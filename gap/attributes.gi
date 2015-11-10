@@ -24,6 +24,78 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true.
 
+BindGlobal("SEMIGROUPS_InjectionPrincipalFactor",
+function(D, constructor)
+  local map, inv, G, mat, rep, R, L, x, RR, LL, rms, iso, hom, i, j;
+
+  map := IsomorphismPermGroup(GroupHClass(D));
+  inv := InverseGeneralMapping(map);
+
+  G := Range(map);
+  mat := [];
+
+  rep := Representative(GroupHClass(D));
+  R := HClassReps(LClass(D, rep));
+  L := HClassReps(RClass(D, rep));
+
+  for i in [1 .. Length(L)] do
+    mat[i] := [];
+    for j in [1 .. Length(R)] do
+      x := L[i] * R[j];
+      if x in D then
+        mat[i][j] := x ^ map;
+      else
+        mat[i][j] := 0;
+      fi;
+    od;
+  od;
+
+  RR := EmptyPlist(Length(R));
+  LL := EmptyPlist(Length(L));
+
+  for j in [1 .. Length(R)] do
+    for i in [1 .. Length(L)] do
+      if mat[i][j] <> 0 then
+        RR[j] := ((mat[i][j] ^ -1) ^ inv) * L[i];
+        break;
+      fi;
+    od;
+  od;
+
+  for i in [1 .. Length(L)] do
+    for j in [1 .. Length(R)] do
+      if mat[i][j] <> 0 then
+        LL[i] := R[j] * (mat[i][j] ^ -1) ^ inv;
+        break;
+      fi;
+    od;
+  od;
+
+  rms := constructor(G, mat);
+
+  iso := function(x)
+    i := PositionProperty(R, y -> y in RClass(D, x));
+    j := PositionProperty(L, y -> y in LClass(D, x));
+
+    if i = fail or j = fail then
+      return fail;
+    fi;
+    return Objectify(TypeReesMatrixSemigroupElements(rms),
+                     [i, (rep * RR[i] * x * LL[j]) ^ map, j, mat]);
+  end;
+
+  hom := MappingByFunction(D, rms, iso,
+                           function(x)
+                             if x![1] = 0 then
+                               return fail;
+                             fi;
+                             return R[x![1]] * (x![2] ^ inv) * L[x![3]];
+                           end);
+  SetIsInjective(hom, true);
+  SetIsTotal(hom, true);
+  return hom;
+end);
+
 # same method for ideals
 
 InstallMethod(IsMultiplicativeZero,
@@ -299,128 +371,29 @@ s -> InverseSemigroup(Idempotents(s), rec(small := true)));
 
 # same method for ideals
 
-InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
+InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass and IsActingSemigroupGreensClass],
-function(d)
-  local rms, iso, hom, rep, isop, g, rreps, lreps, mat, inv_l, inv_r,
-   rightact, lambdaperm, leftact, f, inv, i, j;
-
-  if not IsRegularDClass(d) then
-    Error("Semigroups: InjectionPrincipalFactor: usage,\n",
-          "the argument <d> must be a regular D-class,");
-    return;
+function(D)
+  if not IsRegularDClass(D) then
+    ErrorMayQuit("Semigroups: InjectionPrincipalFactor: usage,\n",
+                 "the argument <D> must be a regular D-class,");
   fi;
-
-  g := GroupHClass(d);
-  rep := Representative(g);
-  isop := IsomorphismPermGroup(g);
-  g := Range(isop);
-
-  rreps := HClassReps(LClass(d, rep));
-  lreps := HClassReps(RClass(d, rep));
-  mat := [];
-
-  inv_l := EmptyPlist(Length(lreps));
-  inv_r := EmptyPlist(Length(rreps));
-
-  rightact := StabilizerAction(Parent(d));
-  lambdaperm := LambdaPerm(Parent(d));
-
-  # FIXME remove this to elsewhere
-  if IsTransformationSemigroupGreensClass(d)
-      or IsPartialPermSemigroupGreensClass(d)
-      or IsBipartitionSemigroupGreensClass(d) then
-    leftact := PROD;
-  elif IsReesZeroMatrixSubsemigroup(Parent(d)) then
-    leftact := function(x, y)
-      if y![1] = 0 then
-        return y;
-      fi;
-      return Objectify(TypeObj(y),
-                       [y![1], y![4][rep![3]][rep![1]] ^ -1 * x * rep![2] ^ -1
-                        * y![2], y![3], y![4]]);
-    end;
-  elif IsMatrixSemigroupGreensClass(d) then
-    leftact := function(x, y)
-      return x ^ InverseGeneralMapping(isop) * y;
-    end;
-    rightact := function(x, y)
-      return x * y ^ InverseGeneralMapping(isop);
-    end;
-    lambdaperm := function(x, y)
-      return StabilizerAction(Parent(d))(rep, LambdaPerm(Parent(d))(x, y)) ^
-       isop;
-    end;
+  if NrHClasses(D) = NrIdempotents(D) then
+    return SEMIGROUPS_InjectionPrincipalFactor(D, ReesMatrixSemigroup);
   fi;
-
-  for i in [1 .. Length(lreps)] do
-    mat[i] := [];
-    for j in [1 .. Length(rreps)] do
-      f := lreps[i] * rreps[j];
-      if f in d then
-        mat[i][j] := lambdaperm(rep, f);
-        if not IsBound(inv_r[j]) then
-          # could use lreps[i]*rreps[j]^-1*lreps[i] instead if there was a
-          # method for ^-1...
-          inv_r[j] := leftact(mat[i][j] ^ -1, lreps[i]);
-        fi;
-        if not IsBound(inv_l[i]) then
-          inv_l[i] := rightact(rreps[j], mat[i][j] ^ -1);
-        fi;
-      else
-        mat[i][j] := 0;
-      fi;
-    od;
-  od;
-
-  if NrIdempotents(d) = NrHClasses(d) then
-    rms := ReesMatrixSemigroup(g, mat);
-  else
-    rms := ReesZeroMatrixSemigroup(g, mat);
-  fi;
-
-  iso := function(f)
-    local o, m, i, j;
-    o := LambdaOrb(d);
-    m := LambdaOrbSCCIndex(d);
-    i := Position(o, LambdaFunc(Parent(d))(f));
-
-    if i = fail or OrbSCCLookup(o)[i] <> m then
-      return fail;
-    fi;
-    i := Position(OrbSCC(o)[OrbSCCLookup(o)[i]], i);
-    if not IsInverseOpClass(d) then
-      o := RhoOrb(d);
-      m := RhoOrbSCCIndex(d);
-    fi;
-    j := Position(o, RhoFunc(Parent(d))(f));
-    if j = fail or OrbSCCLookup(o)[j] <> m then
-      return fail;
-    fi;
-    j := Position(OrbSCC(o)[OrbSCCLookup(o)[j]], j);
-    return Objectify(TypeReesMatrixSemigroupElements(rms),
-                     [j, lambdaperm(rep, rep * inv_r[j] * f * inv_l[i]), i,
-                      mat]);
-  end;
-
-  inv := function(x)
-    if x![1] = 0 then
-      return fail;
-    fi;
-    return rightact(rreps[x![1]], x![2]) * lreps[x![3]];
-  end;
-
-  hom := MappingByFunction(d, rms, iso, inv);
-  SetIsInjective(hom, true);
-  SetIsTotal(hom, true);
-  return hom;
+  return SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
 end);
 
-# same method for ideals
+InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
+[IsGreensDClass and IsActingSemigroupGreensClass],
+function(D)
+  if NrIdempotents(D) <> NrHClasses(D) then
+    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
+                 "the D-class is not a subsemigroup,");
+  fi;
 
-InstallMethod(IsomorphismReesMatrixSemigroup,
-"for D-class of an acting semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass], InjectionPrincipalFactor);
+  return InjectionPrincipalFactor(D);
+end);
 
 # same method for ideal
 
@@ -481,24 +454,51 @@ function(coll)
   return out;
 end);
 
-#
-
-InstallMethod(IsomorphismReesMatrixSemigroup,
-"for a simple or 0-simple acting semigroup", [IsActingSemigroup],
+InstallMethod(IsomorphismReesMatrixSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
   local D, iso, inv;
-  if not (IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)) then
+
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
-  D := GreensDClasses(S)[1];
-  if IsZeroSimpleSemigroup(S)
-      and IsMultiplicativeZero(S, Representative(D)) then
-    D := GreensDClasses(S)[2];
+
+  if not IsSimpleSemigroup(S) then
+    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
+                 "the argument must be a simple semigroup,");
+    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
+
+  D := GreensDClasses(S)[1];
   iso := IsomorphismReesMatrixSemigroup(D);
   inv := InverseGeneralMapping(iso);
   return MagmaIsomorphismByFunctionsNC(S,
                                        Range(iso),
+                                       x -> x ^ iso,
+                                       x -> x ^ inv);
+end);
+
+InstallMethod(IsomorphismReesZeroMatrixSemigroup, "for an acting semigroup",
+[IsActingSemigroup],
+function(S)
+  local D, iso, inv;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  if not IsZeroSimpleSemigroup(S) then
+    ErrorMayQuit("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
+                 "the argument must be a 0-simple semigroup,");
+    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # semigroups into Rees (0-)matrix semigroups over non-groups?
+  fi;
+
+  D := First(GreensDClasses(S),
+             x -> not IsMultiplicativeZero(S, Representative(x)));
+  iso := SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
+  inv := InverseGeneralMapping(iso);
+  return MagmaIsomorphismByFunctionsNC(S, Range(iso),
                                        x -> x ^ iso, x -> x ^ inv);
 end);
 
