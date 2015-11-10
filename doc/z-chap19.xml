@@ -34,7 +34,12 @@
 
   We can also create left congruences and right congruences, using the <Ref
   Func="LeftSemigroupCongruence"/> and <Ref Func="RightSemigroupCongruence"/>
-  functions.
+  functions.<P/>
+
+  Please note that congruence objects made in &GAP; before loading the
+  &Semigroups; package may not behave correctly after &Semigroups; is loaded.
+  If &Semigroups; is loaded at the beginning of the session, or before any
+  congruence work is done, then the objects should behave correctly.<P/>
 
   <Section><Heading>Semigroup congruence objects</Heading>
 
