@@ -47,7 +47,8 @@
 SEMIGROUPS.SetupCongData := function(cong)
   # This function creates the congruence data object for cong.  It should only
   # be called once.
-  local S, elms, pairs, hashlen, ht, data, genpairs, right_compat, left_compat;
+  local S, elms, genpairs, gendata, pairs, hashlen, ht, treehashsize, data, 
+        pairstoapply, pos, found, ufdata;
 
   S := Range(cong);
   elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
@@ -60,8 +61,10 @@ SEMIGROUPS.SetupCongData := function(cong)
   elif HasGeneratingPairsOfRightMagmaCongruence(cong) then
     genpairs := GeneratingPairsOfRightSemigroupCongruence(cong);
   fi;
-
-  pairs   := List(genpairs, x -> [Position(elms, x[1]), Position(elms, x[2])]);
+  
+  gendata := GenericSemigroupData(S);
+  pairs   := List(genpairs, x -> [Position(gendata, x[1]),
+                                  Position(gendata, x[2])]);
   hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
 
   ht := HTCreate([1, 1], rec(forflatplainlists := true,
@@ -440,9 +443,8 @@ _InstallMethodsForCongruences := function(_record)
                    "over a semigroup\nwhich is known to be finite,");
     fi;
 
-    elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
-    p1 := Position(elms, pair[1]);
-    p2 := Position(elms, pair[2]);
+    p1 := Position(GenericSemigroupData(S), pair[1]);
+    p2 := Position(GenericSemigroupData(S), pair[2]);
 
     # Use lookup table if available
     if HasAsLookupTable(cong) then
@@ -559,10 +561,11 @@ _InstallMethodsForCongruences := function(_record)
                 "and an associative element"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence, IsAssociativeElement],
   function(cong, elm)
-    local elms, lookup, classNo;
-    elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(cong)), infinity);
+    local lookup, gendata, classNo, elms;
     lookup := AsLookupTable(cong);
-    classNo := lookup[Position(elms, elm)];
+    gendata := GenericSemigroupData(Range(cong));
+    classNo := lookup[Position(gendata, elm)];
+    elms := SEMIGROUP_ELEMENTS(gendata, infinity);
     return elms{Positions(lookup, classNo)};
   end);
 
@@ -770,7 +773,7 @@ _InstallMethodsForCongruences := function(_record)
 
     enum.NumberElement := function(enum, elm)
       local x, lookfunc, result, table, classno, i;
-      x := Position(enum!.elms, elm);
+      x := Position(enum!.gendata, elm);
       lookfunc := function(data)
         return UF_FIND(data!.ufdata, x)
                = UF_FIND(data!.ufdata, enum!.rep);
@@ -813,12 +816,12 @@ _InstallMethodsForCongruences := function(_record)
 
     enum := EnumeratorByFunctions(class, enum);
     enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
-    enum!.elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(enum!.cong)),
-                                     infinity);
-    enum!.rep := Position(enum!.elms,
+    enum!.gendata := GenericSemigroupData(Range(enum!.cong));
+    enum!.elms := SEMIGROUP_ELEMENTS(enum!.gendata, infinity);
+    enum!.rep := Position(enum!.gendata,
                           Representative(UnderlyingCollection(enum)));
     enum!.list := [enum!.rep];
-    enum!.found := BlistList([1 .. Size(enum!.elms)], [enum!.rep]);
+    enum!.found := BlistList([1 .. Size(Range(enum!.cong))], [enum!.rep]);
     enum!.len := 1;
 
     return enum;
@@ -840,9 +843,8 @@ _InstallMethodsForCongruences := function(_record)
   Concatenation("for a finite ", _record.type_string, " congruence class"),
   [_IsXCongruenceClass and IsFinite],
   function(class)
-    local elms, p, tab;
-    elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(ParentAttr(class)), infinity);
-    p := Position(elms, Representative(class));
+    local p, tab;
+    p := Position(GenericSemigroupData(Parent(class)), Representative(class));
     tab := AsLookupTable(EquivalenceClassRelation(class));
     return Number(tab, n -> n = tab[p]);
   end);
