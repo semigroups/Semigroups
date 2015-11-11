@@ -10,13 +10,13 @@
 
 <#GAPDoc Label="AsMatrix">
   <ManSection>
-    <Oper Name="AsMatrix" Arg="filt, mat" 
+    <Oper Name = "AsMatrix" Arg = "filt, mat" 
       Label = "for a filter and a matrix"/>
-    <!--  <Oper Name="AsMatrix" Arg="semiring, mat" 
+    <!--  <Oper Name = "AsMatrix" Arg = "semiring, mat" 
       Label = "for a semiring and a matrix"/>-->
-    <Oper Name="AsMatrix" Arg="filt, mat, threshold" 
+    <Oper Name = "AsMatrix" Arg = "filt, mat, threshold" 
       Label = "for a filter, matrix, and threshold"/>
-    <Oper Name="AsMatrix" Arg="filt, mat, threshold, period" 
+    <Oper Name = "AsMatrix" Arg = "filt, mat, threshold, period" 
       Label = "for a filter, matrix, threshold, and period"/>
     <Returns>A matrix.</Returns>
     <Description>
@@ -41,8 +41,8 @@
           projective max-plus matrix;
         </Item>
         <Item>
-          <Ref Filt = "IsProjectiveMaxPlusMatrix"/> and a tropical max-plus matrix or
-          (non-tropical) max-plus matrix;
+          <Ref Filt = "IsProjectiveMaxPlusMatrix"/> and a tropical max-plus
+          matrix or (non-tropical) max-plus matrix;
         </Item>
         <Item>
           <Ref Filt = "IsIntegerMatrix"/> and an ntp matrix.
@@ -148,8 +148,8 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)]]></Example>
 
 <#GAPDoc Label="AsList">
   <ManSection>
-    <Attr Name="AsList"        Arg="mat"/>
-    <Oper Name="AsMutableList" Arg="mat"/>
+    <Attr Name = "AsList"        Arg = "mat"/>
+    <Oper Name = "AsMutableList" Arg = "mat"/>
     <Returns>A list of lists.</Returns>
     <Description>
       If <A>mat</A> is a matrix over a semiring (in the category <Ref Filt
@@ -162,7 +162,7 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)]]></Example>
       underlying list of lists of the matrix over semiring <A>mat</A>.
       
       <Example><![CDATA[
-gap> mat := Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]]);
+gap> mat := Matrix(GF(7), [[Z(7) ^ 3, Z(7) ^ 2], [Z(7) ^ 4, Z(7)]]);
 Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])
 gap> list := AsList(mat);
 [ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ]
@@ -188,32 +188,32 @@ gap> AsList(mat);
 
 <#GAPDoc Label="IsMatrixOverSemiring">
   <ManSection>
-    <Filt Name="IsMatrixOverSemiring" Arg="obj" Type="Category"/>
+    <Filt Name = "IsMatrixOverSemiring" Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every matrix over a semiring in &Semigroups; is a member of the category
       <C>IsMatrixOverSemiring</C>, which is a subcategory of 
-      <Ref Filt="IsMultiplicativeElementWithOne" BookName="ref"/>, 
-      <Ref Filt="IsAssociativeElement" BookName="ref"/>, and
+      <Ref Filt = "IsMultiplicativeElementWithOne" BookName = "ref"/>, 
+      <Ref Filt = "IsAssociativeElement" BookName = "ref"/>, and
       <C>IsPositionalObjectRep</C>; see 
-      <Ref Sect="Representation" BookName="ref"/>.
+      <Ref Sect = "Representation" BookName = "ref"/>.
       <P/>
 
       Every matrix over a semiring in &Semigroups; is a square matrix.
       <P/>
 
       Basic operations for matrices over semirings are:
-      <Ref Attr="DimensionOfMatrixOverSemiring"/>,
-      <Ref Attr="TransposedMat" BookName = "ref"/>, and
-      <Ref Attr="One" BookName = "ref"/>.
+      <Ref Attr = "DimensionOfMatrixOverSemiring"/>,
+      <Ref Attr = "TransposedMat" BookName = "ref"/>, and
+      <Ref Attr = "One" BookName = "ref"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsMatrixOverSemiringCollection">
   <ManSection>
-    <Filt Name="IsMatrixOverSemiringCollection" Arg="obj" Type="Category"/>
-    <Filt Name="IsMatrixOverSemiringCollColl" Arg="obj" Type="Category"/>
+    <Filt Name = "IsMatrixOverSemiringCollection" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMatrixOverSemiringCollColl" Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
        Every collection of matrices over the same semiring belongs to the
@@ -231,11 +231,11 @@ gap> AsList(mat);
 
 <#GAPDoc Label="DimensionOfMatrixOverSemiring">
   <ManSection>
-    <Attr Name="DimensionOfMatrixOverSemiring" Arg="mat"/>
+    <Attr Name = "DimensionOfMatrixOverSemiring" Arg = "mat"/>
     <Returns>A positive integer.</Returns>
     <Description>
       If <A>mat</A> is a matrix over a semiring (i.e. belongs to the category
-      <Ref Filt="IsMatrixOverSemiring"/>), then <A>mat</A> is a square <C>n</C>
+      <Ref Filt = "IsMatrixOverSemiring"/>), then <A>mat</A> is a square <C>n</C>
       by <C>n</C> matrix. 
       <C>DimensionOfMatrixOverSemiring</C> returns the dimension <C>n</C> of
       <A>mat</A>.
@@ -252,8 +252,8 @@ gap> DimensionOfMatrixOverSemiring(x);
 
 <#GAPDoc Label="Matrix">
   <ManSection>
-    <Oper Name="Matrix" Arg="filt, mat[, threshold[, period]]"/>
-    <Oper Name="Matrix" Arg="semiring, mat"/>
+    <Oper Name = "Matrix" Arg = "filt, mat[, threshold[, period]]"/>
+    <Oper Name = "Matrix" Arg = "semiring, mat"/>
     <Returns>A matrix over semiring.</Returns>
     <Description>
       This operation can be used to construct a matrix over
@@ -310,7 +310,7 @@ gap> DimensionOfMatrixOverSemiring(x);
       In its second form, the arguments should be a semiring <A>semiring</A>
       and matrix <A>mat</A> with entries in <A>semiring</A>. Currently, the
       only supported semirings are finite fields of prime order, and the
-      integers <Ref Var ="Integers" BookName = "ref"/>.
+      integers <Ref Var = "Integers" BookName = "ref"/>.
       <P/>
 
       The function <Ref Func = "BooleanMat"/> is provided for specifically
@@ -370,8 +370,8 @@ Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0],
 
 <#GAPDoc Label="RandomMatrix">
   <ManSection>
-    <Func Name="RandomMatrix" Arg="filt, dim[, threshold[, period]]"/>
-    <Func Name="RandomMatrix" Arg="semiring, dim"/>
+    <Func Name = "RandomMatrix" Arg = "filt, dim[, threshold[, period]]"/>
+    <Func Name = "RandomMatrix" Arg = "semiring, dim"/>
     <Returns>A matrix over semiring.</Returns>
     <Description>
       This operation can be used to construct a random matrix over a semiring

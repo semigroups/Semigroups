@@ -10,41 +10,41 @@
 
 <#GAPDoc Label="IsPBRSemigroup">
   <ManSection>
-    <Prop Name="IsPBRSemigroup" Arg="S"/>
-    <Prop Name="IsPBRMonoid" Arg="S"/>
+    <Prop Name = "IsPBRSemigroup" Arg = "S"/>
+    <Prop Name = "IsPBRMonoid" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>PBR semigroup</E> is simply a semigroup consisting of
       PBRs. An object <A>obj</A> is a PBR semigroup in &GAP; if
-      it satisfies <Ref Prop="IsSemigroup" BookName="ref"/> and 
-      <Ref Filt="IsPBRCollection"/>.<P/>
+      it satisfies <Ref Prop = "IsSemigroup" BookName = "ref"/> and 
+      <Ref Filt = "IsPBRCollection"/>.<P/>
 
       A <E>PBR monoid</E> is a monoid consisting of PBRs. 
       An object <A>obj</A> is a PBR monoid in &GAP; if it satisfies 
-      <Ref Prop="IsMonoid" BookName="ref"/> and 
-      <Ref Filt="IsPBRCollection"/>.<P/>
+      <Ref Prop = "IsMonoid" BookName = "ref"/> and 
+      <Ref Filt = "IsPBRCollection"/>.<P/>
 
       Note that it is possible for a PBR semigroup to have a multiplicative
       neutral element (i.e. an identity element) but not to satisfy
       <C>IsPBRMonoid</C>. For example, 
 
       <Example><![CDATA[
-gap> x := PBR([ [ -2, -1, 3 ], [ -2, 2 ], [ -3, -2, 1, 2, 3 ] ],
->             [ [ -3, -2, -1, 2, 3 ], [ -3, -2, -1, 2, 3 ], [ -1 ] ]);;
+gap> x := PBR([[-2, -1, 3], [-2, 2], [-3, -2, 1, 2, 3]],
+>             [[-3, -2, -1, 2, 3], [-3, -2, -1, 2, 3], [-1]]);;
 gap> S := Semigroup(x, One(x));
 <commutative pbr monoid of degree 3 with 1 generator>
 gap> IsMonoid(S);
 true
 gap> IsPBRMonoid(S);
 true
-gap> S := Semigroup( [
->  PBR([ [ -2, 1 ], [ -3, 2 ], [ -1, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ],
->      [ [ -1, 3 ], [ -2, 1 ], [ -3, 2 ], [ -4, 4, 5 ], [ -5 ] ]),
->  PBR([ [ -2, 1 ], [ -1, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ]
->       , [ [ -1, 2 ], [ -2, 1 ], [ -3, 3 ], [ -4, 4, 5 ], [ -5 ] ]),
->  PBR([ [ -1, 1, 3 ], [ -2, 2 ], [ -1, 1, 3 ], [ -4, 4, 5 ],
->          [ -4, 4, 5 ] ],
->      [ [ -1, 1, 3 ], [ -2, 2 ], [ -3 ], [ -4, 4, 5 ], [ -5 ] ]) ] );
+gap> S := Semigroup([
+>  PBR([[-2, 1], [-3, 2], [-1, 3], [-4, 4, 5], [-4, 4, 5]],
+>      [[-1, 3], [-2, 1], [-3, 2], [-4, 4, 5], [-5]]),
+>  PBR([[-2, 1], [-1, 2], [-3, 3], [-4, 4, 5], [-4, 4, 5]]
+>       , [[-1, 2], [-2, 1], [-3, 3], [-4, 4, 5], [-5]]),
+>  PBR([[-1, 1, 3], [-2, 2], [-1, 1, 3], [-4, 4, 5],
+>          [-4, 4, 5]],
+>      [[-1, 1, 3], [-2, 2], [-3], [-4, 4, 5], [-5]])]);
 <pbr semigroup of degree 5 with 3 generators>
 gap> One(S);
 fail
@@ -54,18 +54,18 @@ PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ],
 gap> IsPBRMonoid(S);
 false]]></Example>
       In this example <C>S</C> cannot be converted into a monoid using <Ref
-        Attr="AsMonoid" BookName="ref"/> since the <Ref Attr="One"
-        BookName="ref"/> of any element in <C>S</C> differs from the
+        Attr = "AsMonoid" BookName = "ref"/> since the <Ref Attr = "One"
+        BookName = "ref"/> of any element in <C>S</C> differs from the
       multiplicative neutral element. <P/>
 
-      For more details see <Ref Filt="IsMagmaWithOne" BookName="ref"/>.
+      For more details see <Ref Filt = "IsMagmaWithOne" BookName = "ref"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="DegreeOfPBRSemigroup">
   <ManSection>
-    <Attr Name="DegreeOfPBRSemigroup" Arg="S"/>
+    <Attr Name = "DegreeOfPBRSemigroup" Arg = "S"/>
     <Returns>A non-negative integer.</Returns>
     <Description>
       The <E>degree</E> of a PBR semigroup <A>S</A> is just the
@@ -73,12 +73,12 @@ false]]></Example>
 
       <Example><![CDATA[
 gap> S := Semigroup(
->  PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ] ],
->      [ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ] ]),
->  PBR([ [ 1, 2 ], [ 1, 2 ], [ -3, 3 ] ],
->      [ [ -2, -1 ], [ -2, -1 ], [ -3, 3 ] ]),
->  PBR([ [ -1, 1 ], [ 2, 3 ], [ 2, 3 ] ],
->      [ [ -1, 1 ], [ -3, -2 ], [ -3, -2 ] ]) );
+>  PBR([[-1, 1], [-2, 2], [-3, 3]],
+>      [[-1, 1], [-2, 2], [-3, 3]]),
+>  PBR([[1, 2], [1, 2], [-3, 3]],
+>      [[-2, -1], [-2, -1], [-3, 3]]),
+>  PBR([[-1, 1], [2, 3], [2, 3]],
+>      [[-1, 1], [-3, -2], [-3, -2]]));
 <pbr semigroup of degree 3 with 3 generators>
 gap> DegreeOfPBRSemigroup(S);
 3]]></Example>
@@ -88,7 +88,7 @@ gap> DegreeOfPBRSemigroup(S);
 
 <#GAPDoc Label="IsomorphismPBRSemigroup">
   <ManSection>
-    <Attr Name="IsomorphismPBRSemigroup" Arg="S"/>
+    <Attr Name = "IsomorphismPBRSemigroup" Arg = "S"/>
     <Returns>An isomorphism.</Returns>
     <Description> 
       If <A>S</A> is a semigroup, then <C>IsomorphismPBRSemigroup</C> returns
@@ -104,13 +104,13 @@ gap> DegreeOfPBRSemigroup(S);
       PBR semigroup.
       <P/>
 
-      See <Ref Oper="AsPBRSemigroup"/>.
+      See <Ref Oper = "AsPBRSemigroup"/>.
       <Example><![CDATA[
 gap> S := InverseSemigroup(
-> PartialPerm( [ 1, 2, 3, 6, 8, 10 ], 
->              [ 2, 6, 7, 9, 1, 5 ] ), 
-> PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
->              [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
+> PartialPerm([1, 2, 3, 6, 8, 10], 
+>              [2, 6, 7, 9, 1, 5]), 
+> PartialPerm([1, 2, 3, 4, 6, 7, 8, 10], 
+>              [3, 8, 1, 9, 4, 10, 5, 6]));;
 gap> Range(IsomorphismPBRSemigroup(S));
 <pbr semigroup of degree 11 with 4 generators>]]></Example>
     </Description> 
@@ -119,7 +119,7 @@ gap> Range(IsomorphismPBRSemigroup(S));
 
 <#GAPDoc Label="FullPBRMonoid">
   <ManSection>
-    <Oper Name="FullPBRMonoid" Arg="S"/>
+    <Oper Name = "FullPBRMonoid" Arg = "S"/>
     <Returns>A PBR monoid.</Returns>
     <Description> 
       If <A>n</A> is a positive integer not greater than <C>2</C>, then

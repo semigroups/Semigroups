@@ -1,4 +1,4 @@
-<Chapter Label="Ideals">
+<Chapter Label = "Ideals">
   <Heading>
     Ideals
   </Heading> 
@@ -11,7 +11,7 @@
   <P/>
 
   The methods in the &Semigroups; package apply to any ideal of a semigroup
-  that is created using the function <Ref Func="SemigroupIdeal"/> or
+  that is created using the function <Ref Func = "SemigroupIdeal"/> or
   <C>SemigroupIdealByGenerators</C>. Anything that can be calculated for a
   semigroup defined by a generating set can also be found for an ideal. This
   works particularly well for regular ideals, since such an ideal can be
@@ -28,7 +28,7 @@
       Creating ideals
     </Heading> 
 
-    <#Include Label="SemigroupIdeal">
+    <#Include Label = "SemigroupIdeal">
     
   </Section>
   
@@ -37,9 +37,9 @@
       Attributes of ideals
     </Heading> 
 
-    <#Include Label="GeneratorsOfSemigroupIdeal">
-    <#Include Label="MinimalIdealGeneratingSet">
-    <#Include Label="SupersemigroupOfIdeal"> 
+    <#Include Label = "GeneratorsOfSemigroupIdeal">
+    <#Include Label = "MinimalIdealGeneratingSet">
+    <#Include Label = "SupersemigroupOfIdeal"> 
 
   </Section>
 

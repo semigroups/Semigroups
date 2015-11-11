@@ -1,4 +1,4 @@
-<Chapter Label="Properties of semigroups and inverse semigroups">
+<Chapter Label = "Properties of semigroups and inverse semigroups">
 
   <Heading>
     Properties of semigroups and inverse semigroups
@@ -20,30 +20,30 @@
     determined using the &Semigroups; package. 
     <P/>
     
-    <#Include Label="IsBand">
-    <#Include Label="IsBlockGroup">
-    <#Include Label="IsCommutativeSemigroup">
-    <#Include Label="IsCompletelyRegularSemigroup">
-    <#Include Label="IsCongruenceFreeSemigroup">
-    <#Include Label="IsGroupAsSemigroup">
-    <#Include Label="IsIdempotentGenerated">
-    <#Include Label="IsLeftSimple">
-    <#Include Label="IsLeftZeroSemigroup">
-    <#Include Label="IsMonogenicSemigroup">
-    <#Include Label="IsMonoidAsSemigroup">
-    <#Include Label="IsOrthodoxSemigroup">
-    <#Include Label="IsRectangularBand">
-    <#Include Label="IsRegularSemigroup">
-    <#Include Label="IsRightZeroSemigroup">
-    <#Include Label="IsRTrivial">
-    <#Include Label="IsSemilattice">
-    <#Include Label="IsSimpleSemigroup">
-    <#Include Label="IsSynchronizingSemigroup">
-    <#Include Label="IsUnitRegularMonoid">
-    <#Include Label="IsZeroGroup">
-    <#Include Label="IsZeroRectangularBand">
-    <#Include Label="IsZeroSemigroup">
-    <#Include Label="IsZeroSimpleSemigroup">
+    <#Include Label = "IsBand">
+    <#Include Label = "IsBlockGroup">
+    <#Include Label = "IsCommutativeSemigroup">
+    <#Include Label = "IsCompletelyRegularSemigroup">
+    <#Include Label = "IsCongruenceFreeSemigroup">
+    <#Include Label = "IsGroupAsSemigroup">
+    <#Include Label = "IsIdempotentGenerated">
+    <#Include Label = "IsLeftSimple">
+    <#Include Label = "IsLeftZeroSemigroup">
+    <#Include Label = "IsMonogenicSemigroup">
+    <#Include Label = "IsMonoidAsSemigroup">
+    <#Include Label = "IsOrthodoxSemigroup">
+    <#Include Label = "IsRectangularBand">
+    <#Include Label = "IsRegularSemigroup">
+    <#Include Label = "IsRightZeroSemigroup">
+    <#Include Label = "IsRTrivial">
+    <#Include Label = "IsSemilattice">
+    <#Include Label = "IsSimpleSemigroup">
+    <#Include Label = "IsSynchronizingSemigroup">
+    <#Include Label = "IsUnitRegularMonoid">
+    <#Include Label = "IsZeroGroup">
+    <#Include Label = "IsZeroRectangularBand">
+    <#Include Label = "IsZeroSemigroup">
+    <#Include Label = "IsZeroSimpleSemigroup">
     
   </Section>
 
@@ -56,13 +56,13 @@
       Properties of inverse semigroups
     </Heading>
     
-    <#Include Label="IsCliffordSemigroup">
-    <#Include Label="IsBrandtSemigroup">
-    <#Include Label="IsEUnitaryInverseSemigroup">
-    <#Include Label="IsFactorisableInverseMonoid">
-    <#Include Label="IsJoinIrreducible">
-    <#Include Label="IsMajorantlyClosed">
-    <#Include Label="IsMonogenicInverseSemigroup">
+    <#Include Label = "IsCliffordSemigroup">
+    <#Include Label = "IsBrandtSemigroup">
+    <#Include Label = "IsEUnitaryInverseSemigroup">
+    <#Include Label = "IsFactorisableInverseMonoid">
+    <#Include Label = "IsJoinIrreducible">
+    <#Include Label = "IsMajorantlyClosed">
+    <#Include Label = "IsMonogenicInverseSemigroup">
 
   </Section>
 

@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="SemigroupsMakeDoc">
   <ManSection>
-    <Func Name="SemigroupsMakeDoc" Arg=""/>
+    <Func Name = "SemigroupsMakeDoc" Arg = ""/>
     <Returns>Nothing.</Returns>    
     <Description>
       This function should be called with no argument to compile the 
@@ -21,30 +21,31 @@
 
 <#GAPDoc Label="SEMIGROUPS_DefaultOptionsRec">
   <ManSection>    
-     <Var Name="SEMIGROUPS_DefaultOptionsRec"/>    
+     <Var Name = "SEMIGROUPS_DefaultOptionsRec"/>    
      <Description>
        This global variable is a record whose components contain the default
        values of certain options for semigroups.  A description of these
-       options is given above in Section <Ref Sect="Options when creating semigroups"/>.
+       options is given above in Section
+       <Ref Sect = "Options when creating semigroups"/>.
        <P/>
 
        The value of <C>SEMIGROUPS_DefaultOptionsRec</C> is defined in the file
        <C>semigroups/gap/options.g</C> as: TODO update this!!
-       <Log>rec( exhaustive := true, hashlen := rec( L := 25013, M := 6257, S :=
-         251 ), regular := false, small := false )</Log>
+       <Log>rec(exhaustive := true, hashlen := rec(L := 25013, M := 6257, S :=
+         251), regular := false, small := false)</Log>
      </Description> 
    </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="SemigroupsTestStandard">
   <ManSection>
-    <Func Name="SemigroupsTestStandard" Arg=""/>
+    <Func Name = "SemigroupsTestStandard" Arg = ""/>
     <Returns><K>true</K> or <K>false</K>.</Returns> 
     <Description>
       This function should be called with no argument to comprehensively test
       that &Semigroups; is working correctly. These tests should take no more
       than a few minutes to complete.  To quickly test that &Semigroups; is
-      installed correctly use <Ref Func="SemigroupsTestInstall"/>. 
+      installed correctly use <Ref Func = "SemigroupsTestInstall"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -52,21 +53,21 @@
 
 <#GAPDoc Label="SemigroupsTestInstall">
   <ManSection>
-    <Func Name="SemigroupsTestInstall" Arg=""/>
+    <Func Name = "SemigroupsTestInstall" Arg = ""/>
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test your installation
       of &Semigroups; is working correctly. These tests should take no more
       than a few seconds to complete.  To more comprehensively test
       that &Semigroups; is installed correctly use 
-      <Ref Func="SemigroupsTestStandard"/>. 
+      <Ref Func = "SemigroupsTestStandard"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="InfoSemigroups">
   <ManSection>
-    <InfoClass Name="InfoSemigroups"/>
+    <InfoClass Name = "InfoSemigroups"/>
     <Description>
     <C>InfoSemigroups</C> is the info class of the &Semigroups; package. 
     The info level is initially set to 0 and no info messages are displayed. 
@@ -74,19 +75,19 @@
     are displayed. To increase the amount of information displayed during a
     computation increase the info level to 2 or 3. To stop all info messages
     from being displayed, set the info level to 0.  See also
-    <Ref Subsect="Info Functions" BookName="ref"/> and 
-    <Ref Func="SetInfoLevel" BookName="ref"/>. 
+    <Ref Subsect = "Info Functions" BookName = "ref"/> and 
+    <Ref Func = "SetInfoLevel" BookName = "ref"/>. 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="ReadGenerators">
   <ManSection> 
-    <Func Name="ReadGenerators" Arg="filename[, nr]"/>
+    <Func Name = "ReadGenerators" Arg = "filename[, nr]"/>
     <Returns>A list of lists of semigroup elements.</Returns>
     <Description>
       If <A>filename</A> is the name of a file created using 
-      <Ref Func="WriteGenerators"/>, then <C>ReadGenerators</C> returns the
+      <Ref Func = "WriteGenerators"/>, then <C>ReadGenerators</C> returns the
       contents of this file as a list of lists of transformations, partial
       permutations, or bipartitions. <P/>
       
@@ -95,7 +96,7 @@
       of <A>filename</A>.
 
       <Example>
-gap> file:=Concatenation(SemigroupsDir(), "/tst/test.gz");;
+gap> file := Concatenation(SemigroupsDir(), "/tst/test.gz");;
 gap> ReadGenerators(file, 1378);
 [ Transformation( [ 1, 2, 2 ] ), IdentityTransformation, 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 
@@ -111,11 +112,11 @@ gap> ReadGenerators(file, 1378);
 
 <#GAPDoc Label="IteratorFromGeneratorsFile">
   <ManSection> 
-    <Func Name="IteratorFromGeneratorsFile" Arg="filename"/>
+    <Func Name = "IteratorFromGeneratorsFile" Arg = "filename"/>
     <Returns>An iterator.</Returns>
     <Description>
       If <A>filename</A> is a string containing the name of a file created using 
-      <Ref Func="WriteGenerators"/>, then <C>IteratorFromGeneratorsFile</C>
+      <Ref Func = "WriteGenerators"/>, then <C>IteratorFromGeneratorsFile</C>
       returns an iterator <C>iter</C> such that <C>NextIterator(iter)</C>
       returns the next collection of generators stored in the file <A>filename</A>. 
       <P/>
@@ -130,7 +131,7 @@ gap> ReadGenerators(file, 1378);
 
 <#GAPDoc Label="WriteGenerators">
   <ManSection> 
-    <Func Name="WriteGenerators" Arg="filename, list[, append]"/>
+    <Func Name = "WriteGenerators" Arg = "filename, list[, append]"/>
     <Returns><K>true</K> or <K>fail</K>.</Returns>
     <Description>
       This function provides a method for writing transformations, partial
@@ -166,34 +167,34 @@ gap> ReadGenerators(file, 1378);
       of <C>m*n</C> in the remainder of the line. For example, the
       transformations: 
       <Log>
-[ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ), 
-  Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] )]</Log>
+[Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]), 
+ Transformation([3, 8, 1, 9, 9, 4, 10, 5, 10, 6])]</Log>
       are written as:
       <Log>
 t210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
      
-      The file <A>filename</A> can be read using <Ref Func="ReadGenerators"/>.
+      The file <A>filename</A> can be read using <Ref Func = "ReadGenerators"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="SemigroupsTestManualExamples">
   <ManSection>
-    <Func Name="SemigroupsTestManualExamples" Arg=""/>
+    <Func Name = "SemigroupsTestManualExamples" Arg = ""/>
     <Returns>Nothing.</Returns> 
     <Description>
       This function should be called with no argument to test the examples in
       the &Semigroups; manual. These tests should take no more than a few
       minutes to complete.  To more comprehensively test that &Semigroups; is
-      installed correctly use <Ref Func="SemigroupsTestStandard"/>. See also <Ref
-      Func="SemigroupsTestInstall"/>.
+      installed correctly use <Ref Func = "SemigroupsTestStandard"/>. See also <Ref
+      Func = "SemigroupsTestInstall"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="SemigroupsDir">
   <ManSection>
-    <Func Name="SemigroupsDir" Arg=""/>
+    <Func Name = "SemigroupsDir" Arg = ""/>
     <Returns>A string.</Returns>    
     <Description>
       This function returns the absolute path to the &Semigroups; package
@@ -205,4 +206,3 @@ t210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
-
