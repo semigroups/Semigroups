@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/congruences/simple.tst
+#W  standard/congruences/congsimple.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/congruences/simple.tst");
+gap> START_TEST("Semigroups package: standard/congruences/congsimple.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -122,4 +122,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/congruences/simple.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/congsimple.tst");
