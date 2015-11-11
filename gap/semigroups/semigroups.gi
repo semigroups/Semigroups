@@ -11,6 +11,36 @@
 # This file contains methods for finite semigroups which do not depend on
 # whether they are acting or not, i.e. they should work for all semigroups.
 
+SEMIGROUPS.SemigroupTypes := [IsPBRSemigroup,
+                              IsBipartitionSemigroup,
+                              IsTransformationSemigroup,
+                              IsPartialPermSemigroup,
+                              IsBooleanMatSemigroup,
+                              IsMaxPlusMatrixSemigroup,
+                              IsMinPlusMatrixSemigroup,
+                              IsTropicalMaxPlusMatrixSemigroup,
+                              IsTropicalMinPlusMatrixSemigroup,
+                              IsProjectiveMaxPlusMatrixSemigroup,
+                              IsNTPMatrixSemigroup,
+                              IsMatrixOverPrimeFieldSemigroup,
+                              IsBlockBijectionSemigroup,
+                              IsIntegerMatrixSemigroup];
+
+SEMIGROUPS.MonoidTypes := [IsPBRMonoid,
+                           IsBipartitionMonoid,
+                           IsTransformationMonoid,
+                           IsPartialPermMonoid,
+                           IsBooleanMatMonoid,
+                           IsMaxPlusMatrixMonoid,
+                           IsMinPlusMatrixMonoid,
+                           IsTropicalMaxPlusMatrixMonoid,
+                           IsTropicalMinPlusMatrixMonoid,
+                           IsProjectiveMaxPlusMatrixMonoid,
+                           IsNTPMatrixMonoid,
+                           IsMatrixOverPrimeFieldMonoid,
+                           IsBlockBijectionMonoid,
+                           IsIntegerMatrixMonoid];
+
 #TODO update the info strings to include "finite"
 
 # fall back methods
@@ -636,50 +666,7 @@ function(S, coll, opts)
 end);
 
 #recreate the lambda/rho orb using the higher degree!
-# TODO move this!
-BindGlobal("SEMIGROUPS_ChangeDegree", # for a transformation semigroup
-function(o, old_deg, t)
-  local deg, extra, ht, max, i, orb;
-  deg := DegreeOfTransformationSemigroup(t);
-  orb := o!.orbit;
-  if IsLambdaOrb(o) then
-    # rehash the orbit values
-    extra := [old_deg + 1 .. deg];
-    ht := HTCreate(o[1], rec(treehashsize := o!.treehashsize));
-    #JDM: could make the treehashsize bigger if needed here!
-    HTAdd(ht, o[1], 1);
-    for i in [2 .. Length(o)] do
-      orb[i] := ShallowCopy(o[i]);
-      Append(o[i], extra);
-      HTAdd(ht, o[i], i);
-    od;
-    Unbind(o!.ht);
-    o!.ht := ht;
 
-    # change the action of <o> to that of <t>
-    o!.op := LambdaAct(t);
-  elif IsRhoOrb(o) then
-    ht := HTCreate(o[1], rec(treehashsize := o!.treehashsize));
-    #JDM: could make the treehashsize bigger if needed here!
-    HTAdd(ht, o[1], 1);
-    for i in [2 .. Length(o)] do
-      orb[i] := ShallowCopy(o[i]);
-      if not IsEmpty(o[i]) then
-        max := MaximumList(o[i]); #nr kernel classes
-      else
-        max := 0;
-      fi;
-      Append(o[i], [max + 1 .. max + deg - old_deg]);
-      HTAdd(ht, o[i], i);
-    od;
-    Unbind(o!.ht);
-    o!.ht := ht;
-
-    # change the action of <o> to that of <t>
-    o!.op := RhoAct(t);
-  fi;
-  return o;
-end);
 
 # this is the fallback method, coll should consist of elements not in
 # the semigroup
@@ -845,22 +832,13 @@ function(S)
   return AsList(S)[Random([1 .. Size(S)])];
 end);
 
-BindGlobal("SEMIGROUPS_Types",
-           [IsPBRSemigroup, IsBipartitionSemigroup, IsTransformationSemigroup,
-            IsPartialPermSemigroup, IsBooleanMatSemigroup,
-            IsMaxPlusMatrixSemigroup, IsMinPlusMatrixSemigroup,
-            IsTropicalMaxPlusMatrixSemigroup, IsTropicalMinPlusMatrixSemigroup,
-            IsProjectiveMaxPlusMatrixSemigroup, IsNTPMatrixSemigroup,
-            IsMatrixOverPrimeFieldSemigroup, IsBlockBijectionSemigroup,
-            IsIntegerMatrixSemigroup]);
 
-BindGlobal("SEMIGROUPS_RandomElementCons",
-function(filt)
+SEMIGROUPS.RandomElementCons := function(filt)
   local RandomTropicalMaxPlusMatrix, RandomTropicalMinPlusMatrix,
   RandomProjectiveMaxPlusMatrix, RandomNTPMatrix, RandomMatrixOverPrimeField;
 
-  if not filt in SEMIGROUPS_Types then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_RandomElementCons: usage,\n");
+  if not filt in SEMIGROUPS.SemigroupTypes then
+    ErrorMayQuit("Semigroups: SEMIGROUPS.RandomElementCons: usage,\n");
   fi;
 
   RandomTropicalMaxPlusMatrix := function(dim, threshold)
@@ -920,22 +898,21 @@ function(filt)
     return [x -> RandomMatrix(IsIntegerMatrix, x), 1, IdFunc];
     #TODO define the canonical embedding from T_n to here!
   fi;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_RandomSemigroupOrMonoid",
-function(SemigroupOrMonoid, string, args)
+SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
   local filt, nrgens, params, cons, i;
 
   if Length(args) > 0 then
     filt := args[1];
   else
-    filt := Random(SEMIGROUPS_Types);
+    filt := Random(SEMIGROUPS.SemigroupTypes);
   fi;
 
   if Length(args) > 1 then
     nrgens := args[2];
   else
-    nrgens := Random([1 .. 12]);
+    nrgens := Random(Integers);
   fi;
 
   if Length(args) > 2 then
@@ -944,7 +921,7 @@ function(SemigroupOrMonoid, string, args)
     params := [];
   fi;
 
-  if not IsFilter(filt) or not filt in SEMIGROUPS_Types then
+  if not IsFilter(filt) or not filt in SEMIGROUPS.SemigroupTypes then
     ErrorMayQuit("Semigroups: ", string, ": usage,\n",
                  "the first argument must be a filter,");
   fi;
@@ -954,11 +931,11 @@ function(SemigroupOrMonoid, string, args)
                  "the second argument must be a positive integer,");
   fi;
 
-  cons := SEMIGROUPS_RandomElementCons(filt);
+  cons := SEMIGROUPS.RandomElementCons(filt);
 
   if Length(params) < cons[2] then
     for i in [Length(params) + 1 .. cons[2]] do
-      Add(params, Random([1 .. 12]));
+      Add(params, Random(Integers));
     od;
   fi;
 
@@ -977,7 +954,7 @@ function(SemigroupOrMonoid, string, args)
       fi;
       params[2] := GF(params[2], 1);
     elif not IsPrimeField(params[2]) then
-      params[2] := GF(NextPrimeInt(Random([1 .. 12])), 1);
+      params[2] := GF(NextPrimeInt(Random(Integers)), 1);
     fi;
   fi;
 
@@ -990,28 +967,28 @@ function(SemigroupOrMonoid, string, args)
     return SemigroupOrMonoid(Set([1 .. nrgens],
                                  x -> CallFuncList(cons[1], params)));
   fi;
-end);
+end;
 
 InstallGlobalFunction(RandomSemigroup,
 function(arg)
-  return SEMIGROUPS_RandomSemigroupOrMonoid(Semigroup, "RandomSemigroup", arg);
+  return SEMIGROUPS.RandomSemigroupOrMonoid(Semigroup, "RandomSemigroup", arg);
 end);
 
 InstallGlobalFunction(RandomMonoid,
 function(arg)
-  return SEMIGROUPS_RandomSemigroupOrMonoid(Monoid, "RandomMonoid", arg);
+  return SEMIGROUPS.RandomSemigroupOrMonoid(Monoid, "RandomMonoid", arg);
 end);
 
 InstallGlobalFunction(RandomInverseSemigroup,
 function(arg)
-  return SEMIGROUPS_RandomSemigroupOrMonoid(InverseSemigroup,
+  return SEMIGROUPS.RandomSemigroupOrMonoid(InverseSemigroup,
                                             "RandomInverseSemigroup",
                                             arg);
 end);
 
 InstallGlobalFunction(RandomInverseMonoid,
 function(arg)
-  return SEMIGROUPS_RandomSemigroupOrMonoid(InverseMonoid,
+  return SEMIGROUPS.RandomSemigroupOrMonoid(InverseMonoid,
                                             "RandomInverseMonoid",
                                             arg);
 end);

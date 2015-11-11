@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  semigroups-matrix-semiring.gd
+#W  semiringma.gd
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -12,3 +12,5 @@
 
 DeclareSynonym("IsMatrixOverSemiringSemigroup",
                IsSemigroup and IsMatrixOverSemiringCollection);
+DeclareSynonym("IsMatrixOverSemiringMonoid",
+               IsMonoid and IsMatrixOverSemiringCollection);

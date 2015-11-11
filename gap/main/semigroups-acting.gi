@@ -8,6 +8,49 @@
 #############################################################################
 ##
 
+SEMIGROUPS.ChangeDegreeOfTransformationSemigroup := function(o, old_deg, t)
+  local deg, extra, ht, max, i, orb;
+  deg := DegreeOfTransformationSemigroup(t);
+  orb := o!.orbit;
+  if IsLambdaOrb(o) then
+    # rehash the orbit values
+    extra := [old_deg + 1 .. deg];
+    ht := HTCreate(o[1], rec(treehashsize := o!.treehashsize));
+    #JDM: could make the treehashsize bigger if needed here!
+    HTAdd(ht, o[1], 1);
+    for i in [2 .. Length(o)] do
+      orb[i] := ShallowCopy(o[i]);
+      Append(o[i], extra);
+      HTAdd(ht, o[i], i);
+    od;
+    Unbind(o!.ht);
+    o!.ht := ht;
+
+    # change the action of <o> to that of <t>
+    o!.op := LambdaAct(t);
+  elif IsRhoOrb(o) then
+    ht := HTCreate(o[1], rec(treehashsize := o!.treehashsize));
+    #JDM: could make the treehashsize bigger if needed here!
+    HTAdd(ht, o[1], 1);
+    for i in [2 .. Length(o)] do
+      orb[i] := ShallowCopy(o[i]);
+      if not IsEmpty(o[i]) then
+        max := MaximumList(o[i]); #nr kernel classes
+      else
+        max := 0;
+      fi;
+      Append(o[i], [max + 1 .. max + deg - old_deg]);
+      HTAdd(ht, o[i], i);
+    od;
+    Unbind(o!.ht);
+    o!.ht := ht;
+
+    # change the action of <o> to that of <t>
+    o!.op := RhoAct(t);
+  fi;
+  return o;
+end;
+
 ## Methods for some standard things for acting semigroups.
 
 InstallMethod(ClosureSemigroupNC,
@@ -45,8 +88,8 @@ function(S, coll, opts)
   if IsTransformationSemigroup(S) then
     old_deg := DegreeOfTransformationSemigroup(S);
     if old_deg < DegreeOfTransformationSemigroup(t) then
-      SEMIGROUPS_ChangeDegree(o, old_deg, t);
-      SEMIGROUPS_ChangeDegree(rho_o, old_deg, t);
+      SEMIGROUPS.ChangeDegreeOfTransformationSemigroup(o, old_deg, t);
+      SEMIGROUPS.ChangeDegreeOfTransformationSemigroup(rho_o, old_deg, t);
     fi;
   fi;
 
