@@ -22,9 +22,15 @@ DeclareAttribute("KernelOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("AsInverseSemigroupCongruenceByKernelTrace",
                  IsSemigroupCongruence);
 
-DeclareGlobalFunction("SEMIGROUPS_InverseCongFromPairs");
-
 # Congruence Classes
 DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
                 IsEquivalenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);
+
+SEMIGROUPS.InverseCongFromPairs := function(S, pairs)
+  local cong;
+  cong := SemigroupCongruenceByGeneratingPairs(S, pairs);
+  cong := AsInverseSemigroupCongruenceByKernelTrace(cong);
+  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
+  return cong;
+end;
