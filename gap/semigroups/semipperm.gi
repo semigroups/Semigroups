@@ -525,9 +525,11 @@ end);
 InstallMethod(CyclesOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, comp, next, nr, cycles, opts, gens, o, scc, i;
+  local deg, pts, comp, next, nr, cycles, opts, gens, o, scc, i;
 
-  pts := [1 .. DegreeOfPartialPermSemigroup(S)];
+  deg := Maximum(DegreeOfPartialPermSemigroup(S),
+                 CodegreeOfPartialPermSemigroup(S));
+  pts := [1 .. deg];
   comp := BlistList(pts, []);
   # integer=its component index, false=not seen it
   next := 1;

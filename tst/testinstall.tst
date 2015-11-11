@@ -1201,6 +1201,12 @@ gap> GeneratorsOfInverseSemigroup(S);
 gap> GeneratorsOfInverseMonoid(S);
 [ IdentityTransformation ]
 
+#T# Test for Issue 136
+gap> S := Semigroup(PartialPerm([2, 0]));
+<commutative partial perm semigroup of rank 1 with 1 generator>
+gap> CyclesOfPartialPermSemigroup(S);
+[  ]
+
 #T# AsXSemigroup for trivial transformation semigroup
 gap> S := Semigroup(IdentityTransformation);
 <trivial transformation group of degree 0 with 1 generator>
