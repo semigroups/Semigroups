@@ -19,7 +19,7 @@
         A <B>trivial</B> semigroup is a semigroup with precisely one element.
         This function returns a trivial semigroup in the representation given
         by the filter <A>filter</A>, and (if possible) with the degree of the
-        representation given by the non-negative integer <A>deg</A> .
+        representation given by the non-negative integer <A>deg</A>.
         <P/>
 
         The optional argument <A>filt</A> may be one of the following:
@@ -62,7 +62,8 @@ gap> Elements(S);
         If <A>m</A> and <A>r</A> are positive integers,
         then this function returns a monogenic semigroup
         <C>S</C> with index <A>m</A> and period <A>r</A>
-        in the representation given by the filter <A>filt</A>. <P/>
+        in the representation given by the filter <A>filt</A>. 
+        <P/>
 
         The optional argument <A>filt</A> may be one of the following:
 
@@ -81,7 +82,8 @@ gap> Elements(S);
         <M>f, f ^ {2}, \ldots, f ^ {m}, \ldots, f ^ {m + r - 1}</M>.
         The minimal ideal of <C>S</C> consists of the elements
         <M>f ^ {m}, \ldots, f ^ {m + r - 1}</M>
-        and is isomorphic to the cyclic group of order <M>r</M>. <P/>
+        and is isomorphic to the cyclic group of order <M>r</M>. 
+        <P/>
 
         See <Ref Prop="IsMonogenicSemigroup"/> for more information
         about monogenic semigroups.
@@ -117,7 +119,6 @@ gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);
         the filter <A>filt</A>. <P/>
 
         The optional argument <A>filt</A> may be one of the following:
-
         <List>
           <Item><C>IsTransformationSemigroup</C>
             (the default, if <A>filt</A> is not specified),</Item>
@@ -209,10 +210,10 @@ true]]></Example>
         If <A>filt</A> is not specified then the default representation is
         <C>IsTransformationSemigroup</C>. <P/>
 
-        The function <C>LeftZeroSemigroup([<A>filt</A>,]<A>n</A>)</C> simply
-        calls <C>RectangularBand([<A>filt</A>,]<A>n</A>,1)</C> and
-        the function <C>RightZeroSemigroup([<A>filt</A>,]<A>n</A>)</C> simply
-        calls <C>RectangularBand([<A>filt</A>,]1,<A>n</A>)</C>. <P/>
+        The function <C>LeftZeroSemigroup([<A>filt</A>,] <A>n</A>)</C> simply
+        calls <C>RectangularBand([<A>filt</A>,] <A>n</A>, 1)</C> and
+        the function <C>RightZeroSemigroup([<A>filt</A>,] <A>n</A>)</C> simply
+        calls <C>RectangularBand([<A>filt</A>,] 1, <A>n</A>)</C>. <P/>
 
         For more information about <C>RectangularBand</C>, including its 
         permitted values of <A>filt</A>, see <Ref Func="RectangularBand"/>.

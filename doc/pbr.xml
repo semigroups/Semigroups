@@ -10,16 +10,18 @@
 
 <#GAPDoc Label="IsPBR">
   <ManSection>
-    <Filt Name="IsPBR" Arg="obj" Type="Category"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Filt Name = "IsPBR" Arg = "obj" Type = "Category"/>
+    <Returns>
+      <K>true</K> or <K>false</K>.
+    </Returns>
     <Description>
       Every PBR in &GAP; belongs to the category <C>IsPBR</C>. Basic operations
       for PBRs are
-      <Ref Attr="DegreeOfPBR"/>,
-      <Ref Attr="ExtRepOfPBR"/>,
-      <Ref Oper="PBRNumber"/>,
-      <Ref Oper="NumberPBR"/>,
-      <Ref Oper="StarOp" Label = "for a PBR"/>,
+      <Ref Attr = "DegreeOfPBR"/>,
+      <Ref Attr = "ExtRepOfPBR"/>,
+      <Ref Oper = "PBRNumber"/>,
+      <Ref Oper = "NumberPBR"/>,
+      <Ref Oper = "StarOp" Label = "for a PBR"/>,
       and multiplication of two PBRs of equal degree is via <K>*</K>. 
     </Description>
   </ManSection>
@@ -27,8 +29,8 @@
 
 <#GAPDoc Label="PBRFamily">
   <ManSection>
-    <Var Name="PBRFamily"/>
-    <Var Name="PBRType"/>
+    <Var Name = "PBRFamily"/>
+    <Var Name = "PBRType"/>
     <Description>
       The family of all PBRs is <C>PBRFamily</C> and the type
       of every PBR is <C>PBRType</C>.
@@ -38,8 +40,8 @@
 
 <#GAPDoc Label="IsPBRCollection">
   <ManSection>
-    <Filt Name="IsPBRCollection" Arg="obj" Type="Category"/>
-    <Filt Name="IsPBRCollColl" Arg="obj" Type="Category"/>
+    <Filt Name = "IsPBRCollection" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsPBRCollColl" Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
        Every collection of PBRs belongs to the category
@@ -56,7 +58,7 @@
 
 <#GAPDoc Label="PBR">
   <ManSection>
-    <Oper Name="PBR" Arg="left, right"/>
+    <Oper Name = "PBR" Arg = "left, right"/>
     <Returns>A PBR.</Returns>
     <Description>
       The arguments <A>left</A> and <A>right</A> of this function should each
@@ -79,8 +81,8 @@
 
       <C>PBR</C> returns an error if the argument does not define a PBR. 
       <Example><![CDATA[
-gap> PBR([ [ -3, -2, -1, 2, 3 ], [ -1 ], [ -3, -2, 1, 2 ] ],
->        [ [ -2, -1, 1, 2, 3 ], [ 3 ], [ -3, -2, -1, 1, 3 ] ]);
+gap> PBR([[-3, -2, -1, 2, 3], [-1], [-3, -2, 1, 2]],
+>        [[-2, -1, 1, 2, 3], [3], [-3, -2, -1, 1, 3]]);
 PBR([ [ -3, -2, -1, 2, 3 ], [ -1 ], [ -3, -2, 1, 2 ] ], 
   [ [ -2, -1, 1, 2, 3 ], [ 3 ], [ -3, -2, -1, 1, 3 ] ])]]></Example>
     </Description>
@@ -89,7 +91,7 @@ PBR([ [ -3, -2, -1, 2, 3 ], [ -1 ], [ -3, -2, 1, 2 ] ],
 
 <#GAPDoc Label="RandomPBR">
   <ManSection>
-    <Oper Name="RandomPBR" Arg="n[, p]"/>
+    <Oper Name = "RandomPBR" Arg = "n[, p]"/>
     <Returns>A PBR.</Returns>
     <Description>
       If <A>n</A> is a positive integer and <A>p</A> is an float between
@@ -115,7 +117,7 @@ PBR(
 
 <#GAPDoc Label="EmptyPBR">
   <ManSection>
-    <Oper Name="EmptyPBR" Arg="n"/>
+    <Oper Name = "EmptyPBR" Arg = "n"/>
     <Returns>A PBR.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then <C>EmptyPBR</C>
@@ -131,7 +133,7 @@ true]]></Example>
 
 <#GAPDoc Label="IdentityPBR">
   <ManSection>
-    <Oper Name="IdentityPBR" Arg="n"/>
+    <Oper Name = "IdentityPBR" Arg = "n"/>
     <Returns>A PBR.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then <C>IdentityPBR</C> returns the
@@ -151,12 +153,12 @@ true]]></Example>
 
 <#GAPDoc Label="UniversalPBR">
   <ManSection>
-    <Oper Name="UniversalPBR" Arg="n"/>
+    <Oper Name = "UniversalPBR" Arg = "n"/>
     <Returns>A PBR.</Returns>
     <Description>
-      If <A>n</A> is a positive integer, then <C>UniversalPBR</C>
-      returns the PBR of degree <A>n</A> with <C>4 * n ^ 2</C> edges,
-      i.e. every possible edge.
+      If <A>n</A> is a positive integer, then <C>UniversalPBR</C> returns the
+      PBR of degree <A>n</A> with <C>4 * n ^ 2</C> edges, i.e. every possible
+      edge.
       <Example><![CDATA[
 gap> x := UniversalPBR(2);
 PBR([ [ -2, -1, 1, 2 ], [ -2, -1, 1, 2 ] ], 
@@ -169,8 +171,8 @@ true]]></Example>
 
 <#GAPDoc Label="DegreeOfPBR">
   <ManSection>
-    <Attr Name="DegreeOfPBR" Arg="x"/>
-    <Attr Name="DegreeOfPBRCollection" Arg="x"/>
+    <Attr Name = "DegreeOfPBR" Arg = "x"/>
+    <Attr Name = "DegreeOfPBRCollection" Arg = "x"/>
     <Returns>A positive integer.</Returns>
     <Description>
       The degree of a PBR is, roughly speaking, the number of points
@@ -183,8 +185,8 @@ true]]></Example>
       of collection of PBRs of unequal degrees is not defined. 
 
 <Example><![CDATA[
-gap> x := PBR([ [ -2 ], [ -2, -1, 2, 3 ], [ -1, 1, 2, 3 ] ],
->             [ [ -1, 1 ], [ 2, 3 ], [ -3, 2, 3 ] ]);
+gap> x := PBR([[-2], [-2, -1, 2, 3], [-1, 1, 2, 3]],
+>             [[-1, 1], [2, 3], [-3, 2, 3]]);
 PBR([ [ -2 ], [ -2, -1, 2, 3 ], [ -1, 1, 2, 3 ] ], 
   [ [ -1, 1 ], [ 2, 3 ], [ -3, 2, 3 ] ])
 gap> DegreeOfPBR(x);
@@ -199,7 +201,7 @@ gap> DegreeOfPBRCollection(S);
 
 <#GAPDoc Label="ExtRepOfPBR">
   <ManSection>
-    <Attr Name="ExtRepOfPBR" Arg="x"/>
+    <Attr Name = "ExtRepOfPBR" Arg = "x"/>
     <Returns>A pair of lists of lists of integers.</Returns>
     <Description>
       If <C>n</C> is the degree of the PBR <A>x</A>, then <C>ExtRepOfPBR</C>
@@ -208,8 +210,8 @@ gap> DegreeOfPBRCollection(S);
       returns a PBR equal to <A>x</A>.
       
       <Example><![CDATA[
-gap> x := PBR([ [ -1, 1 ], [ -2, 2 ] ],
->             [ [ -2, -1, 1 ], [ -1, 1, 2 ] ]);
+gap> x := PBR([[-1, 1], [-2, 2]],
+>             [[-2, -1, 1], [-1, 1, 2]]);
 PBR([ [ -1, 1 ], [ -2, 2 ] ], [ [ -2, -1, 1 ], [ -1, 1, 2 ] ])
 gap> ExtRepOfPBR(x);
 [ [ [ -1, 1 ], [ -2, 2 ] ], [ [ -2, -1, 1 ], [ -1, 1, 2 ] ] ]]]></Example>
@@ -219,9 +221,10 @@ gap> ExtRepOfPBR(x);
 
 <#GAPDoc Label="NumberPBR">
   <ManSection>
-    <Oper Name="PBRNumber" Arg="m, n"/>
-    <Oper Name="NumberPBR" Arg="mat"/>
+    <Oper Name = "PBRNumber" Arg = "m, n"/>
+    <Oper Name = "NumberPBR" Arg = "mat"/>
     <Returns>A PBR, or a positive integer.</Returns>
+
     <Description>
       These functions implement a bijection from the set of all PBRs of
       degree <A>n</A> and the numbers <C>[1 .. 2 ^ (4 * <A>n</A> ^ 2)]</C>.
@@ -253,10 +256,10 @@ gap> List(S, NumberPBR);
       A PBR is <B>empty</B> if it has no edges. <C>IsEmptyPBR</C> returns
       <K>true</K> if the PBR <A>x</A> is empty and <K>false</K> if it is not.
       <Example><![CDATA[
-gap> x := PBR([ [ ] ], [ [ ] ]);;
+gap> x := PBR([[]], [[]]);;
 gap> IsEmptyPBR(x);
 true
-gap> x := PBR([ [ -2, 1 ], [ 2 ] ], [ [ -1 ], [ -2, 1 ] ]);
+gap> x := PBR([[-2, 1], [2]], [[-1], [-2, 1]]);
 PBR([ [ -2, 1 ], [ 2 ] ], [ [ -1 ], [ -2, 1 ] ])
 gap> IsEmptyPBR(x);
 false]]></Example>
@@ -279,11 +282,11 @@ false]]></Example>
       <C>IsIdentityPBR</C> returns <K>true</K> is the PBR <A>x</A> is
       an identity PBR and <K>false</K> if it is not.
       <Example><![CDATA[
-gap> x := PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ 2 ] ]);
+gap> x := PBR([[-2], [-1]], [[1], [2]]);
 PBR([ [ -2 ], [ -1 ] ], [ [ 1 ], [ 2 ] ])
 gap> IsIdentityPBR(x);
 false
-gap> x := PBR([ [ -1 ] ], [ [ 1 ] ]);
+gap> x := PBR([[-1]], [[1]]);
 PBR([ [ -1 ] ], [ [ 1 ] ])
 gap> IsIdentityPBR(x);
 true]]></Example>
@@ -293,21 +296,21 @@ true]]></Example>
 
 <#GAPDoc Label="IsUniversalPBR">
   <ManSection>
-    <Prop Name="IsUniversalPBR" Arg="x"/>
+    <Prop Name = "IsUniversalPBR" Arg = "x"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A PBR of degree <C>n</C> is <B>universal</B> if it has 
       <C>4 * n ^ 2</C> edges, i.e. every possible edge.
       <Example><![CDATA[
-gap> x := PBR([ [ ] ], [ [ ] ]);
+gap> x := PBR([[]], [[]]);
 PBR([ [  ] ], [ [  ] ])
 gap> IsUniversalPBR(x);
 false
-gap> x := PBR([ [ -2, 1 ], [ 2 ] ], [ [ -1 ], [ -2, 1 ] ]);
+gap> x := PBR([[-2, 1], [2]], [[-1], [-2, 1]]);
 PBR([ [ -2, 1 ], [ 2 ] ], [ [ -1 ], [ -2, 1 ] ])
 gap> IsUniversalPBR(x);
 false
-gap> x := PBR([ [ -1, 1 ] ], [ [ -1, 1 ] ]);
+gap> x := PBR([[-1, 1]], [[-1, 1]]);
 PBR([ [ -1, 1 ] ], [ [ -1, 1 ] ])
 gap> IsUniversalPBR(x);
 true]]></Example>
@@ -317,8 +320,8 @@ true]]></Example>
 
 <#GAPDoc Label="IsBipartitionPBR">
   <ManSection>
-    <Prop Name="IsBipartitionPBR" Arg="x"/>
-    <Prop Name="IsBlockBijectionPBR" Arg="x"/>
+    <Prop Name = "IsBipartitionPBR" Arg = "x"/>
+    <Prop Name = "IsBlockBijectionPBR" Arg = "x"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
     If the PBR <A>x</A> defines a bipartition, then <C>IsBipartitionPBR</C>
@@ -333,15 +336,15 @@ true]]></Example>
     returns <K>true</K>.
 
     <Example><![CDATA[
-gap> x := PBR([ [ -1, 3 ], [ -1, 3 ], [ -2, 1, 2, 3 ] ],
->             [ [ -2, -1, 2 ], [ -2, -1, 1, 2, 3 ], 
->               [ -2, -1, 1, 2 ] ]);
+gap> x := PBR([[-1, 3], [-1, 3], [-2, 1, 2, 3]],
+>             [[-2, -1, 2], [-2, -1, 1, 2, 3], 
+>              [-2, -1, 1, 2]]);
 PBR([ [ -1, 3 ], [ -1, 3 ], [ -2, 1, 2, 3 ] ], 
   [ [ -2, -1, 2 ], [ -2, -1, 1, 2, 3 ], [ -2, -1, 1, 2 ] ])
 gap> IsBipartitionPBR(x);
 false
-gap> x := PBR([ [ -2, -1, 1 ], [ 2, 3 ], [ 2, 3 ] ],
->             [ [ -2, -1, 1 ], [ -2, -1, 1 ], [ -3 ] ]);
+gap> x := PBR([[-2, -1, 1], [2, 3], [2, 3]],
+>             [[-2, -1, 1], [-2, -1, 1], [-3]]);
 PBR([ [ -2, -1, 1 ], [ 2, 3 ], [ 2, 3 ] ], 
   [ [ -2, -1, 1 ], [ -2, -1, 1 ], [ -3 ] ])
 gap> IsBipartitionPBR(x);
@@ -354,8 +357,10 @@ false]]></Example>
 
 <#GAPDoc Label="IsTransformationPBR">
   <ManSection>
-    <Prop Name="IsTransformationPBR" Arg="x"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Prop Name = "IsTransformationPBR" Arg = "x"/>
+    <Returns>
+      <K>true</K> or <K>false</K>.
+    </Returns>
     <Description>
     If the PBR <A>x</A> defines a transformation, then
     <C>IsTransformationPBR</C> returns <K>true</K>, and if not, then
@@ -375,8 +380,8 @@ false]]></Example>
     all the elements satisfying <C>IsTransformationPBR</C>.
     
     <Example><![CDATA[
-gap> x := PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ],
->             [ [ -1, 2 ], [ -2 ], [ -3, 1, 3 ] ]);
+gap> x := PBR([[-3, 1, 3], [-1, 2], [-3, 1, 3]],
+>             [[-1, 2], [-2], [-3, 1, 3]]);
 PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ], 
   [ [ -1, 2 ], [ -2 ], [ -3, 1, 3 ] ])
 gap> IsTransformationPBR(x);
@@ -387,8 +392,8 @@ gap> AsPBR(x) * AsPBR(x) = AsPBR(x ^ 2);
 true
 gap> Number(FullPBRMonoid(1), IsTransformationPBR);
 1
-gap> x := PBR([ [ -2, -1, 2 ], [ -2, 1, 2 ] ], 
->             [ [ -1, 1 ], [ -2 ] ]);
+gap> x := PBR([[-2, -1, 2], [-2, 1, 2]], 
+>             [[-1, 1], [-2]]);
 PBR([ [ -2, -1, 2 ], [ -2, 1, 2 ] ], [ [ -1, 1 ], [ -2 ] ])
 gap> IsTransformationPBR(x);
 false]]></Example>
@@ -398,7 +403,7 @@ false]]></Example>
 
 <#GAPDoc Label="IsDualTransformationPBR">
   <ManSection>
-    <Prop Name="IsDualTransformationPBR" Arg="x"/>
+    <Prop Name = "IsDualTransformationPBR" Arg = "x"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
     If the PBR <A>x</A> defines a dual transformation, then
@@ -411,8 +416,8 @@ false]]></Example>
     <P/>
     
     <Example><![CDATA[
-gap> x := PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ],
->             [ [ -1, 2 ], [ -2 ], [ -3, 1, 3 ] ]);
+gap> x := PBR([[-3, 1, 3], [-1, 2], [-3, 1, 3]],
+>             [[-1, 2], [-2], [-3, 1, 3]]);
 PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ], 
   [ [ -1, 2 ], [ -2 ], [ -3, 1, 3 ] ])
 gap> IsDualTransformationPBR(x);
@@ -448,7 +453,7 @@ gap> Number(FullPBRMonoid(1), IsDualTransformationPBR);
     elements satisfying <C>IsPartialPermPBR</C>.
 
   <Example><![CDATA[
-gap> x:= PBR([ [ -1, 1 ], [ 2 ] ], [ [ -1, 1 ], [ -2 ] ]);
+gap> x := PBR([[-1, 1], [2]], [[-1, 1], [-2]]);
 PBR([ [ -1, 1 ], [ 2 ] ], [ [ -1, 1 ], [ -2 ] ])
 gap> IsPartialPermPBR(x);
 true
@@ -464,7 +469,7 @@ gap> Number(FullPBRMonoid(1), IsPartialPermPBR);
 
 <#GAPDoc Label="IsPermPBR">
   <ManSection>
-    <Prop Name="IsPermPBR" Arg="x"/>
+    <Prop Name = "IsPermPBR" Arg = "x"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
     If the PBR <A>x</A> defines a permutation, then
@@ -482,7 +487,7 @@ gap> Number(FullPBRMonoid(1), IsPartialPermPBR);
     <Ref Oper = "AsPermutation" Label = "for a PBR"/> define mutually inverse
     isomorphisms from the symmetric group of degree <C>n</C> to the
     subgroup of the full PBR monoid of degree <C>n</C> consisting of all the
-    elements satisfying <C>IsPermPBR</C> (i.e. the <Ref Attr="GroupOfUnits"/>
+    elements satisfying <C>IsPermPBR</C> (i.e. the <Ref Attr = "GroupOfUnits"/>
     of the full PBR monoid of degree <C>n</C>).
 
   <Example><![CDATA[
@@ -504,52 +509,52 @@ gap> Number(FullPBRMonoid(1), IsPermPBR);
 
 <#GAPDoc Label="AsPBR">
   <ManSection>
-    <Oper Name="AsPBR" Arg="x[, n]"/>
+    <Oper Name = "AsPBR" Arg = "x[, n]"/>
     <Returns>A PBR.</Returns>
-  <Description>
-  <C>AsPBR</C> 
-  returns the boolean matrix, bipartition, transformation, partial
-  permutation, or permutation <A>x</A> as a PBR of degree <A>n</A>.
-  <P/>
-  
-  There are several possible arguments for <C>AsPBR</C>:
-  <List>
-    <Mark>bipartitions</Mark>
-    <Item>
-      If <A>x</A> is a bipartition and <A>n</A> is a positive integer, then
-      <C>AsPBR</C> returns a PBR corresponding to <A>x</A> with degree
-      <A>n</A>. The resulting PBR has an edge from <C>i</C> to <C>j</C>
-      whenever <C>i</C> and <C>j</C> belong to the same block of <A>x</A>.<P/>
-      
-      If the optional second argument <A>n</A> is not specified, then degree of
-      the bipartition <A>x</A> is used by default.
-    </Item>
-    
-    <Mark>boolean matrices</Mark>
-    <Item>
-      If <A>x</A> is a boolean matrix of even dimension <C>2 * m</C> and
-      <A>n</A> is a positive integer, then <C>AsPBR</C> returns a PBR
-      corresponding to <A>x</A> with degree <A>n</A>.
-      
-      If the optional second argument <A>n</A> is not specified, then dimension
-      of the boolean matrix <A>x</A> is used by default.
-    </Item>
+    <Description>
+      <C>AsPBR</C> returns the boolean matrix, bipartition, transformation,
+      partial permutation, or permutation <A>x</A> as a PBR of degree <A>n</A>.
+      <P/>
 
-    <Mark>transformations, partial perms, permutations</Mark>      
-    <Item>
-      If <A>x</A> is a transformation, partial perm, or permutation and
-      <A>n</A> is a positive integer, then <C>AsPBR</C> is a synonym for
-      <C>AsPBR(AsBipartition(<A>x</A>, <A>n</A>))</C>.
+      There are several possible arguments for <C>AsPBR</C>:
+      <List>
+        <Mark>bipartitions</Mark>
+        <Item>
+          If <A>x</A> is a bipartition and <A>n</A> is a positive integer, then
+          <C>AsPBR</C> returns a PBR corresponding to <A>x</A> with degree
+          <A>n</A>. The resulting PBR has an edge from <C>i</C> to <C>j</C>
+          whenever <C>i</C> and <C>j</C> belong to the same block of
+          <A>x</A>.<P/>
 
-      If the optional second argument <A>n</A> is not specified, then
-      <C>AsPBR</C> is a synonym for <C>AsPBR(AsBipartition(<A>x</A>))</C>.
-      
-      See <Ref Oper = "AsBipartition"/> for more details. 
-    </Item> 
-  </List>
+          If the optional second argument <A>n</A> is not specified, then
+          degree of the bipartition <A>x</A> is used by default.
+        </Item>
+
+        <Mark>boolean matrices</Mark>
+        <Item>
+          If <A>x</A> is a boolean matrix of even dimension <C>2 * m</C> and
+          <A>n</A> is a positive integer, then <C>AsPBR</C> returns a PBR
+          corresponding to <A>x</A> with degree <A>n</A>.
+
+          If the optional second argument <A>n</A> is not specified, then
+          dimension of the boolean matrix <A>x</A> is used by default.
+        </Item>
+
+        <Mark>transformations, partial perms, permutations</Mark>      
+        <Item>
+          If <A>x</A> is a transformation, partial perm, or permutation and
+          <A>n</A> is a positive integer, then <C>AsPBR</C> is a synonym for
+          <C>AsPBR(AsBipartition(<A>x</A>, <A>n</A>))</C>.
+
+          If the optional second argument <A>n</A> is not specified, then
+          <C>AsPBR</C> is a synonym for <C>AsPBR(AsBipartition(<A>x</A>))</C>.
+
+          See <Ref Oper = "AsBipartition"/> for more details. 
+        </Item> 
+      </List>
 
   <Example><![CDATA[
-gap> x := Bipartition( [ [ 1, 2, -1 ], [ 3, -2 ], [ 4, -3, -4 ] ] );
+gap> x := Bipartition([[1, 2, -1], [3, -2], [4, -3, -4]]);
 <block bijection: [ 1, 2, -1 ], [ 3, -2 ], [ 4, -3, -4 ]>
 gap> AsPBR(x, 2);
 PBR([ [ -1, 1, 2 ], [ -1, 1, 2 ] ], [ [ -1, 1, 2 ], [ -2 ] ])
@@ -569,7 +574,7 @@ gap> AsPBR(mat, 2);
 PBR([ [ 1 ] ], [ [ -1 ] ])
 gap> AsPBR(mat, 6);
 PBR([ [ -2, 1 ], [ -1, 2 ], [  ] ], [ [ -2, -1, 1 ], [ -2 ], [  ] ])
-gap> x := Transformation( [ 2, 2, 1 ] );;
+gap> x := Transformation([2, 2, 1]);;
 gap> AsPBR(x);
 PBR([ [ -2, 1, 2 ], [ -2, 1, 2 ], [ -1, 3 ] ], 
   [ [ -1, 3 ], [ -2, 1, 2 ], [ -3 ] ])
@@ -578,7 +583,7 @@ PBR([ [ -2, 1, 2 ], [ -2, 1, 2 ] ], [ [ -1 ], [ -2, 1, 2 ] ])
 gap> AsPBR(x, 4);
 PBR([ [ -2, 1, 2 ], [ -2, 1, 2 ], [ -1, 3 ], [ -4, 4 ] ], 
   [ [ -1, 3 ], [ -2, 1, 2 ], [ -3 ], [ -4, 4 ] ])
-gap> x := PartialPerm( [ 1, 2 ], [ 4, 3 ] );
+gap> x := PartialPerm([1, 2], [4, 3]);
 [1,4][2,3]
 gap> AsPBR(x);
 PBR([ [ -4, 1 ], [ -3, 2 ], [ 3 ], [ 4 ] ], 
@@ -602,7 +607,7 @@ PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ], [ -5, 5 ] ],
 
 <#GAPDoc Label="AsTransformationPBR">
   <ManSection>
-    <Oper Name="AsTransformation" Arg="x" Label="for a PBR"/>
+    <Oper Name = "AsTransformation" Arg = "x" Label = "for a PBR"/>
     <Returns>A transformation.</Returns>
     <Description>
       When the argument <A>x</A> is a PBR which satisfies <Ref Prop =
@@ -610,13 +615,13 @@ PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ], [ -5, 5 ] ],
       transformation. 
 
       <Example><![CDATA[
-gap> x := PBR([ [ -3, 1, 2 ], [ -3, 1, 2 ], [ -2, 3 ] ], 
->             [ [ -1 ], [ -2, 3 ], [ -3, 1, 2 ] ]);;
+gap> x := PBR([[-3, 1, 2], [-3, 1, 2], [-2, 3]], 
+>             [[-1], [-2, 3], [-3, 1, 2]]);;
 gap> IsTransformationPBR(x);
 true
 gap> AsTransformation(x);
 Transformation( [ 3, 3, 2 ] )
-gap> x := PBR([ [ 1 ], [ 1, 2 ] ], [ [ -2, -1 ], [ -2, -1 ] ]);;
+gap> x := PBR([[1], [1, 2]], [[-2, -1], [-2, -1]]);;
 gap> AsTransformation(x);
 Error, Semigroups: AsTransformation: usage,
 the argument <x> must be a transformation PBR,]]></Example>
@@ -626,7 +631,7 @@ the argument <x> must be a transformation PBR,]]></Example>
 
 <#GAPDoc Label="AsPartialPermPBR">
   <ManSection>
-    <Oper Name="AsPartialPerm" Arg="x" Label="for a PBR"/>
+    <Oper Name = "AsPartialPerm" Arg = "x" Label = "for a PBR"/>
     <Returns>A partial perm.</Returns>
     <Description>
       When the argument <A>x</A> is a PBR which satisfies 
@@ -634,8 +639,8 @@ the argument <x> must be a transformation PBR,]]></Example>
       perm.
       
       <Example><![CDATA[
-gap> x := PBR([ [ -1, 1 ], [ -3, 2 ], [ -4, 3 ], [ 4 ], [ 5 ] ],
->  [ [ -1, 1 ], [ -2 ], [ -3, 2 ], [ -4, 3 ], [ -5 ] ]);;
+gap> x := PBR([[-1, 1], [-3, 2], [-4, 3], [4], [5]],
+>             [[-1, 1], [-2], [-3, 2], [-4, 3], [-5]]);;
 gap> IsPartialPermPBR(x);
 true
 gap> AsPartialPerm(x);
@@ -646,15 +651,15 @@ gap> AsPartialPerm(x);
 
 <#GAPDoc Label="AsPermutationPBR">
   <ManSection>
-    <Oper Name="AsPermutation" Arg="x" Label="for a PBR"/>
+    <Oper Name = "AsPermutation" Arg = "x" Label = "for a PBR"/>
     <Returns>A permutation.</Returns>
     <Description>
       When the argument <A>x</A> is a PBR which satisfies
       <Ref Prop = "IsPermPBR"/>, then this function returns that permutation.
       
       <Example><![CDATA[
-gap> x := PBR([ [ -1, 1 ], [ -4, 2 ], [ -2, 3 ], [ -3, 4 ] ], 
-> [ [ -1, 1 ], [ -2, 3 ], [ -3, 4 ], [ -4, 2 ] ]);;
+gap> x := PBR([[-1, 1], [-4, 2], [-2, 3], [-3, 4]], 
+>             [[-1, 1], [-2, 3], [-3, 4], [-4, 2]]);;
 gap> IsPermPBR(x);
 true
 gap> AsPermutation(x);
@@ -675,8 +680,8 @@ gap> AsPermutation(x);
       second components).
 
       <Example><![CDATA[
-gap> x := PBR([ [  ], [ -1 ], [  ] ], [
->             [ -3, -2, 2, 3 ], [ -2, 1 ], [  ] ]);;
+gap> x := PBR([[], [-1], []], 
+>             [[-3, -2, 2, 3], [-2, 1], []]);;
 gap> Star(x);
 PBR([ [ -3, -2, 2, 3 ], [ -1, 2 ], [  ] ], [ [  ], [ 1 ], [  ] ])]]></Example>
     </Description>

@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="BaseField">
   <ManSection>
-    <Attr Name="BaseField" Arg="mat"/>
+    <Attr Name = "BaseField" Arg = "mat"/>
     <Returns>A finite field.</Returns>
     <Description>
       If <A>mat</A> is a matrix over a finite field (in the category <Ref Filt

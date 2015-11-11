@@ -10,26 +10,28 @@
 
 <#GAPDoc Label="EndomorphismsPartition">
    <ManSection>
-    <Oper Name="EndomorphismsPartition" Arg="list"/>
+    <Oper Name = "EndomorphismsPartition" Arg = "list"/>
     <Returns>A transformation monoid.</Returns>
     <Description>
       If <A>list</A> is a list of positive integers, then 
       <C>EndomorphismsPartition</C> returns a monoid of endomorphisms preserving
-      a partition of <C>[1..Sum(<A>list</A>)]</C> with
+      a partition of <C>[1 .. Sum(<A>list</A>)]</C> with
       a part of length <C><A>list</A>[i]</C> for
-      every <C>i</C>. For example, if <C><A>list</A>=[1,2,3]</C>, then
+      every <C>i</C>. For example, if <C><A>list</A> = [1, 2, 3]</C>, then
       <C>EndomorphismsPartition</C> returns the monoid of endomorphisms of the
-      partition <C>[[1],[2,3],[4,5,6]]</C>. <P/>
+      partition <C>[[1], [2, 3], [4, 5, 6]]</C>. <P/>
       
-      If <C>f</C> is a transformation of <C>[1..n]</C>, then it is an
-      <B>endomorphism</B> of a partition <C>P</C> on <C>[1..n]</C> if
-      <C>(i,j)</C> in <C>P</C> implies that <C>(i^f, j^f)</C> is in <C>P</C>. <P/>
+      If <C>f</C> is a transformation of <C>[1 .. n]</C>, then it is an
+      <B>endomorphism</B> of a partition <C>P</C> on <C>[1 .. n]</C> if
+      <C>(i, j)</C> in <C>P</C> implies that <C>(i ^ f, j ^ f)</C> is in
+      <C>P</C>. 
+      <P/>
 
       <C>EndomorphismsPartition</C> returns a monoid with a minimal size
-      generating set, as described in <Cite Key="Araujo2014aa"/>.
+      generating set, as described in <Cite Key = "Araujo2014aa"/>.
 
       <Example><![CDATA[
-gap> S:=EndomorphismsPartition([3,3,3]);
+gap> S := EndomorphismsPartition([3, 3, 3]);
 <transformation semigroup of degree 9 with 4 generators>
 gap> Size(S);
 531441]]></Example>
@@ -39,9 +41,9 @@ gap> Size(S);
 
 <#GAPDoc Label="JonesMonoid">
    <ManSection>
-    <Oper Name="JonesMonoid" Arg="n"/>
-    <Oper Name="TemperleyLiebMonoid" Arg="n"/>
-    <Oper Name="SingularJonesMonoid" Arg="n"/>
+    <Oper Name = "JonesMonoid" Arg = "n"/>
+    <Oper Name = "TemperleyLiebMonoid" Arg = "n"/>
+    <Oper Name = "SingularJonesMonoid" Arg = "n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the Jones
@@ -93,13 +95,14 @@ gap> SingularBrauerMonoid(8);
 
 <#GAPDoc Label="FactorisableDualSymmetricInverseSemigroup">
    <ManSection>
-    <Oper Name="FactorisableDualSymmetricInverseSemigroup" Arg="n"/>
-    <Oper Name="SingularFactorisableDualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name = "FactorisableDualSymmetricInverseSemigroup" Arg = "n"/>
+    <Oper Name = "SingularFactorisableDualSymmetricInverseSemigroup" Arg = "n"/>
     <Returns>An inverse bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the largest
       factorisable inverse subsemigroup of the dual symmetric inverse monoid of
-      degree <A>n</A>. <P/>
+      degree <A>n</A>.
+      <P/>
       
       <C>SingularFactorisableDualSymmetricInverseSemigroup</C> returns the ideal
       of the factorisable dual symmetric inverse semigroup consisting of the
@@ -127,20 +130,21 @@ true]]></Example>
 
 <#GAPDoc Label="DualSymmetricInverseSemigroup">
    <ManSection>
-    <Oper Name="DualSymmetricInverseSemigroup" Arg="n"/>
-    <Oper Name="DualSymmetricInverseMonoid" Arg="n"/>
-    <Oper Name="SingularDualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name = "DualSymmetricInverseSemigroup" Arg = "n"/>
+    <Oper Name = "DualSymmetricInverseMonoid" Arg = "n"/>
+    <Oper Name = "SingularDualSymmetricInverseSemigroup" Arg = "n"/>
     <Returns>An inverse bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then these operations return the dual
       symmetric inverse monoid of degree <A>n</A>, which is the subsemigroup of
-      the partition monoid consisting of the block bijections of degree <A>n</A>.<P/>
+      the partition monoid consisting of the block bijections of degree
+      <A>n</A>.<P/>
 
       <C>SingularDualSymmetricInverseSemigroup</C> returns the ideal of the
       dual symmetric inverse monoid consisting of the non-invertible elements
       (i.e. those not in the group of units), when <A>n</A> is at least 2.<P/>
       
-      See <Ref Prop="IsBlockBijection"/>.
+      See <Ref Prop = "IsBlockBijection"/>.
 
       <Example><![CDATA[
 gap> Number(PartitionMonoid(3), IsBlockBijection);
@@ -155,17 +159,19 @@ gap> Size(S);
 
 <#GAPDoc Label="PartitionMonoid">
    <ManSection>
-    <Oper Name="PartitionMonoid" Arg="n"/>
-    <Oper Name="SingularPartitionMonoid" Arg="n"/>
+    <Oper Name = "PartitionMonoid" Arg = "n"/>
+    <Oper Name = "SingularPartitionMonoid" Arg = "n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the
       partition monoid of degree <A>n</A> which is the monoid consisting of all
-      the bipartitions of degree <A>n</A>. <P/>
+      the bipartitions of degree <A>n</A>.
+      <P/>
 
       <C>SingularPartitionMonoid</C> returns the ideal of the
       partition monoid consisting of the non-invertible elements
-      (i.e. those not in the group of units). <P/>
+      (i.e. those not in the group of units). 
+      <P/>
 
       <Example><![CDATA[
 gap> S := PartitionMonoid(5);
@@ -178,13 +184,13 @@ gap> Size(S);
 
 <#GAPDoc Label="PartialTransformationSemigroup">
    <ManSection>
-    <Oper Name="PartialTransformationSemigroup" Arg="n"/>
+    <Oper Name = "PartialTransformationSemigroup" Arg = "n"/>
     <Returns>A transformation monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this function returns a
-      semigroup of transformations on <C><A>n</A>+1</C> points which is
+      semigroup of transformations on <C><A>n</A> + 1</C> points which is
       isomorphic to the semigroup consisting of all partial transformation on
-      <A>n</A> points. This monoid has <C>(<A>n</A>+1)^<A>n</A></C> elements.
+      <A>n</A> points. This monoid has <C>(<A>n</A> + 1) ^ <A>n</A></C> elements.
       <!--JDM add generators-->
       <Example><![CDATA[
 gap> PartialTransformationSemigroup(8); 
@@ -197,8 +203,8 @@ gap> Size(last);
 
 <#GAPDoc Label="FullMatrixSemigroup">
    <ManSection>
-    <Oper Name="FullMatrixSemigroup" Arg="d, q"/>
-    <Oper Name="GeneralLinearSemigroup" Arg="d, q"/>
+    <Oper Name = "FullMatrixSemigroup" Arg = "d, q"/>
+    <Oper Name = "GeneralLinearSemigroup" Arg = "d, q"/>
     <Returns>A matrix semigroup.</Returns>
     <Description>
       <C>FullMatrixSemigroup</C> and <C>GeneralLinearSemigroup</C> are synonyms
@@ -219,19 +225,19 @@ gap> Size(T);
 
 <#GAPDoc Label="IsFullMatrixSemigroup">
   <ManSection>
-    <Prop Name="IsFullMatrixSemigroup" Arg="S"/>      
-    <Prop Name="IsGeneralLinearSemigroup" Arg="S"/>      
+    <Prop Name = "IsFullMatrixSemigroup" Arg = "S"/>      
+    <Prop Name = "IsGeneralLinearSemigroup" Arg = "S"/>      
     <Description>
       <C>IsFullMatrixSemigroup</C> and <C>IsGeneralLinearSemigroup</C> return
       <K>true</K> if the semigroup <C>S</C> was created using either of the
-      commands <Ref Oper="FullMatrixSemigroup"/> or 
-      <Ref Oper="GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
+      commands <Ref Oper = "FullMatrixSemigroup"/> or 
+      <Ref Oper = "GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
 
       <Example><![CDATA[
 gap> S := RandomSemigroup(IsTransformationSemigroup, 4, 4);;
 gap> IsFullMatrixSemigroup(S);
 false
-gap> S:=GeneralLinearSemigroup(3,3);
+gap> S := GeneralLinearSemigroup(3, 3);
 <full matrix semigroup 3x3 over GF(3)>
 gap> IsFullMatrixSemigroup(S);
 true]]></Example>
@@ -241,7 +247,7 @@ true]]></Example>
 
 <#GAPDoc Label="MunnSemigroup">
     <ManSection>
-      <Oper Name="MunnSemigroup" Arg="S"/>
+      <Oper Name = "MunnSemigroup" Arg = "S"/>
       <Returns>The Munn semigroup of a semilattice.</Returns>
       <Description>
         If <A>S</A> is a semilattice, then <C>MunnSemigroup</C> returns the
@@ -256,12 +262,12 @@ true]]></Example>
 
         <Example><![CDATA[
 gap> S := InverseSemigroup(
-> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], 
->              [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),
-> PartialPerm( [ 1, 2, 7, 9 ], 
->              [ 5, 6, 4, 3 ] ) );
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 10], 
+>             [4, 6, 7, 3, 8, 2, 9, 5]),
+> PartialPerm([1, 2, 7, 9], 
+>             [5, 6, 4, 3]));
 <inverse partial perm semigroup of rank 10 with 2 generators>
-gap> T := InverseSemigroup(Idempotents(S), rec(small:=true));;
+gap> T := InverseSemigroup(Idempotents(S), rec(small := true));;
 gap> M := MunnSemigroup(T);
 <inverse partial perm semigroup of rank 60 with 188 generators>
 gap> NrIdempotents(M);
@@ -274,23 +280,26 @@ gap> NrIdempotents(S);
 
 <#GAPDoc Label="OPOIPOPI">
   <ManSection><Heading>Monoids of order preserving functions</Heading>
-    <Oper Name="OrderEndomorphisms" Arg="n" Label="monoid of order preserving transformations"/>
-    <Oper Name="POI" Arg="n" Label="monoid of order preserving partial perms"/>
-    <Oper Name="POPI" Arg="n" Label="monoid of orientation preserving partial
-      perms"/>
-    <Returns>A semigroup of transformations or partial permutations related
-      to a linear order. 
+    <Oper Name = "OrderEndomorphisms" Arg = "n" 
+      Label = "monoid of order preserving transformations"/>
+    <Oper Name = "POI" Arg = "n" 
+      Label = "monoid of order preserving partial perms"/>
+    <Oper Name = "POPI" Arg = "n" 
+      Label = "monoid of orientation preserving partial perms"/>
+    <Returns>
+      A semigroup of transformations or partial permutations related to a
+      linear order. 
     </Returns>
     <Description>
       <List>
         <Mark><C>OrderEndomorphisms(<A>n</A>)</C></Mark>
         <Item>
           <C>OrderEndomorphisms(<A>n</A>)</C> returns the monoid of
-          transformations that preserve the usual order on <M>\{1,2,\ldots,
+          transformations that preserve the usual order on <M>\{1, 2, \ldots,
             n\}</M> where <A>n</A> is a positive integer. 
-          <Alt Not="Text"> 
+          <Alt Not = "Text"> 
             <C>OrderEndomorphisms(<A>n</A>)</C> is generated by the
-            <M><A>n+1</A></M> transformations:
+            <M><A>n + 1</A></M> transformations:
             <Display>
               \left(
               \begin{array}{ccccccccc}
@@ -313,7 +322,7 @@ gap> NrIdempotents(S);
       <Item>
       <C>POI(<A>n</A>)</C> returns the inverse
       monoid of partial permutations that preserve the usual order
-      on <M>\{1,2,\ldots, n\}</M> where <A>n</A> is a positive integer.
+      on <M>\{1, 2, \ldots, n\}</M> where <A>n</A> is a positive integer.
       <Alt Not="Text">
       <C>POI(<A>n</A>)</C> is generated by the <M><A>n</A></M> 
       partial permutations:
@@ -330,7 +339,7 @@ gap> NrIdempotents(S);
       1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;-&amp;i+2&amp;\cdots&amp;n\\
       \end{array}\right)
     </Display>
-    where <M>i=1, \ldots, n-1</M>
+    where <M>i = 1, \ldots, n - 1</M>
     and has <M>{2n\choose n}</M> elements. </Alt>
   </Item>
   <Mark><C>POPI(<A>n</A>)</C></Mark>
@@ -390,8 +399,8 @@ true]]></Example>
       <Description>
         If <A>n</A> is a integer greater than 1, then this function
         returns the semigroup of non-invertible transformations, which is
-        generated by the <C><A>n</A>(<A>n</A>-1)</C> idempotents of degree
-        <A>n</A> and rank <C><A>n</A>-1</C> and has <M>n^n-n!</M> elements. 
+        generated by the <C><A>n</A>(<A>n</A> - 1)</C> idempotents of degree
+        <A>n</A> and rank <C><A>n</A> - 1</C> and has <M>n ^ n - n!</M> elements. 
 
         <Example><![CDATA[
 gap> S := SingularTransformationSemigroup(5);
@@ -410,7 +419,7 @@ gap> Size(S);
     <C>RegularBinaryRelationSemigroup</C> return the semigroup generated by
     the regular binary relations on the set <M>\{1,\ldots, <A>n</A>\}</M> for a
     positive integer <A>n</A>. 
-    <Alt Not="Text"> <C>RegularBinaryRelationSemigroup(<A>n</A>)</C> is
+    <Alt Not = "Text"> <C>RegularBinaryRelationSemigroup(<A>n</A>)</C> is
       generated by the <M>4</M> binary relations:
       <Display>
         \begin{array}{ll} 
@@ -433,7 +442,7 @@ gap> Size(S);
         \end{array}
       </Display> 
     </Alt>
-    This semigroup has nearly <M>2^{(n^2)}</M> elements. 
+    This semigroup has nearly <C>2 ^ (n ^ 2)</C> elements. 
   </Description>
 </ManSection>
 <#/GAPDoc>

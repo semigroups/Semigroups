@@ -10,40 +10,40 @@
 
 <#GAPDoc Label="IsBipartitionSemigroup">
   <ManSection>
-    <Prop Name="IsBipartitionSemigroup" Arg="S"/>
-    <Prop Name="IsBipartitionMonoid" Arg="S"/>
+    <Prop Name = "IsBipartitionSemigroup" Arg = "S"/>
+    <Prop Name = "IsBipartitionMonoid" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>bipartition semigroup</E> is simply a semigroup consisting of
       bipartitions. An object <A>obj</A> is a bipartition semigroup in &GAP; if
-      it satisfies <Ref Prop="IsSemigroup" BookName="ref"/> and 
-      <Ref Filt="IsBipartitionCollection"/>.<P/>
+      it satisfies <Ref Prop = "IsSemigroup" BookName = "ref"/> and 
+      <Ref Filt = "IsBipartitionCollection"/>.<P/>
 
       A <E>bipartition monoid</E> is a monoid consisting of bipartitions. 
       An object <A>obj</A> is a bipartition monoid in &GAP; if it satisfies 
-      <Ref Prop="IsMonoid" BookName="ref"/> and 
-      <Ref Filt="IsBipartitionCollection"/>.<P/>
+      <Ref Prop = "IsMonoid" BookName = "ref"/> and 
+      <Ref Filt = "IsBipartitionCollection"/>.<P/>
 
       Note that it is possible for a bipartition semigroup to have a
       multiplicative neutral element (i.e. an identity element) but not to
       satisfy <C>IsBipartitionMonoid</C>. For example, 
 
       <Example><![CDATA[
-gap> x := Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], 
-> [ 6, 7, -9 ], [ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], 
-> [ -8 ], [ -10 ] ] );;
+gap> x := Bipartition([[1, 4, -2], [2, 5, -6], [3, -7], 
+>                      [6, 7, -9], [8, 9, -1], [10, -5], [-3], 
+>                      [-4], [-8], [-10]]);;
 gap> S := Semigroup(x, One(x));
 <commutative bipartition monoid of degree 10 with 1 generator>
 gap> IsMonoid(S);
 true
 gap> IsBipartitionMonoid(S);
 true
-gap> S := Semigroup( Bipartition( [ [ 1, -3 ], [ 2, -8 ], [ 3, 8, -1 ], 
-> [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 9, 10, -10 ], 
-> [ -2 ], [ -9 ] ] ), 
-> Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
-> [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], 
-> [ -9 ] ] ) );;
+gap> S := Semigroup(Bipartition([[1, -3], [2, -8], [3, 8, -1], 
+> [4, -4], [5, -5], [6, -6], [7, -7], [9, 10, -10], 
+> [-2], [-9]]), 
+> Bipartition([[1, -1], [2, -2], [3, -3], [4, -4], 
+> [5, -5], [6, -6], [7, -7], [8, -8], [9, 10, -10], 
+> [-9]]));;
 gap> One(S);
 fail
 gap> MultiplicativeNeutralElement(S);
@@ -52,22 +52,22 @@ gap> MultiplicativeNeutralElement(S);
 gap> IsMonoid(S);
 false]]></Example>
       In this example <C>S</C> cannot be converted into a monoid using <Ref
-        Attr="AsMonoid" BookName="ref"/> since the <Ref Attr="One"
-        BookName="ref"/> of any element in <C>S</C> differs from the
+        Attr = "AsMonoid" BookName = "ref"/> since the <Ref Attr = "One"
+        BookName = "ref"/> of any element in <C>S</C> differs from the
       multiplicative neutral element. <P/>
 
-      For more details see <Ref Filt="IsMagmaWithOne" BookName="ref"/>.
+      For more details see <Ref Filt = "IsMagmaWithOne" BookName = "ref"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="DegreeOfBipartitionSemigroup">
   <ManSection>
-    <Attr Name="DegreeOfBipartitionSemigroup" Arg="S"/>
+    <Attr Name = "DegreeOfBipartitionSemigroup" Arg = "S"/>
     <Returns>A non-negative integer.</Returns>
     <Description>
-      The <E>degree</E> of a bipartition semigroup <A>S</A> is just the
-      degree of any (and every) element of <A>S</A>.
+      The <E>degree</E> of a bipartition semigroup <A>S</A> is just the degree
+      of any (and every) element of <A>S</A>.
 
       <Example><![CDATA[
 gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
@@ -78,8 +78,8 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
 
 <#GAPDoc Label="IsomorphismBipartitionSemigroup">
   <ManSection>
-    <Attr Name="IsomorphismBipartitionSemigroup" Arg="S"/>
-    <Attr Name="IsomorphismBipartitionMonoid" Arg="S"/>
+    <Attr Name = "IsomorphismBipartitionSemigroup" Arg = "S"/>
+    <Attr Name = "IsomorphismBipartitionMonoid" Arg = "S"/>
     <Returns>An isomorphism.</Returns>
     <Description> 
       If <A>S</A> is a semigroup, then <C>IsomorphismBipartitionSemigroup</C>
@@ -95,10 +95,10 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
       See <Ref Oper="AsBipartitionSemigroup"/>.
       <Example><![CDATA[
 gap> S := InverseSemigroup(
-> PartialPerm( [ 1, 2, 3, 6, 8, 10 ], 
->              [ 2, 6, 7, 9, 1, 5 ] ), 
-> PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], 
->              [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;
+> PartialPerm([1, 2, 3, 6, 8, 10], 
+>             [2, 6, 7, 9, 1, 5]), 
+> PartialPerm([1, 2, 3, 4, 6, 7, 8, 10], 
+>             [3, 8, 1, 9, 4, 10, 5, 6]));;
 gap> IsomorphismBipartitionSemigroup(S);
 MappingByFunction( <inverse partial perm semigroup of rank 10 with 2 
  generators>, <inverse bipartition semigroup of degree 10 with 2 
@@ -109,16 +109,16 @@ MappingByFunction( <inverse partial perm semigroup of rank 10 with 2
 
 <#GAPDoc Label="IsomorphismBlockBijectionSemigroup">
   <ManSection>
-    <Attr Name="IsomorphismBlockBijectionSemigroup" Arg="S"/>
-    <Attr Name="IsomorphismBlockBijectionMonoid" Arg="S"/>
+    <Attr Name = "IsomorphismBlockBijectionSemigroup" Arg = "S"/>
+    <Attr Name = "IsomorphismBlockBijectionMonoid" Arg = "S"/>
     <Returns>An isomorphism.</Returns>
     <Description>
       If <A>S</A> is a partial perm semigroup on <C>n</C> points, then this
       function returns the embedding of <A>S</A> into a subsemigroup of the dual
       symmetric inverse monoid on <C>n+1</C> points given by the
-      FitzGerald-Leech Theorem <Cite Key="Fitzgerald1998aa"/>.<P/>
+      FitzGerald-Leech Theorem <Cite Key = "Fitzgerald1998aa"/>.<P/>
 
-      See <Ref Oper="AsBlockBijection"/> for more details. 
+      See <Ref Oper = "AsBlockBijection"/> for more details. 
 <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(4);                                    
 <symmetric inverse monoid of degree 4>
@@ -128,8 +128,8 @@ MappingByFunction( <symmetric inverse monoid of degree 4>,
  , function( x ) ... end, function( x ) ... end )
 gap> Size(Range(last));
 209
-gap> S := Semigroup( PartialPerm( [ 1, 2 ], [ 3, 1 ] ), 
->                    PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ) );;
+gap> S := Semigroup(PartialPerm([1, 2], [3, 1]), 
+>                   PartialPerm([1, 2, 3], [1, 3, 4]));;
 gap> IsomorphismBlockBijectionSemigroup(S);
 MappingByFunction( <partial perm semigroup of rank 3 with 2 
  generators>, <bipartition semigroup of degree 5 with 2 generators>
@@ -140,8 +140,8 @@ MappingByFunction( <partial perm semigroup of rank 3 with 2
 
 <#GAPDoc Label="IsBlockBijectionSemigroup">
   <ManSection>
-    <Prop Name="IsBlockBijectionSemigroup" Arg="S"/>
-    <Prop Name="IsBlockBijectionMonoid" Arg="S"/>
+    <Prop Name = "IsBlockBijectionSemigroup" Arg = "S"/>
+    <Prop Name = "IsBlockBijectionMonoid" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>block bijection semigroup</E> is simply a semigroup consisting of
@@ -149,43 +149,42 @@ MappingByFunction( <partial perm semigroup of rank 3 with 2
       of block bijections.<P/>
       
       An object in &GAP; is a block bijection monoid if it satisfies
-      <Ref Prop="IsMonoid" BookName="ref"/> and <Ref
-        Filt="IsBlockBijectionSemigroup"/>.<P/>
+      <Ref Prop = "IsMonoid" BookName = "ref"/> and <Ref
+        Filt = "IsBlockBijectionSemigroup"/>.<P/>
       
-      See <Ref Filt="IsBlockBijection"/>.
+      See <Ref Filt = "IsBlockBijection"/>.
     </Description> 
   </ManSection> 
 <#/GAPDoc>
 
 <#GAPDoc Label="IsPartialPermBipartitionSemigroup">
   <ManSection>
-    <Prop Name="IsPartialPermBipartitionSemigroup" Arg="S"/>
-    <Prop Name="IsPartialPermBipartitionMonoid" Arg="S"/>
+    <Prop Name = "IsPartialPermBipartitionSemigroup" Arg = "S"/>
+    <Prop Name = "IsPartialPermBipartitionMonoid" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>partial perm bipartition semigroup</E> is simply a semigroup
-      consisting of partial perm bipartitions.
-      A <E>partial perm bipartition monoid</E> is a monoid consisting of partial
-      perm bipartitions.<P/>
+      consisting of partial perm bipartitions.  A <E>partial perm bipartition
+        monoid</E> is a monoid consisting of partial perm bipartitions.<P/>
      
       An object in &GAP; is a partial perm bipartition monoid
-      if it satisfies <Ref Prop="IsMonoid" BookName="ref"/> and 
-      <Ref Filt="IsPartialPermBipartitionSemigroup"/>.<P/>
+      if it satisfies <Ref Prop = "IsMonoid" BookName = "ref"/> and 
+      <Ref Filt = "IsPartialPermBipartitionSemigroup"/>.<P/>
       
-      See <Ref Filt="IsPartialPermBipartition"/>.
+      See <Ref Filt = "IsPartialPermBipartition"/>.
     </Description> 
   </ManSection> 
 <#/GAPDoc>
 
 <#GAPDoc Label="IsPermBipartitionGroup">
   <ManSection>
-    <Prop Name="IsPermBipartitionGroup" Arg="S"/>
+    <Prop Name = "IsPermBipartitionGroup" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>perm bipartition group</E> is simply a semigroup consisting of perm
       bipartitions.<P/>
 
-      See <Ref Filt="IsPermBipartition"/>.<P/>
+      See <Ref Filt = "IsPermBipartition"/>.<P/>
     </Description> 
   </ManSection> 
 <#/GAPDoc>

@@ -43,13 +43,13 @@
    ]>
 
 <Book Name="semigroups">
-<#Include SYSTEM="title.xml">
+<#Include SYSTEM "title.xml">
 
 <TableOfContents/>
 
 <Body>
-  <#Include SYSTEM="z-chap01.xml">  <!-- intro -->
-  <#Include SYSTEM="z-chap02.xml">  <!-- installation instructions -->
+  <#Include SYSTEM "z-chap01.xml">  <!-- intro -->
+  <#Include SYSTEM "z-chap02.xml">  <!-- installation instructions -->
   <#Include SYSTEM "z-chap03.xml">  <!-- bipartitions and blocks --> 
   <#Include SYSTEM "z-chap04.xml">  <!-- partitioned binary relation -->
   <#Include SYSTEM "z-chap05.xml">  <!-- matrices over semirings -->

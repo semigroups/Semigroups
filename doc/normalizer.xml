@@ -10,21 +10,22 @@
 
 <#GAPDoc Label="Normalizer">
   <ManSection>
-    <Oper Name="Normalizer" Arg="G, S[, opts]" 
-      Label="for a perm group, semigroup, record"/>
-    <Oper Name="Normalizer" Arg="S[, opts]" Label="for a semigroup, record"/>
+    <Oper Name = "Normalizer" Arg = "G, S[, opts]" 
+      Label = "for a perm group, semigroup, record"/>
+    <Oper Name = "Normalizer" Arg = "S[, opts]" 
+      Label = "for a semigroup, record"/>
     <Returns>A permutation group.</Returns>
     <Description> 
       In its first form, this function returns the normalizer of the
       transformation, partial perm, or bipartition semigroup <A>S</A> in the
       permutation group <A>G</A>.  In its second form, the normalizer of
-      <A>S</A> in the symmetric group on <C>[1..n]</C> where <C>n</C> is the
+      <A>S</A> in the symmetric group on <C>[1 .. n]</C> where <C>n</C> is the
       degree of <A>S</A> is returned.<P/>
       
       The <B>normalizer</B> of a transformation semigroup <A>S</A> in a
       permutation group <A>G</A> in the subgroup <C>H</C> of <A>G</A> consisting
       of those elements in <C>g</C> in <A>G</A> conjugating <A>S</A> to
-      <A>S</A>, i.e.  <C><A>S</A>^g=<A>S</A></C>. <P/>
+      <A>S</A>, i.e. <C><A>S</A> ^ g = <A>S</A></C>. <P/>
       
       Analogous definitions can be given for a partial perm and bipartition
       semigroups.<P/>
@@ -78,13 +79,13 @@
       </List> 
 
       <Log><![CDATA[
-gap> S:=BrauerMonoid(8);
+gap> S := BrauerMonoid(8);
 <regular bipartition monoid on 8 pts with 3 generators>
 gap> StructureDescription(Normalizer(S));
 "S8"
-gap> S:=InverseSemigroup( 
-> PartialPerm( [ 1, 2, 3, 4, 5 ], [ 2, 5, 6, 3, 8 ] ), 
-> PartialPerm( [ 1, 2, 4, 7, 8 ], [ 3, 6, 2, 5, 7 ] ) );;
+gap> S := InverseSemigroup(
+> PartialPerm([1, 2, 3, 4, 5], [2, 5, 6, 3, 8]), 
+> PartialPerm([1, 2, 4, 7, 8], [3, 6, 2, 5, 7]));;
 gap> Normalizer(S, rec(random:=true, lambdastab:=false));
 #I  Have 33389 points.
 #I  Have 40136 points in new orbit.

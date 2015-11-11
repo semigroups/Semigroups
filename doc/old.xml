@@ -1,3 +1,54 @@
+<!-- JDM improve --> 
+<#GAPDoc Label="IsAbundantSemigroup">
+  <ManSection>
+    <Prop Name="IsAbundantSemigroup" Arg="S"/>
+    <Returns><K>true</K> if the transformation semigroup <A>S</A> is abundant
+          and <K>false</K> if it is not.
+    </Returns>
+    <Description>
+      A transformation semigroup is <E>abundant</E> if and only if for all
+      <M>f\in S</M> there exists an idempotent <M>e\in S</M> such that
+      <M>\textrm{ker}(f) = \textrm{ker}(e)</M>.  <!-- hmm is this right, or do we
+      require the existence of an idempotent e' such that im(e')=im(f) too? --> 
+      <Example><![CDATA[
+gap> S := Semigroup(Transformation([1, 3, 2, 3]),
+>                   Transformation([1, 4, 1, 2]),
+>                   Transformation([2, 4, 1, 1]),
+>                   Transformation([3, 4, 2, 2]));;
+gap> IsAbundantSemigroup(S);
+true
+gap> IsRegularSemigroup(S);
+false]]></Example> 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<!-- JDM improve --> 
+<#GAPDoc Label="IsAdequateSemigroup">
+  <ManSection>
+    <Prop Name = "IsAdequateSemigroup" Arg = "S"/>
+    <Returns><K>true</K> if the transformation semigroup <A>S</A> is adequate
+          and <K>false</K> if it is not.
+    </Returns>
+    <Description>
+      A transformation semigroup is <E>adequate</E> if it is abundant and its
+      idempotents commute. See <Ref Prop="IsAbundantSemigroup"/> and 
+      <Ref Prop="IsBlockGroup"/>.
+      <Example><![CDATA[
+gap> S := Semigroup(Transformation( [ 1, 7, 3, 8, 4, 2, 6, 5, 9 ] ),
+>   Transformation( [ 1, 8, 6, 2, 3, 7, 4, 5, 9 ] ),
+>   Transformation( [ 1, 9, 9, 9, 5, 6, 7, 9, 9 ] ));;
+gap> IsAdequateSemigroup(S);
+true
+gap> S := Semigroup( Transformation( [ 1, 3, 2, 3 ] ),
+>  Transformation( [ 1, 4, 1, 2 ] ),
+>  Transformation( [ 2, 4, 1, 1 ] ),
+>  Transformation( [ 3, 4, 2, 2 ] ) );;
+gap> IsAdequateSemigroup(S);
+false]]></Example> 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="IsomorphismTransformationMonoid">
 <ManSection>
