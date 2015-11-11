@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  congruences/inverse.gd
+#W  congruences/conginverse.gd
 #Y  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
