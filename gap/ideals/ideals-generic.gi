@@ -208,7 +208,7 @@ function(I)
   local U, opts, enum, x;
 
   U := Semigroup(GeneratorsOfSemigroupIdeal(I));
-  opts := SEMIGROUPS_OptionsRec(U);
+  opts := SEMIGROUPS.OptionsRec(U);
   enum := Enumerator(I);
 
   for x in enum do

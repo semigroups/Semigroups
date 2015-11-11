@@ -5,6 +5,8 @@
 ###TODO C++
 
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
+* enumerator sorted
+* ideals (look at semigroupe)
 * multiplicative zero
 
 * remove `auto`, use `override`: done in:
@@ -32,11 +34,7 @@
 
 ###GAP
 * fix the ViewString method for graph inverse semigroup
-
 * `AsTransformationSemigroup` for a pbr semigroup seems slow.
-
-* **Move the new view string methods into the library.**
-
 * Add `IsFinite` check to start of appropriate methods and add tests
 * remove `genstoapply` from the the generic semigroup data
 * `ReadGenerators` and `WriteGenerators` for new types
@@ -60,6 +58,7 @@
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
 ##DONE
+* **Move the new view string methods into the library.**
 * change `IdempotentGeneratedSubsemigroup` for generic semigroups to find a small generating set
 * Print for `S := Semigroup(PartialPerm([1]), PartialPerm([]));` returns the wrong thing
 * tests for pbrs

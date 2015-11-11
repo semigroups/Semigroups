@@ -117,7 +117,7 @@ function(S)
 
   for x in iter do
     if not x in T then
-      T := SEMIGROUPS_AddGenerators(T, [x], SEMIGROUPS_OptionsRec(T));
+      T := SEMIGROUPS_AddGenerators(T, [x], SEMIGROUPS.OptionsRec(T));
       if T = S then
         break;
       fi;

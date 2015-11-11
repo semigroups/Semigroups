@@ -340,7 +340,7 @@ function(cong)
   idsmgp := IdempotentGeneratedSubsemigroup(S);
   ids := SEMIGROUP_ELEMENTS(GenericSemigroupData(idsmgp), infinity);
   pos := 0;
-  hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
+  hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
 
   ht := HTCreate([ids[1], ids[1]], rec(forflatplainlists := true,
                                        treehashsize := hashlen));
