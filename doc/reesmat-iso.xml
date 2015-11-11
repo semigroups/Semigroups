@@ -13,15 +13,15 @@
     <Filt Name = "IsRMSIsoByTriple" Type = "Category"/>
     <Filt Name = "IsRZMSIsoByTriple" Type = "Category"/>
     <Description>
-      The isomorphisms between finite Rees matrix or 0-matrix semigroups <C>S</C> and
-      <C>T</C> over groups <C>G</C> and <C>H</C>, respectively, specified by a
-      triple consisting of:
+      The isomorphisms between finite Rees matrix or 0-matrix semigroups
+      <C>S</C> and <C>T</C> over groups <C>G</C> and <C>H</C>, respectively,
+      specified by a triple consisting of:
 
       <Enum>
 
         <Item>
-          an isomorphism of the underlying graph of <C>S</C> to the underlying graph of 
-          of <C>T</C>
+          an isomorphism of the underlying graph of <C>S</C> to the underlying
+          graph of of <C>T</C>
         </Item>
         
         <Item>
@@ -34,8 +34,9 @@
       
       </Enum>
 
-      belong to the categories <C>IsRMSIsoByTriple</C> and <C>IsRZMSIsoByTriple</C>. 
-      Basic operators for such isomorphism are given in <Ref Subsect = 
+      belong to the categories <C>IsRMSIsoByTriple</C> and
+      <C>IsRZMSIsoByTriple</C>.  Basic operators for such isomorphism are given
+      in <Ref Subsect = 
         "Operators for isomorphisms of Rees (0-)matrix semigroup by triples"/>,
       and basic operations are:
 
@@ -61,12 +62,13 @@
       A component of an isomorphism of Rees (0-)matrix semigroups by triple.
     </Returns>
     <Description>
-      <C>ELM_LIST(<A>map</A>, <A>i</A>)</C> returns the <C>i</C>th component of the Rees
-        (0-)matrix semigroup isomorphism by triple <A>map</A> when <C>i = 1,
-          2, 3</C>. 
-        <P/>
+      <C>ELM_LIST(<A>map</A>, <A>i</A>)</C> returns the <C>i</C>th component of
+      the Rees (0-)matrix semigroup isomorphism by triple <A>map</A> when 
+      <C>i = 1, 2, 3</C>. 
+      <P/>
 
-        The components of an isomorphism of Rees (0-)matrix semigroups by triple are:
+      The components of an isomorphism of Rees (0-)matrix semigroups by triple
+      are:
         <Enum>
           <Item>
             An isomorphism of the underlying graphs of the source and range of
@@ -97,12 +99,12 @@
       A Rees (0-)matrix semigroup by triple.
     </Returns>
     <Description>
-      If <A>map1</A> and <A>map2</A> are isomorphisms of Rees matrix or 0-matrix
-      semigroups specified by triples and the range of <A>map2</A> is contained
-      in the source of <A>map1</A>, then <C>CompositionMapping2(<A>map1</A>,
-        <A>map2</A>)</C> returns the isomorphism from
-      <C>Source(<A>map2</A>)</C> to <C>Range(<A>map1</A>)</C> specified by the
-      triple with components:
+      If <A>map1</A> and <A>map2</A> are isomorphisms of Rees matrix or
+      0-matrix semigroups specified by triples and the range of <A>map2</A> is
+      contained in the source of <A>map1</A>, then
+      <C>CompositionMapping2(<A>map1</A>, <A>map2</A>)</C> returns the
+      isomorphism from <C>Source(<A>map2</A>)</C> to <C>Range(<A>map1</A>)</C>
+      specified by the triple with components:
 
       <Enum>
         <Item>
@@ -119,13 +121,13 @@
         </Item>
       </Enum>
       <Example><![CDATA[
-gap> R := ReesZeroMatrixSemigroup( Group( [ (1,2,3,4) ] ),
-> [ [ (1,3)(2,4), (1,4,3,2), (), (1,2,3,4), (1,3)(2,4), 0 ],
->  [ (1,4,3,2), 0, (), (1,4,3,2), (1,2,3,4), (1,2,3,4) ],
->  [ (), (), (1,4,3,2), (1,2,3,4), 0, (1,2,3,4) ],
->  [ (1,2,3,4), (1,4,3,2), (1,2,3,4), 0, (), (1,2,3,4) ],
->  [ (1,3)(2,4), (1,2,3,4), 0, (), (1,4,3,2), (1,2,3,4) ],
->  [ 0, (1,2,3,4), (1,2,3,4), (1,2,3,4), (1,2,3,4), () ] ] );
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3, 4)]),
+> [[(1, 3)(2, 4), (1, 4, 3, 2), (), (1, 2, 3, 4), (1, 3)(2, 4), 0],
+>  [(1, 4, 3, 2), 0, (), (1, 4, 3, 2), (1, 2, 3, 4), (1, 2, 3, 4)],
+>  [(), (), (1, 4, 3, 2), (1, 2, 3, 4), 0, (1, 2, 3, 4)],
+>  [(1, 2, 3, 4), (1, 4, 3, 2), (1, 2, 3, 4), 0, (), (1, 2, 3, 4)],
+>  [(1, 3)(2, 4), (1, 2, 3, 4), 0, (), (1, 4, 3, 2), (1, 2, 3, 4)],
+>  [0, (1, 2, 3, 4), (1, 2, 3, 4), (1, 2, 3, 4), (1, 2, 3, 4), ()]]);
 <Rees 0-matrix semigroup 6x6 over Group([ (1,2,3,4) ])>
 gap> G := AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 6x6 over Group([ (1,2,3,
@@ -152,16 +154,19 @@ gap> CompositionMapping2(G.2, G.3);
 <#GAPDoc Label="ImagesElm">
   <ManSection>
     <Oper Name = "ImagesElm" Label = "for IsRMSIsoByTriple" Arg = "map, pt"/>
-    <Oper Name = "ImagesRepresentative" Label = "for IsRMSIsoByTriple" Arg = "map, pt"/>
+    <Oper Name = "ImagesRepresentative" Label = "for IsRMSIsoByTriple" 
+      Arg = "map, pt"/>
     <Returns>
-      An element of a Rees (0-)matrix semigroup or a list containing such an element.
+      An element of a Rees (0-)matrix semigroup or a list containing such an
+      element.
     </Returns>
 
     <Description>
       If <A>map</A> is an isomorphism of Rees matrix or 0-matrix semigroups
       specified by a triple and <A>pt</A> is an element of the source of
       <A>map</A>, then <C>ImagesRepresentative(<A>map</A>, <A>pt</A>) =
-        <A>pt</A> ^ <A>map</A></C> returns the image of <A>pt</A> under <A>map</A>.
+      <A>pt</A> ^ <A>map</A></C> returns the image of <A>pt</A> under
+      <A>map</A>.  
       <P/>
       
       The image of <A>pt</A> under <A>map</A> of <C>Range(<A>map</A>)</C> is the
@@ -200,4 +205,3 @@ gap> ImagesElm(RMSElement(R, 1, (2,8), 2), map);
     </Description>
   </ManSection>
 <#/GAPDoc>
-

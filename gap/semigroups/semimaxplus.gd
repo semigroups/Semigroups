@@ -38,6 +38,36 @@ DeclareSynonym("IsNTPMatrixSemigroup",
 DeclareSynonym("IsIntegerMatrixSemigroup",
                IsSemigroup and IsIntegerMatrixCollection);
 
+DeclareSynonym("IsMaxPlusMatrixMonoid",
+               IsMonoid and IsMaxPlusMatrixCollection);
+
+DeclareSynonym("IsMinPlusMatrixMonoid",
+               IsMonoid and IsMinPlusMatrixCollection);
+
+DeclareSynonym("IsTropicalMatrixMonoid",
+               IsMonoid and IsTropicalMatrixCollection);
+
+DeclareSynonym("IsTropicalMaxPlusMatrixMonoid",
+               IsTropicalMatrixMonoid
+               and IsTropicalMaxPlusMatrixCollection);
+
+DeclareSynonym("IsTropicalMinPlusMatrixMonoid",
+               IsTropicalMatrixMonoid
+               and IsTropicalMinPlusMatrixCollection);
+
+DeclareSynonym("IsProjectiveMaxPlusMatrixMonoid",
+               IsMonoid and IsProjectiveMaxPlusMatrixCollection);
+
+DeclareSynonym("IsNTPMatrixMonoid",
+               IsMonoid and IsNTPMatrixCollection);
+
+DeclareSynonym("IsIntegerMatrixMonoid",
+               IsMonoid and IsIntegerMatrixCollection);
+
 InstallTrueMethod(IsFinite, IsTropicalMaxPlusMatrixSemigroup);
 InstallTrueMethod(IsFinite, IsTropicalMinPlusMatrixSemigroup);
 InstallTrueMethod(IsFinite, IsNTPMatrixSemigroup);
+
+InstallTrueMethod(IsFinite, IsTropicalMaxPlusMatrixMonoid);
+InstallTrueMethod(IsFinite, IsTropicalMinPlusMatrixMonoid);
+InstallTrueMethod(IsFinite, IsNTPMatrixMonoid);

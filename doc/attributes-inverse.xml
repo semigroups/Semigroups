@@ -20,8 +20,9 @@
   </Returns>
   <Description>   
     <C>NaturalLeqInverseSemigroup</C> returns a function that, when given two
-    elements <C>x,y</C> of the inverse semigroup <A>S</A>, returns <K>true</K>
-    if <C>x</C> is less than or equal to <C>y</C> in the natural partial order on <A>S</A>. 
+    elements <C>x, y</C> of the inverse semigroup <A>S</A>, returns <K>true</K>
+    if <C>x</C> is less than or equal to <C>y</C> in the natural partial order
+    on <A>S</A>. 
 <Example><![CDATA[
 gap> S := Monoid(Transformation([1, 3, 4, 4]), 
 >                Transformation([1, 4, 2, 4]));
@@ -95,19 +96,19 @@ gap> CharacterTableOfInverseSemigroup(S);
 
 <#GAPDoc Label="PrimitiveIdempotents">
 <ManSection>
-  <Attr Name="PrimitiveIdempotents" Arg="S"/>
+  <Attr Name = "PrimitiveIdempotents" Arg = "S"/>
   <Returns>A list of idempotent partial permutations.</Returns>
   <Description>
     An idempotent in an inverse semigroup <A>S</A> is <E>primitive</E> if it is
     non-zero and minimal with respect to the 
-    <Ref Attr="NaturalPartialOrder" BookName="ref"/>
-    on <A>S</A>. <C>PrimitiveIdempotents</C> returns the list of primitive
-    idempotents in the inverse semigroup of partial permutations <A>S</A>. 
+    <Ref Attr="NaturalPartialOrder" BookName="ref"/> on <A>S</A>.
+    <C>PrimitiveIdempotents</C> returns the list of primitive idempotents in
+    the inverse semigroup of partial permutations <A>S</A>. 
     <Example><![CDATA[
-gap> S:= InverseMonoid(
-> PartialPerm( [ 1 ], [ 4 ] ),
-> PartialPerm( [ 1, 2, 3 ], [ 2, 1, 3 ] ),
-> PartialPerm( [ 1, 2, 3 ], [ 3, 1, 2 ] ) );;
+gap> S := InverseMonoid(
+> PartialPerm([1], [4]),
+> PartialPerm([1, 2, 3], [2, 1, 3]),
+> PartialPerm([1, 2, 3], [3, 1, 2]));;
 gap> MultiplicativeZero(S);
 <empty partial perm>
 gap> Set(PrimitiveIdempotents(S));
@@ -147,7 +148,7 @@ gap> Set(PrimitiveIdempotents(S));
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(3);
 <symmetric inverse monoid of degree 3>
-gap> x := PartialPerm([1,2,3]);
+gap> x := PartialPerm([1, 2, 3]);
 <identity partial perm on [ 1, 2, 3 ]>
 gap> IsJoinIrreducible(S, x);
 false
@@ -155,19 +156,19 @@ gap> T := InverseSemigroup(PartialPerm([1, 2, 4, 3]),
 >                          PartialPerm([1]),
 >                          PartialPerm([0, 2]));
 <inverse partial perm semigroup of rank 4 with 3 generators>
-gap> y := PartialPerm([1,2,3,4]);
+gap> y := PartialPerm([1, 2, 3, 4]);
 <identity partial perm on [ 1, 2, 3, 4 ]>
 gap> IsJoinIrreducible(T, y);
 true
 gap> B := InverseSemigroup([
->  Bipartition( [ [ 1, -5 ], [ 2, -2 ], 
->    [ 3, 5, 6, 7, -1, -4, -6, -7 ], [ 4, -3 ] ] ),
->  Bipartition( [ [ 1, -1 ], [ 2, -3 ], [ 3, -4 ], 
->    [ 4, 5, 7, -2, -6, -7 ], [ 6, -5 ] ] ),
->  Bipartition( [ [ 1, -2 ], [ 2, -4 ], [ 3, -6 ], 
->    [ 4, -1 ], [ 5, 7, -3, -7 ], [ 6, -5 ] ] ),
->  Bipartition( [ [ 1, -5 ], [ 2, -1 ], [ 3, -6 ], 
->    [ 4, 5, 7, -2, -4, -7 ], [ 6, -3 ] ] )]);
+>  Bipartition([[1, -5], [2, -2], 
+>    [3, 5, 6, 7, -1, -4, -6, -7], [4, -3]]),
+>  Bipartition([[1, -1], [2, -3], [3, -4], 
+>    [4, 5, 7, -2, -6, -7], [6, -5]]),
+>  Bipartition([[1, -2], [2, -4], [3, -6], 
+>    [4, -1], [5, 7, -3, -7], [6, -5]]),
+>  Bipartition([[1, -5], [2, -1], [3, -6], 
+>    [4, 5, 7, -2, -4, -7], [6, -3]])]);
 <inverse bipartition semigroup of degree 7 with 4 generators>
 gap> x := Bipartition( [ [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], 
 > [ 4, -1 ] ] );
@@ -204,7 +205,7 @@ gap> S := SymmetricInverseSemigroup(2);
 <symmetric inverse monoid of degree 2>
 gap> T := [Elements(S)[2]];
 [ <identity partial perm on [ 1 ]> ]
-gap> IsMajorantlyClosed(S,T);
+gap> IsMajorantlyClosed(S, T);
 false
 gap> U := [Elements(S)[2],Elements(S)[6]];
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]
@@ -213,11 +214,11 @@ gap> IsMajorantlyClosed(S,U);
 true
 gap> D := DualSymmetricInverseSemigroup(3);
 <inverse bipartition monoid of degree 3 with 3 generators>
-gap> x := Bipartition( [ [ 1, -2 ], [ 2, -3 ], [ 3, -1 ] ] );;
+gap> x := Bipartition([[1, -2], [2, -3], [3, -1]]);;
 gap> IsMajorantlyClosed(D, [x]);
 true
-gap> y := Bipartition( [ [ 1, 2, -1, -2 ], [ 3, -3 ] ] );;
-gap> IsMajorantlyClosed(D, [x,y]);
+gap> y := Bipartition([[1, 2, -1, -2], [3, -3]]);;
+gap> IsMajorantlyClosed(D, [x, y]);
 false
 ]]></Example>
 <#/GAPDoc>
@@ -242,9 +243,9 @@ gap> S := SymmetricInverseSemigroup(3);
 <symmetric inverse monoid of degree 3>
 gap> JoinIrreducibleDClasses(S);
 [ <Green's D-class: <identity partial perm on [ 1 ]>> ]
-gap> T := InverseSemigroup( 
-> PartialPerm( [ 1, 2, 3, 4 ], [ 1, 2, 4, 3 ] ), 
-> PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 2 ] ) );
+gap> T := InverseSemigroup(
+> PartialPerm([1, 2, 3, 4], [1, 2, 4, 3]), 
+> PartialPerm([1], [1]), PartialPerm([2], [2]));
 <inverse partial perm semigroup of rank 4 with 3 generators>
 gap> JoinIrreducibleDClasses(T);
 [ <Green's D-class: <identity partial perm on [ 1, 2, 3, 4 ]>>, 
@@ -278,7 +279,7 @@ gap> JoinIrreducibleDClasses(D);
 <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(4);
 <symmetric inverse monoid of degree 4>
-gap> T := [PartialPerm([1,0,3,0])];
+gap> T := [PartialPerm([1, 0, 3, 0])];
 [ <identity partial perm on [ 1, 3 ]> ]
 gap> U := MajorantClosure(S,T);
 [ <identity partial perm on [ 1, 3 ]>, 
@@ -286,12 +287,10 @@ gap> U := MajorantClosure(S,T);
   <identity partial perm on [ 1, 3, 4 ]>, 
   <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2,4)(3) ]
 gap> B := InverseSemigroup([
->  Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, 5, -4, -5 ] ] ),
->  Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -2 ], 
->    [ 4, -1 ], [ 5, -5 ] ] ) ]);;
-gap> T := [
->  Bipartition( [ [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ] ] ),
->  Bipartition( [ [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ] ] ) ];;
+>  Bipartition([[1, -2], [2, -1], [3, -3], [4, 5, -4, -5]]),
+>  Bipartition([[1, -3], [2, -4], [3, -2], [4, -1], [5, -5]])]);;
+gap> T := [Bipartition([[1, -2], [2, 3, 5, -1, -3, -5], [4, -4]]),
+>  Bipartition([[1, -4], [2, 3, 5, -1, -3, -5], [4, -2]])];;
 gap> IsMajorantlyClosed(B,T);
 false
 gap> MajorantClosure(B,T);
@@ -332,7 +331,7 @@ gap> x := Elements(S)[13];
 [1,3](2)
 gap> Minorants(S, x);
 [ <empty partial perm>, [1,3], <identity partial perm on [ 2 ]> ]
-gap> x := PartialPerm([3,2,4,0]);
+gap> x := PartialPerm([3, 2, 4, 0]);
 [1,3,4](2)
 gap> S := InverseSemigroup(x);
 <inverse partial perm semigroup of rank 4 with 1 generator>
@@ -363,7 +362,7 @@ gap> S := SymmetricInverseSemigroup(3);
 <symmetric inverse monoid of degree 3>
 gap> T := InverseSemigroup(MajorantClosure(S, [PartialPerm([1])]));
 <inverse partial perm monoid of rank 3 with 6 generators>
-gap> IsMajorantlyClosed(S,T);
+gap> IsMajorantlyClosed(S, T);
 true
 gap> RC := RightCosetsOfInverseSemigroup(S, T);
 [ [ <identity partial perm on [ 1 ]>, 
@@ -404,8 +403,8 @@ gap> Elements(H);
 gap> SameMinorantsSubgroup(H);
 [ <identity partial perm on [ 1, 2, 3 ]> ]
 gap> T := InverseSemigroup( 
-> PartialPerm( [ 1, 2, 3, 4 ], [ 1, 2, 4, 3 ] ), 
-> PartialPerm( [ 1 ], [ 1 ] ), PartialPerm( [ 2 ], [ 2 ] ) );
+> PartialPerm([1, 2, 3, 4], [1, 2, 4, 3]), 
+> PartialPerm([1], [1]), PartialPerm([2], [2]));
 <inverse partial perm semigroup of rank 4 with 3 generators>
 gap> Elements(T);
 [ <empty partial perm>, <identity partial perm on [ 1 ]>, 
@@ -437,7 +436,7 @@ gap> AsSet(SameMinorantsSubgroup(x));
   </Description>
 </ManSection>
 <Example><![CDATA[
-gap> S := InverseSemigroup(PartialPerm([2,1,4,3,6,5,8,7]));
+gap> S := InverseSemigroup(PartialPerm([2, 1, 4, 3, 6, 5, 8, 7]));
 <commutative inverse partial perm semigroup of rank 8 with 1 
  generator>
 gap> Elements(S);
@@ -501,12 +500,12 @@ gap> inv := InverseGeneralMapping(iso);;
 gap> ForAll(S, x-> (x ^ iso) ^ inv = x);
 true
 gap> V := InverseSemigroup(
-> Bipartition( [ [ 1, -4 ], [ 2, -1 ], [ 3, -5 ], 
->                [ 4 ], [ 5 ], [ -2 ], [ -3 ] ] ),
-> Bipartition( [ [ 1, -5 ], [ 2, -1 ], [ 3, -3 ], 
->                [ 4 ], [ 5 ], [ -2 ], [ -4 ] ] ),
-> Bipartition( [ [ 1, -2 ], [ 2, -4 ], [ 3, -5 ], 
->                [ 4, -1 ], [ 5, -3 ] ] ));
+> Bipartition([[1, -4], [2, -1], [3, -5], 
+>              [4], [5], [-2], [-3]]),
+> Bipartition([[1, -5], [2, -1], [3, -3], 
+>              [4], [5], [-2], [-4]]),
+> Bipartition([[1, -2], [2, -4], [3, -5], 
+>              [4, -1], [5, -3]]));
 <inverse bipartition semigroup of degree 5 with 3 generators>
 gap> IsInverseSemigroup(V);
 true

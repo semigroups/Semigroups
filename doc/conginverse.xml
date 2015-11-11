@@ -20,14 +20,14 @@
       if and only if they are related by <A>cong</A>.
 
       <Example><![CDATA[
-gap> i := InverseSemigroup([
-> PartialPerm( [ 1, 2 ], [ 2, 3 ] ),
-> PartialPerm( [ 1, 3 ], [ 2, 3 ] ) ]);;
+gap> i := InverseSemigroup(
+> PartialPerm([1, 2], [2, 3]),
+> PartialPerm([1, 3], [2, 3]));;
 gap> cong := SemigroupCongruence(i,
-> [[ PartialPerm( [ 2, 3 ], [ 1, 3 ] ),
->    PartialPerm( [ 2 ], [ 1 ] ) ],
->  [ PartialPerm( [  ], [  ] ),
->    PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ]]);
+> [[PartialPerm([2, 3], [1, 3]),
+>   PartialPerm([2], [1])],
+>  [PartialPerm([], []),
+>   PartialPerm([1, 2], [1, 2])]]);
 <semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with congruence pair (19,1)>
 gap> TraceOfSemigroupCongruence(cong);
@@ -43,22 +43,24 @@ gap> TraceOfSemigroupCongruence(cong);
 
 <#GAPDoc Label="KernelOfSemigroupCongruence">
   <ManSection>
-    <Attr Name="KernelOfSemigroupCongruence" Arg="cong"/>
-    <Returns>An inverse semigroup.</Returns>
+    <Attr Name = "KernelOfSemigroupCongruence" Arg = "cong"/>
+    <Returns>
+      An inverse semigroup.
+    </Returns>
     <Description>
       If <A>cong</A> is an inverse semigroup congruence by kernel and trace,
       then this attribute returns the <E>kernel</E> of that congruence; that
       is, the inverse subsemigroup consisting of all elements which are related
       to an idempotent by <A>cong</A>. <P/>
       <Example><![CDATA[
-gap> i := InverseSemigroup([
-> PartialPerm( [ 1, 2 ], [ 2, 3 ] ),
-> PartialPerm( [ 1, 3 ], [ 2, 3 ] ) ]);;
+gap> i := InverseSemigroup(
+> PartialPerm([1, 2], [2, 3]),
+> PartialPerm([1, 3], [2, 3]));;
 gap> cong := SemigroupCongruence(i,
-> [[ PartialPerm( [ 2, 3 ], [ 1, 3 ] ),
->    PartialPerm( [ 2 ], [ 1 ] ) ],
->  [ PartialPerm( [  ], [  ] ),
->    PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ]]);
+> [[PartialPerm([2, 3], [1, 3]),
+>   PartialPerm([2], [1])],
+>  [PartialPerm([], []),
+>   PartialPerm([1, 2], [1, 2])]]);
 <semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with congruence pair (19,1)>
 gap> KernelOfSemigroupCongruence(cong);
@@ -69,25 +71,27 @@ gap> KernelOfSemigroupCongruence(cong);
 
 <#GAPDoc Label="AsInverseSemigroupCongruenceByKernelTrace">
   <ManSection>
-    <Attr Name="AsInverseSemigroupCongruenceByKernelTrace" Arg="cong"/>
-    <Returns>An inverse semigroup congruence by kernel and trace.</Returns>
+    <Attr Name = "AsInverseSemigroupCongruenceByKernelTrace" Arg = "cong"/>
+    <Returns>
+      An inverse semigroup congruence by kernel and trace.
+    </Returns>
     <Description>
       If <A>cong</A> is a semigroup congruence over an inverse semigroup, then
       this attribute returns an object which describes the same congruence, but
       with an internal representation defined by that congruence's kernel and
       trace. <P/>
 
-      See <Cite Key="Howie1995aa"/> section 5.3 for more details.
+      See <Cite Key = "Howie1995aa"/> section 5.3 for more details.
       
       <Example><![CDATA[
 gap> i := InverseSemigroup([
-> PartialPerm( [ 1, 2 ], [ 2, 3 ] ),
-> PartialPerm( [ 1, 3 ], [ 2, 3 ] ) ]);;
+> PartialPerm([1, 2], [2, 3]),
+> PartialPerm([1, 3], [2, 3])]);;
 gap> cong := SemigroupCongruenceByGeneratingPairs(i,
-> [[ PartialPerm( [ 2, 3 ], [ 1, 3 ] ),
->    PartialPerm( [ 2 ], [ 1 ] ) ],
->  [ PartialPerm( [  ], [  ] ),
->    PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ]]);
+> [[PartialPerm([2, 3], [1, 3]),
+>    PartialPerm([2], [1])],
+>  [PartialPerm([], []),
+>    PartialPerm([1, 2], [1, 2])]]);
 <semigroup congruence over <inverse partial perm semigroup of rank 3 
  with 2 generators> with 2 generating pairs>
 gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
@@ -99,27 +103,30 @@ gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
 
 <#GAPDoc Label="IsInverseSemigroupCongruenceByKernelTrace">
   <ManSection>
-    <Filt Name="IsInverseSemigroupCongruenceByKernelTrace" Arg="cong" Type="Category"/>
-    <Returns>True or false.</Returns>
+    <Filt Name = "IsInverseSemigroupCongruenceByKernelTrace" Arg = "cong"
+      Type = "Category"/>
+    <Returns>
+      <K>true</K> or <K>false</K>.</Returns>
     <Description>
       This category contains any inverse semigroup congruence <A>cong</A> which
       is represented internally by its kernel and trace.  The <Ref
-      Func="SemigroupCongruence"/> function will almost always create an object
-      of this category if its first argument <A>S</A> is an inverse
-      semigroup.<P/>
+        Func = "SemigroupCongruence"/> function will almost always create an
+      object of this category if its first argument <A>S</A> is an inverse
+      semigroup.
+      <P/>
 
-      See <Cite Key="Howie1995aa"/> section 5.3 for more details.  See also <Ref
-      Attr="InverseSemigroupCongruenceByKernelTrace"/>.
+      See <Cite Key = "Howie1995aa"/> Section 5.3 for more details.  See also
+      <Ref Attr = "InverseSemigroupCongruenceByKernelTrace"/>.
       
       <Example><![CDATA[
 gap> i := InverseSemigroup([
-> PartialPerm( [ 1, 2 ], [ 2, 3 ] ),
-> PartialPerm( [ 1, 3 ], [ 2, 3 ] ) ]);;
+> PartialPerm([1, 2], [2, 3]),
+> PartialPerm([1, 3], [2, 3])]);;
 gap> cong := SemigroupCongruence(i,
-> [[ PartialPerm( [ 2, 3 ], [ 1, 3 ] ),
->    PartialPerm( [ 2 ], [ 1 ] ) ],
->  [ PartialPerm( [  ], [  ] ),
->    PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ]]);
+> [[PartialPerm([2, 3], [1, 3]),
+>   PartialPerm([2], [1])],
+>  [PartialPerm([], []),
+>   PartialPerm([1, 2], [1, 2])]]);
 <semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with congruence pair (19,1)>
 gap> IsInverseSemigroupCongruenceByKernelTrace(cong);
@@ -130,26 +137,29 @@ true]]></Example>
 
 <#GAPDoc Label="IsInverseSemigroupCongruenceClassByKernelTrace">
   <ManSection>
-    <Filt Name="IsInverseSemigroupCongruenceClassByKernelTrace" Arg="obj" Type="Category"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Filt Name = "IsInverseSemigroupCongruenceClassByKernelTrace" Arg = "obj"
+      Type = "Category"/>
+    <Returns>
+      <K>true</K> or <K>false</K>.
+    </Returns>
     <Description>
       This category contains any congruence class which belongs to a congruence
       which is represented internally by its kernel and trace.  See <Ref
-      Attr="InverseSemigroupCongruenceByKernelTrace"/>. <P/>
+      Attr = "InverseSemigroupCongruenceByKernelTrace"/>. <P/>
 
-      See also <Cite Key="Howie1995aa"/> section 5.3 for more details.
+      See <Cite Key = "Howie1995aa"/> Section 5.3 for more details.
 
       <Example><![CDATA[
 gap> i := InverseSemigroup([
-> PartialPerm( [ 1, 2 ], [ 2, 3 ] ),
-> PartialPerm( [ 1, 3 ], [ 2, 3 ] ) ]);;
+> PartialPerm([1, 2], [2, 3]),
+> PartialPerm([1, 3], [2, 3])]);;
 gap> cong := SemigroupCongruence(i,
-> [[ PartialPerm( [ 2, 3 ], [ 1, 3 ] ),
->    PartialPerm( [ 2 ], [ 1 ] ) ],
->  [ PartialPerm( [  ], [  ] ),
->    PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ]]);;
+> [[PartialPerm([2, 3], [1, 3]),
+>   PartialPerm([2], [1])],
+>  [PartialPerm([], []),
+>   PartialPerm([1, 2], [1, 2])]]);;
 gap> class := CongruenceClassOfElement(cong,
-> PartialPerm( [ 1, 2 ], [ 2, 3 ]));;
+>                                      PartialPerm([1, 2], [2, 3]));;
 gap> IsInverseSemigroupCongruenceClassByKernelTrace(class);
 true]]></Example>
     </Description>
@@ -158,36 +168,39 @@ true]]></Example>
 
 <#GAPDoc Label="InverseSemigroupCongruenceByKernelTrace">
   <ManSection>
-    <Func Name="InverseSemigroupCongruenceByKernelTrace" Arg="S, kernel, traceBlocks"/>
-    <Returns>An inverse semigroup congruence by kernel and trace.</Returns>
+    <Func Name = "InverseSemigroupCongruenceByKernelTrace" 
+      Arg = "S, kernel, traceBlocks"/>
+    <Returns>
+      An inverse semigroup congruence by kernel and trace.
+    </Returns>
     <Description>
       If <A>S</A> is an inverse semigroup, <A>kernel</A> is a subsemigroup of
-      <A>S</A>, <A>traceBlocks</A> is a list of lists describing a congruence on
-      the idempotents of <A>S</A>, and <M>(<A>kernel</A>, <A>trace</A>)</M>
-      describes a valid congruence pair for <A>S</A> (see <Cite Key="Howie1995aa"/>
-      section 5.3) then this function returns the semigroup congruence defined
-      by that congruence pair. <P/>
+      <A>S</A>, <A>traceBlocks</A> is a list of lists describing a congruence
+      on the idempotents of <A>S</A>, and <M>(<A>kernel</A>, <A>trace</A>)</M>
+      describes a valid congruence pair for <A>S</A> (see <Cite Key =
+        "Howie1995aa"/> Section 5.3) then this function returns the semigroup
+      congruence defined by that congruence pair. <P/>
 
-      See also <Ref Attr="KernelOfSemigroupCongruence"/> and
-      <Ref Attr="TraceOfSemigroupCongruence"/>.
+      See also <Ref Attr = "KernelOfSemigroupCongruence"/> and
+      <Ref Attr = "TraceOfSemigroupCongruence"/>.
       
       <Example><![CDATA[
 gap> S := InverseSemigroup([
-> PartialPerm( [ 1, 2 ], [ 2, 3 ] ),
-> PartialPerm( [ 1, 3 ], [ 2, 3 ] ) ]);;
+> PartialPerm([1, 2], [2, 3]),
+> PartialPerm([1, 3], [2, 3])]);;
 gap> kernel := InverseSemigroup([
-> PartialPerm( [ 1, 3 ], [ 1, 3 ] ),
-> PartialPerm( [ 2, 3 ], [ 2, 3 ] ),
-> PartialPerm( [ 1, 2 ], [ 1, 2 ] ), 
-> PartialPerm( [ 1 ], [ 3 ] ),
-> PartialPerm( [ 1 ], [ 2 ] ) ] );;
-gap> trace := [[ PartialPerm( [ 2, 3 ], [ 2, 3 ] ) ], 
->              [ PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ], 
->              [ PartialPerm( [ 1, 3 ], [ 1, 3 ] ) ], 
->              [ PartialPerm( [ 3 ], [ 3 ] ),
->                PartialPerm( [ 2 ], [ 2 ] ), 
->                PartialPerm( [ 1 ], [ 1 ] ),
->                PartialPerm( [  ], [  ] ) ]];;
+> PartialPerm([1, 3], [1, 3]),
+> PartialPerm([2, 3], [2, 3]),
+> PartialPerm([1, 2], [1, 2]), 
+> PartialPerm([1], [3]),
+> PartialPerm([1], [2])]);;
+gap> trace := [[PartialPerm([2, 3], [2, 3])], 
+>              [PartialPerm([1, 2], [1, 2])], 
+>              [PartialPerm([1, 3], [1, 3])], 
+>              [PartialPerm([3], [3]),
+>               PartialPerm([2], [2]), 
+>               PartialPerm([1], [1]),
+>               PartialPerm([], [])]];;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, kernel, trace);
 <semigroup congruence over <inverse partial perm semigroup of rank 3 
  with 2 generators> with congruence pair (13,4)>]]></Example>

@@ -9,6 +9,9 @@
 #############################################################################
 ##
 
+#TODO get rid of AsXSemigroup (i.e. AsTransformationSemigroup etc) and write an
+# AsSemigroup(IsTransformationSemigroup, S) function (or bunch of functions)
+
 SEMIGROUPS.AsXSemigroup := function(filt)
   if filt = IsTransformationSemigroup then
     return AsTransformationSemigroup;
@@ -116,7 +119,7 @@ end;
 SEMIGROUPS.InstallConstructors1 := function(func, exclude, param)
   local type, cons;
   cons := EvalString(Concatenation(NameFunction(func), "Cons"));
-  for type in SEMIGROUPS_Types do
+  for type in SEMIGROUPS.SemigroupTypes do
     if not type in exclude then
       InstallMethod(cons, Concatenation([type], param),
       function(filt, n)
@@ -136,7 +139,7 @@ end;
 SEMIGROUPS.InstallConstructors2 := function(func, exclude, param)
   local type, cons;
   cons := EvalString(Concatenation(NameFunction(func), "Cons"));
-  for type in SEMIGROUPS_Types do
+  for type in SEMIGROUPS.SemigroupTypes do
     if not type in exclude then
       InstallMethod(cons, Concatenation([type], param),
       function(filt, m, n)

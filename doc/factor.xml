@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="Factorization">
 <ManSection> 
-  <Oper Name="Factorization" Arg="S, x"/>
+  <Oper Name = "Factorization" Arg = "S, x"/>
     <Returns>A word in the generators.</Returns>
     <Description> 
     <List>
@@ -21,7 +21,7 @@
         is equal to <A>x</A>. In this case, a word is a list of positive
         integers where an entry <C>i</C> corresponds to
         <C>GeneratorsOfSemigroups(S)[i]</C>.  More specifically,
-      <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x))=x;</Log>
+      <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x)) = x;</Log>
     </Item>
 
       <Mark>for inverse semigroups</Mark>
@@ -31,23 +31,23 @@
          is equal to <A>x</A>. In this case, a word is a list of non-zero
          integers where an entry <C>i</C> corresponds to
          <C>GeneratorsOfSemigroup(S)[i]</C> and <C>-i</C> corresponds to 
-         <C>GeneratorsOfSemigroup(S)[i]^-1</C>.
+         <C>GeneratorsOfSemigroup(S)[i] ^ -1</C>.
          As in the previous case,
-      <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x))=x;</Log>
+      <Log>EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, x)) = x;</Log>
       </Item>
     </List>
       
     Note that <C>Factorization</C> does not always return a word of minimum length;
-    see <Ref Oper="MinimalFactorization"/>.
+    see <Ref Oper = "MinimalFactorization"/>.
     <P/> 
 
-    See also <Ref Func="EvaluateWord"/> and 
-    <Ref Func="GeneratorsOfSemigroup" BookName="ref"/>.
+    See also <Ref Func = "EvaluateWord"/> and 
+    <Ref Func = "GeneratorsOfSemigroup" BookName = "ref"/>.
 <Example><![CDATA[
-gap> gens := [ Transformation( [ 2, 2, 9, 7, 4, 9, 5, 5, 4, 8 ] ), 
->              Transformation( [ 4, 10, 5, 6, 4, 1, 2, 7, 1, 2 ] ) ];;
+gap> gens := [Transformation([2, 2, 9, 7, 4, 9, 5, 5, 4, 8]), 
+>             Transformation([4, 10, 5, 6, 4, 1, 2, 7, 1, 2])];;
 gap> S := Semigroup(gens);;
-gap> x := Transformation( [ 1, 10, 2, 10, 1, 2, 7, 10, 2, 7 ] );;
+gap> x := Transformation([1, 10, 2, 10, 1, 2, 7, 10, 2, 7]);;
 gap> word := Factorization(S, x);
 [ 2, 2, 1, 2 ]
 gap> EvaluateWord(gens, word);
@@ -80,28 +80,28 @@ gap> EvaluateWord(GeneratorsOfSemigroup(S), word);
 
 <#GAPDoc Label="MinimalFactorization">
 <ManSection> 
-  <Oper Name="MinimalFactorization" Arg="S, x"/>
-    <Returns>A minimal word in the generators.</Returns>
-    <Description> 
-      This operation returns a minimal length word in the generators of the
-      semigroup <A>S</A> that equals the element <A>x</A>. 
-      In this case, a word is a list of positive
-      integers where an entry <C>i</C> corresponds to
-      <C>GeneratorsOfSemigroups(<A>S</A>)[i]</C>.  More specifically,
-      <Log>EvaluateWord(GeneratorsOfSemigroup(S), MinimalFactorization(S, x)) = x;</Log>
-      <P/>
-      
-      <C>MinimalFactorization</C> involves exhaustively enumerating <A>S</A>
-      until the element <A>x</A> is found, and so <C>MinimalFactorization</C>
-      may be less efficient than <Ref Oper="Factorization"/> for some
-      semigroups.
-      <P/>
-      
-      Unlike <Ref Oper="Factorization"/> this operation does not distinguish
-      between semigroups and inverse semigroups.  See also <Ref
-        Func="EvaluateWord"/> and <Ref Func="GeneratorsOfSemigroup"
-        BookName="ref"/>.
-<Example><![CDATA[
+  <Oper Name = "MinimalFactorization" Arg = "S, x"/>
+  <Returns>A minimal word in the generators.</Returns>
+  <Description> 
+    This operation returns a minimal length word in the generators of the
+    semigroup <A>S</A> that equals the element <A>x</A>. 
+    In this case, a word is a list of positive
+    integers where an entry <C>i</C> corresponds to
+    <C>GeneratorsOfSemigroups(<A>S</A>)[i]</C>.  More specifically,
+    <Log>EvaluateWord(GeneratorsOfSemigroup(S), MinimalFactorization(S, x)) = x;</Log>
+    <P/>
+
+    <C>MinimalFactorization</C> involves exhaustively enumerating <A>S</A>
+    until the element <A>x</A> is found, and so <C>MinimalFactorization</C>
+    may be less efficient than <Ref Oper="Factorization"/> for some
+    semigroups.
+    <P/>
+
+    Unlike <Ref Oper = "Factorization"/> this operation does not distinguish
+    between semigroups and inverse semigroups.  See also <Ref
+      Func = "EvaluateWord"/> and <Ref Func = "GeneratorsOfSemigroup"
+      BookName="ref"/>.
+    <Example><![CDATA[
 gap> S := Semigroup(Transformation([2, 2, 9, 7, 4, 9, 5, 5, 4, 8]), 
 >                   Transformation([4, 10, 5, 6, 4, 1, 2, 7, 1, 2]));
 <transformation semigroup of degree 10 with 2 generators>
@@ -113,4 +113,4 @@ gap> MinimalFactorization(S, x);
 [ 1, 2, 1, 1, 1, 1, 2, 2, 1 ]]]></Example>
     </Description>
   </ManSection>
-<#/GAPDoc>
+  <#/GAPDoc>

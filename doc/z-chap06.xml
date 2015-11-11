@@ -1,4 +1,4 @@
-<Chapter Label="Creating semigroups and monoids">
+<Chapter Label = "Creating semigroups and monoids">
   <Heading>
     Creating semigroups and monoids
   </Heading> 
@@ -7,7 +7,7 @@
   be created in &Semigroups;, the options that are available at the time of
   creation. 
   
-  <Section Label="Acting semigroups"><!--TODOFIXME: move this-->
+  <Section Label = "Acting semigroups"><!--TODOFIXME: move this-->
     <Heading>Acting semigroups</Heading>
     It is harder for &Semigroups; to compute Green's &L;- and &H;-classes of a
     transformation semigroup and the methods used to compute with Green's &R;-
@@ -21,39 +21,45 @@
 
     The methods in &Semigroups; allow the computation of individual Green's
     classes without computing the entire data structure of the underlying
-    semigroup; see <Ref Oper="GreensRClassOfElementNC"/>.  It is also possible
-    to compute the &R;-classes, the number of elements and test membership
-    in a semigroup without computing all the elements; see, for example, <Ref
-      Oper="GreensRClasses"/>, <Ref Attr="RClassReps"/>, <Ref
-      Func="IteratorOfRClassReps"/>, <Ref Func="IteratorOfRClasses"/>, or <Ref
-      Func="NrRClasses"/>.  This may be useful if you want to study a very large
-    semigroup where computing all the elements of the semigroup is not feasible.<P/>
+    semigroup; see <Ref Oper = "GreensRClassOfElementNC"/>.  It is also
+    possible to compute the &R;-classes, the number of elements and test
+    membership in a semigroup without computing all the elements; see, for
+    example, <Ref Oper = "GreensRClasses"/>, <Ref Attr = "RClassReps"/>, <Ref
+      Func = "IteratorOfRClassReps"/>, <Ref Func = "IteratorOfRClasses"/>, or
+    <Ref Func = "NrRClasses"/>.  This may be useful if you want to study a very
+    large semigroup where computing all the elements of the semigroup is not
+    feasible.<P/>
   </Section>
 
-  <Section><Heading>New semigroups from old</Heading> 
-    <#Include Label="ClosureInverseSemigroup">
-    <#Include Label="ClosureSemigroup">
-    <#Include Label="SubsemigroupByProperty">
-    <#Include Label="InverseSubsemigroupByProperty">
+  <Section>
+    <Heading>New semigroups from old</Heading> 
+
+    <#Include Label = "ClosureInverseSemigroup">
+    <#Include Label = "ClosureSemigroup">
+    <#Include Label = "SubsemigroupByProperty">
+    <#Include Label = "InverseSubsemigroupByProperty">
   </Section> 
   
-  <Section><Heading>Random semigroups</Heading> 
-    <#Include Label="RandomInverseMonoid"> 
+  <Section>
+    <Heading>Random semigroups</Heading> 
+
+    <#Include Label = "RandomInverseMonoid"> 
   </Section> 
   
-  <Section Label="Options when creating semigroups">
+  <Section Label = "Options when creating semigroups">
     <Heading>Options when creating semigroups</Heading>
+
     When using any of the functions:
     <List>
-      <Item><Ref Func="InverseSemigroup"  BookName="ref"/>,</Item>
-      <Item><Ref Func="InverseMonoid" BookName="ref"/>,</Item>
-      <Item><Ref Func="Semigroup" BookName="ref"/>,</Item>
-      <Item><Ref Func="Monoid" BookName="ref"/>,</Item>
-      <Item><Ref Meth="SemigroupByGenerators" BookName="ref"/>,</Item>
-      <Item><Ref Meth="MonoidByGenerators" BookName="ref"/>,</Item>
-      <Item><Ref Oper="ClosureInverseSemigroup"/>,</Item>
-      <Item><Ref Oper="ClosureSemigroup"/>,</Item>
-      <Item><Ref Func="SemigroupIdeal"/></Item>
+      <Item><Ref Func = "InverseSemigroup"  BookName = "ref"/>, </Item>
+      <Item><Ref Func = "InverseMonoid" BookName = "ref"/>, </Item>
+      <Item><Ref Func = "Semigroup" BookName = "ref"/>, </Item>
+      <Item><Ref Func = "Monoid" BookName = "ref"/>, </Item>
+      <Item><Ref Meth = "SemigroupByGenerators" BookName = "ref"/>, </Item>
+      <Item><Ref Meth = "MonoidByGenerators" BookName = "ref"/>, </Item>
+      <Item><Ref Oper = "ClosureInverseSemigroup"/>, </Item>
+      <Item><Ref Oper = "ClosureSemigroup"/>, </Item>
+      <Item><Ref Func = "SemigroupIdeal"/></Item>
     </List>
     a record can be given as an optional final argument. The components of this
     record specify the values of certain options for the semigroup being
@@ -71,7 +77,7 @@
         
         Roughly speaking,
         there are two types of methods in the &Semigroups; package: exhaustive
-        and non-exhaustive; see Section <Ref Sect="Introduction"/>.
+        and non-exhaustive; see Section <Ref Sect = "Introduction"/>.
         In order for a semigroup to use the non-exhaustive methods in
         &Semigroups; it must satisfy <C>IsNonExhaustiveSemigroup</C>.  By
         default any semigroup or monoid of transformations, partial
@@ -124,8 +130,8 @@
 
         You might find it useful to set the info level of the info class
         <C>InfoOrb</C> to 2 or higher since this will indicate when hash tables
-        used by &Semigroups; are being grown; see <Ref Oper="SetInfoLevel"
-        BookName="ref"/>.
+        used by &Semigroups; are being grown; see <Ref Oper = "SetInfoLevel"
+        BookName = "ref"/>.
       </Item>
       
       <Mark><C>small</C></Mark> <Item>if this component is set to <K>true</K>,
@@ -138,18 +144,18 @@
         without modifying <A>gens</A>. The default value for this component is
         <K>false</K>.<P/>
 
-        This option is ignored when passed to <Ref Oper="ClosureSemigroup"/> or
-        <Ref Oper="ClosureInverseSemigroup"/>. 
+        This option is ignored when passed to <Ref Oper = "ClosureSemigroup"/>
+        or <Ref Oper = "ClosureInverseSemigroup"/>. 
     </Item> 
 </List>
 
     <Example><![CDATA[
-gap> S := Semigroup(Transformation( [ 1, 2, 3, 3 ] ), 
+gap> S := Semigroup(Transformation([1, 2, 3, 3]), 
 >                   rec(hashlen := 100003, small := false));
 <commutative transformation semigroup of degree 4 with 1 generator>]]></Example>
 
       The default values of the options described above are stored in a global
-      variable named <Ref Var="SEMIGROUPS_DefaultOptionsRec"/>. If you want to
+      variable named <Ref Var = "SEMIGROUPS_DefaultOptionsRec"/>. If you want to
       change the default values of these options for a single &GAP; session,
       then you can simply redefine the value in &GAP;. For example, to change
       the option <C>small</C> from the default value of <A>false</A> use:
@@ -158,35 +164,41 @@ gap> S := Semigroup(Transformation( [ 1, 2, 3, 3 ] ),
 true</Log>
 
     If you want to change the default values of the options stored in <Ref
-      Var="SEMIGROUPS_DefaultOptionsRec"/> for all &GAP; sessions, then you can
+      Var = "SEMIGROUPS_DefaultOptionsRec"/> for all &GAP; sessions, then you can
     edit these values in the file <C>semigroups/gap/options.g</C>. <P/>
 
-    <#Include Label="SEMIGROUPS_DefaultOptionsRec">
+    <#Include Label = "SEMIGROUPS_DefaultOptionsRec">
 
    </Section>
     
-   <Section Label="Changing the representation of a semigroup">
+   <Section Label = "Changing the representation of a semigroup">
      <Heading>Changing the representation of a semigroup</Heading>
+
      In addition, to the library functions
      <List>
-       <Item><Ref Oper="IsomorphismReesMatrixSemigroup" BookName="ref"/>,</Item>
-       <Item><Ref Oper="AntiIsomorphismTransformationSemigroup" BookName="ref"/>,
+       <Item>
+         <Ref Oper = "IsomorphismReesMatrixSemigroup" BookName = "ref"/>,
        </Item>
-       <Item><Ref Oper="IsomorphismTransformationSemigroup" BookName="ref"/>,
+       <Item>
+         <Ref Oper = "AntiIsomorphismTransformationSemigroup" BookName = "ref"/>,
        </Item>
-       <Item><Ref Oper="IsomorphismPartialPermSemigroup" BookName="ref"/>,</Item>
+       <Item>
+         <Ref Oper = "IsomorphismTransformationSemigroup" BookName = "ref"/>,
+       </Item>
+       <Item>
+         <Ref Oper = "IsomorphismPartialPermSemigroup" BookName = "ref"/>,
+       </Item>
      </List>
      there are several methods for changing the representation of a semigroup
      in &Semigroups;. There are also methods for the operations given above for
      the types of semigroups defined in &Semigroups; which are not mentioned in
      the reference manual. 
-     <#Include Label="AsTransformationSemigroup">
-     <#Include Label="IsomorphismPermGroup">
-     <#Include Label="IsomorphismBipartitionSemigroup">
-     <#Include Label="IsomorphismBlockBijectionSemigroup">
-     <#Include Label="IsomorphismReesZeroMatrixSemigroup">
-     <#Include Label="IsomorphismPBRSemigroup">
+     <#Include Label = "AsTransformationSemigroup">
+     <#Include Label = "IsomorphismPermGroup">
+     <#Include Label = "IsomorphismBipartitionSemigroup">
+     <#Include Label = "IsomorphismBlockBijectionSemigroup">
+     <#Include Label = "IsomorphismReesZeroMatrixSemigroup">
+     <#Include Label = "IsomorphismPBRSemigroup">
   </Section>
   
 </Chapter>
-

@@ -21,59 +21,7 @@
 # 1. Internal methods
 #############################################################################
 
-# SEMIGROUPS_IsCCSemigroup: returns <true> if the argument is a semigroup to
-# which we can apply the C++ code.
-
-InstallMethod(SEMIGROUPS_IsCCSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  return IsTransformationSemigroup(S)
-           or IsPartialPermSemigroup(S)
-           or IsBipartitionSemigroup(S)
-           or IsBooleanMatSemigroup(S)
-           or IsPBRSemigroup(S)
-           or IsMatrixOverSemiringSemigroup(S);
-end);
-
-# SEMIGROUPS_DegreeOfSemigroup: returns the size of the container required in
-# the C++ code by elements of the semigroup.
-
-InstallGlobalFunction(SEMIGROUPS_DegreeOfSemigroup,
-function(arg)
-  local S, coll;
-
-  S := arg[1];
-  if Length(arg) = 1 then
-    coll := [Representative(S)];
-  elif Length(arg) = 2 then
-    coll := arg[2];
-  else
-    ErrorMayQuit("Semigroups: SEMIGROUPS_DegreeOfSemigroup:\n",
-                 "unknown error,");
-  fi;
-
-  if IsTransformationSemigroup(S) then
-    return Maximum(DegreeOfTransformationSemigroup(S),
-                   DegreeOfTransformationCollection(coll));
-  elif IsPartialPermSemigroup(S) then
-    return Maximum(DegreeOfPartialPermSemigroup(S),
-                   CodegreeOfPartialPermSemigroup(S),
-                   DegreeOfPartialPermCollection(coll),
-                   CodegreeOfPartialPermCollection(coll));
-  elif IsMatrixOverSemiringSemigroup(S) then
-    return DimensionOfMatrixOverSemiring(Representative(S));
-  elif IsBipartitionSemigroup(S) then
-    return DegreeOfBipartitionSemigroup(S);
-  elif IsPBRSemigroup(S) then
-    return DegreeOfPBRSemigroup(S);
-  else
-    ErrorMayQuit("Semigroups: SEMIGROUPS_DegreeOfSemigroup:\n",
-                 "unknown error,");
-  fi;
-end);
-
 #############################################################################
-
 # different method for ideals
 
 InstallMethod(Enumerator, "for a generic semigroup with generators",
@@ -263,15 +211,15 @@ function(S)
     TryNextMethod();
   fi;
 
-  if SEMIGROUPS_IsCCSemigroup(S) then
+  if SEMIGROUPS.IsCCSemigroup(S) then
 
     data             := rec();
     data.gens        := ShallowCopy(GeneratorsOfSemigroup(S));
     data.nr          := 0;
     data.pos         := 0;
-    data.degree      := SEMIGROUPS_DegreeOfSemigroup(S);
-    data.report      := SEMIGROUPS_OptionsRec(S).report;
-    data.batch_size  := SEMIGROUPS_OptionsRec(S).batch_size;
+    data.degree      := SEMIGROUPS.DegreeOfSemigroup(S);
+    data.report      := SEMIGROUPS.OptionsRec(S).report;
+    data.batch_size  := SEMIGROUPS.OptionsRec(S).batch_size;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
 
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
@@ -295,8 +243,8 @@ function(S)
               suffix := [],
               words := []);
 
-  data.batch_size := SEMIGROUPS_OptionsRec(S).batch_size;
-  hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
+  data.batch_size := SEMIGROUPS.OptionsRec(S).batch_size;
+  hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
 
   data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
   nrgens := Length(data.gens);

@@ -10,8 +10,10 @@
 
 <#GAPDoc Label="SmallestMultiplicationTable">
   <ManSection>
-    <Attr Name="SmallestMultiplicationTable" Arg="S"/>
-    <Returns>The lex-least multiplication table of a semigroup.</Returns>
+    <Attr Name = "SmallestMultiplicationTable" Arg = "S"/>
+    <Returns>
+      The lex-least multiplication table of a semigroup.
+    </Returns>
     <Description>
       This function returns the lex-least multiplication table of a semigroup
       isomorphic to the semigroup <A>S</A>. <C>SmallestMultiplicationTable</C>
@@ -23,17 +25,18 @@
       at most approximately 50 elements.<P/> 
       
       <C>SmallestMultiplicationTable</C> is based on the function 
-      <Ref Attr="IdSmallSemigroup" BookName="Smallsemi"/> by Andreas Distler.<P/>
+      <Ref Attr = "IdSmallSemigroup" BookName = "Smallsemi"/> by Andreas
+      Distler.<P/>
 
-      <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must be
-      loaded for this function to work. 
+      <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher
+      must be loaded for this function to work. 
 
       <Example><![CDATA[
 gap> S := Semigroup(
-> Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), 
-> Bipartition( [ [ 1, 2, 3, -1 ], [ -2 ], [ -3 ] ] ), 
-> Bipartition( [ [ 1, 2, 3 ], [ -1 ], [ -2, -3 ] ] ), 
-> Bipartition( [ [ 1, 2, -1 ], [ 3, -2 ], [ -3 ] ] ) );;
+> Bipartition([[1, 2, 3, -1, -3], [-2]]), 
+> Bipartition([[1, 2, 3, -1], [-2], [-3]]), 
+> Bipartition([[1, 2, 3], [-1], [-2, -3]]), 
+> Bipartition([[1, 2, -1], [3, -2], [-3]]));;
 gap> Size(S);
 8
 gap> SmallestMultiplicationTable(S);
@@ -47,8 +50,10 @@ gap> SmallestMultiplicationTable(S);
 
 <#GAPDoc Label="IsIsomorphicSemigroup">
   <ManSection>
-    <Oper Name="IsIsomorphicSemigroup" Arg="S, T"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Oper Name = "IsIsomorphicSemigroup" Arg = "S, T"/>
+    <Returns>
+      <K>true</K> or <K>false</K>.
+    </Returns>
     <Description>
       This operation attempts to determine if the semigroups <A>S</A> and
       <A>T</A> are isomorphic, it returns <K>true</K> if they are and
@@ -61,11 +66,12 @@ gap> SmallestMultiplicationTable(S);
       be available and compiled installed for this function to work.
 
       <Example><![CDATA[
-gap> S:=Semigroup( [ PartialPerm( [ 1, 2, 4 ], [ 3, 5, 1 ] ), 
-> PartialPerm( [ 1, 3, 5 ], [ 4, 3, 2 ] ) ] );;
+gap> S := Semigroup(PartialPerm([1, 2, 4], [3, 5, 1]), 
+>                   PartialPerm([1, 3, 5], [4, 3, 2]));;
 gap> Size(S);
 11
-gap> T:=SemigroupByMultiplicationTable(SmallestMultiplicationTable(S));;
+gap> T := SemigroupByMultiplicationTable(
+> SmallestMultiplicationTable(S));;
 gap> IsIsomorphicSemigroup(S, T);
 true]]></Example>
     </Description>
@@ -74,8 +80,10 @@ true]]></Example>
 
 <#GAPDoc Label="IsomorphismSemigroups">
   <ManSection>
-    <Oper Name="IsomorphismSemigroups" Arg="S, T"/>
-    <Returns>An isomorphism or <K>fail</K>.</Returns>
+    <Oper Name = "IsomorphismSemigroups" Arg = "S, T"/>
+    <Returns>
+      An isomorphism or <K>fail</K>.
+    </Returns>
     <Description>
       This operation returns an isomorphism from the semigroup <A>S</A>
       and to the semigroup <A>T</A> if it exists, and it returns <K>fail</K> if
@@ -90,15 +98,15 @@ true]]></Example>
 
       <Example><![CDATA[
 gap> D := DClass(FullTransformationMonoid(5), 
->                Transformation( [ 1, 2, 3, 4, 1 ] ));;
+>                Transformation([1, 2, 3, 4, 1]));;
 gap> S := PrincipalFactor(D);;
 gap> StructureDescription(UnderlyingSemigroup(S));
 "S4"
 gap> S;
 <Rees 0-matrix semigroup 10x5 over S4>
 gap> D := DClass(PartitionMonoid(5), 
->                Bipartition( [ [ 1 ], [ 2, -2 ], [ 3, -3 ], 
->                               [ 4, -4 ], [ 5, -5 ], [ -1 ] ] ));;
+>                Bipartition([[1], [2, -2], [3, -3], 
+>                             [4, -4], [5, -5], [-1]]));;
 gap> T := PrincipalFactor(D);;
 gap> StructureDescription(UnderlyingSemigroup(T));
 "S4"

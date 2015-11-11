@@ -224,7 +224,7 @@ function(I)
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
 
   htopts := ShallowCopy(LambdaOrbOpts(I));
-  htopts.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
+  htopts.treehashsize := SEMIGROUPS.OptionsRec(I).hashlen.M;
   record.ht := HTCreate(LambdaFunc(I)(Representative(I)), htopts);
 
   fam := CollectionsFamily(FamilyObj(LambdaFunc(I)(Representative(I))));
@@ -262,7 +262,7 @@ function(I)
   # and <orbtogen[ComponentOfIndex(Position(o, RhoFunc(I)(gens[i])))]=i>
   # i.e. component <i> arises from <gens[orbtogen[i]]>.
   htopts := ShallowCopy(RhoOrbOpts(I));
-  htopts.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
+  htopts.treehashsize := SEMIGROUPS.OptionsRec(I).hashlen.M;
   record.ht := HTCreate(RhoFunc(I)(Representative(I)), htopts);
 
   fam := CollectionsFamily(FamilyObj(RhoFunc(I)(Representative(I))));
@@ -288,7 +288,7 @@ function(I)
   record.storenumbers := true;
   record.log := true;
   record.parent := I;
-  record.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
+  record.treehashsize := SEMIGROUPS.OptionsRec(I).hashlen.M;
   record.orbtogen := [];
   # orbtogen[Position(o, LambdaFunc(I)(gens[i]))]=i and
 
@@ -364,7 +364,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   record.storenumbers := true;
   record.log := true;
   record.parent := I;
-  record.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
+  record.treehashsize := SEMIGROUPS.OptionsRec(I).hashlen.M;
 
   len := Length(o);
 
@@ -479,7 +479,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   record.storenumbers := true;
   record.log := true;
   record.parent := I;
-  record.treehashsize := SEMIGROUPS_OptionsRec(I).hashlen.M;
+  record.treehashsize := SEMIGROUPS.OptionsRec(I).hashlen.M;
 
   len := Length(o);
 

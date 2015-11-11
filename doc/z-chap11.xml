@@ -38,22 +38,22 @@
     An element of a free inverse semigroup in &Semigroups; is displayed, by
     default, as a shortest word corresponding to the element.  However, there
     might be more than one word of the minimum length. For example, if <M>x</M>
-    and <M>y</M> are generators of a free inverse semigroups, then
-    <Display>xyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1}.</Display> See <Ref
-      Oper="MinimalWord" Label = "for free inverse semigroup element"/>.
+    and <M>y</M> are generators of a free inverse semigroups, then <Display>xyy
+      ^ {-1}xx ^ {-1}x ^ {-1} = xxx ^ {-1}yy ^ {-1}x ^ {-1}.</Display> See <Ref
+      Oper = "MinimalWord" Label = "for free inverse semigroup element"/>.
     Therefore we provide a another method for printing elements of a free
     inverse semigroup: a unique canonical form.  Suppose an element of a free
     inverse semigroup is given as a Munn tree. Let <M>L</M> be the set of words
     corresponding to the shortest paths from the start vertex to the leaves of
     the tree. Also let <M>w</M> be a word corresponding to the shortest path
-    from start to terminal vertices. The word <M>vv^{-1}</M> is an idempotent
+    from start to terminal vertices. The word <M>vv ^ {-1}</M> is an idempotent
     for every <M>v</M> in <M>L</M>.  The canonical form is given by multiplying
     these idempotents, in shortlex order, and then postmultiplying by <M>w</M>.
-    For example, consider the word <M>xyy^{-1}xx^{-1}x^{-1}</M> again.  The
-    words corresponding to the paths to the leaves are in this case <M>xx</M>
-    and <M>xy</M>. And <M>w</M> is an empty word since start and terminal
-    vertices are the same. Therefore, the canonical form is
-    <Display>xxx^{-1}x^{-1}xyy^{-1}x^{-1}.</Display> See <Ref Oper =
+    For example, consider the word <M>xyy ^ {-1}xx ^ {-1}x ^ {-1}</M> again.
+    The words corresponding to the paths to the leaves are in this case
+    <M>xx</M> and <M>xy</M>. And <M>w</M> is an empty word since start and
+    terminal vertices are the same. Therefore, the canonical form is
+    <Display>xxx ^ {-1}x ^ {-1}xyy ^ {-1}x ^ {-1}.</Display> See <Ref Oper =
       "CanonicalForm" Label = "for a free inverse semigroup element"/>.
 
     <#Include Label = "FreeInverseSemigroup">
@@ -104,7 +104,8 @@ x1x2x2^-1x1^-1x1x2]]></Example>
       <List>
         <Mark><C><A>w</A> ^ -1</C></Mark>
         <Item>
-          returns the semigroup inverse of the free inverse semigroup element <A>w</A>.
+          returns the semigroup inverse of the free inverse semigroup element
+          <A>w</A>.
         </Item>
 
         <Mark><C><A>u</A> * <A>v</A></C></Mark>
@@ -114,8 +115,8 @@ x1x2x2^-1x1^-1x1x2]]></Example>
         </Item>
         <Mark><C><A>u</A> = <A>v</A> </C></Mark>
         <Item>
-          checks if two free inverse semigroup elements are equal, by comparing their
-          canonical forms.
+          checks if two free inverse semigroup elements are equal, by comparing
+          their canonical forms.
         </Item>
       </List>
 

@@ -292,7 +292,7 @@ function(cong)
     colBlocks := [[1 .. Size(Matrix(r)[1])]];
     rowBlocks := [[1 .. Size(Matrix(r))]];
     rmscong := RMSCongruenceByLinkedTriple(r, n, colBlocks, rowBlocks);
-    cong := SEMIGROUPS_SimpleCongFromRMSCong(m, iso, rmscong);
+    cong := SEMIGROUPS.SimpleCongFromRMSCong(m, iso, rmscong);
     pairs := ShallowCopy(GeneratingPairsOfSemigroupCongruence(cong));
 
     if IsSimpleSemigroup(S) then

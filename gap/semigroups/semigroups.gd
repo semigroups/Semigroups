@@ -50,7 +50,6 @@ DeclareOperation("ClosureSemigroup",
                  [IsSemigroup, IsAssociativeElement]);
 DeclareOperation("ClosureSemigroupNC",
                  [IsSemigroup, IsListOrCollection, IsRecord]);
-DeclareGlobalFunction("SEMIGROUPS_AddGenerators");
 
 #TODO move this to attributes!
 DeclareAttribute("Generators", IsSemigroup);

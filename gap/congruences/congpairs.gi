@@ -65,7 +65,7 @@ SEMIGROUPS.SetupCongData := function(cong)
   gendata := GenericSemigroupData(S);
   pairs   := List(genpairs, x -> [Position(gendata, x[1]),
                                   Position(gendata, x[2])]);
-  hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
+  hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
 
   ht := HTCreate([1, 1], rec(forflatplainlists := true,
                              treehashsize := hashlen));

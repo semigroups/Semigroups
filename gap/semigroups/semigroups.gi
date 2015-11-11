@@ -11,6 +11,66 @@
 # This file contains methods for finite semigroups which do not depend on
 # whether they are acting or not, i.e. they should work for all semigroups.
 
+SEMIGROUPS.SemigroupTypes := [IsPBRSemigroup,
+                              IsBipartitionSemigroup,
+                              IsTransformationSemigroup,
+                              IsPartialPermSemigroup,
+                              IsBooleanMatSemigroup,
+                              IsMaxPlusMatrixSemigroup,
+                              IsMinPlusMatrixSemigroup,
+                              IsTropicalMaxPlusMatrixSemigroup,
+                              IsTropicalMinPlusMatrixSemigroup,
+                              IsProjectiveMaxPlusMatrixSemigroup,
+                              IsNTPMatrixSemigroup,
+                              IsMatrixOverPrimeFieldSemigroup,
+                              IsBlockBijectionSemigroup,
+                              IsIntegerMatrixSemigroup];
+
+SEMIGROUPS.MonoidTypes := [IsPBRMonoid,
+                           IsBipartitionMonoid,
+                           IsTransformationMonoid,
+                           IsPartialPermMonoid,
+                           IsBooleanMatMonoid,
+                           IsMaxPlusMatrixMonoid,
+                           IsMinPlusMatrixMonoid,
+                           IsTropicalMaxPlusMatrixMonoid,
+                           IsTropicalMinPlusMatrixMonoid,
+                           IsProjectiveMaxPlusMatrixMonoid,
+                           IsNTPMatrixMonoid,
+                           IsMatrixOverPrimeFieldMonoid,
+                           IsBlockBijectionMonoid,
+                           IsIntegerMatrixMonoid];
+
+SEMIGROUPS.AddGenerators := function(S, coll, opts)
+  local data;
+
+  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
+    ErrorMayQuit("Semigroups: SEMIGROUPS.AddGenerators: usage,\n",
+                 "the arguments do not belong to the same family,");
+  fi;
+
+  if IsActingSemigroup(S)
+      or (IsTransformationSemigroup(S) and DegreeOfTransformationSemigroup(S)
+          <> DegreeOfTransformationCollection(coll))
+      or (IsPartialPermSemigroup(S) and
+          (DegreeOfPartialPermSemigroup(S) <>
+           DegreeOfPartialPermCollection(coll)
+           or CodegreeOfPartialPermSemigroup(S) <>
+           CodegreeOfPartialPermCollection(coll)))
+           ## FIXME the above should really be less than, since this should
+           # work if the degree of the semigroup is larger than the degree of
+           # the collection!
+      or not SEMIGROUPS.IsCCSemigroup(S) then
+    return ClosureSemigroup(S, coll, opts);
+  fi;
+
+  data := GenericSemigroupData(S);
+  SEMIGROUP_ADD_GENERATORS(data, coll);
+  S := Semigroup(data!.gens, opts);
+  SetGenericSemigroupData(S, data);
+  return S;
+end;
+
 #TODO update the info strings to include "finite"
 
 # fall back methods
@@ -85,7 +145,7 @@ InstallMethod(MagmaByGenerators, "for an associative element collection",
 InstallMethod(SemigroupByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection and IsFinite],
 function(coll)
-  return SemigroupByGenerators(coll, SEMIGROUPS_DefaultOptionsRec);
+  return SemigroupByGenerators(coll, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 #
@@ -94,9 +154,9 @@ InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
-  local n, i, S, filts, pos, x;
+  local n, S, SemigroupsAddGenerators, filts, pos, i, x;
 
-  opts := SEMIGROUPS_ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(opts);
   gens := AsList(gens);
 
   # try to find a smaller generating set
@@ -125,17 +185,19 @@ function(gens, opts)
     opts.regular := false;
     S := Semigroup(gens[1], opts);
 
+    SemigroupsAddGenerators := SEMIGROUPS.AddGenerators;
+
     if InfoLevel(InfoSemigroups) > 1 then
       n := Length(gens);
       for i in [2 .. n] do
-        S := SEMIGROUPS_AddGenerators(S, [gens[i]], opts);
+        S := SemigroupsAddGenerators(S, [gens[i]], opts);
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far\r");
       od;
       Print("\n");
     else
       for x in gens do
-        S := SEMIGROUPS_AddGenerators(S, [x], opts);
+        S := SemigroupsAddGenerators(S, [x], opts);
       od;
     fi;
     return S;
@@ -184,7 +246,7 @@ end);
 InstallMethod(MonoidByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection and IsFinite],
 function(gens)
-  return MonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
+  return MonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 #
@@ -193,9 +255,9 @@ InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
-  local n, S, filts, pos, i, x;
+  local n, S, SemigroupsAddGenerators, filts, pos, i, x;
 
-  opts := SEMIGROUPS_ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(opts);
   gens := AsList(gens);
 
   if opts.small and Length(gens) > 1 then #small gen. set
@@ -224,11 +286,12 @@ function(gens, opts)
     opts.regular := false;
     S := Monoid(gens[1], opts);
 
+    SemigroupsAddGenerators := SEMIGROUPS.AddGenerators;
     if InfoLevel(InfoSemigroups) > 1 then
       n := Length(gens);
       for i in [2 .. n] do
         if not gens[i] in S then
-          S := SEMIGROUPS_AddGenerators(S, [gens[i]], opts);
+          S := SemigroupsAddGenerators(S, [gens[i]], opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far");
@@ -237,7 +300,7 @@ function(gens, opts)
     else
       for x in gens do
         if not x in S then
-          S := SEMIGROUPS_AddGenerators(S, [x], opts);
+          S := SemigroupsAddGenerators(S, [x], opts);
         fi;
       od;
     fi;
@@ -286,7 +349,7 @@ InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection",
 [IsAssociativeElementCollection and IsFinite],
 function(gens)
-  return InverseMonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
+  return InverseMonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 #
@@ -295,7 +358,7 @@ InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection",
 [IsAssociativeElementCollection and IsFinite],
 function(gens)
-  return InverseSemigroupByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
+  return InverseSemigroupByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 #
@@ -313,7 +376,7 @@ function(gens, opts)
                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
-  opts := SEMIGROUPS_ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(opts);
 
   if opts.small and Length(gens) > 1 then
     gens := Shuffle(Set(gens));
@@ -388,7 +451,7 @@ function(gens, opts)
                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
-  opts := SEMIGROUPS_ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(opts);
 
   if opts.small and Length(gens) > 1 then
     gens := Shuffle(Set(gens));
@@ -453,7 +516,7 @@ InstallMethod(ClosureInverseSemigroup,
 function(S, coll) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
                                  coll,
-                                 ShallowCopy(SEMIGROUPS_OptionsRec(S)));
+                                 ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
 #
@@ -464,7 +527,7 @@ InstallMethod(ClosureInverseSemigroup,
 function(S, x) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
                                  [x],
-                                 ShallowCopy(SEMIGROUPS_OptionsRec(S)));
+                                 ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
 #
@@ -508,7 +571,7 @@ function(S, coll, opts)
 
   return ClosureInverseSemigroupNC(S,
                                    Filtered(coll, x -> not x in S),
-                                   SEMIGROUPS_ProcessOptionsRec(opts));
+                                   SEMIGROUPS.ProcessOptionsRec(opts));
 end);
 
 #
@@ -579,7 +642,7 @@ InstallMethod(ClosureSemigroup,
 "for a semigroup and associative element collection",
 [IsSemigroup, IsAssociativeElementCollection and IsFinite],
 function(S, coll) #FIXME: ShallowCopy?
-  return ClosureSemigroup(S, coll, ShallowCopy(SEMIGROUPS_OptionsRec(S)));
+  return ClosureSemigroup(S, coll, ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
 #
@@ -587,7 +650,7 @@ end);
 InstallMethod(ClosureSemigroup, "for a semigroup and associative element",
 [IsSemigroup, IsAssociativeElement],
 function(S, x) #FIXME: ShallowCopy
-  return ClosureSemigroup(S, [x], ShallowCopy(SEMIGROUPS_OptionsRec(S)));
+  return ClosureSemigroup(S, [x], ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
 #
@@ -632,54 +695,10 @@ function(S, coll, opts)
   return ClosureSemigroupNC(S,
                             Filtered(coll, x -> not x in S), # FIXME don't do
                                                              #       this
-                            SEMIGROUPS_ProcessOptionsRec(opts));
+                            SEMIGROUPS.ProcessOptionsRec(opts));
 end);
 
 #recreate the lambda/rho orb using the higher degree!
-# TODO move this!
-BindGlobal("SEMIGROUPS_ChangeDegree", # for a transformation semigroup
-function(o, old_deg, t)
-  local deg, extra, ht, max, i, orb;
-  deg := DegreeOfTransformationSemigroup(t);
-  orb := o!.orbit;
-  if IsLambdaOrb(o) then
-    # rehash the orbit values
-    extra := [old_deg + 1 .. deg];
-    ht := HTCreate(o[1], rec(treehashsize := o!.treehashsize));
-    #JDM: could make the treehashsize bigger if needed here!
-    HTAdd(ht, o[1], 1);
-    for i in [2 .. Length(o)] do
-      orb[i] := ShallowCopy(o[i]);
-      Append(o[i], extra);
-      HTAdd(ht, o[i], i);
-    od;
-    Unbind(o!.ht);
-    o!.ht := ht;
-
-    # change the action of <o> to that of <t>
-    o!.op := LambdaAct(t);
-  elif IsRhoOrb(o) then
-    ht := HTCreate(o[1], rec(treehashsize := o!.treehashsize));
-    #JDM: could make the treehashsize bigger if needed here!
-    HTAdd(ht, o[1], 1);
-    for i in [2 .. Length(o)] do
-      orb[i] := ShallowCopy(o[i]);
-      if not IsEmpty(o[i]) then
-        max := MaximumList(o[i]); #nr kernel classes
-      else
-        max := 0;
-      fi;
-      Append(o[i], [max + 1 .. max + deg - old_deg]);
-      HTAdd(ht, o[i], i);
-    od;
-    Unbind(o!.ht);
-    o!.ht := ht;
-
-    # change the action of <o> to that of <t>
-    o!.op := RhoAct(t);
-  fi;
-  return o;
-end);
 
 # this is the fallback method, coll should consist of elements not in
 # the semigroup
@@ -690,10 +709,10 @@ InstallMethod(ClosureSemigroupNC,
 function(S, coll, opts)
   local data, T;
 
-  if SEMIGROUPS_IsCCSemigroup(S) then
+  if SEMIGROUPS.IsCCSemigroup(S) then
     data := SEMIGROUP_CLOSURE(GenericSemigroupData(S),
                               ShallowCopy(coll),
-                              SEMIGROUPS_DegreeOfSemigroup(S, coll));
+                              SEMIGROUPS.DegreeOfSemigroup(S, coll));
     data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                             and IsAttributeStoringRep), data);
     T := Semigroup(data!.gens, opts);
@@ -713,36 +732,6 @@ function(S, coll, opts)
   return S;
 end);
 
-InstallGlobalFunction(SEMIGROUPS_AddGenerators,
-function(S, coll, opts)
-  local data;
-
-  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_AddGenerators: usage,\n",
-                 "the arguments do not belong to the same family,");
-  fi;
-
-  if IsActingSemigroup(S)
-      or (IsTransformationSemigroup(S) and DegreeOfTransformationSemigroup(S)
-          <> DegreeOfTransformationCollection(coll))
-      or (IsPartialPermSemigroup(S) and
-          (DegreeOfPartialPermSemigroup(S) <>
-           DegreeOfPartialPermCollection(coll)
-           or CodegreeOfPartialPermSemigroup(S) <>
-           CodegreeOfPartialPermCollection(coll)))
-           ## FIXME the above should really be less than, since this should
-           # work if the degree of the semigroup is larger than the degree of
-           # the collection!
-      or not SEMIGROUPS_IsCCSemigroup(S) then
-    return ClosureSemigroup(S, coll, opts);
-  fi;
-
-  data := GenericSemigroupData(S);
-  SEMIGROUP_ADD_GENERATORS(data, coll);
-  S := Semigroup(data!.gens, opts);
-  SetGenericSemigroupData(S, data);
-  return S;
-end);
 
 #subsemigroups
 
@@ -769,7 +758,7 @@ function(S, func, limit)
   while Size(T) < limit and not IsDoneIterator(iter) do
     f := NextIterator(iter);
     if func(f) and not f in T then
-      T := SEMIGROUPS_AddGenerators(T, [f], SEMIGROUPS_OptionsRec(T));
+      T := SEMIGROUPS.AddGenerators(T, [f], SEMIGROUPS.OptionsRec(T));
     fi;
   od;
   SetParent(T, S);
@@ -845,22 +834,13 @@ function(S)
   return AsList(S)[Random([1 .. Size(S)])];
 end);
 
-BindGlobal("SEMIGROUPS_Types",
-           [IsPBRSemigroup, IsBipartitionSemigroup, IsTransformationSemigroup,
-            IsPartialPermSemigroup, IsBooleanMatSemigroup,
-            IsMaxPlusMatrixSemigroup, IsMinPlusMatrixSemigroup,
-            IsTropicalMaxPlusMatrixSemigroup, IsTropicalMinPlusMatrixSemigroup,
-            IsProjectiveMaxPlusMatrixSemigroup, IsNTPMatrixSemigroup,
-            IsMatrixOverPrimeFieldSemigroup, IsBlockBijectionSemigroup,
-            IsIntegerMatrixSemigroup]);
 
-BindGlobal("SEMIGROUPS_RandomElementCons",
-function(filt)
+SEMIGROUPS.RandomElementCons := function(filt)
   local RandomTropicalMaxPlusMatrix, RandomTropicalMinPlusMatrix,
   RandomProjectiveMaxPlusMatrix, RandomNTPMatrix, RandomMatrixOverPrimeField;
 
-  if not filt in SEMIGROUPS_Types then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_RandomElementCons: usage,\n");
+  if not filt in SEMIGROUPS.SemigroupTypes then
+    ErrorMayQuit("Semigroups: SEMIGROUPS.RandomElementCons: usage,\n");
   fi;
 
   RandomTropicalMaxPlusMatrix := function(dim, threshold)
@@ -920,22 +900,21 @@ function(filt)
     return [x -> RandomMatrix(IsIntegerMatrix, x), 1, IdFunc];
     #TODO define the canonical embedding from T_n to here!
   fi;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_RandomSemigroupOrMonoid",
-function(SemigroupOrMonoid, string, args)
+SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
   local filt, nrgens, params, cons, i;
 
   if Length(args) > 0 then
     filt := args[1];
   else
-    filt := Random(SEMIGROUPS_Types);
+    filt := Random(SEMIGROUPS.SemigroupTypes);
   fi;
 
   if Length(args) > 1 then
     nrgens := args[2];
   else
-    nrgens := Random([1 .. 12]);
+    nrgens := Random(Integers);
   fi;
 
   if Length(args) > 2 then
@@ -944,7 +923,7 @@ function(SemigroupOrMonoid, string, args)
     params := [];
   fi;
 
-  if not IsFilter(filt) or not filt in SEMIGROUPS_Types then
+  if not IsFilter(filt) or not filt in SEMIGROUPS.SemigroupTypes then
     ErrorMayQuit("Semigroups: ", string, ": usage,\n",
                  "the first argument must be a filter,");
   fi;
@@ -954,11 +933,11 @@ function(SemigroupOrMonoid, string, args)
                  "the second argument must be a positive integer,");
   fi;
 
-  cons := SEMIGROUPS_RandomElementCons(filt);
+  cons := SEMIGROUPS.RandomElementCons(filt);
 
   if Length(params) < cons[2] then
     for i in [Length(params) + 1 .. cons[2]] do
-      Add(params, Random([1 .. 12]));
+      Add(params, Random(Integers));
     od;
   fi;
 
@@ -977,7 +956,7 @@ function(SemigroupOrMonoid, string, args)
       fi;
       params[2] := GF(params[2], 1);
     elif not IsPrimeField(params[2]) then
-      params[2] := GF(NextPrimeInt(Random([1 .. 12])), 1);
+      params[2] := GF(NextPrimeInt(Random(Integers)), 1);
     fi;
   fi;
 
@@ -990,28 +969,28 @@ function(SemigroupOrMonoid, string, args)
     return SemigroupOrMonoid(Set([1 .. nrgens],
                                  x -> CallFuncList(cons[1], params)));
   fi;
-end);
+end;
 
 InstallGlobalFunction(RandomSemigroup,
 function(arg)
-  return SEMIGROUPS_RandomSemigroupOrMonoid(Semigroup, "RandomSemigroup", arg);
+  return SEMIGROUPS.RandomSemigroupOrMonoid(Semigroup, "RandomSemigroup", arg);
 end);
 
 InstallGlobalFunction(RandomMonoid,
 function(arg)
-  return SEMIGROUPS_RandomSemigroupOrMonoid(Monoid, "RandomMonoid", arg);
+  return SEMIGROUPS.RandomSemigroupOrMonoid(Monoid, "RandomMonoid", arg);
 end);
 
 InstallGlobalFunction(RandomInverseSemigroup,
 function(arg)
-  return SEMIGROUPS_RandomSemigroupOrMonoid(InverseSemigroup,
+  return SEMIGROUPS.RandomSemigroupOrMonoid(InverseSemigroup,
                                             "RandomInverseSemigroup",
                                             arg);
 end);
 
 InstallGlobalFunction(RandomInverseMonoid,
 function(arg)
-  return SEMIGROUPS_RandomSemigroupOrMonoid(InverseMonoid,
+  return SEMIGROUPS.RandomSemigroupOrMonoid(InverseMonoid,
                                             "RandomInverseMonoid",
                                             arg);
 end);

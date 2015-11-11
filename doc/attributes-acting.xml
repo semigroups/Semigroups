@@ -31,12 +31,9 @@ gap> S := Semigroup(PartialPerm( [ 1, 2, 3 ], [ 2, 5, 4 ] ),
 gap> StructureDescriptionSchutzenbergerGroups(S);            
 [ "1", "C2", "S3" ]
 gap> S := Monoid( 
-> Bipartition([[ 1, 2, 5, -1, -2 ], [ 3, 4, -3, -5 ], 
->              [ -4 ]]), 
-> Bipartition([[ 1, 2, -2 ], [ 3, -1 ], [ 4 ], [ 5 ], 
->              [ -3, -4 ], [ -5 ]]),
-> Bipartition([[ 1 ], [ 2, 3, -5 ], [ 4, -3 ], [ 5, -2 ], 
->              [ -1, -4 ]]));
+> Bipartition([[1, 2, 5, -1, -2], [3, 4, -3, -5], [-4]]), 
+> Bipartition([[1, 2, -2], [3, -1], [4], [5], [-3, -4], [-5]]),
+> Bipartition([[1], [2, 3, -5], [4, -3], [5, -2], [-1, -4]]));
 <bipartition monoid of degree 5 with 3 generators>
 gap> StructureDescriptionSchutzenbergerGroups(S);
 [ "1", "C2" ]]]></Example>

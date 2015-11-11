@@ -10,11 +10,12 @@
 
 <#GAPDoc Label="Splash">
   <ManSection>
-    <Func Name="Splash" Arg="str, [opts]"/>
+    <Func Name = "Splash" Arg = "str, [opts]"/>
     <Returns>Nothing.</Returns>
     <Description>
       This function attempts to convert the string <A>str</A> into a pdf
-      document and open this document, i.e. to splash it all over your monitor.<P/>
+      document and open this document, i.e. to splash it all over your
+      monitor.<P/>
 
       The string <A>str</A> must correspond to a valid <C>dot</C> or
       <C>LaTeX</C> text file and you must have have <C>GraphViz</C> and
@@ -132,7 +133,7 @@
       </List>
 
       <Log><![CDATA[
-gap> x := Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] );;
+gap> x := Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]);;
 gap> TikzString(RightBlocks(x));
 "%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
 t}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \
@@ -143,8 +144,7 @@ aw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\
 raw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\
 .8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\
  and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"
-gap> x := Bipartition( [ [ 1, 5 ], [ 2, 4, -3, -5 ], [ 3, -1, -2 ], 
->                        [ -4 ] ] );;
+gap> x := Bipartition([[1, 5], [2, 4, -3, -5], [3, -1, -2], [-4]]);;
 gap> TikzString(x);
 "%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
 t}\n\\begin{tikzpicture}\n\n  %block #1\n  %vertices and labels\n  \\\
@@ -223,7 +223,8 @@ ent}"]]></Log>
       <C>GreensDClasses(<A>S</A>)</C>, so that an <C>i</C> appears next to the
       eggbox diagram of <C>GreensDClasses(<A>S</A>)[i]</C>. A line from one
       &D;-class to another indicates that the higher &D;-class is greater than 
-      the lower one in the &D;-order on <A>S</A>. <P/>
+      the lower one in the &D;-order on <A>S</A>. 
+      <P/>
 
       If the optional second argument <A>options</A> is present, it can be used
       to specify some options for output. 
@@ -303,4 +304,3 @@ ter_3{\n2 3 10 4 6 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3 -- \
     </Description>
   </ManSection>
 <#/GAPDoc>
-

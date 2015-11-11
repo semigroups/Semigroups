@@ -208,12 +208,12 @@ function(I)
   local U, opts, enum, x;
 
   U := Semigroup(GeneratorsOfSemigroupIdeal(I));
-  opts := SEMIGROUPS_OptionsRec(U);
+  opts := SEMIGROUPS.OptionsRec(U);
   enum := Enumerator(I);
 
   for x in enum do
     if not x in U then # excluding this check makes this run much much slower!!
-      U := SEMIGROUPS_AddGenerators(U, [x], opts);
+      U := SEMIGROUPS.AddGenerators(U, [x], opts);
     fi;
   od;
 

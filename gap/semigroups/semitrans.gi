@@ -11,6 +11,94 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
+SEMIGROUPS.ElementRClass := function(R, largest)
+  local o, m, rep, n, base, S, max, scc, y, basei, p, x, i;
+
+  if Size(R) = 1 then
+    return Representative(R);
+  fi;
+
+  o := LambdaOrb(R);
+  m := LambdaOrbSCCIndex(R);
+  rep := Representative(R);
+
+  n := DegreeOfTransformationSemigroup(Parent(R));
+  base := DuplicateFreeList(ImageListOfTransformation(rep, n));
+
+  if not largest then
+    base := Reversed(base);
+  fi;
+
+  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
+  max := rep * LargestElementStabChain(S, ());
+
+  scc := OrbSCC(o)[m];
+
+  for i in [2 .. Length(scc)] do
+    y := EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
+    basei := DuplicateFreeList(ImageListOfTransformation(rep * y, n));
+    p := MappingPermListList(base, basei);
+    x := rep * y * LargestElementStabChain(S, (), p);
+    if x > max then
+      max := x;
+    fi;
+  od;
+
+  return max;
+end;
+
+SEMIGROUPS.SmallestElementRClass := function(R)
+  return SEMIGROUPS.ElementRClass(R, false);
+end;
+
+SEMIGROUPS.LargestElementRClass := function(R)
+  return SEMIGROUPS.ElementRClass(R, true);
+end;
+
+# stop_on_isolated_pair:
+#   if true, this function returns false if there is an isolated pair-vertex
+# TODO should this be a Digraph??
+SEMIGROUPS.GraphOfRightActionOnPairs :=
+function(gens, n, stop_on_isolated_pair)
+  local nrgens, nrpairs, PairNumber, NumberPair, in_nbs, labels, pair,
+  isolated_pair, act, range, i, j;
+  nrgens     := Length(gens);
+  nrpairs    := Binomial(n, 2);
+  PairNumber := Concatenation([1 .. n], Combinations([1 .. n], 2));
+  # Currently assume <x> is sorted and is a valid combination of [1 .. n]
+  NumberPair := function(n, x)
+    if Length(x) = 1 then
+      return x[1];
+    fi;
+    return n + Binomial(n, 2) - Binomial(n + 1 - x[1], 2) + x[2] - x[1];
+  end;
+
+  in_nbs := List([1 .. n + nrpairs], x -> []);
+  labels := List([1 .. n + nrpairs], x -> []);
+  for i in [(n + 1) .. (n + nrpairs)] do
+    pair := PairNumber[i];
+    isolated_pair := true;
+    for j in [1 .. nrgens] do
+      act := OnSets(pair, gens[j]);
+      range := NumberPair(n, act);
+      Add(in_nbs[range], i);
+      Add(labels[range], j);
+      if range <> i and isolated_pair then
+        isolated_pair := false;
+      fi;
+    od;
+    if stop_on_isolated_pair and isolated_pair then
+      return false;
+    fi;
+  od;
+
+  return rec(degree := n,
+             in_nbs := in_nbs,
+             labels := labels,
+             PairNumber := PairNumber,
+             NumberPair := NumberPair);
+end;
+
 # FIXME can probably do better than this
 
 InstallMethod(Idempotents, "for a transformation semigroup and pos int",
@@ -117,7 +205,7 @@ function(S)
 
   for x in iter do
     if not x in T then
-      T := SEMIGROUPS_AddGenerators(T, [x], SEMIGROUPS_OptionsRec(T));
+      T := SEMIGROUPS.AddGenerators(T, [x], SEMIGROUPS.OptionsRec(T));
       if T = S then
         break;
       fi;
@@ -125,57 +213,6 @@ function(S)
   od;
 
   return GeneratorsOfSemigroup(T);
-end);
-
-#
-
-BindGlobal("SEMIGROUPS_ElementRClass",
-function(R, largest)
-  local o, m, rep, n, base, S, max, scc, y, basei, p, x, i;
-
-  if Size(R) = 1 then
-    return Representative(R);
-  fi;
-
-  o := LambdaOrb(R);
-  m := LambdaOrbSCCIndex(R);
-  rep := Representative(R);
-
-  n := DegreeOfTransformationSemigroup(Parent(R));
-  base := DuplicateFreeList(ImageListOfTransformation(rep, n));
-
-  if not largest then
-    base := Reversed(base);
-  fi;
-
-  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
-  max := rep * LargestElementStabChain(S, ());
-
-  scc := OrbSCC(o)[m];
-
-  for i in [2 .. Length(scc)] do
-    y := EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
-    basei := DuplicateFreeList(ImageListOfTransformation(rep * y, n));
-    p := MappingPermListList(base, basei);
-    x := rep * y * LargestElementStabChain(S, (), p);
-    if x > max then
-      max := x;
-    fi;
-  od;
-
-  return max;
-end);
-
-#
-
-BindGlobal("SEMIGROUPS_SmallestElementRClass",
-function(R)
-  return SEMIGROUPS_ElementRClass(R, false);
-end);
-
-BindGlobal("SEMIGROUPS_LargestElementRClass",
-function(R)
-  return SEMIGROUPS_ElementRClass(R, true);
 end);
 
 #
@@ -191,7 +228,7 @@ function(S)
     return ConstantTransformation(n, 1);
   fi;
 
-  return Minimum(List(RClasses(S), SEMIGROUPS_SmallestElementRClass));
+  return Minimum(List(RClasses(S), SEMIGROUPS.SmallestElementRClass));
 end);
 
 InstallMethod(LargestElementSemigroup, "for a transformation semigroup",
@@ -205,7 +242,7 @@ function(S)
     return ConstantTransformation(n, n);
   fi;
 
-  return Maximum(List(RClasses(S), SEMIGROUPS_LargestElementRClass));
+  return Maximum(List(RClasses(S), SEMIGROUPS.LargestElementRClass));
 end);
 
 # different method required (but not yet given!! JDM) for ideals
@@ -304,48 +341,6 @@ function(S)
   return Sum(ind);
 end);
 
-# stop_on_isolated_pair:
-#   if true, this function returns false if there is an isolated pair-vertex
-BindGlobal("SEMIGROUPS_GraphOfRightActionOnPairs",
-function(gens, n, stop_on_isolated_pair)
-  local nrgens, nrpairs, PairNumber, NumberPair, in_nbs, labels, pair,
-  isolated_pair, act, range, i, j;
-  nrgens     := Length(gens);
-  nrpairs    := Binomial(n, 2);
-  PairNumber := Concatenation([1 .. n], Combinations([1 .. n], 2));
-  # Currently assume <x> is sorted and is a valid combination of [1 .. n]
-  NumberPair := function(n, x)
-    if Length(x) = 1 then
-      return x[1];
-    fi;
-    return n + Binomial(n, 2) - Binomial(n + 1 - x[1], 2) + x[2] - x[1];
-  end;
-
-  in_nbs := List([1 .. n + nrpairs], x -> []);
-  labels := List([1 .. n + nrpairs], x -> []);
-  for i in [(n + 1) .. (n + nrpairs)] do
-    pair := PairNumber[i];
-    isolated_pair := true;
-    for j in [1 .. nrgens] do
-      act := OnSets(pair, gens[j]);
-      range := NumberPair(n, act);
-      Add(in_nbs[range], i);
-      Add(labels[range], j);
-      if range <> i and isolated_pair then
-        isolated_pair := false;
-      fi;
-    od;
-    if stop_on_isolated_pair and isolated_pair then
-      return false;
-    fi;
-  od;
-
-  return rec(degree := n,
-             in_nbs := in_nbs,
-             labels := labels,
-             PairNumber := PairNumber,
-             NumberPair := NumberPair);
-end);
 
 # same method for ideals
 
@@ -412,7 +407,7 @@ function(gens, n)
     return false; # S = <gens> is a group of transformations
   fi;
 
-  graph := SEMIGROUPS_GraphOfRightActionOnPairs(gens, n, true);
+  graph := SEMIGROUPS.GraphOfRightActionOnPairs(gens, n, true);
 
   if graph = false then
     return false;
@@ -476,7 +471,7 @@ function(S)
     return gens[1];
   fi;
 
-  graph := SEMIGROUPS_GraphOfRightActionOnPairs(gens, n, false);
+  graph := SEMIGROUPS.GraphOfRightActionOnPairs(gens, n, false);
 
   # find a word describing a path from each collapsible pair to a singleton
   nrpairs := Binomial(n, 2);

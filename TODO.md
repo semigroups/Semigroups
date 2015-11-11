@@ -1,38 +1,12 @@
 #TODO
 ##There are more TODOs in the source files this list is not exhaustive##
 
-gap> S := Semigroup(PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]));
-<trivial partial perm group of rank 5 with 0 generators>
-gap> Print(S);
-Group( ... )
-
-fix this:
-
-gap> s := FreeSemigroup("a","b");
-<free semigroup on the generators [ a, b ]>
-gap> t := Subsemigroup(s,[]);
-<trivial group with 0 generators>
-gap> Size(t);
-1
-gap> AsList(t);
-Error, List Element: <list>[1] must have an assigned value in
-  data.ht := HTCreate( data.gens[1], rec(
-      treehashsize := hashlen ) )
- ; on line 295 of file /Users/jdm/gap/pkg/semigroups/gap/main/froidure-pin.gi called from
-GenericSemigroupData( S
- ) on line 101 of file /Users/jdm/gap/pkg/semigroups/gap/main/froidure-pin.gi called from
-enum!.Length( enum ) on line 467 of file /Users/jdm/gap/lib/coll.gi called from
-Length( list ) on line 481 of file /Users/jdm/gap/lib/list.gi called from
-IsSmallList( list ) on line 551 of file /Users/jdm/gap/lib/list.gi called from
-ConstantTimeAccessList( Enumerator( coll ) ) on line 282 of file /Users/jdm/gap/lib/coll.gi called from
-...  at line 12 of *stdin*
-you can 'return;' after assigning a value
-brk>
-
 
 ###TODO C++
 
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
+* enumerator sorted
+* ideals (look at semigroupe)
 * multiplicative zero
 
 * remove `auto`, use `override`: done in:
@@ -60,11 +34,7 @@ brk>
 
 ###GAP
 * fix the ViewString method for graph inverse semigroup
-
 * `AsTransformationSemigroup` for a pbr semigroup seems slow.
-
-* **Move the new view string methods into the library.**
-
 * Add `IsFinite` check to start of appropriate methods and add tests
 * remove `genstoapply` from the the generic semigroup data
 * `ReadGenerators` and `WriteGenerators` for new types
@@ -88,6 +58,7 @@ brk>
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
 ##DONE
+* **Move the new view string methods into the library.**
 * change `IdempotentGeneratedSubsemigroup` for generic semigroups to find a small generating set
 * Print for `S := Semigroup(PartialPerm([1]), PartialPerm([]));` returns the wrong thing
 * tests for pbrs

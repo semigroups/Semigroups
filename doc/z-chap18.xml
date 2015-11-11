@@ -1,4 +1,4 @@
-<Chapter Label="Semigroup homomorphisms">
+<Chapter Label = "Semigroup homomorphisms">
   <Heading>
     Semigroup homomorphisms
   </Heading> 
@@ -15,9 +15,9 @@
       Isomorphisms of arbitrary semigroups
     </Heading> 
 
-    <#Include Label="IsIsomorphicSemigroup"> 
-    <#Include Label="SmallestMultiplicationTable"> 
-    <#Include Label="IsomorphismSemigroups"> 
+    <#Include Label = "IsIsomorphicSemigroup"> 
+    <#Include Label = "SmallestMultiplicationTable"> 
+    <#Include Label = "IsomorphismSemigroups"> 
 
   </Section>
   
@@ -33,8 +33,8 @@
 
     <!--********************************************************************-->
     
-    <Subsection 
-      Label="Operators for isomorphisms of Rees (0-)matrix semigroup by triples">
+    <Subsection Label = "Operators for isomorphisms of Rees (0-)matrix
+      semigroup by triples">
 
       <Heading>
         Operators for isomorphisms of Rees (0-)matrix semigroup by triples
@@ -44,17 +44,18 @@
         
         <Mark><C><A>map</A>[<A>i</A>]</C></Mark>
         <Item>
-          <Index Key="ELM_LIST"><C>ELM_LIST</C> (for Rees (0-)matrix semigroup
+          <Index Key = "ELM_LIST"><C>ELM_LIST</C> (for Rees (0-)matrix semigroup
             isomorphisms by triples)
           </Index>
           <C><A>map</A>[i]</C> returns the <A>i</A>th component of the Rees
-          (0-)matrix semigroup isomorphism by triple <A>map</A> when <C><A>i</A> = 1,
-            2, 3</C>; see <Ref Oper = "ELM_LIST" Label = "for IsRMSIsoByTriple"/>. 
+          (0-)matrix semigroup isomorphism by triple <A>map</A> when
+          <C><A>i</A> = 1, 2, 3</C>; see
+          <Ref Oper = "ELM_LIST" Label = "for IsRMSIsoByTriple"/>. 
         </Item>
 
         <Mark><C><A>map1</A> * <A>map2</A></C></Mark>
         <Item>
-          <Index Key="*"><C>*</C> 
+          <Index Key = "*"><C> * </C> 
             (for Rees (0-)matrix semigroup isomorphisms by triples)
           </Index>
           returns the composition of <A>map2</A> and <A>map1</A>;
@@ -63,7 +64,7 @@
 
         <Mark><C><A>map1</A> &lt; <A>map2</A></C></Mark>
         <Item>
-          <Index Key="&lt;"><C>&lt;</C>
+          <Index Key = "&lt;"><C>&lt;</C>
             (for Rees (0-)matrix semigroup isomorphisms by triples)
           </Index>
           returns <K>true</K> if <A>map1</A> is lexicographically less than
@@ -72,7 +73,7 @@
 
         <Mark><C><A>map1</A> = <A>map2</A></C></Mark>
         <Item>
-          <Index Key="="><C>=</C>
+          <Index Key = "="><C> = </C>
             (for Rees (0-)matrix semigroup isomorphisms by triples)
           </Index>
           returns <K>true</K> if the Rees (0-)matrix semigroup
@@ -85,7 +86,7 @@
         
         <Mark><C><A>pt</A> ^ <A>map</A></C></Mark>
         <Item>
-          <Index Key="^"><C>^</C>
+          <Index Key = "^"><C> ^ </C>
             (for Rees (0-)matrix semigroup isomorphisms by triples)
           </Index>
           returns the image of the element <A>pt</A> of the source of

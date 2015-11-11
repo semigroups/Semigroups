@@ -16,11 +16,79 @@
 DeclareCategory("SEMIGROUPS_CongSimple",
                 IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
 
-DeclareGlobalFunction("SEMIGROUPS_SimpleCongFromRMSCong");
-DeclareGlobalFunction("SEMIGROUPS_SimpleCongFromPairs");
-
 DeclareCategory("SEMIGROUPS_CongClassSimple",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);
 
-DeclareGlobalFunction("SEMIGROUPS_SimpleClassFromRMSclass");
+#
+
+SEMIGROUPS.SimpleCongFromPairs :=
+function(S, pairs)
+  local iso, r, rmspairs, pcong, rmscong, cong;
+
+  # If s is a RMS/RZMS, then just create the linked triple congruence
+  if IsReesMatrixSemigroup(S) then
+    # gaplint: ignore 2
+    cong := AsRMSCongruenceByLinkedTriple(
+            SemigroupCongruenceByGeneratingPairs(S, pairs));
+  elif IsReesZeroMatrixSemigroup(S) then
+    # gaplint: ignore 2
+    cong := AsRZMSCongruenceByLinkedTriple(
+            SemigroupCongruenceByGeneratingPairs(S, pairs));
+  else
+    # Otherwise, create a SIMPLECONG
+    if IsSimpleSemigroup(S) then
+      iso := IsomorphismReesMatrixSemigroup(S);
+    else
+      iso := IsomorphismReesZeroMatrixSemigroup(S);
+    fi;
+    r := Range(iso);
+    rmspairs := List(pairs, p -> [p[1] ^ iso, p[2] ^ iso]);
+    pcong := SemigroupCongruenceByGeneratingPairs(r, rmspairs);
+    if IsReesMatrixSemigroup(r) then
+      rmscong := AsRMSCongruenceByLinkedTriple(pcong);
+    else  #elif IsReesZeroMatrixSemigroup(r) then
+      rmscong := AsRZMSCongruenceByLinkedTriple(pcong);
+    fi;
+    # Special case for the universal congruence
+    if IsUniversalSemigroupCongruence(rmscong) then
+      cong := UniversalSemigroupCongruence(S);
+    else
+      cong := SEMIGROUPS.SimpleCongFromRMSCong(S, iso, rmscong);
+    fi;
+  fi;
+  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
+  return cong;
+end;
+
+#
+
+SEMIGROUPS.SimpleCongFromRMSCong :=
+function(S, iso, rmscong)
+  local r, fam, cong;
+  r := Range(rmscong);
+
+  # Construct the object
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
+  cong := Objectify(NewType(fam, SEMIGROUPS_CongSimple),
+                    rec(rmscong := rmscong, iso := iso));
+  SetSource(cong, S);
+  SetRange(cong, S);
+  return cong;
+end;
+
+#
+
+SEMIGROUPS.SimpleClassFromRMSclass :=
+function(cong, rmsclass)
+  local fam, class;
+  fam := FamilyObj(Range(cong));
+  class := Objectify(NewType(fam, SEMIGROUPS_CongClassSimple),
+                     rec(rmsclass := rmsclass, iso := cong!.iso));
+  SetParentAttr(class, Range(cong));
+  SetEquivalenceClassRelation(class, cong);
+  SetRepresentative(class, Representative(rmsclass) ^
+                           InverseGeneralMapping(cong!.iso));
+  return class;
+end;

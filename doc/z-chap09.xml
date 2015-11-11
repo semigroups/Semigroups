@@ -1,4 +1,4 @@
-<Chapter Label="Standard examples">
+<Chapter Label = "Standard examples">
   <Heading>
     Standard examples
   </Heading> 
@@ -10,27 +10,27 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label="Transformation semigroups">
+  <Section Label = "Transformation semigroups">
     <Heading>
       Transformation semigroups
     </Heading>
 
     In this section, we describe the operations in &Semigroups; that can be
     used to create transformation semigroups belonging to several standard
-    classes of example. See <Ref Chap="Transformations" BookName="ref"/> for
-    more information about semigroups of transformations. 
-    <#Include Label="EndomorphismsPartition"> 
-    <#Include Label="PartialTransformationSemigroup"> 
-    <#Include Label="MunnSemigroup">
-    <#Include Label="OPOIPOPI">
+    classes of example. See <Ref Chap = "Transformations" BookName = "ref"/>
+    for more information about semigroups of transformations. 
+    <#Include Label = "EndomorphismsPartition"> 
+    <#Include Label = "PartialTransformationSemigroup"> 
+    <#Include Label = "MunnSemigroup">
+    <#Include Label = "OPOIPOPI">
     <!-- split this to separate transformation and partial perm semigroups-->
-    <#Include Label="SingularTransformationSemigroup">
+    <#Include Label = "SingularTransformationSemigroup">
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
   
-  <Section Label="Semigroups of partial permutations">
+  <Section Label = "Semigroups of partial permutations">
     <Heading>
       Semigroups of partial permutations
     </Heading>
@@ -39,52 +39,52 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
   
-  <Section Label="Semigroups of bipartitions">
+  <Section Label = "Semigroups of bipartitions">
     <Heading>
       Semigroups of bipartitions
     </Heading>
 
     In this section, we describe the operations in &Semigroups; that can be
     used to create bipartition semigroups belonging to several standard
-    classes of example. See Chapter <Ref Chap="bipartition"/> for more
+    classes of example. See Chapter <Ref Chap = "bipartition"/> for more
     information about semigroups of bipartitions.
-    <#Include Label="PartitionMonoid"> 
-    <#Include Label="BrauerMonoid"> 
-    <#Include Label="JonesMonoid"> 
-    <#Include Label="FactorisableDualSymmetricInverseSemigroup">
-    <#Include Label="DualSymmetricInverseSemigroup">
+    <#Include Label = "PartitionMonoid"> 
+    <#Include Label = "BrauerMonoid"> 
+    <#Include Label = "JonesMonoid"> 
+    <#Include Label = "FactorisableDualSymmetricInverseSemigroup">
+    <#Include Label = "DualSymmetricInverseSemigroup">
   </Section>
   
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label="Standard PBR semigroups">
+  <Section Label = "Standard PBR semigroups">
     <Heading>
       Standard PBR semigroups
     </Heading>
-    <#Include Label="FullPBRMonoid">
+    <#Include Label = "FullPBRMonoid">
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
   
-  <Section Label="Semigroups of boolean matrices">
+  <Section Label = "Semigroups of boolean matrices">
     <Heading>
       Semigroups of boolean matrices
     </Heading>
-    <#Include Label="RegularBinaryRelationSemigroup">
+    <#Include Label = "RegularBinaryRelationSemigroup">
     
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
   
-  <Section Label="Matrix semigroups">
+  <Section Label = "Matrix semigroups">
     <Heading>
       Matrix semigroups
     </Heading>
-    <#Include Label="FullMatrixSemigroup">
-    <#Include Label="IsFullMatrixSemigroup">
+    <#Include Label = "FullMatrixSemigroup">
+    <#Include Label = "IsFullMatrixSemigroup">
     
   </Section>
 

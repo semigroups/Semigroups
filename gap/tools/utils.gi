@@ -111,7 +111,7 @@ SEMIGROUPS.StartTest := function()
 
   # store current default options
   record.SEMIGROUPS_DefaultOptionsRec :=
-    ShallowCopy(SEMIGROUPS_DefaultOptionsRec);
+    ShallowCopy(SEMIGROUPS.DefaultOptionsRec);
 
   # set info levels
   SetInfoLevel(InfoWarning, 0);
@@ -129,7 +129,7 @@ SEMIGROUPS.StartTest := function()
                     "minimal");
 
   # set default options
-  SEMIGROUPS_DefaultOptionsRec.report := false;
+  SEMIGROUPS.DefaultOptionsRec.report := false;
 
   # timing
   record.timeofday := IO_gettimeofday();
@@ -168,10 +168,7 @@ SEMIGROUPS.StopTest := function(file)
                     record.FreeInverseSemigroupElementDisplay);
 
   # restore default options
-  UnbindGlobal("SEMIGROUPS_DefaultOptionsRec");
-  BindGlobal("SEMIGROUPS_DefaultOptionsRec",
-             record.SEMIGROUPS_DefaultOptionsRec);
-  MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
+  SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;
 
   # timing
   timeofday := IO_gettimeofday();
@@ -223,7 +220,7 @@ SEMIGROUPS.Test := function(arg)
     opts.silent := true;
   fi;
 
-  generic := SEMIGROUPS_DefaultOptionsRec.generic;
+  generic := SEMIGROUPS.DefaultOptionsRec.generic;
   split := SplitString(file, "/");
   print_file := JoinStringsWithSeparator(split{
                                          [Length(split) - 2 .. Length(split)]},
@@ -239,7 +236,7 @@ SEMIGROUPS.Test := function(arg)
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
 
-  SEMIGROUPS_DefaultOptionsRec.generic := false;
+  SEMIGROUPS.DefaultOptionsRec.generic := false;
   enabled := Test(file);
   if not opts.silent then
     Print("\n");
@@ -258,7 +255,7 @@ SEMIGROUPS.Test := function(arg)
   if not opts.silent then
     Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   fi;
-  SEMIGROUPS_DefaultOptionsRec.generic := true;
+  SEMIGROUPS.DefaultOptionsRec.generic := true;
   disabled := Test(file);
   Print("\n");
   if not opts.silent then
@@ -270,7 +267,7 @@ SEMIGROUPS.Test := function(arg)
     Print("\n\n");
   fi;
 
-  SEMIGROUPS_DefaultOptionsRec.generic := generic;
+  SEMIGROUPS.DefaultOptionsRec.generic := generic;
   return enabled and disabled;
 end;
 
@@ -380,9 +377,9 @@ SEMIGROUPS.TestManualExamples := function(arg)
   fi;
 
   width := SizeScreen()[1] - 3;
-  generic := SEMIGROUPS_DefaultOptionsRec.generic;
+  generic := SEMIGROUPS.DefaultOptionsRec.generic;
 
-  SEMIGROUPS_DefaultOptionsRec.generic := false;
+  SEMIGROUPS.DefaultOptionsRec.generic := false;
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
   Print("Testing manual examples with acting methods ",
@@ -392,7 +389,7 @@ SEMIGROUPS.TestManualExamples := function(arg)
   SEMIGROUPS.RunExamples(ex, []);
   SEMIGROUPS.StopTest("");
 
-  SEMIGROUPS_DefaultOptionsRec.generic := true;
+  SEMIGROUPS.DefaultOptionsRec.generic := true;
   GASMAN("collect");
   Print("\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
@@ -405,7 +402,7 @@ SEMIGROUPS.TestManualExamples := function(arg)
   # SEMIGROUPS.StopTest("");
   #TODO make SEMIGROUPS.StopTest accept no args, or 1 arg
 
-  SEMIGROUPS_DefaultOptionsRec.generic := generic;
+  SEMIGROUPS.DefaultOptionsRec.generic := generic;
   return;
 end;
 

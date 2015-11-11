@@ -396,7 +396,7 @@ function(cong)
   end;
 
   pos := 0;
-  hashlen := SEMIGROUPS_OptionsRec(S).hashlen.L;
+  hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
 
   ht := HTCreate([ids[1], ids[1]], rec(forflatplainlists := true,
                                        treehashsize := hashlen));
@@ -532,15 +532,4 @@ function(cong)
 
   #TODO: Change this to NC
   return InverseSemigroupCongruenceByKernelTrace(S, kernel, traceBlocks);
-end);
-
-#
-
-InstallGlobalFunction(SEMIGROUPS_InverseCongFromPairs,
-function(S, pairs)
-  local cong;
-  cong := SemigroupCongruenceByGeneratingPairs(S, pairs);
-  cong := AsInverseSemigroupCongruenceByKernelTrace(cong);
-  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
-  return cong;
 end);
