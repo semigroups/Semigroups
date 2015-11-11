@@ -1190,6 +1190,12 @@ gap> GeneratorsOfInverseSemigroup(S);
 gap> GeneratorsOfInverseMonoid(S);
 [ IdentityTransformation ]
 
+#T# Test for Issue 136
+gap> S := Semigroup(PartialPerm([2, 0]));
+<commutative partial perm semigroup of rank 1 with 1 generator>
+gap> CyclesOfPartialPermSemigroup(S);
+[  ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
