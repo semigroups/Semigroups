@@ -80,15 +80,15 @@ ReadPackage("semigroups/gap/attributes/normalizer.gd");
 ReadPackage("semigroups/gap/attributes/properties.gd");
 ReadPackage("semigroups/gap/attributes/reesmat-iso.gd");
 
-ReadPackage("semigroups/gap/congruences/pairs.gd");
-ReadPackage("semigroups/gap/congruences/reesmat.gd");
-ReadPackage("semigroups/gap/congruences/univ.gd");
-ReadPackage("semigroups/gap/congruences/inverse.gd");
-ReadPackage("semigroups/gap/congruences/simple.gd");
-ReadPackage("semigroups/gap/congruences/rees.gd");
+ReadPackage("semigroups/gap/congruences/congpairs.gd");
+ReadPackage("semigroups/gap/congruences/congreesmat.gd");
+ReadPackage("semigroups/gap/congruences/conguniv.gd");
+ReadPackage("semigroups/gap/congruences/conginverse.gd");
+ReadPackage("semigroups/gap/congruences/congsimple.gd");
+ReadPackage("semigroups/gap/congruences/congrees.gd");
 ReadPackage("semigroups/gap/congruences/quotients.gd");
 ReadPackage("semigroups/gap/congruences/congruences.gd");
-ReadPackage("semigroups/gap/congruences/lattice.gd");
+ReadPackage("semigroups/gap/congruences/conglattice.gd");
 
 ReadPackage("semigroups/gap/fp/fpsemi.gd");
 ReadPackage("semigroups/gap/fp/freeinverse.gd");

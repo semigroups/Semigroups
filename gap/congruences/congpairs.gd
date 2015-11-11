@@ -10,7 +10,7 @@
 ## This file contains functions for any finite semigroup congruence with
 ## generating pairs, using a pair enumeration and union-find method.
 ##
-## See the header of pairs.gi for a full summary.
+## See the header of congpairs.gi for a full summary.
 ## 
 
 DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);

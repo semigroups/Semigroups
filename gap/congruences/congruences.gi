@@ -11,12 +11,12 @@
 ## semigroup congruences.  Methods for specific types of congruence are
 ## implemented in the following files:
 ##
-##       inverse.gi - Inverse semigroups
-##       pairs.gi   - Congruences with generating pairs
-##       rees.gi    - Rees congruences
-##       reesmat.gi - (0-)simple Rees matrix semigroups
-##       simple.gi  - (0-)simple semigroups
-##       univ.gi    - Universal congruences
+##       conginverse.gi - Inverse semigroups
+##       congpairs.gi   - Congruences with generating pairs
+##       congrees.gi    - Rees congruences
+##       congreesmat.gi - (0-)simple Rees matrix semigroups
+##       congsimple.gi  - (0-)simple semigroups
+##       conguniv.gi    - Universal congruences
 ##
 ## congruences.gd contains declarations for many of these.
 ##
