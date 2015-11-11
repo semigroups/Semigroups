@@ -24,7 +24,7 @@
     automatically processing and opening the strings output by <Ref Oper =
       "TikzString"/> and <Ref Oper = "DotString"/> 
 
-    <#Include Label="Splash"/>
+    <#Include Label = "Splash"/>
 
   </Section>
   
@@ -42,11 +42,11 @@
     <P/>
     
     The operations described in this section return strings, which
-    can be written to a file using the function <Ref Func="FileString"
-      BookName="GAPDoc"/> or viewed using <Ref Func="Splash"/>.
+    can be written to a file using the function <Ref Func = "FileString"
+      BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash"/>.
 
-    <#Include Label="DotString"/>
-    <#Include Label="DotSemilatticeOfIdempotents"/>
+    <#Include Label = "DotString"/>
+    <#Include Label = "DotSemilatticeOfIdempotents"/>
 
   </Section>
   
@@ -63,10 +63,10 @@
     <P/>
 
     The functions described in this section return a string, which can be
-    written to a file using the function <Ref Func="FileString"
-      BookName="GAPDoc"/> or viewed using <Ref Func="Splash"/>.
+    written to a file using the function <Ref Func = "FileString"
+      BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash"/>.
 
-    <#Include Label="TikzString">
+    <#Include Label = "TikzString">
 
   </Section>
 

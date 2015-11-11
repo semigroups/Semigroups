@@ -1,4 +1,4 @@
-<Chapter Label="Standard constructions">
+<Chapter Label = "Standard constructions">
   <Heading>
     Standard constructions
   </Heading>
@@ -10,7 +10,7 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label="Standard constructions">
+  <Section Label = "Standard constructions">
     <Heading>
       Standard constructions
     </Heading>
@@ -21,11 +21,11 @@
     of transformations. In general, these functions do not return
     a representation of minimal degree.
 
-    <#Include Label="TrivialSemigroup">
-    <#Include Label="MonogenicSemigroup">
-    <#Include Label="RectangularBand">
-    <#Include Label="ZeroSemigroup">
-    <#Include Label="LeftZeroSemigroup">
+    <#Include Label = "TrivialSemigroup">
+    <#Include Label = "MonogenicSemigroup">
+    <#Include Label = "RectangularBand">
+    <#Include Label = "ZeroSemigroup">
+    <#Include Label = "LeftZeroSemigroup">
   </Section>
 
   <!--**********************************************************************-->

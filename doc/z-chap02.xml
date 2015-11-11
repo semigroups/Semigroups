@@ -1,12 +1,12 @@
-<Chapter Label="Installing Semigroups">
+<Chapter Label = "Installing Semigroups">
   <Heading>Installing &Semigroups;</Heading>
     
-  <Section Label="For those in a hurry">
+  <Section Label = "For those in a hurry">
     <Heading>For those in a hurry</Heading>
     In this section we give a brief description of how to start using
     &Semigroups;.<P/>
 
-    It is assumed that you have a working copy of &GAP; with version number 
+    It is assumed that you have a working copy of &GAP; with version number
     &GAPVERS; or higher. The most up-to-date version of &GAP; and instructions
     on how to install it can be obtained from the main &GAP; webpage
     <URL>http://www.gap-system.org</URL>.<P/>
@@ -39,18 +39,18 @@
 
       <Item>  
         <B>This step is optional:</B> certain functions in &Semigroups; require
-        the &Grape; package to be available and fully compiled; see Section 
-        <Ref Subsect="The Grape package"/> for full details.  To use these
+        the &Grape; package to be available and fully compiled; see Section
+        <Ref Subsect = "The Grape package"/> for full details.  To use these
         functions make sure that the &Grape; package version &GRAPEVERS; or
         higher is available.  If &Grape; is not fully installed (i.e.
         compiled), then &Semigroups; can be used as normal with the exception
-        that the functions listed in Subsection <Ref Subsect="The Grape package"/> 
-        will not work. 
+        that the functions listed in Subsection
+        <Ref Subsect = "The Grape package"/> will not work. 
       </Item>
 
       <Item> 
         download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
-        <URL Text="the Semigroups package webpage">http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php</URL>.
+        <URL Text = "the Semigroups package webpage" >http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php</URL>.
       </Item>
     
       <Item> 
@@ -71,7 +71,7 @@
 <![CDATA[./configure
 make]]></Listing>
         Further information about this step can be found in Section 
-        <Ref Sect="Compiling the kernel module"/>. 
+        <Ref Sect = "Compiling the kernel module"/>. 
       </Item>
 
       <Item>
@@ -88,13 +88,13 @@ make]]></Listing>
 
     If you want to check that the package is working correctly, you
     should run some of the tests described in Section 
-    <Ref Sect="Testing your installation"/>.
+    <Ref Sect = "Testing your installation"/>.
   </Section>
   
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label="Optional package dependencies">
+  <Section Label = "Optional package dependencies">
     <Heading>Optional package dependencies</Heading>
     
     <!--********************************************************************-->
@@ -107,26 +107,26 @@ make]]></Listing>
     
     <!--********************************************************************-->
 
-    <Subsection Label="The Grape package">
+    <Subsection Label = "The Grape package">
       <Heading>The Grape package</Heading>
       
       The &Grape; package must be available for the operation 
-      <Ref Oper="SmallestMultiplicationTable"/> to work, and it must be fully
+      <Ref Oper = "SmallestMultiplicationTable"/> to work, and it must be fully
       compiled for the following functions to work:
       
       <List>
         <Item> 
-          <Ref Oper="MunnSemigroup"/>
+          <Ref Oper = "MunnSemigroup"/>
         </Item>
         <Item> 
-          <Ref Oper="MaximalSubsemigroups"
-            Label="for a non-exhaustive semigroup"/>
+          <Ref Oper = "MaximalSubsemigroups"
+            Label = "for a non-exhaustive semigroup"/>
         </Item>
         <Item>
-          <Ref Oper="IsIsomorphicSemigroup"/>
+          <Ref Oper = "IsIsomorphicSemigroup"/>
         </Item>
         <Item>
-          <Ref Oper="IsomorphismSemigroups"/>.
+          <Ref Oper = "IsomorphismSemigroups"/>.
         </Item>
       </List>
 
@@ -136,21 +136,21 @@ make]]></Listing>
 
     <!--********************************************************************-->
 
-    <Subsection Label="genss">
+    <Subsection Label = "genss">
       <Heading>The genss package</Heading>
 
       The &genss; package is used in a non-deterministic version of the
       operation
-      <Ref Oper="Normalizer" Label="for a perm group, semigroup, record"/> and
-      in calculating the stabiliser of a Rees 0-matrix semigroup's matrix.  It
-      must be installed for &Semigroups; to load.
+      <Ref Oper = "Normalizer" Label = "for a perm group, semigroup, record"/>
+      and in calculating the stabiliser of a Rees 0-matrix semigroup's matrix.
+      It must be installed for &Semigroups; to load.
     </Subsection>
   </Section>
   
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label="Compiling the kernel module">
+  <Section Label = "Compiling the kernel module">
     <Heading>Compiling the kernel module</Heading>
     As of version ??, the &Semigroups; package has a &GAP; kernel component in
     C/C++ which should be compiled.  This component contains low-level
@@ -186,58 +186,61 @@ make]]></Listing>
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label="Rebuilding the documentation">
+  <Section Label = "Rebuilding the documentation">
     <Heading>Rebuilding the documentation</Heading>
+
     The &Semigroups; package comes complete with pdf, html, and text versions
     of the documentation. However, you might find it necessary, at some point,
     to rebuild the documentation. To rebuild the documentation use the <Ref
-      Func="SemigroupsMakeDoc"/>.
+      Func = "SemigroupsMakeDoc"/>.
 
-    <#Include Label="SemigroupsMakeDoc">
+    <#Include Label = "SemigroupsMakeDoc">
   </Section>
   
   <!--**********************************************************************-->
   <!--**********************************************************************-->
     
-  <Section Label="Testing your installation">
+  <Section Label = "Testing your installation">
     <Heading>Testing your installation</Heading>
     
     In this section we describe how to test that &Semigroups; is working as
     intended.  To test that &Semigroups; is installed correctly use 
-    <Ref Func="SemigroupsTestInstall"/> or for more extensive tests use 
-    <Ref Func="SemigroupsTestStandard"/>. Please note that it will take a few
-    seconds for <Ref Func="SemigroupsTestInstall"/> to finish and it may take
-    several minutes for <Ref Func="SemigroupsTestStandard"/> to finish.
+    <Ref Func = "SemigroupsTestInstall"/> or for more extensive tests use 
+    <Ref Func = "SemigroupsTestStandard"/>. Please note that it will take a few
+    seconds for <Ref Func = "SemigroupsTestInstall"/> to finish and it may take
+    several minutes for <Ref Func = "SemigroupsTestStandard"/> to finish.
     <P/>
 
-    If something goes wrong, then please review the instructions in Section <Ref
-      Sect="For those in a hurry"/> and ensure that &Semigroups; has been
+    If something goes wrong, then please review the instructions in Section
+    <Ref Sect = "For those in a hurry"/> and ensure that &Semigroups; has been
     properly installed.  If you continue having problems, please use the <URL
-      Text="issue tracker">http://bitbucket.org/james-d-mitchell/semigroups/issues</URL>
-    to report the issues you are having. 
+      Text = "issue
+      tracker">http://bitbucket.org/james-d-mitchell/semigroups/issues</URL> to
+    report the issues you are having. 
 
-    <#Include Label="SemigroupsTestInstall">
-    <#Include Label="SemigroupsTestStandard">
-    <!--<#Include Label="SemigroupsTestManualExamples">-->
+    <#Include Label = "SemigroupsTestInstall">
+    <#Include Label = "SemigroupsTestStandard">
+    <!--<#Include Label = "SemigroupsTestManualExamples">-->
 
   </Section>
   
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section><Heading>More information during a computation</Heading>
-    <#Include Label="InfoSemigroups">
+  <Section>
+    <Heading>More information during a computation</Heading>
+    <#Include Label = "InfoSemigroups">
   </Section>
 
   <!-- TODO: move this
     <Section><Heading>Reading and writing elements to a file</Heading>
-    The functions <Ref Func="ReadGenerators"/> and 
-    <Ref Func="WriteGenerators"/> can be used to read or write transformations,
+    The functions <Ref Func = "ReadGenerators"/> and 
+    <Ref Func = "WriteGenerators"/> can be used to read or write transformations,
     partial permutations, and bipartitions to a file. 
-    <#Include Label="SemigroupsDir">
-    <#Include Label="ReadGenerators">
-    <#Include Label="WriteGenerators">
-    <#Include Label="IteratorFromGeneratorsFile">
+    <#Include Label = "SemigroupsDir">
+    <#Include Label = "ReadGenerators">
+    <#Include Label = "WriteGenerators">
+    <#Include Label = "IteratorFromGeneratorsFile">
   </Section>-->
   
   <!--**********************************************************************-->

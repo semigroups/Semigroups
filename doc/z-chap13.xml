@@ -1,4 +1,4 @@
-<Chapter Label="GraphInverseSemigroups">
+<Chapter Label = "GraphInverseSemigroups">
   <Heading>
     Graph inverse semigroups
   </Heading> 
@@ -11,10 +11,10 @@
       Creating graph inverse semigroups
     </Heading> 
 
-    <#Include Label="GraphInverseSemigroup"> 
-    <#Include Label="RangeSourceGraphInverseSemigroupElement"> 
-    <#Include Label="IsVertex"> 
-    <#Include Label="IsGraphInverseSemigroup"> 
-    <#Include Label="GraphOfGraphInverseSemigroup"> 
+    <#Include Label = "GraphInverseSemigroup"> 
+    <#Include Label = "RangeSourceGraphInverseSemigroupElement"> 
+    <#Include Label = "IsVertex"> 
+    <#Include Label = "IsGraphInverseSemigroup"> 
+    <#Include Label = "GraphOfGraphInverseSemigroup"> 
   </Section>
 </Chapter>

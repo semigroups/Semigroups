@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="GeneratorsSmallest">
 <ManSection>
-  <Attr Name="GeneratorsSmallest" Arg="S" Label="for a transformation
+  <Attr Name = "GeneratorsSmallest" Arg = "S" Label = "for a transformation
     semigroup"/>
   <Returns>A generating set of transformations.</Returns>
   <Description>
@@ -29,9 +29,9 @@
     semigroups.  
 
     <Example><![CDATA[
-gap> S := Monoid( 
-> Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 2, 4, 1, 2 ] ), 
-> Transformation( [ 3, 1, 1, 3 ] ), Transformation( [ 3, 3, 4, 1 ] ) );
+gap> S := Monoid(
+> Transformation([1, 3, 4, 1]), Transformation([2, 4, 1, 2]), 
+> Transformation([3, 1, 1, 3]), Transformation([3, 3, 4, 1]));
 <transformation monoid of degree 4 with 4 generators>
 gap> GeneratorsSmallest(S);
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ), 
@@ -50,8 +50,8 @@ gap> GeneratorsSmallest(S);
 
 <#GAPDoc Label="SmallestElementSemigroup">
 <ManSection>
-  <Attr Name="SmallestElementSemigroup" Arg="S"/>
-  <Attr Name="LargestElementSemigroup" Arg="S"/>
+  <Attr Name = "SmallestElementSemigroup" Arg = "S"/>
+  <Attr Name = "LargestElementSemigroup" Arg = "S"/>
   <Returns>A transformation.</Returns>
   <Description>
     These attributes return the smallest and largest element of the
@@ -65,9 +65,9 @@ gap> GeneratorsSmallest(S);
     <C>Elements(<A>S</A>)[Size(<A>S</A>)]</C>.
 
     <Example><![CDATA[
-gap> S := Monoid( 
-> Transformation( [ 1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10 ] ), 
-> Transformation( [ 2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7 ] ));
+gap> S := Monoid(
+> Transformation([1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10]), 
+> Transformation([2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7]));
 <transformation monoid of degree 11 with 2 generators>
 gap> SmallestElementSemigroup(S);
 IdentityTransformation
@@ -79,29 +79,29 @@ Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )]]></Example>
 
 <#GAPDoc Label="IsTransitive">
 <ManSection>
-  <Oper Name="IsTransitive" Arg="S[, X]" Label="for a transformation
+  <Oper Name = "IsTransitive" Arg = "S[, X]" Label = "for a transformation
     semigroup and a set"/>
-  <Oper Name="IsTransitive" Arg="S[, n]" Label="for a transformation
+  <Oper Name = "IsTransitive" Arg = "S[, n]" Label = "for a transformation
     semigroup and a pos int"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
     A transformation semigroup <A>S</A> is <E>transitive</E> or <E>strongly
-    connected</E> on the set <A>X</A> if for every <C>i,j</C> in <A>X</A>
-    there is an element <C>s</C> in <A>S</A> such that <C>i^s=j</C>. <P/>
+    connected</E> on the set <A>X</A> if for every <C>i, j</C> in <A>X</A>
+    there is an element <C>s</C> in <A>S</A> such that <C>i ^ s = j</C>. <P/>
 
     If the optional second argument is a positive integer <A>n</A>, then
     <C>IsTransitive</C> returns <K>true</K> if <A>S</A> is transitive on
-    <C>[1..<A>n</A>]</C>, and <K>false</K> if it is not. <P/>
+    <C>[1 .. <A>n</A>]</C>, and <K>false</K> if it is not. <P/>
 
     If the optional second argument is not provided, then the degree of 
     <A>S</A> is used by default; see <Ref
-      Attr="DegreeOfTransformationSemigroup" BookName="ref"/>. 
+      Attr = "DegreeOfTransformationSemigroup" BookName = "ref"/>. 
 
     <Example><![CDATA[
-gap> S:=Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ], 
-> [ 4, 5, -3, -4 ], [ -1, -6 ], [ -5 ] ] ), 
-> Bipartition( [ [ 1, -4 ], [ 2, 3, 4, 5 ], [ 6 ], [ -1, -6 ], 
-> [ -2, -3 ], [ -5 ] ] ) ] );
+gap> S := Semigroup([Bipartition([[1, 2], [3, 6, -2], 
+> [4, 5, -3, -4], [-1, -6], [-5]]), 
+> Bipartition([[1, -4], [2, 3, 4, 5], [6], [-1, -6], 
+> [-2, -3], [-5]])]);
 <bipartition semigroup of degree 6 with 2 generators>
 gap> AsTransformationSemigroup(S);
 <transformation semigroup of degree 12 with 2 generators>
@@ -115,24 +115,24 @@ true]]></Example>
 
 <#GAPDoc Label="AsTransformationSemigroup">
 <ManSection>
-  <Oper Name="AsTransformationSemigroup" Arg="S"/>
-  <Oper Name="AsPartialPermSemigroup" Arg="S"/>
-  <Oper Name="AsBipartitionSemigroup" Arg="S"/>
-  <Oper Name="AsBlockBijectionSemigroup" Arg="S"/>
-  <Oper Name="AsPBRSemigroup" Arg="S"/>
+  <Oper Name = "AsTransformationSemigroup" Arg = "S"/>
+  <Oper Name = "AsPartialPermSemigroup" Arg = "S"/>
+  <Oper Name = "AsBipartitionSemigroup" Arg = "S"/>
+  <Oper Name = "AsBlockBijectionSemigroup" Arg = "S"/>
+  <Oper Name = "AsPBRSemigroup" Arg = "S"/>
   <Returns>A semigroup.</Returns>
   <Description>
     <C>AsTransformationSemigroup(<A>S</A>)</C> is just shorthand for 
     <C>Range(IsomorphismTransformationSemigroup(<A>S</A>))</C>, when <A>S</A> 
-    is a semigroup; see <Ref Oper="IsomorphismTransformationSemigroup"
-      BookName="ref"/> for more details.<P/>
+    is a semigroup; see <Ref Oper = "IsomorphismTransformationSemigroup"
+      BookName = "ref"/> for more details.<P/>
   
     The operations: 
     <List>
-      <Item> <C>AsPartialPermSemigroup</C>;</Item>
-      <Item> <C>AsBipartitionSemigroup</C>;</Item>
-      <Item> <C>AsBlockBijectionSemigroup</C>;</Item>
-      <Item> <C>AsPBRSemigroup</C>;</Item>
+      <Item><C>AsPartialPermSemigroup</C>;</Item>
+      <Item><C>AsBipartitionSemigroup</C>;</Item>
+      <Item><C>AsBlockBijectionSemigroup</C>;</Item>
+      <Item><C>AsPBRSemigroup</C>;</Item>
     </List>
     are analogous to <C>AsTransformationSemigroup</C>.
 
@@ -151,7 +151,7 @@ gap> AsTransformationSemigroup(S);
 
 <#GAPDoc Label="ComponentRepsOfTransformationSemigroup">
 <ManSection>
-  <Attr Name="ComponentRepsOfTransformationSemigroup" Arg="S"/>
+  <Attr Name = "ComponentRepsOfTransformationSemigroup" Arg = "S"/>
   <Returns>The representatives of components of a transformation semigroup.</Returns>
   <Description>
     This function returns the representatives of the components of the 
@@ -162,9 +162,9 @@ gap> AsTransformationSemigroup(S);
     be reached from some representative under the action of <A>S</A>.
 
     <Example><![CDATA[
-gap> S:=Semigroup( 
-> Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
-> Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
+gap> S := Semigroup(
+> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]), 
+> Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
 gap> ComponentRepsOfTransformationSemigroup(S);
 [ 2, 3, 8 ]]]></Example>
   </Description>
@@ -173,7 +173,7 @@ gap> ComponentRepsOfTransformationSemigroup(S);
 
 <#GAPDoc Label="ComponentsOfTransformationSemigroup">
 <ManSection>
-  <Attr Name="ComponentsOfTransformationSemigroup" Arg="S"/>
+  <Attr Name = "ComponentsOfTransformationSemigroup" Arg = "S"/>
   <Returns>The components of a transformation semigroup.</Returns>
   <Description>
     This function returns the components of the action of the transformation
@@ -181,9 +181,9 @@ gap> ComponentRepsOfTransformationSemigroup(S);
     degree of <A>S</A>; the components of <A>S</A> partition this set.
     
     <Example><![CDATA[
-gap> S:=Semigroup( 
-> Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
-> Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
+gap> S := Semigroup(
+> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]), 
+> Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
 gap> ComponentsOfTransformationSemigroup(S);
 [ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ]]]></Example>
   </Description>
@@ -192,16 +192,16 @@ gap> ComponentsOfTransformationSemigroup(S);
 
 <#GAPDoc Label="CyclesOfTransformationSemigroup">
 <ManSection>
-  <Attr Name="CyclesOfTransformationSemigroup" Arg="S"/>
+  <Attr Name = "CyclesOfTransformationSemigroup" Arg = "S"/>
   <Returns>The cycles of a transformation semigroup.</Returns>
   <Description>
     This function returns the cycles, or strongly connected components, of the
     action of the transformation semigroup <A>S</A> on the set of positive
     integers not greater than the degree of <A>S</A>.
     <Example><![CDATA[
-gap> S:=Semigroup( 
-> Transformation( [ 11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5 ] ), 
-> Transformation( [ 12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12 ] ) );;
+gap> S := Semigroup(
+> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]), 
+> Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
 gap> CyclesOfTransformationSemigroup(S);
 [ [ 1, 11, 12, 5, 4, 6, 10, 7, 9 ] ]]]></Example>
   </Description>
@@ -210,21 +210,22 @@ gap> CyclesOfTransformationSemigroup(S);
 
 <#GAPDoc Label="IsSynchronizingSemigroup">
   <ManSection>
-    <Oper Name="IsSynchronizingSemigroup" Arg="S[, n]"/>
-    <Oper Name="IsSynchronizingTransformationCollection" Arg="coll[, n]"/>
+    <Oper Name = "IsSynchronizingSemigroup" Arg = "S[, n]"/>
+    <Oper Name = "IsSynchronizingTransformationCollection" Arg = "coll[, n]"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       For a positive integer <A>n</A>,
       <C>IsSynchronizingSemigroup</C> returns <K>true</K> if the semigroup of
       transformations <A>S</A> contains a transformation with constant value on
-      <C>[1..<A>n</A>]</C>.
+      <C>[1 .. <A>n</A>]</C>.
       Note that this function will return true whenever <C><A>n</A> = 1</C>.
-      See also <Ref Oper="ConstantTransformation" BookName="ref"/>.
+      See also <Ref Oper = "ConstantTransformation" BookName = "ref"/>.
       <P/>
 
       If the optional second argument is not specified, then <A>n</A> will be
       taken to be the value of 
-      <Ref Oper="DegreeOfTransformationSemigroup" BookName="ref"/> for <A>S</A>.
+      <Ref Oper = "DegreeOfTransformationSemigroup" BookName = "ref"/> for
+      <A>S</A>.
       <P/>
 
       The operation <C>IsSynchronizingTransformationCollection</C> behaves in
@@ -235,17 +236,15 @@ gap> CyclesOfTransformationSemigroup(S);
       transformation has degree <C>0</C>, and for this special case the
       function <C>IsSynchronizingSemigroup</C> will return <K>false</K>.<P/>
 
-
-
       <Example><![CDATA[
 gap> S := Semigroup(
-> Transformation( [ 1, 1, 8, 7, 6, 6, 4, 1, 8, 9 ] ), 
-> Transformation( [ 5, 8, 7, 6, 10, 8, 7, 6, 9, 7 ] ) );;
+> Transformation([1, 1, 8, 7, 6, 6, 4, 1, 8, 9]), 
+> Transformation([5, 8, 7, 6, 10, 8, 7, 6, 9, 7]));;
 gap> IsSynchronizingSemigroup(S, 10);
 true
-gap> S:=Semigroup(
-> Transformation( [ 3, 8, 1, 1, 9, 9, 8, 7, 9, 6 ] ), 
-> Transformation( [ 7, 6, 8, 7, 5, 6, 8, 7, 8, 9 ] ) );;
+gap> S := Semigroup(
+> Transformation([3, 8, 1, 1, 9, 9, 8, 7, 9, 6]), 
+> Transformation([7, 6, 8, 7, 5, 6, 8, 7, 8, 9]));;
 gap> IsSynchronizingSemigroup(S, 10);
 false
 gap> Representative(MinimalIdeal(S));
@@ -256,7 +255,7 @@ Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
 
 <#GAPDoc Label="IsTransformationSemigroupGreensClass">
   <ManSection>
-    <Prop Name="IsTransformationSemigroupGreensClass" Arg="class"/>
+    <Prop Name = "IsTransformationSemigroupGreensClass" Arg = "class"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
