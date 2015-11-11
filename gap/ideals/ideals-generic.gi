@@ -213,7 +213,7 @@ function(I)
 
   for x in enum do
     if not x in U then # excluding this check makes this run much much slower!!
-      U := SEMIGROUPS_AddGenerators(U, [x], opts);
+      U := SEMIGROUPS.AddGenerators(U, [x], opts);
     fi;
   od;
 

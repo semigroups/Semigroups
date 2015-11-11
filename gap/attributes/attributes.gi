@@ -109,7 +109,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  if SEMIGROUPS_IsCCSemigroup(S) then
+  if SEMIGROUPS.IsCCSemigroup(S) then
     return SEMIGROUP_NR_IDEMPOTENTS(GenericSemigroupData(S));
   fi;
   return Length(Idempotents(S));

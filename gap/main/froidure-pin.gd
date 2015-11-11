@@ -20,11 +20,55 @@
 # Note that an acting semigroup can have generic data but not the other way
 # around.
 
-DeclareCategory("IsGenericSemigroupData", IsList);
+# SEMIGROUPS.IsCCSemigroup: returns <true> if the argument is a semigroup to
+# which we can apply the C++ code.
 
-DeclareProperty("SEMIGROUPS_IsCCSemigroup", IsSemigroup);
-# TODO immediate methods for IsCppSemigroup?
-DeclareGlobalFunction("SEMIGROUPS_DegreeOfSemigroup");
+SEMIGROUPS.IsCCSemigroup := function(S)
+  return IsTransformationSemigroup(S)
+           or IsPartialPermSemigroup(S)
+           or IsBipartitionSemigroup(S)
+           or IsBooleanMatSemigroup(S)
+           or IsPBRSemigroup(S)
+           or IsMatrixOverSemiringSemigroup(S);
+end;
+
+# SEMIGROUPS.DegreeOfSemigroup: returns the size of the container required in
+# the C++ code by elements of the semigroup.
+
+SEMIGROUPS.DegreeOfSemigroup := function(arg)
+  local S, coll;
+
+  S := arg[1];
+  if Length(arg) = 1 then
+    coll := [Representative(S)];
+  elif Length(arg) = 2 then
+    coll := arg[2];
+  else
+    ErrorMayQuit("Semigroups: SEMIGROUPS_DegreeOfSemigroup:\n",
+                 "unknown error,");
+  fi;
+
+  if IsTransformationSemigroup(S) then
+    return Maximum(DegreeOfTransformationSemigroup(S),
+                   DegreeOfTransformationCollection(coll));
+  elif IsPartialPermSemigroup(S) then
+    return Maximum(DegreeOfPartialPermSemigroup(S),
+                   CodegreeOfPartialPermSemigroup(S),
+                   DegreeOfPartialPermCollection(coll),
+                   CodegreeOfPartialPermCollection(coll));
+  elif IsMatrixOverSemiringSemigroup(S) then
+    return DimensionOfMatrixOverSemiring(Representative(S));
+  elif IsBipartitionSemigroup(S) then
+    return DegreeOfBipartitionSemigroup(S);
+  elif IsPBRSemigroup(S) then
+    return DegreeOfPBRSemigroup(S);
+  else
+    ErrorMayQuit("Semigroups: SEMIGROUPS_DegreeOfSemigroup:\n",
+                 "unknown error,");
+  fi;
+end;
+
+DeclareCategory("IsGenericSemigroupData", IsList);
 
 # TODO remove everything from here down
 DeclareAttribute("GenericSemigroupData", IsSemigroup, "mutable");

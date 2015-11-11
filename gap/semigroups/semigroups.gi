@@ -41,6 +41,36 @@ SEMIGROUPS.MonoidTypes := [IsPBRMonoid,
                            IsBlockBijectionMonoid,
                            IsIntegerMatrixMonoid];
 
+SEMIGROUPS.AddGenerators := function(S, coll, opts)
+  local data;
+
+  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
+    ErrorMayQuit("Semigroups: SEMIGROUPS.AddGenerators: usage,\n",
+                 "the arguments do not belong to the same family,");
+  fi;
+
+  if IsActingSemigroup(S)
+      or (IsTransformationSemigroup(S) and DegreeOfTransformationSemigroup(S)
+          <> DegreeOfTransformationCollection(coll))
+      or (IsPartialPermSemigroup(S) and
+          (DegreeOfPartialPermSemigroup(S) <>
+           DegreeOfPartialPermCollection(coll)
+           or CodegreeOfPartialPermSemigroup(S) <>
+           CodegreeOfPartialPermCollection(coll)))
+           ## FIXME the above should really be less than, since this should
+           # work if the degree of the semigroup is larger than the degree of
+           # the collection!
+      or not SEMIGROUPS.IsCCSemigroup(S) then
+    return ClosureSemigroup(S, coll, opts);
+  fi;
+
+  data := GenericSemigroupData(S);
+  SEMIGROUP_ADD_GENERATORS(data, coll);
+  S := Semigroup(data!.gens, opts);
+  SetGenericSemigroupData(S, data);
+  return S;
+end;
+
 #TODO update the info strings to include "finite"
 
 # fall back methods
@@ -124,7 +154,7 @@ InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
-  local n, i, S, filts, pos, x;
+  local n, S, SemigroupsAddGenerators, filts, pos, i, x;
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
   gens := AsList(gens);
@@ -155,17 +185,19 @@ function(gens, opts)
     opts.regular := false;
     S := Semigroup(gens[1], opts);
 
+    SemigroupsAddGenerators := SEMIGROUPS.AddGenerators;
+
     if InfoLevel(InfoSemigroups) > 1 then
       n := Length(gens);
       for i in [2 .. n] do
-        S := SEMIGROUPS_AddGenerators(S, [gens[i]], opts);
+        S := SemigroupsAddGenerators(S, [gens[i]], opts);
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far\r");
       od;
       Print("\n");
     else
       for x in gens do
-        S := SEMIGROUPS_AddGenerators(S, [x], opts);
+        S := SemigroupsAddGenerators(S, [x], opts);
       od;
     fi;
     return S;
@@ -223,7 +255,7 @@ InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
 [IsAssociativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
-  local n, S, filts, pos, i, x;
+  local n, S, SemigroupsAddGenerators, filts, pos, i, x;
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
   gens := AsList(gens);
@@ -254,11 +286,12 @@ function(gens, opts)
     opts.regular := false;
     S := Monoid(gens[1], opts);
 
+    SemigroupsAddGenerators := SEMIGROUPS.AddGenerators;
     if InfoLevel(InfoSemigroups) > 1 then
       n := Length(gens);
       for i in [2 .. n] do
         if not gens[i] in S then
-          S := SEMIGROUPS_AddGenerators(S, [gens[i]], opts);
+          S := SemigroupsAddGenerators(S, [gens[i]], opts);
         fi;
         Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
               " generators so far");
@@ -267,7 +300,7 @@ function(gens, opts)
     else
       for x in gens do
         if not x in S then
-          S := SEMIGROUPS_AddGenerators(S, [x], opts);
+          S := SemigroupsAddGenerators(S, [x], opts);
         fi;
       od;
     fi;
@@ -667,7 +700,6 @@ end);
 
 #recreate the lambda/rho orb using the higher degree!
 
-
 # this is the fallback method, coll should consist of elements not in
 # the semigroup
 
@@ -677,10 +709,10 @@ InstallMethod(ClosureSemigroupNC,
 function(S, coll, opts)
   local data, T;
 
-  if SEMIGROUPS_IsCCSemigroup(S) then
+  if SEMIGROUPS.IsCCSemigroup(S) then
     data := SEMIGROUP_CLOSURE(GenericSemigroupData(S),
                               ShallowCopy(coll),
-                              SEMIGROUPS_DegreeOfSemigroup(S, coll));
+                              SEMIGROUPS.DegreeOfSemigroup(S, coll));
     data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                             and IsAttributeStoringRep), data);
     T := Semigroup(data!.gens, opts);
@@ -700,36 +732,6 @@ function(S, coll, opts)
   return S;
 end);
 
-InstallGlobalFunction(SEMIGROUPS_AddGenerators,
-function(S, coll, opts)
-  local data;
-
-  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_AddGenerators: usage,\n",
-                 "the arguments do not belong to the same family,");
-  fi;
-
-  if IsActingSemigroup(S)
-      or (IsTransformationSemigroup(S) and DegreeOfTransformationSemigroup(S)
-          <> DegreeOfTransformationCollection(coll))
-      or (IsPartialPermSemigroup(S) and
-          (DegreeOfPartialPermSemigroup(S) <>
-           DegreeOfPartialPermCollection(coll)
-           or CodegreeOfPartialPermSemigroup(S) <>
-           CodegreeOfPartialPermCollection(coll)))
-           ## FIXME the above should really be less than, since this should
-           # work if the degree of the semigroup is larger than the degree of
-           # the collection!
-      or not SEMIGROUPS_IsCCSemigroup(S) then
-    return ClosureSemigroup(S, coll, opts);
-  fi;
-
-  data := GenericSemigroupData(S);
-  SEMIGROUP_ADD_GENERATORS(data, coll);
-  S := Semigroup(data!.gens, opts);
-  SetGenericSemigroupData(S, data);
-  return S;
-end);
 
 #subsemigroups
 
@@ -756,7 +758,7 @@ function(S, func, limit)
   while Size(T) < limit and not IsDoneIterator(iter) do
     f := NextIterator(iter);
     if func(f) and not f in T then
-      T := SEMIGROUPS_AddGenerators(T, [f], SEMIGROUPS.OptionsRec(T));
+      T := SEMIGROUPS.AddGenerators(T, [f], SEMIGROUPS.OptionsRec(T));
     fi;
   od;
   SetParent(T, S);

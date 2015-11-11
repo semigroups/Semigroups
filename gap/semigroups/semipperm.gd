@@ -27,5 +27,3 @@ DeclareOperation("PartialPermNumber", [IsPosInt, IsPosInt]);
 DeclareOperation("SubsetNumber", [IsPosInt, IsPosInt, IsPosInt]);
 DeclareOperation("NumberSubset", [IsList, IsPosInt]);
 DeclareOperation("NumberSubsetOfEqualSize", [IsList, IsPosInt]);
-
-DeclareGlobalFunction("SEMIGROUPS_SubsetNumber");

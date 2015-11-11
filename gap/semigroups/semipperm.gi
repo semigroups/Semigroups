@@ -11,6 +11,35 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to semigroups of partial perms.
 
+# TODO improve this
+
+SEMIGROUPS.SubsetNumber :=
+function(m, k, n, set, min, nr, coeff)
+  local i;
+
+  nr := nr + 1;
+
+  if k = 1 then
+    set[nr] := m + min;
+    return set;
+  fi;
+
+  i := 1;
+  while m > coeff do
+    m := m - coeff;
+    coeff := coeff * (n - k - i + 1) / (n - i);
+    # coeff = Binomial( n - i, k - 1 )
+    i := i + 1;
+  od;
+
+  min := min + i;
+  set[nr] := min;
+
+  return SEMIGROUPS.SubsetNumber(m, k - 1, n - i, set, min, nr,
+                                 coeff * (k - 1) / (n - i));
+   # coeff = Binomial( n - i - 1, k - 2 )
+end;
+
 InstallMethod(Idempotents, "for a partial perm semigroup and pos int",
 [IsPartialPermSemigroup, IsInt],
 function(S, rank)
@@ -76,34 +105,6 @@ function(S)
   return EnumeratorByFunctions(S, record);
 end);
 
-# TODO improve this
-
-InstallGlobalFunction(SEMIGROUPS_SubsetNumber,
-function(m, k, n, set, min, nr, coeff)
-  local i;
-
-  nr := nr + 1;
-
-  if k = 1 then
-    set[nr] := m + min;
-    return set;
-  fi;
-
-  i := 1;
-  while m > coeff do
-    m := m - coeff;
-    coeff := coeff * (n - k - i + 1) / (n - i);
-    # coeff = Binomial( n - i, k - 1 )
-    i := i + 1;
-  od;
-
-  min := min + i;
-  set[nr] := min;
-
-  return SEMIGROUPS_SubsetNumber(m, k - 1, n - i, set, min, nr,
-                                 coeff * (k - 1) / (n - i));
-   # coeff = Binomial( n - i - 1, k - 2 )
-end);
 
 # the <m>th subset of <[1..n]> with <k> elements
 # TODO improve this
@@ -111,7 +112,7 @@ end);
 InstallMethod(SubsetNumber, "for pos int, pos int, pos int",
 [IsPosInt, IsPosInt, IsPosInt],
 function(m, k, n)
-  return SEMIGROUPS_SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial(n - 1,
+  return SEMIGROUPS.SubsetNumber(m, k, n, EmptyPlist(k), 0, 0, Binomial(n - 1,
                                  k - 1));
 end);
 
