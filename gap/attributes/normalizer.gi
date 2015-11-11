@@ -14,16 +14,16 @@
 
 # process the options record...
 
-BindGlobal("SEMIGROUPS_NormalizerOptsRec",
+SEMIGROUPS.NormalizerOptsRec :=
 function(S, opts)
 
   # don't check the component `random' since this is only called inside
-  # (SEMIGROUPS_(Non)DeterministicNormalizer...
+  # (SEMIGROUPS.(Non)DeterministicNormalizer...
 
   if not IsBound(opts.lambdastab) then
     opts.lambdastab := true;
   elif not IsBool(opts.lambdastab) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_NormalizerOptsRec: usage,\n",
+    ErrorMayQuit("Semigroups: SEMIGROUPS.NormalizerOptsRec: usage,\n",
                  "the component `lambdastab' must be a boolean,");
   fi;
 
@@ -32,16 +32,16 @@ function(S, opts)
   elif not IsBound(opts.rhostab) then
     opts.rhostab := true;
   elif not IsBool(opts.rhostab) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_NormalizerOptsRec: usage,\n",
+    ErrorMayQuit("Semigroups: SEMIGROUPS.NormalizerOptsRec: usage,\n",
                  "the component `rhostab' must be a boolean,");
   fi;
 
   return opts;
-end);
+end;
 
 # process the lambda-orb
 
-BindGlobal("SEMIGROUPS_LambdaOrbForNormalizer",
+SEMIGROUPS.LambdaOrbForNormalizer :=
 function(G, S, func)
   local o, i, nr;
 
@@ -71,28 +71,28 @@ function(G, S, func)
     fi;
   fi;
   return o;
-end);
+end;
 
 #
 
-BindGlobal("SEMIGROUPS_DeterministicNormalizer",
+SEMIGROUPS.DeterministicNormalizer := 
 function(G, S, opts)
   local o, act, deg, U, gens, nrgens, P;
 
   if not IsPermGroup(G) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_DeterministicNormalizer: usage,\n",
+    ErrorMayQuit("Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,\n",
                  "the first arg must be a permutation group,");
   fi;
 
   if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S)
           or IsBipartitionSemigroup(S)) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_DeterministicNormalizer: usage,\n",
+    ErrorMayQuit("Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,\n",
                  "the second arg must be a semigroup of transformations,\n",
                  "partial perms or bipartitions,");
   fi;
 
   if not IsRecord(opts) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_DeterministicNormalizer: usage,\n",
+    ErrorMayQuit("Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,\n",
                  "the third argument must be a record,");
   fi;
 
@@ -100,7 +100,7 @@ function(G, S, opts)
     return G;
   fi;
 
-  opts := SEMIGROUPS_NormalizerOptsRec(S, opts);
+  opts := SEMIGROUPS.NormalizerOptsRec(S, opts);
 
   # the example of the JonesMonoid(8), and the inverse semigroup example
   # immediately after it in normalizer.tst show that calculating the stabilizer
@@ -108,7 +108,7 @@ function(G, S, opts)
   # second quicker with this than without...
 
   if opts.lambdastab then
-    o := SEMIGROUPS_LambdaOrbForNormalizer(G, S, LT);
+    o := SEMIGROUPS.LambdaOrbForNormalizer(G, S, LT);
 
     if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) then
       act := OnSetsSets;
@@ -173,13 +173,13 @@ function(G, S, opts)
   end;
 
   return SubgroupProperty(U, P);
-end);
+end;
 
 #
 
 if IsBound(GAPInfo.PackagesLoaded.genss) then
 
-  BindGlobal("SEMIGROUPS_NonDeterministicNormalizer",
+  SEMIGROUPS.NonDeterministicNormalizer :=
   function(G, S, opts)
     local o, act, deg, U, gens, nrgens, P, pruner, out, func;
 
@@ -192,19 +192,19 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
          "`random' set to <false> for a deterministic (but slower) answer.");
 
     if not IsPermGroup(G) then
-      ErrorMayQuit("Semigroups: SEMIGROUPS_NonDeterministicNormalizer: ",
+      ErrorMayQuit("Semigroups: SEMIGROUPS.NonDeterministicNormalizer: ",
                    "usage,\nthe first arg must be a permutation group,");
     fi;
 
     if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) or
             IsBipartitionSemigroup(S)) then
-      ErrorMayQuit("Semigroups: SEMIGROUPS_NonDeterministicNormalizer: ",
+      ErrorMayQuit("Semigroups: SEMIGROUPS.NonDeterministicNormalizer: ",
                    "usage,\nthe second arg must be a semigroup of ",
                    "transformations,\npartial perms or bipartitions,");
     fi;
 
     if not IsRecord(opts) then
-      ErrorMayQuit("Semigroups: SEMIGROUPS_NonDeterministicNormalizer: ",
+      ErrorMayQuit("Semigroups: SEMIGROUPS.NonDeterministicNormalizer: ",
                    "usage,\nthe third arg must be a record,");
     fi;
 
@@ -212,13 +212,13 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
       return G;
     fi;
 
-    opts := SEMIGROUPS_NormalizerOptsRec(S, opts);
+    opts := SEMIGROUPS.NormalizerOptsRec(S, opts);
 
     if opts.lambdastab then
 
       if IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) then
         act := OnSets;
-        o := SEMIGROUPS_LambdaOrbForNormalizer(G, S,
+        o := SEMIGROUPS.LambdaOrbForNormalizer(G, S,
                                                function(x, y)
                                                  return Length(x) < Length(y);
                                                end);
@@ -232,7 +232,7 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
         func := function(x, y)
                   return NrBlocks(x) < NrBlocks(y);
                 end;
-        o := SEMIGROUPS_LambdaOrbForNormalizer(G, S, func);
+        o := SEMIGROUPS.LambdaOrbForNormalizer(G, S, func);
       fi;
       Info(InfoSemigroups, 2, "finding the stabilizer of the images...");
       U := SetwiseStabilizer(G, act, o).setstab;
@@ -308,7 +308,7 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
     out := Group(U!.orb!.gens);
     SetStabilizerChain(out, U);
     return out;
-  end);
+  end;
 fi;
 
 if not IsBound(POW_KER_PERM) then
@@ -346,7 +346,7 @@ InstallMethod(Normalizer, "for a transformation semigroup",
 function(S)
   local deg;
   deg := DegreeOfTransformationSemigroup(S);
-  return SEMIGROUPS_DeterministicNormalizer(SymmetricGroup(deg), S, rec());
+  return SEMIGROUPS.DeterministicNormalizer(SymmetricGroup(deg), S, rec());
 end);
 
 InstallMethod(Normalizer, "for a partial perm semigroup",
@@ -354,7 +354,7 @@ InstallMethod(Normalizer, "for a partial perm semigroup",
 function(S)
   local deg;
   deg := DegreeOfPartialPermSemigroup(S);
-  return SEMIGROUPS_DeterministicNormalizer(SymmetricGroup(deg), S, rec());
+  return SEMIGROUPS.DeterministicNormalizer(SymmetricGroup(deg), S, rec());
 end);
 
 InstallMethod(Normalizer, "for a bipartition semigroup",
@@ -362,7 +362,7 @@ InstallMethod(Normalizer, "for a bipartition semigroup",
 function(S)
   local deg;
   deg := DegreeOfBipartitionSemigroup(S);
-  return SEMIGROUPS_DeterministicNormalizer(SymmetricGroup(deg), S, rec());
+  return SEMIGROUPS.DeterministicNormalizer(SymmetricGroup(deg), S, rec());
 end);
 
 #
@@ -371,7 +371,7 @@ InstallMethod(NormalizerOp,
 "for a permutation group and a semigroup",
 [IsPermGroup, IsSemigroup],
 function(G, S)
-  return SEMIGROUPS_DeterministicNormalizer(G, S, rec());
+  return SEMIGROUPS.DeterministicNormalizer(G, S, rec());
 end);
 
 #
@@ -383,9 +383,9 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
   [IsPermGroup, IsSemigroup, IsRecord],
   function(G, S, opts)
     if IsBound(opts.random) and opts.random then
-      return SEMIGROUPS_NonDeterministicNormalizer(G, S, opts);
+      return SEMIGROUPS.NonDeterministicNormalizer(G, S, opts);
     fi;
-    return SEMIGROUPS_DeterministicNormalizer(G, S, opts);
+    return SEMIGROUPS.DeterministicNormalizer(G, S, opts);
   end);
 
 else
@@ -393,6 +393,6 @@ else
   InstallMethod(Normalizer,
   "for a permutation group, a semigroup, a record",
   [IsPermGroup, IsSemigroup, IsRecord],
-  SEMIGROUPS_DeterministicNormalizer);
+  SEMIGROUPS.DeterministicNormalizer);
 
 fi;
