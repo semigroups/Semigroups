@@ -405,19 +405,6 @@ _InstallMethodsForCongruences := function(_record)
 
   #
 
-  InstallImmediateMethod(IsFinite,
-  Concatenation("for a ", _record.info_string, " with known range"),
-  _IsXSemigroupCongruence and HasRange,
-  0,
-  function(cong)
-    if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
-      return true;
-    fi;
-    TryNextMethod();
-  end);
-
-  #
-
   InstallMethod(\in,
   Concatenation("for dense list and ", _record.info_string,
                 " with known generating pairs"),
@@ -427,20 +414,18 @@ _InstallMethodsForCongruences := function(_record)
     local S, elms, p1, p2, table, lookfunc;
 
     # Input checks
+    S := Range(cong);
+    if not IsFinite(S) then
+      TryNextMethod();
+    fi;
     if Size(pair) <> 2 then
       ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
                    "the first arg <pair> must be a list of length 2,");
     fi;
-    S := Range(cong);
     if not (pair[1] in S and pair[2] in S) then
       ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
                    "elements of the first arg <pair> must be\n",
                    "in the range of the second arg <cong>,");
-    fi;
-    if not (HasIsFinite(S) and IsFinite(S)) then
-      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
-                   "this function currently only works if <cong> is ",
-                   "over a semigroup\nwhich is known to be finite,");
     fi;
 
     p1 := Position(GenericSemigroupData(S), pair[1]);
@@ -467,9 +452,8 @@ _InstallMethodsForCongruences := function(_record)
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local data;
-    if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
-      ErrorMayQuit("Semigroups: AsLookupTable: usage,\n",
-                   "<cong> must be a congruence of a finite semigroup,");
+    if not IsFinite(Range(cong)) then
+      TryNextMethod();
     fi;
     # Enumerate the congruence until all pairs are found
     data := SEMIGROUPS_Enumerate(cong, ReturnFalse);
@@ -504,11 +488,8 @@ _InstallMethodsForCongruences := function(_record)
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local classes, next, tab, elms, i;
-
-    if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
-      ErrorMayQuit("Semigroups: EquivalenceClasses: usage,\n",
-                   "this function currently only works if <cong> is over a ",
-                   "semigroup\nwhich is known to be finite,");
+    if not IsFinite(Range(cong)) then
+      TryNextMethod();
     fi;
     classes := [];
     next := 1;
@@ -530,11 +511,8 @@ _InstallMethodsForCongruences := function(_record)
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local classes;
-
-    if not (HasIsFinite(Range(cong)) and IsFinite(Range(cong))) then
-      ErrorMayQuit("Semigroups: NonTrivialEquivalenceClasses: usage,\n",
-                   "this function currently only works if <cong> is ",
-                   "over a semigroup\nwhich is known to be finite,");
+    if not IsFinite(Range(cong)) then
+      TryNextMethod();
     fi;
     classes := EquivalenceClasses(cong);
     return Filtered(classes, c -> Size(c) > 1);
@@ -543,25 +521,33 @@ _InstallMethodsForCongruences := function(_record)
   #
 
   InstallMethod(\=,
-  Concatenation("for finite ", _record.info_string,
-                "s with known generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence and IsFinite,
-   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence and IsFinite],
+  Concatenation("for ", _record.info_string, "s with known generating pairs"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
+   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong1, cong2)
+    if not (IsFinite(Range(cong1)) and IsFinite(Range(cong2))) then
+      TryNextMethod();
+    fi;
     return Range(cong1) = Range(cong2)
-           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong1), pair -> pair in cong2)
-           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2), pair -> pair in cong1);
+           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong1),
+                      pair -> pair in cong2)
+           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
+                      pair -> pair in cong1);
   end);
 
 
   #
 
   InstallMethod(ImagesElm,
-  Concatenation("for a ", _record.info_string, " with known generating pairs ",
-                "and an associative element"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence, IsAssociativeElement],
+  Concatenation("for a ", _record.info_string,
+                " with known generating pairs and an associative element"),
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
+   IsAssociativeElement],
   function(cong, elm)
     local lookup, gendata, classNo, elms;
+    if not IsFinite(Range(cong)) then
+      TryNextMethod();
+    fi;
     lookup := AsLookupTable(cong);
     gendata := GenericSemigroupData(Range(cong));
     classNo := lookup[Position(gendata, elm)];
@@ -578,10 +564,8 @@ _InstallMethodsForCongruences := function(_record)
   function(cong)
     local S;
     S := Range(cong);
-    if not (HasIsFinite(S) and IsFinite(S)) then
-      ErrorMayQuit("Semigroups: NrEquivalenceClasses: usage,\n",
-                   "this function currently only works if <cong> is over ",
-                   "a semigroup\nwhich is known to be finite,");
+    if not IsFinite(S) then
+      TryNextMethod();
     fi;
     return Maximum(AsLookupTable(cong));
   end);
@@ -703,7 +687,7 @@ _InstallMethodsForCongruences := function(_record)
     SetParentAttr(class, Range(cong));
     SetEquivalenceClassRelation(class, cong);
     SetRepresentative(class, elm);
-    if HasIsFinite(cong) and IsFinite(cong) then
+    if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
       SetIsFinite(class, true);
     fi;
     return class;
@@ -720,7 +704,7 @@ _InstallMethodsForCongruences := function(_record)
     cong := EquivalenceClassRelation(class);
     S := Range(cong);
 
-    if not (HasIsFinite(S) and IsFinite(S)) then
+    if not IsFinite(S) then
       TryNextMethod();
     fi;
 
@@ -830,20 +814,26 @@ _InstallMethodsForCongruences := function(_record)
   #
 
   InstallMethod(\in,
-  Concatenation("for an associative element and a finite ",
+  Concatenation("for an associative element and a ",
                 _record.type_string, " congruence class"),
-  [IsAssociativeElement, _IsXCongruenceClass and IsFinite],
+  [IsAssociativeElement, _IsXCongruenceClass],
   function(elm, class)
+    if not IsFinite(Parent(class)) then
+      TryNextMethod();
+    fi;
     return [elm, Representative(class)] in EquivalenceClassRelation(class);
   end);
 
   #
 
   InstallMethod(Size,
-  Concatenation("for a finite ", _record.type_string, " congruence class"),
-  [_IsXCongruenceClass and IsFinite],
+  Concatenation("for a ", _record.type_string, " congruence class"),
+  [_IsXCongruenceClass],
   function(class)
     local p, tab;
+    if not IsFinite(Parent(class)) then
+      TryNextMethod();
+    fi;
     p := Position(GenericSemigroupData(Parent(class)), Representative(class));
     tab := AsLookupTable(EquivalenceClassRelation(class));
     return Number(tab, n -> n = tab[p]);
@@ -863,7 +853,7 @@ _InstallMethodsForCongruences := function(_record)
   #
 
   InstallMethod(AsList,
-  Concatenation("for a finite ", _record.type_string, " congruence class"),
+  Concatenation("for a ", _record.type_string, " congruence class"),
   [_IsXCongruenceClass],
   function(class)
     return ImagesElm(EquivalenceClassRelation(class), Representative(class));
@@ -876,9 +866,9 @@ end;
 
 for _record in [rec(type_string := "",
                     info_string := "semigroup congruence"),
-                rec(type_string   := "Left",
+                rec(type_string := "Left",
                     info_string := "left semigroup congruence"),
-                rec(type_string   := "Right",
+                rec(type_string := "Right",
                     info_string := "right semigroup congruence")] do
   _InstallMethodsForCongruences(_record);
 od;

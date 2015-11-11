@@ -25,24 +25,18 @@ gap> cong := SemigroupCongruence(S, gens);
 <semigroup congruence over <free semigroup on the generators [ s1 ]> with 
 1 generating pairs>
 gap> NonTrivialCongruenceClasses(cong);
-Error, Semigroups: NonTrivialEquivalenceClasses: usage,
-this function currently only works if <cong> is over a semigroup
-which is known to be finite,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `NonTrivialEquivalenceClasses' on 1 argu\
+ments
 gap> gens in cong;
-Error, Semigroups: \in (for a congruence): usage,
-this function currently only works if <cong> is over a semigroup
-which is known to be finite,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `in' on 2 arguments
 gap> AsLookupTable(cong);
-Error, Semigroups: AsLookupTable: usage,
-<cong> must be a congruence of a finite semigroup,
-gap> EquivalenceClasses(cong);
-Error, Semigroups: EquivalenceClasses: usage,
-this function currently only works if <cong> is over a semigroup
-which is known to be finite,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `AsLookupTable' on 1 arguments
 gap> NrCongruenceClasses(cong);
-Error, Semigroups: NrEquivalenceClasses: usage,
-this function currently only works if <cong> is over a semigroup
-which is known to be finite,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `NrEquivalenceClasses' on 1 arguments
 gap> class := CongruenceClassOfElement(cong, x);;
 
 #T# PairsCongTest3: \= for two semigroup congruences
