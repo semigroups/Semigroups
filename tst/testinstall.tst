@@ -1201,6 +1201,25 @@ gap> GeneratorsOfInverseSemigroup(S);
 gap> GeneratorsOfInverseMonoid(S);
 [ IdentityTransformation ]
 
+#T# AsXSemigroup for trivial transformation semigroup
+gap> S := Semigroup(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+gap> AsTransformationSemigroup(S);
+<trivial transformation group of degree 0 with 1 generator>
+gap> AsPartialPermSemigroup(S);
+<trivial partial perm group of rank 0 with 1 generator>
+gap> AsBipartitionSemigroup(S);
+<trivial bipartition group of degree 1 with 1 generator>
+gap> AsPBRSemigroup(S);
+<commutative pbr semigroup of degree 1 with 1 generator>
+gap> AsBooleanMatSemigroup(S);
+<trivial group of 1x1 boolean matrices with 1 generator>
+
+#T# Issue #138: InversesOfSemigroupElement for trivial transformation monoid
+gap> x := IdentityTransformation;;
+gap> InversesOfSemigroupElement(FullTransformationMonoid(1), x);
+[ IdentityTransformation ]
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);
