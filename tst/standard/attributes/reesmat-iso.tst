@@ -254,10 +254,10 @@ gap> IsomorphismSemigroups(R, S);
 [ (1,2,3), (1,2) ] ), [ (1,2,3), (1,2) ], [ (1,2,3), (1,2) ] ), 
 [ (), (1,2,3), (2,3), (1,2) ])
 
-#T# SEMIGROUPS_RZMStoRZMSInducedFunction: error, 1/1
+#T# SEMIGROUPS.RZMStoRZMSInducedFunction: error, 1/1
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), 0], [0, ()]]);;
-gap> SEMIGROUPS_RZMStoRZMSInducedFunction(R, R, fail, fail, [1]);
-Error, Semigroups: SEMIGROUPS_RZMStoRZMSInducedFunction: usage,
+gap> SEMIGROUPS.RZMStoRZMSInducedFunction(R, R, fail, fail, [1]);
+Error, Semigroups: SEMIGROUPS.RZMStoRZMSInducedFunction: usage,
 the 5th argument must be a list of length 2,
 
 #T# \=: RMS and RMS elements
@@ -369,6 +369,5 @@ gap> PreImagesRepresentative(G.2, R.1);
 gap> ImagesElm(G.2, R.1);
 [ (1,(),1) ]
 
-#E#
-# SEMIGROUPS_UnbindVariables
+#E# SEMIGROUPS_UnbindVariables
 gap> STOP_TEST("Semigroups package: standard/attributes/reesmat-iso.tst");

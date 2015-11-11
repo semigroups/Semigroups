@@ -27,8 +27,7 @@
 # MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true.
 
-BindGlobal("SEMIGROUPS_InjectionPrincipalFactor",
-function(D, constructor)
+SEMIGROUPS.InjectionPrincipalFactor := function(D, constructor)
   local map, inv, G, mat, rep, R, L, x, RR, LL, rms, iso, hom, i, j;
 
   map := IsomorphismPermGroup(GroupHClass(D));
@@ -97,7 +96,7 @@ function(D, constructor)
   SetIsInjective(hom, true);
   SetIsTotal(hom, true);
   return hom;
-end);
+end;
 
 #############################################################################
 ## 1. Default methods, for which there are currently no better methods.
@@ -356,7 +355,7 @@ function(S)
 
   D := First(GreensDClasses(S),
              x -> not IsMultiplicativeZero(S, Representative(x)));
-  iso := SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
+  iso := SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
   inv := InverseGeneralMapping(iso);
   return MagmaIsomorphismByFunctionsNC(S, Range(iso),
                                        x -> x ^ iso, x -> x ^ inv);
@@ -715,9 +714,9 @@ function(D)
                  "the argument <D> must be a regular D-class,");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
-    return SEMIGROUPS_InjectionPrincipalFactor(D, ReesMatrixSemigroup);
+    return SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
   fi;
-  return SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
+  return SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
 end);
 
 InstallMethod(InjectionNormalizedPrincipalFactor,
@@ -731,10 +730,10 @@ function(D)
                  "the argument <D> must be a regular D-class,");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
-    iso1 := SEMIGROUPS_InjectionPrincipalFactor(D, ReesMatrixSemigroup);
+    iso1 := SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
     iso2 := RMSNormalization(Range(iso1));
   else
-    iso1 := SEMIGROUPS_InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
+    iso1 := SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
     iso2 := RZMSNormalization(Range(iso1));
   fi;
 
