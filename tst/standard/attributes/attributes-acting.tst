@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
-gap> SEMIGROUPS_DefaultOptionsRec.generic := false;;
+gap> SEMIGROUPS.DefaultOptionsRec.generic := false;;
 
 # attributes-acting: IsMultiplicativeZero
 gap> S := InverseSemigroup([PartialPerm([1, 2, 5], [2, 1, 5]),

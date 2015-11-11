@@ -354,7 +354,7 @@ function(I)
               log := [1],
               genspos := 0,
               ht := HTCreate(gens[1], rec(treehashsize :=
-                                          SEMIGROUPS_OptionsRec(I).hashlen.L)),
+                                          SEMIGROUPS.OptionsRec(I).hashlen.L)),
               pos := 0,
               init := false,
               reps := [],

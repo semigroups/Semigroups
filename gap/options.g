@@ -8,23 +8,21 @@
 #############################################################################
 ##
 
-BindGlobal("SEMIGROUPS_DefaultOptionsRec",
+SEMIGROUPS.DefaultOptionsRec :=
   rec(small      := false,
       hashlen    := rec(S := 251, M := 6257, L := 25013),
       regular    := false,
       generic    := false,
       report     := true,
-      batch_size := 8192));
+      batch_size := 8192);
 
-MakeReadWriteGlobal("SEMIGROUPS_DefaultOptionsRec");
-
-BindGlobal("SEMIGROUPS_ProcessOptionsRec",
+SEMIGROUPS.ProcessOptionsRec :=
 function(opts)
   local n, x;
 
-  for x in RecNames(SEMIGROUPS_DefaultOptionsRec) do
+  for x in RecNames(SEMIGROUPS.DefaultOptionsRec) do
     if not IsBound(opts.(x)) then
-      opts.(x) := SEMIGROUPS_DefaultOptionsRec.(x);
+      opts.(x) := SEMIGROUPS.DefaultOptionsRec.(x);
     fi;
   od;
 
@@ -36,12 +34,12 @@ function(opts)
   fi;
 
   return opts;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_OptionsRec",
+SEMIGROUPS.OptionsRec :=
 function(S)
   if not IsBound(S!.opts) then
-    return SEMIGROUPS_DefaultOptionsRec;
+    return SEMIGROUPS.DefaultOptionsRec;
   fi;
   return S!.opts;
-end);
+end;

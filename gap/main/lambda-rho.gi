@@ -23,7 +23,7 @@ function(s)
   record.storenumbers := true;
   record.log := true;
   record.parent := s;
-  record.treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.M;
+  record.treehashsize := SEMIGROUPS.OptionsRec(s).hashlen.M;
 
   o := Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
 
@@ -299,7 +299,7 @@ function(s)
   record.storenumbers := true;
   record.log := true;
   record.parent := s;
-  record.treehashsize := SEMIGROUPS_OptionsRec(s).hashlen.M;
+  record.treehashsize := SEMIGROUPS.OptionsRec(s).hashlen.M;
   record.scc_reps := [FakeOne(GeneratorsOfSemigroup(s))];
 
   o := Orb(GeneratorsOfSemigroup(s), RhoOrbSeed(s), RhoAct(s), record);

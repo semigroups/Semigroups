@@ -85,7 +85,7 @@ InstallMethod(MagmaByGenerators, "for an associative element collection",
 InstallMethod(SemigroupByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection and IsFinite],
 function(coll)
-  return SemigroupByGenerators(coll, SEMIGROUPS_DefaultOptionsRec);
+  return SemigroupByGenerators(coll, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 #
@@ -96,7 +96,7 @@ InstallMethod(SemigroupByGenerators,
 function(gens, opts)
   local n, i, S, filts, pos, x;
 
-  opts := SEMIGROUPS_ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(opts);
   gens := AsList(gens);
 
   # try to find a smaller generating set
@@ -184,7 +184,7 @@ end);
 InstallMethod(MonoidByGenerators, "for an associative element collection",
 [IsAssociativeElementCollection and IsFinite],
 function(gens)
-  return MonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
+  return MonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 #
@@ -195,7 +195,7 @@ InstallMethod(MonoidByGenerators,
 function(gens, opts)
   local n, S, filts, pos, i, x;
 
-  opts := SEMIGROUPS_ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(opts);
   gens := AsList(gens);
 
   if opts.small and Length(gens) > 1 then #small gen. set
@@ -286,7 +286,7 @@ InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection",
 [IsAssociativeElementCollection and IsFinite],
 function(gens)
-  return InverseMonoidByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
+  return InverseMonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 #
@@ -295,7 +295,7 @@ InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection",
 [IsAssociativeElementCollection and IsFinite],
 function(gens)
-  return InverseSemigroupByGenerators(gens, SEMIGROUPS_DefaultOptionsRec);
+  return InverseSemigroupByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 #
@@ -313,7 +313,7 @@ function(gens, opts)
                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
-  opts := SEMIGROUPS_ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(opts);
 
   if opts.small and Length(gens) > 1 then
     gens := Shuffle(Set(gens));
@@ -388,7 +388,7 @@ function(gens, opts)
                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
-  opts := SEMIGROUPS_ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(opts);
 
   if opts.small and Length(gens) > 1 then
     gens := Shuffle(Set(gens));
@@ -453,7 +453,7 @@ InstallMethod(ClosureInverseSemigroup,
 function(S, coll) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
                                  coll,
-                                 ShallowCopy(SEMIGROUPS_OptionsRec(S)));
+                                 ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
 #
@@ -464,7 +464,7 @@ InstallMethod(ClosureInverseSemigroup,
 function(S, x) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
                                  [x],
-                                 ShallowCopy(SEMIGROUPS_OptionsRec(S)));
+                                 ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
 #
@@ -508,7 +508,7 @@ function(S, coll, opts)
 
   return ClosureInverseSemigroupNC(S,
                                    Filtered(coll, x -> not x in S),
-                                   SEMIGROUPS_ProcessOptionsRec(opts));
+                                   SEMIGROUPS.ProcessOptionsRec(opts));
 end);
 
 #
@@ -579,7 +579,7 @@ InstallMethod(ClosureSemigroup,
 "for a semigroup and associative element collection",
 [IsSemigroup, IsAssociativeElementCollection and IsFinite],
 function(S, coll) #FIXME: ShallowCopy?
-  return ClosureSemigroup(S, coll, ShallowCopy(SEMIGROUPS_OptionsRec(S)));
+  return ClosureSemigroup(S, coll, ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
 #
@@ -587,7 +587,7 @@ end);
 InstallMethod(ClosureSemigroup, "for a semigroup and associative element",
 [IsSemigroup, IsAssociativeElement],
 function(S, x) #FIXME: ShallowCopy
-  return ClosureSemigroup(S, [x], ShallowCopy(SEMIGROUPS_OptionsRec(S)));
+  return ClosureSemigroup(S, [x], ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
 #
@@ -632,7 +632,7 @@ function(S, coll, opts)
   return ClosureSemigroupNC(S,
                             Filtered(coll, x -> not x in S), # FIXME don't do
                                                              #       this
-                            SEMIGROUPS_ProcessOptionsRec(opts));
+                            SEMIGROUPS.ProcessOptionsRec(opts));
 end);
 
 #recreate the lambda/rho orb using the higher degree!
@@ -769,7 +769,7 @@ function(S, func, limit)
   while Size(T) < limit and not IsDoneIterator(iter) do
     f := NextIterator(iter);
     if func(f) and not f in T then
-      T := SEMIGROUPS_AddGenerators(T, [f], SEMIGROUPS_OptionsRec(T));
+      T := SEMIGROUPS_AddGenerators(T, [f], SEMIGROUPS.OptionsRec(T));
     fi;
   od;
   SetParent(T, S);

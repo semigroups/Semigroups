@@ -372,7 +372,7 @@ function(S)
     TryNextMethod();
   fi;
   I := SemigroupIdealByGeneratorsNC(S, [RepresentativeOfMinimalIdeal(S)],
-                                    SEMIGROUPS_OptionsRec(S));
+                                    SEMIGROUPS.OptionsRec(S));
   SetIsSimpleSemigroup(I, true);
   return I;
 end);
