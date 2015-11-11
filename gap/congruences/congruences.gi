@@ -57,9 +57,9 @@ function(arg)
     if not IsFinite(S) then
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     elif IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S) then
-      return SEMIGROUPS_SimpleCongFromPairs(S, pairs);
+      return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
     elif IsInverseSemigroup(S) then
-      return SEMIGROUPS_InverseCongFromPairs(S, pairs);
+      return SEMIGROUPS.InverseCongFromPairs(S, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     fi;
@@ -69,7 +69,7 @@ function(arg)
       then
     # We should have a congruence of an isomorphic RMS/RZMS
     if Range(arg[2]) = Range(arg[3]) and S = Source(arg[2]) then
-      return SEMIGROUPS_SimpleCongFromRMSCong(S, arg[2], arg[3]);
+      return SEMIGROUPS.SimpleCongFromRMSCong(S, arg[2], arg[3]);
     else
       ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
                    "<cong> should be over a Rees (0-)matrix semigroup ",

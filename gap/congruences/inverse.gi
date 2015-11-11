@@ -498,14 +498,3 @@ function(cong)
 
   return InverseSemigroupCongruenceByKernelTrace(S, kernel, traceBlocks);
 end);
-
-#
-
-InstallGlobalFunction(SEMIGROUPS_InverseCongFromPairs,
-function(S, pairs)
-  local cong;
-  cong := SemigroupCongruenceByGeneratingPairs(S, pairs);
-  cong := AsInverseSemigroupCongruenceByKernelTrace(cong);
-  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
-  return cong;
-end);

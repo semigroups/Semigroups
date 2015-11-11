@@ -13,77 +13,6 @@
 ## use by an end-user.
 ##
 
-InstallGlobalFunction(SEMIGROUPS_SimpleCongFromPairs,
-function(S, pairs)
-  local iso, r, rmspairs, pcong, rmscong, cong;
-
-  # If s is a RMS/RZMS, then just create the linked triple congruence
-  if IsReesMatrixSemigroup(S) then
-    # gaplint: ignore 2
-    cong := AsRMSCongruenceByLinkedTriple(
-            SemigroupCongruenceByGeneratingPairs(S, pairs));
-  elif IsReesZeroMatrixSemigroup(S) then
-    # gaplint: ignore 2
-    cong := AsRZMSCongruenceByLinkedTriple(
-            SemigroupCongruenceByGeneratingPairs(S, pairs));
-  else
-    # Otherwise, create a SIMPLECONG
-    if IsSimpleSemigroup(S) then
-      iso := IsomorphismReesMatrixSemigroup(S);
-    else
-      iso := IsomorphismReesZeroMatrixSemigroup(S);
-    fi;
-    r := Range(iso);
-    rmspairs := List(pairs, p -> [p[1] ^ iso, p[2] ^ iso]);
-    pcong := SemigroupCongruenceByGeneratingPairs(r, rmspairs);
-    if IsReesMatrixSemigroup(r) then
-      rmscong := AsRMSCongruenceByLinkedTriple(pcong);
-    else  #elif IsReesZeroMatrixSemigroup(r) then
-      rmscong := AsRZMSCongruenceByLinkedTriple(pcong);
-    fi;
-    # Special case for the universal congruence
-    if IsUniversalSemigroupCongruence(rmscong) then
-      cong := UniversalSemigroupCongruence(S);
-    else
-      cong := SEMIGROUPS_SimpleCongFromRMSCong(S, iso, rmscong);
-    fi;
-  fi;
-  SetGeneratingPairsOfMagmaCongruence(cong, pairs);
-  return cong;
-end);
-
-#
-
-InstallGlobalFunction(SEMIGROUPS_SimpleCongFromRMSCong,
-function(S, iso, rmscong)
-  local r, fam, cong;
-  r := Range(rmscong);
-
-  # Construct the object
-  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
-                               ElementsFamily(FamilyObj(S)));
-  cong := Objectify(NewType(fam, SEMIGROUPS_CongSimple),
-                    rec(rmscong := rmscong, iso := iso));
-  SetSource(cong, S);
-  SetRange(cong, S);
-  return cong;
-end);
-
-#
-
-InstallGlobalFunction(SEMIGROUPS_SimpleClassFromRMSclass,
-function(cong, rmsclass)
-  local fam, class;
-  fam := FamilyObj(Range(cong));
-  class := Objectify(NewType(fam, SEMIGROUPS_CongClassSimple),
-                     rec(rmsclass := rmsclass, iso := cong!.iso));
-  SetParentAttr(class, cong);
-  SetRepresentative(class, Representative(rmsclass) ^
-                           InverseGeneralMapping(cong!.iso));
-  SetEquivalenceClassRelation(class, cong);
-  return class;
-end);
-
 #
 
 InstallMethod(ViewObj,
@@ -119,7 +48,7 @@ function(S)
     if IsUniversalSemigroupCongruence(congs[i]) then
       congs[i] := UniversalSemigroupCongruence(S);
     else
-      congs[i] := SEMIGROUPS_SimpleCongFromRMSCong(S, iso, congs[i]);
+      congs[i] := SEMIGROUPS.SimpleCongFromRMSCong(S, iso, congs[i]);
     fi;
   od;
   return congs;
@@ -146,7 +75,7 @@ function(cong1, cong2)
                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
-  return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1), cong1!.iso, join);
+  return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, join);
 end);
 
 #
@@ -161,7 +90,7 @@ function(cong1, cong2)
                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
-  return SEMIGROUPS_SimpleCongFromRMSCong(Range(cong1), cong1!.iso, meet);
+  return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, meet);
 end);
 
 #
@@ -199,7 +128,7 @@ InstallMethod(EquivalenceClasses,
 [SEMIGROUPS_CongSimple],
 function(cong)
   return List(EquivalenceClasses(cong!.rmscong),
-              c -> SEMIGROUPS_SimpleClassFromRMSclass(cong, c));
+              c -> SEMIGROUPS.SimpleClassFromRMSclass(cong, c));
 end);
 
 #
@@ -224,7 +153,7 @@ InstallMethod(EquivalenceClassOfElementNC,
 function(cong, elm)
   local class;
   class := EquivalenceClassOfElementNC(cong!.rmscong, elm ^ cong!.iso);
-  return SEMIGROUPS_SimpleClassFromRMSclass(cong, class);
+  return SEMIGROUPS.SimpleClassFromRMSclass(cong, class);
 end);
 
 #
@@ -251,7 +180,7 @@ InstallMethod(\*,
 "for two (0-)simple semigroup congruence classes",
 [SEMIGROUPS_CongClassSimple, SEMIGROUPS_CongClassSimple],
 function(c1, c2)
-  return SEMIGROUPS_SimpleClassFromRMSclass(EquivalenceClassRelation(c1),
+  return SEMIGROUPS.SimpleClassFromRMSclass(EquivalenceClassRelation(c1),
                                             c1!.rmsclass * c2!.rmsclass);
 end);
 
