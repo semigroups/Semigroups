@@ -134,7 +134,7 @@ function(filter, mat)
 end);
 
 InstallMethod(AsMatrixCons,
-"for IsMaxPlusMatrix and a tropical max-plus matrix",
+"for IsMaxPlusMatrix and a projective max-plus matrix",
 [IsMaxPlusMatrix, IsProjectiveMaxPlusMatrix],
 function(filter, mat)
   return MatrixNC(filter, AsList(mat));

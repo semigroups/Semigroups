@@ -8,6 +8,33 @@
 #############################################################################
 ##
 
+#############################################################################
+# Pickler
+#############################################################################
+
+InstallMethod(IO_Pickle, "for a boolean matrix",
+[IsFile, IsBipartition],
+function(file, x)
+  if IO_Write(file, "BIPA") = fail then
+    return IO_Error;
+  fi;
+  if IO_Pickle(file, x!.blocks) = IO_Error then
+    return IO_Error;
+  fi;
+  return IO_OK;
+end);
+
+IO_Unpicklers.BIPA :=
+function(file)
+  local blocks;
+
+  blocks := IO_Unpickle(file);
+  if blocks = IO_Error then
+    return IO_Error;
+  fi;
+  return BipartitionByIntRepNC(blocks);
+end;
+
 # implications
 
 InstallTrueMethod(IsPermBipartition, IsTransBipartition

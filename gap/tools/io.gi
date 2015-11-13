@@ -49,13 +49,6 @@ function(str)
     return rec(file := file, curr := ReadGeneratorsLine(IO_ReadLine(file)));
   end;
 
-  # TODO is this still necessary?
-  InstallAtExit(function()
-                  if not file!.closed then
-                    IO_Close(file);
-                  fi;
-                end);
-
   return IteratorByFunctions(record);
 end);
 
@@ -63,11 +56,11 @@ end);
 
 InstallGlobalFunction(ReadGenerators,
 function(arg)
-  local name, line_nr, file, i, line;
+  local name, line_nr, file, i, obj, out;
 
   if Length(arg) = 1 then
     name := arg[1];
-    line_nr := 0;
+    line_nr := 0; # read all lines
   elif Length(arg) = 2 then
     name := arg[1];
     line_nr := arg[2];
@@ -98,29 +91,35 @@ function(arg)
     i := 0;
     repeat
       i := i + 1;
-      line := IO_ReadLine(file);
-    until i = line_nr or line = "";
+      obj := IO_Unpickle(file);
+    until i = line_nr or obj = IO_Nothing;
 
     if IsString(arg[1]) then
       IO_Close(file);
     fi;
-    if line = "" then
+    if obj = IO_Nothing then
       ErrorMayQuit("Semigroups: ReadGenerators:\n",
-                   "the file only has ", i - 1, " lines,");
-    else
-      return ReadGeneratorsLine(Chomp(line));
+                   "the file only has ", i - 1, " rows,");
     fi;
+    return obj;
   else
-    line := IO_ReadLines(file);
+    i := 0;
+    out := [];
+    obj := IO_Unpickle(file);
+    while obj <> IO_Nothing do
+      i := i + 1;
+      out[i] := obj;
+      obj := IO_Unpickle(file);
+    od;
 
     if IsString(arg[1]) then
       IO_Close(file);
     fi;
-    return List(line, x -> ReadGeneratorsLine(Chomp(x)));
+    return out;
   fi;
 end);
 
-#
+# FIXME remove this!
 
 InstallGlobalFunction(ReadGeneratorsLine,
 function(line)
@@ -177,18 +176,6 @@ function(arg)
                  "the third argument must be \"a\" or \"w\",");
   fi;
 
-  if IsTransformationCollection(coll)
-      or IsPartialPermCollection(coll)
-      or IsBipartitionCollection(coll) then
-    coll := [coll];
-  elif not (IsTransformationCollColl(coll)
-            or IsPartialPermCollColl(coll)
-            or IsBipartitionCollColl(coll)) then
-    ErrorMayQuit("Semigroups: WriteGenerators: usage,\n",
-                 "the second arg must be a transformation, partial perm,\n",
-                 "or bipartition collection, or coll coll,");
-  fi;
-
   if IsString(name) then
     file := IO_CompressedFile(name, mode);
     if file = fail then
@@ -211,92 +198,41 @@ function(arg)
     fi;
   od;
 
-  #
-
-  append := function(str, pt, m)
-    local i, j;
-
-    i := String(pt);
-    for j in [1 .. m - Length(i)] do
-      Append(str, " ");
-    od;
-    Append(str, i);
-    return str;
-  end;
-
-  #
-
   for x in coll do
-    if IsTransformationCollection(x) then
-      line := "t";
-      for f in x do
-        deg := String(DegreeOfTransformation(f));
-        nrdigits := Length(deg);
-        Append(line, String(nrdigits));
-        Append(line, deg);
-        for i in [1 .. DegreeOfTransformation(f)] do
-          append(line, i ^ f, nrdigits);
-        od;
-      od;
-      IO_WriteLine(file, line);
-    elif IsPartialPermCollection(x) then
-      line := "p";
-      for f in x do
-        deg := String(DegreeOfPartialPerm(f));
-        nrdigits := Length(String(Maximum(DegreeOfPartialPerm(f),
-                                          CodegreeOfPartialPerm(f))));
-        Append(line, String(nrdigits));
-        append(line, deg, nrdigits);
-        for i in [1 .. DegreeOfPartialPerm(f)] do
-          append(line, i ^ f, nrdigits);
-        od;
-      od;
-      IO_WriteLine(file, line);
-    elif IsBipartitionCollection(x) then
-      line := "b";
-      for f in x do
-        deg := String(2 * DegreeOfBipartition(f));
-        nrdigits := Length(deg);
-        Append(line, String(nrdigits));
-        Append(line, deg);
-        blocks := f!.blocks;
-        for i in [1 .. Length(blocks)] do
-          append(line, blocks[i], nrdigits);
-        od;
-      od;
-      IO_WriteLine(file, line);
+    if IO_Pickle(file, x) = IO_Error then
+      return IO_Error;
     fi;
   od;
 
   if IsString(arg[1]) then
     IO_Close(file);
   fi;
-  return true;
+  return IO_OK;
 end);
 
+##
 #
-
-InstallMethod(ShortStringRep, "for a transformation",
-[IsTransformation],
-function(f)
-  local append, line, deg, nrdigits, i;
-
-  append := function(str, pt, m)
-    local i, j;
-    i := String(pt);
-    for j in [1 .. m - Length(i)] do
-      Append(str, " ");
-    od;
-    Append(str, i);
-    return str;
-  end;
-  line := "";
-  deg := String(DegreeOfTransformation(f));
-  nrdigits := Length(deg);
-  Append(line, String(nrdigits));
-  Append(line, deg);
-  for i in [1 .. DegreeOfTransformation(f)] do
-    append(line, i ^ f, nrdigits);
-  od;
-  return line;
-end);
+#InstallMethod(ShortStringRep, "for a transformation",
+#[IsTransformation],
+#function(f)
+#  local append, line, deg, nrdigits, i;
+#
+#  append := function(str, pt, m)
+#    local i, j;
+#    i := String(pt);
+#    for j in [1 .. m - Length(i)] do
+#      Append(str, " ");
+#    od;
+#    Append(str, i);
+#    return str;
+#  end;
+#  line := "";
+#  deg := String(DegreeOfTransformation(f));
+#  nrdigits := Length(deg);
+#  Append(line, String(nrdigits));
+#  Append(line, deg);
+#  for i in [1 .. DegreeOfTransformation(f)] do
+#    append(line, i ^ f, nrdigits);
+#  od;
+#  return line;
+#end);
