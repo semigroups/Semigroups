@@ -695,10 +695,9 @@ gap> NextIterator(iter);
 Transformation( [ 5, 5, 4, 5, 1 ] )
 gap> iter;
 <iterator of R-class reps>
-gap> file := Concatenation(
-> PackageInfo("semigroups")[1]!.InstallationPath,
-> "/tst/test-data.gz");;
-gap> S := InverseSemigroup(ReadGenerators(file, 1377));
+gap> file := PackageInfo("semigroups")[1]!.InstallationPath;;
+gap> file := Concatenation(file, "/data/doc/greens.pickle");;
+gap> S := InverseSemigroup(ReadGenerators(file, 1));
 <inverse partial perm semigroup of rank 983 with 2 generators>
 gap> NrMovedPoints(S);
 983
