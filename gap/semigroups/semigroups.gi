@@ -914,7 +914,7 @@ SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
   if Length(args) > 1 then
     nrgens := args[2];
   else
-    nrgens := AbsInt(Random(Integers));
+    nrgens := AbsInt(Random(Integers)) + 1;
   fi;
 
   if Length(args) > 2 then
@@ -937,7 +937,7 @@ SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
 
   if Length(params) < cons[2] then
     for i in [Length(params) + 1 .. cons[2]] do
-      Add(params, AbsInt(Random(Integers)));
+      Add(params, AbsInt(Random(Integers)) + 1);
     od;
   fi;
 
@@ -956,7 +956,7 @@ SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
       fi;
       params[2] := GF(params[2], 1);
     elif not IsPrimeField(params[2]) then
-      params[2] := GF(NextPrimeInt(AbsInt(Random(Integers))), 1);
+      params[2] := GF(NextPrimeInt(AbsInt(Random(Integers)) + 1), 1);
     fi;
   fi;
 
