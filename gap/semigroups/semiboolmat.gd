@@ -23,6 +23,9 @@ DeclareAttribute("IsomorphismBooleanMatSemigroup", IsSemigroup);
 
 DeclareOperation("RegularBooleanMatMonoid", [IsPosInt]);
 DeclareOperation("GossipMonoid", [IsPosInt]);
+DeclareOperation("UnitriangularBooleanMatrixMonoid", [IsPosInt]);
+DeclareOperation("TriangularBooleanMatrixMonoid", [IsPosInt]);
+
 DeclareOperation("ReflexiveBooleanMatMonoid", [IsPosInt]);
-DeclareOperation("HallBooleanMatMonoid", [IsPosInt]);
+DeclareOperation("HallMonoid", [IsPosInt]);
 DeclareOperation("FullBooleanMatMonoid", [IsPosInt]);

@@ -49,6 +49,9 @@ function(file)
   if arg = IO_Error then
     return IO_Error;
   fi;
+  if arg[1] = IsBooleanMat then
+    Perform(arg[2], ConvertToBlistRep);
+  fi;
   return CallFuncList(MatrixNC, arg);
 end;
 

@@ -23,6 +23,8 @@ fi;
 
 BindGlobal("SEMIGROUPS", rec());
 MakeReadWriteGlobal("SEMIGROUPS");
+SEMIGROUPS.GENERATORS := rec();
+SEMIGROUPS.PackageDir := PackageInfo("semigroups")[1]!.InstallationPath;
 
 ReadPackage("semigroups/gap/options.g");
 

@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  semibool.gi
+#W  semiboolmat.gi
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -9,6 +9,10 @@
 ##
 
 # This file contains methods for semigroups of boolean matrices.
+
+#############################################################################
+## 1. Isomorphisms etc.
+#############################################################################
 
 InstallMethod(IsomorphismBooleanMatSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
@@ -64,7 +68,7 @@ function(S)
 end);
 
 #############################################################################
-## ?. Standard examples
+## 2. Standard examples - known generators
 #############################################################################
 
 InstallMethod(RegularBooleanMatMonoid, "for a pos int",
@@ -118,184 +122,92 @@ function(n)
   return Monoid(gens);
 end);
 
+InstallMethod(UnitriangularBooleanMatrixMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, x, i, j;
+
+  gens := [];
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      x := List([1 .. n], k -> BlistList([1 .. n], [k]));
+      x[i][j] := true;
+      Add(gens, BooleanMat(x));
+    od;
+  od;
+
+  return Monoid(gens);
+end);
+
+InstallMethod(TriangularBooleanMatrixMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, x, i;
+
+  gens := [];
+  for i in [1 .. n] do
+    x := List([1 .. n], k -> BlistList([1 .. n], [k]));
+    x[i][i] := false;
+    Add(gens, BooleanMat(x));
+  od;
+
+  return Monoid(UnitriangularBooleanMatrixMonoid(n), gens);
+end);
+
+#############################################################################
+## 3. Standard examples - calculated generators
+#############################################################################
+
 InstallMethod(ReflexiveBooleanMatMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
-  if n = 3 then
-    return
-    Semigroup(BooleanMat([[1, 1, 0], [0, 1, 1], [1, 0, 1]]),
-              BooleanMat([[1, 1, 0], [0, 1, 0], [0, 0, 1]]),
-              BooleanMat([[1, 0, 1], [1, 1, 0], [0, 1, 1]]),
-              BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),
-              BooleanMat([[1, 0, 0], [1, 1, 0], [0, 0, 1]]),
-              BooleanMat([[1, 0, 0], [0, 1, 1], [0, 0, 1]]),
-              BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
-              BooleanMat([[1, 0, 0], [0, 1, 0], [0, 1, 1]]),
-              BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 1]]));
-  elif n = 4 then
-    return
-    Semigroup(BooleanMat([[1, 1, 1, 0], [0, 1, 0, 1], [0, 0, 1, 1],
-                          [1, 0, 0, 1]]),
-              BooleanMat([[1, 1, 0, 1], [0, 1, 1, 0], [1, 0, 1, 0],
-                          [0, 0, 1, 1]]),
-              BooleanMat([[1, 0, 1, 1], [1, 1, 0, 0], [0, 1, 1, 0],
-                          [0, 1, 0, 1]]),
-              BooleanMat([[1, 1, 0, 0], [0, 1, 1, 1], [1, 0, 1, 0],
-                          [1, 0, 0, 1]]),
-              BooleanMat([[1, 0, 1, 0], [1, 1, 0, 1], [0, 1, 1, 0],
-                          [0, 0, 1, 1]]),
-              BooleanMat([[1, 0, 1, 0], [0, 1, 0, 1], [0, 1, 1, 0],
-                          [1, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 1], [1, 1, 1, 0], [0, 0, 1, 1],
-                          [0, 1, 0, 1]]),
-              BooleanMat([[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 0],
-                          [0, 1, 0, 1]]),
-              BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [1, 0, 1, 1],
-                          [0, 1, 0, 1]]),
-              BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1],
-                          [1, 0, 0, 1]]),
-              BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 1, 1],
-                          [1, 0, 0, 1]]),
-              BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 0, 1, 1],
-                          [0, 1, 0, 1]]),
-              BooleanMat([[1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 1, 1],
-                          [1, 1, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1],
-                          [0, 1, 0, 1]]),
-              BooleanMat([[1, 0, 1, 0], [0, 1, 0, 0], [0, 0, 1, 1],
-                          [1, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 1], [0, 1, 0, 1], [1, 1, 1, 0],
-                          [0, 0, 1, 1]]),
-              BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [0, 1, 1, 0],
-                          [0, 0, 1, 1]]),
-              BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [1, 0, 1, 0],
-                          [0, 0, 1, 1]]),
-              BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0],
-                          [1, 0, 1, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 1], [0, 1, 1, 0],
-                          [0, 0, 1, 1]]),
-              BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [1, 0, 1, 0],
-                          [0, 1, 1, 1]]),
-              BooleanMat([[1, 0, 0, 1], [0, 1, 0, 0], [1, 0, 1, 0],
-                          [0, 0, 1, 1]]),
-              BooleanMat([[1, 1, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0],
-                          [1, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 1], [1, 1, 0, 0], [0, 0, 1, 0],
-                          [0, 1, 0, 1]]),
-              BooleanMat([[1, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 1],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 1, 0, 0], [0, 1, 1, 0], [1, 0, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 1, 0], [0, 1, 0, 0], [0, 0, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 1, 0], [0, 0, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
-                          [0, 0, 1, 1]]),
-              BooleanMat([[1, 1, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
-                          [0, 1, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [1, 1, 0, 0], [0, 0, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [1, 0, 1, 0],
-                          [0, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
-                          [1, 0, 0, 1]]),
-              BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0],
-                          [0, 0, 0, 1]]));
+  if not IsBound(SEMIGROUPS.GENERATORS.Reflex) then
+    SEMIGROUPS.GENERATORS.Reflex :=
+      ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/reflex.pickle.gz"));
   fi;
 
-  return fail;
+  if not IsBound(SEMIGROUPS.GENERATORS.Reflex[n]) then
+    ErrorMayQuit("Semigroups: ReflexiveBooleanMatMonoid:\n ",
+                 "generators for this monoid are only known up to ",
+                 String(Length(SEMIGROUPS.GENERATORS.Reflex[n])), ",");
+  fi;
+
+  return Monoid(SEMIGROUPS.GENERATORS.Reflex[n]);
 end);
 
-InstallMethod(HallBooleanMatMonoid, "for a positive integer",
+InstallMethod(HallMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
-  return Semigroup(ReflexiveBooleanMatMonoid(n),
-                   AsBooleanMatSemigroup(SymmetricGroup(n)));
+  if not IsBound(SEMIGROUPS.GENERATORS.Hall) then
+    SEMIGROUPS.GENERATORS.Hall :=
+      ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/hall.pickle.gz"));
+  fi;
+
+  if not IsBound(SEMIGROUPS.GENERATORS.Hall[n]) then
+    ErrorMayQuit("Semigroups: HallMonoid:\n ",
+                 "generators for this monoid are only known up to ",
+                 String(Length(SEMIGROUPS.GENERATORS.Hall[n])), ",");
+  fi;
+
+  return Monoid(SEMIGROUPS.GENERATORS.Hall[n]);
 end);
 
 InstallMethod(FullBooleanMatMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
-  local gens;
-
-  gens := [RegularBooleanMatMonoid(1),
-
-           RegularBooleanMatMonoid(2),
-
-           [BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
-            BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]]),
-            BooleanMat([[1, 0, 0], [0, 1, 0], [1, 0, 1]]),
-            BooleanMat([[1, 0, 0], [0, 1, 0], [0, 0, 0]]),
-            BooleanMat([[1, 1, 0], [1, 0, 1], [0, 1, 1]])],
-
-           [BooleanMat([[1, 1, 1, 0], [1, 0, 0, 1],
-                        [0, 1, 0, 1], [0, 0, 1, 1]]),
-            BooleanMat([[1, 1, 0, 0], [1, 0, 1, 0],
-                        [0, 1, 1, 0], [0, 0, 0, 1]]),
-            BooleanMat([[1, 1, 0, 0], [1, 0, 1, 0],
-                        [0, 1, 0, 1], [0, 0, 1, 1]]),
-            BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0],
-                        [0, 0, 1, 0], [1, 0, 0, 1]]),
-            BooleanMat([[1, 0, 0, 0], [0, 1, 0, 0],
-                        [0, 0, 1, 0], [0, 0, 0, 0]]),
-            BooleanMat([[0, 1, 0, 0], [1, 0, 0, 0],
-                        [0, 0, 1, 0], [0, 0, 0, 1]]),
-            BooleanMat([[0, 1, 0, 0], [0, 0, 1, 0],
-                        [0, 0, 0, 1], [1, 0, 0, 0]])],
-
-           [BooleanMat([[0, 1, 0, 0, 0],
-                        [0, 0, 1, 0, 0], [0, 0, 0, 1, 0],
-                        [0, 0, 0, 0, 1], [1, 0, 0, 0, 0]]),
-            BooleanMat([[0, 1, 0, 0, 0],
-                        [1, 0, 0, 0, 0], [0, 0, 1, 0, 0],
-                        [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]),
-            BooleanMat([[1, 0, 0, 0, 0],
-                        [0, 1, 0, 0, 0], [0, 0, 1, 0, 0],
-                        [0, 0, 0, 1, 0], [1, 0, 0, 0, 1]]),
-            BooleanMat([[1, 1, 0, 0, 0],
-                        [1, 0, 1, 0, 0], [0, 1, 0, 1, 0],
-                        [0, 0, 1, 1, 0], [0, 0, 0, 0, 1]]),
-            BooleanMat([[1, 1, 0, 0, 0],
-                        [1, 0, 1, 0, 0], [0, 1, 1, 0, 0],
-                        [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]]),
-            BooleanMat([[1, 1, 1, 0, 0],
-                        [1, 0, 0, 1, 0], [0, 1, 0, 1, 0],
-                        [0, 0, 1, 1, 0], [0, 0, 0, 0, 1]]),
-            BooleanMat([[1, 1, 0, 0, 0],
-                        [1, 0, 1, 0, 0], [0, 1, 0, 1, 0],
-                        [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
-            BooleanMat([[1, 1, 1, 1, 0],
-                        [1, 0, 0, 0, 1], [0, 1, 0, 0, 1],
-                        [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
-            BooleanMat([[1, 0, 0, 0, 0],
-                        [0, 1, 0, 0, 0], [0, 0, 1, 0, 0],
-                        [0, 0, 0, 1, 0], [0, 0, 0, 0, 0]]),
-            BooleanMat([[1, 1, 1, 0, 0],
-                        [1, 0, 0, 1, 0], [0, 1, 0, 1, 0],
-                        [0, 0, 1, 0, 1], [0, 0, 0, 1, 1]]),
-            BooleanMat([[1, 1, 1, 0, 0],
-                        [1, 0, 0, 1, 0], [1, 0, 0, 0, 1],
-                        [0, 1, 0, 1, 0], [0, 0, 1, 0, 1]]),
-            BooleanMat([[1, 1, 1, 0, 0],
-                        [1, 0, 0, 1, 1], [0, 1, 0, 1, 0],
-                        [0, 1, 0, 0, 1], [0, 0, 1, 1, 0]]),
-            BooleanMat([[1, 1, 1, 0, 0],
-                        [1, 1, 0, 1, 0], [1, 0, 0, 0, 1],
-                        [0, 1, 0, 0, 1], [0, 0, 1, 1, 1]])]];
-  if n > 6 then
-    ErrorMayQuit("Semigroups: FullBooleanMatMonoid: usage,\n",
-                 "the argument <n> must be at most 6,");
+  if not IsBound(SEMIGROUPS.GENERATORS.FullBool) then
+    SEMIGROUPS.GENERATORS.FullBool :=
+      ReadGenerators(Concatenation(SEMIGROUPS.PackageDir,
+                                   "/data/gens/fullbool.pickle.gz"));
   fi;
-  return Monoid(gens[n]);
+
+  if not IsBound(SEMIGROUPS.GENERATORS.FullBool[n]) then
+    ErrorMayQuit("Semigroups: FullBooleanMatMonoid:\n ",
+                 "generators for this monoid are only known up to ",
+                 String(Length(SEMIGROUPS.GENERATORS.FullBool[n])), ",");
+  fi;
+
+  return Monoid(SEMIGROUPS.GENERATORS.FullBool[n]);
 end);
