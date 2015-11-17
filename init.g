@@ -36,6 +36,7 @@ ReadPackage("semigroups/gap/elements/semiringmat.gd");
 ReadPackage("semigroups/gap/elements/maxplusmat.gd");
 ReadPackage("semigroups/gap/elements/boolmat.gd");
 ReadPackage("semigroups/gap/elements/pfmat.gd");
+ReadPackage("semigroups/gap/elements/trans.gd");
 
 ReadPackage("semigroups/gap/semigroups/semigroups.gd");
 ReadPackage("semigroups/gap/semigroups/grpperm.gd");
