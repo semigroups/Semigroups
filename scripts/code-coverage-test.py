@@ -9,14 +9,14 @@ PARSER.add_argument('file', nargs=1, type=str, help='the test file')
 ARGS = PARSER.parse_args()
 
 DIR = tempfile.gettempdir()
-print 'using temporary directory: ' + DIR
+print '\033[35musing temporary directory: ' + DIR + '\033[0m'
 
 COMMANDS = '''echo "CoverageLineByLine(\\"''' + DIR + '''/profile.gz\\");;
 LoadPackage(\\"semigroups\\", false);;
 SEMIGROUPS.Test(\\"''' + ARGS.file[0] + '''\\", rec(silent := true));;
 UnprofileLineByLine();;
 LoadPackage(\\"profiling\\", false);;
-filesdir := \\"/Users/jdm/gap/pkg/semigroups/gap/\\";;
+filesdir := Concatenation(SEMIGROUPS.PackageDir, \\"/gap/\\");;
 outdir := \\"''' + DIR + '''\\";;
 x := ReadLineByLineProfile(\\"''' + DIR + '''/profile.gz\\");;
 OutputAnnotatedCodeCoverageFiles(x, filesdir, outdir);"'''
