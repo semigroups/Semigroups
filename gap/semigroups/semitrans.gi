@@ -767,11 +767,6 @@ InstallMethod(EndomorphismMonoid, "for a digraph",
 function(digraph)
   local hook, S;
 
-  if IsMultiDigraph(digraph) then
-    ErrorMayQuit("Semigroups: EndomorphismMonoid: usage,\n",
-                 "the argument <digraph> must not be a multigraph,");
-  fi;
-
   if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then
     return Semigroup(GeneratorsOfEndomorphismMonoidAttr(digraph),
                      rec(small := true));
@@ -784,5 +779,22 @@ function(digraph)
   S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
 
   return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
-                                    fail, false, DigraphVertices(digraph), []);
+                                    fail, false, DigraphVertices(digraph), [], fail, fail)[1];
+end);
+
+InstallMethod(EndomorphismMonoid, "for a digraph and a homogeneous list",
+[IsDigraph, IsHomogeneousList],
+function(digraph, colors)
+  local hook, S;
+
+  hook := function(S, f)
+    S[1] := ClosureSemigroup(S[1], f);
+  end;
+
+  S := [AsTransformationSemigroup(AutomorphismGroup(digraph, colors))];
+
+  return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
+                                    fail, false, DigraphVertices(digraph), [],
+                                    colors, colors)[1];
+
 end);

@@ -32,3 +32,4 @@ DeclareAttribute("SmallestElementSemigroup", IsSemigroup);
 DeclareAttribute("LargestElementSemigroup", IsSemigroup);
 
 DeclareAttribute("EndomorphismMonoid", IsDigraph);
+DeclareOperation("EndomorphismMonoid", [IsDigraph, IsHomogeneousList]);
