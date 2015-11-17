@@ -82,6 +82,7 @@ ReadPackage("semigroups/gap/attributes/maximal.gd");
 ReadPackage("semigroups/gap/attributes/normalizer.gd");
 ReadPackage("semigroups/gap/attributes/properties.gd");
 ReadPackage("semigroups/gap/attributes/reesmat-iso.gd");
+ReadPackage("semigroups/gap/attributes/translat.gd");
 
 ReadPackage("semigroups/gap/congruences/pairs.gd");
 ReadPackage("semigroups/gap/congruences/reesmat.gd");

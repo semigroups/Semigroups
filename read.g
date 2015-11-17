@@ -139,6 +139,7 @@ ReadPackage("semigroups/gap/attributes/maximal.gi");
 ReadPackage("semigroups/gap/attributes/normalizer.gi");
 ReadPackage("semigroups/gap/attributes/properties.gi");
 ReadPackage("semigroups/gap/attributes/reesmat-iso.gi");
+ReadPackage("semigroups/gap/attributes/translat.gi");
 
 ReadPackage("semigroups/gap/congruences/pairs.gi");
 ReadPackage("semigroups/gap/congruences/reesmat.gi");
