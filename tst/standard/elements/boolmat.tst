@@ -322,7 +322,7 @@ gap> for x in S do
 gap> ht;
 <tree hash table len=100003 used=16 colls=0 accs=16>
 
-#T# boolmat: CanonicalBooleanMat, 1/2
+#T# boolmat: CanonicalBooleanMat, 1/3
 gap> mat := BooleanMat([[1, 1, 1, 0, 0, 0],
 >                       [0, 0, 0, 1, 0, 1],
 >                       [1, 0, 0, 1, 0, 1],
@@ -358,7 +358,7 @@ gap> Display(CanonicalBooleanMat(Group((1, 3)), Group(()), mat));
 1 0 1 1 1 1
 1 0 1 0 1 0
 
-#T# boolmat: CanonicalBooleanMat, 2/2
+#T# boolmat: CanonicalBooleanMat, 2/3
 gap> mat := BooleanMat([[1, 1, 1, 0, 0, 0],
 >                       [0, 0, 0, 1, 0, 1],
 >                       [1, 0, 0, 1, 0, 1],
@@ -369,6 +369,31 @@ gap> CanonicalBooleanMat(SymmetricGroup(7), mat);
 Error, Semigroups: CanonicalBooleanMat: usage,
 the largest moved point of the first argument must not exceed the dimension
 of the Boolean matrix,
+
+#T# boolmat: CanonicalBooleanMat (check that bliss is used in all 3 versions), 3/3
+gap> mat := Matrix(IsBooleanMat, [[1, 0, 1, 1, 0, 0, 0, 1], 
+>                                 [0, 1, 0, 0, 1, 1, 0, 1],
+>                                 [0, 1, 0, 0, 0, 1, 0, 1], 
+>                                 [1, 0, 0, 1, 1, 1, 1, 1],
+>                                 [1, 1, 1, 0, 0, 1, 1, 0],
+>                                 [1, 0, 1, 0, 1, 0, 0, 1], 
+>                                 [0, 0, 0, 0, 0, 0, 1, 1], 
+>                                 [1, 0, 1, 0, 0, 1, 1, 1]]);;
+gap> CanonicalBooleanMat(mat);
+Matrix(IsBooleanMat, [[0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1], 
+  [0, 1, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 1], 
+  [1, 0, 0, 0, 1, 1, 0, 1], [0, 0, 1, 1, 1, 1, 1, 0], 
+  [0, 0, 0, 1, 1, 1, 1, 1], [1, 1, 0, 1, 0, 1, 1, 1]])
+gap> CanonicalBooleanMat(SymmetricGroup(8), mat);
+Matrix(IsBooleanMat, [[0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1], 
+  [0, 1, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 1], 
+  [1, 0, 0, 0, 1, 1, 0, 1], [0, 0, 1, 1, 1, 1, 1, 0], 
+  [0, 0, 0, 1, 1, 1, 1, 1], [1, 1, 0, 1, 0, 1, 1, 1]])
+gap> CanonicalBooleanMat(SymmetricGroup(8), Group((1,2), (1,2,3,4,5,6,7,8)), mat);
+Matrix(IsBooleanMat, [[0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1], 
+  [0, 1, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 1], 
+  [1, 0, 0, 0, 1, 1, 0, 1], [0, 0, 1, 1, 1, 1, 1, 0], 
+  [0, 0, 0, 1, 1, 1, 1, 1], [1, 1, 0, 1, 0, 1, 1, 1]])
 
 #T# boolmat: IsSymmetricBooleanMat, 1/1
 gap> mat := BooleanMat([[0, 1, 1, 0],
@@ -440,7 +465,7 @@ false
 gap> IsOntoBooleanMat(x);
 true
 
-#T# boolmat: AsBooleanMat, for a boolean mat, 1/1
+#T# boolmat: AsBooleanMat, for a boolean mat, 1/2
 gap> mat := Matrix(IsBooleanMat, [[1, 0, 0, 1],
 >                                 [0, 1, 1, 0],
 >                                 [1, 0, 1, 1],
@@ -451,6 +476,19 @@ gap> AsBooleanMat(mat, 6);
 Matrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0], 
   [1, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0], 
   [0, 0, 0, 0, 0, 0]])
+
+#T# boolmat: AsBooleanMat, AsDigraph for a digraph, boolean mat 2/2
+gap> x := Digraph([[], [8, 10], [1, 10], [5], [8], [], [10], [], [9], []]);
+<digraph with 10 vertices, 8 edges>
+gap> AsDigraph(AsBooleanMat(x)) = x;
+true
+gap> x := Matrix(IsBooleanMat, [[1, 0, 0, 1, 0], 
+>                               [1, 1, 0, 1, 0], 
+>                               [1, 1, 0, 0, 0],
+>                               [1, 1, 1, 1, 0],
+>                               [0, 0, 0, 0, 0]]);;
+gap> AsBooleanMat(AsDigraph(mat)) = mat;
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(x);

@@ -316,7 +316,6 @@ function(digraph)
   X   := [1 .. DigraphNrVertices(digraph)];
   for i in X do
     mat[i] := BlistList(X, out[i]);
-    mat[i][i] := true;
   od;
   return MatrixNC(BooleanMatType, mat);
 end);
