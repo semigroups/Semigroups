@@ -17,6 +17,48 @@
 # it is also square, any additional data (like the threshold for tropical
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
+#############################################################################
+# Pickler
+#############################################################################
+
+InstallMethod(IO_Pickle, "for a matrix over semiring",
+[IsFile, IsMatrixOverSemiring],
+function(file, mat)
+  local pickle, i;
+
+  if IO_Write(file, "MOSR") = fail then
+    return IO_Error;
+  fi;
+  pickle := [SEMIGROUPS_FilterOfMatrixOverSemiring(mat), []];
+  i := 1;
+  while IsBound(mat![i]) do
+    pickle[2][i] := mat![i];
+    i := i + 1;
+  od;
+
+  if IO_Pickle(file, pickle) = IO_Error then
+    return IO_Error;
+  fi;
+  return IO_OK;
+end);
+
+IO_Unpicklers.MOSR :=
+function(file)
+  local arg;
+  arg := IO_Unpickle(file);
+  if arg = IO_Error then
+    return IO_Error;
+  fi;
+  if arg[1] = IsBooleanMat then
+    Perform(arg[2], ConvertToBlistRep);
+  fi;
+  return CallFuncList(MatrixNC, arg);
+end;
+
+#############################################################################
+# Constructors
+#############################################################################
+
 # Note that MatrixNC changes its argument in place!!
 
 InstallMethod(MatrixNC, "for a type and homogeneous list",

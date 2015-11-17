@@ -24,6 +24,32 @@
 # The number <n> is the *degree* of <x>.
 
 #############################################################################
+# Pickler
+#############################################################################
+
+InstallMethod(IO_Pickle, "for a PBR",
+[IsFile, IsPBR],
+function(file, x)
+  if IO_Write(file, "PABR") = fail then
+    return IO_Error;
+  fi;
+  if IO_Pickle(file, List([1 .. 2 * x![1] + 1], i -> x![i])) = IO_Error then
+    return IO_Error;
+  fi;
+  return IO_OK;
+end);
+
+IO_Unpicklers.PABR :=
+function(file)
+  local x;
+  x := IO_Unpickle(file);
+  if x = IO_Error then
+    return IO_Error;
+  fi;
+  return Objectify(PBRType, x);
+end;
+
+#############################################################################
 # TODO the embeddings from the paper, AsPBR for a pbr (extend or restrict),
 #############################################################################
 

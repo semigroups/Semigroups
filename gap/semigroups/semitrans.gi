@@ -765,7 +765,7 @@ end);
 InstallMethod(EndomorphismMonoid, "for a digraph",
 [IsDigraph],
 function(digraph)
-  local STAB, hook, S;
+  local hook, S;
 
   if IsMultiDigraph(digraph) then
     ErrorMayQuit("Semigroups: EndomorphismMonoid: usage,\n",
@@ -777,19 +777,12 @@ function(digraph)
                      rec(small := true));
   fi;
 
-  STAB := function(gens, pt)
-    if gens = [] then
-      return [()];
-    fi;
-    return GeneratorsOfGroup(Stabilizer(Group(gens), pt));
-  end;
-
   hook := function(S, f)
     S[1] := ClosureSemigroup(S[1], f);
-    Print("found ", Size(S[1]), " endomorphisms so far\n");
   end;
 
   S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
 
-  return GRAPH_HOMOS(digraph, hook, S, fail, fail, false, STAB);
+  return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
+                                    fail, false, DigraphVertices(digraph), []);
 end);

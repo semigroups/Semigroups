@@ -289,8 +289,8 @@ gap> InversesOfSemigroupElement(S, x);
 
 #T# TestInstall16
 gap> file := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-> "/tst/test-data.gz");;
-gap>  ReadGenerators(file, 1376);
+>                          "/data/tst/testinstall.pickle");;
+gap>  ReadGenerators(file, 1);
 [ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]>, 
   <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 9 ]>, 
   <identity partial perm on [ 1, 2, 3, 4, 5, 6, 9 ]>, 
