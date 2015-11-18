@@ -321,7 +321,7 @@ else
   function(R)
     local G, m, n, aut_graph, components, t, aut_group, stab_aut_graph,
           hom, stab_aut_group, i, V, A, gens1, gens2, U, T, tester,
-          g, x, map, cart;
+          g, x, map, cart, RZMSInducedFunction;
 
     G := UnderlyingSemigroup(R);
 
@@ -395,15 +395,16 @@ else
     # is a RZMSIsoByTriple, and add <phi> to <A> if it is!
     ##########################################################################
 
+    RZMSInducedFunction := SEMIGROUPS.RZMSInducedFunction;
+
     tester := function(x)
       local y, found, g, i, tmp, map;
       y := PreImagesRepresentative(hom, x ^ Projection(V, 2));
       x := x ^ Projection(V, 1);
-
       tmp := [];
       found := false;
       for g in T do
-        map := SEMIGROUPS.RZMSInducedFunction(R, x, y, g, components[1]);
+        map := RZMSInducedFunction(R, x, y, g, components[1]);
         if map <> fail then
           tmp := tmp + map;
           found := true;
@@ -415,7 +416,7 @@ else
         i := i + 1;
         found := false;
         for g in G do
-          map := SEMIGROUPS.RZMSInducedFunction(R, x, y, g, components[i]);
+          map := RZMSInducedFunction(R, x, y, g, components[i]);
           if map <> fail then
             tmp := tmp + map;
             found := true;
@@ -444,11 +445,11 @@ else
 
     cart := [[]];
     for g in T do
-      map := SEMIGROUPS.RZMSInducedFunction(R,
-                                            One(aut_graph),
-                                            One(aut_group),
-                                            g,
-                                            components[1]);
+      map := RZMSInducedFunction(R,
+                                 One(aut_graph),
+                                 One(aut_group),
+                                 g,
+                                 components[1]);
       if map <> fail then
         Add(cart[1], map);
       fi;
@@ -457,11 +458,11 @@ else
     for i in [2 .. t] do
       cart[i] := [];
       for g in G do
-        map := SEMIGROUPS.RZMSInducedFunction(R,
-                                              One(aut_graph),
-                                              One(aut_group),
-                                              g,
-                                              components[i]);
+        map := RZMSInducedFunction(R,
+                                   One(aut_graph),
+                                   One(aut_group),
+                                   g,
+                                   components[i]);
         if map <> fail then
           Add(cart[i], map);
         fi;
@@ -499,7 +500,7 @@ else
   function(R)
     local G, m, n, aut_graph, aut_group, stab_aut_graph,
           hom, stab_aut_group, V, A, gens1, gens2, U, T, tester,
-          g, map, gens;
+          g, map, gens, RMSInducedFunction;
 
     G := UnderlyingSemigroup(R);
     if not (IsReesMatrixSemigroup(R) and IsPermGroup(G)
@@ -583,12 +584,14 @@ else
     # is a RMSIsoByTriple, and add <phi> to <A> if it is!
     ##########################################################################
 
+    RMSInducedFunction := SEMIGROUPS.RMSInducedFunction;
+
     tester := function(x)
       local y, map, g;
       y := PreImagesRepresentative(hom, x ^ Projection(V, 2));
       x := x ^ Projection(V, 1);
       for g in T do
-        map := SEMIGROUPS.RMSInducedFunction(R, x, y, g);
+        map := RMSInducedFunction(R, x, y, g);
         if map <> fail then
           AddSet(A, RMSIsoByTriple(R, R, [x, y, map]));
           return true;
@@ -610,10 +613,10 @@ else
     fi;
 
     for g in T do
-      map := SEMIGROUPS.RMSInducedFunction(R,
-                                           One(aut_graph),
-                                           One(aut_group),
-                                           g);
+      map := RMSInducedFunction(R,
+                                One(aut_graph),
+                                One(aut_group),
+                                g);
       if map <> fail then
         AddSet(A, RMSIsoByTriple(R, R, [One(aut_graph), One(aut_group), map]));
       fi;
@@ -704,7 +707,8 @@ end);
 InstallMethod(IsomorphismSemigroups, "for Rees matrix semigroups",
 [IsReesMatrixSemigroup, IsReesMatrixSemigroup],
 function(R1, R2)
-  local mat, m, n, g, g1, g2, iso, isograph, isogroup, map, l, tup;
+  local mat, m, n, g, g1, g2, iso, isograph, isogroup, map, l, tup,
+  RMSInducedFunction;
 
   if Size(R1) = Size(R2) and Columns(R1) = Columns(R2)
       and Rows(R1) = Rows(R2) then
@@ -731,10 +735,11 @@ function(R1, R2)
         isogroup := List(Elements(AutomorphismGroup(g1)), x -> x * iso);
 
         #find an induced function, if there is one
+        RMSInducedFunction := SEMIGROUPS.RMSInducedFunction;
         for l in isograph do
           for g in isogroup do
             for tup in Elements(g2) do
-              map := SEMIGROUPS.RMSInducedFunction(R2, l, g, tup);
+              map := RMSInducedFunction(R2, l, g, tup);
               if map <> fail then
                 return RMSIsoByTriple(R1, R2, [l, g, map]);
               fi;
@@ -763,7 +768,7 @@ else
   [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
   function(R1, R2)
     local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso, tuples,
-          map, l, tup;
+          map, l, tup, RZMStoRZMSInducedFunction;
 
     G1 := UnderlyingSemigroup(R1);
     G2 := UnderlyingSemigroup(R2);
@@ -815,10 +820,11 @@ else
     tuples := EnumeratorOfCartesianProduct(
                 List([1 .. Length(ConnectedComponents(graph1))], x -> G2));
     #find an induced function, if there is one
+    RZMStoRZMSInducedFunction := SEMIGROUPS.RZMStoRZMSInducedFunction;
     for l in graphiso do
       for g in groupiso do
         for tup in tuples do #FIXME it should be possible to cut this down
-          map := SEMIGROUPS.RZMStoRZMSInducedFunction(R1, R2, l, g, tup);
+          map := RZMStoRZMSInducedFunction(R1, R2, l, g, tup);
           if map <> fail then
             return RZMSIsoByTriple(R1, R2, [l, g, map]);
           fi;
