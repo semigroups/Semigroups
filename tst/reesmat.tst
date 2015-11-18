@@ -180,11 +180,11 @@ true
 gap> ForAll(T, x-> ForAll(T, y-> (x*y)^iso=x^iso*y^iso));                   
 true
 gap> iso:=IsomorphismPermGroup(MinimalIdeal(V));
-MappingByFunction( <group with 1 generator>
-, Group(()), function( x ) ... end, function( x ) ... end )
+MappingByFunction( 
+<group>, Group(()), function( x ) ... end, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( Group(()), <trivial group with 1 generator>
-, function( x ) ... end, function( x ) ... end )
+MappingByFunction( Group(()), 
+<group>, function( x ) ... end, function( x ) ... end )
 gap> ForAll(MinimalIdeal(V), x-> (x^iso)^inv=x);         
 true
 gap> ForAll(MinimalIdeal(V), x-> ForAll(MinimalIdeal(V), y-> 

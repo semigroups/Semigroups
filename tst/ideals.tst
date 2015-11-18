@@ -387,11 +387,11 @@ gap> MultiplicativeZero(K);
 gap> MultiplicativeNeutralElement(K);
 fail
 gap> MinimalIdeal(K);
-<partial perm group of rank 10 with 1 generator>
+<partial perm group of rank 10>
 gap> MinimalDClass(K);
 <Green's D-class: <empty partial perm>>
 gap> I:=MinimalIdeal(K);
-<trivial partial perm group of rank 10 with 1 generator>
+<partial perm group of rank 10>
 gap> IsomorphismPermGroup(I);
 MappingByFunction( <trivial partial perm group of rank 10 with 1 generator>
 , Group(()), <Attribute "AsPermutation">, function( x ) ... end )
