@@ -15,12 +15,10 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 # greens-regular: RhoCosets, for a regular Greens class of an acting semigroup, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> L := LClass(S, S.1);;
 gap> HasIsRegularClass(L) and IsRegularClass(L);
 true
@@ -28,12 +26,10 @@ gap> RhoCosets(L);
 [ () ]
 
 # greens-regular: LambdaCosets, for a regular Greens class of an acting semigroup, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> L := LClass(S, S.1);;
 gap> HasIsRegularClass(L) and IsRegularClass(L);
 true
@@ -41,45 +37,37 @@ gap> LambdaCosets(L);
 [ () ]
 
 # greens-regular: SchutzenbergerGroup, for a regular acting D-class, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> D := DClass(S, S.1);;
 gap> SchutzenbergerGroup(D);
 Group([ (1,2), (1,3,2) ])
 
 # greens-regular: SchutzenbergerGroup, for an H-class of a regular acting semigroup, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> H := HClass(S, S.1);;
 gap> SchutzenbergerGroup(H);
 Group([ (1,2), (1,3,2) ])
 
 # greens-regular: Size, for a regular D-class of an acting semigroup, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])]);;
-gap> IsRegularSemigroup(S);
-true
 gap> D := DClass(S, S.1);;
 gap> Size(D);
 504
 
 # greens-regular: (D/R)ClassReps, for a regular D-class of an acting semigroup, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> DClassReps(S);
 [ Transformation( [ 1, 2, 3, 3, 1 ] ), Transformation( [ 2, 4, 3, 5, 5 ] ), 
   Transformation( [ 2, 3, 3, 3, 2 ] ), Transformation( [ 3, 3, 3, 3, 3 ] ) ]
@@ -100,12 +88,10 @@ gap> RClassReps(S);
   Transformation( [ 2, 3, 3, 3, 3 ] ), Transformation( [ 3, 3, 3, 3, 3 ] ) ]
 
 # greens-regular: Greens(D/R)Classes, for a regular D-class of an acting semigroup, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> GreensDClasses(S);
 [ <Green's D-class: Transformation( [ 1, 2, 3, 3, 1 ] )>, 
   <Green's D-class: Transformation( [ 2, 4, 3, 5, 5 ] )>, 
@@ -142,12 +128,10 @@ gap> GreensRClasses(S);
   <Green's R-class: Transformation( [ 3, 3, 3, 3, 3 ] )> ]
 
 # greens-regular: Nr(D/R/L/H)Classes: for a regular acting semigroup with gens
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> IsActingSemigroup(S);
 true
 gap> HasGeneratorsOfSemigroup(S);
@@ -162,12 +146,10 @@ gap> NrHClasses(S);
 210
 
 # greens-regular: Nr(R/L)Classes: for a regular D-class of an acting semigroup
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> D := DClass(S, S.3);;
 gap> NrRClasses(D);
 2
@@ -177,12 +159,10 @@ gap> NrHClasses(D) = last * last2;
 true
 
 # greens-regular: NrHClasses: for a regular D/R/L class of an acting semigroup
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> D := DClass(S, S.2);;
 gap> NrHClasses(D);
 4
@@ -195,9 +175,7 @@ gap> NrHClasses(L);
 
 # greens-regular: PartialOrderOfDClasses for a regular acting semigroup w gens 1
 gap> S := FullTransformationMonoid(4);;
-gap> S := Semigroup(S, rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
+gap> S := RegularSemigroup(S, rec(generic := false));;
 gap> OutNeighbours(DigraphReflexiveTransitiveReduction(Digraph(
 > PartialOrderOfDClasses(S))));
 [ [ 2 ], [ 3 ], [ 4 ], [  ] ]
@@ -206,34 +184,28 @@ gap> OutNeighbours(DigraphReflexiveTransitiveReduction(Digraph(
 gap> S := FullTransformationSemigroup(4);;
 gap> NrIdempotents(S);
 41
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> NrIdempotents(S);
 108
 
 # greens-regular: NrRegularDClasses, for a regular acting semigroup, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> NrRegularDClasses(S) = NrDClasses(S);
 true
 gap> NrRegularDClasses(S);
 4
 
 # greens-regular: IteratorOf(D/L)Classes, for a regular acting semigroup, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);
-true
 gap> IteratorOfDClasses(S);
 <iterator of D-classes>
 gap> GreensDClasses(S);;
@@ -246,11 +218,10 @@ gap> IteratorOfLClasses(S);
 <iterator>
 
 # greens-regular: EnumeratorOfRClasses, for a regular acting semigroup, 1
-gap> S := Semigroup([
+gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
-gap> IsRegularSemigroup(S);;
 gap> e := EnumeratorOfRClasses(S);
 <enumerator of R-classes of <regular transformation semigroup of degree 5 
  with 3 generators>>

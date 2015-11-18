@@ -99,9 +99,8 @@ function(L)
     p := LambdaConjugator(Parent(L))(RightOne(LambdaOrbRep(o, m)),
                                      Representative(L));
     return LambdaOrbSchutzGp(o, m) ^ p;
-  else
-    return LambdaOrbSchutzGp(o, m);
   fi;
+  return LambdaOrbSchutzGp(o, m);
 end);
 
 #############################################################################
