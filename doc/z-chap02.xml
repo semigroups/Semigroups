@@ -119,8 +119,7 @@ make]]></Listing>
           <Ref Oper = "MunnSemigroup"/>
         </Item>
         <Item> 
-          <Ref Oper = "MaximalSubsemigroups"
-            Label = "for a non-exhaustive semigroup"/>
+          <Ref Attr = "MaximalSubsemigroups"/>
         </Item>
         <Item>
           <Ref Oper = "IsIsomorphicSemigroup"/>

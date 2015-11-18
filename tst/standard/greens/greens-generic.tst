@@ -45,7 +45,7 @@ false
 gap> L < D;
 false
 
-# greens-generic: MultiplicativeNeutralElement, One, for an H-class, 1/1
+# greens-generic: MultiplicativeNeutralElement, One, for an H-class, 1
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 3, 4, 6, 7], [2, 5, 3, 7, 4, 1]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
@@ -60,6 +60,22 @@ gap> MultiplicativeNeutralElement(H);
 <identity partial perm on [ 3, 5 ]>
 gap> OneImmutable(H);
 <identity partial perm on [ 3, 5 ]>
+
+# greens-generic: MultiplicativeNeutralElement, One, for an H-class, 2
+gap> S := Semigroup([
+> Transformation([1, 1, 3, 2, 4]),
+> Transformation([1, 5, 5, 2, 5]),
+> Transformation([4, 1, 3, 5, 5])]);;
+gap> H := HClass(S, S.1);;
+gap> MultiplicativeNeutralElement(H);
+fail
+gap> OneImmutable(H);
+IdentityTransformation
+gap> H := HClass(S, Transformation([1, 1]));;
+gap> MultiplicativeNeutralElement(H);
+Transformation( [ 1, 1 ] )
+gap> OneImmutable(H);
+Transformation( [ 1, 1 ] )
 
 # greens-generic: StructureDescription, for an H-class, 1/1
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
