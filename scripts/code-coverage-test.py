@@ -33,7 +33,7 @@ _COMMANDS = 'echo "CoverageLineByLine(\\"' + _DIR + '/profile.gz\\");;'
 _COMMANDS += 'LoadPackage(\\"semigroups\\", false);;'
 for f in _ARGS.files:
     _COMMANDS += 'SEMIGROUPS.Test(\\"' + f + '\\", rec(silent := true));;'
-_COMMANDS += '''UnprofileLineByLine();;
+_COMMANDS += '''UncoverageLineByLine();;
 LoadPackage(\\"profiling\\", false);;
 filesdir := Concatenation(SEMIGROUPS.PackageDir, \\"/gap/\\");;'''
 _COMMANDS += 'outdir := \\"' + _DIR + '\\";;'
@@ -43,7 +43,7 @@ _COMMANDS += 'OutputAnnotatedCodeCoverageFiles(x, filesdir, outdir);"'
 PS = subprocess.Popen(_COMMANDS, stdout=subprocess.PIPE, shell=True)
 
 try:
-    subprocess.check_call(_ARGS.gap_root + 'bin/gap.sh -A -r -m 1g -T',
+    subprocess.check_call(_ARGS.gap_root + 'bin/gap.sh -A -r -q -m 1g -T',
                           stdin=PS.stdout, shell=True)
 except subprocess.CalledProcessError:
     sys.exit('\033[31mcode-coverage-test.py: error: something went wrong calling GAP!\033[0m')
