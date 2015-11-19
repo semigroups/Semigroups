@@ -99,9 +99,8 @@ function(L)
     p := LambdaConjugator(Parent(L))(RightOne(LambdaOrbRep(o, m)),
                                      Representative(L));
     return LambdaOrbSchutzGp(o, m) ^ p;
-  else
-    return LambdaOrbSchutzGp(o, m);
   fi;
+  return LambdaOrbSchutzGp(o, m);
 end);
 
 #############################################################################
@@ -401,6 +400,11 @@ InstallMethod(GreensHClasses,
 function(C)
   local reps, out, setter, i;
 
+  if not (IsGreensLClass(C) or IsGreensRClass(C) or IsGreensDClass(C)) then
+    ErrorMayQuit("Semigroups: GreensHClasses: usage,\n",
+                 "an L-, R-, or D-class,");
+  fi;
+
   reps := HClassReps(C);
   out := [];
 
@@ -410,9 +414,6 @@ function(C)
     setter := SetRClassOfHClass;
   elif IsGreensDClass(C) then
     setter := SetDClassOfHClass;
-  else
-    ErrorMayQuit("Semigroups: GreensHClasses: usage,\n",
-                 "an L-, R-, or D-class,");
   fi;
 
   for i in [1 .. Length(reps)] do
