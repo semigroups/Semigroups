@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
 DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
 DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
 

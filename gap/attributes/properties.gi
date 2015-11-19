@@ -470,12 +470,9 @@ InstallMethod(IsRTrivial, "for an inverse semigroup",
 
 InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+2, # to beat the method for acting semigroups
 function(S)
-  if ForAny(GeneratorsOfSemigroup(S),
-            x -> ForAny(CyclesOfTransformation(x), y -> Length(y) > 1)) then
-    return false;
-  fi;
-  return ForAll(CyclesOfTransformationSemigroup(S), x -> Length(x) = 1);
+  return IsAcyclicDigraph(DigraphOfActionOnPoints(S));
 end);
 
 # different method for ideals
