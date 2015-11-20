@@ -39,8 +39,7 @@ function(file, x)
   return IO_OK;
 end);
 
-IO_Unpicklers.PABR :=
-function(file)
+IO_Unpicklers.PABR := function(file)
   local x;
   x := IO_Unpickle(file);
   if x = IO_Error then
