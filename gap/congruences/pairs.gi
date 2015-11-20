@@ -423,17 +423,17 @@ function(_record)
 
     # Input checks
     if Size(pair) <> 2 then
-      ErrorMayQuit("Semigroups: \in (for a congruence): usage,\n",
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
                    "the first arg <pair> must be a list of length 2,");
     fi;
     S := Range(cong);
     if not (pair[1] in S and pair[2] in S) then
-      ErrorMayQuit("Semigroups: \in (for a congruence): usage,\n",
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
                    "elements of the first arg <pair> must be\n",
                    "in the range of the second arg <cong>,");
     fi;
     if not (HasIsFinite(S) and IsFinite(S)) then
-      ErrorMayQuit("Semigroups: \in (for a congruence): usage,\n",
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
                    "this function currently only works if <cong> is a ",
                    "congruence of a semigroup\nwhich is known to be finite,");
     fi;
