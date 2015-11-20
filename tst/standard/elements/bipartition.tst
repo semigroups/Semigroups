@@ -67,9 +67,9 @@ true
 #T# BipartitionTest8: check BlocksIdempotentTester, first a few little examples
 gap> l := BlocksByIntRepNC([3, 1, 2, 3, 3, 0, 0, 0]);;
 gap> r := BlocksByIntRepNC([2, 1, 2, 2, 2, 0, 0]);;
-gap> SEMIGROUPS_BlocksIdempotentTester(l, r);
+gap> SEMIGROUPS.BlocksIdempotentTester(l, r);
 true
-gap> e := SEMIGROUPS_BlocksIdempotentCreator(l, r);
+gap> e := SEMIGROUPS.BlocksIdempotentCreator(l, r);
 <bipartition: [ 1 ], [ 2, 3, 4 ], [ -1 ], [ -2 ], [ -3, -4 ]>
 gap> IsIdempotent(e);
 true
