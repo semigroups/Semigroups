@@ -77,7 +77,7 @@ end;
 
 # TODO move this method into the graph inverse semigroup file
 
-#InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a graph inverse semigroup",
+#InstallMethod(SemigroupsViewStringSuffix, "for a graph inverse semigroup",
 #[IsGraphInverseSemigroup],
 #function(S)
 #  local n, str;

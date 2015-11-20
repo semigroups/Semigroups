@@ -20,18 +20,18 @@ DeclareOperation("OrbitGraphAsSets", [IsSemigroupData]);
 DeclareOperation("OrbitGraph", [IsSemigroupData]);
 DeclareOperation("PositionOfFound", [IsSemigroupData]);
 
-# these must be here since SEMIGROUPS_UniversalFakeOne is used in lots of other
+# these must be here since SEMIGROUPS.UniversalFakeOne is used in lots of other
 # places
 
 DeclareCategory("SEMIGROUPS_IsUniversalFakeOne", IsAssociativeElement);
 
-BindGlobal("SEMIGROUPS_UniversalFakeOneFamily",
-           NewFamily("SEMIGROUPS_UniversalFakeOneFamily",
+SEMIGROUPS.UniversalFakeOneFamily :=
+           NewFamily("SEMIGROUPS.UniversalFakeOneFamily",
                      SEMIGROUPS_IsUniversalFakeOne,
                      CanEasilyCompareElements,
-                     CanEasilyCompareElements));
+                     CanEasilyCompareElements);
 
-BindGlobal("SEMIGROUPS_UniversalFakeOne",
-           Objectify(NewType(SEMIGROUPS_UniversalFakeOneFamily,
+SEMIGROUPS.UniversalFakeOne :=
+           Objectify(NewType(SEMIGROUPS.UniversalFakeOneFamily,
                              SEMIGROUPS_IsUniversalFakeOne),
-                     rec()));
+                     rec());

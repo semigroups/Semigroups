@@ -17,8 +17,7 @@
 # enumerate the ideal until <enum[limit]> is bound or <lookfunc(enum, nr)> is
 # <true>
 
-BindGlobal("SEMIGROUPS_EnumerateIdeal",
-function(enum, limit, lookfunc)
+SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   local nr, looking, found, i, lookup, indices, S, data, left, right,
    genstoapply, j, len, lookfunc2, l, k;
 
@@ -116,7 +115,7 @@ function(enum, limit, lookfunc)
   enum!.pos := i;
 
   return enum;
-end);
+end;
 
 #
 
@@ -161,13 +160,13 @@ function(I)
     lookfunc := function(enum, i)
       return enum!.indices[i] = pos;
     end;
-    return SEMIGROUPS_EnumerateIdeal(enum, infinity, lookfunc)!.found;
+    return SEMIGROUPS.EnumerateIdeal(enum, infinity, lookfunc)!.found;
     # enumerate until lookup[pos] is bound...
   end;
 
   record.ElementNumber := function(enum, nr)
     if not IsBound(enum!.indices[nr]) then
-      SEMIGROUPS_EnumerateIdeal(enum, nr, ReturnFalse);
+      SEMIGROUPS.EnumerateIdeal(enum, nr, ReturnFalse);
     fi;
     return SEMIGROUP_ELEMENTS(data, enum!.indices[nr])[enum!.indices[nr]];
   end;
@@ -176,7 +175,7 @@ function(I)
     return IsBound(enum!.indices[nr]);
   end;
 
-  record.Length := enum -> SEMIGROUPS_EnumerateIdeal(enum,
+  record.Length := enum -> SEMIGROUPS.EnumerateIdeal(enum,
                                                      infinity,
                                                      ReturnFalse)!.nr;
 
@@ -231,7 +230,7 @@ function(I)
                              infinity);
   enum := Enumerator(I);
   if not IsBound(enum!.idempotents) then
-    SEMIGROUPS_EnumerateIdeal(enum, infinity, ReturnFalse);
+    SEMIGROUPS.EnumerateIdeal(enum, infinity, ReturnFalse);
     indices := enum!.indices;
     idempotents := EmptyPlist(Length(indices));
     nr := 0;

@@ -40,21 +40,17 @@
 
 # the following is only for inverse op semigroups!
 
-BindGlobal("SEMIGROUPS_DClassOfXClass",
-function(X)
+SEMIGROUPS.DClassOfXClass := function(X)
   local D;
-  D := SEMIGROUPS_CreateDClass(X);
-  SEMIGROUPS_CopyLambda(X, D);
-  SEMIGROUPS_RectifyLambda(D);
+  D := SEMIGROUPS.CreateDClass(X);
+  SEMIGROUPS.CopyLambda(X, D);
+  SEMIGROUPS.RectifyLambda(D);
   D!.rep := RightOne(D!.rep);
   # so that lambda and rho are rectified!
   return D;
-end);
+end;
 
-#
-
-InstallGlobalFunction(SEMIGROUPS_InverseRectifyRho,
-function(C)
+SEMIGROUPS.InverseRectifyRho := function(C)
   local o, i, m;
 
   o := LambdaOrb(C);
@@ -67,7 +63,7 @@ function(C)
   fi;
 
   return;
-end);
+end;
 
 # same method for inverse ideals
 
@@ -95,21 +91,21 @@ end);
 InstallMethod(DClassOfLClass,
 "for an L-class of an inverse op acting semigroup",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
-SEMIGROUPS_DClassOfXClass);
+SEMIGROUPS.DClassOfXClass);
 
 #
 
 InstallMethod(DClassOfRClass,
 "for an R-class of an inverse op acting semigroup",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
-SEMIGROUPS_DClassOfXClass);
+SEMIGROUPS.DClassOfXClass);
 
 #
 
 InstallMethod(DClassOfHClass,
 "for an H-class of an inverse op acting semigroup",
 [IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
-SEMIGROUPS_DClassOfXClass);
+SEMIGROUPS.DClassOfXClass);
 
 #
 
@@ -118,9 +114,9 @@ InstallMethod(LClassOfHClass,
 [IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
 function(H)
   local L;
-  L := SEMIGROUPS_CreateLClass(H);
-  SEMIGROUPS_CopyLambda(H, L);
-  SEMIGROUPS_InverseRectifyRho(L);
+  L := SEMIGROUPS.CreateLClass(H);
+  SEMIGROUPS.CopyLambda(H, L);
+  SEMIGROUPS.InverseRectifyRho(L);
   return L;
 end);
 
@@ -131,9 +127,9 @@ InstallMethod(GreensDClassOfElementNC,
 [IsActingSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement, IsBool],
 function(S, x, isGreensClassNC)
   local D;
-  D := SEMIGROUPS_CreateDClass(S, x, isGreensClassNC);
-  SEMIGROUPS_SetLambda(D);
-  SEMIGROUPS_RectifyLambda(D);
+  D := SEMIGROUPS.CreateDClass(S, x, isGreensClassNC);
+  SEMIGROUPS.SetLambda(D);
+  SEMIGROUPS.RectifyLambda(D);
   D!.rep := RightOne(D!.rep);
   return D;
 end);
@@ -145,9 +141,9 @@ InstallMethod(GreensLClassOfElementNC,
 [IsActingSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement, IsBool],
 function(S, x, isGreensClassNC)
   local L;
-  L := SEMIGROUPS_CreateLClass(S, x, isGreensClassNC);
-  SEMIGROUPS_SetLambda(L);
-  SEMIGROUPS_InverseRectifyRho(L);
+  L := SEMIGROUPS.CreateLClass(S, x, isGreensClassNC);
+  SEMIGROUPS.SetLambda(L);
+  SEMIGROUPS.InverseRectifyRho(L);
   return L;
 end);
 
@@ -158,8 +154,8 @@ InstallMethod(GreensHClassOfElementNC,
 [IsActingSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement, IsBool],
 function(S, x, isGreensClassNC)
   local H;
-  H := SEMIGROUPS_CreateHClass(S, x, isGreensClassNC);
-  SEMIGROUPS_SetLambda(H);
+  H := SEMIGROUPS.CreateHClass(S, x, isGreensClassNC);
+  SEMIGROUPS.SetLambda(H);
   return H;
 end);
 
@@ -171,8 +167,8 @@ InstallMethod(GreensHClassOfElementNC,
  IsBool],
 function(C, x, isGreensClassNC)
   local H;
-  H := SEMIGROUPS_CreateHClass(C, x, isGreensClassNC);
-  SEMIGROUPS_CopyLambda(C, H);
+  H := SEMIGROUPS.CreateHClass(C, x, isGreensClassNC);
+  SEMIGROUPS.CopyLambda(C, H);
   if IsGreensLClass(C) then
     SetLClassOfHClass(H, C);
   elif IsGreensRClass(C) then
@@ -310,16 +306,18 @@ end);
 InstallMethod(GreensDClasses, "for an acting semigroup with inverse op",
 [IsActingSemigroup and IsSemigroupWithInverseOp],
 function(S)
-  local o, scc, out, D, i;
+  local o, scc, out, CreateDClass, D, i;
 
   o := LambdaOrb(S);
   scc := OrbSCC(o);
   out := EmptyPlist(Length(scc) - 1);
 
+  CreateDClass := SEMIGROUPS.CreateDClass;
+
   for i in [2 .. Length(scc)] do
     # don't use GreensDClassOfElementNC cos we don't need to rectify the
     # rho-value
-    D := SEMIGROUPS_CreateDClass(S, RightOne(LambdaOrbRep(o, i)), false);
+    D := CreateDClass(S, RightOne(LambdaOrbRep(o, i)), false);
     SetLambdaOrb(D, o);
     SetLambdaOrbSCCIndex(D, i);
     out[i - 1] := D;
@@ -332,14 +330,18 @@ end);
 InstallMethod(GreensLClasses, "for inverse op D-class of acting semigroup",
 [IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
 function(D)
-  local reps, out, i;
-  reps := LClassReps(D);
-  out := EmptyPlist(Length(reps));
+  local reps, out, CreateLClass, CopyLambda, i;
+
+  reps         := LClassReps(D);
+  out          := EmptyPlist(Length(reps));
+  CreateLClass := SEMIGROUPS.CreateLClass;
+  CopyLambda   := SEMIGROUPS.CopyLambda;
+
   for i in [1 .. Length(reps)] do
     # don't use GreensLClassOfElementNC cos we don't need to rectify the
     # rho-value
-    out[i] := SEMIGROUPS_CreateLClass(D, reps[i], IsGreensClassNC(D));
-    SEMIGROUPS_CopyLambda(D, out[i]);
+    out[i] := CreateLClass(D, reps[i], IsGreensClassNC(D));
+    CopyLambda(D, out[i]);
     SetDClassOfLClass(out[i], D);
   od;
   return out;
@@ -383,7 +385,7 @@ InstallMethod(GreensHClasses,
 "for an inverse op class of an acting semigroup",
 [IsInverseOpClass and IsActingSemigroupGreensClass],
 function(C)
-  local reps, out, setter, i;
+  local reps, out, setter, CreateHClass, CopyLambda, i;
 
   if not (IsGreensLClass(C) or IsGreensRClass(C) or IsGreensDClass(C)) then
     ErrorMayQuit("Semigroups: GreensHClasses: usage,\n",
@@ -401,9 +403,12 @@ function(C)
     setter := SetDClassOfHClass;
   fi;
 
+  CreateHClass := SEMIGROUPS.CreateHClass;
+  CopyLambda   := SEMIGROUPS.CopyLambda;
+
   for i in [1 .. Length(reps)] do
-    out[i] := SEMIGROUPS_CreateHClass(C, reps[i], IsGreensClassNC(C));
-    SEMIGROUPS_CopyLambda(C, out[i]);
+    out[i] := CreateHClass(C, reps[i], IsGreensClassNC(C));
+    CopyLambda(C, out[i]);
     setter(out[i], C);
   od;
 

@@ -220,7 +220,7 @@ gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
 >  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(generic := true));;
 gap> GreensDClassOfElement(S, PartialPerm([19]));
-Error, Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
 
 # greens-generic: GreensDClassOfElementNC, 1/1
@@ -245,13 +245,13 @@ gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
 >  Transformation([4, 4, 2, 6, 6, 3]), Transformation([5, 5, 5, 6, 5, 4]),
 >  Transformation([6, 3, 1, 3, 1, 6])], rec(generic := true));;
 gap> RClass(S, ConstantTransformation(7, 7));
-Error, Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
 gap> LClass(S, ConstantTransformation(7, 7));
-Error, Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
 gap> HClass(S, ConstantTransformation(7, 7));
-Error, Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
 
 # greens-generic: GreensL/RClassOfElementNC, 1/1
@@ -298,10 +298,10 @@ gap> L := LClass(D, x);;
 gap> Size(L);
 1
 gap> LClass(D, IdentityBipartition(8));
-Error, Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
 gap> RClass(D, IdentityBipartition(8));
-Error, Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
 gap> x := Bipartition([[1, 4, -1, -2, -6], [2, 3, 5, -4],
 > [6, -3], [-5]]);;
@@ -348,7 +348,7 @@ gap> H := HClassNC(D, MultiplicativeZero(S));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `GreensHClassOfElementNC' on 2 arguments
 gap> H := HClass(D, IdentityTransformation);
-Error, Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
 
 # greens-generic: GreensHClassOfElement(L/R-class, x), 1/1
