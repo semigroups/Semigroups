@@ -32,18 +32,16 @@
 ##
 #############################################################################
 
-BindGlobal("SEMIGROUPS_PlusMinMax",
-function(x, y)
+SEMIGROUPS.PlusMinMax := function(x, y)
   if x = infinity or y = infinity then
     return infinity;
   elif x = -infinity or y = -infinity then
     return -infinity;
   fi;
   return x + y;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_IdentityMat",
-function(x, zero, one)
+SEMIGROUPS.IdentityMat := function(x, zero, one)
   local n, id, i;
   n := Length(x![1]);
   id := List([1 .. n], x -> [1 .. n] * zero);
@@ -51,10 +49,9 @@ function(x, zero, one)
     id[i][i] := one;
   od;
   return id;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_RandomIntegerMatrix",
-function(n, source)
+SEMIGROUPS.RandomIntegerMatrix := function(n, source)
   local out, i, j;
 
   out := List([1 .. n], x -> EmptyPlist(n));
@@ -69,7 +66,42 @@ function(n, source)
     od;
   od;
   return out;
-end);
+end;
+
+SEMIGROUPS.TropicalizeMat := function(mat, threshold)
+  local n, i, j;
+
+  n := Length(mat);
+  mat[n + 1] := threshold;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if IsInt(mat[i][j]) then
+        mat[i][j] := AbsInt(mat[i][j]);
+        if mat[i][j] > threshold then
+          mat[i][j] := threshold;
+        fi;
+      fi;
+    od;
+  od;
+  return mat;
+end;
+
+SEMIGROUPS.NaturalizeMat := function(x, threshold, period)
+  local n, i, j;
+
+  n := Length(x);
+  x[n + 1] := threshold;
+  x[n + 2] := period;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      x[i][j] := AbsInt(x[i][j]);
+      if x[i][j] > threshold then
+        x[i][j] := threshold + (x[i][j] - threshold) mod period;
+      fi;
+    od;
+  od;
+  return x;
+end;
 
 #############################################################################
 ## 1. Max-plus matrices
@@ -94,7 +126,7 @@ end);
 
 InstallMethod(\*, "for max-plus matrices", [IsMaxPlusMatrix, IsMaxPlusMatrix],
 function(x, y)
-  local n, xy, val, i, j, k;
+  local n, xy, val, i, j, k, PlusMinMax;
 
   n := Length(x![1]);
   if n <> DimensionOfMatrixOverSemiring(y) then
@@ -102,12 +134,13 @@ function(x, y)
                  "the arguments must be matrices of the same dimensions,");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
+  PlusMinMax := SEMIGROUPS.PlusMinMax;
 
   for i in [1 .. n] do
     for j in [1 .. n] do
       val := -infinity;
       for k in [1 .. n] do
-        val := Maximum(val, SEMIGROUPS_PlusMinMax(x![i][k], y![k][j]));
+        val := Maximum(val, PlusMinMax(x![i][k], y![k][j]));
       od;
       xy[i][j] := val;
     od;
@@ -117,13 +150,13 @@ end);
 
 InstallMethod(OneImmutable, "for a max-plus matrix",
 [IsMaxPlusMatrix],
-x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, -infinity, 0)));
+x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, -infinity, 0)));
 
 InstallMethod(RandomMatrixCons, "for IsMaxPlusMatrix and pos int",
 [IsMaxPlusMatrix, IsPosInt],
 function(filter, n)
   return MatrixNC(filter,
-                  SEMIGROUPS_RandomIntegerMatrix(n, -infinity));
+                  SEMIGROUPS.RandomIntegerMatrix(n, -infinity));
 end);
 
 InstallMethod(AsMatrixCons,
@@ -163,7 +196,7 @@ end);
 
 InstallMethod(\*, "for min-plus matrices", [IsMinPlusMatrix, IsMinPlusMatrix],
 function(x, y)
-  local n, xy, val, i, j, k;
+  local n, xy, val, i, j, k, PlusMinMax;
 
   n := Length(x![1]);
   if n <> DimensionOfMatrixOverSemiring(y) then
@@ -171,12 +204,13 @@ function(x, y)
                  "the arguments must be matrices of the same dimensions,");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
+  PlusMinMax := SEMIGROUPS.PlusMinMax;
 
   for i in [1 .. n] do
     for j in [1 .. n] do
       val := infinity;
       for k in [1 .. n] do
-        val := Minimum(val, SEMIGROUPS_PlusMinMax(x![i][k], y![k][j]));
+        val := Minimum(val, PlusMinMax(x![i][k], y![k][j]));
       od;
       xy[i][j] := val;
     od;
@@ -186,13 +220,13 @@ end);
 
 InstallMethod(OneImmutable, "for a min-plus matrix",
 [IsMinPlusMatrix],
-x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, infinity, 0)));
+x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, infinity, 0)));
 
 InstallMethod(RandomMatrixCons, "for IsMinPlusMatrix and pos int",
 [IsMinPlusMatrix, IsPosInt],
 function(filter, n)
   return MatrixNC(filter,
-                  SEMIGROUPS_RandomIntegerMatrix(n, infinity));
+                  SEMIGROUPS.RandomIntegerMatrix(n, infinity));
 end);
 
 InstallMethod(AsMatrixCons,
@@ -209,24 +243,6 @@ end);
 InstallMethod(ThresholdTropicalMatrix, "for a tropical matrix",
 [IsTropicalMatrix], x -> x![Length(x![1]) + 1]);
 
-InstallGlobalFunction(SEMIGROUPS_TropicalizeMat,
-function(mat, threshold)
-  local n, i, j;
-
-  n := Length(mat);
-  mat[n + 1] := threshold;
-  for i in [1 .. n] do
-    for j in [1 .. n] do
-      if IsInt(mat[i][j]) then
-        mat[i][j] := AbsInt(mat[i][j]);
-        if mat[i][j] > threshold then
-          mat[i][j] := threshold;
-        fi;
-      fi;
-    od;
-  od;
-  return mat;
-end);
 
 #############################################################################
 ## 4. Tropical max-plus matrices
@@ -254,7 +270,7 @@ end);
 InstallMethod(\*, "for tropical max-plus matrices",
 [IsTropicalMaxPlusMatrix, IsTropicalMaxPlusMatrix],
 function(x, y)
-  local n, threshold, xy, val, i, j, k;
+  local n, threshold, xy, PlusMinMax, val, i, j, k;
 
   n := DimensionOfMatrixOverSemiring(x);
   threshold := ThresholdTropicalMatrix(x);
@@ -266,12 +282,13 @@ function(x, y)
                  "the arguments must be matrices of the same dimensions,");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
+  PlusMinMax := SEMIGROUPS.PlusMinMax;
 
   for i in [1 .. n] do
     for j in [1 .. n] do
       val := -infinity;
       for k in [1 .. n] do
-        val := Maximum(val, SEMIGROUPS_PlusMinMax(x![i][k], y![k][j]));
+        val := Maximum(val, PlusMinMax(x![i][k], y![k][j]));
       od;
       if val > threshold then
         val := threshold;
@@ -284,15 +301,15 @@ end);
 
 InstallMethod(OneImmutable, "for a tropical max-plus matrix",
 [IsTropicalMaxPlusMatrix],
-x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, -infinity, 0)));
+x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, -infinity, 0)));
 
 InstallMethod(RandomMatrixCons,
 "for IsTropicalMaxPlusMatrix, pos int, pos int",
 [IsTropicalMaxPlusMatrix, IsPosInt, IsPosInt],
 function(filter, dim, threshold)
   local mat;
-  mat := SEMIGROUPS_RandomIntegerMatrix(dim, -infinity);
-  mat := SEMIGROUPS_TropicalizeMat(mat, threshold);
+  mat := SEMIGROUPS.RandomIntegerMatrix(dim, -infinity);
+  mat := SEMIGROUPS.TropicalizeMat(mat, threshold);
   return MatrixNC(filter, mat);
 end);
 
@@ -300,7 +317,7 @@ InstallMethod(AsMatrixCons,
 "for IsTropicalMaxPlusMatrix, max-plus matrix, and pos int",
 [IsTropicalMaxPlusMatrix, IsMaxPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
-  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+  return MatrixNC(filter, SEMIGROUPS.TropicalizeMat(AsMutableList(mat),
                                                     threshold));
 end);
 
@@ -308,7 +325,7 @@ InstallMethod(AsMatrixCons,
 "for IsTropicalMaxPlusMatrix, projective max-plus matrix, and pos int",
 [IsTropicalMaxPlusMatrix, IsProjectiveMaxPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
-  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+  return MatrixNC(filter, SEMIGROUPS.TropicalizeMat(AsMutableList(mat),
                                                     threshold));
 end);
 
@@ -318,7 +335,7 @@ InstallMethod(AsMatrixCons,
 "for IsTropicalMaxPlusMatrix, max-plus matrix, and pos int",
 [IsTropicalMaxPlusMatrix, IsTropicalMaxPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
-  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+  return MatrixNC(filter, SEMIGROUPS.TropicalizeMat(AsMutableList(mat),
                                                     threshold));
 end);
 
@@ -348,7 +365,7 @@ end);
 InstallMethod(\*, "for tropical min-plus matrices",
 [IsTropicalMinPlusMatrix, IsTropicalMinPlusMatrix],
 function(x, y)
-  local n, threshold, xy, val, i, j, k;
+  local n, threshold, xy, PlusMinMax, val, i, j, k;
 
   n := DimensionOfMatrixOverSemiring(x);
   threshold := ThresholdTropicalMatrix(x);
@@ -362,12 +379,13 @@ function(x, y)
   fi;
 
   xy := List([1 .. n], x -> EmptyPlist(n));
+  PlusMinMax := SEMIGROUPS.PlusMinMax;
 
   for i in [1 .. n] do
     for j in [1 .. n] do
       val := infinity;
       for k in [1 .. n] do
-        val := Minimum(val, SEMIGROUPS_PlusMinMax(x![i][k], y![k][j]));
+        val := Minimum(val, PlusMinMax(x![i][k], y![k][j]));
       od;
       if val <> infinity and val > threshold then
         val := threshold;
@@ -380,15 +398,15 @@ end);
 
 InstallMethod(OneImmutable, "for a tropical min-plus matrix",
 [IsTropicalMinPlusMatrix],
-x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, infinity, 0)));
+x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, infinity, 0)));
 
 InstallMethod(RandomMatrixCons,
 "for IsTropicalMinPlusMatrix, pos int, pos int",
 [IsTropicalMinPlusMatrix, IsPosInt, IsPosInt],
 function(filter, dim, threshold)
   local mat;
-  mat := SEMIGROUPS_RandomIntegerMatrix(dim, infinity);
-  mat := SEMIGROUPS_TropicalizeMat(mat, threshold);
+  mat := SEMIGROUPS.RandomIntegerMatrix(dim, infinity);
+  mat := SEMIGROUPS.TropicalizeMat(mat, threshold);
   return MatrixNC(filter, mat);
 end);
 
@@ -396,7 +414,7 @@ InstallMethod(AsMatrixCons,
 "for IsTropicalMinPlusMatrix, min-plus matrix, and pos int",
 [IsTropicalMinPlusMatrix, IsMinPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
-  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+  return MatrixNC(filter, SEMIGROUPS.TropicalizeMat(AsMutableList(mat),
                                                     threshold));
 end);
 
@@ -406,7 +424,7 @@ InstallMethod(AsMatrixCons,
 "for IsTropicalMinPlusMatrix, min-plus matrix, and pos int",
 [IsTropicalMinPlusMatrix, IsTropicalMinPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
-  return MatrixNC(filter, SEMIGROUPS_TropicalizeMat(AsMutableList(mat),
+  return MatrixNC(filter, SEMIGROUPS.TropicalizeMat(AsMutableList(mat),
                                                     threshold));
 end);
 
@@ -436,7 +454,7 @@ end);
 InstallMethod(\*, "for projective max-plus matrices",
 [IsProjectiveMaxPlusMatrix, IsProjectiveMaxPlusMatrix],
 function(x, y)
-  local n, xy, norm, val, i, j, k;
+  local n, xy, norm, PlusMinMax, val, i, j, k;
 
   n := DimensionOfMatrixOverSemiring(x);
   if n <> DimensionOfMatrixOverSemiring(y) then
@@ -445,12 +463,13 @@ function(x, y)
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
   norm := -infinity;
+  PlusMinMax := SEMIGROUPS.PlusMinMax;
 
   for i in [1 .. n] do
     for j in [1 .. n] do
       val := -infinity;
       for k in [1 .. n] do
-        val := Maximum(val, SEMIGROUPS_PlusMinMax(x![i][k], y![k][j]));
+        val := Maximum(val, PlusMinMax(x![i][k], y![k][j]));
       od;
       xy[i][j] := val;
       if val > norm then
@@ -471,13 +490,13 @@ end);
 
 InstallMethod(OneImmutable, "for a projective max-plus matrix",
 [IsProjectiveMaxPlusMatrix],
-x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, -infinity, 0)));
+x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, -infinity, 0)));
 
 InstallMethod(RandomMatrixCons, "for IsProjectiveMaxPlusMatrix and pos int",
 [IsProjectiveMaxPlusMatrix, IsPosInt],
 function(filter, n)
   return MatrixNC(filter,
-                  SEMIGROUPS_RandomIntegerMatrix(n, -infinity));
+                  SEMIGROUPS.RandomIntegerMatrix(n, -infinity));
 end);
 
 InstallMethod(AsMatrixCons,
@@ -504,23 +523,6 @@ InstallMethod(ThresholdNTPMatrix, "for a natural matrix",
 InstallMethod(PeriodNTPMatrix, "for a natural matrix",
 [IsNTPMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 2]);
 
-InstallGlobalFunction(SEMIGROUPS_NaturalizeMat,
-function(x, threshold, period)
-  local n, i, j;
-
-  n := Length(x);
-  x[n + 1] := threshold;
-  x[n + 2] := period;
-  for i in [1 .. n] do
-    for j in [1 .. n] do
-      x[i][j] := AbsInt(x[i][j]);
-      if x[i][j] > threshold then
-        x[i][j] := threshold + (x[i][j] - threshold) mod period;
-      fi;
-    od;
-  od;
-  return x;
-end);
 
 InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a natural number matrix",
@@ -574,14 +576,14 @@ end);
 
 InstallMethod(OneImmutable, "for a ntp matrix",
 [IsNTPMatrix],
-x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, 0, 1)));
+x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, 0, 1)));
 
 InstallMethod(RandomMatrixCons, "for IsNTPMatrix, pos int, pos int, pos int",
 [IsNTPMatrix, IsPosInt, IsPosInt, IsPosInt],
 function(filter, dim, threshold, period)
   local mat;
-  mat := SEMIGROUPS_RandomIntegerMatrix(dim, false);
-  mat := SEMIGROUPS_NaturalizeMat(mat, threshold, period);
+  mat := SEMIGROUPS.RandomIntegerMatrix(dim, false);
+  mat := SEMIGROUPS.NaturalizeMat(mat, threshold, period);
   return MatrixNC(filter, mat);
 end);
 
@@ -589,7 +591,7 @@ InstallMethod(AsMatrixCons,
 "for IsNTPMatrix, ntp matrix, pos int, pos int",
 [IsNTPMatrix, IsNTPMatrix, IsPosInt, IsPosInt],
 function(filter, mat, threshold, period)
-  return MatrixNC(filter, SEMIGROUPS_NaturalizeMat(AsMutableList(mat),
+  return MatrixNC(filter, SEMIGROUPS.NaturalizeMat(AsMutableList(mat),
                                                    threshold,
                                                    period));
 end);
@@ -598,7 +600,7 @@ InstallMethod(AsMatrixCons,
 "for IsNTPMatrix, ntp matrix, pos int, pos int",
 [IsNTPMatrix, IsIntegerMatrix, IsPosInt, IsPosInt],
 function(filter, mat, threshold, period)
-  return MatrixNC(filter, SEMIGROUPS_NaturalizeMat(AsMutableList(mat),
+  return MatrixNC(filter, SEMIGROUPS.NaturalizeMat(AsMutableList(mat),
                                                    threshold,
                                                    period));
 end);
@@ -649,12 +651,12 @@ end);
 
 InstallMethod(OneImmutable, "for an integer matrix",
 [IsIntegerMatrix],
-x -> MatrixNC(x, SEMIGROUPS_IdentityMat(x, 0, 1)));
+x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, 0, 1)));
 
 InstallMethod(RandomMatrixCons, "for IsIntegerMatrix and pos int",
 [IsIntegerMatrix, IsPosInt],
 function(filter, dim)
-  return MatrixNC(filter, SEMIGROUPS_RandomIntegerMatrix(dim, false));
+  return MatrixNC(filter, SEMIGROUPS.RandomIntegerMatrix(dim, false));
 end);
 
 InstallMethod(RandomMatrixOp, "for Integers and pos int",
@@ -681,7 +683,8 @@ function(S)
     od;
   od;
 
-  ET := Idempotents(Semigroup(List(gens, x -> AsMatrix(IsNTPMatrix, x, 1, 2))));
+  ET := Idempotents(Semigroup(List(gens,
+                                   x -> AsMatrix(IsNTPMatrix, x, 1, 2))));
 
   for mat in ET do
     mat := AsMatrix(IsIntegerMatrix, mat);

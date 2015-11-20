@@ -18,6 +18,45 @@
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
 #############################################################################
+# Internal
+#############################################################################
+
+SEMIGROUPS.TropicalizeMat := function(mat, threshold)
+  local n, i, j;
+
+  n := Length(mat);
+  mat[n + 1] := threshold;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if IsInt(mat[i][j]) then
+        mat[i][j] := AbsInt(mat[i][j]);
+        if mat[i][j] > threshold then
+          mat[i][j] := threshold;
+        fi;
+      fi;
+    od;
+  od;
+  return mat;
+end;
+
+SEMIGROUPS.NaturalizeMat := function(x, threshold, period)
+  local n, i, j;
+
+  n := Length(x);
+  x[n + 1] := threshold;
+  x[n + 2] := period;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      x[i][j] := AbsInt(x[i][j]);
+      if x[i][j] > threshold then
+        x[i][j] := threshold + (x[i][j] - threshold) mod period;
+      fi;
+    od;
+  od;
+  return x;
+end;
+
+#############################################################################
 # Pickler
 #############################################################################
 
@@ -141,7 +180,7 @@ function(filter, mat, threshold, period)
 
   return MatrixNC(filter,
                   List(mat, ShallowCopy),
-                  x -> SEMIGROUPS_NaturalizeMat(x, threshold, period));
+                  x -> SEMIGROUPS.NaturalizeMat(x, threshold, period));
 end);
 
 InstallMethod(Matrix,
@@ -174,7 +213,7 @@ function(filter, mat, threshold)
 
   return MatrixNC(filter,
                   List(mat, ShallowCopy),
-                  x -> SEMIGROUPS_TropicalizeMat(x, threshold));
+                  x -> SEMIGROUPS.TropicalizeMat(x, threshold));
 end);
 
 InstallMethod(Matrix, "for a filter and homogeneous list",

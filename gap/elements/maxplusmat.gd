@@ -49,8 +49,6 @@ BindGlobal("MinPlusMatrixType",
 ## 3. Tropical matrices
 #############################################################################
 
-DeclareGlobalFunction("SEMIGROUPS_TropicalizeMat");
-
 DeclareCategory("IsTropicalMatrix", IsMatrixOverSemiring);
 DeclareCategoryCollections("IsTropicalMatrix");
 
@@ -110,8 +108,6 @@ BindGlobal("ProjectiveMaxPlusMatrixType",
 #############################################################################
 ## 7. NTP (Natural Threshold Period) matrices
 #############################################################################
-
-DeclareGlobalFunction("SEMIGROUPS_NaturalizeMat");
 
 DeclareCategory("IsNTPMatrix", IsMatrixOverSemiring);
 DeclareCategoryCollections("IsNTPMatrix");
