@@ -49,8 +49,7 @@
 # Same as <Info> but without a line break at the end if the boolean <linebreak>
 # is false.
 
-SEMIGROUPS.InfoStatement :=
-function(level, linebreak, arg)
+SEMIGROUPS.InfoStatement := function(level, linebreak, arg)
 
   if InfoLevel(InfoSemigroups) >= level then
     Apply(arg, String);
@@ -68,8 +67,7 @@ end;
 # action of the automorphism group of the R(Z)MSGraph via rearranging rows and
 # columns
 
-SEMIGROUPS.StabOfRMSMatrix :=
-function(G, R)
+SEMIGROUPS.StabOfRMSMatrix := function(G, R)
   local OnMatrix, H, m, n;
 
   m := Length(Matrix(R)[1]);
@@ -94,10 +92,10 @@ end;
 # (0-)matrix semigroup under the action of the automorphism group of the
 # underlying group.
 
-SEMIGROUPS.StabOfRMSEntries :=
-function(G, R)
+SEMIGROUPS.StabOfRMSEntries := function(G, R)
   local H, entries, i;
-  SEMIGROUPS.InfoStatement(2, false, "finding the stabilizer of matrix entries . . . ");
+  SEMIGROUPS.InfoStatement(2, false,
+                           "finding the stabilizer of matrix entries . . . ");
   H := G;
   entries := MatrixEntries(R);
   i := PositionProperty(entries, x -> x <> 0 and x <> ());
@@ -114,8 +112,7 @@ end;
 # An elementary pruner for the backtrack search in the direct product V (to
 # find the subgroup U).
 
-SEMIGROUPS.RMSIsoPruner :=
-function(U, V)
+SEMIGROUPS.RMSIsoPruner := function(U, V)
   local blist, right;
 
   if IsTrivial(U) then
@@ -138,8 +135,7 @@ end;
 
 #
 
-SEMIGROUPS.RMSInducedFunction :=
-function(R, l, g, x)
+SEMIGROUPS.RMSInducedFunction := function(R, l, g, x)
   local mat, m, n, out, j, i;
 
   mat := Matrix(R);
@@ -334,7 +330,8 @@ else
     n := Length(Columns(R));
 
     # automorphism group of the graph . . .
-    SEMIGROUPS.InfoStatement(2, false, "finding automorphisms of the graph . . . ");
+    SEMIGROUPS.InfoStatement(2, false,
+                             "finding automorphisms of the graph . . . ");
 
     aut_graph := AutGroupGraph(RZMSGraph(R), [[1 .. m], [m + 1 .. n + m]]);
 
@@ -354,7 +351,8 @@ else
     fi;
 
     # automorphism group of the underlying group
-    SEMIGROUPS.InfoStatement(2, false, "finding the automorphism group of the group",
+    SEMIGROUPS.InfoStatement(2, false,
+                             "finding the automorphism group of the group",
                               " . . . ");
     aut_group := AutomorphismGroup(G);
     SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
@@ -513,7 +511,8 @@ else
 
     # automorphism group of the graph . . .
     # this is easy since the graph is complete bipartite
-    SEMIGROUPS.InfoStatement(2, false, "finding automorphisms of the graph . . . ");
+    SEMIGROUPS.InfoStatement(2, false,
+                             "finding automorphisms of the graph . . . ");
 
     if n = 1 and m = 1 then
       gens := GeneratorsOfGroup(AutomorphismGroup(G));
@@ -547,8 +546,9 @@ else
     fi;
 
     # automorphism group of the underlying group
-    SEMIGROUPS.InfoStatement(2, false, "finding the automorphism group of the group",
-                              " . . . ");
+    SEMIGROUPS.InfoStatement(2, false,
+                             "finding the automorphism group of the group",
+                             " . . . ");
     aut_group := AutomorphismGroup(G);
     SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
 

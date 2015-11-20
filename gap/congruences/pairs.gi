@@ -44,10 +44,11 @@
 ##
 #############################################################################
 
+# This function creates the congruence data object for cong.  It should only
+# be called once.
+
 SEMIGROUPS.SetupCongData := function(cong)
-  # This function creates the congruence data object for cong.  It should only
-  # be called once.
-  local S, elms, pairs, hashlen, ht, data, genpairs, right_compat, left_compat;
+  local S, elms, pairs, hashlen, ht, data, genpairs;
 
   S := Range(cong);
   elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
@@ -80,13 +81,12 @@ SEMIGROUPS.SetupCongData := function(cong)
                           data);
 end;
 
-#
+# Enumerates pairs in the congruence in batches until lookfunc is satisfied
 
 InstallMethod(SEMIGROUPS_Enumerate,
 "for semigroup congruence data and a function",
 [SEMIGROUPS_IsSemigroupCongruenceData, IsFunction],
 function(data, lookfunc)
-  # Enumerates pairs in the congruence in batches until lookfunc is satisfied
   local cong, ufdata, pairstoapply, ht, S, left, right, genstoapply, i, nr, x,
         check_period, j, y, next, newtable, ii;
 
@@ -303,10 +303,11 @@ end);
 
 #
 
-_GenericCongruenceEquality := function(c1, c2)
+BindGlobal("_GenericCongruenceEquality",
+function(c1, c2)
   # This function tests equality of left, right, or 2-sided congruences
   return Range(c1) = Range(c2) and AsLookupTable(c1) = AsLookupTable(c2);
-end;
+end);
 
 # _GenericCongruenceEquality tests equality for any combination of left, right
 # and 2-sided congruences, so it is installed for the six combinations below.
@@ -354,7 +355,8 @@ Concatenation("for a semigroup congruence with known generating pairs ",
  IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
 _GenericCongruenceEquality);
 
-Unbind(_GenericCongruenceEquality);
+MakeReadWriteGlobal("_GenericCongruenceEquality");
+UnbindGlobal("_GenericCongruenceEquality");
 
 #
 
@@ -373,7 +375,8 @@ Unbind(_GenericCongruenceEquality);
 # are unbound by the time the methods are called.
 ################################################################################
 
-_InstallMethodsForCongruences := function(_record)
+BindGlobal("_InstallMethodsForCongruences",
+function(_record)
   local _GeneratingPairsOfXSemigroupCongruence,
         _HasGeneratingPairsOfXSemigroupCongruence,
         _XSemigroupCongruence,
@@ -420,17 +423,17 @@ _InstallMethodsForCongruences := function(_record)
 
     # Input checks
     if Size(pair) <> 2 then
-      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+      ErrorMayQuit("Semigroups: \in (for a congruence): usage,\n",
                    "the first arg <pair> must be a list of length 2,");
     fi;
     S := Range(cong);
     if not (pair[1] in S and pair[2] in S) then
-      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+      ErrorMayQuit("Semigroups: \in (for a congruence): usage,\n",
                    "elements of the first arg <pair> must be\n",
                    "in the range of the second arg <cong>,");
     fi;
     if not (HasIsFinite(S) and IsFinite(S)) then
-      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+      ErrorMayQuit("Semigroups: \in (for a congruence): usage,\n",
                    "this function currently only works if <cong> is a ",
                    "congruence of a semigroup\nwhich is known to be finite,");
     fi;
@@ -538,21 +541,25 @@ _InstallMethodsForCongruences := function(_record)
   InstallMethod(\=,
   Concatenation("for finite ", _record.info_string,
                 "s with known generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence and IsFinite,
-   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence and IsFinite],
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence and
+   IsFinite,
+   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence and
+   IsFinite],
   function(cong1, cong2)
     return Range(cong1) = Range(cong2)
-           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong1), pair -> pair in cong2)
-           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2), pair -> pair in cong1);
+           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong1), pair ->
+                      pair in cong2)
+           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2), pair ->
+                      pair in cong1);
   end);
-
 
   #
 
   InstallMethod(ImagesElm,
   Concatenation("for a ", _record.info_string, " with known generating pairs ",
                 "and an associative element"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence, IsAssociativeElement],
+  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
+   IsAssociativeElement],
   function(cong, elm)
     local elms, lookup, classNo;
     elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(cong)), infinity);
@@ -560,7 +567,6 @@ _InstallMethodsForCongruences := function(_record)
     classNo := lookup[Position(elms, elm)];
     return elms{Positions(lookup, classNo)};
   end);
-
 
   #
 
@@ -577,7 +583,6 @@ _InstallMethodsForCongruences := function(_record)
     fi;
     return Maximum(AsLookupTable(cong));
   end);
-
 
   #
 
@@ -618,7 +623,7 @@ _InstallMethodsForCongruences := function(_record)
       for i in [1 .. UF_SIZE(uf2)] do
         ii := UF_FIND(uf2, i);
         if ii <> i then
-          UF_UNION(ufdata, [i,ii]);
+          UF_UNION(ufdata, [i, ii]);
         fi;
       od;
       cong!.ufdata := ufdata;
@@ -660,7 +665,7 @@ _InstallMethodsForCongruences := function(_record)
     return ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
                   pair -> pair in cong1);
   end);
-end;
+end);
 # End of _InstallMethodsForCongruences function
 
 for _record in [rec(type_string := "",
@@ -673,7 +678,8 @@ for _record in [rec(type_string := "",
 od;
 
 Unbind(_record);
-Unbind(_InstallMethodsForCongruences);
+MakeReadWriteGlobal("_InstallMethodsForCongruences");
+UnbindGlobal("_InstallMethodsForCongruences");
 
 ###########################################################################
 # Some individual methods for congruences
@@ -864,7 +870,6 @@ function(class1, class2)
         in EquivalenceClassRelation(class1);
 end);
 
-
 #
 
 InstallMethod(\*,
@@ -1027,7 +1032,7 @@ function(latt, opts)
     congs := latt![2];
     S := Range(congs[1]);
     symbols := EmptyPlist(Length(latt));
-    for i in [1..Length(latt)] do
+    for i in [1 .. Length(latt)] do
       nr := NrCongruenceClasses(congs[i]);
       if nr = 1 then
         symbols[i] := "U";
@@ -1052,7 +1057,7 @@ function(latt, opts)
     Append(str, "//dot\ngraph graphname {\n     node [shape=point]\n");
   fi;
 
-  for i in [1..Length(rel)] do
+  for i in [1 .. Length(rel)] do
     j := Difference(rel[i], Union(rel{rel[i]}));
     i := symbols[i];
     for k in j do

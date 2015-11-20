@@ -14,8 +14,7 @@
 
 # process the options record...
 
-SEMIGROUPS.NormalizerOptsRec :=
-function(S, opts)
+SEMIGROUPS.NormalizerOptsRec := function(S, opts)
 
   # don't check the component `random' since this is only called inside
   # (SEMIGROUPS.(Non)DeterministicNormalizer...
@@ -41,8 +40,7 @@ end;
 
 # process the lambda-orb
 
-SEMIGROUPS.LambdaOrbForNormalizer :=
-function(G, S, func)
+SEMIGROUPS.LambdaOrbForNormalizer := function(G, S, func)
   local o, i, nr;
 
   o := LambdaOrb(S);
@@ -75,8 +73,7 @@ end;
 
 #
 
-SEMIGROUPS.DeterministicNormalizer := 
-function(G, S, opts)
+SEMIGROUPS.DeterministicNormalizer := function(G, S, opts)
   local o, act, deg, U, gens, nrgens, P;
 
   if not IsPermGroup(G) then
@@ -179,8 +176,7 @@ end;
 
 if IsBound(GAPInfo.PackagesLoaded.genss) then
 
-  SEMIGROUPS.NonDeterministicNormalizer :=
-  function(G, S, opts)
+  SEMIGROUPS.NonDeterministicNormalizer := function(G, S, opts)
     local o, act, deg, U, gens, nrgens, P, pruner, out, func;
 
     Info(InfoWarning, 1,
