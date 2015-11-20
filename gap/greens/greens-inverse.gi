@@ -58,23 +58,8 @@ function(C)
   local o, i, m;
 
   o := LambdaOrb(C);
-
-  if not IsClosed(o) then
-    Enumerate(o, infinity);
-  fi;
-
-  if not IsBound(C!.RhoPos) then
-    i := Position(o, RhoFunc(Parent(C))(C!.rep));
-  else
-    i := C!.RhoPos;
-  fi;
-
-  if not HasLambdaOrbSCCIndex(C) then
-    m := OrbSCCLookup(o)[i];
-    SetLambdaOrbSCCIndex(C, m);
-  else
-    m := LambdaOrbSCCIndex(C);
-  fi;
+  i := Position(o, RhoFunc(Parent(C))(C!.rep));
+  m := LambdaOrbSCCIndex(C);
 
   if i <> OrbSCC(o)[m][1] then
     C!.rep := LambdaOrbMult(o, m, i)[1] * C!.rep;
@@ -508,9 +493,7 @@ function(s)
   local o, creator, r, out, i;
 
   o := LambdaOrb(s);
-  if not IsClosed(o) then
-    Enumerate(o, infinity);
-  fi;
+  Enumerate(o, infinity);
 
   creator := IdempotentCreator(s);
   r := Length(o);
@@ -627,7 +610,7 @@ function(S)
 
   Enumerate(LambdaOrb(S));
   # gaplint: ignore 36
-  return EnumeratorByFunctions(S, rec(
+  return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)), rec(
 
     parent := S,
 

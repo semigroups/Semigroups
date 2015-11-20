@@ -134,6 +134,17 @@ gap> D := DClass(S, x);;
 gap> PartialPerm([2, 4, 5, 7], [2, 4, 7, 5]) in D;
 false
 
+#T# greens-inverse: \in, for a D-class and an element, 3
+gap> S := SymmetricInverseMonoid(5);
+<symmetric inverse monoid of degree 5>
+gap> x := S.1 * S.2 * S.1;
+(1,2,4)(3,5)
+gap> x := S.1 * S.2 * S.3 ;
+[5,1](2)(3)(4)
+gap> D := DClass(S, x);;
+gap> x in D;
+true
+
 #T# greens-inverse: \in, for an L-class and an element, 1
 gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
@@ -167,6 +178,30 @@ gap> PartialPerm([4, 5, 6], [4, 2, 1]) in L;
 false
 gap> PartialPerm([1, 4, 5], [4, 2, 1]) in L;
 false
+
+#T# greens-inverse: \in, for an L-class and an element, 3
+gap> S := SymmetricInverseMonoid(5);
+<symmetric inverse monoid of degree 5>
+gap> x := S.1 * S.2 * S.1;
+(1,2,4)(3,5)
+gap> x := S.1 * S.2 * S.3 ^ 6;
+<empty partial perm>
+gap> x := S.1 * S.2 * S.3 ;
+[5,1](2)(3)(4)
+gap> L := LClass(S, x);;
+gap> x in L;
+true
+
+#T# greens-inverse: \in, for an L-class and an element, 4
+gap> S := InverseSemigroup(PartialPerm([1, 3, 4, 8], [2, 7, 8, 4]),
+> PartialPerm([1, 2, 3, 4, 5, 8], [7, 6, 9, 1, 3, 2]),
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 9], [2, 8, 3, 7, 1, 5, 9, 6]),
+> PartialPerm([1, 2, 3, 4, 6, 7, 9], [3, 5, 7, 2, 6, 9, 8]),
+> PartialPerm([1, 2, 3, 4, 6, 9], [8, 4, 7, 5, 3, 6]));;
+gap> x := PartialPerm([1, 2, 3, 4, 6, 7, 9], [3, 5, 7, 2, 6, 9, 8]);;
+gap> y := PartialPermNC([2, 3, 5, 6, 7, 8, 9], [2, 3, 5, 6, 7, 8, 9]);;
+gap> x in LClass(S, y);
+true
 
 #T# greens-inverse: XClassReps: for an inverse op acting semigroup
 gap> S := InverseSemigroup([
@@ -431,10 +466,8 @@ fail
 gap> RClass(PartitionMonoid(3),
 > Bipartition([[1, -2], [2], [3, -3], [-1]])) in e;
 false
-
-# bug
-#gap> e[1] in e;
-#true
+gap> e[1] in e;
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

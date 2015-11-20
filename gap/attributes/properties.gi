@@ -476,6 +476,7 @@ function(S)
 end);
 
 # different method for ideals
+# FIXME the following should be fixed similar to the previous method.
 
 InstallMethod(IsRTrivial, "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
