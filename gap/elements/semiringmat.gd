@@ -18,8 +18,6 @@ DeclareCategory("IsMatrixOverSemiring",
 DeclareCategoryCollections("IsMatrixOverSemiring");
 DeclareCategoryCollections("IsMatrixOverSemiringCollection");
 
-InstallTrueMethod(IsGeneratorsOfSemigroup, IsMatrixOverSemiringCollection);
-
 # IsList rather than IsHomogeneousList to allow us to
 # include the threshold and/or period.
 DeclareOperation("MatrixNC", [IsType, IsList]);

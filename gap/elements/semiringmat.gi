@@ -42,8 +42,7 @@ function(file, mat)
   return IO_OK;
 end);
 
-IO_Unpicklers.MOSR :=
-function(file)
+IO_Unpicklers.MOSR := function(file)
   local arg;
   arg := IO_Unpickle(file);
   if arg = IO_Error then
@@ -54,6 +53,18 @@ function(file)
   fi;
   return CallFuncList(MatrixNC, arg);
 end;
+
+InstallMethod(IsGeneratorsOfSemigroup,
+"for a matrix over semiring collection",
+[IsMatrixOverSemiringCollection],
+function(coll)
+  local n;
+  if not IsHomogeneousList(coll) then
+    return false;
+  fi;
+  n := Length(coll[1]![1]);
+  return ForAll(coll, x -> Length(x![1]) = n);
+end);
 
 #############################################################################
 # Constructors
