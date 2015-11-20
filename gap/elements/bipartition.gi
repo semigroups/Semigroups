@@ -9,6 +9,41 @@
 ##
 
 #############################################################################
+# Internal stuff
+#############################################################################
+
+# linear complexity
+# returns a blist <out> for the Left blocks so that <out[i]> is <true> if
+# and only the <i>th block of <f> is a transverse block.
+
+SEMIGROUPS.TransBlocksLookup := function(x)
+  local n, k, blocks, out, i;
+
+  if not IsBipartition(x) then
+    ErrorMayQuit("Semigroups: SEMIGROUPS.TransBlocksLookup: usage,\n",
+                 "the argument must be a bipartition,");
+  fi;
+
+  if IsBound(x!.lookup) then
+    return x!.lookup;
+  fi;
+
+  n      := DegreeOfBipartition(x);
+  k      := NrLeftBlocks(x);
+  blocks := x!.blocks;
+  out    := BlistList([1 .. k], []);
+
+  for i in [1 .. n] do
+    if blocks[i + n] <= k then
+      out[blocks[i + n]] := true;
+    fi;
+  od;
+
+  x!.lookup := out;
+  return out;
+end;
+
+#############################################################################
 # Pickler
 #############################################################################
 
@@ -141,7 +176,7 @@ RankOfBipartition);
 InstallMethod(NrRightBlocks, "for a bipartition", [IsBipartition],
 x -> NrBlocks(x) - NrLeftBlocks(x) + NrTransverseBlocks(x));
 
-# could use SEMIGROUPS_TransBlocksLookup if known here JDM
+# could use SEMIGROUPS.TransBlocksLookup if known here JDM
 
 InstallMethod(LeftBlocks, "for a bipartition", [IsBipartition],
 function(f)
@@ -785,44 +820,12 @@ end);
 
 #properties/attributes
 
-# linear - attribute
-
-# returns a blist <out> for the Left blocks so that <out[i]> is <true> if
-# and only the <i>th block of <f> is a transverse block.
-
-BindGlobal("SEMIGROUPS_TransBlocksLookup",
-function(f)
-  local n, k, blocks, out, i;
-
-  if not IsBipartition(f) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_TransBlocksLookup: usage,\n",
-                 "the argument must be a bipartition,");
-  fi;
-
-  if IsBound(f!.lookup) then
-    return f!.lookup;
-  fi;
-
-  n := DegreeOfBipartition(f);
-  k := NrLeftBlocks(f);
-  blocks := f!.blocks;
-  out := BlistList([1 .. k], []);
-
-  for i in [1 .. n] do
-    if blocks[i + n] <= k then
-      out[blocks[i + n]] := true;
-    fi;
-  od;
-
-  f!.lookup := out;
-  return out;
-end);
 
 #
 
 InstallMethod(RankOfBipartition, "for a bipartition",
 [IsBipartition],
-x -> Number(SEMIGROUPS_TransBlocksLookup(x), y -> y = true));
+x -> Number(SEMIGROUPS.TransBlocksLookup(x), y -> y = true));
 
 # return the classes of <f> as a list of lists
 
@@ -933,7 +936,7 @@ function(f)
   n := DegreeOfBipartition(f);
   next := NrLeftBlocks(f);
   blocks := f!.blocks;
-  lookup := SEMIGROUPS_TransBlocksLookup(f);
+  lookup := SEMIGROUPS.TransBlocksLookup(f);
   table := [];
   out := [];
 
@@ -1027,7 +1030,7 @@ function(f)
 
   nrleft := next;
   table := [];
-  lookup := SEMIGROUPS_TransBlocksLookup(f);
+  lookup := SEMIGROUPS.TransBlocksLookup(f);
 
   for i in [1 .. n] do
     if blocks[i + n] <= NrLeftBlocks(f) and lookup[blocks[i + n]] then
@@ -1420,7 +1423,7 @@ function(f, p)
   SetNrLeftBlocks(out, NrLeftBlocks(f));
   SetNrBlocks(out, NrBlocks(f));
   SetRankOfBipartition(out, RankOfBipartition(f));
-  out!.lookup := SEMIGROUPS_TransBlocksLookup(f);
+  out!.lookup := SEMIGROUPS.TransBlocksLookup(f);
 
   if HasLeftBlocks(f) then
     SetLeftBlocks(out, LeftBlocks(f));

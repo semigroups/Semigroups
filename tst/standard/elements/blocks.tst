@@ -23,7 +23,7 @@ gap> x := BlocksNC([[1, 6], [2], [3, 4], [-5]]);;
 gap> PrintString(x);
 "BlocksNC([ [ 1, 6 ], [ 2 ], [ 3, 4 ], [ -5 ] ])"
 
-# blocks: SEMIGROUPS_HashFunctionForBlocks 1/1
+# blocks: SEMIGROUPS.HashFunctionForBlocks 1/1
 gap> Size(Monoid([Bipartition([[1, 2, -1], [-2]]),
 >  Bipartition([[1], [2, -1, -2]])]));
 8
@@ -85,24 +85,24 @@ gap> NrLClasses(PartitionMonoid(2));
 gap> OnLeftBlocks(EmptyBlocks, IdentityBipartition(2));
 <blocks: [ 1 ], [ 2 ]>
 
-# blocks: SEMIGROUPS_BlocksIdempotentTester 1/3
+# blocks: SEMIGROUPS.BlocksIdempotentTester 1/3
 gap> NrIdempotents(PartitionMonoid(3));
 114
 
-# blocks: SEMIGROUPS_BlocksIdempotentTester 2/3
+# blocks: SEMIGROUPS.BlocksIdempotentTester 2/3
 gap> x := BlocksNC([[1, 4], [2, 3, 5]]);;
 gap> y := BlocksNC([[1, 2, 3], [4], [-5, -6]]);;
-gap> SEMIGROUPS_BlocksIdempotentTester(x, y);
-Error, Semigroups: SEMIGROUPS_BlocksIdempotentTester: usage,
+gap> SEMIGROUPS.BlocksIdempotentTester(x, y);
+Error, Semigroups: SEMIGROUPS.BlocksIdempotentTester: usage,
 the degrees of the blocks <lambda> and <rho> must be equal,
 
-# blocks: SEMIGROUPS_BlocksIdempotentTester 3/3
+# blocks: SEMIGROUPS.BlocksIdempotentTester 3/3
 gap> x := BlocksNC([[1, 4], [2, 3, 5]]);;
 gap> y := BlocksNC([[1], [-2, -3, -4], [-5]]);;
-gap> SEMIGROUPS_BlocksIdempotentTester(x, y);
+gap> SEMIGROUPS.BlocksIdempotentTester(x, y);
 false
 
-# blocks: SEMIGROUPS_BlocksIdempotentCreator 1/3
+# blocks: SEMIGROUPS.BlocksIdempotentCreator 1/3
 gap> Set(Idempotents(PartitionMonoid(2)));
 [ <block bijection: [ 1, 2, -1, -2 ]>, <bipartition: [ 1, 2, -1 ], [ -2 ]>, 
   <bipartition: [ 1, 2, -2 ], [ -1 ]>, <bipartition: [ 1, 2 ], [ -1, -2 ]>, 
