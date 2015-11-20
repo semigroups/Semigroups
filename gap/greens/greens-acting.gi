@@ -231,22 +231,13 @@ function(C)
 
   o := RhoOrb(C);
 
-  #if not (IsClosed(o) or IsIdealOrb(o)) then
-  #  Enumerate(o, infinity);
-  #fi;
-
   if not IsBound(C!.RhoPos) then
     i := Position(o, RhoFunc(Parent(C))(C!.rep));
   else
     i := C!.RhoPos;
   fi;
 
-  #if not HasRhoOrbSCCIndex(C) then
-  #  m := OrbSCCLookup(o)[i];
-  #  SetRhoOrbSCCIndex(C, m);
-  #else
-    m := RhoOrbSCCIndex(C);
-  #fi;
+  m := RhoOrbSCCIndex(C);
 
   if i <> OrbSCC(o)[m][1] then
     C!.rep := RhoOrbMult(o, m, i)[2] * C!.rep;
@@ -257,32 +248,6 @@ function(C)
 end);
 
 # Lambda-Rho stuff
-
-# TODO delete the following methods, they don't appear to be used
-# anywhere.
-
-# same method for regular/inverse/ideals
-
-#InstallMethod(LambdaOrbSCCIndex,
-#"for a Green's class of an acting semigroup",
-#[IsActingSemigroupGreensClass and IsGreensClass],
-#function(C)
-#  local o;
-#  o := LambdaOrb(C);
-#  return OrbSCCLookup(o)[Position(o,
-#                                  LambdaFunc(Parent(C))(Representative(C)))];
-#end);
-
-# same method for regular/ideals, not required for inverse
-
-#InstallMethod(RhoOrbSCCIndex,
-#"for a Green's class of an acting semigroup",
-#[IsActingSemigroupGreensClass and IsGreensClass],
-#function(C)
-#  local o;
-#  o := RhoOrb(C);
-#  return OrbSCCLookup(o)[Position(o, RhoFunc(Parent(C))(Representative(C)))];
-#end);
 
 # same method for regular/inverse/ideals
 

@@ -846,9 +846,6 @@ function(C)
     Append(str, "L");
   elif IsGreensHClass(C) then
     Append(str, "H");
-  #elif IsGreensJClass(C) then #TODO delete these line,
-                               # this code cannot be executed
-  #  Append(str, "J");
   fi;
   Append(str, "-class: ");
   Append(str, ViewString(Representative(C)));
@@ -873,8 +870,6 @@ function(rel)
     Append(str, "L");
   elif IsGreensHRelation(rel) then
     Append(str, "H");
-  #elif IsGreensJRelation(rel) then #TODO remove this
-  #  Append(str, "J");
   fi;
   Append(str, "-relation of ");
   Append(str, ViewString(Source(rel)));
@@ -921,8 +916,6 @@ function(C)
     Append(str, "L");
   elif IsGreensHClass(C) then
     Append(str, "H");
-  #elif IsGreensJClass(C) then
-  #  Append(str, "J");
   fi;
   Append(str, "ClassOfElement\<(\>");
   Append(str, PrintString(Parent(C)));
@@ -947,8 +940,6 @@ function(rel)
     Append(str, "L");
   elif IsGreensHRelation(rel) then
     Append(str, "H");
-  #elif IsGreensJRelation(rel) then
-  #  Append(str, "J");
   fi;
   Append(str, "Relation\<(\>\n");
   Append(str, PrintString(Source(rel)));
