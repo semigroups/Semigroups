@@ -77,8 +77,6 @@ DeclareOperation("Iterator", [IsMatrixOverSemiring]);
 DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
 DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
 
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionMatrixOverSemiring");
-
 # Cannot use TypeObj since it can contain information about
 # properties satisfied (or not) by the object.
 DeclareAttribute("SEMIGROUPS_TypeViewStringOfMatrixOverSemiring",
