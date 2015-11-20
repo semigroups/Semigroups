@@ -56,6 +56,20 @@ SEMIGROUPS.NaturalizeMat := function(x, threshold, period)
   return x;
 end;
 
+SEMIGROUPS.HashFunctionMatrixOverSemiring := function(x, data)
+  local n, h, i, j;
+  n := DimensionOfMatrixOverSemiring(x);
+  h := 0;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if x![i][j] <> infinity and x![i][j] <> -infinity then
+        h := ((h / 4) + x![i][j]) mod data;
+      fi;
+    od;
+  od;
+  return h + 1;
+end;
+
 #############################################################################
 # Pickler
 #############################################################################
@@ -621,24 +635,10 @@ end);
 InstallMethod(ChooseHashFunction, "for a matrix over semiring",
 [IsMatrixOverSemiring, IsInt],
   function(x, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionMatrixOverSemiring,
+  return rec(func := SEMIGROUPS.HashFunctionMatrixOverSemiring,
              data := hashlen);
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionMatrixOverSemiring,
-function(x, data)
-  local n, h, i, j;
-  n := DimensionOfMatrixOverSemiring(x);
-  h := 0;
-  for i in [1 .. n] do
-    for j in [1 .. n] do
-      if x![i][j] <> infinity and x![i][j] <> -infinity then
-        h := ((h / 4) + x![i][j]) mod data;
-      fi;
-    od;
-  od;
-  return h + 1;
-end);
 
 InstallMethod(OneMutable, "for a matrix over semiring",
 [IsMatrixOverSemiring], OneImmutable);
