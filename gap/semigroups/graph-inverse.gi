@@ -8,6 +8,38 @@
 #############################################################################
 ##
 
+InstallMethod(ViewString, "for a graph inverse semigroup",
+[IsGraphInverseSemigroup],
+function(S)
+  local n, str;
+
+  n := DigraphNrVertices(GraphOfGraphInverseSemigroup(S));
+  str := "\><";
+  if IsAcyclicDigraph(GraphOfGraphInverseSemigroup(S)) then
+    Append(str, "\>finite \<");
+  else
+    Append(str, "\>infinite \<");
+  fi;
+
+  Append(str, "\>graph \<\>inverse \<\>semigroup\< \>with\< \>");
+  Append(str, String(n));
+  Append(str, "\< \>vert");
+  if n = 1 then
+    Append(str, "ex");
+  else
+    Append(str, "ices");
+  fi;
+  Append(str, ",\< ");
+  n := DigraphNrEdges(GraphOfGraphInverseSemigroup(S));
+  Append(str, String(n));
+  Append(str, "\< \>edge");
+  if not n = 1 then
+    Append(str, "s");
+  fi;
+  Append(str, "\<>\<");
+  return str;
+end);
+
 InstallMethod(AssignGeneratorVariables, "for an inverse semigroup",
 [IsInverseSemigroup],
 function(S)

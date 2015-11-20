@@ -421,8 +421,8 @@ end);
 
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
-  local opts, file_ext, is_testable, tst_dir, contents, subdirs, str, farm,
-    nr_tests, out, elapsed, start_time, pass, end_time, subdir, filename;
+  local opts, file_ext, is_testable, dir, contents, farm, nr_tests, out,
+        start_time, pass, end_time, elapsed, str, filename;
 
   if Length(arg) = 1 and IsRecord(arg[1]) then
     opts := arg[1];
@@ -467,24 +467,12 @@ function(arg)
     PRINT_STRINGIFY(" . . .\n\n");
   fi;
 
-  tst_dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-                            "/tst/standard");
-  contents := DirectoryContents(tst_dir);
-  subdirs := [];
-
-  for str in contents do
-    # TODO remove: <<< and str in ["attributes", etc ...] >>> from below
-    if str <> ".." and str <> "."
-        and str in ["attributes", "congruences", "elements", "fp", "greens"]
-        then
-      str := Concatenation(tst_dir, "/", str);
-      if IsDirectoryPath(str) then
-        Add(subdirs, str);
-      fi;
-    fi;
-  od;
+  dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
+                                    "/tst/standard");
+  contents := DirectoryContents(dir);
 
   SemigroupsTestInstall(rec(silent := false));
+
   if opts.parallel then
     farm := ParWorkerFarmByFork(SEMIGROUPS.Test,
                                 rec(NumberJobs := 3));
@@ -492,29 +480,28 @@ function(arg)
   else
     out := true;
   fi;
-  elapsed := 0;
-  for subdir in subdirs do
-    contents := DirectoryContents(Directory(subdir));
-    for filename in contents do
-      if file_ext(filename) = "tst" and is_testable(subdir, filename) then
-        if opts.parallel then
-          nr_tests := nr_tests + 1;
-          Submit(farm, [Filename(Directory(subdir), filename),
-                        rec(silent := false)]);
-        else
-          start_time := IO_gettimeofday();
-          pass := SEMIGROUPS.Test(Filename(Directory(subdir), filename),
-                                  rec(silent := false));
 
-          end_time := IO_gettimeofday();
-          elapsed := elapsed + (end_time.tv_sec - start_time.tv_sec) * 1000
-                     + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
-          if not pass then
-            out := false;
-          fi;
+  elapsed := 0;
+
+  for filename in contents do
+    if file_ext(filename) = "tst" and is_testable(dir, filename) then
+      if opts.parallel then
+        nr_tests := nr_tests + 1;
+        Submit(farm, [Filename(Directory(dir), filename),
+                      rec(silent := false)]);
+      else
+        start_time := IO_gettimeofday();
+        pass := SEMIGROUPS.Test(Filename(Directory(dir), filename),
+                                rec(silent := false));
+
+        end_time := IO_gettimeofday();
+        elapsed := elapsed + (end_time.tv_sec - start_time.tv_sec) * 1000
+                   + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+        if not pass then
+          out := false;
         fi;
       fi;
-    od;
+    fi;
   od;
 
   if opts.parallel then
