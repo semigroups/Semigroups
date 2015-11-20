@@ -9,15 +9,11 @@
 
 # TODO: this is not really finished.
 
-InstallMethod(IsGeneratorsOfInverseSemigroup, "for a free band element coll",
-[IsFreeBandElementCollection], ReturnFalse);
+###############################################################################
+## Internal
+###############################################################################
 
-InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
-
-#
-
-InstallGlobalFunction(SEMIGROUPS_FreeBandElmToWord,
-function(elem)
+SEMIGROUPS.FreeBandElmToWord := function(elem)
   local tuple, out, first, pre_tuple, last, su_tuple, word1, word2;
 
   tuple := elem!.tuple;
@@ -36,12 +32,12 @@ function(elem)
 
     # if first = last we only need a single letter
     if first = last then
-      out := Concatenation(SEMIGROUPS_FreeBandElmToWord(pre_tuple), [first],
-                           SEMIGROUPS_FreeBandElmToWord(su_tuple));
+      out := Concatenation(SEMIGROUPS.FreeBandElmToWord(pre_tuple), [first],
+                           SEMIGROUPS.FreeBandElmToWord(su_tuple));
       # otherwise we need distinct letters for both first and last
     else
-      word1 := Concatenation(SEMIGROUPS_FreeBandElmToWord(pre_tuple), [first]);
-      word2 := Concatenation([last], SEMIGROUPS_FreeBandElmToWord(su_tuple));
+      word1 := Concatenation(SEMIGROUPS.FreeBandElmToWord(pre_tuple), [first]);
+      word2 := Concatenation([last], SEMIGROUPS.FreeBandElmToWord(su_tuple));
       if word1 = word2 then
         out := word1;
       else
@@ -51,7 +47,19 @@ function(elem)
   fi;
   elem!.word := out;
   return out;
-end);
+end;
+
+SEMIGROUPS.HashFunctionForFreeBandElements := function(x, data)
+  return ORB_HashFunctionForPlainFlatList(SEMIGROUPS.FreeBandElmToWord(x),
+                                          data);
+end;
+
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a free band element coll",
+[IsFreeBandElementCollection], ReturnFalse);
+
+InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
+
+#
 
 InstallGlobalFunction(FreeBand,
 function(arg)
@@ -223,7 +231,7 @@ function(dclass)
     if next_value = fail then
       return fail;
     else
-      return Product(List(SEMIGROUPS_FreeBandElmToWord(next_value),
+      return Product(List(SEMIGROUPS.FreeBandElmToWord(next_value),
                      x -> GeneratorsOfSemigroup(iter!.semigroup)[x]));
     fi;
   end;
@@ -366,7 +374,7 @@ InstallMethod(ViewString, "for a free band element",
 InstallMethod(PrintString, "for a free band element",
 [IsFreeBandElement],
 function(elem)
-  return Concatenation(List(SEMIGROUPS_FreeBandElmToWord(elem),
+  return Concatenation(List(SEMIGROUPS.FreeBandElmToWord(elem),
                             x -> FamilyObj(elem)!.names[x]));
 end);
 
@@ -512,17 +520,11 @@ end);
 
 #
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionForFreeBandElements,
-function(x, data)
-  return ORB_HashFunctionForPlainFlatList(SEMIGROUPS_FreeBandElmToWord(x),
-                                          data);
-end);
-
 #
 
 InstallMethod(ChooseHashFunction, "for a free band element and int",
 [IsFreeBandElement, IsInt],
 function(x, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionForFreeBandElements,
+  return rec(func := SEMIGROUPS.HashFunctionForFreeBandElements,
              data := hashlen);
 end);
