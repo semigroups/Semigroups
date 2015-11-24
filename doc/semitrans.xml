@@ -203,7 +203,9 @@ gap> S := Semigroup(
 > Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]), 
 > Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
 gap> CyclesOfTransformationSemigroup(S);
-[ [ 1, 11, 12, 5, 4, 6, 10, 7, 9 ] ]]]></Example>
+[ [ 1, 11 ], [ 1, 11, 12, 5, 4, 6 ], [ 1, 11, 12, 5, 4, 10, 9, 6 ], 
+  [ 1, 12, 5, 4, 6 ], [ 1, 12, 5, 4, 10, 9, 6 ], 
+  [ 1, 12, 5, 4, 10, 9, 11 ] ]]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

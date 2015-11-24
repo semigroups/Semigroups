@@ -23,14 +23,14 @@
 
     <Mark>the max-plus semiring</Mark>
     <Item> 
-      the set of natural numbers and negative
+      the set of integers and negative
       infinity <M>\mathbb{Z}\cup \{-\infty\}</M> with operations max and
       plus.
     </Item>
 
     <Mark>the min-plus semiring</Mark>
     <Item> 
-      the set of natural numbers and
+      the set of integers and
       infinity <M>\mathbb{Z}\cup \{\infty\}</M> with operations min and
       plus;
     </Item>

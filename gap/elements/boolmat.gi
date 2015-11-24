@@ -298,6 +298,28 @@ function(nr, n)
   return x;
 end);
 
+InstallMethod(AsDigraph, "for a boolean matrix",
+[IsBooleanMat],
+function(mat)
+  return DigraphByAdjacencyMatrix(AsList(mat));
+end);
+
+InstallMethod(AsBooleanMat, "for a digraph",
+[IsDigraph],
+function(digraph)
+  local n, out, mat, X, i;
+
+  n   := DigraphNrVertices(digraph);
+  out := OutNeighbours(digraph);
+
+  mat := EmptyPlist(n);
+  X   := [1 .. DigraphNrVertices(digraph)];
+  for i in X do
+    mat[i] := BlistList(X, out[i]);
+  od;
+  return MatrixNC(BooleanMatType, mat);
+end);
+
 InstallMethod(AsBooleanMat, "for a partitioned binary relation",
 [IsPBR], x -> AsBooleanMat(x, 2 * DegreeOfPBR(x)));
 
@@ -480,15 +502,64 @@ end);
 
 InstallMethod(CanonicalBooleanMat, "for boolean mat",
 [IsBooleanMat],
-function(x)
-  local n;
-  n := Length(x![1]);
-  return CanonicalBooleanMatNC(SymmetricGroup(n), SymmetricGroup(n), x);
+function(mat)
+  local _AsDigraph, _AsBooleanMat, gr, colors, p;
+
+  # convert a boolean mat to a bipartite graph with all edges pointing in the
+  # same direction (so that we may act on the rows and columns independently).
+  _AsDigraph := function(mat)
+    local n, out, ver, row, i, j;
+
+    n := Length(mat![1]);
+    out := List([1 .. 2 * n], x -> []);
+    ver := [1 .. n];
+    for i in ver do
+      row := mat![i];
+      for j in ver do
+        if row[j] then
+          Add(out[i], j + n);
+        fi;
+      od;
+    od;
+    return DigraphNC(out);
+  end;
+
+  # convert a digraph (of the type created by _AsDigraph above) back into a
+  # boolean mat.
+  _AsBooleanMat := function(digraph)
+    local n, ver, out, mat, i;
+
+    n := DigraphNrVertices(digraph) / 2;
+    ver := [1 .. n];
+    out := OutNeighbours(digraph);
+    mat := EmptyPlist(n);
+
+    for i in ver do
+      mat[i] := BlistList(ver, out[i] - n);
+    od;
+
+    return MatrixNC(BooleanMatType, mat);
+  end;
+
+  # convert mat to a bipartite graph
+  gr := _AsDigraph(mat);
+
+  # calculate a canonical representative of the digraph, use colors to prevent
+  # the two sets of vertices in the bipartite graph from being swapped (which
+  # corresponds to swapping rows and columns of the Boolean matrix.
+  colors := Concatenation([1 .. Length(mat![1])] * 0,
+                          [1 .. Length(mat![1])] * 0 + 1);
+
+  p  := DIGRAPH_CANONICAL_LABELING_COLORS(gr, colors);
+  return _AsBooleanMat(OnDigraphs(gr, p));
 end);
 
 InstallMethod(CanonicalBooleanMat, "for perm group and boolean mat",
 [IsPermGroup, IsBooleanMat],
 function(G, x)
+  if IsNaturalSymmetricGroup(G) and MovedPoints(G) = [1 .. Length(x![1])] then
+    return CanonicalBooleanMat(x);
+  fi;
   return CanonicalBooleanMat(G, G, x);
 end);
 
@@ -501,6 +572,9 @@ function(G, H, x)
     ErrorMayQuit("Semigroups: CanonicalBooleanMat: usage,\n",
                  "the largest moved point of the first argument must not",
                  " exceed the dimension\nof the Boolean matrix,");
+  elif G = H and IsNaturalSymmetricGroup(G)
+      and MovedPoints(G) = [1 .. n] then
+    return CanonicalBooleanMat(x);
   fi;
   return CanonicalBooleanMatNC(G, H, x);
 end);

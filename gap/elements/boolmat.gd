@@ -36,6 +36,8 @@ DeclareGlobalFunction("BooleanMatNC");
 
 DeclareOperation("AsBooleanMat", [IsAssociativeElement, IsPosInt]);
 DeclareOperation("AsBooleanMat", [IsAssociativeElement]);
+DeclareOperation("AsBooleanMat", [IsDigraph]);
+DeclareOperation("AsDigraph", [IsBooleanMat]);
 
 DeclareOperation("NumberBooleanMat", [IsBooleanMat]);
 DeclareOperation("BooleanMatNumber", [IsPosInt, IsPosInt]);

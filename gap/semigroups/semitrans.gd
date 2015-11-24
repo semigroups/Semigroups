@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
 DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
 DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
 
@@ -32,3 +33,4 @@ DeclareAttribute("SmallestElementSemigroup", IsSemigroup);
 DeclareAttribute("LargestElementSemigroup", IsSemigroup);
 
 DeclareAttribute("EndomorphismMonoid", IsDigraph);
+DeclareOperation("EndomorphismMonoid", [IsDigraph, IsHomogeneousList]);

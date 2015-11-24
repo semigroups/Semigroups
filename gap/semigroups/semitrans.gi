@@ -11,6 +11,26 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
+InstallMethod(DigraphOfActionOnPoints,
+"for a transformation semigroup with known generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local out, gens, x, k, i, j;
+
+  out := List([1 .. DegreeOfTransformationSemigroup(S)], x -> []);
+  gens := GeneratorsOfSemigroup(S);
+  for i in [1 .. Length(gens)] do
+    x := gens[i];
+    for j in [1 .. DegreeOfTransformation(x)] do
+      k := j ^ x;
+      if j <> k then
+        AddSet(out[j], k);
+      fi;
+    od;
+  od;
+  return DigraphNC(out);
+end);
+
 SEMIGROUPS.ElementRClass := function(R, largest)
   local o, m, rep, n, base, S, max, scc, y, basei, p, x, i;
 
@@ -719,58 +739,13 @@ end);
 InstallMethod(CyclesOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
-  local pts, comp, next, nr, cycles, opts, gens, o, scc, i;
-
-  pts := [1 .. DegreeOfTransformationSemigroup(S)];
-  comp := BlistList(pts, []);
-  # integer=its component index, false=not seen it
-  next := 1;
-  nr := 0;
-  cycles := [];
-  opts := rec(lookingfor := function(o, x)
-                              return IsPosInt(comp[x]);
-                            end);
-
-  if IsSemigroupIdeal(S) then
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  else
-    gens := GeneratorsOfSemigroup(S);
-  fi;
-
-  repeat
-    o := Orb(gens, next, OnPoints, opts);
-    Enumerate(o);
-    if PositionOfFound(o) <> false then
-      for i in o do
-        comp[i] := comp[o[PositionOfFound(o)]];
-      od;
-    else
-      nr := nr + 1;
-      for i in o do
-        comp[i] := nr;
-      od;
-      scc := First(OrbSCC(o), x -> Length(x) > 1);
-      if scc = fail then
-        Add(cycles, [o[Length(o)]]);
-      else
-        Add(cycles, o{scc});
-      fi;
-    fi;
-    next := Position(comp, false, next);
-  until next = fail;
-
-  return cycles;
+  return DigraphAllSimpleCircuits(DigraphOfActionOnPoints(S));
 end);
 
 InstallMethod(EndomorphismMonoid, "for a digraph",
 [IsDigraph],
 function(digraph)
   local hook, S;
-
-  if IsMultiDigraph(digraph) then
-    ErrorMayQuit("Semigroups: EndomorphismMonoid: usage,\n",
-                 "the argument <digraph> must not be a multigraph,");
-  fi;
 
   if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then
     return Semigroup(GeneratorsOfEndomorphismMonoidAttr(digraph),
@@ -784,5 +759,22 @@ function(digraph)
   S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
 
   return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
-                                    fail, false, DigraphVertices(digraph), []);
+                                    fail, false, DigraphVertices(digraph), [], fail, fail)[1];
+end);
+
+InstallMethod(EndomorphismMonoid, "for a digraph and a homogeneous list",
+[IsDigraph, IsHomogeneousList],
+function(digraph, colors)
+  local hook, S;
+
+  hook := function(S, f)
+    S[1] := ClosureSemigroup(S[1], f);
+  end;
+
+  S := [AsTransformationSemigroup(AutomorphismGroup(digraph, colors))];
+
+  return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
+                                    fail, false, DigraphVertices(digraph), [],
+                                    colors, colors)[1];
+
 end);

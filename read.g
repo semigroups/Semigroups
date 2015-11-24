@@ -89,6 +89,7 @@ ReadPackage("semigroups/gap/elements/semiringmat.gi");
 ReadPackage("semigroups/gap/elements/maxplusmat.gi");
 ReadPackage("semigroups/gap/elements/boolmat.gi");
 ReadPackage("semigroups/gap/elements/pfmat.gi");
+ReadPackage("semigroups/gap/elements/trans.gi");
 
 ReadPackage("semigroups/gap/semigroups/semigroups.gi");
 ReadPackage("semigroups/gap/semigroups/grpperm.gi");
@@ -138,6 +139,7 @@ ReadPackage("semigroups/gap/attributes/maximal.gi");
 ReadPackage("semigroups/gap/attributes/normalizer.gi");
 ReadPackage("semigroups/gap/attributes/properties.gi");
 ReadPackage("semigroups/gap/attributes/reesmat-iso.gi");
+ReadPackage("semigroups/gap/attributes/translat.gi");
 
 ReadPackage("semigroups/gap/congruences/congpairs.gi");
 ReadPackage("semigroups/gap/congruences/congreesmat.gi");

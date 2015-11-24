@@ -36,6 +36,7 @@ ReadPackage("semigroups/gap/elements/semiringmat.gd");
 ReadPackage("semigroups/gap/elements/maxplusmat.gd");
 ReadPackage("semigroups/gap/elements/boolmat.gd");
 ReadPackage("semigroups/gap/elements/pfmat.gd");
+ReadPackage("semigroups/gap/elements/trans.gd");
 
 ReadPackage("semigroups/gap/semigroups/semigroups.gd");
 ReadPackage("semigroups/gap/semigroups/grpperm.gd");
@@ -81,6 +82,7 @@ ReadPackage("semigroups/gap/attributes/maximal.gd");
 ReadPackage("semigroups/gap/attributes/normalizer.gd");
 ReadPackage("semigroups/gap/attributes/properties.gd");
 ReadPackage("semigroups/gap/attributes/reesmat-iso.gd");
+ReadPackage("semigroups/gap/attributes/translat.gd");
 
 ReadPackage("semigroups/gap/congruences/congpairs.gd");
 ReadPackage("semigroups/gap/congruences/congreesmat.gd");
