@@ -863,7 +863,7 @@ function(_record)
 
   #
 
-end;
+end);
 # End of _InstallMethodsForCongruences function
 
 for _record in [rec(type_string := "",
