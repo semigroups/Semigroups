@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  standard/congpairs.tst
+#W  standard/congruences/congpairs.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##                                                          Wilfred Wilson
 ##
@@ -8,7 +8,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/congpairs.tst");
+gap> START_TEST("Semigroups package: standard/congruences/congpairs.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -25,24 +25,18 @@ gap> cong := SemigroupCongruence(S, gens);
 <semigroup congruence over <free semigroup on the generators [ s1 ]> with 
 1 generating pairs>
 gap> NonTrivialCongruenceClasses(cong);
-Error, Semigroups: NonTrivialEquivalenceClasses: usage,
-this function currently only works if <cong> is a congruence of a semigroup
-which is known to be finite,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `NonTrivialEquivalenceClasses' on 1 argu\
+ments
 gap> gens in cong;
-Error, Semigroups: \in (for a congruence): usage,
-this function currently only works if <cong> is a congruence of a semigroup
-which is known to be finite,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `in' on 2 arguments
 gap> AsLookupTable(cong);
-Error, Semigroups: AsLookupTable: usage,
-<cong> must be a congruence of a finite semigroup,
-gap> EquivalenceClasses(cong);
-Error, Semigroups: EquivalenceClasses: usage,
-this function currently only works if <cong> is a congruence of a semigroup
-which is known to be finite,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `AsLookupTable' on 1 arguments
 gap> NrCongruenceClasses(cong);
-Error, Semigroups: NrCongruenceClasses: usage,
-this function currently only works if <cong> is a congruence of a semigroup
-which is known to be finite,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `NrEquivalenceClasses' on 1 arguments
 gap> class := CongruenceClassOfElement(cong, x);;
 
 #T# PairsCongTest3: \= for two semigroup congruences
@@ -166,10 +160,10 @@ true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 1, 1, 1, 2, 3, 4, 2, 2, 3, 3, 4, 4 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
-  <congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
-  <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
-  <congruence class of Transformation( [ 4, 3, 3, 4, 4 ] )> ]
+[ <left congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
+  <left congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
+  <left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
+  <left congruence class of Transformation( [ 4, 3, 3, 4, 4 ] )> ]
 gap> IsRightSemigroupCongruence(cong);
 true
 gap> SEMIGROUPS_Enumerate(cong, ReturnTrue);
@@ -200,7 +194,7 @@ true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 3, 9, 10, 11, 3, 3, 12, 13 ]
 gap> NonTrivialCongruenceClasses(cong);
-[ <congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
+[ <right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
 gap> IsLeftSemigroupCongruence(cong);
 false
 gap> SEMIGROUPS_Enumerate(cong, ReturnFail);
@@ -302,4 +296,4 @@ gap> Unbind(pair);
 gap> Unbind(enum);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/congpairs.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/congpairs.tst");

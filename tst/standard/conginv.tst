@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/conginv.tst
+#W  standard/congruences/conginverse.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/conginv.tst");
+gap> START_TEST("Semigroups package: standard/congruences/conginverse.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -20,8 +20,8 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 >  PartialPerm([1, 2, 3], [3, 4, 2])]);;
 gap> cong := SemigroupCongruence(S,
 >  [PartialPerm([4], [4]), PartialPerm([2], [1])]);
-<semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
- generators> with congruence pair (41,16)>
+<semigroup congruence over <inverse partial perm semigroup of size 206, 
+ rank 5 with 4 generators> with congruence pair (41,16)>
 
 # Try some methods
 gap> x := PartialPerm([1], [2]);;
@@ -59,7 +59,7 @@ gap> AsSortedList(List(TraceOfSemigroupCongruence(cong), AsSortedList));
 
 # Congruence classes
 gap> classx := CongruenceClassOfElement(cong, x);
-{PartialPerm( [ 1 ], [ 2 ] )}
+<congruence class of [1,2]>
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);;
 gap> classx = classy;
@@ -88,8 +88,8 @@ gap> ccong := SemigroupCongruence(S, pairs);;
 gap> ccong = cong;
 true
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
- generators> with 1 generating pairs>
+<semigroup congruence over <inverse partial perm semigroup of size 206, 
+ rank 5 with 4 generators> with 1 generating pairs>
 gap> [x, y] in ccong;
 false
 gap> [x, z] in ccong;
@@ -203,8 +203,8 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 3, 4]),
 gap> cong := SemigroupCongruence(S,
 >       [PartialPerm([1], [1]), PartialPerm([], [])],
 >       [PartialPerm([5], [3]), PartialPerm([], [])]);
-<semigroup congruence over <inverse partial perm semigroup of rank 5 with 3 
- generators> with congruence pair (44,19)>
+<semigroup congruence over <inverse partial perm semigroup of size 258, 
+ rank 5 with 3 generators> with congruence pair (44,19)>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);
@@ -225,4 +225,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E# 
-gap> STOP_TEST("Semigroups package: standard/conginv.tst");
+gap> STOP_TEST("Semigroups package: standard/congruences/conginverse.tst");
