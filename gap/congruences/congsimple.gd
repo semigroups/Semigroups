@@ -63,8 +63,7 @@ end;
 
 #
 
-SEMIGROUPS.SimpleCongFromRMSCong :=
-function(S, iso, rmscong)
+SEMIGROUPS.SimpleCongFromRMSCong := function(S, iso, rmscong)
   local r, fam, cong;
   r := Range(rmscong);
 
@@ -80,8 +79,7 @@ end;
 
 #
 
-SEMIGROUPS.SimpleClassFromRMSclass :=
-function(cong, rmsclass)
+SEMIGROUPS.SimpleClassFromRMSclass := function(cong, rmsclass)
   local fam, class;
   fam := FamilyObj(Range(cong));
   class := Objectify(NewType(fam, SEMIGROUPS_CongClassSimple),

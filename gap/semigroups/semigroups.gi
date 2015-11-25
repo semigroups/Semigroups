@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+#TODO update the info strings to include "finite"
 # This file contains methods for finite semigroups which do not depend on
 # whether they are acting or not, i.e. they should work for all semigroups.
 
@@ -71,36 +72,9 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
   return S;
 end;
 
-#TODO update the info strings to include "finite"
 
 # fall back methods
 
-# TODO move this method into the graph inverse semigroup file
-
-#InstallMethod(SEMIGROUPS_ViewStringSuffix, "for a graph inverse semigroup",
-#[IsGraphInverseSemigroup],
-#function(S)
-#  local n, str;
-#
-#  n := DigraphNrVertices(GraphOfGraphInverseSemigroup(S));
-#  str := "\>with\< \>";
-#  Append(str, String(n));
-#  Append(str, "\< \>vert");
-#  if n = 1 then
-#    Append(str, "ex");
-#  else
-#    Append(str, "ices");
-#  fi;
-#  Append(str, ",\< ");
-#  n := DigraphNrEdges(GraphOfGraphInverseSemigroup(S));
-#  Append(str, String(n));
-#  Append(str, "\< \>edge");
-#  if not n = 1 then
-#    Append(str, "s");
-#  fi;
-#  Append(str, "\<>\<");
-#  return str;
-#end);
 
 # Generators
 

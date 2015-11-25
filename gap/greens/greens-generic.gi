@@ -57,13 +57,12 @@
 # require the variable <pos> below, and if it can't be determined, then we
 # can't make the Green's class.
 
-BindGlobal("SEMIGROUPS_EquivalenceClassOfElement",
-function(rel, rep, type)
+SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
   local pos, out, S;
 
   pos := Position(GenericSemigroupData(Source(rel)), rep);
   if pos = fail then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_EquivalenceClassOfElement: usage,\n",
+    ErrorMayQuit("Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,\n",
                  "the element in the 2nd argument does not belong to the ",
                  "semigroup,");
   fi;
@@ -77,10 +76,9 @@ function(rel, rep, type)
   out!.index := rel!.data.id[pos];
 
   return out;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_GreensXClasses",
-function(S, GreensXRelation, GreensXClassOfElement)
+SEMIGROUPS.GreensXClasses := function(S, GreensXRelation, GreensXClassOfElement)
   local comps, elts, out, C, i;
 
   comps := GreensXRelation(S)!.data.comps;
@@ -93,10 +91,9 @@ function(S, GreensXRelation, GreensXClassOfElement)
     out[i] := C;
   od;
   return out;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_XClassReps",
-function(S, GreensXRelation)
+SEMIGROUPS.XClassReps := function(S, GreensXRelation)
   local comps, elts, out, i;
 
   comps := GreensXRelation(S)!.data.comps;
@@ -106,10 +103,11 @@ function(S, GreensXRelation)
     out[i] := elts[comps[i][1]];
   od;
   return out;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_GreensXClassesOfClass",
-function(C, GreensXRelation, GreensXClassOfElement)
+SEMIGROUPS.GreensXClassesOfClass := function(C,
+                                             GreensXRelation,
+                                             GreensXClassOfElement)
   local S, comp, id, seen, elts, out, i;
 
   S := Parent(C);
@@ -129,10 +127,9 @@ function(C, GreensXRelation, GreensXClassOfElement)
   od;
 
   return out;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_XClassRepsOfClass",
-function(C, GreensXRelation)
+SEMIGROUPS.XClassRepsOfClass := function(C, GreensXRelation)
   local S, comp, id, seen, elts, out, i;
 
   S := Parent(C);
@@ -150,10 +147,9 @@ function(C, GreensXRelation)
   od;
 
   return out;
-end);
+end;
 
-BindGlobal("SEMIGROUPS_XClassIndex",
-function(C)
+SEMIGROUPS.XClassIndex := function(C)
   local pos;
   if not IsBound(C!.index) then
     # in case of classes created using EquivalenceClassOfElementNC
@@ -161,7 +157,7 @@ function(C)
     C!.index := EquivalenceClassRelation(C)!.data.id[pos];
   fi;
   return C!.index;
-end);
+end;
 
 #############################################################################
 ## 2. Technical Green's classes stuff . . .
@@ -178,7 +174,7 @@ InstallMethod(Size, "for a generic semigroup Green's class",
 [IsGreensClass],
 function(C)
   return Length(EquivalenceClassRelation(C)!.
-                data.comps[SEMIGROUPS_XClassIndex(C)]);
+                data.comps[SEMIGROUPS.XClassIndex(C)]);
 end);
 
 InstallMethod(\in,
@@ -188,7 +184,7 @@ function(x, C)
   local pos;
   pos := Position(GenericSemigroupData(Parent(C)), x);
   return pos <> fail
-    and EquivalenceClassRelation(C)!.data.id[pos] = SEMIGROUPS_XClassIndex(C);
+    and EquivalenceClassRelation(C)!.data.id[pos] = SEMIGROUPS.XClassIndex(C);
 end);
 
 #JDM: is this necessary? I.e. is there a similar method in the library?
@@ -424,35 +420,35 @@ function(C)
   rel := EquivalenceClassRelation(C);
   # gaplint: ignore 2
   return SEMIGROUP_ELEMENTS(data, infinity){
-    rel!.data.comps[SEMIGROUPS_XClassIndex(C)]};
+    rel!.data.comps[SEMIGROUPS.XClassIndex(C)]};
 end);
 
 InstallMethod(EquivalenceClassOfElement,
 "for a generic semigroup Green's R-relation and an associative element",
 [IsGreensRRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, RClassType);
+  return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, RClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
 "for a generic semigroup Green's L-relation and an associative element",
 [IsGreensLRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, LClassType);
+  return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, LClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
 "for a generic semigroup Green's H-relation and an associative element",
 [IsGreensHRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, HClassType);
+  return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, HClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
 "for a generic semigroup Green's D-relation and an associative element",
 [IsGreensDRelation, IsAssociativeElement],
 function(rel, rep)
-  return SEMIGROUPS_EquivalenceClassOfElement(rel, rep, DClassType);
+  return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, DClassType);
 end);
 
 # Green's classes of an element of a semigroup
@@ -632,7 +628,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return SEMIGROUPS_GreensXClasses(S, GreensLRelation, GreensLClassOfElement);
+  return SEMIGROUPS.GreensXClasses(S, GreensLRelation, GreensLClassOfElement);
 end);
 
 # same method for ideals
@@ -643,7 +639,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return SEMIGROUPS_GreensXClasses(S, GreensRRelation, GreensRClassOfElement);
+  return SEMIGROUPS.GreensXClasses(S, GreensRRelation, GreensRClassOfElement);
 end);
 
 # same method for ideals
@@ -654,7 +650,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return SEMIGROUPS_GreensXClasses(S, GreensHRelation, GreensHClassOfElement);
+  return SEMIGROUPS.GreensXClasses(S, GreensHRelation, GreensHClassOfElement);
 end);
 
 # same method for ideals
@@ -665,7 +661,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return SEMIGROUPS_GreensXClasses(S, GreensDRelation, GreensDClassOfElement);
+  return SEMIGROUPS.GreensXClasses(S, GreensDRelation, GreensDClassOfElement);
 end);
 
 ## Green's classes of a Green's class
@@ -673,14 +669,14 @@ end);
 InstallMethod(GreensLClasses, "for a Green's D-class",
 [IsGreensDClass],
 function(C)
-  return SEMIGROUPS_GreensXClassesOfClass(C, GreensLRelation,
+  return SEMIGROUPS.GreensXClassesOfClass(C, GreensLRelation,
                                           GreensLClassOfElement);
 end);
 
 InstallMethod(GreensRClasses, "for a Green's D-class",
 [IsGreensDClass],
 function(C)
-  return SEMIGROUPS_GreensXClassesOfClass(C, GreensRRelation,
+  return SEMIGROUPS.GreensXClassesOfClass(C, GreensRRelation,
                                           GreensRClassOfElement);
 end);
 
@@ -692,32 +688,32 @@ function(C)
                  "(for a generic semigroup Green's class): usage,\n",
                  "the argument should be a Green's R-, L-, or D-class,");
   fi;
-  return SEMIGROUPS_GreensXClassesOfClass(C, GreensHRelation,
+  return SEMIGROUPS.GreensXClassesOfClass(C, GreensHRelation,
                                           GreensHClassOfElement);
 end);
 
 ## Representatives
 
 InstallMethod(DClassReps, "for a semigroup",
-[IsSemigroup], S -> SEMIGROUPS_XClassReps(S, GreensDRelation));
+[IsSemigroup], S -> SEMIGROUPS.XClassReps(S, GreensDRelation));
 
 InstallMethod(RClassReps, "for a semigroup",
-[IsSemigroup], S -> SEMIGROUPS_XClassReps(S, GreensRRelation));
+[IsSemigroup], S -> SEMIGROUPS.XClassReps(S, GreensRRelation));
 
 InstallMethod(LClassReps, "for a semigroup",
-[IsSemigroup], S -> SEMIGROUPS_XClassReps(S, GreensLRelation));
+[IsSemigroup], S -> SEMIGROUPS.XClassReps(S, GreensLRelation));
 
 InstallMethod(HClassReps, "for a semigroup",
-[IsSemigroup], S -> SEMIGROUPS_XClassReps(S, GreensHRelation));
+[IsSemigroup], S -> SEMIGROUPS.XClassReps(S, GreensHRelation));
 
 InstallMethod(RClassReps, "for a Green's D-class (Semigroups)",
-[IsGreensDClass], D -> SEMIGROUPS_XClassRepsOfClass(D, GreensRRelation));
+[IsGreensDClass], D -> SEMIGROUPS.XClassRepsOfClass(D, GreensRRelation));
 
 InstallMethod(LClassReps, "for a Green's D-class (Semigroups)",
-[IsGreensDClass], D -> SEMIGROUPS_XClassRepsOfClass(D, GreensLRelation));
+[IsGreensDClass], D -> SEMIGROUPS.XClassRepsOfClass(D, GreensLRelation));
 
 InstallMethod(HClassReps, "for a Green's class (Semigroups)",
-[IsGreensClass], C -> SEMIGROUPS_XClassRepsOfClass(C, GreensHRelation));
+[IsGreensClass], C -> SEMIGROUPS.XClassRepsOfClass(C, GreensHRelation));
 
 ## Partial order of D-classes
 
@@ -783,7 +779,7 @@ function(C)
   rel := EquivalenceClassRelation(C);
 
   if IsBound(data!.idempotents) then
-    positions := Intersection(rel!.data.comps[SEMIGROUPS_XClassIndex(C)],
+    positions := Intersection(rel!.data.comps[SEMIGROUPS.XClassIndex(C)],
                               data!.idempotents);
     return SEMIGROUP_ELEMENTS(data, infinity){positions};
   fi;
@@ -846,9 +842,6 @@ function(C)
     Append(str, "L");
   elif IsGreensHClass(C) then
     Append(str, "H");
-  #elif IsGreensJClass(C) then #TODO delete these line,
-                               # this code cannot be executed
-  #  Append(str, "J");
   fi;
   Append(str, "-class: ");
   Append(str, ViewString(Representative(C)));
@@ -873,8 +866,6 @@ function(rel)
     Append(str, "L");
   elif IsGreensHRelation(rel) then
     Append(str, "H");
-  #elif IsGreensJRelation(rel) then #TODO remove this
-  #  Append(str, "J");
   fi;
   Append(str, "-relation of ");
   Append(str, ViewString(Source(rel)));
@@ -921,8 +912,6 @@ function(C)
     Append(str, "L");
   elif IsGreensHClass(C) then
     Append(str, "H");
-  #elif IsGreensJClass(C) then
-  #  Append(str, "J");
   fi;
   Append(str, "ClassOfElement\<(\>");
   Append(str, PrintString(Parent(C)));
@@ -947,8 +936,6 @@ function(rel)
     Append(str, "L");
   elif IsGreensHRelation(rel) then
     Append(str, "H");
-  #elif IsGreensJRelation(rel) then
-  #  Append(str, "J");
   fi;
   Append(str, "Relation\<(\>\n");
   Append(str, PrintString(Source(rel)));

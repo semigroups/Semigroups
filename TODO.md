@@ -37,9 +37,6 @@
 * `AsTransformationSemigroup` for a pbr semigroup seems slow.
 * Add `IsFinite` check to start of appropriate methods and add tests
 * remove `genstoapply` from the the generic semigroup data
-* `ReadGenerators` and `WriteGenerators` for new types
-* `HallMatrixMonoid`
-* `ReflexiveBooleanMatrixMonoid`
 * add tests for all Semigroupe manual example things
 * `IsRectangularGroup` <=> `IsOrthodox` and `IsSimple`
 * `CatalanMonoid`
@@ -58,6 +55,10 @@
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
 ##DONE
+* `ReadGenerators` and `WriteGenerators` for new types
+* `HallMatrixMonoid`
+* `ReflexiveBooleanMatrixMonoid`
+
 * **Move the new view string methods into the library.**
 * change `IdempotentGeneratedSubsemigroup` for generic semigroups to find a small generating set
 * Print for `S := Semigroup(PartialPerm([1]), PartialPerm([]));` returns the wrong thing

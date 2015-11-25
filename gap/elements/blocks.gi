@@ -8,13 +8,153 @@
 #############################################################################
 ##
 
+#############################################################################
 # Blocks are stored internally as a list consisting of:
 #
 # [ nr of blocks, internal rep of blocks, transverse blocks ]
 #
-# <nr of blocks> is a non-negative integer, <internal rep of blocks>[i]=j if
-# <i> belongs to the <j>th block, <transverse blocks>[j]=1 if block <j> is
+# <nr of blocks> is a non-negative integer, <internal rep of blocks>[i] = j if
+# <i> belongs to the <j>th block, <transverse blocks>[j] = 1 if block <j> is
 # transverse and 0 if it is not.
+#############################################################################
+
+#############################################################################
+# Internal
+#############################################################################
+
+SEMIGROUPS.HashFunctionForBlocks := function(blocks, data)
+  return ORB_HashFunctionForPlainFlatList(blocks!.blocks, data);
+end;
+
+SEMIGROUPS.BlocksIdempotentTester := function(lambda, rho)
+  local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
+
+  if DegreeOfBlocks(lambda) <> DegreeOfBlocks(rho) then
+    ErrorMayQuit("Semigroups: SEMIGROUPS.BlocksIdempotentTester: usage,\n",
+                 "the degrees of the blocks <lambda> and <rho> must be equal,");
+  fi;
+
+  if RankOfBlocks(lambda) <> RankOfBlocks(rho) then
+    return false;
+  fi;
+
+  if RankOfBlocks(lambda) = 0 then
+    return true;
+  fi;
+
+  n := DegreeOfBlocks(lambda);
+  lambdanr := NrBlocks(lambda);
+  rhonr := NrBlocks(rho);
+
+  fuse := [1 .. lambdanr + rhonr];
+  fuseit := function(i)
+    while fuse[i] < i do
+      i := fuse[i];
+    od;
+    return i;
+  end;
+
+  sign := [1 .. lambdanr] * 0;
+  for i in [lambdanr + 1 .. lambdanr + rhonr] do #copy the signs from <rho>
+    sign[i] := rho[n + i - lambdanr];
+  od;
+
+  for i in [1 .. n] do
+    x := fuseit(lambda[i]);
+    y := fuseit(rho[i] + lambdanr);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+        if sign[y] = 1 then
+          sign[x] := 1;
+        fi;
+      else
+        fuse[x] := y;
+        if sign[x] = 1 then
+          sign[y] := 1;
+        fi;
+      fi;
+    fi;
+  od;
+
+  #check if we are injective on signed classes of <lambda> and that the fused
+  #blocks are also signed.
+
+  seen := BlistList([1 .. lambdanr], []);
+  for i in [1 .. lambdanr] do
+    if lambda[n + i] = 1 then # is block <i> a signed block?
+      x := fuseit(i);
+      if seen[x] or sign[x] = 0 then
+        return false;
+      fi;
+      seen[x] := true;
+    fi;
+  od;
+  return true;
+end;
+
+# assumes that SEMIGROUPS.BlocksIdempotentTester returns true!
+
+SEMIGROUPS.BlocksIdempotentCreator := function(lambda, rho)
+  local n, lambdanr, rhonr, fuse, fuseit, x, y, tab1, tab2, out, next, i;
+
+  n := DegreeOfBlocks(lambda);
+  lambdanr := NrBlocks(lambda);
+  rhonr := NrBlocks(rho);
+
+  fuse := [1 .. lambdanr + rhonr];
+  fuseit := function(i)
+    while fuse[i] < i do
+      i := fuse[i];
+    od;
+    return i;
+  end;
+
+  for i in [1 .. n] do
+    x := fuseit(lambda[i]);
+    y := fuseit(rho[i] + lambdanr);
+    if x <> y then
+      if x < y then
+        fuse[y] := x;
+      else
+        fuse[x] := y;
+      fi;
+    fi;
+  od;
+
+  tab1 := EmptyPlist(lambdanr);
+
+  #find new names for the signed blocks of rho
+  for i in [1 .. rhonr] do
+    if rho[n + i] = 1 then
+      tab1[fuseit(i + lambdanr)] := i;
+    fi;
+  od;
+
+  tab2 := EmptyPlist(lambdanr);
+  out := EmptyPlist(2 * n);
+  next := rhonr;
+
+  for i in [1 .. n] do
+    out[i] := rho[i];
+    if lambda[n + lambda[i]] = 1 then
+      out[i + n] := tab1[fuseit(lambda[i])];
+    else
+      if not IsBound(tab2[lambda[i]]) then
+        next := next + 1;
+        tab2[lambda[i]] := next;
+      fi;
+      out[i + n] := tab2[lambda[i]];
+    fi;
+  od;
+
+  out := Objectify(BipartitionType, rec(blocks := out));
+  SetDegreeOfBipartition(out, n);
+  SetRankOfBipartition(out, RankOfBlocks(rho));
+  SetNrLeftBlocks(out, rhonr);
+  SetNrBlocks(out, next);
+  return out;
+end;
 
 # fuse <blocks> with <f>. <sign> should be true to keep track of signed and
 # unsigned blocks and false not to keep track.
@@ -120,19 +260,10 @@ end);
 InstallGlobalFunction(BlocksByIntRepNC,
 x -> Objectify(BlocksType, rec(blocks := x)));
 
-#
-
-BindGlobal("SEMIGROUPS_HashFunctionForBlocks",
-function(blocks, data)
-  return ORB_HashFunctionForPlainFlatList(blocks!.blocks, data);
-end);
-
-#
-
 InstallMethod(ChooseHashFunction, "for blocks",
 [IsBlocks, IsInt],
 function(t, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionForBlocks, data := hashlen);
+  return rec(func := SEMIGROUPS.HashFunctionForBlocks, data := hashlen);
 end);
 
 #
@@ -395,137 +526,6 @@ x -> Length(x!.blocks) - x!.blocks[1] - 1);
 
 #
 
-InstallGlobalFunction(SEMIGROUPS_BlocksIdempotentTester,
-function(lambda, rho)
-  local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
-
-  if DegreeOfBlocks(lambda) <> DegreeOfBlocks(rho) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS_BlocksIdempotentTester: usage,\n",
-                 "the degrees of the blocks <lambda> and <rho> must be equal,");
-  fi;
-
-  if RankOfBlocks(lambda) <> RankOfBlocks(rho) then
-    return false;
-  fi;
-
-  if RankOfBlocks(lambda) = 0 then
-    return true;
-  fi;
-
-  n := DegreeOfBlocks(lambda);
-  lambdanr := NrBlocks(lambda);
-  rhonr := NrBlocks(rho);
-
-  fuse := [1 .. lambdanr + rhonr];
-  fuseit := function(i)
-    while fuse[i] < i do
-      i := fuse[i];
-    od;
-    return i;
-  end;
-
-  sign := [1 .. lambdanr] * 0;
-  for i in [lambdanr + 1 .. lambdanr + rhonr] do #copy the signs from <rho>
-    sign[i] := rho[n + i - lambdanr];
-  od;
-
-  for i in [1 .. n] do
-    x := fuseit(lambda[i]);
-    y := fuseit(rho[i] + lambdanr);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-        if sign[y] = 1 then
-          sign[x] := 1;
-        fi;
-      else
-        fuse[x] := y;
-        if sign[x] = 1 then
-          sign[y] := 1;
-        fi;
-      fi;
-    fi;
-  od;
-
-  #check if we are injective on signed classes of <lambda> and that the fused
-  #blocks are also signed.
-
-  seen := BlistList([1 .. lambdanr], []);
-  for i in [1 .. lambdanr] do
-    if lambda[n + i] = 1 then # is block <i> a signed block?
-      x := fuseit(i);
-      if seen[x] or sign[x] = 0 then
-        return false;
-      fi;
-      seen[x] := true;
-    fi;
-  od;
-  return true;
-end);
-
-# assumes that SEMIGROUPS_BlocksIdempotentTester returns true!
-
-InstallGlobalFunction(SEMIGROUPS_BlocksIdempotentCreator,
-function(lambda, rho)
-  local n, lambdanr, rhonr, fuse, fuseit, x, y, tab1, tab2, out, next, i;
-
-  n := DegreeOfBlocks(lambda);
-  lambdanr := NrBlocks(lambda);
-  rhonr := NrBlocks(rho);
-
-  fuse := [1 .. lambdanr + rhonr];
-  fuseit := function(i)
-    while fuse[i] < i do
-      i := fuse[i];
-    od;
-    return i;
-  end;
-
-  for i in [1 .. n] do
-    x := fuseit(lambda[i]);
-    y := fuseit(rho[i] + lambdanr);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-      else
-        fuse[x] := y;
-      fi;
-    fi;
-  od;
-
-  tab1 := EmptyPlist(lambdanr);
-
-  #find new names for the signed blocks of rho
-  for i in [1 .. rhonr] do
-    if rho[n + i] = 1 then
-      tab1[fuseit(i + lambdanr)] := i;
-    fi;
-  od;
-
-  tab2 := EmptyPlist(lambdanr);
-  out := EmptyPlist(2 * n);
-  next := rhonr;
-
-  for i in [1 .. n] do
-    out[i] := rho[i];
-    if lambda[n + lambda[i]] = 1 then
-      out[i + n] := tab1[fuseit(lambda[i])];
-    else
-      if not IsBound(tab2[lambda[i]]) then
-        next := next + 1;
-        tab2[lambda[i]] := next;
-      fi;
-      out[i + n] := tab2[lambda[i]];
-    fi;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := out));
-  SetDegreeOfBipartition(out, n);
-  SetRankOfBipartition(out, RankOfBlocks(rho));
-  SetNrLeftBlocks(out, rhonr);
-  SetNrBlocks(out, next);
-  return out;
-end);
 
 # permutation of indices of signed (connected) blocks of <blocks> under the
 # action of <f> which is assumed to stabilise <blocks>.

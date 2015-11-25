@@ -8,6 +8,18 @@
 #############################################################################
 ##
 
+SEMIGROUPS.HashFunctionBipartition := function(x, data)
+  return ORB_HashFunctionForPlainFlatList(x!.blocks, data);
+end;
+
+SEMIGROUPS.HashFunctionRZMSE := function(x, data, func)
+  if x![1] = 0 then
+    return 1;
+  fi;
+
+  return (x![1] + x![3] + func(x![2], data)) mod data + 1;
+end;
+
 ###############################################################################
 # Setup - install the basic things required for specific acting semigroups    #
 ###############################################################################
@@ -537,7 +549,7 @@ InstallMethod(IdempotentTester, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s -> EQ);
 
 InstallMethod(IdempotentTester, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> SEMIGROUPS_BlocksIdempotentTester);
+[IsBipartitionSemigroup], s -> SEMIGROUPS.BlocksIdempotentTester);
 
 InstallMethod(IdempotentTester, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->
@@ -560,7 +572,7 @@ InstallMethod(IdempotentCreator, "for a partial perm semigp",
 [IsPartialPermSemigroup], s -> PartialPermNC);
 
 InstallMethod(IdempotentCreator, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> SEMIGROUPS_BlocksIdempotentCreator);
+[IsBipartitionSemigroup], s -> SEMIGROUPS.BlocksIdempotentCreator);
 
 InstallMethod(IdempotentCreator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R ->
@@ -631,7 +643,7 @@ InstallMethod(FakeOne, "for a bipartition collection",
 [IsBipartitionCollection], One);
 
 InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
-[IsReesZeroMatrixSemigroupElementCollection], R -> SEMIGROUPS_UniversalFakeOne);
+[IsReesZeroMatrixSemigroupElementCollection], R -> SEMIGROUPS.UniversalFakeOne);
 
 # missing hash functions
 
@@ -648,7 +660,7 @@ function(x, hashlen)
     under := ChooseHashFunction(x![2], hashlen).func;
   fi;
   func := function(x, hashlen)
-    return SEMIGROUPS_HashFunctionRZMSE(x, hashlen, under);
+    return SEMIGROUPS.HashFunctionRZMSE(x, hashlen, under);
   end;
 
   return rec(func := func,
@@ -658,20 +670,7 @@ end);
 InstallMethod(ChooseHashFunction, "for a bipartition",
 [IsBipartition, IsInt],
   function(x, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionBipartition,
+  return rec(func := SEMIGROUPS.HashFunctionBipartition,
              data := hashlen);
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionBipartition,
-function(x, data)
-  return ORB_HashFunctionForPlainFlatList(x!.blocks, data);
-end);
-
-InstallGlobalFunction(SEMIGROUPS_HashFunctionRZMSE,
-function(x, data, func)
-  if x![1] = 0 then
-    return 1;
-  fi;
-
-  return (x![1] + x![3] + func(x![2], data)) mod data + 1;
-end);

@@ -32,8 +32,6 @@ DeclareOperation("PermLeftBlocks", [IsList, IsBipartition]);
 
 DeclareGlobalFunction("InverseRightBlocks");
 DeclareGlobalFunction("InverseLeftBlocks");
-DeclareGlobalFunction("SEMIGROUPS_BlocksIdempotentTester");
-DeclareGlobalFunction("SEMIGROUPS_BlocksIdempotentCreator");
 
 BindGlobal("BlocksFamily",
            NewFamily("BlocksFamily", IsBlocks, CanEasilySortElements,

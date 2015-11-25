@@ -44,7 +44,6 @@ DeclareOperation("BooleanMatNumber", [IsPosInt, IsPosInt]);
 DeclareGlobalFunction("NumberBlist");
 DeclareGlobalFunction("BlistNumber");
 
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionBooleanMat");
 DeclareAttribute("Successors", IsBooleanMat);
 DeclareGlobalFunction("BooleanMatBySuccessorsNC");
 
@@ -54,7 +53,6 @@ DeclareProperty("IsTrimBooleanMat", IsBooleanMat);
 
 DeclareGlobalFunction("OnBlist");
 
-DeclareAttribute("SEMIGROUPS_SetBooleanMat", IsBooleanMat);
 DeclareAttribute("CanonicalBooleanMat", IsBooleanMat);
 DeclareOperation("CanonicalBooleanMat", [IsPermGroup, IsBooleanMat]);
 DeclareOperation("CanonicalBooleanMat",

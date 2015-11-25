@@ -18,6 +18,59 @@
 # matrices), is contained in the positions from Length(mat![1]) + 1 onwards.
 
 #############################################################################
+# Internal
+#############################################################################
+
+SEMIGROUPS.TropicalizeMat := function(mat, threshold)
+  local n, i, j;
+
+  n := Length(mat);
+  mat[n + 1] := threshold;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if IsInt(mat[i][j]) then
+        mat[i][j] := AbsInt(mat[i][j]);
+        if mat[i][j] > threshold then
+          mat[i][j] := threshold;
+        fi;
+      fi;
+    od;
+  od;
+  return mat;
+end;
+
+SEMIGROUPS.NaturalizeMat := function(x, threshold, period)
+  local n, i, j;
+
+  n := Length(x);
+  x[n + 1] := threshold;
+  x[n + 2] := period;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      x[i][j] := AbsInt(x[i][j]);
+      if x[i][j] > threshold then
+        x[i][j] := threshold + (x[i][j] - threshold) mod period;
+      fi;
+    od;
+  od;
+  return x;
+end;
+
+SEMIGROUPS.HashFunctionMatrixOverSemiring := function(x, data)
+  local n, h, i, j;
+  n := DimensionOfMatrixOverSemiring(x);
+  h := 0;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if x![i][j] <> infinity and x![i][j] <> -infinity then
+        h := ((h / 4) + x![i][j]) mod data;
+      fi;
+    od;
+  od;
+  return h + 1;
+end;
+
+#############################################################################
 # Pickler
 #############################################################################
 
@@ -42,8 +95,7 @@ function(file, mat)
   return IO_OK;
 end);
 
-IO_Unpicklers.MOSR :=
-function(file)
+IO_Unpicklers.MOSR := function(file)
   local arg;
   arg := IO_Unpickle(file);
   if arg = IO_Error then
@@ -54,6 +106,18 @@ function(file)
   fi;
   return CallFuncList(MatrixNC, arg);
 end;
+
+InstallMethod(IsGeneratorsOfSemigroup,
+"for a matrix over semiring collection",
+[IsMatrixOverSemiringCollection],
+function(coll)
+  local n;
+  if not IsHomogeneousList(coll) then
+    return false;
+  fi;
+  n := Length(coll[1]![1]);
+  return ForAll(coll, x -> Length(x![1]) = n);
+end);
 
 #############################################################################
 # Constructors
@@ -130,7 +194,7 @@ function(filter, mat, threshold, period)
 
   return MatrixNC(filter,
                   List(mat, ShallowCopy),
-                  x -> SEMIGROUPS_NaturalizeMat(x, threshold, period));
+                  x -> SEMIGROUPS.NaturalizeMat(x, threshold, period));
 end);
 
 InstallMethod(Matrix,
@@ -163,7 +227,7 @@ function(filter, mat, threshold)
 
   return MatrixNC(filter,
                   List(mat, ShallowCopy),
-                  x -> SEMIGROUPS_TropicalizeMat(x, threshold));
+                  x -> SEMIGROUPS.TropicalizeMat(x, threshold));
 end);
 
 InstallMethod(Matrix, "for a filter and homogeneous list",
@@ -571,24 +635,10 @@ end);
 InstallMethod(ChooseHashFunction, "for a matrix over semiring",
 [IsMatrixOverSemiring, IsInt],
   function(x, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionMatrixOverSemiring,
+  return rec(func := SEMIGROUPS.HashFunctionMatrixOverSemiring,
              data := hashlen);
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionMatrixOverSemiring,
-function(x, data)
-  local n, h, i, j;
-  n := DimensionOfMatrixOverSemiring(x);
-  h := 0;
-  for i in [1 .. n] do
-    for j in [1 .. n] do
-      if x![i][j] <> infinity and x![i][j] <> -infinity then
-        h := ((h / 4) + x![i][j]) mod data;
-      fi;
-    od;
-  od;
-  return h + 1;
-end);
 
 InstallMethod(OneMutable, "for a matrix over semiring",
 [IsMatrixOverSemiring], OneImmutable);

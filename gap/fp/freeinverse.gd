@@ -19,7 +19,7 @@ DeclareUserPreference(rec(
 DeclareCategory("IsFreeInverseSemigroupElement", IsAssociativeElement);
 DeclareCategoryCollections("IsFreeInverseSemigroupElement");
 
-DeclareCategory("IsFreeInverseSemigroupCategory", 
+DeclareCategory("IsFreeInverseSemigroupCategory",
                 IsSemigroupWithInverseOp and
                 IsFreeInverseSemigroupElementCollection);
 DeclareProperty("IsFreeInverseSemigroup", IsSemigroup);

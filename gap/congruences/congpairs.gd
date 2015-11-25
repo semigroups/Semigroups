@@ -14,9 +14,9 @@
 ## 
 
 DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);
-DeclareProperty("IsLeftSemigroupCongruence",  IsRightSemigroupCongruence);
-DeclareProperty("IsSemigroupCongruence",      IsLeftSemigroupCongruence);
-DeclareProperty("IsSemigroupCongruence",      IsRightSemigroupCongruence);
+DeclareProperty("IsLeftSemigroupCongruence", IsRightSemigroupCongruence);
+DeclareProperty("IsSemigroupCongruence", IsLeftSemigroupCongruence);
+DeclareProperty("IsSemigroupCongruence", IsRightSemigroupCongruence);
 
 DeclareCategory("SEMIGROUPS_IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("SEMIGROUPS_Enumerate", [IsEquivalenceRelation, IsFunction]);

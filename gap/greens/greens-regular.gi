@@ -62,7 +62,7 @@ function(H)
   local S, rep, p;
   S := Parent(H);
   rep := Representative(H);
-  SEMIGROUPS_RectifyLambda(H);
+  SEMIGROUPS.RectifyLambda(H);
   p := LambdaConjugator(S)(H!.rep, rep);
   return LambdaOrbSchutzGp(LambdaOrb(H), LambdaOrbSCCIndex(H)) ^ p;
 end);
@@ -108,20 +108,21 @@ end);
 InstallMethod(GreensDClasses, "for a regular acting semigroup with generators",
 [IsRegularSemigroup and IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local o, scc, out, D, i;
+  local o, scc, out, SetRho, RectifyRho, D, i;
 
   o := LambdaOrb(S);
   scc := OrbSCC(o);
   out := EmptyPlist(Length(scc) - 1);
   Enumerate(RhoOrb(S));
-
+  SetRho := SEMIGROUPS.SetRho;
+  RectifyRho := SEMIGROUPS.RectifyRho;
   for i in [2 .. Length(scc)] do
     # don't use GreensDClassOfElementNC here to avoid rectifying lambda
-    D := SEMIGROUPS_CreateDClass(S, LambdaOrbRep(o, i), false);
+    D := SEMIGROUPS.CreateDClass(S, LambdaOrbRep(o, i), false);
     SetLambdaOrb(D, o);
     SetLambdaOrbSCCIndex(D, i);
-    SEMIGROUPS_SetRho(D);
-    SEMIGROUPS_RectifyRho(D);
+    SetRho(D);
+    RectifyRho(D);
     out[i - 1] := D;
   od;
   return out;
@@ -317,7 +318,7 @@ InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(S)
   # gaplint: ignore 35
-  return EnumeratorByFunctions(S, rec(
+  return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)), rec(
 
     parent := S,
 

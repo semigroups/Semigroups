@@ -15,6 +15,3 @@ DeclareSynonym("IsFreeBandSubsemigroup",
                IsSemigroup and IsFreeBandElementCollection);
 
 DeclareGlobalFunction("FreeBand");
-
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionForFreeBandElements");
-DeclareGlobalFunction("SEMIGROUPS_FreeBandElmToWord");

@@ -14,6 +14,47 @@
 # of the matrix, and it is a blist in blist rep.
 
 #############################################################################
+## Internal
+#############################################################################
+
+SEMIGROUPS.HashFunctionBooleanMat := function(x, data)
+  local n, h, i, j;
+
+  n := Length(x![1]);
+  h := 0;
+  for i in [1 .. n] do
+    for j in [1 .. n] do
+      if x![i][j] then
+        h := ((h / 2) + 1) mod data;
+      else
+        h := (h / 2) mod data;
+      fi;
+    od;
+  od;
+  return h + 1;
+end;
+
+SEMIGROUPS.SetBooleanMat := function(x)
+  local n, out, i;
+  n := Length(x![1]);
+  out := EmptyPlist(n);
+  for i in [1 .. n] do
+    out[i] := NumberBlist(x![i]) + (i - 1) * 2 ^ n;
+  od;
+  return out;
+end;
+
+SEMIGROUPS.BooleanMatSet := function(set)
+  local n, x, i;
+  n := Length(set);
+  x := EmptyPlist(n);
+  for i in [1 .. n] do
+    x[i] := BlistNumber(set[i] - (i - 1) * 2 ^ n, n);
+  od;
+  return MatrixNC(BooleanMatType, x);
+end;
+
+#############################################################################
 ## Specializations of methods for MatrixOverSemiring
 #############################################################################
 
@@ -455,50 +496,10 @@ end);
 InstallMethod(ChooseHashFunction, "for a boolean matrix",
 [IsBooleanMat, IsInt],
   function(x, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionBooleanMat,
+  return rec(func := SEMIGROUPS.HashFunctionBooleanMat,
              data := hashlen);
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionBooleanMat,
-function(x, data)
-  local n, h, i, j;
-
-  n := Length(x![1]);
-  h := 0;
-  for i in [1 .. n] do
-    for j in [1 .. n] do
-      if x![i][j] then
-        h := ((h / 2) + 1) mod data;
-      else
-        h := (h / 2) mod data;
-      fi;
-    od;
-  od;
-  return h + 1;
-end);
-
-InstallMethod(SEMIGROUPS_SetBooleanMat, "for a boolean matrix",
-[IsBooleanMat],
-function(x)
-  local n, out, i;
-  n := Length(x![1]);
-  out := EmptyPlist(n);
-  for i in [1 .. n] do
-    out[i] := NumberBlist(x![i]) + (i - 1) * 2 ^ n;
-  od;
-  return out;
-end);
-
-BindGlobal("SEMIGROUPS_BooleanMatSet",
-function(set)
-  local n, x, i;
-  n := Length(set);
-  x := EmptyPlist(n);
-  for i in [1 .. n] do
-    x[i] := BlistNumber(set[i] - (i - 1) * 2 ^ n, n);
-  od;
-  return MatrixNC(BooleanMatType, x);
-end);
 
 InstallMethod(CanonicalBooleanMat, "for boolean mat",
 [IsBooleanMat],
@@ -600,8 +601,8 @@ if IsGrapeLoaded then
     end;
 
      map := ActionHomomorphism(V, [1 .. n * 2 ^ n], act);
-     return SEMIGROUPS_BooleanMatSet(SmallestImageSet(Image(map),
-                                     SEMIGROUPS_SetBooleanMat(x)));
+     return SEMIGROUPS.BooleanMatSet(SmallestImageSet(Image(map),
+                                     SEMIGROUPS.SetBooleanMat(x)));
   end);
 fi;
 

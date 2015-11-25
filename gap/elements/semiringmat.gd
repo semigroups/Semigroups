@@ -18,8 +18,6 @@ DeclareCategory("IsMatrixOverSemiring",
 DeclareCategoryCollections("IsMatrixOverSemiring");
 DeclareCategoryCollections("IsMatrixOverSemiringCollection");
 
-InstallTrueMethod(IsGeneratorsOfSemigroup, IsMatrixOverSemiringCollection);
-
 # IsList rather than IsHomogeneousList to allow us to
 # include the threshold and/or period.
 DeclareOperation("MatrixNC", [IsType, IsList]);
@@ -78,8 +76,6 @@ DeclareOperation("ELM_LIST", [IsMatrixOverSemiring, IsPosInt]);
 DeclareOperation("Iterator", [IsMatrixOverSemiring]);
 DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
 DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
-
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionMatrixOverSemiring");
 
 # Cannot use TypeObj since it can contain information about
 # properties satisfied (or not) by the object.

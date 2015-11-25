@@ -55,6 +55,3 @@ DeclareAttribute("IdempotentCreator", IsSemigroup);
 DeclareAttribute("StabilizerAction", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
-
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionRZMSE");
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionBipartition");
