@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  standard/congruences/congpairs.tst
+#W  standard/congpairs.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##                                                          Wilfred Wilson
 ##
@@ -8,7 +8,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/congruences/congpairs.tst");
+gap> START_TEST("Semigroups package: standard/congpairs.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -296,4 +296,4 @@ gap> Unbind(pair);
 gap> Unbind(enum);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/congruences/congpairs.tst");
+gap> STOP_TEST("Semigroups package: standard/congpairs.tst");

@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/congruences/conginverse.tst
+#W  standard/conginv.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/congruences/conginverse.tst");
+gap> START_TEST("Semigroups package: standard/conginv.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -225,4 +225,4 @@ gap> Unbind(x);
 gap> Unbind(z);
 
 #E# 
-gap> STOP_TEST("Semigroups package: standard/congruences/conginverse.tst");
+gap> STOP_TEST("Semigroups package: standard/conginv.tst");

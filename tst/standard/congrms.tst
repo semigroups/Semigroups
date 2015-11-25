@@ -1,13 +1,13 @@
 ###########################################################################
 ##
-#W  standard/congruences/congreesmat.tst
+#W  standard/congrms.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/congruences/congreesmat.tst");
+gap> START_TEST("Semigroups package: standard/congrms.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -279,4 +279,4 @@ gap> Unbind(class3);
 gap> Unbind(mat);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/congruences/congreesmat.tst");
+gap> STOP_TEST("Semigroups package: standard/congrms.tst");
