@@ -1581,8 +1581,11 @@ function(S)
   orho := RhoOrb(S);
   scc := OrbSCC(o);
   lookup := OrbSCCLookup(o);
+  Perform([2 .. Length(scc)], x -> LambdaOrbSchutzGp(o, x));
+  Perform([2 .. Length(scc)], x -> LambdaOrbMults(o, x));
   schutz := o!.schutzstab;
   mults := o!.mults;
+
 
   for i in [1 .. n] do
     # collect info about left multiplying R-class reps of d[i] by gens

@@ -1196,6 +1196,12 @@ gap> S := Semigroup(PartialPerm([2, 0]));
 gap> CyclesOfPartialPermSemigroup(S);
 [  ]
 
+#T# Test for Issue 141
+gap> S := Semigroup(Bipartition ([[1, 4], [2, 3], [-1, -4], [-2, -3]]),
+>                   Bipartition([[1, 2], [3, 4], [-1, -4], [-2, -3]]));;
+gap> PartialOrderOfDClasses(S);
+[ [ 1 ] ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
