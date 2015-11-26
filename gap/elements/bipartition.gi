@@ -13,7 +13,7 @@
 #############################################################################
 
 # linear complexity
-# returns a blist <out> for the Left blocks so that <out[i]> is <true> if
+# returns a blist <out> for the left blocks so that <out[i]> is <true> if
 # and only the <i>th block of <f> is a transverse block.
 
 SEMIGROUPS.TransBlocksLookup := function(x)
@@ -59,8 +59,7 @@ function(file, x)
   return IO_OK;
 end);
 
-IO_Unpicklers.BIPA :=
-function(file)
+IO_Unpicklers.BIPA := function(file)
   local blocks;
 
   blocks := IO_Unpickle(file);
@@ -819,7 +818,6 @@ function(f, n)
 end);
 
 #properties/attributes
-
 
 #
 

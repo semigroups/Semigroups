@@ -14,29 +14,33 @@ gap> LoadPackage("semigroups", false);;
 #T#
 gap> SEMIGROUPS.StartTest();
 
-#T# boolmat: BooleanMat, error 1/6
+#T# boolmat: BooleanMat, error 1/7
 gap> BooleanMat([[true, false, 1], [0, 1, 0], [false, true, false]]);
 Error, Semigroups: BooleanMat: usage,
-the argmuent must be a non-empty homogeneous list of homogeneous lists,
+the argmuent must be a non-empty list of homogeneous lists,
 
-#T# boolmat: BooleanMat, for 0s and 1s, 2/6
+#T# boolmat: BooleanMat, for 0s and 1s, 2/7
 gap> BooleanMat([[1, 0, 1], [0, 1, 0], [0, 1, 0]]);
 Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [0, 1, 0]])
 
-#T# boolmat: BooleanMat, for blists in blist_rep, 3/6
+#T# boolmat: BooleanMat, for blists in blist_rep, 3/7
 gap> BooleanMat([[true, false, true], [false, true, false],
 > [false, true, false]]);
 Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [0, 1, 0]])
 
-#T# boolmat: BooleanMat, for blists not in blist_rep, 4/6
+#T# boolmat: BooleanMat, for blists not in blist_rep, 4/7
 gap> BooleanMat(List([1 .. 3], y -> List([1 .. 3], x -> x = x)));
 Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [1, 1, 1]])
 
-#T# boolmat: BooleanMat, for successors, 5/6
+#T# boolmat: BooleanMat, for successors, 5/7
 gap> BooleanMat([[1], [3, 4], [2], [1]]);
 Matrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 1, 1], [0, 1, 0, 0], [1, 0, 0, 0]])
 
-#T# boolmat: BooleanMat, for successors, error, 6/6
+#T# boolmat: BooleanMat, for successors, 6/7
+gap> BooleanMat([[1], []]);
+Matrix(IsBooleanMat, [[1, 0], [0, 0]])
+
+#T# boolmat: BooleanMat, for successors, error, 7/7
 gap> BooleanMat([[1], [3, 4], [2], [5]]);
 Error, Semigroups: BooleanMat:
 the entries of each list must not exceed 4,
