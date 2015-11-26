@@ -171,9 +171,9 @@ inline u_int32_t Bipartition::fuseit (std::vector<u_int32_t> const& fuse,
 
 u_int32_t Bipartition::nrblocks () const {
   size_t nr = 0;
-  for (size_t i = 0; i < _vector->size(); i++) {
-    if (_vector->at(i) > nr) {
-      nr = _vector->at(i);
+  for (auto x: *_vector) {
+    if (x > nr) {
+      nr = x;
     }
   }
   return nr + 1;

@@ -41,7 +41,7 @@ using namespace std;
 
 class Element {
 
-  public: 
+  public:
     virtual ~Element () {}
 
     bool     operator == (const Element& that) const {
@@ -80,23 +80,23 @@ namespace std {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-template <typename S, class T> 
+template <typename S, class T>
 class ElementWithVectorData : public Element {
 
-  public: 
-    
+  public:
+
     ElementWithVectorData (std::vector<S>* vector) : _vector(vector) {}
 
     inline S operator [] (size_t pos) const {
       return (*_vector)[pos];
     }
-    
+
     inline S at (size_t pos) const {
       return _vector->at(pos);
     }
-    
+
     bool equals (const Element* that) const override {
-      return *(static_cast<const T*>(that)->_vector) 
+      return *(static_cast<const T*>(that)->_vector)
         == *(this->_vector);
     }
 
@@ -123,14 +123,14 @@ class ElementWithVectorData : public Element {
 ////////////////////////////////////////////////////////////////////////////////
 
 template <typename S, typename T>
-class PartialTransformation : 
+class PartialTransformation :
   public ElementWithVectorData<S, T> {
 
   public:
-    
-    PartialTransformation (std::vector<S>* vector) : 
+
+    PartialTransformation (std::vector<S>* vector) :
       ElementWithVectorData<S, T>(vector) {}
-    
+
     size_t complexity () const override {
       return this->_vector->size();
     }
@@ -147,7 +147,7 @@ class PartialTransformation :
       }
       return seed;
     }
-    
+
     Element* identity () const override {
       std::vector<S>* vector(new std::vector<S>());
       vector->reserve(this->degree());
@@ -165,14 +165,14 @@ class PartialTransformation :
 ////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-class Transformation : 
+class Transformation :
   public PartialTransformation<T, Transformation<T> > {
 
   public:
 
-    Transformation (std::vector<T>* vector) : 
+    Transformation (std::vector<T>* vector) :
       PartialTransformation<T, Transformation<T> >(vector) {}
-    
+
     Element* really_copy (size_t increase_deg_by = 0) const override {
       std::vector<T>* out(new std::vector<T>(*this->_vector));
       size_t n   = this->_vector->size();
@@ -206,7 +206,7 @@ class PartialPerm : public PartialTransformation<T, PartialPerm<T> > {
 
   public:
 
-    PartialPerm (std::vector<T>* vector) : 
+    PartialPerm (std::vector<T>* vector) :
       PartialTransformation<T, PartialPerm<T> >(vector) {}
 
     Element* really_copy (size_t increase_deg_by = 0) const override {
@@ -244,9 +244,9 @@ class BooleanMat: public ElementWithVectorData<bool, BooleanMat> {
 
   public:
 
-    BooleanMat             (std::vector<bool>* matrix) : 
+    BooleanMat             (std::vector<bool>* matrix) :
       ElementWithVectorData<bool, BooleanMat>(matrix) {}
-    
+
     size_t   complexity ()                               const override;
     size_t   degree     ()                               const override;
     size_t   hash_value ()                               const override;
@@ -262,23 +262,22 @@ class BooleanMat: public ElementWithVectorData<bool, BooleanMat> {
 
 class Bipartition : public ElementWithVectorData<u_int32_t, Bipartition> {
 
-  public:
-
-    Bipartition            (std::vector<u_int32_t>* blocks) : 
+ public:
+    explicit Bipartition(std::vector<u_int32_t>* blocks) :
       ElementWithVectorData<u_int32_t, Bipartition> (blocks) {}
-      
-    u_int32_t block        (size_t pos)                     const;
 
-    size_t   complexity ()                               const override;
-    size_t   degree     ()                               const override;
-    size_t   hash_value ()                               const override;
-    Element* identity   ()                               const override;
-    void     redefine   (Element const*, Element const*)       override;
-  
-  private:
+    u_int32_t block(size_t pos)                       const;
 
-    u_int32_t fuseit   (std::vector<u_int32_t>const&, u_int32_t);
-    u_int32_t nrblocks () const;
+    size_t   complexity()                             const override;
+    size_t   degree()                                 const override;
+    size_t   hash_value()                             const override;
+    Element* identity()                               const override;
+    void     redefine(Element const*, Element const*)       override;
+
+ private:
+    u_int32_t fuseit(std::vector<u_int32_t>const&, u_int32_t);
+    u_int32_t nrblocks() const;
+    u_int32_t _nrblocks;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -291,12 +290,12 @@ class MatrixOverSemiring :
   public ElementWithVectorData<long, MatrixOverSemiring> {
 
   public:
-    
-    MatrixOverSemiring (std::vector<long>* matrix, 
+
+    MatrixOverSemiring (std::vector<long>* matrix,
                         Semiring*          semiring = nullptr) :
 
-                       ElementWithVectorData<long, 
-                                             MatrixOverSemiring>(matrix), 
+                       ElementWithVectorData<long,
+                                             MatrixOverSemiring>(matrix),
                        _semiring(semiring) {}
 
              Semiring* semiring     ()                               const;
@@ -309,13 +308,13 @@ class MatrixOverSemiring :
              Element* really_copy (size_t increase_deg_by)         const override;
              void     redefine    (Element const*, Element const*) override;
 
-  private: 
+  private:
 
-    // a function applied after redefinition 
+    // a function applied after redefinition
     virtual void after () {}
 
     Semiring* _semiring;
-}; 
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -327,15 +326,15 @@ class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
 
   public:
 
-    ProjectiveMaxPlusMatrix(std::vector<long>* matrix, 
+    ProjectiveMaxPlusMatrix(std::vector<long>* matrix,
                             Semiring*          semiring) :
       MatrixOverSemiring(matrix, semiring) {};
-    
-    size_t hash_value () const override;
-  
-  private: 
 
-    // a function applied after redefinition 
+    size_t hash_value () const override;
+
+  private:
+
+    // a function applied after redefinition
     void after () override;
 };
 
@@ -347,9 +346,9 @@ class ProjectiveMaxPlusMatrix: public MatrixOverSemiring {
 
 class PBR: public ElementWithVectorData<std::vector<u_int32_t>, PBR> {
 
-  public: 
-    
-    PBR (std::vector<std::vector<u_int32_t> >* vector) : 
+  public:
+
+    PBR (std::vector<std::vector<u_int32_t> >* vector) :
       ElementWithVectorData<std::vector<u_int32_t>, PBR>(vector) {}
 
     size_t   complexity ()                               const override;
@@ -359,23 +358,23 @@ class PBR: public ElementWithVectorData<std::vector<u_int32_t>, PBR> {
     void     redefine   (Element const*, Element const*)       override;
 
   private:
-    
+
     void add_adjacency (size_t vertex1, size_t vertex2);
-    
+
     void x_dfs (u_int32_t          n,
-                u_int32_t          i, 
+                u_int32_t          i,
                 u_int32_t          v,        // the vertex we're currently doing
                 std::vector<bool>& x_seen,
                 std::vector<bool>& y_seen,
-                PBR const*         x, 
+                PBR const*         x,
                 PBR const*         y      );
-    
+
     void y_dfs (u_int32_t          n,
-                u_int32_t          i, 
+                u_int32_t          i,
                 u_int32_t          v,        // the vertex we're currently doing
                 std::vector<bool>& x_seen,
                 std::vector<bool>& y_seen,
-                PBR const*         x, 
+                PBR const*         x,
                 PBR const*         y      );
 };
 
