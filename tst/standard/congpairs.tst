@@ -137,7 +137,7 @@ gap> NonTrivialCongruenceClasses(cong);
 gap> SEMIGROUPS_Enumerate(cong, ReturnFalse);
 fail
 
-#T# A left semigroup congruence example
+#T# A left semigroup congruence example that is also right
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
 >                   Transformation([3, 4, 3, 4, 4]),
 >                   Transformation([3, 4, 3, 4, 3]),
@@ -169,7 +169,34 @@ true
 gap> SEMIGROUPS_Enumerate(cong, ReturnTrue);
 fail
 
-#T# A right semigroup congruence example
+#T# A left semigroup congruence example that is not right
+gap> S := Semigroup( [ Transformation( [ 1, 3, 4, 1, 3, 7, 5 ] ),
+>                      Transformation( [ 5, 7, 1, 6, 1, 7, 6 ] ) ] );;
+gap> pair := [Transformation([1,1,1,1,1,4,1]),Transformation([1,6,5,7,5,6,7])];;
+gap> cong := LeftSemigroupCongruence(S, pair);;
+gap> [ Transformation( [ 7, 1, 7, 7, 1, 5, 5 ] ),
+>      Transformation( [ 1, 7, 1, 1, 7, 1, 1 ] ) ] in cong;
+true
+gap> IsSemigroupCongruence(cong);
+false
+gap> IsRightSemigroupCongruence(cong);
+false
+
+#T# A right semigroup congruence example that is left
+gap> S := Semigroup( [ Transformation( [ 2, 3, 5, 1, 4, 6, 1 ] ),
+>                      Transformation( [ 2, 6, 4, 2, 6, 1, 2 ] ) ] );;
+gap> pairs:=[[Transformation([6,1,2,6,1,2,6]),Transformation([5,4,1,3,2,6,3])],
+>            [Transformation([2,3,5,1,4,6,1]),Transformation([5,6,2,5,6,3,5])]];;
+gap> cong := RightSemigroupCongruence(S, pairs);;
+gap> [ Transformation( [ 2, 6, 4, 2, 6, 1, 2 ] ),
+>      Transformation( [ 6, 2, 6, 5, 5, 3, 5 ] ) ] in cong;
+true
+gap> IsSemigroupCongruence(cong);
+true
+gap> IsLeftSemigroupCongruence(cong);
+true
+
+#T# A right semigroup congruence example that is not left
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
 >                   Transformation([3, 4, 3, 4, 4]),
 >                   Transformation([3, 4, 3, 4, 3]),
