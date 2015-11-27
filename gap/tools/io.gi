@@ -200,14 +200,14 @@ function(arg)
 
   for x in coll do
     if IO_Pickle(file, x) = IO_Error then
-      return IO_Error;
+      return false;
     fi;
   od;
 
   if IsString(arg[1]) then
     IO_Close(file);
   fi;
-  return IO_OK;
+  return true;
 end);
 
 ##
