@@ -151,4 +151,3 @@ function(H)
   fi;
   return StructureDescription(Range(IsomorphismPermGroup(H)));
 end);
-

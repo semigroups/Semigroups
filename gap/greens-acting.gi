@@ -1586,7 +1586,6 @@ function(S)
   schutz := o!.schutzstab;
   mults := o!.mults;
 
-
   for i in [1 .. n] do
     # collect info about left multiplying R-class reps of d[i] by gens
     for j in OrbSCC(data)[OrbSCCLookup(data)[SemigroupDataIndex(d[i])]] do

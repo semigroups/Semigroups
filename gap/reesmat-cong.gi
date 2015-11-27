@@ -18,7 +18,7 @@ InstallMethod(ViewObj, "for a congruence class",
 [IsCongruenceClass],
 function(c)
   Print("{");
-  ViewObj(Representative( c ));
+  ViewObj(Representative(c));
   Print("}");
   return;
 end);

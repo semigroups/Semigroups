@@ -270,9 +270,9 @@ function(gens, opts)
         SetIsTrivial(s, true);
       elif not IsPartialPermCollection(gens) or One(gens) =
         One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
-        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
-        # = gens[1] from this, it is not possible to recreate the semigroup using
-        # Monoid(PartialPerm([1])) (since the One in this case is
+        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the
+        # One = gens[1] from this, it is not possible to recreate the semigroup
+        # using Monoid(PartialPerm([1])) (since the One in this case is
         # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
         gens := ShallowCopy(gens);
         Remove(gens, pos);
@@ -371,12 +371,14 @@ function(gens, record)
       SetGeneratorsOfMagma(s, AsList(gens));
       if Length(gens) = 1 then
         SetIsTrivial(s, true);
-      elif not IsPartialPermCollection(gens) or One(gens) =
-        One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
-        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
-        # = gens[1] from this, it is not possible to recreate the semigroup using
-        # Monoid(PartialPerm([1])) (since the One in this case is
-        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+      elif not IsPartialPermCollection(gens)
+          or One(gens) = One(gens{Concatenation([1 .. pos - 1],
+                                                [pos + 1 .. Length(gens)])})
+          then
+          # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the
+          # One = gens[1] from this, it is not possible to recreate the
+          # semigroup using Monoid(PartialPerm([1])) (since the One in this
+          # case is PartialPerm([1]) not PartialPerm([1,2]) as it should be.
         gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
@@ -466,12 +468,13 @@ function(gens, record)
     SetGeneratorsOfInverseSemigroup(s, gens);
     if Length(gens) = 1 then
       SetIsTrivial(s, true);
-    elif not IsPartialPermCollection(gens) or One(gens) =
-      One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
-      # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
-      # = gens[1] from this, it is not possible to recreate the semigroup using
-      # Monoid(PartialPerm([1])) (since the One in this case is
-      # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+    elif not IsPartialPermCollection(gens)
+        or One(gens) = One(gens{Concatenation([1 .. pos - 1],
+                                              [pos + 1 .. Length(gens)])}) then
+        # if gens = [PartialPerm([1, 2]), PartialPerm([1])], then removing the
+        # One = gens[1] from this, it is not possible to recreate the semigroup
+        # using Monoid(PartialPerm([1])) (since the One in this case is
+        # PartialPerm([1]) not PartialPerm([1, 2]) as it should be.
       gens := ShallowCopy(gens);
       Remove(gens, pos);
     fi;
@@ -534,12 +537,14 @@ function(gens, record)
       SetFilterObj(s, IsMonoid);
       if Length(gens) = 1 then
         SetIsTrivial(s, true);
-      elif not IsPartialPermCollection(gens) or One(gens) =
-        One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
-        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the One
-        # = gens[1] from this, it is not possible to recreate the semigroup using
-        # Monoid(PartialPerm([1])) (since the One in this case is
-        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+      elif not IsPartialPermCollection(gens)
+          or One(gens) = One(gens{Concatenation([1 .. pos - 1],
+                                                [pos + 1 .. Length(gens)])})
+          then
+          # if gens = [PartialPerm([1, 2]), PartialPerm([1])], then removing
+          # the One = gens[1] from this, it is not possible to recreate the
+          # semigroup using Monoid(PartialPerm([1])) (since the One in this
+          # case is PartialPerm([1]) not PartialPerm([1, 2]) as it should be.
         gens := ShallowCopy(gens);
         Remove(gens, pos);
       fi;
