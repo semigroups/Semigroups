@@ -209,30 +209,3 @@ function(arg)
   fi;
   return true;
 end);
-
-##
-#
-#InstallMethod(ShortStringRep, "for a transformation",
-#[IsTransformation],
-#function(f)
-#  local append, line, deg, nrdigits, i;
-#
-#  append := function(str, pt, m)
-#    local i, j;
-#    i := String(pt);
-#    for j in [1 .. m - Length(i)] do
-#      Append(str, " ");
-#    od;
-#    Append(str, i);
-#    return str;
-#  end;
-#  line := "";
-#  deg := String(DegreeOfTransformation(f));
-#  nrdigits := Length(deg);
-#  Append(line, String(nrdigits));
-#  Append(line, deg);
-#  for i in [1 .. DegreeOfTransformation(f)] do
-#    append(line, i ^ f, nrdigits);
-#  od;
-#  return line;
-#end);

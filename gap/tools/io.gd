@@ -13,5 +13,3 @@ DeclareGlobalFunction("ReadGenerators");
 DeclareGlobalFunction("WriteGeneratorsLine");
 DeclareGlobalFunction("WriteGenerators");
 DeclareGlobalFunction("IteratorFromGeneratorsFile");
-
-DeclareOperation("ShortStringRep", [IsTransformation]);
