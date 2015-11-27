@@ -4,6 +4,22 @@
 #### Copyright (C) 2011-15 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.7 (released 27/11/15)
+
+This is a minor release including some changes for compatibility with GAP 4.8, and some bug fixes. 
+
+###New Features in Version 2.7
+* `IsomorphismReesZeroMatrixSemigroup` is introduced, and it is no longer possible to apply `IsomorphismReesMatrixSemigroup` to a 0-simple semigroup. This change was made for the sake of consistency, so that the `Range` of an `IsomorphismReesMatrixSemigroup` is always a Rees matrix semigroup and not sometimes a a Rees 0-matrix semigroup as was formerly the case.
+
+###Changes for GAP 4.8
+* several `ViewString` methods for semigroups and their elements were moved from the `Semigroups` package to the GAP library. Some minor changes were made in the method for `ViewString` for semigroups, and the tests, and manual examples were updated accordingly. 
+* The meaning of `IsMonoidAsSemigroup` was changed to be consistent with the meaning of `IsGroupAsSemigroup`. In earlier versions, `IsMonoidAsSemigroup` was `false` for semigroups in the category `IsMonoid`. From Version 2.7, `IsMonoidAsSemigroup` is `true` for monoids in the category `IsMonoid` and for some further semigroups. 
+
+###Issue Resolved in Version 2.7
+
+* [Issue 136](https://bitbucket.org/james-d-mitchell/semigroups/issue/136/): `CyclesOfPartialPermSemigroup` sometimes resulted in an error do to using `DegreeOfPartialPermSemigroup` instead of the maximum of the degree and the codegree.
+* [Issue 141](https://bitbucket.org/james-d-mitchell/semigroups/issue/141/): `PartialOrderOfDClasses` sometimes resulted in an error. This bug was introduced in Semigroups 2.6 and did not effect any previous versions.
+
 ## Version 2.6 (released 22/09/15)
 
 This release includes some bugfixes, some minor new features, and one major new feature (efficient methods for semigroups of matrices over a finite field).
