@@ -50,7 +50,7 @@ except subprocess.CalledProcessError:
 
 try:
     webbrowser.open('file://' + _DIR + '/index.html', new=2)
-finally:
+except:
     print '\n\n\033[31mFailed to open file://' + _DIR + '/index.html\033[0m'
     sys.exit(0)
 
