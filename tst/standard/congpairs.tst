@@ -38,6 +38,10 @@ gap> NrCongruenceClasses(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `NrEquivalenceClasses' on 1 arguments
 gap> class := CongruenceClassOfElement(cong, x);;
+gap> cong := SemigroupCongruence(S, [x^2, x^2]);;
+gap> class := CongruenceClassOfElement(cong, x);;
+gap> enum := Enumerator(class);
+[ s1 ]
 
 #T# PairsCongTest3: \= for two semigroup congruences
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
@@ -69,7 +73,7 @@ true
 gap> NrCongruenceClasses(u);
 1
 
-#T# PairsCongTest4: \* for two semigroups congruence classes
+#T# PairsCongTest4: \* for two semigroup congruence classes
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> S := Semigroup(gens);;
 gap> gens := List(S, x -> [gens[1], x]);;
@@ -136,6 +140,21 @@ gap> NonTrivialCongruenceClasses(cong);
 [ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )> ]
 gap> SEMIGROUPS_Enumerate(cong, ReturnFalse);
 fail
+gap> T := Semigroup([Transformation([2, 1, 1, 2, 1]),
+>                    Transformation([3, 4, 3, 4, 3]),
+>                    Transformation([4, 3, 3, 4, 4]),
+>                    Transformation([2, 3, 2, 2, 3, 1]),
+>                    Transformation([1, 3, 4, 1, 3])]);;
+gap> cong2 := SemigroupCongruence(T, pair1, pair2);;
+gap> EquivalenceClassOfElement(cong, Transformation([2, 3, 2, 2, 3, 1]));
+Error, Semigroups: EquivalenceClassOfElement: usage,
+the second arg <elm> must be in the semigroup of the first arg <cong>,
+gap> JoinSemigroupCongruences(cong, cong2);
+Error, Semigroups: JoinSemigroupCongruences: usage,
+congruences must be defined over the same semigroup,
+gap> IsSubrelation(cong, cong2);
+Error, Semigroups: IsSubrelation: usage,
+congruences must be defined over the same semigroup,
 
 #T# A left semigroup congruence example that is also right
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),

@@ -667,7 +667,7 @@ function(_record)
   function(cong, elm)
     if not elm in Range(cong) then
       ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
-                   "the second arg <elm> must be in the\n",
+                   "the second arg <elm> must be in the ",
                    "semigroup of the first arg <cong>,");
     fi;
     return EquivalenceClassOfElementNC(cong, elm);
