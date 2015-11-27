@@ -18,22 +18,17 @@ function(str)
     return fail;
   fi;
 
-  record := rec(file := file, curr := ReadGeneratorsLine(IO_ReadLine(file)));
+  record := rec(file := file, current := IO_Unpickle(file));
 
   record.NextIterator := function(iter)
     local next, line;
-    next := iter!.curr;
-    line := IO_ReadLine(iter!.file);
-    if line <> "" then
-      iter!.curr := ReadGeneratorsLine(line);
-    else
-      iter!.curr := line;
-    fi;
+    next := iter!.current;
+    iter!.current := IO_Unpickle(iter!.file);
     return next;
   end;
 
   record.IsDoneIterator := function(iter)
-    if iter!.curr = "" then
+    if iter!.current = IO_Nothing then
       if not iter!.file!.closed then
         IO_Close(iter!.file);
       fi;
@@ -46,7 +41,7 @@ function(str)
   record.ShallowCopy := function(iter)
     local file;
     file := IO_CompressedFile(str, "r");
-    return rec(file := file, curr := ReadGeneratorsLine(IO_ReadLine(file)));
+    return rec(file := file, current := IO_Unpickle(file));
   end;
 
   return IteratorByFunctions(record);
@@ -119,39 +114,6 @@ function(arg)
   fi;
 end);
 
-# FIXME remove this!
-
-InstallGlobalFunction(ReadGeneratorsLine,
-function(line)
-  local i, k, out, m, deg, f, j;
-
-  i := 2;
-  k := 0;
-  out := [];
-
-  while i < Length(line) do
-    m := Int([line[i]]);                                      # blocksize
-    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]})); # max domain
-    f := line{[m + i + 1 .. i + m * (deg + 1)]};
-    k := k + 1;
-    out[k] := EmptyPlist(deg);
-    for j in [1 .. deg] do
-      Add(out[k], Int(NormalizedWhitespace(f{[(j - 1) * m + 1 .. j * m]})));
-    od;
-    i := i + m * (deg + 1) + 1;
-  od;
-
-  if line[1] = 't' then   # transformations
-    Apply(out, TransformationNC);
-  elif line[1] = 'p' then # partial perms
-    Apply(out, DensePartialPermNC);
-  elif line[1] = 'b' then #bipartitions
-    Apply(out, BipartitionByIntRepNC);
-  fi;
-
-  return out;
-end);
-
 #
 
 InstallGlobalFunction(WriteGenerators,
@@ -209,3 +171,100 @@ function(arg)
   fi;
   return true;
 end);
+
+SEMIGROUPS.ReadGeneratorsLine := function(line)
+  local i, k, out, m, deg, f, j;
+
+  i := 2;
+  k := 0;
+  out := [];
+
+  while i < Length(line) do
+    m := Int([line[i]]);                                      # blocksize
+    deg := Int(NormalizedWhitespace(line{[i + 1 .. m + i]})); # max domain
+    f := line{[m + i + 1 .. i + m * (deg + 1)]};
+    k := k + 1;
+    out[k] := EmptyPlist(deg);
+    for j in [1 .. deg] do
+      Add(out[k], Int(NormalizedWhitespace(f{[(j - 1) * m + 1 .. j * m]})));
+    od;
+    i := i + m * (deg + 1) + 1;
+  od;
+
+  if line[1] = 't' then   # transformations
+    Apply(out, TransformationNC);
+  elif line[1] = 'p' then # partial perms
+    Apply(out, DensePartialPermNC);
+  elif line[1] = 'b' then #bipartitions
+    Apply(out, BipartitionByIntRepNC);
+  fi;
+
+  return out;
+end;
+
+InstallGlobalFunction(ReadOldGenerators,
+function(arg)
+  local name, line_nr, file, i, line, ReadGeneratorsLine;
+
+  if Length(arg) = 1 then
+    name := arg[1];
+    line_nr := 0;
+  elif Length(arg) = 2 then
+    name := arg[1];
+    line_nr := arg[2];
+  else
+    Error("Semigroups: ReadOldGenerators: usage,\n",
+          "there should be at most 2 arguments,");
+    return;
+  fi;
+
+  if IsString(name) then
+    file := IO_CompressedFile(name, "r");
+    if file = fail then
+      Error("Semigroups: ReadOldGenerators:\n",
+            "could not open the file ", file, ",");
+      return;
+    fi;
+  elif IsFile(name) then
+    file := name;
+  else
+    Error("Semigroups: ReadOldGenerators: usage,\n",
+          "the first argument must be a string or a file,");
+    return;
+  fi;
+
+  if not (IsInt(line_nr) and line_nr >= 0) then
+    Error("Semigroups: ReadOldGenerators: usage,\n",
+          "the second argument must be a positive integer,");
+    return;
+  fi;
+
+  ReadGeneratorsLine := SEMIGROUPS.ReadGeneratorsLine;
+
+  if line_nr <> 0 then
+    i := 0;
+    repeat
+      i := i + 1;
+      line := IO_ReadLine(file);
+    until i = line_nr or line = "";
+
+    if IsString(arg[1]) then
+      IO_Close(file);
+    fi;
+    if line = "" then
+      Error("Semigroups: ReadOldGenerators:\n",
+            "the file only has ", i - 1, " lines,");
+      return;
+    else
+      return ReadGeneratorsLine(Chomp(line));
+    fi;
+  else
+    line := IO_ReadLines(file);
+
+    if IsString(arg[1]) then
+      IO_Close(file);
+    fi;
+    return List(line, x -> ReadGeneratorsLine(Chomp(x)));
+  fi;
+end);
+

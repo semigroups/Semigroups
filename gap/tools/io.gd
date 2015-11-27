@@ -8,8 +8,7 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("ReadGeneratorsLine");
 DeclareGlobalFunction("ReadGenerators");
-DeclareGlobalFunction("WriteGeneratorsLine");
+DeclareGlobalFunction("ReadOldGenerators");
 DeclareGlobalFunction("WriteGenerators");
 DeclareGlobalFunction("IteratorFromGeneratorsFile");
