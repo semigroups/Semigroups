@@ -4,6 +4,8 @@ This is a script for checking that the Semigroups package is releasable, i.e.
 that it passes all the tests in all configurations.
 '''
 
+#TODO verbose mode
+
 import textwrap, os, argparse, tempfile, subprocess, sys, os, signal
 
 ################################################################################
@@ -19,6 +21,10 @@ def _red_string(string):
 def _green_string(string):
     'green string'
     return '\n        '.join(_WRAPPER.wrap('\033[1;32m' + string + '\033[0m'))
+
+def _yellow_string(string):
+    'yellow string'
+    return '\n        '.join(_WRAPPER.wrap('\033[1;33m' + string + '\033[0m'))
 
 def _blue_string(string):
     'blue string'
@@ -40,6 +46,9 @@ _PARSER.add_argument('--gap-root', nargs='?', type=str,
 _PARSER.add_argument('--pkg-dir', nargs='?', type=str,
                      help='the pkg directory (default: gap-root/pkg/)',
                      default='~/gap/pkg/')
+_PARSER.add_argument('--verbose', dest='verbose', action='store_true',
+                     help='verbose mode (default: False)')
+_PARSER.set_defaults(verbose=False)
 
 _ARGS = _PARSER.parse_args()
 
@@ -62,7 +71,6 @@ if not (os.path.exists(_ARGS.pkg_dir) or os.path.isdir(_ARGS.pkg_dir)):
 ################################################################################
 
 _CWD = os.getcwd()
-# temporary dir for writing stuff in
 _DIR_TMP = tempfile.gettempdir()
 print '\033[35musing temporary directory: ' + _DIR_TMP + '\033[0m'
 _FILE = _DIR_TMP + '/testlog'
@@ -77,7 +85,9 @@ def _run_gap():
     global _LOG_NR
     _LOG_NR += 1
     log_file = _FILE + str(_LOG_NR) + '.txt'
-    return (_ARGS.gap_root + 'bin/gap.sh -q -A -m 1g | tee ' + log_file +
+    # FIXME don't do this this way, start gap, use LogTo, then process the log with
+    # python not grep
+    return (_ARGS.gap_root + 'bin/gap.sh -q -r -A -T -m 1g | tee ' + log_file +
             '| grep --colour=always -A 1 -E "########> Diff|# WARNING|#E' +
             '|called from" ; ( ! grep -q -E "########> Diff|# WARNING|#E ' +
             '|called from" ' + log_file + ' )')
@@ -95,16 +105,19 @@ def _run_test(message, stop_for_diffs, *arg):
 
     commands = 'echo "' + ' '.join(arg) + '"'
 
-    pro = subprocess.Popen(commands,
-                           stdout=subprocess.PIPE,
-                           shell=True)
+    pro1 = subprocess.Popen(commands,
+                            stdout=subprocess.PIPE,
+                            shell=True)
     try:
-        subprocess.check_call(_run_gap(),
-                              stdin=pro.stdout,
-                              shell=True)
+        pro2 = subprocess.Popen(_run_gap(),
+                                stdin=pro1.stdout,
+                                shell=True)
+        pro2.wait()
     except KeyboardInterrupt:
-        os.kill(pro.pid, signal.SIGKILL)
-        os.kill(pid, signal.SIGKILL)
+        pro1.terminate()
+        pro1.wait()
+        pro2.terminate()
+        pro2.wait()
         sys.exit(_red_string('Killed!'))
     except subprocess.CalledProcessError:
         if stop_for_diffs:
@@ -132,7 +145,7 @@ def _get_ready_to_make(package_name):
 ################################################################################
 
 def _exec(command):
-    try:
+    try: #FIXME use popen here
         pro = subprocess.call(command + ' &> /dev/null',
                               shell=True)
     except KeyboardInterrupt:
@@ -151,7 +164,7 @@ def _make_clean(name):
 ################################################################################
 
 def _configure_make(name):
-    print _blue_string('Compiling ' + name + ' . . . ')
+    print _yellow_string('Compiling ' + name + ' . . . ')
     _get_ready_to_make(name)
     _exec('./configure')
     _exec('make')
@@ -243,4 +256,4 @@ def main():
     print '\n\033[32mSUCCESS!\033[0m'
 
 if __name__ == '__main__':
-    main()
+    main() #TODO add try, except Killed here
