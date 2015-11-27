@@ -3,7 +3,7 @@
 This module compiles the dependencies of the Semigroups package.
 """
 
-import argparse, os, sys, subprocess 
+import argparse, os, sys, subprocess
 
 PACKAGES = ["io", "orb", "grape"]
 
@@ -30,7 +30,6 @@ if not (os.path.exists(ARGS.gap_root) or os.path.isdir(ARGS.gap_root)):
 if not (os.path.exists(ARGS.pkg_dir) or os.path.isdir(ARGS.pkg_dir)):
     sys.exit('ERROR: can\'t pkg directory!')
 
-DIR = os.getcwd()
 _SCREEN_WIDTH = int(os.popen('stty size', 'r').read().split()[1]) - 3
 _LINE_OF_HASHES = '\033[35m' + ('#' * _SCREEN_WIDTH) + '\033[0m'
 
