@@ -1226,6 +1226,14 @@ gap> x := IdentityTransformation;;
 gap> InversesOfSemigroupElement(FullTransformationMonoid(1), x);
 [ IdentityTransformation ]
 
+#T# GroupOfUnits error (Monoid used inappropriately instead of Semigroup)
+gap> S := Semigroup([Bipartition([[1], [-1]])]);
+<commutative bipartition semigroup of degree 1 with 1 generator>
+gap> Size(S);
+1
+gap> Size(GroupOfUnits(S));
+1
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);
