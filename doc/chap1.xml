@@ -149,8 +149,8 @@
     on how to install it can be obtained from the main &GAP; webpage
     <URL>http://www.gap-system.org</URL>.<P/>
 
-     The following is a summary of the steps that should lead to a
-     successful installation of &Semigroups;:
+    The following is a summary of the steps that should lead to a
+    successful installation of &Semigroups;:
 
     <List>
      <Item> ensure that the &IO; package version &IOVERS; or higher is
