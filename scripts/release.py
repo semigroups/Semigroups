@@ -12,11 +12,14 @@ import textwrap, os, argparse, tempfile, subprocess, sys, os, signal
 # Strings for printing
 ################################################################################
 
-_WRAPPER = textwrap.TextWrapper(break_on_hyphens=False, width=72)
+_WRAPPER = textwrap.TextWrapper(break_on_hyphens=False, width=80)
 
-def _red_string(string):
+def _red_string(string, wrap=True):
     'red string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;31m' + string + '\033[0m'))
+    if wrap:
+        return '\n        '.join(_WRAPPER.wrap('\033[1;31m' + string + '\033[0m'))
+    else:
+        return '\033[1;31m' + string + '\033[0m'
 
 def _green_string(string):
     'green string'
@@ -78,19 +81,22 @@ _FILE = _DIR_TMP + '/testlog'
 ################################################################################
 ################################################################################
 
-_LOG_NR = 0
 
 def _run_gap():
     'returns the bash script to run GAP and detect errors'
+    out = _ARGS.gap_root + 'bin/gap.sh -r -A -T -m 1g'
+    if not _ARGS.verbose:
+        out += ' -q'
+    return out
+
+_LOG_NR = 0
+
+def _log_file():
+    'returns the string "LogTo(a unique file);"'
     global _LOG_NR
     _LOG_NR += 1
-    log_file = _FILE + str(_LOG_NR) + '.txt'
-    # FIXME don't do this this way, start gap, use LogTo, then process the log with
-    # python not grep
-    return (_ARGS.gap_root + 'bin/gap.sh -q -r -A -T -m 1g | tee ' + log_file +
-            '| grep --colour=always -A 1 -E "########> Diff|# WARNING|#E' +
-            '|called from" ; ( ! grep -q -E "########> Diff|# WARNING|#E ' +
-            '|called from" ' + log_file + ' )')
+    log_file = _FILE + str(_LOG_NR) + '.log'
+    return log_file
 
 ################################################################################
 # Functions
@@ -103,14 +109,18 @@ def _run_test(message, stop_for_diffs, *arg):
     print _magenta_string(message + ' . . . '),
     sys.stdout.flush()
 
-    commands = 'echo "' + ' '.join(arg) + '"'
+    log_file = _log_file()
+    commands = 'echo "LogTo(\\"' + log_file + '\\");\n' + '\n'.join(arg) + '"'
 
     pro1 = subprocess.Popen(commands,
                             stdout=subprocess.PIPE,
                             shell=True)
     try:
+        devnull = open(os.devnull, 'w')
         pro2 = subprocess.Popen(_run_gap(),
                                 stdin=pro1.stdout,
+                                stdout=devnull,
+                                stderr=devnull,
                                 shell=True)
         pro2.wait()
     except KeyboardInterrupt:
@@ -120,11 +130,30 @@ def _run_test(message, stop_for_diffs, *arg):
         pro2.wait()
         sys.exit(_red_string('Killed!'))
     except subprocess.CalledProcessError:
+        print _red_string('FAILED!')
         if stop_for_diffs:
-            sys.exit(_red_string('FAILED!'))
-        else:
-            print _red_string('FAILED!')
-            return
+            sys.exit(0)
+
+    try:
+        log = open(log_file, 'r').read()
+    except IOError:
+        print _red_string('release.py: error: ' + log_file + ' not found!')
+        sys.exit(0)
+
+    if len(log) == 0:
+        print _red_string('release.py: warning: ' + log_file + ' is empty!')
+
+    if (log.find('########> Diff') != -1
+            or log.find('# WARNING') != -1
+            or log.find('#E ') != -1
+            or log.find('Error') != -1
+            or log.find('brk>') != -1
+            or log.find('LoadPackage("semigroups", false);\nfail') != -1):
+        print _magenta_string('FAILED!')
+        for x in open(log_file, 'r').readlines():
+            print _red_string(x.rstrip(), False)
+        if stop_for_diffs:
+            sys.exit(0)
 
     print _magenta_string('PASSED!')
 
@@ -157,18 +186,23 @@ def _exec(command):
 ################################################################################
 
 def _make_clean(name):
+    print _yellow_string(_pad('make clean ' + name) + ' . . . '),
+    sys.stdout.flush()
     _get_ready_to_make(name)
     _exec('make clean')
     os.chdir(_CWD)
+    print _yellow_string('DONE!')
 
 ################################################################################
 
 def _configure_make(name):
-    print _yellow_string('Compiling ' + name + ' . . . ')
+    print _yellow_string(_pad('Compiling ' + name) + ' . . . '),
+    sys.stdout.flush()
     _get_ready_to_make(name)
     _exec('./configure')
     _exec('make')
     os.chdir(_CWD)
+    print _yellow_string('DONE!')
 
 ################################################################################
 
@@ -176,6 +210,11 @@ def _man_ex_str(name):
     return ('ex := ExtractExamples(\\"'  + _ARGS.gap_root + 'doc/ref\\", \\"'
             + name + '\\", [\\"' + name + '\\"], \\"Section\\");' +
             ' RunExamples(ex);')
+
+def _pad(string):
+    for i in xrange(27 - len(string)):
+        string += ' '
+    return string
 
 ################################################################################
 # the GAP commands to run the tests
@@ -228,13 +267,13 @@ def main():
 
     _run_test('Compiling the doc          ', True, _LOAD, _MAKE_DOC)
 
-    print _blue_string('Testing with Orb compiled . . .') # Orb compiled
+    print _blue_string(_pad('Testing with Orb compiled') + ' . . .')
     _run_test('testinstall.tst            ', True, _LOAD, _TEST_INSTALL)
     _run_test('manual examples            ', True, _LOAD, _TEST_MAN_EX)
     _run_test('tst/*                      ', True, _LOAD, _TEST_ALL)
     _run_test('GAP quick tests            ', False, _LOAD, _TEST_GAP_QUICK)
 
-    print _blue_string('Testing with Orb uncompiled . . .')
+    print _blue_string(_pad('Testing with Orb uncompiled') + ' . . .')
     _make_clean('orb')
     _run_test('testinstall.tst            ', True, _LOAD, _TEST_INSTALL)
     _run_test('manual examples            ', True, _LOAD, _TEST_MAN_EX)
@@ -242,16 +281,16 @@ def main():
     _run_test('GAP quick tests            ', False, _LOAD, _TEST_GAP_QUICK)
     _configure_make('orb')
 
-    print _blue_string('Testing only needed . . .')
+    print _blue_string(_pad('Testing only needed') + ' . . .')
     _run_test('testinstall.tst            ', True, _LOAD_ONLY_NEEDED, _TEST_INSTALL)
     _run_test('manual examples            ', True, _LOAD_ONLY_NEEDED, _TEST_MAN_EX)
     _run_test('tst/*                      ', True, _LOAD_ONLY_NEEDED, _TEST_ALL)
     _run_test('GAP quick tests            ', False, _LOAD, _TEST_GAP_QUICK)
 
-    print _blue_string('make teststandard . . .')
-    os.chdir(_ARGS.gap_root)
-    _exec('make teststandard')
-    os.chdir(_CWD)
+    #print _blue_string('make teststandard . . .')
+    #os.chdir(_ARGS.gap_root)
+    #_exec('make teststandard')
+    #os.chdir(_CWD)
 
     print '\n\033[32mSUCCESS!\033[0m'
 
