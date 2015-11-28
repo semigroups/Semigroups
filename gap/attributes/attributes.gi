@@ -15,16 +15,16 @@
 # (the same goes for Zero and MultplicativeZero):
 #
 # One(s) returns One(Representative(s)) if it belongs to s, so that
-# One(s)=Transformation([1..DegreeOfTransformationSemigroup(s)]) if s is a
+# One(s) = Transformation([1 .. DegreeOfTransformationSemigroup(s)]) if s is a
 # transformation semigroup and it returns fail otherwise, or it returns
-# PartialPerm([1..DegreeOfPartialPermSemigroup]) if this belongs to s.
+# PartialPerm([1 .. DegreeOfPartialPermSemigroup]) if this belongs to s.
 #
 # MultiplicativeNeutralElement on the other hand returns the element of s that
 # acts as the identity, note that this can be equal to One(s) but it can also
 # not be equal to One(s).
 #
 # A semigroup satisfies IsMonoidAsSemigroup(s) if
-# MultiplicativeNeutralElement(x)<>fail, so it could be that One(s) returns
+# MultiplicativeNeutralElement(x) <> fail, so it could be that One(s) returns
 # fail but IsMonoidAsSemigroup is still true.
 
 SEMIGROUPS.InjectionPrincipalFactor := function(D, constructor)
@@ -131,8 +131,8 @@ function(S)
   H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
   map := IsomorphismPermGroup(H);
 
-  U := Monoid(List(GeneratorsOfGroup(Range(map)),
-                   x -> x ^ InverseGeneralMapping(map)));
+  U := Semigroup(List(GeneratorsOfGroup(Range(map)),
+                      x -> x ^ InverseGeneralMapping(map)));
 
   iso := MappingByFunction(U,
                            Range(map),
