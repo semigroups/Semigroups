@@ -1234,6 +1234,19 @@ gap> Size(S);
 gap> Size(GroupOfUnits(S));
 1
 
+#T# IsInverseSemigroup fall back method was wrong.
+gap> S := Semigroup([Bipartition([[1, 2], [-1], [-2]]),
+>  Bipartition([[1, -1], [2], [-2]]),
+>  Bipartition([[1], [2, -1], [-2]]),
+>  Bipartition([[1, -2], [2], [-1]]),
+>  Bipartition([[1], [2, -2], [-1]]),
+>  Bipartition([[1], [2], [-1], [-2]])]);;
+gap> IsInverseSemigroup(S);
+false
+gap> S := Semigroup(S, rec(generic := true));;
+gap> IsInverseSemigroup(S);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);

@@ -660,16 +660,11 @@ function(S)
         return false;
       fi;
     od;
+    return true;
   else
-    iter := IteratorOfRClasses(S);
-    for x in iter do
-      if not IsRegularClass(x) or NrIdempotents(x) > 1 then
-        return false;
-      fi;
-    od;
+    return NrLClasses(S) = NrRClasses(S) and NrIdempotents(S) = NrRClasses(S);
   fi;
 
-  return true;
 end);
 
 # same method for ideals
