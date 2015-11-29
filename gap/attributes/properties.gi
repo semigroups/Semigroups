@@ -656,7 +656,9 @@ function(S)
   if HasGreensDClasses(S) then
     iter := GreensDClasses(S);
     for x in iter do
-      if not IsRegularClass(x) or NrIdempotents(x) <> NrRClasses(x) then
+      if not IsRegularClass(x)
+          or NrRClasses(x) <> NrLClasses(x)
+          or NrIdempotents(x) <> NrRClasses(x) then
         return false;
       fi;
     od;
