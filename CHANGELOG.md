@@ -9,7 +9,7 @@
 This is a minor release including some changes for compatibility with GAP 4.8, and some bug fixes. 
 
 ###New Features in Version 2.7
-* `IsomorphismReesZeroMatrixSemigroup` is introduced, and it is no longer possible to apply `IsomorphismReesMatrixSemigroup` to a 0-simple semigroup. This change was made for the sake of consistency, so that the `Range` of an `IsomorphismReesMatrixSemigroup` is always a Rees matrix semigroup and not sometimes a a Rees 0-matrix semigroup as was formerly the case.
+* `IsomorphismReesZeroMatrixSemigroup` is introduced, and it is no longer possible to apply `IsomorphismReesMatrixSemigroup` to a 0-simple semigroup. This change was made for the sake of consistency, so that the `Range` of an `IsomorphismReesMatrixSemigroup` is always a Rees matrix semigroup and not sometimes a Rees 0-matrix semigroup as was formerly the case.
 
 ###Changes for GAP 4.8
 * several `ViewString` methods for semigroups and their elements were moved from the `Semigroups` package to the GAP library. Some minor changes were made in the method for `ViewString` for semigroups, and the tests, and manual examples were updated accordingly. 

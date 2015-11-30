@@ -226,6 +226,7 @@ _LOAD_ONLY_NEEDED = 'LoadPackage(\\"semigroups\\", false : OnlyNeeded);'
 _TEST_STANDARD = 'SemigroupsTestStandard();'
 _TEST_INSTALL = 'SemigroupsTestInstall();'
 _TEST_ALL = 'SemigroupsTestAll();'
+_TEST_SMALLSEMI = 'SmallsemiTestAll();\n SmallsemiTestManualExamples();'
 _TEST_MAN_EX = 'SemigroupsTestManualExamples();'
 _MAKE_DOC = 'SemigroupsMakeDoc();'
 _VALIDATE_PACKAGE_INFO = ('ValidatePackageInfo(\\"' + _ARGS.gap_root +
@@ -252,6 +253,7 @@ def main():
     _run_test('Loading package            ', True, _LOAD)
     _run_test('Loading only needed        ', True, _LOAD_ONLY_NEEDED)
     _run_test('Loading Smallsemi first    ', True, _LOAD_SMALLSEMI, _LOAD)
+    _run_test('Loading Smallsemi second   ', True, _LOAD, _LOAD_SMALLSEMI)
 
     _make_clean('grape')
     _run_test('Loading Grape not compiled ', True, _LOAD)
@@ -266,6 +268,11 @@ def main():
     _run_test('Loading Orb compiled       ', True, _LOAD)
 
     _run_test('Compiling the doc          ', True, _LOAD, _MAKE_DOC)
+    _run_test('Testing Smallsemi          ',
+              True,
+              _LOAD,
+              _LOAD_SMALLSEMI,
+              _TEST_SMALLSEMI)
 
     print _blue_string(_pad('Testing with Orb compiled') + ' . . .')
     _run_test('testinstall.tst            ', True, _LOAD, _TEST_INSTALL)
