@@ -64,6 +64,8 @@ DeclareSynonym("IsNTPMatrixMonoid",
 DeclareSynonym("IsIntegerMatrixMonoid",
                IsMonoid and IsIntegerMatrixCollection);
 
+DeclareOperation("FullTropicalMaxPlusMonoid", [IsPosInt, IsPosInt]);
+
 InstallTrueMethod(IsFinite, IsTropicalMaxPlusMatrixSemigroup);
 InstallTrueMethod(IsFinite, IsTropicalMinPlusMatrixSemigroup);
 InstallTrueMethod(IsFinite, IsNTPMatrixSemigroup);
