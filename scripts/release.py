@@ -277,21 +277,24 @@ def main():
     print _blue_string(_pad('Testing with Orb compiled') + ' . . .')
     _run_test('testinstall.tst            ', True, _LOAD, _TEST_INSTALL)
     _run_test('manual examples            ', True, _LOAD, _TEST_MAN_EX)
-    _run_test('tst/*                      ', True, _LOAD, _TEST_ALL)
+    _run_test('tst/*                      ', True, _LOAD, _TEST_STANDARD)
     _run_test('GAP quick tests            ', False, _LOAD, _TEST_GAP_QUICK)
 
     print _blue_string(_pad('Testing with Orb uncompiled') + ' . . .')
     _make_clean('orb')
     _run_test('testinstall.tst            ', True, _LOAD, _TEST_INSTALL)
     _run_test('manual examples            ', True, _LOAD, _TEST_MAN_EX)
-    _run_test('tst/*                      ', True, _LOAD, _TEST_ALL)
+    _run_test('tst/*                      ', True, _LOAD, _TEST_STANDARD)
     _run_test('GAP quick tests            ', False, _LOAD, _TEST_GAP_QUICK)
     _configure_make('orb')
 
     print _blue_string(_pad('Testing only needed') + ' . . .')
     _run_test('testinstall.tst            ', True, _LOAD_ONLY_NEEDED, _TEST_INSTALL)
     _run_test('manual examples            ', True, _LOAD_ONLY_NEEDED, _TEST_MAN_EX)
-    _run_test('tst/*                      ', True, _LOAD_ONLY_NEEDED, _TEST_ALL)
+    _run_test('tst/*                      ',
+              True,
+              _LOAD_ONLY_NEEDED,
+              _TEST_STANDARD)
     _run_test('GAP quick tests            ', False, _LOAD, _TEST_GAP_QUICK)
 
     #print _blue_string('make teststandard . . .')
