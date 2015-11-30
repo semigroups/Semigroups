@@ -11,6 +11,18 @@
 ## (0-)matrix semigroups, using linked triples.
 ##
 
+# FIXME the following method probably doesn't want to go in this file, but I
+# couldn't figure out where it should go.
+
+InstallMethod(ViewObj, "for a congruence class",
+[IsCongruenceClass],
+function(c)
+  Print("{");
+  ViewObj(Representative(c));
+  Print("}");
+  return;
+end);
+
 # TODO: remove brackets around return statements everywhere in this file.
 
 InstallGlobalFunction(RMSCongruenceByLinkedTriple,

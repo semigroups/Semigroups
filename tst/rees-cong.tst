@@ -49,14 +49,13 @@ gap> s := Semigroup( [ Transformation( [ 2, 4, 3, 5, 5 ] ),
 >                 Transformation( [ 3, 1, 4, 2, 4 ] ), 
 >                 Transformation( [ 3, 4, 2, 3, 4 ] ),
 >                 Transformation( [ 4, 1, 5, 1, 2 ] ) ] );
-<transformation semigroup on 5 pts with 5 generators>
+<transformation semigroup of degree 5 with 5 generators>
 gap> i := SemigroupIdeal(s, [ Transformation( [ 3, 1, 1, 4, 4 ] ),
 >                             Transformation( [ 1, 4, 1, 4, 1 ] ) ] );
-<regular transformation semigroup ideal on 5 pts with 2 generators>
+<regular transformation semigroup ideal of degree 5 with 2 generators>
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);
-<Rees congruence of <regular transformation semigroup ideal 
- on 5 pts with 2 generators> over <transformation semigroup 
- on 5 pts with 5 generators>>
+<Rees congruence of <regular transformation semigroup ideal of degree 5 with
+  2 generators> over <transformation semigroup of degree 5 with 5 generators>>
 gap> NrCongruenceClasses(cong);
 19
 gap> cc := CongruenceClasses(cong);;
@@ -82,8 +81,8 @@ gap> i := SemigroupIdeal( s, Transformation( [ 5, 2, 1, 5, 2 ] ),
 >                            Transformation( [ 5, 2, 1, 5, 2 ] ) );;
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <transformation semigroup of size 61, 
- on 5 pts with 3 generators> with 1 generating pairs>
+<semigroup congruence over <transformation semigroup of size 61, degree 5 
+ with 3 generators> with 1 generating pairs>
 gap> NrCongruenceClasses(ccong);
 12
 gap> IsReesCongruence(ccong);
@@ -180,8 +179,8 @@ gap> i := SemigroupIdeal(s, Transformation( [ 1, 1, 1, 3, 1 ] ));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> class := CongruenceClassOfElement(cong, Transformation([3,3,3,3,3]));;
 gap> enum := Enumerator(class);
-<enumerator of <non-regular transformation semigroup ideal 
- on 5 pts with 1 generator>>
+<enumerator of <non-regular transformation semigroup ideal of size 5, 
+ degree 5 with 1 generator>>
 gap> Size(enum);
 5
 gap> class := CongruenceClassOfElement(cong, Transformation([2,2,2,1,2]));;

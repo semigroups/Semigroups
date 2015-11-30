@@ -16,8 +16,8 @@ gap> SemigroupsStartTest();
 #T# ReesMatTest2
 # Some semigroups to which the methods in Semigroups should not apply
 gap> R:=ReesZeroMatrixSemigroup(POI(5), [[0,0,0], [0,0,0]]);
-<Rees 0-matrix semigroup 3x2 over <inverse partial perm monoid on 5 pts
- with 5 generators>>
+<Rees 0-matrix semigroup 3x2 over <inverse partial perm monoid of rank 5 with 
+  5 generators>>
 gap> R:=Semigroup(Generators(R));
 <subsemigroup of 3x2 Rees 0-matrix semigroup with 1512 generators>
 gap> IsActingSemigroup(R);
@@ -32,8 +32,8 @@ gap> IsActingSemigroup(R);
 false
 gap> R:=ReesZeroMatrixSemigroup(POI(5), [[PartialPerm([],[]),0],
 > [0, PartialPerm([], [])]]);
-<Rees 0-matrix semigroup 2x2 over <inverse partial perm monoid on 5 pts
- with 5 generators>>
+<Rees 0-matrix semigroup 2x2 over <inverse partial perm monoid of rank 5 with 
+  5 generators>>
 gap> R:=Semigroup(Generators(R));                                              
 <subsemigroup of 2x2 Rees 0-matrix semigroup with 1008 generators>
 gap> IsActingSemigroup(R);
@@ -180,11 +180,11 @@ true
 gap> ForAll(T, x-> ForAll(T, y-> (x*y)^iso=x^iso*y^iso));                   
 true
 gap> iso:=IsomorphismPermGroup(MinimalIdeal(V));
-MappingByFunction( <simple Rees 0-matrix semigroup ideal with 1 generator>
-, Group(()), function( x ) ... end, function( x ) ... end )
+MappingByFunction( 
+<group>, Group(()), function( x ) ... end, function( x ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( Group(()), <simple Rees 0-matrix semigroup ideal with
- 1 generator>, function( x ) ... end, function( x ) ... end )
+MappingByFunction( Group(()), 
+<group>, function( x ) ... end, function( x ) ... end )
 gap> ForAll(MinimalIdeal(V), x-> (x^iso)^inv=x);         
 true
 gap> ForAll(MinimalIdeal(V), x-> ForAll(MinimalIdeal(V), y-> 
@@ -323,9 +323,9 @@ gap> LClasses(V);
   <Green's L-class: (15,(5,8)(6,9),3)>, <Green's L-class: (15,(),2)>, 
   <Green's L-class: (15,(1,6)(5,8),5)>, <Green's L-class: (15,(1,6)(5,8),4)>, 
   <Green's L-class: (15,(5,8),3)>, <Green's L-class: (15,(6,9),2)>, 
-  <Green's L-class: (15,(1,6,9)(5,8),5)>, <Green's L-class: (15,(1,6,9)
-   (5,8),4)>, <Green's L-class: (15,(1,9)(5,8),3)>, 
-  <Green's L-class: (15,(1,6,9),2)>, <Green's L-class: (15,(5,8)(6,9),5)>, 
+  <Green's L-class: (15,(1,6,9)(5,8),5)>, 
+  <Green's L-class: (15,(1,6,9)(5,8),4)>, <Green's L-class: (15,(1,9)(5,8),3)>
+    , <Green's L-class: (15,(1,6,9),2)>, <Green's L-class: (15,(5,8)(6,9),5)>,
   <Green's L-class: (15,(5,8)(6,9),4)>, <Green's L-class: (15,(1,9,6),3)>, 
   <Green's L-class: (15,(1,6)(5,8),2)>, <Green's L-class: (15,(),5)>, 
   <Green's L-class: (15,(),4)>, <Green's L-class: (15,(1,6),3)>, 
@@ -336,15 +336,15 @@ gap> LClasses(V);
   <Green's L-class: (15,(1,6),2)>, <Green's L-class: (15,(5,8),5)>, 
   <Green's L-class: (15,(5,8),4)>, <Green's L-class: (15,(1,6)(5,8),3)>, 
   <Green's L-class: (15,(1,9,6),2)>, <Green's L-class: (15,(1,9)(5,8),5)>, 
-  <Green's L-class: (15,(1,9)(5,8),4)>, <Green's L-class: (15,(1,6,9)
-   (5,8),3)>, <Green's L-class: (15,(1,9),2)>, <Green's L-class: (15,(1,9,6)
-   (5,8),5)>, <Green's L-class: (15,(1,9,6)(5,8),4)>, 
-  <Green's L-class: (15,(6,9),3)>, <Green's L-class: (15,(5,8),2)>, 
-  <Green's L-class: (15,(1,6),5)>, <Green's L-class: (15,(1,6),4)>, 
-  <Green's L-class: (15,(),3)>, <Green's L-class: (15,(5,8)(6,9),2)>, 
-  <Green's L-class: (15,(1,6,9),5)>, <Green's L-class: (15,(1,6,9),4)>, 
-  <Green's L-class: (22,(),3)>, <Green's L-class: (22,(5,8)(6,9),2)>, 
-  <Green's L-class: (22,(1,6,9),5)>, <Green's L-class: (22,(1,6,9),4)> ]
+  <Green's L-class: (15,(1,9)(5,8),4)>, <Green's L-class: (15,(1,6,9)(5,8),3)>
+    , <Green's L-class: (15,(1,9),2)>, <Green's L-class: (15,(1,9,6)(5,8),5)>,
+  <Green's L-class: (15,(1,9,6)(5,8),4)>, <Green's L-class: (15,(6,9),3)>, 
+  <Green's L-class: (15,(5,8),2)>, <Green's L-class: (15,(1,6),5)>, 
+  <Green's L-class: (15,(1,6),4)>, <Green's L-class: (15,(),3)>, 
+  <Green's L-class: (15,(5,8)(6,9),2)>, <Green's L-class: (15,(1,6,9),5)>, 
+  <Green's L-class: (15,(1,6,9),4)>, <Green's L-class: (22,(),3)>, 
+  <Green's L-class: (22,(5,8)(6,9),2)>, <Green's L-class: (22,(1,6,9),5)>, 
+  <Green's L-class: (22,(1,6,9),4)> ]
 gap> DClasses(V);
 [ <Green's D-class: 0>, <Green's D-class: (13,(1,6)(5,8),3)>, 
   <Green's D-class: (1,(1,6),3)>, <Green's D-class: (22,(1,6),1)>, 
@@ -399,16 +399,17 @@ true
 gap> reps := ShallowCopy(Idempotents(U[2]));;
 gap> Sort(reps);
 gap> reps;
-[ 0, (1,(),1), (2,(5,8)(6,9),4), (2,(5,8)(6,9),5), (3,(5,8)(6,9),4), (3,(5,8)
-  (6,9),5), (4,(),4), (4,(),5), (5,(5,8)(6,9),4), (5,(5,8)(6,9),5), 
+[ 0, (1,(),1), (2,(5,8)(6,9),4), (2,(5,8)(6,9),5), (3,(5,8)(6,9),4), 
+  (3,(5,8)(6,9),5), (4,(),4), (4,(),5), (5,(5,8)(6,9),4), (5,(5,8)(6,9),5), 
   (6,(1,6),1), (7,(),2), (7,(),3), (8,(1,9)(5,8),2), (8,(1,9)(5,8),3), 
-  (9,(1,9),2), (9,(1,9),3), (10,(),1), (11,(1,6),2), (11,(1,6),3), (12,(1,6)
-  (5,8),2), (12,(1,6)(5,8),3), (13,(1,9,6),2), (13,(1,9,6),3), (14,(5,8)
-  (6,9),1), (15,(1,9),1), (16,(1,9,6)(5,8),2), (16,(1,9,6)(5,8),3), (17,(1,9)
-  (5,8),4), (17,(1,9)(5,8),5), (18,(1,9,6)(5,8),2), (18,(1,9,6)(5,8),3), 
-  (19,(1,9,6)(5,8),2), (19,(1,9,6)(5,8),3), (20,(),2), (20,(),3), (21,(1,9,6)
-  (5,8),2), (21,(1,9,6)(5,8),3), (22,(),1), (23,(1,6),4), (23,(1,6),5), 
-  (24,(),4), (24,(),5), (25,(),4), (25,(),5), (26,(1,9),2), (26,(1,9),3) ]
+  (9,(1,9),2), (9,(1,9),3), (10,(),1), (11,(1,6),2), (11,(1,6),3), 
+  (12,(1,6)(5,8),2), (12,(1,6)(5,8),3), (13,(1,9,6),2), (13,(1,9,6),3), 
+  (14,(5,8)(6,9),1), (15,(1,9),1), (16,(1,9,6)(5,8),2), (16,(1,9,6)(5,8),3), 
+  (17,(1,9)(5,8),4), (17,(1,9)(5,8),5), (18,(1,9,6)(5,8),2), 
+  (18,(1,9,6)(5,8),3), (19,(1,9,6)(5,8),2), (19,(1,9,6)(5,8),3), (20,(),2), 
+  (20,(),3), (21,(1,9,6)(5,8),2), (21,(1,9,6)(5,8),3), (22,(),1), 
+  (23,(1,6),4), (23,(1,6),5), (24,(),4), (24,(),5), (25,(),4), (25,(),5), 
+  (26,(1,9),2), (26,(1,9),3) ]
 gap> ForAll(last, IsIdempotent);
 true
 
@@ -516,8 +517,8 @@ gap> List(U, IsMonoidAsSemigroup);
 [ false, false, false, false, false, false ]
 gap> IsomorphismTransformationSemigroup(R);
 MappingByFunction( <subsemigroup of 1x1 Rees 0-matrix semigroup 
- with 2 generators>, <commutative transformation monoid 
- on 2 pts with 1 generator>, function( x ) ... end, function( x ) ... end )
+ with 2 generators>, <commutative transformation monoid of degree 2 with 1 
+ generator>, function( x ) ... end, function( x ) ... end )
 gap> IsOrthodoxSemigroup(R);
 true
 gap> IsOrthodoxSemigroup(V);
@@ -539,7 +540,7 @@ gap> List(U, IsRegularSemigroup);
 gap> IsRegularSemigroup(V);      
 false
 gap> UU:=IdempotentGeneratedSubsemigroup(R);;
-gap> IsSemilatticeAsSemigroup(UU);
+gap> IsSemilattice(UU);
 false
 gap> IsSimpleSemigroup(V);        
 false
@@ -734,12 +735,12 @@ true
 
 #
 gap> T := Semigroup(Transformation([2, 1]));
-<commutative transformation semigroup on 2 pts with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> IsGroupAsSemigroup(T);
 true
 gap> R := ReesZeroMatrixSemigroup(T, [[Transformation([2, 1])]]);
-<Rees 0-matrix semigroup 1x1 over <transformation group 
-  on 2 pts with 1 generator>>
+<Rees 0-matrix semigroup 1x1 over <transformation group of degree 2 with
+   1 generator>>
 gap> IsInverseSemigroup(R);
 true
 gap> IsInverseSemigroup(AsTransformationSemigroup(R));
@@ -751,8 +752,8 @@ gap> T := Semigroup(x);;
 gap> IsInverseSemigroup(T);
 false
 gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);
-<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
-  on 3 pts with 1 generator>>
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup of 
+  degree 3 with 1 generator>>
 gap> IsInverseSemigroup(R);
 false
 gap> IsInverseSemigroup(AsTransformationSemigroup(R));
@@ -798,7 +799,7 @@ false
 
 #T# ReesMatTest102: IsInverseSemigroup (false because of matrix)
 gap> S := Semigroup(SymmetricInverseMonoid(5));
-<partial perm monoid on 5 pts with 4 generators>
+<partial perm monoid of rank 5 with 4 generators>
 gap> id := Identity(S);
 <identity partial perm on [ 1, 2, 3, 4, 5 ]>
 gap> zero := MultiplicativeZero(S);
@@ -806,8 +807,8 @@ gap> zero := MultiplicativeZero(S);
 
 # Non-square matrix
 gap> R := ReesZeroMatrixSemigroup(S, [[zero, id]]);
-<Rees 0-matrix semigroup 2x1 over <partial perm monoid on 5 pts
- with 4 generators>>
+<Rees 0-matrix semigroup 2x1 over <partial perm monoid of rank 5 with 4 
+  generators>>
 gap> IsInverseSemigroup(R);
 false
 
@@ -852,11 +853,11 @@ true
 
 #T# ReesMatTest103: NrIdempotents and Idempotents for an inverse RZMS
 gap> S := SymmetricInverseMonoid(4);
-<symmetric inverse semigroup on 4 pts>
+<symmetric inverse monoid of degree 4>
 gap> x := PartialPerm([2, 1, 4, 3]);;
 gap> y := PartialPerm([2, 4, 3, 1]);;
 gap> R := ReesZeroMatrixSemigroup(S, [[0, x], [y, 0]]);
-<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(R);
 true
 gap> NrIdempotents(R);
@@ -886,10 +887,10 @@ true
 #
 gap> x := Transformation([2, 1]);;
 gap> T := Semigroup(x);
-<commutative transformation semigroup on 2 pts with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [x, x ^ 2]]);
-<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
-  on 2 pts with 1 generator>>
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup of 
+  degree 2 with 1 generator>>
 gap> NrIdempotents(R);
 4
 gap> Idempotents(R);
@@ -903,10 +904,10 @@ true
 #
 gap> x := Transformation([1, 1, 2]);;
 gap> T := Semigroup(x);
-<commutative transformation semigroup on 3 pts with 1 generator>
+<commutative transformation semigroup of degree 3 with 1 generator>
 gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [0, x ^ 2]]);
-<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup 
-  on 3 pts with 1 generator>>
+<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup of 
+  degree 3 with 1 generator>>
 gap> NrIdempotents(R);
 3
 gap> Idempotents(R);
@@ -923,7 +924,7 @@ gap> x := PartialPerm([2, 1, 4, 3]);;
 gap> y := PartialPerm([2, 4, 3, 1]);;
 gap> z := PartialPerm([0, 0, 0, 0]);;
 gap> R := ReesZeroMatrixSemigroup(S, [[x, x, 0], [y, 0, 0], [0, 0, x]]);
-<Rees 0-matrix semigroup 3x3 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 3x3 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(R);
 false
 
@@ -970,19 +971,19 @@ gap> Idempotents(T);
 
 #
 gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 2, 3]);
-<Rees 0-matrix semigroup 2x3 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x3 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(T);
 false
 gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 2]);
-<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(T);
 false
 gap> T := ReesZeroMatrixSubsemigroup(R, [1, 2], S, [2, 3]);
-<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(T);
 false
 gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], S, [1, 3]);
-<Rees 0-matrix semigroup 2x2 over <symmetric inverse semigroup on 4 pts>>
+<Rees 0-matrix semigroup 2x2 over <symmetric inverse monoid of degree 4>>
 gap> IsInverseSemigroup(T);
 true
 gap> NrIdempotents(T);
@@ -1034,7 +1035,7 @@ gap> T := ReesZeroMatrixSubsemigroup(R, [1 .. 2], G, [1 .. 2]);
 gap> IsReesZeroMatrixSemigroup(T);
 true
 gap> UnderlyingSemigroup(T);
-<partial perm group of size 120, on 5 pts with 73 generators>
+<partial perm group of size 120, rank 5 with 73 generators>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(f1);

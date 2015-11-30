@@ -69,7 +69,7 @@ false]]></Example>
       <C>IsBand</C> returns <K>true</K> if every element of the semigroup
       <A>S</A> is an idempotent and <K>false</K> if it is not. An inverse
       semigroup is band if and only if it is a semilattice; see 
-      <Ref Prop="IsSemilatticeAsSemigroup"/>.
+      <Ref Prop="IsSemilattice"/>.
 
       <Example><![CDATA[
 gap> gens := [ Transformation( [ 1, 1, 1, 4, 4, 4, 7, 7, 7, 1 ] ), 
@@ -88,9 +88,9 @@ false
 gap> IsBand(IdempotentGeneratedSubsemigroup(S));
 true
 gap> S := PartitionMonoid(4);
-<regular bipartition monoid on 4 pts with 4 generators>
+<regular bipartition monoid of degree 4 with 4 generators>
 gap> M := MinimalIdeal(S);
-<simple bipartition semigroup ideal on 4 pts with 1 generator>
+<simple bipartition semigroup ideal of degree 4 with 1 generator>
 gap> IsBand(M);
 true]]></Example> 
     </Description>
@@ -126,7 +126,7 @@ gap> S := Semigroup(
 > PartialPerm( [ 1, 3, 4 ], [ 3, 1, 2 ] ), 
 > PartialPerm( [ 1, 3, 4, 5 ], [ 5, 4, 3, 2 ] ) );;
 gap> T := Range(IsomorphismBlockBijectionSemigroup(S));
-<bipartition semigroup on 6 pts with 5 generators>
+<bipartition semigroup of degree 6 with 5 generators>
 gap> IsBlockGroup(T);
 true
 gap> IsBlockGroup(Range(IsomorphismBipartitionSemigroup(S)));
@@ -293,7 +293,7 @@ false]]></Example>
 
       For inverse semigroups, the properties of being 
       &R;-trivial, &L;-trivial, &D;-trivial, and a semilattice are equivalent;
-      see <Ref Prop="IsSemilatticeAsSemigroup"/>.
+      see <Ref Prop="IsSemilattice"/>.
       <P/>
 
       A semigroup is <E>aperiodic</E> if its contains no non-trivial
@@ -409,9 +409,8 @@ true]]></Example>
     <Prop Name="IsGroupAsSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      If the semigroup <A>S</A> is actually a group, then
-      <C>IsGroupAsSemigroup</C> returns <K>true</K>.  If it is not a group,
-      then <K>false</K> is returned.
+      <C>IsGroupAsSemigroup</C> returns <K>true</K> if and only if the
+      semigroup <A>S</A> is mathematically a group.
       <Example><![CDATA[
 gap> gens := [ Transformation( [ 2, 4, 5, 3, 7, 8, 6, 9, 1 ] ), 
 >  Transformation( [ 3, 5, 6, 7, 8, 1, 9, 2, 4 ] ) ];;
@@ -420,13 +419,13 @@ gap> IsGroupAsSemigroup(S);
 true
 gap> G := SymmetricGroup(5);;
 gap> S := Range(IsomorphismPartialPermSemigroup(G));
-<inverse partial perm semigroup on 5 pts with 2 generators>
+<inverse partial perm semigroup of rank 5 with 2 generators>
 gap> IsGroupAsSemigroup(S);
 true
 gap> S := SymmetricGroup([1,2,10]);;
 gap> T := Range(IsomorphismBlockBijectionSemigroup(
 > Range(IsomorphismPartialPermSemigroup(S))));
-<inverse bipartition semigroup on 11 pts with 2 generators>
+<inverse bipartition semigroup of degree 11 with 2 generators>
 gap> IsGroupAsSemigroup(T);
 true]]></Example>
     </Description>
@@ -445,18 +444,18 @@ true]]></Example>
       <Ref Attr="IdempotentGeneratedSubsemigroup"/>. <P/>
 
       An inverse semigroup is idempotent-generated if and only if it is a
-      semilattice; see <Ref Prop="IsSemilatticeAsSemigroup"/>.<P/>
+      semilattice; see <Ref Prop="IsSemilattice"/>.<P/>
 
       Semiband and  idempotent-generated are synonymous
       in this context. 
 
       <Example><![CDATA[
 gap> S := SingularTransformationSemigroup(4);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> IsIdempotentGenerated(S);
 true
 gap> S := SingularBrauerMonoid(5);
-<regular bipartition semigroup ideal on 5 pts with 1 generator>
+<regular bipartition semigroup ideal of degree 5 with 1 generator>
 gap> IsIdempotentGenerated(S);
 true]]></Example>
     </Description>
@@ -625,15 +624,18 @@ true]]></Example>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
       <C>IsMonoidAsSemigroup</C> returns <K>true</K> if and only if the
-      semigroup <A>S</A> is mathematically a monoid but does belong to the
-      category of monoids <Ref Prop="IsMonoid" BookName="ref"/> in &GAP; This is
-      possible if the <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>
-      of <A>S</A> is not equal to the <Ref Attr="One" BookName="ref"/> of any
-      element in <A>S</A>. <P/>
-
-      A semigroup satisfying <C>IsMonoidAsSemigroup</C> does not possess the
-      attributes of a monoid (such as, <Ref Attr="GeneratorsOfMonoid"
-        BookName="ref"/>).<P/>
+      semigroup <A>S</A> is mathematically a monoid, i.e. if and only if it
+      contains a <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
+      <P/>
+      
+      It is possible that a semigroup which satisfies
+      <C>IsMonoidAsSemigroup</C> is not in the &GAP; category <Ref
+        Prop="IsMonoid" BookName="ref"/>. This is possible if the <Ref
+        Attr="MultiplicativeNeutralElement" BookName="ref"/> of <A>S</A> is not
+      equal to the <Ref Attr="One" BookName="ref"/> of any element in <A>S</A>.
+      Therefore a semigroup satisfying <C>IsMonoidAsSemigroup</C> may not
+      possess the attributes of a monoid (such as, <Ref
+        Attr="GeneratorsOfMonoid" BookName="ref"/>).<P/>
 
      See also <Ref Attr="One" BookName="ref"/>, 
      <Ref Prop="IsInverseMonoid" BookName="ref"/>
@@ -657,7 +659,7 @@ fail
 gap> S := Monoid(Transformation( [ 8, 2, 8, 9, 10, 6, 2, 8, 7, 8 ] ),
 > Transformation( [ 9, 2, 6, 3, 6, 4, 5, 5, 3, 2 ] ));;
 gap> IsMonoidAsSemigroup(S);
-false]]></Example>
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -779,12 +781,12 @@ true]]></Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsSemilatticeAsSemigroup">
+<#GAPDoc Label="IsSemilattice">
   <ManSection>
-    <Prop Name="IsSemilatticeAsSemigroup" Arg="S"/>
+    <Prop Name="IsSemilattice" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
     <Description>
-      <C>IsSemilatticeAsSemigroup</C> returns <K>true</K> if the semigroup
+      <C>IsSemilattice</C> returns <K>true</K> if the semigroup
       <A>S</A> is a semilattice and <K>false</K> if it is not. <P/>
       
       A semigroup is a <E>semilattice</E> if it is commutative and every
@@ -798,12 +800,12 @@ gap> Size(S);
 gap> IsInverseSemigroup(S);
 true
 gap> A := Semigroup(Idempotents(S)); 
-<transformation semigroup on 7 pts with 32 generators>
-gap> IsSemilatticeAsSemigroup(A);
+<transformation semigroup of degree 7 with 32 generators>
+gap> IsSemilattice(A);
 true
 gap> S := FactorisableDualSymmetricInverseSemigroup(5);;
 gap> S := IdempotentGeneratedSubsemigroup(S);;
-gap> IsSemilatticeAsSemigroup(S);
+gap> IsSemilattice(S);
 true]]></Example>
     </Description>
   </ManSection>
@@ -1018,7 +1020,7 @@ gap> S := Semigroup( [
 > Transformation( [ 2, 3, 4, 5, 1, 6 ] ),
 > Transformation( [ 2, 1, 3, 4, 5, 6 ] ),
 > Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ] );
-<transformation semigroup on 6 pts with 3 generators>
+<transformation semigroup of degree 6 with 3 generators>
 gap> IsZeroGroup(S);
 true
 gap> IsSemigroupWithAdjoinedZero(S);
@@ -1029,5 +1031,3 @@ false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-
-#EOF

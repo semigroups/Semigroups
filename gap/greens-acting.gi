@@ -1581,6 +1581,8 @@ function(S)
   orho := RhoOrb(S);
   scc := OrbSCC(o);
   lookup := OrbSCCLookup(o);
+  Perform([2 .. Length(scc)], x -> LambdaOrbSchutzGp(o, x));
+  Perform([2 .. Length(scc)], x -> LambdaOrbMults(o, x));
   schutz := o!.schutzstab;
   mults := o!.mults;
 

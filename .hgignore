@@ -111,3 +111,5 @@ src/.deps
 src/semigroups++/.deps
 *.o
 .dirstamp
+src/semigroups++/html
+src/semigroups++

@@ -10,36 +10,36 @@
 
 #for testing purposes
 
-# BlocksOfPartition:=function(partition)
+# BlocksOfPartition := function(partition)
 #   local blocks, lookup, n, i, j;
 #
-#   blocks:=[]; lookup:=[]; n:=0;
-#   for i in [1..Length(partition)] do
-#     blocks[i]:=[n+1..partition[i]+n];
+#   blocks := []; lookup := []; n := 0;
+#   for i in [1 .. Length(partition)] do
+#     blocks[i] := [n + 1 .. partition[i] + n];
 #     for j in blocks[i] do
-#       lookup[j]:=i;
+#       lookup[j] := i;
 #     od;
-#     n:=n+partition[i];
+#     n := n + partition[i];
 #   od;
 #   return [blocks, lookup];
 # end;
 #
-# IsEndomorphismOfPartition:=function(bl, f)
+# IsEndomorphismOfPartition := function(bl, f)
 #   local imblock, x;
 #
 #   for x in bl[1] do #blocks
-#     imblock:=bl[1][bl[2][x[1]^f]];
-#     if not ForAll(x, y-> y^f in imblock) then
+#     imblock := bl[1][bl[2][x[1] ^ f]];
+#     if not ForAll(x, y -> y ^ f in imblock) then
 #       return false;
 #     fi;
 #   od;
 #   return true;
 # end;
 #
-# NrEndomorphismsPartition:=function(partition)
+# NrEndomorphismsPartition := function(partition)
 #   local bl;
-#   bl:=BlocksOfPartition(partition);
-#   return Number(FullTransformationSemigroup(Sum(partition)), x->
+#   bl := BlocksOfPartition(partition);
+#   return Number(FullTransformationSemigroup(Sum(partition)), x ->
 #     IsEndomorphismOfPartition(bl, x));
 # end;
 
@@ -594,7 +594,7 @@ else
     local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal,
       d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
 
-    if not IsSemilatticeAsSemigroup(s) then
+    if not IsSemilattice(s) then
       Info(InfoWarning, 1, "usage: argument should be a semilattice,");
       return fail;
     fi;
@@ -1182,7 +1182,9 @@ function(arg)
   SetIsMonogenicSemigroup(out, true);
 
   if m = 1 then
-    SetIsGroupAsSemigroup(out, true);
+    if not IsGroup(out) then
+      SetIsGroupAsSemigroup(out, true);
+    fi;
   else
     SetIsGroupAsSemigroup(out, false);
     SetIsRegularSemigroup(out, false);

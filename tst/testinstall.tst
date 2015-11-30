@@ -23,9 +23,9 @@ true
 gap> IsMonoid(s);
 false
 gap> iso:=IsomorphismTransformationMonoid(s);
-MappingByFunction( <commutative transformation semigroup 
- on 6 pts with 1 generator>, <commutative transformation monoid 
- on 4 pts with 1 generator>, function( f ) ... end, function( f ) ... end )
+MappingByFunction( <commutative transformation semigroup of degree 6 with 1 
+ generator>, <commutative transformation monoid of degree 4 with 1 generator>
+ , function( f ) ... end, function( f ) ... end )
 gap> RespectsMultiplication(iso);
 true
 gap> ForAll(s, x-> (x^iso)^InverseGeneralMapping(iso)=x);
@@ -33,13 +33,13 @@ true
 
 #T# TestInstall4
 gap> s:=Semigroup(Transformation([1,1,1]), Transformation([3,1,2]));
-<transformation semigroup on 3 pts with 2 generators>
+<transformation semigroup of degree 3 with 2 generators>
 gap> IsSimpleSemigroup(s);
 false
 
 #T# TestInstall5
 gap> s:=SingularTransformationSemigroup(6);
-<regular transformation semigroup ideal on 6 pts with 1 generator>
+<regular transformation semigroup ideal of degree 6 with 1 generator>
 gap> Size(s);
 45936
 
@@ -72,7 +72,7 @@ gap> f:=Transformation( [ 1, 1, 3, 1 ] );;
 gap> f in s;
 true
 gap> t:=Semigroup(gens{[1..3]});
-<transformation semigroup on 4 pts with 3 generators>
+<transformation semigroup of degree 4 with 3 generators>
 gap> ForAll(t, x-> x in s);
 true
 gap> Size(t);
@@ -163,9 +163,9 @@ gap> gens:=[ Transformation( [ 1, 2, 3, 5, 4, 6, 7, 8 ] ),
 >   Transformation( [ 1, 2, 3, 4, 1, 6, 7, 8 ] ),
 >   Transformation( [ 8, 8, 3, 4, 5, 7, 6, 1 ] ) ];;
 gap> s:=Monoid(gens);
-<transformation monoid on 8 pts with 6 generators>
+<transformation monoid of degree 8 with 6 generators>
 gap> t:=ClosureSemigroup(s, [Transformation( [ 4, 4, 3, 1, 5, 6, 3, 8 ] )]);
-<transformation monoid on 8 pts with 6 generators>
+<transformation monoid of degree 8 with 6 generators>
 gap> Size(t)=Size(Semigroup(Generators(t)));
 true
 
@@ -248,16 +248,16 @@ Group([ (5,9), (1,7) ])
 #T# TestInstall14: IsomorphismTransformationSemigroup/Monoid
 gap> IsomorphismTransformationSemigroup(g);
 MappingByFunction( Group([ (5,9), (1,7) ]), <transformation semigroup 
- of size 4, on 4 pts with 2 generators>
+ of size 4, degree 4 with 2 generators>
  , function( x ) ... end, function( x ) ... end )
 gap> s:=Range(last);
-<transformation semigroup of size 4, on 4 pts with 2 generators>
+<transformation semigroup of size 4, degree 4 with 2 generators>
 gap> IsGroupAsSemigroup(s);
 true
 gap> Generators(s);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> t:=Range(IsomorphismTransformationMonoid(g));
-<transformation monoid of size 4, on 4 pts with 2 generators>
+<transformation monoid of size 4, degree 4 with 2 generators>
 gap> Generators(t);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> h:=Range(IsomorphismPermGroup(t));
@@ -322,7 +322,7 @@ true
 gap> ForAll(s, x-> x in s);
 true
 gap> t:=InverseSemigroup(Generators(s){[1..3]});
-<inverse partial perm semigroup on 4 pts with 3 generators>
+<inverse partial perm semigroup of rank 4 with 3 generators>
 gap> ForAll(t, x-> x in s);
 true
 gap> Size(t);
@@ -426,13 +426,13 @@ true
 gap> S:=FullTransformationSemigroup(3);;
 gap> f:=Transformation( [ 4, 3, 1, 2 ] );;
 gap> ClosureSemigroup(S, f);           
-<transformation monoid on 4 pts with 4 generators>
+<transformation monoid of degree 4 with 4 generators>
 
 #T# TestInstall27: Issue 36 in the new numbering...
 gap> S:=Semigroup(IdentityTransformation);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> SmallGeneratingSet(S);
-[  ]
+[ IdentityTransformation ]
 
 #T# TestInstall28: MaximalSubsemigroups of Rees 0-matrix semigroups
 gap> G:=Group((1,2),(3,4));;
@@ -486,7 +486,7 @@ gap> S:=Semigroup([ Transformation( [ 1, 2, 4, 6, 1, 6 ] ),
 > Transformation( [ 4, 1, 3, 6, 1, 5 ] ),
 > Transformation( [ 4, 1, 4, 2, 4, 2 ] ),
 > Transformation( [ 6, 6, 4, 6, 1, 1 ] ) ]);
-<transformation semigroup on 6 pts with 6 generators>
+<transformation semigroup of degree 6 with 6 generators>
 gap> T:=Semigroup([ Transformation( [ 1, 5, 3, 4, 5 ] ),
 > Transformation( [ 6, 4, 3, 5, 4, 1 ] ),
 > Transformation( [ 1, 2, 4, 6, 1, 6 ] ),
@@ -499,7 +499,7 @@ gap> T:=Semigroup([ Transformation( [ 1, 5, 3, 4, 5 ] ),
 > Transformation( [ 6, 1, 6, 6, 4, 6 ] ),
 > Transformation( [ 5, 6, 6, 6, 6, 1 ] ),
 > Transformation( [ 4, 4, 5, 4, 3, 3 ] ) ]);
-<transformation semigroup on 6 pts with 12 generators>
+<transformation semigroup of degree 6 with 12 generators>
 gap> IsMaximalSubsemigroup(S, T);
 true
 gap> T:=Semigroup(T, rec(small:=true));;
@@ -548,7 +548,7 @@ gap> gens:=[
 > Bipartition( [ [ 1, -1, -3 ], [ 2, -2 ], [ 3 ] ] ),
 > Bipartition( [ [ 1, 2, -2 ], [ 3, -1, -3 ] ] ) ];;
 gap> V:=SemigroupIdealByGenerators(S, gens);
-<regular bipartition semigroup ideal on 3 pts with 3 generators>
+<regular bipartition semigroup ideal of degree 3 with 3 generators>
 gap> tuples:=[ Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ] ] ) ];;
 gap> Semigroup(V, tuples, rec(small:=true));;
 
@@ -572,7 +572,7 @@ gap> for i in [1..6] do
 # of the arguments is a monoid). 
 # This only works in GAP 4.7.5 or higher hence the CompareVersionNumbers
 gap> S:=Semigroup(PartialPerm( [ 1, 2, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ] ) );
-<trivial partial perm group on 5 pts with 0 generators>
+<trivial partial perm group of rank 5 with 1 generator>
 gap> T:=Monoid(S,  PartialPerm( [ 1, 2, 3, 4, 6 ], [ 2, 5, 4, 1, 3 ] ));;
 gap> Length(GeneratorsOfMonoid(T))=2 
 > or not CompareVersionNumbers(GAPInfo.Version,"4.7.5");
@@ -627,12 +627,12 @@ true
 #T# TestInstall38: Issue 33 (problem with Rees factor semigroups)
 gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4), 
 > [Transformation([1,2,2,2])]);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
-<Rees congruence of <regular transformation semigroup ideal 
- on 4 pts with 1 generator> over <full transformation semigroup on 4 pts>>
+<Rees congruence of <regular transformation semigroup ideal of degree 4 with
+  1 generator> over <full transformation monoid of degree 4>>
 gap> hom := HomomorphismQuotientSemigroup(cong);
-MappingByFunction( <full transformation semigroup on 4 pts>, <quotient of Mono\
+MappingByFunction( <full transformation monoid of degree 4>, <quotient of Mono\
 id( [ Transformation( [ 2, 3, 4, 1 ] ), Transformation( [ 2, 1 ] ), 
   Transformation( [ 1, 2, 3, 1 ] ) ] ) by ReesCongruenceOfSemigroupIdeal( 
 SemigroupIdeal( 
@@ -667,13 +667,13 @@ gap> Size(S);
 #T# TestInstall39: Issue 56
 # (Monoid/InverseMonoid removes One inappropriately sometimes)
 gap> M:=InverseMonoid( PartialPerm([1,2]), PartialPerm([1]) );
-<commutative inverse partial perm monoid on 2 pts with 1 generator>
+<inverse partial perm monoid of rank 2 with 2 generators>
 gap> One(M) in M;
 true
 gap> AsSet(M);
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
 gap> M:=InverseMonoid( PartialPerm([1,2]), PartialPerm([1]) );
-<commutative inverse partial perm monoid on 2 pts with 1 generator>
+<inverse partial perm monoid of rank 2 with 2 generators>
 gap> AsSet(M);
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ]
 
@@ -711,7 +711,7 @@ gap> IsMonoid(B);
 true
 gap> iso:=IsomorphismTransformationSemigroup(B);;
 gap> T:=Range(iso);
-<transformation monoid on 6 pts with 3 generators>
+<transformation monoid of degree 6 with 3 generators>
 gap> Size(T);
 16
 gap> IsMonoid(T);
@@ -777,7 +777,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.6") then
 > G:=SymmetricGroup(3);
 > fi;
 gap> G;
-Sym( [ 1 .. 3 ] )
+Group([ (2,3), (1,2,3) ])
 
 #T# TestInstall46: Issue 98
 # (incorrect definition of partition monoid on 1 point)
@@ -792,7 +792,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.6") then
 > G:=Semigroup(IdentityTransformation);
 > fi;
 gap> G;
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 
 #T# TestInstall48: Issue 101
 # (incorrect method for AsPartialPerm for a perm and zero)
@@ -802,7 +802,7 @@ gap> if CompareVersionNumbers(GAPInfo.Version,"4.7.6") then
 > G:=Semigroup(PartialPerm([]));
 > fi;
 gap> G;
-<trivial partial perm group on 0 pts with 0 generators>
+<trivial partial perm group of rank 0 with 1 generator>
 
 #T# TestInstall49: Issue 103
 # (problem with Enumerate(LambdaOrb(I)) when T is an inverse semigroup but 
@@ -810,7 +810,7 @@ gap> G;
 gap> S:=POI(5);;
 gap> T:=Semigroup(S, PartialPerm([1,2,3,4,5],[2,3,4,5,1]));;
 gap> I:=SemigroupIdeal(T, [ PartialPerm( [ 1, 2, 4, 5 ], [ 1, 2, 3, 5 ] )]);
-<inverse partial perm semigroup ideal on 5 pts with 1 generator>
+<inverse partial perm semigroup ideal of rank 5 with 1 generator>
 gap> Size(I);
 626
 
@@ -926,12 +926,12 @@ gap> S := DualSymmetricInverseMonoid(6);;
 gap> x := Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], 
 > [ 5, -5 ], [ 6, -6 ] ] );;
 gap> I := SemigroupIdeal(S, x);
-<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+<inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> JoinIrreducibleDClasses(I);
 [ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], 
       [ 6, -6 ]>> ]
 gap> I;
-<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+<inverse bipartition semigroup ideal of degree 6 with 1 generator>
 
 #T# TestInstall60: Issue 94:
 # EquivalenceClasses of trivial congruence returns empty list
@@ -968,10 +968,10 @@ true
 # Bug in NrCongruenceClasses for Rees congruences
 gap> I := SemigroupIdealByGenerators(FullTransformationSemigroup(4),
 > [Transformation([1,2,2,2])]);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> cong := ReesCongruenceOfSemigroupIdeal(I);
-<Rees congruence of <regular transformation semigroup ideal 
- on 4 pts with 1 generator> over <full transformation semigroup on 4 pts>>
+<Rees congruence of <regular transformation semigroup ideal of degree 4 with
+  1 generator> over <full transformation monoid of degree 4>>
 gap> NrCongruenceClasses(cong);
 169
 
@@ -1025,22 +1025,22 @@ gap> S := Semigroup([[[Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)],
 >                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0]]]);
 <semigroup with 3 generators>
 gap> T := AsTransformationSemigroup(S);
-<transformation semigroup on 22 pts with 3 generators>
+<transformation semigroup of degree 22 with 3 generators>
 gap> Size(T);
 21
 gap> I := SemigroupIdeal(T, Idempotents(T));
-<regular transformation semigroup ideal on 22 pts with 8 generators>
+<regular transformation semigroup ideal of degree 22 with 8 generators>
 gap> Size(I);
 21
 
 #T# TestInstall64: Bug fixed by changeset 949553d
 gap> s := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
-<inverse partial perm semigroup on 2 pts with 2 generators>
+<inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(s);
 5
 gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
-of size 5, on 2 pts with 2 generators>>
+ of size 5, rank 2 with 2 generators>>
 
 #T# TestInstall65: Issue #131
 gap> S := FullTransformationSemigroup(3);;
@@ -1053,6 +1053,154 @@ gap> One(T);
 gap> I := SemigroupIdeal(FullTransformationSemigroup(3), Transformation([1,1,1]));;
 gap> hom:=HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
 gap> map:=IsomorphismTransformationSemigroup(Range(hom));;
+
+#T# Checking for correct non-removal of one from generating sets in
+# SemigroupByGenerators JDM
+gap> S := Semigroup(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfGroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> S := Semigroup(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfMonoid(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfGroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseMonoid(S);
+[ IdentityTransformation ]
+
+#T# Checking for correct non-removal of one from generating sets in
+# MonoidByGenerators JDM
+gap> S := Monoid(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+gap> S := Monoid(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfGroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> S := Monoid(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfMonoid(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfGroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseMonoid(S);
+[ IdentityTransformation ]
+
+#T# Checking for correct non-removal of one from generating sets in
+# InverseSemigroupByGenerators JDM
+gap> S := InverseSemigroup(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfGroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> S := InverseSemigroup(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfMonoid(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfGroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseMonoid(S);
+[ IdentityTransformation ]
+
+#T# Checking for correct non-removal of one from generating sets in
+# InverseMonoidByGenerators JDM
+gap> S := InverseMonoid(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfGroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> S := InverseMonoid(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfMonoid(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfGroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseMonoid(S);
+[ IdentityTransformation ]
+
+#T# Checking GroupByGenerators
+gap> S := Group(PartialPerm([1]));
+<partial perm group of rank 1 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfGroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> GeneratorsOfInverseMonoid(S);
+[ <identity partial perm on [ 1 ]> ]
+gap> S := Group(IdentityTransformation);
+<transformation group of degree 0 with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfMonoid(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfGroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseSemigroup(S);
+[ IdentityTransformation ]
+gap> GeneratorsOfInverseMonoid(S);
+[ IdentityTransformation ]
+
+#T# Test for Issue 136
+gap> S := Semigroup(PartialPerm([2, 0]));
+<commutative partial perm semigroup of rank 1 with 1 generator>
+gap> CyclesOfPartialPermSemigroup(S);
+[  ]
+
+#T# Test for Issue 141
+gap> S := Semigroup(Bipartition ([[1, 4], [2, 3], [-1, -4], [-2, -3]]),
+>                   Bipartition([[1, 2], [3, 4], [-1, -4], [-2, -3]]));;
+gap> PartialOrderOfDClasses(S);
+[ [ 1 ] ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);

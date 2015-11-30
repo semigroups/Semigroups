@@ -168,7 +168,7 @@ gap> gens := [ Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] ),
 >   Transformation( [ 8, 8, 5, 1, 7, 5, 2, 8 ] ) ];;
 gap> s:=Semigroup(gens);;
 gap> iter:=IteratorOfDClasses(s);
-<iterator of D-classes>
+<iterator>
 gap> repeat d:=NextIterator(iter); until IsDoneIterator(iter) or IsLTrivial(d);
 gap> d;
 <Green's D-class: Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )>
@@ -363,7 +363,7 @@ gap> gens := [
 gap> s := Monoid(gens);;
 gap> s := Semigroup(GeneratorsOfSemigroup(s));;
 gap> IsMonoidAsSemigroup(s);
-false
+true
 gap> IsMonoid(s);
 true
 gap> i:=MinimalIdeal(s);;
@@ -532,7 +532,7 @@ gap> s:=Monoid(gens);;
 gap> IsInverseSemigroup(s);
 false
 gap> t:=Semigroup(Idempotents(s));;
-gap> IsSemilatticeAsSemigroup(t);
+gap> IsSemilattice(t);
 false
 gap> IsBand(t);
 true
@@ -546,7 +546,7 @@ gap> gens := [Transformation( [ 2, 3, 4, 5, 1, 8, 7, 6, 2, 7 ] ),
 > Transformation([2,3,4,5,6,8,7,1,2,2])];;
 gap> s:=Monoid(gens);;
 gap> s:=Semigroup(Idempotents(Monoid(gens)));;
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsBand(s);
 true
@@ -559,7 +559,7 @@ gap> gens := [ Transformation( [ 5, 6, 7, 3, 1, 4, 2, 8 ] ),
 gap> s:=Semigroup(Idempotents(Monoid(gens)));;
 gap> Size(s);
 94
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 true
 
 #T# PropertiesTest47
@@ -790,7 +790,7 @@ false
 # for <IdentityTransformation>
 gap> t := Transformation( [ 1 ] );;
 gap> s := Semigroup(t);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsSynchronizingSemigroup(s, 2);
 false
 gap> IsSynchronizingSemigroup(s, 1);
@@ -803,16 +803,17 @@ gap> t := Transformation( [ 1 ] );;
 
 # For a trivial transformation semigroup
 gap> s := Semigroup(t);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsZeroSemigroup(s);
 true
 
 # For a non-trivial zero semigroup of transformations & an ideal
 gap> t := Transformation( [ 1, 1, 2 ] );;
 gap> s := Semigroup(t);
-<commutative transformation semigroup on 3 pts with 1 generator>
+<commutative transformation semigroup of degree 3 with 1 generator>
 gap> I := SemigroupIdeal(s, t ^ 2);
-<commutative regular transformation semigroup ideal on 3 pts with 1 generator>
+<commutative regular transformation semigroup ideal of degree 3 with
+  1 generator>
 gap> HasIsZeroSemigroup(s);
 false
 gap> IsZeroSemigroup(I); # parent does not know it is zero
@@ -832,11 +833,12 @@ true
 # For a non-trivial transformation group (semigroup without a zero)
 gap> t := Transformation( [ 2, 1 ] );;
 gap> s := Semigroup(t);
-<commutative transformation semigroup on 2 pts with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> IsZeroSemigroup(s);
 false
 gap> I := SemigroupIdeal(s, Transformation([ 1, 2 ]));
-<commutative regular transformation semigroup ideal on 2 pts with 1 generator>
+<commutative regular transformation semigroup ideal of degree 2 with
+  1 generator>
 gap> IsZeroSemigroup(I); # parent knows that it is not zero
 false
 
@@ -844,7 +846,7 @@ false
 gap> s := Semigroup([
 > Transformation( [ 1, 3, 2, 3 ] ),
 > Transformation( [ 1, 1, 1, 1 ] ) ]); # s is a 0-simple semigroup
-<transformation semigroup on 4 pts with 2 generators>
+<transformation semigroup of degree 4 with 2 generators>
 gap> IsZeroSemigroup(s);
 false
 gap> IsZeroSimpleSemigroup(s);
@@ -854,7 +856,7 @@ true
 gap> s := InverseSemigroup([
 > PartialPerm( [ 1, 2 ], [ 3, 1 ] ),
 > PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ) ]);
-<inverse partial perm semigroup on 4 pts with 2 generators>
+<inverse partial perm semigroup of rank 4 with 2 generators>
 gap> MultiplicativeZero(s);
 <empty partial perm>
 gap> IsZeroSemigroup(s);

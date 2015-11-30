@@ -6,8 +6,7 @@
   
 ## Getting Semigroups
 
-To get the latest version of the package download the archive file
-`semigroups-x.x.tar.gz` from the [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups.php) webpage, and inside the `pkg` subdirectory of your GAP installation unpack `semigroups-x.x.tar.gz`, by, for example, doing:
+To get the latest version of the package download the archive file `semigroups-x.x.tar.gz` from the [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups.php) webpage, and inside the `pkg` subdirectory of your GAP installation unpack `semigroups-x.x.tar.gz`, by, for example, doing:
 
     gunzip semigroups-x.x.tar.gz; tar xvf semigroups-x.x.tar
    
@@ -20,7 +19,7 @@ For questions, remarks, suggestions, and issues please use the
 
 ## Installation
 
-It is assumed that you have a working copy of GAP with version number 4.7.6 or higher.  The  most  up-to-date  version  of  GAP  and instructions on how to install it can be obtained from the main [GAP](http://www.gap-system.org) page.
+It is assumed that you have a working copy of GAP with version number 4.8.0 or higher.  The  most  up-to-date  version  of  GAP  and instructions on how to install it can be obtained from the main [GAP](http://www.gap-system.org) page.
 
 The  following  is  a  summary of the steps that should lead to a successful installation of [Semigroups](http://www-groups.mcs.st-and.ac.uk/~jamesm/semigroups.php):
 

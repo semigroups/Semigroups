@@ -296,56 +296,56 @@ ViewString);
 
 #
 
-InstallMethod(ViewString, "for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal],
-function(I)
-  local str, nrgens;
-
-  str := "<";
-
-  if HasIsTrivial(I) and IsTrivial(I) then
-    Append(str, "trivial ");
-  else
-    if HasIsCommutative(I) and IsCommutative(I) then
-      Append(str, "commutative ");
-    fi;
-  fi;
-
-  if HasIsTrivial(I) and IsTrivial(I) then
-  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
-    Append(str, "0-simple ");
-  elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
-    Append(str, "simple ");
-  fi;
-
-  if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
-    Append(str, "inverse ");
-  elif HasIsRegularSemigroup(I)
-      and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
-    if IsRegularSemigroup(I) then
-      Append(str, "\>regular\< ");
-    else
-      Append(str, "\>non-regular\< ");
-    fi;
-  fi;
-
-  Append(str, "partial perm semigroup ideal ");
-  Append(str, "\<\>on ");
-  Append(str, String(RankOfPartialPermSemigroup(I)));
-  Append(str, " pts\<\> with ");
-
-  nrgens := Length(GeneratorsOfSemigroupIdeal(I));
-  Append(str, String(nrgens));
-  Append(str, " generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s");
-  fi;
-  Append(str, ">");
-
-  return str;
-end);
+#InstallMethod(ViewString, "for a partial perm semigroup ideal with generators",
+#[IsPartialPermSemigroup and IsSemigroupIdeal and
+# HasGeneratorsOfSemigroupIdeal],
+#function(I)
+#  local str, nrgens;
+#
+#  str := "<";
+#
+#  if HasIsTrivial(I) and IsTrivial(I) then
+#    Append(str, "trivial ");
+#  else
+#    if HasIsCommutative(I) and IsCommutative(I) then
+#      Append(str, "commutative ");
+#    fi;
+#  fi;
+#
+#  if HasIsTrivial(I) and IsTrivial(I) then
+#  elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
+#    Append(str, "0-simple ");
+#  elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
+#    Append(str, "simple ");
+#  fi;
+#
+#  if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
+#    Append(str, "inverse ");
+#  elif HasIsRegularSemigroup(I)
+#      and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+#    if IsRegularSemigroup(I) then
+#      Append(str, "\>regular\< ");
+#    else
+#      Append(str, "\>non-regular\< ");
+#    fi;
+#  fi;
+#
+#  Append(str, "partial perm semigroup ideal ");
+#  Append(str, "\<\>on ");
+#  Append(str, String(RankOfPartialPermSemigroup(I)));
+#  Append(str, " pts\<\> with ");
+#
+#  nrgens := Length(GeneratorsOfSemigroupIdeal(I));
+#  Append(str, String(nrgens));
+#  Append(str, " generator");
+#
+#  if nrgens > 1 or nrgens = 0 then
+#    Append(str, "s");
+#  fi;
+#  Append(str, ">");
+#
+#  return str;
+#end);
 
 #
 
@@ -499,9 +499,11 @@ end);
 InstallMethod(CyclesOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, comp, next, nr, cycles, opts, gens, o, scc, i;
+  local deg, pts, comp, next, nr, cycles, opts, gens, o, scc, i;
 
-  pts := [1 .. DegreeOfPartialPermSemigroup(S)];
+  deg := Maximum(DegreeOfPartialPermSemigroup(S),
+                 CodegreeOfPartialPermSemigroup(S));
+  pts := [1 .. deg];
   comp := BlistList(pts, []);
   # integer=its component index, false=not seen it
   next := 1;
@@ -648,7 +650,9 @@ function(S)
   codeg := Maximum(range);
 
   if min_rank = rank and domain = range then
-    SetIsGroupAsSemigroup(S, true);
+    if not IsGroup(S) then
+      SetIsGroupAsSemigroup(S, true);
+    fi;
     return gens[1];
   fi;
 

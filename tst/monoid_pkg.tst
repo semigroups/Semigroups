@@ -53,7 +53,7 @@ true
 gap> IsGroupAsSemigroup(s);
 false
 gap> i:=MinimalIdeal(s);
-<simple transformation semigroup ideal on 8 pts with 1 generator>
+<simple transformation semigroup ideal of degree 8 with 1 generator>
 gap> Size(i);
 1
 gap> MultiplicativeZero(s);
@@ -565,7 +565,7 @@ gap> r2:=First(dr, x-> x=r);;
 gap> DClassOfRClass(r2)=d;
 true
 gap> m:=Semigroup(GeneratorsOfSemigroup(m));
-<transformation semigroup on 7 pts with 3 generators>
+<transformation semigroup of degree 7 with 3 generators>
 gap> r:=GreensRClassOfElement(m, Transformation( [ 2, 1, 2, 2, 1, 2, 1 ] ));;
 gap> d:=DClassOfRClass(r);;
 gap> dr:=GreensRClasses(d);;
@@ -735,7 +735,7 @@ gap> r2:=First(dr, x-> x=r);;
 gap> DClassOfLClass(r2)=d;
 true
 gap> m:=Semigroup(GeneratorsOfSemigroup(m));
-<transformation semigroup on 7 pts with 2 generators>
+<transformation semigroup of degree 7 with 2 generators>
 gap>  r:=GreensLClassOfElement(m, Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] ));
 <Green's L-class: Transformation( [ 3, 3, 3, 3, 3, 3, 5 ] )>
 gap> d:=DClassOfLClass(r);;
@@ -961,7 +961,7 @@ Group([ (2,3) ])
 gap> Number(GreensDClasses(s), IsRegularDClass);
 3
 gap> s:=Semigroup(gens);
-<transformation semigroup on 7 pts with 2 generators>
+<transformation semigroup of degree 7 with 2 generators>
 gap> NrRegularDClasses(s);
 3
 
@@ -1376,13 +1376,13 @@ gap> List(SmallMonoids, IsOrthodoxSemigroup);
 [ false, true, false, false, false, false, true, true, true, false, false, 
   false, false, true, false ]
 gap> s:=SmallMonoids[1];
-<non-regular transformation monoid on 6 pts with 2 generators>
+<non-regular transformation monoid of degree 6 with 2 generators>
 gap> IsRegularSemigroup(s);
 false
 gap> IsOrthodoxSemigroup(s);
 false
 gap> t:=Semigroup(Idempotents(s));
-<transformation monoid on 6 pts with 3 generators>
+<transformation monoid of degree 6 with 3 generators>
 gap> Size(t);
 4
 gap> s:=SmallMonoids[7];;

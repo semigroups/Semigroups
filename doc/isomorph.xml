@@ -97,7 +97,7 @@ gap> IsomorphismSemigroups(S, T);
 fail
 gap> I:=SemigroupIdeal(FullTransformationMonoid(5), 
 > Transformation([1,1,2,3,4]));
-<regular transformation semigroup ideal on 5 pts with 1 generator>
+<regular transformation semigroup ideal of degree 5 with 1 generator>
 gap> T:=PrincipalFactor(DClass(I, I.1));
 <Rees 0-matrix semigroup 10x5 over Group([ (2,3,4,5), (2,5) ])>
 gap> IsomorphismSemigroups(S, T);

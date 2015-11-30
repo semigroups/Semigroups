@@ -35,14 +35,20 @@ DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
 DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
 
-InstallTrueMethod(IsActingSemigroupWithInverseOp,
-                  IsInverseSemigroup and IsRegularStarSemigroup and
-                  IsActingSemigroup);
+# The following method is invalid. For example, if we have a semigroup of
+# bipartitions, which does not consist of partial perm bipartitions or block
+# bijections, but which is a group, say, then InverseOp(any element) = fail,
+# but it satisfies IsInverseSemigroup, IsRegularStarSemigroup, and
+# IsActingSemigroup.
+#InstalltrueMethod(IsActingSemigroupWithInverseOp,
+#                  IsInverseSemigroup and IsRegularStarSemigroup and
+#                  IsActingSemigroup);
+
 InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
 InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
 InstallTrueMethod(IsBlockGroup, IsPartialPermSemigroup);
-InstallTrueMethod(IsDTrivial, IsSemilatticeAsSemigroup);
+InstallTrueMethod(IsDTrivial, IsSemilattice);
 InstallTrueMethod(IsHTrivial, IsLTrivial);
 InstallTrueMethod(IsHTrivial, IsRTrivial);
 InstallTrueMethod(IsInverseMonoid, IsInverseSemigroup and IsMonoid);
@@ -57,7 +63,7 @@ InstallTrueMethod(IsRectangularBand,
 InstallTrueMethod(IsRightSimple, IsInverseSemigroup and IsGroupAsSemigroup);
 InstallTrueMethod(IsRTrivial, IsInverseSemigroup and IsLTrivial);
 InstallTrueMethod(IsRTrivial, IsDTrivial);
-InstallTrueMethod(IsSemilatticeAsSemigroup, IsDTrivial and IsInverseSemigroup);
+InstallTrueMethod(IsSemilattice, IsDTrivial and IsInverseSemigroup);
 InstallTrueMethod(IsMonogenicInverseSemigroup,
                   IsInverseSemigroup and IsMonogenicSemigroup);
 InstallTrueMethod(IsZeroRectangularBand, IsZeroGroup);

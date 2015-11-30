@@ -8,25 +8,6 @@
 #############################################################################
 ##
 
-InstallMethod(ViewString, "for a Rees matrix semigroup element",
-[IsReesMatrixSemigroupElement],
-function(x)
-  return Concatenation("(", ViewString(x![1]), ",", ViewString(x![2]), ",",
-                       ViewString(x![3]), ")");
-end);
-
-#
-
-InstallMethod(ViewString, "for a Rees 0-matrix semigroup element",
-[IsReesZeroMatrixSemigroupElement],
-function(x)
-  if x![1] = 0 then
-    return "0";
-  fi;
-  return Concatenation("(", ViewString(x![1]), ",", ViewString(x![2]), ",",
-                       ViewString(x![3]), ")");
-end);
-
 # TODO a proper method here
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,
@@ -198,7 +179,8 @@ function(R)
       return false;
     fi;
 
-    if HasIsMonoidAsSemigroup(U) and (not IsMonoidAsSemigroup(U)) then
+    if HasIsMonoidAsSemigroup(U) and not IsMonoidAsSemigroup(U)
+        and not IsMonoid(U) then
       return false;
     fi;
 
@@ -303,7 +285,7 @@ function(R)
   if IsGroup(U) then
     iso := IdentityMapping(U);
     inv := iso;
-  elif IsGroupAsSemigroup(U) <> fail and IsGroupAsSemigroup(U) then
+  elif IsGroupAsSemigroup(U) then
     iso := IsomorphismPermGroup(U);
     inv := InverseGeneralMapping(iso);
   else
@@ -350,8 +332,7 @@ function(R)
   fi;
 
   U := UnderlyingSemigroup(R);
-  if not IsGroup(U)
-      and (IsGroupAsSemigroup(U) = fail or not IsGroupAsSemigroup(U)) then
+  if not IsGroup(U) and not IsGroupAsSemigroup(U) then
     TryNextMethod();
   fi;
 

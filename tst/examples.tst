@@ -79,7 +79,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -153,7 +153,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -227,7 +227,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -307,7 +307,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -380,7 +380,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -454,7 +454,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -528,7 +528,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -602,7 +602,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -674,7 +674,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -748,7 +748,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -820,7 +820,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -893,7 +893,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -966,7 +966,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1038,7 +1038,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1110,7 +1110,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -1182,7 +1182,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1254,7 +1254,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1326,7 +1326,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -1398,7 +1398,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1470,7 +1470,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -1542,7 +1542,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1614,7 +1614,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1686,7 +1686,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1759,7 +1759,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -1829,7 +1829,9 @@ true
 gap> IsLeftZeroSemigroup(s);
 false
 gap> IsMonoidAsSemigroup(s);
-false
+true
+gap> IsMonoid(s);
+true
 gap> IsOrthodoxSemigroup(s);
 true
 gap> IsRectangularBand(s);
@@ -1840,7 +1842,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 true
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 true
 gap> IsSimpleSemigroup(s);
 false
@@ -1928,7 +1930,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -2002,7 +2004,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 true
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -2079,7 +2081,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -2153,7 +2155,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 true
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 true
@@ -2231,7 +2233,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -2305,7 +2307,7 @@ gap> IsRightZeroSemigroup(s);
 false
 gap> IsSemiband(s);
 false
-gap> IsSemilatticeAsSemigroup(s);
+gap> IsSemilattice(s);
 false
 gap> IsSimpleSemigroup(s);
 false
@@ -2338,7 +2340,7 @@ this function takes at most two arguments,
 
 # IsTransformationSemigroup
 gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 1));
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsZeroSemigroup(s);
 true
 gap> Size(s);
@@ -2346,7 +2348,7 @@ gap> Size(s);
 gap> Elements(s);
 [ IdentityTransformation ]
 gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 2));
-<commutative transformation semigroup on 3 pts with 1 generator>
+<commutative transformation semigroup of degree 3 with 1 generator>
 gap> IsZeroSemigroup(s);
 true
 gap> Size(s);
@@ -2354,7 +2356,7 @@ gap> Size(s);
 gap> Elements(s);
 [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 3, 1 ] ) ]
 gap> s := Semigroup(ZeroSemigroup(IsTransformationSemigroup, 10));
-<transformation semigroup on 19 pts with 9 generators>
+<transformation semigroup of degree 19 with 9 generators>
 gap> IsZeroSemigroup(s);
 true
 gap> Size(s);
@@ -2402,13 +2404,13 @@ gap> Size(s);
 
 # IsBipartitionSemigroup and IsBlockBijectionSemigroup
 gap> s := ZeroSemigroup(IsBipartitionSemigroup, 1);
-<trivial bipartition monoid on 1 pts with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> s := ZeroSemigroup(IsBlockBijectionSemigroup, 1);
-<trivial bipartition monoid on 1 pts with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> last = last2;
 true
 gap> s := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 2));
-<commutative bipartition semigroup on 2 pts with 1 generator>
+<commutative bipartition semigroup of degree 2 with 1 generator>
 gap> IsBlockBijectionSemigroup(s);
 false
 gap> IsZeroSemigroup(s);
@@ -2416,7 +2418,7 @@ true
 gap> Size(s);
 2
 gap> s := Semigroup(ZeroSemigroupCons(IsBlockBijectionSemigroup, 2));
-<commutative bipartition semigroup on 3 pts with 1 generator>
+<commutative bipartition semigroup of degree 3 with 1 generator>
 gap> IsBlockBijectionSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2424,7 +2426,7 @@ true
 gap> Size(s);
 2
 gap> s := Semigroup(ZeroSemigroupCons(IsBipartitionSemigroup, 20));
-<bipartition semigroup on 38 pts with 19 generators>
+<bipartition semigroup of degree 38 with 19 generators>
 gap> IsBlockBijectionSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2432,7 +2434,7 @@ true
 gap> Size(s);
 20
 gap> s := Semigroup(ZeroSemigroupCons(IsBlockBijectionSemigroup, 20));
-<bipartition semigroup on 38 pts with 19 generators>
+<bipartition semigroup of degree 38 with 19 generators>
 gap> IsBlockBijectionSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2442,7 +2444,7 @@ gap> Size(s);
 
 # Zero semigroup of order 1
 gap> s := ZeroSemigroup(1);
-<trivial partial perm group on 0 pts with 0 generators>
+<trivial partial perm group of rank 0 with 1 generator>
 gap> GeneratorsOfSemigroup(s);
 [ <empty partial perm> ]
 gap> HasAsList(s);
@@ -2465,10 +2467,13 @@ gap> HasIsGroupAsSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
 true
+gap> IsGroup(s);
+true
 
 # Zero semigroup of order 2
 gap> s := ZeroSemigroup(2);
-<commutative partial perm semigroup of size 2, on 1 pts with 1 generator>
+<commutative non-regular partial perm semigroup of size 2, rank 1 with 1 
+ generator>
 gap> HasIsZeroSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2544,7 +2549,7 @@ false
 
 # Zero semigroup of order 50
 gap> s := ZeroSemigroup(50);
-<partial perm semigroup of size 50, on 49 pts with 49 generators>
+<non-regular partial perm semigroup of size 50, rank 49 with 49 generators>
 gap> HasIsZeroSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2628,7 +2633,7 @@ gap> s := MonogenicSemigroup(IsPermGroup, 1, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `MonogenicSemigroupCons' on 3 arguments
 gap> s := MonogenicSemigroup(IsTransformationSemigroup, 1, 1);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> s := MonogenicSemigroup(1, 1, 1, 1);
 Error, Semigroups: MonogenicSemigroup: usage,
 this function takes either two or three arguments,
@@ -2638,7 +2643,7 @@ this function takes either two or three arguments,
 
 # Trivial monogenic semigroup
 gap> s := MonogenicSemigroup(1, 1);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2654,6 +2659,8 @@ gap> Size(s);
 gap> IsMonogenicSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
+true
+gap> IsGroup(s);
 true
 gap> IsRegularSemigroup(s);
 true
@@ -2680,6 +2687,8 @@ gap> IsMonogenicSemigroup(s);
 true
 gap> IsGroupAsSemigroup(s);
 true
+gap> IsGroup(s);
+true
 gap> IsRegularSemigroup(s);
 true
 gap> IsZeroSemigroup(s);
@@ -2691,8 +2700,8 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(2, 1)
 gap> s := MonogenicSemigroup(2, 1);
-<commutative non-regular transformation semigroup of size 2, 
- on 3 pts with 1 generator>
+<commutative non-regular transformation semigroup of size 2, degree 3 with 1 
+ generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2745,8 +2754,8 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(3, 1)
 gap> s := MonogenicSemigroup(3, 1);
-<commutative non-regular transformation semigroup of size 3, 
- on 4 pts with 1 generator>
+<commutative non-regular transformation semigroup of size 3, degree 4 with 1 
+ generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2799,7 +2808,7 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(1, 2)
 gap> s := MonogenicSemigroup(1, 2);
-<transformation group of size 2, on 2 pts with 1 generator>
+<transformation group of size 2, degree 2 with 1 generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2825,7 +2834,7 @@ gap> GeneratorsOfSemigroup(s);
 
 # Not created by MonogenicSemigroup
 gap> s := Semigroup(s);
-<commutative transformation semigroup on 2 pts with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> HasSize(s);
 false
 gap> HasIsMonogenicSemigroup(s);
@@ -2853,8 +2862,8 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # MonogenicSemigroup(5, 10)
 gap> s := MonogenicSemigroup(5, 10);
-<commutative non-regular transformation semigroup of size 14, 
- on 15 pts with 1 generator>
+<commutative non-regular transformation semigroup of size 14, degree 15 with 
+ 1 generator>
 gap> HasSize(s);
 true
 gap> HasIsMonogenicSemigroup(s);
@@ -2880,7 +2889,7 @@ gap> GeneratorsOfSemigroup(s);
 
 # Not created by MonogenicSemigroup
 gap> s := Semigroup(s);
-<commutative transformation semigroup on 15 pts with 1 generator>
+<commutative transformation semigroup of degree 15 with 1 generator>
 gap> HasSize(s);
 false
 gap> HasIsMonogenicSemigroup(s);
@@ -2910,42 +2919,44 @@ gap> IndexPeriodOfTransformation(last[1]);
 
 # partial perm
 gap> s := MonogenicSemigroup(IsPartialPermSemigroup, 1, 1);
-<trivial partial perm group on 0 pts with 0 generators>
+<trivial partial perm group of rank 0 with 1 generator>
 gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 > AsTransformationSemigroup(s))[1]);
 [ 1, 1 ]
 gap> s := MonogenicSemigroup(IsPartialPermSemigroup, 2, 1);
-<commutative partial perm semigroup of size 2, on 1 pts with 1 generator>
+<commutative non-regular partial perm semigroup of size 2, rank 1 with 1 
+ generator>
 gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 > AsTransformationSemigroup(s))[1]);
 [ 2, 1 ]
 gap> s := MonogenicSemigroup(IsPartialPermSemigroup, 2, 2);
-<commutative partial perm semigroup of size 3, on 3 pts with 1 generator>
+<commutative non-regular partial perm semigroup of size 3, rank 3 with 1 
+ generator>
 gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 > AsTransformationSemigroup(s))[1]);
 [ 2, 2 ]
 
 # bipartition and block bijection
 gap> s := MonogenicSemigroup(IsBipartitionSemigroup, 1, 1);
-<trivial bipartition monoid on 1 pts with 0 generators>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 > AsTransformationSemigroup(s))[1]);
 [ 1, 1 ]
 gap> s := MonogenicSemigroup(IsBlockBijectionSemigroup, 2, 1);
-<commutative non-regular bipartition semigroup of size 2, 
- on 3 pts with 1 generator>
+<commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
+ generator>
 gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 > AsTransformationSemigroup(s))[1]);
 [ 2, 1 ]
 gap> s := MonogenicSemigroup(IsBlockBijectionSemigroup, 2, 2);
-<commutative non-regular bipartition semigroup of size 3, 
- on 5 pts with 1 generator>
+<commutative non-regular bipartition semigroup of size 3, degree 5 with 1 
+ generator>
 gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 > AsTransformationSemigroup(s))[1]);
 [ 2, 2 ]
 gap> s := MonogenicSemigroup(IsBlockBijectionSemigroup, 5, 6);
-<commutative non-regular bipartition semigroup of size 10, 
- on 12 pts with 1 generator>
+<commutative non-regular bipartition semigroup of size 10, degree 12 with 1 
+ generator>
 gap> IndexPeriodOfTransformation(GeneratorsOfSemigroup(
 > AsTransformationSemigroup(s))[1]);
 [ 5, 6 ]
@@ -3009,7 +3020,7 @@ true
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<commutative transformation semigroup on 2 pts with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3081,7 +3092,7 @@ false
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<transformation semigroup on 11 pts with 10 generators>
+<transformation semigroup of degree 11 with 10 generators>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3153,7 +3164,7 @@ true
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<transformation semigroup on 9 pts with 8 generators>
+<transformation semigroup of degree 9 with 8 generators>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3225,7 +3236,7 @@ false
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<transformation semigroup on 85 pts with 84 generators>
+<transformation semigroup of degree 85 with 84 generators>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3263,31 +3274,31 @@ false
 
 # transformation semigroup
 gap> s := RectangularBand(IsTransformationSemigroup, 1, 1);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [1, 1];
 true
 gap> s := RectangularBand(IsTransformationSemigroup, 10, 10);
-<transformation semigroup of size 100, on 101 pts with 10 generators>
+<transformation semigroup of size 100, degree 101 with 10 generators>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [10, 10];
 true
 gap> s := RectangularBand(IsTransformationSemigroup, 1, 12);
-<transformation semigroup of size 12, on 12 pts with 12 generators>
+<transformation semigroup of size 12, degree 12 with 12 generators>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [1, 12];
 true
 gap> s := RectangularBand(IsTransformationSemigroup, 10, 20);
-<transformation semigroup of size 200, on 201 pts with 20 generators>
+<transformation semigroup of size 200, degree 201 with 20 generators>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [10, 20];
 true
 gap> s := RectangularBand(IsTransformationSemigroup, 20, 10);
-<transformation semigroup of size 200, on 201 pts with 20 generators>
+<transformation semigroup of size 200, degree 201 with 20 generators>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [20, 10];
@@ -3295,31 +3306,31 @@ true
 
 # bipartition
 gap> s := RectangularBand(IsBipartitionSemigroup, 1, 1);
-<trivial bipartition group on 1 pts with 1 generator>
+<trivial bipartition group of degree 1 with 1 generator>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [1, 1];
 true
 gap> s := RectangularBand(IsBipartitionSemigroup, 10, 10);
-<bipartition semigroup of size 100, on 4 pts with 10 generators>
+<bipartition semigroup of size 100, degree 4 with 10 generators>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [10, 10];
 true
 gap> s := RectangularBand(IsBipartitionSemigroup, 1, 12);
-<bipartition semigroup of size 12, on 4 pts with 12 generators>
+<bipartition semigroup of size 12, degree 4 with 12 generators>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [1, 12];
 true
 gap> s := RectangularBand(IsBipartitionSemigroup, 10, 20);
-<bipartition semigroup of size 200, on 5 pts with 20 generators>
+<bipartition semigroup of size 200, degree 5 with 20 generators>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [10, 20];
 true
 gap> s := RectangularBand(IsBipartitionSemigroup, 20, 10);
-<bipartition semigroup of size 200, on 5 pts with 20 generators>
+<bipartition semigroup of size 200, degree 5 with 20 generators>
 gap> IsHTrivial(s) and IsSimpleSemigroup(s);
 true
 gap> [NrRClasses(s), NrLClasses(s)] = [20, 10];
@@ -3336,7 +3347,7 @@ gap> s := LeftZeroSemigroup(IsPermGroup, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
 gap> s := LeftZeroSemigroup(IsTransformationSemigroup, 1);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> s := LeftZeroSemigroup(1, 1, 1);
 Error, Semigroups: LeftZeroSemigroup: usage,
 this function takes at most two arguments,
@@ -3352,7 +3363,7 @@ gap> s := RightZeroSemigroup(IsPermGroup, 1);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
 gap> s := RightZeroSemigroup(IsTransformationSemigroup, 1);
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> s := RightZeroSemigroup(1, 1, 1);
 Error, Semigroups: RightZeroSemigroup: usage,
 this function takes at most two arguments,

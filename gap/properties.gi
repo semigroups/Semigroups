@@ -89,7 +89,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsBand, "for an inverse semigroup", [IsInverseSemigroup],
-IsSemilatticeAsSemigroup);
+IsSemilattice);
 
 # same method for ideals
 
@@ -149,7 +149,7 @@ function(S)
   elif not IsCompletelyRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not completely regular");
     return false;
-  elif IsGroupAsSemigroup(S) then
+  elif IsGroup(S) or IsGroupAsSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is a group");
     return true;
   fi;
@@ -304,7 +304,7 @@ function(S)
   if G = fail then
     return false;
   elif IsTrivial(G) then
-    return IsSemilatticeAsSemigroup(S);
+    return IsSemilattice(S);
   fi;
 
   iso := InverseGeneralMapping(IsomorphismPermGroup(G));
@@ -585,7 +585,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
-[IsInverseSemigroup], IsSemilatticeAsSemigroup);
+[IsInverseSemigroup], IsSemilattice);
 
 # same method for ideals
 
@@ -662,7 +662,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup",
-[IsInverseSemigroup], IsGroupAsSemigroup);
+[IsInverseSemigroup],
+x -> IsGroup(x) or IsGroupAsSemigroup(x));
 
 # different method for ideals without generators
 
@@ -740,7 +741,7 @@ function(S)
 
   I := MinimalIdeal(S);
 
-  if not IsGroupAsSemigroup(I) then
+  if not (IsGroup(I) or IsGroupAsSemigroup(I)) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -798,7 +799,7 @@ function(S)
 
   I := MinimalIdeal(S);
 
-  if not IsGroupAsSemigroup(I) then
+  if not (IsGroup(I) or IsGroupAsSemigroup(I)) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -1147,7 +1148,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsRightSimple, "for an inverse semigroup",
-[IsInverseSemigroup], IsGroupAsSemigroup);
+[IsInverseSemigroup],
+x -> IsGroup(x) or IsGroupAsSemigroup(x));
 
 # different method for ideals
 
@@ -1195,10 +1197,10 @@ IsIdempotentGenerated);
 
 # same method for ideals
 
-InstallMethod(IsSemilatticeAsSemigroup, "for a semigroup", [IsSemigroup],
+InstallMethod(IsSemilattice, "for a semigroup", [IsSemigroup],
 function(S)
-  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S))
-      and IsSemilatticeAsSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsSemilattice(Parent(S))
+      and IsSemilattice(Parent(S)) then
     return true;
   fi;
   return IsCommutativeSemigroup(S) and IsBand(S);
@@ -1206,12 +1208,12 @@ end);
 
 # not applicable to ideals
 
-InstallMethod(IsSemilatticeAsSemigroup,
+InstallMethod(IsSemilattice,
 "for an inverse semigroup with generators",
 [IsInverseSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S))
-      and IsSemilatticeAsSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsSemilattice(Parent(S))
+      and IsSemilattice(Parent(S)) then
     return true;
   fi;
   return ForAll(GeneratorsOfSemigroup(S), IsIdempotent);
@@ -1219,11 +1221,11 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsSemilatticeAsSemigroup, "for an inverse semigroup",
+InstallMethod(IsSemilattice, "for an inverse semigroup",
 [IsInverseSemigroup],
 function(S)
-  if HasParent(S) and HasIsSemilatticeAsSemigroup(Parent(S))
-      and IsSemilatticeAsSemigroup(Parent(S)) then
+  if HasParent(S) and HasIsSemilattice(Parent(S))
+      and IsSemilattice(Parent(S)) then
     return true;
   else
     return ForAll(GreensDClasses(S), IsTrivial);

@@ -20,7 +20,7 @@ gap> t := Transformation( [ 1 ] );;
 # Trivial full transformation monoid T_1
 # Previously this crashed: see issue #121 on Bitbucket
 gap> s := Semigroup(t); # with displaying the semigroup
-<trivial transformation group>
+<trivial transformation group of degree 0 with 1 generator>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -39,7 +39,7 @@ true
 # Trivial transformation monoid with different rep.
 gap> t := Transformation( [ 2, 2, 3, 3 ] );;
 gap> s := Semigroup(t); # with displaying the semigroup
-<commutative transformation semigroup on 4 pts with 1 generator>
+<commutative transformation semigroup of degree 4 with 1 generator>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -63,7 +63,7 @@ false
 
 # Other transformation semigroups
 gap> s := FullTransformationMonoid(10);
-<full transformation semigroup on 10 pts>
+<full transformation monoid of degree 10>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -74,10 +74,10 @@ gap> s := Semigroup([
 > Transformation( [ 2, 3, 4, 1 ] ),
 > Transformation( [ 2, 1, 3, 4 ] ),
 > Transformation( [ 3, 1, 1, 3 ] ) ]);
-<transformation semigroup on 4 pts with 3 generators>
+<transformation semigroup of degree 4 with 3 generators>
 gap> t := Transformation( [ 1, 1, 1, 1 ] );;
 gap> I := SemigroupIdeal(s, t);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I); # does not know whether parent has a zero
@@ -91,7 +91,7 @@ fail
 gap> Size(MinimalIdeal(s)) = 1;
 false
 gap> I := SemigroupIdeal(s, t);
-<regular transformation semigroup ideal on 4 pts with 1 generator>
+<regular transformation semigroup ideal of degree 4 with 1 generator>
 gap> MultiplicativeZero(I); # does know whether parent has a zero
 fail
 gap> Size(MinimalIdeal(I)) = 1;
@@ -108,7 +108,7 @@ true
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := SymmetricInverseMonoid(1);
-<symmetric inverse semigroup on 1 pts>
+<symmetric inverse monoid of degree 1>
 gap> MultiplicativeZero(s) = t;
 true
 gap> Size(MinimalIdeal(s)) = 1;
@@ -124,7 +124,7 @@ true
 
 # For a non-trivial partial perm semigroup
 gap> s := Semigroup([ PartialPerm( [ 2 ], [ 1 ] ) ]); # contains <empty pperm>
-<commutative partial perm semigroup on 1 pts with 1 generator>
+<commutative partial perm semigroup of rank 1 with 1 generator>
 gap> MultiplicativeZero(s);
 <empty partial perm>
 gap> Size(MinimalIdeal(s)) = 1;
@@ -132,7 +132,7 @@ true
 gap> s := Semigroup([
 > PartialPerm( [ 1, 2, 3 ], [ 1, 4, 2 ] ),
 > PartialPerm( [ 1, 4 ], [ 1, 3 ] ) ]); # does not contain <empty pperm>
-<partial perm semigroup on 4 pts with 2 generators>
+<partial perm semigroup of rank 4 with 2 generators>
 gap> MultiplicativeZero(s);
 <identity partial perm on [ 1 ]>
 gap> Size(MinimalIdeal(s)) = 1;
@@ -140,7 +140,7 @@ true
 gap> s := InverseSemigroup([
 > PartialPerm( [ 1, 2, 3 ], [ 3, 4, 1 ] ),
 > PartialPerm( [ 1, 2, 3, 4, 5 ], [ 3, 5, 1, 2, 4 ] ) ]);
-<inverse partial perm semigroup on 5 pts with 2 generators>
+<inverse partial perm semigroup of rank 5 with 2 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -151,10 +151,10 @@ gap> s := Semigroup([
 > PartialPerm( [ 1, 2, 3, 4 ], [ 2, 3, 4, 1 ] ),
 > PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 3, 4 ] ),
 > PartialPerm( [ 1, 3 ], [ 2, 3 ] ) ]); 
-<partial perm semigroup on 4 pts with 3 generators>
+<partial perm semigroup of rank 4 with 3 generators>
 gap> t := PartialPerm( [  ], [  ] );;
 gap> I := SemigroupIdeal(s, t);
-<inverse partial perm semigroup ideal on 4 pts with 1 generator>
+<inverse partial perm semigroup ideal of rank 4 with 1 generator>
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I) = t; # does not know whether parent has a zero
@@ -168,7 +168,7 @@ true
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> I := SemigroupIdeal(s, t);
-<inverse partial perm semigroup ideal on 4 pts with 1 generator>
+<inverse partial perm semigroup ideal of rank 4 with 1 generator>
 gap> MultiplicativeZero(I) = t; # does know whether parent has a zero
 true
 gap> Size(MinimalIdeal(I)) = 1;
@@ -177,19 +177,19 @@ true
 #T# AttributesTest3:
 # MultiplicativeZero for a bipartition semigroup/ideal
 gap> s := PartitionMonoid(1);
-<commutative bipartition monoid on 1 pts with 1 generator>
+<commutative bipartition monoid of degree 1 with 1 generator>
 gap> MultiplicativeZero(s);
 <bipartition: [ 1 ], [ -1 ]>
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := PartitionMonoid(2);
-<regular bipartition monoid on 2 pts with 3 generators>
+<regular bipartition monoid of degree 2 with 3 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
 false
 gap> s := PartitionMonoid(3);
-<regular bipartition monoid on 3 pts with 4 generators>
+<regular bipartition monoid of degree 3 with 4 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -197,7 +197,7 @@ false
 gap> s := Semigroup([
 > Bipartition( [ [ 1, 2, 3, 4, 5, -2 ], [ -1 ], [ -3 ], [ -4 ], [ -5 ] ] ),
 > Bipartition( [ [ 1, 3, 5, -1 ], [ 2, 4, -2 ], [ -3 ], [ -4 ], [ -5 ] ] ) ]);
-<bipartition semigroup on 5 pts with 2 generators>
+<bipartition semigroup of degree 5 with 2 generators>
 gap> MultiplicativeZero(s);
 <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1 ], [ -3 ], [ -4 ], [ -5 ]>
 gap> Size(MinimalIdeal(s)) = 1;
@@ -207,7 +207,7 @@ true
 gap> s := PartitionMonoid(3);;
 gap> t := Bipartition( [ [ 1, -2 ], [ 2 ], [ 3, -3 ], [ -1 ] ] );;
 gap> I := SemigroupIdeal(s, t);
-<regular bipartition semigroup ideal on 3 pts with 1 generator>
+<regular bipartition semigroup ideal of degree 3 with 1 generator>
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I);
@@ -228,7 +228,7 @@ false
 gap> t := Bipartition( [ [ 1 ], [ -1 ] ] );;
 gap> s := Semigroup([ t, Bipartition( [ [ 1, -1 ] ] ) ]);;
 gap> I := SemigroupIdeal(s, t);
-<commutative regular bipartition semigroup ideal on 1 pts with 1 generator>
+<commutative regular bipartition semigroup ideal of degree 1 with 1 generator>
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I);
@@ -250,13 +250,13 @@ true
 #T# AttributesTest4:
 # MultiplicativeZero for a block bijection inverse semigroup/ideal
 gap> s := AsBlockBijectionSemigroup(SymmetricInverseMonoid(1));
-<commutative inverse bipartition monoid on 2 pts with 1 generator>
+<commutative inverse bipartition monoid of degree 2 with 1 generator>
 gap> MultiplicativeZero(s);
 <block bijection: [ 1, 2, -1, -2 ]>
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := AsBlockBijectionSemigroup(SymmetricInverseMonoid(4));
-<inverse bipartition monoid on 5 pts with 3 generators>
+<inverse bipartition monoid of degree 5 with 3 generators>
 gap> MultiplicativeZero(s);
 <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>
 gap> Size(MinimalIdeal(s)) = 1;
@@ -265,7 +265,7 @@ gap> s := InverseSemigroup([
 > Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, 5, 6, -2, -5, -6 ] ] ),
 > Bipartition( [ [ 1, -3 ], [ 2, -5 ], [ 3, -1 ], [ 4, -2 ], [ 5, -4 ],
 > [ 6, -6 ] ] ) ]);
-<inverse bipartition semigroup on 6 pts with 2 generators>
+<inverse bipartition semigroup of degree 6 with 2 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -277,11 +277,11 @@ gap> s := InverseSemigroup([
 >  [ 5, -3 ] ] ),
 > Bipartition( [ [ 1, -5 ], [ 2, -4 ], [ 3, -3 ], [ 4, -2 ], [ 5, -1 ],
 >  [ 6, -6 ] ] ) ]);
-<inverse bipartition semigroup on 6 pts with 2 generators>
+<inverse bipartition semigroup of degree 6 with 2 generators>
 gap> t := Bipartition(
 > [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, 6, -4, -6 ], [ 5, -5 ] ] );;
 gap> I := SemigroupIdeal(s, t);
-<inverse bipartition semigroup ideal on 6 pts with 1 generator>
+<inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I);
@@ -303,7 +303,7 @@ false
 #T# AttributesTest5:
 # MultiplicativeZero where MinimalDClass is known
 gap> s := FullTransformationMonoid(10);
-<full transformation semigroup on 10 pts>
+<full transformation monoid of degree 10>
 gap> MinimalDClass(s);;
 gap> HasSize(last);
 false
@@ -323,7 +323,7 @@ gap> gens := [
 > Transformation( [ 3, 11, 14, 4, 11, 13, 13, 5, 3, 11, 14, 14, 10, 15, 12 ] ),
 > Transformation( [ 5, 13, 11, 4, 9, 13, 8, 1, 2, 12, 6, 12, 11, 8, 1 ] ) ];;
 gap> s := Semigroup(gens);
-<transformation semigroup on 15 pts with 3 generators>
+<transformation semigroup of degree 15 with 3 generators>
 gap> HasMinimalDClass(s);
 false
 gap> MultiplicativeZero(s);
@@ -355,18 +355,18 @@ gap> S := SymmetricInverseMonoid(5);;
 gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
 fail
 gap> S := MonogenicSemigroup(4, 1);
-<commutative non-regular transformation semigroup of size 4, 
- on 5 pts with 1 generator>
+<commutative non-regular transformation semigroup of size 4, degree 5 with 1 
+ generator>
 gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
 fail
 gap> S := Semigroup(Elements(S));
-<transformation semigroup on 5 pts with 4 generators>
+<transformation semigroup of degree 5 with 4 generators>
 gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
 fail
 gap> S := Semigroup([PartialPerm([]), PartialPerm([1])]);
-<commutative partial perm monoid on 1 pts with 1 generator>
+<partial perm monoid of rank 1 with 2 generators>
 gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
-<trivial partial perm group on 1 pts with 0 generators>
+<trivial partial perm group of rank 1 with 1 generator>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);

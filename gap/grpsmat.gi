@@ -81,9 +81,12 @@ function(G)
     H := Group(AsMatrix(One(G)));
     return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
   fi;
-  return GroupHomomorphismByFunction(G, Group(List(gens, AsMatrix)),
-    AsMatrix,
-    g -> AsMatrixOverFiniteField(Representative(G), g));
+  return GroupHomomorphismByFunction(G,
+                                     Group(List(gens, AsMatrix)),
+                                     AsMatrix,
+                                     g ->
+                                     AsMatrixOverFiniteField(Representative(G),
+                                                             g));
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup, "for a matrix group",
@@ -103,7 +106,7 @@ function(G, R)
     return;
   fi;
   iso := g -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, R,
-                         DimensionOfMatrixGroup(G), g);
+                                       DimensionOfMatrixGroup(G), g);
   return GroupHomomorphismByFunction(G,
                                      Group(List(gens, iso)),
                                      iso,

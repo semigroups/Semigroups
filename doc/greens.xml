@@ -152,7 +152,7 @@ gap> S := InverseSemigroup(
 > PartialPerm([ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ]), 
 > PartialPerm([ 1, 2, 3, 4, 6, 7, 8, 10 ],
 > [ 3, 8, 1, 9, 4, 10, 5, 6 ]));
-<inverse partial perm semigroup on 10 pts with 2 generators>
+<inverse partial perm semigroup of rank 10 with 2 generators>
 gap> x := S.1;
 [3,7][8,1,2,6,9][10,5]
 gap> H := HClass(S, x);
@@ -678,20 +678,20 @@ gap> gens := [ Transformation( [ 3, 2, 1, 5, 4 ] ),
 > Transformation( [ 4, 5, 4, 3, 3 ] ) ];;
 gap> S := Semigroup(gens);;
 gap> iter := IteratorOfRClassReps(S);
-<iterator of R-class reps>
+<iterator>
 gap> NextIterator(iter);
 Transformation( [ 3, 2, 1, 5, 4 ] )
 gap> NextIterator(iter);
 Transformation( [ 5, 5, 4, 5, 1 ] )
 gap> iter;
-<iterator of R-class reps>
+<iterator>
 gap> file := Concatenation(SemigroupsDir(), "/tst/test.gz");;
 gap> S := InverseSemigroup(ReadGenerators(file, 1377));
-<inverse partial perm semigroup on 983 pts with 2 generators>
+<inverse partial perm semigroup of rank 983 with 2 generators>
 gap> NrMovedPoints(S);
 983
 gap> iter := IteratorOfLClassReps(S);
-<iterator of L-class reps>
+<iterator>
 gap> NextIterator(iter);
 <partial perm on 634 pts with degree 1000, codegree 1000>]]></Example>
   </Description>
@@ -741,7 +741,7 @@ gap> gens := [ Transformation( [ 2, 4, 1, 5, 4, 4, 7, 3, 8, 1 ] ),
 >   Transformation( [ 10, 7, 3, 7, 1, 9, 8, 8, 4, 10 ] ) ];;
 gap> S := Semigroup(gens);;
 gap> iter := IteratorOfRClasses(S);
-<iterator of R-classes>
+<iterator>
 gap> for R in iter do
 > if Size(R)>1 then break; fi;
 > od;
@@ -771,7 +771,7 @@ gap> S := InverseSemigroup(
 >  PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 17, 18, 19, 20 ], 
 > [ 8, 3, 9, 20, 2, 12, 14, 15, 4, 18, 13, 1, 17, 19, 5 ] ) ]);;
 gap> iter := IteratorOfRClasses(S);
-<iterator of R-classes>
+<iterator>
 gap> repeat r := NextIterator(iter); until Size(r)>1000;
 gap> r;
 <Green's R-class: [8,3][11,5][13,1][15,2][17,6][19,7]>

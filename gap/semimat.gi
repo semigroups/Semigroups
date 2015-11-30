@@ -39,7 +39,7 @@ function(arg)
       and IsFFECollCollColl(arg[1]) then
     gens := arg[1];
   elif Length(arg) = 2 and IsField(arg[2]) and
-    IsFFECollCollColl(arg[1]) then
+      IsFFECollCollColl(arg[1]) then
     gens := arg[1];
     ring := arg[2];
   else
@@ -380,6 +380,8 @@ function(S, x, y)
     fi;
   fi;
 end);
+
+#TODO this method is probably redundant.
 
 InstallMethod(ViewString,
 "for an matrix over finite field semigroup with generators",

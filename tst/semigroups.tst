@@ -120,20 +120,20 @@ gap> gens:=[ PartialPermNC( [ 1, 2, 3, 4, 6, 7, 10 ], [ 5, 3, 4, 1, 9, 6, 8 ] ),
 > PartialPermNC( [ 1, 2, 5, 8, 9, 10 ], [ 7, 1, 3, 10, 5, 8 ] ),
 > PartialPermNC( [ 1, 2, 3, 4, 5, 6, 9 ], [ 1, 3, 5, 4, 9, 6, 7 ] ) ];;
 gap> s:=InverseSemigroup(gens);      
-<inverse partial perm semigroup on 10 pts with 100 generators>
+<inverse partial perm semigroup of rank 10 with 100 generators>
 gap> Size(s);
 89616897
 gap> s:=InverseSemigroup(gens[1]);
-<inverse partial perm semigroup on 10 pts with 1 generator>
+<inverse partial perm semigroup of rank 10 with 1 generator>
 gap> for i in [2..100] do 
 > s:=ClosureInverseSemigroup(s, gens[i]);
 > od;
 gap> s;
-<inverse partial perm semigroup on 10 pts with 54 generators>
+<inverse partial perm semigroup of rank 10 with 54 generators>
 gap> Size(s);
 89616897
 gap> s:=InverseMonoid(gens);
-<inverse partial perm monoid on 10 pts with 100 generators>
+<inverse partial perm monoid of rank 10 with 100 generators>
 gap> Size(s);
 89616898
 gap> IsSubsemigroup(s, InverseSemigroup(s, rec(small:=true)));
@@ -143,7 +143,7 @@ gap> for i in [2..100] do
 > s:=ClosureInverseSemigroup(s, gens[i]);
 > od;
 gap> s;
-<inverse partial perm monoid on 10 pts with 54 generators>
+<inverse partial perm monoid of rank 10 with 54 generators>
 gap> Size(s);
 89616898
 gap> NrDClasses(s);
@@ -175,12 +175,12 @@ gap> g:=DihedralGroup(8);;
 gap> g:=Range(IsomorphismPermGroup(g));;
 gap> iso:=IsomorphismPartialPermSemigroup(g);
 MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)
-(2,6)(3,7)(5,8) ]), <inverse partial perm semigroup on 8 pts
- with 3 generators>, function( p ) ... end, function( f ) ... end )
+(2,6)(3,7)(5,8) ]), <inverse partial perm semigroup of rank 8 with 3 
+ generators>, function( p ) ... end, function( f ) ... end )
 gap> inv:=InverseGeneralMapping(iso);
-MappingByFunction( <inverse partial perm semigroup on 8 pts
- with 3 generators>, Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)
-(2,6)(3,7)(5,8) ]), function( f ) ... end, function( p ) ... end )
+MappingByFunction( <inverse partial perm semigroup of rank 8 with 3 
+ generators>, Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)
+(3,7)(5,8) ]), function( f ) ... end, function( p ) ... end )
 gap> f:=(1,5)(2,3)(4,8)(6,7);;
 gap> f^iso;
 (1,5)(2,3)(4,8)(6,7)
@@ -193,15 +193,15 @@ gap> Size(Range(iso));
 
 #T# SemigroupsTest4: Symmetric (perm) group to a partial perm semigroup
 gap> s := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
-<inverse partial perm semigroup on 4 pts with 2 generators>
+<inverse partial perm semigroup of rank 4 with 2 generators>
 gap> iso := IsomorphismPermGroup(s);
-MappingByFunction( <partial perm group on 4 pts with 2 generators>
- , Group([ (1,2,3,4), (1,
+MappingByFunction( <partial perm group of rank 4 with 2 generators>
+, Group([ (1,2,3,4), (1,
 2) ]), <Attribute "AsPermutation">, function( x ) ... end )
 gap> inv := InverseGeneralMapping(iso);
 MappingByFunction( Group([ (1,2,3,4), (1,
-2) ]), <partial perm group on 4 pts with 2 generators>
- , function( x ) ... end, <Attribute "AsPermutation"> )
+2) ]), <partial perm group of rank 4 with 2 generators>
+, function( x ) ... end, <Attribute "AsPermutation"> )
 gap> f := PartialPerm( [ 1, 2, 3, 4 ], [ 2, 1, 3, 4 ] );
 (1,2)(3)(4)
 gap> f in s;

@@ -41,131 +41,131 @@ end);
 
 #
 
-InstallMethod(ViewString, "for a group of bipartitions",
-[IsBipartitionSemigroup and IsGroupAsSemigroup],
-function(s)
-  local str, nrgens;
-  if IsGroup(s) then
-    TryNextMethod();
-  fi;
-  str := "\><";
-  if HasIsTrivial(s) and IsTrivial(s) then
-    Append(str, "\>trivial\< ");
-  fi;
-
-  Append(str, "\>bipartition\< \>group\< ");
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
-      and Size(s) < 2 ^ 64 then
-    Append(str, "\>of size\> ");
-    Append(str, String(Size(s)));
-    Append(str, ",\<\< ");
-  fi;
-
-  nrgens := Length(Generators(s));
-
-  Append(str, "\>on \>");
-  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
-  Append(str, "\< pts with\> ");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
-
+#InstallMethod(ViewString, "for a group of bipartitions",
+#[IsBipartitionSemigroup and IsGroupAsSemigroup],
+#function(s)
+#  local str, nrgens;
+#  if IsGroup(s) then
+#    TryNextMethod();
+#  fi;
+#  str := "\><";
+#  if HasIsTrivial(s) and IsTrivial(s) then
+#    Append(str, "\>trivial\< ");
+#  fi;
 #
-
-BindGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations",
-function(s)
-  local str, nrgens;
-  str := "\><";
-  if HasIsTrivial(s) and IsTrivial(s) then
-    Append(str, "\>trivial\< ");
-  fi;
-
-  Append(str, "\>transformation\< \>group\<");
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
-      and Size(s) < 2 ^ 64 then
-    Append(str, " \>of size \>");
-    Append(str, String(Size(s)));
-    Append(str, ",\<\<");
-  fi;
-
-  nrgens := Length(Generators(s));
-  if DegreeOfTransformationSemigroup(s) > 0 then
-    Append(str, " \>on \>");
-    Append(str, ViewString(DegreeOfTransformationSemigroup(s)));
-    Append(str, "\< pts");
-  fi;
-  if nrgens > 0 then
-    Append(str, " with\> ");
-    Append(str, ViewString(nrgens));
-    Append(str, "\< generator");
-    if nrgens > 1 or nrgens = 0 then
-      Append(str, "s\<");
-    else
-      Append(str, "\<");
-    fi;
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
-
-InstallMethod(ViewString, "for a group of transformations",
-[IsTransformationSemigroup and IsGroupAsSemigroup],
-SEMIGROUPS_ViewStringForGroupOfTransformations);
-
-InstallMethod(ViewString, "for a group of transformations",
-[IsTransformationSemigroup and IsGroup],
-SEMIGROUPS_ViewStringForGroupOfTransformations);
-
-MakeReadWriteGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations");
-Unbind(SEMIGROUPS_ViewStringForGroupOfTransformations);
-
+#  Append(str, "\>bipartition\< \>group\< ");
+#  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
+#      and Size(s) < 2 ^ 64 then
+#    Append(str, "\>of size\> ");
+#    Append(str, String(Size(s)));
+#    Append(str, ",\<\< ");
+#  fi;
 #
-
-InstallMethod(ViewString, "for a group of partial perms",
-[IsPartialPermSemigroup and IsGroupAsSemigroup],
-function(s)
-  local str, nrgens;
-
-  str := "\><";
-  if HasIsTrivial(s) and IsTrivial(s) then
-    Append(str, "\>trivial\< ");
-  fi;
-
-  Append(str, "\>partial perm\< \>group\< ");
-  if HasIsTrivial(s) and not IsTrivial(s)
-      and HasSize(s) and Size(s) < 2 ^ 64 then
-    Append(str, "\>of size\> ");
-    Append(str, String(Size(s)));
-    Append(str, ",\<\< ");
-  fi;
-
-  nrgens := Length(Generators(s));
-
-  Append(str, "\>on \>");
-  Append(str, ViewString(RankOfPartialPermSemigroup(s)));
-  Append(str, "\< pts with\> ");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
+#  nrgens := Length(Generators(s));
+#
+#  Append(str, "\>on \>");
+#  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
+#  Append(str, "\< pts with\> ");
+#  Append(str, ViewString(nrgens));
+#  Append(str, "\< generator");
+#
+#  if nrgens > 1 or nrgens = 0 then
+#    Append(str, "s\<");
+#  else
+#    Append(str, "\<");
+#  fi;
+#  Append(str, ">\<");
+#
+#  return str;
+#end);
+#
+##
+#
+#BindGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations",
+#function(s)
+#  local str, nrgens;
+#  str := "\><";
+#  if HasIsTrivial(s) and IsTrivial(s) then
+#    Append(str, "\>trivial\< ");
+#  fi;
+#
+#  Append(str, "\>transformation\< \>group\<");
+#  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
+#      and Size(s) < 2 ^ 64 then
+#    Append(str, " \>of size \>");
+#    Append(str, String(Size(s)));
+#    Append(str, ",\<\<");
+#  fi;
+#
+#  nrgens := Length(Generators(s));
+#  if DegreeOfTransformationSemigroup(s) > 0 then
+#    Append(str, " \>on \>");
+#    Append(str, ViewString(DegreeOfTransformationSemigroup(s)));
+#    Append(str, "\< pts");
+#  fi;
+#  if nrgens > 0 then
+#    Append(str, " with\> ");
+#    Append(str, ViewString(nrgens));
+#    Append(str, "\< generator");
+#    if nrgens > 1 or nrgens = 0 then
+#      Append(str, "s\<");
+#    else
+#      Append(str, "\<");
+#    fi;
+#  fi;
+#  Append(str, ">\<");
+#
+#  return str;
+#end);
+#
+#InstallMethod(ViewString, "for a group of transformations",
+#[IsTransformationSemigroup and IsGroupAsSemigroup],
+#SEMIGROUPS_ViewStringForGroupOfTransformations);
+#
+#InstallMethod(ViewString, "for a group of transformations",
+#[IsTransformationSemigroup and IsGroup],
+#SEMIGROUPS_ViewStringForGroupOfTransformations);
+#
+#MakeReadWriteGlobal("SEMIGROUPS_ViewStringForGroupOfTransformations");
+#Unbind(SEMIGROUPS_ViewStringForGroupOfTransformations);
+#
+##
+#
+#InstallMethod(ViewString, "for a group of partial perms",
+#[IsPartialPermSemigroup and IsGroupAsSemigroup],
+#function(s)
+#  local str, nrgens;
+#
+#  str := "\><";
+#  if HasIsTrivial(s) and IsTrivial(s) then
+#    Append(str, "\>trivial\< ");
+#  fi;
+#
+#  Append(str, "\>partial perm\< \>group\< ");
+#  if HasIsTrivial(s) and not IsTrivial(s)
+#      and HasSize(s) and Size(s) < 2 ^ 64 then
+#    Append(str, "\>of size\> ");
+#    Append(str, String(Size(s)));
+#    Append(str, ",\<\< ");
+#  fi;
+#
+#  nrgens := Length(Generators(s));
+#
+#  Append(str, "\>on \>");
+#  Append(str, ViewString(RankOfPartialPermSemigroup(s)));
+#  Append(str, "\< pts with\> ");
+#  Append(str, ViewString(nrgens));
+#  Append(str, "\< generator");
+#
+#  if nrgens > 1 or nrgens = 0 then
+#    Append(str, "s\<");
+#  else
+#    Append(str, "\<");
+#  fi;
+#  Append(str, ">\<");
+#
+#  return str;
+#end);
 
 # creating semigroups, monoids, inverse semigroups, etc
 
@@ -261,12 +261,22 @@ function(gens, opts)
 
   SetGeneratorsOfMagma(s, gens);
   if (IsMultiplicativeElementWithOneCollection(gens)
-      and CanEasilyCompareElements(gens)) or IsMatrixObj(gens[1]) then
+      and CanEasilyCompareElements(gens) and IsFinite(gens))
+      or IsMatrixObj(gens[1]) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(s, IsMonoid);
-      gens := ShallowCopy(gens);
-      Remove(gens, pos);
+      if Length(gens) = 1 then
+        SetIsTrivial(s, true);
+      elif not IsPartialPermCollection(gens) or One(gens) =
+        One(gens{Concatenation([1 .. pos - 1], [pos + 1 .. Length(gens)])}) then
+        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the
+        # One = gens[1] from this, it is not possible to recreate the semigroup
+        # using Monoid(PartialPerm([1])) (since the One in this case is
+        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
+        Remove(gens, pos);
+      fi;
       SetGeneratorsOfMonoid(s, gens);
     fi;
   fi;
@@ -299,7 +309,7 @@ function(gens, record)
   fi;
 
   record := SEMIGROUPS_ProcessOptionsRec(record);
-  gens := ShallowCopy(gens);
+  gens := AsList(gens);
 
   if record.small and Length(gens) > 1 then #small gen. set
     gens := SSortedList(gens); #remove duplicates
@@ -355,12 +365,23 @@ function(gens, record)
   fi;
 
   # remove one from gens if it's there.
-  if CanEasilyCompareElements(gens) then
+  if CanEasilyCompareElements(gens) and IsFinite(gens) then
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetGeneratorsOfMagma(s, AsList(gens));
-      gens := ShallowCopy(gens);
-      Remove(gens, pos);
+      if Length(gens) = 1 then
+        SetIsTrivial(s, true);
+      elif not IsPartialPermCollection(gens)
+          or One(gens) = One(gens{Concatenation([1 .. pos - 1],
+                                                [pos + 1 .. Length(gens)])})
+          then
+          # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the
+          # One = gens[1] from this, it is not possible to recreate the
+          # semigroup using Monoid(PartialPerm([1])) (since the One in this
+          # case is PartialPerm([1]) not PartialPerm([1,2]) as it should be.
+        gens := ShallowCopy(gens);
+        Remove(gens, pos);
+      fi;
     else
       SetGeneratorsOfMagma(s, Concatenation([One(gens)], gens));
     fi;
@@ -410,6 +431,7 @@ function(gens, record)
   fi;
 
   record := SEMIGROUPS_ProcessOptionsRec(record);
+  gens := AsList(gens);
 
   if record.small and Length(gens) > 1 then
     gens := SSortedList(ShallowCopy(gens));
@@ -444,8 +466,18 @@ function(gens, record)
 
   if pos <> fail then
     SetGeneratorsOfInverseSemigroup(s, gens);
-    gens := ShallowCopy(gens);
-    Remove(gens, pos);
+    if Length(gens) = 1 then
+      SetIsTrivial(s, true);
+    elif not IsPartialPermCollection(gens)
+        or One(gens) = One(gens{Concatenation([1 .. pos - 1],
+                                              [pos + 1 .. Length(gens)])}) then
+        # if gens = [PartialPerm([1, 2]), PartialPerm([1])], then removing the
+        # One = gens[1] from this, it is not possible to recreate the semigroup
+        # using Monoid(PartialPerm([1])) (since the One in this case is
+        # PartialPerm([1]) not PartialPerm([1, 2]) as it should be.
+      gens := ShallowCopy(gens);
+      Remove(gens, pos);
+    fi;
     SetGeneratorsOfInverseMonoid(s, gens);
   else
     SetGeneratorsOfInverseMonoid(s, gens);
@@ -470,6 +502,7 @@ function(gens, record)
   fi;
 
   record := SEMIGROUPS_ProcessOptionsRec(record);
+  gens := AsList(gens);
 
   if record.small and Length(gens) > 1 then
     gens := SSortedList(ShallowCopy(gens));
@@ -502,8 +535,19 @@ function(gens, record)
     pos := Position(gens, One(gens));
     if pos <> fail then
       SetFilterObj(s, IsMonoid);
-      gens := ShallowCopy(gens);
-      Remove(gens, pos);
+      if Length(gens) = 1 then
+        SetIsTrivial(s, true);
+      elif not IsPartialPermCollection(gens)
+          or One(gens) = One(gens{Concatenation([1 .. pos - 1],
+                                                [pos + 1 .. Length(gens)])})
+          then
+          # if gens = [PartialPerm([1, 2]), PartialPerm([1])], then removing
+          # the One = gens[1] from this, it is not possible to recreate the
+          # semigroup using Monoid(PartialPerm([1])) (since the One in this
+          # case is PartialPerm([1]) not PartialPerm([1, 2]) as it should be.
+        gens := ShallowCopy(gens);
+        Remove(gens, pos);
+      fi;
       SetGeneratorsOfInverseMonoid(s, gens);
     fi;
   fi;

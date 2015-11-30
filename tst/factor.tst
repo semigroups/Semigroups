@@ -130,9 +130,9 @@ true
 
 #T# FactorTest13: Factorization regularity is learned after creation
 gap> s:=SingularTransformationSemigroup(5);
-<regular transformation semigroup ideal on 5 pts with 1 generator>
+<regular transformation semigroup ideal of degree 5 with 1 generator>
 gap> s:=Semigroup(GeneratorsOfSemigroup(s));
-<transformation semigroup on 5 pts with 16 generators>
+<transformation semigroup of degree 5 with 16 generators>
 gap> IsRegularSemigroup(s);
 true
 gap> ForAll(s, f-> EvaluateWord(GeneratorsOfSemigroup(s), 

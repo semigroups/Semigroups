@@ -8,6 +8,17 @@
 #############################################################################
 ##
 
+InstallMethod(SemigroupViewStringPrefix, "for a bipartition semigroup",
+[IsBipartitionSemigroup], S -> "\>bipartition\< ");
+
+InstallMethod(SemigroupViewStringSuffix, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
+function(S)
+  return Concatenation("\>degree \>",
+                       ViewString(DegreeOfBipartitionSemigroup(S)),
+                       "\<\< ");
+end);
+
 InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
 function(S)
   return Range(IsomorphismBlockBijectionSemigroup(S));
@@ -20,60 +31,60 @@ end);
 
 #
 
-InstallMethod(ViewString,
-"for a bipartition semigroup ideal with ideal generators",
-[IsBipartitionSemigroup and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal],
-function(I)
-  local str, nrgens;
-
-  str := "\><";
-
-  if HasIsTrivial(I) and IsTrivial(I) then
-    Append(str, "\>trivial\< ");
-  else
-    if HasIsCommutative(I) and IsCommutative(I) then
-      Append(str, "\>commutative\< ");
-    fi;
-  fi;
-  if not IsGroup(I) then
-    if (HasIsTrivial(I) and IsTrivial(I)) or IsGroup(I) then
-    elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
-      Append(str, "\>0-simple\< ");
-    elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
-      Append(str, "\>simple\< ");
-    fi;
-
-    if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
-      Append(str, "\>inverse\< ");
-    elif HasIsRegularSemigroup(I)
-        and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
-      if IsRegularSemigroup(I) then
-        Append(str, "\>regular\< ");
-      else
-        Append(str, "\>non-regular\< ");
-      fi;
-    fi;
-  fi;
-
-  Append(str, "\>bipartition\< \>semigroup\< \>ideal\< ");
-  Append(str, "\>on \>");
-  Append(str, ViewString(DegreeOfBipartitionSemigroup(I)));
-  Append(str, "\< pts with\> ");
-
-  nrgens := Length(GeneratorsOfSemigroupIdeal(I));
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
+#InstallMethod(ViewString,
+#"for a bipartition semigroup ideal with ideal generators",
+#[IsBipartitionSemigroup and IsSemigroupIdeal and
+# HasGeneratorsOfSemigroupIdeal],
+#function(I)
+#  local str, nrgens;
+#
+#  str := "\><";
+#
+#  if HasIsTrivial(I) and IsTrivial(I) then
+#    Append(str, "\>trivial\< ");
+#  else
+#    if HasIsCommutative(I) and IsCommutative(I) then
+#      Append(str, "\>commutative\< ");
+#    fi;
+#  fi;
+#  if not IsGroup(I) then
+#    if (HasIsTrivial(I) and IsTrivial(I)) or IsGroup(I) then
+#    elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
+#      Append(str, "\>0-simple\< ");
+#    elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
+#      Append(str, "\>simple\< ");
+#    fi;
+#
+#    if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
+#      Append(str, "\>inverse\< ");
+#    elif HasIsRegularSemigroup(I)
+#        and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+#      if IsRegularSemigroup(I) then
+#        Append(str, "\>regular\< ");
+#      else
+#        Append(str, "\>non-regular\< ");
+#      fi;
+#    fi;
+#  fi;
+#
+#  Append(str, "\>bipartition\< \>semigroup\< \>ideal\< ");
+#  Append(str, "\>on \>");
+#  Append(str, ViewString(DegreeOfBipartitionSemigroup(I)));
+#  Append(str, "\< pts with\> ");
+#
+#  nrgens := Length(GeneratorsOfSemigroupIdeal(I));
+#  Append(str, ViewString(nrgens));
+#  Append(str, "\< generator");
+#
+#  if nrgens > 1 or nrgens = 0 then
+#    Append(str, "s\<");
+#  else
+#    Append(str, "\<");
+#  fi;
+#  Append(str, ">\<");
+#
+#  return str;
+#end);
 
 #
 
@@ -619,80 +630,80 @@ InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
 
 #
 
-InstallMethod(ViewString, "for a bipartition semigroup with generators",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup], 8, # to trump IsGroup
-function(s)
-  local str, nrgens;
-
-  str := "\><";
-
-  if HasIsTrivial(s) and IsTrivial(s) then
-    Append(str, "\>trivial\< ");
-  else
-    if HasIsCommutative(s) and IsCommutative(s) then
-      Append(str, "\>commutative\< ");
-    fi;
-  fi;
-  if not IsGroup(s) then
-    if (HasIsTrivial(s) and IsTrivial(s)) or IsGroup(s) then
-    elif HasIsZeroSimpleSemigroup(s) and IsZeroSimpleSemigroup(s) then
-      Append(str, "\>0-simple\< ");
-    elif HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s) then
-      Append(str, "\>simple\< ");
-    fi;
-
-    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
-      Append(str, "\>inverse\< ");
-    elif HasIsRegularSemigroup(s)
-        and not (HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s)) then
-      if IsRegularSemigroup(s) then
-        Append(str, "\>regular\< ");
-      else
-        Append(str, "\>non-regular\< ");
-      fi;
-    fi;
-  fi;
-
-  Append(str, "\>bipartition\< ");
-
-  if HasIsMonoid(s) and IsMonoid(s) then
-    Append(str, "monoid ");
-    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
-      nrgens := Length(GeneratorsOfInverseMonoid(s));
-    else
-      nrgens := Length(GeneratorsOfMonoid(s));
-    fi;
-  else
-    Append(str, "semigroup ");
-    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
-      nrgens := Length(GeneratorsOfInverseSemigroup(s));
-    else
-      nrgens := Length(GeneratorsOfSemigroup(s));
-    fi;
-  fi;
-
-  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
-      and Size(s) < 2 ^ 64 then
-    Append(str, "\>of size\> ");
-    Append(str, String(Size(s)));
-    Append(str, ",\<\< ");
-  fi;
-
-  Append(str, "\>on \>");
-  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
-  Append(str, "\< pts with\> ");
-  Append(str, ViewString(nrgens));
-  Append(str, "\< generator");
-
-  if nrgens > 1 or nrgens = 0 then
-    Append(str, "s\<");
-  else
-    Append(str, "\<");
-  fi;
-  Append(str, ">\<");
-
-  return str;
-end);
+#InstallMethod(ViewString, "for a bipartition semigroup with generators",
+#[IsBipartitionSemigroup and HasGeneratorsOfSemigroup], 8, # to trump IsGroup
+#function(s)
+#  local str, nrgens;
+#
+#  str := "\><";
+#
+#  if HasIsTrivial(s) and IsTrivial(s) then
+#    Append(str, "\>trivial\< ");
+#  else
+#    if HasIsCommutative(s) and IsCommutative(s) then
+#      Append(str, "\>commutative\< ");
+#    fi;
+#  fi;
+#  if not IsGroup(s) then
+#    if (HasIsTrivial(s) and IsTrivial(s)) or IsGroup(s) then
+#    elif HasIsZeroSimpleSemigroup(s) and IsZeroSimpleSemigroup(s) then
+#      Append(str, "\>0-simple\< ");
+#    elif HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s) then
+#      Append(str, "\>simple\< ");
+#    fi;
+#
+#    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
+#      Append(str, "\>inverse\< ");
+#    elif HasIsRegularSemigroup(s)
+#        and not (HasIsSimpleSemigroup(s) and IsSimpleSemigroup(s)) then
+#      if IsRegularSemigroup(s) then
+#        Append(str, "\>regular\< ");
+#      else
+#        Append(str, "\>non-regular\< ");
+#      fi;
+#    fi;
+#  fi;
+#
+#  Append(str, "\>bipartition\< ");
+#
+#  if HasIsMonoid(s) and IsMonoid(s) then
+#    Append(str, "monoid ");
+#    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
+#      nrgens := Length(GeneratorsOfInverseMonoid(s));
+#    else
+#      nrgens := Length(GeneratorsOfMonoid(s));
+#    fi;
+#  else
+#    Append(str, "semigroup ");
+#    if HasIsInverseSemigroup(s) and IsInverseSemigroup(s) then
+#      nrgens := Length(GeneratorsOfInverseSemigroup(s));
+#    else
+#      nrgens := Length(GeneratorsOfSemigroup(s));
+#    fi;
+#  fi;
+#
+#  if HasIsTrivial(s) and not IsTrivial(s) and HasSize(s)
+#      and Size(s) < 2 ^ 64 then
+#    Append(str, "\>of size\> ");
+#    Append(str, String(Size(s)));
+#    Append(str, ",\<\< ");
+#  fi;
+#
+#  Append(str, "\>on \>");
+#  Append(str, ViewString(DegreeOfBipartitionSemigroup(s)));
+#  Append(str, "\< pts with\> ");
+#  Append(str, ViewString(nrgens));
+#  Append(str, "\< generator");
+#
+#  if nrgens > 1 or nrgens = 0 then
+#    Append(str, "s\<");
+#  else
+#    Append(str, "\<");
+#  fi;
+#  Append(str, ">\<");
+#
+#  return str;
+#end);
 
 #
 
