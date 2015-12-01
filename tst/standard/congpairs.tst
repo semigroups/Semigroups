@@ -38,10 +38,16 @@ gap> NrCongruenceClasses(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `NrEquivalenceClasses' on 1 arguments
 gap> class := CongruenceClassOfElement(cong, x);;
-gap> cong := SemigroupCongruence(S, [x^2, x^2]);;
-gap> class := CongruenceClassOfElement(cong, x);;
+gap> cong2 := SemigroupCongruence(S, [x^2, x^2]);;
+gap> class := CongruenceClassOfElement(cong2, x);;
 gap> enum := Enumerator(class);
 [ s1 ]
+gap> Size(class);
+1
+gap> x^2 in class;
+false
+gap> ImagesElm(cong2, x^5);
+[ s1^5 ]
 
 #T# PairsCongTest3: \= for two semigroup congruences
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
@@ -288,6 +294,17 @@ gap> Transformation([1, 2, 2, 2, 1]) in class;
 true
 gap> Transformation([2, 2, 3, 2, 2]) in class;
 true
+gap> enum[2000];
+fail
+gap> cong := SemigroupCongruence(S, pair);;
+gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
+gap> enum := Enumerator(class);;
+gap> x := enum[1];;
+gap> AsLookupTable(cong);;
+gap> Position(enum, Transformation( [ 2, 2, 2, 2, 3 ] ));
+25
+gap> Position(enum, x);
+1
 gap> cong := SemigroupCongruence(S, pair);;
 gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> Transformation([1, 1, 5, 1, 1]) in class;
@@ -324,6 +341,24 @@ gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1 ], [ 1, 2, 5 ], [ 1, 2, 3, 5 ], [ 1, 2 ] ]
 gap> DotString(l, rec(info := true)) = Concatenation("//dot\ngraph graphname",
 > " {\n     node [shape=circle]\nR2 -- T\nR3 -- 5\nU -- R3\n5 -- R2\n }");
+true
+gap> S := Semigroup([Transformation([1,1,2,1]), Transformation([3,3,1,2])]);;
+gap> l := LatticeOfCongruences(S);;
+gap> DotString(l) = Concatenation(
+> "//dot\ngraph graphname {\n     node [shape=point]\n2 -- 3\n2 -- 10\n3 ",
+> "-- 13\n4 -- 22\n5 -- 1\n6 -- 4\n6 -- 23\n7 -- 5\n8 -- 1\n9 -- 4\n9 -- ",
+> "19\n10 -- 13\n10 -- 25\n11 -- 4\n12 -- 2\n12 -- 14\n12 -- 28\n13 -- 5",
+> "\n14 -- 3\n14 -- 29\n15 -- 29\n16 -- 15\n16 -- 41\n17 -- 1\n18 -- 6\n18",
+> " -- 9\n18 -- 11\n18 -- 20\n19 -- 12\n19 -- 22\n19 -- 31\n20 -- 19\n20 ",
+> "-- 23\n20 -- 32\n20 -- 35\n21 -- 2\n21 -- 24\n21 -- 34\n22 -- 14\n22 -",
+> "- 15\n23 -- 16\n23 -- 22\n23 -- 37\n24 -- 3\n24 -- 36\n25 -- 5\n25 -- ",
+> "8\n26 -- 5\n26 -- 17\n27 -- 7\n27 -- 25\n28 -- 10\n28 -- 27\n28 -- 29",
+> "\n29 -- 7\n29 -- 13\n30 -- 7\n30 -- 26\n31 -- 15\n31 -- 28\n32 -- 16\n3",
+> "2 -- 31\n32 -- 40\n33 -- 8\n33 -- 17\n34 -- 10\n34 -- 36\n34 -- 38\n35",
+> " -- 12\n35 -- 21\n35 -- 37\n35 -- 40\n36 -- 13\n36 -- 26\n37 -- 14\n37",
+> " -- 24\n37 -- 41\n38 -- 25\n38 -- 26\n38 -- 33\n39 -- 27\n39 -- 30\n39",
+> " -- 38\n40 -- 28\n40 -- 34\n40 -- 39\n40 -- 41\n41 -- 29\n41 -- 30\n41",
+> " -- 36\n }");
 true
 
 #T# SEMIGROUPS_UnbindVariables
