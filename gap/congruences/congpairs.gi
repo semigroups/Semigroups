@@ -781,7 +781,11 @@ function(_record)
         od;
         SetSize(class, enum!.len);
         SetAsList(class, enum!.list);
-        return result;
+        if result = fail then
+          return Position(enum!.list, x);
+        else
+          return result;
+        fi;
       elif result!.found then
         # elm is in the class
         if enum!.found[x] then

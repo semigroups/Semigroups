@@ -39,7 +39,11 @@ function(S)
   if IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S) then
     return CongruencesOfSemigroup(S);
   fi;
-  iso := IsomorphismReesMatrixSemigroup(S);
+  if IsSimpleSemigroup(S) then
+    iso := IsomorphismReesMatrixSemigroup(S);
+  else
+    iso := IsomorphismReesZeroMatrixSemigroup(S);
+  fi;
   R := Range(iso);
   congs := ShallowCopy(CongruencesOfSemigroup(R));
   for i in [1 .. Length(congs)] do
