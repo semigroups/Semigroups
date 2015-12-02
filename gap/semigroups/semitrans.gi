@@ -11,21 +11,69 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
+InstallMethod(FixedPoints, "for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, gens, out, fixed, i, x;
+
+  n    := DegreeOfTransformationSemigroup(S);
+  gens := GeneratorsOfSemigroup(S);
+  out  := [];
+
+  for i in [1 .. n] do
+    fixed := true;
+    for x in gens do
+      if i ^ x <> i then
+        fixed := false;
+        break;
+      fi;
+    od;
+    if fixed then
+      Add(out, i);
+    fi;
+  od;
+
+  return out;
+end);
+
+InstallMethod(MovedPoints, "for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  return Difference([1 .. DegreeOfTransformationSemigroup(S)], FixedPoints(S));
+end);
+
+InstallMethod(\^, "for a transformation semigroup with generators and perm",
+[IsTransformationCollection, IsPerm],
+function(coll, p)
+  return List(coll, x -> x ^ p);
+end);
+
+InstallMethod(\^, "for a transformation semigroup with generators and perm",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPerm],
+function(S, p)
+  return Semigroup(GeneratorsOfSemigroup(S) ^ p);
+end);
+
 InstallMethod(DigraphOfActionOnPoints,
 "for a transformation semigroup with known generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
+  return DigraphOfActionOnPoints(S, DegreeOfTransformationSemigroup(S));
+end);
+
+InstallMethod(DigraphOfActionOnPoints,
+"for a transformation semigroup with known generators and pos int",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
+function(S, n)
   local out, gens, x, k, i, j;
 
-  out := List([1 .. DegreeOfTransformationSemigroup(S)], x -> []);
+  out := List([1 .. n], x -> []);
   gens := GeneratorsOfSemigroup(S);
   for i in [1 .. Length(gens)] do
     x := gens[i];
-    for j in [1 .. DegreeOfTransformation(x)] do
+    for j in [1 .. n] do
       k := j ^ x;
-      if j <> k then
-        AddSet(out[j], k);
-      fi;
+      AddSet(out[j], k);
     od;
   od;
   return DigraphNC(out);

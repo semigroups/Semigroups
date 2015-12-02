@@ -472,7 +472,7 @@ InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 2, # to beat the method for acting semigroups
 function(S)
-  return IsAcyclicDigraph(DigraphOfActionOnPoints(S));
+  return IsAcyclicDigraph(DigraphRemoveLoops(DigraphOfActionOnPoints(S)));
 end);
 
 # different method for ideals
