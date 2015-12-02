@@ -1,7 +1,7 @@
 /*
  * Semigroups GAP package
  *
- * This file contains . . . 
+ * This file contains . . .
  *
  */
 
@@ -16,7 +16,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-* data_type: 
+* data_type:
 *******************************************************************************/
 
 DataType data_type (Obj data) {
@@ -59,13 +59,13 @@ DataType data_type (Obj data) {
         return BIPART;
       }
       // intentional fall through
-    default: 
+    default:
       return UNKNOWN;
   }
 }
 
 /*******************************************************************************
-* data_init: 
+* data_init:
 *******************************************************************************/
 
 void data_init (Obj data) {
@@ -74,11 +74,11 @@ void data_init (Obj data) {
 }
 
 /*******************************************************************************
-* data_init_converter: 
+* data_init_converter:
 *******************************************************************************/
 
 void data_init_converter (Obj data) {
-  
+
   if (IsbPRec(data, RNam_converter)) {
     return;
   }
@@ -101,7 +101,7 @@ void data_init_converter (Obj data) {
       converter = new PPermConverter<u_int32_t>();
       break;
     }
-    case BOOL_MAT:{ 
+    case BOOL_MAT:{
       converter = new BoolMatConverter();
       break;
     }
@@ -110,51 +110,51 @@ void data_init_converter (Obj data) {
       break;
     }
     case MAX_PLUS_MAT:{
-      converter = new MatrixOverSemiringConverter(new MaxPlusSemiring(), 
-                                                  Ninfinity, 
+      converter = new MatrixOverSemiringConverter(new MaxPlusSemiring(),
+                                                  Ninfinity,
                                                   MaxPlusMatrixType);
       break;
     }
     case MIN_PLUS_MAT:{
-      converter = new MatrixOverSemiringConverter(new MinPlusSemiring(), 
-                                                  infinity, 
+      converter = new MatrixOverSemiringConverter(new MinPlusSemiring(),
+                                                  infinity,
                                                   MinPlusMatrixType);
       break;
     }
     case TROP_MAX_PLUS_MAT:{
-      converter = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(data_threshold(data)), 
-                                                  Ninfinity, 
+      converter = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(data_threshold(data)),
+                                                  Ninfinity,
                                                   TropicalMaxPlusMatrixType);
       break;
     }
     case TROP_MIN_PLUS_MAT:{
-      converter = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(data_threshold(data)), 
-                                                  infinity, 
+      converter = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(data_threshold(data)),
+                                                  infinity,
                                                   TropicalMinPlusMatrixType);
       break;
     }
     case NTP_MAT:{
       converter = new MatrixOverSemiringConverter(new NaturalSemiring(data_threshold(data),
-                                                                      data_period(data)), 
-                                                  INTOBJ_INT(0), 
+                                                                      data_period(data)),
+                                                  INTOBJ_INT(0),
                                                   NTPMatrixType);
       break;
     }
     case INT_MAT:{
-      converter = new MatrixOverSemiringConverter(new Integers(), 
-                                                  INTOBJ_INT(0), 
+      converter = new MatrixOverSemiringConverter(new Integers(),
+                                                  INTOBJ_INT(0),
                                                   IntegerMatrixType);
       break;
     }
     case PROJ_MAX_PLUS_MAT:{
-      converter = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(), 
-                                                        Ninfinity, 
+      converter = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(),
+                                                        Ninfinity,
                                                         ProjectiveMaxPlusMatrixType);
       break;
 
     }
     case MAT_OVER_PF:{
-      converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)), 
+      converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)),
                                                     MatrixOverPrimeFieldType);
       break;
     }
@@ -167,12 +167,12 @@ void data_init_converter (Obj data) {
     }
   }
 
-  AssPRec(data, RNam_converter, NewSemigroupsBag(converter, CONVERTER));
+  AssPRec(data, RNam_converter, NewSemigroupsBag(converter, CONVERTER, 2));
 }
 
 /*******************************************************************************
 * data_init_semigroup: the default value for <semigroup> is nullptr, which is
-* set in the header file. 
+* set in the header file.
 *******************************************************************************/
 
 void data_init_semigroup (Obj data, Semigroup* semigroup) {
@@ -182,20 +182,20 @@ void data_init_semigroup (Obj data, Semigroup* semigroup) {
       assert(false);
     }
     semigroup->set_batch_size(data_batch_size(data));
-    AssPRec(data, RNam_semigroup, NewSemigroupsBag(semigroup, SEMIGROUP));
+    AssPRec(data, RNam_semigroup, NewSemigroupsBag(semigroup, SEMIGROUP, 2));
     return;
   }
 
   if (IsbPRec(data, RNam_semigroup)) {
     return;
   }
-  
+
   data_init_converter(data);
   Converter* converter = data_converter(data);
-  
+
   assert(IsbPRec(data, RNam_gens));
   assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
-  
+
   Obj gens_gap = ElmPRec(data, RNam_gens);
   PLAIN_LIST(gens_gap);
 
@@ -205,12 +205,12 @@ void data_init_semigroup (Obj data, Semigroup* semigroup) {
   for(size_t i = 1; i <= (size_t) LEN_PLIST(gens_gap); i++) {
     gens->push_back(converter->convert(ELM_PLIST(gens_gap, i), degree));
   }
-    
+
   semigroup = new Semigroup(gens, degree);
   semigroup->set_batch_size(data_batch_size(data));
 
-  AssPRec(data, RNam_semigroup, NewSemigroupsBag(semigroup, SEMIGROUP));
-  
+  AssPRec(data, RNam_semigroup, NewSemigroupsBag(semigroup, SEMIGROUP, 2));
+
   for (Element* x: *gens) {
     x->really_delete();
   }
@@ -218,7 +218,7 @@ void data_init_semigroup (Obj data, Semigroup* semigroup) {
 }
 
 /*******************************************************************************
-* data_semigroup: 
+* data_semigroup:
 *******************************************************************************/
 
 Semigroup* data_semigroup (Obj data) {
@@ -259,7 +259,7 @@ void data_delete (Obj data) {
 *******************************************************************************/
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 
 long data_threshold (Obj data) {
@@ -274,7 +274,7 @@ long data_threshold (Obj data) {
 }
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 
 long data_period (Obj data) {
@@ -289,7 +289,7 @@ long data_period (Obj data) {
 }
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 
 long data_size_ff (Obj data) {
@@ -303,18 +303,18 @@ long data_size_ff (Obj data) {
 }
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 
 Obj data_rep (Obj data) {
-  // TODO more asserts 
+  // TODO more asserts
   assert(IsbPRec(data, RNam_gens));
   assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
   return ELM_PLIST(ElmPRec(data, RNam_gens), 1);
 }
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 
 size_t data_batch_size (Obj data) {
@@ -324,7 +324,7 @@ size_t data_batch_size (Obj data) {
 }
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 
 bool data_report (Obj data) {
@@ -336,11 +336,11 @@ bool data_report (Obj data) {
 }
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 
 size_t data_degree (Obj data) {
-  //TODO add asserts 
+  //TODO add asserts
   return INT_INTOBJ(ElmPRec(data, RNamName("degree")));
 }
 

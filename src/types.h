@@ -24,14 +24,15 @@
 #endif
 
 enum SemigroupsBagType {
-  UF_DATA   = 0,
-  SEMIGROUP = 1,
-  CONVERTER = 2
+  UF_DATA    = 0,
+  SEMIGROUP  = 1,
+  CONVERTER  = 2,
+  GAP_BIPART = 3
 };
 
 template <typename Class>
-inline Obj NewSemigroupsBag (Class* cpp_class, SemigroupsBagType type) {
-  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
+inline Obj NewSemigroupsBag (Class* cpp_class, SemigroupsBagType type, size_t size) {
+  Obj o = NewBag(T_SEMI, size * sizeof(Obj));
   ADDR_OBJ(o)[0] = (Obj)type;
   ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(cpp_class);
   return o;
@@ -48,6 +49,7 @@ inline Class* CLASS_OBJ(Obj o) {
 #define IS_CONVERTER_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == CONVERTER)
 #define IS_SEMIGROUP_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == SEMIGROUP)
 #define IS_UF_DATA_BAG(o)   (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == UF_DATA)
+#define IS_GAP_BIPART(o)    (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == GAP_BIPART)
 
 /*******************************************************************************
  * Macros for checking types of objects
@@ -76,17 +78,17 @@ inline Class* CLASS_OBJ(Obj o) {
 extern Obj infinity;
 extern Obj Ninfinity;
 extern Obj IsBipartition;
-extern Obj BipartitionByIntRepNC;   
+extern Obj BipartitionByIntRepNC;
 extern Obj IsBooleanMat;
-extern Obj BooleanMatType;   
+extern Obj BooleanMatType;
 extern Obj IsMatrixOverSemiring;
 extern Obj IsMaxPlusMatrix;
-extern Obj MaxPlusMatrixType;   
+extern Obj MaxPlusMatrixType;
 extern Obj IsMinPlusMatrix;
-extern Obj MinPlusMatrixType;   
+extern Obj MinPlusMatrixType;
 extern Obj IsTropicalMatrix;
 extern Obj IsTropicalMinPlusMatrix;
-extern Obj TropicalMinPlusMatrixType;   
+extern Obj TropicalMinPlusMatrixType;
 extern Obj IsTropicalMaxPlusMatrix;
 extern Obj TropicalMaxPlusMatrixType;
 extern Obj IsProjectiveMaxPlusMatrix;
@@ -103,6 +105,8 @@ extern Obj PBRType;
 /*******************************************************************************
  * Union-find data structure
 *******************************************************************************/
+
+//FIXME move this to its own file
 
 typedef std::vector<size_t>   table_t;
 typedef std::vector<table_t*> blocks_t;

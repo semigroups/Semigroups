@@ -1,7 +1,7 @@
 /*
  * Semigroups GAP package
  *
- * This file contains ...
+ * This file contains some methods for Boolean matrices
  *
  */
 

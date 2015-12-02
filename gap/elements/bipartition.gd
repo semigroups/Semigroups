@@ -25,6 +25,7 @@ BindGlobal("BipartitionType",
 
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
+#DeclareOperation("InverseMutable", [IsBipartition]);
 
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
 DeclareAttribute("RankOfBipartition", IsBipartition);
