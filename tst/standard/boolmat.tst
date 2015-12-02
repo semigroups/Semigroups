@@ -375,13 +375,13 @@ the largest moved point of the first argument must not exceed the dimension
 of the Boolean matrix,
 
 #T# boolmat: CanonicalBooleanMat (check that bliss is used in all 3 versions), 3/3
-gap> mat := Matrix(IsBooleanMat, [[1, 0, 1, 1, 0, 0, 0, 1], 
+gap> mat := Matrix(IsBooleanMat, [[1, 0, 1, 1, 0, 0, 0, 1],
 >                                 [0, 1, 0, 0, 1, 1, 0, 1],
->                                 [0, 1, 0, 0, 0, 1, 0, 1], 
+>                                 [0, 1, 0, 0, 0, 1, 0, 1],
 >                                 [1, 0, 0, 1, 1, 1, 1, 1],
 >                                 [1, 1, 1, 0, 0, 1, 1, 0],
->                                 [1, 0, 1, 0, 1, 0, 0, 1], 
->                                 [0, 0, 0, 0, 0, 0, 1, 1], 
+>                                 [1, 0, 1, 0, 1, 0, 0, 1],
+>                                 [0, 0, 0, 0, 0, 0, 1, 1],
 >                                 [1, 0, 1, 0, 0, 1, 1, 1]]);;
 gap> CanonicalBooleanMat(mat);
 Matrix(IsBooleanMat, [[0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1], 
@@ -393,7 +393,9 @@ Matrix(IsBooleanMat, [[0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1],
   [0, 1, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 1], 
   [1, 0, 0, 0, 1, 1, 0, 1], [0, 0, 1, 1, 1, 1, 1, 0], 
   [0, 0, 0, 1, 1, 1, 1, 1], [1, 1, 0, 1, 0, 1, 1, 1]])
-gap> CanonicalBooleanMat(SymmetricGroup(8), Group((1,2), (1,2,3,4,5,6,7,8)), mat);
+gap> CanonicalBooleanMat(SymmetricGroup(8),
+>                        Group((1, 2), (1, 2, 3, 4, 5, 6, 7, 8)),
+>                        mat);
 Matrix(IsBooleanMat, [[0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1], 
   [0, 1, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 1], 
   [1, 0, 0, 0, 1, 1, 0, 1], [0, 0, 1, 1, 1, 1, 1, 0], 
@@ -486,8 +488,8 @@ gap> x := Digraph([[], [8, 10], [1, 10], [5], [8], [], [10], [], [9], []]);
 <digraph with 10 vertices, 8 edges>
 gap> AsDigraph(AsBooleanMat(x)) = x;
 true
-gap> x := Matrix(IsBooleanMat, [[1, 0, 0, 1, 0], 
->                               [1, 1, 0, 1, 0], 
+gap> x := Matrix(IsBooleanMat, [[1, 0, 0, 1, 0],
+>                               [1, 1, 0, 1, 0],
 >                               [1, 1, 0, 0, 0],
 >                               [1, 1, 1, 1, 0],
 >                               [0, 0, 0, 0, 0]]);;
