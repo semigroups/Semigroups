@@ -213,6 +213,27 @@ gap> cong := SemigroupCongruence(S, pairs);;
 gap> IsReesCongruence(cong);
 false
 
+#T# IsSubrelation
+gap> S := Semigroup([Transformation([2,4,1,2]), Transformation([3,3,4,1])]);;
+gap> i1 := SemigroupIdeal(S, [ Transformation( [ 2, 4, 1, 2 ] ) ]);;
+gap> i2 := SemigroupIdeal(S, [ Transformation( [ 4, 2, 2, 4 ] ) ]);;
+gap> i3 := SemigroupIdeal(S, [ Transformation( [ 3, 3, 4, 1 ] ) ]);;
+gap> c1 := ReesCongruenceOfSemigroupIdeal(i1);;
+gap> c2 := ReesCongruenceOfSemigroupIdeal(i2);;
+gap> c3 := ReesCongruenceOfSemigroupIdeal(i3);;
+gap> IsSubrelation(c3, c2);
+true
+gap> IsSubrelation(c1, c2);
+true
+gap> IsSubrelation(c2, c1);
+false
+gap> IsSubrelation(c3, c3);
+true
+gap> IsSubrelation(c3, c1);
+false
+gap> IsSubrelation(c1, c3);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(cong);
