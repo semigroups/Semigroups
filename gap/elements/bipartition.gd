@@ -20,8 +20,7 @@ BindGlobal("BipartitionFamily",
                      CanEasilySortElements));
 BindGlobal("BipartitionType",
            NewType(BipartitionFamily,
-                   IsBipartition and IsComponentObjectRep and
-                   IsAttributeStoringRep));
+                   IsBipartition and IsPositionalObjectRep));
 
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");

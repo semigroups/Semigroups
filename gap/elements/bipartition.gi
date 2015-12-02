@@ -23,7 +23,7 @@ function(file, x)
   if IO_Write(file, "BIPA") = fail then
     return IO_Error;
   fi;
-  if IO_Pickle(file, x!.blocks) = IO_Error then
+  if IO_Pickle(file, BIPART_INT_REP(x)) = IO_Error then
     return IO_Error;
   fi;
   return IO_OK;
@@ -51,6 +51,34 @@ InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 #############################################################################
 # GAP level
 #############################################################################
+
+InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
+function(n)
+  local out, nrblocks, vals, j, i;
+
+  out := EmptyPlist(2 * n);
+  nrblocks := 0;
+  vals := [1];
+
+  for i in [1 .. 2 * n] do
+    j := Random(vals);
+    if j = nrblocks + 1 then
+      nrblocks := nrblocks + 1;
+      Add(vals, nrblocks + 1);
+    fi;
+    out[i] := j;
+  od;
+
+  return BIPART_NC(out);
+end);
+
+InstallMethod(DegreeOfBipartition, "for a bipartition",
+[IsBipartition],
+function(x)
+  return BIPART_DEGREE(x);
+end);
+
+#HERE
 
 InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
 [IsBipartition, IsBipartition],
@@ -357,13 +385,13 @@ function(x)
     return "\><empty bipartition>\<";
   fi;
 
-  if IsBlockBijection(x) then
-    str := "\>\><block bijection:\< ";
-  else
+  #if IsBlockBijection(x) then
+  #  str := "\>\><block bijection:\< ";
+  #else
     str := "\>\><bipartition:\< ";
-  fi;
+  #fi;
 
-  ext := ExtRepOfBipartition(x);
+  ext := BIPART_EXT_REP(x);
   Append(str, "\>");
   Append(str, String(ext[1]));
   Append(str, "\<");
@@ -383,7 +411,7 @@ InstallMethod(PrintString, "for a bipartition",
 [IsBipartition],
 function(f)
   local ext, str, i;
-  ext := ExtRepOfBipartition(f);
+  ext := BIPART_EXT_REP(f);
   str := Concatenation("\>\>Bipartition(\< \>[ ", PrintString(ext[1]));
   for i in [2 .. Length(ext)] do
     Append(str, ",\< \>");
@@ -654,31 +682,6 @@ InstallMethod(RankOfBipartition, "for a bipartition",
 [IsBipartition],
 x -> Number(SEMIGROUPS.TransBlocksLookup(x), y -> y = true));
 
-# return the classes of <f> as a list of lists
-
-InstallMethod(ExtRepOfBipartition, "for a bipartition",
-[IsBipartition],
-function(f)
-  local n, blocks, ext, i;
-
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  ext := [];
-
-  for i in [1 .. 2 * n] do
-    if not IsBound(ext[blocks[i]]) then
-      ext[blocks[i]] := [];
-    fi;
-    if i <= n then
-      Add(ext[blocks[i]], i);
-    else
-      Add(ext[blocks[i]], -(i - n));
-    fi;
-  od;
-
-  return ext;
-end);
-
 # Constructors
 
 # xx ^ * - linear - 2 * degree - attribute
@@ -803,37 +806,6 @@ function(f)
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
   SetNrBlocks(out, next);
-  return out;
-end);
-
-InstallGlobalFunction(BipartitionNC,
-function(classes)
-  local blocks, n, nrleft, nrblocks, k, out, i, j;
-
-  blocks := [];
-  n := Sum(List(classes, Length)) / 2;
-  nrleft := 0;
-  nrblocks := Length(classes);
-
-  for i in [1 .. Length(classes)] do
-    k := 0; # detect if the class is transverse or not
-    for j in classes[i] do
-      if j < 0 then
-        blocks[- j + n] := i;
-      else
-        nrleft := i;
-        blocks[j] := i;
-      fi;
-    od;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := blocks));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetExtRepOfBipartition(out, AsList(classes));
-  SetNrBlocks(out, nrblocks);
-
   return out;
 end);
 
@@ -1197,42 +1169,6 @@ function(f)
   return true;
 end);
 
-InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
-function(n)
-  local out, nrblocks, vals, j, nrleft, i;
-
-  out := EmptyPlist(2 * n);
-  nrblocks := 0;
-  vals := [1];
-
-  for i in [1 .. n] do
-    j := Random(vals);
-    if j = nrblocks + 1 then
-      nrblocks := nrblocks + 1;
-      Add(vals, nrblocks + 1);
-    fi;
-    out[i] := j;
-  od;
-
-  nrleft := nrblocks;
-
-  for i in [1 .. n] do
-    j := Random(vals);
-    if j = nrblocks + 1 then
-      nrblocks := nrblocks + 1;
-      Add(vals, nrblocks + 1);
-    fi;
-    out[i + n] := j;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := out));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, nrblocks);
-
-  return out;
-end);
 
 InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
 function(n)
@@ -1389,38 +1325,6 @@ end);
 #############################################################################
 # To delete . . .
 #############################################################################
-
-InstallMethod(BipartitionByIntRepNC, "for a list", [IsList],
-function(blocks)
-  local n, next, seen, nrleft, out, i;
-
-  n := Length(blocks) / 2;
-  next := 0;
-  seen := BlistList([1 .. 2 * n], []);
-
-  for i in [1 .. n] do
-    if not seen[blocks[i]] then
-      next := next + 1;
-      seen[blocks[i]] := true;
-    fi;
-  od;
-
-  nrleft := next;
-
-  for i in [n + 1 .. 2 * n] do
-    if not seen[blocks[i]] then #new block
-      next := next + 1;
-      seen[blocks[i]] := true;
-    fi;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := blocks));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, next);
-  return out;
-end);
 
 # roll into Bipartition
 

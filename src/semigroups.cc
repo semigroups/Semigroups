@@ -12,6 +12,7 @@
 
 #include "semigroups.h"
 #include "boolean.h"
+#include "bipart.h"
 
 #include "semigroups++/semigroups.h"
 
@@ -768,6 +769,14 @@ static StructGVarFunc GVarFuncs [] = {
                           "ufdata"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", UF_BLOCKS, 1,
                           "ufdata"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NC, 1,
+                          "BIPART_NC"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_EXT_REP, 1,
+                          "BIPART_EXT_REP"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_INT_REP, 1,
+                          "BIPART_INT_REP"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_DEGREE, 1,
+                          "BIPART_DEGREE"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 
@@ -788,6 +797,7 @@ static Int InitKernel( StructInitInfo *module )
 
     ImportGVarFromLibrary( "IsBipartition", &IsBipartition );
     ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
+    ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
 
     ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
     ImportGVarFromLibrary( "BooleanMatType", &BooleanMatType );

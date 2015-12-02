@@ -9,10 +9,13 @@
 #ifndef SRC_BIPART_H_
 #define SRC_BIPART_H_
 
-#include <assert.h>
 #include "src/compiled.h"
 #include "src/types.h"
+#include <assert.h>
 
-Obj BIPART_NC (Obj);
+Obj BIPART_NC      (Obj, Obj);
+Obj BIPART_EXT_REP (Obj, Obj);
+Obj BIPART_INT_REP (Obj, Obj);
+Obj BIPART_DEGREE  (Obj, Obj);
 
 #endif // SRC_BIPART_H_

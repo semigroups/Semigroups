@@ -30,8 +30,8 @@ class Converter {
 
 template <typename T>
 class TransConverter : public Converter {
-  
-  public: 
+
+  public:
 
     Transformation<T>* convert (Obj o, size_t n) {
       assert(IS_TRANS(o));
@@ -41,7 +41,7 @@ class TransConverter : public Converter {
       size_t degree = std::min((size_t) DEG_TRANS(o), n);
       auto   x      = new std::vector<T>();
       x->reserve(std::max(degree, n));
-      
+
       for (i = 0; i < degree; i++) {
         x->push_back(pto[i]);
       }
@@ -62,7 +62,7 @@ class TransConverter : public Converter {
     }
 
   private:
-    
+
     inline Obj NEW_TRANS (size_t deg) {
       if (deg < 65536) {
         return NEW_TRANS2(deg);
@@ -84,7 +84,7 @@ class TransConverter : public Converter {
 template <typename T>
 class PPermConverter : public Converter {
 
-  public: 
+  public:
 
     PartialPerm<T>* convert (Obj o, size_t n) {
       assert(IS_PPERM(o));
@@ -109,7 +109,7 @@ class PPermConverter : public Converter {
     // similar to FuncDensePartialPermNC in gap/src/pperm.c
     Obj unconvert (Element* x) {
       auto xx  = static_cast<PartialPerm<T>*>(x);
-      T    deg = xx->degree(); 
+      T    deg = xx->degree();
 
       //remove trailing 0s
       while (deg > 0 && (*xx)[deg - 1] == UNDEFINED) {
@@ -133,9 +133,9 @@ class PPermConverter : public Converter {
       set_codeg(o, deg, codeg);
       return o;
     }
-  
+
   private:
-   
+
     void set_codeg (Obj o, T deg, T codeg) {
       if (deg < 65536) {
         CODEG_PPERM2(o) = codeg;
@@ -166,10 +166,10 @@ class PPermConverter : public Converter {
 
 class BoolMatConverter : public Converter {
 
-  public: 
+  public:
 
     BooleanMat* convert   (Obj o, size_t n);
-    Obj         unconvert (Element* x  );
+    Obj         unconvert (Element* x);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -178,14 +178,14 @@ class BoolMatConverter : public Converter {
 
 class BipartConverter : public Converter {
 
-  public: 
+  public:
 
     Bipartition* convert   (Obj o, size_t n);
     Obj          unconvert (Element* x);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// Matrices over semirings 
+// Matrices over semirings
 ////////////////////////////////////////////////////////////////////////////////
 
 class MatrixOverSemiringConverter : public Converter {
@@ -196,18 +196,18 @@ class MatrixOverSemiringConverter : public Converter {
       delete _semiring;
     }
 
-    MatrixOverSemiringConverter (Semiring* semiring, 
-                                 Obj       gap_zero, 
-                                 Obj       gap_type) 
-      : _semiring(semiring), 
+    MatrixOverSemiringConverter (Semiring* semiring,
+                                 Obj       gap_zero,
+                                 Obj       gap_type)
+      : _semiring(semiring),
         _gap_zero(gap_zero),
         _gap_type(gap_type) {}
 
     virtual MatrixOverSemiring* convert   (Obj      o, size_t n);
     virtual Obj                 unconvert (Element* x          );
 
-  protected: 
-    
+  protected:
+
     Semiring* _semiring;
     Obj       _gap_zero;
     Obj       _gap_type;
@@ -221,8 +221,8 @@ class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
 
   public:
 
-    ProjectiveMaxPlusMatrixConverter(Semiring* semiring, 
-                                     Obj       gap_zero, 
+    ProjectiveMaxPlusMatrixConverter(Semiring* semiring,
+                                     Obj       gap_zero,
                                      Obj       gap_type)
       : MatrixOverSemiringConverter(semiring, gap_zero, gap_type) {}
 
@@ -245,7 +245,7 @@ class MatrixOverPrimeFieldConverter : public MatrixOverSemiringConverter {
 
   public:
 
-    MatrixOverPrimeFieldConverter(PrimeField* field, 
+    MatrixOverPrimeFieldConverter(PrimeField* field,
                                   Obj         gap_type)
       : MatrixOverSemiringConverter(field, 0, gap_type) {}
 
