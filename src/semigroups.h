@@ -32,13 +32,23 @@ extern "C" {
  * are defined.
 *******************************************************************************/
 
-void SemigroupsBagFreeFunc(Obj o) {
+void SemigroupsBagFreeFunc (Obj o) {
   if (IS_CONVERTER_BAG(o)) {
     delete CLASS_OBJ<Converter>(o);
   } else if (IS_SEMIGROUP_BAG(o)) {
     delete CLASS_OBJ<Semigroup>(o);
   } else if (IS_GAP_BIPART_BAG(o)) {
     delete CLASS_OBJ<Bipartition>(o);
+  }
+}
+
+void SemigroupsMarkSubBags (Obj o) {
+  if (SIZE_OBJ(o) > 2) {
+    for (size_t i = 2; i < SIZE_OBJ(o); i++) {
+      if (ADDR_OBJ(o)[i] != NULL) {
+        MARK_BAG(ADDR_OBJ(o)[i]);
+      }
+    }
   }
 }
 

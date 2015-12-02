@@ -7,7 +7,26 @@
 
 #include "src/bipart.h"
 #include "src/semigroups++/elements.h"
+#include "src/permutat.h"
 #include <vector>
+
+// Helper function
+
+Obj NEW_BIPART (Bipartition* x) {
+
+  // construct GAP wrapper for C++ object
+  Obj wrapper = NewSemigroupsBag(x, GAP_BIPART, 4);
+
+  // put the GAP wrapper in a list and Objectify
+  Obj out = NEW_PLIST(T_PLIST, 1);
+  SET_LEN_PLIST(out, 1);
+  SET_ELM_PLIST(out, 1, wrapper);
+  TYPE_POSOBJ(out) = BipartitionType;
+  RetypeBag(out, T_POSOBJ);
+  CHANGED_BAG(out);
+
+  return out;
+}
 
 // Create a bipartition
 // This is just a wrapper for the C++ objects.
@@ -76,23 +95,16 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
   x->set_nr_left_blocks(nr_left_blocks + 1);
   x->set_nr_blocks(nr_blocks + 1);
 
+  Obj out = NEW_BIPART(x);
+
   // construct GAP wrapper for C++ object
-  Obj wrapper = NewSemigroupsBag(x, GAP_BIPART, 4);
+  Obj wrapper = ELM_PLIST(out, 1);
   if (by_ext_rep) {
     ADDR_OBJ(wrapper)[2] = gap_blocks; //copy blocks here? FIXME
   } else {
     ADDR_OBJ(wrapper)[3] = gap_blocks; //copy blocks here? FIXME
   }
   CHANGED_BAG(wrapper);
-
-  // put the GAP wrapper in a list and Objectify
-  // FIXME this should be unnecessary
-  Obj out = NEW_PLIST(T_PLIST, 1);
-  SET_LEN_PLIST(out, 1);
-  SET_ELM_PLIST(out, 1, wrapper);
-  TYPE_POSOBJ(out) = BipartitionType;
-  RetypeBag(out, T_POSOBJ);
-  CHANGED_BAG(out);
 
   return out;
 }
@@ -153,4 +165,106 @@ Obj BIPART_INT_REP (Obj self, Obj bipart) {
 Obj BIPART_DEGREE (Obj self, Obj bipart) {
   Bipartition* x = CLASS_OBJ<Bipartition>(ELM_PLIST(bipart, 1));
   return INTOBJ_INT(x->degree());
+}
+
+Obj BIPART_NR_BLOCKS (Obj self, Obj bipart) {
+  Bipartition* x = CLASS_OBJ<Bipartition>(ELM_PLIST(bipart, 1));
+  return INTOBJ_INT(x->nr_blocks());
+}
+
+Obj BIPART_NR_LEFT_BLOCKS (Obj self, Obj bipart) {
+  Bipartition* x = CLASS_OBJ<Bipartition>(ELM_PLIST(bipart, 1));
+  return INTOBJ_INT(x->nr_left_blocks());
+}
+
+Obj BIPART_RANK (Obj self, Obj bipart) {
+  Bipartition* x = CLASS_OBJ<Bipartition>(ELM_PLIST(bipart, 1));
+  return INTOBJ_INT(x->rank());
+}
+
+Obj BIPART_PROD (Obj self, Obj x, Obj y) {
+
+  Element* xx = CLASS_OBJ<Element>(ELM_PLIST(x, 1));
+  Element* yy = CLASS_OBJ<Element>(ELM_PLIST(y, 1));
+
+  Bipartition* z = new Bipartition(xx->degree());
+  z->redefine(xx, yy);
+
+  return NEW_BIPART(z);
+}
+
+Obj BIPART_EQ (Obj self, Obj x, Obj y) {
+  Bipartition* xx = CLASS_OBJ<Bipartition>(ELM_PLIST(x, 1));
+  Bipartition* yy = CLASS_OBJ<Bipartition>(ELM_PLIST(y, 1));
+  return (xx->equals(yy) ? True : False);
+}
+
+Obj BIPART_LT (Obj self, Obj x, Obj y) {
+  Bipartition* xx = CLASS_OBJ<Bipartition>(ELM_PLIST(x, 1));
+  Bipartition* yy = CLASS_OBJ<Bipartition>(ELM_PLIST(y, 1));
+
+  return (xx < yy ? True : False);
+}
+
+// TODO this should go into semigroups++
+
+Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
+  Bipartition* xx = CLASS_OBJ<Bipartition>(ELM_PLIST(x, 1));
+  Bipartition* yy = CLASS_OBJ<Bipartition>(ELM_PLIST(y, 1));
+
+  size_t deg  = xx->degree();
+  Obj p       = NEW_PERM4(deg);
+  UInt4* ptrp = ADDR_PERM4(p);
+
+  // find indices of right blocks of <x>
+  size_t  index = 0;
+  std::vector<UInt4> tab = std::vector<UInt4>();
+  tab.resize(2 * deg, -1);
+  // FIXME reuse memory
+
+  for (size_t i = deg; i < 2 * deg; i++) {
+    if (tab[xx->block(i)] == (UInt4) -1) {
+      tab[xx->block(i)] = index;
+      index++;
+    }
+    ptrp[i - deg] = i - deg;
+  }
+
+  for (size_t i = deg; i < 2 * deg; i++) {
+    if (yy->block(i) < xx->nr_left_blocks()) {
+      ptrp[tab[yy->block(i)]] = tab[xx->block(i)];
+    }
+  }
+  return p;
+}
+
+Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
+
+  Bipartition* xx = CLASS_OBJ<Bipartition>(ELM_PLIST(x, 1));
+
+  size_t deg  = xx->degree();
+  size_t next = xx->nr_left_blocks();
+  std::vector<bool> lookup = xx->trans_blocks_lookup();
+
+  std::vector<size_t> table  = std::vector<size_t>();
+  table.resize(2 * deg, -1);
+  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+  blocks->resize(2 * deg, -1);
+
+  for (size_t i = 0; i < deg; i++) {
+    (*blocks)[i] = xx->block(i);
+    if (lookup[xx->block(i)]) {
+      (*blocks)[i + deg] = xx->block(i);
+    } else if (table[xx->block(i)] != (size_t) -1) {
+      (*blocks)[i + deg] = table[xx->block(i)];
+    } else {
+      table[xx->block(i)] = next;
+      (*blocks)[i + deg] = next;
+      next++;
+    }
+  }
+
+  Bipartition* out = new Bipartition(blocks);
+  out->set_nr_blocks(next);
+  return NEW_BIPART(out);
 }

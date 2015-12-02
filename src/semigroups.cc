@@ -770,13 +770,29 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.c", UF_BLOCKS, 1,
                           "ufdata"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NC, 1,
-                          "BIPART_NC"),
+                          "list"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_EXT_REP, 1,
-                          "BIPART_EXT_REP"),
+                          "x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_INT_REP, 1,
-                          "BIPART_INT_REP"),
+                          "x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_DEGREE, 1,
-                          "BIPART_DEGREE"),
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RANK, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_BLOCKS, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_LEFT_BLOCKS, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_PROD, 2,
+                          "x, y"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_EQ, 2,
+                          "x, y"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LT, 2,
+                          "x, y"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_PERM_LEFT_QUO, 2,
+                          "x, y"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LEFT_PROJ, 1,
+                          "x"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 
@@ -789,7 +805,7 @@ static Int InitKernel( StructInitInfo *module )
     InitHdlrFuncsFromTable( GVarFuncs );
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
     PrintObjFuncs[T_SEMI] = PrintSemi;
-    InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
+    InitMarkFuncBags(T_SEMI, &SemigroupsMarkSubBags);
     InitFreeFuncBag(T_SEMI, &SemigroupsBagFreeFunc);
 
     ImportGVarFromLibrary( "infinity", &infinity);

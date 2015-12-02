@@ -36,7 +36,7 @@ IO_Unpicklers.BIPA := function(file)
   if blocks = IO_Error then
     return IO_Error;
   fi;
-  return BipartitionByIntRepNC(blocks);
+  return BIPART_NC(blocks);
 end;
 
 #############################################################################
@@ -49,8 +49,74 @@ InstallTrueMethod(IsPermBipartition, IsTransBipartition
 InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 
 #############################################################################
-# GAP level
+# GAP level - directly using interface to C/C++ level
 #############################################################################
+
+# Fundamental properties
+
+InstallMethod(DegreeOfBipartition, "for a bipartition",
+[IsBipartition], BIPART_DEGREE);
+
+InstallMethod(NrBlocks, "for a bipartition",
+[IsBipartition], BIPART_NR_BLOCKS);
+
+InstallMethod(NrLeftBlocks, "for a bipartition",
+[IsBipartition], BIPART_NR_LEFT_BLOCKS);
+
+InstallMethod(RankOfBipartition, "for a bipartition",
+[IsBipartition], BIPART_RANK);
+
+# Constructors
+
+InstallGlobalFunction(Bipartition,
+function(classes)
+  local n, copy, i, j;
+
+  if not IsList(classes)
+      or ForAny(classes, x -> not IsHomogeneousList(x)
+                                  or not IsDuplicateFree(x)) then
+    ErrorMayQuit("Semigroups: Bipartition: usage,\n",
+                 "the argument <classes> must consist of duplicate-free ",
+                 "homogeneous lists,");
+  fi;
+
+  if not ForAll(classes, x -> ForAll(x, i -> IsPosInt(i) or IsNegInt(i))) then
+    ErrorMayQuit("Semigroups: Bipartition: usage,\n",
+                 "the argument <classes> must consist of positive and/or ",
+                 "negative integers,\n");
+  fi;
+
+  copy := Union(classes);
+  if not IsEmpty(classes)
+      and (copy <> Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)])
+           or Minimum(copy) > 0) then
+    ErrorMayQuit("Semigroups: Bipartition: usage,\n",
+                 "the union of the argument <classes> must be ",
+                 "[-n..-1, 1..n],");
+  fi;
+
+  n := Sum(List(classes, Length)) / 2;
+  copy := List(classes, ShallowCopy);
+  for i in [1 .. Length(copy)] do
+    for j in [1 .. Length(copy[i])] do
+      if copy[i][j] < 0 then
+        copy[i][j] := AbsInt(copy[i][j]) + n;
+      fi;
+    od;
+  od;
+
+  Perform(copy, Sort);
+  Sort(copy);
+
+  for i in [1 .. Length(copy)] do
+    for j in [1 .. Length(copy[i])] do
+      if copy[i][j] > n then
+        copy[i][j] := -copy[i][j] + n;
+      fi;
+    od;
+  od;
+  return BIPART_NC(copy);
+end);
 
 InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
 function(n)
@@ -72,38 +138,72 @@ function(n)
   return BIPART_NC(out);
 end);
 
-InstallMethod(DegreeOfBipartition, "for a bipartition",
-[IsBipartition],
-function(x)
-  return BIPART_DEGREE(x);
-end);
+# Operators
 
-#HERE
+InstallMethod(\*, "for a bipartition and bipartition",
+[IsBipartition, IsBipartition], BIPART_PROD);
 
-InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
+InstallMethod(\<, "for a bipartition and bipartition",
+[IsBipartition, IsBipartition], BIPART_LT);
+
+InstallMethod(\=, "for a bipartition and bipartition",
+[IsBipartition, IsBipartition], BIPART_EQ);
+
+InstallMethod(PermLeftQuoBipartition, "for a bipartition and bipartition",
 [IsBipartition, IsBipartition],
 function(x, y)
 
-  if not (IsPartialPermBipartition(x) and IsPartialPermBipartition(y)) then
-    ErrorMayQuit("Semigroups: PartialPermLeqBipartition: usage,\n",
-                 "the arguments must be partial perm bipartitions,");
-  elif DegreeOfBipartition(x) <> DegreeOfBipartition(y) then
-    ErrorMayQuit("Semigroups: PartialPermLeqBipartition: usage,\n",
-                 "the arguments must have equal degree,");
+  if LeftBlocks(x) <> LeftBlocks(y) or RightBlocks(x) <> RightBlocks(y) then
+    ErrorMayQuit("Semigroups: PermLeftQuoBipartition: usage,\n",
+                 "the arguments must have equal left and right blocks,");
   fi;
-
-  return AsPartialPerm(x) < AsPartialPerm(y);
+  return BIPART_PERM_LEFT_QUO(x, y);
 end);
 
-# the Other is to avoid warning on opening GAP
+# Attributes
 
-InstallOtherMethod(InverseMutable, "for a bipartition", [IsBipartition],
-function(f)
-  if IsBlockBijection(f) or IsPartialPermBipartition(f) then
-    return Star(f);
-  fi;
-  return fail;
-end);
+# xx ^ * - linear - 2 * degree
+
+InstallMethod(LeftProjection, "for a bipartition", [IsBipartition],
+BIPART_LEFT_PROJ);
+
+#function(f)
+#  local n, next, blocks, lookup, table, out, i;
+#
+#  n := DegreeOfBipartition(f);
+#  next := NrLeftBlocks(f);
+#  blocks := f!.blocks;
+#  lookup := SEMIGROUPS.TransBlocksLookup(f);
+#  table := [];
+#  out := [];
+#
+#  for i in [1 .. n] do
+#    out[i] := blocks[i];
+#    if lookup[blocks[i]] then
+#      out[i + n] := blocks[i];
+#    elif IsBound(table[blocks[i]]) then
+#      out[i + n] := table[blocks[i]];
+#    else
+#      next := next + 1;
+#      table[blocks[i]] := next;
+#      out[i + n] := next;
+#    fi;
+#  od;
+#
+#  out := Objectify(BipartitionType, rec(blocks := out));
+#
+#  SetDegreeOfBipartition(out, n);
+#  SetNrLeftBlocks(out, NrLeftBlocks(f));
+#  SetNrBlocks(out, next);
+#  SetRankOfBipartition(out, RankOfBipartition(f));
+#  return out;
+#end);
+
+#############################################################################
+# GAP level
+#############################################################################
+
+# Attributes
 
 # not a synonym since NrTransverseBlocks also applies to blocks
 
@@ -113,7 +213,62 @@ RankOfBipartition);
 InstallMethod(NrRightBlocks, "for a bipartition", [IsBipartition],
 x -> NrBlocks(x) - NrLeftBlocks(x) + NrTransverseBlocks(x));
 
-# operators
+InstallMethod(OneMutable, "for a bipartition",
+[IsBipartition], x -> IdentityBipartition(DegreeOfBipartition(x)));
+
+InstallMethod(OneMutable, "for a bipartition collection",
+[IsBipartitionCollection], x ->
+IdentityBipartition(DegreeOfBipartitionCollection(x)));
+
+# the Other is to avoid warning on opening GAP
+
+InstallOtherMethod(InverseMutable, "for a bipartition", [IsBipartition],
+function(x)
+  if IsBlockBijection(x) or IsPartialPermBipartition(x) then
+    return Star(x);
+  fi;
+  return fail;
+end);
+
+# Properties
+
+InstallMethod(IsBlockBijection, "for a bipartition",
+[IsBipartition],
+function(x)
+  return NrBlocks(x) = NrLeftBlocks(x) and NrRightBlocks(x) = NrLeftBlocks(x);
+end);
+
+InstallMethod(IsPartialPermBipartition, "for a bipartition",
+[IsBipartition],
+function(x)
+  return NrLeftBlocks(x) = DegreeOfBipartition(x)
+    and NrRightBlocks(x) = DegreeOfBipartition(x);
+end);
+
+# a bipartition is a transformation if and only if the second row is a
+# permutation of [1 .. n], where n is the degree.
+
+InstallMethod(IsTransBipartition, "for a bipartition",
+[IsBipartition],
+function(x)
+  return NrLeftBlocks(x) = NrTransverseBlocks(x)
+   and NrRightBlocks(x) = DegreeOfBipartition(x);
+end);
+
+InstallMethod(IsDualTransBipartition, "for a bipartition", [IsBipartition],
+function(x)
+  return NrRightBlocks(x) = NrTransverseBlocks(x)
+   and NrLeftBlocks(x) = DegreeOfBipartition(x);
+end);
+
+InstallMethod(IsPermBipartition, "for a bipartition",
+[IsBipartition],
+function(x)
+  return IsPartialPermBipartition(x)
+    and NrTransverseBlocks(x) = DegreeOfBipartition(x);
+end);
+
+# Fundamental operators
 
 InstallMethod(\*, "for a bipartition and a perm",
 [IsBipartition, IsPerm],
@@ -194,16 +349,25 @@ function(f, p)
   return p ^ -1 * f * p;
 end);
 
-InstallMethod(PermLeftQuoBipartition, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition],
-function(f, g)
+# Other operators
 
-  if LeftBlocks(f) <> LeftBlocks(g) or RightBlocks(f) <> RightBlocks(g) then
-    ErrorMayQuit("Semigroups: PermLeftQuoBipartition: usage,\n",
-                 "the arguments must have equal left and right blocks,");
+InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
+[IsBipartition, IsBipartition],
+function(x, y)
+
+  if not (IsPartialPermBipartition(x) and IsPartialPermBipartition(y)) then
+    ErrorMayQuit("Semigroups: PartialPermLeqBipartition: usage,\n",
+                 "the arguments must be partial perm bipartitions,");
+  elif DegreeOfBipartition(x) <> DegreeOfBipartition(y) then
+    ErrorMayQuit("Semigroups: PartialPermLeqBipartition: usage,\n",
+                 "the arguments must have equal degree,");
   fi;
-  return PermLeftQuoBipartitionNC(f, g);
+
+  return AsPartialPerm(x) < AsPartialPerm(y);
 end);
+
+
+# Changing representations
 
 InstallMethod(AsBipartition, "for a permutation and zero",
 [IsPerm, IsZeroCyc],
@@ -270,111 +434,20 @@ function(x)
   return Bipartition(Union(ExtRepOfPBR(x)));
 end);
 
-#
-
 InstallMethod(AsBlockBijection, "for a partial perm",
 [IsPartialPerm],
-function(f)
-  return AsBlockBijection(f, Maximum(DegreeOfPartialPerm(f),
-                                     CodegreeOfPartialPerm(f)) + 1);
+function(x)
+  return AsBlockBijection(x, Maximum(DegreeOfPartialPerm(x),
+                                     CodegreeOfPartialPerm(x)) + 1);
 end);
 
 InstallMethod(AsBlockBijection, "for a partial perm and zero",
 [IsPartialPerm, IsZeroCyc],
-function(f, n)
+function(x, n)
   return Bipartition([]);
 end);
 
-InstallMethod(IsBlockBijection, "for a bipartition",
-[IsBipartition],
-x -> NrBlocks(x) = NrLeftBlocks(x) and NrRightBlocks(x) = NrLeftBlocks(x));
-
-InstallMethod(IsPartialPermBipartition, "for a bipartition",
-[IsBipartition],
-function(f)
-  return NrLeftBlocks(f) = DegreeOfBipartition(f)
-    and NrRightBlocks(f) = DegreeOfBipartition(f);
-end);
-
-# a bipartition is a transformation if and only if the second row is a
-# permutation of [1..n], where n is the degree.
-
-InstallMethod(IsTransBipartition, "for a bipartition",
-[IsBipartition],
-function(f)
-  return NrLeftBlocks(f) = NrTransverseBlocks(f)
-   and NrRightBlocks(f) = DegreeOfBipartition(f);
-end);
-
-InstallMethod(IsDualTransBipartition, "for a bipartition", [IsBipartition],
-function(f)
-  return NrRightBlocks(f) = NrTransverseBlocks(f)
-   and NrLeftBlocks(f) = DegreeOfBipartition(f);
-end);
-
-InstallMethod(IsPermBipartition, "for a bipartition",
-[IsBipartition],
-function(f)
-  return IsPartialPermBipartition(f)
-    and NrTransverseBlocks(f) = DegreeOfBipartition(f);
-end);
-
-InstallGlobalFunction(Bipartition,
-function(classes)
-  local n, copy, i, j;
-
-  if not IsList(classes)
-      or ForAny(classes, x -> not IsHomogeneousList(x)
-                                  or not IsDuplicateFree(x)) then
-    ErrorMayQuit("Semigroups: Bipartition: usage,\n",
-                 "the argument <classes> must consist of duplicate-free ",
-                 "homogeneous lists,");
-  fi;
-
-  if not ForAll(classes, x -> ForAll(x, i -> IsPosInt(i) or IsNegInt(i))) then
-    ErrorMayQuit("Semigroups: Bipartition: usage,\n",
-                 "the argument <classes> must consist of positive and/or ",
-                 "negative integers,\n");
-  fi;
-
-  copy := Union(classes);
-  if not IsEmpty(classes)
-      and (copy <> Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)])
-           or Minimum(copy) > 0) then
-    ErrorMayQuit("Semigroups: Bipartition: usage,\n",
-                 "the union of the argument <classes> must be ",
-                 "[-n..-1, 1..n],");
-  fi;
-
-  n := Sum(List(classes, Length)) / 2;
-  copy := List(classes, ShallowCopy);
-  for i in [1 .. Length(copy)] do
-    for j in [1 .. Length(copy[i])] do
-      if copy[i][j] < 0 then
-        copy[i][j] := AbsInt(copy[i][j]) + n;
-      fi;
-    od;
-  od;
-
-  Perform(copy, Sort);
-  Sort(copy);
-
-  for i in [1 .. Length(copy)] do
-    for j in [1 .. Length(copy[i])] do
-      if copy[i][j] > n then
-        copy[i][j] := -copy[i][j] + n;
-      fi;
-    od;
-  od;
-  return BIPART_NC(copy);
-end);
-
-InstallMethod(OneMutable, "for a bipartition",
-[IsBipartition], x -> IdentityBipartition(DegreeOfBipartition(x)));
-
-InstallMethod(OneMutable, "for a bipartition collection",
-[IsBipartitionCollection], x ->
-IdentityBipartition(DegreeOfBipartitionCollection(x)));
+# Viewing, printing etc
 
 InstallMethod(ViewString, "for a bipartition",
 [IsBipartition],
@@ -385,11 +458,11 @@ function(x)
     return "\><empty bipartition>\<";
   fi;
 
-  #if IsBlockBijection(x) then
-  #  str := "\>\><block bijection:\< ";
-  #else
+  if IsBlockBijection(x) then
+    str := "\>\><block bijection:\< ";
+  else
     str := "\>\><bipartition:\< ";
-  #fi;
+  fi;
 
   ext := BIPART_EXT_REP(x);
   Append(str, "\>");
@@ -405,13 +478,11 @@ function(x)
   return str;
 end);
 
-#
-
 InstallMethod(PrintString, "for a bipartition",
 [IsBipartition],
-function(f)
+function(x)
   local ext, str, i;
-  ext := BIPART_EXT_REP(f);
+  ext := BIPART_EXT_REP(x);
   str := Concatenation("\>\>Bipartition(\< \>[ ", PrintString(ext[1]));
   for i in [2 .. Length(ext)] do
     Append(str, ",\< \>");
@@ -421,8 +492,6 @@ function(f)
   Append(str, " )\<");
   return str;
 end);
-
-#
 
 InstallMethod(PrintString, "for a bipartition collection",
 [IsBipartitionCollection],
@@ -449,7 +518,7 @@ function(coll)
   return str;
 end);
 
-#collections
+# Bipartition collections
 
 InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
 [IsBipartitionCollection],
@@ -478,246 +547,131 @@ end);
 # returns a blist <out> for the left blocks so that <out[i]> is <true> if
 # and only the <i>th block of <f> is a transverse block.
 
-SEMIGROUPS.TransBlocksLookup := function(x)
-  local n, k, blocks, out, i;
+#SEMIGROUPS.TransBlocksLookup := function(x)
+#  local n, k, blocks, out, i;
+#
+#  if not IsBipartition(x) then
+#    ErrorMayQuit("Semigroups: SEMIGROUPS.TransBlocksLookup: usage,\n",
+#                 "the argument must be a bipartition,");
+#  fi;
+#
+#  if IsBound(x!.lookup) then
+#    return x!.lookup;
+#  fi;
+#
+#  n      := DegreeOfBipartition(x);
+#  k      := NrLeftBlocks(x);
+#  blocks := x!.blocks;
+#  out    := BlistList([1 .. k], []);
+#
+#  for i in [1 .. n] do
+#    if blocks[i + n] <= k then
+#      out[blocks[i + n]] := true;
+#    fi;
+#  od;
+#
+#  x!.lookup := out;
+#  return out;
+#end;
 
-  if not IsBipartition(x) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS.TransBlocksLookup: usage,\n",
-                 "the argument must be a bipartition,");
-  fi;
+#InstallMethod(LeftBlocks, "for a bipartition", [IsBipartition],
+#function(f)
+#  local n, blocks, tab, out, nrblocks, i;
+#
+#  n := DegreeOfBipartition(f);
+#  blocks := f!.blocks;
+#  tab := List([1 .. n], x -> false);
+#  out := EmptyPlist(n + 2);
+#  out[1] := 0;
+#  out[n + 2] := [];
+#  nrblocks := 0;
+#
+#  for i in [1 .. n] do
+#    out[i + 1] := blocks[i];
+#    if not tab[blocks[i]] then
+#      out[1] := out[1] + 1;
+#      out[n + 1 + blocks[i]] := 0;
+#      tab[blocks[i]] := true;
+#    fi;
+#  od;
+#
+#  for i in [n + 1 .. 2 * n] do
+#    if blocks[i] <= out[1] then #transverse block!
+#      out[n + 1 + blocks[i]] := 1;
+#    fi;
+#  od;
+#
+#  out := Objectify(BlocksType, rec(blocks := out));
+#  return out;
+#end);
+#
+#InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
+#function(f)
+#  local n, blocks, tab, out, nrblocks, i;
+#
+#  n := DegreeOfBipartition(f);
+#  blocks := f!.blocks;
+#  tab := EmptyPlist(2 * n);
+#  out := [];
+#  nrblocks := 0;
+#
+#  for i in [n + 1 .. 2 * n] do
+#    if not IsBound(tab[blocks[i]]) then
+#      nrblocks := nrblocks + 1;
+#      tab[blocks[i]] := nrblocks;
+#      if blocks[i] <= NrLeftBlocks(f) then
+#        out[n + 1 + nrblocks] := 1; #signed
+#      else
+#        out[n + 1 + nrblocks] := 0; #unsigned
+#      fi;
+#    fi;
+#    out[i - n + 1] := tab[blocks[i]];
+#  od;
+#  out[1] := nrblocks;
+#  out := Objectify(BlocksType, rec(blocks := out));
+#  return out;
+#end);
 
-  if IsBound(x!.lookup) then
-    return x!.lookup;
-  fi;
-
-  n      := DegreeOfBipartition(x);
-  k      := NrLeftBlocks(x);
-  blocks := x!.blocks;
-  out    := BlistList([1 .. k], []);
-
-  for i in [1 .. n] do
-    if blocks[i + n] <= k then
-      out[blocks[i + n]] := true;
-    fi;
-  od;
-
-  x!.lookup := out;
-  return out;
-end;
-
-InstallMethod(LeftBlocks, "for a bipartition", [IsBipartition],
-function(f)
-  local n, blocks, tab, out, nrblocks, i;
-
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  tab := List([1 .. n], x -> false);
-  out := EmptyPlist(n + 2);
-  out[1] := 0;
-  out[n + 2] := [];
-  nrblocks := 0;
-
-  for i in [1 .. n] do
-    out[i + 1] := blocks[i];
-    if not tab[blocks[i]] then
-      out[1] := out[1] + 1;
-      out[n + 1 + blocks[i]] := 0;
-      tab[blocks[i]] := true;
-    fi;
-  od;
-
-  for i in [n + 1 .. 2 * n] do
-    if blocks[i] <= out[1] then #transverse block!
-      out[n + 1 + blocks[i]] := 1;
-    fi;
-  od;
-
-  out := Objectify(BlocksType, rec(blocks := out));
-  return out;
-end);
-
-InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
-function(f)
-  local n, blocks, tab, out, nrblocks, i;
-
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  tab := EmptyPlist(2 * n);
-  out := [];
-  nrblocks := 0;
-
-  for i in [n + 1 .. 2 * n] do
-    if not IsBound(tab[blocks[i]]) then
-      nrblocks := nrblocks + 1;
-      tab[blocks[i]] := nrblocks;
-      if blocks[i] <= NrLeftBlocks(f) then
-        out[n + 1 + nrblocks] := 1; #signed
-      else
-        out[n + 1 + nrblocks] := 0; #unsigned
-      fi;
-    fi;
-    out[i - n + 1] := tab[blocks[i]];
-  od;
-  out[1] := nrblocks;
-  out := Objectify(BlocksType, rec(blocks := out));
-  return out;
-end);
-
-#operators
-
-InstallMethod(\*, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition],
-function(a, b)
-  local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next,
-  nrleft, c, i;
-
-  n := DegreeOfBipartition(a);
-  Assert(1, n = DegreeOfBipartition(b));
-  anr := NrBlocks(a);
-
-  fuse := [1 .. anr + NrBlocks(b)];
-
-  fuseit := function(i)
-    while fuse[i] < i do
-      i := fuse[i];
-    od;
-    return i;
-  end;
-
-  ablocks := a!.blocks;
-  bblocks := b!.blocks;
-
-  for i in [1 .. n] do
-    x := fuseit(ablocks[i + n]);
-    y := fuseit(bblocks[i] + anr);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-      else
-        fuse[x] := y;
-      fi;
-    fi;
-  od;
-
-  tab := 0 * fuse;    # A table for the old part numbers
-  cblocks := EmptyPlist(2 * n);
-  next := 0;
-
-  for i in [1 .. n] do
-    x := fuseit(ablocks[i]);
-    if tab[x] = 0 then
-      next := next + 1;
-      tab[x] := next;
-    fi;
-    cblocks[i] := tab[x];
-  od;
-
-  nrleft := next;
-
-  for i in [n + 1 .. 2 * n] do
-    x := fuseit(bblocks[i] + anr);
-    if tab[x] = 0 then
-      next := next + 1;
-      tab[x] := next;
-    fi;
-    cblocks[i] := tab[x];
-  od;
-
-  c := Objectify(BipartitionType, rec(blocks := cblocks));
-
-  SetDegreeOfBipartition(c, n);
-  SetNrLeftBlocks(c, nrleft);
-  SetNrBlocks(c, next);
-  return c;
-end);
-
-InstallMethod(\<, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition],
-function(f, g)
-  return f!.blocks < g!.blocks;
-end);
-
-InstallMethod(\=, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition],
-function(f, g)
-  return f!.blocks = g!.blocks;
-end);
+# Operators
 
 # LambdaPerm
 
-InstallGlobalFunction(PermLeftQuoBipartitionNC,
-function(f, g)
-  local n, fblocks, gblocks, p, nr, tab, i;
-
-  n := DegreeOfBipartition(f);
-  fblocks := f!.blocks;
-  gblocks := g!.blocks;
-  p := [1 .. n];
-
-  #figure out which blocks of f correspond to which blocks of the right blocks
-  #of f
-  nr := 0;
-  tab := EmptyPlist(2 * n);
-  for i in [n + 1 .. 2 * n] do
-    if not IsBound(tab[fblocks[i]]) then
-      nr := nr + 1;
-      tab[fblocks[i]] := nr;
-    fi;
-  od;
-
-  nr := NrLeftBlocks(f);
-  for i in [n + 1 .. 2 * n] do
-    if gblocks[i] <= nr then
-      p[tab[gblocks[i]]] := tab[fblocks[i]];
-    fi;
-  od;
-
-  return PermList(p);
-end);
+#InstallGlobalFunction(PermLeftQuoBipartitionNC,
+#function(f, g)
+#  local n, fblocks, gblocks, p, nr, tab, i;
+#
+#  n := DegreeOfBipartition(f);
+#  fblocks := f!.blocks;
+#  gblocks := g!.blocks;
+#  p := [1 .. n];
+#
+#  #figure out which blocks of f correspond to which blocks of the right blocks
+#  #of f
+#  nr := 0;
+#  tab := EmptyPlist(2 * n);
+#  for i in [n + 1 .. 2 * n] do
+#    if not IsBound(tab[fblocks[i]]) then
+#      nr := nr + 1;
+#      tab[fblocks[i]] := nr;
+#    fi;
+#  od;
+#
+#  nr := NrLeftBlocks(f);
+#  for i in [n + 1 .. 2 * n] do
+#    if gblocks[i] <= nr then
+#      p[tab[gblocks[i]]] := tab[fblocks[i]];
+#    fi;
+#  od;
+#
+#  return PermList(p);
+#end);
 
 
 # Properties/attributes
 
-InstallMethod(RankOfBipartition, "for a bipartition",
-[IsBipartition],
-x -> Number(SEMIGROUPS.TransBlocksLookup(x), y -> y = true));
 
 # Constructors
 
-# xx ^ * - linear - 2 * degree - attribute
-
-InstallMethod(LeftProjection, "for a bipartition", [IsBipartition],
-function(f)
-  local n, next, blocks, lookup, table, out, i;
-
-  n := DegreeOfBipartition(f);
-  next := NrLeftBlocks(f);
-  blocks := f!.blocks;
-  lookup := SEMIGROUPS.TransBlocksLookup(f);
-  table := [];
-  out := [];
-
-  for i in [1 .. n] do
-    out[i] := blocks[i];
-    if lookup[blocks[i]] then
-      out[i + n] := blocks[i];
-    elif IsBound(table[blocks[i]]) then
-      out[i + n] := table[blocks[i]];
-    else
-      next := next + 1;
-      table[blocks[i]] := next;
-      out[i + n] := next;
-    fi;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := out));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, NrLeftBlocks(f));
-  SetNrBlocks(out, next);
-  SetRankOfBipartition(out, RankOfBipartition(f));
-  return out;
-end);
 
 # linear - 2*degree
 
@@ -762,52 +716,52 @@ function(f)
   return out;
 end);
 
-# linear - 2*degree
+# linear - 2 * degree
 
-InstallMethod(RightProjection, "for a bipartition",
-[IsBipartition],
-function(f)
-  local n, blocks, table, out, next, nrleft, lookup, i;
-
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  table := [];
-  out := [];
-  next := 0;
-
-  for i in [1 .. n] do
-    if IsBound(table[blocks[i + n]]) then
-      out[i] := table[blocks[i + n]];
-    else
-      next := next + 1;
-      table[blocks[i + n]] := next;
-      out[i] := next;
-    fi;
-  od;
-
-  nrleft := next;
-  table := [];
-  lookup := SEMIGROUPS.TransBlocksLookup(f);
-
-  for i in [1 .. n] do
-    if blocks[i + n] <= NrLeftBlocks(f) and lookup[blocks[i + n]] then
-      out[i + n] := out[i];
-    elif IsBound(table[blocks[i + n]]) then
-      out[i + n] := table[blocks[i + n]];
-    else
-      next := next + 1;
-      table[blocks[i + n]] := next;
-      out[i + n] := next;
-    fi;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := out));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, next);
-  return out;
-end);
+#InstallMethod(RightProjection, "for a bipartition",
+#[IsBipartition],
+#function(f)
+#  local n, blocks, table, out, next, nrleft, lookup, i;
+#
+#  n := DegreeOfBipartition(f);
+#  blocks := f!.blocks;
+#  table := [];
+#  out := [];
+#  next := 0;
+#
+#  for i in [1 .. n] do
+#    if IsBound(table[blocks[i + n]]) then
+#      out[i] := table[blocks[i + n]];
+#    else
+#      next := next + 1;
+#      table[blocks[i + n]] := next;
+#      out[i] := next;
+#    fi;
+#  od;
+#
+#  nrleft := next;
+#  table := [];
+#  lookup := SEMIGROUPS.TransBlocksLookup(f);
+#
+#  for i in [1 .. n] do
+#    if blocks[i + n] <= NrLeftBlocks(f) and lookup[blocks[i + n]] then
+#      out[i + n] := out[i];
+#    elif IsBound(table[blocks[i + n]]) then
+#      out[i + n] := table[blocks[i + n]];
+#    else
+#      next := next + 1;
+#      table[blocks[i + n]] := next;
+#      out[i + n] := next;
+#    fi;
+#  od;
+#
+#  out := Objectify(BipartitionType, rec(blocks := out));
+#
+#  SetDegreeOfBipartition(out, n);
+#  SetNrLeftBlocks(out, nrleft);
+#  SetNrBlocks(out, next);
+#  return out;
+#end);
 
 #############################################################################
 # C/C++ or update to remove access to internals of the object . . .
