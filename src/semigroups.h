@@ -43,8 +43,8 @@ void SemigroupsBagFreeFunc (Obj o) {
 }
 
 void SemigroupsMarkSubBags (Obj o) {
-  if (SIZE_OBJ(o) > 2) {
-    for (size_t i = 2; i < SIZE_OBJ(o); i++) {
+  if ((SIZE_OBJ(o) / sizeof(Obj)) > 2) {
+    for (size_t i = 2; i < (SIZE_OBJ(o) / sizeof(Obj)); i++) {
       if (ADDR_OBJ(o)[i] != NULL) {
         MARK_BAG(ADDR_OBJ(o)[i]);
       }
