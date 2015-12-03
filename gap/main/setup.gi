@@ -525,7 +525,7 @@ function(f, g)
 end);
 
 InstallMethod(LambdaConjugator, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> BipartRightBlocksConjNC);
+[IsBipartitionSemigroup], S -> BIPART_LAMBDA_CONJ);
 
 InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], s ->
@@ -599,7 +599,7 @@ InstallMethod(StabilizerAction, "for a partial perm semigroup",
 [IsPartialPermSemigroup], s -> PROD);
 
 InstallMethod(StabilizerAction, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> OnRightBlocksBipartitionByPerm);
+[IsBipartitionSemigroup], S -> BIPART_STAB_ACTION);
 
 InstallMethod(StabilizerAction, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], s ->

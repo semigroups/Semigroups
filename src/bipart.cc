@@ -263,6 +263,7 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
 
   // find indices of right blocks of <x>
   size_t  index = 0;
+  std::fill(_BUFFER.begin(), std::min(_BUFFER.end(), _BUFFER.begin() + 2 * deg), -1);
   _BUFFER.resize(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
@@ -289,6 +290,7 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
   size_t next = xx->nr_left_blocks();
   std::vector<bool> const& lookup(xx->trans_blocks_lookup());
 
+  std::fill(_BUFFER.begin(), std::min(_BUFFER.end(), _BUFFER.begin() + 2 * deg), -1);
   _BUFFER.resize(2 * deg, -1);
 
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
@@ -317,6 +319,7 @@ Obj BIPART_STAR (Obj self, Obj x) {
   Bipartition* xx = GET_CPP_BIPART(x);
   size_t deg  = xx->degree();
 
+  std::fill(_BUFFER.begin(), std::min(_BUFFER.end(), _BUFFER.begin() + 2 * deg), -1);
   _BUFFER.resize(2 * deg, -1);
 
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
@@ -351,4 +354,143 @@ Obj BIPART_STAR (Obj self, Obj x) {
   out->set_nr_left_blocks(nr_left);
 
   return NEW_GAP_BIPART(out);
+}
+
+// x and y should have equal left blocks
+
+Obj BIPART_LAMBDA_CONJ (Obj self, Obj x, Obj y) {
+
+  Bipartition* xx = GET_CPP_BIPART(x);
+  Bipartition* yy = GET_CPP_BIPART(y);
+
+  size_t deg            = xx->degree();
+  size_t nr_left_blocks = xx->nr_left_blocks();
+  size_t nr_blocks      = std::max(xx->nr_blocks(), yy->nr_blocks());
+
+  std::fill(_BUFFER.begin(),
+            std::min(_BUFFER.end(),
+                     _BUFFER.begin() + nr_left_blocks + 3 * nr_blocks),
+            -1);
+  _BUFFER.resize(nr_left_blocks + 3 * nr_blocks, -1);
+
+  auto   seen = _BUFFER.begin() + nr_left_blocks;
+  auto   src  = seen + nr_blocks;
+  auto   dst  = src + nr_blocks;
+  size_t next = 0;
+
+  for (size_t i = deg; i < 2 * deg; i++) {
+    if (seen[yy->block(i)] == (size_t) -1) {
+      seen[yy->block(i)]++;
+      if (yy->block(i) < nr_left_blocks) { // connected block
+        _BUFFER[yy->block(i)] = next;
+      }
+      next++;
+    }
+  }
+
+  Obj    p    = NEW_PERM4(nr_blocks);
+  UInt4* ptrp = ADDR_PERM4(p);
+  next = 0;
+
+  for (size_t i = deg; i < 2 * deg; i++) {
+    if (seen[xx->block(i)] < 1) {
+      seen[xx->block(i)] += 2;
+      if (xx->block(i) < nr_left_blocks) { // connected block
+        ptrp[next] = _BUFFER[xx->block(i)];
+        src[next]++;
+        dst[_BUFFER[xx->block(i)]]++;
+      }
+      next++;
+    }
+  }
+
+  size_t j = 0;
+  for (size_t i = 0; i < nr_blocks; i++) {
+    if (src[i] == (size_t) -1) {
+      while (dst[j] != (size_t) -1) {
+        j++;
+      }
+      ptrp[i] = j;
+      j++;
+    }
+  }
+  return p;
+}
+
+// x and y should have equal left blocks
+
+Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
+  size_t pdeg;
+
+  // find the degree of the permutation p
+  if (TNUM_OBJ(p) == T_PERM2){
+    UInt2* ptr = ADDR_PERM2(p);
+    pdeg       = DEG_PERM2(p);
+    while (ptr[pdeg] == pdeg) {
+      pdeg--;
+    }
+  } else if (TNUM_OBJ(p) == T_PERM4) {
+    UInt4* ptr = ADDR_PERM4(p);
+    pdeg       = DEG_PERM4(p);
+    while (ptr[pdeg] == pdeg) {
+      pdeg--;
+    }
+  } else {
+    ErrorQuit("usage: <p> must be a list (not a %s)", (Int) TNAM_OBJ(p), 0L);
+  }
+
+  Bipartition* xx = GET_CPP_BIPART(x);
+
+  size_t deg       = xx->degree();
+  size_t nr_blocks = xx->nr_blocks();
+
+  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+  blocks->resize(2 * deg);
+
+  std::fill(_BUFFER.begin(),
+            std::min(_BUFFER.end(),
+                     _BUFFER.begin() + 2 * nr_blocks + std::max(nr_blocks, pdeg)),
+            -1);
+  _BUFFER.resize(2 * nr_blocks + std::max(nr_blocks, pdeg), -1);
+
+  auto tab1 = _BUFFER.begin();
+  auto tab2 = _BUFFER.begin() + nr_blocks;
+  auto q    = tab2 + nr_blocks; // the inverse of p
+
+  if (TNUM_OBJ(p) == T_PERM2){
+    UInt2* ptr = ADDR_PERM2(p);
+    UInt2 i;
+    for (i = 0; i < pdeg; i++) {
+      q[ptr[i]] = static_cast<size_t>(i);
+    }
+    for (; i < deg; i++) {
+      q[i] = static_cast<size_t>(i);
+    }
+  } else if (TNUM_OBJ(p) == T_PERM4) {
+    UInt4* ptr = ADDR_PERM4(p);
+    UInt4 i;
+    for (i = 0; i < pdeg; i++) {
+      q[ptr[i]] = static_cast<size_t>(i);
+    }
+    for (; i < deg; i++) {
+      q[i] = static_cast<size_t>(i);
+    }
+  }
+
+  size_t next = 0;
+
+  for (size_t i = deg; i < 2 * deg; i++) {
+    if (tab1[xx->block(i)] == (size_t) -1) {
+      tab1[xx->block(i)] = q[next];
+      tab2[next]         = xx->block(i);
+      next++;
+    }
+  }
+
+  for (size_t i = 0; i < deg; i++) {
+    (*blocks)[i]       = xx->block(i);
+    (*blocks)[i + deg] = tab2[tab1[xx->block(i + deg)]];
+  }
+
+  return NEW_GAP_BIPART(new Bipartition(blocks));
 }

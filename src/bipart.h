@@ -27,5 +27,9 @@ Obj BIPART_PERM_LEFT_QUO  (Obj, Obj, Obj);
 Obj BIPART_LEFT_PROJ      (Obj, Obj);
 Obj BIPART_RIGHT_PROJ     (Obj, Obj);
 Obj BIPART_STAR           (Obj, Obj);
+Obj BIPART_LAMBDA_CONJ    (Obj, Obj, Obj);
+// OnRightBlocksBipartitionByPerm
+Obj BIPART_STAB_ACTION    (Obj, Obj, Obj);
+
 
 #endif // SRC_BIPART_H_

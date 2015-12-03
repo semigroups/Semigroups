@@ -113,7 +113,7 @@ function(classes)
   return BIPART_NC(copy);
 end);
 
-# roll into Bipartition
+# TODO roll into Bipartition?
 
 InstallMethod(BipartitionByIntRep, "for a list", [IsList],
 function(blocks)
@@ -171,6 +171,25 @@ function(blocks)
   return out;
 end);
 
+InstallMethod(IdentityBipartition, "for a positive integer", [IsPosInt],
+function(n)
+  local blocks, out, i;
+
+  blocks := EmptyPlist(2 * n);
+  for i in [1 .. n] do
+    blocks[i] := i;
+    blocks[i + n] := i;
+  od;
+
+  out := BIPART_NC(blocks);
+  SetDegreeOfBipartition(out, n);
+  SetRankOfBipartition(out, n);
+  SetNrLeftBlocks(out, n);
+  SetNrBlocks(out, n);
+
+  return out;
+end);
+
 InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
 function(n)
   local out, nrblocks, vals, j, i;
@@ -189,6 +208,42 @@ function(n)
   od;
 
   return BIPART_NC(out);
+end);
+
+InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
+function(n)
+  local out, nrblocks, j, free, i;
+
+  out := EmptyPlist(2 * n);
+  out[1] := 1;
+  nrblocks := 1;
+
+  for i in [2 .. n] do
+    j := Random([1 .. nrblocks + 1]);
+    if j = nrblocks + 1 then
+      nrblocks := nrblocks + 1;
+    fi;
+    out[i] := j;
+  od;
+
+  free := [n + 1 .. 2 * n];
+  for i in [1 .. nrblocks] do
+    j := Random(free);
+    out[j] := i;
+    RemoveSet(free, j);
+  od;
+
+  for i in free do
+    out[i] := Random([1 .. nrblocks]);
+  od;
+
+  out := BIPART_NC(out);
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrblocks);
+  SetNrBlocks(out, nrblocks);
+  SetNrRightBlocks(out, nrblocks);
+
+  return out;
 end);
 
 # Operators
@@ -225,17 +280,6 @@ BIPART_LEFT_PROJ);
 InstallMethod(StarOp, "for a bipartition", [IsBipartition], BIPART_STAR);
 
 # Changing representation . . .
-
-InstallMethod(AsBipartition, "for a permutation and pos int",
-[IsPerm, IsPosInt],
-function(x, n)
-  if OnSets([1 .. n], x) <> [1 .. n] then
-    ErrorMayQuit("Semigroups: AsBipartition (xor a permutation and pos int):",
-                 "\nthe permutation <p> in the 1st argument must permute ",
-                 "[1 .. ", String(n), "],");
-  fi;
-  return BIPART_NC(Concatenation([1 .. n], ListPerm(x ^ -1, n)));
-end);
 
 #############################################################################
 # GAP level
@@ -692,10 +736,21 @@ end);
 #end);
 
 #############################################################################
-# C/C++ method required
+# All of the methods in this section could be done in C/C++
 #############################################################################
 
-# change representations...
+# Change representations . . .
+
+InstallMethod(AsBipartition, "for a permutation and pos int",
+[IsPerm, IsPosInt],
+function(x, n)
+  if OnSets([1 .. n], x) <> [1 .. n] then
+    ErrorMayQuit("Semigroups: AsBipartition (xor a permutation and pos int):",
+                 "\nthe permutation <p> in the 1st argument must permute ",
+                 "[1 .. ", String(n), "],");
+  fi;
+  return BIPART_NC(Concatenation([1 .. n], ListPerm(x ^ -1, n)));
+end);
 
 InstallMethod(AsPartialPerm, "for a bipartition", [IsBipartition],
 function(x)
@@ -1042,161 +1097,3 @@ function(x)
 
   return true;
 end);
-
-InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
-function(n)
-  local out, nrblocks, j, free, i;
-
-  out := EmptyPlist(2 * n);
-  out[1] := 1;
-  nrblocks := 1;
-
-  for i in [2 .. n] do
-    j := Random([1 .. nrblocks + 1]);
-    if j = nrblocks + 1 then
-      nrblocks := nrblocks + 1;
-    fi;
-    out[i] := j;
-  od;
-
-  free := [n + 1 .. 2 * n];
-  for i in [1 .. nrblocks] do
-    j := Random(free);
-    out[j] := i;
-    RemoveSet(free, j);
-  od;
-
-  for i in free do
-    out[i] := Random([1 .. nrblocks]);
-  od;
-
-  out := BIPART_NC(out);
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrblocks);
-  SetNrBlocks(out, nrblocks);
-  SetNrRightBlocks(out, nrblocks);
-
-  return out;
-end);
-
-InstallMethod(IdentityBipartition, "for a positive integer", [IsPosInt],
-function(n)
-  local blocks, out, i;
-
-  blocks := EmptyPlist(2 * n);
-  for i in [1 .. n] do
-    blocks[i] := i;
-    blocks[i + n] := i;
-  od;
-
-  out := BIPART_NC(out);
-
-  SetDegreeOfBipartition(out, n);
-  SetRankOfBipartition(out, n);
-  SetNrLeftBlocks(out, n);
-  SetNrBlocks(out, n);
-
-  return out;
-end);
-
-# HERE!! JDM JDM
-
-# LambdaConjugator: f and g have equal left blocks (rho value)
-# JDM: this will be better in c...
-
-InstallGlobalFunction(BipartRightBlocksConjNC,
-function(f, g)
-  local n, fblocks, gblocks, nr, lookup, next, seen, src, dst, i;
-
-  n := DegreeOfBipartition(f);
-  fblocks := f!.blocks;
-  gblocks := g!.blocks;
-  nr := NrLeftBlocks(f);
-
-  lookup := [];
-  next := 0;
-  seen := BlistList([1 .. 2 * n], []);
-  for i in [n + 1 .. 2 * n] do
-    if not seen[gblocks[i]] then
-      next := next + 1;
-      seen[gblocks[i]] := true;
-      if gblocks[i] <= nr then #connected block
-        lookup[gblocks[i]] := next;
-      fi;
-    fi;
-  od;
-
-  src := [];
-  dst := [];
-  next := 0;
-  seen := BlistList([1 .. 2 * n], []);
-  for i in [n + 1 .. 2 * n] do
-    if not seen[fblocks[i]] then
-      next := next + 1;
-      seen[fblocks[i]] := true;
-      if fblocks[i] <= nr then #connected block
-        Add(src, next);
-        Add(dst, lookup[fblocks[i]]);
-      fi;
-    fi;
-  od;
-
-  return MappingPermListList(src, dst);
-end);
-
-# StabiliserAction
-# TODO continue code coverage from here . . .
-
-InstallGlobalFunction(OnRightBlocksBipartitionByPerm,
-function(f, p)
-  local n, out, blocks, tab1, tab2, next, q, i;
-
-  if IsOne(p) then
-    return f;
-  fi;
-
-  n := DegreeOfBipartition(f);
-  out := EmptyPlist(2 * n);
-  blocks := f!.blocks;
-
-  tab1 := EmptyPlist(2 * n);
-  tab2 := EmptyPlist(2 * n);
-  next := 0;
-  q := p ^ -1;
-
-  for i in [n + 1 .. 2 * n] do
-    if not IsBound(tab1[blocks[i]]) then
-      next := next + 1;
-      tab1[blocks[i]] := next ^ q;
-      tab2[next] := blocks[i];
-    fi;
-  od;
-
-  for i in [1 .. n] do
-    out[i] := blocks[i];
-    out[i + n] := tab2[tab1[blocks[i + n]]];
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := out));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, NrLeftBlocks(f));
-  SetNrBlocks(out, NrBlocks(f));
-  SetRankOfBipartition(out, RankOfBipartition(f));
-  out!.lookup := SEMIGROUPS.TransBlocksLookup(f);
-
-  if HasLeftBlocks(f) then
-    SetLeftBlocks(out, LeftBlocks(f));
-  fi;
-  if HasRightBlocks(f) then
-    SetRightBlocks(out, RightBlocks(f));
-  fi;
-
-  return out;
-end);
-
-
-#############################################################################
-# To delete . . .
-#############################################################################
-

@@ -485,9 +485,14 @@ expected 2 but found 3, in position 2
 gap> BipartitionByIntRep([1, 2, 3, 1]);
 <bipartition: [ 1, -2 ], [ 2 ], [ -1 ]>
 
-# bipartition: BipartRightBlocksConjNC 1/1
+# bipartition: BIPART_LAMBDA_CONJ 1/2
 gap> x := Bipartition([[1, 3, -2, -3], [2, -1]]);;
-gap> BipartRightBlocksConjNC(x, RightOne(x));
+gap> BIPART_LAMBDA_CONJ(x, RightOne(x));
+(1,2)
+
+# bipartition: BIPART_LAMBDA_CONJ 2/2
+gap> x := Bipartition([[1, 3, -2, -3], [2, -1]]);;
+gap> BIPART_LAMBDA_CONJ(LeftOne(x), x);
 (1,2)
 
 # bipartition: PrintString, for a bipartition 1/1
