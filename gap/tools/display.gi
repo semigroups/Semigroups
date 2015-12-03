@@ -562,6 +562,9 @@ function(S, opts)
   if not IsBound(opts.number) then
     opts.number := true;
   fi;
+  if not IsBound(opts.normal) then
+    opts.normal := true;
+  fi;
   if not IsBound(opts.highlight) then
     opts.highlight := false; #JDM means highlight H-classes
   else
@@ -631,8 +634,12 @@ function(S, opts)
     if opts.maximal then
       gp := StructureDescription(GroupHClass(d));
     fi;
-
-    iso := InjectionNormalizedPrincipalFactor(d);
+    
+    if opts.normal then
+      iso := InjectionNormalizedPrincipalFactor(d);
+    else
+      iso := InjectionPrincipalFactor(d);
+    fi;
     inv := InverseGeneralMapping(iso);
     RMS := Range(iso);
     mat := Matrix(RMS);
