@@ -154,8 +154,8 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
 
   // construct C++ object
   Bipartition* x = new Bipartition(blocks);
-  x->set_nr_left_blocks(nr_left_blocks + 1);
-  x->set_nr_blocks(nr_blocks + 1);
+  x->set_nr_left_blocks(nr_left_blocks);
+  x->set_nr_blocks(nr_blocks);
 
   Obj out = NEW_GAP_BIPART(x);
 
