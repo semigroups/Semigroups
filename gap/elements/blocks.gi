@@ -363,7 +363,7 @@ function(blocks)
       out[i + n] := lookup[blocks[i + 1]];
     fi;
   od;
-  return BipartitionByIntRepNC(out);
+  return BIPART_NC(out);
 end);
 
 # JDM use FuseRightBlocks here!

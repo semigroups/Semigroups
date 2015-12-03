@@ -141,7 +141,7 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
       blocks->push_back(index);
       nr_blocks = (index > nr_blocks ? index : nr_blocks);
     }
-    nr_left_blocks = nr_blocks;
+    nr_left_blocks = nr_blocks + 1;
     for (size_t i = ((size_t) LEN_LIST(gap_blocks) / 2) + 1;
          i <= (size_t) LEN_LIST(gap_blocks); i++) {
       assert(IS_INTOBJ(ELM_LIST(gap_blocks, i)) &&
@@ -150,6 +150,7 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
       blocks->push_back(index);
       nr_blocks = (index > nr_blocks ? index : nr_blocks);
     }
+    nr_blocks++;
   }
 
   // construct C++ object

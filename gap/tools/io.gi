@@ -196,7 +196,7 @@ SEMIGROUPS.ReadGeneratorsLine := function(line)
   elif line[1] = 'p' then # partial perms
     Apply(out, DensePartialPermNC);
   elif line[1] = 'b' then #bipartitions
-    Apply(out, BipartitionByIntRepNC);
+    Apply(out, BIPART_NC);
   fi;
 
   return out;

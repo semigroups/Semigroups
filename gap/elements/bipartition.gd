@@ -47,7 +47,6 @@ DeclareOperation("NaturalLeqPartialPermBipartition",
 DeclareOperation("PartialPermLeqBipartition", [IsBipartition, IsBipartition]);
 
 DeclareOperation("IdentityBipartition", [IsPosInt]);
-DeclareOperation("BipartitionByIntRepNC", [IsList]);
 DeclareOperation("BipartitionByIntRep", [IsList]);
 
 DeclareOperation("AsBipartition", [IsPerm, IsInt]);

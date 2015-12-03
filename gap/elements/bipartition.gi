@@ -113,6 +113,64 @@ function(classes)
   return BIPART_NC(copy);
 end);
 
+# roll into Bipartition
+
+InstallMethod(BipartitionByIntRep, "for a list", [IsList],
+function(blocks)
+  local n, next, seen, nrleft, out, i;
+
+  n := Length(blocks);
+
+  if not IsEvenInt(n) then
+    ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
+                 "the length of the argument <blocks> must be an even ",
+                 "integer,");
+  fi;
+
+  n := n / 2;
+  if not ForAll(blocks, IsPosInt) then
+    ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
+                 "the elements of the argument <blocks> must be positive ",
+                 "integers,");
+  fi;
+
+  next := 0;
+  seen := BlistList([1 .. 2 * Maximum(blocks)], []);
+
+  for i in [1 .. n] do
+    if not seen[blocks[i]] then
+      next := next + 1;
+      if blocks[i] <> next then
+        ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
+                     "expected ", next, " but found ", blocks[i],
+                     ", in position ", i);
+      fi;
+      seen[blocks[i]] := true;
+    fi;
+  od;
+
+  nrleft := next;
+
+  for i in [n + 1 .. 2 * n] do
+    if not seen[blocks[i]] then
+      next := next + 1;
+      if blocks[i] <> next then
+        ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
+                     "expected ", next, " but found ", blocks[i],
+                     ", in position ", i);
+      fi;
+      seen[blocks[i]] := true;
+    fi;
+  od;
+
+  out := BIPART_NC(blocks);
+
+  SetDegreeOfBipartition(out, n);
+  SetNrLeftBlocks(out, nrleft);
+  SetNrBlocks(out, next);
+  return out;
+end);
+
 InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
 function(n)
   local out, nrblocks, vals, j, i;
@@ -777,7 +835,7 @@ function(f, n)
       out[n + i] := r;
     fi;
   od;
-  out := BipartitionByIntRepNC(out);
+  out := BIPART_NC(out);
   SetIsTransBipartition(out, true);
   return out;
 end);
@@ -838,7 +896,7 @@ function(f, n)
       out[i] := nrblocks;
     od;
   fi;
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := BIPART_NC(out);
   SetDegreeOfBipartition(out, n);
   SetNrBlocks(out, nrblocks);
   SetNrLeftBlocks(out, nrleft);
@@ -887,7 +945,7 @@ function(f, n)
     fi;
   od;
 
-  out := BipartitionByIntRepNC(out);
+  out := BIPART_NC(out);
   SetIsBlockBijection(out, true);
   return out;
 end);
@@ -958,17 +1016,17 @@ end);
 
 InstallMethod(IsUniformBlockBijection, "for a bipartition",
 [IsBipartition],
-function(f)
+function(x)
   local blocks, n, sizesleft, sizesright, i;
 
-  if not IsBlockBijection(f) then
+  if not IsBlockBijection(x) then
     return false;
   fi;
 
-  blocks := f!.blocks;
-  n := DegreeOfBipartition(f);
-  sizesleft := [1 .. NrBlocks(f)] * 0;
-  sizesright := [1 .. NrBlocks(f)] * 0;
+  blocks := BIPART_EXT_REP(x);
+  n := DegreeOfBipartition(x);
+  sizesleft := [1 .. NrBlocks(x)] * 0;
+  sizesright := [1 .. NrBlocks(x)] * 0;
 
   for i in [1 .. n] do
     sizesleft[blocks[i]] := sizesleft[blocks[i]] + 1;
@@ -976,7 +1034,7 @@ function(f)
   for i in [n + 1 .. 2 * n] do
     sizesright[blocks[i]] := sizesright[blocks[i]] + 1;
   od;
-  for i in [1 .. NrBlocks(f)] do
+  for i in [1 .. NrBlocks(x)] do
     if sizesright[i] <> sizesleft[i] then
       return false;
     fi;
@@ -984,7 +1042,6 @@ function(f)
 
   return true;
 end);
-
 
 InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
 function(n)
@@ -1013,8 +1070,7 @@ function(n)
     out[i] := Random([1 .. nrblocks]);
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := out));
-
+  out := BIPART_NC(out);
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrblocks);
   SetNrBlocks(out, nrblocks);
@@ -1033,7 +1089,7 @@ function(n)
     blocks[i + n] := i;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := blocks));
+  out := BIPART_NC(out);
 
   SetDegreeOfBipartition(out, n);
   SetRankOfBipartition(out, n);
@@ -1042,6 +1098,8 @@ function(n)
 
   return out;
 end);
+
+# HERE!! JDM JDM
 
 # LambdaConjugator: f and g have equal left blocks (rho value)
 # JDM: this will be better in c...
@@ -1142,60 +1200,3 @@ end);
 # To delete . . .
 #############################################################################
 
-# roll into Bipartition
-
-InstallMethod(BipartitionByIntRep, "for a list", [IsList],
-function(blocks)
-  local n, next, seen, nrleft, out, i;
-
-  n := Length(blocks);
-
-  if not IsEvenInt(n) then
-    ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
-                 "the length of the argument <blocks> must be an even ",
-                 "integer,");
-  fi;
-
-  n := n / 2;
-  if not ForAll(blocks, IsPosInt) then
-    ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
-                 "the elements of the argument <blocks> must be positive ",
-                 "integers,");
-  fi;
-
-  next := 0;
-  seen := BlistList([1 .. 2 * Maximum(blocks)], []);
-
-  for i in [1 .. n] do
-    if not seen[blocks[i]] then
-      next := next + 1;
-      if blocks[i] <> next then
-        ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
-                     "expected ", next, " but found ", blocks[i],
-                     ", in position ", i);
-      fi;
-      seen[blocks[i]] := true;
-    fi;
-  od;
-
-  nrleft := next;
-
-  for i in [n + 1 .. 2 * n] do
-    if not seen[blocks[i]] then
-      next := next + 1;
-      if blocks[i] <> next then
-        ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
-                     "expected ", next, " but found ", blocks[i],
-                     ", in position ", i);
-      fi;
-      seen[blocks[i]] := true;
-    fi;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := blocks));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, next);
-  return out;
-end);
