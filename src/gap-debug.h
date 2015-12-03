@@ -9,6 +9,14 @@
 
 //#ifdef DEBUG
 
+Bag* ADDR_OBJ_F (Obj x) {
+  return ADDR_OBJ(x);
+}
+
+UInt SIZE_OBJ_F (Obj x) {
+  return SIZE_OBJ(x);
+}
+
 Bag TYPE_COMOBJ_F (Obj x) {
   return TYPE_COMOBJ(x);
 }

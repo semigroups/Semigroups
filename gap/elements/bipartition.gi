@@ -69,7 +69,7 @@ function(classes)
 
   if not IsList(classes)
       or ForAny(classes, x -> not IsHomogeneousList(x)
-                                  or not IsDuplicateFree(x)) then
+                              or not IsDuplicateFree(x)) then
     ErrorMayQuit("Semigroups: Bipartition: usage,\n",
                  "the argument <classes> must consist of duplicate-free ",
                  "homogeneous lists,");
