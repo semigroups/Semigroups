@@ -793,6 +793,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "x, y"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LEFT_PROJ, 1,
                           "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_STAR, 1,
+                          "x"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 

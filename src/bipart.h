@@ -25,5 +25,7 @@ Obj BIPART_EQ             (Obj, Obj, Obj);
 Obj BIPART_LT             (Obj, Obj, Obj);
 Obj BIPART_PERM_LEFT_QUO  (Obj, Obj, Obj);
 Obj BIPART_LEFT_PROJ      (Obj, Obj);
+Obj BIPART_RIGHT_PROJ     (Obj, Obj);
+Obj BIPART_STAR           (Obj, Obj);
 
 #endif // SRC_BIPART_H_

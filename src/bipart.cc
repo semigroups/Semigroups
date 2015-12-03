@@ -10,6 +10,8 @@
 #include "src/permutat.h"
 #include <vector>
 
+std::vector<size_t> _BUFFER;
+
 // Helper function
 
 Obj NEW_BIPART (Bipartition* x) {
@@ -218,13 +220,11 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
 
   // find indices of right blocks of <x>
   size_t  index = 0;
-  std::vector<UInt4> tab = std::vector<UInt4>();
-  tab.resize(2 * deg, -1);
-  // FIXME reuse memory
+  _BUFFER.resize(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (tab[xx->block(i)] == (UInt4) -1) {
-      tab[xx->block(i)] = index;
+    if (_BUFFER[xx->block(i)] == (UInt4) -1) {
+      _BUFFER[xx->block(i)] = index;
       index++;
     }
     ptrp[i - deg] = i - deg;
@@ -232,7 +232,7 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
 
   for (size_t i = deg; i < 2 * deg; i++) {
     if (yy->block(i) < xx->nr_left_blocks()) {
-      ptrp[tab[yy->block(i)]] = tab[xx->block(i)];
+      ptrp[_BUFFER[yy->block(i)]] = _BUFFER[xx->block(i)];
     }
   }
   return p;
@@ -244,10 +244,10 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
 
   size_t deg  = xx->degree();
   size_t next = xx->nr_left_blocks();
-  std::vector<bool> lookup = xx->trans_blocks_lookup();
+  std::vector<bool> const& lookup(xx->trans_blocks_lookup());
 
-  std::vector<size_t> table  = std::vector<size_t>();
-  table.resize(2 * deg, -1);
+  _BUFFER.resize(2 * deg, -1);
+
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
   blocks->resize(2 * deg, -1);
 
@@ -255,10 +255,10 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
     (*blocks)[i] = xx->block(i);
     if (lookup[xx->block(i)]) {
       (*blocks)[i + deg] = xx->block(i);
-    } else if (table[xx->block(i)] != (size_t) -1) {
-      (*blocks)[i + deg] = table[xx->block(i)];
+    } else if (_BUFFER[xx->block(i)] != (size_t) -1) {
+      (*blocks)[i + deg] = _BUFFER[xx->block(i)];
     } else {
-      table[xx->block(i)] = next;
+      _BUFFER[xx->block(i)] = next;
       (*blocks)[i + deg] = next;
       next++;
     }
@@ -266,5 +266,46 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
 
   Bipartition* out = new Bipartition(blocks);
   out->set_nr_blocks(next);
+  return NEW_BIPART(out);
+}
+
+Obj BIPART_STAR (Obj self, Obj x) {
+
+  Bipartition* xx = CLASS_OBJ<Bipartition>(ELM_PLIST(x, 1));
+  size_t deg  = xx->degree();
+
+  _BUFFER.resize(2 * deg, -1);
+
+  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+  blocks->resize(2 * deg, -1);
+
+  size_t next = 0;
+
+  for (size_t i = 0; i < deg; i++) {
+    if (_BUFFER[xx->block(i + deg)] != (size_t) -1) {
+      (*blocks)[i] = _BUFFER[xx->block(i + deg)];
+    } else {
+      _BUFFER[xx->block(i + deg)] = next;
+      (*blocks)[i] = next;
+      next++;
+    }
+  }
+
+  size_t nr_left = next;
+
+  for (size_t i = 0; i < deg; i++) {
+    if (_BUFFER[xx->block(i)] != (size_t) -1) {
+      (*blocks)[i + deg] = _BUFFER[xx->block(i)];
+    } else {
+      _BUFFER[xx->block(i)] = next;
+      (*blocks)[i + deg] = next;
+      next++;
+    }
+  }
+
+  Bipartition* out = new Bipartition(blocks);
+  out->set_nr_blocks(next);
+  out->set_nr_left_blocks(nr_left);
+
   return NEW_BIPART(out);
 }

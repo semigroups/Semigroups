@@ -167,37 +167,10 @@ end);
 InstallMethod(LeftProjection, "for a bipartition", [IsBipartition],
 BIPART_LEFT_PROJ);
 
-#function(f)
-#  local n, next, blocks, lookup, table, out, i;
-#
-#  n := DegreeOfBipartition(f);
-#  next := NrLeftBlocks(f);
-#  blocks := f!.blocks;
-#  lookup := SEMIGROUPS.TransBlocksLookup(f);
-#  table := [];
-#  out := [];
-#
-#  for i in [1 .. n] do
-#    out[i] := blocks[i];
-#    if lookup[blocks[i]] then
-#      out[i + n] := blocks[i];
-#    elif IsBound(table[blocks[i]]) then
-#      out[i + n] := table[blocks[i]];
-#    else
-#      next := next + 1;
-#      table[blocks[i]] := next;
-#      out[i + n] := next;
-#    fi;
-#  od;
-#
-#  out := Objectify(BipartitionType, rec(blocks := out));
-#
-#  SetDegreeOfBipartition(out, n);
-#  SetNrLeftBlocks(out, NrLeftBlocks(f));
-#  SetNrBlocks(out, next);
-#  SetRankOfBipartition(out, RankOfBipartition(f));
-#  return out;
-#end);
+# linear - 2*degree
+
+InstallMethod(StarOp, "for a bipartition", [IsBipartition],
+BIPART_STAR);
 
 #############################################################################
 # GAP level
@@ -673,48 +646,6 @@ end);
 # Constructors
 
 
-# linear - 2*degree
-
-InstallMethod(StarOp, "for a bipartition", [IsBipartition],
-function(f)
-  local n, blocks, table, out, next, nrleft, i;
-
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  table := [];
-  out := [];
-  next := 0;
-
-  for i in [1 .. n] do
-    if IsBound(table[blocks[i + n]]) then
-      out[i] := table[blocks[i + n]];
-    else
-      next := next + 1;
-      table[blocks[i + n]] := next;
-      out[i] := next;
-    fi;
-  od;
-
-  nrleft := next;
-
-  for i in [1 .. n] do
-    if IsBound(table[blocks[i]]) then
-      out[i + n] := table[blocks[i]];
-    else
-      next := next + 1;
-      table[blocks[i]] := next;
-      out[i + n] := next;
-    fi;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := out));
-
-  SetDegreeOfBipartition(out, Length(blocks) / 2);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, next);
-  SetRankOfBipartition(out, RankOfBipartition(f));
-  return out;
-end);
 
 # linear - 2 * degree
 
