@@ -9,15 +9,10 @@
 ##
 
 #############################################################################
-# Internal stuff
-#############################################################################
-
-
-#############################################################################
 # Pickler
 #############################################################################
 
-InstallMethod(IO_Pickle, "for a boolean matrix",
+InstallMethod(IO_Pickle, "for a bipartition",
 [IsFile, IsBipartition],
 function(file, x)
   if IO_Write(file, "BIPA") = fail then
@@ -167,10 +162,22 @@ end);
 InstallMethod(LeftProjection, "for a bipartition", [IsBipartition],
 BIPART_LEFT_PROJ);
 
-# linear - 2*degree
+# linear - 2 * degree
 
-InstallMethod(StarOp, "for a bipartition", [IsBipartition],
-BIPART_STAR);
+InstallMethod(StarOp, "for a bipartition", [IsBipartition], BIPART_STAR);
+
+# Changing representation . . .
+
+InstallMethod(AsBipartition, "for a permutation and pos int",
+[IsPerm, IsPosInt],
+function(x, n)
+  if OnSets([1 .. n], x) <> [1 .. n] then
+    ErrorMayQuit("Semigroups: AsBipartition (xor a permutation and pos int):",
+                 "\nthe permutation <p> in the 1st argument must permute ",
+                 "[1 .. ", String(n), "],");
+  fi;
+  return BIPART_NC(Concatenation([1 .. n], ListPerm(x ^ -1, n)));
+end);
 
 #############################################################################
 # GAP level
@@ -338,7 +345,6 @@ function(x, y)
 
   return AsPartialPerm(x) < AsPartialPerm(y);
 end);
-
 
 # Changing representations
 
@@ -516,37 +522,6 @@ end);
 # C/C++ level
 #############################################################################
 
-# linear complexity
-# returns a blist <out> for the left blocks so that <out[i]> is <true> if
-# and only the <i>th block of <f> is a transverse block.
-
-#SEMIGROUPS.TransBlocksLookup := function(x)
-#  local n, k, blocks, out, i;
-#
-#  if not IsBipartition(x) then
-#    ErrorMayQuit("Semigroups: SEMIGROUPS.TransBlocksLookup: usage,\n",
-#                 "the argument must be a bipartition,");
-#  fi;
-#
-#  if IsBound(x!.lookup) then
-#    return x!.lookup;
-#  fi;
-#
-#  n      := DegreeOfBipartition(x);
-#  k      := NrLeftBlocks(x);
-#  blocks := x!.blocks;
-#  out    := BlistList([1 .. k], []);
-#
-#  for i in [1 .. n] do
-#    if blocks[i + n] <= k then
-#      out[blocks[i + n]] := true;
-#    fi;
-#  od;
-#
-#  x!.lookup := out;
-#  return out;
-#end;
-
 #InstallMethod(LeftBlocks, "for a bipartition", [IsBipartition],
 #function(f)
 #  local n, blocks, tab, out, nrblocks, i;
@@ -607,42 +582,6 @@ end);
 
 # Operators
 
-# LambdaPerm
-
-#InstallGlobalFunction(PermLeftQuoBipartitionNC,
-#function(f, g)
-#  local n, fblocks, gblocks, p, nr, tab, i;
-#
-#  n := DegreeOfBipartition(f);
-#  fblocks := f!.blocks;
-#  gblocks := g!.blocks;
-#  p := [1 .. n];
-#
-#  #figure out which blocks of f correspond to which blocks of the right blocks
-#  #of f
-#  nr := 0;
-#  tab := EmptyPlist(2 * n);
-#  for i in [n + 1 .. 2 * n] do
-#    if not IsBound(tab[fblocks[i]]) then
-#      nr := nr + 1;
-#      tab[fblocks[i]] := nr;
-#    fi;
-#  od;
-#
-#  nr := NrLeftBlocks(f);
-#  for i in [n + 1 .. 2 * n] do
-#    if gblocks[i] <= nr then
-#      p[tab[gblocks[i]]] := tab[fblocks[i]];
-#    fi;
-#  od;
-#
-#  return PermList(p);
-#end);
-
-
-# Properties/attributes
-
-
 # Constructors
 
 
@@ -695,24 +634,24 @@ end);
 #end);
 
 #############################################################################
-# C/C++ or update to remove access to internals of the object . . .
+# C/C++ method required
 #############################################################################
 
 # change representations...
 
 InstallMethod(AsPartialPerm, "for a bipartition", [IsBipartition],
-function(f)
+function(x)
   local n, blocks, nrleft, im, out, i;
 
-  if not IsPartialPermBipartition(f) then
+  if not IsPartialPermBipartition(x) then
     ErrorMayQuit("Semigroups: AsPartialPerm (for a bipartition):\n",
                  "the argument does not define a partial perm,");
   fi;
 
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  nrleft := NrLeftBlocks(f);
-  im := [1 .. n] * 0;
+  n      := DegreeOfBipartition(x);
+  blocks := BIPART_INT_REP(x);
+  nrleft := NrLeftBlocks(x);
+  im     := [1 .. n] * 0;
 
   for i in [n + 1 .. 2 * n] do
     if blocks[i] <= nrleft then
@@ -728,17 +667,17 @@ function(f)
 end);
 
 InstallMethod(AsPermutation, "for a bipartition", [IsBipartition],
-function(f)
+function(x)
   local n, blocks, im, out, i;
 
-  if not IsPermBipartition(f) then
+  if not IsPermBipartition(x) then
     ErrorMayQuit("Semigroups: AsPermutation (for a bipartition):\n",
                  "the argument does not define a permutation,");
   fi;
 
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  im := EmptyPlist(n);
+  n      := DegreeOfBipartition(x);
+  blocks := BIPART_INT_REP(x);
+  im     := EmptyPlist(n);
 
   for i in [n + 1 .. 2 * n] do
     im[blocks[i]] := i - n;
@@ -752,18 +691,18 @@ function(f)
 end);
 
 InstallMethod(AsTransformation, "for a bipartition", [IsBipartition],
-function(f)
+function(x)
   local n, blocks, nr, im, out, i;
 
-  if not IsTransBipartition(f) then
+  if not IsTransBipartition(x) then
     ErrorMayQuit("Semigroups: AsTransformation (for a bipartition):\n",
                  "the argument does not define a transformation,");
   fi;
 
-  n := DegreeOfBipartition(f);
-  blocks := f!.blocks;
-  nr := NrLeftBlocks(f);
-  im := EmptyPlist(n);
+  n      := DegreeOfBipartition(x);
+  blocks := BIPART_INT_REP(x);
+  nr     := NrLeftBlocks(x);
+  im     := EmptyPlist(n);
 
   for i in [n + 1 .. 2 * n] do
     if blocks[i] <= nr then
@@ -777,82 +716,10 @@ function(f)
   od;
   return TransformationNC(out);
 end);
-InstallMethod(NaturalLeqBlockBijection, "for bipartitions",
-[IsBipartition, IsBipartition],
-function(f, g)
-  local fblocks, gblocks, n, lookup, i;
-
-  if not IsBlockBijection(f) or not IsBlockBijection(g) then
-    ErrorMayQuit("Semigroups: NaturalLeqBlockBijection: usage,\n",
-                 "the arguments must be block bijections,");
-  elif DegreeOfBipartition(f) <> DegreeOfBipartition(g) then
-    ErrorMayQuit("Semigroups: NaturalLeqBlockBijection: usage,\n",
-                 "the arguments must be block bijections of equal degree,");
-  elif NrBlocks(f) > NrBlocks(g) then
-    return false;
-  fi;
-
-  fblocks := f!.blocks;
-  gblocks := g!.blocks;
-  n := DegreeOfBipartition(f);
-
-  lookup := [];
-  for i in [1 .. n] do
-    if IsBound(lookup[gblocks[i]]) and lookup[gblocks[i]] <> fblocks[i] then
-      return false;
-    else
-      lookup[gblocks[i]] := fblocks[i];
-    fi;
-  od;
-  for i in [n + 1 .. 2 * n] do
-    if lookup[gblocks[i]] <> fblocks[i] then
-      return false;
-    fi;
-  od;
-  return true;
-end);
-
-InstallMethod(NaturalLeqPartialPermBipartition, "for bipartitions",
-[IsBipartition, IsBipartition],
-function(f, g)
-  local n, fblocks, gblocks, val, i;
-
-  if not IsPartialPermBipartition(f) or not IsPartialPermBipartition(g) then
-    ErrorMayQuit("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
-                 "the arguments must be partial perm bipartitions,");
-  fi;
-  n := DegreeOfBipartition(f);
-  if n <> DegreeOfBipartition(g) then
-    ErrorMayQuit("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
-                 "the arguments must have equal degree,");
-  fi;
-
-  fblocks := f!.blocks;
-  gblocks := g!.blocks;
-
-  for i in [n + 1 .. 2 * n] do
-    val := fblocks[i];
-    if val <= n and val <> gblocks[i] then
-      return false;
-    fi;
-  od;
-  return true;
-end);
-InstallMethod(AsBipartition, "for a permutation and pos int",
-[IsPerm, IsPosInt],
-function(f, n)
-  if OnSets([1 .. n], f) <> [1 .. n] then
-    ErrorMayQuit("Semigroups: AsBipartition (for a permutation and pos int):",
-                 "\n",
-                 "the permutation <p> in the 1st argument must permute ",
-                 "[1 .. ", String(n), "],");
-  fi;
-  return BipartitionByIntRepNC(Concatenation([1 .. n], ListPerm(f ^ -1, n)));
-end);
 
 InstallMethod(AsBipartition, "for a partial perm and pos int",
 [IsPartialPerm, IsPosInt],
-function(f, n)
+function(x, n)
   local r, out, j, i;
 
   r := n;
@@ -860,7 +727,7 @@ function(f, n)
 
   for i in [1 .. n] do
     out[i] := i;
-    j := PreImagePartialPerm(f, i);
+    j := PreImagePartialPerm(x, i);
     if j <> fail then
       out[n + i] := j;
     else
@@ -868,7 +735,7 @@ function(f, n)
       out[n + i] := r;
     fi;
   od;
-  out := BipartitionByIntRepNC(out);
+  out := BIPART_NC(out);
   SetIsPartialPermBipartition(out, true);
   return out;
 end);
@@ -1023,6 +890,70 @@ function(f, n)
   out := BipartitionByIntRepNC(out);
   SetIsBlockBijection(out, true);
   return out;
+end);
+
+InstallMethod(NaturalLeqBlockBijection, "for bipartitions",
+[IsBipartition, IsBipartition],
+function(x, y)
+  local xblocks, yblocks, n, lookup, i;
+
+  if not IsBlockBijection(x) or not IsBlockBijection(y) then
+    ErrorMayQuit("Semigroups: NaturalLeqBlockBijection: usage,\n",
+                 "the arguments must be block bijections,");
+  elif DegreeOfBipartition(x) <> DegreeOfBipartition(y) then
+    ErrorMayQuit("Semigroups: NaturalLeqBlockBijection: usage,\n",
+                 "the arguments must be block bijections of equal degree,");
+  elif NrBlocks(x) > NrBlocks(y) then
+    return false;
+  fi;
+
+  xblocks := BIPART_INT_REP(x);
+  yblocks := BIPART_INT_REP(y);
+  n       := DegreeOfBipartition(x);
+
+  lookup := [];
+  for i in [1 .. n] do
+    if IsBound(lookup[yblocks[i]]) and lookup[yblocks[i]] <> xblocks[i] then
+      return false;
+    else
+      lookup[yblocks[i]] := xblocks[i];
+    fi;
+  od;
+  for i in [n + 1 .. 2 * n] do
+    if lookup[yblocks[i]] <> xblocks[i] then
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
+InstallMethod(NaturalLeqPartialPermBipartition, "for bipartitions",
+[IsBipartition, IsBipartition],
+function(x, y)
+  local n, xblocks, yblocks, val, i;
+
+  if not IsPartialPermBipartition(x) or not IsPartialPermBipartition(y) then
+    ErrorMayQuit("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
+                 "the arguments must be partial perm bipartitions,");
+  fi;
+
+  n := DegreeOfBipartition(x);
+
+  if n <> DegreeOfBipartition(y) then
+    ErrorMayQuit("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
+                 "the arguments must have equal degree,");
+  fi;
+
+  xblocks := BIPART_INT_REP(x);
+  yblocks := BIPART_INT_REP(y);
+
+  for i in [n + 1 .. 2 * n] do
+    val := xblocks[i];
+    if val <= n and val <> yblocks[i] then
+      return false;
+    fi;
+  od;
+  return true;
 end);
 
 InstallMethod(IsUniformBlockBijection, "for a bipartition",
@@ -1268,10 +1199,3 @@ function(blocks)
   SetNrBlocks(out, next);
   return out;
 end);
-
-#############################################################################
-# Unreviewed from here down . . .
-#############################################################################
-
-#view/print/display
-

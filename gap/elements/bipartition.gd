@@ -20,11 +20,10 @@ BindGlobal("BipartitionFamily",
                      CanEasilySortElements));
 BindGlobal("BipartitionType",
            NewType(BipartitionFamily,
-                   IsBipartition and IsPositionalObjectRep));
+                   IsBipartition and IsComponentObjectRep and IsAttributeStoringRep));
 
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
-#DeclareOperation("InverseMutable", [IsBipartition]);
 
 DeclareAttribute("DegreeOfBipartition", IsBipartition);
 DeclareAttribute("RankOfBipartition", IsBipartition);
