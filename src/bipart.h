@@ -16,6 +16,7 @@
 Obj BIPART_NC             (Obj, Obj);
 Obj BIPART_EXT_REP        (Obj, Obj);
 Obj BIPART_INT_REP        (Obj, Obj);
+Obj BIPART_HASH           (Obj, Obj);
 Obj BIPART_DEGREE         (Obj, Obj);
 Obj BIPART_RANK           (Obj, Obj);
 Obj BIPART_NR_BLOCKS      (Obj, Obj);
@@ -30,6 +31,11 @@ Obj BIPART_STAR           (Obj, Obj);
 Obj BIPART_LAMBDA_CONJ    (Obj, Obj, Obj);
 // OnRightBlocksBipartitionByPerm
 Obj BIPART_STAB_ACTION    (Obj, Obj, Obj);
+Obj BIPART_LEFT_BLOCKS    (Obj, Obj);
+Obj BIPART_RIGHT_BLOCKS   (Obj, Obj);
 
+Obj BLOCKS_DEGREE         (Obj, Obj);
+Obj BLOCKS_NR_BLOCKS      (Obj, Obj);
+Obj BLOCKS_ELM_LIST       (Obj, Obj, Obj);
 
 #endif // SRC_BIPART_H_

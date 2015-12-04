@@ -14,19 +14,54 @@
 // Global variables
 
 static std::vector<size_t> _BUFFER;
-static Int                 _RNam_wrapper = RNamName("wrapper");
+static Int                 _RNam_wrapper   = RNamName("wrapper");
+static Int                 _RNam_blocks    = RNamName("blocks");
+static Int                 _RNam_degree    = RNamName("degree");
+static Int                 _RNam_blist     = RNamName("blist");
+static Int                 _RNam_nr_blocks = RNamName("nr_blocks");
 
 // Helper functions
 
 inline Obj NEW_GAP_BIPART (Bipartition* x) {
 
   // construct GAP wrapper for C++ object
-  Obj wrapper = NewSemigroupsBag(x, GAP_BIPART, 4);
+  Obj wrapper = NewSemigroupsBag(x, GAP_BIPART, 6);
 
   // put the GAP wrapper in a list and Objectify
   Obj out = NEW_PREC(1);
   AssPRec(out, _RNam_wrapper, wrapper);
   TYPE_COMOBJ(out) = BipartitionType;
+  RetypeBag(out, T_COMOBJ);
+  CHANGED_BAG(out);
+
+  return out;
+}
+
+// Blocks are stored internally as a list consisting of:
+//
+// [ nr of blocks, internal rep of blocks, transverse blocks ]
+//
+// <nr of blocks> is a non-negative integer, <internal rep of blocks>[i] = j if
+// <i> belongs to the <j>th block, <transverse blocks>[j] = true if block <j> is
+// transverse and false if it is not.
+
+inline Obj NEW_GAP_BLOCKS (size_t degree, Obj blocks, Obj blist) {
+
+  size_t nr_blocks = 0;
+  for (size_t i = 1; i <= (size_t) LEN_LIST(blocks); i++) {
+    size_t index = INT_INTOBJ(ELM_LIST(blocks, i));
+    nr_blocks = (index > nr_blocks ? index : nr_blocks);
+  }
+
+  Obj out = NEW_PREC(4);
+
+  AssPRec(out, _RNam_degree,    INTOBJ_INT(degree));
+  AssPRec(out, _RNam_blocks,    blocks);
+  AssPRec(out, _RNam_blist,     blist);
+  AssPRec(out, _RNam_nr_blocks, INTOBJ_INT(nr_blocks));
+  CHANGED_BAG(out);
+
+  TYPE_COMOBJ(out) = BlocksType;
   RetypeBag(out, T_COMOBJ);
   CHANGED_BAG(out);
 
@@ -86,6 +121,34 @@ inline Bipartition* GET_CPP_BIPART (Obj x) {
   //TODO check that x is a bipartition
 
   return CLASS_OBJ<Bipartition>(GET_WRAPPER(x));
+}
+
+inline void SET_LEFT_BLOCKS (Obj x, Obj blocks) {
+  //TODO check that x is a bipartition
+  //TODO check that <pos> isn't off the end of the wrapper
+  //TODO check blocks
+  SET_ELM_WRAPPER(x, 4, blocks);
+}
+
+inline Obj GET_LEFT_BLOCKS (Obj x) {
+  //TODO check that x is a bipartition
+  //TODO check that <pos> isn't off the end of the wrapper
+  //TODO check blocks
+  return GET_ELM_WRAPPER(x, 4);
+}
+
+inline void SET_RIGHT_BLOCKS (Obj x, Obj blocks) {
+  //TODO check that x is a bipartition
+  //TODO check that <pos> isn't off the end of the wrapper
+  //TODO check blocks
+  SET_ELM_WRAPPER(x, 5, blocks);
+}
+
+inline Obj GET_RIGHT_BLOCKS (Obj x) {
+  //TODO check that x is a bipartition
+  //TODO check that <pos> isn't off the end of the wrapper
+  //TODO check blocks
+  return GET_ELM_WRAPPER(x, 5);
 }
 
 // GAP kernel functions
@@ -216,6 +279,11 @@ Obj BIPART_INT_REP (Obj self, Obj x) {
   return GET_BIPART_INT_REP(x);
 }
 
+Obj BIPART_HASH (Obj self, Obj x) {
+  Bipartition* xx = GET_CPP_BIPART(x);
+  return INTOBJ_INT(xx->hash_value());
+}
+
 Obj BIPART_DEGREE (Obj self, Obj x) {
   return INTOBJ_INT(GET_CPP_BIPART(x)->degree());
 }
@@ -288,7 +356,6 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
 
   size_t deg  = xx->degree();
   size_t next = xx->nr_left_blocks();
-  std::vector<bool> const& lookup(xx->trans_blocks_lookup());
 
   std::fill(_BUFFER.begin(), std::min(_BUFFER.end(), _BUFFER.begin() + 2 * deg), -1);
   _BUFFER.resize(2 * deg, -1);
@@ -298,7 +365,7 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
 
   for (size_t i = 0; i < deg; i++) {
     (*blocks)[i] = xx->block(i);
-    if (lookup[xx->block(i)]) {
+    if (xx->is_transverse_block(xx->block(i))) {
       (*blocks)[i + deg] = xx->block(i);
     } else if (_BUFFER[xx->block(i)] != (size_t) -1) {
       (*blocks)[i + deg] = _BUFFER[xx->block(i)];
@@ -493,4 +560,66 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
   }
 
   return NEW_GAP_BIPART(new Bipartition(blocks));
+}
+
+Obj BLOCKS_DEGREE (Obj self, Obj x) {
+  return ElmPRec(x, _RNam_degree);
+}
+
+Obj BLOCKS_NR_BLOCKS (Obj self, Obj x) {
+  return ElmPRec(x, _RNam_nr_blocks);
+}
+
+Obj BLOCKS_ELM_LIST (Obj self, Obj x, Obj pos) {
+  return ELM_LIST(ElmPRec(x, _RNam_blocks), INT_INTOBJ(pos));
+}
+
+Obj BIPART_LEFT_BLOCKS (Obj self, Obj x) {
+  Bipartition* xx       = GET_CPP_BIPART(x);
+  size_t deg            = xx->degree();
+  size_t nr_left_blocks = xx->nr_left_blocks();
+
+  Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(nr_left_blocks)); // transverse blocks lookup
+  SET_LEN_BLIST(blist, deg);
+
+  for (size_t i = 0; i < nr_left_blocks; i++) {
+    if (xx->is_transverse_block(i)) {
+      SET_ELM_BLIST(blist, i + 1, True);
+    } else {
+      SET_ELM_BLIST(blist, i + 1, False);
+    }
+  }
+
+  Obj blocks = NEW_PLIST(T_PLIST_CYC, deg);
+  SET_LEN_PLIST(blocks, deg);
+
+  for (size_t i = 0; i < deg; i++) {
+    SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i) + 1));
+  }
+  return NEW_GAP_BLOCKS(deg, blocks, blist);
+}
+
+Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
+  Bipartition* xx        = GET_CPP_BIPART(x);
+  size_t deg             = xx->degree();
+  size_t nr_right_blocks = xx->nr_right_blocks();
+
+  Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(nr_right_blocks)); // transverse blocks lookup
+  SET_LEN_BLIST(blist, deg);
+
+  for (size_t i = deg; i < 2 * deg; i++) {
+    if (xx->is_transverse_block(xx->block(i))) {
+      SET_ELM_BLIST(blist, xx->block(i) + 1, True);
+    } else {
+      SET_ELM_BLIST(blist, xx->block(i) + 1, False);
+    }
+  }
+
+  Obj blocks = NEW_PLIST(T_PLIST_CYC, deg);
+  SET_LEN_PLIST(blocks, deg);
+
+  for (size_t i = 0; i < deg; i++) {
+    SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i + deg) + 1));
+  }
+  return NEW_GAP_BLOCKS(deg, blocks, blist);
 }

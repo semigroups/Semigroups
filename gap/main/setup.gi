@@ -8,10 +8,6 @@
 #############################################################################
 ##
 
-SEMIGROUPS.HashFunctionBipartition := function(x, data)
-  return ORB_HashFunctionForPlainFlatList(x!.blocks, data);
-end;
-
 SEMIGROUPS.HashFunctionRZMSE := function(x, data, func)
   if x![1] = 0 then
     return 1;
@@ -667,10 +663,4 @@ function(x, hashlen)
              data := hashlen);
 end);
 
-InstallMethod(ChooseHashFunction, "for a bipartition",
-[IsBipartition, IsInt],
-  function(x, hashlen)
-  return rec(func := SEMIGROUPS.HashFunctionBipartition,
-             data := hashlen);
-end);
 

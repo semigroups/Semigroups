@@ -13,6 +13,7 @@ Obj Ninfinity;
 Obj IsBipartition;
 Obj BipartitionByIntRepNC;
 Obj BipartitionType;
+Obj BlocksType;
 Obj IsBooleanMat;
 Obj BooleanMatType;
 Obj IsMatrixOverSemiring;

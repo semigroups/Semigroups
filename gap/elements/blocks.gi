@@ -19,6 +19,139 @@
 #############################################################################
 
 #############################################################################
+# GAP level - directly using interface to C/C++ level
+#############################################################################
+
+InstallMethod(LeftBlocks, "for a bipartition", [IsBipartition],
+BIPART_LEFT_BLOCKS);
+
+InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
+BIPART_RIGHT_BLOCKS);
+
+InstallMethod(DegreeOfBlocks, "for blocks", [IsBlocks], BLOCKS_DEGREE);
+
+InstallMethod(ELM_LIST, "for blocks", [IsBlocks, IsPosInt], BLOCKS_ELM_LIST);
+
+InstallMethod(NrBlocks, "for blocks", [IsBlocks], BLOCKS_NR_BLOCKS);
+
+#############################################################################
+# GAP level - NOT directly using interface to C/C++ level
+#############################################################################
+
+# TODO C/C++
+
+InstallMethod(RankOfBlocks, "for blocks", [IsBlocks],
+function(blocks)
+  return SizeBlist(blocks!.blist);
+end);
+
+# FIXME
+BindGlobal("EmptyBlocks", Objectify(BlocksType, rec(blocks := [0])));
+
+InstallMethod(ExtRepOfBlocks, "for blocks", [IsBlocks],
+function(blocks)
+  local n, lookup, ext, i;
+
+  n := DegreeOfBlocks(blocks);
+  lookup := blocks!.blist;
+  ext := [];
+
+  for i in [1 .. n] do
+    if not IsBound(ext[blocks[i]]) then
+      ext[blocks[i]] := [];
+    fi;
+    if lookup[blocks[i]] then
+      Add(ext[blocks[i]], i);
+    else
+      Add(ext[blocks[i]], -i);
+    fi;
+  od;
+  return ext;
+end);
+
+# not a synonym since NrTransverseBlocks applies to a bipartition also
+InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
+
+# TODO C/C++?
+
+InstallMethod(ProjectionFromBlocks, "for blocks", [IsBlocks],
+function(blocks)
+  local deg, blist, nr_blocks, out, lookup, i;
+
+  deg       := DegreeOfBlocks(blocks);
+  blist     := blocks!.blist;
+  nr_blocks := NrBlocks(blocks);             #nr of blocks
+  blocks    := blocks!.blocks;
+  out       := [];
+  lookup    := [];
+
+  for i in [1 .. deg] do
+    out[i] := blocks[i];
+    if blist[blocks[i]] then
+      out[i + deg] := blocks[i];
+    else
+      if not IsBound(lookup[blocks[i]]) then
+        nr_blocks := nr_blocks + 1;
+        lookup[blocks[i]] := nr_blocks;
+      fi;
+      out[i + deg] := lookup[blocks[i]];
+    fi;
+  od;
+  return BIPART_NC(out);
+end);
+
+# Operators . . .
+
+# TODO C/C++?
+
+InstallMethod(\=, "for blocks", [IsBlocks, IsBlocks],
+function(a, b)
+  return a!.blocks = b!.blocks;
+end);
+
+# TODO C/C++?
+
+InstallMethod(\<, "for blocks", [IsBlocks, IsBlocks],
+function(a, b)
+  return a!.blocks < b!.blocks;
+end);
+
+# Printing, viewing etc . . .
+
+InstallMethod(PrintObj, "for blocks", [IsBlocks], 10,
+function(blocks)
+  Print(PrintString(blocks));
+  return;
+end);
+
+InstallMethod(PrintString, "for blocks", [IsBlocks],
+x -> Concatenation("BlocksNC(", String(ExtRepOfBlocks(x)), ")"));
+
+InstallMethod(ViewObj, "for blocks", [IsBlocks],
+function(blocks)
+  local ext, i;
+
+  ext := ExtRepOfBlocks(blocks);
+  if Length(ext) > 0 then
+    Print("<blocks: ");
+    Print(ext[1]);
+    for i in [2 .. Length(ext)] do
+      Print(", ", ext[i]);
+    od;
+  else
+    Print("<empty blocks");
+  fi;
+
+  Print(">");
+  return;
+end);
+
+#############################################################################
+# Not yet processed . . .
+#############################################################################
+
+
+#############################################################################
 # Internal
 #############################################################################
 
@@ -220,152 +353,6 @@ function(blocks, f, sign)
   fi;
 end);
 
-# not a synonym since NrTransverseBlocks applies to a bipartition also
-InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
-
-InstallMethod(PrintObj, "for blocks", [IsBlocks], 5,
-function(blocks)
-  Print(PrintString(blocks));
-  return;
-end);
-
-InstallMethod(PrintString, "for blocks", [IsBlocks],
-x -> Concatenation("BlocksNC(", String(ExtRepOfBlocks(x)), ")"));
-
-#
-
-InstallGlobalFunction(BlocksNC,
-function(blocks)
-  local n, out, i, j;
-
-  n := Sum(List(blocks, Length));
-  out := EmptyPlist(n + Length(blocks) + 1);
-  out[1] := Length(blocks);
-
-  for i in [1 .. Length(blocks)] do
-    if blocks[i][1] > 0 then
-      out[1 + n + i] := 1;
-    else
-      out[1 + n + i] := 0;
-    fi;
-    for j in blocks[i] do
-      out[AbsInt(j) + 1] := i;
-    od;
-  od;
-  return Objectify(BlocksType, rec(blocks := out));
-end);
-
-#
-
-InstallGlobalFunction(BlocksByIntRepNC,
-x -> Objectify(BlocksType, rec(blocks := x)));
-
-InstallMethod(ChooseHashFunction, "for blocks",
-[IsBlocks, IsInt],
-function(t, hashlen)
-  return rec(func := SEMIGROUPS.HashFunctionForBlocks, data := hashlen);
-end);
-
-#
-
-BindGlobal("EmptyBlocks", Objectify(BlocksType, rec(blocks := [0])));
-
-#
-
-InstallMethod(\=, "for blocks", [IsBlocks, IsBlocks],
-function(a, b)
-  return a!.blocks = b!.blocks;
-end);
-
-#
-
-InstallMethod(\<, "for blocks", [IsBlocks, IsBlocks],
-function(a, b)
-  return a!.blocks < b!.blocks;
-end);
-
-#
-
-InstallMethod(ELM_LIST, "for blocks", [IsBlocks, IsPosInt],
-function(b, i)
-  return b!.blocks[i + 1];
-end);
-
-#
-
-InstallMethod(NrBlocks, "for blocks", [IsBlocks],
-x -> x!.blocks[1]); #don't change this!!
-
-#
-
-InstallMethod(ExtRepOfBlocks, "for blocks", [IsBlocks],
-function(blocks)
-  local n, ext, i;
-
-  n := DegreeOfBlocks(blocks);
-  ext := [];
-
-  for i in [1 .. n] do
-    if not IsBound(ext[blocks[i]]) then
-      ext[blocks[i]] := [];
-    fi;
-    if blocks[blocks[i] + n] = 1 then
-      Add(ext[blocks[i]], i);
-    else
-      Add(ext[blocks[i]], -i);
-    fi;
-  od;
-  return ext;
-end);
-
-#
-
-InstallMethod(ViewObj, "for blocks", [IsBlocks],
-function(blocks)
-  local ext, i;
-
-  ext := ExtRepOfBlocks(blocks);
-  if Length(ext) > 0 then
-    Print("<blocks: ");
-    Print(ext[1]);
-    for i in [2 .. Length(ext)] do
-      Print(", ", ext[i]);
-    od;
-  else
-    Print("<empty blocks");
-  fi;
-
-  Print(">");
-  return;
-end);
-
-# create a projection using some blocks
-
-InstallMethod(ProjectionFromBlocks, "for blocks", [IsBlocks],
-function(blocks)
-  local n, nr, out, lookup, i;
-
-  n := DegreeOfBlocks(blocks);
-  blocks := blocks!.blocks;
-  nr := blocks[1];             #nr of blocks
-  out := [];
-  lookup := [];
-
-  for i in [1 .. n] do
-    out[i] := blocks[i + 1];
-    if blocks[blocks[i + 1] + n + 1] = 1 then
-      out[i + n] := blocks[i + 1];
-    else
-      if not IsBound(lookup[blocks[i + 1]]) then
-        nr := nr + 1;
-        lookup[blocks[i + 1]] := nr;
-      fi;
-      out[i + n] := lookup[blocks[i + 1]];
-    fi;
-  od;
-  return BIPART_NC(out);
-end);
-
 # JDM use FuseRightBlocks here!
 
 InstallGlobalFunction(OnRightBlocks,
@@ -503,67 +490,6 @@ function(blocks, f)
   out[1] := next;
   out := Objectify(BlocksType, rec(blocks := out));
   return out;
-end);
-
-#
-
-InstallMethod(RankOfBlocks, "for blocks", [IsBlocks],
-function(blocks)
-  local n, rank, i;
-
-  n := DegreeOfBlocks(blocks);
-  rank := 0;
-  for i in [1 .. NrBlocks(blocks)] do
-    rank := rank + blocks[n + i];
-  od;
-  return rank;
-end);
-
-#
-
-InstallMethod(DegreeOfBlocks, "for blocks", [IsBlocks],
-x -> Length(x!.blocks) - x!.blocks[1] - 1);
-
-#
-
-
-# permutation of indices of signed (connected) blocks of <blocks> under the
-# action of <f> which is assumed to stabilise <blocks>.
-
-InstallMethod(PermLeftBlocks, "for blocks and bipartition",
-[IsBlocks, IsBipartition],
-function(blocks, f)
-  return PermRightBlocks(blocks, Star(f));
-end);
-
-#
-
-InstallMethod(PermRightBlocks, "for blocks and bipartition",
-[IsBlocks, IsBipartition],
-function(blocks, f)
-  local n, nrblocks, fblocks, fuseit, signed, tab, next, x, i;
-
-  n := DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks := NrBlocks(blocks);
-  fblocks := f!.blocks;
-
-  fuseit := FuseRightBlocks(blocks, f, false);
-  signed := [];
-  tab := [];
-  next := 0;
-
-  # JDM could stop here after reaching the maximum signed class of <blocks>
-  for i in [n + 1 .. 2 * n] do
-    if blocks[n + blocks[i - n]] = 1 then
-      Add(signed, blocks[i - n]);
-    fi;
-    x := fuseit(fblocks[i] + nrblocks);
-    if not IsBound(tab[x]) then
-      next := next + 1;
-      tab[x] := next;
-    fi;
-  od;
-  return MappingPermListList_C(signed, List(signed, i -> tab[fuseit(i)]));
 end);
 
 # LambdaInverse - fuse <blocks> with the left blocks of <f> keeping track of
@@ -717,3 +643,78 @@ function(blocks, f)
   SetNrBlocks(out, nrblocks + 1);
   return out;
 end);
+
+################################################################################
+# not used
+################################################################################
+
+# permutation of indices of signed (connected) blocks of <blocks> under the
+# action of <f> which is assumed to stabilise <blocks>.
+
+#InstallMethod(PermLeftBlocks, "for blocks and bipartition",
+#[IsBlocks, IsBipartition],
+#function(blocks, f)
+#  return PermRightBlocks(blocks, Star(f));
+#end);
+#
+##
+#
+#InstallMethod(PermRightBlocks, "for blocks and bipartition",
+#[IsBlocks, IsBipartition],
+#function(blocks, f)
+#  local n, nrblocks, fblocks, fuseit, signed, tab, next, x, i;
+#
+#  n := DegreeOfBlocks(blocks); # length of partition!!
+#  nrblocks := NrBlocks(blocks);
+#  fblocks := f!.blocks;
+#
+#  fuseit := FuseRightBlocks(blocks, f, false);
+#  signed := [];
+#  tab := [];
+#  next := 0;
+#
+#  # JDM could stop here after reaching the maximum signed class of <blocks>
+#  for i in [n + 1 .. 2 * n] do
+#    if blocks[n + blocks[i - n]] = 1 then
+#      Add(signed, blocks[i - n]);
+#    fi;
+#    x := fuseit(fblocks[i] + nrblocks);
+#    if not IsBound(tab[x]) then
+#      next := next + 1;
+#      tab[x] := next;
+#    fi;
+#  od;
+#  return MappingPermListList_C(signed, List(signed, i -> tab[fuseit(i)]));
+#end);
+#
+#InstallGlobalFunction(BlocksNC,
+#function(blocks)
+#  local n, out, i, j;
+#
+#  n := Sum(List(blocks, Length));
+#  out := EmptyPlist(n + Length(blocks) + 1);
+#  out[1] := Length(blocks);
+#
+#  for i in [1 .. Length(blocks)] do
+#    if blocks[i][1] > 0 then
+#      out[1 + n + i] := 1;
+#    else
+#      out[1 + n + i] := 0;
+#    fi;
+#    for j in blocks[i] do
+#      out[AbsInt(j) + 1] := i;
+#    od;
+#  od;
+#  return Objectify(BlocksType, rec(blocks := out));
+#end);
+
+#
+
+#InstallGlobalFunction(BlocksByIntRepNC,
+#x -> Objectify(BlocksType, rec(blocks := x)));
+#
+#InstallMethod(ChooseHashFunction, "for blocks",
+#[IsBlocks, IsInt],
+#function(t, hashlen)
+#  return rec(func := SEMIGROUPS.HashFunctionForBlocks, data := hashlen);
+#end);

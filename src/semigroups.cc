@@ -775,6 +775,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_INT_REP, 1,
                           "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_HASH, 1,
+                          "x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_DEGREE, 1,
                           "x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RANK, 1,
@@ -799,6 +801,16 @@ static StructGVarFunc GVarFuncs [] = {
                           "x, y"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_STAB_ACTION, 2,
                           "x, p"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LEFT_BLOCKS, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RIGHT_BLOCKS, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_DEGREE, 1,
+                          "blocks"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_ELM_LIST, 2,
+                          "blocks, pos"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_NR_BLOCKS, 1,
+                          "blocks"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 
@@ -818,8 +830,10 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
 
     ImportGVarFromLibrary( "IsBipartition", &IsBipartition );
+    //FIXME delete the next line
     ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
     ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
+    ImportGVarFromLibrary( "BlocksType", &BlocksType );
 
     ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
     ImportGVarFromLibrary( "BooleanMatType", &BooleanMatType );

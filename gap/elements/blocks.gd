@@ -11,8 +11,16 @@
 DeclareCategory("IsBlocks", IsList);
 DeclareCategoryCollections("IsBlocks");
 
-DeclareGlobalFunction("BlocksNC");
-DeclareGlobalFunction("BlocksByIntRepNC");
+BindGlobal("BlocksFamily",
+           NewFamily("BlocksFamily", IsBlocks, CanEasilySortElements,
+                     CanEasilySortElements));
+
+BindGlobal("BlocksType",
+           NewType(BlocksFamily, IsBlocks and IsComponentObjectRep and
+                   IsAttributeStoringRep));
+
+#DeclareGlobalFunction("BlocksNC");
+#DeclareGlobalFunction("BlocksByIntRepNC");
 DeclareOperation("ProjectionFromBlocks", [IsBlocks]);
 
 DeclareAttribute("NrBlocks", IsBlocks);
@@ -33,10 +41,4 @@ DeclareOperation("PermLeftBlocks", [IsList, IsBipartition]);
 DeclareGlobalFunction("InverseRightBlocks");
 DeclareGlobalFunction("InverseLeftBlocks");
 
-BindGlobal("BlocksFamily",
-           NewFamily("BlocksFamily", IsBlocks, CanEasilySortElements,
-                     CanEasilySortElements));
 
-BindGlobal("BlocksType",
-           NewType(BlocksFamily, IsBlocks and IsComponentObjectRep and
-                   IsAttributeStoringRep));
