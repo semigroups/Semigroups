@@ -11,6 +11,31 @@
 #include "src/precord.h"
 #include <vector>
 
+UInt SizeBlist (
+    Obj                 blist )
+{
+    UInt *              ptr;            /* pointer to blist                */
+    UInt                nrb;            /* number of blocks in blist       */
+    UInt                m;              /* number of bits in a block       */
+    UInt                n;              /* number of bits in blist         */
+    UInt                i;              /* loop variable                   */
+
+    /* get the number of blocks and a pointer                              */
+    nrb = NUMBER_BLOCKS_BLIST(blist);
+    ptr = BLOCKS_BLIST( blist );
+
+    /* loop over the blocks, adding the number of bits of each one         */
+    n = 0;
+    for ( i = 1; i <= nrb; i++ ) {
+        m = *ptr++;
+        COUNT_TRUES_BLOCK(m);
+        n += m;
+    }
+
+    /* return the number of bits                                           */
+    return n;
+}
+
 // Global variables
 
 static std::vector<size_t> _BUFFER;
@@ -562,6 +587,62 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
   return NEW_GAP_BIPART(new Bipartition(blocks));
 }
 
+Obj BIPART_LEFT_BLOCKS (Obj self, Obj x) {
+  if (GET_LEFT_BLOCKS(x) == NULL) {
+    Bipartition* xx       = GET_CPP_BIPART(x);
+    size_t deg            = xx->degree();
+    size_t nr_left_blocks = xx->nr_left_blocks();
+
+    Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(nr_left_blocks)); // transverse blocks lookup
+    SET_LEN_BLIST(blist, nr_left_blocks);
+
+    for (size_t i = 0; i < nr_left_blocks; i++) {
+      if (xx->is_transverse_block(i)) {
+        SET_ELM_BLIST(blist, i + 1, True);
+      } else {
+        SET_ELM_BLIST(blist, i + 1, False);
+      }
+    }
+
+    Obj blocks = NEW_PLIST(T_PLIST_CYC, deg);
+    SET_LEN_PLIST(blocks, deg);
+
+    for (size_t i = 0; i < deg; i++) {
+      SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i) + 1));
+    }
+    SET_LEFT_BLOCKS(x, NEW_GAP_BLOCKS(deg, blocks, blist));
+  }
+  return GET_LEFT_BLOCKS(x);
+}
+
+Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
+  if (GET_RIGHT_BLOCKS(x) == NULL) {
+    Bipartition* xx        = GET_CPP_BIPART(x);
+    size_t deg             = xx->degree();
+    size_t nr_right_blocks = xx->nr_right_blocks();
+
+    Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(nr_right_blocks)); // transverse blocks lookup
+    SET_LEN_BLIST(blist, deg);
+
+    for (size_t i = deg; i < 2 * deg; i++) {
+      if (xx->is_transverse_block(xx->block(i))) {
+        SET_ELM_BLIST(blist, xx->block(i) + 1, True);
+      } else {
+        SET_ELM_BLIST(blist, xx->block(i) + 1, False);
+      }
+    }
+
+    Obj blocks = NEW_PLIST(T_PLIST_CYC, deg);
+    SET_LEN_PLIST(blocks, deg);
+
+    for (size_t i = 0; i < deg; i++) {
+      SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i + deg) + 1));
+    }
+    SET_RIGHT_BLOCKS(x, NEW_GAP_BLOCKS(deg, blocks, blist));
+  }
+  return GET_RIGHT_BLOCKS(x);
+}
+
 Obj BLOCKS_DEGREE (Obj self, Obj x) {
   return ElmPRec(x, _RNam_degree);
 }
@@ -574,52 +655,117 @@ Obj BLOCKS_ELM_LIST (Obj self, Obj x, Obj pos) {
   return ELM_LIST(ElmPRec(x, _RNam_blocks), INT_INTOBJ(pos));
 }
 
-Obj BIPART_LEFT_BLOCKS (Obj self, Obj x) {
-  Bipartition* xx       = GET_CPP_BIPART(x);
-  size_t deg            = xx->degree();
-  size_t nr_left_blocks = xx->nr_left_blocks();
-
-  Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(nr_left_blocks)); // transverse blocks lookup
-  SET_LEN_BLIST(blist, deg);
-
-  for (size_t i = 0; i < nr_left_blocks; i++) {
-    if (xx->is_transverse_block(i)) {
-      SET_ELM_BLIST(blist, i + 1, True);
-    } else {
-      SET_ELM_BLIST(blist, i + 1, False);
-    }
+size_t FUSE_IT (std::vector<size_t>::iterator const& it, size_t i) {
+  while (*(it + i) < i) {
+    i = *(it + i);
   }
-
-  Obj blocks = NEW_PLIST(T_PLIST_CYC, deg);
-  SET_LEN_PLIST(blocks, deg);
-
-  for (size_t i = 0; i < deg; i++) {
-    SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i) + 1));
-  }
-  return NEW_GAP_BLOCKS(deg, blocks, blist);
+  return i;
 }
 
-Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
-  Bipartition* xx        = GET_CPP_BIPART(x);
-  size_t deg             = xx->degree();
-  size_t nr_right_blocks = xx->nr_right_blocks();
+//void FUSE_BIPART_BLOCKS (Obj x, Obj blocks) {
+//}
 
-  Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(nr_right_blocks)); // transverse blocks lookup
-  SET_LEN_BLIST(blist, deg);
+//void FUSE_BLOCKS_BIPART (Obj x, Obj blocks) {
+//}
 
-  for (size_t i = deg; i < 2 * deg; i++) {
-    if (xx->is_transverse_block(xx->block(i))) {
-      SET_ELM_BLIST(blist, xx->block(i) + 1, True);
-    } else {
-      SET_ELM_BLIST(blist, xx->block(i) + 1, False);
+size_t blocks_rank (Obj blocks) {
+  return SizeBlist(ElmPRec(blocks, _RNam_blist));
+}
+
+void fuse_blocks_blocks (Obj left, Obj right) {
+
+  size_t deg = INT_INTOBJ(BLOCKS_DEGREE(0L, left));
+
+  size_t left_nr_blocks  = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, left));
+  size_t right_nr_blocks = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, right));
+
+  _BUFFER.resize(2 * (left_nr_blocks + right_nr_blocks));
+
+  for (size_t i = 0; i < left_nr_blocks + right_nr_blocks; i++) {
+    _BUFFER[i] = i;
+  }
+  std::fill(_BUFFER.begin() + left_nr_blocks + right_nr_blocks,
+            _BUFFER.begin() + 2 * (left_nr_blocks + right_nr_blocks),
+            0);
+
+  auto left_it  = _BUFFER.begin();
+  auto right_it = _BUFFER.begin() + left_nr_blocks;
+  auto sign_it  = right_it + right_nr_blocks;
+
+  Obj  right_blist = ElmPRec(right, _RNam_blist);
+
+  for (size_t i = 0; i < right_nr_blocks; i++) {
+    if (ELM_BLIST(right_blist, i + 1) == True) {
+      *(sign_it + i) = 1;
     }
   }
 
-  Obj blocks = NEW_PLIST(T_PLIST_CYC, deg);
-  SET_LEN_PLIST(blocks, deg);
+  Obj left_blocks = ElmPRec(left, _RNam_blocks);
+  Obj right_blocks = ElmPRec(right, _RNam_blocks);
 
-  for (size_t i = 0; i < deg; i++) {
-    SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i + deg) + 1));
+  for (size_t i = 1; i <= deg; i++) {
+    size_t j = FUSE_IT(left_it,  INT_INTOBJ(ELM_PLIST(left_blocks,  i)) - 1);
+    size_t k = FUSE_IT(right_it, INT_INTOBJ(ELM_PLIST(right_blocks, i)) - 1);
+
+    if (j != k) {
+      if (j < k) {
+        _BUFFER[k] = j;
+        if (*(sign_it + k) == 1) {
+          *(sign_it + j) = 1;
+        }
+      } else {
+        _BUFFER[j] = k;
+        if (*(sign_it + j) == 1) {
+          *(sign_it + k) = 1;
+        }
+      }
+    }
   }
-  return NEW_GAP_BLOCKS(deg, blocks, blist);
+}
+
+Obj BLOCKS_E_TESTER (Obj self, Obj left, Obj right) {
+
+  size_t rank = blocks_rank(left);
+  if (rank != blocks_rank(right)) {
+    return False;
+  } else if (rank == 0) {
+    return True;
+  }
+
+  size_t left_nr_blocks  = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, left));
+  size_t right_nr_blocks = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, right));
+
+  // after the following line:
+  //
+  // 1) [_BUFFER.begin() .. _BUFFER.begin() + left_nr_blocks +
+  //    right_nr_blocks - 1] is the fuse table for left and right
+  //
+  // 2) _BUFFER.begin() + left_nr_blocks + right_nr_blocks ..
+  //    _BUFFER.begin() + left_nr_blocks + 2 * right_nr_blocks - 1 is lookup
+  //    for the transverse blocks of the fused left and right
+  //
+  // 3) _BUFFER.begin() + left_nr_blocks + 2 * right_nr_blocks ..
+  //    _BUFFER.begin() + 2 * (left_nr_blocks + right_nr_blocks) is initialised
+  //    to 0.
+
+  fuse_blocks_blocks(left, right);
+
+  auto sign_it = _BUFFER.begin() + left_nr_blocks + right_nr_blocks;
+  auto seen_it = sign_it + right_nr_blocks;
+
+  Obj left_blist = ElmPRec(left, _RNam_blist);
+
+  // check we are injective on transverse blocks of <left> and that the fused
+  // blocks are also transverse.
+
+  for (size_t i = 0; i < left_nr_blocks; i++) {
+    if (ELM_BLIST(left_blist, i + 1) == True) {
+      size_t j = FUSE_IT(_BUFFER.begin(), i);
+      if (*(seen_it + j) == 1 || *(sign_it + j) == 0) {
+        return False;
+      }
+      *(seen_it + j) = 1;
+    }
+  }
+  return True;
 }
