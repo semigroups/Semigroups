@@ -305,8 +305,7 @@ Obj BIPART_INT_REP (Obj self, Obj x) {
 }
 
 Obj BIPART_HASH (Obj self, Obj x) {
-  Bipartition* xx = GET_CPP_BIPART(x);
-  return INTOBJ_INT(xx->hash_value());
+  return INTOBJ_INT(GET_CPP_BIPART(x)->hash_value());
 }
 
 Obj BIPART_DEGREE (Obj self, Obj x) {
