@@ -813,6 +813,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "blocks"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_E_TESTER, 2,
                           "left, right"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_E_CREATOR, 2,
+                          "left, right"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 

@@ -38,7 +38,8 @@ UInt SizeBlist (
 
 // Global variables
 
-static std::vector<size_t> _BUFFER;
+static std::vector<size_t> _BUFFER_size_t;
+static std::vector<bool>   _BUFFER_bool;
 static Int                 _RNam_wrapper   = RNamName("wrapper");
 static Int                 _RNam_blocks    = RNamName("blocks");
 static Int                 _RNam_degree    = RNamName("degree");
@@ -293,7 +294,7 @@ Obj BIPART_INT_REP (Obj self, Obj x) {
     size_t n = xx->degree();
 
     Obj int_rep = NEW_PLIST(T_PLIST_CYC, 2 * xx->degree());
-    SET_LEN_PLIST(int_rep, (Int) 2 * xx->nr_blocks());
+    SET_LEN_PLIST(int_rep, (Int) 2 * xx->degree());
 
     for (size_t i = 0; i < 2 * n; i++) {
       SET_ELM_PLIST(int_rep, i + 1, INTOBJ_INT(xx->block(i) + 1));
@@ -355,12 +356,12 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
 
   // find indices of right blocks of <x>
   size_t  index = 0;
-  std::fill(_BUFFER.begin(), std::min(_BUFFER.end(), _BUFFER.begin() + 2 * deg), -1);
-  _BUFFER.resize(2 * deg, -1);
+  std::fill(_BUFFER_size_t.begin(), std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg), -1);
+  _BUFFER_size_t.resize(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (_BUFFER[xx->block(i)] == (UInt4) -1) {
-      _BUFFER[xx->block(i)] = index;
+    if (_BUFFER_size_t[xx->block(i)] == (UInt4) -1) {
+      _BUFFER_size_t[xx->block(i)] = index;
       index++;
     }
     ptrp[i - deg] = i - deg;
@@ -368,7 +369,7 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
 
   for (size_t i = deg; i < 2 * deg; i++) {
     if (yy->block(i) < xx->nr_left_blocks()) {
-      ptrp[_BUFFER[yy->block(i)]] = _BUFFER[xx->block(i)];
+      ptrp[_BUFFER_size_t[yy->block(i)]] = _BUFFER_size_t[xx->block(i)];
     }
   }
   return p;
@@ -381,8 +382,8 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
   size_t deg  = xx->degree();
   size_t next = xx->nr_left_blocks();
 
-  std::fill(_BUFFER.begin(), std::min(_BUFFER.end(), _BUFFER.begin() + 2 * deg), -1);
-  _BUFFER.resize(2 * deg, -1);
+  std::fill(_BUFFER_size_t.begin(), std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg), -1);
+  _BUFFER_size_t.resize(2 * deg, -1);
 
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
   blocks->resize(2 * deg, -1);
@@ -391,10 +392,10 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
     (*blocks)[i] = xx->block(i);
     if (xx->is_transverse_block(xx->block(i))) {
       (*blocks)[i + deg] = xx->block(i);
-    } else if (_BUFFER[xx->block(i)] != (size_t) -1) {
-      (*blocks)[i + deg] = _BUFFER[xx->block(i)];
+    } else if (_BUFFER_size_t[xx->block(i)] != (size_t) -1) {
+      (*blocks)[i + deg] = _BUFFER_size_t[xx->block(i)];
     } else {
-      _BUFFER[xx->block(i)] = next;
+      _BUFFER_size_t[xx->block(i)] = next;
       (*blocks)[i + deg] = next;
       next++;
     }
@@ -410,8 +411,8 @@ Obj BIPART_STAR (Obj self, Obj x) {
   Bipartition* xx = GET_CPP_BIPART(x);
   size_t deg  = xx->degree();
 
-  std::fill(_BUFFER.begin(), std::min(_BUFFER.end(), _BUFFER.begin() + 2 * deg), -1);
-  _BUFFER.resize(2 * deg, -1);
+  std::fill(_BUFFER_size_t.begin(), std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg), -1);
+  _BUFFER_size_t.resize(2 * deg, -1);
 
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
   blocks->resize(2 * deg, -1);
@@ -419,10 +420,10 @@ Obj BIPART_STAR (Obj self, Obj x) {
   size_t next = 0;
 
   for (size_t i = 0; i < deg; i++) {
-    if (_BUFFER[xx->block(i + deg)] != (size_t) -1) {
-      (*blocks)[i] = _BUFFER[xx->block(i + deg)];
+    if (_BUFFER_size_t[xx->block(i + deg)] != (size_t) -1) {
+      (*blocks)[i] = _BUFFER_size_t[xx->block(i + deg)];
     } else {
-      _BUFFER[xx->block(i + deg)] = next;
+      _BUFFER_size_t[xx->block(i + deg)] = next;
       (*blocks)[i] = next;
       next++;
     }
@@ -431,10 +432,10 @@ Obj BIPART_STAR (Obj self, Obj x) {
   size_t nr_left = next;
 
   for (size_t i = 0; i < deg; i++) {
-    if (_BUFFER[xx->block(i)] != (size_t) -1) {
-      (*blocks)[i + deg] = _BUFFER[xx->block(i)];
+    if (_BUFFER_size_t[xx->block(i)] != (size_t) -1) {
+      (*blocks)[i + deg] = _BUFFER_size_t[xx->block(i)];
     } else {
-      _BUFFER[xx->block(i)] = next;
+      _BUFFER_size_t[xx->block(i)] = next;
       (*blocks)[i + deg] = next;
       next++;
     }
@@ -458,13 +459,13 @@ Obj BIPART_LAMBDA_CONJ (Obj self, Obj x, Obj y) {
   size_t nr_left_blocks = xx->nr_left_blocks();
   size_t nr_blocks      = std::max(xx->nr_blocks(), yy->nr_blocks());
 
-  std::fill(_BUFFER.begin(),
-            std::min(_BUFFER.end(),
-                     _BUFFER.begin() + nr_left_blocks + 3 * nr_blocks),
+  std::fill(_BUFFER_size_t.begin(),
+            std::min(_BUFFER_size_t.end(),
+                     _BUFFER_size_t.begin() + nr_left_blocks + 3 * nr_blocks),
             -1);
-  _BUFFER.resize(nr_left_blocks + 3 * nr_blocks, -1);
+  _BUFFER_size_t.resize(nr_left_blocks + 3 * nr_blocks, -1);
 
-  auto   seen = _BUFFER.begin() + nr_left_blocks;
+  auto   seen = _BUFFER_size_t.begin() + nr_left_blocks;
   auto   src  = seen + nr_blocks;
   auto   dst  = src + nr_blocks;
   size_t next = 0;
@@ -473,7 +474,7 @@ Obj BIPART_LAMBDA_CONJ (Obj self, Obj x, Obj y) {
     if (seen[yy->block(i)] == (size_t) -1) {
       seen[yy->block(i)]++;
       if (yy->block(i) < nr_left_blocks) { // connected block
-        _BUFFER[yy->block(i)] = next;
+        _BUFFER_size_t[yy->block(i)] = next;
       }
       next++;
     }
@@ -487,9 +488,9 @@ Obj BIPART_LAMBDA_CONJ (Obj self, Obj x, Obj y) {
     if (seen[xx->block(i)] < 1) {
       seen[xx->block(i)] += 2;
       if (xx->block(i) < nr_left_blocks) { // connected block
-        ptrp[next] = _BUFFER[xx->block(i)];
+        ptrp[next] = _BUFFER_size_t[xx->block(i)];
         src[next]++;
-        dst[_BUFFER[xx->block(i)]]++;
+        dst[_BUFFER_size_t[xx->block(i)]]++;
       }
       next++;
     }
@@ -538,14 +539,14 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
   blocks->resize(2 * deg);
 
-  std::fill(_BUFFER.begin(),
-            std::min(_BUFFER.end(),
-                     _BUFFER.begin() + 2 * nr_blocks + std::max(nr_blocks, pdeg)),
+  std::fill(_BUFFER_size_t.begin(),
+            std::min(_BUFFER_size_t.end(),
+                     _BUFFER_size_t.begin() + 2 * nr_blocks + std::max(nr_blocks, pdeg)),
             -1);
-  _BUFFER.resize(2 * nr_blocks + std::max(nr_blocks, pdeg), -1);
+  _BUFFER_size_t.resize(2 * nr_blocks + std::max(nr_blocks, pdeg), -1);
 
-  auto tab1 = _BUFFER.begin();
-  auto tab2 = _BUFFER.begin() + nr_blocks;
+  auto tab1 = _BUFFER_size_t.begin();
+  auto tab2 = _BUFFER_size_t.begin() + nr_blocks;
   auto q    = tab2 + nr_blocks; // the inverse of p
 
   if (TNUM_OBJ(p) == T_PERM2){
@@ -654,9 +655,9 @@ Obj BLOCKS_ELM_LIST (Obj self, Obj x, Obj pos) {
   return ELM_LIST(ElmPRec(x, _RNam_blocks), INT_INTOBJ(pos));
 }
 
-size_t FUSE_IT (std::vector<size_t>::iterator const& it, size_t i) {
-  while (*(it + i) < i) {
-    i = *(it + i);
+inline size_t fuse_it (size_t i) {
+  while (_BUFFER_size_t[i] < i) {
+    i = _BUFFER_size_t[i];
   }
   return i;
 }
@@ -671,51 +672,51 @@ size_t blocks_rank (Obj blocks) {
   return SizeBlist(ElmPRec(blocks, _RNam_blist));
 }
 
-void fuse_blocks_blocks (Obj left, Obj right) {
+void fuse_blocks_blocks (Obj left, Obj right, bool sign) {
 
   size_t deg = INT_INTOBJ(BLOCKS_DEGREE(0L, left));
 
   size_t left_nr_blocks  = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, left));
   size_t right_nr_blocks = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, right));
 
-  _BUFFER.resize(2 * (left_nr_blocks + right_nr_blocks));
+  _BUFFER_size_t.clear();
+  _BUFFER_size_t.reserve(left_nr_blocks + right_nr_blocks);
 
   for (size_t i = 0; i < left_nr_blocks + right_nr_blocks; i++) {
-    _BUFFER[i] = i;
+    _BUFFER_size_t.push_back(i);
   }
-  std::fill(_BUFFER.begin() + left_nr_blocks + right_nr_blocks,
-            _BUFFER.begin() + 2 * (left_nr_blocks + right_nr_blocks),
-            0);
 
-  auto left_it  = _BUFFER.begin();
-  auto right_it = _BUFFER.begin() + left_nr_blocks;
-  auto sign_it  = right_it + right_nr_blocks;
+  if (sign) {
+    _BUFFER_bool.clear();
 
-  Obj  right_blist = ElmPRec(right, _RNam_blist);
+    Obj right_blist = ElmPRec(right, _RNam_blist);
 
-  for (size_t i = 0; i < right_nr_blocks; i++) {
-    if (ELM_BLIST(right_blist, i + 1) == True) {
-      *(sign_it + i) = 1;
+    for (size_t i = 0; i < right_nr_blocks; i++) {
+      if (ELM_BLIST(right_blist, i + 1) == True) {
+        _BUFFER_bool.push_back(true);
+      } else {
+        _BUFFER_bool.push_back(false);
+      }
     }
   }
 
-  Obj left_blocks = ElmPRec(left, _RNam_blocks);
+  Obj left_blocks  = ElmPRec(left, _RNam_blocks);
   Obj right_blocks = ElmPRec(right, _RNam_blocks);
 
   for (size_t i = 1; i <= deg; i++) {
-    size_t j = FUSE_IT(left_it,  INT_INTOBJ(ELM_PLIST(left_blocks,  i)) - 1);
-    size_t k = FUSE_IT(right_it, INT_INTOBJ(ELM_PLIST(right_blocks, i)) - 1);
+    size_t j = fuse_it(INT_INTOBJ(ELM_PLIST(left_blocks,  i)) - 1);
+    size_t k = fuse_it(INT_INTOBJ(ELM_PLIST(right_blocks, i)) - 1 + left_nr_blocks);
 
     if (j != k) {
       if (j < k) {
-        _BUFFER[k] = j;
-        if (*(sign_it + k) == 1) {
-          *(sign_it + j) = 1;
+        _BUFFER_size_t[k] = j;
+        if (sign && _BUFFER_bool[k]) {
+          _BUFFER_bool[j] = true;
         }
       } else {
-        _BUFFER[j] = k;
-        if (*(sign_it + j) == 1) {
-          *(sign_it + k) = 1;
+        _BUFFER_size_t[j] = k;
+        if (sign && _BUFFER_bool[j]) {
+          _BUFFER_bool[k] = true;
         }
       }
     }
@@ -732,25 +733,22 @@ Obj BLOCKS_E_TESTER (Obj self, Obj left, Obj right) {
   }
 
   size_t left_nr_blocks  = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, left));
-  size_t right_nr_blocks = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, right));
 
   // after the following line:
   //
-  // 1) [_BUFFER.begin() .. _BUFFER.begin() + left_nr_blocks +
+  // 1) [_BUFFER_size_t.begin() .. _BUFFER_size_t.begin() + left_nr_blocks +
   //    right_nr_blocks - 1] is the fuse table for left and right
   //
-  // 2) _BUFFER.begin() + left_nr_blocks + right_nr_blocks ..
-  //    _BUFFER.begin() + left_nr_blocks + 2 * right_nr_blocks - 1 is lookup
-  //    for the transverse blocks of the fused left and right
-  //
-  // 3) _BUFFER.begin() + left_nr_blocks + 2 * right_nr_blocks ..
-  //    _BUFFER.begin() + 2 * (left_nr_blocks + right_nr_blocks) is initialised
-  //    to 0.
+  // 2) _BUFFER_bool is a lookup for the transverse blocks of the fused left
+  //     and right
 
-  fuse_blocks_blocks(left, right);
+  fuse_blocks_blocks(left, right, true);
 
-  auto sign_it = _BUFFER.begin() + left_nr_blocks + right_nr_blocks;
-  auto seen_it = sign_it + right_nr_blocks;
+  size_t n = _BUFFER_bool.size();
+  _BUFFER_bool.resize(n + left_nr_blocks, false);
+  std::fill(_BUFFER_bool.begin() + n,
+            _BUFFER_bool.begin() + left_nr_blocks,
+            false);
 
   Obj left_blist = ElmPRec(left, _RNam_blist);
 
@@ -759,12 +757,67 @@ Obj BLOCKS_E_TESTER (Obj self, Obj left, Obj right) {
 
   for (size_t i = 0; i < left_nr_blocks; i++) {
     if (ELM_BLIST(left_blist, i + 1) == True) {
-      size_t j = FUSE_IT(_BUFFER.begin(), i);
-      if (*(seen_it + j) == 1 || *(sign_it + j) == 0) {
+      size_t j = fuse_it(i);
+      if (!_BUFFER_bool[j] || _BUFFER_bool[j + n]) {
         return False;
       }
-      *(seen_it + j) = 1;
+      _BUFFER_bool[n + j] = true;
     }
   }
   return True;
+}
+
+Obj BLOCKS_E_CREATOR (Obj self, Obj left, Obj right) {
+
+  fuse_blocks_blocks(left, right, false);
+
+  size_t deg             = INT_INTOBJ(BLOCKS_DEGREE(0L, left));
+  size_t left_nr_blocks  = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, left));
+  size_t right_nr_blocks = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, right));
+
+  _BUFFER_size_t.resize(3 * (left_nr_blocks + right_nr_blocks), 0);
+  std::fill(_BUFFER_size_t.begin() + 2 * (left_nr_blocks + right_nr_blocks),
+            _BUFFER_size_t.begin() + 3 * (left_nr_blocks + right_nr_blocks),
+            -1);
+
+  auto tab_1_it = _BUFFER_size_t.begin() + left_nr_blocks + right_nr_blocks;
+  auto tab_2_it = _BUFFER_size_t.begin() + 2 * (left_nr_blocks + right_nr_blocks);
+
+  Obj left_blist  = ElmPRec(left, _RNam_blist);
+  Obj right_blist = ElmPRec(right, _RNam_blist);
+
+  //find new names for the signed blocks of right
+  for (size_t i = 0; i < right_nr_blocks; i++) {
+    if (ELM_BLIST(right_blist, i + 1) == True) {
+      *(tab_1_it + fuse_it(i + left_nr_blocks)) = i;
+    }
+  }
+
+  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+  blocks->resize(2 * deg);
+
+  Obj left_blocks  = ElmPRec(left, _RNam_blocks);
+  Obj right_blocks = ElmPRec(right, _RNam_blocks);
+
+  size_t next = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, right));
+
+  for (size_t i = 0; i < deg; i++) {
+    (*blocks)[i] = INT_INTOBJ(ELM_LIST(right_blocks, i + 1)) - 1;
+    size_t j = INT_INTOBJ(ELM_LIST(left_blocks, i + 1)) - 1;
+    if (ELM_BLIST(left_blist, j + 1) == True) {
+      (*blocks)[i + deg] = *(tab_1_it + fuse_it(j));
+    } else {
+      if (*(tab_2_it + j) == (size_t) -1) {
+        *(tab_2_it + j) = next;
+        next++;
+      }
+      (*blocks)[i + deg] = *(tab_2_it + j);
+    }
+  }
+
+  Bipartition* out = new Bipartition(blocks);
+  out->set_nr_blocks(next);
+  out->set_nr_left_blocks(right_nr_blocks);
+
+  return NEW_GAP_BIPART(out);
 }
