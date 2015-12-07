@@ -233,6 +233,12 @@ gap> IsSubrelation(c3, c1);
 false
 gap> IsSubrelation(c1, c3);
 false
+gap> T := Semigroup([Transformation([2,4,1,2])]);;
+gap> i4 := SemigroupIdeal(T, [ Transformation( [ 2, 4, 1, 2 ] ) ]);;
+gap> c4 := ReesCongruenceOfSemigroupIdeal(i4);;
+gap> IsSubrelation(c4, c1);
+Error, Semigroups: IsSubrelation: usage,
+congruences must be defined over the same semigroup,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
