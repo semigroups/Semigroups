@@ -142,7 +142,7 @@ ReadPackage("semigroups/gap/attributes/reesmat-iso.gi");
 ReadPackage("semigroups/gap/attributes/translat.gi");
 
 ReadPackage("semigroups/gap/congruences/congpairs.gi");
-ReadPackage("semigroups/gap/congruences/congreesmat.gi");
+ReadPackage("semigroups/gap/congruences/congrms.gi");
 ReadPackage("semigroups/gap/congruences/conguniv.gi");
 ReadPackage("semigroups/gap/congruences/conginverse.gi");
 ReadPackage("semigroups/gap/congruences/congsimple.gi");
