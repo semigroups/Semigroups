@@ -48,7 +48,7 @@ static Int                 _RNam_nr_blocks = RNamName("nr_blocks");
 
 // Helper functions
 
-inline Obj NEW_GAP_BIPART (Bipartition* x) {
+inline Obj new_gap_bipart (Bipartition* x) {
 
   // construct GAP wrapper for C++ object
   Obj wrapper = NewSemigroupsBag(x, GAP_BIPART, 6);
@@ -71,7 +71,7 @@ inline Obj NEW_GAP_BIPART (Bipartition* x) {
 // <i> belongs to the <j>th block, <transverse blocks>[j] = true if block <j> is
 // transverse and false if it is not.
 
-inline Obj NEW_GAP_BLOCKS (size_t degree, Obj blocks, Obj blist) {
+inline Obj new_gap_blocks (size_t degree, Obj blocks, Obj blist) {
 
   size_t nr_blocks = 0;
   for (size_t i = 1; i <= (size_t) LEN_LIST(blocks); i++) {
@@ -94,87 +94,87 @@ inline Obj NEW_GAP_BLOCKS (size_t degree, Obj blocks, Obj blist) {
   return out;
 }
 
-inline Obj GET_WRAPPER (Obj x) {
+inline Obj get_wrapper (Obj x) {
   //TODO check that x is a bipartition and that _RNam_wrapper is set
   return ElmPRec(x, _RNam_wrapper);
 }
 
-inline Obj GET_ELM_WRAPPER (Obj x, size_t pos) {
+inline Obj get_elm_wrapper (Obj x, size_t pos) {
   //TODO check that x is a bipartition and that pos is not bigger than it
   // should be
-  Obj wrapper = GET_WRAPPER(x);
+  Obj wrapper = get_wrapper(x);
   return ELM_PLIST(wrapper, pos);
 }
 
-inline void SET_ELM_WRAPPER (Obj x, size_t pos, Obj val) {
+inline void set_elm_wrapper (Obj x, size_t pos, Obj val) {
   //TODO check that x is a bipartition and that pos is not bigger than it
   // should be
-  Obj wrapper = GET_WRAPPER(x);
+  Obj wrapper = get_wrapper(x);
   SET_ELM_PLIST(wrapper, pos, val);
   CHANGED_BAG(wrapper);
   CHANGED_BAG(x);
 }
 
-inline void SET_BIPART_EXT_REP (Obj x, Obj blocks) {
+inline void set_bipart_ext_rep (Obj x, Obj blocks) {
   //TODO check that x is a bipartition
   //TODO check that <pos> isn't off the end of the wrapper
   //TODO check blocks
-  SET_ELM_WRAPPER(x, 2, blocks);
+  set_elm_wrapper(x, 2, blocks);
 }
 
-inline Obj GET_BIPART_EXT_REP (Obj x) {
+inline Obj get_bipart_ext_rep (Obj x) {
   //TODO check that x is a bipartition
   //TODO check that <pos> isn't off the end of the wrapper
   //TODO check blocks
-  return GET_ELM_WRAPPER(x, 2);
+  return get_elm_wrapper(x, 2);
 }
 
-inline void SET_BIPART_INT_REP (Obj x, Obj blocks) {
+inline void set_bipart_int_rep (Obj x, Obj blocks) {
   //TODO check that x is a bipartition
   //TODO check that <pos> isn't off the end of the wrapper
   //TODO check blocks
-  SET_ELM_WRAPPER(x, 3, blocks);
+  set_elm_wrapper(x, 3, blocks);
 }
 
-inline Obj GET_BIPART_INT_REP (Obj x) {
+inline Obj get_bipart_int_rep (Obj x) {
   //TODO check that x is a bipartition
   //TODO check that <pos> isn't off the end of the wrapper
   //TODO check blocks
-  return GET_ELM_WRAPPER(x, 3);
+  return get_elm_wrapper(x, 3);
 }
 
-inline Bipartition* GET_CPP_BIPART (Obj x) {
+inline Bipartition* get_cpp_bipart (Obj x) {
   //TODO check that x is a bipartition
 
-  return CLASS_OBJ<Bipartition>(GET_WRAPPER(x));
+  return CLASS_OBJ<Bipartition>(get_wrapper(x));
 }
 
-inline void SET_LEFT_BLOCKS (Obj x, Obj blocks) {
-  //TODO check that x is a bipartition
-  //TODO check that <pos> isn't off the end of the wrapper
-  //TODO check blocks
-  SET_ELM_WRAPPER(x, 4, blocks);
-}
-
-inline Obj GET_LEFT_BLOCKS (Obj x) {
+inline void set_left_blocks (Obj x, Obj blocks) {
   //TODO check that x is a bipartition
   //TODO check that <pos> isn't off the end of the wrapper
   //TODO check blocks
-  return GET_ELM_WRAPPER(x, 4);
+  set_elm_wrapper(x, 4, blocks);
 }
 
-inline void SET_RIGHT_BLOCKS (Obj x, Obj blocks) {
+inline Obj get_left_blocks (Obj x) {
   //TODO check that x is a bipartition
   //TODO check that <pos> isn't off the end of the wrapper
   //TODO check blocks
-  SET_ELM_WRAPPER(x, 5, blocks);
+  return get_elm_wrapper(x, 4);
 }
 
-inline Obj GET_RIGHT_BLOCKS (Obj x) {
+inline void set_right_blocks (Obj x, Obj blocks) {
   //TODO check that x is a bipartition
   //TODO check that <pos> isn't off the end of the wrapper
   //TODO check blocks
-  return GET_ELM_WRAPPER(x, 5);
+  set_elm_wrapper(x, 5, blocks);
+}
+
+inline Obj get_right_blocks (Obj x) {
+  //TODO check that x is a bipartition
+  //TODO check that <pos> isn't off the end of the wrapper
+  //TODO check blocks
+  return get_elm_wrapper(x, 5);
 }
 
 // GAP kernel functions
@@ -247,12 +247,12 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
   x->set_nr_left_blocks(nr_left_blocks);
   x->set_nr_blocks(nr_blocks);
 
-  Obj out = NEW_GAP_BIPART(x);
+  Obj out = new_gap_bipart(x);
 
   if (by_ext_rep) {
-    SET_BIPART_EXT_REP(out, gap_blocks); //TODO copy gap_blocks?
+    set_bipart_ext_rep(out, gap_blocks); //TODO copy gap_blocks?
   } else {
-    SET_BIPART_INT_REP(out, gap_blocks); //TODO copy gap_blocks?
+    set_bipart_int_rep(out, gap_blocks); //TODO copy gap_blocks?
   }
 
   return out;
@@ -260,8 +260,8 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
 
 Obj BIPART_EXT_REP (Obj self, Obj x) {
 
-  if (GET_BIPART_EXT_REP(x) == NULL) {
-    Bipartition* xx = GET_CPP_BIPART(x);
+  if (get_bipart_ext_rep(x) == NULL) {
+    Bipartition* xx = get_cpp_bipart(x);
     size_t n = xx->degree();
 
     Obj ext_rep = NEW_PLIST(T_PLIST_HOM, xx->nr_blocks());
@@ -281,16 +281,16 @@ Obj BIPART_EXT_REP (Obj self, Obj x) {
         AssPlist(block, LEN_PLIST(block) + 1, entry);
       }
     }
-    SET_BIPART_EXT_REP(x, ext_rep);
+    set_bipart_ext_rep(x, ext_rep);
   }
 
-  return GET_BIPART_EXT_REP(x);
+  return get_bipart_ext_rep(x);
 }
 
 Obj BIPART_INT_REP (Obj self, Obj x) {
 
-  if (GET_BIPART_INT_REP(x) == NULL) {
-    Bipartition* xx = GET_CPP_BIPART(x); // get C++ bipartition
+  if (get_bipart_int_rep(x) == NULL) {
+    Bipartition* xx = get_cpp_bipart(x); // get C++ bipartition
     size_t n = xx->degree();
 
     Obj int_rep = NEW_PLIST(T_PLIST_CYC, 2 * xx->degree());
@@ -299,56 +299,56 @@ Obj BIPART_INT_REP (Obj self, Obj x) {
     for (size_t i = 0; i < 2 * n; i++) {
       SET_ELM_PLIST(int_rep, i + 1, INTOBJ_INT(xx->block(i) + 1));
     }
-    SET_BIPART_INT_REP(x, int_rep);
+    set_bipart_int_rep(x, int_rep);
   }
 
-  return GET_BIPART_INT_REP(x);
+  return get_bipart_int_rep(x);
 }
 
 Obj BIPART_HASH (Obj self, Obj x) {
-  return INTOBJ_INT(GET_CPP_BIPART(x)->hash_value());
+  return INTOBJ_INT(get_cpp_bipart(x)->hash_value());
 }
 
 Obj BIPART_DEGREE (Obj self, Obj x) {
-  return INTOBJ_INT(GET_CPP_BIPART(x)->degree());
+  return INTOBJ_INT(get_cpp_bipart(x)->degree());
 }
 
 Obj BIPART_NR_BLOCKS (Obj self, Obj x) {
-  return INTOBJ_INT(GET_CPP_BIPART(x)->nr_blocks());
+  return INTOBJ_INT(get_cpp_bipart(x)->nr_blocks());
 }
 
 Obj BIPART_NR_LEFT_BLOCKS (Obj self, Obj x) {
-  return INTOBJ_INT(GET_CPP_BIPART(x)->nr_left_blocks());
+  return INTOBJ_INT(get_cpp_bipart(x)->nr_left_blocks());
 }
 
 Obj BIPART_RANK (Obj self, Obj x) {
-  return INTOBJ_INT(GET_CPP_BIPART(x)->rank());
+  return INTOBJ_INT(get_cpp_bipart(x)->rank());
 }
 
 Obj BIPART_PROD (Obj self, Obj x, Obj y) {
 
-  Bipartition* xx = GET_CPP_BIPART(x);
-  Bipartition* yy = GET_CPP_BIPART(y);
+  Bipartition* xx = get_cpp_bipart(x);
+  Bipartition* yy = get_cpp_bipart(y);
 
   Bipartition* z = new Bipartition(xx->degree());
   z->redefine(xx, yy);
 
-  return NEW_GAP_BIPART(z);
+  return new_gap_bipart(z);
 }
 
 Obj BIPART_EQ (Obj self, Obj x, Obj y) {
-  return (GET_CPP_BIPART(x)->equals(GET_CPP_BIPART(y)) ? True : False);
+  return (get_cpp_bipart(x)->equals(get_cpp_bipart(y)) ? True : False);
 }
 
 Obj BIPART_LT (Obj self, Obj x, Obj y) {
-  return (GET_CPP_BIPART(x) < GET_CPP_BIPART(y) ? True : False);
+  return (get_cpp_bipart(x) < get_cpp_bipart(y) ? True : False);
 }
 
 // TODO this should go into semigroups++
 
 Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
-  Bipartition* xx = GET_CPP_BIPART(x);
-  Bipartition* yy = GET_CPP_BIPART(y);
+  Bipartition* xx = get_cpp_bipart(x);
+  Bipartition* yy = get_cpp_bipart(y);
 
   size_t deg  = xx->degree();
   Obj p       = NEW_PERM4(deg);
@@ -379,7 +379,7 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
 
 Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
 
-  Bipartition* xx = GET_CPP_BIPART(x);
+  Bipartition* xx = get_cpp_bipart(x);
 
   size_t deg  = xx->degree();
   size_t next = xx->nr_left_blocks();
@@ -407,12 +407,12 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
 
   Bipartition* out = new Bipartition(blocks);
   out->set_nr_blocks(next);
-  return NEW_GAP_BIPART(out);
+  return new_gap_bipart(out);
 }
 
 Obj BIPART_STAR (Obj self, Obj x) {
 
-  Bipartition* xx = GET_CPP_BIPART(x);
+  Bipartition* xx = get_cpp_bipart(x);
   size_t deg  = xx->degree();
 
   std::fill(_BUFFER_size_t.begin(),
@@ -451,15 +451,15 @@ Obj BIPART_STAR (Obj self, Obj x) {
   out->set_nr_blocks(next);
   out->set_nr_left_blocks(nr_left);
 
-  return NEW_GAP_BIPART(out);
+  return new_gap_bipart(out);
 }
 
 // x and y should have equal left blocks
 
 Obj BIPART_LAMBDA_CONJ (Obj self, Obj x, Obj y) {
 
-  Bipartition* xx = GET_CPP_BIPART(x);
-  Bipartition* yy = GET_CPP_BIPART(y);
+  Bipartition* xx = get_cpp_bipart(x);
+  Bipartition* yy = get_cpp_bipart(y);
 
   size_t deg            = xx->degree();
   size_t nr_left_blocks = xx->nr_left_blocks();
@@ -537,7 +537,7 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
     ErrorQuit("usage: <p> must be a list (not a %s)", (Int) TNAM_OBJ(p), 0L);
   }
 
-  Bipartition* xx = GET_CPP_BIPART(x);
+  Bipartition* xx = get_cpp_bipart(x);
 
   size_t deg       = xx->degree();
   size_t nr_blocks = xx->nr_blocks();
@@ -590,12 +590,12 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
     (*blocks)[i + deg] = tab2[tab1[xx->block(i + deg)]];
   }
 
-  return NEW_GAP_BIPART(new Bipartition(blocks));
+  return new_gap_bipart(new Bipartition(blocks));
 }
 
 Obj BIPART_LEFT_BLOCKS (Obj self, Obj x) {
-  if (GET_LEFT_BLOCKS(x) == NULL) {
-    Bipartition* xx       = GET_CPP_BIPART(x);
+  if (get_left_blocks(x) == NULL) {
+    Bipartition* xx       = get_cpp_bipart(x);
     size_t deg            = xx->degree();
     size_t nr_left_blocks = xx->nr_left_blocks();
 
@@ -616,14 +616,14 @@ Obj BIPART_LEFT_BLOCKS (Obj self, Obj x) {
     for (size_t i = 0; i < deg; i++) {
       SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i) + 1));
     }
-    SET_LEFT_BLOCKS(x, NEW_GAP_BLOCKS(deg, blocks, blist));
+    set_left_blocks(x, new_gap_blocks(deg, blocks, blist));
   }
-  return GET_LEFT_BLOCKS(x);
+  return get_left_blocks(x);
 }
 
 Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
-  if (GET_RIGHT_BLOCKS(x) == NULL) {
-    Bipartition* xx        = GET_CPP_BIPART(x);
+  if (get_right_blocks(x) == NULL) {
+    Bipartition* xx        = get_cpp_bipart(x);
     size_t deg             = xx->degree();
     size_t nr_right_blocks = xx->nr_right_blocks();
 
@@ -644,9 +644,9 @@ Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
     for (size_t i = 0; i < deg; i++) {
       SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i + deg) + 1));
     }
-    SET_RIGHT_BLOCKS(x, NEW_GAP_BLOCKS(deg, blocks, blist));
+    set_right_blocks(x, new_gap_blocks(deg, blocks, blist));
   }
-  return GET_RIGHT_BLOCKS(x);
+  return get_right_blocks(x);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -839,5 +839,5 @@ Obj BLOCKS_E_CREATOR (Obj self, Obj left, Obj right) {
   out->set_nr_blocks(next);
   out->set_nr_left_blocks(right_nr_blocks);
 
-  return NEW_GAP_BIPART(out);
+  return new_gap_bipart(out);
 }

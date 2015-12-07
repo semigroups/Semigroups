@@ -24,12 +24,9 @@ BindGlobal("BlocksType",
 DeclareOperation("ProjectionFromBlocks", [IsBlocks]);
 
 DeclareAttribute("NrBlocks", IsBlocks);
-
 DeclareAttribute("RankOfBlocks", IsBlocks);
 DeclareAttribute("NrTransverseBlocks", IsBlocks);
-
 DeclareAttribute("DegreeOfBlocks", IsBlocks);
-
 DeclareAttribute("ExtRepOfBlocks", IsBlocks);
 
 DeclareGlobalFunction("OnRightBlocks");
