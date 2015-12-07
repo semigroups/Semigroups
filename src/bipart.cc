@@ -356,7 +356,9 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
 
   // find indices of right blocks of <x>
   size_t  index = 0;
-  std::fill(_BUFFER_size_t.begin(), std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg), -1);
+  std::fill(_BUFFER_size_t.begin(),
+            std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg),
+            -1);
   _BUFFER_size_t.resize(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
@@ -382,7 +384,9 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
   size_t deg  = xx->degree();
   size_t next = xx->nr_left_blocks();
 
-  std::fill(_BUFFER_size_t.begin(), std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg), -1);
+  std::fill(_BUFFER_size_t.begin(),
+            std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg),
+            -1);
   _BUFFER_size_t.resize(2 * deg, -1);
 
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
@@ -411,7 +415,9 @@ Obj BIPART_STAR (Obj self, Obj x) {
   Bipartition* xx = GET_CPP_BIPART(x);
   size_t deg  = xx->degree();
 
-  std::fill(_BUFFER_size_t.begin(), std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg), -1);
+  std::fill(_BUFFER_size_t.begin(),
+            std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg),
+            -1);
   _BUFFER_size_t.resize(2 * deg, -1);
 
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
@@ -643,6 +649,12 @@ Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
   return GET_RIGHT_BLOCKS(x);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Blocks
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 Obj BLOCKS_DEGREE (Obj self, Obj x) {
   return ElmPRec(x, _RNam_degree);
 }
@@ -661,6 +673,10 @@ inline size_t fuse_it (size_t i) {
   }
   return i;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// Non-GAP functions
+////////////////////////////////////////////////////////////////////////////////
 
 //void FUSE_BIPART_BLOCKS (Obj x, Obj blocks) {
 //}
@@ -723,6 +739,10 @@ void fuse_blocks_blocks (Obj left, Obj right, bool sign) {
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// GAP-level functions
+////////////////////////////////////////////////////////////////////////////////
+
 Obj BLOCKS_E_TESTER (Obj self, Obj left, Obj right) {
 
   size_t rank = blocks_rank(left);
@@ -780,8 +800,8 @@ Obj BLOCKS_E_CREATOR (Obj self, Obj left, Obj right) {
             _BUFFER_size_t.begin() + 3 * (left_nr_blocks + right_nr_blocks),
             -1);
 
-  auto tab_1_it = _BUFFER_size_t.begin() + left_nr_blocks + right_nr_blocks;
-  auto tab_2_it = _BUFFER_size_t.begin() + 2 * (left_nr_blocks + right_nr_blocks);
+  auto tab1 = _BUFFER_size_t.begin() + left_nr_blocks + right_nr_blocks;
+  auto tab2 = _BUFFER_size_t.begin() + 2 * (left_nr_blocks + right_nr_blocks);
 
   Obj left_blist  = ElmPRec(left, _RNam_blist);
   Obj right_blist = ElmPRec(right, _RNam_blist);
@@ -789,7 +809,7 @@ Obj BLOCKS_E_CREATOR (Obj self, Obj left, Obj right) {
   //find new names for the signed blocks of right
   for (size_t i = 0; i < right_nr_blocks; i++) {
     if (ELM_BLIST(right_blist, i + 1) == True) {
-      *(tab_1_it + fuse_it(i + left_nr_blocks)) = i;
+      tab1[fuse_it(i + left_nr_blocks)] = i;
     }
   }
 
@@ -805,13 +825,13 @@ Obj BLOCKS_E_CREATOR (Obj self, Obj left, Obj right) {
     (*blocks)[i] = INT_INTOBJ(ELM_LIST(right_blocks, i + 1)) - 1;
     size_t j = INT_INTOBJ(ELM_LIST(left_blocks, i + 1)) - 1;
     if (ELM_BLIST(left_blist, j + 1) == True) {
-      (*blocks)[i + deg] = *(tab_1_it + fuse_it(j));
+      (*blocks)[i + deg] = tab1[fuse_it(j)];
     } else {
-      if (*(tab_2_it + j) == (size_t) -1) {
-        *(tab_2_it + j) = next;
+      if (tab2[j] == (size_t) -1) {
+        tab2[j] = next;
         next++;
       }
-      (*blocks)[i + deg] = *(tab_2_it + j);
+      (*blocks)[i + deg] = tab2[j];
     }
   }
 
