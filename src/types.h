@@ -27,7 +27,8 @@ enum SemigroupsBagType {
   UF_DATA    = 0,
   SEMIGROUP  = 1,
   CONVERTER  = 2,
-  GAP_BIPART = 3
+  GAP_BIPART = 3,
+  GAP_BLOCKS = 4
 };
 
 template <typename Class>
@@ -53,6 +54,7 @@ inline Class* CLASS_OBJ(Obj o) {
 #define IS_SEMIGROUP_BAG(o)  (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == SEMIGROUP)
 #define IS_UF_DATA_BAG(o)    (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == UF_DATA)
 #define IS_GAP_BIPART_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == GAP_BIPART)
+#define IS_GAP_BLOCKS_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == GAP_BLOCKS)
 
 /*******************************************************************************
  * Macros for checking types of objects

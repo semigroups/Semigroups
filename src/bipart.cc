@@ -5,36 +5,14 @@
  *
  */
 
+//TODO if we use clear before resize maybe don't need fill
+
 #include "src/bipart.h"
 #include "src/semigroups++/elements.h"
 #include "src/permutat.h"
 #include "src/precord.h"
 #include <vector>
 
-UInt SizeBlist (
-    Obj                 blist )
-{
-    UInt *              ptr;            /* pointer to blist                */
-    UInt                nrb;            /* number of blocks in blist       */
-    UInt                m;              /* number of bits in a block       */
-    UInt                n;              /* number of bits in blist         */
-    UInt                i;              /* loop variable                   */
-
-    /* get the number of blocks and a pointer                              */
-    nrb = NUMBER_BLOCKS_BLIST(blist);
-    ptr = BLOCKS_BLIST( blist );
-
-    /* loop over the blocks, adding the number of bits of each one         */
-    n = 0;
-    for ( i = 1; i <= nrb; i++ ) {
-        m = *ptr++;
-        COUNT_TRUES_BLOCK(m);
-        n += m;
-    }
-
-    /* return the number of bits                                           */
-    return n;
-}
 
 // Global variables
 
@@ -46,12 +24,34 @@ static Int                 _RNam_degree    = RNamName("degree");
 static Int                 _RNam_blist     = RNamName("blist");
 static Int                 _RNam_nr_blocks = RNamName("nr_blocks");
 
+
+inline Obj wrapper_get (Obj x) {
+  //TODO check that x is a bipartition or blocks and that _RNam_wrapper is set
+  return ElmPRec(x, _RNam_wrapper);
+}
+
+inline Obj wrapper_get_elm (Obj x, size_t pos) {
+  //TODO check that x is a bipartition or blocks and that pos is not bigger than it
+  // should be
+  Obj wrapper = wrapper_get(x);
+  return ELM_PLIST(wrapper, pos);
+}
+
+inline void wrapper_set_elm (Obj x, size_t pos, Obj val) {
+  //TODO check that x is a bipartition or blocks and that pos is not bigger than it
+  // should be
+  Obj wrapper = wrapper_get(x);
+  SET_ELM_PLIST(wrapper, pos, val);
+  CHANGED_BAG(wrapper);
+  CHANGED_BAG(x);
+}
+
 // Helper functions
 
-inline Obj new_gap_bipart (Bipartition* x) {
+inline Obj bipart_new (Bipartition* x) {
 
   // construct GAP wrapper for C++ object
-  Obj wrapper = NewSemigroupsBag(x, GAP_BIPART, 6);
+  Obj wrapper = NewSemigroupsBag(x, GAP_BIPART, 4);
 
   // put the GAP wrapper in a list and Objectify
   Obj out = NEW_PREC(1);
@@ -63,30 +63,47 @@ inline Obj new_gap_bipart (Bipartition* x) {
   return out;
 }
 
-// Blocks are stored internally as a list consisting of:
-//
-// [ nr of blocks, internal rep of blocks, transverse blocks ]
-//
-// <nr of blocks> is a non-negative integer, <internal rep of blocks>[i] = j if
-// <i> belongs to the <j>th block, <transverse blocks>[j] = true if block <j> is
-// transverse and false if it is not.
+inline Bipartition* bipart_get_cpp (Obj x) {
+  //TODO check that x is a bipartition
+  return CLASS_OBJ<Bipartition>(wrapper_get(x));
+}
 
-inline Obj new_gap_blocks (size_t degree, Obj blocks, Obj blist) {
+inline void bipart_set_ext_rep (Obj x, Obj blocks) {
+  //TODO check that x is a bipartition
+  //TODO check that <pos> isn't off the end of the wrapper
+  //TODO check blocks
+  wrapper_set_elm(x, 2, blocks);
+}
 
-  size_t nr_blocks = 0;
-  for (size_t i = 1; i <= (size_t) LEN_LIST(blocks); i++) {
-    size_t index = INT_INTOBJ(ELM_LIST(blocks, i));
-    nr_blocks = (index > nr_blocks ? index : nr_blocks);
-  }
+inline Obj bipart_get_ext_rep (Obj x) {
+  //TODO check that x is a bipartition
+  //TODO check that <pos> isn't off the end of the wrapper
+  //TODO check blocks
+  return wrapper_get_elm(x, 2);
+}
 
-  Obj out = NEW_PREC(4);
+inline void bipart_set_int_rep (Obj x, Obj blocks) {
+  //TODO check that x is a bipartition
+  //TODO check that <pos> isn't off the end of the wrapper
+  //TODO check blocks
+  wrapper_set_elm(x, 3, blocks);
+}
 
-  AssPRec(out, _RNam_degree,    INTOBJ_INT(degree));
-  AssPRec(out, _RNam_blocks,    blocks);
-  AssPRec(out, _RNam_blist,     blist);
-  AssPRec(out, _RNam_nr_blocks, INTOBJ_INT(nr_blocks));
-  CHANGED_BAG(out);
+inline Obj bipart_get_int_rep (Obj x) {
+  //TODO check that x is a bipartition
+  //TODO check that <pos> isn't off the end of the wrapper
+  //TODO check blocks
+  return wrapper_get_elm(x, 3);
+}
 
+inline Obj blocks_new (Blocks* x) {
+
+  // construct GAP wrapper for C++ object
+  Obj wrapper = NewSemigroupsBag(x, GAP_BLOCKS, 3);
+
+  // put the GAP wrapper in a list and Objectify
+  Obj out = NEW_PREC(1);
+  AssPRec(out, _RNam_wrapper, wrapper);
   TYPE_COMOBJ(out) = BlocksType;
   RetypeBag(out, T_COMOBJ);
   CHANGED_BAG(out);
@@ -94,87 +111,19 @@ inline Obj new_gap_blocks (size_t degree, Obj blocks, Obj blist) {
   return out;
 }
 
-inline Obj get_wrapper (Obj x) {
-  //TODO check that x is a bipartition and that _RNam_wrapper is set
-  return ElmPRec(x, _RNam_wrapper);
+inline Blocks* blocks_get_cpp (Obj x) {
+  //TODO check that x is a blocks
+  return CLASS_OBJ<Blocks>(wrapper_get(x));
 }
 
-inline Obj get_elm_wrapper (Obj x, size_t pos) {
-  //TODO check that x is a bipartition and that pos is not bigger than it
-  // should be
-  Obj wrapper = get_wrapper(x);
-  return ELM_PLIST(wrapper, pos);
+inline Obj blocks_get_ext_rep (Obj x) {
+  //TODO asserts
+  return wrapper_get_elm(x, 2);
 }
 
-inline void set_elm_wrapper (Obj x, size_t pos, Obj val) {
-  //TODO check that x is a bipartition and that pos is not bigger than it
-  // should be
-  Obj wrapper = get_wrapper(x);
-  SET_ELM_PLIST(wrapper, pos, val);
-  CHANGED_BAG(wrapper);
-  CHANGED_BAG(x);
-}
-
-inline void set_bipart_ext_rep (Obj x, Obj blocks) {
-  //TODO check that x is a bipartition
-  //TODO check that <pos> isn't off the end of the wrapper
-  //TODO check blocks
-  set_elm_wrapper(x, 2, blocks);
-}
-
-inline Obj get_bipart_ext_rep (Obj x) {
-  //TODO check that x is a bipartition
-  //TODO check that <pos> isn't off the end of the wrapper
-  //TODO check blocks
-  return get_elm_wrapper(x, 2);
-}
-
-inline void set_bipart_int_rep (Obj x, Obj blocks) {
-  //TODO check that x is a bipartition
-  //TODO check that <pos> isn't off the end of the wrapper
-  //TODO check blocks
-  set_elm_wrapper(x, 3, blocks);
-}
-
-inline Obj get_bipart_int_rep (Obj x) {
-  //TODO check that x is a bipartition
-  //TODO check that <pos> isn't off the end of the wrapper
-  //TODO check blocks
-  return get_elm_wrapper(x, 3);
-}
-
-inline Bipartition* get_cpp_bipart (Obj x) {
-  //TODO check that x is a bipartition
-
-  return CLASS_OBJ<Bipartition>(get_wrapper(x));
-}
-
-inline void set_left_blocks (Obj x, Obj blocks) {
-  //TODO check that x is a bipartition
-  //TODO check that <pos> isn't off the end of the wrapper
-  //TODO check blocks
-  set_elm_wrapper(x, 4, blocks);
-}
-
-inline Obj get_left_blocks (Obj x) {
-  //TODO check that x is a bipartition
-  //TODO check that <pos> isn't off the end of the wrapper
-  //TODO check blocks
-  return get_elm_wrapper(x, 4);
-}
-
-inline void set_right_blocks (Obj x, Obj blocks) {
-  //TODO check that x is a bipartition
-  //TODO check that <pos> isn't off the end of the wrapper
-  //TODO check blocks
-  set_elm_wrapper(x, 5, blocks);
-}
-
-inline Obj get_right_blocks (Obj x) {
-  //TODO check that x is a bipartition
-  //TODO check that <pos> isn't off the end of the wrapper
-  //TODO check blocks
-  return get_elm_wrapper(x, 5);
+inline void blocks_set_ext_rep (Obj x, Obj ext_rep) {
+  //TODO asserts
+  wrapper_set_elm(x, 2, ext_rep);
 }
 
 // GAP kernel functions
@@ -226,7 +175,7 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
     for (size_t i = 1; i <= (size_t) LEN_LIST(gap_blocks) / 2; i++) {
       assert(IS_INTOBJ(ELM_LIST(gap_blocks, i)) &&
              INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
-      size_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
+      u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
       blocks->push_back(index);
       nr_blocks = (index > nr_blocks ? index : nr_blocks);
     }
@@ -235,7 +184,7 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
          i <= (size_t) LEN_LIST(gap_blocks); i++) {
       assert(IS_INTOBJ(ELM_LIST(gap_blocks, i)) &&
              INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
-      size_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
+      u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
       blocks->push_back(index);
       nr_blocks = (index > nr_blocks ? index : nr_blocks);
     }
@@ -247,12 +196,12 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
   x->set_nr_left_blocks(nr_left_blocks);
   x->set_nr_blocks(nr_blocks);
 
-  Obj out = new_gap_bipart(x);
+  Obj out = bipart_new(x);
 
   if (by_ext_rep) {
-    set_bipart_ext_rep(out, gap_blocks); //TODO copy gap_blocks?
+    bipart_set_ext_rep(out, gap_blocks); //TODO copy gap_blocks?
   } else {
-    set_bipart_int_rep(out, gap_blocks); //TODO copy gap_blocks?
+    bipart_set_int_rep(out, gap_blocks); //TODO copy gap_blocks?
   }
 
   return out;
@@ -260,8 +209,8 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
 
 Obj BIPART_EXT_REP (Obj self, Obj x) {
 
-  if (get_bipart_ext_rep(x) == NULL) {
-    Bipartition* xx = get_cpp_bipart(x);
+  if (bipart_get_ext_rep(x) == NULL) {
+    Bipartition* xx = bipart_get_cpp(x);
     size_t n = xx->degree();
 
     Obj ext_rep = NEW_PLIST(T_PLIST_HOM, xx->nr_blocks());
@@ -281,16 +230,16 @@ Obj BIPART_EXT_REP (Obj self, Obj x) {
         AssPlist(block, LEN_PLIST(block) + 1, entry);
       }
     }
-    set_bipart_ext_rep(x, ext_rep);
+    bipart_set_ext_rep(x, ext_rep);
   }
 
-  return get_bipart_ext_rep(x);
+  return bipart_get_ext_rep(x);
 }
 
 Obj BIPART_INT_REP (Obj self, Obj x) {
 
-  if (get_bipart_int_rep(x) == NULL) {
-    Bipartition* xx = get_cpp_bipart(x); // get C++ bipartition
+  if (bipart_get_int_rep(x) == NULL) {
+    Bipartition* xx = bipart_get_cpp(x); // get C++ bipartition
     size_t n = xx->degree();
 
     Obj int_rep = NEW_PLIST(T_PLIST_CYC, 2 * xx->degree());
@@ -299,56 +248,56 @@ Obj BIPART_INT_REP (Obj self, Obj x) {
     for (size_t i = 0; i < 2 * n; i++) {
       SET_ELM_PLIST(int_rep, i + 1, INTOBJ_INT(xx->block(i) + 1));
     }
-    set_bipart_int_rep(x, int_rep);
+    bipart_set_int_rep(x, int_rep);
   }
 
-  return get_bipart_int_rep(x);
+  return bipart_get_int_rep(x);
 }
 
 Obj BIPART_HASH (Obj self, Obj x) {
-  return INTOBJ_INT(get_cpp_bipart(x)->hash_value());
+  return INTOBJ_INT(bipart_get_cpp(x)->hash_value());
 }
 
 Obj BIPART_DEGREE (Obj self, Obj x) {
-  return INTOBJ_INT(get_cpp_bipart(x)->degree());
+  return INTOBJ_INT(bipart_get_cpp(x)->degree());
 }
 
 Obj BIPART_NR_BLOCKS (Obj self, Obj x) {
-  return INTOBJ_INT(get_cpp_bipart(x)->nr_blocks());
+  return INTOBJ_INT(bipart_get_cpp(x)->nr_blocks());
 }
 
 Obj BIPART_NR_LEFT_BLOCKS (Obj self, Obj x) {
-  return INTOBJ_INT(get_cpp_bipart(x)->nr_left_blocks());
+  return INTOBJ_INT(bipart_get_cpp(x)->nr_left_blocks());
 }
 
 Obj BIPART_RANK (Obj self, Obj x) {
-  return INTOBJ_INT(get_cpp_bipart(x)->rank());
+  return INTOBJ_INT(bipart_get_cpp(x)->rank());
 }
 
 Obj BIPART_PROD (Obj self, Obj x, Obj y) {
 
-  Bipartition* xx = get_cpp_bipart(x);
-  Bipartition* yy = get_cpp_bipart(y);
+  Bipartition* xx = bipart_get_cpp(x);
+  Bipartition* yy = bipart_get_cpp(y);
 
   Bipartition* z = new Bipartition(xx->degree());
   z->redefine(xx, yy);
 
-  return new_gap_bipart(z);
+  return bipart_new(z);
 }
 
 Obj BIPART_EQ (Obj self, Obj x, Obj y) {
-  return (get_cpp_bipart(x)->equals(get_cpp_bipart(y)) ? True : False);
+  return (bipart_get_cpp(x)->equals(bipart_get_cpp(y)) ? True : False);
 }
 
 Obj BIPART_LT (Obj self, Obj x, Obj y) {
-  return (get_cpp_bipart(x) < get_cpp_bipart(y) ? True : False);
+  return (bipart_get_cpp(x) < bipart_get_cpp(y) ? True : False);
 }
 
 // TODO this should go into semigroups++
 
 Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
-  Bipartition* xx = get_cpp_bipart(x);
-  Bipartition* yy = get_cpp_bipart(y);
+  Bipartition* xx = bipart_get_cpp(x);
+  Bipartition* yy = bipart_get_cpp(y);
 
   size_t deg  = xx->degree();
   Obj p       = NEW_PERM4(deg);
@@ -379,7 +328,7 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
 
 Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
 
-  Bipartition* xx = get_cpp_bipart(x);
+  Bipartition* xx = bipart_get_cpp(x);
 
   size_t deg  = xx->degree();
   size_t next = xx->nr_left_blocks();
@@ -407,12 +356,12 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
 
   Bipartition* out = new Bipartition(blocks);
   out->set_nr_blocks(next);
-  return new_gap_bipart(out);
+  return bipart_new(out);
 }
 
 Obj BIPART_STAR (Obj self, Obj x) {
 
-  Bipartition* xx = get_cpp_bipart(x);
+  Bipartition* xx = bipart_get_cpp(x);
   size_t deg  = xx->degree();
 
   std::fill(_BUFFER_size_t.begin(),
@@ -451,15 +400,15 @@ Obj BIPART_STAR (Obj self, Obj x) {
   out->set_nr_blocks(next);
   out->set_nr_left_blocks(nr_left);
 
-  return new_gap_bipart(out);
+  return bipart_new(out);
 }
 
 // x and y should have equal left blocks
 
 Obj BIPART_LAMBDA_CONJ (Obj self, Obj x, Obj y) {
 
-  Bipartition* xx = get_cpp_bipart(x);
-  Bipartition* yy = get_cpp_bipart(y);
+  Bipartition* xx = bipart_get_cpp(x);
+  Bipartition* yy = bipart_get_cpp(y);
 
   size_t deg            = xx->degree();
   size_t nr_left_blocks = xx->nr_left_blocks();
@@ -537,7 +486,7 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
     ErrorQuit("usage: <p> must be a list (not a %s)", (Int) TNAM_OBJ(p), 0L);
   }
 
-  Bipartition* xx = get_cpp_bipart(x);
+  Bipartition* xx = bipart_get_cpp(x);
 
   size_t deg       = xx->degree();
   size_t nr_blocks = xx->nr_blocks();
@@ -590,63 +539,15 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
     (*blocks)[i + deg] = tab2[tab1[xx->block(i + deg)]];
   }
 
-  return new_gap_bipart(new Bipartition(blocks));
+  return bipart_new(new Bipartition(blocks));
 }
 
 Obj BIPART_LEFT_BLOCKS (Obj self, Obj x) {
-  if (get_left_blocks(x) == NULL) {
-    Bipartition* xx       = get_cpp_bipart(x);
-    size_t deg            = xx->degree();
-    size_t nr_left_blocks = xx->nr_left_blocks();
-
-    Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(nr_left_blocks)); // transverse blocks lookup
-    SET_LEN_BLIST(blist, nr_left_blocks);
-
-    for (size_t i = 0; i < nr_left_blocks; i++) {
-      if (xx->is_transverse_block(i)) {
-        SET_ELM_BLIST(blist, i + 1, True);
-      } else {
-        SET_ELM_BLIST(blist, i + 1, False);
-      }
-    }
-
-    Obj blocks = NEW_PLIST(T_PLIST_CYC, deg);
-    SET_LEN_PLIST(blocks, deg);
-
-    for (size_t i = 0; i < deg; i++) {
-      SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i) + 1));
-    }
-    set_left_blocks(x, new_gap_blocks(deg, blocks, blist));
-  }
-  return get_left_blocks(x);
+  return blocks_new(bipart_get_cpp(x)->left_blocks());
 }
 
 Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
-  if (get_right_blocks(x) == NULL) {
-    Bipartition* xx        = get_cpp_bipart(x);
-    size_t deg             = xx->degree();
-    size_t nr_right_blocks = xx->nr_right_blocks();
-
-    Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(nr_right_blocks)); // transverse blocks lookup
-    SET_LEN_BLIST(blist, deg);
-
-    for (size_t i = deg; i < 2 * deg; i++) {
-      if (xx->is_transverse_block(xx->block(i))) {
-        SET_ELM_BLIST(blist, xx->block(i) + 1, True);
-      } else {
-        SET_ELM_BLIST(blist, xx->block(i) + 1, False);
-      }
-    }
-
-    Obj blocks = NEW_PLIST(T_PLIST_CYC, deg);
-    SET_LEN_PLIST(blocks, deg);
-
-    for (size_t i = 0; i < deg; i++) {
-      SET_ELM_PLIST(blocks, i + 1, INTOBJ_INT(xx->block(i + deg) + 1));
-    }
-    set_right_blocks(x, new_gap_blocks(deg, blocks, blist));
-  }
-  return get_right_blocks(x);
+  return blocks_new(bipart_get_cpp(x)->right_blocks());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -655,17 +556,109 @@ Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+
+////////////////////////////////////////////////////////////////////////////////
+// GAP-level functions
+////////////////////////////////////////////////////////////////////////////////
+
+Obj BLOCKS_NC (Obj self, Obj gap_blocks) {
+
+  assert(IS_LIST(gap_blocks));
+  assert(LEN_LIST(gap_blocks) > 0);
+  assert(IS_LIST(ELM_LIST(gap_blocks, 1)));
+
+  size_t degree    = 0;
+  size_t nr_blocks = LEN_LIST(gap_blocks);
+
+  for (size_t i = 1; i <= nr_blocks; i++) {
+    assert(IS_LIST(ELM_LIST(gap_blocks, i)));
+    degree += LEN_LIST(ELM_LIST(gap_blocks, i));
+  }
+
+  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+  blocks->resize(degree);
+
+  std::vector<bool>* lookup = new std::vector<bool>();
+  lookup->resize(nr_blocks);
+
+  for (size_t i = 1; i <= nr_blocks; i++) {
+    Obj block = ELM_LIST(gap_blocks, i);
+    for (size_t j = 1; j <= (size_t) LEN_LIST(block); j++) {
+      assert(IS_INTOBJ(ELM_LIST(block, j)));
+      int jj = INT_INTOBJ(ELM_LIST(block, j));
+      if (jj < 0) {
+        (*blocks)[- jj + degree - 1] = i - 1;
+      } else {
+        (*blocks)[jj - 1] = i - 1;
+        (*lookup)[i] = true;
+      }
+    }
+  }
+
+  Obj out = blocks_new(new Blocks(blocks, lookup, nr_blocks));
+  blocks_set_ext_rep(out, gap_blocks);
+
+  return out;
+}
+
+Obj BLOCKS_EXT_REP (Obj self, Obj x) {
+
+  if (blocks_get_ext_rep(x) == NULL) {
+    Blocks* xx = blocks_get_cpp(x);
+    size_t n = xx->degree();
+
+    Obj ext_rep = NEW_PLIST(T_PLIST_HOM, xx->nr_blocks());
+    SET_LEN_PLIST(ext_rep, (Int) xx->nr_blocks());
+
+    for (size_t i = 0; i < n; i++) {
+      Obj block;
+      Obj entry = (xx->is_transverse_block(xx->block(i)) ? INTOBJ_INT(i + 1) : INTOBJ_INT(-i - 1));
+      if (ELM_PLIST(ext_rep, xx->block(i) + 1) == 0) {
+        block = NEW_PLIST(T_PLIST_CYC, 1);
+        SET_LEN_PLIST(block, 1);
+        SET_ELM_PLIST(block, 1, entry);
+        SET_ELM_PLIST(ext_rep, xx->block(i) + 1, block);
+        CHANGED_BAG(ext_rep);
+      } else {
+        block = ELM_PLIST(ext_rep, xx->block(i) + 1);
+        AssPlist(block, LEN_PLIST(block) + 1, entry);
+      }
+    }
+    blocks_set_ext_rep(x, ext_rep);
+  }
+
+  return blocks_get_ext_rep(x);
+}
+
+Obj BLOCKS_HASH (Obj self, Obj x) {
+  return INTOBJ_INT(blocks_get_cpp(x)->hash_value());
+}
+
 Obj BLOCKS_DEGREE (Obj self, Obj x) {
-  return ElmPRec(x, _RNam_degree);
+  return INTOBJ_INT(blocks_get_cpp(x)->degree());
+}
+
+Obj BLOCKS_RANK (Obj self, Obj x) {
+  return INTOBJ_INT(blocks_get_cpp(x)->rank());
 }
 
 Obj BLOCKS_NR_BLOCKS (Obj self, Obj x) {
-  return ElmPRec(x, _RNam_nr_blocks);
+  return INTOBJ_INT(blocks_get_cpp(x)->nr_blocks());
 }
 
-Obj BLOCKS_ELM_LIST (Obj self, Obj x, Obj pos) {
-  return ELM_LIST(ElmPRec(x, _RNam_blocks), INT_INTOBJ(pos));
+Obj BLOCKS_EQ (Obj self, Obj x, Obj y) {
+  return (blocks_get_cpp(x) == blocks_get_cpp(y) ? True : False);
 }
+
+Obj BLOCKS_LT (Obj self, Obj x, Obj y) {
+  return (blocks_get_cpp(x) < blocks_get_cpp(y) ? True : False);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Non-GAP functions
+////////////////////////////////////////////////////////////////////////////////
+
+// _BUFFER_bool has to be pre-assigned with the correct values
 
 inline size_t fuse_it (size_t i) {
   while (_BUFFER_size_t[i] < i) {
@@ -674,26 +667,12 @@ inline size_t fuse_it (size_t i) {
   return i;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Non-GAP functions
-////////////////////////////////////////////////////////////////////////////////
-
-//void FUSE_BIPART_BLOCKS (Obj x, Obj blocks) {
-//}
-
-//void FUSE_BLOCKS_BIPART (Obj x, Obj blocks) {
-//}
-
-size_t blocks_rank (Obj blocks) {
-  return SizeBlist(ElmPRec(blocks, _RNam_blist));
-}
-
-void fuse_blocks_blocks (Obj left, Obj right, bool sign) {
-
-  size_t deg = INT_INTOBJ(BLOCKS_DEGREE(0L, left));
-
-  size_t left_nr_blocks  = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, left));
-  size_t right_nr_blocks = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, right));
+void fuse (u_int32_t                                 deg,
+           typename std::vector<u_int32_t>::iterator left_begin,
+           u_int32_t                                 left_nr_blocks,
+           typename std::vector<u_int32_t>::iterator right_begin,
+           u_int32_t                                 right_nr_blocks,
+           bool sign) {
 
   _BUFFER_size_t.clear();
   _BUFFER_size_t.reserve(left_nr_blocks + right_nr_blocks);
@@ -702,26 +681,10 @@ void fuse_blocks_blocks (Obj left, Obj right, bool sign) {
     _BUFFER_size_t.push_back(i);
   }
 
-  if (sign) {
-    _BUFFER_bool.clear();
-
-    Obj right_blist = ElmPRec(right, _RNam_blist);
-
-    for (size_t i = 0; i < right_nr_blocks; i++) {
-      if (ELM_BLIST(right_blist, i + 1) == True) {
-        _BUFFER_bool.push_back(true);
-      } else {
-        _BUFFER_bool.push_back(false);
-      }
-    }
-  }
-
-  Obj left_blocks  = ElmPRec(left, _RNam_blocks);
-  Obj right_blocks = ElmPRec(right, _RNam_blocks);
-
-  for (size_t i = 1; i <= deg; i++) {
-    size_t j = fuse_it(INT_INTOBJ(ELM_PLIST(left_blocks,  i)) - 1);
-    size_t k = fuse_it(INT_INTOBJ(ELM_PLIST(right_blocks, i)) - 1 + left_nr_blocks);
+  for (auto left_it = left_begin, right_it = right_begin;
+       left_it < left_begin + deg; left_it++, right_it++) {
+    size_t j = fuse_it(*left_it);
+    size_t k = fuse_it(*right_it + left_nr_blocks);
 
     if (j != k) {
       if (j < k) {
@@ -739,20 +702,23 @@ void fuse_blocks_blocks (Obj left, Obj right, bool sign) {
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// GAP-level functions
-////////////////////////////////////////////////////////////////////////////////
+Obj BLOCKS_E_TESTER (Obj self, Obj left_gap, Obj right_gap) {
 
-Obj BLOCKS_E_TESTER (Obj self, Obj left, Obj right) {
+  Blocks* left  = blocks_get_cpp(left_gap);
+  Blocks* right = blocks_get_cpp(right_gap);
 
-  size_t rank = blocks_rank(left);
-  if (rank != blocks_rank(right)) {
+  if (left->rank() != right->rank()) {
     return False;
-  } else if (rank == 0) {
+  } else if (left->rank() == 0) {
     return True;
   }
 
-  size_t left_nr_blocks  = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, left));
+  // prepare the _BUFFER_bool for detecting transverse fused blocks
+  _BUFFER_bool.clear();
+  _BUFFER_bool.resize(right->nr_blocks() + left->nr_blocks());
+  std::copy(right->lookup()->begin(),
+            right->lookup()->end(),
+            _BUFFER_bool.begin());
 
   // after the following line:
   //
@@ -762,82 +728,77 @@ Obj BLOCKS_E_TESTER (Obj self, Obj left, Obj right) {
   // 2) _BUFFER_bool is a lookup for the transverse blocks of the fused left
   //     and right
 
-  fuse_blocks_blocks(left, right, true);
-
-  size_t n = _BUFFER_bool.size();
-  _BUFFER_bool.resize(n + left_nr_blocks, false);
-  std::fill(_BUFFER_bool.begin() + n,
-            _BUFFER_bool.begin() + left_nr_blocks,
-            false);
-
-  Obj left_blist = ElmPRec(left, _RNam_blist);
+  fuse(left->degree(),
+       left->begin(),
+       left->nr_blocks(),
+       right->begin(),
+       right->nr_blocks(),
+       true);
 
   // check we are injective on transverse blocks of <left> and that the fused
   // blocks are also transverse.
 
-  for (size_t i = 0; i < left_nr_blocks; i++) {
-    if (ELM_BLIST(left_blist, i + 1) == True) {
+  for (u_int32_t i = 0; i < left->nr_blocks(); i++) {
+    if (left->is_transverse_block(i)) {
       size_t j = fuse_it(i);
-      if (!_BUFFER_bool[j] || _BUFFER_bool[j + n]) {
+      if (!_BUFFER_bool[j] || _BUFFER_bool[right->nr_blocks() + j]) {
         return False;
       }
-      _BUFFER_bool[n + j] = true;
+      _BUFFER_bool[right->nr_blocks() + j] = true;
     }
   }
   return True;
 }
 
-Obj BLOCKS_E_CREATOR (Obj self, Obj left, Obj right) {
+Obj BLOCKS_E_CREATOR (Obj self, Obj left_gap, Obj right_gap) {
 
-  fuse_blocks_blocks(left, right, false);
+  Blocks* left  = blocks_get_cpp(left_gap);
+  Blocks* right = blocks_get_cpp(right_gap);
 
-  size_t deg             = INT_INTOBJ(BLOCKS_DEGREE(0L, left));
-  size_t left_nr_blocks  = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, left));
-  size_t right_nr_blocks = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, right));
+  fuse(left->degree(),
+       left->begin(),
+       left->nr_blocks(),
+       right->begin(),
+       right->nr_blocks(),
+       false);
 
-  _BUFFER_size_t.resize(3 * (left_nr_blocks + right_nr_blocks), 0);
-  std::fill(_BUFFER_size_t.begin() + 2 * (left_nr_blocks + right_nr_blocks),
-            _BUFFER_size_t.begin() + 3 * (left_nr_blocks + right_nr_blocks),
+  _BUFFER_size_t.resize(3 * (left->nr_blocks() + right->nr_blocks()), 0);
+  std::fill(_BUFFER_size_t.begin() + 2 * (left->nr_blocks() + right->nr_blocks()),
+            _BUFFER_size_t.begin() + 3 * (left->nr_blocks() + right->nr_blocks()),
             -1);
 
-  auto tab1 = _BUFFER_size_t.begin() + left_nr_blocks + right_nr_blocks;
-  auto tab2 = _BUFFER_size_t.begin() + 2 * (left_nr_blocks + right_nr_blocks);
+  auto tab1 = _BUFFER_size_t.begin() + left->nr_blocks() + right->nr_blocks();
+  auto tab2 = _BUFFER_size_t.begin() + 2 * (left->nr_blocks() + right->nr_blocks());
 
-  Obj left_blist  = ElmPRec(left, _RNam_blist);
-  Obj right_blist = ElmPRec(right, _RNam_blist);
-
-  //find new names for the signed blocks of right
-  for (size_t i = 0; i < right_nr_blocks; i++) {
-    if (ELM_BLIST(right_blist, i + 1) == True) {
-      tab1[fuse_it(i + left_nr_blocks)] = i;
+  // find new names for the signed blocks of right
+  for (size_t i = 0; i < right->nr_blocks(); i++) {
+    if (right->is_transverse_block(i)) {
+      tab1[fuse_it(i + left->nr_blocks())] = i;
     }
   }
 
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-  blocks->resize(2 * deg);
+  blocks->resize(2 * left->degree());
 
-  Obj left_blocks  = ElmPRec(left, _RNam_blocks);
-  Obj right_blocks = ElmPRec(right, _RNam_blocks);
+  size_t next = right->nr_blocks();
 
-  size_t next = INT_INTOBJ(BLOCKS_NR_BLOCKS(0L, right));
-
-  for (size_t i = 0; i < deg; i++) {
-    (*blocks)[i] = INT_INTOBJ(ELM_LIST(right_blocks, i + 1)) - 1;
-    size_t j = INT_INTOBJ(ELM_LIST(left_blocks, i + 1)) - 1;
-    if (ELM_BLIST(left_blist, j + 1) == True) {
-      (*blocks)[i + deg] = tab1[fuse_it(j)];
+  for (size_t i = 0; i < left->degree(); i++) {
+    (*blocks)[i] = right->block(i);
+    size_t j = left->block(i);
+    if (left->is_transverse_block(j)) {
+      (*blocks)[i + left->degree()] = tab1[fuse_it(j)];
     } else {
       if (tab2[j] == (size_t) -1) {
         tab2[j] = next;
         next++;
       }
-      (*blocks)[i + deg] = tab2[j];
+      (*blocks)[i + left->degree()] = tab2[j];
     }
   }
 
   Bipartition* out = new Bipartition(blocks);
   out->set_nr_blocks(next);
-  out->set_nr_left_blocks(right_nr_blocks);
+  out->set_nr_left_blocks(right->nr_blocks());
 
-  return new_gap_bipart(out);
+  return bipart_new(out);
 }

@@ -19,8 +19,7 @@ BindGlobal("BlocksType",
            NewType(BlocksFamily, IsBlocks and IsComponentObjectRep and
                    IsAttributeStoringRep));
 
-#DeclareGlobalFunction("BlocksNC");
-#DeclareGlobalFunction("BlocksByIntRepNC");
+DeclareGlobalFunction("BlocksNC");
 DeclareOperation("ProjectionFromBlocks", [IsBlocks]);
 
 DeclareAttribute("NrBlocks", IsBlocks);

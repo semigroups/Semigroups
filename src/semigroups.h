@@ -39,6 +39,10 @@ void SemigroupsBagFreeFunc (Obj o) {
     delete CLASS_OBJ<Semigroup>(o);
   } else if (IS_GAP_BIPART_BAG(o)) {
     delete CLASS_OBJ<Bipartition>(o);
+//  } else if (IS_GAP_BLOCKS_BAG(o)) { // this is not necessary, since blocks
+//  will only ever be inside a bipartition and hence are deleted by its
+//  destructor
+//    delete CLASS_OBJ<Blocks>(o);
   }
 }
 

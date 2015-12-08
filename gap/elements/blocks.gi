@@ -28,51 +28,79 @@ BIPART_LEFT_BLOCKS);
 InstallMethod(RightBlocks, "for a bipartition", [IsBipartition],
 BIPART_RIGHT_BLOCKS);
 
+# for backwards compatibility
+InstallGlobalFunction(BlocksNC, BLOCKS_NC);
+InstallMethod(ExtRepOfBlocks, "for blocks", [IsBlocks], BLOCKS_EXT_REP);
+
+InstallMethod(ChooseHashFunction, "for blocks",
+[IsBlocks, IsInt],
+  function(x, hashlen)
+  return rec(func := BLOCKS_HASH,
+             data := hashlen);
+end);
+
 InstallMethod(DegreeOfBlocks, "for blocks", [IsBlocks], BLOCKS_DEGREE);
-
-InstallMethod(ELM_LIST, "for blocks", [IsBlocks, IsPosInt], BLOCKS_ELM_LIST);
-
-InstallMethod(NrBlocks, "for blocks", [IsBlocks], BLOCKS_NR_BLOCKS);
+InstallMethod(RankOfBlocks,   "for blocks", [IsBlocks], BLOCKS_RANK);
+InstallMethod(NrBlocks,       "for blocks", [IsBlocks], BLOCKS_NR_BLOCKS);
+InstallMethod(\=,             "for blocks", [IsBlocks, IsBlocks], BLOCKS_EQ);
+InstallMethod(\<,             "for blocks", [IsBlocks, IsBlocks], BLOCKS_LT);
 
 #############################################################################
 # GAP level - NOT directly using interface to C/C++ level
 #############################################################################
 
-# TODO C/C++
+# not a synonym since NrTransverseBlocks applies to a bipartition also
+InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
 
-InstallMethod(RankOfBlocks, "for blocks", [IsBlocks],
+# Printing, viewing etc . . .
+
+InstallMethod(PrintString, "for blocks", [IsBlocks],
+x -> Concatenation("BlocksNC(", String(ExtRepOfBlocks(x)), ")"));
+
+InstallMethod(ViewObj, "for blocks", [IsBlocks],
 function(blocks)
-  return SizeBlist(blocks!.blist);
+  local ext, str, i;
+
+  ext := ExtRepOfBlocks(blocks);
+  if Length(ext) > 0 then
+    Print("<blocks: ");
+    if ext[1][1] < 0 then
+      Print(-1 * ext[1]);
+    else
+      str := JoinStringsWithSeparator(List(ext[1], String), "*, ");
+      Print("[ ", str, "* ]");
+    fi;
+    for i in [2 .. Length(ext)] do
+      if ext[i][1] < 0 then
+        Print(", ", -1 * ext[i]);
+      else
+        str := JoinStringsWithSeparator(List(ext[i], String), "*, ");
+        Print(", [ ", str, "* ]");
+      fi;
+    od;
+  else
+    Print("<empty blocks");
+  fi;
+
+  Print(">");
+  return;
 end);
+
+InstallMethod(PrintObj, "for blocks", [IsBlocks], 10,
+function(blocks)
+  Print(PrintString(blocks));
+  return;
+end);
+
+#############################################################################
+# Not yet processed . . .
+#############################################################################
 
 # FIXME
 BindGlobal("EmptyBlocks", Objectify(BlocksType, rec(blocks := [0])));
 
-InstallMethod(ExtRepOfBlocks, "for blocks", [IsBlocks],
-function(blocks)
-  local n, lookup, ext, i;
 
-  n := DegreeOfBlocks(blocks);
-  lookup := blocks!.blist;
-  ext := [];
-
-  for i in [1 .. n] do
-    if not IsBound(ext[blocks[i]]) then
-      ext[blocks[i]] := [];
-    fi;
-    if lookup[blocks[i]] then
-      Add(ext[blocks[i]], i);
-    else
-      Add(ext[blocks[i]], -i);
-    fi;
-  od;
-  return ext;
-end);
-
-# not a synonym since NrTransverseBlocks applies to a bipartition also
-InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
-
-# TODO C/C++?
+# FIXME C/C++
 
 InstallMethod(ProjectionFromBlocks, "for blocks", [IsBlocks],
 function(blocks)
@@ -100,66 +128,7 @@ function(blocks)
   return BIPART_NC(out);
 end);
 
-# Operators . . .
-
-# TODO C/C++?
-
-InstallMethod(\=, "for blocks", [IsBlocks, IsBlocks],
-function(a, b)
-  return a!.blocks = b!.blocks;
-end);
-
-# TODO C/C++?
-
-InstallMethod(\<, "for blocks", [IsBlocks, IsBlocks],
-function(a, b)
-  return a!.blocks < b!.blocks;
-end);
-
-# Printing, viewing etc . . .
-
-InstallMethod(PrintObj, "for blocks", [IsBlocks], 10,
-function(blocks)
-  Print(PrintString(blocks));
-  return;
-end);
-
-InstallMethod(PrintString, "for blocks", [IsBlocks],
-x -> Concatenation("BlocksNC(", String(ExtRepOfBlocks(x)), ")"));
-
-InstallMethod(ViewObj, "for blocks", [IsBlocks],
-function(blocks)
-  local ext, i;
-
-  ext := ExtRepOfBlocks(blocks);
-  if Length(ext) > 0 then
-    Print("<blocks: ");
-    Print(ext[1]);
-    for i in [2 .. Length(ext)] do
-      Print(", ", ext[i]);
-    od;
-  else
-    Print("<empty blocks");
-  fi;
-
-  Print(">");
-  return;
-end);
-
-#############################################################################
-# Not yet processed . . .
-#############################################################################
-
-
-#############################################################################
-# Internal
-#############################################################################
-
-SEMIGROUPS.HashFunctionForBlocks := function(blocks, data)
-  return ORB_HashFunctionForPlainFlatList(blocks!.blocks, data);
-end;
-
-# JDM use FuseRightBlocks here!
+#
 
 InstallGlobalFunction(OnRightBlocks,
 function(blocks, f)

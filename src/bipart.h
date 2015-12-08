@@ -34,9 +34,15 @@ Obj BIPART_STAB_ACTION    (Obj, Obj, Obj);
 Obj BIPART_LEFT_BLOCKS    (Obj, Obj);
 Obj BIPART_RIGHT_BLOCKS   (Obj, Obj);
 
+Obj BLOCKS_NC             (Obj, Obj);
+Obj BLOCKS_EXT_REP        (Obj, Obj);
+Obj BLOCKS_HASH           (Obj, Obj);
 Obj BLOCKS_DEGREE         (Obj, Obj);
+Obj BLOCKS_RANK           (Obj, Obj);
 Obj BLOCKS_NR_BLOCKS      (Obj, Obj);
-Obj BLOCKS_ELM_LIST       (Obj, Obj, Obj);
+Obj BLOCKS_EQ             (Obj, Obj, Obj);
+Obj BLOCKS_LT             (Obj, Obj, Obj);
+
 Obj BLOCKS_E_TESTER       (Obj, Obj, Obj);
 Obj BLOCKS_E_CREATOR      (Obj, Obj, Obj);
 Obj BLOCKS_LEFT_ACT       (Obj, Obj, Obj);
