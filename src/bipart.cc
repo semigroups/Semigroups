@@ -254,8 +254,8 @@ Obj BIPART_INT_REP (Obj self, Obj x) {
   return bipart_get_int_rep(x);
 }
 
-Obj BIPART_HASH (Obj self, Obj x) {
-  return INTOBJ_INT(bipart_get_cpp(x)->hash_value());
+Obj BIPART_HASH (Obj self, Obj x, Obj data) {
+  return INTOBJ_INT((bipart_get_cpp(x)->hash_value() % INT_INTOBJ(data)) + 1);
 }
 
 Obj BIPART_DEGREE (Obj self, Obj x) {
@@ -640,8 +640,8 @@ Obj BLOCKS_EXT_REP (Obj self, Obj x) {
   return blocks_get_ext_rep(x);
 }
 
-Obj BLOCKS_HASH (Obj self, Obj x) {
-  return INTOBJ_INT(blocks_get_cpp(x)->hash_value());
+Obj BLOCKS_HASH (Obj self, Obj x, Obj data) {
+  return INTOBJ_INT((blocks_get_cpp(x)->hash_value() % INT_INTOBJ(data)) + 1);
 }
 
 Obj BLOCKS_DEGREE (Obj self, Obj x) {
@@ -684,11 +684,11 @@ Obj BLOCKS_PROJ (Obj self, Obj blocks_gap) {
 }
 
 Obj BLOCKS_EQ (Obj self, Obj x, Obj y) {
-  return (blocks_get_cpp(x) == blocks_get_cpp(y) ? True : False);
+  return (*blocks_get_cpp(x) == *blocks_get_cpp(y) ? True : False);
 }
 
 Obj BLOCKS_LT (Obj self, Obj x, Obj y) {
-  return (blocks_get_cpp(x) < blocks_get_cpp(y) ? True : False);
+  return (*blocks_get_cpp(x) < *blocks_get_cpp(y) ? True : False);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -931,6 +931,7 @@ Obj BLOCKS_RIGHT_ACT (Obj self, Obj blocks_gap, Obj x_gap) {
     out_blocks->push_back(tab[j]);
     (*out_lookup)[tab[j]] = _BUFFER_bool[j];
   }
+  out_lookup->resize(next);
   return blocks_new(new Blocks(out_blocks, out_lookup));
 }
 

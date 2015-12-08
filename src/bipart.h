@@ -16,7 +16,7 @@
 Obj BIPART_NC             (Obj, Obj);
 Obj BIPART_EXT_REP        (Obj, Obj);
 Obj BIPART_INT_REP        (Obj, Obj);
-Obj BIPART_HASH           (Obj, Obj);
+Obj BIPART_HASH           (Obj, Obj, Obj);
 Obj BIPART_DEGREE         (Obj, Obj);
 Obj BIPART_RANK           (Obj, Obj, Obj);
 Obj BIPART_NR_BLOCKS      (Obj, Obj);
@@ -36,7 +36,7 @@ Obj BIPART_RIGHT_BLOCKS   (Obj, Obj);
 
 Obj BLOCKS_NC             (Obj, Obj);
 Obj BLOCKS_EXT_REP        (Obj, Obj);
-Obj BLOCKS_HASH           (Obj, Obj);
+Obj BLOCKS_HASH           (Obj, Obj, Obj);
 Obj BLOCKS_DEGREE         (Obj, Obj);
 Obj BLOCKS_RANK           (Obj, Obj);
 Obj BLOCKS_NR_BLOCKS      (Obj, Obj);

@@ -34,7 +34,7 @@ InstallMethod(ExtRepOfBlocks, "for blocks", [IsBlocks], BLOCKS_EXT_REP);
 
 InstallMethod(ChooseHashFunction, "for blocks",
 [IsBlocks, IsInt],
-  function(x, hashlen)
+function(x, hashlen)
   return rec(func := BLOCKS_HASH,
              data := hashlen);
 end);

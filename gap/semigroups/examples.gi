@@ -533,13 +533,13 @@ function(n)
   local gens;
 
   if n = 1 then
-    return Monoid(BipartitionNC([[1], [-1]]));
+    return Monoid(Bipartition([[1], [-1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
   Add(gens, AsBipartition(PartialPermNC([2 .. n], [2 .. n]), n));
-  Add(gens, BipartitionNC(Concatenation([[1, 2, -1, -2]],
-                                         List([3 .. n], x -> [x, -x]))));
+  Add(gens, Bipartition(Concatenation([[1, 2, -1, -2]],
+                                        List([3 .. n], x -> [x, -x]))));
 
   return Monoid(gens, rec(regular := true));
 end);

@@ -8,28 +8,26 @@
 #############################################################################
 ##
 
-#
-
 InstallMethod(LambdaOrb, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
-function(s)
+function(S)
   local record, o;
 
-  record := ShallowCopy(LambdaOrbOpts(s));
-  record.scc_reps := [FakeOne(GeneratorsOfSemigroup(s))];
+  record := ShallowCopy(LambdaOrbOpts(S));
+  record.scc_reps := [FakeOne(GeneratorsOfSemigroup(S))];
 
-  record.schreier := true;
-  record.orbitgraph := true;
+  record.schreier     := true;
+  record.orbitgraph   := true;
   record.storenumbers := true;
-  record.log := true;
-  record.parent := s;
-  record.treehashsize := SEMIGROUPS.OptionsRec(s).hashlen.M;
+  record.log          := true;
+  record.parent       := S;
+  record.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen.M;
 
-  o := Orb(GeneratorsOfSemigroup(s), LambdaOrbSeed(s), LambdaAct(s), record);
+  o := Orb(GeneratorsOfSemigroup(S), LambdaOrbSeed(S), LambdaAct(S), record);
 
   SetFilterObj(o, IsLambdaOrb);
 
-  if IsSemigroupWithInverseOp(s) then
+  if IsSemigroupWithInverseOp(S) then
     SetFilterObj(o, IsInverseOrb);
   fi;
 
