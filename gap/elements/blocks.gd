@@ -20,19 +20,19 @@ BindGlobal("BlocksType",
                    IsAttributeStoringRep));
 
 DeclareGlobalFunction("BlocksNC");
-DeclareOperation("ProjectionFromBlocks", [IsBlocks]);
 
+DeclareAttribute("ProjectionFromBlocks", IsBlocks);
 DeclareAttribute("NrBlocks", IsBlocks);
 DeclareAttribute("RankOfBlocks", IsBlocks);
 DeclareAttribute("NrTransverseBlocks", IsBlocks);
 DeclareAttribute("DegreeOfBlocks", IsBlocks);
 DeclareAttribute("ExtRepOfBlocks", IsBlocks);
 
-DeclareGlobalFunction("OnRightBlocks");
-DeclareGlobalFunction("OnLeftBlocks");
+#DeclareGlobalFunction("OnRightBlocks");
+#DeclareGlobalFunction("OnLeftBlocks");
 
-DeclareOperation("PermRightBlocks", [IsList, IsBipartition]);
-DeclareOperation("PermLeftBlocks", [IsList, IsBipartition]);
+#DeclareOperation("PermRightBlocks", [IsList, IsBipartition]);
+#DeclareOperation("PermLeftBlocks", [IsList, IsBipartition]);
 
 DeclareGlobalFunction("InverseRightBlocks");
 DeclareGlobalFunction("InverseLeftBlocks");

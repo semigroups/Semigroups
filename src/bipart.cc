@@ -270,7 +270,7 @@ Obj BIPART_NR_LEFT_BLOCKS (Obj self, Obj x) {
   return INTOBJ_INT(bipart_get_cpp(x)->nr_left_blocks());
 }
 
-Obj BIPART_RANK (Obj self, Obj x) {
+Obj BIPART_RANK (Obj self, Obj x, Obj dummy) {
   return INTOBJ_INT(bipart_get_cpp(x)->rank());
 }
 
@@ -561,10 +561,20 @@ Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
 // GAP-level functions
 ////////////////////////////////////////////////////////////////////////////////
 
+/*gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5],
+> [7, 9]]);;*/
+
+
 Obj BLOCKS_NC (Obj self, Obj gap_blocks) {
 
   assert(IS_LIST(gap_blocks));
-  assert(LEN_LIST(gap_blocks) > 0);
+
+  if (LEN_LIST(gap_blocks) == 0) {
+    Obj out = blocks_new(new Blocks());
+    blocks_set_ext_rep(out, gap_blocks);
+    return out;
+  }
+
   assert(IS_LIST(ELM_LIST(gap_blocks, 1)));
 
   size_t degree    = 0;
@@ -587,10 +597,10 @@ Obj BLOCKS_NC (Obj self, Obj gap_blocks) {
       assert(IS_INTOBJ(ELM_LIST(block, j)));
       int jj = INT_INTOBJ(ELM_LIST(block, j));
       if (jj < 0) {
-        (*blocks)[- jj + degree - 1] = i - 1;
+        (*blocks)[-jj - 1] = i - 1;
       } else {
         (*blocks)[jj - 1] = i - 1;
-        (*lookup)[i] = true;
+        (*lookup)[i - 1] = true;
       }
     }
   }
@@ -644,6 +654,33 @@ Obj BLOCKS_RANK (Obj self, Obj x) {
 
 Obj BLOCKS_NR_BLOCKS (Obj self, Obj x) {
   return INTOBJ_INT(blocks_get_cpp(x)->nr_blocks());
+}
+
+Obj BLOCKS_PROJ (Obj self, Obj blocks_gap) {
+
+  Blocks* blocks = blocks_get_cpp(blocks_gap);
+
+  _BUFFER_size_t.clear();
+  _BUFFER_size_t.resize(blocks->nr_blocks(), -1);
+
+  std::vector<u_int32_t>* out = new std::vector<u_int32_t>();
+  out->resize(2 * blocks->degree());
+  u_int32_t nr_blocks = blocks->nr_blocks();
+
+  for (u_int32_t i = 0; i < blocks->degree(); i++) {
+    u_int32_t index = blocks->block(i);
+    (*out)[i] = index;
+    if (blocks->is_transverse_block(index)) {
+      (*out)[i + blocks->degree()] = index;
+    } else {
+      if (_BUFFER_size_t[index] == (size_t) -1) {
+        _BUFFER_size_t[index] = nr_blocks;
+        nr_blocks++;
+      }
+      (*out)[i + blocks->degree()] = _BUFFER_size_t[index];
+    }
+  }
+  return bipart_new(new Bipartition(out));
 }
 
 Obj BLOCKS_EQ (Obj self, Obj x, Obj y) {
@@ -802,3 +839,98 @@ Obj BLOCKS_E_CREATOR (Obj self, Obj left_gap, Obj right_gap) {
 
   return bipart_new(out);
 }
+
+// act on <blocks> on the left with the bipartition <x>
+
+Obj BLOCKS_LEFT_ACT (Obj self, Obj blocks_gap, Obj x_gap) {
+
+  Bipartition* x       = bipart_get_cpp(x_gap);
+  Blocks*      blocks  = blocks_get_cpp(blocks_gap);
+
+  if (blocks->nr_blocks() == 0) {
+    return blocks_new(x->left_blocks());
+  }
+
+  // prepare the _BUFFER_bool for detecting transverse fused blocks
+  _BUFFER_bool.clear();
+  _BUFFER_bool.resize(x->nr_blocks() + blocks->nr_blocks());
+  std::copy(blocks->lookup()->begin(),
+            blocks->lookup()->end(),
+            _BUFFER_bool.begin() + x->nr_blocks());
+
+  fuse(x->degree(),
+       x->begin() + x->degree(),
+       x->nr_blocks(),
+       blocks->begin(),
+       blocks->nr_blocks(),
+       true);
+
+  _BUFFER_size_t.resize(2 * (x->nr_blocks() + blocks->nr_blocks()), -1);
+  auto tab = _BUFFER_size_t.begin() + x->nr_blocks() + blocks->nr_blocks();
+
+  std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
+  out_blocks->reserve(x->degree());
+  std::vector<bool>* out_lookup = new std::vector<bool>();
+  out_lookup->resize(x->degree());
+
+  u_int32_t next = 0;
+
+  for (u_int32_t i = 0; i < x->degree(); i++) {
+    u_int32_t j = fuse_it(x->block(i));
+    if (tab[j] == (size_t) -1) {
+      tab[j] = next;
+      next++;
+    }
+    out_blocks->push_back(tab[j]);
+    (*out_lookup)[tab[j]] = _BUFFER_bool[j];
+  }
+  return blocks_new(new Blocks(out_blocks, out_lookup));
+}
+
+// act on <blocks> on the right with the bipartition <x>
+
+Obj BLOCKS_RIGHT_ACT (Obj self, Obj blocks_gap, Obj x_gap) {
+
+  Bipartition* x       = bipart_get_cpp(x_gap);
+  Blocks*      blocks  = blocks_get_cpp(blocks_gap);
+
+  if (blocks->nr_blocks() == 0) {
+    return blocks_new(x->right_blocks());
+  }
+
+  // prepare the _BUFFER_bool for detecting transverse fused blocks
+  _BUFFER_bool.clear();
+  _BUFFER_bool.resize(x->nr_blocks() + blocks->nr_blocks());
+  std::copy(blocks->lookup()->begin(),
+            blocks->lookup()->end(),
+            _BUFFER_bool.begin());
+
+  fuse(x->degree(),
+       blocks->begin(),
+       blocks->nr_blocks(),
+       x->begin(),
+       x->nr_blocks(),
+       true);
+
+  _BUFFER_size_t.resize(2 * (x->nr_blocks() + blocks->nr_blocks()), -1);
+  auto tab = _BUFFER_size_t.begin() + x->nr_blocks() + blocks->nr_blocks();
+
+  std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
+  out_blocks->reserve(x->degree());
+  std::vector<bool>* out_lookup = new std::vector<bool>();
+  out_lookup->resize(x->degree());
+
+  u_int32_t next = 0;
+
+  for (u_int32_t i = x->degree(); i < 2 * x->degree(); i++) {
+    u_int32_t j = fuse_it(x->block(i) + blocks->nr_blocks());
+    if (tab[j] == (size_t) -1) {
+      tab[j] = next;
+      next++;
+    }
+    out_blocks->push_back(tab[j]);
+    (*out_lookup)[tab[j]] = _BUFFER_bool[j];
+  }
+  return blocks_new(new Blocks(out_blocks, out_lookup));
+}
+

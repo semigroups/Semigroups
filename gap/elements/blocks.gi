@@ -44,6 +44,9 @@ InstallMethod(RankOfBlocks,   "for blocks", [IsBlocks], BLOCKS_RANK);
 InstallMethod(NrBlocks,       "for blocks", [IsBlocks], BLOCKS_NR_BLOCKS);
 InstallMethod(\=,             "for blocks", [IsBlocks, IsBlocks], BLOCKS_EQ);
 InstallMethod(\<,             "for blocks", [IsBlocks, IsBlocks], BLOCKS_LT);
+InstallMethod(ProjectionFromBlocks, "for blocks", [IsBlocks], BLOCKS_PROJ);
+
+BindGlobal("EmptyBlocks", BLOCKS_NC([]));
 
 #############################################################################
 # GAP level - NOT directly using interface to C/C++ level
@@ -96,108 +99,9 @@ end);
 # Not yet processed . . .
 #############################################################################
 
-# FIXME
-BindGlobal("EmptyBlocks", Objectify(BlocksType, rec(blocks := [0])));
 
 
 # FIXME C/C++
-
-InstallMethod(ProjectionFromBlocks, "for blocks", [IsBlocks],
-function(blocks)
-  local deg, blist, nr_blocks, out, lookup, i;
-
-  deg       := DegreeOfBlocks(blocks);
-  blist     := blocks!.blist;
-  nr_blocks := NrBlocks(blocks);             #nr of blocks
-  blocks    := blocks!.blocks;
-  out       := [];
-  lookup    := [];
-
-  for i in [1 .. deg] do
-    out[i] := blocks[i];
-    if blist[blocks[i]] then
-      out[i + deg] := blocks[i];
-    else
-      if not IsBound(lookup[blocks[i]]) then
-        nr_blocks := nr_blocks + 1;
-        lookup[blocks[i]] := nr_blocks;
-      fi;
-      out[i + deg] := lookup[blocks[i]];
-    fi;
-  od;
-  return BIPART_NC(out);
-end);
-
-#
-
-InstallGlobalFunction(OnRightBlocks,
-function(blocks, f)
-  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out,
-   next, i;
-
-  if blocks!.blocks = [0] then   # special case for dummy/seed
-    return RightBlocks(f);
-  fi;
-
-  n := DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks := NrBlocks(blocks);
-
-  nrfblocks := NrBlocks(f);
-  fblocks := f!.blocks;
-
-  fuse := [1 .. nrblocks + nrfblocks];
-  sign := EmptyPlist(nrfblocks + nrblocks);
-
-  for i in [1 .. nrblocks] do
-    sign[i] := blocks[n + i];
-  od;
-  for i in [nrblocks + 1 .. nrfblocks + nrblocks] do
-    sign[i] := 0;
-  od;
-
-  fuseit := function(i)
-    while fuse[i] < i do
-      i := fuse[i];
-    od;
-    return i;
-  end;
-
-  for i in [1 .. n] do
-    x := fuseit(blocks[i]);
-    y := fuseit(fblocks[i] + nrblocks);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-        if sign[y] = 1 then
-          sign[x] := 1;
-        fi;
-      else
-        fuse[x] := y;
-        if sign[x] = 1 then
-          sign[y] := 1;
-        fi;
-      fi;
-    fi;
-  od;
-
-  tab := 0 * fuse;
-  out := [];
-  next := 0;
-
-  for i in [n + 1 .. 2 * n] do
-    x := fuseit(fblocks[i] + nrblocks);
-    if tab[x] = 0 then
-      next := next + 1;
-      tab[x] := next;
-    fi;
-    out[i - n + 1] := tab[x];
-    out[n + 1 + tab[x]] := sign[x];
-  od;
-  out[1] := next;
-  out := Objectify(BlocksType, rec(blocks := out));
-  return out;
-end);
-#
 
 
 # LambdaInverse - fuse <blocks> with the left blocks of <f> keeping track of
@@ -546,4 +450,141 @@ end);
 #    od;
 #    return fuseit;
 #  fi;
+#end);
+
+#left_nr_blocks + right_nr_blocks
+#// act on <blocks> with <x> on the left
+#
+#Obj BLOCKS_LEFT_ACT (Obj self, Obj blocks, Obj x) {
+#
+#  //TODO
+#  //if blocks!.blocks = [0] then
+#  //  return LeftBlocks(f);
+#  //fi;
+#
+#  deg              = BLOCKS_DEGREE(self, blocks);
+#  blocks_nr_blocks = BLOCKS_NR_BLOCKS(self, blocks);
+#
+#  x_nr_blocks = BIPART_NR_BLOCKS(self, x);
+#
+#  fuse := [1 .. nrfblocks + nrblocks];
+#  sign := EmptyPlist(nrfblocks + nrblocks);
+#
+#  for i in [1 .. nrfblocks] do
+#    sign[i] := 0;
+#  od;
+#  for i in [1 .. nrblocks] do
+#    sign[i + nrfblocks] := blocks[n + i];
+#  od;
+#
+#  fuseit := function(i)
+#    while fuse[i] < i do
+#      i := fuse[i];
+#    od;
+#    return i;
+#  end;
+#
+#  for i in [1 .. n] do
+#    x := fuseit(fblocks[n + i]);
+#    y := fuseit(blocks[i] + nrfblocks);
+#    if x <> y then
+#      if x < y then
+#        fuse[y] := x;
+#        if sign[y] = 1 then
+#          sign[x] := 1;
+#        fi;
+#      else
+#        fuse[x] := y;
+#        if sign[x] = 1 then
+#          sign[y] := 1;
+#        fi;
+#      fi;
+#    fi;
+#  od;
+#
+#  tab := 0 * fuse;
+#  out := [];
+#  next := 0;
+#
+#  for i in [1 .. n] do
+#    x := fuseit(fblocks[i]);
+#    if tab[x] = 0 then
+#      next := next + 1;
+#      tab[x] := next;
+#    fi;
+#    out[i + 1] := tab[x];
+#    out[n + 1 + tab[x]] := sign[x];
+#  od;
+#  out[1] := next;
+#  out := Objectify(BlocksType, rec(blocks := out));
+#  return out;
+#end);
+#
+
+#InstallGlobalFunction(OnRightBlocks,
+#function(blocks, f)
+#  local n, nrblocks, nrfblocks, fblocks, fuse, sign, fuseit, x, y, tab, out,
+#   next, i;
+#
+#  if blocks!.blocks = [0] then   # special case for dummy/seed
+#    return RightBlocks(f);
+#  fi;
+#
+#  n := DegreeOfBlocks(blocks); # length of partition!!
+#  nrblocks := NrBlocks(blocks);
+#
+#  nrfblocks := NrBlocks(f);
+#  fblocks := f!.blocks;
+#
+#  fuse := [1 .. nrblocks + nrfblocks];
+#  sign := EmptyPlist(nrfblocks + nrblocks);
+#
+#  for i in [1 .. nrblocks] do
+#    sign[i] := blocks[n + i];
+#  od;
+#  for i in [nrblocks + 1 .. nrfblocks + nrblocks] do
+#    sign[i] := 0;
+#  od;
+#
+#  fuseit := function(i)
+#    while fuse[i] < i do
+#      i := fuse[i];
+#    od;
+#    return i;
+#  end;
+#
+#  for i in [1 .. n] do
+#    x := fuseit(blocks[i]);
+#    y := fuseit(fblocks[i] + nrblocks);
+#    if x <> y then
+#      if x < y then
+#        fuse[y] := x;
+#        if sign[y] = 1 then
+#          sign[x] := 1;
+#        fi;
+#      else
+#        fuse[x] := y;
+#        if sign[x] = 1 then
+#          sign[y] := 1;
+#        fi;
+#      fi;
+#    fi;
+#  od;
+#
+#  tab := 0 * fuse;
+#  out := [];
+#  next := 0;
+#
+#  for i in [n + 1 .. 2 * n] do
+#    x := fuseit(fblocks[i] + nrblocks);
+#    if tab[x] = 0 then
+#      next := next + 1;
+#      tab[x] := next;
+#    fi;
+#    out[i - n + 1] := tab[x];
+#    out[n + 1 + tab[x]] := sign[x];
+#  od;
+#  out[1] := next;
+#  out := Objectify(BlocksType, rec(blocks := out));
+#  return out;
 #end);

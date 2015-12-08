@@ -59,7 +59,7 @@ InstallMethod(NrLeftBlocks, "for a bipartition",
 [IsBipartition], BIPART_NR_LEFT_BLOCKS);
 
 InstallMethod(RankOfBipartition, "for a bipartition",
-[IsBipartition], BIPART_RANK);
+[IsBipartition], x -> BIPART_RANK(x, 0));
 
 # Constructors
 

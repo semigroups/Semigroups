@@ -779,8 +779,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_DEGREE, 1,
                           "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RANK, 1,
-                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RANK, 2,
+                          "x, nothing"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_BLOCKS, 1,
                           "x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_LEFT_BLOCKS, 1,
@@ -817,6 +817,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "blocks"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_HASH, 1,
                           "blocks"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_PROJ, 1,
+                          "blocks"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_EQ, 2,
                           "blocks1, blocks2"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_LT, 2,
@@ -825,6 +827,10 @@ static StructGVarFunc GVarFuncs [] = {
                           "left, right"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_E_CREATOR, 2,
                           "left, right"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_LEFT_ACT, 2,
+                          "blocks, x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_RIGHT_ACT, 2,
+                          "blocks, x"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 
