@@ -275,6 +275,9 @@ end);
 InstallMethod(LeftProjection, "for a bipartition", [IsBipartition],
 BIPART_LEFT_PROJ);
 
+InstallMethod(RightProjection, "for a bipartition", [IsBipartition],
+BIPART_RIGHT_PROJ);
+
 # linear - 2 * degree
 
 InstallMethod(StarOp, "for a bipartition", [IsBipartition], BIPART_STAR);
@@ -695,7 +698,7 @@ InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
 function(x, n)
   if OnSets([1 .. n], x) <> [1 .. n] then
-    ErrorMayQuit("Semigroups: AsBipartition (xor a permutation and pos int):",
+    ErrorMayQuit("Semigroups: AsBipartition (for a permutation and pos int):",
                  "\nthe permutation <p> in the 1st argument must permute ",
                  "[1 .. ", String(n), "],");
   fi;
@@ -854,7 +857,7 @@ function(f, n)
   if n = deg then
     return f;
   fi;
-  blocks := f!.blocks;
+  blocks := BIPART_INT_REP(f);
   out := [];
   nrblocks := 0;
 
@@ -1028,7 +1031,7 @@ function(x)
     return false;
   fi;
 
-  blocks := BIPART_EXT_REP(x);
+  blocks := BIPART_INT_REP(x);
   n := DegreeOfBipartition(x);
   sizesleft := [1 .. NrBlocks(x)] * 0;
   sizesright := [1 .. NrBlocks(x)] * 0;

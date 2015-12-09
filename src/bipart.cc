@@ -359,6 +359,40 @@ Obj BIPART_LEFT_PROJ (Obj self, Obj x) {
   return bipart_new(out);
 }
 
+Obj BIPART_RIGHT_PROJ (Obj self, Obj x) {
+
+  Bipartition* xx = bipart_get_cpp(x);
+
+  size_t deg     = xx->degree();
+  size_t l_block = 0;
+  size_t r_block = xx->nr_right_blocks();
+
+  _BUFFER_size_t.clear();
+  _BUFFER_size_t.resize(4 * deg, -1);
+  auto buf1 = _BUFFER_size_t.begin();
+  auto buf2 = _BUFFER_size_t.begin() + 2 * deg;
+
+  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+  blocks->resize(2 * deg, -1);
+
+  for (size_t i = deg; i < 2 * deg; i++) {
+    if (buf2[xx->block(i)] == (size_t) -1) {
+      if (xx->is_transverse_block(xx->block(i)))
+        buf2[xx->block(i)] = buf1[xx->block(i)] = l_block++;
+      else {
+        buf2[xx->block(i)] = r_block++;
+        buf1[xx->block(i)] = l_block++;
+      }
+    }
+    (*blocks)[i - deg] = buf1[xx->block(i)];
+    (*blocks)[i]       = buf2[xx->block(i)];
+  }
+
+  Bipartition* out = new Bipartition(blocks);
+  out->set_nr_blocks(r_block);
+  return bipart_new(out);
+}
+
 Obj BIPART_STAR (Obj self, Obj x) {
 
   Bipartition* xx = bipart_get_cpp(x);

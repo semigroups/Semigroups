@@ -434,8 +434,6 @@ function(o, m)
   for i in scc do
     for j in [1 .. nrgens] do
       if IsBound(orbitgraph[i][j]) and lookup[orbitgraph[i][j]] = m then
-        Print("i, j = ", i, ", ", j, "\n");
-        Error();
         g := ClosureGroup(g, lambdaperm(rep,
                                         mults[orbitgraph[i][j]][2] * gens[j] *
                                         mults[i][1] * rep));

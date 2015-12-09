@@ -20,7 +20,7 @@ gap> N := 333;;
 #T# BipartitionTest2: BASICS
 gap> classes := [[1, 2, 3, -2], [4, -5], [5, -7], [6, -3, -4], [7], [-1],
 > [-6]];;
-gap> f := BipartitionNC(classes);
+gap> f := Bipartition(classes);
 <bipartition: [ 1, 2, 3, -2 ], [ 4, -5 ], [ 5, -7 ], [ 6, -3, -4 ], [ 7 ], 
  [ -1 ], [ -6 ]>
 gap> LeftProjection(f);
@@ -32,7 +32,7 @@ gap> classes2 := [[-6], [1, 2, 3, -2], [4, -5], [5, -7], [6, -3, -4], [-1],
 > [7]];;
 gap> f = Bipartition(classes2);
 true
-gap> f := BipartitionNC([[1, 2, -3, -5, -6], [3, -2, -4], [4, 7],
+gap> f := Bipartition([[1, 2, -3, -5, -6], [3, -2, -4], [4, 7],
 > [5, -7, -8, -9], [6], [8, 9, -1]]);
 <bipartition: [ 1, 2, -3, -5, -6 ], [ 3, -2, -4 ], [ 4, 7 ], [ 5, -7, -8, -9 ]
   , [ 6 ], [ 8, 9, -1 ]>
@@ -65,11 +65,11 @@ gap> One(bp) * bp = bp;
 true
 
 #T# BipartitionTest8: check BlocksIdempotentTester, first a few little examples
-gap> l := BlocksByIntRepNC([3, 1, 2, 3, 3, 0, 0, 0]);;
-gap> r := BlocksByIntRepNC([2, 1, 2, 2, 2, 0, 0]);;
-gap> SEMIGROUPS.BlocksIdempotentTester(l, r);
+gap> l := BlocksNC([[-1], [-2], [-3, -4]]);;
+gap> r := BlocksNC([[-1], [-2, -3, -4]]);;
+gap> BLOCKS_E_TESTER(l, r);
 true
-gap> e := SEMIGROUPS.BlocksIdempotentCreator(l, r);
+gap> e := BLOCKS_E_CREATOR(l, r);
 <bipartition: [ 1 ], [ 2, 3, 4 ], [ -1 ], [ -2 ], [ -3, -4 ]>
 gap> IsIdempotent(e);
 true
@@ -349,7 +349,7 @@ true
 # bipartition: \<, for bipartitions 2/2
 gap> Bipartition([[1, 2, 3, -1, -2, -3], [4, -4]]) <
 > Bipartition([[1, 3], [2, -1], [-2, -3]]);
-true
+false
 
 # bipartition: PermLeftQuoBipartition, error 1/2
 gap> x := Bipartition([[1, 2], [-1, -2]]);;
@@ -431,6 +431,51 @@ gap> x := Bipartition([[1, 2, 4, 5, -1], [3, 6, -2], [-3, -6], [-4, -5]]);;
 gap> RightProjection(x);
 <bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, 6 ], [ 4, 5 ], [ -3, -6 ], 
  [ -4, -5 ]>
+
+# bipartition: RightProjection, LeftProjection
+gap> x := Bipartition([[1, 2], [-1, -2, 3], [-3, -4, -5], [4, 5]]);;
+gap> RightProjection(x);
+<bipartition: [ 1, 2, -1, -2 ], [ 3, 4, 5 ], [ -3, -4, -5 ]>
+gap> LeftProjection(StarOp(x));
+<bipartition: [ 1, 2, -1, -2 ], [ 3, 4, 5 ], [ -3, -4, -5 ]>
+gap> LeftProjection(x);
+<bipartition: [ 1, 2 ], [ 3, -3 ], [ 4, 5 ], [ -1, -2 ], [ -4, -5 ]>
+gap> RightProjection(StarOp(x));
+<bipartition: [ 1, 2 ], [ 3, -3 ], [ 4, 5 ], [ -1, -2 ], [ -4, -5 ]>
+
+# bipartition: RightProjection, LeftProjection
+gap> x := Bipartition([[1, -2], [2, 3, 4], [5, -1, -3], [6, 7, 8], 
+> [9, 10, -7, -8, -9], [11], [-4, -5, -6], [-10, -11]]);;
+gap> RightProjection(x);
+<bipartition: [ 1, 3, -1, -3 ], [ 2, -2 ], [ 4, 5, 6 ], 
+ [ 7, 8, 9, -7, -8, -9 ], [ 10, 11 ], [ -4, -5, -6 ], [ -10, -11 ]>
+gap> LeftProjection(StarOp(x));
+<bipartition: [ 1, 3, -1, -3 ], [ 2, -2 ], [ 4, 5, 6 ], 
+ [ 7, 8, 9, -7, -8, -9 ], [ 10, 11 ], [ -4, -5, -6 ], [ -10, -11 ]>
+gap> LeftProjection(x);
+<bipartition: [ 1, -1 ], [ 2, 3, 4 ], [ 5, -5 ], [ 6, 7, 8 ], 
+ [ 9, 10, -9, -10 ], [ 11 ], [ -2, -3, -4 ], [ -6, -7, -8 ], [ -11 ]>
+gap> RightProjection(StarOp(x));
+<bipartition: [ 1, -1 ], [ 2, 3, 4 ], [ 5, -5 ], [ 6, 7, 8 ], 
+ [ 9, 10, -9, -10 ], [ 11 ], [ -2, -3, -4 ], [ -6, -7, -8 ], [ -11 ]>
+
+# bipartition: RightProjection, LeftProjection
+gap> x := Bipartition([[1, 3, -2, -4], [2], [4, 6, -1, -3, -5], [5, 8], 
+> [7, -6, -9], [9, 10], [-7, -8, -10]]);
+<bipartition: [ 1, 3, -2, -4 ], [ 2 ], [ 4, 6, -1, -3, -5 ], [ 5, 8 ], 
+ [ 7, -6, -9 ], [ 9, 10 ], [ -7, -8, -10 ]>
+gap> RightProjection(x);
+<bipartition: [ 1, 3, 5, -1, -3, -5 ], [ 2, 4, -2, -4 ], [ 6, 9, -6, -9 ], 
+ [ 7, 8, 10 ], [ -7, -8, -10 ]>
+gap> LeftProjection(StarOp(x));
+<bipartition: [ 1, 3, 5, -1, -3, -5 ], [ 2, 4, -2, -4 ], [ 6, 9, -6, -9 ], 
+ [ 7, 8, 10 ], [ -7, -8, -10 ]>
+gap> LeftProjection(x);
+<bipartition: [ 1, 3, -1, -3 ], [ 2 ], [ 4, 6, -4, -6 ], [ 5, 8 ], [ 7, -7 ], 
+ [ 9, 10 ], [ -2 ], [ -5, -8 ], [ -9, -10 ]>
+gap> RightProjection(StarOp(x));
+<bipartition: [ 1, 3, -1, -3 ], [ 2 ], [ 4, 6, -4, -6 ], [ 5, 8 ], [ 7, -7 ], 
+ [ 9, 10 ], [ -2 ], [ -5, -8 ], [ -9, -10 ]>
 
 # bipartition: Bipartition 1/3
 gap> Bipartition("test");

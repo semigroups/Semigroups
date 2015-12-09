@@ -19,7 +19,7 @@
 #     for j in blocks[i] do
 #       lookup[j]:=i;
 #     od;
-#     n:=n+partition[i];
+#     n:=n+partitionINT;
 #   od;
 #   return [blocks, lookup];
 # end;
@@ -552,15 +552,15 @@ function(n)
   local gens, s;
 
   if n = 1 then
-    return Semigroup(BipartitionNC([[1, -1]]));
+    return Semigroup(Bipartition([[1, -1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
 
   if n = 2 then
-    Add(gens, BipartitionNC([[1, 2, -1, -2]]));
+    Add(gens, Bipartition([[1, 2, -1, -2]]));
   else
-    Add(gens, BipartitionNC(Concatenation([[1, 2, -3], [3, -1, -2]],
+    Add(gens, Bipartition(Concatenation([[1, 2, -3], [3, -1, -2]],
                                            List([4 .. n], x -> [x, -x]))));
   fi;
   s := InverseMonoid(gens);
@@ -578,7 +578,7 @@ function(n)
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1, 2, -1, -2]],
+  Add(gens, Bipartition(Concatenation([[1, 2, -1, -2]],
                                         List([3 .. n], x -> [x, -x]))));
   return InverseMonoid(gens);
 end);
@@ -590,10 +590,10 @@ function(n)
   local gens;
 
   if n = 1 then
-    return Semigroup(BipartitionNC([[1, -1]]));
+    return Semigroup(Bipartition([[1, -1]]));
   fi;
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1, 2]],
+  Add(gens, Bipartition(Concatenation([[1, 2]],
                                         List([3 .. n],
                                              x -> [x, -x]), [[-1, -2]])));
   return Monoid(gens, rec(regular := true));
@@ -606,11 +606,11 @@ function(n)
   local gens;
 
   if n = 1 then
-    return Semigroup(BipartitionNC([[1, -1]]));
+    return Semigroup(Bipartition([[1, -1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1, 2]],
+  Add(gens, Bipartition(Concatenation([[1, 2]],
                                         List([3 .. n],
                                              x -> [x, -x]), [[-1, -2]])));
   Add(gens, AsBipartition(PartialPermNC([2 .. n], [2 .. n]), n));
@@ -624,7 +624,7 @@ function(n)
   local gens, next, i, j;
 
   if n = 1 then
-    return Monoid(BipartitionNC([[1, -1]]));
+    return Monoid(Bipartition([[1, -1]]));
   fi;
 
   gens := [];
