@@ -559,10 +559,6 @@ Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
 // GAP-level functions
 ////////////////////////////////////////////////////////////////////////////////
 
-/*gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5],
-> [7, 9]]);;*/
-
-
 Obj BLOCKS_NC (Obj self, Obj gap_blocks) {
 
   assert(IS_LIST(gap_blocks));
