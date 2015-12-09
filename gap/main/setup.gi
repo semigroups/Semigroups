@@ -213,28 +213,28 @@ InstallMethod(MinActionRank, "for a Rees 0-matrix subsemigroup",
 # options passed to LambdaOrb(s) when it is created
 
 InstallMethod(LambdaOrbOpts, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> rec(forflatplainlists := true));
+[IsTransformationSemigroup], S -> rec(forflatplainlists := true));
 
 InstallMethod(LambdaOrbOpts, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> rec(forflatplainlists := true));
+[IsPartialPermSemigroup], S -> rec(forflatplainlists := true));
 
 InstallMethod(LambdaOrbOpts, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> rec());
+[IsBipartitionSemigroup], S -> rec());
 
 InstallMethod(LambdaOrbOpts, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> rec());
+[IsReesZeroMatrixSubsemigroup], S -> rec());
 
 InstallMethod(RhoOrbOpts, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> rec(forflatplainlists := true));
+[IsTransformationSemigroup], S -> rec(forflatplainlists := true));
 
 InstallMethod(RhoOrbOpts, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> rec(forflatplainlists := true));
+[IsPartialPermSemigroup], S -> rec(forflatplainlists := true));
 
 InstallMethod(RhoOrbOpts, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> rec());
+[IsBipartitionSemigroup], S -> rec());
 
 InstallMethod(RhoOrbOpts, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> rec());
+[IsReesZeroMatrixSubsemigroup], S -> rec());
 
 # the lambda and rho acts
 
@@ -281,7 +281,7 @@ end);
 
 # JDM new c method for this!
 InstallMethod(RhoAct, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s ->
+[IsPartialPermSemigroup], S ->
   function(set, f)
     return OnPosIntSetsPartialPerm(set, f ^ -1);
   end);
@@ -303,30 +303,30 @@ end);
 # the seed or dummy start point for LambdaOrb
 
 InstallMethod(LambdaOrbSeed, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> [0]);
+[IsTransformationSemigroup], S -> [0]);
 
 InstallMethod(LambdaOrbSeed, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> [0]);
+[IsPartialPermSemigroup], S -> [0]);
 
 InstallMethod(LambdaOrbSeed, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> EmptyBlocks);
+[IsBipartitionSemigroup], S -> EmptyBlocks);
 
 InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> -1);
+[IsReesZeroMatrixSubsemigroup], S -> -1);
 
 # the seed or dummy start point for RhoOrb
 
 InstallMethod(RhoOrbSeed, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> [0]);
+[IsTransformationSemigroup], S -> [0]);
 
 InstallMethod(RhoOrbSeed, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> [0]);
+[IsPartialPermSemigroup], S -> [0]);
 
 InstallMethod(RhoOrbSeed, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> EmptyBlocks);
+[IsBipartitionSemigroup], S -> EmptyBlocks);
 
 InstallMethod(RhoOrbSeed, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s -> -1);
+[IsReesZeroMatrixSubsemigroup], S -> -1);
 
 # the function calculating the lambda or rho value of an element
 
@@ -425,18 +425,18 @@ InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
 # like the inverse of f on Y.
 
 InstallMethod(LambdaInverse, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> INV_LIST_TRANS);
+[IsTransformationSemigroup], S -> INV_LIST_TRANS);
 
 InstallMethod(LambdaInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> function(x, f)
+[IsPartialPermSemigroup], S -> function(x, f)
                                  return f ^ -1;
                                end);
 
 InstallMethod(LambdaInverse, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> InverseRightBlocks);
+[IsBipartitionSemigroup], S -> BLOCKS_INV_RIGHT);
 
 InstallMethod(LambdaInverse, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s ->
+[IsReesZeroMatrixSubsemigroup], S ->
 function(k, x)
   local i;
   if x![1] = 0 or k = 0 then
@@ -454,10 +454,10 @@ end);
 # acts on the left like the inverse of g on Y.
 
 InstallMethod(RhoInverse, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> INV_KER_TRANS);
+[IsTransformationSemigroup], S -> INV_KER_TRANS);
 
 InstallMethod(RhoInverse, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s ->
+[IsPartialPermSemigroup], S ->
   function(dom, f)
     return f ^ -1;
   end);
@@ -465,7 +465,7 @@ InstallMethod(RhoInverse, "for a partial perm semigroup",
 #JDM better method for this!!
 
 InstallMethod(RhoInverse, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s ->
+[IsReesZeroMatrixSubsemigroup], S ->
 function(k, x)
   local i;
   if x![1] = 0 or k = 0 then
@@ -480,23 +480,23 @@ function(k, x)
 end);
 
 InstallMethod(RhoInverse, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> InverseLeftBlocks);
+[IsBipartitionSemigroup], S -> BLOCKS_INV_LEFT);
 
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.
 
 InstallMethod(LambdaPerm, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> PERM_LEFT_QUO_TRANS_NC);
+[IsTransformationSemigroup], S -> PERM_LEFT_QUO_TRANS_NC);
 
 InstallMethod(LambdaPerm, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> PERM_LEFT_QUO_PPERM_NC);
+[IsPartialPermSemigroup], S -> PERM_LEFT_QUO_PPERM_NC);
 
 InstallMethod(LambdaPerm, "for a partial perm semigroup",
-[IsBipartitionSemigroup], s -> BIPART_PERM_LEFT_QUO);
+[IsBipartitionSemigroup], S -> BIPART_PERM_LEFT_QUO);
 
 InstallMethod(LambdaPerm, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s ->
+[IsReesZeroMatrixSubsemigroup], S ->
 function(x, y)
   if x![1] = 0 or y![1] = 0 then
     return ();
@@ -508,11 +508,11 @@ end);
 # gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
 
 InstallMethod(LambdaConjugator, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> TRANS_IMG_CONJ);
+[IsTransformationSemigroup], S -> TRANS_IMG_CONJ);
 
 # c method
 InstallMethod(LambdaConjugator, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s ->
+[IsPartialPermSemigroup], S ->
 function(f, g)
   return MappingPermListList(IMAGE_PPERM(f), IMAGE_PPERM(g));
 end);
@@ -521,7 +521,7 @@ InstallMethod(LambdaConjugator, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BIPART_LAMBDA_CONJ);
 
 InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s ->
+[IsReesZeroMatrixSubsemigroup], S ->
 function(f, g)
   return ();
 end);
@@ -530,7 +530,7 @@ end);
 # lambda and rho values.
 
 InstallMethod(IdempotentTester, "for a transformation semigroup",
-[IsTransformationSemigroup], s ->
+[IsTransformationSemigroup], S ->
 function(img, ker)
   if IsEmpty(img) then
     return IsEmpty(ker);
@@ -539,7 +539,7 @@ function(img, ker)
 end);
 
 InstallMethod(IdempotentTester, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> EQ);
+[IsPartialPermSemigroup], S -> EQ);
 
 InstallMethod(IdempotentTester, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BLOCKS_E_TESTER);
@@ -586,16 +586,16 @@ end);
 # and something else for semigroups of bipartitions.
 
 InstallMethod(StabilizerAction, "for a transformation semigroup",
-[IsTransformationSemigroup], s -> PROD);
+[IsTransformationSemigroup], S -> PROD);
 
 InstallMethod(StabilizerAction, "for a partial perm semigroup",
-[IsPartialPermSemigroup], s -> PROD);
+[IsPartialPermSemigroup], S -> PROD);
 
 InstallMethod(StabilizerAction, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BIPART_STAB_ACTION);
 
 InstallMethod(StabilizerAction, "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], s ->
+[IsReesZeroMatrixSubsemigroup], S ->
 function(x, p)
 
   if x![1] = 0 then

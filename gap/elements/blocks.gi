@@ -129,132 +129,136 @@ end);
 # <blocks> is given the index <tab1[x]> where <x> is the fused index of the
 # block.
 
-InstallGlobalFunction(InverseRightBlocks,
-function(blocks, f)
-  local n, nrblocks, fblocks, fusesign, sign, fuseit, out, junk, next,
-   tab1, x, nrleft, tab2, i;
+# so f is on the right
 
-  n := DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks := NrBlocks(blocks);
-  fblocks := f!.blocks;
+#InstallGlobalFunction(InverseRightBlocks,
+#function(blocks, f)
+#  local n, nrblocks, fblocks, fusesign, sign, fuseit, out, junk, next,
+#   tab1, x, nrleft, tab2, i;
+#
+#  n := DegreeOfBlocks(blocks); # length of partition!!
+#  nrblocks := NrBlocks(blocks);
+#  fblocks := f!.blocks;
+#
+#  fusesign := FuseRightBlocks(blocks, f, true);
+#  fuseit := fusesign[1];
+#  sign := fusesign[2];
+#
+#  out := [];
+#  junk := 0;
+#  next := 0;
+#
+#  # find the left blocks of the output
+#  tab1 := [];
+#  for i in [1 .. n] do
+#    if fblocks[i + n] > NrLeftBlocks(f) then #disconnected before fusing
+#      if junk = 0 then
+#        next := next + 1;
+#        junk := next;
+#      fi;
+#      out[i] := junk;
+#    else
+#      x := fuseit(fblocks[i + n] + nrblocks);
+#      if sign[x] = 0 then #disconnected after fusing
+#        if junk = 0 then
+#          next := next + 1;
+#          junk := next;
+#        fi;
+#        out[i] := junk;
+#      else              # connected block
+#        if not IsBound(tab1[x]) then
+#          next := next + 1;
+#          tab1[x] := next;
+#        fi;
+#        out[i] := tab1[x];
+#      fi;
+#    fi;
+#  od;
+#  nrleft := next;
+#
+#  # find the right blocks of the output
+#  tab2 := [];
+#  for i in [n + 1 .. 2 * n] do
+#    x := blocks[i - n];
+#    if blocks[n + x] = 1 then
+#      x := fuseit(x);
+#      out[i] := tab1[x];
+#    else
+#      if not IsBound(tab2[x]) then
+#        next := next + 1;
+#        tab2[x] := next;
+#      fi;
+#      out[i] := tab2[x];
+#    fi;
+#  od;
+#
+#  out := Objectify(BipartitionType, rec(blocks := out));
+#
+#  SetDegreeOfBipartition(out, n);
+#  SetNrLeftBlocks(out, nrleft);
+#  SetNrBlocks(out, next);
+#  return out;
+#end);
 
-  fusesign := FuseRightBlocks(blocks, f, true);
-  fuseit := fusesign[1];
-  sign := fusesign[2];
-
-  out := [];
-  junk := 0;
-  next := 0;
-
-  # find the left blocks of the output
-  tab1 := [];
-  for i in [1 .. n] do
-    if fblocks[i + n] > NrLeftBlocks(f) then #disconnected before fusing
-      if junk = 0 then
-        next := next + 1;
-        junk := next;
-      fi;
-      out[i] := junk;
-    else
-      x := fuseit(fblocks[i + n] + nrblocks);
-      if sign[x] = 0 then #disconnected after fusing
-        if junk = 0 then
-          next := next + 1;
-          junk := next;
-        fi;
-        out[i] := junk;
-      else              # connected block
-        if not IsBound(tab1[x]) then
-          next := next + 1;
-          tab1[x] := next;
-        fi;
-        out[i] := tab1[x];
-      fi;
-    fi;
-  od;
-  nrleft := next;
-
-  # find the right blocks of the output
-  tab2 := [];
-  for i in [n + 1 .. 2 * n] do
-    x := blocks[i - n];
-    if blocks[n + x] = 1 then
-      x := fuseit(x);
-      out[i] := tab1[x];
-    else
-      if not IsBound(tab2[x]) then
-        next := next + 1;
-        tab2[x] := next;
-      fi;
-      out[i] := tab2[x];
-    fi;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := out));
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, next);
-  return out;
-end);
-
-# RhoInverse
-
-InstallGlobalFunction(InverseLeftBlocks,
-function(blocks, f)
-  local n, nrblocks, fblocks, nrfblocks, fuse, fuseit, x, y, out, tab, i;
-
-  n := DegreeOfBlocks(blocks); # length of partition!!
-  nrblocks := NrBlocks(blocks);
-  fblocks := f!.blocks;
-  nrfblocks := NrBlocks(f);
-
-  fuse := [1 .. nrblocks + nrfblocks];
-  fuseit := function(i)
-    while fuse[i] < i do
-      i := fuse[i];
-    od;
-    return i;
-  end;
-
-  for i in [1 .. n] do
-    x := fuseit(blocks[i]);
-    y := fuseit(fblocks[n + i] + nrblocks);
-    if x <> y then
-      if x < y then
-        fuse[y] := x;
-      else
-        fuse[x] := y;
-      fi;
-    fi;
-  od;
-
-  out := [];
-  tab := [];
-
-  for i in [1 .. nrblocks] do
-    if blocks[n + i] = 1 then
-      tab[fuseit(i)] := i;
-    fi;
-  od;
-
-  # find the left blocks of the output
-  for i in [1 .. n] do
-    out[i] := blocks[i];
-    x := fuseit(fblocks[i] + nrblocks);
-    if x > nrblocks or not IsBound(tab[x]) then
-      out[i + n] := nrblocks + 1; #junk
-    else
-      out[i + n] := tab[x];
-    fi;
-  od;
-
-  out := Objectify(BipartitionType, rec(blocks := out));
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrblocks);
-  SetNrBlocks(out, nrblocks + 1);
-  return out;
-end);
+## RhoInverse
+#
+## f is on the left
+#
+#InstallGlobalFunction(InverseLeftBlocks,
+#function(blocks, f)
+#  local n, nrblocks, fblocks, nrfblocks, fuse, fuseit, x, y, out, tab, i;
+#
+#  n := DegreeOfBlocks(blocks); # length of partition!!
+#  nrblocks := NrBlocks(blocks);
+#  fblocks := f!.blocks;
+#  nrfblocks := NrBlocks(f);
+#
+#  fuse := [1 .. nrblocks + nrfblocks];
+#  fuseit := function(i)
+#    while fuse[i] < i do
+#      i := fuse[i];
+#    od;
+#    return i;
+#  end;
+#
+#  for i in [1 .. n] do
+#    x := fuseit(blocks[i]);
+#    y := fuseit(fblocks[n + i] + nrblocks);
+#    if x <> y then
+#      if x < y then
+#        fuse[y] := x;
+#      else
+#        fuse[x] := y;
+#      fi;
+#    fi;
+#  od;
+#
+#  out := [];
+#  tab := [];
+#
+#  for i in [1 .. nrblocks] do
+#    if blocks[n + i] = 1 then
+#      tab[fuseit(i)] := i;
+#    fi;
+#  od;
+#
+#  # find the left blocks of the output
+#  for i in [1 .. n] do
+#    out[i] := blocks[i];
+#    x := fuseit(fblocks[i] + nrblocks);
+#    if x > nrblocks or not IsBound(tab[x]) then
+#      out[i + n] := nrblocks + 1; #junk
+#    else
+#      out[i + n] := tab[x];
+#    fi;
+#  od;
+#
+#  out := Objectify(BipartitionType, rec(blocks := out));
+#  SetDegreeOfBipartition(out, n);
+#  SetNrLeftBlocks(out, nrblocks);
+#  SetNrBlocks(out, nrblocks + 1);
+#  return out;
+#end);
 
 # TODO delete from here on ...
 

@@ -290,7 +290,7 @@ Obj BIPART_EQ (Obj self, Obj x, Obj y) {
 }
 
 Obj BIPART_LT (Obj self, Obj x, Obj y) {
-  return (bipart_get_cpp(x) < bipart_get_cpp(y) ? True : False);
+  return (bipart_get_cpp(x)->lt(bipart_get_cpp(y)) ? True : False);
 }
 
 // TODO this should go into semigroups++
@@ -622,7 +622,8 @@ Obj BLOCKS_EXT_REP (Obj self, Obj x) {
 
     for (size_t i = 0; i < n; i++) {
       Obj block;
-      Obj entry = (xx->is_transverse_block(xx->block(i)) ? INTOBJ_INT(i + 1) : INTOBJ_INT(-i - 1));
+      Obj entry = (xx->is_transverse_block(xx->block(i)) ? INTOBJ_INT(i + 1) :
+                   INTOBJ_INT(-i - 1));
       if (ELM_PLIST(ext_rep, xx->block(i) + 1) == 0) {
         block = NEW_PLIST(T_PLIST_CYC, 1);
         SET_LEN_PLIST(block, 1);
@@ -884,6 +885,7 @@ Obj BLOCKS_LEFT_ACT (Obj self, Obj blocks_gap, Obj x_gap) {
     out_blocks->push_back(tab[j]);
     (*out_lookup)[tab[j]] = _BUFFER_bool[j];
   }
+  out_lookup->resize(next);
   return blocks_new(new Blocks(out_blocks, out_lookup));
 }
 
@@ -935,3 +937,147 @@ Obj BLOCKS_RIGHT_ACT (Obj self, Obj blocks_gap, Obj x_gap) {
   return blocks_new(new Blocks(out_blocks, out_lookup));
 }
 
+Obj BLOCKS_INV_LEFT (Obj self, Obj blocks_gap, Obj x_gap) {
+
+  Blocks*      blocks = blocks_get_cpp(blocks_gap);
+  Bipartition* x      = bipart_get_cpp(x_gap);
+
+  fuse(x->degree(),
+       blocks->begin(),
+       blocks->nr_blocks(),
+       x->begin(),
+       x->nr_blocks(),
+       false);
+
+  std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
+  out_blocks->resize(2 * x -> degree());
+
+  _BUFFER_size_t.resize(2 * blocks->nr_blocks() + x->nr_blocks(), -1);
+  auto tab = _BUFFER_size_t.begin() + blocks->nr_blocks() + x->nr_blocks();
+
+  for (u_int32_t i = 0; i < blocks->nr_blocks(); i++) {
+    if (blocks->is_transverse_block(i)) {
+      tab[fuse_it(i)] = i;
+    }
+  }
+
+  // find the left blocks of the output
+  for (u_int32_t i = 0; i < blocks->degree(); i++) {
+    (*out_blocks)[i] = blocks->block(i);
+    u_int32_t j = fuse_it(x->block(i) + blocks->nr_blocks());
+    if (j > blocks->nr_blocks() || tab[j] == (size_t) -1) {
+      (*out_blocks)[i + x->degree()] = blocks->nr_blocks(); //junk
+    } else {
+      (*out_blocks)[i + x->degree()] = tab[j];
+    }
+  }
+
+  Bipartition* out = new Bipartition(out_blocks);
+  out->set_nr_left_blocks(blocks->nr_blocks());
+
+  return bipart_new(out);
+}
+
+// LambdaInverse - fuse <blocks> with the left blocks of <f> keeping track of
+// the signs of the fused classes.
+//
+// The left blocks of the output are then:
+//
+// 1) disconnected right blocks of <f> (before fusing)
+//
+// 2) disconnected right blocks of <f> (after fusing)
+//
+// 3) connected right blocks of <f> (after fusing)
+//
+// both types 1+2 of the disconnected blocks are unioned into one left block of
+// the output with index <junk>. The connected blocks 3 of <f> are given the next
+// available index, if they have not been seen before. The table <tab1> keeps
+// track of which connected right blocks of <f> have been seen before and the
+// corresponding index in the output, i.e. <tab1[x]> is the index in <out> of the
+// fused block with index <x>.
+//
+// The right blocks of the output are:
+//
+// 1) disconnected blocks of <blocks>; or
+//
+// 2) connected blocks of <blocks>.
+//
+// The disconnected blocks 1 are given the next available index, if they have not
+// been seen before. The table <tab2> keeps track of which disconnected blocks of
+// <blocks> have been seen before and the corresponding index in the output, i.e.
+// <tab2[x]> is the index in <out> of the disconnected block of <blocks> with
+// index <x>. The connected blocks 2 of <blocks> is given the index <tab1[x]>
+// where <x> is the fused index of the block.
+
+Obj BLOCKS_INV_RIGHT (Obj self, Obj blocks_gap, Obj x_gap) {
+
+  Blocks*      blocks = blocks_get_cpp(blocks_gap);
+  Bipartition* x      = bipart_get_cpp(x_gap);
+
+  //prepare _BUFFER_bool for fusing
+
+  _BUFFER_bool.clear();
+  _BUFFER_bool.resize(blocks->nr_blocks() + x->nr_blocks());
+  std::copy(blocks->lookup()->begin(),
+            blocks->lookup()->end(),
+            _BUFFER_bool.begin());
+
+  fuse(x->degree(),
+       blocks->begin(),
+       blocks->nr_blocks(),
+       x->begin(),
+       x->nr_blocks(),
+       true);
+
+  u_int32_t junk = -1;
+  u_int32_t next = 0;
+
+  std::vector<u_int32_t>* out_blocks = new std::vector<u_int32_t>();
+  out_blocks->resize(2 * x -> degree());
+
+  _BUFFER_size_t.resize(3 * blocks->nr_blocks() + 2 * x->nr_blocks(), -1);
+  auto tab1 = _BUFFER_size_t.begin() + blocks->nr_blocks() + x->nr_blocks();
+  auto tab2 = _BUFFER_size_t.begin() + 2 * (blocks->nr_blocks() + x->nr_blocks());
+
+  // find the left blocks of the output
+  for (u_int32_t i = 0; i < blocks->degree(); i++) {
+    if (x->block(i + x->degree()) < x->nr_left_blocks()) {
+      u_int32_t j = fuse_it(x->block(i + x->degree()) + blocks->nr_blocks());
+      if (_BUFFER_bool[j]) {
+        if (tab1[j] == (size_t) -1) {
+          tab1[j] = next;
+          next++;
+        }
+        (*out_blocks)[i] = tab1[j];
+        continue;
+      }
+    }
+    if (junk == (u_int32_t) -1) {
+      junk = next;
+      next++;
+    }
+    (*out_blocks)[i] = junk;
+  }
+
+  u_int32_t out_nr_left_blocks = next;
+
+  // find the right blocks of the output
+
+  for (u_int32_t i = blocks->degree(); i < 2 * blocks->degree(); i++) {
+    u_int32_t j = blocks->block(i - blocks->degree());
+    if (blocks->is_transverse_block(j)) {
+      (*out_blocks)[i] = tab1[fuse_it(j)];
+    } else {
+      if (tab2[j] == (size_t) -1) {
+        tab2[j] = next;
+        next++;
+      }
+      (*out_blocks)[i] = tab2[j];
+    }
+  }
+
+  Bipartition* out = new Bipartition(out_blocks);
+  out->set_nr_left_blocks(out_nr_left_blocks);
+  out->set_nr_blocks(next);
+  return bipart_new(out);
+}

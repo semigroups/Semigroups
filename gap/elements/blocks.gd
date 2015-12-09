@@ -27,14 +27,3 @@ DeclareAttribute("RankOfBlocks", IsBlocks);
 DeclareAttribute("NrTransverseBlocks", IsBlocks);
 DeclareAttribute("DegreeOfBlocks", IsBlocks);
 DeclareAttribute("ExtRepOfBlocks", IsBlocks);
-
-#DeclareGlobalFunction("OnRightBlocks");
-#DeclareGlobalFunction("OnLeftBlocks");
-
-#DeclareOperation("PermRightBlocks", [IsList, IsBipartition]);
-#DeclareOperation("PermLeftBlocks", [IsList, IsBipartition]);
-
-DeclareGlobalFunction("InverseRightBlocks");
-DeclareGlobalFunction("InverseLeftBlocks");
-
-
