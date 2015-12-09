@@ -34,13 +34,13 @@ function(S, n, colBlocks, rowBlocks)
   fi;
   if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
     ErrorMayQuit("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-                 "the third arg <colBlocks> must be a partition ",
-                 "of the columns of the matrix of <S>,");
+                 "the third arg <colBlocks> must partition ",
+                 "the columns of the matrix of <S>,");
   fi;
   if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
     ErrorMayQuit("Semigroups: RMSCongruenceByLinkedTriple: usage,\n",
-                 "the fourth arg <rowBlocks> must be a partition ",
-                 "of the rows of the matrix of <S>,");
+                 "the fourth arg <rowBlocks> must partition ",
+                 "the rows of the matrix of <S>,");
   fi;
 
   if IsLinkedTriple(S, n, colBlocks, rowBlocks) then
@@ -62,7 +62,7 @@ function(S, n, colBlocks, rowBlocks)
   # Basic checks
   if not (IsGroup(g) and IsGroup(n)) then
     ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-                 "the first arg <s> must be a Rees 0-matrix semigroup over ",
+                 "the first arg <S> must be a Rees 0-matrix semigroup over ",
                  "a group,");
   fi;
 
@@ -80,13 +80,13 @@ function(S, n, colBlocks, rowBlocks)
   fi;
   if SortedList(Flat(colBlocks)) <> [1 .. Size(mat[1])] then
     ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-                 "the third arg <colBlocks> must be a partition ",
-                 "of the columns of the matrix of <S>,");
+                 "the third arg <colBlocks> must partition ",
+                 "the columns of the matrix of <S>,");
   fi;
   if SortedList(Flat(rowBlocks)) <> [1 .. Size(mat)] then
     ErrorMayQuit("Semigroups: RZMSCongruenceByLinkedTriple: usage,\n",
-                 "the fourth arg <rowBlocks> must be a partition ",
-                 "of the rows of the matrix of <S>,");
+                 "the fourth arg <rowBlocks> must partition ",
+                 "the rows of the matrix of <S>,");
   fi;
 
   if IsLinkedTriple(S, n, colBlocks, rowBlocks) then
@@ -348,7 +348,7 @@ function(S, n, colBlocks, rowBlocks)
   # Check the semigroup is valid
   if not (IsFinite(S) and IsSimpleSemigroup(S)) then
     ErrorMayQuit("Semigroups: IsLinkedTriple: usage,\n",
-                 "first arg <S> must be a finite simple Rees matrix ",
+                 "the first arg <S> must be a finite simple Rees matrix ",
                  "semigroup,");
   fi;
   mat := Matrix(S);
@@ -406,8 +406,8 @@ function(S, n, colBlocks, rowBlocks)
   # Check the semigroup is valid
   if not (IsFinite(S) and IsZeroSimpleSemigroup(S)) then
     ErrorMayQuit("Semigroups: IsLinkedTriple: usage,\n",
-                 "the first arg <s> must be a finite 0-simple Rees 0-matrix ",
-                 "semigroup");
+                 "the first arg <S> must be a finite 0-simple Rees 0-matrix ",
+                 "semigroup,");
   fi;
   mat := Matrix(S);
   # Check axioms (L1) and (L2) from Howie p.86, then call NC function
@@ -561,7 +561,7 @@ function(cong1, cong2)
     ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
                  "congruences must be defined over the same semigroup,");
   fi;
-  return IsSubgroup(cong1!.n, cong2!.ln)
+  return IsSubgroup(cong1!.n, cong2!.n)
          and ForAll(cong2!.colBlocks,
                     b2 -> ForAny(cong1!.colBlocks, b1 -> IsSubset(b1, b2)))
          and ForAll(cong2!.rowBlocks,
