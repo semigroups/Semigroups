@@ -1722,7 +1722,7 @@ function(S)
       if tester(lambda_o[i], rho_o[k]) then
         nr := nr + 1;
         Print("lambda_o[i] = ", lambda_o[i], "\n");
-        Print("rho_o[i] = ", rho_o[i], "\n");
+        Print("rho_o[k] = ", rho_o[k], "\n");
         out[nr] := creator(lambda_o[i], rho_o[k]);
         Print("out[nr] = ", out[nr], "\n");
       fi;
