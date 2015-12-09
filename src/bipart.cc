@@ -942,7 +942,7 @@ Obj BLOCKS_INV_LEFT (Obj self, Obj blocks_gap, Obj x_gap) {
   fuse(x->degree(),
        blocks->begin(),
        blocks->nr_blocks(),
-       x->begin(),
+       x->begin() + x->degree(),
        x->nr_blocks(),
        false);
 
