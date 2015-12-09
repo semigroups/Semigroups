@@ -300,18 +300,16 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
   Bipartition* yy = bipart_get_cpp(y);
 
   size_t deg  = xx->degree();
-  Obj p       = NEW_PERM4(deg);
+  Obj    p    = NEW_PERM4(deg);
   UInt4* ptrp = ADDR_PERM4(p);
 
   // find indices of right blocks of <x>
   size_t  index = 0;
-  std::fill(_BUFFER_size_t.begin(),
-            std::min(_BUFFER_size_t.end(), _BUFFER_size_t.begin() + 2 * deg),
-            -1);
+  _BUFFER_size_t.clear();
   _BUFFER_size_t.resize(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (_BUFFER_size_t[xx->block(i)] == (UInt4) -1) {
+    if (_BUFFER_size_t[xx->block(i)] == (size_t) -1) {
       _BUFFER_size_t[xx->block(i)] = index;
       index++;
     }
