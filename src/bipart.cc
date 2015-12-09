@@ -507,13 +507,13 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
   if (TNUM_OBJ(p) == T_PERM2){
     UInt2* ptr = ADDR_PERM2(p);
     pdeg       = DEG_PERM2(p);
-    while (ptr[pdeg] == pdeg) {
+    while (ptr[pdeg] == pdeg && pdeg > 0) {
       pdeg--;
     }
   } else if (TNUM_OBJ(p) == T_PERM4) {
     UInt4* ptr = ADDR_PERM4(p);
     pdeg       = DEG_PERM4(p);
-    while (ptr[pdeg] == pdeg) {
+    while (ptr[pdeg] == pdeg && pdeg > 0) {
       pdeg--;
     }
   } else {

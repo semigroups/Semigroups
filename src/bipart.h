@@ -11,7 +11,11 @@
 
 #include "src/compiled.h"
 #include "src/types.h"
+#include "semigroups++/elements.h"
 #include <assert.h>
+
+Bipartition* bipart_get_cpp (Obj x);
+Obj          bipart_new     (Bipartition* x);
 
 Obj BIPART_NC             (Obj, Obj);
 Obj BIPART_EXT_REP        (Obj, Obj);

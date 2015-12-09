@@ -269,6 +269,8 @@ function(x, y)
 end);
 
 # Attributes
+InstallMethod(ExtRepOfBipartition, "for a bipartition", [IsBipartition],
+BIPART_EXT_REP);
 
 # xx ^ * - linear - 2 * degree
 

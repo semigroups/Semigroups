@@ -127,7 +127,8 @@ Obj SEMIGROUP_ADD_GENERATORS (Obj self, Obj data, Obj coll_gap) {
   std::unordered_set<Element*> coll;
 
   for(size_t i = 1; i <= (size_t) LEN_PLIST(coll_gap); i++) {
-    coll.insert(converter->convert(ELM_PLIST(coll_gap, i), semigroup->degree()));
+    coll.insert(converter->convert(ELM_PLIST(coll_gap, i),
+                                   semigroup->degree())->really_copy());
   }
   semigroup->add_generators(coll, data_report(data));
 
