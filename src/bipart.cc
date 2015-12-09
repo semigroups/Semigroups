@@ -136,8 +136,6 @@ inline void blocks_set_ext_rep (Obj x, Obj ext_rep) {
 Obj BIPART_NC (Obj self, Obj gap_blocks) {
 
   assert(IS_LIST(gap_blocks));
-  assert(LEN_LIST(gap_blocks) > 0);
-
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
 
   size_t degree         = 0;
@@ -145,50 +143,52 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
   size_t nr_blocks      = 0;
   bool   by_ext_rep;
 
-  if (IS_LIST(ELM_LIST(gap_blocks, 1))) { // gap_blocks is a list of lists
-    by_ext_rep = true;
-    nr_blocks = LEN_LIST(gap_blocks);
-    for (size_t i = 1; i <= nr_blocks; i++) {
-      assert(IS_LIST(ELM_LIST(gap_blocks, i)));
-      degree += LEN_LIST(ELM_LIST(gap_blocks, i));
-    }
-    blocks->resize(degree);
+  if (LEN_LIST(gap_blocks) != 0) {
+    if (IS_LIST(ELM_LIST(gap_blocks, 1))) { // gap_blocks is a list of lists
+      by_ext_rep = true;
+      nr_blocks = LEN_LIST(gap_blocks);
+      for (size_t i = 1; i <= nr_blocks; i++) {
+        assert(IS_LIST(ELM_LIST(gap_blocks, i)));
+        degree += LEN_LIST(ELM_LIST(gap_blocks, i));
+      }
+      blocks->resize(degree);
 
-    degree /= 2;
+      degree /= 2;
 
-    for (size_t i = 1; i <= nr_blocks; i++) {
-      Obj block = ELM_LIST(gap_blocks, i);
-      for (size_t j = 1; j <= (size_t) LEN_LIST(block); j++) {
-        assert(IS_INTOBJ(ELM_LIST(block, j)));
-        int jj = INT_INTOBJ(ELM_LIST(block, j));
-        if (jj < 0) {
-          (*blocks)[- jj + degree - 1] = i - 1;
-        } else {
-          nr_left_blocks = i;
-          (*blocks)[jj - 1] = i - 1;
+      for (size_t i = 1; i <= nr_blocks; i++) {
+        Obj block = ELM_LIST(gap_blocks, i);
+        for (size_t j = 1; j <= (size_t) LEN_LIST(block); j++) {
+          assert(IS_INTOBJ(ELM_LIST(block, j)));
+          int jj = INT_INTOBJ(ELM_LIST(block, j));
+          if (jj < 0) {
+            (*blocks)[- jj + degree - 1] = i - 1;
+          } else {
+            nr_left_blocks = i;
+            (*blocks)[jj - 1] = i - 1;
+          }
         }
       }
+    } else { // gap_blocks is the internal rep of a bipartition
+      by_ext_rep = false;
+      blocks->reserve(LEN_LIST(gap_blocks));
+      for (size_t i = 1; i <= (size_t) LEN_LIST(gap_blocks) / 2; i++) {
+        assert(IS_INTOBJ(ELM_LIST(gap_blocks, i)) &&
+            INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
+        u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
+        blocks->push_back(index);
+        nr_blocks = (index > nr_blocks ? index : nr_blocks);
+      }
+      nr_left_blocks = nr_blocks + 1;
+      for (size_t i = ((size_t) LEN_LIST(gap_blocks) / 2) + 1;
+          i <= (size_t) LEN_LIST(gap_blocks); i++) {
+        assert(IS_INTOBJ(ELM_LIST(gap_blocks, i)) &&
+            INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
+        u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
+        blocks->push_back(index);
+        nr_blocks = (index > nr_blocks ? index : nr_blocks);
+      }
+      nr_blocks++;
     }
-  } else { // gap_blocks is the internal rep of a bipartition
-    by_ext_rep = false;
-    blocks->reserve(LEN_LIST(gap_blocks));
-    for (size_t i = 1; i <= (size_t) LEN_LIST(gap_blocks) / 2; i++) {
-      assert(IS_INTOBJ(ELM_LIST(gap_blocks, i)) &&
-             INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
-      u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
-      blocks->push_back(index);
-      nr_blocks = (index > nr_blocks ? index : nr_blocks);
-    }
-    nr_left_blocks = nr_blocks + 1;
-    for (size_t i = ((size_t) LEN_LIST(gap_blocks) / 2) + 1;
-         i <= (size_t) LEN_LIST(gap_blocks); i++) {
-      assert(IS_INTOBJ(ELM_LIST(gap_blocks, i)) &&
-             INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
-      u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
-      blocks->push_back(index);
-      nr_blocks = (index > nr_blocks ? index : nr_blocks);
-    }
-    nr_blocks++;
   }
 
   // construct C++ object
@@ -197,8 +197,10 @@ Obj BIPART_NC (Obj self, Obj gap_blocks) {
   x->set_nr_blocks(nr_blocks);
 
   Obj out = bipart_new(x);
-
-  if (by_ext_rep) {
+  if (x->degree() == 0) {
+    bipart_set_ext_rep(out, gap_blocks); //TODO copy gap_blocks?
+    bipart_set_int_rep(out, gap_blocks); //TODO copy gap_blocks?
+  } else if (by_ext_rep) {
     bipart_set_ext_rep(out, gap_blocks); //TODO copy gap_blocks?
   } else {
     bipart_set_int_rep(out, gap_blocks); //TODO copy gap_blocks?
