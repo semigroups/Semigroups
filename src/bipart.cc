@@ -753,10 +753,11 @@ Obj BLOCKS_E_TESTER (Obj self, Obj left_gap, Obj right_gap) {
 
   // prepare the _BUFFER_bool for detecting transverse fused blocks
   _BUFFER_bool.clear();
-  _BUFFER_bool.resize(right->nr_blocks() + left->nr_blocks());
+  _BUFFER_bool.resize(right->nr_blocks() + 2 * left->nr_blocks());
   std::copy(right->lookup()->begin(),
             right->lookup()->end(),
-            _BUFFER_bool.begin());
+            _BUFFER_bool.begin() + left->nr_blocks());
+  auto seen = _BUFFER_bool.begin() + right->nr_blocks() + left->nr_blocks();
 
   // after the following line:
   //
@@ -779,10 +780,10 @@ Obj BLOCKS_E_TESTER (Obj self, Obj left_gap, Obj right_gap) {
   for (u_int32_t i = 0; i < left->nr_blocks(); i++) {
     if (left->is_transverse_block(i)) {
       size_t j = fuse_it(i);
-      if (!_BUFFER_bool[j] || _BUFFER_bool[right->nr_blocks() + j]) {
+      if (!_BUFFER_bool[j] || seen[j]) {
         return False;
       }
-      _BUFFER_bool[right->nr_blocks() + j] = true;
+      seen[j] = true;
     }
   }
   return True;
