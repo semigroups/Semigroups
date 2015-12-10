@@ -584,8 +584,8 @@ function(pair, cong)
   S := Range(cong);
   if not ForAll(pair, x -> x in S) then
     ErrorMayQuit("Semigroups: \\in: usage,\n",
-                 "the elements of the first arg <pair> ",
-                 "must be in the range of the second arg <cong>,");
+                 "elements of first arg <pair> ",
+                 "must be in range of second arg <cong>,");
   fi;
 
   # Read the elements as (i,a,u) and (j,b,v)
@@ -624,8 +624,8 @@ function(pair, cong)
   S := Range(cong);
   if not ForAll(pair, x -> x in S) then
     ErrorMayQuit("Semigroups: \\in: usage,\n",
-                 "the elements of the first arg <pair> ",
-                 "must be in the range of the second arg <cong>,");
+                 "elements of first arg <pair> ",
+                 "must be in range of second arg <cong>,");
   fi;
 
   # Handling the case when one or more of the pair are zero
@@ -909,7 +909,7 @@ function(c1, c2)
   local gens, n, colBlocks, rowBlocks, block, b1, j, pos;
   if Range(c1) <> Range(c2) then
     ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
-                 "the args must be defined over the same semigroup,");
+                 "congruences must be defined over the same semigroup,");
   fi;
   # n is the product of the normal subgroups
   gens := Concatenation(GeneratorsOfGroup(c1!.n), GeneratorsOfGroup(c2!.n));

@@ -102,6 +102,32 @@ end);
 
 #
 
+InstallMethod(IsSubrelation,
+"for a universal semigroup congruence and a semigroup congruence",
+[IsUniversalSemigroupCongruence, IsSemigroupCongruence],
+function(uni, cong)
+  if Range(uni) <> Range(cong) then
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return true;
+end);
+
+#
+
+InstallMethod(IsSubrelation,
+"for a semigroup congruence and a universal semigroup congruence",
+[IsSemigroupCongruence, IsUniversalSemigroupCongruence],
+function(cong, uni)
+  if Range(uni) <> Range(cong) then
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return uni = cong;
+end);
+
+#
+
 InstallMethod(ImagesElm,
 "for universal semigroup congruence and element",
 [IsUniversalSemigroupCongruence, IsAssociativeElement],
