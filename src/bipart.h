@@ -5,7 +5,6 @@
  *
  */
 
-
 #ifndef SRC_BIPART_H_
 #define SRC_BIPART_H_
 
@@ -14,7 +13,18 @@
 #include "semigroups++/elements.h"
 #include <assert.h>
 
-Bipartition* bipart_get_cpp (Obj x);
+static Int                 _RNam_wrapper   = RNamName("wrapper");
+
+inline Obj wrapper_get (Obj x) {
+  //TODO check that x is a bipartition or blocks and that _RNam_wrapper is set
+  return ElmPRec(x, _RNam_wrapper);
+}
+
+inline Bipartition* bipart_get_cpp (Obj x) {
+  //TODO check that x is a bipartition
+  return CLASS_OBJ<Bipartition>(wrapper_get(x));
+}
+
 Obj          bipart_new     (Bipartition* x);
 
 Obj BIPART_NC             (Obj, Obj);

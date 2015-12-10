@@ -13,22 +13,10 @@
 #include "src/precord.h"
 #include <vector>
 
-
 // Global variables
 
 static std::vector<size_t> _BUFFER_size_t;
 static std::vector<bool>   _BUFFER_bool;
-static Int                 _RNam_wrapper   = RNamName("wrapper");
-static Int                 _RNam_blocks    = RNamName("blocks");
-static Int                 _RNam_degree    = RNamName("degree");
-static Int                 _RNam_blist     = RNamName("blist");
-static Int                 _RNam_nr_blocks = RNamName("nr_blocks");
-
-
-inline Obj wrapper_get (Obj x) {
-  //TODO check that x is a bipartition or blocks and that _RNam_wrapper is set
-  return ElmPRec(x, _RNam_wrapper);
-}
 
 inline Obj wrapper_get_elm (Obj x, size_t pos) {
   //TODO check that x is a bipartition or blocks and that pos is not bigger than it
@@ -48,7 +36,7 @@ inline void wrapper_set_elm (Obj x, size_t pos, Obj val) {
 
 // Helper functions
 
-inline Obj bipart_new (Bipartition* x) {
+Obj bipart_new (Bipartition* x) {
 
   // construct GAP wrapper for C++ object
   Obj wrapper = NewSemigroupsBag(x, GAP_BIPART, 4);
@@ -61,11 +49,6 @@ inline Obj bipart_new (Bipartition* x) {
   CHANGED_BAG(out);
 
   return out;
-}
-
-inline Bipartition* bipart_get_cpp (Obj x) {
-  //TODO check that x is a bipartition
-  return CLASS_OBJ<Bipartition>(wrapper_get(x));
 }
 
 inline void bipart_set_ext_rep (Obj x, Obj blocks) {

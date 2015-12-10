@@ -629,22 +629,49 @@ function(n)
 
   gens := [];
   for i in [1 .. n - 1] do
-    next := [];
+    next := [[i, i + 1], [-i, -i - 1]];
     for j in [1 .. i - 1] do
-      next[j] := j;
-      next[n + j] := j;
+      Add(next, [j, -j]);
     od;
-    next[i] := i;
-    next[i + 1] := i;
-    next[i + n] := n;
-    next[i + n + 1] := n;
     for j in [i + 2 .. n] do
-      next[j] := j - 1;
-      next[n + j] := j - 1;
+      Add(next, [j, -j]);
     od;
-    gens[i] := BipartitionByIntRep(next);
+    Add(gens, Bipartition(next));
   od;
+
   return Monoid(gens, rec(regular := true));
+end);
+
+InstallMethod(PartialJonesMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens, next, i, j;
+
+  if n = 1 then
+    return Monoid(Bipartition([[1, -1]]), Bipartition([[1], [-1]]));
+  fi;
+
+  gens := ShallowCopy(GeneratorsOfMonoid(JonesMonoid(n)));
+
+  for i in [1 .. n] do
+    next := [[i], [-i]];
+    for j in [1 .. i - 1] do
+      Add(next, [j, -j]);
+    od;
+    for j in [i + 1 .. n] do
+      Add(next, [j, -j]);
+    od;
+    Add(gens, Bipartition(next));
+  od;
+
+  return Monoid(gens, rec(regular := true));
+end);
+
+InstallMethod(MotzkinMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens;
+  gens := List(GeneratorsOfInverseSemigroup(POI(n)),
+               x -> AsBipartition(x, n));
+  return Monoid(JonesMonoid(n), gens, rec(regular := true));
 end);
 
 # TODO: document this!
