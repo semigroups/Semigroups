@@ -40,6 +40,17 @@ false
 gap> cong = congs[3];
 true
 
+#T# IsSubrelation: RMS case
+gap> colBlocks := [[1, 2]];;
+gap> rowBlocks := [[1, 2, 3]];;
+gap> cong2 := RMSCongruenceByLinkedTriple(S, g, colBlocks, rowBlocks);
+<semigroup congruence over <Rees matrix semigroup 2x3 over S4>
+  with linked triple (S4,1,1)>
+gap> IsSubrelation(cong, cong2);
+false
+gap> IsSubrelation(cong2, cong);
+true
+
 #T# RMSCongruenceByLinkedTriple: Bad input
 gap> RMSCongruenceByLinkedTriple(S, SymmetricGroup(3), colBlocks, rowBlocks);
 Error, Semigroups: RMSCongruenceByLinkedTriple: usage,
@@ -59,6 +70,20 @@ the fourth arg <rowBlocks> must partition the rows of the matrix of <S>,
 gap> RMSCongruenceByLinkedTriple(S, n, colBlocks, [[1], [2, 3]]);
 Error, Semigroups: RMSCongruenceByLinkedTriple:
 invalid triple,
+
+#T# IsSubrelation: bad input
+gap> g := SymmetricGroup(4);;
+gap> mat := [[(), (1, 2)(3, 4)],
+>            [(), ()],
+>            [(2, 4), (1, 3, 4, 2)]];;
+gap> T := ReesZeroMatrixSemigroup(g, mat);;
+gap> n := Group( [ (2,4,3), (1,4)(2,3), (1,3)(2,4) ] );;
+gap> colBlocks := [[1, 2]];;
+gap> rowBlocks := [[1], [2, 3]];;
+gap> cong2 := RZMSCongruenceByLinkedTriple(T, n, colBlocks, rowBlocks);;
+gap> IsSubrelation(cong2, cong);
+Error, Semigroups: IsSubrelation: usage,
+congruences must be defined over the same semigroup,
 
 #T# ReesMatCongTest4: Testing membership
 gap> x := ReesZeroMatrixSemigroupElement(S, 1, (2, 3), 2);;
@@ -302,6 +327,17 @@ gap> cong = uni;
 true
 gap> Size(S / uni);
 1
+
+#T# CongruencesOfSemigroup: another example
+gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
+gap> mat := [[0, (4,5), (3,4), (1,4,3), 0],
+>            [0, (1,3,5,4), (1,5,3), (), 0],
+>            [(), 0, (1,5), (), (1,4,3)],
+>            [0, (1,4,3), (), (4,5), 0]];;
+gap> S := ReesZeroMatrixSemigroup(g, mat);;
+gap> congs := CongruencesOfSemigroup(S);;
+gap> Size(congs);
+29
 
 #T# IsLinkedTriple: bad input
 gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
