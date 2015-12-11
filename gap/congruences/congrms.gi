@@ -956,7 +956,7 @@ function(c1, c2)
   local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
   if Range(c1) <> Range(c2) then
     ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
-                 "the args must be defined over the same semigroup,");
+                 "congruences must be defined over the same semigroup,");
   fi;
   # n is the intersection of the two normal subgroups
   n := Intersection(c1!.n, c2!.n);
@@ -1000,7 +1000,7 @@ function(c1, c2)
   local n, colBlocks, cols, rowBlocks, rows, i, block, j, u, v;
   if Range(c1) <> Range(c2) then
     ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
-                 "the args must be defined over the same semigroup,");
+                 "congruences must be defined over the same semigroup,");
   fi;
   # n is the intersection of the two normal subgroups
   n := Intersection(c1!.n, c2!.n);
