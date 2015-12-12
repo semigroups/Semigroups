@@ -148,6 +148,8 @@ gap> Size(classes[1]);
 gap> congs[3];
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (2^2,2,2)>
+gap> MeetSemigroupCongruences(congs[3], congs[3]) = congs[3];
+true
 gap> congs[9];
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (A4,1,3)>
@@ -156,6 +158,9 @@ gap> cong1 := JoinSemigroupCongruences(congs[3], congs[9]);
   with linked triple (A4,1,2)>
 gap> JoinSemigroupCongruences(congs[9], congs[3]) = cong1;
 true
+gap> MeetSemigroupCongruences(cong1, congs[9]);
+<semigroup congruence over <Rees matrix semigroup 2x3 over S4>
+  with linked triple (A4,1,3)>
 gap> cong1 := MeetSemigroupCongruences(congs[3], congs[9]);
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (2^2,2,3)>
@@ -164,6 +169,9 @@ true
 gap> cong1 := SemigroupCongruence(T, []);;
 gap> MeetSemigroupCongruences(congs[3], cong1);
 Error, Semigroups: MeetSemigroupCongruences: usage,
+congruences must be defined over the same semigroup,
+gap> JoinSemigroupCongruences(congs[3], cong1);
+Error, Semigroups: JoinSemigroupCongruences: usage,
 congruences must be defined over the same semigroup,
 
 #T# ReesMatCongTest7: Quotients
@@ -430,6 +438,9 @@ gap> cong1 := MeetSemigroupCongruences(congs[7], congs[25]);
   with linked triple (A4,5,4)>
 gap> cong1 = MeetSemigroupCongruences(congs[25], congs[7]);
 true
+gap> MeetSemigroupCongruences(congs[9], congs[28]);
+<semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
+  with linked triple (A4,4,3)>
 
 #T# IsLinkedTriple: bad input
 gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
