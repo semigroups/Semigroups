@@ -201,7 +201,7 @@ InstallMethod(CongruencesOfSemigroup,
 "for finite simple Rees matrix semigroup",
 [IsReesMatrixSemigroup and IsSimpleSemigroup and IsFinite],
 function(S)
-  local subpartitions, congs, mat, g, AddRelation, colBlocksList,
+  local subpartitions, congs, mat, g, colBlocksList,
         rowBlocksList, n, colBlocks, rowBlocks;
 
   # Function to compute all subsets of a relation given by partitions
@@ -221,17 +221,6 @@ function(S)
   congs := [];
   mat := Matrix(S);
   g := UnderlyingSemigroup(S);
-
-  # This function combines two congruence classes
-  AddRelation := function(R, x, y)
-    local xClass, yClass;
-    xClass := PositionProperty(R, class -> x in class);
-    yClass := PositionProperty(R, class -> y in class);
-    if xClass <> yClass then
-      Append(R[xClass], R[yClass]);
-      Remove(R, yClass);
-    fi;
-  end;
 
   # No need to add the universal congruence
 
