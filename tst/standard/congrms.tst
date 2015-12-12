@@ -139,6 +139,10 @@ gap> classes[11] * classes[19] = classes[12];
 true
 gap> classes[12] * classes[10] = classes[8];
 true
+gap> Position(classes, classes[20] * classes[10]);
+21
+gap> [classes[12], classes[20]] * classes[10] = [classes[8], classes[21]];
+true
 gap> classes[24] * classes[2] = classes[15]; # actually 16
 false
 gap> class1 * classother;
@@ -222,6 +226,19 @@ gap> cong = uni;
 true
 gap> Size(S / uni);
 1
+
+#T# AsRMSCongruenceByLinkedTriple
+gap> g := SymmetricGroup(4);;
+gap> mat := [[(1, 3), (1, 2)(3, 4)],
+>            [(1, 4, 3, 2), ()],
+>            [(1, 3)(2, 4), (1, 3, 4, 2)]];;
+gap> S := ReesMatrixSemigroup(g, mat);;
+gap> x := RMSElement(S, 2, (1,3)(2,4), 3);;
+gap> y := RMSElement(S, 1, (), 3);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x,y]]);;
+gap> AsRMSCongruenceByLinkedTriple(cong);
+<semigroup congruence over <Rees matrix semigroup 2x3 over Sym( [ 1 .. 4 ] )>
+  with linked triple (S4,1,3)>
 
 # Similar tests, but with zero
 #T# ReesZeroMatCongTest1: Create a Rees 0-matrix semigroup
@@ -376,6 +393,8 @@ gap> classes[28] * classes[32] = classes[36]; # non-0 class
 true
 gap> classes[28] * classes[32] = classes[15];
 false
+gap> classes[28] * [classes[32], classes[73]] = [classes[36], class0];
+true
 gap> class1 * classother;
 Error, Semigroups: \*: usage,
 the args <c1> and <c2> must be classes of the same congruence,
@@ -502,6 +521,22 @@ gap> AsRZMSCongruenceByLinkedTriple(cong) = congs[9];
 true
 gap> cong = congs[9];
 true
+
+#T# AsRZMSCongruenceByLinkedTriple
+gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
+gap> StructureDescription(g);
+"S4"
+gap> mat := [[0, (4,5), (3,4), (1,4,3), 0],
+>            [0, (1,3,5,4), (1,5,3), (), 0],
+>            [(), 0, (1,5), (), (1,4,3)],
+>            [0, (1,4,3), (), (4,5), 0]];;
+gap> S := ReesZeroMatrixSemigroup(g, mat);;
+gap> x := RMSElement(S, 5, (3,4), 2);;
+gap> y := RMSElement(S, 1, (), 4);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x,y]]);;
+gap> AsRZMSCongruenceByLinkedTriple(cong);
+<semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
+  with linked triple (S4,4,3)>
 
 #T# IsLinkedTriple: bad input
 gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
