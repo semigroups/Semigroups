@@ -113,10 +113,14 @@ the args <cong> and <elm> must refer to the same semigroup,
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
-gap> class1 := CongruenceClassOfElement(cong, x);;
+gap> class1 := EquivalenceClassOfElement(cong, x);;
 gap> class2 := CongruenceClassOfElement(cong, y);;
-gap> class3 := CongruenceClassOfElement(cong, z);
+gap> class3 := EquivalenceClassOfElement(cong, z);
 <congruence class of (1,(2,3,4),3)>
+gap> EquivalenceClassOfElement(cong, t);
+Error, Semigroups: EquivalenceClassOfElement: usage,
+the second arg <elm> must be in the semigroup of first arg <cong>,
+gap> classother := EquivalenceClassOfElement(congs[12], x);;
 gap> class1 = class2;
 true
 gap> class1 = class3;
@@ -137,6 +141,9 @@ gap> classes[12] * classes[10] = classes[8];
 true
 gap> classes[24] * classes[2] = classes[15]; # actually 16
 false
+gap> class1 * classother;
+Error, Semigroups: \*: usage,
+the args <c1> and <c2> must be classes of the same congruence,
 gap> Size(classes[13]);
 8
 gap> Size(classes[24]);
@@ -328,13 +335,27 @@ gap> ims := ImagesElm(cong, zero);
 [ 0 ]
 
 #T# ReesZeroMatCongTest5: Equivalence classes
+gap> class0 := CongruenceClassOfElement(cong, zero);
+<congruence class of 0>
+gap> class0!.nCoset;
+0
+gap> HasSize(class0);
+false
+gap> Size(class0);
+1
+gap> CanonicalRepresentative(class0);
+0
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
-gap> class1 := CongruenceClassOfElement(cong, x);;
+gap> class1 := EquivalenceClassOfElement(cong, x);;
 gap> class2 := CongruenceClassOfElement(cong, y);;
-gap> class3 := CongruenceClassOfElement(cong, z);
+gap> class3 := EquivalenceClassOfElement(cong, z);
 <congruence class of (1,(1,3,5),2)>
+gap> EquivalenceClassOfElement(cong, t);
+Error, Semigroups: EquivalenceClassOfElement: usage,
+the second arg <elm> must be in the semigroup of first arg <cong>,
+gap> classother := EquivalenceClassOfElement(congs[12], x);;
 gap> class1 = class2;
 true
 gap> class1 = class3;
@@ -355,12 +376,21 @@ gap> classes[28] * classes[32] = classes[36]; # non-0 class
 true
 gap> classes[28] * classes[32] = classes[15];
 false
+gap> class1 * classother;
+Error, Semigroups: \*: usage,
+the args <c1> and <c2> must be classes of the same congruence,
 gap> Size(classes[13]);
 4
 gap> Size(classes[72]);
 4
 gap> Size(classes[73]);
 1
+gap> Size(class0);
+1
+gap> MultiplicativeZero(S) in class0;
+true
+gap> x in class0;
+false
 
 #T# RZMSCongruenceClassByLinkedTriple: bad input
 gap> badCoset := RightCoset(SymmetricGroup(6), (1,5,4));;
@@ -432,7 +462,7 @@ gap> Length(CongruenceClasses(uni)) = 1 and
 true
 gap> eq := CongruenceClassOfElement(uni, y);
 <congruence class of (6,(1,3,5),1)>
-gap> eq := CongruenceClassOfElement(uni, y);;
+gap> eq := EquivalenceClassOfElement(uni, y);;
 gap> z in eq;
 true
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(uni);;
@@ -467,6 +497,11 @@ true
 gap> MeetSemigroupCongruences(congs[9], congs[28]);
 <semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
   with linked triple (A4,4,3)>
+gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[9]);;
+gap> AsRZMSCongruenceByLinkedTriple(cong) = congs[9];
+true
+gap> cong = congs[9];
+true
 
 #T# IsLinkedTriple: bad input
 gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;

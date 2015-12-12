@@ -1124,7 +1124,7 @@ function(cong, elm)
   if not elm in Range(cong) then
     ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
                  "the second arg <elm> must be in the semigroup of ",
-                 "first arg <cong>");
+                 "first arg <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -1139,7 +1139,7 @@ function(cong, elm)
   if not elm in Range(cong) then
     ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
                  "the second arg <elm> must be ",
-                 "in the semigroup of first arg <cong>");
+                 "in the semigroup of first arg <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -1176,7 +1176,6 @@ function(cong, elm)
   if elm = MultiplicativeZero(Range(cong)) then
     class := Objectify(NewType(fam, IsRZMSCongruenceClassByLinkedTriple),
                        rec(nCoset := 0));
-    SetAsSSortedList(class, [elm]);
   else
     nCoset := RightCoset(cong!.n, LinkedElement(elm));
     colClass := cong!.colLookup[elm[1]];
@@ -1217,10 +1216,8 @@ function(elm, class)
   cong := EquivalenceClassRelation(class);
   S := Range(cong);
   # Special case for 0 and {0}
-  if elm = MultiplicativeZero(S) then
-    return class!.nCoset = 0;
-  elif class!.nCoset = 0 then
-    return false;
+  if class!.nCoset = 0 then
+    return elm = MultiplicativeZero(S);
   fi;
   # Otherwise
   return(elm in S and
@@ -1237,7 +1234,7 @@ InstallMethod(\*,
 function(c1, c2)
   local elm;
   if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
-    ErrorMayQuit("Semigroups: \*: usage,\n",
+    ErrorMayQuit("Semigroups: \\*: usage,\n",
                  "the args <c1> and <c2> must be classes of the same ",
                  "congruence,");
   fi;
@@ -1253,8 +1250,9 @@ InstallMethod(\*,
 function(c1, c2)
   local elm;
   if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
-    ErrorMayQuit("Semigroups: \*: usage,\n",
-                 "<c1> and <c2> must be classes of the same congruence,");
+    ErrorMayQuit("Semigroups: \\*: usage,\n",
+                 "the args <c1> and <c2> must be classes of the same ",
+                 "congruence,");
   fi;
   elm := Representative(c1) * Representative(c2);
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1), elm);
