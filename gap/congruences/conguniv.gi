@@ -151,19 +151,6 @@ end);
 #
 
 InstallMethod(JoinSemigroupCongruences,
-"for two universal semigroup congruences",
-[IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
-function(uni1, uni2)
-  if Range(uni1) <> Range(uni2) then
-    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
-                 "congruences must be defined over the same semigroup,");
-  fi;
-  return uni1;
-end);
-
-#
-
-InstallMethod(JoinSemigroupCongruences,
 "for semigroup congruence and universal congruence",
 [IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, ucong)
@@ -185,19 +172,6 @@ function(ucong, cong)
                  "congruences must be defined over the same semigroup,");
   fi;
   return ucong;
-end);
-
-#
-
-InstallMethod(MeetSemigroupCongruences,
-"for two universal semigroup congruences",
-[IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
-function(uni1, uni2)
-  if Range(uni1) <> Range(uni2) then
-    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
-                 "congruences must be defined over the same semigroup,");
-  fi;
-  return uni1;
 end);
 
 #
