@@ -134,7 +134,7 @@ InstallMethod(ImagesElm,
 function(cong, elm)
   if not elm in Range(cong) then
     ErrorMayQuit("Semigroups: ImagesElm: usage,\n",
-                 "the second argument <elm> must be in <cong>'s semigroup");
+                 "the second argument <elm> must be in <cong>'s semigroup,");
   fi;
   return Elements(Range(cong));
 end);
@@ -153,25 +153,37 @@ end);
 InstallMethod(JoinSemigroupCongruences,
 "for two universal semigroup congruences",
 [IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
-function(ucong1, ucong2)
-  return ucong1;
+function(uni1, uni2)
+  if Range(uni1) <> Range(uni2) then
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return uni1;
 end);
 
 #
 
 InstallMethod(JoinSemigroupCongruences,
-"for RZMS congruence by linked triple and universal congruence",
-[IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
+"for semigroup congruence and universal congruence",
+[IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, ucong)
+  if Range(cong) <> Range(ucong) then
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
   return ucong;
 end);
 
 #
 
 InstallMethod(JoinSemigroupCongruences,
-"for universal congruence and RZMS congruence by linked triple",
-[IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
+"for universal congruence and semigroup congruence",
+[IsUniversalSemigroupCongruence, IsSemigroupCongruence],
 function(ucong, cong)
+  if Range(cong) <> Range(ucong) then
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
   return ucong;
 end);
 
@@ -180,25 +192,37 @@ end);
 InstallMethod(MeetSemigroupCongruences,
 "for two universal semigroup congruences",
 [IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
-function(ucong1, ucong2)
-  return ucong1;
+function(uni1, uni2)
+  if Range(uni1) <> Range(uni2) then
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return uni1;
 end);
 
 #
 
 InstallMethod(MeetSemigroupCongruences,
-"for RZMS congruence by linked triple and universal congruence",
-[IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
+"for semigroup congruence and universal congruence",
+[IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, ucong)
+  if Range(cong) <> Range(ucong) then
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
   return cong;
 end);
 
 #
 
 InstallMethod(MeetSemigroupCongruences,
-"for universal congruence and RZMS congruence by linked triple",
-[IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
+"for universal congruence and semigroup congruence",
+[IsUniversalSemigroupCongruence, IsSemigroupCongruence],
 function(ucong, cong)
+  if Range(cong) <> Range(ucong) then
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
   return cong;
 end);
 
