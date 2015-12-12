@@ -1035,8 +1035,9 @@ function(cong, nCoset, colClass, rowClass)
   g := UnderlyingSemigroup(Range(cong));
   if not (ActingDomain(nCoset) = cong!.n and IsSubset(g, nCoset)) then
     ErrorMayQuit("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
-                 "the second arg <nCoset> must be a right coset of ", cong!.n,
-                 " inside ", g, ",");
+                 "the second arg <nCoset> must be a right coset of <cong>'s\n",
+                 "normal subgroup <n> inside the semigroup's underlying ",
+                 "group <g>,");
   fi;
   if not colClass in [1 .. Size(cong!.colBlocks)] then
     ErrorMayQuit("Semigroups: RMSCongruenceClassByLinkedTriple: usage,\n",
@@ -1060,8 +1061,9 @@ function(cong, nCoset, colClass, rowClass)
   g := UnderlyingSemigroup(Range(cong));
   if not (ActingDomain(nCoset) = cong!.n and IsSubset(g, nCoset)) then
     ErrorMayQuit("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
-                 "the second arg <nCoset> must be a right coset of ", cong!.n,
-                 " inside ", g, ",");
+                 "the second arg <nCoset> must be a right coset of <cong>'s\n",
+                 "normal subgroup <n> inside the semigroup's underlying ",
+                 "group <g>,");
   fi;
   if not colClass in [1 .. Size(cong!.colBlocks)] then
     ErrorMayQuit("Semigroups: RZMSCongruenceClassByLinkedTriple: usage,\n",
