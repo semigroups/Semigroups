@@ -255,8 +255,8 @@ InstallMethod(\*,
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
   if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
-    ErrorMayQuit("Semigroups: \*: usage,\n",
-                 "the args <c1> and <c2> must be over the same congruence");
+    ErrorMayQuit("Semigroups: \\*: usage,\n",
+                 "the args <c1> and <c2> must be over the same congruence,");
   fi;
   return c1;
 end);
