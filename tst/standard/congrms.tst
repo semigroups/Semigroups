@@ -144,6 +144,19 @@ gap> Size(classes[24]);
 gap> Size(classes[1]);
 8
 
+#T# RMSCongruenceClassByLinkedTriple: bad input
+gap> badCoset := RightCoset(SymmetricGroup(6), (1,5,4));;
+gap> class := RMSCongruenceClassByLinkedTriple(congs[3], badCoset, 1, 2);;
+Error, Semigroups: RMSCongruenceClassByLinkedTriple: usage,
+the second arg <nCoset> must be a right coset of <cong>'s
+normal subgroup <n> inside the semigroup's underlying group <g>,
+gap> class := RMSCongruenceClassByLinkedTriple(congs[3], nCoset, 7, 2);;
+Error, Semigroups: RMSCongruenceClassByLinkedTriple: usage,
+the third arg <colClass> is out of range,
+gap> class := RMSCongruenceClassByLinkedTriple(congs[3], nCoset, 1, 42);;
+Error, Semigroups: RMSCongruenceClassByLinkedTriple: usage,
+the fourth arg <rowClass> is out of range,
+
 #T# ReesMatCongTest6: Join and meet congruences
 gap> congs[3];
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
@@ -348,6 +361,19 @@ gap> Size(classes[72]);
 4
 gap> Size(classes[73]);
 1
+
+#T# RZMSCongruenceClassByLinkedTriple: bad input
+gap> badCoset := RightCoset(SymmetricGroup(6), (1,5,4));;
+gap> class := RZMSCongruenceClassByLinkedTriple(congs[13], badCoset, 3, 2);;
+Error, Semigroups: RZMSCongruenceClassByLinkedTriple: usage,
+the second arg <nCoset> must be a right coset of <cong>'s
+normal subgroup <n> inside the semigroup's underlying group <g>,
+gap> class := RZMSCongruenceClassByLinkedTriple(congs[13], nCoset, 7, 2);;
+Error, Semigroups: RZMSCongruenceClassByLinkedTriple: usage,
+the third arg <colClass> is out of range,
+gap> class := RZMSCongruenceClassByLinkedTriple(congs[13], nCoset, 3, 42);;
+Error, Semigroups: RZMSCongruenceClassByLinkedTriple: usage,
+the fourth arg <rowClass> is out of range,
 
 #T# ReesZeroMatCongTest6: Join and meet congruences
 gap> cong1 := JoinSemigroupCongruences(congs[12], congs[31]);
