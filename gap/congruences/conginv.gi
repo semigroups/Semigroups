@@ -11,9 +11,6 @@
 ## "kernel and trace" representation - see Howie 5.3
 ##
 
-# TODO: make a method for NrEquivalenceClasses for an inverse semigroup by
-# congreunce pair JDM
-
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTrace,
 [IsInverseSemigroup and IsFinite, IsInverseSemigroup, IsDenseList],
 function(S, kernel, traceBlocks)
@@ -66,7 +63,6 @@ function(S, kernel, traceBlocks)
       od;
     od;
   od;
-  #TODO: Change this to NC
   return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
 end);
 
