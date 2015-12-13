@@ -412,7 +412,7 @@ function(_record)
 
   InstallMethod(\in,
   Concatenation("for dense list and ", _record.info_string,
-                " with known generating pairs"),
+                "semigroup congruence with known generating pairs"),
   [IsDenseList, _IsXSemigroupCongruence and
    _HasGeneratingPairsOfXSemigroupCongruence],
   function(pair, cong)
@@ -453,7 +453,8 @@ function(_record)
   #
 
   InstallMethod(AsLookupTable,
-  Concatenation("for a ", _record.info_string, "with known generating pairs"),
+  Concatenation("for a ", _record.info_string,
+                "semigroup congruence with known generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local data;
@@ -469,7 +470,7 @@ function(_record)
   #
 
   InstallMethod(SEMIGROUPS_Enumerate,
-  Concatenation("for a ", _record.info_string,
+  Concatenation("for a ", _record.info_string, "semigroup congruence",
                 " with known generating pairs and a function"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
    IsFunction],
@@ -489,7 +490,8 @@ function(_record)
   #
 
   InstallMethod(EquivalenceClasses,
-  Concatenation("for a ", _record.info_string, " with known generating pairs"),
+  Concatenation("for a ", _record.info_string,
+                "semigroup congruence with known generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local classes, next, tab, elms, i;
@@ -512,7 +514,8 @@ function(_record)
   #
 
   InstallMethod(NonTrivialEquivalenceClasses,
-  Concatenation("for a ", _record.info_string, "with known generating pairs"),
+  Concatenation("for a ", _record.info_string,
+                "semigroup congruence with known generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local classes;
@@ -526,7 +529,8 @@ function(_record)
   #
 
   InstallMethod(\=,
-  Concatenation("for ", _record.info_string, "s with known generating pairs"),
+  Concatenation("for ", _record.info_string,
+                "semigroup congruences with known generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
    _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong1, cong2)
@@ -543,7 +547,7 @@ function(_record)
   #
 
   InstallMethod(ImagesElm,
-  Concatenation("for a ", _record.info_string,
+  Concatenation("for a ", _record.info_string, "semigroup congruence",
                 " with known generating pairs and an associative element"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
    IsAssociativeElement],
@@ -562,7 +566,8 @@ function(_record)
   #
 
   InstallMethod(NrEquivalenceClasses,
-  Concatenation("for a ", _record.info_string, " with generating pairs"),
+  Concatenation("for a ", _record.info_string,
+                "semigroup congruence with generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
     local S;
@@ -576,10 +581,11 @@ function(_record)
   #
 
   InstallMethod(ViewObj,
-  Concatenation("for a ", _record.info_string, " with generating pairs"),
+  Concatenation("for a ", _record.info_string,
+                "semigroup congruence with generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
-    Print("<", _record.info_string, " over ");
+    Print("<", _record.info_string, "semigroup congruence over ");
     ViewObj(Range(cong));
     Print(" with ", Size(_GeneratingPairsOfXSemigroupCongruence(cong)),
           " generating pairs>");
@@ -589,7 +595,8 @@ function(_record)
 
   InstallMethod(EvalString(
   Concatenation("Join", _record.type_string, "SemigroupCongruences")),
-  Concatenation("for two ", _record.info_string, "s with generating pairs"),
+  Concatenation("for two ", _record.info_string,
+                "semigroup congruences with generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
    _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(c1, c2)
@@ -642,7 +649,8 @@ function(_record)
   #
 
   InstallMethod(IsSubrelation,
-  Concatenation("for two ", _record.info_string, "s with generating pairs"),
+  Concatenation("for two ", _record.info_string,
+                "semigroup congruences with generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
    _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong1, cong2)
@@ -660,7 +668,7 @@ function(_record)
   ###########################################################################
 
   InstallMethod(EquivalenceClassOfElement,
-  Concatenation("for a ", _record.info_string,
+  Concatenation("for a ", _record.info_string, "semigroup congruence",
                 " with generating pairs and an associative element"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
    IsAssociativeElement],
@@ -676,7 +684,7 @@ function(_record)
   #
 
   InstallMethod(EquivalenceClassOfElementNC,
-  Concatenation("for a ", _record.info_string,
+  Concatenation("for a ", _record.info_string, "semigroup congruence",
                 " with generating pairs and an associative element"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
    IsAssociativeElement],
@@ -698,7 +706,7 @@ function(_record)
   #
 
   InstallMethod(Enumerator,
-  Concatenation("for a ", _record.type_string, " congruence class"),
+  Concatenation("for a ", _record.info_string, "congruence class"),
   [_IsXCongruenceClass],
   function(class)
     local cong, S, enum;
@@ -821,7 +829,7 @@ function(_record)
 
   InstallMethod(\in,
   Concatenation("for an associative element and a ",
-                _record.type_string, " congruence class"),
+                _record.info_string, "congruence class"),
   [IsAssociativeElement, _IsXCongruenceClass],
   function(elm, class)
     if not IsFinite(Parent(class)) then
@@ -833,7 +841,7 @@ function(_record)
   #
 
   InstallMethod(Size,
-  Concatenation("for a ", _record.type_string, " congruence class"),
+  Concatenation("for a ", _record.info_string, "congruence class"),
   [_IsXCongruenceClass],
   function(class)
     local p, tab;
@@ -848,7 +856,7 @@ function(_record)
   #
 
   InstallMethod(\=,
-  Concatenation("for two ", _record.type_string, " congruence classes"),
+  Concatenation("for two ", _record.info_string, "congruence classes"),
   [_IsXCongruenceClass, _IsXCongruenceClass],
   function(class1, class2)
     return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
@@ -859,7 +867,7 @@ function(_record)
   #
 
   InstallMethod(AsList,
-  Concatenation("for a ", _record.type_string, " congruence class"),
+  Concatenation("for a ", _record.info_string, "congruence class"),
   [_IsXCongruenceClass],
   function(class)
     return ImagesElm(EquivalenceClassRelation(class), Representative(class));
@@ -871,11 +879,11 @@ end);
 # End of _InstallMethodsForCongruences function
 
 for _record in [rec(type_string := "",
-                    info_string := "semigroup congruence"),
+                    info_string := ""),
                 rec(type_string := "Left",
-                    info_string := "left semigroup congruence"),
+                    info_string := "left "),
                 rec(type_string := "Right",
-                    info_string := "right semigroup congruence")] do
+                    info_string := "right ")] do
   _InstallMethodsForCongruences(_record);
 od;
 
