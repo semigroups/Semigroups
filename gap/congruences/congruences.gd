@@ -57,8 +57,12 @@ DeclareOperation("JoinRightSemigroupCongruences",
 DeclareOperation("IsSubrelation",
                  [IsEquivalenceRelation, IsEquivalenceRelation]);
 
-# Synonyms replacing "equivalence" with "congruence", at user's preference
-DeclareSynonym("NonTrivialCongruenceClasses", NonTrivialEquivalenceClasses);
-DeclareSynonym("CongruenceClasses", EquivalenceClasses);
-DeclareSynonym("CongruenceClassOfElement", EquivalenceClassOfElement);
-DeclareSynonym("NrCongruenceClasses", NrEquivalenceClasses);
+# Helper functions to EquivalenceClasses for specific categories
+DeclareOperation("CongruenceClasses", [IsSemigroupCongruence]);
+DeclareOperation("LeftCongruenceClasses", [IsLeftSemigroupCongruence]);
+DeclareOperation("RightCongruenceClasses", [IsRightSemigroupCongruence]);
+
+DeclareOperation("NonTrivialCongruenceClasses", [IsSemigroupCongruence]);
+DeclareOperation("NrCongruenceClasses", [IsSemigroupCongruence]);
+DeclareOperation("CongruenceClassOfElement", [IsSemigroupCongruence,
+                                              IsAssociativeElement]);

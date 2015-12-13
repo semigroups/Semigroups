@@ -184,7 +184,12 @@ gap> HasAsLookupTable(cong);
 true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 1, 1, 1, 2, 3, 4, 2, 2, 3, 3, 4, 4 ]
-gap> NonTrivialCongruenceClasses(cong);
+gap> NonTrivialEquivalenceClasses(cong);
+[ <left congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
+  <left congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
+  <left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
+  <left congruence class of Transformation( [ 4, 3, 3, 4, 4 ] )> ]
+gap> LeftCongruenceClasses(cong);
 [ <left congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
   <left congruence class of Transformation( [ 3, 4, 3, 4, 4 ] )>, 
   <left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>, 
@@ -246,6 +251,10 @@ true
 gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 3, 9, 10, 11, 3, 3, 12, 13 ]
 gap> NonTrivialCongruenceClasses(cong);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `NonTrivialCongruenceClasses' on 1 argum\
+ents
+gap> NonTrivialEquivalenceClasses(cong);
 [ <right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
 gap> IsLeftSemigroupCongruence(cong);
 false

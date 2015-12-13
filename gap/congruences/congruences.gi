@@ -205,3 +205,47 @@ function(class)
   ViewObj(Representative(class));
   Print(">");
 end);
+
+#
+
+InstallMethod(CongruenceClasses,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+EquivalenceClasses);
+
+#
+
+InstallMethod(LeftCongruenceClasses,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+EquivalenceClasses);
+
+#
+
+InstallMethod(RightCongruenceClasses,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+EquivalenceClasses);
+
+#
+
+InstallMethod(NrCongruenceClasses,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+NrEquivalenceClasses);
+
+#
+
+InstallMethod(NonTrivialCongruenceClasses,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+NonTrivialEquivalenceClasses);
+
+#
+
+InstallMethod(CongruenceClassOfElement,
+"for a semigroup congruence and associative element",
+[IsSemigroupCongruence, IsAssociativeElement],
+function(cong, elm)
+  return EquivalenceClassOfElement(cong, elm);
+end);
