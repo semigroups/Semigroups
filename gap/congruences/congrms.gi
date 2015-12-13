@@ -1723,3 +1723,35 @@ function(cong)
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
 end);
+
+#
+
+SEMIGROUPS.AsLookupTableRMS :=
+function(cong)
+  local S, n, data, elms, table, next, i, x;
+  S := Range(cong);
+  n := Size(S);
+  data := GenericSemigroupData(S);
+  elms := SEMIGROUP_ELEMENTS(data, infinity);
+  table := EmptyPlist(n);
+  next := 1;
+  for i in [1 .. n] do
+    if not IsBound(table[i]) then
+      for x in ImagesElm(cong, elms[i]) do
+        table[Position(data, x)] := next;
+      od;
+      next := next + 1;
+    fi;
+  od;
+  return table;
+end;
+
+InstallMethod(AsLookupTable,
+"for Rees matrix semigroup congruence by linked triple",
+[IsRMSCongruenceByLinkedTriple],
+SEMIGROUPS.AsLookupTableRMS);
+
+InstallMethod(AsLookupTable,
+"for Rees 0-matrix semigroup congruence by linked triple",
+[IsRZMSCongruenceByLinkedTriple],
+SEMIGROUPS.AsLookupTableRMS);

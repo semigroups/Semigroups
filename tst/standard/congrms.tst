@@ -81,6 +81,13 @@ gap> n := Group( [ (2,4,3), (1,4)(2,3), (1,3)(2,4) ] );;
 gap> colBlocks := [[1, 2]];;
 gap> rowBlocks := [[1], [2, 3]];;
 gap> cong2 := RMSCongruenceByLinkedTriple(T, n, colBlocks, rowBlocks);;
+gap> AsLookupTable(cong2);
+[ 1, 1, 2, 3, 4, 4, 3, 2, 4, 4, 3, 2, 1, 1, 3, 4, 4, 3, 2, 1, 1, 2, 3, 1, 2, 
+  3, 1, 1, 2, 3, 1, 2, 3, 2, 4, 2, 1, 1, 2, 3, 4, 4, 3, 2, 4, 4, 3, 2, 4, 4, 
+  3, 2, 1, 2, 3, 3, 4, 2, 2, 3, 2, 4, 3, 2, 4, 4, 3, 2, 4, 3, 2, 3, 2, 3, 2, 
+  3, 3, 3, 1, 3, 2, 3, 2, 1, 1, 2, 3, 1, 2, 3, 1, 1, 2, 3, 1, 2, 3, 2, 4, 2, 
+  1, 1, 2, 3, 1, 3, 3, 4, 2, 2, 3, 3, 2, 2, 2, 3, 2, 4, 3, 2, 4, 4, 3, 2, 4, 
+  3, 2, 3, 2, 3, 2, 3, 3, 3, 1, 3, 2, 3, 2, 3, 3, 2, 2, 2 ]
 gap> IsSubrelation(cong2, cong);
 Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
@@ -260,6 +267,14 @@ gap> T := ReesZeroMatrixSemigroup(g, mat);;
 gap> congs1 := CongruencesOfSemigroup(T);;
 gap> Size(congs1);
 13
+gap> AsLookupTable(congs1[8]);
+[ 1, 2, 3, 4, 1, 5, 1, 2, 3, 4, 2, 1, 6, 7, 8, 1, 2, 3, 4, 2, 5, 9, 10, 11, 
+  9, 3, 4, 6, 7, 6, 7, 1, 2, 3, 4, 6, 7, 6, 7, 5, 9, 10, 11, 12, 13, 12, 13, 
+  3, 4, 6, 7, 10, 11, 12, 13 ]
+gap> AsLookupTable(AsSemigroupCongruenceByGeneratingPairs(congs1[8]));
+[ 1, 2, 3, 4, 1, 5, 1, 2, 3, 4, 2, 1, 6, 7, 8, 1, 2, 3, 4, 2, 5, 9, 10, 11, 
+  9, 3, 4, 6, 7, 6, 7, 1, 2, 3, 4, 6, 7, 6, 7, 5, 9, 10, 11, 12, 13, 12, 13, 
+  3, 4, 6, 7, 10, 11, 12, 13 ]
 
 #T# ReesZeroMatCongTest3: Construct a congruence manually
 gap> n := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
