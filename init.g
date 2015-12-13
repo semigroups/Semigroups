@@ -87,7 +87,7 @@ ReadPackage("semigroups/gap/attributes/translat.gd");
 ReadPackage("semigroups/gap/congruences/congpairs.gd");
 ReadPackage("semigroups/gap/congruences/congrms.gd");
 ReadPackage("semigroups/gap/congruences/conguniv.gd");
-ReadPackage("semigroups/gap/congruences/conginverse.gd");
+ReadPackage("semigroups/gap/congruences/conginv.gd");
 ReadPackage("semigroups/gap/congruences/congsimple.gd");
 ReadPackage("semigroups/gap/congruences/congrees.gd");
 ReadPackage("semigroups/gap/congruences/quotients.gd");
