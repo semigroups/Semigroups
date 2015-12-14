@@ -321,47 +321,17 @@ function(cong)
   return InverseSemigroup(gens, rec(small := true));
 end);
 
-# assumes K is normal in the beginning!!!!
-
-NormalClosureInverseSemigroup := function(S, K, coll)
-  local T, opts, x;
-
-  T := ClosureInverseSemigroup(K, coll);
-
-  while K <> T do
-    K := T;
-    opts := rec();
-    opts.gradingfunc := function(o, x)
-                          return x in K;
-                        end;
-
-    opts.onlygrades := function(x, data)
-                         return x = false;
-                       end;
-
-    opts.onlygradesdata := fail;
-
-    for x in K do
-      T := ClosureInverseSemigroup(T,
-                                   AsList(Orb(GeneratorsOfSemigroup(S), x, POW,
-                                              opts)));
-    od;
-  od;
-
-  return K;
-end;
-
 #
 
 InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local S, idsmgp, idsdata, idslist, StartTiming, StopTiming, pos, hashlen, ht, 
-        treehashsize, right, left, genstoapply, enumerate_trace, 
-        enforce_conditions, compute_kernel, genpairs, pairstoapply, 
-        kernelgenstoapply, nr, nrk, traceUF, kernel, timing, oldLookup, 
-        oldKernel, traceBlocks;
+  local S, idsmgp, idsdata, idslist, slist, StartTiming, StopTiming, pos, 
+        hashlen, ht, treehashsize, right, left, genstoapply, 
+        NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions, 
+        compute_kernel, genpairs, pairstoapply, kernelgenstoapply, nr, nrk, 
+        traceUF, kernel, timing, oldLookup, oldKernel, traceBlocks;
 
   # Check that the argument makes sense
   S := Range(cong);
@@ -397,6 +367,30 @@ function(cong)
   right := RightCayleyGraphSemigroup(idsmgp);
   left := LeftCayleyGraphSemigroup(idsmgp);
   genstoapply := [1 .. Length(right[1])];
+
+  NormalClosureInverseSemigroup := function(S, K, coll)
+    # This takes an inv smgp S, an inv subsemigroup K, and some elms coll,
+    # then creates the *normal closure* of K with coll inside S.
+    # It assumes K is already normal.
+    local T, opts, x;
+    T := ClosureInverseSemigroup(K, coll);
+    while K <> T do
+      K := T;
+      opts := rec();
+      opts.gradingfunc := function(o, x)
+        return x in K;
+      end;
+      opts.onlygrades := function(x, data)
+        return x = false;
+      end;
+      opts.onlygradesdata := fail;
+      for x in K do
+        T := ClosureInverseSemigroup(T, AsList(Orb(GeneratorsOfSemigroup(S),
+                                                   x, POW, opts)));
+      od;
+    od;
+    return K;
+  end;
 
   enumerate_trace := function()
     local x, a, y, j;
