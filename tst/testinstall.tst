@@ -1233,6 +1233,16 @@ gap> Size(S);
 1
 gap> Size(GroupOfUnits(S));
 1
+gap> S := Semigroup([IdentityTransformation]);
+<trivial transformation group of degree 0 with 1 generator>
+gap> GroupOfUnits(S);
+<trivial transformation group of degree 0 with 1 generator>
+gap> Size(GroupOfUnits(S));
+1
+gap> S := Semigroup([Transformation([1,1])]);
+<commutative transformation semigroup of degree 2 with 1 generator>
+gap> Size(GroupOfUnits(S));
+1
 
 #T# IsInverseSemigroup fall back method was wrong.
 gap> S := Semigroup([Bipartition([[1, 2], [-1], [-2]]),

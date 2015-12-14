@@ -668,12 +668,11 @@ function(S)
   H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
   map := InverseGeneralMapping(IsomorphismPermGroup(H));
   G := Source(map);
-  U := Monoid(List(GeneratorsOfGroup(G), x -> x ^ map));
+  U := Semigroup(List(GeneratorsOfGroup(G), x -> x ^ map));
 
   SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage,
                                                x -> x ^ map));
   SetIsGroupAsSemigroup(U, true);
-
   UseIsomorphismRelation(U, G);
 
   return U;

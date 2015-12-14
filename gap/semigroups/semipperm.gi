@@ -301,7 +301,7 @@ function(S)
   deg := Maximum(DegreeOfPartialPermSemigroup(S),
                  CodegreeOfPartialPermSemigroup(S));
 
-  U := Monoid(List(GeneratorsOfGroup(G), x -> x ^ inv));
+  U := Semigroup(List(GeneratorsOfGroup(G), x -> x ^ inv));
 
   SetIsomorphismPermGroup(U, MappingByFunction(U, G,
                                                x -> x ^ map,
