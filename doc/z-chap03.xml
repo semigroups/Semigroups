@@ -197,7 +197,6 @@
    <#Include Label = "NaturalLeqPartialPermBipartition">
    <#Include Label = "NaturalLeqBlockBijection">
    <#Include Label = "PermLeftQuoBipartition">
-   <#Include Label = "OnRightBlocksBipartitionByPerm">
  </Section>    
 
   <!--**********************************************************************-->
@@ -255,9 +254,6 @@
     described in this section. 
     <#Include Label = "OnRightBlocks">
     <#Include Label = "OnLeftBlocks">
-    <#Include Label = "PermRightBlocks">
-    <#Include Label = "InverseRightBlocks">
-    <#Include Label = "InverseLeftBlocks">
   </Section>
 
   <!--**********************************************************************-->

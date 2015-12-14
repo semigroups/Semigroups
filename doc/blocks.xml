@@ -47,11 +47,8 @@ gap> RightProjection(x);
     <Ref Attr = "ExtRepOfBlocks"/>,
     <Ref Attr = "RankOfBlocks"/>,
     <Ref Attr = "DegreeOfBlocks"/>,
-    <Ref Oper = "OnRightBlocks"/>,
-    <Ref Oper = "OnLeftBlocks"/>,
-    <Ref Oper = "PermRightBlocks"/>, 
-    <Ref Func = "InverseRightBlocks"/>, and
-    <Ref Func = "InverseLeftBlocks"/>.
+    <Ref Oper = "OnRightBlocks"/>, and 
+    <Ref Oper = "OnLeftBlocks"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -66,34 +63,6 @@ gap> RightProjection(x);
     </Description>
   </ManSection>
 <#/GAPDoc>
-
-<#GAPDoc Label="PermRightBlocks">
-  <ManSection>
-    <Oper Name = "PermRightBlocks" Arg = "blocks, x"/>
-    <Oper Name = "PermLeftBlocks" Arg = "blocks, x"/>
-    <Returns>A permutation.</Returns>
-    <Description>
-      If <A>x</A> is a bipartition that stabilises <A>blocks</A>, i.e.
-      <C>OnRightBlocks(<A>blocks</A>, <A>x</A>) = <A>blocks</A></C>, then
-      <C>PermRightBlocks</C> returns the permutation of the indices of the
-      transverse blocks of <A>blocks</A> under the action of <A>x</A>.<P/>
-
-      <C>PermLeftBlocks</C> is the analogue of <C>PermRightBlocks</C> with
-      respect to <Ref Oper = "OnLeftBlocks"/>. 
-
-      <Example><![CDATA[
-gap> x := Bipartition([[1, 10], [2, -7, -9], [3, 4, 6, 8], [5, -5], 
->                      [7, 9, -2], [-1, -10], [-3, -4, -6, -8]]);;
-gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5], 
->                        [ 7, 9 ]]);;
-gap> OnRightBlocks(blocks, x) = blocks;
-true
-gap> PermRightBlocks(blocks, x);
-(2,5)]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 
 <#GAPDoc Label="BlocksNC">
   <ManSection>
@@ -114,73 +83,7 @@ gap> PermRightBlocks(blocks, x);
 
       <Example><![CDATA[
 gap> BlocksNC([[1], [2], [-3, -6], [-4, -5]]);
-<blocks: [ 1 ], [ 2 ], [ -3, -6 ], [ -4, -5 ]>]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="InverseRightBlocks">
-  <ManSection>
-    <Func Name = "InverseRightBlocks" Arg = "blocks, x"/>
-    <Returns>A bipartition.</Returns>
-    <Description>
-    If <C>OnRightBlocks(<A>blocks</A>, <A>x</A>)</C> has rank equal to the rank
-    of <A>blocks</A>, then <C>InverseRightBlocks</C> returns a bipartition
-    <C>g</C> such that 
-    <C>OnRightBlocks(<A>blocks</A>, <A>x</A> * g) = <A>blocks</A></C>
-    and where <C>PermRightBlocks(<A>blocks</A>, <A>x</A> * g)</C> is the identity
-    permutation.
-    <P/>
-
-    See <Ref Oper = "PermRightBlocks"/> and <Ref Oper = "OnRightBlocks"/>.
-    <Example><![CDATA[
-gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7], 
->                      [6, -1], [-3], [-5, -6, -8]]);;
-gap> blocks := BlocksNC([[-1, -4, -5, -8], [-2, -3, -7], [6]]);;
-gap> RankOfBlocks(blocks);
-1
-gap> RankOfBlocks(OnRightBlocks(blocks, x));
-1
-gap> y := InverseRightBlocks(blocks, x);
-<bipartition: [ 1, -6 ], [ 2, 3, 4, 5, 6, 7, 8 ], [ -1, -4, -5, -8 ], 
- [ -2, -3, -7 ]>
-gap> blocks;
-<blocks: [ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]>
-gap> OnRightBlocks(blocks, x * y);
-<blocks: [ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]>
-gap> PermRightBlocks(blocks, x * y);
-()]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="InverseLeftBlocks">
-  <ManSection>
-    <Func Name = "InverseLeftBlocks" Arg = "blocks, x"/>
-    <Returns>A bipartition.</Returns>
-    <Description>
-    If <C>OnLeftBlocks(<A>blocks</A>, <A>x</A>)</C> has rank equal to the rank
-    of <A>blocks</A>, then <C>InverseLeftBlocks</C> returns a bipartition
-    <C>g</C> such that 
-    <C>OnLeftBlocks(<A>blocks</A>, g * <A>x</A>) = <A>blocks</A></C>
-    and where <C>PermLeftBlocks(<A>blocks</A>, g * <A>x</A>)</C> is the
-    identity permutation.
-    <P/>
-
-    See <Ref Oper = "PermLeftBlocks"/> and <Ref Oper = "OnLeftBlocks"/>.
-    <Example><![CDATA[
-gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7], 
->                      [6, -1], [-3], [-5, -6, -8]]);;
-gap> blocks := BlocksNC([[-1, -2, -6], [3, 4, 5], [-7, -8]]);;
-gap> RankOfBlocks(OnLeftBlocks(blocks, x));
-1
-gap> y := InverseLeftBlocks(blocks, x);
-<bipartition: [ 1, 2, 6 ], [ 3, 4, 5, -1, -2, -3, -4, -5, -6, -7, -8 ]
-  , [ 7, 8 ]>
-gap> OnLeftBlocks(blocks, y * x);
-<blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>
-gap> PermLeftBlocks(blocks, y * x);          
-()]]></Example>
+<blocks: [ 1* ], [ 2* ], [ 3, 6 ], [ 4, 5 ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -199,9 +102,9 @@ gap> x := Bipartition([[1, 4, 5, 8], [2, 3, 7], [6, -3, -4, -5],
 gap> y := Bipartition([[1, 5], [2, 4, 8, -2], [3, 6, 7, -3, -4], 
 >                      [-1, -6, -8], [-5, -7]]);;
 gap> RightBlocks(y * x);
-<blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>
+<blocks: [ 1, 2, 6 ], [ 3*, 4*, 5* ], [ 7, 8 ]>
 gap> OnRightBlocks(RightBlocks(y), x); 
-<blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>]]></Example>
+<blocks: [ 1, 2, 6 ], [ 3*, 4*, 5* ], [ 7, 8 ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -220,9 +123,9 @@ gap> x := Bipartition([[1, 5, 7, -1, -3, -4, -6], [2, 3, 6, 8],
 gap> y := Bipartition([[1, 3, -4, -5], [2, 4, 5, 8], [6, -1, -3], 
 > [7, -2, -6, -7, -8]]);;
 gap> LeftBlocks(x * y);
-<blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]>
+<blocks: [ 1*, 4*, 5*, 7* ], [ 2, 3, 6, 8 ]>
 gap> OnLeftBlocks(LeftBlocks(y), x);
-<blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]>]]></Example>
+<blocks: [ 1*, 4*, 5*, 7* ], [ 2, 3, 6, 8 ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

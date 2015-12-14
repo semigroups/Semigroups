@@ -32,9 +32,9 @@
 gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7], 
 >                      [6, -1], [-3], [-5, -6, -8]]);;
 gap> RightBlocks(x);
-<blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]>
+<blocks: [ 1* ], [ 2*, 7* ], [ 3 ], [ 4* ], [ 5, 6, 8 ]>
 gap> LeftBlocks(x);
-<blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]>]]></Example>
+<blocks: [ 1*, 4*, 7*, 8* ], [ 2*, 3*, 5* ], [ 6* ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -66,9 +66,9 @@ gap> LeftBlocks(x);
 gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7], 
 >                      [6, -1], [-3], [-5, -6, -8]]);;
 gap> RightBlocks(x);
-<blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]>
+<blocks: [ 1* ], [ 2*, 7* ], [ 3 ], [ 4* ], [ 5, 6, 8 ]>
 gap> LeftBlocks(x);
-<blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]>]]></Example>
+<blocks: [ 1*, 4*, 7*, 8* ], [ 2*, 3*, 5* ], [ 6* ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -84,7 +84,7 @@ gap> LeftBlocks(x);
       respectively. 
       <Example><![CDATA[
 gap> blocks := BlocksNC([[-1, -2, -3, -4], [-5], [6]]);
-<blocks: [ -1, -2, -3, -4 ], [ -5 ], [ 6 ]>
+<blocks: [ 1, 2, 3, 4 ], [ 5 ], [ 6* ]>
 gap> NrBlocks(blocks);
 3
 gap> x := Bipartition([[1, 5], [2, 4, -2, -4], 
@@ -111,7 +111,7 @@ gap> x := Bipartition([[1, 2, 3, 4, 5, 6, 8], [7, -2, -3],
 gap> NrLeftBlocks(x);
 2
 gap> LeftBlocks(x);
-<blocks: [ -1, -2, -3, -4, -5, -6, -8 ], [ 7 ]>]]></Example>
+<blocks: [ 1, 2, 3, 4, 5, 6, 8 ], [ 7* ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -128,7 +128,7 @@ gap> LeftBlocks(x);
 gap> x := Bipartition([[1, 2, 3, 4, 6, -2, -7], [5, -1, -3, -8], 
 >                      [7, -4, -6], [8], [-5]]);;
 gap> RightBlocks(x);
-<blocks: [ 1, 3, 8 ], [ 2, 7 ], [ 4, 6 ], [ -5 ]>
+<blocks: [ 1*, 3*, 8* ], [ 2*, 7* ], [ 4*, 6* ], [ 5 ]>
 gap> NrRightBlocks(x);
 4]]></Example>
     </Description>
@@ -713,11 +713,6 @@ gap> BipartitionByIntRep([1, 2, 2, 1, 3, 4]);
       <C>PermLeftQuoBipartition</C> verifies that <A>x</A> and <A>y</A> have
       equal left and right blocks, and returns an error if they do not.
 
-      The value returned by <C>PermLeftQuoBipartition(<A>x</A>, <A>y</A>)</C> is
-      the same as that returned by 
-      <C>PermRightBlocks(RightBlocks(<A>x</A>), Star(<A>x</A>) * <A>y</A>)</C>.
-      See also <Ref Oper = "PermRightBlocks"/> and 
-       <Ref Oper="OnRightBlocksBipartitionByPerm"/>.
       <Example><![CDATA[
 gap> x := Bipartition([[1, 4, 6, 7, 8, 10], [2, 5, -1, -2, -8], 
 >                      [3, -3, -6, -7, -9], [9, -4, -5], [-10]]);;
@@ -727,30 +722,7 @@ gap> PermLeftQuoBipartition(x, y);
 (1,2,3)
 gap> Star(x) * y;
 <bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ], 
- [ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]>
-gap> PermRightBlocks(RightBlocks(x), last);
-(1,2,3)]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="OnRightBlocksBipartitionByPerm">
-  <ManSection>
-    <Func Name = "OnRightBlocksBipartitionByPerm" Arg = "x, p"/>
-    <Returns>A bipartition.</Returns>
-    <Description>
-      If <A>x</A> is a bipartition and <A>p</A> is a permutation of the indices
-      of the right blocks of <A>x</A>, then
-      <C>OnRightBlocksBipartitionByPerm</C> returns the bipartition obtained
-      from <A>x</A> by rearranging the right blocks of <A>x</A> according to
-      <A>p</A>.
-      
-      <Example><![CDATA[
-gap> x := Bipartition([[1, 4, 6, 7, 8, 10], [2, 5, -1, -2, -8],
->                      [3, -3, -6, -7, -9], [9, -4, -5], [-10]]);;
-gap> OnRightBlocksBipartitionByPerm(x, (1,2,3));
-<bipartition: [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], 
- [ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ]>]]></Example>
+ [ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -882,11 +854,11 @@ gap> LeftOne(x);
 <block bijection: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ], 
  [ 6, -6 ]>
 gap> LeftBlocks(x);
-<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>
+<blocks: [ 1*, 4* ], [ 2*, 3*, 5* ], [ 6* ]>
 gap> RightBlocks(LeftOne(x));
-<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>
+<blocks: [ 1*, 4* ], [ 2*, 3*, 5* ], [ 6* ]>
 gap> LeftBlocks(LeftOne(x)); 
-<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>
+<blocks: [ 1*, 4* ], [ 2*, 3*, 5* ], [ 6* ]>
 gap> LeftOne(x) * x = x;
 true]]></Example>
     </Description>
@@ -912,11 +884,11 @@ gap> x := Bipartition([[1, -1, -4], [2, -2, -3], [3, 4], [5, -5]]);;
 gap> RightOne(x);
 <block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ], [ 5, -5 ]>
 gap> RightBlocks(RightOne(x));
-<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>
+<blocks: [ 1*, 4* ], [ 2*, 3* ], [ 5* ]>
 gap> LeftBlocks(RightOne(x));        
-<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>
+<blocks: [ 1*, 4* ], [ 2*, 3* ], [ 5* ]>
 gap> RightBlocks(x);
-<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>
+<blocks: [ 1*, 4* ], [ 2*, 3* ], [ 5* ]>
 gap> x * RightOne(x) = x;
 true]]></Example>
     </Description>

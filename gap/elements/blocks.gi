@@ -45,6 +45,11 @@ InstallMethod(NrBlocks,       "for blocks", [IsBlocks], BLOCKS_NR_BLOCKS);
 InstallMethod(\=,             "for blocks", [IsBlocks, IsBlocks], BLOCKS_EQ);
 InstallMethod(\<,             "for blocks", [IsBlocks, IsBlocks], BLOCKS_LT);
 InstallMethod(ProjectionFromBlocks, "for blocks", [IsBlocks], BLOCKS_PROJ);
+InstallMethod(OnRightBlocks, "for blocks and a bipartition",
+[IsBlocks, IsBipartition], BLOCKS_RIGHT_ACT);
+InstallMethod(OnLeftBlocks, "for blocks and a bipartition",
+[IsBlocks, IsBipartition], BLOCKS_LEFT_ACT);
+
 
 BindGlobal("EmptyBlocks", BLOCKS_NC([]));
 
