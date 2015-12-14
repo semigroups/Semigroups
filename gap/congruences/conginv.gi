@@ -279,46 +279,28 @@ InstallMethod(TraceOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  local S, elms, trace, i, class, congClass, j;
-  S := Range(cong);
-  if not IsInverseSemigroup(S) then
+  local S, invcong;
+  if not IsInverseSemigroup(Range(cong)) then
     ErrorMayQuit("Semigroups: TraceOfSemigroupCongruence: usage,\n",
                  "the argument <cong> must be over an inverse semigroup,");
   fi;
-  elms := ShallowCopy(Idempotents(S));
-  trace := [];
-  for i in [1 .. Size(elms)] do
-    if elms[i] <> fail then
-      class := [elms[i]];
-      congClass := EquivalenceClassOfElementNC(cong, elms[i]);
-      for j in [i + 1 .. Size(elms)] do
-        if elms[j] in congClass then
-          Add(class, elms[j]);
-          elms[j] := fail;
-        fi;
-      od;
-      Add(trace, class);
-    fi;
-  od;
-  return trace;
+  invcong := AsInverseSemigroupCongruenceByKernelTrace(cong);
+  return invcong!.traceBlocks;
 end);
 
-# FIXME this method should be updated, in case that the congruence is given by
-# a congruence pair.
+#
 
 InstallMethod(KernelOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  local S, gens;
-  S := Range(cong);
-  if not IsInverseSemigroup(S) then
+  local invcong;
+  if not IsInverseSemigroup(Range(cong)) then
     ErrorMayQuit("Semigroups: KernelOfSemigroupCongruence: usage,\n",
                  "the first arg <cong> must be over an inverse semigroup,");
   fi;
-  gens := Union(List(Idempotents(S),
-                     e -> EquivalenceClassOfElementNC(cong, e)));
-  return InverseSemigroup(gens, rec(small := true));
+  invcong := AsInverseSemigroupCongruenceByKernelTrace(cong);
+  return invcong!.kernel;
 end);
 
 #
