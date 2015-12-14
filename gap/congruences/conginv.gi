@@ -357,10 +357,10 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local S, idsmgp, ids, ht_e, i, StartTiming, StopTiming, pos, hashlen, ht,
-        treehashsize, right, left, genstoapply, enumerate_trace,
-        enforce_conditions, compute_kernel, genpairs, pairstoapply,
-        kernelgenstoapply, nr, nrk, traceUF, kernel, timing, oldLookup,
+  local S, idsmgp, ids, ht_e_size, ht_e, i, StartTiming, StopTiming, pos, 
+        hashlen, ht, treehashsize, right, left, genstoapply, enumerate_trace, 
+        enforce_conditions, compute_kernel, genpairs, pairstoapply, 
+        kernelgenstoapply, nr, nrk, traceUF, kernel, timing, oldLookup, 
         oldKernel, traceBlocks;
 
   # Check that the argument makes sense
@@ -374,7 +374,8 @@ function(cong)
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(S);
   ids := SEMIGROUP_ELEMENTS(GenericSemigroupData(idsmgp), infinity);
-  ht_e := HTCreate(ids[1]);
+  ht_e_size := NextPrimeInt(Int(Length(ids) * 4 / 3));
+  ht_e := HTCreate(ids[1], rec(hashlen := ht_e_size));
   for i in [1 .. Length(ids)] do
     HTAdd(ht_e, ids[i], i);
   od;
@@ -393,15 +394,12 @@ function(cong)
 
   pos := 0;
   hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
-
-  ht := HTCreate([ids[1], ids[1]], rec(forflatplainlists := true,
-                                       treehashsize := hashlen));
-
+  ht := HTCreate([1, 1], rec(forflatplainlists := true,
+                             treehashsize := hashlen));
   right := RightCayleyGraphSemigroup(idsmgp);
   left := LeftCayleyGraphSemigroup(idsmgp);
   genstoapply := [1 .. Length(right[1])];
 
-  # STEPS (2)+(1)
   enumerate_trace := function()
     local x, a, y, j;
     if pos = 0 then
