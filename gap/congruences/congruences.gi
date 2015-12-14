@@ -249,3 +249,12 @@ InstallMethod(CongruenceClassOfElement,
 function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
 end);
+
+#
+
+InstallMethod(IsSuperrelation,
+"for two equivalence relations",
+[IsEquivalenceRelation, IsEquivalenceRelation],
+function(eq1, eq2)
+  return IsSubrelation(eq2, eq1);
+end);

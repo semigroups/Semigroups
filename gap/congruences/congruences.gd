@@ -56,6 +56,8 @@ DeclareOperation("JoinRightSemigroupCongruences",
 
 DeclareOperation("IsSubrelation",
                  [IsEquivalenceRelation, IsEquivalenceRelation]);
+DeclareOperation("IsSuperrelation",
+                 [IsEquivalenceRelation, IsEquivalenceRelation]);
 
 # Helper functions to EquivalenceClasses for specific categories
 DeclareOperation("CongruenceClasses", [IsSemigroupCongruence]);
