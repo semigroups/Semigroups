@@ -564,5 +564,25 @@ Obj SEMIGROUP_SIZE (Obj self, Obj data) {
 }
 
 /*******************************************************************************
- * SEMIGROUP_CAYLEY_TABLE: TODO
+ * SEMIGROUP_CAYLEY_TABLE: TODO for non-C++
  ******************************************************************************/
+
+Obj SEMIGROUP_CAYLEY_TABLE (Obj self, Obj data) {
+  if (data_type(data) != UNKNOWN) {
+    Semigroup* semigroup = data_semigroup(data);
+    bool       report = data_report(data);
+    Obj out = NEW_PLIST(T_PLIST_HOM, semigroup->size(report));
+    SET_LEN_PLIST(out, semigroup->size(report));
+
+    for (size_t i = 0; i < semigroup->size(report); i++) {
+      Obj next = NEW_PLIST(T_PLIST_CYC, semigroup->size(report));
+      SET_LEN_PLIST(next, semigroup->size(report));
+      for (size_t j = 0; j < semigroup->size(report); j++) {
+        SET_ELM_PLIST(next, j + 1, INTOBJ_INT(semigroup->fast_product(i, j) + 1));
+      }
+      SET_ELM_PLIST(out, i + 1, next);
+      CHANGED_BAG(out);
+    }
+    return out;
+  }
+}
