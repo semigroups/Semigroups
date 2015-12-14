@@ -576,58 +576,49 @@ gap> for i in [1 .. 6] do
 
 #T# TestInstall37: Issue #63 (problem with Monoid and InverseMonoid when one
 # of the arguments is a monoid).
-# This only works in GAP 4.7.5 or higher hence the CompareVersionNumbers
 gap> S := Semigroup(PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]));
 <trivial partial perm group of rank 5 with 1 generator>
 gap> T := Monoid(S, PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]));;
-gap> Length(GeneratorsOfMonoid(T)) = 2
-> or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+gap> Length(GeneratorsOfMonoid(T)) = 2;
 true
-gap> One(S) in T or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+gap> One(S) in T;
 true
 gap> One(S) = One(T);
 false
 gap> GeneratorsOfSemigroup(T) =
 > [PartialPerm([1, 2, 3, 4, 5, 6]),
 >  PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]),
->  PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3])]
-> or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+>  PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3])];
 true
 gap> GeneratorsOfMonoid(T) =
 > [PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]),
->  PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3])]
-> or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+>  PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3])];
 true
 gap> S := InverseSemigroup(PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]));;
 gap> T := InverseMonoid(S, PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]));;
-gap> Length(GeneratorsOfInverseMonoid(T)) = 2
-> or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+gap> Length(GeneratorsOfInverseMonoid(T)) = 2;
 true
 gap> GeneratorsOfMonoid(T) =
 > [PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]),
 >  PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]),
->  PartialPerm([1, 2, 3, 4, 5], [4, 1, 6, 3, 2])]
-> or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+>  PartialPerm([1, 2, 3, 4, 5], [4, 1, 6, 3, 2])];
 true
 gap> GeneratorsOfSemigroup(T) =
 > [PartialPerm([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6]),
 >  PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]),
 >  PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]),
->  PartialPerm([1, 2, 3, 4, 5], [4, 1, 6, 3, 2])]
->  or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+>  PartialPerm([1, 2, 3, 4, 5], [4, 1, 6, 3, 2])];
 true
 gap> GeneratorsOfInverseMonoid(T) =
 > [PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]),
->   PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3])]
->   or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+>   PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3])];
 true
 gap> GeneratorsOfInverseSemigroup(T) =
 > [PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]),
 >   PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]),
->   PartialPerm([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6])]
->   or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+>   PartialPerm([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6])];
 true
-gap> One(S) in T or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+gap> One(S) in T;
 true
 
 #T# TestInstall38: Issue 33 (problem with Rees factor semigroups)
@@ -720,8 +711,7 @@ gap> S := Semigroup(Transformation([2, 1, 3, 1, 4, 3]),
 >                   Transformation([5, 3, 4, 3, 5]),
 >                   Transformation([6, 4, 1, 4, 5, 3]),
 >                   Transformation([6, 5, 2, 6, 3, 4]));;
-gap> NrIdempotents(S) = Number(HClasses(S), IsGroupHClass)
-> or not CompareVersionNumbers(GAPInfo.Version, "4.7.5");
+gap> NrIdempotents(S) = Number(HClasses(S), IsGroupHClass);
 true
 
 #T# TestInstall44: Issue 96 (problem with using the partial order of D-classes
@@ -745,12 +735,8 @@ true
 
 #T# TestInstall45: Issue 97
 # (bug in normalizer and the kernel function POW_KER_TRANS)
-gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
->   G := Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation,
->                                                rec(generic := false)));
-> else
->   G := SymmetricGroup(3);
-> fi;
+gap> G := Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation,
+>                                                 rec(generic := false)));;
 gap> G = SymmetricGroup(3);
 true
 
@@ -761,21 +747,13 @@ gap> GeneratorsOfSemigroup(PartitionMonoid(1));
 
 #T# TestInstall47: Issue 101 (incorrect method for
 # DegreeOfTransformationSemigroup for a transformation group with 0 generators)
-gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
->   G := GroupOfUnits(FullTransformationSemigroup(1));
-> else
->   G := Semigroup(IdentityTransformation);
-> fi;
+gap> G := GroupOfUnits(FullTransformationSemigroup(1));;
 gap> G;
 <trivial transformation group of degree 0 with 1 generator>
 
 #T# TestInstall48: Issue 101
 # (incorrect method for AsPartialPerm for a perm and zero)
-gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.6") then
->   G := GroupOfUnits(Semigroup(PartialPerm([])));
-> else
->   G := Semigroup(PartialPerm([]));
-> fi;
+gap> G := GroupOfUnits(Semigroup(PartialPerm([])));;
 gap> G;
 <trivial partial perm group of rank 0 with 1 generator>
 
@@ -808,8 +786,7 @@ gap> GeneratorsOfSemigroup(I);
 # inverse semigroups)
 gap> S := [SymmetricInverseMonoid(2)];;
 gap> S[2] := MaximalSubsemigroups(S[1]);;
-gap> if CompareVersionNumbers(GAPInfo.Version, "4.7.7")
->        and (IsBound(GAPInfo.PackagesLoaded.grape)
+gap> if (IsBound(GAPInfo.PackagesLoaded.grape)
 >        and Filename(DirectoriesPackagePrograms("grape"),
 >                     "dreadnautB") <> fail) then
 >      S[3] := List(S[2], MaximalSubsemigroups);;
@@ -821,8 +798,7 @@ gap> R1 := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
 gap> R2 := Semigroup(MultiplicativeZero(R1));;
 gap> IsReesZeroMatrixSubsemigroup(R2);
 true
-gap> (CompareVersionNumbers(GAPInfo.Version, "4.7.7") and
-> IsReesZeroMatrixSemigroup(R2));
+gap> IsReesZeroMatrixSemigroup(R2);
 false
 
 #T# TestInstall54: FreeBand
