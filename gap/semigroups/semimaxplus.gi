@@ -42,3 +42,25 @@ function(dim, threshold)
 
   return Monoid(gens);
 end);
+
+InstallMethod(FullTropicalMinPlusMonoid, "for pos int and pos int",
+[IsPosInt, IsPosInt],
+function(dim, threshold)
+  local gens, i;
+
+  if dim <> 2 then
+    ErrorMayQuit();
+  fi;
+
+  gens := [Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
+                                            [0, infinity]], threshold),
+           Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
+                                            [1, infinity]], threshold),
+           Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
+                                            [infinity, infinity]], threshold)];
+  for i in [0 .. threshold] do
+    Add(gens, Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], [0, i]], threshold));
+  od;
+
+  return Monoid(gens);
+end);
