@@ -678,11 +678,6 @@ end);
 
 #
 
-InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
-
-#
-
 InstallMethod(DegreeOfTransformationSemigroup,
 "for a transformation semigroup ideal",
 [IsTransformationSemigroup and IsSemigroupIdeal],
