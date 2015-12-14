@@ -440,7 +440,6 @@ function(cong)
         if traceTable[e] <> traceTable[f] then
           nr := nr + 1;
           pairstoapply[nr] := [e, f];
-          #UF_UNION(traceUF, [e,f]);
         fi;
       else
         classno := traceTable[Position(idsdata, RightOne(a))];
@@ -473,7 +472,7 @@ function(cong)
   nr := Length(pairstoapply);
   nrk := Length(kernelgenstoapply);
   traceUF := UF_NEW(Length(idslist));
-  kernel := IdempotentGeneratedSubsemigroup(S);
+  kernel := idsmgp;
   Elements(kernel);
 
   # Keep applying the method until no new info is found
@@ -494,6 +493,5 @@ function(cong)
   traceBlocks := List(Compacted(UF_BLOCKS(traceUF)),
                       b -> List(b, i -> idslist[i]));
 
-  #TODO: Change this to NC
-  return InverseSemigroupCongruenceByKernelTrace(S, kernel, traceBlocks);
+  return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
 end);
