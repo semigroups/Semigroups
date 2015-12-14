@@ -11,6 +11,7 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
+
 InstallMethod(FixedPoints, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
@@ -319,7 +320,7 @@ InstallMethod(IsTransitive,
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  return IsTransitive(S, DegreeOfTransformationSemigroup(S));
+  return IsStronglyConnectedDigraph(DigraphOfActionOnPoints(S));
 end);
 
 InstallMethod(IsTransitive,
