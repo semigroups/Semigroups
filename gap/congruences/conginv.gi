@@ -357,8 +357,8 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local S, idsmgp, ids, ht_e_size, ht_e, i, StartTiming, StopTiming, pos, 
-        hashlen, ht, treehashsize, right, left, genstoapply, enumerate_trace, 
+  local S, idsmgp, idsdata, idslist, StartTiming, StopTiming, pos, hashlen, ht, 
+        treehashsize, right, left, genstoapply, enumerate_trace, 
         enforce_conditions, compute_kernel, genpairs, pairstoapply, 
         kernelgenstoapply, nr, nrk, traceUF, kernel, timing, oldLookup, 
         oldKernel, traceBlocks;
@@ -373,12 +373,10 @@ function(cong)
 
   # Setup some data structures for the trace
   idsmgp := IdempotentGeneratedSubsemigroup(S);
-  ids := SEMIGROUP_ELEMENTS(GenericSemigroupData(idsmgp), infinity);
-  ht_e_size := NextPrimeInt(Int(Length(ids) * 4 / 3));
-  ht_e := HTCreate(ids[1], rec(hashlen := ht_e_size));
-  for i in [1 .. Length(ids)] do
-    HTAdd(ht_e, ids[i], i);
-  od;
+  idsdata := GenericSemigroupData(idsmgp);
+  idslist := SEMIGROUP_ELEMENTS(idsdata, infinity);
+
+  slist := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
 
   StartTiming := function(record)
     record.timeofday := IO_gettimeofday();
@@ -410,8 +408,8 @@ function(cong)
           UF_UNION(traceUF, x);
           # Add each pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(S) do
-            y := [HTValue(ht_e, a ^ -1 * ids[x[1]] * a),
-                  HTValue(ht_e, a ^ -1 * ids[x[2]] * a)];
+            y := [Position(idsdata, a ^ -1 * idslist[x[1]] * a),
+                  Position(idsdata, a ^ -1 * idslist[x[2]] * a)];
             if y[1] <> y[2] and HTValue(ht, y) = fail then
               HTAdd(ht, y, true);
               nr := nr + 1;
@@ -449,24 +447,23 @@ function(cong)
     UF_FLATTEN(traceUF);
   end;
 
-  # STEPS (6)+(5)
   enforce_conditions := function()
     local traceTable, traceBlocks, a, e, f, classno;
     traceTable := UF_TABLE(traceUF);
     traceBlocks := UF_BLOCKS(traceUF);
-    for a in Elements(S) do #TODO: Don't use Elements?
+    for a in slist do
       if a in kernel then
-        e := HTValue(ht_e, LeftOne(a));
-        f := HTValue(ht_e, RightOne(a));
+        e := Position(idsdata, LeftOne(a));
+        f := Position(idsdata, RightOne(a));
         if traceTable[e] <> traceTable[f] then
           nr := nr + 1;
           pairstoapply[nr] := [e, f];
           #UF_UNION(traceUF, [e,f]);
         fi;
       else
-        classno := traceTable[HTValue(ht_e, RightOne(a))];
+        classno := traceTable[Position(idsdata, RightOne(a))];
         for e in traceBlocks[classno] do
-          if a * ids[e] in kernel then
+          if a * idslist[e] in kernel then
             nrk := nrk + 1;
             AddSet(kernelgenstoapply, a);
           fi;
@@ -475,7 +472,6 @@ function(cong)
     od;
   end;
 
-  # STEPS (3)+(4)
   compute_kernel := function()
     # Take the normal closure inverse semigroup containing the new elements
     if kernelgenstoapply <> [] then
@@ -489,12 +485,12 @@ function(cong)
 
   # Retrieve the initial information
   genpairs := GeneratingPairsOfSemigroupCongruence(cong);
-  pairstoapply := List(genpairs, x -> [HTValue(ht_e, RightOne(x[1])),
-                                       HTValue(ht_e, RightOne(x[2]))]);
+  pairstoapply := List(genpairs, x -> [Position(idsdata, RightOne(x[1])),
+                                       Position(idsdata, RightOne(x[2]))]);
   kernelgenstoapply := Set(genpairs, x -> x[1] * x[2] ^ -1);
   nr := Length(pairstoapply);
   nrk := Length(kernelgenstoapply);
-  traceUF := UF_NEW(Length(ids));
+  traceUF := UF_NEW(Length(idslist));
   kernel := IdempotentGeneratedSubsemigroup(S);
   Elements(kernel);
 
@@ -522,7 +518,7 @@ function(cong)
 
   # Convert traceLookup to traceBlocks
   traceBlocks := List(Compacted(UF_BLOCKS(traceUF)),
-                      b -> List(b, i -> ids[i]));
+                      b -> List(b, i -> idslist[i]));
 
   #TODO: Change this to NC
   return InverseSemigroupCongruenceByKernelTrace(S, kernel, traceBlocks);
