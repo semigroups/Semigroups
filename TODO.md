@@ -3,7 +3,7 @@
 
 
 ###TODO C++
-
+* use positional rather than component object for bipartitions/blocks?? (This will likely speed things up)
 * better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
 * enumerator sorted
 * ideals (look at semigroupe)
@@ -17,7 +17,6 @@
 
 * use namespace in the C++ code
 * optimize
-
 
 * check for memleaks
 * gmp problems?
@@ -33,6 +32,8 @@
 * `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 ###GAP
+* embedding transformation semigroups into max-plus etc semigroups.
+* `AsSemigroup` instead of `AsTransformationSemigroup` etc
 * fix the ViewString method for graph inverse semigroup
 * `AsTransformationSemigroup` for a pbr semigroup seems slow.
 * Add `IsFinite` check to start of appropriate methods and add tests
