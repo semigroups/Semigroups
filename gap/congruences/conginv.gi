@@ -327,11 +327,11 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local S, idsmgp, idsdata, idslist, slist, StartTiming, StopTiming, pos, 
-        hashlen, ht, treehashsize, right, left, genstoapply, 
-        NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions, 
-        compute_kernel, genpairs, pairstoapply, kernelgenstoapply, nr, nrk, 
-        traceUF, kernel, timing, oldLookup, oldKernel, traceBlocks;
+  local S, idsmgp, idsdata, idslist, slist, pos, hashlen, ht, treehashsize, 
+        right, left, genstoapply, NormalClosureInverseSemigroup, 
+        enumerate_trace, enforce_conditions, compute_kernel, genpairs, 
+        pairstoapply, kernelgenstoapply, nr, nrk, traceUF, kernel, oldLookup, 
+        oldKernel, trace_unchanged, kernel_unchanged, traceBlocks;
 
   # Check that the argument makes sense
   S := Range(cong);
@@ -347,18 +347,6 @@ function(cong)
   idslist := SEMIGROUP_ELEMENTS(idsdata, infinity);
 
   slist := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
-
-  StartTiming := function(record)
-    record.timeofday := IO_gettimeofday();
-  end;
-
-  StopTiming := function(record)
-    local timeofday, elapsed;
-    timeofday := IO_gettimeofday();
-    elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000
-               + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
-    Print("elapsed time: ", String(elapsed), "ms\n");
-  end;
 
   pos := 0;
   hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
@@ -488,27 +476,19 @@ function(cong)
   kernel := IdempotentGeneratedSubsemigroup(S);
   Elements(kernel);
 
-  timing := rec();
   # Keep applying the method until no new info is found
   repeat
     oldLookup := StructuralCopy(UF_TABLE(traceUF));
     oldKernel := kernel;
-    StartTiming(timing);
-    Print("compute_kernel: ");
     compute_kernel();
-    StopTiming(timing);
-    StartTiming(timing);
-    Print("enforce_conditions: ");
     enforce_conditions();
-    StopTiming(timing);
-    StartTiming(timing);
-    Print("enumerate_trace: ");
     enumerate_trace();
-    StopTiming(timing);
-    Info(InfoSemigroups, 2, "lookup: ", oldLookup = UF_TABLE(traceUF));
-    Info(InfoSemigroups, 2, "kernel: ", oldKernel = kernel);
+    trace_unchanged := (oldLookup = UF_TABLE(traceUF));
+    kernel_unchanged := (oldKernel = kernel);
+    Info(InfoSemigroups, 2, "lookup: ", trace_unchanged);
+    Info(InfoSemigroups, 2, "kernel: ", kernel_unchanged);
     Info(InfoSemigroups, 2, "nrk = 0: ", nrk = 0);
-  until (oldLookup = UF_TABLE(traceUF)) and (nrk = 0);
+  until trace_unchanged and kernel_unchanged and (nrk = 0);
 
   # Convert traceLookup to traceBlocks
   traceBlocks := List(Compacted(UF_BLOCKS(traceUF)),
