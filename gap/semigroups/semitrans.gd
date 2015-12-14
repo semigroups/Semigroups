@@ -20,6 +20,8 @@ DeclareAttribute("ComponentRepsOfTransformationSemigroup",
                  IsTransformationSemigroup);
 DeclareAttribute("ComponentsOfTransformationSemigroup",
                  IsTransformationSemigroup);
+DeclareProperty("IsConnectedTransformationSemigroup",
+                 IsTransformationSemigroup);
 DeclareAttribute("CyclesOfTransformationSemigroup",
                  IsTransformationSemigroup);
 
