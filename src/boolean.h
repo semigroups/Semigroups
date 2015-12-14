@@ -15,5 +15,6 @@
 #include <assert.h>
 
 Obj IS_COL_TRIM_BOOLEAN_MAT (Obj, Obj);
+Obj HASH_FUNC_FOR_BLIST (Obj, Obj, Obj);
 
 #endif

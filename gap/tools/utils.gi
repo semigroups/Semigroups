@@ -9,6 +9,13 @@
 ##
 ## this file contains utilies for use with the Semigroups package.
 
+InstallMethod(ChooseHashFunction, "for a blist and pos int",
+[IsBlistRep, IsPosInt],
+  function(x, hashlen)
+  return rec(func := HASH_FUNC_FOR_BLIST,
+             data := hashlen);
+end);
+
 #############################################################################
 # 1. Put things in the record SEMIGROUPS.
 #############################################################################
