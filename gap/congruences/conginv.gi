@@ -8,7 +8,11 @@
 #############################################################################
 ##
 ## This file contains methods for congruences on inverse semigroups, using the
-## "kernel and trace" representation - see Howie 5.3
+## "kernel and trace" representation.
+##
+## See J.M. Howie's "Fundamentals of Semigroup Theory" Section 5.3, and see
+## Michael Torpey's MSc thesis "Computing with Semigroup Congruences" Chapter 5
+## (www-circa.mcs.st-and.ac.uk/~mct25/files/mt5099-report.pdf) for more details.
 ##
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTrace,
