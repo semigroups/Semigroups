@@ -59,8 +59,8 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 4, 2]),
 >                           PartialPerm([1, 2, 3], [2, 3, 4]),
 >                           PartialPerm([1, 2, 4], [2, 1, 3])]);;
 gap> SemigroupCongruence(S, [S.1, S.2]);
-<semigroup congruence over <inverse partial perm semigroup of size 116, 
- rank 4 with 3 generators> with congruence pair (116,1)>
+<semigroup congruence over <inverse partial perm semigroup of rank 4 with 3 
+ generators> with congruence pair (116,1)>
 
 #T# SemigroupCongruence: Pairs
 gap> S := Semigroup([Transformation([3, 3, 3]),

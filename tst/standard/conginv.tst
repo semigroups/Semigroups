@@ -35,8 +35,8 @@ gap> [y, z] in cong;
 false
 
 # Get the Kernel and Trace out
-gap> KernelOfSemigroupCongruence(cong);
-<inverse partial perm semigroup of size 41, rank 5 with 12 generators>
+gap> Size(KernelOfSemigroupCongruence(cong));
+41
 gap> AsSortedList(List(TraceOfSemigroupCongruence(cong), AsSortedList));
 [ [ <empty partial perm>, <identity partial perm on [ 1 ]>, 
       <identity partial perm on [ 2 ]>, <identity partial perm on [ 3 ]>, 
