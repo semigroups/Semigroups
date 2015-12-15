@@ -48,7 +48,6 @@ DeclareOperation("NaturalLeqPartialPermBipartition",
 DeclareOperation("PartialPermLeqBipartition", [IsBipartition, IsBipartition]);
 
 DeclareOperation("IdentityBipartition", [IsPosInt]);
-DeclareOperation("BipartitionByIntRepNC", [IsList]);
 DeclareOperation("BipartitionByIntRep", [IsList]);
 
 DeclareOperation("AsBipartition", [IsPerm, IsInt]);
@@ -77,14 +76,8 @@ DeclareProperty("IsDualTransBipartition", IsBipartition);
 DeclareProperty("IsPermBipartition", IsBipartition);
 DeclareProperty("IsPartialPermBipartition", IsBipartition);
 
-DeclareGlobalFunction("PermLeftQuoBipartitionNC");
 DeclareOperation("PermLeftQuoBipartition", [IsBipartition, IsBipartition]);
-DeclareGlobalFunction("OnRightBlocksBipartitionByPerm");
 
 #collections
 DeclareAttribute("DegreeOfBipartitionCollection", IsBipartitionCollection);
-
-# LambdaConjugator
-DeclareGlobalFunction("BipartRightBlocksConjNC");
-
 DeclareOperation("OneMutable", [IsBipartitionCollection]);

@@ -2,7 +2,7 @@
 """
 """
 
-import argparse, tempfile, subprocess, sys, os
+import argparse, tempfile, subprocess, sys, os, webbrowser
 
 _PARSER = argparse.ArgumentParser(prog='code-coverage-test.py', usage='%(prog)s [options]')
 _PARSER.add_argument('files', nargs='+', type=str,
@@ -43,10 +43,15 @@ _COMMANDS += 'OutputAnnotatedCodeCoverageFiles(x, filesdir, outdir);"'
 PS = subprocess.Popen(_COMMANDS, stdout=subprocess.PIPE, shell=True)
 
 try:
-    subprocess.check_call(_ARGS.gap_root + 'bin/gap.sh -A -r -q -m 1g -T',
+    subprocess.check_call(_ARGS.gap_root + 'bin/gap.sh -A -r -m 1g -T',
                           stdin=PS.stdout, shell=True)
 except subprocess.CalledProcessError:
     sys.exit('\033[31mcode-coverage-test.py: error: something went wrong calling GAP!\033[0m')
 
-subprocess.call(('chromium-browser', _DIR + '/index.html'))
+try:
+    webbrowser.open('file://' + _DIR + '/index.html', new=2)
+except:
+    print '\n\n\033[31mFailed to open file://' + _DIR + '/index.html\033[0m'
+    sys.exit(0)
+
 print '\n\n\033[32mSUCCESS!\033[0m'

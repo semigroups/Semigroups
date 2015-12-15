@@ -98,4 +98,6 @@ ReadPackage("semigroups/gap/fp/fpsemi.gd");
 ReadPackage("semigroups/gap/fp/freeinverse.gd");
 ReadPackage("semigroups/gap/fp/freeband.gd");
 
+ReadPackage("semigroups/gap/obsolete.gd");
+
 DeclareInfoClass("InfoSemigroups");

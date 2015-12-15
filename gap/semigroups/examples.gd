@@ -25,7 +25,9 @@ DeclareOperation("POPI", [IsPosInt]);
 
 # Bipartition semigroups
 DeclareOperation("JonesMonoid", [IsPosInt]);
+DeclareOperation("PartialJonesMonoid", [IsPosInt]);
 DeclareOperation("SingularJonesMonoid", [IsPosInt]);
+DeclareOperation("MotzkinMonoid", [IsPosInt]);
 DeclareSynonym("TemperleyLiebMonoid", JonesMonoid);
 DeclareOperation("BrauerMonoid", [IsPosInt]);
 DeclareOperation("PartialBrauerMonoid", [IsPosInt]);

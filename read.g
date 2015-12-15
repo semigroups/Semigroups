@@ -154,3 +154,5 @@ ReadPackage("semigroups/gap/congruences/conglattice.gi");
 ReadPackage("semigroups/gap/fp/fpsemi.gi");
 ReadPackage("semigroups/gap/fp/freeinverse.gi");
 ReadPackage("semigroups/gap/fp/freeband.gi");
+
+ReadPackage("semigroups/gap/obsolete.gi");

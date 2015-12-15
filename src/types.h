@@ -24,16 +24,21 @@
 #endif
 
 enum SemigroupsBagType {
-  UF_DATA   = 0,
-  SEMIGROUP = 1,
-  CONVERTER = 2
+  UF_DATA    = 0,
+  SEMIGROUP  = 1,
+  CONVERTER  = 2,
+  GAP_BIPART = 3,
+  GAP_BLOCKS = 4
 };
 
 template <typename Class>
-inline Obj NewSemigroupsBag (Class* cpp_class, SemigroupsBagType type) {
-  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
+inline Obj NewSemigroupsBag (Class* cpp_class, SemigroupsBagType type, size_t size) {
+  Obj o = NewBag(T_SEMI, size * sizeof(Obj));
   ADDR_OBJ(o)[0] = (Obj)type;
   ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(cpp_class);
+  for (size_t i = 2; i < size; i++) {
+    ADDR_OBJ(o)[i] = NULL;
+  }
   return o;
 }
 
@@ -44,10 +49,12 @@ inline Class* CLASS_OBJ(Obj o) {
     return reinterpret_cast<Class*>(ADDR_OBJ(o)[1]);
 }
 
-#define IS_T_SEMI(o)        (TNUM_OBJ(o) == T_SEMI)
-#define IS_CONVERTER_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == CONVERTER)
-#define IS_SEMIGROUP_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == SEMIGROUP)
-#define IS_UF_DATA_BAG(o)   (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == UF_DATA)
+#define IS_T_SEMI(o)         (TNUM_OBJ(o) == T_SEMI)
+#define IS_CONVERTER_BAG(o)  (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == CONVERTER)
+#define IS_SEMIGROUP_BAG(o)  (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == SEMIGROUP)
+#define IS_UF_DATA_BAG(o)    (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == UF_DATA)
+#define IS_GAP_BIPART_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == GAP_BIPART)
+#define IS_GAP_BLOCKS_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == GAP_BLOCKS)
 
 /*******************************************************************************
  * Macros for checking types of objects
@@ -76,17 +83,19 @@ inline Class* CLASS_OBJ(Obj o) {
 extern Obj infinity;
 extern Obj Ninfinity;
 extern Obj IsBipartition;
-extern Obj BipartitionByIntRepNC;   
+extern Obj BipartitionType;
+extern Obj BlocksType;
+extern Obj BipartitionByIntRepNC; //FIXME remove this
 extern Obj IsBooleanMat;
-extern Obj BooleanMatType;   
+extern Obj BooleanMatType;
 extern Obj IsMatrixOverSemiring;
 extern Obj IsMaxPlusMatrix;
-extern Obj MaxPlusMatrixType;   
+extern Obj MaxPlusMatrixType;
 extern Obj IsMinPlusMatrix;
-extern Obj MinPlusMatrixType;   
+extern Obj MinPlusMatrixType;
 extern Obj IsTropicalMatrix;
 extern Obj IsTropicalMinPlusMatrix;
-extern Obj TropicalMinPlusMatrixType;   
+extern Obj TropicalMinPlusMatrixType;
 extern Obj IsTropicalMaxPlusMatrix;
 extern Obj TropicalMaxPlusMatrixType;
 extern Obj IsProjectiveMaxPlusMatrix;
@@ -103,6 +112,8 @@ extern Obj PBRType;
 /*******************************************************************************
  * Union-find data structure
 *******************************************************************************/
+
+//FIXME move this to its own file
 
 typedef std::vector<size_t>   table_t;
 typedef std::vector<table_t*> blocks_t;

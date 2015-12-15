@@ -126,8 +126,8 @@ false
 #T# greens-inverse: \in, for a D-class and an element, 2
 gap> S := InverseSemigroup([
 >   PartialPerm([1, 2, 3, 5, 6, 7], [5, 7, 1, 9, 4, 2]),
->   PartialPerm([1, 2, 3, 6, 8], [2, 6, 7, 9, 1]), 
->   PartialPerm([1, 2, 3, 4, 5, 8], [7, 1, 4, 3, 2, 6]), 
+>   PartialPerm([1, 2, 3, 6, 8], [2, 6, 7, 9, 1]),
+>   PartialPerm([1, 2, 3, 4, 5, 8], [7, 1, 4, 3, 2, 6]),
 >   PartialPerm([1, 2, 3, 4, 5, 7, 9], [5, 3, 8, 1, 9, 4, 6])]);;
 gap> x := PartialPerm([2, 4, 5, 7], [4, 1, 6, 7]);;
 gap> D := DClass(S, x);;
@@ -167,9 +167,9 @@ gap> Bipartition([[1, 2, 5, -1, -2, -3], [3, -4], [4, -5]]) in L;
 false
 
 #T# greens-inverse: \in, for an L-class and an element, 2
-gap> S := InverseSemigroup([PartialPerm([1, 3], [4, 3]), 
->   PartialPerm([1, 2, 3], [4, 1, 2]), 
->   PartialPerm([1, 2, 4], [4, 5, 1]), 
+gap> S := InverseSemigroup([PartialPerm([1, 3], [4, 3]),
+>   PartialPerm([1, 2, 3], [4, 1, 2]),
+>   PartialPerm([1, 2, 4], [4, 5, 1]),
 >   PartialPerm([1, 3, 4], [5, 2, 1])],
 > rec(generic := false));;
 gap> x := PartialPerm([1, 2, 4], [1, 2, 4]);;
@@ -362,7 +362,7 @@ gap> OutNeighbours(DigraphReflexiveTransitiveReduction(Digraph(
 
 #T# greens-inverse: (Nr)Idempotents, for an inv op acting R/L/D-class
 gap> S := InverseSemigroup([
->   Bipartition([[1, -4], [2, 4, 5, 6, -1, -2, -5, -6], [3, -3]]), 
+>   Bipartition([[1, -4], [2, 4, 5, 6, -1, -2, -5, -6], [3, -3]]),
 >   Bipartition([[1, -4], [2, -1], [3, -2], [4, 5, 6, -3, -5, -6]]),
 >   Bipartition([[1, -4], [2, -5], [3, 5, 6, -2, -3, -6], [4, -1]]),
 >   Bipartition([[1, -5], [2, 5, 6, -3, -4, -6], [3, -2], [4, -1]])],
@@ -410,9 +410,9 @@ gap> Idempotents(S, 3);
 gap> Length(last) = Binomial(5, 3);
 true
 gap> S := InverseSemigroup([
->  PartialPerm([1, 2, 3], [1, 3, 4]), 
->  PartialPerm([1, 2, 3], [2, 5, 3]), 
->  PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]), 
+>  PartialPerm([1, 2, 3], [1, 3, 4]),
+>  PartialPerm([1, 2, 3], [2, 5, 3]),
+>  PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 >  PartialPerm([1, 3, 5], [5, 1, 3])],
 > rec(generic := false));;
 gap> NrIdempotents(S);
@@ -445,7 +445,7 @@ the second argument <n> must be a non-negative integer,
 
 #T# greens-inverse: EnumeratorOfRClasses, for an acting inverse op semigroup
 gap> S := InverseSemigroup([
-> Bipartition([[1, -4], [2, 4, 5, 6, -1, -2, -5, -6], [3, -3]]), 
+> Bipartition([[1, -4], [2, 4, 5, 6, -1, -2, -5, -6], [3, -3]]),
 > Bipartition([[1, -4], [2, -1], [3, -2], [4, 5, 6, -3, -5, -6]]),
 > Bipartition([[1, -4], [2, -5], [3, 5, 6, -2, -3, -6], [4, -1]]),
 > Bipartition([[1, -5], [2, 5, 6, -3, -4, -6], [3, -2], [4, -1]])],

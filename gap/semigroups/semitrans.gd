@@ -8,13 +8,19 @@
 #############################################################################
 ##
 
-DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
 DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
+
+DeclareOperation("\^", [IsTransformationCollection, IsPerm]);
+DeclareAttribute("FixedPoints", IsTransformationSemigroup);
+DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
+DeclareOperation("DigraphOfActionOnPoints", [IsTransformationSemigroup, IsPosInt]);
 DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
 
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
                  IsTransformationSemigroup);
 DeclareAttribute("ComponentsOfTransformationSemigroup",
+                 IsTransformationSemigroup);
+DeclareProperty("IsConnectedTransformationSemigroup",
                  IsTransformationSemigroup);
 DeclareAttribute("CyclesOfTransformationSemigroup",
                  IsTransformationSemigroup);
@@ -34,3 +40,4 @@ DeclareAttribute("LargestElementSemigroup", IsSemigroup);
 
 DeclareAttribute("EndomorphismMonoid", IsDigraph);
 DeclareOperation("EndomorphismMonoid", [IsDigraph, IsHomogeneousList]);
+

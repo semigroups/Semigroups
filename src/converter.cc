@@ -7,6 +7,7 @@
 
 #include "converter.h"
 #include "types.h"
+#include "bipart.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +56,7 @@ Obj BoolMatConverter::unconvert (Element* x) {
     SET_ELM_PLIST(o, i + 1, blist);
     CHANGED_BAG(o);
   }
-  
+
   TYPE_POSOBJ(o) = BooleanMatType;
   RetypeBag(o, T_POSOBJ);
   CHANGED_BAG(o);
@@ -70,33 +71,11 @@ Obj BoolMatConverter::unconvert (Element* x) {
 
 Bipartition* BipartConverter::convert (Obj o, size_t n) {
   assert(IS_BIPART(o));
-  assert(IsbPRec(o, RNamName("blocks")));
-
-  Obj blocks_gap = ElmPRec(o, RNamName("blocks"));
-
-  //assert((size_t) LEN_LIST(blocks_gap) == 2 * n);
-
-  std::vector<u_int32_t>* blocks(new std::vector<u_int32_t>());
-  size_t m = LEN_LIST(blocks_gap);
-  // don't compare n and m since we might be testing membership 
-  blocks->reserve(m);
-  for (size_t i = 0; i < m; i++) {
-    blocks->push_back(INT_INTOBJ(ELM_LIST(blocks_gap, i + 1)) - 1);
-  }
-  return new Bipartition(blocks);
+  return static_cast<Bipartition*>(static_cast<Element*>(bipart_get_cpp(o))->really_copy());
 }
 
 Obj BipartConverter::unconvert (Element* x) {
-  Bipartition* xx(static_cast<Bipartition*>(x));
-  
-  Obj o = NEW_PLIST(T_PLIST_CYC, 2 * xx->degree());
-  SET_LEN_PLIST(o, 2 * xx->degree());
-  for (size_t i = 0; i < 2 * xx->degree(); i++) {
-    SET_ELM_PLIST(o, i + 1, INTOBJ_INT(xx->block(i) + 1));
-  }
-
-  o = CALL_1ARGS(BipartitionByIntRepNC, o);
-  return o;
+  return bipart_new(static_cast<Bipartition*>(x->really_copy()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +90,7 @@ MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   assert(IS_PLIST(ELM_PLIST(o, 1)));
 
   size_t m = LEN_PLIST(ELM_PLIST(o, 1));
-  
+
   std::vector<long>* matrix(new std::vector<long>());
   matrix->reserve(m);
 
@@ -246,7 +225,7 @@ Obj PBRConverter::unconvert (Element* xx) {
       adj = NEW_PLIST(T_PLIST_EMPTY, 0);
     } else {
       adj = NEW_PLIST(T_PLIST_CYC, m);
-      for (size_t j = 0; j < x->at(i).size(); j++) { 
+      for (size_t j = 0; j < x->at(i).size(); j++) {
         SET_ELM_PLIST(adj, j + 1, INTOBJ_INT(x->at(i).at(j) + 1));
       }
     }

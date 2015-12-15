@@ -11,21 +11,76 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
+InstallMethod(IsConnectedTransformationSemigroup,
+"for a transformation semigroup with generators",
+[IsTransformationSemigroup],
+function(S)
+  return IsConnectedDigraph(DigraphOfActionOnPoints(S));
+end);
+
+InstallMethod(FixedPoints, "for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, gens, out, fixed, i, x;
+
+  n    := DegreeOfTransformationSemigroup(S);
+  gens := GeneratorsOfSemigroup(S);
+  out  := [];
+
+  for i in [1 .. n] do
+    fixed := true;
+    for x in gens do
+      if i ^ x <> i then
+        fixed := false;
+        break;
+      fi;
+    od;
+    if fixed then
+      Add(out, i);
+    fi;
+  od;
+
+  return out;
+end);
+
+InstallMethod(MovedPoints, "for a transformation semigroup with generators",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  return Difference([1 .. DegreeOfTransformationSemigroup(S)], FixedPoints(S));
+end);
+
+InstallMethod(\^, "for a transformation semigroup with generators and perm",
+[IsTransformationCollection, IsPerm],
+function(coll, p)
+  return List(coll, x -> x ^ p);
+end);
+
+InstallMethod(\^, "for a transformation semigroup with generators and perm",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPerm],
+function(S, p)
+  return Semigroup(GeneratorsOfSemigroup(S) ^ p);
+end);
+
 InstallMethod(DigraphOfActionOnPoints,
 "for a transformation semigroup with known generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
+  return DigraphOfActionOnPoints(S, DegreeOfTransformationSemigroup(S));
+end);
+
+InstallMethod(DigraphOfActionOnPoints,
+"for a transformation semigroup with known generators and pos int",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
+function(S, n)
   local out, gens, x, k, i, j;
 
-  out := List([1 .. DegreeOfTransformationSemigroup(S)], x -> []);
+  out := List([1 .. n], x -> []);
   gens := GeneratorsOfSemigroup(S);
   for i in [1 .. Length(gens)] do
     x := gens[i];
-    for j in [1 .. DegreeOfTransformation(x)] do
+    for j in [1 .. n] do
       k := j ^ x;
-      if j <> k then
-        AddSet(out[j], k);
-      fi;
+      AddSet(out[j], k);
     od;
   od;
   return DigraphNC(out);
@@ -78,6 +133,7 @@ end;
 # stop_on_isolated_pair:
 #   if true, this function returns false if there is an isolated pair-vertex
 # TODO should this be a Digraph??
+# FIXME make this a digraph
 SEMIGROUPS.GraphOfRightActionOnPairs :=
 function(gens, n, stop_on_isolated_pair)
   local nrgens, nrpairs, PairNumber, NumberPair, in_nbs, labels, pair,
@@ -271,7 +327,7 @@ InstallMethod(IsTransitive,
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  return IsTransitive(S, DegreeOfTransformationSemigroup(S));
+  return IsStronglyConnectedDigraph(DigraphOfActionOnPoints(S));
 end);
 
 InstallMethod(IsTransitive,
@@ -287,10 +343,6 @@ InstallMethod(IsTransitive,
 function(S, set)
   return IsTransitive(GeneratorsOfSemigroup(S), set);
 end);
-
-# JDM this could be done without creating the graph first and then running
-# IsStronglyConnectedDigraph, but just using the method of
-# IsStronglyConnectedDigraph with the generators themselves.
 
 InstallMethod(IsTransitive,
 "for a transformation collection and a positive int",
@@ -576,7 +628,7 @@ function(s)
                            inv);
 end);
 
-#
+# FIXME get rid of this -> AsSemigroup
 
 InstallMethod(AsTransformationSemigroup, "for a semigroup",
 [IsSemigroup],
@@ -616,21 +668,15 @@ function(S)
   H := GreensHClassOfElementNC(S, MultiplicativeNeutralElement(S));
   map := InverseGeneralMapping(IsomorphismPermGroup(H));
   G := Source(map);
-  U := Monoid(List(GeneratorsOfGroup(G), x -> x ^ map));
+  U := Semigroup(List(GeneratorsOfGroup(G), x -> x ^ map));
 
   SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage,
                                                x -> x ^ map));
   SetIsGroupAsSemigroup(U, true);
-
   UseIsomorphismRelation(U, G);
 
   return U;
 end);
-
-#
-
-InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
 
 #
 
@@ -690,48 +736,7 @@ end);
 InstallMethod(ComponentsOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
-  local pts, comp, next, nr, opts, gens, o, out, i;
-
-  pts := [1 .. DegreeOfTransformationSemigroup(S)];
-  comp := BlistList(pts, []);
-  # integer=its component index, false=not seen it
-  next := 1;
-  nr := 0;
-  opts := rec(lookingfor := function(o, x)
-                              return IsPosInt(comp[x]);
-                            end);
-
-  if IsSemigroupIdeal(S) then
-    gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  else
-    gens := GeneratorsOfSemigroup(S);
-  fi;
-
-  repeat
-    o := Orb(gens, next, OnPoints, opts);
-    Enumerate(o);
-    if PositionOfFound(o) <> false then
-      for i in o do
-        comp[i] := comp[o[PositionOfFound(o)]];
-      od;
-    else
-      nr := nr + 1;
-      for i in o do
-        comp[i] := nr;
-      od;
-    fi;
-    next := Position(comp, false, next);
-  until next = fail;
-
-  out := [];
-  for i in pts do
-    if not IsBound(out[comp[i]]) then
-      out[comp[i]] := [];
-    fi;
-    Add(out[comp[i]], i);
-  od;
-
-  return out;
+  return DigraphConnectedComponents(DigraphOfActionOnPoints(S)).comps;
 end);
 
 #

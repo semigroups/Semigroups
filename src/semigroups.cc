@@ -1,17 +1,18 @@
 /*
  * Semigroups GAP package
  *
- * This file contains the kernel module for the Semigroup package. 
+ * This file contains the kernel module for the Semigroup package.
  *
  */
 
-// TODO 
+// TODO
 //
 // 2) set data!.pos and data!.nr so that the filter IsClosedData gets set at
 // the GAP level
 
 #include "semigroups.h"
 #include "boolean.h"
+#include "bipart.h"
 
 #include "semigroups++/semigroups.h"
 
@@ -20,13 +21,13 @@
 #include <time.h>
 
 //#define DEBUG
-//#define NDEBUG 
+//#define NDEBUG
 
 /*******************************************************************************
  * GAP kernel version of the algorithm for other types of semigroups
 *******************************************************************************/
 
-// macros for the GAP version of the algorithm 
+// macros for the GAP version of the algorithm
 
 #define ELM_PLIST2(plist, i, j)       ELM_PLIST(ELM_PLIST(plist, i), j)
 #define INT_PLIST(plist, i)           INT_INTOBJ(ELM_PLIST(plist, i))
@@ -42,18 +43,18 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 // TODO move this into the previous section, and put the actual function in another function
 
 Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
-  Obj   found, elts, gens, genslookup, right, left, first, final, prefix, suffix, 
+  Obj   found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
         reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
         empty, oldword, x;
   UInt  i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
         intval, stop, one;
 
-  assert(data_type(data) == UNKNOWN); 
+  assert(data_type(data) == UNKNOWN);
 
   // TODO if looking check that something in elts doesn't already satisfy the
-  // lookfunc 
+  // lookfunc
 
-  //remove nrrules 
+  //remove nrrules
   if(looking==True){
     AssPRec(data, RNamName("found"), False);
   }
@@ -69,58 +70,58 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
   if (data_report(data)) {
     std::cout << "GAP kernel version\n";
   }
-  
+
   #ifdef DEBUG
     Pr("here 1\n", 0L, 0L);
-  #endif 
+  #endif
   // get everything out of <data>
-  
+
   //lists of integers, objects
-  elts = ElmPRec(data, RNamName("elts")); 
+  elts = ElmPRec(data, RNamName("elts"));
   // the so far enumerated elements
-  gens = ElmPRec(data, RNamName("gens")); 
+  gens = ElmPRec(data, RNamName("gens"));
   // the generators
-  genslookup = ElmPRec(data, RNamName("genslookup"));     
+  genslookup = ElmPRec(data, RNamName("genslookup"));
   // genslookup[i]=Position(elts, gens[i], this is not always <i+1>!
-  lenindex = ElmPRec(data, RNamName("lenindex"));         
+  lenindex = ElmPRec(data, RNamName("lenindex"));
   // lenindex[len]=position in <words> and <elts> of first element of length
-  // <len> 
+  // <len>
   first = ElmPRec(data, RNamName("first"));
-  // elts[i]=gens[first[i]]*elts[suffix[i]], first letter 
+  // elts[i]=gens[first[i]]*elts[suffix[i]], first letter
   final = ElmPRec(data, RNamName("final"));
   // elts[i]=elts[prefix[i]]*gens[final[i]]
   prefix = ElmPRec(data, RNamName("prefix"));
   // see final, 0 if prefix is empty i.e. elts[i] is a gen
-  suffix = ElmPRec(data, RNamName("suffix"));             
+  suffix = ElmPRec(data, RNamName("suffix"));
   // see first, 0 if suffix is empty i.e. elts[i] is a gen
-  
+
   #ifdef DEBUG
     Pr("here 2\n", 0L, 0L);
-  #endif 
+  #endif
   //lists of lists
-  right = ElmPRec(data, RNamName("right")); 
+  right = ElmPRec(data, RNamName("right"));
   // elts[right[i][j]]=elts[i]*gens[j], right Cayley graph
-  left = ElmPRec(data, RNamName("left"));                 
+  left = ElmPRec(data, RNamName("left"));
   // elts[left[i][j]]=gens[j]*elts[i], left Cayley graph
-  reduced = ElmPRec(data, RNamName("reduced"));           
+  reduced = ElmPRec(data, RNamName("reduced"));
   // words[right[i][j]] is reduced if reduced[i][j]=true
   words = ElmPRec(data, RNamName("words"));
   // words[i] is a word in the gens equal to elts[i]
-  rules = ElmPRec(data, RNamName("rules"));               
+  rules = ElmPRec(data, RNamName("rules"));
   if(TNUM_OBJ(rules)==T_PLIST_EMPTY){
     RetypeBag(rules, T_PLIST_CYC);
   }
   // the relations
- 
+
   //hash table
-  ht = ElmPRec(data, RNamName("ht"));                     
+  ht = ElmPRec(data, RNamName("ht"));
   // HTValue(ht, x)=Position(elts, x)
- 
+
   #ifdef DEBUG
     Pr("here 3\n", 0L, 0L);
-  #endif 
+  #endif
   //integers
-  len=INT_INTOBJ(ElmPRec(data, RNamName("len"))); 
+  len=INT_INTOBJ(ElmPRec(data, RNamName("len")));
   // current word length
   if(IS_INTOBJ(ElmPRec(data, RNamName("one")))){
     one=INT_INTOBJ(ElmPRec(data, RNamName("one")));
@@ -129,21 +130,21 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
   }
   // <elts[one]> is the mult. neutral element
   stopper=INT_INTOBJ(ElmPRec(data, RNamName("stopper")));
-  // stop when we have applied generators to elts[stopper] 
-  nrrules=INT_INTOBJ(ElmPRec(data, RNamName("nrrules")));           
+  // stop when we have applied generators to elts[stopper]
+  nrrules=INT_INTOBJ(ElmPRec(data, RNamName("nrrules")));
   // Length(rules)
-  
+
   nrgens=LEN_PLIST(gens);
   stop = 0;
   found = False;
-  
+
   #ifdef DEBUG
     Pr("here 4\n", 0L, 0L);
-  #endif 
+  #endif
 
   while(i<=nr&&!stop){
     while(i<=nr&&(UInt) LEN_PLIST(ELM_PLIST(words, i))==len&&!stop){
-      b=INT_INTOBJ(ELM_PLIST(first, i)); 
+      b=INT_INTOBJ(ELM_PLIST(first, i));
       s=INT_INTOBJ(ELM_PLIST(suffix, i));
       RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC); //from T_PLIST_EMPTY
       for(j = 1;j <= nrgens;j++){
@@ -170,23 +171,23 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
             #ifdef DEBUG
               Pr("Case 3!\n", 0L, 0L);
             #endif
-            SET_ELM_PLIST2(right, i, j, 
+            SET_ELM_PLIST2(right, i, j,
               ELM_PLIST2(right, INT_PLIST(genslookup, b), INT_PLIST(final, r)));
             SET_ELM_PLIST2(reduced, i, j, False);
           }
         } else {
-          newElt = PROD(ELM_PLIST(elts, i), ELM_PLIST(gens, j)); 
+          newElt = PROD(ELM_PLIST(elts, i), ELM_PLIST(gens, j));
           oldword = ELM_PLIST(words, i);
           len = LEN_PLIST(oldword);
           newword = NEW_PLIST(T_PLIST_CYC, len+1);
 
-          memcpy( (void *)((char *)(ADDR_OBJ(newword)) + sizeof(Obj)), 
-                  (void *)((char *)(ADDR_OBJ(oldword)) + sizeof(Obj)), 
+          memcpy( (void *)((char *)(ADDR_OBJ(newword)) + sizeof(Obj)),
+                  (void *)((char *)(ADDR_OBJ(oldword)) + sizeof(Obj)),
                   (size_t)(len*sizeof(Obj)) );
           SET_ELM_PLIST(newword, len+1, INTOBJ_INT(j));
           SET_LEN_PLIST(newword, len+1);
 
-          objval = HTValue_TreeHash_C(self, ht, newElt); 
+          objval = HTValue_TreeHash_C(self, ht, newElt);
           if(objval!=Fail){
             #ifdef DEBUG
               Pr("Case 4!\n", 0L, 0L);
@@ -204,7 +205,7 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
               Pr("Case 5!\n", 0L, 0L);
             #endif
             nr++;
-            
+
             HTAdd_TreeHash_C(self, ht, newElt, INTOBJ_INT(nr));
 
             if(one==0){
@@ -227,35 +228,35 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
             } else {
               AssPlist(suffix, nr, ELM_PLIST(genslookup, j));
             }
-          
+
             AssPlist(elts, nr, newElt);
             AssPlist(words, nr, newword);
             AssPlist(first, nr, INTOBJ_INT(b));
             AssPlist(final, nr, INTOBJ_INT(j));
             AssPlist(prefix, nr, INTOBJ_INT(i));
-            
+
             empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
             SET_LEN_PLIST(empty, 0);
             AssPlist(right, nr, empty);
-            
+
             empty = NEW_PLIST(T_PLIST_EMPTY, nrgens);
             SET_LEN_PLIST(empty, 0);
             AssPlist(left, nr, empty);
-            
+
             empty = NEW_PLIST(T_PLIST_CYC, nrgens);
             for(k=1;k<=nrgens;k++){
               SET_ELM_PLIST(empty, k, False);
             }
             SET_LEN_PLIST(empty, nrgens);
             AssPlist(reduced, nr, empty);
-            
+
             SET_ELM_PLIST2(reduced, i, j, True);
-            SET_ELM_PLIST2(right, i, j, INTOBJ_INT(nr));            
+            SET_ELM_PLIST2(right, i, j, INTOBJ_INT(nr));
             if(looking==True&&found==False&&
                 CALL_2ARGS(lookfunc, data, INTOBJ_INT(nr))==True){
                 found=True;
                 stop=1;
-                AssPRec(data,  RNamName("found"), INTOBJ_INT(nr)); 
+                AssPRec(data,  RNamName("found"), INTOBJ_INT(nr));
             } else {
               stop=(nr>=int_limit);
             }
@@ -273,39 +274,39 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
         #ifdef DEBUG
           Pr("Case 6!\n", 0L, 0L);
         #endif
-        for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
+        for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){
           RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
-          p=INT_INTOBJ(ELM_PLIST(prefix, j)); 
+          p=INT_INTOBJ(ELM_PLIST(prefix, j));
           b=INT_INTOBJ(ELM_PLIST(final, j));
-          for(k=1;k<=nrgens;k++){ 
+          for(k=1;k<=nrgens;k++){
             SET_ELM_PLIST2(left, j, k, ELM_PLIST2(right, INT_PLIST2(left, p, k), b));
           }
         }
-      } else if(len==1){ 
+      } else if(len==1){
         #ifdef DEBUG
           Pr("Case 7!\n", 0L, 0L);
         #endif
-        for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){ 
+        for(j=INT_INTOBJ(ELM_PLIST(lenindex, len));j<=i-1;j++){
           RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); //from T_PLIST_EMPTY
           b=INT_INTOBJ(ELM_PLIST(final, j));
-          for(k=1;k<=nrgens;k++){ 
+          for(k=1;k<=nrgens;k++){
             SET_ELM_PLIST2(left, j, k, ELM_PLIST2(right, INT_PLIST(genslookup, k) , b));
           }
         }
       }
       len++;
-      AssPlist(lenindex, len, INTOBJ_INT(i));  
+      AssPlist(lenindex, len, INTOBJ_INT(i));
     }
   }
-  
-  AssPRec(data, RNamName("nr"), INTOBJ_INT(nr));  
-  AssPRec(data, RNamName("nrrules"), INTOBJ_INT(nrrules));  
-  AssPRec(data, RNamName("one"), ((one!=0)?INTOBJ_INT(one):False));  
-  AssPRec(data, RNamName("pos"), INTOBJ_INT(i));  
-  AssPRec(data, RNamName("len"), INTOBJ_INT(len));  
 
-  CHANGED_BAG(data); 
-  
+  AssPRec(data, RNamName("nr"), INTOBJ_INT(nr));
+  AssPRec(data, RNamName("nrrules"), INTOBJ_INT(nrrules));
+  AssPRec(data, RNamName("one"), ((one!=0)?INTOBJ_INT(one):False));
+  AssPRec(data, RNamName("pos"), INTOBJ_INT(i));
+  AssPRec(data, RNamName("len"), INTOBJ_INT(len));
+
+  CHANGED_BAG(data);
+
   return data;
 }
 
@@ -321,19 +322,19 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
 ** elements of 'comps' are lists representing the strongly connected components
 ** of the directed graph, and in the component 'id' the following holds:
 ** id[i]=PositionProperty(comps, x-> i in x);
-** i.e. 'id[i]' is the index in 'comps' of the component containing 'i'.  
+** i.e. 'id[i]' is the index in 'comps' of the component containing 'i'.
 ** Neither the components, nor their elements are in any particular order.
 **
 ** The algorithm is that of Gabow, based on the implementation in Sedgwick:
 **   http://algs4.cs.princeton.edu/42directed/GabowSCC.java.html
-** (made non-recursive to avoid problems with stack limits) and 
+** (made non-recursive to avoid problems with stack limits) and
 ** the implementation of STRONGLY_CONNECTED_COMPONENTS_DIGRAPH in listfunc.c.
 */
 
 Obj SEMIGROUPS_GABOW_SCC (Obj self, Obj digraph) {
   UInt end1, end2, count, level, w, v, n, nr, idw, *frames, *stack2;
-  Obj  id, stack1, out, comp, comps, adj; 
- 
+  Obj  id, stack1, out, comp, comps, adj;
+
   PLAIN_LIST(digraph);
   n = LEN_PLIST(digraph);
   if (n == 0){
@@ -344,28 +345,28 @@ Obj SEMIGROUPS_GABOW_SCC (Obj self, Obj digraph) {
     return out;
   }
 
-  end1 = 0; 
-  stack1 = NEW_PLIST(T_PLIST_CYC, n); 
+  end1 = 0;
+  stack1 = NEW_PLIST(T_PLIST_CYC, n);
   //stack1 is a plist so we can use memcopy below
   SET_LEN_PLIST(stack1, n);
-  
+
   id = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, n);
   SET_LEN_PLIST(id, n);
-  
+
   //init id
   for(v=1;v<=n;v++){
     SET_ELM_PLIST(id, v, INTOBJ_INT(0));
   }
-  
+
   count = n;
-  
+
   comps = NEW_PLIST(T_PLIST_TAB+IMMUTABLE, n);
   SET_LEN_PLIST(comps, 0);
-  
+
   stack2 = static_cast<UInt*>(malloc( (4 * n + 2) * sizeof(UInt) ));
   frames = stack2 + n + 1;
   end2 = 0;
-  
+
   for (v = 1; v <= n; v++) {
     if(INT_INTOBJ(ELM_PLIST(id, v)) == 0){
       adj =  ELM_PLIST(digraph, v);
@@ -373,11 +374,11 @@ Obj SEMIGROUPS_GABOW_SCC (Obj self, Obj digraph) {
       level = 1;
       frames[0] = v; // vertex
       frames[1] = 1; // index
-      frames[2] = (UInt)adj; 
+      frames[2] = (UInt)adj;
       SET_ELM_PLIST(stack1, ++end1, INTOBJ_INT(v));
       stack2[++end2] = end1;
-      SET_ELM_PLIST(id, v, INTOBJ_INT(end1)); 
-      
+      SET_ELM_PLIST(id, v, INTOBJ_INT(end1));
+
       while (1) {
         if (frames[1] > (UInt) LEN_PLIST(frames[2])) {
           if (stack2[end2] == (UInt) INT_INTOBJ(ELM_PLIST(id, frames[0]))) {
@@ -389,12 +390,12 @@ Obj SEMIGROUPS_GABOW_SCC (Obj self, Obj digraph) {
               w = INT_INTOBJ(ELM_PLIST(stack1, end1--));
               SET_ELM_PLIST(id, w, INTOBJ_INT(count));
             }while (w != frames[0]);
-            
+
             comp = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, nr);
             SET_LEN_PLIST(comp, nr);
-           
-            memcpy( (void *)((char *)(ADDR_OBJ(comp)) + sizeof(Obj)), 
-                    (void *)((char *)(ADDR_OBJ(stack1)) + (end1 + 1) * sizeof(Obj)), 
+
+            memcpy( (void *)((char *)(ADDR_OBJ(comp)) + sizeof(Obj)),
+                    (void *)((char *)(ADDR_OBJ(stack1)) + (end1 + 1) * sizeof(Obj)),
                     (size_t)(nr * sizeof(Obj)));
 
             nr = LEN_PLIST(comps) + 1;
@@ -408,21 +409,21 @@ Obj SEMIGROUPS_GABOW_SCC (Obj self, Obj digraph) {
           }
           frames -= 3;
         } else {
-          
+
           w = INT_INTOBJ(ELM_PLIST(frames[2], frames[1]++));
           idw = INT_INTOBJ(ELM_PLIST(id, w));
-          
+
           if(idw==0){
             adj = ELM_PLIST(digraph, w);
             PLAIN_LIST(adj);
             level++;
-            frames += 3; 
+            frames += 3;
             frames[0] = w; // vertex
             frames[1] = 1; // index
             frames[2] = (UInt) adj;
             SET_ELM_PLIST(stack1, ++end1, INTOBJ_INT(w));
             stack2[++end2] = end1;
-            SET_ELM_PLIST(id, w, INTOBJ_INT(end1)); 
+            SET_ELM_PLIST(id, w, INTOBJ_INT(end1));
           } else {
             while (stack2[end2] > idw) {
               end2--; // pop from stack2
@@ -456,7 +457,7 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   Obj   comps1, id2, comps2, id, comps, seen, comp1, comp2, new_comp, x, out;
 
   n = LEN_PLIST(ElmPRec(scc1, RNamName("id")));
-  
+
   if (n == 0){
     out = NEW_PREC(2);
     AssPRec(out, RNamName("id"), NEW_PLIST(T_PLIST_EMPTY+IMMUTABLE,0));
@@ -468,23 +469,23 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   comps1 = ElmPRec(scc1, RNamName("comps"));
   id2 = ElmPRec(scc2, RNamName("id"));
   comps2 = ElmPRec(scc2, RNamName("comps"));
-   
+
   id = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, n);
   SET_LEN_PLIST(id, n);
   seen = NewBag(T_DATOBJ, (LEN_PLIST(comps2)+1)*sizeof(UInt));
   ptr = (UInt *)ADDR_OBJ(seen);
-  
+
   //init id
   for (i = 1; i <= n; i++) {
     SET_ELM_PLIST(id, i, INTOBJ_INT(0));
     ptr[i] = 0;
   }
-  
+
   comps = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, LEN_PLIST(comps1));
   SET_LEN_PLIST(comps, 0);
- 
+
   nr = 0;
-  
+
   for (i = 1; i <= LEN_PLIST(comps1); i++) {
     comp1 = ELM_PLIST(comps1, i);
     if (INT_INTOBJ(ELM_PLIST(id, INT_INTOBJ(ELM_PLIST(comp1, 1)))) == 0) {
@@ -527,15 +528,15 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
 // that described in:
 // http://www.liafa.jussieu.fr/~jep/PDF/Exposes/StAndrews.pdf
 
-Obj FIND_HCLASSES(Obj self, Obj right, Obj left){ 
+Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
   UInt  *nextpos, *sorted, *lookup, init;
   Int   n, nrcomps, i, hindex, rindex, j, k, len;
   Obj   rightid, leftid, comps, buf, id, out, comp;
-  
+
   rightid = ElmPRec(right, RNamName("id"));
   leftid = ElmPRec(left, RNamName("id"));
   n = LEN_PLIST(rightid);
-  
+
   if (n == 0){
     out = NEW_PREC(2);
     AssPRec(out, RNamName("id"), NEW_PLIST(T_PLIST_EMPTY+IMMUTABLE,0));
@@ -545,15 +546,15 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
   }
   comps = ElmPRec(right, RNamName("comps"));
   nrcomps = LEN_PLIST(comps);
-  
+
   buf = NewBag(T_DATOBJ, (2*n+nrcomps+1)*sizeof(UInt));
   nextpos = (UInt *)ADDR_OBJ(buf);
-  
+
   nextpos[1] = 1;
   for(i=2;i<=nrcomps;i++){
     nextpos[i]=nextpos[i-1]+LEN_PLIST(ELM_PLIST(comps, i-1));
   }
-  
+
   sorted = (UInt *)ADDR_OBJ(buf) + nrcomps;
   lookup = (UInt *)ADDR_OBJ(buf) + nrcomps + n;
   for(i = 1;i <= n; i++){
@@ -562,16 +563,16 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
     nextpos[j]++;
     lookup[i] = 0;
   }
-  
+
   id = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, n);
   SET_LEN_PLIST(id, n);
   comps = NEW_PLIST(T_PLIST_TAB+IMMUTABLE, n);
   SET_LEN_PLIST(comps, 0);
-  
+
   hindex = 0;
   rindex = 0;
   init = 0;
-  
+
   for(i=1;i<=n;i++){
     sorted = (UInt *)ADDR_OBJ(buf) + nrcomps;
     lookup = (UInt *)ADDR_OBJ(buf) + nrcomps + n;
@@ -598,9 +599,9 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
     k = lookup[k];
     comp = ELM_PLIST(comps, k);
     len = LEN_PLIST(comp) + 1;
-    AssPlist(comp, len, INTOBJ_INT(j)); 
+    AssPlist(comp, len, INTOBJ_INT(j));
     SET_LEN_PLIST(comp, len);
-    
+
     SET_ELM_PLIST(id, j, INTOBJ_INT(k));
   }
 
@@ -609,7 +610,7 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
     comp = ELM_PLIST(comps, i);
     SHRINK_PLIST(comp, LEN_PLIST(comp));
   }
-  
+
   out = NEW_PREC(2);
   AssPRec(out, RNamName("id"), id);
   AssPRec(out, RNamName("comps"), comps);
@@ -623,11 +624,11 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
 *******************************************************************************/
 
 Obj UF_NEW (Obj self, Obj size) {
-  return NewSemigroupsBag(new UFData(INT_INTOBJ(size)), UF_DATA);
+  return NewSemigroupsBag(new UFData(INT_INTOBJ(size)), UF_DATA, 2);
 }
 
 Obj UF_COPY (Obj self, Obj ufdata) {
-  return NewSemigroupsBag(new UFData(*CLASS_OBJ<UFData>(ufdata)), UF_DATA);
+  return NewSemigroupsBag(new UFData(*CLASS_OBJ<UFData>(ufdata)), UF_DATA, 2);
 }
 
 Obj UF_SIZE (Obj self, Obj ufdata) {
@@ -710,47 +711,49 @@ typedef Obj (* GVarFunc)(/*arguments*/);
 
 // Table of functions to export
 static StructGVarFunc GVarFuncs [] = {
-    GVAR_FUNC_TABLE_ENTRY("boolean.cc", IS_COL_TRIM_BOOLEAN_MAT, 1, 
+    GVAR_FUNC_TABLE_ENTRY("boolean.cc", IS_COL_TRIM_BOOLEAN_MAT, 1,
                           "x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ENUMERATE, 4, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ENUMERATE, 4,
                           "data, limit, lookfunc, looking"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RIGHT_CAYLEY_GRAPH, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RIGHT_CAYLEY_GRAPH, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_LEFT_CAYLEY_GRAPH, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_LEFT_CAYLEY_GRAPH, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ELEMENTS, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ELEMENTS, 2,
                           "data, limit"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RELATIONS, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RELATIONS, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_FACTORIZATION, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_FACTORIZATION, 2,
                           "data, pos"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_SIZE, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_SIZE, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_NR_IDEMPOTENTS, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_NR_IDEMPOTENTS, 1,
                             "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CLOSURE, 3, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CLOSURE, 3,
                           "old_data, coll, degree"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ADD_GENERATORS, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ADD_GENERATORS, 2,
                           "data, coll"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_SIZE, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_SIZE, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_NR_RULES, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_NR_RULES, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION, 2,
                           "data, x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_IS_DONE, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_IS_DONE, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_MAX_WORD_LENGTH, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_MAX_WORD_LENGTH, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_FIND, 4, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_FIND, 4,
                           "data, lookfunc, start, end"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_LENGTH_ELEMENT, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_LENGTH_ELEMENT, 2,
                           "data, pos"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUPS_GABOW_SCC, 1, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CAYLEY_TABLE, 1,
+                          "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUPS_GABOW_SCC, 1,
                           "digraph"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2,
                           "scc1, scc2"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", FIND_HCLASSES, 2, 
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", FIND_HCLASSES, 2,
                           "left, right"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", UF_NEW, 1,
                           "size"),
@@ -768,6 +771,76 @@ static StructGVarFunc GVarFuncs [] = {
                           "ufdata"),
     GVAR_FUNC_TABLE_ENTRY("interface.c", UF_BLOCKS, 1,
                           "ufdata"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NC, 1,
+                          "list"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_EXT_REP, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_INT_REP, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_HASH, 2,
+                          "x, data"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_DEGREE, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RANK, 2,
+                          "x, nothing"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_BLOCKS, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_LEFT_BLOCKS, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_PROD, 2,
+                          "x, y"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_EQ, 2,
+                          "x, y"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LT, 2,
+                          "x, y"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_PERM_LEFT_QUO, 2,
+                          "x, y"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LEFT_PROJ, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RIGHT_PROJ, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_STAR, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LAMBDA_CONJ, 2,
+                          "x, y"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_STAB_ACTION, 2,
+                          "x, p"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LEFT_BLOCKS, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RIGHT_BLOCKS, 1,
+                          "x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_NC, 1,
+                          "blocks"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_EXT_REP, 1,
+                          "blocks"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_DEGREE, 1,
+                          "blocks"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_RANK, 1,
+                          "blocks"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_NR_BLOCKS, 1,
+                          "blocks"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_HASH, 2,
+                          "blocks, data"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_PROJ, 1,
+                          "blocks"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_EQ, 2,
+                          "blocks1, blocks2"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_LT, 2,
+                          "blocks1, blocks2"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_E_TESTER, 2,
+                          "left, right"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_E_CREATOR, 2,
+                          "left, right"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_LEFT_ACT, 2,
+                          "blocks, x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_RIGHT_ACT, 2,
+                          "blocks, x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_INV_LEFT, 2,
+                          "blocks, x"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_INV_RIGHT, 2,
+                          "blocks, x"),
+    GVAR_FUNC_TABLE_ENTRY("boolean.cc", HASH_FUNC_FOR_BLIST, 2,
+                          "blist, data"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 
@@ -780,14 +853,17 @@ static Int InitKernel( StructInitInfo *module )
     InitHdlrFuncsFromTable( GVarFuncs );
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
     PrintObjFuncs[T_SEMI] = PrintSemi;
-    InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
+    InitMarkFuncBags(T_SEMI, &SemigroupsMarkSubBags);
     InitFreeFuncBag(T_SEMI, &SemigroupsBagFreeFunc);
-    
+
     ImportGVarFromLibrary( "infinity", &infinity);
     ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
 
     ImportGVarFromLibrary( "IsBipartition", &IsBipartition );
+    //FIXME delete the next line
     ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
+    ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
+    ImportGVarFromLibrary( "BlocksType", &BlocksType );
 
     ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
     ImportGVarFromLibrary( "BooleanMatType", &BooleanMatType );
@@ -796,30 +872,30 @@ static Int InitKernel( StructInitInfo *module )
 
     ImportGVarFromLibrary( "IsMaxPlusMatrix", &IsMaxPlusMatrix );
     ImportGVarFromLibrary( "MaxPlusMatrixType", &MaxPlusMatrixType );
-    
+
     ImportGVarFromLibrary( "IsMinPlusMatrix", &IsMinPlusMatrix );
     ImportGVarFromLibrary( "MinPlusMatrixType", &MinPlusMatrixType );
-    
+
     ImportGVarFromLibrary( "IsTropicalMatrix", &IsTropicalMatrix );
 
     ImportGVarFromLibrary( "IsTropicalMaxPlusMatrix", &IsTropicalMaxPlusMatrix );
     ImportGVarFromLibrary( "TropicalMaxPlusMatrixType", &TropicalMaxPlusMatrixType );
-    
+
     ImportGVarFromLibrary( "IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
     ImportGVarFromLibrary( "TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
 
     ImportGVarFromLibrary( "IsProjectiveMaxPlusMatrix", &IsProjectiveMaxPlusMatrix );
     ImportGVarFromLibrary( "ProjectiveMaxPlusMatrixType", &ProjectiveMaxPlusMatrixType );
-    
+
     ImportGVarFromLibrary( "IsNTPMatrix", &IsNTPMatrix );
     ImportGVarFromLibrary( "NTPMatrixType", &NTPMatrixType );
-    
+
     ImportGVarFromLibrary( "IsIntegerMatrix", &IsIntegerMatrix );
     ImportGVarFromLibrary( "IntegerMatrixType", &IntegerMatrixType );
 
     ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
     ImportGVarFromLibrary( "MatrixOverPrimeFieldType", &MatrixOverPrimeFieldType );
-    
+
     ImportGVarFromLibrary( "IsPBR", &IsPBR);
     ImportGVarFromLibrary( "PBRType", &PBRType );
 

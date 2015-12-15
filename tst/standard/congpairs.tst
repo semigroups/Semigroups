@@ -269,10 +269,10 @@ gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
 gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
 >              Transformation([1, 2, 1, 2, 1])];;
 gap> cong := SemigroupCongruence(S, pair1);;
-gap> [Transformation([2,1,1,2,1])] in cong;
+gap> [Transformation([2, 1, 1, 2, 1])] in cong;
 Error, Semigroups: \in (for a congruence): usage,
 the first arg <pair> must be a list of length 2,
-gap> [Transformation([2,1,1,2,1]), Transformation([5,2,1,2,2])] in cong;
+gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
 Error, Semigroups: \in (for a congruence): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
@@ -318,7 +318,7 @@ gap> cong := SemigroupCongruence(S, pair);;
 gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> Transformation([1, 1, 5, 1, 1]) in class;
 true
-gap> Transformation( [ 6, 2, 3, 4, 1, 1 ] ) in class;
+gap> Transformation([6, 2, 3, 4, 1, 1]) in class;
 Error, Semigroups: \in (for a congruence): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
@@ -344,8 +344,8 @@ gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1, 3 ], [ 1 ] ]
 gap> DotString(l);
 "//dot\ngraph graphname {\n     node [shape=circle]\n2 -- 3\n3 -- 1\n }"
-gap> S := Semigroup( [ Transformation( [ 1, 4, 3, 1, 4, 2 ] ),
->                      Transformation( [ 1, 6, 6, 3, 6, 6 ] ) ] );;
+gap> S := Semigroup([Transformation([1, 4, 3, 1, 4, 2]),
+>                    Transformation([1, 6, 6, 3, 6, 6])]);;
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1 ], [ 1, 2, 5 ], [ 1, 2, 3, 5 ], [ 1, 2 ] ]
 gap> DotString(l, rec(info := true)) = Concatenation("//dot\ngraph graphname",

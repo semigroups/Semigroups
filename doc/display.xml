@@ -247,6 +247,19 @@ ent}"]]></Log>
           <C>DotString</C>. The default value for this option is
           <K>false</K>. 
         </Item>
+
+        <Mark>normal</Mark>
+        <Item>
+          if <C><A>options</A>.number</C> is <K>false</K>, then the &L;- and
+          &R;-classes within each &D;-class arranged to correspond to <Ref
+            Attr="PrincipalFactor"/>.  If <C><A>options</A>.number</C> is
+          <K>true</K>, they are instead arranged to correspond to <Ref
+            Attr="NormalizedPrincipalFactor"/>. Setting this attribute to
+          <K>false</K> may improve the performance of <C>DotString</C> as it
+          avoids the computation of <Ref
+            Attr="InjectionNormalizedPrincipalFactor"/>. The default value for
+          this option is <K>true</K>.
+        </Item>
       </List>
       <Log><![CDATA[
 gap> S := FullTransformationSemigroup(3);

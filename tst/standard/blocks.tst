@@ -16,7 +16,7 @@ gap> SEMIGROUPS.StartTest();
 
 # blocks: BlocksNC 1/1
 gap> x := BlocksNC([[1], [2], [-3]]);
-<blocks: [ 1 ], [ 2 ], [ -3 ]>
+<blocks: [ 1* ], [ 2* ], [ 3 ]>
 
 # blocks: PrintString 1/1
 gap> x := BlocksNC([[1, 6], [2], [3, 4], [-5]]);;
@@ -51,58 +51,56 @@ gap> a = a;
 true
 
 # blocks: BlocksByIntRepNC 1/1
-gap> x := BlocksNC([[1, 2, 3, 8], [-4, -9, -10], [5, 6], [7]]);;
-gap> BlocksByIntRepNC(x!.blocks);
-<blocks: [ 1, 2, 3, 8 ], [ -4, -9, -10 ], [ 5, 6 ], [ 7 ]>
-
+#gap> x := BlocksNC([[1, 2, 3, 8], [-4, -9, -10], [5, 6], [7]]);;
+#gap> BlocksByIntRepNC(x!.blocks);
+#<blocks: [ 1, 2, 3, 8 ], [ -4, -9, -10 ], [ 5, 6 ], [ 7 ]>
 # blocks: ProjectionFromBlocks 1/1
 gap> x :=
 > Bipartition([[1, 2, 3], [4, 7, 9], [5, 6, 10, -1], [8, -3, -5, -8],
 >  [-2, -4], [-6, -7], [-9, -10]]);;
 gap> y := LeftBlocks(x);
-<blocks: [ -1, -2, -3 ], [ -4, -7, -9 ], [ 5, 6, 10 ], [ 8 ]>
+<blocks: [ 1, 2, 3 ], [ 4, 7, 9 ], [ 5*, 6*, 10* ], [ 8* ]>
 gap> ProjectionFromBlocks(y);
 <bipartition: [ 1, 2, 3 ], [ 4, 7, 9 ], [ 5, 6, 10, -5, -6, -10 ], [ 8, -8 ], 
  [ -1, -2, -3 ], [ -4, -7, -9 ]>
 gap> last = LeftProjection(x);
 true
 
-# blocks: OnRightBlocks 1/1 
+# blocks: BLOCKS_RIGHT_ACT 1/1 
 gap> NrRClasses(PartitionMonoid(3));
 22
 
-# blocks: OnLeftBlocks 1/3 
+# blocks: BLOCKS_LEFT_ACT 1/3 
 gap> S := Monoid([Bipartition([[1, 2, -1], [-2]]),
 >  Bipartition([[1, -2], [2, -1]])]);;
 gap> NrLClasses(S);
 3
 
-# blocks: OnLeftBlocks 2/3
+# blocks: BLOCKS_LEFT_ACT 2/3
 gap> NrLClasses(PartitionMonoid(2));
 6
 
-# blocks: OnLeftBlocks 3/3
-gap> OnLeftBlocks(EmptyBlocks, IdentityBipartition(2));
-<blocks: [ 1 ], [ 2 ]>
+# blocks: BLOCKS_LEFT_ACT 3/3
+gap> BLOCKS_LEFT_ACT(EmptyBlocks, IdentityBipartition(2));
+<blocks: [ 1* ], [ 2* ]>
 
-# blocks: SEMIGROUPS.BlocksIdempotentTester 1/3
+# blocks: BLOCKS_E_TESTER 1/3
 gap> NrIdempotents(PartitionMonoid(3));
 114
 
-# blocks: SEMIGROUPS.BlocksIdempotentTester 2/3
+# blocks: BLOCKS_E_TESTER 2/3
 gap> x := BlocksNC([[1, 4], [2, 3, 5]]);;
 gap> y := BlocksNC([[1, 2, 3], [4], [-5, -6]]);;
-gap> SEMIGROUPS.BlocksIdempotentTester(x, y);
-Error, Semigroups: SEMIGROUPS.BlocksIdempotentTester: usage,
-the degrees of the blocks <lambda> and <rho> must be equal,
-
-# blocks: SEMIGROUPS.BlocksIdempotentTester 3/3
-gap> x := BlocksNC([[1, 4], [2, 3, 5]]);;
-gap> y := BlocksNC([[1], [-2, -3, -4], [-5]]);;
-gap> SEMIGROUPS.BlocksIdempotentTester(x, y);
+gap> BLOCKS_E_TESTER(x, y);
 false
 
-# blocks: SEMIGROUPS.BlocksIdempotentCreator 1/3
+# blocks: BLOCKS_E_TESTER 3/3
+gap> x := BlocksNC([[1, 4], [2, 3, 5]]);;
+gap> y := BlocksNC([[1], [-2, -3, -4], [-5]]);;
+gap> BLOCKS_E_TESTER(x, y);
+false
+
+# blocks: BLOCKS_E_CREATOR 1/3
 gap> Set(Idempotents(PartitionMonoid(2)));
 [ <block bijection: [ 1, 2, -1, -2 ]>, <bipartition: [ 1, 2, -1 ], [ -2 ]>, 
   <bipartition: [ 1, 2, -2 ], [ -1 ]>, <bipartition: [ 1, 2 ], [ -1, -2 ]>, 
@@ -113,45 +111,41 @@ gap> Set(Idempotents(PartitionMonoid(2)));
   <bipartition: [ 1 ], [ 2 ], [ -1, -2 ]>, 
   <bipartition: [ 1 ], [ 2 ], [ -1 ], [ -2 ]> ]
 
-# blocks: PermRightBlocks 1/1
+# blocks: BLOCKS_RIGHT_ACT 1/1
 gap> x := Bipartition([[1, 10], [2, -7, -9], [3, 4, 6, 8],
 > [5, -5], [7, 9, -2], [-1, -10], [-3, -4, -6, -8]]);;
 gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5],
 > [7, 9]]);;
-gap> OnRightBlocks(blocks, x) = blocks;
+gap> BLOCKS_RIGHT_ACT(blocks, x) = blocks;
 true
-gap> PermRightBlocks(blocks, x);
-(2,5)
 
-# blocks: PermLeftBlocks 1/1
+# blocks: BLOCKS_LEFT_ACT 1/1
 gap> x := Bipartition([[1, 10], [2, -7, -9], [3, 4, 6, 8],
 > [5, -5], [7, 9, -2], [-1, -10], [-3, -4, -6, -8]]);;
 gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5],
 > [7, 9]]);;
-gap> OnLeftBlocks(blocks, Star(x)) = blocks;
+gap> BLOCKS_LEFT_ACT(blocks, Star(x)) = blocks;
 true
-gap> PermLeftBlocks(blocks, x);
-(2,5)
 
-# blocks: InverseRightBlocks 1/1
+# blocks: BLOCKS_INV_RIGHT, 1/1
 gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7],
 > [6, -1], [-3], [-5, -6, -8]]);;
 gap> blocks := BlocksNC([[-1, -4, -5, -8], [-2, -3, -7], [6]]);;
 gap> RankOfBlocks(blocks);
 1
-gap> RankOfBlocks(OnRightBlocks(blocks, x));
+gap> RankOfBlocks(BLOCKS_RIGHT_ACT(blocks, x));
 1
-gap> InverseRightBlocks(blocks, x);
+gap> BLOCKS_INV_RIGHT(blocks, x);
 <bipartition: [ 1, -6 ], [ 2, 3, 4, 5, 6, 7, 8 ], [ -1, -4, -5, -8 ], 
  [ -2, -3, -7 ]>
 
-# blocks: InverseLeftBlocks 1/1
+# blocks: BLOCKS_INV_LEFT, 1/1
 gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7],
 > [6, -1], [-3], [-5, -6, -8]]);;
 gap> blocks := BlocksNC([[-1, -2, -6], [3, 4, 5], [-7, -8]]);;
-gap> RankOfBlocks(OnLeftBlocks(blocks, x));
+gap> RankOfBlocks(BLOCKS_LEFT_ACT(blocks, x));
 1
-gap> InverseLeftBlocks(blocks, x);
+gap> BLOCKS_INV_LEFT(blocks, x);
 <bipartition: [ 1, 2, 6 ], [ 3, 4, 5, -1, -2, -3, -4, -5, -6, -7, -8 ], 
  [ 7, 8 ]>
 

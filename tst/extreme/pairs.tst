@@ -180,7 +180,8 @@ gap> Representative(classes[5] * classes[2]) =
 true
 
 #T# LatticeOfCongruences
-gap> S := Semigroup( [ Transformation( [ 1, 3, 4, 1 ] ), Transformation( [ 3, 1, 1, 3 ] ) ] );;
+gap> S := Semigroup([
+> Transformation([1, 3, 4, 1]), Transformation([3, 1, 1, 3])]);;
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1, 5, 28, 37 ], 
   [ 1, 2, 5, 6, 7, 8, 9, 10, 12, 13, 14, 16, 21, 22, 23, 24, 25, 26, 27, 28, 
@@ -240,10 +241,12 @@ gap> l := LatticeOfCongruences(S);
   [ 1, 5, 8, 9, 10, 21, 22, 23, 26, 27, 28, 32, 35, 36, 37, 44, 45 ], 
   [ 1, 5, 8, 9, 10, 13, 21, 22, 23, 26, 27, 28, 32, 33, 35, 36, 37, 44, 45, 
       49, 51 ] ]
-gap> S := Semigroup( [ Transformation( [ 1, 4, 3, 1, 4, 2 ] ), Transformation( [ 1, 6, 6, 3, 6, 6 ] ) ] );;
+gap> S := Semigroup([
+> Transformation([1, 4, 3, 1, 4, 2]), Transformation([1, 6, 6, 3, 6, 6])]);;
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1 ], [ 1, 2, 5 ], [ 1, 2, 3, 5 ], [ 1, 2 ] ]
-gap> S := Semigroup( [ Transformation( [ 4, 3, 1, 1, 6, 4 ] ), Transformation( [ 4, 3, 6, 4, 2, 3 ] ) ] );;
+gap> S := Semigroup([
+> Transformation([4, 3, 1, 1, 6, 4]), Transformation([4, 3, 6, 4, 2, 3])]);;
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1 ], [ 1, 2, 4, 6, 17, 19, 27, 43, 45, 55, 56, 76, 84, 89, 173, 175 
      ], [ 1, 2, 6, 27 ], 
@@ -1757,7 +1760,8 @@ gap> l := LatticeOfCongruences(S);
       245, 246, 247, 252, 255, 256, 257, 258, 262, 278, 279, 280, 281, 283, 
       284, 286, 290, 291, 293, 294, 297, 301, 306, 309, 310, 311, 312, 313, 
       317, 320, 324, 325, 327 ] ]
-gap> S := Semigroup( [ Transformation( [ 1, 5, 4, 5, 2 ] ), Transformation( [ 4, 5, 1, 3, 5 ] ) ] );;
+gap> S := Semigroup([
+> Transformation([1, 5, 4, 5, 2]), Transformation([4, 5, 1, 3, 5])]);;
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1, 3, 11, 12, 13, 18, 22, 24, 48, 51, 54, 58, 61, 63, 112, 116, 
       127, 147 ], [ 1, 48 ], 
@@ -2494,7 +2498,8 @@ gap> l := LatticeOfCongruences(S);
   [ 1, 3, 6, 10, 21, 25, 33, 48, 49, 50, 51, 52, 53, 55, 59, 60, 61, 62, 64, 
       82, 86, 87, 89, 96, 97, 98, 99, 101, 138, 139, 140, 142, 148, 150, 151, 
       165, 166, 167, 169, 173, 175, 176, 178, 179, 184 ] ]
-gap> S := Semigroup( [ Transformation( [ 1, 3, 5, 5, 3 ] ), Transformation( [ 4, 5, 5, 5, 2 ] ) ] );;
+gap> S := Semigroup([
+> Transformation([1, 3, 5, 5, 3]), Transformation([4, 5, 5, 5, 2])]);;
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1, 9, 15, 16, 32, 37, 38, 86, 93, 96, 123, 156 ], 
   [ 1, 2, 6, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 30, 

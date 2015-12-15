@@ -11,28 +11,6 @@
 DeclareCategory("IsBlocks", IsList);
 DeclareCategoryCollections("IsBlocks");
 
-DeclareGlobalFunction("BlocksNC");
-DeclareGlobalFunction("BlocksByIntRepNC");
-DeclareOperation("ProjectionFromBlocks", [IsBlocks]);
-
-DeclareAttribute("NrBlocks", IsBlocks);
-
-DeclareAttribute("RankOfBlocks", IsBlocks);
-DeclareAttribute("NrTransverseBlocks", IsBlocks);
-
-DeclareAttribute("DegreeOfBlocks", IsBlocks);
-
-DeclareAttribute("ExtRepOfBlocks", IsBlocks);
-
-DeclareGlobalFunction("OnRightBlocks");
-DeclareGlobalFunction("OnLeftBlocks");
-
-DeclareOperation("PermRightBlocks", [IsList, IsBipartition]);
-DeclareOperation("PermLeftBlocks", [IsList, IsBipartition]);
-
-DeclareGlobalFunction("InverseRightBlocks");
-DeclareGlobalFunction("InverseLeftBlocks");
-
 BindGlobal("BlocksFamily",
            NewFamily("BlocksFamily", IsBlocks, CanEasilySortElements,
                      CanEasilySortElements));
@@ -40,3 +18,14 @@ BindGlobal("BlocksFamily",
 BindGlobal("BlocksType",
            NewType(BlocksFamily, IsBlocks and IsComponentObjectRep and
                    IsAttributeStoringRep));
+
+DeclareGlobalFunction("BlocksNC");
+
+DeclareAttribute("ProjectionFromBlocks", IsBlocks);
+DeclareAttribute("NrBlocks", IsBlocks);
+DeclareAttribute("RankOfBlocks", IsBlocks);
+DeclareAttribute("NrTransverseBlocks", IsBlocks);
+DeclareAttribute("DegreeOfBlocks", IsBlocks);
+DeclareAttribute("ExtRepOfBlocks", IsBlocks);
+DeclareOperation("OnRightBlocks", [IsBlocks, IsBipartition]);
+DeclareOperation("OnLeftBlocks", [IsBlocks, IsBipartition]);

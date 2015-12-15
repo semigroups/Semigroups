@@ -13,8 +13,9 @@ lib_LTLIBRARIES = semigroups.la
 
 semigroups_la_SOURCES =  src/semigroups.cc src/boolean.cc src/types.cc
 semigroups_la_SOURCES += src/converter.cc src/interface.cc src/data.cc
-semigroups_la_SOURCES += src/semigroups++/elements.cc
-semigroups_la_CXXFLAGS = -std=c++11
+semigroups_la_SOURCES += src/bipart.cc 
+semigroups_la_SOURCES += src/semigroups++/elements.cc src/semigroups++/blocks.cc
+semigroups_la_CXXFLAGS = -std=c++11 -fPIC
 
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
 # Note that the latter is only for GAP 4.4.12

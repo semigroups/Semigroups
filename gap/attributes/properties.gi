@@ -472,7 +472,7 @@ InstallMethod(IsRTrivial, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 2, # to beat the method for acting semigroups
 function(S)
-  return IsAcyclicDigraph(DigraphOfActionOnPoints(S));
+  return IsAcyclicDigraph(DigraphRemoveLoops(DigraphOfActionOnPoints(S)));
 end);
 
 # different method for ideals
@@ -656,20 +656,17 @@ function(S)
   if HasGreensDClasses(S) then
     iter := GreensDClasses(S);
     for x in iter do
-      if not IsRegularClass(x) or NrIdempotents(x) <> NrRClasses(x) then
+      if not IsRegularClass(x)
+          or NrRClasses(x) <> NrLClasses(x)
+          or NrIdempotents(x) <> NrRClasses(x) then
         return false;
       fi;
     od;
+    return true;
   else
-    iter := IteratorOfRClasses(S);
-    for x in iter do
-      if not IsRegularClass(x) or NrIdempotents(x) > 1 then
-        return false;
-      fi;
-    od;
+    return NrLClasses(S) = NrRClasses(S) and NrIdempotents(S) = NrRClasses(S);
   fi;
 
-  return true;
 end);
 
 # same method for ideals

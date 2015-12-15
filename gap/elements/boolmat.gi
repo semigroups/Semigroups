@@ -74,11 +74,10 @@ InstallGlobalFunction(BooleanMat,
 function(mat)
   local n, x, blist, i, j, row;
 
-  if (not IsHomogeneousList(mat))
-      or IsEmpty(mat)
+  if (not IsList(mat)) or IsEmpty(mat)
       or not ForAll(mat, IsHomogeneousList) then
     ErrorMayQuit("Semigroups: BooleanMat: usage,\n",
-                 "the argmuent must be a non-empty homogeneous list ",
+                 "the argmuent must be a non-empty list ",
                  "of homogeneous lists,");
   elif IsRectangularTable(mat) then #0s and 1s or blists
     if ForAll(mat, row -> ForAll(row, x -> x = 0 or x = 1)) then

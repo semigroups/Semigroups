@@ -353,7 +353,7 @@ true
 
 #T# properties: IsCompletelyRegularSemigroup, 2
 gap> S := Semigroup(GroupOfUnits(FullTransformationMonoid(3)));
-<transformation monoid of degree 3 with 2 generators>
+<transformation semigroup of degree 3 with 2 generators>
 gap> IsCompletelyRegularSemigroup(S);
 true
 gap> I := SemigroupIdeal(S, S.1);;

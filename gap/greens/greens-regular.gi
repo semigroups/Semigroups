@@ -232,16 +232,18 @@ InstallMethod(NrIdempotents, "for a regular acting semigroup",
 function(S)
   local nr, tester, rho_o, scc, lambda_o, rhofunc, lookup, rep, rho, j, i, k;
 
-  nr := 0;
-  tester := IdempotentTester(S);
-  rho_o := RhoOrb(S);
-  scc := OrbSCC(rho_o);
+  nr       := 0;
+  tester   := IdempotentTester(S);
+  rho_o    := RhoOrb(S);
+  scc      := OrbSCC(rho_o);
   lambda_o := LambdaOrb(S);
   Enumerate(lambda_o, infinity);
-  rhofunc := RhoFunc(S);
-  lookup := OrbSCCLookup(rho_o);
+  rhofunc  := RhoFunc(S);
+  lookup   := OrbSCCLookup(rho_o);
 
   for i in [2 .. Length(lambda_o)] do
+    # TODO this could be better, just multiply by next element of the Schreier
+    # tree
     rep := EvaluateWord(lambda_o, TraceSchreierTreeForward(lambda_o, i));
     rho := rhofunc(rep);
     j := lookup[Position(rho_o, rho)];
