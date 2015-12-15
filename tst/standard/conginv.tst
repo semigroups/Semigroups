@@ -36,7 +36,7 @@ false
 
 # Get the Kernel and Trace out
 gap> KernelOfSemigroupCongruence(cong);
-<inverse partial perm semigroup of rank 5 with 12 generators>
+<inverse partial perm semigroup of size 41, rank 5 with 12 generators>
 gap> AsSortedList(List(TraceOfSemigroupCongruence(cong), AsSortedList));
 [ [ <empty partial perm>, <identity partial perm on [ 1 ]>, 
       <identity partial perm on [ 2 ]>, <identity partial perm on [ 3 ]>, 
@@ -205,6 +205,26 @@ gap> cong := SemigroupCongruence(S,
 >       [PartialPerm([5], [3]), PartialPerm([], [])]);
 <semigroup congruence over <inverse partial perm semigroup of rank 5 with 3 
  generators> with congruence pair (44,19)>
+
+#T# MinimumGroupCongruence
+gap> S := InverseSemigroup([PartialPerm([1,2,5,6], [5,2,1,4]),
+>                           PartialPerm([1,2,3,4,5,7], [1,4,6,3,5,2])]);;
+gap> cong := MinimumGroupCongruence(S);
+<semigroup congruence over <inverse partial perm semigroup of rank 7 with 2 
+ generators> with congruence pair (59,1)>
+gap> NrEquivalenceClasses(cong);
+2
+gap> S := InverseSemigroup([PartialPerm([1,2,3,4,6], [3,2,1,4,7]),
+>                           PartialPerm([1,2,3,7], [3,1,2,5])]);;
+gap> cong := MinimumGroupCongruence(S);
+<semigroup congruence over <inverse partial perm semigroup of rank 7 with 2 
+ generators> with congruence pair (7,1)>
+gap> q := S / cong;;
+gap> IsGroupAsSemigroup(q);
+true
+gap> g := Range(IsomorphismPermGroup(q));;
+gap> StructureDescription(g);
+"S3"
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);
