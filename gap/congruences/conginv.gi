@@ -219,6 +219,31 @@ end);
 
 #
 
+InstallMethod(AsLookupTable,
+"for inverse semigroup congruence",
+[IsInverseSemigroupCongruenceByKernelTrace],
+function(cong)
+  local S, n, classes, data, elms, table, next, i, x;
+  S := Range(cong);
+  n := Size(S);
+  classes := EquivalenceClasses(cong);
+  data := GenericSemigroupData(S);
+  elms := SEMIGROUP_ELEMENTS(data, infinity);
+  table := EmptyPlist(n);
+  next := 1;
+  for i in [1 .. n] do
+    if not IsBound(table[i]) then
+      for x in First(classes, class -> elms[i] in class) do
+        table[Position(data, x)] := next;
+      od;
+      next := next + 1;
+    fi;
+  od;
+  return table;
+end);
+
+#
+
 InstallMethod(\in,
 "for dense list and inverse semigroup congruence",
 [IsDenseList, IsInverseSemigroupCongruenceByKernelTrace],
