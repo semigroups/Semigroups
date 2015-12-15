@@ -165,6 +165,60 @@ end);
 
 #
 
+InstallMethod(EquivalenceClasses,
+"for inverse semigroup congruence",
+[IsInverseSemigroupCongruenceByKernelTrace],
+function(cong)
+  local S, reps, elmlists, kernel, traceBlock, blockreps, blockelmlists, id,
+        elm, pos, classes, i;
+  S := Range(cong);
+  reps := [];
+  elmlists := [];
+  kernel := Elements(cong!.kernel);
+
+  # Consider each trace-class in turn
+  for traceBlock in cong!.traceBlocks do
+    # Consider all the congruence classes corresponding to this trace-class
+    blockreps := [];       # List of class reps
+    blockelmlists := [];   # List of lists of elms in class
+    for id in traceBlock do
+      for elm in LClass(S, id) do
+        # Find the congruence class that this element lies in
+        pos := PositionProperty(blockreps, rep -> elm*rep^-1 in kernel);
+        if pos = fail then
+          # New class
+          Add(blockreps, elm);
+          Add(blockelmlists, [elm]);
+        else
+          # Add to the old class
+          Add(blockelmlists[pos], elm);
+        fi;
+      od;
+    od;
+    Append(reps, blockreps);
+    Append(elmlists, blockelmlists);
+  od;
+
+  # Create the class objects
+  classes := [];
+  for i in [1..Length(reps)] do
+    classes[i] := EquivalenceClassOfElementNC(cong, reps[i]);
+    SetAsList(classes[i], elmlists[i]);
+  od;
+  return classes;
+end);
+
+#
+
+InstallMethod(NrEquivalenceClasses,
+"for inverse semigroup congruence",
+[IsInverseSemigroupCongruenceByKernelTrace],
+function(cong)
+  return Length(EquivalenceClasses(cong));
+end);
+
+#
+
 InstallMethod(\in,
 "for dense list and inverse semigroup congruence",
 [IsDenseList, IsInverseSemigroupCongruenceByKernelTrace],
@@ -261,11 +315,20 @@ end);
 
 #
 
+InstallMethod(AsList,
+"for inverse semigroup congruence class",
+[IsInverseSemigroupCongruenceClassByKernelTrace],
+function(class)
+  return ImagesElm(EquivalenceClassRelation(class), class!.rep);
+end);
+
+#
+
 InstallMethod(AsSSortedList,
 "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace],
 function(class)
-  return SSortedList(ImagesElm(EquivalenceClassRelation(class), class!.rep));
+  return SSortedList(AsList(class));
 end);
 
 #
@@ -274,7 +337,7 @@ InstallMethod(Size,
 "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace],
 function(class)
-  return Size(Elements(class));
+  return Size(AsList(class));
 end);
 
 #
@@ -313,10 +376,10 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local S, idsmgp, idsdata, idslist, slist, pos, hashlen, ht, treehashsize, 
-        right, left, genstoapply, NormalClosureInverseSemigroup, 
-        enumerate_trace, enforce_conditions, compute_kernel, genpairs, 
-        pairstoapply, kernelgenstoapply, nr, nrk, traceUF, kernel, oldLookup, 
+  local S, idsmgp, idsdata, idslist, slist, pos, hashlen, ht, treehashsize,
+        right, left, genstoapply, NormalClosureInverseSemigroup,
+        enumerate_trace, enforce_conditions, compute_kernel, genpairs,
+        pairstoapply, kernelgenstoapply, nr, nrk, traceUF, kernel, oldLookup,
         oldKernel, trace_unchanged, kernel_unchanged, traceBlocks;
 
   # Check that the argument makes sense
