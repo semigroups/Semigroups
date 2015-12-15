@@ -25,6 +25,12 @@ gap> S := InverseSemigroup( [ PartialPerm( [ 1, 3, 4, 5 ], [ 6, 7, 4, 1 ] ),
 gap> cong := SemigroupCongruence(S, [S.1, S.2]);
 <semigroup congruence over <inverse partial perm semigroup of rank 8 with 8 
  generators> with congruence pair (57528,29)>
+gap> NrEquivalenceClasses(cong);
+85
+gap> IsReesCongruence(cong);
+true
+gap> SemigroupIdealOfReesCongruence(cong);
+<inverse partial perm semigroup ideal of size 57500, rank 8 with 1 generator>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
