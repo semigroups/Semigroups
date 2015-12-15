@@ -348,8 +348,8 @@ true]]></Example>
 gap> S := Monoid([Transformation( [ 1, 2, 2 ] ),
 >                 Transformation( [ 3, 1, 3 ] )]);;
 gap> pairs := [Transformation( [ 1, 2, 1 ] ), 
->              Transformation( [ 2, 1, 2 ] )]);;
-gap> cong := LeftSemigroupCongruence(S, pairs);
+>              Transformation( [ 2, 1, 2 ] )];;
+gap> cong := LeftSemigroupCongruence(S, pairs);;
 gap> class := EquivalenceClassOfElement(cong,
 >                                       Transformation( [ 3, 1, 1 ] ));
 <left congruence class of Transformation( [ 3, 1, 1 ] )>
@@ -372,7 +372,7 @@ true]]></Example>
 gap> S := Monoid([Transformation( [ 1, 2, 2 ] ),
 >                 Transformation( [ 3, 1, 3 ] )]);;
 gap> pairs := [Transformation( [ 1, 2, 1 ] ),
->              Transformation( [ 2, 1, 2 ] )]);;
+>              Transformation( [ 2, 1, 2 ] )];;
 gap> cong := RightSemigroupCongruence(S, pairs);;
 gap> class := EquivalenceClassOfElement(cong,
 >                                       Transformation( [ 3, 1, 1 ] ));
