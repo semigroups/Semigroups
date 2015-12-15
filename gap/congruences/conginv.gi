@@ -93,6 +93,8 @@ function(S, kernel, traceBlocks)
                         traceLookup := traceLookup));
   SetSource(cong, S);
   SetRange(cong, S);
+  SetKernelOfSemigroupCongruence(cong, kernel);
+  SetTraceOfSemigroupCongruence(cong, traceBlocks);
   return cong;
 end);
 
@@ -261,7 +263,7 @@ function(pair, cong)
   fi;
   # Is (a^-1 a, b^-1 b) in the trace?
   if pair[1] ^ -1 * pair[1] in
-      First(cong!.traceBlocks, c -> pair[2] ^ -1 * pair[2] in c) then
+     First(cong!.traceBlocks, c -> pair[2] ^ -1 * pair[2] in c) then
     # Is ab^-1 in the kernel?
     if pair[1] * pair[2] ^ -1 in cong!.kernel then
       return true;
@@ -293,7 +295,7 @@ function(cong, elm)
   local fam, class;
   fam := FamilyObj(Range(cong));
   class := Objectify(NewType(fam,
-                     IsInverseSemigroupCongruenceClassByKernelTrace),
+                             IsInverseSemigroupCongruenceClassByKernelTrace),
                      rec(rep := elm));
   SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
@@ -306,10 +308,10 @@ end);
 InstallMethod(\=,
 "for two inverse semigroup congruence classes",
 [IsInverseSemigroupCongruenceClassByKernelTrace,
- IsInverseSemigroupCongruenceClassByKernelTrace],
-function(c1, c2)
+IsInverseSemigroupCongruenceClassByKernelTrace],
+              function(c1, c2)
   return(EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) and
-          [c1!.rep, c2!.rep] in EquivalenceClassRelation(c1));
+         [c1!.rep, c2!.rep] in EquivalenceClassRelation(c1));
 end);
 
 #
@@ -336,6 +338,15 @@ function(c1, c2)
   fi;
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1),
                                      c1!.rep * c2!.rep);
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for inverse semigroup congruence class",
+[IsInverseSemigroupCongruenceClassByKernelTrace],
+function(class)
+  return AsList(class);
 end);
 
 #
@@ -568,4 +579,31 @@ function(cong)
                       b -> List(b, i -> idslist[i]));
 
   return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
+end);
+
+#
+
+InstallMethod(MinimumGroupCongruence,
+"for an inverse semigroup",
+[IsInverseSemigroup],
+# This is the maximum congruence whose quotient is a group
+function(S)
+  local ker, leq, n, x, traceBlocks;
+
+  # Kernel should be the majorant closure of the idempotents
+  ker := IdempotentGeneratedSubsemigroup(S);
+  leq := NaturalLeqInverseSemigroup(S);
+  for n in ker do
+    for x in S do
+      if leq(n, x) and not x in ker then
+        ker := ClosureInverseSemigroup(ker, x);
+      fi;
+    od;
+  od;
+  ker := InverseSemigroup(SmallGeneratingSet(ker));
+
+  # Trace should be the universal congruence
+  traceBlocks := [Idempotents(S)];
+
+  return InverseSemigroupCongruenceByKernelTraceNC(S, ker, traceBlocks);
 end);

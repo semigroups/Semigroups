@@ -34,3 +34,6 @@ SEMIGROUPS.InverseCongFromPairs := function(S, pairs)
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
 end;
+
+# Special congruences
+DeclareAttribute("MinimumGroupCongruence", IsInverseSemigroup);
