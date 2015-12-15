@@ -38,6 +38,7 @@ function(cong)
     # Only one non-trivial class - check it is an ideal
     class := classes[pos[1]];
     ideal := SemigroupIdeal(S, AsList(class));
+    ideal := SemigroupIdeal(S, MinimalIdealGeneratingSet(ideal));
     if Size(class) = Size(ideal) then
       SetSemigroupIdealOfReesCongruence(cong, ideal);
       return true;
