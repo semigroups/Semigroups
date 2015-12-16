@@ -76,6 +76,9 @@ InstallGlobalFunction(InverseSemigroupCongruenceByKernelTraceNC,
 [IsInverseSemigroup and IsFinite, IsSemigroup, IsDenseList],
 function(S, kernel, traceBlocks)
   local traceLookup, i, elm, fam, cong;
+  # Sort blocks
+  traceBlocks := SortedList(List(traceBlocks, SortedList));
+
   # Calculate lookup table for trace
   # Might remove lookup - might never be better than blocks
   traceLookup := [];
@@ -412,27 +415,64 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(cong)
-  local S, idsmgp, idsdata, idslist, slist, pos, hashlen, ht, treehashsize,
-        right, left, genstoapply, NormalClosureInverseSemigroup,
-        enumerate_trace, enforce_conditions, compute_kernel, genpairs,
-        pairstoapply, kernelgenstoapply, nr, nrk, traceUF, kernel, oldLookup,
-        oldKernel, trace_unchanged, kernel_unchanged, traceBlocks;
-
-  # Check that the argument makes sense
+  local S;
   S := Range(cong);
   if not IsInverseSemigroup(S) then
     ErrorMayQuit("Semigroups: AsInverseSemigroupCongruenceByKernelTrace: ",
                  "usage,\n",
                  "the argument <cong> must be over an inverse semigroup,");
   fi;
+  return SEMIGROUPS.KernelTraceClosure(
+                                       S,
+                                       IdempotentGeneratedSubsemigroup(S),
+                                       List(Idempotents(S), e -> [e]),
+                                       GeneratingPairsOfSemigroupCongruence(cong));
+end);
 
-  # Setup some data structures for the trace
+#
+
+SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
+  #
+  # This function takes an inverse semigroup S, a subsemigroup ker, an
+  # equivalence traceBlocks on the idempotents, and a list of pairs in S.
+  # It returns the minimal congruence containing "kernel" in its kernel and
+  # "traceBlocks" in its trace, and containing all the given pairs
+  #
+  local idsmgp, idsdata, idslist, slist, nr, kernelgenstoapply, gen, nrk,
+        traceUF, i, pos1, j, pos, hashlen, ht, treehashsize, right, left,
+        genstoapply, NormalClosureInverseSemigroup, enumerate_trace,
+        enforce_conditions, compute_kernel, oldLookup, oldKernel,
+        trace_unchanged, kernel_unchanged;
+
   idsmgp := IdempotentGeneratedSubsemigroup(S);
   idsdata := GenericSemigroupData(idsmgp);
   idslist := SEMIGROUP_ELEMENTS(idsdata, infinity);
-
   slist := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
 
+  # Retrieve the initial information
+  kernel := InverseSubsemigroup(S, kernel);
+  kernelgenstoapply := Set(pairstoapply, x -> x[1] * x[2] ^ -1);
+  # kernel might not be normal, so make sure to check its generators too
+  for gen in GeneratorsOfInverseSemigroup(kernel) do
+    AddSet(kernelgenstoapply, gen);
+  od;
+  nrk := Length(kernelgenstoapply);
+  Elements(kernel);
+  pairstoapply := List(pairstoapply, x -> [Position(idsdata, RightOne(x[1])),
+                                           Position(idsdata, RightOne(x[2]))]);
+  nr := Length(pairstoapply);
+
+  # Calculate traceUF from traceBlocks
+  traceUF := UF_NEW(Length(idslist));
+  for i in [1 .. Length(traceBlocks)] do
+    pos1 := Position(idsdata, traceBlocks[i][1]);
+    for j in [2 .. Length(traceBlocks[i])] do
+      UF_UNION(traceUF, [pos1, Position(idsdata, traceBlocks[i][j])]);
+    od;
+  od;
+  UF_FLATTEN(traceUF);
+
+  # Setup some useful information
   pos := 0;
   hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
   ht := HTCreate([1, 1], rec(forflatplainlists := true,
@@ -441,6 +481,9 @@ function(cong)
   left := LeftCayleyGraphSemigroup(idsmgp);
   genstoapply := [1 .. Length(right[1])];
 
+  #
+  # The functions that do the work:
+  #
   NormalClosureInverseSemigroup := function(S, K, coll)
     # This takes an inv smgp S, an inv subsemigroup K, and some elms coll,
     # then creates the *normal closure* of K with coll inside S.
@@ -549,17 +592,6 @@ function(cong)
     fi;
   end;
 
-  # Retrieve the initial information
-  genpairs := GeneratingPairsOfSemigroupCongruence(cong);
-  pairstoapply := List(genpairs, x -> [Position(idsdata, RightOne(x[1])),
-                                       Position(idsdata, RightOne(x[2]))]);
-  kernelgenstoapply := Set(genpairs, x -> x[1] * x[2] ^ -1);
-  nr := Length(pairstoapply);
-  nrk := Length(kernelgenstoapply);
-  traceUF := UF_NEW(Length(idslist));
-  kernel := idsmgp;
-  Elements(kernel);
-
   # Keep applying the method until no new info is found
   repeat
     oldLookup := StructuralCopy(UF_TABLE(traceUF));
@@ -579,7 +611,7 @@ function(cong)
                       b -> List(b, i -> idslist[i]));
 
   return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
-end);
+end;
 
 #
 
