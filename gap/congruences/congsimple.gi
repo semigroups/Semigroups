@@ -67,7 +67,7 @@ end);
 
 #
 
-InstallMethod(JoinMagmaCongruences,
+InstallMethod(JoinSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
 [SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
 function(cong1, cong2)
@@ -82,7 +82,7 @@ end);
 
 #
 
-InstallMethod(MeetMagmaCongruences,
+InstallMethod(MeetSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
 [SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
 function(cong1, cong2)
@@ -161,7 +161,7 @@ end);
 #
 
 InstallMethod(NrEquivalenceClasses,
-"for a (0-simple) semigroup congruence",
+"for a (0-)simple semigroup congruence",
 [SEMIGROUPS_CongSimple],
 function(cong)
   return NrEquivalenceClasses(cong!.rmscong);
@@ -174,6 +174,15 @@ InstallMethod(\in,
 [IsAssociativeElement, SEMIGROUPS_CongClassSimple],
 function(elm, class)
   return (elm ^ EquivalenceClassRelation(class)!.iso in class!.rmsclass);
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for a (0-)simple semigroup congruence class",
+[SEMIGROUPS_CongClassSimple],
+function(class)
+  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
 
 #
@@ -224,4 +233,43 @@ InstallMethod(CanonicalRepresentative,
 [SEMIGROUPS_CongClassSimple],
 function(class)
   return CanonicalRepresentative(class!.rmsclass) ^ class!.iso;
+end);
+
+#
+
+InstallMethod(IsSubrelation,
+"for two (0-)simple semigroup congruences",
+[SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
+function(cong1, cong2)
+  return IsSubrelation(cong1!.rmscong, cong2!.rmscong);
+end);
+
+#
+
+InstallMethod(AsLookupTable,
+"for a (0-)simple semigroup congruence",
+[SEMIGROUPS_CongSimple],
+function(cong)
+  local S, rmstable, nrclasses, rmsdata, iso, elms, table, newnums, next, i,
+        rmsclass;
+  S := Range(cong);
+  rmstable := AsLookupTable(cong!.rmscong);
+  nrclasses := NrEquivalenceClasses(cong!.rmscong);
+  rmsdata := GenericSemigroupData(Range(cong!.rmscong));
+  iso := cong!.iso;
+  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+
+  # Renumber the entries so we start at 1
+  table := EmptyPlist(Length(elms));
+  newnums := EmptyPlist(nrclasses);
+  next := 1;
+  for i in [1 .. Length(elms)] do
+    rmsclass := rmstable[Position(rmsdata, elms[i] ^ iso)];
+    if not IsBound(newnums[rmsclass]) then
+      newnums[rmsclass] := next;
+      next := next + 1;
+    fi;
+    table[i] := newnums[rmsclass];
+  od;
+  return table;
 end);
