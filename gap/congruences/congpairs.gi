@@ -1127,6 +1127,9 @@ InstallMethod(CongruencesOfSemigroup,
 "for a semigroup",
 [IsSemigroup],
 function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
   # Find the lattice of congruences, and retrieve
   # the list of congruences from inside it
   return LatticeOfCongruences(S)![2];
