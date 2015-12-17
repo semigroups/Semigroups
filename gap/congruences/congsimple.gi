@@ -103,14 +103,17 @@ InstallMethod(\in,
 [IsAssociativeElementCollection, SEMIGROUPS_CongSimple],
 function(pair, cong)
   local S;
-  # Check for validity
-  if Size(pair) <> 2 then
-    return false;
-  fi;
-  S := Range(cong);
-  if not ForAll(pair, x -> x in S) then
-    return false;
-  fi;
+    # Input checks
+    S := Range(cong);
+    if Size(pair) <> 2 then
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+                   "the first arg <pair> must be a list of length 2,");
+    fi;
+    if not (pair[1] in S and pair[2] in S) then
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+                   "elements of the first arg <pair> must be\n",
+                   "in the range of the second arg <cong>,");
+    fi;
   return [pair[1] ^ cong!.iso, pair[2] ^ cong!.iso] in cong!.rmscong;
 end);
 
@@ -140,12 +143,11 @@ InstallMethod(EquivalenceClassOfElement,
 "for a (0-)simple semigroup congruence and associative element",
 [SEMIGROUPS_CongSimple, IsAssociativeElement],
 function(cong, elm)
-  if elm in Range(cong) then
-    return EquivalenceClassOfElementNC(cong, elm);
-  else
+  if not elm in Range(cong) then
     ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
-                 "<elm> must be an element of the range of <cong>");
+                 "<elm> must be an element of the range of <cong>,");
   fi;
+  return EquivalenceClassOfElementNC(cong, elm);
 end);
 
 #
@@ -233,7 +235,8 @@ InstallMethod(CanonicalRepresentative,
 "for a (0-)simple semigroup congruence class",
 [SEMIGROUPS_CongClassSimple],
 function(class)
-  return CanonicalRepresentative(class!.rmsclass) ^ class!.iso;
+  return CanonicalRepresentative(class!.rmsclass) ^
+         InverseGeneralMapping(class!.iso);
 end);
 
 #

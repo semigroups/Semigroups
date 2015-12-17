@@ -21,8 +21,13 @@ gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
 
 #T# SimpleCongTest2: Find all congruences of a simple semigroup
 gap> congs := CongruencesOfSemigroup(S);;
+gap> congs[5];
+<semigroup congruence over <simple transformation semigroup of degree 5 with 
+ 4 generators> with linked triple (2,4,2)>
 gap> Size(congs);
 34
+gap> IsSubrelation(congs[3], congs[4]);
+false
 
 #T# SimpleCongTest3: Construct a congruence by generating pairs
 gap> cong := SemigroupCongruence(S,
@@ -47,15 +52,33 @@ gap> [x, y] in cong;
 true
 gap> [x, z] in cong;
 false
+gap> [x, y, z] in cong;
+Error, Semigroups: \in (for a congruence): usage,
+the first arg <pair> must be a list of length 2,
+gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
+Error, Semigroups: \in (for a congruence): usage,
+elements of the first arg <pair> must be
+in the range of the second arg <cong>,
 
 #T# SimpleCongTest5: Congruence classes
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
+gap> EquivalenceClassOfElement(cong, PartialPerm([2],[3]));
+Error, Semigroups: EquivalenceClassOfElement: usage,
+<elm> must be an element of the range of <cong>,
 gap> classx := CongruenceClassOfElement(cong, x);;
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);
 <congruence class of Transformation( [ 2, 1, 2, 1, 1 ] )>
+gap> elms := ImagesElm(cong, x);
+[ Transformation( [ 1, 2, 2, 1, 2 ] ), Transformation( [ 2, 1, 1, 2, 1 ] ), 
+  Transformation( [ 1, 2, 2, 1, 1 ] ), Transformation( [ 2, 1, 1, 2, 2 ] ) ]
+gap> ForAll(elms, elm -> elm in classx);
+true
+gap> Enumerator(classx);
+[ Transformation( [ 1, 2, 2, 1, 2 ] ), Transformation( [ 2, 1, 1, 2, 1 ] ), 
+  Transformation( [ 1, 2, 2, 1, 1 ] ), Transformation( [ 2, 1, 1, 2, 2 ] ) ]
 gap> classx = classy;
 true
 gap> classz = classx;
@@ -76,6 +99,8 @@ gap> x * z in classz * classx;
 false
 gap> Size(classx);
 4
+gap> CanonicalRepresentative(classx);
+Transformation( [ 1, 2, 2, 1, 2 ] )
 
 #T# SimpleCongTest6: Join and meet congruences
 gap> JoinSemigroupCongruences(congs[6], congs[11]) = congs[12];
@@ -108,6 +133,49 @@ gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
  of rank 2 with 2 generators>>
+
+#T# Test with a 0-simple semigroup
+gap> S := Semigroup([Transformation([3,3,3]), Transformation([4,1,1,4])]);;
+gap> IsRegularSemigroup(S);
+true
+gap> congs := CongruencesOfSemigroup(S);
+[ <universal semigroup congruence over <0-simple regular transformation 
+     semigroup of degree 4 with 2 generators>>, 
+  <semigroup congruence over <0-simple regular transformation semigroup of 
+     degree 4 with 2 generators> with linked triple (1,2,2)> ]
+gap> Size(congs);
+2
+
+#T# Robustness against infinite semigroups
+gap> S := FreeSemigroup(2);;
+gap> congs := CongruencesOfSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 4th choice method found for `CongruencesOfSemigroup' on 1 arguments
+
+#T# Join/Meet: bad input
+gap> S := Semigroup([Transformation([3,3,3]), Transformation([4,1,1,4])]);;
+gap> IsRegularSemigroup(S);
+true
+gap> T := Semigroup([Transformation([2, 1, 1, 2, 1]),
+>                    Transformation([3, 4, 3, 4, 4]),
+>                    Transformation([3, 4, 3, 4, 3]),
+>                    Transformation([4, 3, 3, 4, 4])]);;
+gap> cong1 := SemigroupCongruence(T,
+> [[Transformation([1, 2, 1, 2, 2]),
+>   Transformation([2, 1, 2, 1, 2])],
+>  [Transformation([2, 1, 1, 2, 2]),
+>   Transformation([1, 2, 2, 1, 2])]]);
+<semigroup congruence over <simple transformation semigroup of degree 5 with 
+ 4 generators> with linked triple (2,2,2)>
+gap> cong2 := SemigroupCongruence(S, []);
+<semigroup congruence over <0-simple regular transformation semigroup of 
+ degree 4 with 2 generators> with linked triple (1,2,2)>
+gap> MeetSemigroupCongruences(cong1, cong2);
+Error, Semigroups: MeetSemigroupCongruences: usage,
+<cong1> and <cong2> must be over the same semigroup,
+gap> JoinSemigroupCongruences(cong1, cong2);
+Error, Semigroups: JoinSemigroupCongruences: usage,
+<cong1> and <cong2> must be over the same semigroup,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);
