@@ -422,8 +422,7 @@ function(cong)
                  "usage,\n",
                  "the argument <cong> must be over an inverse semigroup,");
   fi;
-  return SEMIGROUPS.KernelTraceClosure(
-                                       S,
+  return SEMIGROUPS.KernelTraceClosure(S,
                                        IdempotentGeneratedSubsemigroup(S),
                                        List(Idempotents(S), e -> [e]),
                                        GeneratingPairsOfSemigroupCongruence(cong));
