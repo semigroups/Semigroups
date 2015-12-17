@@ -226,6 +226,42 @@ gap> g := Range(IsomorphismPermGroup(q));;
 gap> StructureDescription(g);
 "S3"
 
+#T# JoinSemigroupCongruences
+gap> S := InverseMonoid( [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ) ] );;
+gap> pair := [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ), PartialPerm( [  ], [  ] ) ];;
+gap> cong := SemigroupCongruence(S, pair);;
+gap> min := MinimumGroupCongruence(S);;
+gap> JoinSemigroupCongruences(cong, min);
+<semigroup congruence over <inverse partial perm monoid of rank 3 with 1 
+ generator> with congruence pair (15,1)>
+
+#T# MeetSemigroupCongruences
+gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ),
+>                             PartialPerm( [ 1, 3 ], [ 3, 1 ] ) ] );;
+gap> pair1 := [ PartialPerm( [  ], [  ] ), PartialPerm( [ 1, 3 ], [ 1, 3 ] ) ];;
+gap> pair2 := [ PartialPerm( [  ], [  ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ];;
+gap> cong1 := SemigroupCongruence(S, pair1);;
+gap> cong2 := SemigroupCongruence(S, pair2);;
+gap> MeetSemigroupCongruences(cong1, cong2);
+<semigroup congruence over <inverse partial perm semigroup of rank 3 with 2 
+ generators> with congruence pair (12,3)>
+
+#T# MeetSemigroupCongruences and JoinSemigroupCongruences: bad input
+gap> S := InverseSemigroup([PartialPerm([1,2], [2,1]),
+>                           PartialPerm([1,3], [3,1])]);;
+gap> T := InverseSemigroup([PartialPerm([1,2], [3,1])]);;
+gap> S = T;
+false
+gap> pair := [PartialPerm([1,2], [3,1]), PartialPerm([], [])];;
+gap> cong1 := MinimumGroupCongruence(S);;
+gap> cong2 := SemigroupCongruence(T, pair);;
+gap> MeetSemigroupCongruences(cong1, cong2);
+Error, Semigroups: MeetSemigroupCongruences: usage,
+congruences must be defined over the same semigroup,
+gap> JoinSemigroupCongruences(cong1, cong2);
+Error, Semigroups: JoinSemigroupCongruences: usage,
+congruences must be defined over the same semigroup,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(pairs);
 gap> Unbind(classy);
