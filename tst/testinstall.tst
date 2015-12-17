@@ -1202,6 +1202,25 @@ gap> S := Semigroup(Bipartition ([[1, 4], [2, 3], [-1, -4], [-2, -3]]),
 gap> PartialOrderOfDClasses(S);
 [ [ 1 ] ]
 
+#T# Test for Issue 144
+gap> S := Semigroup([ Bipartition( [ [ 1, 2 ], [ -1 ], [ -2 ] ] ), 
+>   Bipartition( [ [ 1, -1 ], [ 2 ], [ -2 ] ] ), 
+>   Bipartition( [ [ 1 ], [ 2, -1 ], [ -2 ] ] ), 
+>   Bipartition( [ [ 1, -2 ], [ 2 ], [ -1 ] ] ), 
+>   Bipartition( [ [ 1 ], [ 2, -2 ], [ -1 ] ] ), 
+>   Bipartition( [ [ 1 ], [ 2 ], [ -1 ], [ -2 ] ] ) ]);;
+gap> IsInverseSemigroup(S);
+false
+gap> S := Semigroup([ Bipartition( [ [ 1, 2 ], [ -1 ], [ -2 ] ] ), 
+>   Bipartition( [ [ 1, -1 ], [ 2 ], [ -2 ] ] ), 
+>   Bipartition( [ [ 1 ], [ 2, -1 ], [ -2 ] ] ), 
+>   Bipartition( [ [ 1, -2 ], [ 2 ], [ -1 ] ] ), 
+>   Bipartition( [ [ 1 ], [ 2, -2 ], [ -1 ] ] ), 
+>   Bipartition( [ [ 1 ], [ 2 ], [ -1 ], [ -2 ] ] ) ]);;
+gap> NrDClasses(S);;
+gap> IsInverseSemigroup(S);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
