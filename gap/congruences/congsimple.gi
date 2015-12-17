@@ -74,7 +74,7 @@ InstallMethod(JoinSemigroupCongruences,
 function(cong1, cong2)
   local join;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorMayQuit("Semigroups: JoinMagmaCongruences: usage,\n",
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
@@ -89,7 +89,7 @@ InstallMethod(MeetSemigroupCongruences,
 function(cong1, cong2)
   local meet;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorMayQuit("Semigroups: MeetMagmaCongruences: usage,\n",
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
@@ -217,13 +217,13 @@ end);
 
 #
 
-InstallMethod(GeneratingPairsOfMagmaCongruence,
+InstallMethod(GeneratingPairsOfSemigroupCongruence,
 "for a (0-)simple semigroup congruence",
 [SEMIGROUPS_CongSimple],
 function(cong)
   local map;
   map := InverseGeneralMapping(cong!.iso);
-  return List(GeneratingPairsOfMagmaCongruence(cong!.rmscong),
+  return List(GeneratingPairsOfSemigroupCongruence(cong!.rmscong),
                x -> [x[1] ^ map, x[2] ^ map]);
 end);
 
