@@ -14,7 +14,7 @@
 InstallMethod(IsReesCongruence,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
-1, #FIXME why is this here?
+1, # Prioritise this function over the one in the library
 function(cong)
   local S, classes, sizes, pos, class, ideal;
   # This function is adapted from code in the library
@@ -53,7 +53,7 @@ end);
 InstallMethod(ReesCongruenceOfSemigroupIdeal,
 "for a semigroup ideal",
 [IsSemigroupIdeal],
-1, #FIXME why is this here?
+1, # Prioritise this function over the one in the library
 function(I)
   local S, fam, type, cong;
   S := Parent(I);
