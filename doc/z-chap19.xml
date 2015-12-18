@@ -74,6 +74,7 @@
     <#Include Label = "NonTrivialEquivalenceClasses">
     <#Include Label = "NrEquivalenceClasses">
     <#Include Label = "CongruencesOfSemigroup">
+    <#Include Label = "LatticeOfCongruences">
     <#Include Label = "AsLookupTable">
 
   </Section>

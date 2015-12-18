@@ -206,7 +206,6 @@ gap> RightSemigroupCongruence(S, pair1, pair2);
       This attribute gives a list of the congruences of the semigroup
       <A>S</A>. <P/>
 
-      At present this only works for simple and 0-simple semigroups.
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
 > [[(), (1,3,2)],[(1,2), 0]]);;
@@ -219,6 +218,25 @@ gap> congs := CongruencesOfSemigroup(S);
       Sym( [ 1 .. 3 ] )> with linked triple (3,2,2)>, 
   <semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
       Sym( [ 1 .. 3 ] )> with linked triple (S3,2,2)> ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LatticeOfCongruences">
+  <ManSection>
+    <Attr Name = "LatticeOfCongruences" Arg = "S"/>
+    <Returns>A list of lists.</Returns>
+    <Description>
+      If <A>S</A> is a semigroup, then this attribute gives a list of lists
+      showing how the congruences of <A>S</A> are contained in each other. <P/>
+
+      The congruence numbered <M>i</M> is a subcongruence of the congruence
+      numbered <M>j</M> if and only if <M>i</M> is in the <M>j</M>th list.
+
+      <Example><![CDATA[
+gap> S := OrderEndomorphisms(2);;
+gap> LatticeOfCongruences(S);
+[ [  ], [ 1, 3 ], [ 1 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
