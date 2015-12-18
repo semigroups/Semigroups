@@ -104,11 +104,6 @@ end);
 # Not yet processed . . .
 #############################################################################
 
-
-
-# FIXME C/C++
-
-
 # LambdaInverse - fuse <blocks> with the left blocks of <f> keeping track of
 # the signs of the fused classes.
 #
