@@ -295,22 +295,27 @@ gap> AsLookupTable(cong);
 [ 1, 2, 3, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4 ]
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(pairs);
-gap> Unbind(classy);
-gap> Unbind(q);
 gap> Unbind(S);
+gap> Unbind(cong);
+gap> Unbind(ccong);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
+gap> Unbind(classx);
+gap> Unbind(classy);
+gap> Unbind(classz);
+gap> Unbind(q);
+gap> Unbind(pairs);
 gap> Unbind(T);
 gap> Unbind(utrace);
 gap> Unbind(ttrace);
-gap> Unbind(classz);
-gap> Unbind(ccong);
-gap> Unbind(classx);
-gap> Unbind(cong);
 gap> Unbind(cong1);
 gap> Unbind(cong2);
-gap> Unbind(y);
-gap> Unbind(x);
-gap> Unbind(z);
+gap> Unbind(g);
+gap> Unbind(pair);
+gap> Unbind(min);
+gap> Unbind(pair1);
+gap> Unbind(pair2);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/conginv.tst");

@@ -178,18 +178,22 @@ Error, Semigroups: JoinSemigroupCongruences: usage,
 <cong1> and <cong2> must be over the same semigroup,
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(pairs);
-gap> Unbind(classy);
-gap> Unbind(congs);
-gap> Unbind(q);
 gap> Unbind(S);
-gap> Unbind(classes);
-gap> Unbind(classz);
-gap> Unbind(classx);
+gap> Unbind(congs);
 gap> Unbind(cong);
-gap> Unbind(y);
 gap> Unbind(x);
+gap> Unbind(y);
 gap> Unbind(z);
+gap> Unbind(classes);
+gap> Unbind(classx);
+gap> Unbind(classy);
+gap> Unbind(classz);
+gap> Unbind(elms);
+gap> Unbind(q);
+gap> Unbind(pairs);
+gap> Unbind(T);
+gap> Unbind(cong1);
+gap> Unbind(cong2);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congsimple.tst");

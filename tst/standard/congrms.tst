@@ -572,27 +572,37 @@ Error, Semigroups: IsLinkedTriple: usage,
 the first arg <S> must be a finite simple Rees matrix semigroup,
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(z);
-gap> Unbind(colBlocks);
 gap> Unbind(g);
-gap> Unbind(eq);
-gap> Unbind(nCoset);
-gap> Unbind(cong);
-gap> Unbind(ccong);
-gap> Unbind(n);
-gap> Unbind(q);
-gap> Unbind(class);
+gap> Unbind(mat);
 gap> Unbind(S);
-gap> Unbind(classes);
-gap> Unbind(uni);
-gap> Unbind(class1);
-gap> Unbind(rowBlocks);
-gap> Unbind(y);
-gap> Unbind(x);
 gap> Unbind(congs);
+gap> Unbind(n);
+gap> Unbind(colBlocks);
+gap> Unbind(rowBlocks);
+gap> Unbind(cong);
+gap> Unbind(cong2);
+gap> Unbind(T);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
+gap> Unbind(t);
+gap> Unbind(ims);
+gap> Unbind(classes);
+gap> Unbind(class1);
 gap> Unbind(class2);
 gap> Unbind(class3);
-gap> Unbind(mat);
+gap> Unbind(classother);
+gap> Unbind(nCoset);
+gap> Unbind(class);
+gap> Unbind(badCoset);
+gap> Unbind(cong1);
+gap> Unbind(q);
+gap> Unbind(ccong);
+gap> Unbind(uni);
+gap> Unbind(eq);
+gap> Unbind(congs1);
+gap> Unbind(zero);
+gap> Unbind(class0);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congrms.tst");

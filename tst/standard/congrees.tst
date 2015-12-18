@@ -242,8 +242,8 @@ congruences must be defined over the same semigroup,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
-gap> Unbind(cong);
 gap> Unbind(I);
+gap> Unbind(cong);
 gap> Unbind(cc);
 gap> Unbind(ccong);
 gap> Unbind(x);
@@ -264,6 +264,15 @@ gap> Unbind(K);
 gap> Unbind(ck);
 gap> Unbind(c);
 gap> Unbind(pairs);
+gap> Unbind(i1);
+gap> Unbind(i2);
+gap> Unbind(i3);
+gap> Unbind(c1);
+gap> Unbind(c2);
+gap> Unbind(c3);
+gap> Unbind(T);
+gap> Unbind(i4);
+gap> Unbind(c4);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congrees.tst");

@@ -220,10 +220,18 @@ gap> GeneratingPairsOfSemigroupCongruence(uni);
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
-gap> Unbind(r);
 gap> Unbind(uni);
 gap> Unbind(pairs);
 gap> Unbind(cong);
+gap> Unbind(r);
+gap> Unbind(congs);
+gap> Unbind(otheruni);
+gap> Unbind(T);
+gap> Unbind(uniS);
+gap> Unbind(uniT);
+gap> Unbind(classes);
+gap> Unbind(class);
+gap> Unbind(badcong);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/conguniv.tst");

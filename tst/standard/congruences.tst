@@ -204,7 +204,6 @@ gap> IsSuperrelation(cong1, cong2);
 true
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(cong);
 gap> Unbind(S);
 gap> Unbind(pairs);
 gap> Unbind(iso);
@@ -214,7 +213,12 @@ gap> Unbind(I);
 gap> Unbind(ker);
 gap> Unbind(trc);
 gap> Unbind(pair);
+gap> Unbind(cong);
 gap> Unbind(class);
+gap> Unbind(pair1);
+gap> Unbind(pair2);
+gap> Unbind(cong1);
+gap> Unbind(cong2);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/congruences.tst");
