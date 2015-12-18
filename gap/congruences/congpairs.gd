@@ -11,13 +11,10 @@
 ## generating pairs, using a pair enumeration and union-find method.
 ##
 ## See the header of congpairs.gi for a full summary.
-## 
+##
 
-DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);
-DeclareProperty("IsLeftSemigroupCongruence", IsRightSemigroupCongruence);
-DeclareProperty("IsSemigroupCongruence", IsLeftSemigroupCongruence);
-DeclareProperty("IsSemigroupCongruence", IsRightSemigroupCongruence);
-
+DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
+                 [IsSemigroupCongruence]);
 DeclareCategory("SEMIGROUPS_IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("SEMIGROUPS_Enumerate", [IsEquivalenceRelation, IsFunction]);
 DeclareOperation("SEMIGROUPS_Enumerate",

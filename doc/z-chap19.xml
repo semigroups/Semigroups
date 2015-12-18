@@ -78,6 +78,19 @@
 
   </Section>
 
+<Section>
+    <Heading>
+      Comparing congruences
+    </Heading>
+
+    <#Include Label = "IsSubrelation">
+    <#Include Label = "IsSuperrelation">
+    <#Include Label = "MeetSemigroupCongruences">
+    <#Include Label = "JoinSemigroupCongruences">
+
+  </Section>
+
+
   <Section>
     <Heading>Congruences on Rees matrix semigroups</Heading>
 
@@ -164,8 +177,6 @@
     <#Include Label = "CanonicalRepresentative">
     <#Include Label = "AsSemigroupCongruenceByGeneratingPairs">
     <#Include Label = "AsRZMSCongruenceByLinkedTriple">
-    <#Include Label = "MeetSemigroupCongruences">
-    <#Include Label = "JoinSemigroupCongruences">
   </Section>
 
   <Section>
@@ -227,6 +238,7 @@
     <#Include Label = "KernelOfSemigroupCongruence">
     <#Include Label = "TraceOfSemigroupCongruence">
     <#Include Label = "IsInverseSemigroupCongruenceClassByKernelTrace">
+    <#Include Label = "MinimumGroupCongruence">
   </Section>
 
   <Section>

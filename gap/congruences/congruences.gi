@@ -253,8 +253,8 @@ end);
 #
 
 InstallMethod(IsSuperrelation,
-"for two equivalence relations",
-[IsEquivalenceRelation, IsEquivalenceRelation],
-function(eq1, eq2)
-  return IsSubrelation(eq2, eq1);
+"for two semigroup congruences",
+[IsSemigroupCongruence, IsSemigroupCongruence],
+function(cong1, cong2)
+  return IsSubrelation(cong2, cong1);
 end);

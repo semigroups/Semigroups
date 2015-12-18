@@ -41,11 +41,7 @@ DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
                GeneratingPairsOfRightMagmaCongruence);
 
 DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);
-DeclareOperation("\*", [IsEquivalenceClass, IsList]);
-DeclareOperation("\*", [IsList, IsEquivalenceClass]);
 
-DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
-                 [IsSemigroupCongruence]);
 DeclareAttribute("AsLookupTable", IsEquivalenceRelation);
 DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
 
@@ -58,6 +54,11 @@ DeclareOperation("IsSubrelation",
                  [IsEquivalenceRelation, IsEquivalenceRelation]);
 DeclareOperation("IsSuperrelation",
                  [IsEquivalenceRelation, IsEquivalenceRelation]);
+
+DeclareProperty("IsRightSemigroupCongruence", IsLeftSemigroupCongruence);
+DeclareProperty("IsLeftSemigroupCongruence", IsRightSemigroupCongruence);
+DeclareProperty("IsSemigroupCongruence", IsLeftSemigroupCongruence);
+DeclareProperty("IsSemigroupCongruence", IsRightSemigroupCongruence);
 
 # Helper functions to EquivalenceClasses for specific categories
 DeclareOperation("CongruenceClasses", [IsSemigroupCongruence]);
