@@ -190,7 +190,7 @@ function(cong)
     for id in traceBlock do
       for elm in LClass(S, id) do
         # Find the congruence class that this element lies in
-        pos := PositionProperty(blockreps, rep -> elm*rep^-1 in kernel);
+        pos := PositionProperty(blockreps, rep -> elm * rep ^ -1 in kernel);
         if pos = fail then
           # New class
           Add(blockreps, elm);
@@ -207,7 +207,7 @@ function(cong)
 
   # Create the class objects
   classes := [];
-  for i in [1..Length(reps)] do
+  for i in [1 .. Length(reps)] do
     classes[i] := EquivalenceClassOfElementNC(cong, reps[i]);
     SetAsList(classes[i], elmlists[i]);
   od;
@@ -386,7 +386,7 @@ InstallMethod(TraceOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  local S, invcong;
+  local invcong;
   if not IsInverseSemigroup(Range(cong)) then
     ErrorMayQuit("Semigroups: TraceOfSemigroupCongruence: usage,\n",
                  "the argument <cong> must be over an inverse semigroup,");
@@ -424,9 +424,9 @@ function(cong)
                  "the argument <cong> must be over an inverse semigroup,");
   fi;
   return SEMIGROUPS.KernelTraceClosure(S,
-                                       IdempotentGeneratedSubsemigroup(S),
-                                       List(Idempotents(S), e -> [e]),
-                                       GeneratingPairsOfSemigroupCongruence(cong));
+                                   IdempotentGeneratedSubsemigroup(S),
+                                   List(Idempotents(S), e -> [e]),
+                                   GeneratingPairsOfSemigroupCongruence(cong));
 end);
 
 #
@@ -491,7 +491,7 @@ function(c1, c2)
   idsdata := GenericSemigroupData(IdempotentGeneratedSubsemigroup(S));
   c2lookup := c2!.traceLookup;
   for block in c1!.traceBlocks do
-    classnos := c2lookup{List(block, x-> Position(idsdata, x))};
+    classnos := c2lookup{List(block, x -> Position(idsdata, x))};
     for classno in DuplicateFreeList(classnos) do
       Add(traceBlocks, block{Positions(classnos, classno)});
     od;
@@ -509,9 +509,9 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   # It returns the minimal congruence containing "kernel" in its kernel and
   # "traceBlocks" in its trace, and containing all the given pairs
   #
-  local idsmgp, idsdata, idslist, slist, kernelgenstoapply, gen, nrk, nr, 
-        traceUF, i, pos1, j, pos, hashlen, ht, treehashsize, right, genstoapply, 
-        NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions, 
+  local idsmgp, idsdata, idslist, slist, kernelgenstoapply, gen, nrk, nr,
+        traceUF, i, pos1, j, pos, hashlen, ht, treehashsize, right, genstoapply,
+        NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions,
         compute_kernel, oldLookup, oldKernel, trace_unchanged, kernel_unchanged;
 
   idsmgp := IdempotentGeneratedSubsemigroup(S);

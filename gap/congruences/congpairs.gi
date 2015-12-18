@@ -50,7 +50,7 @@
 SEMIGROUPS.SetupCongData := function(cong)
   # This function creates the congruence data object for cong.  It should only
   # be called once.
-  local S, elms, genpairs, gendata, pairs, hashlen, ht, treehashsize, data, 
+  local S, elms, genpairs, gendata, pairs, hashlen, ht, treehashsize, data,
         pairstoapply, pos, found, ufdata;
 
   S := Range(cong);
@@ -64,7 +64,7 @@ SEMIGROUPS.SetupCongData := function(cong)
   elif HasGeneratingPairsOfRightMagmaCongruence(cong) then
     genpairs := GeneratingPairsOfRightSemigroupCongruence(cong);
   fi;
-  
+
   gendata := GenericSemigroupData(S);
   pairs   := List(genpairs, x -> [Position(gendata, x[1]),
                                   Position(gendata, x[2])]);
@@ -416,7 +416,7 @@ function(_record)
   [IsDenseList, _IsXSemigroupCongruence and
    _HasGeneratingPairsOfXSemigroupCongruence],
   function(pair, cong)
-    local S, elms, p1, p2, table, lookfunc;
+    local S, p1, p2, table, lookfunc;
 
     # Input checks
     S := Range(cong);

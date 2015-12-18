@@ -23,7 +23,7 @@
 
 InstallGlobalFunction(SemigroupCongruence,
 function(arg)
-  local S, pairs, cong;
+  local S, pairs;
   if not Length(arg) >= 2 then
     ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
                  "at least 2 arguments are required,");
