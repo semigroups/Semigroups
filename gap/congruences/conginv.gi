@@ -509,11 +509,10 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   # It returns the minimal congruence containing "kernel" in its kernel and
   # "traceBlocks" in its trace, and containing all the given pairs
   #
-  local idsmgp, idsdata, idslist, slist, nr, kernelgenstoapply, gen, nrk,
-        traceUF, i, pos1, j, pos, hashlen, ht, treehashsize, right, left,
-        genstoapply, NormalClosureInverseSemigroup, enumerate_trace,
-        enforce_conditions, compute_kernel, oldLookup, oldKernel,
-        trace_unchanged, kernel_unchanged;
+  local idsmgp, idsdata, idslist, slist, kernelgenstoapply, gen, nrk, nr, 
+        traceUF, i, pos1, j, pos, hashlen, ht, treehashsize, right, genstoapply, 
+        NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions, 
+        compute_kernel, oldLookup, oldKernel, trace_unchanged, kernel_unchanged;
 
   idsmgp := IdempotentGeneratedSubsemigroup(S);
   idsdata := GenericSemigroupData(idsmgp);
@@ -549,7 +548,6 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   ht := HTCreate([1, 1], rec(forflatplainlists := true,
                              treehashsize := hashlen));
   right := RightCayleyGraphSemigroup(idsmgp);
-  left := LeftCayleyGraphSemigroup(idsmgp);
   genstoapply := [1 .. Length(right[1])];
 
   #
@@ -606,17 +604,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
       pos := pos + 1;
       x := pairstoapply[pos];
       for j in genstoapply do
-        # Add the pair's left-multiples
+        # Add the pair's right-multiples (idsmgp is commutative)
         y := [right[x[1]][j], right[x[2]][j]];
-        if y[1] <> y[2] and HTValue(ht, y) = fail then
-          HTAdd(ht, y, true);
-          nr := nr + 1;
-          pairstoapply[nr] := y;
-          UF_UNION(traceUF, y);
-        fi;
-
-        # Add the pair's right-multiples
-        y := [left[x[1]][j], left[x[2]][j]];
         if y[1] <> y[2] and HTValue(ht, y) = fail then
           HTAdd(ht, y, true);
           nr := nr + 1;
