@@ -217,11 +217,12 @@ gap> cong := InverseSemigroupCongruenceByKernelTrace(S, kernel, trace);
     </Returns>
     <Description>
       If <A>S</A> is an inverse semigroup, then this function returns the
-      least congruence on <A>S</A> whose quotient is a group.
+      least congruence on <A>S</A> whose quotient is a group. <P/>
 
       <Example><![CDATA[
-gap> S := InverseSemigroup([PartialPerm([1,2,5,6], [5,2,1,4]),
->                           PartialPerm([1,2,3,4,5,7], [1,4,6,3,5,2])]);;
+gap> S := InverseSemigroup(
+>       [PartialPerm([1,2,5,6], [5,2,1,4]),
+>        PartialPerm([1,2,3,4,5,7], [1,4,6,3,5,2])]);;
 gap> cong := MinimumGroupCongruence(S);
 <semigroup congruence over <inverse partial perm semigroup of rank 7 
  with 2 generators> with congruence pair (59,1)>
