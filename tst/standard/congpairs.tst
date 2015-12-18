@@ -332,6 +332,15 @@ gap> l := LatticeOfCongruences(S);
   [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13 ], [ 1, 2, 3, 4, 7, 8, 9 ], [ 1 ], 
   [ 1 ], [ 1, 7, 8 ], [ 1, 3 ], [ 1, 2, 3, 7, 10 ], [ 1, 3, 4, 8, 10 ], 
   [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12 ] ]
+gap> Print(l, "\n");
+[ [  ], [ 1, 3, 7 ], [ 1 ], [ 1, 3, 8 ], 
+  [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13 ], [ 1, 2, 3, 4, 7, 8, 9 ], [ 1 ], 
+  [ 1 ], [ 1, 7, 8 ], [ 1, 3 ], [ 1, 2, 3, 7, 10 ], [ 1, 3, 4, 8, 10 ], 
+  [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12 ] ]
+gap> IsBound(l[4]);
+true
+gap> l[4];
+[ 1, 3, 8 ]
 gap> S := OrderEndomorphisms(2);;
 gap> CongruencesOfSemigroup(S);
 [ <semigroup congruence over <regular transformation monoid of size 3, 
