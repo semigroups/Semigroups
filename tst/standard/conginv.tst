@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
-#T# InverseCongTest1: Create an inverse semigroup
+#T# InverseCongTest1: Create an inverse semigroup congruence
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 >  PartialPerm([1, 2, 4], [3, 1, 5]),
 >  PartialPerm([1, 2, 5], [5, 1, 3]),
@@ -22,6 +22,16 @@ gap> cong := SemigroupCongruence(S,
 >  [PartialPerm([4], [4]), PartialPerm([2], [1])]);
 <semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
  generators> with congruence pair (41,16)>
+gap> ccong := SemigroupCongruenceByGeneratingPairs(S,
+>  [[PartialPerm([4], [4]), PartialPerm([2], [1])]]);
+<semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
+ generators> with 1 generating pairs>
+gap> KernelOfSemigroupCongruence(ccong) = cong!.kernel;
+true
+gap> ccong := SemigroupCongruenceByGeneratingPairs(S,
+>  [[PartialPerm([4], [4]), PartialPerm([2], [1])]]);;
+gap> TraceOfSemigroupCongruence(ccong) = cong!.traceBlocks;
+true
 
 # Try some methods
 gap> x := PartialPerm([1], [2]);;
@@ -35,8 +45,8 @@ gap> [y, z] in cong;
 false
 
 # Get the Kernel and Trace out
-gap> KernelOfSemigroupCongruence(cong);
-<inverse partial perm semigroup of rank 5 with 12 generators>
+gap> Size(KernelOfSemigroupCongruence(cong));
+41
 gap> AsSortedList(List(TraceOfSemigroupCongruence(cong), AsSortedList));
 [ [ <empty partial perm>, <identity partial perm on [ 1 ]>, 
       <identity partial perm on [ 2 ]>, <identity partial perm on [ 3 ]>, 
@@ -59,7 +69,7 @@ gap> AsSortedList(List(TraceOfSemigroupCongruence(cong), AsSortedList));
 
 # Congruence classes
 gap> classx := CongruenceClassOfElement(cong, x);
-{PartialPerm( [ 1 ], [ 2 ] )}
+<congruence class of [1,2]>
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);;
 gap> classx = classy;
@@ -78,6 +88,8 @@ gap> y * x in classy * classx;
 true
 gap> Size(classx);
 26
+gap> AsSSortedList(classy);
+[ [5,1](2) ]
 
 # Quotients
 gap> q := S / cong;;
@@ -196,7 +208,7 @@ gap> AsInverseSemigroupCongruenceByKernelTrace(cong);
 Error, Semigroups: AsInverseSemigroupCongruenceByKernelTrace: usage,
 the argument <cong> must be over an inverse semigroup,
 
-#T# AsInverseSemigroupCongruenceByKernelTrace: Another test
+#T# AsInverseSemigroupCongruenceByKernelTrace: More tests
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 3, 4]),
 >                           PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 >                           PartialPerm([1, 3, 5], [5, 1, 3])]);;
@@ -205,24 +217,105 @@ gap> cong := SemigroupCongruence(S,
 >       [PartialPerm([5], [3]), PartialPerm([], [])]);
 <semigroup congruence over <inverse partial perm semigroup of rank 5 with 3 
  generators> with congruence pair (44,19)>
+gap> cong := SemigroupCongruence(S,
+>       [ PartialPerm( [ 1, 3, 5 ], [ 1, 3, 5 ] ), 
+>         PartialPerm( [ 1, 2, 4 ], [ 3, 1, 2 ] ) ]);
+<semigroup congruence over <inverse partial perm semigroup of rank 5 with 3 
+ generators> with congruence pair (256,3)>
+
+#T# MinimumGroupCongruence
+gap> S := InverseSemigroup([PartialPerm([1,2,5,6], [5,2,1,4]),
+>                           PartialPerm([1,2,3,4,5,7], [1,4,6,3,5,2])]);;
+gap> cong := MinimumGroupCongruence(S);
+<semigroup congruence over <inverse partial perm semigroup of rank 7 with 2 
+ generators> with congruence pair (59,1)>
+gap> NrEquivalenceClasses(cong);
+2
+gap> S := InverseSemigroup([PartialPerm([1,2,3,4,6], [3,2,1,4,7]),
+>                           PartialPerm([1,2,3,7], [3,1,2,5])]);;
+gap> cong := MinimumGroupCongruence(S);
+<semigroup congruence over <inverse partial perm semigroup of rank 7 with 2 
+ generators> with congruence pair (7,1)>
+gap> q := S / cong;;
+gap> IsGroupAsSemigroup(q);
+true
+gap> g := Range(IsomorphismPermGroup(q));;
+gap> StructureDescription(g);
+"S3"
+
+#T# JoinSemigroupCongruences
+gap> S := InverseMonoid( [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ) ] );;
+gap> pair := [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ), PartialPerm( [  ], [  ] ) ];;
+gap> cong := SemigroupCongruence(S, pair);;
+gap> min := MinimumGroupCongruence(S);;
+gap> JoinSemigroupCongruences(cong, min);
+<semigroup congruence over <inverse partial perm monoid of rank 3 with 1 
+ generator> with congruence pair (15,1)>
+gap> IsSubrelation(last, cong);
+true
+
+#T# MeetSemigroupCongruences
+gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ),
+>                             PartialPerm( [ 1, 3 ], [ 3, 1 ] ) ] );;
+gap> pair1 := [ PartialPerm( [  ], [  ] ), PartialPerm( [ 1, 3 ], [ 1, 3 ] ) ];;
+gap> pair2 := [ PartialPerm( [  ], [  ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ];;
+gap> cong1 := SemigroupCongruence(S, pair1);;
+gap> cong2 := SemigroupCongruence(S, pair2);;
+gap> MeetSemigroupCongruences(cong1, cong2);
+<semigroup congruence over <inverse partial perm semigroup of rank 3 with 2 
+ generators> with congruence pair (12,3)>
+
+#T# Bad input: different semigroups
+gap> S := InverseSemigroup([PartialPerm([1,2], [2,1]),
+>                           PartialPerm([1,3], [3,1])]);;
+gap> T := InverseSemigroup([PartialPerm([1,2], [3,1])]);;
+gap> S = T;
+false
+gap> pair := [PartialPerm([1,2], [3,1]), PartialPerm([], [])];;
+gap> cong1 := MinimumGroupCongruence(S);;
+gap> cong2 := SemigroupCongruence(T, pair);;
+gap> MeetSemigroupCongruences(cong1, cong2);
+Error, Semigroups: MeetSemigroupCongruences: usage,
+congruences must be defined over the same semigroup,
+gap> JoinSemigroupCongruences(cong1, cong2);
+Error, Semigroups: JoinSemigroupCongruences: usage,
+congruences must be defined over the same semigroup,
+gap> IsSubrelation(cong1, cong2);
+Error, Semigroups: IsSubrelation: usage,
+congruences must be defined over the same semigroup,
+
+#T# AsLookupTable
+gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 1, 2 ] ), 
+>                             PartialPerm( [ 1, 2 ], [ 2, 3 ] ) ] );;
+gap> pairs := [PartialPerm([],[]), PartialPerm([1],[1])];;
+gap> cong := SemigroupCongruence(S, pairs);
+<semigroup congruence over <inverse partial perm semigroup of rank 3 with 2 
+ generators> with congruence pair (12,3)>
+gap> AsLookupTable(cong);
+[ 1, 2, 3, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4 ]
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(pairs);
-gap> Unbind(classy);
-gap> Unbind(q);
 gap> Unbind(S);
+gap> Unbind(cong);
+gap> Unbind(ccong);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
+gap> Unbind(classx);
+gap> Unbind(classy);
+gap> Unbind(classz);
+gap> Unbind(q);
+gap> Unbind(pairs);
 gap> Unbind(T);
 gap> Unbind(utrace);
 gap> Unbind(ttrace);
-gap> Unbind(classz);
-gap> Unbind(ccong);
-gap> Unbind(classx);
-gap> Unbind(cong);
 gap> Unbind(cong1);
 gap> Unbind(cong2);
-gap> Unbind(y);
-gap> Unbind(x);
-gap> Unbind(z);
+gap> Unbind(g);
+gap> Unbind(pair);
+gap> Unbind(min);
+gap> Unbind(pair1);
+gap> Unbind(pair2);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/conginv.tst");

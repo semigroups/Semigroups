@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  congruences/rees.gi
+#W  congruences/congrees.gi
 #Y  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -14,12 +14,12 @@
 InstallMethod(IsReesCongruence,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
-1, #FIXME why is this here?
+1, # Prioritise this function over the one in the library
 function(cong)
   local S, classes, sizes, pos, class, ideal;
   # This function is adapted from code in the library
   S := Range(cong);
-  if NrCongruenceClasses(cong) = Size(S) then
+  if NrEquivalenceClasses(cong) = Size(S) then
     # Trivial congruence - only possible ideal is zero
     if MultiplicativeZero(S) <> fail then
       SetSemigroupIdealOfReesCongruence(cong, MinimalIdeal(S));
@@ -38,6 +38,7 @@ function(cong)
     # Only one non-trivial class - check it is an ideal
     class := classes[pos[1]];
     ideal := SemigroupIdeal(S, AsList(class));
+    ideal := SemigroupIdeal(S, MinimalIdealGeneratingSet(ideal));
     if Size(class) = Size(ideal) then
       SetSemigroupIdealOfReesCongruence(cong, ideal);
       return true;
@@ -52,7 +53,7 @@ end);
 InstallMethod(ReesCongruenceOfSemigroupIdeal,
 "for a semigroup ideal",
 [IsSemigroupIdeal],
-1, #FIXME why is this here?
+1, # Prioritise this function over the one in the library
 function(I)
   local S, fam, type, cong;
   S := Parent(I);
@@ -95,7 +96,7 @@ end);
 
 #
 
-InstallMethod(NrCongruenceClasses,
+InstallMethod(NrEquivalenceClasses,
 "for a Rees congruence",
 [IsReesCongruence],
 cong -> Size(Range(cong)) - Size(SemigroupIdealOfReesCongruence(cong)) + 1);
@@ -201,7 +202,7 @@ InstallMethod(EquivalenceClasses,
 [IsReesCongruence],
 function(cong)
   local classes, I, next, x;
-  classes := EmptyPlist(NrCongruenceClasses(cong));
+  classes := EmptyPlist(NrEquivalenceClasses(cong));
   I := SemigroupIdealOfReesCongruence(cong);
   classes[1] := EquivalenceClassOfElementNC(cong, I.1);
   next := 2;
@@ -248,7 +249,7 @@ function(cong, elm)
   fam := CollectionsFamily(FamilyObj(elm));
   class := Objectify(NewType(fam, IsReesCongruenceClass),
                      rec(is_ideal_class := is_ideal_class));
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
@@ -261,7 +262,8 @@ InstallMethod(\in,
 [IsAssociativeElement, IsReesCongruenceClass],
 function(elm, class)
   if class!.is_ideal_class then
-    return elm in SemigroupIdealOfReesCongruence(Parent(class));
+    return elm in SemigroupIdealOfReesCongruence(
+                    EquivalenceClassRelation(class));
   else
     return elm = Representative(class);
   fi;
@@ -273,7 +275,7 @@ InstallMethod(\*,
 "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
 function(c1, c2)
-  if not Parent(c1) = Parent(c2) then
+  if not EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) then
     ErrorMayQuit("Semigroups: \\*: usage,\n",
                  "the args <c1> and <c2> must be classes of the same ",
                  "congruence,");
@@ -284,7 +286,7 @@ function(c1, c2)
   if c2!.is_ideal_class then
     return c2;
   fi;
-  return EquivalenceClassOfElementNC(Parent(c1),
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1),
                                      Representative(c1) * Representative(c2));
 end);
 
@@ -322,7 +324,7 @@ function(cong)
   S := Range(cong);
   gens := MinimalIdealGeneratingSet(SemigroupIdealOfReesCongruence(cong));
   min := MinimalIdeal(S);
-  nrclasses := NrCongruenceClasses(cong);
+  nrclasses := NrEquivalenceClasses(cong);
   pairs := [];
   cong := SemigroupCongruence(S, pairs);
   for y in min do

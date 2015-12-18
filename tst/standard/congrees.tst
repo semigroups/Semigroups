@@ -1,13 +1,13 @@
 ###########################################################################
 ##
-#W  standard/rees.tst
+#W  standard/congrees.tst
 #Y  Copyright (C) 2015                                      Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/rees.tst");
+gap> START_TEST("Semigroups package: standard/congrees.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -213,10 +213,37 @@ gap> cong := SemigroupCongruence(S, pairs);;
 gap> IsReesCongruence(cong);
 false
 
+#T# IsSubrelation
+gap> S := Semigroup([Transformation([2,4,1,2]), Transformation([3,3,4,1])]);;
+gap> i1 := SemigroupIdeal(S, [ Transformation( [ 2, 4, 1, 2 ] ) ]);;
+gap> i2 := SemigroupIdeal(S, [ Transformation( [ 4, 2, 2, 4 ] ) ]);;
+gap> i3 := SemigroupIdeal(S, [ Transformation( [ 3, 3, 4, 1 ] ) ]);;
+gap> c1 := ReesCongruenceOfSemigroupIdeal(i1);;
+gap> c2 := ReesCongruenceOfSemigroupIdeal(i2);;
+gap> c3 := ReesCongruenceOfSemigroupIdeal(i3);;
+gap> IsSubrelation(c3, c2);
+true
+gap> IsSubrelation(c1, c2);
+true
+gap> IsSubrelation(c2, c1);
+false
+gap> IsSubrelation(c3, c3);
+true
+gap> IsSubrelation(c3, c1);
+false
+gap> IsSubrelation(c1, c3);
+false
+gap> T := Semigroup([Transformation([2,4,1,2])]);;
+gap> i4 := SemigroupIdeal(T, [ Transformation( [ 2, 4, 1, 2 ] ) ]);;
+gap> c4 := ReesCongruenceOfSemigroupIdeal(i4);;
+gap> IsSubrelation(c4, c1);
+Error, Semigroups: IsSubrelation: usage,
+congruences must be defined over the same semigroup,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
-gap> Unbind(cong);
 gap> Unbind(I);
+gap> Unbind(cong);
 gap> Unbind(cc);
 gap> Unbind(ccong);
 gap> Unbind(x);
@@ -237,6 +264,15 @@ gap> Unbind(K);
 gap> Unbind(ck);
 gap> Unbind(c);
 gap> Unbind(pairs);
+gap> Unbind(i1);
+gap> Unbind(i2);
+gap> Unbind(i3);
+gap> Unbind(c1);
+gap> Unbind(c2);
+gap> Unbind(c3);
+gap> Unbind(T);
+gap> Unbind(i4);
+gap> Unbind(c4);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/rees.tst");
+gap> STOP_TEST("Semigroups package: standard/congrees.tst");

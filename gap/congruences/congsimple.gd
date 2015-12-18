@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  congruences/simple.gd
+#W  congruences/congsimple.gd
 #Y  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -22,7 +22,8 @@ DeclareCategory("SEMIGROUPS_CongClassSimple",
 
 #
 
-SEMIGROUPS.SimpleCongFromPairs := function(S, pairs)
+SEMIGROUPS.SimpleCongFromPairs :=
+function(S, pairs)
   local iso, r, rmspairs, pcong, rmscong, cong;
 
   # If s is a RMS/RZMS, then just create the linked triple congruence
@@ -83,9 +84,9 @@ SEMIGROUPS.SimpleClassFromRMSclass := function(cong, rmsclass)
   fam := FamilyObj(Range(cong));
   class := Objectify(NewType(fam, SEMIGROUPS_CongClassSimple),
                      rec(rmsclass := rmsclass, iso := cong!.iso));
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
+  SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, Representative(rmsclass) ^
                            InverseGeneralMapping(cong!.iso));
-  SetEquivalenceClassRelation(class, cong);
   return class;
 end;
