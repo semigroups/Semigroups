@@ -11,12 +11,12 @@
 ## semigroup congruences.  Methods for specific types of congruence are
 ## implemented in the following files:
 ##
-##       inverse.gi - Inverse semigroups
-##       pairs.gi   - Congruences with generating pairs
-##       rees.gi    - Rees congruences
-##       reesmat.gi - (0-)simple Rees matrix semigroups
-##       simple.gi  - (0-)simple semigroups
-##       univ.gi    - Universal congruences
+##       conginv.gi     - Inverse semigroups
+##       congpairs.gi   - Congruences with generating pairs
+##       congrees.gi    - Rees congruences
+##       congrms.gi     - (0-)simple Rees matrix semigroups
+##       congsimple.gi  - (0-)simple semigroups
+##       conguniv.gi    - Universal congruences
 ##
 ## congruences.gd contains declarations for many of these.
 ##
@@ -182,4 +182,79 @@ function(class)
   Print("<congruence class of ");
   ViewObj(Representative(class));
   Print(">");
+end);
+
+#
+
+InstallMethod(ViewObj,
+"for a left congruence class",
+[IsLeftCongruenceClass],
+function(class)
+  Print("<left congruence class of ");
+  ViewObj(Representative(class));
+  Print(">");
+end);
+
+#
+
+InstallMethod(ViewObj,
+"for a right congruence class",
+[IsRightCongruenceClass],
+function(class)
+  Print("<right congruence class of ");
+  ViewObj(Representative(class));
+  Print(">");
+end);
+
+#
+
+InstallMethod(CongruenceClasses,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+EquivalenceClasses);
+
+#
+
+InstallMethod(LeftCongruenceClasses,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+EquivalenceClasses);
+
+#
+
+InstallMethod(RightCongruenceClasses,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+EquivalenceClasses);
+
+#
+
+InstallMethod(NrCongruenceClasses,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+NrEquivalenceClasses);
+
+#
+
+InstallMethod(NonTrivialCongruenceClasses,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+NonTrivialEquivalenceClasses);
+
+#
+
+InstallMethod(CongruenceClassOfElement,
+"for a semigroup congruence and associative element",
+[IsSemigroupCongruence, IsAssociativeElement],
+function(cong, elm)
+  return EquivalenceClassOfElement(cong, elm);
+end);
+
+#
+
+InstallMethod(IsSuperrelation,
+"for two semigroup congruences",
+[IsSemigroupCongruence, IsSemigroupCongruence],
+function(cong1, cong2)
+  return IsSubrelation(cong2, cong1);
 end);

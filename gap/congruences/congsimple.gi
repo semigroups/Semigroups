@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  congruences/simple.gi
+#W  congruences/congsimple.gi
 #Y  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -12,8 +12,6 @@
 ## congruences/reesmat.gd/gi.  These functions are not intended for direct # use
 ## by an end-user.
 ##
-
-#
 
 InstallMethod(ViewObj,
 "for a (0-)simple semigroup congruence",
@@ -32,6 +30,7 @@ end);
 InstallMethod(CongruencesOfSemigroup,
 "for a (0-)simple or simple semigroup",
 [IsSemigroup],
+1, # Try this before the method in congpairs.gi
 function(S)
   local iso, R, congs, i;
   if not (IsFinite(S) and (IsSimpleSemigroup(S)
@@ -41,7 +40,11 @@ function(S)
   if IsReesMatrixSemigroup(S) or IsReesZeroMatrixSemigroup(S) then
     return CongruencesOfSemigroup(S);
   fi;
-  iso := IsomorphismReesMatrixSemigroup(S);
+  if IsSimpleSemigroup(S) then
+    iso := IsomorphismReesMatrixSemigroup(S);
+  else
+    iso := IsomorphismReesZeroMatrixSemigroup(S);
+  fi;
   R := Range(iso);
   congs := ShallowCopy(CongruencesOfSemigroup(R));
   for i in [1 .. Length(congs)] do
@@ -65,13 +68,13 @@ end);
 
 #
 
-InstallMethod(JoinMagmaCongruences,
+InstallMethod(JoinSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
 [SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
 function(cong1, cong2)
   local join;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorMayQuit("Semigroups: JoinMagmaCongruences: usage,\n",
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
@@ -80,13 +83,13 @@ end);
 
 #
 
-InstallMethod(MeetMagmaCongruences,
+InstallMethod(MeetSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
 [SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
 function(cong1, cong2)
   local meet;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorMayQuit("Semigroups: MeetMagmaCongruences: usage,\n",
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
@@ -100,14 +103,17 @@ InstallMethod(\in,
 [IsAssociativeElementCollection, SEMIGROUPS_CongSimple],
 function(pair, cong)
   local S;
-  # Check for validity
-  if Size(pair) <> 2 then
-    return false;
-  fi;
-  S := Range(cong);
-  if not ForAll(pair, x -> x in S) then
-    return false;
-  fi;
+    # Input checks
+    S := Range(cong);
+    if Size(pair) <> 2 then
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+                   "the first arg <pair> must be a list of length 2,");
+    fi;
+    if not (pair[1] in S and pair[2] in S) then
+      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+                   "elements of the first arg <pair> must be\n",
+                   "in the range of the second arg <cong>,");
+    fi;
   return [pair[1] ^ cong!.iso, pair[2] ^ cong!.iso] in cong!.rmscong;
 end);
 
@@ -137,12 +143,11 @@ InstallMethod(EquivalenceClassOfElement,
 "for a (0-)simple semigroup congruence and associative element",
 [SEMIGROUPS_CongSimple, IsAssociativeElement],
 function(cong, elm)
-  if elm in Range(cong) then
-    return EquivalenceClassOfElementNC(cong, elm);
-  else
+  if not elm in Range(cong) then
     ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
-                 "<elm> must be an element of the range of <cong>");
+                 "<elm> must be an element of the range of <cong>,");
   fi;
+  return EquivalenceClassOfElementNC(cong, elm);
 end);
 
 #
@@ -158,11 +163,11 @@ end);
 
 #
 
-InstallMethod(NrCongruenceClasses,
-"for a (0-simple) semigroup congruence",
+InstallMethod(NrEquivalenceClasses,
+"for a (0-)simple semigroup congruence",
 [SEMIGROUPS_CongSimple],
 function(cong)
-  return NrCongruenceClasses(cong!.rmscong);
+  return NrEquivalenceClasses(cong!.rmscong);
 end);
 
 #
@@ -172,6 +177,15 @@ InstallMethod(\in,
 [IsAssociativeElement, SEMIGROUPS_CongClassSimple],
 function(elm, class)
   return (elm ^ EquivalenceClassRelation(class)!.iso in class!.rmsclass);
+end);
+
+#
+
+InstallMethod(Enumerator,
+"for a (0-)simple semigroup congruence class",
+[SEMIGROUPS_CongClassSimple],
+function(class)
+  return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
 
 #
@@ -205,13 +219,13 @@ end);
 
 #
 
-InstallMethod(GeneratingPairsOfMagmaCongruence,
+InstallMethod(GeneratingPairsOfSemigroupCongruence,
 "for a (0-)simple semigroup congruence",
 [SEMIGROUPS_CongSimple],
 function(cong)
   local map;
   map := InverseGeneralMapping(cong!.iso);
-  return List(GeneratingPairsOfMagmaCongruence(cong!.rmscong),
+  return List(GeneratingPairsOfSemigroupCongruence(cong!.rmscong),
                x -> [x[1] ^ map, x[2] ^ map]);
 end);
 
@@ -221,5 +235,45 @@ InstallMethod(CanonicalRepresentative,
 "for a (0-)simple semigroup congruence class",
 [SEMIGROUPS_CongClassSimple],
 function(class)
-  return CanonicalRepresentative(class!.rmsclass) ^ class!.iso;
+  return CanonicalRepresentative(class!.rmsclass) ^
+         InverseGeneralMapping(class!.iso);
+end);
+
+#
+
+InstallMethod(IsSubrelation,
+"for two (0-)simple semigroup congruences",
+[SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
+function(cong1, cong2)
+  return IsSubrelation(cong1!.rmscong, cong2!.rmscong);
+end);
+
+#
+
+InstallMethod(AsLookupTable,
+"for a (0-)simple semigroup congruence",
+[SEMIGROUPS_CongSimple],
+function(cong)
+  local S, rmstable, nrclasses, rmsdata, iso, elms, table, newnums, next, i,
+        rmsclass;
+  S := Range(cong);
+  rmstable := AsLookupTable(cong!.rmscong);
+  nrclasses := NrEquivalenceClasses(cong!.rmscong);
+  rmsdata := GenericSemigroupData(Range(cong!.rmscong));
+  iso := cong!.iso;
+  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+
+  # Renumber the entries so we start at 1
+  table := EmptyPlist(Length(elms));
+  newnums := EmptyPlist(nrclasses);
+  next := 1;
+  for i in [1 .. Length(elms)] do
+    rmsclass := rmstable[Position(rmsdata, elms[i] ^ iso)];
+    if not IsBound(newnums[rmsclass]) then
+      newnums[rmsclass] := next;
+      next := next + 1;
+    fi;
+    table[i] := newnums[rmsclass];
+  od;
+  return table;
 end);

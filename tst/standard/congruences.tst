@@ -193,8 +193,17 @@ gap> CongruenceClasses(cong) * class;
 [ <congruence class of Transformation( [ 4, 4, 4, 4 ] )>, 
   <congruence class of Transformation( [ 4, 4, 4, 4 ] )> ]
 
+#T# IsSuperrelation
+gap> S := Semigroup(
+> [Transformation([1, 4, 3, 4]), Transformation([2, 3, 4, 2])]);;
+gap> pair1 := [Transformation([2, 3, 4, 2]), Transformation([4, 4, 4, 4])];;
+gap> pair2 := [Transformation([2, 3, 4, 2]), Transformation([1, 4, 3, 4])];;
+gap> cong1 := SemigroupCongruence(S, pair1);;
+gap> cong2 := SemigroupCongruence(S, pair2);;
+gap> IsSuperrelation(cong1, cong2);
+true
+
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(cong);
 gap> Unbind(S);
 gap> Unbind(pairs);
 gap> Unbind(iso);
@@ -204,7 +213,12 @@ gap> Unbind(I);
 gap> Unbind(ker);
 gap> Unbind(trc);
 gap> Unbind(pair);
+gap> Unbind(cong);
 gap> Unbind(class);
+gap> Unbind(pair1);
+gap> Unbind(pair2);
+gap> Unbind(cong1);
+gap> Unbind(cong2);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/congruences.tst");

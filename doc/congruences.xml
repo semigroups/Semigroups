@@ -8,6 +8,100 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="IsSemigroupCongruence">
+  <ManSection>
+    <Prop Name="IsSemigroupCongruence" Arg="obj"/>
+    <Description>
+      A semigroup congruence <C>cong</C> is an equivalence relation on a
+      semigroup <C>S</C> which respects left and right multiplication. <P/>
+
+      That is, if <M>(a,b)</M> is a pair in <C>cong</C>, and <M>x</M> is an
+      element of <C>S</C>, then <M>(ax,bx)</M> and <M>(xa,xb)</M> are both in
+      <C>cong</C>. <P/>
+
+      The simplest way of creating a congruence in &Semigroups; is by a set of
+      <E>generating pairs</E>.  See <Ref Func="SemigroupCongruence"/>.
+
+      <Example><![CDATA[
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),  
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
+>              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
+>              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> cong := SemigroupCongruence(S, [pair1, pair2]);
+<semigroup congruence over <simple transformation semigroup of 
+ degree 5 with 4 generators> with linked triple (2,4,1)>
+gap> IsSemigroupCongruence(cong);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsLeftSemigroupCongruence">
+  <ManSection>
+    <Prop Name="IsLeftSemigroupCongruence" Arg="obj"/>
+    <Description>
+      A left semigroup congruence <C>cong</C> is an equivalence relation on a
+      semigroup <C>S</C> which respects left multiplication. <P/>
+
+      That is, if <M>(a,b)</M> is a pair in <C>cong</C>, and <M>x</M> is an
+      element of <C>S</C>, then <M>(xa,xb)</M> is also in <C>cong</C>. <P/>
+
+      The simplest way of creating a left congruence in &Semigroups; is by a set
+      of <E>generating pairs</E>.  See <Ref Func="LeftSemigroupCongruence"/>.
+
+      <Example><![CDATA[
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),  
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
+>              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
+>              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> cong := LeftSemigroupCongruence(S, [pair1, pair2]);
+<left semigroup congruence over <transformation semigroup of degree 5 
+ with 4 generators> with 2 generating pairs>
+gap> IsLeftSemigroupCongruence(cong);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsRightSemigroupCongruence">
+  <ManSection>
+    <Prop Name="IsRightSemigroupCongruence" Arg="obj"/>
+    <Description>
+      A right semigroup congruence <C>cong</C> is an equivalence relation on a
+      semigroup <C>S</C> which respects right multiplication. <P/>
+
+      That is, if <M>(a,b)</M> is a pair in <C>cong</C>, and <M>x</M> is an
+      element of <C>S</C>, then <M>(ax,bx)</M> is also in <C>cong</C>. <P/>
+
+      The simplest way of creating a right congruence in &Semigroups; is by a set
+      of <E>generating pairs</E>.  See <Ref Func="RightSemigroupCongruence"/>.
+
+      <Example><![CDATA[
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ), 
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),  
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
+>              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
+>              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> RightSemigroupCongruence(S, [pair1, pair2]);
+<right semigroup congruence over <transformation semigroup of 
+ degree 5 with 4 generators> with 2 generating pairs>
+gap> IsRightSemigroupCongruence(cong);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="SemigroupCongruence">
   <ManSection>
     <Func Name = "SemigroupCongruence" Arg = "S, pairs"/>
@@ -112,7 +206,6 @@ gap> RightSemigroupCongruence(S, pair1, pair2);
       This attribute gives a list of the congruences of the semigroup
       <A>S</A>. <P/>
 
-      At present this only works for simple and 0-simple semigroups.
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
 > [[(), (1,3,2)],[(1,2), 0]]);;
@@ -125,6 +218,25 @@ gap> congs := CongruencesOfSemigroup(S);
       Sym( [ 1 .. 3 ] )> with linked triple (3,2,2)>, 
   <semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
       Sym( [ 1 .. 3 ] )> with linked triple (S3,2,2)> ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LatticeOfCongruences">
+  <ManSection>
+    <Attr Name = "LatticeOfCongruences" Arg = "S"/>
+    <Returns>A list of lists.</Returns>
+    <Description>
+      If <A>S</A> is a semigroup, then this attribute gives a list of lists
+      showing how the congruences of <A>S</A> are contained in each other. <P/>
+
+      The congruence numbered <M>i</M> is a subcongruence of the congruence
+      numbered <M>j</M> if and only if <M>i</M> is in the <M>j</M>th list.
+
+      <Example><![CDATA[
+gap> S := OrderEndomorphisms(2);;
+gap> LatticeOfCongruences(S);
+[ [  ], [ 1, 3 ], [ 1 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -157,20 +269,17 @@ gap> AsLookupTable(cong);
 <#GAPDoc Label="NrEquivalenceClasses">
   <ManSection> 
     <Attr Name = "NrEquivalenceClasses" Arg = "eq"/>
-    <Attr Name = "NrCongruenceClasses" Arg = "cong"/>
+    <Oper Name = "NrCongruenceClasses" Arg = "cong"/>
     <Returns>A positive integer.</Returns>
     <Description>
       If <A>eq</A> is an equivalence relation, then this attribute describes
       the number of equivalence classes it has. <P/>
 
-      If <A>cong</A> is a semigroup congruence, then this attribute describes
-      the number of congruence classes it has. <P/>
-
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
 > [[(), (1,3,2)], [(1,2), 0]]);;
 gap> cong := CongruencesOfSemigroup(S)[3];;
-gap> NrCongruenceClasses(cong);
+gap> NrEquivalenceClasses(cong);
 9]]></Example>
     </Description>
   </ManSection>
@@ -199,22 +308,19 @@ gap> AsSemigroupCongruenceByGeneratingPairs(cong);
 <#GAPDoc Label="NonTrivialEquivalenceClasses">
   <ManSection>
     <Attr Name = "NonTrivialEquivalenceClasses" Arg = "eq"/>
-    <Attr Name = "NonTrivialCongruenceClasses" Arg = "cong"/>
+    <Oper Name = "NonTrivialCongruenceClasses" Arg = "cong"/>
     <Returns>A list.</Returns>
     <Description>
       If <A>eq</A> is an equivalence relation, then this attribute returns a
       list of all equivalence classes of <A>eq</A> which contain more than one
       element. <P/>
 
-      If <A>cong</A> is a semigroup congruence, then this attribute returns a
-      list of all congruence classes of <A>cong</A> which contain more than one
-      element.
       <Example><![CDATA[
 gap> S := Monoid([Transformation([1, 2, 2]),
 >                 Transformation([3, 1, 3])]);;
 gap> cong := SemigroupCongruence(S, [Transformation([1, 2, 1]), 
 >                                    Transformation([2, 1, 2])]);;
-gap> NonTrivialCongruenceClasses(cong);
+gap> NonTrivialEquivalenceClasses(cong);
 [ <congruence class of Transformation( [ 1, 2, 2 ] )>, 
   <congruence class of Transformation( [ 3, 1, 3 ] )>, 
   <congruence class of Transformation( [ 3, 1, 1 ] )>, 
@@ -222,4 +328,208 @@ gap> NonTrivialCongruenceClasses(cong);
   <congruence class of Transformation( [ 3, 3, 3 ] )> ]]]></Example>
     </Description>
   </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsCongruenceClass">
+  <ManSection>
+    <Filt Name="IsCongruenceClass" Arg="obj" Type="category"/>
+    <Description>
+      This category contains any object which is an equivalence class of a
+      semigroup congruence (see <Ref Filt="IsSemigroupCongruence"/>).  An
+      object will only be in this category if the relation is known to be a
+      semigroup congruence when the congruence class is created.
+
+      <Example><![CDATA[
+gap> S := Monoid([Transformation( [ 1, 2, 2 ] ),
+>                 Transformation( [ 3, 1, 3 ] )]);;
+gap> cong := SemigroupCongruence(S, [Transformation( [ 1, 2, 1 ] ), 
+>                                    Transformation( [ 2, 1, 2 ] )]);;
+gap> class := EquivalenceClassOfElement(cong,
+>                                       Transformation([ 3, 1, 1 ] ));
+<congruence class of Transformation( [ 3, 1, 1 ] )>
+gap> IsCongruenceClass(class);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsLeftCongruenceClass">
+  <ManSection>
+    <Filt Name="IsLeftCongruenceClass" Arg="obj" Type="category"/>
+    <Description>
+      This category contains any object which is an equivalence class of a
+      left semigroup congruence (see <Ref Filt="IsLeftSemigroupCongruence"/>).
+      An object will only be in this category if the relation is known to be a
+      left semigroup congruence when the class is created.
+
+      <Example><![CDATA[
+gap> S := Monoid([Transformation( [ 1, 2, 2 ] ),
+>                 Transformation( [ 3, 1, 3 ] )]);;
+gap> pairs := [Transformation( [ 1, 2, 1 ] ), 
+>              Transformation( [ 2, 1, 2 ] )];;
+gap> cong := LeftSemigroupCongruence(S, pairs);;
+gap> class := EquivalenceClassOfElement(cong,
+>                                       Transformation( [ 3, 1, 1 ] ));
+<left congruence class of Transformation( [ 3, 1, 1 ] )>
+gap> IsLeftCongruenceClass(class);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsRightCongruenceClass">
+  <ManSection>
+    <Filt Name="IsRightCongruenceClass" Arg="obj" Type="category"/>
+    <Description>
+      This category contains any object which is an equivalence class of a
+      right semigroup congruence (see <Ref Filt="IsRightSemigroupCongruence"/>).
+      An object will only be in this category if the relation is known to be a
+      right semigroup congruence when the class is created.
+
+      <Example><![CDATA[
+gap> S := Monoid([Transformation( [ 1, 2, 2 ] ),
+>                 Transformation( [ 3, 1, 3 ] )]);;
+gap> pairs := [Transformation( [ 1, 2, 1 ] ),
+>              Transformation( [ 2, 1, 2 ] )];;
+gap> cong := RightSemigroupCongruence(S, pairs);;
+gap> class := EquivalenceClassOfElement(cong,
+>                                       Transformation( [ 3, 1, 1 ] ));
+<right congruence class of Transformation( [ 3, 1, 1 ] )>
+gap> IsRightCongruenceClass(class);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CongruenceClassOfElement">
+<ManSection> 
+  <Oper Name = "CongruenceClassOfElement" Arg = "cong, elm"/>
+  <Returns>A congruence class.</Returns>  
+  <Description>
+    This operation is a synonym of <C>EquivalenceClassOfElement</C> in the case
+    that the argument <A>cong</A> is a congruence of a semigroup.<P/>
+
+    <Example><![CDATA[
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
+> [[(), (1, 3, 2)], [(1, 2), 0]]);;
+gap> cong := CongruencesOfSemigroup(S)[3];;
+gap> elm := ReesZeroMatrixSemigroupElement(S, 1, (1,3,2), 1);;
+gap> CongruenceClassOfElement(cong, elm);
+<congruence class of (1,(1,3,2),1)>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="CongruenceClasses">
+<ManSection> 
+  <Oper Name = "CongruenceClasses" Arg = "cong"/>
+  <Oper Name = "LeftCongruenceClasses" Arg = "cong"/>
+  <Oper Name = "RightCongruenceClasses" Arg = "cong"/>
+  <Returns>A list of equivalence classes.</Returns>  
+  <Description>
+    These operations acts as a synonym of <C>EquivalenceClasses</C> in the case
+    that the argument <A>cong</A> is a congruence, left congruence, or right
+    congruence (respectively) of a semigroup.<P/>
+
+    See <Ref Filt="IsLeftSemigroupCongruence"/>, <Ref
+    Filt="IsRightSemigroupCongruence"/>, and <Ref
+    Filt="IsSemigroupCongruence"/>.<P/>
+
+    <Example><![CDATA[
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
+> [[(), (1, 3, 2)], [(1, 2), 0]]);;
+gap> cong := CongruencesOfSemigroup(S)[3];;
+gap> elm := ReesZeroMatrixSemigroupElement(S, 1, (1,3,2), 1);;
+gap> CongruenceClassOfElement(cong, elm);
+<congruence class of (1,(1,3,2),1)>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsSubrelation">
+<ManSection> 
+  <Oper Name = "IsSubrelation" Arg = "cong1, cong2"/>
+  <Returns>True or false.</Returns>  
+  <Description>
+    If <A>cong1</A> and <A>cong2</A> are congruences over the same semigroup,
+    then this operation returns whether <A>cong2</A> is a refinement of
+    <A>cong1</A>, i.e. whether every pair in <A>cong2</A> is contained in
+    <A>cong1</A>. <P/>
+
+    <Example><![CDATA[
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
+> [[(), (1, 3, 2)], [(1, 2), 0]]);;
+gap> cong1 := CongruencesOfSemigroup(S)[3];;
+gap> cong2 := CongruencesOfSemigroup(S)[2];;
+gap> IsSubrelation(cong1, cong2);
+true]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsSuperrelation">
+<ManSection> 
+  <Oper Name = "IsSuperrelation" Arg = "cong1, cong2"/>
+  <Returns>True or false.</Returns>  
+  <Description>
+    If <A>cong1</A> and <A>cong2</A> are congruences over the same semigroup,
+    then this operation returns whether <A>cong1</A> is a refinement of
+    <A>cong2</A>, i.e. whether every pair in <A>cong1</A> is contained in
+    <A>cong2</A>. <P/>
+
+    See <Ref Oper="IsSubrelation"/>. <P/>
+
+    <Example><![CDATA[
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
+> [[(), (1, 3, 2)], [(1, 2), 0]]);;
+gap> cong1 := CongruencesOfSemigroup(S)[3];;
+gap> cong2 := CongruencesOfSemigroup(S)[2];;
+gap> IsSuperrelation(cong1, cong2);
+false]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MeetSemigroupCongruences">
+<ManSection> 
+  <Oper Name = "MeetSemigroupCongruences" Arg = "c1, c2"/>
+  <Oper Name = "MeetLeftSemigroupCongruences" Arg = "c1, c2"/>
+  <Oper Name = "MeetRightSemigroupCongruences" Arg = "c1, c2"/>
+  <Returns>A semigroup congruence.</Returns>
+  <Description>
+    This operation returns the <E>meet</E> of the two semigroup congruences
+    <A>c1</A> and <A>c2</A> -- that is, the largest semigroup congruence
+    contained in both <A>c1</A> and <A>c2</A>.<P/>
+
+    <Example><![CDATA[
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
+> [[(), (1, 3, 2)], [(1, 2), 0]]);;
+gap> congs := CongruencesOfSemigroup(S);;
+gap> MeetSemigroupCongruences(congs[2], congs[3]);
+<semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )> with linked triple (1,2,2)>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="JoinSemigroupCongruences">
+<ManSection> 
+  <Oper Name = "JoinSemigroupCongruences" Arg = "c1, c2"/>
+  <Oper Name = "JoinLeftSemigroupCongruences" Arg = "c1, c2"/>
+  <Oper Name = "JoinRightSemigroupCongruences" Arg = "c1, c2"/>
+  <Returns>A semigroup congruence.</Returns>
+  <Description>
+    This operation returns the <E>join</E> of the two semigroup congruences
+    <A>c1</A> and <A>c2</A> -- that is, the smallest semigroup congruence
+    containing all the relations in both <A>c1</A> and <A>c2</A>.<P/>
+
+    <Example><![CDATA[
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
+> [[(), (1, 3, 2)], [(1, 2), 0]]);;
+gap> congs := CongruencesOfSemigroup(S);;
+gap> JoinSemigroupCongruences(congs[2], congs[3]);
+<semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )> with linked triple (3,2,2)>]]></Example>
+  </Description>
+</ManSection>
 <#/GAPDoc>

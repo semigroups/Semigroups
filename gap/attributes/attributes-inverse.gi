@@ -312,18 +312,16 @@ InstallMethod(IsMajorantlyClosedNC,
 "for a semigroup with inverse op and associative element collection",
 [IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
-  local i, leq, iter, t, u;
+  local leq, t, iter, u;
 
   if Size(S) = Size(T) then
     return true;
   fi;
 
-  i := 0;
   leq := NaturalLeqInverseSemigroup(S);
   for t in T do
     iter := Iterator(S);
     for u in iter do
-      i := i + 1;
       if leq(t, u) and not u in T then
         return false;
       fi;

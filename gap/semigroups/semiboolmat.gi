@@ -107,7 +107,7 @@ end);
 InstallMethod(GossipMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
-  local gens, x, i, j;
+  local gens, i, j, x, m;
 
   gens := [];
   for i in [1 .. n - 1] do
@@ -119,7 +119,9 @@ function(n)
     od;
   od;
 
-  return Monoid(gens);
+  m := Monoid(gens);
+  SetNrIdempotents(m, Bell(n));
+  return m;
 end);
 
 InstallMethod(UnitriangularBooleanMatrixMonoid, "for a positive integer",

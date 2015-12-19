@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  congruences/univ.gi
+#W  congruences/conguniv.gi
 #Y  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -10,8 +10,6 @@
 ## This file contains methods for the unique universal congruence on a
 ## semigroup, that is the relation SxS on a semigroup S.
 ##
-
-#
 
 InstallMethod(UniversalSemigroupCongruence,
 "for a semigroup",
@@ -50,7 +48,7 @@ InstallMethod(\=,
 "for two universal semigroup congruences",
 [IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong1, cong2)
-  return(Range(cong1) = Range(cong2));
+  return Range(cong1) = Range(cong2);
 end);
 
 #
@@ -78,7 +76,7 @@ InstallMethod(\=,
 [IsUniversalSemigroupCongruence,
  IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
 function(ucong, pcong)
-  return Range(ucong) = Range(pcong) and NrCongruenceClasses(pcong) = 1;
+  return Range(ucong) = Range(pcong) and NrEquivalenceClasses(pcong) = 1;
 end);
 
 #
@@ -88,7 +86,7 @@ InstallMethod(\=,
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
  IsUniversalSemigroupCongruence],
 function(pcong, ucong)
-  return Range(ucong) = Range(pcong) and NrCongruenceClasses(pcong) = 1;
+  return Range(ucong) = Range(pcong) and NrEquivalenceClasses(pcong) = 1;
 end);
 
 #
@@ -104,20 +102,46 @@ end);
 
 #
 
+InstallMethod(IsSubrelation,
+"for a universal semigroup congruence and a semigroup congruence",
+[IsUniversalSemigroupCongruence, IsSemigroupCongruence],
+function(uni, cong)
+  if Range(uni) <> Range(cong) then
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return true;
+end);
+
+#
+
+InstallMethod(IsSubrelation,
+"for a semigroup congruence and a universal semigroup congruence",
+[IsSemigroupCongruence, IsUniversalSemigroupCongruence],
+function(cong, uni)
+  if Range(uni) <> Range(cong) then
+    ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
+  return uni = cong;
+end);
+
+#
+
 InstallMethod(ImagesElm,
 "for universal semigroup congruence and element",
 [IsUniversalSemigroupCongruence, IsAssociativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
     ErrorMayQuit("Semigroups: ImagesElm: usage,\n",
-                 "the second argument <elm> must be in <cong>'s semigroup");
+                 "the second argument <elm> must be in <cong>'s semigroup,");
   fi;
   return Elements(Range(cong));
 end);
 
 #
 
-InstallMethod(NrCongruenceClasses,
+InstallMethod(NrEquivalenceClasses,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
 function(cong)
@@ -127,54 +151,52 @@ end);
 #
 
 InstallMethod(JoinSemigroupCongruences,
-"for two universal semigroup congruences",
-[IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
-function(ucong1, ucong2)
-  return ucong1;
-end);
-
-#
-
-InstallMethod(JoinSemigroupCongruences,
-"for RZMS congruence by linked triple and universal congruence",
-[IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
+"for semigroup congruence and universal congruence",
+[IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, ucong)
+  if Range(cong) <> Range(ucong) then
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
   return ucong;
 end);
 
 #
 
 InstallMethod(JoinSemigroupCongruences,
-"for universal congruence and RZMS congruence by linked triple",
-[IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
+"for universal congruence and semigroup congruence",
+[IsUniversalSemigroupCongruence, IsSemigroupCongruence],
 function(ucong, cong)
+  if Range(cong) <> Range(ucong) then
+    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
   return ucong;
 end);
 
 #
 
 InstallMethod(MeetSemigroupCongruences,
-"for two universal semigroup congruences",
-[IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
-function(ucong1, ucong2)
-  return ucong1;
-end);
-
-#
-
-InstallMethod(MeetSemigroupCongruences,
-"for RZMS congruence by linked triple and universal congruence",
-[IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
+"for semigroup congruence and universal congruence",
+[IsSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong, ucong)
+  if Range(cong) <> Range(ucong) then
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
   return cong;
 end);
 
 #
 
 InstallMethod(MeetSemigroupCongruences,
-"for universal congruence and RZMS congruence by linked triple",
-[IsUniversalSemigroupCongruence, IsRZMSCongruenceByLinkedTriple],
+"for universal congruence and semigroup congruence",
+[IsUniversalSemigroupCongruence, IsSemigroupCongruence],
 function(ucong, cong)
+  if Range(cong) <> Range(ucong) then
+    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
+                 "congruences must be defined over the same semigroup,");
+  fi;
   return cong;
 end);
 
@@ -211,7 +233,7 @@ function(cong, elm)
   local fam, class;
   fam := CollectionsFamily(FamilyObj(elm));
   class := Objectify(NewType(fam, IsUniversalSemigroupCongruenceClass), rec());
-  SetParentAttr(class, cong);
+  SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
@@ -223,7 +245,7 @@ InstallMethod(\in,
 "for associative element and universal semigroup congruence class",
 [IsAssociativeElement, IsUniversalSemigroupCongruenceClass],
 function(elm, class)
-  return(elm in Range(ParentAttr(class)));
+  return elm in Parent(class);
 end);
 
 #
@@ -232,9 +254,9 @@ InstallMethod(\*,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
-  if ParentAttr(c1) <> ParentAttr(c2) then
-    ErrorMayQuit("Semigroups: \*: usage,\n",
-                 "the args <c1> and <c2> must be over the same congruence");
+  if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
+    ErrorMayQuit("Semigroups: \\*: usage,\n",
+                 "the args <c1> and <c2> must be over the same congruence,");
   fi;
   return c1;
 end);
@@ -254,7 +276,7 @@ InstallMethod(\=,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
-  return(ParentAttr(c1) = ParentAttr(c2));
+  return EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2);
 end);
 
 #
