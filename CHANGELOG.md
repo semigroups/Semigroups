@@ -9,8 +9,7 @@
 This is a minor release to fix [Issue
 144](https://bitbucket.org/james-d-mitchell/semigroups/issue/144/).
 This issue resulted in `IsInverseSemigroup` sometimes returning `true` for
-semigroups which were not inverse. This occurred when the D-classes of the
-semigroup were computed before the method for `IsInverseSemigroup` was first
+semigroups which were not inverse. This occurred when the \\(\mathscr{D}\\)-classes of the semigroup were computed before the method for `IsInverseSemigroup` was first
 run. 
 
 ## Version 2.7 (released 27/11/15)
