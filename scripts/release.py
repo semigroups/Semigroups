@@ -5,7 +5,11 @@ things to the webpage.
 '''
 
 import textwrap, os, argparse, tempfile, subprocess, sys, os, re, shutil, gzip
-import test, time
+import test, time, webbrowser
+
+_WEBPAGE_DIR = os.path.expanduser('~/Sites/public_html/semigroups')
+_MAMP_DIR = '/Applications/MAMP/'
+_SEMIGROUPS_REPO_DIR = os.path.expanduser('~/gap/pkg/semigroups')
 
 ################################################################################
 # Strings for printing
@@ -113,6 +117,18 @@ def _version_hg():
                              'version number'))
     return hg_version
 
+def _hg_identify():
+    'returns the current changeset'
+    try:
+        hg_identify = subprocess.check_output(['hg', 'identify']).strip()
+    except OSError:
+        sys.exit(_red_string('release.py: error: could not determine the ',
+                             'version number'))
+    except subprocess.CalledProcessError:
+        sys.exit(_red_string('release.py: error: could not determine the ',
+                             'version number'))
+    return hg_identify.split('+')[0]
+
 def _copy_doc(dst, verbose):
     for filename in os.listdir('doc'):
         if os.path.splitext(filename)[-1] in ['.html', '.txt', '.pdf', '.css',
@@ -129,6 +145,19 @@ def _delete_xml_files(docdir, verbose):
                 print _cyan_string('Deleting ' + filename +
                                       ' from archive . . .')
             os.remove(os.path.join(docdir, filename))
+
+def _start_mamp():
+    _exec('open ' + _MAMP_DIR + 'MAMP.app', False)
+    cwd = os.getcwd()
+    os.chdir(_MAMP_DIR + 'bin')
+    _exec('./start.sh', False)
+    os.chdir(cwd)
+
+def _stop_mamp():
+    cwd = os.getcwd()
+    os.chdir(_MAMP_DIR + 'bin')
+    _exec('./stop.sh', False)
+    os.chdir(cwd)
 
 ################################################################################
 # The main event
@@ -213,39 +242,72 @@ def main():
 
     print _magenta_string('Running the tests on the archive . . .')
     os.chdir(tmpdir_base)
-    try:
-        shutil.copytree('semigroups-' + vers, args.pkg_dir + 'semigroups-' + vers)
-        shutil.move(os.path.join(args.pkg_dir, 'semigroups'), tmpdir_base)
-    except IOError:
-        sys.exit(_red_string('release.py: error: could not copy to the pkg dir'))
+    for directory in args.gap_root:
+        semigroups_dir = os.path.join(directory, 'pkg/semigroups-' + vers)
+        try:
+            shutil.copytree('semigroups-' + vers, semigroups_dir)
+            if os.path.exists(os.path.join(directory, 'pkg/semigroups')):
+                shutil.move(os.path.join(directory, 'pkg/semigroups'), tmpdir_base)
+        except Exception as e:
+            sys.exit(_red_string(str(e)))
 
-    try:
-        test.run_semigroups_tests(args.gap_root,
-                                  args.pkg_dir,
-                                  'semigroups-' + vers)
-    except:
-        shutil.move(os.path.join(tmpdir_base, 'semigroups'), args.pkg_dir)
-        os.remove(args.pkg_dir, 'semigroups-' + vers)
-        sys.exit(_red_string('release.py: error: tests failed, aborting!'))
-
-    shutil.move(os.path.join(tmpdir_base, 'semigroups'), args.pkg_dir)
-    os.remove(args.pkg_dir, 'semigroups-' + vers)
+        try:
+            test.run_semigroups_tests(directory,
+                                      directory + '/pkg',
+                                      'semigroups-' + vers)
+        except (OSError, IOError) as e:
+            sys.exit(_red_string(str(e)))
+        finally:
+            if os.path.exists(os.path.join(tmpdir_base, 'semigroups')):
+                shutil.move(os.path.join(tmpdir_base, 'semigroups'),
+                            os.path.join(directory, 'pkg/semigroups'))
+            shutil.rmtree(semigroups_dir)
 
     print _magenta_string('Creating the tarball . . .')
 
-    _delete_xml_files(tmpdir + '/doc', args.verbose)
     _exec('tar -cpf semigroups-' + vers + '.tar semigroups-' + vers +
           '; gzip -9 semigroups-' + vers + '.tar', args.verbose)
 
-    print _magenta_string('Copying the archive to the desktop . . .')
+    print _magenta_string('Copying to webpage . . .')
     try:
-        shutil.copy('semigroups-' + vers + '.tar.gz',
-                    os.path.expanduser('~/Desktop'))
+        shutil.copy('semigroups-' + vers + '.tar.gz', _WEBPAGE_DIR)
+        shutil.copy('semigroups-' + vers + '/README.md', _WEBPAGE_DIR)
+        shutil.copy('semigroups-' + vers + '/PackageInfo.g', _WEBPAGE_DIR)
+        shutil.copy('semigroups-' + vers + '/CHANGELOG.md', _WEBPAGE_DIR)
+        shutil.copytree('semigroups-' + vers + '/doc', _WEBPAGE_DIR + 'doc')
     except:
-        sys.exit(_red_string('release.py: error: could not copy to the desktop'))
+        sys.exit(_red_string('release.py: error: could not copy to the webpage!'))
+
+    os.chdir(_WEBPAGE_DIR)
+    print _magenta_string('Adding archive to webpage repo . . .')
+    _exec('hg add semigroups-' + vers + '.tar.gz', args.verbose)
+    print _magenta_string('Committing webpage repo . . .')
+    _exec('hg commit -m "Releasing Semigroups "' + vers + '"', args.verbose)
+
+    _start_mamp()
+    webbrowser.open('http://localhost:8888/public_html/semigroups.php')
+    _stop_mamp()
+
+    publish = input('Publish the webpage? (y/n)')
+    if publish == 'y':
+        print _magenta_string('Pushing webpage to server . . .')
+        _exec('hg push', args.verbose)
+
+    os.chdir(_SEMIGROUPS_REPO_DIR)
+
+    print _magenta_string('Merging ' + vers + ' into default . . .')
+    _exec('hg up -r default', args.verbose)
+    _exec('hg merge -r ' + vers, args.verbose)
+
+    print _magenta_string('Closing branch ' + vers + ' . . .')
+    _exec('hg up -r ' + vers, args.verbose)
+    _exec('hg commit --close-branch -m "closing branch"', args.verbose)
+
+    print _magenta_string('Updating to default branch . . .')
+    _exec('hg up -r default', args.verbose)
 
     print _green_string('SUCCESS!')
-    sys.exit(0)
+    sys.exit(1)
 
 ################################################################################
 # So that we can load this as a module if we want

@@ -6,7 +6,7 @@ that it passes all the tests in all configurations.
 
 #TODO verbose mode
 
-import textwrap, os, argparse, tempfile, subprocess, sys, os, signal
+import textwrap, os, argparse, tempfile, subprocess, sys, os, signal, dots
 
 ################################################################################
 # Strings for printing
@@ -17,9 +17,9 @@ _WRAPPER = textwrap.TextWrapper(break_on_hyphens=False, width=80)
 def _red_string(string, wrap=True):
     'red string'
     if wrap:
-        return '\n        '.join(_WRAPPER.wrap('\033[1;31m' + string + '\033[0m'))
+        return '\n        '.join(_WRAPPER.wrap('\033[31m' + string + '\033[0m'))
     else:
-        return '\033[1;31m' + string + '\033[0m'
+        return '\033[31m' + string + '\033[0m'
 
 def _green_string(string):
     'green string'
@@ -31,11 +31,24 @@ def _cyan_string(string):
 
 def _blue_string(string):
     'blue string'
-    return '\n        '.join(_WRAPPER.wrap('\033[34m' + string + '\033[0m'))
+    return '\n        '.join(_WRAPPER.wrap('\033[44m' + string + '\033[0m'))
 
 def _magenta_string(string):
     'magenta string'
     return '\n        '.join(_WRAPPER.wrap('\033[35m' + string + '\033[0m'))
+
+_MAGENTA_DOT = _magenta_string('. ')
+_CYAN_DOT = _cyan_string('. ')
+
+def hide_cursor():
+    if os.name == 'posix':
+        sys.stdout.write("\033[?25l")
+        sys.stdout.flush()
+
+def show_cursor():
+    if os.name == 'posix':
+        sys.stdout.write("\033[?25h")
+        sys.stdout.flush()
 
 ################################################################################
 # Parse the arguments
@@ -65,6 +78,11 @@ def _run_test(gap_root, message, stop_for_diffs, *arg):
     '''echo the GAP commands in the string <commands> into _GAPTest, after
        printing the string <message>.'''
 
+    dots.dotIt(_MAGENTA_DOT, _run_test_base, gap_root, message,
+                 stop_for_diffs, *arg)
+
+def _run_test_base (gap_root, message, stop_for_diffs, *arg):
+    hide_cursor()
     print _pad(_magenta_string(message + ' . . . ')),
     sys.stdout.flush()
 
@@ -87,20 +105,22 @@ def _run_test(gap_root, message, stop_for_diffs, *arg):
         pro1.wait()
         pro2.terminate()
         pro2.wait()
-        sys.exit(_red_string('Killed!'))
+        show_cursor()
+        print _red_string('Killed!')
+        sys.exit(1)
     except subprocess.CalledProcessError:
         print _red_string('FAILED!')
         if stop_for_diffs:
-            sys.exit(0)
+            show_cursor()
+            sys.exit(1)
 
     try:
         log = open(log_file, 'r').read()
     except IOError:
-        print _red_string('release.py: error: ' + log_file + ' not found!')
-        sys.exit(0)
+        sys.exit(_red_string('test.py: error: ' + log_file + ' not found!'))
 
     if len(log) == 0:
-        print _red_string('release.py: warning: ' + log_file + ' is empty!')
+        print _red_string('test.py: warning: ' + log_file + ' is empty!')
 
     if (log.find('########> Diff') != -1
             or log.find('# WARNING') != -1
@@ -108,26 +128,27 @@ def _run_test(gap_root, message, stop_for_diffs, *arg):
             or log.find('Error') != -1
             or log.find('brk>') != -1
             or log.find('LoadPackage("semigroups", false);\nfail') != -1):
-        print _magenta_string('FAILED!')
+        print _red_string('FAILED!')
         for line in open(log_file, 'r').readlines():
             print _red_string(line.rstrip(), False)
         if stop_for_diffs:
+            show_cursor()
             sys.exit(1)
-
-    print _green_string('PASSED!')
+    show_cursor()
+    print ''
 
 ################################################################################
 
 def _get_ready_to_make(pkg_dir, package_name):
     os.chdir(pkg_dir)
+    package_dir = None
     for pkg in os.listdir(pkg_dir):
         if os.path.isdir(pkg) and pkg.startswith(package_name):
             package_dir = pkg
 
     if not package_dir:
-        sys.exit(_red_string('release.py: error: can\'t find the ' + package_name
+        sys.exit(_red_string('test.py: error: can\'t find the ' + package_name
                              + ' directory'))
-
     os.chdir(package_dir)
 
 ################################################################################
@@ -138,24 +159,28 @@ def _exec(command):
                               shell=True)
     except KeyboardInterrupt:
         os.kill(pro.pid, signal.SIGKILL)
-        sys.exit(_red_string('Killed!'))
+        print _red_string('Killed!')
+        sys.exit(1)
     except subprocess.CalledProcessError:
-        sys.exit(_red_string('release.py: error: ' + command + ' failed!!'))
+        sys.exit(_red_string('test.py: error: ' + command + ' failed!!'))
 
 ################################################################################
 
 def _make_clean(gap_root, name):
+    hide_cursor()
     print _cyan_string(_pad('Deleting ' + name + ' binary') + ' . . . '),
     cwd = os.getcwd()
     sys.stdout.flush()
     _get_ready_to_make(gap_root, name)
     _exec('make clean')
     os.chdir(cwd)
-    print _cyan_string('DONE!')
+    print ''
+    show_cursor()
 
 ################################################################################
 
 def _configure_make(directory, name):
+    hide_cursor()
     print _cyan_string(_pad('Compiling ' + name) + ' . . . '),
     cwd = os.getcwd()
     sys.stdout.flush()
@@ -163,7 +188,8 @@ def _configure_make(directory, name):
     _exec('./configure')
     _exec('make')
     os.chdir(cwd)
-    print _cyan_string('DONE!')
+    print ''
+    show_cursor()
 
 ################################################################################
 
@@ -221,9 +247,12 @@ def run_semigroups_tests(gap_root, pkg_dir, pkg_name):
     filename = tmpdir + '/testlog'
 
     #print '\033[35musing temporary directory: ' + tmpdir + '\033[0m'
+    print ''
     print _blue_string(_pad('Running tests in ' + gap_root))
+
     _run_test(gap_root,
-              'Validating PackageInfo.g   ', True,
+              'Validating PackageInfo.g   ',
+              True,
               _validate_package_info(gap_root, pkg_name))
     _run_test(gap_root, 'Loading package            ', True, _LOAD)
     _run_test(gap_root, 'Loading only needed        ', True, _LOAD_ONLY_NEEDED)
@@ -233,13 +262,13 @@ def run_semigroups_tests(gap_root, pkg_dir, pkg_name):
     _make_clean(pkg_dir, 'grape')
     _run_test(gap_root, 'Loading Grape not compiled ', True, _LOAD)
 
-    _configure_make(pkg_dir, 'grape')
+    dots.dotIt(_CYAN_DOT, _configure_make, pkg_dir, 'grape')
     _run_test(gap_root, 'Loading Grape compiled     ', True, _LOAD)
 
     _make_clean(pkg_dir, 'orb')
     _run_test(gap_root, 'Loading Orb not compiled   ', True, _LOAD)
 
-    _configure_make(pkg_dir, 'orb')
+    dots.dotIt(_CYAN_DOT, _configure_make, pkg_dir, 'orb')
     _run_test(gap_root, 'Loading Orb compiled       ', True, _LOAD)
 
     _run_test(gap_root, 'Compiling the doc          ', True, _LOAD, _MAKE_DOC)
@@ -249,23 +278,26 @@ def run_semigroups_tests(gap_root, pkg_dir, pkg_name):
               _LOAD_SMALLSEMI,
               _TEST_SMALLSEMI)
 
-    print _blue_string(_pad('Testing with Orb compiled') + ' . . .')
+    print ''
+    print _blue_string('Testing with Orb compiled')
     _run_test(gap_root, 'testinstall.tst            ', True, _LOAD, _TEST_INSTALL)
     _run_test(gap_root, 'manual examples            ', True, _LOAD, _TEST_MAN_EX)
     _run_test(gap_root, 'tst/*                      ', True, _LOAD, _TEST_ALL)
     _run_test(gap_root, 'GAP quick tests            ', False, _LOAD,
               _test_gap_quick(gap_root))
 
-    print _blue_string(_pad('Testing with Orb uncompiled') + ' . . .')
+    print ''
+    print _blue_string('Testing with Orb uncompiled')
     _make_clean(pkg_dir, 'orb')
     _run_test(gap_root, 'testinstall.tst            ', True, _LOAD, _TEST_INSTALL)
     _run_test(gap_root, 'manual examples            ', True, _LOAD, _TEST_MAN_EX)
     _run_test(gap_root, 'tst/*                      ', True, _LOAD, _TEST_ALL)
     _run_test(gap_root, 'GAP quick tests            ', False, _LOAD,
               _test_gap_quick(gap_root))
-    _configure_make(pkg_dir, 'orb')
+    dots.dotIt(_CYAN_DOT, _configure_make, pkg_dir, 'orb')
 
-    print _blue_string(_pad('Testing only needed') + ' . . .')
+    print ''
+    print _blue_string('Testing only needed')
     _run_test(gap_root, 'testinstall.tst            ', True, _LOAD_ONLY_NEEDED,
               _TEST_INSTALL)
     _run_test(gap_root, 'manual examples            ', True, _LOAD_ONLY_NEEDED,
@@ -276,13 +308,14 @@ def run_semigroups_tests(gap_root, pkg_dir, pkg_name):
               _test_gap_quick(gap_root))
 
     print '\n\033[32mSUCCESS!\033[0m'
+    return
 
 ################################################################################
 # Run the script
 ################################################################################
 
 def main():
-    parser = argparse.ArgumentParser(prog='release.py',
+    parser = argparse.ArgumentParser(prog='test.py',
                                      usage='%(prog)s [options]')
     parser.add_argument('--gap-root', nargs='?', type=str,
                         help='the gap root directory (default: ~/gap)',
@@ -311,7 +344,7 @@ def main():
         sys.exit(_red_string('release.py: error: can\'t find GAP root' +
                              ' directory!'))
     if not (os.path.exists(args.pkg_dir) or os.path.isdir(args.pkg_dir)):
-        sys.exit(_red_string('release.py: error: can\'t find package' +
+        sys.exit(_red_string('test.py: error: can\'t find package' +
                              ' directory!'))
 
     run_semigroups_tests(args.gap_root, args.pkg_dir, args.pkg_name)
@@ -320,4 +353,5 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        sys.exit(_red_string('Killed!'))
+        print _red_string('Killed!')
+        sys.exit(1)
