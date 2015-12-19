@@ -113,3 +113,4 @@ src/semigroups++/.deps
 .dirstamp
 src/semigroups++/html
 src/semigroups++
+*.pyc

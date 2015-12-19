@@ -4,6 +4,14 @@
 #### Copyright (C) 2011-15 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.7.1 (released 18/12/15)
+
+This is a minor release to fix [Issue
+144](https://bitbucket.org/james-d-mitchell/semigroups/issue/144/).
+This issue resulted in `IsInverseSemigroup` sometimes returning `true` for
+semigroups which were not inverse. This occurred when the \\(\mathscr{D}\\)-classes of the semigroup were computed before the method for `IsInverseSemigroup` was first
+run. 
+
 ## Version 2.7 (released 27/11/15)
 
 This is a minor release including some changes for compatibility with GAP 4.8, and some bug fixes. 

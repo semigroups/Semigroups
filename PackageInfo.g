@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.7">
+##  <!ENTITY VERSION "2.7.1">
 ##  <!ENTITY GAPVERS "4.8">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.7">
+##  <!ENTITY ARCHIVENAME "semigroups-2.7.1">
 ##  <!ENTITY COPYRIGHTYEARS "2011-15">
 ##  <#/GAPDoc>
 
@@ -37,10 +37,10 @@ end;
 
 SetPackageInfo( rec(
 PackageName := "Semigroups",
-Subtitle := "Methods for Semigroups",
-Version := "2.7",
-Date := "30/11/2015",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.7",
+Subtitle := "",
+Version := "2.7.1",
+Date := "19/12/2015",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.7.1",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec(
@@ -188,7 +188,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Semigroups - Methods for semigroups",
+  LongTitle := "Semigroups",
   Autoload  := true
 ),
 
@@ -204,7 +204,7 @@ Dependencies := rec(
   BannerString := Concatenation(
   "----------------------------------------------------------------------",
   "-------\n",
-  "Loading  Semigroups ", ~.Version, " - methods for semigroups\n",
+  "Loading  Semigroups ", ~.Version, "\n",
   "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
         " (", ~.Persons[1].WWWHome, ")\n",
   "with contributions by:\n",
