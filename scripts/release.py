@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 '''
-This is a script for checking that the Semigroups package is releasable, i.e.
-that it passes all the tests in all configurations.
+Create the archive of the Semigroups package for release, and copy the relevant
+things to the webpage.
 '''
 
-#TODO verbose mode
+import textwrap, os, argparse, tempfile, subprocess, sys, os, re, shutil, gzip
+import test, time, webbrowser
 
-import textwrap, os, argparse, tempfile, subprocess, sys, os, signal
+_WEBPAGE_DIR = os.path.expanduser('~/Sites/public_html/semigroups/')
+_MAMP_DIR = '/Applications/MAMP/'
+_SEMIGROUPS_REPO_DIR = os.path.expanduser('~/gap/pkg/semigroups/')
 
 ################################################################################
 # Strings for printing
@@ -17,292 +20,343 @@ _WRAPPER = textwrap.TextWrapper(break_on_hyphens=False, width=80)
 def _red_string(string, wrap=True):
     'red string'
     if wrap:
-        return '\n        '.join(_WRAPPER.wrap('\033[1;31m' + string + '\033[0m'))
+        return '\n'.join(_WRAPPER.wrap('\033[31m' + string + '\033[0m'))
     else:
-        return '\033[1;31m' + string + '\033[0m'
+        return '\033[31m' + string + '\033[0m'
 
 def _green_string(string):
     'green string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;32m' + string + '\033[0m'))
+    return '\n'.join(_WRAPPER.wrap('\033[1;32m' + string + '\033[0m'))
 
-def _yellow_string(string):
-    'yellow string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;33m' + string + '\033[0m'))
-
-def _blue_string(string):
-    'blue string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;34m' + string + '\033[0m'))
+def _cyan_string(string):
+    'cyan string'
+    return '\n'.join(_WRAPPER.wrap('\033[36m' + string + '\033[0m'))
 
 def _magenta_string(string):
     'magenta string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;35m' + string + '\033[0m'))
+    return '\n'.join(_WRAPPER.wrap('\033[35m' + string + '\033[0m'))
+
+def query_yes_no(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+
+    "question" is a string that is presented to the user.
+    "default" is the presumed answer if the user just hits <Enter>.
+        It must be "yes" (the default), "no" or None (meaning
+        an answer is required of the user).
+
+    The "answer" return value is True for "yes" or False for "no".
+    """
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False}
+    if default is None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("invalid default answer: '%s'" % default)
+
+    while True:
+        sys.stdout.write(question + prompt)
+        choice = raw_input().lower()
+        if default is not None and choice == '':
+            return valid[default]
+        elif choice in valid:
+            return valid[choice]
+        else:
+            sys.stdout.write("Please respond with 'yes' or 'no' "
+                             "(or 'y' or 'n').\n")
 
 ################################################################################
-# Parse the arguments
+# Check the version number in the branch against that in the PackageInfo.g
 ################################################################################
 
-_PARSER = argparse.ArgumentParser(prog='code-coverage-test.py',
-                                  usage='%(prog)s [options]')
-_PARSER.add_argument('--gap-root', nargs='?', type=str,
-                     help='the gap root directory (default: ~/gap)',
-                     default='~/gap/')
-_PARSER.add_argument('--pkg-dir', nargs='?', type=str,
-                     help='the pkg directory (default: gap-root/pkg/)',
-                     default='~/gap/pkg/')
-_PARSER.add_argument('--verbose', dest='verbose', action='store_true',
-                     help='verbose mode (default: False)')
-_PARSER.set_defaults(verbose=False)
+def _version_number_package_info():
+    '''returns the version number from the PackageInfo.g file, exits if this
+    file doesn't exist or the version number can't be found.'''
 
-_ARGS = _PARSER.parse_args()
+    if not (os.path.exists('PackageInfo.g') and
+            os.path.isfile('PackageInfo.g')):
+        sys.exit(_red_string('release.py: error: cannot find PackageInfo.g file'))
+    else:
+        try:
+            contents = open('PackageInfo.g', 'r').read()
+        except IOError:
+            sys.exit(_red_string('release.py: error: cannot read PackageInfo.g'))
+        match = re.compile(r'Version\s*:=\s*"((\d.*)+)"').search(contents)
+        if match:
+            return match.group(1)
+        else:
+            sys.exit(_red_string('release.py: error: could not determine the',
+                                 'version number in PackageInfo.g'))
 
-if not _ARGS.gap_root[-1] == '/':
-    _ARGS.gap_root += '/'
-if not _ARGS.pkg_dir[-1] == '/':
-    _ARGS.pkg_dir += '/'
+def _check_date_package_info(verbose):
+    '''checks if the date in the PackageInfo.g file is today's date'''
 
-_ARGS.gap_root = os.path.expanduser(_ARGS.gap_root)
-_ARGS.pkg_dir = os.path.expanduser(_ARGS.pkg_dir)
+    if not (os.path.exists('PackageInfo.g') and
+            os.path.isfile('PackageInfo.g')):
+        sys.exit(_red_string('release.py: error: cannot find PackageInfo.g file'))
+    else:
+        try:
+            contents = open('PackageInfo.g', 'r').read()
+        except IOError:
+            sys.exit(_red_string('release.py: error: cannot read PackageInfo.g'))
+        match = re.compile(r'Date\s*:=\s*"(\d\d/\d\d/\d\d\d\d)"').search(contents)
+        if match:
+            today = time.strftime("%d/%m/%Y")
+            if match.group(1) != today and verbose:
+                print _cyan_string('Date in PackageInfo.g is ' + match.group(1)
+                                    + ' but today is ' + today)
+            return match.group(1) == today
+        else:
+            sys.exit(_red_string('release.py: error: could not determine the',
+                                 'version number in PackageInfo.g'))
 
-if not (os.path.exists(_ARGS.gap_root) and os.path.isdir(_ARGS.gap_root)):
-    sys.exit(_red_string('release.py: error: can\'t find GAP root' +
-                         ' directory!'))
-if not (os.path.exists(_ARGS.pkg_dir) or os.path.isdir(_ARGS.pkg_dir)):
-    sys.exit(_red_string('release.py: error: can\'t find package directory!'))
-
-################################################################################
-# Get the cwd and a temporary dir
-################################################################################
-
-_CWD = os.getcwd()
-_DIR_TMP = tempfile.gettempdir()
-print '\033[35musing temporary directory: ' + _DIR_TMP + '\033[0m'
-_FILE = _DIR_TMP + '/testlog'
-
-################################################################################
-################################################################################
-
-
-def _run_gap():
-    'returns the bash script to run GAP and detect errors'
-    out = _ARGS.gap_root + 'bin/gap.sh -r -A -T -m 1g'
-    if not _ARGS.verbose:
-        out += ' -q'
-    return out
-
-_LOG_NR = 0
-
-def _log_file():
-    'returns the string "LogTo(a unique file);"'
-    global _LOG_NR
-    _LOG_NR += 1
-    log_file = _FILE + str(_LOG_NR) + '.log'
-    return log_file
-
-################################################################################
-# Functions
-################################################################################
-
-def _run_test(message, stop_for_diffs, *arg):
-    '''echo the GAP commands in the string <commands> into _GAPTest, after
-       printing the string <message>.'''
-
-    print _magenta_string(message + ' . . . '),
-    sys.stdout.flush()
-
-    log_file = _log_file()
-    commands = 'echo "LogTo(\\"' + log_file + '\\");\n' + '\n'.join(arg) + '"'
-
-    pro1 = subprocess.Popen(commands,
-                            stdout=subprocess.PIPE,
-                            shell=True)
+def _exec(string, verbose):
+    if verbose:
+        print _cyan_string(string + ' . . .')
     try:
         devnull = open(os.devnull, 'w')
-        pro2 = subprocess.Popen(_run_gap(),
-                                stdin=pro1.stdout,
+        proc = subprocess.Popen(string,
                                 stdout=devnull,
                                 stderr=devnull,
                                 shell=True)
-        pro2.wait()
-    except KeyboardInterrupt:
-        pro1.terminate()
-        pro1.wait()
-        pro2.terminate()
-        pro2.wait()
-        sys.exit(_red_string('Killed!'))
+        proc.wait()
+    except OSError:
+        sys.exit(_red_string('release.py: error: ' + string + ' failed'))
     except subprocess.CalledProcessError:
-        print _red_string('FAILED!')
-        if stop_for_diffs:
-            sys.exit(0)
+        sys.exit(_red_string('release.py: error: ' +  string + ' failed'))
 
+def _version_hg():
+    '''returns the version number from the branch name in mercurial, exits if
+    something goes wrong'''
     try:
-        log = open(log_file, 'r').read()
-    except IOError:
-        print _red_string('release.py: error: ' + log_file + ' not found!')
-        sys.exit(0)
-
-    if len(log) == 0:
-        print _red_string('release.py: warning: ' + log_file + ' is empty!')
-
-    if (log.find('########> Diff') != -1
-            or log.find('# WARNING') != -1
-            or log.find('#E ') != -1
-            or log.find('Error') != -1
-            or log.find('brk>') != -1
-            or log.find('LoadPackage("semigroups", false);\nfail') != -1):
-        print _magenta_string('FAILED!')
-        for x in open(log_file, 'r').readlines():
-            print _red_string(x.rstrip(), False)
-        if stop_for_diffs:
-            sys.exit(0)
-
-    print _magenta_string('PASSED!')
-
-################################################################################
-
-def _get_ready_to_make(package_name):
-    os.chdir(_ARGS.pkg_dir)
-    for pkg in os.listdir(_ARGS.pkg_dir):
-        if os.path.isdir(pkg) and pkg.startswith(package_name):
-            package_dir = pkg
-
-    if not package_dir:
-        sys.exit(_red_string('release.py: error: can\'t find the ' + package_name
-                             + ' directory'))
-
-    os.chdir(package_dir)
-
-################################################################################
-
-def _exec(command):
-    try: #FIXME use popen here
-        pro = subprocess.call(command + ' &> /dev/null',
-                              shell=True)
-    except KeyboardInterrupt:
-        os.kill(pro.pid, signal.SIGKILL)
-        sys.exit(_red_string('Killed!'))
+        hg_version = subprocess.check_output(['hg', 'branch']).strip()
+    except OSError:
+        sys.exit(_red_string('release.py: error: could not determine the ',
+                             'version number'))
     except subprocess.CalledProcessError:
-        sys.exit(_red_string('release.py: error: ' + command + ' failed!!'))
+        sys.exit(_red_string('release.py: error: could not determine the ',
+                             'version number'))
+    return hg_version
+
+def _hg_identify():
+    'returns the current changeset'
+    try:
+        hg_identify = subprocess.check_output(['hg', 'identify']).strip()
+    except OSError:
+        sys.exit(_red_string('release.py: error: could not determine the ',
+                             'version number'))
+    except subprocess.CalledProcessError:
+        sys.exit(_red_string('release.py: error: could not determine the ',
+                             'version number'))
+    return hg_identify.split('+')[0]
+
+def _copy_doc(dst, verbose):
+    for filename in os.listdir('doc'):
+        if os.path.splitext(filename)[-1] in ['.html', '.txt', '.pdf', '.css',
+                '.js', '.six']:
+            if verbose:
+                print _cyan_string('Copying ' + filename +
+                                     ' to archive . . .')
+            shutil.copy('doc/' + filename, dst)
+
+def _delete_xml_files(docdir, verbose):
+    for filename in os.listdir(docdir):
+        if os.path.splitext(filename)[-1] == '.xml':
+            if verbose:
+                print _cyan_string('Deleting ' + filename +
+                                      ' from archive . . .')
+            os.remove(os.path.join(docdir, filename))
+
+def _start_mamp():
+    _exec('open ' + _MAMP_DIR + 'MAMP.app', False)
+    cwd = os.getcwd()
+    os.chdir(_MAMP_DIR + 'bin')
+    _exec('./start.sh', False)
+    os.chdir(cwd)
+
+def _stop_mamp():
+    cwd = os.getcwd()
+    os.chdir(_MAMP_DIR + 'bin')
+    _exec('./stop.sh', False)
+    os.chdir(cwd)
 
 ################################################################################
-
-def _make_clean(name):
-    print _yellow_string(_pad('make clean ' + name) + ' . . . '),
-    sys.stdout.flush()
-    _get_ready_to_make(name)
-    _exec('make clean')
-    os.chdir(_CWD)
-    print _yellow_string('DONE!')
-
-################################################################################
-
-def _configure_make(name):
-    print _yellow_string(_pad('Compiling ' + name) + ' . . . '),
-    sys.stdout.flush()
-    _get_ready_to_make(name)
-    _exec('./configure')
-    _exec('make')
-    os.chdir(_CWD)
-    print _yellow_string('DONE!')
-
-################################################################################
-
-def _man_ex_str(name):
-    return ('ex := ExtractExamples(\\"'  + _ARGS.gap_root + 'doc/ref\\", \\"'
-            + name + '\\", [\\"' + name + '\\"], \\"Section\\");' +
-            ' RunExamples(ex);')
-
-def _pad(string):
-    for i in xrange(27 - len(string)):
-        string += ' '
-    return string
-
-################################################################################
-# the GAP commands to run the tests
-################################################################################
-
-_LOAD = 'LoadPackage(\\"semigroups\\", false);'
-_LOAD_SMALLSEMI = 'LoadPackage(\\"smallsemi\\", false);'
-_LOAD_ONLY_NEEDED = 'LoadPackage(\\"semigroups\\", false : OnlyNeeded);'
-_TEST_STANDARD = 'SemigroupsTestStandard();'
-_TEST_INSTALL = 'SemigroupsTestInstall();'
-_TEST_ALL = 'SemigroupsTestAll();'
-_TEST_SMALLSEMI = 'SmallsemiTestAll();\n SmallsemiTestManualExamples();'
-_TEST_MAN_EX = 'SemigroupsTestManualExamples();'
-_MAKE_DOC = 'SemigroupsMakeDoc();'
-_VALIDATE_PACKAGE_INFO = ('ValidatePackageInfo(\\"' + _ARGS.gap_root +
-                          'pkg/semigroups/PackageInfo.g\\");')
-
-_TEST_GAP_QUICK = 'Test(\\"' + _ARGS.gap_root + 'tst/testinstall/trans.tst\\");'
-_TEST_GAP_QUICK += 'Test(\\"' + _ARGS.gap_root + 'tst/testinstall/pperm.tst\\");'
-_TEST_GAP_QUICK += 'Test(\\"' + _ARGS.gap_root + 'tst/testinstall/semigrp.tst\\");'
-_TEST_GAP_QUICK += 'Test(\\"' + _ARGS.gap_root + 'tst/teststandard/reesmat.tst\\");'
-_TEST_GAP_QUICK += _man_ex_str('trans.xml')
-_TEST_GAP_QUICK += _man_ex_str('pperm.xml')
-_TEST_GAP_QUICK += _man_ex_str('invsgp.xml')
-_TEST_GAP_QUICK += _man_ex_str('reesmat.xml')
-_TEST_GAP_QUICK += _man_ex_str('mgmadj.xml')
-_TEST_GAP_QUICK += 'Test(\\"' + _ARGS.gap_root + 'tst/teststandard/bugfix.tst\\");'
-_TEST_GAP_QUICK += 'Read(\\"' + _ARGS.gap_root + 'tst/testinstall.g\\");'
-
-################################################################################
-# Run the tests
+# The main event
 ################################################################################
 
 def main():
-    _run_test('Validating PackageInfo.g   ', True, _VALIDATE_PACKAGE_INFO)
-    _run_test('Loading package            ', True, _LOAD)
-    _run_test('Loading only needed        ', True, _LOAD_ONLY_NEEDED)
-    _run_test('Loading Smallsemi first    ', True, _LOAD_SMALLSEMI, _LOAD)
-    _run_test('Loading Smallsemi second   ', True, _LOAD, _LOAD_SMALLSEMI)
+    # parse the args
+    parser = argparse.ArgumentParser(prog='release.py',
+                                     usage='%(prog)s [options]')
 
-    _make_clean('grape')
-    _run_test('Loading Grape not compiled ', True, _LOAD)
+    parser.add_argument('--verbose', dest='verbose', action='store_true',
+                        help='verbose mode (default: False)')
+    parser.set_defaults(verbose=False)
+    parser.add_argument('--skip-tests', dest='skip_tests', action='store_true',
+                        help='verbose mode (default: False)')
+    parser.set_defaults(skip_tests=False)
+    parser.add_argument('--gap-root', nargs='*', type=str,
+                        help='the gap root directory (default: [~/gap])',
+                        default=['~/gap/'])
+    parser.add_argument('--pkg-dir', nargs='?', type=str,
+                        help='the pkg directory (default: gap-root/pkg/)',
+                        default='~/gap/pkg/')
 
-    _configure_make('grape')
-    _run_test('Loading Grape compiled     ', True, _LOAD)
+    args = parser.parse_args()
 
-    _make_clean('orb')
-    _run_test('Loading Orb not compiled   ', True, _LOAD)
+    for i in xrange(len(args.gap_root)):
+        if args.gap_root[i][-1] != '/':
+            args.gap_root[i] += '/'
+    if not args.pkg_dir[-1] == '/':
+        args.pkg_dir += '/'
 
-    _configure_make('orb')
-    _run_test('Loading Orb compiled       ', True, _LOAD)
+    args.gap_root = [os.path.expanduser(x) for x in args.gap_root]
+    args.pkg_dir = os.path.expanduser(args.pkg_dir)
 
-    _run_test('Compiling the doc          ', True, _LOAD, _MAKE_DOC)
-    _run_test('Testing Smallsemi          ',
-              True,
-              _LOAD,
-              _LOAD_SMALLSEMI,
-              _TEST_SMALLSEMI)
+    for gap_root_dir in args.gap_root:
+        if not (os.path.exists(gap_root_dir) and os.path.isdir(gap_root_dir)):
+            sys.exit(_red_string('release.py: error: can\'t find GAP root' +
+                                 ' directory' + gap_root_dir + '!'))
+    if not (os.path.exists(args.pkg_dir) or os.path.isdir(args.pkg_dir)):
+        sys.exit(_red_string('release.py: error: can\'t find package' +
+                             ' directory!'))
 
-    print _blue_string(_pad('Testing with Orb compiled') + ' . . .')
-    _run_test('testinstall.tst            ', True, _LOAD, _TEST_INSTALL)
-    _run_test('manual examples            ', True, _LOAD, _TEST_MAN_EX)
-    _run_test('tst/*                      ', True, _LOAD, _TEST_STANDARD)
-    _run_test('GAP quick tests            ', False, _LOAD, _TEST_GAP_QUICK)
+    # get the version number
+    vers = _version_number_package_info()
+    tmpdir_base = tempfile.mkdtemp()
+    tmpdir = tmpdir_base + '/semigroups-' + vers
 
-    print _blue_string(_pad('Testing with Orb uncompiled') + ' . . .')
-    _make_clean('orb')
-    _run_test('testinstall.tst            ', True, _LOAD, _TEST_INSTALL)
-    _run_test('manual examples            ', True, _LOAD, _TEST_MAN_EX)
-    _run_test('tst/*                      ', True, _LOAD, _TEST_STANDARD)
-    _run_test('GAP quick tests            ', False, _LOAD, _TEST_GAP_QUICK)
-    _configure_make('orb')
+    if vers != _version_hg():
+        sys.exit(_red_string('release.py: error: the version number in the ' +
+                             'PackageInfo.g file is ' + vers + ' but the branch ' +
+                             'name is ' + _version_hg()))
 
-    print _blue_string(_pad('Testing only needed') + ' . . .')
-    _run_test('testinstall.tst            ', True, _LOAD_ONLY_NEEDED, _TEST_INSTALL)
-    _run_test('manual examples            ', True, _LOAD_ONLY_NEEDED, _TEST_MAN_EX)
-    _run_test('tst/*                      ',
-              True,
-              _LOAD_ONLY_NEEDED,
-              _TEST_STANDARD)
-    _run_test('GAP quick tests            ', False, _LOAD, _TEST_GAP_QUICK)
+    if not _check_date_package_info(args.verbose):
+        sys.exit(_red_string('release.py: error: date in PackageInfo.g ' +
+                             'is not today!'))
 
-    #print _blue_string('make teststandard . . .')
-    #os.chdir(_ARGS.gap_root)
-    #_exec('make teststandard')
-    #os.chdir(_CWD)
+    print _magenta_string('The version number is: ' + vers)
+    if args.verbose:
+        print _cyan_string('Using temporary directory: ' + tmpdir)
 
-    print '\n\033[32mSUCCESS!\033[0m'
+    test.semigroups_make_doc(args.gap_root[0])
+
+    # archive . . .
+    print _magenta_string('Archiving using hg . . .')
+    _exec('hg archive ' + tmpdir, args.verbose)
+
+    # handle the doc . . .
+    _copy_doc(tmpdir + '/doc/', args.verbose)
+
+    # delete extra files and dirs
+    for filename in ['.hgignore', '.hgtags', '.gaplint_ignore',
+                     'configure.ac', 'Makefile.am']:
+        if (os.path.exists(os.path.join(tmpdir, filename))
+                and os.path.isfile(os.path.join(tmpdir, filename))):
+            print _magenta_string('Deleting file ' + filename + ' . . .')
+            try:
+                os.remove(os.path.join(tmpdir, filename))
+            except OSError:
+                sys.exit(_red_string('release.py: error: could not delete' +
+                                     filename))
+
+    print _magenta_string('Deleting directory scripts . . .')
+    try:
+        shutil.rmtree(os.path.join(tmpdir, 'scripts'))
+    except OSError:
+        sys.exit(_red_string('release.py: error: could not delete scripts/*'))
+
+    if args.skip_tests:
+        print _magenta_string('Skipping tests . . .')
+    else:
+        print _magenta_string('Running the tests on the archive . . .')
+        os.chdir(tmpdir_base)
+        for directory in args.gap_root:
+            semigroups_dir = os.path.join(directory, 'pkg/semigroups-' + vers)
+            try:
+                shutil.copytree('semigroups-' + vers, semigroups_dir)
+                if os.path.exists(os.path.join(directory, 'pkg/semigroups')):
+                    shutil.move(os.path.join(directory, 'pkg/semigroups'),
+                                tmpdir_base)
+            except Exception as e:
+                sys.exit(_red_string(str(e)))
+
+            try:
+                test.run_semigroups_tests(directory,
+                                          directory + '/pkg',
+                                          'semigroups-' + vers)
+            except (OSError, IOError) as e:
+                sys.exit(_red_string(str(e)))
+            finally:
+                if os.path.exists(os.path.join(tmpdir_base, 'semigroups')):
+                    shutil.move(os.path.join(tmpdir_base, 'semigroups'),
+                                os.path.join(directory, 'pkg/semigroups'))
+                shutil.rmtree(semigroups_dir)
+
+    print _magenta_string('Creating the tarball . . .')
+    os.chdir(tmpdir_base)
+    _exec('tar -cpf semigroups-' + vers + '.tar semigroups-' + vers +
+          '; gzip -9 semigroups-' + vers + '.tar', args.verbose)
+
+    print _magenta_string('Copying to webpage . . .')
+    try:
+        os.chdir(tmpdir_base)
+        shutil.copy('semigroups-' + vers + '.tar.gz', _WEBPAGE_DIR)
+        os.chdir(tmpdir)
+        shutil.copy('README.md', _WEBPAGE_DIR)
+        shutil.copy('PackageInfo.g', _WEBPAGE_DIR)
+        shutil.copy('CHANGELOG.md', _WEBPAGE_DIR)
+        shutil.rmtree(_WEBPAGE_DIR + 'doc')
+        shutil.copytree('doc', _WEBPAGE_DIR + 'doc')
+    except Exception as e:
+        print _red_string('release.py: error: could not copy to the webpage!')
+        sys.exit(_red_string(str(e)))
+
+    os.chdir(_WEBPAGE_DIR)
+    print _magenta_string('Adding archive to webpage repo . . .')
+    _exec('hg add semigroups-' + vers + '.tar.gz', args.verbose)
+    _exec('hg addremove', args.verbose)
+    print _magenta_string('Committing webpage repo . . .')
+    _exec('hg commit -m "Releasing Semigroups ' + vers + '"', args.verbose)
+
+    _start_mamp()
+    webbrowser.open('http://localhost:8888/public_html/semigroups.php')
+    publish = query_yes_no(_magenta_string('Publish the webpage?'))
+    _stop_mamp()
+
+    if not publish:
+        sys.exit(_red_string('Aborting!'))
+
+    print _magenta_string('Pushing webpage to server . . .')
+    _exec('hg push', args.verbose)
+    os.chdir(_SEMIGROUPS_REPO_DIR)
+
+    print _magenta_string('Merging ' + vers + ' into default . . .')
+    _exec('hg up -r default', args.verbose)
+    _exec('hg merge -r ' + vers, args.verbose)
+    _exec('hg commit -m "Merge from' + vers + '"', args.verbose)
+
+    print _magenta_string('Closing branch ' + vers + ' . . .')
+    _exec('hg up -r ' + vers, args.verbose)
+    _exec('hg commit --close-branch -m "closing branch"', args.verbose)
+
+    print _magenta_string('Updating to default branch . . .')
+    _exec('hg up -r default', args.verbose)
+
+    print _magenta_string('Don\'t forget to check everything is ok at:' +
+                          'http://www.gap-system.org/Packages/Authors/authors.html')
+    print _green_string('SUCCESS!')
+    sys.exit(1)
+
+################################################################################
+# So that we can load this as a module if we want
+################################################################################
 
 if __name__ == '__main__':
-    main() #TODO add try, except Killed here
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(_red_string('Killed!'))

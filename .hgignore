@@ -50,3 +50,4 @@ src/.libs/*
 src/semigroups++/.deps
 src/semigroups++/html
 src/semigroups++
+*.pyc
