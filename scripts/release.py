@@ -20,29 +20,21 @@ _WRAPPER = textwrap.TextWrapper(break_on_hyphens=False, width=80)
 def _red_string(string, wrap=True):
     'red string'
     if wrap:
-        return '\n        '.join(_WRAPPER.wrap('\033[31m' + string + '\033[0m'))
+        return '\n'.join(_WRAPPER.wrap('\033[31m' + string + '\033[0m'))
     else:
         return '\033[31m' + string + '\033[0m'
 
 def _green_string(string):
     'green string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;32m' + string + '\033[0m'))
-
-def _yellow_string(string):
-    'yellow string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;33m' + string + '\033[0m'))
+    return '\n'.join(_WRAPPER.wrap('\033[1;32m' + string + '\033[0m'))
 
 def _cyan_string(string):
-    'blue string'
-    return '\n        '.join(_WRAPPER.wrap('\033[36m' + string + '\033[0m'))
-
-def _other_magenta_string(string):
-    'magenta string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;35m' + string + '\033[0m'))
+    'cyan string'
+    return '\n'.join(_WRAPPER.wrap('\033[36m' + string + '\033[0m'))
 
 def _magenta_string(string):
     'magenta string'
-    return '\n        '.join(_WRAPPER.wrap('\033[35m' + string + '\033[0m'))
+    return '\n'.join(_WRAPPER.wrap('\033[35m' + string + '\033[0m'))
 
 ################################################################################
 # Check the version number in the branch against that in the PackageInfo.g
@@ -95,8 +87,7 @@ def _exec(string, verbose):
     try:
         devnull = open(os.devnull, 'w')
         proc = subprocess.Popen(string,
-                                stdout=devnull,
-                                stderr=devnull,
+                                stdout=subprocess.STDOUT,
                                 shell=True)
         proc.wait()
     except OSError:
@@ -171,6 +162,9 @@ def main():
     parser.add_argument('--verbose', dest='verbose', action='store_true',
                         help='verbose mode (default: False)')
     parser.set_defaults(verbose=False)
+    parser.add_argument('--skip-tests', dest='skip_tests', action='store_true',
+                        help='verbose mode (default: False)')
+    parser.set_defaults(skip_tests=False)
     parser.add_argument('--gap-root', nargs='*', type=str,
                         help='the gap root directory (default: [~/gap])',
                         default=['~/gap/'])
@@ -240,31 +234,35 @@ def main():
     except OSError:
         sys.exit(_red_string('release.py: error: could not delete scripts/*'))
 
-    print _magenta_string('Running the tests on the archive . . .')
-    os.chdir(tmpdir_base)
-    for directory in args.gap_root:
-        semigroups_dir = os.path.join(directory, 'pkg/semigroups-' + vers)
-        try:
-            shutil.copytree('semigroups-' + vers, semigroups_dir)
-            if os.path.exists(os.path.join(directory, 'pkg/semigroups')):
-                shutil.move(os.path.join(directory, 'pkg/semigroups'), tmpdir_base)
-        except Exception as e:
-            sys.exit(_red_string(str(e)))
+    if args.skip_tests:
+        print _magenta_string('Skipping tests . . .')
+    else:
+        print _magenta_string('Running the tests on the archive . . .')
+        os.chdir(tmpdir_base)
+        for directory in args.gap_root:
+            semigroups_dir = os.path.join(directory, 'pkg/semigroups-' + vers)
+            try:
+                shutil.copytree('semigroups-' + vers, semigroups_dir)
+                if os.path.exists(os.path.join(directory, 'pkg/semigroups')):
+                    shutil.move(os.path.join(directory, 'pkg/semigroups'),
+                                tmpdir_base)
+            except Exception as e:
+                sys.exit(_red_string(str(e)))
 
-        try:
-            test.run_semigroups_tests(directory,
-                                      directory + '/pkg',
-                                      'semigroups-' + vers)
-        except (OSError, IOError) as e:
-            sys.exit(_red_string(str(e)))
-        finally:
-            if os.path.exists(os.path.join(tmpdir_base, 'semigroups')):
-                shutil.move(os.path.join(tmpdir_base, 'semigroups'),
-                            os.path.join(directory, 'pkg/semigroups'))
-            shutil.rmtree(semigroups_dir)
+            try:
+                test.run_semigroups_tests(directory,
+                                          directory + '/pkg',
+                                          'semigroups-' + vers)
+            except (OSError, IOError) as e:
+                sys.exit(_red_string(str(e)))
+            finally:
+                if os.path.exists(os.path.join(tmpdir_base, 'semigroups')):
+                    shutil.move(os.path.join(tmpdir_base, 'semigroups'),
+                                os.path.join(directory, 'pkg/semigroups'))
+                shutil.rmtree(semigroups_dir)
 
     print _magenta_string('Creating the tarball . . .')
-
+    os.chdir(tmpdir)
     _exec('tar -cpf semigroups-' + vers + '.tar semigroups-' + vers +
           '; gzip -9 semigroups-' + vers + '.tar', args.verbose)
 
