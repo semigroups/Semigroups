@@ -23,19 +23,19 @@ def _red_string(string, wrap=True):
 
 def _green_string(string):
     'green string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;32m' + string + '\033[0m'))
+    return '\n        '.join(_WRAPPER.wrap('\033[32m' + string + '\033[0m'))
 
-def _yellow_string(string):
-    'yellow string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;33m' + string + '\033[0m'))
+def _cyan_string(string):
+    'cyan string'
+    return '\n        '.join(_WRAPPER.wrap('\033[36m' + string + '\033[0m'))
 
 def _blue_string(string):
     'blue string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;34m' + string + '\033[0m'))
+    return '\n        '.join(_WRAPPER.wrap('\033[34m' + string + '\033[0m'))
 
 def _magenta_string(string):
     'magenta string'
-    return '\n        '.join(_WRAPPER.wrap('\033[1;35m' + string + '\033[0m'))
+    return '\n        '.join(_WRAPPER.wrap('\033[35m' + string + '\033[0m'))
 
 ################################################################################
 # Parse the arguments
@@ -65,7 +65,7 @@ def _run_test(gap_root, message, stop_for_diffs, *arg):
     '''echo the GAP commands in the string <commands> into _GAPTest, after
        printing the string <message>.'''
 
-    print _magenta_string(message + ' . . . '),
+    print _pad(_magenta_string(message + ' . . . ')),
     sys.stdout.flush()
 
     log_file = _log_file()
@@ -114,7 +114,7 @@ def _run_test(gap_root, message, stop_for_diffs, *arg):
         if stop_for_diffs:
             sys.exit(1)
 
-    print _magenta_string('PASSED!')
+    print _green_string('PASSED!')
 
 ################################################################################
 
@@ -145,25 +145,25 @@ def _exec(command):
 ################################################################################
 
 def _make_clean(gap_root, name):
+    print _cyan_string(_pad('Deleting ' + name + ' binary') + ' . . . '),
     cwd = os.getcwd()
-    print _yellow_string(_pad('make clean ' + name) + ' . . . '),
     sys.stdout.flush()
     _get_ready_to_make(gap_root, name)
     _exec('make clean')
     os.chdir(cwd)
-    print _yellow_string('DONE!')
+    print _cyan_string('DONE!')
 
 ################################################################################
 
 def _configure_make(directory, name):
+    print _cyan_string(_pad('Compiling ' + name) + ' . . . '),
     cwd = os.getcwd()
-    print _yellow_string(_pad('Compiling ' + name) + ' . . . '),
     sys.stdout.flush()
     _get_ready_to_make(directory, name)
     _exec('./configure')
     _exec('make')
     os.chdir(cwd)
-    print _yellow_string('DONE!')
+    print _cyan_string('DONE!')
 
 ################################################################################
 
@@ -172,8 +172,8 @@ def _man_ex_str(gap_root, name):
             + name + '\\", [\\"' + name + '\\"], \\"Section\\");' +
             ' RunExamples(ex);')
 
-def _pad(string):
-    for i in xrange(27 - len(string)):
+def _pad(string, extra=0):
+    for i in xrange(extra + 27 - len(string)):
         string += ' '
     return string
 
@@ -218,8 +218,10 @@ def _test_gap_quick(gap_root):
 def run_semigroups_tests(gap_root, pkg_dir, pkg_name):
     cwd = os.getcwd()
     tmpdir = tempfile.mkdtemp()
-    #print '\033[35musing temporary directory: ' + tmpdir + '\033[0m'
     filename = tmpdir + '/testlog'
+
+    #print '\033[35musing temporary directory: ' + tmpdir + '\033[0m'
+    print _blue_string(_pad('Running tests in ' + gap_root))
     _run_test(gap_root,
               'Validating PackageInfo.g   ', True,
               _validate_package_info(gap_root, pkg_name))
@@ -282,9 +284,9 @@ def run_semigroups_tests(gap_root, pkg_dir, pkg_name):
 def main():
     parser = argparse.ArgumentParser(prog='release.py',
                                      usage='%(prog)s [options]')
-    parser.add_argument('--gap-root', nargs='?', type=str,
+    parser.add_argument('--gap-root', nargs='*', type=str,
                         help='the gap root directory (default: ~/gap)',
-                        default='~/gap/')
+                        default=['~/gap/'])
     parser.add_argument('--pkg-dir', nargs='?', type=str,
                         help='the pkg directory (default: gap-root/pkg/)',
                         default='~/gap/pkg/')
@@ -297,20 +299,23 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.gap_root[-1] == '/':
-        args.gap_root += '/'
+    for i in xrange(len(args.gap_root)):
+        if args.gap_root[i][-1] != '/':
+            args.gap_root[i] += '/'
     if not args.pkg_dir[-1] == '/':
         args.pkg_dir += '/'
-
-    args.gap_root = os.path.expanduser(args.gap_root)
+    args.gap_root = [os.path.expanduser(x) for x in args.gap_root]
     args.pkg_dir = os.path.expanduser(args.pkg_dir)
 
-    if not (os.path.exists(args.gap_root) and os.path.isdir(args.gap_root)):
-        sys.exit(_red_string('release.py: error: can\'t find GAP root' +
-                             ' directory!'))
+    for gap_root_dir in args.gap_root:
+        if not (os.path.exists(gap_root_dir) and os.path.isdir(gap_root_dir)):
+            sys.exit(_red_string('release.py: error: can\'t find GAP root' +
+                                 ' directory' + gap_root_dir + '!'))
     if not (os.path.exists(args.pkg_dir) or os.path.isdir(args.pkg_dir)):
         sys.exit(_red_string('release.py: error: can\'t find package' +
                              ' directory!'))
+
+    print args.gap_root
 
     run_semigroups_tests(args.gap_root, args.pkg_dir, args.pkg_name)
 
