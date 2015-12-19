@@ -337,6 +337,7 @@ def main():
     print _magenta_string('Merging ' + vers + ' into default . . .')
     _exec('hg up -r default', args.verbose)
     _exec('hg merge -r ' + vers, args.verbose)
+    _exec('hg commit -m "Merge from' + vers + '"', args.verbose)
 
     print _magenta_string('Closing branch ' + vers + ' . . .')
     _exec('hg up -r ' + vers, args.verbose)
@@ -345,6 +346,8 @@ def main():
     print _magenta_string('Updating to default branch . . .')
     _exec('hg up -r default', args.verbose)
 
+    print _magenta_string('Don\'t forget to check everything is ok at:' +
+                          'http://www.gap-system.org/Packages/Authors/authors.html')
     print _green_string('SUCCESS!')
     sys.exit(1)
 
