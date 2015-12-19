@@ -63,11 +63,11 @@ def _run_gap(gap_root, verbose=False):
         out += ' -q'
     return out
 
-def _log_file():
+def _log_file(tmp_dir):
     'returns the string "LogTo(a unique file);"'
     global _LOG_NR
     _LOG_NR += 1
-    log_file = 'test-' + str(_LOG_NR) + '.log'
+    log_file = os.path.join(tmp_dir, 'test-' + str(_LOG_NR) + '.log')
     return log_file
 
 ################################################################################
@@ -79,16 +79,16 @@ def _run_test(gap_root, message, stop_for_diffs, *arg):
        printing the string <message>.'''
 
     dots.dotIt(_MAGENTA_DOT, _run_test_base, gap_root, message,
-                 stop_for_diffs, *arg)
+               stop_for_diffs, *arg)
 
 def _run_test_base (gap_root, message, stop_for_diffs, *arg):
     hide_cursor()
     print _pad(_magenta_string(message + ' . . . ')),
     sys.stdout.flush()
 
-    log_file = _log_file()
+    tmpdir = tempfile.mkdtemp()
+    log_file = _log_file(tmpdir)
     commands = 'echo "LogTo(\\"' + log_file + '\\");\n' + '\n'.join(arg) + '"'
-
     pro1 = subprocess.Popen(commands,
                             stdout=subprocess.PIPE,
                             shell=True)
@@ -241,10 +241,10 @@ def _test_gap_quick(gap_root):
 # Run the tests
 ############################################################################
 
+def semigroups_make_doc(gap_root):
+    _run_test(gap_root, 'Compiling the doc          ', True, _LOAD, _MAKE_DOC)
+
 def run_semigroups_tests(gap_root, pkg_dir, pkg_name):
-    cwd = os.getcwd()
-    tmpdir = tempfile.mkdtemp()
-    filename = tmpdir + '/testlog'
 
     #print '\033[35musing temporary directory: ' + tmpdir + '\033[0m'
     print ''

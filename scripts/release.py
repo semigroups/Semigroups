@@ -7,9 +7,9 @@ things to the webpage.
 import textwrap, os, argparse, tempfile, subprocess, sys, os, re, shutil, gzip
 import test, time, webbrowser
 
-_WEBPAGE_DIR = os.path.expanduser('~/Sites/public_html/semigroups')
+_WEBPAGE_DIR = os.path.expanduser('~/Sites/public_html/semigroups/')
 _MAMP_DIR = '/Applications/MAMP/'
-_SEMIGROUPS_REPO_DIR = os.path.expanduser('~/gap/pkg/semigroups')
+_SEMIGROUPS_REPO_DIR = os.path.expanduser('~/gap/pkg/semigroups/')
 
 ################################################################################
 # Strings for printing
@@ -87,7 +87,8 @@ def _exec(string, verbose):
     try:
         devnull = open(os.devnull, 'w')
         proc = subprocess.Popen(string,
-                                stdout=subprocess.STDOUT,
+                                stdout=devnull,
+                                stderr=devnull,
                                 shell=True)
         proc.wait()
     except OSError:
@@ -209,6 +210,8 @@ def main():
     if args.verbose:
         print _cyan_string('Using temporary directory: ' + tmpdir)
 
+    test.semigroups_make_doc(args.gap_root[0])
+
     # archive . . .
     print _magenta_string('Archiving using hg . . .')
     _exec('hg archive ' + tmpdir, args.verbose)
@@ -262,25 +265,28 @@ def main():
                 shutil.rmtree(semigroups_dir)
 
     print _magenta_string('Creating the tarball . . .')
-    os.chdir(tmpdir)
+    os.chdir(tmpdir_base)
     _exec('tar -cpf semigroups-' + vers + '.tar semigroups-' + vers +
           '; gzip -9 semigroups-' + vers + '.tar', args.verbose)
 
     print _magenta_string('Copying to webpage . . .')
     try:
+        os.chdir(tmpdir_base)
         shutil.copy('semigroups-' + vers + '.tar.gz', _WEBPAGE_DIR)
-        shutil.copy('semigroups-' + vers + '/README.md', _WEBPAGE_DIR)
-        shutil.copy('semigroups-' + vers + '/PackageInfo.g', _WEBPAGE_DIR)
-        shutil.copy('semigroups-' + vers + '/CHANGELOG.md', _WEBPAGE_DIR)
-        shutil.copytree('semigroups-' + vers + '/doc', _WEBPAGE_DIR + 'doc')
-    except:
-        sys.exit(_red_string('release.py: error: could not copy to the webpage!'))
+        os.chdir(tmpdir)
+        shutil.copy('README.md', _WEBPAGE_DIR)
+        shutil.copy('PackageInfo.g', _WEBPAGE_DIR)
+        shutil.copy('CHANGELOG.md', _WEBPAGE_DIR)
+        shutil.copytree('doc', _WEBPAGE_DIR + 'doc')
+    except Exception as e:
+        print _red_string('release.py: error: could not copy to the webpage!')
+        sys.exit(_red_string(str(e)))
 
     os.chdir(_WEBPAGE_DIR)
     print _magenta_string('Adding archive to webpage repo . . .')
     _exec('hg add semigroups-' + vers + '.tar.gz', args.verbose)
     print _magenta_string('Committing webpage repo . . .')
-    _exec('hg commit -m "Releasing Semigroups "' + vers + '"', args.verbose)
+    _exec('hg commit -m "Releasing Semigroups ' + vers + '"', args.verbose)
 
     _start_mamp()
     webbrowser.open('http://localhost:8888/public_html/semigroups.php')
