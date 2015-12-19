@@ -284,9 +284,9 @@ def run_semigroups_tests(gap_root, pkg_dir, pkg_name):
 def main():
     parser = argparse.ArgumentParser(prog='release.py',
                                      usage='%(prog)s [options]')
-    parser.add_argument('--gap-root', nargs='*', type=str,
+    parser.add_argument('--gap-root', nargs='?', type=str,
                         help='the gap root directory (default: ~/gap)',
-                        default=['~/gap/'])
+                        default='~/gap/')
     parser.add_argument('--pkg-dir', nargs='?', type=str,
                         help='the pkg directory (default: gap-root/pkg/)',
                         default='~/gap/pkg/')
@@ -299,23 +299,20 @@ def main():
 
     args = parser.parse_args()
 
-    for i in xrange(len(args.gap_root)):
-        if args.gap_root[i][-1] != '/':
-            args.gap_root[i] += '/'
+    if not args.gap_root[-1] == '/':
+        args.gap_root += '/'
     if not args.pkg_dir[-1] == '/':
         args.pkg_dir += '/'
-    args.gap_root = [os.path.expanduser(x) for x in args.gap_root]
+
+    args.gap_root = os.path.expanduser(args.gap_root)
     args.pkg_dir = os.path.expanduser(args.pkg_dir)
 
-    for gap_root_dir in args.gap_root:
-        if not (os.path.exists(gap_root_dir) and os.path.isdir(gap_root_dir)):
-            sys.exit(_red_string('release.py: error: can\'t find GAP root' +
-                                 ' directory' + gap_root_dir + '!'))
+    if not (os.path.exists(args.gap_root) and os.path.isdir(args.gap_root)):
+        sys.exit(_red_string('release.py: error: can\'t find GAP root' +
+                             ' directory!'))
     if not (os.path.exists(args.pkg_dir) or os.path.isdir(args.pkg_dir)):
         sys.exit(_red_string('release.py: error: can\'t find package' +
                              ' directory!'))
-
-    print args.gap_root
 
     run_semigroups_tests(args.gap_root, args.pkg_dir, args.pkg_name)
 
