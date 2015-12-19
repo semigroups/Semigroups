@@ -36,6 +36,38 @@ def _magenta_string(string):
     'magenta string'
     return '\n'.join(_WRAPPER.wrap('\033[35m' + string + '\033[0m'))
 
+def query_yes_no(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+
+    "question" is a string that is presented to the user.
+    "default" is the presumed answer if the user just hits <Enter>.
+        It must be "yes" (the default), "no" or None (meaning
+        an answer is required of the user).
+
+    The "answer" return value is True for "yes" or False for "no".
+    """
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False}
+    if default is None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("invalid default answer: '%s'" % default)
+
+    while True:
+        sys.stdout.write(question + prompt)
+        choice = raw_input().lower()
+        if default is not None and choice == '':
+            return valid[default]
+        elif choice in valid:
+            return valid[choice]
+        else:
+            sys.stdout.write("Please respond with 'yes' or 'no' "
+                             "(or 'y' or 'n').\n")
+
 ################################################################################
 # Check the version number in the branch against that in the PackageInfo.g
 ################################################################################
@@ -277,6 +309,7 @@ def main():
         shutil.copy('README.md', _WEBPAGE_DIR)
         shutil.copy('PackageInfo.g', _WEBPAGE_DIR)
         shutil.copy('CHANGELOG.md', _WEBPAGE_DIR)
+        shutil.rmtree(_WEBPAGE_DIR + 'doc')
         shutil.copytree('doc', _WEBPAGE_DIR + 'doc')
     except Exception as e:
         print _red_string('release.py: error: could not copy to the webpage!')
@@ -285,18 +318,20 @@ def main():
     os.chdir(_WEBPAGE_DIR)
     print _magenta_string('Adding archive to webpage repo . . .')
     _exec('hg add semigroups-' + vers + '.tar.gz', args.verbose)
+    _exec('hg addremove', args.verbose)
     print _magenta_string('Committing webpage repo . . .')
     _exec('hg commit -m "Releasing Semigroups ' + vers + '"', args.verbose)
 
     _start_mamp()
     webbrowser.open('http://localhost:8888/public_html/semigroups.php')
+    publish = query_yes_no(_magenta_string('Publish the webpage?'))
     _stop_mamp()
 
-    publish = input('Publish the webpage? (y/n)')
-    if publish == 'y':
-        print _magenta_string('Pushing webpage to server . . .')
-        _exec('hg push', args.verbose)
+    if not publish:
+        sys.exit(_red_string('Aborting!'))
 
+    print _magenta_string('Pushing webpage to server . . .')
+    _exec('hg push', args.verbose)
     os.chdir(_SEMIGROUPS_REPO_DIR)
 
     print _magenta_string('Merging ' + vers + ' into default . . .')
