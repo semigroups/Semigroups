@@ -357,19 +357,3 @@ if __name__ == '__main__':
         main()
     except KeyboardInterrupt:
         sys.exit(_red_string('Killed!'))
-
-#cd /tmp
-#ditto --norsrc semigroups semigroups_copy
-#rm -r semigroups
-#mv semigroups_copy semigroups-2.7.1
-#
-#cp semigroups-2.7.1.tar.gz ~/Sites/public_html/semigroups
-#
-#cd
-#cd ~/Sites/public_html/semigroups
-#hg add semigroups-2.7.1.tar.gz
-#cp ~/semigroups/README.md .
-#cp ~/semigroups/PackageInfo.g .
-#cp ~/semigroups/CHANGELOG.md .
-#
-#cp ~/semigroups/doc/* doc/
