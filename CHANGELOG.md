@@ -4,7 +4,7 @@
 #### Copyright (C) 2011-15 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
-## Version 2.7.1 (released 18/12/15)
+## Version 2.7.1 (released 19/12/15)
 
 This is a minor release to fix [Issue
 144](https://bitbucket.org/james-d-mitchell/semigroups/issue/144/).
@@ -23,10 +23,14 @@ This is a minor release including some changes for compatibility with GAP 4.8, a
 * several `ViewString` methods for semigroups and their elements were moved from the `Semigroups` package to the GAP library. Some minor changes were made in the method for `ViewString` for semigroups, and the tests, and manual examples were updated accordingly. 
 * The meaning of `IsMonoidAsSemigroup` was changed to be consistent with the meaning of `IsGroupAsSemigroup`. In earlier versions, `IsMonoidAsSemigroup` was `false` for semigroups in the category `IsMonoid`. From Version 2.7, `IsMonoidAsSemigroup` is `true` for monoids in the category `IsMonoid` and for some further semigroups. 
 
-###Issue Resolved in Version 2.7
+###Issues Resolved in Version 2.7
 
-* [Issue 136](https://bitbucket.org/james-d-mitchell/semigroups/issue/136/): `CyclesOfPartialPermSemigroup` sometimes resulted in an error do to using `DegreeOfPartialPermSemigroup` instead of the maximum of the degree and the codegree.
-* [Issue 141](https://bitbucket.org/james-d-mitchell/semigroups/issue/141/): `PartialOrderOfDClasses` sometimes resulted in an error. This bug was introduced in Semigroups 2.6 and did not effect any previous versions.
+* [Issue 136](https://bitbucket.org/james-d-mitchell/semigroups/issue/136/):
+`CyclesOfPartialPermSemigroup` sometimes resulted in an error due to using `DegreeOfPartialPermSemigroup` instead of the maximum of the degree and the codegree. [[James Mitchell](http://tinyurl.com/jdmitchell)]
+* [Issue 141](https://bitbucket.org/james-d-mitchell/semigroups/issue/141/):
+ `PartialOrderOfDClasses` sometimes resulted in an error. This bug was
+ introduced in Semigroups 2.6 and did not effect any previous versions.
+ [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
 ## Version 2.6 (released 22/09/15)
 
@@ -51,7 +55,7 @@ in a similar sense.
 * The operations `MotzkinMonoid` and `PartialJonesMonoid` were introduced.
  [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
-###Issue Resolved in Version 2.6
+###Issues Resolved in Version 2.6
 
 *  [Issue 131](https://bitbucket.org/james-d-mitchell/semigroups/issue/131/): testing membership in a Rees 0-matrix semigroup that knows it is inverse sometimes resulted in an error. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 
@@ -82,7 +86,7 @@ been added. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 * A `UniversalSemigroupCongruence` now returns a much smaller set
 of generating pairs. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 
-###Issue Resolved in Version 2.5
+###Issues Resolved in Version 2.5
 
 Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
