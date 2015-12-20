@@ -24,23 +24,25 @@ DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
 
 # Bipartition semigroups
-DeclareOperation("JonesMonoid", [IsPosInt]);
-DeclareOperation("PartialJonesMonoid", [IsPosInt]);
-DeclareOperation("SingularJonesMonoid", [IsPosInt]);
-DeclareOperation("MotzkinMonoid", [IsPosInt]);
+DeclareOperation("JonesMonoid", [IsInt]);
+DeclareOperation("PartialJonesMonoid", [IsInt]);
+DeclareOperation("MotzkinMonoid", [IsInt]);
+DeclareOperation("BrauerMonoid", [IsInt]);
+DeclareOperation("PartialBrauerMonoid", [IsInt]);
+DeclareOperation("FactorisableDualSymmetricInverseSemigroup", [IsInt]);
+DeclareOperation("DualSymmetricInverseSemigroup", [IsInt]);
+DeclareOperation("TriapsisMonoid", [IsInt]);
+DeclareOperation("PartitionMonoid", [IsInt]);
+
+DeclareSynonym("DualSymmetricInverseMonoid", DualSymmetricInverseSemigroup);
 DeclareSynonym("TemperleyLiebMonoid", JonesMonoid);
-DeclareOperation("BrauerMonoid", [IsPosInt]);
-DeclareOperation("PartialBrauerMonoid", [IsPosInt]);
+
+DeclareOperation("SingularDualSymmetricInverseSemigroup", [IsPosInt]);
+DeclareOperation("SingularPartitionMonoid", [IsPosInt]);
 DeclareOperation("SingularBrauerMonoid", [IsPosInt]);
-DeclareOperation("FactorisableDualSymmetricInverseSemigroup", [IsPosInt]);
+DeclareOperation("SingularJonesMonoid", [IsPosInt]);
 DeclareOperation("SingularFactorisableDualSymmetricInverseSemigroup",
                  [IsPosInt]);
-DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
-DeclareSynonym("DualSymmetricInverseMonoid", DualSymmetricInverseSemigroup);
-DeclareOperation("SingularDualSymmetricInverseSemigroup", [IsPosInt]);
-DeclareOperation("TriapsisMonoid", [IsPosInt]);
-DeclareOperation("PartitionMonoid", [IsPosInt]);
-DeclareOperation("SingularPartitionMonoid", [IsPosInt]);
 
 # Matrix over finite field semigroups
 

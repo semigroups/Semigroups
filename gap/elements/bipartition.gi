@@ -171,6 +171,11 @@ function(blocks)
   return out;
 end);
 
+InstallMethod(IdentityBipartition, "for zero", [IsZeroCyc],
+function(n)
+  return Bipartition([]);
+end);
+
 InstallMethod(IdentityBipartition, "for a positive integer", [IsPosInt],
 function(n)
   local blocks, out, i;

@@ -527,12 +527,16 @@ end);
 
 #
 
-InstallMethod(PartitionMonoid, "for a positive integer",
-[IsPosInt],
+InstallMethod(PartitionMonoid, "for an integer",
+[IsInt],
 function(n)
   local gens;
 
-  if n = 1 then
+  if n < 0 then
+    TryNextMethod();
+  elif n = 0 then
+    return Monoid(Bipartition([]));
+  elif n = 1 then
     return Monoid(Bipartition([[1], [-1]]));
   fi;
 
@@ -544,15 +548,17 @@ function(n)
   return Monoid(gens, rec(regular := true));
 end);
 
-#
-
-InstallMethod(DualSymmetricInverseSemigroup, "for a positive integer",
-[IsPosInt],
+InstallMethod(DualSymmetricInverseSemigroup, "for an integer",
+[IsInt],
 function(n)
   local gens, s;
 
-  if n = 1 then
-    return Semigroup(Bipartition([[1, -1]]));
+  if n < 0 then
+    TryNextMethod();
+  elif n = 0 then
+    return Monoid(Bipartition([]));
+  elif n = 1 then
+    return Monoid(Bipartition([[1, -1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
@@ -567,13 +573,16 @@ function(n)
   return s;
 end);
 
-#
-
 InstallMethod(FactorisableDualSymmetricInverseSemigroup,
-"for a positive integer", [IsPosInt],
+"for an integer", [IsInt],
 function(n)
   local gens;
-  if n = 1 then
+
+  if n < 0 then
+    TryNextMethod();
+  elif n = 0 then
+    return Monoid(Bipartition([]));
+  elif n = 1 then
     return DualSymmetricInverseSemigroup(1);
   fi;
 
@@ -583,15 +592,18 @@ function(n)
   return InverseMonoid(gens);
 end);
 
-#
-
-InstallMethod(BrauerMonoid, "for a positive integer", [IsPosInt],
+InstallMethod(BrauerMonoid, "for an integer", [IsInt],
 function(n)
   local gens;
 
-  if n = 1 then
-    return Semigroup(Bipartition([[1, -1]]));
+  if n < 0 then
+    TryNextMethod();
+  elif n = 0 then
+    return Monoid(Bipartition([]));
+  elif n = 1 then
+    return Monoid(Bipartition([[1, -1]]));
   fi;
+
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
   Add(gens, Bipartition(Concatenation([[1, 2]],
                                         List([3 .. n],
@@ -599,13 +611,15 @@ function(n)
   return Monoid(gens, rec(regular := true));
 end);
 
-#
-
-InstallMethod(PartialBrauerMonoid, "for a positive integer", [IsPosInt],
+InstallMethod(PartialBrauerMonoid, "for an integer", [IsInt],
 function(n)
   local gens;
 
-  if n = 1 then
+  if n < 0 then
+    TryNextMethod();
+  elif n = 0 then
+    return Monoid(Bipartition([]));
+  elif n = 1 then
     return Semigroup(Bipartition([[1, -1]]));
   fi;
 
@@ -619,11 +633,15 @@ end);
 
 #
 
-InstallMethod(JonesMonoid, "for a positive integer", [IsPosInt],
+InstallMethod(JonesMonoid, "for an integer", [IsInt],
 function(n)
   local gens, next, i, j;
 
-  if n = 1 then
+  if n < 0 then
+    TryNextMethod();
+  elif n = 0 then
+    return Monoid(Bipartition([]));
+  elif n = 1 then
     return Monoid(Bipartition([[1, -1]]));
   fi;
 
@@ -642,11 +660,15 @@ function(n)
   return Monoid(gens, rec(regular := true));
 end);
 
-InstallMethod(PartialJonesMonoid, "for a positive integer", [IsPosInt],
+InstallMethod(PartialJonesMonoid, "for an integer", [IsInt],
 function(n)
   local gens, next, i, j;
 
-  if n = 1 then
+  if n < 0 then
+    TryNextMethod();
+  elif n = 0 then
+    return Monoid(Bipartition([]));
+  elif n = 1 then
     return Monoid(Bipartition([[1, -1]]), Bipartition([[1], [-1]]));
   fi;
 
@@ -666,15 +688,22 @@ function(n)
   return Monoid(gens, rec(regular := true));
 end);
 
-InstallMethod(MotzkinMonoid, "for a positive integer", [IsPosInt],
+InstallMethod(MotzkinMonoid, "for a positive integer", [IsInt],
 function(n)
   local gens;
+
+  if n < 0 then
+    TryNextMethod();
+  elif n = 0 then
+    return Monoid(Bipartition([]));
+  fi;
+
   gens := List(GeneratorsOfInverseSemigroup(POI(n)),
                x -> AsBipartition(x, n));
   return Monoid(JonesMonoid(n), gens, rec(regular := true));
 end);
 
-# TODO: document this!
+# TODO n = 0, n = 1 cases here
 
 InstallMethod(TriapsisMonoid, "for a positive integer", [IsPosInt],
 function(n)
@@ -699,7 +728,7 @@ function(n)
     od;
     gens[i] := BipartitionByIntRep(next);
   od;
-  return Semigroup(gens);
+  return Monoid(gens);
 end);
 
 #

@@ -1233,6 +1233,18 @@ gap> S := Semigroup(S, rec(generic := true));;
 gap> IsInverseSemigroup(S);
 false
 
+#T# Bipartition semigroups of degree 0, Issue #139
+gap> AsBipartitionSemigroup( CyclicGroup( IsPermGroup, 1 ) );
+<trivial bipartition group of degree 0 with 1 generator>
+gap> AsBipartitionSemigroup( Group(()) );
+<trivial bipartition group of degree 0 with 1 generator>
+gap> Semigroup( Bipartition( [  ] ) );
+<trivial bipartition group of degree 0 with 1 generator>
+gap> JonesMonoid(0);
+<trivial bipartition group of degree 0 with 1 generator>
+gap> PartitionMonoid(0);
+<trivial bipartition group of degree 0 with 1 generator>
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);
