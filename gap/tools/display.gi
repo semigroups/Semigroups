@@ -27,7 +27,9 @@ SEMIGROUPS.TikzArcPBR := Concatenation("\\newcommand{\\arc}{\\draw[semithick, ",
                                        "2.5mm]}]}\n");
 
 SEMIGROUPS.TikzPBROpts         := rec(labels := false);
-SEMIGROUPS.TikzBipartitionOpts := rec(colors := false);
+SEMIGROUPS.TikzBipartitionOpts := rec(colors        := false,
+                                      beginDocument := true,
+                                      endDocument   := true);
 SEMIGROUPS.TikzBlocksOpts      := rec(labels := "above",
                                       edges  := "below",
                                       colors := false);
@@ -295,6 +297,32 @@ end);
 
 #############################################################################
 
+InstallMethod(TikzString, "for a bipartition collection",
+[IsBipartitionCollection],
+function(coll)
+  return TikzString(coll, SEMIGROUPS.TikzBipartitionOpts);
+end);
+
+InstallMethod(TikzString, "for a bipartition collection and record",
+[IsBipartitionCollection, IsRecord],
+function(coll, opts)
+  local str, x;
+
+  str := ShallowCopy(SEMIGROUPS.TikzInit);
+  Append(str, "\\begin{center}");
+  opts.beginDocument := false;
+  opts.endDocument   := false;
+
+  for x in coll do
+    Append(str, TikzString(x, opts));
+    Append(str, "\n\\bigskip\\bigskip\n\n");
+  od;
+  Append(str, "\\end{center}");
+
+  Append(str, ShallowCopy(SEMIGROUPS.TikzEnd));
+  return str;
+end);
+
 InstallMethod(TikzString, "for a bipartition",
 [IsBipartition],
 function(x)
@@ -317,7 +345,12 @@ function(x, opts)
   ext := ExtRepOfBipartition(x);
   n   := DegreeOfBipartition(x);
 
-  str := ShallowCopy(SEMIGROUPS.TikzInit);
+  if opts.beginDocument = true then
+    str := ShallowCopy(SEMIGROUPS.TikzInit);
+  else
+    str := "";
+  fi;
+
   Append(str, "\\begin{tikzpicture}\n");
 
   # draw the lines
@@ -422,7 +455,9 @@ function(x, opts)
     fi;
   od;
   Append(str, "\\end{tikzpicture}\n\n");
-  Append(str, SEMIGROUPS.TikzEnd);
+  if opts.endDocument = true then
+    Append(str, ShallowCopy(SEMIGROUPS.TikzEnd));
+  fi;
   return str;
 end);
 
@@ -634,7 +669,7 @@ function(S, opts)
     if opts.maximal then
       gp := StructureDescription(GroupHClass(d));
     fi;
-    
+
     if opts.normal then
       iso := InjectionNormalizedPrincipalFactor(d);
     else
