@@ -289,8 +289,8 @@ end);
 # This is required since it is used elsewhere in the code that DClassReps of an
 # inverse semigroup are all idempotents.
 
-InstallMethod(DClassReps, "for an inverse op acting semigroup with generators",
-[IsActingSemigroup and IsSemigroupWithInverseOp and HasGeneratorsOfSemigroup],
+InstallMethod(DClassReps, "for an inverse op acting semigroup",
+[IsActingSemigroup and IsSemigroupWithInverseOp],
 function(S)
   local o, out, m;
   o := LambdaOrb(S);
