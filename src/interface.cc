@@ -178,7 +178,6 @@ Obj SEMIGROUP_CLOSURE (Obj self, Obj old_data, Obj coll_gap, Obj degree) {
 
   Obj new_data = NEW_PREC(6);
 
-
   AssPRec(new_data, RNam_gens,       UnconvertElements(converter,
                                                        new_semigroup->gens()));
   AssPRec(new_data, RNam_degree,     INTOBJ_INT(new_semigroup->degree()));
