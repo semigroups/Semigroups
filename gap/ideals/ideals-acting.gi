@@ -135,7 +135,7 @@ function(I)
   od;
 
   # find generators for I...
-  U := Semigroup(GeneratorsOfSemigroupIdeal(I));
+  U := Semigroup(GeneratorsOfSemigroupIdeal(I), SEMIGROUPS.OptionsRec(I));
 
   for i in [1 .. Length(D)] do
     if IsRegularDClass(D[i]) then
