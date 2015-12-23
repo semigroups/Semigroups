@@ -111,11 +111,18 @@ MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
 Obj MatrixOverSemiringConverter::unconvert (Element* x) {
   MatrixOverSemiring* xx(static_cast<MatrixOverSemiring*>(x));
   size_t n = xx->degree();
+
   Obj plist = NEW_PLIST(T_PLIST, n + 2);
-  SET_LEN_PLIST(plist, n + 2);
-  //TODO only do this if necessary
-  SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
-  SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(_semiring->period()));
+  if (_semiring->period() != -1) {
+    SET_LEN_PLIST(plist, n + 2);
+    SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
+    SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(_semiring->period()));
+  } else if (_semiring->threshold() != -1) {
+    SET_LEN_PLIST(plist, n + 1);
+    SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
+  } else {
+    SET_LEN_PLIST(plist, n);
+  }
 
   for (size_t i = 0; i < n; i++) {
     Obj row = NEW_PLIST(T_PLIST_CYC, n);
@@ -135,7 +142,6 @@ Obj MatrixOverSemiringConverter::unconvert (Element* x) {
   RetypeBag(plist, T_POSOBJ);
   CHANGED_BAG(plist);
   return plist;
-  //return CALL_2ARGS(Objectify, _gap_type, plist);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
