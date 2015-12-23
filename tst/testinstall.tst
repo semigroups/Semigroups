@@ -1245,6 +1245,12 @@ gap> JonesMonoid(0);
 gap> PartitionMonoid(0);
 <trivial bipartition group of degree 0 with 1 generator>
 
+#T# Fixed unconvert for matrix over semiring
+gap> S := FullTropicalMinPlusMonoid(2, 3);
+<monoid of 2x2 tropical min-plus matrices with 7 generators>
+gap> AsTransformationSemigroup(S);
+<transformation monoid of degree 625 with 7 generators>
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);
