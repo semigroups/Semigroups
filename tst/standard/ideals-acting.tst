@@ -68,8 +68,7 @@ gap> S := Semigroup(Transformation([4, 3, 9, 7, 7, 8, 6, 8, 10, 4]),
 >                   Transformation([6, 1, 6, 3, 1, 3, 6, 9, 9, 3]), 
 >                   rec(generic := false));;
 gap> x := Transformation([6, 10, 4, 8, 8, 8, 8, 8, 7, 6]);;
-gap> I := SemigroupIdeal(S, x, rec(generic := false));
-<non-regular transformation semigroup ideal of degree 10 with 1 generator>
+gap> I := SemigroupIdeal(S, x, rec(generic := false));;
 gap> SemigroupData(I);
 <closed semigroup data with 33 reps, 26 lambda-values, 33 rho-values>
 
@@ -91,6 +90,100 @@ gap> I := SemigroupIdeal(Semigroup(
 <non-regular transformation semigroup ideal of degree 5 with 2 generators>
 gap> SemigroupData(I);
 <closed semigroup data with 12 reps, 17 lambda-values, 12 rho-values>
+
+#T# GeneratorsOfSemigroup, for an acting semigroup ideal, 1
+gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ),
+>  PartialPerm( [ 1, 2, 3 ], [ 4, 3, 1 ] ),
+>  PartialPerm( [ 1, 2, 3 ], [ 5, 2, 1 ] ),
+>  PartialPerm( [ 1, 2, 4 ], [ 4, 3, 2 ] ),
+>  PartialPerm( [ 1, 2, 3, 5 ], [ 4, 3, 1, 2 ] ) ]);;
+gap> x := PartialPerm( [ 3, 5 ], [ 3, 4 ] );
+[5,4](3)
+gap> I := SemigroupIdeal(S, x);;
+gap> GeneratorsOfSemigroup(I);;
+
+#T# GeneratorsOfSemigroup, for an acting semigroup ideal, 2
+gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ),
+>  PartialPerm( [ 1, 2, 3 ], [ 4, 3, 1 ] ),
+>  PartialPerm( [ 1, 2, 3 ], [ 5, 2, 1 ] ),
+>  PartialPerm( [ 1, 2, 4 ], [ 4, 3, 2 ] ),
+>  PartialPerm( [ 1, 2, 3, 5 ], [ 4, 3, 1, 2 ] ) ]);;
+gap> x := PartialPerm( [ 2 ], [ 3 ] );;
+gap> I := SemigroupIdeal(S, x);;
+gap> GeneratorsOfSemigroup(I);;
+gap> GeneratorsOfInverseSemigroup(I);;
+
+#T# GeneratorsOfSemigroup, for an acting semigroup ideal, 3
+gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ),
+>  PartialPerm( [ 1, 2, 3 ], [ 4, 3, 1 ] ),
+>  PartialPerm( [ 1, 2, 3 ], [ 5, 2, 1 ] ),
+>  PartialPerm( [ 1, 2, 4 ], [ 4, 3, 2 ] ),
+>  PartialPerm( [ 1, 2, 3, 5 ], [ 4, 3, 1, 2 ] ) ]);;
+gap> x := PartialPerm( [ 2 ], [ 3 ] );;
+gap> I := SemigroupIdeal(S, x);;
+gap> GeneratorsOfInverseSemigroup(I);;
+gap> GeneratorsOfSemigroup(I);;
+
+#T# GeneratorsOfSemigroup, for an acting semigroup ideal, 4
+gap> S := Semigroup( [ Transformation( [ 1, 4, 4, 3, 3 ] ),
+>  Transformation( [ 3, 2, 4, 1 ] ), Transformation( [ 3, 4, 1, 2, 2 ] ),
+>  Transformation( [ 3, 4, 5, 5, 1 ] ), Transformation( [ 5, 2, 5, 3, 5 ] ) ] );;
+gap> x := Transformation( [ 1, 4, 4, 3, 3 ] );;
+gap> I := SemigroupIdeal(S, x);;
+gap> I = Semigroup(GeneratorsOfSemigroup(I));
+true
+
+#T# GeneratorsOfSemigroup, for an acting semigroup ideal, 5
+gap> S := Semigroup(Transformation([3, 4, 3, 3, 1]),
+>                   Transformation([4, 1, 2, 3, 4]), 
+>                   Transformation([5, 1, 1, 1, 4]));;
+gap> x := Transformation([5, 1, 1, 1, 4]);;
+gap> I := SemigroupIdeal(S, x);;
+gap> I = Semigroup(GeneratorsOfSemigroup(I));
+true
+
+#T# GeneratorsOfSemigroup, for an acting semigroup ideal, 6
+gap> S := InverseSemigroup(PartialPerm([1, 2, 3], [2, 1, 4]),
+>                          PartialPerm([1, 3, 4], [1, 3, 2]),
+>                          PartialPerm([1, 4], [3, 4]),
+>                          PartialPerm([1, 2, 3, 4], [3, 4, 1, 2]),
+>                          PartialPerm([1, 2, 3, 4], [4, 1, 2, 3]));;
+gap> x := PartialPerm( [ 1, 3 ], [ 1, 3 ] );;
+gap> I := SemigroupIdeal(S, x);;
+gap> I = InverseSemigroup(GeneratorsOfInverseSemigroup(I));
+true
+
+#T# GeneratorsOfSemigroup, for an acting semigroup ideal, 7
+gap> S := InverseSemigroup(PartialPerm([1, 2, 3], [2, 1, 4]),
+>                          PartialPerm([1, 3, 4], [1, 3, 2]),
+>                          PartialPerm([1, 4], [3, 4]),
+>                          PartialPerm([1, 2, 3, 4], [3, 4, 1, 2]),
+>                          PartialPerm([1, 2, 3, 4], [4, 1, 2, 3]));;
+gap> x := PartialPerm( [ 1, 3 ], [ 1, 3 ] );;
+gap> I := SemigroupIdeal(S, x);;
+gap> I = Semigroup(GeneratorsOfSemigroup(I));
+true
+
+#T# \in, for a regular acting semigroup ideal, 1
+gap> S := PartialTransformationSemigroup(5);;
+gap> x := Transformation( [ 5, 6, 2, 3, 4, 6 ] );;
+gap> I := SemigroupIdeal(S, x);;
+gap> S.1 in I;
+false
+gap> PartialPerm([]) in I;
+false
+gap> Transformation([1, 1, 1, 1, 1, 1, 1]) in I;
+false
+
+#T# \in, for a regular acting semigroup ideal, 2
+gap> S := BrauerMonoid(5);
+<regular bipartition monoid of degree 5 with 3 generators>
+gap> x := Bipartition([[1, 5], [2, -1], [3, -4], [4, -5], [-2, -3]]);;
+gap> I := SemigroupIdeal(S, x);;
+gap> J := MinimalIdeal(I);
+<simple bipartition semigroup ideal of degree 5 with 1 generator>
+gap> Bipartition([[1, 2, 3, 4, 5], [-1, -2, -3, -4, -5]]) in I;
+false
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/ideals-acting.tst");

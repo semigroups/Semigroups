@@ -117,7 +117,12 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   return enum;
 end;
 
-#
+InstallMethod(GeneratorsOfInverseSemigroup, "for a semigroup ideal with generators",
+[IsSemigroupIdeal and IsSemigroupWithInverseOp and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  # TODO could remove inverses...
+  return GeneratorsOfSemigroup(I);
+end);
 
 InstallMethod(Enumerator, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],

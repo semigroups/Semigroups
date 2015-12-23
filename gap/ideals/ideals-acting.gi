@@ -183,7 +183,7 @@ end);
 InstallMethod(GeneratorsOfSemigroup, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
-  local data, pos, partial, classes, D, U, inj, i, j, C;
+  local data, pos, partial, classes, D, U, inj, i, j;
 
   if not IsRegularSemigroup(I) then
     return SemigroupData(I)!.gens;
@@ -206,13 +206,9 @@ function(I)
   U := Semigroup(GeneratorsOfSemigroupIdeal(I));
 
   for i in [1 .. Length(D)] do
-    if IsRegularDClass(D[i]) then
-      inj := InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
-      U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
-                                        inj));
-    else
-      U := ClosureSemigroup(U, D[i]);
-    fi;
+    inj := InverseGeneralMapping(InjectionPrincipalFactor(D[i]));
+    U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
+                                      inj));
   od;
 
   i := 0;
@@ -225,14 +221,9 @@ function(I)
     while Size(U) <> Size(I) and j < Length(partial[i]) do
       j := j + 1;
       if Length(partial[i]) = 1 or partial[i][j] <> i then
-        C := D[partial[i][j]];
-        if IsRegularDClass(C) then
-          inj := InverseGeneralMapping(InjectionPrincipalFactor(C));
-          U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
-                                            inj));
-        else
-          U := ClosureSemigroup(U, AsList(C));
-        fi;
+        inj := InverseGeneralMapping(InjectionPrincipalFactor(D[partial[i][j]]));
+        U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
+                                          inj));
       fi;
     od;
   od;
@@ -247,13 +238,6 @@ InstallMethod(GeneratorsOfSemigroup,
 [IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local out, U, partial, D, pos, inj, i, j, C, gens;
-
-  if HasGeneratorsOfInverseSemigroup(I) then
-    # TODO could remove repeats and only add necessary inverses...
-    out := ShallowCopy(GeneratorsOfInverseSemigroup(I));
-    Append(out, List(out, x -> x ^ -1));
-    return out;
-  fi;
 
   Info(InfoWarning, 2, "finding a generating set of a semigroup ideal!");
 
@@ -301,7 +285,7 @@ function(I)
   local U, i, partial, D, pos, inj, gens, j, C;
 
   if HasGeneratorsOfSemigroup(I) then
-    # JDM: could remove inverses...
+    # TODO could remove inverses...
     return GeneratorsOfSemigroup(I);
   fi;
 
@@ -309,7 +293,6 @@ function(I)
 
   # find generators for I...
   U := InverseSemigroup(GeneratorsOfSemigroupIdeal(I));
-  i := 0;
   partial := PartialOrderOfDClasses(I);
   D := GreensDClasses(I);
 
@@ -323,6 +306,8 @@ function(I)
     gens := GeneratorsOfSemigroup(Source(inj));
     U := ClosureInverseSemigroup(U, OnTuples(gens, inj));
   od;
+  
+  i := 0;
 
   while Size(U) <> Size(I) do
     i := i + 1;
@@ -350,29 +335,30 @@ function(I)
 
   gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(I));
 
-  data := rec(gens := gens,
-              parent := I,
-              log := [1],
-              genspos := 0,
-              ht := HTCreate(gens[1], rec(treehashsize :=
-                                          SEMIGROUPS.OptionsRec(I).hashlen.L)),
-              pos := 0,
-              init := false,
-              reps := [],
-              repslookup := [],
-              orblookup1 := [],
-              orblookup2 := [],
-              rholookup := [fail],
-              lenreps := [0],
-              orbit := [fail],
-              dorbit := [],
-              repslens := [],
-              lambdarhoht := [],
-              regular := [],
-              genstoapply := [1 .. Length(gens)],
-              stopper := false,
-              poset := [],
-              scc_lookup := []);
+  data := rec();
+  data.gens := gens;
+  data.parent := I;
+  data.log := [1];
+  data.genspos := 0;
+  data.ht := HTCreate(gens[1], rec(treehashsize :=
+                                   SEMIGROUPS.OptionsRec(I).hashlen.L));
+  data.pos := 0;
+  data.init := false;
+  data.reps := [];
+  data.repslookup := [];
+  data.orblookup1 := [];
+  data.orblookup2 := [];
+  data.rholookup := [fail];
+  data.lenreps := [0];
+  data.orbit := [fail];
+  data.dorbit := [];
+  data.repslens := [];
+  data.lambdarhoht := [];
+  data.regular := [];
+  data.genstoapply := [1 .. Length(gens)];
+  data.stopper := false;
+  data.poset := [];
+  data.scc_lookup := [];
 
   if HasIsRegularSemigroup(I) and IsRegularSemigroup(I) then
     filt := IsRegularIdealData;
@@ -420,7 +406,7 @@ end);
 # ideal.
 
 # we make the R-class centered data structure as in SemigroupIdealData but at
-# the same time have an additional "orbit" consisting of D-class reps.
+# the same time have an additional "orbit" consisting of D-class reps.
 
 InstallMethod(Enumerate,
 "for semigroup ideal data, limit, and record",
@@ -434,7 +420,7 @@ function(data, limit, record)
   htvalue, drel, dtype, poset, datalookup, log, tester, regular,
   UpdateSemigroupIdealData, idealgens, i, x, rreps, scc, pos, j, k, z;
 
-  if IsBound(record.lookfunc) then
+  if IsBound(record.lookfunc) and not record.lookfunc <> ReturnFalse then
     lookfunc := record.lookfunc;
     looking := true;
     data!.found := false;
@@ -784,7 +770,7 @@ function(x, I)
   fi;
 
   if ActionRank(I)(x) >
-      MaximumList(List(Generators(I), f -> ActionRank(I)(x))) then
+      MaximumList(List(Generators(I), y -> ActionRank(I)(y))) then
     Info(InfoSemigroups, 2, "element has larger rank than any element of ",
          "semigroup.");
     return false;
@@ -811,7 +797,7 @@ function(x, I)
 
   if l = fail then
     if IsClosed(o) then
-      return fail;
+      return false;
     fi;
 
     # this function checks if <pt> has the same lambda-value as x
@@ -852,7 +838,7 @@ function(x, I)
 
   if l = fail then
     if IsClosed(o) then
-      return fail;
+      return false;
     fi;
 
     # this function checks if <pt> has the same lambda-value as x

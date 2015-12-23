@@ -14,6 +14,7 @@ DeclareOperation("SemigroupIdealByGenerators",
                  [IsSemigroup,
                   IsAssociativeElementCollection,
                   IsRecord]);
+
 DeclareOperation("SemigroupIdealByGeneratorsNC",
                  [IsSemigroup,
                   IsAssociativeElementCollection,
