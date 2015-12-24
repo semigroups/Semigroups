@@ -49,7 +49,7 @@
 # Same as <Info> but without a line break at the end if the boolean <linebreak>
 # is false.
 
-SEMIGROUPS.InfoStatement := function(level, linebreak, arg)
+SEMIGROUPS.InfoStatement := function(level, linebreak, arg...)
 
   if InfoLevel(InfoSemigroups) >= level then
     Apply(arg, String);
