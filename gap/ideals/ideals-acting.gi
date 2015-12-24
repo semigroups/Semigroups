@@ -759,8 +759,8 @@ InstallMethod(\in,
 [IsAssociativeElement,
  IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(x, I)
-  local data, ht, xx, o, scc, scclookup, l, lookfunc, new, m, xxx, lambdarhoht,
-    schutz, ind, reps, repslens, max, lambdaperm, oldrepslens, found, n, i;
+  local data, ht, xx, o, scc, scclookup, l, lookfunc, m, lambdarhoht,
+        schutz, ind, reps;
 
   if ElementsFamily(FamilyObj(I)) <> FamilyObj(x)
       or (IsActingSemigroupWithFixedDegreeMultiplication(I)
@@ -812,48 +812,41 @@ function(x, I)
       return false;
     fi;
     l := Position(o, xx);
-    new := true;
   fi;
 
   # strongly connected component of lambda orb
   m := OrbSCCLookup(o)[l];
 
-  # make sure lambda of f is in the first place of its scc
+  # make sure lambda of <x> is in the first place of its scc
   if l <> OrbSCC(o)[m][1] then
     x := x * LambdaOrbMult(o, m, l)[2];
   fi;
 
-  # check if f is an existing R-rep
+  schutz := LambdaOrbStabChain(o, m);
+
+  # check if <x> is an existing R-rep
   if HTValue(ht, x) <> fail then
     return true;
+  elif schutz = false then 
+    # If <x> in <I> and the Schutz gp is trivial, then <x> is an R-class rep. 
+    # Since we have found the D-class containing an element of <I> with the
+    # same lambda-val as <x>, we have found all of the R-class reps of <I>
+    # with the same lambda-val as <x>, and so we should have found <x>. We
+    # didn't and so <x> is not in <I>. 
+    return false;
   fi;
 
   # look for rho!
-  xxx := RhoFunc(I)(x);
   o := RhoOrb(I);
-  scc := OrbSCC(o);
-  scclookup := OrbSCCLookup(o);
-
-  l := Position(o, xxx);
+  l := Position(o, RhoFunc(I)(x));
 
   if l = fail then
-    if IsClosed(o) then
-      return false;
-    fi;
-
-    # this function checks if <pt> has the same lambda-value as x
-    lookfunc := function(o, pt)
-      return pt = xxx;
-    end;
-    Enumerate(data, infinity, rec(rholookfunc := lookfunc));
-    l := PositionOfFound(o);
-
-    # rho is not found, so f not in s
-    if l = false then
-      return false;
-    fi;
-    l := Position(o, xxx);
-    new := true;
+    Assert(1, IsClosed(o));
+    # Because I is regular once we have found the lambda-val we have found the
+    # (unique) D-class of I containing something with the same lambda-val. If x
+    # in I, then the D-class we've found must contain x and so we already know
+    # the rho-val. So, if l = fail, then x is not in I.
+    return false;
   fi;
 
   lambdarhoht := data!.lambdarhoht;
@@ -872,85 +865,20 @@ function(x, I)
     if not IsBound(lambdarhoht[l]) or not IsBound(lambdarhoht[l][m]) then
       return false;
     fi;
-    new := true;
   fi;
 
-  o := LambdaOrb(I);
-  schutz := LambdaOrbStabChain(o, m);
   ind := lambdarhoht[l][m];
-  # the index of the list of reps with same lambda-rho value as f.
-
-  # if the Schutzenberger group is the symmetric group, then f in s!
+  # the index of the list of reps with same lambda-rho value as <x>.
+  # Note that since <I> is regular, there is only one such rep at most.
+  
+  reps := data!.reps;
+  
+  # if the Schutzenberger group is the symmetric group, then <x> in <I>!
   if schutz = true then
     return true;
   fi;
-
-  reps := data!.reps;
-  repslens := data!.repslens;
-  max := Factorial(LambdaRank(I)(xx)) / Size(LambdaOrbSchutzGp(o, m));
-
-  if repslens[m][ind] = max then
-    return true;
-  fi;
-
-  # if schutz is false, then f has to be an R-rep which it is not...
-  if schutz <> false then
-
-    # check if f already corresponds to an element of reps[m][ind]
-    lambdaperm := LambdaPerm(I);
-    for n in [1 .. repslens[m][ind]] do
-      if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = () then
-        return true;
-      fi;
-    od;
-  elif new and HTValue(ht, x) <> fail then
-    return true;
-  fi;
-
-  if IsClosedData(data) then
-    return false;
-  fi;
-
-  # enumerate until we find x or finish
-  if repslens[m][ind] < max then
-    oldrepslens := repslens[m][ind];
-    lookfunc := function(data, x)
-      return repslens[m][ind] > oldrepslens;
-    end;
-    if schutz = false then
-      repeat
-        # look for more R-reps with same lambda-rho value
-        data := Enumerate(data, infinity, lookfunc);
-        oldrepslens := repslens[m][ind];
-        found := data!.found;
-        if found <> false then
-          if oldrepslens = max or x = data[found][4] then
-            return true;
-          fi;
-        fi;
-      until found = false;
-    else
-      repeat
-        # look for more R-reps with same lambda-rho value
-        data := Enumerate(data, infinity, lookfunc);
-        oldrepslens := repslens[m][ind];
-        found := data!.found;
-        if found <> false then
-          if oldrepslens = max then
-            return true;
-          fi;
-          for i in [n + 1 .. repslens[m][ind]] do
-            if SiftedPermutation(schutz, lambdaperm(reps[m][ind][i], x))
-                = () then
-              return true;
-            fi;
-          od;
-          n := repslens[m][ind];
-        fi;
-      until found = false;
-    fi;
-  fi;
-  return false;
+  Assert(1, schutz <> false);
+  return SiftedPermutation(schutz, LambdaPerm(I)(reps[m][ind][1], x)) = ();
 end);
 
 # JDM; this method could be removed later...

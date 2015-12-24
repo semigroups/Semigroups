@@ -164,7 +164,7 @@ gap> I := SemigroupIdeal(S, x);;
 gap> I = Semigroup(GeneratorsOfSemigroup(I));
 true
 
-#T# \in, for a regular acting semigroup ideal, 1
+#T# \in, for a regular acting semigroup ideal, wrong type, 1
 gap> S := PartialTransformationSemigroup(5);;
 gap> x := Transformation( [ 5, 6, 2, 3, 4, 6 ] );;
 gap> I := SemigroupIdeal(S, x);;
@@ -175,7 +175,7 @@ false
 gap> Transformation([1, 1, 1, 1, 1, 1, 1]) in I;
 false
 
-#T# \in, for a regular acting semigroup ideal, 2
+#T# \in, for a regular acting semigroup ideal, too low rank, 2
 gap> S := BrauerMonoid(5);
 <regular bipartition monoid of degree 5 with 3 generators>
 gap> x := Bipartition([[1, 5], [2, -1], [3, -4], [4, -5], [-2, -3]]);;
@@ -184,6 +184,81 @@ gap> J := MinimalIdeal(I);
 <simple bipartition semigroup ideal of degree 5 with 1 generator>
 gap> Bipartition([[1, 2, 3, 4, 5], [-1, -2, -3, -4, -5]]) in I;
 false
+
+#T# \in, for a regular acting semigroup ideal, wrong lambda-val, 3
+gap> S := BrauerMonoid(5);
+<regular bipartition monoid of degree 5 with 3 generators>
+gap> I := SemigroupIdeal(S, S.1);
+<regular bipartition semigroup ideal of degree 5 with 1 generator>
+gap> x := Bipartition([[1, 2, -1, -2], [3, -3], [4, -4], [5, -5]]);;
+gap> x in I;
+false
+
+#T# \in, for a regular acting semigroup ideal, wrong lambda-val, 4
+gap> S := BrauerMonoid(5);
+<regular bipartition monoid of degree 5 with 3 generators>
+gap> I := SemigroupIdeal(S, S.1);
+<regular bipartition semigroup ideal of degree 5 with 1 generator>
+gap> Size(I);;
+gap> x := Bipartition([[1, 2, -1, -2], [3, -3], [4, -4], [5, -5]]);;
+gap> x in I;
+false
+
+#T# \in, for a regular acting semigroup ideal, wrong lambda-val, 5
+gap> S := BrauerMonoid(5);;
+gap> I := SemigroupIdeal(S, S.1);;
+gap> S.3 in I;
+true
+gap> Bipartition([[1, 2], [3, -5], [4, 5], [-1, -2], [-3, -4]])
+> in I;
+true
+
+#T# \in, for a regular acting semigroup ideal, wrong lambda-val, 6
+gap> S := Semigroup([Transformation([4, 3, 3, 3, 4]),
+>  Transformation([5, 5, 1, 4, 5])]);;
+gap> I := SemigroupIdeal(S, S.1);;
+gap> S.2 in I;
+false
+gap> Transformation([3, 3, 4, 4, 4]) in I;
+false
+
+#T# \in, for a regular acting semigroup ideal, wrong lambda-val, 7
+gap> S := Semigroup([Transformation([4, 3, 3, 3, 4]),
+>  Transformation([5, 5, 1, 4, 5])]);;
+gap> I := SemigroupIdeal(S, S.1);;
+gap> Transformation([3, 3, 4, 4, 4]) in I;
+false
+
+#T# \in, for a regular acting semigroup ideal, looking in rho-orb, 8
+gap> S := PartialTransformationSemigroup(5);;
+gap> x := Transformation([6, 2, 3, 4, 5, 6]);;
+gap> I := SemigroupIdeal(S, x);;
+gap> Transformation([5, 2, 4, 3, 2]) in I;
+true
+
+#T# \in, for a regular acting semigroup ideal, trivial Schutz gp 9
+gap> S := JonesMonoid(5);;
+gap> x := Bipartition([[1, -1], [2, 3], [4, -2], [5, -3], [-4, -5]]);;
+gap> I := SemigroupIdeal(S, x);;
+gap> RepresentativeOfMinimalIdeal(I) in I;
+true
+
+#T# \in, for a regular acting semigroup ideal, trivial Schutz gp 10
+gap> S := JonesMonoid(5);;
+gap> x := Bipartition([[1, -1], [2, 3], [4, -2], [5, -3], [-4, -5]]);;
+gap> I := SemigroupIdeal(S, x);;
+gap> y := Bipartition([[1, 2], [3, -5], [4, -1], [5, -2], [-3, -4]]);;
+gap> y in I;
+false
+
+#T# ViewObj, for SemigroupIdealData 1
+gap> S := Semigroup(Transformation([1, 3, 4, 1, 3]),
+>                   Transformation([5, 5, 1, 1, 3]));
+<transformation semigroup of degree 5 with 2 generators>
+gap> x := Transformation( [ 1, 3, 4, 1, 3 ] );;
+gap> I := SemigroupIdeal(S, x, rec(generic := false));;
+gap> SemigroupIdealData(I);
+<closed semigroup ideal data with 10 reps, 10 lambda-values, 8 rho-values>
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/ideals-acting.tst");
