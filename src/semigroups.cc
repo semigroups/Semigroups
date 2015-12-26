@@ -719,6 +719,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_LEFT_CAYLEY_GRAPH, 1,
                           "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ELEMENT_NUMBER, 2,
+                          "data, pos"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ELEMENTS, 2,
                           "data, limit"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RELATIONS, 1,

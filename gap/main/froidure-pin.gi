@@ -41,7 +41,7 @@ function(S)
   end;
 
   enum.ElementNumber := function(enum, nr)
-    SEMIGROUP_ELEMENT_NUMBER(GenericSemigroupData(S), nr);
+    return SEMIGROUP_ELEMENT_NUMBER(GenericSemigroupData(S), nr);
   end;
 
   # FIXME this should be Size(S) hack around RZMS
