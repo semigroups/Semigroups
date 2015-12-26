@@ -40,18 +40,29 @@ _COMMANDS += 'outdir := \\"' + _DIR + '\\";;'
 _COMMANDS += 'x := ReadLineByLineProfile(\\"' + _DIR + '/profile.gz\\");;'
 _COMMANDS += 'OutputAnnotatedCodeCoverageFiles(x, filesdir, outdir);"'
 
-PS = subprocess.Popen(_COMMANDS, stdout=subprocess.PIPE, shell=True)
+pro1 = subprocess.Popen(_COMMANDS, stdout=subprocess.PIPE, shell=True)
+_RUN_GAP = _ARGS.gap_root + 'bin/gap.sh -A -r -m 1g -T'
 
 try:
-    subprocess.check_call(_ARGS.gap_root + 'bin/gap.sh -A -r -m 1g -T',
-                          stdin=PS.stdout, shell=True)
-except subprocess.CalledProcessError:
+    pro2 = subprocess.Popen(_RUN_GAP,
+                            stdin=pro1.stdout,
+                            shell=True)
+    pro2.wait()
+except KeyboardInterrupt:
+    pro1.terminate()
+    pro1.wait()
+    pro2.terminate()
+    pro2.wait()
+    print '\033[31mKilled!\033[0m'
+    sys.exit(1)
+except (subprocess.CalledProcessError, IOError, OSError):
     sys.exit('\033[31mcode-coverage-test.py: error: something went wrong calling GAP!\033[0m')
 
 try:
     webbrowser.open('file://' + _DIR + '/index.html', new=2)
 except:
     print '\n\n\033[31mFailed to open file://' + _DIR + '/index.html\033[0m'
-    sys.exit(0)
+    sys.exit(1)
 
 print '\n\n\033[32mSUCCESS!\033[0m'
+sys.exit(0)
