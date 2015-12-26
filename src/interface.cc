@@ -155,6 +155,30 @@ Obj SEMIGROUP_ADD_GENERATORS (Obj self, Obj data, Obj coll_gap) {
 }
 
 /*******************************************************************************
+ * SEMIGROUP_CAYLEY_TABLE: TODO for non-C++
+ ******************************************************************************/
+
+Obj SEMIGROUP_CAYLEY_TABLE (Obj self, Obj data) {
+  if (data_type(data) != UNKNOWN) {
+    Semigroup* semigroup = data_semigroup(data);
+    bool       report = data_report(data);
+    Obj out = NEW_PLIST(T_PLIST_HOM, semigroup->size(report));
+    SET_LEN_PLIST(out, semigroup->size(report));
+
+    for (size_t i = 0; i < semigroup->size(report); i++) {
+      Obj next = NEW_PLIST(T_PLIST_CYC, semigroup->size(report));
+      SET_LEN_PLIST(next, semigroup->size(report));
+      for (size_t j = 0; j < semigroup->size(report); j++) {
+        SET_ELM_PLIST(next, j + 1, INTOBJ_INT(semigroup->fast_product(i, j) + 1));
+      }
+      SET_ELM_PLIST(out, i + 1, next);
+      CHANGED_BAG(out);
+    }
+    return out;
+  }
+}
+
+/*******************************************************************************
  * SEMIGROUP_CLOSURE:
  ******************************************************************************/
 
@@ -258,6 +282,33 @@ Obj SEMIGROUP_ELEMENTS (Obj self, Obj data, Obj limit) {
     enumerate_semigroup(self, data, limit, 0, False);
   }
   return ElmPRec(data, RNam_elts);
+}
+
+/*******************************************************************************
+ * SEMIGROUP_ELEMENT_NUMBER: get the <pos> element of <S>, do not store them in
+ * the data record.
+ ******************************************************************************/
+
+Obj SEMIGROUP_ELEMENT_NUMBER (Obj self, Obj data, Obj pos) {
+
+  size_t nr = INT_INTOBJ(pos);
+
+  // use the element cached in the data record if known
+  if (IsbPRec(data, RNam_elts)) {
+    Obj elts = ElmPRec(data, RNam_elts);
+    if (nr < (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
+      return ELM_PLIST(elts, nr);
+    }
+  }
+
+  if (data_type(data) != UNKNOWN) {
+    Semigroup* semigroup = data_semigroup(data);
+    Element* x = semigroup->at(nr, data_report(data));
+    if (x == nullptr) {
+      return Fail;
+    }
+    return data_converter(data)->unconvert(x);
+  }
 }
 
 /*******************************************************************************
@@ -562,26 +613,3 @@ Obj SEMIGROUP_SIZE (Obj self, Obj data) {
   return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
 }
 
-/*******************************************************************************
- * SEMIGROUP_CAYLEY_TABLE: TODO for non-C++
- ******************************************************************************/
-
-Obj SEMIGROUP_CAYLEY_TABLE (Obj self, Obj data) {
-  if (data_type(data) != UNKNOWN) {
-    Semigroup* semigroup = data_semigroup(data);
-    bool       report = data_report(data);
-    Obj out = NEW_PLIST(T_PLIST_HOM, semigroup->size(report));
-    SET_LEN_PLIST(out, semigroup->size(report));
-
-    for (size_t i = 0; i < semigroup->size(report); i++) {
-      Obj next = NEW_PLIST(T_PLIST_CYC, semigroup->size(report));
-      SET_LEN_PLIST(next, semigroup->size(report));
-      for (size_t j = 0; j < semigroup->size(report); j++) {
-        SET_ELM_PLIST(next, j + 1, INTOBJ_INT(semigroup->fast_product(i, j) + 1));
-      }
-      SET_ELM_PLIST(out, i + 1, next);
-      CHANGED_BAG(out);
-    }
-    return out;
-  }
-}

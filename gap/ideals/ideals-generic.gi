@@ -8,19 +8,27 @@
 #############################################################################
 ##
 
-# this file contains method specific to generic ideals of semigroups.
+# This file contains method specific to generic ideals of semigroups.
 
 # We use the result of enumerating the GenericSemigroupData of the
 # supersemigroup of an ideal to calculate elements, size, test membership, find
 # idempotents, etc. We get a generating set and use that otherwise.
 
-# enumerate the ideal until <enum[limit]> is bound or <lookfunc(enum, nr)> is
+InstallMethod(GeneratorsOfInverseSemigroup,
+"for a semigroup ideal with generators",
+[IsSemigroupIdeal and IsSemigroupWithInverseOp and
+ HasGeneratorsOfSemigroupIdeal],
+function(I)
+  # TODO could remove inverses...
+  return GeneratorsOfSemigroup(I);
+end);
+
+# Enumerate the ideal until <enum[limit]> is bound or <lookfunc(enum, nr)> is
 # <true>
 
 SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   local nr, looking, found, i, lookup, indices, S, data, left, right,
    genstoapply, j, len, lookfunc2, l, k;
-
   nr := enum!.nr;
 
   if limit < nr then # we already know descendants of enum[i]
@@ -117,13 +125,6 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   return enum;
 end;
 
-InstallMethod(GeneratorsOfInverseSemigroup, "for a semigroup ideal with generators",
-[IsSemigroupIdeal and IsSemigroupWithInverseOp and HasGeneratorsOfSemigroupIdeal],
-function(I)
-  # TODO could remove inverses...
-  return GeneratorsOfSemigroup(I);
-end);
-
 InstallMethod(Enumerator, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 1, # to beat the library method
@@ -204,7 +205,7 @@ function(x, I)
   return Position(Enumerator(I), x) <> fail;
 end);
 
-#JDM: this should be better, more like the method in ideals-acting.gi
+#TODO this should be better, more like the method in ideals-acting.gi
 
 InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
