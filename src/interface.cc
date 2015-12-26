@@ -294,21 +294,19 @@ Obj SEMIGROUP_ELEMENT_NUMBER (Obj self, Obj data, Obj pos) {
   size_t nr = INT_INTOBJ(pos);
 
   // use the element cached in the data record if known
-  if (IsbPRec(data, RNam_elts)) {
+  if (IsbPRec(data, RNam_elts) || data_type(data) == UNKNOWN) {
+    enumerate_semigroup(self, data, pos, 0, False);
     Obj elts = ElmPRec(data, RNam_elts);
     if (nr < (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
       return ELM_PLIST(elts, nr);
+    } else {
+      return Fail;
     }
   }
 
-  if (data_type(data) != UNKNOWN) {
-    Semigroup* semigroup = data_semigroup(data);
-    Element* x = semigroup->at(nr, data_report(data));
-    if (x == nullptr) {
-      return Fail;
-    }
-    return data_converter(data)->unconvert(x);
-  }
+  Semigroup* semigroup = data_semigroup(data);
+  Element* x = semigroup->at(nr, data_report(data));
+  return (x == nullptr ? Fail : data_converter(data)->unconvert(x));
 }
 
 /*******************************************************************************

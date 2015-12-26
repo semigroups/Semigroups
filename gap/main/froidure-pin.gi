@@ -41,12 +41,7 @@ function(S)
   end;
 
   enum.ElementNumber := function(enum, nr)
-    local data;
-    data := GenericSemigroupData(S);
-    if not IsBound(data!.elts) or not IsBound(data!.elts[nr]) then
-      SEMIGROUP_ELEMENTS(data, nr);
-    fi;
-    return data!.elts[nr];
+    SEMIGROUP_ELEMENT_NUMBER(GenericSemigroupData(S), nr);
   end;
 
   # FIXME this should be Size(S) hack around RZMS
