@@ -221,7 +221,8 @@ function(I)
     while Size(U) <> Size(I) and j < Length(partial[i]) do
       j := j + 1;
       if Length(partial[i]) = 1 or partial[i][j] <> i then
-        inj := InverseGeneralMapping(InjectionPrincipalFactor(D[partial[i][j]]));
+        inj := InjectionPrincipalFactor(D[partial[i][j]]);
+        inj := InverseGeneralMapping(inj);
         U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
                                           inj));
       fi;
@@ -237,7 +238,7 @@ InstallMethod(GeneratorsOfSemigroup,
 "for an inverse op acting semigroup ideal",
 [IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
-  local out, U, partial, D, pos, inj, i, j, C, gens;
+  local U, partial, D, pos, inj, i, j, C, gens;
 
   Info(InfoWarning, 2, "finding a generating set of a semigroup ideal!");
 
@@ -306,7 +307,7 @@ function(I)
     gens := GeneratorsOfSemigroup(Source(inj));
     U := ClosureInverseSemigroup(U, OnTuples(gens, inj));
   od;
-  
+
   i := 0;
 
   while Size(U) <> Size(I) do
@@ -827,12 +828,12 @@ function(x, I)
   # check if <x> is an existing R-rep
   if HTValue(ht, x) <> fail then
     return true;
-  elif schutz = false then 
-    # If <x> in <I> and the Schutz gp is trivial, then <x> is an R-class rep. 
+  elif schutz = false then
+    # If <x> in <I> and the Schutz gp is trivial, then <x> is an R-class rep.
     # Since we have found the D-class containing an element of <I> with the
     # same lambda-val as <x>, we have found all of the R-class reps of <I>
     # with the same lambda-val as <x>, and so we should have found <x>. We
-    # didn't and so <x> is not in <I>. 
+    # didn't and so <x> is not in <I>.
     return false;
   fi;
 
@@ -870,9 +871,9 @@ function(x, I)
   ind := lambdarhoht[l][m];
   # the index of the list of reps with same lambda-rho value as <x>.
   # Note that since <I> is regular, there is only one such rep at most.
-  
+
   reps := data!.reps;
-  
+
   # if the Schutzenberger group is the symmetric group, then <x> in <I>!
   if schutz = true then
     return true;
