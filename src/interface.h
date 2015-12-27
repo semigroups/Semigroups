@@ -43,6 +43,9 @@ Obj SEMIGROUP_FIND                    (Obj self,
 Obj SEMIGROUP_IS_DONE                 (Obj self, Obj data);
 Obj SEMIGROUP_LEFT_CAYLEY_GRAPH       (Obj self, Obj data);
 Obj SEMIGROUP_LENGTH_ELEMENT          (Obj self, Obj data, Obj pos);
+Obj SEMIGROUP_NEXT_ITERATOR           (Obj self, Obj iter);
+Obj SEMIGROUP_IS_DONE_ITERATOR        (Obj self, Obj iter);
+Obj SEMIGROUP_IS_DONE_ITERATOR_CC     (Obj self, Obj iter);
 Obj SEMIGROUP_NR_IDEMPOTENTS          (Obj self, Obj data);
 Obj SEMIGROUP_POSITION                (Obj self, Obj data, Obj x);
 Obj SEMIGROUP_RELATIONS               (Obj self, Obj data);

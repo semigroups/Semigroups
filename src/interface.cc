@@ -22,6 +22,9 @@
 
 #include "semigroups++/semigroups.h"
 
+Int RNam_pos = RNamName("pos");
+Int RNam_data = RNamName("data");
+
 /*******************************************************************************
  *******************************************************************************
  * Helper functions
@@ -294,20 +297,29 @@ Obj SEMIGROUP_ELEMENT_NUMBER (Obj self, Obj data, Obj pos) {
   size_t nr = INT_INTOBJ(pos);
 
   // use the element cached in the data record if known
-  if (IsbPRec(data, RNam_elts) || data_type(data) == UNKNOWN) {
-    enumerate_semigroup(self, data, pos, 0, False);
+  if (IsbPRec(data, RNam_elts)) {
     Obj elts = ElmPRec(data, RNam_elts);
-    if (nr < (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
+    if (nr <= (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
+      return ELM_PLIST(elts, nr);
+    }
+  }
+
+  if (data_type(data) == UNKNOWN) {
+    Obj elts = ElmPRec(data, RNam_elts);
+    enumerate_semigroup(self, data, pos, 0, False);
+    if (nr <= (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
       return ELM_PLIST(elts, nr);
     } else {
       return Fail;
     }
+  } else {
+    Semigroup* semigroup = data_semigroup(data);
+    nr--;
+    Element* x = semigroup->at(nr, data_report(data));
+    return (x == nullptr ? Fail : data_converter(data)->unconvert(x));
   }
-
-  Semigroup* semigroup = data_semigroup(data);
-  Element* x = semigroup->at(nr, data_report(data));
-  return (x == nullptr ? Fail : data_converter(data)->unconvert(x));
 }
+
 
 /*******************************************************************************
  * SEMIGROUP_ENUMERATE:
@@ -475,6 +487,23 @@ Obj SEMIGROUP_LENGTH_ELEMENT (Obj self, Obj data, Obj pos) {
   }
 }
 
+Obj SEMIGROUP_NEXT_ITERATOR (Obj self, Obj iter) {
+  Obj pos = INTOBJ_INT(INT_INTOBJ(ElmPRec(iter, RNam_pos)) + 1);
+  AssPRec(iter, RNam_pos, pos);
+  return SEMIGROUP_ELEMENT_NUMBER(self, ElmPRec(iter, RNam_data), pos);
+}
+
+Obj SEMIGROUP_IS_DONE_ITERATOR_CC (Obj self, Obj iter) {
+  Obj data = ElmPRec(iter, RNam_data);
+  Int size = data_semigroup(data)->size(data_report(data));
+  return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
+}
+
+Obj SEMIGROUP_IS_DONE_ITERATOR (Obj self, Obj iter) {
+  Int size = INT_INTOBJ(SEMIGROUP_SIZE(self, ElmPRec(iter, RNam_data)));
+  return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
+}
+
 /*******************************************************************************
  * SEMIGROUP_NR_IDEMPOTENTS:
  ******************************************************************************/
@@ -607,7 +636,7 @@ Obj SEMIGROUP_SIZE (Obj self, Obj data) {
     return INTOBJ_INT(data_semigroup(data)->size(report));
   } else {
     enumerate_semigroup(self, data, INTOBJ_INT(-1), 0, False);
+    return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
   }
-  return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
 }
 

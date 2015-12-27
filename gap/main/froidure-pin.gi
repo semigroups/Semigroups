@@ -24,6 +24,42 @@
 #############################################################################
 # different method for ideals
 
+InstallMethod(AsList, "for a generic semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  return SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+end);
+
+InstallMethod(Iterator, "for a generic semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup], 2,
+# to beat the generic method for a Rees matrix semigroup, FIXME!!
+function(S)
+  local iter;
+
+  iter      := rec();
+  iter.pos  := 0;
+  iter.data := GenericSemigroupData(S);
+
+  iter.NextIterator := SEMIGROUP_NEXT_ITERATOR;
+  if SEMIGROUPS.IsCCSemigroup(S) then
+    iter.IsDoneIterator := SEMIGROUP_IS_DONE_ITERATOR_CC;
+  else
+    iter.IsDoneIterator := SEMIGROUP_IS_DONE_ITERATOR;
+  fi;
+
+  iter.ShallowCopy := function(iter)
+    return rec(pos := 0, data := iter!.data);
+  end;
+
+  return IteratorByFunctions(iter);
+end);
+
+InstallMethod(Iterator, "for an enumerator of a semigroup",
+[IsEnumeratorOfSemigroup],
+function(enum)
+  return Iterator(UnderlyingCollection(enum));
+end);
+
 InstallMethod(Enumerator, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 2,
 # to beat the generic method for a Rees matrix semigroup, FIXME!!
@@ -47,7 +83,10 @@ function(S)
   # FIXME this should be Size(S) hack around RZMS
   enum.Length := enum -> SEMIGROUP_SIZE(GenericSemigroupData(S));
 
-  enum.AsList := enum -> SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+  enum.AsList := function(enum)
+    return SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+  end;
+
 
   enum.Membership := function(enum, elt)
     return Position(GenericSemigroupData(S), elt) <> fail;
@@ -58,7 +97,9 @@ function(S)
     return nr <= SEMIGROUP_SIZE(GenericSemigroupData(S));
   end;
 
-  return EnumeratorByFunctions(S, enum);
+  enum := EnumeratorByFunctions(S, enum);
+  SetIsEnumeratorOfSemigroup(enum, true);
+  return enum;
 end);
 
 # different method for ideals
