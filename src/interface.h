@@ -33,6 +33,7 @@ Obj SEMIGROUP_CURRENT_NR_RULES        (Obj self, Obj data);
 Obj SEMIGROUP_CURRENT_SIZE            (Obj self, Obj data);
 Obj SEMIGROUP_ELEMENTS                (Obj self, Obj data, Obj limit);
 Obj SEMIGROUP_ELEMENT_NUMBER          (Obj self, Obj data, Obj pos);
+Obj SEMIGROUP_ELEMENT_NUMBER_SORTED   (Obj self, Obj data, Obj pos);
 Obj SEMIGROUP_ENUMERATE               (Obj self, Obj data, Obj limit);
 Obj SEMIGROUP_FACTORIZATION           (Obj self, Obj data, Obj pos);
 Obj SEMIGROUP_FIND                    (Obj self,

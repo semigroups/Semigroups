@@ -320,6 +320,19 @@ Obj SEMIGROUP_ELEMENT_NUMBER (Obj self, Obj data, Obj pos) {
   }
 }
 
+Obj SEMIGROUP_ELEMENT_NUMBER_SORTED (Obj self, Obj data, Obj pos) {
+
+  // use the element cached in the data record if known
+  if (data_type(data) == UNKNOWN) {
+    ErrorQuit("SEMIGROUP_ELEMENT_NUMEBER_SORTED: this shouldn't happen!", 0L, 0L);
+    return 0L;
+  } else {
+    size_t nr = INT_INTOBJ(pos) - 1;
+    Semigroup* semigroup = data_semigroup(data);
+    Element* x = semigroup->sorted_at(nr, data_report(data));
+    return (x == nullptr ? Fail : data_converter(data)->unconvert(x));
+  }
+}
 
 /*******************************************************************************
  * SEMIGROUP_ENUMERATE:

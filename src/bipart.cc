@@ -275,7 +275,7 @@ Obj BIPART_EQ (Obj self, Obj x, Obj y) {
 }
 
 Obj BIPART_LT (Obj self, Obj x, Obj y) {
-  return (bipart_get_cpp(x)->lt(bipart_get_cpp(y)) ? True : False);
+  return (*bipart_get_cpp(x) < *bipart_get_cpp(y) ? True : False);
 }
 
 // TODO this should go into semigroups++
