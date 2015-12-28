@@ -21,12 +21,11 @@
 # 1. Internal methods
 #############################################################################
 
-#TODO IteratorSorted, AsSet
-
 InstallMethod(Iterator, "for semigroup enumerator sorted",
 [IsSemigroupEnumerator and IsSSortedList],
 function(enum)
   return IteratorSorted(UnderlyingCollection(enum));
+end);
 
 InstallMethod(AsSet, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
