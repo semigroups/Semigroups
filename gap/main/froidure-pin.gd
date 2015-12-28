@@ -23,7 +23,12 @@
 # SEMIGROUPS.IsCCSemigroup: returns <true> if the argument is a semigroup to
 # which we can apply the C++ code.
 
-DeclareProperty("IsEnumeratorOfSemigroup", IsEnumeratorByFunctions);
+DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
+
+DeclareOperation("PositionSortedOp",
+                 [IsSemigroup and HasGeneratorsOfSemigroup,
+                  IsAssociativeElement,
+                  IsZeroCyc]);
 
 SEMIGROUPS.IsCCSemigroup := function(S)
   return IsTransformationSemigroup(S)

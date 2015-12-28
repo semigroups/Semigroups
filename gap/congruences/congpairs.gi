@@ -54,7 +54,7 @@ SEMIGROUPS.SetupCongData := function(cong)
         pairstoapply, pos, found, ufdata;
 
   S := Range(cong);
-  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+  elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
 
   # Is this a left, right, or 2-sided congruence?
   if HasGeneratingPairsOfMagmaCongruence(cong) then
@@ -501,7 +501,7 @@ function(_record)
     classes := [];
     next := 1;
     tab := AsLookupTable(cong);
-    elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(Range(cong)), infinity);
+    elms := SEMIGROUP_AS_LIST(GenericSemigroupData(Range(cong)));
     for i in [1 .. Size(tab)] do
       if tab[i] = next then
         classes[next] := EquivalenceClassOfElementNC(cong, elms[i]);
@@ -559,7 +559,7 @@ function(_record)
     lookup := AsLookupTable(cong);
     gendata := GenericSemigroupData(Range(cong));
     classNo := lookup[Position(gendata, elm)];
-    elms := SEMIGROUP_ELEMENTS(gendata, infinity);
+    elms := SEMIGROUP_AS_LIST(gendata);
     return elms{Positions(lookup, classNo)};
   end);
 
@@ -815,7 +815,7 @@ function(_record)
     enum := EnumeratorByFunctions(class, enum);
     enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
     enum!.gendata := GenericSemigroupData(Range(enum!.cong));
-    enum!.elms := SEMIGROUP_ELEMENTS(enum!.gendata, infinity);
+    enum!.elms := SEMIGROUP_AS_LIST(enum!.gendata, infinity);
     enum!.rep := Position(enum!.gendata,
                           Representative(UnderlyingCollection(enum)));
     enum!.list := [enum!.rep];
@@ -953,10 +953,10 @@ function(S)
   local elms, pairs, congs1, nrcongs, children, parents, pair, badcong,
         newchildren, newparents, newcong, i, c, p, congs, length, found, start,
         j, k, lattice;
-  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+  elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
 
   # Get all non-reflexive pairs in SxS
-  pairs := Combinations(elms, 2);
+  pairs := EnumeratorOfCombinations(elms, 2);
 
   # Get all the unique 1-generated congruences
   Info(InfoSemigroups, 1, "Getting all 1-generated congruences...");

@@ -1732,7 +1732,7 @@ function(cong)
   S := Range(cong);
   n := Size(S);
   data := GenericSemigroupData(S);
-  elms := SEMIGROUP_ELEMENTS(data, infinity);
+  elms := SEMIGROUP_AS_LIST(data);
   table := EmptyPlist(n);
   next := 1;
   for i in [1 .. n] do

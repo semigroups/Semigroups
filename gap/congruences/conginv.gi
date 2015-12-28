@@ -234,7 +234,7 @@ function(cong)
   n := Size(S);
   classes := EquivalenceClasses(cong);
   data := GenericSemigroupData(S);
-  elms := SEMIGROUP_ELEMENTS(data, infinity);
+  elms := SEMIGROUP_AS_LIST(data);
   table := EmptyPlist(n);
   next := 1;
   for i in [1 .. n] do
@@ -516,8 +516,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
 
   idsmgp := IdempotentGeneratedSubsemigroup(S);
   idsdata := GenericSemigroupData(idsmgp);
-  idslist := SEMIGROUP_ELEMENTS(idsdata, infinity);
-  slist := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+  idslist := SEMIGROUP_AS_LIST(idsdata);
+  slist := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
 
   # Retrieve the initial information
   kernel := InverseSubsemigroup(S, kernel);

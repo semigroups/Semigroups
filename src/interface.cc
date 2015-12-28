@@ -256,14 +256,14 @@ Obj SEMIGROUP_CURRENT_SIZE (Obj self, Obj data) {
 }
 
 /*******************************************************************************
- * SEMIGROUP_ELEMENTS: get the elements of the C++ semigroup, store them in
+ * SEMIGROUP_AS_LIST: get the elements of the C++ semigroup, store them in
  * data.
  ******************************************************************************/
 
-Obj SEMIGROUP_ELEMENTS (Obj self, Obj data, Obj limit) {
+Obj SEMIGROUP_AS_LIST (Obj self, Obj data) {
   if (data_type(data) != UNKNOWN) {
     std::vector<Element*>* elements =
-      data_semigroup(data)->elements(INT_INTOBJ(limit), data_report(data));
+      data_semigroup(data)->elements(data_report(data));
     Converter* converter = data_converter(data);
 
     if (! IsbPRec(data, RNam_elts)) {
@@ -282,7 +282,7 @@ Obj SEMIGROUP_ELEMENTS (Obj self, Obj data, Obj limit) {
     }
     CHANGED_BAG(data);
   } else {
-    enumerate_semigroup(self, data, limit, 0, False);
+    enumerate_semigroup(self, data, INTOBJ_INT(-1), 0, False);
   }
   return ElmPRec(data, RNam_elts);
 }
@@ -331,6 +331,22 @@ Obj SEMIGROUP_ELEMENT_NUMBER_SORTED (Obj self, Obj data, Obj pos) {
     Semigroup* semigroup = data_semigroup(data);
     Element* x = semigroup->sorted_at(nr, data_report(data));
     return (x == nullptr ? Fail : data_converter(data)->unconvert(x));
+  }
+}
+
+Obj SEMIGROUP_POSITION_SORTED (Obj self, Obj data, Obj x) {
+
+  // use the element cached in the data record if known
+  if (data_type(data) == UNKNOWN) {
+    ErrorQuit("SEMIGROUP_ELEMENT_NUMEBER_SORTED: this shouldn't happen!", 0L, 0L);
+    return 0L;
+  } else {
+    size_t     deg       = data_degree(data);
+    Semigroup* semigroup = data_semigroup(data);
+    Converter* converter = data_converter(data);
+    size_t pos = semigroup->position_sorted(converter->convert(x, deg),
+                                            data_report(data));
+    return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
   }
 }
 
@@ -428,7 +444,8 @@ Obj SEMIGROUP_FIND (Obj self, Obj data, Obj lookfunc, Obj start, Obj end) {
     }
 
     // get the elements out of _semigroup into "elts"
-    SEMIGROUP_ELEMENTS(self, data, limit);
+    // FIXME update this to use "_semigroup->at"
+    SEMIGROUP_AS_LIST(self, data);
 
     size_t nr = std::min(LEN_PLIST(ElmPRec(data, RNam_elts)),
                          INT_INTOBJ(end));
@@ -445,7 +462,8 @@ Obj SEMIGROUP_FIND (Obj self, Obj data, Obj lookfunc, Obj start, Obj end) {
       if (!found) {
         limit = INTOBJ_INT(INT_INTOBJ(limit) + semigroup->batch_size());
         // get the elements out of semigroup into "elts"
-        SEMIGROUP_ELEMENTS(self, data, limit);
+        // FIXME update this
+        SEMIGROUP_AS_LIST(self, data);
         nr = std::min(LEN_PLIST(ElmPRec(data, RNam_elts)),
                       INT_INTOBJ(end));
       }
@@ -504,6 +522,12 @@ Obj SEMIGROUP_NEXT_ITERATOR (Obj self, Obj iter) {
   Obj pos = INTOBJ_INT(INT_INTOBJ(ElmPRec(iter, RNam_pos)) + 1);
   AssPRec(iter, RNam_pos, pos);
   return SEMIGROUP_ELEMENT_NUMBER(self, ElmPRec(iter, RNam_data), pos);
+}
+
+Obj SEMIGROUP_NEXT_ITERATOR_SORTED (Obj self, Obj iter) {
+  Obj pos = INTOBJ_INT(INT_INTOBJ(ElmPRec(iter, RNam_pos)) + 1);
+  AssPRec(iter, RNam_pos, pos);
+  return SEMIGROUP_ELEMENT_NUMBER_SORTED(self, ElmPRec(iter, RNam_data), pos);
 }
 
 Obj SEMIGROUP_IS_DONE_ITERATOR_CC (Obj self, Obj iter) {

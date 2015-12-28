@@ -261,7 +261,7 @@ function(cong)
   nrclasses := NrEquivalenceClasses(cong!.rmscong);
   rmsdata := GenericSemigroupData(Range(cong!.rmscong));
   iso := cong!.iso;
-  elms := SEMIGROUP_ELEMENTS(GenericSemigroupData(S), infinity);
+  elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
 
   # Renumber the entries so we start at 1
   table := EmptyPlist(Length(elms));
