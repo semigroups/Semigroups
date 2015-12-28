@@ -23,11 +23,10 @@
 
 #TODO IteratorSorted, AsSet
 
-#InstallMethod(Iterator, "for semigroup enumerator sorted",
-#[IsSemigroupEnumerator and IsSSortedList],
-#function(enum)
-#  return IteratorSorted(UnderlyingCollection(enum));
-#end);
+InstallMethod(Iterator, "for semigroup enumerator sorted",
+[IsSemigroupEnumerator and IsSSortedList],
+function(enum)
+  return IteratorSorted(UnderlyingCollection(enum));
 
 InstallMethod(AsSet, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
