@@ -65,8 +65,8 @@ Obj UnconvertElements (Converter* converter, std::vector<Element*>* elements) {
 
   for (size_t i = 0; i < elements->size(); i++) {
     SET_ELM_PLIST(out, i + 1, converter->unconvert(elements->at(i)));
+    CHANGED_BAG(out);
   }
-  CHANGED_BAG(out);
   return out;
 }
 
@@ -313,8 +313,8 @@ Obj SEMIGROUP_ELEMENT_NUMBER (Obj self, Obj data, Obj pos) {
       return Fail;
     }
   } else {
-    Semigroup* semigroup = data_semigroup(data);
     nr--;
+    Semigroup* semigroup = data_semigroup(data);
     Element* x = semigroup->at(nr, data_report(data));
     return (x == nullptr ? Fail : data_converter(data)->unconvert(x));
   }
@@ -322,9 +322,8 @@ Obj SEMIGROUP_ELEMENT_NUMBER (Obj self, Obj data, Obj pos) {
 
 Obj SEMIGROUP_ELEMENT_NUMBER_SORTED (Obj self, Obj data, Obj pos) {
 
-  // use the element cached in the data record if known
   if (data_type(data) == UNKNOWN) {
-    ErrorQuit("SEMIGROUP_ELEMENT_NUMEBER_SORTED: this shouldn't happen!", 0L, 0L);
+    ErrorQuit("SEMIGROUP_ELEMENT_NUMBER_SORTED: this shouldn't happen!", 0L, 0L);
     return 0L;
   } else {
     size_t nr = INT_INTOBJ(pos) - 1;
@@ -334,11 +333,21 @@ Obj SEMIGROUP_ELEMENT_NUMBER_SORTED (Obj self, Obj data, Obj pos) {
   }
 }
 
-Obj SEMIGROUP_POSITION_SORTED (Obj self, Obj data, Obj x) {
+Obj SEMIGROUP_AS_SET (Obj self, Obj data) {
+
+  if (data_type(data) == UNKNOWN) {
+    ErrorQuit("SEMIGROUP_AS_SET: this shouldn't happen!", 0L, 0L);
+    return 0L;
+  } else {
+    return UnconvertElements(data_converter(data),
+                             data_semigroup(data)->sorted_elements());
+  }
+}
+/*Obj SEMIGROUP_POSITION_SORTED (Obj self, Obj data, Obj x) {
 
   // use the element cached in the data record if known
   if (data_type(data) == UNKNOWN) {
-    ErrorQuit("SEMIGROUP_ELEMENT_NUMEBER_SORTED: this shouldn't happen!", 0L, 0L);
+    ErrorQuit("SEMIGROUP_ELEMENT_NUMBER_SORTED: this shouldn't happen!", 0L, 0L);
     return 0L;
   } else {
     size_t     deg       = data_degree(data);
@@ -348,7 +357,7 @@ Obj SEMIGROUP_POSITION_SORTED (Obj self, Obj data, Obj x) {
                                             data_report(data));
     return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
   }
-}
+}*/
 
 /*******************************************************************************
  * SEMIGROUP_ENUMERATE:

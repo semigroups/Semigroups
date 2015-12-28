@@ -23,10 +23,16 @@
 
 #TODO IteratorSorted, AsSet
 
-InstallMethod(Iterator, "for semigroup enumerator sorted",
-[IsSemigroupEnumerator and IsSSortedList],
-function(enum)
-  return IteratorSorted(UnderlyingCollection(enum));
+#InstallMethod(Iterator, "for semigroup enumerator sorted",
+#[IsSemigroupEnumerator and IsSSortedList],
+#function(enum)
+#  return IteratorSorted(UnderlyingCollection(enum));
+#end);
+
+InstallMethod(AsSet, "for a generic semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  return SEMIGROUP_AS_SET(GenericSemigroupData(S));
 end);
 
 InstallMethod(EnumeratorSorted, "for a generic semigroup with generators",
@@ -35,7 +41,9 @@ InstallMethod(EnumeratorSorted, "for a generic semigroup with generators",
 function(S)
   local enum;
 
-  if Length(GeneratorsOfSemigroup(S)) = 0 then
+  if HasAsSSortedList(S) then
+    return AsSSortedList(S);
+  elif Length(GeneratorsOfSemigroup(S)) = 0 then
     TryNextMethod();
   fi;
 
@@ -73,6 +81,10 @@ InstallMethod(IteratorSorted, "for a generic semigroup with generators",
 function(S)
   local iter;
 
+  if HasAsSSortedList(S) then
+    return AsSSortedList(S);
+  fi;
+
   iter      := rec();
   iter.pos  := 0;
   iter.data := GenericSemigroupData(S);
@@ -102,6 +114,10 @@ InstallMethod(Iterator, "for a generic semigroup with generators",
 # to beat the generic method for a Rees matrix semigroup, FIXME!!
 function(S)
   local iter;
+
+  if HasAsList(S) then
+    return AsList(S);
+  fi;
 
   iter      := rec();
   iter.pos  := 0;
@@ -133,7 +149,9 @@ InstallMethod(Enumerator, "for a generic semigroup with generators",
 function(S)
   local enum;
 
-  if Length(GeneratorsOfSemigroup(S)) = 0 then
+  if HasAsList(S) then
+    return AsList(S);
+  elif Length(GeneratorsOfSemigroup(S)) = 0 then
     TryNextMethod();
   fi;
 

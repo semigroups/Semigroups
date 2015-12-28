@@ -732,6 +732,7 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_IS_DONE_ITERATOR_CC, 1,
                           "iter"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_AS_LIST, 1, "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_AS_SET, 1, "data"),
 
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RELATIONS, 1,
                           "data"),
@@ -751,8 +752,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION, 2,
                           "data, x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION_SORTED, 2,
-                          "data, x"),
+  //  GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION_SORTED, 2,
+  //                        "data, x"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_IS_DONE, 1,
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_MAX_WORD_LENGTH, 1,
