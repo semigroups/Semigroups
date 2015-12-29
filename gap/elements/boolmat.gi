@@ -142,6 +142,32 @@ function(x, y)
   return MatrixNC(x, xy);
 end);
 
+InstallMethod(\<, "for boolean matrices",
+[IsBooleanMat, IsBooleanMat],
+function(x, y)
+  local n, i;
+
+  n := Length(x![1]);
+  if n < Length(y![1]) then
+    return true;
+  elif n > Length(y![1]) then
+    return false;
+  fi;
+
+  i := 1;
+  while IsBound(x![i]) do
+    # this is the opposite way around than general matrices over semirings
+    # since for some reason true < false in GAP.
+    if x![i] > y![i] then
+      return true;
+    elif x![i] < y![i] then
+      return false;
+    fi;
+    i := i + 1;
+  od;
+  return false;
+end);
+
 InstallMethod(OneImmutable, "for a boolean mat",
 [IsBooleanMat],
 function(x)

@@ -305,8 +305,8 @@ Obj SEMIGROUP_ELEMENT_NUMBER (Obj self, Obj data, Obj pos) {
   }
 
   if (data_type(data) == UNKNOWN) {
-    Obj elts = ElmPRec(data, RNam_elts);
     enumerate_semigroup(self, data, pos, 0, False);
+    Obj elts = ElmPRec(data, RNam_elts);
     if (nr <= (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
       return ELM_PLIST(elts, nr);
     } else {
@@ -334,20 +334,34 @@ Obj SEMIGROUP_ELEMENT_NUMBER_SORTED (Obj self, Obj data, Obj pos) {
 }
 
 Obj SEMIGROUP_AS_SET (Obj self, Obj data) {
-
+//TODO make this faster by running through _pos_sorted so that we run through
+//semigroup->_elements in order, and fill in out (below) out of order
   if (data_type(data) == UNKNOWN) {
     ErrorQuit("SEMIGROUP_AS_SET: this shouldn't happen!", 0L, 0L);
     return 0L;
   } else {
-    return UnconvertElements(data_converter(data),
-                             data_semigroup(data)->sorted_elements());
+
+    std::vector<std::pair<Element*, size_t> >*
+      pairs = data_semigroup(data)->sorted_elements();
+    Converter* converter = data_converter(data);
+
+    Obj out = NEW_PLIST(T_PLIST, pairs->size());
+    SET_LEN_PLIST(out, pairs->size());
+
+    size_t i = 1;
+    for (auto x: *pairs) {
+      SET_ELM_PLIST(out, i++, converter->unconvert(x.first));
+      CHANGED_BAG(out);
+    }
+    return out;
   }
 }
-/*Obj SEMIGROUP_POSITION_SORTED (Obj self, Obj data, Obj x) {
+
+Obj SEMIGROUP_POSITION_SORTED (Obj self, Obj data, Obj x) {
 
   // use the element cached in the data record if known
   if (data_type(data) == UNKNOWN) {
-    ErrorQuit("SEMIGROUP_ELEMENT_NUMBER_SORTED: this shouldn't happen!", 0L, 0L);
+    ErrorQuit("SEMIGROUP_POSITION_SORTED: this shouldn't happen!", 0L, 0L);
     return 0L;
   } else {
     size_t     deg       = data_degree(data);
@@ -357,7 +371,7 @@ Obj SEMIGROUP_AS_SET (Obj self, Obj data) {
                                             data_report(data));
     return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
   }
-}*/
+}
 
 /*******************************************************************************
  * SEMIGROUP_ENUMERATE:

@@ -30,18 +30,21 @@ end);
 InstallMethod(AsSet, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  return SEMIGROUP_AS_SET(GenericSemigroupData(S));
+  if (not IsActingSemigroup(S)) and SEMIGROUPS.IsCCSemigroup(S) then
+    return SEMIGROUP_AS_SET(GenericSemigroupData(S));
+  fi;
+  TryNextMethod();
 end);
 
 InstallMethod(EnumeratorSorted, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
-# to beat the generic method for a Rees matrix semigroup, FIXME!!
 function(S)
   local enum;
 
   if HasAsSSortedList(S) then
     return AsSSortedList(S);
-  elif Length(GeneratorsOfSemigroup(S)) = 0 then
+  elif not SEMIGROUPS.IsCCSemigroup(S)
+    or Length(GeneratorsOfSemigroup(S)) = 0 then
     TryNextMethod();
   fi;
 
@@ -80,7 +83,7 @@ function(S)
   local iter;
 
   if HasAsSSortedList(S) then
-    return AsSSortedList(S);
+    return IteratorList(AsSSortedList(S));
   fi;
 
   iter      := rec();
@@ -114,7 +117,7 @@ function(S)
   local iter;
 
   if HasAsList(S) then
-    return AsList(S);
+    return IteratorList(AsList(S));
   fi;
 
   iter      := rec();
@@ -148,7 +151,7 @@ function(S)
   local enum;
 
   if HasAsList(S) then
-    return AsList(S);
+    return IteratorList(AsList(S));
   elif Length(GeneratorsOfSemigroup(S)) = 0 then
     TryNextMethod();
   fi;
@@ -204,17 +207,17 @@ end);
 InstallMethod(Idempotents, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local data, xs, idempotents, nr, i;
+  local data, elts, idempotents, nr, i;
 
   data := Enumerate(GenericSemigroupData(S));
 
   if not IsBound(data!.idempotents) then
-    xs := SEMIGROUP_AS_LIST(data);
-    idempotents := EmptyPlist(Length(xs));
+    elts := SEMIGROUP_AS_LIST(data);
+    idempotents := EmptyPlist(Length(elts));
     nr := 0;
 
-    for i in [1 .. Length(xs)] do
-      if xs[i] * xs[i] = xs[i] then
+    for i in [1 .. Length(elts)] do
+      if elts[i] * elts[i] = elts[i] then
         nr := nr + 1;
         idempotents[nr] := i;
       fi;
@@ -250,9 +253,9 @@ function(data, x, n)
 end);
 
 InstallMethod(PositionSortedOp,
-"for a semigroup with generators, an associative element, zero cyc",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement, IsZeroCyc],
-function(S, x, n)
+"for a semigroup with generators, an associative element",
+[IsSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
+function(S, x)
   local gens;
 
   if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
@@ -285,7 +288,7 @@ SEMIGROUP_CURRENT_SIZE);
 InstallMethod(ELM_LIST, "for generic semigroup data, and pos int",
 [IsGenericSemigroupData, IsPosInt],
 function(data, nr)
-  return data!.xs[nr];
+  return data!.elts[nr];
 end);
 
 #
@@ -313,7 +316,7 @@ InstallMethod(PrintObj, [IsGenericSemigroupData],
 function(data)
   local recnames, com, i, nam;
 
-  recnames := ["degree", "xs", "final", "first", "found", "gens",
+  recnames := ["degree", "elts", "final", "first", "found", "gens",
                "genslookup", "genstoapply", "ht", "left", "len", "lenindex",
                "nr", "nrrules", "one", "pos", "prefix", "reduced", "right",
                "rules", "stopper", "suffix", "words", "leftscc", "rightscc",
@@ -370,7 +373,7 @@ function(S)
                                            and IsAttributeStoringRep), data);
   fi;
 
-  data := rec(xs := [],
+  data := rec(elts := [],
               final := [],
               first := [],
               found := false,
@@ -405,7 +408,7 @@ function(S)
     if val = fail then # new generator
       nr := nr + 1;
       HTAdd(data.ht, data.gens[i], nr);
-      data.xs[nr] := data.gens[i];
+      data.elts[nr] := data.gens[i];
       data.words[nr] := [i];
       data.first[nr] := i;
       data.final[nr] := i;
@@ -450,7 +453,7 @@ function(data, limit)
 end);
 
 # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
-# <[1..Length(data!.xs)]>.
+# <[1..Length(data!.elts)]>.
 
 InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
 [IsGenericSemigroupData, IsCyclotomic, IsFunction],

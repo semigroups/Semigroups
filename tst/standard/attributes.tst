@@ -837,8 +837,8 @@ gap> S := Semigroup([BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
 > BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
 gap> IsomorphismPermGroup(S);
 MappingByFunction( <group of 3x3 boolean matrices with 2 generators>
-, Group([ (1,3)(2,4)(5,6), (1,4,5)
-(2,3,6) ]), function( x ) ... end, function( x ) ... end )
+, Group([ (1,2)(3,5)(4,6), (1,5,4)
+(2,6,3) ]), function( x ) ... end, function( x ) ... end )
 
 #T# attributes: GroupOfUnits, for a finite semigroup 1/2
 gap> S := RegularBooleanMatMonoid(3);

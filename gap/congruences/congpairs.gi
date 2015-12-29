@@ -815,7 +815,7 @@ function(_record)
     enum := EnumeratorByFunctions(class, enum);
     enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
     enum!.gendata := GenericSemigroupData(Range(enum!.cong));
-    enum!.elms := SEMIGROUP_AS_LIST(enum!.gendata, infinity);
+    enum!.elms := SEMIGROUP_AS_LIST(enum!.gendata);
     enum!.rep := Position(enum!.gendata,
                           Representative(UnderlyingCollection(enum)));
     enum!.list := [enum!.rep];
@@ -956,7 +956,7 @@ function(S)
   elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
 
   # Get all non-reflexive pairs in SxS
-  pairs := EnumeratorOfCombinations(elms, 2);
+  pairs := Combinations(elms, 2);
 
   # Get all the unique 1-generated congruences
   Info(InfoSemigroups, 1, "Getting all 1-generated congruences...");
