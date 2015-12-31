@@ -757,8 +757,6 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_MAX_WORD_LENGTH, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_FIND, 4,
-                          "data, lookfunc, start, end"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_LENGTH_ELEMENT, 2,
                           "data, pos"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CAYLEY_TABLE, 1,

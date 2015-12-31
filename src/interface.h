@@ -37,11 +37,6 @@ Obj SEMIGROUP_ELEMENT_NUMBER          (Obj self, Obj data, Obj pos);
 Obj SEMIGROUP_ELEMENT_NUMBER_SORTED   (Obj self, Obj data, Obj pos);
 Obj SEMIGROUP_ENUMERATE               (Obj self, Obj data, Obj limit);
 Obj SEMIGROUP_FACTORIZATION           (Obj self, Obj data, Obj pos);
-Obj SEMIGROUP_FIND                    (Obj self,
-                                       Obj data,
-                                       Obj lookfunc,
-                                       Obj start,
-                                       Obj end);
 Obj SEMIGROUP_IS_DONE                 (Obj self, Obj data);
 Obj SEMIGROUP_LEFT_CAYLEY_GRAPH       (Obj self, Obj data);
 Obj SEMIGROUP_LENGTH_ELEMENT          (Obj self, Obj data, Obj pos);

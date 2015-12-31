@@ -449,55 +449,6 @@ Obj SEMIGROUP_FACTORIZATION (Obj self, Obj data, Obj pos) {
 }
 
 /*******************************************************************************
- * SEMIGROUP_FIND: return first place in _semigroup starting from pos, for
- * which lookfunc returns true
- ******************************************************************************/
-
-Obj SEMIGROUP_FIND (Obj self, Obj data, Obj lookfunc, Obj start, Obj end) {
-  if (data_type(data) != UNKNOWN) {
-
-    Semigroup* semigroup = data_semigroup(data);
-    AssPRec(data, RNamName("found"), False);
-    size_t pos = INT_INTOBJ(start);
-    Obj limit;
-    if (pos < semigroup->current_size()) {
-      limit = INTOBJ_INT(semigroup->current_size());
-    } else {
-      limit = INTOBJ_INT(pos + semigroup->batch_size());
-    }
-
-    // get the elements out of _semigroup into "elts"
-    // FIXME update this to use "_semigroup->at"
-    SEMIGROUP_AS_LIST(self, data);
-
-    size_t nr = std::min(LEN_PLIST(ElmPRec(data, RNam_elts)),
-                         INT_INTOBJ(end));
-    bool found = false;
-
-    while (!found && pos < nr) {
-      for (; pos < nr; pos++) {
-        if (CALL_2ARGS(lookfunc, data, INTOBJ_INT(pos)) == True) {
-          AssPRec(data,  RNamName("found"), INTOBJ_INT(pos));
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        limit = INTOBJ_INT(INT_INTOBJ(limit) + semigroup->batch_size());
-        // get the elements out of semigroup into "elts"
-        // FIXME update this
-        SEMIGROUP_AS_LIST(self, data);
-        nr = std::min(LEN_PLIST(ElmPRec(data, RNam_elts)),
-                      INT_INTOBJ(end));
-      }
-    }
-  } else {
-    enumerate_semigroup(self, data, end, lookfunc, True);
-  }
-  return ElmPRec(data, RNamName("found"));
-}
-
-/*******************************************************************************
  * SEMIGROUP_IS_DONE:
  ******************************************************************************/
 
