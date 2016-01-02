@@ -853,6 +853,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "blocks, x"),
     GVAR_FUNC_TABLE_ENTRY("boolean.cc", HASH_FUNC_FOR_BLIST, 2,
                           "blist, data"),
+    GVAR_FUNC_TABLE_ENTRY("boolean.cc", BIPART_NR_IDEMPOTENTS, 3,
+                          "o, scc, lookup"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 

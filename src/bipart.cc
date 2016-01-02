@@ -1095,3 +1095,22 @@ Obj BLOCKS_INV_RIGHT (Obj self, Obj blocks_gap, Obj x_gap) {
   out->set_nr_blocks(next);
   return bipart_new(out);
 }
+
+Obj BIPART_NR_IDEMPOTENTS (Obj self, Obj o, Obj scc, Obj lookup) {
+
+  size_t nr = 0;
+
+  for (Int i = 2; i <= LEN_LIST(o); i++) {
+    Obj vals = ELM_PLIST(scc, INT_INTOBJ(ELM_PLIST(lookup, i)));
+    Obj x    = ELM_LIST(o, i);
+    for (Int j = 1; j <= LEN_PLIST(vals); j++) {
+      if (BLOCKS_E_TESTER(self,
+                          x,
+                          ELM_LIST(o, INT_INTOBJ(ELM_PLIST(vals, j)))) == True) {
+        nr++;
+      }
+    }
+  }
+
+  return INTOBJ_INT(nr);
+}

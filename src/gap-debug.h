@@ -45,6 +45,10 @@ bool IS_LIST_F (Obj x) {
   return IS_LIST(x);
 }
 
+Int LEN_LIST_F (Obj x) {
+  return LEN_LIST(x);
+}
+
 bool IS_COMOBJ_F (Obj x) {
   return IS_COMOBJ(x);
 }
