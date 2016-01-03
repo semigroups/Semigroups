@@ -14,6 +14,7 @@
 #include <vector>
 #include <algorithm>
 #include <thread>
+#include <chrono>
 
 // Global variables
 
@@ -1098,121 +1099,215 @@ Obj BLOCKS_INV_RIGHT (Obj self, Obj blocks_gap, Obj x_gap) {
   return bipart_new(out);
 }
 
+typedef std::chrono::duration<int, std::milli> millisecs_t;
 
-class ThreadDispatcher {
+class NrIdempotentsFinder {
 
  public:
-  ThreadDispatcher (Obj orbit, Obj scc, unsigned int nr_threads) :
+  NrIdempotentsFinder (Obj orbit, Obj scc, unsigned int nr_threads) :
     _mutex(),
-    _orbit(orbit),
-    _sccs(scc),
+    _orbit(),
+    _scc(),
     _nr_threads(std::min(nr_threads, std::thread::hardware_concurrency())),
     _threads(),
     _unprocessed(),
     _vals() {
 
+      for (Int i = 2; i <= LEN_LIST(orbit); i++) {
+        _orbit.push_back(blocks_get_cpp(ELM_LIST(orbit, i)));
+      }
+
       _threads.reserve(_nr_threads);
       _vals.reserve(_nr_threads);
-      for (Int i = 1; i <= LEN_PLIST(scc); i++) {
+      for (Int i = 2; i <= LEN_PLIST(scc); i++) {
+        _scc.push_back(std::vector<size_t>());
+        Obj comp = ELM_PLIST(scc, i);
+        for (Int j = 1; j <= LEN_PLIST(comp); j++) {
+          _scc.back().push_back(INT_INTOBJ(ELM_PLIST(comp, j)) - 2);
+        }
         _vals.push_back(0);
-        _unprocessed.push_back(i);
+        _unprocessed.push_back(i - 2);
+      }
+
+      _seen.clear();
+      _seen.reserve(_nr_threads);
+      _lookup.clear();
+      _lookup.reserve(_nr_threads);
+      _fuse_table.clear();
+      _fuse_table.reserve(_nr_threads);
+
+      for (size_t i = 0; i < _nr_threads; i++) {
+        _seen.push_back(std::vector<bool>());
+        _lookup.push_back(std::vector<bool>());
+        _fuse_table.push_back(std::vector<size_t>());
+
       }
   }
 
-  void go () {
+  size_t go () {
+    std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+
     for (size_t i = 0; i < _nr_threads; i++) {
-      _threads[i] = std::thread(&ThreadDispatcher::do_work, this);
+      _threads.push_back(std::thread(&NrIdempotentsFinder::do_work,
+                                     this,
+                                     i));
     }
 
     for (size_t i = 0; i < _nr_threads; i++) {
       _threads[i].join();
     }
+    size_t out = 0;
+    for (size_t i = 0; i < _scc.size(); i++) {
+      out += _vals[i];
+    }
+
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    millisecs_t duration( std::chrono::duration_cast<millisecs_t>(end-start) ) ;
+    std::cout << duration.count() << "ms\n" ;
+
+    return out;
   }
 
  private:
-  void do_work () {
-    std::unique_lock<std::mutex> lck(_mutex);
+  void do_work (size_t thread_id) {
+    while (true) {
+      _mutex.lock();
+      if (_unprocessed.empty()) {
+        _mutex.unlock();
+        return;
+      }
+      size_t index = _unprocessed.back();
+      _unprocessed.pop_back();
+      std::cout << "thread " << thread_id << " is processing index " <<
+        index << "\n";
+      _mutex.unlock();
 
-    lck.lock();
-    if (_unprocessed.empty()) {
-      return;
-    }
-    size_t index = _unprocessed.back();
-    _unprocessed.pop_back();
-    lck.unlock();
-
-    Obj scc = ELM_PLIST(_sccs, index);
-
-    for (Int i = 1; i <= LEN_PLIST(scc); i++) {
-      //Obj x = ELM_LIST(_orbit, INT_INTOBJ(ELM_PLIST(scc, i)));
-      for (Int j = 1; j <= LEN_PLIST(scc); j++) {
-        _vals[index]++;
+      std::vector<size_t> comp = _scc[index];
+      for (size_t i = 0; i < comp.size(); i++) {
+        for (size_t j = 0; j < comp.size(); j++) {
+          if (tester(thread_id, comp[i], comp[j])) {
+            _vals[index]++;
+          }
+        }
       }
     }
   }
 
-  std::mutex          _mutex;
-  Obj const&          _orbit;
-  Obj const&          _sccs;
-  size_t              _nr_threads;
-  std::vector<std::thread>  _threads;
-  std::vector<size_t> _unprocessed; // indices of scc not yet processed
-  std::vector<size_t> _vals;
+  bool tester (size_t thread_id, size_t i, size_t j) {
+    Blocks* left  = _orbit[i];
+    Blocks* right = _orbit[j];
+
+    // prepare the _lookup for detecting transverse fused blocks
+    _lookup[thread_id].clear();
+    _lookup[thread_id].resize(right->nr_blocks() + left->nr_blocks());
+    std::copy(right->lookup()->begin(),
+              right->lookup()->end(),
+              _lookup[thread_id].begin() + left->nr_blocks());
+
+    _seen[thread_id].clear();
+    _seen[thread_id].resize(left->nr_blocks());
+
+    // prepare the _fuse_table
+    _fuse_table[thread_id].clear();
+    _fuse_table[thread_id].reserve(left->nr_blocks() + right->nr_blocks());
+
+    for (size_t i = 0; i < left->nr_blocks() + right->nr_blocks(); i++) {
+      _fuse_table[thread_id].push_back(i);
+    }
+
+    for (auto left_it = left->begin(), right_it = right->begin();
+        left_it < left->begin() + left->degree(); left_it++, right_it++) {
+      size_t j = fuse_it(thread_id, *left_it);
+      size_t k = fuse_it(thread_id, *right_it + left->nr_blocks());
+
+      if (j != k) {
+        if (j < k) {
+          _fuse_table[thread_id][k] = j;
+          if (_lookup[thread_id][k]) {
+            _lookup[thread_id][j] = true;
+          }
+        } else {
+          _fuse_table[thread_id][j] = k;
+          if (_lookup[thread_id][j]) {
+            _lookup[thread_id][k] = true;
+          }
+        }
+      }
+    }
+
+    // check we are injective on transverse blocks of <left> and that the fused
+    // blocks are also transverse.
+
+    for (u_int32_t i = 0; i < left->nr_blocks(); i++) {
+      if (left->is_transverse_block(i)) {
+        size_t j = fuse_it(thread_id, i);
+        if (!_lookup[thread_id][j] || _seen[thread_id][j]) {
+          return false;
+        }
+        _seen[thread_id][j] = true;
+      }
+    }
+    return true;
+  }
+
+  inline size_t fuse_it (size_t thread_id, size_t i) {
+    while (_fuse_table[thread_id][i] < i) {
+      i = _fuse_table[thread_id][i];
+    }
+    return i;
+  }
+
+  std::mutex                        _mutex;
+  std::vector<Blocks*>              _orbit;
+  std::vector<std::vector<size_t> > _scc;
+  size_t                           _nr_threads;
+  std::vector<std::thread>          _threads;
+  std::vector<size_t>               _unprocessed; // indices of scc not yet processed
+  std::vector<size_t>               _vals;        // the values found for each scc
+
+  static std::vector<std::vector<bool> >   _seen;
+  static std::vector<std::vector<bool> >   _lookup; //transverse block lookup
+  static std::vector<std::vector<size_t> > _fuse_table; //transverse block lookup
 };
 
-/*size_t worker_nr_e (Obj o, Obj scc) {
-  size_t nr = 0;
-  for (Int i = 1; i <= LEN_PLIST(scc); i++) {
-    Obj x = ELM_LIST(o, INT_INTOBJ(ELM_PLIST(scc, i)));
-    for (Int j = 1; j <= LEN_PLIST(scc); j++) {
-      if (BLOCKS_E_TESTER(0L,
-                          x,
-                          ELM_LIST(o, INT_INTOBJ(ELM_PLIST(scc, j)))) == True) {
-        nr++;
-    std::cout << "nr = " << nr << "\n";
-      }
-    }
-  }
-  return nr;
-}*/
+std::vector<std::vector<bool> > NrIdempotentsFinder::_seen
+  = std::vector<std::vector<bool> >();
+std::vector<std::vector<bool> > NrIdempotentsFinder::_lookup
+  = std::vector<std::vector<bool> >();
+std::vector<std::vector<size_t> > NrIdempotentsFinder::_fuse_table
+  = std::vector<std::vector<size_t> >();
 
 Obj BIPART_NR_IDEMPOTENTS (Obj self,
                            Obj o,
                            Obj scc,
-                           Obj lookup,
+                           Obj lookup, //FIXME remove this arg
                            Obj nr_threads) {
 
-  for (size_t i = 0; i < nr_threads; i++) {
-    threads[i] = std::thread([&nrs, i, o, scc] {
-        nrs[i] = bipart_nr_idempotents(o, ELM_PLIST(scc, i + 3));
-    });
-  }
 
-  for (size_t i = 0; i < nr_threads; i++) {
-    threads[i].join();
-  }
+  return INTOBJ_INT(NrIdempotentsFinder(o, scc, INT_INTOBJ(nr_threads)).go());
+}
 
+Obj BIPART_NR_IDEMPOTENTS2 (Obj self,
+                            Obj o,
+                            Obj scc,
+                            Obj lookup) {
+  std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
   size_t nr = 0;
-
-  for (size_t i = 0; i < nr_threads; i++) {
-    std::cout << "nrs[i] = " << nrs[i] << "\n";
-    nr += nrs[i];
-  }
-  std::cout << "nr = " << nr << "\n";
-  return INTOBJ_INT(nr);
-}*/
-
-/*  for (Int i = 2; i <= LEN_LIST(o); i++) {
+  for (Int i = 2; i <= LEN_LIST(o); i++) {
     Obj vals = ELM_PLIST(scc, INT_INTOBJ(ELM_PLIST(lookup, i)));
     Obj x    = ELM_LIST(o, i);
     for (Int j = 1; j <= LEN_PLIST(vals); j++) {
       if (BLOCKS_E_TESTER(self,
-                          x,
-                          ELM_LIST(o, INT_INTOBJ(ELM_PLIST(vals, j)))) == True) {
+            x,
+            ELM_LIST(o, INT_INTOBJ(ELM_PLIST(vals, j)))) == True) {
         nr++;
       }
     }
   }
 
+  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+  millisecs_t duration( std::chrono::duration_cast<millisecs_t>(end-start) ) ;
+  std::cout << duration.count() << "ms\n" ;
+
   return INTOBJ_INT(nr);
-}*/
+}

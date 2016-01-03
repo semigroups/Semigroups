@@ -286,7 +286,7 @@ InstallMethod(NrIdempotents, "for a regular star bipartition acting semigroup",
 function(S)
   local o;
   o := Enumerate(LambdaOrb(S));
-  return BIPART_NR_IDEMPOTENTS(o, OrbSCC(o), OrbSCCLookup(o), 4);
+  return BIPART_NR_IDEMPOTENTS(o, OrbSCC(o), OrbSCCLookup(o), 3);
 end);
 
 #############################################################################
