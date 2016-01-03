@@ -12,6 +12,8 @@
 #include "src/permutat.h"
 #include "src/precord.h"
 #include <vector>
+#include <algorithm>
+#include <thread>
 
 // Global variables
 
@@ -1096,11 +1098,111 @@ Obj BLOCKS_INV_RIGHT (Obj self, Obj blocks_gap, Obj x_gap) {
   return bipart_new(out);
 }
 
-Obj BIPART_NR_IDEMPOTENTS (Obj self, Obj o, Obj scc, Obj lookup) {
+
+class ThreadDispatcher {
+
+ public:
+  ThreadDispatcher (Obj orbit, Obj scc, unsigned int nr_threads) :
+    _mutex(),
+    _orbit(orbit),
+    _sccs(scc),
+    _nr_threads(std::min(nr_threads, std::thread::hardware_concurrency())),
+    _threads(),
+    _unprocessed(),
+    _vals() {
+
+      _threads.reserve(_nr_threads);
+      _vals.reserve(_nr_threads);
+      for (Int i = 1; i <= LEN_PLIST(scc); i++) {
+        _vals.push_back(0);
+        _unprocessed.push_back(i);
+      }
+  }
+
+  void go () {
+    for (size_t i = 0; i < _nr_threads; i++) {
+      _threads[i] = std::thread(&ThreadDispatcher::do_work, this);
+    }
+
+    for (size_t i = 0; i < _nr_threads; i++) {
+      _threads[i].join();
+    }
+  }
+
+ private:
+  void do_work () {
+    std::unique_lock<std::mutex> lck(_mutex);
+
+    lck.lock();
+    if (_unprocessed.empty()) {
+      return;
+    }
+    size_t index = _unprocessed.back();
+    _unprocessed.pop_back();
+    lck.unlock();
+
+    Obj scc = ELM_PLIST(_sccs, index);
+
+    for (Int i = 1; i <= LEN_PLIST(scc); i++) {
+      //Obj x = ELM_LIST(_orbit, INT_INTOBJ(ELM_PLIST(scc, i)));
+      for (Int j = 1; j <= LEN_PLIST(scc); j++) {
+        _vals[index]++;
+      }
+    }
+  }
+
+  std::mutex          _mutex;
+  Obj const&          _orbit;
+  Obj const&          _sccs;
+  size_t              _nr_threads;
+  std::vector<std::thread>  _threads;
+  std::vector<size_t> _unprocessed; // indices of scc not yet processed
+  std::vector<size_t> _vals;
+};
+
+/*size_t worker_nr_e (Obj o, Obj scc) {
+  size_t nr = 0;
+  for (Int i = 1; i <= LEN_PLIST(scc); i++) {
+    Obj x = ELM_LIST(o, INT_INTOBJ(ELM_PLIST(scc, i)));
+    for (Int j = 1; j <= LEN_PLIST(scc); j++) {
+      if (BLOCKS_E_TESTER(0L,
+                          x,
+                          ELM_LIST(o, INT_INTOBJ(ELM_PLIST(scc, j)))) == True) {
+        nr++;
+    std::cout << "nr = " << nr << "\n";
+      }
+    }
+  }
+  return nr;
+}*/
+
+Obj BIPART_NR_IDEMPOTENTS (Obj self,
+                           Obj o,
+                           Obj scc,
+                           Obj lookup,
+                           Obj nr_threads) {
+
+  for (size_t i = 0; i < nr_threads; i++) {
+    threads[i] = std::thread([&nrs, i, o, scc] {
+        nrs[i] = bipart_nr_idempotents(o, ELM_PLIST(scc, i + 3));
+    });
+  }
+
+  for (size_t i = 0; i < nr_threads; i++) {
+    threads[i].join();
+  }
 
   size_t nr = 0;
 
-  for (Int i = 2; i <= LEN_LIST(o); i++) {
+  for (size_t i = 0; i < nr_threads; i++) {
+    std::cout << "nrs[i] = " << nrs[i] << "\n";
+    nr += nrs[i];
+  }
+  std::cout << "nr = " << nr << "\n";
+  return INTOBJ_INT(nr);
+}*/
+
+/*  for (Int i = 2; i <= LEN_LIST(o); i++) {
     Obj vals = ELM_PLIST(scc, INT_INTOBJ(ELM_PLIST(lookup, i)));
     Obj x    = ELM_LIST(o, i);
     for (Int j = 1; j <= LEN_PLIST(vals); j++) {
@@ -1113,4 +1215,4 @@ Obj BIPART_NR_IDEMPOTENTS (Obj self, Obj o, Obj scc, Obj lookup) {
   }
 
   return INTOBJ_INT(nr);
-}
+}*/
