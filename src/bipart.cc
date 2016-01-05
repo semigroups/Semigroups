@@ -1104,8 +1104,7 @@ typedef std::chrono::duration<int, std::milli> millisecs_t;
 class NrIdempotentsFinder {
 
  public:
-  NrIdempotentsFinder (Obj orbit, Obj scc, unsigned int nr_threads) :
-    _mutex(),
+  NrIdempotentsFinder (Obj orbit, Obj scc, Obj lookup, unsigned int nr_threads) :
     _orbit(),
     _scc(),
     _nr_threads(std::min(nr_threads, std::thread::hardware_concurrency())),
@@ -1113,21 +1112,25 @@ class NrIdempotentsFinder {
     _unprocessed(),
     _vals() {
 
+      _orbit.reserve(LEN_LIST(orbit));
       for (Int i = 2; i <= LEN_LIST(orbit); i++) {
         _orbit.push_back(blocks_get_cpp(ELM_LIST(orbit, i)));
       }
 
       _threads.reserve(_nr_threads);
-      _vals.reserve(_nr_threads);
+      _vals.resize(_nr_threads);
+
+      size_t total_load = 0;
       for (Int i = 2; i <= LEN_PLIST(scc); i++) {
         _scc.push_back(std::vector<size_t>());
         Obj comp = ELM_PLIST(scc, i);
         for (Int j = 1; j <= LEN_PLIST(comp); j++) {
           _scc.back().push_back(INT_INTOBJ(ELM_PLIST(comp, j)) - 2);
         }
-        _vals.push_back(0);
-        _unprocessed.push_back(i - 2);
+        total_load += std::pow(_scc.back().size(), 2);
       }
+
+      total_load = total_load / _nr_threads;
 
       _seen.clear();
       _seen.reserve(_nr_threads);
@@ -1140,9 +1143,27 @@ class NrIdempotentsFinder {
         _seen.push_back(std::vector<bool>());
         _lookup.push_back(std::vector<bool>());
         _fuse_table.push_back(std::vector<size_t>());
-
+        _unprocessed.push_back(std::vector<std::pair<size_t, size_t> >());
       }
-  }
+
+      // queue pairs for each thread
+      size_t thread_id   = 0;
+      size_t thread_load = 0;
+
+      for (size_t i = 0; i < _orbit.size(); i++) {
+        size_t comp = INT_INTOBJ(ELM_PLIST(lookup, i + 2)) - 2;
+        _unprocessed[thread_id].push_back(make_pair(i, comp));
+        thread_load += _scc[comp].size();
+        if (thread_load >= total_load && thread_id != _nr_threads - 1) {
+          //std::cout << "thread " << thread_id << " has load " << thread_load <<
+          //  "\n";
+          thread_id++;
+          thread_load = 0;
+        }
+      }
+      //std::cout << "thread " << thread_id << " has load " << thread_load <<
+      //  "\n";
+    }
 
   size_t go () {
     std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
@@ -1157,13 +1178,13 @@ class NrIdempotentsFinder {
       _threads[i].join();
     }
     size_t out = 0;
-    for (size_t i = 0; i < _scc.size(); i++) {
+    for (size_t i = 0; i < _nr_threads; i++) {
       out += _vals[i];
     }
 
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     millisecs_t duration( std::chrono::duration_cast<millisecs_t>(end-start) ) ;
-    std::cout << duration.count() << "ms\n" ;
+    // std::cout << duration.count() << "ms\n" ;
 
     return out;
   }
@@ -1171,23 +1192,16 @@ class NrIdempotentsFinder {
  private:
   void do_work (size_t thread_id) {
     while (true) {
-      _mutex.lock();
-      if (_unprocessed.empty()) {
-        _mutex.unlock();
+      if (_unprocessed[thread_id].empty()) {
         return;
       }
-      size_t index = _unprocessed.back();
-      _unprocessed.pop_back();
-      std::cout << "thread " << thread_id << " is processing index " <<
-        index << "\n";
-      _mutex.unlock();
+      std::pair<size_t, size_t> index = _unprocessed[thread_id].back();
+      _unprocessed[thread_id].pop_back();
 
-      std::vector<size_t> comp = _scc[index];
+      std::vector<size_t> comp = _scc[index.second];
       for (size_t i = 0; i < comp.size(); i++) {
-        for (size_t j = 0; j < comp.size(); j++) {
-          if (tester(thread_id, comp[i], comp[j])) {
-            _vals[index]++;
-          }
+        if (tester(thread_id, index.first, comp[i])) {
+          _vals[thread_id]++;
         }
       }
     }
@@ -1257,12 +1271,11 @@ class NrIdempotentsFinder {
     return i;
   }
 
-  std::mutex                        _mutex;
   std::vector<Blocks*>              _orbit;
   std::vector<std::vector<size_t> > _scc;
   size_t                           _nr_threads;
   std::vector<std::thread>          _threads;
-  std::vector<size_t>               _unprocessed; // indices of scc not yet processed
+  std::vector<std::vector<std::pair<size_t, size_t> > >               _unprocessed; // indices of scc not yet processed
   std::vector<size_t>               _vals;        // the values found for each scc
 
   static std::vector<std::vector<bool> >   _seen;
@@ -1280,11 +1293,12 @@ std::vector<std::vector<size_t> > NrIdempotentsFinder::_fuse_table
 Obj BIPART_NR_IDEMPOTENTS (Obj self,
                            Obj o,
                            Obj scc,
-                           Obj lookup, //FIXME remove this arg
+                           Obj lookup,
                            Obj nr_threads) {
 
 
-  return INTOBJ_INT(NrIdempotentsFinder(o, scc, INT_INTOBJ(nr_threads)).go());
+  return INTOBJ_INT(NrIdempotentsFinder(o, scc, lookup,
+                                        INT_INTOBJ(nr_threads)).go());
 }
 
 Obj BIPART_NR_IDEMPOTENTS2 (Obj self,
