@@ -698,3 +698,12 @@ function(S)
 
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
+
+#
+
+InstallMethod(InversesOfSemigroupElementNC,
+"for a semigroup with inverse op and an associative element",
+[IsSemigroupWithInverseOp and IsActingSemigroup, IsAssociativeElement],
+function(S, elm)
+  return [elm ^ -1];
+end);
