@@ -49,7 +49,7 @@ function(S, kernel, traceBlocks)
       for a in l do
         if a in kernel then
           # Condition (C2): aa' related to a'a
-          if not a * a ^ -1 in traceClass then
+          if not a * InversesOfSemigroupElementNC(S, a)[1] in traceClass then
             ErrorMayQuit("Semigroups: ",
                          "InverseSemigroupCongruenceByKernelTrace:\n",
                          "not a valid congruence pair (C2),");
@@ -150,18 +150,19 @@ InstallMethod(ImagesElm,
 "for inverse semigroup congruence and associative element",
 [IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement],
 function(cong, elm)
-  local S, images, e, b;
+  local S, elminv, images, e, b;
   S := Range(cong);
   if not elm in S then
     ErrorMayQuit("Semigroups: ImagesElm: usage,\n",
                  "the first arg <cong> is not defined over the semigroup of ",
                  "the second\nargument <elm>,");
   fi;
+  elminv := InversesOfSemigroupElementNC(S, elm)[1];
   images := [];
   # Consider all idempotents trace-related to (a^-1 a)
-  for e in First(cong!.traceBlocks, c -> (elm ^ -1 * elm) in c) do
+  for e in First(cong!.traceBlocks, c -> (elminv * elm) in c) do
     for b in LClass(S, e) do
-      if elm * b ^ -1 in cong!.kernel then
+      if elm * InversesOfSemigroupElementNC(S, b)[1] in cong!.kernel then
         Add(images, b);
       fi;
     od;
@@ -190,7 +191,9 @@ function(cong)
     for id in traceBlock do
       for elm in LClass(S, id) do
         # Find the congruence class that this element lies in
-        pos := PositionProperty(blockreps, rep -> elm * rep ^ -1 in kernel);
+        pos := PositionProperty(blockreps, rep ->
+                                elm * InversesOfSemigroupElementNC(S, rep)[1]
+                                in kernel);
         if pos = fail then
           # New class
           Add(blockreps, elm);
@@ -254,7 +257,7 @@ InstallMethod(\in,
 "for dense list and inverse semigroup congruence",
 [IsDenseList, IsInverseSemigroupCongruenceByKernelTrace],
 function(pair, cong)
-  local S;
+  local S, pairinv;
   if Size(pair) <> 2 then
     ErrorMayQuit("Semigroups: \\in: usage,\n",
                  "the first arg <pair> must be a list of length 2,");
@@ -265,11 +268,12 @@ function(pair, cong)
                  "the entries of the first arg <pair> must\n",
                  "belong to the semigroup of <cong>,");
   fi;
+  pairinv := List(pair, x-> InversesOfSemigroupElementNC(S, x)[1]);
   # Is (a^-1 a, b^-1 b) in the trace?
-  if pair[1] ^ -1 * pair[1] in
-     First(cong!.traceBlocks, c -> pair[2] ^ -1 * pair[2] in c) then
+  if pairinv[1] * pair[1] in
+     First(cong!.traceBlocks, c -> pairinv[2] * pair[2] in c) then
     # Is ab^-1 in the kernel?
-    if pair[1] * pair[2] ^ -1 in cong!.kernel then
+    if pair[1] * pairinv[2] in cong!.kernel then
       return true;
     fi;
   fi;
@@ -521,7 +525,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
 
   # Retrieve the initial information
   kernel := InverseSubsemigroup(S, kernel);
-  kernelgenstoapply := Set(pairstoapply, x -> x[1] * x[2] ^ -1);
+  kernelgenstoapply := Set(pairstoapply, x -> x[1] *
+                           InversesOfSemigroupElementNC(S, x[2])[1]);
   # kernel might not be normal, so make sure to check its generators too
   for gen in GeneratorsOfInverseSemigroup(kernel) do
     AddSet(kernelgenstoapply, gen);
@@ -578,7 +583,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   end;
 
   enumerate_trace := function()
-    local x, a, y, j;
+    local x, a, y, j, ainv;
     if pos = 0 then
       # Add the generating pairs themselves
       for x in pairstoapply do
@@ -587,8 +592,9 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
           UF_UNION(traceUF, x);
           # Add each pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(S) do
-            y := [Position(idsdata, a ^ -1 * idslist[x[1]] * a),
-                  Position(idsdata, a ^ -1 * idslist[x[2]] * a)];
+            ainv := InversesOfSemigroupElementNC(S, a)[1];
+            y := [Position(idsdata, ainv * idslist[x[1]] * a),
+                  Position(idsdata, ainv * idslist[x[2]] * a)];
             if y[1] <> y[2] and HTValue(ht, y) = fail then
               HTAdd(ht, y, true);
               nr := nr + 1;

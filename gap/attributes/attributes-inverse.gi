@@ -703,7 +703,8 @@ end);
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for a semigroup with inverse op and an associative element",
-[IsSemigroupWithInverseOp and IsActingSemigroup, IsAssociativeElement],
+[IsSemigroupWithInverseOp, IsAssociativeElement],
+2, # We should choose this over the method for acting semigroups
 function(S, elm)
   return [elm ^ -1];
 end);
