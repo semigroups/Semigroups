@@ -7,7 +7,8 @@
 
 //TODO if we use clear before resize maybe don't need fill
 
-#include "src/bipart.h"
+#include "bipart.h"
+#include "timer.hh"
 #include "src/semigroups++/elements.h"
 #include "src/permutat.h"
 #include "src/precord.h"
@@ -20,6 +21,7 @@
 
 static std::vector<size_t> _BUFFER_size_t;
 static std::vector<bool>   _BUFFER_bool;
+static Timer               timer;
 
 inline Obj wrapper_get_elm (Obj x, size_t pos) {
   //TODO check that x is a bipartition or blocks and that pos is not bigger than it
@@ -1099,8 +1101,6 @@ Obj BLOCKS_INV_RIGHT (Obj self, Obj blocks_gap, Obj x_gap) {
   return bipart_new(out);
 }
 
-typedef std::chrono::duration<int, std::milli> millisecs_t;
-
 class NrIdempotentsFinder {
 
  public:
@@ -1166,7 +1166,8 @@ class NrIdempotentsFinder {
     }
 
   size_t go () {
-    std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+
+    timer.start();
 
     for (size_t i = 0; i < _nr_threads; i++) {
       _threads.push_back(std::thread(&NrIdempotentsFinder::do_work,
@@ -1182,9 +1183,7 @@ class NrIdempotentsFinder {
       out += _vals[i];
     }
 
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    millisecs_t duration( std::chrono::duration_cast<millisecs_t>(end-start) ) ;
-    // std::cout << duration.count() << "ms\n" ;
+    timer.stop();
 
     return out;
   }
@@ -1305,7 +1304,7 @@ Obj BIPART_NR_IDEMPOTENTS2 (Obj self,
                             Obj o,
                             Obj scc,
                             Obj lookup) {
-  std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+  timer.start();
   size_t nr = 0;
   for (Int i = 2; i <= LEN_LIST(o); i++) {
     Obj vals = ELM_PLIST(scc, INT_INTOBJ(ELM_PLIST(lookup, i)));
@@ -1318,10 +1317,8 @@ Obj BIPART_NR_IDEMPOTENTS2 (Obj self,
       }
     }
   }
-
-  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-  millisecs_t duration( std::chrono::duration_cast<millisecs_t>(end-start) ) ;
-  std::cout << duration.count() << "ms\n" ;
+  
+  timer.stop();
 
   return INTOBJ_INT(nr);
 }
