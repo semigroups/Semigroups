@@ -236,9 +236,37 @@ NrEquivalenceClasses);
 
 #
 
+InstallMethod(NrLeftCongruenceClasses,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+NrEquivalenceClasses);
+
+#
+
+InstallMethod(NrRightCongruenceClasses,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+NrEquivalenceClasses);
+
+#
+
 InstallMethod(NonTrivialCongruenceClasses,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
+NonTrivialEquivalenceClasses);
+
+#
+
+InstallMethod(NonTrivialLeftCongruenceClasses,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+NonTrivialEquivalenceClasses);
+
+#
+
+InstallMethod(NonTrivialRightCongruenceClasses,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
 NonTrivialEquivalenceClasses);
 
 #
@@ -252,9 +280,49 @@ end);
 
 #
 
+InstallMethod(LeftCongruenceClassOfElement,
+"for a left semigroup congruence and associative element",
+[IsLeftSemigroupCongruence, IsAssociativeElement],
+function(cong, elm)
+  return EquivalenceClassOfElement(cong, elm);
+end);
+
+#
+
+InstallMethod(RightCongruenceClassOfElement,
+"for a right semigroup congruence and associative element",
+[IsRightSemigroupCongruence, IsAssociativeElement],
+function(cong, elm)
+  return EquivalenceClassOfElement(cong, elm);
+end);
+
+#
+
 InstallMethod(IsSuperrelation,
 "for two semigroup congruences",
 [IsSemigroupCongruence, IsSemigroupCongruence],
 function(cong1, cong2)
   return IsSubrelation(cong2, cong1);
+end);
+
+#
+
+InstallMethod(OnLeftCongruenceClasses,
+"for a left congruence class and an associative element",
+[IsLeftCongruenceClass, IsAssociativeElement],
+function(class, elm)
+  local cong;
+  cong := EquivalenceClassRelation(class);
+  return EquivalenceClassOfElementNC(cong, elm * Representative(class));
+end);
+
+#
+
+InstallMethod(OnRightCongruenceClasses,
+"for a right congruence class and an associative element",
+[IsRightCongruenceClass, IsAssociativeElement],
+function(class, elm)
+  local cong;
+  cong := EquivalenceClassRelation(class);
+  return EquivalenceClassOfElementNC(cong, Representative(class) * elm);
 end);
