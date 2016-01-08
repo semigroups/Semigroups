@@ -48,10 +48,10 @@ class Timer {
             print_it<seconds>(elapsed, "s", 0);
             std::cout << std::endl;
             return;
-          } else if (print_it<seconds>(elapsed, "s ", 0)) {
+          /*} else if (print_it<seconds>(elapsed, "s ", 0)) {
             print_it<milliseconds>(elapsed, "ms", 0);
             std::cout << std::endl;
-            return;
+            return;*/
           } else if (print_it<milliseconds>(elapsed, "ms ", 9)) {
             std::cout << std::endl;
             return;

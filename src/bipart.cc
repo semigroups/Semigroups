@@ -1104,13 +1104,18 @@ Obj BLOCKS_INV_RIGHT (Obj self, Obj blocks_gap, Obj x_gap) {
 class NrIdempotentsFinder {
 
  public:
-  NrIdempotentsFinder (Obj orbit, Obj scc, Obj lookup, unsigned int nr_threads) :
+  NrIdempotentsFinder (Obj orbit, 
+                       Obj scc, 
+                       Obj lookup, 
+                       unsigned int nr_threads, 
+                       Obj report) :
     _orbit(),
     _scc(),
     _nr_threads(std::min(nr_threads, std::thread::hardware_concurrency())),
     _threads(),
     _unprocessed(),
-    _vals() {
+    _vals(), 
+    _report(report == True) {
 
       _orbit.reserve(LEN_LIST(orbit));
       for (Int i = 2; i <= LEN_LIST(orbit); i++) {
@@ -1118,7 +1123,6 @@ class NrIdempotentsFinder {
       }
 
       _threads.reserve(_nr_threads);
-      _vals.resize(_nr_threads);
 
       size_t total_load = 0;
       for (Int i = 2; i <= LEN_PLIST(scc); i++) {
@@ -1127,6 +1131,7 @@ class NrIdempotentsFinder {
         for (Int j = 1; j <= LEN_PLIST(comp); j++) {
           _scc.back().push_back(INT_INTOBJ(ELM_PLIST(comp, j)) - 2);
         }
+        _ranks.push_back(_orbit[_scc.back()[0]]->rank());
         total_load += std::pow(_scc.back().size(), 2);
       }
 
@@ -1140,6 +1145,8 @@ class NrIdempotentsFinder {
       _fuse_table.reserve(_nr_threads);
 
       for (size_t i = 0; i < _nr_threads; i++) {
+        _vals.push_back(std::vector<size_t>());
+        _vals.back().resize(LEN_PLIST(scc) - 1);
         _seen.push_back(std::vector<bool>());
         _lookup.push_back(std::vector<bool>());
         _fuse_table.push_back(std::vector<size_t>());
@@ -1155,17 +1162,21 @@ class NrIdempotentsFinder {
         _unprocessed[thread_id].push_back(make_pair(i, comp));
         thread_load += _scc[comp].size();
         if (thread_load >= total_load && thread_id != _nr_threads - 1) {
-          //std::cout << "thread " << thread_id << " has load " << thread_load <<
-          //  "\n";
+          if (_report) {
+            std::cout << "thread " << thread_id << " has load " << thread_load <<
+              "\n";
+          }
           thread_id++;
           thread_load = 0;
         }
       }
-      //std::cout << "thread " << thread_id << " has load " << thread_load <<
-      //  "\n";
+      if (_report) {
+        std::cout << "thread " << thread_id << " has load " << thread_load <<
+          "\n";
+      }
     }
 
-  size_t go () {
+  std::vector<size_t>* go () {
 
     timer.start();
 
@@ -1178,12 +1189,18 @@ class NrIdempotentsFinder {
     for (size_t i = 0; i < _nr_threads; i++) {
       _threads[i].join();
     }
-    size_t out = 0;
-    for (size_t i = 0; i < _nr_threads; i++) {
-      out += _vals[i];
-    }
+    
+    timer.stop(_report);
 
-    timer.stop();
+    std::vector<size_t>* out = new std::vector<size_t>();
+    out->resize(_ranks.size());
+
+    for (size_t j = 0; j < _scc.size(); j++) {
+      size_t rank = _ranks[j]; 
+      for (size_t i = 0; i < _nr_threads; i++) {
+        (*out)[rank] += _vals[i][j];
+      }
+    }
 
     return out;
   }
@@ -1200,7 +1217,7 @@ class NrIdempotentsFinder {
       std::vector<size_t> comp = _scc[index.second];
       for (size_t i = 0; i < comp.size(); i++) {
         if (tester(thread_id, index.first, comp[i])) {
-          _vals[thread_id]++;
+          _vals[thread_id][index.second]++;
         }
       }
     }
@@ -1275,11 +1292,15 @@ class NrIdempotentsFinder {
   size_t                           _nr_threads;
   std::vector<std::thread>          _threads;
   std::vector<std::vector<std::pair<size_t, size_t> > >               _unprocessed; // indices of scc not yet processed
-  std::vector<size_t>               _vals;        // the values found for each scc
+  std::vector<std::vector<size_t> > _vals;        // the values found for each scc
+  bool                              _report;
+  std::vector<size_t>               _ranks;
+  // map from the scc indices to the rank of elements in that scc
 
   static std::vector<std::vector<bool> >   _seen;
   static std::vector<std::vector<bool> >   _lookup; //transverse block lookup
   static std::vector<std::vector<size_t> > _fuse_table; //transverse block lookup
+
 };
 
 std::vector<std::vector<bool> > NrIdempotentsFinder::_seen
@@ -1296,8 +1317,18 @@ Obj BIPART_NR_IDEMPOTENTS (Obj self,
                            Obj nr_threads) {
 
 
-  return INTOBJ_INT(NrIdempotentsFinder(o, scc, lookup,
-                                        INT_INTOBJ(nr_threads)).go());
+  std::vector<size_t>* vals = NrIdempotentsFinder(o, scc, lookup,
+      INT_INTOBJ(nr_threads), True).go();
+  
+  Obj out = NEW_PLIST(T_PLIST_CYC, vals->size());
+  SET_LEN_PLIST(out, vals->size());
+
+  for (size_t i = 1; i <= vals->size(); i++) {
+    SET_ELM_PLIST(out, i, INTOBJ_INT((*vals)[i - 1]));
+  }
+  delete vals;
+  
+  return out;
 }
 
 Obj BIPART_NR_IDEMPOTENTS2 (Obj self,
