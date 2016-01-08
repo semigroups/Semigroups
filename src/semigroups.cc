@@ -851,8 +851,6 @@ static StructGVarFunc GVarFuncs [] = {
                           "blocks, x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_INV_RIGHT, 2,
                           "blocks, x"),
-    GVAR_FUNC_TABLE_ENTRY("boolean.cc", HASH_FUNC_FOR_BLIST, 2,
-                          "blist, data"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_IDEMPOTENTS, 4,
                           "o, scc, lookup, nr_threads"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_IDEMPOTENTS2, 3,
