@@ -371,6 +371,8 @@ function(S)
 
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);
+  elif ChooseHashFunction(Representative(S), 1) = fail then 
+    TryNextMethod();
   fi;
 
   data := rec(elts := [],
