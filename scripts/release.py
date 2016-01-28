@@ -450,7 +450,7 @@ def _main():
     _check_hg_version()
     _check_date_package_info()
     _check_change_log()
-    _check_version_file()
+    #_check_version_file()
     _check_versions_file()
     _check_package_info()
 
@@ -475,8 +475,8 @@ def _main():
     _copy_doc(tmpdir + '/doc/')
 
     # Run autogen.sh
-    info_action('Creating the build files')
-    _create_build_files(tmpdir)
+    #info_action('Creating the build files')
+    #_create_build_files(tmpdir)
 
     # Delete unnecessary files from the archive
     _delete_files_archive(tmpdir)
@@ -501,9 +501,9 @@ def _main():
 
             try:
                 test.run_semigroups_tests(directory,
-                                        directory + '/pkg',
-                                        'semigroups-' + _VERSION,
-                                        args.skip_extreme)
+                                          directory + '/pkg',
+                                          'semigroups-' + _VERSION,
+                                          args.skip_extreme)
             except (OSError, IOError) as e:
                 sys.exit(red_string(str(e)))
             finally:
