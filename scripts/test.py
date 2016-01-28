@@ -287,13 +287,18 @@ def _man_ex_str(gap_root, name):
 # the GAP commands to run the tests
 ################################################################################
 
+################################################################################
+# the GAP commands to run the tests
+################################################################################
+
 _LOAD = 'LoadPackage(\\"semigroups\\", false);'
-_LOAD_SEMIGROUPS = 'LoadPackage(\\"semigroups\\", false);'
 _LOAD_SMALLSEMI = 'LoadPackage(\\"smallsemi\\", false);'
 _LOAD_ONLY_NEEDED = 'LoadPackage(\\"semigroups\\", false : OnlyNeeded);'
 _TEST_STANDARD = 'SemigroupsTestStandard();'
 _TEST_EXTREME = 'SemigroupsTestExtreme();'
 _TEST_INSTALL = 'SemigroupsTestInstall();'
+_TEST_ALL = 'SemigroupsTestAll();'
+_TEST_SMALLSEMI = 'SmallsemiTestAll();\n SmallsemiTestManualExamples();'
 _TEST_MAN_EX = 'SemigroupsTestManualExamples();'
 _MAKE_DOC = 'SemigroupsMakeDoc();'
 
@@ -302,7 +307,46 @@ def _validate_package_info(gap_root, pkg_name):
             'pkg/' + pkg_name + '/PackageInfo.g\\");')
 
 def _test_gap_quick(gap_root):
-    return 'Read(\\"' + gap_root + 'tst/testinstall.g\\");'
+
+    string = 'Test(\\"' + gap_root + 'tst/testinstall/trans.tst\\");'
+    string += 'Test(\\"' + gap_root + 'tst/testinstall/pperm.tst\\");'
+    string += 'Test(\\"' + gap_root + 'tst/testinstall/semigrp.tst\\");'
+    string += 'Test(\\"' + gap_root + 'tst/teststandard/reesmat.tst\\");'
+    string += _man_ex_str(gap_root, 'trans.xml')
+    string += _man_ex_str(gap_root, 'pperm.xml')
+    string += _man_ex_str(gap_root, 'invsgp.xml')
+    string += _man_ex_str(gap_root, 'reesmat.xml')
+    string += _man_ex_str(gap_root, 'mgmadj.xml')
+    string += 'Test(\\"' + gap_root + 'tst/teststandard/bugfix.tst\\");'
+    string += 'Read(\\"' + gap_root + 'tst/testinstall.g\\");'
+
+    return string
+
+def _run_test_suite(gap_root, pkg_name, skip_extreme, load):
+
+    _run_test(gap_root,
+              'Testing ' + pkg_name + '/tst/testinstall.tst',
+              True,
+              load,
+              _TEST_INSTALL)
+    _run_test(gap_root,
+              'Testing Semigroups manual examples',
+              True,
+              load,
+              _TEST_MAN_EX)
+    if not skip_extreme:
+        _run_test(gap_root,
+                  'Testing ' + pkg_name + '/tst/*',
+                  True,
+                  load,
+                  _TEST_ALL)
+        _run_test(gap_root,
+                  'Testing gap/tst/testinstall.g',
+                  False,
+                  load,
+                  _test_gap_quick(gap_root))
+    else:
+        info_verbose('Skipping extreme tests')
 
 ############################################################################
 # Run the tests
@@ -316,8 +360,8 @@ def run_semigroups_tests(gap_root, pkg_dir, pkg_name, skip_extreme):
     print neon_green_string(pad_string('Package name:') + pkg_name)
     print neon_green_string(pad_string('GAP root:') + gap_root)
 
-    _make_clean(gap_root, pkg_dir, pkg_name)
-    _configure_make(gap_root, pkg_dir, pkg_name)
+    #_make_clean(gap_root, pkg_dir, pkg_name)
+    #_configure_make(gap_root, pkg_dir, pkg_name)
 
     _run_test(gap_root,
               'Validating PackageInfo.g',
@@ -331,24 +375,39 @@ def run_semigroups_tests(gap_root, pkg_dir, pkg_name, skip_extreme):
               'Loading only needed',
               True,
               _LOAD_ONLY_NEEDED)
+    _run_test(gap_root,
+              'Loading Smallsemi first',
+              True,
+              _LOAD_SMALLSEMI,
+              _LOAD)
+    _run_test(gap_root,
+              'Loading Smallsemi second',
+              True,
+              _LOAD,
+              _LOAD_SMALLSEMI)
 
     _make_clean(gap_root, pkg_dir, 'grape')
-
     _run_test(gap_root,
               'Loading Grape not compiled',
               True,
               _LOAD)
 
     _configure_make(gap_root, pkg_dir, 'grape')
-
     _run_test(gap_root,
               'Loading Grape compiled',
               True,
               _LOAD)
+
+    _make_clean(gap_root, pkg_dir, 'orb')
     _run_test(gap_root,
-              'Loading Semigroups first',
+              'Loading Orb not compiled',
               True,
-              _LOAD_SEMIGROUPS,
+              _LOAD)
+
+    _configure_make(gap_root, pkg_dir, 'orb')
+    _run_test(gap_root,
+              'Loading Orb compiled',
+              True,
               _LOAD)
 
     _run_test(gap_root,
@@ -357,119 +416,31 @@ def run_semigroups_tests(gap_root, pkg_dir, pkg_name, skip_extreme):
               _LOAD,
               _MAKE_DOC)
 
-    info_statement('Semigroups loaded first')
     _run_test(gap_root,
-              'Testing ' + pkg_name + '/tst/testinstall.tst',
+              'Testing Smallsemi',
               True,
-              _LOAD_SEMIGROUPS,
               _LOAD,
-              _TEST_INSTALL)
-    _run_test(gap_root,
-              'Testing Semigroups manual examples',
-              True,
-              _LOAD_SEMIGROUPS,
-              _LOAD,
-              _TEST_MAN_EX)
-    _run_test(gap_root,
-              'Testing ' + pkg_name + '/tst/standard/*',
-              True,
-              _LOAD_SEMIGROUPS,
-              _LOAD,
-              _TEST_STANDARD)
+              _LOAD_SMALLSEMI,
+              _TEST_SMALLSEMI)
 
-    info_statement('Grape compiled')
+    info_statement('Orb and Grape compiled')
+    _run_test_suite(gap_root, pkg_name, skip_extreme, _LOAD)
 
-    _run_test(gap_root,
-              'Testing ' + pkg_name + '/tst/testinstall.tst',
-              True,
-              _LOAD,
-              _TEST_INSTALL)
-    _run_test(gap_root,
-              'Testing Semigroups manual examples',
-              True,
-              _LOAD,
-              _TEST_MAN_EX)
-    _run_test(gap_root,
-              'Testing ' + pkg_name + '/tst/standard/*',
-              True,
-              _LOAD,
-              _TEST_STANDARD)
-    if not skip_extreme:
-        _run_test(gap_root,
-                  'Testing ' + pkg_name + '/tst/extreme/*',
-                  True,
-                  _LOAD,
-                  _TEST_EXTREME)
-        _run_test(gap_root,
-                  'Testing gap/tst/testinstall.g',
-                  False,
-                  _LOAD,
-                  _test_gap_quick(gap_root))
-    else:
-        info_verbose('Skipping extreme tests')
+    info_statement('Orb uncompiled and Grape compiled')
+    _make_clean(gap_root, pkg_dir, 'orb')
+    _run_test_suite(gap_root, pkg_name, skip_extreme, _LOAD)
 
-    info_statement('Grape uncompiled')
-
+    info_statement('Orb compiled and Grape uncompiled')
+    _configure_make(gap_root, pkg_dir, 'orb')
     _make_clean(gap_root, pkg_dir, 'grape')
-    _run_test(gap_root,
-              'Testing ' + pkg_name + '/tst/testinstall.tst',
-              True,
-              _LOAD,
-              _TEST_INSTALL)
-    _run_test(gap_root,
-              'Testing Semigroups manual examples',
-              True,
-              _LOAD,
-              _TEST_MAN_EX)
-    _run_test(gap_root,
-              'Testing ' + pkg_name + '/tst/standard/*',
-              True,
-              _LOAD,
-              _TEST_STANDARD)
-    if not skip_extreme:
-        _run_test(gap_root,
-                  'Testing ' + pkg_name + '/tst/extreme/*',
-                  True,
-                  _LOAD,
-                  _TEST_EXTREME)
-        _run_test(gap_root,
-                  'Testing gap/tst/testinstall.g',
-                  False,
-                  _LOAD,
-                  _test_gap_quick(gap_root))
-    else:
-        info_verbose('Skipping extreme tests')
+    _run_test_suite(gap_root, pkg_name, skip_extreme, _LOAD)
+
+    info_statement('Orb and Grape uncompiled')
+    _make_clean(gap_root, pkg_dir, 'orb')
+    _run_test_suite(gap_root, pkg_name, skip_extreme, _LOAD)
 
     info_statement('Only needed packages')
-
-    _run_test(gap_root,
-              'Testing ' + pkg_name + '/tst/testinstall.tst',
-              True,
-              _LOAD_ONLY_NEEDED,
-              _TEST_INSTALL)
-    _run_test(gap_root,
-              'Testing Semigroups manual examples',
-              True,
-              _LOAD_ONLY_NEEDED,
-              _TEST_MAN_EX)
-    _run_test(gap_root,
-              'Testing ' + pkg_name + '/tst/standard/*',
-              True,
-              _LOAD_ONLY_NEEDED,
-              _TEST_STANDARD)
-    if not skip_extreme:
-        _run_test(gap_root,
-                  'Testing ' + pkg_name + '/tst/extreme/*',
-                  True,
-                  _LOAD_ONLY_NEEDED,
-                  _TEST_EXTREME)
-        _run_test(gap_root,
-                  'Testing gap/tst/testinstall.g',
-                  False,
-                  _LOAD_ONLY_NEEDED,
-                  _test_gap_quick(gap_root))
-    else:
-        info_verbose('Skipping extreme tests')
+    _run_test_suite(gap_root, pkg_name, skip_extreme, _LOAD_ONLY_NEEDED)
 
     info_statement('SUCCESS!')
 

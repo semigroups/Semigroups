@@ -481,10 +481,6 @@ def _main():
     # Delete unnecessary files from the archive
     _delete_files_archive(tmpdir)
 
-    # Download digraphs-lib if we want to run extreme tests
-    if not args.skip_extreme:
-        _download_digraphs_lib(tmpdir)
-
     # Run the tests
     if args.skip_tests:
         info_statement('Skipping tests')
