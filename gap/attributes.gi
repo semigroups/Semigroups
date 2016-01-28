@@ -375,7 +375,7 @@ InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
   if not IsRegularDClass(D) then
-    ErrorMayQuit("Semigroups: InjectionPrincipalFactor: usage,\n",
+    ErrorNoReturn("Semigroups: InjectionPrincipalFactor: usage,\n",
                  "the argument <D> must be a regular D-class,");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
@@ -388,7 +388,7 @@ InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
 [IsGreensDClass and IsActingSemigroupGreensClass],
 function(D)
   if NrIdempotents(D) <> NrHClasses(D) then
-    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                  "the D-class is not a subsemigroup,");
   fi;
 
@@ -463,7 +463,7 @@ function(S)
   fi;
 
   if not IsSimpleSemigroup(S) then
-    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                  "the argument must be a simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
@@ -488,7 +488,7 @@ function(S)
   fi;
 
   if not IsZeroSimpleSemigroup(S) then
-    ErrorMayQuit("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
                  "the argument must be a 0-simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
