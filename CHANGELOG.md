@@ -1,10 +1,15 @@
 ##CHANGELOG
 ### [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) package for [GAP](http://www.gap-system.org)
 
-#### Copyright (C) 2011-15 James D. Mitchell et al.
+#### Copyright (C) 2011-16 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
-## Version 2.7.1 (released 19/12/15)
+## Version 2.7.2 (released 28/01/2016)
+
+This is a minor release to fix to remove `ErrorMayQuit` which was renamed
+`ErrorNoReturn` in GAP 4.8.2. This change was made by Max Horn. 
+
+## Version 2.7.1 (released 19/12/2015)
 
 This is a minor release to fix [Issue
 144](https://bitbucket.org/james-d-mitchell/semigroups/issue/144/).
@@ -12,7 +17,7 @@ This issue resulted in `IsInverseSemigroup` sometimes returning `true` for
 semigroups which were not inverse. This occurred when the \\(\mathscr{D}\\)-classes of the semigroup were computed before the method for `IsInverseSemigroup` was first
 run. 
 
-## Version 2.7 (released 27/11/15)
+## Version 2.7 (released 27/11/2015)
 
 This is a minor release including some changes for compatibility with GAP 4.8, and some bug fixes. 
 
@@ -32,7 +37,7 @@ This is a minor release including some changes for compatibility with GAP 4.8, a
  introduced in Semigroups 2.6 and did not effect any previous versions.
  [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
-## Version 2.6 (released 22/09/15)
+## Version 2.6 (released 22/09/2015)
 
 This release includes some bugfixes, some minor new features, and one major new feature (efficient methods for semigroups of matrices over a finite field).
 
@@ -65,7 +70,7 @@ in a similar sense.
 *  [Issue 134](https://bitbucket.org/james-d-mitchell/semigroups/issue/134/): the operation `PartialBrauerMonoid` returned the wrong answer when the argument was `1`. The returned semigroup was not the partial brauer monoid of degree 1. 
 [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
-## Version 2.5 (released 01/06/15)
+## Version 2.5 (released 01/06/2015)
 
 This is a minor release including several bugfixes, lots of minor improvements in the documentation, some improvements in performance, and some new features.
 
@@ -99,11 +104,11 @@ Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-
 * The universal congruence specified by generating pairs on a (0-)simple
 semigroup no longer causes an error. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 	
-## Version 2.4.1 (released 15/05/15)
+## Version 2.4.1 (released 15/05/2015)
 This is a extremely minor release to change 1 character in the PackageInfo.g
 file (wrong package archive URL). 
 
-## Version 2.4 (released 02/04/15) 
+## Version 2.4 (released 02/04/2015) 
 This is a minor release including several bugfixes, and
 improvements in performance, and some new features.
 
@@ -162,7 +167,7 @@ partitions, or subsemigroups of a Rees 0-matrix semigroup).
 
 * [Issue 123](https://bitbucket.org/james-d-mitchell/semigroups/issue/123/): `IsZeroSemigroup` sometimes returned a false positive when applied to a non-acting semigroup. 
 
-## Version 2.3 (released 16/03/15)
+## Version 2.3 (released 16/03/2015)
 This is a minor release including some internal refactoring, and
 subsequent bugfixes, and stability improvements.
 
@@ -171,7 +176,7 @@ hash tables in [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semig
 fault occurred. This is a bug in the [Orb](http://gap-system.github.io/orb/) package (see [Issue
 10](https://github.com/gap-system/orb/issues/10)), but we worked around it to resolve this issue. 
 
-## Version 2.2 (released 20/01/15)
+## Version 2.2 (released 20/01/2015)
 This is a minor release including some bug fixes, performance
 improvements, and additional functionality. 
 
@@ -220,11 +225,11 @@ transformation semigroup.
 * [Issue 111](https://bitbucket.org/james-d-mitchell/semigroups/issue/111/): `POPI(1)` returned the wrong semigroup. Similar issues
 existed in other corner cases, and these have been resolved too.
 
-## Version 2.1.1 (released 09/09/14)
+## Version 2.1.1 (released 09/09/2014)
 This is a very minor release to fix an issue caused by only loading
 the packages needed (but not required) by [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php).
 
-## Version 2.1 (released 04/09/14)
+## Version 2.1 (released 04/09/2014)
 This is a minor release including some bug fixes and performance
 improvements. 
 
@@ -292,7 +297,7 @@ incorrect.
 * [Issue 103](https://bitbucket.org/james-d-mitchell/semigroups/issue/103/): under certain circumstances an error was given when
 trying to compute with an ideal of an inverse semigroup. 
 
-## Version 2.0 (released 17/04/14)
+## Version 2.0 (released 17/04/2014)
                                     
 This is a major release including many new features and several bug
 fixes. 
