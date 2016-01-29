@@ -65,6 +65,7 @@ function(arg)
   fi;
 
   if IsString(name) then
+    name := UserHomeExpand(name);
     file := IO_CompressedFile(name, "r");
     if file = fail then
       ErrorMayQuit("Semigroups: ReadGenerators:\n",
@@ -139,6 +140,7 @@ function(arg)
   fi;
 
   if IsString(name) then
+    name := UserHomeExpand(name);
     file := IO_CompressedFile(name, mode);
     if file = fail then
       ErrorMayQuit("Semigroups: WriteGenerators:\n",
