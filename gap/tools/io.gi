@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  io.gd
+#W  io.gi
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -12,7 +12,7 @@ InstallGlobalFunction(IteratorFromGeneratorsFile,
 function(str)
   local file, record;
 
-  file := IO_CompressedFile(str, "r");
+  file := IO_CompressedFile(UserHomeExpand(str), "r");
 
   if file = fail then
     return fail;
@@ -46,8 +46,6 @@ function(str)
 
   return IteratorByFunctions(record);
 end);
-
-#
 
 InstallGlobalFunction(ReadGenerators,
 function(arg)
@@ -269,4 +267,3 @@ function(arg)
     return List(line, x -> ReadGeneratorsLine(Chomp(x)));
   fi;
 end);
-

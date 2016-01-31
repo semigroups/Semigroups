@@ -88,7 +88,6 @@ ReadPackage("semigroups/gap/elements/blocks.gi");
 ReadPackage("semigroups/gap/elements/semiringmat.gi");
 ReadPackage("semigroups/gap/elements/maxplusmat.gi");
 ReadPackage("semigroups/gap/elements/boolmat.gi");
-ReadPackage("semigroups/gap/elements/pfmat.gi");
 ReadPackage("semigroups/gap/elements/trans.gi");
 
 ReadPackage("semigroups/gap/semigroups/semigroups.gi");
@@ -101,7 +100,6 @@ ReadPackage("semigroups/gap/semigroups/semipbr.gi");
 ReadPackage("semigroups/gap/semigroups/semimaxplus.gi");
 ReadPackage("semigroups/gap/semigroups/semiringmat.gi");
 ReadPackage("semigroups/gap/semigroups/semiboolmat.gi");
-ReadPackage("semigroups/gap/semigroups/semipfmat.gi");
 ReadPackage("semigroups/gap/semigroups/examples.gi");
 ReadPackage("semigroups/gap/semigroups/constructions.gi");
 ReadPackage("semigroups/gap/semigroups/graph-inverse.gi");

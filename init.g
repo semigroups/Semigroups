@@ -13,6 +13,10 @@ if not IsBound(ORBC) then
   BindGlobal("HTValue_TreeHash_C", fail);
 fi;
 
+if not IsBound(UserHomeExpand) then 
+  BindGlobal("UserHomeExpand", USER_HOME_EXPAND);
+fi;
+
 _SEMIGROUPS_SO := Filename(DirectoriesPackagePrograms("semigroups"),
                            "semigroups.so");
 if _SEMIGROUPS_SO <> fail then
@@ -34,7 +38,6 @@ ReadPackage("semigroups/gap/elements/blocks.gd");
 ReadPackage("semigroups/gap/elements/semiringmat.gd");
 ReadPackage("semigroups/gap/elements/maxplusmat.gd");
 ReadPackage("semigroups/gap/elements/boolmat.gd");
-ReadPackage("semigroups/gap/elements/pfmat.gd");
 ReadPackage("semigroups/gap/elements/trans.gd");
 
 ReadPackage("semigroups/gap/semigroups/semigroups.gd");
@@ -47,7 +50,6 @@ ReadPackage("semigroups/gap/semigroups/semipbr.gd");
 ReadPackage("semigroups/gap/semigroups/semimaxplus.gd");
 ReadPackage("semigroups/gap/semigroups/semiringmat.gd");
 ReadPackage("semigroups/gap/semigroups/semiboolmat.gd");
-ReadPackage("semigroups/gap/semigroups/semipfmat.gd");
 ReadPackage("semigroups/gap/semigroups/examples.gd");
 ReadPackage("semigroups/gap/semigroups/constructions.gd");
 ReadPackage("semigroups/gap/semigroups/graph-inverse.gd");

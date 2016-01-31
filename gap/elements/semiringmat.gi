@@ -166,7 +166,7 @@ end);
 
 InstallMethod(Matrix,
 "for a filter, homogeneous list, pos int, and pos int",
-[IsOperation and IsFunction, IsHomogeneousList, IsPosInt, IsPosInt],
+[IsOperation and IsFunction, IsHomogeneousList, IsInt, IsInt],
 function(filter, mat, threshold, period)
   local checker, row;
 
@@ -274,9 +274,9 @@ function(semiring, mat)
   fi;
 
   # IsField required cos there's no method for IsPrimeField for Integers.
-  if IsField(semiring) and IsFinite(semiring) and IsPrimeField(semiring) then
-    filter := IsMatrixOverPrimeField;
-  elif IsIntegers(semiring) then
+#  if IsField(semiring) and IsFinite(semiring) and IsPrimeField(semiring) then
+#    filter := IsMatrixOverPrimeField;
+  if IsIntegers(semiring) then
     filter := IsIntegerMatrix;
   else
     ErrorMayQuit("Semigroups: Matrix:\n",
@@ -309,10 +309,10 @@ function(arg)
       and IsPosInt(arg[2]) then
     if Length(arg) = 2 then
       return RandomMatrixCons(arg[1], arg[2]);
-    elif Length(arg) >= 3 and IsPosInt(arg[3]) then
+    elif Length(arg) >= 3 and IsInt(arg[3]) then
       if Length(arg) = 3 then
         return RandomMatrixCons(arg[1], arg[2], arg[3]);
-      elif Length(arg) = 4 and IsPosInt(arg[4]) then
+      elif Length(arg) = 4 and IsInt(arg[4]) then
         return RandomMatrixCons(arg[1], arg[2], arg[3], arg[4]);
       fi;
     fi;
@@ -529,11 +529,11 @@ function(x)
 
   n := DimensionOfMatrixOverSemiring(x);
   str := "\>\>Matrix(\<\>";
-  if IsMatrixOverPrimeField(x) then
-    Append(str, String(BaseField(x)));
-  else
-    Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
-  fi;
+  #if IsMatrixOverPrimeField(x) then
+  #  Append(str, String(BaseField(x)));
+  #else
+  Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
+  #fi;
   Append(str, "\<, \>[");
   for i in [1 .. n] do
     Append(str, "\>\>[");

@@ -20,7 +20,6 @@
     <Filt Name = "IsProjectiveMaxPlusMatrix" Arg = "obj" Type = "Category"/>
     <Filt Name = "IsNTPMatrix"               Arg = "obj" Type = "Category"/>
     <Filt Name = "IsIntegerMatrix"           Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMatrixOverPrimeField"    Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every matrix over a semiring in &Semigroups; is a member of one of these
@@ -86,10 +85,6 @@
       "Category"/>
     <Filt Name = "IsIntegerMatrixCollColl"             Arg = "obj" Type =
       "Category"/>
-    <Filt Name = "IsMatrixOverPrimeFieldCollection"    Arg = "obj" Type =
-      "Category"/>
-    <Filt Name = "IsMatrixOverPrimeFieldCollColl"      Arg = "obj" Type =
-      "Category"/>
     <Returns>
       <K>true</K> or <K>false</K>.
     </Returns>
@@ -126,9 +121,6 @@
     <Var Name = "NTPMatrixFamily"              />
     <Var Name = "IntegerMatrixType"            />
     <Var Name = "IntegerMatrixFamily"          />
-    <Var Name = "MatrixOverPrimeFieldType"     />
-    <Var Name = "MatrixOverPrimeFieldFamily"   />
-
     <Description>
       Every matrix over a semiring in &Semigroups; has family and type equal to
       one of the above.

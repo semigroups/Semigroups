@@ -36,7 +36,6 @@ end;
 #  IsTropicalMinPlusMatrixSemigroup
 #  IsProjectiveMaxPlusMatrixSemigroup
 #  IsNTPMatrixSemigroup
-#  IsMatrixOverPrimeFieldSemigroup
 #  IsIntegerMatrixSemigroup
 
 SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
