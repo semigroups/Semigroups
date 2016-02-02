@@ -168,17 +168,59 @@ gap> RightSemigroupCongruence(S, 12, 13, 100);
 gap> S := Semigroup([Transformation([3, 3, 3]),
 >                      Transformation([3, 4, 3, 3])]);;
 gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
-gap> LeftSemigroupCongruence(S, pairs);
+gap> cong := LeftSemigroupCongruence(S, pairs);
 <left semigroup congruence over <transformation semigroup of degree 4 with 2 
  generators> with 1 generating pairs>
+gap> LeftCongruenceClassOfElement(cong, Transformation([3,4,3,3]));
+<left congruence class of Transformation( [ 3, 4, 3, 3 ] )>
 
 #T# RightSemigroupCongruence: Pairs
 gap> S := Semigroup([Transformation([3, 3, 3]),
 >                      Transformation([3, 4, 3, 3])]);;
 gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
-gap> RightSemigroupCongruence(S, pairs);
+gap> cong := RightSemigroupCongruence(S, pairs);
 <right semigroup congruence over <transformation semigroup of degree 4 with 2 
  generators> with 1 generating pairs>
+gap> RightCongruenceClassOfElement(cong, Transformation([3,4,3,3]));
+<right congruence class of Transformation( [ 3, 4, 3, 3 ] )>
+
+#T# OnLeftCongruenceClasses
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
+>              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
+>              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> cong := LeftSemigroupCongruence(S, [pair1, pair2]);
+<left semigroup congruence over <transformation semigroup of degree 5 with 4 
+ generators> with 2 generating pairs>
+gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> class := LeftCongruenceClassOfElement(cong, x);
+<left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
+gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> OnLeftCongruenceClasses(class, elm);
+<left congruence class of Transformation( [ 3, 4, 4, 3, 4 ] )>
+
+#T# OnRightCongruenceClasses
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
+>              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
+>              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> cong := RightSemigroupCongruence(S, [pair1, pair2]);
+<right semigroup congruence over <transformation semigroup of degree 5 with 4 
+ generators> with 2 generating pairs>
+gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> class := RightCongruenceClassOfElement(cong, x);
+<right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
+gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> OnRightCongruenceClasses(class, elm);
+<right congruence class of Transformation( [ 2, 1, 2, 1, 2 ] )>
 
 #T# \* for an equivalence class and a list
 gap> S := Semigroup(
