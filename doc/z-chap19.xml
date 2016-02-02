@@ -76,6 +76,8 @@
     <#Include Label = "CongruencesOfSemigroup">
     <#Include Label = "LatticeOfCongruences">
     <#Include Label = "AsLookupTable">
+    <#Include Label = "OnLeftCongruenceClasses">
+    <#Include Label = "OnRightCongruenceClasses">
 
   </Section>
 

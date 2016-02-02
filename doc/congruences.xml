@@ -533,3 +533,79 @@ gap> JoinSemigroupCongruences(congs[2], congs[3]);
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="OnLeftCongruenceClasses">
+<ManSection>
+  <Oper Name = "OnLeftCongruenceClasses" Arg = "class, elm"/>
+  <Returns>A left congruence class.</Returns>
+  <Description>
+    If <A>class</A> is an equivalence class of the left semigroup congruence
+    <C>cong</C> on the semigroup <C>S</C>, and <A>elm</A> is an element of
+    <C>S</C>, then this operation returns the equivalence class of <C>cong</C>
+    containing the element <C><A>elm</A> * x</C>, where <C>x</C> is any element
+    of <A>class</A>.  The result is well-defined by the definition of a left
+    congruence. <P/>
+
+    See <Ref Filt="IsLeftSemigroupCongruence"/> and
+    <Ref Filt="IsLeftCongruenceClass"/>. <P/>
+
+    <Example><![CDATA[
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
+>              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
+>              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> cong := LeftSemigroupCongruence(S, [pair1, pair2]);
+<left semigroup congruence over <transformation semigroup of degree 5 
+ with 4 generators> with 2 generating pairs>
+gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> class := LeftCongruenceClassOfElement(cong, x);
+<left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
+gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> OnLeftCongruenceClasses(class, elm);
+<left congruence class of Transformation( [ 3, 4, 4, 3, 4 ] )>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OnRightCongruenceClasses">
+<ManSection>
+  <Oper Name = "OnRightCongruenceClasses" Arg = "class, elm"/>
+  <Returns>A right congruence class.</Returns>
+  <Description>
+    If <A>class</A> is an equivalence class of the right semigroup congruence
+    <C>cong</C> on the semigroup <C>S</C>, and <A>elm</A> is an element of
+    <C>S</C>, then this operation returns the equivalence class of <C>cong</C>
+    containing the element <C>x * <A>elm</A></C>, where <C>x</C> is any element
+    of <A>class</A>.  The result is well-defined by the definition of a right
+    congruence. <P/>
+
+    See <Ref Filt="IsRightSemigroupCongruence"/> and
+    <Ref Filt="IsRightCongruenceClass"/>. <P/>
+
+    <Example><![CDATA[
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
+>              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
+>              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> cong := RightSemigroupCongruence(S, [pair1, pair2]);
+<right semigroup congruence over <transformation semigroup of 
+ degree 5 with 4 generators> with 2 generating pairs>
+gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> class := RightCongruenceClassOfElement(cong, x);
+<right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
+gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> OnRightCongruenceClasses(class, elm);
+<right congruence class of Transformation( [ 2, 1, 2, 1, 2 ] )>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
