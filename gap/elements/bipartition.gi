@@ -70,24 +70,24 @@ function(classes)
   if not IsList(classes)
       or ForAny(classes, x -> not IsHomogeneousList(x)
                               or not IsDuplicateFree(x)) then
-    ErrorMayQuit("Semigroups: Bipartition: usage,\n",
-                 "the argument <classes> must consist of duplicate-free ",
-                 "homogeneous lists,");
+    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
+                  "the argument <classes> must consist of duplicate-free ",
+                  "homogeneous lists,");
   fi;
 
   if not ForAll(classes, x -> ForAll(x, i -> IsPosInt(i) or IsNegInt(i))) then
-    ErrorMayQuit("Semigroups: Bipartition: usage,\n",
-                 "the argument <classes> must consist of positive and/or ",
-                 "negative integers,\n");
+    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
+                  "the argument <classes> must consist of positive and/or ",
+                  "negative integers,\n");
   fi;
 
   copy := Union(classes);
   if not IsEmpty(classes)
       and (copy <> Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)])
            or Minimum(copy) > 0) then
-    ErrorMayQuit("Semigroups: Bipartition: usage,\n",
-                 "the union of the argument <classes> must be ",
-                 "[-n..-1, 1..n],");
+    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
+                  "the union of the argument <classes> must be ",
+                  "[-n..-1, 1..n],");
   fi;
 
   n := Sum(List(classes, Length)) / 2;
@@ -122,16 +122,16 @@ function(blocks)
   n := Length(blocks);
 
   if not IsEvenInt(n) then
-    ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
-                 "the length of the argument <blocks> must be an even ",
-                 "integer,");
+    ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
+                  "the length of the argument <blocks> must be an even ",
+                  "integer,");
   fi;
 
   n := n / 2;
   if not ForAll(blocks, IsPosInt) then
-    ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
-                 "the elements of the argument <blocks> must be positive ",
-                 "integers,");
+    ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
+                  "the elements of the argument <blocks> must be positive ",
+                  "integers,");
   fi;
 
   next := 0;
@@ -141,9 +141,9 @@ function(blocks)
     if not seen[blocks[i]] then
       next := next + 1;
       if blocks[i] <> next then
-        ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
-                     "expected ", next, " but found ", blocks[i],
-                     ", in position ", i);
+        ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
+                      "expected ", next, " but found ", blocks[i],
+                      ", in position ", i);
       fi;
       seen[blocks[i]] := true;
     fi;
@@ -155,9 +155,9 @@ function(blocks)
     if not seen[blocks[i]] then
       next := next + 1;
       if blocks[i] <> next then
-        ErrorMayQuit("Semigroups: BipartitionByIntRep: usage,\n",
-                     "expected ", next, " but found ", blocks[i],
-                     ", in position ", i);
+        ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
+                      "expected ", next, " but found ", blocks[i],
+                      ", in position ", i);
       fi;
       seen[blocks[i]] := true;
     fi;
@@ -267,8 +267,8 @@ InstallMethod(PermLeftQuoBipartition, "for a bipartition and bipartition",
 function(x, y)
 
   if LeftBlocks(x) <> LeftBlocks(y) or RightBlocks(x) <> RightBlocks(y) then
-    ErrorMayQuit("Semigroups: PermLeftQuoBipartition: usage,\n",
-                 "the arguments must have equal left and right blocks,");
+    ErrorNoReturn("Semigroups: PermLeftQuoBipartition: usage,\n",
+                  "the arguments must have equal left and right blocks,");
   fi;
   return BIPART_PERM_LEFT_QUO(x, y);
 end);
@@ -375,9 +375,9 @@ function(f, g)
   if LargestMovedPoint(g) <= DegreeOfBipartition(f) then
     return f * AsBipartition(g, DegreeOfBipartition(f));
   fi;
-  ErrorMayQuit("Semigroups: \* (for a bipartition and perm): usage,\n",
-               "the largest moved point of the perm must not be greater\n",
-               "than the degree of the bipartition,");
+  ErrorNoReturn("Semigroups: \* (for a bipartition and perm): usage,\n",
+                "the largest moved point of the perm must not be greater\n",
+                "than the degree of the bipartition,");
 end);
 
 InstallMethod(\*, "for a perm and a bipartition",
@@ -386,9 +386,9 @@ function(f, g)
   if LargestMovedPoint(f) <= DegreeOfBipartition(g) then
     return AsBipartition(f, DegreeOfBipartition(g)) * g;
   fi;
-  ErrorMayQuit("Semigroups: \* (for a perm and bipartition): usage,\n",
-               "the largest moved point of the perm must not be greater\n",
-               "than the degree of the bipartition,");
+  ErrorNoReturn("Semigroups: \* (for a perm and bipartition): usage,\n",
+                "the largest moved point of the perm must not be greater\n",
+                "than the degree of the bipartition,");
 end);
 
 InstallMethod(\*, "for a bipartition and a transformation",
@@ -397,10 +397,10 @@ function(f, g)
   if DegreeOfTransformation(g) <= DegreeOfBipartition(f) then
     return f * AsBipartition(g, DegreeOfBipartition(f));
   fi;
-  ErrorMayQuit("Semigroups: \* (for a bipartition and transformation): ",
-               "usage,\n",
-               "the degree of the transformation must not be greater\n",
-               "than the degree of the bipartition,");
+  ErrorNoReturn("Semigroups: \* (for a bipartition and transformation): ",
+                "usage,\n",
+                "the degree of the transformation must not be greater\n",
+                "than the degree of the bipartition,");
 end);
 
 InstallMethod(\*, "for a transformation and a bipartition",
@@ -409,10 +409,10 @@ function(f, g)
   if DegreeOfTransformation(f) <= DegreeOfBipartition(g) then
     return AsBipartition(f, DegreeOfBipartition(g)) * g;
   fi;
-  ErrorMayQuit("Semigroups: \* (for a transformation and bipartition): ",
-               "usage,\n",
-               "the degree of the transformation must not be greater\n",
-               "than the degree of the bipartition,");
+  ErrorNoReturn("Semigroups: \* (for a transformation and bipartition): ",
+                "usage,\n",
+                "the degree of the transformation must not be greater\n",
+                "than the degree of the bipartition,");
 end);
 
 InstallMethod(\*, "for a bipartition and a partial perm",
@@ -423,9 +423,9 @@ function(f, g)
   if ForAll([1 .. n], i -> i ^ g <= n) then
     return f * AsBipartition(g, DegreeOfBipartition(f));
   fi;
-  ErrorMayQuit("Semigroups: \* (for a bipartition and partial perm): usage,\n",
-               "the partial perm must map [1 .. ", String(n), "] into\n",
-               "[1 .. ", String(n), "],");
+  ErrorNoReturn("Semigroups: \* (for a bipartition and partial perm): usage,\n",
+                "the partial perm must map [1 .. ", String(n), "] into\n",
+                "[1 .. ", String(n), "],");
 end);
 
 InstallMethod(\*, "for a partial perm and a bipartition",
@@ -436,10 +436,10 @@ function(f, g)
   if ForAll([1 .. n], i -> i ^ f <= n) then
     return AsBipartition(f, DegreeOfBipartition(g)) * g;
   fi;
-  ErrorMayQuit("Semigroups: \* (for a partial perm and a bipartition): ",
-               "usage,\n",
-               "the partial perm must map [1 .. ", String(n), "] into\n",
-               "[1 .. ", String(n), "],");
+  ErrorNoReturn("Semigroups: \* (for a partial perm and a bipartition): ",
+                "usage,\n",
+                "the partial perm must map [1 .. ", String(n), "] into\n",
+                "[1 .. ", String(n), "],");
 end);
 
 InstallMethod(\^, "for a bipartition and permutation",
@@ -455,11 +455,11 @@ InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
 function(x, y)
 
   if not (IsPartialPermBipartition(x) and IsPartialPermBipartition(y)) then
-    ErrorMayQuit("Semigroups: PartialPermLeqBipartition: usage,\n",
-                 "the arguments must be partial perm bipartitions,");
+    ErrorNoReturn("Semigroups: PartialPermLeqBipartition: usage,\n",
+                  "the arguments must be partial perm bipartitions,");
   elif DegreeOfBipartition(x) <> DegreeOfBipartition(y) then
-    ErrorMayQuit("Semigroups: PartialPermLeqBipartition: usage,\n",
-                 "the arguments must have equal degree,");
+    ErrorNoReturn("Semigroups: PartialPermLeqBipartition: usage,\n",
+                  "the arguments must have equal degree,");
   fi;
 
   return AsPartialPerm(x) < AsPartialPerm(y);
@@ -515,8 +515,8 @@ InstallMethod(AsBipartition, "for a pbr and pos int",
 [IsPBR, IsPosInt],
 function(x, deg)
   if not IsBipartitionPBR(x) then
-    ErrorMayQuit("Semigroups: AsBipartition (for a pbr): usage,\n",
-                 "the argument does not satisfy 'IsBipartitionPBR',");
+    ErrorNoReturn("Semigroups: AsBipartition (for a pbr): usage,\n",
+                  "the argument does not satisfy 'IsBipartitionPBR',");
   fi;
 
   return AsBipartition(AsBipartition(x), deg);
@@ -526,8 +526,8 @@ InstallMethod(AsBipartition, "for a pbr",
 [IsPBR],
 function(x)
   if not IsBipartitionPBR(x) then
-    ErrorMayQuit("Semigroups: AsBipartition (for a pbr): usage,\n",
-                 "the argument does not satisfy 'IsBipartitionPBR',");
+    ErrorNoReturn("Semigroups: AsBipartition (for a pbr): usage,\n",
+                  "the argument does not satisfy 'IsBipartitionPBR',");
   fi;
   return Bipartition(Union(ExtRepOfPBR(x)));
 end);
@@ -629,9 +629,9 @@ function(coll)
 
   deg := DegreeOfBipartition(coll[1]);
   if not ForAll(coll, x -> DegreeOfBipartition(x) = deg) then
-    ErrorMayQuit("Semigroups: DegreeOfBipartitionCollection: usage,\n",
-                 "the argument <coll> must be a collection of bipartitions ",
-                 "of equal degree,");
+    ErrorNoReturn("Semigroups: DegreeOfBipartitionCollection: usage,\n",
+                  "the argument <coll> must be a collection of bipartitions ",
+                  "of equal degree,");
   fi;
 
   return deg;
@@ -647,9 +647,9 @@ InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
 function(x, n)
   if OnSets([1 .. n], x) <> [1 .. n] then
-    ErrorMayQuit("Semigroups: AsBipartition (for a permutation and pos int):",
-                 "\nthe permutation <p> in the 1st argument must permute ",
-                 "[1 .. ", String(n), "],");
+    ErrorNoReturn("Semigroups: AsBipartition (for a permutation and pos int):",
+                  "\nthe permutation <p> in the 1st argument must permute ",
+                  "[1 .. ", String(n), "],");
   fi;
   return BIPART_NC(Concatenation([1 .. n], ListPerm(x ^ -1, n)));
 end);
@@ -659,8 +659,8 @@ function(x)
   local n, blocks, nrleft, im, out, i;
 
   if not IsPartialPermBipartition(x) then
-    ErrorMayQuit("Semigroups: AsPartialPerm (for a bipartition):\n",
-                 "the argument does not define a partial perm,");
+    ErrorNoReturn("Semigroups: AsPartialPerm (for a bipartition):\n",
+                  "the argument does not define a partial perm,");
   fi;
 
   n      := DegreeOfBipartition(x);
@@ -686,8 +686,8 @@ function(x)
   local n, blocks, im, out, i;
 
   if not IsPermBipartition(x) then
-    ErrorMayQuit("Semigroups: AsPermutation (for a bipartition):\n",
-                 "the argument does not define a permutation,");
+    ErrorNoReturn("Semigroups: AsPermutation (for a bipartition):\n",
+                  "the argument does not define a permutation,");
   fi;
 
   n      := DegreeOfBipartition(x);
@@ -710,8 +710,8 @@ function(x)
   local n, blocks, nr, im, out, i;
 
   if not IsTransBipartition(x) then
-    ErrorMayQuit("Semigroups: AsTransformation (for a bipartition):\n",
-                 "the argument does not define a transformation,");
+    ErrorNoReturn("Semigroups: AsTransformation (for a bipartition):\n",
+                  "the argument does not define a transformation,");
   fi;
 
   n      := DegreeOfBipartition(x);
@@ -764,10 +764,10 @@ function(f, n)
     #verify <f> is a transformation on [1..n]
     for i in [1 .. n] do
       if i ^ f > n then
-        ErrorMayQuit("Semigroups: AsBipartition (for a transformation and ",
-                     "pos int):\n",
-                     "the argument must map [1 .. ", String(n), "] to ",
-                     "itself,");
+        ErrorNoReturn("Semigroups: AsBipartition (for a transformation and ",
+                      "pos int):\n",
+                      "the argument must map [1 .. ", String(n), "] to ",
+                      "itself,");
       fi;
     od;
   fi;
@@ -869,10 +869,10 @@ function(f, n)
   local bigblock, nr, out, i;
 
   if n <= Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then
-    ErrorMayQuit("Semigroups: AsBlockBijection (for a partial perm and pos ",
-                 "int):\n",
-                 "the 2nd argument must be at least the maximum of the ",
-                 "degree and\ncodegree of the 1st argument,");
+    ErrorNoReturn("Semigroups: AsBlockBijection (for a partial perm and pos ",
+                  "int):\n",
+                  "the 2nd argument must be at least the maximum of the ",
+                  "degree and\ncodegree of the 1st argument,");
   fi;
 
   nr := 0;
@@ -913,11 +913,11 @@ function(x, y)
   local xblocks, yblocks, n, lookup, i;
 
   if not IsBlockBijection(x) or not IsBlockBijection(y) then
-    ErrorMayQuit("Semigroups: NaturalLeqBlockBijection: usage,\n",
-                 "the arguments must be block bijections,");
+    ErrorNoReturn("Semigroups: NaturalLeqBlockBijection: usage,\n",
+                  "the arguments must be block bijections,");
   elif DegreeOfBipartition(x) <> DegreeOfBipartition(y) then
-    ErrorMayQuit("Semigroups: NaturalLeqBlockBijection: usage,\n",
-                 "the arguments must be block bijections of equal degree,");
+    ErrorNoReturn("Semigroups: NaturalLeqBlockBijection: usage,\n",
+                  "the arguments must be block bijections of equal degree,");
   elif NrBlocks(x) > NrBlocks(y) then
     return false;
   fi;
@@ -948,15 +948,15 @@ function(x, y)
   local n, xblocks, yblocks, val, i;
 
   if not IsPartialPermBipartition(x) or not IsPartialPermBipartition(y) then
-    ErrorMayQuit("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
-                 "the arguments must be partial perm bipartitions,");
+    ErrorNoReturn("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
+                  "the arguments must be partial perm bipartitions,");
   fi;
 
   n := DegreeOfBipartition(x);
 
   if n <> DegreeOfBipartition(y) then
-    ErrorMayQuit("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
-                 "the arguments must have equal degree,");
+    ErrorNoReturn("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
+                  "the arguments must have equal degree,");
   fi;
 
   xblocks := BIPART_INT_REP(x);

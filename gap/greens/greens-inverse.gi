@@ -388,8 +388,8 @@ function(C)
   local reps, out, setter, CreateHClass, CopyLambda, i;
 
   if not (IsGreensLClass(C) or IsGreensRClass(C) or IsGreensDClass(C)) then
-    ErrorMayQuit("Semigroups: GreensHClasses: usage,\n",
-                 "an L-, R-, or D-class,");
+    ErrorNoReturn("Semigroups: GreensHClasses: usage,\n",
+                  "an L-, R-, or D-class,");
   fi;
 
   reps := HClassReps(C);
@@ -519,8 +519,8 @@ function(S, n)
   local o, creator, out, rank, nr, i;
 
   if n < 0 then
-    ErrorMayQuit("Semigroups: Idempotents: usage,\n",
-                 "the second argument <n> must be a non-negative integer,");
+    ErrorNoReturn("Semigroups: Idempotents: usage,\n",
+                  "the second argument <n> must be a non-negative integer,");
   fi;
 
   if HasIdempotents(S) then

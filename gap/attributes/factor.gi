@@ -21,9 +21,9 @@ InstallMethod(MinimalFactorization,
 function(S, x)
   local data, pos;
   if not x in S then
-    ErrorMayQuit("Semigroups: MinimalFactorization:\n",
-                 "the second argument <x> is not an element ",
-                 "of the first argument <S>,");
+    ErrorNoReturn("Semigroups: MinimalFactorization:\n",
+                  "the second argument <x> is not an element ",
+                  "of the first argument <S>,");
   fi;
   data := GenericSemigroupData(S);
   pos := Position(data, x);
@@ -57,9 +57,9 @@ function(o, m, elt)
     if IsBound(o!.factors[m]) then
       pos := Position(o!.exhaust[m], elt);
       if pos = fail then
-        ErrorMayQuit("Semigroups: Factorization: usage,\n",
-                     "the third arg <perm> does not belong to the ",
-                     "Schutzenberger group,");
+        ErrorNoReturn("Semigroups: Factorization: usage,\n",
+                      "the third arg <perm> does not belong to the ",
+                      "Schutzenberger group,");
       fi;
 
       # express <elt> as a word in the generators of the Schutzenberger group
@@ -175,9 +175,9 @@ function(s, f)
   local o, l, m, scc, data, pos, rep, word1, word2, p;
 
   if not f in s then
-    ErrorMayQuit("Semigroups: Factorization: usage,\n",
-                 "the second argument <x> is not an element ",
-                 "of the first argument <S>,");
+    ErrorNoReturn("Semigroups: Factorization: usage,\n",
+                  "the second argument <x> is not an element ",
+                  "of the first argument <S>,");
   fi;
 
   o := LambdaOrb(s);
@@ -224,9 +224,9 @@ function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
 
   if not f in s then
-    ErrorMayQuit("Semigroups: Factorization: usage,\n",
-                 "the second argument <x> is not an element ",
-                 "of the first argument <S>,");
+    ErrorNoReturn("Semigroups: Factorization: usage,\n",
+                  "the second argument <x> is not an element ",
+                  "of the first argument <S>,");
   fi;
 
   o := LambdaOrb(s);
@@ -280,9 +280,9 @@ function(s, f)
   local o, gens, l, m, scc, word1, k, rep, p, word2;
 
   if not f in s then
-    ErrorMayQuit("Semigroups: Factorization: usage,\n",
-                 "the second argument <x> is not an element ",
-                 "of the first argument <S>,");
+    ErrorNoReturn("Semigroups: Factorization: usage,\n",
+                  "the second argument <x> is not an element ",
+                  "of the first argument <S>,");
   fi;
 
   o := RhoOrb(s);

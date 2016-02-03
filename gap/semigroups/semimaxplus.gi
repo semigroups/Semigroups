@@ -17,7 +17,7 @@ function(dim, threshold)
   local gens, i, j;
 
   if dim <> 2 then
-    ErrorMayQuit();
+    ErrorNoReturn();
   fi;
 
   gens := [Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
@@ -120,7 +120,7 @@ function(dim, threshold)
       od;
     od;
   else 
-    ErrorMayQuit();
+    ErrorNoReturn();
   fi;
 
   return Monoid(gens);

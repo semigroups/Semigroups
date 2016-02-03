@@ -352,8 +352,8 @@ function(o, i)
   r := Length(OrbSCC(o));
 
   if i > r then
-    ErrorMayQuit("Semigroups: ReverseSchreierTreeOfSCC:\n",
-                 "the orbit only has ", r, " strongly connected components,");
+    ErrorNoReturn("Semigroups: ReverseSchreierTreeOfSCC:\n",
+                  "the orbit only has ", r, " strongly connected components,");
   fi;
 
   if not IsBound(o!.reverse) then

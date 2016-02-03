@@ -309,8 +309,8 @@ end);
 #  local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
 #
 #  if DegreeOfBlocks(lambda) <> DegreeOfBlocks(rho) then
-#    ErrorMayQuit("Semigroups: SEMIGROUPS.BlocksIdempotentTester: usage,\n",
-#                 "the degrees of the blocks <lambda> and <rho> must be equal,");
+#    ErrorNoReturn("Semigroups: SEMIGROUPS.BlocksIdempotentTester: usage,\n",
+#                  "the degrees of the blocks <lambda> and <rho> must be equal,");
 #  fi;
 #
 #  if RankOfBlocks(lambda) <> RankOfBlocks(rho) then

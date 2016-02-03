@@ -95,8 +95,8 @@ function(x, y)
 
   n := Length(x![1]);
   if n <> DimensionOfMatrixOverSemiring(y) then
-    ErrorMayQuit("Semigroups: \* (for max-plus matrices): usage,\n",
-                 "the arguments must be matrices of the same dimensions,");
+    ErrorNoReturn("Semigroups: \* (for max-plus matrices): usage,\n",
+                  "the arguments must be matrices of the same dimensions,");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
   PlusMinMax := SEMIGROUPS.PlusMinMax;
@@ -165,8 +165,8 @@ function(x, y)
 
   n := Length(x![1]);
   if n <> DimensionOfMatrixOverSemiring(y) then
-    ErrorMayQuit("Semigroups: \* (for min-plus matrices): usage,\n",
-                 "the arguments must be matrices of the same dimensions,");
+    ErrorNoReturn("Semigroups: \* (for min-plus matrices): usage,\n",
+                  "the arguments must be matrices of the same dimensions,");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
   PlusMinMax := SEMIGROUPS.PlusMinMax;
@@ -240,11 +240,11 @@ function(x, y)
   n := DimensionOfMatrixOverSemiring(x);
   threshold := ThresholdTropicalMatrix(x);
   if threshold <> ThresholdTropicalMatrix(y) then
-    ErrorMayQuit("Semigroups: \* (for tropical max-plus matrices): usage,\n",
-                 "the arguments do not have the same threshold,");
+    ErrorNoReturn("Semigroups: \* (for tropical max-plus matrices): usage,\n",
+                  "the arguments do not have the same threshold,");
   elif n <> DimensionOfMatrixOverSemiring(y) then
-    ErrorMayQuit("Semigroups: \* (for tropical max-plus matrices): usage,\n",
-                 "the arguments must be matrices of the same dimensions,");
+    ErrorNoReturn("Semigroups: \* (for tropical max-plus matrices): usage,\n",
+                  "the arguments must be matrices of the same dimensions,");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
   PlusMinMax := SEMIGROUPS.PlusMinMax;
@@ -336,11 +336,11 @@ function(x, y)
   threshold := ThresholdTropicalMatrix(x);
 
   if threshold <> ThresholdTropicalMatrix(y) then
-    ErrorMayQuit("Semigroups: \* (for tropical min-plus matrices): usage,\n",
-                 "the arguments do not have the same threshold,");
+    ErrorNoReturn("Semigroups: \* (for tropical min-plus matrices): usage,\n",
+                  "the arguments do not have the same threshold,");
   elif n <> DimensionOfMatrixOverSemiring(y) then
-    ErrorMayQuit("Semigroups: \* (for tropical min-plus matrices): usage,\n",
-                 "the arguments must be matrices of the same dimensions,");
+    ErrorNoReturn("Semigroups: \* (for tropical min-plus matrices): usage,\n",
+                  "the arguments must be matrices of the same dimensions,");
   fi;
 
   xy := List([1 .. n], x -> EmptyPlist(n));
@@ -423,8 +423,8 @@ function(x, y)
 
   n := DimensionOfMatrixOverSemiring(x);
   if n <> DimensionOfMatrixOverSemiring(y) then
-    ErrorMayQuit("Semigroups: \* (for projective max-plus matrices): usage,\n",
-                 "the arguments must be matrices of the same dimensions,");
+    ErrorNoReturn("Semigroups: \* (for projective max-plus matrices): usage,\n",
+                  "the arguments must be matrices of the same dimensions,");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
   norm := -infinity;
@@ -520,11 +520,11 @@ function(x, y)
   threshold := ThresholdNTPMatrix(x);
 
   if period <> PeriodNTPMatrix(y) or threshold <> ThresholdNTPMatrix(y) then
-    ErrorMayQuit("Semigroups: \* (for ntp matrices): usage,\n",
-                 "the arguments must be matrices over the same semiring,");
+    ErrorNoReturn("Semigroups: \* (for ntp matrices): usage,\n",
+                  "the arguments must be matrices over the same semiring,");
   elif n <> DimensionOfMatrixOverSemiring(y) then
-    ErrorMayQuit("Semigroups: \* (for ntp matrices): usage,\n",
-                 "the arguments must be matrices of the same dimensions,");
+    ErrorNoReturn("Semigroups: \* (for ntp matrices): usage,\n",
+                  "the arguments must be matrices of the same dimensions,");
   fi;
 
   xy := List([1 .. n], x -> EmptyPlist(n));
@@ -602,8 +602,8 @@ function(x, y)
 
   n := Length(x![1]);
   if n <> DimensionOfMatrixOverSemiring(y) then
-    ErrorMayQuit("Semigroups: \* (for integer matrices): usage,\n",
-                 "the arguments must be matrices of the same dimensions,");
+    ErrorNoReturn("Semigroups: \* (for integer matrices): usage,\n",
+                  "the arguments must be matrices of the same dimensions,");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
 

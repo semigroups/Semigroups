@@ -73,8 +73,8 @@ end);
 InstallMethod(InverseMonoidByGenerators,
 [IsPBRCollection],
 function(coll)
-  ErrorMayQuit("Semigroups: InverseMonoidByGenerators",
-               "(for a pbr collection):\nnot yet implemented,");
+  ErrorNoReturn("Semigroups: InverseMonoidByGenerators",
+                "(for a pbr collection):\nnot yet implemented,");
 end);
 
 # FIXME see the comment above, this is not really correct.
@@ -120,9 +120,9 @@ function(coll)
 
   deg := DegreeOfPBR(coll[1]);
   if not ForAll(coll, x -> DegreeOfPBR(x) = deg) then
-    ErrorMayQuit("Semigroups: DegreeOfPBRCollection: usage,\n",
-                 "the argument <coll> must be a collection of PBRs ",
-                 "of equal degree,");
+    ErrorNoReturn("Semigroups: DegreeOfPBRCollection: usage,\n",
+                  "the argument <coll> must be a collection of PBRs ",
+                  "of equal degree,");
   fi;
 
   return deg;
@@ -276,8 +276,8 @@ function(x)
 
   dim := DimensionOfMatrixOverSemiring(x);
   if not IsEvenInt(dim) then
-    ErrorMayQuit("Semigroups: AsPBR: usage,\n",
-                 "the boolean matrix <x> must be of even dimension,");
+    ErrorNoReturn("Semigroups: AsPBR: usage,\n",
+                  "the boolean matrix <x> must be of even dimension,");
   fi;
   succ := Successors(x);
   return PBRNC(succ{[1 .. dim / 2]}, succ{[dim / 2 + 1 .. dim]});
@@ -289,15 +289,15 @@ function(mat, n)
   local m, nbs, k, i, j;
 
   if not IsEvenInt(n) then
-    ErrorMayQuit("Semigroups: AsPBR: usage,\n",
-                 "the second argument <n> must be even,");
+    ErrorNoReturn("Semigroups: AsPBR: usage,\n",
+                  "the second argument <n> must be even,");
   fi;
 
   m := DimensionOfMatrixOverSemiring(mat);
 
   if not IsEvenInt(m) then
-    ErrorMayQuit("Semigroups: AsPBR: usage,\n",
-                 "the boolean matrix <x> must be of even dimension,");
+    ErrorNoReturn("Semigroups: AsPBR: usage,\n",
+                  "the boolean matrix <x> must be of even dimension,");
   fi;
 
   nbs := [List([1 .. n / 2], x -> []),
@@ -356,8 +356,8 @@ InstallMethod(AsTransformation, "for a pbr",
 [IsPBR],
 function(x)
   if not IsTransformationPBR(x) then
-    ErrorMayQuit("Semigroups: AsTransformation: usage,\n",
-                 "the argument <x> must be a transformation PBR,");
+    ErrorNoReturn("Semigroups: AsTransformation: usage,\n",
+                  "the argument <x> must be a transformation PBR,");
   fi;
   return AsTransformation(AsBipartition(x));
 end);
@@ -368,8 +368,8 @@ InstallMethod(AsPartialPerm, "for a pbr",
 [IsPBR],
 function(x)
   if not IsPartialPermPBR(x) then
-    ErrorMayQuit("Semigroups: AsPartialPerm: usage,\n",
-                 "the argument <x> must be a partial perm PBR,");
+    ErrorNoReturn("Semigroups: AsPartialPerm: usage,\n",
+                  "the argument <x> must be a partial perm PBR,");
   fi;
   return AsPartialPerm(AsBipartition(x));
 end);
@@ -380,8 +380,8 @@ InstallMethod(AsPermutation, "for a pbr",
 [IsPBR],
 function(x)
   if not IsPermPBR(x) then
-    ErrorMayQuit("Semigroups: AsPermutation: usage,\n",
-                 "the argument <x> must be a permutation PBR,");
+    ErrorNoReturn("Semigroups: AsPermutation: usage,\n",
+                  "the argument <x> must be a permutation PBR,");
   fi;
   return AsPermutation(AsBipartition(x));
 end);
@@ -408,23 +408,23 @@ function(left, right)
   local deg, i;
 
   if Length(left) <> Length(right) then
-    ErrorMayQuit("Semigroups: PBR: usage,\n",
-                 "the arguments must have equal lengths,");
+    ErrorNoReturn("Semigroups: PBR: usage,\n",
+                  "the arguments must have equal lengths,");
   fi;
 
   deg := Length(left);
 
   for i in [1 .. deg] do
     if not IsHomogeneousList(left[i]) or not IsHomogeneousList(right[i]) then
-      ErrorMayQuit("Semigroups: PBR: usage,\n",
-                   "the entries in the arguments must be homogeneous lists,");
+      ErrorNoReturn("Semigroups: PBR: usage,\n",
+                    "the entries in the arguments must be homogeneous lists,");
     elif   not ForAll(left[i], j -> IsInt(j) and j <> 0
                                     and j <= deg and j >= -deg)
         or not ForAll(right[i], j -> IsInt(j) and j <> 0
                                      and j <= deg and j >= -deg) then
-      ErrorMayQuit("Semigroups: PBR: usage,\n",
-                   "the entries in the first argument must be integers ",
-                   "in [", -deg, " .. -1]\n or [1 .. ", deg, "],");
+      ErrorNoReturn("Semigroups: PBR: usage,\n",
+                    "the entries in the first argument must be integers ",
+                    "in [", -deg, " .. -1]\n or [1 .. ", deg, "],");
     fi;
   od;
   return PBRNC(left, right);
