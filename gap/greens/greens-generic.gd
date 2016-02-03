@@ -63,6 +63,7 @@ DeclareAttribute("NrRClasses", IsCollection);
 DeclareAttribute("Idempotents", IsGreensClass);
 DeclareOperation("Idempotents", [IsSemigroup, IsInt]);
 DeclareAttribute("NrIdempotents", IsCollection);
+DeclareAttribute("NrIdempotentsByRank", IsCollection);
 
 DeclareSynonym("DClass", GreensDClassOfElement);
 DeclareSynonym("LClass", GreensLClassOfElement);

@@ -761,6 +761,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "data, pos"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CAYLEY_TABLE, 1,
                           "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_MAX_WORD_LENGTH_BY_RANK, 1,
+                          "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUPS_GABOW_SCC, 1,
                           "digraph"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2,
@@ -906,9 +908,6 @@ static Int InitKernel( StructInitInfo *module )
 
     ImportGVarFromLibrary( "IsIntegerMatrix", &IsIntegerMatrix );
     ImportGVarFromLibrary( "IntegerMatrixType", &IntegerMatrixType );
-
-    ImportGVarFromLibrary( "IsMatrixOverPrimeField", &IsMatrixOverPrimeField );
-    ImportGVarFromLibrary( "MatrixOverPrimeFieldType", &MatrixOverPrimeFieldType );
 
     ImportGVarFromLibrary( "IsPBR", &IsPBR);
     ImportGVarFromLibrary( "PBRType", &PBRType );

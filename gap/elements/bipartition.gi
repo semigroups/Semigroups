@@ -638,64 +638,6 @@ function(coll)
 end);
 
 #############################################################################
-# C/C++ level
-#############################################################################
-
-#
-# Operators
-
-# Constructors
-
-
-
-# linear - 2 * degree
-
-#InstallMethod(RightProjection, "for a bipartition",
-#[IsBipartition],
-#function(f)
-#  local n, blocks, table, out, next, nrleft, lookup, i;
-#
-#  n := DegreeOfBipartition(f);
-#  blocks := f!.blocks;
-#  table := [];
-#  out := [];
-#  next := 0;
-#
-#  for i in [1 .. n] do
-#    if IsBound(table[blocks[i + n]]) then
-#      out[i] := table[blocks[i + n]];
-#    else
-#      next := next + 1;
-#      table[blocks[i + n]] := next;
-#      out[i] := next;
-#    fi;
-#  od;
-#
-#  nrleft := next;
-#  table := [];
-#  lookup := SEMIGROUPS.TransBlocksLookup(f);
-#
-#  for i in [1 .. n] do
-#    if blocks[i + n] <= NrLeftBlocks(f) and lookup[blocks[i + n]] then
-#      out[i + n] := out[i];
-#    elif IsBound(table[blocks[i + n]]) then
-#      out[i + n] := table[blocks[i + n]];
-#    else
-#      next := next + 1;
-#      table[blocks[i + n]] := next;
-#      out[i + n] := next;
-#    fi;
-#  od;
-#
-#  out := Objectify(BipartitionType, rec(blocks := out));
-#
-#  SetDegreeOfBipartition(out, n);
-#  SetNrLeftBlocks(out, nrleft);
-#  SetNrBlocks(out, next);
-#  return out;
-#end);
-
-#############################################################################
 # All of the methods in this section could be done in C/C++
 #############################################################################
 

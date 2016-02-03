@@ -238,23 +238,6 @@ class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// Matrices over prime field
-////////////////////////////////////////////////////////////////////////////////
-
-class MatrixOverPrimeFieldConverter : public MatrixOverSemiringConverter {
-
-  public:
-
-    MatrixOverPrimeFieldConverter(PrimeField* field,
-                                  Obj         gap_type)
-      : MatrixOverSemiringConverter(field, 0, gap_type) {}
-
-    MatrixOverSemiring* convert   (Obj      o, size_t n);
-    Obj                 unconvert (Element* x          );
-
-};
-
-////////////////////////////////////////////////////////////////////////////////
 // Partitioned binary relations (PBRs)
 ////////////////////////////////////////////////////////////////////////////////
 

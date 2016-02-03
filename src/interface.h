@@ -44,6 +44,7 @@ Obj SEMIGROUP_NEXT_ITERATOR           (Obj self, Obj iter);
 Obj SEMIGROUP_NEXT_ITERATOR_SORTED    (Obj self, Obj iter);
 Obj SEMIGROUP_IS_DONE_ITERATOR        (Obj self, Obj iter);
 Obj SEMIGROUP_IS_DONE_ITERATOR_CC     (Obj self, Obj iter);
+Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data);
 Obj SEMIGROUP_NR_IDEMPOTENTS          (Obj self, Obj data);
 Obj SEMIGROUP_POSITION                (Obj self, Obj data, Obj x);
 Obj SEMIGROUP_POSITION_SORTED         (Obj self, Obj data, Obj x);

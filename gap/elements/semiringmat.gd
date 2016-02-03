@@ -35,7 +35,7 @@ DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList]);
 DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
                             IsPosInt]);
 DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
-                            IsPosInt, IsPosInt]);
+                            IsInt, IsInt]);
 DeclareOperation("Matrix", [IsSemiring, IsHomogeneousList]);
 
 DeclareOperation("AsMatrix", [IsFunction and IsOperation,
@@ -66,8 +66,8 @@ DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
                                         IsPosInt]);
 DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
                                         IsPosInt,
-                                        IsPosInt,
-                                        IsPosInt]);
+                                        IsInt,
+                                        IsInt]);
 DeclareOperation("RandomMatrixOp", [IsSemiring, IsPosInt]);
 
 DeclareAttribute("AsList", IsMatrixOverSemiring);
@@ -92,4 +92,4 @@ DeclareConstructor("SEMIGROUPS_MatrixOverSemiringEntryCheckerCons",
 DeclareConstructor("SEMIGROUPS_MatrixOverSemiringEntryCheckerCons",
                    [IsMatrixOverSemiring, IsPosInt]);
 DeclareConstructor("SEMIGROUPS_MatrixOverSemiringEntryCheckerCons",
-                   [IsMatrixOverSemiring, IsPosInt, IsPosInt]);
+                   [IsMatrixOverSemiring, IsInt, IsInt]);

@@ -32,7 +32,5 @@ Obj IsNTPMatrix;
 Obj NTPMatrixType;
 Obj IsIntegerMatrix;
 Obj IntegerMatrixType;
-Obj IsMatrixOverPrimeField;
-Obj MatrixOverPrimeFieldType;
 Obj IsPBR;
 Obj PBRType;

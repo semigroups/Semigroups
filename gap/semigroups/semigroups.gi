@@ -23,7 +23,6 @@ SEMIGROUPS.SemigroupTypes := [IsPBRSemigroup,
                               IsTropicalMinPlusMatrixSemigroup,
                               IsProjectiveMaxPlusMatrixSemigroup,
                               IsNTPMatrixSemigroup,
-                              IsMatrixOverPrimeFieldSemigroup,
                               IsBlockBijectionSemigroup,
                               IsIntegerMatrixSemigroup];
 
@@ -38,7 +37,6 @@ SEMIGROUPS.MonoidTypes := [IsPBRMonoid,
                            IsTropicalMinPlusMatrixMonoid,
                            IsProjectiveMaxPlusMatrixMonoid,
                            IsNTPMatrixMonoid,
-                           IsMatrixOverPrimeFieldMonoid,
                            IsBlockBijectionMonoid,
                            IsIntegerMatrixMonoid];
 
@@ -811,7 +809,7 @@ end);
 
 SEMIGROUPS.RandomElementCons := function(filt)
   local RandomTropicalMaxPlusMatrix, RandomTropicalMinPlusMatrix,
-  RandomProjectiveMaxPlusMatrix, RandomNTPMatrix, RandomMatrixOverPrimeField;
+  RandomProjectiveMaxPlusMatrix, RandomNTPMatrix;
 
   if not filt in SEMIGROUPS.SemigroupTypes then
     ErrorNoReturn("Semigroups: SEMIGROUPS.RandomElementCons: usage,\n");
@@ -831,10 +829,6 @@ SEMIGROUPS.RandomElementCons := function(filt)
 
   RandomNTPMatrix := function(dim, threshold, period)
     return RandomMatrix(IsNTPMatrix, dim, threshold, period);
-  end;
-
-  RandomMatrixOverPrimeField := function(dim, field)
-    return RandomMatrix(field, dim);
   end;
 
   if filt = IsTransformationSemigroup then
@@ -867,9 +861,6 @@ SEMIGROUPS.RandomElementCons := function(filt)
   elif filt = IsNTPMatrixSemigroup then
     return [RandomNTPMatrix, 3, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
-  elif filt = IsMatrixOverPrimeFieldSemigroup then
-    return [RandomMatrixOverPrimeField, 2, IdFunc];
-    #TODO define the canonical embedding from T_n to here!
   elif filt = IsIntegerMatrixSemigroup then
     return [x -> RandomMatrix(IsIntegerMatrix, x), 1, IdFunc];
     #TODO define the canonical embedding from T_n to here!
@@ -923,16 +914,16 @@ SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
                   "there should be ", cons[2], " arguments,");
   fi;
 
-  if filt = IsMatrixOverPrimeFieldSemigroup then
-    if IsPosInt(params[2]) then
-      if not IsPrimeInt(params[2]) then
-        params[2] := NextPrimeInt(params[2]);
-      fi;
-      params[2] := GF(params[2], 1);
-    elif not IsPrimeField(params[2]) then
-      params[2] := GF(NextPrimeInt(AbsInt(Random(Integers)) + 1), 1);
-    fi;
-  fi;
+  #if filt = IsMatrixOverPrimeFieldSemigroup then
+  #  if IsPosInt(params[2]) then
+  #    if not IsPrimeInt(params[2]) then
+  #      params[2] := NextPrimeInt(params[2]);
+  #    fi;
+  #    params[2] := GF(params[2], 1);
+  #  elif not IsPrimeField(params[2]) then
+  #    params[2] := GF(NextPrimeInt(AbsInt(Random(Integers)) + 1), 1);
+  #  fi;
+  #fi;
 
   if SemigroupOrMonoid = InverseSemigroup
       or SemigroupOrMonoid = InverseMonoid

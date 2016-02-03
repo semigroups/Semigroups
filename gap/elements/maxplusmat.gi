@@ -501,8 +501,12 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsNTPMatrix",
 [IsNTPMatrix], x -> NTPMatrixType);
 
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
-"for IsNTPMatrix, pos int, pos int", [IsNTPMatrix, IsPosInt, IsPosInt],
+"for IsNTPMatrix, pos int, pos int", [IsNTPMatrix, IsInt, IsInt],
 function(filter, threshold, period)
+  if threshold < 0 or period < 0 then 
+    ErrorNoReturn("Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons:", 
+                  " usage,\n the threshold and period must be non-negative,");
+  fi;
   return x -> (IsInt(x) and x >= 0 and x <= threshold + period - 1);
 end);
 
@@ -544,7 +548,7 @@ InstallMethod(OneImmutable, "for a ntp matrix",
 x -> MatrixNC(x, SEMIGROUPS.IdentityMat(x, 0, 1)));
 
 InstallMethod(RandomMatrixCons, "for IsNTPMatrix, pos int, pos int, pos int",
-[IsNTPMatrix, IsPosInt, IsPosInt, IsPosInt],
+[IsNTPMatrix, IsPosInt, IsInt, IsInt],
 function(filter, dim, threshold, period)
   local mat;
   mat := SEMIGROUPS.RandomIntegerMatrix(dim, false);

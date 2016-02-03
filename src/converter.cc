@@ -146,54 +146,6 @@ Obj MatrixOverSemiringConverter::unconvert (Element* x) {
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-// Matrices over prime fields
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-MatrixOverSemiring* MatrixOverPrimeFieldConverter::convert (Obj o, size_t n) {
-  assert(IS_MAT_OVER_PF(o));
-  assert(LEN_PLIST(o) > 0);
-  assert(IS_PLIST(ELM_PLIST(o, 1)));
-  size_t m = LEN_PLIST(ELM_PLIST(o, 1));
-
-  std::vector<long>* matrix(new std::vector<long>());
-  matrix->reserve(m);
-
-  for (size_t i = 1; i <= m; i++) {
-    Obj row = ELM_PLIST(o, i);
-    for (size_t j = 1; j <= m; j++) {
-      matrix->push_back(VAL_FFE(ELM_PLIST(row, j)));
-    }
-  }
-  return new MatrixOverSemiring(matrix, _semiring);
-}
-
-Obj MatrixOverPrimeFieldConverter::unconvert (Element* xx) {
-  MatrixOverSemiring* x(static_cast<MatrixOverSemiring*>(xx));
-
-  size_t n = x->degree();
-  Obj plist = NEW_PLIST(T_PLIST, n + 1);
-  SET_LEN_PLIST(plist, n + 1);
-  SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(static_cast<PrimeField*>(_semiring)->size()));
-  FF field = FiniteField(static_cast<PrimeField*>(_semiring)->size(), 1);
-
-  for (size_t i = 0; i < n; i++) {
-    Obj row = NEW_PLIST(T_PLIST_FFE, n);
-    SET_LEN_PLIST(row, n);
-    for (size_t j = 0; j < n; j++) {
-      SET_ELM_PLIST(row, j + 1, NEW_FFE(field, (FFV) x->at(i * n + j)));
-    }
-    SET_ELM_PLIST(plist, i + 1, row);
-    CHANGED_BAG(plist);
-  }
-  TYPE_POSOBJ(plist) = _gap_type;
-  RetypeBag(plist, T_POSOBJ);
-  CHANGED_BAG(plist);
-  return plist;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 // Partitioned binary relations (PBRs)
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
