@@ -130,8 +130,8 @@ function(S)
     TryNextMethod(); # this should be the default method for a non-inverse op
                      # semigroup
   fi;
-  ErrorMayQuit("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-               "the argument is not an inverse semigroup,");
+  ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
+                "the argument is not an inverse semigroup,");
 end);
 
 #

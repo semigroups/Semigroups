@@ -282,7 +282,15 @@ function(S)
 end);
 
 InstallMethod(NrIdempotents, "for a regular star bipartition acting semigroup",
-[IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup],
+[IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  return Sum(NrIdempotentsByRank(S));
+end);
+
+#TODO other methods for this!
+
+InstallMethod(NrIdempotentsByRank, "for a regular star bipartition acting semigroup",
+[IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local o;
   o := Enumerate(LambdaOrb(S));

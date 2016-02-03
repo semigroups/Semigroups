@@ -660,4 +660,11 @@ function(x, hashlen)
              data := hashlen);
 end);
 
+# fallback method for hashing
 
+InstallMethod(ChooseHashFunction, "for an object and an int",
+[IsObject, IsInt],
+1,
+function(p, hashlen)
+  return rec(func := function(v, data) return 1; end, data := fail);
+end);

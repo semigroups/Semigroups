@@ -36,7 +36,6 @@ end;
 #  IsTropicalMinPlusMatrixSemigroup
 #  IsProjectiveMaxPlusMatrixSemigroup
 #  IsNTPMatrixSemigroup
-#  IsMatrixOverPrimeFieldSemigroup
 #  IsIntegerMatrixSemigroup
 
 SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
@@ -172,13 +171,13 @@ function(arg)
       and arg[2] >= 0 then
     out := TrivialSemigroupCons(arg[1], arg[2]);
   else
-    ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
-                 "the arguments must be a non-negative integer or ",
-                 "a filter and a non-negative\ninteger,");
+    ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
+                  "the arguments must be a non-negative integer or ",
+                  "a filter and a non-negative\ninteger,");
   fi;
   if out = fail then
-    ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
-                 "the requested filter is not supported,");
+    ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
+                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(TrivialSemigroup, out, 0);
   return out;
@@ -270,15 +269,15 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(r)
       or not IsOperation(filter) then
-    ErrorMayQuit("Semigroups: MonogenicSemigroup: usage,\n",
-                 "the arguments must be two positive integers or a filter ",
-                 "and a two positive\nintegers,");
+    ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
+                  "the arguments must be two positive integers or a filter ",
+                  "and a two positive\nintegers,");
   fi;
 
   out := MonogenicSemigroupCons(filter, m, r);
   if out = fail then
-    ErrorMayQuit("Semigroups: MonogenicSemigroup: usage,\n",
-                 "the requested filter is not supported,");
+    ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
+                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(MonogenicSemigroup, out, m, r);
   return out;
@@ -399,15 +398,15 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(n)
       or not IsOperation(filter) then
-    ErrorMayQuit("Semigroups: RectangularBand: usage,\n",
-                 "the arguments must be two positive integers or a filter ",
-                 "and a two positive\nintegers,");
+    ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
+                  "the arguments must be two positive integers or a filter ",
+                  "and a two positive\nintegers,");
   fi;
 
   out := RectangularBandCons(filter, m, n);
   if out = fail then
-    ErrorMayQuit("Semigroups: RectangularBand: usage,\n",
-                 "the requested filter is not supported,");
+    ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
+                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(RectangularBand, out, m, n);
   return out;
@@ -530,15 +529,15 @@ function(arg)
   fi;
 
   if not IsBound(n) or not IsPosInt(n) or not IsOperation(filter) then
-    ErrorMayQuit("Semigroups: ZeroSemigroup: usage,\n",
-                 "the arguments must be a positive integer or a filter and a ",
-                 "positive integer,");
+    ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
+                  "the arguments must be a positive integer or a filter and a ",
+                  "positive integer,");
   fi;
 
   out := ZeroSemigroupCons(filter, n);
   if out = fail then
-    ErrorMayQuit("Semigroups: ZeroSemigroup: usage,\n",
-                 "the requested filter is not supported,");
+    ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
+                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(ZeroSemigroup, out, n);
   return out;
@@ -647,8 +646,8 @@ function(filter, n)
   local mat;
 
   if n = 1 then
-    ErrorMayQuit("Semigroups: ZeroSemigroupCons: usage:\n",
-                 "there is no Rees 0-matrix semigroup of order 1,");
+    ErrorNoReturn("Semigroups: ZeroSemigroupCons: usage:\n",
+                  "there is no Rees 0-matrix semigroup of order 1,");
   fi;
   mat := [[1 .. n - 1] * 0];
   return ReesZeroMatrixSemigroup(Group(()), mat);
@@ -675,9 +674,9 @@ function(arg)
   elif Length(arg) = 1 and IsPosInt(arg[1]) then
     out := RectangularBand(IsTransformationSemigroup, arg[1], 1);
   else
-    ErrorMayQuit("Semigroups: LeftZeroSemigroup: usage,\n",
-                 "the arguments must be a positive integer or ",
-                 "a filter and a positive integer,");
+    ErrorNoReturn("Semigroups: LeftZeroSemigroup: usage,\n",
+                  "the arguments must be a positive integer or ",
+                  "a filter and a positive integer,");
   fi;
   return out;
 end);
@@ -692,9 +691,9 @@ function(arg)
   elif Length(arg) = 1 and IsPosInt(arg[1]) then
     out := RectangularBand(IsTransformationSemigroup, 1, arg[1]);
   else
-    ErrorMayQuit("Semigroups: RightZeroSemigroup: usage,\n",
-                 "the arguments must be a positive integer or ",
-                 "a filter and a positive integer,");
+    ErrorNoReturn("Semigroups: RightZeroSemigroup: usage,\n",
+                  "the arguments must be a positive integer or ",
+                  "a filter and a positive integer,");
   fi;
   return out;
 end);

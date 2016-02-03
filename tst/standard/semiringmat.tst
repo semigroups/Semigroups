@@ -73,13 +73,14 @@ gap> Matrix(Integers, [[-1, -2, 0],
 Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
 gap> TransposedMat(TransposedMat(last)) = last;
 true
-gap> Matrix(GF(3), [[Z(3), Z(3) ^ 0, Z(3)],
->                   [Z(3), Z(3) ^ 0, Z(3) ^ 0],
->                   [Z(3), 0 * Z(3), 0 * Z(3)]]);
-Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0], 
-  [Z(3), 0*Z(3), 0*Z(3)]])
-gap> TransposedMat(TransposedMat(last)) = last;
-true
+
+# gap> Matrix(GF(3), [[Z(3), Z(3) ^ 0, Z(3)],
+# >                   [Z(3), Z(3) ^ 0, Z(3) ^ 0],
+# >                   [Z(3), 0 * Z(3), 0 * Z(3)]]);
+# Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0], 
+#   [Z(3), 0*Z(3), 0*Z(3)]])
+# gap> TransposedMat(TransposedMat(last)) = last;
+# true
 
 #T# semiringmat: MatrixNC for a matrix over semiring and homogeneous list
 gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3], [0, 2]], 5);
@@ -174,11 +175,11 @@ gap> RandomMatrix(IsTropicalMaxPlusMatrix, 2, 2);;
 #T# semiringmat: RandomMatrix, 3/6
 gap> RandomMatrix(IsNTPMatrix, 2, 2, 2);;
 
-#T# semiringmat: RandomMatrix, 4/6
-gap> RandomMatrix(GF(7), 2);;
-
-#T# semiringmat: RandomMatrix, 5/6
-gap> RandomMatrix(7, 2);;
+# #T# semiringmat: RandomMatrix, 4/6
+# gap> RandomMatrix(GF(7), 2);;
+#
+# #T# semiringmat: RandomMatrix, 5/6
+# gap> RandomMatrix(7, 2);;
 
 #T# semiringmat: RandomMatrix, 6/6
 gap> RandomMatrix(7, 2, 3);

@@ -20,7 +20,6 @@
     <Filt Name = "IsProjectiveMaxPlusMatrix" Arg = "obj" Type = "Category"/>
     <Filt Name = "IsNTPMatrix"               Arg = "obj" Type = "Category"/>
     <Filt Name = "IsIntegerMatrix"           Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsMatrixOverPrimeField"    Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       Every matrix over a semiring in &Semigroups; is a member of one of these
@@ -40,9 +39,13 @@
       <C>1</C> and the dimension of the matrix, it also possible to loop over
       the rows of a matrix; for tropical matrices <Ref
         Attr = "ThresholdTropicalMatrix"/>; for ntp matrices <Ref
-        Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>; for
-      matrices over finite fields <Ref Attr = "BaseField"/>; for Boolean matrices
-      more details can be found in Section <Ref Sect = "Boolean matrices"/>.
+        Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>.
+
+      <!--
+      For matrices over finite fields <Ref Attr = "BaseField"/>; for Boolean
+      matrices more details can be found in
+      Section <Ref Sect = "Boolean matrices"/>.
+      -->
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -86,10 +89,6 @@
       "Category"/>
     <Filt Name = "IsIntegerMatrixCollColl"             Arg = "obj" Type =
       "Category"/>
-    <Filt Name = "IsMatrixOverPrimeFieldCollection"    Arg = "obj" Type =
-      "Category"/>
-    <Filt Name = "IsMatrixOverPrimeFieldCollColl"      Arg = "obj" Type =
-      "Category"/>
     <Returns>
       <K>true</K> or <K>false</K>.
     </Returns>
@@ -126,9 +125,6 @@
     <Var Name = "NTPMatrixFamily"              />
     <Var Name = "IntegerMatrixType"            />
     <Var Name = "IntegerMatrixFamily"          />
-    <Var Name = "MatrixOverPrimeFieldType"     />
-    <Var Name = "MatrixOverPrimeFieldFamily"   />
-
     <Description>
       Every matrix over a semiring in &Semigroups; has family and type equal to
       one of the above.

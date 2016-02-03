@@ -70,8 +70,8 @@ that:
   assigned using `BindGlobal` in that file. 
 * there should be no non-global functions
 * error messages should be in the following format: 
-  `ErrorMayQuit("Semigroups: NameOfWhateverContainingError: \n", 
-                "something went wrong");`
+  `ErrorNoReturn("Semigroups: NameOfWhateverContainingError: \n", 
+                 "something went wrong");`
 * functions and variables which will be unbound after they are read must have
  an underscore '_' at the start.
 * non-user operations must start SEMIGROUPS_

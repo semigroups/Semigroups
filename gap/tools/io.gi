@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  io.gd
+#W  io.gi
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -12,7 +12,7 @@ InstallGlobalFunction(IteratorFromGeneratorsFile,
 function(str)
   local file, record;
 
-  file := IO_CompressedFile(str, "r");
+  file := IO_CompressedFile(UserHomeExpand(str), "r");
 
   if file = fail then
     return fail;
@@ -47,8 +47,6 @@ function(str)
   return IteratorByFunctions(record);
 end);
 
-#
-
 InstallGlobalFunction(ReadGenerators,
 function(arg)
   local name, line_nr, file, i, obj, out;
@@ -60,26 +58,27 @@ function(arg)
     name := arg[1];
     line_nr := arg[2];
   else
-    ErrorMayQuit("Semigroups: ReadGenerators: usage,\n",
-                 "there should be at most 2 arguments,");
+    ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
+                  "there should be at most 2 arguments,");
   fi;
 
   if IsString(name) then
+    name := UserHomeExpand(name);
     file := IO_CompressedFile(name, "r");
     if file = fail then
-      ErrorMayQuit("Semigroups: ReadGenerators:\n",
-                   "could not open the file ", file, ",");
+      ErrorNoReturn("Semigroups: ReadGenerators:\n",
+                    "could not open the file ", file, ",");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorMayQuit("Semigroups: ReadGenerators: usage,\n",
-                 "the first argument must be a string or a file,");
+    ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
+                  "the first argument must be a string or a file,");
   fi;
 
   if not (IsInt(line_nr) and line_nr >= 0) then
-    ErrorMayQuit("Semigroups: ReadGenerators: usage,\n",
-                 "the second argument must be a positive integer,");
+    ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
+                  "the second argument must be a positive integer,");
   fi;
 
   if line_nr <> 0 then
@@ -93,8 +92,8 @@ function(arg)
       IO_Close(file);
     fi;
     if obj = IO_Nothing then
-      ErrorMayQuit("Semigroups: ReadGenerators:\n",
-                   "the file only has ", i - 1, " rows,");
+      ErrorNoReturn("Semigroups: ReadGenerators:\n",
+                    "the file only has ", i - 1, " rows,");
     fi;
     return obj;
   else
@@ -129,26 +128,27 @@ function(arg)
     coll := arg[2];
     mode := arg[3];
   else
-    ErrorMayQuit("Semigroups: WriteGenerators: usage,\n",
-                 "there should be 2 or 3 arguments,");
+    ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
+                  "there should be 2 or 3 arguments,");
   fi;
 
   if not (mode = "a" or mode = "w") then
-    ErrorMayQuit("Semigroups: WriteGenerators: usage,\n",
-                 "the third argument must be \"a\" or \"w\",");
+    ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
+                  "the third argument must be \"a\" or \"w\",");
   fi;
 
   if IsString(name) then
+    name := UserHomeExpand(name);
     file := IO_CompressedFile(name, mode);
     if file = fail then
-      ErrorMayQuit("Semigroups: WriteGenerators:\n",
-                   "couldn't open the file ", name, ",");
+      ErrorNoReturn("Semigroups: WriteGenerators:\n",
+                    "couldn't open the file ", name, ",");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    ErrorMayQuit("Semigroups: WriteGenerators: usage,\n",
-                 "the first argument must be a string or a file,");
+    ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
+                  "the first argument must be a string or a file,");
   fi;
 
   for i in [1 .. Length(coll)] do
@@ -267,4 +267,3 @@ function(arg)
     return List(line, x -> ReadGeneratorsLine(Chomp(x)));
   fi;
 end);
-

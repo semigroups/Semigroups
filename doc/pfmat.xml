@@ -8,6 +8,7 @@
 #############################################################################
 ##
 
+<!-- Uses matrices over finite field
 <#GAPDoc Label="BaseField">
   <ManSection>
     <Attr Name = "BaseField" Arg = "mat"/>
@@ -17,13 +18,10 @@
         = "IsMatrixOverSemiring"/>), then <C>BaseField</C> returns the finite
       field specified at the point that <A>mat</A> was created. Every entry in
       the matrix <A>mat</A> belongs to <C>BaseField(<A>mat</A>)</C>. 
-
-      <Example><![CDATA[
 gap> mat := Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]]);
 Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])
 gap> BaseField(mat);
-GF(7)]]></Example>
-
     </Description>
   </ManSection>
 <#/GAPDoc>
+-->

@@ -23,7 +23,6 @@ SEMIGROUPS.SemigroupTypes := [IsPBRSemigroup,
                               IsTropicalMinPlusMatrixSemigroup,
                               IsProjectiveMaxPlusMatrixSemigroup,
                               IsNTPMatrixSemigroup,
-                              IsMatrixOverPrimeFieldSemigroup,
                               IsBlockBijectionSemigroup,
                               IsIntegerMatrixSemigroup];
 
@@ -38,7 +37,6 @@ SEMIGROUPS.MonoidTypes := [IsPBRMonoid,
                            IsTropicalMinPlusMatrixMonoid,
                            IsProjectiveMaxPlusMatrixMonoid,
                            IsNTPMatrixMonoid,
-                           IsMatrixOverPrimeFieldMonoid,
                            IsBlockBijectionMonoid,
                            IsIntegerMatrixMonoid];
 
@@ -46,8 +44,8 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
   local data;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
-    ErrorMayQuit("Semigroups: SEMIGROUPS.AddGenerators: usage,\n",
-                 "the arguments do not belong to the same family,");
+    ErrorNoReturn("Semigroups: SEMIGROUPS.AddGenerators: usage,\n",
+                  "the arguments do not belong to the same family,");
   fi;
 
   if IsActingSemigroup(S)
@@ -345,9 +343,9 @@ function(gens, opts)
   local n, S, filts, one, pos, x;
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
-    ErrorMayQuit("Semigroups: InverseMonoidByGenerators: usage,\n",
-                 "the first argument must satisfy ",
-                 "`IsGeneratorsOfInverseSemigroup',");
+    ErrorNoReturn("Semigroups: InverseMonoidByGenerators: usage,\n",
+                  "the first argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
@@ -420,9 +418,9 @@ function(gens, opts)
   local n, S, filts, pos, x;
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
-    ErrorMayQuit("Semigroups: InverseSemigroupByGenerators: usage,\n",
-                 "the first argument must satisfy ",
-                 "`IsGeneratorsOfInverseSemigroup',");
+    ErrorNoReturn("Semigroups: InverseSemigroupByGenerators: usage,\n",
+                  "the first argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
@@ -526,15 +524,15 @@ function(S, coll, opts)
   fi;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
-    ErrorMayQuit("Semigroups: ClosureInverseSemigroup: usage,\n",
-                 "the semigroup and collection of elements are not of the ",
-                 "same type,");
+    ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
+                  "the semigroup and collection of elements are not of the ",
+                  "same type,");
   fi;
 
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorMayQuit("Semigroups: ClosureInverseSemigroup: usage,\n",
-                 "the first argument must satisfy ",
-                 "`IsGeneratorsOfInverseSemigroup',");
+    ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
+                  "the first argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
   if IsSemigroup(coll) then
@@ -648,16 +646,16 @@ function(S, coll, opts)
   fi;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
-    ErrorMayQuit("Semigroups: ClosureSemigroup: usage,\n",
-                 "the semigroup and collection of elements are not of the ",
-                 "same type,");
+    ErrorNoReturn("Semigroups: ClosureSemigroup: usage,\n",
+                  "the semigroup and collection of elements are not of the ",
+                  "same type,");
   fi;
 
   if IsActingSemigroup(S)
       and IsActingSemigroupWithFixedDegreeMultiplication(S)
       and ActionDegree(S) <> ActionDegree(Representative(coll)) then
-    ErrorMayQuit("Semigroups: ClosureSemigroup: usage,\n",
-                 "the degree of the semigroup and collection must be equal,");
+    ErrorNoReturn("Semigroups: ClosureSemigroup: usage,\n",
+                  "the degree of the semigroup and collection must be equal,");
   fi;
 
   if IsSemigroup(coll) then
@@ -811,10 +809,10 @@ end);
 
 SEMIGROUPS.RandomElementCons := function(filt)
   local RandomTropicalMaxPlusMatrix, RandomTropicalMinPlusMatrix,
-  RandomProjectiveMaxPlusMatrix, RandomNTPMatrix, RandomMatrixOverPrimeField;
+  RandomProjectiveMaxPlusMatrix, RandomNTPMatrix;
 
   if not filt in SEMIGROUPS.SemigroupTypes then
-    ErrorMayQuit("Semigroups: SEMIGROUPS.RandomElementCons: usage,\n");
+    ErrorNoReturn("Semigroups: SEMIGROUPS.RandomElementCons: usage,\n");
   fi;
 
   RandomTropicalMaxPlusMatrix := function(dim, threshold)
@@ -831,10 +829,6 @@ SEMIGROUPS.RandomElementCons := function(filt)
 
   RandomNTPMatrix := function(dim, threshold, period)
     return RandomMatrix(IsNTPMatrix, dim, threshold, period);
-  end;
-
-  RandomMatrixOverPrimeField := function(dim, field)
-    return RandomMatrix(field, dim);
   end;
 
   if filt = IsTransformationSemigroup then
@@ -867,9 +861,6 @@ SEMIGROUPS.RandomElementCons := function(filt)
   elif filt = IsNTPMatrixSemigroup then
     return [RandomNTPMatrix, 3, IdFunc];
     #TODO how to define a canonical embedding from T_n to here?
-  elif filt = IsMatrixOverPrimeFieldSemigroup then
-    return [RandomMatrixOverPrimeField, 2, IdFunc];
-    #TODO define the canonical embedding from T_n to here!
   elif filt = IsIntegerMatrixSemigroup then
     return [x -> RandomMatrix(IsIntegerMatrix, x), 1, IdFunc];
     #TODO define the canonical embedding from T_n to here!
@@ -898,13 +889,13 @@ SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
   fi;
 
   if not IsFilter(filt) or not filt in SEMIGROUPS.SemigroupTypes then
-    ErrorMayQuit("Semigroups: ", string, ": usage,\n",
-                 "the first argument must be a filter,");
+    ErrorNoReturn("Semigroups: ", string, ": usage,\n",
+                  "the first argument must be a filter,");
   fi;
 
   if not IsPosInt(nrgens) then
-    ErrorMayQuit("Semigroups: ", string, ": usage,\n",
-                 "the second argument must be a positive integer,");
+    ErrorNoReturn("Semigroups: ", string, ": usage,\n",
+                  "the second argument must be a positive integer,");
   fi;
 
   cons := SEMIGROUPS.RandomElementCons(filt);
@@ -916,23 +907,23 @@ SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
   fi;
 
   if not IsHomogeneousList(params) or not IsPosInt(params[1]) then
-    ErrorMayQuit("Semigroups: ", string, ": usage,\n",
-                 "the third to last arguments must be positive integers,");
+    ErrorNoReturn("Semigroups: ", string, ": usage,\n",
+                  "the third to last arguments must be positive integers,");
   elif Length(params) > cons[2] then
-    ErrorMayQuit("Semigroups: ", string, ": usage,\n",
-                 "there should be ", cons[2], " arguments,");
+    ErrorNoReturn("Semigroups: ", string, ": usage,\n",
+                  "there should be ", cons[2], " arguments,");
   fi;
 
-  if filt = IsMatrixOverPrimeFieldSemigroup then
-    if IsPosInt(params[2]) then
-      if not IsPrimeInt(params[2]) then
-        params[2] := NextPrimeInt(params[2]);
-      fi;
-      params[2] := GF(params[2], 1);
-    elif not IsPrimeField(params[2]) then
-      params[2] := GF(NextPrimeInt(AbsInt(Random(Integers)) + 1), 1);
-    fi;
-  fi;
+  #if filt = IsMatrixOverPrimeFieldSemigroup then
+  #  if IsPosInt(params[2]) then
+  #    if not IsPrimeInt(params[2]) then
+  #      params[2] := NextPrimeInt(params[2]);
+  #    fi;
+  #    params[2] := GF(params[2], 1);
+  #  elif not IsPrimeField(params[2]) then
+  #    params[2] := GF(NextPrimeInt(AbsInt(Random(Integers)) + 1), 1);
+  #  fi;
+  #fi;
 
   if SemigroupOrMonoid = InverseSemigroup
       or SemigroupOrMonoid = InverseMonoid

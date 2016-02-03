@@ -50,8 +50,8 @@ SEMIGROUPS.DegreeOfSemigroup := function(arg)
   elif Length(arg) = 2 then
     coll := arg[2];
   else
-    ErrorMayQuit("Semigroups: SEMIGROUPS.DegreeOfSemigroup:\n",
-                 "unknown error,");
+    ErrorNoReturn("Semigroups: SEMIGROUPS.DegreeOfSemigroup:\n",
+                  "unknown error,");
   fi;
 
   if IsTransformationSemigroup(S) then
@@ -69,8 +69,8 @@ SEMIGROUPS.DegreeOfSemigroup := function(arg)
   elif IsPBRSemigroup(S) then
     return DegreeOfPBRSemigroup(S);
   else
-    ErrorMayQuit("Semigroups: SEMIGROUPS.DegreeOfSemigroup:\n",
-                 "unknown error,");
+    ErrorNoReturn("Semigroups: SEMIGROUPS.DegreeOfSemigroup:\n",
+                  "unknown error,");
   fi;
 end;
 

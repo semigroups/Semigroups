@@ -53,9 +53,9 @@ function(partition)
   m, y, w, i, j, k, block;
 
   if not ForAll(partition, IsPosInt) then
-    ErrorMayQuit("Semigroups: EndomorphismsPartition: usage,\n",
-                 "the argument <partition> must be a list of positive ",
-                 "integers,");
+    ErrorNoReturn("Semigroups: EndomorphismsPartition: usage,\n",
+                  "the argument <partition> must be a list of positive ",
+                  "integers,");
   elif ForAll(partition, x -> x = 1) then
     return FullTransformationMonoid(Length(partition));
   elif Length(partition) = 1 then
@@ -816,8 +816,8 @@ InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 function(n)
   local x, S;
   if n = 1 then
-    ErrorMayQuit("Semigroups: SingularTransformationSemigroup: usage,\n",
-                 "the argument must be greater than 1,");
+    ErrorNoReturn("Semigroups: SingularTransformationSemigroup: usage,\n",
+                  "the argument must be greater than 1,");
   fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := FullTransformationSemigroup(n);
@@ -831,8 +831,8 @@ InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
 function(n)
   local x, S;
   if n = 1 then
-    ErrorMayQuit("Semigroups: SingularOrderEndomorphisms: usage,\n",
-                 "the argument must be greater than 1,");
+    ErrorNoReturn("Semigroups: SingularOrderEndomorphisms: usage,\n",
+                  "the argument must be greater than 1,");
   fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := OrderEndomorphisms(n);
@@ -847,8 +847,8 @@ function(n)
   local blocks, x, S, i;
 
   if n = 1 then
-    ErrorMayQuit("Semigroups: SingularBrauerMonoid: usage,\n",
-                 "the argument must be greater than 1,");
+    ErrorNoReturn("Semigroups: SingularBrauerMonoid: usage,\n",
+                  "the argument must be greater than 1,");
   fi;
 
   blocks := [[1, 2], [-1, -2]];
@@ -867,8 +867,8 @@ InstallMethod(SingularJonesMonoid, "for a positive integer",
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorMayQuit("Semigroups: SingularJonesMonoid: usage,\n",
-                 "the argument must be greater than 1,");
+    ErrorNoReturn("Semigroups: SingularJonesMonoid: usage,\n",
+                  "the argument must be greater than 1,");
   fi;
 
   blocks := [[1, 2], [-1, -2]];
@@ -887,8 +887,8 @@ InstallMethod(SingularDualSymmetricInverseSemigroup, "for a positive integer",
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorMayQuit("Semigroups: SingularDualSymmetricInverseSemigroup: usage,\n",
-                 "the argument must be greater than 1,");
+    ErrorNoReturn("Semigroups: SingularDualSymmetricInverseSemigroup: usage,\n",
+                  "the argument must be greater than 1,");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -907,9 +907,9 @@ InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorMayQuit("Semigroups: ",
-                 "SingularFactorisableDualSymmetricInverseSemigroup: usage,\n",
-                 "the argument must be greater than 1");
+    ErrorNoReturn("Semigroups: ",
+                  "SingularFactorisableDualSymmetricInverseSemigroup: usage,\n",
+                  "the argument must be greater than 1");
   fi;
 
   blocks := [[1, 2, -1, -2]];

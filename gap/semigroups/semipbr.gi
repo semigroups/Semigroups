@@ -30,8 +30,8 @@ function(n)
             PBR([[-2], [-2, -1]], [[1], [2]])]];
 
   if n > 2 then
-    ErrorMayQuit("Semigroups: FullPBRMonoid: usage,\n",
-                 "the argument <n> must be at most 2,");
+    ErrorNoReturn("Semigroups: FullPBRMonoid: usage,\n",
+                  "the argument <n> must be at most 2,");
   fi;
   return Monoid(gens[n]);
 end);

@@ -19,13 +19,13 @@ function(S)
   local elts, p, func, out, i, j;
 
   if not IsFinite(S) then
-    ErrorMayQuit("Semigroups: NaturalPartialOrder: usage,\n",
-                 "the argument is not a finite semigroup,");
+    ErrorNoReturn("Semigroups: NaturalPartialOrder: usage,\n",
+                  "the argument is not a finite semigroup,");
   fi;
 
   if not IsInverseSemigroup(S) then
-    ErrorMayQuit("Semigroups: NaturalPartialOrder: usage,\n",
-                 "the argument is not an inverse semigroup,");
+    ErrorNoReturn("Semigroups: NaturalPartialOrder: usage,\n",
+                  "the argument is not an inverse semigroup,");
   fi;
 
   Info(InfoWarning, 2, "NaturalPartialOrder: this method ",
@@ -53,13 +53,13 @@ InstallMethod(NaturalLeqInverseSemigroup, "for a semigroup",
 function(S)
 
   if not IsFinite(S) then
-    ErrorMayQuit("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-                 "the argument is not a finite semigroup,");
+    ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
+                  "the argument is not a finite semigroup,");
   fi;
 
   if not IsInverseSemigroup(S) then
-    ErrorMayQuit("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-                 "the argument is not an inverse semigroup,");
+    ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
+                  "the argument is not an inverse semigroup,");
   fi;
 
   return
@@ -181,13 +181,13 @@ function(S)
   local T, i, gr, prims;
 
   if not IsFinite(S) then
-    ErrorMayQuit("Semigroups: PrimitiveIdempotents: usage,\n",
-                 "the argument is not a finite semigroup,");
+    ErrorNoReturn("Semigroups: PrimitiveIdempotents: usage,\n",
+                  "the argument is not a finite semigroup,");
   fi;
 
   if not IsInverseSemigroup(S) then
-    ErrorMayQuit("Semigroups: PrimitiveIdempotents: usage,\n",
-                 "the argument is not an inverse semigroup,");
+    ErrorNoReturn("Semigroups: PrimitiveIdempotents: usage,\n",
+                  "the argument is not an inverse semigroup,");
   fi;
 
   if MultiplicativeZero(S) = fail then
@@ -242,8 +242,8 @@ function(S, x)
   local elts, leq, y, i, k, j, sup;
 
   if not x in S then
-    ErrorMayQuit("Semigroups: IsJoinIrreducible: usage,\n",
-                 "the second argument <x> is not an element of the first,");
+    ErrorNoReturn("Semigroups: IsJoinIrreducible: usage,\n",
+                  "the second argument <x> is not an element of the first,");
   fi;
 
   if IsMultiplicativeZero(S, x) then
@@ -287,8 +287,8 @@ InstallMethod(IsMajorantlyClosed,
 [IsSemigroupWithInverseOp, IsSemigroupWithInverseOp],
 function(S, T)
   if not IsSubsemigroup(S, T) then
-    ErrorMayQuit("Semigroups: IsMajorantlyClosed: usage,\n",
-                 "the second argument is not a subsemigroup of the first,");
+    ErrorNoReturn("Semigroups: IsMajorantlyClosed: usage,\n",
+                  "the second argument is not a subsemigroup of the first,");
   fi;
   return IsMajorantlyClosedNC(S, Elements(T));
 end);
@@ -300,8 +300,8 @@ InstallMethod(IsMajorantlyClosed,
 [IsSemigroupWithInverseOp, IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
-    ErrorMayQuit("Semigroups: IsMajorantlyClosed: usage,\n",
-                 "the second argument should be a subset of the first,");
+    ErrorNoReturn("Semigroups: IsMajorantlyClosed: usage,\n",
+                  "the second argument should be a subset of the first,");
   fi;
   return IsMajorantlyClosedNC(S, T);
 end);
@@ -430,8 +430,8 @@ InstallMethod(MajorantClosure,
 [IsSemigroupWithInverseOp, IsSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
-    ErrorMayQuit("Semigroups: MajorantClosure: usage,\n",
-                 "the second argument is not a subset of the first,");
+    ErrorNoReturn("Semigroups: MajorantClosure: usage,\n",
+                  "the second argument is not a subset of the first,");
   fi;
   return MajorantClosureNC(S, Elements(T));
 end);
@@ -444,8 +444,8 @@ InstallMethod(MajorantClosure,
  IsAssociativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
-    ErrorMayQuit("Semigroups: MajorantClosure: usage,\n",
-                 "the second argument is not a subset of the first,");
+    ErrorNoReturn("Semigroups: MajorantClosure: usage,\n",
+                  "the second argument is not a subset of the first,");
   fi;
   return MajorantClosureNC(S, T);
 end);
@@ -498,8 +498,8 @@ function(S, f)
   local elts, i, out, rank, j, leq, k;
 
   if not f in S then
-    ErrorMayQuit("Semigroups: Minorants: usage,\n",
-                 "the second argument is not an element of the first,");
+    ErrorNoReturn("Semigroups: Minorants: usage,\n",
+                  "the second argument is not an element of the first,");
   fi;
 
   if HasNaturalPartialOrder(S) then
@@ -553,15 +553,15 @@ function(S, T)
   local elts, min, usedreps, out, coset, s, t;
 
   if not IsSubsemigroup(S, T) then
-    ErrorMayQuit("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
-                 "the second argument should be a subsemigroup of the first,");
+    ErrorNoReturn("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
+                  "the second argument should be a subsemigroup of the first,");
   fi;
 
   elts := Elements(T);
 
   if not IsMajorantlyClosedNC(S, elts) then
-    ErrorMayQuit("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
-                 "the second argument must be majorantly closed,");
+    ErrorNoReturn("Semigroups: RightCosetsOfInverseSemigroup: usage,\n",
+                  "the second argument must be majorantly closed,");
   fi;
 
   min := RepresentativeOfMinimalIdeal(T);
@@ -603,9 +603,9 @@ function(H)
   # FIXME IsInverseOpClass should work for non-acting semigroup too
   #       and then this could then become a filter for the method
   if not IsSemigroupWithInverseOp(S) then
-    ErrorMayQuit("Semigroups: SameMinorantsSubgroup: usage,\n",
-                 "the parent semigroup of the group H-class <H> must be ",
-                 "inverse,");
+    ErrorNoReturn("Semigroups: SameMinorantsSubgroup: usage,\n",
+                  "the parent semigroup of the group H-class <H> must be ",
+                  "inverse,");
   fi;
 
   e := Representative(H);
@@ -665,9 +665,9 @@ function(coll, x)
     return AsBipartition(SupremumIdempotentsNC(
                          List(coll, AsPartialPerm), PartialPerm([])), i);
   fi;
-  ErrorMayQuit("Semigroups: SupremumIdempotentsNC: usage,\n",
-               "the argument is not a collection of partial perms, block ",
-               "bijections,\n", "or partial perm bipartitions,");
+  ErrorNoReturn("Semigroups: SupremumIdempotentsNC: usage,\n",
+                "the argument is not a collection of partial perms, block ",
+                "bijections,\n", "or partial perm bipartitions,");
 end);
 
 # same method for ideals

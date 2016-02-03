@@ -49,6 +49,8 @@ inline Class* CLASS_OBJ(Obj o) {
     return reinterpret_cast<Class*>(ADDR_OBJ(o)[1]);
 }
 
+//TODO make these into function
+
 #define IS_T_SEMI(o)         (TNUM_OBJ(o) == T_SEMI)
 #define IS_CONVERTER_BAG(o)  (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == CONVERTER)
 #define IS_SEMIGROUP_BAG(o)  (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == SEMIGROUP)
@@ -64,6 +66,7 @@ inline bool IS_GAP_BLOCKS_BAG (Obj o) {
 *******************************************************************************/
 
 //FIXME remove CALL_1ARGS here
+//TODO make these into function
 
 #define IS_BOOL_MAT(x)           (CALL_1ARGS(IsBooleanMat, x) == True)
 #define IS_BIPART(x)             (CALL_1ARGS(IsBipartition, x) == True)
@@ -76,7 +79,6 @@ inline bool IS_GAP_BLOCKS_BAG (Obj o) {
 #define IS_PROJ_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True)
 #define IS_NTP_MAT(x)            (CALL_1ARGS(IsNTPMatrix, x) == True)
 #define IS_INT_MAT(x)            (CALL_1ARGS(IsIntegerMatrix, x) == True)
-#define IS_MAT_OVER_PF(x)        (CALL_1ARGS(IsMatrixOverPrimeField, x) == True)
 #define IS_PBR(x)                (CALL_1ARGS(IsPBR, x) == True)
 
 /*******************************************************************************
@@ -107,8 +109,6 @@ extern Obj IsNTPMatrix;
 extern Obj NTPMatrixType;
 extern Obj IsIntegerMatrix;
 extern Obj IntegerMatrixType;
-extern Obj IsMatrixOverPrimeField;
-extern Obj MatrixOverPrimeFieldType;
 extern Obj IsPBR;
 extern Obj PBRType;
 

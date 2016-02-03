@@ -651,3 +651,20 @@ Obj SEMIGROUP_SIZE (Obj self, Obj data) {
   }
 }
 
+Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data) {
+  if (data_type(data) != UNKNOWN) {
+    bool report = data_report(data);
+    std::vector<size_t> result = std::vector<size_t>();
+    data_semigroup(data)->max_word_length_by_rank(result, report);
+    Obj out = NEW_PLIST(T_PLIST_CYC, data_degree(data));
+    SET_LEN_PLIST(out, data_degree(data)); 
+    size_t i = 0;
+    for (; i < result.size(); i++) {
+      SET_ELM_PLIST(out, i + 1, INTOBJ_INT(result[i]));
+    }
+    for (; i < data_degree(data); i++) {
+      SET_ELM_PLIST(out, i + 1, INTOBJ_INT(0));
+    }
+    return out;
+  }
+}

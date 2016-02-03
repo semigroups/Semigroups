@@ -1338,7 +1338,7 @@ gap> for i in [1 .. 100] do
 >   r2 := NextIterator(iter2);
 >   r3 := NextIterator(iter3);
 >   if not (r1 = r2 and r2 = r3) then
->     ErrorMayQuit("Problem in IteratorOfRClasses 1");
+>     ErrorNoReturn("Problem in IteratorOfRClasses 1");
 >   fi;
 > od;
 gap> for i in iter1 do od;
@@ -1353,7 +1353,7 @@ gap> for i in [1 .. 100] do
 > r2 := NextIterator(iter2);
 > r3 := NextIterator(iter3);
 > if not r2 = r3 then
->   ErrorMayQuit("Problem in IteratorOfRClasses 2");
+>   ErrorNoReturn("Problem in IteratorOfRClasses 2");
 > fi;
 > od;
 gap> iter2;
@@ -1396,7 +1396,7 @@ gap> j := 0;
 gap> for i in iter1 do
 >   j := j + 1;
 >   if not i = out[j] then
->     ErrorMayQuit("Problems with IteratorOfRClasses 3");
+>     ErrorNoReturn("Problems with IteratorOfRClasses 3");
 >   fi;
 > od;
 gap> s := Semigroup(gens);;

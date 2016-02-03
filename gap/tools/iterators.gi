@@ -82,15 +82,15 @@ function(n, m)
   local convert;
 
   if not IsPosInt(n) then
-    ErrorMayQuit("Semigroups: IteratorOfArrangements: usage,\n",
-                 "the first arg <n> must be a positive integer,");
+    ErrorNoReturn("Semigroups: IteratorOfArrangements: usage,\n",
+                  "the first arg <n> must be a positive integer,");
   elif not (IsInt(m) and m >= 0) then
-    ErrorMayQuit("Semigroups: IteratorOfArrangements: usage,\n",
-                 "the second arg <m> must be a non-negative integer,");
+    ErrorNoReturn("Semigroups: IteratorOfArrangements: usage,\n",
+                  "the second arg <m> must be a non-negative integer,");
   elif m > n then
-    ErrorMayQuit("Semigroups: IteratorOfArrangements: usage,\n",
-                 "the second arg <m> must be no greater than the first arg ",
-                 "<n>,");
+    ErrorNoReturn("Semigroups: IteratorOfArrangements: usage,\n",
+                  "the second arg <m> must be no greater than the first arg ",
+                  "<n>,");
   fi;
 
   convert := function(iter, x)
@@ -113,11 +113,11 @@ function(o, func, start)
   local func2, record;
 
   if not IsOrbit(o) then
-    ErrorMayQuit("Semigroups: IteratorByOrbFunc: usage,\n",
-                 "the first arg <o> must be an orbit,");
+    ErrorNoReturn("Semigroups: IteratorByOrbFunc: usage,\n",
+                  "the first arg <o> must be an orbit,");
   elif not IsFunction(func) then
-    ErrorMayQuit("Semigroups: IteratorByOrbFunc: usage,\n",
-                 "the second arg <func> must be a function,");
+    ErrorNoReturn("Semigroups: IteratorByOrbFunc: usage,\n",
+                  "the second arg <func> must be a function,");
   fi;
 
   # change 1 arg <func> to 2 arg
@@ -167,16 +167,16 @@ function(record)
 
   if not (IsRecord(record) and IsBound(record.NextIterator)
                            and IsBound(record.ShallowCopy)) then
-    ErrorMayQuit("Semigroups: IteratorByNextIterator: usage,\n",
-                 "the arg <record> must be a record with components ",
-                 "`NextIterator'\nand `ShallowCopy',");
+    ErrorNoReturn("Semigroups: IteratorByNextIterator: usage,\n",
+                  "the arg <record> must be a record with components ",
+                  "`NextIterator'\nand `ShallowCopy',");
   elif IsRecord(record) and (IsBound(record.last_called_by_is_done)
                              or IsBound(record.next_value)
                              or IsBound(record.IsDoneIterator)) then
-    ErrorMayQuit("Semigroups: IteratorByNextIterator: usage,\n",
-                 "the arg <record> must be a record with no components named",
-                 "\n`last_called_by_is_done', `next_value', or ",
-                 "`IsDoneIterator',");
+    ErrorNoReturn("Semigroups: IteratorByNextIterator: usage,\n",
+                  "the arg <record> must be a record with no components named",
+                  "\n`last_called_by_is_done', `next_value', or ",
+                  "`IsDoneIterator',");
   fi;
 
   iter := rec(last_called_by_is_done := false,
@@ -232,20 +232,20 @@ function(record, baseiter, convert, filts)
   if not IsRecord(record) or IsBound(record.baseiter)
       or IsBound(record.iterofiters) or IsBound(record.IsDoneIterator)
       or IsBound(record.NextIterator) or IsBound(record.ShallowCopy) then
-    ErrorMayQuit("Semigroups: IteratorByIterOfIters: usage,\n",
-                 "the first arg <record> must be a record with no components",
-                 "named:\n",
-                 "`baseiter', `iterofiters', `IsDoneIterator', ",
-                 "`NextIterator', or\n`ShallowCopy'");
+    ErrorNoReturn("Semigroups: IteratorByIterOfIters: usage,\n",
+                  "the first arg <record> must be a record with no components",
+                  "named:\n",
+                  "`baseiter', `iterofiters', `IsDoneIterator', ",
+                  "`NextIterator', or\n`ShallowCopy'");
   elif not IsIterator(baseiter) then
-    ErrorMayQuit("Semigroups: IteratorByIterOfIters: usage,\n",
-                 "the second arg <baseiter> must be an iterator,");
+    ErrorNoReturn("Semigroups: IteratorByIterOfIters: usage,\n",
+                  "the second arg <baseiter> must be an iterator,");
   elif not IsFunction(convert) then
-    ErrorMayQuit("Semigroups: IteratorByIterOfIters: usage,\n",
-                 "the third arg <convert> must be a function,");
+    ErrorNoReturn("Semigroups: IteratorByIterOfIters: usage,\n",
+                  "the third arg <convert> must be a function,");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    ErrorMayQuit("Semigroups: IteratorByIterOfIters: usage,\n",
-                 "the fourth arg <filts> must be a list of filters,");
+    ErrorNoReturn("Semigroups: IteratorByIterOfIters: usage,\n",
+                  "the fourth arg <filts> must be a list of filters,");
   fi;
 
   record.baseiter := baseiter;
@@ -367,8 +367,8 @@ function(arg)
 
   if IsBound(arg[2]) then
     if not IsPosInt(arg[2]) then
-      ErrorMayQuit("Semigroups: ListIterator: usage,\n",
-                   "the second argument must be a positive integer,");
+      ErrorNoReturn("Semigroups: ListIterator: usage,\n",
+                    "the second argument must be a positive integer,");
     fi;
     out := EmptyPlist(arg[2]);
   else

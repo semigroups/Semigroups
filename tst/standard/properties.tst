@@ -547,24 +547,24 @@ false
 gap> IsRTrivial(S);
 false
 
-#T# properties: IsXTrivial, D-class, 6
-gap> S := Semigroup(
-> [Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5) ^ 2, Z(5) ^ 0]]),
->  Matrix(GF(5), [[Z(5) ^ 0, Z(5)], [Z(5), Z(5) ^ 3]]),
->  Matrix(GF(5), [[Z(5) ^ 0, Z(5) ^ 3], [0 * Z(5), 0 * Z(5)]]),
->  Matrix(GF(5), [[Z(5), Z(5) ^ 0], [0 * Z(5), Z(5) ^ 3]]),
->  Matrix(GF(5), [[Z(5), Z(5) ^ 0], [Z(5) ^ 0, Z(5)]]),
->  Matrix(GF(5), [[Z(5) ^ 2, 0 * Z(5)], [Z(5), 0 * Z(5)]]),
->  Matrix(GF(5), [[Z(5) ^ 2, Z(5)], [0 * Z(5), 0 * Z(5)]])]);;
-gap> D := GreensDClassOfElement(S,
-> Matrix(GF(5), [[Z(5) ^ 3, Z(5) ^ 2], [Z(5) ^ 3, Z(5)]]));
-<Green's D-class: Matrix(GF(5), [[Z(5)^3, Z(5)^2], [Z(5)^3, Z(5)]])>
-gap> IsHTrivial(D);
-false
-gap> IsLTrivial(D);
-false
-gap> IsRTrivial(D);
-false
+# #T# properties: IsXTrivial, D-class, 6
+# gap> S := Semigroup(
+# > [Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5) ^ 2, Z(5) ^ 0]]),
+# >  Matrix(GF(5), [[Z(5) ^ 0, Z(5)], [Z(5), Z(5) ^ 3]]),
+# >  Matrix(GF(5), [[Z(5) ^ 0, Z(5) ^ 3], [0 * Z(5), 0 * Z(5)]]),
+# >  Matrix(GF(5), [[Z(5), Z(5) ^ 0], [0 * Z(5), Z(5) ^ 3]]),
+# >  Matrix(GF(5), [[Z(5), Z(5) ^ 0], [Z(5) ^ 0, Z(5)]]),
+# >  Matrix(GF(5), [[Z(5) ^ 2, 0 * Z(5)], [Z(5), 0 * Z(5)]]),
+# >  Matrix(GF(5), [[Z(5) ^ 2, Z(5)], [0 * Z(5), 0 * Z(5)]])]);;
+# gap> D := GreensDClassOfElement(S,
+# > Matrix(GF(5), [[Z(5) ^ 3, Z(5) ^ 2], [Z(5) ^ 3, Z(5)]]));
+# <Green's D-class: Matrix(GF(5), [[Z(5)^3, Z(5)^2], [Z(5)^3, Z(5)]])>
+# gap> IsHTrivial(D);
+# false
+# gap> IsLTrivial(D);
+# false
+# gap> IsRTrivial(D);
+# false
 
 #T# properties: IsXTrivial, infinite semigroup, 7
 gap> S := FreeSemigroup(2);;
@@ -739,18 +739,18 @@ true
 gap> IsLeftSimple(S);
 true
 
-#T# properties: IsLeftSimple, known L-classes, 3
-gap> S := Monoid([Matrix(GF(11), [[0 * Z(11)]]),
->  Matrix(GF(11), [[Z(11)]]),
->  Matrix(GF(11), [[Z(11) ^ 4]]),
->  Matrix(GF(11), [[Z(11) ^ 5]]),
->  Matrix(GF(11), [[Z(11) ^ 8]]),
->  Matrix(GF(11), [[Z(11) ^ 9]])]);
-<monoid of 1x1 prime field matrices with 6 generators>
-gap> NrLClasses(S);
-2
-gap> IsLeftSimple(S);
-false
+# #T# properties: IsLeftSimple, known L-classes, 3
+# gap> S := Monoid([Matrix(GF(11), [[0 * Z(11)]]),
+# >  Matrix(GF(11), [[Z(11)]]),
+# >  Matrix(GF(11), [[Z(11) ^ 4]]),
+# >  Matrix(GF(11), [[Z(11) ^ 5]]),
+# >  Matrix(GF(11), [[Z(11) ^ 8]]),
+# >  Matrix(GF(11), [[Z(11) ^ 9]])]);
+# <monoid of 1x1 prime field matrices with 6 generators>
+# gap> NrLClasses(S);
+# 2
+# gap> IsLeftSimple(S);
+# false
 
 #T# properties: IsLeftSimple, acting, 4
 gap> S := JonesMonoid(3);
@@ -1141,18 +1141,18 @@ true
 gap> IsRightSimple(S);
 true
 
-#T# properties: IsRightSimple, known L-classes, 3
-gap> S := Monoid([Matrix(GF(11), [[0 * Z(11)]]),
->  Matrix(GF(11), [[Z(11)]]),
->  Matrix(GF(11), [[Z(11) ^ 4]]),
->  Matrix(GF(11), [[Z(11) ^ 5]]),
->  Matrix(GF(11), [[Z(11) ^ 8]]),
->  Matrix(GF(11), [[Z(11) ^ 9]])]);
-<monoid of 1x1 prime field matrices with 6 generators>
-gap> NrRClasses(S);
-2
-gap> IsRightSimple(S);
-false
+# #T# properties: IsRightSimple, known L-classes, 3
+# gap> S := Monoid([Matrix(GF(11), [[0 * Z(11)]]),
+# >  Matrix(GF(11), [[Z(11)]]),
+# >  Matrix(GF(11), [[Z(11) ^ 4]]),
+# >  Matrix(GF(11), [[Z(11) ^ 5]]),
+# >  Matrix(GF(11), [[Z(11) ^ 8]]),
+# >  Matrix(GF(11), [[Z(11) ^ 9]])]);
+# <monoid of 1x1 prime field matrices with 6 generators>
+# gap> NrRClasses(S);
+# 2
+# gap> IsRightSimple(S);
+# false
 
 #T# properties: IsRightSimple, acting, 4
 gap> S := JonesMonoid(3);

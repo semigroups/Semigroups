@@ -50,12 +50,55 @@ InstallMethod(OnRightBlocks, "for blocks and a bipartition",
 InstallMethod(OnLeftBlocks, "for blocks and a bipartition",
 [IsBlocks, IsBipartition], BLOCKS_LEFT_ACT);
 
-
 BindGlobal("EmptyBlocks", BLOCKS_NC([]));
 
 #############################################################################
 # GAP level - NOT directly using interface to C/C++ level
 #############################################################################
+
+InstallMethod(AsDigraph, "for blocks", [IsBlocks], 
+function(blocks)
+  local ext, out, block, i;
+
+  ext := ExtRepOfBlocks(blocks);
+  out := List([1 .. DegreeOfBlocks(blocks)], x -> []);
+
+  for block in ext do 
+    if block[1] > 0 then # transverse block
+      for i in block do
+        out[i] := ShallowCopy(block);
+        RemoveSet(out[i], i);
+      od;
+    else 
+      for i in block do
+        out[-i] := block * -1;
+      od;
+    fi;
+  od;
+  return Digraph(out);
+end);
+
+InstallMethod(CanonicalBlocks, "for blocks", [IsBlocks],
+function(blocks)
+  local gr, canon, scc, id, rep, i;
+
+  gr := AsDigraph(blocks);
+  gr := OnDigraphs(gr, DigraphCanonicalLabelling(gr));
+  canon := [];
+
+  scc := DigraphStronglyConnectedComponents(gr).comps;
+  id  := DigraphStronglyConnectedComponents(gr).id;
+  canon := ShallowCopy(scc);
+
+  for i in [1 .. Length(scc)] do 
+    rep := scc[i][1];
+    if IsDigraphEdge(gr, [rep, rep]) then 
+      canon[i] := canon[i] * -1;
+    fi;
+  od;
+
+  return BLOCKS_NC(canon);
+end);
 
 # not a synonym since NrTransverseBlocks applies to a bipartition also
 InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
@@ -266,8 +309,8 @@ end);
 #  local n, lambdanr, rhonr, fuse, fuseit, sign, x, y, seen, i;
 #
 #  if DegreeOfBlocks(lambda) <> DegreeOfBlocks(rho) then
-#    ErrorMayQuit("Semigroups: SEMIGROUPS.BlocksIdempotentTester: usage,\n",
-#                 "the degrees of the blocks <lambda> and <rho> must be equal,");
+#    ErrorNoReturn("Semigroups: SEMIGROUPS.BlocksIdempotentTester: usage,\n",
+#                  "the degrees of the blocks <lambda> and <rho> must be equal,");
 #  fi;
 #
 #  if RankOfBlocks(lambda) <> RankOfBlocks(rho) then
