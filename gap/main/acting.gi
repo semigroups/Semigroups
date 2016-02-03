@@ -758,7 +758,7 @@ InstallMethod(PositionOfFound, "for semigroup data",
 [IsSemigroupData],
 function(data)
   if not(data!.looking) then
-    ErrorMayQuit("Semigroups: PositionOfFound: usage,\n",
+    ErrorNoReturn("Semigroups: PositionOfFound: usage,\n",
                  "not looking for anything,");
   fi;
   return data!.found;
@@ -771,7 +771,7 @@ function(data)
   local lenreps, repslens, o, scc, size, n, m, i;
 
   if not IsSemigroupData(data) then
-    ErrorMayQuit("Semigroups: SizeOfSemigroupData: usage,\n",
+    ErrorNoReturn("Semigroups: SizeOfSemigroupData: usage,\n",
                  "the arg <data> must be semigroup data,");
   fi;
 

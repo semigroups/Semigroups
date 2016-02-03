@@ -371,7 +371,7 @@ function(coll, set)
 
   if not (IsSSortedList(set) and IsHomogeneousList(set)
           and IsPosInt(set[1])) then
-    ErrorMayQuit("Semigroups: IsTransitive: usage,\n",
+    ErrorNoReturn("Semigroups: IsTransitive: usage,\n",
                  "the second argument <set> must be a set of positive ",
                  "integers");
   fi;
@@ -602,7 +602,7 @@ function(s)
   fi;
 
   if MultiplicativeNeutralElement(s) = fail then
-    ErrorMayQuit("Semigroups: IsomorphismTransformationMonoid: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismTransformationMonoid: usage,\n",
                  "the argument <s> must have a multiplicative neutral element",
                  ",");
   fi;
@@ -643,7 +643,7 @@ InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
 function(s)
 
   if not IsGroupAsSemigroup(s) then
-    ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
                  "the argument <s> must be a transformation semigroup ",
                  "satisfying IsGroupAsSemigroup,");
   fi;

@@ -246,7 +246,7 @@ InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
 [IsGreensDClass],
 function(D)
   if NrIdempotents(D) <> NrHClasses(D) then
-    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                  "the D-class is not a subsemigroup,");
   fi;
 
@@ -324,7 +324,7 @@ function(S)
   fi;
 
   if not IsSimpleSemigroup(S) then
-    ErrorMayQuit("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                  "the argument must be a simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
@@ -347,7 +347,7 @@ function(S)
   fi;
 
   if not IsZeroSimpleSemigroup(S) then
-    ErrorMayQuit("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
                  "the argument must be a 0-simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
@@ -437,7 +437,7 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 [IsMultiplicativeElementCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorMayQuit("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
+    ErrorNoReturn("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) < 2 then
@@ -460,7 +460,7 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorMayQuit("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
+    ErrorNoReturn("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) = 1 then
@@ -710,7 +710,7 @@ InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],
 function(D)
   if not IsRegularDClass(D) then
-    ErrorMayQuit("Semigroups: InjectionPrincipalFactor: usage,\n",
+    ErrorNoReturn("Semigroups: InjectionPrincipalFactor: usage,\n",
                  "the argument <D> must be a regular D-class,");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
@@ -726,7 +726,7 @@ function(D)
   local iso1, iso2, rms, inv1, inv2, iso, inv, hom;
 
   if not IsRegularDClass(D) then
-    ErrorMayQuit("Semigroups: InjectionNormalizedPrincipalFactor: usage,\n",
+    ErrorNoReturn("Semigroups: InjectionNormalizedPrincipalFactor: usage,\n",
                  "the argument <D> must be a regular D-class,");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
@@ -821,7 +821,7 @@ function(S)
   fi;
 
   if not IsGroupAsSemigroup(S) then
-    ErrorMayQuit("Semigroups: IsomorphismPermGroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
                  "the argument must be a semigroup satisfying ",
                  "IsGroupAsSemigroup,");
   fi;

@@ -21,7 +21,7 @@ InstallMethod(MinimalFactorization,
 function(S, x)
   local data, pos;
   if not x in S then
-    ErrorMayQuit("Semigroups: MinimalFactorization:\n",
+    ErrorNoReturn("Semigroups: MinimalFactorization:\n",
                  "the second argument <x> is not an element ",
                  "of the first argument <S>,");
   fi;
@@ -57,7 +57,7 @@ function(o, m, elt)
     if IsBound(o!.factors[m]) then
       pos := Position(o!.exhaust[m], elt);
       if pos = fail then
-        ErrorMayQuit("Semigroups: Factorization: usage,\n",
+        ErrorNoReturn("Semigroups: Factorization: usage,\n",
                      "the third arg <perm> does not belong to the ",
                      "Schutzenberger group,");
       fi;
@@ -175,7 +175,7 @@ function(s, f)
   local o, l, m, scc, data, pos, rep, word1, word2, p;
 
   if not f in s then
-    ErrorMayQuit("Semigroups: Factorization: usage,\n",
+    ErrorNoReturn("Semigroups: Factorization: usage,\n",
                  "the second argument <x> is not an element ",
                  "of the first argument <S>,");
   fi;
@@ -224,7 +224,7 @@ function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
 
   if not f in s then
-    ErrorMayQuit("Semigroups: Factorization: usage,\n",
+    ErrorNoReturn("Semigroups: Factorization: usage,\n",
                  "the second argument <x> is not an element ",
                  "of the first argument <S>,");
   fi;
@@ -280,7 +280,7 @@ function(s, f)
   local o, gens, l, m, scc, word1, k, rep, p, word2;
 
   if not f in s then
-    ErrorMayQuit("Semigroups: Factorization: usage,\n",
+    ErrorNoReturn("Semigroups: Factorization: usage,\n",
                  "the second argument <x> is not an element ",
                  "of the first argument <S>,");
   fi;

@@ -36,10 +36,10 @@ function(x, y)
   n := DimensionOfMatrixOverSemiring(x);
 
   if n <> DimensionOfMatrixOverSemiring(y) then
-    ErrorMayQuit("Semigroups: \* (for matrices over a prime field): usage,\n",
+    ErrorNoReturn("Semigroups: \* (for matrices over a prime field): usage,\n",
                  "the arguments must be matrices of the same dimensions,");
   elif Size(BaseField(x)) <> Size(BaseField(y)) then
-    ErrorMayQuit("Semigroups: \* (for matrices over a prime field): usage,\n",
+    ErrorNoReturn("Semigroups: \* (for matrices over a prime field): usage,\n",
                  "the arguments must be matrices over the same field,");
   fi;
 

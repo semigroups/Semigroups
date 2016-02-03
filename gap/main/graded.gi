@@ -70,7 +70,7 @@ function(arg)
   onlygradesdata, orb, gens, o, j, k, l;
 
   if Length(arg) < 3 then
-    ErrorMayQuit("Semigroups: GradedLambdaOrb: usage,\n",
+    ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
                  "there must be at least 3 arguments,");
   fi;
 
@@ -83,13 +83,13 @@ function(arg)
   fi;
 
   if not IsActingSemigroup(S) then
-    ErrorMayQuit("Semigroups: GradedLambdaOrb: usage,\n",
+    ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
                  "the first argument <S> must be an acting semigroup,");
   elif not IsAssociativeElement(x) then
-    ErrorMayQuit("Semigroups: GradedLambdaOrb: usage,\n",
+    ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
                  "the second argument <x> must be an associative element,");
   elif not IsBool(global) then
-    ErrorMayQuit("Semigroups: GradedLambdaOrb: usage,\n",
+    ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
                  "the third argument <global> must be a boolean,");
   fi;
 
@@ -177,7 +177,7 @@ function(arg)
   onlygradesdata, orb, gens, o, j, k, l;
 
   if Length(arg) < 3 then
-    ErrorMayQuit("Semigroups: GradedRhoOrb: usage,\n",
+    ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
                  "there must be at least 3 arguments,");
   fi;
 
@@ -190,13 +190,13 @@ function(arg)
   fi;
 
   if not IsActingSemigroup(S) then
-    ErrorMayQuit("Semigroups: GradedRhoOrb: usage,\n",
+    ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
                  "the first argument <S> must be an acting semigroup,");
   elif not IsAssociativeElement(x) then
-    ErrorMayQuit("Semigroups: GradedRhoOrb: usage,\n",
+    ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
                  "the second argument <f> must be an associative element,");
   elif not IsBool(global) then
-    ErrorMayQuit("Semigroups: GradedRhoOrb: usage,\n",
+    ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
                  "the third argument <opt> must be a boolean,");
   fi;
 

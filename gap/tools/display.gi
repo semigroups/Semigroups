@@ -50,13 +50,13 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     local opt, path, dir, tdir, file, viewer, type, filetype;
 
     if not IsString(arg[1]) then
-      ErrorMayQuit("Semigroups: Splash: usage,\n",
+      ErrorNoReturn("Semigroups: Splash: usage,\n",
                    "the first argument must be a string,");
     fi;
 
     if IsBound(arg[2]) then
       if not IsRecord(arg[2]) then
-        ErrorMayQuit("Semigroups: Splash: usage,\n",
+        ErrorNoReturn("Semigroups: Splash: usage,\n",
                      "the second argument must be a record,");
       else
         opt := arg[2];
@@ -111,7 +111,7 @@ if not IsBound(Splash) then #This function is written by A. Egri-Nagy
     elif arg[1]{[1 .. 5]} = "//dot" then
       type := "dot";
     else
-      ErrorMayQuit("Semigroups: Splash: usage,\n",
+      ErrorNoReturn("Semigroups: Splash: usage,\n",
                    "the option <type> must be \"dot\" or \"latex\",");
     fi;
 

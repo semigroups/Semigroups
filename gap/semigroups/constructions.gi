@@ -172,12 +172,12 @@ function(arg)
       and arg[2] >= 0 then
     out := TrivialSemigroupCons(arg[1], arg[2]);
   else
-    ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
                  "the arguments must be a non-negative integer or ",
                  "a filter and a non-negative\ninteger,");
   fi;
   if out = fail then
-    ErrorMayQuit("Semigroups: TrivialSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(TrivialSemigroup, out, 0);
@@ -270,14 +270,14 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(r)
       or not IsOperation(filter) then
-    ErrorMayQuit("Semigroups: MonogenicSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
                  "the arguments must be two positive integers or a filter ",
                  "and a two positive\nintegers,");
   fi;
 
   out := MonogenicSemigroupCons(filter, m, r);
   if out = fail then
-    ErrorMayQuit("Semigroups: MonogenicSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(MonogenicSemigroup, out, m, r);
@@ -399,14 +399,14 @@ function(arg)
 
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(n)
       or not IsOperation(filter) then
-    ErrorMayQuit("Semigroups: RectangularBand: usage,\n",
+    ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
                  "the arguments must be two positive integers or a filter ",
                  "and a two positive\nintegers,");
   fi;
 
   out := RectangularBandCons(filter, m, n);
   if out = fail then
-    ErrorMayQuit("Semigroups: RectangularBand: usage,\n",
+    ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(RectangularBand, out, m, n);
@@ -530,14 +530,14 @@ function(arg)
   fi;
 
   if not IsBound(n) or not IsPosInt(n) or not IsOperation(filter) then
-    ErrorMayQuit("Semigroups: ZeroSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
                  "the arguments must be a positive integer or a filter and a ",
                  "positive integer,");
   fi;
 
   out := ZeroSemigroupCons(filter, n);
   if out = fail then
-    ErrorMayQuit("Semigroups: ZeroSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(ZeroSemigroup, out, n);
@@ -647,7 +647,7 @@ function(filter, n)
   local mat;
 
   if n = 1 then
-    ErrorMayQuit("Semigroups: ZeroSemigroupCons: usage:\n",
+    ErrorNoReturn("Semigroups: ZeroSemigroupCons: usage:\n",
                  "there is no Rees 0-matrix semigroup of order 1,");
   fi;
   mat := [[1 .. n - 1] * 0];
@@ -675,7 +675,7 @@ function(arg)
   elif Length(arg) = 1 and IsPosInt(arg[1]) then
     out := RectangularBand(IsTransformationSemigroup, arg[1], 1);
   else
-    ErrorMayQuit("Semigroups: LeftZeroSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: LeftZeroSemigroup: usage,\n",
                  "the arguments must be a positive integer or ",
                  "a filter and a positive integer,");
   fi;
@@ -692,7 +692,7 @@ function(arg)
   elif Length(arg) = 1 and IsPosInt(arg[1]) then
     out := RectangularBand(IsTransformationSemigroup, 1, arg[1]);
   else
-    ErrorMayQuit("Semigroups: RightZeroSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: RightZeroSemigroup: usage,\n",
                  "the arguments must be a positive integer or ",
                  "a filter and a positive integer,");
   fi;

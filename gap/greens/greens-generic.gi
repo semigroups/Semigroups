@@ -62,7 +62,7 @@ SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
 
   pos := Position(GenericSemigroupData(Source(rel)), rep);
   if pos = fail then
-    ErrorMayQuit("Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,\n",
+    ErrorNoReturn("Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,\n",
                  "the element in the 2nd argument does not belong to the ",
                  "semigroup,");
   fi;
@@ -684,7 +684,7 @@ InstallMethod(GreensHClasses, "for a generic semigroup Green's class",
 [IsGreensClass], 2, # to beat the library method
 function(C)
   if not (IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C)) then
-    ErrorMayQuit("Semigroups: GreensHClasses ",
+    ErrorNoReturn("Semigroups: GreensHClasses ",
                  "(for a generic semigroup Green's class): usage,\n",
                  "the argument should be a Green's R-, L-, or D-class,");
   fi;

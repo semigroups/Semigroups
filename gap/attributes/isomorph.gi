@@ -153,7 +153,7 @@ else
       return false;
     fi;
 
-    ErrorMayQuit("Semigroups: IsIsomorphicSemigroup:\n",
+    ErrorNoReturn("Semigroups: IsIsomorphicSemigroup:\n",
                  "not yet implemented,");
 
   end);

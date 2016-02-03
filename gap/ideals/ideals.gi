@@ -185,7 +185,7 @@ function(S, n)
   n := NameRNam(n);
   n := Int(n);
   if n = fail or Length(S) < n then
-    ErrorMayQuit("Semigroups: \\.: usage,\n",
+    ErrorNoReturn("Semigroups: \\.: usage,\n",
                  "the second argument <n> should be a positive integer\n",
                  "not greater than the number of generators of the semigroup ",
                  "<S> in\nthe first argument,");
@@ -253,12 +253,12 @@ function(arg)
   local out, i;
 
   if not IsSemigroup(arg[1]) then
-    ErrorMayQuit("Semigroups: SemigroupIdeal: usage,\n",
+    ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
                  "the first argument must be a semigroup,");
   fi;
 
   if Length(arg) = 1 then
-    ErrorMayQuit("Semigroups: SemigroupIdeal: usage,\n",
+    ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
                  "there must be a second argument, which specifies\n",
                  "the generators of the ideal,");
   fi;
@@ -292,7 +292,7 @@ function(arg)
         #so that we can pass the options record in the Semigroups package
         return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
-        ErrorMayQuit("Semigroups: SemigroupIdeal: usage,\n",
+        ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
                      "the second argument must be a ",
                      "combination of generators,\n lists of generators, ",
                      "or semigroups,");
@@ -301,7 +301,7 @@ function(arg)
     return SemigroupIdealByGenerators(arg[1], out);
   else
     # no argument given, error
-    ErrorMayQuit("Semigroups: SemigroupIdeal: usage,\n",
+    ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
                  "the second argument must be a combination ",
                  "of generators,\nlists of generators, or semigroups,");
   fi;
@@ -323,7 +323,7 @@ InstallMethod(SemigroupIdealByGenerators,
 [IsSemigroup, IsAssociativeElementCollection, IsRecord],
 function(S, gens, opts)
   if not ForAll(gens, x -> x in S) then
-    ErrorMayQuit("Semigroups: SemigroupIdealByGenerators: usage,\n",
+    ErrorNoReturn("Semigroups: SemigroupIdealByGenerators: usage,\n",
                  "the second argument <gens> do not all belong to the ",
                  "semigroup,");
   fi;

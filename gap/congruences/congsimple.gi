@@ -74,7 +74,7 @@ InstallMethod(JoinSemigroupCongruences,
 function(cong1, cong2)
   local join;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorMayQuit("Semigroups: JoinSemigroupCongruences: usage,\n",
+    ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
@@ -89,7 +89,7 @@ InstallMethod(MeetSemigroupCongruences,
 function(cong1, cong2)
   local meet;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
-    ErrorMayQuit("Semigroups: MeetSemigroupCongruences: usage,\n",
+    ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
@@ -106,11 +106,11 @@ function(pair, cong)
     # Input checks
     S := Range(cong);
     if Size(pair) <> 2 then
-      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+      ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
                    "the first arg <pair> must be a list of length 2,");
     fi;
     if not (pair[1] in S and pair[2] in S) then
-      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+      ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
                    "elements of the first arg <pair> must be\n",
                    "in the range of the second arg <cong>,");
     fi;
@@ -144,7 +144,7 @@ InstallMethod(EquivalenceClassOfElement,
 [SEMIGROUPS_CongSimple, IsAssociativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
-    ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+    ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
                  "<elm> must be an element of the range of <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);

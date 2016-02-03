@@ -240,7 +240,7 @@ if IsGrapeLoaded then
     components := ConnectedComponents(rmsgraph);
 
     if not Length(groupelts) = Length(components) then
-      ErrorMayQuit("Semigroups: SEMIGROUPS.RZMStoRZMSInducedFunction: ",
+      ErrorNoReturn("Semigroups: SEMIGROUPS.RZMStoRZMSInducedFunction: ",
                    "usage,\nthe 5th argument must be a list of length ",
                    Length(components), ",");
     fi;
@@ -775,7 +775,7 @@ else
 
     if not (IsRegularSemigroup(R1) and IsGroup(G1) and IsRegularSemigroup(R2)
             and IsGroup(G2)) then
-      ErrorMayQuit("Semigroups: IsomorphismSemigroups: usage,\n",
+      ErrorNoReturn("Semigroups: IsomorphismSemigroups: usage,\n",
                    "the arguments must be regular Rees 0-matrix semigroups ",
                    "over groups,");
     fi;

@@ -25,11 +25,11 @@ InstallGlobalFunction(SemigroupCongruence,
 function(arg)
   local S, pairs;
   if not Length(arg) >= 2 then
-    ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+    ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
                  "at least 2 arguments are required,");
   fi;
   if not IsSemigroup(arg[1]) then
-    ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+    ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
                  "1st argument <S> must be a semigroup,");
   fi;
   S := arg[1];
@@ -45,11 +45,11 @@ function(arg)
       pairs := arg{[2 .. Length(arg)]};
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+      ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
                    "<pairs> should be a list of lists of size 2,");
     fi;
     if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+      ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
                    "each pair should contain elements from the semigroup <S>,");
     fi;
     # Remove any reflexive pairs
@@ -71,7 +71,7 @@ function(arg)
     if Range(arg[2]) = Range(arg[3]) and S = Source(arg[2]) then
       return SEMIGROUPS.SimpleCongFromRMSCong(S, arg[2], arg[3]);
     else
-      ErrorMayQuit("Semigroups: SemigroupCongruence: usage,\n",
+      ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
                    "<cong> should be over a Rees (0-)matrix semigroup ",
                    "isomorphic to <S> via <iso>,");
     fi;
@@ -97,11 +97,11 @@ InstallGlobalFunction(LeftSemigroupCongruence,
 function(arg)
   local S, pairs;
   if not Length(arg) >= 2 then
-    ErrorMayQuit("Semigroups: LeftSemigroupCongruence: usage,\n",
+    ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
                  "at least 2 arguments are required,");
   fi;
   if not IsSemigroup(arg[1]) then
-    ErrorMayQuit("Semigroups: LeftSemigroupCongruence: usage,\n",
+    ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
                  "1st argument <S> must be a semigroup,");
   fi;
   S := arg[1];
@@ -117,11 +117,11 @@ function(arg)
       pairs := arg{[2 .. Length(arg)]};
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorMayQuit("Semigroups: LeftSemigroupCongruence: usage,\n",
+      ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
                    "<pairs> should be a list of lists of size 2,");
     fi;
     if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorMayQuit("Semigroups: LeftSemigroupCongruence: usage,\n",
+      ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
                    "each pair should contain elements from the semigroup <S>,");
     fi;
     # Remove any reflexive pairs
@@ -138,11 +138,11 @@ InstallGlobalFunction(RightSemigroupCongruence,
 function(arg)
   local S, pairs;
   if not Length(arg) >= 2 then
-    ErrorMayQuit("Semigroups: RightSemigroupCongruence: usage,\n",
+    ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
                  "at least 2 arguments are required,");
   fi;
   if not IsSemigroup(arg[1]) then
-    ErrorMayQuit("Semigroups: RightSemigroupCongruence: usage,\n",
+    ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
                  "1st argument <S> must be a semigroup,");
   fi;
   S := arg[1];
@@ -158,11 +158,11 @@ function(arg)
       pairs := arg{[2 .. Length(arg)]};
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
-      ErrorMayQuit("Semigroups: RightSemigroupCongruence: usage,\n",
+      ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
                    "<pairs> should be a list of lists of size 2,");
     fi;
     if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
-      ErrorMayQuit("Semigroups: RightSemigroupCongruence: usage,\n",
+      ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
                    "each pair should contain elements from the semigroup <S>,");
     fi;
     # Remove any reflexive pairs

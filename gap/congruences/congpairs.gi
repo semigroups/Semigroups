@@ -424,11 +424,11 @@ function(_record)
       TryNextMethod();
     fi;
     if Size(pair) <> 2 then
-      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+      ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
                    "the first arg <pair> must be a list of length 2,");
     fi;
     if not (pair[1] in S and pair[2] in S) then
-      ErrorMayQuit("Semigroups: \\in (for a congruence): usage,\n",
+      ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
                    "elements of the first arg <pair> must be\n",
                    "in the range of the second arg <cong>,");
     fi;
@@ -602,7 +602,7 @@ function(_record)
   function(c1, c2)
     local pairs, cong, ufdata, uf2, i, ii, next, newtable;
     if Range(c1) <> Range(c2) then
-      ErrorMayQuit("Semigroups: Join", _record.type_string,
+      ErrorNoReturn("Semigroups: Join", _record.type_string,
                    "SemigroupCongruences: usage,\n",
                    "congruences must be defined over the same semigroup,");
     fi;
@@ -656,7 +656,7 @@ function(_record)
   function(cong1, cong2)
     # Tests whether cong1 contains all the pairs in cong2
     if Range(cong1) <> Range(cong2) then
-      ErrorMayQuit("Semigroups: IsSubrelation: usage,\n",
+      ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
                    "congruences must be defined over the same semigroup,");
     fi;
     return ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
@@ -674,7 +674,7 @@ function(_record)
    IsAssociativeElement],
   function(cong, elm)
     if not elm in Range(cong) then
-      ErrorMayQuit("Semigroups: EquivalenceClassOfElement: usage,\n",
+      ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
                    "the second arg <elm> must be in the ",
                    "semigroup of the first arg <cong>,");
     fi;
@@ -899,7 +899,7 @@ InstallMethod(\*,
 [IsCongruenceClass, IsCongruenceClass],
 function(class1, class2)
   if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-    ErrorMayQuit("Semigroups: \*: usage,\n",
+    ErrorNoReturn("Semigroups: \*: usage,\n",
                  "the args must be classes of the same congruence,");
   fi;
   return CongruenceClassOfElement(EquivalenceClassRelation(class1),

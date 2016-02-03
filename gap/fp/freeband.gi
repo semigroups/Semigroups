@@ -79,7 +79,7 @@ function(arg)
       and ForAll(arg[1], IsString) then
     names := arg[1];
   else
-    ErrorMayQuit("Semigroups: FreeBand: usage,\n",
+    ErrorNoReturn("Semigroups: FreeBand: usage,\n",
                  "FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),");
   fi;
 
@@ -349,7 +349,7 @@ function(S, x)
   local type, D;
 
   if not x in S then
-    ErrorMayQuit("Semigroups: GreensDClassOfElement: usage,\n",
+    ErrorNoReturn("Semigroups: GreensDClassOfElement: usage,\n",
                  "the element does not belong to the semigroup,");
   fi;
 

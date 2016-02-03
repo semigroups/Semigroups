@@ -20,19 +20,19 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
                  "the first argument <obj> must be a domain or a collections",
                  "family,");
   elif not (IsEnumeratorByFunctions(baseenum) or IsList(baseenum)) then
-    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
                  "the second argument <baseenum> must be an enumerator or a ",
                  "list,");
   elif not (IsFunction(convert_out) and IsFunction(convert_in)) then
-    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
                  "the third and fourth arguments <convert_out> and ",
                  "<convert_in>\nmust be functions,");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
                  "the fifth argument <filts> must be a list of filters,");
   elif not (IsRecord(record) and IsMutable(record))
       or IsBound(record.baseenum)
@@ -40,7 +40,7 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
       or IsBound(record.convert_in)
       or IsBound(record.NumberElement)
       or IsBound(record.ElementNumber) then
-    ErrorMayQuit("Semigroups: EnumeratorByEnumerator: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
                  "the sixth argument <record> must be a mutable record",
                  "with no components\n",
                  "named:\n`baseenum', `convert_out', `convert_in',",
@@ -105,7 +105,7 @@ function(obj, record, baseenum, convert, filts)
   local enum, filt;
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
-    ErrorMayQuit("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
                  "the first argument <obj> must be a domain or a collections ",
                  "family,");
   elif not IsRecord(record)
@@ -113,17 +113,17 @@ function(obj, record, baseenum, convert, filts)
       or IsBound(record.NumberElement)
       or IsBound(record.baseenum)
       or IsBound(record.enumofenums) then
-    ErrorMayQuit("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
                  "the second argument  <record> must be a record",
                  "with no components named:\n",
                  "`NumberElement', `ElementNumber', `baseenum', or ",
                  "`enumofenums',");
     # TODO add check for third arg
   elif not IsFunction(convert) then
-    ErrorMayQuit("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
                  "the fourth argument <convert> must be a function,");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
-    ErrorMayQuit("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
                  "the fifth argument <filts> must be a list of filters,");
   fi;
 
@@ -717,13 +717,13 @@ function(m, n)
   local convert_out, convert_in, fam;
 
   if not IsPosInt(n) then
-    ErrorMayQuit("Semigroups: EnumeratorOfArrangements: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorOfArrangements: usage,\n",
                  "the second argument <n> must be a positive integer,");
   elif not (IsInt(m) and m >= 0) then
-    ErrorMayQuit("Semigroups: EnumeratorOfArrangements: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorOfArrangements: usage,\n",
                  "the first argument <m> must be a non-negative integer,");
   elif m > n then
-    ErrorMayQuit("Semigroups: EnumeratorOfArrangements: usage,\n",
+    ErrorNoReturn("Semigroups: EnumeratorOfArrangements: usage,\n",
                  "the first argument <m> must be no greater than the\n",
                  "second argument <n>,");
   fi;
