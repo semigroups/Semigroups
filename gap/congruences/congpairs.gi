@@ -663,6 +663,131 @@ function(_record)
                   pair -> pair in cong1);
   end);
 
+  #
+
+  ###########################################################################
+  # LatticeOfXCongruences
+  ###########################################################################
+  InstallMethod(EvalString(
+  Concatenation("LatticeOf", _record.type_string, "Congruences")),
+  "for a semigroup",
+  [IsSemigroup],
+  function(S)
+    local elms, pairs, congs1, nrcongs, children, parents, pair, badcong,
+          newchildren, newparents, newcong, i, c, p, congs, join_func, length,
+          found, start, j, k, set_func, lattice;
+    elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
+
+    # Get all non-reflexive pairs in SxS
+    pairs := Combinations(elms, 2);
+
+    # Get all the unique 1-generated congruences
+    Info(InfoSemigroups, 1, "Getting all 1-generated congruences...");
+    congs1 := [];     # List of all congruences found so far
+    nrcongs := 0;     # Number of congruences found so far
+    children := [];   # List of lists of children
+    parents := [];    # List of lists of parents
+    for pair in pairs do
+      badcong := false;
+      newchildren := []; # Children of newcong
+      newparents := [];  # Parents of newcong
+      newcong := _XSemigroupCongruence(S, pair);
+      for i in [1 .. Length(congs1)] do
+        if IsSubrelation(congs1[i], newcong) then
+          if IsSubrelation(newcong, congs1[i]) then
+            # This is not a new congruence - drop it!
+            badcong := true;
+            break;
+          else
+            Add(newparents, i);
+          fi;
+        elif IsSubrelation(newcong, congs1[i]) then
+          Add(newchildren, i);
+        fi;
+      od;
+      if not badcong then
+        nrcongs := nrcongs + 1;
+        congs1[nrcongs] := newcong;
+        children[nrcongs] := newchildren;
+        parents[nrcongs] := newparents;
+        for c in newchildren do
+          Add(parents[c], nrcongs);
+        od;
+        for p in newparents do
+          Add(children[p], nrcongs);
+        od;
+      fi;
+    od;
+    congs := ShallowCopy(congs1);
+
+    # Take all their joins
+    Info(InfoSemigroups, 1, "Taking joins...");
+    join_func := EvalString(Concatenation("Join",
+                                          _record.type_string,
+                                          "SemigroupCongruences"));
+    length := 0;
+    found := true;
+    while found do
+      # There are new congruences to try joining
+      start := length + 1;     # New congruences start here
+      found := false;          # Have we found any more congruences on this sweep?
+      length := Length(congs); # Remember starting position for next sweep
+      for i in [start .. Length(congs)] do # for each new congruence
+        for j in [1 .. Length(congs1)] do  # for each 1-generated congruence
+          newcong := join_func(congs[i], congs1[j]);
+          badcong := false;  # Is newcong the same as another congruence?
+          newchildren := []; # Children of newcong
+          newparents := [];  # Parents of newcong
+          for k in [1 .. Length(congs)] do
+            if IsSubrelation(congs[k], newcong) then
+              if IsSubrelation(newcong, congs[k]) then
+                # This is the same as an old congruence - discard it!
+                badcong := true;
+                break;
+              else
+                Add(newparents, k);
+              fi;
+            elif IsSubrelation(newcong, congs[k]) then
+              Add(newchildren, k);
+            fi;
+          od;
+          if not badcong then
+            nrcongs := nrcongs + 1;
+            congs[nrcongs] := newcong;
+            children[nrcongs] := newchildren;
+            parents[nrcongs] := newparents;
+            for c in newchildren do
+              Add(parents[c], nrcongs);
+            od;
+            for p in newparents do
+              Add(children[p], nrcongs);
+            od;
+            found := true;
+          fi;
+        od;
+      od;
+    od;
+
+    # Add the trivial congruence at the start
+    children := Concatenation([[]], children + 1);
+    for i in [2 .. nrcongs + 1] do
+      Add(children[i], 1, 1);
+    od;
+    Add(congs, _XSemigroupCongruence(S, []), 1);
+
+    # We have a list of all the congruences
+    set_func := EvalString(Concatenation("Set",
+                                         _record.type_string,
+                                         "CongruencesOfSemigroup"));
+    set_func(S, congs);
+
+    # Objectify the result
+    lattice := Objectify(NewType(FamilyObj(children),
+                                 SEMIGROUPS_IsCongruenceLattice),
+                         [children, congs]);
+    return lattice;
+  end);
+
   ###########################################################################
   # methods for classes
   ###########################################################################
@@ -942,121 +1067,6 @@ function(cong)
   Print(", ");
   Print(GeneratingPairsOfSemigroupCongruence(cong));
   Print(" )");
-end);
-
-#
-
-InstallMethod(LatticeOfCongruences,
-"for a semigroup",
-[IsSemigroup],
-function(S)
-  local elms, pairs, congs1, nrcongs, children, parents, pair, badcong,
-        newchildren, newparents, newcong, i, c, p, congs, length, found, start,
-        j, k, lattice;
-  elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
-
-  # Get all non-reflexive pairs in SxS
-  pairs := Combinations(elms, 2);
-
-  # Get all the unique 1-generated congruences
-  Info(InfoSemigroups, 1, "Getting all 1-generated congruences...");
-  congs1 := [];     # List of all congruences found so far
-  nrcongs := 0;     # Number of congruences found so far
-  children := [];   # List of lists of children
-  parents := [];    # List of lists of parents
-  for pair in pairs do
-    badcong := false;
-    newchildren := []; # Children of newcong
-    newparents := [];  # Parents of newcong
-    newcong := SemigroupCongruence(S, pair);
-    for i in [1 .. Length(congs1)] do
-      if IsSubrelation(congs1[i], newcong) then
-        if IsSubrelation(newcong, congs1[i]) then
-          # This is not a new congruence - drop it!
-          badcong := true;
-          break;
-        else
-          Add(newparents, i);
-        fi;
-      elif IsSubrelation(newcong, congs1[i]) then
-        Add(newchildren, i);
-      fi;
-    od;
-    if not badcong then
-      nrcongs := nrcongs + 1;
-      congs1[nrcongs] := newcong;
-      children[nrcongs] := newchildren;
-      parents[nrcongs] := newparents;
-      for c in newchildren do
-        Add(parents[c], nrcongs);
-      od;
-      for p in newparents do
-        Add(children[p], nrcongs);
-      od;
-    fi;
-  od;
-  congs := ShallowCopy(congs1);
-
-  # Take all their joins
-  Info(InfoSemigroups, 1, "Taking joins...");
-  length := 0;
-  found := true;
-  while found do
-    # There are new congruences to try joining
-    start := length + 1;     # New congruences start here
-    found := false;          # Have we found any more congruences on this sweep?
-    length := Length(congs); # Remember starting position for next sweep
-    for i in [start .. Length(congs)] do # for each new congruence
-      for j in [1 .. Length(congs1)] do  # for each 1-generated congruence
-        newcong := JoinSemigroupCongruences(congs[i], congs1[j]);
-        badcong := false;  # Is newcong the same as another congruence?
-        newchildren := []; # Children of newcong
-        newparents := [];  # Parents of newcong
-        for k in [1 .. Length(congs)] do
-          if IsSubrelation(congs[k], newcong) then
-            if IsSubrelation(newcong, congs[k]) then
-              # This is the same as an old congruence - discard it!
-              badcong := true;
-              break;
-            else
-              Add(newparents, k);
-            fi;
-          elif IsSubrelation(newcong, congs[k]) then
-            Add(newchildren, k);
-          fi;
-        od;
-        if not badcong then
-          nrcongs := nrcongs + 1;
-          congs[nrcongs] := newcong;
-          children[nrcongs] := newchildren;
-          parents[nrcongs] := newparents;
-          for c in newchildren do
-            Add(parents[c], nrcongs);
-          od;
-          for p in newparents do
-            Add(children[p], nrcongs);
-          od;
-          found := true;
-        fi;
-      od;
-    od;
-  od;
-
-  # Add the trivial congruence at the start
-  children := Concatenation([[]], children + 1);
-  for i in [2 .. nrcongs + 1] do
-    Add(children[i], 1, 1);
-  od;
-  Add(congs, SemigroupCongruence(S, []), 1);
-
-  # We have a list of all the congruences
-  SetCongruencesOfSemigroup(S, congs);
-
-  # Objectify the result
-  lattice := Objectify(NewType(FamilyObj(children),
-                               SEMIGROUPS_IsCongruenceLattice),
-                       [children, congs]);
-  return lattice;
 end);
 
 #

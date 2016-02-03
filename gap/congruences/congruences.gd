@@ -33,7 +33,11 @@ DeclareCategory("IsRightCongruenceClass",
                 IsEquivalenceClass and IsAttributeStoringRep);
 
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("LeftCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("RightCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("LatticeOfCongruences", IsSemigroup);
+DeclareAttribute("LatticeOfLeftCongruences", IsSemigroup);
+DeclareAttribute("LatticeOfRightCongruences", IsSemigroup);
 
 DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
                GeneratingPairsOfLeftMagmaCongruence);
