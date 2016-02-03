@@ -162,6 +162,12 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)]]></Example>
       underlying list of lists of the matrix over semiring <A>mat</A>.
       
       <Example><![CDATA[
+gap> mat := Matrix(IsIntegerMatrix, [[0,2], [3,5]]);
+Matrix(IsIntegerMatrix, [[0, 2], [3, 5]])
+gap> AsList(mat);
+[ [ 0, 2 ], [ 3, 5 ] ]
+]]></Example>
+<!-- Tests including finite fields
 gap> mat := Matrix(GF(7), [[Z(7) ^ 3, Z(7) ^ 2], [Z(7) ^ 4, Z(7)]]);
 Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])
 gap> list := AsList(mat);
@@ -178,10 +184,7 @@ gap> IsMutable(list[1]);
 true
 gap> mat = Matrix(BaseField(mat), AsList(mat));
 true
-gap> mat := Matrix(IsIntegerMatrix, [[0,2], [3,5]]);
-Matrix(IsIntegerMatrix, [[0, 2], [3, 5]])
-gap> AsList(mat);
-[ [ 0, 2 ], [ 3, 5 ] ]]]></Example>
+-->
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -359,11 +362,14 @@ gap> Matrix(Integers, [[-1, -2, 0],
 >                      [0, 3, -1], 
 >                      [1, 0, -3]]);
 Matrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])
+]]></Example>
+<!-- Another test, for a matrix over a finite field
 gap> Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], 
 >                   [Z(3), Z(3)^0, Z(3)^0], 
 >                   [Z(3), 0*Z(3), 0*Z(3)]]);
 Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0], 
-  [Z(3), 0*Z(3), 0*Z(3)]])]]></Example>
+  [Z(3), 0*Z(3), 0*Z(3)]])
+-->
     </Description>
   </ManSection>
 <#/GAPDoc>
