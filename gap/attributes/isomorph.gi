@@ -154,7 +154,7 @@ else
     fi;
 
     ErrorNoReturn("Semigroups: IsIsomorphicSemigroup:\n",
-                 "not yet implemented,");
+                  "not yet implemented,");
 
   end);
 fi;

@@ -61,25 +61,25 @@ function(arg)
     line_nr := arg[2];
   else
     ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
-                 "there should be at most 2 arguments,");
+                  "there should be at most 2 arguments,");
   fi;
 
   if IsString(name) then
     file := IO_CompressedFile(name, "r");
     if file = fail then
       ErrorNoReturn("Semigroups: ReadGenerators:\n",
-                   "could not open the file ", file, ",");
+                    "could not open the file ", file, ",");
     fi;
   elif IsFile(name) then
     file := name;
   else
     ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
-                 "the first argument must be a string or a file,");
+                  "the first argument must be a string or a file,");
   fi;
 
   if not (IsInt(line_nr) and line_nr >= 0) then
     ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
-                 "the second argument must be a positive integer,");
+                  "the second argument must be a positive integer,");
   fi;
 
   if line_nr <> 0 then
@@ -94,7 +94,7 @@ function(arg)
     fi;
     if obj = IO_Nothing then
       ErrorNoReturn("Semigroups: ReadGenerators:\n",
-                   "the file only has ", i - 1, " rows,");
+                    "the file only has ", i - 1, " rows,");
     fi;
     return obj;
   else
@@ -130,25 +130,25 @@ function(arg)
     mode := arg[3];
   else
     ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                 "there should be 2 or 3 arguments,");
+                  "there should be 2 or 3 arguments,");
   fi;
 
   if not (mode = "a" or mode = "w") then
     ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                 "the third argument must be \"a\" or \"w\",");
+                  "the third argument must be \"a\" or \"w\",");
   fi;
 
   if IsString(name) then
     file := IO_CompressedFile(name, mode);
     if file = fail then
       ErrorNoReturn("Semigroups: WriteGenerators:\n",
-                   "couldn't open the file ", name, ",");
+                    "couldn't open the file ", name, ",");
     fi;
   elif IsFile(name) then
     file := name;
   else
     ErrorNoReturn("Semigroups: WriteGenerators: usage,\n",
-                 "the first argument must be a string or a file,");
+                  "the first argument must be a string or a file,");
   fi;
 
   for i in [1 .. Length(coll)] do

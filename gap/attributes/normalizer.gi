@@ -23,7 +23,7 @@ SEMIGROUPS.NormalizerOptsRec := function(S, opts)
     opts.lambdastab := true;
   elif not IsBool(opts.lambdastab) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.NormalizerOptsRec: usage,\n",
-                 "the component `lambdastab' must be a boolean,");
+                  "the component `lambdastab' must be a boolean,");
   fi;
 
   if (IsPartialPermSemigroup(S) and IsInverseSemigroup(S)) then
@@ -32,7 +32,7 @@ SEMIGROUPS.NormalizerOptsRec := function(S, opts)
     opts.rhostab := true;
   elif not IsBool(opts.rhostab) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.NormalizerOptsRec: usage,\n",
-                 "the component `rhostab' must be a boolean,");
+                  "the component `rhostab' must be a boolean,");
   fi;
 
   return opts;
@@ -78,19 +78,19 @@ SEMIGROUPS.DeterministicNormalizer := function(G, S, opts)
 
   if not IsPermGroup(G) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,\n",
-                 "the first arg must be a permutation group,");
+                  "the first arg must be a permutation group,");
   fi;
 
   if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S)
           or IsBipartitionSemigroup(S)) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,\n",
-                 "the second arg must be a semigroup of transformations,\n",
-                 "partial perms or bipartitions,");
+                  "the second arg must be a semigroup of transformations,\n",
+                  "partial perms or bipartitions,");
   fi;
 
   if not IsRecord(opts) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,\n",
-                 "the third argument must be a record,");
+                  "the third argument must be a record,");
   fi;
 
   if IsTrivial(G) then
@@ -189,19 +189,19 @@ if IsBound(GAPInfo.PackagesLoaded.genss) then
 
     if not IsPermGroup(G) then
       ErrorNoReturn("Semigroups: SEMIGROUPS.NonDeterministicNormalizer: ",
-                   "usage,\nthe first arg must be a permutation group,");
+                    "usage,\nthe first arg must be a permutation group,");
     fi;
 
     if not (IsTransformationSemigroup(S) or IsPartialPermSemigroup(S) or
             IsBipartitionSemigroup(S)) then
       ErrorNoReturn("Semigroups: SEMIGROUPS.NonDeterministicNormalizer: ",
-                   "usage,\nthe second arg must be a semigroup of ",
-                   "transformations,\npartial perms or bipartitions,");
+                    "usage,\nthe second arg must be a semigroup of ",
+                    "transformations,\npartial perms or bipartitions,");
     fi;
 
     if not IsRecord(opts) then
       ErrorNoReturn("Semigroups: SEMIGROUPS.NonDeterministicNormalizer: ",
-                   "usage,\nthe third arg must be a record,");
+                    "usage,\nthe third arg must be a record,");
     fi;
 
     if IsTrivial(G) then

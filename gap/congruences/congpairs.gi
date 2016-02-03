@@ -425,12 +425,12 @@ function(_record)
     fi;
     if Size(pair) <> 2 then
       ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                   "the first arg <pair> must be a list of length 2,");
+                    "the first arg <pair> must be a list of length 2,");
     fi;
     if not (pair[1] in S and pair[2] in S) then
       ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                   "elements of the first arg <pair> must be\n",
-                   "in the range of the second arg <cong>,");
+                    "elements of the first arg <pair> must be\n",
+                    "in the range of the second arg <cong>,");
     fi;
 
     p1 := Position(GenericSemigroupData(S), pair[1]);
@@ -603,8 +603,8 @@ function(_record)
     local pairs, cong, ufdata, uf2, i, ii, next, newtable;
     if Range(c1) <> Range(c2) then
       ErrorNoReturn("Semigroups: Join", _record.type_string,
-                   "SemigroupCongruences: usage,\n",
-                   "congruences must be defined over the same semigroup,");
+                    "SemigroupCongruences: usage,\n",
+                    "congruences must be defined over the same semigroup,");
     fi;
     pairs := Concatenation(
                ShallowCopy(_GeneratingPairsOfXSemigroupCongruence(c1)),
@@ -657,7 +657,7 @@ function(_record)
     # Tests whether cong1 contains all the pairs in cong2
     if Range(cong1) <> Range(cong2) then
       ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                   "congruences must be defined over the same semigroup,");
+                    "congruences must be defined over the same semigroup,");
     fi;
     return ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
                   pair -> pair in cong1);
@@ -675,8 +675,8 @@ function(_record)
   function(cong, elm)
     if not elm in Range(cong) then
       ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                   "the second arg <elm> must be in the ",
-                   "semigroup of the first arg <cong>,");
+                    "the second arg <elm> must be in the ",
+                    "semigroup of the first arg <cong>,");
     fi;
     return EquivalenceClassOfElementNC(cong, elm);
   end);
@@ -900,7 +900,7 @@ InstallMethod(\*,
 function(class1, class2)
   if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
     ErrorNoReturn("Semigroups: \*: usage,\n",
-                 "the args must be classes of the same congruence,");
+                  "the args must be classes of the same congruence,");
   fi;
   return CongruenceClassOfElement(EquivalenceClassRelation(class1),
                                   Representative(class1) *

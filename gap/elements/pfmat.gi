@@ -37,10 +37,10 @@ function(x, y)
 
   if n <> DimensionOfMatrixOverSemiring(y) then
     ErrorNoReturn("Semigroups: \* (for matrices over a prime field): usage,\n",
-                 "the arguments must be matrices of the same dimensions,");
+                  "the arguments must be matrices of the same dimensions,");
   elif Size(BaseField(x)) <> Size(BaseField(y)) then
     ErrorNoReturn("Semigroups: \* (for matrices over a prime field): usage,\n",
-                 "the arguments must be matrices over the same field,");
+                  "the arguments must be matrices over the same field,");
   fi;
 
   xy := List([1 .. n], x -> EmptyPlist(n));

@@ -108,7 +108,7 @@ InstallMethod(IsSubrelation,
 function(uni, cong)
   if Range(uni) <> Range(cong) then
     ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                 "congruences must be defined over the same semigroup,");
+                  "congruences must be defined over the same semigroup,");
   fi;
   return true;
 end);
@@ -121,7 +121,7 @@ InstallMethod(IsSubrelation,
 function(cong, uni)
   if Range(uni) <> Range(cong) then
     ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                 "congruences must be defined over the same semigroup,");
+                  "congruences must be defined over the same semigroup,");
   fi;
   return uni = cong;
 end);
@@ -134,7 +134,7 @@ InstallMethod(ImagesElm,
 function(cong, elm)
   if not elm in Range(cong) then
     ErrorNoReturn("Semigroups: ImagesElm: usage,\n",
-                 "the second argument <elm> must be in <cong>'s semigroup,");
+                  "the second argument <elm> must be in <cong>'s semigroup,");
   fi;
   return Elements(Range(cong));
 end);
@@ -156,7 +156,7 @@ InstallMethod(JoinSemigroupCongruences,
 function(cong, ucong)
   if Range(cong) <> Range(ucong) then
     ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
-                 "congruences must be defined over the same semigroup,");
+                  "congruences must be defined over the same semigroup,");
   fi;
   return ucong;
 end);
@@ -169,7 +169,7 @@ InstallMethod(JoinSemigroupCongruences,
 function(ucong, cong)
   if Range(cong) <> Range(ucong) then
     ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
-                 "congruences must be defined over the same semigroup,");
+                  "congruences must be defined over the same semigroup,");
   fi;
   return ucong;
 end);
@@ -182,7 +182,7 @@ InstallMethod(MeetSemigroupCongruences,
 function(cong, ucong)
   if Range(cong) <> Range(ucong) then
     ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
-                 "congruences must be defined over the same semigroup,");
+                  "congruences must be defined over the same semigroup,");
   fi;
   return cong;
 end);
@@ -195,7 +195,7 @@ InstallMethod(MeetSemigroupCongruences,
 function(ucong, cong)
   if Range(cong) <> Range(ucong) then
     ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
-                 "congruences must be defined over the same semigroup,");
+                  "congruences must be defined over the same semigroup,");
   fi;
   return cong;
 end);
@@ -218,8 +218,8 @@ function(cong, elm)
   # Check that the arguments make sense
   if not elm in Range(cong) then
     ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                 "the second argument <elm> must be ",
-                 "in the semigroup of 1st argument <cong>,");
+                  "the second argument <elm> must be ",
+                  "in the semigroup of 1st argument <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
@@ -256,7 +256,7 @@ InstallMethod(\*,
 function(c1, c2)
   if EquivalenceClassRelation(c1) <> EquivalenceClassRelation(c2) then
     ErrorNoReturn("Semigroups: \\*: usage,\n",
-                 "the args <c1> and <c2> must be over the same congruence,");
+                  "the args <c1> and <c2> must be over the same congruence,");
   fi;
   return c1;
 end);

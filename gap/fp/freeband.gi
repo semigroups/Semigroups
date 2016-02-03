@@ -80,7 +80,7 @@ function(arg)
     names := arg[1];
   else
     ErrorNoReturn("Semigroups: FreeBand: usage,\n",
-                 "FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),");
+                  "FreeBand(<name1>,<name2>..) or FreeBand(<rank> [, name]),");
   fi;
 
   MakeImmutable(names);
@@ -350,7 +350,7 @@ function(S, x)
 
   if not x in S then
     ErrorNoReturn("Semigroups: GreensDClassOfElement: usage,\n",
-                 "the element does not belong to the semigroup,");
+                  "the element does not belong to the semigroup,");
   fi;
 
   type := NewType(FamilyObj(S), IsEquivalenceClass and

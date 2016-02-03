@@ -759,7 +759,7 @@ InstallMethod(PositionOfFound, "for semigroup data",
 function(data)
   if not(data!.looking) then
     ErrorNoReturn("Semigroups: PositionOfFound: usage,\n",
-                 "not looking for anything,");
+                  "not looking for anything,");
   fi;
   return data!.found;
 end);
@@ -772,7 +772,7 @@ function(data)
 
   if not IsSemigroupData(data) then
     ErrorNoReturn("Semigroups: SizeOfSemigroupData: usage,\n",
-                 "the arg <data> must be semigroup data,");
+                  "the arg <data> must be semigroup data,");
   fi;
 
   if not data!.init then

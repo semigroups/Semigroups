@@ -47,7 +47,7 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.AddGenerators: usage,\n",
-                 "the arguments do not belong to the same family,");
+                  "the arguments do not belong to the same family,");
   fi;
 
   if IsActingSemigroup(S)
@@ -346,8 +346,8 @@ function(gens, opts)
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
     ErrorNoReturn("Semigroups: InverseMonoidByGenerators: usage,\n",
-                 "the first argument must satisfy ",
-                 "`IsGeneratorsOfInverseSemigroup',");
+                  "the first argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
@@ -421,8 +421,8 @@ function(gens, opts)
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
     ErrorNoReturn("Semigroups: InverseSemigroupByGenerators: usage,\n",
-                 "the first argument must satisfy ",
-                 "`IsGeneratorsOfInverseSemigroup',");
+                  "the first argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
@@ -527,14 +527,14 @@ function(S, coll, opts)
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
     ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
-                 "the semigroup and collection of elements are not of the ",
-                 "same type,");
+                  "the semigroup and collection of elements are not of the ",
+                  "same type,");
   fi;
 
   if not IsGeneratorsOfInverseSemigroup(coll) then
     ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
-                 "the first argument must satisfy ",
-                 "`IsGeneratorsOfInverseSemigroup',");
+                  "the first argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
   if IsSemigroup(coll) then
@@ -649,15 +649,15 @@ function(S, coll, opts)
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
     ErrorNoReturn("Semigroups: ClosureSemigroup: usage,\n",
-                 "the semigroup and collection of elements are not of the ",
-                 "same type,");
+                  "the semigroup and collection of elements are not of the ",
+                  "same type,");
   fi;
 
   if IsActingSemigroup(S)
       and IsActingSemigroupWithFixedDegreeMultiplication(S)
       and ActionDegree(S) <> ActionDegree(Representative(coll)) then
     ErrorNoReturn("Semigroups: ClosureSemigroup: usage,\n",
-                 "the degree of the semigroup and collection must be equal,");
+                  "the degree of the semigroup and collection must be equal,");
   fi;
 
   if IsSemigroup(coll) then
@@ -899,12 +899,12 @@ SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
 
   if not IsFilter(filt) or not filt in SEMIGROUPS.SemigroupTypes then
     ErrorNoReturn("Semigroups: ", string, ": usage,\n",
-                 "the first argument must be a filter,");
+                  "the first argument must be a filter,");
   fi;
 
   if not IsPosInt(nrgens) then
     ErrorNoReturn("Semigroups: ", string, ": usage,\n",
-                 "the second argument must be a positive integer,");
+                  "the second argument must be a positive integer,");
   fi;
 
   cons := SEMIGROUPS.RandomElementCons(filt);
@@ -917,10 +917,10 @@ SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
 
   if not IsHomogeneousList(params) or not IsPosInt(params[1]) then
     ErrorNoReturn("Semigroups: ", string, ": usage,\n",
-                 "the third to last arguments must be positive integers,");
+                  "the third to last arguments must be positive integers,");
   elif Length(params) > cons[2] then
     ErrorNoReturn("Semigroups: ", string, ": usage,\n",
-                 "there should be ", cons[2], " arguments,");
+                  "there should be ", cons[2], " arguments,");
   fi;
 
   if filt = IsMatrixOverPrimeFieldSemigroup then

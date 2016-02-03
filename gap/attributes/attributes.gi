@@ -247,7 +247,7 @@ InstallMethod(IsomorphismReesMatrixSemigroup, "for a D-class",
 function(D)
   if NrIdempotents(D) <> NrHClasses(D) then
     ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
-                 "the D-class is not a subsemigroup,");
+                  "the D-class is not a subsemigroup,");
   fi;
 
   return InjectionPrincipalFactor(D);
@@ -325,7 +325,7 @@ function(S)
 
   if not IsSimpleSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
-                 "the argument must be a simple semigroup,");
+                  "the argument must be a simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
@@ -348,7 +348,7 @@ function(S)
 
   if not IsZeroSimpleSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
-                 "the argument must be a 0-simple semigroup,");
+                  "the argument must be a 0-simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
   fi;
@@ -438,7 +438,7 @@ InstallMethod(SmallInverseSemigroupGeneratingSet,
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
     ErrorNoReturn("Semigroups: SmallInverseSemigroupGeneratingSet: usage,\n",
-                 "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) < 2 then
     return coll;
@@ -461,7 +461,7 @@ InstallMethod(SmallInverseMonoidGeneratingSet,
 function(coll)
   if not IsGeneratorsOfInverseSemigroup(coll) then
     ErrorNoReturn("Semigroups: SmallInverseMonoidGeneratingSet: usage,\n",
-                 "the argument must satisfy IsGeneratorsOfInverseSemigroup");
+                  "the argument must satisfy IsGeneratorsOfInverseSemigroup");
   fi;
   if Length(coll) = 1 then
     if coll[1] = One(coll) then
@@ -711,7 +711,7 @@ InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 function(D)
   if not IsRegularDClass(D) then
     ErrorNoReturn("Semigroups: InjectionPrincipalFactor: usage,\n",
-                 "the argument <D> must be a regular D-class,");
+                  "the argument <D> must be a regular D-class,");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
     return SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
@@ -727,7 +727,7 @@ function(D)
 
   if not IsRegularDClass(D) then
     ErrorNoReturn("Semigroups: InjectionNormalizedPrincipalFactor: usage,\n",
-                 "the argument <D> must be a regular D-class,");
+                  "the argument <D> must be a regular D-class,");
   fi;
   if NrHClasses(D) = NrIdempotents(D) then
     iso1 := SEMIGROUPS.InjectionPrincipalFactor(D, ReesMatrixSemigroup);
@@ -822,8 +822,8 @@ function(S)
 
   if not IsGroupAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                 "the argument must be a semigroup satisfying ",
-                 "IsGroupAsSemigroup,");
+                  "the argument must be a semigroup satisfying ",
+                  "IsGroupAsSemigroup,");
   fi;
 
   en := EnumeratorSorted(S);

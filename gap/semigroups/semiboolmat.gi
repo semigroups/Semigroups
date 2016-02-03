@@ -171,8 +171,8 @@ function(n)
 
   if not IsBound(SEMIGROUPS.GENERATORS.Reflex[n]) then
     ErrorNoReturn("Semigroups: ReflexiveBooleanMatMonoid:\n ",
-                 "generators for this monoid are only known up to ",
-                 String(Length(SEMIGROUPS.GENERATORS.Reflex[n])), ",");
+                  "generators for this monoid are only known up to ",
+                  String(Length(SEMIGROUPS.GENERATORS.Reflex[n])), ",");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.Reflex[n]);
@@ -189,8 +189,8 @@ function(n)
 
   if not IsBound(SEMIGROUPS.GENERATORS.Hall[n]) then
     ErrorNoReturn("Semigroups: HallMonoid:\n ",
-                 "generators for this monoid are only known up to ",
-                 String(Length(SEMIGROUPS.GENERATORS.Hall[n])), ",");
+                  "generators for this monoid are only known up to ",
+                  String(Length(SEMIGROUPS.GENERATORS.Hall[n])), ",");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.Hall[n]);
@@ -207,8 +207,8 @@ function(n)
 
   if not IsBound(SEMIGROUPS.GENERATORS.FullBool[n]) then
     ErrorNoReturn("Semigroups: FullBooleanMatMonoid:\n ",
-                 "generators for this monoid are only known up to ",
-                 String(Length(SEMIGROUPS.GENERATORS.FullBool[n])), ",");
+                  "generators for this monoid are only known up to ",
+                  String(Length(SEMIGROUPS.GENERATORS.FullBool[n])), ",");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.FullBool[n]);

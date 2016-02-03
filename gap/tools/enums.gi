@@ -21,19 +21,19 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
     ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
-                 "the first argument <obj> must be a domain or a collections",
-                 "family,");
+                  "the first argument <obj> must be a domain or a collections",
+                  "family,");
   elif not (IsEnumeratorByFunctions(baseenum) or IsList(baseenum)) then
     ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
-                 "the second argument <baseenum> must be an enumerator or a ",
-                 "list,");
+                  "the second argument <baseenum> must be an enumerator or a ",
+                  "list,");
   elif not (IsFunction(convert_out) and IsFunction(convert_in)) then
     ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
-                 "the third and fourth arguments <convert_out> and ",
-                 "<convert_in>\nmust be functions,");
+                  "the third and fourth arguments <convert_out> and ",
+                  "<convert_in>\nmust be functions,");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
     ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
-                 "the fifth argument <filts> must be a list of filters,");
+                  "the fifth argument <filts> must be a list of filters,");
   elif not (IsRecord(record) and IsMutable(record))
       or IsBound(record.baseenum)
       or IsBound(record.convert_out)
@@ -41,10 +41,10 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
       or IsBound(record.NumberElement)
       or IsBound(record.ElementNumber) then
     ErrorNoReturn("Semigroups: EnumeratorByEnumerator: usage,\n",
-                 "the sixth argument <record> must be a mutable record",
-                 "with no components\n",
-                 "named:\n`baseenum', `convert_out', `convert_in',",
-                 "`ElementNumber',\n or `NumberElement',");
+                  "the sixth argument <record> must be a mutable record",
+                  "with no components\n",
+                  "named:\n`baseenum', `convert_out', `convert_in',",
+                  "`ElementNumber',\n or `NumberElement',");
   fi;
 
   record.baseenum := baseenum;
@@ -106,25 +106,25 @@ function(obj, record, baseenum, convert, filts)
 
   if not (IsDomain(obj) or IsCollectionFamily(obj)) then
     ErrorNoReturn("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-                 "the first argument <obj> must be a domain or a collections ",
-                 "family,");
+                  "the first argument <obj> must be a domain or a collections ",
+                  "family,");
   elif not IsRecord(record)
       or IsBound(record.ElementNumber)
       or IsBound(record.NumberElement)
       or IsBound(record.baseenum)
       or IsBound(record.enumofenums) then
     ErrorNoReturn("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-                 "the second argument  <record> must be a record",
-                 "with no components named:\n",
-                 "`NumberElement', `ElementNumber', `baseenum', or ",
-                 "`enumofenums',");
+                  "the second argument  <record> must be a record",
+                  "with no components named:\n",
+                  "`NumberElement', `ElementNumber', `baseenum', or ",
+                  "`enumofenums',");
     # TODO add check for third arg
   elif not IsFunction(convert) then
     ErrorNoReturn("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-                 "the fourth argument <convert> must be a function,");
+                  "the fourth argument <convert> must be a function,");
   elif not (IsList(filts) and ForAll(filts, IsFilter)) then
     ErrorNoReturn("Semigroups: EnumeratorByEnumOfEnums: usage,\n",
-                 "the fifth argument <filts> must be a list of filters,");
+                  "the fifth argument <filts> must be a list of filters,");
   fi;
 
   record.baseenum := baseenum;
@@ -718,14 +718,14 @@ function(m, n)
 
   if not IsPosInt(n) then
     ErrorNoReturn("Semigroups: EnumeratorOfArrangements: usage,\n",
-                 "the second argument <n> must be a positive integer,");
+                  "the second argument <n> must be a positive integer,");
   elif not (IsInt(m) and m >= 0) then
     ErrorNoReturn("Semigroups: EnumeratorOfArrangements: usage,\n",
-                 "the first argument <m> must be a non-negative integer,");
+                  "the first argument <m> must be a non-negative integer,");
   elif m > n then
     ErrorNoReturn("Semigroups: EnumeratorOfArrangements: usage,\n",
-                 "the first argument <m> must be no greater than the\n",
-                 "second argument <n>,");
+                  "the first argument <m> must be no greater than the\n",
+                  "second argument <n>,");
   fi;
 
   convert_out := function(enum, x)

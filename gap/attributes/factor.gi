@@ -22,8 +22,8 @@ function(S, x)
   local data, pos;
   if not x in S then
     ErrorNoReturn("Semigroups: MinimalFactorization:\n",
-                 "the second argument <x> is not an element ",
-                 "of the first argument <S>,");
+                  "the second argument <x> is not an element ",
+                  "of the first argument <S>,");
   fi;
   data := GenericSemigroupData(S);
   pos := Position(data, x);
@@ -58,8 +58,8 @@ function(o, m, elt)
       pos := Position(o!.exhaust[m], elt);
       if pos = fail then
         ErrorNoReturn("Semigroups: Factorization: usage,\n",
-                     "the third arg <perm> does not belong to the ",
-                     "Schutzenberger group,");
+                      "the third arg <perm> does not belong to the ",
+                      "Schutzenberger group,");
       fi;
 
       # express <elt> as a word in the generators of the Schutzenberger group
@@ -176,8 +176,8 @@ function(s, f)
 
   if not f in s then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
-                 "the second argument <x> is not an element ",
-                 "of the first argument <S>,");
+                  "the second argument <x> is not an element ",
+                  "of the first argument <S>,");
   fi;
 
   o := LambdaOrb(s);
@@ -225,8 +225,8 @@ function(s, f)
 
   if not f in s then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
-                 "the second argument <x> is not an element ",
-                 "of the first argument <S>,");
+                  "the second argument <x> is not an element ",
+                  "of the first argument <S>,");
   fi;
 
   o := LambdaOrb(s);
@@ -281,8 +281,8 @@ function(s, f)
 
   if not f in s then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
-                 "the second argument <x> is not an element ",
-                 "of the first argument <S>,");
+                  "the second argument <x> is not an element ",
+                  "of the first argument <S>,");
   fi;
 
   o := RhoOrb(s);

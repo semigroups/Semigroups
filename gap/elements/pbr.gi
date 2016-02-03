@@ -74,7 +74,7 @@ InstallMethod(InverseMonoidByGenerators,
 [IsPBRCollection],
 function(coll)
   ErrorNoReturn("Semigroups: InverseMonoidByGenerators",
-               "(for a pbr collection):\nnot yet implemented,");
+                "(for a pbr collection):\nnot yet implemented,");
 end);
 
 # FIXME see the comment above, this is not really correct.
@@ -121,8 +121,8 @@ function(coll)
   deg := DegreeOfPBR(coll[1]);
   if not ForAll(coll, x -> DegreeOfPBR(x) = deg) then
     ErrorNoReturn("Semigroups: DegreeOfPBRCollection: usage,\n",
-                 "the argument <coll> must be a collection of PBRs ",
-                 "of equal degree,");
+                  "the argument <coll> must be a collection of PBRs ",
+                  "of equal degree,");
   fi;
 
   return deg;
@@ -277,7 +277,7 @@ function(x)
   dim := DimensionOfMatrixOverSemiring(x);
   if not IsEvenInt(dim) then
     ErrorNoReturn("Semigroups: AsPBR: usage,\n",
-                 "the boolean matrix <x> must be of even dimension,");
+                  "the boolean matrix <x> must be of even dimension,");
   fi;
   succ := Successors(x);
   return PBRNC(succ{[1 .. dim / 2]}, succ{[dim / 2 + 1 .. dim]});
@@ -290,14 +290,14 @@ function(mat, n)
 
   if not IsEvenInt(n) then
     ErrorNoReturn("Semigroups: AsPBR: usage,\n",
-                 "the second argument <n> must be even,");
+                  "the second argument <n> must be even,");
   fi;
 
   m := DimensionOfMatrixOverSemiring(mat);
 
   if not IsEvenInt(m) then
     ErrorNoReturn("Semigroups: AsPBR: usage,\n",
-                 "the boolean matrix <x> must be of even dimension,");
+                  "the boolean matrix <x> must be of even dimension,");
   fi;
 
   nbs := [List([1 .. n / 2], x -> []),
@@ -357,7 +357,7 @@ InstallMethod(AsTransformation, "for a pbr",
 function(x)
   if not IsTransformationPBR(x) then
     ErrorNoReturn("Semigroups: AsTransformation: usage,\n",
-                 "the argument <x> must be a transformation PBR,");
+                  "the argument <x> must be a transformation PBR,");
   fi;
   return AsTransformation(AsBipartition(x));
 end);
@@ -369,7 +369,7 @@ InstallMethod(AsPartialPerm, "for a pbr",
 function(x)
   if not IsPartialPermPBR(x) then
     ErrorNoReturn("Semigroups: AsPartialPerm: usage,\n",
-                 "the argument <x> must be a partial perm PBR,");
+                  "the argument <x> must be a partial perm PBR,");
   fi;
   return AsPartialPerm(AsBipartition(x));
 end);
@@ -381,7 +381,7 @@ InstallMethod(AsPermutation, "for a pbr",
 function(x)
   if not IsPermPBR(x) then
     ErrorNoReturn("Semigroups: AsPermutation: usage,\n",
-                 "the argument <x> must be a permutation PBR,");
+                  "the argument <x> must be a permutation PBR,");
   fi;
   return AsPermutation(AsBipartition(x));
 end);
@@ -409,7 +409,7 @@ function(left, right)
 
   if Length(left) <> Length(right) then
     ErrorNoReturn("Semigroups: PBR: usage,\n",
-                 "the arguments must have equal lengths,");
+                  "the arguments must have equal lengths,");
   fi;
 
   deg := Length(left);
@@ -417,14 +417,14 @@ function(left, right)
   for i in [1 .. deg] do
     if not IsHomogeneousList(left[i]) or not IsHomogeneousList(right[i]) then
       ErrorNoReturn("Semigroups: PBR: usage,\n",
-                   "the entries in the arguments must be homogeneous lists,");
+                    "the entries in the arguments must be homogeneous lists,");
     elif   not ForAll(left[i], j -> IsInt(j) and j <> 0
                                     and j <= deg and j >= -deg)
         or not ForAll(right[i], j -> IsInt(j) and j <> 0
                                      and j <= deg and j >= -deg) then
       ErrorNoReturn("Semigroups: PBR: usage,\n",
-                   "the entries in the first argument must be integers ",
-                   "in [", -deg, " .. -1]\n or [1 .. ", deg, "],");
+                    "the entries in the first argument must be integers ",
+                    "in [", -deg, " .. -1]\n or [1 .. ", deg, "],");
     fi;
   od;
   return PBRNC(left, right);

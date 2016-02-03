@@ -730,7 +730,7 @@ InstallMethod(GreensDClassOfElement, "for an acting semigroup and element",
 function(S, x)
   if not x in S then
     ErrorNoReturn("Semigroups: GreensDClassOfElement: usage,\n",
-                 "the element does not belong to the semigroup,");
+                  "the element does not belong to the semigroup,");
   fi;
   return GreensDClassOfElementNC(S, x, false);
 end);
@@ -765,7 +765,7 @@ InstallMethod(GreensLClassOfElement, "for an acting semigroup and element",
 function(S, x)
   if not x in S then
     ErrorNoReturn("Semigroups: GreensLClassOfElement: usage,\n",
-                 "the element does not belong to the semigroup,");
+                  "the element does not belong to the semigroup,");
   fi;
   return GreensLClassOfElementNC(S, x, false);
 end);
@@ -799,7 +799,7 @@ InstallMethod(GreensLClassOfElement,
 function(D, x)
   if not x in D then
     ErrorNoReturn("Semigroups: GreensLClassOfElement: usage,\n",
-                 "the element does not belong to the D-class,");
+                  "the element does not belong to the D-class,");
   fi;
   return GreensLClassOfElementNC(D, x, IsGreensClassNC(D));
 end);
@@ -841,7 +841,7 @@ InstallMethod(GreensRClassOfElement, "for an acting semigroup and element",
 function(S, x)
   if not x in S then
     ErrorNoReturn("Semigroups: GreensRClassOfElement: usage,\n",
-                 "the element does not belong to the semigroup,");
+                  "the element does not belong to the semigroup,");
   fi;
   return GreensRClassOfElementNC(S, x, false);
 end);
@@ -875,7 +875,7 @@ InstallMethod(GreensRClassOfElement,
 function(D, x)
   if not x in D then
     ErrorNoReturn("Semigroups: GreensRClassOfElement: usage,\n",
-                 "the element does not belong to the D-class,");
+                  "the element does not belong to the D-class,");
   fi;
   return GreensRClassOfElementNC(D, x, IsGreensClassNC(D));
 end);
@@ -910,7 +910,7 @@ InstallMethod(GreensHClassOfElement, "for an acting semigroup and element",
 function(S, x)
   if not x in S then
     ErrorNoReturn("Semigroups: GreensHClassOfElement: usage,\n",
-                 "the element does not belong to the semigroup,");
+                  "the element does not belong to the semigroup,");
   fi;
   return GreensHClassOfElementNC(S, x, false);
 end);
@@ -943,7 +943,7 @@ InstallMethod(GreensHClassOfElement, "for a D/H-class and element",
 function(C, x)
   if not x in C then
     ErrorNoReturn("Semigroups: GreensHClassOfElement: usage,\n",
-                 "the element does not belong to the D-class,");
+                  "the element does not belong to the D-class,");
   fi;
   return GreensHClassOfElementNC(C, x, IsGreensClassNC(C));
 end);
@@ -1596,7 +1596,7 @@ function(H)
 
   if not IsGroupHClass(H) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                 "the H-class is not a group,");
+                  "the H-class is not a group,");
   fi;
   # gaplint: ignore 3
   return MappingByFunction(H, SchutzenbergerGroup(H),
@@ -1743,7 +1743,7 @@ function(S, n)
 
   if n < 0 then
     ErrorNoReturn("Semigroups: Idempotents: usage,\n",
-                 "the second argument <n> must be a non-negative integer,");
+                  "the second argument <n> must be a non-negative integer,");
   elif n > Maximum(List(GeneratorsOfSemigroup(S), x -> ActionRank(S)(x))) then
     return [];
   fi;

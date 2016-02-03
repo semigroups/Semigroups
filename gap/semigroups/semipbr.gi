@@ -31,7 +31,7 @@ function(n)
 
   if n > 2 then
     ErrorNoReturn("Semigroups: FullPBRMonoid: usage,\n",
-                 "the argument <n> must be at most 2,");
+                  "the argument <n> must be at most 2,");
   fi;
   return Monoid(gens[n]);
 end);

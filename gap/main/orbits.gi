@@ -353,7 +353,7 @@ function(o, i)
 
   if i > r then
     ErrorNoReturn("Semigroups: ReverseSchreierTreeOfSCC:\n",
-                 "the orbit only has ", r, " strongly connected components,");
+                  "the orbit only has ", r, " strongly connected components,");
   fi;
 
   if not IsBound(o!.reverse) then

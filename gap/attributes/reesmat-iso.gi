@@ -241,8 +241,8 @@ if IsGrapeLoaded then
 
     if not Length(groupelts) = Length(components) then
       ErrorNoReturn("Semigroups: SEMIGROUPS.RZMStoRZMSInducedFunction: ",
-                   "usage,\nthe 5th argument must be a list of length ",
-                   Length(components), ",");
+                    "usage,\nthe 5th argument must be a list of length ",
+                    Length(components), ",");
     fi;
 
     reps := List(components, Minimum);
@@ -776,8 +776,8 @@ else
     if not (IsRegularSemigroup(R1) and IsGroup(G1) and IsRegularSemigroup(R2)
             and IsGroup(G2)) then
       ErrorNoReturn("Semigroups: IsomorphismSemigroups: usage,\n",
-                   "the arguments must be regular Rees 0-matrix semigroups ",
-                   "over groups,");
+                    "the arguments must be regular Rees 0-matrix semigroups ",
+                    "over groups,");
     fi;
 
     if not (Size(R1) = Size(R2) and Columns(R1) = Columns(R2)

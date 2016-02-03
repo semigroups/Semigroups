@@ -77,8 +77,8 @@ function(mat)
   if (not IsList(mat)) or IsEmpty(mat)
       or not ForAll(mat, IsHomogeneousList) then
     ErrorNoReturn("Semigroups: BooleanMat: usage,\n",
-                 "the argmuent must be a non-empty list ",
-                 "of homogeneous lists,");
+                  "the argmuent must be a non-empty list ",
+                  "of homogeneous lists,");
   elif IsRectangularTable(mat) then #0s and 1s or blists
     if ForAll(mat, row -> ForAll(row, x -> x = 0 or x = 1)) then
       # 0s and 1s
@@ -111,7 +111,7 @@ function(mat)
   for i in [1 .. n] do
     if not ForAll(mat[i], x -> IsPosInt(x) and x <= n) then
       ErrorNoReturn("Semigroups: BooleanMat:\n",
-                   "the entries of each list must not exceed ", n, ",");
+                    "the entries of each list must not exceed ", n, ",");
     fi;
     Add(x, BlistList([1 .. n], mat[i]));
   od;
@@ -125,7 +125,7 @@ function(x, y)
   n := Length(x![1]);
   if Length(y![1]) <> n then
     ErrorNoReturn("Semigroups: \* (for boolean matrices):\n",
-                 "the matrices must have equal dimension,");
+                  "the matrices must have equal dimension,");
   fi;
   xy := List([1 .. n], x -> BlistList([1 .. n], []));
 
@@ -209,8 +209,8 @@ function(x, y)
 
   if n <> Length(y![1]) then
     ErrorNoReturn("Semigroups: \\in: usage,\n",
-                 "the arguments <x> and <y> must be boolean matrix of equal ",
-                 "size,");
+                  "the arguments <x> and <y> must be boolean matrix of equal ",
+                  "size,");
   fi;
 
   for i in [1 .. n] do
@@ -445,8 +445,8 @@ function(x, n)
   local out, i;
   if ForAny([1 .. n], i -> i ^ x > n) then
     ErrorNoReturn("Semigroups: AsBooleanMat: usage,\n",
-                 "the transformation in the first argument must map ",
-                 "[1 .. ", String(n), "] to itself,");
+                  "the transformation in the first argument must map ",
+                  "[1 .. ", String(n), "] to itself,");
   fi;
 
   out := List([1 .. n], x -> BlistList([1 .. n], []));
@@ -479,8 +479,8 @@ function(x, n)
 
   if ForAny([1 .. n], i -> i ^ x > n) then
     ErrorNoReturn("Semigroups: AsBooleanMat: usage,\n",
-                 "the partial perm in the first argument must map ",
-                 "[1 .. ", String(n), "] into itself,");
+                  "the partial perm in the first argument must map ",
+                  "[1 .. ", String(n), "] into itself,");
   fi;
 
   out := List([1 .. n], x -> BlistList([1 .. n], []));
@@ -596,8 +596,8 @@ function(G, H, x)
   n := Length(x![1]);
   if LargestMovedPoint(G) > n or LargestMovedPoint(H) > n then
     ErrorNoReturn("Semigroups: CanonicalBooleanMat: usage,\n",
-                 "the largest moved point of the first argument must not",
-                 " exceed the dimension\nof the Boolean matrix,");
+                  "the largest moved point of the first argument must not",
+                  " exceed the dimension\nof the Boolean matrix,");
   elif G = H and IsNaturalSymmetricGroup(G)
       and MovedPoints(G) = [1 .. n] then
     return CanonicalBooleanMat(x);

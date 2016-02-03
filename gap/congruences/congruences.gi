@@ -26,11 +26,11 @@ function(arg)
   local S, pairs;
   if not Length(arg) >= 2 then
     ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                 "at least 2 arguments are required,");
+                  "at least 2 arguments are required,");
   fi;
   if not IsSemigroup(arg[1]) then
     ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                 "1st argument <S> must be a semigroup,");
+                  "1st argument <S> must be a semigroup,");
   fi;
   S := arg[1];
 
@@ -46,11 +46,12 @@ function(arg)
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
       ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                   "<pairs> should be a list of lists of size 2,");
+                    "<pairs> should be a list of lists of size 2,");
     fi;
     if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
       ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                   "each pair should contain elements from the semigroup <S>,");
+                    "each pair should contain ",
+                    "elements from the semigroup <S>,");
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
@@ -72,8 +73,8 @@ function(arg)
       return SEMIGROUPS.SimpleCongFromRMSCong(S, arg[2], arg[3]);
     else
       ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
-                   "<cong> should be over a Rees (0-)matrix semigroup ",
-                   "isomorphic to <S> via <iso>,");
+                    "<cong> should be over a Rees (0-)matrix semigroup ",
+                    "isomorphic to <S> via <iso>,");
     fi;
   elif HasIsSemigroupIdeal(arg[2])
       and IsSemigroupIdeal(arg[2])
@@ -98,11 +99,11 @@ function(arg)
   local S, pairs;
   if not Length(arg) >= 2 then
     ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                 "at least 2 arguments are required,");
+                  "at least 2 arguments are required,");
   fi;
   if not IsSemigroup(arg[1]) then
     ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                 "1st argument <S> must be a semigroup,");
+                  "1st argument <S> must be a semigroup,");
   fi;
   S := arg[1];
 
@@ -118,11 +119,11 @@ function(arg)
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
       ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                   "<pairs> should be a list of lists of size 2,");
+                    "<pairs> should be a list of lists of size 2,");
     fi;
     if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
       ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                   "each pair should contain elements from the semigroup <S>,");
+                    "each pair should contain elements from the semigroup <S>,");
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
@@ -139,11 +140,11 @@ function(arg)
   local S, pairs;
   if not Length(arg) >= 2 then
     ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                 "at least 2 arguments are required,");
+                  "at least 2 arguments are required,");
   fi;
   if not IsSemigroup(arg[1]) then
     ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                 "1st argument <S> must be a semigroup,");
+                  "1st argument <S> must be a semigroup,");
   fi;
   S := arg[1];
 
@@ -159,11 +160,11 @@ function(arg)
     fi;
     if not ForAll(pairs, p -> Size(p) = 2) then
       ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                   "<pairs> should be a list of lists of size 2,");
+                    "<pairs> should be a list of lists of size 2,");
     fi;
     if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
       ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                   "each pair should contain elements from the semigroup <S>,");
+                    "each pair should contain elements from the semigroup <S>,");
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);

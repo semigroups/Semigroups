@@ -128,7 +128,7 @@ function(x)
                       x![2]]);
   fi;
   ErrorNoReturn("Semigroups: Source: usage,\n",
-               "the argument <x> must not be the zero,");
+                "the argument <x> must not be the zero,");
 end);
 
 InstallMethod(Range, "for a graph inverse semigroup element",
@@ -148,7 +148,7 @@ function(x)
                       x![2]]);
   fi;
   ErrorNoReturn("Semigroups: Range: usage,\n",
-               "the argument <x> must not be the zero,");
+                "the argument <x> must not be the zero,");
 end);
 
 InstallMethod(String, "for a graph inverse semigroup element",

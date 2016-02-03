@@ -372,8 +372,8 @@ function(coll, set)
   if not (IsSSortedList(set) and IsHomogeneousList(set)
           and IsPosInt(set[1])) then
     ErrorNoReturn("Semigroups: IsTransitive: usage,\n",
-                 "the second argument <set> must be a set of positive ",
-                 "integers");
+                  "the second argument <set> must be a set of positive ",
+                  "integers");
   fi;
 
   n := Length(set);
@@ -603,8 +603,8 @@ function(s)
 
   if MultiplicativeNeutralElement(s) = fail then
     ErrorNoReturn("Semigroups: IsomorphismTransformationMonoid: usage,\n",
-                 "the argument <s> must have a multiplicative neutral element",
-                 ",");
+                  "the argument <s> must have a multiplicative neutral element",
+                  ",");
   fi;
 
   id := MultiplicativeNeutralElement(s);
@@ -644,8 +644,8 @@ function(s)
 
   if not IsGroupAsSemigroup(s) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                 "the argument <s> must be a transformation semigroup ",
-                 "satisfying IsGroupAsSemigroup,");
+                  "the argument <s> must be a transformation semigroup ",
+                  "satisfying IsGroupAsSemigroup,");
   fi;
   # gaplint: ignore 4
   return MagmaIsomorphismByFunctionsNC(s,

@@ -389,7 +389,7 @@ function(C)
 
   if not (IsGreensLClass(C) or IsGreensRClass(C) or IsGreensDClass(C)) then
     ErrorNoReturn("Semigroups: GreensHClasses: usage,\n",
-                 "an L-, R-, or D-class,");
+                  "an L-, R-, or D-class,");
   fi;
 
   reps := HClassReps(C);
@@ -520,7 +520,7 @@ function(S, n)
 
   if n < 0 then
     ErrorNoReturn("Semigroups: Idempotents: usage,\n",
-                 "the second argument <n> must be a non-negative integer,");
+                  "the second argument <n> must be a non-negative integer,");
   fi;
 
   if HasIdempotents(S) then

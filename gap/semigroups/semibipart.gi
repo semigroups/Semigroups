@@ -131,7 +131,7 @@ function(S)
                      # semigroup
   fi;
   ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-               "the argument is not an inverse semigroup,");
+                "the argument is not an inverse semigroup,");
 end);
 
 #

@@ -182,9 +182,9 @@ SEMIGROUPS.StopTest := function(file)
 
   if not IsBound(GAPInfo.TestData.START_TIME)  then
       ErrorNoReturn("Semigroups: SEMIGROUPS.StopTest:\n",
-                   "`STOP_TEST' command without `START_TEST' command for `",
-                   file,
-                   "'");
+                    "`STOP_TEST' command without `START_TEST' command for `",
+                    file,
+                    "'");
   fi;
   Print(GAPInfo.TestData.START_NAME, "\n");
 
@@ -204,7 +204,7 @@ SEMIGROUPS.Test := function(arg)
 
   if Length(arg) = 0 then
     ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
-                 "no arguments have been supplied,");
+                  "no arguments have been supplied,");
   fi;
 
   file := arg[1];
@@ -359,11 +359,11 @@ SEMIGROUPS.TestManualExamples := function(arg)
       ex := ex{arg};
     else
       ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
-                   "the argument must be a pos int or list of pos ints,");
+                    "the argument must be a pos int or list of pos ints,");
     fi;
   elif Length(arg) > 1 then
     ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
-                 "there should be 0 or 1 argument,");
+                  "there should be 0 or 1 argument,");
   fi;
 
   omit := SEMIGROUPS.OmitFromTests;

@@ -54,8 +54,8 @@ function(partition)
 
   if not ForAll(partition, IsPosInt) then
     ErrorNoReturn("Semigroups: EndomorphismsPartition: usage,\n",
-                 "the argument <partition> must be a list of positive ",
-                 "integers,");
+                  "the argument <partition> must be a list of positive ",
+                  "integers,");
   elif ForAll(partition, x -> x = 1) then
     return FullTransformationMonoid(Length(partition));
   elif Length(partition) = 1 then
@@ -817,7 +817,7 @@ function(n)
   local x, S;
   if n = 1 then
     ErrorNoReturn("Semigroups: SingularTransformationSemigroup: usage,\n",
-                 "the argument must be greater than 1,");
+                  "the argument must be greater than 1,");
   fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := FullTransformationSemigroup(n);
@@ -832,7 +832,7 @@ function(n)
   local x, S;
   if n = 1 then
     ErrorNoReturn("Semigroups: SingularOrderEndomorphisms: usage,\n",
-                 "the argument must be greater than 1,");
+                  "the argument must be greater than 1,");
   fi;
   x := TransformationNC(Concatenation([1 .. n - 1], [n - 1]));
   S := OrderEndomorphisms(n);
@@ -848,7 +848,7 @@ function(n)
 
   if n = 1 then
     ErrorNoReturn("Semigroups: SingularBrauerMonoid: usage,\n",
-                 "the argument must be greater than 1,");
+                  "the argument must be greater than 1,");
   fi;
 
   blocks := [[1, 2], [-1, -2]];
@@ -868,7 +868,7 @@ function(n)
   local blocks, x, S, i;
   if n = 1 then
     ErrorNoReturn("Semigroups: SingularJonesMonoid: usage,\n",
-                 "the argument must be greater than 1,");
+                  "the argument must be greater than 1,");
   fi;
 
   blocks := [[1, 2], [-1, -2]];
@@ -888,7 +888,7 @@ function(n)
   local blocks, x, S, i;
   if n = 1 then
     ErrorNoReturn("Semigroups: SingularDualSymmetricInverseSemigroup: usage,\n",
-                 "the argument must be greater than 1,");
+                  "the argument must be greater than 1,");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -908,8 +908,8 @@ function(n)
   local blocks, x, S, i;
   if n = 1 then
     ErrorNoReturn("Semigroups: ",
-                 "SingularFactorisableDualSymmetricInverseSemigroup: usage,\n",
-                 "the argument must be greater than 1");
+                  "SingularFactorisableDualSymmetricInverseSemigroup: usage,\n",
+                  "the argument must be greater than 1");
   fi;
 
   blocks := [[1, 2, -1, -2]];

@@ -40,8 +40,8 @@ function(S)
 
   if not IsGroupAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                 "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
-                 "semigroup satisfying IsGroupAsSemigroup,");
+                  "the argument <S> must be a subsemigroup of a Rees 0-matrix ",
+                  "semigroup satisfying IsGroupAsSemigroup,");
   fi;
 
   rep := Representative(S);
@@ -424,8 +424,8 @@ function(R)
 
   if not IsGroupAsSemigroup(UnderlyingSemigroup(R)) then
     ErrorNoReturn("Semigroups: RZMSNormalization: usage,\n",
-                 "not yet implemented for when the underlying semigroup is ",
-                 "not a group,");
+                  "not yet implemented for when the underlying semigroup is ",
+                  "not a group,");
   fi;
   mat := Matrix(R);
   n := Length(mat);
@@ -552,8 +552,8 @@ function(R)
   G := UnderlyingSemigroup(R);
   if not IsGroupAsSemigroup(G) then
     ErrorNoReturn("Semigroups: RMSNormalization: usage,\n",
-                 "the underlying semigroup of the Rees matrix semigroup <R> ",
-                 "must be a group,");
+                  "the underlying semigroup of the Rees matrix semigroup <R> ",
+                  "must be a group,");
   fi;
 
   mat := Matrix(R);

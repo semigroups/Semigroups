@@ -71,7 +71,7 @@ function(arg)
 
   if Length(arg) < 3 then
     ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
-                 "there must be at least 3 arguments,");
+                  "there must be at least 3 arguments,");
   fi;
 
   S := arg[1];
@@ -84,13 +84,13 @@ function(arg)
 
   if not IsActingSemigroup(S) then
     ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
-                 "the first argument <S> must be an acting semigroup,");
+                  "the first argument <S> must be an acting semigroup,");
   elif not IsAssociativeElement(x) then
     ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
-                 "the second argument <x> must be an associative element,");
+                  "the second argument <x> must be an associative element,");
   elif not IsBool(global) then
     ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
-                 "the third argument <global> must be a boolean,");
+                  "the third argument <global> must be a boolean,");
   fi;
 
   lambda := LambdaFunc(S)(x);
@@ -178,7 +178,7 @@ function(arg)
 
   if Length(arg) < 3 then
     ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
-                 "there must be at least 3 arguments,");
+                  "there must be at least 3 arguments,");
   fi;
 
   S := arg[1];
@@ -191,13 +191,13 @@ function(arg)
 
   if not IsActingSemigroup(S) then
     ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
-                 "the first argument <S> must be an acting semigroup,");
+                  "the first argument <S> must be an acting semigroup,");
   elif not IsAssociativeElement(x) then
     ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
-                 "the second argument <f> must be an associative element,");
+                  "the second argument <f> must be an associative element,");
   elif not IsBool(global) then
     ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
-                 "the third argument <opt> must be a boolean,");
+                  "the third argument <opt> must be a boolean,");
   fi;
 
   rho := RhoFunc(S)(x);

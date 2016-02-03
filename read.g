@@ -48,7 +48,7 @@ if not IsBound(MappingPermListList_C) then
 
     if not IsList(src) or not IsList(dst) or Length(src) <> Length(dst)  then
        ErrorNoReturn("Semigroups: MappingPermListList_C: usage,\n",
-                    "the arguments must be lists of equal length,");
+                     "the arguments must be lists of equal length,");
     fi;
 
     if IsEmpty(src)  then

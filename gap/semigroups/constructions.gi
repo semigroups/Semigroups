@@ -173,12 +173,12 @@ function(arg)
     out := TrivialSemigroupCons(arg[1], arg[2]);
   else
     ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
-                 "the arguments must be a non-negative integer or ",
-                 "a filter and a non-negative\ninteger,");
+                  "the arguments must be a non-negative integer or ",
+                  "a filter and a non-negative\ninteger,");
   fi;
   if out = fail then
     ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
-                 "the requested filter is not supported,");
+                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(TrivialSemigroup, out, 0);
   return out;
@@ -271,14 +271,14 @@ function(arg)
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(r)
       or not IsOperation(filter) then
     ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
-                 "the arguments must be two positive integers or a filter ",
-                 "and a two positive\nintegers,");
+                  "the arguments must be two positive integers or a filter ",
+                  "and a two positive\nintegers,");
   fi;
 
   out := MonogenicSemigroupCons(filter, m, r);
   if out = fail then
     ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
-                 "the requested filter is not supported,");
+                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(MonogenicSemigroup, out, m, r);
   return out;
@@ -400,14 +400,14 @@ function(arg)
   if not IsBound(m) or not IsPosInt(m) or not IsPosInt(n)
       or not IsOperation(filter) then
     ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
-                 "the arguments must be two positive integers or a filter ",
-                 "and a two positive\nintegers,");
+                  "the arguments must be two positive integers or a filter ",
+                  "and a two positive\nintegers,");
   fi;
 
   out := RectangularBandCons(filter, m, n);
   if out = fail then
     ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
-                 "the requested filter is not supported,");
+                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(RectangularBand, out, m, n);
   return out;
@@ -531,14 +531,14 @@ function(arg)
 
   if not IsBound(n) or not IsPosInt(n) or not IsOperation(filter) then
     ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
-                 "the arguments must be a positive integer or a filter and a ",
-                 "positive integer,");
+                  "the arguments must be a positive integer or a filter and a ",
+                  "positive integer,");
   fi;
 
   out := ZeroSemigroupCons(filter, n);
   if out = fail then
     ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
-                 "the requested filter is not supported,");
+                  "the requested filter is not supported,");
   fi;
   SEMIGROUPS.StandardExampleApplyAttributes(ZeroSemigroup, out, n);
   return out;
@@ -648,7 +648,7 @@ function(filter, n)
 
   if n = 1 then
     ErrorNoReturn("Semigroups: ZeroSemigroupCons: usage:\n",
-                 "there is no Rees 0-matrix semigroup of order 1,");
+                  "there is no Rees 0-matrix semigroup of order 1,");
   fi;
   mat := [[1 .. n - 1] * 0];
   return ReesZeroMatrixSemigroup(Group(()), mat);
@@ -676,8 +676,8 @@ function(arg)
     out := RectangularBand(IsTransformationSemigroup, arg[1], 1);
   else
     ErrorNoReturn("Semigroups: LeftZeroSemigroup: usage,\n",
-                 "the arguments must be a positive integer or ",
-                 "a filter and a positive integer,");
+                  "the arguments must be a positive integer or ",
+                  "a filter and a positive integer,");
   fi;
   return out;
 end);
@@ -693,8 +693,8 @@ function(arg)
     out := RectangularBand(IsTransformationSemigroup, 1, arg[1]);
   else
     ErrorNoReturn("Semigroups: RightZeroSemigroup: usage,\n",
-                 "the arguments must be a positive integer or ",
-                 "a filter and a positive integer,");
+                  "the arguments must be a positive integer or ",
+                  "a filter and a positive integer,");
   fi;
   return out;
 end);

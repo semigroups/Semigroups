@@ -75,7 +75,7 @@ function(cong1, cong2)
   local join;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
     ErrorNoReturn("Semigroups: JoinSemigroupCongruences: usage,\n",
-                 "<cong1> and <cong2> must be over the same semigroup,");
+                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   join := JoinSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, join);
@@ -90,7 +90,7 @@ function(cong1, cong2)
   local meet;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
     ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
-                 "<cong1> and <cong2> must be over the same semigroup,");
+                  "<cong1> and <cong2> must be over the same semigroup,");
   fi;
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, meet);
@@ -107,12 +107,12 @@ function(pair, cong)
     S := Range(cong);
     if Size(pair) <> 2 then
       ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                   "the first arg <pair> must be a list of length 2,");
+                    "the first arg <pair> must be a list of length 2,");
     fi;
     if not (pair[1] in S and pair[2] in S) then
       ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                   "elements of the first arg <pair> must be\n",
-                   "in the range of the second arg <cong>,");
+                    "elements of the first arg <pair> must be\n",
+                    "in the range of the second arg <cong>,");
     fi;
   return [pair[1] ^ cong!.iso, pair[2] ^ cong!.iso] in cong!.rmscong;
 end);
@@ -145,7 +145,7 @@ InstallMethod(EquivalenceClassOfElement,
 function(cong, elm)
   if not elm in Range(cong) then
     ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                 "<elm> must be an element of the range of <cong>,");
+                  "<elm> must be an element of the range of <cong>,");
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
