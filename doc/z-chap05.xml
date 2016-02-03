@@ -102,10 +102,13 @@
     operations which apply to every matrix over one of the semirings given at
     the start of this chapter.<P/>
 
-    There are several special methods for boolean matrices and matrices over
-    finite fields, which can be found in Sections 
-    <Ref Sect = "Boolean matrices"/> and 
-    <Ref Sect = "Matrices over finite fields"/>
+    There are several special methods for boolean matrices, which can be found
+    in Section <Ref Sect = "Boolean matrices"/>.
+
+    <!--
+    There are also several special methods for finite fields, which can be found
+    in section <Ref Sect = "Matrices over finite fields"/>.
+    -->
 
     <#Include Label = "Matrix">
     <#Include Label = "AsMatrix"/>
@@ -229,7 +232,7 @@
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-    
+  <!--
   <Section Label = "Matrices over finite fields">
     <Heading>
       Matrices over finite fields
@@ -242,7 +245,7 @@
     <#Include Label = "BaseField">
 
   </Section>
-  
+  -->
   <!--**********************************************************************-->
   <!--**********************************************************************-->
     

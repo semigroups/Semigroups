@@ -39,9 +39,13 @@
       <C>1</C> and the dimension of the matrix, it also possible to loop over
       the rows of a matrix; for tropical matrices <Ref
         Attr = "ThresholdTropicalMatrix"/>; for ntp matrices <Ref
-        Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>; for
-      matrices over finite fields <Ref Attr = "BaseField"/>; for Boolean matrices
-      more details can be found in Section <Ref Sect = "Boolean matrices"/>.
+        Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>.
+
+      <!--
+      For matrices over finite fields <Ref Attr = "BaseField"/>; for Boolean
+      matrices more details can be found in
+      Section <Ref Sect = "Boolean matrices"/>.
+      -->
     </Description>
   </ManSection>
 <#/GAPDoc>
