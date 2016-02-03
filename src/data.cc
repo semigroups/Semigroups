@@ -47,9 +47,6 @@ DataType data_type (Obj data) {
         return NTP_MAT;
       } else if (IS_INT_MAT(x)) {
         return INT_MAT;
-      } else if (IS_MAT_OVER_PF(x)) {
-        // TODO handle non-prime fields too!
-        return MAT_OVER_PF;
       } else if (IS_PBR(x)) {
         return PBR_TYPE;
       }
@@ -152,11 +149,6 @@ void data_init_converter (Obj data) {
                                                         ProjectiveMaxPlusMatrixType);
       break;
 
-    }
-    case MAT_OVER_PF:{
-      converter = new MatrixOverPrimeFieldConverter(new PrimeField(data_size_ff(data)),
-                                                    MatrixOverPrimeFieldType);
-      break;
     }
     case PBR_TYPE:{
       converter = new PBRConverter();
@@ -292,7 +284,7 @@ long data_period (Obj data) {
 *
 *******************************************************************************/
 
-long data_size_ff (Obj data) {
+/*long data_size_ff (Obj data) {
   Obj x = data_rep(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
   assert(IS_MAT_OVER_PF(x));
@@ -300,7 +292,7 @@ long data_size_ff (Obj data) {
   assert(IS_PLIST(ELM_PLIST(x, 1)));
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
-}
+}*/
 
 /*******************************************************************************
 *

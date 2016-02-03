@@ -79,7 +79,6 @@ inline bool IS_GAP_BLOCKS_BAG (Obj o) {
 #define IS_PROJ_MAX_PLUS_MAT(x)  (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True)
 #define IS_NTP_MAT(x)            (CALL_1ARGS(IsNTPMatrix, x) == True)
 #define IS_INT_MAT(x)            (CALL_1ARGS(IsIntegerMatrix, x) == True)
-#define IS_MAT_OVER_PF(x)        (CALL_1ARGS(IsMatrixOverPrimeField, x) == True)
 #define IS_PBR(x)                (CALL_1ARGS(IsPBR, x) == True)
 
 /*******************************************************************************
@@ -110,8 +109,6 @@ extern Obj IsNTPMatrix;
 extern Obj NTPMatrixType;
 extern Obj IsIntegerMatrix;
 extern Obj IntegerMatrixType;
-extern Obj IsMatrixOverPrimeField;
-extern Obj MatrixOverPrimeFieldType;
 extern Obj IsPBR;
 extern Obj PBRType;
 

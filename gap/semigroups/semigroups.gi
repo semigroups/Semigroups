@@ -809,7 +809,7 @@ end);
 
 SEMIGROUPS.RandomElementCons := function(filt)
   local RandomTropicalMaxPlusMatrix, RandomTropicalMinPlusMatrix,
-  RandomProjectiveMaxPlusMatrix, RandomNTPMatrix, RandomMatrixOverPrimeField;
+  RandomProjectiveMaxPlusMatrix, RandomNTPMatrix;
 
   if not filt in SEMIGROUPS.SemigroupTypes then
     ErrorMayQuit("Semigroups: SEMIGROUPS.RandomElementCons: usage,\n");
@@ -829,10 +829,6 @@ SEMIGROUPS.RandomElementCons := function(filt)
 
   RandomNTPMatrix := function(dim, threshold, period)
     return RandomMatrix(IsNTPMatrix, dim, threshold, period);
-  end;
-
-  RandomMatrixOverPrimeField := function(dim, field)
-    return RandomMatrix(field, dim);
   end;
 
   if filt = IsTransformationSemigroup then
