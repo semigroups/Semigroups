@@ -241,38 +241,38 @@ Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
 gap> Unbind(I);
-gap> Unbind(cong);
-gap> Unbind(cc);
-gap> Unbind(ccong);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
-gap> Unbind(t);
-gap> Unbind(im);
-gap> Unbind(yclass);
-gap> Unbind(tclass);
-gap> Unbind(xclass);
-gap> Unbind(xxclass);
 gap> Unbind(J);
-gap> Unbind(ci);
-gap> Unbind(cj);
-gap> Unbind(class1);
-gap> Unbind(class2);
 gap> Unbind(K);
-gap> Unbind(ck);
+gap> Unbind(S);
+gap> Unbind(T);
 gap> Unbind(c);
-gap> Unbind(pairs);
-gap> Unbind(i1);
-gap> Unbind(i2);
-gap> Unbind(i3);
 gap> Unbind(c1);
 gap> Unbind(c2);
 gap> Unbind(c3);
-gap> Unbind(T);
-gap> Unbind(i4);
 gap> Unbind(c4);
+gap> Unbind(cc);
+gap> Unbind(ccong);
+gap> Unbind(ci);
+gap> Unbind(cj);
+gap> Unbind(ck);
+gap> Unbind(class1);
+gap> Unbind(class2);
+gap> Unbind(cong);
+gap> Unbind(i1);
+gap> Unbind(i2);
+gap> Unbind(i3);
+gap> Unbind(i4);
+gap> Unbind(im);
+gap> Unbind(pairs);
+gap> Unbind(t);
+gap> Unbind(tclass);
+gap> Unbind(x);
+gap> Unbind(xclass);
+gap> Unbind(xxclass);
+gap> Unbind(y);
+gap> Unbind(yclass);
+gap> Unbind(z);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congrees.tst");

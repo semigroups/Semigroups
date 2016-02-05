@@ -88,16 +88,16 @@ gap> SemigroupCongruence(s, [s.1, s.1 * s.2]);
  of size 5, rank 2 with 2 generators>>
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(pairs);
-gap> Unbind(classy);
-gap> Unbind(q);
-gap> Unbind(s);
-gap> Unbind(classz);
 gap> Unbind(ccong);
 gap> Unbind(classx);
+gap> Unbind(classy);
+gap> Unbind(classz);
 gap> Unbind(cong);
-gap> Unbind(y);
+gap> Unbind(pairs);
+gap> Unbind(q);
+gap> Unbind(s);
 gap> Unbind(x);
+gap> Unbind(y);
 gap> Unbind(z);
 
 #E# 

@@ -260,5 +260,12 @@ gap> I := SemigroupIdeal(S, x, rec(generic := false));;
 gap> SemigroupIdealData(I);
 <closed semigroup ideal data with 10 reps, 10 lambda-values, 8 rho-values>
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(I);
+gap> Unbind(J);
+gap> Unbind(S);
+gap> Unbind(x);
+gap> Unbind(y);
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/ideals-acting.tst");

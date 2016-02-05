@@ -382,7 +382,9 @@ gap> x < PBR([[-1, 1], [-3, 2], [-2, 3]], [[-1, 1], [-2, 3], [-3, 2]]);
 false
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
 gap> Unbind(x);
+gap> Unbind(y);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/pbr.tst");

@@ -322,5 +322,11 @@ gap> S := Semigroup(Matrix(IsIntegerMatrix,
 gap> IsFinite(S);
 true
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(mat);
+gap> Unbind(mat2);
+gap> Unbind(mat3);
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/maxplusmat.tst");

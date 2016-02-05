@@ -178,8 +178,11 @@ Error, Semigroups: Factorization: usage,
 the third arg <perm> does not belong to the Schutzenberger group,
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(s);
+gap> Unbind(S);
 gap> Unbind(gens);
+gap> Unbind(o);
+gap> Unbind(s);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/factor.tst");

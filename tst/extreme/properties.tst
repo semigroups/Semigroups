@@ -911,18 +911,19 @@ gap> IsZeroSemigroup(I);
 true
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(I);
 gap> Unbind(S);
-gap> Unbind(rms);
 gap> Unbind(d);
 gap> Unbind(g);
-gap> Unbind(f);
+gap> Unbind(gens);
 gap> Unbind(i);
 gap> Unbind(inv);
-gap> Unbind(j);
-gap> Unbind(gens);
-gap> Unbind(iter);
-gap> Unbind(s);
 gap> Unbind(iso);
+gap> Unbind(iter);
+gap> Unbind(j);
+gap> Unbind(rms);
+gap> Unbind(s);
+gap> Unbind(semis);
 gap> Unbind(t);
 
 #E#

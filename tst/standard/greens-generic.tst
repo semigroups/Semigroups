@@ -1595,5 +1595,21 @@ Mat\<, \>[\>\>[1, 1, 0]\<, \<\>\>[1, 0, 1]\<, \<\>\>[0, 1, 1]\<\<]\<)\<\<\<\> \
 )\<,\< \>\>\>Matrix(\<\>IsBooleanMat\<, \>[\>\>[0, 1, 0]\<, \<\>\>[0, 0, 1]\<,\
  \<\>\>[1, 0, 0]\<\<]\<)\<\<)\<\<"
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(D);
+gap> Unbind(DD);
+gap> Unbind(DDD);
+gap> Unbind(H);
+gap> Unbind(J);
+gap> Unbind(L);
+gap> Unbind(L3);
+gap> Unbind(LL);
+gap> Unbind(R);
+gap> Unbind(RR);
+gap> Unbind(RRR);
+gap> Unbind(S);
+gap> Unbind(x);
+gap> Unbind(y);
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/greens-generic.tst");

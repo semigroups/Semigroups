@@ -438,5 +438,11 @@ gap> mat[4];
 Error, Semigroups: ELM_LIST (for a matrix over semiring):
 the position is greater than the dimension of the matrix,
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(ht);
+gap> Unbind(iter);
+gap> Unbind(mat);
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/semiringmat.tst");

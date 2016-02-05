@@ -236,17 +236,16 @@ false
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
-gap> Unbind(g);
 gap> Unbind(f);
-gap> Unbind(i);
-gap> Unbind(inv);
+gap> Unbind(g);
 gap> Unbind(gens);
-gap> Unbind(s);
+gap> Unbind(inv);
 gap> Unbind(iso);
-gap> Unbind(y);
-gap> Unbind(x);
-gap> Unbind(z);
+gap> Unbind(s);
 gap> Unbind(u);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
 
 #E#
 gap> Unbind(s);; Unbind(S);; Unbind(gens);;

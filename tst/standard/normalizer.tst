@@ -176,6 +176,7 @@ gap> SEMIGROUPS.NonDeterministicNormalizer(Group(()), S,
 Group(())
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/normalizer.tst");

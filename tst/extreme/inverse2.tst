@@ -1035,27 +1035,24 @@ gap> Size(s);
 686
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(D);
+gap> Unbind(IsIsometryPP);
+gap> Unbind(L);
+gap> Unbind(R);
+gap> Unbind(S);
 gap> Unbind(d);
 gap> Unbind(f);
-gap> Unbind(S);
-gap> Unbind(h);
-gap> Unbind(inv);
-gap> Unbind(j);
-gap> Unbind(m);
-gap> Unbind(l);
-gap> Unbind(iter);
 gap> Unbind(gens);
-gap> Unbind(i);
-gap> Unbind(s);
-gap> Unbind(r);
-gap> Unbind(iso);
-gap> Unbind(n);
-gap> Unbind(R);
-gap> Unbind(IsIsometryPP);
+gap> Unbind(h);
 gap> Unbind(hh);
-gap> Unbind(k);
-gap> Unbind(L);
-gap> Unbind(D);
+gap> Unbind(i);
+gap> Unbind(inv);
+gap> Unbind(iso);
+gap> Unbind(iter);
+gap> Unbind(l);
+gap> Unbind(m);
+gap> Unbind(r);
+gap> Unbind(s);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/inverse.tst");

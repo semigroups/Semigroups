@@ -293,30 +293,22 @@ gap> empty_map in s;
 false
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(F);
+gap> Unbind(H1);
+gap> Unbind(J);
 gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(V);
 gap> Unbind(enum);
-gap> Unbind(sets);
+gap> Unbind(f);
 gap> Unbind(f1);
 gap> Unbind(f2);
-gap> Unbind(f3);
-gap> Unbind(I5);
-gap> Unbind(B);
-gap> Unbind(F);
-gap> Unbind(J);
-gap> Unbind(L);
-gap> Unbind(T);
-gap> Unbind(rho);
-gap> Unbind(V);
-gap> Unbind(g);
-gap> Unbind(f);
-gap> Unbind(H2);
 gap> Unbind(h);
-gap> Unbind(H1);
 gap> Unbind(iso);
-gap> Unbind(y);
-gap> Unbind(x);
+gap> Unbind(map);
+gap> Unbind(rho);
 gap> Unbind(s);
-gap> Unbind(empty_map);
+gap> Unbind(sets);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/semipperm.tst");

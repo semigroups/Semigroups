@@ -415,12 +415,13 @@ gap> a;
 [ 2346, 3316, 3593, 3767, 4000, 4191, 4290, 4747 ]
 
 # TODO check in a smaller example that the presentation is correct
+
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(i);
-gap> Unbind(s);
 gap> Unbind(S);
+gap> Unbind(T);
 gap> Unbind(a);
 gap> Unbind(gens);
+gap> Unbind(s);
 gap> Unbind(t);
 
 #E# 

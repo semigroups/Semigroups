@@ -24,5 +24,8 @@ gap> S := Semigroup(AsPartialPermSemigroup(AlternatingGroup(8)),
 gap> Size(S);
 1421569
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+
 #E#
 gap> STOP_TEST("Semigroups package: extreme/semigroups.tst");

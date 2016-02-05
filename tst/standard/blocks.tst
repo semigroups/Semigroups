@@ -149,5 +149,13 @@ gap> BLOCKS_INV_LEFT(blocks, x);
 <bipartition: [ 1, 2, 6 ], [ 3, 4, 5, -1, -2, -3, -4, -5, -6, -7, -8 ], 
  [ 7, 8 ]>
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(a);
+gap> Unbind(b);
+gap> Unbind(blocks);
+gap> Unbind(x);
+gap> Unbind(y);
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/blocks.tst");
