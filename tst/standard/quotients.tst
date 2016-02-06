@@ -50,6 +50,30 @@ gap> T := S / I;;
 gap> Size(T);
 25
 
+#T# quotients, PROD_SCL_LIST_DEFAULT, PROD_LIST_SCL_DEFAULT
+gap> S := Semigroup([Matrix(IsTropicalMaxPlusMatrix, [[0, 0], [1, 1]], 2),
+>  Matrix(IsTropicalMaxPlusMatrix, [[1, 2], [0, - infinity]], 2),
+>  Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [1, 0]], 2)]);
+<semigroup of 2x2 tropical max-plus matrices with 3 generators>
+gap> cong := SemigroupCongruence(S, [S.3, S.1]);
+<semigroup congruence over <semigroup of 2x2 tropical max-plus matrices with 
+ 3 generators> with 1 generating pairs>
+gap> T := S / cong;;
+gap> AsList(T) * T.1;
+[ <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [2, 2]], 2)>, 
+  <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 0]], 2)>, 
+  <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [2, 2]], 2)> ]
+gap> T.1 * AsList(T);
+[ <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [2, 2]], 2)>, 
+  <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[1, 2], [2, 2]], 2)>, 
+  <congruence class of Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [2, 2]], 2)> ]
+gap> GreensRClasses(S) * T.1;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `*' on 2 arguments
+gap> T.1 * GreensRClasses(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `*' on 2 arguments
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(x);
 
