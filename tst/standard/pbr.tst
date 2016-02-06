@@ -425,7 +425,7 @@ gap> x := PBR([[-82, -53, -35, 44, 53, 69], [4, 30, 34, 47, 76], [94], [],
 >      [-81, 86, 92], [37], [-10, 72]]);;
 gap> filename := Concatenation(SEMIGROUPS.PackageDir, "/tst/standard/pbr.gz");;
 gap> WriteGenerators(filename, [x]);
-true
+IO_OK
 gap> x = ReadGenerators(filename)[1];
 true
 gap> Exec("rm ", filename);
