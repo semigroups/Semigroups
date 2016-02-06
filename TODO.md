@@ -4,8 +4,7 @@
 
 ###TODO C++
 * use positional rather than component object for bipartitions/blocks?? (This will likely speed things up)
-* better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
-* enumerator sorted
+
 * ideals (look at semigroupe)
 * multiplicative zero
 
@@ -56,6 +55,8 @@
 * a method for `SEMIGROUPS_AddGenerators` for acting semigroups?
 
 ##DONE
+* better enumerator method for C++ semigroups (don't transfer everything from C++ to GAP just transfer the `enum[pos]` value)
+* enumerator sorted
 * `ReadGenerators` and `WriteGenerators` for new types
 * `HallMatrixMonoid`
 * `ReflexiveBooleanMatrixMonoid`
