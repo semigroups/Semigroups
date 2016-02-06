@@ -1314,11 +1314,14 @@ Obj BIPART_NR_IDEMPOTENTS (Obj self,
                            Obj o,
                            Obj scc,
                            Obj lookup,
-                           Obj nr_threads) {
+                           Obj nr_threads, 
+                           Obj report) {
 
-
-  std::vector<size_t>* vals = NrIdempotentsFinder(o, scc, lookup,
-      INT_INTOBJ(nr_threads), True).go();
+  std::vector<size_t>* vals = NrIdempotentsFinder(o, 
+                                                  scc, 
+                                                  lookup,
+                                                  INT_INTOBJ(nr_threads), 
+                                                  report).go();
   
   Obj out = NEW_PLIST(T_PLIST_CYC, vals->size());
   SET_LEN_PLIST(out, vals->size());
@@ -1329,27 +1332,4 @@ Obj BIPART_NR_IDEMPOTENTS (Obj self,
   delete vals;
   
   return out;
-}
-
-Obj BIPART_NR_IDEMPOTENTS2 (Obj self,
-                            Obj o,
-                            Obj scc,
-                            Obj lookup) {
-  timer.start();
-  size_t nr = 0;
-  for (Int i = 2; i <= LEN_LIST(o); i++) {
-    Obj vals = ELM_PLIST(scc, INT_INTOBJ(ELM_PLIST(lookup, i)));
-    Obj x    = ELM_LIST(o, i);
-    for (Int j = 1; j <= LEN_PLIST(vals); j++) {
-      if (BLOCKS_E_TESTER(self,
-            x,
-            ELM_LIST(o, INT_INTOBJ(ELM_PLIST(vals, j)))) == True) {
-        nr++;
-      }
-    }
-  }
-  
-  timer.stop();
-
-  return INTOBJ_INT(nr);
 }

@@ -853,10 +853,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "blocks, x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_INV_RIGHT, 2,
                           "blocks, x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_IDEMPOTENTS, 4,
-                          "o, scc, lookup, nr_threads"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_IDEMPOTENTS2, 3,
-                          "o, scc, lookup"),
+    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_IDEMPOTENTS, 5,
+                          "o, scc, lookup, nr_threads, report"),
     { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
 };
 

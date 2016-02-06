@@ -65,7 +65,6 @@ Obj BLOCKS_RIGHT_ACT      (Obj, Obj, Obj);
 Obj BLOCKS_INV_LEFT       (Obj, Obj, Obj);
 Obj BLOCKS_INV_RIGHT      (Obj, Obj, Obj);
 
-Obj BIPART_NR_IDEMPOTENTS  (Obj, Obj, Obj, Obj, Obj);
-Obj BIPART_NR_IDEMPOTENTS2 (Obj, Obj, Obj, Obj);
+Obj BIPART_NR_IDEMPOTENTS  (Obj, Obj, Obj, Obj, Obj, Obj);
 
 #endif // SRC_BIPART_H_
