@@ -3,46 +3,10 @@
 
 
 ###TODO C++
-* use positional rather than component object for bipartitions/blocks?? (This will likely speed things up)
-
-* ideals (look at semigroupe)
-* multiplicative zero
-
-* remove `auto`, use `override`: done in:
-    * `element.h`
-* whitespace: done in:
-    * `element.h`
-* documentation and comments: 
-
-* use namespace in the C++ code
-* optimize
-
-* check for memleaks
-* gmp problems?
-
 
 ###GAP kernel
-* SEMIGROUP_IDEMPOTENTS
-
-* register TNUM: [https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c](https://github.com/gap-packages/RegisterPackageTNUMDemo/blob/master/src/RegisterPackageTNUMDemo.c)
-* use `ConvertElements` and `UnconvertElements`
-* reporting in the generic Froidure-Pin method
-* a new GAP kernel version of the C++ code !
-* `T_PLIST_TAB` instead of `T_PLIST`? Double-check this is ok, and then implement if it is.
 
 ###GAP
-* embedding transformation semigroups into max-plus etc semigroups.
-* `AsSemigroup` instead of `AsTransformationSemigroup` etc
-* fix the ViewString method for graph inverse semigroup
-* `AsTransformationSemigroup` for a pbr semigroup seems slow.
-* Add `IsFinite` check to start of appropriate methods and add tests
-* remove `genstoapply` from the the generic semigroup data
-* add tests for all Semigroupe manual example things
-* `IsRectangularGroup` <=> `IsOrthodox` and `IsSimple`
-* `CatalanMonoid`
-* update `Factorization` method for lambda orb, scc index and perm to use `MinimalFactorization` on the Schutzenberger group
-* get rid of `*Data` roll semigroups-generic into semigroups.gi
-* closure of generic inverse semigroups
 
 ##DO LATER
 * `Idempotents(S, 1)` for non-acting semigroups (I don't think this makes sense in general, what is the 1 for?)
@@ -107,7 +71,6 @@
 * make 2.6 branch with new style Green's class printing in tests.
 
 
-
 #Gaplint - Notes#
 
 * `NrLeftBlocks`, `NrBlocks` are in gaplint_ignore since the every way to create 
@@ -125,9 +88,3 @@
   (somehow) and then use `RightCayleyGraphSemigroup`...
 * `HasGeneratorsOfMagmaIdeal` has been changed to `HasGeneratorsOfSemigroupIdeal`
   in lots of places.
-
-#New features in this branch:#
-
-* `IsSemigroupWithInverseOp` 
-* `SEMIGROUPS_OptionsRec` is an attribute, has a component generic which is set to
-  true or false
