@@ -166,25 +166,28 @@ Error, Semigroups: Matrix: usage,
 the entries in the 2nd argument do not define a matrix of type IsIntegerMatrix\
 ,
 
-#T# semiringmat: RandomMatrix, 1/6
+#T# semiringmat: RandomMatrix, 1
 gap> RandomMatrix(IsIntegerMatrix, 2);;
 
-#T# semiringmat: RandomMatrix, 2/6
+#T# semiringmat: RandomMatrix, 2
 gap> RandomMatrix(IsTropicalMaxPlusMatrix, 2, 2);;
 
-#T# semiringmat: RandomMatrix, 3/6
+#T# semiringmat: RandomMatrix, 3
 gap> RandomMatrix(IsNTPMatrix, 2, 2, 2);;
 
-# #T# semiringmat: RandomMatrix, 4/6
+# #T# semiringmat: RandomMatrix, 4
 # gap> RandomMatrix(GF(7), 2);;
 #
-# #T# semiringmat: RandomMatrix, 5/6
+# #T# semiringmat: RandomMatrix, 5
 # gap> RandomMatrix(7, 2);;
 
-#T# semiringmat: RandomMatrix, 6/6
+#T# semiringmat: RandomMatrix, 6
 gap> RandomMatrix(7, 2, 3);
 Error, Semigroups: RandomMatrix: usage,
 the arguments must be: filter, pos int[, pos int[, pos int]],
+
+#T# semiringmat: RandomMatrix, for a semiring, 7
+gap> RandomMatrix(Integers, 20);;
 
 #T# semiringmat: PrintString, DisplayString for a collection
 gap> mat := Matrix(IsBooleanMat, [[1, 0, 0, 0],
@@ -281,7 +284,7 @@ gap> S := Semigroup(mat);
 <commutative semigroup of 9x9 tropical min-plus matrices with 1 generator>
 gap> Size(S);
 9
-gap> AsSet(S);
+gap> AsSet(AsList(S));
 [ <9x9 tropical min-plus matrix>, <9x9 tropical min-plus matrix>, 
   <9x9 tropical min-plus matrix>, <9x9 tropical min-plus matrix>, 
   <9x9 tropical min-plus matrix>, <9x9 tropical min-plus matrix>, 
@@ -413,6 +416,8 @@ gap> mat := AsMatrix(IsIntegerMatrix, mat);
 Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])
 gap> AsMatrix(IsNTPMatrix, mat, 1, 2);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)
+gap> AsMatrix(Integers, mat);
+Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])
 
 # semiringmat: Iterator, for a matrix over semiring 1/1
 gap> mat := Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]]);;
@@ -437,6 +442,36 @@ gap> mat[1];
 gap> mat[4];
 Error, Semigroups: ELM_LIST (for a matrix over semiring):
 the position is greater than the dimension of the matrix,
+
+#T# semiringmat, pickling
+gap> S := FullTropicalMaxPlusMonoid(2, 10);
+<monoid of 2x2 tropical max-plus matrices with 69 generators>
+gap> filename := Concatenation(SEMIGROUPS.PackageDir, "/tst/standard/fulltrop.gz");;
+gap> WriteGenerators(filename, [S]);
+IO_OK
+gap> S = Semigroup(ReadGenerators(filename)[1]);
+true
+
+#T# semiringmat, unpickling boolean mats
+gap> S := FullBooleanMatMonoid(4);
+<monoid of 4x4 boolean matrices with 7 generators>
+gap> filename := Concatenation(SEMIGROUPS.PackageDir, "/tst/standard/fulltrop.gz");;
+gap> WriteGenerators(filename, [S]);
+IO_OK
+gap> S = Semigroup(ReadGenerators(filename)[1]);
+true
+gap> Exec("rm ", filename);
+
+#T# semiringmat, IsGeneratorsOfSemigroup
+gap> coll := [Matrix(IsIntegerMatrix, [[-1, -1, 0, 3, 0], [-1, 1, 3, 0, 0],
+>      [-1, 0, 0, -1, 0], [0, 4, 4, 2, -1], [1, 1, 0, 3, 0]]),
+>  Matrix(IsIntegerMatrix, [[-3, 0, 0, 4, 0, 2], [-3, 1, 0, 0, 0, 4],
+>      [0, 1, 2, -3, 3, -1], [-2, 0, 0, 3, -1, 1], [0, -3, 3, -1, -1, 1],
+>      [1, 1, -2, 0, 0, 0]])];;
+gap> IsGeneratorsOfSemigroup(coll);
+false
+gap> IsGeneratorsOfSemigroup([coll[1]]);
+true
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/semiringmat.tst");
