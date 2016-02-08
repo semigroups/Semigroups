@@ -497,6 +497,10 @@ gap> AsBooleanMat(AsDigraph(mat)) = mat;
 true
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(blist);
+gap> Unbind(ht);
+gap> Unbind(mat);
 gap> Unbind(x);
 gap> Unbind(y);
 

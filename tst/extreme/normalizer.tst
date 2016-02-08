@@ -178,11 +178,8 @@ gap> Normalizer(S, rec(lambdastab := false, random := true));
 Group(())
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
-gap> Unbind(random);
-gap> Unbind(rhostab);
 gap> Unbind(G);
-gap> Unbind(lambdastab);
+gap> Unbind(S);
 
 #E#
 gap> STOP_TEST("Semigroups package: extreme/normalizer.tst");

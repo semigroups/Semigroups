@@ -149,5 +149,27 @@ gap> BLOCKS_INV_LEFT(blocks, x);
 <bipartition: [ 1, 2, 6 ], [ 3, 4, 5, -1, -2, -3, -4, -5, -6, -7, -8 ], 
  [ 7, 8 ]>
 
+# blocks: AsDigraph and CanonicalBlocks
+gap> x := Bipartition([[1, 4, 7, 8, 12, -1, -5, -14],
+> [2, 3, 5, 10, 15, -2, -4, -17], [6, 9, 17, 19, -9, -20],
+> [11, 20, -6, -8, -16], [13, 14, 16, 18, -12, -18], [-3, -7, -11, -19],
+> [-10, -13, -15]]);;
+gap> blocks := LeftBlocks(x);;
+gap> CanonicalBlocks(blocks);
+<blocks: [ 1*, 2* ], [ 3*, 6*, 5*, 4* ], [ 7*, 10*, 9*, 8* ], [ 11*, 15*, 14*,\
+ 13*, 12* ], [ 16*, 20*, 19*, 18*, 17* ]>
+gap> blocks := RightBlocks(x);;
+gap> CanonicalBlocks(blocks);
+<blocks: [ 1*, 2* ], [ 3*, 4* ], [ 5*, 7*, 6* ], [ 8*, 10*, 9* ], [ 11*, 13*, \
+12* ], [ 14, 16, 15 ], [ 17, 20, 19, 18 ]>
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(a);
+gap> Unbind(b);
+gap> Unbind(blocks);
+gap> Unbind(x);
+gap> Unbind(y);
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/blocks.tst");

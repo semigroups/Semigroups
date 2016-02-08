@@ -162,14 +162,14 @@ function(arg)
 
   for x in coll do
     if IO_Pickle(file, x) = IO_Error then
-      return false;
+      return IO_Error;
     fi;
   od;
 
   if IsString(arg[1]) then
     IO_Close(file);
   fi;
-  return true;
+  return IO_OK;
 end);
 
 SEMIGROUPS.ReadGeneratorsLine := function(line)

@@ -1472,8 +1472,14 @@ gap> IsNilpotentSemigroup(S);
 false
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
+gap> Unbind(D);
 gap> Unbind(I);
+gap> Unbind(J);
+gap> Unbind(R);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(gens);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/properties.tst");

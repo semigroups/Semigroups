@@ -368,11 +368,13 @@ gap> RandomPartialPerm(4) < SEMIGROUPS.UniversalFakeOne;
 false
 
 #T# UnbindVariables
-gap> Unbind(s);
-gap> Unbind(r);
+gap> Unbind(S);
+gap> Unbind(f);
 gap> Unbind(gens);
 gap> Unbind(iter);
-gap> Unbind(f);
+gap> Unbind(r);
+gap> Unbind(s);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/acting.tst");

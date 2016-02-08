@@ -296,26 +296,26 @@ gap> AsLookupTable(cong);
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
-gap> Unbind(cong);
+gap> Unbind(T);
 gap> Unbind(ccong);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
 gap> Unbind(classx);
 gap> Unbind(classy);
 gap> Unbind(classz);
-gap> Unbind(q);
-gap> Unbind(pairs);
-gap> Unbind(T);
-gap> Unbind(utrace);
-gap> Unbind(ttrace);
+gap> Unbind(cong);
 gap> Unbind(cong1);
 gap> Unbind(cong2);
 gap> Unbind(g);
-gap> Unbind(pair);
 gap> Unbind(min);
+gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);
+gap> Unbind(pairs);
+gap> Unbind(q);
+gap> Unbind(ttrace);
+gap> Unbind(utrace);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/conginv.tst");

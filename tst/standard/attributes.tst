@@ -1092,11 +1092,24 @@ Error, Semigroups: InjectionNormalizedPrincipalFactor: usage,
 the argument <D> must be a regular D-class,
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(D);
+gap> Unbind(G);
+gap> Unbind(GR);
+gap> Unbind(I);
+gap> Unbind(R);
 gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(coll);
+gap> Unbind(foo);
+gap> Unbind(gens);
+gap> Unbind(inv);
+gap> Unbind(iso);
+gap> Unbind(map);
 gap> Unbind(s);
 gap> Unbind(t);
-gap> Unbind(I);
-gap> Unbind(gens);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/attributes.tst");

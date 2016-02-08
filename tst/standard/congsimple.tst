@@ -179,21 +179,21 @@ Error, Semigroups: JoinSemigroupCongruences: usage,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
-gap> Unbind(congs);
-gap> Unbind(cong);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
+gap> Unbind(T);
 gap> Unbind(classes);
 gap> Unbind(classx);
 gap> Unbind(classy);
 gap> Unbind(classz);
-gap> Unbind(elms);
-gap> Unbind(q);
-gap> Unbind(pairs);
-gap> Unbind(T);
+gap> Unbind(cong);
 gap> Unbind(cong1);
 gap> Unbind(cong2);
+gap> Unbind(congs);
+gap> Unbind(elms);
+gap> Unbind(pairs);
+gap> Unbind(q);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congsimple.tst");

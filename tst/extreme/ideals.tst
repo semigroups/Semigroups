@@ -870,30 +870,30 @@ MappingByFunction( <transformation group of size 720, degree 6 with
 2) ]), <Attribute "PermutationOfImage">, function( x ) ... end )
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(ideals);
-gap> Unbind(gensL);
+gap> Unbind(A);
+gap> Unbind(B);
+gap> Unbind(C);
+gap> Unbind(I);
+gap> Unbind(J);
+gap> Unbind(K);
+gap> Unbind(L);
+gap> Unbind(M);
+gap> Unbind(R);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(U);
+gap> Unbind(a);
+gap> Unbind(data);
+gap> Unbind(gens);
+gap> Unbind(gensI);
 gap> Unbind(gensJ);
 gap> Unbind(gensK);
-gap> Unbind(gensI);
-gap> Unbind(A);
-gap> Unbind(C);
-gap> Unbind(B);
-gap> Unbind(I);
-gap> Unbind(K);
-gap> Unbind(J);
-gap> Unbind(M);
-gap> Unbind(L);
-gap> Unbind(S);
-gap> Unbind(R);
-gap> Unbind(U);
-gap> Unbind(T);
-gap> Unbind(data);
-gap> Unbind(a);
-gap> Unbind(gens);
+gap> Unbind(gensL);
+gap> Unbind(ideals);
+gap> Unbind(idems);
 gap> Unbind(o);
 gap> Unbind(s);
 gap> Unbind(x);
-gap> Unbind(idems);
 
 #E# 
 gap> STOP_TEST("Semigroups package: extreme/ideals.tst");

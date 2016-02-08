@@ -14,7 +14,8 @@ SEMIGROUPS.DefaultOptionsRec :=
       regular    := false,
       generic    := false,
       report     := true,
-      batch_size := 8192);
+      batch_size := 8192, 
+      nr_threads := 4);
 
 SEMIGROUPS.ProcessOptionsRec :=
 function(opts)
