@@ -1049,6 +1049,7 @@ gap> Unbind(i);
 gap> Unbind(inv);
 gap> Unbind(iso);
 gap> Unbind(iter);
+gap> Unbind(j);
 gap> Unbind(l);
 gap> Unbind(m);
 gap> Unbind(r);

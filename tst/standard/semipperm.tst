@@ -309,6 +309,8 @@ gap> Unbind(map);
 gap> Unbind(rho);
 gap> Unbind(s);
 gap> Unbind(sets);
+gap> Unbind(x);
+gap> Unbind(y);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/semipperm.tst");

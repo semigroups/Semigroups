@@ -224,6 +224,7 @@ gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(gens);
 gap> Unbind(ht);
+gap> Unbind(i);
 gap> Unbind(iter);
 gap> Unbind(list);
 gap> Unbind(new);

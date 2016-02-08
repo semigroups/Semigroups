@@ -1866,6 +1866,7 @@ gap> Unbind(g);
 gap> Unbind(gens);
 gap> Unbind(h);
 gap> Unbind(hh);
+gap> Unbind(i);
 gap> Unbind(idem);
 gap> Unbind(iter);
 gap> Unbind(iter1);
@@ -1884,6 +1885,7 @@ gap> Unbind(reps);
 gap> Unbind(rr);
 gap> Unbind(s);
 gap> Unbind(t);
+gap> Unbind(x);
 
 #E# 
 gap> STOP_TEST("Semigroups package: extreme/greens-acting.tst");

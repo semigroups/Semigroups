@@ -251,6 +251,7 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(gens);
+gap> Unbind(i);
 gap> Unbind(s);
 gap> Unbind(t);
 

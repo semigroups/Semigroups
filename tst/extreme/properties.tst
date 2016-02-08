@@ -914,6 +914,7 @@ true
 gap> Unbind(I);
 gap> Unbind(S);
 gap> Unbind(d);
+gap> Unbind(f);
 gap> Unbind(g);
 gap> Unbind(gens);
 gap> Unbind(i);

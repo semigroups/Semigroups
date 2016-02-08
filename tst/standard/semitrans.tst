@@ -106,6 +106,7 @@ false
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
+gap> Unbind(n);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/semitrans.tst");

@@ -421,8 +421,10 @@ gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(a);
 gap> Unbind(gens);
+gap> Unbind(i);
 gap> Unbind(s);
 gap> Unbind(t);
+gap> Unbind(x);
 
 #E# 
 gap> STOP_TEST("Semigroups package: extreme/closure.tst");

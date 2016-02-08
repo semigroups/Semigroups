@@ -4656,6 +4656,7 @@ gap> Unbind(g);
 gap> Unbind(gens);
 gap> Unbind(h);
 gap> Unbind(hh);
+gap> Unbind(i);
 gap> Unbind(iso);
 gap> Unbind(iter);
 gap> Unbind(l);

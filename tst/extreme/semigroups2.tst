@@ -239,6 +239,7 @@ gap> Unbind(S);
 gap> Unbind(f);
 gap> Unbind(g);
 gap> Unbind(gens);
+gap> Unbind(i);
 gap> Unbind(inv);
 gap> Unbind(iso);
 gap> Unbind(s);
