@@ -219,19 +219,19 @@ gap> IsFreeBand(Semigroup([gens[1] * gens[2], gens[1]]));
 false
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(ht);
 gap> Unbind(D);
-gap> Unbind(i);
-gap> Unbind(s);
-gap> Unbind(list);
-gap> Unbind(gens);
-gap> Unbind(iter);
-gap> Unbind(next);
 gap> Unbind(S);
 gap> Unbind(T);
+gap> Unbind(gens);
+gap> Unbind(ht);
+gap> Unbind(i);
+gap> Unbind(iter);
+gap> Unbind(list);
 gap> Unbind(new);
-gap> Unbind(y);
+gap> Unbind(next);
+gap> Unbind(s);
 gap> Unbind(x);
+gap> Unbind(y);
 gap> Unbind(z);
 
 #E#

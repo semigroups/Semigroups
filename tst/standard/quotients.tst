@@ -75,7 +75,11 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `*' on 2 arguments
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(x);
+gap> Unbind(I);
+gap> Unbind(J);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(cong);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/quotients.tst");

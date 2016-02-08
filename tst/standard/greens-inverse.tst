@@ -470,12 +470,13 @@ gap> e[1] in e;
 true
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
 gap> Unbind(D);
-gap> Unbind(R);
 gap> Unbind(L);
-gap> Unbind(H);
+gap> Unbind(R);
+gap> Unbind(S);
+gap> Unbind(e);
 gap> Unbind(x);
+gap> Unbind(y);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/greens-inverse.tst");

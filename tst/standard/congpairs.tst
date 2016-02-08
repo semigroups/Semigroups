@@ -381,22 +381,21 @@ true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
-gap> Unbind(x);
-gap> Unbind(gens);
-gap> Unbind(cong);
+gap> Unbind(T);
 gap> Unbind(class);
+gap> Unbind(classes);
+gap> Unbind(cong);
 gap> Unbind(cong2);
 gap> Unbind(enum);
-gap> Unbind(T);
-gap> Unbind(u);
-gap> Unbind(v);
-gap> Unbind(classes);
+gap> Unbind(gens);
+gap> Unbind(l);
+gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);
-gap> Unbind(pair);
 gap> Unbind(pairs);
-gap> Unbind(l);
-gap> Unbind(info);
+gap> Unbind(u);
+gap> Unbind(v);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congpairs.tst");

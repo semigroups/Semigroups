@@ -935,10 +935,19 @@ the argument is not a collection of partial perms, block bijections,
 or partial perm bipartitions,
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(D);
+gap> Unbind(I);
 gap> Unbind(S);
-gap> Unbind(iso);
-gap> Unbind(h);
+gap> Unbind(T);
+gap> Unbind(W);
 gap> Unbind(f);
+gap> Unbind(foo);
+gap> Unbind(gens);
+gap> Unbind(h);
+gap> Unbind(iso);
+gap> Unbind(jid);
+gap> Unbind(reps);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST(Concatenation("Semigroups package: ",

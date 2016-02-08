@@ -3272,23 +3272,25 @@ gap> l := LatticeOfCongruences(S);
   [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12 ] ]
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(c);
-gap> Unbind(classy);
-gap> Unbind(gens);
-gap> Unbind(q);
 gap> Unbind(P);
-gap> Unbind(s);
-gap> Unbind(classes);
-gap> Unbind(classz);
-gap> Unbind(classx);
-gap> Unbind(cong);
-gap> Unbind(y);
-gap> Unbind(x);
 gap> Unbind(R);
-gap> Unbind(z);
+gap> Unbind(S);
+gap> Unbind(c);
+gap> Unbind(classes);
+gap> Unbind(classx);
+gap> Unbind(classy);
+gap> Unbind(classz);
+gap> Unbind(cong);
+gap> Unbind(gens);
+gap> Unbind(l);
+gap> Unbind(q);
+gap> Unbind(s);
 gap> Unbind(t);
 gap> Unbind(u);
 gap> Unbind(v);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
 
 #E#
 gap> STOP_TEST("Semigroups package: extreme/pairs.tst");

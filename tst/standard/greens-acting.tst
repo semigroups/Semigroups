@@ -1616,5 +1616,22 @@ gap> H := HClass(S,
 gap> SchutzenbergerGroup(H);
 Group(())
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(D);
+gap> Unbind(DD);
+gap> Unbind(DDD);
+gap> Unbind(H);
+gap> Unbind(L);
+gap> Unbind(L3);
+gap> Unbind(LL);
+gap> Unbind(R);
+gap> Unbind(RR);
+gap> Unbind(RRR);
+gap> Unbind(S);
+gap> Unbind(enum);
+gap> Unbind(iter);
+gap> Unbind(x);
+gap> Unbind(y);
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/greens-acting.tst");

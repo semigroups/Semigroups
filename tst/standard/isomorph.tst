@@ -83,6 +83,8 @@ gap> IsIsomorphicSemigroup(S, T);
 false
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(T);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/isomorph.tst");

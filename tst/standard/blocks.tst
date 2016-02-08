@@ -163,5 +163,13 @@ gap> CanonicalBlocks(blocks);
 <blocks: [ 1*, 2* ], [ 3*, 4* ], [ 5*, 7*, 6* ], [ 8*, 10*, 9* ], [ 11*, 13*, \
 12* ], [ 14, 16, 15 ], [ 17, 20, 19, 18 ]>
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(a);
+gap> Unbind(b);
+gap> Unbind(blocks);
+gap> Unbind(x);
+gap> Unbind(y);
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/blocks.tst");

@@ -369,5 +369,17 @@ gap> PreImagesRepresentative(G.2, R.1);
 gap> ImagesElm(G.2, R.1);
 [ (1,(),1) ]
 
-#E# SEMIGROUPS_UnbindVariables
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(G);
+gap> Unbind(H);
+gap> Unbind(I);
+gap> Unbind(R);
+gap> Unbind(R1);
+gap> Unbind(R2);
+gap> Unbind(S);
+gap> Unbind(func);
+gap> Unbind(mat);
+gap> Unbind(mat1);
+
+#E#
 gap> STOP_TEST("Semigroups package: standard/reesmat-iso.tst");

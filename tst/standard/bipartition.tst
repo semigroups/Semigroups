@@ -597,33 +597,22 @@ gap> AsBipartition(PBR(
 gap> ForAll([1 .. 20], x -> IsBlockBijection(RandomBlockBijection(x)));
 true
 
-#
-gap> Unbind(elts);
-gap> Unbind(DD);
-gap> Unbind(gens);
-gap> Unbind(HH);
-gap> Unbind(LL);
-gap> Unbind(r);
-gap> Unbind(inv);
-gap> Unbind(triples);
-gap> Unbind(D);
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
-gap> Unbind(H);
-gap> Unbind(L);
 gap> Unbind(N);
 gap> Unbind(S);
-gap> Unbind(R);
 gap> Unbind(bp);
-gap> Unbind(T);
-gap> Unbind(e);
-gap> Unbind(g);
-gap> Unbind(classes2);
-gap> Unbind(f);
-gap> Unbind(l);
-gap> Unbind(s);
 gap> Unbind(classes);
-gap> Unbind(iso);
+gap> Unbind(classes2);
+gap> Unbind(e);
+gap> Unbind(elts);
+gap> Unbind(f);
+gap> Unbind(g);
+gap> Unbind(l);
+gap> Unbind(r);
+gap> Unbind(triples);
 gap> Unbind(x);
+gap> Unbind(y);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/bipartition.tst");

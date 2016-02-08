@@ -572,37 +572,37 @@ Error, Semigroups: IsLinkedTriple: usage,
 the first arg <S> must be a finite simple Rees matrix semigroup,
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(g);
-gap> Unbind(mat);
 gap> Unbind(S);
-gap> Unbind(congs);
-gap> Unbind(n);
-gap> Unbind(colBlocks);
-gap> Unbind(rowBlocks);
-gap> Unbind(cong);
-gap> Unbind(cong2);
 gap> Unbind(T);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
-gap> Unbind(t);
-gap> Unbind(ims);
-gap> Unbind(classes);
+gap> Unbind(badCoset);
+gap> Unbind(ccong);
+gap> Unbind(class);
+gap> Unbind(class0);
 gap> Unbind(class1);
 gap> Unbind(class2);
 gap> Unbind(class3);
+gap> Unbind(classes);
 gap> Unbind(classother);
-gap> Unbind(nCoset);
-gap> Unbind(class);
-gap> Unbind(badCoset);
+gap> Unbind(colBlocks);
+gap> Unbind(cong);
 gap> Unbind(cong1);
-gap> Unbind(q);
-gap> Unbind(ccong);
-gap> Unbind(uni);
-gap> Unbind(eq);
+gap> Unbind(cong2);
+gap> Unbind(congs);
 gap> Unbind(congs1);
+gap> Unbind(eq);
+gap> Unbind(g);
+gap> Unbind(ims);
+gap> Unbind(mat);
+gap> Unbind(n);
+gap> Unbind(nCoset);
+gap> Unbind(q);
+gap> Unbind(rowBlocks);
+gap> Unbind(t);
+gap> Unbind(uni);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
 gap> Unbind(zero);
-gap> Unbind(class0);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congrms.tst");

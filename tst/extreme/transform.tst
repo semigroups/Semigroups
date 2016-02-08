@@ -291,26 +291,26 @@ gap> IsRightZeroSemigroup(last2);
 true
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(filt);
-gap> Unbind(perms);
-gap> Unbind(inv);
-gap> Unbind(im);
-gap> Unbind(m18);
-gap> Unbind(perm);
-gap> Unbind(m6);
-gap> Unbind(m1);
-gap> Unbind(g2);
-gap> Unbind(g1);
-gap> Unbind(dc);
 gap> Unbind(S);
-gap> Unbind(hc);
-gap> Unbind(ker);
 gap> Unbind(d);
+gap> Unbind(dc);
 gap> Unbind(f);
-gap> Unbind(h);
+gap> Unbind(filt);
+gap> Unbind(g1);
+gap> Unbind(g2);
 gap> Unbind(gens);
-gap> Unbind(s);
+gap> Unbind(h);
+gap> Unbind(hc);
+gap> Unbind(im);
+gap> Unbind(inv);
 gap> Unbind(iso);
+gap> Unbind(ker);
+gap> Unbind(m1);
+gap> Unbind(m18);
+gap> Unbind(m6);
+gap> Unbind(perm);
+gap> Unbind(perms);
+gap> Unbind(s);
 gap> Unbind(t);
 gap> Unbind(x);
 

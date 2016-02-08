@@ -261,5 +261,17 @@ gap> I := SemigroupIdeal(S, RepresentativeOfMinimalIdeal(S));;
 gap> RepresentativeOfMinimalIdeal(I);
 <bipartition: [ 1, 2, 4, 5, -1 ], [ 3, -3 ], [ -2 ], [ -4 ], [ -5 ]>
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(D);
+gap> Unbind(I);
+gap> Unbind(R);
+gap> Unbind(S);
+gap> Unbind(foo);
+gap> Unbind(inv);
+gap> Unbind(map);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/attributes-acting.tst");

@@ -111,13 +111,13 @@ gap> CanonicalForm((S.1 ^ -1) * S.1 * (S.1 ^ -1) * S.1);
 "x1^-1x1"
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(i);
-gap> Unbind(gens);
-gap> Unbind(iter);
 gap> Unbind(S);
+gap> Unbind(gens);
+gap> Unbind(i);
+gap> Unbind(iter);
 gap> Unbind(u);
-gap> Unbind(y);
 gap> Unbind(x);
+gap> Unbind(y);
 gap> Unbind(z);
 
 #E#
