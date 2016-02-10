@@ -788,6 +788,28 @@ function(_record)
     return lattice;
   end);
 
+  #
+
+  ###########################################################################
+  # XCongruencesOfSemigroup
+  ###########################################################################
+  InstallMethod(EvalString(
+  Concatenation(_record.type_string, "CongruencesOfSemigroup")),
+  "for a semigroup",
+  [IsSemigroup],
+  function(S)
+    local lattice_func;
+    if not IsFinite(S) then
+      TryNextMethod();
+    fi;
+    # Find the lattice of congruences, and retrieve
+    # the list of congruences from inside it
+    lattice_func := EvalString(Concatenation("LatticeOf",
+                                             _record.type_string,
+                                             "Congruences"));
+    return lattice_func(S)![2];
+  end);
+
   ###########################################################################
   # methods for classes
   ###########################################################################
@@ -1129,18 +1151,4 @@ function(latt, opts)
   Append(str, " }");
 
   return str;
-end);
-
-#
-
-InstallMethod(CongruencesOfSemigroup,
-"for a semigroup",
-[IsSemigroup],
-function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-  # Find the lattice of congruences, and retrieve
-  # the list of congruences from inside it
-  return LatticeOfCongruences(S)![2];
 end);
