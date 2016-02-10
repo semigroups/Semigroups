@@ -525,7 +525,6 @@ InstallMethod(ChooseHashFunction, "for a boolean matrix",
              data := hashlen);
 end);
 
-
 InstallMethod(CanonicalBooleanMat, "for boolean mat",
 [IsBooleanMat],
 function(mat)

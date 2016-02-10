@@ -94,75 +94,75 @@ gap> AsLookupTable(uni);
 
 #T# Equality checking
 gap> S := FullTransformationMonoid(2);;
-gap> T := Semigroup([Transformation([2,3,3])]);;
+gap> T := Semigroup([Transformation([2, 3, 3])]);;
 gap> uniS := UniversalSemigroupCongruence(S);;
 gap> uniT := UniversalSemigroupCongruence(T);;
 gap> uniS = uniT;
 false
 gap> uniS = UniversalSemigroupCongruence(S);
 true
-gap> cong := SemigroupCongruence(S, [Transformation([1,1]),
->                                    Transformation([2,2])]);;
+gap> cong := SemigroupCongruence(S, [Transformation([1, 1]),
+>                                    Transformation([2, 2])]);;
 gap> cong = uniS;
 false
-gap> cong := SemigroupCongruence(T, [Transformation([2,3,3]),
->                                    Transformation([3,3,3])]);;
+gap> cong := SemigroupCongruence(T, [Transformation([2, 3, 3]),
+>                                    Transformation([3, 3, 3])]);;
 gap> uniT = cong;
 true
 
 #T# Pair inclusion
-gap> S := Semigroup([Transformation([1,4,2,4])]);;
+gap> S := Semigroup([Transformation([1, 4, 2, 4])]);;
 gap> uni := UniversalSemigroupCongruence(S);;
-gap> [Transformation([1,4,2,4]), Transformation([1,4,4,4])] in uni;
+gap> [Transformation([1, 4, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
 true
-gap> [Transformation([1,3,2,4]), Transformation([1,4,4,4])] in uni;
+gap> [Transformation([1, 3, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
 false
 gap> [3, 4] in uni;
 false
-gap> [Transformation([1,4,2,4])] in uni;
+gap> [Transformation([1, 4, 2, 4])] in uni;
 false
 
 #T# Classes
-gap> S := Semigroup([PartialPerm([1,2], [3,1]),
->                    PartialPerm([1,2,3], [1,3,4])]);
+gap> S := Semigroup([PartialPerm([1, 2], [3, 1]),
+>                    PartialPerm([1, 2, 3], [1, 3, 4])]);
 <partial perm semigroup of rank 3 with 2 generators>
 gap> uni := UniversalSemigroupCongruence(S);;
-gap> ImagesElm(uni, PartialPerm([1,2,3], [1,3,4])) = Elements(S);
+gap> ImagesElm(uni, PartialPerm([1, 2, 3], [1, 3, 4])) = Elements(S);
 true
-gap> ImagesElm(uni, Transformation([1,3,2]));
+gap> ImagesElm(uni, Transformation([1, 3, 2]));
 Error, Semigroups: ImagesElm: usage,
 the second argument <elm> must be in <cong>'s semigroup,
 gap> classes := EquivalenceClasses(uni);
 [ <congruence class of [2,1,3]> ]
-gap> EquivalenceClassOfElement(uni, Transformation([1,3,2]));
+gap> EquivalenceClassOfElement(uni, Transformation([1, 3, 2]));
 Error, Semigroups: EquivalenceClassOfElement: usage,
 the second argument <elm> must be in the semigroup of 1st argument <cong>,
-gap> class := EquivalenceClassOfElement(uni, PartialPerm([1,2,3], [1,3,4]));
+gap> class := EquivalenceClassOfElement(uni, PartialPerm([1, 2, 3], [1, 3, 4]));
 <congruence class of [2,3,4](1)>
 gap> PartialPerm([2], [3]) in class;
 true
-gap> PartialPerm([1,2,4], [3,2,1]) in class;
+gap> PartialPerm([1, 2, 4], [3, 2, 1]) in class;
 false
 gap> classes[1] * class = class;
 true
 gap> class = classes[1];
 true
 gap> T := Semigroup([PartialPerm([1], [3]),
->                    PartialPerm([1,2,3], [1,3,4])]);;
+>                    PartialPerm([1, 2, 3], [1, 3, 4])]);;
 gap> badcong := UniversalSemigroupCongruence(T);;
-gap> class * EquivalenceClassOfElement(badcong, PartialPerm([1],[3]));
+gap> class * EquivalenceClassOfElement(badcong, PartialPerm([1], [3]));
 Error, Semigroups: \*: usage,
 the args <c1> and <c2> must be over the same congruence,
 gap> Size(class);
 1
 
 #T# Meet and join
-gap> S := Semigroup( [ Transformation( [ 1, 3, 4, 1 ] ),
->                      Transformation( [ 3, 1, 1, 3 ] ) ] );;
-gap> T := Semigroup( [ Transformation( [ 1, 2, 4, 1 ] ),
->                      Transformation( [ 3, 3, 1, 3 ] ) ] );;
-gap> cong := SemigroupCongruence(S, [Transformation([1,3,1,1]),
->                                    Transformation([1,3,4,1])]);
+gap> S := Semigroup([Transformation([1, 3, 4, 1]),
+>                    Transformation([3, 1, 1, 3])]);;
+gap> T := Semigroup([Transformation([1, 2, 4, 1]),
+>                    Transformation([3, 3, 1, 3])]);;
+gap> cong := SemigroupCongruence(S, [Transformation([1, 3, 1, 1]),
+>                                    Transformation([1, 3, 4, 1])]);
 <semigroup congruence over <transformation semigroup of degree 4 with 2 
  generators> with 1 generating pairs>
 gap> uni := UniversalSemigroupCongruence(S);
@@ -186,8 +186,8 @@ gap> MeetSemigroupCongruences(cong, uni);
 gap> MeetSemigroupCongruences(uni, cong);
 <semigroup congruence over <transformation semigroup of degree 4 with 2 
  generators> with 1 generating pairs>
-gap> badcong := SemigroupCongruence(T, [Transformation([1,2,4,1]),
->                                       Transformation([1,1,1,1])]);;
+gap> badcong := SemigroupCongruence(T, [Transformation([1, 2, 4, 1]),
+>                                       Transformation([1, 1, 1, 1])]);;
 gap> JoinSemigroupCongruences(uni, badcong);
 Error, Semigroups: JoinSemigroupCongruences: usage,
 congruences must be defined over the same semigroup,
@@ -200,8 +200,8 @@ congruences must be defined over the same semigroup,
 gap> MeetSemigroupCongruences(badcong, uni);
 Error, Semigroups: MeetSemigroupCongruences: usage,
 congruences must be defined over the same semigroup,
-gap> cong := SemigroupCongruence(S, [Transformation([1,3,4,1]),
->                                    Transformation([1,3,3,1])]);;
+gap> cong := SemigroupCongruence(S, [Transformation([1, 3, 4, 1]),
+>                                    Transformation([1, 3, 3, 1])]);;
 gap> cong = uni;
 true
 
@@ -211,8 +211,8 @@ gap> S := Semigroup(IdentityTransformation);
 gap> uni := UniversalSemigroupCongruence(S);;
 gap> GeneratingPairsOfSemigroupCongruence(uni);
 [  ]
-gap> S := Semigroup([Transformation([4,5,3,4,5]),
->                    Transformation([5,1,3,1,5])]);;
+gap> S := Semigroup([Transformation([4, 5, 3, 4, 5]),
+>                    Transformation([5, 1, 3, 1, 5])]);;
 gap> uni := UniversalSemigroupCongruence(S);;
 gap> GeneratingPairsOfSemigroupCongruence(uni);
 [ [ Transformation( [ 4, 5, 3, 4, 5 ] ), Transformation( [ 5, 5, 3, 5, 5 ] ) 

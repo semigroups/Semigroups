@@ -444,7 +444,7 @@ gap> RightProjection(StarOp(x));
 <bipartition: [ 1, 2 ], [ 3, -3 ], [ 4, 5 ], [ -1, -2 ], [ -4, -5 ]>
 
 # bipartition: RightProjection, LeftProjection
-gap> x := Bipartition([[1, -2], [2, 3, 4], [5, -1, -3], [6, 7, 8], 
+gap> x := Bipartition([[1, -2], [2, 3, 4], [5, -1, -3], [6, 7, 8],
 > [9, 10, -7, -8, -9], [11], [-4, -5, -6], [-10, -11]]);;
 gap> RightProjection(x);
 <bipartition: [ 1, 3, -1, -3 ], [ 2, -2 ], [ 4, 5, 6 ], 
@@ -460,7 +460,7 @@ gap> RightProjection(StarOp(x));
  [ 9, 10, -9, -10 ], [ 11 ], [ -2, -3, -4 ], [ -6, -7, -8 ], [ -11 ]>
 
 # bipartition: RightProjection, LeftProjection
-gap> x := Bipartition([[1, 3, -2, -4], [2], [4, 6, -1, -3, -5], [5, 8], 
+gap> x := Bipartition([[1, 3, -2, -4], [2], [4, 6, -1, -3, -5], [5, 8],
 > [7, -6, -9], [9, 10], [-7, -8, -10]]);
 <bipartition: [ 1, 3, -2, -4 ], [ 2 ], [ 4, 6, -1, -3, -5 ], [ 5, 8 ], 
  [ 7, -6, -9 ], [ 9, 10 ], [ -7, -8, -10 ]>

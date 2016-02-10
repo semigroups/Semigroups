@@ -208,7 +208,6 @@ end);
 InstallMethod(ThresholdTropicalMatrix, "for a tropical matrix",
 [IsTropicalMatrix], x -> x![Length(x![1]) + 1]);
 
-
 #############################################################################
 ## 4. Tropical max-plus matrices
 #############################################################################
@@ -488,6 +487,7 @@ InstallMethod(ThresholdNTPMatrix, "for a natural matrix",
 InstallMethod(PeriodNTPMatrix, "for a natural matrix",
 [IsNTPMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 2]);
 
+#
 
 InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a natural number matrix",
@@ -503,8 +503,8 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsNTPMatrix",
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
 "for IsNTPMatrix, pos int, pos int", [IsNTPMatrix, IsInt, IsInt],
 function(filter, threshold, period)
-  if threshold < 0 or period < 0 then 
-    ErrorNoReturn("Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons:", 
+  if threshold < 0 or period < 0 then
+    ErrorNoReturn("Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons:",
                   " usage,\n the threshold and period must be non-negative,");
   fi;
   return x -> (IsInt(x) and x >= 0 and x <= threshold + period - 1);

@@ -639,6 +639,5 @@ InstallMethod(ChooseHashFunction, "for a matrix over semiring",
              data := hashlen);
 end);
 
-
 InstallMethod(OneMutable, "for a matrix over semiring",
 [IsMatrixOverSemiring], OneImmutable);

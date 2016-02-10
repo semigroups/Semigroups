@@ -282,24 +282,26 @@ function(S)
 end);
 
 InstallMethod(NrIdempotents, "for a regular star bipartition acting semigroup",
-[IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+[IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and
+ HasGeneratorsOfSemigroup],
 function(S)
   return Sum(NrIdempotentsByRank(S));
 end);
 
 #TODO other methods for this!
 
-InstallMethod(NrIdempotentsByRank, "for a regular star bipartition acting semigroup",
+InstallMethod(NrIdempotentsByRank,
+"for a regular star bipartition acting semigroup",
 [IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and
  HasGeneratorsOfSemigroup],
 function(S)
   local o, opts;
   o := Enumerate(LambdaOrb(S));
   opts := SEMIGROUPS.OptionsRec(S);
-  return BIPART_NR_IDEMPOTENTS(o, 
-                               OrbSCC(o), 
-                               OrbSCCLookup(o), 
-                               opts.nr_threads, 
+  return BIPART_NR_IDEMPOTENTS(o,
+                               OrbSCC(o),
+                               OrbSCCLookup(o),
+                               opts.nr_threads,
                                opts.report);
 end);
 

@@ -1038,7 +1038,7 @@ fail
 #T# TestInstall67: semigroups with infinity generators are not allowed in
 # Semigroups, i.e. this example shouldn't use Semigroups code and this is here
 # to make sure that it does not. This is from bugfix.tst.
-gap> FreeMonoid( infinity, "m", [  ] );
+gap> FreeMonoid(infinity, "m", []);
 <free monoid with infinity generators>
 
 #T# Checking for correct non-removal of one from generating sets in
@@ -1234,11 +1234,11 @@ gap> IsInverseSemigroup(S);
 false
 
 #T# Bipartition semigroups of degree 0, Issue #139
-gap> AsBipartitionSemigroup( CyclicGroup( IsPermGroup, 1 ) );
+gap> AsBipartitionSemigroup(CyclicGroup(IsPermGroup, 1));
 <trivial bipartition group of degree 0 with 1 generator>
-gap> AsBipartitionSemigroup( Group(()) );
+gap> AsBipartitionSemigroup(Group(()));
 <trivial bipartition group of degree 0 with 1 generator>
-gap> Semigroup( Bipartition( [  ] ) );
+gap> Semigroup(Bipartition([]));
 <trivial bipartition group of degree 0 with 1 generator>
 gap> JonesMonoid(0);
 <trivial bipartition group of degree 0 with 1 generator>
