@@ -34,10 +34,8 @@ DeclareOperation("SemigroupByGenerators", [IsCollection, IsRecord]);
 
 DeclareOperation("MonoidByGenerators", [IsCollection, IsRecord]);
 
-DeclareOperation("InverseMonoidByGenerators", [IsCollection]);
 DeclareOperation("InverseMonoidByGenerators", [IsCollection, IsRecord]);
 
-DeclareOperation("InverseSemigroupByGenerators", [IsCollection]);
 DeclareOperation("InverseSemigroupByGenerators", [IsCollection, IsRecord]);
 
 DeclareOperation("ClosureInverseSemigroup",
