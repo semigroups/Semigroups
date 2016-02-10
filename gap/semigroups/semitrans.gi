@@ -113,7 +113,7 @@ SEMIGROUPS.ElementRClass := function(R, largest)
     y := EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
     basei := DuplicateFreeList(ImageListOfTransformation(rep * y, n));
     p := MappingPermListList(base, basei);
-    x := rep * y * LargestElementStabChain(S, (), p);
+    x := rep * y * LargestElementConjugateStabChain(S, (), p);
     if x > max then
       max := x;
     fi;
@@ -182,6 +182,9 @@ InstallMethod(Idempotents, "for a transformation semigroup and pos int",
 function(S, rank)
   local deg;
   deg := DegreeOfTransformationSemigroup(S);
+  if rank > deg then
+    return [];
+  fi;
   return Filtered(Idempotents(S),
                               x -> RankOfTransformation(x, deg) = rank);
 end);
