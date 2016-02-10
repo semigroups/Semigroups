@@ -4,6 +4,9 @@
 #### Copyright (C) 2011-16 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.7.3 (released 10/02/2016)
+This is a minor release to fix some manual examples, and to correct the package url in the `PackageInfo.g` file. 
+
 ## Version 2.7.2 (released 28/01/2016)
 
 This is a minor release to fix to remove `ErrorMayQuit` which was renamed
