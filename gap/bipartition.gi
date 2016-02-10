@@ -1348,6 +1348,10 @@ InstallMethod(PrintString, "for a bipartition",
 function(f)
   local ext, str, i;
   ext := ExtRepOfBipartition(f);
+  if Length(ext) = 0 then 
+    return "\>\>Bipartition(\<\>[]\<)\<";
+  fi;
+
   str := Concatenation("\>\>Bipartition(\< \>[ ", PrintString(ext[1]));
   for i in [2 .. Length(ext)] do
     Append(str, ",\< \>");
