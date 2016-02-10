@@ -25,7 +25,7 @@
     <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must be
     available and compiled for this function to work.
 
-  <Example><![CDATA[
+  <Log><![CDATA[
 gap> S := FullTransformationSemigroup(4);
 <full transformation monoid of degree 4>
 gap> MaximalSubsemigroups(S);
@@ -63,7 +63,7 @@ gap> MaximalSubsemigroups(R);
   <subsemigroup of 6x4 Rees 0-matrix semigroup with 21 generators>, 
   <subsemigroup of 6x4 Rees 0-matrix semigroup with 21 generators>, 
   <subsemigroup of 6x4 Rees 0-matrix semigroup with 21 generators> ]
-]]></Example>
+]]></Log>
   </Description>
 </ManSection>
 <#/GAPDoc>
