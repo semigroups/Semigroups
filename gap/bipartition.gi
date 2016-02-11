@@ -86,10 +86,6 @@ function(f, g)
     Error("Semigroups: NaturalLeqBlockBijection: usage,\n",
           "the arguments must be block bijections,");
     return;
-  elif DegreeOfBipartition(f) <> DegreeOfBipartition(g) then
-    Error("Semigroups: NaturalLeqBlockBijection: usage,\n",
-          "the arguments must be block bijections of equal degree,");
-    return;
   elif NrBlocks(f) > NrBlocks(g) then
     return false;
   fi;
