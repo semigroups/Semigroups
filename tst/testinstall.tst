@@ -1223,10 +1223,13 @@ false
 
 #T# MaximalSubsemigroups, replacement test for manual example which becomes a
 #log because of the randomness in the generating sets here.
-gap> MaximalSubsemigroups(FullTransformationMonoid(4)) = 
+gap> S := FullTransformationMonoid(4);;
+gap> (not IsGrapeCompiled) or Length(MaximalSubsemigroups(S)) = 9;
+true
+gap> (not IsGrapeCompiled) or ForAll(MaximalSubsemigroups(S), M -> M in 
 > [Semigroup(Transformation([1, 4, 2, 3]),
 >            Transformation([4, 2, 3, 4]), 
->             Transformation([4, 3, 2, 1])),
+>            Transformation([4, 3, 2, 1])),
 >  Semigroup(Transformation([1, 1, 2, 3]),
 >            Transformation([1, 2, 4, 3]), 
 >            Transformation([4, 2, 3, 4]),
@@ -1259,7 +1262,7 @@ gap> MaximalSubsemigroups(FullTransformationMonoid(4)) =
 >  Semigroup(Transformation([2, 1]), 
 >            Transformation([2, 3, 4, 1]),
 >            Transformation([3, 1, 3, 3]), 
->            Transformation([4, 3, 3, 4]))];
+>            Transformation([4, 3, 3, 4]))]);
 true
 
 #T# Test for not being allowed to generate a semigroup with bipartitions of
