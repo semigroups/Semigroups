@@ -252,11 +252,11 @@ false
 #true
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
 gap> Unbind(D);
 gap> Unbind(H);
 gap> Unbind(L);
 gap> Unbind(R);
+gap> Unbind(S);
 gap> Unbind(e);
 
 #E# 

@@ -55,5 +55,8 @@ gap> NrIdempotents(S);
 gap> MultiplicativeZero(S);
 fail
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/semimaxplus.tst");

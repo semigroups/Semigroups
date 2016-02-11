@@ -131,8 +131,7 @@ end;
 
 # same method for regular/inverse
 
-SEMIGROUPS.CreateLClass :=
-function(arg)
+SEMIGROUPS.CreateLClass := function(arg)
   return SEMIGROUPS.CreateXClass(arg, LClassType, GreensLRelation);
 end;
 
@@ -1785,7 +1784,6 @@ function(S, n)
   return out;
 end);
 
-
 # same method for regular/ideals, different method for inverse
 
 InstallMethod(Idempotents, "for a D-class of an acting semigroup",
@@ -1870,7 +1868,6 @@ function(S)
 
   return nr;
 end);
-
 
 # same method for regular/inverse/ideals
 

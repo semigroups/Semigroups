@@ -80,6 +80,7 @@ gap> e_1 * e_1 ^ -1 = v_1;
 false
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
 gap> Unbind(gr);
 gap> Unbind(x);
 

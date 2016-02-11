@@ -31,7 +31,7 @@ gap> S := JonesMonoid(5);
 <regular bipartition monoid of degree 5 with 4 generators>
 gap> I := SemigroupIdeal(S, S.4);
 <regular bipartition semigroup ideal of degree 5 with 1 generator>
-gap> J := SemigroupIdeal(I, Bipartition([[1, -3], [2, -4], [3, 4], [5, -5], 
+gap> J := SemigroupIdeal(I, Bipartition([[1, -3], [2, -4], [3, 4], [5, -5],
 > [-1, -2]]));
 <regular bipartition semigroup ideal of degree 5 with 1 generator>
 gap> T := I / J;;
@@ -52,7 +52,7 @@ gap> Size(T);
 
 #T# quotients, PROD_SCL_LIST_DEFAULT, PROD_LIST_SCL_DEFAULT
 gap> S := Semigroup([Matrix(IsTropicalMaxPlusMatrix, [[0, 0], [1, 1]], 2),
->  Matrix(IsTropicalMaxPlusMatrix, [[1, 2], [0, - infinity]], 2),
+>  Matrix(IsTropicalMaxPlusMatrix, [[1, 2], [0, -infinity]], 2),
 >  Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [1, 0]], 2)]);
 <semigroup of 2x2 tropical max-plus matrices with 3 generators>
 gap> cong := SemigroupCongruence(S, [S.3, S.1]);
@@ -75,7 +75,11 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `*' on 2 arguments
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(x);
+gap> Unbind(I);
+gap> Unbind(J);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(cong);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/quotients.tst");

@@ -473,5 +473,13 @@ false
 gap> IsGeneratorsOfSemigroup([coll[1]]);
 true
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(ht);
+gap> Unbind(iter);
+gap> Unbind(mat);
+gap> Unbind(row);
+gap> Unbind(x);
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/semiringmat.tst");

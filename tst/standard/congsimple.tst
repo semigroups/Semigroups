@@ -64,7 +64,7 @@ in the range of the second arg <cong>,
 gap> classes := CongruenceClasses(cong);;
 gap> Size(classes) = NrCongruenceClasses(cong);
 true
-gap> EquivalenceClassOfElement(cong, PartialPerm([2],[3]));
+gap> EquivalenceClassOfElement(cong, PartialPerm([2], [3]));
 Error, Semigroups: EquivalenceClassOfElement: usage,
 <elm> must be an element of the range of <cong>,
 gap> classx := CongruenceClassOfElement(cong, x);;
@@ -135,7 +135,7 @@ gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
  of rank 2 with 2 generators>>
 
 #T# Test with a 0-simple semigroup
-gap> S := Semigroup([Transformation([3,3,3]), Transformation([4,1,1,4])]);;
+gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])]);;
 gap> IsRegularSemigroup(S);
 true
 gap> congs := CongruencesOfSemigroup(S);
@@ -153,7 +153,7 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 4th choice method found for `CongruencesOfSemigroup' on 1 arguments
 
 #T# Join/Meet: bad input
-gap> S := Semigroup([Transformation([3,3,3]), Transformation([4,1,1,4])]);;
+gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])]);;
 gap> IsRegularSemigroup(S);
 true
 gap> T := Semigroup([Transformation([2, 1, 1, 2, 1]),
@@ -179,21 +179,21 @@ Error, Semigroups: JoinSemigroupCongruences: usage,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
-gap> Unbind(congs);
-gap> Unbind(cong);
-gap> Unbind(x);
-gap> Unbind(y);
-gap> Unbind(z);
+gap> Unbind(T);
 gap> Unbind(classes);
 gap> Unbind(classx);
 gap> Unbind(classy);
 gap> Unbind(classz);
-gap> Unbind(elms);
-gap> Unbind(q);
-gap> Unbind(pairs);
-gap> Unbind(T);
+gap> Unbind(cong);
 gap> Unbind(cong1);
 gap> Unbind(cong2);
+gap> Unbind(congs);
+gap> Unbind(elms);
+gap> Unbind(pairs);
+gap> Unbind(q);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congsimple.tst");

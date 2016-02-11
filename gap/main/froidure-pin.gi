@@ -44,7 +44,7 @@ function(S)
   if HasAsSSortedList(S) then
     return AsSSortedList(S);
   elif not SEMIGROUPS.IsCCSemigroup(S)
-    or Length(GeneratorsOfSemigroup(S)) = 0 then
+      or Length(GeneratorsOfSemigroup(S)) = 0 then
     TryNextMethod();
   fi;
 

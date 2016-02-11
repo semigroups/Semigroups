@@ -68,6 +68,11 @@ gap> SEMIGROUPS.StartTest();
 #   6  8 10  5  5
 #   9  2  7  8 10
 #   .  3  8  9  1
+#
+# #T# SEMIGROUPS_UnbindVariables
+# gap> Unbind(mat);
+# gap> Unbind(mat2);
+#
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/pfmat.tst");

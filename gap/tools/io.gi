@@ -21,7 +21,7 @@ function(str)
   record := rec(file := file, current := IO_Unpickle(file));
 
   record.NextIterator := function(iter)
-    local next, line;
+    local next;
     next := iter!.current;
     iter!.current := IO_Unpickle(iter!.file);
     return next;
@@ -117,7 +117,7 @@ end);
 
 InstallGlobalFunction(WriteGenerators,
 function(arg)
-  local name, coll, mode, file, append, line, deg, nrdigits, blocks, i, x, f;
+  local name, coll, mode, file, i, x;
 
   if Length(arg) = 2 then
     name := arg[1];

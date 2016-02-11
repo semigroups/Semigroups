@@ -444,7 +444,7 @@ gap> RightProjection(StarOp(x));
 <bipartition: [ 1, 2 ], [ 3, -3 ], [ 4, 5 ], [ -1, -2 ], [ -4, -5 ]>
 
 # bipartition: RightProjection, LeftProjection
-gap> x := Bipartition([[1, -2], [2, 3, 4], [5, -1, -3], [6, 7, 8], 
+gap> x := Bipartition([[1, -2], [2, 3, 4], [5, -1, -3], [6, 7, 8],
 > [9, 10, -7, -8, -9], [11], [-4, -5, -6], [-10, -11]]);;
 gap> RightProjection(x);
 <bipartition: [ 1, 3, -1, -3 ], [ 2, -2 ], [ 4, 5, 6 ], 
@@ -460,7 +460,7 @@ gap> RightProjection(StarOp(x));
  [ 9, 10, -9, -10 ], [ 11 ], [ -2, -3, -4 ], [ -6, -7, -8 ], [ -11 ]>
 
 # bipartition: RightProjection, LeftProjection
-gap> x := Bipartition([[1, 3, -2, -4], [2], [4, 6, -1, -3, -5], [5, 8], 
+gap> x := Bipartition([[1, 3, -2, -4], [2], [4, 6, -1, -3, -5], [5, 8],
 > [7, -6, -9], [9, 10], [-7, -8, -10]]);
 <bipartition: [ 1, 3, -2, -4 ], [ 2 ], [ 4, 6, -1, -3, -5 ], [ 5, 8 ], 
  [ 7, -6, -9 ], [ 9, 10 ], [ -7, -8, -10 ]>
@@ -597,33 +597,22 @@ gap> AsBipartition(PBR(
 gap> ForAll([1 .. 20], x -> IsBlockBijection(RandomBlockBijection(x)));
 true
 
-#
-gap> Unbind(elts);
-gap> Unbind(DD);
-gap> Unbind(gens);
-gap> Unbind(HH);
-gap> Unbind(LL);
-gap> Unbind(r);
-gap> Unbind(inv);
-gap> Unbind(triples);
-gap> Unbind(D);
+# SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
-gap> Unbind(H);
-gap> Unbind(L);
 gap> Unbind(N);
 gap> Unbind(S);
-gap> Unbind(R);
 gap> Unbind(bp);
-gap> Unbind(T);
-gap> Unbind(e);
-gap> Unbind(g);
-gap> Unbind(classes2);
-gap> Unbind(f);
-gap> Unbind(l);
-gap> Unbind(s);
 gap> Unbind(classes);
-gap> Unbind(iso);
+gap> Unbind(classes2);
+gap> Unbind(e);
+gap> Unbind(elts);
+gap> Unbind(f);
+gap> Unbind(g);
+gap> Unbind(l);
+gap> Unbind(r);
+gap> Unbind(triples);
 gap> Unbind(x);
+gap> Unbind(y);
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/bipartition.tst");

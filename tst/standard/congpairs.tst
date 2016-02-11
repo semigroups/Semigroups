@@ -38,15 +38,15 @@ gap> NrCongruenceClasses(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `NrEquivalenceClasses' on 1 arguments
 gap> class := CongruenceClassOfElement(cong, x);;
-gap> cong2 := SemigroupCongruence(S, [x^2, x^2]);;
+gap> cong2 := SemigroupCongruence(S, [x ^ 2, x ^ 2]);;
 gap> class := CongruenceClassOfElement(cong2, x);;
 gap> enum := Enumerator(class);
 [ s1 ]
 gap> Size(class);
 1
-gap> x^2 in class;
+gap> x ^ 2 in class;
 false
-gap> ImagesElm(cong2, x^5);
+gap> ImagesElm(cong2, x ^ 5);
 [ s1^5 ]
 
 #T# PairsCongTest3: \= for two semigroup congruences
@@ -200,12 +200,13 @@ gap> SEMIGROUPS_Enumerate(cong, ReturnTrue);
 fail
 
 #T# A left semigroup congruence example that is not right
-gap> S := Semigroup( [ Transformation( [ 1, 3, 4, 1, 3, 7, 5 ] ),
->                      Transformation( [ 5, 7, 1, 6, 1, 7, 6 ] ) ] );;
-gap> pair := [Transformation([1,1,1,1,1,4,1]),Transformation([1,6,5,7,5,6,7])];;
+gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 7, 5]),
+>                    Transformation([5, 7, 1, 6, 1, 7, 6])]);;
+gap> pair := [Transformation([1, 1, 1, 1, 1, 4, 1]),
+>             Transformation([1, 6, 5, 7, 5, 6, 7])];;
 gap> cong := LeftSemigroupCongruence(S, pair);;
-gap> [ Transformation( [ 7, 1, 7, 7, 1, 5, 5 ] ),
->      Transformation( [ 1, 7, 1, 1, 7, 1, 1 ] ) ] in cong;
+gap> [Transformation([7, 1, 7, 7, 1, 5, 5]),
+>     Transformation([1, 7, 1, 1, 7, 1, 1])] in cong;
 true
 gap> IsSemigroupCongruence(cong);
 false
@@ -213,13 +214,15 @@ gap> IsRightSemigroupCongruence(cong);
 false
 
 #T# A right semigroup congruence example that is left
-gap> S := Semigroup( [ Transformation( [ 2, 3, 5, 1, 4, 6, 1 ] ),
->                      Transformation( [ 2, 6, 4, 2, 6, 1, 2 ] ) ] );;
-gap> pairs:=[[Transformation([6,1,2,6,1,2,6]),Transformation([5,4,1,3,2,6,3])],
->            [Transformation([2,3,5,1,4,6,1]),Transformation([5,6,2,5,6,3,5])]];;
+gap> S := Semigroup([Transformation([2, 3, 5, 1, 4, 6, 1]),
+>                    Transformation([2, 6, 4, 2, 6, 1, 2])]);;
+gap> pairs := [[Transformation([6, 1, 2, 6, 1, 2, 6]),
+>               Transformation([5, 4, 1, 3, 2, 6, 3])],
+>             [Transformation([2, 3, 5, 1, 4, 6, 1]),
+>              Transformation([5, 6, 2, 5, 6, 3, 5])]];;
 gap> cong := RightSemigroupCongruence(S, pairs);;
-gap> [ Transformation( [ 2, 6, 4, 2, 6, 1, 2 ] ),
->      Transformation( [ 6, 2, 6, 5, 5, 3, 5 ] ) ] in cong;
+gap> [Transformation([2, 6, 4, 2, 6, 1, 2]),
+>     Transformation([6, 2, 6, 5, 5, 3, 5])] in cong;
 true
 gap> IsSemigroupCongruence(cong);
 true
@@ -310,7 +313,7 @@ gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> enum := Enumerator(class);;
 gap> x := enum[1];;
 gap> AsLookupTable(cong);;
-gap> Position(enum, Transformation( [ 2, 2, 2, 2, 3 ] ));
+gap> Position(enum, Transformation([2, 2, 2, 2, 3]));
 25
 gap> Position(enum, x);
 1
@@ -360,7 +363,8 @@ gap> l := LatticeOfCongruences(S);
 gap> DotString(l, rec(info := true)) = Concatenation("//dot\ngraph graphname",
 > " {\n     node [shape=circle]\nR2 -- T\nR3 -- 5\nU -- R3\n5 -- R2\n }");
 true
-gap> S := Semigroup([Transformation([1,1,2,1]), Transformation([3,3,1,2])]);;
+gap> S := Semigroup([Transformation([1, 1, 2, 1]),
+>                    Transformation([3, 3, 1, 2])]);;
 gap> l := LatticeOfCongruences(S);;
 gap> DotString(l) = Concatenation(
 > "//dot\ngraph graphname {\n     node [shape=point]\n2 -- 3\n2 -- 10\n3 ",
@@ -381,22 +385,21 @@ true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
-gap> Unbind(x);
-gap> Unbind(gens);
-gap> Unbind(cong);
+gap> Unbind(T);
 gap> Unbind(class);
+gap> Unbind(classes);
+gap> Unbind(cong);
 gap> Unbind(cong2);
 gap> Unbind(enum);
-gap> Unbind(T);
-gap> Unbind(u);
-gap> Unbind(v);
-gap> Unbind(classes);
+gap> Unbind(gens);
+gap> Unbind(l);
+gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);
-gap> Unbind(pair);
 gap> Unbind(pairs);
-gap> Unbind(l);
-gap> Unbind(info);
+gap> Unbind(u);
+gap> Unbind(v);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/congpairs.tst");

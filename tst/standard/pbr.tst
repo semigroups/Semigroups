@@ -431,7 +431,10 @@ true
 gap> Exec("rm ", filename);
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(filename);
 gap> Unbind(x);
+gap> Unbind(y);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/pbr.tst");
