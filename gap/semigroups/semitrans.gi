@@ -87,7 +87,7 @@ function(S, n)
 end);
 
 SEMIGROUPS.ElementRClass := function(R, largest)
-  local o, m, rep, n, base, S, max, scc, y, basei, p, x, i;
+  local o, m, rep, n, base, S, out, scc, y, basei, p, x, i;
 
   if Size(R) = 1 then
     return Representative(R);
@@ -100,12 +100,12 @@ SEMIGROUPS.ElementRClass := function(R, largest)
   n := DegreeOfTransformationSemigroup(Parent(R));
   base := DuplicateFreeList(ImageListOfTransformation(rep, n));
 
-  if not largest then
-    base := Reversed(base);
-  fi;
-
   S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
-  max := rep * LargestElementStabChain(S, ());
+  if largest then
+    out := rep * LargestElementStabChain(S, ());
+  else
+    out := rep * SmallestElementConjugateStabChain(S, (), ());
+  fi;
 
   scc := OrbSCC(o)[m];
 
@@ -113,13 +113,20 @@ SEMIGROUPS.ElementRClass := function(R, largest)
     y := EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
     basei := DuplicateFreeList(ImageListOfTransformation(rep * y, n));
     p := MappingPermListList(base, basei);
-    x := rep * y * LargestElementConjugateStabChain(S, (), p);
-    if x > max then
-      max := x;
+    if largest then
+      x := rep * y * LargestElementConjugateStabChain(S, (), p);
+      if x > out then
+        out := x;
+      fi;
+    else
+      x := rep * y * SmallestElementConjugateStabChain(S, (), p);
+      if x < out then
+        out := x;
+      fi;
     fi;
   od;
 
-  return max;
+  return out;
 end;
 
 SEMIGROUPS.SmallestElementRClass := function(R)

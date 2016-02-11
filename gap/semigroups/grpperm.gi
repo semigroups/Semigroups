@@ -100,3 +100,33 @@ function(S, rep, conj)
 
     return LargestElementConjugateStabChain(S.stabilizer, rep, conj);
 end);
+
+# finds the smallest element of the stab chain S^conj.
+
+InstallGlobalFunction(SmallestElementConjugateStabChain,
+function(S, rep, conj)
+  local pnt, min, val, gen, i;
+
+    if Length(S.generators) = 0  then
+      return rep;
+    fi;
+
+    pnt := S.orbit[1];
+    min := 0;
+    val := infinity;
+
+    for i in S.orbit  do
+      if (i ^ conj) ^ rep < val  then
+        min := i;
+        val := (i ^ conj) ^ rep;
+      fi;
+    od;
+
+    while pnt <> min  do
+      gen := S.transversal[min];
+      rep := LeftQuotient(gen ^ conj, rep);
+      min := min ^ gen;
+    od;
+
+    return SmallestElementConjugateStabChain(S.stabilizer, rep, conj);
+end);
