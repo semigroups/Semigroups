@@ -8,6 +8,11 @@
 #############################################################################
 ##
 
+BindGlobal("SEMIGROUPS_BipartitionFamilies", []);
+MakeReadWriteGlobal("SEMIGROUPS_BipartitionFamilies");
+BindGlobal("SEMIGROUPS_BipartitionTypes", []);
+MakeReadWriteGlobal("SEMIGROUPS_BipartitionTypes");
+
 InstallGlobalFunction(BipartitionFamily,
 function(n)
 
@@ -18,18 +23,14 @@ function(n)
 
   n := n + 1; # since the degree can be 0
 
-  if not IsBound(SEMIGROUPS.BipartitionFamily) then 
-    SEMIGROUPS.BipartitionFamily := [];
-  fi;
-
-  if not IsBound(SEMIGROUPS.BipartitionFamily[n]) then 
-    SEMIGROUPS.BipartitionFamily[n] := 
+  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then 
+    SEMIGROUPS_BipartitionFamilies[n] := 
            NewFamily("BipartitionFamily",
                      IsBipartition, CanEasilySortElements,
                      CanEasilySortElements);
   fi;
 
-  return SEMIGROUPS.BipartitionFamily[n];
+  return SEMIGROUPS_BipartitionFamilies[n];
 end);
 
 InstallGlobalFunction(BipartitionType,
@@ -42,18 +43,14 @@ function(n)
   
   n := n + 1; # since the degree can be 0
  
-  if not IsBound(SEMIGROUPS.BipartitionType) then 
-    SEMIGROUPS.BipartitionType := [];
-  fi;
-
-  if not IsBound(SEMIGROUPS.BipartitionType[n]) then 
-    SEMIGROUPS.BipartitionType[n] := 
+  if not IsBound(SEMIGROUPS_BipartitionTypes[n]) then 
+    SEMIGROUPS_BipartitionTypes[n] := 
            NewType(BipartitionFamily(n),
                    IsBipartition and IsComponentObjectRep and
                    IsAttributeStoringRep);
   fi;
 
-  return SEMIGROUPS.BipartitionType[n];
+  return SEMIGROUPS_BipartitionTypes[n];
 end);
 
 # implications

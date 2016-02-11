@@ -75,6 +75,3 @@ ReadPackage("semigroups/gap/freeband.gd");
 
 DeclareInfoClass("InfoMatrixSemigroups");
 DeclareInfoClass("InfoSemigroups");
-
-BindGlobal("SEMIGROUPS", rec());
-MakeReadWriteGlobal("SEMIGROUPS");
