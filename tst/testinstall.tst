@@ -1262,6 +1262,11 @@ gap> MaximalSubsemigroups(FullTransformationMonoid(4)) =
 >            Transformation([4, 3, 3, 4]))];
 true
 
+#T# Test for not being allowed to generate a semigroup with bipartitions of
+# different degree
+gap> Semigroup(Bipartition([[-1,1]]), Bipartition([]));
+Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);

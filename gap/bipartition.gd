@@ -11,17 +11,12 @@
 DeclareCategory("IsBipartition",
                 IsMultiplicativeElementWithInverse and
                 IsAssociativeElementWithStar);
+
 DeclareCategoryCollections("IsBipartition");
 DeclareCategoryCollections("IsBipartitionCollection");
 
-BindGlobal("BipartitionFamily",
-           NewFamily("BipartitionFamily",
-                     IsBipartition, CanEasilySortElements,
-                     CanEasilySortElements));
-BindGlobal("BipartitionType",
-           NewType(BipartitionFamily,
-                   IsBipartition and IsComponentObjectRep and
-                   IsAttributeStoringRep));
+DeclareGlobalFunction("BipartitionFamily");
+DeclareGlobalFunction("BipartitionType");
 
 DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
