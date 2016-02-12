@@ -1251,6 +1251,11 @@ gap> S := FullTropicalMinPlusMonoid(2, 3);
 gap> AsTransformationSemigroup(S);
 <transformation monoid of degree 625 with 7 generators>
 
+#T# Test for not being allowed to generate a semigroup with bipartitions of
+# different degree
+gap> Semigroup(Bipartition([[-1,1]]), Bipartition([]));
+Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);

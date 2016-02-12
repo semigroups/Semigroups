@@ -8,6 +8,49 @@
 #############################################################################
 ##
 
+BindGlobal("SEMIGROUPS_BipartitionFamilies", []);
+BindGlobal("SEMIGROUPS_BipartitionTypes", []);
+
+InstallGlobalFunction(BipartitionFamily,
+function(n)
+
+  if not IsInt(n) or n < 0 then 
+    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n", 
+                  "the argument must be a non-negative integer,");
+  fi;
+
+  n := n + 1; # since the degree can be 0
+
+  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then 
+    SEMIGROUPS_BipartitionFamilies[n] := 
+           NewFamily("BipartitionFamily",
+                     IsBipartition, CanEasilySortElements,
+                     CanEasilySortElements);
+  fi;
+
+  return SEMIGROUPS_BipartitionFamilies[n];
+end);
+
+InstallGlobalFunction(BipartitionType,
+function(n)
+
+  if not IsInt(n) or n < 0 then 
+    ErrorNoReturn("Semigroups: BipartitionType: usage,\n", 
+                  "the argument must be a non-negative integer,");
+  fi;
+  
+  n := n + 1; # since the degree can be 0
+ 
+  if not IsBound(SEMIGROUPS_BipartitionTypes[n]) then 
+    SEMIGROUPS_BipartitionTypes[n] := 
+           NewType(BipartitionFamily(n),
+                   IsBipartition and IsComponentObjectRep and
+                   IsAttributeStoringRep);
+  fi;
+
+  return SEMIGROUPS_BipartitionTypes[n];
+end);
+
 #############################################################################
 # Pickler
 #############################################################################

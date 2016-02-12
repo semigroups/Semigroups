@@ -88,9 +88,9 @@ inline bool IS_GAP_BLOCKS_BAG (Obj o) {
 extern Obj infinity;
 extern Obj Ninfinity;
 extern Obj IsBipartition;
+extern Obj BipartTypes;
 extern Obj BipartitionType;
 extern Obj BlocksType;
-extern Obj BipartitionByIntRepNC; //FIXME remove this
 extern Obj IsBooleanMat;
 extern Obj BooleanMatType;
 extern Obj IsMatrixOverSemiring;

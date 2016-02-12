@@ -870,45 +870,44 @@ static Int InitKernel( StructInitInfo *module )
     InitMarkFuncBags(T_SEMI, &SemigroupsMarkSubBags);
     InitFreeFuncBag(T_SEMI, &SemigroupsBagFreeFunc);
 
-    ImportGVarFromLibrary( "infinity", &infinity);
-    ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
+    ImportGVarFromLibrary("infinity", &infinity);
+    ImportGVarFromLibrary("Ninfinity", &Ninfinity);
 
-    ImportGVarFromLibrary( "IsBipartition", &IsBipartition );
-    //FIXME delete the next line
-    ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
-    ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
-    ImportGVarFromLibrary( "BlocksType", &BlocksType );
+    ImportGVarFromLibrary("IsBipartition", &IsBipartition );
+    ImportGVarFromLibrary("SEMIGROUPS_BipartitionTypes", &BipartTypes);
+    ImportGVarFromLibrary("BipartitionType", &BipartitionType);
+    ImportGVarFromLibrary("BlocksType", &BlocksType );
 
-    ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
-    ImportGVarFromLibrary( "BooleanMatType", &BooleanMatType );
+    ImportGVarFromLibrary("IsBooleanMat", &IsBooleanMat );
+    ImportGVarFromLibrary("BooleanMatType", &BooleanMatType );
 
-    ImportGVarFromLibrary( "IsMatrixOverSemiring", &IsMatrixOverSemiring);
+    ImportGVarFromLibrary("IsMatrixOverSemiring", &IsMatrixOverSemiring);
 
-    ImportGVarFromLibrary( "IsMaxPlusMatrix", &IsMaxPlusMatrix );
-    ImportGVarFromLibrary( "MaxPlusMatrixType", &MaxPlusMatrixType );
+    ImportGVarFromLibrary("IsMaxPlusMatrix", &IsMaxPlusMatrix );
+    ImportGVarFromLibrary("MaxPlusMatrixType", &MaxPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsMinPlusMatrix", &IsMinPlusMatrix );
-    ImportGVarFromLibrary( "MinPlusMatrixType", &MinPlusMatrixType );
+    ImportGVarFromLibrary("IsMinPlusMatrix", &IsMinPlusMatrix );
+    ImportGVarFromLibrary("MinPlusMatrixType", &MinPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsTropicalMatrix", &IsTropicalMatrix );
+    ImportGVarFromLibrary("IsTropicalMatrix", &IsTropicalMatrix );
 
-    ImportGVarFromLibrary( "IsTropicalMaxPlusMatrix", &IsTropicalMaxPlusMatrix );
-    ImportGVarFromLibrary( "TropicalMaxPlusMatrixType", &TropicalMaxPlusMatrixType );
+    ImportGVarFromLibrary("IsTropicalMaxPlusMatrix", &IsTropicalMaxPlusMatrix );
+    ImportGVarFromLibrary("TropicalMaxPlusMatrixType", &TropicalMaxPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
-    ImportGVarFromLibrary( "TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
+    ImportGVarFromLibrary("IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
+    ImportGVarFromLibrary("TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsProjectiveMaxPlusMatrix", &IsProjectiveMaxPlusMatrix );
-    ImportGVarFromLibrary( "ProjectiveMaxPlusMatrixType", &ProjectiveMaxPlusMatrixType );
+    ImportGVarFromLibrary("IsProjectiveMaxPlusMatrix", &IsProjectiveMaxPlusMatrix );
+    ImportGVarFromLibrary("ProjectiveMaxPlusMatrixType", &ProjectiveMaxPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsNTPMatrix", &IsNTPMatrix );
-    ImportGVarFromLibrary( "NTPMatrixType", &NTPMatrixType );
+    ImportGVarFromLibrary("IsNTPMatrix", &IsNTPMatrix);
+    ImportGVarFromLibrary("NTPMatrixType", &NTPMatrixType);
 
-    ImportGVarFromLibrary( "IsIntegerMatrix", &IsIntegerMatrix );
-    ImportGVarFromLibrary( "IntegerMatrixType", &IntegerMatrixType );
+    ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
+    ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
-    ImportGVarFromLibrary( "IsPBR", &IsPBR);
-    ImportGVarFromLibrary( "PBRType", &PBRType );
+    ImportGVarFromLibrary("IsPBR", &IsPBR);
+    ImportGVarFromLibrary("PBRType", &PBRType );
 
     /* return success                                                      */
     return 0;
