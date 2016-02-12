@@ -21,7 +21,6 @@ if not IsGrapeLoaded then
 fi;
 
 if not IsGrapeCompiled then
-  Add(SEMIGROUPS.OmitFromTests, "MaximalSubsemigroups");
   Add(SEMIGROUPS.OmitFromTests, "MunnSemigroup");
   Add(SEMIGROUPS.OmitFromTests, "IsIsomorphicSemigroup");
   Add(SEMIGROUPS.OmitFromTests, "IsomorphismSemigroups");
