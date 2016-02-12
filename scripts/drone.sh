@@ -1,1 +1,1 @@
-echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples(); quit; quit; quit;" | sh bin/gap.sh | tee testlog.txt | grep --colour=always -A 1 -E "########> Diff|$" ; ( ! grep -E "########> Diff|brk>|#E|Error|# WARNING" testlog.txt )
+echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples(); quit; quit; quit;" | bin/gap.sh -A -r -m 1g -T | tee testlog.txt | grep --colour=always -A 1 -E "########> Diff|brk>|#E|Error|# WARNING|fail|$" ; ( ! grep -E "########> Diff|brk>|#E|Error|# WARNING|fail" testlog.txt )
