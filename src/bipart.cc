@@ -23,7 +23,7 @@ static std::vector<size_t> _BUFFER_size_t;
 static std::vector<bool>   _BUFFER_bool;
 static Timer               timer;
 
-Obj bipart_type (size_t deg) {
+inline Obj bipart_type (size_t deg) {
   deg++;  
   if (deg > (size_t) LEN_PLIST(BipartTypes) || 
       ELM_PLIST(BipartTypes, deg) == 0) {
