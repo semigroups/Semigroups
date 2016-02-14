@@ -201,10 +201,14 @@ gap> RightSemigroupCongruence(S, pair1, pair2);
 <#GAPDoc Label="CongruencesOfSemigroup">
   <ManSection> 
     <Attr Name = "CongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "LeftCongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "RightCongruencesOfSemigroup" Arg = "S"/>
     <Returns>The congruences of a semigroup.</Returns>
     <Description>
-      This attribute gives a list of the congruences of the semigroup
-      <A>S</A>. <P/>
+      This attribute gives a list of the left, right, or 2-sided congruences of
+      the semigroup <A>S</A>. <P/>
+
+      See also <Ref Attr = "LatticeOfCongruences"/>. <P/>
 
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
