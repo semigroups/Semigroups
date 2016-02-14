@@ -35,6 +35,11 @@ DeclareCategory("IsRightCongruenceClass",
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("LeftCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("RightCongruencesOfSemigroup", IsSemigroup);
+
+DeclareAttribute("MinimalCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("MinimalLeftCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("MinimalRightCongruencesOfSemigroup", IsSemigroup);
+
 DeclareAttribute("LatticeOfCongruences", IsSemigroup);
 DeclareAttribute("LatticeOfLeftCongruences", IsSemigroup);
 DeclareAttribute("LatticeOfRightCongruences", IsSemigroup);

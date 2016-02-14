@@ -412,6 +412,39 @@ gap> LatticeOfCongruences(S);
 gap> Size(CongruencesOfSemigroup(S));
 4
 
+#T# MinimalCongruencesOfSemigroup
+gap> S := Semigroup([Transformation([1,3,2]), Transformation([3,1,3])]);;
+gap> min := MinimalCongruencesOfSemigroup(S);
+[ <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs> ]
+gap> congs := CongruencesOfSemigroup(S);
+[ <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 0 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs> ]
+gap> l := LatticeOfCongruences(S);
+[ [  ], [ 1, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1 ], [ 1, 4 ], [ 1, 2, 4, 5 ] ]
+gap> Position(congs, min[1]) = Position(l, [1]);
+true
+gap> minl := MinimalLeftCongruencesOfSemigroup(S);;
+gap> Size(minl);
+3
+gap> minr := MinimalRightCongruencesOfSemigroup(S);;
+gap> Size(minr);
+9
+gap> PositionsProperty(minl, c -> IsSubrelation(min[1], c));
+[ 1, 2, 3 ]
+gap> PositionsProperty(minr, c -> IsSubrelation(min[1], c));
+[ 5 ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
@@ -419,9 +452,13 @@ gap> Unbind(class);
 gap> Unbind(classes);
 gap> Unbind(cong);
 gap> Unbind(cong2);
+gap> Unbind(congs);
 gap> Unbind(enum);
 gap> Unbind(gens);
 gap> Unbind(l);
+gap> Unbind(min);
+gap> Unbind(minl);
+gap> Unbind(minr);
 gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);

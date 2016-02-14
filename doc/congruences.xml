@@ -226,6 +226,46 @@ gap> congs := CongruencesOfSemigroup(S);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="MinimalCongruencesOfSemigroup">
+  <ManSection>
+    <Attr Name = "MinimalCongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "MinimalLeftCongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "MinimalRightCongruencesOfSemigroup" Arg = "S"/>
+    <Returns>The congruences of a semigroup.</Returns>
+    <Description>
+      If <A>S</A> is a semigroup, then the attribute
+      <C>MinimalCongruencesOfSemigroup</C> gives a list of all the congruences
+      on <A>S</A> which are <E>minimal</E>.  A congruence is minimal iff it is
+      non-trivial and contains no other congruences as subrelations (apart from
+      the trivial congruence).
+      <P/>
+
+      <C>MinimalLeftCongruencesOfSemigroup</C> and
+      <C>MinimalRightCongruencesOfSemigroup</C> do the same thing, but for left
+      congruences and right congruences respectively.  Note that any congruence
+      is also a left congruence, but that a minimal congruence may not be a
+      minimal left congruence. <P/>
+
+      See also <Ref Attr = "CongruencesOfSemigroup"/>. <P/>
+
+      <Example><![CDATA[
+gap> S := Semigroup([Transformation([1,3,2]),
+>                    Transformation([3,1,3])]);;
+gap> min := MinimalCongruencesOfSemigroup(S);
+[ <semigroup congruence over <transformation semigroup of size 13, 
+     degree 3 with 2 generators> with 1 generating pairs> ]
+gap> minl := MinimalLeftCongruencesOfSemigroup(S);
+[ <left semigroup congruence over <transformation semigroup 
+     of size 13, degree 3 with 2 generators> with 1 generating pairs>,
+  <left semigroup congruence over <transformation semigroup 
+     of size 13, degree 3 with 2 generators> with 1 generating pairs>,
+  <left semigroup congruence over <transformation semigroup 
+     of size 13, degree 3 with 2 generators> with 1 generating pairs> 
+ ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="LatticeOfCongruences">
   <ManSection>
     <Attr Name = "LatticeOfCongruences" Arg = "S"/>

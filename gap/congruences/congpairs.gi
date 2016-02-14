@@ -674,8 +674,6 @@ function(_record)
   [IsSemigroup],
   S -> SEMIGROUPS.LatticeOfXCongruences(S, _record.type_string, rec()));
 
-  #
-
   ###########################################################################
   # XCongruencesOfSemigroup
   ###########################################################################
@@ -694,6 +692,25 @@ function(_record)
                                              _record.type_string,
                                              "Congruences"));
     return lattice_func(S)![2];
+  end);
+
+  ###########################################################################
+  # MinimalXCongruencesOfSemigroup
+  ###########################################################################
+  InstallMethod(EvalString(
+  Concatenation("Minimal", _record.type_string, "CongruencesOfSemigroup")),
+  "for a semigroup",
+  [IsSemigroup],
+  function(S)
+    local lattice;
+    if not IsFinite(S) then
+      TryNextMethod();
+    fi;
+    # Find the lattice of congruences, and retrieve
+    # the list of congruences from inside it
+    lattice := SEMIGROUPS.LatticeOfXCongruences(S, _record.type_string,
+                                                rec(minimal := true));
+    return lattice![2];
   end);
 
   ###########################################################################
@@ -941,6 +958,39 @@ function(class1, class2)
 end);
 
 ###########################################################################
+# IsSubrelation methods between 1-sided and 2-sided congruences
+###########################################################################
+InstallMethod(IsSubrelation,
+"for semigroup congruence and left semigroup congruence",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
+ IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
+function(cong, lcong)
+  # Tests whether cong contains all the pairs in lcong
+  if Range(cong) <> Range(lcong) then
+    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
+                  "congruences must be defined over the same semigroup,");
+  fi;
+  return ForAll(GeneratingPairsOfLeftSemigroupCongruence(lcong),
+                pair -> pair in cong);
+end);
+
+#
+
+InstallMethod(IsSubrelation,
+"for semigroup congruence and right semigroup congruence",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
+ IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
+function(cong, rcong)
+  # Tests whether cong contains all the pairs in rcong
+  if Range(cong) <> Range(rcong) then
+    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
+                  "congruences must be defined over the same semigroup,");
+  fi;
+  return ForAll(GeneratingPairsOfRightSemigroupCongruence(rcong),
+                pair -> pair in cong);
+end);
+
+###########################################################################
 # Some individual methods for congruences
 ###########################################################################
 
@@ -1029,6 +1079,37 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     fi;
   od;
   congs := ShallowCopy(congs1);
+
+  # We now have all 1-generated congruences, which must include all the minimal
+  # congruences.  We can return if necessary.
+  if IsBound(record.minimal) and record.minimal = true then
+    # Find all the minimal congruences (those with no children)
+    congs := congs{Positions(children, [])};
+    # Note: we don't include the trivial congruence
+    # Set the MinimalXCongruencesOfSemigroup attribute
+    set_func := EvalString(Concatenation("SetMinimal",
+                                         type_string,
+                                         "CongruencesOfSemigroup"));
+    set_func(S, congs);
+    # Minimal congruences cannot contain each other
+    children := ListWithIdenticalEntries(Length(congs), []);
+    lattice := Objectify(NewType(FamilyObj(children),
+                                 SEMIGROUPS_IsCongruenceLattice),
+                         [children, congs]);
+    return lattice;
+  elif IsBound(record.1gen) and record.1gen = true then
+    # Add the trivial congruence at the start
+    children := Concatenation([[]], children + 1);
+    for i in [2 .. nrcongs + 1] do
+      Add(children[i], 1, 1);
+    od;
+    Add(congs, _XSemigroupCongruence(S, []), 1);
+    # Return the lattice, but don't set any attributes
+    lattice := Objectify(NewType(FamilyObj(children),
+                                 SEMIGROUPS_IsCongruenceLattice),
+                         [children, congs]);
+    return lattice;
+  fi;
 
   # Take all their joins
   Info(InfoSemigroups, 1, "Taking joins...");
