@@ -511,7 +511,8 @@ function(R)
   Info(InfoSemigroups, 3,
        "...now computing the corresponding maximal subsemigroups...");
   # the following relies on the fact that the first and last cliques
-  # will always be the bicomponents. Is this actually guaranteed?
+  # will always be the bicomponents. This is guaranteed since we sort
+  Sort(rectangles);
   for r in [2 .. Length(rectangles) - 1] do
     # add group generators
     i := rectangles[r][1];
