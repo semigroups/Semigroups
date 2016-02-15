@@ -236,11 +236,11 @@ end);
 # for partial perms, etc
 
 InstallMethod(AsPBR, "for an associative element",
-[IsAssociativeElement], x -> AsPBR(AsBipartition(x)));
+[IsMultiplicativeElement], x -> AsPBR(AsBipartition(x)));
 
 InstallMethod(AsPBR,
 "for an associative element and pos int",
-[IsAssociativeElement, IsPosInt],
+[IsMultiplicativeElement, IsPosInt],
 function(x, n)
   return AsPBR(AsBipartition(x, n));
 end);

@@ -73,7 +73,7 @@ function(R, H)
 
 end);
 
-#
+#FIXME the info string is wrong
 
 InstallMethod(MaximalSubsemigroupsNC,
 "for a Rees matrix subsemigroup and a group",

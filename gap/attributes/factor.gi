@@ -17,7 +17,7 @@
 
 InstallMethod(MinimalFactorization,
 "for a semigroup and an associative element",
-[IsSemigroup, IsAssociativeElement],
+[IsSemigroup, IsMultiplicativeElement],
 function(S, x)
   local data, pos;
   if not x in S then
@@ -37,7 +37,7 @@ end);
 
 InstallMethod(Factorization,
 "for a semigroup and associative element",
-[IsSemigroup, IsAssociativeElement],
+[IsSemigroup, IsMultiplicativeElement],
 function(S, x)
   return MinimalFactorization(S, x);
 end);
@@ -170,7 +170,7 @@ end);
 
 InstallMethod(Factorization,
 "for an acting semigroup with generators and element",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(s, f)
   local o, l, m, scc, data, pos, rep, word1, word2, p;
 
@@ -219,7 +219,7 @@ end);
 InstallMethod(Factorization,
 "for an acting semigroup with inverse op with generators and element",
 [IsSemigroupWithInverseOp and IsActingSemigroup and HasGeneratorsOfSemigroup,
- IsAssociativeElement],
+ IsMultiplicativeElement],
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
 
@@ -275,7 +275,7 @@ end);
 InstallMethod(Factorization,
 "for a regular acting semigroup with generators and element",
 [IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup,
- IsAssociativeElement],
+ IsMultiplicativeElement],
 function(s, f)
   local o, gens, l, m, scc, word1, k, rep, p, word2;
 

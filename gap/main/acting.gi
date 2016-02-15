@@ -58,8 +58,8 @@ end);
 # for non-regular ideals
 
 InstallMethod(\in,
-"for an associative element and acting semigroup",
-[IsAssociativeElement, IsActingSemigroup],
+"for a multiplicative element and acting semigroup",
+[IsMultiplicativeElement, IsActingSemigroup],
 function(x, S)
   local data, ht, lambda, lambdao, l, m, rhoranker, rho, rank, rhoo,
   lambdarhoht, rholookup, rhoranks, lookahead_last, lookahead_fail, nrgens,
@@ -321,8 +321,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(\in, "for associative element and semigroup data",
-[IsAssociativeElement, IsSemigroupData],
+InstallMethod(\in, "for a multiplicative element and semigroup data",
+[IsMultiplicativeElement, IsSemigroupData],
 function(f, data)
   return not Position(data, f) = fail;
 end);
@@ -692,8 +692,9 @@ InstallMethod(OrbitGraphAsSets, "for semigroup data",
 
 # same method for ideals
 
-InstallMethod(Position, "for semigroup data and an associative element",
-[IsSemigroupData, IsAssociativeElement, IsZeroCyc],
+InstallMethod(Position, 
+"for semigroup data, multiplicative element, and zero cyc",
+[IsSemigroupData, IsMultiplicativeElement, IsZeroCyc],
 function(data, x, n)
   local S, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
   lambdaperm;

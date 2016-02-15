@@ -54,8 +54,8 @@ end;
 ## Methods for some standard things for acting semigroups.
 
 InstallMethod(ClosureSemigroupNC,
-"for an acting semigroup, associative element coll, and record",
-[IsActingSemigroup, IsAssociativeElementCollection, IsRecord],
+"for an acting semigroup, multiplicative element coll, and record",
+[IsActingSemigroup, IsMultiplicativeElementCollection, IsRecord],
 function(S, coll, opts)
   local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup,
   rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr,
@@ -499,8 +499,8 @@ end);
 
 # different method for inverse, same method for ideals
 
-InstallMethod(\in, "for an associative element and regular acting semigroup",
-[IsAssociativeElement, IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(\in, "for a multiplicative element and regular acting semigroup",
+[IsMultiplicativeElement, IsActingSemigroup and IsRegularSemigroup],
 function(x, S)
   local pos_lambda, pos_rho, m, schutz, n, rep;
 
@@ -588,8 +588,8 @@ end);
 # TODO clean this up
 
 InstallMethod(\in,
-"for an associative element and acting semigroup with inversion",
-[IsAssociativeElement, IsActingSemigroup and IsSemigroupWithInverseOp],
+"for a multiplicative element and acting semigroup with inversion",
+[IsMultiplicativeElement, IsActingSemigroup and IsSemigroupWithInverseOp],
 function(f, s)
   local o, lambda, lambda_l, rho, rho_l, m, schutz, scc, rep;
 

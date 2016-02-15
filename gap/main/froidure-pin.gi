@@ -196,8 +196,8 @@ S -> SEMIGROUP_SIZE(GenericSemigroupData(S)));
 # different method for ideals
 
 InstallMethod(\in,
-"for an associative element and finite semigroup with generators",
-[IsAssociativeElement, IsSemigroup and HasGeneratorsOfSemigroup],
+"for a multiplicative element and finite semigroup with generators",
+[IsMultiplicativeElement, IsSemigroup and HasGeneratorsOfSemigroup],
 function(x, S)
   return Position(GenericSemigroupData(S), x) <> fail;
 end);

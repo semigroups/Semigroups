@@ -20,8 +20,6 @@ DeclareCategory("SEMIGROUPS_CongClassSimple",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);
 
-#
-
 SEMIGROUPS.SimpleCongFromPairs :=
 function(S, pairs)
   local iso, r, rmspairs, pcong, rmscong, cong;
