@@ -820,21 +820,21 @@ InstallMethod(String, "for the universal fake one",
 [SEMIGROUPS_IsUniversalFakeOne], obj -> "<universal fake one>");
 
 InstallMethod(\*,
-"for the universal fake one and an associative element",
-[SEMIGROUPS_IsUniversalFakeOne, IsAssociativeElement],
+"for the universal fake one and a multiplicative element",
+[SEMIGROUPS_IsUniversalFakeOne, IsMultiplicativeElement],
 function(x, y)
   return y;
 end);
 
 InstallMethod(\*,
-"for an associative element and the universal fake one",
-[IsAssociativeElement, SEMIGROUPS_IsUniversalFakeOne],
+"for a multiplicative element and the universal fake one",
+[IsMultiplicativeElement, SEMIGROUPS_IsUniversalFakeOne],
 function(x, y)
   return x;
 end);
 
-InstallMethod(\<, "for the universal fake one and an associative element",
-[SEMIGROUPS_IsUniversalFakeOne, IsAssociativeElement], ReturnTrue);
+InstallMethod(\<, "for the universal fake one and a multiplicative element",
+[SEMIGROUPS_IsUniversalFakeOne, IsMultiplicativeElement], ReturnTrue);
 
-InstallMethod(\<, "for an associative element and the universal fake one",
-[IsAssociativeElement, SEMIGROUPS_IsUniversalFakeOne], ReturnFalse);
+InstallMethod(\<, "for a multiplicative element and the universal fake one",
+[IsMultiplicativeElement, SEMIGROUPS_IsUniversalFakeOne], ReturnFalse);

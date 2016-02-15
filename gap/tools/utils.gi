@@ -32,17 +32,17 @@ SEMIGROUPS.ColorizeString := function(arg)
   color := arg[Length(arg)];
 
   if color = "green" then
-    return Concatenation("\033[1;32m", string, "\033[0m");
+    return Concatenation("\033[32m", string, "\033[0m");
   elif color = "red" then
-    return Concatenation("\033[1;31m", string, "\033[0m");
+    return Concatenation("\033[31m", string, "\033[0m");
   elif color = "lightblue" then
     return Concatenation("\033[94m", string, "\033[0m");
   elif color = "magenta" then
     return Concatenation("\033[35m", string, "\033[0m");
   elif color = "back_blue" then
-    return Concatenation("\033[1;44m", string, "\033[0m");
+    return Concatenation("\033[44m", string, "\033[0m");
   elif color = "back_gray" then
-    return Concatenation("\033[1;100m", string, "\033[0m");
+    return Concatenation("\033[100m", string, "\033[0m");
   fi;
   return string;
 end;
@@ -277,11 +277,12 @@ SEMIGROUPS.ManualExamples := function()
 end;
 
 SEMIGROUPS.RunExamples := function(exlists, excluded)
-  local oldscr, l, sp, bad, s, start_time, test, end_time, elapsed, pex, j, ex,
-        i;
+  local oldscr, passed, l, sp, bad, s, start_time, test, end_time, elapsed,
+        pex, j, ex, i, attedStrin;
 
   oldscr := SizeScreen();
   SizeScreen([72, oldscr[2]]);
+  passed := true;
   for j in [1 .. Length(exlists)] do
     if j in excluded then
       Print(SEMIGROUPS.ColorizeString("# Skipping list ", j, " . . .\n",
@@ -313,14 +314,15 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
                                         "back_gray"));
         Print("\n");
 
-        if Length(bad) > 0  then
+        if Length(bad) > 0 then
           Print(SEMIGROUPS.ColorizeString("# WARNING: Overlong lines ", bad,
                                          " in ", ex[2]{[1 .. 3]}, "red"));
           Print("\n");
+          passed := false;
         fi;
 
-        if test = false  then
-          for i in [1 .. Length(pex[1])]  do
+        if test = false then
+          for i in [1 .. Length(pex[1])] do
             if EQ(pex[2][i], pex[4][i]) <> true then
               Print("\033[1;31m########> Diff in ", ex[2]{[1 .. 3]},
                     "\n# Input is:\n");
@@ -330,6 +332,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
               Print("# But found:\n");
               PrintFormattedString(pex[4][i]);
               Print("########\033[0m\n");
+              passed := false;
             fi;
           od;
         fi;
@@ -337,11 +340,11 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
     fi;
   od;
   SizeScreen(oldscr);
-  return;
+  return passed;
 end;
 
 SEMIGROUPS.TestManualExamples := function(arg)
-  local ex, omit, width, generic, exclude, str;
+  local exclude, ex, omit, width, generic, passed, str;
 
   # TODO add extreme/standard tests for those examples below where it makes
   # sense.
@@ -386,7 +389,7 @@ SEMIGROUPS.TestManualExamples := function(arg)
         SEMIGROUPS.ColorizeString("ENABLED", "lightblue"), " . . .\n");
   Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS.StartTest();
-  SEMIGROUPS.RunExamples(ex, []);
+  passed := SEMIGROUPS.RunExamples(ex, []);
   SEMIGROUPS.StopTest("");
 
   SEMIGROUPS.DefaultOptionsRec.generic := true;
@@ -403,7 +406,7 @@ SEMIGROUPS.TestManualExamples := function(arg)
   #TODO make SEMIGROUPS.StopTest accept no args, or 1 arg
 
   SEMIGROUPS.DefaultOptionsRec.generic := generic;
-  return;
+  return passed;
 end;
 
 #############################################################################

@@ -173,8 +173,8 @@ function(S)
     return SEMIGROUP_AS_LIST(GenericSemigroupData(S));
   end;
 
-  enum.Membership := function(enum, x)
-    return Position(S, x) <> fail;
+  enum.Membership := function(x, enum)
+    return Position(GenericSemigroupData(S), x) <> fail;
   end;
 
   # FIXME this should be Size(S) hack around RZMS
@@ -233,8 +233,8 @@ end);
 #
 
 InstallMethod(Position,
-"for generic semigroup data, an associative element, zero cyc",
-[IsGenericSemigroupData, IsAssociativeElement, IsZeroCyc],
+"for generic semigroup data, a multiplicative element, zero cyc",
+[IsGenericSemigroupData, IsMultiplicativeElement, IsZeroCyc],
 function(data, x, n)
   if FamilyObj(x) <> ElementsFamily(FamilyObj(data)) then
     return fail;
@@ -253,12 +253,13 @@ function(data, x, n)
 end);
 
 InstallMethod(PositionSortedOp,
-"for a semigroup with generators, an associative element",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
+"for a semigroup with generators, and object",
+[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(S, x)
   local gens;
 
-  if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
+  if not (IsAssociativeElement(x) or IsMatrixOverSemiring(x))
+      or FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
   fi;
 
@@ -267,9 +268,10 @@ function(S, x)
   if (IsTransformation(x)
       and DegreeOfTransformation(x) >
       DegreeOfTransformationCollection(gens))
-      or (IsPartialPerm(x)
-          and DegreeOfPartialPerm(x) >
-          DegreeOfPartialPermCollection(gens)) then
+      or 
+      (IsPartialPerm(x)
+       and DegreeOfPartialPerm(x) >
+       DegreeOfPartialPermCollection(gens)) then
     return fail;
   fi;
   if SEMIGROUPS.IsCCSemigroup(S) then

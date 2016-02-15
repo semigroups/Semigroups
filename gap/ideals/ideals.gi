@@ -271,14 +271,14 @@ function(arg)
     # list of generators
     return SemigroupIdealByGenerators(arg[1], arg[2]);
 
-  elif IsAssociativeElement(arg[2])
-      or IsAssociativeElementCollection(arg[2]) then
+  elif IsMultiplicativeElement(arg[2])
+      or IsMultiplicativeElementCollection(arg[2]) then
     # generators and collections of generators
     out := [];
     for i in [2 .. Length(arg)] do
-      if IsAssociativeElement(arg[i]) then
+      if IsMultiplicativeElement(arg[i]) then
         Add(out, arg[i]);
-      elif IsAssociativeElementCollection(arg[i]) then
+      elif IsMultiplicativeElementCollection(arg[i]) then
         if HasGeneratorsOfSemigroup(arg[i]) then
           Append(out, GeneratorsOfSemigroup(arg[i]));
         elif HasGeneratorsOfSemigroupIdeal(arg[i]) then
@@ -310,8 +310,8 @@ end);
 #
 
 InstallMethod(SemigroupIdealByGenerators,
-"for a semigroup, associative element collection",
-[IsSemigroup, IsAssociativeElementCollection],
+"for a semigroup, multiplicative element collection",
+[IsSemigroup, IsMultiplicativeElementCollection],
 function(S, gens)
   return SemigroupIdealByGenerators(S, gens, SEMIGROUPS.OptionsRec(S));
 end);
@@ -319,8 +319,8 @@ end);
 #
 
 InstallMethod(SemigroupIdealByGenerators,
-"for semigroup, associative element collection, and record",
-[IsSemigroup, IsAssociativeElementCollection, IsRecord],
+"for semigroup, multiplicative element collection, and record",
+[IsSemigroup, IsMultiplicativeElementCollection, IsRecord],
 function(S, gens, opts)
   if not ForAll(gens, x -> x in S) then
     ErrorNoReturn("Semigroups: SemigroupIdealByGenerators: usage,\n",
@@ -331,8 +331,8 @@ function(S, gens, opts)
 end);
 
 InstallMethod(SemigroupIdealByGeneratorsNC,
-"for semigroup, associative element collection, and record",
-[IsSemigroup, IsAssociativeElementCollection, IsRecord],
+"for semigroup, multiplicative element collection, and record",
+[IsSemigroup, IsMultiplicativeElementCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
 
@@ -466,8 +466,8 @@ end);
 # there is
 
 InstallMethod(InversesOfSemigroupElementNC,
-"for a semigroup ideal and associative element",
-[IsSemigroupIdeal, IsAssociativeElement],
+"for a semigroup ideal and multiplicative element",
+[IsSemigroupIdeal, IsMultiplicativeElement],
 function(I, x)
   return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);
 end);

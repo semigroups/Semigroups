@@ -246,7 +246,7 @@ NonTrivialEquivalenceClasses);
 
 InstallMethod(CongruenceClassOfElement,
 "for a semigroup congruence and associative element",
-[IsSemigroupCongruence, IsAssociativeElement],
+[IsSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
 end);

@@ -130,7 +130,7 @@ end);
 
 InstallMethod(ImagesElm,
 "for universal semigroup congruence and element",
-[IsUniversalSemigroupCongruence, IsAssociativeElement],
+[IsUniversalSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
     ErrorNoReturn("Semigroups: ImagesElm: usage,\n",
@@ -213,7 +213,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElement,
 "for universal semigroup congruence and associative element",
-[IsUniversalSemigroupCongruence, IsAssociativeElement],
+[IsUniversalSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   # Check that the arguments make sense
   if not elm in Range(cong) then
@@ -228,7 +228,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for universal semigroup congruence and associative element",
-[IsUniversalSemigroupCongruence, IsAssociativeElement],
+[IsUniversalSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   local fam, class;
   fam := CollectionsFamily(FamilyObj(elm));
@@ -243,7 +243,7 @@ end);
 
 InstallMethod(\in,
 "for associative element and universal semigroup congruence class",
-[IsAssociativeElement, IsUniversalSemigroupCongruenceClass],
+[IsMultiplicativeElement, IsUniversalSemigroupCongruenceClass],
 function(elm, class)
   return elm in Parent(class);
 end);

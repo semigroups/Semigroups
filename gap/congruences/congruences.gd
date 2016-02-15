@@ -68,4 +68,4 @@ DeclareOperation("RightCongruenceClasses", [IsRightSemigroupCongruence]);
 DeclareOperation("NonTrivialCongruenceClasses", [IsSemigroupCongruence]);
 DeclareOperation("NrCongruenceClasses", [IsSemigroupCongruence]);
 DeclareOperation("CongruenceClassOfElement", [IsSemigroupCongruence,
-                                              IsAssociativeElement]);
+                                              IsMultiplicativeElement]);

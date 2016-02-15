@@ -244,8 +244,8 @@ end);
 # same method for ideals
 
 InstallMethod(InversesOfSemigroupElement,
-"for an acting semigroup and associative element",
-[IsActingSemigroup, IsAssociativeElement],
+"for an acting semigroup and multiplicative element",
+[IsActingSemigroup, IsMultiplicativeElement],
 function(S, x)
 
   if x in S then

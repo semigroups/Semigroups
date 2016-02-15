@@ -563,9 +563,8 @@ gap> DegreeOfBipartitionCollection(PartitionMonoid(2));
 # bipartition: DegreeOfBipartitionCollection, error 1/1
 gap> x := Bipartition([[1, 2, -2], [-1]]);;
 gap> y := Bipartition([[1, 3], [2, -1], [-2], [-3]]);;
-gap> DegreeOfBipartitionCollection([x, y]);
-Error, Semigroups: DegreeOfBipartitionCollection: usage,
-the argument <coll> must be a collection of bipartitions of equal degree,
+gap> IsBipartitionCollection([x, y]);
+false
 
 # bipartition: AsBipartition, for a PBR and 0, 1
 gap> AsBipartition(EmptyPBR(1), 0);

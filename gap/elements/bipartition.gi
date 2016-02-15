@@ -23,9 +23,9 @@ function(n)
 
   if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then 
     SEMIGROUPS_BipartitionFamilies[n] := 
-           NewFamily("BipartitionFamily",
-                     IsBipartition, CanEasilySortElements,
-                     CanEasilySortElements);
+          NewFamily(Concatenation("BipartitionFamily", String(n)),
+                    IsBipartition, CanEasilySortElements,
+                    CanEasilySortElements);
   fi;
 
   return SEMIGROUPS_BipartitionFamilies[n];
@@ -664,31 +664,16 @@ end);
 
 # Bipartition collections
 
+InstallMethod(DegreeOfBipartitionCollection, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
+function(S)
+  return DegreeOfBipartitionSemigroup(S);
+end);
+
 InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll)
-  local deg;
-
-  if IsBipartitionSemigroup(coll) then
-    return DegreeOfBipartitionSemigroup(coll);
-  fi;
-
-  deg := DegreeOfBipartition(coll[1]);
-  if not ForAll(coll, x -> DegreeOfBipartition(x) = deg) then
-    ErrorNoReturn("Semigroups: DegreeOfBipartitionCollection: usage,\n",
-                  "the argument <coll> must be a collection of bipartitions ",
-                  "of equal degree,");
-  fi;
-
-  return deg;
-end);
-
-InstallMethod(IsGeneratorsOfSemigroup, "for a bipartition collection",
-[IsBipartitionCollection],
-function(coll)
-  local deg;
-  deg := DegreeOfBipartition(coll[1]);
-  return ForAll(coll, x -> DegreeOfBipartition(x) = deg);
+  return DegreeOfBipartition(coll[1]);
 end);
 
 #############################################################################

@@ -178,8 +178,8 @@ function(C)
 end);
 
 InstallMethod(\in,
-"for an associative element and a generic semigroup Green's class",
-[IsAssociativeElement, IsGreensClass],
+"for a multiplicative element and a generic semigroup Green's class",
+[IsMultiplicativeElement, IsGreensClass],
 function(x, C)
   local pos;
   pos := Position(GenericSemigroupData(Parent(C)), x);
@@ -424,29 +424,29 @@ function(C)
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a generic semigroup Green's R-relation and an associative element",
-[IsGreensRRelation, IsAssociativeElement],
+"for a generic semigroup Green's R-relation and a multiplicative element",
+[IsGreensRRelation, IsMultiplicativeElement],
 function(rel, rep)
   return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, RClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a generic semigroup Green's L-relation and an associative element",
-[IsGreensLRelation, IsAssociativeElement],
+"for a generic semigroup Green's L-relation and a multiplicative element",
+[IsGreensLRelation, IsMultiplicativeElement],
 function(rel, rep)
   return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, LClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a generic semigroup Green's H-relation and an associative element",
-[IsGreensHRelation, IsAssociativeElement],
+"for a generic semigroup Green's H-relation and a multiplicative element",
+[IsGreensHRelation, IsMultiplicativeElement],
 function(rel, rep)
   return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, HClassType);
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a generic semigroup Green's D-relation and an associative element",
-[IsGreensDRelation, IsAssociativeElement],
+"for a generic semigroup Green's D-relation and a multiplicative element",
+[IsGreensDRelation, IsMultiplicativeElement],
 function(rel, rep)
   return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, DClassType);
 end);
@@ -454,70 +454,70 @@ end);
 # Green's classes of an element of a semigroup
 
 InstallMethod(GreensRClassOfElement,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElement(GreensRRelation(S), x);
 end);
 
 InstallMethod(GreensLClassOfElement,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElement(GreensLRelation(S), x);
 end);
 
 InstallMethod(GreensHClassOfElement,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElement(GreensHRelation(S), x);
 end);
 
 InstallMethod(GreensDClassOfElement,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElement(GreensDRelation(S), x);
 end);
 
 InstallMethod(GreensJClassOfElement,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement], GreensDClassOfElement);
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement], GreensDClassOfElement);
 
 # No check Green's classes of an element of a semigroup
 
 InstallMethod(GreensRClassOfElementNC,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElementNC(GreensRRelation(S), x);
 end);
 
 InstallMethod(GreensLClassOfElementNC,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElementNC(GreensLRelation(S), x);
 end);
 
 InstallMethod(GreensHClassOfElementNC,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElementNC(GreensHRelation(S), x);
 end);
 
 InstallMethod(GreensDClassOfElementNC,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement],
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElementNC(GreensDRelation(S), x);
 end);
 
 InstallMethod(GreensJClassOfElementNC,
-"for a finite semigroup and associative element",
-[IsSemigroup and IsFinite, IsAssociativeElement], GreensDClassOfElementNC);
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement], GreensDClassOfElementNC);
 
 # Green's class of a Green's class (coarser from finer)
 
@@ -559,22 +559,22 @@ end);
 # Green's class of a Green's class (finer from coarser)
 
 InstallMethod(GreensRClassOfElement,
-"for a D-class and associative element",
-[IsGreensDClass, IsAssociativeElement],
+"for a D-class and multiplicative element",
+[IsGreensDClass, IsMultiplicativeElement],
 function(D, x)
   return EquivalenceClassOfElement(GreensRRelation(Parent(D)), x);
 end);
 
 InstallMethod(GreensLClassOfElement,
-"for a D-class and associative element",
-[IsGreensDClass, IsAssociativeElement],
+"for a D-class and multiplicative element",
+[IsGreensDClass, IsMultiplicativeElement],
 function(D, x)
   return EquivalenceClassOfElement(GreensLRelation(Parent(D)), x);
 end);
 
 InstallMethod(GreensHClassOfElement,
-"for a Green's class and associative element",
-[IsGreensClass, IsAssociativeElement],
+"for a Green's class and multiplicative element",
+[IsGreensClass, IsMultiplicativeElement],
 function(C, x)
   return EquivalenceClassOfElement(GreensHRelation(Parent(C)), x);
 end);

@@ -17,7 +17,7 @@ DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
 # IsSemigroupIdeal and IsFinite and HasGeneratorsOfSemigroupIdeal
 
 DeclareProperty("IsGeneratorsOfActingSemigroup",
-                IsAssociativeElementCollection);
+                IsMultiplicativeElementCollection);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
                 IsActingSemigroup);
 

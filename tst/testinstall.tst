@@ -1253,7 +1253,7 @@ gap> AsTransformationSemigroup(S);
 
 #T# Test for not being allowed to generate a semigroup with bipartitions of
 # different degree
-gap> Semigroup(Bipartition([[-1,1]]), Bipartition([]));
+gap> Semigroup(Bipartition([[-1, 1]]), Bipartition([]));
 Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 
 #T# SEMIGROUPS_UnbindVariables

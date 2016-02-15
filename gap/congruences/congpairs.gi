@@ -550,7 +550,7 @@ function(_record)
   Concatenation("for a ", _record.info_string, "semigroup congruence",
                 " with known generating pairs and an associative element"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsAssociativeElement],
+   IsMultiplicativeElement],
   function(cong, elm)
     local lookup, gendata, classNo, elms;
     if not IsFinite(Range(cong)) then
@@ -671,7 +671,7 @@ function(_record)
   Concatenation("for a ", _record.info_string, "semigroup congruence",
                 " with generating pairs and an associative element"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsAssociativeElement],
+   IsMultiplicativeElement],
   function(cong, elm)
     if not elm in Range(cong) then
       ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
@@ -687,7 +687,7 @@ function(_record)
   Concatenation("for a ", _record.info_string, "semigroup congruence",
                 " with generating pairs and an associative element"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsAssociativeElement],
+   IsMultiplicativeElement],
   function(cong, elm)
     local fam, class;
     fam := FamilyObj(Range(cong));
@@ -830,7 +830,7 @@ function(_record)
   InstallMethod(\in,
   Concatenation("for an associative element and a ",
                 _record.info_string, "congruence class"),
-  [IsAssociativeElement, _IsXCongruenceClass],
+  [IsMultiplicativeElement, _IsXCongruenceClass],
   function(elm, class)
     if not IsFinite(Parent(class)) then
       TryNextMethod();

@@ -12,6 +12,6 @@
 # acting semigroups.
 
 DeclareOperation("InversesOfSemigroupElementNC",
-                 [IsSemigroup, IsAssociativeElement]);
+                 [IsSemigroup, IsMultiplicativeElement]);
 DeclareAttribute("StructureDescriptionSchutzenbergerGroups",
                  IsSemigroup and IsFinite);

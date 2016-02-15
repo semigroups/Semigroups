@@ -23,8 +23,8 @@ end;
 # IsGeneratorsOfActingSemigroup
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
-"for an associative element collection",
-[IsAssociativeElementCollection], ReturnFalse);
+"for a multiplicative element collection",
+[IsMultiplicativeElementCollection], ReturnFalse);
 
 # In the below can't do ReturnTrue, since GAP insists that we use
 # InstallTrueMethod.

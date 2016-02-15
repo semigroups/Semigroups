@@ -132,7 +132,7 @@ end);
 
 InstallMethod(\in,
 "for an associative element collection and a Rees congruence",
-[IsAssociativeElementCollection, IsReesCongruence],
+[IsMultiplicativeElementCollection, IsReesCongruence],
 function(pair, cong)
   local S, I;
   # Check for validity
@@ -154,7 +154,7 @@ end);
 
 InstallMethod(ImagesElm,
 "for a Rees congruence and an associative element",
-[IsReesCongruence, IsAssociativeElement],
+[IsReesCongruence, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
     ErrorNoReturn("Semigroups: ImagesElm: usage,\n",
@@ -220,7 +220,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElement,
 "for a Rees congruence and an associative element",
-[IsReesCongruence, IsAssociativeElement],
+[IsReesCongruence, IsMultiplicativeElement],
 function(cong, elm)
   # Check that the args make sense
   if not elm in Range(cong) then
@@ -235,7 +235,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for a Rees congruence and an associative element",
-[IsReesCongruence, IsAssociativeElement],
+[IsReesCongruence, IsMultiplicativeElement],
 function(cong, elm)
   local is_ideal_class, fam, class;
   # Ensure consistency of representatives
@@ -260,7 +260,7 @@ end);
 
 InstallMethod(\in,
 "for an associative element and a Rees congruence class",
-[IsAssociativeElement, IsReesCongruenceClass],
+[IsMultiplicativeElement, IsReesCongruenceClass],
 function(elm, class)
   if class!.is_ideal_class then
     return elm in SemigroupIdealOfReesCongruence(
