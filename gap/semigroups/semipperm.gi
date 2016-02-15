@@ -705,8 +705,8 @@ function(S)
 end);
 
 InstallMethod(RepresentativeOfMinimalIdeal,
-"for a partial perm semigroup",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+"for a partial perm semigroup with generators",
+[IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 1,
 function(S)
   local gens, empty_map, nrgens, min_rank, doms, ims, rank, min_rank_index,
   domain, range, lenrange, deg, codeg, in_nbs, labels, positions, collapsed,

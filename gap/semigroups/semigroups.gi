@@ -318,8 +318,8 @@ end);
 #
 
 InstallMethod(InverseMonoidByGenerators,
-"for an associative element collection",
-[IsAssociativeElementCollection and IsFinite],
+"for a finite collection",
+[IsCollection and IsFinite],
 function(gens)
   return InverseMonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
@@ -327,8 +327,8 @@ end);
 #
 
 InstallMethod(InverseSemigroupByGenerators,
-"for an associative element collection",
-[IsAssociativeElementCollection and IsFinite],
+"for a finite collection",
+[IsCollection and IsFinite],
 function(gens)
   return InverseSemigroupByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);

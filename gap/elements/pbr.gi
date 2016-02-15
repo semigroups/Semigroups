@@ -128,6 +128,14 @@ function(coll)
   return deg;
 end);
 
+InstallMethod(IsGeneratorsOfSemigroup, "for a PBR collection",
+[IsPBRCollection],
+function(coll)
+  local deg;
+  deg := DegreeOfPBR(coll[1]);
+  return ForAll(coll, x -> DegreeOfPBR(x) = deg);
+end);
+
 InstallMethod(IsBipartitionPBR, "for a pbr",
 [IsPBR],
 function(x)

@@ -11,7 +11,7 @@
 Obj infinity;
 Obj Ninfinity;
 Obj IsBipartition;
-Obj BipartitionByIntRepNC;
+Obj BipartTypes;
 Obj BipartitionType;
 Obj BlocksType;
 Obj IsBooleanMat;

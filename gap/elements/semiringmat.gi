@@ -274,8 +274,8 @@ function(semiring, mat)
   fi;
 
   # IsField required cos there's no method for IsPrimeField for Integers.
-#  if IsField(semiring) and IsFinite(semiring) and IsPrimeField(semiring) then
-#    filter := IsMatrixOverPrimeField;
+  #if IsField(semiring) and IsFinite(semiring) and IsPrimeField(semiring) then
+  #  filter := IsMatrixOverPrimeField;
   if IsIntegers(semiring) then
     filter := IsIntegerMatrix;
   else
@@ -297,9 +297,9 @@ function(semiring, mat)
     fi;
   od;
   mat := List(mat, ShallowCopy);
-  if IsField(semiring) then
-    Add(mat, Size(semiring));
-  fi;
+  #if IsField(semiring) then
+  #  Add(mat, Size(semiring));
+  #fi;
   return MatrixNC(filter, mat);
 end);
 
@@ -318,9 +318,9 @@ function(arg)
     fi;
   elif Length(arg) = 2 and IsSemiring(arg[1]) and IsPosInt(arg[2]) then
     return RandomMatrixOp(arg[1], arg[2]);
-  elif Length(arg) = 2 and IsPosInt(arg[1]) and IsPrimeInt(arg[1])
-      and IsPosInt(arg[2]) then
-    return RandomMatrixOp(GF(arg[1]), arg[2]);
+  #elif Length(arg) = 2 and IsPosInt(arg[1]) and IsPrimeInt(arg[1])
+  #    and IsPosInt(arg[2]) then
+  #  return RandomMatrixOp(GF(arg[1]), arg[2]);
   fi;
 
   ErrorNoReturn("Semigroups: RandomMatrix: usage,\n",
@@ -348,8 +348,8 @@ end);
 
 InstallMethod(AsMatrix, "for a semiring, and matrix over semiring",
 [IsSemiring, IsMatrixOverSemiring],
-function(filt, mat)
-  return AsMatrixCons(filt, mat);
+function(semiring, mat)
+  return Matrix(semiring, AsList(mat));
 end);
 
 InstallMethod(AsMutableList, "for matrix over semiring",
