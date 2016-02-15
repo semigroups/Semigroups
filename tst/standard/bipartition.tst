@@ -213,8 +213,9 @@ gap> x := Bipartition([[1, -4], [2, -1], [3], [4, -5], [5], [-2], [-3], [6],
 > [-6]]);;
 gap> y := Bipartition([[1, -4], [2, -3], [3], [4], [5], [-1], [-2], [-5]]);;
 gap> PartialPermLeqBipartition(x, y);
-Error, Semigroups: PartialPermLeqBipartition: usage,
-the arguments must have equal degree,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `PartialPermLeqBipartition' on 2 argumen\
+ts
 
 # bipartition: NaturalLeqBlockBijection  1/3
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3]]);;
@@ -227,8 +228,9 @@ the arguments must be block bijections,
 gap> x := Bipartition([[1, 2, -4], [3, 4, -1, -2, -3]]);;
 gap> y := Bipartition([[1, 2, -3], [3, -1, -2]]);;
 gap> NaturalLeqBlockBijection(x, y);
-Error, Semigroups: NaturalLeqBlockBijection: usage,
-the arguments must be block bijections of equal degree,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `NaturalLeqBlockBijection' on 2 argument\
+s
 
 # bipartition: NaturalLeqBlockBijection 3/3
 gap> x := IdentityBipartition(10);;
@@ -258,8 +260,9 @@ gap> x := Bipartition([[1, -4], [2, -1], [3], [4, -5], [5], [-2], [-3], [6],
 > [-6]]);;
 gap> y := Bipartition([[1, -4], [2, -3], [3], [4], [5], [-1], [-2], [-5]]);;
 gap> NaturalLeqPartialPermBipartition(x, y);
-Error, Semigroups: NaturalLeqPartialPermBipartition: usage,
-the arguments must have equal degree,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `NaturalLeqPartialPermBipartition' on 2 \
+arguments
 
 # bipartition: NaturalLeqPartialPermBipartition 4/4
 gap> x := Bipartition([[1, -4], [2], [3, -3], [4, -1], [-2]]);;
@@ -349,7 +352,8 @@ true
 # bipartition: \<, for bipartitions 2/2
 gap> Bipartition([[1, 2, 3, -1, -2, -3], [4, -4]]) <
 > Bipartition([[1, 3], [2, -1], [-2, -3]]);
-false
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `<' on 2 arguments
 
 # bipartition: PermLeftQuoBipartition, error 1/2
 gap> x := Bipartition([[1, 2], [-1, -2]]);;

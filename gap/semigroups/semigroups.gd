@@ -24,8 +24,7 @@ DeclareOperation("SemigroupByGenerators",
 DeclareOperation("MonoidByGenerators",
                  [IsMultiplicativeElementCollection, IsRecord]);
 DeclareOperation("InverseMonoidByGenerators",
-                 [IsMultiplicativeElementCollection and
-                  IsMultiplicativeElementWithOneCollection, IsRecord]);
+                 [IsMultiplicativeElementWithOneCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGenerators",
                  [IsMultiplicativeElementCollection, IsRecord]);
 

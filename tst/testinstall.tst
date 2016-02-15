@@ -1268,6 +1268,50 @@ gap> Semigroup(
 >                          [5, -1, -4]]));
 Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 
+#T# MaximalSubsemigroups, replacement test for manual example which becomes a
+#log because of the randomness in the generating sets here.
+gap> S := FullTransformationMonoid(4);;
+gap> (not IsGrapeCompiled) or Length(MaximalSubsemigroups(S)) = 9;
+true
+gap> (not IsGrapeCompiled) or ForAll(MaximalSubsemigroups(S), M -> M in 
+> [Semigroup(Transformation([1, 4, 2, 3]),
+>            Transformation([4, 2, 3, 4]), 
+>             Transformation([4, 3, 2, 1])),
+>  Semigroup(Transformation([1, 1, 2, 3]),
+>            Transformation([1, 2, 4, 3]), 
+>            Transformation([4, 2, 3, 4]),
+>            Transformation([4, 3, 2, 1])),
+>  Semigroup(Transformation([1, 1, 2, 3]),
+>            Transformation([1, 3, 1, 2]), 
+>            Transformation([1, 4, 3, 2]),
+>            Transformation([2, 1, 4, 3])),
+>  Semigroup(Transformation([1, 3, 2]), 
+>            Transformation([2, 1, 3, 1]),
+>            Transformation([3, 4, 1, 2]), 
+>            Transformation([3, 4, 1, 3])),
+>  Semigroup(Transformation([1, 2, 4, 3]),
+>            Transformation([1, 4, 2, 3]), 
+>            Transformation([2, 3, 1, 1]),
+>            Transformation([2, 3, 1, 2]), 
+>            Transformation([4, 2, 3, 4])),
+>  Semigroup(Transformation([1, 1, 2, 3]),
+>            Transformation([1, 3, 2]), 
+>            Transformation([3, 1, 2]),
+>            Transformation([4, 1, 2, 4])),
+>  Semigroup(Transformation([2, 1]), 
+>            Transformation([2, 3, 1, 1]),
+>            Transformation([4, 1, 2, 4]), 
+>            Transformation([4, 1, 3, 2])),
+>  Semigroup(Transformation([2, 1, 3, 1]),
+>            Transformation([3, 4, 1, 3]), 
+>            Transformation([4, 2, 1, 3]),
+>            Transformation([4, 2, 3, 1])),
+>  Semigroup(Transformation([2, 1]), 
+>            Transformation([2, 3, 4, 1]),
+>            Transformation([3, 1, 3, 3]), 
+>            Transformation([4, 3, 3, 4]))]);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);

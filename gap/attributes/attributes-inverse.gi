@@ -661,9 +661,9 @@ function(coll, x)
     return Bipartition(out);
 
   elif IsBipartition(x) and IsPartialPermBipartition(x) then
-    i := DegreeOfBipartition(x);
     return AsBipartition(SupremumIdempotentsNC(
-                         List(coll, AsPartialPerm), PartialPerm([])), i);
+                         List(coll, AsPartialPerm), PartialPerm([])), 
+                         DegreeOfBipartition(x));
   fi;
   ErrorNoReturn("Semigroups: SupremumIdempotentsNC: usage,\n",
                 "the argument is not a collection of partial perms, block ",
