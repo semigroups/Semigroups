@@ -1256,6 +1256,18 @@ gap> AsTransformationSemigroup(S);
 gap> Semigroup(Bipartition([[-1, 1]]), Bipartition([]));
 Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 
+#T# Test for not being allowed to generate a semigroup with matrices of
+# different dimensions
+gap> Semigroup(
+> Matrix(IsIntegerMatrix, [[0, -3, 0, -2],  
+>                          [-1, 1, -1, 0], 
+>                          [0, 1, 0, 1],
+>                          [0, 0, 2, 0]]), 
+> Matrix(IsIntegerMatrix, [[4, 0, -2], 
+>                          [1, -3, 0], 
+>                          [5, -1, -4]]));
+Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);
