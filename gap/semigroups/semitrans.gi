@@ -749,7 +749,8 @@ function(digraph)
   S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
 
   return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
-                                    fail, false, DigraphVertices(digraph), [], fail, fail)[1];
+                                    fail, false, DigraphVertices(digraph), [],
+                                    fail, fail)[1];
 end);
 
 InstallMethod(EndomorphismMonoid, "for a digraph and a homogeneous list",

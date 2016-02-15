@@ -25,9 +25,9 @@ SEMIGROUPS.HashFunctionBooleanMat := function(x, data)
   for i in [1 .. n] do
     for j in [1 .. n] do
       if x![i][j] then
-        h := ((h / 2) + 1) mod data;
+        h := ((h * 2) + 1) mod data;
       else
-        h := (h / 2) mod data;
+        h := (h * 2) mod data;
       fi;
     od;
   od;
