@@ -4,6 +4,13 @@
 #### Copyright (C) 2011-16 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.7.3 (released 15/02/2016)
+This is a minor release to fix some manual examples, to correct the package url
+in the `PackageInfo.g` file, and to fix some issues with semigroups of
+bipartitions. It was formerly possible to create semigroups of bipartitions
+where the generators had different degrees, but the created semigroups were
+invalid; this is fixed in version 2.7.3.
+
 ## Version 2.7.2 (released 28/01/2016)
 
 This is a minor release to fix to remove `ErrorMayQuit` which was renamed

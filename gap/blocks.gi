@@ -581,7 +581,7 @@ function(lambda, rho)
     fi;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := Objectify(BipartitionType(n), rec(blocks := out));
   SetDegreeOfBipartition(out, n);
   SetRankOfBipartition(out, RankOfBlocks(rho));
   SetNrLeftBlocks(out, rhonr);
@@ -714,7 +714,7 @@ function(blocks, f)
     fi;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := Objectify(BipartitionType(n), rec(blocks := out));
 
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
@@ -753,7 +753,7 @@ function(blocks, f)
     fi;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := Objectify(BipartitionType(n), rec(blocks := out));
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrblocks);
   SetNrBlocks(out, nrblocks + 1);

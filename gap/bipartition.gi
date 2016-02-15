@@ -8,6 +8,51 @@
 #############################################################################
 ##
 
+BindGlobal("SEMIGROUPS_BipartitionFamilies", []);
+MakeReadWriteGlobal("SEMIGROUPS_BipartitionFamilies");
+BindGlobal("SEMIGROUPS_BipartitionTypes", []);
+MakeReadWriteGlobal("SEMIGROUPS_BipartitionTypes");
+
+InstallGlobalFunction(BipartitionFamily,
+function(n)
+
+  if not IsInt(n) or n < 0 then 
+    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n", 
+                  "the argument must be a non-negative integer,");
+  fi;
+
+  n := n + 1; # since the degree can be 0
+
+  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then 
+    SEMIGROUPS_BipartitionFamilies[n] := 
+           NewFamily("BipartitionFamily",
+                     IsBipartition, CanEasilySortElements,
+                     CanEasilySortElements);
+  fi;
+
+  return SEMIGROUPS_BipartitionFamilies[n];
+end);
+
+InstallGlobalFunction(BipartitionType,
+function(n)
+
+  if not IsInt(n) or n < 0 then 
+    ErrorNoReturn("Semigroups: BipartitionType: usage,\n", 
+                  "the argument must be a non-negative integer,");
+  fi;
+  
+  n := n + 1; # since the degree can be 0
+ 
+  if not IsBound(SEMIGROUPS_BipartitionTypes[n]) then 
+    SEMIGROUPS_BipartitionTypes[n] := 
+           NewType(BipartitionFamily(n),
+                   IsBipartition and IsComponentObjectRep and
+                   IsAttributeStoringRep);
+  fi;
+
+  return SEMIGROUPS_BipartitionTypes[n];
+end);
+
 # implications
 
 InstallTrueMethod(IsPermBipartition, IsTransBipartition and
@@ -16,7 +61,9 @@ InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 
 #
 
-InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
+InstallMethod(PartialPermLeqBipartition, 
+"for a bipartition and a bipartition", 
+IsIdenticalObj,
 [IsBipartition, IsBipartition],
 function(x, y)
 
@@ -30,6 +77,7 @@ end);
 #
 
 InstallMethod(NaturalLeqBlockBijection, "for bipartitions",
+IsIdenticalObj,
 [IsBipartition, IsBipartition],
 function(f, g)
   local fblocks, gblocks, n, lookup, i;
@@ -37,10 +85,6 @@ function(f, g)
   if not IsBlockBijection(f) or not IsBlockBijection(g) then
     Error("Semigroups: NaturalLeqBlockBijection: usage,\n",
           "the arguments must be block bijections,");
-    return;
-  elif DegreeOfBipartition(f) <> DegreeOfBipartition(g) then
-    Error("Semigroups: NaturalLeqBlockBijection: usage,\n",
-          "the arguments must be block bijections of equal degree,");
     return;
   elif NrBlocks(f) > NrBlocks(g) then
     return false;
@@ -69,6 +113,7 @@ end);
 #
 
 InstallMethod(NaturalLeqPartialPermBipartition, "for bipartitions",
+IsIdenticalObj,
 [IsBipartition, IsBipartition],
 function(f, g)
   local fblocks, gblocks, n, m, i;
@@ -99,6 +144,7 @@ end);
 #
 
 InstallMethod(NaturalLeqInverseSemigroup, "for two bipartitions",
+IsIdenticalObj,
 [IsBipartition, IsBipartition],
 function(f, g)
   if IsBlockBijection(f) and IsBlockBijection(g) then
@@ -194,14 +240,13 @@ function(f)
 end);
 #operators
 
-InstallMethod(\*, "for a bipartition and bipartition",
+InstallMethod(\*, "for a bipartition and bipartition", IsIdenticalObj, 
 [IsBipartition, IsBipartition],
 function(a, b)
   local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next,
   nrleft, c, i;
 
   n := DegreeOfBipartition(a);
-  Assert(1, n = DegreeOfBipartition(b));
   anr := NrBlocks(a);
 
   fuse := [1 .. anr + NrBlocks(b)];
@@ -252,7 +297,7 @@ function(a, b)
     cblocks[i] := tab[x];
   od;
 
-  c := Objectify(BipartitionType, rec(blocks := cblocks));
+  c := Objectify(BipartitionType(n), rec(blocks := cblocks));
 
   SetDegreeOfBipartition(c, n);
   SetNrLeftBlocks(c, nrleft);
@@ -319,7 +364,8 @@ end);
 #
 
 InstallMethod(\=, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition],
+IsIdenticalObj,
+[IsBipartition, IsBipartition], 
 function(f, g)
   return f!.blocks = g!.blocks;
 end);
@@ -367,6 +413,7 @@ end);
 #
 
 InstallMethod(PermLeftQuoBipartition, "for a bipartition and bipartition",
+IsIdenticalObj,
 [IsBipartition, IsBipartition],
 function(f, g)
 
@@ -632,7 +679,7 @@ function(f, n)
       out[i] := nrblocks;
     od;
   fi;
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := Objectify(BipartitionType(deg), rec(blocks := out));
   SetDegreeOfBipartition(out, n);
   SetNrBlocks(out, nrblocks);
   SetNrLeftBlocks(out, nrleft);
@@ -865,7 +912,7 @@ function(f)
     fi;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := Objectify(BipartitionType(n), rec(blocks := out));
 
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, NrLeftBlocks(f));
@@ -908,7 +955,7 @@ function(f)
     fi;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := Objectify(BipartitionType(n), rec(blocks := out));
 
   SetDegreeOfBipartition(out, Length(blocks) / 2);
   SetNrLeftBlocks(out, nrleft);
@@ -956,7 +1003,7 @@ function(f)
     fi;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := Objectify(BipartitionType(n), rec(blocks := out));
 
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
@@ -994,7 +1041,7 @@ function(n)
     out[i + n] := j;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := Objectify(BipartitionType(n), rec(blocks := out));
 
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
@@ -1080,7 +1127,7 @@ function(classes)
     od;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := blocks));
+  out := Objectify(BipartitionType(n), rec(blocks := blocks));
 
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
@@ -1113,7 +1160,7 @@ function(n)
     blocks[i + n] := i;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := blocks));
+  out := Objectify(BipartitionType(n), rec(blocks := blocks));
 
   SetDegreeOfBipartition(out, n);
   SetRankOfBipartition(out, n);
@@ -1149,7 +1196,7 @@ function(blocks)
     fi;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := blocks));
+  out := Objectify(BipartitionType(n), rec(blocks := blocks));
 
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
@@ -1207,7 +1254,7 @@ function(blocks)
     fi;
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := blocks));
+  out := Objectify(BipartitionType(n), rec(blocks := blocks));
 
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, nrleft);
@@ -1292,7 +1339,7 @@ function(f, p)
     out[i + n] := tab2[tab1[blocks[i + n]]];
   od;
 
-  out := Objectify(BipartitionType, rec(blocks := out));
+  out := Objectify(BipartitionType(n), rec(blocks := out));
 
   SetDegreeOfBipartition(out, n);
   SetNrLeftBlocks(out, NrLeftBlocks(f));
@@ -1348,6 +1395,10 @@ InstallMethod(PrintString, "for a bipartition",
 function(f)
   local ext, str, i;
   ext := ExtRepOfBipartition(f);
+  if Length(ext) = 0 then 
+    return "\>\>Bipartition(\<\>[]\<)\<";
+  fi;
+
   str := Concatenation("\>\>Bipartition(\< \>[ ", PrintString(ext[1]));
   for i in [2 .. Length(ext)] do
     Append(str, ",\< \>");
