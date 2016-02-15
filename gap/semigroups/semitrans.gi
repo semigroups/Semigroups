@@ -203,8 +203,8 @@ InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
 
 #
 
-InstallMethod(IteratorSorted, "for a transformation semigroup",
-[IsTransformationSemigroup],
+InstallMethod(IteratorSorted, "for an acting transformation semigroup",
+[IsTransformationSemigroup and IsActingSemigroup],
 function(S)
   if HasAsSSortedList(S) then
     return IteratorList(AsSSortedList(S));
@@ -215,7 +215,7 @@ end);
 #
 
 InstallMethod(IteratorSorted, "for an R-class",
-[IsGreensRClass],
+[IsGreensRClass and IsActingSemigroupGreensClass],
 function(R)
   local o, m, rep, n, scc, base, S, out, x, image, basei, iter, i;
 
@@ -279,32 +279,9 @@ function(S, T)
   fi;
 end);
 
-#
-
-InstallMethod(GeneratorsSmallest, "for a semigroup",
-[IsSemigroup],
-function(S)
-  local iter, T, x;
-
-  iter := IteratorSorted(S);
-  T := Semigroup(NextIterator(iter));
-
-  for x in iter do
-    if not x in T then
-      T := SEMIGROUPS.AddGenerators(T, [x], SEMIGROUPS.OptionsRec(T));
-      if T = S then
-        break;
-      fi;
-    fi;
-  od;
-
-  return GeneratorsOfSemigroup(T);
-end);
-
-#
-
-InstallMethod(SmallestElementSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
+InstallMethod(SmallestElementSemigroup, 
+"for an acting transformation semigroup",
+[IsTransformationSemigroup and IsActingSemigroup],
 function(S)
   local n;
 
@@ -317,8 +294,8 @@ function(S)
   return Minimum(List(RClasses(S), SEMIGROUPS.SmallestElementRClass));
 end);
 
-InstallMethod(LargestElementSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
+InstallMethod(LargestElementSemigroup, "for an acting transformation semigroup",
+[IsTransformationSemigroup and IsActingSemigroup],
 function(S)
   local n;
 
@@ -413,10 +390,9 @@ end);
 InstallMethod(Size, "for a monogenic transformation semigroup",
 [IsTransformationSemigroup and IsMonogenicSemigroup],
 function(S)
-  local ind;
-  # FIXME this must be wrong what if <S> is monogenic but is defined by more
-  # than one generator?
-  ind := IndexPeriodOfTransformation(GeneratorsOfSemigroup(S)[1]);
+  local gen, ind;
+  gen := IrredundantGeneratingSubset(S)[1];
+  ind := IndexPeriodOfTransformation(gen);
   if ind[1] > 0 then
     return Sum(ind) - 1;
   fi;

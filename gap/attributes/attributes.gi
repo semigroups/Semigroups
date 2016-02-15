@@ -102,6 +102,38 @@ end;
 ## 1. Default methods, for which there are currently no better methods.
 #############################################################################
 
+InstallMethod(GeneratorsSmallest, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local iter, T, x;
+
+  iter := IteratorSorted(S);
+  T := Semigroup(NextIterator(iter));
+
+  for x in iter do
+    if not x in T then
+      T := SEMIGROUPS.AddGenerators(T, [x], SEMIGROUPS.OptionsRec(T));
+      if T = S then
+        break;
+      fi;
+    fi;
+  od;
+
+  return GeneratorsOfSemigroup(T);
+end);
+
+InstallMethod(SmallestElementSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return NextIterator(IteratorSorted(S));
+end);
+
+InstallMethod(LargestElementSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return EnumeratorSorted(S)[Size(S)];
+end);
+
 InstallMethod(NrIdempotents, "for a semigroup",
 [IsSemigroup],
 function(S)
