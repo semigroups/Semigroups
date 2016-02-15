@@ -13,10 +13,10 @@
 ## use by an end-user.
 ##
 
-DeclareCategory("SEMIGROUPS_CongSimple",
+DeclareCategory("IsSimpleSemigroupCongruence",
                 IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
 
-DeclareCategory("SEMIGROUPS_CongClassSimple",
+DeclareCategory("IsSimpleSemigroupCongruenceClass",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);
 
@@ -70,7 +70,7 @@ SEMIGROUPS.SimpleCongFromRMSCong := function(S, iso, rmscong)
   # Construct the object
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-  cong := Objectify(NewType(fam, SEMIGROUPS_CongSimple),
+  cong := Objectify(NewType(fam, IsSimpleSemigroupCongruence),
                     rec(rmscong := rmscong, iso := iso));
   SetSource(cong, S);
   SetRange(cong, S);
@@ -82,7 +82,7 @@ end;
 SEMIGROUPS.SimpleClassFromRMSclass := function(cong, rmsclass)
   local fam, class;
   fam := FamilyObj(Range(cong));
-  class := Objectify(NewType(fam, SEMIGROUPS_CongClassSimple),
+  class := Objectify(NewType(fam, IsSimpleSemigroupCongruenceClass),
                      rec(rmsclass := rmsclass, iso := cong!.iso));
   SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);

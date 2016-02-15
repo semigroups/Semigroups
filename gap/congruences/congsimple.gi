@@ -15,7 +15,7 @@
 
 InstallMethod(ViewObj,
 "for a (0-)simple semigroup congruence",
-[SEMIGROUPS_CongSimple],
+[IsSimpleSemigroupCongruence],
 function(cong)
   Print("<semigroup congruence over ");
   ViewObj(Range(cong));
@@ -61,7 +61,7 @@ end);
 
 InstallMethod(\=,
 "for two (0-)simple semigroup congruences",
-[SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
+[IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
 function(cong1, cong2)
   return (Range(cong1) = Range(cong2) and cong1!.rmscong = cong2!.rmscong);
 end);
@@ -70,7 +70,7 @@ end);
 
 InstallMethod(JoinSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
-[SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
+[IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
 function(cong1, cong2)
   local join;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
@@ -85,7 +85,7 @@ end);
 
 InstallMethod(MeetSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
-[SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
+[IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
 function(cong1, cong2)
   local meet;
   if Range(cong1) <> Range(cong2) or cong1!.iso <> cong2!.iso then
@@ -100,7 +100,7 @@ end);
 
 InstallMethod(\in,
 "for an associative element collection and a (0-)simple semigroup congruence",
-[IsAssociativeElementCollection, SEMIGROUPS_CongSimple],
+[IsAssociativeElementCollection, IsSimpleSemigroupCongruence],
 function(pair, cong)
   local S;
     # Input checks
@@ -121,7 +121,7 @@ end);
 
 InstallMethod(ImagesElm,
 "for a (0-)simple semigroup congruence and an associative element",
-[SEMIGROUPS_CongSimple, IsAssociativeElement],
+[IsSimpleSemigroupCongruence, IsAssociativeElement],
 function(cong, elm)
   return List(ImagesElm(cong!.rmscong, elm ^ cong!.iso),
               x -> x ^ InverseGeneralMapping(cong!.iso));
@@ -131,7 +131,7 @@ end);
 
 InstallMethod(EquivalenceClasses,
 "for a (0-)simple semigroup congruence",
-[SEMIGROUPS_CongSimple],
+[IsSimpleSemigroupCongruence],
 function(cong)
   return List(EquivalenceClasses(cong!.rmscong),
               c -> SEMIGROUPS.SimpleClassFromRMSclass(cong, c));
@@ -141,7 +141,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElement,
 "for a (0-)simple semigroup congruence and associative element",
-[SEMIGROUPS_CongSimple, IsAssociativeElement],
+[IsSimpleSemigroupCongruence, IsAssociativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
     ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
@@ -154,7 +154,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for a (0-)simple semigroup congruence and associative element",
-[SEMIGROUPS_CongSimple, IsAssociativeElement],
+[IsSimpleSemigroupCongruence, IsAssociativeElement],
 function(cong, elm)
   local class;
   class := EquivalenceClassOfElementNC(cong!.rmscong, elm ^ cong!.iso);
@@ -165,7 +165,7 @@ end);
 
 InstallMethod(NrEquivalenceClasses,
 "for a (0-)simple semigroup congruence",
-[SEMIGROUPS_CongSimple],
+[IsSimpleSemigroupCongruence],
 function(cong)
   return NrEquivalenceClasses(cong!.rmscong);
 end);
@@ -174,7 +174,7 @@ end);
 
 InstallMethod(\in,
 "for an associative element and a (0-)simple semigroup congruence class",
-[IsAssociativeElement, SEMIGROUPS_CongClassSimple],
+[IsAssociativeElement, IsSimpleSemigroupCongruenceClass],
 function(elm, class)
   return (elm ^ EquivalenceClassRelation(class)!.iso in class!.rmsclass);
 end);
@@ -183,7 +183,7 @@ end);
 
 InstallMethod(Enumerator,
 "for a (0-)simple semigroup congruence class",
-[SEMIGROUPS_CongClassSimple],
+[IsSimpleSemigroupCongruenceClass],
 function(class)
   return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
@@ -192,7 +192,7 @@ end);
 
 InstallMethod(\*,
 "for two (0-)simple semigroup congruence classes",
-[SEMIGROUPS_CongClassSimple, SEMIGROUPS_CongClassSimple],
+[IsSimpleSemigroupCongruenceClass, IsSimpleSemigroupCongruenceClass],
 function(c1, c2)
   return SEMIGROUPS.SimpleClassFromRMSclass(EquivalenceClassRelation(c1),
                                             c1!.rmsclass * c2!.rmsclass);
@@ -202,7 +202,7 @@ end);
 
 InstallMethod(Size,
 "for a (0-)simple semigroup congruence class",
-[SEMIGROUPS_CongClassSimple],
+[IsSimpleSemigroupCongruenceClass],
 function(class)
   return Size(class!.rmsclass);
 end);
@@ -211,7 +211,7 @@ end);
 
 InstallMethod(\=,
 "for two (0-)simple semigroup congruence classes",
-[SEMIGROUPS_CongClassSimple, SEMIGROUPS_CongClassSimple],
+[IsSimpleSemigroupCongruenceClass, IsSimpleSemigroupCongruenceClass],
 function(c1, c2)
   return EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) and
          c1!.rmsclass = c2!.rmsclass;
@@ -221,7 +221,7 @@ end);
 
 InstallMethod(GeneratingPairsOfSemigroupCongruence,
 "for a (0-)simple semigroup congruence",
-[SEMIGROUPS_CongSimple],
+[IsSimpleSemigroupCongruence],
 function(cong)
   local map;
   map := InverseGeneralMapping(cong!.iso);
@@ -233,7 +233,7 @@ end);
 
 InstallMethod(CanonicalRepresentative,
 "for a (0-)simple semigroup congruence class",
-[SEMIGROUPS_CongClassSimple],
+[IsSimpleSemigroupCongruenceClass],
 function(class)
   return CanonicalRepresentative(class!.rmsclass) ^
          InverseGeneralMapping(class!.iso);
@@ -243,7 +243,7 @@ end);
 
 InstallMethod(IsSubrelation,
 "for two (0-)simple semigroup congruences",
-[SEMIGROUPS_CongSimple, SEMIGROUPS_CongSimple],
+[IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
 function(cong1, cong2)
   return IsSubrelation(cong1!.rmscong, cong2!.rmscong);
 end);
@@ -252,7 +252,7 @@ end);
 
 InstallMethod(AsLookupTable,
 "for a (0-)simple semigroup congruence",
-[SEMIGROUPS_CongSimple],
+[IsSimpleSemigroupCongruence],
 function(cong)
   local S, rmstable, nrclasses, rmsdata, iso, elms, table, newnums, next, i,
         rmsclass;
