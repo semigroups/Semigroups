@@ -15,5 +15,5 @@ DeclareOperation("MaximalSubsemigroupsNC", [IsReesMatrixSubsemigroup, IsGroup,
                  IsList, IsAssociativeElement]);
 # FIXME What does this do?
 DeclareOperation("MaximalSubsemigroupsNC", [IsReesZeroMatrixSubsemigroup,
-                 IsGroup, IsRecord, IsList, IsList, IsList]);
+                 IsGroup, IsDigraph, IsList, IsList, IsList]);
 DeclareOperation("IsMaximalSubsemigroup", [IsSemigroup, IsSemigroup]);

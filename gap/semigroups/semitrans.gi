@@ -590,10 +590,9 @@ function(S)
         break;
       fi;
     od;
-    if reduced then
-      continue;
+    if not reduced then
+      break;
     fi;
-    break;
   od;
 
   return t;

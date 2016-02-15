@@ -118,9 +118,6 @@ make]]></Listing>
         <Item> 
           <Ref Oper = "MunnSemigroup"/>
         </Item>
-        <Item> 
-          <Ref Attr = "MaximalSubsemigroups"/>
-        </Item>
         <Item>
           <Ref Oper = "IsIsomorphicSemigroup"/>
         </Item>
