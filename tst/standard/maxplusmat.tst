@@ -32,8 +32,7 @@ false
 gap> mat2 := RandomMatrix(IsMaxPlusMatrix, 20);
 <20x20 max-plus matrix>
 gap> mat * mat2;
-Error, Semigroups: * (for max-plus matrices): usage,
-the arguments must be matrices of the same dimensions,
+Matrix(IsMaxPlusMatrix, [[4, 1, 5], [1, -1, 2], [5, 2, 5]])
 
 #T# maxplusmat: test min-plus matrix code, 1/1
 gap> mat := Matrix(IsMinPlusMatrix, [[-1, infinity],
@@ -52,14 +51,13 @@ false
 gap> mat2 := RandomMatrix(IsMinPlusMatrix, 20);
 <20x20 min-plus matrix>
 gap> mat * mat2;
-Error, Semigroups: * (for min-plus matrices): usage,
-the arguments must be matrices of the same dimensions,
+Matrix(IsMinPlusMatrix, [[-2, -5], [0, -3]])
 
 #T# maxplusmat: test tropical max-plus matrix code, 1/1
 gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4],
 >                                            [3, 1, 1],
 >                                            [-infinity, 1, 1]],
->           9);
+>                  9);
 Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], [3, 1, 1], [-infinity, 1, 1]], 9)
 gap> mat ^ 2;
 Matrix(IsTropicalMaxPlusMatrix, [[6, 5, 7], [6, 5, 7], [4, 2, 2]], 9)
@@ -80,8 +78,7 @@ Error, no 1st choice method found for `RandomMatrixCons' on 2 arguments
 gap> mat2 := RandomMatrix(IsTropicalMaxPlusMatrix, 20, 9);
 <20x20 tropical max-plus matrix>
 gap> mat * mat2;
-Error, Semigroups: * (for tropical max-plus matrices): usage,
-the arguments must be matrices of the same dimensions,
+Matrix(IsTropicalMaxPlusMatrix, [[4, 5, 6], [2, 2, 6], [2, 2, 3]], 9)
 gap> mat3 := RandomMatrix(IsTropicalMaxPlusMatrix, 20, 5);
 <20x20 tropical max-plus matrix>
 gap> mat2 * mat3;
@@ -114,8 +111,7 @@ Error, no 1st choice method found for `RandomMatrixCons' on 2 arguments
 gap> mat2 := RandomMatrix(IsTropicalMinPlusMatrix, 20, 2);
 <20x20 tropical min-plus matrix>
 gap> mat * mat2;
-Error, Semigroups: * (for tropical min-plus matrices): usage,
-the arguments must be matrices of the same dimensions,
+Matrix(IsTropicalMinPlusMatrix, [[2, 2], [2, 2]], 2)
 gap> mat3 := RandomMatrix(IsTropicalMinPlusMatrix, 20, 5);
 <20x20 tropical min-plus matrix>
 gap> mat2 * mat3;
@@ -148,8 +144,8 @@ false
 gap> mat2 := RandomMatrix(IsProjectiveMaxPlusMatrix, 20);
 <20x20 projective max-plus matrix>
 gap> mat * mat2;
-Error, Semigroups: * (for projective max-plus matrices): usage,
-the arguments must be matrices of the same dimensions,
+Matrix(IsProjectiveMaxPlusMatrix, [[-6, -6, -5, -4], [-6, -8, -6, -4], 
+  [-1, -3, -2, 0], [-3, -4, -2, -3]])
 
 #T# maxplusmat: test projective ntp matrix code, 1/1
 gap> mat := Matrix(IsNTPMatrix, [[0, 0, 0],
@@ -181,8 +177,7 @@ the arguments must be matrices over the same semiring,
 gap> mat3 := RandomMatrix(IsNTPMatrix, 21, 4, 2);
 <21x21 ntp matrix>
 gap> mat3 * mat2;
-Error, Semigroups: * (for ntp matrices): usage,
-the arguments must be matrices of the same dimensions,
+<20x20 ntp matrix>
 
 #T# maxplusmat: test integer matrix code, 1/1
 gap> mat := Matrix(IsIntegerMatrix, [[-1, -2, 0],
@@ -206,8 +201,7 @@ false
 gap> mat3 := RandomMatrix(IsIntegerMatrix, 20);
 <20x20 integer matrix>
 gap> mat * mat3;
-Error, Semigroups: * (for integer matrices): usage,
-the arguments must be matrices of the same dimensions,
+Matrix(IsIntegerMatrix, [[4, -3, 3], [-6, 1, -9], [0, -5, -8]])
 gap> RandomMatrix(Integers, 20);
 <20x20 integer matrix>
 

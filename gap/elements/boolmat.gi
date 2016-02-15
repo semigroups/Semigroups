@@ -122,11 +122,7 @@ InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
   local n, xy, i, j, k;
 
-  n := Length(x![1]);
-  if Length(y![1]) <> n then
-    ErrorNoReturn("Semigroups: \* (for boolean matrices):\n",
-                  "the matrices must have equal dimension,");
-  fi;
+  n := Minimum(Length(x![1]), Length(y![1]));
   xy := List([1 .. n], x -> BlistList([1 .. n], []));
 
   for i in [1 .. n] do
