@@ -1029,6 +1029,20 @@ end);
 
 #
 
+###############################################################################
+# LatticeOfXCongruences function
+###############################################################################
+# This abstract function takes a semigroup 'S', a string 'type_string' and a
+# record 'record'.
+# type_string should be in ["Left", "Right", ""] and describes the sort of
+# relations we want to find (respectively: left congruences, right congruences,
+# two-sided congruences), referred to as 'x congs' below.
+# record may contain any of the following components, which should be set to
+# 'true' to have the stated effect:
+#   * minimal - Return only minimal x-congs
+#   * 1gen - Return only x-congs with a single generating pair
+#   * poor - Return only x-congs with no 2-sided congruences as subrelations
+###############################################################################
 SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   local _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children, parents,
         pair, badcong, newchildren, newparents, newcong, i, c, p, congs,
@@ -1041,10 +1055,10 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   # Get all non-reflexive pairs in SxS
   pairs := Combinations(elms, 2);
 
-  # Get all the unique 1-generated congruences
-  Info(InfoSemigroups, 1, "Getting all 1-generated congruences...");
-  congs1 := [];     # List of all congruences found so far
-  nrcongs := 0;     # Number of congruences found so far
+  # Get all the unique 1-generated congs
+  Info(InfoSemigroups, 1, "Getting all 1-generated congs...");
+  congs1 := [];     # List of all congs found so far
+  nrcongs := 0;     # Number of congs found so far
   children := [];   # List of lists of children
   parents := [];    # List of lists of parents
   for pair in pairs do
@@ -1055,7 +1069,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     for i in [1 .. Length(congs1)] do
       if IsSubrelation(congs1[i], newcong) then
         if IsSubrelation(newcong, congs1[i]) then
-          # This is not a new congruence - drop it!
+          # This is not a new cong - drop it!
           badcong := true;
           break;
         else
@@ -1080,25 +1094,25 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   od;
   congs := ShallowCopy(congs1);
 
-  # We now have all 1-generated congruences, which must include all the minimal
-  # congruences.  We can return if necessary.
+  # We now have all 1-generated congs, which must include all the minimal
+  # congs.  We can return if necessary.
   if IsBound(record.minimal) and record.minimal = true then
-    # Find all the minimal congruences (those with no children)
+    # Find all the minimal congs (those with no children)
     congs := congs{Positions(children, [])};
-    # Note: we don't include the trivial congruence
+    # Note: we don't include the trivial cong
     # Set the MinimalXCongruencesOfSemigroup attribute
     set_func := EvalString(Concatenation("SetMinimal",
                                          type_string,
                                          "CongruencesOfSemigroup"));
     set_func(S, congs);
-    # Minimal congruences cannot contain each other
+    # Minimal congs cannot contain each other
     children := ListWithIdenticalEntries(Length(congs), []);
     lattice := Objectify(NewType(FamilyObj(children),
                                  SEMIGROUPS_IsCongruenceLattice),
                          [children, congs]);
     return lattice;
   elif IsBound(record.1gen) and record.1gen = true then
-    # Add the trivial congruence at the start
+    # Add the trivial cong at the start
     children := Concatenation([[]], children + 1);
     for i in [2 .. nrcongs + 1] do
       Add(children[i], 1, 1);
@@ -1119,20 +1133,20 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   length := 0;
   found := true;
   while found do
-    # There are new congruences to try joining
-    start := length + 1;     # New congruences start here
-    found := false;          # Have we found any more congruences on this sweep?
+    # There are new congs to try joining
+    start := length + 1;     # New congs start here
+    found := false;          # Have we found any more congs on this sweep?
     length := Length(congs); # Remember starting position for next sweep
-    for i in [start .. Length(congs)] do # for each new congruence
-      for j in [1 .. Length(congs1)] do  # for each 1-generated congruence
+    for i in [start .. Length(congs)] do # for each new cong
+      for j in [1 .. Length(congs1)] do  # for each 1-generated cong
         newcong := join_func(congs[i], congs1[j]);
-        badcong := false;  # Is newcong the same as another congruence?
+        badcong := false;  # Is newcong the same as another cong?
         newchildren := []; # Children of newcong
         newparents := [];  # Parents of newcong
         for k in [1 .. Length(congs)] do
           if IsSubrelation(congs[k], newcong) then
             if IsSubrelation(newcong, congs[k]) then
-              # This is the same as an old congruence - discard it!
+              # This is the same as an old cong - discard it!
               badcong := true;
               break;
             else
@@ -1159,14 +1173,14 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     od;
   od;
 
-  # Add the trivial congruence at the start
+  # Add the trivial cong at the start
   children := Concatenation([[]], children + 1);
   for i in [2 .. nrcongs + 1] do
     Add(children[i], 1, 1);
   od;
   Add(congs, _XSemigroupCongruence(S, []), 1);
 
-  # We have a list of all the congruences
+  # We have a list of all the congs
   set_func := EvalString(Concatenation("Set",
                                        type_string,
                                        "CongruencesOfSemigroup"));
