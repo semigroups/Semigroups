@@ -107,7 +107,7 @@ function(S, coll, opts)
   Unbind(o!.rev);
   Unbind(o!.truth);
   Unbind(o!.schutzstab);
-  Unbind(o!.exhaust);
+  Unbind(o!.factorgroups);
   Unbind(o!.factors);
 
   o!.parent := t;

@@ -49,83 +49,91 @@ end);
 
 InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
 [IsLambdaOrb, IsPosInt, IsPerm],
-function(o, m, elt)
-  local pos, word, factors, out, s, gens, scc, lookup, orbitgraph, genstoapply,
-  lambdaperm, rep, bound, nrgens, uword, u, vword, v, f, ex, stop, i, k, l;
-
-  if IsBound(o!.factors) then
-    if IsBound(o!.factors[m]) then
-      pos := Position(o!.exhaust[m], elt);
-      if pos = fail then
-        ErrorNoReturn("Semigroups: Factorization: usage,\n",
-                      "the third arg <perm> does not belong to the ",
-                      "Schutzenberger group,");
-      fi;
-
-      # express <elt> as a word in the generators of the Schutzenberger group
-      word := TraceSchreierTreeForward(o!.exhaust[m], pos);
-      factors := o!.factors[m];
-
-      # convert group generators to semigroup generators
-      out := [];
-      for i in word do
-        Append(out, factors[i]);
-      od;
-      return out;
-    fi;
-  else
-    o!.factors := EmptyPlist(Length(OrbSCC(o)));
-    o!.exhaust := EmptyPlist(Length(OrbSCC(o)));
+function(o, m, p)
+  local gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, bound, G,
+        factors, nr, stop, uword, u, adj, vword, v, x, epi, word, out, k, l, i,
+        j;
+  
+  if not IsBound(o!.factors) then 
+    o!.factors      := [];
+    o!.factorgroups := [];
   fi;
 
-  s := o!.parent;
-  gens := o!.gens;
-  scc := OrbSCC(o)[m];
-  lookup := o!.scc_lookup;
-  orbitgraph := OrbitGraph(o);
-  genstoapply := [1 .. Length(gens)];
-  lambdaperm := LambdaPerm(s);
-  rep := LambdaOrbRep(o, m);
-  factors := [];
-  bound := Size(LambdaOrbSchutzGp(o, m));
-  nrgens := 0;
-  stop := false;
+  if not IsBound(o!.factors[m]) then
+    gens        := o!.gens;
+    scc         := OrbSCC(o)[m];
+    lookup      := o!.scc_lookup;
+    orbitgraph  := OrbitGraph(o);
+    genstoapply := [1 .. Length(gens)];
+    lambdaperm  := LambdaPerm(o!.parent);
+    rep         := LambdaOrbRep(o, m);
+    bound       := Size(LambdaOrbSchutzGp(o, m));
 
-  for k in scc do
-    uword := TraceSchreierTreeOfSCCForward(o, m, k);
-    u := EvaluateWord(o, uword);
-    for l in genstoapply do
-      if IsBound(orbitgraph[k][l]) and lookup[orbitgraph[k][l]] = m then
-        vword := TraceSchreierTreeOfSCCBack(o, m, orbitgraph[k][l]);
-        v := EvaluateWord(o, vword);
-        f := lambdaperm(rep, rep * u * gens[l] * v);
-        if not IsBound(ex) then
-          nrgens := nrgens + 1;
-          factors[nrgens] := Concatenation(uword, [l], vword);
-          ex := Orb([f], (), PROD, rec(hashlen := 2 * bound,
-                                       schreier := true,
-                                       log := true));
-          Enumerate(ex);
-        elif not f in ex then
-          nrgens := nrgens + 1;
-          factors[nrgens] := Concatenation(uword, [l], vword);
-          AddGeneratorsToOrbit(ex, [f]);
+    G           := Group(()); 
+    factors     := [];
+    nr          := 0;
+    stop        := false;
+
+    for k in scc do
+      uword := TraceSchreierTreeOfSCCForward(o, m, k);
+      u     := EvaluateWord(o, uword);
+      adj   := orbitgraph[k];
+
+      for l in genstoapply do
+        if IsBound(adj[l]) and lookup[adj[l]] = m then
+          vword := TraceSchreierTreeOfSCCBack(o, m, adj[l]);
+          v     := EvaluateWord(o, vword);
+          x     := lambdaperm(rep, rep * u * gens[l] * v);
+          if not x in G then
+            nr := nr + 1;
+            factors[nr] := Concatenation(uword, [l], vword);
+            # TODO:
+            # should also cache the inverse of factors[nr] = vword * some word
+            # that takes o[l] back to o[k] * uword, where "some word" could be
+            # found by taking all the paths from o[l] to o[k] in the
+            # orbitgraph.
+            G := ClosureGroup(G, x);
+            if Size(G) = bound then
+              stop := true;
+              break;
+            fi;
+          fi;
         fi;
-        if Length(ex) = bound then
-          stop := true;
-          break;
-        fi;
+      od;
+      if stop then
+        break;
       fi;
     od;
-    if stop then
-      break;
+
+    o!.factors[m]      := factors;
+    o!.factorgroups[m] := G;
+  else 
+    G       := o!.factorgroups[m];
+    factors := o!.factors[m];
+  fi;
+
+  if not p in G then
+    ErrorNoReturn("Semigroups: Factorization: usage,\n",
+                  "the third argument <p> does not belong to the ",
+                  "Schutzenberger group,");
+  fi;
+
+  # express <elt> as a word in the generators of the Schutzenberger group
+  epi := EpimorphismFromFreeGroup(G);
+  word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
+
+  # convert group generators to semigroup generators
+  out := [];
+  for i in word do
+    if i > 0 then 
+      Append(out, factors[i]);
+    else # this results in super long words, special case for inverse semigroups!
+      for j in [1 .. Order(G.(-i)) - 1] do 
+        Append(out, factors[-i]);
+      od;
     fi;
   od;
-
-  o!.factors[m] := factors;
-  o!.exhaust[m] := ex;
-
-  return Factorization(o, m, elt);
+  return out;
 end);
 
 # returns a word in the generators of the parent of <data> equal to the R-class
