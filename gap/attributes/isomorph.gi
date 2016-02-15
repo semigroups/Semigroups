@@ -17,7 +17,7 @@
 
 # returns the lex-least multiplication table of the semigroup <S>
 
-if not IsGrapeLoaded then
+if not SEMIGROUPS.IsGrapeLoaded then
 
   InstallMethod(SmallestMultiplicationTable, "for a semigroup",
   [IsSemigroup],
@@ -103,7 +103,7 @@ fi;
 
 #
 
-if not (IsGrapeLoaded and IsGrapeCompiled) then
+if not (SEMIGROUPS.IsGrapeLoaded and SEMIGROUPS.IsGrapeCompiled) then
   InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
   [IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
    HasGeneratorsOfSemigroup],

@@ -173,7 +173,7 @@ end);
 
 #
 
-if not IsGrapeLoaded then
+if not SEMIGROUPS.IsGrapeLoaded then
   InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
   function(R)
     Info(InfoWarning, 1, GrapeIsNotLoadedString);

@@ -600,7 +600,9 @@ function(G, H, x)
   return CanonicalBooleanMatNC(G, H, x);
 end);
 
-if IsGrapeLoaded then
+#FIXME the following could be done without grape using vertex colors.
+
+if SEMIGROUPS.IsGrapeLoaded then
   InstallMethod(CanonicalBooleanMatNC,
   "for perm group, perm group, and boolean mat",
   [IsPermGroup, IsPermGroup, IsBooleanMat],

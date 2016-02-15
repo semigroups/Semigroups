@@ -1271,9 +1271,9 @@ Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 #T# MaximalSubsemigroups, replacement test for manual example which becomes a
 #log because of the randomness in the generating sets here.
 gap> S := FullTransformationMonoid(4);;
-gap> (not IsGrapeCompiled) or Length(MaximalSubsemigroups(S)) = 9;
+gap> (not SEMIGROUPS.IsGrapeCompiled) or Length(MaximalSubsemigroups(S)) = 9;
 true
-gap> (not IsGrapeCompiled) or ForAll(MaximalSubsemigroups(S), M -> M in 
+gap> (not SEMIGROUPS.IsGrapeCompiled) or ForAll(MaximalSubsemigroups(S), M -> M in 
 > [Semigroup(Transformation([1, 4, 2, 3]),
 >            Transformation([4, 2, 3, 4]), 
 >             Transformation([4, 3, 2, 1])),
