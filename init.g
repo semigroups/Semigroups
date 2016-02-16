@@ -11,18 +11,23 @@
 if not IsBound(ORBC) then
   BindGlobal("HTAdd_TreeHash_C", fail);
   BindGlobal("HTValue_TreeHash_C", fail);
+else 
+  # the kernel module makes use of the c functions HTAdd_TreeHash_C and
+  # HTValue_TreeHash_C and so we should only use the part of the kernel module
+  # using these functions if Orb is compiled.
+  _SEMIGROUPS_SO := Filename(DirectoriesPackagePrograms("semigroups"),
+                             "semigroups.so");
+  if _SEMIGROUPS_SO <> fail then
+    LoadDynamicModule(_SEMIGROUPS_SO);
+  fi;
+  Unbind(_SEMIGROUPS_SO);
 fi;
+
+
 
 if not IsBound(UserHomeExpand) then 
   BindGlobal("UserHomeExpand", USER_HOME_EXPAND);
 fi;
-
-_SEMIGROUPS_SO := Filename(DirectoriesPackagePrograms("semigroups"),
-                           "semigroups.so");
-if _SEMIGROUPS_SO <> fail then
-  LoadDynamicModule(_SEMIGROUPS_SO);
-fi;
-Unbind(_SEMIGROUPS_SO);
 
 BindGlobal("SEMIGROUPS", rec());
 MakeReadWriteGlobal("SEMIGROUPS");
