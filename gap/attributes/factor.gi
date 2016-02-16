@@ -127,7 +127,7 @@ function(o, m, p)
   for i in word do
     if i > 0 then 
       Append(out, factors[i]);
-    else # this results in super long words, special case for inverse semigroups!
+    else # this results in super long words, TODO special case for inverse semigroups!
       for j in [1 .. Order(G.(-i)) - 1] do 
         Append(out, factors[-i]);
       od;
