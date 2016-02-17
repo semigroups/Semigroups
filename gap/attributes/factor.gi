@@ -127,7 +127,9 @@ function(o, m, p)
   for i in word do
     if i > 0 then 
       Append(out, factors[i]);
-    else # this results in super long words, TODO special case for inverse semigroups!
+    elif IsSemigroupWithInverseOp(o!.parent) then 
+      Append(out, Reversed(factors[-i]) * -1);
+    else # this results in super long words
       for j in [1 .. Order(G.(-i)) - 1] do 
         Append(out, factors[-i]);
       od;

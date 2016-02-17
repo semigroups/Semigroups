@@ -175,7 +175,7 @@ gap> S := Semigroup(OrderEndomorphisms(3), rec(generic := false));;
 gap> o := LambdaOrb(S);;
 gap> Factorization(o, 2, (1, 2));
 Error, Semigroups: Factorization: usage,
-the third arg <perm> does not belong to the Schutzenberger group,
+the third argument <p> does not belong to the Schutzenberger group,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
