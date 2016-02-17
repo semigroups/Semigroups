@@ -1041,13 +1041,15 @@ end);
 # 'true' to have the stated effect:
 #   * minimal - Return only minimal x-congs
 #   * 1gen - Return only x-congs with a single generating pair
-#   * poor - Return only x-congs with no 2-sided congruences as subrelations
+#   * poor - Return only x-congs which contain no 2-sided congruences
 ###############################################################################
 SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
-  local _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children, parents,
-        pair, badcong, newchildren, newparents, newcong, i, c, p, congs,
-        join_func, length, found, start, j, k, set_func, lattice;
-
+  local poor, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children, 
+        parents, pair, badcong, newchildren, newparents, newcong, i, c, p, 
+        congs, 2congs, n, image, next, set_func, lattice, join_func, length, 
+        found, start, j, k;
+  
+  poor := IsBound(record.poor) and record.poor;
   _XSemigroupCongruence := EvalString(Concatenation(type_string,
                                                     "SemigroupCongruence"));
   elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
@@ -1092,8 +1094,56 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
       od;
     fi;
   od;
+  
   congs := ShallowCopy(congs1);
-
+  if poor then
+    # Find and remove any 2-sided congruences, and discard their parents
+    2congs := Set([]);
+    for i in [1 .. Length(congs)] do
+      if not IsBound(congs[i]) then
+        continue;
+      fi;
+      if IsSemigroupCongruence(congs[i]) then
+        # Remove it from the list
+        Unbind(congs[i]);
+        # Remove all its parents
+        for p in parents[i] do
+          Unbind(congs[p]);
+          if p in 2congs then
+            RemoveSet(2congs, p);
+          fi;
+        od;
+        # Store it unless it has 2-sided children
+        if ForAll(children[i], c -> not c in p) then
+          AddSet(2congs, i);
+        fi;
+      fi;
+    od;
+    
+    2congs := List(2congs, i -> congs1[i]);
+    
+    # Remove holes from congs and change children and parents appropriately
+    n := Length(congs);
+    image := ListWithIdenticalEntries(n, fail);
+    next := 1;
+    for i in [1 .. n] do
+      if IsBound(congs[i]) then
+        image[i] := next;
+        next := next + 1;
+      else
+        Unbind(parents[i]);
+        Unbind(children[i]);
+      fi;
+    od;
+    congs := Compacted(congs);
+    parents := Compacted(parents);
+    children := Compacted(children);
+    parents := List(parents, l -> Filtered(List(l, i -> image[i]),
+                                           i -> i <> fail));
+    children := List(children, l -> Filtered(List(l, i -> image[i]),
+                                             i -> i <> fail));        
+  fi;
+  
   # We now have all 1-generated congs, which must include all the minimal
   # congs.  We can return if necessary.
   if IsBound(record.minimal) and record.minimal = true then
