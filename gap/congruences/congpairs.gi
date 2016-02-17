@@ -1046,8 +1046,8 @@ end);
 SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   local poor, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children, 
         parents, pair, badcong, newchildren, newparents, newcong, i, c, p, 
-        congs, 2congs, n, image, next, set_func, lattice, join_func, length, 
-        found, start, j, k;
+        congs, 2congs, image, next, set_func, lattice, join_func, length, found, 
+        start, j, k;
   
   poor := IsBound(record.poor) and record.poor;
   _XSemigroupCongruence := EvalString(Concatenation(type_string,
@@ -1114,23 +1114,23 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
           fi;
         od;
         # Store it unless it has 2-sided children
-        if ForAll(children[i], c -> not c in p) then
+        if ForAll(children[i], c -> not c in 2congs) then
           AddSet(2congs, i);
         fi;
       fi;
     od;
 
     # Remove holes from congs and change children and parents appropriately
-    n := Length(congs);
-    image := ListWithIdenticalEntries(n, fail);
+    image := ListWithIdenticalEntries(nrcongs, fail);
     next := 1;
-    for i in [1 .. n] do
+    for i in [1 .. nrcongs] do
       if IsBound(congs[i]) then
         image[i] := next;
         next := next + 1;
       else
         Unbind(parents[i]);
         Unbind(children[i]);
+        nrcongs := nrcongs - 1;
       fi;
     od;
     congs := Compacted(congs);
