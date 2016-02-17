@@ -190,6 +190,10 @@ function(S, x)
                   "of the first argument <S>,");
   fi;
 
+  if HasGenericSemigroupData(S) and IsClosedData(GenericSemigroupData(S)) then 
+    return MinimalFactorization(S, x);
+  fi;
+
   o := LambdaOrb(S);
   l := Position(o, LambdaFunc(S)(x));
   m := OrbSCCLookup(o)[l];
