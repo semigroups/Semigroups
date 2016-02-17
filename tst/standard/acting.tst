@@ -46,7 +46,7 @@ gap> r := GreensRClasses(s)[10];;
 gap> Representative(r);
 Transformation( [ 3, 3, 3, 3, 3, 2, 3 ] )
 gap> AsList(LambdaOrb(r){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]});
-[ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 4 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ] ]
+[ [ 2, 3 ], [ 4, 6 ], [ 2, 6 ], [ 1, 6 ], [ 2, 4 ], [ 3, 6 ], [ 1, 4 ] ]
 gap> LambdaOrbMults(LambdaOrb(r),
 > LambdaOrbSCCIndex(r)){OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]};
 [ [ IdentityTransformation, IdentityTransformation ], 
@@ -54,14 +54,14 @@ gap> LambdaOrbMults(LambdaOrb(r),
       Transformation( [ 6, 3, 3, 2, 3, 3, 3 ] ) ], 
   [ Transformation( [ 1, 6, 2, 4, 5, 6 ] ), 
       Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ) ], 
-  [ Transformation( [ 1, 1, 4, 4 ] ), 
-      Transformation( [ 2, 3, 3, 3, 3, 3, 3 ] ) ], 
   [ Transformation( [ 1, 1, 6, 4, 5, 6 ] ), 
       Transformation( [ 2, 3, 3, 3, 3, 3, 3 ] ) ], 
   [ Transformation( [ 1, 4, 2, 4 ] ), 
       Transformation( [ 6, 3, 3, 2, 3, 3, 3 ] ) ], 
   [ Transformation( [ 1, 6, 3, 4, 5, 6 ] ), 
-      Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ) ] ]
+      Transformation( [ 4, 3, 3, 6, 7, 2, 3 ] ) ], 
+  [ Transformation( [ 1, 1, 4, 4 ] ), 
+      Transformation( [ 2, 3, 3, 3, 3, 3, 3 ] ) ] ]
 
 #T# ActingTest3
 gap> gens := [Transformation([8, 7, 5, 3, 1, 3, 8, 8]),

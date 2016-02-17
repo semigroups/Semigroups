@@ -422,11 +422,8 @@ gap> D := GreensDClassOfElement(Semigroup(
 > Bipartition([[1], [2], [3, 5, -1, -2], [4, -3], [-4, -5]]),
 > Bipartition([[1], [2], [3], [4, -1, -4], [5], [-2, -3], [-5]])),
 > Bipartition([[1], [2], [3], [4, -1, -4], [5], [-2, -3], [-5]]));;
-gap> InjectionPrincipalFactor(D);
-MappingByFunction( <Green's D-class: <bipartition: [ 1 ], [ 2 ], [ 3 ], 
-  [ 4, -1, -4 ], [ 5 ], [ -2, -3 ], [ -5 ]>>, 
+gap> PrincipalFactor(D);
 <Rees 0-matrix semigroup 12x15 over Group(())>
- , function( x ) ... end, function( x ) ... end )
 
 #T# attributes: IsomorphismReesMatrixSemigroup, error, 1/1
 gap> D := DClass(FullTransformationMonoid(3), Transformation([1, 2, 1]));;
@@ -469,14 +466,8 @@ gap> IrredundantGeneratingSubset([RandomTransformation(10)]);;
 gap> S := Monoid([Transformation([1, 1]), Transformation([2, 1]),
 >  Transformation([2, 2])], rec(generic := false));
 <transformation monoid of degree 2 with 3 generators>
-gap> SetInfoLevel(InfoSemigroups, 3);
-gap> IrredundantGeneratingSubset(S);;
-at 	1 of 	4 with 	0 redundant, 	0 non-redundant
-at 	2 of 	4 with 	0 redundant, 	1 non-redundant
-at 	3 of 	4 with 	1 redundant, 	1 non-redundant
-at 	4 of 	4 with 	2 redundant, 	1 non-redundant
-
-gap> SetInfoLevel(InfoSemigroups, 0);
+gap> Size(IrredundantGeneratingSubset(S));
+2
 
 #T# attributes: IsomorphismReesMatrixSemigroup: for a simple semigroup
 gap> S := SemigroupIdeal(
@@ -602,10 +593,10 @@ gap> S := InverseMonoid([PartialPerm([1, 3], [2, 3]),
 gap> SmallInverseMonoidGeneratingSet(S);;
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for > 0 generators 2/2
-gap> SmallInverseMonoidGeneratingSet(DualSymmetricInverseMonoid(3));
-[ <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ]>, 
-  <block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>, 
-  <block bijection: [ 1, 2, -3 ], [ 3, -1, -2 ]> ]
+gap> Set(SmallInverseMonoidGeneratingSet(DualSymmetricInverseMonoid(3)));
+[ <block bijection: [ 1, 2, -3 ], [ 3, -1, -2 ]>, 
+  <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ]>, 
+  <block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]> ]
 
 #T# attributes: SmallInverseSemigroupGeneratingSet: for a collection
 gap> coll := [Bipartition([[1, -1], [2, -2], [3, -3], [4, -4], [5, -5]]),

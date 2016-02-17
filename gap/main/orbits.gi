@@ -488,7 +488,7 @@ function(o, i, j)
   scc := OrbSCC(o)[i];
 
   word := [];
-  while j > scc[1] do
+  while j <> scc[1] do
     Add(word, tree[1][j]);
     j := tree[2][j];
   od;
@@ -511,7 +511,7 @@ function(o, i, j)
   scc := OrbSCC(o)[i];
 
   word := [];
-  while j > scc[1] do
+  while j <> scc[1] do
     Add(word, tree[1][j]);
     j := tree[2][j];
   od;

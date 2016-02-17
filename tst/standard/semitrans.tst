@@ -197,7 +197,7 @@ true
 gap> S := FullTransformationMonoid(5);;
 gap> S := Semigroup(S, rec(generic := false));;
 gap> R := RClass(S, Transformation([4, 2, 4, 1, 2]));
-<Green's R-class: Transformation( [ 1, 4, 1, 3, 4 ] )>
+<Green's R-class: Transformation( [ 1, 3, 1, 2, 3 ] )>
 gap> SEMIGROUPS.LargestElementRClass(R);
 Transformation( [ 5, 4, 5, 3, 4 ] )
 gap> S := Semigroup([Transformation([4, 4, 3, 6, 5, 1]), 
@@ -228,15 +228,15 @@ gap> Idempotents(S, 9);
 [  ]
 gap> Length(Idempotents(S, 3));
 988
-gap> Idempotents(S, 1);
-[ Transformation( [ 7, 7, 7, 7, 7, 7, 7, 7 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8 ] ), 
-  Transformation( [ 5, 5, 5, 5, 5, 5, 5, 5 ] ), 
-  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
+gap> AsSet(Idempotents(S, 1));
+[ Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] ), 
   Transformation( [ 2, 2, 2, 2, 2, 2, 2, 2 ] ), 
   Transformation( [ 3, 3, 3, 3, 3, 3, 3, 3 ] ), 
-  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4 ] ) ]
+  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
+  Transformation( [ 5, 5, 5, 5, 5, 5, 5, 5 ] ), 
+  Transformation( [ 6, 6, 6, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 7, 7, 7, 7, 7, 7, 7, 7 ] ), 
+  Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
 
 #T# SemiTransTest10
 # IteratorSorted for a transformation semigroup

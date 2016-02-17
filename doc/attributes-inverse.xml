@@ -88,7 +88,7 @@ gap> CharacterTableOfInverseSemigroup(S);
   [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4), 
       (1)(2,3,4), (1,2)(3,4), (1,2,3,4), 
       <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2,3), 
-      <identity partial perm on [ 1, 2 ]>, (1,2), 
+      <identity partial perm on [ 2, 3 ]>, (2,3), 
       <identity partial perm on [ 1 ]>, <empty partial perm> ] ]]]></Example>
     </Description>
   </ManSection>
@@ -242,7 +242,7 @@ false
 gap> S := SymmetricInverseSemigroup(3);
 <symmetric inverse monoid of degree 3>
 gap> JoinIrreducibleDClasses(S);
-[ <Green's D-class: <identity partial perm on [ 1 ]>> ]
+[ <Green's D-class: <identity partial perm on [ 2 ]>> ]
 gap> T := InverseSemigroup(
 > PartialPerm([1, 2, 3, 4], [1, 2, 4, 3]), 
 > PartialPerm([1], [1]), PartialPerm([2], [2]));

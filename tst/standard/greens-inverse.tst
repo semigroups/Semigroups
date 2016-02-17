@@ -22,8 +22,8 @@ gap> S := InverseSemigroup([
 >  rec(generic := false));;
 gap> x := Bipartition([[1, -2], [2, -4], [3, 4, 5, -1, -3, -5]]);;
 gap> L := LClass(S, x);
-<Green's L-class: <block bijection: [ 1, 4, 5, -1, -3, -5 ], [ 2, -4 ], 
-  [ 3, -2 ]>>
+<Green's L-class: <block bijection: [ 1, -2 ], [ 2, -4 ], 
+  [ 3, 4, 5, -1, -3, -5 ]>>
 gap> x in L;
 true
 gap> SchutzenbergerGroup(L);
@@ -71,8 +71,8 @@ gap> S := InverseSemigroup([
 >  rec(generic := false));;
 gap> x := Bipartition([[1, -4], [2, 3, 5, -2, -3, -5], [4, -1]]);;
 gap> L := LClassOfHClass(HClass(S, x));
-<Green's L-class: <block bijection: [ 1, 4, 5, -2, -3, -5 ], [ 2, -4 ], 
-  [ 3, -1 ]>>
+<Green's L-class: <block bijection: [ 1, -1 ], [ 2, -4 ], 
+  [ 3, 4, 5, -2, -3, -5 ]>>
 gap> L = LClass(S, x);
 true
 
@@ -214,29 +214,29 @@ gap> DClassReps(S);
 [ <identity partial perm on [ 1, 2, 6, 7 ]>, 
   <identity partial perm on [ 1, 2, 3, 6, 7 ]>, 
   <identity partial perm on [ 1, 3, 4, 5, 6 ]>, 
-  <identity partial perm on [ 6, 7 ]>, <identity partial perm on [ 1, 3, 7 ]>,
-  <identity partial perm on [ 1, 3, 6, 7 ]>, 
-  <identity partial perm on [ 2, 3, 6, 7 ]>, <empty partial perm>, 
+  <identity partial perm on [ 6, 7 ]>, <identity partial perm on [ 1, 3, 6 ]>,
+  <identity partial perm on [ 2, 3, 6, 7 ]>, 
+  <identity partial perm on [ 1, 2, 3, 5 ]>, <empty partial perm>, 
   <identity partial perm on [ 7 ]>, <identity partial perm on [ 2, 3, 7 ]> ]
 gap> RClassReps(S);
 [ <identity partial perm on [ 1, 2, 6, 7 ]>, [3,2,6][4,1,7], [3,6,7][5,2](1), 
   [3,7][4,6,2](1), [3,2][4,7,6](1), 
   <identity partial perm on [ 1, 2, 3, 6, 7 ]>, [5,2,3,6,7](1), 
   [5,3](1,6,2,7), <identity partial perm on [ 1, 3, 4, 5, 6 ]>, 
-  [7,4,3,6,5](1), <identity partial perm on [ 6, 7 ]>, [1,7][3,6], 
-  [2,6][4,7], [3,6][4,7], [4,7][5,6], [1,7][2,6], [3,6,7], [2,6](7), 
-  [1,7](6), [1,7][4,6], [1,6](7), [5,6](7), [3,6](7), [2,7](6), [5,7](6), 
-  [2,6][3,7], [4,6](7), [1,7][5,6], [2,7][5,6], [4,7](6), [3,6][5,7], 
-  <identity partial perm on [ 1, 3, 7 ]>, [4,1,7][5,3], [2,7,3][6,1], 
-  [4,3,1,7], [2,1,3](7), [2,3,1][6,7], [2,1,3,7], [5,3](1)(7), [6,1,7](3), 
-  [2,7][5,1,3], [4,1,7,3], [5,7,3][6,1], [5,1,7][6,3], [2,7][4,1](3), 
-  [6,3](1,7), [2,3][6,7](1), [2,3][4,7](1), [4,7][6,3](1), [2,7,1][5,3], 
-  [5,7][6,3,1], [5,3,7](1), [6,3,1](7), [2,1][5,3,7], [4,7][5,3][6,1], 
-  [4,1][6,7](3), [4,3,7,1], <identity partial perm on [ 1, 3, 6, 7 ]>, 
-  [4,7][5,6,3](1), [2,6][5,3,7](1), [5,6,3](1,7), [2,3,6,7](1), 
-  [2,7,1,6][5,3], <identity partial perm on [ 2, 3, 6, 7 ]>, [1,6](2,3,7), 
-  [5,2,3,6,7], [1,6,2,7][5,3], [5,7,6,3](2), <empty partial perm>, 
-  <identity partial perm on [ 7 ]>, [3,7], [4,7], [1,7], [6,7], [5,7], [2,7], 
+  [7,4,3,6,5](1), <identity partial perm on [ 6, 7 ]>, [4,7][5,6], 
+  [1,7][2,6], [1,7][3,6], [2,6](7), [1,6](7), [1,7](6), [2,6][4,7], [2,7](6), 
+  [3,6](7), [2,7][5,6], [2,6][3,7], [3,6,7], [3,6][4,7], [4,6](7), [5,7](6), 
+  [1,7][5,6], [4,7](6), [3,6][5,7], [1,7][4,6], [5,6](7), 
+  <identity partial perm on [ 1, 3, 6 ]>, [4,3,6](1), [2,6][7,1,3], 
+  [2,6,3][7,1], [2,3,6](1), [2,6][5,3](1), [7,6,1](3), [2,3,6,1], [5,6,3](1), 
+  [2,6][5,3,1], [4,6,3][5,1], [5,6,3][7,1], [2,3](1,6), [7,1,6](3), 
+  [4,1,6,3], [5,3,1,6], [2,1][5,3][7,6], [2,1][4,6](3), [7,6,3](1), 
+  [4,6][5,3](1), [2,3][4,1,6], [5,6,1](3), [4,3,1](6), [4,1][7,3,6], 
+  [4,6][7,3](1), [5,3][7,1,6], <identity partial perm on [ 2, 3, 6, 7 ]>, 
+  [5,2,3,6,7], [1,6,2,7][5,3], [1,6](2,3,7), [5,7,6,3](2), 
+  <identity partial perm on [ 1, 2, 3, 5 ]>, [6,3,2,5](1), [6,2][7,3,5](1), 
+  [4,3][6,5,2](1), [7,1,2,3](5), [6,5,2][7,1,3], <empty partial perm>, 
+  <identity partial perm on [ 7 ]>, [4,7], [3,7], [6,7], [1,7], [5,7], [2,7], 
   <identity partial perm on [ 2, 3, 7 ]>, [5,2,3][6,7] ]
 
 #T# greens-inverse: XClassReps: for an inverse op acting Greens class
@@ -267,43 +267,43 @@ gap> GreensLClasses(S);
 [ <Green's L-class: <identity partial perm on [ 2, 3 ]>>, 
   <Green's L-class: [3,1](2)>, 
   <Green's L-class: <identity partial perm on [ 1, 3 ]>>, 
-  <Green's L-class: [3,4](1)>, <Green's L-class: [1,4](3)>, 
-  <Green's L-class: [1,5](3)>, <Green's L-class: [3,1,5]>, 
+  <Green's L-class: [3,4](1)>, <Green's L-class: [3,1,5]>, 
+  <Green's L-class: [1,4](3)>, <Green's L-class: [1,5](3)>, 
   <Green's L-class: <identity partial perm on [ 1, 3, 4 ]>>, 
   <Green's L-class: [4,1,5](3)>, 
   <Green's L-class: <identity partial perm on [ 2 ]>>, 
   <Green's L-class: <empty partial perm>>, 
-  <Green's L-class: <identity partial perm on [ 3 ]>>, 
-  <Green's L-class: [3,4]>, <Green's L-class: [3,1]>, 
-  <Green's L-class: [3,5]> ]
+  <Green's L-class: <identity partial perm on [ 4 ]>>, 
+  <Green's L-class: [4,3]>, <Green's L-class: [4,1]>, 
+  <Green's L-class: [4,5]> ]
 gap> x := PartialPerm([1, 4], [5, 1]);;
 gap> GreensHClasses(DClass(S, x));
 [ <Green's H-class: <identity partial perm on [ 1, 3 ]>>, 
-  <Green's H-class: [3,4](1)>, <Green's H-class: [1,4](3)>, 
-  <Green's H-class: [1,5](3)>, <Green's H-class: [3,1,5]>, 
+  <Green's H-class: [3,4](1)>, <Green's H-class: [3,1,5]>, 
+  <Green's H-class: [1,4](3)>, <Green's H-class: [1,5](3)>, 
   <Green's H-class: [4,3](1)>, 
   <Green's H-class: <identity partial perm on [ 1, 4 ]>>, 
-  <Green's H-class: [1,4,3]>, <Green's H-class: [1,5][4,3]>, 
-  <Green's H-class: [4,1,5]>, <Green's H-class: [4,1](3)>, 
-  <Green's H-class: [3,4,1]>, 
+  <Green's H-class: [4,1,5]>, <Green's H-class: [1,4,3]>, 
+  <Green's H-class: [1,5][4,3]>, <Green's H-class: [5,1,3]>, 
+  <Green's H-class: [5,1,4]>, 
+  <Green's H-class: <identity partial perm on [ 1, 5 ]>>, 
+  <Green's H-class: [1,3][5,4]>, <Green's H-class: [1,3](5)>, 
+  <Green's H-class: [4,1](3)>, <Green's H-class: [3,4,1]>, 
+  <Green's H-class: [3,1][4,5]>, 
   <Green's H-class: <identity partial perm on [ 3, 4 ]>>, 
-  <Green's H-class: [4,5](3)>, <Green's H-class: [3,1][4,5]>, 
-  <Green's H-class: [5,1](3)>, <Green's H-class: [3,4][5,1]>, 
+  <Green's H-class: [4,5](3)>, <Green's H-class: [5,1](3)>, 
+  <Green's H-class: [3,4][5,1]>, <Green's H-class: [3,1](5)>, 
   <Green's H-class: [5,4](3)>, 
-  <Green's H-class: <identity partial perm on [ 3, 5 ]>>, 
-  <Green's H-class: [3,1](5)>, <Green's H-class: [5,1,3]>, 
-  <Green's H-class: [5,1,4]>, <Green's H-class: [1,3][5,4]>, 
-  <Green's H-class: [1,3](5)>, 
-  <Green's H-class: <identity partial perm on [ 1, 5 ]>> ]
+  <Green's H-class: <identity partial perm on [ 3, 5 ]>> ]
 gap> GreensHClasses(RClass(S, x));
 [ <Green's H-class: [4,3](1)>, 
   <Green's H-class: <identity partial perm on [ 1, 4 ]>>, 
-  <Green's H-class: [1,4,3]>, <Green's H-class: [1,5][4,3]>, 
-  <Green's H-class: [4,1,5]> ]
+  <Green's H-class: [4,1,5]>, <Green's H-class: [1,4,3]>, 
+  <Green's H-class: [1,5][4,3]> ]
 gap> GreensHClasses(LClass(S, x));
 [ <Green's H-class: [3,1,5]>, <Green's H-class: [4,1,5]>, 
-  <Green's H-class: [3,1][4,5]>, <Green's H-class: [3,1](5)>, 
-  <Green's H-class: <identity partial perm on [ 1, 5 ]>> ]
+  <Green's H-class: <identity partial perm on [ 1, 5 ]>>, 
+  <Green's H-class: [3,1][4,5]>, <Green's H-class: [3,1](5)> ]
 gap> GreensHClasses(HClass(S, x));
 Error, Semigroups: GreensHClasses: usage,
 an L-, R-, or D-class,
@@ -385,12 +385,12 @@ gap> NrIdempotents(DClass(S, x));
 gap> Idempotents(DClass(S, x));
 [ <block bijection: [ 1, 2, 5, 6, -1, -2, -5, -6 ], [ 3, -3 ], [ 4, -4 ]>, 
   <block bijection: [ 1, -1 ], [ 2, 4, 5, 6, -2, -4, -5, -6 ], [ 3, -3 ]>, 
-  <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, -3, -4, -5, -6 ]>, 
-  <block bijection: [ 1, -1 ], [ 2, 3, 5, 6, -2, -3, -5, -6 ], [ 4, -4 ]>, 
+  <block bijection: [ 1, 3, 5, 6, -1, -3, -5, -6 ], [ 2, -2 ], [ 4, -4 ]>, 
   <block bijection: [ 1, -1 ], [ 2, 3, 4, 6, -2, -3, -4, -6 ], [ 5, -5 ]>, 
+  <block bijection: [ 1, -1 ], [ 2, 3, 5, 6, -2, -3, -5, -6 ], [ 4, -4 ]>, 
+  <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, 4, 5, 6, -3, -4, -5, -6 ]>, 
   <block bijection: [ 1, 2, 3, 6, -1, -2, -3, -6 ], [ 4, -4 ], [ 5, -5 ]>, 
   <block bijection: [ 1, 4, 5, 6, -1, -4, -5, -6 ], [ 2, -2 ], [ 3, -3 ]>, 
-  <block bijection: [ 1, 3, 5, 6, -1, -3, -5, -6 ], [ 2, -2 ], [ 4, -4 ]>, 
   <block bijection: [ 1, 3, 4, 6, -1, -3, -4, -6 ], [ 2, -2 ], [ 5, -5 ]> ]
 
 #T# greens-inverse: (Nr)Idempotents, for an inverse op acting semigroup

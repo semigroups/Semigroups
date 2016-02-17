@@ -882,8 +882,8 @@ gap> x := Bipartition([[1, 2, -3], [3, -1, -2], [4, -4],
 gap> I := SemigroupIdeal(S, x);
 <inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> JoinIrreducibleDClasses(I);
-[ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], 
-      [ 6, -6 ]>> ]
+[ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 6, -1, -2, -3, -4, -6 ], 
+      [ 5, -5 ]>> ]
 gap> I;
 <inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> S := InverseMonoid(DualSymmetricInverseMonoid(3));;

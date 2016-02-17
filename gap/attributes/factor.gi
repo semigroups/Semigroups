@@ -181,22 +181,22 @@ end);
 InstallMethod(Factorization,
 "for an acting semigroup with generators and element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
-function(s, f)
+function(S, x)
   local o, l, m, scc, data, pos, rep, word1, word2, p;
 
-  if not f in s then
+  if not x in S then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   fi;
 
-  o := LambdaOrb(s);
-  l := Position(o, LambdaFunc(s)(f));
+  o := LambdaOrb(S);
+  l := Position(o, LambdaFunc(S)(x));
   m := OrbSCCLookup(o)[l];
   scc := OrbSCC(o)[m];
 
-  data := SemigroupData(s);
-  pos := Position(data, f);                     #not <fail> since <f> in <s>
+  data := SemigroupData(S);
+  pos := Position(data, x);                     #not <fail> since <f> in <s>
   rep := data[pos][4];                          #rep of R-class of <f>
 
   word1 := TraceSchreierTreeForward(data, pos); #a word equal to <rep>
@@ -204,12 +204,12 @@ function(s, f)
   #compensate for the action of the multipliers, if necessary
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep, f *
-                       LambdaInverse(s)(o[scc[1]],
+    p := LambdaPerm(S)(rep, x *
+                       LambdaInverse(S)(o[scc[1]],
                                         EvaluateWord(o!.gens, word2)));
   else
     word2 := [];
-    p := LambdaPerm(s)(rep, f);
+    p := LambdaPerm(S)(rep, x);
   fi;
 
   if IsOne(p) then #no need to factorise <p>
