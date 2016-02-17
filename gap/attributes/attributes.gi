@@ -872,3 +872,36 @@ function(S)
            x -> Permutation(x, [1 .. Length(en)], act),
            x -> en[Position(en, MultiplicativeNeutralElement(S)) ^ x]);
 end);
+
+#
+
+InstallMethod(MinimumDegreeTransformationRepresentation,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  #TODO: We should append an identity so this works for non-monoids
+  #TODO: We should return an isomorphism instead of just a semigroup
+  local l, congs, nrclasses, cong, bestcong, classes, transgens, gen, image;
+  # Get all the right congruences which contain no 2-sided congruences
+  l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(poor := true));
+  congs := l![2];
+
+  # Find the one with the fewest classes
+  nrclasses := infinity;
+  for cong in congs do
+    if NrEquivalenceClasses(cong) < nrclasses then
+      bestcong := cong;
+      nrclasses := NrEquivalenceClasses(cong);
+    fi;
+  od;
+
+  # Consider the action of S on the classes of cong
+  classes := EquivalenceClasses(bestcong);
+  transgens := [];
+  for gen in GeneratorsOfSemigroup(S) do
+    image := List(classes, c -> Position(classes,
+                                         OnRightCongruenceClasses(c, gen)));
+    Add(transgens, Transformation(image));
+  od;
+  return Semigroup(transgens);
+end);

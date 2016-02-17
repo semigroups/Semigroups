@@ -46,3 +46,5 @@ DeclareAttribute("StructureDescriptionMaximalSubgroups",
 DeclareAttribute("MaximalDClasses", IsSemigroup);
 DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsSemigroup);
+
+DeclareAttribute("MinimumDegreeTransformationRepresentation", IsSemigroup);

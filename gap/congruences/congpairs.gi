@@ -1044,11 +1044,11 @@ end);
 #   * poor - Return only x-congs which contain no 2-sided congruences
 ###############################################################################
 SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
-  local poor, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children, 
-        parents, pair, badcong, newchildren, newparents, newcong, i, c, p, 
-        congs, 2congs, image, next, set_func, lattice, join_func, length, found, 
+  local poor, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children,
+        parents, pair, badcong, newchildren, newparents, newcong, i, c, p,
+        congs, 2congs, image, next, set_func, lattice, join_func, length, found,
         start, j, k;
-  
+
   poor := IsBound(record.poor) and record.poor;
   _XSemigroupCongruence := EvalString(Concatenation(type_string,
                                                     "SemigroupCongruence"));
@@ -1094,7 +1094,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
       od;
     fi;
   od;
-  
+
   congs := ShallowCopy(congs1);
   if poor then
     # Find and remove any 2-sided congruences, and discard their parents
@@ -1139,8 +1139,12 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     parents := List(parents, l -> Filtered(List(l, i -> image[i]),
                                            i -> i <> fail));
     children := List(children, l -> Filtered(List(l, i -> image[i]),
-                                             i -> i <> fail));        
+                                             i -> i <> fail));
     2congs := List(2congs, i -> congs1[i]);
+  fi;
+
+  if nrcongs <> Length(children) or nrcongs <> Length(congs) then
+    ErrorNoReturn("This should never happen");
   fi;
 
   # We now have all 1-generated congs, which must include all the minimal
