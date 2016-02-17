@@ -85,6 +85,8 @@ inline bool IS_GAP_BLOCKS_BAG (Obj o) {
  * Imported types from the library
 *******************************************************************************/
 
+extern Obj HTValue;
+extern Obj HTAdd;
 extern Obj infinity;
 extern Obj Ninfinity;
 extern Obj IsBipartition;

@@ -8,6 +8,8 @@
 
 #include "types.h"
 
+Obj HTValue;
+Obj HTAdd;
 Obj infinity;
 Obj Ninfinity;
 Obj IsBipartition;

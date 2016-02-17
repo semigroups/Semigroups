@@ -12,9 +12,9 @@
  *
 *******************************************************************************/
 
-extern "C" {
-  Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
-}
+//extern "C" {
+//  Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
+//}
 
 Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking);
 

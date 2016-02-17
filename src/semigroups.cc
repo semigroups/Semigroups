@@ -187,7 +187,7 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
           SET_ELM_PLIST(newword, len+1, INTOBJ_INT(j));
           SET_LEN_PLIST(newword, len+1);
 
-          objval = HTValue_TreeHash_C(self, ht, newElt);
+          objval = CALL_2ARGS(HTValue, ht, newElt);
           if(objval!=Fail){
             #ifdef DEBUG
               Pr("Case 4!\n", 0L, 0L);
@@ -206,7 +206,7 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
             #endif
             nr++;
 
-            HTAdd_TreeHash_C(self, ht, newElt, INTOBJ_INT(nr));
+            CALL_3ARGS(HTAdd, ht, newElt, INTOBJ_INT(nr));
 
             if(one==0){
               one=nr;
@@ -696,7 +696,7 @@ Obj UF_BLOCKS (Obj self, Obj ufdata) {
 *******************************************************************************/
 
 void PrintSemi (Obj o) {
-  Pr("<interface to C++ semigroup object>", 0L, 0L);
+  Pr("<Semigroups package C++ type>", 0L, 0L);
 }
 
 /*****************************************************************************/
@@ -869,6 +869,9 @@ static Int InitKernel( StructInitInfo *module )
     PrintObjFuncs[T_SEMI] = PrintSemi;
     InitMarkFuncBags(T_SEMI, &SemigroupsMarkSubBags);
     InitFreeFuncBag(T_SEMI, &SemigroupsBagFreeFunc);
+
+    ImportGVarFromLibrary("HTValue", &HTValue);
+    ImportGVarFromLibrary("HTAdd", &HTAdd);
 
     ImportGVarFromLibrary("infinity", &infinity);
     ImportGVarFromLibrary("Ninfinity", &Ninfinity);

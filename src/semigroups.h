@@ -22,10 +22,10 @@
 
 #include "src/compiled.h"
 
-extern "C" {
+/*extern "C" {
   Obj HTValue_TreeHash_C ( Obj self, Obj ht, Obj obj );
   Obj HTAdd_TreeHash_C ( Obj self, Obj ht, Obj obj, Obj val);
-}
+}*/
 
 /*******************************************************************************
  * free a Bag of type T_SEMI - this has to go here so that InterfaceBase etc
