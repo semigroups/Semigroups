@@ -45,17 +45,16 @@ end);
 # factorisation of Schutzenberger group element, the same method works for
 # ideals
 
-# TODO update this to use MinimalFactorization on the Schutzenberger group!
-
 InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
 [IsLambdaOrb, IsPosInt, IsPerm],
 function(o, m, p)
   local gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, bound, G,
-        factors, nr, stop, uword, u, adj, vword, v, x, epi, word, out, k, l, i,
-        j;
+  factors, inversefacts, nr, stop, uword, u, adj, vword, v, x, wword, w, path,
+  y, len, xyword, epi, word, out, k, l, i;
   
   if not IsBound(o!.factors) then 
     o!.factors      := [];
+    o!.inversefacts := [];
     o!.factorgroups := [];
   fi;
 
@@ -69,10 +68,11 @@ function(o, m, p)
     rep         := LambdaOrbRep(o, m);
     bound       := Size(LambdaOrbSchutzGp(o, m));
 
-    G           := Group(()); 
-    factors     := [];
-    nr          := 0;
-    stop        := false;
+    G            := Group(()); 
+    factors      := [];
+    inversefacts := [];
+    nr           := 0;
+    stop         := false;
 
     for k in scc do
       uword := TraceSchreierTreeOfSCCForward(o, m, k);
@@ -85,14 +85,41 @@ function(o, m, p)
           v     := EvaluateWord(o, vword);
           x     := lambdaperm(rep, rep * u * gens[l] * v);
           if not x in G then
+            G := ClosureGroup(G, x);
+            
             nr := nr + 1;
             factors[nr] := Concatenation(uword, [l], vword);
-            # TODO:
-            # should also cache the inverse of factors[nr] = vword * some word
-            # that takes o[l] back to o[k] * uword, where "some word" could be
-            # found by taking all the paths from o[l] to o[k] in the
-            # orbitgraph.
-            G := ClosureGroup(G, x);
+            
+            # try to find a word in the generators equal to the inverse of <x>
+            if IsSemigroupWithInverseOp(o!.parent) then 
+              inversefacts[nr] := Reversed(factors[nr]) * -1;
+            elif Order(x) = 2 then 
+              #Print("Case 1!\n");
+              inversefacts[nr] := factors[nr];
+            else 
+              vword := TraceSchreierTreeOfSCCForward(o, m, adj[l]);
+              v     := EvaluateWord(o, vword);
+              wword := TraceSchreierTreeOfSCCBack(o, m, k);
+              w     := EvaluateWord(o, wword);
+              path  := DIGRAPH_PATH(OrbitGraph(o), adj[l], k)[2];
+              y     := lambdaperm(rep, rep * v * EvaluateWord(o, path) * w);
+              len   := Length(vword) + Length(path) + Length(wword);
+              if len <= Length(factors[nr]) * (Order(x) - 1) and y = x ^ -1 then
+                #Print("Case 2!\n");
+                inversefacts[nr] := Concatenation(vword, path, wword);
+              elif Order(x * y) * (len + Length(factors[nr])) - Length(factors[nr])
+                   < Length(factors[nr]) * (Order(x) - 1) then 
+                #Print("Case 3!\n");
+                inversefacts[nr] := [Concatenation(vword, path, wword)];
+                xyword := Concatenation(factors[nr], inversefacts[nr]);
+                Append(inversefacts[nr], List([1 .. Order(x * y) - 1], 
+                                              i -> xyword));
+              else
+                #Print("Case 4!\n");
+                inversefacts[nr] := Concatenation(List([1 .. Order(x) - 1], 
+                                                       i -> factors[nr]));
+              fi;
+            fi;
             if Size(G) = bound then
               stop := true;
               break;
@@ -105,11 +132,13 @@ function(o, m, p)
       fi;
     od;
 
-    o!.factors[m]      := factors;
     o!.factorgroups[m] := G;
+    o!.inversefacts[m] := inversefacts;
+    o!.factors[m]      := factors;
   else 
-    G       := o!.factorgroups[m];
-    factors := o!.factors[m];
+    G            := o!.factorgroups[m];
+    inversefacts := o!.inversefacts[m];
+    factors      := o!.factors[m];
   fi;
 
   if not p in G then
@@ -127,12 +156,8 @@ function(o, m, p)
   for i in word do
     if i > 0 then 
       Append(out, factors[i]);
-    elif IsSemigroupWithInverseOp(o!.parent) then 
-      Append(out, Reversed(factors[-i]) * -1);
-    else # this results in super long words
-      for j in [1 .. Order(G.(-i)) - 1] do 
-        Append(out, factors[-i]);
-      od;
+    else 
+      Append(out, inversefacts[-i]);
     fi;
   od;
   return out;
@@ -188,9 +213,7 @@ function(S, x)
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
-  fi;
-
-  if HasGenericSemigroupData(S) and IsClosedData(GenericSemigroupData(S)) then 
+  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then 
     return MinimalFactorization(S, x);
   fi;
 
@@ -234,30 +257,32 @@ InstallMethod(Factorization,
 "for an acting semigroup with inverse op with generators and element",
 [IsSemigroupWithInverseOp and IsActingSemigroup and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
-function(s, f)
+function(S, x)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
 
-  if not f in s then
+  if not x in S then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
+  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then 
+    return MinimalFactorization(S, x);
   fi;
 
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   gens := o!.gens;
-  l := Position(o, LambdaFunc(s)(f));
+  l := Position(o, LambdaFunc(S)(x));
   m := OrbSCCLookup(o)[l];
   scc := OrbSCC(o)[m];
 
   # find the R-class rep
   word1 := TraceSchreierTreeForward(o, scc[1]);
   # lambda value is ok, but rho value is wrong
-  k := Position(o, RhoFunc(s)(EvaluateWord(gens, word1)));
+  k := Position(o, RhoFunc(S)(EvaluateWord(gens, word1)));
   # take rho value of <word1> back to 1st position in scc
   word1 := Concatenation(TraceSchreierTreeOfSCCForward(o, m, k), word1);
 
   # take rho value of <word1> forwards to rho value of <f>
-  k := Position(o, RhoFunc(s)(f));
+  k := Position(o, RhoFunc(S)(x));
   word1 := Concatenation(TraceSchreierTreeOfSCCBack(o, m, k), word1);
   # <rep> is an R-class rep for the R-class of <f>
   rep := EvaluateWord(gens, word1);
@@ -265,11 +290,11 @@ function(s, f)
   # compensate for the action of the multipliers
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep, f *
-                       LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p := LambdaPerm(S)(rep, x *
+                       LambdaInverse(S)(o[scc[1]], EvaluateWord(gens, word2)));
   else
     word2 := [];
-    p := LambdaPerm(s)(rep, f);
+    p := LambdaPerm(S)(rep, x);
   fi;
 
   if IsOne(p) then
@@ -290,46 +315,47 @@ InstallMethod(Factorization,
 "for a regular acting semigroup with generators and element",
 [IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
-function(s, f)
+function(S, x)
   local o, gens, l, m, scc, word1, k, rep, p, word2;
 
-  if not f in s then
+  if not x in S then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
+  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then 
+    return MinimalFactorization(S, x);
   fi;
 
-  o := RhoOrb(s);
+  o := RhoOrb(S);
   Enumerate(o);
   gens := o!.gens;
-  l := Position(o, RhoFunc(s)(f));
+  l := Position(o, RhoFunc(S)(x));
 
   # find the R-class rep
   word1 := TraceSchreierTreeBack(o, l);    #rho value is ok
   #trace back to get forward since this is a left orbit
   rep := EvaluateWord(gens, word1);        #but lambda value is wrong
 
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   Enumerate(o);
-  l := Position(o, LambdaFunc(s)(f));
+  l := Position(o, LambdaFunc(S)(x));
   m := OrbSCCLookup(o)[l];
   scc := OrbSCC(o)[m];
 
-  k := Position(o, LambdaFunc(s)(rep));
+  k := Position(o, LambdaFunc(S)(rep));
   word2 := TraceSchreierTreeOfSCCBack(o, m, k);
   rep := rep * EvaluateWord(gens, word2);
   #the R-class rep of the R-class of <f>
   Append(word1, word2);               #and this word equals <rep>
 
   #compensate for the action of the multipliers
-  #JDM: update this as above
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep, f *
-                       LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p := LambdaPerm(S)(rep, x *
+                       LambdaInverse(S)(o[scc[1]], EvaluateWord(gens, word2)));
   else
     word2 := [];
-    p := LambdaPerm(s)(rep, f);
+    p := LambdaPerm(S)(rep, x);
   fi;
 
   if IsOne(p) then

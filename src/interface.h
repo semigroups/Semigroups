@@ -47,6 +47,7 @@ Obj SEMIGROUP_IS_DONE_ITERATOR_CC     (Obj self, Obj iter);
 Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data);
 Obj SEMIGROUP_NR_IDEMPOTENTS          (Obj self, Obj data);
 Obj SEMIGROUP_POSITION                (Obj self, Obj data, Obj x);
+Obj SEMIGROUP_POSITION_CURRENT        (Obj self, Obj data, Obj x);
 Obj SEMIGROUP_POSITION_SORTED         (Obj self, Obj data, Obj x);
 Obj SEMIGROUP_RELATIONS               (Obj self, Obj data);
 Obj SEMIGROUP_RIGHT_CAYLEY_GRAPH      (Obj self, Obj data);
