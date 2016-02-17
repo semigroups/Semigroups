@@ -462,6 +462,10 @@ gap> LatticeOfCongruences(S);
 gap> LatticeOfRightCongruences(S);
 [ [  ], [ 1 ], [ 1 ], [ 1, 2, 6 ], [ 1, 2, 3 ], [ 1 ], [ 1, 2 ], 
   [ 1, 2, 3, 4, 5, 6, 7, 9 ], [ 1, 3, 6 ] ]
+gap> p := PartitionMonoid(2);;
+gap> q := MinimumDegreeTransformationRepresentation(p);;
+gap> IsIsomorphicSemigroup(p, q);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
