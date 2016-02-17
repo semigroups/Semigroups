@@ -1042,8 +1042,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsRegularSemigroupElement,
-"for an acting semigroup and associative element",
-[IsActingSemigroup, IsAssociativeElement],
+"for an acting semigroup and multiplicative element",
+[IsActingSemigroup, IsMultiplicativeElement],
 function(S, x)
   local o, scc, rho, tester, i;
 
@@ -1097,7 +1097,7 @@ end);
 
 InstallMethod(IsRegularSemigroupElementNC,
 "for an acting semigroup and associative element",
-[IsActingSemigroup, IsAssociativeElement],
+[IsActingSemigroup, IsMultiplicativeElement],
 function(S, x)
   local o, l, scc, rho, tester, i;
 
@@ -1147,7 +1147,7 @@ function(S, x)
 end);
 
 InstallMethod(IsRegularSemigroupElementNC,
-[IsSemigroup, IsAssociativeElement], IsRegularSemigroupElement);
+[IsSemigroup, IsMultiplicativeElement], IsRegularSemigroupElement);
 
 # same method for ideals
 

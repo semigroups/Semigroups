@@ -12,12 +12,12 @@ DeclareGlobalFunction("SemigroupIdeal");
 
 DeclareOperation("SemigroupIdealByGenerators",
                  [IsSemigroup,
-                  IsAssociativeElementCollection,
+                  IsMultiplicativeElementCollection,
                   IsRecord]);
 
 DeclareOperation("SemigroupIdealByGeneratorsNC",
                  [IsSemigroup,
-                  IsAssociativeElementCollection,
+                  IsMultiplicativeElementCollection,
                   IsRecord]);
 
 DeclareAttribute("MinimalIdealGeneratingSet", IsSemigroupIdeal);

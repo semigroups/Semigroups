@@ -458,7 +458,7 @@ Obj SEMIGROUP_IS_DONE (Obj self, Obj data) {
   }
 
   size_t pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
-  size_t nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
+  size_t nr  = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
   return (pos > nr ? True : False);
 }
 
@@ -545,7 +545,7 @@ Obj SEMIGROUP_POSITION (Obj self, Obj data, Obj x) {
   size_t pos, nr;
 
   do {
-    Obj val = HTValue_TreeHash_C(self, ht, x);
+    Obj val = CALL_2ARGS(HTValue, ht, x);
     if (val != Fail) {
       return val;
     }
@@ -554,7 +554,7 @@ Obj SEMIGROUP_POSITION (Obj self, Obj data, Obj x) {
     pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
     nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
   } while (pos <= nr);
-  return HTValue_TreeHash_C(self, ht, x);
+  return CALL_2ARGS(HTValue, ht, x);
 }
 
 /*******************************************************************************

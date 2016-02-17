@@ -12,7 +12,6 @@
 
 DeclareCategory("IsMatrixOverSemiring",
                     IsMultiplicativeElementWithOne
-                and IsAssociativeElement
                 and IsPositionalObjectRep);
 
 DeclareCategoryCollections("IsMatrixOverSemiring");

@@ -104,8 +104,7 @@ gap> y := BooleanMat([[1, 0, 0],
 >                     [1, 0, 1],
 >                     [0, 0, 0]]);;
 gap> x * y;
-Error, Semigroups: * (for boolean matrices):
-the matrices must have equal dimension,
+Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 0], [0, 0, 0]])
 
 #T# boolmat: OneImmutable, for boolean mats, 1/1
 gap> x := BooleanMat([[1, 0, 0],

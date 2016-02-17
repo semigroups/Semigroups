@@ -372,13 +372,13 @@ end);
 
 #
 
-if not (IsGrapeLoaded and IsGrapeCompiled) then
+if not (SEMIGROUPS.IsGrapeLoaded and SEMIGROUPS.IsGrapeCompiled) then
   InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
   function(S)
     Info(InfoWarning, 1, GrapeIsNotCompiledString);
     return fail;
   end);
-else
+else #TODO don't use Grape here!
   # JDM use ClosureInverseSemigroup to improve things here!
   InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
   function(s)

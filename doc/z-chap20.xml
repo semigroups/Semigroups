@@ -23,7 +23,6 @@
 
     <#Include Label="OrbSCC">
     <#Include Label="OrbSCCLookup">
-    <#Include Label="OrbSCCTruthTable">
     <#Include Label="ReverseSchreierTreeOfSCC">
     <#Include Label="SchreierTreeOfSCC">
     <#Include Label="TraceSchreierTreeOfSCCBack">

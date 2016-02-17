@@ -148,7 +148,7 @@ end);
 
 InstallMethod(ImagesElm,
 "for inverse semigroup congruence and associative element",
-[IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement],
+[IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
 function(cong, elm)
   local S, images, e, b;
   S := Range(cong);
@@ -280,7 +280,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElement,
 "for inverse semigroup congruence and associative element",
-[IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement],
+[IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
     ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
@@ -294,7 +294,7 @@ end);
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for inverse semigroup congruence and associative element",
-[IsInverseSemigroupCongruenceByKernelTrace, IsAssociativeElement],
+[IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
 function(cong, elm)
   local fam, class;
   fam := FamilyObj(Range(cong));
@@ -322,7 +322,7 @@ end);
 
 InstallMethod(\in,
 "for associative element and inverse semigroup congruence class",
-[IsAssociativeElement, IsInverseSemigroupCongruenceClassByKernelTrace],
+[IsMultiplicativeElement, IsInverseSemigroupCongruenceClassByKernelTrace],
 function(elm, class)
   local cong;
   cong := EquivalenceClassRelation(class);

@@ -17,16 +17,16 @@ DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
 # IsSemigroupIdeal and IsFinite and HasGeneratorsOfSemigroupIdeal
 
 DeclareProperty("IsGeneratorsOfActingSemigroup",
-                IsAssociativeElementCollection);
+                IsMultiplicativeElementCollection);
 DeclareProperty("IsActingSemigroupWithFixedDegreeMultiplication",
                 IsActingSemigroup);
 
 DeclareCategory("IsActingSemigroupGreensClass", IsGreensClass);
 
-DeclareAttribute("ActionDegree", IsAssociativeElement);
-DeclareAttribute("ActionDegree", IsAssociativeElementCollection);
+DeclareAttribute("ActionDegree", IsMultiplicativeElement);
+DeclareAttribute("ActionDegree", IsMultiplicativeElementCollection);
 DeclareAttribute("ActionRank", IsSemigroup);
-DeclareOperation("ActionRank", [IsAssociativeElement, IsInt]);
+DeclareOperation("ActionRank", [IsMultiplicativeElement, IsInt]);
 DeclareAttribute("MinActionRank", IsSemigroup);
 
 DeclareAttribute("RhoAct", IsSemigroup);
@@ -54,4 +54,4 @@ DeclareAttribute("IdempotentCreator", IsSemigroup);
 
 DeclareAttribute("StabilizerAction", IsSemigroup);
 
-DeclareOperation("FakeOne", [IsAssociativeElementCollection]);
+DeclareOperation("FakeOne", [IsMultiplicativeElementCollection]);

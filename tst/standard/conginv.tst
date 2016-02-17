@@ -218,21 +218,22 @@ gap> cong := SemigroupCongruence(S,
 <semigroup congruence over <inverse partial perm semigroup of rank 5 with 3 
  generators> with congruence pair (44,19)>
 gap> cong := SemigroupCongruence(S,
->       [ PartialPerm( [ 1, 3, 5 ], [ 1, 3, 5 ] ), 
->         PartialPerm( [ 1, 2, 4 ], [ 3, 1, 2 ] ) ]);
+>        [PartialPerm([1, 3, 5], [1, 3, 5]),
+>         PartialPerm([1, 2, 4], [3, 1, 2])]);
 <semigroup congruence over <inverse partial perm semigroup of rank 5 with 3 
  generators> with congruence pair (256,3)>
 
 #T# MinimumGroupCongruence
-gap> S := InverseSemigroup([PartialPerm([1,2,5,6], [5,2,1,4]),
->                           PartialPerm([1,2,3,4,5,7], [1,4,6,3,5,2])]);;
+gap> S := InverseSemigroup([PartialPerm([1, 2, 5, 6], [5, 2, 1, 4]),
+>                           PartialPerm([1, 2, 3, 4, 5, 7],
+>                                       [1, 4, 6, 3, 5, 2])]);;
 gap> cong := MinimumGroupCongruence(S);
 <semigroup congruence over <inverse partial perm semigroup of rank 7 with 2 
  generators> with congruence pair (59,1)>
 gap> NrEquivalenceClasses(cong);
 2
-gap> S := InverseSemigroup([PartialPerm([1,2,3,4,6], [3,2,1,4,7]),
->                           PartialPerm([1,2,3,7], [3,1,2,5])]);;
+gap> S := InverseSemigroup([PartialPerm([1, 2, 3, 4, 6], [3, 2, 1, 4, 7]),
+>                           PartialPerm([1, 2, 3, 7], [3, 1, 2, 5])]);;
 gap> cong := MinimumGroupCongruence(S);
 <semigroup congruence over <inverse partial perm semigroup of rank 7 with 2 
  generators> with congruence pair (7,1)>
@@ -244,8 +245,8 @@ gap> StructureDescription(g);
 "S3"
 
 #T# JoinSemigroupCongruences
-gap> S := InverseMonoid( [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ) ] );;
-gap> pair := [ PartialPerm( [ 1, 2 ], [ 3, 1 ] ), PartialPerm( [  ], [  ] ) ];;
+gap> S := InverseMonoid([PartialPerm([1, 2], [3, 1])]);;
+gap> pair := [PartialPerm([1, 2], [3, 1]), PartialPerm([], [])];;
 gap> cong := SemigroupCongruence(S, pair);;
 gap> min := MinimumGroupCongruence(S);;
 gap> JoinSemigroupCongruences(cong, min);
@@ -255,10 +256,10 @@ gap> IsSubrelation(last, cong);
 true
 
 #T# MeetSemigroupCongruences
-gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ),
->                             PartialPerm( [ 1, 3 ], [ 3, 1 ] ) ] );;
-gap> pair1 := [ PartialPerm( [  ], [  ] ), PartialPerm( [ 1, 3 ], [ 1, 3 ] ) ];;
-gap> pair2 := [ PartialPerm( [  ], [  ] ), PartialPerm( [ 1, 2 ], [ 1, 2 ] ) ];;
+gap> S := InverseSemigroup([PartialPerm([1, 2], [2, 1]),
+>                           PartialPerm([1, 3], [3, 1])]);;
+gap> pair1 := [PartialPerm([], []), PartialPerm([1, 3], [1, 3])];;
+gap> pair2 := [PartialPerm([], []), PartialPerm([1, 2], [1, 2])];;
 gap> cong1 := SemigroupCongruence(S, pair1);;
 gap> cong2 := SemigroupCongruence(S, pair2);;
 gap> MeetSemigroupCongruences(cong1, cong2);
@@ -266,12 +267,12 @@ gap> MeetSemigroupCongruences(cong1, cong2);
  generators> with congruence pair (12,3)>
 
 #T# Bad input: different semigroups
-gap> S := InverseSemigroup([PartialPerm([1,2], [2,1]),
->                           PartialPerm([1,3], [3,1])]);;
-gap> T := InverseSemigroup([PartialPerm([1,2], [3,1])]);;
+gap> S := InverseSemigroup([PartialPerm([1, 2], [2, 1]),
+>                           PartialPerm([1, 3], [3, 1])]);;
+gap> T := InverseSemigroup([PartialPerm([1, 2], [3, 1])]);;
 gap> S = T;
 false
-gap> pair := [PartialPerm([1,2], [3,1]), PartialPerm([], [])];;
+gap> pair := [PartialPerm([1, 2], [3, 1]), PartialPerm([], [])];;
 gap> cong1 := MinimumGroupCongruence(S);;
 gap> cong2 := SemigroupCongruence(T, pair);;
 gap> MeetSemigroupCongruences(cong1, cong2);
@@ -285,9 +286,9 @@ Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
 
 #T# AsLookupTable
-gap> S := InverseSemigroup( [ PartialPerm( [ 1, 2 ], [ 1, 2 ] ), 
->                             PartialPerm( [ 1, 2 ], [ 2, 3 ] ) ] );;
-gap> pairs := [PartialPerm([],[]), PartialPerm([1],[1])];;
+gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),
+>                           PartialPerm([1, 2], [2, 3])]);;
+gap> pairs := [PartialPerm([], []), PartialPerm([1], [1])];;
 gap> cong := SemigroupCongruence(S, pairs);
 <semigroup congruence over <inverse partial perm semigroup of rank 3 with 2 
  generators> with congruence pair (12,3)>

@@ -110,12 +110,12 @@ end);
 # creating semigroups, monoids, inverse semigroups, etc
 
 InstallMethod(MagmaByGenerators, "for an associative element collection",
-[IsAssociativeElementCollection and IsFinite], SemigroupByGenerators);
+[IsMultiplicativeElementCollection and IsFinite], SemigroupByGenerators);
 
 #
 
 InstallMethod(SemigroupByGenerators, "for an associative element collection",
-[IsAssociativeElementCollection and IsFinite],
+[IsMultiplicativeElementCollection and IsFinite],
 function(coll)
   return SemigroupByGenerators(coll, SEMIGROUPS.DefaultOptionsRec);
 end);
@@ -124,7 +124,7 @@ end);
 
 InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
-[IsAssociativeElementCollection and IsFinite, IsRecord],
+[IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
   local n, S, SemigroupsAddGenerators, filts, pos, i, x;
 
@@ -216,7 +216,7 @@ end);
 #
 
 InstallMethod(MonoidByGenerators, "for an associative element collection",
-[IsAssociativeElementCollection and IsFinite],
+[IsMultiplicativeElementCollection and IsFinite],
 function(gens)
   return MonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
@@ -225,7 +225,7 @@ end);
 
 InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
-[IsAssociativeElementCollection and IsFinite, IsRecord],
+[IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
   local n, S, SemigroupsAddGenerators, filts, pos, i, x;
 
@@ -318,8 +318,8 @@ end);
 #
 
 InstallMethod(InverseMonoidByGenerators,
-"for an associative element collection",
-[IsAssociativeElementCollection and IsFinite],
+"for a finite collection",
+[IsCollection and IsFinite],
 function(gens)
   return InverseMonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
@@ -327,8 +327,8 @@ end);
 #
 
 InstallMethod(InverseSemigroupByGenerators,
-"for an associative element collection",
-[IsAssociativeElementCollection and IsFinite],
+"for a finite collection",
+[IsCollection and IsFinite],
 function(gens)
   return InverseSemigroupByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
@@ -337,7 +337,7 @@ end);
 
 InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection and record",
-[IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection
+[IsMultiplicativeElementCollection and IsMultiplicativeElementWithOneCollection
  and IsFinite, IsRecord],
 function(gens, opts)
   local n, S, filts, one, pos, x;
@@ -413,7 +413,7 @@ end);
 
 InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection and record",
-[IsAssociativeElementCollection and IsFinite, IsRecord],
+[IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
   local n, S, filts, pos, x;
 
@@ -484,7 +484,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup,
 "for a semigroup with inverse op and associative element coll.",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection and IsFinite],
+[IsSemigroupWithInverseOp, IsMultiplicativeElementCollection and IsFinite],
 function(S, coll) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
                                  coll,
@@ -495,7 +495,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup,
 "for a semigroup with inverse op and an associative element",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp, IsMultiplicativeElement],
 function(S, x) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
                                  [x],
@@ -506,7 +506,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup,
 "for semigroup with inverse op, associative element, record",
-[IsSemigroupWithInverseOp, IsAssociativeElement, IsRecord],
+[IsSemigroupWithInverseOp, IsMultiplicativeElement, IsRecord],
 function(S, x, opts)
   return ClosureInverseSemigroup(S, [x], opts);
 end);
@@ -515,7 +515,7 @@ end);
 
 InstallMethod(ClosureInverseSemigroup,
 "for a semigroup with inverse op, associative elt coll, and record",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection and IsFinite,
+[IsSemigroupWithInverseOp, IsMultiplicativeElementCollection and IsFinite,
  IsRecord],
 function(S, coll, opts)
 
@@ -581,7 +581,7 @@ function(S, coll, opts)
     Unbind(o!.rev);
     Unbind(o!.truth);
     Unbind(o!.schutzstab);
-    Unbind(o!.exhaust);
+    Unbind(o!.factorgroups);
     Unbind(o!.factors);
 
     o!.parent := T;
@@ -612,7 +612,7 @@ end);
 
 InstallMethod(ClosureSemigroup,
 "for a semigroup and associative element collection",
-[IsSemigroup, IsAssociativeElementCollection and IsFinite],
+[IsSemigroup, IsMultiplicativeElementCollection and IsFinite],
 function(S, coll) #FIXME: ShallowCopy?
   return ClosureSemigroup(S, coll, ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
@@ -620,7 +620,7 @@ end);
 #
 
 InstallMethod(ClosureSemigroup, "for a semigroup and associative element",
-[IsSemigroup, IsAssociativeElement],
+[IsSemigroup, IsMultiplicativeElement],
 function(S, x) #FIXME: ShallowCopy
   return ClosureSemigroup(S, [x], ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
@@ -629,7 +629,7 @@ end);
 
 InstallMethod(ClosureSemigroup,
 "for a semigroup, associative element, and record",
-[IsSemigroup, IsAssociativeElement, IsRecord],
+[IsSemigroup, IsMultiplicativeElement, IsRecord],
 function(S, x, opts)
   return ClosureSemigroup(S, [x], opts);
 end);
@@ -638,7 +638,7 @@ end);
 
 InstallMethod(ClosureSemigroup,
 "for a semigroup, associative element collection, and record",
-[IsSemigroup, IsAssociativeElementCollection and IsFinite, IsRecord],
+[IsSemigroup, IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(S, coll, opts)
 
   if IsEmpty(coll) then
@@ -677,7 +677,7 @@ end);
 
 InstallMethod(ClosureSemigroupNC,
 "for a semigroup, associative element collection, and record",
-[IsSemigroup, IsAssociativeElementCollection and IsFinite, IsRecord],
+[IsSemigroup, IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(S, coll, opts)
   local data, T;
 

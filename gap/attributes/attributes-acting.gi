@@ -16,7 +16,7 @@
 
 InstallMethod(IsMultiplicativeZero,
 "for an acting semigroup and element",
-[IsActingSemigroup, IsAssociativeElement],
+[IsActingSemigroup, IsMultiplicativeElement],
 function(S, x)
   return MultiplicativeZero(S) <> fail and x = MultiplicativeZero(S);
 end);
@@ -244,8 +244,8 @@ end);
 # same method for ideals
 
 InstallMethod(InversesOfSemigroupElement,
-"for an acting semigroup and associative element",
-[IsActingSemigroup, IsAssociativeElement],
+"for an acting semigroup and multiplicative element",
+[IsActingSemigroup, IsMultiplicativeElement],
 function(S, x)
 
   if x in S then
@@ -259,7 +259,7 @@ end);
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for an acting semigroup and associative element",
-[IsActingSemigroup and HasGeneratorsOfSemigroup, IsAssociativeElement],
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(s, f)
   local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades,
    rho_f, lambdarank, creator, inv, out, k, g, i, name, rho;

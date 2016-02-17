@@ -29,8 +29,7 @@ DeclareProperty("IsFactorisableInverseMonoid", IsSemigroup);
 DeclareProperty("IsLeftSimple", IsSemigroup);
 DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
 DeclareOperation("IsRegularSemigroupElementNC",
-                 [IsSemigroup, IsMultiplicativeElement and
-                               IsAssociativeElement]);
+                 [IsSemigroup, IsMultiplicativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);
 DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
 DeclareProperty("IsUnitRegularMonoid", IsSemigroup);

@@ -26,9 +26,6 @@
     The method for this function are based on <Cite Key="Graham1968aa"/>.
     <P/>
 
-    <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must be
-    available and compiled for this function to work.
-
   <Log><![CDATA[
 gap> S := FullTransformationSemigroup(4);
 <full transformation monoid of degree 4>
@@ -96,10 +93,6 @@ gap> MaximalSubsemigroups(R);
 
     The method used in this function is based on Remark 1 of <Cite
       Key="Graham1968aa"/>. <P/>
-
-   <B>Please note:</B> the &Grape; package version &GRAPEVERS; or higher must
-   be available and compiled for this function to work, when the argument
-   <A>R</A> is a Rees 0-matrix semigroup. 
 
   <Example><![CDATA[
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2), (3, 4)]), 

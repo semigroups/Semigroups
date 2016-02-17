@@ -9,6 +9,56 @@
 ##
 
 #############################################################################
+# Family and type. 
+#
+# One per degree to avoid lists with bipartitions of different degrees
+# belonging to IsAssociativeElementCollection.
+#############################################################################
+
+BindGlobal("SEMIGROUPS_BipartitionFamilies", []);
+BindGlobal("SEMIGROUPS_BipartitionTypes", []);
+
+InstallGlobalFunction(BipartitionFamily,
+function(n)
+
+  if not IsInt(n) or n < 0 then 
+    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n", 
+                  "the argument must be a non-negative integer,");
+  fi;
+
+  n := n + 1; # since the degree can be 0
+
+  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then 
+    SEMIGROUPS_BipartitionFamilies[n] := 
+          NewFamily(Concatenation("BipartitionFamily", String(n)),
+                    IsBipartition, CanEasilySortElements,
+                    CanEasilySortElements);
+  fi;
+
+  return SEMIGROUPS_BipartitionFamilies[n];
+end);
+
+InstallGlobalFunction(BipartitionType,
+function(n)
+
+  if not IsInt(n) or n < 0 then 
+    ErrorNoReturn("Semigroups: BipartitionType: usage,\n", 
+                  "the argument must be a non-negative integer,");
+  fi;
+  
+  n := n + 1; # since the degree can be 0
+ 
+  if not IsBound(SEMIGROUPS_BipartitionTypes[n]) then 
+    SEMIGROUPS_BipartitionTypes[n] := 
+           NewType(BipartitionFamily(n),
+                   IsBipartition and IsComponentObjectRep and
+                   IsAttributeStoringRep);
+  fi;
+
+  return SEMIGROUPS_BipartitionTypes[n];
+end);
+
+#############################################################################
 # Pickler
 #############################################################################
 
@@ -47,7 +97,7 @@ InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 # GAP level - directly using interface to C/C++ level
 #############################################################################
 
-# Fundamental properties
+# Fundamental attributes
 
 InstallMethod(DegreeOfBipartition, "for a bipartition",
 [IsBipartition], BIPART_DEGREE);
@@ -112,8 +162,6 @@ function(classes)
   od;
   return BIPART_NC(copy);
 end);
-
-# TODO roll into Bipartition?
 
 InstallMethod(BipartitionByIntRep, "for a list", [IsList],
 function(blocks)
@@ -195,6 +243,8 @@ function(n)
   return out;
 end);
 
+# TODO add RandomSource version of this
+
 InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
 function(n)
   local out, nrblocks, vals, j, i;
@@ -214,6 +264,8 @@ function(n)
 
   return BIPART_NC(out);
 end);
+
+# TODO add RandomSource version of this
 
 InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
 function(n)
@@ -254,16 +306,16 @@ end);
 # Operators
 
 InstallMethod(\*, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition], BIPART_PROD);
+IsIdenticalObj, [IsBipartition, IsBipartition], BIPART_PROD);
 
 InstallMethod(\<, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition], BIPART_LT);
+IsIdenticalObj, [IsBipartition, IsBipartition], BIPART_LT);
 
 InstallMethod(\=, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition], BIPART_EQ);
+IsIdenticalObj, [IsBipartition, IsBipartition], BIPART_EQ);
 
 InstallMethod(PermLeftQuoBipartition, "for a bipartition and bipartition",
-[IsBipartition, IsBipartition],
+IsIdenticalObj, [IsBipartition, IsBipartition],
 function(x, y)
 
   if LeftBlocks(x) <> LeftBlocks(y) or RightBlocks(x) <> RightBlocks(y) then
@@ -274,6 +326,7 @@ function(x, y)
 end);
 
 # Attributes
+
 InstallMethod(ExtRepOfBipartition, "for a bipartition", [IsBipartition],
 BIPART_EXT_REP);
 
@@ -295,8 +348,6 @@ InstallMethod(ChooseHashFunction, "for a bipartition",
   return rec(func := BIPART_HASH,
              data := hashlen);
 end);
-
-# Changing representation . . .
 
 #############################################################################
 # GAP level
@@ -371,9 +422,9 @@ end);
 
 InstallMethod(\*, "for a bipartition and a perm",
 [IsBipartition, IsPerm],
-function(f, g)
-  if LargestMovedPoint(g) <= DegreeOfBipartition(f) then
-    return f * AsBipartition(g, DegreeOfBipartition(f));
+function(x, p)
+  if LargestMovedPoint(p) <= DegreeOfBipartition(x) then
+    return x * AsBipartition(p, DegreeOfBipartition(x));
   fi;
   ErrorNoReturn("Semigroups: \* (for a bipartition and perm): usage,\n",
                 "the largest moved point of the perm must not be greater\n",
@@ -382,9 +433,9 @@ end);
 
 InstallMethod(\*, "for a perm and a bipartition",
 [IsPerm, IsBipartition],
-function(f, g)
-  if LargestMovedPoint(f) <= DegreeOfBipartition(g) then
-    return AsBipartition(f, DegreeOfBipartition(g)) * g;
+function(p, x)
+  if LargestMovedPoint(p) <= DegreeOfBipartition(x) then
+    return AsBipartition(p, DegreeOfBipartition(x)) * x;
   fi;
   ErrorNoReturn("Semigroups: \* (for a perm and bipartition): usage,\n",
                 "the largest moved point of the perm must not be greater\n",
@@ -393,9 +444,9 @@ end);
 
 InstallMethod(\*, "for a bipartition and a transformation",
 [IsBipartition, IsTransformation],
-function(f, g)
-  if DegreeOfTransformation(g) <= DegreeOfBipartition(f) then
-    return f * AsBipartition(g, DegreeOfBipartition(f));
+function(x, f)
+  if DegreeOfTransformation(f) <= DegreeOfBipartition(x) then
+    return x * AsBipartition(f, DegreeOfBipartition(x));
   fi;
   ErrorNoReturn("Semigroups: \* (for a bipartition and transformation): ",
                 "usage,\n",
@@ -451,15 +502,12 @@ end);
 # Other operators
 
 InstallMethod(PartialPermLeqBipartition, "for a bipartition and a bipartition",
-[IsBipartition, IsBipartition],
+IsIdenticalObj, [IsBipartition, IsBipartition],
 function(x, y)
 
   if not (IsPartialPermBipartition(x) and IsPartialPermBipartition(y)) then
     ErrorNoReturn("Semigroups: PartialPermLeqBipartition: usage,\n",
                   "the arguments must be partial perm bipartitions,");
-  elif DegreeOfBipartition(x) <> DegreeOfBipartition(y) then
-    ErrorNoReturn("Semigroups: PartialPermLeqBipartition: usage,\n",
-                  "the arguments must have equal degree,");
   fi;
 
   return AsPartialPerm(x) < AsPartialPerm(y);
@@ -580,6 +628,9 @@ InstallMethod(PrintString, "for a bipartition",
 [IsBipartition],
 function(x)
   local ext, str, i;
+  if DegreeOfBipartition(x) = 0 then
+    return "\>\>Bipartition(\< \>[]\<)\<";
+  fi;
   ext := BIPART_EXT_REP(x);
   str := Concatenation("\>\>Bipartition(\< \>[ ", PrintString(ext[1]));
   for i in [2 .. Length(ext)] do
@@ -618,23 +669,16 @@ end);
 
 # Bipartition collections
 
+InstallMethod(DegreeOfBipartitionCollection, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
+function(S)
+  return DegreeOfBipartitionSemigroup(S);
+end);
+
 InstallMethod(DegreeOfBipartitionCollection, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll)
-  local deg;
-
-  if IsBipartitionSemigroup(coll) then
-    return DegreeOfBipartitionSemigroup(coll);
-  fi;
-
-  deg := DegreeOfBipartition(coll[1]);
-  if not ForAll(coll, x -> DegreeOfBipartition(x) = deg) then
-    ErrorNoReturn("Semigroups: DegreeOfBipartitionCollection: usage,\n",
-                  "the argument <coll> must be a collection of bipartitions ",
-                  "of equal degree,");
-  fi;
-
-  return deg;
+  return DegreeOfBipartition(coll[1]);
 end);
 
 #############################################################################
@@ -907,17 +951,14 @@ function(f, n)
   return out;
 end);
 
-InstallMethod(NaturalLeqBlockBijection, "for bipartitions",
-[IsBipartition, IsBipartition],
+InstallMethod(NaturalLeqBlockBijection, "for a bipartition and bipartition",
+IsIdenticalObj, [IsBipartition, IsBipartition],
 function(x, y)
   local xblocks, yblocks, n, lookup, i;
 
   if not IsBlockBijection(x) or not IsBlockBijection(y) then
     ErrorNoReturn("Semigroups: NaturalLeqBlockBijection: usage,\n",
                   "the arguments must be block bijections,");
-  elif DegreeOfBipartition(x) <> DegreeOfBipartition(y) then
-    ErrorNoReturn("Semigroups: NaturalLeqBlockBijection: usage,\n",
-                  "the arguments must be block bijections of equal degree,");
   elif NrBlocks(x) > NrBlocks(y) then
     return false;
   fi;
@@ -942,8 +983,9 @@ function(x, y)
   return true;
 end);
 
-InstallMethod(NaturalLeqPartialPermBipartition, "for bipartitions",
-[IsBipartition, IsBipartition],
+InstallMethod(NaturalLeqPartialPermBipartition, 
+"for a bipartition and bipartition",
+IsIdenticalObj, [IsBipartition, IsBipartition],
 function(x, y)
   local n, xblocks, yblocks, val, i;
 
@@ -953,12 +995,7 @@ function(x, y)
   fi;
 
   n := DegreeOfBipartition(x);
-
-  if n <> DegreeOfBipartition(y) then
-    ErrorNoReturn("Semigroups: NaturalLeqPartialPermBipartition: usage,\n",
-                  "the arguments must have equal degree,");
-  fi;
-
+  
   xblocks := BIPART_INT_REP(x);
   yblocks := BIPART_INT_REP(y);
 

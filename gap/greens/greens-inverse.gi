@@ -9,7 +9,7 @@
 ##
 
 # This file contains methods for inverse acting semigroups consisting of
-# associative elements with a method for InverseOp.
+# multiplicative elements with a method for InverseOp.
 
 ## See the start of greens-acting.gi for details of how to create Green's
 ## classes of acting semigroups.
@@ -124,7 +124,7 @@ end);
 
 InstallMethod(GreensDClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement, IsBool],
+[IsActingSemigroup and IsSemigroupWithInverseOp, IsMultiplicativeElement, IsBool],
 function(S, x, isGreensClassNC)
   local D;
   D := SEMIGROUPS.CreateDClass(S, x, isGreensClassNC);
@@ -138,7 +138,7 @@ end);
 
 InstallMethod(GreensLClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement, IsBool],
+[IsActingSemigroup and IsSemigroupWithInverseOp, IsMultiplicativeElement, IsBool],
 function(S, x, isGreensClassNC)
   local L;
   L := SEMIGROUPS.CreateLClass(S, x, isGreensClassNC);
@@ -151,7 +151,7 @@ end);
 
 InstallMethod(GreensHClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroup and IsSemigroupWithInverseOp, IsAssociativeElement, IsBool],
+[IsActingSemigroup and IsSemigroupWithInverseOp, IsMultiplicativeElement, IsBool],
 function(S, x, isGreensClassNC)
   local H;
   H := SEMIGROUPS.CreateHClass(S, x, isGreensClassNC);
@@ -163,7 +163,7 @@ end);
 
 InstallMethod(GreensHClassOfElementNC,
 "for a inverse op class, element, and bool",
-[IsInverseOpClass and IsActingSemigroupGreensClass, IsAssociativeElement,
+[IsInverseOpClass and IsActingSemigroupGreensClass, IsMultiplicativeElement,
  IsBool],
 function(C, x, isGreensClassNC)
   local H;
@@ -194,7 +194,7 @@ L -> Size(SchutzenbergerGroup(L)) * Length(LambdaOrbSCC(L)));
 #
 
 InstallMethod(\in, "for inverse op D-class",
-[IsAssociativeElement,
+[IsMultiplicativeElement,
  IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
 function(x, D)
   local S, rep, m, o, scc, l, schutz;
@@ -242,8 +242,8 @@ end);
 #
 
 InstallMethod(\in,
-"for associative element and inverse op L-class of acting semigroup.",
-[IsAssociativeElement, IsInverseOpClass and IsGreensLClass and
+"for multiplicative element and inverse op L-class of acting semigroup.",
+[IsMultiplicativeElement, IsInverseOpClass and IsGreensLClass and
  IsActingSemigroupGreensClass],
 function(x, L)
   local S, rep, o, m, scc, l, schutz;

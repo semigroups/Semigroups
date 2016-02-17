@@ -70,22 +70,22 @@ gap> S := RegularSemigroup([
 > Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
 gap> DClassReps(S);
 [ Transformation( [ 1, 2, 3, 3, 1 ] ), Transformation( [ 2, 4, 3, 5, 5 ] ), 
-  Transformation( [ 2, 3, 3, 3, 2 ] ), Transformation( [ 3, 3, 3, 3, 3 ] ) ]
+  Transformation( [ 1, 1, 2, 2, 1 ] ), Transformation( [ 5, 5, 5, 5, 5 ] ) ]
 gap> RClassReps(S);
 [ Transformation( [ 1, 2, 3, 3, 1 ] ), Transformation( [ 2, 3, 3, 1, 1 ] ), 
-  Transformation( [ 1, 1, 2, 1, 3 ] ), Transformation( [ 1, 3, 2, 3, 3 ] ), 
-  Transformation( [ 1, 2, 3, 1, 3 ] ), Transformation( [ 1, 1, 2, 3, 3 ] ), 
-  Transformation( [ 3, 1, 1, 3, 2 ] ), Transformation( [ 3, 1, 3, 3, 2 ] ), 
-  Transformation( [ 2, 1, 3, 3, 3 ] ), Transformation( [ 3, 1, 2, 3, 3 ] ), 
-  Transformation( [ 1, 3, 1, 2, 2 ] ), Transformation( [ 2, 1, 3, 2, 1 ] ), 
+  Transformation( [ 1, 2, 3, 1, 3 ] ), Transformation( [ 2, 1, 3, 3, 3 ] ), 
+  Transformation( [ 3, 1, 2, 3, 3 ] ), Transformation( [ 1, 1, 2, 1, 3 ] ), 
+  Transformation( [ 1, 1, 2, 3, 3 ] ), Transformation( [ 1, 3, 2, 3, 3 ] ), 
+  Transformation( [ 3, 1, 3, 3, 2 ] ), Transformation( [ 2, 1, 3, 2, 1 ] ), 
+  Transformation( [ 3, 1, 1, 3, 2 ] ), Transformation( [ 1, 3, 1, 2, 2 ] ), 
   Transformation( [ 2, 4, 3, 5, 5 ] ), Transformation( [ 5, 2, 4, 5, 3 ] ), 
-  Transformation( [ 2, 3, 3, 3, 2 ] ), Transformation( [ 3, 2, 3, 2, 2 ] ), 
-  Transformation( [ 2, 2, 3, 3, 2 ] ), Transformation( [ 2, 2, 3, 2, 2 ] ), 
-  Transformation( [ 3, 3, 3, 2, 2 ] ), Transformation( [ 2, 2, 3, 2, 3 ] ), 
-  Transformation( [ 3, 2, 3, 3, 3 ] ), Transformation( [ 2, 3, 2, 2, 3 ] ), 
-  Transformation( [ 3, 2, 2, 3, 3 ] ), Transformation( [ 2, 2, 2, 2, 3 ] ), 
-  Transformation( [ 2, 3, 3, 2, 3 ] ), Transformation( [ 2, 2, 3, 3, 3 ] ), 
-  Transformation( [ 2, 3, 3, 3, 3 ] ), Transformation( [ 3, 3, 3, 3, 3 ] ) ]
+  Transformation( [ 1, 2, 2, 2, 1 ] ), Transformation( [ 2, 2, 2, 1, 1 ] ), 
+  Transformation( [ 2, 1, 2, 1, 1 ] ), Transformation( [ 1, 1, 2, 1, 1 ] ), 
+  Transformation( [ 1, 1, 2, 2, 1 ] ), Transformation( [ 2, 1, 1, 2, 2 ] ), 
+  Transformation( [ 1, 1, 2, 1, 2 ] ), Transformation( [ 1, 1, 2, 2, 2 ] ), 
+  Transformation( [ 1, 2, 2, 2, 2 ] ), Transformation( [ 2, 1, 2, 2, 2 ] ), 
+  Transformation( [ 1, 1, 1, 1, 2 ] ), Transformation( [ 1, 2, 2, 1, 2 ] ), 
+  Transformation( [ 1, 2, 1, 1, 2 ] ), Transformation( [ 5, 5, 5, 5, 5 ] ) ]
 
 # greens-regular: Greens(D/R)Classes, for a regular D-class of an acting semigroup, 1
 gap> S := RegularSemigroup([
@@ -95,37 +95,37 @@ gap> S := RegularSemigroup([
 gap> GreensDClasses(S);
 [ <Green's D-class: Transformation( [ 1, 2, 3, 3, 1 ] )>, 
   <Green's D-class: Transformation( [ 2, 4, 3, 5, 5 ] )>, 
-  <Green's D-class: Transformation( [ 2, 3, 3, 3, 2 ] )>, 
-  <Green's D-class: Transformation( [ 3, 3, 3, 3, 3 ] )> ]
+  <Green's D-class: Transformation( [ 1, 2, 2, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 5, 5, 5, 5, 5 ] )> ]
 gap> GreensRClasses(S);
 [ <Green's R-class: Transformation( [ 1, 2, 3, 3, 1 ] )>, 
   <Green's R-class: Transformation( [ 2, 3, 3, 1, 1 ] )>, 
-  <Green's R-class: Transformation( [ 1, 1, 2, 1, 3 ] )>, 
-  <Green's R-class: Transformation( [ 1, 3, 2, 3, 3 ] )>, 
   <Green's R-class: Transformation( [ 1, 2, 3, 1, 3 ] )>, 
-  <Green's R-class: Transformation( [ 1, 1, 2, 3, 3 ] )>, 
-  <Green's R-class: Transformation( [ 3, 1, 1, 3, 2 ] )>, 
-  <Green's R-class: Transformation( [ 3, 1, 3, 3, 2 ] )>, 
   <Green's R-class: Transformation( [ 2, 1, 3, 3, 3 ] )>, 
   <Green's R-class: Transformation( [ 3, 1, 2, 3, 3 ] )>, 
-  <Green's R-class: Transformation( [ 1, 3, 1, 2, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 1, 2, 1, 3 ] )>, 
+  <Green's R-class: Transformation( [ 1, 1, 2, 3, 3 ] )>, 
+  <Green's R-class: Transformation( [ 1, 3, 2, 3, 3 ] )>, 
+  <Green's R-class: Transformation( [ 3, 1, 3, 3, 2 ] )>, 
   <Green's R-class: Transformation( [ 2, 1, 3, 2, 1 ] )>, 
+  <Green's R-class: Transformation( [ 3, 1, 1, 3, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 3, 1, 2, 2 ] )>, 
   <Green's R-class: Transformation( [ 2, 4, 3, 5, 5 ] )>, 
   <Green's R-class: Transformation( [ 5, 2, 4, 5, 3 ] )>, 
-  <Green's R-class: Transformation( [ 2, 3, 3, 3, 2 ] )>, 
-  <Green's R-class: Transformation( [ 3, 2, 3, 2, 2 ] )>, 
-  <Green's R-class: Transformation( [ 2, 2, 3, 3, 2 ] )>, 
-  <Green's R-class: Transformation( [ 2, 2, 3, 2, 2 ] )>, 
-  <Green's R-class: Transformation( [ 3, 3, 3, 2, 2 ] )>, 
-  <Green's R-class: Transformation( [ 2, 2, 3, 2, 3 ] )>, 
-  <Green's R-class: Transformation( [ 3, 2, 3, 3, 3 ] )>, 
-  <Green's R-class: Transformation( [ 2, 3, 2, 2, 3 ] )>, 
-  <Green's R-class: Transformation( [ 3, 2, 2, 3, 3 ] )>, 
-  <Green's R-class: Transformation( [ 2, 2, 2, 2, 3 ] )>, 
-  <Green's R-class: Transformation( [ 2, 3, 3, 2, 3 ] )>, 
-  <Green's R-class: Transformation( [ 2, 2, 3, 3, 3 ] )>, 
-  <Green's R-class: Transformation( [ 2, 3, 3, 3, 3 ] )>, 
-  <Green's R-class: Transformation( [ 3, 3, 3, 3, 3 ] )> ]
+  <Green's R-class: Transformation( [ 1, 2, 2, 2, 1 ] )>, 
+  <Green's R-class: Transformation( [ 2, 2, 2, 1, 1 ] )>, 
+  <Green's R-class: Transformation( [ 2, 1, 2, 1, 1 ] )>, 
+  <Green's R-class: Transformation( [ 1, 1, 2, 1, 1 ] )>, 
+  <Green's R-class: Transformation( [ 1, 1, 2, 2, 1 ] )>, 
+  <Green's R-class: Transformation( [ 2, 1, 1, 2, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 1, 2, 1, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 1, 2, 2, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 2, 2, 2, 2 ] )>, 
+  <Green's R-class: Transformation( [ 2, 1, 2, 2, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 1, 1, 1, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 2, 2, 1, 2 ] )>, 
+  <Green's R-class: Transformation( [ 1, 2, 1, 1, 2 ] )>, 
+  <Green's R-class: Transformation( [ 5, 5, 5, 5, 5 ] )> ]
 
 # greens-regular: Nr(D/R/L/H)Classes: for a regular acting semigroup with gens
 gap> S := RegularSemigroup([

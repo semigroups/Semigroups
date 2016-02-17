@@ -205,19 +205,20 @@ false
 
 #T# IsReesCongruence: One class, but not an ideal
 gap> S := Semigroup([Transformation([2, 4, 3, 2]),
->                      Transformation([3, 3, 1, 3]),
->                      Transformation([4, 1, 2, 4]),
->                      Transformation([4, 2, 2, 4])]);;
+>                    Transformation([3, 3, 1, 3]),
+>                    Transformation([4, 1, 2, 4]),
+>                    Transformation([4, 2, 2, 4])]);;
 gap> pairs := [Transformation([4, 4, 4, 4]), Transformation([2, 2, 4, 2])];;
 gap> cong := SemigroupCongruence(S, pairs);;
 gap> IsReesCongruence(cong);
 false
 
 #T# IsSubrelation
-gap> S := Semigroup([Transformation([2,4,1,2]), Transformation([3,3,4,1])]);;
-gap> i1 := SemigroupIdeal(S, [ Transformation( [ 2, 4, 1, 2 ] ) ]);;
-gap> i2 := SemigroupIdeal(S, [ Transformation( [ 4, 2, 2, 4 ] ) ]);;
-gap> i3 := SemigroupIdeal(S, [ Transformation( [ 3, 3, 4, 1 ] ) ]);;
+gap> S := Semigroup([Transformation([2, 4, 1, 2]),
+>                    Transformation([3, 3, 4, 1])]);;
+gap> i1 := SemigroupIdeal(S, [Transformation([2, 4, 1, 2])]);;
+gap> i2 := SemigroupIdeal(S, [Transformation([4, 2, 2, 4])]);;
+gap> i3 := SemigroupIdeal(S, [Transformation([3, 3, 4, 1])]);;
 gap> c1 := ReesCongruenceOfSemigroupIdeal(i1);;
 gap> c2 := ReesCongruenceOfSemigroupIdeal(i2);;
 gap> c3 := ReesCongruenceOfSemigroupIdeal(i3);;
@@ -233,8 +234,8 @@ gap> IsSubrelation(c3, c1);
 false
 gap> IsSubrelation(c1, c3);
 false
-gap> T := Semigroup([Transformation([2,4,1,2])]);;
-gap> i4 := SemigroupIdeal(T, [ Transformation( [ 2, 4, 1, 2 ] ) ]);;
+gap> T := Semigroup([Transformation([2, 4, 1, 2])]);;
+gap> i4 := SemigroupIdeal(T, [Transformation([2, 4, 1, 2])]);;
 gap> c4 := ReesCongruenceOfSemigroupIdeal(i4);;
 gap> IsSubrelation(c4, c1);
 Error, Semigroups: IsSubrelation: usage,

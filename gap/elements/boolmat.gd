@@ -34,8 +34,8 @@ DeclareGlobalFunction("BooleanMatNC");
 ## Declarations specifically for Boolean mats
 #############################################################################
 
-DeclareOperation("AsBooleanMat", [IsAssociativeElement, IsPosInt]);
-DeclareOperation("AsBooleanMat", [IsAssociativeElement]);
+DeclareOperation("AsBooleanMat", [IsMultiplicativeElement, IsPosInt]);
+DeclareOperation("AsBooleanMat", [IsMultiplicativeElement]);
 DeclareOperation("AsBooleanMat", [IsDigraph]);
 DeclareOperation("AsDigraph", [IsBooleanMat]);
 

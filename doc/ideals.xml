@@ -136,7 +136,8 @@ gap> x := Transformation([2, 6, 7, 2, 6, 1, 1, 5]);;
 gap> D := DClassNC(S, x);
 <Green's D-class: Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] )>
 gap> R := PrincipalFactor(D);
-<Rees 0-matrix semigroup 1050x56 over Group([ (3,4), (2,8,7,4,3) ])>
+<Rees 0-matrix semigroup 1050x56 over Group([ (7,8), (4,5), (3,4), (3,
+7,4,8,5) ])>
 gap> S := Semigroup(List([1 .. 10], x -> Random(R)));
 <subsemigroup of 1050x56 Rees 0-matrix semigroup with 10 generators>
 gap> I := SemigroupIdeal(S, MultiplicativeZero(S));

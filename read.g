@@ -8,20 +8,18 @@
 #############################################################################
 ##
 
-BindGlobal("IsGrapeLoaded", IsPackageMarkedForLoading("grape", "4.5"));
-BindGlobal("IsGrapeCompiled",
-           ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB")
-           <> fail);
+SEMIGROUPS.IsGrapeLoaded := IsPackageMarkedForLoading("grape", "4.5");
+SEMIGROUPS.IsGrapeCompiled :=
+ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail;
 
-if not IsGrapeLoaded then
+if not SEMIGROUPS.IsGrapeLoaded then
   Add(SEMIGROUPS.OmitFromTests, "SmallestMultiplicationTable");
   BindGlobal("GrapeIsNotLoadedString",
              Concatenation("the GRAPE package is not loaded and",
                            " so this function does not work"));
 fi;
 
-if not IsGrapeCompiled then
-  Add(SEMIGROUPS.OmitFromTests, "MaximalSubsemigroups");
+if not SEMIGROUPS.IsGrapeCompiled then
   Add(SEMIGROUPS.OmitFromTests, "MunnSemigroup");
   Add(SEMIGROUPS.OmitFromTests, "IsIsomorphicSemigroup");
   Add(SEMIGROUPS.OmitFromTests, "IsomorphismSemigroups");

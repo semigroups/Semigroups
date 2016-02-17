@@ -35,9 +35,6 @@ DeclareProperty("IsTransitive", IsTransformationSemigroup);
 DeclareOperation("IsTransitive", [IsTransformationCollection, IsPosInt]);
 DeclareOperation("IsTransitive", [IsTransformationCollection, IsList]);
 
-DeclareAttribute("SmallestElementSemigroup", IsSemigroup);
-DeclareAttribute("LargestElementSemigroup", IsSemigroup);
-
 DeclareAttribute("EndomorphismMonoid", IsDigraph);
 DeclareOperation("EndomorphismMonoid", [IsDigraph, IsHomogeneousList]);
 

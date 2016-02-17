@@ -102,6 +102,38 @@ end;
 ## 1. Default methods, for which there are currently no better methods.
 #############################################################################
 
+InstallMethod(GeneratorsSmallest, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local iter, T, x;
+
+  iter := IteratorSorted(S);
+  T := Semigroup(NextIterator(iter));
+
+  for x in iter do
+    if not x in T then
+      T := SEMIGROUPS.AddGenerators(T, [x], SEMIGROUPS.OptionsRec(T));
+      if T = S then
+        break;
+      fi;
+    fi;
+  od;
+
+  return GeneratorsOfSemigroup(T);
+end);
+
+InstallMethod(SmallestElementSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return NextIterator(IteratorSorted(S));
+end);
+
+InstallMethod(LargestElementSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return EnumeratorSorted(S)[Size(S)];
+end);
+
 InstallMethod(NrIdempotents, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -256,8 +288,8 @@ end);
 # same method for ideal
 
 InstallMethod(IrredundantGeneratingSubset,
-"for an associative element collection",
-[IsAssociativeElementCollection],
+"for a multiplicative element collection",
+[IsMultiplicativeElementCollection],
 function(coll)
   local gens, nrgens, deg, out, redund, i, x;
 
@@ -389,8 +421,8 @@ InstallMethod(NormalizedPrincipalFactor, "for a Green's D-class",
 # different method for ideals, not yet implemented
 
 InstallMethod(SmallSemigroupGeneratingSet,
-"for an associative element collection",
-[IsAssociativeElementCollection],
+"for a multiplicative element collection",
+[IsMultiplicativeElementCollection],
 function(coll)
   if Length(coll) < 2 then
     return coll;
@@ -407,8 +439,8 @@ S -> SmallSemigroupGeneratingSet(GeneratorsOfSemigroup(S)));
 #
 
 InstallMethod(SmallMonoidGeneratingSet,
-"for an associative element with one collection",
-[IsAssociativeElementCollection and IsMultiplicativeElementWithOneCollection],
+"for an multiplicative element with one collection",
+[IsMultiplicativeElementWithOneCollection],
 function(coll)
   if Length(coll) = 1 then
     if coll[1] = One(coll) then

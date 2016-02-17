@@ -187,7 +187,7 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
           SET_ELM_PLIST(newword, len+1, INTOBJ_INT(j));
           SET_LEN_PLIST(newword, len+1);
 
-          objval = HTValue_TreeHash_C(self, ht, newElt);
+          objval = CALL_2ARGS(HTValue, ht, newElt);
           if(objval!=Fail){
             #ifdef DEBUG
               Pr("Case 4!\n", 0L, 0L);
@@ -206,7 +206,7 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
             #endif
             nr++;
 
-            HTAdd_TreeHash_C(self, ht, newElt, INTOBJ_INT(nr));
+            CALL_3ARGS(HTAdd, ht, newElt, INTOBJ_INT(nr));
 
             if(one==0){
               one=nr;
@@ -696,7 +696,7 @@ Obj UF_BLOCKS (Obj self, Obj ufdata) {
 *******************************************************************************/
 
 void PrintSemi (Obj o) {
-  Pr("<interface to C++ semigroup object>", 0L, 0L);
+  Pr("<Semigroups package C++ type>", 0L, 0L);
 }
 
 /*****************************************************************************/
@@ -870,45 +870,47 @@ static Int InitKernel( StructInitInfo *module )
     InitMarkFuncBags(T_SEMI, &SemigroupsMarkSubBags);
     InitFreeFuncBag(T_SEMI, &SemigroupsBagFreeFunc);
 
-    ImportGVarFromLibrary( "infinity", &infinity);
-    ImportGVarFromLibrary( "Ninfinity", &Ninfinity);
+    ImportGVarFromLibrary("HTValue", &HTValue);
+    ImportGVarFromLibrary("HTAdd", &HTAdd);
 
-    ImportGVarFromLibrary( "IsBipartition", &IsBipartition );
-    //FIXME delete the next line
-    ImportGVarFromLibrary( "BipartitionByIntRepNC", &BipartitionByIntRepNC );
-    ImportGVarFromLibrary( "BipartitionType", &BipartitionType );
-    ImportGVarFromLibrary( "BlocksType", &BlocksType );
+    ImportGVarFromLibrary("infinity", &infinity);
+    ImportGVarFromLibrary("Ninfinity", &Ninfinity);
 
-    ImportGVarFromLibrary( "IsBooleanMat", &IsBooleanMat );
-    ImportGVarFromLibrary( "BooleanMatType", &BooleanMatType );
+    ImportGVarFromLibrary("IsBipartition", &IsBipartition );
+    ImportGVarFromLibrary("SEMIGROUPS_BipartitionTypes", &BipartTypes);
+    ImportGVarFromLibrary("BipartitionType", &BipartitionType);
+    ImportGVarFromLibrary("BlocksType", &BlocksType );
 
-    ImportGVarFromLibrary( "IsMatrixOverSemiring", &IsMatrixOverSemiring);
+    ImportGVarFromLibrary("IsBooleanMat", &IsBooleanMat );
+    ImportGVarFromLibrary("BooleanMatType", &BooleanMatType );
 
-    ImportGVarFromLibrary( "IsMaxPlusMatrix", &IsMaxPlusMatrix );
-    ImportGVarFromLibrary( "MaxPlusMatrixType", &MaxPlusMatrixType );
+    ImportGVarFromLibrary("IsMatrixOverSemiring", &IsMatrixOverSemiring);
 
-    ImportGVarFromLibrary( "IsMinPlusMatrix", &IsMinPlusMatrix );
-    ImportGVarFromLibrary( "MinPlusMatrixType", &MinPlusMatrixType );
+    ImportGVarFromLibrary("IsMaxPlusMatrix", &IsMaxPlusMatrix );
+    ImportGVarFromLibrary("MaxPlusMatrixType", &MaxPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsTropicalMatrix", &IsTropicalMatrix );
+    ImportGVarFromLibrary("IsMinPlusMatrix", &IsMinPlusMatrix );
+    ImportGVarFromLibrary("MinPlusMatrixType", &MinPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsTropicalMaxPlusMatrix", &IsTropicalMaxPlusMatrix );
-    ImportGVarFromLibrary( "TropicalMaxPlusMatrixType", &TropicalMaxPlusMatrixType );
+    ImportGVarFromLibrary("IsTropicalMatrix", &IsTropicalMatrix );
 
-    ImportGVarFromLibrary( "IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
-    ImportGVarFromLibrary( "TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
+    ImportGVarFromLibrary("IsTropicalMaxPlusMatrix", &IsTropicalMaxPlusMatrix );
+    ImportGVarFromLibrary("TropicalMaxPlusMatrixType", &TropicalMaxPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsProjectiveMaxPlusMatrix", &IsProjectiveMaxPlusMatrix );
-    ImportGVarFromLibrary( "ProjectiveMaxPlusMatrixType", &ProjectiveMaxPlusMatrixType );
+    ImportGVarFromLibrary("IsTropicalMinPlusMatrix", &IsTropicalMinPlusMatrix );
+    ImportGVarFromLibrary("TropicalMinPlusMatrixType", &TropicalMinPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsNTPMatrix", &IsNTPMatrix );
-    ImportGVarFromLibrary( "NTPMatrixType", &NTPMatrixType );
+    ImportGVarFromLibrary("IsProjectiveMaxPlusMatrix", &IsProjectiveMaxPlusMatrix );
+    ImportGVarFromLibrary("ProjectiveMaxPlusMatrixType", &ProjectiveMaxPlusMatrixType );
 
-    ImportGVarFromLibrary( "IsIntegerMatrix", &IsIntegerMatrix );
-    ImportGVarFromLibrary( "IntegerMatrixType", &IntegerMatrixType );
+    ImportGVarFromLibrary("IsNTPMatrix", &IsNTPMatrix);
+    ImportGVarFromLibrary("NTPMatrixType", &NTPMatrixType);
 
-    ImportGVarFromLibrary( "IsPBR", &IsPBR);
-    ImportGVarFromLibrary( "PBRType", &PBRType );
+    ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
+    ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
+
+    ImportGVarFromLibrary("IsPBR", &IsPBR);
+    ImportGVarFromLibrary("PBRType", &PBRType );
 
     /* return success                                                      */
     return 0;

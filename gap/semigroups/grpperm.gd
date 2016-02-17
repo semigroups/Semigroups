@@ -10,3 +10,4 @@
 
 DeclareGlobalFunction("IteratorSortedConjugateStabChain");
 DeclareGlobalFunction("LargestElementConjugateStabChain");
+DeclareGlobalFunction("SmallestElementConjugateStabChain");

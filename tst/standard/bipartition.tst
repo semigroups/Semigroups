@@ -213,8 +213,9 @@ gap> x := Bipartition([[1, -4], [2, -1], [3], [4, -5], [5], [-2], [-3], [6],
 > [-6]]);;
 gap> y := Bipartition([[1, -4], [2, -3], [3], [4], [5], [-1], [-2], [-5]]);;
 gap> PartialPermLeqBipartition(x, y);
-Error, Semigroups: PartialPermLeqBipartition: usage,
-the arguments must have equal degree,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `PartialPermLeqBipartition' on 2 argumen\
+ts
 
 # bipartition: NaturalLeqBlockBijection  1/3
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3]]);;
@@ -227,8 +228,9 @@ the arguments must be block bijections,
 gap> x := Bipartition([[1, 2, -4], [3, 4, -1, -2, -3]]);;
 gap> y := Bipartition([[1, 2, -3], [3, -1, -2]]);;
 gap> NaturalLeqBlockBijection(x, y);
-Error, Semigroups: NaturalLeqBlockBijection: usage,
-the arguments must be block bijections of equal degree,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `NaturalLeqBlockBijection' on 2 argument\
+s
 
 # bipartition: NaturalLeqBlockBijection 3/3
 gap> x := IdentityBipartition(10);;
@@ -258,8 +260,9 @@ gap> x := Bipartition([[1, -4], [2, -1], [3], [4, -5], [5], [-2], [-3], [6],
 > [-6]]);;
 gap> y := Bipartition([[1, -4], [2, -3], [3], [4], [5], [-1], [-2], [-5]]);;
 gap> NaturalLeqPartialPermBipartition(x, y);
-Error, Semigroups: NaturalLeqPartialPermBipartition: usage,
-the arguments must have equal degree,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `NaturalLeqPartialPermBipartition' on 2 \
+arguments
 
 # bipartition: NaturalLeqPartialPermBipartition 4/4
 gap> x := Bipartition([[1, -4], [2], [3, -3], [4, -1], [-2]]);;
@@ -349,7 +352,8 @@ true
 # bipartition: \<, for bipartitions 2/2
 gap> Bipartition([[1, 2, 3, -1, -2, -3], [4, -4]]) <
 > Bipartition([[1, 3], [2, -1], [-2, -3]]);
-false
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `<' on 2 arguments
 
 # bipartition: PermLeftQuoBipartition, error 1/2
 gap> x := Bipartition([[1, 2], [-1, -2]]);;
@@ -444,7 +448,7 @@ gap> RightProjection(StarOp(x));
 <bipartition: [ 1, 2 ], [ 3, -3 ], [ 4, 5 ], [ -1, -2 ], [ -4, -5 ]>
 
 # bipartition: RightProjection, LeftProjection
-gap> x := Bipartition([[1, -2], [2, 3, 4], [5, -1, -3], [6, 7, 8], 
+gap> x := Bipartition([[1, -2], [2, 3, 4], [5, -1, -3], [6, 7, 8],
 > [9, 10, -7, -8, -9], [11], [-4, -5, -6], [-10, -11]]);;
 gap> RightProjection(x);
 <bipartition: [ 1, 3, -1, -3 ], [ 2, -2 ], [ 4, 5, 6 ], 
@@ -460,7 +464,7 @@ gap> RightProjection(StarOp(x));
  [ 9, 10, -9, -10 ], [ 11 ], [ -2, -3, -4 ], [ -6, -7, -8 ], [ -11 ]>
 
 # bipartition: RightProjection, LeftProjection
-gap> x := Bipartition([[1, 3, -2, -4], [2], [4, 6, -1, -3, -5], [5, 8], 
+gap> x := Bipartition([[1, 3, -2, -4], [2], [4, 6, -1, -3, -5], [5, 8],
 > [7, -6, -9], [9, 10], [-7, -8, -10]]);
 <bipartition: [ 1, 3, -2, -4 ], [ 2 ], [ 4, 6, -1, -3, -5 ], [ 5, 8 ], 
  [ 7, -6, -9 ], [ 9, 10 ], [ -7, -8, -10 ]>
@@ -563,9 +567,8 @@ gap> DegreeOfBipartitionCollection(PartitionMonoid(2));
 # bipartition: DegreeOfBipartitionCollection, error 1/1
 gap> x := Bipartition([[1, 2, -2], [-1]]);;
 gap> y := Bipartition([[1, 3], [2, -1], [-2], [-3]]);;
-gap> DegreeOfBipartitionCollection([x, y]);
-Error, Semigroups: DegreeOfBipartitionCollection: usage,
-the argument <coll> must be a collection of bipartitions of equal degree,
+gap> IsBipartitionCollection([x, y]);
+false
 
 # bipartition: AsBipartition, for a PBR and 0, 1
 gap> AsBipartition(EmptyPBR(1), 0);

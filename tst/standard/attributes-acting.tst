@@ -112,13 +112,13 @@ the argument <d> must be a regular D-class,
 #T# attributes-acting: InjectionPrincipalFactor 3/6
 gap> R := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
 <Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>
-gap> x := RMSElement(R, 9, (1, 3, 2, 4), 2);;
+gap> x := RMSElement(R, 1, (1, 2, 3, 4), 1);;
 gap> y := RMSElement(R, 6, (1, 3, 4, 2), 5);;
 gap> S := Semigroup(x, y);;
-gap> D := DClass(S, RMSElement(R, 9, (1, 3, 2, 4), 2));;
+gap> D := DClass(S, x);;
 gap> InjectionPrincipalFactor(D);
-MappingByFunction( <Green's D-class: (9,(1,3,2,4),2)>, 
-<Rees matrix semigroup 1x1 over Group([ (2,3,
+MappingByFunction( <Green's D-class: (1,(1,2,3,4),1)>, 
+<Rees matrix semigroup 1x1 over Group([ (1,2,3,
 4) ])>, function( x ) ... end, function( x ) ... end )
 
 #T# attributes-acting: InjectionPrincipalFactor 4/6

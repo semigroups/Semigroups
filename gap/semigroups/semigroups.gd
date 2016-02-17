@@ -20,34 +20,33 @@ InstallTrueMethod(IsSemigroup, IsInverseSemigroup);
 DeclareCategory("IsSemigroupWithInverseOp",
                 IsInverseSemigroup);
 DeclareOperation("SemigroupByGenerators",
-                 [IsAssociativeElementCollection, IsRecord]);
+                 [IsMultiplicativeElementCollection, IsRecord]);
 DeclareOperation("MonoidByGenerators",
-                 [IsAssociativeElementCollection, IsRecord]);
+                 [IsMultiplicativeElementCollection, IsRecord]);
 DeclareOperation("InverseMonoidByGenerators",
-                 [IsAssociativeElementCollection and
-                  IsMultiplicativeElementWithOneCollection, IsRecord]);
+                 [IsMultiplicativeElementWithOneCollection, IsRecord]);
 DeclareOperation("InverseSemigroupByGenerators",
-                 [IsAssociativeElementCollection, IsRecord]);
+                 [IsMultiplicativeElementCollection, IsRecord]);
 
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
+                 [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection]);
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection,
+                 [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection,
                   IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsSemigroupWithInverseOp, IsAssociativeElement]);
+                 [IsSemigroupWithInverseOp, IsMultiplicativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsSemigroupWithInverseOp, IsAssociativeElement, IsRecord]);
+                 [IsSemigroupWithInverseOp, IsMultiplicativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
 DeclareOperation("ClosureSemigroup",
-                 [IsSemigroup, IsAssociativeElementCollection, IsRecord]);
+                 [IsSemigroup, IsMultiplicativeElementCollection, IsRecord]);
 DeclareOperation("ClosureSemigroup",
-                 [IsSemigroup, IsAssociativeElementCollection]);
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
 DeclareOperation("ClosureSemigroup",
-                 [IsSemigroup, IsAssociativeElement, IsRecord]);
+                 [IsSemigroup, IsMultiplicativeElement, IsRecord]);
 DeclareOperation("ClosureSemigroup",
-                 [IsSemigroup, IsAssociativeElement]);
+                 [IsSemigroup, IsMultiplicativeElement]);
 DeclareOperation("ClosureSemigroupNC",
                  [IsSemigroup, IsListOrCollection, IsRecord]);
 

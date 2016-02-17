@@ -21,6 +21,5 @@ DeclareGlobalFunction("LookForInOrb");
 DeclareGlobalFunction("OrbSCC");
 DeclareGlobalFunction("OrbSCCIndex");
 DeclareGlobalFunction("OrbSCCLookup");
-DeclareGlobalFunction("OrbSCCTruthTable");
 DeclareGlobalFunction("ReverseSchreierTreeOfSCC");
 DeclareGlobalFunction("SchreierTreeOfSCC");

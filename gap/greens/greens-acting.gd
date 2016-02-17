@@ -42,19 +42,19 @@ DeclareAttribute("SemigroupDataIndex", IsActingSemigroupGreensClass);
 DeclareCategory("IsInverseOpClass", IsGreensClass);
 
 DeclareOperation("GreensDClassOfElementNC",
-                 [IsActingSemigroup, IsAssociativeElement, IsBool]);
+                 [IsActingSemigroup, IsMultiplicativeElement, IsBool]);
 DeclareOperation("GreensLClassOfElementNC",
-                 [IsActingSemigroup, IsAssociativeElement, IsBool]);
+                 [IsActingSemigroup, IsMultiplicativeElement, IsBool]);
 DeclareOperation("GreensRClassOfElementNC",
-                 [IsActingSemigroup, IsAssociativeElement, IsBool]);
+                 [IsActingSemigroup, IsMultiplicativeElement, IsBool]);
 DeclareOperation("GreensHClassOfElementNC",
-                 [IsActingSemigroup, IsAssociativeElement, IsBool]);
+                 [IsActingSemigroup, IsMultiplicativeElement, IsBool]);
 
 DeclareOperation("GreensDClassOfElementNC",
-                 [IsGreensClass, IsAssociativeElement, IsBool]);
+                 [IsGreensClass, IsMultiplicativeElement, IsBool]);
 DeclareOperation("GreensLClassOfElementNC",
-                 [IsGreensClass, IsAssociativeElement, IsBool]);
+                 [IsGreensClass, IsMultiplicativeElement, IsBool]);
 DeclareOperation("GreensRClassOfElementNC",
-                 [IsGreensClass, IsAssociativeElement, IsBool]);
+                 [IsGreensClass, IsMultiplicativeElement, IsBool]);
 DeclareOperation("GreensHClassOfElementNC",
-                 [IsGreensClass, IsAssociativeElement, IsBool]);
+                 [IsGreensClass, IsMultiplicativeElement, IsBool]);

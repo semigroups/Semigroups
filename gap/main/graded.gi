@@ -85,9 +85,9 @@ function(arg)
   if not IsActingSemigroup(S) then
     ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
                   "the first argument <S> must be an acting semigroup,");
-  elif not IsAssociativeElement(x) then
+  elif not IsMultiplicativeElement(x) then
     ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
-                  "the second argument <x> must be an associative element,");
+                  "the second argument <x> must be a multiplicative element,");
   elif not IsBool(global) then
     ErrorNoReturn("Semigroups: GradedLambdaOrb: usage,\n",
                   "the third argument <global> must be a boolean,");
@@ -192,9 +192,9 @@ function(arg)
   if not IsActingSemigroup(S) then
     ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
                   "the first argument <S> must be an acting semigroup,");
-  elif not IsAssociativeElement(x) then
+  elif not IsMultiplicativeElement(x) then
     ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
-                  "the second argument <f> must be an associative element,");
+                  "the second argument <f> must be a multiplicative element,");
   elif not IsBool(global) then
     ErrorNoReturn("Semigroups: GradedRhoOrb: usage,\n",
                   "the third argument <opt> must be a boolean,");

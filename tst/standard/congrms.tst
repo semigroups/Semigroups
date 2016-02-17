@@ -77,7 +77,7 @@ gap> mat := [[(), (1, 2)(3, 4)],
 >            [(), ()],
 >            [(2, 4), (1, 3, 4, 2)]];;
 gap> T := ReesMatrixSemigroup(g, mat);;
-gap> n := Group( [ (2,4,3), (1,4)(2,3), (1,3)(2,4) ] );;
+gap> n := Group([(2, 4, 3), (1, 4)(2, 3), (1, 3)(2, 4)]);;
 gap> colBlocks := [[1, 2]];;
 gap> rowBlocks := [[1], [2, 3]];;
 gap> cong2 := RMSCongruenceByLinkedTriple(T, n, colBlocks, rowBlocks);;
@@ -96,7 +96,7 @@ congruences must be defined over the same semigroup,
 gap> x := ReesMatrixSemigroupElement(S, 1, (2, 3), 2);;
 gap> y := ReesMatrixSemigroupElement(S, 1, (1, 4), 1);;
 gap> z := ReesMatrixSemigroupElement(S, 1, (2, 3, 4), 3);;
-gap> t := ReesMatrixSemigroupElement(T, 1, (1,2)(3,4), 2);;
+gap> t := ReesMatrixSemigroupElement(T, 1, (1, 2)(3, 4), 2);;
 gap> [x, y] in cong;
 true
 gap> [x, z] in cong;
@@ -163,7 +163,7 @@ gap> Size(classes[1]);
 8
 
 #T# RMSCongruenceClassByLinkedTriple: bad input
-gap> badCoset := RightCoset(SymmetricGroup(6), (1,5,4));;
+gap> badCoset := RightCoset(SymmetricGroup(6), (1, 5, 4));;
 gap> class := RMSCongruenceClassByLinkedTriple(congs[3], badCoset, 1, 2);;
 Error, Semigroups: RMSCongruenceClassByLinkedTriple: usage,
 the second arg <nCoset> must be a right coset of <cong>'s
@@ -240,9 +240,9 @@ gap> mat := [[(1, 3), (1, 2)(3, 4)],
 >            [(1, 4, 3, 2), ()],
 >            [(1, 3)(2, 4), (1, 3, 4, 2)]];;
 gap> S := ReesMatrixSemigroup(g, mat);;
-gap> x := RMSElement(S, 2, (1,3)(2,4), 3);;
+gap> x := RMSElement(S, 2, (1, 3)(2, 4), 3);;
 gap> y := RMSElement(S, 1, (), 3);;
-gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x,y]]);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);;
 gap> AsRMSCongruenceByLinkedTriple(cong);
 <semigroup congruence over <Rees matrix semigroup 2x3 over Sym( [ 1 .. 4 ] )>
   with linked triple (S4,1,3)>
@@ -262,7 +262,7 @@ gap> Size(congs);
 
 #T# CongruencesOfSemigroup: a different RZMS
 gap> g := SymmetricGroup(3);;
-gap> mat := [[0, 0, (1,3)], [(1,2,3), (), (2,3)], [0, 0, ()]];;
+gap> mat := [[0, 0, (1, 3)], [(1, 2, 3), (), (2, 3)], [0, 0, ()]];;
 gap> T := ReesZeroMatrixSemigroup(g, mat);;
 gap> congs1 := CongruencesOfSemigroup(T);;
 gap> Size(congs1);
@@ -285,7 +285,7 @@ false
 gap> colBlocks := [[1], [4], [2, 5], [3, 6]];;
 gap> IsLinkedTriple(S, n, colBlocks, rowBlocks);
 true
-gap> IsLinkedTriple(S, Group([()]), [[1..6]], rowBlocks);
+gap> IsLinkedTriple(S, Group([()]), [[1 .. 6]], rowBlocks);
 false
 gap> cong := RZMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);
 <semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
@@ -298,9 +298,9 @@ true
 #T# IsSubrelation: with zero
 gap> IsSubrelation(congs[26], congs[2]);
 true
-gap> IsSubrelation(congs[33],congs[33]);
+gap> IsSubrelation(congs[33], congs[33]);
 true
-gap> IsSubrelation(congs[19],congs[24]);
+gap> IsSubrelation(congs[19], congs[24]);
 false
 gap> IsSubrelation(UniversalSemigroupCongruence(S), congs[11]);
 true
@@ -335,7 +335,7 @@ invalid triple,
 gap> x := ReesZeroMatrixSemigroupElement(S, 3, (4, 5), 1);;
 gap> y := ReesZeroMatrixSemigroupElement(S, 3, (1, 5, 3, 4), 1);;
 gap> z := ReesZeroMatrixSemigroupElement(S, 1, (1, 3, 5), 2);;
-gap> t := ReesZeroMatrixSemigroupElement(T, 1, Transformation([2,1]), 1);;
+gap> t := ReesZeroMatrixSemigroupElement(T, 1, Transformation([2, 1]), 1);;
 gap> zero := MultiplicativeZero(S);
 0
 gap> [x, y] in cong;
@@ -427,7 +427,7 @@ gap> x in class0;
 false
 
 #T# RZMSCongruenceClassByLinkedTriple: bad input
-gap> badCoset := RightCoset(SymmetricGroup(6), (1,5,4));;
+gap> badCoset := RightCoset(SymmetricGroup(6), (1, 5, 4));;
 gap> class := RZMSCongruenceClassByLinkedTriple(congs[13], badCoset, 3, 2);;
 Error, Semigroups: RZMSCongruenceClassByLinkedTriple: usage,
 the second arg <nCoset> must be a right coset of <cong>'s
@@ -475,7 +475,7 @@ gap> mat := [[(), (1, 2)(3, 4)],
 >            [(), ()],
 >            [(2, 4), (1, 3, 4, 2)]];;
 gap> T := ReesZeroMatrixSemigroup(g, mat);;
-gap> n := Group( [ (2,4,3), (1,4)(2,3), (1,3)(2,4) ] );;
+gap> n := Group([(2, 4, 3), (1, 4)(2, 3), (1, 3)(2, 4)]);;
 gap> colBlocks := [[1, 2]];;
 gap> rowBlocks := [[1], [2, 3]];;
 gap> cong2 := RZMSCongruenceByLinkedTriple(T, n, colBlocks, rowBlocks);;
@@ -510,10 +510,10 @@ gap> Size(S / uni);
 gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
 gap> StructureDescription(g);
 "S4"
-gap> mat := [[0, (4,5), (3,4), (1,4,3), 0],
->            [0, (1,3,5,4), (1,5,3), (), 0],
->            [(), 0, (1,5), (), (1,4,3)],
->            [0, (1,4,3), (), (4,5), 0]];;
+gap> mat := [[0, (4, 5), (3, 4), (1, 4, 3), 0],
+>            [0, (1, 3, 5, 4), (1, 5, 3), (), 0],
+>            [(), 0, (1, 5), (), (1, 4, 3)],
+>            [0, (1, 4, 3), (), (4, 5), 0]];;
 gap> S := ReesZeroMatrixSemigroup(g, mat);;
 gap> congs := CongruencesOfSemigroup(S);;
 gap> Size(congs);
@@ -541,14 +541,14 @@ true
 gap> g := Group([(1, 4, 5), (1, 5, 3, 4)]);;
 gap> StructureDescription(g);
 "S4"
-gap> mat := [[0, (4,5), (3,4), (1,4,3), 0],
->            [0, (1,3,5,4), (1,5,3), (), 0],
->            [(), 0, (1,5), (), (1,4,3)],
->            [0, (1,4,3), (), (4,5), 0]];;
+gap> mat := [[0, (4, 5), (3, 4), (1, 4, 3), 0],
+>            [0, (1, 3, 5, 4), (1, 5, 3), (), 0],
+>            [(), 0, (1, 5), (), (1, 4, 3)],
+>            [0, (1, 4, 3), (), (4, 5), 0]];;
 gap> S := ReesZeroMatrixSemigroup(g, mat);;
-gap> x := RMSElement(S, 5, (3,4), 2);;
+gap> x := RMSElement(S, 5, (3, 4), 2);;
 gap> y := RMSElement(S, 1, (), 4);;
-gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x,y]]);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);;
 gap> AsRZMSCongruenceByLinkedTriple(cong);
 <semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
   with linked triple (S4,4,3)>
@@ -562,10 +562,10 @@ gap> S := ReesZeroMatrixSemigroup(g, mat);;
 gap> IsLinkedTriple(S, SymmetricGroup(4), [], [[1]]);
 Error, Semigroups: IsLinkedTriple: usage,
 the first arg <S> must be a finite 0-simple Rees 0-matrix semigroup,
-gap> g := Semigroup( [ Transformation( [ 1, 3, 2 ] ), 
->                      Transformation( [ 2, 2, 1 ] ) ] );;
-gap> mat := [[Transformation([1,3,2]), Transformation([2,2,2])],
->            [Transformation([1,3,2]), Transformation([3,1,3])]];;
+gap> g := Semigroup([Transformation([1, 3, 2]),
+>                    Transformation([2, 2, 1])]);;
+gap> mat := [[Transformation([1, 3, 2]), Transformation([2, 2, 2])],
+>            [Transformation([1, 3, 2]), Transformation([3, 1, 3])]];;
 gap> S := ReesMatrixSemigroup(g, mat);;
 gap> IsLinkedTriple(S, SymmetricGroup(2), [], [[1]]);
 Error, Semigroups: IsLinkedTriple: usage,

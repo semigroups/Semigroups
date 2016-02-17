@@ -882,8 +882,8 @@ gap> x := Bipartition([[1, 2, -3], [3, -1, -2], [4, -4],
 gap> I := SemigroupIdeal(S, x);
 <inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> JoinIrreducibleDClasses(I);
-[ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ], 
-      [ 6, -6 ]>> ]
+[ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 6, -1, -2, -3, -4, -6 ], 
+      [ 5, -5 ]>> ]
 gap> I;
 <inverse bipartition semigroup ideal of degree 6 with 1 generator>
 gap> S := InverseMonoid(DualSymmetricInverseMonoid(3));;
@@ -1038,7 +1038,7 @@ fail
 #T# TestInstall67: semigroups with infinity generators are not allowed in
 # Semigroups, i.e. this example shouldn't use Semigroups code and this is here
 # to make sure that it does not. This is from bugfix.tst.
-gap> FreeMonoid( infinity, "m", [  ] );
+gap> FreeMonoid(infinity, "m", []);
 <free monoid with infinity generators>
 
 #T# Checking for correct non-removal of one from generating sets in
@@ -1234,11 +1234,11 @@ gap> IsInverseSemigroup(S);
 false
 
 #T# Bipartition semigroups of degree 0, Issue #139
-gap> AsBipartitionSemigroup( CyclicGroup( IsPermGroup, 1 ) );
+gap> AsBipartitionSemigroup(CyclicGroup(IsPermGroup, 1));
 <trivial bipartition group of degree 0 with 1 generator>
-gap> AsBipartitionSemigroup( Group(()) );
+gap> AsBipartitionSemigroup(Group(()));
 <trivial bipartition group of degree 0 with 1 generator>
-gap> Semigroup( Bipartition( [  ] ) );
+gap> Semigroup(Bipartition([]));
 <trivial bipartition group of degree 0 with 1 generator>
 gap> JonesMonoid(0);
 <trivial bipartition group of degree 0 with 1 generator>
@@ -1250,6 +1250,67 @@ gap> S := FullTropicalMinPlusMonoid(2, 3);
 <monoid of 2x2 tropical min-plus matrices with 7 generators>
 gap> AsTransformationSemigroup(S);
 <transformation monoid of degree 625 with 7 generators>
+
+#T# Test for not being allowed to generate a semigroup with bipartitions of
+# different degree
+gap> Semigroup(Bipartition([[-1, 1]]), Bipartition([]));
+Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
+
+#T# Test for not being allowed to generate a semigroup with matrices of
+# different dimensions
+gap> Semigroup(
+> Matrix(IsIntegerMatrix, [[0, -3, 0, -2],  
+>                          [-1, 1, -1, 0], 
+>                          [0, 1, 0, 1],
+>                          [0, 0, 2, 0]]), 
+> Matrix(IsIntegerMatrix, [[4, 0, -2], 
+>                          [1, -3, 0], 
+>                          [5, -1, -4]]));
+Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
+
+#T# MaximalSubsemigroups, replacement test for manual example which becomes a
+#log because of the randomness in the generating sets here.
+gap> S := FullTransformationMonoid(4);;
+gap> (not SEMIGROUPS.IsGrapeCompiled) or Length(MaximalSubsemigroups(S)) = 9;
+true
+gap> (not SEMIGROUPS.IsGrapeCompiled) or ForAll(MaximalSubsemigroups(S), M -> M in 
+> [Semigroup(Transformation([1, 4, 2, 3]),
+>            Transformation([4, 2, 3, 4]), 
+>             Transformation([4, 3, 2, 1])),
+>  Semigroup(Transformation([1, 1, 2, 3]),
+>            Transformation([1, 2, 4, 3]), 
+>            Transformation([4, 2, 3, 4]),
+>            Transformation([4, 3, 2, 1])),
+>  Semigroup(Transformation([1, 1, 2, 3]),
+>            Transformation([1, 3, 1, 2]), 
+>            Transformation([1, 4, 3, 2]),
+>            Transformation([2, 1, 4, 3])),
+>  Semigroup(Transformation([1, 3, 2]), 
+>            Transformation([2, 1, 3, 1]),
+>            Transformation([3, 4, 1, 2]), 
+>            Transformation([3, 4, 1, 3])),
+>  Semigroup(Transformation([1, 2, 4, 3]),
+>            Transformation([1, 4, 2, 3]), 
+>            Transformation([2, 3, 1, 1]),
+>            Transformation([2, 3, 1, 2]), 
+>            Transformation([4, 2, 3, 4])),
+>  Semigroup(Transformation([1, 1, 2, 3]),
+>            Transformation([1, 3, 2]), 
+>            Transformation([3, 1, 2]),
+>            Transformation([4, 1, 2, 4])),
+>  Semigroup(Transformation([2, 1]), 
+>            Transformation([2, 3, 1, 1]),
+>            Transformation([4, 1, 2, 4]), 
+>            Transformation([4, 1, 3, 2])),
+>  Semigroup(Transformation([2, 1, 3, 1]),
+>            Transformation([3, 4, 1, 3]), 
+>            Transformation([4, 2, 1, 3]),
+>            Transformation([4, 2, 3, 1])),
+>  Semigroup(Transformation([2, 1]), 
+>            Transformation([2, 3, 4, 1]),
+>            Transformation([3, 1, 3, 3]), 
+>            Transformation([4, 3, 3, 4]))]);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!

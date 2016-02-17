@@ -87,7 +87,7 @@ function(S, n)
 end);
 
 SEMIGROUPS.ElementRClass := function(R, largest)
-  local o, m, rep, n, base, S, max, scc, y, basei, p, x, i;
+  local o, m, rep, n, base, S, out, scc, y, basei, p, x, i;
 
   if Size(R) = 1 then
     return Representative(R);
@@ -100,12 +100,12 @@ SEMIGROUPS.ElementRClass := function(R, largest)
   n := DegreeOfTransformationSemigroup(Parent(R));
   base := DuplicateFreeList(ImageListOfTransformation(rep, n));
 
-  if not largest then
-    base := Reversed(base);
-  fi;
-
   S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
-  max := rep * LargestElementStabChain(S, ());
+  if largest then
+    out := rep * LargestElementStabChain(S, ());
+  else
+    out := rep * SmallestElementConjugateStabChain(S, (), ());
+  fi;
 
   scc := OrbSCC(o)[m];
 
@@ -113,13 +113,20 @@ SEMIGROUPS.ElementRClass := function(R, largest)
     y := EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
     basei := DuplicateFreeList(ImageListOfTransformation(rep * y, n));
     p := MappingPermListList(base, basei);
-    x := rep * y * LargestElementStabChain(S, (), p);
-    if x > max then
-      max := x;
+    if largest then
+      x := rep * y * LargestElementConjugateStabChain(S, (), p);
+      if x > out then
+        out := x;
+      fi;
+    else
+      x := rep * y * SmallestElementConjugateStabChain(S, (), p);
+      if x < out then
+        out := x;
+      fi;
     fi;
   od;
 
-  return max;
+  return out;
 end;
 
 SEMIGROUPS.SmallestElementRClass := function(R)
@@ -182,6 +189,9 @@ InstallMethod(Idempotents, "for a transformation semigroup and pos int",
 function(S, rank)
   local deg;
   deg := DegreeOfTransformationSemigroup(S);
+  if rank > deg then
+    return [];
+  fi;
   return Filtered(Idempotents(S),
                               x -> RankOfTransformation(x, deg) = rank);
 end);
@@ -193,8 +203,8 @@ InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
 
 #
 
-InstallMethod(IteratorSorted, "for a transformation semigroup",
-[IsTransformationSemigroup],
+InstallMethod(IteratorSorted, "for an acting transformation semigroup",
+[IsTransformationSemigroup and IsActingSemigroup],
 function(S)
   if HasAsSSortedList(S) then
     return IteratorList(AsSSortedList(S));
@@ -205,7 +215,7 @@ end);
 #
 
 InstallMethod(IteratorSorted, "for an R-class",
-[IsGreensRClass],
+[IsGreensRClass and IsActingSemigroupGreensClass],
 function(R)
   local o, m, rep, n, scc, base, S, out, x, image, basei, iter, i;
 
@@ -269,32 +279,9 @@ function(S, T)
   fi;
 end);
 
-#
-
-InstallMethod(GeneratorsSmallest, "for a semigroup",
-[IsSemigroup],
-function(S)
-  local iter, T, x;
-
-  iter := IteratorSorted(S);
-  T := Semigroup(NextIterator(iter));
-
-  for x in iter do
-    if not x in T then
-      T := SEMIGROUPS.AddGenerators(T, [x], SEMIGROUPS.OptionsRec(T));
-      if T = S then
-        break;
-      fi;
-    fi;
-  od;
-
-  return GeneratorsOfSemigroup(T);
-end);
-
-#
-
-InstallMethod(SmallestElementSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
+InstallMethod(SmallestElementSemigroup, 
+"for an acting transformation semigroup",
+[IsTransformationSemigroup and IsActingSemigroup],
 function(S)
   local n;
 
@@ -307,8 +294,8 @@ function(S)
   return Minimum(List(RClasses(S), SEMIGROUPS.SmallestElementRClass));
 end);
 
-InstallMethod(LargestElementSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
+InstallMethod(LargestElementSemigroup, "for an acting transformation semigroup",
+[IsTransformationSemigroup and IsActingSemigroup],
 function(S)
   local n;
 
@@ -403,10 +390,9 @@ end);
 InstallMethod(Size, "for a monogenic transformation semigroup",
 [IsTransformationSemigroup and IsMonogenicSemigroup],
 function(S)
-  local ind;
-  # FIXME this must be wrong what if <S> is monogenic but is defined by more
-  # than one generator?
-  ind := IndexPeriodOfTransformation(GeneratorsOfSemigroup(S)[1]);
+  local gen, ind;
+  gen := IrredundantGeneratingSubset(S)[1];
+  ind := IndexPeriodOfTransformation(gen);
   if ind[1] > 0 then
     return Sum(ind) - 1;
   fi;
@@ -580,10 +566,9 @@ function(S)
         break;
       fi;
     od;
-    if reduced then
-      continue;
+    if not reduced then
+      break;
     fi;
-    break;
   od;
 
   return t;
@@ -764,7 +749,8 @@ function(digraph)
   S := [AsTransformationSemigroup(AutomorphismGroup(digraph))];
 
   return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
-                                    fail, false, DigraphVertices(digraph), [], fail, fail)[1];
+                                    fail, false, DigraphVertices(digraph), [],
+                                    fail, fail)[1];
 end);
 
 InstallMethod(EndomorphismMonoid, "for a digraph and a homogeneous list",

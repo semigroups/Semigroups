@@ -237,7 +237,7 @@ end);
 
 InstallMethod(IsJoinIrreducible,
 "for semigroup with inverse op and an associative element",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp, IsMultiplicativeElement],
 function(S, x)
   local elts, leq, y, i, k, j, sup;
 
@@ -297,7 +297,7 @@ end);
 
 InstallMethod(IsMajorantlyClosed,
 "for a semigroup with inverse op and associative element collection",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
+[IsSemigroupWithInverseOp, IsMultiplicativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
     ErrorNoReturn("Semigroups: IsMajorantlyClosed: usage,\n",
@@ -310,7 +310,7 @@ end);
 
 InstallMethod(IsMajorantlyClosedNC,
 "for a semigroup with inverse op and associative element collection",
-[IsSemigroupWithInverseOp, IsAssociativeElementCollection],
+[IsSemigroupWithInverseOp, IsMultiplicativeElementCollection],
 function(S, T)
   local leq, t, iter, u;
 
@@ -441,7 +441,7 @@ end);
 InstallMethod(MajorantClosure,
 "for a semigroup with inverse op and associative element collections",
 [IsSemigroupWithInverseOp,
- IsAssociativeElementCollection],
+ IsMultiplicativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
     ErrorNoReturn("Semigroups: MajorantClosure: usage,\n",
@@ -455,7 +455,7 @@ end);
 InstallMethod(MajorantClosureNC,
 "for a semigroup with inverse op and associative element collections",
 [IsSemigroupWithInverseOp,
- IsAssociativeElementCollection],
+ IsMultiplicativeElementCollection],
 function(S, T)
   local elts, n, out, ht, k, leq, val, t, i;
 
@@ -493,7 +493,7 @@ end);
 
 InstallMethod(Minorants,
 "for a semigroup with inverse op and associative element collections",
-[IsSemigroupWithInverseOp, IsAssociativeElement],
+[IsSemigroupWithInverseOp, IsMultiplicativeElement],
 function(S, f)
   local elts, i, out, rank, j, leq, k;
 
@@ -661,9 +661,9 @@ function(coll, x)
     return Bipartition(out);
 
   elif IsBipartition(x) and IsPartialPermBipartition(x) then
-    i := DegreeOfBipartition(x);
     return AsBipartition(SupremumIdempotentsNC(
-                         List(coll, AsPartialPerm), PartialPerm([])), i);
+                         List(coll, AsPartialPerm), PartialPerm([])), 
+                         DegreeOfBipartition(x));
   fi;
   ErrorNoReturn("Semigroups: SupremumIdempotentsNC: usage,\n",
                 "the argument is not a collection of partial perms, block ",
@@ -703,7 +703,7 @@ end);
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for a semigroup with inverse op and an associative element",
-[IsSemigroupWithInverseOp and IsActingSemigroup, IsAssociativeElement],
+[IsSemigroupWithInverseOp and IsActingSemigroup, IsMultiplicativeElement],
 function(S, elm)
   return [elm ^ -1];
 end);

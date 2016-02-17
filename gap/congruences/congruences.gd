@@ -70,9 +70,9 @@ DeclareProperty("IsSemigroupCongruence", IsLeftSemigroupCongruence);
 DeclareProperty("IsSemigroupCongruence", IsRightSemigroupCongruence);
 
 DeclareOperation("OnLeftCongruenceClasses",
-                 [IsLeftCongruenceClass, IsAssociativeElement]);
+                 [IsLeftCongruenceClass, IsMultiplicativeElement]);
 DeclareOperation("OnRightCongruenceClasses",
-                 [IsRightCongruenceClass, IsAssociativeElement]);
+                 [IsRightCongruenceClass, IsMultiplicativeElement]);
 
 # Helper functions to EquivalenceClasses for specific categories
 DeclareOperation("CongruenceClasses", [IsSemigroupCongruence]);
@@ -91,8 +91,8 @@ DeclareOperation("NrLeftCongruenceClasses", [IsLeftSemigroupCongruence]);
 DeclareOperation("NrRightCongruenceClasses", [IsRightSemigroupCongruence]);
 
 DeclareOperation("CongruenceClassOfElement", [IsSemigroupCongruence,
-                                              IsAssociativeElement]);
+                                              IsMultiplicativeElement]);
 DeclareOperation("LeftCongruenceClassOfElement", [IsLeftSemigroupCongruence,
-                                                  IsAssociativeElement]);
+                                                  IsMultiplicativeElement]);
 DeclareOperation("RightCongruenceClassOfElement", [IsRightSemigroupCongruence,
-                                                   IsAssociativeElement]);
+                                                   IsMultiplicativeElement]);

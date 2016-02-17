@@ -23,6 +23,15 @@ static std::vector<size_t> _BUFFER_size_t;
 static std::vector<bool>   _BUFFER_bool;
 static Timer               timer;
 
+inline Obj bipart_type (size_t deg) {
+  deg++;  
+  if (deg > (size_t) LEN_PLIST(BipartTypes) || 
+      ELM_PLIST(BipartTypes, deg) == 0) {
+    CALL_1ARGS(BipartitionType, INTOBJ_INT(deg - 1));
+  }
+  return ELM_PLIST(BipartTypes, deg);
+}
+
 inline Obj wrapper_get_elm (Obj x, size_t pos) {
   //TODO check that x is a bipartition or blocks and that pos is not bigger than it
   // should be
@@ -49,7 +58,7 @@ Obj bipart_new (Bipartition* x) {
   // put the GAP wrapper in a list and Objectify
   Obj out = NEW_PREC(1);
   AssPRec(out, _RNam_wrapper, wrapper);
-  TYPE_COMOBJ(out) = BipartitionType;
+  TYPE_COMOBJ(out) = bipart_type(x->degree());
   RetypeBag(out, T_COMOBJ);
   CHANGED_BAG(out);
 

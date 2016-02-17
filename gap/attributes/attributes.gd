@@ -11,7 +11,7 @@
 # This file contains declarations for attributes of semigroups.
 
 DeclareOperation("IrredundantGeneratingSubset",
-                 [IsAssociativeElementCollection]);
+                 [IsMultiplicativeElementCollection]);
 
 DeclareAttribute("GroupOfUnits", IsSemigroup);
 DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
@@ -27,17 +27,17 @@ DeclareAttribute("MultiplicativeZero", IsSemigroup);
 DeclareAttribute("LengthOfLongestDClassChain", IsSemigroup);
 
 DeclareAttribute("SmallSemigroupGeneratingSet",
-                 IsAssociativeElementCollection);
-DeclareAttribute("SmallSemigroupGeneratingSet", IsSemigroup);
+                 IsMultiplicativeElementCollection);
 DeclareAttribute("SmallMonoidGeneratingSet",
-                 IsAssociativeElementCollection and
                  IsMultiplicativeElementWithOneCollection);
-DeclareAttribute("SmallMonoidGeneratingSet", IsMonoid);
 DeclareAttribute("SmallInverseSemigroupGeneratingSet",
                  IsMultiplicativeElementCollection);
 DeclareAttribute("SmallInverseMonoidGeneratingSet",
                  IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
+
+DeclareAttribute("SmallestElementSemigroup", IsSemigroup);
+DeclareAttribute("LargestElementSemigroup", IsSemigroup);
 
 DeclareAttribute("StructureDescription", IsBrandtSemigroup);
 DeclareAttribute("StructureDescription", IsGroupAsSemigroup);

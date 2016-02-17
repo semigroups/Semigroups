@@ -46,8 +46,8 @@ DeclareAttribute("ExtRepOfPBR", IsPBR);
 DeclareOperation("NumberPBR", [IsPBR]);
 DeclareOperation("PBRNumber", [IsPosInt, IsPosInt]);
 
-DeclareOperation("AsPBR", [IsAssociativeElement, IsPosInt]);
-DeclareOperation("AsPBR", [IsAssociativeElement]);
+DeclareOperation("AsPBR", [IsMultiplicativeElement, IsPosInt]);
+DeclareOperation("AsPBR", [IsMultiplicativeElement]);
 
 DeclareProperty("IsEmptyPBR", IsPBR);
 DeclareProperty("IsIdentityPBR", IsPBR);

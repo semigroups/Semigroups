@@ -200,8 +200,8 @@ end);
 #
 
 InstallMethod(\in,
-"for an associative element and semigroup ideal with generators",
-[IsAssociativeElement, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+"for a multiplicative element and semigroup ideal with generators",
+[IsMultiplicativeElement, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(x, I)
   return Position(Enumerator(I), x) <> fail;
 end);

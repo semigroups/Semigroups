@@ -164,7 +164,7 @@ end;
 
 #
 
-if IsGrapeLoaded then
+if SEMIGROUPS.IsGrapeLoaded then
 
   SEMIGROUPS.RZMSInducedFunction := function(R, l, g, x, component)
     local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb,
@@ -753,7 +753,7 @@ function(R1, R2)
 end);
 
 #
-if not (IsGrapeLoaded and IsGrapeCompiled) then
+if not (SEMIGROUPS.IsGrapeLoaded and SEMIGROUPS.IsGrapeCompiled) then
 
   InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups",
   [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],

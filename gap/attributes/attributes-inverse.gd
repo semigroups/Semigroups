@@ -15,18 +15,16 @@ DeclareAttribute("CharacterTableOfInverseSemigroup",
                  IsInverseSemigroup and IsPartialPermSemigroup
                  and IsActingSemigroup);
 DeclareOperation("IsJoinIrreducible",
-                 [IsInverseSemigroup, IsAssociativeElement]);
+                 [IsInverseSemigroup, IsMultiplicativeElement]);
 DeclareAttribute("JoinIrreducibleDClasses", IsInverseSemigroup);
 DeclareOperation("IsMajorantlyClosed",
-                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
-DeclareOperation("IsMajorantlyClosed",
-                 [IsSemigroupWithInverseOp, IsSemigroupWithInverseOp]);
+                 [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection]);
 DeclareOperation("IsMajorantlyClosedNC",
-                 [IsSemigroupWithInverseOp, IsAssociativeElementCollection]);
+                 [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection]);
 DeclareOperation("MajorantClosure", [IsInverseSemigroup, IsCollection]);
 DeclareOperation("MajorantClosureNC",
-                 [IsInverseSemigroup, IsAssociativeElementCollection]);
-DeclareOperation("Minorants", [IsInverseSemigroup, IsAssociativeElement]);
+                 [IsInverseSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("Minorants", [IsInverseSemigroup, IsMultiplicativeElement]);
 DeclareAttribute("SameMinorantsSubgroup", IsGroupHClass);
 DeclareOperation("RightCosetsOfInverseSemigroup",
                  [IsSemigroupWithInverseOp, IsSemigroupWithInverseOp]);

@@ -56,20 +56,20 @@ BindGlobal("EmptyBlocks", BLOCKS_NC([]));
 # GAP level - NOT directly using interface to C/C++ level
 #############################################################################
 
-InstallMethod(AsDigraph, "for blocks", [IsBlocks], 
+InstallMethod(AsDigraph, "for blocks", [IsBlocks],
 function(blocks)
   local ext, out, block, i;
 
   ext := ExtRepOfBlocks(blocks);
   out := List([1 .. DegreeOfBlocks(blocks)], x -> []);
 
-  for block in ext do 
+  for block in ext do
     if block[1] > 0 then # transverse block
       for i in block do
         out[i] := ShallowCopy(block);
         RemoveSet(out[i], i);
       od;
-    else 
+    else
       for i in block do
         out[-i] := block * -1;
       od;
@@ -90,10 +90,10 @@ function(blocks)
   id  := DigraphStronglyConnectedComponents(gr).id;
   canon := ShallowCopy(scc);
 
-  for i in [1 .. Length(scc)] do 
+  for i in [1 .. Length(scc)] do
     rep := scc[i][1];
-    if IsDigraphEdge(gr, [rep, rep]) then 
-      canon[i] := canon[i] * -1;
+    if IsDigraphEdge(gr, [rep, rep]) then
+      canon[i] := -1 * canon[i];
     fi;
   od;
 

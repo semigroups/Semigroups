@@ -25,9 +25,9 @@ SEMIGROUPS.HashFunctionBooleanMat := function(x, data)
   for i in [1 .. n] do
     for j in [1 .. n] do
       if x![i][j] then
-        h := ((h / 2) + 1) mod data;
+        h := ((h * 2) + 1) mod data;
       else
-        h := (h / 2) mod data;
+        h := (h * 2) mod data;
       fi;
     od;
   od;
@@ -122,11 +122,7 @@ InstallMethod(\*, "for boolean matrices", [IsBooleanMat, IsBooleanMat],
 function(x, y)
   local n, xy, i, j, k;
 
-  n := Length(x![1]);
-  if Length(y![1]) <> n then
-    ErrorNoReturn("Semigroups: \* (for boolean matrices):\n",
-                  "the matrices must have equal dimension,");
-  fi;
+  n := Minimum(Length(x![1]), Length(y![1]));
   xy := List([1 .. n], x -> BlistList([1 .. n], []));
 
   for i in [1 .. n] do
@@ -525,7 +521,6 @@ InstallMethod(ChooseHashFunction, "for a boolean matrix",
              data := hashlen);
 end);
 
-
 InstallMethod(CanonicalBooleanMat, "for boolean mat",
 [IsBooleanMat],
 function(mat)
@@ -605,7 +600,9 @@ function(G, H, x)
   return CanonicalBooleanMatNC(G, H, x);
 end);
 
-if IsGrapeLoaded then
+#FIXME the following could be done without grape using vertex colors.
+
+if SEMIGROUPS.IsGrapeLoaded then
   InstallMethod(CanonicalBooleanMatNC,
   "for perm group, perm group, and boolean mat",
   [IsPermGroup, IsPermGroup, IsBooleanMat],

@@ -424,7 +424,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   Unbind(new!.rev);
   Unbind(new!.truth);
   Unbind(new!.schutzstab);
-  Unbind(new!.exhaust);
+  Unbind(new!.factorgroups);
   Unbind(new!.factors);
   Unbind(new!.orbitgraph);
   Unbind(new!.schreiergen);
@@ -539,7 +539,7 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   Unbind(new!.rev);
   Unbind(new!.truth);
   Unbind(new!.schutzstab);
-  Unbind(new!.exhaust);
+  Unbind(new!.factorgroups);
   Unbind(new!.factors);
   Unbind(new!.orbitgraph);
   Unbind(new!.schreiergen);

@@ -26,7 +26,7 @@ gap> gens := [Transformation([1, 3, 2, 3]),
 > Transformation([1, 4, 1, 2]),
 > Transformation([2, 4, 1, 1]),
 > Transformation([3, 4, 2, 2])];;
-> s := Semigroup(gens);;
+gap> s := Semigroup(gens);;
 gap> ForAll(s, f -> EvaluateWord(gens, Factorization(s, f)) = f);
 true
 
@@ -175,7 +175,7 @@ gap> S := Semigroup(OrderEndomorphisms(3), rec(generic := false));;
 gap> o := LambdaOrb(S);;
 gap> Factorization(o, 2, (1, 2));
 Error, Semigroups: Factorization: usage,
-the third arg <perm> does not belong to the Schutzenberger group,
+the third argument <p> does not belong to the Schutzenberger group,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

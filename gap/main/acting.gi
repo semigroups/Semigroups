@@ -58,8 +58,8 @@ end);
 # for non-regular ideals
 
 InstallMethod(\in,
-"for an associative element and acting semigroup",
-[IsAssociativeElement, IsActingSemigroup],
+"for a multiplicative element and acting semigroup",
+[IsMultiplicativeElement, IsActingSemigroup],
 function(x, S)
   local data, ht, lambda, lambdao, l, m, rhoranker, rho, rank, rhoo,
   lambdarhoht, rholookup, rhoranks, lookahead_last, lookahead_fail, nrgens,
@@ -296,13 +296,13 @@ end);
 
 InstallMethod(Size, "for an acting semigroup",
 [IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
-function(s)
+function(S)
   local data, lenreps, repslens, o, scc, size, n, m, i;
 
-  data := Enumerate(SemigroupData(s), infinity, ReturnFalse);
-  lenreps := data!.lenreps;
+  data := Enumerate(SemigroupData(S), infinity, ReturnFalse);
+  lenreps  := data!.lenreps;
   repslens := data!.repslens;
-  o := LambdaOrb(s);
+  o   := LambdaOrb(S);
   scc := OrbSCC(o);
 
   size := 0;
@@ -321,8 +321,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(\in, "for associative element and semigroup data",
-[IsAssociativeElement, IsSemigroupData],
+InstallMethod(\in, "for a multiplicative element and semigroup data",
+[IsMultiplicativeElement, IsSemigroupData],
 function(f, data)
   return not Position(data, f) = fail;
 end);
@@ -692,8 +692,9 @@ InstallMethod(OrbitGraphAsSets, "for semigroup data",
 
 # same method for ideals
 
-InstallMethod(Position, "for semigroup data and an associative element",
-[IsSemigroupData, IsAssociativeElement, IsZeroCyc],
+InstallMethod(Position, 
+"for semigroup data, multiplicative element, and zero cyc",
+[IsSemigroupData, IsMultiplicativeElement, IsZeroCyc],
 function(data, x, n)
   local S, o, l, m, val, schutz, lambdarhoht, ind, repslookup, reps, repslens,
   lambdaperm;
@@ -820,21 +821,21 @@ InstallMethod(String, "for the universal fake one",
 [SEMIGROUPS_IsUniversalFakeOne], obj -> "<universal fake one>");
 
 InstallMethod(\*,
-"for the universal fake one and an associative element",
-[SEMIGROUPS_IsUniversalFakeOne, IsAssociativeElement],
+"for the universal fake one and a multiplicative element",
+[SEMIGROUPS_IsUniversalFakeOne, IsMultiplicativeElement],
 function(x, y)
   return y;
 end);
 
 InstallMethod(\*,
-"for an associative element and the universal fake one",
-[IsAssociativeElement, SEMIGROUPS_IsUniversalFakeOne],
+"for a multiplicative element and the universal fake one",
+[IsMultiplicativeElement, SEMIGROUPS_IsUniversalFakeOne],
 function(x, y)
   return x;
 end);
 
-InstallMethod(\<, "for the universal fake one and an associative element",
-[SEMIGROUPS_IsUniversalFakeOne, IsAssociativeElement], ReturnTrue);
+InstallMethod(\<, "for the universal fake one and a multiplicative element",
+[SEMIGROUPS_IsUniversalFakeOne, IsMultiplicativeElement], ReturnTrue);
 
-InstallMethod(\<, "for an associative element and the universal fake one",
-[IsAssociativeElement, SEMIGROUPS_IsUniversalFakeOne], ReturnFalse);
+InstallMethod(\<, "for a multiplicative element and the universal fake one",
+[IsMultiplicativeElement, SEMIGROUPS_IsUniversalFakeOne], ReturnFalse);

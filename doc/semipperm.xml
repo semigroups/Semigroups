@@ -70,7 +70,7 @@ gap> S := Semigroup(
 >  PartialPerm([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 14, 16, 18, 19, 20], 
 >     [13, 1, 8, 5, 4, 14, 11, 12, 9, 20, 2, 18, 7, 3, 19]));;
 gap> CyclesOfPartialPermSemigroup(S);
-[ [ 1, 9, 12, 14, 20, 2, 19, 3, 8, 11 ] ]</Example>
+[ [ 1, 9, 12, 14, 2, 20, 19, 3, 8, 11 ] ]</Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
