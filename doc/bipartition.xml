@@ -926,14 +926,19 @@ true]]></Example>
 
 <#GAPDoc Label="RandomBipartition">
   <ManSection>
-    <Oper Name = "RandomBipartition" Arg = "n"/>
-    <Oper Name = "RandomBlockBijection" Arg = "n"/>
+    <Oper Name = "RandomBipartition" Arg = "[rs, ]n"/>
+    <Oper Name = "RandomBlockBijection" Arg = "[rs, ]n"/>
     <Returns>A bipartition.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then <C>RandomBipartition</C> returns
       a random bipartition of degree <A>n</A>, and <C>RandomBlockBijection</C>
-      returns a random block bijection of degree <A>n</A>. 
+      returns a random block bijection of degree <A>n</A>. <P/>
 
+      If the optional first argument <A>rs</A> is a random source, then this is
+      used to generate the bipartition returned by <C>RandomBipartition</C> and
+      <C>RandomBlockBijection</C>. <P/>
+
+      Note that neither of these functions has a uniform distribution.
       <Log><![CDATA[
 gap> x := RandomBipartition(6); 
 <bipartition: [ 1, 2, 3, 4 ], [ 5 ], [ 6, -2, -3, -4 ], [ -1, -5 ], [ -6 ]>

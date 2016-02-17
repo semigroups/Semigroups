@@ -243,10 +243,9 @@ function(n)
   return out;
 end);
 
-# TODO add RandomSource version of this
-
-InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
-function(n)
+InstallMethod(RandomBipartition, "for a random source and pos int", 
+[IsRandomSource, IsPosInt],
+function(rs, n)
   local out, nrblocks, vals, j, i;
 
   out := EmptyPlist(2 * n);
@@ -254,7 +253,7 @@ function(n)
   vals := [1];
 
   for i in [1 .. 2 * n] do
-    j := Random(vals);
+    j := Random(rs, vals);
     if j = nrblocks + 1 then
       nrblocks := nrblocks + 1;
       Add(vals, nrblocks + 1);
@@ -265,10 +264,14 @@ function(n)
   return BIPART_NC(out);
 end);
 
-# TODO add RandomSource version of this
-
-InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
+InstallMethod(RandomBipartition, "for a pos int", [IsPosInt],
 function(n)
+  return RandomBipartition(GlobalMersenneTwister, n);
+end);
+
+InstallMethod(RandomBlockBijection, "for a random source and pos int", 
+[IsRandomSource, IsPosInt],
+function(rs, n)
   local out, nrblocks, j, free, i;
 
   out := EmptyPlist(2 * n);
@@ -276,7 +279,7 @@ function(n)
   nrblocks := 1;
 
   for i in [2 .. n] do
-    j := Random([1 .. nrblocks + 1]);
+    j := Random(rs, [1 .. nrblocks + 1]);
     if j = nrblocks + 1 then
       nrblocks := nrblocks + 1;
     fi;
@@ -285,13 +288,13 @@ function(n)
 
   free := [n + 1 .. 2 * n];
   for i in [1 .. nrblocks] do
-    j := Random(free);
+    j := Random(rs, free);
     out[j] := i;
     RemoveSet(free, j);
   od;
 
   for i in free do
-    out[i] := Random([1 .. nrblocks]);
+    out[i] := Random(rs, [1 .. nrblocks]);
   od;
 
   out := BIPART_NC(out);
@@ -301,6 +304,11 @@ function(n)
   SetNrRightBlocks(out, nrblocks);
 
   return out;
+end);
+
+InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
+function(n)
+  return RandomBlockBijection(GlobalMersenneTwister, n);
 end);
 
 # Operators

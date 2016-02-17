@@ -35,6 +35,8 @@ DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);
 DeclareOperation("RandomBipartition", [IsPosInt]);
 DeclareOperation("RandomBlockBijection", [IsPosInt]);
+DeclareOperation("RandomBipartition", [IsRandomSource, IsPosInt]);
+DeclareOperation("RandomBlockBijection", [IsRandomSource, IsPosInt]);
 
 DeclareOperation("NaturalLeqBlockBijection", [IsBipartition, IsBipartition]);
 DeclareOperation("NaturalLeqPartialPermBipartition",
