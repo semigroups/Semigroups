@@ -1119,9 +1119,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
         fi;
       fi;
     od;
-    
-    2congs := List(2congs, i -> congs1[i]);
-    
+
     # Remove holes from congs and change children and parents appropriately
     n := Length(congs);
     image := ListWithIdenticalEntries(n, fail);
@@ -1142,8 +1140,9 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
                                            i -> i <> fail));
     children := List(children, l -> Filtered(List(l, i -> image[i]),
                                              i -> i <> fail));        
+    2congs := List(2congs, i -> congs1[i]);
   fi;
-  
+
   # We now have all 1-generated congs, which must include all the minimal
   # congs.  We can return if necessary.
   if IsBound(record.minimal) and record.minimal = true then
@@ -1206,6 +1205,14 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
             Add(newchildren, k);
           fi;
         od;
+        # Check for 2-sided congs if 'poor' is set
+        if poor then
+          if IsSemigroupCongruence(newcong) then
+            badcong := true;
+          elif ForAny(2congs, c2 -> IsSubrelation(newcong, c2)) then
+            badcong := true;
+          fi;
+        fi;
         if not badcong then
           nrcongs := nrcongs + 1;
           congs[nrcongs] := newcong;
