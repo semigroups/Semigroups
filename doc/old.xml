@@ -1,3 +1,39 @@
+<#GAPDoc Label="OrbSCCTruthTable">
+  <ManSection>
+    <Func Name = "OrbSCCTruthTable" Arg = "o"/>
+    <Returns>
+      Truth tables for strongly connected components of an orbit.
+    </Returns>
+    <Description>
+      If <A>o</A> is an orbit created by the <Package>Orb</Package> package
+      with the option <C>orbitgraph = true</C>, then <C>OrbSCCTruthTable</C>
+      returns a list of boolean lists such that
+      <C>OrbSCCTruthTable(o)[i][j]</C> is <K>true</K> if <C>j</C> belongs to
+      <C>OrbSCC(o)[i]</C>.
+      <P/>
+
+      See also <Ref Func = "OrbSCC"/> and <Ref Func = "OrbSCCLookup"/>.
+
+<Example><![CDATA[
+gap> S := FullTransformationSemigroup(4);;
+gap> o := LambdaOrb(S);;
+gap> OrbSCC(o);
+[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
+  [ 13, 14, 15, 16 ] ]
+gap> OrbSCCTruthTable(o);
+[ [ true, false, false, false, false, false, false, false, false, 
+      false, false, false, false, false, false, false ], 
+  [ false, true, false, false, false, false, false, false, false, 
+      false, false, false, false, false, false, false ], 
+  [ false, false, true, true, true, true, false, false, false, false, 
+      false, false, false, false, false, false ], 
+  [ false, false, false, false, false, false, true, true, true, true, 
+      true, true, false, false, false, false ], 
+  [ false, false, false, false, false, false, false, false, false, 
+      false, false, false, true, true, true, true ] ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 <#GAPDoc Label="InverseRightBlocks">
   <ManSection>
     <Func Name = "InverseRightBlocks" Arg = "blocks, x"/>

@@ -296,13 +296,13 @@ end);
 
 InstallMethod(Size, "for an acting semigroup",
 [IsActingSemigroup], 2, #to beat the method for a Rees 0-matrix semigroup
-function(s)
+function(S)
   local data, lenreps, repslens, o, scc, size, n, m, i;
 
-  data := Enumerate(SemigroupData(s), infinity, ReturnFalse);
-  lenreps := data!.lenreps;
+  data := Enumerate(SemigroupData(S), infinity, ReturnFalse);
+  lenreps  := data!.lenreps;
   repslens := data!.repslens;
-  o := LambdaOrb(s);
+  o   := LambdaOrb(S);
   scc := OrbSCC(o);
 
   size := 0;

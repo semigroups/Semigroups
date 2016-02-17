@@ -20,7 +20,7 @@ function(o, x)
   fi;
 end);
 
-#JDM this should work for the RhoOrb too!
+#FIXME this should work for the RhoOrb too!
 
 InstallMethod(Enumerate, "for a lambda orbit and a limit (Semigroups)",
 [IsLambdaOrb and IsHashOrbitRep, IsCyclotomic],
@@ -253,10 +253,10 @@ InstallGlobalFunction(LookForInOrb,
 function(o, func, start)
   local pos, i;
 
-  # not including this line means that when considering LambdaOrb(s)
-  # the first point is considered which it shouldn't be. Whatever is broken
-  # when this line is not included should be fixed as at present this is not
-  # consistent. JDM
+  # FIXME not including the following line means that when considering
+  # LambdaOrb(S) the first point is considered which it shouldn't be. Whatever
+  # is broken when this line is not included should be fixed as at present this
+  # is not consistent. 
   Enumerate(o, Length(o) + 1);
 
   if start <= Length(o) then
@@ -287,7 +287,7 @@ end);
 
 InstallGlobalFunction(OrbSCC,
 function(o)
-  local scc, r, i;
+  local scc, p;
 
   if IsBound(o!.scc) then
     return o!.scc;
@@ -297,20 +297,11 @@ function(o)
     Enumerate(o, infinity);
   fi;
 
-  scc := Set(List(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(OrbitGraphAsSets(o)),
-                  Set));
-  r := Length(scc);
+  scc           := GABOW_SCC(OrbitGraphAsSets(o));
+  o!.scc        := ShallowCopy(scc.comps);
+  o!.scc_lookup := OnTuples(scc.id, Sortex(o!.scc));
 
-  o!.scc := scc;
-  o!.scc_lookup := ListWithIdenticalEntries(Length(o), 1);
-
-  if r > 1 then
-    for i in [2 .. r] do
-      o!.scc_lookup{scc[i]} := ListWithIdenticalEntries(Length(scc[i]), i);
-    od;
-  fi;
-
-  return scc;
+  return o!.scc;
 end);
 
 #
@@ -325,24 +316,6 @@ function(o)
   OrbSCC(o);
   return o!.scc_lookup;
 end);
-
-#
-
-InstallGlobalFunction(OrbSCCTruthTable,
-function(o)
-  local scc, r;
-
-  if IsBound(o!.truth) then
-    return o!.truth;
-  fi;
-
-  scc := OrbSCC(o);
-  r := Length(scc);
-  o!.truth := List([1 .. r], i -> BlistList([1 .. Length(o)], scc[i]));
-  return o!.truth;
-end);
-
-#
 
 InstallGlobalFunction(ReverseSchreierTreeOfSCC,
 function(o, i)
@@ -451,23 +424,19 @@ function(o, i)
   fi;
 
   if i = 1 then
-    o!.trees[i] := [o!.schreiergen, o!.schreierpos];#JDM remove this line
+    o!.trees[i] := [o!.schreiergen, o!.schreierpos];
     return o!.trees[i];
   fi;
 
   scc := o!.scc[i];
   len := Length(o);
 
-  #gen:=ListWithIdenticalEntries(len, fail);
-  #pos:=ListWithIdenticalEntries(len, fail);
   gen := EmptyPlist(len);
   pos := EmptyPlist(len);
   gen[scc[1]] := fail;
   pos[scc[1]] := fail;
 
   seen := BlistList([1 .. len], [scc[1]]);
-  #JDM remove the use of truth table here
-  #t:=OrbSCCTruthTable(o)[i];
   lookup := OrbSCCLookup(o);
   oo := [scc[1]];
   m := 1;
