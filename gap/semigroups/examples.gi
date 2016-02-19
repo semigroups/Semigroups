@@ -519,6 +519,26 @@ function(n)
   return S;
 end);
 
+InstallMethod(CatalanMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, next, i;
+
+  if n = 1 then 
+    return Monoid(IdentityTransformation);
+  fi;
+
+  gens := [];
+
+  for i in [1 .. n - 1] do 
+    next := [1 .. n]; 
+    next[i + 1] := i;
+    Add(gens, Transformation(next));
+  od;
+
+  return Monoid(gens, rec(generic := true));
+end);
+
 InstallMethod(PartitionMonoid, "for an integer",
 [IsInt],
 function(n)

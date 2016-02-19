@@ -37,6 +37,9 @@ DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
 
+DeclareSynonymAttr("IsRectangularGroup", 
+                   IsOrthodoxSemigroup and IsSimpleSemigroup);
+
 InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
                                             IsPartialPermSemigroup);
 InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
