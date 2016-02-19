@@ -177,6 +177,39 @@ gap> Factorization(o, 2, (1, 2));
 Error, Semigroups: Factorization: usage,
 the third argument <p> does not belong to the Schutzenberger group,
 
+#T# factor: test for epimorphism from free group returning a word with negative
+# powers.
+gap> S := Semigroup(FullTransformationMonoid(8), rec(generic := false));;
+gap> x := AsTransformation((1,2,3,5));
+Transformation( [ 2, 3, 5, 4, 1 ] )
+gap> Factorization(S, x);
+[ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 3, 2, 
+  3, 2, 3, 2, 3 ]
+
+#T# factor: test for use of minimal factorization it is known, non-regular.
+gap> S := Semigroup(FullTransformationMonoid(5));;
+gap> x := Transformation([4, 3, 2, 4, 1]);;
+gap> MinimalFactorization(S, x);
+[ 2, 3, 4, 2, 3, 2, 2, 3, 2 ]
+gap> Factorization(S, x);
+[ 2, 3, 4, 2, 3, 2, 2, 3, 2 ]
+
+#T# factor: test for use of minimal factorization it is known, regular.
+gap> S := PartitionMonoid(4);;
+gap> x := Bipartition([[1, 3, -1, -4], [2, 4, -2], [-3]]);;
+gap> MinimalFactorization(S, x);
+[ 2, 3, 2, 5, 2, 2, 5, 4, 3, 2 ]
+gap> Factorization(S, x);
+[ 2, 3, 2, 5, 2, 2, 5, 4, 3, 2 ]
+
+#T# factor: test for use of minimal factorization it is known, regular.
+gap> S := SymmetricInverseMonoid(6);;
+gap> x := PartialPerm([1, 2, 5], [6, 2, 4]);;
+gap> MinimalFactorization(S, x);
+[ 5, 2, 5, 5, 2, 3 ]
+gap> Factorization(S, x);
+[ 5, 2, 5, 5, 2, 3 ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(gens);
