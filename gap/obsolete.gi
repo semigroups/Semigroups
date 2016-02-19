@@ -33,3 +33,11 @@ function(S)
   SEMIGROUPS.PrintObsolete("DotDClasses", "DotString");
   return DotString(S);
 end);
+
+InstallMethod(PartialTransformationSemigroup, "for a positive integer",
+[IsPosInt],
+function(n)
+  SEMIGROUPS.PrintObsolete("PartialTransformationSemigroup",
+                           "PartialTransformationMonoid");
+  return PartialTransformationMonoid(n);
+end);

@@ -11,3 +11,4 @@
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomPartialPermSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("DotDClasses", [IsSemigroup]);
+DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);

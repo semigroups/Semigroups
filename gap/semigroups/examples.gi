@@ -495,37 +495,29 @@ function(n)
   return s;
 end);
 
-#
-
-InstallMethod(PartialTransformationSemigroup, "for a positive integer",
+InstallMethod(PartialTransformationMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
-  local a, b, c, d, s;
+  local a, b, c, d, S;
 
-  a := [1 .. n + 1];
-  a[1] := 2;
-  a[2] := 1;         # transposition
-  b := [0 .. n];
+  a := [2, 1];
+  b := [0 .. n - 1];
   b[1] := n;
-  b[n + 1] := n + 1; # cycle
   c := [1 .. n + 1];
   c[1] := n + 1;     # partial
-  d := [1 .. n + 1];
-  d[1] := 2;         # collapsing
+  d := [2, 2];
 
   if n = 1 then
-    s := Monoid(List([c], TransformationNC));
+    S := Monoid(TransformationNC(c));
   elif n = 2 then
-    s := Monoid(List([a, c, d], TransformationNC));
+    S := Monoid(List([a, c, d], TransformationNC));
   else
-    s := Monoid(List([a, b, c, d], TransformationNC));
+    S := Monoid(List([a, b, c, d], TransformationNC));
   fi;
 
-  SetIsRegularSemigroup(s, true);
-  return s;
+  SetIsRegularSemigroup(S, true);
+  return S;
 end);
-
-#
 
 InstallMethod(PartitionMonoid, "for an integer",
 [IsInt],

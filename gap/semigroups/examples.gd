@@ -13,7 +13,7 @@
 DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
 DeclareOperation("OrderEndomorphisms", [IsPosInt]);
 DeclareOperation("SingularOrderEndomorphisms", [IsPosInt]);
-DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
+DeclareOperation("PartialTransformationMonoid", [IsPosInt]);
 DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
 DeclareSynonym("SingularTransformationMonoid",
                SingularTransformationSemigroup);
