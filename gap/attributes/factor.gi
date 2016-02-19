@@ -50,8 +50,8 @@ InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
 function(o, m, p)
   local gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, bound, G,
   factors, nr, stop, uword, u, adj, vword, v, x, iso, word, epi, out, k, l, i;
-  
-  if not IsBound(o!.factors) then 
+
+  if not IsBound(o!.factors) then
     o!.factors      := [];
     o!.factorgroups := [];
   fi;
@@ -66,10 +66,10 @@ function(o, m, p)
     rep         := LambdaOrbRep(o, m);
     bound       := Size(LambdaOrbSchutzGp(o, m));
 
-    G            := Group(()); 
-    factors      := [];
-    nr           := 0;
-    stop         := false;
+    G           := Group(());
+    factors     := [];
+    nr          := 0;
+    stop        := false;
 
     for k in scc do
       uword := TraceSchreierTreeOfSCCForward(o, m, k);
@@ -98,7 +98,7 @@ function(o, m, p)
     od;
     o!.factors[m]      := factors;
     o!.factorgroups[m] := G;
-  else 
+  else
     factors      := o!.factors[m];
     G            := o!.factorgroups[m];
   fi;
@@ -110,10 +110,14 @@ function(o, m, p)
   fi;
 
   # express <elt> as a word in the generators of the Schutzenberger group
-  if (not IsSemigroupWithInverseOp(o!.parent)) and Size(G) <= 1024 then 
+  if (not IsSemigroupWithInverseOp(o!.parent)) and Size(G) <= 1024 then
     iso := IsomorphismTransformationSemigroup(G);
     word := MinimalFactorization(Range(iso), p ^ iso);
-  else 
+  else
+    # Note that in this case the word potentially contains inverses of
+    # generators and we do not have a good way, in general, of finding words in
+    # the original generators of the semigroup that equal the inverse of a
+    # generator of the Schutzenberger group.
     epi := EpimorphismFromFreeGroup(G);
     word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
   fi;
@@ -121,12 +125,13 @@ function(o, m, p)
   # convert group generators to semigroup generators
   out := [];
   for i in word do
-    if i > 0 then 
+    if i > 0 then
       Append(out, factors[i]);
-    elif IsSemigroupWithInverseOp(o!.parent) then 
+    elif IsSemigroupWithInverseOp(o!.parent) then
       Append(out, Reversed(factors[-i]) * -1);
-    else 
-      Append(out, Concatenation(List([1 .. Order(G.(-i)) - 1], x -> factors[-i])));
+    else
+      Append(out, Concatenation(List([1 .. Order(G.(-i)) - 1],
+                                x -> factors[-i])));
     fi;
   od;
   return out;
@@ -182,7 +187,7 @@ function(S, x)
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
-  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then 
+  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then
     return MinimalFactorization(S, x);
   fi;
 
@@ -197,7 +202,7 @@ function(S, x)
 
   word1 := TraceSchreierTreeForward(data, pos); #a word equal to <rep>
 
-  #compensate for the action of the multipliers, if necessary
+  # compensate for the action of the multipliers, if necessary
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
     p := LambdaPerm(S)(rep, x *
@@ -233,7 +238,7 @@ function(S, x)
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
-  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then 
+  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then
     return MinimalFactorization(S, x);
   fi;
 
@@ -291,7 +296,7 @@ function(S, x)
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
-  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then 
+  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then
     return MinimalFactorization(S, x);
   fi;
 
