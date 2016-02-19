@@ -53,7 +53,6 @@ function(o, m, p)
   
   if not IsBound(o!.factors) then 
     o!.factors      := [];
-    o!.exhaust      := [];
     o!.factorgroups := [];
   fi;
 
@@ -97,7 +96,6 @@ function(o, m, p)
         break;
       fi;
     od;
-
     o!.factors[m]      := factors;
     o!.factorgroups[m] := G;
   else 
@@ -114,10 +112,7 @@ function(o, m, p)
   # express <elt> as a word in the generators of the Schutzenberger group
   if (not IsSemigroupWithInverseOp(o!.parent)) and Size(G) <= 1024 then 
     iso := IsomorphismTransformationSemigroup(G);
-    if not IsBound(o!.exhaust[m]) then 
-      o!.exhaust[m] := Range(iso);
-    fi;
-    word := MinimalFactorization(o!.exhaust[m], p ^ iso);
+    word := MinimalFactorization(Range(iso), p ^ iso);
   else 
     epi := EpimorphismFromFreeGroup(G);
     word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
