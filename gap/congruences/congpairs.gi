@@ -1044,10 +1044,10 @@ end);
 #   * poor - Return only x-congs which contain no 2-sided congruences
 ###############################################################################
 SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
-  local poor, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children,
-        parents, pair, badcong, newchildren, newparents, newcong, i, c, p,
-        congs, 2congs, image, next, set_func, lattice, join_func, length, found,
-        start, j, k;
+  local poor, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children, 
+        parents, pair, badcong, newchildren, newparents, newcong, i, c, p, 
+        congs, 2congs, image, next, set_func, lattice, join_func, length, found, 
+        ignore, start, j, k;
 
   poor := IsBound(record.poor) and record.poor;
   _XSemigroupCongruence := EvalString(Concatenation(type_string,
@@ -1141,10 +1141,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     children := List(children, l -> Filtered(List(l, i -> image[i]),
                                              i -> i <> fail));
     2congs := List(2congs, i -> congs1[i]);
-  fi;
-
-  if nrcongs <> Length(children) or nrcongs <> Length(congs) then
-    ErrorNoReturn("This should never happen");
+    congs1 := congs;
   fi;
 
   # We now have all 1-generated congs, which must include all the minimal
@@ -1185,6 +1182,8 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
                                         "SemigroupCongruences"));
   length := 0;
   found := true;
+  # 'ignore' is a list of congs that we don't try joining
+  ignore := BlistList(congs, []);
   while found do
     # There are new congs to try joining
     start := length + 1;     # New congs start here
@@ -1213,6 +1212,10 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
         if poor then
           if IsSemigroupCongruence(newcong) then
             badcong := true;
+            Add(2congs, newcong);
+            for p in newparents do
+              ignore[p] := true;
+            od;
           elif ForAny(2congs, c2 -> IsSubrelation(newcong, c2)) then
             badcong := true;
           fi;
@@ -1222,6 +1225,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
           congs[nrcongs] := newcong;
           children[nrcongs] := newchildren;
           parents[nrcongs] := newparents;
+          ignore[nrcongs] := false;
           for c in newchildren do
             Add(parents[c], nrcongs);
           od;
@@ -1233,6 +1237,36 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
       od;
     od;
   od;
+
+  if poor and (true in ignore) then
+    # Remove any congs in 'ignore'
+    for i in [1 .. Length(congs)] do
+      if ignore[i] then
+        Unbind(congs[i]);
+      fi;
+    od;
+
+    # Remove holes from congs and change children and parents appropriately
+    image := ListWithIdenticalEntries(nrcongs, fail);
+    next := 1;
+    for i in [1 .. nrcongs] do
+      if not ignore[i] then
+        image[i] := next;
+        next := next + 1;
+      else
+        Unbind(parents[i]);
+        Unbind(children[i]);
+        nrcongs := nrcongs - 1;
+      fi;
+    od;
+    congs := Compacted(congs);
+    parents := Compacted(parents);
+    children := Compacted(children);
+    parents := List(parents, l -> Filtered(List(l, i -> image[i]),
+                                           i -> i <> fail));
+    children := List(children, l -> Filtered(List(l, i -> image[i]),
+                                             i -> i <> fail));
+  fi;
 
   # Add the trivial cong at the start
   children := Concatenation([[]], children + 1);
