@@ -49,12 +49,11 @@ InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
 [IsLambdaOrb, IsPosInt, IsPerm],
 function(o, m, p)
   local gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, bound, G,
-  factors, inversefacts, nr, stop, uword, u, adj, vword, v, x, wword, w, path,
-  y, len, xyword, epi, word, out, k, l, i;
+  factors, nr, stop, uword, u, adj, vword, v, x, iso, word, epi, out, k, l, i;
   
   if not IsBound(o!.factors) then 
     o!.factors      := [];
-    o!.inversefacts := [];
+    o!.exhaust      := [];
     o!.factorgroups := [];
   fi;
 
@@ -70,7 +69,6 @@ function(o, m, p)
 
     G            := Group(()); 
     factors      := [];
-    inversefacts := [];
     nr           := 0;
     stop         := false;
 
@@ -86,40 +84,8 @@ function(o, m, p)
           x     := lambdaperm(rep, rep * u * gens[l] * v);
           if not x in G then
             G := ClosureGroup(G, x);
-            
             nr := nr + 1;
             factors[nr] := Concatenation(uword, [l], vword);
-            
-            # try to find a word in the generators equal to the inverse of <x>
-            if IsSemigroupWithInverseOp(o!.parent) then 
-              inversefacts[nr] := Reversed(factors[nr]) * -1;
-            elif Order(x) = 2 then 
-              #Print("Case 1!\n");
-              inversefacts[nr] := factors[nr];
-            else 
-              vword := TraceSchreierTreeOfSCCForward(o, m, adj[l]);
-              v     := EvaluateWord(o, vword);
-              wword := TraceSchreierTreeOfSCCBack(o, m, k);
-              w     := EvaluateWord(o, wword);
-              path  := DIGRAPH_PATH(OrbitGraph(o), adj[l], k)[2];
-              y     := lambdaperm(rep, rep * v * EvaluateWord(o, path) * w);
-              len   := Length(vword) + Length(path) + Length(wword);
-              if len <= Length(factors[nr]) * (Order(x) - 1) and y = x ^ -1 then
-                #Print("Case 2!\n");
-                inversefacts[nr] := Concatenation(vword, path, wword);
-              elif Order(x * y) * (len + Length(factors[nr])) - Length(factors[nr])
-                   < Length(factors[nr]) * (Order(x) - 1) then 
-                #Print("Case 3!\n");
-                inversefacts[nr] := [Concatenation(vword, path, wword)];
-                xyword := Concatenation(factors[nr], inversefacts[nr]);
-                Append(inversefacts[nr], List([1 .. Order(x * y) - 1], 
-                                              i -> xyword));
-              else
-                #Print("Case 4!\n");
-                inversefacts[nr] := Concatenation(List([1 .. Order(x) - 1], 
-                                                       i -> factors[nr]));
-              fi;
-            fi;
             if Size(G) = bound then
               stop := true;
               break;
@@ -132,13 +98,11 @@ function(o, m, p)
       fi;
     od;
 
-    o!.factorgroups[m] := G;
-    o!.inversefacts[m] := inversefacts;
     o!.factors[m]      := factors;
+    o!.factorgroups[m] := G;
   else 
-    G            := o!.factorgroups[m];
-    inversefacts := o!.inversefacts[m];
     factors      := o!.factors[m];
+    G            := o!.factorgroups[m];
   fi;
 
   if not p in G then
@@ -148,16 +112,26 @@ function(o, m, p)
   fi;
 
   # express <elt> as a word in the generators of the Schutzenberger group
-  epi := EpimorphismFromFreeGroup(G);
-  word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
+  if (not IsSemigroupWithInverseOp(o!.parent)) and Size(G) <= 1024 then 
+    iso := IsomorphismTransformationSemigroup(G);
+    if not IsBound(o!.exhaust[m]) then 
+      o!.exhaust[m] := Range(iso);
+    fi;
+    word := MinimalFactorization(o!.exhaust[m], p ^ iso);
+  else 
+    epi := EpimorphismFromFreeGroup(G);
+    word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
+  fi;
 
   # convert group generators to semigroup generators
   out := [];
   for i in word do
     if i > 0 then 
       Append(out, factors[i]);
+    elif IsSemigroupWithInverseOp(o!.parent) then 
+      Append(out, Reversed(factors[-i]) * -1);
     else 
-      Append(out, inversefacts[-i]);
+      Append(out, Concatenation(List([1 .. Order(G.(-i)) - 1], x -> factors[-i])));
     fi;
   od;
   return out;
