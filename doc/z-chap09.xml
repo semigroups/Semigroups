@@ -25,6 +25,7 @@
     <#Include Label = "OPOIPOPI">
     <!-- split this to separate transformation and partial perm semigroups-->
     <#Include Label = "SingularTransformationSemigroup">
+    <#Include Label = "CatalanMonoid">
   </Section>
 
   <!--**********************************************************************-->
