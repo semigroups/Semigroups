@@ -8,6 +8,34 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="IsRectangularGroup">
+  <ManSection>
+    <Prop Name="IsRectangularGroup" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A semigroup is <E>rectangular group</E> if it is the direct product of a
+      group and a rectangular band. Or equivalently, if it is orthodox and simple. 
+      
+      <Example><![CDATA[
+gap> G := AsTransformationSemigroup(MathieuGroup(11));
+<transformation semigroup of size 7920, degree 11 with 2 generators>
+gap> R := RectangularBand(3, 2);
+<regular transformation semigroup of size 6, degree 7 with 3 
+ generators>
+gap> S := DirectProduct(G, R);
+<transformation semigroup of size 47520, degree 18 with 4 generators>
+gap> IsRectangularGroup(R);
+true
+gap> IsRectangularGroup(G);
+true
+gap> IsRectangularGroup(S);
+true
+gap> IsRectangularGroup(JonesMonoid(3));
+false]]></Example> 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsUnitRegularMonoid">
   <ManSection>
     <Prop Name="IsUnitRegularMonoid" Arg="S"/>
@@ -25,7 +53,6 @@ true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-
 
 <#GAPDoc Label="IsBand">
   <ManSection>

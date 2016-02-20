@@ -1471,6 +1471,20 @@ gap> S := Semigroup(Transformation([2, 1]));;
 gap> IsNilpotentSemigroup(S);
 false
 
+#T# properties: IsRectangularGroup, 1
+gap> R := RectangularBand(10, 10);;
+gap> G := AsTransformationSemigroup(SymmetricGroup(5));;
+gap> S := DirectProduct(R, G);
+<transformation semigroup of size 12000, degree 106 with 11 generators>
+gap> IsRectangularGroup(S);
+true
+gap> S := DirectProduct(G, R);
+<transformation semigroup of size 12000, degree 106 with 11 generators>
+gap> IsRectangularGroup(S);
+true
+gap> IsRectangularGroup(PartitionMonoid(3));
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(I);
