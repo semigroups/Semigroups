@@ -11,6 +11,70 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
+InstallMethod(DirectProductOp, "for a list and a transformation monoid",
+[IsList, IsTransformationMonoid],
+function(list, S)
+  local gens, deg, m, i, x;
+    
+  # Check the arguments.
+  if IsEmpty( list ) then
+    Error( "<list> must be nonempty" );
+  elif ForAny(list, T -> not IsTransformationMonoid(T)) then
+    TryNextMethod();
+  fi;
+    
+  gens := ShallowCopy(GeneratorsOfMonoid(list[1]));
+  deg  := DegreeOfTransformationSemigroup(list[1]);
+
+  for i in [2 .. Length(list)] do
+    m := DegreeOfTransformationSemigroup(list[i]);
+    for x in GeneratorsOfMonoid(list[i]) do
+      Add(gens, Transformation([1 .. m] + deg, i -> (i - deg) ^ x + deg));
+    od;
+    deg := deg + m;
+  od;
+  return Monoid(gens);
+end);
+
+# TODO a method for IsMonoidAsSemigroup and IsTransformationSemigroup
+
+InstallMethod(DirectProductOp, "for a list and a transformation semigroup",
+[IsList, IsTransformationSemigroup],
+function(list, S)
+  local D, dfs;
+    
+  # Check the arguments.
+  if IsEmpty( list ) then
+    Error( "<list> must be nonempty" );
+  elif ForAny(list, T -> not IsTransformationSemigroup(T)) then
+    TryNextMethod();
+  fi;
+
+  D := fail;
+
+  dfs := function(image, deg, depth)
+    local x, n, next;
+    if depth = Length(list) then 
+      x := Transformation(image); 
+      if D = fail then 
+        D := Semigroup(x);
+      elif not x in D then 
+        D := ClosureSemigroup(D, x);
+      fi;
+      return;
+    fi;
+    depth := depth + 1;
+    n := DegreeOfTransformationSemigroup(list[depth]);
+    for x in GeneratorsOfSemigroup(list[depth]) do 
+      next := Concatenation(image, ImageListOfTransformation(x, n) + deg);
+      dfs(next, n + deg, depth);
+    od;
+    return;
+  end;
+  dfs([], 0, 0);
+  return D;
+end);
+
 InstallMethod(IsConnectedTransformationSemigroup,
 "for a transformation semigroup with generators",
 [IsTransformationSemigroup],
