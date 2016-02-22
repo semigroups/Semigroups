@@ -880,8 +880,8 @@ InstallMethod(MinimumDegreeTransformationRepresentation,
 [IsSemigroup],
 function(S)
   #TODO: We should append an identity so this works for non-monoids
-  #TODO: We should return an isomorphism instead of just a semigroup
-  local l, congs, nrclasses, cong, bestcong, classes, transgens, gen, image;
+  #TODO: The map should have an invfun included
+  local l, congs, nrclasses, cong, bestcong, classes, fun, range;
   # Get all the right congruences which contain no 2-sided congruences
   l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(poor := true));
   congs := l![2];
@@ -897,11 +897,13 @@ function(S)
 
   # Consider the action of S on the classes of cong
   classes := EquivalenceClasses(bestcong);
-  transgens := [];
-  for gen in GeneratorsOfSemigroup(S) do
+  fun := function(elm)
+    local image;
     image := List(classes, c -> Position(classes,
-                                         OnRightCongruenceClasses(c, gen)));
-    Add(transgens, Transformation(image));
-  od;
-  return Semigroup(transgens);
+                                         OnRightCongruenceClasses(c, elm)));
+    return Transformation(image);
+  end;
+  
+  range := Semigroup(List(GeneratorsOfSemigroup(S), fun));
+  return MappingByFunction(S, range, fun); #, invfun);
 end);
