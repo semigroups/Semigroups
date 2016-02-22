@@ -463,8 +463,19 @@ gap> LatticeOfRightCongruences(S);
 [ [  ], [ 1 ], [ 1 ], [ 1, 2, 6 ], [ 1, 2, 3 ], [ 1 ], [ 1, 2 ], 
   [ 1, 2, 3, 4, 5, 6, 7, 9 ], [ 1, 3, 6 ] ]
 gap> p := PartitionMonoid(2);;
-gap> q := MinimumDegreeTransformationRepresentation(p);;
+gap> iso := MinimumDegreeTransformationRepresentation(p);;
+gap> q := Range(iso);;
 gap> IsIsomorphicSemigroup(p, q);
+true
+gap> S := Semigroup(
+> [ PBR([ [ -3, -2, -1, 1, 2, 3 ], [ -3, 1, 3 ], [ -3, 2 ] ],
+>       [ [ -3, -2, 1, 2, 3 ], [ -3, -2, -1, 2, 3 ], [ -2, -1, 1, 3 ] ]),
+>   PBR([ [ -3, 2 ], [ 3 ], [ -3, -2, -1 ] ],
+>       [ [ -3 ], [ -3, -2 ], [ -3, -2, 1, 2 ] ]) ] );;
+gap> iso := MinimumDegreeTransformationRepresentation(S);;
+gap> T := Range(iso);
+<transformation semigroup of degree 6 with 2 generators>
+gap> IsIsomorphicSemigroup(S, T);
 true
 
 #T# SEMIGROUPS_UnbindVariables
@@ -477,14 +488,17 @@ gap> Unbind(cong2);
 gap> Unbind(congs);
 gap> Unbind(enum);
 gap> Unbind(gens);
+gap> Unbind(iso);
 gap> Unbind(l);
 gap> Unbind(min);
 gap> Unbind(minl);
 gap> Unbind(minr);
+gap> Unbind(p);
 gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);
 gap> Unbind(pairs);
+gap> Unbind(q);
 gap> Unbind(u);
 gap> Unbind(v);
 gap> Unbind(x);
