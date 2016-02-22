@@ -283,7 +283,7 @@ end);
 
 InstallMethod(LeftCongruenceClassOfElement,
 "for a left semigroup congruence and associative element",
-[IsLeftSemigroupCongruence, IsAssociativeElement],
+[IsLeftSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
 end);
@@ -292,7 +292,7 @@ end);
 
 InstallMethod(RightCongruenceClassOfElement,
 "for a right semigroup congruence and associative element",
-[IsRightSemigroupCongruence, IsAssociativeElement],
+[IsRightSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
 end);
@@ -310,7 +310,7 @@ end);
 
 InstallMethod(OnLeftCongruenceClasses,
 "for a left congruence class and an associative element",
-[IsLeftCongruenceClass, IsAssociativeElement],
+[IsLeftCongruenceClass, IsMultiplicativeElement],
 function(class, elm)
   local cong;
   cong := EquivalenceClassRelation(class);
@@ -321,7 +321,7 @@ end);
 
 InstallMethod(OnRightCongruenceClasses,
 "for a right congruence class and an associative element",
-[IsRightCongruenceClass, IsAssociativeElement],
+[IsRightCongruenceClass, IsMultiplicativeElement],
 function(class, elm)
   local cong;
   cong := EquivalenceClassRelation(class);
