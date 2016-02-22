@@ -881,9 +881,16 @@ InstallMethod(MinimumDegreeTransformationRepresentation,
 function(S)
   #TODO: We should append an identity so this works for non-monoids
   #TODO: The map should have an invfun included
-  local l, congs, nrclasses, cong, bestcong, classes, fun, range;
+  local M, l, congs, nrclasses, cong, bestcong, classes, fun, R;
+  # If S is not a monoid, append an identity
+  if not IsMonoid(S) then
+    M := Monoid(S);
+  else
+    M := S;
+  fi;
+
   # Get all the right congruences which contain no 2-sided congruences
-  l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(poor := true));
+  l := SEMIGROUPS.LatticeOfXCongruences(M, "Right", rec(poor := true));
   congs := l![2];
 
   # Find the one with the fewest classes
@@ -895,7 +902,7 @@ function(S)
     fi;
   od;
 
-  # Consider the action of S on the classes of cong
+  # Consider the action of M on the classes of cong
   classes := EquivalenceClasses(bestcong);
   fun := function(elm)
     local image;
@@ -903,7 +910,8 @@ function(S)
                                          OnRightCongruenceClasses(c, elm)));
     return Transformation(image);
   end;
-  
-  range := Semigroup(List(GeneratorsOfSemigroup(S), fun));
-  return MappingByFunction(S, range, fun); #, invfun);
+
+  # Construct the range from the original generators (possibly not a monoid)
+  R := Semigroup(List(GeneratorsOfSemigroup(S), fun));
+  return MappingByFunction(S, R, fun); #, invfun);
 end);

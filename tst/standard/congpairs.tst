@@ -474,7 +474,7 @@ gap> S := Semigroup(
 >       [ [ -3 ], [ -3, -2 ], [ -3, -2, 1, 2 ] ]) ] );;
 gap> iso := MinimumDegreeTransformationRepresentation(S);;
 gap> T := Range(iso);
-<transformation semigroup of degree 6 with 2 generators>
+<transformation semigroup of degree 7 with 2 generators>
 gap> IsIsomorphicSemigroup(S, T);
 true
 
