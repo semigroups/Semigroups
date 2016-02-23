@@ -8,6 +8,73 @@
 #############################################################################
 ##
 
+InstallMethod(AsSemigroup, "for a filter and a semigroup",
+[IsFunction and IsOperation, IsSemigroup],
+function(filt, S)
+  return Range(IsomorphismSemigroup(filt, S));
+end);
+
+# these are attributes
+
+InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
+function(S)
+  return IsomorphismSemigroup(IsPermGroup, S);
+end);
+
+InstallMethod(IsomorphismTransformationSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return IsomorphismSemigroup(IsTransformationSemigroup, S);
+end);
+
+InstallMethod(IsomorphismPartialPermSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return IsomorphismSemigroup(IsPartialPermSemigroup, S);
+end);
+
+InstallMethod(IsomorphismReesMatrixSemigroup, "for a semigroup", [IsSemigroup],
+function(S)
+  return IsomorphismSemigroup(IsReesMatrixSemigroup, S);
+end);
+
+InstallMethod(IsomorphismReesZeroMatrixSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  return IsomorphismSemigroup(IsReesZeroMatrixSemigroup, S);
+end);
+
+InstallMethod(IsomorphismPermGroup, "for a group as semigroup",
+[IsGroupAsSemigroup],
+function(S)
+  return IsomorphismSemigroup(IsPermGroup, S);
+end);
+
+InstallMethod(IsomorphismFpSemigroup, "for a semigroup", [IsSemigroup],
+function(S)
+  return IsomorphismSemigroup(IsFpSemigroup, S);
+end);
+
+InstallMethod(IsomorphismFpMonoid, "for a monoid", [IsMonoid],
+function(S)
+  return IsomorphismSemigroup(IsFpMonoid, S);
+end);
+
+# these are operations
+
+SEMIGROUPS.DefaultIsomorphismSemigroup := function(filter, S)
+  local iso1, inv1, iso2, inv2;
+
+  iso1 := IsomorphismTransformationSemigroup(S);
+  inv1 := InverseGeneralMapping(iso1);
+  iso2 := IsomorphismSemigroup(filter, Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+
+  return MappingByFunction(S, Range(iso2),
+                           x -> (x ^ iso1) ^ iso2,
+                           x -> (x ^ inv2) ^ inv1);
+end;
+
 #TODO update the info strings to include "finite"
 # This file contains methods for finite semigroups which do not depend on
 # whether they are acting or not, i.e. they should work for all semigroups.
@@ -112,15 +179,11 @@ end);
 InstallMethod(MagmaByGenerators, "for an associative element collection",
 [IsMultiplicativeElementCollection and IsFinite], SemigroupByGenerators);
 
-#
-
 InstallMethod(SemigroupByGenerators, "for an associative element collection",
 [IsMultiplicativeElementCollection and IsFinite],
 function(coll)
   return SemigroupByGenerators(coll, SEMIGROUPS.DefaultOptionsRec);
 end);
-
-#
 
 InstallMethod(SemigroupByGenerators,
 "for an associative element collection and record",
@@ -213,15 +276,11 @@ function(gens, opts)
   return S;
 end);
 
-#
-
 InstallMethod(MonoidByGenerators, "for an associative element collection",
 [IsMultiplicativeElementCollection and IsFinite],
 function(gens)
   return MonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
-
-#
 
 InstallMethod(MonoidByGenerators,
 "for an associative element collection and record",
@@ -315,8 +374,6 @@ function(gens, opts)
   return S;
 end);
 
-#
-
 InstallMethod(InverseMonoidByGenerators,
 "for a finite collection",
 [IsCollection and IsFinite],
@@ -324,16 +381,12 @@ function(gens)
   return InverseMonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
-#
-
 InstallMethod(InverseSemigroupByGenerators,
 "for a finite collection",
 [IsCollection and IsFinite],
 function(gens)
   return InverseSemigroupByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
-
-#
 
 InstallMethod(InverseMonoidByGenerators,
 "for an associative element collection and record",
@@ -408,8 +461,6 @@ function(gens, opts)
 
   return S;
 end);
-
-#
 
 InstallMethod(InverseSemigroupByGenerators,
 "for an associative element collection and record",
@@ -491,8 +542,6 @@ function(S, coll) #FIXME is the ShallowCopy really necessary?
                                  ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
-#
-
 InstallMethod(ClosureInverseSemigroup,
 "for a semigroup with inverse op and an associative element",
 [IsSemigroupWithInverseOp, IsMultiplicativeElement],
@@ -502,16 +551,12 @@ function(S, x) #FIXME is the ShallowCopy really necessary?
                                  ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
-#
-
 InstallMethod(ClosureInverseSemigroup,
 "for semigroup with inverse op, associative element, record",
 [IsSemigroupWithInverseOp, IsMultiplicativeElement, IsRecord],
 function(S, x, opts)
   return ClosureInverseSemigroup(S, [x], opts);
 end);
-
-#
 
 InstallMethod(ClosureInverseSemigroup,
 "for a semigroup with inverse op, associative elt coll, and record",
@@ -545,8 +590,6 @@ function(S, coll, opts)
                                    Filtered(coll, x -> not x in S),
                                    SEMIGROUPS.ProcessOptionsRec(opts));
 end);
-
-#
 
 InstallGlobalFunction(ClosureInverseSemigroupNC,
 function(S, coll, opts)
@@ -608,8 +651,6 @@ function(S, coll, opts)
   return S;
 end);
 
-#
-
 InstallMethod(ClosureSemigroup,
 "for a semigroup and associative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection and IsFinite],
@@ -617,15 +658,11 @@ function(S, coll) #FIXME: ShallowCopy?
   return ClosureSemigroup(S, coll, ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
 
-#
-
 InstallMethod(ClosureSemigroup, "for a semigroup and associative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x) #FIXME: ShallowCopy
   return ClosureSemigroup(S, [x], ShallowCopy(SEMIGROUPS.OptionsRec(S)));
 end);
-
-#
 
 InstallMethod(ClosureSemigroup,
 "for a semigroup, associative element, and record",
@@ -633,8 +670,6 @@ InstallMethod(ClosureSemigroup,
 function(S, x, opts)
   return ClosureSemigroup(S, [x], opts);
 end);
-
-#
 
 InstallMethod(ClosureSemigroup,
 "for a semigroup, associative element collection, and record",
@@ -767,15 +802,11 @@ function(S, func, limit)
   return T;
 end);
 
-#
-
 InstallMethod(SubsemigroupByProperty, "for a semigroup and function",
 [IsSemigroup, IsFunction],
 function(S, func)
   return SubsemigroupByProperty(S, func, Size(S));
 end);
-
-#
 
 InstallMethod(InverseSubsemigroupByProperty,
 "for semigroup with inverse op and function",

@@ -54,36 +54,32 @@ function(S)
   return DegreeOfPBR(Representative(S));
 end);
 
-InstallMethod(AsPBRSemigroup, "for a semigroup", [IsSemigroup],
-function(S)
-  return Range(IsomorphismPBRSemigroup(S));
-end);
+# fall back method via a transformation semigroup
 
-# fall back method
+InstallMethod(IsomorphismSemigroup, "for IsPBRSemigroup and a semigroup",
+[IsPBRSemigroup, IsSemigroup], SEMIGROUPS.DefaultIsomorphismSemigroup);
 
-InstallMethod(IsomorphismPBRSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  local map;
-  map := IsomorphismTransformationSemigroup(S);
-  return CompositionMapping(IsomorphismPBRSemigroup(Range(map)), map);
-end);
-
-InstallMethod(IsomorphismPBRSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsPBRSemigroup and a transformation semigroup",
+[IsPBRSemigroup, IsTransformationSemigroup],
+function(filt, S)
   local deg, gens;
   deg := Maximum(1, DegreeOfTransformationSemigroup(S));
   gens := List(GeneratorsOfSemigroup(S), x -> AsPBR(x, deg));
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
-                                       AsPBR, AsTransformation);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Semigroup(gens),
+                                       AsPBR,
+                                       AsTransformation);
 end);
 
-InstallMethod(IsomorphismPBRSemigroup, "for a bipartition semigroup",
-[IsBipartitionSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsPBRSemigroup and a bipartition semigroup",
+[IsPBRSemigroup, IsBipartitionSemigroup],
+function(filt, S)
   local gens;
   gens := List(GeneratorsOfSemigroup(S), AsPBR);
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
-                                       AsPBR, AsBipartition);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Semigroup(gens),
+                                       AsPBR,
+                                       AsBipartition);
 end);

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  constructions.gi
+#W  semicons.gi
 #Y  Copyright (C) 2015                                    James D. Mitchell
 ##                                                        Wilfred A. Wilson
 ##
@@ -9,183 +9,38 @@
 #############################################################################
 ##
 
-#TODO get rid of AsXSemigroup (i.e. AsTransformationSemigroup etc) and write an
-# AsSemigroup(IsTransformationSemigroup, S) function (or bunch of functions)
-
-SEMIGROUPS.AsXSemigroup := function(filt)
-  if filt = IsTransformationSemigroup then
-    return AsTransformationSemigroup;
-  elif filt = IsPartialPermSemigroup then
-    return AsPartialPermSemigroup;
-  elif filt = IsBipartitionSemigroup then
-    return AsBipartitionSemigroup;
-  elif filt = IsBlockBijectionSemigroup then
-    return AsBlockBijectionSemigroup;
-  elif filt = IsPBRSemigroup then
-    return AsPBRSemigroup;
-  elif filt = IsBooleanMatSemigroup then
-    return AsBooleanMatSemigroup;
-  fi;
-  return fail;
-end;
-
-# Also have:
-#  IsMaxPlusMatrixSemigroup
-#  IsMinPlusMatrixSemigroup
-#  IsTropicalMaxPlusMatrixSemigroup
-#  IsTropicalMinPlusMatrixSemigroup
-#  IsProjectiveMaxPlusMatrixSemigroup
-#  IsNTPMatrixSemigroup
-#  IsIntegerMatrixSemigroup
-
-SEMIGROUPS.StandardExampleApplyAttributes := function(arg)
-  local func, S, param, m, r, n;
-
-  func := arg[1];
-  S := arg[2];
-  param := arg{[3 .. Length(arg)]};
-
-  # Trivial semigroup
-  if func = TrivialSemigroup then
-    SetIsTrivial(S, true);
-
-  # Zero semigroup
-  elif func = ZeroSemigroup then
-    n := param[1];
-    SetSize(S, n);
-    SetIsZeroSemigroup(S, true);
-    SetMultiplicativeZero(S, GeneratorsOfSemigroup(S)[1] ^ 2);
-    if IsTrivial(S) then
-      SetAsList(S, GeneratorsOfSemigroup(S));
-    else
-      SetIsGroupAsSemigroup(S, false);
-      SetIsRegularSemigroup(S, false);
-      if n > 2 then
-        SetIsMonogenicSemigroup(S, false);
-      fi;
-      SetAsList(S, Concatenation(GeneratorsOfSemigroup(S),
-                                 [MultiplicativeZero(S)]));
-    fi;
-
-  # Monogenic semigroup
-  elif func = MonogenicSemigroup then
-    m := param[1];
-    r := param[2];
-    SetSize(S, m + r - 1);
-    SetIsMonogenicSemigroup(S, true);
-    if m = 1 then
-      SetIsGroupAsSemigroup(S, true);
-    else
-      SetIsGroupAsSemigroup(S, false);
-      SetIsRegularSemigroup(S, false);
-    fi;
-
-    if r = 1 and m < 3 then
-      SetIsZeroSemigroup(S, true);
-    else
-      SetIsZeroSemigroup(S, false);
-    fi;
-
-  # Rectangular band
-  elif func = RectangularBand then
-    m := param[1];
-    n := param[2];
-    SetSize(S, m * n);
-    SetIsRectangularBand(S, true);
-    SetNrRClasses(S, m);
-    SetNrLClasses(S, n);
-    if not (m = 1 and n = 1) then
-      SetIsGroupAsSemigroup(S, false);
-      SetIsZeroSemigroup(S, false);
-      SetIsTrivial(S, false);
-      if m = 1 then
-        SetIsRightZeroSemigroup(S, true);
-      else
-        SetIsRightZeroSemigroup(S, false);
-      fi;
-      if n = 1 then
-        SetIsLeftZeroSemigroup(S, true);
-      else
-        SetIsLeftZeroSemigroup(S, false);
-      fi;
-    else
-      SetIsTrivial(S, true);
-    fi;
-  fi;
-end;
-
-# For 1-parameter constructions
-SEMIGROUPS.InstallConstructors1 := function(func, exclude, param)
-  local type, cons;
-  cons := EvalString(Concatenation(NameFunction(func), "Cons"));
-  for type in SEMIGROUPS.SemigroupTypes do
-    if not type in exclude then
-      InstallMethod(cons, Concatenation([type], param),
-      function(filt, n)
-        local S;
-        if SEMIGROUPS.AsXSemigroup(filt) <> fail then
-          S := SEMIGROUPS.AsXSemigroup(filt)(func(IsBipartitionSemigroup, n));
-          SEMIGROUPS.StandardExampleApplyAttributes(func, S, n);
-          return S;
-        fi;
-        return fail;
-      end);
-    fi;
-  od;
-end;
-
-# For 2-parameter constructions
-SEMIGROUPS.InstallConstructors2 := function(func, exclude, param)
-  local type, cons;
-  cons := EvalString(Concatenation(NameFunction(func), "Cons"));
-  for type in SEMIGROUPS.SemigroupTypes do
-    if not type in exclude then
-      InstallMethod(cons, Concatenation([type], param),
-      function(filt, m, n)
-        local S;
-        if SEMIGROUPS.AsXSemigroup(filt) <> fail then
-          S := SEMIGROUPS.AsXSemigroup(filt)(func(IsBipartitionSemigroup, m,
-                                                  n));
-          SEMIGROUPS.StandardExampleApplyAttributes(func, S, m, n);
-          return S;
-        fi;
-        return fail;
-      end);
-    fi;
-  od;
-end;
-
 # Trivial semigroup: main method
 
 InstallGlobalFunction(TrivialSemigroup,
 function(arg)
-  local out;
+  local S;
 
   if Length(arg) = 0 then
-    out := TrivialSemigroupCons(IsTransformationSemigroup, 0);
+    S := TrivialSemigroupCons(IsTransformationSemigroup, 0);
   elif Length(arg) = 1 and IsInt(arg[1]) and arg[1] >= 0 then
-    out := TrivialSemigroupCons(IsTransformationSemigroup, arg[1]);
+    S := TrivialSemigroupCons(IsTransformationSemigroup, arg[1]);
   elif Length(arg) = 1 and IsOperation(arg[1]) then
-    out := TrivialSemigroupCons(arg[1], 0);
+    S := TrivialSemigroupCons(arg[1], 2);
   elif Length(arg) = 2 and IsOperation(arg[1]) and IsInt(arg[2])
       and arg[2] >= 0 then
-    out := TrivialSemigroupCons(arg[1], arg[2]);
+    S := TrivialSemigroupCons(arg[1], arg[2]);
   else
     ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
                   "the arguments must be a non-negative integer or ",
                   "a filter and a non-negative\ninteger,");
   fi;
-  if out = fail then
+  if S = fail then
     ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
                   "the requested filter is not supported,");
   fi;
-  SEMIGROUPS.StandardExampleApplyAttributes(TrivialSemigroup, out, 0);
-  return out;
+  SetIsTrivial(S, true);
+  return S;
 end);
 
 # Trivial semigroup: constructors
 
 InstallMethod(TrivialSemigroupCons,
+"for IsTransformationSemigroup and an integer",
 [IsTransformationSemigroup, IsInt],
 function(filt, deg)
   if deg = 0 then
@@ -194,17 +49,15 @@ function(filt, deg)
   return Semigroup(ConstantTransformation(deg, 1));
 end);
 
-#
-
 InstallMethod(TrivialSemigroupCons,
+"for IsPartialPermSemigroup and an integer",
 [IsPartialPermSemigroup, IsInt],
 function(filt, n)
   return Semigroup(PartialPerm([1 .. n]));
 end);
 
-#
-
 InstallMethod(TrivialSemigroupCons,
+"for IsBipartitionSemigroup and an integer",
 [IsBipartitionSemigroup, IsInt],
 function(filt, deg)
   local n;
@@ -212,17 +65,15 @@ function(filt, deg)
   return Semigroup(Bipartition([Concatenation(List([1 .. n], x -> [-x, x]))]));
 end);
 
-#
-
 InstallMethod(TrivialSemigroupCons,
+"for IsBlockBijectionSemigroup and an integer",
 [IsBlockBijectionSemigroup, IsInt],
 function(filt, deg)
   return TrivialSemigroupCons(IsBipartitionSemigroup, deg);
 end);
 
-#
-
 InstallMethod(TrivialSemigroupCons,
+"for IsPBRSemigroup and an integer",
 [IsPBRSemigroup, IsInt],
 function(filt, deg)
   local n;
@@ -230,9 +81,8 @@ function(filt, deg)
   return Semigroup(IdentityPBR(n));
 end);
 
-#
-
 InstallMethod(TrivialSemigroupCons,
+"for IsBooleanMatSemigroup and an integer",
 [IsBooleanMatSemigroup, IsInt],
 function(filt, deg)
   local n;
@@ -242,20 +92,29 @@ end);
 
 # Trivial semigroup: other constructors
 
-SEMIGROUPS.InstallConstructors1(TrivialSemigroup,
-                                [IsTransformationSemigroup,
-                                 IsPartialPermSemigroup,
-                                 IsBipartitionSemigroup,
-                                 IsBlockBijectionSemigroup,
-                                 IsPBRSemigroup,
-                                 IsBooleanMatSemigroup],
-                                [IsInt]);
+for IsXSemigroup in ["IsNTPMatrixSemigroup",
+                     "IsMaxPlusMatrixSemigroup",
+                     "IsMinPlusMatrixSemigroup",
+                     "IsTropicalMaxPlusMatrixSemigroup",
+                     "IsTropicalMinPlusMatrixSemigroup",
+                     "IsProjectiveMaxPlusMatrixSemigroup",
+                     "IsIntegerMatrixSemigroup",
+                     "IsReesMatrixSemigroup",
+                     "IsReesZeroMatrixSemigroup"] do
+  InstallMethod(TrivialSemigroupCons,
+  Concatenation("for ", IsXSemigroup, " and an integer"),
+  [EvalString(IsXSemigroup), IsInt],
+  function(filter, n)
+    return AsSemigroup(filter,
+                       TrivialSemigroupCons(IsTransformationSemigroup, n));
+  end);
+od;
 
 # Monogenic semigroup: main method
 
 InstallGlobalFunction(MonogenicSemigroup,
 function(arg)
-  local filter, m, r, out;
+  local filter, m, r, S;
 
   if Length(arg) = 2  then
     filter := IsTransformationSemigroup;
@@ -274,19 +133,31 @@ function(arg)
                   "and a two positive\nintegers,");
   fi;
 
-  out := MonogenicSemigroupCons(filter, m, r);
-  if out = fail then
+  S := MonogenicSemigroupCons(filter, m, r);
+
+  if S = fail then
     ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
                   "the requested filter is not supported,");
   fi;
-  SEMIGROUPS.StandardExampleApplyAttributes(MonogenicSemigroup, out, m, r);
-  return out;
+
+  SetSize(S, m + r - 1);
+  SetIsMonogenicSemigroup(S, true);
+  if m = 1 then
+    SetIsGroupAsSemigroup(S, true);
+  else
+    SetIsGroupAsSemigroup(S, false);
+    SetIsRegularSemigroup(S, false);
+  fi;
+
+  SetIsZeroSemigroup(S, r = 1 and m < 3);
+
+  return S;
 end);
 
 # Monogenic semigroup: constructors
 
 InstallMethod(MonogenicSemigroupCons,
-"for a filter and a positive integer and positive integer",
+"for a IsTransformationSemigroup and two positive integers",
 [IsTransformationSemigroup, IsPosInt, IsPosInt],
 function(filter, m, r)
   local t;
@@ -301,10 +172,8 @@ function(filter, m, r)
   return Semigroup(Transformation(t));
 end);
 
-#
-
 InstallMethod(MonogenicSemigroupCons,
-"for a filter and two positive integers",
+"for a IsPartialPermSemigroup and two positive integers",
 [IsPartialPermSemigroup, IsPosInt, IsPosInt],
 function(filter, m, r)
   local cyclic_group, nilpotent_offset, nilpotent, im;
@@ -327,19 +196,15 @@ function(filter, m, r)
   return Semigroup(PartialPerm(im));
 end);
 
-#
-
 InstallMethod(MonogenicSemigroupCons,
-"for a filter and two positive integers",
+"for a IsBipartitionSemigroup and two positive integers",
 [IsBipartitionSemigroup, IsPosInt, IsPosInt],
 function(filter, m, r)
   return MonogenicSemigroupCons(IsBlockBijectionSemigroup, m, r);
 end);
 
-#
-
 InstallMethod(MonogenicSemigroupCons,
-"for a filter and two positive integers",
+"for IsBlockBijectionSemigroup and two positive integers",
 [IsBlockBijectionSemigroup, IsPosInt, IsPosInt],
 function(filter, m, r)
   local out, offset, i;
@@ -371,20 +236,29 @@ end);
 
 # Monogenic semigroup: other constructors
 
-SEMIGROUPS.InstallConstructors2(MonogenicSemigroup,
-                                [IsTransformationSemigroup,
-                                 IsPartialPermSemigroup,
-                                 IsBipartitionSemigroup,
-                                 IsBlockBijectionSemigroup,
-                                 IsReesMatrixSemigroup,
-                                 IsReesZeroMatrixSemigroup],
-                                [IsPosInt, IsPosInt]);
+for IsXSemigroup in ["IsNTPMatrixSemigroup",
+                     "IsMaxPlusMatrixSemigroup",
+                     "IsMinPlusMatrixSemigroup",
+                     "IsTropicalMaxPlusMatrixSemigroup",
+                     "IsTropicalMinPlusMatrixSemigroup",
+                     "IsProjectiveMaxPlusMatrixSemigroup",
+                     "IsIntegerMatrixSemigroup",
+                     "IsReesMatrixSemigroup",
+                     "IsReesZeroMatrixSemigroup"] do
+  InstallMethod(MonogenicSemigroupCons,
+  Concatenation("for ", IsXSemigroup, " and two positive integers"),
+  [EvalString(IsXSemigroup), IsPosInt, IsPosInt],
+  function(filter, m, r)
+    return AsSemigroup(filter,
+                       MonogenicSemigroupCons(IsTransformationSemigroup, m, r));
+  end);
+od;
 
 # Rectangular band: main method
 
 InstallGlobalFunction(RectangularBand,
 function(arg)
-  local filter, m, n, out;
+  local filter, m, n, S;
 
   if Length(arg) = 2  then
     filter := IsTransformationSemigroup;
@@ -403,13 +277,28 @@ function(arg)
                   "and a two positive\nintegers,");
   fi;
 
-  out := RectangularBandCons(filter, m, n);
-  if out = fail then
+  S := RectangularBandCons(filter, m, n);
+
+  if S = fail then
     ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
                   "the requested filter is not supported,");
   fi;
-  SEMIGROUPS.StandardExampleApplyAttributes(RectangularBand, out, m, n);
-  return out;
+
+  SetSize(S, m * n);
+  SetIsRectangularBand(S, true);
+  SetNrRClasses(S, m);
+  SetNrLClasses(S, n);
+
+  if not (m = 1 and n = 1) then
+    SetIsGroupAsSemigroup(S, false);
+    SetIsZeroSemigroup(S, false);
+    SetIsTrivial(S, false);
+    SetIsRightZeroSemigroup(S, m = 1);
+    SetIsLeftZeroSemigroup(S, n = 1);
+  else
+    SetIsTrivial(S, true);
+  fi;
+  return S;
 end);
 
 # Rectangular band: constructors
@@ -454,8 +343,6 @@ function(filter, m, n)
   return Semigroup(out);
 end);
 
-#
-
 InstallMethod(RectangularBandCons,
 "for a filter and two positive integers",
 [IsBipartitionSemigroup, IsPosInt, IsPosInt],
@@ -490,8 +377,6 @@ function(filter, m, n)
   return Semigroup(out);
 end);
 
-#
-
 InstallMethod(RectangularBandCons,
 "for a filter and a positive integer and positive integer",
 [IsReesMatrixSemigroup, IsPosInt, IsPosInt],
@@ -505,20 +390,27 @@ end);
 
 # Rectangular band: other constructors
 
-SEMIGROUPS.InstallConstructors2(RectangularBand,
-                                [IsTransformationSemigroup,
-                                 IsPartialPermSemigroup,
-                                 IsBipartitionSemigroup,
-                                 IsBlockBijectionSemigroup,
-                                 IsReesMatrixSemigroup,
-                                 IsReesZeroMatrixSemigroup],
-                                [IsPosInt, IsPosInt]);
+for IsXSemigroup in ["IsNTPMatrixSemigroup",
+                     "IsMaxPlusMatrixSemigroup",
+                     "IsMinPlusMatrixSemigroup",
+                     "IsTropicalMaxPlusMatrixSemigroup",
+                     "IsTropicalMinPlusMatrixSemigroup",
+                     "IsProjectiveMaxPlusMatrixSemigroup",
+                     "IsIntegerMatrixSemigroup"] do
+  InstallMethod(RectangularBandCons,
+  Concatenation("for ", IsXSemigroup, " and a positive integer"),
+  [EvalString(IsXSemigroup), IsPosInt, IsPosInt],
+  function(filter, m, n)
+    return AsSemigroup(filter,
+                       RectangularBandCons(IsTransformationSemigroup, m, n));
+  end);
+od;
 
 # Zero semigroup: main method
 
 InstallGlobalFunction(ZeroSemigroup,
 function(arg)
-  local filter, n, out;
+  local filter, n, S;
 
   if Length(arg) = 1  then
     filter := IsTransformationSemigroup;
@@ -534,13 +426,18 @@ function(arg)
                   "positive integer,");
   fi;
 
-  out := ZeroSemigroupCons(filter, n);
-  if out = fail then
+  S := ZeroSemigroupCons(filter, n);
+  if S = fail then
     ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
                   "the requested filter is not supported,");
   fi;
-  SEMIGROUPS.StandardExampleApplyAttributes(ZeroSemigroup, out, n);
-  return out;
+  SetSize(S, n);
+  SetIsZeroSemigroup(S, true);
+  SetMultiplicativeZero(S, S.1 ^ 2);
+  SetIsGroupAsSemigroup(S, not IsTrivial(S));
+  SetIsRegularSemigroup(S, not IsTrivial(S));
+  SetIsMonogenicSemigroup(S, n <= 2);
+  return S;
 end);
 
 # Zero semigroup: constructors
@@ -569,8 +466,6 @@ function(filter, n)
   return out;
 end);
 
-#
-
 InstallMethod(ZeroSemigroupCons,
 "for a filter and a positive integer",
 [IsPartialPermSemigroup, IsPosInt],
@@ -591,8 +486,6 @@ function(filter, n)
   return out;
 end);
 
-#
-
 InstallMethod(ZeroSemigroupCons,
 "for a filter and a positive integer",
 [IsBipartitionSemigroup, IsPosInt],
@@ -607,8 +500,6 @@ function(filter, n)
   fi;
   return ZeroSemigroupCons(IsBlockBijectionSemigroup, n);
 end);
-
-#
 
 InstallMethod(ZeroSemigroupCons,
 "for a filter and a positive integer",
@@ -637,8 +528,6 @@ function(filter, n)
   return out;
 end);
 
-#
-
 InstallMethod(ZeroSemigroupCons,
 "for a filter and a positive integer",
 [IsReesZeroMatrixSemigroup, IsPosInt],
@@ -655,14 +544,21 @@ end);
 
 # Zero semigroup: other constructors
 
-SEMIGROUPS.InstallConstructors1(ZeroSemigroup,
-                                [IsTransformationSemigroup,
-                                 IsPartialPermSemigroup,
-                                 IsBipartitionSemigroup,
-                                 IsBlockBijectionSemigroup,
-                                 IsReesMatrixSemigroup,
-                                 IsReesZeroMatrixSemigroup],
-                                [IsPosInt]);
+for IsXSemigroup in ["IsNTPMatrixSemigroup",
+                     "IsMaxPlusMatrixSemigroup",
+                     "IsMinPlusMatrixSemigroup",
+                     "IsTropicalMaxPlusMatrixSemigroup",
+                     "IsTropicalMinPlusMatrixSemigroup",
+                     "IsProjectiveMaxPlusMatrixSemigroup",
+                     "IsIntegerMatrixSemigroup"] do
+  InstallMethod(ZeroSemigroupCons,
+  Concatenation("for ", IsXSemigroup, " and a positive integer"),
+  [EvalString(IsXSemigroup), IsPosInt],
+  function(filter, n)
+    return AsSemigroup(filter,
+                       ZeroSemigroupCons(IsTransformationSemigroup, n));
+  end);
+od;
 
 # Left zero semigroup: main method
 

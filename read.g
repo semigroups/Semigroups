@@ -99,7 +99,7 @@ ReadPackage("semigroups/gap/semigroups/semimaxplus.gi");
 ReadPackage("semigroups/gap/semigroups/semiringmat.gi");
 ReadPackage("semigroups/gap/semigroups/semiboolmat.gi");
 ReadPackage("semigroups/gap/semigroups/examples.gi");
-ReadPackage("semigroups/gap/semigroups/constructions.gi");
+ReadPackage("semigroups/gap/semigroups/semicons.gi");
 ReadPackage("semigroups/gap/semigroups/graph-inverse.gi");
 
 ReadPackage("semigroups/gap/main/froidure-pin.gi");

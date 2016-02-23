@@ -19,6 +19,4 @@ InstallTrueMethod(IsFinite, IsPBRSemigroup);
 DeclareAttribute("DegreeOfPBRSemigroup",
                  IsPBRSemigroup);
 
-DeclareAttribute("IsomorphismPBRSemigroup", IsSemigroup);
-DeclareAttribute("AsPBRSemigroup", IsSemigroup);
 DeclareOperation("FullPBRMonoid", [IsPosInt]);

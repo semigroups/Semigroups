@@ -18,9 +18,6 @@ DeclareSynonym("IsBooleanMatMonoid",
 
 InstallTrueMethod(IsFinite, IsBooleanMatSemigroup);
 
-DeclareAttribute("AsBooleanMatSemigroup", IsSemigroup);
-DeclareAttribute("IsomorphismBooleanMatSemigroup", IsSemigroup);
-
 DeclareOperation("RegularBooleanMatMonoid", [IsPosInt]);
 DeclareOperation("GossipMonoid", [IsPosInt]);
 DeclareOperation("UnitriangularBooleanMatrixMonoid", [IsPosInt]);

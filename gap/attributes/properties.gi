@@ -986,8 +986,6 @@ function(S)
   return data!.found = false;
 end);
 
-#
-
 InstallMethod(IsRegularSemigroup,
 "for an acting star semigroup with generators",
 [IsActingSemigroup and IsStarSemigroup and HasGeneratorsOfSemigroup],
@@ -1524,8 +1522,6 @@ end);
 InstallMethod(IsZeroSimpleSemigroup, "for a finite inverse semigroup",
 [IsInverseSemigroup and IsFinite],
 S -> MultiplicativeZero(S) <> fail and NrDClasses(S) = 2);
-
-#
 
 InstallMethod(IsNilpotentSemigroup, "for a semigroup",
 [IsSemigroup],

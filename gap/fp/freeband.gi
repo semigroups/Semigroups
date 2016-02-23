@@ -115,15 +115,15 @@ end);
 
 InstallMethod(IsFreeBand, "for a semigroup",
 [IsSemigroup],
-function(s)
+function(S)
   local used, occurred, gens, max_d, g;
 
-  if not IsBand(s) then
+  if not IsBand(S) then
     return false;
   fi;
 
-  if IsFreeBandSubsemigroup(s) then
-    gens := Generators(s);
+  if IsFreeBandSubsemigroup(S) then
+    gens := Generators(S);
     used := BlistList([1 .. Length(gens[1]!.cont)], []);
     occurred := BlistList([1 .. Length(gens[1]!.cont)], []);
     for g in gens do
@@ -137,12 +137,12 @@ function(s)
     fi;
   fi;
 
-  if not IsActingSemigroup(s) then
-    s := AsTransformationSemigroup(s);
+  if not IsActingSemigroup(S) then
+    S := AsSemigroup(IsTransformationSemigroup, S);
   fi;
 
-  max_d := MaximalDClasses(s);
-  return Size(s) = Size(FreeBand(Length(max_d)));
+  max_d := MaximalDClasses(S);
+  return Size(S) = Size(FreeBand(Length(max_d)));
 end);
 
 InstallMethod(Iterator, "for a Greens D-class of a free band",

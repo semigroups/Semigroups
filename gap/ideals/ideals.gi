@@ -29,8 +29,6 @@ function(I)
 
 end);
 
-#
-
 BindGlobal("_ViewStringForSemigroupsIdeals",
 function(I)
   local str, suffix, nrgens;
@@ -122,12 +120,8 @@ InstallMethod(ViewString,
  HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
 _ViewStringForSemigroupsIdeals);
 
-#
-
 MakeReadWriteGlobal("_ViewStringForSemigroupsIdeals");
 Unbind(_ViewStringForSemigroupsIdeals);
-
-#
 
 InstallMethod(PrintObj,
 "for a semigroup ideal with ideal generators",
@@ -135,8 +129,6 @@ InstallMethod(PrintObj,
 function(I)
   Print(PrintString(I));
 end);
-
-#
 
 InstallMethod(PrintString,
 "for a semigroup ideal with ideal generators",
@@ -176,8 +168,6 @@ function(S)
                        " generators>");
 end);
 
-#
-
 InstallMethod(\., "for a semigroup ideal with generators and pos int",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal, IsPosInt],
 function(S, n)
@@ -193,8 +183,6 @@ function(S, n)
   return S[n];
 end);
 
-#
-
 InstallMethod(\=, "for semigroup ideals",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal,
  IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
@@ -209,8 +197,6 @@ function(I, J)
   fi;
 
 end);
-
-#
 
 InstallMethod(\=, "for a semigroup ideal and semigroup with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal,
@@ -229,16 +215,12 @@ function(I, S)
   fi;
 end);
 
-#
-
 InstallMethod(\=, "for a semigroup with generators and a semigroup ideal",
 [IsSemigroup and HasGeneratorsOfSemigroup,
  IsSemigroupIdeal and HasGeneratorsOfMagmaIdeal],
 function(S, I)
   return I = S;
 end);
-
-#
 
 InstallMethod(Representative, "for a semigroup ideal",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
@@ -307,16 +289,12 @@ function(arg)
   fi;
 end);
 
-#
-
 InstallMethod(SemigroupIdealByGenerators,
 "for a semigroup, multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, gens)
   return SemigroupIdealByGenerators(S, gens, SEMIGROUPS.OptionsRec(S));
 end);
-
-#
 
 InstallMethod(SemigroupIdealByGenerators,
 "for semigroup, multiplicative element collection, and record",
@@ -389,8 +367,6 @@ function(S, gens, opts)
   return I;
 end);
 
-#
-
 InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],
 function(S)
@@ -442,8 +418,6 @@ function(I)
   return out;
 end);
 
-#
-
 InstallMethod(MinimalIdealGeneratingSet,
 "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
@@ -472,12 +446,10 @@ function(I, x)
   return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);
 end);
 
-#
-
-InstallMethod(IsomorphismTransformationSemigroup,
-"for a semigroup ideal",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I)
+InstallMethod(IsomorphismSemigroup,
+"for IsTransformationSemigroup and a semigroup ideal",
+[IsTransformationSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(filter, I)
   local iso, inv, J;
 
   iso := IsomorphismTransformationSemigroup(SupersemigroupOfIdeal(I));
@@ -487,12 +459,10 @@ function(I)
   return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
-#
-
-InstallMethod(IsomorphismBipartitionSemigroup,
-"for a semigroup ideal",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I)
+InstallMethod(IsomorphismSemigroup,
+"for IsBipartitionSemigroup and a semigroup ideal",
+[IsBipartitionSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(filter, I)
   local iso, inv, J;
 
   iso := IsomorphismBipartitionSemigroup(SupersemigroupOfIdeal(I));
@@ -502,12 +472,10 @@ function(I)
   return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
-#
-
-InstallMethod(IsomorphismPartialPermSemigroup,
-"for a semigroup ideal",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I)
+InstallMethod(IsomorphismSemigroup,
+"for IsPartialPermSemigroup and a semigroup ideal",
+[IsPartialPermSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(filter, I)
   local iso, inv, J;
 
   iso := IsomorphismPartialPermSemigroup(SupersemigroupOfIdeal(I));
@@ -517,12 +485,10 @@ function(I)
   return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
-#
-
-InstallMethod(IsomorphismBlockBijectionSemigroup,
-"for a semigroup ideal",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(I)
+InstallMethod(IsomorphismSemigroup,
+"for IsBlockBijectionSemigroup and a semigroup ideal",
+[IsBlockBijectionSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(filter, I)
   local iso, inv, J;
 
   iso := IsomorphismBlockBijectionSemigroup(SupersemigroupOfIdeal(I));
@@ -531,8 +497,6 @@ function(I)
 
   return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
-
-#
 
 InstallMethod(IsCommutativeSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal],
@@ -555,8 +519,6 @@ function(I)
   return true;
 end);
 
-#
-
 InstallMethod(IsTrivial, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(I)
@@ -569,8 +531,6 @@ function(I)
   gens := GeneratorsOfSemigroupIdeal(I);
   return MultiplicativeZero(I) = gens[1] and ForAll(gens, x -> gens[1] = x);
 end);
-
-#
 
 InstallMethod(IsFactorisableInverseMonoid, "for an inverse semigroup ideal",
 [IsSemigroupIdeal and IsInverseSemigroup],
@@ -591,8 +551,6 @@ function(I)
   return Length(OrbSCC(LambdaOrb(I))) - 1;
 end);
 
-#
-
 InstallMethod(NrDClasses, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
@@ -600,16 +558,12 @@ function(I)
   return Length(SemigroupIdealData(I)!.dorbit);
 end);
 
-#
-
 InstallMethod(GreensDClasses, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
 function(I)
   Enumerate(SemigroupIdealData(I));
   return SemigroupIdealData(I)!.dorbit;
 end);
-
-#
 
 InstallMethod(PartialOrderOfDClasses,
 "for a regular acting semigroup ideal",
@@ -621,8 +575,6 @@ function(I)
   Enumerate(data);
   return data!.poset;
 end);
-
-#
 
 InstallMethod(DClassReps, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],

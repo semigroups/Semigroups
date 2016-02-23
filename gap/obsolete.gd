@@ -11,4 +11,13 @@
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomPartialPermSemigroup", [IsPosInt, IsPosInt]);
 DeclareOperation("DotDClasses", [IsSemigroup]);
+DeclareOperation("DotDClasses", [IsSemigroup, IsRecord]);
 DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
+
+DeclareOperation("AsPartialPermSemigroup", [IsSemigroup]);
+DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
+DeclareOperation("AsBipartitionSemigroup", [IsSemigroup]);
+DeclareOperation("AsBlockBijectionSemigroup", [IsSemigroup]);
+
+DeclareOperation("IsomorphismBipartitionSemigroup", [IsSemigroup]);
+DeclareOperation("IsomorphismBlockBijectionSemigroup", [IsSemigroup]);

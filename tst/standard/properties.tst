@@ -276,7 +276,7 @@ true
 
 # doesn't know it is inverse
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
-gap> S := Range(IsomorphismBooleanMatSemigroup(S));;
+gap> S := Range(IsomorphismSemigroup(IsBooleanMat, S));;
 gap> IsCliffordSemigroup(S);
 true
 gap> I := SemigroupIdeal(S, Random(S));;
@@ -362,7 +362,7 @@ gap> IsCompletelyRegularSemigroup(I);
 true
 
 #T# properties: IsCompletelyRegularSemigroup, 3
-gap> S := Range(IsomorphismBooleanMatSemigroup(MonogenicSemigroup(3, 2)));;
+gap> S := AsSemigroup(IsBooleanMat, MonogenicSemigroup(3, 2));;
 gap> IsRegularSemigroup(S);
 false
 gap> IsCompletelyRegularSemigroup(S);

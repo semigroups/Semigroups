@@ -48,12 +48,8 @@ function(S)
   return U;
 end);
 
-#
-
 InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
 S -> Range(IsomorphismBlockBijectionSemigroup(S)));
-
-#
 
 InstallImmediateMethod(IsBlockBijectionSemigroup, IsSemigroup and
 HasGeneratorsOfSemigroup, 0,
@@ -62,8 +58,6 @@ function(S)
          and ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
 end);
 
-#
-
 InstallImmediateMethod(IsPartialPermBipartitionSemigroup, IsSemigroup and
 HasGeneratorsOfSemigroup, 0,
 function(S)
@@ -71,16 +65,12 @@ function(S)
          and ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
 end);
 
-#
-
 InstallImmediateMethod(IsPermBipartitionGroup, IsSemigroup and
 HasGeneratorsOfSemigroup, 0,
 function(S)
   return IsBipartitionSemigroup(S)
          and ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
 end);
-
-#
 
 InstallMethod(IsBlockBijectionSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal],
@@ -92,8 +82,6 @@ function(S)
          and ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
 end);
 
-#
-
 InstallMethod(IsPartialPermBipartitionSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(S)
@@ -104,8 +92,6 @@ function(S)
          and ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
 end);
 
-#
-
 InstallMethod(IsPermBipartitionGroup, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(S)
@@ -115,8 +101,6 @@ function(S)
   return IsBipartitionSemigroup(S)
          and ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
 end);
-
-#
 
 InstallMethod(NaturalLeqInverseSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
@@ -133,8 +117,6 @@ function(S)
   ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
                 "the argument is not an inverse semigroup,");
 end);
-
-#
 
 InstallMethod(NaturalPartialOrder,
 "for an inverse block bijection semigroup",
@@ -156,8 +138,6 @@ function(S)
 
   return out;
 end);
-
-#
 
 InstallMethod(NaturalPartialOrder,
 "for an inverse partial perm bipartition semigroup",
@@ -191,38 +171,15 @@ end);
 # this is just a composition of IsomorphismTransformationSemigroup and the
 # method below for IsomorphismBipartitionSemigroup...
 
-InstallMethod(IsomorphismBipartitionSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  local en, act, gens;
+InstallMethod(IsomorphismSemigroup,
+"for IsBipartitionSemigroup and a semigroup",
+[IsBipartitionSemigroup, IsSemigroup], SEMIGROUPS.DefaultIsomorphismSemigroup);
 
-  en := EnumeratorSorted(S);
-
-  act := function(i, x)
-    if i <= Length(en) then
-      return Position(en, en[i] * x);
-    fi;
-    return Position(en, x);
-  end;
-
-  gens := List(en,
-               x -> AsBipartition(TransformationOp(x,
-                                                   [1 .. Length(en) + 1],
-                                                   act),
-                                  Length(en) + 1));
-  # gaplint: ignore 4
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
-   x -> AsBipartition(TransformationOp(x, [1 .. Length(en) + 1], act),
-                      Length(en) + 1),
-   x -> en[(Length(en) + 1) ^ AsTransformation(x)]);
-end);
-
-#
-
-InstallMethod(IsomorphismBipartitionSemigroup,
-"for a transformation semigroup with generators",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsBipartitionSemigroup and a transformation semigroup with generators",
+[IsBipartitionSemigroup,
+ IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(filter, S)
   local n, source, range, i;
 
   n := Maximum(1, DegreeOfTransformationSemigroup(S));
@@ -239,13 +196,15 @@ end);
 
 # the converse of the previous method
 
-InstallMethod(IsomorphismTransformationSemigroup,
-"for a bipartition semigroup with generators",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsTransformationSemigroup and a bipartition semigroup with generators",
+[IsTransformationSemigroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(filter, S)
   local n, source, range, i;
 
-  if not ForAll(GeneratorsOfSemigroup(S), IsTransBipartition) then
+  if HasIsomorphismTransformationSemigroup(S) then
+    return IsomorphismTransformationSemigroup(S);
+  elif not ForAll(GeneratorsOfSemigroup(S), IsTransBipartition) then
     TryNextMethod();
   fi;
 
@@ -262,12 +221,10 @@ function(S)
            AsTransformation, x -> AsBipartition(x, n));
 end);
 
-#
-
-InstallMethod(IsomorphismBipartitionSemigroup,
-"for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsBipartitonSemigroup and a partial perm semigroup with generators",
+[IsBipartitionSemigroup, IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(filter, S)
   local n, source, range, i;
 
   n := Maximum(DegreeOfPartialPermSemigroup(S),
@@ -286,13 +243,15 @@ end);
 
 # the converse of the previous method
 
-InstallMethod(IsomorphismPartialPermSemigroup,
-"for a bipartition semigroup with generators",
-[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsPartialPermSemigroup and a bipartition semigroup with generators",
+[IsPartialPermSemigroup, IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(filter, S)
   local n, source, range, i;
 
-  if not ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition) then
+  if HasIsomorphismPartialPermSemigroup(S) then
+    return IsomorphismPartialPermSemigroup(S);
+  elif not ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition) then
     TryNextMethod();
   fi;
 
@@ -309,13 +268,11 @@ function(S)
            AsPartialPerm, x -> AsBipartition(x, n));
 end);
 
-#
-
-InstallMethod(IsomorphismBipartitionSemigroup,
-"for a partial perm inverse semigroup with generators",
-[IsPartialPermSemigroup and IsInverseSemigroup and
+InstallMethod(IsomorphismSemigroup,
+"for IsBipartitionSemigroup and partial perm inverse semigp with generators",
+[IsBipartitionSemigroup, IsPartialPermSemigroup and IsInverseSemigroup and
  HasGeneratorsOfInverseSemigroup],
-function(S)
+function(filter, S)
   local n, source, range, i;
 
   n := Maximum(DegreeOfPartialPermSemigroup(S),
@@ -335,14 +292,17 @@ end);
 
 # the converse of the last method
 
-InstallMethod(IsomorphismPartialPermSemigroup,
-"for a bipartition inverse semigroup with generators",
-[IsBipartitionSemigroup and IsInverseSemigroup and
+InstallMethod(IsomorphismSemigroup,
+"for IsPartialPermSemigroup and bipartition inverse semigroup with generators",
+[IsPartialPermSemigroup, IsBipartitionSemigroup and IsInverseSemigroup and
  HasGeneratorsOfInverseSemigroup],
-function(S)
+function(filter, S)
   local n, source, range, i;
 
-  if not ForAll(GeneratorsOfInverseSemigroup(S), IsPartialPermBipartition) then
+  if HasIsomorphismPartialPermSemigroup(S) then
+    return IsomorphismPartialPermSemigroup(S);
+  elif not ForAll(GeneratorsOfInverseSemigroup(S),
+                  IsPartialPermBipartition) then
     TryNextMethod();
   fi;
 
@@ -360,12 +320,10 @@ function(S)
                                        x -> AsBipartition(x, n));
 end);
 
-#
-
-InstallMethod(IsomorphismBipartitionSemigroup,
-"for a perm group with generators",
-[IsPermGroup and HasGeneratorsOfGroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsBipartitionSemigroup and a perm group with generators",
+[IsBipartitionSemigroup, IsPermGroup and HasGeneratorsOfGroup],
+function(filt, S)
   local n, source, range, i;
 
   n := LargestMovedPoint(S);
@@ -384,12 +342,16 @@ end);
 
 # the converse of the previous method
 
-InstallMethod(IsomorphismPermGroup,
-"for a perm bipartition group with generators",
-[IsPermBipartitionGroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsomorphismSemigroup,
+"for IsPermGroup and a perm bipartition group with generators",
+[IsPermGroup, IsPermBipartitionGroup and HasGeneratorsOfSemigroup],
 1, # to beat the method for IsBlockBijectionSemigroup
-function(S)
+function(filter, S)
   local n, source, range, i;
+
+  if HasIsomorphismPermGroup(S) then
+    return IsomorphismPermGroup(S);
+  fi;
 
   n := DegreeOfBipartitionSemigroup(S);
   source := GeneratorsOfSemigroup(S);
@@ -405,13 +367,15 @@ function(S)
                                        x -> AsBipartition(x, n));
 end);
 
-InstallMethod(IsomorphismPermGroup,
-"for a block bijection semigroup with generators",
-[IsBlockBijectionSemigroup and HasGeneratorsOfSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsPermGroup and a block bijection semigroup with generators",
+[IsPermGroup, IsBlockBijectionSemigroup and HasGeneratorsOfSemigroup],
+function(filter, S)
   local iso, inv;
 
-  if not IsGroupAsSemigroup(S) then
+  if HasIsomorphismPermGroup(S) then
+    return IsomorphismPermGroup(S);
+  elif not IsGroupAsSemigroup(S) then
     return fail;
   fi;
 
@@ -426,11 +390,11 @@ end);
 
 # this is one way, i.e. no converse method
 
-InstallMethod(IsomorphismBlockBijectionSemigroup,
+InstallMethod(IsomorphismSemigroup,
 "for an inverse partial perm semigroup with generators",
-[IsPartialPermSemigroup and IsInverseSemigroup and
+[IsBlockBijectionSemigroup, IsPartialPermSemigroup and IsInverseSemigroup and
  HasGeneratorsOfInverseSemigroup],
-function(S)
+function(filter, S)
   local n, source, range, i, inv;
 
   n := DegreeOfPartialPermSemigroup(S) + 1;
@@ -468,17 +432,18 @@ function(S)
   end;
 
   return MagmaIsomorphismByFunctionsNC(S,
-                                       InverseSemigroup(range), x ->
-                                       AsBlockBijection(x, n),
+                                       InverseSemigroup(range),
+                                       x -> AsBlockBijection(x, n),
                                        inv);
 end);
 
 # this is one way, i.e. no converse method
 
-InstallMethod(IsomorphismBlockBijectionSemigroup,
-"for a partial perm semigroup with generators",
-[IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsBlockBijectionSemigroup and a partial perm semigroup with generators",
+[IsBlockBijectionSemigroup,
+ IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
+function(filter, S)
   local n, source, range, i, inv;
 
   n := Maximum(DegreeOfPartialPermSemigroup(S),
@@ -522,7 +487,7 @@ function(S)
                                        inv);
 end);
 
-# JDM could have a method for IsomorphismBlockBijectionSemigroup for
+# TODO could have a method for IsomorphismBlockBijectionSemigroup for
 # IsPartialPermBipartitions too..  or just for general inverse semigroups, via
 # composing IsomorphismPartialPermSemigroup and IsomorphismBlockBijection
 
@@ -536,8 +501,6 @@ function(coll)
   return ForAll(coll, IsBlockBijection)
    or ForAll(coll, IsPartialPermBipartition);
 end);
-
-#
 
 InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse bipartition semigroup with generators",
@@ -555,8 +518,6 @@ function(S)
   MakeImmutable(gens);
   return gens;
 end);
-
-#
 
 InstallMethod(GeneratorsOfInverseMonoid,
 "for an inverse bipartition monoid with generators",
@@ -576,8 +537,6 @@ function(s)
   return gens;
 end);
 
-#
-
 InstallImmediateMethod(GeneratorsOfSemigroup,
 IsBipartitionSemigroup and HasGeneratorsOfInverseSemigroup, 0,
 function(s)
@@ -595,8 +554,6 @@ function(s)
   MakeImmutable(gens);
   return gens;
 end);
-
-#
 
 InstallImmediateMethod(GeneratorsOfMonoid,
 IsBipartitionMonoid and HasGeneratorsOfInverseMonoid, 0,
@@ -616,12 +573,8 @@ function(s)
   return gens;
 end);
 
-#
-
 InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsBipartitionSemigroup(Parent(x)));
-
-#
 
 InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup], s -> DegreeOfBipartition(Representative(s)));

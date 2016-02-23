@@ -59,12 +59,8 @@ InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup",
 [IsPartialPermSemigroup], RankOfPartialPermCollection);
 
-#
-
 InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsPartialPermSemigroup(Parent(x)));
-
-#
 
 InstallMethod(Enumerator, "for a symmetric inverse monoid",
 [IsSymmetricInverseMonoid],
@@ -144,8 +140,6 @@ function(set, n)
   return nr + NumberSubsetOfEqualSize(set, n);
 end);
 
-#
-
 InstallMethod(NumberSubsetOfEqualSize, "for a set and a pos int",
 [IsList, IsPosInt],
 function(set, n)
@@ -189,8 +183,6 @@ function(set, n)
   return nr + 1;
 end);
 
-#
-
 InstallMethod(PartialPermNumber, "for pos int and pos int",
 [IsPosInt, IsPosInt],
 function(m, n)
@@ -220,8 +212,6 @@ function(m, n)
   return PartialPermNC(SubsetNumber(j, i, n), ArrangementNumber(m, i, n));
 end);
 
-#
-
 InstallMethod(NumberPartialPerm, "for a partial perm and a pos int",
 [IsPartialPerm, IsPosInt],
 function(x, n)
@@ -245,32 +235,23 @@ function(x, n)
    + NumberArrangement(ImageListOfPartialPerm(x), n);
 end);
 
-#
-
-InstallMethod(AsPartialPermSemigroup, "for a semigroup", [IsSemigroup],
-function(S)
-  return Range(IsomorphismPartialPermSemigroup(S));
-end);
-
 # same method for ideals
 
-# same method for ideals
+InstallMethod(IsomorphismSemigroup, "for a perm group and partial perm semigroup",
+[IsPermGroup, IsPartialPermSemigroup],
+function(filt, S)
 
-InstallMethod(IsomorphismPermGroup, "for a partial perm semigroup",
-[IsPartialPermSemigroup],
-function(s)
-
-  if not IsGroupAsSemigroup(s) then
-    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
-                  "the argument <s> must be a partial perm semigroup ",
+  if not IsGroupAsSemigroup(S) then
+    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
+                  "the argument <S> must be a partial perm semigroup ",
                   "satisfying IsGroupAsSemigroup,");
   fi;
 
   # gaplint: ignore 3
-  return MagmaIsomorphismByFunctionsNC(s,
-           Group(List(GeneratorsOfSemigroup(s), AsPermutation)),
+  return MagmaIsomorphismByFunctionsNC(S,
+           Group(List(GeneratorsOfSemigroup(S), AsPermutation)),
            AsPermutation,
-           x -> AsPartialPerm(x, DomainOfPartialPermCollection(s)));
+           x -> AsPartialPerm(x, DomainOfPartialPermCollection(S)));
 end);
 
 # it just so happens that the MultiplicativeNeutralElement of a semigroup of
@@ -313,8 +294,6 @@ function(S)
   return U;
 end);
 
-#
-
 InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsPartialPermSemigroup(Parent(x)));
 
@@ -339,16 +318,12 @@ function(I)
   return fail;
 end);
 
-#
-
 InstallMethod(CodegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
   return CodegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
-
-#
 
 InstallMethod(DegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
@@ -357,8 +332,6 @@ function(I)
   return DegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
 
-#
-
 InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
@@ -366,15 +339,11 @@ function(I)
   return RankOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
 
-#
-
 InstallMethod(DisplayString,
 "for a partial perm semigroup ideal with generators",
 [IsPartialPermSemigroup and IsSemigroupIdeal and
  HasGeneratorsOfSemigroupIdeal],
 ViewString);
-
-#
 
 InstallMethod(CyclesOfPartialPerm, "for a partial perm", [IsPartialPerm],
 function(f)
@@ -410,8 +379,6 @@ function(f)
   od;
   return out;
 end);
-
-#
 
 InstallMethod(ComponentRepsOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
@@ -463,8 +430,6 @@ function(S)
 
   return out;
 end);
-
-#
 
 InstallMethod(ComponentsOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
@@ -521,8 +486,6 @@ function(S)
   return out;
 end);
 
-#
-
 InstallMethod(CyclesOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
@@ -578,8 +541,6 @@ function(S)
   return cycles;
 end);
 
-#
-
 InstallMethod(NaturalLeqInverseSemigroup, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
@@ -589,8 +550,6 @@ function(S)
   fi;
   return NaturalLeqPartialPerm;
 end);
-
-#
 
 InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",

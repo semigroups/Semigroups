@@ -14,41 +14,32 @@
 ## 1. Isomorphisms etc.
 #############################################################################
 
-InstallMethod(IsomorphismBooleanMatSemigroup,
-"for a transformation semigroup", [IsTransformationSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsBooleanMatSemigroup and a transformation semigroup",
+[IsBooleanMatSemigroup, IsTransformationSemigroup],
+function(filter, S)
   local n, T;
   n := Maximum(1, DegreeOfTransformationSemigroup(S));
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
   return MappingByFunction(S, T, x -> AsBooleanMat(x, n), AsTransformation);
 end);
 
-InstallMethod(IsomorphismBooleanMatSemigroup,
-"for a semigroup", [IsSemigroup],
-function(S)
-  local iso1, inv1, iso2, inv2;
+# via a transformation semigroup
 
-  iso1 := IsomorphismTransformationSemigroup(S);
-  inv1 := InverseGeneralMapping(iso1);
-  iso2 := IsomorphismBooleanMatSemigroup(Range(iso1));
-  inv2 := InverseGeneralMapping(iso2);
+InstallMethod(IsomorphismSemigroup,
+"for IsBooleanMatSemigroup and a semigroup",
+[IsBooleanMatSemigroup, IsSemigroup],
+SEMIGROUPS.DefaultIsomorphismSemigroup);
 
-  return MappingByFunction(S, Range(iso2),
-                           x -> (x ^ iso1) ^ iso2,
-                           x -> (x ^ inv2) ^ inv1);
-end);
-
-InstallMethod(AsBooleanMatSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  return Range(IsomorphismBooleanMatSemigroup(S));
-end);
-
-InstallMethod(IsomorphismTransformationSemigroup,
-"for a boolean matrix semigroup generators",
-[IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsTransformationSemigroup and a boolean matrix semigroup with generators",
+[IsTransformationSemigroup, IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
+function(filter, S)
   local n, pts, o, pos, T, i;
+
+  if HasIsomorphismTransformationSemigroup(S) then
+    return IsomorphismTransformationSemigroup(S);
+  fi;
 
   n := Length(Representative(S)![1]);
   pts := EmptyPlist(2 ^ n);

@@ -37,25 +37,33 @@ DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
                             IsInt, IsInt]);
 DeclareOperation("Matrix", [IsSemiring, IsHomogeneousList]);
 
-DeclareOperation("AsMatrix", [IsFunction and IsOperation,
-                              IsMatrixOverSemiring]);
-DeclareOperation("AsMatrix", [IsFunction and IsOperation,
-                              IsMatrixOverSemiring,
-                              IsPosInt]);
-DeclareOperation("AsMatrix", [IsFunction and IsOperation, IsMatrixOverSemiring,
-                              IsPosInt, IsPosInt]);
-DeclareOperation("AsMatrix", [IsSemiring, IsMatrixOverSemiring]);
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsMatrixOverSemiring]);
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsMatrixOverSemiring,
+                                IsPosInt]);
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsMatrixOverSemiring,
+                                IsPosInt,
+                                IsPosInt]);
+DeclareConstructor("AsMatrix", [IsSemiring, IsMatrixOverSemiring]);
 
-DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring,
-                                    IsMatrixOverSemiring]);
-DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring,
-                                    IsMatrixOverSemiring,
-                                    IsPosInt]);
-DeclareConstructor("AsMatrixCons", [IsMatrixOverSemiring,
-                                    IsMatrixOverSemiring,
-                                    IsPosInt,
-                                    IsPosInt]);
-DeclareConstructor("AsMatrixCons", [IsSemiring, IsMatrixOverSemiring]);
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsTransformation,
+                                IsPosInt]);
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsTransformation,
+                                IsPosInt,
+                                IsPosInt]);
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsTransformation,
+                                IsPosInt,
+                                IsPosInt,
+                                IsPosInt]);
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsTransformation]);
+
+DeclareAttribute("AsTransformation", IsMatrixOverSemiring);
 
 DeclareGlobalFunction("RandomMatrix");
 DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,

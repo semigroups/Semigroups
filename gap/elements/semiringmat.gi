@@ -70,6 +70,16 @@ SEMIGROUPS.HashFunctionMatrixOverSemiring := function(x, data)
   return h + 1;
 end;
 
+SEMIGROUPS.MatrixTrans := function(x, dim, zero, one)
+  local mat, i;
+
+  mat := List([1 .. dim], x -> ShallowCopy([1 .. dim] * 0 + zero));
+  for i in [1 .. dim] do
+    mat[i][i ^ x] := one;
+  od;
+  return mat;
+end;
+
 #############################################################################
 # Pickler
 #############################################################################
@@ -328,28 +338,20 @@ function(arg)
                 " pos int]],");
 end);
 
-InstallMethod(AsMatrix, "for a filter, and matrix over semiring",
-[IsFunction and IsOperation, IsMatrixOverSemiring],
-function(filt, mat)
-  return AsMatrixCons(filt, mat);
-end);
+InstallMethod(AsTransformation, "for a matrix over semiring",
+[IsMatrixOverSemiring],
+function(mat)
+  local one, dim;
 
-InstallMethod(AsMatrix, "for a filter, matrix over semiring, and pos int",
-[IsFunction and IsOperation, IsMatrixOverSemiring, IsPosInt],
-function(filt, mat, threshold)
-  return AsMatrixCons(filt, mat, threshold);
-end);
+  one := One(mat);
+  dim := Length(mat![1]);
+  if Union(AsList(mat)) <> Union(AsList(one))
+      or ForAny([1 .. dim], i -> Number(mat![i], one[1][1]) <> 1) then
+    return fail;
+  fi;
 
-InstallMethod(AsMatrix, "for a filter, matrix over semiring, pos int, pos int",
-[IsFunction and IsOperation, IsMatrixOverSemiring, IsPosInt, IsPosInt],
-function(filt, mat, threshold, period)
-  return AsMatrixCons(filt, mat, threshold, period);
-end);
-
-InstallMethod(AsMatrix, "for a semiring, and matrix over semiring",
-[IsSemiring, IsMatrixOverSemiring],
-function(semiring, mat)
-  return Matrix(semiring, AsList(mat));
+  one := one[1][1];
+  return Transformation(List([1 .. dim], i -> Position(mat![i], one)));
 end);
 
 InstallMethod(AsMutableList, "for matrix over semiring",

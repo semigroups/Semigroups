@@ -50,6 +50,11 @@ DeclareOperation("ClosureSemigroup",
 DeclareOperation("ClosureSemigroupNC",
                  [IsSemigroup, IsListOrCollection, IsRecord]);
 
+DeclareOperation("AsSemigroup", [IsFunction, IsSemigroup]);
+DeclareConstructor("IsomorphismSemigroup", [IsSemigroup, IsSemigroup]);
+DeclareConstructor("IsomorphismSemigroup",
+                   [IsMultiplicativeElement, IsSemigroup]);
+
 #TODO move this to attributes!
 DeclareAttribute("Generators", IsSemigroup);
 

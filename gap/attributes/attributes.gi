@@ -178,9 +178,9 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismFpMonoid, "for a monoid",
-[IsMonoid], 3,
-function(S)
+InstallMethod(IsomorphismSemigroup, "for IsFpMonoid and a monoid",
+[IsFpMonoid, IsMonoid], 3,
+function(filt, S)
   local F, A, lookup, pos, data, rules, rels, convert, Q, B, rule;
 
   if not IsFinite(S) then
@@ -226,9 +226,9 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismFpSemigroup, "for a semigroup",
-[IsSemigroup], 3,
-function(S)
+InstallMethod(IsomorphismSemigroup, "for IsFpSemigroup and a semigroup",
+[IsFpSemigroup, IsSemigroup], 3,
+function(filter, S)
   local rules, F, A, rels, Q, B;
 
   if not IsFinite(S) then
@@ -347,8 +347,10 @@ end);
 
 #
 
-InstallMethod(IsomorphismReesMatrixSemigroup, "for a semigroup", [IsSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsReesMatrixSemigroup and a semigroup",
+[IsReesMatrixSemigroup, IsSemigroup],
+function(filter, S)
   local D, iso, inv;
 
   if not IsFinite(S) then
@@ -356,7 +358,7 @@ function(S)
   fi;
 
   if not IsSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
                   "the argument must be a simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
@@ -369,9 +371,10 @@ function(S)
                                        x -> x ^ iso, x -> x ^ inv);
 end);
 
-InstallMethod(IsomorphismReesZeroMatrixSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup,
+"for IsReesZeroMatrixSemigroup and a semigroup",
+[IsReesZeroMatrixSemigroup, IsSemigroup],
+function(filter, S)
   local D, iso, inv;
 
   if not IsFinite(S) then
@@ -379,7 +382,7 @@ function(S)
   fi;
 
   if not IsZeroSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
                   "the argument must be a 0-simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
     # semigroups into Rees (0-)matrix semigroups over non-groups?
@@ -844,8 +847,9 @@ end);
 
 # fall back method, same method for ideals
 
-InstallMethod(IsomorphismPermGroup, "for a semigroup", [IsSemigroup],
-function(S)
+InstallMethod(IsomorphismSemigroup, "for IsGroupAsSemigroup and a semigroup",
+[IsGroupAsSemigroup, IsSemigroup],
+function(filter, S)
   local en, act, gens;
 
   if not IsFinite(S) then
@@ -853,7 +857,7 @@ function(S)
   fi;
 
   if not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
                   "the argument must be a semigroup satisfying ",
                   "IsGroupAsSemigroup,");
   fi;

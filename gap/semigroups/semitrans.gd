@@ -14,7 +14,6 @@ DeclareOperation("\^", [IsTransformationCollection, IsPerm]);
 DeclareAttribute("FixedPoints", IsTransformationSemigroup);
 DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
 DeclareOperation("DigraphOfActionOnPoints", [IsTransformationSemigroup, IsPosInt]);
-DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
 
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
                  IsTransformationSemigroup);

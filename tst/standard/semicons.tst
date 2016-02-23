@@ -1,12 +1,12 @@
 #############################################################################
 ##
-#W  standard/constructions.tst
+#W  standard/semicons.tst
 #Y  Copyright (C) 2015                                   Wilfred A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
-gap> START_TEST("Semigroups package: standard/constructions.tst");
+gap> START_TEST("Semigroups package: standard/semicons.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -808,18 +808,8 @@ true
 gap> Size(S);
 10
 
-#T# construction: SEMIGROUPS.AsXSemigroup
-gap> SEMIGROUPS.AsXSemigroup(IsTransformationSemigroup);
-<Operation "AsTransformationSemigroup">
-gap> SEMIGROUPS.AsXSemigroup(IsPartialPermSemigroup);
-<Operation "AsPartialPermSemigroup">
-gap> SEMIGROUPS.AsXSemigroup(IsBipartitionSemigroup);
-<Operation "AsBipartitionSemigroup">
-gap> SEMIGROUPS.AsXSemigroup(IsBlockBijectionSemigroup);
-<Operation "AsBlockBijectionSemigroup">
-
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 
 #E# 
-gap> STOP_TEST("Semigroups package: standard/constructions.tst");
+gap> STOP_TEST("Semigroups package: standard/semicons.tst");
