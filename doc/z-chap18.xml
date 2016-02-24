@@ -19,6 +19,7 @@
     <#Include Label = "SmallestMultiplicationTable"> 
     <#Include Label = "IsomorphismSemigroups">
     <#Include Label = "MinimumDegreeTransformationRepresentation">
+    <#Include Label = "SmallDegreeTransformationRepresentation">
 
   </Section>
   

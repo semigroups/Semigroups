@@ -935,13 +935,41 @@ gap> Matrix(S);
     semigroup, then this attribute returns an isomorphism from <A>S</A> to a
     transformation semigroup of minimum possible rank. <P/>
 
-<!--See also <Ref Attr="SmallDegreeTransformationRepresentation"/>. <P/>-->
+    See also <Ref Attr="SmallDegreeTransformationRepresentation"/>. <P/>
 
 <Example><![CDATA[
 gap> S := Semigroup([PBR([[], []], [[], [-1]]),
 >                    PBR([[], [-2,1]], [[], [-2,1]])]);
 <pbr semigroup of degree 2 with 2 generators>
 gap> iso := MinimumDegreeTransformationRepresentation(S);;
+gap> Range(iso);
+<transformation semigroup of degree 6 with 2 generators>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SmallDegreeTransformationRepresentation">
+<ManSection>
+  <Attr Name="SmallDegreeTransformationRepresentation" Arg="S"/>
+  <Returns>An isomorphism.</Returns>
+  <Description>
+    Any semigroup is isomorphic to a transformation semigroup.  If <A>S</A> is a
+    semigroup, then this attribute returns an isomorphism from <A>S</A> to a
+    transformation semigroup with some reasonably low rank.<P/>
+
+    If <A>S</A> is already a transformation semigroup, and the function fails to
+    find a transformation semigroup with a lower rank than <A>S</A>, then the
+    identity mapping will be returned. <P/>
+
+    There is no guarantee that a representation with smallest possible degree is
+    returned.  See <Ref Attr="MinimumDegreeTransformationRepresentation"/>. <P/>
+
+<Example><![CDATA[
+gap> S := Semigroup([PBR([[], []], [[], [-1]]),
+>                    PBR([[], [-2,1]], [[], [-2,1]])]);
+<pbr semigroup of degree 2 with 2 generators>
+gap> iso := SmallDegreeTransformationRepresentation(S);;
 gap> Range(iso);
 <transformation semigroup of degree 6 with 2 generators>
 ]]></Example>

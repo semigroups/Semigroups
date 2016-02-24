@@ -426,10 +426,11 @@ gap> AsSet(SameMinorantsSubgroup(x));
   </Returns>
   <Description>   
     <C>SmallerDegreePartialPermRepresentation</C> attempts to find an
-    isomorphism from the inverse semigroup <A>S</A> of partial permutations to
-    another inverse semigroup of partial permutations with smaller degree.
-    If the function cannot reduce the degree, the identity mapping is returned.
-    <P/>
+    isomorphism from the inverse semigroup <A>S</A> to
+    an inverse semigroup of partial permutations with small degree.
+    If <A>S</A> is already a partial permutation semigroup, and the function
+    cannot reduce the degree, the identity mapping is returned. <P/>
+
     There is no guarantee that the smallest possible degree 
     representation is returned. For more information see
     <Cite Key ="Schein1992aa"/>.
