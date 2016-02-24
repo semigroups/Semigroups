@@ -416,8 +416,7 @@ function(_record)
   [IsDenseList, _IsXSemigroupCongruence and
    _HasGeneratingPairsOfXSemigroupCongruence],
   function(pair, cong)
-    local S, p1, p2, table, lookfunc;
-
+    local S;
     # Input checks
     S := Range(cong);
     if not IsFinite(S) then
@@ -432,7 +431,15 @@ function(_record)
                     "elements of the first arg <pair> must be\n",
                     "in the range of the second arg <cong>,");
     fi;
+    return SEMIGROUPS.IsPairInXCong(pair, cong);
+  end);
 
+  #
+
+  SEMIGROUPS.IsPairInXCong := function(pair, cong)
+    local S, p1, p2, table, lookfunc;
+
+    S := Range(cong);
     p1 := Position(GenericSemigroupData(S), pair[1]);
     p2 := Position(GenericSemigroupData(S), pair[2]);
 
@@ -448,7 +455,7 @@ function(_record)
       end;
       return SEMIGROUPS_Enumerate(cong, lookfunc)!.found;
     fi;
-  end);
+  end;
 
   #
 
@@ -539,9 +546,9 @@ function(_record)
     fi;
     return Range(cong1) = Range(cong2)
            and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong1),
-                      pair -> pair in cong2)
+                      pair -> SEMIGROUPS.IsPairInXCong(pair, cong2))
            and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
-                      pair -> pair in cong1);
+                      pair -> SEMIGROUPS.IsPairInXCong(pair, cong1));
   end);
 
   #
@@ -660,7 +667,7 @@ function(_record)
                     "congruences must be defined over the same semigroup,");
     fi;
     return ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
-                  pair -> pair in cong1);
+                  pair -> SEMIGROUPS.IsPairInXCong(pair, cong1));
   end);
 
   #
@@ -909,9 +916,12 @@ function(_record)
   Concatenation("for two ", _record.info_string, "congruence classes"),
   [_IsXCongruenceClass, _IsXCongruenceClass],
   function(class1, class2)
-    return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
-      and [Representative(class1), Representative(class2)]
-          in EquivalenceClassRelation(class1);
+    if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+      return false;
+    fi;
+    return SEMIGROUPS.IsPairInXCong(
+              [Representative(class1), Representative(class2)],
+              EquivalenceClassRelation(class1));
   end);
 
   #
@@ -971,7 +981,7 @@ function(cong, lcong)
                   "congruences must be defined over the same semigroup,");
   fi;
   return ForAll(GeneratingPairsOfLeftSemigroupCongruence(lcong),
-                pair -> pair in cong);
+                pair -> SEMIGROUPS.IsPairInXCong(pair, cong));
 end);
 
 #
@@ -987,7 +997,7 @@ function(cong, rcong)
                   "congruences must be defined over the same semigroup,");
   fi;
   return ForAll(GeneratingPairsOfRightSemigroupCongruence(rcong),
-                pair -> pair in cong);
+                pair -> SEMIGROUPS.IsPairInXCong(pair, cong));
 end);
 
 ###########################################################################
@@ -1044,9 +1054,9 @@ end);
 #   * poor - Return only x-congs which contain no 2-sided congruences
 ###############################################################################
 SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
-  local poor, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children, 
-        parents, pair, badcong, newchildren, newparents, newcong, i, c, p, 
-        congs, 2congs, image, next, set_func, lattice, join_func, length, found, 
+  local poor, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children,
+        parents, pair, badcong, newchildren, newparents, newcong, i, c, p,
+        congs, 2congs, image, next, set_func, lattice, join_func, length, found,
         ignore, start, j, k;
 
   poor := IsBound(record.poor) and record.poor;
