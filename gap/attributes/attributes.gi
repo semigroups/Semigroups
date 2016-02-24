@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  attributes.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+#Y  Copyright (C) 2013-16                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -879,7 +879,6 @@ InstallMethod(MinimumDegreeTransformationRepresentation,
 "for a semigroup",
 [IsSemigroup],
 function(S)
-  #TODO: We should append an identity so this works for non-monoids
   #TODO: The map should have an invfun included
   local M, l, congs, nrclasses, cong, bestcong, classes, fun, R;
   # If S is not a monoid, append an identity
