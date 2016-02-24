@@ -558,6 +558,24 @@ Obj SEMIGROUP_POSITION (Obj self, Obj data, Obj x) {
 }
 
 /*******************************************************************************
+ * SEMIGROUP_POSITION_CURRENT: get the position of <x> with out any further
+ * enumeration
+ ******************************************************************************/
+
+Obj SEMIGROUP_POSITION_CURRENT (Obj self, Obj data, Obj x) {
+
+  if (data_type(data) != UNKNOWN) {
+    size_t     deg       = data_degree(data);
+    Semigroup* semigroup = data_semigroup(data);
+    Converter* converter = data_converter(data);
+    size_t pos = semigroup->position_current(converter->convert(x, deg));
+    return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
+  }
+
+  return CALL_2ARGS(HTValue, ElmPRec(data, RNamName("ht")), x);
+}
+
+/*******************************************************************************
  * SEMIGROUP_RELATIONS:
  ******************************************************************************/
 

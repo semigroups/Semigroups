@@ -202,6 +202,15 @@ function(x, S)
   return Position(GenericSemigroupData(S), x) <> fail;
 end);
 
+# this has different meaning than Position in the data
+
+InstallMethod(\in,
+"for a multiplicative element and generic semigroup data",
+[IsMultiplicativeElement, IsGenericSemigroupData],
+function(x, data)
+  return SEMIGROUP_POSITION_CURRENT(data, x) <> fail;
+end);
+
 # different method for ideals
 
 InstallMethod(Idempotents, "for a generic semigroup with generators",
@@ -290,7 +299,7 @@ SEMIGROUP_CURRENT_SIZE);
 InstallMethod(ELM_LIST, "for generic semigroup data, and pos int",
 [IsGenericSemigroupData, IsPosInt],
 function(data, nr)
-  return data!.elts[nr];
+  return SEMIGROUP_ELEMENT_NUMBER(data, nr);
 end);
 
 #

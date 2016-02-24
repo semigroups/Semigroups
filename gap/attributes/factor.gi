@@ -45,17 +45,15 @@ end);
 # factorisation of Schutzenberger group element, the same method works for
 # ideals
 
-# TODO update this to use MinimalFactorization on the Schutzenberger group!
-
 InstallMethod(Factorization, "for a lambda orbit, scc index, and perm",
 [IsLambdaOrb, IsPosInt, IsPerm],
 function(o, m, p)
   local gens, scc, lookup, orbitgraph, genstoapply, lambdaperm, rep, bound, G,
-        factors, nr, stop, uword, u, adj, vword, v, x, epi, word, out, k, l, i,
-        j;
+  factors, nr, stop, uword, u, adj, vword, v, x, iso, word, epi, out, k, l, i;
   
   if not IsBound(o!.factors) then 
     o!.factors      := [];
+    o!.exhaust      := [];
     o!.factorgroups := [];
   fi;
 
@@ -69,10 +67,10 @@ function(o, m, p)
     rep         := LambdaOrbRep(o, m);
     bound       := Size(LambdaOrbSchutzGp(o, m));
 
-    G           := Group(()); 
-    factors     := [];
-    nr          := 0;
-    stop        := false;
+    G            := Group(()); 
+    factors      := [];
+    nr           := 0;
+    stop         := false;
 
     for k in scc do
       uword := TraceSchreierTreeOfSCCForward(o, m, k);
@@ -85,14 +83,9 @@ function(o, m, p)
           v     := EvaluateWord(o, vword);
           x     := lambdaperm(rep, rep * u * gens[l] * v);
           if not x in G then
+            G := ClosureGroup(G, x);
             nr := nr + 1;
             factors[nr] := Concatenation(uword, [l], vword);
-            # TODO:
-            # should also cache the inverse of factors[nr] = vword * some word
-            # that takes o[l] back to o[k] * uword, where "some word" could be
-            # found by taking all the paths from o[l] to o[k] in the
-            # orbitgraph.
-            G := ClosureGroup(G, x);
             if Size(G) = bound then
               stop := true;
               break;
@@ -108,8 +101,8 @@ function(o, m, p)
     o!.factors[m]      := factors;
     o!.factorgroups[m] := G;
   else 
-    G       := o!.factorgroups[m];
-    factors := o!.factors[m];
+    factors      := o!.factors[m];
+    G            := o!.factorgroups[m];
   fi;
 
   if not p in G then
@@ -119,8 +112,16 @@ function(o, m, p)
   fi;
 
   # express <elt> as a word in the generators of the Schutzenberger group
-  epi := EpimorphismFromFreeGroup(G);
-  word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
+  if (not IsSemigroupWithInverseOp(o!.parent)) and Size(G) <= 1024 then 
+    iso := IsomorphismTransformationSemigroup(G);
+    if not IsBound(o!.exhaust[m]) then 
+      o!.exhaust[m] := Range(iso);
+    fi;
+    word := MinimalFactorization(o!.exhaust[m], p ^ iso);
+  else 
+    epi := EpimorphismFromFreeGroup(G);
+    word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
+  fi;
 
   # convert group generators to semigroup generators
   out := [];
@@ -129,10 +130,8 @@ function(o, m, p)
       Append(out, factors[i]);
     elif IsSemigroupWithInverseOp(o!.parent) then 
       Append(out, Reversed(factors[-i]) * -1);
-    else # this results in super long words
-      for j in [1 .. Order(G.(-i)) - 1] do 
-        Append(out, factors[-i]);
-      od;
+    else 
+      Append(out, Concatenation(List([1 .. Order(G.(-i)) - 1], x -> factors[-i])));
     fi;
   od;
   return out;
@@ -188,6 +187,8 @@ function(S, x)
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
+  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then 
+    return MinimalFactorization(S, x);
   fi;
 
   o := LambdaOrb(S);
@@ -230,30 +231,32 @@ InstallMethod(Factorization,
 "for an acting semigroup with inverse op with generators and element",
 [IsSemigroupWithInverseOp and IsActingSemigroup and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
-function(s, f)
+function(S, x)
   local o, gens, l, m, scc, word1, k, rep, word2, p;
 
-  if not f in s then
+  if not x in S then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
+  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then 
+    return MinimalFactorization(S, x);
   fi;
 
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   gens := o!.gens;
-  l := Position(o, LambdaFunc(s)(f));
+  l := Position(o, LambdaFunc(S)(x));
   m := OrbSCCLookup(o)[l];
   scc := OrbSCC(o)[m];
 
   # find the R-class rep
   word1 := TraceSchreierTreeForward(o, scc[1]);
   # lambda value is ok, but rho value is wrong
-  k := Position(o, RhoFunc(s)(EvaluateWord(gens, word1)));
+  k := Position(o, RhoFunc(S)(EvaluateWord(gens, word1)));
   # take rho value of <word1> back to 1st position in scc
   word1 := Concatenation(TraceSchreierTreeOfSCCForward(o, m, k), word1);
 
   # take rho value of <word1> forwards to rho value of <f>
-  k := Position(o, RhoFunc(s)(f));
+  k := Position(o, RhoFunc(S)(x));
   word1 := Concatenation(TraceSchreierTreeOfSCCBack(o, m, k), word1);
   # <rep> is an R-class rep for the R-class of <f>
   rep := EvaluateWord(gens, word1);
@@ -261,11 +264,11 @@ function(s, f)
   # compensate for the action of the multipliers
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep, f *
-                       LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p := LambdaPerm(S)(rep, x *
+                       LambdaInverse(S)(o[scc[1]], EvaluateWord(gens, word2)));
   else
     word2 := [];
-    p := LambdaPerm(s)(rep, f);
+    p := LambdaPerm(S)(rep, x);
   fi;
 
   if IsOne(p) then
@@ -286,46 +289,47 @@ InstallMethod(Factorization,
 "for a regular acting semigroup with generators and element",
 [IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
-function(s, f)
+function(S, x)
   local o, gens, l, m, scc, word1, k, rep, p, word2;
 
-  if not f in s then
+  if not x in S then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
+  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then 
+    return MinimalFactorization(S, x);
   fi;
 
-  o := RhoOrb(s);
+  o := RhoOrb(S);
   Enumerate(o);
   gens := o!.gens;
-  l := Position(o, RhoFunc(s)(f));
+  l := Position(o, RhoFunc(S)(x));
 
   # find the R-class rep
   word1 := TraceSchreierTreeBack(o, l);    #rho value is ok
   #trace back to get forward since this is a left orbit
   rep := EvaluateWord(gens, word1);        #but lambda value is wrong
 
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   Enumerate(o);
-  l := Position(o, LambdaFunc(s)(f));
+  l := Position(o, LambdaFunc(S)(x));
   m := OrbSCCLookup(o)[l];
   scc := OrbSCC(o)[m];
 
-  k := Position(o, LambdaFunc(s)(rep));
+  k := Position(o, LambdaFunc(S)(rep));
   word2 := TraceSchreierTreeOfSCCBack(o, m, k);
   rep := rep * EvaluateWord(gens, word2);
   #the R-class rep of the R-class of <f>
   Append(word1, word2);               #and this word equals <rep>
 
   #compensate for the action of the multipliers
-  #JDM: update this as above
   if l <> scc[1] then
     word2 := TraceSchreierTreeOfSCCForward(o, m, l);
-    p := LambdaPerm(s)(rep, f *
-                       LambdaInverse(s)(o[scc[1]], EvaluateWord(gens, word2)));
+    p := LambdaPerm(S)(rep, x *
+                       LambdaInverse(S)(o[scc[1]], EvaluateWord(gens, word2)));
   else
     word2 := [];
-    p := LambdaPerm(s)(rep, f);
+    p := LambdaPerm(S)(rep, x);
   fi;
 
   if IsOne(p) then

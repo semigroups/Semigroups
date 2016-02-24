@@ -752,6 +752,8 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION, 2,
                           "data, x"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION_CURRENT, 2,
+                          "data, x"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION_SORTED, 2, "data, x"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_IS_DONE, 1,
                           "data"),
