@@ -462,43 +462,6 @@ gap> LatticeOfCongruences(S);
 gap> LatticeOfRightCongruences(S);
 [ [  ], [ 1 ], [ 1 ], [ 1, 2, 6 ], [ 1, 2, 3 ], [ 1 ], [ 1, 2 ], 
   [ 1, 2, 3, 4, 5, 6, 7, 9 ], [ 1, 3, 6 ] ]
-gap> p := PartitionMonoid(2);;
-gap> iso := MinimumDegreeTransformationRepresentation(p);;
-gap> q := Range(iso);;
-gap> IsIsomorphicSemigroup(p, q);
-true
-gap> S := Semigroup(
-> [ PBR([ [ -3, -2, -1, 1, 2, 3 ], [ -3, 1, 3 ], [ -3, 2 ] ],
->       [ [ -3, -2, 1, 2, 3 ], [ -3, -2, -1, 2, 3 ], [ -2, -1, 1, 3 ] ]),
->   PBR([ [ -3, 2 ], [ 3 ], [ -3, -2, -1 ] ],
->       [ [ -3 ], [ -3, -2 ], [ -3, -2, 1, 2 ] ]) ] );;
-gap> iso := MinimumDegreeTransformationRepresentation(S);;
-gap> T := Range(iso);
-<transformation semigroup of degree 7 with 2 generators>
-gap> IsIsomorphicSemigroup(S, T);
-true
-gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), 
->                      PartialPerm( [ 1, 2 ], [ 3, 1 ] ) ] );;
-gap> l := [ [  ], [ 1, 3 ], [ 1 ], [ 1, 5 ], [ 1 ], [ 1, 2, 3, 10, 21 ], 
-> [ 1, 4, 5, 16, 25 ], [ 1, 12 ], [ 1, 4, 5, 10, 13, 23, 24, 30 ], [ 1 ], 
-> [ 1, 8, 12, 16, 35 ], [ 1 ], [ 1, 4, 5 ], [ 1, 8, 10, 12, 29 ], 
-> [ 1, 2, 3, 16, 17, 20, 22, 37 ], [ 1 ], [ 1, 2, 3 ], [ 1, 8, 12, 19 ], 
-> [ 1, 8, 12 ], [ 1, 2, 3, 16, 22 ], [ 1, 3, 10 ], [ 1, 3, 16 ], 
-> [ 1, 4, 5, 10, 24 ], [ 1, 5, 10 ], [ 1, 5, 16 ], 
-> [ 1, 2, 3, 6, 10, 16, 20, 21, 22, 31, 33 ], 
-> [ 1, 4, 5, 7, 10, 16, 23, 24, 25, 31, 34 ], 
-> [ 1, 8, 10, 11, 12, 14, 16, 19, 29, 31, 35, 36 ], [ 1, 10, 12 ], 
-> [ 1, 4, 5, 10, 13, 23, 24 ], [ 1, 10, 16 ], 
-> [ 1, 8, 10, 11, 12, 14, 16, 18, 19, 28, 29, 31, 35, 36 ], 
-> [ 1, 3, 10, 16, 21, 22, 31 ], [ 1, 5, 10, 16, 24, 25, 31 ], [ 1, 12, 16 ], 
-> [ 1, 10, 12, 16, 29, 31, 35 ], [ 1, 2, 3, 16, 17, 20, 22 ] ];;
-gap> l = SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(poor:=true))![1];
-true
-gap> iso := MinimumDegreeTransformationRepresentation(S);;
-gap> T := Range(iso);
-<transformation semigroup of degree 4 with 2 generators>
-gap> IsIsomorphicSemigroup(S, T);
-true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
