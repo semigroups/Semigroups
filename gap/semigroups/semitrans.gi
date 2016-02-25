@@ -697,11 +697,63 @@ function(filt, S)
            x -> AsTransformation(x, DegreeOfTransformationSemigroup(S)));
 end);
 
+# there could be an even faster C/C++ version of this
+
 InstallMethod(IsomorphismSemigroup,
 "for IsTransformationSemigroup and a semigroup",
 [IsTransformationSemigroup, IsSemigroup],
 function(filt, S)
-  return IsomorphismTransformationSemigroup(S);
+  local cay, deg, gen, next, T, iso, inv, i;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  cay := RightCayleyGraphSemigroup(S);
+  deg := Size(S);
+  gen := [];
+
+  for i in [1 .. Length(cay[1])] do
+    next := List([1 .. deg], j -> cay[j][i]);
+    Add(next, i);
+    Add(gen, Transformation(next));
+  od;
+
+  T := Semigroup(gen);
+
+  iso := function(x)
+    return EvaluateWord(gen, Factorization(S, x));
+  end;
+
+  inv := function(x)
+    return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
+  end;
+
+  #TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsTransformationSemigroup and a transformation semigroup",
+[IsTransformationSemigroup, IsTransformationSemigroup],
+function(filt, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsTransformationSemigroup and a perm group with generators",
+[IsTransformationSemigroup, IsPermGroup and HasGeneratorsOfGroup],
+function(filt, G)
+  local S, conj;
+
+  S := Semigroup(List(GeneratorsOfGroup(G),
+                      x -> TransformationOp(x, MovedPoints(G))));
+  UseIsomorphismRelation(G, S);
+  conj := MappingPermListList([1 .. NrMovedPoints(G)], MovedPoints(G));
+
+  return MagmaIsomorphismByFunctionsNC(G, S,
+             x -> TransformationOp(x, MovedPoints(G)),
+             x -> Permutation(x, [1 .. NrMovedPoints(G)]) ^ conj);
 end);
 
 # same method for ideals

@@ -844,35 +844,3 @@ function(S)
   # the first component (i.e. the inner most) of the strongly connected
   # components of the right Cayley graph corresponds the minimal ideal.
 end);
-
-# fall back method, same method for ideals
-
-InstallMethod(IsomorphismSemigroup, "for IsGroupAsSemigroup and a semigroup",
-[IsGroupAsSemigroup, IsSemigroup],
-function(filter, S)
-  local en, act, gens;
-
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  if not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-                  "the argument must be a semigroup satisfying ",
-                  "IsGroupAsSemigroup,");
-  fi;
-
-  en := EnumeratorSorted(S);
-
-  act := function(i, x)
-    return Position(en, en[i] * x);
-  end;
-
-  gens := List(GeneratorsOfSemigroup(S),
-               x -> Permutation(x, [1 .. Length(en)], act));
-
-  # gaplint: ignore 3
-  return MagmaIsomorphismByFunctionsNC(S, Group(gens),
-           x -> Permutation(x, [1 .. Length(en)], act),
-           x -> en[Position(en, MultiplicativeNeutralElement(S)) ^ x]);
-end);

@@ -217,7 +217,7 @@ gap> IsCongruenceFreeSemigroup(TrivialSemigroup());
 true
 
 #T# properties: IsCongruenceFreeSemigroup, group, 2
-gap> S := AsTransformationSemigroup(AlternatingGroup(5));
+gap> S := AsSemigroup(IsTransformationSemigroup, AlternatingGroup(5));
 <transformation semigroup of size 60, degree 5 with 2 generators>
 gap> IsCongruenceFreeSemigroup(S);
 true
@@ -276,7 +276,7 @@ true
 
 # doesn't know it is inverse
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
-gap> S := Range(IsomorphismSemigroup(IsBooleanMat, S));;
+gap> S := Range(IsomorphismSemigroup(IsBooleanMatSemigroup, S));;
 gap> IsCliffordSemigroup(S);
 true
 gap> I := SemigroupIdeal(S, Random(S));;
@@ -302,7 +302,7 @@ gap> IsCliffordSemigroup(S);
 false
 
 #T# properties: IsCliffordSemigroup, group, 5
-gap> S := AsPartialPermSemigroup(Group((1, 2, 3)));
+gap> S := AsSemigroup(IsPartialPermSemigroup, Group((1, 2, 3)));
 <commutative inverse partial perm semigroup of rank 3 with 1 generator>
 gap> IsCliffordSemigroup(S);
 true
@@ -362,7 +362,7 @@ gap> IsCompletelyRegularSemigroup(I);
 true
 
 #T# properties: IsCompletelyRegularSemigroup, 3
-gap> S := AsSemigroup(IsBooleanMat, MonogenicSemigroup(3, 2));;
+gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 3, 2);;
 gap> IsRegularSemigroup(S);
 false
 gap> IsCompletelyRegularSemigroup(S);
@@ -607,7 +607,7 @@ gap> IsRTrivial(S);
 true
 
 #T# properties: IsGroupAsSemigroup, parent, non-acting, 1
-gap> S := AsBooleanMatSemigroup(Group((1, 2, 3)));
+gap> S := AsSemigroup(IsBooleanMatSemigroup, Group((1, 2, 3)));
 <commutative semigroup of 3x3 boolean matrices with 1 generator>
 gap> I := SemigroupIdeal(S, S.1);
 <commutative semigroup ideal of 3x3 boolean matrices with 1 generator>
@@ -622,8 +622,8 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsGroupAsSemigroup' on 1 arguments
 
 #T# properties: IsGroupAsSemigroup, parent, acting, 3
-gap> S := AsBipartitionSemigroup(Group((1, 2, 3)));
-<commutative bipartition semigroup of degree 3 with 1 generator>
+gap> S := AsSemigroup(IsBipartitionSemigroup, Group((1, 2, 3)));
+<bipartition group of degree 3 with 1 generator>
 gap> IsGroupAsSemigroup(S);
 true
 gap> I := SemigroupIdeal(S, S.1);
@@ -779,9 +779,9 @@ gap> IsLeftZeroSemigroup(I);
 true
 
 #T# properties: IsLeftZeroSemigroup, 2
-gap> S := AsTransformationSemigroup(
+gap> S := AsSemigroup(IsTransformationSemigroup, 
 > RectangularBand(IsReesMatrixSemigroup, 2, 2));
-<transformation semigroup of degree 5 with 4 generators>
+<transformation semigroup of degree 5 with 2 generators>
 gap> IsLeftZeroSemigroup(S);
 false
 
@@ -812,7 +812,7 @@ gap> IsMonogenicSemigroup(SymmetricInverseMonoid(3));
 false
 
 #T# properties: IsMonogenicSemigroup, 5
-gap> IsMonogenicSemigroup(AsBooleanMatSemigroup(Group((1, 2, 3), (2, 3))));
+gap> IsMonogenicSemigroup(AsSemigroup(IsBooleanMatSemigroup, Group((1, 2, 3), (2, 3))));
 false
 
 #T# properties: IsMonogenicSemigroup, 6
@@ -825,8 +825,8 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsMonogenicSemigroup' on 1 arguments
 
 #T# properties: IsMonogenicInverseSemigroup, 1
-gap> IsMonogenicInverseSemigroup(AsBooleanMatSemigroup(Group((1, 2, 3),
-> (2, 3))));
+gap> IsMonogenicInverseSemigroup(AsSemigroup(IsBooleanMatSemigroup, 
+>                                            Group((1, 2, 3), (2, 3))));
 false
 
 #T# properties: IsMonogenicInverseSemigroup, 2
@@ -980,7 +980,7 @@ gap> S := ReesMatrixSemigroup(Group([(1, 2)]),
 >  [(), (), (), (), ()], [(), (), (), (), ()]]);;
 gap> IsRegularSemigroup(S);
 true
-gap> IsRegularSemigroup(AsTransformationSemigroup(S));
+gap> IsRegularSemigroup(AsSemigroup(IsTransformationSemigroup, S));
 true
 
 #T# properties: IsRegularSemigroup, 2/7
@@ -1002,8 +1002,8 @@ gap> IsRegularSemigroup(S);
 true
 
 #T# properties: IsRegularSemigroup, 4/7
-gap> S := AsTransformationSemigroup(PartitionMonoid(3));
-<transformation monoid of degree 203 with 4 generators>
+gap> S := AsSemigroup(IsTransformationSemigroup, PartitionMonoid(3));
+<transformation semigroup of degree 204 with 5 generators>
 gap> DClasses(S);;
 gap> IsRegularSemigroup(S);
 true
@@ -1025,7 +1025,7 @@ false
 gap> gens := [Transformation([1, 2, 4, 3, 6, 5, 4]),
 >  Transformation([1, 2, 5, 6, 3, 4, 5]),
 >  Transformation([2, 1, 2, 2, 2, 2, 2])];;
-gap> S := AsBipartitionSemigroup(Semigroup(gens));
+gap> S := AsSemigroup(IsBipartitionSemigroup, Semigroup(gens));
 <bipartition semigroup of degree 7 with 3 generators>
 gap> IsCompletelyRegularSemigroup(S);
 true
@@ -1035,7 +1035,7 @@ true
 #T# properties: IsRegularSemigroup, 7/7
 gap> S := ReesMatrixSemigroup(Group([(1, 2)]),
 > [[(), (), (), (), ()], [(), (), (), (), ()]]);;
-gap> IsRegularSemigroup(AsBipartitionSemigroup(S));
+gap> IsRegularSemigroup(AsSemigroup(IsBipartitionSemigroup, S));
 true
 
 #T# properties: IsRegularElementSemigroup, 1/8
@@ -1085,15 +1085,15 @@ true
 gap> S := Semigroup([Transformation([6, 9, 10, 1, 11, 3, 6, 6, 2, 10, 12, 2]),
 >  Transformation([7, 8, 8, 11, 2, 11, 10, 2, 11, 4, 4, 7])]);
 <transformation semigroup of degree 12 with 2 generators>
-gap> IsRegularSemigroupElement(AsBipartitionSemigroup(S), Bipartition([[1,
+gap> IsRegularSemigroupElement(AsSemigroup(IsBipartitionSemigroup, S), Bipartition([[1,
 > 2, 3, 4, 5, 7, -4, -10, -11, -12], [6, 11, -6, -7, -9],
 >  [8, 9, 10, -2, -3, -5, -8], [12, -1]]));
 false
 gap> x := Bipartition([[1, 2, 6, 10, -1, -3, -4, -5, -7],
 > [3, 5, 7, 11, -2, -8, -9], [4, 8, 9, 12, -10], [-6, -11, -12]]);;
-gap> IsRegularSemigroupElement(AsBipartitionSemigroup(S), x);
+gap> IsRegularSemigroupElement(AsSemigroup(IsBipartitionSemigroup, S), x);
 false
-gap> IsRegularSemigroupElementNC(AsBipartitionSemigroup(S), x);
+gap> IsRegularSemigroupElementNC(AsSemigroup(IsBipartitionSemigroup, S), x);
 false
 
 #T# properties: IsRegularElementSemigroup, 6/8
@@ -1104,9 +1104,9 @@ gap> Size(S);
 2030
 gap> x := Bipartition([[1, 2, 6, 10, -1, -3, -4, -5, -7],
 > [3, 5, 7, 11, -2, -8, -9], [4, 8, 9, 12, -10], [-6, -11, -12]]);;
-gap> IsRegularSemigroupElement(AsBipartitionSemigroup(S), x);
+gap> IsRegularSemigroupElement(AsSemigroup(IsBipartitionSemigroup, S), x);
 false
-gap> IsRegularSemigroupElementNC(AsBipartitionSemigroup(S), x);
+gap> IsRegularSemigroupElementNC(AsSemigroup(IsBipartitionSemigroup, S), x);
 false
 
 #T# properties: IsRegularElementSemigroup, 7/8
@@ -1180,9 +1180,9 @@ gap> IsRightZeroSemigroup(I);
 true
 
 #T# properties: IsRightZeroSemigroup, 2
-gap> S := AsTransformationSemigroup(
+gap> S := AsSemigroup(IsTransformationSemigroup, 
 > RectangularBand(IsReesMatrixSemigroup, 2, 2));
-<transformation semigroup of degree 5 with 4 generators>
+<transformation semigroup of degree 5 with 2 generators>
 gap> IsRightZeroSemigroup(S);
 false
 
@@ -1228,7 +1228,7 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsCommutativeSemigroup' on 1 arguments
 
 #T# properties: IsSimpleSemigroup, 1/?
-gap> S := AsTransformationSemigroup(RegularBooleanMatMonoid(3));
+gap> S := AsSemigroup(IsTransformationSemigroup, RegularBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 4 generators>
 gap> IsRegularSemigroup(S);
 false
@@ -1236,7 +1236,7 @@ gap> IsSimpleSemigroup(S);
 false
 
 #T# properties: IsSimpleSemigroup, 2/?
-gap> S := AsTransformationSemigroup(RegularBooleanMatMonoid(3));
+gap> S := AsSemigroup(IsTransformationSemigroup, RegularBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 4 generators>
 gap> IsCompletelyRegularSemigroup(S);
 false
@@ -1244,7 +1244,7 @@ gap> IsSimpleSemigroup(S);
 false
 
 #T# properties: IsSimpleSemigroup, 3/?
-gap> S := AsTransformationSemigroup(RegularBooleanMatMonoid(3));
+gap> S := AsSemigroup(IsTransformationSemigroup, RegularBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 4 generators>
 gap> NrDClasses(S);
 10
@@ -1304,7 +1304,7 @@ gap> IsUnitRegularMonoid(Semigroup(SingularTransformationSemigroup(3),
 false
 
 #T# properties: IsUnitRegularMonoid, 5/7
-gap> S := AsTransformationSemigroup(RegularBooleanMatMonoid(3));
+gap> S := AsSemigroup(IsTransformationSemigroup, RegularBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 4 generators>
 gap> IsUnitRegularMonoid(S);
 false
@@ -1473,13 +1473,13 @@ false
 
 #T# properties: IsRectangularGroup, 1
 gap> R := RectangularBand(10, 10);;
-gap> G := AsTransformationSemigroup(SymmetricGroup(5));;
+gap> G := AsSemigroup(IsTransformationSemigroup, SymmetricGroup(5));;
 gap> S := DirectProduct(R, G);
-<transformation semigroup of size 12000, degree 106 with 11 generators>
+<transformation semigroup of size 12000, degree 18 with 11 generators>
 gap> IsRectangularGroup(S);
 true
 gap> S := DirectProduct(G, R);
-<transformation semigroup of size 12000, degree 106 with 11 generators>
+<transformation semigroup of size 12000, degree 18 with 11 generators>
 gap> IsRectangularGroup(S);
 true
 gap> IsRectangularGroup(PartitionMonoid(3));

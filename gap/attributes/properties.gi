@@ -318,7 +318,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return IsEUnitaryInverseSemigroup(AsPartialPermSemigroup(S));
+  return IsEUnitaryInverseSemigroup(AsSemigroup(IsPartialPermSemigroup, S));
 end);
 
 #different method for ideals TODO or same?
@@ -800,7 +800,7 @@ function(S)
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
-  return IsMonogenicInverseSemigroup(AsPartialPermSemigroup(S));
+  return IsMonogenicInverseSemigroup(AsSemigroup(IsPartialPermSemigroup, S));
 end);
 
 # same method for ideals

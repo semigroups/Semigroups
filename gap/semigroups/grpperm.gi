@@ -11,6 +11,43 @@
 # in this file there are some methods for perm groups that were not found in
 # the library.
 
+# fall back method, same method for ideals
+
+# it seems to be important that this is read after the method "for IsPermGroup
+# and a transformation semigroup", otherwise this method is used instead.
+
+InstallMethod(IsomorphismSemigroup, "for IsPermGroup and a semigroup",
+[IsPermGroup, IsSemigroup],
+function(filter, S)
+  local en, act, gens;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  if not IsGroupAsSemigroup(S) then
+    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
+                  "the argument must be a semigroup satisfying ",
+                  "IsGroupAsSemigroup,");
+  fi;
+
+  # FIXME use right Cayley graph, as per the default method for
+  # IsomorphismTransformationSemigroup
+  en := EnumeratorSorted(S);
+
+  act := function(i, x)
+    return Position(en, en[i] * x);
+  end;
+
+  gens := List(GeneratorsOfSemigroup(S),
+               x -> Permutation(x, [1 .. Length(en)], act));
+
+  # gaplint: ignore 3
+  return MagmaIsomorphismByFunctionsNC(S, Group(gens),
+           x -> Permutation(x, [1 .. Length(en)], act),
+           x -> en[Position(en, MultiplicativeNeutralElement(S)) ^ x]);
+end);
+
 # returns an iterator of the sorted elements of the stab chain S^conj.
 
 InstallGlobalFunction(IteratorSortedConjugateStabChain,

@@ -66,7 +66,7 @@ gap> S := Semigroup([
 <semigroup of 3x3 ntp matrices with 2 generators>
 gap> IsIsomorphicSemigroup(S, S);
 true
-gap> T := AsTransformationSemigroup(S);
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of degree 47 with 2 generators>
 gap> IsIsomorphicSemigroup(S, T);
 Error, Semigroups: IsIsomorphicSemigroup:

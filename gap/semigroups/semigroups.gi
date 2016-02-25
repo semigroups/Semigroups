@@ -23,6 +23,9 @@ end);
 
 InstallMethod(IsomorphismTransformationSemigroup, "for a semigroup",
 [IsSemigroup],
+2, # to beat the library method for IsomorphismTransformationSemigroup
+   # for a semigroup with generators, and for a semigroup with generators and
+   # MultiplicativeNeutralElement.
 function(S)
   return IsomorphismSemigroup(IsTransformationSemigroup, S);
 end);
@@ -44,11 +47,6 @@ function(S)
   return IsomorphismSemigroup(IsReesZeroMatrixSemigroup, S);
 end);
 
-InstallMethod(IsomorphismPermGroup, "for a group as semigroup",
-[IsGroupAsSemigroup],
-function(S)
-  return IsomorphismSemigroup(IsPermGroup, S);
-end);
 
 InstallMethod(IsomorphismFpSemigroup, "for a semigroup", [IsSemigroup],
 function(S)

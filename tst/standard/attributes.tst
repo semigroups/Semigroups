@@ -243,13 +243,13 @@ true
 
 #T# AttributesTest4:
 # MultiplicativeZero for a block bijection inverse semigroup/ideal
-gap> s := AsBlockBijectionSemigroup(SymmetricInverseMonoid(1));
+gap> S := AsSemigroup(IsBlockBijectionSemigroup, SymmetricInverseMonoid(1));
 <commutative inverse bipartition monoid of degree 2 with 1 generator>
-gap> MultiplicativeZero(s);
+gap> MultiplicativeZero(S);
 <block bijection: [ 1, 2, -1, -2 ]>
-gap> Size(MinimalIdeal(s)) = 1;
+gap> Size(MinimalIdeal(S)) = 1;
 true
-gap> s := AsBlockBijectionSemigroup(SymmetricInverseMonoid(4));
+gap> S := AsSemigroup(IsBlockBijectionSemigroup, SymmetricInverseMonoid(4));
 <inverse bipartition monoid of degree 5 with 3 generators>
 gap> MultiplicativeZero(s);
 <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>
@@ -705,7 +705,7 @@ gap> StructureDescription(S);
 "B(1, 6)"
 
 #T# attributes: StructureDescription for a group as semigroup 1/3
-gap> S := AsTransformationSemigroup(AlternatingGroup(5));;
+gap> S := AsSemigroup(IsTransformationSemigroup, AlternatingGroup(5));;
 gap> IsGroupAsSemigroup(S);
 true
 gap> StructureDescription(S);

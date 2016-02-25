@@ -578,7 +578,7 @@ gap> CharacterTableOfInverseSemigroup(S[10]);
 gap> S := InverseSemigroup([Bipartition([[1, -3], [2, -1], [3, 4, -2, -4]]),
 > Bipartition([[1, -1], [2, -3], [3, -2], [4, -4]])]);
 <inverse bipartition semigroup of degree 4 with 2 generators>
-gap> NaturalPartialOrder(AsTransformationSemigroup(S));
+gap> NaturalPartialOrder(AsSemigroup(IsTransformationSemigroup, S));
 [ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1, 4, 5 ], [ 1 ], [ 1, 4, 7 ], [ 1 ], 
   [ 1, 2, 9 ], [ 1, 3, 9 ], [ 1 ], [ 1, 4, 12 ], [ 1, 4, 7, 8, 12, 13 ], 
   [ 1 ], [ 1, 4, 15 ], [ 1, 4, 5, 6, 15, 16 ], [ 1 ], [ 1, 2, 18 ], 
