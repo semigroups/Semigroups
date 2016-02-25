@@ -715,7 +715,9 @@ function(filt, S)
 
   for i in [1 .. Length(cay[1])] do
     next := List([1 .. deg], j -> cay[j][i]);
-    Add(next, i);
+    if MultiplicativeNeutralElement(S) = fail then
+      Add(next, i);
+    fi;
     Add(gen, Transformation(next));
   od;
 

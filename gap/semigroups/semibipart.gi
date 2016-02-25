@@ -48,9 +48,6 @@ function(S)
   return U;
 end);
 
-InstallMethod(AsBlockBijectionSemigroup, "for a semigroup", [IsSemigroup],
-S -> Range(IsomorphismBlockBijectionSemigroup(S)));
-
 InstallImmediateMethod(IsBlockBijectionSemigroup, IsSemigroup and
 HasGeneratorsOfSemigroup, 0,
 function(S)
@@ -162,11 +159,9 @@ function(S)
   return out;
 end);
 
-InstallMethod(AsBipartitionSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  return Range(IsomorphismBipartitionSemigroup(S));
-end);
+# The relative order of the methods for the constructor IsomorphismSemigroup is
+# important do not change it! They should be ordered from lowest rank to
+# highest so that the correct method is used.
 
 # this is just a composition of IsomorphismTransformationSemigroup and the
 # method below for IsomorphismBipartitionSemigroup...
@@ -391,55 +386,6 @@ end);
 # this is one way, i.e. no converse method
 
 InstallMethod(IsomorphismSemigroup,
-"for an inverse partial perm semigroup with generators",
-[IsBlockBijectionSemigroup, IsPartialPermSemigroup and IsInverseSemigroup and
- HasGeneratorsOfInverseSemigroup],
-function(filter, S)
-  local n, source, range, i, inv;
-
-  n := DegreeOfPartialPermSemigroup(S) + 1;
-  source := GeneratorsOfInverseSemigroup(S);
-  range := EmptyPlist(Length(source));
-
-  for i in [1 .. Length(source)] do
-    range[i] := AsBlockBijection(source[i], n);
-  od;
-
-  # AsPartialPerm for a block bijection created using AsBlockBijection with
-  # argument a partial perm
-  inv := function(x)
-    local blocks, n, bigblock, lookup, out, i;
-
-    blocks := x!.blocks;
-    n := DegreeOfBipartition(x);
-    bigblock := blocks[n];
-
-    # find the images of [1..n]
-    lookup := EmptyPlist(n - 1);
-    for i in [1 .. n - 1] do
-      lookup[blocks[i + n]] := i;
-    od;
-
-    # put it together
-    out := [1 .. n - 1] * 0;
-    for i in [1 .. n - 1] do
-      if blocks[i] <> bigblock then
-        out[i] := lookup[blocks[i]];
-      fi;
-    od;
-
-    return PartialPerm(out);
-  end;
-
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       InverseSemigroup(range),
-                                       x -> AsBlockBijection(x, n),
-                                       inv);
-end);
-
-# this is one way, i.e. no converse method
-
-InstallMethod(IsomorphismSemigroup,
 "for IsBlockBijectionSemigroup and a partial perm semigroup with generators",
 [IsBlockBijectionSemigroup,
  IsPartialPermSemigroup and HasGeneratorsOfSemigroup],
@@ -486,6 +432,56 @@ function(filter, S)
                                        x -> AsBlockBijection(x, n),
                                        inv);
 end);
+
+# this is one way, i.e. no converse method
+
+InstallMethod(IsomorphismSemigroup,
+"for an inverse partial perm semigroup with generators",
+[IsBlockBijectionSemigroup, IsPartialPermSemigroup and IsInverseSemigroup and
+ HasGeneratorsOfInverseSemigroup],
+function(filter, S)
+  local n, source, range, i, inv;
+
+  n := DegreeOfPartialPermSemigroup(S) + 1;
+  source := GeneratorsOfInverseSemigroup(S);
+  range := EmptyPlist(Length(source));
+
+  for i in [1 .. Length(source)] do
+    range[i] := AsBlockBijection(source[i], n);
+  od;
+
+  # AsPartialPerm for a block bijection created using AsBlockBijection with
+  # argument a partial perm
+  inv := function(x)
+    local blocks, n, bigblock, lookup, out, i;
+
+    blocks := x!.blocks;
+    n := DegreeOfBipartition(x);
+    bigblock := blocks[n];
+
+    # find the images of [1..n]
+    lookup := EmptyPlist(n - 1);
+    for i in [1 .. n - 1] do
+      lookup[blocks[i + n]] := i;
+    od;
+
+    # put it together
+    out := [1 .. n - 1] * 0;
+    for i in [1 .. n - 1] do
+      if blocks[i] <> bigblock then
+        out[i] := lookup[blocks[i]];
+      fi;
+    od;
+
+    return PartialPerm(out);
+  end;
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       InverseSemigroup(range),
+                                       x -> AsBlockBijection(x, n),
+                                       inv);
+end);
+
 
 # TODO could have a method for IsomorphismBlockBijectionSemigroup for
 # IsPartialPermBipartitions too..  or just for general inverse semigroups, via

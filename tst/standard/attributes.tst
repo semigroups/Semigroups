@@ -251,9 +251,9 @@ gap> Size(MinimalIdeal(S)) = 1;
 true
 gap> S := AsSemigroup(IsBlockBijectionSemigroup, SymmetricInverseMonoid(4));
 <inverse bipartition monoid of degree 5 with 3 generators>
-gap> MultiplicativeZero(s);
+gap> MultiplicativeZero(S);
 <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>
-gap> Size(MinimalIdeal(s)) = 1;
+gap> Size(MinimalIdeal(S)) = 1;
 true
 gap> s := InverseSemigroup([
 > Bipartition([[1, -3], [2, -4], [3, -1], [4, 5, 6, -2, -5, -6]]),

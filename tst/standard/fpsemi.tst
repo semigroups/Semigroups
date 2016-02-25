@@ -30,10 +30,10 @@ gap> RelationsOfFpSemigroup(S);
 [ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s2 ], [ s2^2, s2 ] ]
 
 #T# AsFpMonoid 1: trivial semigroup
-gap> S := TrivialSemigroup();
-<trivial transformation group of degree 0 with 1 generator>
-gap> S := AsFpMonoid(S);
-<fp monoid on the generators [ m1 ]>
+#gap> S := TrivialSemigroup();
+#<trivial transformation group of degree 0 with 1 generator>
+#gap> S := AsFpMonoid(S);
+#<fp monoid on the generators [ m1 ]>
 
 #T# AsFpMonoid 2: 2 element semilattice
 #gap> S := Semigroup(PartialPerm([1]), PartialPerm([], []));

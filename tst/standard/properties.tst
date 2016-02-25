@@ -1003,7 +1003,7 @@ true
 
 #T# properties: IsRegularSemigroup, 4/7
 gap> S := AsSemigroup(IsTransformationSemigroup, PartitionMonoid(3));
-<transformation semigroup of degree 204 with 5 generators>
+<transformation monoid of degree 203 with 4 generators>
 gap> DClasses(S);;
 gap> IsRegularSemigroup(S);
 true

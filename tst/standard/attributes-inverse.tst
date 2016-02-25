@@ -579,10 +579,10 @@ gap> S := InverseSemigroup([Bipartition([[1, -3], [2, -1], [3, 4, -2, -4]]),
 > Bipartition([[1, -1], [2, -3], [3, -2], [4, -4]])]);
 <inverse bipartition semigroup of degree 4 with 2 generators>
 gap> NaturalPartialOrder(AsSemigroup(IsTransformationSemigroup, S));
-[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1, 4, 5 ], [ 1 ], [ 1, 4, 7 ], [ 1 ], 
-  [ 1, 2, 9 ], [ 1, 3, 9 ], [ 1 ], [ 1, 4, 12 ], [ 1, 4, 7, 8, 12, 13 ], 
-  [ 1 ], [ 1, 4, 15 ], [ 1, 4, 5, 6, 15, 16 ], [ 1 ], [ 1, 2, 18 ], 
-  [ 1, 3, 18 ] ]
+[ [ 2, 8, 9, 15, 16, 19 ], [ 9, 16, 19 ], [ 4, 9, 11 ], [ 9 ], [ 9, 16, 18 ], 
+  [ 5, 9, 10, 14, 16, 18 ], [ 9, 13, 20 ], [ 9 ], [  ], [ 9 ], [ 9 ], 
+  [ 9, 11, 13 ], [ 9 ], [ 9, 10, 16 ], [ 8, 9, 16 ], [ 9 ], [ 4, 9, 20 ], 
+  [ 9 ], [ 9 ], [ 9 ] ]
 
 #T# attributes-inverse: NaturalPartialOrder (for a semigroup), error, 1/2
 gap> S := Semigroup(
