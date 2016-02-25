@@ -29,10 +29,6 @@ function(arg)
                   "the arguments must be a non-negative integer or ",
                   "a filter and a non-negative\ninteger,");
   fi;
-  if S = fail then
-    ErrorNoReturn("Semigroups: TrivialSemigroup: usage,\n",
-                  "the requested filter is not supported,");
-  fi;
   SetIsTrivial(S, true);
   return S;
 end);
@@ -140,11 +136,6 @@ function(arg)
   fi;
 
   S := MonogenicSemigroupCons(filter, m, r);
-
-  if S = fail then
-    ErrorNoReturn("Semigroups: MonogenicSemigroup: usage,\n",
-                  "the requested filter is not supported,");
-  fi;
 
   SetSize(S, m + r - 1);
   SetIsMonogenicSemigroup(S, true);
@@ -286,11 +277,6 @@ function(arg)
   fi;
 
   S := RectangularBandCons(filter, m, n);
-
-  if S = fail then
-    ErrorNoReturn("Semigroups: RectangularBand: usage,\n",
-                  "the requested filter is not supported,");
-  fi;
 
   SetSize(S, m * n);
   SetIsRectangularBand(S, true);
@@ -458,10 +444,6 @@ function(arg)
   fi;
 
   S := ZeroSemigroupCons(filter, n);
-  if S = fail then
-    ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
-                  "the requested filter is not supported,");
-  fi;
 
   SetSize(S, n);
   SetIsZeroSemigroup(S, true);

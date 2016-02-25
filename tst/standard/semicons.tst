@@ -34,6 +34,8 @@ Error, Semigroups: TrivialSemigroup: usage,
 the arguments must be a non-negative integer or a filter and a non-negative
 integer,
 gap> S := TrivialSemigroup(IsFreeBand);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `TrivialSemigroupCons' on 2 arguments
 
 #T# constructions: TrivialSemigroup: known properties and attributes
 gap> S := TrivialSemigroup(IsPartialPermSemigroup, 5);;
@@ -391,6 +393,8 @@ gap> IsRightZeroSemigroup(S);
 false
 gap> IsLeftZeroSemigroup(S);
 false
+gap> S := RectangularBand(5, 2);
+<regular transformation semigroup of size 10, degree 7 with 5 generators>
 
 #T# constructions: RectangularBand: known properties and attributes, [1, 1]
 gap> S := RectangularBand(IsBooleanMatSemigroup, 1, 1);;
@@ -805,6 +809,10 @@ gap> IsRightZeroSemigroup(Semigroup(S));
 true
 gap> Size(S);
 10
+
+#T# constructions: RightZeroSemigroup, deg = 0 mod 3
+gap> S := RightZeroSemigroup(9);
+<transformation semigroup of degree 6 with 9 generators>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
