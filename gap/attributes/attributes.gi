@@ -919,7 +919,7 @@ end;
 
 #
 
-InstallMethod(MinimumDegreeTransitiveTransformationRepresentation,
+InstallMethod(SmallerDegreeTransformationRepresentation,
 "for a semigroup",
 [IsSemigroup],
 # Use the best right congruence which contains no congruences
