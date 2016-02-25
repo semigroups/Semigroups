@@ -254,6 +254,13 @@ function(filt, S)
            x -> AsPartialPerm(x, DomainOfPartialPermCollection(S)));
 end);
 
+InstallMethod(IsomorphismSemigroup,
+"for IsPartialPermSemigroup and a semigroup",
+[IsPartialPermSemigroup, IsSemigroup],
+function(filt, S)
+  return IsomorphismPartialPermSemigroup(S);
+end);
+
 # it just so happens that the MultiplicativeNeutralElement of a semigroup of
 # partial permutations has to coincide with the One. This is not the case for
 # transformation semigroups

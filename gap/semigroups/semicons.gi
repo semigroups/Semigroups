@@ -20,7 +20,7 @@ function(arg)
   elif Length(arg) = 1 and IsInt(arg[1]) and arg[1] >= 0 then
     S := TrivialSemigroupCons(IsTransformationSemigroup, arg[1]);
   elif Length(arg) = 1 and IsOperation(arg[1]) then
-    S := TrivialSemigroupCons(arg[1], 2);
+    S := TrivialSemigroupCons(arg[1], 0);
   elif Length(arg) = 2 and IsOperation(arg[1]) and IsInt(arg[2])
       and arg[2] >= 0 then
     S := TrivialSemigroupCons(arg[1], arg[2]);
@@ -69,7 +69,9 @@ InstallMethod(TrivialSemigroupCons,
 "for IsBlockBijectionSemigroup and an integer",
 [IsBlockBijectionSemigroup, IsInt],
 function(filt, deg)
-  return TrivialSemigroupCons(IsBipartitionSemigroup, deg);
+  local n;
+  n := Maximum(deg, 1);
+  return TrivialSemigroupCons(IsBipartitionSemigroup, n);
 end);
 
 InstallMethod(TrivialSemigroupCons,
@@ -92,7 +94,9 @@ end);
 
 # Trivial semigroup: other constructors
 
-for IsXSemigroup in ["IsNTPMatrixSemigroup",
+for IsXSemigroup in ["IsFpSemigroup",
+                     "IsFpMonoid",
+                     "IsNTPMatrixSemigroup",
                      "IsMaxPlusMatrixSemigroup",
                      "IsMinPlusMatrixSemigroup",
                      "IsTropicalMaxPlusMatrixSemigroup",
@@ -104,9 +108,11 @@ for IsXSemigroup in ["IsNTPMatrixSemigroup",
   InstallMethod(TrivialSemigroupCons,
   Concatenation("for ", IsXSemigroup, " and an integer"),
   [EvalString(IsXSemigroup), IsInt],
-  function(filter, n)
+  function(filter, deg)
+    local n;
+    n := Maximum(deg, 1);
     return AsSemigroup(filter,
-                       TrivialSemigroupCons(IsTransformationSemigroup, n));
+                       TrivialSemigroupCons(IsTransformationSemigroup, deg));
   end);
 od;
 
@@ -236,7 +242,9 @@ end);
 
 # Monogenic semigroup: other constructors
 
-for IsXSemigroup in ["IsNTPMatrixSemigroup",
+for IsXSemigroup in ["IsPBRSemigroup",
+                     "IsBooleanMatSemigroup",
+                     "IsNTPMatrixSemigroup",
                      "IsMaxPlusMatrixSemigroup",
                      "IsMinPlusMatrixSemigroup",
                      "IsTropicalMaxPlusMatrixSemigroup",
@@ -288,16 +296,14 @@ function(arg)
   SetIsRectangularBand(S, true);
   SetNrRClasses(S, m);
   SetNrLClasses(S, n);
-
-  if not (m = 1 and n = 1) then
+  if m <> 1 or n <> 1 then
     SetIsGroupAsSemigroup(S, false);
     SetIsZeroSemigroup(S, false);
     SetIsTrivial(S, false);
-    SetIsRightZeroSemigroup(S, m = 1);
-    SetIsLeftZeroSemigroup(S, n = 1);
-  else
-    SetIsTrivial(S, true);
   fi;
+  SetIsRightZeroSemigroup(S, m = 1);
+  SetIsLeftZeroSemigroup(S, n = 1);
+
   return S;
 end);
 
@@ -307,40 +313,56 @@ InstallMethod(RectangularBandCons,
 "for a filter and a positive integer and positive integer",
 [IsTransformationSemigroup, IsPosInt, IsPosInt],
 function(filter, m, n)
-  local max, min, out, basic, im, i, j;
-
-  max := Maximum(m, n);
-  min := Minimum(m, n);
-  out := EmptyPlist(max);
-
-  basic := EmptyPlist(m * n + 1);
-  for i in [0 .. m - 1] do
-    for j in [1 .. n] do
-      basic[n * i + j] := n * i + 1;
-    od;
-  od;
+  local L, R, div, deg, gens, act, i;
 
   if m = 1 then
-    for i in [0 .. n - 1] do
-      Add(out, Transformation(basic + i));
-    od;
-    return Semigroup(out);
+    return RightZeroSemigroup(filter, n);
+  elif n = 1 then
+    return LeftZeroSemigroup(filter, m);
   fi;
 
-  for i in [0 .. min - 1] do
-    im := Concatenation(basic + i, [i * (n + 1) + 1]);
-    Add(out, Transformation(im));
-  od;
+  # don't do:
+  # DirectProduct(LeftZeroSemigroup(m), RightZeroSemigroup(n));
+  # because we know a generating set.
 
-  for i in [min .. m - 1] do
-    Add(out, Transformation(Concatenation(basic, [i * n + 1])));
-  od;
+  L := LeftZeroSemigroup(filter, m);
+  R := RightZeroSemigroup(filter, n);
+  div := DegreeOfTransformationSemigroup(L);
+  deg := div + DegreeOfTransformationSemigroup(R);
 
-  for i in [min .. n - 1] do
-    Add(out, Transformation(Concatenation(basic + i, [i + 1])));
-  od;
+  gens := [];
 
-  return Semigroup(out);
+  act := function(l, r, i)
+    if i <= div then
+      return i ^ l;
+    else
+      return (i - div) ^ r + div;
+    fi;
+  end;
+
+  if m < n then
+
+    for i in [1 .. m] do
+      Add(gens, Transformation([1 .. deg], j -> act(L.(i), R.(i), j)));
+    od;
+
+    for i in [m + 1 .. n] do
+      Add(gens, Transformation([1 .. deg], j -> act(L.1, R.(i), j)));
+    od;
+
+  else
+
+    for i in [1 .. n] do
+      Add(gens, Transformation([1 .. deg], j -> act(L.(i), R.(i), j)));
+    od;
+
+    for i in [n + 1 .. m] do
+      Add(gens, Transformation([1 .. deg], j -> act(L.(i), R.1, j)));
+    od;
+
+  fi;
+
+  return Semigroup(gens);
 end);
 
 InstallMethod(RectangularBandCons,
@@ -388,9 +410,18 @@ function(filter, m, n)
   return ReesMatrixSemigroup(Group(id), mat);
 end);
 
+InstallMethod(RectangularBandCons,
+"for IsPBRSemigroup and a pos int, and pos int",
+[IsPBRSemigroup, IsPosInt, IsPosInt],
+function(filter, m, n)
+  return AsSemigroup(filter,
+                     RectangularBandCons(IsBipartitionSemigroup, m, n));
+end);
+
 # Rectangular band: other constructors
 
-for IsXSemigroup in ["IsNTPMatrixSemigroup",
+for IsXSemigroup in ["IsBooleanMatSemigroup",
+                     "IsNTPMatrixSemigroup",
                      "IsMaxPlusMatrixSemigroup",
                      "IsMinPlusMatrixSemigroup",
                      "IsTropicalMaxPlusMatrixSemigroup",
@@ -398,7 +429,7 @@ for IsXSemigroup in ["IsNTPMatrixSemigroup",
                      "IsProjectiveMaxPlusMatrixSemigroup",
                      "IsIntegerMatrixSemigroup"] do
   InstallMethod(RectangularBandCons,
-  Concatenation("for ", IsXSemigroup, " and a positive integer"),
+  Concatenation("for ", IsXSemigroup, ", pos int, and pos int"),
   [EvalString(IsXSemigroup), IsPosInt, IsPosInt],
   function(filter, m, n)
     return AsSemigroup(filter,
@@ -431,11 +462,12 @@ function(arg)
     ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
                   "the requested filter is not supported,");
   fi;
+
   SetSize(S, n);
   SetIsZeroSemigroup(S, true);
   SetMultiplicativeZero(S, S.1 ^ 2);
-  SetIsGroupAsSemigroup(S, not IsTrivial(S));
-  SetIsRegularSemigroup(S, not IsTrivial(S));
+  SetIsGroupAsSemigroup(S, IsTrivial(S));
+  SetIsRegularSemigroup(S, IsTrivial(S));
   SetIsMonogenicSemigroup(S, n <= 2);
   return S;
 end);
@@ -542,6 +574,17 @@ function(filter, n)
   return ReesZeroMatrixSemigroup(Group(()), mat);
 end);
 
+for IsXSemigroup in ["IsPBRSemigroup",
+                     "IsBooleanMatSemigroup"] do
+  InstallMethod(ZeroSemigroupCons,
+  Concatenation("for ", IsXSemigroup, " and a positive integer"),
+  [EvalString(IsXSemigroup), IsPosInt],
+  function(filter, n)
+    return AsSemigroup(filter,
+                       ZeroSemigroupCons(IsBipartitionSemigroup, n));
+  end);
+od;
+
 # Zero semigroup: other constructors
 
 for IsXSemigroup in ["IsNTPMatrixSemigroup",
@@ -564,32 +607,112 @@ od;
 
 InstallGlobalFunction(LeftZeroSemigroup,
 function(arg)
-  local out;
-  if Length(arg) = 2 and IsOperation(arg[1]) and IsPosInt(arg[2]) then
-    out := RectangularBand(arg[1], arg[2], 1);
-  elif Length(arg) = 1 and IsPosInt(arg[1]) then
-    out := RectangularBand(IsTransformationSemigroup, arg[1], 1);
-  else
+  local filt, n, max, deg, N, R, gens, im, iter, r, i;
+
+  if Length(arg) = 1 then
+    filt := IsTransformationSemigroup;
+    n    := arg[1];
+  elif Length(arg) = 2 then
+    filt := arg[1];
+    n    := arg[2];
+  fi;
+
+  if not IsBound(filt) or not IsFilter(filt) or not IsPosInt(n) then
     ErrorNoReturn("Semigroups: LeftZeroSemigroup: usage,\n",
                   "the arguments must be a positive integer or ",
                   "a filter and a positive integer,");
+  elif n = 1 then
+    return TrivialSemigroup(filt);
+  elif filt <> IsTransformationSemigroup then
+    return RectangularBand(filt, n, 1);
   fi;
-  return out;
+
+  # calculate the minimal possible degree
+  max := 0;
+  deg := 0;
+  while max < n do
+    deg := deg + 1;
+    for r in [1 .. deg - 1] do
+      N := r ^ (deg - r);
+      if N > max then
+        max := N;
+        R := r;
+      fi;
+    od;
+  od;
+
+  gens := [];
+  im   := [1 .. R];
+  iter := IteratorOfTuples([1 .. R], deg - R);
+
+  for i in [1 .. n] do
+    Add(gens, Transformation(Concatenation(im, NextIterator(iter))));
+  od;
+
+  return Semigroup(gens, rec(generic := true));
 end);
 
 # Right zero semigroup: main method
 
 InstallGlobalFunction(RightZeroSemigroup,
 function(arg)
-  local out;
-  if Length(arg) = 2 and IsOperation(arg[1]) and IsPosInt(arg[2]) then
-    out := RectangularBand(arg[1], 1, arg[2]);
-  elif Length(arg) = 1 and IsPosInt(arg[1]) then
-    out := RectangularBand(IsTransformationSemigroup, 1, arg[1]);
-  else
+  local filt, n, max, deg, ker, add, iter, gens, i;
+
+  if Length(arg) = 1 then
+    filt := IsTransformationSemigroup;
+    n    := arg[1];
+  elif Length(arg) = 2 then
+    filt := arg[1];
+    n    := arg[2];
+  fi;
+
+  if not IsBound(filt) or not IsFilter(filt) or not IsPosInt(n) then
     ErrorNoReturn("Semigroups: RightZeroSemigroup: usage,\n",
                   "the arguments must be a positive integer or ",
                   "a filter and a positive integer,");
+  elif n = 1 then
+    return TrivialSemigroup(filt);
+  elif filt <> IsTransformationSemigroup then
+    return RectangularBand(filt, 1, n);
   fi;
-  return out;
+
+  # calculate the minimal possible degree
+  max := 0;
+  deg := 0;
+  while max < n do
+    deg := deg + 1;
+    if (deg mod 3) = 0 then
+      max := 3 ^ (deg / 3);
+    elif (deg mod 3) = 1 then
+      max := 4 * 3 ^ ((deg - 4) / 3);
+    else
+      max := 2 * 3 ^ ((deg - 2) / 3);
+    fi;
+  od;
+
+  # make the first class of the kernel
+  if (deg mod 3) = 0 then
+    ker := [[1 .. 3]];
+    add := 3;
+  elif (deg mod 3) = 1 then
+    ker := [[1 .. 4]];
+    add := 4;
+  else
+    ker := [[1 .. 2]];
+    add := 2;
+  fi;
+
+  # add remaining classes in kernel (all of size 3)
+  while add < deg do
+    Add(ker, [1 .. 3] + add);
+    add := add + 3;
+  od;
+
+  iter := IteratorOfCartesianProduct(ker);
+
+  gens := [];
+  for i in [1 .. n] do
+    Add(gens, TransformationByImageAndKernel(NextIterator(iter), ker));
+  od;
+  return Semigroup(gens, rec(generic := true));
 end);

@@ -1000,7 +1000,7 @@ gap> S := Semigroup([[[Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
 >                     [Z(2 ^ 2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
 >                     [Z(2 ^ 2) ^ 2, Z(2) ^ 0, 0 * Z(2), Z(2) ^ 0]]]);
 <semigroup with 3 generators>
-gap> T := AsTransformationSemigroup(S);
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of degree 22 with 3 generators>
 gap> Size(T);
 21
@@ -1186,15 +1186,15 @@ gap> CyclesOfPartialPermSemigroup(S);
 #T# AsXSemigroup for trivial transformation semigroup
 gap> S := Semigroup(IdentityTransformation);
 <trivial transformation group of degree 0 with 1 generator>
-gap> AsTransformationSemigroup(S);
+gap> AsSemigroup(IsTransformationSemigroup, S);
 <trivial transformation group of degree 0 with 1 generator>
-gap> AsPartialPermSemigroup(S);
+gap> AsSemigroup(IsPartialPermSemigroup, S);
 <trivial partial perm group of rank 0 with 1 generator>
-gap> AsBipartitionSemigroup(S);
+gap> AsSemigroup(IsBipartitionSemigroup, S);
 <trivial bipartition group of degree 1 with 1 generator>
-gap> AsPBRSemigroup(S);
+gap> AsSemigroup(IsPBRSemigroup, S);
 <commutative pbr semigroup of degree 1 with 1 generator>
-gap> AsBooleanMatSemigroup(S);
+gap> AsSemigroup(IsBooleanMatSemigroup, S);
 <trivial group of 1x1 boolean matrices with 1 generator>
 
 #T# Issue #138: InversesOfSemigroupElement for trivial transformation monoid
@@ -1234,9 +1234,9 @@ gap> IsInverseSemigroup(S);
 false
 
 #T# Bipartition semigroups of degree 0, Issue #139
-gap> AsBipartitionSemigroup(CyclicGroup(IsPermGroup, 1));
+gap> AsSemigroup(IsBipartitionSemigroup, CyclicGroup(IsPermGroup, 1));
 <trivial bipartition group of degree 0 with 1 generator>
-gap> AsBipartitionSemigroup(Group(()));
+gap> AsSemigroup(IsBipartitionSemigroup, Group(()));
 <trivial bipartition group of degree 0 with 1 generator>
 gap> Semigroup(Bipartition([]));
 <trivial bipartition group of degree 0 with 1 generator>
@@ -1248,7 +1248,7 @@ gap> PartitionMonoid(0);
 #T# Fixed unconvert for matrix over semiring
 gap> S := FullTropicalMinPlusMonoid(2, 3);
 <monoid of 2x2 tropical min-plus matrices with 7 generators>
-gap> AsTransformationSemigroup(S);
+gap> AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of degree 625 with 7 generators>
 
 #T# Test for not being allowed to generate a semigroup with bipartitions of

@@ -14,6 +14,16 @@
 ## 1. Isomorphisms etc.
 #############################################################################
 
+# fallback method: via a transformation semigroup
+
+InstallMethod(IsomorphismSemigroup,
+"for IsBooleanMatSemigroup and a semigroup",
+[IsBooleanMatSemigroup, IsSemigroup],
+SEMIGROUPS.DefaultIsomorphismSemigroup);
+
+# it seems necessary that the method below occurs after the fallback method, in
+# order that it be selected.
+
 InstallMethod(IsomorphismSemigroup,
 "for IsBooleanMatSemigroup and a transformation semigroup",
 [IsBooleanMatSemigroup, IsTransformationSemigroup],
@@ -23,13 +33,6 @@ function(filter, S)
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
   return MappingByFunction(S, T, x -> AsBooleanMat(x, n), AsTransformation);
 end);
-
-# via a transformation semigroup
-
-InstallMethod(IsomorphismSemigroup,
-"for IsBooleanMatSemigroup and a semigroup",
-[IsBooleanMatSemigroup, IsSemigroup],
-SEMIGROUPS.DefaultIsomorphismSemigroup);
 
 InstallMethod(IsomorphismSemigroup,
 "for IsTransformationSemigroup and a boolean matrix semigroup with generators",

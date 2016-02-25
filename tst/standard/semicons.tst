@@ -33,9 +33,7 @@ gap> S := TrivialSemigroup(IsPermGroup, 1, 1);
 Error, Semigroups: TrivialSemigroup: usage,
 the arguments must be a non-negative integer or a filter and a non-negative
 integer,
-gap> S := TrivialSemigroup(IsMaxPlusMatrixSemigroup);
-Error, Semigroups: TrivialSemigroup: usage,
-the requested filter is not supported,
+gap> S := TrivialSemigroup(IsFreeBand);
 
 #T# constructions: TrivialSemigroup: known properties and attributes
 gap> S := TrivialSemigroup(IsPartialPermSemigroup, 5);;
@@ -133,6 +131,10 @@ gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 5);
 gap> S := TrivialSemigroup(IsBooleanMatSemigroup, 10);
 <trivial group of 10x10 boolean matrices with 1 generator>
 
+#T# constructions: TrivialSemigroup: other constructors
+gap> S := TrivialSemigroup(IsMaxPlusMatrixSemigroup);
+<trivial group of 1x1 max-plus matrices with 1 generator>
+
 #T# constructions: MonogenicSemigroup: errors
 gap> S := MonogenicSemigroup(0);
 Error, Semigroups: MonogenicSemigroup: usage,
@@ -159,8 +161,8 @@ Error, Semigroups: MonogenicSemigroup: usage,
 the arguments must be two positive integers or a filter and a two positive
 integers,
 gap> S := MonogenicSemigroup(IsMaxPlusMatrixSemigroup, 100, 100);
-Error, Semigroups: MonogenicSemigroup: usage,
-the requested filter is not supported,
+<commutative non-regular semigroup of size 199, 200x200 max-plus matrices 
+ with 1 generator>
 
 #T# constructions: MonogenicSemigroup: known properties and attributes, [4, 7]
 gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 4, 7);;
@@ -303,9 +305,9 @@ gap> S := MonogenicSemigroup(IsPBRSemigroup, 2, 1);
 gap> S := MonogenicSemigroup(IsPBRSemigroup, 1, 2);
 <pbr group of size 2, degree 2 with 1 generator>
 gap> S := MonogenicSemigroup(IsPBRSemigroup, 5, 5);
-<commutative non-regular pbr semigroup of size 9, degree 11 with 1 generator>
+<commutative non-regular pbr semigroup of size 9, degree 10 with 1 generator>
 gap> S := MonogenicSemigroup(IsPBRSemigroup, 10, 11);
-<commutative non-regular pbr semigroup of size 20, degree 22 with 1 generator>
+<commutative non-regular pbr semigroup of size 20, degree 21 with 1 generator>
 
 #T# constructions: MonogenicSemigroup: Boolean matrix semigroup
 gap> S := MonogenicSemigroup(IsBooleanMatSemigroup, 1, 1);
@@ -348,8 +350,7 @@ Error, Semigroups: RectangularBand: usage,
 the arguments must be two positive integers or a filter and a two positive
 integers,
 gap> S := RectangularBand(IsMaxPlusMatrixSemigroup, 100, 100);
-Error, Semigroups: RectangularBand: usage,
-the requested filter is not supported,
+<regular semigroup of size 10000, 21x21 max-plus matrices with 100 generators>
 
 #T# constructions: RectangularBand: known properties and attributes, [3, 4]
 gap> S := RectangularBand(3, 4);;
@@ -429,9 +430,9 @@ gap> S := RectangularBand(2, 1);
 gap> S := RectangularBand(1, 2);
 <regular transformation semigroup of size 2, degree 2 with 2 generators>
 gap> S := RectangularBand(5, 5);
-<regular transformation semigroup of size 25, degree 26 with 5 generators>
+<regular transformation semigroup of size 25, degree 10 with 5 generators>
 gap> S := RectangularBand(10, 11);
-<regular transformation semigroup of size 110, degree 111 with 11 generators>
+<regular transformation semigroup of size 110, degree 13 with 11 generators>
 
 #T# constructions: RectangularBand: transformation semigroup
 gap> S := RectangularBand(IsTransformationSemigroup, 1, 1);
@@ -441,9 +442,9 @@ gap> S := RectangularBand(IsTransformationSemigroup, 2, 1);
 gap> S := RectangularBand(IsTransformationSemigroup, 1, 2);
 <regular transformation semigroup of size 2, degree 2 with 2 generators>
 gap> S := RectangularBand(IsTransformationSemigroup, 5, 5);
-<regular transformation semigroup of size 25, degree 26 with 5 generators>
+<regular transformation semigroup of size 25, degree 10 with 5 generators>
 gap> S := RectangularBand(IsTransformationSemigroup, 10, 11);
-<regular transformation semigroup of size 110, degree 111 with 11 generators>
+<regular transformation semigroup of size 110, degree 13 with 11 generators>
 
 #T# constructions: RectangularBand: partial perm semigroup
 gap> S := RectangularBand(IsPartialPermSemigroup, 1, 1);
@@ -487,13 +488,13 @@ gap> S := RectangularBand(IsPBRSemigroup, 10, 11);
 
 #T# constructions: RectangularBand: Boolean matrix semigroup
 gap> S := RectangularBand(IsBooleanMatSemigroup, 1, 1);
-<trivial group of 2x2 boolean matrices with 1 generator>
+<trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := RectangularBand(IsBooleanMatSemigroup, 2, 1);
 <regular semigroup of size 2, 3x3 boolean matrices with 2 generators>
 gap> S := RectangularBand(IsBooleanMatSemigroup, 1, 2);
-<regular semigroup of size 2, 3x3 boolean matrices with 2 generators>
+<regular semigroup of size 2, 2x2 boolean matrices with 2 generators>
 gap> S := RectangularBand(IsBooleanMatSemigroup, 5, 5);
-<regular semigroup of size 25, 26x26 boolean matrices with 5 generators>
+<regular semigroup of size 25, 10x10 boolean matrices with 5 generators>
 
 #T# constructions: RectangularBand: Rees matrix semigroup
 gap> S := RectangularBand(IsReesMatrixSemigroup, 1, 1);
@@ -526,9 +527,8 @@ Error, no 1st choice method found for `ZeroSemigroupCons' on 2 arguments
 gap> S := ZeroSemigroup(IsPartialPermSemigroup, 2, true);
 Error, Semigroups: ZeroSemigroup: usage,
 the arguments must be a positive integer or a filter and a positive integer,
-gap> S := ZeroSemigroup(IsMaxPlusMatrixSemigroup, 100);
-Error, Semigroups: ZeroSemigroup: usage,
-the requested filter is not supported,
+gap> S := ZeroSemigroup(IsMaxPlusMatrixSemigroup, 10);
+<non-regular semigroup of size 10, 19x19 max-plus matrices with 9 generators>
 
 #T# constructions: ZeroSemigroup: known properties and attributes, n = 1
 gap> S := ZeroSemigroup(1);;
@@ -545,7 +545,7 @@ true
 gap> MultiplicativeZero(S);
 IdentityTransformation
 gap> HasAsList(S);
-true
+false
 gap> AsList(S);
 [ IdentityTransformation ]
 gap> IsGroup(S);
@@ -597,7 +597,7 @@ true
 gap> MultiplicativeZero(S);
 Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )
 gap> HasAsList(S);
-true
+false
 gap> AsList(S);
 [ Transformation( [ 1, 3, 1, 1, 1, 1, 1, 1, 1 ] ), 
   Transformation( [ 1, 1, 1, 5, 1, 1, 1, 1, 1 ] ), 
@@ -759,8 +759,7 @@ gap> S := LeftZeroSemigroup(1, 2, 3);
 Error, Semigroups: LeftZeroSemigroup: usage,
 the arguments must be a positive integer or a filter and a positive integer,
 gap> S := LeftZeroSemigroup(IsMaxPlusMatrixSemigroup, 4);
-Error, Semigroups: RectangularBand: usage,
-the requested filter is not supported,
+<regular semigroup of size 4, 4x4 max-plus matrices with 4 generators>
 gap> S := LeftZeroSemigroup(IsGroup, 4);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `RectangularBandCons' on 3 arguments
@@ -792,8 +791,7 @@ gap> S := RightZeroSemigroup(1, 2, 3);
 Error, Semigroups: RightZeroSemigroup: usage,
 the arguments must be a positive integer or a filter and a positive integer,
 gap> S := RightZeroSemigroup(IsMaxPlusMatrixSemigroup, 4);
-Error, Semigroups: RectangularBand: usage,
-the requested filter is not supported,
+<regular semigroup of size 4, 4x4 max-plus matrices with 4 generators>
 gap> S := RightZeroSemigroup(IsGroup, 4);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `RectangularBandCons' on 3 arguments

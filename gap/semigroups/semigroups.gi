@@ -55,6 +55,8 @@ function(S)
   return IsomorphismSemigroup(IsFpSemigroup, S);
 end);
 
+#TODO use IsomorphismMonoid here?
+
 InstallMethod(IsomorphismFpMonoid, "for a monoid", [IsMonoid],
 function(S)
   return IsomorphismSemigroup(IsFpMonoid, S);
