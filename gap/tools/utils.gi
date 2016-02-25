@@ -425,7 +425,7 @@ end);
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
   local opts, file_ext, is_testable, dir, contents, farm, nr_tests, out,
-        start_time, pass, end_time, elapsed, str, filename;
+  elapsed, passed, failed, start_time, pass, end_time, str, filename;
 
   if Length(arg) = 1 and IsRecord(arg[1]) then
     opts := arg[1];
@@ -485,6 +485,8 @@ function(arg)
   fi;
 
   elapsed := 0;
+  passed  := 0;
+  failed  := 0;
 
   for filename in contents do
     if file_ext(filename) = "tst" and is_testable(dir, filename) then
@@ -501,7 +503,10 @@ function(arg)
         elapsed := elapsed + (end_time.tv_sec - start_time.tv_sec) * 1000
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
         if not pass then
+          failed := failed + 1;
           out := false;
+        else
+          passed := passed + 1;
         fi;
       fi;
     fi;
@@ -516,6 +521,7 @@ function(arg)
     Kill(farm);
   fi;
 
+  Print(failed, " tests failed out of ", failed + passed, "\n");
   Print("TOTAL elapsed time: ", String(elapsed), "ms\n");
   return out;
 end);
