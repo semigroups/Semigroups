@@ -37,7 +37,8 @@ true
 #T# MinimumDegreeTransformationRepresentation: Partition monoid
 gap> p := PartitionMonoid(2);;
 gap> iso := MinimumDegreeTransformationRepresentation(p);;
-gap> q := Range(iso);;
+gap> q := Range(iso);
+<transformation monoid of degree 7 with 3 generators>
 gap> IsIsomorphicSemigroup(p, q);
 true
 
@@ -45,6 +46,8 @@ true
 gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(iso);
+gap> Unbind(p);
+gap> Unbind(q);
 
 #E#
 gap> STOP_TEST("Semigroups package: extreme/attributes.tst");

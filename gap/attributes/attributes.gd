@@ -48,3 +48,4 @@ DeclareAttribute("MinimalDClass", IsSemigroup);
 DeclareAttribute("IsGreensDLeq", IsSemigroup);
 
 DeclareAttribute("MinimumDegreeTransformationRepresentation", IsSemigroup);
+DeclareAttribute("SmallDegreeTransformationRepresentation", IsSemigroup);

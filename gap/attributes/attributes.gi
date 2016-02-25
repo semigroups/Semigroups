@@ -875,10 +875,12 @@ end);
 
 #
 
-InstallMethod(MinimumDegreeTransformationRepresentation,
-"for a semigroup",
-[IsSemigroup],
-function(S)
+################################################################################
+# SmallDegreeTransRepFromLattice: used for two user-facing functions (see below)
+# Returns the smallest degree transformation semigroup corresponding to right
+# congruences found using LatticeOfXCongruences with the given record.
+################################################################################
+SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
   #TODO: The map should have an invfun included
   local M, l, congs, nrclasses, cong, bestcong, classes, fun, R;
   # If S is not a monoid, append an identity
@@ -888,8 +890,8 @@ function(S)
     M := S;
   fi;
 
-  # Get all the right congruences which contain no 2-sided congruences
-  l := SEMIGROUPS.LatticeOfXCongruences(M, "Right", rec(poor := true));
+  # Get all the right congruences which apply here
+  l := SEMIGROUPS.LatticeOfXCongruences(M, "Right", record);
   congs := l![2];
 
   # Find the one with the fewest classes
@@ -913,4 +915,21 @@ function(S)
   # Construct the range from the original generators (possibly not a monoid)
   R := Semigroup(List(GeneratorsOfSemigroup(S), fun));
   return MappingByFunction(S, R, fun); #, invfun);
-end);
+end;
+
+#
+
+InstallMethod(MinimumDegreeTransformationRepresentation,
+"for a semigroup",
+[IsSemigroup],
+# Use the best right congruence which contains no congruences
+S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(poor := true)));
+
+#
+
+InstallMethod(SmallDegreeTransformationRepresentation,
+"for a semigroup",
+[IsSemigroup],
+# Use the best 1-generated right congruence which contains no congruences
+S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(poor := true,
+                                                      1gen := true)));

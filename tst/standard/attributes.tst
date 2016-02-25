@@ -1082,6 +1082,14 @@ gap> InjectionNormalizedPrincipalFactor(DClass(S, S.1));
 Error, Semigroups: InjectionNormalizedPrincipalFactor: usage,
 the argument <D> must be a regular D-class,
 
+#T# SmallDegreeTransformationRepresentation: Partition monoid
+gap> p := PartitionMonoid(2);;
+gap> iso := SmallDegreeTransformationRepresentation(p);;
+gap> q := Range(iso);
+<transformation monoid of degree 8 with 3 generators>
+gap> IsIsomorphicSemigroup(p, q);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);
@@ -1096,6 +1104,8 @@ gap> Unbind(gens);
 gap> Unbind(inv);
 gap> Unbind(iso);
 gap> Unbind(map);
+gap> Unbind(p);
+gap> Unbind(q);
 gap> Unbind(s);
 gap> Unbind(t);
 gap> Unbind(x);
