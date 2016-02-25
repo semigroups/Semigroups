@@ -1051,15 +1051,15 @@ end);
 # 'true' to have the stated effect:
 #   * minimal - Return only minimal x-congs
 #   * 1gen - Return only x-congs with a single generating pair
-#   * poor - Return only x-congs which contain no 2-sided congruences
+#   * transrep - Return only x-congs which contain no 2-sided congruences
 ###############################################################################
 SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
-  local poor, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children,
+  local transrep, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children,
         parents, pair, badcong, newchildren, newparents, newcong, i, c, p,
         congs, 2congs, image, next, set_func, lattice, join_func, length, found,
         ignore, start, j, k;
 
-  poor := IsBound(record.poor) and record.poor;
+  transrep := IsBound(record.transrep) and record.transrep;
   _XSemigroupCongruence := EvalString(Concatenation(type_string,
                                                     "SemigroupCongruence"));
   elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
@@ -1106,7 +1106,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   od;
 
   congs := ShallowCopy(congs1);
-  if poor then
+  if transrep then
     # Find and remove any 2-sided congruences, and discard their parents
     2congs := Set([]);
     for i in [1 .. Length(congs)] do
@@ -1218,8 +1218,8 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
             Add(newchildren, k);
           fi;
         od;
-        # Check for 2-sided congs if 'poor' is set
-        if poor then
+        # Check for 2-sided congs if 'transrep' is set
+        if transrep then
           if IsSemigroupCongruence(newcong) then
             badcong := true;
             Add(2congs, newcong);
@@ -1248,7 +1248,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     od;
   od;
 
-  if poor and (true in ignore) then
+  if transrep and (true in ignore) then
     # Remove any congs in 'ignore'
     for i in [1 .. Length(congs)] do
       if ignore[i] then

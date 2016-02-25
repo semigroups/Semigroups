@@ -449,12 +449,12 @@ gap> PositionsProperty(minl, c -> IsSubrelation(min[1], c));
 gap> PositionsProperty(minr, c -> IsSubrelation(min[1], c));
 [ 5 ]
 
-#T# SEMIGROUPS.LatticeOfXCongruences poor
+#T# SEMIGROUPS.LatticeOfXCongruences transrep
 gap> S := Semigroup( [ Transformation( [ 4, 2, 3, 3 ] ),
 >   Transformation( [ 4, 4, 4, 4 ] ) ] );;
-gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(poor := true));
+gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
 [ [  ] ]
-gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(poor := true));
+gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
 [ [  ] ]
 gap> LatticeOfCongruences(S);
 [ [  ], [ 1 ], [ 1 ], [ 1, 2, 6 ], [ 1, 2, 3 ], [ 1 ], 

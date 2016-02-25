@@ -923,7 +923,7 @@ InstallMethod(SmallerDegreeTransformationRepresentation,
 "for a semigroup",
 [IsSemigroup],
 # Use the best right congruence which contains no congruences
-S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(poor := true)));
+S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true)));
 
 #
 
@@ -931,5 +931,5 @@ InstallMethod(SmallDegreeTransformationRepresentation,
 "for a semigroup",
 [IsSemigroup],
 # Use the best 1-generated right congruence which contains no congruences
-S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(poor := true,
+S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true,
                                                       1gen := true)));
