@@ -13,30 +13,30 @@ gap> LoadPackage("semigroups", false);;
 #  
 gap> SEMIGROUPS.StartTest();;
 
-#T# MinimumDegreeTransformationRepresentation: Partial perm semigroup
+#T# MinimumDegreeTransitiveTransformationRepresentation: Partial perm semigroup
 gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), 
 >                      PartialPerm( [ 1, 2 ], [ 3, 1 ] ) ] );;
-gap> iso := MinimumDegreeTransformationRepresentation(S);;
+gap> iso := MinimumDegreeTransitiveTransformationRepresentation(S);;
 gap> T := Range(iso);
 <transformation semigroup of degree 4 with 2 generators>
 gap> IsIsomorphicSemigroup(S, T);
 true
 
-#T# MinimumDegreeTransformationRepresentation: PBR semigroup
+#T# MinimumDegreeTransitiveTransformationRepresentation: PBR semigroup
 gap> S := Semigroup(
 > [ PBR([ [ -3, -2, -1, 1, 2, 3 ], [ -3, 1, 3 ], [ -3, 2 ] ],
 >       [ [ -3, -2, 1, 2, 3 ], [ -3, -2, -1, 2, 3 ], [ -2, -1, 1, 3 ] ]),
 >   PBR([ [ -3, 2 ], [ 3 ], [ -3, -2, -1 ] ],
 >       [ [ -3 ], [ -3, -2 ], [ -3, -2, 1, 2 ] ]) ] );;
-gap> iso := MinimumDegreeTransformationRepresentation(S);;
+gap> iso := MinimumDegreeTransitiveTransformationRepresentation(S);;
 gap> T := Range(iso);
 <transformation semigroup of degree 7 with 2 generators>
 gap> IsIsomorphicSemigroup(S, T);
 true
 
-#T# MinimumDegreeTransformationRepresentation: Partition monoid
+#T# MinimumDegreeTransitiveTransformationRepresentation: Partition monoid
 gap> p := PartitionMonoid(2);;
-gap> iso := MinimumDegreeTransformationRepresentation(p);;
+gap> iso := MinimumDegreeTransitiveTransformationRepresentation(p);;
 gap> q := Range(iso);
 <transformation monoid of degree 7 with 3 generators>
 gap> IsIsomorphicSemigroup(p, q);

@@ -926,9 +926,9 @@ gap> Matrix(S);
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="MinimumDegreeTransformationRepresentation">
+<#GAPDoc Label="MinimumDegreeTransitiveTransformationRepresentation">
 <ManSection>
-  <Attr Name="MinimumDegreeTransformationRepresentation" Arg="S"/>
+  <Attr Name="MinimumDegreeTransitiveTransformationRepresentation" Arg="S"/>
   <Returns>An isomorphism.</Returns>
   <Description>
     Any semigroup is isomorphic to a transformation semigroup.  If <A>S</A> is a
@@ -941,7 +941,7 @@ gap> Matrix(S);
 gap> S := Semigroup([PBR([[], []], [[], [-1]]),
 >                    PBR([[], [-2,1]], [[], [-2,1]])]);
 <pbr semigroup of degree 2 with 2 generators>
-gap> iso := MinimumDegreeTransformationRepresentation(S);;
+gap> iso := MinimumDegreeTransitiveTransformationRepresentation(S);;
 gap> Range(iso);
 <transformation semigroup of degree 6 with 2 generators>
 ]]></Example>
@@ -963,7 +963,7 @@ gap> Range(iso);
     identity mapping will be returned. <P/>
 
     There is no guarantee that a representation with smallest possible degree is
-    returned.  See <Ref Attr="MinimumDegreeTransformationRepresentation"/>. <P/>
+    returned.  See <Ref Attr="MinimumDegreeTransitiveTransformationRepresentation"/>. <P/>
 
 <Example><![CDATA[
 gap> S := Semigroup([PBR([[], []], [[], [-1]]),
