@@ -8,6 +8,11 @@
 #############################################################################
 ##
 
+# This file contains methods for finite semigroups which do not depend on
+# whether they are acting or not, i.e. they should work for all semigroups.
+
+#TODO update the info strings to include "finite"?
+
 InstallMethod(AsSemigroup, "for a filter and a semigroup",
 [IsFunction and IsOperation, IsSemigroup],
 function(filt, S)
@@ -75,37 +80,7 @@ SEMIGROUPS.DefaultIsomorphismSemigroup := function(filter, S)
                            x -> (x ^ inv2) ^ inv1);
 end;
 
-#TODO update the info strings to include "finite"
-# This file contains methods for finite semigroups which do not depend on
-# whether they are acting or not, i.e. they should work for all semigroups.
 
-SEMIGROUPS.SemigroupTypes := [IsPBRSemigroup,
-                              IsBipartitionSemigroup,
-                              IsTransformationSemigroup,
-                              IsPartialPermSemigroup,
-                              IsBooleanMatSemigroup,
-                              IsMaxPlusMatrixSemigroup,
-                              IsMinPlusMatrixSemigroup,
-                              IsTropicalMaxPlusMatrixSemigroup,
-                              IsTropicalMinPlusMatrixSemigroup,
-                              IsProjectiveMaxPlusMatrixSemigroup,
-                              IsNTPMatrixSemigroup,
-                              IsBlockBijectionSemigroup,
-                              IsIntegerMatrixSemigroup];
-
-SEMIGROUPS.MonoidTypes := [IsPBRMonoid,
-                           IsBipartitionMonoid,
-                           IsTransformationMonoid,
-                           IsPartialPermMonoid,
-                           IsBooleanMatMonoid,
-                           IsMaxPlusMatrixMonoid,
-                           IsMinPlusMatrixMonoid,
-                           IsTropicalMaxPlusMatrixMonoid,
-                           IsTropicalMinPlusMatrixMonoid,
-                           IsProjectiveMaxPlusMatrixMonoid,
-                           IsNTPMatrixMonoid,
-                           IsBlockBijectionMonoid,
-                           IsIntegerMatrixMonoid];
 
 SEMIGROUPS.AddGenerators := function(S, coll, opts)
   local data;
@@ -837,6 +812,33 @@ function(S)
   return AsList(S)[Random([1 .. Size(S)])];
 end);
 
+SEMIGROUPS.SemigroupTypes := [IsPBRSemigroup,
+                              IsBipartitionSemigroup,
+                              IsTransformationSemigroup,
+                              IsPartialPermSemigroup,
+                              IsBooleanMatSemigroup,
+                              IsMaxPlusMatrixSemigroup,
+                              IsMinPlusMatrixSemigroup,
+                              IsTropicalMaxPlusMatrixSemigroup,
+                              IsTropicalMinPlusMatrixSemigroup,
+                              IsProjectiveMaxPlusMatrixSemigroup,
+                              IsNTPMatrixSemigroup,
+                              IsBlockBijectionSemigroup,
+                              IsIntegerMatrixSemigroup];
+
+SEMIGROUPS.MonoidTypes := [IsPBRMonoid,
+                           IsBipartitionMonoid,
+                           IsTransformationMonoid,
+                           IsPartialPermMonoid,
+                           IsBooleanMatMonoid,
+                           IsMaxPlusMatrixMonoid,
+                           IsMinPlusMatrixMonoid,
+                           IsTropicalMaxPlusMatrixMonoid,
+                           IsTropicalMinPlusMatrixMonoid,
+                           IsProjectiveMaxPlusMatrixMonoid,
+                           IsNTPMatrixMonoid,
+                           IsBlockBijectionMonoid,
+                           IsIntegerMatrixMonoid];
 
 SEMIGROUPS.RandomElementCons := function(filt)
   local RandomTropicalMaxPlusMatrix, RandomTropicalMinPlusMatrix,
@@ -944,17 +946,6 @@ SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
     ErrorNoReturn("Semigroups: ", string, ": usage,\n",
                   "there should be ", cons[2], " arguments,");
   fi;
-
-  #if filt = IsMatrixOverPrimeFieldSemigroup then
-  #  if IsPosInt(params[2]) then
-  #    if not IsPrimeInt(params[2]) then
-  #      params[2] := NextPrimeInt(params[2]);
-  #    fi;
-  #    params[2] := GF(params[2], 1);
-  #  elif not IsPrimeField(params[2]) then
-  #    params[2] := GF(NextPrimeInt(AbsInt(Random(Integers)) + 1), 1);
-  #  fi;
-  #fi;
 
   if SemigroupOrMonoid = InverseSemigroup
       or SemigroupOrMonoid = InverseMonoid
