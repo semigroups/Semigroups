@@ -1090,6 +1090,16 @@ gap> q := Range(iso);
 gap> IsIsomorphicSemigroup(p, q);
 true
 
+#T# SmallDegreeTransformationRepresentation: No improvement
+gap> S := Semigroup([Transformation([1,3,1]), Transformation([2,2,2])]);;
+gap> SmallDegreeTransformationRepresentation(S);
+IdentityMapping( <transformation semigroup of degree 3 with 2 generators> )
+
+#T# SmallerDegreeTransformationRepresentation: No improvement
+gap> S := Semigroup([Transformation([1,3,1]), Transformation([2,2,2])]);;
+gap> SmallerDegreeTransformationRepresentation(S);
+IdentityMapping( <transformation semigroup of degree 3 with 2 generators> )
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);

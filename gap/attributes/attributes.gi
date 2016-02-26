@@ -903,6 +903,12 @@ SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
     fi;
   od;
 
+  # If nrclasses is not lower than the current degree, just return the identity
+  if IsTransformationSemigroup(S)
+     and nrclasses >= DegreeOfTransformationSemigroup(S) then
+    return IdentityMapping(S);
+  fi;
+
   # Consider the action of M on the classes of cong
   classes := EquivalenceClasses(bestcong);
   fun := function(elm)
