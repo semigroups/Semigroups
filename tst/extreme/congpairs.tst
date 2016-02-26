@@ -31,10 +31,19 @@ gap> l := [ [  ], [ 1, 3 ], [ 1 ], [ 1, 5 ], [ 1 ], [ 1, 2, 3, 10, 21 ],
 > [ 1, 10, 12, 16, 29, 31, 35 ], [ 1, 2, 3, 16, 17, 20, 22 ] ];;
 gap> l = SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep:=true))![1];
 true
+gap> p := PartitionMonoid(2);;
+gap> iso := SmallerDegreeTransformationRepresentation(p);;
+gap> q := Range(iso);
+<transformation monoid of degree 7 with 3 generators>
+gap> IsIsomorphicSemigroup(p, q);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
+gap> Unbind(iso);
 gap> Unbind(l);
+gap> Unbind(p);
+gap> Unbind(q);
 
 #E#
 gap> STOP_TEST("Semigroups package: extreme/congpairs.tst");

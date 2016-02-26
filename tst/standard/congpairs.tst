@@ -161,6 +161,14 @@ congruences must be defined over the same semigroup,
 gap> IsSubrelation(cong, cong2);
 Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
+gap> cong := LeftSemigroupCongruence(S, pair1, pair2);;
+gap> IsSubrelation(cong2, cong);
+Error, Semigroups: IsSubrelation: usage,
+congruences must be defined over the same semigroup,
+gap> cong := RightSemigroupCongruence(S, pair1, pair2);;
+gap> IsSubrelation(cong2, cong);
+Error, Semigroups: IsSubrelation: usage,
+congruences must be defined over the same semigroup,
 
 #T# A left semigroup congruence example that is also right
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
@@ -462,6 +470,20 @@ gap> LatticeOfCongruences(S);
 gap> LatticeOfRightCongruences(S);
 [ [  ], [ 1 ], [ 1 ], [ 1, 2, 6 ], [ 1, 2, 3 ], [ 1 ], [ 1, 2 ], 
   [ 1, 2, 3, 4, 5, 6, 7, 9 ], [ 1, 3, 6 ] ]
+gap> p := PartitionMonoid(2);;
+gap> iso := SmallDegreeTransformationRepresentation(p);;
+gap> q := Range(iso);
+<transformation monoid of degree 8 with 3 generators>
+gap> IsIsomorphicSemigroup(p, q);
+true
+gap> S := Semigroup([Transformation([1,3,1]), Transformation([2,2,2])]);;
+gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+[ [  ], [ 1 ], [ 1 ] ]
+gap> S := Semigroup([Transformation([2,3,2]), Transformation([3,1,3])]);;
+gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));           
+[ [  ], [ 1 ], [ 1 ], [ 1, 3, 6, 13 ], [ 1 ], [ 1 ], [ 1, 2, 9, 12 ], 
+  [ 1, 5 ], [ 1 ], [ 1, 2, 3, 5 ], [ 1, 2, 3, 5, 8, 10 ], [ 1, 2, 9 ], 
+  [ 1, 3, 6 ], [ 1, 5, 6, 9 ], [ 1, 5, 6, 8, 9, 14 ] ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
