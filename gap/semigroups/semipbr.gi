@@ -7,6 +7,8 @@
 ##
 #############################################################################
 
+#TODO IsomorphismSemigroup for IsBooleanMatSemigroup
+#
 # This file contains methods for semigroups of PBRs.
 
 InstallMethod(FullPBRMonoid, "for a positive integer",
@@ -63,12 +65,15 @@ InstallMethod(IsomorphismSemigroup,
 "for IsPBRSemigroup and a transformation semigroup",
 [IsPBRSemigroup, IsTransformationSemigroup],
 function(filt, S)
-  local deg, gens;
+  local deg, T;
+
   deg := Maximum(1, DegreeOfTransformationSemigroup(S));
-  gens := List(GeneratorsOfSemigroup(S), x -> AsPBR(x, deg));
+  T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsPBR(x, deg)));
+  UseIsomorphismRelation(S, T);
+
   return MagmaIsomorphismByFunctionsNC(S,
-                                       Semigroup(gens),
-                                       AsPBR,
+                                       T,
+                                       x -> AsPBR(x, deg),
                                        AsTransformation);
 end);
 
@@ -76,10 +81,22 @@ InstallMethod(IsomorphismSemigroup,
 "for IsPBRSemigroup and a bipartition semigroup",
 [IsPBRSemigroup, IsBipartitionSemigroup],
 function(filt, S)
-  local gens;
-  gens := List(GeneratorsOfSemigroup(S), AsPBR);
+  local T;
+
+  T := Semigroup(List(GeneratorsOfSemigroup(S), AsPBR));
+  UseIsomorphismRelation(S, T);
+
   return MagmaIsomorphismByFunctionsNC(S,
-                                       Semigroup(gens),
+                                       T,
                                        AsPBR,
                                        AsBipartition);
+end);
+
+InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a semigroup",
+[IsPBRMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
+
+InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a monoid",
+[IsPBRMonoid, IsMonoid],
+function(filter, S)
+  return IsomorphismSemigroup(IsPBRSemigroup, S);
 end);

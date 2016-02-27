@@ -60,7 +60,6 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "congrms.xml",
                            "congruences.xml",
                            "conguniv.xml",
-                           "constructions.xml",
                            "display.xml",
                            "examples.xml",
                            "factor.xml",
@@ -78,6 +77,7 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "pfmat.xml",
                            "properties.xml",
                            "semibipart.xml",
+                           "semicons.xml",
                            "semigroups.xml",
                            "semipbr.xml",
                            "semipperm.xml",
@@ -324,7 +324,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
         if test = false then
           for i in [1 .. Length(pex[1])] do
             if EQ(pex[2][i], pex[4][i]) <> true then
-              Print("\033[1;31m########> Diff in ", ex[2]{[1 .. 3]},
+              Print("\033[31m########> Diff in ", ex[2]{[1 .. 3]},
                     "\n# Input is:\n");
               PrintFormattedString(pex[1][i]);
               Print("# Expected output:\n");
@@ -425,7 +425,8 @@ end);
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
   local opts, file_ext, is_testable, dir, contents, farm, nr_tests, out,
-  elapsed, passed, failed, start_time, pass, end_time, str, filename;
+  elapsed, failed, passed, info, start_time, pass, end_time, elapsed_this_test,
+  str, filename;
 
   if Length(arg) = 1 and IsRecord(arg[1]) then
     opts := arg[1];
@@ -485,8 +486,9 @@ function(arg)
   fi;
 
   elapsed := 0;
-  passed  := 0;
   failed  := 0;
+  passed  := 0;
+  info    := [];
 
   for filename in contents do
     if file_ext(filename) = "tst" and is_testable(dir, filename) then
@@ -500,13 +502,20 @@ function(arg)
                                 rec(silent := false));
 
         end_time := IO_gettimeofday();
-        elapsed := elapsed + (end_time.tv_sec - start_time.tv_sec) * 1000
+        elapsed_this_test := (end_time.tv_sec - start_time.tv_sec) * 1000
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+        elapsed := elapsed + elapsed_this_test;
         if not pass then
           failed := failed + 1;
+          Add(info, [filename,
+                     "FAILED",
+                     Concatenation(String(elapsed_this_test), "ms")]);
           out := false;
         else
           passed := passed + 1;
+          Add(info, [filename,
+                     "PASSED",
+                     Concatenation(String(elapsed_this_test), "ms")]);
         fi;
       fi;
     fi;
@@ -521,8 +530,12 @@ function(arg)
     Kill(farm);
   fi;
 
-  Print(failed, " tests failed out of ", failed + passed, "\n");
-  Print("TOTAL elapsed time: ", String(elapsed), "ms\n");
+  Print(info, "\n\n");
+  Print(failed, " tests FAILED\n");
+  Print(passed, " tests PASSED\n\n");
+  Print("TOTAL elapsed time: ", String(elapsed), "ms\n\n");
+  GASMAN("collect");
+
   return out;
 end);
 
@@ -536,6 +549,7 @@ function(arg)
     opts := arg[1];
   fi;
   #TODO check args
+  GASMAN("collect");
   return SEMIGROUPS.Test(Filename(DirectoriesPackageLibrary("semigroups",
                                                             "tst"),
                                   "testinstall.tst"),

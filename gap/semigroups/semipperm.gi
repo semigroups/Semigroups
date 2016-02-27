@@ -11,6 +11,34 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to semigroups of partial perms.
 
+InstallMethod(RandomSemigroupCons,
+"for IsPartialPermSemigroup, pos int, int",
+[IsPartialPermSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Semigroup(List([1 .. nrgens], i -> RandomPartialPerm(deg)));
+end);
+
+InstallMethod(RandomSemigroupCons,
+"for IsPartialPermMonoid, pos int, int",
+[IsPartialPermMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Monoid(List([1 .. nrgens], i -> RandomPartialPerm(deg)));
+end);
+
+InstallMethod(RandomInverseSemigroupCons,
+"for IsPartialPermSemigroup, pos int, int",
+[IsPartialPermSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return InverseSemigroup(List([1 .. nrgens], i -> RandomPartialPerm(deg)));
+end);
+
+InstallMethod(RandomInverseMonoidCons,
+"for IsPartialPermMonoid, pos int, int",
+[IsPartialPermMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return InverseMonoid(List([1 .. nrgens], i -> RandomPartialPerm(deg)));
+end);
+
 # TODO improve this
 
 SEMIGROUPS.SubsetNumber :=
@@ -235,30 +263,72 @@ function(x, n)
    + NumberArrangement(ImageListOfPartialPerm(x), n);
 end);
 
-# same method for ideals
-
-InstallMethod(IsomorphismSemigroup, "for a perm group and partial perm semigroup",
-[IsPermGroup, IsPartialPermSemigroup],
-function(filt, S)
-
-  if not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-                  "the argument <S> must be a partial perm semigroup ",
-                  "satisfying IsGroupAsSemigroup,");
-  fi;
-
-  # gaplint: ignore 3
-  return MagmaIsomorphismByFunctionsNC(S,
-           Group(List(GeneratorsOfSemigroup(S), AsPermutation)),
-           AsPermutation,
-           x -> AsPartialPerm(x, DomainOfPartialPermCollection(S)));
-end);
+#############################################################################
+## ?. Isomorphisms
+#############################################################################
 
 InstallMethod(IsomorphismSemigroup,
 "for IsPartialPermSemigroup and a semigroup",
 [IsPartialPermSemigroup, IsSemigroup],
 function(filt, S)
   return IsomorphismPartialPermSemigroup(S);
+end);
+
+InstallMethod(IsomorphismPartialPermSemigroup,
+"for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local T, n;
+
+  if not ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition) then
+    TryNextMethod();
+  fi;
+
+  T := Semigroup(List(GeneratorsOfSemigroup(S), AsPartialPerm));
+  UseIsomorphismRelation(S, T);
+  n := DegreeOfBipartitionSemigroup(S);
+
+  # gaplint: ignore 2
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       AsPartialPerm,
+                                       x -> AsBipartition(x, n));
+end);
+
+InstallMethod(IsomorphismPartialPermSemigroup,
+"for bipartition inverse semigroup with generators",
+[IsBipartitionSemigroup and IsInverseSemigroup and
+ HasGeneratorsOfInverseSemigroup],
+function(S)
+  local T, n;
+
+  if not ForAll(GeneratorsOfInverseSemigroup(S),
+                IsPartialPermBipartition) then
+    TryNextMethod();
+  fi;
+
+  T := InverseSemigroup(List(GeneratorsOfInverseSemigroup(S),
+                             AsPartialPerm));
+  UseIsomorphismRelation(S, T);
+  n := DegreeOfBipartitionSemigroup(S);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       AsPartialPerm,
+                                       x -> AsBipartition(x, n));
+end);
+
+InstallMethod(IsomorphismPartialPermSemigroup, "for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local iso, inv, J;
+
+  iso := IsomorphismPartialPermSemigroup(SupersemigroupOfIdeal(I));
+  inv := InverseGeneralMapping(iso);
+  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+  UseIsomorphismRelation(I, J);
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
 # it just so happens that the MultiplicativeNeutralElement of a semigroup of

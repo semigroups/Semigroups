@@ -11,14 +11,39 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
+InstallMethod(RandomSemigroupCons,
+"for IsTransformationSemigroup, pos int, int",
+[IsTransformationSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Semigroup(List([1 .. nrgens], i -> RandomTransformation(deg)));
+end);
+
+InstallMethod(RandomMonoidCons,
+"for IsTransformationMonoid, pos int, int",
+[IsTransformationMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Monoid(List([1 .. nrgens], i -> RandomTransformation(deg)));
+end);
+
+InstallMethod(RandomInverseSemigroupCons,
+"for IsTransformationSemigroup, pos int, int",
+[IsTransformationSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+SEMIGROUPS.DefaultRandomInverseSemigroup);
+
+#InstallMethod(RandomInverseMonoidCons,
+#"for IsTransformationMonoid, pos int, int",
+#[IsTransformationMonoid, IsPosInt, IsInt, IsInt, IsInt],
+#SEMIGROUPS.DefaultRandomInverseMonoid);
+
 InstallMethod(DirectProductOp, "for a list and a transformation monoid",
 [IsList, IsTransformationMonoid],
 function(list, S)
   local gens, deg, m, i, x;
 
   # Check the arguments.
-  if IsEmpty( list ) then
-    Error( "<list> must be nonempty" );
+  if IsEmpty(list) then
+    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
+                  "the first argument must be a non-empty list," );
   elif ForAny(list, T -> not IsTransformationMonoid(T)) then
     TryNextMethod();
   fi;
@@ -44,8 +69,9 @@ function(list, S)
   local D, dfs;
 
   # Check the arguments.
-  if IsEmpty( list ) then
-    Error( "<list> must be nonempty" );
+  if IsEmpty(list) then
+    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
+                  "the first argument must be a non-empty list," );
   elif ForAny(list, T -> not IsTransformationSemigroup(T)) then
     TryNextMethod();
   fi;
@@ -265,8 +291,6 @@ end);
 InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
 
-#
-
 InstallMethod(IteratorSorted, "for an acting transformation semigroup",
 [IsTransformationSemigroup and IsActingSemigroup],
 function(S)
@@ -275,8 +299,6 @@ function(S)
   fi;
   return CallFuncList(IteratorSortedOp, List(RClasses(S), IteratorSorted));
 end);
-
-#
 
 InstallMethod(IteratorSorted, "for an R-class",
 [IsGreensRClass and IsActingSemigroupGreensClass],
@@ -310,8 +332,6 @@ function(R)
   od;
   return CallFuncList(IteratorSortedOp, out);
 end);
-
-#
 
 InstallMethod(\<, "for transformation semigroups",
 [IsTransformationSemigroup, IsTransformationSemigroup],
@@ -549,8 +569,6 @@ function(gens, n)
   return Length(squashed) = n + Binomial(n, 2);
 end);
 
-#
-
 InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
 [IsTransformationSemigroup], RankFilter(IsActingSemigroup),
 # to beat the default method for acting semigroups
@@ -638,71 +656,31 @@ function(S)
   return t;
 end);
 
-#FIXME use this in the new context
-
-InstallMethod(IsomorphismTransformationMonoid,
-"for a transformation semigroup",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local id, dom, gens, inv;
-
-  if IsMonoid(S) then
-    return MappingByFunction(S, S, IdFunc, IdFunc);
-  fi;
-
-  if MultiplicativeNeutralElement(S) = fail then
-    ErrorNoReturn("Semigroups: IsomorphismTransformationMonoid: usage,\n",
-                  "the argument <S> must have a multiplicative neutral element",
-                  ",");
-  fi;
-
-  id := MultiplicativeNeutralElement(S);
-  dom := ImageSetOfTransformation(id);
-
-  gens := List(Generators(S), x -> TransformationOp(x, dom));
-
-  inv := function(x)
-    local out, i;
-
-    out := [1 .. DegreeOfTransformationSemigroup(S)];
-    for i in [1 .. Length(dom)] do
-      out[dom[i]] := dom[i ^ x];
-    od;
-    return id * Transformation(out);
-  end;
-
-  return MappingByFunction(S,
-                           Monoid(gens),
-                           x -> TransformationOp(x, dom),
-                           inv);
-end);
-
-# same method for ideals
-
-InstallMethod(IsomorphismSemigroup,
-"for IsPermGroup and a transformation semigroup",
-[IsPermGroup, IsTransformationSemigroup],
-function(filt, S)
-
-  if HasIsomorphismPermGroup(S) then
-    return IsomorphismPermGroup(S);
-  elif not IsGroupAsSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-                  "the argument <S> must satisfy IsGroupAsSemigroup,");
-  fi;
-  # gaplint: ignore 4
-  return MagmaIsomorphismByFunctionsNC(S,
-           Group(List(GeneratorsOfSemigroup(S), PermutationOfImage)),
-           PermutationOfImage,
-           x -> AsTransformation(x, DegreeOfTransformationSemigroup(S)));
-end);
-
-# there could be an even faster C/C++ version of this
+#############################################################################
+# ?. Isomorphisms
+#############################################################################
 
 InstallMethod(IsomorphismSemigroup,
 "for IsTransformationSemigroup and a semigroup",
 [IsTransformationSemigroup, IsSemigroup],
 function(filt, S)
+  return IsomorphismTransformationSemigroup(S);
+end);
+
+InstallMethod(IsomorphismMonoid,
+"for IsTransformationMonoid and a semigroup",
+[IsTransformationMonoid, IsSemigroup],
+function(filt, S)
+  return IsomorphismTransformationMonoid(S);
+end);
+
+# there could be an even faster C/C++ version of this
+# TODO AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
+
+InstallMethod(IsomorphismTransformationSemigroup, "for a finite semigroup",
+[IsSemigroup], 2,
+# to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
+function(S)
   local cay, deg, gen, next, T, iso, inv, i;
 
   if not IsFinite(S) then
@@ -722,6 +700,7 @@ function(filt, S)
   od;
 
   T := Semigroup(gen);
+  UseIsomorphismRelation(S, T);
 
   iso := function(x)
     return EvaluateWord(gen, Factorization(S, x));
@@ -735,27 +714,122 @@ function(filt, S)
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
 
-InstallMethod(IsomorphismSemigroup,
-"for IsTransformationSemigroup and a transformation semigroup",
-[IsTransformationSemigroup, IsTransformationSemigroup],
-function(filt, S)
-  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+InstallMethod(IsomorphismTransformationSemigroup,
+"for a boolean matrix semigroup with generators",
+[IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local n, pts, o, pos, T, i;
+
+  n := Length(Representative(S)![1]);
+  pts := EmptyPlist(2 ^ n);
+
+  for i in [1 .. n] do
+    o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlist));
+    pts := Union(pts, AsList(o));
+  od;
+  ShrinkAllocationPlist(pts);
+  pos := List([1 .. n], x -> Position(pts, BlistList([1 .. n], [x])));
+  T := Semigroup(List(GeneratorsOfSemigroup(S),
+                      x -> TransformationOpNC(x, pts, OnBlist)));
+  UseIsomorphismRelation(S, T);
+
+  # gaplint: ignore 3
+  return MappingByFunction(S, T,
+           x -> TransformationOpNC(x, pts, OnBlist),
+           x -> BooleanMatNC(List([1 .. n], i -> pts[pos[i] ^ x])));
 end);
 
-InstallMethod(IsomorphismSemigroup,
-"for IsTransformationSemigroup and a perm group with generators",
-[IsTransformationSemigroup, IsPermGroup and HasGeneratorsOfGroup],
-function(filt, G)
-  local S, conj;
+InstallMethod(IsomorphismTransformationSemigroup,
+"for a bipartition semigroup with generators",
+[IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local T, n;
 
-  S := Semigroup(List(GeneratorsOfGroup(G),
-                      x -> TransformationOp(x, MovedPoints(G))));
-  UseIsomorphismRelation(G, S);
-  conj := MappingPermListList([1 .. NrMovedPoints(G)], MovedPoints(G));
+  if not ForAll(GeneratorsOfSemigroup(S), IsTransBipartition) then
+    TryNextMethod();
+  fi;
 
-  return MagmaIsomorphismByFunctionsNC(G, S,
-             x -> TransformationOp(x, MovedPoints(G)),
-             x -> Permutation(x, [1 .. NrMovedPoints(G)]) ^ conj);
+  T := Semigroup(List(GeneratorsOfSemigroup(S), AsTransformation));
+  n := DegreeOfBipartitionSemigroup(S);
+  UseIsomorphismRelation(S, T);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       AsTransformation,
+                                       x -> AsBipartition(x, n));
+end);
+
+InstallMethod(IsomorphismTransformationSemigroup,
+"for a semigroup ideal",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+function(I)
+  local iso, inv, J;
+
+  iso := IsomorphismTransformationSemigroup(SupersemigroupOfIdeal(I));
+  inv := InverseGeneralMapping(iso);
+  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
+  UseIsomorphismRelation(I, J);
+
+  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
+end);
+
+InstallMethod(IsomorphismTransformationMonoid,
+"for a transformation semigroup",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local id, dom, T, inv;
+
+  if IsMonoid(S) then
+    return MappingByFunction(S, S, IdFunc, IdFunc);
+  fi;
+
+  if MultiplicativeNeutralElement(S) = fail then
+    ErrorNoReturn("Semigroups: IsomorphismTransformationMonoid: usage,\n",
+                  "the argument <S> must have a multiplicative neutral ",
+                  "element ,");
+  fi;
+
+  id := MultiplicativeNeutralElement(S);
+  dom := ImageSetOfTransformation(id);
+
+  T := Monoid(List(Generators(S), x -> TransformationOp(x, dom)));
+  UseIsomorphismRelation(S, T);
+
+  inv := function(x)
+    local out, i;
+
+    out := [1 .. DegreeOfTransformationSemigroup(S)];
+    for i in [1 .. Length(dom)] do
+      out[dom[i]] := dom[i ^ x];
+    od;
+    return id * Transformation(out);
+  end;
+
+  return MappingByFunction(S,
+                           T,
+                           x -> TransformationOp(x, dom),
+                           inv);
+end);
+
+InstallMethod(IsomorphismTransformationMonoid,
+"for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+1, # to beat the incorrect library method
+function(S)
+  local iso1, inv1, iso2, inv2;
+
+  if MultiplicativeNeutralElement(S) = fail then
+    ErrorNoReturn();
+  fi;
+
+  iso1 := IsomorphismTransformationSemigroup(S);
+  inv1 := InverseGeneralMapping(iso1);
+  iso2 := IsomorphismTransformationMonoid(Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+
+  return MappingByFunction(S, Range(iso2),
+                           x -> (x ^ iso1) ^ iso2,
+                           x -> (x ^ inv2) ^ inv1);
 end);
 
 # same method for ideals
@@ -782,16 +856,12 @@ function(S)
   return U;
 end);
 
-#
-
 InstallMethod(DegreeOfTransformationSemigroup,
 "for a transformation semigroup ideal",
 [IsTransformationSemigroup and IsSemigroupIdeal],
 function(I)
   return DegreeOfTransformationSemigroup(SupersemigroupOfIdeal(I));
 end);
-
-#
 
 InstallMethod(ComponentRepsOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
@@ -835,15 +905,11 @@ function(S)
   return out;
 end);
 
-#
-
 InstallMethod(ComponentsOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
 function(S)
   return DigraphConnectedComponents(DigraphOfActionOnPoints(S)).comps;
 end);
-
-#
 
 InstallMethod(CyclesOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],
@@ -857,15 +923,15 @@ function(digraph)
   local hook, S;
 
   if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then
-    return Semigroup(GeneratorsOfEndomorphismMonoidAttr(digraph),
-                     rec(small := true));
+    return Monoid(GeneratorsOfEndomorphismMonoidAttr(digraph),
+                  rec(small := true));
   fi;
 
   hook := function(S, f)
     S[1] := ClosureSemigroup(S[1], f);
   end;
 
-  S := [AsSemigroup(IsTransformationSemigroup, AutomorphismGroup(digraph))];
+  S := [AsMonoid(IsTransformationMonoid, AutomorphismGroup(digraph))];
 
   return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
                                     fail, false, DigraphVertices(digraph), [],
@@ -881,8 +947,8 @@ function(digraph, colors)
     S[1] := ClosureSemigroup(S[1], f);
   end;
 
-  S := [AsSemigroup(IsTransformationSemigroup,
-                    AutomorphismGroup(digraph, colors))];
+  S := [AsMonoid(IsTransformationMonoid,
+                 AutomorphismGroup(digraph, colors))];
 
   return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
                                     fail, false, DigraphVertices(digraph), [],

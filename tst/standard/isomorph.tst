@@ -67,7 +67,7 @@ gap> S := Semigroup([
 gap> IsIsomorphicSemigroup(S, S);
 true
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
-<transformation semigroup of degree 47 with 2 generators>
+<transformation semigroup of size 46, degree 47 with 2 generators>
 gap> IsIsomorphicSemigroup(S, T);
 Error, Semigroups: IsIsomorphicSemigroup:
 not yet implemented,

@@ -178,80 +178,6 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismSemigroup, "for IsFpMonoid and a monoid",
-[IsFpMonoid, IsMonoid], 3,
-function(filt, S)
-  local F, A, lookup, pos, data, rules, rels, convert, Q, B, rule;
-
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  F := FreeMonoid(Length(GeneratorsOfMonoid(S)));
-  A := GeneratorsOfMonoid(F);
-  lookup := List(GeneratorsOfSemigroup(S),
-                 x -> Position(GeneratorsOfMonoid(S), x));
-  pos := Position(lookup, fail);
-
-  data := GenericSemigroupData(S);
-  rules := SEMIGROUP_RELATIONS(data);
-  rels := [];
-
-  convert := function(word)
-    local out, i;
-    out := One(F);
-    for i in word do
-      if lookup[i] <> fail then
-        out := out * A[lookup[i]];
-      fi;
-    od;
-    return out;
-  end;
-
-  for rule in rules do
-    # only include non-redundant rules
-    if Length(rule[1]) <> 2
-        or (rule[1][1] <> pos and rule[1][Length(rule[1])] <> pos) then
-      Add(rels, [convert(rule[1]), convert(rule[2])]);
-    fi;
-  od;
-
-  Q := F / rels;
-  B := GeneratorsOfSemigroup(Q);
-  # gaplint: ignore 3
-  return MagmaIsomorphismByFunctionsNC(S, Q,
-           x -> EvaluateWord(B, Factorization(S, x)),
-           x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfMonoid(S)));
-end);
-
-# same method for ideals
-
-InstallMethod(IsomorphismSemigroup, "for IsFpSemigroup and a semigroup",
-[IsFpSemigroup, IsSemigroup], 3,
-function(filter, S)
-  local rules, F, A, rels, Q, B;
-
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  rules := SEMIGROUP_RELATIONS(GenericSemigroupData(S));
-
-  F := FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
-  A := GeneratorsOfSemigroup(F);
-  rels := List(rules, x -> [EvaluateWord(A, x[1]), EvaluateWord(A, x[2])]);
-
-  Q := F / rels;
-  B := GeneratorsOfSemigroup(Q);
-
-  # gaplint: ignore 3
-  return MagmaIsomorphismByFunctionsNC(S, Q,
-           x -> EvaluateWord(B, Factorization(S, x)),
-           x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
-end);
-
-# same method for ideals
-
 InstallMethod(RightCayleyGraphSemigroup, "for a semigroup",
 [IsSemigroup], 3,
 function(S)
@@ -334,7 +260,6 @@ function(coll)
       else
         AddSet(out, x);
       fi;
-      GASMAN("collect");
     fi;
   until Length(redund) + Length(out) = nrgens;
 
@@ -343,57 +268,6 @@ function(coll)
   fi;
 
   return out;
-end);
-
-#
-
-InstallMethod(IsomorphismSemigroup,
-"for IsReesMatrixSemigroup and a semigroup",
-[IsReesMatrixSemigroup, IsSemigroup],
-function(filter, S)
-  local D, iso, inv;
-
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  if not IsSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-                  "the argument must be a simple semigroup,");
-    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
-    # semigroups into Rees (0-)matrix semigroups over non-groups?
-  fi;
-
-  D := GreensDClasses(S)[1];
-  iso := IsomorphismReesMatrixSemigroup(D);
-  inv := InverseGeneralMapping(iso);
-  return MagmaIsomorphismByFunctionsNC(S, Range(iso),
-                                       x -> x ^ iso, x -> x ^ inv);
-end);
-
-InstallMethod(IsomorphismSemigroup,
-"for IsReesZeroMatrixSemigroup and a semigroup",
-[IsReesZeroMatrixSemigroup, IsSemigroup],
-function(filter, S)
-  local D, iso, inv;
-
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  if not IsZeroSimpleSemigroup(S) then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-                  "the argument must be a 0-simple semigroup,");
-    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
-    # semigroups into Rees (0-)matrix semigroups over non-groups?
-  fi;
-
-  D := First(GreensDClasses(S),
-             x -> not IsMultiplicativeZero(S, Representative(x)));
-  iso := SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
-  inv := InverseGeneralMapping(iso);
-  return MagmaIsomorphismByFunctionsNC(S, Range(iso),
-                                       x -> x ^ iso, x -> x ^ inv);
 end);
 
 # same method for ideals

@@ -446,58 +446,6 @@ function(I, x)
   return InversesOfSemigroupElementNC(SupersemigroupOfIdeal(I), x);
 end);
 
-InstallMethod(IsomorphismSemigroup,
-"for IsTransformationSemigroup and a semigroup ideal",
-[IsTransformationSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(filter, I)
-  local iso, inv, J;
-
-  iso := IsomorphismTransformationSemigroup(SupersemigroupOfIdeal(I));
-  inv := InverseGeneralMapping(iso);
-  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
-
-  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
-end);
-
-InstallMethod(IsomorphismSemigroup,
-"for IsBipartitionSemigroup and a semigroup ideal",
-[IsBipartitionSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(filter, I)
-  local iso, inv, J;
-
-  iso := IsomorphismBipartitionSemigroup(SupersemigroupOfIdeal(I));
-  inv := InverseGeneralMapping(iso);
-  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
-
-  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
-end);
-
-InstallMethod(IsomorphismSemigroup,
-"for IsPartialPermSemigroup and a semigroup ideal",
-[IsPartialPermSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(filter, I)
-  local iso, inv, J;
-
-  iso := IsomorphismPartialPermSemigroup(SupersemigroupOfIdeal(I));
-  inv := InverseGeneralMapping(iso);
-  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
-
-  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
-end);
-
-InstallMethod(IsomorphismSemigroup,
-"for IsBlockBijectionSemigroup and a semigroup ideal",
-[IsBlockBijectionSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-function(filter, I)
-  local iso, inv, J;
-
-  iso := IsomorphismBlockBijectionSemigroup(SupersemigroupOfIdeal(I));
-  inv := InverseGeneralMapping(iso);
-  J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
-
-  return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
-end);
-
 InstallMethod(IsCommutativeSemigroup, "for a semigroup ideal",
 [IsSemigroupIdeal],
 function(I)

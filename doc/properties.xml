@@ -119,11 +119,11 @@ gap> S := Semigroup(
 > PartialPerm([1, 2, 3], [2, 1, 5]), 
 > PartialPerm([1, 3, 4], [3, 1, 2]), 
 > PartialPerm([1, 3, 4, 5], [5, 4, 3, 2]));;
-gap> T := Range(IsomorphismBlockBijectionSemigroup(S));
+gap> T := AsSemigroup(IsBlockBijectionSemigroup, S);
 <bipartition semigroup of degree 6 with 5 generators>
 gap> IsBlockGroup(T);
 true
-gap> IsBlockGroup(Range(IsomorphismBipartitionSemigroup(S)));
+gap> IsBlockGroup(AsSemigroup(IsBipartitionSemigroup, S));
 true
 gap> S := Semigroup(
 > Bipartition([[1, -2], [2, -3], [3, -4], [4, -1]]), 
@@ -421,8 +421,8 @@ gap> S := Range(IsomorphismPartialPermSemigroup(G));
 gap> IsGroupAsSemigroup(S);
 true
 gap> S := SymmetricGroup([1, 2, 10]);;
-gap> T := Range(IsomorphismBlockBijectionSemigroup(
-> Range(IsomorphismPartialPermSemigroup(S))));
+gap> T := Range(IsomorphismSemigroup(IsBlockBijectionSemigroup,
+> Range(IsomorphismSemigroup(IsPartialPermSemigroup, S))));
 <inverse bipartition semigroup of degree 11 with 2 generators>
 gap> IsGroupAsSemigroup(T);
 true]]></Example>
@@ -652,7 +652,7 @@ gap> IsMonoid(S);
 false
 gap> MultiplicativeNeutralElement(S);
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 9 ] )
-gap> T := Range(IsomorphismBipartitionSemigroup(S));;
+gap> T := AsSemigroup(IsBipartitionSemigroup, S);;
 gap> IsMonoidAsSemigroup(T);
 true
 gap> IsMonoid(T);

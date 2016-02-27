@@ -17,7 +17,7 @@ gap> SEMIGROUPS.StartTest();
 gap> gens := [Transformation([3, 4, 1, 2, 1]),
 > Transformation([4, 2, 1, 5, 5]),
 > Transformation([4, 2, 2, 2, 4])];;
-> s := Semigroup(gens);;
+gap> s := Semigroup(gens);;
 gap> ForAll(s, f -> EvaluateWord(gens, Factorization(s, f)) = f);
 true
 

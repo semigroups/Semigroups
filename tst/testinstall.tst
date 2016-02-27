@@ -1001,7 +1001,7 @@ gap> S := Semigroup([[[Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
 >                     [Z(2 ^ 2) ^ 2, Z(2) ^ 0, 0 * Z(2), Z(2) ^ 0]]]);
 <semigroup with 3 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
-<transformation monoid of degree 21 with 2 generators>
+<transformation monoid of size 21, degree 21 with 2 generators>
 gap> Size(T);
 21
 gap> I := SemigroupIdeal(T, Idempotents(T));;
@@ -1193,7 +1193,7 @@ gap> AsSemigroup(IsPartialPermSemigroup, S);
 gap> AsSemigroup(IsBipartitionSemigroup, S);
 <trivial bipartition group of degree 1 with 1 generator>
 gap> AsSemigroup(IsPBRSemigroup, S);
-<commutative pbr semigroup of degree 1 with 1 generator>
+<trivial pbr group of degree 1 with 1 generator>
 gap> AsSemigroup(IsBooleanMatSemigroup, S);
 <trivial group of 1x1 boolean matrices with 1 generator>
 
@@ -1249,7 +1249,7 @@ gap> PartitionMonoid(0);
 gap> S := FullTropicalMinPlusMonoid(2, 3);
 <monoid of 2x2 tropical min-plus matrices with 7 generators>
 gap> AsSemigroup(IsTransformationSemigroup, S);
-<transformation monoid of degree 625 with 7 generators>
+<transformation monoid of size 625, degree 625 with 7 generators>
 
 #T# Test for not being allowed to generate a semigroup with bipartitions of
 # different degree

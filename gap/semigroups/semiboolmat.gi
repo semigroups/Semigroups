@@ -11,7 +11,7 @@
 # This file contains methods for semigroups of boolean matrices.
 
 #############################################################################
-## 1. Isomorphisms etc.
+## 1. Isomorphisms
 #############################################################################
 
 # fallback method: via a transformation semigroup
@@ -21,7 +21,7 @@ InstallMethod(IsomorphismSemigroup,
 [IsBooleanMatSemigroup, IsSemigroup],
 SEMIGROUPS.DefaultIsomorphismSemigroup);
 
-# it seems necessary that the method below occurs after the fallback method, in
+# It seems necessary that the method below occurs after the fallback method, in
 # order that it be selected.
 
 InstallMethod(IsomorphismSemigroup,
@@ -31,34 +31,22 @@ function(filter, S)
   local n, T;
   n := Maximum(1, DegreeOfTransformationSemigroup(S));
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
+  UseIsomorphismRelation(S, T);
   return MappingByFunction(S, T, x -> AsBooleanMat(x, n), AsTransformation);
 end);
 
-InstallMethod(IsomorphismSemigroup,
-"for IsTransformationSemigroup and a boolean matrix semigroup with generators",
-[IsTransformationSemigroup, IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
+# If the second argument here is a transformation semigroup, then
+# DefaultIsomorphismMonoid uses IsomorphismTransformationMonoid, which detects
+# the MultiplicativeNeutralElement of the second argument, and reduces the
+# degree accordingly.
+
+InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a semigroup",
+[IsBooleanMatMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
+
+InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a monoid",
+[IsBooleanMatMonoid, IsMonoid],
 function(filter, S)
-  local n, pts, o, pos, T, i;
-
-  if HasIsomorphismTransformationSemigroup(S) then
-    return IsomorphismTransformationSemigroup(S);
-  fi;
-
-  n := Length(Representative(S)![1]);
-  pts := EmptyPlist(2 ^ n);
-
-  for i in [1 .. n] do
-    o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlist));
-    pts := Union(pts, AsList(o));
-  od;
-  ShrinkAllocationPlist(pts);
-  pos := List([1 .. n], x -> Position(pts, BlistList([1 .. n], [x])));
-  T := Semigroup(List(GeneratorsOfSemigroup(S),
-                      x -> TransformationOpNC(x, pts, OnBlist)));
-  # gaplint: ignore 3
-  return MappingByFunction(S, T,
-           x -> TransformationOpNC(x, pts, OnBlist),
-           x -> BooleanMatNC(List([1 .. n], i -> pts[pos[i] ^ x])));
+  return IsomorphismSemigroup(IsBooleanMatSemigroup, S);
 end);
 
 #############################################################################

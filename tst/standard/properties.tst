@@ -781,7 +781,7 @@ true
 #T# properties: IsLeftZeroSemigroup, 2
 gap> S := AsSemigroup(IsTransformationSemigroup, 
 > RectangularBand(IsReesMatrixSemigroup, 2, 2));
-<transformation semigroup of degree 5 with 2 generators>
+<transformation semigroup of size 4, degree 5 with 2 generators>
 gap> IsLeftZeroSemigroup(S);
 false
 
@@ -1003,7 +1003,7 @@ true
 
 #T# properties: IsRegularSemigroup, 4/7
 gap> S := AsSemigroup(IsTransformationSemigroup, PartitionMonoid(3));
-<transformation monoid of degree 203 with 4 generators>
+<transformation monoid of size 203, degree 203 with 4 generators>
 gap> DClasses(S);;
 gap> IsRegularSemigroup(S);
 true
@@ -1182,7 +1182,7 @@ true
 #T# properties: IsRightZeroSemigroup, 2
 gap> S := AsSemigroup(IsTransformationSemigroup, 
 > RectangularBand(IsReesMatrixSemigroup, 2, 2));
-<transformation semigroup of degree 5 with 2 generators>
+<transformation semigroup of size 4, degree 5 with 2 generators>
 gap> IsRightZeroSemigroup(S);
 false
 

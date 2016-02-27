@@ -11,6 +11,61 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to Rees 0-matrix semigroups.
 
+InstallMethod(IsomorphismReesMatrixSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local D, iso, inv;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  if not IsSimpleSemigroup(S) then
+    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
+                  "the argument must be a simple semigroup,");
+    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # semigroups into Rees (0-)matrix semigroups over non-groups?
+  fi;
+
+  D := GreensDClasses(S)[1];
+  iso := IsomorphismReesMatrixSemigroup(D);
+  inv := InverseGeneralMapping(iso);
+  UseIsomorphismRelation(S, Range(iso));
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso),
+                                       x -> x ^ iso,
+                                       x -> x ^ inv);
+end);
+
+InstallMethod(IsomorphismReesZeroMatrixSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local D, iso, inv;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  if not IsZeroSimpleSemigroup(S) then
+    ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
+                  "the argument must be a 0-simple semigroup,");
+    #TODO is there another method? I.e. can we turn non-simple/non-0-simple
+    # semigroups into Rees (0-)matrix semigroups over non-groups?
+  fi;
+
+  D := First(GreensDClasses(S),
+             x -> not IsMultiplicativeZero(S, Representative(x)));
+  iso := SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
+  inv := InverseGeneralMapping(iso);
+  UseIsomorphismRelation(S, Range(iso));
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso),
+                                       x -> x ^ iso,
+                                       x -> x ^ inv);
+end);
+
 InstallGlobalFunction(RMSElementNC,
 function(R, i, g, j)
   return Objectify(TypeReesMatrixSemigroupElements(R),
@@ -36,7 +91,7 @@ InstallMethod(IsomorphismPermGroup,
 "for a subsemigroup of a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(S)
-  local rep;
+  local rep, G;
 
   if not IsGroupAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
@@ -49,11 +104,17 @@ function(S)
     return MagmaIsomorphismByFunctionsNC(S, Group(()), x -> (), x -> rep);
   fi;
 
+  G := Group(List(GeneratorsOfSemigroup(S), x -> x![2]));
+  UseIsomorphismRelation(S, G);
+
   # gaplint: ignore 4
   return MagmaIsomorphismByFunctionsNC(S,
-           Group(List(GeneratorsOfSemigroup(S), x -> x![2])),
-           x -> x![2],
-           x -> RMSElement(S, rep![1], x, rep![3]));
+                                       G,
+                                       x -> x![2],
+                                       x -> RMSElement(S,
+                                                       rep![1],
+                                                       x,
+                                                       rep![3]));
 end);
 
 # same method for ideals

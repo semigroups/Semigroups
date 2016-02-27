@@ -133,7 +133,7 @@ gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);
 
         <Example><![CDATA[
 gap> T := RectangularBand(5, 6);
-<regular transformation semigroup of size 30, degree 31 with 6 
+<regular transformation semigroup of size 30, degree 10 with 6 
  generators>
 gap> IsRectangularBand(T);
 true
@@ -224,8 +224,7 @@ true]]></Example>
       
         <Example><![CDATA[
 gap> S := LeftZeroSemigroup(20);
-<regular transformation semigroup of size 20, degree 21 with 20 
- generators>
+<transformation semigroup of degree 6 with 20 generators>
 gap> IsLeftZeroSemigroup(S);
 true
 gap> ForAll(Tuples(S, 2), p -> p[1] * p[2] = p[1]);

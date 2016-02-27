@@ -267,17 +267,17 @@ gap> GeneratorsOfEndomorphismMonoidAttr(gr);
 [ Transformation( [ 2, 1 ] ), IdentityTransformation, 
   Transformation( [ 1, 1 ] ) ]
 gap> S := EndomorphismMonoid(gr);
-<transformation semigroup of degree 2 with 2 generators>
+<transformation monoid of degree 2 with 2 generators>
 gap> Elements(S);
 [ Transformation( [ 1, 1 ] ), IdentityTransformation, 
   Transformation( [ 2, 1 ] ), Transformation( [ 2, 2 ] ) ]
 gap> S := EndomorphismMonoid(Digraph([[1, 2], [1, 2]]), [1, 1]);
-<transformation semigroup of degree 2 with 2 generators>
+<transformation monoid of degree 2 with 2 generators>
 gap> Elements(S);
 [ Transformation( [ 1, 1 ] ), IdentityTransformation, 
   Transformation( [ 2, 1 ] ), Transformation( [ 2, 2 ] ) ]
 gap> S := EndomorphismMonoid(Digraph([[1, 2], [1, 2]]));
-<transformation semigroup of degree 2 with 2 generators>
+<transformation monoid of degree 2 with 2 generators>
 gap> Elements(S);
 [ Transformation( [ 1, 1 ] ), IdentityTransformation, 
   Transformation( [ 2, 1 ] ), Transformation( [ 2, 2 ] ) ]

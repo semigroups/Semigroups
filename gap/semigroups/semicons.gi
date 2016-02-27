@@ -460,23 +460,39 @@ InstallMethod(ZeroSemigroupCons,
 "for a filter and a positive integer",
 [IsTransformationSemigroup, IsPosInt],
 function(filter, n)
-  local zero, gens, out, i;
+  local out, max, deg, N, R, gens, im, iter, r, i;
 
   if n = 1 then
-    zero := Transformation([1]);
-    gens := [zero];
-  else
-    zero := Transformation(List([1 .. 2 * n - 1], x -> 1));
-    gens := EmptyPlist(n - 1);
-    for i in [1 .. n - 1] do
-      gens[i] := Transformation(Concatenation([1 .. (2 * i) - 1] * 0 + 1,
-                                              [2 * i + 1],
-                                              [2 * i + 1 .. 2 * n - 1]
-                                              * 0 + 1));
-    od;
+    out := Semigroup(Transformation([1]));
+    SetMultiplicativeZero(out, out.1);
+    return out;
   fi;
-  out := Semigroup(gens);
-  SetMultiplicativeZero(out, zero);
+
+  # calculate the minimal possible degree
+  max := 0;
+  deg := 0;
+  while max < n do
+    deg := deg + 1;
+    for r in [1 .. deg - 1] do
+      N := r ^ (deg - r);
+      if N > max then
+        max := N;
+        R := r;
+      fi;
+    od;
+  od;
+
+  gens := [];
+  im   := [1 .. R] * 0 + 1;
+  iter := IteratorOfTuples([1 .. R], deg - R);
+
+  for i in [1 .. n] do
+    Add(gens, Transformation(Concatenation(im, NextIterator(iter))));
+  od;
+
+  out := Semigroup(gens, rec(generic := true));
+  SetMultiplicativeZero(out, ConstantTransformation(deg, 1));
+
   return out;
 end);
 

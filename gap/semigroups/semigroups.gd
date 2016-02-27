@@ -52,17 +52,26 @@ DeclareOperation("ClosureSemigroupNC",
 
 DeclareOperation("AsSemigroup", [IsFunction, IsSemigroup]);
 DeclareConstructor("IsomorphismSemigroup", [IsSemigroup, IsSemigroup]);
-DeclareConstructor("IsomorphismSemigroup",
-                   [IsMultiplicativeElement, IsSemigroup]);
+
+DeclareOperation("AsMonoid", [IsFunction, IsSemigroup]);
+DeclareConstructor("IsomorphismMonoid", [IsSemigroup, IsSemigroup]);
 
 #TODO move this to attributes!
 DeclareAttribute("Generators", IsSemigroup);
 
 #TODO move this to examples!
 DeclareGlobalFunction("RandomSemigroup");
+DeclareConstructor("RandomSemigroupCons",
+                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
 DeclareGlobalFunction("RandomMonoid");
+DeclareConstructor("RandomMonoidCons",
+                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
 DeclareGlobalFunction("RandomInverseSemigroup");
+DeclareConstructor("RandomInverseSemigroupCons",
+                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
 DeclareGlobalFunction("RandomInverseMonoid");
+DeclareConstructor("RandomInverseMonoidCons",
+                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty",

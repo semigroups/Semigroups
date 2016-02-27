@@ -120,7 +120,7 @@ gap> S := FactorisableDualSymmetricInverseSemigroup(4);
 gap> IsFactorisableInverseMonoid(S);
 true
 gap> S := SymmetricInverseMonoid(5);;
-gap> S := Range(IsomorphismBipartitionSemigroup(S));
+gap> S := AsSemigroup(IsBipartitionSemigroup, S);
 <inverse bipartition monoid of degree 5 with 3 generators>
 gap> IsFactorisableInverseMonoid(S);
 true]]></Example>

@@ -14,23 +14,51 @@
 # fallback method: isomorphism from an arbitrary semigroup to a matrix
 # semigroup via a transformation semigroup
 
-for IsXSemigroup in ["IsNTPMatrixSemigroup",
-                     "IsMaxPlusMatrixSemigroup",
-                     "IsMinPlusMatrixSemigroup",
-                     "IsTropicalMaxPlusMatrixSemigroup",
-                     "IsTropicalMinPlusMatrixSemigroup",
-                     "IsProjectiveMaxPlusMatrixSemigroup",
-                     "IsIntegerMatrixSemigroup"] do
+for _IsXMatrix in ["IsNTPMatrix",
+                   "IsMaxPlusMatrix",
+                   "IsMinPlusMatrix",
+                   "IsTropicalMaxPlusMatrix",
+                   "IsTropicalMinPlusMatrix",
+                   "IsProjectiveMaxPlusMatrix",
+                   "IsIntegerMatrix"] do
+
+  _IsXSemigroup := Concatenation(_IsXMatrix, "Semigroup");
+  _IsXMonoid    := Concatenation(_IsXMatrix, "Monoid");
+
   InstallMethod(IsomorphismSemigroup,
-  Concatenation("for ", IsXSemigroup, " and a semigroup"),
-  [EvalString(IsXSemigroup), IsSemigroup],
+  Concatenation("for ", _IsXSemigroup, " and a semigroup"),
+  [EvalString(_IsXSemigroup), IsSemigroup],
   SEMIGROUPS.DefaultIsomorphismSemigroup);
+
+  InstallMethod(IsomorphismMonoid,
+  Concatenation("for ", _IsXMonoid, " and a semigroup"),
+  [EvalString(_IsXMonoid), IsSemigroup],
+  SEMIGROUPS.DefaultIsomorphismMonoid);
+
 od;
+
+Unbind(_IsXSemigroup);
+Unbind(_IsXMonoid);
 
 # isomorphism from a transformation semigroup to a matrix
 # semigroup.
 
 # so that the value of _IsXMatrix is retained as a local variable
+
+_InstallIsomorphismMonoid := function(filter)
+  local IsXSemigroup, IsXMonoid;
+
+  IsXSemigroup := Concatenation(filter, "Semigroup");
+  IsXMonoid := Concatenation(filter, "Monoid");
+
+  InstallMethod(IsomorphismMonoid,
+  Concatenation("for ", IsXMonoid, " and a monoid"),
+  [EvalString(IsXMonoid), IsMonoid],
+  function(filter, S)
+    return IsomorphismSemigroup(EvalString(IsXSemigroup), S);
+  end);
+
+end;
 
 _InstallIsomorphismSemigroup := function(filter)
   local IsXSemigroup, IsXMatrix;
@@ -43,13 +71,15 @@ _InstallIsomorphismSemigroup := function(filter)
   [EvalString(IsXSemigroup),
    IsTransformationSemigroup and HasGeneratorsOfSemigroup],
   function(filt, S)
-    local deg, n, map, gens;
-    deg  := DegreeOfTransformationSemigroup(S);
-    n    := Maximum(deg, 1);
+    local n, map, T;
+
+    n    := Maximum(DegreeOfTransformationSemigroup(S), 1);
     map  := x -> AsMatrix(EvalString(IsXMatrix), x, n);
-    gens := List(GeneratorsOfSemigroup(S), map);
+    T := Semigroup(List(GeneratorsOfSemigroup(S), map));
+    UseIsomorphismRelation(S, T);
+
     return MagmaIsomorphismByFunctionsNC(S,
-                                         Semigroup(gens),
+                                         T,
                                          map,
                                          AsTransformation);
   end);
@@ -60,6 +90,7 @@ for _IsXMatrix in ["IsMaxPlusMatrix",
                    "IsProjectiveMaxPlusMatrix",
                    "IsIntegerMatrix"] do
   _InstallIsomorphismSemigroup(_IsXMatrix);
+  _InstallIsomorphismMonoid(_IsXMatrix);
 od;
 
 _InstallIsomorphismSemigroup := function(filter)
@@ -73,12 +104,15 @@ _InstallIsomorphismSemigroup := function(filter)
   [EvalString(IsXSemigroup),
    IsTransformationSemigroup and HasGeneratorsOfSemigroup],
   function(filt, S)
-    local map, deg, gens, isxmatrix;
-    map  := x -> AsMatrix(EvalString(IsXMatrix), x, deg, 1);
-    deg := DegreeOfTransformationSemigroup(S);
-    gens := List(GeneratorsOfSemigroup(S), map);
+    local n, map, T;
+
+    n    := Maximum(DegreeOfTransformationSemigroup(S), 1);
+    map  := x -> AsMatrix(EvalString(IsXMatrix), x, n, 1);
+    T := Semigroup(List(GeneratorsOfSemigroup(S), map));
+    UseIsomorphismRelation(S, T);
+
     return MagmaIsomorphismByFunctionsNC(S,
-                                         Semigroup(gens),
+                                         T,
                                          map,
                                          AsTransformation);
   end);
@@ -90,30 +124,36 @@ end;
 for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
                    "IsTropicalMinPlusMatrix"] do
   _InstallIsomorphismSemigroup(_IsXMatrix);
+  _InstallIsomorphismMonoid(_IsXMatrix);
 od;
 
-Unbind(_InstallIsomorphismSemigroup);
-Unbind(_IsXMatrix);
+_InstallIsomorphismMonoid("IsNTPMatrix");
 
 InstallMethod(IsomorphismSemigroup,
 "for IsNTPMatrixSemigroup and transformation semigroup with gens",
 [IsNTPMatrixSemigroup,
  IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(filt, S)
-  local deg, gens;
+  local n, map, T;
 
-  deg := DegreeOfTransformationSemigroup(S);
-  gens := List(GeneratorsOfSemigroup(S),
-               x -> AsMatrix(IsNTPMatrix, x, deg, 1, 1));
+  n := Maximum(DegreeOfTransformationSemigroup(S), 1);
+  map := x -> AsMatrix(EvalString(IsNTPMatrix), x, n, 1, 1);
+  T := Semigroup(List(GeneratorsOfSemigroup(S), map));
+  UseIsomorphismRelation(S, T);
+
   return MagmaIsomorphismByFunctionsNC(S,
-                                       Semigroup(gens),
+                                       T,
                                        x -> AsMatrix(IsNTPMatrix,
                                                      x,
-                                                     deg,
+                                                     n,
                                                      1,
                                                      1),
                                        x -> AsTransformation(x));
 end);
+
+Unbind(_InstallIsomorphismSemigroup);
+Unbind(_InstallIsomorphismMonoid);
+Unbind(_IsXMatrix);
 
 InstallMethod(FullTropicalMaxPlusMonoid, "for pos int and pos int",
 [IsPosInt, IsPosInt],
