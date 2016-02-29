@@ -1084,10 +1084,7 @@ the argument <D> must be a regular D-class,
 
 #T# SmallDegreeTransformationRepresentation: A monoid
 gap> S := Monoid([PartialPerm([1, 2], [1, 3])]);;
-gap> iso := SmallDegreeTransformationRepresentation(S);
-MappingByFunction( <commutative non-regular partial perm monoid of size 3, 
- rank 3 with 1 generator>, <commutative transformation monoid of degree 3 
- with 1 generator>, function( elm ) ... end )
+gap> iso := SmallDegreeTransformationRepresentation(S);;
 gap> T := Range(iso);
 <commutative transformation monoid of degree 3 with 1 generator>
 gap> IsIsomorphicSemigroup(S, T);
