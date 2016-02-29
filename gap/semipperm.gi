@@ -683,8 +683,10 @@ function(S)
       if act = 0 then
         Add(in_nbs[lenrange + 1], m);
         Add(labels[lenrange + 1], j);
-        collapsed[m] := true;
-        nr_collapsed := nr_collapsed + 1;
+        if not collapsed[m] then
+          collapsed[m] := true;
+          nr_collapsed := nr_collapsed + 1;
+        fi;
         break;
       fi;
       pos := positions[act];
@@ -729,8 +731,8 @@ function(S)
     im := ImageListOfPartialPerm(t);
     reduced_rank := false;
     for i in im do
-      if collapsible[i] then
-        t := t * EvaluateWord(gens, elts[i]);
+      if collapsible[positions[i]] then
+        t := t * EvaluateWord(gens, elts[positions[i]]);
         reduced_rank := true;
         break;
       fi;
