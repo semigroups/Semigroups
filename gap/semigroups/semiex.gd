@@ -9,7 +9,6 @@
 ##
 
 # Transformation semigroups
-
 DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
 DeclareOperation("OrderEndomorphisms", [IsPosInt]);
 DeclareOperation("SingularOrderEndomorphisms", [IsPosInt]);

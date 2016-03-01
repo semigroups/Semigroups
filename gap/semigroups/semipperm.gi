@@ -272,6 +272,13 @@ function(filt, S)
   return IsomorphismPartialPermSemigroup(S);
 end);
 
+InstallMethod(IsomorphismMonoid,
+"for IsPartialPermMonoid and a semigroup",
+[IsPartialPermMonoid, IsSemigroup],
+function(filt, S)
+  return IsomorphismPartialPermMonoid(S);
+end);
+
 InstallMethod(IsomorphismPartialPermSemigroup,
 "for a bipartition semigroup with generators",
 [IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
