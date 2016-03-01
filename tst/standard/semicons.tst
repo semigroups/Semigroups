@@ -532,7 +532,7 @@ gap> S := ZeroSemigroup(IsPartialPermSemigroup, 2, true);
 Error, Semigroups: ZeroSemigroup: usage,
 the arguments must be a positive integer or a filter and a positive integer,
 gap> S := ZeroSemigroup(IsMaxPlusMatrixSemigroup, 10);
-<non-regular semigroup of size 10, 19x19 max-plus matrices with 9 generators>
+<non-regular semigroup of size 10, 6x6 max-plus matrices with 9 generators>
 
 #T# constructions: ZeroSemigroup: known properties and attributes, n = 1
 gap> S := ZeroSemigroup(1);;
@@ -599,15 +599,13 @@ true
 gap> HasMultiplicativeZero(S);
 true
 gap> MultiplicativeZero(S);
-Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )
+Transformation( [ 1, 1, 1, 1, 1 ] )
 gap> HasAsList(S);
 false
 gap> AsList(S);
-[ Transformation( [ 1, 3, 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 5, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 7, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 1, 9, 1 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ) ]
+[ Transformation( [ 1, 1, 1, 1, 2 ] ), Transformation( [ 1, 1, 1, 1, 3 ] ), 
+  Transformation( [ 1, 1, 1, 2, 1 ] ), Transformation( [ 1, 1, 1, 2, 2 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1 ] ) ]
 gap> HasIsGroupAsSemigroup(S);
 true
 gap> IsGroupAsSemigroup(S);
@@ -632,15 +630,13 @@ true
 gap> HasMultiplicativeZero(S);
 true
 gap> MultiplicativeZero(S);
-Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )
+Transformation( [ 1, 1, 1, 1, 1 ] )
 gap> HasAsList(S);
 false
 gap> AsList(S);
-[ Transformation( [ 1, 3, 1, 1, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 5, 1, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 7, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 1, 9, 1 ] ), 
-  Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ) ]
+[ Transformation( [ 1, 1, 1, 1, 2 ] ), Transformation( [ 1, 1, 1, 1, 3 ] ), 
+  Transformation( [ 1, 1, 1, 2, 1 ] ), Transformation( [ 1, 1, 1, 2, 2 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1 ] ) ]
 gap> HasIsGroupAsSemigroup(S);
 false
 gap> IsGroupAsSemigroup(S);
@@ -661,7 +657,7 @@ gap> S := ZeroSemigroup(2);
 <commutative non-regular transformation semigroup of size 2, degree 3 with 1 
  generator>
 gap> S := ZeroSemigroup(3);
-<non-regular transformation semigroup of size 3, degree 5 with 2 generators>
+<non-regular transformation semigroup of size 3, degree 4 with 2 generators>
 gap> IsZeroSemigroup(Semigroup(S));
 true
 
@@ -669,9 +665,9 @@ true
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 1);
 <trivial transformation group of degree 0 with 1 generator>
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 5);
-<non-regular transformation semigroup of size 5, degree 9 with 4 generators>
+<non-regular transformation semigroup of size 5, degree 5 with 4 generators>
 gap> S := ZeroSemigroup(IsTransformationSemigroup, 10);
-<non-regular transformation semigroup of size 10, degree 19 with 9 generators>
+<non-regular transformation semigroup of size 10, degree 6 with 9 generators>
 gap> IsZeroSemigroup(Semigroup(S));
 true
 
@@ -692,9 +688,9 @@ gap> S := ZeroSemigroup(IsBipartitionSemigroup, 2);
 <commutative non-regular bipartition semigroup of size 2, degree 2 with 1 
  generator>
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 5);
-<non-regular bipartition semigroup of size 5, degree 8 with 4 generators>
+<non-regular bipartition semigroup of size 5, degree 5 with 4 generators>
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 10);
-<non-regular bipartition semigroup of size 10, degree 18 with 9 generators>
+<non-regular bipartition semigroup of size 10, degree 6 with 9 generators>
 gap> IsZeroSemigroup(Semigroup(S));
 true
 
@@ -715,9 +711,9 @@ true
 gap> S := ZeroSemigroup(IsPBRSemigroup, 1);
 <trivial pbr group of degree 1 with 1 generator>
 gap> S := ZeroSemigroup(IsPBRSemigroup, 5);
-<non-regular pbr semigroup of size 5, degree 8 with 4 generators>
+<non-regular pbr semigroup of size 5, degree 5 with 4 generators>
 gap> S := ZeroSemigroup(IsPBRSemigroup, 10);
-<non-regular pbr semigroup of size 10, degree 18 with 9 generators>
+<non-regular pbr semigroup of size 10, degree 6 with 9 generators>
 gap> IsZeroSemigroup(Semigroup(S));
 true
 
@@ -725,9 +721,9 @@ true
 gap> S := ZeroSemigroup(IsBooleanMatSemigroup, 1);
 <trivial group of 1x1 boolean matrices with 1 generator>
 gap> S := ZeroSemigroup(IsBooleanMatSemigroup, 5);
-<non-regular semigroup of size 5, 6x6 boolean matrices with 4 generators>
+<non-regular semigroup of size 5, 5x5 boolean matrices with 4 generators>
 gap> S := ZeroSemigroup(IsBooleanMatSemigroup, 10);
-<non-regular semigroup of size 10, 11x11 boolean matrices with 9 generators>
+<non-regular semigroup of size 10, 6x6 boolean matrices with 9 generators>
 gap> IsZeroSemigroup(Semigroup(S));
 true
 

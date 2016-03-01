@@ -9,7 +9,7 @@
 ##
 
 #############################################################################
-# Family and type. 
+# Family and type.
 #
 # One per degree to avoid lists with bipartitions of different degrees
 # belonging to IsAssociativeElementCollection.
@@ -21,15 +21,15 @@ BindGlobal("SEMIGROUPS_BipartitionTypes", []);
 InstallGlobalFunction(BipartitionFamily,
 function(n)
 
-  if not IsInt(n) or n < 0 then 
-    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n", 
+  if not IsInt(n) or n < 0 then
+    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n",
                   "the argument must be a non-negative integer,");
   fi;
 
   n := n + 1; # since the degree can be 0
 
-  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then 
-    SEMIGROUPS_BipartitionFamilies[n] := 
+  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then
+    SEMIGROUPS_BipartitionFamilies[n] :=
           NewFamily(Concatenation("BipartitionFamily", String(n)),
                     IsBipartition, CanEasilySortElements,
                     CanEasilySortElements);
@@ -41,15 +41,15 @@ end);
 InstallGlobalFunction(BipartitionType,
 function(n)
 
-  if not IsInt(n) or n < 0 then 
-    ErrorNoReturn("Semigroups: BipartitionType: usage,\n", 
+  if not IsInt(n) or n < 0 then
+    ErrorNoReturn("Semigroups: BipartitionType: usage,\n",
                   "the argument must be a non-negative integer,");
   fi;
-  
+
   n := n + 1; # since the degree can be 0
- 
-  if not IsBound(SEMIGROUPS_BipartitionTypes[n]) then 
-    SEMIGROUPS_BipartitionTypes[n] := 
+
+  if not IsBound(SEMIGROUPS_BipartitionTypes[n]) then
+    SEMIGROUPS_BipartitionTypes[n] :=
            NewType(BipartitionFamily(n),
                    IsBipartition and IsComponentObjectRep and
                    IsAttributeStoringRep);
@@ -243,7 +243,7 @@ function(n)
   return out;
 end);
 
-InstallMethod(RandomBipartition, "for a random source and pos int", 
+InstallMethod(RandomBipartition, "for a random source and pos int",
 [IsRandomSource, IsPosInt],
 function(rs, n)
   local out, nrblocks, vals, j, i;
@@ -269,7 +269,7 @@ function(n)
   return RandomBipartition(GlobalMersenneTwister, n);
 end);
 
-InstallMethod(RandomBlockBijection, "for a random source and pos int", 
+InstallMethod(RandomBlockBijection, "for a random source and pos int",
 [IsRandomSource, IsPosInt],
 function(rs, n)
   local out, nrblocks, j, free, i;
@@ -991,7 +991,7 @@ function(x, y)
   return true;
 end);
 
-InstallMethod(NaturalLeqPartialPermBipartition, 
+InstallMethod(NaturalLeqPartialPermBipartition,
 "for a bipartition and bipartition",
 IsIdenticalObj, [IsBipartition, IsBipartition],
 function(x, y)
@@ -1003,7 +1003,7 @@ function(x, y)
   fi;
 
   n := DegreeOfBipartition(x);
-  
+
   xblocks := BIPART_INT_REP(x);
   yblocks := BIPART_INT_REP(y);
 

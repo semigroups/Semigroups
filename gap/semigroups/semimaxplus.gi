@@ -161,7 +161,8 @@ function(dim, threshold)
   local gens, i, j;
 
   if dim <> 2 then
-    ErrorNoReturn();
+    ErrorNoReturn("Semigroups: FullTropicalMaxPlusMonoid: usage,\n",
+                  "the dimension must be 2,");
   fi;
 
   gens := [Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0],
@@ -178,9 +179,13 @@ function(dim, threshold)
                                             threshold)];
 
   for i in [1 .. threshold] do
-    Add(gens, Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0], [0, i]], threshold));
+    Add(gens, Matrix(IsTropicalMaxPlusMatrix,
+                     [[-infinity, 0], [0, i]],
+                     threshold));
     for j in [1 .. i] do
-      Add(gens, Matrix(IsTropicalMaxPlusMatrix, [[0, j], [i, 0]], threshold));
+      Add(gens, Matrix(IsTropicalMaxPlusMatrix,
+                       [[0, j], [i, 0]],
+                       threshold));
     od;
   od;
 
@@ -194,13 +199,18 @@ function(dim, threshold)
 
   if dim = 2  then
     gens := [Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
-                                              [0, infinity]], threshold),
+                                              [0, infinity]],
+                                              threshold),
              Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
-                                              [1, infinity]], threshold),
+                                              [1, infinity]],
+                                              threshold),
              Matrix(IsTropicalMinPlusMatrix, [[infinity, 0],
-                                              [infinity, infinity]], threshold)];
+                                              [infinity, infinity]],
+                                              threshold)];
     for i in [0 .. threshold] do
-      Add(gens, Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], [0, i]], threshold));
+      Add(gens, Matrix(IsTropicalMinPlusMatrix,
+                       [[infinity, 0], [0, i]],
+                       threshold));
     od;
   elif dim = 3 then
     gens := [Matrix(IsTropicalMinPlusMatrix,
@@ -264,7 +274,8 @@ function(dim, threshold)
       od;
     od;
   else
-    ErrorNoReturn();
+    ErrorNoReturn("Semigroups: FullTropicalMinPlusMonoid: usage,\n",
+                  "the dimension must be 2 or 3,");
   fi;
 
   return Monoid(gens);

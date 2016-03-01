@@ -70,13 +70,13 @@ function(x, S)
       and ActionDegree(x) <> ActionDegree(S))
       or (ActionDegree(x) > ActionDegree(S)) then
     return false;
-  elif HasGenericSemigroupData(S) then 
+  elif HasGenericSemigroupData(S) then
     if x in GenericSemigroupData(S) then
       return true;
-    elif IsClosedData(GenericSemigroupData(S)) then 
+    elif IsClosedData(GenericSemigroupData(S)) then
       return false;
     fi;
-  elif HasAsSSortedList(S) then 
+  elif HasAsSSortedList(S) then
     return x in AsSSortedList(S);
   fi;
 
@@ -700,7 +700,7 @@ InstallMethod(OrbitGraphAsSets, "for semigroup data",
 
 # same method for ideals
 
-InstallMethod(Position, 
+InstallMethod(Position,
 "for semigroup data, multiplicative element, and zero cyc",
 [IsSemigroupData, IsMultiplicativeElement, IsZeroCyc],
 function(data, x, n)

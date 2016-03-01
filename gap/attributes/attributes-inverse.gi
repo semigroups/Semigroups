@@ -638,7 +638,7 @@ function(coll, x)
 
     if IsList(coll) and IsEmpty(coll) then
       return Bipartition([Concatenation([1 .. DegreeOfBipartition(x)],
-                                       - [1 .. DegreeOfBipartition(x)])]);
+                                        -[1 .. DegreeOfBipartition(x)])]);
     fi;
 
     reps := List(coll, ExtRepOfBipartition);
@@ -662,7 +662,7 @@ function(coll, x)
 
   elif IsBipartition(x) and IsPartialPermBipartition(x) then
     return AsBipartition(SupremumIdempotentsNC(
-                         List(coll, AsPartialPerm), PartialPerm([])), 
+                         List(coll, AsPartialPerm), PartialPerm([])),
                          DegreeOfBipartition(x));
   fi;
   ErrorNoReturn("Semigroups: SupremumIdempotentsNC: usage,\n",

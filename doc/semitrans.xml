@@ -104,7 +104,7 @@ gap> S := Semigroup([Bipartition([[1, 2], [3, 6, -2],
 > [-2, -3], [-5]])]);
 <bipartition semigroup of degree 6 with 2 generators>
 gap> AsSemigroup(IsTransformationSemigroup, S);
-<transformation semigroup of degree 12 with 2 generators>
+<transformation semigroup of size 11, degree 12 with 2 generators>
 gap> IsTransitive(last);
 false
 gap> IsTransitive(AsSemigroup(Group((1,2,3))));
@@ -144,7 +144,7 @@ gap> S := Semigroup(
 >              [-2, -3], [-5]]));
 <bipartition semigroup of degree 6 with 2 generators>
 gap> AsSemigroup(IsTransformationSemigroup, S);
-<transformation semigroup of degree 12 with 2 generators>]]></Example>
+<transformation semigroup of size 11, degree 12 with 2 generators>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>

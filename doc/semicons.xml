@@ -177,7 +177,7 @@ true]]></Example>
 
         <Example><![CDATA[
 gap> S := ZeroSemigroup(5);
-<non-regular transformation semigroup of size 5, degree 9 with 4 
+<non-regular transformation semigroup of size 5, degree 5 with 4 
  generators>
 gap> IsZeroSemigroup(S);
 true

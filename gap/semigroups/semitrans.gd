@@ -13,7 +13,8 @@ DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
 DeclareOperation("\^", [IsTransformationCollection, IsPerm]);
 DeclareAttribute("FixedPoints", IsTransformationSemigroup);
 DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
-DeclareOperation("DigraphOfActionOnPoints", [IsTransformationSemigroup, IsPosInt]);
+DeclareOperation("DigraphOfActionOnPoints",
+                 [IsTransformationSemigroup, IsPosInt]);
 
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
                  IsTransformationSemigroup);

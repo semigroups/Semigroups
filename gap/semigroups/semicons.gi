@@ -439,8 +439,8 @@ function(arg)
 
   if not IsBound(n) or not IsPosInt(n) or not IsOperation(filter) then
     ErrorNoReturn("Semigroups: ZeroSemigroup: usage,\n",
-                  "the arguments must be a positive integer or a filter and a ",
-                  "positive integer,");
+                  "the arguments must be a positive integer or a filter ",
+                  "and a positive integer,");
   fi;
 
   S := ZeroSemigroupCons(filter, n);
@@ -457,7 +457,7 @@ end);
 # Zero semigroup: constructors
 
 InstallMethod(ZeroSemigroupCons,
-"for a filter and a positive integer",
+"for IsTransformationSemigroup and a positive integer",
 [IsTransformationSemigroup, IsPosInt],
 function(filter, n)
   local out, max, deg, N, R, gens, im, iter, r, i;
@@ -485,8 +485,9 @@ function(filter, n)
   gens := [];
   im   := [1 .. R] * 0 + 1;
   iter := IteratorOfTuples([1 .. R], deg - R);
+  NextIterator(iter); # skip the zero
 
-  for i in [1 .. n] do
+  for i in [1 .. n - 1] do
     Add(gens, Transformation(Concatenation(im, NextIterator(iter))));
   od;
 
@@ -497,7 +498,7 @@ function(filter, n)
 end);
 
 InstallMethod(ZeroSemigroupCons,
-"for a filter and a positive integer",
+"for IsPartialPermSemigroup and a positive integer",
 [IsPartialPermSemigroup, IsPosInt],
 function(filter, n)
   local zero, gens, out, i;
@@ -514,21 +515,6 @@ function(filter, n)
   out := Semigroup(gens);
   SetMultiplicativeZero(out, zero);
   return out;
-end);
-
-InstallMethod(ZeroSemigroupCons,
-"for a filter and a positive integer",
-[IsBipartitionSemigroup, IsPosInt],
-function(filter, n)
-  local zero, out;
-
-  if n = 2 then
-    zero := Bipartition([[1], [2], [-1], [-2]]);
-    out := Semigroup(Bipartition([[1, -2], [2], [-1]]));
-    SetMultiplicativeZero(out, zero);
-    return out;
-  fi;
-  return ZeroSemigroupCons(IsBlockBijectionSemigroup, n);
 end);
 
 InstallMethod(ZeroSemigroupCons,
@@ -560,6 +546,24 @@ end);
 
 InstallMethod(ZeroSemigroupCons,
 "for a filter and a positive integer",
+[IsBipartitionSemigroup, IsPosInt],
+function(filter, n)
+  local zero, out;
+
+  if n = 2 then
+    zero := Bipartition([[1], [2], [-1], [-2]]);
+    out := Semigroup(Bipartition([[1, -2], [2], [-1]]));
+    SetMultiplicativeZero(out, zero);
+    return out;
+  fi;
+
+  return AsSemigroup(IsBipartitionSemigroup,
+                     ZeroSemigroupCons(IsTransformationSemigroup, n));
+end);
+
+
+InstallMethod(ZeroSemigroupCons,
+"for a IsReesZeroMatrixSemigroup and a positive integer",
 [IsReesZeroMatrixSemigroup, IsPosInt],
 function(filter, n)
   local mat;
@@ -572,34 +576,26 @@ function(filter, n)
   return ReesZeroMatrixSemigroup(Group(()), mat);
 end);
 
-for IsXSemigroup in ["IsPBRSemigroup",
-                     "IsBooleanMatSemigroup"] do
-  InstallMethod(ZeroSemigroupCons,
-  Concatenation("for ", IsXSemigroup, " and a positive integer"),
-  [EvalString(IsXSemigroup), IsPosInt],
-  function(filter, n)
-    return AsSemigroup(filter,
-                       ZeroSemigroupCons(IsBipartitionSemigroup, n));
-  end);
-od;
-
 # Zero semigroup: other constructors
 
-for IsXSemigroup in ["IsNTPMatrixSemigroup",
-                     "IsMaxPlusMatrixSemigroup",
-                     "IsMinPlusMatrixSemigroup",
-                     "IsTropicalMaxPlusMatrixSemigroup",
-                     "IsTropicalMinPlusMatrixSemigroup",
-                     "IsProjectiveMaxPlusMatrixSemigroup",
-                     "IsIntegerMatrixSemigroup"] do
+for _IsXSemigroup in ["IsPBRSemigroup",
+                      "IsBooleanMatSemigroup",
+                      "IsNTPMatrixSemigroup",
+                      "IsMaxPlusMatrixSemigroup",
+                      "IsMinPlusMatrixSemigroup",
+                      "IsTropicalMaxPlusMatrixSemigroup",
+                      "IsTropicalMinPlusMatrixSemigroup",
+                      "IsProjectiveMaxPlusMatrixSemigroup",
+                      "IsIntegerMatrixSemigroup"] do
   InstallMethod(ZeroSemigroupCons,
-  Concatenation("for ", IsXSemigroup, " and a positive integer"),
-  [EvalString(IsXSemigroup), IsPosInt],
+  Concatenation("for ", _IsXSemigroup, " and a positive integer"),
+  [EvalString(_IsXSemigroup), IsPosInt],
   function(filter, n)
     return AsSemigroup(filter,
                        ZeroSemigroupCons(IsTransformationSemigroup, n));
   end);
 od;
+Unbind(_IsXSemigroup);
 
 # Left zero semigroup: main method
 

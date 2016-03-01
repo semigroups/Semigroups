@@ -41,8 +41,7 @@ end);
 
 # TODO improve this
 
-SEMIGROUPS.SubsetNumber :=
-function(m, k, n, set, min, nr, coeff)
+SEMIGROUPS.SubsetNumber := function(m, k, n, set, min, nr, coeff)
   local i;
 
   nr := nr + 1;
@@ -128,7 +127,6 @@ function(S)
 
   return EnumeratorByFunctions(S, record);
 end);
-
 
 # the <m>th subset of <[1..n]> with <k> elements
 # TODO improve this
@@ -632,9 +630,9 @@ InstallMethod(SmallerDegreePartialPermRepresentation,
 "for an inverse semigroup of partial permutations",
 [IsInverseSemigroup and IsPartialPermSemigroup],
 function(S)
-  local oldgens, newgens, D, e, h, lambdaorb, He, schutz, sigmainv, enum,
-  sup, trivialse, orbits, cosets, stabpp, psi, rho, rhoinv, stab, nrcosets, j,
-  reps, gen, offset, rep, box, subbox, T, d, k, i, m;
+  local oldgens, newgens, D, e, h, lambdaorb, He, sup, trivialse, schutz,
+  sigmainv, enum, orbits, cosets, stabpp, psi, rho, rhoinv, stab, nrcosets, j,
+  reps, gen, offset, rep, box, subbox, T, map, inv, d, k, i, m;
 
   oldgens := Generators(S);
   newgens := List(oldgens, x -> []);
@@ -734,10 +732,10 @@ function(S)
     return IdentityMapping(S);
   fi;
 
-  # gaplint: ignore 3
-  return MagmaIsomorphismByFunctionsNC(S, T,
-    x -> EvaluateWord(GeneratorsOfSemigroup(T), Factorization(S, x)),
-    x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x)));
+  map := x -> EvaluateWord(GeneratorsOfSemigroup(T), Factorization(S, x));
+  inv := x -> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
+
+  return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);
 
 InstallMethod(RepresentativeOfMinimalIdeal,

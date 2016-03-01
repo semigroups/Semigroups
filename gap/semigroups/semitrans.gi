@@ -43,7 +43,7 @@ function(list, S)
   # Check the arguments.
   if IsEmpty(list) then
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the first argument must be a non-empty list," );
+                  "the first argument must be a non-empty list,");
   elif ForAny(list, T -> not IsTransformationMonoid(T)) then
     TryNextMethod();
   fi;
@@ -71,7 +71,7 @@ function(list, S)
   # Check the arguments.
   if IsEmpty(list) then
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the first argument must be a non-empty list," );
+                  "the first argument must be a non-empty list,");
   elif ForAny(list, T -> not IsTransformationSemigroup(T)) then
     TryNextMethod();
   fi;
@@ -231,8 +231,7 @@ end;
 #   if true, this function returns false if there is an isolated pair-vertex
 # TODO should this be a Digraph??
 # FIXME make this a digraph
-SEMIGROUPS.GraphOfRightActionOnPairs :=
-function(gens, n, stop_on_isolated_pair)
+SEMIGROUPS.GraphOfRightActionOnPairs := function(gens, n, stop_on_isolated_pair)
   local nrgens, nrpairs, PairNumber, NumberPair, in_nbs, labels, pair,
   isolated_pair, act, range, i, j;
   nrgens     := Length(gens);
@@ -483,7 +482,6 @@ function(S)
   return Sum(ind);
 end);
 
-
 # same method for ideals
 
 InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup",
@@ -733,10 +731,11 @@ function(S)
                       x -> TransformationOpNC(x, pts, OnBlist)));
   UseIsomorphismRelation(S, T);
 
-  # gaplint: ignore 3
-  return MappingByFunction(S, T,
-           x -> TransformationOpNC(x, pts, OnBlist),
-           x -> BooleanMatNC(List([1 .. n], i -> pts[pos[i] ^ x])));
+  return MappingByFunction(S,
+                           T,
+                           x -> TransformationOpNC(x, pts, OnBlist),
+                           x -> BooleanMatNC(List([1 .. n],
+                                             i -> pts[pos[i] ^ x])));
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
@@ -819,7 +818,9 @@ function(S)
   local iso1, inv1, iso2, inv2;
 
   if MultiplicativeNeutralElement(S) = fail then
-    ErrorNoReturn();
+    ErrorNoReturn("Semigroups: IsomorphismTransformationMonoid: usage,\n",
+                  "the semigroup given as first argument must have a ",
+                  "multiplicative neutral element,");
   fi;
 
   iso1 := IsomorphismTransformationSemigroup(S);

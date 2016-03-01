@@ -13,7 +13,7 @@
 InstallMethod(IsomorphismFpSemigroup, "for a semigroup",
 [IsSemigroup], 3,
 function(S)
-  local rules, F, A, rels, Q, B;
+  local rules, F, A, rels, Q, B, map, inv;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -28,10 +28,10 @@ function(S)
   Q := F / rels;
   B := GeneratorsOfSemigroup(Q);
 
-  # gaplint: ignore 3
-  return MagmaIsomorphismByFunctionsNC(S, Q,
-           x -> EvaluateWord(B, Factorization(S, x)),
-           x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S)));
+  map := x -> EvaluateWord(B, Factorization(S, x));
+  inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S));
+
+  return MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
 end);
 
 # same method for ideals
@@ -39,7 +39,7 @@ end);
 InstallMethod(IsomorphismFpMonoid, "for a monoid",
 [IsMonoid], 3,
 function(S)
-  local F, A, lookup, pos, data, rules, rels, convert, Q, B, rule;
+  local F, A, lookup, pos, data, rules, rels, convert, Q, B, map, inv, rule;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -77,8 +77,8 @@ function(S)
   Q := F / rels;
   B := GeneratorsOfSemigroup(Q);
 
-  # gaplint: ignore 3
-  return MagmaIsomorphismByFunctionsNC(S, Q,
-           x -> EvaluateWord(B, Factorization(S, x)),
-           x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfMonoid(S)));
+  map := x -> EvaluateWord(B, Factorization(S, x));
+  inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfMonoid(S));
+
+  return MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
 end);

@@ -283,9 +283,8 @@ function(x)
     else # been in this part before
       words[part[j]] := Concatenation(words[part[j]]{[1 .. pos[j]]},
                                       temp_word,
-      # gaplint: ignore 2
                                       words[part[j]]{[pos[j] + 1 ..
-                                        Length(words[part[j]])]});
+                                                      Length(words[part[j]])]});
     fi;
     i := i - 1;
   od;

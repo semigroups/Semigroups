@@ -102,7 +102,7 @@ end);
 InstallMethod(StarOp, "for a pbr", [IsPBR],
 function(x)
   local ext;
-  ext := ShallowCopy(ExtRepOfPBR(x) * - 1);
+  ext := ShallowCopy(ExtRepOfPBR(x) * -1);
   Apply(ext, ShallowCopy);
   Apply(ext[1], ShallowCopy);
   Apply(ext[2], ShallowCopy);

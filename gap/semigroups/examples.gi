@@ -50,7 +50,7 @@ InstallMethod(EndomorphismsPartition, "for a list of positive integers",
 [IsCyclotomicCollection],
 function(partition)
   local s, r, distinct, equal, prev, n, blocks, unique, didprevrepeat, gens, x,
-  m, y, w, i, j, k, block;
+  m, y, w, p, i, j, k, block;
 
   if not ForAll(partition, IsPosInt) then
     ErrorNoReturn("Semigroups: EndomorphismsPartition: usage,\n",
@@ -256,16 +256,14 @@ function(partition)
         x := ShallowCopy(blocks[unique[i]]);
       fi;
       if IsOddInt(Length(blocks[unique[i + 1]])) then
-        # FIXME
-        Append(x,
-               Permuted(blocks[unique[i + 1]],
-                        PermList(Concatenation([2 ..
-                                                Length(blocks[unique[i + 1]])],
-                                               [1]))));
+        p := PermList(Concatenation([2 .. Length(blocks[unique[i + 1]])],
+                                    [1]));
+        Append(x, Permuted(blocks[unique[i + 1]], p));
       else
-        # gaplint: ignore 2 FIXME
-        Append(x, Permuted(blocks[unique[i + 1]], PermList(Concatenation([1],
-          [3 .. Length(blocks[unique[i + 1]])], [2]))));
+
+        p := PermList(Concatenation([1], [3 .. Length(blocks[unique[i + 1]])],
+                                    [2]));
+        Append(x, Permuted(blocks[unique[i + 1]], p));
       fi;
       x := MappingPermListList(Union(blocks[unique[i]],
                                      blocks[unique[i + 1]]), x);
@@ -524,14 +522,14 @@ InstallMethod(CatalanMonoid, "for a positive integer",
 function(n)
   local gens, next, i;
 
-  if n = 1 then 
+  if n = 1 then
     return Monoid(IdentityTransformation);
   fi;
 
   gens := [];
 
-  for i in [1 .. n - 1] do 
-    next := [1 .. n]; 
+  for i in [1 .. n - 1] do
+    next := [1 .. n];
     next[i + 1] := i;
     Add(gens, Transformation(next));
   od;

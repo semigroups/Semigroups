@@ -9,7 +9,6 @@
 
 # This file contains declarations for semigroups of PBRs.
 
-
 DeclareSynonym("IsPBRSemigroup",
                IsSemigroup and IsPBRCollection);
 DeclareSynonym("IsPBRMonoid",

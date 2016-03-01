@@ -17,13 +17,13 @@
       group and a rectangular band. Or equivalently, if it is orthodox and simple. 
       
       <Example><![CDATA[
-gap> G := AsTransformationSemigroup(MathieuGroup(11));
+gap> G := AsSemigroup(IsTransformationSemigroup, MathieuGroup(11));
 <transformation semigroup of size 7920, degree 11 with 2 generators>
 gap> R := RectangularBand(3, 2);
-<regular transformation semigroup of size 6, degree 7 with 3 
+<regular transformation semigroup of size 6, degree 6 with 3 
  generators>
 gap> S := DirectProduct(G, R);
-<transformation semigroup of size 47520, degree 18 with 4 generators>
+<transformation semigroup of size 47520, degree 17 with 4 generators>
 gap> IsRectangularGroup(R);
 true
 gap> IsRectangularGroup(G);

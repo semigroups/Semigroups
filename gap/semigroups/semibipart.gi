@@ -215,7 +215,6 @@ function(filter, S)
                                        AsPartialPerm);
 end);
 
-
 InstallMethod(IsomorphismSemigroup,
 "for IsBipartitionSemigroup and partial perm inverse semigp with generators",
 [IsBipartitionSemigroup, IsPartialPermSemigroup and IsInverseSemigroup and
