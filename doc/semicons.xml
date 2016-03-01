@@ -45,7 +45,7 @@ gap> Size(S);
 gap> S := TrivialSemigroup(3);
 <trivial transformation group of degree 3 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 2);
-<trivial bipartition group of degree 2 with 1 generator>
+<trivial block bijection group of degree 2 with 1 generator>
 gap> Elements(S);
 [ <block bijection: [ 1, 2, -1, -2 ]> ]]]></Example>
     </Description>
@@ -100,8 +100,8 @@ true
 gap> StructureDescription(I);
 "C3"
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);
-<commutative non-regular bipartition semigroup of size 9, degree 10 
- with 1 generator>]]></Example>
+<commutative non-regular block bijection semigroup of size 9, 
+ degree 10 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

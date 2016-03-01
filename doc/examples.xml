@@ -112,11 +112,11 @@ gap> SingularBrauerMonoid(8);
       See <Ref Prop="IsUniformBlockBijection"/>.
       <Example><![CDATA[
 gap> S := DualSymmetricInverseMonoid(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
+<inverse block bijection monoid of degree 4 with 3 generators>
 gap> IsFactorisableInverseMonoid(S);
 false
 gap> S := FactorisableDualSymmetricInverseSemigroup(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
+<inverse block bijection monoid of degree 4 with 3 generators>
 gap> IsFactorisableInverseMonoid(S);
 true
 gap> S := SymmetricInverseMonoid(5);;
@@ -150,7 +150,7 @@ true]]></Example>
 gap> Number(PartitionMonoid(3), IsBlockBijection);
 25
 gap> S := DualSymmetricInverseSemigroup(3);
-<inverse bipartition monoid of degree 3 with 3 generators>
+<inverse block bijection monoid of degree 3 with 3 generators>
 gap> Size(S);
 25]]></Example>
     </Description>

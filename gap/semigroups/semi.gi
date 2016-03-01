@@ -807,6 +807,52 @@ function(S)
   return AsList(S)[Random([1 .. Size(S)])];
 end);
 
+SEMIGROUPS.DefaultRandomInverseSemigroup :=
+function(filt, nrgens, deg, arg...)
+  if Length(arg) = 0 then
+    return AsSemigroup(filt,
+                       RandomInverseSemigroup(IsPartialPermSemigroup,
+                                              nrgens,
+                                              deg));
+  elif Length(arg) = 1 then
+    return AsSemigroup(filt,
+                       arg[1],
+                       RandomInverseSemigroup(IsPartialPermSemigroup,
+                                              nrgens,
+                                              deg));
+  elif Length(arg) = 2 then
+    return AsSemigroup(filt,
+                       arg[1],
+                       arg[2],
+                       RandomInverseSemigroup(IsPartialPermSemigroup,
+                                              nrgens,
+                                              deg));
+  fi;
+end;
+
+SEMIGROUPS.DefaultRandomInverseMonoid :=
+function(filt, nrgens, deg, arg...)
+  if Length(arg) = 0 then
+    return AsMonoid(filt,
+                    RandomInverseMonoid(IsPartialPermMonoid,
+                                        nrgens,
+                                        deg));
+  elif Length(arg) = 1 then
+    return AsMonoid(filt,
+                    arg[1],
+                    RandomInverseMonoid(IsPartialPermMonoid,
+                                        nrgens,
+                                        deg));
+  elif Length(arg) = 2 then
+    return AsMonoid(filt,
+                    arg[1],
+                    arg[2],
+                    RandomInverseMonoid(IsPartialPermMonoid,
+                                        nrgens,
+                                        deg));
+  fi;
+end;
+
 # TODO RandomSource?
 
 InstallGlobalFunction(RandomSemigroup,
@@ -880,220 +926,213 @@ function(arg)
   return RandomSemigroupCons(filt, nrgens, deg, threshold, period);
 end);
 
-SEMIGROUPS.DefaultRandomInverseSemigroup :=
-function(filt, nrgens, deg, arg...)
-  if Length(arg) = 0 then
-    return AsSemigroup(filt,
-                       RandomInverseSemigroup(IsPartialPermSemigroup,
-                                              nrgens,
-                                              deg));
-  elif Length(arg) = 1 then
-    return AsSemigroup(filt,
-                       RandomInverseSemigroup(IsPartialPermSemigroup,
-                                              nrgens,
-                                              deg),
-                       arg[1]);
-  elif Length(arg) = 2 then
-    return AsSemigroup(filt,
-                       RandomInverseSemigroup(IsPartialPermSemigroup,
-                                              nrgens,
-                                              deg),
-                       arg[1],
-                       arg[2]);
-  fi;
-end;
-
-#SEMIGROUPS.DefaultRandomInverseMonoid :=
-#function(filt, nrgens, deg, arg...)
-#  if Length(arg) = 0 then
-#    return AsMonoid(filt,
-#                    RandomInverseMonoid(IsPartialPermMonoid,
-#                                        nrgens,
-#                                        deg));
-#  elif Length(arg) = 1 then
-#    return AsMonoid(filt,
-#                    RandomInverseMonoid(IsPartialPermMonoid,
-#                                        nrgens,
-#                                        deg),
-#                       arg[1]);
-#  elif Length(arg) = 2 then
-#    return AsMonoid(filt,
-#                    RandomInverseMonoid(IsPartialPermMonoid,
-#                                        nrgens,
-#                                        deg),
-#                       arg[1],
-#                       arg[2]);
-#  fi;
-#end);
-
-SEMIGROUPS.SemigroupTypes := [IsPBRSemigroup,
-                              IsBipartitionSemigroup,
-                              IsTransformationSemigroup,
-                              IsPartialPermSemigroup,
-                              IsBooleanMatSemigroup,
-                              IsMaxPlusMatrixSemigroup,
-                              IsMinPlusMatrixSemigroup,
-                              IsTropicalMaxPlusMatrixSemigroup,
-                              IsTropicalMinPlusMatrixSemigroup,
-                              IsProjectiveMaxPlusMatrixSemigroup,
-                              IsNTPMatrixSemigroup,
-                              IsBlockBijectionSemigroup,
-                              IsIntegerMatrixSemigroup];
-
-SEMIGROUPS.MonoidTypes := [IsPBRMonoid,
-                           IsBipartitionMonoid,
-                           IsTransformationMonoid,
-                           IsPartialPermMonoid,
-                           IsBooleanMatMonoid,
-                           IsMaxPlusMatrixMonoid,
-                           IsMinPlusMatrixMonoid,
-                           IsTropicalMaxPlusMatrixMonoid,
-                           IsTropicalMinPlusMatrixMonoid,
-                           IsProjectiveMaxPlusMatrixMonoid,
-                           IsNTPMatrixMonoid,
-                           IsBlockBijectionMonoid,
-                           IsIntegerMatrixMonoid];
-
-SEMIGROUPS.RandomElementCons := function(filt)
-  local RandomTropicalMaxPlusMatrix, RandomTropicalMinPlusMatrix,
-  RandomProjectiveMaxPlusMatrix, RandomNTPMatrix;
-
-  if not filt in SEMIGROUPS.SemigroupTypes then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.RandomElementCons: usage,\n");
-  fi;
-
-  RandomTropicalMaxPlusMatrix := function(dim, threshold)
-    return RandomMatrix(IsTropicalMaxPlusMatrix, dim, threshold);
-  end;
-
-  RandomTropicalMinPlusMatrix := function(dim, threshold)
-    return RandomMatrix(IsTropicalMinPlusMatrix, dim, threshold);
-  end;
-
-  RandomProjectiveMaxPlusMatrix := function(dim)
-    return RandomMatrix(IsProjectiveMaxPlusMatrix, dim);
-  end;
-
-  RandomNTPMatrix := function(dim, threshold, period)
-    return RandomMatrix(IsNTPMatrix, dim, threshold, period);
-  end;
-
-  if filt = IsTransformationSemigroup then
-    return [RandomTransformation, 1, AsTransformationSemigroup];
-  elif filt = IsPartialPermSemigroup then
-    return [RandomPartialPerm, 1, AsPartialPermSemigroup];
-  elif filt = IsBipartitionSemigroup then
-    return [RandomBipartition, 1, AsBipartitionSemigroup];
-  elif filt = IsBlockBijectionSemigroup then
-    return [RandomBlockBijection, 1, AsBlockBijectionSemigroup];
-  elif filt = IsBooleanMatSemigroup then
-    return [x -> RandomMatrix(IsBooleanMat, x), 1, AsBooleanMatSemigroup];
-  elif filt = IsPBRSemigroup then
-    return [RandomPBR, 1, AsPBRSemigroup];
-  elif filt = IsMaxPlusMatrixSemigroup then
-    return [x -> RandomMatrix(IsMaxPlusMatrix, x), 1, IdFunc];
-    #TODO how to define a canonical embedding from T_n to here?
-  elif filt = IsMinPlusMatrixSemigroup then
-    return [x -> RandomMatrix(IsMinPlusMatrix, x), 1, IdFunc];
-    #TODO how to define a canonical embedding from T_n to here?
-  elif filt = IsTropicalMaxPlusMatrixSemigroup then
-    return [RandomTropicalMaxPlusMatrix, 2, IdFunc];
-    #TODO how to define a canonical embedding from T_n to here?
-  elif filt = IsTropicalMinPlusMatrixSemigroup then
-    return [RandomTropicalMinPlusMatrix, 2, IdFunc];
-    #TODO how to define a canonical embedding from T_n to here?
-  elif filt = IsProjectiveMaxPlusMatrixSemigroup then
-    return [RandomProjectiveMaxPlusMatrix, 1, IdFunc];
-    #TODO how to define a canonical embedding from T_n to here?
-  elif filt = IsNTPMatrixSemigroup then
-    return [RandomNTPMatrix, 3, IdFunc];
-    #TODO how to define a canonical embedding from T_n to here?
-  elif filt = IsIntegerMatrixSemigroup then
-    return [x -> RandomMatrix(IsIntegerMatrix, x), 1, IdFunc];
-    #TODO define the canonical embedding from T_n to here!
-  fi;
-end;
-
-SEMIGROUPS.RandomSemigroupOrMonoid := function(SemigroupOrMonoid, string, args)
-  local filt, nrgens, params, cons, i;
-
-  if Length(args) > 0 then
-    filt := args[1];
-  else
-    filt := Random(SEMIGROUPS.SemigroupTypes);
-  fi;
-
-  if Length(args) > 1 then
-    nrgens := args[2];
-  else
-    nrgens := AbsInt(Random(Integers)) + 1;
-  fi;
-
-  if Length(args) > 2 then
-    params := args{[3 .. Length(args)]};
-  else
-    params := [];
-  fi;
-
-  if not IsFilter(filt) or not filt in SEMIGROUPS.SemigroupTypes then
-    ErrorNoReturn("Semigroups: ", string, ": usage,\n",
-                  "the first argument must be a filter,");
-  fi;
-
-  if not IsPosInt(nrgens) then
-    ErrorNoReturn("Semigroups: ", string, ": usage,\n",
-                  "the second argument must be a positive integer,");
-  fi;
-
-  cons := SEMIGROUPS.RandomElementCons(filt);
-
-  if Length(params) < cons[2] then
-    for i in [Length(params) + 1 .. cons[2]] do
-      Add(params, AbsInt(Random(Integers)) + 1);
-    od;
-  fi;
-
-  if not IsHomogeneousList(params) or not IsPosInt(params[1]) then
-    ErrorNoReturn("Semigroups: ", string, ": usage,\n",
-                  "the third to last arguments must be positive integers,");
-  elif Length(params) > cons[2] then
-    ErrorNoReturn("Semigroups: ", string, ": usage,\n",
-                  "there should be ", cons[2], " arguments,");
-  fi;
-
-  if SemigroupOrMonoid = InverseSemigroup
-      or SemigroupOrMonoid = InverseMonoid
-      and not (filt in [IsBlockBijectionSemigroup, IsPartialPermSemigroup]) then
-    return cons[3](SemigroupOrMonoid(Set([1 .. nrgens],
-                     x -> RandomPartialPerm(Maximum(params[1] - 1, 1)))));
-  else
-    return SemigroupOrMonoid(Set([1 .. nrgens],
-                                 x -> CallFuncList(cons[1], params)));
-  fi;
-end;
-
-#InstallGlobalFunction(RandomSemigroup,
-#function(arg)
-#  return SEMIGROUPS.RandomSemigroupOrMonoid(Semigroup, "RandomSemigroup", arg);
-#end);
-
 InstallGlobalFunction(RandomMonoid,
 function(arg)
-  return SEMIGROUPS.RandomSemigroupOrMonoid(Monoid, "RandomMonoid", arg);
+  local filt, nrgens, deg, threshold, period;
+
+  # check for optional first arg
+  if Length(arg) >= 1 and IsPosInt(arg[1]) then
+    CopyListEntries(arg, 1, 1, arg, 2, 1, Length(arg));
+    Unbind(arg[1]);
+  fi;
+
+  if Length(arg) >= 1 and IsBound(arg[1]) then
+    filt := arg[1];
+  else
+    filt := Random([IsFpMonoid,
+                    IsPBRMonoid,
+                    IsBipartitionMonoid,
+                    IsTransformationMonoid,
+                    IsPartialPermMonoid,
+                    IsBooleanMatMonoid,
+                    IsMaxPlusMatrixMonoid,
+                    IsMinPlusMatrixMonoid,
+                    IsTropicalMaxPlusMatrixMonoid,
+                    IsTropicalMinPlusMatrixMonoid,
+                    IsProjectiveMaxPlusMatrixMonoid,
+                    IsNTPMatrixMonoid,
+                    IsBlockBijectionMonoid,
+                    IsIntegerMatrixMonoid]);
+  fi;
+
+  if Length(arg) >= 2 then
+    nrgens := arg[2];
+  else
+    nrgens := Random([1 .. 100]);
+  fi;
+  if Length(arg) >= 3 then
+    deg := arg[3]; # dimension, degree
+  else
+    deg := Random([1 .. 100]);
+  fi;
+  if Length(arg) >= 4 then
+    threshold := arg[4];
+  else
+    threshold := Random([1 .. 100]);
+  fi;
+  if Length(arg) >= 5 then
+    period := arg[5];
+  else
+    period := Random([1 .. 100]);
+  fi;
+
+  if Length(arg) > 5 then
+    ErrorNoReturn();
+  fi;
+
+  if not IsFilter(filt) then
+    ErrorNoReturn();
+  elif not IsPosInt(nrgens) then
+    ErrorNoReturn();
+  elif not IsInt(deg) or deg <= 0 then
+    ErrorNoReturn();
+  elif not IsInt(threshold) or threshold <= 0 then
+    ErrorNoReturn();
+  elif not IsInt(period) or period <= 0 then
+    ErrorNoReturn();
+  fi;
+  #return [filt, nrgens, deg, threshold, period];
+  return RandomMonoidCons(filt, nrgens, deg, threshold, period);
 end);
 
 InstallGlobalFunction(RandomInverseSemigroup,
 function(arg)
-  return SEMIGROUPS.RandomSemigroupOrMonoid(InverseSemigroup,
-                                            "RandomInverseSemigroup",
-                                            arg);
+  local filt, nrgens, deg, threshold, period;
+
+  # check for optional first arg
+  if Length(arg) >= 1 and IsPosInt(arg[1]) then
+    CopyListEntries(arg, 1, 1, arg, 2, 1, Length(arg));
+    Unbind(arg[1]);
+  fi;
+
+  if Length(arg) >= 1 and IsBound(arg[1]) then
+    filt := arg[1];
+  else
+    filt := Random([IsReesMatrixSemigroup,
+                    IsReesZeroMatrixSemigroup,
+                    IsFpSemigroup,
+                    IsPBRSemigroup,
+                    IsBipartitionSemigroup,
+                    IsTransformationSemigroup,
+                    IsPartialPermSemigroup,
+                    IsBooleanMatSemigroup,
+                    IsMaxPlusMatrixSemigroup,
+                    IsMinPlusMatrixSemigroup,
+                    IsTropicalMaxPlusMatrixSemigroup,
+                    IsTropicalMinPlusMatrixSemigroup,
+                    IsProjectiveMaxPlusMatrixSemigroup,
+                    IsNTPMatrixSemigroup,
+                    IsBlockBijectionSemigroup,
+                    IsIntegerMatrixSemigroup]);
+  fi;
+
+  if Length(arg) >= 2 then
+    nrgens := arg[2];
+  else
+    nrgens := Random([1 .. 100]);
+  fi;
+  if Length(arg) >= 3 then
+    deg := arg[3]; # dimension, degree
+  else
+    deg := Random([1 .. 100]);
+  fi;
+  if Length(arg) >= 4 then
+    threshold := arg[4];
+  else
+    threshold := Random([1 .. 100]);
+  fi;
+  if Length(arg) >= 5 then
+    period := arg[5];
+  else
+    period := Random([1 .. 100]);
+  fi;
+
+  if Length(arg) > 5 then
+    ErrorNoReturn();
+  fi;
+
+  if not IsFilter(filt) then
+    ErrorNoReturn();
+  elif not IsPosInt(nrgens) then
+    ErrorNoReturn();
+  elif not IsInt(deg) or deg <= 0 then
+    ErrorNoReturn();
+  elif not IsInt(threshold) or threshold <= 0 then
+    ErrorNoReturn();
+  elif not IsInt(period) or period <= 0 then
+    ErrorNoReturn();
+  fi;
+  #return [filt, nrgens, deg, threshold, period];
+  return RandomInverseSemigroupCons(filt, nrgens, deg, threshold, period);
 end);
 
 InstallGlobalFunction(RandomInverseMonoid,
 function(arg)
-  return SEMIGROUPS.RandomSemigroupOrMonoid(InverseMonoid,
-                                            "RandomInverseMonoid",
-                                            arg);
+  local filt, nrgens, deg, threshold, period;
+
+  # check for optional first arg
+  if Length(arg) >= 1 and IsPosInt(arg[1]) then
+    CopyListEntries(arg, 1, 1, arg, 2, 1, Length(arg));
+    Unbind(arg[1]);
+  fi;
+
+  if Length(arg) >= 1 and IsBound(arg[1]) then
+    filt := arg[1];
+  else
+    filt := Random([IsFpMonoid,
+                    IsPBRMonoid,
+                    IsBipartitionMonoid,
+                    IsTransformationMonoid,
+                    IsPartialPermMonoid,
+                    IsBooleanMatMonoid,
+                    IsMaxPlusMatrixMonoid,
+                    IsMinPlusMatrixMonoid,
+                    IsTropicalMaxPlusMatrixMonoid,
+                    IsTropicalMinPlusMatrixMonoid,
+                    IsProjectiveMaxPlusMatrixMonoid,
+                    IsNTPMatrixMonoid,
+                    IsBlockBijectionMonoid,
+                    IsIntegerMatrixMonoid]);
+  fi;
+
+  if Length(arg) >= 2 then
+    nrgens := arg[2];
+  else
+    nrgens := Random([1 .. 100]);
+  fi;
+  if Length(arg) >= 3 then
+    deg := arg[3]; # dimension, degree
+  else
+    deg := Random([1 .. 100]);
+  fi;
+  if Length(arg) >= 4 then
+    threshold := arg[4];
+  else
+    threshold := Random([1 .. 100]);
+  fi;
+  if Length(arg) >= 5 then
+    period := arg[5];
+  else
+    period := Random([1 .. 100]);
+  fi;
+
+  if Length(arg) > 5 then
+    ErrorNoReturn();
+  fi;
+
+  if not IsFilter(filt) then
+    ErrorNoReturn();
+  elif not IsPosInt(nrgens) then
+    ErrorNoReturn();
+  elif not IsInt(deg) or deg <= 0 then
+    ErrorNoReturn();
+  elif not IsInt(threshold) or threshold <= 0 then
+    ErrorNoReturn();
+  elif not IsInt(period) or period <= 0 then
+    ErrorNoReturn();
+  fi;
+  #return [filt, nrgens, deg, threshold, period];
+  return RandomInverseMonoidCons(filt, nrgens, deg, threshold, period);
 end);
 
 #############################################################################
@@ -1189,6 +1228,19 @@ function(filt, S)
   return Range(IsomorphismSemigroup(filt, S));
 end);
 
+InstallMethod(AsSemigroup, "for a filter, pos int, a semigroup",
+[IsFunction and IsOperation, IsPosInt, IsSemigroup],
+function(filt, threshold, S)
+  return Range(IsomorphismSemigroup(filt, threshold, S));
+end);
+
+InstallMethod(AsSemigroup,
+"for a filter, pos int, pos int, a semigroup",
+[IsFunction and IsOperation, IsPosInt, IsPosInt, IsSemigroup],
+function(filt, threshold, period, S)
+  return Range(IsomorphismSemigroup(filt, threshold, period, S));
+end);
+
 InstallMethod(AsMonoid, "for a filter and a semigroup",
 [IsFunction and IsOperation, IsSemigroup],
 function(filt, S)
@@ -1202,4 +1254,17 @@ function(filt, S)
   fi;
 
   return Range(IsomorphismMonoid(filt, S));
+end);
+
+InstallMethod(AsMonoid, "for a filter, pos int, a Monoid",
+[IsFunction and IsOperation, IsPosInt, IsMonoid],
+function(filt, threshold, S)
+  return Range(IsomorphismMonoid(filt, threshold, S));
+end);
+
+InstallMethod(AsMonoid,
+"for a filter, pos int, pos int, a Monoid",
+[IsFunction and IsOperation, IsPosInt, IsPosInt, IsMonoid],
+function(filt, threshold, period, S)
+  return Range(IsomorphismMonoid(filt, threshold, period, S));
 end);

@@ -87,27 +87,27 @@ gap> S := TrivialSemigroup(IsPartialPermSemigroup, 10);
 
 #T# constructions: TrivialSemigroup: bipartition semigroup
 gap> S := TrivialSemigroup(IsBipartitionSemigroup);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 0);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 5);
-<trivial bipartition group of degree 5 with 1 generator>
+<trivial block bijection group of degree 5 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 10);
-<trivial bipartition group of degree 10 with 1 generator>
+<trivial block bijection group of degree 10 with 1 generator>
 
 #T# constructions: TrivialSemigroup: block bijection semigroup
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 0);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 5);
-<trivial bipartition group of degree 5 with 1 generator>
+<trivial block bijection group of degree 5 with 1 generator>
 gap> S := TrivialSemigroup(IsBlockBijectionSemigroup, 10);
-<trivial bipartition group of degree 10 with 1 generator>
+<trivial block bijection group of degree 10 with 1 generator>
 
 #T# constructions: TrivialSemigroup: PBR semigroup
 gap> S := TrivialSemigroup(IsPBRSemigroup);
@@ -271,33 +271,33 @@ gap> S := MonogenicSemigroup(IsPartialPermSemigroup, 10, 11);
 
 #T# constructions: MonogenicSemigroup: bipartition semigroup
 gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 1, 1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 2, 1);
-<commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
+<commutative non-regular block bijection semigroup of size 2, degree 3 with 1 
  generator>
 gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 1, 2);
-<bipartition group of size 2, degree 2 with 1 generator>
+<block bijection group of size 2, degree 2 with 1 generator>
 gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 5, 5);
-<commutative non-regular bipartition semigroup of size 9, degree 11 with 1 
- generator>
+<commutative non-regular block bijection semigroup of size 9, degree 11 with 
+ 1 generator>
 gap> S := MonogenicSemigroup(IsBipartitionSemigroup, 10, 11);
-<commutative non-regular bipartition semigroup of size 20, degree 22 with 1 
- generator>
+<commutative non-regular block bijection semigroup of size 20, degree 22 with 
+ 1 generator>
 
 #T# constructions: MonogenicSemigroup: block bijection semigroup
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 1, 1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 2, 1);
-<commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
+<commutative non-regular block bijection semigroup of size 2, degree 3 with 1 
  generator>
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 1, 2);
-<bipartition group of size 2, degree 2 with 1 generator>
+<block bijection group of size 2, degree 2 with 1 generator>
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 5, 5);
-<commutative non-regular bipartition semigroup of size 9, degree 11 with 1 
- generator>
+<commutative non-regular block bijection semigroup of size 9, degree 11 with 
+ 1 generator>
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 10, 11);
-<commutative non-regular bipartition semigroup of size 20, degree 22 with 1 
- generator>
+<commutative non-regular block bijection semigroup of size 20, degree 22 with 
+ 1 generator>
 
 #T# constructions: MonogenicSemigroup: PBR semigroup
 gap> S := MonogenicSemigroup(IsPBRSemigroup, 1, 1);
@@ -683,7 +683,7 @@ true
 
 #T# constructions: ZeroSemigroup: bipartition semigroup
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := ZeroSemigroup(IsBipartitionSemigroup, 2);
 <commutative non-regular bipartition semigroup of size 2, degree 2 with 1 
  generator>
@@ -696,14 +696,15 @@ true
 
 #T# constructions: ZeroSemigroup: block bijection semigroup
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 2);
-<commutative non-regular bipartition semigroup of size 2, degree 3 with 1 
+<commutative non-regular block bijection semigroup of size 2, degree 3 with 1 
  generator>
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 5);
-<non-regular bipartition semigroup of size 5, degree 8 with 4 generators>
+<non-regular block bijection semigroup of size 5, degree 8 with 4 generators>
 gap> S := ZeroSemigroup(IsBlockBijectionSemigroup, 10);
-<non-regular bipartition semigroup of size 10, degree 18 with 9 generators>
+<non-regular block bijection semigroup of size 10, degree 18 with 9 
+ generators>
 gap> IsZeroSemigroup(Semigroup(S));
 true
 

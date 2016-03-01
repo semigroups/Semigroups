@@ -577,7 +577,7 @@ gap> CharacterTableOfInverseSemigroup(S[10]);
 #T# attributes-inverse: NaturalPartialOrder (for a semigroup), works, 1/1
 gap> S := InverseSemigroup([Bipartition([[1, -3], [2, -1], [3, 4, -2, -4]]),
 > Bipartition([[1, -1], [2, -3], [3, -2], [4, -4]])]);
-<inverse bipartition semigroup of degree 4 with 2 generators>
+<inverse block bijection semigroup of degree 4 with 2 generators>
 gap> NaturalPartialOrder(AsSemigroup(IsTransformationSemigroup, S));
 [ [ 2, 8, 9, 15, 16, 19 ], [ 9, 16, 19 ], [ 4, 9, 11 ], [ 9 ], [ 9, 16, 18 ], 
   [ 5, 9, 10, 14, 16, 18 ], [ 9, 13, 20 ], [ 9 ], [  ], [ 9 ], [ 9 ], 
@@ -630,7 +630,7 @@ the argument is not a finite semigroup,
 gap> S := InverseSemigroup(
 > [Bipartition([[1, -3], [2, -1], [3, 4, 5, -2, -4, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, -4], [4, 5, -2, -5]])]);
-<inverse bipartition semigroup of degree 5 with 2 generators>
+<inverse block bijection semigroup of degree 5 with 2 generators>
 gap> Size(S);
 39
 gap> foo := IsGreensDLeq(S);;
@@ -696,7 +696,7 @@ true
 
 #T# attributes-inverse: IsJoinIrreducible, 3/4
 gap> S := DualSymmetricInverseMonoid(3);
-<inverse bipartition monoid of degree 3 with 3 generators>
+<inverse block bijection monoid of degree 3 with 3 generators>
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3]]);;
 gap> IsJoinIrreducible(S, x);
 true
@@ -715,12 +715,12 @@ false
 
 #T# attributes-inverse: IsMajorantlyClosed, 1/1
 gap> S := DualSymmetricInverseMonoid(3);
-<inverse bipartition monoid of degree 3 with 3 generators>
+<inverse block bijection monoid of degree 3 with 3 generators>
 gap> Size(S);
 25
 gap> T := InverseMonoid([Bipartition([[1, -1], [2, 3, -2, -3]]),
 > Bipartition([[1, -2], [2, 3, -1, -3]])]);
-<inverse bipartition monoid of degree 3 with 2 generators>
+<inverse block bijection monoid of degree 3 with 2 generators>
 gap> IsMajorantlyClosed(S, T);
 false
 gap> IsMajorantlyClosed(S, S);
@@ -786,12 +786,12 @@ true
 
 #T# attributes-inverse: MajorantClosure, 1/1
 gap> S := DualSymmetricInverseMonoid(3);
-<inverse bipartition monoid of degree 3 with 3 generators>
+<inverse block bijection monoid of degree 3 with 3 generators>
 gap> Size(S);
 25
 gap> T := InverseMonoid([Bipartition([[1, -1], [2, 3, -2, -3]]),
 > Bipartition([[1, -2], [2, 3, -1, -3]])]);
-<inverse bipartition monoid of degree 3 with 2 generators>
+<inverse block bijection monoid of degree 3 with 2 generators>
 gap> MajorantClosure(S, T);
 [ <block bijection: [ 1, 2, 3, -1, -2, -3 ]>, 
   <block bijection: [ 1, 3, -1, -3 ], [ 2, -2 ]>, 

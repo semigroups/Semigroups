@@ -885,7 +885,7 @@ gap> JoinIrreducibleDClasses(I);
 [ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 6, -1, -2, -3, -4, -6 ], 
       [ 5, -5 ]>> ]
 gap> I;
-<inverse bipartition semigroup ideal of degree 6 with 1 generator>
+<inverse block bijection semigroup ideal of degree 6 with 1 generator>
 gap> S := InverseMonoid(DualSymmetricInverseMonoid(3));;
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3]]);;
 gap> I := SemigroupIdeal(S, x);
@@ -1191,7 +1191,7 @@ gap> AsSemigroup(IsTransformationSemigroup, S);
 gap> AsSemigroup(IsPartialPermSemigroup, S);
 <trivial partial perm group of rank 0 with 1 generator>
 gap> AsSemigroup(IsBipartitionSemigroup, S);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> AsSemigroup(IsPBRSemigroup, S);
 <trivial pbr group of degree 1 with 1 generator>
 gap> AsSemigroup(IsBooleanMatSemigroup, S);
@@ -1235,15 +1235,15 @@ false
 
 #T# Bipartition semigroups of degree 0, Issue #139
 gap> AsSemigroup(IsBipartitionSemigroup, CyclicGroup(IsPermGroup, 1));
-<trivial bipartition group of degree 0 with 1 generator>
+<trivial block bijection group of degree 0 with 1 generator>
 gap> AsSemigroup(IsBipartitionSemigroup, Group(()));
-<trivial bipartition group of degree 0 with 1 generator>
+<trivial block bijection group of degree 0 with 1 generator>
 gap> Semigroup(Bipartition([]));
-<trivial bipartition group of degree 0 with 1 generator>
+<trivial block bijection group of degree 0 with 1 generator>
 gap> JonesMonoid(0);
-<trivial bipartition group of degree 0 with 1 generator>
+<trivial block bijection group of degree 0 with 1 generator>
 gap> PartitionMonoid(0);
-<trivial bipartition group of degree 0 with 1 generator>
+<trivial block bijection group of degree 0 with 1 generator>
 
 #T# Fixed unconvert for matrix over semiring
 gap> S := FullTropicalMinPlusMonoid(2, 3);

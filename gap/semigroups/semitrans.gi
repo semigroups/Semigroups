@@ -11,6 +11,10 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to transformation semigroups.
 
+#############################################################################
+## Random
+#############################################################################
+
 InstallMethod(RandomSemigroupCons,
 "for IsTransformationSemigroup, pos int, int",
 [IsTransformationSemigroup, IsPosInt, IsInt, IsInt, IsInt],
@@ -28,12 +32,16 @@ end);
 InstallMethod(RandomInverseSemigroupCons,
 "for IsTransformationSemigroup, pos int, int",
 [IsTransformationSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-SEMIGROUPS.DefaultRandomInverseSemigroup);
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
+end);
 
-#InstallMethod(RandomInverseMonoidCons,
-#"for IsTransformationMonoid, pos int, int",
-#[IsTransformationMonoid, IsPosInt, IsInt, IsInt, IsInt],
-#SEMIGROUPS.DefaultRandomInverseMonoid);
+InstallMethod(RandomInverseMonoidCons,
+"for IsTransformationMonoid, pos int, int",
+[IsTransformationMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
+end);
 
 InstallMethod(DirectProductOp, "for a list and a transformation monoid",
 [IsList, IsTransformationMonoid],

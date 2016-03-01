@@ -15,7 +15,7 @@ gap> SEMIGROUPS.StartTest();
 
 # isomorph: SmallestMultiplicationTable, 1/2
 gap> S := DualSymmetricInverseMonoid(2);
-<inverse bipartition monoid of degree 2 with 2 generators>
+<inverse block bijection monoid of degree 2 with 2 generators>
 gap> Size(S);
 3
 gap> SmallestMultiplicationTable(S);

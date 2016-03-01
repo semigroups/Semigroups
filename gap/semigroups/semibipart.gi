@@ -11,8 +11,75 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to bipartition semigroups.
 
+#############################################################################
+## Random - bipartitions
+#############################################################################
+
+InstallMethod(RandomSemigroupCons,
+"for IsBipartitionSemigroup, pos int, int",
+[IsBipartitionSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Semigroup(List([1 .. nrgens], i -> RandomBipartition(deg)));
+end);
+
+InstallMethod(RandomMonoidCons,
+"for IsBipartitionMonoid, pos int, int",
+[IsBipartitionMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Monoid(List([1 .. nrgens], i -> RandomBipartition(deg)));
+end);
+
+InstallMethod(RandomInverseSemigroupCons,
+"for IsBipartitionSemigroup, pos int, int",
+[IsBipartitionSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
+end);
+
+InstallMethod(RandomInverseMonoidCons,
+"for IsBipartitionMonoid, pos int, int",
+[IsBipartitionMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
+end);
+
+#############################################################################
+## Random - block bijections
+#############################################################################
+
+InstallMethod(RandomSemigroupCons,
+"for IsBlockBijectionSemigroup, pos int, int",
+[IsBlockBijectionSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Semigroup(List([1 .. nrgens], i -> RandomBlockBijection(deg)));
+end);
+
+InstallMethod(RandomMonoidCons,
+"for IsBlockBijectionMonoid, pos int, int",
+[IsBlockBijectionMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Monoid(List([1 .. nrgens], i -> RandomBlockBijection(deg)));
+end);
+
+InstallMethod(RandomInverseSemigroupCons,
+"for IsBlockBijectionSemigroup, pos int, int",
+[IsBlockBijectionSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return InverseSemigroup(List([1 .. nrgens], i -> RandomBlockBijection(deg)));
+end);
+
+InstallMethod(RandomInverseMonoidCons,
+"for IsBlockBijectionMonoid, pos int, int",
+[IsBlockBijectionMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return InverseMonoid(List([1 .. nrgens], i -> RandomBlockBijection(deg)));
+end);
+
 InstallMethod(SemigroupViewStringPrefix, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> "\>bipartition\< ");
+
+InstallMethod(SemigroupViewStringPrefix, "for a block bijection semigroup",
+[IsBlockBijectionSemigroup], S -> "\>block bijection\< ");
 
 InstallMethod(SemigroupViewStringSuffix, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
@@ -48,11 +115,10 @@ function(S)
   return U;
 end);
 
-InstallImmediateMethod(IsBlockBijectionSemigroup, IsSemigroup and
+InstallImmediateMethod(IsBlockBijectionSemigroup, IsBipartitionSemigroup and
 HasGeneratorsOfSemigroup, 0,
 function(S)
-  return IsBipartitionSemigroup(S)
-         and ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
+  return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
 end);
 
 InstallImmediateMethod(IsPartialPermBipartitionSemigroup, IsSemigroup and
@@ -69,8 +135,8 @@ function(S)
          and ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
 end);
 
-InstallMethod(IsBlockBijectionSemigroup, "for a semigroup ideal",
-[IsSemigroupIdeal],
+InstallMethod(IsBlockBijectionSemigroup, "for a bipartition semigroup ideal",
+[IsBipartitionSemigroup and IsSemigroupIdeal],
 function(S)
   if IsBlockBijectionSemigroup(SupersemigroupOfIdeal(S)) then
     return true;

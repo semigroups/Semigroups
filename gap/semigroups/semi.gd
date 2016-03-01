@@ -51,10 +51,24 @@ DeclareOperation("ClosureSemigroupNC",
                  [IsSemigroup, IsListOrCollection, IsRecord]);
 
 DeclareOperation("AsSemigroup", [IsFunction, IsSemigroup]);
-DeclareConstructor("IsomorphismSemigroup", [IsSemigroup, IsSemigroup]);
+DeclareOperation("AsSemigroup", [IsFunction, IsPosInt, IsSemigroup]);
+DeclareOperation("AsSemigroup", [IsFunction, IsPosInt, IsPosInt, IsSemigroup]);
+DeclareConstructor("IsomorphismSemigroup",
+                   [IsSemigroup, IsSemigroup]);
+DeclareConstructor("IsomorphismSemigroup",
+                   [IsSemigroup, IsPosInt, IsSemigroup]);
+DeclareConstructor("IsomorphismSemigroup",
+                   [IsSemigroup, IsPosInt, IsPosInt, IsSemigroup]);
 
 DeclareOperation("AsMonoid", [IsFunction, IsSemigroup]);
-DeclareConstructor("IsomorphismMonoid", [IsSemigroup, IsSemigroup]);
+DeclareOperation("AsMonoid", [IsFunction, IsPosInt, IsSemigroup]);
+DeclareOperation("AsMonoid", [IsFunction, IsPosInt, IsPosInt, IsSemigroup]);
+DeclareConstructor("IsomorphismMonoid",
+                   [IsSemigroup, IsSemigroup]);
+DeclareConstructor("IsomorphismMonoid",
+                   [IsSemigroup, IsPosInt, IsSemigroup]);
+DeclareConstructor("IsomorphismMonoid",
+                   [IsSemigroup, IsPosInt, IsPosInt, IsSemigroup]);
 
 #TODO move this to attributes!
 DeclareAttribute("Generators", IsSemigroup);

@@ -120,7 +120,7 @@ gap> S := Semigroup(
 > PartialPerm([1, 3, 4], [3, 1, 2]), 
 > PartialPerm([1, 3, 4, 5], [5, 4, 3, 2]));;
 gap> T := AsSemigroup(IsBlockBijectionSemigroup, S);
-<bipartition semigroup of degree 6 with 5 generators>
+<block bijection semigroup of degree 6 with 5 generators>
 gap> IsBlockGroup(T);
 true
 gap> IsBlockGroup(AsSemigroup(IsBipartitionSemigroup, S));
@@ -423,7 +423,7 @@ true
 gap> S := SymmetricGroup([1, 2, 10]);;
 gap> T := Range(IsomorphismSemigroup(IsBlockBijectionSemigroup,
 > Range(IsomorphismSemigroup(IsPartialPermSemigroup, S))));
-<inverse bipartition semigroup of degree 11 with 2 generators>
+<inverse block bijection semigroup of degree 11 with 2 generators>
 gap> IsGroupAsSemigroup(T);
 true]]></Example>
     </Description>

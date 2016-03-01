@@ -112,7 +112,7 @@ gap> G := SymmetricGroup(5);;
 gap> ForAll(G, x -> AsPermutation(AsBipartition(x)) = x);
 true
 gap> G := GroupOfUnits(PartitionMonoid(3));
-<bipartition group of degree 3 with 2 generators>
+<block bijection group of degree 3 with 2 generators>
 gap> ForAll(G, x -> AsBipartition(AsPermutation(x), 3) = x);
 true
 

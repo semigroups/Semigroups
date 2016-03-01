@@ -196,7 +196,7 @@ false
 
 #T# properties: IsZeroSimpleSemigroup, inverse, 2
 gap> S := DualSymmetricInverseMonoid(3);
-<inverse bipartition monoid of degree 3 with 3 generators>
+<inverse block bijection monoid of degree 3 with 3 generators>
 gap> IsZeroSimpleSemigroup(S);
 false
 
@@ -410,11 +410,11 @@ nts
 
 #T# properties: IsFactorisableInverseMonoid, 1
 gap> S := DualSymmetricInverseMonoid(3);
-<inverse bipartition monoid of degree 3 with 3 generators>
+<inverse block bijection monoid of degree 3 with 3 generators>
 gap> IsFactorisableInverseMonoid(S);
 false
 gap> T := InverseSemigroup(FactorisableDualSymmetricInverseSemigroup(3));
-<inverse bipartition monoid of degree 3 with 3 generators>
+<inverse block bijection monoid of degree 3 with 3 generators>
 gap> IsFactorisableInverseMonoid(T);
 true
 
@@ -505,7 +505,7 @@ gap> S := InverseSemigroup(
 >   Bipartition([[1, -1], [2, 3, 5, -2, -3, -5], [4, -4]]),
 >   Bipartition([[1, 2, 4, 5, -1, -2, -4, -5], [3, -3]]),
 >   Bipartition([[1, 2, 3, 5, -1, -2, -3, -5], [4, -4]])]);
-<inverse bipartition semigroup of degree 5 with 5 generators>
+<inverse block bijection semigroup of degree 5 with 5 generators>
 gap> IsHTrivial(S);
 true
 gap> IsLTrivial(S);
@@ -539,7 +539,7 @@ true
 gap> S := Semigroup(
 >  Bipartition([[1, 2, 3, 4, 5, -6], [6, -1, -2, -3, -4, -5]]),
 >  Bipartition([[1, 2, 6, -1, -5, -6], [3, 5, -2, -3], [4, -4]]));
-<bipartition semigroup of degree 6 with 2 generators>
+<block bijection semigroup of degree 6 with 2 generators>
 gap> IsHTrivial(S);
 false
 gap> IsLTrivial(S);
@@ -623,7 +623,7 @@ Error, no 3rd choice method found for `IsGroupAsSemigroup' on 1 arguments
 
 #T# properties: IsGroupAsSemigroup, parent, acting, 3
 gap> S := AsSemigroup(IsBipartitionSemigroup, Group((1, 2, 3)));
-<bipartition group of degree 3 with 1 generator>
+<block bijection group of degree 3 with 1 generator>
 gap> IsGroupAsSemigroup(S);
 true
 gap> I := SemigroupIdeal(S, S.1);
@@ -650,7 +650,7 @@ gap> S :=
 >   Bipartition([[1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6], [7, -7]]),
 >   Bipartition([[1, 5, -1, -5], [2, 3, 4, 6, 7, -2, -3, -4, -6, -7]]),
 >   Bipartition([[1, 2, 7, -1, -2, -7], [3, 4, 5, 6, -3, -4, -5, -6]])]);
-<bipartition semigroup of degree 7 with 4 generators>
+<block bijection semigroup of degree 7 with 4 generators>
 gap> IsIdempotentGenerated(S);
 true
 
@@ -1397,7 +1397,7 @@ false
 
 #T# properties: IsZeroSemigroup, 3
 gap> S := Semigroup(DualSymmetricInverseMonoid(3));
-<bipartition monoid of degree 3 with 3 generators>
+<block bijection monoid of degree 3 with 3 generators>
 gap> IsZeroSemigroup(S);
 false
 

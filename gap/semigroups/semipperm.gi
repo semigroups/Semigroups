@@ -11,6 +11,10 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to semigroups of partial perms.
 
+#############################################################################
+## Random
+#############################################################################
+
 InstallMethod(RandomSemigroupCons,
 "for IsPartialPermSemigroup, pos int, int",
 [IsPartialPermSemigroup, IsPosInt, IsInt, IsInt, IsInt],
@@ -18,7 +22,7 @@ function(filt, nrgens, deg, dummy1, dummy2)
   return Semigroup(List([1 .. nrgens], i -> RandomPartialPerm(deg)));
 end);
 
-InstallMethod(RandomSemigroupCons,
+InstallMethod(RandomMonoidCons,
 "for IsPartialPermMonoid, pos int, int",
 [IsPartialPermMonoid, IsPosInt, IsInt, IsInt, IsInt],
 function(filt, nrgens, deg, dummy1, dummy2)

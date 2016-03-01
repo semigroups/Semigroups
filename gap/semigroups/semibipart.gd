@@ -18,7 +18,7 @@ InstallTrueMethod(IsFinite, IsBipartitionSemigroup);
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 
-DeclareProperty("IsBlockBijectionSemigroup", IsSemigroup);
+DeclareProperty("IsBlockBijectionSemigroup", IsBipartitionSemigroup);
 DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroup);
 DeclareProperty("IsPermBipartitionGroup", IsSemigroup);
 InstallTrueMethod(IsGroupAsSemigroup, IsPermBipartitionGroup);

@@ -11,6 +11,38 @@
 # This file contains methods for semigroups of boolean matrices.
 
 #############################################################################
+## ?. Random
+#############################################################################
+
+InstallMethod(RandomSemigroupCons,
+"for IsBooleanMatSemigroup, pos int, int, int, int",
+[IsBooleanMatSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, dim, dummy1, dummy2)
+  return Semigroup(List([1 .. nrgens], i -> RandomMatrix(IsBooleanMat, dim)));
+end);
+
+InstallMethod(RandomMonoidCons,
+"for IsBooleanMatMonoid, pos int, int, int, int",
+[IsBooleanMatMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, dim, dummy1, dummy2)
+  return Monoid(List([1 .. nrgens], i -> RandomMatrix(IsBooleanMat, dim)));
+end);
+
+InstallMethod(RandomInverseSemigroupCons,
+"for IsBooleanMatSemigroup, pos int, int, int, int",
+[IsBooleanMatSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
+end);
+
+InstallMethod(RandomInverseMonoidCons,
+"for IsBooleanMatMonoid, pos int, int, int, int",
+[IsBooleanMatMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
+end);
+
+#############################################################################
 ## 1. Isomorphisms
 #############################################################################
 

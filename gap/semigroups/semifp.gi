@@ -8,6 +8,38 @@
 #############################################################################
 ##
 
+InstallMethod(RandomSemigroupCons,
+"for IsFpSemigroup, pos int, int",
+[IsFpSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, dummy1, dummy2, dummy3)
+  return AsSemigroup(IsFpSemigroup,
+                     RandomSemigroup(IsTransformationSemigroup, nrgens));
+end);
+
+InstallMethod(RandomMonoidCons,
+"for IsFpMonoid, pos int, int",
+[IsFpMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, dummy1, dummy2, dummy3)
+  return AsMonoid(IsFpMonoid,
+                  RandomMonoid(IsTransformationMonoid, nrgens));
+end);
+
+InstallMethod(RandomInverseSemigroupCons,
+"for IsFpSemigroup, pos int, int",
+[IsFpSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, dummy1, dummy2, dummy3)
+  return AsSemigroup(IsFpSemigroup,
+                     RandomInverseSemigroup(IsPartialPermSemigroup, nrgens));
+end);
+
+InstallMethod(RandomInverseMonoidCons,
+"for IsFpMonoid, pos int, int",
+[IsFpMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, dummy1, dummy2, dummy3)
+  return AsMonoid(IsFpMonoid,
+                  RandomInverseMonoid(IsPartialPermMonoid, nrgens));
+end);
+
 # same method for ideals
 
 InstallMethod(IsomorphismFpSemigroup, "for a semigroup",
