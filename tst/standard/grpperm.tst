@@ -178,93 +178,11 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
-#T# IsomorphismPermGroup: for a Min Plus Matrix Semigroup
-gap> S := 
-gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
-true
-gap> G := Range(iso);
-
-gap> S :=
-gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
-
-#T# IsomorphismPermGroup: for a Tropical Max Plus Matrix Semigroup
-gap> S := 
-gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
-true
-gap> G := Range(iso);
-
-gap> S :=
-gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
-
-#T# IsomorphismPermGroup: for a Tropical Min Plus Matrix Semigroup
-gap> S := 
-gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
-true
-gap> G := Range(iso);
-
-gap> S :=
-gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
-
-#T# IsomorphismPermGroup: for a Projective Max Plus Matrix Semigroup
-gap> S := 
-gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
-true
-gap> G := Range(iso);
-
-gap> S :=
-gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
-
-#T# IsomorphismPermGroup: for a NTP Matrix Semigroup
-gap> S := 
-gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
-true
-gap> G := Range(iso);
-
-gap> S :=
-gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
-
-#T# IsomorphismPermGroup: for a Block Bijection Semigroup
-gap> S := 
-gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
-true
-gap> G := Range(iso);
-
-gap> S :=
-gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
-
-#T# IsomorphismPermGroup: for a Integer Matrix Semigroup
-gap> S := 
-gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
-true
-gap> G := Range(iso);
-
-gap> S :=
-gap> iso := IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
-
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(BruteForceoCheck);
+gap> Unbind(BruteForceIsoCheck);
+gap> Unbind(F);
 gap> Unbind(G);
+gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(iso);
 
