@@ -4,6 +4,9 @@
 #### Copyright (C) 2011-16 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.7.4 (released 02/03/2016)
+This is a minor release to fix [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150/), and to correct the required version of GAP (from 4.8.2 to 4.8.3). In [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150/) the function `IsZeroSimpleSemigroup` entered an infinite loop for some examples of semigroups of partial permutations. 
+
 ## Version 2.7.3 (released 15/02/2016)
 This is a minor release to fix some manual examples, to correct the package url
 in the `PackageInfo.g` file, and to fix some issues with semigroups of
