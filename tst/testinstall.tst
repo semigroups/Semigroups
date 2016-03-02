@@ -1270,6 +1270,13 @@ true
 gap> Semigroup(Bipartition([[-1,1]]), Bipartition([]));
 Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 
+#T# Issue 150: Bug in RepresentativeOfMinimalIdeal
+gap> S := Semigroup([PartialPerm([1, 2], [3, 2])]);;
+gap> RepresentativeOfMinimalIdeal(S);
+<identity partial perm on [ 2 ]>
+gap> IsZeroSimpleSemigroup(S);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(lookingfor);
 gap> Unbind(l);
