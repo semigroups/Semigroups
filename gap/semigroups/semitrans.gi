@@ -742,8 +742,8 @@ function(S)
   return MappingByFunction(S,
                            T,
                            x -> TransformationOpNC(x, pts, OnBlist),
-                           x -> BooleanMatNC(List([1 .. n],
-                                             i -> pts[pos[i] ^ x])));
+                           x -> BooleanMat(List([1 .. n],
+                                           i -> pts[pos[i] ^ x])));
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,

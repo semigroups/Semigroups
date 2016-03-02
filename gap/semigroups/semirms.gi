@@ -11,6 +11,20 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to Rees 0-matrix semigroups.
 
+InstallMethod(IsomorphismSemigroup,
+"for IsReesMatrixSemigroup and a semigroup",
+[IsReesMatrixSemigroup, IsSemigroup],
+function(filt, S)
+  return IsomorphismReesMatrixSemigroup(S);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsReesZeroMatrixSemigroup and a semigroup",
+[IsReesZeroMatrixSemigroup, IsSemigroup],
+function(filt, S)
+  return IsomorphismReesZeroMatrixSemigroup(S);
+end);
+
 InstallMethod(IsomorphismReesMatrixSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)

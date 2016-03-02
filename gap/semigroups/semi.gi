@@ -48,7 +48,8 @@ SEMIGROUPS.DefaultIsomorphismSemigroup := function(filter, S)
   iso2 := IsomorphismSemigroup(filter, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MappingByFunction(S, Range(iso2),
+  return MappingByFunction(S,
+                           Range(iso2),
                            x -> (x ^ iso1) ^ iso2,
                            x -> (x ^ inv2) ^ inv1);
 end;
