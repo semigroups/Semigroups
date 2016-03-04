@@ -404,7 +404,7 @@ function(filt, threshold, period, S)
   local n, map, T;
 
   n := Maximum(DegreeOfTransformationSemigroup(S), 1);
-  map := x -> AsMatrix(EvalString(IsNTPMatrix), x, n, threshold, period);
+  map := x -> AsMatrix(IsNTPMatrix, x, n, threshold, period);
   T := Semigroup(List(GeneratorsOfSemigroup(S), map));
   UseIsomorphismRelation(S, T);
 
