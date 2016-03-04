@@ -107,7 +107,6 @@ function(S, coll, opts)
   Unbind(o!.rev);
   Unbind(o!.truth);
   Unbind(o!.schutzstab);
-  Unbind(o!.exhaust);
   Unbind(o!.factorgroups);
   Unbind(o!.factors);
 
@@ -510,6 +509,12 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or ActionDegree(x) > ActionDegree(S) then
     return false;
+  elif HasGenericSemigroupData(S) then
+    if x in GenericSemigroupData(S) then
+      return true;
+    elif IsClosedData(GenericSemigroupData(S)) then
+      return false;
+    fi;
   fi;
 
   if not (IsMonoid(S) and IsOne(x)) then
@@ -591,55 +596,59 @@ end);
 InstallMethod(\in,
 "for a multiplicative element and acting semigroup with inversion",
 [IsMultiplicativeElement, IsActingSemigroup and IsSemigroupWithInverseOp],
-function(f, s)
+function(x, S)
   local o, lambda, lambda_l, rho, rho_l, m, schutz, scc, rep;
 
-  if ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
-      or (IsActingSemigroupWithFixedDegreeMultiplication(s)
-          and ActionDegree(f) <> ActionDegree(s))
-      or ActionDegree(f) > ActionDegree(s) then
+  if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
+      or (IsActingSemigroupWithFixedDegreeMultiplication(S)
+          and ActionDegree(x) <> ActionDegree(S))
+      or ActionDegree(x) > ActionDegree(S) then
     return false;
+  elif HasGenericSemigroupData(S) then
+    if x in GenericSemigroupData(S) then
+      return true;
+    elif IsClosedData(GenericSemigroupData(S)) then
+      return false;
+    fi;
+  elif HasAsSSortedList(S) then
+    return x in AsSSortedList(S);
   fi;
 
-  if HasAsSSortedList(s) then
-    return f in AsSSortedList(s);
-  fi;
-
-  if not (IsMonoid(s) and IsOne(f)) then
-    if Length(Generators(s)) > 0
-        and ActionRank(s)(f) >
-        MaximumList(List(Generators(s), f -> ActionRank(s)(f))) then
+  if not (IsMonoid(S) and IsOne(x)) then
+    if Length(Generators(S)) > 0
+        and ActionRank(S)(x) >
+        MaximumList(List(Generators(S), x -> ActionRank(S)(x))) then
       Info(InfoSemigroups, 2, "element has larger rank than any element of ",
            "semigroup.");
       return false;
     fi;
   fi;
 
-  if HasMinimalIdeal(s) then
-    if ActionRank(s)(f) < ActionRank(s)(Representative(MinimalIdeal(s))) then
+  if HasMinimalIdeal(S) then
+    if ActionRank(S)(x) < ActionRank(S)(Representative(MinimalIdeal(S))) then
       Info(InfoSemigroups, 2, "element has smaller rank than any element of ",
            "semigroup.");
       return false;
     fi;
   fi;
 
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   Enumerate(o);
-  lambda := LambdaFunc(s)(f);
+  lambda := LambdaFunc(S)(x);
   lambda_l := Position(o, lambda);
 
   if lambda_l = fail then
     return false;
   fi;
 
-  rho := RhoFunc(s)(f);
+  rho := RhoFunc(S)(x);
   rho_l := Position(o, rho);
 
   if rho_l = fail then
     return false;
   fi;
 
-  # must use LambdaOrb(s) and not a graded lambda orb as LambdaOrbRep(o, m)
+  # must use LambdaOrb(S) and not a graded lambda orb as LambdaOrbRep(o, m)
   # when o is graded, is just f and hence \in will always return true!!
   m := OrbSCCLookup(o)[lambda_l];
 
@@ -656,27 +665,27 @@ function(f, s)
   scc := OrbSCC(o)[m];
 
   if lambda_l <> scc[1] then
-    f := f * LambdaOrbMult(o, m, lambda_l)[2];
+    x := x * LambdaOrbMult(o, m, lambda_l)[2];
   fi;
 
   if rho_l <> scc[1] then
-    f := LambdaOrbMult(o, m, rho_l)[1] * f;
+    x := LambdaOrbMult(o, m, rho_l)[1] * x;
   fi;
 
-  if IsIdempotent(f) then
+  if IsIdempotent(x) then
     return true;
   elif schutz = false then
     return false;
   fi;
 
-  rep := LambdaOrbRep(LambdaOrb(s), m);
-  rho_l := Position(LambdaOrb(s), RhoFunc(s)(rep));
+  rep := LambdaOrbRep(LambdaOrb(S), m);
+  rho_l := Position(LambdaOrb(S), RhoFunc(S)(rep));
 
-  if rho_l <> OrbSCC(LambdaOrb(s))[m][1] then
+  if rho_l <> OrbSCC(LambdaOrb(S))[m][1] then
     # the D-class rep corresponding to lambda_o and scc.
-    rep := LambdaOrbMult(LambdaOrb(s), m, rho_l)[1] * rep;
+    rep := LambdaOrbMult(LambdaOrb(S), m, rho_l)[1] * rep;
   fi;
-  return SiftedPermutation(schutz, LambdaPerm(s)(rep, f)) = ();
+  return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
 end);
 
 #############################################################################

@@ -451,8 +451,8 @@ gap> S := InverseSemigroup([
 > Bipartition([[1, -5], [2, 5, 6, -3, -4, -6], [3, -2], [4, -1]])],
 > rec(generic := false));;
 gap> e := EnumeratorOfRClasses(S);
-<enumerator of R-classes of <inverse bipartition semigroup of degree 6 with 4 
- generators>>
+<enumerator of R-classes of <inverse block bijection semigroup of degree 6 
+ with 4 generators>>
 gap> Length(e) = NrRClasses(S);
 true
 gap> e[1];

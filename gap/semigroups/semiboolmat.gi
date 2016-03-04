@@ -11,60 +11,74 @@
 # This file contains methods for semigroups of boolean matrices.
 
 #############################################################################
-## 1. Isomorphisms etc.
+## ?. Random
 #############################################################################
 
-InstallMethod(IsomorphismBooleanMatSemigroup,
-"for a transformation semigroup", [IsTransformationSemigroup],
-function(S)
+InstallMethod(RandomSemigroupCons,
+"for IsBooleanMatSemigroup, pos int, int, int, int",
+[IsBooleanMatSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, dim, dummy1, dummy2)
+  return Semigroup(List([1 .. nrgens], i -> RandomMatrix(IsBooleanMat, dim)));
+end);
+
+InstallMethod(RandomMonoidCons,
+"for IsBooleanMatMonoid, pos int, int, int, int",
+[IsBooleanMatMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, dim, dummy1, dummy2)
+  return Monoid(List([1 .. nrgens], i -> RandomMatrix(IsBooleanMat, dim)));
+end);
+
+InstallMethod(RandomInverseSemigroupCons,
+"for IsBooleanMatSemigroup, pos int, int, int, int",
+[IsBooleanMatSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
+end);
+
+InstallMethod(RandomInverseMonoidCons,
+"for IsBooleanMatMonoid, pos int, int, int, int",
+[IsBooleanMatMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
+end);
+
+#############################################################################
+## 1. Isomorphisms
+#############################################################################
+
+# fallback method: via a transformation semigroup
+
+InstallMethod(IsomorphismSemigroup,
+"for IsBooleanMatSemigroup and a semigroup",
+[IsBooleanMatSemigroup, IsSemigroup],
+SEMIGROUPS.DefaultIsomorphismSemigroup);
+
+# It seems necessary that the method below occurs after the fallback method, in
+# order that it be selected.
+
+InstallMethod(IsomorphismSemigroup,
+"for IsBooleanMatSemigroup and a transformation semigroup",
+[IsBooleanMatSemigroup, IsTransformationSemigroup],
+function(filter, S)
   local n, T;
   n := Maximum(1, DegreeOfTransformationSemigroup(S));
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
+  UseIsomorphismRelation(S, T);
   return MappingByFunction(S, T, x -> AsBooleanMat(x, n), AsTransformation);
 end);
 
-InstallMethod(IsomorphismBooleanMatSemigroup,
-"for a semigroup", [IsSemigroup],
-function(S)
-  local iso1, inv1, iso2, inv2;
+# If the second argument here is a transformation semigroup, then
+# DefaultIsomorphismMonoid uses IsomorphismTransformationMonoid, which detects
+# the MultiplicativeNeutralElement of the second argument, and reduces the
+# degree accordingly.
 
-  iso1 := IsomorphismTransformationSemigroup(S);
-  inv1 := InverseGeneralMapping(iso1);
-  iso2 := IsomorphismBooleanMatSemigroup(Range(iso1));
-  inv2 := InverseGeneralMapping(iso2);
+InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a semigroup",
+[IsBooleanMatMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
 
-  return MappingByFunction(S, Range(iso2),
-                           x -> (x ^ iso1) ^ iso2,
-                           x -> (x ^ inv2) ^ inv1);
-end);
-
-InstallMethod(AsBooleanMatSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  return Range(IsomorphismBooleanMatSemigroup(S));
-end);
-
-InstallMethod(IsomorphismTransformationSemigroup,
-"for a boolean matrix semigroup generators",
-[IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local n, pts, o, pos, T, i;
-
-  n := Length(Representative(S)![1]);
-  pts := EmptyPlist(2 ^ n);
-
-  for i in [1 .. n] do
-    o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlist));
-    pts := Union(pts, AsList(o));
-  od;
-  ShrinkAllocationPlist(pts);
-  pos := List([1 .. n], x -> Position(pts, BlistList([1 .. n], [x])));
-  T := Semigroup(List(GeneratorsOfSemigroup(S),
-                      x -> TransformationOpNC(x, pts, OnBlist)));
-  # gaplint: ignore 3
-  return MappingByFunction(S, T,
-           x -> TransformationOpNC(x, pts, OnBlist),
-           x -> BooleanMatNC(List([1 .. n], i -> pts[pos[i] ^ x])));
+InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a monoid",
+[IsBooleanMatMonoid, IsMonoid],
+function(filter, S)
+  return IsomorphismSemigroup(IsBooleanMatSemigroup, S);
 end);
 
 #############################################################################

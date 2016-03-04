@@ -23,7 +23,7 @@ if _SEMIGROUPS_SO <> fail then
 fi;
 Unbind(_SEMIGROUPS_SO);
 
-if not IsBound(UserHomeExpand) then 
+if not IsBound(UserHomeExpand) then
   BindGlobal("UserHomeExpand", USER_HOME_EXPAND);
 fi;
 
@@ -43,9 +43,9 @@ ReadPackage("semigroups/gap/elements/maxplusmat.gd");
 ReadPackage("semigroups/gap/elements/boolmat.gd");
 ReadPackage("semigroups/gap/elements/trans.gd");
 
-ReadPackage("semigroups/gap/semigroups/semigroups.gd");
+ReadPackage("semigroups/gap/semigroups/semi.gd");
 ReadPackage("semigroups/gap/semigroups/grpperm.gd");
-ReadPackage("semigroups/gap/semigroups/reesmat.gd");
+ReadPackage("semigroups/gap/semigroups/semirms.gd");
 ReadPackage("semigroups/gap/semigroups/semibipart.gd");
 ReadPackage("semigroups/gap/semigroups/semipperm.gd");
 ReadPackage("semigroups/gap/semigroups/semitrans.gd");
@@ -53,9 +53,9 @@ ReadPackage("semigroups/gap/semigroups/semipbr.gd");
 ReadPackage("semigroups/gap/semigroups/semimaxplus.gd");
 ReadPackage("semigroups/gap/semigroups/semiringmat.gd");
 ReadPackage("semigroups/gap/semigroups/semiboolmat.gd");
-ReadPackage("semigroups/gap/semigroups/examples.gd");
-ReadPackage("semigroups/gap/semigroups/constructions.gd");
-ReadPackage("semigroups/gap/semigroups/graph-inverse.gd");
+ReadPackage("semigroups/gap/semigroups/semiex.gd");
+ReadPackage("semigroups/gap/semigroups/semicons.gd");
+ReadPackage("semigroups/gap/semigroups/semigraph.gd");
 
 ReadPackage("semigroups/gap/main/froidure-pin.gd");
 ReadPackage("semigroups/gap/main/setup.gd");

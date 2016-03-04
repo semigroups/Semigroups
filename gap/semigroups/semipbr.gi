@@ -7,6 +7,8 @@
 ##
 #############################################################################
 
+#TODO IsomorphismSemigroup for IsBooleanMatSemigroup
+#
 # This file contains methods for semigroups of PBRs.
 
 InstallMethod(FullPBRMonoid, "for a positive integer",
@@ -54,36 +56,47 @@ function(S)
   return DegreeOfPBR(Representative(S));
 end);
 
-InstallMethod(AsPBRSemigroup, "for a semigroup", [IsSemigroup],
-function(S)
-  return Range(IsomorphismPBRSemigroup(S));
-end);
+# fall back method via a transformation semigroup
 
-# fall back method
+InstallMethod(IsomorphismSemigroup, "for IsPBRSemigroup and a semigroup",
+[IsPBRSemigroup, IsSemigroup], SEMIGROUPS.DefaultIsomorphismSemigroup);
 
-InstallMethod(IsomorphismPBRSemigroup, "for a semigroup",
-[IsSemigroup],
-function(S)
-  local map;
-  map := IsomorphismTransformationSemigroup(S);
-  return CompositionMapping(IsomorphismPBRSemigroup(Range(map)), map);
-end);
+InstallMethod(IsomorphismSemigroup,
+"for IsPBRSemigroup and a transformation semigroup",
+[IsPBRSemigroup, IsTransformationSemigroup],
+function(filt, S)
+  local deg, T;
 
-InstallMethod(IsomorphismPBRSemigroup, "for a transformation semigroup",
-[IsTransformationSemigroup],
-function(S)
-  local deg, gens;
   deg := Maximum(1, DegreeOfTransformationSemigroup(S));
-  gens := List(GeneratorsOfSemigroup(S), x -> AsPBR(x, deg));
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
-                                       AsPBR, AsTransformation);
+  T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsPBR(x, deg)));
+  UseIsomorphismRelation(S, T);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       x -> AsPBR(x, deg),
+                                       AsTransformation);
 end);
 
-InstallMethod(IsomorphismPBRSemigroup, "for a bipartition semigroup",
-[IsBipartitionSemigroup],
-function(S)
-  local gens;
-  gens := List(GeneratorsOfSemigroup(S), AsPBR);
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens),
-                                       AsPBR, AsBipartition);
+InstallMethod(IsomorphismSemigroup,
+"for IsPBRSemigroup and a bipartition semigroup",
+[IsPBRSemigroup, IsBipartitionSemigroup],
+function(filt, S)
+  local T;
+
+  T := Semigroup(List(GeneratorsOfSemigroup(S), AsPBR));
+  UseIsomorphismRelation(S, T);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       AsPBR,
+                                       AsBipartition);
+end);
+
+InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a semigroup",
+[IsPBRMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
+
+InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a monoid",
+[IsPBRMonoid, IsMonoid],
+function(filter, S)
+  return IsomorphismSemigroup(IsPBRSemigroup, S);
 end);

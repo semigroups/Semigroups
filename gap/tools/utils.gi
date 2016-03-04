@@ -60,7 +60,6 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "congrms.xml",
                            "congruences.xml",
                            "conguniv.xml",
-                           "constructions.xml",
                            "display.xml",
                            "examples.xml",
                            "factor.xml",
@@ -78,6 +77,7 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "pfmat.xml",
                            "properties.xml",
                            "semibipart.xml",
+                           "semicons.xml",
                            "semigroups.xml",
                            "semipbr.xml",
                            "semipperm.xml",
@@ -278,7 +278,7 @@ end;
 
 SEMIGROUPS.RunExamples := function(exlists, excluded)
   local oldscr, passed, l, sp, bad, s, start_time, test, end_time, elapsed,
-        pex, j, ex, i, attedStrin;
+  pex, j, ex, i;
 
   oldscr := SizeScreen();
   SizeScreen([72, oldscr[2]]);
@@ -294,9 +294,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
       START_TEST("");
       for ex in l do
         sp := SplitString(ex[1], "\n", "");
-        bad := Filtered([1 .. Length(sp)], function(i)
-                                             return Length(sp[i]) > 72;
-                                           end);
+        bad := Filtered([1 .. Length(sp)], i -> Length(sp[i]) > 72);
         s := InputTextString(ex[1]);
 
         start_time := IO_gettimeofday();
@@ -324,7 +322,8 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
         if test = false then
           for i in [1 .. Length(pex[1])] do
             if EQ(pex[2][i], pex[4][i]) <> true then
-              Print("\033[1;31m########> Diff in ", ex[2]{[1 .. 3]},
+              Print("\033[31m########> Diff in \n",
+                    "# ", ex[2][1], ":", ex[2][2],
                     "\n# Input is:\n");
               PrintFormattedString(pex[1][i]);
               Print("# Expected output:\n");
@@ -425,7 +424,8 @@ end);
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
   local opts, file_ext, is_testable, dir, contents, farm, nr_tests, out,
-        start_time, pass, end_time, elapsed, str, filename;
+  elapsed, failed, passed, info, start_time, pass, end_time, elapsed_this_test,
+  str, filename;
 
   if Length(arg) = 1 and IsRecord(arg[1]) then
     opts := arg[1];
@@ -485,6 +485,8 @@ function(arg)
   fi;
 
   elapsed := 0;
+  failed  := [];
+  passed  := [];
 
   for filename in contents do
     if file_ext(filename) = "tst" and is_testable(dir, filename) then
@@ -498,10 +500,18 @@ function(arg)
                                 rec(silent := false));
 
         end_time := IO_gettimeofday();
-        elapsed := elapsed + (end_time.tv_sec - start_time.tv_sec) * 1000
+        elapsed_this_test := (end_time.tv_sec - start_time.tv_sec) * 1000
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+        elapsed := elapsed + elapsed_this_test;
         if not pass then
+          Add(failed, [filename,
+                       "FAILED",
+                       Concatenation(String(elapsed_this_test), "ms")]);
           out := false;
+        else
+          Add(passed, [filename,
+                      "PASSED",
+                      Concatenation(String(elapsed_this_test), "ms")]);
         fi;
       fi;
     fi;
@@ -516,7 +526,11 @@ function(arg)
     Kill(farm);
   fi;
 
-  Print("TOTAL elapsed time: ", String(elapsed), "ms\n");
+  Print(failed, "\n");
+  Print(passed, "\n\n");
+  Print("TOTAL elapsed time: ", String(elapsed), "ms\n\n");
+  GASMAN("collect");
+
   return out;
 end);
 
@@ -530,6 +544,7 @@ function(arg)
     opts := arg[1];
   fi;
   #TODO check args
+  GASMAN("collect");
   return SEMIGROUPS.Test(Filename(DirectoriesPackageLibrary("semigroups",
                                                             "tst"),
                                   "testinstall.tst"),

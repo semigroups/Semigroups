@@ -486,7 +486,8 @@ Obj SEMIGROUP_LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
 
 Obj SEMIGROUP_LENGTH_ELEMENT (Obj self, Obj data, Obj pos) {
   if (data_type(data) != UNKNOWN) {
-    return INTOBJ_INT(data_semigroup(data)->length(INT_INTOBJ(pos) - 1));
+    return INTOBJ_INT(data_semigroup(data)->length_non_const(INT_INTOBJ(pos) - 1, 
+                                                             data_report(data)));
   } else {
     //TODO
   }

@@ -20,11 +20,12 @@
     classes of example. See <Ref Chap = "Transformations" BookName = "ref"/>
     for more information about semigroups of transformations. 
     <#Include Label = "EndomorphismsPartition"> 
-    <#Include Label = "PartialTransformationSemigroup"> 
+    <#Include Label = "PartialTransformationMonoid"> 
     <#Include Label = "MunnSemigroup">
     <#Include Label = "OPOIPOPI">
     <!-- split this to separate transformation and partial perm semigroups-->
     <#Include Label = "SingularTransformationSemigroup">
+    <#Include Label = "CatalanMonoid">
   </Section>
 
   <!--**********************************************************************-->

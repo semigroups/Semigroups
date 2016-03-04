@@ -33,6 +33,7 @@
     <#Include Label = "IsMonoidAsSemigroup">
     <#Include Label = "IsOrthodoxSemigroup">
     <#Include Label = "IsRectangularBand">
+    <#Include Label = "IsRectangularGroup">
     <#Include Label = "IsRegularSemigroup">
     <#Include Label = "IsRightZeroSemigroup">
     <#Include Label = "IsRTrivial">

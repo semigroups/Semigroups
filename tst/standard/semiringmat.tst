@@ -416,8 +416,6 @@ gap> mat := AsMatrix(IsIntegerMatrix, mat);
 Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])
 gap> AsMatrix(IsNTPMatrix, mat, 1, 2);
 Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)
-gap> AsMatrix(Integers, mat);
-Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])
 
 # semiringmat: Iterator, for a matrix over semiring 1/1
 gap> mat := Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]]);;

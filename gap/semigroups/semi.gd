@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  semigroups.gd
+#W  semi.gd
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -50,14 +50,42 @@ DeclareOperation("ClosureSemigroup",
 DeclareOperation("ClosureSemigroupNC",
                  [IsSemigroup, IsListOrCollection, IsRecord]);
 
+DeclareOperation("AsSemigroup", [IsFunction, IsSemigroup]);
+DeclareOperation("AsSemigroup", [IsFunction, IsPosInt, IsSemigroup]);
+DeclareOperation("AsSemigroup", [IsFunction, IsPosInt, IsPosInt, IsSemigroup]);
+DeclareConstructor("IsomorphismSemigroup",
+                   [IsSemigroup, IsSemigroup]);
+DeclareConstructor("IsomorphismSemigroup",
+                   [IsSemigroup, IsPosInt, IsSemigroup]);
+DeclareConstructor("IsomorphismSemigroup",
+                   [IsSemigroup, IsPosInt, IsPosInt, IsSemigroup]);
+
+DeclareOperation("AsMonoid", [IsFunction, IsSemigroup]);
+DeclareOperation("AsMonoid", [IsFunction, IsPosInt, IsSemigroup]);
+DeclareOperation("AsMonoid", [IsFunction, IsPosInt, IsPosInt, IsSemigroup]);
+DeclareConstructor("IsomorphismMonoid",
+                   [IsSemigroup, IsSemigroup]);
+DeclareConstructor("IsomorphismMonoid",
+                   [IsSemigroup, IsPosInt, IsSemigroup]);
+DeclareConstructor("IsomorphismMonoid",
+                   [IsSemigroup, IsPosInt, IsPosInt, IsSemigroup]);
+
 #TODO move this to attributes!
 DeclareAttribute("Generators", IsSemigroup);
 
 #TODO move this to examples!
 DeclareGlobalFunction("RandomSemigroup");
+DeclareConstructor("RandomSemigroupCons",
+                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
 DeclareGlobalFunction("RandomMonoid");
+DeclareConstructor("RandomMonoidCons",
+                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
 DeclareGlobalFunction("RandomInverseSemigroup");
+DeclareConstructor("RandomInverseSemigroupCons",
+                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
 DeclareGlobalFunction("RandomInverseMonoid");
+DeclareConstructor("RandomInverseMonoidCons",
+                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty",

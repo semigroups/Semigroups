@@ -243,23 +243,23 @@ true
 
 #T# AttributesTest4:
 # MultiplicativeZero for a block bijection inverse semigroup/ideal
-gap> s := AsBlockBijectionSemigroup(SymmetricInverseMonoid(1));
-<commutative inverse bipartition monoid of degree 2 with 1 generator>
-gap> MultiplicativeZero(s);
+gap> S := AsSemigroup(IsBlockBijectionSemigroup, SymmetricInverseMonoid(1));
+<commutative inverse block bijection monoid of degree 2 with 1 generator>
+gap> MultiplicativeZero(S);
 <block bijection: [ 1, 2, -1, -2 ]>
-gap> Size(MinimalIdeal(s)) = 1;
+gap> Size(MinimalIdeal(S)) = 1;
 true
-gap> s := AsBlockBijectionSemigroup(SymmetricInverseMonoid(4));
-<inverse bipartition monoid of degree 5 with 3 generators>
-gap> MultiplicativeZero(s);
+gap> S := AsSemigroup(IsBlockBijectionSemigroup, SymmetricInverseMonoid(4));
+<inverse block bijection monoid of degree 5 with 3 generators>
+gap> MultiplicativeZero(S);
 <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>
-gap> Size(MinimalIdeal(s)) = 1;
+gap> Size(MinimalIdeal(S)) = 1;
 true
 gap> s := InverseSemigroup([
 > Bipartition([[1, -3], [2, -4], [3, -1], [4, 5, 6, -2, -5, -6]]),
 > Bipartition([[1, -3], [2, -5], [3, -1], [4, -2], [5, -4],
 > [6, -6]])]);
-<inverse bipartition semigroup of degree 6 with 2 generators>
+<inverse block bijection semigroup of degree 6 with 2 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -271,7 +271,7 @@ gap> s := InverseSemigroup([
 >  [5, -3]]),
 > Bipartition([[1, -5], [2, -4], [3, -3], [4, -2], [5, -1],
 >  [6, -6]])]);
-<inverse bipartition semigroup of degree 6 with 2 generators>
+<inverse block bijection semigroup of degree 6 with 2 generators>
 gap> t := Bipartition(
 > [[1, -1], [2, -2], [3, -3], [4, 6, -4, -6], [5, -5]]);;
 gap> I := SemigroupIdeal(s, t);
@@ -454,7 +454,7 @@ gap> S := Range(iso);;
 gap> S := Semigroup(IrredundantGeneratingSubset(SmallGeneratingSet(S)));;
 
 #T# attributes: IrredundantGeneratingSubset: for a semigroup
-gap> S := RandomMonoid(IsBooleanMatSemigroup, 10, 3);;
+gap> S := RandomMonoid(IsBooleanMatMonoid, 10, 3);;
 gap> T := Semigroup(IrredundantGeneratingSubset(S));;
 gap> S = T;
 true
@@ -705,7 +705,7 @@ gap> StructureDescription(S);
 "B(1, 6)"
 
 #T# attributes: StructureDescription for a group as semigroup 1/3
-gap> S := AsTransformationSemigroup(AlternatingGroup(5));;
+gap> S := AsSemigroup(IsTransformationSemigroup, AlternatingGroup(5));;
 gap> IsGroupAsSemigroup(S);
 true
 gap> StructureDescription(S);
@@ -827,9 +827,9 @@ the argument must be a semigroup satisfying IsGroupAsSemigroup,
 gap> S := Semigroup([BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
 > BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
 gap> IsomorphismPermGroup(S);
-MappingByFunction( <group of 3x3 boolean matrices with 2 generators>
-, Group([ (1,2)(3,5)(4,6), (1,5,4)
-(2,6,3) ]), function( x ) ... end, function( x ) ... end )
+MappingByFunction( <group of size 6, 3x3 boolean matrices with 2 generators>, 
+<group of size 6, with 2 generators>
+, function( x ) ... end, function( x ) ... end )
 
 #T# attributes: GroupOfUnits, for a finite semigroup 1/2
 gap> S := RegularBooleanMatMonoid(3);
@@ -881,7 +881,7 @@ Error, no 3rd choice method found for `MinimalIdeal' on 1 arguments
 #T# attributes: IdempotentGeneratedSubsemigroup, inverse op 1/1
 gap> S := DualSymmetricInverseMonoid(2);;
 gap> IdempotentGeneratedSubsemigroup(S);
-<commutative inverse bipartition monoid of degree 2 with 1 generator>
+<commutative inverse block bijection monoid of degree 2 with 1 generator>
 
 #T# attributes: MultiplicativeZero, infinite 1/1
 #gap> MultiplicativeZero(FreeMonoid(2)); 

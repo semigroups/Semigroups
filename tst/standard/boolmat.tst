@@ -140,10 +140,10 @@ gap> y := BooleanMat([[1, 0, 1],
 >                     [0, 1, 0]]);;
 gap> x in y;
 Error, Semigroups: \in: usage,
-the arguments <x> and <y> must be boolean matrix of equal size,
+the arguments <x> and <y> must be boolean matrices of equal dimensions,
 gap> y in x;
 Error, Semigroups: \in: usage,
-the arguments <x> and <y> must be boolean matrix of equal size,
+the arguments <x> and <y> must be boolean matrices of equal dimensions,
 
 #T# boolmat: OnBlist, for boolean mat and blist, 1/1
 gap> mat := BooleanMat([[1, 0, 0, 1],

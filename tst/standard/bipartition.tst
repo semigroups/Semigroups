@@ -112,7 +112,7 @@ gap> G := SymmetricGroup(5);;
 gap> ForAll(G, x -> AsPermutation(AsBipartition(x)) = x);
 true
 gap> G := GroupOfUnits(PartitionMonoid(3));
-<bipartition group of degree 3 with 2 generators>
+<block bijection group of degree 3 with 2 generators>
 gap> ForAll(G, x -> AsBipartition(AsPermutation(x), 3) = x);
 true
 
@@ -174,7 +174,7 @@ gap> S := PartitionMonoid(3);;
 gap> f := Bipartition([[1, -2, -3], [2, 3], [-1]]);;
 gap> EvaluateWord(GeneratorsOfSemigroup(S), Factorization(S, f));
 <bipartition: [ 1, -2, -3 ], [ 2, 3 ], [ -1 ]>
-gap> S := Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
+gap> S := AsSemigroup(IsBipartitionSemigroup, SymmetricInverseMonoid(5));
 <inverse bipartition monoid of degree 5 with 3 generators>
 gap> f := S.1 * S.2 * S.3 * S.2 * S.1;
 <bipartition: [ 1 ], [ 2, -2 ], [ 3, -4 ], [ 4, -5 ], [ 5, -3 ], [ -1 ]>

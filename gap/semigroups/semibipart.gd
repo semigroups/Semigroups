@@ -17,14 +17,11 @@ InstallTrueMethod(IsFinite, IsBipartitionSemigroup);
 
 DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
-DeclareAttribute("IsomorphismBipartitionSemigroup", IsSemigroup);
-DeclareOperation("AsBipartitionSemigroup", [IsSemigroup]);
-DeclareAttribute("IsomorphismBlockBijectionSemigroup", IsSemigroup);
-DeclareOperation("AsBlockBijectionSemigroup", [IsSemigroup]);
 
-DeclareProperty("IsBlockBijectionSemigroup", IsSemigroup);
+DeclareProperty("IsBlockBijectionSemigroup", IsBipartitionSemigroup);
 DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroup);
 DeclareProperty("IsPermBipartitionGroup", IsSemigroup);
+InstallTrueMethod(IsGroupAsSemigroup, IsPermBipartitionGroup);
 
 DeclareSynonymAttr("IsBlockBijectionMonoid",
                    IsBlockBijectionSemigroup and IsMonoid);

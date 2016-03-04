@@ -1,5 +1,8 @@
+_InstallIsomorphismSemigroup
+_InstallIsomorphismMonoid
 NC
-SEMIGROUPS_
+IO_Unpicklers
+SEMIGROUPS
 OneMutable
 NrBlocks
 NrLeftBlocks

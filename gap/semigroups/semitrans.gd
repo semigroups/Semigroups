@@ -13,8 +13,8 @@ DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
 DeclareOperation("\^", [IsTransformationCollection, IsPerm]);
 DeclareAttribute("FixedPoints", IsTransformationSemigroup);
 DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
-DeclareOperation("DigraphOfActionOnPoints", [IsTransformationSemigroup, IsPosInt]);
-DeclareOperation("AsTransformationSemigroup", [IsSemigroup]);
+DeclareOperation("DigraphOfActionOnPoints",
+                 [IsTransformationSemigroup, IsPosInt]);
 
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
                  IsTransformationSemigroup);
@@ -38,3 +38,4 @@ DeclareOperation("IsTransitive", [IsTransformationCollection, IsList]);
 DeclareAttribute("EndomorphismMonoid", IsDigraph);
 DeclareOperation("EndomorphismMonoid", [IsDigraph, IsHomogeneousList]);
 
+DeclareOperation("DirectProductOp", [IsList, IsSemigroup]);

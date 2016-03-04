@@ -318,7 +318,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return IsEUnitaryInverseSemigroup(AsPartialPermSemigroup(S));
+  return IsEUnitaryInverseSemigroup(AsSemigroup(IsPartialPermSemigroup, S));
 end);
 
 #different method for ideals TODO or same?
@@ -800,7 +800,7 @@ function(S)
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
-  return IsMonogenicInverseSemigroup(AsPartialPermSemigroup(S));
+  return IsMonogenicInverseSemigroup(AsSemigroup(IsPartialPermSemigroup, S));
 end);
 
 # same method for ideals
@@ -985,8 +985,6 @@ function(S)
   data := Enumerate(data, infinity, lookfunc);
   return data!.found = false;
 end);
-
-#
 
 InstallMethod(IsRegularSemigroup,
 "for an acting star semigroup with generators",
@@ -1524,8 +1522,6 @@ end);
 InstallMethod(IsZeroSimpleSemigroup, "for a finite inverse semigroup",
 [IsInverseSemigroup and IsFinite],
 S -> MultiplicativeZero(S) <> fail and NrDClasses(S) = 2);
-
-#
 
 InstallMethod(IsNilpotentSemigroup, "for a semigroup",
 [IsSemigroup],

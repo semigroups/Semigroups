@@ -1149,7 +1149,7 @@ gap> NrHClasses(S);
 252
 
 # greens-acting: GroupHClass, IsGroupHClass, IsomorphismPermGroup, 1/1
-gap> S := AsTransformationSemigroup(FullBooleanMatMonoid(4));;
+gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(4));;
 gap> S := Semigroup(S, rec(generic := false));;
 gap> D := DClass(S, S.2);
 <Green's D-class: Transformation( [ 1, 2, 1, 2, 1, 2, 3, 4, 1, 2, 5, 6, 9,
@@ -1183,7 +1183,7 @@ Error, Semigroups: IsomorphismPermGroup: usage,
 the H-class is not a group,
 
 # greens-acting: PartialOrderOfDClasses, 1/2
-gap> S := AsTransformationSemigroup(FullBooleanMatMonoid(3));;
+gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));;
 gap> S := Semigroup(S, rec(generic := false));;
 gap> PartialOrderOfDClasses(S);
 [ [ 1, 2, 3, 4 ], [ 2, 3, 6, 7, 8, 9, 10 ], [ 3, 5, 8 ], [ 3, 4, 5 ], 
@@ -1290,26 +1290,29 @@ gap> PartialOrderOfDClasses(S);
   [ 42, 69, 127, 177, 200 ], [ 42, 157, 201 ] ]
 
 # greens-acting: Idempotents, 1/?
-gap> S := AsTransformationSemigroup(FullPBRMonoid(1));;
+gap> S := AsSemigroup(IsTransformationSemigroup, FullPBRMonoid(1));;
 gap> S := Semigroup(S, rec(generic := false));;
 gap> Idempotents(S);
-[ Transformation( [ 1, 2, 2, 1, 5, 6, 6, 5, 5, 6, 6, 5, 1, 2, 2, 1 ] ), 
-  Transformation( [ 1, 2, 2, 1, 5, 6, 6, 5, 5, 6, 6, 5, 1, 6, 6, 1 ] ), 
-  Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 10, 11 ] ), 
-  Transformation( [ 1, 1, 1, 1, 5, 5, 5, 5, 9, 9, 9, 9, 13, 13, 13, 13 ] ), 
-  Transformation( [ 1, 1, 1, 1, 5, 5, 5, 5, 9, 9, 9, 9, 13, 9, 9, 13 ] ), 
-  IdentityTransformation, Transformation( [ 4, 3, 3, 4, 8, 7, 7, 8, 12, 11,
-      11, 12, 16, 15, 15, 16 ] ), 
-  Transformation( [ 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1 ] ), 
-  Transformation( [ 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 1, 5, 5, 1 ] ), 
-  Transformation( [ 4, 3, 3, 4, 8, 7, 7, 8, 8, 7, 7, 8, 4, 3, 3, 4 ] ), 
-  Transformation( [ 4, 3, 3, 4, 8, 7, 7, 8, 8, 7, 7, 8, 4, 7, 7, 4 ] ), 
-  Transformation( [ 4, 3, 3, 4, 8, 7, 7, 8, 12, 11, 11, 12, 16, 11, 11, 16 ] )
-    , Transformation( [ 4, 4, 4, 4, 8, 8, 8, 8, 12, 12, 12, 12, 16, 16, 16,
-      16 ] ), Transformation( [ 4, 4, 4, 4, 8, 8, 8, 8, 12, 12, 12, 12, 16,
-      12, 12, 16 ] ), Transformation( [ 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 8, 8, 4,
-     4, 4, 4 ] ), Transformation( [ 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 8, 8, 4, 8,
-      8, 4 ] ) ]
+[ Transformation( [ 1, 8, 6, 1, 1, 6, 1, 8, 13, 8, 6, 6, 13, 8, 13, 13 ] ), 
+  Transformation( [ 1, 8, 6, 8, 8, 6, 1, 8, 13, 8, 6, 6, 13, 8, 13, 13 ] ), 
+  Transformation( [ 1, 2, 3, 2, 10, 6, 7, 8, 9, 10 ] ), 
+  Transformation( [ 6, 9, 3, 3, 3, 6, 6, 13, 9, 9, 3, 6, 13, 13, 9, 13 ] ), 
+  Transformation( [ 6, 9, 3, 9, 9, 6, 6, 13, 9, 9, 3, 6, 13, 13, 9, 13 ] ), 
+  IdentityTransformation, Transformation( [ 7, 10, 11, 5, 5, 12, 7, 14, 15,
+      10, 11, 12, 16, 14, 15, 16 ] ), 
+  Transformation( [ 6, 13, 6, 6, 6, 6, 6, 13, 13, 13, 6, 6, 13, 13, 13, 13 ] )
+    , Transformation( [ 6, 13, 6, 13, 13, 6, 6, 13, 13, 13, 6, 6, 13, 13, 13,
+      13 ] ), Transformation( [ 7, 14, 12, 7, 7, 12, 7, 14, 16, 14, 12, 12,
+      16, 14, 16, 16 ] ), Transformation( [ 7, 14, 12, 14, 14, 12, 7, 14, 16,
+      14, 12, 12, 16, 14, 16, 16 ] ), 
+  Transformation( [ 7, 10, 11, 10, 10, 12, 7, 14, 15, 10, 11, 12, 16, 14, 15,
+      16 ] ), Transformation( [ 12, 15, 11, 11, 11, 12, 12, 16, 15, 15, 11,
+      12, 16, 16, 15, 16 ] ), 
+  Transformation( [ 12, 15, 11, 15, 15, 12, 12, 16, 15, 15, 11, 12, 16, 16,
+      15, 16 ] ), Transformation( [ 12, 16, 12, 12, 12, 12, 12, 16, 16, 16,
+      12, 12, 16, 16, 16, 16 ] ), 
+  Transformation( [ 12, 16, 12, 16, 16, 12, 12, 16, 16, 16, 12, 12, 16, 16,
+      16, 16 ] ) ]
 
 # greens-acting: Idempotents, 2/2
 gap> S := Semigroup(FullTransformationMonoid(3),
@@ -1373,7 +1376,7 @@ gap> Idempotents(L);
   Transformation( [ 1, 2, 3, 4, 2 ] ), Transformation( [ 1, 2, 3, 4, 3 ] ) ]
 
 # greens-acting: Idempotents, for a L-class, 2/3
-gap> S := AsTransformationSemigroup(FullBooleanMatMonoid(3));
+gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 5 generators>
 gap> L := LClass(S, Transformation([1, 1, 1, 2, 1, 3, 5]));;
 gap> IsRegularClass(L);
@@ -1395,7 +1398,7 @@ gap> Idempotents(H);
 [ Transformation( [ 1, 2, 3, 3 ] ) ]
 
 # greens-acting: Idempotents, for a H-class, 1/2
-gap> S := AsTransformationSemigroup(FullBooleanMatMonoid(3));
+gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 5 generators>
 gap> H := HClass(S, Transformation([1, 1, 1, 2, 1, 3, 5]));;
 gap> IsGroupHClass(H);
@@ -1444,7 +1447,7 @@ gap> NrIdempotents(L);
 4
 
 # greens-acting: NrIdempotents, for a L-class, 2/3
-gap> S := AsTransformationSemigroup(FullBooleanMatMonoid(3));
+gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 5 generators>
 gap> L := LClass(S, Transformation([1, 1, 1, 2, 1, 3, 5]));;
 gap> IsRegularClass(L);
@@ -1466,7 +1469,7 @@ gap> NrIdempotents(H);
 1
 
 # greens-acting: NrIdempotents, for a H-class, 1/2
-gap> S := AsTransformationSemigroup(FullBooleanMatMonoid(3));
+gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 5 generators>
 gap> H := HClass(S, Transformation([1, 1, 1, 2, 1, 3, 5]));;
 gap> IsGroupHClass(H);
@@ -1504,7 +1507,7 @@ false
 # greens-acting: IsRegularClass, for an R-class in group of units, 1/1
 gap> S := Monoid(Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]),
 >                 Transformation([3, 8, 1, 9, 9, 4, 10, 5, 10, 6]));;
-gap> S := AsBipartitionSemigroup(S);;
+gap> S := AsSemigroup(IsBipartitionSemigroup, S);;
 gap> R := RClass(S, IdentityBipartition(10));;
 gap> IsRegularClass(R);
 true

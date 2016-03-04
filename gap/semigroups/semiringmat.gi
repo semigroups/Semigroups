@@ -14,10 +14,8 @@ InstallMethod(SemigroupViewStringSuffix,
 "for a matrix over semiring semigroup with generators",
 [IsMatrixOverSemiringSemigroup],
 function(S)
-  local n;
+  local n, type;
   n := ViewString(DimensionOfMatrixOverSemiring(Representative(S)));
-  # gaplint: ignore 3
-  return Concatenation("\>\>", n, "x", n, "\< \>",
-    SEMIGROUPS_TypeViewStringOfMatrixOverSemiring(Representative(S)),
-                       "\< matrices\< ");
+  type := SEMIGROUPS_TypeViewStringOfMatrixOverSemiring(Representative(S));
+  return Concatenation("\>\>", n, "x", n, "\< \>", type, "\< matrices\< ");
 end);

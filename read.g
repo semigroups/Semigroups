@@ -88,9 +88,9 @@ ReadPackage("semigroups/gap/elements/maxplusmat.gi");
 ReadPackage("semigroups/gap/elements/boolmat.gi");
 ReadPackage("semigroups/gap/elements/trans.gi");
 
-ReadPackage("semigroups/gap/semigroups/semigroups.gi");
+ReadPackage("semigroups/gap/semigroups/semi.gi");
 ReadPackage("semigroups/gap/semigroups/grpperm.gi");
-ReadPackage("semigroups/gap/semigroups/reesmat.gi");
+ReadPackage("semigroups/gap/semigroups/semirms.gi");
 ReadPackage("semigroups/gap/semigroups/semibipart.gi");
 ReadPackage("semigroups/gap/semigroups/semipperm.gi");
 ReadPackage("semigroups/gap/semigroups/semitrans.gi");
@@ -98,9 +98,10 @@ ReadPackage("semigroups/gap/semigroups/semipbr.gi");
 ReadPackage("semigroups/gap/semigroups/semimaxplus.gi");
 ReadPackage("semigroups/gap/semigroups/semiringmat.gi");
 ReadPackage("semigroups/gap/semigroups/semiboolmat.gi");
-ReadPackage("semigroups/gap/semigroups/examples.gi");
-ReadPackage("semigroups/gap/semigroups/constructions.gi");
-ReadPackage("semigroups/gap/semigroups/graph-inverse.gi");
+ReadPackage("semigroups/gap/semigroups/semifp.gi");
+ReadPackage("semigroups/gap/semigroups/semiex.gi");
+ReadPackage("semigroups/gap/semigroups/semicons.gi");
+ReadPackage("semigroups/gap/semigroups/semigraph.gi");
 
 ReadPackage("semigroups/gap/main/froidure-pin.gi");
 ReadPackage("semigroups/gap/main/setup.gi");

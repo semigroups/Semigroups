@@ -437,7 +437,7 @@ function(x, opts)
     od;
     if Length(up) <> 0 and Length(down) <> 0 then
       min := [n + 1];
-      down := down * - 1;
+      down := down * -1;
       for i in up do
         for k in down do
           if AbsInt(i - k) < min[1] then

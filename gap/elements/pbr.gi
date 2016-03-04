@@ -102,7 +102,7 @@ end);
 InstallMethod(StarOp, "for a pbr", [IsPBR],
 function(x)
   local ext;
-  ext := ShallowCopy(ExtRepOfPBR(x) * - 1);
+  ext := ShallowCopy(ExtRepOfPBR(x) * -1);
   Apply(ext, ShallowCopy);
   Apply(ext[1], ShallowCopy);
   Apply(ext[2], ShallowCopy);
@@ -232,10 +232,54 @@ function(x)
   return true;
 end);
 
-#FIXME: this should probably be more specific, 1 method for transformations, 1
-# for partial perms, etc
+InstallMethod(AsPBR, "for a partial perm and pos int",
+[IsPartialPerm, IsPosInt],
+function(x, deg)
+  local left, right, j, i;
 
-InstallMethod(AsPBR, "for an associative element",
+  left  := List([1 .. deg], x -> []);
+  right := List([1 .. deg], x -> []);
+
+  for i in [1 .. deg] do
+    j := i ^ x;
+    if j <= deg and j <> 0 then
+      Add(left[i], -j);
+      Add(right[j], i);
+    fi;
+  od;
+
+  return PBR(left, right);
+end);
+
+InstallMethod(AsPBR, "for a partial perm",
+[IsPartialPerm],
+function(x)
+  return AsPBR(x, Maximum(DegreeOfPartialPerm(x), CoDegreeOfPartialPerm(x)));
+end);
+
+InstallMethod(AsPBR, "for a transformation and pos int",
+[IsTransformation, IsPosInt],
+function(x, deg)
+  local left, right, i;
+
+  left  := List([1 .. deg], x -> []);
+  right := List([1 .. deg], x -> []);
+
+  for i in [1 .. deg] do
+    Add(left[i], -(i ^ x));
+    Add(right[i ^ x], i);
+  od;
+
+  return PBR(left, right);
+end);
+
+InstallMethod(AsPBR, "for a transformation",
+[IsTransformation],
+function(x)
+  return AsPBR(x, DegreeOfTransformation(x));
+end);
+
+InstallMethod(AsPBR, "for a multiplicative element",
 [IsMultiplicativeElement], x -> AsPBR(AsBipartition(x)));
 
 InstallMethod(AsPBR,
@@ -244,6 +288,8 @@ InstallMethod(AsPBR,
 function(x, n)
   return AsPBR(AsBipartition(x, n));
 end);
+
+# FIXME the following doesn't define a monoid embedding of P_n into PBR_n
 
 InstallMethod(AsPBR, "for a bipartition",
 [IsBipartition], x -> AsPBR(x, DegreeOfBipartition(x)));

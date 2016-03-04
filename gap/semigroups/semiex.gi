@@ -50,7 +50,7 @@ InstallMethod(EndomorphismsPartition, "for a list of positive integers",
 [IsCyclotomicCollection],
 function(partition)
   local s, r, distinct, equal, prev, n, blocks, unique, didprevrepeat, gens, x,
-  m, y, w, i, j, k, block;
+  m, y, w, p, i, j, k, block;
 
   if not ForAll(partition, IsPosInt) then
     ErrorNoReturn("Semigroups: EndomorphismsPartition: usage,\n",
@@ -256,16 +256,14 @@ function(partition)
         x := ShallowCopy(blocks[unique[i]]);
       fi;
       if IsOddInt(Length(blocks[unique[i + 1]])) then
-        # FIXME
-        Append(x,
-               Permuted(blocks[unique[i + 1]],
-                        PermList(Concatenation([2 ..
-                                                Length(blocks[unique[i + 1]])],
-                                               [1]))));
+        p := PermList(Concatenation([2 .. Length(blocks[unique[i + 1]])],
+                                    [1]));
+        Append(x, Permuted(blocks[unique[i + 1]], p));
       else
-        # gaplint: ignore 2 FIXME
-        Append(x, Permuted(blocks[unique[i + 1]], PermList(Concatenation([1],
-          [3 .. Length(blocks[unique[i + 1]])], [2]))));
+
+        p := PermList(Concatenation([1], [3 .. Length(blocks[unique[i + 1]])],
+                                    [2]));
+        Append(x, Permuted(blocks[unique[i + 1]], p));
       fi;
       x := MappingPermListList(Union(blocks[unique[i]],
                                      blocks[unique[i + 1]]), x);
@@ -495,37 +493,49 @@ function(n)
   return s;
 end);
 
-#
-
-InstallMethod(PartialTransformationSemigroup, "for a positive integer",
+InstallMethod(PartialTransformationMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
-  local a, b, c, d, s;
+  local a, b, c, d, S;
 
-  a := [1 .. n + 1];
-  a[1] := 2;
-  a[2] := 1;         # transposition
-  b := [0 .. n];
+  a := [2, 1];
+  b := [0 .. n - 1];
   b[1] := n;
-  b[n + 1] := n + 1; # cycle
   c := [1 .. n + 1];
   c[1] := n + 1;     # partial
-  d := [1 .. n + 1];
-  d[1] := 2;         # collapsing
+  d := [2, 2];
 
   if n = 1 then
-    s := Monoid(List([c], TransformationNC));
+    S := Monoid(TransformationNC(c));
   elif n = 2 then
-    s := Monoid(List([a, c, d], TransformationNC));
+    S := Monoid(List([a, c, d], TransformationNC));
   else
-    s := Monoid(List([a, b, c, d], TransformationNC));
+    S := Monoid(List([a, b, c, d], TransformationNC));
   fi;
 
-  SetIsRegularSemigroup(s, true);
-  return s;
+  SetIsRegularSemigroup(S, true);
+  return S;
 end);
 
-#
+InstallMethod(CatalanMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, next, i;
+
+  if n = 1 then
+    return Monoid(IdentityTransformation);
+  fi;
+
+  gens := [];
+
+  for i in [1 .. n - 1] do
+    next := [1 .. n];
+    next[i + 1] := i;
+    Add(gens, Transformation(next));
+  od;
+
+  return Monoid(gens, rec(generic := true));
+end);
 
 InstallMethod(PartitionMonoid, "for an integer",
 [IsInt],

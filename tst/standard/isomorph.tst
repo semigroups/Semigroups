@@ -15,7 +15,7 @@ gap> SEMIGROUPS.StartTest();
 
 # isomorph: SmallestMultiplicationTable, 1/2
 gap> S := DualSymmetricInverseMonoid(2);
-<inverse bipartition monoid of degree 2 with 2 generators>
+<inverse block bijection monoid of degree 2 with 2 generators>
 gap> Size(S);
 3
 gap> SmallestMultiplicationTable(S);
@@ -66,8 +66,8 @@ gap> S := Semigroup([
 <semigroup of 3x3 ntp matrices with 2 generators>
 gap> IsIsomorphicSemigroup(S, S);
 true
-gap> T := AsTransformationSemigroup(S);
-<transformation semigroup of degree 47 with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 46, degree 47 with 2 generators>
 gap> IsIsomorphicSemigroup(S, T);
 Error, Semigroups: IsIsomorphicSemigroup:
 not yet implemented,

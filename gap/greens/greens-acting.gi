@@ -958,7 +958,9 @@ end);
 # same method for regular/ideals, different method for inverse
 
 InstallMethod(GreensHClassOfElementNC, "for a D/H-class, element, and bool",
-[IsActingSemigroupGreensClass and IsGreensClass, IsMultiplicativeElement, IsBool],
+[IsActingSemigroupGreensClass and IsGreensClass,
+ IsMultiplicativeElement,
+ IsBool],
 function(C, x, isGreensClassNC)
   local H;
   H := SEMIGROUPS.CreateHClass(C, x, isGreensClassNC);

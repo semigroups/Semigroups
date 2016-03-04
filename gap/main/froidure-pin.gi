@@ -277,7 +277,7 @@ function(S, x)
   if (IsTransformation(x)
       and DegreeOfTransformation(x) >
       DegreeOfTransformationCollection(gens))
-      or 
+      or
       (IsPartialPerm(x)
        and DegreeOfPartialPerm(x) >
        DegreeOfPartialPermCollection(gens)) then
@@ -467,7 +467,7 @@ end);
 # <[1..Length(data!.elts)]>.
 
 
-if IsBound(SEMIGROUP_ENUMERATE) then 
+if IsBound(SEMIGROUP_ENUMERATE) then
   # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
   # <[1..Length(data!.elts)]>.
   InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
@@ -478,10 +478,14 @@ if IsBound(SEMIGROUP_ENUMERATE) then
   end);
 else
   InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
-  [IsGenericSemigroupData, IsCyclotomic, IsFunction], 
+  [IsGenericSemigroupData, IsCyclotomic, IsFunction],
   function(data, limit, lookfunc)
+    local looking, found, i, nr, len, one, stopper, nrrules, elts, gens,
+    nrgens, genstoapply, genslookup, lenindex, first, final, prefix, suffix,
+    words, right, left, reduced, ht, rules, htadd, htvalue, stop, lentoapply,
+    b, s, r, new, newword, val, p, j, k;
 
-    if lookfunc <> ReturnFalse then 
+    if lookfunc <> ReturnFalse then
       looking := true;
       # only applied to new elements, not old ones!!!
       data!.found := false;
@@ -490,7 +494,7 @@ else
       looking := false;
     fi;
 
-    found := false; 
+    found := false;
 
     i := data!.pos;
     # current position we are about to apply gens to .. .
@@ -507,7 +511,7 @@ else
     one := data!.one;
     # < elts[one] > is the mult. neutral element
     stopper := data!.stopper;
-    # stop when we have applied generators to elts[stopper] 
+    # stop when we have applied generators to elts[stopper]
     nrrules := data!.nrrules;
     # Length(rules)
 
@@ -525,7 +529,7 @@ else
     # lenindex[len] = position in < words > and < elts > of
     # first element of length < len >
     first := data!.first;
-    # elts[i] = gens[first[i]] * elts[suffix[i]], first letter 
+    # elts[i] = gens[first[i]] * elts[suffix[i]], first letter
     final := data!.final;
     # elts[i] = elts[prefix[i]] * gens[final[i]]
     prefix := data!.prefix;
@@ -546,7 +550,7 @@ else
     rules := data!.rules;
     # the relations
 
-    if IsBoundGlobal("ORBC") then 
+    if IsBoundGlobal("ORBC") then
       htadd := HTAdd_TreeHash_C;
       htvalue := HTValue_TreeHash_C;
     else
@@ -556,9 +560,9 @@ else
 
     stop := false;
 
-    while i <= nr and not stop do 
+    while i <= nr and not stop do
       lentoapply := [1 .. len];
-      while i <= nr and Length(words[i]) = len and not stop do 
+      while i <= nr and Length(words[i]) = len and not stop do
         b := first[i];
         s := suffix[i];
         # elts[i] = gens[b] * elts[s]
@@ -567,14 +571,14 @@ else
             # < elts[s] * gens[j] > is not reduced
             r := right[s][j];
             # elts[r] = elts[s] * gens[j]
-            if prefix[r] <> 0 then 
+            if prefix[r] <> 0 then
               right[i][j] := right[left[prefix[r]][b]][final[r]];
               # elts[i] * gens[j] = gens[b] * elts[prefix[r]] * gens[final[r]];
               # reduced[i][j] = ([words[i], j] = words[right[i][j]])
               reduced[i][j] := false;
             elif r = one then
               # < elts[r] > is the identity
-              right[i][j] := genslookup[b]; 
+              right[i][j] := genslookup[b];
               reduced[i][j] := true;
               # < elts[i] * gens[j] = b > and it is reduced
             else # prefix[r] = 0, i.e. elts[r] is one of the generators
@@ -592,7 +596,7 @@ else
             # using Concatenate here is very bad!
             val := htvalue(ht, new);
 
-            if val <> fail then 
+            if val <> fail then
               nrrules := nrrules + 1;
               rules[nrrules] := [newword, words[val]];
               right[i][j] := val;
@@ -607,23 +611,23 @@ else
                 one := nr;
               fi;
 
-              if s <> 0 then 
+              if s <> 0 then
                 suffix[nr] := right[s][j];
-              else 
+              else
                 suffix[nr] := genslookup[j];
               fi;
 
-              elts[nr] := new;        
-              words[nr] := newword;   
-              first[nr] := b;         
+              elts[nr] := new;
+              words[nr] := newword;
+              first[nr] := b;
               final[nr] := j;
-              prefix[nr] := i;        
-              right[nr] := EmptyPlist(nrgens);        
-              left[nr] := EmptyPlist(nrgens);         
+              prefix[nr] := i;
+              right[nr] := EmptyPlist(nrgens);
+              left[nr] := EmptyPlist(nrgens);
               reduced[nr] := BlistList(genstoapply, []);
 
-              right[i][j] := nr;    
-              reduced[i][j] := true; 
+              right[i][j] := nr;
+              reduced[i][j] := true;
 
               if looking and (not found) and lookfunc(data, nr) then
                 found := true;
@@ -640,21 +644,21 @@ else
         i := i + 1;
       od;
       # finished words of length < len > or < looking and found >
-      if i > nr or Length(words[i]) <> len then 
+      if i > nr or Length(words[i]) <> len then
         # process words of length < len > into < left >
-        if len > 1 then 
+        if len > 1 then
           for j in [lenindex[len] .. i - 1] do # loop over all words of length < len - 1 >
             p := prefix[j];
             b := final[j];
-            for k in genstoapply do 
+            for k in genstoapply do
               left[j][k] := right[left[p][k]][b];
               # gens[k] * elts[j] = (gens[k] * elts[p]) * gens[b]
             od;
           od;
-        elif len = 1 then 
+        elif len = 1 then
           for j in [lenindex[len] .. i - 1] do  # loop over all words of length < 1 >
             b := final[j];
-            for k in genstoapply do 
+            for k in genstoapply do
               left[j][k] := right[genslookup[k]][b];
               # gens[k] * elts[j] = elts[k] * gens[b]
             od;
@@ -665,9 +669,9 @@ else
       fi;
     od;
 
-    data!.nr := nr;    
+    data!.nr := nr;
     data!.nrrules := nrrules;
-    data!.one := one;  
+    data!.one := one;
     data!.pos := i;
     data!.len := len;
 

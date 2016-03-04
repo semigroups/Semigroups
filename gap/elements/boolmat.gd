@@ -28,7 +28,6 @@ BindGlobal("BooleanMatType",
                    IsBooleanMat));
 
 DeclareGlobalFunction("BooleanMat");
-DeclareGlobalFunction("BooleanMatNC");
 
 #############################################################################
 ## Declarations specifically for Boolean mats

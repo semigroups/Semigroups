@@ -166,7 +166,7 @@ gap> I = Semigroup(GeneratorsOfSemigroup(I));
 true
 
 #T# \in, for a regular acting semigroup ideal, wrong type, 1
-gap> S := PartialTransformationSemigroup(5);;
+gap> S := PartialTransformationMonoid(5);;
 gap> x := Transformation([5, 6, 2, 3, 4, 6]);;
 gap> I := SemigroupIdeal(S, x);;
 gap> S.1 in I;
@@ -231,7 +231,7 @@ gap> Transformation([3, 3, 4, 4, 4]) in I;
 false
 
 #T# \in, for a regular acting semigroup ideal, looking in rho-orb, 8
-gap> S := PartialTransformationSemigroup(5);;
+gap> S := PartialTransformationMonoid(5);;
 gap> x := Transformation([6, 2, 3, 4, 5, 6]);;
 gap> I := SemigroupIdeal(S, x);;
 gap> Transformation([5, 2, 4, 3, 2]) in I;

@@ -885,7 +885,7 @@ gap> JoinIrreducibleDClasses(I);
 [ <Green's D-class: <block bijection: [ 1, 2, 3, 4, 6, -1, -2, -3, -4, -6 ], 
       [ 5, -5 ]>> ]
 gap> I;
-<inverse bipartition semigroup ideal of degree 6 with 1 generator>
+<inverse block bijection semigroup ideal of degree 6 with 1 generator>
 gap> S := InverseMonoid(DualSymmetricInverseMonoid(3));;
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3]]);;
 gap> I := SemigroupIdeal(S, x);
@@ -1000,8 +1000,8 @@ gap> S := Semigroup([[[Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
 >                     [Z(2 ^ 2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
 >                     [Z(2 ^ 2) ^ 2, Z(2) ^ 0, 0 * Z(2), Z(2) ^ 0]]]);
 <semigroup with 3 generators>
-gap> T := AsTransformationSemigroup(S);
-<transformation semigroup of degree 22 with 3 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 21, degree 21 with 2 generators>
 gap> Size(T);
 21
 gap> I := SemigroupIdeal(T, Idempotents(T));;
@@ -1186,15 +1186,15 @@ gap> CyclesOfPartialPermSemigroup(S);
 #T# AsXSemigroup for trivial transformation semigroup
 gap> S := Semigroup(IdentityTransformation);
 <trivial transformation group of degree 0 with 1 generator>
-gap> AsTransformationSemigroup(S);
+gap> AsSemigroup(IsTransformationSemigroup, S);
 <trivial transformation group of degree 0 with 1 generator>
-gap> AsPartialPermSemigroup(S);
+gap> AsSemigroup(IsPartialPermSemigroup, S);
 <trivial partial perm group of rank 0 with 1 generator>
-gap> AsBipartitionSemigroup(S);
-<trivial bipartition group of degree 1 with 1 generator>
-gap> AsPBRSemigroup(S);
-<commutative pbr semigroup of degree 1 with 1 generator>
-gap> AsBooleanMatSemigroup(S);
+gap> AsSemigroup(IsBipartitionSemigroup, S);
+<trivial block bijection group of degree 1 with 1 generator>
+gap> AsSemigroup(IsPBRSemigroup, S);
+<trivial pbr group of degree 1 with 1 generator>
+gap> AsSemigroup(IsBooleanMatSemigroup, S);
 <trivial group of 1x1 boolean matrices with 1 generator>
 
 #T# Issue #138: InversesOfSemigroupElement for trivial transformation monoid
@@ -1234,22 +1234,22 @@ gap> IsInverseSemigroup(S);
 false
 
 #T# Bipartition semigroups of degree 0, Issue #139
-gap> AsBipartitionSemigroup(CyclicGroup(IsPermGroup, 1));
-<trivial bipartition group of degree 0 with 1 generator>
-gap> AsBipartitionSemigroup(Group(()));
-<trivial bipartition group of degree 0 with 1 generator>
+gap> AsSemigroup(IsBipartitionSemigroup, CyclicGroup(IsPermGroup, 1));
+<trivial block bijection group of degree 0 with 1 generator>
+gap> AsSemigroup(IsBipartitionSemigroup, Group(()));
+<trivial block bijection group of degree 0 with 1 generator>
 gap> Semigroup(Bipartition([]));
-<trivial bipartition group of degree 0 with 1 generator>
+<trivial block bijection group of degree 0 with 1 generator>
 gap> JonesMonoid(0);
-<trivial bipartition group of degree 0 with 1 generator>
+<trivial block bijection group of degree 0 with 1 generator>
 gap> PartitionMonoid(0);
-<trivial bipartition group of degree 0 with 1 generator>
+<trivial block bijection group of degree 0 with 1 generator>
 
 #T# Fixed unconvert for matrix over semiring
 gap> S := FullTropicalMinPlusMonoid(2, 3);
 <monoid of 2x2 tropical min-plus matrices with 7 generators>
-gap> AsTransformationSemigroup(S);
-<transformation monoid of degree 625 with 7 generators>
+gap> AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 625, degree 625 with 7 generators>
 
 #T# Test for not being allowed to generate a semigroup with bipartitions of
 # different degree
@@ -1311,6 +1311,13 @@ gap> (not SEMIGROUPS.IsGrapeCompiled) or ForAll(MaximalSubsemigroups(S), M -> M 
 >            Transformation([3, 1, 3, 3]), 
 >            Transformation([4, 3, 3, 4]))]);
 true
+
+#T# Issue 150: Bug in RepresentativeOfMinimalIdeal
+gap> S := Semigroup([PartialPerm([1, 2], [3, 2])]);;
+gap> RepresentativeOfMinimalIdeal(S);
+<identity partial perm on [ 2 ]>
+gap> IsZeroSimpleSemigroup(S);
+false
 
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!

@@ -45,7 +45,7 @@ gap> Size(S);
 gap> S := TrivialSemigroup(3);
 <trivial transformation group of degree 3 with 1 generator>
 gap> S := TrivialSemigroup(IsBipartitionSemigroup, 2);
-<trivial bipartition group of degree 2 with 1 generator>
+<trivial block bijection group of degree 2 with 1 generator>
 gap> Elements(S);
 [ <block bijection: [ 1, 2, -1, -2 ]> ]]]></Example>
     </Description>
@@ -100,8 +100,8 @@ true
 gap> StructureDescription(I);
 "C3"
 gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);
-<commutative non-regular bipartition semigroup of size 9, degree 10 
- with 1 generator>]]></Example>
+<commutative non-regular block bijection semigroup of size 9, 
+ degree 10 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -133,7 +133,7 @@ gap> S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);
 
         <Example><![CDATA[
 gap> T := RectangularBand(5, 6);
-<regular transformation semigroup of size 30, degree 31 with 6 
+<regular transformation semigroup of size 30, degree 10 with 6 
  generators>
 gap> IsRectangularBand(T);
 true
@@ -177,7 +177,7 @@ true]]></Example>
 
         <Example><![CDATA[
 gap> S := ZeroSemigroup(5);
-<non-regular transformation semigroup of size 5, degree 9 with 4 
+<non-regular transformation semigroup of size 5, degree 5 with 4 
  generators>
 gap> IsZeroSemigroup(S);
 true
@@ -224,8 +224,7 @@ true]]></Example>
       
         <Example><![CDATA[
 gap> S := LeftZeroSemigroup(20);
-<regular transformation semigroup of size 20, degree 21 with 20 
- generators>
+<transformation semigroup of degree 6 with 20 generators>
 gap> IsLeftZeroSemigroup(S);
 true
 gap> ForAll(Tuples(S, 2), p -> p[1] * p[2] = p[1]);

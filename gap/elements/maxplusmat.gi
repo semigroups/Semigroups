@@ -121,18 +121,32 @@ function(filter, n)
                   SEMIGROUPS.RandomIntegerMatrix(n, -infinity));
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsMaxPlusMatrix and a tropical max-plus matrix",
 [IsMaxPlusMatrix, IsTropicalMaxPlusMatrix],
 function(filter, mat)
   return MatrixNC(filter, AsList(mat));
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsMaxPlusMatrix and a projective max-plus matrix",
 [IsMaxPlusMatrix, IsProjectiveMaxPlusMatrix],
 function(filter, mat)
   return MatrixNC(filter, AsList(mat));
+end);
+
+InstallMethod(AsMatrix,
+"for IsMaxPlusMatrix, transformation",
+[IsMaxPlusMatrix, IsTransformation],
+function(filter, x)
+  return AsMatrix(filter, x, DegreeOfTransformation(x));
+end);
+
+InstallMethod(AsMatrix,
+"for IsMaxPlusMatrix, transformation, pos int",
+[IsMaxPlusMatrix, IsTransformation, IsPosInt],
+function(filter, x, dim)
+  return MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, -infinity, 0));
 end);
 
 #############################################################################
@@ -161,7 +175,7 @@ function(x, y)
   local n, xy, val, i, j, k, PlusMinMax;
 
   n := Minimum(Length(x![1]), Length(y![1]));
-  
+
   xy := List([1 .. n], x -> EmptyPlist(n));
   PlusMinMax := SEMIGROUPS.PlusMinMax;
 
@@ -188,11 +202,25 @@ function(filter, n)
                   SEMIGROUPS.RandomIntegerMatrix(n, infinity));
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsMinPlusMatrix and a tropical min-plus matrix",
 [IsMinPlusMatrix, IsTropicalMinPlusMatrix],
 function(filter, mat)
   return MatrixNC(filter, AsList(mat));
+end);
+
+InstallMethod(AsMatrix,
+"for IsMinPlusMatrix, transformation",
+[IsMinPlusMatrix, IsTransformation],
+function(filter, x)
+  return AsMatrix(filter, x, DegreeOfTransformation(x));
+end);
+
+InstallMethod(AsMatrix,
+"for IsMinPlusMatrix, transformation, pos int",
+[IsMinPlusMatrix, IsTransformation, IsPosInt],
+function(filter, x, dim)
+  return MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, infinity, 0));
 end);
 
 #############################################################################
@@ -268,7 +296,7 @@ function(filter, dim, threshold)
   return MatrixNC(filter, mat);
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsTropicalMaxPlusMatrix, max-plus matrix, and pos int",
 [IsTropicalMaxPlusMatrix, IsMaxPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
@@ -276,7 +304,7 @@ function(filter, mat, threshold)
                                                     threshold));
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsTropicalMaxPlusMatrix, projective max-plus matrix, and pos int",
 [IsTropicalMaxPlusMatrix, IsProjectiveMaxPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
@@ -286,12 +314,29 @@ end);
 
 # change the threshold
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsTropicalMaxPlusMatrix, max-plus matrix, and pos int",
 [IsTropicalMaxPlusMatrix, IsTropicalMaxPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
   return MatrixNC(filter, SEMIGROUPS.TropicalizeMat(AsMutableList(mat),
                                                     threshold));
+end);
+
+InstallMethod(AsMatrix,
+"for IsTropicalMaxPlusMatrix, transformation, IsPosInt",
+[IsTropicalMaxPlusMatrix, IsTransformation, IsPosInt],
+function(filter, x, threshold)
+  return AsMatrix(filter, x, DegreeOfTransformation(x), threshold);
+end);
+
+InstallMethod(AsMatrix,
+"for IsTropicalMaxPlusMatrix, transformation, pos int, pos int",
+[IsTropicalMaxPlusMatrix, IsTransformation, IsPosInt, IsPosInt],
+function(filter, x, dim, threshold)
+  local mat;
+  mat := SEMIGROUPS.MatrixTrans(x, dim, -infinity, 0);
+  return MatrixNC(filter,
+                  SEMIGROUPS.TropicalizeMat(mat, threshold));
 end);
 
 #############################################################################
@@ -362,7 +407,7 @@ function(filter, dim, threshold)
   return MatrixNC(filter, mat);
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsTropicalMinPlusMatrix, min-plus matrix, and pos int",
 [IsTropicalMinPlusMatrix, IsMinPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
@@ -372,12 +417,29 @@ end);
 
 # change the threshold
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsTropicalMinPlusMatrix, min-plus matrix, and pos int",
 [IsTropicalMinPlusMatrix, IsTropicalMinPlusMatrix, IsPosInt],
 function(filter, mat, threshold)
   return MatrixNC(filter, SEMIGROUPS.TropicalizeMat(AsMutableList(mat),
                                                     threshold));
+end);
+
+InstallMethod(AsMatrix,
+"for IsTropicalMinPlusMatrix, transformation, IsPosInt",
+[IsTropicalMinPlusMatrix, IsTransformation, IsPosInt],
+function(filter, x, threshold)
+  return AsMatrix(filter, x, DegreeOfTransformation(x), threshold);
+end);
+
+InstallMethod(AsMatrix,
+"for IsTropicalMinPlusMatrix, transformation, pos int, pos int",
+[IsTropicalMinPlusMatrix, IsTransformation, IsPosInt, IsPosInt],
+function(filter, x, dim, threshold)
+  local mat;
+  mat := SEMIGROUPS.MatrixTrans(x, dim, infinity, 0);
+  return MatrixNC(filter,
+                  SEMIGROUPS.TropicalizeMat(mat, threshold));
 end);
 
 #############################################################################
@@ -447,18 +509,32 @@ function(filter, n)
                   SEMIGROUPS.RandomIntegerMatrix(n, -infinity));
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsProjectiveMaxPlusMatrix, max-plus matrix",
 [IsProjectiveMaxPlusMatrix, IsMaxPlusMatrix],
 function(filter, mat)
   return MatrixNC(filter, AsList(mat));
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsProjectiveMaxPlusMatrix, tropical max-plus matrix",
 [IsProjectiveMaxPlusMatrix, IsTropicalMaxPlusMatrix],
 function(filter, mat)
   return MatrixNC(filter, AsList(mat));
+end);
+
+InstallMethod(AsMatrix,
+"for IsProjectiveMaxPlusMatrix, transformation",
+[IsProjectiveMaxPlusMatrix, IsTransformation],
+function(filter, x)
+  return AsMatrix(filter, x, DegreeOfTransformation(x));
+end);
+
+InstallMethod(AsMatrix,
+"for IsProjectiveMaxPlusMatrix, transformation, pos int",
+[IsProjectiveMaxPlusMatrix, IsTransformation, IsPosInt],
+function(filter, x, dim)
+  return MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, -infinity, 0));
 end);
 
 #############################################################################
@@ -470,8 +546,6 @@ InstallMethod(ThresholdNTPMatrix, "for a natural matrix",
 
 InstallMethod(PeriodNTPMatrix, "for a natural matrix",
 [IsNTPMatrix], x -> x![DimensionOfMatrixOverSemiring(x) + 2]);
-
-#
 
 InstallMethod(SEMIGROUPS_TypeViewStringOfMatrixOverSemiring,
 "for a natural number matrix",
@@ -537,7 +611,7 @@ function(filter, dim, threshold, period)
   return MatrixNC(filter, mat);
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsNTPMatrix, ntp matrix, pos int, pos int",
 [IsNTPMatrix, IsNTPMatrix, IsPosInt, IsPosInt],
 function(filter, mat, threshold, period)
@@ -546,13 +620,30 @@ function(filter, mat, threshold, period)
                                                    period));
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsNTPMatrix, ntp matrix, pos int, pos int",
 [IsNTPMatrix, IsIntegerMatrix, IsPosInt, IsPosInt],
 function(filter, mat, threshold, period)
   return MatrixNC(filter, SEMIGROUPS.NaturalizeMat(AsMutableList(mat),
                                                    threshold,
                                                    period));
+end);
+
+InstallMethod(AsMatrix,
+"for IsNTPMatrix, transformation, pos int, pos int",
+[IsNTPMatrix, IsTransformation, IsPosInt, IsPosInt],
+function(filter, x, threshold, period)
+  return AsMatrix(filter, x, DegreeOfTransformation(x), threshold, period);
+end);
+
+InstallMethod(AsMatrix,
+"for IsNTPMatrix, transformation, pos int, pos int, pos int",
+[IsNTPMatrix, IsTransformation, IsPosInt, IsPosInt, IsPosInt],
+function(filter, x, dim, threshold, period)
+  local mat;
+  mat := SEMIGROUPS.MatrixTrans(x, dim, 0, 1);
+  return MatrixNC(filter,
+                  SEMIGROUPS.NaturalizeMat(mat, threshold, period));
 end);
 
 #############################################################################
@@ -642,9 +733,24 @@ function(S)
   return true;
 end);
 
-InstallMethod(AsMatrixCons,
+InstallMethod(AsMatrix,
 "for IsIntegerMatrix, ntp matrix",
 [IsIntegerMatrix, IsNTPMatrix],
 function(filter, mat)
   return MatrixNC(filter, AsList(mat));
+end);
+
+InstallMethod(AsMatrix,
+"for IsIntegerMatrix, transformation",
+[IsIntegerMatrix, IsTransformation],
+function(filter, x)
+  return AsMatrix(filter, x, DegreeOfTransformation(x));
+end);
+
+InstallMethod(AsMatrix,
+"for IsIntegerMatrix, transformation, pos int",
+[IsIntegerMatrix, IsTransformation, IsPosInt],
+function(filter, x, dim)
+  return MatrixNC(filter,
+                  SEMIGROUPS.MatrixTrans(x, dim, 0, 1));
 end);
