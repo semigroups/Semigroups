@@ -125,7 +125,9 @@ function(S)
   local iso, inv;
 
   if not IsGroupAsSemigroup(S) then
-    return fail;
+    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
+                  "the argument must be a semigroup satisfying ",
+                  "IsGroupAsSemigroup,");
   fi;
 
   iso := IsomorphismPermGroup(GroupHClass(DClass(S, Representative(S))));
