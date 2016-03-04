@@ -178,6 +178,161 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
+#T# IsomorphismPermGroup: for a Min Plus Matrix Semigroup
+gap> S := Semigroup( [ Matrix(IsMinPlusMatrix,
+>                             [[infinity, 0, infinity, infinity],
+>                              [infinity, infinity, 0, infinity],
+>                              [infinity, infinity, infinity, 0],
+>                              [0, infinity, infinity, infinity]]),
+>                      Matrix(IsMinPlusMatrix,
+>                             [[infinity, infinity, 0, infinity],
+>                              [infinity, infinity, infinity, 0],
+>                              [0, infinity, infinity, infinity],
+>                              [infinity, 0, infinity, infinity]]) ] );
+<semigroup of 4x4 min-plus matrices with 2 generators>
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> G := Range(iso);
+<group of size 4, with 2 generators>
+gap> S := Semigroup(
+> [Matrix(IsMinPlusMatrix, [[infinity, 0, infinity], [0, infinity, infinity],
+>     [infinity, 0, infinity]]),
+> Matrix(IsMinPlusMatrix, [[infinity, infinity, 0], [infinity, infinity, 0],
+>     [0, infinity, infinity]]) ] );;
+gap> iso := IsomorphismPermGroup(S);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument must be a semigroup satisfying IsGroupAsSemigroup,
+
+#T# IsomorphismPermGroup: for a Tropical Max Plus Matrix Semigroup
+gap> S := Semigroup(
+> [Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 0, -infinity],
+>     [-infinity, -infinity, -infinity, 0],
+>     [0, -infinity, -infinity, -infinity],
+>     [-infinity, 0, -infinity, -infinity]], 2),
+> Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, -infinity, 0],
+>     [-infinity, -infinity, 0, -infinity],
+>     [-infinity, 0, -infinity, -infinity],
+>     [0, -infinity, -infinity, -infinity]], 2) ] );;
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> G := Range(iso);
+<group of size 4, with 2 generators>
+gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [[3, 0], [2, 1]], 3),
+>  Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [0, -infinity]], 3),
+>  Matrix(IsTropicalMaxPlusMatrix, [[1, -infinity], [1, 0]], 3) ] );;
+gap> iso := IsomorphismPermGroup(S);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument must be a semigroup satisfying IsGroupAsSemigroup,
+
+#T# IsomorphismPermGroup: for a Tropical Min Plus Matrix Semigroup
+gap> S := Semigroup([
+> Matrix(IsTropicalMinPlusMatrix,
+>    [[infinity, 0, infinity, infinity, infinity],
+>     [infinity, infinity, 0, infinity, infinity],
+>     [infinity, infinity, infinity, 0, infinity],
+>     [infinity, infinity, infinity, infinity, 0],
+>     [0, infinity, infinity, infinity, infinity]], 2)]);;
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> G := Range(iso);
+<group of size 5, with 1 generator>
+gap> S := Monoid(
+> [Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], [infinity, 0]], 2)]);;
+gap> iso := IsomorphismPermGroup(S);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument must be a semigroup satisfying IsGroupAsSemigroup,
+
+#T# IsomorphismPermGroup: for a Projective Max Plus Matrix Semigroup
+gap> S := Semigroup([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>    [[-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>     [-infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>     [0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>     [-infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>     [-infinity, -infinity, -infinity, -infinity, -infinity, 0],
+>     [-infinity, -infinity, -infinity, -infinity, 0, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>    [[-infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>     [-infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>     [-infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>     [-infinity, -infinity, -infinity, -infinity, -infinity, 0],
+>     [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>     [0, -infinity, -infinity, -infinity, -infinity, -infinity]])]);;
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> G := Range(iso);
+<group of size 6, with 2 generators>
+gap> S := Semigroup([
+> Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, 0, -infinity],
+>     [0, -infinity, -infinity], [-infinity, 0, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, -infinity, 0],
+>     [-infinity, -infinity, 0], [0, -infinity, -infinity]])]);;
+gap> iso := IsomorphismPermGroup(S);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument must be a semigroup satisfying IsGroupAsSemigroup,
+
+#T# IsomorphismPermGroup: for a NTP Matrix Semigroup
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix, [[0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0],
+>     [1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1],
+>     [0, 0, 0, 0, 1, 0]], 2, 3),
+> Matrix(IsNTPMatrix, [[0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0],
+>     [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0],
+>     [1, 0, 0, 0, 0, 0]], 2, 3)]);;
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> G := Range(iso);
+<group of size 6, with 2 generators>
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix, [[0, 0, 1, 0], [1, 0, 0, 2], [0, 4, 0, 2],
+>     [1, 3, 0, 5]], 88, 6)]);;
+gap> iso := IsomorphismPermGroup(S);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument must be a semigroup satisfying IsGroupAsSemigroup,
+
+#T# IsomorphismPermGroup: for a Block Bijection Semigroup
+gap> S := InverseSemigroup(
+> [Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ],
+>    [ 6, -6 ] ] ), Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -4 ],
+>    [ 4, -5 ], [ 5, -3 ], [ 6, -6 ]])]);;
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> G := Range(iso);
+Group([ (1,2), (3,4,5) ])
+gap> S :=
+> Semigroup( [ Bipartition( [ [ 1, 4, -4 ], [ 2, -3 ], [ 3, -1, -2 ] ] ),
+>  Bipartition( [ [ 1, 2, -2, -3 ], [ 3, -1 ], [ 4, -4 ]])]);;
+gap> iso := IsomorphismPermGroup(S);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument must be a semigroup satisfying IsGroupAsSemigroup,
+
+#T# IsomorphismPermGroup: for a Integer Matrix Semigroup
+gap> S := Semigroup(
+> [Matrix(IsIntegerMatrix, [[0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0],
+>     [1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1],
+>     [0, 0, 0, 0, 1, 0]]),
+> Matrix(IsIntegerMatrix, [[0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 1, 0],
+>     [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0],
+>     [1, 0, 0, 0, 0, 0]])]);;
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> G := Range(iso);
+<group of size 6, with 2 generators>
+gap> S := Semigroup(
+> [Matrix(IsIntegerMatrix, [[0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0],
+>     [0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 1, 0, 0],
+>     [0, 0, 0, 0, 1, 0, 0], [0, 0, 0, 0, 0, 0, 1]])]);;
+gap> iso := IsomorphismPermGroup(S);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument must be a semigroup satisfying IsGroupAsSemigroup,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceIsoCheck);
 gap> Unbind(F);
