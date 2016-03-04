@@ -600,6 +600,11 @@ gap> AsBipartition(PBR(
 gap> ForAll([1 .. 20], x -> IsBlockBijection(RandomBlockBijection(x)));
 true
 
+# bipartition: bug in BIPART_LAMBDA_CONJ
+gap> BIPART_LAMBDA_CONJ(Bipartition([[1, -2], [2, -3], [3], [-1]]),
+>                       Bipartition([[1, -1, -2], [2, -3], [3]]));
+(1,3,2)
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
 gap> Unbind(N);

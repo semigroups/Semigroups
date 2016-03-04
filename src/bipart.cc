@@ -445,38 +445,42 @@ Obj BIPART_LAMBDA_CONJ (Obj self, Obj x, Obj y) {
   size_t nr_left_blocks = xx->nr_left_blocks();
   size_t nr_blocks      = std::max(xx->nr_blocks(), yy->nr_blocks());
 
-  std::fill(_BUFFER_size_t.begin(),
-            std::min(_BUFFER_size_t.end(),
-                     _BUFFER_size_t.begin() + nr_left_blocks + 3 * nr_blocks),
-            -1);
-  _BUFFER_size_t.resize(nr_left_blocks + 3 * nr_blocks, -1);
+  _BUFFER_bool.clear();
+  _BUFFER_bool.resize(3 * nr_blocks);
+  auto seen = _BUFFER_bool.begin();
+  auto src  = seen + nr_blocks;
+  auto dst  = src + nr_blocks;
 
-  auto   seen = _BUFFER_size_t.begin() + nr_left_blocks;
-  auto   src  = seen + nr_blocks;
-  auto   dst  = src + nr_blocks;
-  size_t next = 0;
+  _BUFFER_size_t.clear();
+  _BUFFER_size_t.resize(nr_left_blocks);
+  auto   lookup = _BUFFER_size_t.begin();
+  size_t next   = 0;
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (seen[yy->block(i)] == (size_t) -1) {
-      seen[yy->block(i)]++;
+    if (! seen[yy->block(i)]) {
+      seen[yy->block(i)] = true;
       if (yy->block(i) < nr_left_blocks) { // connected block
-        _BUFFER_size_t[yy->block(i)] = next;
+        lookup[yy->block(i)] = next;
       }
       next++;
     }
   }
+
+  std::fill(_BUFFER_bool.begin(), 
+            _BUFFER_bool.begin() + nr_blocks,
+            false);
 
   Obj    p    = NEW_PERM4(nr_blocks);
   UInt4* ptrp = ADDR_PERM4(p);
   next = 0;
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (seen[xx->block(i)] < 1) {
-      seen[xx->block(i)] += 2;
+    if (! seen[xx->block(i)]) {
+      seen[xx->block(i)] = true;
       if (xx->block(i) < nr_left_blocks) { // connected block
-        ptrp[next] = _BUFFER_size_t[xx->block(i)];
-        src[next]++;
-        dst[_BUFFER_size_t[xx->block(i)]]++;
+        ptrp[next] = lookup[xx->block(i)];
+        src[next] = true;
+        dst[lookup[xx->block(i)]] = true;
       }
       next++;
     }
@@ -484,8 +488,8 @@ Obj BIPART_LAMBDA_CONJ (Obj self, Obj x, Obj y) {
 
   size_t j = 0;
   for (size_t i = 0; i < nr_blocks; i++) {
-    if (src[i] == (size_t) -1) {
-      while (dst[j] != (size_t) -1) {
+    if (! src[i]) {
+      while (dst[j]) {
         j++;
       }
       ptrp[i] = j;
@@ -494,8 +498,6 @@ Obj BIPART_LAMBDA_CONJ (Obj self, Obj x, Obj y) {
   }
   return p;
 }
-
-// x and y should have equal left blocks
 
 Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
   size_t pdeg;
@@ -514,7 +516,7 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
       pdeg--;
     }
   } else {
-    ErrorQuit("usage: <p> must be a list (not a %s)", (Int) TNAM_OBJ(p), 0L);
+    ErrorQuit("usage: <p> must be a perm (not a %s)", (Int) TNAM_OBJ(p), 0L);
   }
 
   Bipartition* xx = bipart_get_cpp(x);
@@ -586,7 +588,6 @@ Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
 // Blocks
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // GAP-level functions
