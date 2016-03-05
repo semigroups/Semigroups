@@ -11,6 +11,38 @@
 #
 # This file contains methods for semigroups of PBRs.
 
+#############################################################################
+## ?. Random
+#############################################################################
+
+InstallMethod(RandomSemigroupCons,
+"for IsPBRSemigroup, pos int, int, int, int",
+[IsPBRSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Semigroup(List([1 .. nrgens], i -> RandomPBR(deg)));
+end);
+
+InstallMethod(RandomMonoidCons,
+"for IsPBRMonoid, pos int, int, int, int",
+[IsPBRMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return Monoid(List([1 .. nrgens], i -> RandomPBR(deg)));
+end);
+
+InstallMethod(RandomInverseSemigroupCons,
+"for IsPBRSemigroup, pos int, int, int, int",
+[IsPBRSemigroup, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
+end);
+
+InstallMethod(RandomInverseMonoidCons,
+"for IsPBRMonoid, pos int, int, int, int",
+[IsPBRMonoid, IsPosInt, IsInt, IsInt, IsInt],
+function(filt, nrgens, deg, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
+end);
+
 InstallMethod(FullPBRMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
