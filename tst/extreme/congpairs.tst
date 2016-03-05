@@ -10,7 +10,7 @@
 gap> START_TEST("Semigroups package: extreme/congpairs.tst");
 gap> LoadPackage("semigroups", false);;
 
-#  
+#
 gap> SEMIGROUPS.StartTest();;
 
 # LatticeOfXCongruences with 'transrep' flag

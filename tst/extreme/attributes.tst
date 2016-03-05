@@ -10,11 +10,11 @@
 gap> START_TEST("Semigroups package: extreme/attributes.tst");
 gap> LoadPackage("semigroups", false);;
 
-#  
+#
 gap> SEMIGROUPS.StartTest();;
 
 #T# SmallerDegreeTransformationRepresentation: Partial perm semigroup
-gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), 
+gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ),
 >                      PartialPerm( [ 1, 2 ], [ 3, 1 ] ) ] );;
 gap> iso := SmallerDegreeTransformationRepresentation(S);;
 gap> T := Range(iso);
