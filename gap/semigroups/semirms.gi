@@ -611,7 +611,8 @@ function(R)
                       x![3] ^ perm.col);
   end;
 
-  hom := MappingByFunction(R, out, iso, inv);
+  hom := MagmaIsomorphismByFunctionsNC(R, out, iso, inv);
+  # TODO check if the next lines are necessary JDM
   SetIsInjective(hom, true);
   SetIsSurjective(hom, true);
   SetIsTotal(hom, true);
@@ -664,7 +665,8 @@ function(R)
     return RMSElement(R, x![1], r[x![1]] * x![2] * c[x![3]], x![3]);
   end;
 
-  hom := MappingByFunction(R, S, iso, inv);
+  hom := MagmaIsomorphismByFunctionsNC(R, S, iso, inv);
+  # TODO check if the next lines are necessary JDM
   SetIsInjective(hom, true);
   SetIsSurjective(hom, true);
   SetIsTotal(hom, true);

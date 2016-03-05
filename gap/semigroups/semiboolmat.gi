@@ -64,7 +64,10 @@ function(filter, S)
   n := Maximum(1, DegreeOfTransformationSemigroup(S));
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
   UseIsomorphismRelation(S, T);
-  return MappingByFunction(S, T, x -> AsBooleanMat(x, n), AsTransformation);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       x -> AsBooleanMat(x, n),
+                                       AsTransformation);
 end);
 
 # If the second argument here is a transformation semigroup, then
