@@ -55,10 +55,12 @@ gap> DegreeOfPBRCollection([x]);
 gap> DegreeOfPBRCollection([y]);
 3
 gap> DegreeOfPBRCollection([x, y]);
-Error, Semigroups: DegreeOfPBRCollection: usage,
-the argument <coll> must be a collection of PBRs of equal degree,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `DegreeOfPBRCollection' on 1 arguments
 gap> DegreeOfPBRCollection(FullPBRMonoid(1));
 1
+gap> Semigroup(x, y);
+Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 
 #T# pbr: IsGeneratorsOfInverseSemigroup, 1/1
 gap> x := PBR([[], [-2]], [[], []]);;

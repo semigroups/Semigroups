@@ -24,6 +24,56 @@
 # The number <n> is the *degree* of <x>.
 
 #############################################################################
+# Family and type.
+#
+# One per degree to avoid lists with pbrs of different degrees
+# belonging to IsAssociativeElementCollection.
+#############################################################################
+
+BindGlobal("SEMIGROUPS_PBRFamilies", []);
+BindGlobal("SEMIGROUPS_PBRTypes", []);
+
+InstallGlobalFunction(PBRFamily,
+function(n)
+
+  if not IsInt(n) or n < 0 then
+    ErrorNoReturn("Semigroups: PBRFamily: usage,\n",
+                  "the argument must be a non-negative integer,");
+  fi;
+
+  n := n + 1; # since the degree can be 0
+
+  if not IsBound(SEMIGROUPS_PBRFamilies[n]) then
+    SEMIGROUPS_PBRFamilies[n] :=
+          NewFamily(Concatenation("PBRFamily", String(n)),
+                    IsPBR,
+                    CanEasilySortElements,
+                    CanEasilySortElements);
+  fi;
+
+  return SEMIGROUPS_PBRFamilies[n];
+end);
+
+InstallGlobalFunction(PBRType,
+function(n)
+
+  if not IsInt(n) or n < 0 then
+    ErrorNoReturn("Semigroups: PBRType: usage,\n",
+                  "the argument must be a non-negative integer,");
+  fi;
+
+  n := n + 1; # since the degree can be 0
+
+  if not IsBound(SEMIGROUPS_PBRTypes[n]) then
+    SEMIGROUPS_PBRTypes[n] :=
+           NewType(PBRFamily(n),
+                   IsPBR and IsPositionalObjectRep);
+  fi;
+
+  return SEMIGROUPS_PBRTypes[n];
+end);
+
+#############################################################################
 # Pickler
 #############################################################################
 
@@ -45,7 +95,7 @@ IO_Unpicklers.PABR := function(file)
   if x = IO_Error then
     return IO_Error;
   fi;
-  return Objectify(PBRType, x);
+  return Objectify(PBRType(x![1]), x);
 end;
 
 #############################################################################
@@ -512,7 +562,7 @@ function(arg)
   od;
   MakeImmutable(arg);
   arg := Concatenation([Length(arg[1])], Concatenation(arg));
-  return Objectify(PBRType, arg);
+  return Objectify(PBRType(arg[1]), arg);
 end);
 
 InstallMethod(DegreeOfPBR, "for a pbr",
@@ -578,7 +628,7 @@ function(x, y)
     y_dfs(i, out[i + 1]);
   od;
 
-  return Objectify(PBRType, out);
+  return Objectify(PBRType(n), out);
 end);
 
 InstallMethod(ExtRepOfPBR, "for a pbr",
@@ -690,5 +740,5 @@ function(x)
     out[i + 1] := [i + n];
     out[i + n + 1] := [i];
   od;
-  return Objectify(PBRType, out);
+  return Objectify(PBRType(n), out);
 end);
