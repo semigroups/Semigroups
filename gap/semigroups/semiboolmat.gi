@@ -31,15 +31,15 @@ end);
 InstallMethod(RandomInverseSemigroupCons,
 "for IsBooleanMatSemigroup, pos int, int, int, int",
 [IsBooleanMatSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
+function(filt, nrgens, dim, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, dim);
 end);
 
 InstallMethod(RandomInverseMonoidCons,
 "for IsBooleanMatMonoid, pos int, int, int, int",
 [IsBooleanMatMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
+function(filt, nrgens, dim, dummy1, dummy2)
+  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, dim);
 end);
 
 #############################################################################
@@ -64,7 +64,10 @@ function(filter, S)
   n := Maximum(1, DegreeOfTransformationSemigroup(S));
   T := Semigroup(List(GeneratorsOfSemigroup(S), x -> AsBooleanMat(x, n)));
   UseIsomorphismRelation(S, T);
-  return MappingByFunction(S, T, x -> AsBooleanMat(x, n), AsTransformation);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       x -> AsBooleanMat(x, n),
+                                       AsTransformation);
 end);
 
 # If the second argument here is a transformation semigroup, then

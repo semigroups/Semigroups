@@ -112,6 +112,7 @@ extern Obj NTPMatrixType;
 extern Obj IsIntegerMatrix;
 extern Obj IntegerMatrixType;
 extern Obj IsPBR;
+extern Obj PBRTypes;
 extern Obj PBRType;
 
 /*******************************************************************************

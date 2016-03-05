@@ -35,4 +35,5 @@ Obj NTPMatrixType;
 Obj IsIntegerMatrix;
 Obj IntegerMatrixType;
 Obj IsPBR;
+Obj PBRTypes;
 Obj PBRType;

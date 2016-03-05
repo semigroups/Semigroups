@@ -739,11 +739,13 @@ function(S)
                       x -> TransformationOpNC(x, pts, OnBlist)));
   UseIsomorphismRelation(S, T);
 
-  return MappingByFunction(S,
-                           T,
-                           x -> TransformationOpNC(x, pts, OnBlist),
-                           x -> BooleanMat(List([1 .. n],
-                                           i -> pts[pos[i] ^ x])));
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       x -> TransformationOpNC(x,
+                                                               pts,
+                                                               OnBlist),
+                                       x -> BooleanMat(List([1 .. n],
+                                                       i -> pts[pos[i] ^ x])));
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
@@ -790,7 +792,7 @@ end);
 InstallMethod(GroupOfUnits, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local H, map, G, U;
+  local H, map, G, U, iso;
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
@@ -800,11 +802,14 @@ function(S)
   map := InverseGeneralMapping(IsomorphismPermGroup(H));
   G := Source(map);
   U := Semigroup(List(GeneratorsOfGroup(G), x -> x ^ map));
-
-  SetIsomorphismPermGroup(U, MappingByFunction(U, G, PermutationOfImage,
-                                               x -> x ^ map));
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
+
+  iso := MagmaIsomorphismByFunctionsNC(U,
+                                       G,
+                                       PermutationOfImage,
+                                       x -> x ^ map);
+  SetIsomorphismPermGroup(U, iso);
 
   return U;
 end);

@@ -423,18 +423,8 @@ end);
 
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
-  local opts, file_ext, is_testable, dir, contents, farm, nr_tests, out,
-  elapsed, failed, passed, info, start_time, pass, end_time, elapsed_this_test,
-  str, filename;
-
-  if Length(arg) = 1 and IsRecord(arg[1]) then
-    opts := arg[1];
-    if not IsBound(opts.parallel) or not IsBool(opts.parallel) then
-      opts.parallel := false;
-    fi;
-  else
-    opts := rec(parallel := false);
-  fi;
+  local file_ext, is_testable, dir, contents, elapsed, failed, passed,
+  start_time, pass, end_time, elapsed_this_test, str, filename;
 
   Print("\n");
 
@@ -476,62 +466,36 @@ function(arg)
 
   SemigroupsTestInstall(rec(silent := false));
 
-  if opts.parallel then
-    farm := ParWorkerFarmByFork(SEMIGROUPS.Test,
-                                rec(NumberJobs := 3));
-    nr_tests := 0;
-  else
-    out := true;
-  fi;
-
   elapsed := 0;
   failed  := [];
   passed  := [];
 
   for filename in contents do
     if file_ext(filename) = "tst" and is_testable(dir, filename) then
-      if opts.parallel then
-        nr_tests := nr_tests + 1;
-        Submit(farm, [Filename(Directory(dir), filename),
-                      rec(silent := false)]);
-      else
-        start_time := IO_gettimeofday();
-        pass := SEMIGROUPS.Test(Filename(Directory(dir), filename),
-                                rec(silent := false));
+      start_time := IO_gettimeofday();
+      pass := SEMIGROUPS.Test(Filename(Directory(dir), filename),
+                              rec(silent := false));
 
-        end_time := IO_gettimeofday();
-        elapsed_this_test := (end_time.tv_sec - start_time.tv_sec) * 1000
-                   + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
-        elapsed := elapsed + elapsed_this_test;
-        if not pass then
-          Add(failed, [filename,
-                       "FAILED",
-                       Concatenation(String(elapsed_this_test), "ms")]);
-          out := false;
-        else
-          Add(passed, [filename,
-                      "PASSED",
-                      Concatenation(String(elapsed_this_test), "ms")]);
-        fi;
+      end_time := IO_gettimeofday();
+      elapsed_this_test := (end_time.tv_sec - start_time.tv_sec) * 1000
+                 + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+      elapsed := elapsed + elapsed_this_test;
+      if not pass then
+        Add(failed, [filename,
+                     "FAILED",
+                     Concatenation(String(elapsed_this_test), "ms")]);
+      else
+        Add(passed, [filename,
+                     "PASSED",
+                     Concatenation(String(elapsed_this_test), "ms")]);
       fi;
     fi;
   od;
 
-  if opts.parallel then
-    while Length(farm!.outqueue) < nr_tests do
-      DoQueues(farm, false);
-    od;
-
-    out := Pickup(farm);
-    Kill(farm);
-  fi;
-
-  Print(failed, "\n");
-  Print(passed, "\n\n");
   Print("TOTAL elapsed time: ", String(elapsed), "ms\n\n");
   GASMAN("collect");
 
-  return out;
+  return [failed, passed];
 end);
 
 InstallGlobalFunction(SemigroupsTestInstall,

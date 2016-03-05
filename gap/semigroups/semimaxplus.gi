@@ -217,11 +217,11 @@ for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
     iso2 := IsomorphismSemigroup(filter, threshold, Range(iso1));
     inv2 := InverseGeneralMapping(iso2);
 
-    return MappingByFunction(S, Range(iso2),
-                             x -> (x ^ iso1) ^ iso2,
-                             x -> (x ^ inv2) ^ inv1);
+    return MagmaIsomorphismByFunctionsNC(S,
+                                         Range(iso2),
+                                         x -> (x ^ iso1) ^ iso2,
+                                         x -> (x ^ inv2) ^ inv1);
   end);
-
 od;
 
 Unbind(_IsXMatrix);
@@ -240,9 +240,10 @@ function(filter, threshold, period, S)
   iso2 := IsomorphismSemigroup(filter, threshold, period, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MappingByFunction(S, Range(iso2),
-                           x -> (x ^ iso1) ^ iso2,
-                           x -> (x ^ inv2) ^ inv1);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso2),
+                                       x -> (x ^ iso1) ^ iso2,
+                                       x -> (x ^ inv2) ^ inv1);
 end);
 
 #############################################################################
@@ -328,9 +329,10 @@ _InstallIsomorphism1 := function(filter)
     iso2 := IsomorphismMonoid(filter, threshold, Range(iso1));
     inv2 := InverseGeneralMapping(iso2);
 
-    return MappingByFunction(S, Range(iso2),
-                             x -> (x ^ iso1) ^ iso2,
-                             x -> (x ^ inv2) ^ inv1);
+    return MagmaIsomorphismByFunctionsNC(S,
+                                         Range(iso2),
+                                         x -> (x ^ iso1) ^ iso2,
+                                         x -> (x ^ inv2) ^ inv1);
   end);
 
   InstallMethod(IsomorphismMonoid,
@@ -384,9 +386,10 @@ function(filter, threshold, period, S)
   iso2 := IsomorphismMonoid(filter, threshold, period, Range(iso1));
   inv2 := InverseGeneralMapping(iso2);
 
-  return MappingByFunction(S, Range(iso2),
-                           x -> (x ^ iso1) ^ iso2,
-                           x -> (x ^ inv2) ^ inv1);
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso2),
+                                       x -> (x ^ iso1) ^ iso2,
+                                       x -> (x ^ inv2) ^ inv1);
 end);
 
 InstallMethod(IsomorphismMonoid,

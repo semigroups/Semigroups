@@ -92,8 +92,8 @@ gap> G := Range(iso);
 <group of size 24, with 2 generators>
 
 #T# IsomorphismPermGroup: for a PBR Semigroup
-gap> S := Semigroup([PBR([[-1],[-4],[-2],[-3]],[[1],[3],[4],[2]]),
->                    PBR([[-2],[-1],[-3],[-4]],[[2],[1],[3],[4]])]);;
+gap> S := Semigroup([PBR([[-1], [-4], [-2], [-3]], [[1], [3], [4], [2]]),
+>                    PBR([[-2], [-1], [-3], [-4]], [[2], [1], [3], [4]])]);;
 gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso);
 true

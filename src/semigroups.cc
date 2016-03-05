@@ -882,6 +882,9 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary("SEMIGROUPS_BipartitionTypes", &BipartTypes);
     ImportGVarFromLibrary("BipartitionType", &BipartitionType);
     ImportGVarFromLibrary("BlocksType", &BlocksType );
+    
+    ImportGVarFromLibrary("SEMIGROUPS_PBRTypes", &PBRTypes);
+    ImportGVarFromLibrary("PBRType", &PBRType);
 
     ImportGVarFromLibrary("IsBooleanMat", &IsBooleanMat );
     ImportGVarFromLibrary("BooleanMatType", &BooleanMatType );

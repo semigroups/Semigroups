@@ -94,7 +94,7 @@ end);
 InstallMethod(GroupOfUnits, "for an acting bipartition semigroup",
 [IsBipartitionSemigroup and IsActingSemigroup],
 function(S)
-  local R, G, deg, U;
+  local R, G, deg, U, map;
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
@@ -105,12 +105,14 @@ function(S)
   deg := DegreeOfBipartitionSemigroup(S);
 
   U := Semigroup(List(GeneratorsOfGroup(G), x -> AsBipartition(x, deg)));
-
-  SetIsomorphismPermGroup(U, MappingByFunction(U, G, AsPermutation,
-                                               x -> AsBipartition(x, deg)));
-
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
+
+  map := MagmaIsomorphismByFunctionsNC(U,
+                                       G,
+                                       AsPermutation,
+                                       x -> AsBipartition(x, deg));
+  SetIsomorphismPermGroup(U, map);
 
   return U;
 end);

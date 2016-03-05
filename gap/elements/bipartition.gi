@@ -30,8 +30,9 @@ function(n)
 
   if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then
     SEMIGROUPS_BipartitionFamilies[n] :=
-          NewFamily(Concatenation("BipartitionFamily", String(n)),
-                    IsBipartition, CanEasilySortElements,
+          NewFamily(Concatenation("BipartitionFamily", String(n - 1)),
+                    IsBipartition,
+                    CanEasilySortElements,
                     CanEasilySortElements);
   fi;
 

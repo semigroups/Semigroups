@@ -150,6 +150,15 @@ Obj MatrixOverSemiringConverter::unconvert (Element* x) {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+Obj PBRConverter::get_gap_type (size_t deg) {
+  deg++;  
+  if (deg > (size_t) LEN_PLIST(PBRTypes) || 
+      ELM_PLIST(PBRTypes, deg) == 0) {
+    CALL_1ARGS(PBRType, INTOBJ_INT(deg - 1));
+  }
+  return ELM_PLIST(PBRTypes, deg);
+}
+
 // TODO add some more asserts here
 
 PBR* PBRConverter::convert (Obj o, size_t n) {
@@ -191,9 +200,8 @@ Obj PBRConverter::unconvert (Element* xx) {
     SET_ELM_PLIST(plist, i + 2, adj);
     CHANGED_BAG(plist);
   }
-  TYPE_POSOBJ(plist) = PBRType;
+  TYPE_POSOBJ(plist) = get_gap_type(x->degree());
   RetypeBag(plist, T_POSOBJ);
   CHANGED_BAG(plist);
   return plist;
-  //return CALL_2ARGS(Objectify, PBRType, plist);
 }

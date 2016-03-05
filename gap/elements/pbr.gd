@@ -21,15 +21,8 @@ DeclareCategory("IsPBR",
 DeclareCategoryCollections("IsPBR");
 DeclareCategoryCollections("IsPBRCollection");
 
-BindGlobal("PBRFamily",
-           NewFamily("PBRFamily",
-                     IsPBR,
-                     CanEasilySortElements,
-                     CanEasilySortElements));
-
-BindGlobal("PBRType",
-           NewType(PBRFamily,
-                   IsPBR and IsPositionalObjectRep));
+DeclareGlobalFunction("PBRType");
+DeclareGlobalFunction("PBRFamily");
 
 DeclareOperation("PBR", [IsDenseList, IsDenseList]);
 DeclareGlobalFunction("PBRNC");

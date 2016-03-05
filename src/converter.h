@@ -248,6 +248,8 @@ class PBRConverter : public Converter {
     PBR* convert   (Obj      o, size_t n);
     Obj  unconvert (Element* x          );
 
+  private: 
+    Obj get_gap_type (size_t deg);
 };
 
 #endif

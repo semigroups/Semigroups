@@ -369,7 +369,7 @@ InstallMethod(MultiplicativeNeutralElement, "for a partial perm semigroup",
 InstallMethod(GroupOfUnits, "for a partial perm semigroup",
 [IsPartialPermSemigroup],
 function(S)
-  local H, map, inv, G, deg, U;
+  local H, map, inv, G, deg, U, iso;
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
@@ -384,13 +384,14 @@ function(S)
                  CodegreeOfPartialPermSemigroup(S));
 
   U := Semigroup(List(GeneratorsOfGroup(G), x -> x ^ inv));
-
-  SetIsomorphismPermGroup(U, MappingByFunction(U, G,
-                                               x -> x ^ map,
-                                               x -> x ^ inv));
-
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, G);
+
+  iso := MagmaIsomorphismByFunctionsNC(U,
+                                       G,
+                                       x -> x ^ map,
+                                       x -> x ^ inv);
+  SetIsomorphismPermGroup(U, iso);
 
   return U;
 end);
