@@ -17,7 +17,9 @@
 
     <#Include Label = "IsIsomorphicSemigroup"> 
     <#Include Label = "SmallestMultiplicationTable"> 
-    <#Include Label = "IsomorphismSemigroups"> 
+    <#Include Label = "IsomorphismSemigroups">
+    <#Include Label = "SmallerDegreeTransformationRepresentation">
+    <#Include Label = "SmallDegreeTransformationRepresentation">
 
   </Section>
   

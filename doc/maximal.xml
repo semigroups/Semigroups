@@ -31,9 +31,9 @@ gap> S := FullTransformationSemigroup(4);
 <full transformation monoid of degree 4>
 gap> MaximalSubsemigroups(S);
 [ <transformation semigroup of degree 4 with 3 generators>, 
+  <transformation semigroup of degree 4 with 4 generators>, 
+  <transformation semigroup of degree 4 with 4 generators>, 
   <transformation semigroup of degree 4 with 5 generators>, 
-  <transformation semigroup of degree 4 with 4 generators>, 
-  <transformation semigroup of degree 4 with 4 generators>, 
   <transformation semigroup of degree 4 with 5 generators>, 
   <transformation semigroup of degree 4 with 5 generators>, 
   <transformation semigroup of degree 4 with 5 generators>, 

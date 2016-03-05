@@ -201,10 +201,14 @@ gap> RightSemigroupCongruence(S, pair1, pair2);
 <#GAPDoc Label="CongruencesOfSemigroup">
   <ManSection> 
     <Attr Name = "CongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "LeftCongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "RightCongruencesOfSemigroup" Arg = "S"/>
     <Returns>The congruences of a semigroup.</Returns>
     <Description>
-      This attribute gives a list of the congruences of the semigroup
-      <A>S</A>. <P/>
+      This attribute gives a list of the left, right, or 2-sided congruences of
+      the semigroup <A>S</A>. <P/>
+
+      See also <Ref Attr = "LatticeOfCongruences"/>. <P/>
 
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
@@ -222,21 +226,72 @@ gap> congs := CongruencesOfSemigroup(S);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="MinimalCongruencesOfSemigroup">
+  <ManSection>
+    <Attr Name = "MinimalCongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "MinimalLeftCongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "MinimalRightCongruencesOfSemigroup" Arg = "S"/>
+    <Returns>The congruences of a semigroup.</Returns>
+    <Description>
+      If <A>S</A> is a semigroup, then the attribute
+      <C>MinimalCongruencesOfSemigroup</C> gives a list of all the congruences
+      on <A>S</A> which are <E>minimal</E>.  A congruence is minimal iff it is
+      non-trivial and contains no other congruences as subrelations (apart from
+      the trivial congruence).
+      <P/>
+
+      <C>MinimalLeftCongruencesOfSemigroup</C> and
+      <C>MinimalRightCongruencesOfSemigroup</C> do the same thing, but for left
+      congruences and right congruences respectively.  Note that any congruence
+      is also a left congruence, but that a minimal congruence may not be a
+      minimal left congruence. <P/>
+
+      See also <Ref Attr = "CongruencesOfSemigroup"/>. <P/>
+
+      <Example><![CDATA[
+gap> S := Semigroup([Transformation([1,3,2]),
+>                    Transformation([3,1,3])]);;
+gap> min := MinimalCongruencesOfSemigroup(S);
+[ <semigroup congruence over <transformation semigroup of size 13, 
+     degree 3 with 2 generators> with 1 generating pairs> ]
+gap> minl := MinimalLeftCongruencesOfSemigroup(S);
+[ <left semigroup congruence over <transformation semigroup 
+     of size 13, degree 3 with 2 generators> with 1 generating pairs>,
+  <left semigroup congruence over <transformation semigroup 
+     of size 13, degree 3 with 2 generators> with 1 generating pairs>,
+  <left semigroup congruence over <transformation semigroup 
+     of size 13, degree 3 with 2 generators> with 1 generating pairs> 
+ ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="LatticeOfCongruences">
   <ManSection>
     <Attr Name = "LatticeOfCongruences" Arg = "S"/>
+    <Attr Name = "LatticeOfLeftCongruences" Arg = "S"/>
+    <Attr Name = "LatticeOfRightCongruences" Arg = "S"/>
     <Returns>A list of lists.</Returns>
     <Description>
-      If <A>S</A> is a semigroup, then this attribute gives a list of lists
-      showing how the congruences of <A>S</A> are contained in each other. <P/>
+      If <A>S</A> is a semigroup, then <C>LatticeOfCongruences</C> gives a list
+      of lists showing how the congruences of <A>S</A> are contained in each
+      other.  The congruence numbered <M>i</M> is a subcongruence of the
+      congruence numbered <M>j</M> if and only if <M>i</M> is in the <M>j</M>th
+      list.  The numbering is according to the order in
+      <Ref Attr = "CongruencesOfSemigroup"/>. <P/>
 
-      The congruence numbered <M>i</M> is a subcongruence of the congruence
-      numbered <M>j</M> if and only if <M>i</M> is in the <M>j</M>th list.
+      <C>LatticeOfLeftCongruences</C> and <C>LatticeOfRightCongruences</C> do
+      the same thing for left and right congruences respectively. <P/>
 
       <Example><![CDATA[
 gap> S := OrderEndomorphisms(2);;
 gap> LatticeOfCongruences(S);
-[ [  ], [ 1, 3 ], [ 1 ] ]]]></Example>
+[ [  ], [ 1, 3 ], [ 1 ] ]
+gap> LatticeOfLeftCongruences(S);
+[ [  ], [ 1, 3 ], [ 1 ] ]
+gap> LatticeOfRightCongruences(S);
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -530,6 +585,82 @@ gap> congs := CongruencesOfSemigroup(S);;
 gap> JoinSemigroupCongruences(congs[2], congs[3]);
 <semigroup congruence over <Rees 0-matrix semigroup 2x2 over 
   Sym( [ 1 .. 3 ] )> with linked triple (3,2,2)>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OnLeftCongruenceClasses">
+<ManSection>
+  <Oper Name = "OnLeftCongruenceClasses" Arg = "class, elm"/>
+  <Returns>A left congruence class.</Returns>
+  <Description>
+    If <A>class</A> is an equivalence class of the left semigroup congruence
+    <C>cong</C> on the semigroup <C>S</C>, and <A>elm</A> is an element of
+    <C>S</C>, then this operation returns the equivalence class of <C>cong</C>
+    containing the element <C><A>elm</A> * x</C>, where <C>x</C> is any element
+    of <A>class</A>.  The result is well-defined by the definition of a left
+    congruence. <P/>
+
+    See <Ref Filt="IsLeftSemigroupCongruence"/> and
+    <Ref Filt="IsLeftCongruenceClass"/>. <P/>
+
+    <Example><![CDATA[
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
+>              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
+>              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> cong := LeftSemigroupCongruence(S, [pair1, pair2]);
+<left semigroup congruence over <transformation semigroup of degree 5 
+ with 4 generators> with 2 generating pairs>
+gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> class := LeftCongruenceClassOfElement(cong, x);
+<left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
+gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> OnLeftCongruenceClasses(class, elm);
+<left congruence class of Transformation( [ 3, 4, 4, 3, 4 ] )>
+]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="OnRightCongruenceClasses">
+<ManSection>
+  <Oper Name = "OnRightCongruenceClasses" Arg = "class, elm"/>
+  <Returns>A right congruence class.</Returns>
+  <Description>
+    If <A>class</A> is an equivalence class of the right semigroup congruence
+    <C>cong</C> on the semigroup <C>S</C>, and <A>elm</A> is an element of
+    <C>S</C>, then this operation returns the equivalence class of <C>cong</C>
+    containing the element <C>x * <A>elm</A></C>, where <C>x</C> is any element
+    of <A>class</A>.  The result is well-defined by the definition of a right
+    congruence. <P/>
+
+    See <Ref Filt="IsRightSemigroupCongruence"/> and
+    <Ref Filt="IsRightCongruenceClass"/>. <P/>
+
+    <Example><![CDATA[
+gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 4 ] ),
+>                 Transformation( [ 3, 4, 3, 4, 3 ] ),
+>                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
+gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
+>              Transformation( [ 1, 2, 1, 2, 1 ] )];;
+gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
+>              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> cong := RightSemigroupCongruence(S, [pair1, pair2]);
+<right semigroup congruence over <transformation semigroup of 
+ degree 5 with 4 generators> with 2 generating pairs>
+gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> class := RightCongruenceClassOfElement(cong, x);
+<right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
+gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> OnRightCongruenceClasses(class, elm);
+<right congruence class of Transformation( [ 2, 1, 2, 1, 2 ] )>
+]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
