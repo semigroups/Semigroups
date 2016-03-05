@@ -45,7 +45,7 @@ function(n)
 
   if not IsBound(SEMIGROUPS_PBRFamilies[n]) then
     SEMIGROUPS_PBRFamilies[n] :=
-          NewFamily(Concatenation("PBRFamily", String(n)),
+          NewFamily(Concatenation("PBRFamily", String(n - 1)),
                     IsPBR,
                     CanEasilySortElements,
                     CanEasilySortElements);
