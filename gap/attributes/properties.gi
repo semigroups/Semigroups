@@ -743,7 +743,8 @@ InstallImmediateMethod(IsMonogenicSemigroup,
 IsSemigroup and IsFinite and HasGeneratorsOfSemigroup,
 0,
 function(S)
-  if Length(DuplicateFreeList(GeneratorsOfSemigroup(S))) = 1 then
+  if CanEasilyCompareElements(S)
+      and Length(DuplicateFreeList(GeneratorsOfSemigroup(S))) = 1 then
     return true;
   fi;
   TryNextMethod();
