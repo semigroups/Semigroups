@@ -11,6 +11,101 @@
 # this file contains methods for every operation/attribute/property that is
 # specific to Rees 0-matrix semigroups.
 
+#############################################################################
+## Random semigroups
+#############################################################################
+
+InstallMethod(RandomSemigroupCons,
+"for IsReesZeroMatrixSemigroup and list",
+[IsReesZeroMatrixSemigroup, IsList],
+function(filt, params)
+  local I, G, J, mat, i, j;
+
+  I := [1 .. params[1]];
+  J := [1 .. params[2]];
+  G := params[3];
+  # could add nr connected components
+
+  mat := List(J, x-> I * 0);
+
+  for i in I do
+    for j in J do
+      if Random([1, 2]) = 1 then
+        mat[j][i] := Random(G);
+      fi;
+    od;
+  od;
+
+  return ReesZeroMatrixSemigroup(G, mat);
+end);
+
+InstallMethod(RandomSemigroupCons,
+"for IsReesMatrixSemigroup and list",
+[IsReesMatrixSemigroup, IsList],
+function(filt, params)
+  local I, G, J, mat, i, j;
+
+  I := [1 .. params[1]];
+  J := [1 .. params[2]];
+  G := params[3];
+
+  mat := List(J, x -> List(I, x -> ()));
+
+  for i in I do
+    for j in J do
+      if Random([1, 2]) = 1 then
+        mat[j][i] := Random(G);
+      fi;
+    od;
+  od;
+
+  return ReesMatrixSemigroup(G, mat);
+end);
+
+InstallMethod(RandomSemigroupCons,
+"for IsReesZeroMatrixSemigroup and IsRegularSemigroup and list",
+[IsReesZeroMatrixSemigroup and IsRegularSemigroup, IsList],
+function(filt, params)
+  local I, G, J, mat, i, j;
+
+  I := [1 .. params[1]];
+  J := [1 .. params[2]];
+  G := params[3];
+  # could add nr connected components
+
+  mat := List(J, x-> I * 0);
+
+  if I > J then
+    for i in J do
+      mat[i][i] := ();
+    od;
+    for i in [params[2] + 1 .. params[1]] do
+      mat[1][i] := ();
+    od;
+  else
+    for i in I do
+      mat[i][i] := ();
+    od;
+    for i in [params[1] + 1 .. params[2]] do
+      mat[i][1] := ();
+    od;
+  fi;
+
+  for i in I do
+    for j in J do
+      if Random([1, 2]) = 1 then
+        mat[j][i] := Random(G);
+      fi;
+    od;
+  od;
+
+  return ReesZeroMatrixSemigroup(G, mat);
+end);
+
+#############################################################################
+## Isomorphisms
+#############################################################################
+
 InstallMethod(IsomorphismSemigroup,
 "for IsReesMatrixSemigroup and a semigroup",
 [IsReesMatrixSemigroup, IsSemigroup],

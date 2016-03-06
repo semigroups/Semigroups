@@ -15,65 +15,65 @@
 ## Random - bipartitions
 #############################################################################
 
-InstallMethod(RandomSemigroupCons,
-"for IsBipartitionSemigroup, pos int, int",
-[IsBipartitionSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Semigroup(List([1 .. nrgens], i -> RandomBipartition(deg)));
+InstallMethod(RandomSemigroupCons, "for IsBipartitionSemigroup and list",
+[IsBipartitionSemigroup, IsList],
+function(filt, params)
+  return Semigroup(List([1 .. params[1]], i -> RandomBipartition(params[2])));
 end);
 
-InstallMethod(RandomMonoidCons,
-"for IsBipartitionMonoid, pos int, int",
-[IsBipartitionMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Monoid(List([1 .. nrgens], i -> RandomBipartition(deg)));
+InstallMethod(RandomMonoidCons, "for IsBipartitionMonoid and list",
+[IsBipartitionMonoid, IsList],
+function(filt, params)
+  return Monoid(List([1 .. params[1]], i -> RandomBipartition(params[2])));
 end);
 
 InstallMethod(RandomInverseSemigroupCons,
-"for IsBipartitionSemigroup, pos int, int",
-[IsBipartitionSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
-end);
+"for IsBipartitionSemigroup and list", [IsBipartitionSemigroup, IsList],
+SEMIGROUPS.DefaultRandomInverseSemigroup);
 
 InstallMethod(RandomInverseMonoidCons,
-"for IsBipartitionMonoid, pos int, int",
-[IsBipartitionMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
-end);
+"for IsBipartitionMonoid and list", [IsBipartitionMonoid, IsList],
+SEMIGROUPS.DefaultRandomInverseMonoid);
 
 #############################################################################
 ## Random - block bijections
 #############################################################################
 
 InstallMethod(RandomSemigroupCons,
-"for IsBlockBijectionSemigroup, pos int, int",
-[IsBlockBijectionSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Semigroup(List([1 .. nrgens], i -> RandomBlockBijection(deg)));
+"for IsBlockBijectionSemigroup and a list",
+[IsBlockBijectionSemigroup, IsList],
+function(filt, params)
+  return Semigroup(List([1 .. params[1]],
+                        i -> RandomBlockBijection(params[2])));
 end);
 
 InstallMethod(RandomMonoidCons,
-"for IsBlockBijectionMonoid, pos int, int",
-[IsBlockBijectionMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Monoid(List([1 .. nrgens], i -> RandomBlockBijection(deg)));
+"for IsBlockBijectionMonoid and a list",
+[IsBlockBijectionMonoid, IsList],
+function(filt, params)
+  return Monoid(List([1 .. params[1]],
+                     i -> RandomBlockBijection(params[2])));
 end);
 
 InstallMethod(RandomInverseSemigroupCons,
-"for IsBlockBijectionSemigroup, pos int, int",
-[IsBlockBijectionSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return InverseSemigroup(List([1 .. nrgens], i -> RandomBlockBijection(deg)));
+"for IsBlockBijectionSemigroup and a list",
+[IsBlockBijectionSemigroup, IsList],
+function(filt, params)
+  return InverseSemigroup(List([1 .. params[1]],
+                               i -> RandomBlockBijection(params[2])));
 end);
 
 InstallMethod(RandomInverseMonoidCons,
-"for IsBlockBijectionMonoid, pos int, int",
-[IsBlockBijectionMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return InverseMonoid(List([1 .. nrgens], i -> RandomBlockBijection(deg)));
+"for IsBlockBijectionMonoid and a list",
+[IsBlockBijectionMonoid, IsList],
+function(filt, params)
+  return InverseMonoid(List([1 .. params[1]],
+                            i -> RandomBlockBijection(params[2])));
 end);
+
+#############################################################################
+## Printing and viewing
+#############################################################################
 
 InstallMethod(SemigroupViewStringPrefix, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> "\>bipartition\< ");

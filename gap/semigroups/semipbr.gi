@@ -15,33 +15,23 @@
 ## ?. Random
 #############################################################################
 
-InstallMethod(RandomSemigroupCons,
-"for IsPBRSemigroup, pos int, int, int, int",
-[IsPBRSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Semigroup(List([1 .. nrgens], i -> RandomPBR(deg)));
+InstallMethod(RandomSemigroupCons, "for IsPBRSemigroup and a list",
+[IsPBRSemigroup, IsList],
+function(filt, params)
+  return Semigroup(List([1 .. params[1]], i -> RandomPBR(params[2])));
 end);
 
-InstallMethod(RandomMonoidCons,
-"for IsPBRMonoid, pos int, int, int, int",
-[IsPBRMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Monoid(List([1 .. nrgens], i -> RandomPBR(deg)));
+InstallMethod(RandomMonoidCons, "for IsPBRMonoid and a list",
+[IsPBRMonoid, IsList],
+function(filt, params)
+  return Monoid(List([1 .. params[1]], i -> RandomPBR(params[2])));
 end);
 
-InstallMethod(RandomInverseSemigroupCons,
-"for IsPBRSemigroup, pos int, int, int, int",
-[IsPBRSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
-end);
+InstallMethod(RandomInverseSemigroupCons, "for IsPBRSemigroup and a list",
+[IsPBRSemigroup, IsList], SEMIGROUPS.DefaultRandomInverseSemigroup);
 
-InstallMethod(RandomInverseMonoidCons,
-"for IsPBRMonoid, pos int, int, int, int",
-[IsPBRMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
-end);
+InstallMethod(RandomInverseMonoidCons, "for IsPBRMonoid and a list",
+[IsPBRMonoid, IsList], SEMIGROUPS.DefaultRandomInverseMonoid);
 
 InstallMethod(FullPBRMonoid, "for a positive integer",
 [IsPosInt],

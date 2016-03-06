@@ -75,17 +75,13 @@ DeclareAttribute("Generators", IsSemigroup);
 
 #TODO move this to examples!
 DeclareGlobalFunction("RandomSemigroup");
-DeclareConstructor("RandomSemigroupCons",
-                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
+DeclareConstructor("RandomSemigroupCons", [IsSemigroup, IsList]);
 DeclareGlobalFunction("RandomMonoid");
-DeclareConstructor("RandomMonoidCons",
-                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
+DeclareConstructor("RandomMonoidCons", [IsMonoid, IsList]);
 DeclareGlobalFunction("RandomInverseSemigroup");
-DeclareConstructor("RandomInverseSemigroupCons",
-                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
+DeclareConstructor("RandomInverseSemigroupCons", [IsSemigroup, IsList]);
 DeclareGlobalFunction("RandomInverseMonoid");
-DeclareConstructor("RandomInverseMonoidCons",
-                   [IsSemigroup, IsPosInt, IsInt, IsInt, IsInt]);
+DeclareConstructor("RandomInverseMonoidCons", [IsMonoid, IsList]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty",

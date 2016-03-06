@@ -15,32 +15,32 @@
 ## Random
 #############################################################################
 
-InstallMethod(RandomSemigroupCons,
-"for IsPartialPermSemigroup, pos int, int",
-[IsPartialPermSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Semigroup(List([1 .. nrgens], i -> RandomPartialPerm(deg)));
+InstallMethod(RandomSemigroupCons, "for IsPartialPermSemigroup and a list",
+[IsPartialPermSemigroup, IsList],
+function(filt, params)
+  return Semigroup(List([1 .. params[1]], i -> RandomPartialPerm(params[2])));
 end);
 
-InstallMethod(RandomMonoidCons,
-"for IsPartialPermMonoid, pos int, int",
-[IsPartialPermMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Monoid(List([1 .. nrgens], i -> RandomPartialPerm(deg)));
+InstallMethod(RandomMonoidCons, "for IsPartialPermMonoid and a list",
+[IsPartialPermMonoid, IsList],
+function(filt, params)
+  return Monoid(List([1 .. params[1]], i -> RandomPartialPerm(params[2])));
 end);
 
 InstallMethod(RandomInverseSemigroupCons,
-"for IsPartialPermSemigroup, pos int, int",
-[IsPartialPermSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return InverseSemigroup(List([1 .. nrgens], i -> RandomPartialPerm(deg)));
+"for IsPartialPermSemigroup and a list",
+[IsPartialPermSemigroup, IsList],
+function(filt, params)
+  return InverseSemigroup(List([1 .. params[1]],
+                               i -> RandomPartialPerm(params[2])));
 end);
 
 InstallMethod(RandomInverseMonoidCons,
-"for IsPartialPermMonoid, pos int, int",
-[IsPartialPermMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return InverseMonoid(List([1 .. nrgens], i -> RandomPartialPerm(deg)));
+"for IsPartialPermMonoid and a list",
+[IsPartialPermMonoid, IsList],
+function(filt, params)
+  return InverseMonoid(List([1 .. params[1]],
+                            i -> RandomPartialPerm(params[2])));
 end);
 
 # TODO improve this

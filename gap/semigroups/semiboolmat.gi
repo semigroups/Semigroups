@@ -15,32 +15,30 @@
 #############################################################################
 
 InstallMethod(RandomSemigroupCons,
-"for IsBooleanMatSemigroup, pos int, int, int, int",
-[IsBooleanMatSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dim, dummy1, dummy2)
-  return Semigroup(List([1 .. nrgens], i -> RandomMatrix(IsBooleanMat, dim)));
+"for IsBooleanMatSemigroup and list",
+[IsBooleanMatSemigroup, IsList],
+function(filt, params)
+  return Semigroup(List([1 .. params[1]], i -> RandomMatrix(IsBooleanMat,
+                                                            params[2])));
 end);
 
 InstallMethod(RandomMonoidCons,
-"for IsBooleanMatMonoid, pos int, int, int, int",
-[IsBooleanMatMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dim, dummy1, dummy2)
-  return Monoid(List([1 .. nrgens], i -> RandomMatrix(IsBooleanMat, dim)));
+"for IsBooleanMatMonoid and list",
+[IsBooleanMatMonoid, IsList],
+function(filt, params)
+  return Monoid(List([1 .. params[1]], i -> RandomMatrix(IsBooleanMat,
+                                                         params[2])));
 end);
 
 InstallMethod(RandomInverseSemigroupCons,
-"for IsBooleanMatSemigroup, pos int, int, int, int",
-[IsBooleanMatSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dim, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, dim);
-end);
+"for IsBooleanMatSemigroup and list",
+[IsBooleanMatSemigroup, IsList],
+SEMIGROUPS.DefaultRandomInverseSemigroup);
 
 InstallMethod(RandomInverseMonoidCons,
-"for IsBooleanMatMonoid, pos int, int, int, int",
-[IsBooleanMatMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dim, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, dim);
-end);
+"for IsBooleanMatMonoid and list",
+[IsBooleanMatMonoid, IsList],
+SEMIGROUPS.DefaultRandomInverseSemigroup);
 
 #############################################################################
 ## 1. Isomorphisms

@@ -8,36 +8,32 @@
 #############################################################################
 ##
 
-InstallMethod(RandomSemigroupCons,
-"for IsFpSemigroup, pos int, int",
-[IsFpSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dummy1, dummy2, dummy3)
+InstallMethod(RandomSemigroupCons, "for IsFpSemigroup and a list",
+[IsFpSemigroup, IsList],
+function(filt, params)
   return AsSemigroup(IsFpSemigroup,
-                     RandomSemigroup(IsTransformationSemigroup, nrgens));
+                     RandomSemigroup(IsTransformationSemigroup, params));
 end);
 
-InstallMethod(RandomMonoidCons,
-"for IsFpMonoid, pos int, int",
-[IsFpMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dummy1, dummy2, dummy3)
+InstallMethod(RandomMonoidCons, "for IsFpMonoid and a list",
+[IsFpMonoid, IsList],
+function(filt, params)
   return AsMonoid(IsFpMonoid,
-                  RandomMonoid(IsTransformationMonoid, nrgens));
+                  RandomMonoid(IsTransformationMonoid, params));
 end);
 
-InstallMethod(RandomInverseSemigroupCons,
-"for IsFpSemigroup, pos int, int",
-[IsFpSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dummy1, dummy2, dummy3)
+InstallMethod(RandomInverseSemigroupCons, "for IsFpSemigroup and a list",
+[IsFpSemigroup, IsList],
+function(filt, params)
   return AsSemigroup(IsFpSemigroup,
-                     RandomInverseSemigroup(IsPartialPermSemigroup, nrgens));
+                     RandomInverseSemigroup(IsPartialPermSemigroup, params));
 end);
 
-InstallMethod(RandomInverseMonoidCons,
-"for IsFpMonoid, pos int, int",
-[IsFpMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dummy1, dummy2, dummy3)
+InstallMethod(RandomInverseMonoidCons, "for IsFpMonoid and a list",
+[IsFpMonoid, IsList],
+function(filt, params)
   return AsMonoid(IsFpMonoid,
-                  RandomInverseMonoid(IsPartialPermMonoid, nrgens));
+                     RandomInverseMonoid(IsPartialPermMonoid, params));
 end);
 
 # same method for ideals

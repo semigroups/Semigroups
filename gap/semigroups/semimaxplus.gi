@@ -12,45 +12,62 @@
 # tropical max-plus, and tropical min-plus matrices.
 
 #############################################################################
+## Random inverse semigroups and monoids, no better method currently
+#############################################################################
+
+for _IsXMatrix in ["IsMaxPlusMatrix",
+                   "IsMinPlusMatrix",
+                   "IsTropicalMaxPlusMatrix",
+                   "IsTropicalMinPlusMatrix",
+                   "IsProjectiveMaxPlusMatrix",
+                   "IsNTPMatrix",
+                   "IsIntegerMatrix"] do
+
+  _IsXSemigroup := Concatenation(_IsXMatrix, "Semigroup");
+  _IsXMonoid := Concatenation(_IsXMatrix, "Monoid");
+
+  InstallMethod(RandomInverseSemigroupCons,
+  Concatenation("for ", _IsXSemigroup, " and a list"),
+  [EvalString(_IsXSemigroup), IsList],
+  SEMIGROUPS.DefaultRandomInverseSemigroup);
+
+  InstallMethod(RandomInverseMonoidCons,
+  Concatenation("for ", _IsXMonoid, " and a list"),
+  [EvalString(_IsXMonoid), IsList],
+  SEMIGROUPS.DefaultRandomInverseMonoid);
+
+od;
+
+Unbind(_IsXMatrix);
+Unbind(_IsXMonoid);
+Unbind(_IsXSemigroup);
+
+#############################################################################
 ## Random for matrices with 0 additional parameters
 #############################################################################
 
-_InstallRandom0 := function(filter)
+_InstallRandom0 := function(IsXMatrix)
   local IsXSemigroup, IsXMonoid;
 
-  IsXSemigroup := Concatenation(filter, "Semigroup");
-  IsXMonoid := Concatenation(filter, "Monoid");
+  IsXSemigroup := Concatenation(IsXMatrix, "Semigroup");
+  IsXMonoid := Concatenation(IsXMatrix, "Monoid");
 
   InstallMethod(RandomSemigroupCons,
-  Concatenation("for ", IsXSemigroup, ", pos int, int, int, int"),
-  [IsXSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-  function(filt, nrgens, dim, dummy1, dummy2)
-    return Semigroup(List([1 .. nrgens],
-                          i -> RandomMatrix(EvalString(filter), dim)));
+  Concatenation("for ", IsXSemigroup, " and a list"),
+  [EvalString(IsXSemigroup), IsList],
+  function(filt, params)
+    return Semigroup(List([1 .. params[1]],
+                          i -> RandomMatrix(EvalString(IsXMatrix),
+                                            params[2])));
   end);
 
   InstallMethod(RandomMonoidCons,
-  Concatenation("for ", IsXMonoid, ", pos int, int, int, int"),
-  [IsXMonoid, IsPosInt, IsInt, IsInt, IsInt],
-  function(filt, nrgens, dim, dummy1, dummy2)
-    return Monoid(List([1 .. nrgens],
-                       i -> RandomMatrix(EvalString(filter), dim)));
+  Concatenation("for ", IsXMonoid, " and a list"),
+  [EvalString(IsXMonoid), IsList],
+  function(filt, params)
+    return Monoid(List([1 .. params[1]],
+                       i -> RandomMatrix(EvalString(IsXMatrix), params[2])));
   end);
-
-  InstallMethod(RandomInverseSemigroupCons,
-  Concatenation("for ", IsXSemigroup, ", pos int, int, int, int"),
-  [IsXSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-  function(filt, nrgens, deg, dummy1, dummy2)
-    return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
-  end);
-
-  InstallMethod(RandomInverseMonoidCons,
-  Concatenation("for ", IsXMonoid, ", pos int, int, int, int"),
-  [IsXMonoid, IsPosInt, IsInt, IsInt, IsInt],
-  function(filt, nrgens, deg, dummy1, dummy2)
-    return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
-  end);
-
 end;
 
 for _IsXMatrix in ["IsMaxPlusMatrix",
@@ -67,52 +84,31 @@ Unbind(_InstallRandom0);
 ## Random for matrices with 1 additional parameters
 #############################################################################
 
-_InstallRandom1 := function(filter)
+_InstallRandom1 := function(IsXMatrix)
   local IsXSemigroup, IsXMonoid;
 
-  IsXSemigroup := Concatenation(filter, "Semigroup");
-  IsXMonoid := Concatenation(filter, "Monoid");
+  IsXSemigroup := Concatenation(IsXMatrix, "Semigroup");
+  IsXMonoid := Concatenation(IsXMatrix, "Monoid");
 
   InstallMethod(RandomSemigroupCons,
-  Concatenation("for ", IsXSemigroup, ", pos int, int, int, int"),
-  [IsXSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-  function(filt, nrgens, dim, threshold, dummy)
-    return Semigroup(List([1 .. nrgens],
-                          i -> RandomMatrix(EvalString(filter),
-                                            dim,
-                                            threshold)));
+  Concatenation("for ", IsXSemigroup, " and a list"),
+  [EvalString(IsXSemigroup), IsList],
+  function(filt, params)
+    return Semigroup(List([1 .. params[1]],
+                          i -> RandomMatrix(EvalString(IsXMatrix),
+                                            params[2],
+                                            params[3])));
   end);
 
   InstallMethod(RandomMonoidCons,
-  Concatenation("for ", IsXMonoid, ", pos int, int, int, int"),
-  [IsXMonoid, IsPosInt, IsInt, IsInt, IsInt],
-  function(filt, nrgens, dim, threshold, dummy)
-    return Monoid(List([1 .. nrgens],
-                        i -> RandomMatrix(EvalString(filter),
-                                          dim,
-                                          threshold)));
+  Concatenation("for ", IsXMonoid, " and a list"),
+  [EvalString(IsXMonoid), IsList],
+  function(filt, params)
+    return Monoid(List([1 .. params[1]],
+                        i -> RandomMatrix(EvalString(IsXMatrix),
+                                          params[2],
+                                          params[3])));
   end);
-
-  InstallMethod(RandomInverseSemigroupCons,
-  Concatenation("for ", IsXSemigroup, ", pos int, int, int, int"),
-  [IsXSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-  function(filt, nrgens, dim, threshold, dummy)
-    return SEMIGROUPS.DefaultRandomInverseSemigroup(filt,
-                                                    nrgens,
-                                                    dim,
-                                                    threshold);
-  end);
-
-  InstallMethod(RandomInverseMonoidCons,
-  Concatenation("for ", IsXMonoid, ", pos int, int, int, int"),
-  [IsXMonoid, IsPosInt, IsInt, IsInt, IsInt],
-  function(filt, nrgens, dim, threshold, dummy)
-    return SEMIGROUPS.DefaultRandomInverseMonoid(filt,
-                                                 nrgens,
-                                                 dim,
-                                                 threshold);
-  end);
-
 end;
 
 for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
@@ -124,51 +120,29 @@ Unbind(_IsXMatrix);
 Unbind(_InstallRandom1);
 
 #############################################################################
-## Random for matrices with 1 additional parameters
+## Random for matrices with 2 additional parameters
 #############################################################################
 
 InstallMethod(RandomSemigroupCons,
-"for IsNTPMatrixSemigroup, pos int, int, int, int",
-[IsNTPMatrixSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dim, threshold, period)
-  return Semigroup(List([1 .. nrgens],
+"for IsNTPMatrixSemigroup and a list",
+[IsNTPMatrixSemigroup, IsList],
+function(filt, params)
+  return Semigroup(List([1 .. params[1]],
                         i -> RandomMatrix(IsNTPMatrix,
-                                          dim,
-                                          threshold,
-                                          period)));
+                                          params[2],
+                                          params[3],
+                                          params[4])));
 end);
 
 InstallMethod(RandomMonoidCons,
-"for IsNTPMatrixMonoid, pos int, int, int, int",
-[IsNTPMatrixMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dim, threshold, period)
-  return Monoid(List([1 .. nrgens],
-                        i -> RandomMatrix(IsNTPMatrix,
-                                          dim,
-                                          threshold,
-                                          period)));
-end);
-
-InstallMethod(RandomInverseSemigroupCons,
-"for IsNTPMatrixSemigroup, pos int, int, int, int",
-[IsNTPMatrixSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dim, threshold, period)
-  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt,
-                                                  nrgens,
-                                                  dim,
-                                                  threshold,
-                                                  period);
-end);
-
-InstallMethod(RandomInverseMonoidCons,
-"for IsNTPMatrixMonoid, pos int, int, int, int",
-[IsNTPMatrixMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, dim, threshold, period)
-  return SEMIGROUPS.DefaultRandomInverseMonoid(filt,
-                                               nrgens,
-                                               dim,
-                                               threshold,
-                                               period);
+"for IsNTPMatrixMonoid and a list",
+[IsNTPMatrixMonoid, IsList],
+function(filt, params)
+  return Monoid(List([1 .. params[1]],
+                      i -> RandomMatrix(IsNTPMatrix,
+                                        params[2],
+                                        params[3],
+                                        params[4])));
 end);
 
 #############################################################################

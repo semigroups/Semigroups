@@ -15,33 +15,31 @@
 ## Random
 #############################################################################
 
-InstallMethod(RandomSemigroupCons,
-"for IsTransformationSemigroup, pos int, int",
-[IsTransformationSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Semigroup(List([1 .. nrgens], i -> RandomTransformation(deg)));
+InstallMethod(RandomSemigroupCons, "for IsTransformationSemigroup and a list",
+[IsTransformationSemigroup, IsList],
+function(filt, params)
+  return Semigroup(List([1 .. params[1]], i -> RandomTransformation(params[2])));
 end);
 
-InstallMethod(RandomMonoidCons,
-"for IsTransformationMonoid, pos int, int",
-[IsTransformationMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return Monoid(List([1 .. nrgens], i -> RandomTransformation(deg)));
+InstallMethod(RandomMonoidCons, "for IsTransformationMonoid and a list",
+[IsTransformationMonoid, IsList],
+function(filt, params)
+  return Monoid(List([1 .. params[1]], i -> RandomTransformation(params[2])));
 end);
 
 InstallMethod(RandomInverseSemigroupCons,
-"for IsTransformationSemigroup, pos int, int",
-[IsTransformationSemigroup, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseSemigroup(filt, nrgens, deg);
-end);
+"for IsTransformationSemigroup and a list",
+[IsTransformationSemigroup, IsList],
+SEMIGROUPS.DefaultRandomInverseSemigroup);
 
 InstallMethod(RandomInverseMonoidCons,
-"for IsTransformationMonoid, pos int, int",
-[IsTransformationMonoid, IsPosInt, IsInt, IsInt, IsInt],
-function(filt, nrgens, deg, dummy1, dummy2)
-  return SEMIGROUPS.DefaultRandomInverseMonoid(filt, nrgens, deg);
-end);
+"for IsTransformationMonoid and a list",
+[IsTransformationMonoid, IsList],
+SEMIGROUPS.DefaultRandomInverseMonoid);
+
+#############################################################################
+## Constructions
+#############################################################################
 
 InstallMethod(DirectProductOp, "for a list and a transformation monoid",
 [IsList, IsTransformationMonoid],
