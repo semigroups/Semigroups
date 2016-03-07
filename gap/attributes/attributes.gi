@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  attributes.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+#Y  Copyright (C) 2013-16                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -718,3 +718,71 @@ function(S)
   # the first component (i.e. the inner most) of the strongly connected
   # components of the right Cayley graph corresponds the minimal ideal.
 end);
+
+#
+
+################################################################################
+# SmallDegreeTransRepFromLattice: used for two user-facing functions (see below)
+# Returns the smallest degree transformation semigroup corresponding to right
+# congruences found using LatticeOfXCongruences with the given record.
+################################################################################
+SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
+  #TODO: The map should have an invfun included
+  local M, l, congs, nrclasses, cong, bestcong, classes, fun, R;
+  # If S is not a monoid, append an identity
+  if not IsMonoid(S) then
+    M := Monoid(S);
+  else
+    M := S;
+  fi;
+
+  # Get all the right congruences which apply here
+  l := SEMIGROUPS.LatticeOfXCongruences(M, "Right", record);
+  congs := l![2];
+
+  # Find the one with the fewest classes
+  nrclasses := infinity;
+  for cong in congs do
+    if NrEquivalenceClasses(cong) < nrclasses then
+      bestcong := cong;
+      nrclasses := NrEquivalenceClasses(cong);
+    fi;
+  od;
+
+  # If nrclasses is not lower than the current degree, just return the identity
+  if IsTransformationSemigroup(S)
+     and nrclasses >= DegreeOfTransformationSemigroup(S) then
+    return IdentityMapping(S);
+  fi;
+
+  # Consider the action of M on the classes of cong
+  classes := EquivalenceClasses(bestcong);
+  fun := function(elm)
+    local image;
+    image := List(classes, c -> Position(classes,
+                                         OnRightCongruenceClasses(c, elm)));
+    return Transformation(image);
+  end;
+
+  # Construct the range from the original generators (possibly not a monoid)
+  R := Semigroup(List(GeneratorsOfSemigroup(S), fun));
+  return MappingByFunction(S, R, fun); #, invfun);
+end;
+
+#
+
+InstallMethod(SmallerDegreeTransformationRepresentation,
+"for a semigroup",
+[IsSemigroup],
+# Use the best right congruence which contains no congruences
+S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true)));
+
+#
+
+InstallMethod(SmallDegreeTransformationRepresentation,
+"for a semigroup",
+[IsSemigroup],
+# Use the best 1-generated right congruence which contains no congruences
+S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true,
+                                                      1gen := true)));
+

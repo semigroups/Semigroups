@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/congpairs.tst
-#Y  Copyright (C) 2014-15                                   Michael Torpey
+#Y  Copyright (C) 2014-16                                   Michael Torpey
 ##                                                          Wilfred Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -159,6 +159,14 @@ gap> JoinSemigroupCongruences(cong, cong2);
 Error, Semigroups: JoinSemigroupCongruences: usage,
 congruences must be defined over the same semigroup,
 gap> IsSubrelation(cong, cong2);
+Error, Semigroups: IsSubrelation: usage,
+congruences must be defined over the same semigroup,
+gap> cong := LeftSemigroupCongruence(S, pair1, pair2);;
+gap> IsSubrelation(cong2, cong);
+Error, Semigroups: IsSubrelation: usage,
+congruences must be defined over the same semigroup,
+gap> cong := RightSemigroupCongruence(S, pair1, pair2);;
+gap> IsSubrelation(cong2, cong);
 Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
 
@@ -383,6 +391,98 @@ gap> DotString(l) = Concatenation(
 > " -- 36\n }");
 true
 
+#LatticeOfLeft/RightCongruences
+gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
+gap> LatticeOfLeftCongruences(S);
+[ [  ], [ 1, 5, 9 ], [ 1 ], [ 1, 3, 5, 11, 12, 13, 15, 17 ], [ 1 ], 
+  [ 1, 2, 3, 5, 9, 12, 15, 16 ], [ 1, 3 ], 
+  [ 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ], 
+  [ 1, 5 ], [ 1, 3, 5, 12, 15 ], [ 1, 12, 13 ], [ 1 ], [ 1, 12 ], 
+  [ 1, 2, 3, 5, 6, 9, 12, 13, 15, 16, 17, 21 ], [ 1, 3, 5, 12 ], 
+  [ 1, 3, 5, 9, 12, 15 ], [ 1, 3, 5, 12, 13, 15 ], 
+  [ 1, 3, 4, 5, 9, 11, 12, 13, 15, 16, 17, 21 ], [ 1, 3, 5, 7, 12, 15 ], 
+  [ 1, 3, 5, 7, 9, 10, 12, 13, 15, 16, 17, 19, 21 ], 
+  [ 1, 3, 5, 9, 12, 13, 15, 16, 17 ] ]
+gap> Size(LeftCongruencesOfSemigroup(S));
+21
+gap> LatticeOfRightCongruences(S);
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 4, 8, 12, 22 ], [ 1, 3, 4, 7, 14, 23 ], 
+  [ 1 ], [ 1 ], [ 1 ], [ 1, 7, 8, 9 ], [ 1 ], [ 1 ], [ 1, 3, 8, 11 ], [ 1 ], 
+  [ 1, 2, 7, 11 ], [ 1, 2, 3, 9 ], 
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 
+      22, 23, 24, 25, 26, 27, 28, 29, 30, 31 ], [ 1, 2, 14 ], [ 1, 3, 12 ], 
+  [ 1, 4, 9 ], [ 1, 4, 11 ], [ 1, 4, 12 ], [ 1, 4, 14 ], 
+  [ 1, 2, 4, 5, 8, 12, 14, 18, 22, 23, 27, 29, 31 ], 
+  [ 1, 3, 4, 6, 7, 12, 14, 19, 22, 23, 26, 29, 31 ], [ 1, 7, 12 ], 
+  [ 1, 8, 14 ], [ 1, 9, 11, 12, 14, 29 ], [ 1, 12, 14 ], 
+  [ 1, 4, 9, 11, 12, 14, 20, 21, 22, 23, 28, 29, 31 ], 
+  [ 1, 4, 12, 14, 22, 23, 29 ] ]
+gap> Size(RightCongruencesOfSemigroup(S));
+31
+gap> LatticeOfCongruences(S);
+[ [  ], [ 1, 3, 4 ], [ 1 ], [ 1, 3 ] ]
+gap> Size(CongruencesOfSemigroup(S));
+4
+
+#T# MinimalCongruencesOfSemigroup
+gap> S := Semigroup([Transformation([1,3,2]), Transformation([3,1,3])]);;
+gap> min := MinimalCongruencesOfSemigroup(S);
+[ <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs> ]
+gap> congs := CongruencesOfSemigroup(S);
+[ <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 0 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs> ]
+gap> l := LatticeOfCongruences(S);
+[ [  ], [ 1, 4, 5 ], [ 1, 2, 4, 5, 6 ], [ 1 ], [ 1, 4 ], [ 1, 2, 4, 5 ] ]
+gap> Position(congs, min[1]) = Position(l, [1]);
+true
+gap> minl := MinimalLeftCongruencesOfSemigroup(S);;
+gap> Size(minl);
+3
+gap> minr := MinimalRightCongruencesOfSemigroup(S);;
+gap> Size(minr);
+9
+gap> PositionsProperty(minl, c -> IsSubrelation(min[1], c));
+[ 1, 2, 3 ]
+gap> PositionsProperty(minr, c -> IsSubrelation(min[1], c));
+[ 5 ]
+
+#T# SEMIGROUPS.LatticeOfXCongruences transrep
+gap> S := Semigroup( [ Transformation( [ 4, 2, 3, 3 ] ),
+>   Transformation( [ 4, 4, 4, 4 ] ) ] );;
+gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+[ [  ] ]
+gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+[ [  ] ]
+gap> LatticeOfCongruences(S);
+[ [  ], [ 1 ], [ 1 ], [ 1, 2, 6 ], [ 1, 2, 3 ], [ 1 ], 
+  [ 1, 2, 3, 4, 5, 6, 8 ], [ 1, 3, 6 ] ]
+gap> LatticeOfRightCongruences(S);
+[ [  ], [ 1 ], [ 1 ], [ 1, 2, 6 ], [ 1, 2, 3 ], [ 1 ], [ 1, 2 ], 
+  [ 1, 2, 3, 4, 5, 6, 7, 9 ], [ 1, 3, 6 ] ]
+gap> S := Semigroup([Transformation([1,3,1]), Transformation([2,2,2])]);;
+gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+[ [  ], [ 1 ], [ 1 ] ]
+gap> S := Semigroup([Transformation([2,3,2]), Transformation([3,1,3])]);;
+gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+[ [  ], [ 1 ], [ 1 ], [ 1, 3, 6, 13 ], [ 1 ], [ 1 ], [ 1, 2, 9, 12 ], 
+  [ 1, 5 ], [ 1 ], [ 1, 2, 3, 5 ], [ 1, 2, 3, 5, 8, 10 ], [ 1, 2, 9 ], 
+  [ 1, 3, 6 ], [ 1, 5, 6, 9 ], [ 1, 5, 6, 8, 9, 14 ] ]
+gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true,
+>                                                          1gen := true));
+[ [  ], [ 1 ], [ 1 ], [ 1, 3, 6 ], [ 1 ], [ 1 ], [ 1, 2, 9 ], [ 1, 5 ], [ 1 ] 
+ ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
@@ -390,13 +490,20 @@ gap> Unbind(class);
 gap> Unbind(classes);
 gap> Unbind(cong);
 gap> Unbind(cong2);
+gap> Unbind(congs);
 gap> Unbind(enum);
 gap> Unbind(gens);
+gap> Unbind(iso);
 gap> Unbind(l);
+gap> Unbind(min);
+gap> Unbind(minl);
+gap> Unbind(minr);
+gap> Unbind(p);
 gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);
 gap> Unbind(pairs);
+gap> Unbind(q);
 gap> Unbind(u);
 gap> Unbind(v);
 gap> Unbind(x);

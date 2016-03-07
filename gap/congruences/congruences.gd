@@ -33,7 +33,16 @@ DeclareCategory("IsRightCongruenceClass",
                 IsEquivalenceClass and IsAttributeStoringRep);
 
 DeclareAttribute("CongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("LeftCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("RightCongruencesOfSemigroup", IsSemigroup);
+
+DeclareAttribute("MinimalCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("MinimalLeftCongruencesOfSemigroup", IsSemigroup);
+DeclareAttribute("MinimalRightCongruencesOfSemigroup", IsSemigroup);
+
 DeclareAttribute("LatticeOfCongruences", IsSemigroup);
+DeclareAttribute("LatticeOfLeftCongruences", IsSemigroup);
+DeclareAttribute("LatticeOfRightCongruences", IsSemigroup);
 
 DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
                GeneratingPairsOfLeftMagmaCongruence);
@@ -60,12 +69,30 @@ DeclareProperty("IsLeftSemigroupCongruence", IsRightSemigroupCongruence);
 DeclareProperty("IsSemigroupCongruence", IsLeftSemigroupCongruence);
 DeclareProperty("IsSemigroupCongruence", IsRightSemigroupCongruence);
 
+DeclareOperation("OnLeftCongruenceClasses",
+                 [IsLeftCongruenceClass, IsMultiplicativeElement]);
+DeclareOperation("OnRightCongruenceClasses",
+                 [IsRightCongruenceClass, IsMultiplicativeElement]);
+
 # Helper functions to EquivalenceClasses for specific categories
 DeclareOperation("CongruenceClasses", [IsSemigroupCongruence]);
 DeclareOperation("LeftCongruenceClasses", [IsLeftSemigroupCongruence]);
 DeclareOperation("RightCongruenceClasses", [IsRightSemigroupCongruence]);
 
-DeclareOperation("NonTrivialCongruenceClasses", [IsSemigroupCongruence]);
+DeclareOperation("NonTrivialCongruenceClasses",
+                 [IsSemigroupCongruence]);
+DeclareOperation("NonTrivialLeftCongruenceClasses",
+                 [IsLeftSemigroupCongruence]);
+DeclareOperation("NonTrivialRightCongruenceClasses",
+                 [IsRightSemigroupCongruence]);
+
 DeclareOperation("NrCongruenceClasses", [IsSemigroupCongruence]);
+DeclareOperation("NrLeftCongruenceClasses", [IsLeftSemigroupCongruence]);
+DeclareOperation("NrRightCongruenceClasses", [IsRightSemigroupCongruence]);
+
 DeclareOperation("CongruenceClassOfElement", [IsSemigroupCongruence,
                                               IsMultiplicativeElement]);
+DeclareOperation("LeftCongruenceClassOfElement", [IsLeftSemigroupCongruence,
+                                                  IsMultiplicativeElement]);
+DeclareOperation("RightCongruenceClassOfElement", [IsRightSemigroupCongruence,
+                                                   IsMultiplicativeElement]);
