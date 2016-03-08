@@ -8,32 +8,48 @@
 #############################################################################
 ##
 
+# FIXME this doesn't work very well
+
 InstallMethod(RandomSemigroupCons, "for IsFpSemigroup and a list",
 [IsFpSemigroup, IsList],
 function(filt, params)
   return AsSemigroup(IsFpSemigroup,
-                     RandomSemigroup(IsTransformationSemigroup, params));
+                     CallFuncList(RandomSemigroup,
+                                  Concatenation([IsTransformationSemigroup],
+                                                 params)));
 end);
+
+# FIXME this doesn't work very well
 
 InstallMethod(RandomMonoidCons, "for IsFpMonoid and a list",
 [IsFpMonoid, IsList],
 function(filt, params)
   return AsMonoid(IsFpMonoid,
-                  RandomMonoid(IsTransformationMonoid, params));
+                  CallFuncList(RandomMonoid,
+                               Concatenation([IsTransformationMonoid],
+                                              params)));
 end);
+
+# FIXME this doesn't work very well
 
 InstallMethod(RandomInverseSemigroupCons, "for IsFpSemigroup and a list",
 [IsFpSemigroup, IsList],
 function(filt, params)
   return AsSemigroup(IsFpSemigroup,
-                     RandomInverseSemigroup(IsPartialPermSemigroup, params));
+                     CallFuncList(RandomInverseSemigroup,
+                                  Concatenation([IsPartialPermSemigroup],
+                                                params)));
 end);
+
+# FIXME this doesn't work very well
 
 InstallMethod(RandomInverseMonoidCons, "for IsFpMonoid and a list",
 [IsFpMonoid, IsList],
 function(filt, params)
   return AsMonoid(IsFpMonoid,
-                     RandomInverseMonoid(IsPartialPermMonoid, params));
+                     CallFuncList(RandomInverseMonoid,
+                                  Concatenation([IsPartialPermMonoid],
+                                                params)));
 end);
 
 # same method for ideals

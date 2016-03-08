@@ -1044,10 +1044,9 @@ function(arg)
   return RandomMonoidCons(filt, params);
 end);
 
-#FIXME redo in the same way as RandomSemigroup
 InstallGlobalFunction(RandomInverseSemigroup,
 function(arg)
-  local filt, nrgens, deg, threshold, period;
+  local filt, params, order, i;
 
   # check for optional first arg
   if Length(arg) >= 1 and IsPosInt(arg[1]) then
@@ -1058,9 +1057,7 @@ function(arg)
   if Length(arg) >= 1 and IsBound(arg[1]) then
     filt := arg[1];
   else
-    filt := Random([IsReesMatrixSemigroup,
-                    IsReesZeroMatrixSemigroup,
-                    IsFpSemigroup,
+    filt := Random([IsFpSemigroup,
                     IsPBRSemigroup,
                     IsBipartitionSemigroup,
                     IsTransformationSemigroup,
@@ -1076,50 +1073,53 @@ function(arg)
                     IsIntegerMatrixSemigroup]);
   fi;
 
-  if Length(arg) >= 2 then
-    nrgens := arg[2];
-  else
-    nrgens := Random([1 .. 100]);
-  fi;
-  if Length(arg) >= 3 then
-    deg := arg[3]; # dimension, degree
-  else
-    deg := Random([1 .. 100]);
-  fi;
-  if Length(arg) >= 4 then
-    threshold := arg[4];
-  else
-    threshold := Random([1 .. 100]);
-  fi;
-  if Length(arg) >= 5 then
-    period := arg[5];
-  else
-    period := Random([1 .. 100]);
-  fi;
-
-  if Length(arg) > 5 then
-    ErrorNoReturn();
-  fi;
-
   if not IsFilter(filt) then
-    ErrorNoReturn();
-  elif not IsPosInt(nrgens) then
-    ErrorNoReturn();
-  elif not IsInt(deg) or deg <= 0 then
-    ErrorNoReturn();
-  elif not IsInt(threshold) or threshold <= 0 then
-    ErrorNoReturn();
-  elif not IsInt(period) or period <= 0 then
-    ErrorNoReturn();
+    ErrorNoReturn("Semigroups: RandomInverseSemigroup: usage,\n",
+                  "the first argument must be a filter,");
   fi;
-  #return [filt, nrgens, deg, threshold, period];
-  return RandomInverseSemigroupCons(filt, nrgens, deg, threshold, period);
+
+  params := [];
+
+  if Length(arg) >= 2 then # nr gens
+    params[1] := arg[2];
+  else
+    params[1] := Random([1 .. 20]);
+  fi;
+
+  if filt <> IsFpSemigroup then
+    if Length(arg) >= 3 then # dimension, degree
+      params[2] := arg[3];
+    else
+      params[2] := Random([1 .. 20]);
+    fi;
+    if filt in [IsTropicalMaxPlusMatrixSemigroup,
+                IsTropicalMinPlusMatrixSemigroup,
+                IsNTPMatrixSemigroup] then
+      if Length(arg) >= 4 then # threshold
+        params[3] := arg[4];
+      else
+        params[3] := Random([1 .. 20]);
+      fi;
+      if filt = IsNTPMatrixSemigroup then
+        if Length(arg) >= 5 then # period
+          params[4] := arg[5];
+        else
+          params[4] := Random([1 .. 20]);
+        fi;
+      fi;
+    fi;
+  fi;
+  # check params
+  if ForAny(params, x -> not IsPosInt(x)) then
+    ErrorNoReturn("Semigroups: RandomInverseSemigroup: usage,\n",
+                  "the parameters must be positive integers,");
+  fi;
+  return RandomInverseSemigroupCons(filt, params);
 end);
 
-#FIXME redo in the same way as RandomSemigroup
 InstallGlobalFunction(RandomInverseMonoid,
 function(arg)
-  local filt, nrgens, deg, threshold, period;
+  local filt, params, order, i;
 
   # check for optional first arg
   if Length(arg) >= 1 and IsPosInt(arg[1]) then
@@ -1146,44 +1146,48 @@ function(arg)
                     IsIntegerMatrixMonoid]);
   fi;
 
-  if Length(arg) >= 2 then
-    nrgens := arg[2];
-  else
-    nrgens := Random([1 .. 100]);
-  fi;
-  if Length(arg) >= 3 then
-    deg := arg[3]; # dimension, degree
-  else
-    deg := Random([1 .. 100]);
-  fi;
-  if Length(arg) >= 4 then
-    threshold := arg[4];
-  else
-    threshold := Random([1 .. 100]);
-  fi;
-  if Length(arg) >= 5 then
-    period := arg[5];
-  else
-    period := Random([1 .. 100]);
-  fi;
-
-  if Length(arg) > 5 then
-    ErrorNoReturn();
-  fi;
-
   if not IsFilter(filt) then
-    ErrorNoReturn();
-  elif not IsPosInt(nrgens) then
-    ErrorNoReturn();
-  elif not IsInt(deg) or deg <= 0 then
-    ErrorNoReturn();
-  elif not IsInt(threshold) or threshold <= 0 then
-    ErrorNoReturn();
-  elif not IsInt(period) or period <= 0 then
-    ErrorNoReturn();
+    ErrorNoReturn("Semigroups: RandomInverseMonoid: usage,\n",
+                  "the first argument must be a filter,");
   fi;
-  #return [filt, nrgens, deg, threshold, period];
-  return RandomInverseMonoidCons(filt, nrgens, deg, threshold, period);
+
+  params := [];
+
+  if Length(arg) >= 2 then # nr gens
+    params[1] := arg[2];
+  else
+    params[1] := Random([1 .. 20]);
+  fi;
+
+  if filt <> IsFpMonoid then
+    if Length(arg) >= 3 then # dimension, degree
+      params[2] := arg[3];
+    else
+      params[2] := Random([1 .. 20]);
+    fi;
+    if filt in [IsTropicalMaxPlusMatrixMonoid,
+                IsTropicalMinPlusMatrixMonoid,
+                IsNTPMatrixMonoid] then
+      if Length(arg) >= 4 then # threshold
+        params[3] := arg[4];
+      else
+        params[3] := Random([1 .. 20]);
+      fi;
+      if filt = IsNTPMatrixMonoid then
+        if Length(arg) >= 5 then # period
+          params[4] := arg[5];
+        else
+          params[4] := Random([1 .. 20]);
+        fi;
+      fi;
+    fi;
+  fi;
+  # check params
+  if ForAny(params, x -> not IsPosInt(x)) then
+    ErrorNoReturn("Semigroups: RandomInverseMonoid: usage,\n",
+                  "the parameters must be positive integers,");
+  fi;
+  return RandomInverseMonoidCons(filt, params);
 end);
 
 #############################################################################
