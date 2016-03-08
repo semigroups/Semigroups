@@ -178,13 +178,13 @@ gap> MultiplicativeZero(s);
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := PartitionMonoid(2);
-<regular bipartition *-monoid of degree 2 with 3 generators>
+<regular bipartition *-monoid of size 15, degree 2 with 3 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
 false
 gap> s := PartitionMonoid(3);
-<regular bipartition *-monoid of degree 3 with 4 generators>
+<regular bipartition *-monoid of size 203, degree 3 with 4 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;

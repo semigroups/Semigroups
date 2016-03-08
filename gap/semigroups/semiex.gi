@@ -545,6 +545,7 @@ function(n)
 
   M := Monoid(gens, rec(regular := true));
   SetIsStarSemigroup(M, true);
+  SetSize(M, Bell(2 * n));
   return M;
 end);
 
