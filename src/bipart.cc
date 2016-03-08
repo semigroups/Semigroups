@@ -1203,7 +1203,7 @@ class NrIdempotentsFinder {
     timer.stop(_report);
 
     std::vector<size_t>* out = new std::vector<size_t>();
-    out->resize(_ranks.size());
+    out->resize(*max_element(_ranks.begin(), _ranks.end()) + 1);
 
     for (size_t j = 0; j < _scc.size(); j++) {
       size_t rank = _ranks[j]; 
@@ -1299,7 +1299,7 @@ class NrIdempotentsFinder {
 
   std::vector<Blocks*>              _orbit;
   std::vector<std::vector<size_t> > _scc;
-  size_t                           _nr_threads;
+  size_t                            _nr_threads;
   std::vector<std::thread>          _threads;
   std::vector<std::vector<std::pair<size_t, size_t> > >               _unprocessed; // indices of scc not yet processed
   std::vector<std::vector<size_t> > _vals;        // the values found for each scc
@@ -1327,11 +1327,12 @@ Obj BIPART_NR_IDEMPOTENTS (Obj self,
                            Obj nr_threads, 
                            Obj report) {
 
-  std::vector<size_t>* vals = NrIdempotentsFinder(o, 
-                                                  scc, 
-                                                  lookup,
-                                                  INT_INTOBJ(nr_threads), 
-                                                  report).go();
+  NrIdempotentsFinder finder = NrIdempotentsFinder(o, 
+                                                   scc, 
+                                                   lookup,
+                                                   INT_INTOBJ(nr_threads), 
+                                                   report);
+  std::vector<size_t>* vals = finder.go();
   
   Obj out = NEW_PLIST(T_PLIST_CYC, vals->size());
   SET_LEN_PLIST(out, vals->size());
