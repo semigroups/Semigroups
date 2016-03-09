@@ -150,7 +150,7 @@ end);
 InstallMethod(IsomorphismReesZeroMatrixSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local D, iso, inv;
+  local D, map, inj, inv;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -165,14 +165,27 @@ function(S)
 
   D := First(GreensDClasses(S),
              x -> not IsMultiplicativeZero(S, Representative(x)));
-  iso := SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
-  inv := InverseGeneralMapping(iso);
-  UseIsomorphismRelation(S, Range(iso));
+  map := SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
+  
+  # the below is necessary since map is not defined on the zero of S 
+  inj := function(x)
+    if x = MultiplicativeZero(S) then
+      return MultiplicativeZero(Range(map));
+    fi;
+    return x ^ map;
+  end;
+  
+  inv := function(x)
+    if x = MultiplicativeZero(Range(map)) then
+      return MultiplicativeZero(S);
+    fi;
+    return x ^ InverseGeneralMapping(map);
+  end;
 
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso),
-                                       x -> x ^ iso,
-                                       x -> x ^ inv);
+  return MagmaIsomorphismByFunctionsNC(S, 
+                                       Range(map),
+                                       inj,
+                                       inv);
 end);
 
 InstallGlobalFunction(RMSElementNC,
