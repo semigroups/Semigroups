@@ -580,6 +580,31 @@ function(x)
   return str;
 end);
 
+InstallMethod(String, "for a matrix over semiring",
+[IsMatrixOverSemiring],
+function(x)
+  local n, str;
+
+  n := DimensionOfMatrixOverSemiring(x);
+  str := "Matrix(";
+  Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
+  Append(str, ", ");
+  Append(str, String(AsList(x)));
+
+  if IsNTPMatrix(x) then
+    Append(str, ", ");
+    Append(str, String(ThresholdNTPMatrix(x)));
+    Append(str, ", ");
+    Append(str, String(PeriodNTPMatrix(x)));
+  elif IsTropicalMatrix(x) then
+    Append(str, ", ");
+    Append(str, String(ThresholdTropicalMatrix(x)));
+  fi;
+  Append(str, ")");
+
+  return str;
+end);
+
 InstallMethod(\=, "for matrices over a semiring",
 [IsMatrixOverSemiring, IsMatrixOverSemiring],
 function(x, y)

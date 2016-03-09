@@ -105,7 +105,7 @@ InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
 
 # Printing, viewing etc . . .
 
-InstallMethod(PrintString, "for blocks", [IsBlocks],
+InstallMethod(String, "for blocks", [IsBlocks],
 x -> Concatenation("BlocksNC(", String(ExtRepOfBlocks(x)), ")"));
 
 InstallMethod(ViewObj, "for blocks", [IsBlocks],

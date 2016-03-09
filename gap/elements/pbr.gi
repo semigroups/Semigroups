@@ -699,6 +699,13 @@ function(x)
   return str;
 end);
 
+InstallMethod(String, "for a pbr", [IsPBR],
+function(x)
+  local ext;
+  ext := ExtRepOfPBR(x);
+  return Concatenation("PBR(", String(ext[1]), ", ", String(ext[2]), ")");
+end);
+
 InstallMethod(\=, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)

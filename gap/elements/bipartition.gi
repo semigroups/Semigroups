@@ -633,6 +633,11 @@ function(x)
   return str;
 end);
 
+InstallMethod(String, "for a bipartition", [IsBipartition],
+function(x)
+  return Concatenation("Bipartition(", String(BIPART_EXT_REP(x)), ")");
+end);
+
 InstallMethod(PrintString, "for a bipartition",
 [IsBipartition],
 function(x)
