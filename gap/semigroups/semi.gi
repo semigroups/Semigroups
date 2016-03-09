@@ -875,6 +875,7 @@ function(arg)
                     IsFpSemigroup,
                     IsPBRSemigroup,
                     IsBipartitionSemigroup,
+                    IsBlockBijectionSemigroup,
                     IsTransformationSemigroup,
                     IsPartialPermSemigroup,
                     IsBooleanMatSemigroup,
@@ -884,7 +885,6 @@ function(arg)
                     IsTropicalMinPlusMatrixSemigroup,
                     IsProjectiveMaxPlusMatrixSemigroup,
                     IsNTPMatrixSemigroup,
-                    IsBlockBijectionSemigroup,
                     IsIntegerMatrixSemigroup]);
   fi;
 
@@ -948,7 +948,7 @@ function(arg)
     fi;
 
     if Length(arg) >= 4 then # group
-      params[3] := arg[3];
+      params[3] := arg[4];
     else
       order := Random([1 .. 2047]);
       i := Random([1 .. NumberSmallGroups(order)]);
