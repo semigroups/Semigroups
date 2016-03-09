@@ -13,9 +13,9 @@ DeclareCategoryCollections("IsAssociativeElementWithStar");
 DeclareOperation("StarOp", [IsAssociativeElementWithStar]);
 DeclareAttribute("Star", IsAssociativeElementWithStar);
 
-DeclareSynonym("IsStarSemigroup",
-               IsSemigroup and IsAssociativeElementWithStarCollection);
+DeclareProperty("IsStarSemigroup",
+                IsSemigroup and IsAssociativeElementWithStarCollection);
 DeclareSynonym("IsRegularStarSemigroup",
-               IsRegularSemigroup and IsAssociativeElementWithStarCollection);
+               IsRegularSemigroup and IsStarSemigroup);
 
 DeclareOperation("InverseOp", [IsAssociativeElementWithStar]);
