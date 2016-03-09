@@ -76,6 +76,7 @@ SEMIGROUPS.InjectionPrincipalFactor := function(D, constructor)
   rms := constructor(G, mat);
 
   iso := function(x)
+    local i, j;
     i := PositionProperty(R, y -> y in RClass(D, x));
     j := PositionProperty(L, y -> y in LClass(D, x));
 
