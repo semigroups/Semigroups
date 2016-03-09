@@ -13,6 +13,7 @@
 #include "semigroups.h"
 #include "boolean.h"
 #include "bipart.h"
+#include "ufdata.h"
 
 #include "semigroups++/semigroups.h"
 
