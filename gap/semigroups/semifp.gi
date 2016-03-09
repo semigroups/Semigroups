@@ -126,3 +126,15 @@ function(S)
 
   return MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
 end);
+
+InstallMethod(AssignGeneratorVariables, "for a free semigroup",
+[IsFreeSemigroup],
+function(S)
+  DoAssignGenVars(GeneratorsOfSemigroup(S));
+end);
+
+InstallMethod(AssignGeneratorVariables, "for an free monoid",
+[IsFreeMonoid],
+function(S)
+  DoAssignGenVars(GeneratorsOfMonoid(S));
+end);
