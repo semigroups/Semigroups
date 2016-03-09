@@ -304,7 +304,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ PBR([ [ -4 ], [ -5 ], [ -3 ], [ -1 ], [ -2 ], [ -1 ] ], [ [ 4, 6 ], [ 5 ], [ 3 ], [ 1 ], [ 2 ], [ ] ]), PBR([ [ -1 ], [ -2 ], [ -3 ], [ -4 ], [ -5 ], [ -2 ] ], [ [ 1 ], [ 2, 6 ], [ 3 ], [ 4 ], [ 5 ], [ ] ]), PBR([ [ -3 ], [ -3 ], [ -3 ], [ -3 ], [ -3 ], [ -3 ] ], [ [ ], [ ], [ 1, 2, 3, 4, 5, 6 ], [ ], [ ], [ ] ]) ] );
+<pbr semigroup of degree 6 with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -326,7 +328,9 @@ true
 gap> F := FreeSemigroup(3);; AssignGeneratorVariables(F);;
 gap> rels := [ [ s1*s2, s1 ], [ s1*s3, s3 ], [ s2^2, s2 ], [ s2*s3, s3 ], [ s3*s1, s3 ], [ s3*s2, s3 ], [ s3^2, s3 ], [ s1^3, s1 ], [ s2*s1^2, s2 ] ];;
 gap> S := F / rels;
+<fp semigroup on the generators [ s1, s2, s3 ]>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -346,7 +350,13 @@ true
 #T# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Bipartition([ [ 1, -4 ], [ 2, -5 ], [ 3, -3 ], [ 4, 6, -1 ], [ 5, -2 ], [ -6 ] ]), Bipartition([ [ 1, -1 ], [ 2, 6, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ -6 ] ]), Bipartition([ [ 1, 2, 3, 4, 5, 6, -3 ], [ -1 ], [ -2 ], [ -4 ], [ -5 ], [ -6 ] ]) ] );
-gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<bipartition semigroup of degree 6 with 3 generators>
+gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);;
+gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group((1,4)(2,5))) 
+> or (not IsActingSemigroup(S) and  UnderlyingSemigroup(T) = Group((1,2)));
+true
+gap> Length(Rows(T)) = 2 and Length(Columns(T)) = 1;
+true
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -366,7 +376,13 @@ true
 #T# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Transformation( [ 4, 5, 3, 1, 2, 1 ] ), Transformation( [ 1, 2, 3, 4, 5, 2 ] ), Transformation( [ 3, 3, 3, 3, 3, 3 ] ) ] );
-gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<transformation semigroup of degree 6 with 3 generators>
+gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);; 
+gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group((1,4)(2,5))) 
+> or (not IsActingSemigroup(S) and  UnderlyingSemigroup(T) = Group((1,2)));
+true
+gap> Length(Rows(T)) = 2 and Length(Columns(T)) = 1;
+true
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -386,7 +402,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ false, false, false, true, false, false ], [ false, false, false, false, true, false ], [ false, false, true, false, false, false ], [ true, false, false, false, false, false ], [ false, true, false, false, false, false ], [ true, false, false, false, false, false ] ]), Matrix(IsBooleanMat, [ [ true, false, false, false, false, false ], [ false, true, false, false, false, false ], [ false, false, true, false, false, false ], [ false, false, false, true, false, false ], [ false, false, false, false, true, false ], [ false, true, false, false, false, false ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false, false, false ], [ false, false, true, false, false, false ], [ false, false, true, false, false, false ], [ false, false, true, false, false, false ], [ false, false, true, false, false, false ], [ false, false, true, false, false, false ] ]) ] );
+<semigroup of 6x6 boolean matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -406,7 +424,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ] ]) ] );
+<semigroup of 6x6 max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -426,7 +446,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ] ]) ] );
+<semigroup of 6x6 min-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -446,7 +468,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ] ]) ] );
+<semigroup of 6x6 projective max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -466,7 +490,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ] ]) ] );
+<semigroup of 6x6 integer matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -486,7 +512,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ] ], 1), Matrix(IsTropicalMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ] ], 1), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ] ], 1) ] );
+<semigroup of 6x6 tropical max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -506,7 +534,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ] ], 3) ] );
+<semigroup of 6x6 tropical min-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -526,7 +556,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsReesZeroMatrixSemigroup
 gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0 ] ], 4, 1), Matrix(IsNTPMatrix, [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0, 0 ] ], 4, 1), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ] ], 4, 1) ] );
+<semigroup of 6x6 ntp matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

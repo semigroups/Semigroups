@@ -151,11 +151,21 @@ gap> S := Semigroup(RMSElement(S, 2, (), 2),
 gap> MaximalSubsemigroups(S);;
 
 #T# attributes-acting: InversesOfSemigroupElement, none, 1/2
+# This test gives the wrong result in Semigroups 2.7.1!!!
 gap> S := Semigroup([Bipartition([[1, 2, -2], [3, -3], [-1]]),
 > Bipartition([[1, -1, -2], [2, 3], [-3]])]);;
 gap> x := Bipartition([[1, 2, 3], [-1, -2], [-3]]);;
-gap> InversesOfSemigroupElement(S, x);
-[  ]
+gap> Y := InversesOfSemigroupElement(S, x);
+[ <bipartition: [ 1, 2, 3 ], [ -1, -2 ], [ -3 ]>, 
+  <bipartition: [ 1 ], [ 2, 3 ], [ -1, -2 ], [ -3 ]>, 
+  <bipartition: [ 1, 2, 3 ], [ -1 ], [ -2 ], [ -3 ]>, 
+  <bipartition: [ 1 ], [ 2, 3 ], [ -1 ], [ -2 ], [ -3 ]> ]
+gap> ForAll(Y, y -> y in S);
+true
+gap> ForAll(Y, y -> x * y * x = x and y * x * y = y);
+true
+gap> Set(Y) = Set(Filtered(AsList(S), y -> x * y * x = x and y * x * y = y));
+true
 
 #T# attributes-acting: InversesOfSemigroupElement, fail, 2/2
 gap> S := Semigroup([PartialPerm([1, 2, 3, 4], [1, 2, 5, 3]),

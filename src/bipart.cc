@@ -505,20 +505,26 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
   // find the degree of the permutation p
   if (TNUM_OBJ(p) == T_PERM2){
     UInt2* ptr = ADDR_PERM2(p);
-    pdeg       = DEG_PERM2(p);
-    while (ptr[pdeg] == pdeg && pdeg > 0) {
-      pdeg--;
+    for (pdeg = DEG_PERM2(p); 1 <= pdeg; pdeg--) {
+      if (ptr[pdeg - 1] != pdeg - 1) {
+        break;
+      }
     }
   } else if (TNUM_OBJ(p) == T_PERM4) {
     UInt4* ptr = ADDR_PERM4(p);
-    pdeg       = DEG_PERM4(p);
-    while (ptr[pdeg] == pdeg && pdeg > 0) {
-      pdeg--;
+    for (pdeg = DEG_PERM4(p); 1 <= pdeg; pdeg--) {
+      if (ptr[pdeg - 1] != pdeg - 1) {
+        break;
+      }
     }
   } else {
     ErrorQuit("usage: <p> must be a perm (not a %s)", (Int) TNAM_OBJ(p), 0L);
   }
-
+  
+  if (pdeg == 0) {
+    return x;
+  }
+  // TODO if pdeg = 0, then return x
   Bipartition* xx = bipart_get_cpp(x);
 
   size_t deg       = xx->degree();
@@ -527,11 +533,8 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
   blocks->resize(2 * deg);
 
-  std::fill(_BUFFER_size_t.begin(),
-            std::min(_BUFFER_size_t.end(),
-                     _BUFFER_size_t.begin() + 2 * nr_blocks + std::max(nr_blocks, pdeg)),
-            -1);
-  _BUFFER_size_t.resize(2 * nr_blocks + std::max(nr_blocks, pdeg), -1);
+  _BUFFER_size_t.clear();
+  _BUFFER_size_t.resize(2 * nr_blocks + std::max(deg, pdeg), -1);
 
   auto tab1 = _BUFFER_size_t.begin();
   auto tab2 = _BUFFER_size_t.begin() + nr_blocks;

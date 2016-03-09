@@ -97,4 +97,8 @@ size_t DEG_TRANS_F (Obj t) {
   return DEG_TRANS(t);
 }
 
+size_t DEG_PERM4_F (Obj t) {
+  return DEG_PERM4(t);
+}
+
 #endif
