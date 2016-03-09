@@ -364,6 +364,25 @@ function(filter, S)
                                        inv);
 end);
 
+# fall back method
+
+InstallMethod(IsomorphismSemigroup,
+"for IsBlockBijectionSemigroup and an inverse semigroup",
+[IsBlockBijectionSemigroup, IsInverseSemigroup],
+function(filter, S)
+  local iso1, inv1, iso2, inv2;
+
+  iso1 := IsomorphismPartialPermSemigroup(S);
+  inv1 := InverseGeneralMapping(iso1);
+  iso2 := IsomorphismSemigroup(filter, Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso2),
+                                       x -> (x ^ iso1) ^ iso2,
+                                       x -> (x ^ inv2) ^ inv1);
+end);
+
 # this is one way, i.e. no converse method
 
 InstallMethod(IsomorphismSemigroup,
@@ -436,6 +455,20 @@ function(filt, I)
   UseIsomorphismRelation(I, J);
 
   return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsBlockBijectionSemigroup and a block bijection semigroup",
+[IsBlockBijectionSemigroup, IsBlockBijectionSemigroup],
+function(filter, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsBipartitionSemigroup and a block bijection semigroup",
+[IsBipartitionSemigroup, IsBipartitionSemigroup],
+function(filter, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);
 
 # TODO could have a method for IsomorphismBlockBijectionSemigroup for
