@@ -8,6 +8,12 @@
 #############################################################################
 ##
 
+InstallMethod(ViewString, "for an f.p. semigroup element",
+[IsElementOfFpSemigroup], String);
+
+InstallMethod(ViewString, "for an f.p. monoid element",
+[IsElementOfFpMonoid], String);
+
 # FIXME this doesn't work very well
 
 InstallMethod(RandomSemigroupCons, "for IsFpSemigroup and a list",
