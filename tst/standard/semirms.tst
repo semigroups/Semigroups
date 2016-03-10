@@ -625,8 +625,12 @@ true
 #   convert from IsBipartitionMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid( [ Bipartition([ [ 1, -3 ], [ 2, -2 ], [ 3, -1 ] ]), Bipartition([ [ 1, 2, 3, -2 ], [ -1 ], [ -3 ] ]) ] );
 <bipartition monoid of degree 3 with 2 generators>
-gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
-<Rees 0-matrix semigroup 1x1 over Group([ (1,3) ])>
+gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);;
+gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([ (1,3) ])) 
+> or (not IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([(1,2)]));
+true
+gap> Length(Rows(T)) = 1 and Length(Columns(T)) = 1;
+true
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -647,8 +651,12 @@ true
 #   convert from IsTransformationMonoid to IsReesZeroMatrixSemigroup
 gap> S := Monoid( [ Transformation( [ 3, 2, 1 ] ), Transformation( [ 2, 2, 2 ] ) ] );
 <transformation monoid of degree 3 with 2 generators>
-gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
-<Rees 0-matrix semigroup 1x1 over Group([ (1,3) ])>
+gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);;
+gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([ (1,3) ])) 
+> or (not IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([(1,2)]));
+true
+gap> Length(Rows(T)) = 1 and Length(Columns(T)) = 1;
+true
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1139,6 +1147,50 @@ gap> S := F / rels;
 <fp group on the generators [  ]>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group(())>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsPermGroup to IsReesMatrixSemigroup
+gap> S := DihedralGroup(IsPermGroup, 4);
+Group([ (1,2), (3,4) ])
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,3)(2,4), (1,4)(2,3) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsGroup to IsReesMatrixSemigroup
+gap> S := DihedralGroup(4);
+<pc group of size 4 with 2 generators>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,3)(2,4), (1,4)(2,3) ])>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
