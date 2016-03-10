@@ -1311,15 +1311,15 @@ function(filt, S)
   return Range(IsomorphismMonoid(filt, S));
 end);
 
-InstallMethod(AsMonoid, "for a filter, pos int, a Monoid",
-[IsFunction and IsOperation, IsPosInt, IsMonoid],
+InstallMethod(AsMonoid, "for a filter, pos int, and a semigroup",
+[IsFunction and IsOperation, IsPosInt, IsSemigroup],
 function(filt, threshold, S)
   return Range(IsomorphismMonoid(filt, threshold, S));
 end);
 
 InstallMethod(AsMonoid,
-"for a filter, pos int, pos int, a Monoid",
-[IsFunction and IsOperation, IsPosInt, IsPosInt, IsMonoid],
+"for a filter, pos int, pos int, and a semigroup",
+[IsFunction and IsOperation, IsPosInt, IsPosInt, IsSemigroup],
 function(filt, threshold, period, S)
   return Range(IsomorphismMonoid(filt, threshold, period, S));
 end);
