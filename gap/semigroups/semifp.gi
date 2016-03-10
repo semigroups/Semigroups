@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  fpsemi.gd
+#W  semifp.gd
 #Y  Copyright (C) 2015                                  James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -80,19 +80,31 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismFpMonoid, "for a monoid",
-[IsMonoid], 3,
+InstallMethod(IsomorphismFpMonoid, "for a semigroup",
+[IsSemigroup], 8,
 function(S)
-  local F, A, lookup, pos, data, rules, rels, convert, Q, B, map, inv, rule;
+  local gens, F, A, lookup, pos, data, rules, rels, convert, Q, B, map, inv,
+  rule;
 
-  if not IsFinite(S) then
+  if not IsMonoidAsSemigroup(S) then 
+    ErrorNoReturn("Semigroups: IsomorphismFpMonoid: usage,\n", 
+                  "the semigroup given as first argument must have a ",
+                  "multiplicative neutral element,");
+  elif not IsFinite(S) then
     TryNextMethod();
   fi;
+  
+  if IsMonoid(S) then 
+    gens := GeneratorsOfMonoid(S);
+  else
+    gens := Filtered(GeneratorsOfSemigroup(S), 
+                     x -> x <> MultiplicativeNeutralElement(S));
+  fi;
 
-  F := FreeMonoid(Length(GeneratorsOfMonoid(S)));
+  F := FreeMonoid(Length(gens));
   A := GeneratorsOfMonoid(F);
   lookup := List(GeneratorsOfSemigroup(S),
-                 x -> Position(GeneratorsOfMonoid(S), x));
+                 x -> Position(gens, x));
   pos := Position(lookup, fail);
 
   data := GenericSemigroupData(S);
@@ -101,7 +113,7 @@ function(S)
 
   convert := function(word)
     local out, i;
-    out := One(F);
+    out := MultiplicativeNeutralElement(F);
     for i in word do
       if lookup[i] <> fail then
         out := out * A[lookup[i]];

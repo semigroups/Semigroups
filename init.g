@@ -56,6 +56,7 @@ ReadPackage("semigroups/gap/semigroups/semiboolmat.gd");
 ReadPackage("semigroups/gap/semigroups/semiex.gd");
 ReadPackage("semigroups/gap/semigroups/semicons.gd");
 ReadPackage("semigroups/gap/semigroups/semigraph.gd");
+ReadPackage("semigroups/gap/semigroups/semifp.gd");
 
 ReadPackage("semigroups/gap/main/froidure-pin.gd");
 ReadPackage("semigroups/gap/main/setup.gd");
