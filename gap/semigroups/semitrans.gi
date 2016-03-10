@@ -707,7 +707,7 @@ function(S)
   UseIsomorphismRelation(S, T);
 
   iso := function(x)
-    return EvaluateWord(gen, Factorization(S, x));
+    return EvaluateWord(gen, MinimalFactorization(S, x));
   end;
 
   inv := function(x)
