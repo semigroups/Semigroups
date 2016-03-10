@@ -1131,5 +1131,29 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+#T# AsSemigroup: 
+#   convert from IsFpMonoid to IsReesMatrixSemigroup
+gap> F := FreeMonoid(0);; AssignGeneratorVariables(F);;
+gap> rels := [ ];;
+gap> S := F / rels;
+<fp group on the generators [  ]>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group(())>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/semirms.tst");
