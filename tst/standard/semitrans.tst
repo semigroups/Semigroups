@@ -597,6 +597,1199 @@ true
 gap> BruteForceIsoCheck(map);
 true
 
+#T# AsSemigroup: 
+#   convert from IsPBRSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ PBR([ [ -2 ], [ -1 ], [ -2 ], [ -2 ] ], [ [ 2 ], [ 1, 3, 4 ], [ ], [ ] ]), PBR([ [ -3 ], [ -3 ], [ -3 ], [ -3 ] ], [ [ ], [ ], [ 1, 2, 3, 4 ], [ ] ]) ] );
+<pbr semigroup of degree 4 with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsFpSemigroup to IsTransformationSemigroup
+gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
+gap> rels := [ [ s1*s2, s2 ], [ s2^2, s2 ], [ s1^3, s1 ] ];;
+gap> S := F / rels;
+<fp semigroup on the generators [ s1, s2 ]>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBipartitionSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Bipartition([ [ 1, 3, 4, -2 ], [ 2, -1 ], [ -3 ], [ -4 ] ]), Bipartition([ [ 1, 2, 3, 4, -3 ], [ -1 ], [ -2 ], [ -4 ] ]) ] );
+<bipartition semigroup of degree 4 with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of degree 4 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTransformationSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Transformation( [ 2, 1, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ) ] );
+<transformation semigroup of degree 4 with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of degree 4 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBooleanMatSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ false, true, false, false ], [ true, false, false, false ], [ false, true, false, false ], [ false, true, false, false ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false ], [ false, false, true, false ], [ false, false, true, false ], [ false, false, true, false ] ]) ] );
+<semigroup of 4x4 boolean matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of degree 4 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMaxPlusMatrixSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ] ]) ] );
+<semigroup of 4x4 max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMinPlusMatrixSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity, infinity ], [ 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity ], [ infinity, 0, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ] ]) ] );
+<semigroup of 4x4 min-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsProjectiveMaxPlusMatrixSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ] ]) ] );
+<semigroup of 4x4 projective max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsIntegerMatrixSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 1, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ] ]) ] );
+<semigroup of 4x4 integer matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMaxPlusMatrixSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ] ], 3), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ] ], 3) ] );
+<semigroup of 4x4 tropical max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMinPlusMatrixSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity, infinity ], [ 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity ], [ infinity, 0, infinity, infinity ] ], 5), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ] ], 5) ] );
+<semigroup of 4x4 tropical min-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsNTPMatrixSemigroup to IsTransformationSemigroup
+gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 1, 0, 0 ] ], 5, 1), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ] ], 5, 1) ] );
+<semigroup of 4x4 ntp matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsReesZeroMatrixSemigroup to IsTransformationSemigroup
+gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ () ], [ () ] ] );
+<Rees 0-matrix semigroup 1x2 over Group([ (1,2) ])>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsReesMatrixSemigroup to IsTransformationSemigroup
+gap> S := ReesMatrixSemigroup( Group( [ (1,2) ] ), [ [ () ], [ () ] ] );
+<Rees matrix semigroup 1x2 over Group([ (1,2) ])>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 4, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsReesZeroMatrixSemigroup to IsTransformationSemigroup
+gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ () ], [ 0 ] ] );
+<Rees 0-matrix semigroup 1x2 over Group([ (1,2) ])>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 5, degree 6 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsPBRMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ PBR([ [ -2 ], [ -3 ], [ -2 ] ], [ [ ], [ 1, 3 ], [ 2 ] ]), PBR([ [ -2 ], [ -2 ], [ -2 ] ], [ [ ], [ 1, 2, 3 ], [ ] ]) ] );
+<pbr monoid of degree 3 with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsFpMonoid to IsTransformationSemigroup
+gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
+gap> rels := [ [ m1*m2, m2 ], [ m2^2, m2 ], [ m1^3, m1 ], [ m2*m1^2, m2 ] ];;
+gap> S := F / rels;
+<fp monoid on the generators [ m1, m2 ]>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBipartitionMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Bipartition([ [ 1, 3, -2 ], [ 2, -3 ], [ -1 ] ]), Bipartition([ [ 1, 2, 3, -2 ], [ -1 ], [ -3 ] ]) ] );
+<bipartition monoid of degree 3 with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of degree 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTransformationMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Transformation( [ 2, 3, 2 ] ), Transformation( [ 2, 2, 2 ] ) ] );
+<transformation monoid of degree 3 with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of degree 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBooleanMatMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true, false ], [ false, false, true ], [ false, true, false ] ]), Matrix(IsBooleanMat, [ [ false, true, false ], [ false, true, false ], [ false, true, false ] ]) ] );
+<monoid of 3x3 boolean matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of degree 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMaxPlusMatrixMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+<monoid of 3x3 max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMinPlusMatrixMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, 0, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ]) ] );
+<monoid of 3x3 min-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsProjectiveMaxPlusMatrixMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+<monoid of 3x3 projective max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsIntegerMatrixMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ]) ] );
+<monoid of 3x3 integer matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMaxPlusMatrixMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ], 5), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ], 5) ] );
+<monoid of 3x3 tropical max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMinPlusMatrixMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, 0, infinity ] ], 1), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ], 1) ] );
+<monoid of 3x3 tropical min-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsNTPMatrixMonoid to IsTransformationSemigroup
+gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ], 1, 3), Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ], 1, 3) ] );
+<monoid of 3x3 ntp matrices with 2 generators>
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsPBRMonoid to IsTransformationMonoid
+gap> S := Monoid( [ PBR([ [ -2 ], [ -3 ], [ -2 ] ], [ [ ], [ 1, 3 ], [ 2 ] ]), PBR([ [ -2 ], [ -2 ], [ -2 ] ], [ [ ], [ 1, 2, 3 ], [ ] ]) ] );
+<pbr monoid of degree 3 with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsFpMonoid to IsTransformationMonoid
+gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
+gap> rels := [ [ m1*m2, m2 ], [ m2^2, m2 ], [ m1^3, m1 ], [ m2*m1^2, m2 ] ];;
+gap> S := F / rels;
+<fp monoid on the generators [ m1, m2 ]>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsBipartitionMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Bipartition([ [ 1, 3, -2 ], [ 2, -3 ], [ -1 ] ]), Bipartition([ [ 1, 2, 3, -2 ], [ -1 ], [ -3 ] ]) ] );
+<bipartition monoid of degree 3 with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of degree 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTransformationMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Transformation( [ 2, 3, 2 ] ), Transformation( [ 2, 2, 2 ] ) ] );
+<transformation monoid of degree 3 with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of degree 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsBooleanMatMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true, false ], [ false, false, true ], [ false, true, false ] ]), Matrix(IsBooleanMat, [ [ false, true, false ], [ false, true, false ], [ false, true, false ] ]) ] );
+<monoid of 3x3 boolean matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of degree 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsMaxPlusMatrixMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+<monoid of 3x3 max-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsMinPlusMatrixMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, 0, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ]) ] );
+<monoid of 3x3 min-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsProjectiveMaxPlusMatrixMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+<monoid of 3x3 projective max-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsIntegerMatrixMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ]) ] );
+<monoid of 3x3 integer matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTropicalMaxPlusMatrixMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ], 4), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ], 4) ] );
+<monoid of 3x3 tropical max-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTropicalMinPlusMatrixMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, 0, infinity ] ], 5), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ], 5) ] );
+<monoid of 3x3 tropical min-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsNTPMatrixMonoid to IsTransformationMonoid
+gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ], 5, 1), Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ], 5, 1) ] );
+<monoid of 3x3 ntp matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 5, degree 5 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsPBRSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ PBR([ [ -1 ], [ -2 ], [ -2 ], [ -2 ], [ -2 ] ], [ [ 1 ], [ 2, 3, 4, 5 ], [ ], [ ], [ ] ]), PBR([ [ -2 ], [ -1 ], [ -1 ], [ -1 ], [ -1 ] ], [ [ 2, 3, 4, 5 ], [ 1 ], [ ], [ ], [ ] ]) ] );
+<pbr semigroup of degree 5 with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsFpSemigroup to IsTransformationMonoid
+gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
+gap> rels := [ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s2 ], [ s2^2, s1 ] ];;
+gap> S := F / rels;
+<fp semigroup on the generators [ s1, s2 ]>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsBipartitionSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Bipartition([ [ 1, -1 ], [ 2, 3, 4, 5, -2 ], [ -3 ], [ -4 ], [ -5 ] ]), Bipartition([ [ 1, -2 ], [ 2, 3, 4, 5, -1 ], [ -3 ], [ -4 ], [ -5 ] ]) ] );
+<bipartition semigroup of degree 5 with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTransformationSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Transformation( [ 1, 2, 2, 2, 2 ] ), Transformation( [ 2, 1, 1, 1, 1 ] ) ] );
+<transformation semigroup of degree 5 with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsBooleanMatSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ true, false, false, false, false ], [ false, true, false, false, false ], [ false, true, false, false, false ], [ false, true, false, false, false ], [ false, true, false, false, false ] ]), Matrix(IsBooleanMat, [ [ false, true, false, false, false ], [ true, false, false, false, false ], [ true, false, false, false, false ], [ true, false, false, false, false ], [ true, false, false, false, false ] ]) ] );
+<semigroup of 5x5 boolean matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsMaxPlusMatrixSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ] ]) ] );
+<semigroup of 5x5 max-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsMinPlusMatrixSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ] ]) ] );
+<semigroup of 5x5 min-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsProjectiveMaxPlusMatrixSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ] ]) ] );
+<semigroup of 5x5 projective max-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsIntegerMatrixSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 1, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ] ]) ] );
+<semigroup of 5x5 integer matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTropicalMaxPlusMatrixSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ] ], 4), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ] ], 4) ] );
+<semigroup of 5x5 tropical max-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTropicalMinPlusMatrixSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ] ], 1), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ] ], 1) ] );
+<semigroup of 5x5 tropical min-plus matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsNTPMatrixSemigroup to IsTransformationMonoid
+gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 1, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ] ], 3, 5), Matrix(IsNTPMatrix, [ [ 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ] ], 3, 5) ] );
+<semigroup of 5x5 ntp matrices with 2 generators>
+gap> T := AsMonoid(IsTransformationMonoid, S);
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsTransformationMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from free band to IsTransformationSemigroup
+gap> S := FreeBand(2);;
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 6, degree 7 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from perm group  to IsTransformationSemigroup
+gap> S := DihedralGroup(IsPermGroup, 6);;
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of degree 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from non-perm group  to IsTransformationSemigroup
+gap> S := DihedralGroup(6);;
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 6, degree 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(R);
