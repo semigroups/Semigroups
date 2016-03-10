@@ -841,5 +841,295 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+#T# AsSemigroup: 
+#   convert from IsFpMonoid to IsReesZeroMatrixSemigroup
+gap> F := FreeMonoid(1);; AssignGeneratorVariables(F);;
+gap> rels := [ [ m1^2, m1 ] ];;
+gap> S := F / rels;
+<fp monoid on the generators [ m1 ]>
+gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
+<Rees 0-matrix semigroup 1x1 over Group(())>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesZeroMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsPBRMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ PBR([ [ -2 ], [ -1 ] ], [ [ 2 ], [ 1 ] ]) ] );
+<commutative pbr monoid of degree 2 with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsFpMonoid to IsReesMatrixSemigroup
+gap> F := FreeMonoid(1);; AssignGeneratorVariables(F);;
+gap> rels := [ [ m1^2, One(F) ] ];;
+gap> S := F / rels;
+<fp monoid on the generators [ m1 ]>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBipartitionMonoid to IsReesMatrixSemigroup
+gap> S := InverseMonoid( [ Bipartition([ [ 1, -1 ], [ 2, -2 ] ]), Bipartition([ [ 1, -2 ], [ 2, -1 ] ]) ] );
+<block bijection group of degree 2 with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTransformationMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ Transformation( [ 2, 1 ] ) ] );
+<commutative transformation monoid of degree 2 with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBooleanMatMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]) ] );
+<commutative monoid of 2x2 boolean matrices with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMaxPlusMatrixMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0 ], [ 0, -infinity ] ]) ] );
+<commutative monoid of 2x2 max-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMinPlusMatrixMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0 ], [ 0, infinity ] ]) ] );
+<commutative monoid of 2x2 min-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsProjectiveMaxPlusMatrixMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0 ], [ 0, -infinity ] ]) ] );
+<commutative monoid of 2x2 projective max-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsIntegerMatrixMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1 ], [ 1, 0 ] ]) ] );
+<commutative monoid of 2x2 integer matrices with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMaxPlusMatrixMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0 ], [ 0, -infinity ] ], 1) ] );
+<commutative monoid of 2x2 tropical max-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMinPlusMatrixMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0 ], [ 0, infinity ] ], 3) ] );
+<commutative monoid of 2x2 tropical min-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsNTPMatrixMonoid to IsReesMatrixSemigroup
+gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1 ], [ 1, 0 ] ], 4, 1) ] );
+<commutative monoid of 2x2 ntp matrices with 1 generator>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/semirms.tst");
