@@ -120,6 +120,20 @@ function(filt, S)
   return IsomorphismReesZeroMatrixSemigroup(S);
 end);
 
+InstallMethod(IsomorphismMonoid,
+"for IsReesMatrixSemigroup and a semigroup",
+[IsReesMatrixSemigroup, IsSemigroup],
+function(filt, S)
+  return IsomorphismReesMatrixSemigroup(S);
+end);
+
+InstallMethod(IsomorphismMonoid,
+"for IsReesZeroMatrixSemigroup and a semigroup",
+[IsReesZeroMatrixSemigroup, IsSemigroup],
+function(filt, S)
+  return IsomorphismReesZeroMatrixSemigroup(S);
+end);
+
 InstallMethod(IsomorphismReesMatrixSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -127,9 +141,7 @@ function(S)
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if not IsSimpleSemigroup(S) then
+  elif not IsSimpleSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroup: usage,\n",
                   "the argument must be a simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
@@ -154,9 +166,7 @@ function(S)
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if not IsZeroSimpleSemigroup(S) then
+  elif not IsZeroSimpleSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,\n",
                   "the argument must be a 0-simple semigroup,");
     #TODO is there another method? I.e. can we turn non-simple/non-0-simple
