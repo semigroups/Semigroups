@@ -22,6 +22,15 @@ function(nrgens, deg)
   return RandomSemigroup(IsTransformationSemigroup, nrgens, deg);
 end);
 
+InstallMethod(RandomTransformationMonoid, "for pos ints",
+[IsPosInt, IsPosInt],
+function(nrgens, deg)
+  SEMIGROUPS.PrintObsolete("RandomTransformationMonoid",
+                           "RandomMonoid(IsTransformationMonoid, ",
+                           nrgens, ", ", deg, ")");
+  return RandomMonoid(IsTransformationMonoid, nrgens, deg);
+end);
+
 InstallMethod(RandomPartialPermSemigroup, "for pos ints",
 [IsPosInt, IsPosInt],
 function(nrgens, deg)
@@ -29,6 +38,15 @@ function(nrgens, deg)
                            "RandomSemigroup(IsPartialPermSemigroup, ",
                            nrgens, ", ", deg, ")");
   return RandomSemigroup(IsPartialPermSemigroup, nrgens, deg);
+end);
+
+InstallMethod(RandomPartialPermMonoid, "for pos ints",
+[IsPosInt, IsPosInt],
+function(nrgens, deg)
+  SEMIGROUPS.PrintObsolete("RandomPartialPermMonoid",
+                            "RandomMonoid(IsPartialPermMonoid, ",
+                            nrgens, ", ", deg, ")");
+  return RandomMonoid(IsPartialPermMonoid, nrgens, deg);
 end);
 
 InstallMethod(DotDClasses, "for a semigroup",

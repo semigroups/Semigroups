@@ -9,9 +9,13 @@
 ##
 
 DeclareOperation("RandomTransformationSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomTransformationMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("RandomPartialPermSemigroup", [IsPosInt, IsPosInt]);
+DeclareOperation("RandomPartialPermMonoid", [IsPosInt, IsPosInt]);
+
 DeclareOperation("DotDClasses", [IsSemigroup]);
 DeclareOperation("DotDClasses", [IsSemigroup, IsRecord]);
+
 DeclareOperation("PartialTransformationSemigroup", [IsPosInt]);
 
 DeclareOperation("AsPartialPermSemigroup", [IsSemigroup]);
