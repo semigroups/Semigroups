@@ -120,20 +120,6 @@ function(filt, S)
   return IsomorphismReesZeroMatrixSemigroup(S);
 end);
 
-InstallMethod(IsomorphismMonoid,
-"for IsReesMatrixSemigroup and a semigroup",
-[IsReesMatrixSemigroup, IsSemigroup],
-function(filt, S)
-  return IsomorphismReesMatrixSemigroup(S);
-end);
-
-InstallMethod(IsomorphismMonoid,
-"for IsReesZeroMatrixSemigroup and a semigroup",
-[IsReesZeroMatrixSemigroup, IsSemigroup],
-function(filt, S)
-  return IsomorphismReesZeroMatrixSemigroup(S);
-end);
-
 InstallMethod(IsomorphismReesMatrixSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
