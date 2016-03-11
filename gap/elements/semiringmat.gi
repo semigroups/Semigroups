@@ -346,7 +346,7 @@ function(mat)
   one := One(mat);
   dim := Length(mat![1]);
   if Union(AsList(mat)) <> Union(AsList(one))
-      or ForAny([1 .. dim], i -> Number(mat![i], one[1][1]) <> 1) then
+      or ForAny([1 .. dim], i -> Number(mat![i], j -> j = one[1][1]) <> 1) then
     return fail;
   fi;
 

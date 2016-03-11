@@ -409,7 +409,7 @@ gap> S := Semigroup(PartialPerm([1, 2, 3, 4], [4, 5, 1, 2]),
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <partial perm semigroup of rank 4 with 2 generators>, 
 <transformation semigroup of degree 6 with 2 generators>
- , function( x ) ... end, <Operation "AsPartialPerm"> )
+ , function( x ) ... end, function( x ) ... end )
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
