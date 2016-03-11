@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  semifp.gd
+#W  semifp.gi
 #Y  Copyright (C) 2015                                  James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -56,6 +56,18 @@ function(filt, params)
                      CallFuncList(RandomInverseMonoid,
                                   Concatenation([IsPartialPermMonoid],
                                                 params)));
+end);
+
+InstallMethod(IsomorphismSemigroup, "for IsFpSemigroup and a semigroup",
+[IsFpSemigroup, IsSemigroup],
+function(filt, S)
+  return IsomorphismFpSemigroup(S);
+end);
+
+InstallMethod(IsomorphismMonoid, "for IsFpMonoid and a semigroup",
+[IsFpMonoid, IsSemigroup],
+function(filt, S)
+  return IsomorphismFpMonoid(S);
 end);
 
 # same method for ideals
