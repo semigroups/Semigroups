@@ -90,7 +90,7 @@ function(S)
   Q := F / rels;
   B := GeneratorsOfSemigroup(Q);
 
-  map := x -> EvaluateWord(B, Factorization(S, x));
+  map := x -> EvaluateWord(B, MinimalFactorization(S, x));
   inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S));
 
   return MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
@@ -140,7 +140,7 @@ function(S)
     # the identity is not a generator, so to avoid adjoining an additional
     # identity in the output, we must add a relation equating the identity with
     # a word in the generators.
-    word := Factorization(S, MultiplicativeNeutralElement(S));
+    word := MinimalFactorization(S, MultiplicativeNeutralElement(S));
     Add(rels, [convert(word), One(F)]);
     # Note that the previously line depends on Factorization always giving a
     # factorization in the GeneratorsOfSemigroup(S), and not in
@@ -179,6 +179,7 @@ function(S)
     fi;
     return false;
   end;
+
   for rule in rules do
     # only include non-redundant rules
     if (Length(rule[1]) <> 2
@@ -189,10 +190,21 @@ function(S)
   od;
 
   Q := F / rels;
-  B := GeneratorsOfSemigroup(Q);
 
-  map := x -> EvaluateWord(B, Factorization(S, x));
-  inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfMonoid(S));
+  if sgens = mgens then
+    map := x -> EvaluateWord(GeneratorsOfMonoid(Q), 
+                             MinimalFactorization(S, x));
+  else
+    map := x -> EvaluateWord(GeneratorsOfSemigroup(Q), 
+                             MinimalFactorization(S, x));
+  fi;
+
+  inv := function(x)
+    if not IsOne(UnderlyingElement(x)) then 
+      return MappedWord(UnderlyingElement(x), A, mgens);
+    fi;
+    return MultiplicativeNeutralElement(S);
+  end;
 
   return MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
 end);
