@@ -28,14 +28,20 @@ gap> BruteForceIsoCheck := function(iso)
 >     od;
 >   od;
 >   return true;
-> end;
-function( iso ) ... end
+> end;;
+gap> BruteForceInverseCheck := function(map)
+> local inv;
+>   inv := InverseGeneralMapping(map);
+>   return ForAll(Source(map), x -> x = (x ^ map) ^ inv)
+>     and ForAll(Range(map), x -> x = (x ^ inv) ^ map);
+> end;;
 
 #T# IsomorphismPermGroup: for a transformation semigroup
 gap> S := Semigroup([Transformation([3, 2, 4, 1]), Transformation([2, 1])]);
 <transformation semigroup of degree 4 with 2 generators>
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
 Group([ (1,3,4), (1,2) ])
@@ -51,7 +57,8 @@ gap> R := ReesMatrixSemigroup(Group((1,3,5), (2,4)), [[()]]);
 gap> iso := IsomorphismPermGroup(R);;
 gap> G := Range(iso);
 <group of size 6, with 2 generators>
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> R := ReesMatrixSemigroup(Group((1,3,5), (2,4)), [[(1,5,3), ()]]);
 <Rees matrix semigroup 2x1 over Group([ (1,3,5), (2,4) ])>
@@ -86,19 +93,25 @@ gap> S := F /
 > [F.2*(F.1*F.2*F.1)^2,(F.1*F.2*F.1)^2*F.2]];
 <fp semigroup on the generators [ s1, s2 ]>
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 24, with 2 generators>
+Group([ (1,3,6)(2,5,9)(4,8,12)(7,11,16)(10,15,20)(13,14,19)(17,18,21)
+(22,23,24), (1,4)(2,6)(3,7)(5,10)(8,13)(9,14)(11,17)(12,18)(15,16)(19,22)
+(20,23)(21,24) ])
 
 #T# IsomorphismPermGroup: for a PBR Semigroup
 gap> S := Semigroup([PBR([[-1], [-4], [-2], [-3]], [[1], [3], [4], [2]]),
 >                    PBR([[-2], [-1], [-3], [-4]], [[2], [1], [3], [4]])]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 24, with 2 generators>
+Group([ (1,3,6)(2,5,9)(4,8,12)(7,11,16)(10,15,20)(13,14,19)(17,18,21)
+(22,23,24), (1,4)(2,6)(3,7)(5,10)(8,13)(9,14)(11,17)(12,18)(15,16)(19,22)
+(20,23)(21,24) ])
 gap> S := Semigroup([PBR([[2], [2]], [[], []]),
 >                    PBR([[], [-2]], [[], [-2, 2]])]);;
 gap> iso := IsomorphismPermGroup(S);
@@ -114,16 +127,18 @@ the argument must be a semigroup satisfying IsGroupAsSemigroup,
 gap> S := Semigroup([PBR([[-2], [-3], [-1]], [[3], [1], [2]])]);
 <commutative pbr semigroup of degree 3 with 1 generator>
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 3, with 1 generator>
+Group([ (1,2,3) ])
 
 #T# IsomorphismPermGroup: for a Transformation Semigroup
 gap> S := Semigroup([Transformation([3, 4, 1, 2, 6, 5]),
 >                    Transformation([4, 5, 2, 6, 3, 1])]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
 Group([ (1,3)(2,4)(5,6), (1,4,6)(2,5,3) ])
@@ -133,13 +148,22 @@ Error, Semigroups: IsomorphismPermGroup: usage,
 the argument <S> must satisfy IsGroupAsSemigroup,
 
 #T# IsomorphismPermGroup: for a Partial Perm Semigroup
-gap> S := Semigroup([PartialPerm([1, 2, 3, 4], [2, 1, 3, 4]),
->                    PartialPerm([1, 2, 3, 4], [1, 2, 4, 3])]);;
+gap> S := Semigroup([PartialPerm([1, 2, 3, 5], [2, 1, 3, 5]),
+>                    PartialPerm([1, 2, 3, 5], [1, 2, 5, 3])]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-Group([ (1,2), (3,4) ])
+Group([ (1,2), (3,5) ])
+gap> S := Monoid(PartialPerm([1, 2, 3, 5], [2, 1, 3, 5]),
+>                PartialPerm([1, 2, 3, 5], [1, 2, 5, 3]));;
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
+true
+gap> G := Range(iso);
+Group([ (), (1,2), (3,5) ])
 gap> S := Semigroup([PartialPerm([1, 2], [2, 1]),
 >                    PartialPerm([1, 3], [3, 1])]);;
 gap> iso := IsomorphismPermGroup(S);
@@ -150,10 +174,11 @@ p,
 #T# IsomorphismPermGroup: for a Boolean Mat Semigroup
 gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 3, with 1 generator>
+Group([ (1,2,3) ])
 gap> S := Semigroup([Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 1], [0, 0, 0]]),
 >                    Matrix(IsBooleanMat, [[1, 1, 1], [1, 0, 0], [0, 0, 0]])]);;
 gap> iso := IsomorphismPermGroup(S);
@@ -165,10 +190,11 @@ gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
 >                                             [-infinity, -infinity, 0],
 >                                             [0, -infinity, -infinity]])]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 3, with 1 generator>
+Group([ (1,2,3) ])
 gap> S := Monoid([Matrix(IsMaxPlusMatrix,[[0,-infinity,-infinity,-infinity],
 >                                         [-infinity,-infinity,0,-infinity],
 >                                         [-infinity,-infinity,-infinity,0],
@@ -191,10 +217,11 @@ gap> S := Semigroup( [ Matrix(IsMinPlusMatrix,
 >                              [infinity, 0, infinity, infinity]]) ] );
 <semigroup of 4x4 min-plus matrices with 2 generators>
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 4, with 2 generators>
+Group([ (1,2,3,4), (1,3)(2,4) ])
 gap> S := Semigroup(
 > [Matrix(IsMinPlusMatrix, [[infinity, 0, infinity], [0, infinity, infinity],
 >     [infinity, 0, infinity]]),
@@ -215,10 +242,11 @@ gap> S := Semigroup(
 >     [-infinity, 0, -infinity, -infinity],
 >     [0, -infinity, -infinity, -infinity]], 2) ] );;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 4, with 2 generators>
+Group([ (1,3)(2,4), (1,4)(2,3) ])
 gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [[3, 0], [2, 1]], 3),
 >  Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [0, -infinity]], 3),
 >  Matrix(IsTropicalMaxPlusMatrix, [[1, -infinity], [1, 0]], 3) ] );;
@@ -235,10 +263,11 @@ gap> S := Semigroup([
 >     [infinity, infinity, infinity, infinity, 0],
 >     [0, infinity, infinity, infinity, infinity]], 2)]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 5, with 1 generator>
+Group([ (1,2,3,4,5) ])
 gap> S := Monoid(
 > [Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], [infinity, 0]], 2)]);;
 gap> iso := IsomorphismPermGroup(S);
@@ -262,10 +291,11 @@ gap> S := Semigroup([
 >     [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
 >     [0, -infinity, -infinity, -infinity, -infinity, -infinity]])]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 6, with 2 generators>
+Group([ (1,3)(2,4)(5,6), (1,4,6)(2,5,3) ])
 gap> S := Semigroup([
 > Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, 0, -infinity],
 >     [0, -infinity, -infinity], [-infinity, 0, -infinity]]),
@@ -284,10 +314,11 @@ gap> S := Semigroup([
 >     [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0],
 >     [1, 0, 0, 0, 0, 0]], 2, 3)]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 6, with 2 generators>
+Group([ (1,3)(2,4)(5,6), (1,4,6)(2,5,3) ])
 gap> S := Semigroup([
 > Matrix(IsNTPMatrix, [[0, 0, 1, 0], [1, 0, 0, 2], [0, 4, 0, 2],
 >     [1, 3, 0, 5]], 88, 6)]);;
@@ -301,7 +332,8 @@ gap> S := InverseSemigroup(
 >    [ 6, -6 ] ] ), Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -4 ],
 >    [ 4, -5 ], [ 5, -3 ], [ 6, -6 ]])]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
 Group([ (1,2), (3,4,5) ])
@@ -312,6 +344,18 @@ gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
+#T# IsomorphismPermGroup: for a block bijection monoid
+gap> S := InverseMonoid(
+> [Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ],
+>    [ 6, -6 ] ] ), Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -4 ],
+>    [ 4, -5 ], [ 5, -3 ], [ 6, -6 ]])]);;
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
+true
+gap> G := Range(iso);
+Group([ (), (1,2), (3,4,5) ])
+
 #T# IsomorphismPermGroup: for a Integer Matrix Semigroup
 gap> S := Semigroup(
 > [Matrix(IsIntegerMatrix, [[0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0],
@@ -321,10 +365,11 @@ gap> S := Semigroup(
 >     [0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0],
 >     [1, 0, 0, 0, 0, 0]])]);;
 gap> iso := IsomorphismPermGroup(S);;
-gap> BruteForceIsoCheck(iso);
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
 true
 gap> G := Range(iso);
-<group of size 6, with 2 generators>
+Group([ (1,3)(2,4)(5,6), (1,4,6)(2,5,3) ])
 gap> S := Semigroup(
 > [Matrix(IsIntegerMatrix, [[0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0],
 >     [0, 0, 1, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 1, 0, 0],
@@ -332,6 +377,14 @@ gap> S := Semigroup(
 gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
+
+#T# IsomorphismPermGroup: for a Integer Matrix Semigroup
+gap> S := GraphInverseSemigroup(Digraph([[]]));
+<finite graph inverse semigroup with 1 vertex, 0 edges>
+gap> iso := IsomorphismPermGroup(S);;
+gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
+true
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceIsoCheck);
