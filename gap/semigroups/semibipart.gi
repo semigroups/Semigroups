@@ -318,6 +318,30 @@ function(filt, S)
                                        AsPermutation);
 end);
 
+# fall back method
+
+InstallMethod(IsomorphismSemigroup,
+"for IsBlockBijectionSemigroup and semigroup",
+[IsBlockBijectionSemigroup, IsSemigroup],
+function(filter, S)
+  local iso1, inv1, iso2, inv2;
+  
+  if not IsInverseSemigroup(S) then 
+    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
+                  "the second arg must be an inverse semigroup,");
+  fi;
+
+  iso1 := IsomorphismPartialPermSemigroup(S);
+  inv1 := InverseGeneralMapping(iso1);
+  iso2 := IsomorphismSemigroup(filter, Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso2),
+                                       x -> (x ^ iso1) ^ iso2,
+                                       x -> (x ^ inv2) ^ inv1);
+end);
+
 # this is one way, i.e. no converse method
 
 InstallMethod(IsomorphismSemigroup,
@@ -362,25 +386,6 @@ function(filter, S)
                                        T,
                                        x -> AsBlockBijection(x, n),
                                        inv);
-end);
-
-# fall back method
-
-InstallMethod(IsomorphismSemigroup,
-"for IsBlockBijectionSemigroup and an inverse semigroup",
-[IsBlockBijectionSemigroup, IsInverseSemigroup],
-function(filter, S)
-  local iso1, inv1, iso2, inv2;
-
-  iso1 := IsomorphismPartialPermSemigroup(S);
-  inv1 := InverseGeneralMapping(iso1);
-  iso2 := IsomorphismSemigroup(filter, Range(iso1));
-  inv2 := InverseGeneralMapping(iso2);
-
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
 end);
 
 # this is one way, i.e. no converse method
