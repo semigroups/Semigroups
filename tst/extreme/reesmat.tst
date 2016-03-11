@@ -1106,14 +1106,14 @@ gap> mat := Matrix(S);
 gap> first_occurrence := l -> First([1 .. Length(l)], i -> l[i] <> 0);;
 gap> x := Length(mat);;
 gap> ForAll([1 .. x - 1],
-> i -> first_occurence(mat[i]) <= first_occurence(mat[i + 1]));
+> i -> first_occurrence(mat[i]) <= first_occurrence(mat[i + 1]));
 true
 gap> ForAll([1 .. Length(mat[1]) - 1], i ->
-> first_occurence(mat{[1 .. x]}[i]) <= first_occurence(mat{[1 .. x]}[i + 1]));
+> first_occurrence(mat{[1 .. x]}[i]) <= first_occurrence(mat{[1 .. x]}[i + 1]));
 true
 
 # check that the connected components are grouped together
-gap> comps := RZMSConnectedCompontents(S);
+gap> comps := RZMSConnectedComponents(S);
 [ [ [ 1, 2, 3, 4, 5, 6 ], [ 1, 2, 3, 4 ] ], [ [ 7, 8 ], [ 5, 6 ] ] ]
 gap> Concatenation(List(comps, x -> x[1])) = Rows(R);
 true
