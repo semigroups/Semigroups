@@ -18,7 +18,8 @@
 InstallMethod(RandomSemigroupCons, "for IsTransformationSemigroup and a list",
 [IsTransformationSemigroup, IsList],
 function(filt, params)
-  return Semigroup(List([1 .. params[1]], i -> RandomTransformation(params[2])));
+  return Semigroup(List([1 .. params[1]], i ->
+                   RandomTransformation(params[2])));
 end);
 
 InstallMethod(RandomMonoidCons, "for IsTransformationMonoid and a list",
@@ -779,7 +780,6 @@ function(I)
 
   return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
-
 
 #############################################################################
 # ?. Attributes

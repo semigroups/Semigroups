@@ -561,7 +561,6 @@ function(filter, n)
                      ZeroSemigroupCons(IsTransformationSemigroup, n));
 end);
 
-
 InstallMethod(ZeroSemigroupCons,
 "for a IsReesZeroMatrixSemigroup and a positive integer",
 [IsReesZeroMatrixSemigroup, IsPosInt],

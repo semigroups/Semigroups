@@ -1,5 +1,6 @@
-_InstallIsomorphismSemigroup
-_InstallIsomorphismMonoid
+_InstallRandom
+_InstallIsomorphism
+_InstallIsomorphism
 NC
 IO_Unpicklers
 SEMIGROUPS

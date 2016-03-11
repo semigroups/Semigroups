@@ -26,7 +26,7 @@ function(filt, params)
   G := params[3];
   # could add nr connected components
 
-  mat := List(J, x-> I * 0);
+  mat := List(J, x -> I * 0);
 
   for i in I do
     for j in J do
@@ -73,7 +73,7 @@ function(filt, params)
   G := params[3];
   # could add nr connected components
 
-  mat := List(J, x-> I * 0);
+  mat := List(J, x -> I * 0);
 
   if I > J then
     for i in J do
@@ -162,15 +162,15 @@ function(S)
   D := First(GreensDClasses(S),
              x -> not IsMultiplicativeZero(S, Representative(x)));
   map := SEMIGROUPS.InjectionPrincipalFactor(D, ReesZeroMatrixSemigroup);
-  
-  # the below is necessary since map is not defined on the zero of S 
+
+  # the below is necessary since map is not defined on the zero of S
   inj := function(x)
     if x = MultiplicativeZero(S) then
       return MultiplicativeZero(Range(map));
     fi;
     return x ^ map;
   end;
-  
+
   inv := function(x)
     if x = MultiplicativeZero(Range(map)) then
       return MultiplicativeZero(S);
@@ -178,7 +178,7 @@ function(S)
     return x ^ InverseGeneralMapping(map);
   end;
 
-  return MagmaIsomorphismByFunctionsNC(S, 
+  return MagmaIsomorphismByFunctionsNC(S,
                                        Range(map),
                                        inj,
                                        inv);

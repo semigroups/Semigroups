@@ -809,8 +809,7 @@ function(S)
   return AsList(S)[Random([1 .. Size(S)])];
 end);
 
-SEMIGROUPS.DefaultRandomInverseSemigroup :=
-function(filt, params)
+SEMIGROUPS.DefaultRandomInverseSemigroup := function(filt, params)
   if Length(params) = 2 then
     return AsSemigroup(filt,
                        RandomInverseSemigroup(IsPartialPermSemigroup,
@@ -832,8 +831,7 @@ function(filt, params)
   fi;
 end;
 
-SEMIGROUPS.DefaultRandomInverseMonoid :=
-function(filt, params)
+SEMIGROUPS.DefaultRandomInverseMonoid := function(filt, params)
   if Length(params) = 2 then
     return AsMonoid(filt,
                        RandomInverseMonoid(IsPartialPermMonoid,
@@ -972,7 +970,7 @@ end);
 
 InstallGlobalFunction(RandomMonoid,
 function(arg)
-  local filt, params, order, i;
+  local filt, params;
 
   # check for optional first arg
   if Length(arg) >= 1 and IsPosInt(arg[1]) then
@@ -1046,7 +1044,7 @@ end);
 
 InstallGlobalFunction(RandomInverseSemigroup,
 function(arg)
-  local filt, params, order, i;
+  local filt, params;
 
   # check for optional first arg
   if Length(arg) >= 1 and IsPosInt(arg[1]) then
@@ -1119,7 +1117,7 @@ end);
 
 InstallGlobalFunction(RandomInverseMonoid,
 function(arg)
-  local filt, params, order, i;
+  local filt, params;
 
   # check for optional first arg
   if Length(arg) >= 1 and IsPosInt(arg[1]) then

@@ -102,18 +102,18 @@ InstallMethod(IsomorphismFpMonoid, "for a semigroup",
 [IsSemigroup], 8,
 function(S)
   local sgens, mgens, F, A, lookup, pos, rules, rels, convert, word,
-   is_redundant, Q, B, map, inv, rule;
+   is_redundant, Q, map, inv, rule;
 
-  if not IsMonoidAsSemigroup(S) then 
-    ErrorNoReturn("Semigroups: IsomorphismFpMonoid: usage,\n", 
+  if not IsMonoidAsSemigroup(S) then
+    ErrorNoReturn("Semigroups: IsomorphismFpMonoid: usage,\n",
                   "the semigroup given as first argument must have a ",
                   "multiplicative neutral element,");
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
- 
+
   sgens := GeneratorsOfSemigroup(S);
-  mgens := Filtered(sgens, 
+  mgens := Filtered(sgens,
                     x -> x <> MultiplicativeNeutralElement(S));
 
   F := FreeMonoid(Length(mgens));
@@ -136,7 +136,7 @@ function(S)
     return out;
   end;
 
-  if mgens = sgens then 
+  if mgens = sgens then
     # the identity is not a generator, so to avoid adjoining an additional
     # identity in the output, we must add a relation equating the identity with
     # a word in the generators.
@@ -150,31 +150,31 @@ function(S)
   # check if a rule is a consequence of the relation (word = one)
   is_redundant := function(rule)
     local prefix, suffix, i;
-    if not IsBound(word) or Length(rule[1]) < Length(word) then 
+    if not IsBound(word) or Length(rule[1]) < Length(word) then
       return false;
     fi;
 
     # check if <word> is a prefix
     prefix := true;
     for i in [1 .. Length(word)] do
-      if word[i] <> rule[1][i] then 
+      if word[i] <> rule[1][i] then
         prefix := false;
         break;
       fi;
     od;
-    if prefix then 
+    if prefix then
       return rule[1]{[Length(word) + 1 .. Length(rule[1])]} = rule[2];
     fi;
 
     # check if <word> is a suffix
     suffix := true;
     for i in [1 .. Length(word)] do
-      if word[i] <> rule[1][i] then 
+      if word[i] <> rule[1][i] then
         suffix := false;
         break;
       fi;
     od;
-    if suffix then 
+    if suffix then
       return rule[1]{[1 .. Length(rule[1]) - Length(word)]} = rule[2];
     fi;
     return false;
@@ -184,7 +184,7 @@ function(S)
     # only include non-redundant rules
     if (Length(rule[1]) <> 2
         or (rule[1][1] <> pos and rule[1][Length(rule[1])] <> pos))
-        and (not is_redundant(rule)) then 
+        and (not is_redundant(rule)) then
       Add(rels, [convert(rule[1]), convert(rule[2])]);
     fi;
   od;
@@ -192,15 +192,15 @@ function(S)
   Q := F / rels;
 
   if sgens = mgens then
-    map := x -> EvaluateWord(GeneratorsOfMonoid(Q), 
+    map := x -> EvaluateWord(GeneratorsOfMonoid(Q),
                              MinimalFactorization(S, x));
   else
-    map := x -> EvaluateWord(GeneratorsOfSemigroup(Q), 
+    map := x -> EvaluateWord(GeneratorsOfSemigroup(Q),
                              MinimalFactorization(S, x));
   fi;
 
   inv := function(x)
-    if not IsOne(UnderlyingElement(x)) then 
+    if not IsOne(UnderlyingElement(x)) then
       return MappedWord(UnderlyingElement(x), A, mgens);
     fi;
     return MultiplicativeNeutralElement(S);
