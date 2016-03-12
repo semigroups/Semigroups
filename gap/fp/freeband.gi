@@ -59,8 +59,6 @@ InstallMethod(IsGeneratorsOfInverseSemigroup, "for a free band element coll",
 
 InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
 
-#
-
 InstallGlobalFunction(FreeBand,
 function(arg)
   local names, F, type, gens, S, m, ngens;
@@ -341,8 +339,6 @@ function(s)
   return IteratorByNextIterator(record);
 end);
 
-#
-
 InstallMethod(GreensDClassOfElement, "for a free band an element",
 [IsFreeBandCategory, IsFreeBandElement],
 function(S, x)
@@ -358,18 +354,36 @@ function(S, x)
   D := Objectify(type, rec());
   SetParent(D, S);
   SetRepresentative(D, x);
-  #SetEquivalenceClassRelation(D, GreensDRelation(S));
+  SetEquivalenceClassRelation(D, GreensDRelation(S));
   # TODO Add a new method for GreensDRelations. JJ
-  # JDM what does this comment mean?
+  # JDM  This means basically that there are not enough methods installed here
+  # for free band Green's classes, so it is not possible to use free bands in
+  # GAP properly at the moment.
   return D;
 end);
 
-#
+InstallMethod(GreensDRelation, "for a free band",
+[IsFreeBandCategory],
+function(S)
+  local fam, rel;
+
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
+
+  rel := Objectify(NewType(fam,
+                           IsEquivalenceRelation
+                           and IsEquivalenceRelationDefaultRep
+                           and IsGreensDRelation),
+                   rec());
+  SetSource(rel, S);
+  SetRange(rel, S);
+  SetIsFiniteSemigroupGreensRelation(rel, true);
+
+  return rel;
+end);
 
 InstallMethod(ViewString, "for a free band element",
 [IsFreeBandElement], PrintString);
-
-#
 
 InstallMethod(PrintString, "for a free band element",
 [IsFreeBandElement],
@@ -431,8 +445,6 @@ function(x, y)
   return tuple1[i] < tuple2[i];
 end);
 
-#
-
 InstallMethod(\*, "for elements of a free band", IsIdenticalObj,
 [IsFreeBandElement, IsFreeBandElement],
 function(x, y)
@@ -493,8 +505,6 @@ function(x, y)
                              word := fail));
 end);
 
-#
-
 InstallMethod(Size, "for a free band",
 [IsFreeBandCategory and IsFinite and HasGeneratorsOfSemigroup],
 function(S)
@@ -517,10 +527,6 @@ function(S)
 
   return output;
 end);
-
-#
-
-#
 
 InstallMethod(ChooseHashFunction, "for a free band element and int",
 [IsFreeBandElement, IsInt],
