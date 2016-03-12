@@ -192,11 +192,24 @@ function(x)
   return IsEquivalenceBooleanMat(AsBooleanMat(x));
 end);
 
-# TODO is this the correct definition
 InstallMethod(IsTransformationPBR, "for a pbr",
 [IsPBR],
 function(x)
-  return IsBipartitionPBR(x) and IsTransBipartition(AsBipartition(x));
+  local n, i;
+
+  n := x![1];
+  for i in [2 .. n + 1] do 
+    if Length(x![i]) <> 1 then 
+      return false;
+    fi;
+  od;
+  for i in [n + 2 .. 2 * n + 1] do 
+    if not ForAll(x![i], j -> x![j + 1][1] = i - 1) then 
+      return false;
+    fi;
+  od;
+
+  return true;
 end);
 
 InstallMethod(IsBlockBijectionPBR, "for a pbr",
@@ -459,11 +472,21 @@ end);
 InstallMethod(AsTransformation, "for a pbr",
 [IsPBR],
 function(x)
+  local out, n, i;
+
   if not IsTransformationPBR(x) then
     ErrorNoReturn("Semigroups: AsTransformation: usage,\n",
                   "the argument <x> must be a transformation PBR,");
   fi;
-  return AsTransformation(AsBipartition(x));
+
+  out := [];
+  n := x![1];
+
+  for i in [2 .. n + 1] do
+    out[i - 1] := x![i][1] - n;
+  od;
+
+  return Transformation(out);
 end);
 
 # TODO 2 arg version of this

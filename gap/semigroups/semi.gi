@@ -37,8 +37,8 @@
 
 # Returns an isomorphism from the semigroup <S> to a semigroup in <filter> by
 # composing an isomorphism from <S> to a transformation semigroup <T> with an
-# isomorphism from <T> to a semigroup in <filter>, i.e.
-# <filter> might be IsMaxPlusMatrixSemigroup or similar.
+# isomorphism from <T> to a semigroup in <filter>, i.e.  <filter> might be
+# IsMaxPlusMatrixSemigroup or similar.
 
 SEMIGROUPS.DefaultIsomorphismSemigroup := function(filter, S)
   local iso1, inv1, iso2, inv2;
