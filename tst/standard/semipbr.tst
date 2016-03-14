@@ -280,5 +280,271 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+#T# AsSemigroup: 
+#   convert from IsPBRMonoid to IsPBRSemigroup
+gap> S := Monoid( [ PBR([ [ -2 ], [ -2 ], [ -5 ], [ -5 ], [ -5 ], [ -9 ], [ -9 ], [ -9 ], [ -9 ] ], [ [ ], [ 1, 2 ], [ ], [ ], [ 3, 4, 5 ], [ ], [ ], [ ], [ 6, 7, 8, 9 ] ]), PBR([ [ -3 ], [ -4 ], [ -6 ], [ -7 ], [ -8 ], [ -6 ], [ -7 ], [ -7 ], [ -8 ] ], [ [ ], [ ], [ 1 ], [ 2 ], [ ], [ 3, 6 ], [ 4, 7, 8 ], [ 5, 9 ], [ ] ]) ] );
+<pbr monoid of degree 9 with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of size 9, degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsFpMonoid to IsPBRSemigroup
+gap> F := FreeMonoid(3);; AssignGeneratorVariables(F);;
+gap> rels := [ [ m1^2, m1 ], [ m1*m2, m2 ], [ m1*m3, m3 ], [ m2*m1, m2 ], [ m2^2, m2 ], [ m3*m1, m3 ], [ m2*m3*m2, m3*m2 ], [ m3^3, m3^2 ], [ m2*m3^2*m2, m3^2*m2 ], [ m3*m2*m3^2, m2*m3^2 ], [ m3^2*m2*m3, m3*m2*m3 ] ];;
+gap> S := F / rels;
+<fp monoid on the generators [ m1, m2, m3 ]>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of size 10, degree 10 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBipartitionMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Bipartition([ [ 1, 2, -2 ], [ 3, 4, 5, -5 ], [ 6, 7, 8, 9, -9 ], [ -1 ], [ -3 ], [ -4 ], [ -6 ], [ -7 ], [ -8 ] ]), Bipartition([ [ 1, -3 ], [ 2, -4 ], [ 3, 6, -6 ], [ 4, 7, 8, -7 ], [ 5, 9, -8 ], [ -1 ], [ -2 ], [ -5 ], [ -9 ] ]) ] );
+<bipartition monoid of degree 9 with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr semigroup of degree 9 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTransformationMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Transformation( [ 2, 2, 5, 5, 5, 9, 9, 9, 9 ] ), Transformation( [ 3, 4, 6, 7, 8, 6, 7, 7, 8 ] ) ] );
+<transformation monoid of degree 9 with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBooleanMatMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true, false, false, false, false, false, false, false ], [ false, true, false, false, false, false, false, false, false ], [ false, false, false, false, true, false, false, false, false ], [ false, false, false, false, true, false, false, false, false ], [ false, false, false, false, true, false, false, false, false ], [ false, false, false, false, false, false, false, false, true ], [ false, false, false, false, false, false, false, false, true ], [ false, false, false, false, false, false, false, false, true ], [ false, false, false, false, false, false, false, false, true ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false, false, false, false, false, false ], [ false, false, false, true, false, false, false, false, false ], [ false, false, false, false, false, true, false, false, false ], [ false, false, false, false, false, false, true, false, false ], [ false, false, false, false, false, false, false, true, false ], [ false, false, false, false, false, true, false, false, false ], [ false, false, false, false, false, false, true, false, false ], [ false, false, false, false, false, false, true, false, false ], [ false, false, false, false, false, false, false, true, false ] ]) ] );
+<monoid of 9x9 boolean matrices with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMaxPlusMatrixMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ] ]) ] );
+<monoid of 9x9 max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of size 9, degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMinPlusMatrixMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ] ]) ] );
+<monoid of 9x9 min-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of size 9, degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsProjectiveMaxPlusMatrixMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ] ]) ] );
+<monoid of 9x9 projective max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of size 9, degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsIntegerMatrixMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ] ]) ] );
+<monoid of 9x9 integer matrices with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of size 9, degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMaxPlusMatrixMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ], 1), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ] ], 1) ] );
+<monoid of 9x9 tropical max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of size 9, degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMinPlusMatrixMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ] ], 3) ] );
+<monoid of 9x9 tropical min-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of size 9, degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsNTPMatrixMonoid to IsPBRSemigroup
+gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ], 4, 1), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ] ], 4, 1) ] );
+<monoid of 9x9 ntp matrices with 2 generators>
+gap> T := AsSemigroup(IsPBRSemigroup, S);
+<pbr monoid of size 9, degree 9 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPBRSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/semipbr.tst");
