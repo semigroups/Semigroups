@@ -466,7 +466,6 @@ end);
 # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
 # <[1..Length(data!.elts)]>.
 
-
 if IsBound(SEMIGROUP_ENUMERATE) then
   # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
   # <[1..Length(data!.elts)]>.
@@ -600,14 +599,15 @@ else
               nrrules := nrrules + 1;
               rules[nrrules] := [newword, words[val]];
               right[i][j] := val;
-              # < newword > and < words[val] > represent the same element (but are not
-              # equal) and so < newword > is not reduced
+              # < newword > and < words[val] > represent the same element (but
+              # are not equal) and so < newword > is not reduced
 
             else # < new > is a new element!
               nr := nr + 1;
               htadd(ht, new, nr);
 
-              if one = false and ForAll(gens, y -> new * y = y and y * new = y) then
+              if one = false
+                  and ForAll(gens, y -> new * y = y and y * new = y) then
                 one := nr;
               fi;
 
@@ -647,7 +647,8 @@ else
       if i > nr or Length(words[i]) <> len then
         # process words of length < len > into < left >
         if len > 1 then
-          for j in [lenindex[len] .. i - 1] do # loop over all words of length < len - 1 >
+          for j in [lenindex[len] .. i - 1] do
+            # loop over all words of length < len - 1 >
             p := prefix[j];
             b := final[j];
             for k in genstoapply do
@@ -656,7 +657,8 @@ else
             od;
           od;
         elif len = 1 then
-          for j in [lenindex[len] .. i - 1] do  # loop over all words of length < 1 >
+          for j in [lenindex[len] .. i - 1] do
+            # loop over all words of length < 1 >
             b := final[j];
             for k in genstoapply do
               left[j][k] := right[genslookup[k]][b];

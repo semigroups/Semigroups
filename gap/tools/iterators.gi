@@ -459,9 +459,9 @@ function(d)
                             [],
                             fail,
                             rec(PrintObj := function(iter)
-                              Print("<iterator of D-class>");
-                              return;
-                            end));
+                                  Print("<iterator of D-class>");
+                                  return;
+                                end));
 end);
 
 #JDM again this method is redundant if we introduce RhoOrb for inverse
@@ -1095,113 +1095,3 @@ function(L)
                                   return;
                                 end));
 end);
-
-#FIXME move this!
-# Printing...
-
-#InstallMethod(PrintObj, [IsIteratorOfDClassElements],
-#function(iter)
-#  Print("<iterator of D-class>");
-#  return;
-#end);
-#
-##
-##FIXME move this!
-#
-#InstallMethod(PrintObj, [IsIteratorOfHClassElements],
-#function(iter)
-#  Print("<iterator of H-class>");
-#  return;
-#end);
-#
-##
-#
-##FIXME move this!
-#InstallMethod(PrintObj, [IsIteratorOfLClassElements],
-#function(iter)
-#  Print("<iterator of L-class>");
-#  return;
-#end);
-#
-##
-#
-##FIXME move this!
-#InstallMethod(PrintObj, [IsIteratorOfRClassElements],
-#function(iter)
-#  Print("<iterator of R-class>");
-#  return;
-#end);
-#
-##
-##FIXME move this!
-#
-#InstallMethod(PrintObj, [IsIteratorOfDClassReps],
-#function(iter)
-#  Print("<iterator of D-class reps>");
-#  return;
-#end);
-#
-##
-##FIXME move this!
-#
-#InstallMethod(PrintObj, [IsIteratorOfHClassReps],
-#function(iter)
-#  Print("<iterator of H-class reps>");
-#  return;
-#end);
-#
-##FIXME move this!
-#
-#InstallMethod(PrintObj, [IsIteratorOfLClassReps],
-#function(iter)
-#  Print("<iterator of L-class reps>");
-#  return;
-#end);
-#
-##FIXME move this!
-#
-#InstallMethod(PrintObj, [IsIteratorOfRClassReps],
-#function(iter)
-#  Print("<iterator of R-class reps>");
-#  return;
-#end);
-#
-##FIXME move this!
-#
-#InstallMethod(PrintObj, [IsIteratorOfDClasses],
-#function(iter)
-#  Print("<iterator of D-classes>");
-#  return;
-#end);
-#
-##FIXME move this!
-#
-#InstallMethod(PrintObj, [IsIteratorOfHClasses],
-#function(iter)
-#  Print("<iterator of H-classes>");
-#  return;
-#end);
-#
-##FIXME move this!
-#
-#InstallMethod(PrintObj, [IsIteratorOfLClasses],
-#function(iter)
-#  Print("<iterator of L-classes>");
-#  return;
-#end);
-#
-##FIXME move this!
-#
-#InstallMethod(PrintObj, [IsIteratorOfRClasses],
-#function(iter)
-#  Print("<iterator of R-classes>");
-#  return;
-#end);
-#
-##
-##FIXME move this!
-#
-#InstallMethod(ViewString, [IsIteratorOfSemigroup],
-#function(iter)
-#  return Concatenation("<iterator of ", ViewString(iter!.parent), ">");
-#end);

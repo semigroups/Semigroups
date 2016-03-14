@@ -155,8 +155,6 @@ function(o, limit)
   return o;
 end);
 
-#
-
 InstallMethod(EvaluateWord, "for bipartition coll and list of integers",
 [IsBipartitionCollection, IsList],
 function(gens, w)
@@ -170,8 +168,6 @@ function(gens, w)
     od;
     return res;
 end);
-
-#
 
 InstallMethod(EvaluateWord, "for partial perm coll and list of integers",
 [IsPartialPermCollection, IsList],
@@ -187,8 +183,6 @@ function(gens, w)
     return res;
 end);
 
-#
-
 InstallMethod(EvaluateWord,
 "for Rees 0-matrix semigroup element collection and a list of positive ints",
 [IsReesZeroMatrixSemigroupElementCollection, IsList],
@@ -203,8 +197,6 @@ function(gens, w)
     od;
     return res;
 end);
-
-#
 
 InstallGlobalFunction(EnumeratePosition,
 "for an orbit, value, and boolean",
@@ -246,8 +238,6 @@ function(arg)
   return fail;
 end);
 
-#
-
 InstallGlobalFunction(LookForInOrb,
 "for an orbit, a function, and positive integer",
 function(o, func, start)
@@ -256,7 +246,7 @@ function(o, func, start)
   # FIXME not including the following line means that when considering
   # LambdaOrb(S) the first point is considered which it shouldn't be. Whatever
   # is broken when this line is not included should be fixed as at present this
-  # is not consistent. 
+  # is not consistent.
   Enumerate(o, Length(o) + 1);
 
   if start <= Length(o) then
@@ -283,11 +273,9 @@ function(o, func, start)
   return pos;
 end);
 
-#
-
 InstallGlobalFunction(OrbSCC,
 function(o)
-  local scc, p;
+  local scc;
 
   if IsBound(o!.scc) then
     return o!.scc;
@@ -303,8 +291,6 @@ function(o)
 
   return o!.scc;
 end);
-
-#
 
 InstallGlobalFunction(OrbSCCLookup,
 function(o)
@@ -404,8 +390,6 @@ function(o, i)
   o!.reverse[i] := [gen, pos];
   return [gen, pos];
 end);
-
-#
 
 InstallGlobalFunction(SchreierTreeOfSCC,
 function(o, i)

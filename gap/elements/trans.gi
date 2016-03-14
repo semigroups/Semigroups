@@ -23,13 +23,16 @@ function(im, ker)
   local flat, i;
 
   if not ForAll(ker, class -> ForAll(class, IsPosInt)) then
-    ErrorNoReturn();
+    ErrorNoReturn("Semigroups: TransformationByImageAndKernel: usage,\n",
+                  "the argument must be a list of lists of pos ints,");
   fi;
 
   flat := Union(ker);
 
   if flat <> [1 .. Length(flat)] then
-    ErrorNoReturn();
+    ErrorNoReturn("Semigroups: TransformationByImageAndKernel: usage,\n",
+                  "the union of the arguments must be [1 .. ", Length(flat),
+                  "],");
   fi;
 
   for i in [1 .. Length(ker)] do

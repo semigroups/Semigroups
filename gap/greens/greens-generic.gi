@@ -78,7 +78,7 @@ SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
   return out;
 end;
 
-SEMIGROUPS.GreensXClasses := function(S, 
+SEMIGROUPS.GreensXClasses := function(S,
                                       GreensXRelation,
                                       GreensXClassOfElement)
   local comps, elts, out, C, i;

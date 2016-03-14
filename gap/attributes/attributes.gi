@@ -727,9 +727,10 @@ end);
 # Returns the smallest degree transformation semigroup corresponding to right
 # congruences found using LatticeOfXCongruences with the given record.
 ################################################################################
-SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
   #TODO: The map should have an invfun included
+SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
   local M, l, congs, nrclasses, cong, bestcong, classes, fun, R;
+
   # If S is not a monoid, append an identity
   if not IsMonoid(S) then
     M := Monoid(S);
@@ -752,7 +753,7 @@ SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
 
   # If nrclasses is not lower than the current degree, just return the identity
   if IsTransformationSemigroup(S)
-     and nrclasses >= DegreeOfTransformationSemigroup(S) then
+      and nrclasses >= DegreeOfTransformationSemigroup(S) then
     return IdentityMapping(S);
   fi;
 
@@ -786,4 +787,3 @@ InstallMethod(SmallDegreeTransformationRepresentation,
 # Use the best 1-generated right congruence which contains no congruences
 S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true,
                                                       1gen := true)));
-

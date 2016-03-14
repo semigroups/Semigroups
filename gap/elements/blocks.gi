@@ -40,10 +40,10 @@ function(x, hashlen)
 end);
 
 InstallMethod(DegreeOfBlocks, "for blocks", [IsBlocks], BLOCKS_DEGREE);
-InstallMethod(RankOfBlocks,   "for blocks", [IsBlocks], BLOCKS_RANK);
-InstallMethod(NrBlocks,       "for blocks", [IsBlocks], BLOCKS_NR_BLOCKS);
-InstallMethod(\=,             "for blocks", [IsBlocks, IsBlocks], BLOCKS_EQ);
-InstallMethod(\<,             "for blocks", [IsBlocks, IsBlocks], BLOCKS_LT);
+InstallMethod(RankOfBlocks, "for blocks", [IsBlocks], BLOCKS_RANK);
+InstallMethod(NrBlocks, "for blocks", [IsBlocks], BLOCKS_NR_BLOCKS);
+InstallMethod(\=, "for blocks", [IsBlocks, IsBlocks], BLOCKS_EQ);
+InstallMethod(\<, "for blocks", [IsBlocks, IsBlocks], BLOCKS_LT);
 InstallMethod(ProjectionFromBlocks, "for blocks", [IsBlocks], BLOCKS_PROJ);
 InstallMethod(OnRightBlocks, "for blocks and a bipartition",
 [IsBlocks, IsBipartition], BLOCKS_RIGHT_ACT);

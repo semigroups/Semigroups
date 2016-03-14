@@ -205,8 +205,8 @@ function(x, y)
 
   if n <> Length(y![1]) then
     ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "the arguments <x> and <y> must be boolean matrices of equal ",
-                  "dimensions,");
+                  "the arguments <x> and <y> must be boolean matrices ",
+                  "of equal dimensions,");
   fi;
 
   for i in [1 .. n] do

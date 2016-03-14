@@ -124,7 +124,9 @@ end);
 
 InstallMethod(GreensDClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroup and IsSemigroupWithInverseOp, IsMultiplicativeElement, IsBool],
+[IsActingSemigroup and IsSemigroupWithInverseOp,
+ IsMultiplicativeElement,
+ IsBool],
 function(S, x, isGreensClassNC)
   local D;
   D := SEMIGROUPS.CreateDClass(S, x, isGreensClassNC);
@@ -138,7 +140,9 @@ end);
 
 InstallMethod(GreensLClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroup and IsSemigroupWithInverseOp, IsMultiplicativeElement, IsBool],
+[IsActingSemigroup and IsSemigroupWithInverseOp,
+ IsMultiplicativeElement,
+ IsBool],
 function(S, x, isGreensClassNC)
   local L;
   L := SEMIGROUPS.CreateLClass(S, x, isGreensClassNC);
@@ -151,7 +155,9 @@ end);
 
 InstallMethod(GreensHClassOfElementNC,
 "for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroup and IsSemigroupWithInverseOp, IsMultiplicativeElement, IsBool],
+[IsActingSemigroup and IsSemigroupWithInverseOp,
+ IsMultiplicativeElement,
+ IsBool],
 function(S, x, isGreensClassNC)
   local H;
   H := SEMIGROUPS.CreateHClass(S, x, isGreensClassNC);

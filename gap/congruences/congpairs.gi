@@ -675,6 +675,7 @@ function(_record)
   ###########################################################################
   # LatticeOfXCongruences
   ###########################################################################
+  
   InstallMethod(EvalString(
   Concatenation("LatticeOf", _record.type_string, "Congruences")),
   "for a semigroup",
@@ -684,6 +685,7 @@ function(_record)
   ###########################################################################
   # XCongruencesOfSemigroup
   ###########################################################################
+  
   InstallMethod(EvalString(
   Concatenation(_record.type_string, "CongruencesOfSemigroup")),
   "for a semigroup",

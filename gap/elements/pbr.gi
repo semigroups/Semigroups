@@ -198,13 +198,13 @@ function(x)
   local n, i;
 
   n := x![1];
-  for i in [2 .. n + 1] do 
-    if Length(x![i]) <> 1 then 
+  for i in [2 .. n + 1] do
+    if Length(x![i]) <> 1 then
       return false;
     fi;
   od;
-  for i in [n + 2 .. 2 * n + 1] do 
-    if not ForAll(x![i], j -> x![j + 1][1] = i - 1) then 
+  for i in [n + 2 .. 2 * n + 1] do
+    if not ForAll(x![i], j -> x![j + 1][1] = i - 1) then
       return false;
     fi;
   od;

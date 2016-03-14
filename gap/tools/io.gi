@@ -113,8 +113,6 @@ function(arg)
   fi;
 end);
 
-#
-
 InstallGlobalFunction(WriteGenerators,
 function(arg)
   local name, coll, mode, file, i, x;
@@ -213,30 +211,26 @@ function(arg)
     name := arg[1];
     line_nr := arg[2];
   else
-    Error("Semigroups: ReadOldGenerators: usage,\n",
-          "there should be at most 2 arguments,");
-    return;
+    ErrorNoReturn("Semigroups: ReadOldGenerators: usage,\n",
+                  "there should be at most 2 arguments,");
   fi;
 
   if IsString(name) then
     file := IO_CompressedFile(name, "r");
     if file = fail then
-      Error("Semigroups: ReadOldGenerators:\n",
-            "could not open the file ", file, ",");
-      return;
+      ErrorNoReturn("Semigroups: ReadOldGenerators:\n",
+                    "could not open the file ", file, ",");
     fi;
   elif IsFile(name) then
     file := name;
   else
-    Error("Semigroups: ReadOldGenerators: usage,\n",
-          "the first argument must be a string or a file,");
-    return;
+    ErrorNoReturn("Semigroups: ReadOldGenerators: usage,\n",
+                  "the first argument must be a string or a file,");
   fi;
 
   if not (IsInt(line_nr) and line_nr >= 0) then
-    Error("Semigroups: ReadOldGenerators: usage,\n",
-          "the second argument must be a positive integer,");
-    return;
+    ErrorNoReturn("Semigroups: ReadOldGenerators: usage,\n",
+                  "the second argument must be a positive integer,");
   fi;
 
   ReadGeneratorsLine := SEMIGROUPS.ReadGeneratorsLine;
@@ -252,9 +246,8 @@ function(arg)
       IO_Close(file);
     fi;
     if line = "" then
-      Error("Semigroups: ReadOldGenerators:\n",
-            "the file only has ", i - 1, " lines,");
-      return;
+      ErrorNoReturn("Semigroups: ReadOldGenerators:\n",
+                    "the file only has ", i - 1, " lines,");
     else
       return ReadGeneratorsLine(Chomp(line));
     fi;

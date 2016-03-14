@@ -115,6 +115,7 @@ InstallMethod(IsomorphismBlockBijectionSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   SEMIGROUPS.PrintObsolete("IsomorphismBlockBijectionSemigroup",
-                           "IsomorphismSemigroup(IsBlockBijectionSemigroup, S)");
+                           "IsomorphismSemigroup(",
+                           "IsBlockBijectionSemigroup, S)");
   return IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
 end);

@@ -325,8 +325,8 @@ InstallMethod(IsomorphismSemigroup,
 [IsBlockBijectionSemigroup, IsSemigroup],
 function(filter, S)
   local iso1, inv1, iso2, inv2;
-  
-  if not IsInverseSemigroup(S) then 
+
+  if not IsInverseSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
                   "the second arg must be an inverse semigroup,");
   fi;

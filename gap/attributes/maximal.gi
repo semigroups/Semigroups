@@ -323,7 +323,7 @@ InstallMethod(MaximalSubsemigroups, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
   local G, out, I, J, nrrows, nrcols, mat, graph, components, nrcomponents,
-  seen_zero, basicgens, pos, new, i, j, JJ, solo, U, II, len, names,
+  seen_zero, basicgens, pos, new, i, j, JJ, solo, U, II, len,
   rectangles, gens, H, r, k;
 
   if not IsReesZeroMatrixSemigroup(R) or not IsRegularSemigroup(R) then
