@@ -519,6 +519,7 @@ Obj BIPART_STAB_ACTION (Obj self, Obj x, Obj p) {
     }
   } else {
     ErrorQuit("usage: <p> must be a perm (not a %s)", (Int) TNAM_OBJ(p), 0L);
+    return 0L; // to keep the compiler happy
   }
   
   if (pdeg == 0) {
