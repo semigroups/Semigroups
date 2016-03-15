@@ -77,10 +77,9 @@ Error, Semigroups: InverseMonoidByGenerators(for a pbr collection):
 not yet implemented,
 
 #T# pbr: IsTransformationPBR, 1/1
-gap> x := PBR([[-3, 1, 3], [-1, 2], [-3, 1, 3]],
->             [[-1, 2], [-2], [-3, 1, 3]]);
-PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ], 
-  [ [ -1, 2 ], [ -2 ], [ -3, 1, 3 ] ])
+gap> x := PBR([[-3], [-1], [-3]],
+>             [[2], [], [1, 3]]);
+PBR([ [ -3 ], [ -1 ], [ -3 ] ], [ [ 2 ], [  ], [ 1, 3 ] ])
 gap> IsTransformationPBR(x);
 true
 gap> x := AsTransformation(x);
@@ -229,10 +228,9 @@ gap> AsPBR(x, 2);
 PBR([ [ -1, 1 ] ], [ [ -1, 1 ] ])
 
 #T# pbr: AsTransformation, for a pbr, 1/1
-gap> x := PBR([[-3, 1, 3], [-1, 2], [-3, 1, 3]],
->             [[-1, 2], [-2], [-3, 1, 3]]);
-PBR([ [ -3, 1, 3 ], [ -1, 2 ], [ -3, 1, 3 ] ], 
-  [ [ -1, 2 ], [ -2 ], [ -3, 1, 3 ] ])
+gap> x := PBR([[-3], [-1], [-3]],
+>             [[2], [], [1, 3]]);
+PBR([ [ -3 ], [ -1 ], [ -3 ] ], [ [ 2 ], [  ], [ 1, 3 ] ])
 gap> IsTransformationPBR(x);
 true
 gap> x := AsTransformation(x);
