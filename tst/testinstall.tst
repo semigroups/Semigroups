@@ -1319,6 +1319,14 @@ gap> RepresentativeOfMinimalIdeal(S);
 gap> IsZeroSimpleSemigroup(S);
 false
 
+#T# Issue 152: Bug in IsomorphismPermGroup for non-perm transformations
+gap> S := Semigroup(Transformation([1, 3, 2, 1]),
+>                   Transformation([2, 1, 3, 2]));;
+gap> iso := IsomorphismPermGroup(S);;
+gap> inv := InverseGeneralMapping(iso);;
+gap> ForAll(S, x -> (x ^ iso) ^ inv = x);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);

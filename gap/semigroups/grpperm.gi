@@ -80,7 +80,7 @@ InstallMethod(IsomorphismPermGroup,
 "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
-  local G, deg;
+  local G, id;
 
   if not IsGroupAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
@@ -89,12 +89,12 @@ function(S)
 
   G := Group(List(GeneratorsOfSemigroup(S), PermutationOfImage));
   UseIsomorphismRelation(S, G);
-  deg := DegreeOfTransformationSemigroup(S);
+  id := MultiplicativeNeutralElement(S);
 
   return MagmaIsomorphismByFunctionsNC(S,
                                        G,
                                        PermutationOfImage,
-                                       x -> AsTransformation(x, deg));
+                                       x -> id * x);
 end);
 
 InstallMethod(IsomorphismPermGroup,
