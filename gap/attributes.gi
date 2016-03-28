@@ -984,21 +984,25 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsomorphismPermGroup, "for a transformation semigroup",
+InstallMethod(IsomorphismPermGroup,
+"for a transformation semigroup",
 [IsTransformationSemigroup],
-function(s)
+function(S)
+  local G, id;
 
-  if not IsGroupAsSemigroup(s) then
-    Error("Semigroups: IsomorphismPermGroup: usage,\n",
-          "the argument <s> must be a transformation semigroup ",
-          "satisfying IsGroupAsSemigroup,");
-    return;
+  if not IsGroupAsSemigroup(S) then
+    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
+                  "the argument <S> must satisfy IsGroupAsSemigroup,");
   fi;
-  # gaplint: ignore 4
-  return MagmaIsomorphismByFunctionsNC(s,
-           Group(List(GeneratorsOfSemigroup(s), PermutationOfImage)),
-           PermutationOfImage,
-           x -> AsTransformation(x, DegreeOfTransformationSemigroup(s)));
+
+  G := Group(List(GeneratorsOfSemigroup(S), PermutationOfImage));
+  UseIsomorphismRelation(S, G);
+  id := MultiplicativeNeutralElement(S);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       G,
+                                       PermutationOfImage,
+                                       x -> id * x);
 end);
 
 # same method for ideals
