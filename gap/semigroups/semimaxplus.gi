@@ -226,7 +226,7 @@ end);
 #############################################################################
 
 ## These are installed inside a function so that the value of IsXMatrix and
-## IsXSemigroup are retained as a local variables.
+## IsXSemigroup are retained as local variables.
 
 _InstallIsomorphism0 := function(filter)
   local IsXMatrix, IsXSemigroup, IsXMonoid;
