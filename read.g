@@ -37,48 +37,6 @@ if TestPackageAvailability("genss") = fail then
       "SEMIGROUPS_NonDeterministicNormalizer");
 fi;
 
-# Issue 5 for Orb:
-
-if not IsBound(MappingPermListList_C) then
-  BindGlobal("MappingPermListList_C",
-  function(src, dst)
-    local src_tab, dst_tab, d, out, next, i;
-
-    if not IsList(src) or not IsList(dst) or Length(src) <> Length(dst)  then
-       ErrorNoReturn("Semigroups: MappingPermListList_C: usage,\n",
-                     "the arguments must be lists of equal length,");
-    fi;
-
-    if IsEmpty(src)  then
-      return ();
-    fi;
-    src_tab := [];
-    dst_tab := [];
-    d := Maximum(Maximum(src), Maximum(dst));
-    for i in [1 .. Length(src)] do
-      src_tab[src[i]] := i;
-    od;
-    for i in [1 .. Length(dst)] do
-      dst_tab[dst[i]] := i;
-    od;
-    out := EmptyPlist(d);
-    next := 1;
-    for i in [1 .. d] do
-      if IsBound(src_tab[i]) then
-        out[i] := dst[src_tab[i]];
-      else
-        while IsBound(dst_tab[next]) do
-          next := next + 1;
-        od;
-        out[i] := next;
-        next := next + 1;
-      fi;
-    od;
-
-    return PermList(out);
-  end);
-fi;
-
 ReadPackage("semigroups/gap/elements/star.gi");
 ReadPackage("semigroups/gap/elements/pbr.gi");
 ReadPackage("semigroups/gap/elements/bipartition.gi");

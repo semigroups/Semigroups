@@ -494,15 +494,11 @@ function(x, y)
   return x![2] ^ -1 * y![2];
 end);
 
-# returns a permutation mapping LambdaFunc(s)(f) to LambdaFunc(s)(g) so that
-# gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
+# returns a permutation mapping LambdaFunc(S)(x) to LambdaFunc(S)(y) so that
+# yx ^ -1(i) = p(i) when RhoFunc(S)(x) = RhoFunc(S)(y)!!
 
 InstallMethod(LambdaConjugator, "for a transformation semigroup",
-[IsTransformationSemigroup], S -> 
-function(f, g)
-  return MappingPermListList(UNSORTED_IMAGE_SET_TRANS(f), 
-                             UNSORTED_IMAGE_SET_TRANS(g));
-end);
+[IsTransformationSemigroup], S -> TRANS_IMG_CONJ);
 
 InstallMethod(LambdaConjugator, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S ->
