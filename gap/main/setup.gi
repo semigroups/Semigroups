@@ -83,8 +83,6 @@ function(x)
   fi;
 end);
 
-#
-
 InstallMethod(ActionDegree, "for a transformation collection",
 [IsTransformationCollection], DegreeOfTransformationCollection);
 
@@ -106,8 +104,6 @@ function(coll)
     return 0;
   fi;
 end);
-
-#
 
 InstallMethod(ActionDegree, "for a transformation semigroup",
 [IsTransformationSemigroup], DegreeOfTransformationSemigroup);
@@ -266,8 +262,6 @@ InstallMethod(LambdaAct, "for a Rees 0-matrix subsemigroup",
   fi;
 end);
 
-#
-
 InstallMethod(RhoAct, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
@@ -356,8 +350,6 @@ InstallMethod(LambdaFunc, "for a Rees 0-matrix subsemigroup",
   fi;
 end);
 
-#
-
 InstallMethod(RhoFunc, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
@@ -400,8 +392,6 @@ function(x)
     return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
   fi;
 end);
-
-#
 
 InstallMethod(RhoRank, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> function(x)
@@ -508,9 +498,12 @@ end);
 # gf^-1(i)=p(i) when RhoFunc(s)(f)=RhoFunc(s)(g)!!
 
 InstallMethod(LambdaConjugator, "for a transformation semigroup",
-[IsTransformationSemigroup], S -> TRANS_IMG_CONJ);
+[IsTransformationSemigroup], S -> 
+function(f, g)
+  return MappingPermListList(UNSORTED_IMAGE_SET_TRANS(f), 
+                             UNSORTED_IMAGE_SET_TRANS(g));
+end);
 
-# c method
 InstallMethod(LambdaConjugator, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S ->
 function(f, g)
