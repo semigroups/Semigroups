@@ -869,7 +869,7 @@ gap> I:=SemigroupIdeal(S, S);;
 gap> IsomorphismPermGroup(I);
 MappingByFunction( <transformation group of size 720, degree 6 with
   3 generators>, Group([ (), (1,2,3,4,5,6), (1,
-2) ]), <Attribute "PermutationOfImage">, function( x ) ... end )
+2) ]), function( f ) ... end, function( x ) ... end )
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(ideals);

@@ -83,6 +83,10 @@ if not IsBound(PERM_LEFT_QUO_TRANS_NC) then
   BindGlobal("PERM_LEFT_QUO_TRANS_NC", PermLeftQuoTransformationNC);
 fi;
 
+if not IsBound(IS_INJECTIVE_LIST_TRANS) then
+  BindGlobal("IS_INJECTIVE_LIST_TRANS", IsInjectiveListTrans);
+fi;
+
 # skip examples including partitions if we're in version less than 2.0
 
 if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
