@@ -477,7 +477,7 @@ InstallMethod(RhoInverse, "for a bipartition semigroup",
 # elements belongs to the schutz gp of a lambda orb.
 
 InstallMethod(LambdaPerm, "for a transformation semigroup",
-[IsTransformationSemigroup], S -> PERM_LEFT_QUO_TRANS_NC);
+[IsTransformationSemigroup], S -> PermLeftQuoTransformationNC);
 
 InstallMethod(LambdaPerm, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S -> PERM_LEFT_QUO_PPERM_NC);
