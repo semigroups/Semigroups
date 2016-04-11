@@ -79,6 +79,10 @@ if not IsBound(MappingPermListList_C) then
   end);
 fi;
 
+if not IsBound(PERM_LEFT_QUO_TRANS_NC) then
+  BindGlobal("PERM_LEFT_QUO_TRANS_NC", PermLeftQuoTransformationNC);
+fi;
+
 # skip examples including partitions if we're in version less than 2.0
 
 if not CompareVersionNumbers(GAPInfo.PackagesInfo.semigroups[1].Version, "2.0")
