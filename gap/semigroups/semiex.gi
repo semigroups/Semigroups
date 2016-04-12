@@ -465,7 +465,7 @@ fi;
 InstallMethod(OrderEndomorphisms, "for a positive integer",
 [IsPosInt],
 function(n)
-  local gens, s, i;
+  local gens, S, i;
 
   gens := EmptyPlist(n);
   gens[1] := Transformation(Concatenation([1], [1 .. n - 1]));
@@ -476,9 +476,9 @@ function(n)
     gens[i + 1] := TransformationNC(gens[i + 1]);
   od;
 
-  s := Monoid(gens);
-  SetIsRegularSemigroup(s, true);
-  return s;
+  S := Monoid(gens);
+  SetIsRegularSemigroup(S, true);
+  return S;
 end);
 
 InstallMethod(PartialTransformationMonoid, "for a positive integer",
@@ -531,7 +531,8 @@ function(n)
   local gens, M;
 
   if n < 0 then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: PartitionMonoid: usage,\n",
+                  "the argument <n> must be a non-negative integer,");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -555,7 +556,8 @@ function(n)
   local gens, s;
 
   if n < 0 then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: DualSymmetricInverseSemigroup: usage,\n",
+                  "the argument <n> must be a non-negative integer,");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -574,13 +576,14 @@ function(n)
   return s;
 end);
 
-InstallMethod(FactorisableDualSymmetricInverseSemigroup,
-"for an integer", [IsInt],
+InstallMethod(FactorisableDualSymmetricInverseSemigroup, "for an integer",
+[IsInt],
 function(n)
   local gens;
 
   if n < 0 then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: FactorisableDualSymmetricInverseSemigroup: ",
+                  "usage,\nthe argument <n> must be a non-negative integer,");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -593,12 +596,14 @@ function(n)
   return InverseMonoid(gens);
 end);
 
-InstallMethod(BrauerMonoid, "for an integer", [IsInt],
+InstallMethod(BrauerMonoid, "for an integer",
+[IsInt],
 function(n)
   local gens, M;
 
   if n < 0 then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: BrauerMonoid: usage,\n",
+                  "the argument <n> must be a non-negative integer,");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -614,12 +619,14 @@ function(n)
   return M;
 end);
 
-InstallMethod(PartialBrauerMonoid, "for an integer", [IsInt],
+InstallMethod(PartialBrauerMonoid, "for an integer",
+[IsInt],
 function(n)
   local gens, M;
 
   if n < 0 then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: PartialBrauerMonoid: usage,\n",
+                  "the argument <n> must be a non-negative integer,");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -637,12 +644,14 @@ function(n)
   return M;
 end);
 
-InstallMethod(JonesMonoid, "for an integer", [IsInt],
+InstallMethod(JonesMonoid, "for an integer",
+[IsInt],
 function(n)
   local gens, next, i, j, M;
 
   if n < 0 then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: JonesMonoid: usage,\n",
+                  "the argument <n> must be a non-negative integer,");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -666,12 +675,14 @@ function(n)
   return M;
 end);
 
-InstallMethod(PartialJonesMonoid, "for an integer", [IsInt],
+InstallMethod(PartialJonesMonoid, "for an integer",
+[IsInt],
 function(n)
   local gens, next, i, j, M;
 
   if n < 0 then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: PartialJonesMonoid: usage,\n",
+                  "the argument <n> must be a non-negative integer,");
   elif n = 0 then
     return Monoid(Bipartition([]));
   elif n = 1 then
@@ -696,12 +707,14 @@ function(n)
   return M;
 end);
 
-InstallMethod(MotzkinMonoid, "for a positive integer", [IsInt],
+InstallMethod(MotzkinMonoid, "for an integer",
+[IsInt],
 function(n)
   local gens, M;
 
   if n < 0 then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: MotzkinMonoid: usage,\n",
+                  "the argument <n> must be a non-negative integer,");
   elif n = 0 then
     return Monoid(Bipartition([]));
   fi;
@@ -741,8 +754,9 @@ function(n)
   return Monoid(gens);
 end);
 
-InstallMethod(POI, "for a positive integer",
-[IsPosInt],
+#
+
+InstallMethod(POI, "for a positive integer", [IsPosInt],
 function(n)
   local out, i;
 
@@ -760,8 +774,9 @@ function(n)
   return InverseMonoid(out);
 end);
 
-InstallMethod(POPI, "for a positive integer",
-[IsPosInt],
+#
+
+InstallMethod(POPI, "for a positive integer", [IsPosInt],
 function(n)
   if n = 1 then
     return InverseMonoid(PartialPerm([1]), PartialPerm([]));
@@ -773,8 +788,7 @@ end);
 # TODO improve and document this
 # FIXME this doesn't work
 
-InstallMethod(PowerSemigroup, "for a group",
-[IsGroup],
+InstallMethod(PowerSemigroup, "for a group", [IsGroup],
 function(g)
   local act, dom, gens, s, i, f;
 
