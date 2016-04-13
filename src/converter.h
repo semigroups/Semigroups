@@ -9,8 +9,10 @@
 
 #define SRC_CONVERTER_H_
 
+#include <algorithm>
+
 #include "src/compiled.h"          /* GAP headers                */
-#include "pperm.h"
+#include "src/pperm.h"
 
 #include "semigroups++/elements.h"
 
@@ -19,8 +21,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 class Converter {
-  public:
-    virtual ~Converter () {};
+ public:
+    virtual ~Converter () {}
     virtual Element* convert   (Obj, size_t) = 0;
     virtual Obj      unconvert (Element*)    = 0;
 };
@@ -51,6 +53,7 @@ class TransConverter : public Converter {
           x->push_back(pto4[i]);
         }
       } else {
+        // in case of future changes to transformations in GAP
         assert(false);
       }
 
@@ -64,26 +67,20 @@ class TransConverter : public Converter {
       auto xx = static_cast<Transformation<T>*>(x);
       Obj o = NEW_TRANS(xx->degree());
 
-      T* pto = ADDR_TRANS(o);
+      T* pto = ((T*)((Obj*)(ADDR_OBJ(o)) + 3));
       for (T i = 0; i < xx->degree(); i++) {
         pto[i] = (*xx)[i];
       }
       return o;
     }
 
-  private:
-
+ private:
     inline Obj NEW_TRANS (size_t deg) {
       if (deg < 65536) {
         return NEW_TRANS2(deg);
       } else {
         return NEW_TRANS4(deg);
       }
-    }
-
-    // helper for getting ADDR_TRANS2/4
-    inline T* ADDR_TRANS (Obj x) {
-      return ((T*)((Obj*)(ADDR_OBJ(x))+3));
     }
 };
 
@@ -99,17 +96,33 @@ class PPermConverter : public Converter {
     PartialPerm<T>* convert (Obj o, size_t n) {
       assert(IS_PPERM(o));
 
-      auto x   = new std::vector<T>();
-      T*   pto = ADDR_PPERM(o);
-      T    i;
+      auto x = new std::vector<T>();
+      x->reserve(n);
 
-      for (i = 0; i < DEG_PPERM(o); i++) {
-        if (pto[i] == 0) {
-          x->push_back(UNDEFINED);
-        } else {
-          x->push_back(pto[i] - 1);
+      size_t i;
+      if (TNUM_OBJ(o) == T_PPERM2) {
+        UInt2* pto2 = ADDR_PPERM2(o);
+        for (i = 0; i < std::min((size_t) DEG_PPERM2(o), n); i++) {
+          if (pto2[i] == 0) {
+            x->push_back(UNDEFINED);
+          } else {
+            x->push_back(pto2[i] - 1);
+          }
         }
+      } else if (TNUM_OBJ(o) == T_PPERM4) {
+        UInt4* pto4 = ADDR_PPERM4(o);
+        for (i = 0; i < std::min((size_t) DEG_PPERM4(o), n); i++) {
+          if (pto4[i] == 0) {
+            x->push_back(UNDEFINED);
+          } else {
+            x->push_back(pto4[i] - 1);
+          }
+        }
+      } else {
+        // in case of future changes to partial perms in GAP
+        assert(false);
       }
+
       for (; i < n; i++) {
         x->push_back(UNDEFINED);
       }
@@ -121,13 +134,13 @@ class PPermConverter : public Converter {
       auto xx  = static_cast<PartialPerm<T>*>(x);
       T    deg = xx->degree();
 
-      //remove trailing 0s
+      // remove trailing 0s
       while (deg > 0 && (*xx)[deg - 1] == UNDEFINED) {
         deg--;
       }
 
       Obj o     = NEW_PPERM(deg);
-      T*  pto   = ADDR_PPERM(o);
+      T*  pto   = ((T*)((Obj*)(ADDR_OBJ(o)) + 2) + 1);
       T   codeg = 0;
 
       for (T i = 0; i < deg; i++) {
@@ -144,7 +157,7 @@ class PPermConverter : public Converter {
       return o;
     }
 
-  private:
+ private:
 
     void set_codeg (Obj o, T deg, T codeg) {
       if (deg < 65536) {
@@ -162,9 +175,12 @@ class PPermConverter : public Converter {
       }
     }
 
-    // helper for getting ADDR_PPERM2/4
-    inline T* ADDR_PPERM (Obj x) {
-      return ((T*)((Obj*)(ADDR_OBJ(x))+2)+1);
+    // FIXME expose these in pperm.h
+    inline UInt2* ADDR_PPERM2 (Obj x) {
+      return ((UInt2*)((Obj*)(ADDR_OBJ(x)) + 2) + 1);
+    }
+    inline UInt4* ADDR_PPERM4 (Obj x) {
+      return ((UInt4*)((Obj*)(ADDR_OBJ(x)) + 2) + 1);
     }
 
     T UNDEFINED = (T) -1;
