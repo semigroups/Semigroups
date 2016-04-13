@@ -97,7 +97,7 @@ true
 
 #T# properties: IsBlockGroup, 2/?
 gap> S := JonesMonoid(3);
-<regular bipartition monoid of degree 3 with 2 generators>
+<regular bipartition *-monoid of degree 3 with 2 generators>
 gap> IsInverseSemigroup(S);
 false
 gap> IsBlockGroup(S);
@@ -326,7 +326,7 @@ true
 
 #T# properties: IsCommutativeSemigroup, 2
 gap> S := JonesMonoid(3);
-<regular bipartition monoid of degree 3 with 2 generators>
+<regular bipartition *-monoid of degree 3 with 2 generators>
 gap> IsCommutativeSemigroup(S);
 false
 
@@ -754,7 +754,7 @@ true
 
 #T# properties: IsLeftSimple, acting, 4
 gap> S := JonesMonoid(3);
-<regular bipartition monoid of degree 3 with 2 generators>
+<regular bipartition *-monoid of degree 3 with 2 generators>
 gap> IsLeftSimple(S);
 false
 
@@ -1156,7 +1156,7 @@ true
 
 #T# properties: IsRightSimple, acting, 4
 gap> S := JonesMonoid(3);
-<regular bipartition monoid of degree 3 with 2 generators>
+<regular bipartition *-monoid of degree 3 with 2 generators>
 gap> IsRightSimple(S);
 false
 

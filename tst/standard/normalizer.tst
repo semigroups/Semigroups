@@ -167,10 +167,10 @@ Group([ (2,3) ])
 #T# normalizer: SEMIGROUPS.NonDeterministicNormalizer, pperm, 1/1
 gap> S := Semigroup(PartitionMonoid(3), rec(generic := false));;
 gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S, rec());
-Group([ (1,2,3), (2,3) ])
+Group([ (1,3,2), (2,3) ])
 gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S,
 > rec(lambdastab := false));
-Group([ (1,3,2), (1,3) ])
+Group([ (1,2,3), (1,2) ])
 gap> SEMIGROUPS.NonDeterministicNormalizer(Group(()), S,
 > rec(lambdastab := false));
 Group(())

@@ -178,13 +178,13 @@ gap> MultiplicativeZero(s);
 gap> Size(MinimalIdeal(s)) = 1;
 true
 gap> s := PartitionMonoid(2);
-<regular bipartition monoid of degree 2 with 3 generators>
+<regular bipartition *-monoid of degree 2 with 3 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
 false
 gap> s := PartitionMonoid(3);
-<regular bipartition monoid of degree 3 with 4 generators>
+<regular bipartition *-monoid of degree 3 with 4 generators>
 gap> MultiplicativeZero(s);
 fail
 gap> Size(MinimalIdeal(s)) = 1;
@@ -202,7 +202,7 @@ true
 gap> s := PartitionMonoid(3);;
 gap> t := Bipartition([[1, -2], [2], [3, -3], [-1]]);;
 gap> I := SemigroupIdeal(s, t);
-<regular bipartition semigroup ideal of degree 3 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 3 with 1 generator>
 gap> HasMultiplicativeZero(s);
 false
 gap> MultiplicativeZero(I);

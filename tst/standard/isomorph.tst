@@ -78,7 +78,7 @@ gap> T := Semigroup(PartialPerm([]));
 gap> IsIsomorphicSemigroup(S, T);
 true
 gap> T := JonesMonoid(4);
-<regular bipartition monoid of degree 4 with 3 generators>
+<regular bipartition *-monoid of degree 4 with 3 generators>
 gap> IsIsomorphicSemigroup(S, T);
 false
 

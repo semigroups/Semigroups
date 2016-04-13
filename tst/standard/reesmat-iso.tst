@@ -51,7 +51,7 @@ gap> SetInfoLevel(InfoSemigroups, 0);
 
 #T#
 gap> I := MinimalIdeal(PartitionMonoid(4));
-<simple bipartition semigroup ideal of degree 4 with 1 generator>
+<simple bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> R := Range(IsomorphismReesMatrixSemigroup(I));
 <Rees matrix semigroup 15x15 over Group(())>
 gap> G := AutomorphismGroup(R);

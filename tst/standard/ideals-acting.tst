@@ -29,7 +29,7 @@ true
 
 #T# MaximalDClasses, for an regular acting semigroup ideal, 1
 gap> S := MotzkinMonoid(5);
-<regular bipartition monoid of degree 5 with 10 generators>
+<regular bipartition *-monoid of degree 5 with 10 generators>
 gap> x := Bipartition([[1, -1], [2, -3], [3, -4], [4], [5, -5], [-2]]);;
 gap> MaximalDClasses(SemigroupIdeal(S, x));
 [ <Green's D-class: <bipartition: [ 1, -1 ], [ 2, -3 ], [ 3, -4 ], [ 4 ], 
@@ -37,7 +37,7 @@ gap> MaximalDClasses(SemigroupIdeal(S, x));
 
 #T# DClassReps, for an regular acting semigroup ideal, 1
 gap> S := MotzkinMonoid(5);
-<regular bipartition monoid of degree 5 with 10 generators>
+<regular bipartition *-monoid of degree 5 with 10 generators>
 gap> x := Bipartition([[1, -1], [2, -3], [3, -4], [4], [5, -5], [-2]]);;
 gap> Length(DClassReps(SemigroupIdeal(S, x))) = 5;
 true
@@ -75,7 +75,7 @@ gap> SemigroupData(I);
 
 #T# SemigroupData, for an acting semigroup ideal, 2
 gap> S := MotzkinMonoid(5);
-<regular bipartition monoid of degree 5 with 10 generators>
+<regular bipartition *-monoid of degree 5 with 10 generators>
 gap> x := Bipartition([[1, -1], [2, -3], [3, -4], [4], [5, -5], [-2]]);;
 gap> I := SemigroupIdeal(S, x, rec(generic := false));;
 gap> SemigroupData(I);
@@ -178,28 +178,28 @@ false
 
 #T# \in, for a regular acting semigroup ideal, too low rank, 2
 gap> S := BrauerMonoid(5);
-<regular bipartition monoid of degree 5 with 3 generators>
+<regular bipartition *-monoid of degree 5 with 3 generators>
 gap> x := Bipartition([[1, 5], [2, -1], [3, -4], [4, -5], [-2, -3]]);;
 gap> I := SemigroupIdeal(S, x);;
 gap> J := MinimalIdeal(I);
-<simple bipartition semigroup ideal of degree 5 with 1 generator>
+<simple bipartition *-semigroup ideal of degree 5 with 1 generator>
 gap> Bipartition([[1, 2, 3, 4, 5], [-1, -2, -3, -4, -5]]) in I;
 false
 
 #T# \in, for a regular acting semigroup ideal, wrong lambda-val, 3
 gap> S := BrauerMonoid(5);
-<regular bipartition monoid of degree 5 with 3 generators>
+<regular bipartition *-monoid of degree 5 with 3 generators>
 gap> I := SemigroupIdeal(S, S.1);
-<regular bipartition semigroup ideal of degree 5 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3], [4, -4], [5, -5]]);;
 gap> x in I;
 false
 
 #T# \in, for a regular acting semigroup ideal, wrong lambda-val, 4
 gap> S := BrauerMonoid(5);
-<regular bipartition monoid of degree 5 with 3 generators>
+<regular bipartition *-monoid of degree 5 with 3 generators>
 gap> I := SemigroupIdeal(S, S.1);
-<regular bipartition semigroup ideal of degree 5 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
 gap> Size(I);;
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3], [4, -4], [5, -5]]);;
 gap> x in I;

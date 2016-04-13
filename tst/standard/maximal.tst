@@ -8,7 +8,6 @@
 ##
 #############################################################################
 ##
-
 gap> START_TEST("Semigroups package: standard/maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -64,10 +63,10 @@ gap> MaximalSubsemigroups(U);
 
 #T# maximal: MaximalSubsemigroups, for RMS and group, error 2/4
 gap> U := BrauerMonoid(2);
-<regular bipartition monoid of degree 2 with 2 generators>
+<regular bipartition *-monoid of degree 2 with 2 generators>
 gap> R := ReesMatrixSemigroup(U, [[One(U)]]);
-<Rees matrix semigroup 1x1 over <regular bipartition monoid of degree 2 with 
-  2 generators>>
+<Rees matrix semigroup 1x1 over <regular bipartition *-monoid of degree 2 
+  with 2 generators>>
 gap> MaximalSubsemigroups(R, Group(()));
 Error, Semigroups: MaximalSubsemigroups: usage,
 the first argument <R> must be a Rees matrix semigroup whose underlying

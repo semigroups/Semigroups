@@ -15,9 +15,9 @@ gap> SEMIGROUPS.StartTest();
 
 #T# quotients, OneImmutable
 gap> S := PartitionMonoid(4);
-<regular bipartition monoid of degree 4 with 4 generators>
+<regular bipartition *-monoid of degree 4 with 4 generators>
 gap> cong := SemigroupCongruence(S, [S.3, S.4]);
-<semigroup congruence over <regular bipartition monoid of degree 4 with 4 
+<semigroup congruence over <regular bipartition *-monoid of degree 4 with 4 
  generators> with 1 generating pairs>
 gap> T := S / cong;;
 gap> Size(T);
@@ -28,12 +28,12 @@ gap> One(T);
 
 #T# quotients, GeneratorsOfSemigroup
 gap> S := JonesMonoid(5);
-<regular bipartition monoid of degree 5 with 4 generators>
+<regular bipartition *-monoid of degree 5 with 4 generators>
 gap> I := SemigroupIdeal(S, S.4);
-<regular bipartition semigroup ideal of degree 5 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
 gap> J := SemigroupIdeal(I, Bipartition([[1, -3], [2, -4], [3, 4], [5, -5],
 > [-1, -2]]));
-<regular bipartition semigroup ideal of degree 5 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
 gap> T := I / J;;
 gap> HasGeneratorsOfMagma(T);
 false
@@ -43,9 +43,9 @@ gap> GeneratorsOfSemigroup(T);
 
 #T# quotients, Rees quotient
 gap> S := PartitionMonoid(4);
-<regular bipartition monoid of degree 4 with 4 generators>
+<regular bipartition *-monoid of degree 4 with 4 generators>
 gap> I := SemigroupIdeal(S, S.4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> T := S / I;;
 gap> Size(T);
 25
