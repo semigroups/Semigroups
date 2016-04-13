@@ -524,7 +524,7 @@ function(img, ker)
   if IsEmpty(img) then
     return IsEmpty(ker);
   fi;
-  return IS_INJECTIVE_LIST_TRANS(img, ker) and Length(img) = MaximumList(ker);
+  return IsInjectiveListTrans(img, ker) and Length(img) = MaximumList(ker);
 end);
 
 InstallMethod(IdempotentTester, "for a partial perm semigroup",
