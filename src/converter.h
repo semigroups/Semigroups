@@ -5,8 +5,9 @@
  *
  */
 
-#ifndef SEMIGROUPS_GAP_CONVERTER_H
-#define SEMIGROUPS_GAP_CONVERTER_H 1
+#ifndef SRC_CONVERTER_H_
+
+#define SRC_CONVERTER_H_
 
 #include "src/compiled.h"          /* GAP headers                */
 #include "pperm.h"
@@ -31,20 +32,28 @@ class Converter {
 template <typename T>
 class TransConverter : public Converter {
 
-  public:
-
+ public:
     Transformation<T>* convert (Obj o, size_t n) {
       assert(IS_TRANS(o));
 
-      T      i;
-      T*     pto    = ADDR_TRANS(o);
-      size_t degree = std::min((size_t) DEG_TRANS(o), n);
-      auto   x      = new std::vector<T>();
-      x->reserve(std::max(degree, n));
+      auto x = new std::vector<T>();
+      x->reserve(n);
 
-      for (i = 0; i < degree; i++) {
-        x->push_back(pto[i]);
+      size_t i;
+      if (TNUM_OBJ(o) == T_TRANS2) {
+        UInt2* pto2 = ADDR_TRANS2(o);
+        for (i = 0; i < std::min((size_t) DEG_TRANS2(o), n); i++) {
+          x->push_back(pto2[i]);
+        }
+      } else if (TNUM_OBJ(o) == T_TRANS4) {
+        UInt4* pto4 = ADDR_TRANS4(o);
+        for (i = 0; i < std::min((size_t) DEG_TRANS4(o), n); i++) {
+          x->push_back(pto4[i]);
+        }
+      } else {
+        assert(false);
       }
+
       for (; i < n; i++) {
         x->push_back(i);
       }
@@ -54,6 +63,7 @@ class TransConverter : public Converter {
     Obj unconvert (Element* x) {
       auto xx = static_cast<Transformation<T>*>(x);
       Obj o = NEW_TRANS(xx->degree());
+
       T* pto = ADDR_TRANS(o);
       for (T i = 0; i < xx->degree(); i++) {
         pto[i] = (*xx)[i];

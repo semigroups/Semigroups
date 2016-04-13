@@ -90,15 +90,15 @@ void data_init_converter (Obj data) {
       converter = new TransConverter<u_int32_t>();
       break;
     }
-    case PPERM2:{
+    case PPERM2: {
       converter = new PPermConverter<u_int16_t>();
       break;
     }
-    case PPERM4:{
+    case PPERM4: {
       converter = new PPermConverter<u_int32_t>();
       break;
     }
-    case BOOL_MAT:{
+    case BOOL_MAT: {
       converter = new BoolMatConverter();
       break;
     }
@@ -106,51 +106,50 @@ void data_init_converter (Obj data) {
       converter = new BipartConverter();
       break;
     }
-    case MAX_PLUS_MAT:{
+    case MAX_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter(new MaxPlusSemiring(),
                                                   Ninfinity,
                                                   MaxPlusMatrixType);
       break;
     }
-    case MIN_PLUS_MAT:{
+    case MIN_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter(new MinPlusSemiring(),
                                                   infinity,
                                                   MinPlusMatrixType);
       break;
     }
-    case TROP_MAX_PLUS_MAT:{
+    case TROP_MAX_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter(new TropicalMaxPlusSemiring(data_threshold(data)),
                                                   Ninfinity,
                                                   TropicalMaxPlusMatrixType);
       break;
     }
-    case TROP_MIN_PLUS_MAT:{
+    case TROP_MIN_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter(new TropicalMinPlusSemiring(data_threshold(data)),
                                                   infinity,
                                                   TropicalMinPlusMatrixType);
       break;
     }
-    case NTP_MAT:{
+    case NTP_MAT: {
       converter = new MatrixOverSemiringConverter(new NaturalSemiring(data_threshold(data),
                                                                       data_period(data)),
                                                   INTOBJ_INT(0),
                                                   NTPMatrixType);
       break;
     }
-    case INT_MAT:{
+    case INT_MAT: {
       converter = new MatrixOverSemiringConverter(new Integers(),
                                                   INTOBJ_INT(0),
                                                   IntegerMatrixType);
       break;
     }
-    case PROJ_MAX_PLUS_MAT:{
+    case PROJ_MAX_PLUS_MAT: {
       converter = new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(),
                                                         Ninfinity,
                                                         ProjectiveMaxPlusMatrixType);
       break;
-
     }
-    case PBR_TYPE:{
+    case PBR_TYPE: {
       converter = new PBRConverter();
       break;
     }
