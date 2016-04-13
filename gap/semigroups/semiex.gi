@@ -297,8 +297,6 @@ function(partition)
   return Semigroup(gens);
 end);
 
-#
-
 InstallMethod(FullMatrixSemigroup, "for pos int and pos int",
 [IsPosInt, IsPosInt],
 function(d, q)
@@ -326,8 +324,6 @@ function(d, q)
   return S;
 end);
 
-#
-
 InstallMethod(ViewObj, "for a full matrix semigroup",
 [IsFullMatrixSemigroup and HasGeneratorsOfSemigroup], 4,
 function(s)
@@ -339,12 +335,8 @@ function(s)
   Print(">");
 end);
 
-#
-
 InstallMethod(GeneralLinearSemigroup, "for 2 pos ints",
 [IsPosInt, IsPosInt], FullMatrixSemigroup);
-
-#
 
 InstallMethod(IsFullMatrixSemigroup, "for a semigroup",
 [IsSemigroup], ReturnFalse);
@@ -367,8 +359,6 @@ function(n)
   return Monoid(Transformation(out{[1 .. n]}),
                 Transformation(out{[n + 1 .. 2 * n]}));
 end);
-
-#
 
 if not (SEMIGROUPS.IsGrapeLoaded and SEMIGROUPS.IsGrapeCompiled) then
   InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
@@ -471,8 +461,6 @@ else #TODO don't use Grape here!
     return InverseSemigroup(out);
   end);
 fi;
-
-#
 
 InstallMethod(OrderEndomorphisms, "for a positive integer",
 [IsPosInt],
@@ -641,8 +629,6 @@ function(n)
   return Monoid(gens, rec(regular := true));
 end);
 
-#
-
 InstallMethod(JonesMonoid, "for an integer", [IsInt],
 function(n)
   local gens, next, i, j;
@@ -741,8 +727,6 @@ function(n)
   return Monoid(gens);
 end);
 
-#
-
 InstallMethod(POI, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -761,8 +745,6 @@ function(n)
   od;
   return InverseMonoid(out);
 end);
-
-#
 
 InstallMethod(POPI, "for a positive integer",
 [IsPosInt],
@@ -801,8 +783,6 @@ function(g)
   return s;
 end);
 
-#
-
 InstallMethod(SingularPartitionMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -818,8 +798,6 @@ function(n)
   od;
   return SemigroupIdeal(PartitionMonoid(n), Bipartition(blocks));
 end);
-
-#
 
 InstallMethod(SingularTransformationSemigroup, "for a positive integer",
 [IsPosInt],
@@ -849,8 +827,6 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
-#
-
 InstallMethod(SingularBrauerMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -870,8 +846,6 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
-#
-
 InstallMethod(SingularJonesMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -890,8 +864,6 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
-#
-
 InstallMethod(SingularDualSymmetricInverseSemigroup, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -909,8 +881,6 @@ function(n)
   S := DualSymmetricInverseMonoid(n);
   return SemigroupIdeal(S, x);
 end);
-
-#
 
 InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
 "for a positive integer", [IsPosInt],
