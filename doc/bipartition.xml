@@ -785,7 +785,7 @@ gap> x := Bipartition([[1, 7, -3, -8], [2, 6],
 gap> DegreeOfBipartition(x);
 9
 gap> S := BrauerMonoid(5);
-<regular bipartition monoid of degree 5 with 3 generators>
+<regular bipartition *-monoid of degree 5 with 3 generators>
 gap> IsBipartitionCollection(S);
 true
 gap> DegreeOfBipartitionCollection(S);

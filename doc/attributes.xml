@@ -305,7 +305,7 @@ gap> S := InverseSemigroup(
 gap> MultiplicativeZero(S);
 <empty partial perm>
 gap> S := PartitionMonoid(6);
-<regular bipartition monoid of degree 6 with 4 generators>
+<regular bipartition *-monoid of degree 6 with 4 generators>
 gap> MultiplicativeZero(S);
 fail
 gap> S := DualSymmetricInverseMonoid(6);
@@ -353,7 +353,7 @@ true
 gap> MinimalIdeal(POI(10));
 <partial perm group of rank 10>
 gap> MinimalIdeal(BrauerMonoid(6));
-<simple bipartition semigroup ideal of degree 6 with 1 generator>]]></Example>
+<simple bipartition *-semigroup ideal of degree 6 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -423,7 +423,7 @@ true
 gap> IsomorphismPermGroup(S); 
 MappingByFunction( <transformation group of degree 8 with 2 generators
  >, Group([ (5,6,8), (2,3,8,
-4) ]), <Attribute "PermutationOfImage">, function( x ) ... end )
+4) ]), function( f ) ... end, function( x ) ... end )
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
 gap> S := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));

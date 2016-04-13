@@ -58,9 +58,9 @@ gap> Size(S);
 
       <Example><![CDATA[
 gap> S := JonesMonoid(4);
-<regular bipartition monoid of degree 4 with 3 generators>
+<regular bipartition *-monoid of degree 4 with 3 generators>
 gap> SingularJonesMonoid(8);
-<regular bipartition semigroup ideal of degree 8 with 1 generator>]]></Example>
+<regular bipartition *-semigroup ideal of degree 8 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -82,13 +82,13 @@ gap> SingularJonesMonoid(8);
 
       <Example><![CDATA[
 gap> S := BrauerMonoid(4);
-<regular bipartition monoid of degree 4 with 3 generators>
+<regular bipartition *-monoid of degree 4 with 3 generators>
 gap> IsSubsemigroup(S, JonesMonoid(4));
 true
 gap> Size(S);
 105
 gap> SingularBrauerMonoid(8);
-<regular bipartition semigroup ideal of degree 8 with 1 generator>]]></Example>
+<regular bipartition *-semigroup ideal of degree 8 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -175,7 +175,7 @@ gap> Size(S);
 
       <Example><![CDATA[
 gap> S := PartitionMonoid(5);
-<regular bipartition monoid of degree 5 with 4 generators>
+<regular bipartition *-monoid of degree 5 with 4 generators>
 gap> Size(S);
 115975]]></Example>
     </Description>

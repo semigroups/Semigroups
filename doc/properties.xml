@@ -81,9 +81,9 @@ false
 gap> IsBand(IdempotentGeneratedSubsemigroup(S));
 true
 gap> S := PartitionMonoid(4);
-<regular bipartition monoid of degree 4 with 4 generators>
+<regular bipartition *-monoid of degree 4 with 4 generators>
 gap> M := MinimalIdeal(S);
-<simple bipartition semigroup ideal of degree 4 with 1 generator>
+<simple bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> IsBand(M);
 true]]></Example> 
     </Description>
@@ -455,7 +455,7 @@ gap> S := SingularTransformationSemigroup(4);
 gap> IsIdempotentGenerated(S);
 true
 gap> S := SingularBrauerMonoid(5);
-<regular bipartition semigroup ideal of degree 5 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
 gap> IsIdempotentGenerated(S);
 true]]></Example>
     </Description>
