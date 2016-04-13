@@ -21,15 +21,24 @@
 
 DataType data_type (Obj data) {
   Obj x = data_rep(data);
-  switch (TNUM_OBJ(x)) {
-    case T_TRANS2:
+
+  if (IS_TRANS(x)) {
+    if (data_degree(data) < 65536) {
       return TRANS2;
-    case T_TRANS4:
+    } else {
       return TRANS4;
-    case T_PPERM2:
+    }
+  }
+
+  if (IS_PPERM(x)) {
+    if (data_degree(data) < 65535) {
       return PPERM2;
-    case T_PPERM4:
+    } else {
       return PPERM4;
+    }
+  }
+
+  switch (TNUM_OBJ(x)) {
     case T_POSOBJ:
       if (IS_BOOL_MAT(x)) {
         return BOOL_MAT;
