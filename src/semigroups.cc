@@ -625,6 +625,7 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left){
 *******************************************************************************/
 
 Obj UF_NEW (Obj self, Obj size) {
+  assert(IS_INTOBJ(size) && INT_INTOBJ(size) > 0);
   return NewSemigroupsBag(new UFData(INT_INTOBJ(size)), UF_DATA, 2);
 }
 
@@ -637,10 +638,14 @@ Obj UF_SIZE (Obj self, Obj ufdata) {
 }
 
 Obj UF_FIND (Obj self, Obj ufdata, Obj i) {
+  assert(IS_INTOBJ(i) && INT_INTOBJ(i) > 0);
   return INTOBJ_INT(CLASS_OBJ<UFData>(ufdata)->find(INT_INTOBJ(i)-1)+1);
 }
 
 Obj UF_UNION (Obj self, Obj ufdata, Obj pair) {
+  assert(IS_PLIST(pair) && LEN_PLIST(pair) == 2);
+  assert(IS_INTOBJ(ELM_PLIST(pair,1)) && INT_INTOBJ(ELM_PLIST(pair,1)) > 0);
+  assert(IS_INTOBJ(ELM_PLIST(pair,2)) && INT_INTOBJ(ELM_PLIST(pair,2)) > 0);
   CLASS_OBJ<UFData>(ufdata)->unite(INT_INTOBJ(ELM_PLIST(pair,1))-1,
                                    INT_INTOBJ(ELM_PLIST(pair,2))-1);
   return 0L;
