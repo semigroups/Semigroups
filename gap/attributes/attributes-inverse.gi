@@ -507,7 +507,7 @@ function(S, f)
     i := Position(elts, f);
     return elts{NaturalPartialOrder(S)[i]};
   fi;
-  Error();
+
   if IsIdempotent(f) then #always true if S is a D-class rep of an inverse sgp
     out := EmptyPlist(NrIdempotents(S));
     elts := ShallowCopy(Idempotents(S));
