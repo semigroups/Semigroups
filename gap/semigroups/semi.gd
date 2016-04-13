@@ -28,6 +28,10 @@ DeclareOperation("InverseMonoidByGenerators",
 DeclareOperation("InverseSemigroupByGenerators",
                  [IsMultiplicativeElementCollection, IsRecord]);
 
+InstallTrueMethod(IsStarSemigroup, 
+                  IsAssociativeElementWithStarCollection and
+                  IsSemigroupWithInverseOp);
+
 DeclareOperation("ClosureInverseSemigroup",
                  [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection]);
 DeclareOperation("ClosureInverseSemigroup",
