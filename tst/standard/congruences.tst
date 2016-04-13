@@ -23,10 +23,11 @@ at least 2 arguments are required,
 gap> SemigroupCongruence(42, pairs);
 Error, Semigroups: SemigroupCongruence: usage,
 1st argument <S> must be a semigroup,
-gap> SemigroupCongruence(S, pairs[1], [Transformation([2, 3])]);
+gap> SemigroupCongruence(S, pairs[1], [Transformation([2, 1])]);
 Error, Semigroups: SemigroupCongruence: usage,
 <pairs> should be a list of lists of size 2,
-gap> SemigroupCongruence(S, [Transformation([2, 7]), Transformation([2, 3])]);
+gap> SemigroupCongruence(S, [Transformation([2, 6, 3, 4, 5, 3]),
+>                            Transformation([2, 3, 1])]);
 Error, Semigroups: SemigroupCongruence: usage,
 each pair should contain elements from the semigroup <S>,
 gap> S := FullTransformationSemigroup(6);;
@@ -132,11 +133,11 @@ at least 2 arguments are required,
 gap> LeftSemigroupCongruence(42, pairs);
 Error, Semigroups: LeftSemigroupCongruence: usage,
 1st argument <S> must be a semigroup,
-gap> LeftSemigroupCongruence(S, pairs[1], [Transformation([2, 3])]);
+gap> LeftSemigroupCongruence(S, pairs[1], [Transformation([2, 1])]);
 Error, Semigroups: LeftSemigroupCongruence: usage,
 <pairs> should be a list of lists of size 2,
 gap> LeftSemigroupCongruence(S,
-> [Transformation([2, 7]), Transformation([2, 3])]);
+> [Transformation([2, 6, 3, 4, 5, 2]), Transformation([2, 3, 1])]);
 Error, Semigroups: LeftSemigroupCongruence: usage,
 each pair should contain elements from the semigroup <S>,
 gap> S := FullTransformationSemigroup(6);;
@@ -153,11 +154,11 @@ at least 2 arguments are required,
 gap> RightSemigroupCongruence(42, pairs);
 Error, Semigroups: RightSemigroupCongruence: usage,
 1st argument <S> must be a semigroup,
-gap> RightSemigroupCongruence(S, pairs[1], [Transformation([2, 3])]);
+gap> RightSemigroupCongruence(S, pairs[1], [Transformation([2, 2])]);
 Error, Semigroups: RightSemigroupCongruence: usage,
 <pairs> should be a list of lists of size 2,
 gap> RightSemigroupCongruence(S,
-> [Transformation([2, 7]), Transformation([2, 3])]);
+> [Transformation([2, 6, 3, 4, 5, 4]), Transformation([2, 3, 1])]);
 Error, Semigroups: RightSemigroupCongruence: usage,
 each pair should contain elements from the semigroup <S>,
 gap> S := FullTransformationSemigroup(6);;
