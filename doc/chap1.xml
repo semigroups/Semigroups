@@ -182,7 +182,7 @@
       </Item>
       
       <Item> download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
-        <URL Text="the Semigroups package webpage">http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php</URL>.
+        <URL Text="the Semigroups package webpage">https://james-d-mitchell.github.io/Semigroups</URL>.
       </Item>
     
       <Item> unzip and untar the file, this should create a directory called

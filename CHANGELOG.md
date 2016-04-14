@@ -4,6 +4,14 @@
 #### Copyright (C) 2011-16 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.7.5 (released 19/04/2016)
+This is a minor release to fix [Issue
+152](https://bitbucket.org/james-d-mitchell/semigroups/issue/152/), and to make
+some changes for future compatibility with GAP. In [Issue
+152](https://bitbucket.org/james-d-mitchell/semigroups/issue/152/) when the
+method `IsomorphismPermGroup` was applied to a semigroups of non-permutation
+transformations the returned mapping was not an isomorphism. 
+
 ## Version 2.7.4 (released 02/03/2016)
 This is a minor release to fix [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150/), and to correct the required version of GAP (from 4.8.2 to 4.8.3). In [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150/) the function `IsZeroSimpleSemigroup` entered an infinite loop for some examples of semigroups of partial permutations. 
 

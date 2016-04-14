@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.7.4">
+##  <!ENTITY VERSION "2.7.5">
 ##  <!ENTITY GAPVERS "4.8.3">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.7.4">
+##  <!ENTITY ARCHIVENAME "semigroups-2.7.5">
 ##  <!ENTITY COPYRIGHTYEARS "2011-16">
 ##  <#/GAPDoc>
 
@@ -23,7 +23,7 @@ RecogsFunnyNameFormatterFunction := function(st)
   if Length(st) = 0 then
     return st;
   else
-    return Concatenation(" (",st,")");
+    return Concatenation(" (", st, ")");
   fi;
 end;
 
@@ -36,12 +36,26 @@ RecogsFunnyWWWURLFunction := function(re)
 end;
 
 SetPackageInfo( rec(
+
 PackageName := "Semigroups",
 Subtitle := "",
-Version := "2.7.4",
-Date := "02/03/2016",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-2.7.4",
+Version := "2.7.5",
+Date := "19/04/2016",
 ArchiveFormats := ".tar.gz",
+
+SourceRepository := rec(
+    Type := "git",
+    URL := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
+),
+
+IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
+PackageWWWHome  := Concatenation("https://gap-packages.github.io/",
+                                 ~.PackageName),
+README_URL      := Concatenation(~.PackageWWWHome, "/README"),
+PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
+ArchiveURL      := Concatenation(~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", "semigroups-", ~.Version),
 Persons := [
   rec(
     LastName      := "Mitchell",
@@ -49,7 +63,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
-    WWWHome       := "http://tinyurl.com/jdmitchell",
+    WWWHome       := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
@@ -172,15 +186,8 @@ Persons := [
 
 Status := "deposited",
 
-README_URL :=
-  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/README.md",
-PackageInfoURL :=
-  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/PackageInfo.g",
-
 AbstractHTML :=
 "<p>The <strong class=\"pkg\">Semigroups</strong> package is a <strong class=\"pkg\">GAP</strong> package containing methods for semigroups, monoids, and inverse semigroups, principally of transformations, partial permutations, bipartitions, subsemigroups of regular Rees 0-matrix semigroups, free inverse semigroups, free bands, and semigroups of matrices over finite fields.</p> <p><strong class=\"pkg\">Semigroups</strong> contains more efficient methods than those available in the <strong class=\"pkg\">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups, monoids, and inverse semigroup, calculating their Green's structure, ideals, size, elements, group of units, small generating sets, testing membership, finding the inverses of a regular element, factorizing elements over the generators, and many more. It is also possible to test if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties.</p> <p>There are methods for finding congruences of certain types of semigroups, the normalizer of a semigroup in a permutation group, the maximal subsemigroups of a finite semigroup, and smaller degree partial permutation representations of inverse semigroups. There are functions for producing pictures of the Green's structure of a semigroup, and for drawing bipartitions.</p>",
-
-PackageWWWHome := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php",
 
 PackageDoc := rec(
   BookName  := "Semigroups",
