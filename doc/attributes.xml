@@ -433,14 +433,12 @@ gap> MinimalDClass(S);
     If <A>S</A> is not a group then an error is given.
 
 <Example><![CDATA[
-gap> S := Semigroup( Transformation( [ 2, 2, 3, 4, 6, 8, 5, 5 ] ),
-> Transformation( [ 3, 3, 8, 2, 5, 6, 4, 4 ] ) );;
+gap> S := Semigroup(Transformation([2, 2, 3, 4, 6, 8, 5, 5]),
+>                   Transformation([3, 3, 8, 2, 5, 6, 4, 4]));;
 gap> IsGroupAsSemigroup(S);
 true
-gap> IsomorphismPermGroup(S); 
-MappingByFunction( <transformation group of degree 8 with 2 generators
- >, Group([ (5,6,8), (2,3,8,
-4) ]), function( f ) ... end, function( x ) ... end )
+gap> Range(IsomorphismPermGroup(S)); 
+Group([ (5,6,8), (2,3,8,4) ])
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
 gap> S := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
@@ -528,19 +526,36 @@ gap> StructureDescription(GroupOfUnits(S));
       
       See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
 <Example><![CDATA[
-gap> S := Semigroup( [ Transformation( [ 1, 1 ] ), 
->  Transformation( [ 2, 1 ] ), 
-> Transformation( [ 1, 2, 2 ] ), 
->  Transformation( [ 1, 2, 3, 4, 5, 1 ] ), 
->  Transformation( [ 1, 2, 3, 4, 5, 5 ] ), 
->  Transformation( [ 1, 2, 3, 4, 6, 5 ] ), 
->  Transformation( [ 1, 2, 3, 5, 4 ] ),
->  Transformation( [ 1, 2, 3, 7, 4, 5, 7 ] ), 
->  Transformation( [ 1, 2, 4, 8, 8, 3, 8, 7 ] ), 
->  Transformation( [ 1, 2, 8, 4, 5, 6, 7, 8 ] ), 
->  Transformation( [ 7, 7, 7, 4, 5, 6, 1 ] ) ] );;
-gap> IdempotentGeneratedSubsemigroup(S);
-<transformation monoid of degree 8 with 18 generators>
+gap> S := Semigroup(Transformation([1, 1]), 
+>                   Transformation([2, 1]), 
+>                   Transformation([1, 2, 2]), 
+>                   Transformation([1, 2, 3, 4, 5, 1]), 
+>                   Transformation([1, 2, 3, 4, 5, 5]), 
+>                   Transformation([1, 2, 3, 4, 6, 5]), 
+>                   Transformation([1, 2, 3, 5, 4]),
+>                   Transformation([1, 2, 3, 7, 4, 5, 7]), 
+>                   Transformation([1, 2, 4, 8, 8, 3, 8, 7]), 
+>                   Transformation([1, 2, 8, 4, 5, 6, 7, 8]), 
+>                   Transformation([7, 7, 7, 4, 5, 6, 1]));;
+gap> IdempotentGeneratedSubsemigroup(S) = 
+> Monoid(Transformation([1, 1]), 
+>        Transformation([1, 2, 1]),
+>        Transformation([1, 2, 2]), 
+>        Transformation([1, 2, 3, 1]),
+>        Transformation([1, 2, 3, 2]), 
+>        Transformation([1, 2, 3, 4, 1]),
+>        Transformation([1, 2, 3, 4, 2]), 
+>        Transformation([1, 2, 3, 4, 4]),
+>        Transformation([1, 2, 3, 4, 5, 1]),
+>        Transformation([1, 2, 3, 4, 5, 2]),
+>        Transformation([1, 2, 3, 4, 5, 5]),
+>        Transformation([1, 2, 3, 4, 5, 7, 7]),
+>        Transformation([1, 2, 3, 4, 7, 6, 7]),
+>        Transformation([1, 2, 3, 6, 5, 6]),
+>        Transformation([1, 2, 3, 7, 5, 6, 7]),
+>        Transformation([1, 2, 8, 4, 5, 6, 7, 8]),
+>        Transformation([2, 2]));
+true
 gap> S := SymmetricInverseSemigroup(5);
 <symmetric inverse monoid of degree 5>
 gap> IdempotentGeneratedSubsemigroup(S);

@@ -866,10 +866,8 @@ gap> Size(SemigroupIdeal(S, I));
 gap> S:=FullTransformationSemigroup(6);;
 gap> S:=Semigroup(GroupOfUnits(S));;
 gap> I:=SemigroupIdeal(S, S);;
-gap> IsomorphismPermGroup(I);
-MappingByFunction( <transformation group of size 720, degree 6 with
-  3 generators>, Group([ (), (1,2,3,4,5,6), (1,
-2) ]), function( f ) ... end, function( x ) ... end )
+gap> Range(IsomorphismPermGroup(I));
+Group([ (), (1,2,3,4,5,6), (1,2) ])
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(ideals);
