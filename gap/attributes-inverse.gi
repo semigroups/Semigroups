@@ -22,7 +22,9 @@ function(S)
 
   reps := ShallowCopy(DClassReps(S));
   p := Sortex(reps, function(x, y)
-                      return RankOfPartialPerm(x) > RankOfPartialPerm(y);
+                      return RankOfPartialPerm(x) > RankOfPartialPerm(y) 
+                             or (RankOfPartialPerm(x) = RankOfPartialPerm(y)
+                                 and x > y);
                     end);
 
   H := List(reps, e -> SchutzenbergerGroup(HClass(S, e)));
