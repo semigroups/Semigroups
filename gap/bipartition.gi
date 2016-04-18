@@ -16,15 +16,15 @@ MakeReadWriteGlobal("SEMIGROUPS_BipartitionTypes");
 InstallGlobalFunction(BipartitionFamily,
 function(n)
 
-  if not IsInt(n) or n < 0 then 
-    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n", 
+  if not IsInt(n) or n < 0 then
+    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n",
                   "the argument must be a non-negative integer,");
   fi;
 
   n := n + 1; # since the degree can be 0
 
-  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then 
-    SEMIGROUPS_BipartitionFamilies[n] := 
+  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then
+    SEMIGROUPS_BipartitionFamilies[n] :=
            NewFamily("BipartitionFamily",
                      IsBipartition, CanEasilySortElements,
                      CanEasilySortElements);
@@ -36,15 +36,15 @@ end);
 InstallGlobalFunction(BipartitionType,
 function(n)
 
-  if not IsInt(n) or n < 0 then 
-    ErrorNoReturn("Semigroups: BipartitionType: usage,\n", 
+  if not IsInt(n) or n < 0 then
+    ErrorNoReturn("Semigroups: BipartitionType: usage,\n",
                   "the argument must be a non-negative integer,");
   fi;
-  
+
   n := n + 1; # since the degree can be 0
- 
-  if not IsBound(SEMIGROUPS_BipartitionTypes[n]) then 
-    SEMIGROUPS_BipartitionTypes[n] := 
+
+  if not IsBound(SEMIGROUPS_BipartitionTypes[n]) then
+    SEMIGROUPS_BipartitionTypes[n] :=
            NewType(BipartitionFamily(n),
                    IsBipartition and IsComponentObjectRep and
                    IsAttributeStoringRep);
@@ -61,8 +61,8 @@ InstallTrueMethod(IsBlockBijection, IsPermBipartition);
 
 #
 
-InstallMethod(PartialPermLeqBipartition, 
-"for a bipartition and a bipartition", 
+InstallMethod(PartialPermLeqBipartition,
+"for a bipartition and a bipartition",
 IsIdenticalObj,
 [IsBipartition, IsBipartition],
 function(x, y)
@@ -240,7 +240,7 @@ function(f)
 end);
 #operators
 
-InstallMethod(\*, "for a bipartition and bipartition", IsIdenticalObj, 
+InstallMethod(\*, "for a bipartition and bipartition", IsIdenticalObj,
 [IsBipartition, IsBipartition],
 function(a, b)
   local n, anr, fuse, fuseit, ablocks, bblocks, x, y, tab, cblocks, next,
@@ -365,7 +365,7 @@ end);
 
 InstallMethod(\=, "for a bipartition and bipartition",
 IsIdenticalObj,
-[IsBipartition, IsBipartition], 
+[IsBipartition, IsBipartition],
 function(f, g)
   return f!.blocks = g!.blocks;
 end);
@@ -1395,7 +1395,7 @@ InstallMethod(PrintString, "for a bipartition",
 function(f)
   local ext, str, i;
   ext := ExtRepOfBipartition(f);
-  if Length(ext) = 0 then 
+  if Length(ext) = 0 then
     return "\>\>Bipartition(\<\>[]\<)\<";
   fi;
 

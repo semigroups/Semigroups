@@ -22,7 +22,7 @@ function(S)
 
   reps := ShallowCopy(DClassReps(S));
   p := Sortex(reps, function(x, y)
-                      return RankOfPartialPerm(x) > RankOfPartialPerm(y) 
+                      return RankOfPartialPerm(x) > RankOfPartialPerm(y)
                              or (RankOfPartialPerm(x) = RankOfPartialPerm(y)
                                  and x > y);
                     end);
@@ -720,7 +720,7 @@ function(coll, type)
   elif IsBipartition(type) and IsPartialPermBipartition(type) then
     #FIXME shouldn't there be a check here like above?
     return AsBipartition(SupremumIdempotentsNC(List(coll, AsPartialPerm),
-                                               PartialPerm([])), 
+                                               PartialPerm([])),
                          DegreeOfBipartition(type));
   else
     Error("Semigroups: SupremumIdempotentsNC: usage,\n",
