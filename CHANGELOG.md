@@ -4,6 +4,10 @@
 #### Copyright (C) 2011-16 James D. Mitchell et al.
 #### Licensing information can be found in the LICENSE file.
 
+## Version 2.7.6 (released 19/04/2016)
+This is a very minor release changing the name of the README (to README.md) in
+the PackageInfo.g file.
+
 ## Version 2.7.5 (released 19/04/2016)
 This is a minor release to fix [Issue
 151](https://github.com/gap-packages/Semigroups/issues/151), and to make
