@@ -20,7 +20,7 @@ cd ..
 # Download and compile GAP
 git clone -b master --depth=1 https://github.com/gap-system/gap.git
 cd gap
-./configure #--with-gmp=system
+./configure --with-gmp=system
 make
 
 # Get the packages
