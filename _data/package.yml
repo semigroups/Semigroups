@@ -1,5 +1,5 @@
 name: Semigroups
-version: 2.7.5
+version: 2.7.6
 date: 19/04/2016
 description: 
 
@@ -51,12 +51,12 @@ suggested-pkgs:
       url: "http://gap-system.github.io/genss/"
 
 www: https://gap-packages.github.io/Semigroups
-readme: https://gap-packages.github.io/Semigroups/README
+readme: https://gap-packages.github.io/Semigroups/README.md
 packageinfo: https://gap-packages.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/Semigroups/releases/download/v2.7.5/semigroups-2.7.5.tar.gz
+      url: https://github.com/gap-packages/Semigroups/releases/download/v2.7.6/semigroups-2.7.6.tar.gz
 
 abstract: <p>The <strong class="pkg">Semigroups</strong> package is a <strong class="pkg">GAP</strong> package containing methods for semigroups, monoids, and inverse semigroups, principally of transformations, partial permutations, bipartitions, subsemigroups of regular Rees 0-matrix semigroups, free inverse semigroups, free bands, and semigroups of matrices over finite fields.</p> <p><strong class="pkg">Semigroups</strong> contains more efficient methods than those available in the <strong class="pkg">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups, monoids, and inverse semigroup, calculating their Green's structure, ideals, size, elements, group of units, small generating sets, testing membership, finding the inverses of a regular element, factorizing elements over the generators, and many more. It is also possible to test if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties.</p> <p>There are methods for finding congruences of certain types of semigroups, the normalizer of a semigroup in a permutation group, the maximal subsemigroups of a finite semigroup, and smaller degree partial permutation representations of inverse semigroups. There are functions for producing pictures of the Green's structure of a semigroup, and for drawing bipartitions.</p>
 

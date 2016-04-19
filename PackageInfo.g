@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.7.5">
+##  <!ENTITY VERSION "2.7.6">
 ##  <!ENTITY GAPVERS "4.8.3">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.7.5">
+##  <!ENTITY ARCHIVENAME "semigroups-2.7.6">
 ##  <!ENTITY COPYRIGHTYEARS "2011-16">
 ##  <#/GAPDoc>
 
@@ -39,7 +39,7 @@ SetPackageInfo( rec(
 
 PackageName := "Semigroups",
 Subtitle := "",
-Version := "2.7.5",
+Version := "2.7.6",
 Date := "19/04/2016",
 ArchiveFormats := ".tar.gz",
 
@@ -51,7 +51,7 @@ SourceRepository := rec(
 IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
 PackageWWWHome  := Concatenation("https://gap-packages.github.io/",
                                  ~.PackageName),
-README_URL      := Concatenation(~.PackageWWWHome, "/README"),
+README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
 PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
 ArchiveURL      := Concatenation(~.SourceRepository.URL,
                                  "/releases/download/v", ~.Version,
