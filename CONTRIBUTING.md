@@ -1,6 +1,6 @@
 ## Contributing to the Semigroups package for GAP
 
-#### Copyright (C) 2011-15 James D. Mitchell
+#### Copyright (C) 2011-16 James D. Mitchell
 #### Licensing information is available in the LICENSE file.   
 
 We invite everyone to contribute by submitting patches, pull requests, and bug
@@ -10,8 +10,8 @@ reports. We would like to make the contributing process as easy as possible.
 
 * Before you report an issue, or wish to add functionality, please try
   and check to see if there are existing
-  [issues](http://bitbucket.org/james-d-mitchell/semigroups/issues) or
-  [pull requests](https://bitbucket.org/james-d-mitchell/semigroups/pull-requests).
+  [issues](https://github.com/gap-packages/Semigroups/issues) or
+  [pull requests](https://github.com/gap-packages/Semigroups/pulls).
   We do not want you wasting your time duplicating somebody else's work.
 * For substantial changes it is also advisable to contact us before
   you start work to discuss your ideas.
@@ -28,16 +28,14 @@ reports. We would like to make the contributing process as easy as possible.
 
 ## Branches
 
-New features should be developed in feature branches with a (somewhat)
-meaningful name. You should regularly merge the *next* release branch into your
-feature branch. The next release branch should be the only open branch whose
-name is a number, for example, 2.3. If there is more than one open branch with
-this type of name, please use the lowest numbered such branch.  It is not
-possible for everyone to push to the next release branch, so when you think
-your changes are ready to go into a release, please let us know. 
+New features should be developed in feature branches in a fork of the
+repository. You should regularly merge/rebase the *next* release branch into
+your feature branch. Releases are currently made from the stable-2.7 branch If
+there is more than one open branch with this type of name, please use the
+lowest numbered such branch.  When you think your changes are ready to go into
+a release, please make a pull request.
 
-Before asking us to merge your code into the next release branch please ensure
-that: 
+Before asking us to merge your code please ensure that: 
 
 * your code is documented and tested
 * all of the tests run without errors

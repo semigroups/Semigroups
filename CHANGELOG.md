@@ -6,9 +6,9 @@
 
 ## Version 2.7.5 (released 19/04/2016)
 This is a minor release to fix [Issue
-152](https://bitbucket.org/james-d-mitchell/semigroups/issue/152/), and to make
+151](https://github.com/gap-packages/Semigroups/issues/151), and to make
 some changes for future compatibility with GAP. In [Issue
-152](https://bitbucket.org/james-d-mitchell/semigroups/issue/152/) when the
+151](https://github.com/gap-packages/Semigroups/issues/151 when the
 method `IsomorphismPermGroup` was applied to a semigroups of non-permutation
 transformations the returned mapping was not an isomorphism. 
 
