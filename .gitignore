@@ -1,4 +1,3 @@
-syntax: glob
 configure
 autom4te*
 *.orig
