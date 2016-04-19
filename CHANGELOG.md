@@ -1,37 +1,35 @@
-##CHANGELOG
-### [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) package for [GAP](http://www.gap-system.org)
+### CHANGELOG - [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) package for [GAP](http://www.gap-system.org)
 
-#### Copyright (C) 2011-16 James D. Mitchell et al.
-#### Licensing information can be found in the LICENSE file.
+#### Copyright (C) 2011-16 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
-## Version 2.7.6 (released 19/04/2016)
+### Version 2.7.6 (released 19/04/2016)
 This is a very minor release changing the name of the `README` (to `README.md`) in
 the `PackageInfo.g` file.
 
-## Version 2.7.5 (released 19/04/2016)
+### Version 2.7.5 (released 19/04/2016)
 This is a minor release to fix [Issue
 151](https://github.com/gap-packages/Semigroups/issues/151), and to make
 some changes for future compatibility with GAP. In [Issue
-151](https://github.com/gap-packages/Semigroups/issues/151 when the
+151](https://github.com/gap-packages/Semigroups/issues/151) when the
 method `IsomorphismPermGroup` was applied to a semigroups of non-permutation
 transformations the returned mapping was not an isomorphism. 
 
-## Version 2.7.4 (released 02/03/2016)
+### Version 2.7.4 (released 02/03/2016)
 This is a minor release to fix [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150/), and to correct the required version of GAP (from 4.8.2 to 4.8.3). In [Issue 150](https://bitbucket.org/james-d-mitchell/semigroups/issue/150/) the function `IsZeroSimpleSemigroup` entered an infinite loop for some examples of semigroups of partial permutations. 
 
-## Version 2.7.3 (released 15/02/2016)
+### Version 2.7.3 (released 15/02/2016)
 This is a minor release to fix some manual examples, to correct the package url
 in the `PackageInfo.g` file, and to fix some issues with semigroups of
 bipartitions. It was formerly possible to create semigroups of bipartitions
 where the generators had different degrees, but the created semigroups were
 invalid; this is fixed in version 2.7.3.
 
-## Version 2.7.2 (released 28/01/2016)
+### Version 2.7.2 (released 28/01/2016)
 
 This is a minor release to fix to remove `ErrorMayQuit` which was renamed
 `ErrorNoReturn` in GAP 4.8.2. This change was made by Max Horn. 
 
-## Version 2.7.1 (released 19/12/2015)
+### Version 2.7.1 (released 19/12/2015)
 
 This is a minor release to fix [Issue
 144](https://bitbucket.org/james-d-mitchell/semigroups/issue/144/).
@@ -39,18 +37,18 @@ This issue resulted in `IsInverseSemigroup` sometimes returning `true` for
 semigroups which were not inverse. This occurred when the \\(\mathscr{D}\\)-classes of the semigroup were computed before the method for `IsInverseSemigroup` was first
 run. 
 
-## Version 2.7 (released 27/11/2015)
+### Version 2.7 (released 27/11/2015)
 
 This is a minor release including some changes for compatibility with GAP 4.8, and some bug fixes. 
 
-###New Features in Version 2.7
+#### New Features in Version 2.7
 * `IsomorphismReesZeroMatrixSemigroup` is introduced, and it is no longer possible to apply `IsomorphismReesMatrixSemigroup` to a 0-simple semigroup. This change was made for the sake of consistency, so that the `Range` of an `IsomorphismReesMatrixSemigroup` is always a Rees matrix semigroup and not sometimes a Rees 0-matrix semigroup as was formerly the case.
 
-###Changes for GAP 4.8
+#### Changes for GAP 4.8
 * several `ViewString` methods for semigroups and their elements were moved from the `Semigroups` package to the GAP library. Some minor changes were made in the method for `ViewString` for semigroups, and the tests, and manual examples were updated accordingly. 
 * The meaning of `IsMonoidAsSemigroup` was changed to be consistent with the meaning of `IsGroupAsSemigroup`. In earlier versions, `IsMonoidAsSemigroup` was `false` for semigroups in the category `IsMonoid`. From Version 2.7, `IsMonoidAsSemigroup` is `true` for monoids in the category `IsMonoid` and for some further semigroups. 
 
-###Issues Resolved in Version 2.7
+#### Issues Resolved in Version 2.7
 
 * [Issue 136](https://bitbucket.org/james-d-mitchell/semigroups/issue/136/):
 `CyclesOfPartialPermSemigroup` sometimes resulted in an error due to using `DegreeOfPartialPermSemigroup` instead of the maximum of the degree and the codegree. [[James Mitchell](http://tinyurl.com/jdmitchell)]
@@ -59,11 +57,11 @@ This is a minor release including some changes for compatibility with GAP 4.8, a
  introduced in Semigroups 2.6 and did not effect any previous versions.
  [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
-## Version 2.6 (released 22/09/2015)
+### Version 2.6 (released 22/09/2015)
 
 This release includes some bugfixes, some minor new features, and one major new feature (efficient methods for semigroups of matrices over a finite field).
 
-###New Features in Version 2.6
+#### New Features in Version 2.6
 
 * extensive new features for computing with semigroups, monoids, and ideals, of
  matrices with entries in a finite field.  See Chapter 7 of the manual for more
@@ -82,7 +80,7 @@ in a similar sense.
 * The operations `MotzkinMonoid` and `PartialJonesMonoid` were introduced.
  [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
-###Issues Resolved in Version 2.6
+#### Issues Resolved in Version 2.6
 
 *  [Issue 131](https://bitbucket.org/james-d-mitchell/semigroups/issue/131/): testing membership in a Rees 0-matrix semigroup that knows it is inverse sometimes resulted in an error. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 
@@ -92,11 +90,11 @@ in a similar sense.
 *  [Issue 134](https://bitbucket.org/james-d-mitchell/semigroups/issue/134/): the operation `PartialBrauerMonoid` returned the wrong answer when the argument was `1`. The returned semigroup was not the partial brauer monoid of degree 1. 
 [[James Mitchell](http://tinyurl.com/jdmitchell)]
 
-## Version 2.5 (released 01/06/2015)
+### Version 2.5 (released 01/06/2015)
 
 This is a minor release including several bugfixes, lots of minor improvements in the documentation, some improvements in performance, and some new features.
 
-###New Features in Version 2.5
+#### New Features in Version 2.5
 
 * Semigroups of partial permutations now have a polynomial time
 (quadratic in the degree) algorithm for computing the minimal ideal
@@ -113,7 +111,7 @@ been added. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 * A `UniversalSemigroupCongruence` now returns a much smaller set
 of generating pairs. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 
-###Issues Resolved in Version 2.5
+#### Issues Resolved in Version 2.5
 
 Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
@@ -126,15 +124,15 @@ Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-
 * The universal congruence specified by generating pairs on a (0-)simple
 semigroup no longer causes an error. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 	
-## Version 2.4.1 (released 15/05/2015)
+### Version 2.4.1 (released 15/05/2015)
 This is a extremely minor release to change 1 character in the PackageInfo.g
 file (wrong package archive URL). 
 
-## Version 2.4 (released 02/04/2015) 
+### Version 2.4 (released 02/04/2015) 
 This is a minor release including several bugfixes, and
 improvements in performance, and some new features.
 
-###New Features in Version 2.4
+#### New Features in Version 2.4
 
 * The function `RepresentativeOfMinimalIdeal` is introduced. [[Wilf
 Wilson](http://wilf.me)]
@@ -159,7 +157,7 @@ improved. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 * There is a new `Enumerator` method for congruence classes of a
 semigroup congruence. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 
-###Issues Resolved in Version 2.4
+#### Issues Resolved in Version 2.4
 
 Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
@@ -189,7 +187,7 @@ partitions, or subsemigroups of a Rees 0-matrix semigroup).
 
 * [Issue 123](https://bitbucket.org/james-d-mitchell/semigroups/issue/123/): `IsZeroSemigroup` sometimes returned a false positive when applied to a non-acting semigroup. 
 
-## Version 2.3 (released 16/03/2015)
+### Version 2.3 (released 16/03/2015)
 This is a minor release including some internal refactoring, and
 subsequent bugfixes, and stability improvements.
 
@@ -198,11 +196,11 @@ hash tables in [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semig
 fault occurred. This is a bug in the [Orb](http://gap-system.github.io/orb/) package (see [Issue
 10](https://github.com/gap-system/orb/issues/10)), but we worked around it to resolve this issue. 
 
-## Version 2.2 (released 20/01/2015)
+### Version 2.2 (released 20/01/2015)
 This is a minor release including some bug fixes, performance
 improvements, and additional functionality. 
 
-###New Features in Version 2.2
+#### New Features in Version 2.2
 
 * The functions `SmallestElementSemigroup`, `LargestElementSemigroup`, 
   and `GeneratorsSmallest`.
@@ -218,7 +216,7 @@ improved, and is better integrated with the core [GAP](http://www.gap-system.org
 
 * The functions `ReadGenerators` and `WriteGenerators` were improved. 
 
-###Issues Resolved in Version 2.2
+#### Issues Resolved in Version 2.2
 
 * Some minor corrections were made to the methods for creating the
 ideals of some semigroups in standard examples semigroups, such as
@@ -247,15 +245,15 @@ transformation semigroup.
 * [Issue 111](https://bitbucket.org/james-d-mitchell/semigroups/issue/111/): `POPI(1)` returned the wrong semigroup. Similar issues
 existed in other corner cases, and these have been resolved too.
 
-## Version 2.1.1 (released 09/09/2014)
+### Version 2.1.1 (released 09/09/2014)
 This is a very minor release to fix an issue caused by only loading
 the packages needed (but not required) by [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php).
 
-## Version 2.1 (released 04/09/2014)
+### Version 2.1 (released 04/09/2014)
 This is a minor release including some bug fixes and performance
 improvements. 
 
-###New Features in Version 2.1
+#### New Features in Version 2.1
 
 * The functions: 
   
@@ -278,7 +276,7 @@ semigroup.
 * There is a new method for `IsSynchronizingSemigroup`, suggested by
 Peter Cameron, with better complexity than the previous method. 
 
-###Issues Resolved in Version 2.1
+#### Issues Resolved in Version 2.1
 
 Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
@@ -319,12 +317,12 @@ incorrect.
 * [Issue 103](https://bitbucket.org/james-d-mitchell/semigroups/issue/103/): under certain circumstances an error was given when
 trying to compute with an ideal of an inverse semigroup. 
 
-## Version 2.0 (released 17/04/2014)
+### Version 2.0 (released 17/04/2014)
                                     
 This is a major release including many new features and several bug
 fixes. 
 
-###New Features in Version 2.0
+#### New Features in Version 2.0
 
 * extensive new features for computing with elements and
 subsemigroups of the partition monoid. It is now possible to compute
@@ -396,7 +394,7 @@ inverse semigroup grouped by \\(\mathscr{D}\\)-class;
 * the operation `NaturalLeqInverseSemigroup`, which is an umbrella
 operation for `NaturalLeqPartialPerm`, and other such functions. 
 
-###Issues Resolved in Version 2.0
+#### Issues Resolved in Version 2.0
 
 Issue numbers refer to the issues on the [tracker](http://bitbucket.org/james-d-mitchell/semigroups/issues).
 
@@ -467,7 +465,7 @@ transformations of unequal degrees correctly. This causes incorrect
 results to be returned when considering semigroups generated by
 transformations of unequal degrees.
 
-## Version 1.4 (released 28/10/13)
+### Version 1.4 (released 28/10/13)
 This is a minor release containing some bug fixes. Specifically:
 the functionality of ReadGenerators and WriteGenerators has been
 improved to allow the argument to be an IO file object, and support
@@ -488,7 +486,7 @@ avoid warnings that their methods matched more than one
 declaration. These warnings were exposed by doing LoadAllPackages,
 but were not present when loading [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) by itself.
 
-## Version 1.3 (released 11/10/13)
+### Version 1.3 (released 11/10/13)
 Version 1.3 contains many bug fixes, extensions and improvements in
 the documentation, and several new methods and functions. Most
 notably are (in no particular order): 
@@ -516,7 +514,7 @@ allows the D-class diagram of a semigroup to be viewed.
 
 * ComponentRepsOfTransformationSemigroup is reintroduced.
 
-## Version 1.2 (released 02/08/13)
+### Version 1.2 (released 02/08/13)
 This release includes several new methods for inverse semigroups of
 partial permutations and for free inverse semigroups. Most notably
 among the new methods for inverse semigroups of partial
@@ -535,21 +533,21 @@ this part of the package was written by [Julius
 Jonusas](http://www-groups.mcs.st-andrews.ac.uk/~julius/) (who wishes
 to acknowledge the support of the Carnegie Trust).
 
-## Version 1.1 (released 11/06/13)
+### Version 1.1 (released 11/06/13)
 A minor release to fix some technical issues in PackageInfo.g, the
 declarations of IsGreens.Class, and a minor change in the output in
 one test in everyfunction.tst which was consequence of the
 declarations of IsGreens.Class.
 
-## Version 1.0 (released 07/06/13)
+### Version 1.0 (released 07/06/13)
 The package has been renamed from Citrus to [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php). The package
 has been completely overhauled, the performance has been improved,
 and the code has been generalized so that in the future the same
 code can be used to compute with other types of semigroups.  
 
-#Under the name Citrus:
+#Under the name Citrus:
 
-## Version 0.9999 
+### Version 0.9999 
 This is the final release of Citrus (the package will be renamed
 Citrus in the next release since the scope of the package has
 expanded to include more types of semigroups than just those of
@@ -568,7 +566,7 @@ gcc, NaturalLeqPP sometimes returned the incorrect value, there was
 no method for IsInverseSemigroup or IsInverseMonoid for a semigroup
 of partial perms.
 
-## Version 0.999
+### Version 0.999
 A minor release fixing several bugs relating to partial
 permutations and monoids thereof, pointed out by Jack Schmidt.
 More specifically, MultiplicativeZero sometimes incorrectly
@@ -578,7 +576,7 @@ range as an argument, sometimes the size of an inverse monoid was 1
 more than the correct value, and RestrictedPP sometimes failed when
 it should not have. 
 
-## Version 0.99
+### Version 0.99
 another minor release. Specific changes were: removed the
 declaration of SmallGeneratingSet for IsSemigroup since it appears
 not to be used and caused a warning to be shown when rcwa was
@@ -587,20 +585,20 @@ file, and the documentation, and updated the webpages, in
 particular so that the html version of the manual is linked to that
 on the [GAP](http://www.gap-system.org) webpage and the links to other manuals work. 
 
-## Version 0.9
+### Version 0.9
 renamed the function for creating the semigroup of order-preserving
 transformations on an n-chain from O to OrderEndomorphisms after it
 was pointed out that it is not sensible to have function names with
 one character. Also made some minor adjustments to the manual.
 
-## Version 0.8 
+### Version 0.8 
 minor changes due to incompatibility with Smallsemi 0.6.4 which 
 caused some test files to fail when Nilmat was loaded after
 Citrus.  The clashes and the failed test were caused by various
 properties being declared for IsTransformationSemigroup rather than
 IsSemigroup. 
 
-## Version 0.7
+### Version 0.7
 the most major change is the introduction of special methods for
 partial permutations and inverse semigroups. So that these methods
 are efficient, a [GAP](http://www.gap-system.org) kernel component (in C) has also been
@@ -619,13 +617,13 @@ specific properties and attributes of inverse semigroups have been
 introduced (such as IsFactorisableSemigroup and
 PrimitiveIdempotents).
 
-## Version 0.6 
+### Version 0.6 
 fixed a bug relating to the creation of transformation semigroups 
 using MagmaByGenerators. Also added the global variable 
 CitrusOptionsRec containing the default values of the options
 used by Citrus when creating a semigroup. 
 
-## Version 0.5 
+### Version 0.5 
 major changes are: the documentation has been further revised,
 functions for creating semigroups and monoids with certain
 options have been introduced, several functions have had the word
@@ -647,7 +645,7 @@ IdempotentGeneratedSubsemigp, IsomorphismTransformationSemigroup
 (for a perm. gp), IsomorphismTransformationMonoid (for a perm. gp),
 NrElementsOfRank.
 
-## Version 0.4 
+### Version 0.4 
 major changes are: the documentation has been updated, some changes
 to core functions for R-classes/image orbits have resulted in a 
 performance improvement, there is a method for the operation
@@ -661,12 +659,12 @@ OrbSCC, OrbSCCLookup, OrbSCCTruthTable,
 ReverseSchreierTreeOfSCC, SchreierTreeOfSCC,
 IsomorphismTransformationSemigroup (for a perm. gp). 
 
-## Version 0.3 
+### Version 0.3 
 fixed a critical (but rare) bug in AddToOrbitsOfKernels that caused
 computations relating to D-classes, H-classes, or L-classes to
 return incorrect answers in some cases. 
 
-## Version 0.2 
+### Version 0.2 
 updated the method for \^ for a transformation and perm so that it
 is more efficient than the library method, same for \* for a perm 
 and transformation. New method for StructureDescription of a
