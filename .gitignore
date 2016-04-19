@@ -16,3 +16,17 @@ doc/manual.pdf
 doc/manual.six
 *.lab
 *.pyc
+src
+m4
+cnf
+autom4te.cache
+*.la
+Makefile
+Makefile.in
+configure
+config.status
+aclocal.m4
+config.log
+.libs
+libtool
+bin/x86_64-apple-darwin15.3.0-clang-default64
