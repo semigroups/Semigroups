@@ -1,8 +1,6 @@
-##README
-### Semigroups package for GAP
+### README - Semigroups package for GAP
 
-#### Copyright (C) 2011-16 James D. Mitchell et al.
-#### Licensing information is available in the LICENSE file.   
+#### Copyright (C) 2011-16 James D. Mitchell et al. <br/>Licensing information is available in the LICENSE file.   
   
 ## Getting Semigroups
 
