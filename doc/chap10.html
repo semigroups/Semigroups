@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (semigroups) - Chapter 10: 
+    Orbits
+  </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap10"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap10_mj.html">[MathJax on]</a></p>
+<p><a id="X81E0FF0587C54543" name="X81E0FF0587C54543"></a></p>
+<div class="ChapSects"><a href="chap10.html#X81E0FF0587C54543">10 <span class="Heading">
+    Orbits
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7B4CFC5380ACB95F">10.1 <span class="Heading">Looking for something in an orbit</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7C8B0A2A82C9E4D8">10.1-1 EnumeratePosition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7DEB890C7D547574">10.1-2 LookForInOrb</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X80B19F9E8631D88B">10.2 <span class="Heading">Strongly connected components of orbits</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8178A420792E6AAC">10.2-1 OrbSCC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X814337A47B773F50">10.2-2 OrbSCCLookup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X78AFD003840823BD">10.2-3 OrbSCCTruthTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D9A29B47D743213">10.2-4 ReverseSchreierTreeOfSCC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8071C7148255D0DB">10.2-5 SchreierTreeOfSCC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7853DC817C3102A4">10.2-6 TraceSchreierTreeOfSCCBack</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D2E200A7B2D5946">10.2-7 TraceSchreierTreeOfSCCForward</a></span>
+</div></div>
+</div>
+
+<h3>10 <span class="Heading">
+    Orbits
+  </span></h3>
+
+<p><a id="X7B4CFC5380ACB95F" name="X7B4CFC5380ACB95F"></a></p>
+
+<h4>10.1 <span class="Heading">Looking for something in an orbit</span></h4>
+
+<p>The functions described in this section supplement the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> package by providing methods for finding something in an orbit, with the possibility of continuing the orbit enumeration at some later point.</p>
+
+<p><a id="X7C8B0A2A82C9E4D8" name="X7C8B0A2A82C9E4D8"></a></p>
+
+<h5>10.1-1 EnumeratePosition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratePosition</code>( <var class="Arg">o</var>, <var class="Arg">val</var>[, <var class="Arg">onlynew</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A positive integer or <code class="keyw">fail</code>.</p>
+
+<p>This function returns the position of the value <var class="Arg">val</var> in the orbit <var class="Arg">o</var>. If <var class="Arg">o</var> is closed, then this is equivalent to doing <code class="code">Position(<var class="Arg">o</var>, <var class="Arg">val</var>)</code>. However, if <var class="Arg">o</var> is open, then the orbit is enumerated until <var class="Arg">val</var> is found, in which case the position of <var class="Arg">val</var> is returned, or the enumeration ends, in which case <code class="keyw">fail</code> is returned.</p>
+
+<p>If the optional argument <var class="Arg">onlynew</var> is present, it should be <code class="keyw">true</code> or <code class="keyw">false</code>. If <var class="Arg">onlynew</var> is <code class="keyw">true</code>, then <var class="Arg">val</var> will only be checked against new points in <var class="Arg">o</var>. Otherwise, every point in the <var class="Arg">o</var>, not only the new ones, is considered.</p>
+
+<p><a id="X7DEB890C7D547574" name="X7DEB890C7D547574"></a></p>
+
+<h5>10.1-2 LookForInOrb</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LookForInOrb</code>( <var class="Arg">o</var>, <var class="Arg">func</var>, <var class="Arg">start</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="keyw">false</code> or a positive integer.</p>
+
+<p>The arguments of this function should be an orbit <var class="Arg">o</var>, a function <var class="Arg">func</var> which gets the orbit object and a point in the orbit as arguments, and a positive integer <var class="Arg">start</var>. The function <var class="Arg">func</var> will be called for every point in <var class="Arg">o</var> starting from <var class="Arg">start</var> (inclusive) and the orbit will be enumerated until <var class="Arg">func</var> returns <code class="keyw">true</code> or the enumeration ends. In the former case, the position of the first point in <var class="Arg">o</var> for which <var class="Arg">func</var> returns <code class="keyw">true</code> is returned, and in the latter <code class="keyw">false</code> is returned.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(SymmetricGroup(100), 1, OnPoints);</span>
+&lt;open Int-orbit, 1 points&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">func:=function(o, x) return x=42; end;</span>
+function( o, x ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LookForInOrb(o, func, 1);</span>
+42
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o;</span>
+&lt;open Int-orbit, 42 points&gt;</pre></div>
+
+<p><a id="X80B19F9E8631D88B" name="X80B19F9E8631D88B"></a></p>
+
+<h4>10.2 <span class="Heading">Strongly connected components of orbits</span></h4>
+
+<p>The functions described in this section supplement the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> package by providing methods for operations related to strongly connected components of orbits.</p>
+
+<p>If any of the functions is applied to an open orbit, then the orbit is completely enumerated before any further calculation is performed. It is not possible to calculate the strongly connected components of an orbit of a semigroup acting on a set until the entire orbit has been found.</p>
+
+<p><a id="X8178A420792E6AAC" name="X8178A420792E6AAC"></a></p>
+
+<h5>10.2-1 OrbSCC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbSCC</code>( <var class="Arg">o</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: The strongly connected components of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code>, then <code class="code">OrbSCC</code> returns a set of sets of positions in <var class="Arg">o</var> corresponding to its strongly connected components.</p>
+
+<p>See also <code class="func">OrbSCCLookup</code> (<a href="chap10.html#X814337A47B773F50"><span class="RefLink">10.2-2</span></a>) and <code class="func">OrbSCCTruthTable</code> (<a href="chap10.html#X78AFD003840823BD"><span class="RefLink">10.2-3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=LambdaOrb(S);</span>
+&lt;open orbit, 1 points with Schreier tree with log&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
+  [ 13, 14, 15, 16 ] ]</pre></div>
+
+<p><a id="X814337A47B773F50" name="X814337A47B773F50"></a></p>
+
+<h5>10.2-2 OrbSCCLookup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbSCCLookup</code>( <var class="Arg">o</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A lookup table for the strongly connected components of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code>, then <code class="code">OrbSCCLookup</code> returns a lookup table for its strongly connected components. More precisely, <code class="code">OrbSCCLookup(o)[i]</code> equals the index of the strongly connected component containing <code class="code">o[i]</code>.</p>
+
+<p>See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>) and <code class="func">OrbSCCTruthTable</code> (<a href="chap10.html#X78AFD003840823BD"><span class="RefLink">10.2-3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=LambdaOrb(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
+  [ 13, 14, 15, 16 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCCLookup(o);</span>
+[ 1, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; </span>
+1
+3
+4</pre></div>
+
+<p><a id="X78AFD003840823BD" name="X78AFD003840823BD"></a></p>
+
+<h5>10.2-3 OrbSCCTruthTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbSCCTruthTable</code>( <var class="Arg">o</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: Truth tables for strongly connected components of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code>, then <code class="code">OrbSCCTruthTable</code> returns a list of boolean lists such that <code class="code">OrbSCCTruthTable(o)[i][j]</code> is <code class="keyw">true</code> if <code class="code">j</code> belongs to <code class="code">OrbSCC(o)[i]</code>.</p>
+
+<p>See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>) and <code class="func">OrbSCCLookup</code> (<a href="chap10.html#X814337A47B773F50"><span class="RefLink">10.2-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=LambdaOrb(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
+  [ 13, 14, 15, 16 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCCTruthTable(o);</span>
+[ [ true, false, false, false, false, false, false, false, false, 
+      false, false, false, false, false, false, false ], 
+  [ false, true, false, false, false, false, false, false, false, 
+      false, false, false, false, false, false, false ], 
+  [ false, false, true, true, true, true, false, false, false, false, 
+      false, false, false, false, false, false ], 
+  [ false, false, false, false, false, false, true, true, true, true, 
+      true, true, false, false, false, false ], 
+  [ false, false, false, false, false, false, false, false, false, 
+      false, false, false, true, true, true, true ] ]</pre></div>
+
+<p><a id="X7D9A29B47D743213" name="X7D9A29B47D743213"></a></p>
+
+<h5>10.2-4 ReverseSchreierTreeOfSCC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReverseSchreierTreeOfSCC</code>( <var class="Arg">o</var>, <var class="Arg">i</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: The reverse Schreier tree corresponding to the <var class="Arg">i</var>th strongly connected component of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code> and action <code class="code">act</code>, and <var class="Arg">i</var> is a positive integer, then <code class="code">ReverseSchreierTreeOfSCC(<var class="Arg">o</var>, <var class="Arg">i</var>)</code> returns a pair <code class="code">[ gen, pos ]</code> of lists with <code class="code">Length(o)</code> entries such that</p>
+
+
+<div class="example"><pre>act(o[j], o!.gens[gen[j]])=o[pos[j]].</pre></div>
+
+<p>The pair <code class="code">[ gen, pos ]</code> corresponds to a tree with root <code class="code">OrbSCC(o)[i][1]</code> and a path from every element of <code class="code">OrbSCC(o)[i]</code> to the root.</p>
+
+<p>See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>), <code class="func">TraceSchreierTreeOfSCCBack</code> (<a href="chap10.html#X7853DC817C3102A4"><span class="RefLink">10.2-6</span></a>), <code class="func">SchreierTreeOfSCC</code> (<a href="chap10.html#X8071C7148255D0DB"><span class="RefLink">10.2-5</span></a>), and <code class="func">TraceSchreierTreeOfSCCForward</code> (<a href="chap10.html#X7D2E200A7B2D5946"><span class="RefLink">10.2-7</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 3, 4, 5 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 5, 1, 4, 5, 5 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReverseSchreierTreeOfSCC(o, 3);</span>
+[ [ ,, fail,, 2, 1, 2,,,, 1 ], [ ,, fail,, 3, 5, 3,,,, 7 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReverseSchreierTreeOfSCC(o, 7);</span>
+[ [ ,,,,,,,,, fail,, 3 ], [ ,,,,,,,,, fail,, 10 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSets(o[11], Generators(S)[1]);</span>
+[ 1, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Position(o, last);</span>
+7</pre></div>
+
+<p><a id="X8071C7148255D0DB" name="X8071C7148255D0DB"></a></p>
+
+<h5>10.2-5 SchreierTreeOfSCC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SchreierTreeOfSCC</code>( <var class="Arg">o</var>, <var class="Arg">i</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: The Schreier tree corresponding to the <var class="Arg">i</var>th strongly connected component of an orbit.</p>
+
+<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code> and action <code class="code">act</code>, and <var class="Arg">i</var> is a positive integer, then <code class="code">SchreierTreeOfSCC(<var class="Arg">o</var>, <var class="Arg">i</var>)</code> returns a pair <code class="code">[ gen, pos ]</code> of lists with <code class="code">Length(o)</code> entries such that</p>
+
+
+<div class="example"><pre>act(o[pos[j]], o!.gens[gen[j]])=o[j].</pre></div>
+
+<p>The pair <code class="code">[ gen, pos ]</code> corresponds to a tree with root <code class="code">OrbSCC(o)[i][1]</code> and a path from the root to every element of <code class="code">OrbSCC(o)[i]</code>.</p>
+
+<p>See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>), <code class="func">TraceSchreierTreeOfSCCBack</code> (<a href="chap10.html#X7853DC817C3102A4"><span class="RefLink">10.2-6</span></a>), <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap10.html#X7D9A29B47D743213"><span class="RefLink">10.2-4</span></a>), and <code class="func">TraceSchreierTreeOfSCCForward</code> (<a href="chap10.html#X7D2E200A7B2D5946"><span class="RefLink">10.2-7</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 3, 4, 5 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 5, 1, 4, 5, 5 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchreierTreeOfSCC(o, 3);</span>
+[ [ ,, fail,, 1, 3, 1,,,, 2 ], [ ,, fail,, 7, 5, 3,,,, 6 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchreierTreeOfSCC(o, 7);</span>
+[ [ ,,,,,,,,, fail,, 1 ], [ ,,,,,,,,, fail,, 10 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSets(o[6], Generators(S)[2]);</span>
+[ 3, 5 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Position(o, last);</span>
+11</pre></div>
+
+<p><a id="X7853DC817C3102A4" name="X7853DC817C3102A4"></a></p>
+
+<h5>10.2-6 TraceSchreierTreeOfSCCBack</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceSchreierTreeOfSCCBack</code>( <var class="Arg">orb</var>, <var class="Arg">m</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A word in the generators.</p>
+
+<p><var class="Arg">orb</var> must be an orbit object with a Schreier tree and orbit graph, that is, the options <code class="code">schreier</code> and <code class="code">orbitgraph</code> must have been set to <code class="keyw">true</code> during the creation of the orbit, <var class="Arg">m</var> must be the number of a strongly connected component of <var class="Arg">orb</var>, and <code class="code">nr</code> must be the number of a point in the <var class="Arg">m</var>th strongly connect component of <var class="Arg">orb</var>.</p>
+
+<p>This operation traces the result of <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap10.html#X7D9A29B47D743213"><span class="RefLink">10.2-4</span></a>) and with arguments <var class="Arg">orb</var> and <var class="Arg">m</var> and returns a word in the generators that maps the point with number <var class="Arg">nr</var> to the first point in the <var class="Arg">m</var>th strongly connected component of <var class="Arg">orb</var>. Here, a word is a list of integers, where positive integers are numbers of generators. See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>), <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap10.html#X7D9A29B47D743213"><span class="RefLink">10.2-4</span></a>), <code class="func">SchreierTreeOfSCC</code> (<a href="chap10.html#X8071C7148255D0DB"><span class="RefLink">10.2-5</span></a>), and <code class="func">TraceSchreierTreeOfSCCForward</code> (<a href="chap10.html#X7D2E200A7B2D5946"><span class="RefLink">10.2-7</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 2, 4, 1, 2 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 1, 1, 3 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 4, 1 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReverseSchreierTreeOfSCC(o, 4);               </span>
+[ [ ,,, fail, 4, 1, 1, 3 ], [ ,,, fail, 4, 4, 4, 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCBack(o, 4, 7);</span>
+[ 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCBack(o, 4, 8);</span>
+[ 3 ]</pre></div>
+
+<p><a id="X7D2E200A7B2D5946" name="X7D2E200A7B2D5946"></a></p>
+
+<h5>10.2-7 TraceSchreierTreeOfSCCForward</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceSchreierTreeOfSCCForward</code>( <var class="Arg">orb</var>, <var class="Arg">m</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A word in the generators.</p>
+
+<p><var class="Arg">orb</var> must be an orbit object with a Schreier tree and orbit graph, that is, the options <code class="code">schreier</code> and <code class="code">orbitgraph</code> must have been set to <code class="keyw">true</code> during the creation of the orbit, <var class="Arg">m</var> must be the number of a strongly connected component of <var class="Arg">orb</var>, and <code class="code">nr</code> must be the number of a point in the <var class="Arg">m</var>th strongly connect component of <var class="Arg">orb</var>.</p>
+
+<p>This operation traces the result of <code class="func">SchreierTreeOfSCC</code> (<a href="chap10.html#X8071C7148255D0DB"><span class="RefLink">10.2-5</span></a>) and with arguments <var class="Arg">orb</var> and <var class="Arg">m</var> and returns a word in the generators that maps the first point in the <var class="Arg">m</var>th strongly connected component of <var class="Arg">orb</var> to the point with number <var class="Arg">nr</var>. Here, a word is a list of integers, where positive integers are numbers of generators. See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>), <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap10.html#X7D9A29B47D743213"><span class="RefLink">10.2-4</span></a>), <code class="func">SchreierTreeOfSCC</code> (<a href="chap10.html#X8071C7148255D0DB"><span class="RefLink">10.2-5</span></a>), and <code class="func">TraceSchreierTreeOfSCCBack</code> (<a href="chap10.html#X7853DC817C3102A4"><span class="RefLink">10.2-6</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 2, 4, 1, 2 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 1, 1, 3 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 4, 1 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
+[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchreierTreeOfSCC(o, 4);</span>
+[ [ ,,, fail, 1, 2, 2, 4 ], [ ,,, fail, 4, 4, 6, 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCForward(o, 4, 8);</span>
+[ 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCForward(o, 4, 7);</span>
+[ 2, 2 ]</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

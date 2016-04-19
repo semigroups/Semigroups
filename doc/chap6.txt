@@ -1,0 +1,344 @@
+  
+  [1X6 [33X[0;0YFree inverse semigroups and free bands[133X[101X
+  
+  [33X[0;0YThis  chapter  describes  the  functions in [5XSemigroups[105X for dealing with free
+  inverse semigroups and free bands. This part of the manual and the functions
+  described herein were written by Julius Jonušas.[133X
+  
+  
+  [1X6.1 [33X[0;0YFree inverse semigroups[133X[101X
+  
+  [33X[0;0Y[22XF[122X  is  a  [13Xfree  inverse  semigroup[113X  on  a non-empty set [22XX[122X if [22XF[122X is an inverse
+  semigroup  with  a map [22Xf[122X from [22XF[122X to [22XX[122X such that for every inverse semigroup [22XS[122X
+  and  a  map  [22Xg[122X from [22XX[122X to [22XS[122X there exists a unique homomorphism [22Xg'[122X from [22XF[122X to [22XS[122X
+  such  that  [22Xfg'  =  g[122X.  Moreover,  by  the universal property, every inverse
+  semigroup can be expressed as a quotient of a free inverse semigroup.[133X
+  
+  [33X[0;0YThe internal representation of an element of a free inverse semigroup uses a
+  Munn  tree.  A  [13XMunn  tree[113X  is  a directed tree with distinguished start and
+  terminal  vertices and where the edges are labeled by generators so that two
+  edges  labeled by the same generator are only incident to the same vertex if
+  one  of the edges is coming in and the other is leaving the vertex. For more
+  information  regarding  free inverse semigroups and the Munn representations
+  see  Section  5.10  of  [How95]. See also [14X'Reference: Inverse semigroups and
+  monoids'[114X,  [14X'Reference:  Partial  permutations'[114X  and [14X'Reference: Free Groups,
+  Monoids and Semigroups'[114X.[133X
+  
+  [33X[0;0YAn  element  of  a  free inverse semigroup in [5XSemigroups[105X is be displayed, by
+  default,  as  a  shortest  word corresponding to the element. However, there
+  might  be  more than one word of the minimum length. For example, if [22Xx[122X and [22Xy[122X
+  are generators of a free inverse semigroups, then[133X
+  
+  
+        [33X[1;6Y[24X[33X[0;0Yxyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1}.[133X [124X[133X
+  
+  
+  [33X[0;0YSee  [2XMinimalWord[102X  ([14X6.3-2[114X) Therefore we provide a another method for printing
+  elements  of  a  free inverse semigroup: a unique canonical form. Suppose an
+  element  of  a  free inverse semigroup is given as a Munn tree. Let [22XL[122X be the
+  set  of  words  corresponding to the shortest paths from the start vertex to
+  the  leaves  of the tree. Also let [22Xw[122X be a word corresponding to the shortest
+  path  from  start  to terminal vertices. The word [22Xvv^-1[122X is an idempotent for
+  every  [22Xv[122X in [22XL[122X. The canonical form is given by multiplying these idempotents,
+  in  shortlex order, and then postmultiplying by [22Xw[122X. For example, consider the
+  word  [22Xxyy^-1xx^-1x^-1[122X  again.  The  words  corresponding to the paths to the
+  leaves  are  in  this case [22Xxx[122X and [22Xxy[122X. And [22Xw[122X is an empty word since start and
+  terminal vertices are the same. Therefore, the canonical form is[133X
+  
+  
+        [33X[1;6Y[24X[33X[0;0Yxxx^{-1}x^{-1}xyy^{-1}x^{-1}.[133X [124X[133X
+  
+  
+  [33X[0;0YSee [2XCanonicalForm[102X ([14X6.3-1[114X).[133X
+  
+  [1X6.1-1 FreeInverseSemigroup[101X
+  
+  [29X[2XFreeInverseSemigroup[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function
+  [29X[2XFreeInverseSemigroup[102X( [3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function
+  [29X[2XFreeInverseSemigroup[102X( [3Xnames[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA free inverse semigroup.[133X
+  
+  [33X[0;0YReturns  a  free  inverse  semigroup  on  [3Xrank[103X  generators,  where [3Xrank[103X is a
+  positive  integer. If [3Xrank[103X is not specified, the number of [3Xnames[103X is used. If
+  [10XS[110X  is  a free inverse semigroup, then the generators can be accessed by [10XS.1[110X,
+  [10XS.2[110X and so on.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(7);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [128X[104X
+    [4X[28X[ x1, x2, x3, x4, x5, x6, x7 ]>[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(7,"s");[127X[104X
+    [4X[28X<free inverse semigroup on the generators [128X[104X
+    [4X[28X[ s1, s2, s3, s4, s5, s6, s7 ]>[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup("a", "b", "c");[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(["a", "b", "c"]);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XS.1;[127X[104X
+    [4X[28Xa[128X[104X
+    [4X[25Xgap>[125X [27XS.2;[127X[104X
+    [4X[28Xb[128X[104X
+  [4X[32X[104X
+  
+  [1X6.1-2 IsFreeInverseSemigroupCategory[101X
+  
+  [29X[2XIsFreeInverseSemigroupCategory[102X( [3Xobj[103X ) [32X Category
+  
+  [33X[0;0YEvery  free inverse semigroup in [5XGAP[105X created by [2XFreeInverseSemigroup[102X ([14X6.1-1[114X)
+  belongs  to the category [10XIsFreeInverseSemigroup[110X. Basic operations for a free
+  inverse     semigroup    are:    [2XGeneratorsOfInverseSemigroup[102X    ([14XReference:
+  GeneratorsOfInverseSemigroup[114X)    and    [2XGeneratorsOfSemigroup[102X    ([14XReference:
+  GeneratorsOfSemigroup[114X).  Elements  of a free inverse semigroup belong to the
+  category [2XIsFreeInverseSemigroupElement[102X ([14X6.1-4[114X).[133X
+  
+  [1X6.1-3 IsFreeInverseSemigroup[101X
+  
+  [29X[2XIsFreeInverseSemigroup[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YAttempts  to  determine  whether  the  given semigroup [3X S [103X is a free inverse
+  semigroup.[133X
+  
+  [1X6.1-4 IsFreeInverseSemigroupElement[101X
+  
+  [29X[2XIsFreeInverseSemigroupElement[102X[32X Category
+  
+  [33X[0;0YEvery   element  of  a  free  inverse  semigroup  belongs  to  the  category
+  [10XIsFreeInverseSemigroupElement[110X.[133X
+  
+  
+  [1X6.2 [33X[0;0YDisplaying free inverse semigroup elements[133X[101X
+  
+  [33X[0;0YThere  is  a  way to change how [5XGAP[105X displays free inverse semigroup elements
+  using    the   user   preference   [10XFreeInverseSemigroupElementDisplay[110X.   See
+  [2XUserPreference[102X  ([14XReference:  UserPreference[114X) for more information about user
+  preferences.[133X
+  
+  [33X[0;0YThere are two possible values for [10XFreeInverseSemigroupElementDisplay[110X:[133X
+  
+  [8Xminimal [108X
+        [33X[0;6YWith   this   option  selected,  [5XGAP[105X  will  display  a  shortest  word
+        corresponding  to  the  free  inverse semigroup element. However, this
+        shortest word is not unique. This is a default setting.[133X
+  
+  [8Xcanonical[108X
+        [33X[0;6YWith  this  option selected, [5XGAP[105X will display a free inverse semigroup
+        element in the canonical form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");[127X[104X
+    [4X[25Xgap>[125X [27XS:=FreeInverseSemigroup(2);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ x1, x2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XS.1 * S.2;[127X[104X
+    [4X[28Xx1*x2[128X[104X
+    [4X[25Xgap>[125X [27XSetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "canonical");[127X[104X
+    [4X[25Xgap>[125X [27XS.1 * S.2;[127X[104X
+    [4X[28Xx1x2x2^-1x1^-1x1x2[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.3 [33X[0;0YOperators and operations for free inverse semigroup elements[133X[101X
+  
+  [8X[10X[3Xw[103X[10X ^ -1[110X[108X
+        [33X[0;6Yreturns the semigroup inverse of the free inverse semigroup element [3Xw[103X.[133X
+  
+  [8X[10X[3Xu[103X[10X * [3Xv[103X[10X[110X[108X
+        [33X[0;6Yreturns the product of two free inverse semigroup elements [3Xu[103X and [3Xv[103X.[133X
+  
+  [8X[10X[3Xu[103X[10X = [3Xv[103X[10X [110X[108X
+        [33X[0;6Ychecks  if two free inverse semigroup elements are equal, by comparing
+        their canonical forms.[133X
+  
+  [1X6.3-1 CanonicalForm[101X
+  
+  [29X[2XCanonicalForm[102X( [3Xw[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA string.[133X
+  
+  [33X[0;0YEvery  element of a free inverse semigroup has a unique canonical form. If [3Xw[103X
+  is  such an element, then [10XCanonicalForm[110X returns the canonical form of [3Xw[103X as a
+  string.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(3);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ x1, x2, x3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := S.1; y := S.2;[127X[104X
+    [4X[28Xx1[128X[104X
+    [4X[28Xx2[128X[104X
+    [4X[25Xgap>[125X [27XCanonicalForm(x^3*y^3);[127X[104X
+    [4X[28X"x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"[128X[104X
+  [4X[32X[104X
+  
+  [1X6.3-2 MinimalWord[101X
+  
+  [29X[2XMinimalWord[102X( [3Xw[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA string.[133X
+  
+  [33X[0;0YFor  an  element [3Xw[103X of a free inverse semigroup [10XS[110X, [10XMinimalWord[110X returns a word
+  of minimal length equal to [3Xw[103X in [10XS[110X as a string.[133X
+  
+  [33X[0;0YNote that there maybe more than one word of minimal length which is equal to
+  [3Xw[103X in [10XS[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(3);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ x1, x2, x3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := S.1;[127X[104X
+    [4X[28Xx1[128X[104X
+    [4X[25Xgap>[125X [27Xy := S.2;[127X[104X
+    [4X[28Xx2[128X[104X
+    [4X[25Xgap>[125X [27XMinimalWord(x^3 * y^3);[127X[104X
+    [4X[28X"x1*x1*x1*x2*x2*x2"[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.4 [33X[0;0YFree bands[133X[101X
+  
+  [33X[0;0YA  semigroup [22XB[122X is a [13Xfree band[113X on a non-empty set [22XX[122X if [22XB[122X is a band with a map
+  [22Xf[122X  from  [22XB[122X to [22XX[122X such that for every band [22XS[122X and every map [22Xg[122X from [22XX[122X to [22XB[122X there
+  exists a unique homomorphism [22Xg'[122X from [22XB[122X to [22XS[122X such that [22Xfg' = g[122X. The free band
+  on a set [22XX[122X is unique up to isomorphism. Moreover, by the universal property,
+  every band can be expressed as a quotient of a free band.[133X
+  
+  [33X[0;0YFor an alternative description of a free band. Suppose that [22XX[122X is a non-empty
+  set  and  [22XX^+[122X  a  free  semigroup  on [22XX[122X. Also suppose that [22Xb[122X is the smallest
+  congurance on [22XX^+[122X containing the set[133X
+  
+  
+        [33X[1;6Y[24X[33X[0;0Y\{ (w^2, w) : w \in X^+ \}.[133X [124X[133X
+  
+  
+  [33X[0;0YThen  the  free  band  on  [22XX[122X  is isomorphic to the quotient of [22XX^+[122X by [22Xb[122X. See
+  Section 4.5 of [How95] for more information on free bands.[133X
+  
+  [1X6.4-1 FreeBand[101X
+  
+  [29X[2XFreeBand[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function
+  [29X[2XFreeBand[102X( [3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function
+  [29X[2XFreeBand[102X( [3Xnames[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA free band.[133X
+  
+  [33X[0;0YReturns a free band on [3Xrank[103X generators, for a positive integer [3Xrank[103X. If [3Xrank[103X
+  is  not  specified,  the number of [3Xnames[103X is used. The resulting semigroup is
+  always finite.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFreeBand(6);[127X[104X
+    [4X[28X<free band on the generators [ x1, x2, x3, x4, x5, x6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeBand(6, "b");[127X[104X
+    [4X[28X<free band on the generators [ b1, b2, b3, b4, b5, b6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeBand("a", "b", "c");[127X[104X
+    [4X[28X<free band on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeBand("a", "b", "c");[127X[104X
+    [4X[28X<free band on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27Xs := FreeBand(["a", "b", "c"]);[127X[104X
+    [4X[28X<free band on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XSize(s);[127X[104X
+    [4X[28X159[128X[104X
+    [4X[25Xgap>[125X [27Xgens := Generators(s);[127X[104X
+    [4X[28X[ a, b, c ][128X[104X
+    [4X[25Xgap>[125X [27Xa := gens[1];; b := gens[2];;[127X[104X
+    [4X[25Xgap>[125X [27Xa * b;[127X[104X
+    [4X[28Xab[128X[104X
+  [4X[32X[104X
+  
+  [1X6.4-2 IsFreeBandCategory[101X
+  
+  [29X[2XIsFreeBandCategory[102X[32X Category
+  
+  [33X[0;0Y[10XIsFreeBandCategory[110X  is  the  category  of  semigroups created using [2XFreeBand[102X
+  ([14X6.4-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandCategory(FreeBand(3));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(SymmetricGroup(6));[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X6.4-3 IsFreeBand[101X
+  
+  [29X[2XIsFreeBand[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0Y[10XIsFreeBand[110X returns [9Xtrue[109X if the given semigroup [3XS[103X is a free band.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(FreeBand(3));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(SymmetricGroup(6));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(FullTransformationMonoid(7));[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X6.4-4 IsFreeBandElement[101X
+  
+  [29X[2XIsFreeBandElement[102X[32X Category
+  
+  [33X[0;0Y[10XIsFreeBandElement[110X is a [10XCategory[110X containing the elements of a free band.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandElement(Generators(FreeBand(4))[1]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandElement(Transformation([1,3,4,1]));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandElement((1,2,3,4));[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X6.4-5 IsFreeBandSubsemigroup[101X
+  
+  [29X[2XIsFreeBandSubsemigroup[102X[32X filter
+  
+  [33X[0;0Y[10XIsFreeBandSubsemigroup[110X     is     a     synonym    for    [10XIsSemigroup[110X    and
+  [10XIsFreeBandElementCollection[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FreeBand(2);[127X[104X
+    [4X[28X<free band on the generators [ x1, x2 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Generators(S)[1];[127X[104X
+    [4X[28Xx1[128X[104X
+    [4X[25Xgap>[125X [27Xy := Generators(S)[2];[127X[104X
+    [4X[28Xx2[128X[104X
+    [4X[25Xgap>[125X [27Xnew := Semigroup([x*y, x]);[127X[104X
+    [4X[28X<semigroup with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(new);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandSubsemigroup(new);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.5 [33X[0;0YOperators and operations for free band elements[133X[101X
+  
+  [8X[10X[3Xu[103X[10X * [3Xv[103X[10X[110X[108X
+        [33X[0;6Yreturns the product of two free band elements [3Xu[103X and [3Xv[103X.[133X
+  
+  [8X[10X[3Xu[103X[10X = [3Xv[103X[10X [110X[108X
+        [33X[0;6Ychecks if two free band elements are equal.[133X
+  
+  [8X[10X[3Xu[103X[10X < [3Xv[103X[10X [110X[108X
+        [33X[0;6Ycompares  the  sizes  of the internal representations of two free band
+        elements.[133X
+  
+  [1X6.5-1 GreensDClassOfElement[101X
+  
+  [29X[2XGreensDClassOfElement[102X( [3Xs[103X, [3Xx[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA Green's D-class[133X
+  
+  [33X[0;0YLet  [3X  S  [103X  be a free band. Two elements of [3X S [103X are [13XD[113X-related if and only if
+  they  have  the  same  content  i.e.  the set of generators appearing in any
+  factorization  of the elements. Therefore, a [13XD[113X-class of a free band element [3X
+  x [103X is the set of elements of [3X S [103X which have the same content as [3X x [103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FreeBand(3, "b");[127X[104X
+    [4X[28X<free band on the generators [ b1, b2, b3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Generators(S)[1] * Generators(S)[2];[127X[104X
+    [4X[28Xb1b2[128X[104X
+    [4X[25Xgap>[125X [27XD := GreensDClassOfElement(S, x);[127X[104X
+    [4X[28X<Green's D-class: b1b2>[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensDClass(D);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  

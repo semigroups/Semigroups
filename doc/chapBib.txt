@@ -1,0 +1,28 @@
+  
+  
+  [1XReferences[101X
+  
+  [[20XABMN10[120X]   [16XAra{\'u}jo,   J.,   B{\"u}nau,   P.   V.,  Mitchell,  J.  D.  and
+  Neunh{\"o}ffer,  M.[116X,  [17XComputing  automorphisms  of  semigroups[117X,  [18XJ. Symbolic
+  Comput.[118X, [19X45[119X, 3 (2010), 373--392.
+  
+  [[20XABMS14[120X] [16XAra{{\'u}}jo, J., Bentz, W., Mitchell, J. D. and Schneider, C.[116X, [17XThe
+  rank of the semigroup of transformations stabilising a partition of a finite
+  set[117X (2014), ((in preparation)).
+  
+  [[20XFL98[120X]  [16XFitzgerald,  D. G. and Leech, J.[116X, [17XDual symmetric inverse monoids and
+  representation theory[117X, [18XJ. Austral. Math. Soc. A[118X, [19X64[119X (1998), 345-67.
+  
+  [[20XGGR68[120X]  [16XGraham,  N.,  Graham,  R.  and Rhodes, J.[116X, [17XMaximal subsemigroups of
+  finite semigroups[117X, [18XJ. Combinatorial Theory[118X, [19X4[119X (1968), 203--209.
+  
+  [[20XHow95[120X]  [16XHowie, J. M.[116X, [17XFundamentals of semigroup theory[117X, The Clarendon Press
+  Oxford University Press, London Mathematical Society Monographs. New Series,
+  [19X12[119X, New York (1995), x+351 pages, ((Oxford Science Publications)).
+  
+  [[20XSch92[120X]  [16XSchein,  B.  M.[116X,  [17XThe minimal degree of a finite inverse semigroup[117X,
+  [18XTrans. Amer. Math. Soc.[118X, [19X333[119X, 2 (1992), 877--888.
+  
+  
+  
+  [32X

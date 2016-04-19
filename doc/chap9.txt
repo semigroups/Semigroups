@@ -1,0 +1,95 @@
+  
+  [1X9 [33X[0;0YHomomorphisms[133X[101X
+  
+  [33X[0;0YIn this chapter we describe the various ways to define a homomorphism from a
+  semigroup to another semigroup.[133X
+  
+  [33X[0;0YSupport  for  homomorphisms  in  [5XSemigroups[105X  is currently rather limited but
+  there are plans to improve this in the future.[133X
+  
+  
+  [1X9.1 [33X[0;0YIsomorphisms[133X[101X
+  
+  [1X9.1-1 IsIsomorphicSemigroup[101X
+  
+  [29X[2XIsIsomorphicSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThis  operation  attempts  to  determine  if  the  semigroups  [3XS[103X  and  [3XT[103X are
+  isomorphic, it returns [9Xtrue[109X if they are and [9Xfalse[109X if they are not.[133X
+  
+  [33X[0;0YAt  present  this only works for rather small semigroups, with approximately
+  50 elements or less.[133X
+  
+  [33X[0;0Y[12XPlease  note:[112X  the [5XGrape[105X package version 4.5 or higher must be available and
+  compiled installed for this function to work.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=Semigroup( [ PartialPerm( [ 1, 2, 4 ], [ 3, 5, 1 ] ), [127X[104X
+    [4X[25X>[125X [27XPartialPerm( [ 1, 3, 5 ], [ 4, 3, 2 ] ) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X11[128X[104X
+    [4X[25Xgap>[125X [27XT:=SemigroupByMultiplicationTable(SmallestMultiplicationTable(S));;[127X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicSemigroup(S, T);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-2 SmallestMultiplicationTable[101X
+  
+  [29X[2XSmallestMultiplicationTable[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe lex-least multiplication table of a semigroup.[133X
+  
+  [33X[0;0YThis  function  returns  the  lex-least  multiplication table of a semigroup
+  isomorphic to the semigroup [3XS[103X. [10XSmallestMultiplicationTable[110X is an isomorphism
+  invariant of semigroups, and so it can, for example, be used to check if two
+  semigroups are isomorphic.[133X
+  
+  [33X[0;0YDue to the high complexity of computing the smallest multiplication table of
+  a  semigroup,  this  function only performs well for semigroups with at most
+  approximately 50 elements.[133X
+  
+  [33X[0;0Y[10XSmallestMultiplicationTable[110X   is  based  on  the  function  [2XIdSmallSemigroup[102X
+  ([14XSmallsemi: IdSmallSemigroup[114X) by Andreas Distler.[133X
+  
+  [33X[0;0Y[12XPlease note:[112X the [5XGrape[105X package version 4.5 or higher must be loaded for this
+  function to work.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=Semigroup([127X[104X
+    [4X[25X>[125X [27XBipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), [127X[104X
+    [4X[25X>[125X [27XBipartition( [ [ 1, 2, 3, -1 ], [ -2 ], [ -3 ] ] ), [127X[104X
+    [4X[25X>[125X [27XBipartition( [ [ 1, 2, 3 ], [ -1 ], [ -2, -3 ] ] ), [127X[104X
+    [4X[25X>[125X [27XBipartition( [ [ 1, 2, -1 ], [ 3, -2 ], [ -3 ] ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27XSmallestMultiplicationTable(S);[127X[104X
+    [4X[28X[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-3 IsomorphismSemigroups[101X
+  
+  [29X[2XIsomorphismSemigroups[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn isomorphism or [9Xfail[109X.[133X
+  
+  [33X[0;0YThis  operation  returns  an  isomorphism  from  the  semigroup [3XS[103X and to the
+  semigroup [3XT[103X if it exists, and it returns [9Xfail[109X if it does not.[133X
+  
+  [33X[0;0YAt  present  this  only  works  for Rees matrix semigroups and Rees 0-matrix
+  semigroups.[133X
+  
+  [33X[0;0Y[12XPlease  note:[112X  the [5XGrape[105X package version 4.5 or higher must be available and
+  compiled  for  this function to work, when the argument [3XR[103X is a Rees 0-matrix
+  semigroup.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>[128X[104X
+    [4X[25Xgap>[125X [27XT:=PrincipalFactor(DClasses(PartitionMonoid(5))[2]);[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 15x15 over Group([ (2,3,4,5), (4,5) ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismSemigroups(S, T);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  

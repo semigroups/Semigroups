@@ -1,0 +1,283 @@
+  
+  [1X10 [33X[0;0YOrbits[133X[101X
+  
+  
+  [1X10.1 [33X[0;0YLooking for something in an orbit[133X[101X
+  
+  [33X[0;0YThe  functions  described  in  this  section  supplement  the [5XOrb[105X package by
+  providing methods for finding something in an orbit, with the possibility of
+  continuing the orbit enumeration at some later point.[133X
+  
+  [1X10.1-1 EnumeratePosition[101X
+  
+  [29X[2XEnumeratePosition[102X( [3Xo[103X, [3Xval[103X[, [3Xonlynew[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10YA positive integer or [9Xfail[109X.[133X
+  
+  [33X[0;0YThis  function returns the position of the value [3Xval[103X in the orbit [3Xo[103X. If [3Xo[103X is
+  closed,  then this is equivalent to doing [10XPosition([3Xo[103X[10X, [3Xval[103X[10X)[110X. However, if [3Xo[103X is
+  open,  then  the  orbit  is enumerated until [3Xval[103X is found, in which case the
+  position  of [3Xval[103X is returned, or the enumeration ends, in which case [9Xfail[109X is
+  returned.[133X
+  
+  [33X[0;0YIf  the optional argument [3Xonlynew[103X is present, it should be [9Xtrue[109X or [9Xfalse[109X. If
+  [3Xonlynew[103X  is  [9Xtrue[109X,  then  [3Xval[103X  will only be checked against new points in [3Xo[103X.
+  Otherwise, every point in the [3Xo[103X, not only the new ones, is considered.[133X
+  
+  [1X10.1-2 LookForInOrb[101X
+  
+  [29X[2XLookForInOrb[102X( [3Xo[103X, [3Xfunc[103X, [3Xstart[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[9Xfalse[109X or a positive integer.[133X
+  
+  [33X[0;0YThe  arguments  of this function should be an orbit [3Xo[103X, a function [3Xfunc[103X which
+  gets  the orbit object and a point in the orbit as arguments, and a positive
+  integer  [3Xstart[103X.  The  function  [3Xfunc[103X  will  be  called  for every point in [3Xo[103X
+  starting  from [3Xstart[103X (inclusive) and the orbit will be enumerated until [3Xfunc[103X
+  returns  [9Xtrue[109X  or  the enumeration ends. In the former case, the position of
+  the  first  point  in  [3Xo[103X for which [3Xfunc[103X returns [9Xtrue[109X is returned, and in the
+  latter [9Xfalse[109X is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xo:=Orb(SymmetricGroup(100), 1, OnPoints);[127X[104X
+    [4X[28X<open Int-orbit, 1 points>[128X[104X
+    [4X[25Xgap>[125X [27Xfunc:=function(o, x) return x=42; end;[127X[104X
+    [4X[28Xfunction( o, x ) ... end[128X[104X
+    [4X[25Xgap>[125X [27XLookForInOrb(o, func, 1);[127X[104X
+    [4X[28X42[128X[104X
+    [4X[25Xgap>[125X [27Xo;[127X[104X
+    [4X[28X<open Int-orbit, 42 points>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X10.2 [33X[0;0YStrongly connected components of orbits[133X[101X
+  
+  [33X[0;0YThe  functions  described  in  this  section  supplement  the [5XOrb[105X package by
+  providing methods for operations related to strongly connected components of
+  orbits.[133X
+  
+  [33X[0;0YIf  any  of  the  functions  is  applied to an open orbit, then the orbit is
+  completely enumerated before any further calculation is performed. It is not
+  possible  to  calculate  the  strongly connected components of an orbit of a
+  semigroup acting on a set until the entire orbit has been found.[133X
+  
+  [1X10.2-1 OrbSCC[101X
+  
+  [29X[2XOrbSCC[102X( [3Xo[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YThe strongly connected components of an orbit.[133X
+  
+  [33X[0;0YIf [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X,
+  then  [10XOrbSCC[110X  returns  a  set of sets of positions in [3Xo[103X corresponding to its
+  strongly connected components.[133X
+  
+  [33X[0;0YSee also [2XOrbSCCLookup[102X ([14X10.2-2[114X) and [2XOrbSCCTruthTable[102X ([14X10.2-3[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=FullTransformationSemigroup(4);;[127X[104X
+    [4X[25Xgap>[125X [27Xo:=LambdaOrb(S);[127X[104X
+    [4X[28X<open orbit, 1 points with Schreier tree with log>[128X[104X
+    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
+    [4X[28X[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], [128X[104X
+    [4X[28X  [ 13, 14, 15, 16 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X10.2-2 OrbSCCLookup[101X
+  
+  [29X[2XOrbSCCLookup[102X( [3Xo[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA lookup table for the strongly connected components of an orbit.[133X
+  
+  [33X[0;0YIf [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X,
+  then  [10XOrbSCCLookup[110X  returns  a  lookup  table  for  its  strongly  connected
+  components.  More  precisely,  [10XOrbSCCLookup(o)[i][110X  equals  the  index of the
+  strongly connected component containing [10Xo[i][110X.[133X
+  
+  [33X[0;0YSee also [2XOrbSCC[102X ([14X10.2-1[114X) and [2XOrbSCCTruthTable[102X ([14X10.2-3[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=FullTransformationSemigroup(4);;[127X[104X
+    [4X[25Xgap>[125X [27Xo:=LambdaOrb(S);;[127X[104X
+    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
+    [4X[28X[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], [128X[104X
+    [4X[28X  [ 13, 14, 15, 16 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOrbSCCLookup(o);[127X[104X
+    [4X[28X[ 1, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5 ][128X[104X
+    [4X[25Xgap>[125X [27XOrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; [127X[104X
+    [4X[28X1[128X[104X
+    [4X[28X3[128X[104X
+    [4X[28X4[128X[104X
+  [4X[32X[104X
+  
+  [1X10.2-3 OrbSCCTruthTable[101X
+  
+  [29X[2XOrbSCCTruthTable[102X( [3Xo[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YTruth tables for strongly connected components of an orbit.[133X
+  
+  [33X[0;0YIf [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X,
+  then   [10XOrbSCCTruthTable[110X   returns   a   list  of  boolean  lists  such  that
+  [10XOrbSCCTruthTable(o)[i][j][110X is [9Xtrue[109X if [10Xj[110X belongs to [10XOrbSCC(o)[i][110X.[133X
+  
+  [33X[0;0YSee also [2XOrbSCC[102X ([14X10.2-1[114X) and [2XOrbSCCLookup[102X ([14X10.2-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=FullTransformationSemigroup(4);;[127X[104X
+    [4X[25Xgap>[125X [27Xo:=LambdaOrb(S);;[127X[104X
+    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
+    [4X[28X[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], [128X[104X
+    [4X[28X  [ 13, 14, 15, 16 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOrbSCCTruthTable(o);[127X[104X
+    [4X[28X[ [ true, false, false, false, false, false, false, false, false, [128X[104X
+    [4X[28X      false, false, false, false, false, false, false ], [128X[104X
+    [4X[28X  [ false, true, false, false, false, false, false, false, false, [128X[104X
+    [4X[28X      false, false, false, false, false, false, false ], [128X[104X
+    [4X[28X  [ false, false, true, true, true, true, false, false, false, false, [128X[104X
+    [4X[28X      false, false, false, false, false, false ], [128X[104X
+    [4X[28X  [ false, false, false, false, false, false, true, true, true, true, [128X[104X
+    [4X[28X      true, true, false, false, false, false ], [128X[104X
+    [4X[28X  [ false, false, false, false, false, false, false, false, false, [128X[104X
+    [4X[28X      false, false, false, true, true, true, true ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X10.2-4 ReverseSchreierTreeOfSCC[101X
+  
+  [29X[2XReverseSchreierTreeOfSCC[102X( [3Xo[103X, [3Xi[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YThe  reverse  Schreier  tree  corresponding  to  the  [3Xi[103Xth strongly
+            connected component of an orbit.[133X
+  
+  [33X[0;0YIf  [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X
+  and    action    [10Xact[110X,    and    [3Xi[103X    is    a    positive    integer,    then
+  [10XReverseSchreierTreeOfSCC([3Xo[103X[10X,  [3Xi[103X[10X)[110X  returns  a  pair [10X[ gen, pos ][110X of lists with
+  [10XLength(o)[110X entries such that[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xact(o[j], o!.gens[gen[j]])=o[pos[j]].[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  pair [10X[ gen, pos ][110X corresponds to a tree with root [10XOrbSCC(o)[i][1][110X and a
+  path from every element of [10XOrbSCC(o)[i][110X to the root.[133X
+  
+  [33X[0;0YSee    also    [2XOrbSCC[102X    ([14X10.2-1[114X),    [2XTraceSchreierTreeOfSCCBack[102X   ([14X10.2-6[114X),
+  [2XSchreierTreeOfSCC[102X ([14X10.2-5[114X), and [2XTraceSchreierTreeOfSCCForward[102X ([14X10.2-7[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), [127X[104X
+    [4X[25X>[125X [27XTransformation( [ 3, 3, 3, 4, 5 ] ),[127X[104X
+    [4X[25X>[125X [27XTransformation( [ 5, 1, 4, 5, 5 ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xo:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;[127X[104X
+    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
+    [4X[28X[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ][128X[104X
+    [4X[25Xgap>[125X [27XReverseSchreierTreeOfSCC(o, 3);[127X[104X
+    [4X[28X[ [ ,, fail,, 2, 1, 2,,,, 1 ], [ ,, fail,, 3, 5, 3,,,, 7 ] ][128X[104X
+    [4X[25Xgap>[125X [27XReverseSchreierTreeOfSCC(o, 7);[127X[104X
+    [4X[28X[ [ ,,,,,,,,, fail,, 3 ], [ ,,,,,,,,, fail,, 10 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOnSets(o[11], Generators(S)[1]);[127X[104X
+    [4X[28X[ 1, 4 ][128X[104X
+    [4X[25Xgap>[125X [27XPosition(o, last);[127X[104X
+    [4X[28X7[128X[104X
+  [4X[32X[104X
+  
+  [1X10.2-5 SchreierTreeOfSCC[101X
+  
+  [29X[2XSchreierTreeOfSCC[102X( [3Xo[103X, [3Xi[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YThe  Schreier  tree  corresponding  to  the [3Xi[103Xth strongly connected
+            component of an orbit.[133X
+  
+  [33X[0;0YIf  [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X
+  and  action  [10Xact[110X,  and [3Xi[103X is a positive integer, then [10XSchreierTreeOfSCC([3Xo[103X[10X, [3Xi[103X[10X)[110X
+  returns a pair [10X[ gen, pos ][110X of lists with [10XLength(o)[110X entries such that[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xact(o[pos[j]], o!.gens[gen[j]])=o[j].[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  pair [10X[ gen, pos ][110X corresponds to a tree with root [10XOrbSCC(o)[i][1][110X and a
+  path from the root to every element of [10XOrbSCC(o)[i][110X.[133X
+  
+  [33X[0;0YSee    also    [2XOrbSCC[102X    ([14X10.2-1[114X),    [2XTraceSchreierTreeOfSCCBack[102X   ([14X10.2-6[114X),
+  [2XReverseSchreierTreeOfSCC[102X    ([14X10.2-4[114X),    and   [2XTraceSchreierTreeOfSCCForward[102X
+  ([14X10.2-7[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), [127X[104X
+    [4X[25X>[125X [27XTransformation( [ 3, 3, 3, 4, 5 ] ),[127X[104X
+    [4X[25X>[125X [27XTransformation( [ 5, 1, 4, 5, 5 ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xo:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;[127X[104X
+    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
+    [4X[28X[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ][128X[104X
+    [4X[25Xgap>[125X [27XSchreierTreeOfSCC(o, 3);[127X[104X
+    [4X[28X[ [ ,, fail,, 1, 3, 1,,,, 2 ], [ ,, fail,, 7, 5, 3,,,, 6 ] ][128X[104X
+    [4X[25Xgap>[125X [27XSchreierTreeOfSCC(o, 7);[127X[104X
+    [4X[28X[ [ ,,,,,,,,, fail,, 1 ], [ ,,,,,,,,, fail,, 10 ] ][128X[104X
+    [4X[25Xgap>[125X [27XOnSets(o[6], Generators(S)[2]);[127X[104X
+    [4X[28X[ 3, 5 ][128X[104X
+    [4X[25Xgap>[125X [27XPosition(o, last);[127X[104X
+    [4X[28X11[128X[104X
+  [4X[32X[104X
+  
+  [1X10.2-6 TraceSchreierTreeOfSCCBack[101X
+  
+  [29X[2XTraceSchreierTreeOfSCCBack[102X( [3Xorb[103X, [3Xm[103X, [3Xnr[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA word in the generators.[133X
+  
+  [33X[0;0Y[3Xorb[103X  must  be an orbit object with a Schreier tree and orbit graph, that is,
+  the  options  [10Xschreier[110X  and [10Xorbitgraph[110X must have been set to [9Xtrue[109X during the
+  creation  of  the  orbit,  [3Xm[103X  must  be  the  number  of a strongly connected
+  component  of  [3Xorb[103X, and [10Xnr[110X must be the number of a point in the [3Xm[103Xth strongly
+  connect component of [3Xorb[103X.[133X
+  
+  [33X[0;0YThis  operation  traces  the result of [2XReverseSchreierTreeOfSCC[102X ([14X10.2-4[114X) and
+  with  arguments [3Xorb[103X and [3Xm[103X and returns a word in the generators that maps the
+  point  with  number  [3Xnr[103X  to  the  first  point in the [3Xm[103Xth strongly connected
+  component  of  [3Xorb[103X.  Here,  a  word  is  a  list of integers, where positive
+  integers   are   numbers   of   generators.   See   also   [2XOrbSCC[102X  ([14X10.2-1[114X),
+  [2XReverseSchreierTreeOfSCC[102X    ([14X10.2-4[114X),    [2XSchreierTreeOfSCC[102X   ([14X10.2-5[114X),   and
+  [2XTraceSchreierTreeOfSCCForward[102X ([14X10.2-7[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), [127X[104X
+    [4X[25X>[125X [27XTransformation( [ 2, 4, 1, 2 ] ),[127X[104X
+    [4X[25X>[125X [27XTransformation( [ 3, 1, 1, 3 ] ), [127X[104X
+    [4X[25X>[125X [27XTransformation( [ 3, 3, 4, 1 ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xo:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;[127X[104X
+    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
+    [4X[28X[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ][128X[104X
+    [4X[25Xgap>[125X [27XReverseSchreierTreeOfSCC(o, 4);               [127X[104X
+    [4X[28X[ [ ,,, fail, 4, 1, 1, 3 ], [ ,,, fail, 4, 4, 4, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XTraceSchreierTreeOfSCCBack(o, 4, 7);[127X[104X
+    [4X[28X[ 1 ][128X[104X
+    [4X[25Xgap>[125X [27XTraceSchreierTreeOfSCCBack(o, 4, 8);[127X[104X
+    [4X[28X[ 3 ][128X[104X
+  [4X[32X[104X
+  
+  [1X10.2-7 TraceSchreierTreeOfSCCForward[101X
+  
+  [29X[2XTraceSchreierTreeOfSCCForward[102X( [3Xorb[103X, [3Xm[103X, [3Xnr[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA word in the generators.[133X
+  
+  [33X[0;0Y[3Xorb[103X  must  be an orbit object with a Schreier tree and orbit graph, that is,
+  the  options  [10Xschreier[110X  and [10Xorbitgraph[110X must have been set to [9Xtrue[109X during the
+  creation  of  the  orbit,  [3Xm[103X  must  be  the  number  of a strongly connected
+  component  of  [3Xorb[103X, and [10Xnr[110X must be the number of a point in the [3Xm[103Xth strongly
+  connect component of [3Xorb[103X.[133X
+  
+  [33X[0;0YThis  operation  traces  the  result  of [2XSchreierTreeOfSCC[102X ([14X10.2-5[114X) and with
+  arguments [3Xorb[103X and [3Xm[103X and returns a word in the generators that maps the first
+  point  in  the  [3Xm[103Xth  strongly  connected  component of [3Xorb[103X to the point with
+  number  [3Xnr[103X.  Here, a word is a list of integers, where positive integers are
+  numbers  of  generators.  See also [2XOrbSCC[102X ([14X10.2-1[114X), [2XReverseSchreierTreeOfSCC[102X
+  ([14X10.2-4[114X),   [2XSchreierTreeOfSCC[102X   ([14X10.2-5[114X),   and   [2XTraceSchreierTreeOfSCCBack[102X
+  ([14X10.2-6[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), [127X[104X
+    [4X[25X>[125X [27XTransformation( [ 2, 4, 1, 2 ] ),[127X[104X
+    [4X[25X>[125X [27XTransformation( [ 3, 1, 1, 3 ] ), [127X[104X
+    [4X[25X>[125X [27XTransformation( [ 3, 3, 4, 1 ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xo:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;[127X[104X
+    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
+    [4X[28X[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ][128X[104X
+    [4X[25Xgap>[125X [27XSchreierTreeOfSCC(o, 4);[127X[104X
+    [4X[28X[ [ ,,, fail, 1, 2, 2, 4 ], [ ,,, fail, 4, 4, 6, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XTraceSchreierTreeOfSCCForward(o, 4, 8);[127X[104X
+    [4X[28X[ 4 ][128X[104X
+    [4X[25Xgap>[125X [27XTraceSchreierTreeOfSCCForward(o, 4, 7);[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+  [4X[32X[104X
+  

@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (semigroups) - Chapter 6: Free inverse semigroups and free bands</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap6"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap6.html">[MathJax off]</a></p>
+<p><a id="X816435C881A89264" name="X816435C881A89264"></a></p>
+<div class="ChapSects"><a href="chap6_mj.html#X816435C881A89264">6 <span class="Heading">Free inverse semigroups and free bands</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7E51292C8755DCF2">6.1 <span class="Heading"> Free inverse semigroups </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7F3F9DED8003CBD0">6.1-1 FreeInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7CE4CFD886220179">6.1-2 IsFreeInverseSemigroupCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7B91643B827DA6DB">6.1-3 IsFreeInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7999FE0286283CC2">6.1-4 IsFreeInverseSemigroupElement</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X8073A2387A42B52D">6.2 <span class="Heading"> Displaying free inverse semigroup elements </span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7E93822179CD7602">6.3 <span class="Heading">Operators and operations for free inverse semigroup elements
+  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7DB7DCEC7E0FE9A3">6.3-1 CanonicalForm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X87BB5D047EB7C2BF">6.3-2 MinimalWord</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7BB29A6779E8066A">6.4 <span class="Heading"> Free bands </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7B2A65F382DB36EC">6.4-1 FreeBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7F5658DC7E56C4A6">6.4-2 IsFreeBandCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7B1CD5FC7E034B88">6.4-3 IsFreeBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7DECF69087BB3B16">6.4-4 IsFreeBandElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7AEF4CD1857E7DCC">6.4-5 IsFreeBandSubsemigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X86221BAE7CD5CF4D">6.5 <span class="Heading">Operators and operations for free band elements
+  </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X85D9F64F7BB64512">6.5-1 GreensDClassOfElement</a></span>
+</div></div>
+</div>
+
+<h3>6 <span class="Heading">Free inverse semigroups and free bands</span></h3>
+
+<p>This chapter describes the functions in <strong class="pkg">Semigroups</strong> for dealing with free inverse semigroups and free bands. This part of the manual and the functions described herein were written by Julius Jonušas.</p>
+
+<p><a id="X7E51292C8755DCF2" name="X7E51292C8755DCF2"></a></p>
+
+<h4>6.1 <span class="Heading"> Free inverse semigroups </span></h4>
+
+<p><span class="SimpleMath">\(F\)</span> is a <em>free inverse semigroup</em> on a non-empty set <span class="SimpleMath">\(X\)</span> if <span class="SimpleMath">\(F\)</span> is an inverse semigroup with a map <span class="SimpleMath">\(f\)</span> from <span class="SimpleMath">\(F\)</span> to <span class="SimpleMath">\(X\)</span> such that for every inverse semigroup <span class="SimpleMath">\(S\)</span> and a map <span class="SimpleMath">\(g\)</span> from <span class="SimpleMath">\(X\)</span> to <span class="SimpleMath">\(S\)</span> there exists a unique homomorphism <span class="SimpleMath">\(g'\)</span> from <span class="SimpleMath">\(F\)</span> to <span class="SimpleMath">\(S\)</span> such that <span class="SimpleMath">\(fg' = g\)</span>. Moreover, by the universal property, every inverse semigroup can be expressed as a quotient of a free inverse semigroup.</p>
+
+<p>The internal representation of an element of a free inverse semigroup uses a Munn tree. A <em>Munn tree</em> is a directed tree with distinguished start and terminal vertices and where the edges are labeled by generators so that two edges labeled by the same generator are only incident to the same vertex if one of the edges is coming in and the other is leaving the vertex. For more information regarding free inverse semigroups and the Munn representations see Section 5.10 of <a href="chapBib_mj.html#biBhowie">[How95]</a>. See also <a href="../../../doc/ref/chap51_mj.html#X840847B6810BD0E1"><span class="RefLink">Reference: Inverse semigroups and monoids</span></a>, <a href="../../../doc/ref/chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">Reference: Partial permutations</span></a> and <a href="../../../doc/ref/chap37_mj.html#X82E7EA7F7FD31EC3"><span class="RefLink">Reference: Free Groups, Monoids and Semigroups</span></a>.</p>
+
+<p>An element of a free inverse semigroup in <strong class="pkg">Semigroups</strong> is be displayed, by default, as a shortest word corresponding to the element. However, there might be more than one word of the minimum length. For example, if <span class="SimpleMath">\(x\)</span> and <span class="SimpleMath">\(y\)</span> are generators of a free inverse semigroups, then</p>
+
+<p class="center">\[xyy^{-1}xx^{-1}x^{-1} = xxx^{-1}yy^{-1}x^{-1}.\]</p>
+
+<p>See <code class="func">MinimalWord</code> (<a href="chap6_mj.html#X87BB5D047EB7C2BF"><span class="RefLink">6.3-2</span></a>) Therefore we provide a another method for printing elements of a free inverse semigroup: a unique canonical form. Suppose an element of a free inverse semigroup is given as a Munn tree. Let <span class="SimpleMath">\(L\)</span> be the set of words corresponding to the shortest paths from the start vertex to the leaves of the tree. Also let <span class="SimpleMath">\(w\)</span> be a word corresponding to the shortest path from start to terminal vertices. The word <span class="SimpleMath">\(vv^{-1}\)</span> is an idempotent for every <span class="SimpleMath">\(v\)</span> in <span class="SimpleMath">\(L\)</span>. The canonical form is given by multiplying these idempotents, in shortlex order, and then postmultiplying by <span class="SimpleMath">\(w\)</span>. For example, consider the word <span class="SimpleMath">\(xyy^{-1}xx^{-1}x^{-1}\)</span> again. The words corresponding to the paths to the leaves are in this case <span class="SimpleMath">\(xx\)</span> and <span class="SimpleMath">\(xy\)</span>. And <span class="SimpleMath">\(w\)</span> is an empty word since start and terminal vertices are the same. Therefore, the canonical form is</p>
+
+<p class="center">\[xxx^{-1}x^{-1}xyy^{-1}x^{-1}.\]</p>
+
+<p>See <code class="func">CanonicalForm</code> (<a href="chap6_mj.html#X7DB7DCEC7E0FE9A3"><span class="RefLink">6.3-1</span></a>).</p>
+
+<p><a id="X7F3F9DED8003CBD0" name="X7F3F9DED8003CBD0"></a></p>
+
+<h5>6.1-1 FreeInverseSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">names</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A free inverse semigroup.</p>
+
+<p>Returns a free inverse semigroup on <var class="Arg">rank</var> generators, where <var class="Arg">rank</var> is a positive integer. If <var class="Arg">rank</var> is not specified, the number of <var class="Arg">names</var> is used. If <code class="code">S</code> is a free inverse semigroup, then the generators can be accessed by <code class="code">S.1</code>, <code class="code">S.2</code> and so on.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(7);</span>
+&lt;free inverse semigroup on the generators 
+[ x1, x2, x3, x4, x5, x6, x7 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(7,"s");</span>
+&lt;free inverse semigroup on the generators 
+[ s1, s2, s3, s4, s5, s6, s7 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup("a", "b", "c");</span>
+&lt;free inverse semigroup on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(["a", "b", "c"]);</span>
+&lt;free inverse semigroup on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.1;</span>
+a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.2;</span>
+b</pre></div>
+
+<p><a id="X7CE4CFD886220179" name="X7CE4CFD886220179"></a></p>
+
+<h5>6.1-2 IsFreeInverseSemigroupCategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupCategory</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Every free inverse semigroup in <strong class="pkg">GAP</strong> created by <code class="func">FreeInverseSemigroup</code> (<a href="chap6_mj.html#X7F3F9DED8003CBD0"><span class="RefLink">6.1-1</span></a>) belongs to the category <code class="code">IsFreeInverseSemigroup</code>. Basic operations for a free inverse semigroup are: <code class="func">GeneratorsOfInverseSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X87C373597F787250"><span class="RefLink">Reference: GeneratorsOfInverseSemigroup</span></a>) and <code class="func">GeneratorsOfSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>). Elements of a free inverse semigroup belong to the category <code class="func">IsFreeInverseSemigroupElement</code> (<a href="chap6_mj.html#X7999FE0286283CC2"><span class="RefLink">6.1-4</span></a>).</p>
+
+<p><a id="X7B91643B827DA6DB" name="X7B91643B827DA6DB"></a></p>
+
+<h5>6.1-3 IsFreeInverseSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>Attempts to determine whether the given semigroup <var class="Arg"> S </var> is a free inverse semigroup.</p>
+
+<p><a id="X7999FE0286283CC2" name="X7999FE0286283CC2"></a></p>
+
+<h5>6.1-4 IsFreeInverseSemigroupElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupElement</code></td><td class="tdright">( category )</td></tr></table></div>
+<p>Every element of a free inverse semigroup belongs to the category <code class="code">IsFreeInverseSemigroupElement</code>.</p>
+
+<p><a id="X8073A2387A42B52D" name="X8073A2387A42B52D"></a></p>
+
+<h4>6.2 <span class="Heading"> Displaying free inverse semigroup elements </span></h4>
+
+<p>There is a way to change how <strong class="pkg">GAP</strong> displays free inverse semigroup elements using the user preference <code class="code">FreeInverseSemigroupElementDisplay</code>. See <code class="func">UserPreference</code> (<a href="../../../doc/ref/chap3_mj.html#X7B0AD104839B6C3C"><span class="RefLink">Reference: UserPreference</span></a>) for more information about user preferences.</p>
+
+<p>There are two possible values for <code class="code">FreeInverseSemigroupElementDisplay</code>:</p>
+
+
+<dl>
+<dt><strong class="Mark">minimal </strong></dt>
+<dd><p>With this option selected, <strong class="pkg">GAP</strong> will display a shortest word corresponding to the free inverse semigroup element. However, this shortest word is not unique. This is a default setting.</p>
+
+</dd>
+<dt><strong class="Mark">canonical</strong></dt>
+<dd><p>With this option selected, <strong class="pkg">GAP</strong> will display a free inverse semigroup element in the canonical form.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "minimal");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FreeInverseSemigroup(2);</span>
+&lt;free inverse semigroup on the generators [ x1, x2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.1 * S.2;</span>
+x1*x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetUserPreference("semigroups", "FreeInverseSemigroupElementDisplay", "canonical");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.1 * S.2;</span>
+x1x2x2^-1x1^-1x1x2</pre></div>
+
+<p><a id="X7E93822179CD7602" name="X7E93822179CD7602"></a></p>
+
+<h4>6.3 <span class="Heading">Operators and operations for free inverse semigroup elements
+  </span></h4>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code"><var class="Arg">w</var> ^ -1</code></strong></dt>
+<dd><p>returns the semigroup inverse of the free inverse semigroup element <var class="Arg">w</var>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> * <var class="Arg">v</var></code></strong></dt>
+<dd><p>returns the product of two free inverse semigroup elements <var class="Arg">u</var> and <var class="Arg">v</var>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> = <var class="Arg">v</var> </code></strong></dt>
+<dd><p>checks if two free inverse semigroup elements are equal, by comparing their canonical forms.</p>
+
+</dd>
+</dl>
+<p><a id="X7DB7DCEC7E0FE9A3" name="X7DB7DCEC7E0FE9A3"></a></p>
+
+<h5>6.3-1 CanonicalForm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalForm</code>( <var class="Arg">w</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>Every element of a free inverse semigroup has a unique canonical form. If <var class="Arg">w</var> is such an element, then <code class="code">CanonicalForm</code> returns the canonical form of <var class="Arg">w</var> as a string.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(3);</span>
+&lt;free inverse semigroup on the generators [ x1, x2, x3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1; y := S.2;</span>
+x1
+x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalForm(x^3*y^3);</span>
+"x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"</pre></div>
+
+<p><a id="X87BB5D047EB7C2BF" name="X87BB5D047EB7C2BF"></a></p>
+
+<h5>6.3-2 MinimalWord</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalWord</code>( <var class="Arg">w</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>For an element <var class="Arg">w</var> of a free inverse semigroup <code class="code">S</code>, <code class="code">MinimalWord</code> returns a word of minimal length equal to <var class="Arg">w</var> in <code class="code">S</code> as a string.</p>
+
+<p>Note that there maybe more than one word of minimal length which is equal to <var class="Arg">w</var> in <code class="code">S</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(3);</span>
+&lt;free inverse semigroup on the generators [ x1, x2, x3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1;</span>
+x1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := S.2;</span>
+x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalWord(x^3 * y^3);</span>
+"x1*x1*x1*x2*x2*x2"</pre></div>
+
+<p><a id="X7BB29A6779E8066A" name="X7BB29A6779E8066A"></a></p>
+
+<h4>6.4 <span class="Heading"> Free bands </span></h4>
+
+<p>A semigroup <span class="SimpleMath">\(B\)</span> is a <em>free band</em> on a non-empty set <span class="SimpleMath">\(X\)</span> if <span class="SimpleMath">\(B\)</span> is a band with a map <span class="SimpleMath">\( f \)</span> from <span class="SimpleMath">\( B \)</span> to <span class="SimpleMath">\(X\)</span> such that for every band <span class="SimpleMath">\( S \)</span> and every map <span class="SimpleMath">\( g \)</span> from <span class="SimpleMath">\(X\)</span> to <span class="SimpleMath">\( B \)</span> there exists a unique homomorphism <span class="SimpleMath">\( g'\)</span> from <span class="SimpleMath">\(B\)</span> to <span class="SimpleMath">\(S\)</span> such that <span class="SimpleMath">\(fg' = g\)</span>. The free band on a set <span class="SimpleMath">\(X\)</span> is unique up to isomorphism. Moreover, by the universal property, every band can be expressed as a quotient of a free band.</p>
+
+<p>For an alternative description of a free band. Suppose that <span class="SimpleMath">\( X \)</span> is a non-empty set and <span class="SimpleMath">\( X^+ \)</span> a free semigroup on <span class="SimpleMath">\( X \)</span>. Also suppose that <span class="SimpleMath">\( b \)</span> is the smallest congurance on <span class="SimpleMath">\( X^+ \)</span> containing the set</p>
+
+<p class="center">\[ \{ (w^2, w) : w \in X^+ \}. \]</p>
+
+<p>Then the free band on <span class="SimpleMath">\( X \)</span> is isomorphic to the quotient of <span class="SimpleMath">\( X^+ \)</span> by <span class="SimpleMath">\( b \)</span>. See Section 4.5 of <a href="chapBib_mj.html#biBhowie">[How95]</a> for more information on free bands.</p>
+
+<p><a id="X7B2A65F382DB36EC" name="X7B2A65F382DB36EC"></a></p>
+
+<h5>6.4-1 FreeBand</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">names</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A free band.</p>
+
+<p>Returns a free band on <var class="Arg">rank</var> generators, for a positive integer <var class="Arg">rank</var>. If <var class="Arg">rank</var> is not specified, the number of <var class="Arg">names</var> is used. The resulting semigroup is always finite.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeBand(6);</span>
+&lt;free band on the generators [ x1, x2, x3, x4, x5, x6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeBand(6, "b");</span>
+&lt;free band on the generators [ b1, b2, b3, b4, b5, b6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeBand("a", "b", "c");</span>
+&lt;free band on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeBand("a", "b", "c");</span>
+&lt;free band on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := FreeBand(["a", "b", "c"]);</span>
+&lt;free band on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(s);</span>
+159
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := Generators(s);</span>
+[ a, b, c ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := gens[1];; b := gens[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a * b;</span>
+ab</pre></div>
+
+<p><a id="X7F5658DC7E56C4A6" name="X7F5658DC7E56C4A6"></a></p>
+
+<h5>6.4-2 IsFreeBandCategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandCategory</code></td><td class="tdright">( category )</td></tr></table></div>
+<p><code class="code">IsFreeBandCategory</code> is the category of semigroups created using <code class="func">FreeBand</code> (<a href="chap6_mj.html#X7B2A65F382DB36EC"><span class="RefLink">6.4-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandCategory(FreeBand(3));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(SymmetricGroup(6));</span>
+false
+</pre></div>
+
+<p><a id="X7B1CD5FC7E034B88" name="X7B1CD5FC7E034B88"></a></p>
+
+<h5>6.4-3 IsFreeBand</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBand</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p><code class="code">IsFreeBand</code> returns <code class="keyw">true</code> if the given semigroup <var class="Arg">S</var> is a free band.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(FreeBand(3));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(SymmetricGroup(6));</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(FullTransformationMonoid(7));</span>
+false
+</pre></div>
+
+<p><a id="X7DECF69087BB3B16" name="X7DECF69087BB3B16"></a></p>
+
+<h5>6.4-4 IsFreeBandElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandElement</code></td><td class="tdright">( category )</td></tr></table></div>
+<p><code class="code">IsFreeBandElement</code> is a <code class="code">Category</code> containing the elements of a free band.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandElement(Generators(FreeBand(4))[1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandElement(Transformation([1,3,4,1]));</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandElement((1,2,3,4));</span>
+false
+</pre></div>
+
+<p><a id="X7AEF4CD1857E7DCC" name="X7AEF4CD1857E7DCC"></a></p>
+
+<h5>6.4-5 IsFreeBandSubsemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandSubsemigroup</code></td><td class="tdright">( filter )</td></tr></table></div>
+<p><code class="code">IsFreeBandSubsemigroup</code> is a synonym for <code class="code">IsSemigroup</code> and <code class="code">IsFreeBandElementCollection</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeBand(2);</span>
+&lt;free band on the generators [ x1, x2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Generators(S)[1];</span>
+x1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := Generators(S)[2];</span>
+x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">new := Semigroup([x*y, x]);</span>
+&lt;semigroup with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(new);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandSubsemigroup(new);</span>
+true
+</pre></div>
+
+<p><a id="X86221BAE7CD5CF4D" name="X86221BAE7CD5CF4D"></a></p>
+
+<h4>6.5 <span class="Heading">Operators and operations for free band elements
+  </span></h4>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> * <var class="Arg">v</var></code></strong></dt>
+<dd><p>returns the product of two free band elements <var class="Arg">u</var> and <var class="Arg">v</var>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> = <var class="Arg">v</var> </code></strong></dt>
+<dd><p>checks if two free band elements are equal.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> &lt; <var class="Arg">v</var> </code></strong></dt>
+<dd><p>compares the sizes of the internal representations of two free band elements.</p>
+
+</dd>
+</dl>
+<p><a id="X85D9F64F7BB64512" name="X85D9F64F7BB64512"></a></p>
+
+<h5>6.5-1 GreensDClassOfElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensDClassOfElement</code>( <var class="Arg">s</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A Green's D-class</p>
+
+<p>Let <var class="Arg"> S </var> be a free band. Two elements of <var class="Arg"> S </var> are \(\mathscr{D}\)-related if and only if they have the same content i.e. the set of generators appearing in any factorization of the elements. Therefore, a \(\mathscr{D}\)-class of a free band element <var class="Arg"> x </var> is the set of elements of <var class="Arg"> S </var> which have the same content as <var class="Arg"> x </var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeBand(3, "b");</span>
+&lt;free band on the generators [ b1, b2, b3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Generators(S)[1] * Generators(S)[2];</span>
+b1b2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClassOfElement(S, x);</span>
+&lt;Green's D-class: b1b2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensDClass(D);</span>
+true</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

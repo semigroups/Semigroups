@@ -1,0 +1,1344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (semigroups) - Chapter 5: 
+    Bipartitions and blocks
+  </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap5"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap5.html">[MathJax off]</a></p>
+<p><a id="X7C18DB427C9C0917" name="X7C18DB427C9C0917"></a></p>
+<div class="ChapSects"><a href="chap5_mj.html#X7C18DB427C9C0917">5 <span class="Heading">
+    Bipartitions and blocks
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7850845886902FBF">5.1 <span class="Heading">The family and categories of bipartitions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X80F11BEF856E7902">5.1-1 IsBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X82F5D10C85489832">5.1-2 IsBipartitionCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7937F20C86F98F88">5.1-3 BipartitionFamily</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X85D77073820C7E72">5.2 <span class="Heading">Creating bipartitions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7E052E6378A5B758">5.2-1 Bipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X846AA7568435D2CE">5.2-2 BipartitionByIntRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8379B0538101FBC8">5.2-3 IdentityBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X824EDD4582AAA8C7">5.2-4 LeftOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X790B71108070FAC2">5.2-5 RightOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D7A2BE482AF5150">5.2-6 StarOp</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8077265981409CCB">5.2-7 RandomBipartition</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7C2C44D281A0D2C9">5.3 <span class="Heading">Changing the representation of a bipartition</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X855126D98583C181">5.3-1 AsBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X85A5AD2B7F3B776F">5.3-2 AsBlockBijection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7CE91D0C83865214">5.3-3 AsTransformation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7C5212EF7A200E63">5.3-4 AsPartialPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7C684CD38405DBEF">5.3-5 AsPermutation</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X83F2C3C97E8FFA49">5.4 <span class="Heading">Operators for bipartitions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7A39D36086647536">5.4-1 PartialPermLeqBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8608D78F83D55108">5.4-2 NaturalLeqPartialPermBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X79E8FA077E24C1F4">5.4-3 NaturalLeqBlockBijection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D9F5A248028FF52">5.4-4 PermLeftQuoBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7FD1BC557DAAE665">5.4-5 OnRightBlocksBipartitionByPerm</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X87F3A304814797CE">5.5 <span class="Heading">Attributes for bipartitons</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X780F5E00784FE58C">5.5-1 DegreeOfBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X82074756826AD2C2">5.5-2 RankOfBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X82CC5635841EE8A4">5.5-3 ExtRepOfBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X86A10B138230C2A4">5.5-4 RightBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7B9B364379D8F4E8">5.5-5 LeftBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X79AEDB5382FD25CF">5.5-6 NrLeftBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X86385A3C8662E1A7">5.5-7 NrRightBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8110B6557A98FB5C">5.5-8 NrBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X79C556827A578509">5.5-9 IsTransBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7F0B8ACC7C9A937F">5.5-10 IsDualTransBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8031B53E7D0ECCFA">5.5-11 IsPermBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X87C771D37B1FE95C">5.5-12 IsPartialPermBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X829494DF7FD6CFEC">5.5-13 IsBlockBijection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X79D54AD8833B9551">5.5-14 IsUniformBlockBijection</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X87684C148592F831">5.6 <span class="Heading">Creating blocks and their attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D6C636785C2E8E0">5.6-1 BlocksNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7A188D947B20CF96">5.6-2 ExtRepOfBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X787D22AE7FA69239">5.6-3 RankOfBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8527DC6A8771C2BE">5.6-4 DegreeOfBlocks</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7A45E0067F344683">5.7 <span class="Heading">Actions on blocks</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7B701DA37F75E77B">5.7-1 OnRightBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7A5A4AF57BEA2313">5.7-2 OnLeftBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X78430AE181917382">5.7-3 PermRightBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X841E627787585C23">5.7-4 InverseRightBlocks</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7FB7FB28812F9AD7">5.7-5 InverseLeftBlocks</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7FF53DBA7C20AD43">5.8 <span class="Heading">Visualising blocks and bipartitions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7E5E9A5187FC803E">5.8-1 TikzBipartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7A0C438B7CA517DB">5.8-2 TikzBlocks</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X876C963F830719E2">5.9 <span class="Heading">Semigroups of bipartitions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X810BFF647C4E191E">5.9-1 IsBipartitionSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X80C37124794636F3">5.9-2 IsBlockBijectionSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X79A706A582ABE558">5.9-3 IsPartialPermBipartitionSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7DEE07577D7379AC">5.9-4 IsPermBipartitionGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8162E2BB7CF144F5">5.9-5 DegreeOfBipartitionSemigroup</a></span>
+</div></div>
+</div>
+
+<h3>5 <span class="Heading">
+    Bipartitions and blocks
+  </span></h3>
+
+<p>In this chapter we describe the functions in <strong class="pkg">Semigroups</strong> for creating and manipulating bipartitions and semigroups of bipartitions. We begin by describing what these objects are.</p>
+
+<p>A <em>partition</em> of a set <span class="SimpleMath">\(X\)</span> is a set of pairwise disjoint non-empty subsets of <span class="SimpleMath">\(X\)</span> whose union is <span class="SimpleMath">\(X\)</span>.</p>
+
+<p>Let <span class="SimpleMath">\(n\in\)</span><span class="SimpleMath">\(\mathbb{N}\)</span>, let <span class="SimpleMath">\(\mathbf{n}\)</span><span class="SimpleMath">\(=\{1,2,\ldots,n\}\)</span>, and let <span class="SimpleMath">\(-\)</span><span class="SimpleMath">\(\mathbf{n}\)</span><span class="SimpleMath">\(=\{-1,-2,\ldots,-n\}\)</span>.</p>
+
+<p>The <em>partition monoid</em> of degree <span class="SimpleMath">\(n\)</span> is the set of all partitions of <span class="SimpleMath">\(\mathbf{n}\)</span><span class="SimpleMath">\(\cup\)</span>-<span class="SimpleMath">\(\mathbf{n}\)</span> with a multiplication we describe below. To avoid conflict with other uses of the word "partition" in <strong class="pkg">GAP</strong>, and to reflect their definition, we have opted to refer to the elements of the partition monoid as <em>bipartitions</em> of degree <span class="SimpleMath">\(n\)</span>; we will do so from this point on.</p>
+
+<p>Let <span class="SimpleMath">\(x\)</span> be any bipartition of degree <span class="SimpleMath">\(n\)</span>. Then <span class="SimpleMath">\(x\)</span> is a set of pairwise disjoint non-empty subsets of <span class="SimpleMath">\(\mathbf{n}\)</span><span class="SimpleMath">\(\cup\)</span>-<span class="SimpleMath">\(\mathbf{n}\)</span> whose union is <span class="SimpleMath">\(\mathbf{n}\)</span><span class="SimpleMath">\(\cup\)</span>-<span class="SimpleMath">\(\mathbf{n}\)</span>; these subsets are called the <em>blocks</em> of <span class="SimpleMath">\(x\)</span>. A block containing elements of both <span class="SimpleMath">\(\mathbf{n}\)</span> and -<span class="SimpleMath">\(\mathbf{n}\)</span> is called a <em>transverse block</em>. If <span class="SimpleMath">\(i\)</span>,<span class="SimpleMath">\(j\)</span><span class="SimpleMath">\(\in\)</span><span class="SimpleMath">\(\mathbf{n}\)</span><span class="SimpleMath">\(\cup\)</span>-<span class="SimpleMath">\(\mathbf{n}\)</span> belong to the same block of a bipartition <span class="SimpleMath">\(x\)</span>, then we write (<span class="SimpleMath">\(i\)</span>,<span class="SimpleMath">\(j\)</span>)<span class="SimpleMath">\(\in\)</span><span class="SimpleMath">\(x\)</span>.</p>
+
+<p>Let <span class="SimpleMath">\(x\)</span> and <span class="SimpleMath">\(y\)</span> be bipartitions of equal degree. Then <span class="SimpleMath">\(x\)</span><span class="SimpleMath">\(y\)</span> is the bipartition where <span class="SimpleMath">\(i\)</span>,<span class="SimpleMath">\(j\)</span><span class="SimpleMath">\(\in\)</span><span class="SimpleMath">\(\mathbf{n}\)</span><span class="SimpleMath">\(\cup\)</span>-<span class="SimpleMath">\(\mathbf{n}\)</span> belong to the same block of <span class="SimpleMath">\(x\)</span><span class="SimpleMath">\(y\)</span> if there exist <span class="SimpleMath">\(k(1), k(2),\ldots, k(r)\in \mathbf{n}\)</span> ; and one of the following holds:</p>
+
+
+<ul>
+<li><p><span class="SimpleMath">\(r\)</span><span class="SimpleMath">\(=0\)</span> and either <span class="SimpleMath">\((\)</span><span class="SimpleMath">\(i\)</span>,<span class="SimpleMath">\(j\)</span><span class="SimpleMath">\()\in\)</span><span class="SimpleMath">\(x\)</span> or <span class="SimpleMath">\((\)</span>-<span class="SimpleMath">\(i\)</span>,-<span class="SimpleMath">\(j\)</span><span class="SimpleMath">\()\in\)</span><span class="SimpleMath">\(y\)</span>;</p>
+
+</li>
+<li><p><span class="SimpleMath">\(r=2s-1\)</span> for some <span class="SimpleMath">\(s\geq 1\)</span> and</p>
+
+<p class="center">\[(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots,\ 
+          (-k(2s-2),-k(2s-1))\in x,\ (k(2s-1),-j)\in y\]</p>
+
+</li>
+<li><p><span class="SimpleMath">\(r=2s\)</span> for some <span class="SimpleMath">\(s\geq 1\)</span> and either:</p>
+
+<p class="center">\[(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots, 
+          (k(2s-1), k(2s))\in y,\ (-k(2s), j)\in x\]</p>
+
+<p>or</p>
+
+<p class="center">\[(-i,k(1))\in y,\ (-k(1),-k(2))\in x,\ (k(2),k(3))\in y,\ \ldots, 
+          (-k(2s-1), -k(2s))\in x,\ (k(2s), -j)\in y.\]</p>
+
+</li>
+</ul>
+<p>This product can be shown to be associative, and so the collection of bipartitions of any particular degree is a monoid; the identity element is the partition <span class="SimpleMath">\(\left\{\{i,-i\}:i\in\mathbf{n}\right\}\)</span>. A bipartition is a unit if and only if each block is of the form <span class="SimpleMath">\(\{\)</span><span class="SimpleMath">\(i\)</span>,-<span class="SimpleMath">\(j\)</span><span class="SimpleMath">\(\}\)</span> for some <span class="SimpleMath">\(i\)</span>, <span class="SimpleMath">\(j\)</span><span class="SimpleMath">\(\in\)</span><span class="SimpleMath">\(\mathbf{n}\)</span>. Hence the group of units is isomorphic to the symmetric group on <span class="SimpleMath">\(\mathbf{n}\)</span>.</p>
+
+<p>Let <span class="SimpleMath">\(x\)</span> be a bipartition of degree <span class="SimpleMath">\(n\)</span>. Then we define <span class="SimpleMath">\(x\)</span><span class="SimpleMath">\(^*\)</span> to be the bipartition obtained from <span class="SimpleMath">\(x\)</span> by replacing <span class="SimpleMath">\(i\)</span> by -<span class="SimpleMath">\(i\)</span> and -<span class="SimpleMath">\(i\)</span> by -<span class="SimpleMath">\(i\)</span> in every block of <span class="SimpleMath">\(x\)</span> for all <span class="SimpleMath">\(i\)</span><span class="SimpleMath">\(\in\)</span><span class="SimpleMath">\(\mathbf{n}\)</span>. It is routine to verify that if <span class="SimpleMath">\(x\)</span> and <span class="SimpleMath">\(y\)</span> are arbitrary bipartitions of equal degree, then</p>
+
+<p class="center">\[
+      (x^*)^*=x,\quad xx^*x=x,\quad x^*xx^*=x^*,\quad (xy)^*=y^*x^*.
+    \]</p>
+
+<p>In this way, the partition monoid is a <em>regular *-semigroup</em>.</p>
+
+<p><a id="X7850845886902FBF" name="X7850845886902FBF"></a></p>
+
+<h4>5.1 <span class="Heading">The family and categories of bipartitions</span></h4>
+
+<p><a id="X80F11BEF856E7902" name="X80F11BEF856E7902"></a></p>
+
+<h5>5.1-1 IsBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBipartition</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>Every bipartition in <strong class="pkg">GAP</strong> belongs to the category <code class="code">IsBipartition</code>. Basic operations for bipartitions are <code class="func">RightBlocks</code> (<a href="chap5_mj.html#X86A10B138230C2A4"><span class="RefLink">5.5-4</span></a>), <code class="func">LeftBlocks</code> (<a href="chap5_mj.html#X7B9B364379D8F4E8"><span class="RefLink">5.5-5</span></a>), <code class="func">ExtRepOfBipartition</code> (<a href="chap5_mj.html#X82CC5635841EE8A4"><span class="RefLink">5.5-3</span></a>), <code class="func">LeftProjection</code> (<a href="chap5_mj.html#X824EDD4582AAA8C7"><span class="RefLink">5.2-4</span></a>), <code class="func">RightProjection</code> (<a href="chap5_mj.html#X790B71108070FAC2"><span class="RefLink">5.2-5</span></a>), <code class="func">StarOp</code> (<a href="chap5_mj.html#X7D7A2BE482AF5150"><span class="RefLink">5.2-6</span></a>), <code class="func">DegreeOfBipartition</code> (<a href="chap5_mj.html#X780F5E00784FE58C"><span class="RefLink">5.5-1</span></a>), <code class="func">RankOfBipartition</code> (<a href="chap5_mj.html#X82074756826AD2C2"><span class="RefLink">5.5-2</span></a>), multiplication of two bipartitions of equal degree is via <code class="keyw">*</code>.</p>
+
+<p><a id="X82F5D10C85489832" name="X82F5D10C85489832"></a></p>
+
+<h5>5.1-2 IsBipartitionCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBipartitionCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>Every collection of bipartitions belongs to the category <code class="code">IsBipartitionCollection</code>. For example, bipartition semigroups belong to <code class="code">IsBipartitionCollection</code>.</p>
+
+<p><a id="X7937F20C86F98F88" name="X7937F20C86F98F88"></a></p>
+
+<h5>5.1-3 BipartitionFamily</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BipartitionFamily</code></td><td class="tdright">( family )</td></tr></table></div>
+<p>The family of all bipartitions is <code class="code">BipartitionFamily</code>.</p>
+
+<p><a id="X85D77073820C7E72" name="X85D77073820C7E72"></a></p>
+
+<h4>5.2 <span class="Heading">Creating bipartitions</span></h4>
+
+<p>There are several ways of creating bipartitions in <strong class="pkg">GAP</strong>, which are described in this section.</p>
+
+<p><a id="X7E052E6378A5B758" name="X7E052E6378A5B758"></a></p>
+
+<h5>5.2-1 Bipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Bipartition</code>( <var class="Arg">blocks</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p><code class="code">Bipartition</code> returns the bipartition <code class="code">f</code> with equivalence classes <var class="Arg">blocks</var>, which should be a list of duplicate-free lists whose union is <code class="code">[-n..-1]</code> union <code class="code">[1..n]</code> for some positive integer <code class="code">n</code>.</p>
+
+<p><code class="code">Bipartition</code> returns an error if the argument does not define a bipartition.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, -1 ],[ 2, 3, -3 ], [ -2 ] ] );</span>
+&lt;bipartition: [ 1, -1 ], [ 2, 3, -3 ], [ -2 ]&gt;</pre></div>
+
+<p><a id="X846AA7568435D2CE" name="X846AA7568435D2CE"></a></p>
+
+<h5>5.2-2 BipartitionByIntRep</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BipartitionByIntRep</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p>It is possible to create a bipartition using its internal representation. The argument <var class="Arg">list</var> must be a list of positive integers not greater than <code class="code">n</code>, of length <code class="code">2*n</code>, and where <code class="code">i</code> appears in the list only if <code class="code">i-1</code> occurs earlier in the list.</p>
+
+<p>For example, the internal representation of the bipartition with blocks</p>
+
+
+<div class="example"><pre>[ 1, -1 ], [ 2, 3, -2 ], [ -3 ]</pre></div>
+
+<p>has internal representation</p>
+
+
+<div class="example"><pre>[ 1, 2, 2, 1, 2, 3 ]</pre></div>
+
+<p>The internal representation indicates that the number <code class="code">1</code> is in class <code class="code">1</code>, the number <code class="code">2</code> is in class <code class="code">2</code>, the number <code class="code">3</code> is in class <code class="code">2</code>, the number <code class="code">-1</code> is in class <code class="code">1</code>, the number <code class="code">-2</code> is in class <code class="code">2</code>, and <code class="code">-3</code> is in class <code class="code">3</code>. As another example, <code class="code">[ 1, 3, 2, 1 ]</code> is not the internal representation of any bipartition since there is no <code class="code">2</code> before the <code class="code">3</code> in the second position.</p>
+
+<p>In its first form <code class="code">BipartitionByIntRep</code> verifies that the argument <var class="Arg">list</var> is the internal representation of a bipartition.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);                         </span>
+&lt;bipartition: [ 1, -1 ], [ 2, 3 ], [ -2 ], [ -3 ]&gt;</pre></div>
+
+<p><a id="X8379B0538101FBC8" name="X8379B0538101FBC8"></a></p>
+
+<h5>5.2-3 IdentityBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityBipartition</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: The identity bipartition.</p>
+
+<p>Returns the identity bipartition with degree <var class="Arg">n</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentityBipartition(10);</span>
+&lt;block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
+ [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]&gt;</pre></div>
+
+<p><a id="X824EDD4582AAA8C7" name="X824EDD4582AAA8C7"></a></p>
+
+<h5>5.2-4 LeftOne</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftOne</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftProjection</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p>The <code class="code">LeftProjection</code> of a bipartition <var class="Arg">f</var> is the bipartition <code class="code"><var class="Arg">f</var>*Star(<var class="Arg">f</var>)</code>. It is so-named, since the left and right blocks of the left projection equal the left blocks of <var class="Arg">f</var>.</p>
+
+<p>The left projection <code class="code">e</code> of <var class="Arg">f</var> is also a bipartition with the property that <code class="code">e*<var class="Arg">f</var>=<var class="Arg">f</var></code>. <code class="code">LeftOne</code> and <code class="code">LeftProjection</code> are synonymous.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, -1, -2, -6 ], [ 2, 3, 5, -4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 6, -3 ], [ -5 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftOne(f);</span>
+&lt;block bijection: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ], 
+ [ 6, -6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftBlocks(f);</span>
+&lt;blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightBlocks(LeftOne(f));</span>
+&lt;blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftBlocks(LeftOne(f)); </span>
+&lt;blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftOne(f)*f=f;</span>
+true</pre></div>
+
+<p><a id="X790B71108070FAC2" name="X790B71108070FAC2"></a></p>
+
+<h5>5.2-5 RightOne</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightOne</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightProjection</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p>The <code class="code">RightProjection</code> of a bipartition <var class="Arg">f</var> is the bipartition <code class="code">Star(<var class="Arg">f</var>)*<var class="Arg">f</var></code>. It is so-named, since the left and right blocks of the right projection equal the right blocks of <var class="Arg">f</var>.</p>
+
+<p>The right projection <code class="code">e</code> of <var class="Arg">f</var> is also a bipartition with the property that <code class="code"><var class="Arg">f</var>*e=<var class="Arg">f</var></code>. <code class="code">RightOne</code> and <code class="code">RightProjection</code> are synonymous.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, -1, -4 ], [ 2, -2, -3 ], [ 3, 4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -5 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightOne(f);</span>
+&lt;block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ], [ 5, -5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightBlocks(RightOne(f));</span>
+&lt;blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftBlocks(RightOne(f));        </span>
+&lt;blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightBlocks(f);</span>
+&lt;blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f*RightOne(f)=f;</span>
+true</pre></div>
+
+<p><a id="X7D7A2BE482AF5150" name="X7D7A2BE482AF5150"></a></p>
+
+<h5>5.2-6 StarOp</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StarOp</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Star</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p><code class="code">StarOp</code> returns the unique bipartition <code class="code">g</code> with the property that: <code class="code"><var class="Arg">f</var>*g*<var class="Arg">f</var>=<var class="Arg">f</var></code>, <code class="code">RightBlocks(<var class="Arg">f</var>)=LeftBlocks(g)</code>, and <code class="code">LeftBlocks(<var class="Arg">f</var>)=RightBlocks(g)</code>. The star <code class="code">g</code> can be obtained from <var class="Arg">f</var> by changing the sign of every integer in the external representation of <var class="Arg">f</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -2, -3 ], [ -5 ] ] );</span>
+&lt;bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ], 
+ [ -5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Star(f);</span>
+&lt;bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ], 
+ [ -5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f*g*f=f;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftBlocks(f)=RightBlocks(g);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightBlocks(f)=LeftBlocks(g); </span>
+true</pre></div>
+
+<p><a id="X8077265981409CCB" name="X8077265981409CCB"></a></p>
+
+<h5>5.2-7 RandomBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomBipartition</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer, then <code class="code">RandomBipartition</code> returns a random bipartition of degree <var class="Arg">n</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=RandomBipartition(6); </span>
+&lt;bipartition: [ 1, 2, 3, 4 ], [ 5 ], [ 6, -2, -3, -4 ], [ -1, -5 ], [ -6 ]&gt;
+</pre></div>
+
+<p><a id="X7C2C44D281A0D2C9" name="X7C2C44D281A0D2C9"></a></p>
+
+<h4>5.3 <span class="Heading">Changing the representation of a bipartition</span></h4>
+
+<p>It is possible that a bipartition can be represented as another type of object, or that another type of <strong class="pkg">GAP</strong> object can be represented as a bipartition. In this section, we describe the functions in the <strong class="pkg">Semigroups</strong> package for changing the representation of bipartition, or for changing the representation of another type of object to that of a bipartition.</p>
+
+<p>The operations <code class="func">AsPermutation</code> (<a href="chap5_mj.html#X7C684CD38405DBEF"><span class="RefLink">5.3-5</span></a>), <code class="func">AsPartialPerm</code> (<a href="chap5_mj.html#X7C5212EF7A200E63"><span class="RefLink">5.3-4</span></a>), <code class="func">AsTransformation</code> (<a href="chap5_mj.html#X7CE91D0C83865214"><span class="RefLink">5.3-3</span></a>) can be used to convert bipartitions into permutations, partial permutations, or transformations where appropriate.</p>
+
+<p><a id="X855126D98583C181" name="X855126D98583C181"></a></p>
+
+<h5>5.3-1 AsBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBipartition</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p><code class="code">AsBipartition</code> returns the bipartition, permutation, transformation, or partial permutation <var class="Arg">f</var>, as a bipartition of degree <var class="Arg">n</var>. There are several possible arguments for <code class="code">AsBipartition</code>:</p>
+
+
+<dl>
+<dt><strong class="Mark">permutations</strong></dt>
+<dd><p>If <var class="Arg">f</var> is a permutation and <var class="Arg">n</var> is a positive integer, then <code class="code">AsBipartition(<var class="Arg">f</var>, <var class="Arg">n</var>)</code> returns the bipartition on <code class="code">[1..<var class="Arg">n</var>]</code> with classes <code class="code">[i, i^<var class="Arg">f</var>]</code> for all <code class="code">i=1..n</code>.</p>
+
+<p>If no positive integer <var class="Arg">n</var> is specified, then the largest moved point of <var class="Arg">f</var> is used as the value for <var class="Arg">n</var>; see <code class="func">LargestMovedPoint</code> (<a href="../../../doc/ref/chap42_mj.html#X84AA603987C94AC0"><span class="RefLink">Reference: LargestMovedPoint (for a permutation)</span></a>).</p>
+
+</dd>
+<dt><strong class="Mark">transformations</strong></dt>
+<dd><p>If <var class="Arg">f</var> is a transformation and <var class="Arg">n</var> is a positive integer such that <var class="Arg">f</var> is a transformation of <code class="code">[1..<var class="Arg">n</var>]</code>, then <code class="code">AsTransformation</code> returns the bipartition with classes <span class="SimpleMath">\((i)f^{-1}\cup \{i\}\)</span> for all <code class="code">i</code> in the image of <var class="Arg">f</var>.</p>
+
+<p>If the positive integer <var class="Arg">n</var> is not specified, then the internal degree of <var class="Arg">f</var> is used as the value for <var class="Arg">n</var>.</p>
+
+</dd>
+<dt><strong class="Mark">partial permutations</strong></dt>
+<dd><p>If <var class="Arg">f</var> is a partial permutation <var class="Arg">f</var> and <var class="Arg">n</var> is a positive integer, then <code class="code">AsBipartition</code> returns the bipartition with classes <code class="code">[i, i^<var class="Arg">f</var>]</code> for <code class="code">i</code> in <code class="code">[1..<var class="Arg">n</var>]</code>. Thus the degree of the returned bipartition is the maximum of <var class="Arg">n</var> and the values <code class="code">i^<var class="Arg">f</var></code> where <code class="code">i</code> in <code class="code">[1..<var class="Arg">n</var>]</code>.</p>
+
+<p>If the optional argument <var class="Arg">n</var> is not present, then the default value of the maximum of the largest moved point and the largest image of a moved point of <var class="Arg">f</var> plus <code class="code">1</code> is used.</p>
+
+</dd>
+<dt><strong class="Mark">bipartitions</strong></dt>
+<dd><p>If <var class="Arg">f</var> is a bipartition and <var class="Arg">n</var> is a non-negative integer, then <code class="code">AsBipartition</code> returns a bipartition corresponding to <var class="Arg">f</var> with degree <var class="Arg">n</var>.</p>
+
+<p>If <var class="Arg">n</var> equals the degree of <var class="Arg">f</var>, then <var class="Arg">f</var> is returned. If <var class="Arg">n</var> is less than the degree of <var class="Arg">f</var>, then this function returns the bipartition obtained from <var class="Arg">f</var> by removing the values exceeding <var class="Arg">n</var> or less than <var class="Arg">-n</var> from the blocks of <var class="Arg">f</var>. If <var class="Arg">n</var> is greater than the degree of <var class="Arg">f</var>, then this function returns the bipartition with the same blocks as <var class="Arg">f</var> and the singleton blocks <code class="code">i</code> and <code class="code">-i</code> for all <code class="code">i</code> greater than the degree of <var class="Arg">f</var></p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 3, 5, 3, 4, 1, 2 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(f, 5);</span>
+&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(f);  </span>
+&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+ [ 6, -2 ], [ -6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(f, 10);</span>
+&lt;bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], 
+ [ 6, -2 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ], [ -6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition((1, 3)(2, 4));</span>
+&lt;block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition((1, 3)(2, 4), 10);</span>
+&lt;block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], 
+ [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 6, 7, 1, 4, 3, 2 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(f, 11);            </span>
+&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+ [ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ], 
+ [ -9 ], [ -10 ], [ -11 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(f);</span>
+&lt;bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], 
+ [ 6, -2 ], [ 7 ], [ -5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(Transformation( [ 1, 1, 2 ] ), 1);</span>
+&lt;block bijection: [ 1, -1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -3, -4, -5, -6 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(f, 0);</span>
+&lt;empty bipartition&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(f, 2);</span>
+&lt;bipartition: [ 1, 2, -2 ], [ -1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(f, 8);</span>
+&lt;bipartition: [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [ 7 ], [ 8 ], 
+ [ -3, -4, -5, -6 ], [ -7 ], [ -8 ]&gt;</pre></div>
+
+<p><a id="X85A5AD2B7F3B776F" name="X85A5AD2B7F3B776F"></a></p>
+
+<h5>5.3-2 AsBlockBijection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBlockBijection</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A block bijection or <code class="keyw">fail</code>.</p>
+
+<p>When the argument <var class="Arg">f</var> is a partial perm and <var class="Arg">n</var> is a positive integer which is greater than the maximum of the degree and codegree of <var class="Arg">f</var>, this function returns a block bijection corresponding to <var class="Arg">f</var>. This block bijection has the same non-singleton classes as <code class="code">g:=AsBipartition(<var class="Arg">f</var>, <var class="Arg">n</var>)</code> and one additional class which is the union the singleton classes of <code class="code">g</code>.</p>
+
+<p>If the optional second argument <var class="Arg">n</var> is not present, then the maximum of the degree and codegree of <var class="Arg">f</var> plus 1 is used by default. If the second argument <var class="Arg">n</var> is not greater than this maximum, then <code class="keyw">fail</code> is returned.</p>
+
+<p>This is the value at <var class="Arg">f</var> of the embedding of the symmetric inverse monoid into the dual symmetric inverse monoid given in the FitzGerald-Leech Theorem <a href="chapBib_mj.html#biBFitzgerald1998aa">[FL98]</a>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( [ 1, 2, 3, 6, 7, 10 ], [ 9, 5, 6, 1, 7, 8 ] ) ;  </span>
+[2,5][3,6,1,9][10,8](7)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(f, 11);</span>
+&lt;bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ], 
+ [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], 
+ [ -3 ], [ -4 ], [ -10 ], [ -11 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBlockBijection(f, 10);</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBlockBijection(f, 11);</span>
+&lt;block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], 
+ [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], 
+ [ 10, -8 ]&gt;</pre></div>
+
+<p><a id="X7CE91D0C83865214" name="X7CE91D0C83865214"></a></p>
+
+<h5>5.3-3 AsTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsTransformation</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A transformation or <code class="keyw">fail</code>.</p>
+
+<p>When the argument <var class="Arg">f</var> is a bipartition, that mathematically defines a transformation, this function returns that transformation. A bipartition <var class="Arg">f</var> defines a transformation if and only if its right blocks are the image list of a permutation of <code class="code">[1..n]</code> where <code class="code">n</code> is the degree of <var class="Arg">f</var>.</p>
+
+<p>See <code class="func">IsTransBipartition</code> (<a href="chap5_mj.html#X79C556827A578509"><span class="RefLink">5.5-9</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition([[ 1, -3 ], [ 2, -2 ], [ 3, 5, 10, -7 ], [ 4, -12 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 6, 7, -6 ], [ 8, -5 ], [ 9, -11 ], [ 11, 12, -10 ], [ -1 ], [ -4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -8 ], [ -9 ]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsTransformation(f);</span>
+Transformation( [ 3, 2, 7, 12, 7, 6, 6, 5, 11, 7, 10, 10 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransBipartition(f);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition([[ 1, 5 ], [ 2, 4, 8, 10 ], [ 3, 6, 7, -1, -2 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 9, -4, -6, -9 ], [ -3, -5 ], [ -7, -8 ], [ -10 ]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsTransformation(f);</span>
+fail</pre></div>
+
+<p><a id="X7C5212EF7A200E63" name="X7C5212EF7A200E63"></a></p>
+
+<h5>5.3-4 AsPartialPerm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A partial perm or <code class="keyw">fail</code>.</p>
+
+<p>When the argument <var class="Arg">f</var> is a bipartition that mathematically defines a partial perm, this function returns that partial perm.</p>
+
+<p>A bipartition <var class="Arg">f</var> defines a partial perm if and only if its numbers of left and right blocks both equal its degree.</p>
+
+<p>See <code class="func">IsPartialPermBipartition</code> (<a href="chap5_mj.html#X87C771D37B1FE95C"><span class="RefLink">5.5-12</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3, -10 ], [ 4, -5 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -9 ], [ 6 ], [ 7 ], [ 8, -6 ], [ 9, -3 ], [ 10, -8 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -1 ], [ -7 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPartialPermBipartition(f);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPartialPerm(f);</span>
+[1,4,5,9,3,10,8,6](2)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition([[ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPartialPermBipartition(f);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPartialPerm(f);</span>
+fail</pre></div>
+
+<p><a id="X7C684CD38405DBEF" name="X7C684CD38405DBEF"></a></p>
+
+<h5>5.3-5 AsPermutation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPermutation</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A permutation or <code class="keyw">fail</code>.</p>
+
+<p>When the argument <var class="Arg">f</var> is a bipartition that mathematically defines a permutation, this function returns that permutation.</p>
+
+<p>A bipartition <var class="Arg">f</var> defines a permutation if and only if its numbers of left, right, and transverse blocks all equal its degree.</p>
+
+<p>See <code class="func">IsPermBipartition</code> (<a href="chap5_mj.html#X8031B53E7D0ECCFA"><span class="RefLink">5.5-11</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, -6 ], [ 2, -4 ], [ 3, -2 ], [ 4, -5 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -3 ], [ 6, -1 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPermBipartition(f);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsPermutation(f);</span>
+(1,6)(2,4,5,3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsBipartition(last)=f;</span>
+true</pre></div>
+
+<p><a id="X83F2C3C97E8FFA49" name="X83F2C3C97E8FFA49"></a></p>
+
+<h4>5.4 <span class="Heading">Operators for bipartitions</span></h4>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> * <var class="Arg">g</var></code></strong></dt>
+<dd><p>returns the composition of <var class="Arg">f</var> and <var class="Arg">g</var> when <var class="Arg">f</var> and <var class="Arg">g</var> are bipartitions.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> &lt; <var class="Arg">g</var></code></strong></dt>
+<dd><p>returns <code class="keyw">true</code> if the internal representation of <var class="Arg">f</var> is lexicographically less than the internal representation of <var class="Arg">g</var> and <code class="keyw">false</code> if it is not.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">f</var> = <var class="Arg">g</var></code></strong></dt>
+<dd><p>returns <code class="keyw">true</code> if the bipartition <var class="Arg">f</var> equals the bipartition <var class="Arg">g</var> and returns <code class="keyw">false</code> if it does not.</p>
+
+</dd>
+</dl>
+<p><a id="X7A39D36086647536" name="X7A39D36086647536"></a></p>
+
+<h5>5.4-1 PartialPermLeqBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialPermLeqBipartition</code>( <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>If <var class="Arg">x</var> and <var class="Arg">y</var> are partial perm bipartitions, i.e. they satisfy <code class="func">IsPartialPermBipartition</code> (<a href="chap5_mj.html#X87C771D37B1FE95C"><span class="RefLink">5.5-12</span></a>), then this function returns <code class="code">AsPartialPerm(<var class="Arg">x</var>)&lt;AsPartialPerm(<var class="Arg">y</var>)</code>.</p>
+
+<p><a id="X8608D78F83D55108" name="X8608D78F83D55108"></a></p>
+
+<h5>5.4-2 NaturalLeqPartialPermBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalLeqPartialPermBipartition</code>( <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>The <em>natural partial order</em> <span class="SimpleMath">\(\leq\)</span> on an inverse semigroup <code class="code">S</code> is defined by <code class="code">s</code><span class="SimpleMath">\(\leq\)</span><code class="code">t</code> if there exists an idempotent <code class="code">e</code> in <code class="code">S</code> such that <code class="code">s=et</code>. Hence if <var class="Arg">x</var> and <var class="Arg">y</var> are partial perm bipartitions, then <var class="Arg">x</var><span class="SimpleMath">\(\leq\)</span><var class="Arg">y</var> if and only if <code class="code">AsPartialPerm(<var class="Arg">x</var>)</code> is a restriction of <code class="code">AsPartialPerm(<var class="Arg">y</var>)</code>.</p>
+
+<p><code class="code">NaturalLeqPartialPermBipartition</code> returns <code class="keyw">true</code> if <code class="code">AsPartialPerm(<var class="Arg">x</var>)</code> is a restriction of <code class="code">AsPartialPerm(<var class="Arg">y</var>)</code> and <code class="keyw">false</code> if it is not. Note that since this is a partial order and not a total order, it is possible that <var class="Arg">x</var> and <var class="Arg">y</var> are incomparable with respect to the natural partial order.</p>
+
+<p><a id="X79E8FA077E24C1F4" name="X79E8FA077E24C1F4"></a></p>
+
+<h5>5.4-3 NaturalLeqBlockBijection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalLeqBlockBijection</code>( <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>The <em>natural partial order</em> <span class="SimpleMath">\(\leq\)</span> on an inverse semigroup <code class="code">S</code> is defined by <code class="code">s</code><span class="SimpleMath">\(\leq\)</span><code class="code">t</code> if there exists an idempotent <code class="code">e</code> in <code class="code">S</code> such that <code class="code">s=et</code>. Hence if <var class="Arg">x</var> and <var class="Arg">y</var> are block bijections, then <var class="Arg">x</var><span class="SimpleMath">\(\leq\)</span><var class="Arg">y</var> if and only if <var class="Arg">x</var> contains <var class="Arg">y</var>.</p>
+
+<p><code class="code">NaturalLeqBlockBijection</code> returns <code class="keyw">true</code> if <var class="Arg">x</var> is contained in <var class="Arg">y</var> and <code class="keyw">false</code> if it is not. Note that since this is a partial order and not a total order, it is possible that <var class="Arg">x</var> and <var class="Arg">y</var> are incomparable with respect to the natural partial order.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 10, -10 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y:=Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z:=Bipartition([Union([1..10],[-10..-1])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NaturalLeqBlockBijection(x, y);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NaturalLeqBlockBijection(y, x);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NaturalLeqBlockBijection(z, x);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NaturalLeqBlockBijection(z, y);</span>
+true</pre></div>
+
+<p><a id="X7D9F5A248028FF52" name="X7D9F5A248028FF52"></a></p>
+
+<h5>5.4-4 PermLeftQuoBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermLeftQuoBipartition</code>( <var class="Arg">f</var>, <var class="Arg">g</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A permutation.</p>
+
+<p>If <var class="Arg">f</var> and <var class="Arg">g</var> are bipartitions with equal left and right blocks, then <code class="code">PermLeftQuoBipartition</code> returns the permutation of the indices of the right blocks of <var class="Arg">f</var> (and <var class="Arg">g</var>) induced by <code class="code">Star(<var class="Arg">f</var>)*<var class="Arg">g</var></code>.</p>
+
+<p><code class="code">PermLeftQuoBipartition</code> verifies that <var class="Arg">f</var> and <var class="Arg">g</var> have equal left and right blocks, and returns an error if they do not. The value returned by <code class="code">PermLeftQuoBipartition(<var class="Arg">f</var>,<var class="Arg">g</var>)</code> is the same as that returned by <code class="code">PermRightBlocks(RightBlocks(<var class="Arg">f</var>), Star(<var class="Arg">f</var>)*<var class="Arg">g</var>)</code>. See also <code class="func">PermRightBlocks</code> (<a href="chap5_mj.html#X78430AE181917382"><span class="RefLink">5.7-3</span></a>) and <code class="func">OnRightBlocksBipartitionByPerm</code> (<a href="chap5_mj.html#X7FD1BC557DAAE665"><span class="RefLink">5.4-5</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -1, -2, -8 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 3, -3, -6, -7, -9 ], [ 9, -4, -5 ], [ -10 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermLeftQuoBipartition(f, g);</span>
+(1,2,3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Star(f)*g;</span>
+&lt;bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ], 
+ [ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermRightBlocks(RightBlocks(f), last);</span>
+(1,2,3)</pre></div>
+
+<p><a id="X7FD1BC557DAAE665" name="X7FD1BC557DAAE665"></a></p>
+
+<h5>5.4-5 OnRightBlocksBipartitionByPerm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnRightBlocksBipartitionByPerm</code>( <var class="Arg">f</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p>If <var class="Arg">f</var> is a bipartition and <var class="Arg">p</var> is a permutation of the indices of the right blocks of <var class="Arg">f</var>, then <code class="code">OnRightBlocksBipartitionByPerm</code> returns the bipartition obtained from <var class="Arg">f</var> by rearranging the right blocks of <var class="Arg">f</var> according to <var class="Arg">p</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -1, -2, -8 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 3, -3, -6, -7, -9 ], [ 9, -4, -5 ], [ -10 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnRightBlocksBipartitionByPerm(f, (1,2,3));</span>
+&lt;bipartition: [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], 
+ [ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ]&gt;</pre></div>
+
+<p><a id="X87F3A304814797CE" name="X87F3A304814797CE"></a></p>
+
+<h4>5.5 <span class="Heading">Attributes for bipartitons</span></h4>
+
+<p>In this section we describe various attributes that a bipartition can possess.</p>
+
+<p><a id="X780F5E00784FE58C" name="X780F5E00784FE58C"></a></p>
+
+<h5>5.5-1 DegreeOfBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfBipartition</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfBipartitionCollection</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A positive integer.</p>
+
+<p>The degree of a bipartition is, roughly speaking, the number of points where it is defined. More precisely, if <var class="Arg">f</var> is a bipartition defined on <code class="code">2*n</code> points, then the degree of <var class="Arg">f</var> is <code class="code">n</code>.</p>
+
+<p>The degree of a collection <var class="Arg">coll</var> of bipartitions of equal degree is just the degree of any (and every) bipartition in <var class="Arg">coll</var>. The degree of collection of bipartitions of unequal degrees is not defined.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 7, -3, -8 ], [ 2, 6 ], [ 3 ], [ 4, -7, -9 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, 9, -2 ], [ 8, -1, -4, -6 ], [ -5 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfBipartition(f);</span>
+9
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=BrauerMonoid(5);</span>
+&lt;regular bipartition monoid of degree 5 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBipartitionCollection(s);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfBipartitionCollection(s);</span>
+5</pre></div>
+
+<p><a id="X82074756826AD2C2" name="X82074756826AD2C2"></a></p>
+
+<h5>5.5-2 RankOfBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankOfBipartition</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrTransverseBlocks</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The rank of a bipartition.</p>
+
+<p>When the argument is a bipartition <var class="Arg">f</var>, <code class="code">RankOfBipartition</code> returns the number of blocks of <var class="Arg">f</var> containing both positive and negative entries, i.e. the number of transverse blocks of <var class="Arg">f</var>.</p>
+
+<p><code class="code">NrTransverseBlocks</code> is just a synonym for <code class="code">RankOfBipartition</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ] ] );</span>
+&lt;bipartition: [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], 
+ [ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfBipartition(f);</span>
+4</pre></div>
+
+<p><a id="X82CC5635841EE8A4" name="X82CC5635841EE8A4"></a></p>
+
+<h5>5.5-3 ExtRepOfBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepOfBipartition</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A partition of <code class="code">[1..2*n]</code>.</p>
+
+<p>If <code class="code">n</code> is the degree of the bipartition <var class="Arg">f</var>, then <code class="code">ExtRepOfBipartition</code> returns the partition of <code class="code">[-n..-1]</code> union <code class="code">[1..n]</code> corresponding to <var class="Arg">f</var> as a sorted list of duplicate-free lists.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ] ] );</span>
+&lt;block bijection: [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ExtRepOfBipartition(f);</span>
+[ [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ] ]</pre></div>
+
+<p><a id="X86A10B138230C2A4" name="X86A10B138230C2A4"></a></p>
+
+<h5>5.5-4 RightBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightBlocks</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The right blocks of a bipartition.</p>
+
+<p><code class="code">RightBlocks</code> returns the right blocks of the bipartition <var class="Arg">f</var>.</p>
+
+<p>The <em>right blocks</em> of a bipartition <var class="Arg">f</var> are just the intersections of the blocks of <var class="Arg">f</var> with <code class="code">[-n..-1]</code> where <code class="code">n</code> is the degree of <var class="Arg">f</var>, the values in transverse blocks are positive, and the values in non-transverse blocks are negative.</p>
+
+<p>The right blocks of bipartition are <strong class="pkg">GAP</strong> objects in their own right, and are not simply a list of blocks of <var class="Arg">f</var>; see <a href="chap5_mj.html#X87684C148592F831"><span class="RefLink">5.6</span></a> for more information.</p>
+
+<p>The significance of this notion lies in the fact that bipartitions <code class="code">x</code> and <code class="code">y</code> are \(\mathscr{L}\)-related in the partition monoid if and only if they have equal right blocks.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightBlocks(f);</span>
+&lt;blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftBlocks(f);</span>
+&lt;blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]&gt;</pre></div>
+
+<p><a id="X7B9B364379D8F4E8" name="X7B9B364379D8F4E8"></a></p>
+
+<h5>5.5-5 LeftBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftBlocks</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The left blocks of a bipartition.</p>
+
+<p><code class="code">LeftBlocks</code> returns the left blocks of the bipartition <var class="Arg">f</var>.</p>
+
+<p>The <em>left blocks</em> of a bipartition <var class="Arg">f</var> are just the intersections of the blocks of <var class="Arg">f</var> with <code class="code">[1..n]</code> where <code class="code">n</code> is the degree of <var class="Arg">f</var>, the values in transverse blocks are positive, and the values in non-transverse blocks are negative.</p>
+
+<p>The left blocks of bipartition are <strong class="pkg">GAP</strong> objects in their own right, and are not simply a list of blocks of <var class="Arg">f</var>; see <a href="chap5_mj.html#X87684C148592F831"><span class="RefLink">5.6</span></a> for more information.</p>
+
+<p>The significance of this notion lies in the fact that bipartitions <code class="code">x</code> and <code class="code">y</code> are \(\mathscr{R}\)-related in the partition monoid if and only if they have equal left blocks.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightBlocks(f);</span>
+&lt;blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftBlocks(f);</span>
+&lt;blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]&gt;</pre></div>
+
+<p><a id="X79AEDB5382FD25CF" name="X79AEDB5382FD25CF"></a></p>
+
+<h5>5.5-6 NrLeftBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrLeftBlocks</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A non-negative integer.</p>
+
+<p>When the argument is a bipartition <var class="Arg">f</var>, <code class="code">NrLeftBlocks</code> returns the number of left blocks of <var class="Arg">f</var>, i.e. the number of blocks of <var class="Arg">f</var> intersecting <code class="code">[1..n]</code> non-trivially.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 2, 3, 4, 5, 6, 8 ], [ 7, -2, -3 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -1, -4, -7, -8 ], [ -5, -6 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrLeftBlocks(f);</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftBlocks(f);</span>
+&lt;blocks: [ -1, -2, -3, -4, -5, -6, -8 ], [ 7 ]&gt;</pre></div>
+
+<p><a id="X86385A3C8662E1A7" name="X86385A3C8662E1A7"></a></p>
+
+<h5>5.5-7 NrRightBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrRightBlocks</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A non-negative integer.</p>
+
+<p>When the argument is a bipartition <var class="Arg">f</var>, <code class="code">NrRightBlocks</code> returns the number of right blocks of <var class="Arg">f</var>, i.e. the number of blocks of <var class="Arg">f</var> intersecting <code class="code">[-n..-1]</code> non-trivially.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 2, 3, 4, 6, -2, -7 ], [ 5, -1, -3, -8 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 7, -4, -6 ], [ 8 ], [ -5 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightBlocks(f);</span>
+&lt;blocks: [ 1, 3, 8 ], [ 2, 7 ], [ 4, 6 ], [ -5 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRightBlocks(f);</span>
+4</pre></div>
+
+<p><a id="X8110B6557A98FB5C" name="X8110B6557A98FB5C"></a></p>
+
+<h5>5.5-8 NrBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrBlocks</code>( <var class="Arg">blocks</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrBlocks</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A positive integer.</p>
+
+<p>If <var class="Arg">blocks</var> is some blocks or <var class="Arg">f</var> is a bipartition, then <code class="code">NrBlocks</code> returns the number of blocks in <var class="Arg">blocks</var> or <var class="Arg">f</var>, respectively.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks:=BlocksNC([[ -1, -2, -3, -4 ], [ -5 ], [ 6 ]]);</span>
+&lt;blocks: [ -1, -2, -3, -4 ], [ -5 ], [ 6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrBlocks(blocks);</span>
+3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -3 ] ] );</span>
+&lt;bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], 
+ [ -3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrBlocks(f);</span>
+4</pre></div>
+
+<p><a id="X79C556827A578509" name="X79C556827A578509"></a></p>
+
+<h5>5.5-9 IsTransBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransBipartition</code>( <var class="Arg">f</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>If the bipartition <var class="Arg">f</var> defines a transformation, then <code class="code">IsTransBipartition</code> returns <code class="keyw">true</code>, and if not, then <code class="keyw">false</code> is returned.</p>
+
+<p>A bipartition <var class="Arg">f</var> defines a transformation if and only if the number of left blocks equals the number of transverse blocks and the number of right blocks equals the degree.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], [ 6, 7, -9 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], [ -8 ], [ -10 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransBipartition(f);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -2 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransBipartition(f);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Number(PartitionMonoid(3), IsTransBipartition);</span>
+27</pre></div>
+
+<p><a id="X7F0B8ACC7C9A937F" name="X7F0B8ACC7C9A937F"></a></p>
+
+<h5>5.5-10 IsDualTransBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDualTransBipartition</code>( <var class="Arg">f</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>If the star of the bipartition <var class="Arg">f</var> defines a transformation, then <code class="code">IsDualTransBipartition</code> returns <code class="keyw">true</code>, and if not, then <code class="keyw">false</code> is returned.</p>
+
+<p>A bipartition is the dual of a transformation if and only if its number of right blocks equals its number of transverse blocks and its number of left blocks equals its degree.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, -8, -9 ], [ 2, -1, -4 ], [ 3 ], [ 4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -10 ], [ 6, -2, -5 ], [ 7, -3 ], [ 8 ], [ 9, -6, -7 ], [ 10 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsDualTransBipartition(f);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -2 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransBipartition(f);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Number(PartitionMonoid(3), IsDualTransBipartition);</span>
+27</pre></div>
+
+<p><a id="X8031B53E7D0ECCFA" name="X8031B53E7D0ECCFA"></a></p>
+
+<h5>5.5-11 IsPermBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPermBipartition</code>( <var class="Arg">f</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>If the bipartition <var class="Arg">f</var> defines a permutation, then <code class="code">IsPermBipartition</code> returns <code class="keyw">true</code>, and if not, then <code class="keyw">false</code> is returned.</p>
+
+<p>A bipartition is a permutation if its numbers of left, right, and transverse blocks all equal its degree.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -2, -4, -6 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPermBipartition(f);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -6 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 4, -1 ], [ 5, -5 ], [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPermBipartition(f);</span>
+true</pre></div>
+
+<p><a id="X87C771D37B1FE95C" name="X87C771D37B1FE95C"></a></p>
+
+<h5>5.5-12 IsPartialPermBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialPermBipartition</code>( <var class="Arg">f</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>If the bipartition <var class="Arg">f</var> defines a partial permutation, then <code class="code">IsPartialPermBipartition</code> returns <code class="keyw">true</code>, and if not, then <code class="keyw">false</code> is returned.</p>
+
+<p>A bipartition <var class="Arg">f</var> defines a partial permutation if and only if the numbers of left and right blocks of <var class="Arg">f</var> equal the degree of <var class="Arg">f</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -2, -4, -6 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPartialPermBipartition(f);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, -3 ], [ 2 ], [ -4 ], [ 3, -6 ], [ 4, -1 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -5 ], [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPermBipartition(f);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPartialPermBipartition(f); </span>
+true</pre></div>
+
+<p><a id="X829494DF7FD6CFEC" name="X829494DF7FD6CFEC"></a></p>
+
+<h5>5.5-13 IsBlockBijection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBlockBijection</code>( <var class="Arg">f</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>If the bipartition <var class="Arg">f</var> induces a bijection from the quotient of <code class="code">[1..n]</code> by the blocks of <var class="Arg">f</var> to the quotient of <code class="code">[-n..-1]</code> by the blocks of <var class="Arg">f</var>, then <code class="code">IsBlockBijection</code> return <code class="keyw">true</code>, and if not, then it returns <code class="keyw">false</code>.</p>
+
+<p>A bipartition is a block bijection if and only if its number of blocks, left blocks and right blocks are equal.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, 5, -2 ], [ 2, 3, -1 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 6, -5, -6 ], [ -3, -4 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBlockBijection(f);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -5 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBlockBijection(f);</span>
+true</pre></div>
+
+<p><a id="X79D54AD8833B9551" name="X79D54AD8833B9551"></a></p>
+
+<h5>5.5-14 IsUniformBlockBijection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUniformBlockBijection</code>( <var class="Arg">x</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>If the bipartition <var class="Arg">x</var> is a block bijection where every block contains an equal number of positive and negative entries, then <code class="code">IsUniformBlockBijection</code> returns <code class="keyw">true</code>, and otherwise it returns <code class="keyw">false</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Bipartition( [ [ 1, 2, -3, -4 ], [ 3, -5 ], [ 4, -6 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -7 ], [ 6, -8 ], [ 7, -9 ], [ 8, -1 ], [ 9, -2 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBlockBijection(x); </span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -5 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsUniformBlockBijection(x);</span>
+false</pre></div>
+
+<p><a id="X87684C148592F831" name="X87684C148592F831"></a></p>
+
+<h4>5.6 <span class="Heading">Creating blocks and their attributes</span></h4>
+
+<p>As described above the left and right blocks of a bipartition characterise Green's \(\mathscr{R}\)- and \(\mathscr{L}\)-relation on the partition monoid; see <code class="func">LeftBlocks</code> (<a href="chap5_mj.html#X7B9B364379D8F4E8"><span class="RefLink">5.5-5</span></a>) and <code class="func">RightBlocks</code> (<a href="chap5_mj.html#X86A10B138230C2A4"><span class="RefLink">5.5-4</span></a>). The left or right blocks of a bipartition are <strong class="pkg">GAP</strong> objects in their own right.</p>
+
+<p>In this section, we describe the functions in the <strong class="pkg">Semigroups</strong> package for creating and manipulating the left or right blocks of a bipartition.</p>
+
+<p><a id="X7D6C636785C2E8E0" name="X7D6C636785C2E8E0"></a></p>
+
+<h5>5.6-1 BlocksNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlocksNC</code>( <var class="Arg">classes</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A blocks.</p>
+
+<p>This function makes it possible to create a <strong class="pkg">GAP</strong> object corresponding to the left or right blocks of a bipartition without reference to any bipartitions.</p>
+
+<p><code class="code">BlocksNC</code> returns the blocks with equivalence classes <var class="Arg">classes</var>, which should be a list of duplicate-free lists consisting solely of positive or negative integers, where the union of the absolute values of the lists is <code class="code">[1..n]</code> for some <code class="code">n</code>. The blocks with positive entries correspond to transverse blocks and the classes with negative entries correspond to non-transverse blocks.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BlocksNC([[ 1 ], [ 2 ], [ -3, -6 ], [ -4, -5 ]]);</span>
+&lt;blocks: [ 1 ], [ 2 ], [ -3, -6 ], [ -4, -5 ]&gt;</pre></div>
+
+<p><a id="X7A188D947B20CF96" name="X7A188D947B20CF96"></a></p>
+
+<h5>5.6-2 ExtRepOfBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepOfBlocks</code>( <var class="Arg">blocks</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list of integers.</p>
+
+<p>If <code class="code">n</code> is the degree of a bipartition with left or right blocks <var class="Arg">blocks</var>, then <code class="code">ExtRepOfBlocks</code> returns the partition corresponding to <var class="Arg">blocks</var> as a sorted list of duplicate-free lists.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks:=BlocksNC([[ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ExtRepOfBlocks(blocks);</span>
+[ [ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ]</pre></div>
+
+<p><a id="X787D22AE7FA69239" name="X787D22AE7FA69239"></a></p>
+
+<h5>5.6-3 RankOfBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankOfBlocks</code>( <var class="Arg">blocks</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrTransverseBlocks</code>( <var class="Arg">blocks</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A non-negative integer.</p>
+
+<p>When the argument <var class="Arg">blocks</var> is the left or right blocks of a bipartition, <code class="code">RankOfBlocks</code> returns the number of blocks of <var class="Arg">blocks</var> containing only positive entries, i.e. the number of transverse blocks in <var class="Arg">blocks</var>.</p>
+
+<p><code class="code">NrTransverseBlocks</code> is a synonym of <code class="code">RankOfBlocks</code> in this context.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks:=BlocksNC([ [ -1, -2, -4, -6 ], [ 3, 10, 12 ], [ 5, 7 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 8 ], [ 9 ], [ -11 ] ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfBlocks(blocks);</span>
+4</pre></div>
+
+<p><a id="X8527DC6A8771C2BE" name="X8527DC6A8771C2BE"></a></p>
+
+<h5>5.6-4 DegreeOfBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfBlocks</code>( <var class="Arg">blocks</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A non-negative integer.</p>
+
+<p>The degree of <var class="Arg">blocks</var> is the number of points <code class="code">n</code> where it is defined, i.e. the union of the blocks in <var class="Arg">blocks</var> will be <code class="code">[1..n]</code> after taking the absolute value of every element.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks:=BlocksNC([ [ -1, -11 ], [ 2 ], [ 3, 5, 6, 7 ], [ 4, 8 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 9, 10 ], [ 12 ] ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfBlocks(blocks);</span>
+12</pre></div>
+
+<p><a id="X7A45E0067F344683" name="X7A45E0067F344683"></a></p>
+
+<h4>5.7 <span class="Heading">Actions on blocks</span></h4>
+
+<p>Bipartitions act on left and right blocks in several ways, which are described in this section.</p>
+
+<p><a id="X7B701DA37F75E77B" name="X7B701DA37F75E77B"></a></p>
+
+<h5>5.7-1 OnRightBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnRightBlocks</code>( <var class="Arg">blocks</var>, <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: The blocks of a bipartition.</p>
+
+<p><code class="code">OnRightBlocks</code> returns the right blocks of the product <code class="code">g*<var class="Arg">f</var></code> where <code class="code">g</code> is any bipartition whose right blocks are equal to <var class="Arg">blocks</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, 5, 8 ], [ 2, 3, 7 ], [ 6, -3, -4, -5 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [ -1, -2, -6 ], [ -7, -8 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Bipartition( [ [ 1, 5 ], [ 2, 4, 8, -2 ], [ 3, 6, 7, -3, -4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [ -1, -6, -8 ], [ -5, -7 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightBlocks(g*f);</span>
+&lt;blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnRightBlocks(RightBlocks(g), f); </span>
+&lt;blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]&gt;</pre></div>
+
+<p><a id="X7A5A4AF57BEA2313" name="X7A5A4AF57BEA2313"></a></p>
+
+<h5>5.7-2 OnLeftBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnLeftBlocks</code>( <var class="Arg">blocks</var>, <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: The blocks of a bipartition.</p>
+
+<p><code class="code">OnLeftBlocks</code> returns the left blocks of the product <code class="code"><var class="Arg">f</var>*g</code> where <code class="code">g</code> is any bipartition whose left blocks are equal to <var class="Arg">blocks</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 5, 7, -1, -3, -4, -6 ], [ 2, 3, 6, 8 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 4, -2, -5, -8 ], [ -7 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Bipartition( [ [ 1, 3, -4, -5 ], [ 2, 4, 5, 8 ], [ 6, -1, -3 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 7, -2, -6, -7, -8 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftBlocks(f*g);</span>
+&lt;blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnLeftBlocks(LeftBlocks(g), f);</span>
+&lt;blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]&gt;</pre></div>
+
+<p><a id="X78430AE181917382" name="X78430AE181917382"></a></p>
+
+<h5>5.7-3 PermRightBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermRightBlocks</code>( <var class="Arg">blocks</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermLeftBlocks</code>( <var class="Arg">blocks</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A permutation.</p>
+
+<p>If <var class="Arg">f</var> is a bipartition that stabilises <var class="Arg">blocks</var>, i.e. <code class="code">OnRightBlocks(<var class="Arg">blocks</var>, <var class="Arg">f</var>)=<var class="Arg">blocks</var></code>, then <code class="code">PermRightBlocks</code> returns the permutation of the indices of the transverse blocks of <var class="Arg">blocks</var> under the action of <var class="Arg">f</var>.</p>
+
+<p><code class="code">PermLeftBlocks</code> is the analogue of <code class="code">PermRightBlocks</code> with respect to <code class="func">OnLeftBlocks</code> (<a href="chap5_mj.html#X7A5A4AF57BEA2313"><span class="RefLink">5.7-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 10 ], [ 2, -7, -9 ], [ 3, 4, 6, 8 ], [ 5, -5 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 7, 9, -2 ], [ -1, -10 ], [ -3, -4, -6, -8 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks:=BlocksNC([[ -1, -10 ], [ 2 ], [ -3, -4, -6, -8 ], [ 5 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 7, 9 ]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnRightBlocks(blocks, f)=blocks;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermRightBlocks(blocks, f);</span>
+(2,5)</pre></div>
+
+<p><a id="X841E627787585C23" name="X841E627787585C23"></a></p>
+
+<h5>5.7-4 InverseRightBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseRightBlocks</code>( <var class="Arg">blocks</var>, <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p>If <code class="code">OnRightBlocks(<var class="Arg">blocks</var>, <var class="Arg">f</var>)</code> has rank equal to the rank of <var class="Arg">blocks</var>, then <code class="code">InverseRightBlocks</code> returns a bipartition <code class="code">g</code> such that <code class="code">OnRightBlocks(<var class="Arg">blocks</var>, <var class="Arg">f</var>*g)=<var class="Arg">blocks</var></code> and where <code class="code">PermRightBlocks(<var class="Arg">blocks</var>, <var class="Arg">f</var>*g)</code> is the identity permutation.</p>
+
+<p>See <code class="func">PermRightBlocks</code> (<a href="chap5_mj.html#X78430AE181917382"><span class="RefLink">5.7-3</span></a>) and <code class="func">OnRightBlocks</code> (<a href="chap5_mj.html#X7B701DA37F75E77B"><span class="RefLink">5.7-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks:=BlocksNC([[ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfBlocks(blocks);</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfBlocks(OnRightBlocks(blocks, f));</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=InverseRightBlocks(blocks, f);</span>
+&lt;bipartition: [ 1, -6 ], [ 2, 3, 4, 5, 6, 7, 8 ], [ -1, -4, -5, -8 ], 
+ [ -2, -3, -7 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks;</span>
+&lt;blocks: [ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnRightBlocks(blocks, f*g);</span>
+&lt;blocks: [ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermRightBlocks(blocks, f*g);</span>
+()</pre></div>
+
+<p><a id="X7FB7FB28812F9AD7" name="X7FB7FB28812F9AD7"></a></p>
+
+<h5>5.7-5 InverseLeftBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseLeftBlocks</code>( <var class="Arg">blocks</var>, <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A bipartition.</p>
+
+<p>If <code class="code">OnLeftBlocks(<var class="Arg">blocks</var>, <var class="Arg">f</var>)</code> has rank equal to the rank of <var class="Arg">blocks</var>, then <code class="code">InverseLeftBlocks</code> returns a bipartition <code class="code">g</code> such that <code class="code">OnLeftBlocks(<var class="Arg">blocks</var>, g*<var class="Arg">f</var>)=<var class="Arg">blocks</var></code> and where <code class="code">PermLeftBlocks(<var class="Arg">blocks</var>, g*<var class="Arg">f</var>)</code> is the identity permutation.</p>
+
+<p>See <code class="func">PermLeftBlocks</code> (<a href="chap5_mj.html#X78430AE181917382"><span class="RefLink">5.7-3</span></a>) and <code class="func">OnLeftBlocks</code> (<a href="chap5_mj.html#X7A5A4AF57BEA2313"><span class="RefLink">5.7-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks:=BlocksNC([[ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfBlocks(OnLeftBlocks(blocks, f));</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=InverseLeftBlocks(blocks, f);</span>
+&lt;bipartition: [ 1, 2, 6 ], [ 3, 4, 5, -1, -2, -3, -4, -5, -6, -7, -8 ]
+  , [ 7, 8 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnLeftBlocks(blocks, g*f);</span>
+&lt;blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermLeftBlocks(blocks, g*f);          </span>
+()</pre></div>
+
+<p><a id="X7FF53DBA7C20AD43" name="X7FF53DBA7C20AD43"></a></p>
+
+<h4>5.8 <span class="Heading">Visualising blocks and bipartitions</span></h4>
+
+<p>There are some functions in <strong class="pkg">Semigroups</strong> for creating LaTeX pictures of bipartitions and blocks. Descriptions of these methods can be found in this section.</p>
+
+<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap4_mj.html#X83B3318784E78415"><span class="RefLink">4.8-1</span></a>).</p>
+
+<p><a id="X7E5E9A5187FC803E" name="X7E5E9A5187FC803E"></a></p>
+
+<h5>5.8-1 TikzBipartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzBipartition</code>( <var class="Arg">f</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>This function produces a graphical representation of the bipartition <var class="Arg">f</var> using the <code class="code">tikz</code> package for LaTeX. More precisely, this function outputs a string containing a minimal LaTeX document which can be compiled using LaTeX to produce a picture of <var class="Arg">f</var>.</p>
+
+<p>If the optional second argument <var class="Arg">opts</var> is a record with the component <code class="code">colors</code> set to <code class="keyw">true</code>, then the blocks of <var class="Arg">f</var> will be colored using the standard <code class="code">tikz</code> colors. Due to the limited number of colors available in <code class="code">tikz</code> this option only works when the degree of <var class="Arg">f</var> is less than 20.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 5 ], [ 2, 4, -3, -5 ], [ 3, -1, -2 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -4 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzBipartition(f);</span>
+"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
+t}\n\\begin{tikzpicture}\n\n  %block #1\n  %vertices and labels\n  \\\
+fill(1,2)circle(.125);\n  \\draw(0.95, 2.2) node [above] {{ $1$}};\n \
+ \\fill(5,2)circle(.125);\n  \\draw(4.95, 2.2) node [above] {{ $5$}};\
+\n\n  %lines\n  \\draw(1,1.875) .. controls (1,1.1) and (5,1.1) .. (5\
+,1.875);\n\n  %block #2\n  %vertices and labels\n  \\fill(2,2)circle(\
+.125);\n  \\draw(1.95, 2.2) node [above] {{ $2$}};\n  \\fill(4,2)circ\
+le(.125);\n  \\draw(3.95, 2.2) node [above] {{ $4$}};\n  \\fill(3,0)c\
+ircle(.125);\n  \\draw(3, -0.2) node [below] {{ $-3$}};\n  \\fill(5,0\
+)circle(.125);\n  \\draw(5, -0.2) node [below] {{ $-5$}};\n\n  %lines\
+\n  \\draw(2,1.875) .. controls (2,1.3) and (4,1.3) .. (4,1.875);\n  \
+\\draw(3,0.125) .. controls (3,0.7) and (5,0.7) .. (5,0.125);\n  \\dr\
+aw(2,2)--(3,0);\n\n  %block #3\n  %vertices and labels\n  \\fill(3,2)\
+circle(.125);\n  \\draw(2.95, 2.2) node [above] {{ $3$}};\n  \\fill(1\
+,0)circle(.125);\n  \\draw(1, -0.2) node [below] {{ $-1$}};\n  \\fill\
+(2,0)circle(.125);\n  \\draw(2, -0.2) node [below] {{ $-2$}};\n\n  %l\
+ines\n  \\draw(1,0.125) .. controls (1,0.6) and (2,0.6) .. (2,0.125);\
+\n  \\draw(3,2)--(2,0);\n\n  %block #4\n  %vertices and labels\n  \\f\
+ill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \
+ %lines\n\\end{tikzpicture}\n\n\\end{document}"</pre></div>
+
+<p><a id="X7A0C438B7CA517DB" name="X7A0C438B7CA517DB"></a></p>
+
+<h5>5.8-2 TikzBlocks</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzBlocks</code>( <var class="Arg">blocks</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>This function produces a graphical representation of the blocks <var class="Arg">blocks</var> of a bipartition using the <code class="code">tikz</code> package for LaTeX. More precisely, this function outputs a string containing a minimal LaTeX document which can be compiled using LaTeX to produce a picture of <var class="Arg">blocks</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzBlocks(RightBlocks(f));</span>
+"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
+t}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \
+\\draw(1.8,5) node [top] {{$1$}};\n  \\fill(4,2)circle(.125);\n  \\dr\
+aw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\
+.8,3) node [top] {{$3$}};\n  \\draw[ultra thick](2,2)circle(.115);\n \
+ \\draw(1.8,2) node [top] {{$4$}};\n  \\fill(1,2)circle(.125);\n  \\d\
+raw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\
+.8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\
+ and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"</pre></div>
+
+<p><a id="X876C963F830719E2" name="X876C963F830719E2"></a></p>
+
+<h4>5.9 <span class="Heading">Semigroups of bipartitions</span></h4>
+
+<p>Semigroups and monoids of bipartitions can be created in the usual way in <strong class="pkg">GAP</strong> using the functions <code class="func">Semigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>) and <code class="func">Monoid</code> (<a href="../../../doc/ref/chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>).</p>
+
+<p>It is possible to create inverse semigroups and monoids of bipartitions using <code class="func">InverseSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>) and <code class="func">InverseMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>) when the argument is a collection of block bijections or partial perm bipartions; see <code class="func">IsBlockBijection</code> (<a href="chap5_mj.html#X829494DF7FD6CFEC"><span class="RefLink">5.5-13</span></a>) and <code class="func">IsPartialPermBipartition</code> (<a href="chap5_mj.html#X87C771D37B1FE95C"><span class="RefLink">5.5-12</span></a>).</p>
+
+<p><a id="X810BFF647C4E191E" name="X810BFF647C4E191E"></a></p>
+
+<h5>5.9-1 IsBipartitionSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBipartitionSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBipartitionMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>A <em>bipartition semigroup</em> is simply a semigroup consisting of bipartitions. An object <var class="Arg">obj</var> is a bipartition semigroup in <strong class="pkg">GAP</strong> if it satisfies <code class="func">IsSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">Reference: IsSemigroup</span></a>) and <code class="func">IsBipartitionCollection</code> (<a href="chap5_mj.html#X82F5D10C85489832"><span class="RefLink">5.1-2</span></a>).</p>
+
+<p>A <em>bipartition monoid</em> is a monoid consisting of bipartitions. An object <var class="Arg">obj</var> is a bipartition monoid in <strong class="pkg">GAP</strong> if it satisfies <code class="func">IsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) and <code class="func">IsBipartitionCollection</code> (<a href="chap5_mj.html#X82F5D10C85489832"><span class="RefLink">5.1-2</span></a>).</p>
+
+<p>Note that it is possible for a bipartition semigroup to have a multiplicative neutral element (i.e. an identity element) but not to satisfy <code class="code">IsBipartitionMonoid</code>. For example,</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 6, 7, -9 ], [ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -8 ], [ -10 ] ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(f, One(f));</span>
+&lt;commutative bipartition monoid of degree 10 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoid(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBipartitionMonoid(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup( Bipartition( [ [ 1, -3 ], [ 2, -8 ], [ 3, 8, -1 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 9, 10, -10 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -2 ], [ -9 ] ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -9 ] ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One(S);</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeNeutralElement(S);</span>
+&lt;bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
+ [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [ -9 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoid(S);</span>
+false</pre></div>
+
+<p>In this example <code class="code">S</code> cannot be converted into a monoid using <code class="func">AsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X7B22038F832B9C0F"><span class="RefLink">Reference: AsMonoid</span></a>) since the <code class="func">One</code> (<a href="../../../doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>) of any element in <code class="code">S</code> differs from the multiplicative neutral element.</p>
+
+<p>For more details see <code class="func">IsMagmaWithOne</code> (<a href="../../../doc/ref/chap35_mj.html#X86071DE7835F1C7C"><span class="RefLink">Reference: IsMagmaWithOne</span></a>).</p>
+
+<p><a id="X80C37124794636F3" name="X80C37124794636F3"></a></p>
+
+<h5>5.9-2 IsBlockBijectionSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBlockBijectionSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBlockBijectionMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>A <em>block bijection semigroup</em> is simply a semigroup consisting of block bijections. A <em>block bijection monoid</em> is a monoid consisting of block bijections.</p>
+
+<p>An object in <strong class="pkg">GAP</strong> is a block bijection monoid if it satisfies <code class="func">IsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) and <code class="func">IsBlockBijectionSemigroup</code>.</p>
+
+<p>See <code class="func">IsBlockBijection</code> (<a href="chap5_mj.html#X829494DF7FD6CFEC"><span class="RefLink">5.5-13</span></a>).</p>
+
+<p><a id="X79A706A582ABE558" name="X79A706A582ABE558"></a></p>
+
+<h5>5.9-3 IsPartialPermBipartitionSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialPermBipartitionSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialPermBipartitionMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>A <em>partial perm bipartition semigroup</em> is simply a semigroup consisting of partial perm bipartitions. A <em>partial perm bipartition monoid</em> is a monoid consisting of partial perm bipartitions.</p>
+
+<p>An object in <strong class="pkg">GAP</strong> is a partial perm bipartition monoid if it satisfies <code class="func">IsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) and <code class="func">IsPartialPermBipartitionSemigroup</code>.</p>
+
+<p>See <code class="func">IsPartialPermBipartition</code> (<a href="chap5_mj.html#X87C771D37B1FE95C"><span class="RefLink">5.5-12</span></a>).</p>
+
+<p><a id="X7DEE07577D7379AC" name="X7DEE07577D7379AC"></a></p>
+
+<h5>5.9-4 IsPermBipartitionGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPermBipartitionGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>A <em>perm bipartition group</em> is simply a semigroup consisting of perm bipartitions.</p>
+
+<p>See <code class="func">IsPermBipartition</code> (<a href="chap5_mj.html#X8031B53E7D0ECCFA"><span class="RefLink">5.5-11</span></a>).</p>
+
+<p><a id="X8162E2BB7CF144F5" name="X8162E2BB7CF144F5"></a></p>
+
+<h5>5.9-5 DegreeOfBipartitionSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfBipartitionSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A non-negative integer.</p>
+
+<p>The <em>degree</em> of a bipartition semigroup <var class="Arg">S</var> is just the degree of any (and every) element of <var class="Arg">S</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfBipartitionSemigroup(JonesMonoid(8));</span>
+8</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

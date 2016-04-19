@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (semigroups) - Chapter 9: Homomorphisms</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap9"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap10_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap9.html">[MathJax off]</a></p>
+<p><a id="X84975388859F203D" name="X84975388859F203D"></a></p>
+<div class="ChapSects"><a href="chap9_mj.html#X84975388859F203D">9 <span class="Heading">Homomorphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X7D702EA087C1C5EF">9.1 <span class="Heading">Isomorphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7A6D59247F15935E">9.1-1 IsIsomorphicSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7DE212DF7DF0A4E9">9.1-2 SmallestMultiplicationTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X8248C522825E2684">9.1-3 IsomorphismSemigroups</a></span>
+</div></div>
+</div>
+
+<h3>9 <span class="Heading">Homomorphisms</span></h3>
+
+<p>In this chapter we describe the various ways to define a homomorphism from a semigroup to another semigroup.</p>
+
+<p>Support for homomorphisms in <strong class="pkg">Semigroups</strong> is currently rather limited but there are plans to improve this in the future.</p>
+
+<p><a id="X7D702EA087C1C5EF" name="X7D702EA087C1C5EF"></a></p>
+
+<h4>9.1 <span class="Heading">Isomorphisms</span></h4>
+
+<p><a id="X7A6D59247F15935E" name="X7A6D59247F15935E"></a></p>
+
+<h5>9.1-1 IsIsomorphicSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsomorphicSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This operation attempts to determine if the semigroups <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic, it returns <code class="keyw">true</code> if they are and <code class="keyw">false</code> if they are not.</p>
+
+<p>At present this only works for rather small semigroups, with approximately 50 elements or less.</p>
+
+<p><strong class="button">Please note:</strong> the <span class="URL"><a href="http://www.maths.qmul.ac.uk/~leonard/grape/">Grape</a></span> package version 4.5 or higher must be available and compiled installed for this function to work.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup( [ PartialPerm( [ 1, 2, 4 ], [ 3, 5, 1 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 3, 5 ], [ 4, 3, 2 ] ) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+11
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=SemigroupByMultiplicationTable(SmallestMultiplicationTable(S));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphicSemigroup(S, T);</span>
+true</pre></div>
+
+<p><a id="X7DE212DF7DF0A4E9" name="X7DE212DF7DF0A4E9"></a></p>
+
+<h5>9.1-2 SmallestMultiplicationTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMultiplicationTable</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The lex-least multiplication table of a semigroup.</p>
+
+<p>This function returns the lex-least multiplication table of a semigroup isomorphic to the semigroup <var class="Arg">S</var>. <code class="code">SmallestMultiplicationTable</code> is an isomorphism invariant of semigroups, and so it can, for example, be used to check if two semigroups are isomorphic.</p>
+
+<p>Due to the high complexity of computing the smallest multiplication table of a semigroup, this function only performs well for semigroups with at most approximately 50 elements.</p>
+
+<p><code class="code">SmallestMultiplicationTable</code> is based on the function <code class="func">IdSmallSemigroup</code> (<a href="../../../pkg/smallsemi/doc/chap4.html#X788211A07D67C282"><span class="RefLink">Smallsemi: IdSmallSemigroup</span></a>) by Andreas Distler.</p>
+
+<p><strong class="button">Please note:</strong> the <span class="URL"><a href="http://www.maths.qmul.ac.uk/~leonard/grape/">Grape</a></span> package version 4.5 or higher must be loaded for this function to work.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, 2, 3, -1 ], [ -2 ], [ -3 ] ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, 2, 3 ], [ -1 ], [ -2, -3 ] ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, 2, -1 ], [ 3, -2 ], [ -3 ] ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMultiplicationTable(S);</span>
+[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ], 
+  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ], 
+  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], 
+  [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ]</pre></div>
+
+<p><a id="X8248C522825E2684" name="X8248C522825E2684"></a></p>
+
+<h5>9.1-3 IsomorphismSemigroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSemigroups</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: An isomorphism or <code class="keyw">fail</code>.</p>
+
+<p>This operation returns an isomorphism from the semigroup <var class="Arg">S</var> and to the semigroup <var class="Arg">T</var> if it exists, and it returns <code class="keyw">fail</code> if it does not.</p>
+
+<p>At present this only works for Rees matrix semigroups and Rees 0-matrix semigroups.</p>
+
+<p><strong class="button">Please note:</strong> the <span class="URL"><a href="http://www.maths.qmul.ac.uk/~leonard/grape/">Grape</a></span> package version 4.5 or higher must be available and compiled for this function to work, when the argument <var class="Arg">R</var> is a Rees 0-matrix semigroup.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);</span>
+&lt;Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=PrincipalFactor(DClasses(PartitionMonoid(5))[2]);</span>
+&lt;Rees 0-matrix semigroup 15x15 over Group([ (2,3,4,5), (4,5) ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroups(S, T);</span>
+fail</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap10_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

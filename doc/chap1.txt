@@ -1,0 +1,354 @@
+  
+  [1X1 [33X[0;0YThe [5XSemigroups[105X[101X[1X package[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0YThis  is  the  manual  for  the [5XSemigroups[105X package version 2.7.5. [5XSemigroups[105X
+  2.7.5   is   a   distant   descendant  of  the  Monoid  package  for  GAP  3
+  ([7Xhttp://schmidt.nuigalway.ie/monoid/index.html[107X)  by Goetz Pfeiffer, Steve A.
+  Linton,  Edmund F. Robertson, and Nik Ruskuc; and the Monoid package for GAP
+  4 by J. D. Mitchell.[133X
+  
+  [33X[0;0YMany of the operations, methods, properties, and functions described in this
+  manual  only  apply  to semigroups of transformations, partial permutations,
+  bipartitions, subsemigroups of regular Rees 0-matrix semigroups over groups,
+  semigroups of matrices over finite fields, free inverse semigroups, and free
+  bands.  For  the sake of brevity, we have opted to say [12Xsemigroup[112X to describe
+  the aforementioned classes of semigroups.[133X
+  
+  [33X[0;0Y[5XSemigroups[105X 2.7.5 contains more efficient methods than those available in the
+  [5XGAP[105X  library  (and in many cases more efficient than any other software) for
+  creating  semigroups  and ideals, calculating their Green's structure, size,
+  elements, group of units, minimal ideal, and testing membership, finding the
+  inverses of a regular element, and factorizing elements over the generators,
+  and  many more; see Chapters [14X2[114X, [14X3[114X, and [14X4[114X. There are also methods for testing
+  if  a  semigroup  satisfies a particular property, such as if it is regular,
+  simple,  inverse,  completely  regular, and a variety of further properties;
+  see  Chapter  [14X4[114X. The theory behind the main algorithms in [5XSemigroups[105X will be
+  described in a forthcoming article.[133X
+  
+  [33X[0;0YIt  is  harder  for  [5XSemigroups[105X  to  compute  Green's  [13XL[113X- and [13XH[113X-classes of a
+  transformation  semigroup.  The  methods used to compute with Green's [13XR[113X- and
+  [13XD[113X-classes  are  the most efficient in [5XSemigroups[105X. Thus, if you are computing
+  with  a  transformation semigroup, wherever possible, it is advisable to use
+  the  commands relating to Green's [13XR[113X- or [13XD[113X-classes rather than those relating
+  to  Green's [13XL[113X- or [13XH[113X-classes. No such difficulties are present when computing
+  with  semigroups  of  partial permutations, bipartitions, subsemigroups of a
+  regular Rees 0-matrix semigroup over a group, or semigroups of matrices over
+  a finite field.[133X
+  
+  [33X[0;0YThe  methods  in  [5XSemigroups[105X  allow  the  computation  of individual Green's
+  classes  without  computing  the  entire  data  structure  of the underlying
+  semigroup;  see  [2XGreensRClassOfElementNC[102X  ([14X4.2-3[114X).  It  is  also possible to
+  compute  the  [13XR[113X-classes,  the  number  of  elements and test membership in a
+  semigroup   without   computing   all   the   elements;  see,  for  example,
+  [2XGreensRClasses[102X  ([14X4.3-1[114X),  [2XRClassReps[102X  ([14X4.3-4[114X), [2XIteratorOfRClassReps[102X ([14X4.3-2[114X),
+  [2XIteratorOfRClasses[102X ([14X4.3-3[114X), or [2XNrRClasses[102X ([14X4.4-6[114X). This may be useful if you
+  want to study a very large semigroup where computing all the elements of the
+  semigroup is not feasible.[133X
+  
+  [33X[0;0YThere  are  methods  for finding: congruences of certain types of semigroups
+  (based  on  Section  3.5  in  [How95]),  the  normalizer of a semigroup in a
+  permutation  group  (as  given  in [ABMN10]), the maximal subsemigroups of a
+  finite  semigroup  (based  on  [GGR68]),  smaller degree partial permutation
+  representations  (based  on  [Sch92])  and the character table of an inverse
+  semigroup.  There  are  functions  for  producing  pictures  of  the Green's
+  structure of a semigroup, and for drawing bipartitions; see Sections [14X4.8[114X and
+  [14X5.8[114X.[133X
+  
+  [33X[0;0YSeveral  standard  examples  of  semigroups  are  provided  see Section [14X2.5[114X.
+  [5XSemigroups[105X  also  provides  functions  to  read  and  write  collections  of
+  transformations,  partial  permutations,  and  bipartitions  to  a file; see
+  [2XReadGenerators[102X ([14X1.6-2[114X) and [2XWriteGenerators[102X ([14X1.6-3[114X).[133X
+  
+  [33X[0;0YDetails  of  how  to create and manipulate semigroups of bipartitions can be
+  found in Chapter [14X5[114X.[133X
+  
+  [33X[0;0YDetails of how to create and manipulate semigroups of matrices over a finite
+  field can be found in Chapter [14X7[114X.[133X
+  
+  [33X[0;0YThere are also functions in [5XSemigroups[105X to define and manipulate free inverse
+  semigroups  and  their  elements;  this  part  of the package was written by
+  Julius Jonušas; see Chapter [14X6[114X and Section 5.10 in [How95] for more details.[133X
+  
+  [33X[0;0Y[5XSemigroups[105X contains functions synonymous to some of those defined in the [5XGAP[105X
+  library  but,  for  the  sake  of  convenience, they have abbreviated names;
+  further details can be found at the appropriate points in the later chapters
+  of this manual.[133X
+  
+  [33X[0;0Y[5XSemigroups[105X contains different methods for some [5XGAP[105X library functions, and so
+  you might notice that [5XGAP[105X behaves differently when [5XSemigroups[105X is loaded. For
+  more details about semigroups in [5XGAP[105X or Green's relations in particular, see
+  [14X'Reference: Semigroups'[114X or [14X'Reference: Green's Relations'[114X.[133X
+  
+  [33X[0;0YThe  [5XSemigroups[105X  package  is  written  [5XGAP[105X  code and requires the [5XOrb[105X and [5XIO[105X
+  packages.  The  [5XOrb[105X  package  is  used  to efficiently compute components of
+  actions,  which  underpin many of the features of [5XSemigroups[105X. The [5XIO[105X package
+  is  used  to  read  and  write  transformations,  partial  permutations, and
+  bipartitions to a file.[133X
+  
+  [33X[0;0YThe     [5XGrape[105X     package    must    be    loaded    for    the    operation
+  [2XSmallestMultiplicationTable[102X  ([14X9.1-2[114X)  to work, and it must be fully compiled
+  for the following functions to work:[133X
+  
+  [30X    [33X[0;6Y[2XMunnSemigroup[102X ([14X2.5-10[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMaximalSubsemigroups[102X ([14X4.5-7[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsIsomorphicSemigroup[102X ([14X9.1-1[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsomorphismSemigroups[102X ([14X9.1-3[114X).[133X
+  
+  [33X[0;0YIf [5XGrape[105X is not available or is not compiled, then [5XSemigroups[105X can be used as
+  normal with the exception that the functions above will not work.[133X
+  
+  [33X[0;0YThe [5Xgenss[105X package is used in one version of the function [2XNormalizer[102X ([14X4.5-23[114X)
+  but  nowhere  else in [5XSemigroups[105X. If [5Xgenss[105X is not available, then [5XSemigroups[105X
+  can be used as normal with the exception that this function will not work.[133X
+  
+  [33X[0;0YSome  further  details  about  semigroups  in  [5XGAP[105X  and Green's relations in
+  particular,  can be found in [14X'Reference: Semigroups'[114X and [14X'Reference: Green's
+  Relations'[114X.[133X
+  
+  [33X[0;0YIf  you  find a bug or an issue with the package, then report this using the
+  issue tracker ([7Xhttps://github.com/gap-packages/Semigroups/issues[107X).[133X
+  
+  
+  [1X1.2 [33X[0;0YInstalling the [5XSemigroups[105X[101X[1X package[133X[101X
+  
+  [33X[0;0YIn  this  section  we  give  a  brief  description  of  how  to  start using
+  [5XSemigroups[105X.[133X
+  
+  [33X[0;0YIt  is assumed that you have a working copy of [5XGAP[105X with version number 4.8.3
+  or  higher.  The  most  up-to-date version of [5XGAP[105X and instructions on how to
+  install    it    can    be    obtained    from    the   main   [5XGAP[105X   webpage
+  [7Xhttp://www.gap-system.org[107X.[133X
+  
+  [33X[0;0YThe  following  is  a  summary of the steps that should lead to a successful
+  installation of [5XSemigroups[105X:[133X
+  
+  [30X    [33X[0;6Yensure  that  the  [5XIO[105X package version 4.4.4 or higher is available. [5XIO[105X
+        must be compiled before [5XSemigroups[105X can be loaded.[133X
+  
+  [30X    [33X[0;6Yensure  that the [5XOrb[105X package version 4.7.3 or higher is available. [5XOrb[105X
+        and [5XSemigroups[105X both perform better if [5XOrb[105X is compiled.[133X
+  
+  [30X    [33X[0;6Y[12XThis  step  is  optional:[112X  certain functions in [5XSemigroups[105X require the
+        [5XGrape[105X package to be available and fully compiled; a full list of these
+        functions  can  be  found above. To use these functions make sure that
+        the  [5XGrape[105X package version 4.5 or higher is available. If [5XGrape[105X is not
+        fully installed (i.e. compiled), then [5XSemigroups[105X can be used as normal
+        with the exception that the functions listed above will not work.[133X
+  
+  [30X    [33X[0;6Y[12XThis  step  is optional:[112X the non-deterministic version of the function
+        [2XNormalizer[102X  ([14X4.5-23[114X)  requires  the [5Xgenss[105X package to be loaded. If you
+        want  to  use this function, then please ensure that the [5Xgenss[105X package
+        version 1.5 or higher is available.[133X
+  
+  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-2.7.5.tar.gz[111X  from  the
+        Semigroups                       package                       webpage
+        ([7Xhttps://gap-packages.github.io/Semigroups[107X).[133X
+  
+  [30X    [33X[0;6Yunzip  and  untar  the  file,  this  should  create a directory called
+        [11Xsemigroups-2.7.5[111X.[133X
+  
+  [30X    [33X[0;6Ylocate  the  [11Xpkg[111X  directory  of your [5XGAP[105X directory, which contains the
+        directories  [11Xlib[111X,  [11Xdoc[111X  and so on. Move the directory [11Xsemigroups-2.7.5[111X
+        into the [11Xpkg[111X directory.[133X
+  
+  [30X    [33X[0;6Ystart [5XGAP[105X in the usual way.[133X
+  
+  [30X    [33X[0;6Ytype [10XLoadPackage("semigroups");[110X[133X
+  
+  [30X    [33X[0;6Ycompile the documentation by using [2XSemigroupsMakeDoc[102X ([14X1.3-1[114X).[133X
+  
+  [33X[0;0YPresuming  that  the  above  steps can be completed successfully you will be
+  running the [5XSemigroups[105X package![133X
+  
+  [33X[0;0YIf  you  want to check that the package is working correctly, you should run
+  some of the tests described in Section [14X1.4[114X.[133X
+  
+  
+  [1X1.3 [33X[0;0YCompiling the documentation[133X[101X
+  
+  [33X[0;0YTo  compile  the documentation use [2XSemigroupsMakeDoc[102X ([14X1.3-1[114X). If you want to
+  use the help system, it is essential that you compile the documentation.[133X
+  
+  [1X1.3-1 SemigroupsMakeDoc[101X
+  
+  [29X[2XSemigroupsMakeDoc[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10YNothing.[133X
+  
+  [33X[0;0YThis  function  should  be called with no argument to compile the [5XSemigroups[105X
+  documentation.[133X
+  
+  
+  [1X1.4 [33X[0;0YTesting the installation[133X[101X
+  
+  [33X[0;0YIn  this  section  we  describe  how  to  test that [5XSemigroups[105X is working as
+  intended.   To   test   that   [5XSemigroups[105X   is   installed   correctly   use
+  [2XSemigroupsTestInstall[102X    ([14X1.4-1[114X)   or   for   more   extensive   tests   use
+  [2XSemigroupsTestAll[102X  ([14X1.4-3[114X).  Please note that it will take a few seconds for
+  [2XSemigroupsTestInstall[102X  ([14X1.4-1[114X) to finish and it may take several minutes for
+  [2XSemigroupsTestAll[102X ([14X1.4-3[114X) to finish.[133X
+  
+  [33X[0;0YIf  something goes wrong, then please review the instructions in Section [14X1.2[114X
+  and  ensure  that  [5XSemigroups[105X  has  been properly installed. If you continue
+  having       problems,      please      use      the      issue      tracker
+  ([7Xhttps://github.com/gap-packages/Semigroups/issues[107X) to report the issues you
+  are having.[133X
+  
+  [1X1.4-1 SemigroupsTestInstall[101X
+  
+  [29X[2XSemigroupsTestInstall[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10YNothing.[133X
+  
+  [33X[0;0YThis function should be called with no argument to test your installation of
+  [5XSemigroups[105X  is  working  correctly.  These  tests should take no more than a
+  fraction  of  a  second  to  complete.  To  more  comprehensively  test that
+  [5XSemigroups[105X is installed correctly use [2XSemigroupsTestAll[102X ([14X1.4-3[114X).[133X
+  
+  [1X1.4-2 SemigroupsTestManualExamples[101X
+  
+  [29X[2XSemigroupsTestManualExamples[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10YNothing.[133X
+  
+  [33X[0;0YThis  function should be called with no argument to test the examples in the
+  [5XSemigroups[105X  manual.  These  tests  should take no more than a few minutes to
+  complete.   To  more  comprehensively  test  that  [5XSemigroups[105X  is  installed
+  correctly  use  [2XSemigroupsTestAll[102X  ([14X1.4-3[114X).  See  also [2XSemigroupsTestInstall[102X
+  ([14X1.4-1[114X).[133X
+  
+  [1X1.4-3 SemigroupsTestAll[101X
+  
+  [29X[2XSemigroupsTestAll[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10YNothing.[133X
+  
+  [33X[0;0YThis function should be called with no argument to comprehensively test that
+  [5XSemigroups[105X  is working correctly. These tests should take no more than a few
+  minutes  to complete. To quickly test that [5XSemigroups[105X is installed correctly
+  use [2XSemigroupsTestInstall[102X ([14X1.4-1[114X).[133X
+  
+  
+  [1X1.5 [33X[0;0YMore information during a computation[133X[101X
+  
+  [1X1.5-1 InfoSemigroups[101X
+  
+  [29X[2XInfoSemigroups[102X[32X info class
+  
+  [33X[0;0Y[10XInfoSemigroups[110X  is  the info class of the [5XSemigroups[105X package. The info level
+  is  initially set to 0 and no info messages are displayed. We recommend that
+  you  set  the  level  to  1  so  that  basic info messages are displayed. To
+  increase  the  amount of information displayed during a computation increase
+  the  info  level  to 2 or 3. To stop all info messages from being displayed,
+  set  the  info  level  to  0.  See  also  [14X'Reference:  Info  Functions'[114X  and
+  [2XSetInfoLevel[102X ([14XReference: SetInfoLevel[114X).[133X
+  
+  
+  [1X1.6 [33X[0;0YReading and writing elements to a file[133X[101X
+  
+  [33X[0;0YThe functions [2XReadGenerators[102X ([14X1.6-2[114X) and [2XWriteGenerators[102X ([14X1.6-3[114X) can be used
+  to  read or write transformations, partial permutations, and bipartitions to
+  a file.[133X
+  
+  [1X1.6-1 SemigroupsDir[101X
+  
+  [29X[2XSemigroupsDir[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10YA string.[133X
+  
+  [33X[0;0YThis  function returns the absolute path to the [5XSemigroups[105X package directory
+  as a string. The same result can be obtained typing:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XPackageInfo("semigroups")[1]!.InstallationPath;[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Yat the [5XGAP[105X prompt.[133X
+  
+  [1X1.6-2 ReadGenerators[101X
+  
+  [29X[2XReadGenerators[102X( [3Xfilename[103X[, [3Xnr[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10YA list of lists of semigroup elements.[133X
+  
+  [33X[0;0YIf  [3Xfilename[103X  is  the  name of a file created using [2XWriteGenerators[102X ([14X1.6-3[114X),
+  then  [10XReadGenerators[110X returns the contents of this file as a list of lists of
+  transformations, partial permutations, or bipartitions.[133X
+  
+  [33X[0;0YIf  the  optional second argument [3Xnr[103X is present, then [10XReadGenerators[110X returns
+  the elements stored in the [3Xnr[103Xth line of [3Xfilename[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfile:=Concatenation(SemigroupsDir(), "/tst/test.gz");;[127X[104X
+    [4X[25Xgap>[125X [27XReadGenerators(file, 1378);[127X[104X
+    [4X[28X[ Transformation( [ 1, 2, 2 ] ), IdentityTransformation, [128X[104X
+    [4X[28X  Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 3, 2, 4, 7, 6, 7 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 2, 1, 1, 6, 5 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 3, 2, 1, 6, 7, 7 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 4, 5, 7, 6, 1, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 7, 6, 6, 1, 2, 4, 4 ] ), [128X[104X
+    [4X[28X  Transformation( [ 7, 7, 5, 4, 3, 1, 1 ] ) ][128X[104X
+  [4X[32X[104X
+  
+  [1X1.6-3 WriteGenerators[101X
+  
+  [29X[2XWriteGenerators[102X( [3Xfilename[103X, [3Xlist[103X[, [3Xappend[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfail[109X.[133X
+  
+  [33X[0;0YThis  function  provides  a  method  for  writing  transformations,  partial
+  permutations,  and  bipartitions  to  a  file,  that uses a relatively small
+  amount  of  disk  space.  The resulting file can be further compressed using
+  [10Xgzip[110X or [10Xxz[110X.[133X
+  
+  [33X[0;0YThe  argument  [3Xlist[103X  should be a list of elements, a semigroup, or a list of
+  lists  of  elements,  or  semigroups.  The  types of elements and semigroups
+  supported are: transformations, partial permutations, and bipartitions.[133X
+  
+  [33X[0;0YThe argument [3Xfilename[103X should be a string containing the name of a file where
+  the entries in [3Xlist[103X will be written or an [5XIO[105X package file object.[133X
+  
+  [33X[0;0YIf  the  optional  third  argument  [3Xappend[103X is given and equals [10X"w"[110X, then the
+  previous  content  of the file is deleted. If the optional third argument is
+  [10X"a"[110X  or  is  not  present,  then [10Xlist[110X is appended to the file. This function
+  returns [9Xtrue[109X if everything went well or [9Xfail[109X if something went wrong.[133X
+  
+  [33X[0;0Y[10XWriteGenerators[110X appends a line to the file [3Xfilename[103X for every entry in [3Xlist[103X.
+  If any element of [3Xlist[103X is a semigroup, then the generators of that semigroup
+  are written to [3Xfilename[103X.[133X
+  
+  [33X[0;0YThe  first character of the appended line indicates which type of element is
+  contained  in  that line, the second character [10Xm[110X is the number of characters
+  in  the  degree of the elements to be written, the next [10Xm[110X characters are the
+  degree  [10Xn[110X  of the elements to be written, and the internal representation of
+  the elements themselves are written in blocks of [10Xm*n[110X in the remainder of the
+  line. For example, the transformations:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[ Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] ), [128X[104X
+    [4X[28X  Transformation( [ 3, 8, 1, 9, 9, 4, 10, 5, 10, 6 ] )][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Yare written as:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xt210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe file [3Xfilename[103X can be read using [2XReadGenerators[102X ([14X1.6-2[114X).[133X
+  
+  [1X1.6-4 IteratorFromGeneratorsFile[101X
+  
+  [29X[2XIteratorFromGeneratorsFile[102X( [3Xfilename[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YAn iterator.[133X
+  
+  [33X[0;0YIf  [3Xfilename[103X  is  a  string  containing  the  name  of  a file created using
+  [2XWriteGenerators[102X ([14X1.6-3[114X), then [10XIteratorFromGeneratorsFile[110X returns an iterator
+  [10Xiter[110X  such that [10XNextIterator(iter)[110X returns the next collection of generators
+  stored in the file [3Xfilename[103X.[133X
+  
+  [33X[0;0YThis function is a convenient way of, for example, looping over a collection
+  of  generators  in  a  file  without  loading  every object in the file into
+  memory.  This  might  be  useful  if the file contains more information than
+  there is available memory.[133X
+  

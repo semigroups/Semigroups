@@ -1,0 +1,1298 @@
+  
+  [1X5 [33X[0;0YBipartitions and blocks[133X[101X
+  
+  [33X[0;0YIn  this  chapter  we  describe the functions in [5XSemigroups[105X for creating and
+  manipulating  bipartitions  and  semigroups  of  bipartitions.  We  begin by
+  describing what these objects are.[133X
+  
+  [33X[0;0YA  [13Xpartition[113X of a set [10XX[110X is a set of pairwise disjoint non-empty subsets of [10XX[110X
+  whose union is [10XX[110X.[133X
+  
+  [33X[0;0YLet [22Xn∈[122X[13XN[113X, let [13Xn[113X[22X={1,2,...,n}[122X, and let [22X-[122X[13Xn[113X[22X={-1,-2,...,-n}[122X.[133X
+  
+  [33X[0;0YThe [13Xpartition monoid[113X of degree [10Xn[110X is the set of all partitions of [13Xn[113X[22X∪[122X-[13Xn[113X with a
+  multiplication  we  describe below. To avoid conflict with other uses of the
+  word  "partition"  in [5XGAP[105X, and to reflect their definition, we have opted to
+  refer  to  the elements of the partition monoid as [13Xbipartitions[113X of degree [10Xn[110X;
+  we will do so from this point on.[133X
+  
+  [33X[0;0YLet  [10Xx[110X  be any bipartition of degree [10Xn[110X. Then [10Xx[110X is a set of pairwise disjoint
+  non-empty  subsets of [13Xn[113X[22X∪[122X-[13Xn[113X whose union is [13Xn[113X[22X∪[122X-[13Xn[113X; these subsets are called the
+  [13Xblocks[113X  of  [10Xx[110X.  A  block  containing  elements  of both [13Xn[113X and -[13Xn[113X is called a
+  [13Xtransverse  block[113X.  If [10Xi[110X,[10Xj[110X[22X∈[122X[13Xn[113X[22X∪[122X-[13Xn[113X belong to the same block of a bipartition [10Xx[110X,
+  then we write ([10Xi[110X,[10Xj[110X)[22X∈[122X[10Xx[110X.[133X
+  
+  [33X[0;0YLet  [10Xx[110X  and  [10Xy[110X  be  bipartitions of equal degree. Then [10Xx[110X[10Xy[110X is the bipartition
+  where   [10Xi[110X,[10Xj[110X[22X∈[122X[13Xn[113X[22X∪[122X-[13Xn[113X   belong   to   the   same  block  of  [10Xx[110X[10Xy[110X  if  there  exist
+  [10Xk(1),k(2)[110X,[22X...[122X,[10Xk(r)[110X[22X∈[122X[13Xn[113X; and one of the following holds:[133X
+  
+  [30X    [33X[0;6Y[10Xr[110X[22X=0[122X and either [22X([122X[10Xi[110X,[10Xj[110X[22X)∈[122X[10Xx[110X or [22X([122X-[10Xi[110X,-[10Xj[110X[22X)∈[122X[10Xy[110X;[133X
+  
+  [30X    [33X[0;6Y[10Xr=2s-1[110X for some [10Xs[110X[22X≥[122X[10X1[110X and[133X
+  
+        [33X[0;6Y[10X(i,-k(1))[110X[22X∈[122X[10Xx[110X,        [10X(k(1),k(2))[110X[22X∈[122X[10Xy[110X,        [10X(-k(2),-k(3))[110X[22X∈[122X[10Xx[110X,        [22X...[122X,
+        [10X(-k(2s-2),-k(2s-1))[110X[22X∈[122X[10Xx[110X, [10X(k(2s-1),-j)[110X[22X∈[122X[10Xy[110X[133X
+  
+  [30X    [33X[0;6Y[10Xr=2s[110X for some [10Xs[110X[22X≥[122X[10X1[110X and either:[133X
+  
+        [33X[0;6Y[10X(i,-k(1))[110X[22X∈[122X[10Xx[110X,  [10X(k(1),k(2))[110X[22X∈[122X[10Xy[110X,  [10X(-k(2),-k(3))[110X[22X∈[122X[10Xx[110X, [22X...[122X, [10X(k(2s-1),k(2s))[110X[22X∈[122X[10Xx[110X,
+        [10X(-k(2s),j)[110X[22X∈[122X[10Xy[110X[133X
+  
+        [33X[0;6Yor[133X
+  
+        [33X[0;6Y[10X(-i,k(1))[110X[22X∈[122X[10Xy[110X, [10X(-k(1),-k(2))[110X[22X∈[122X[10Xx[110X, [10X(k(2),k(3))[110X[22X∈[122X[10Xy[110X, [22X...[122X, [10X(-k(2s-1),-k(2s))[110X[22X∈[122X[10Xy[110X,
+        [10X(k(2s),-j)[110X[22X∈[122X[10Xx[110X.[133X
+  
+  [33X[0;0YThis  product  can  be  shown  to  be  associative, and so the collection of
+  bipartitions  of  any particular degree is a monoid; the identity element is
+  the  partition  {{[10Xi[110X,-[10Xi[110X}:[10Xi[110X[22X∈[122X[13Xn[113X}.  A  bipartition  is a unit if and only if each
+  block  is  of  the  form [22X{[122X[10Xi[110X,-[10Xj[110X[22X}[122X for some [10Xi[110X, [10Xj[110X[22X∈[122X[13Xn[113X. Hence the group of units is
+  isomorphic to the symmetric group on [13Xn[113X.[133X
+  
+  [33X[0;0YLet [10Xx[110X be a bipartition of degree [10Xn[110X. Then we define [10Xx[110X[22X^*[122X to be the bipartition
+  obtained  from  [10Xx[110X  by replacing [10Xi[110X by -[10Xi[110X and -[10Xi[110X by -[10Xi[110X in every block of [10Xx[110X for
+  all  [10Xi[110X[22X∈[122X[13Xn[113X. It is routine to verify that if [10Xx[110X and [10Xy[110X are arbitrary bipartitions
+  of equal degree, then[133X
+  
+  [33X[0;0Y[10X(x^*)^*=x, xx^*x=x, x^*xx^*=x^*, (xy)^*=y^*x^*.[110X[133X
+  
+  [33X[0;0YIn this way, the partition monoid is a [13Xregular *-semigroup[113X.[133X
+  
+  
+  [1X5.1 [33X[0;0YThe family and categories of bipartitions[133X[101X
+  
+  [1X5.1-1 IsBipartition[101X
+  
+  [29X[2XIsBipartition[102X( [3Xobj[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YEvery  bipartition  in  [5XGAP[105X  belongs  to  the  category [10XIsBipartition[110X. Basic
+  operations  for  bipartitions  are  [2XRightBlocks[102X ([14X5.5-4[114X), [2XLeftBlocks[102X ([14X5.5-5[114X),
+  [2XExtRepOfBipartition[102X   ([14X5.5-3[114X),   [2XLeftProjection[102X   ([14X5.2-4[114X),   [2XRightProjection[102X
+  ([14X5.2-5[114X),  [2XStarOp[102X  ([14X5.2-6[114X),  [2XDegreeOfBipartition[102X  ([14X5.5-1[114X),  [2XRankOfBipartition[102X
+  ([14X5.5-2[114X), multiplication of two bipartitions of equal degree is via [9X*[109X.[133X
+  
+  [1X5.1-2 IsBipartitionCollection[101X
+  
+  [29X[2XIsBipartitionCollection[102X( [3Xobj[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YEvery    collection    of    bipartitions    belongs    to    the   category
+  [10XIsBipartitionCollection[110X.  For  example,  bipartition  semigroups  belong  to
+  [10XIsBipartitionCollection[110X.[133X
+  
+  [1X5.1-3 BipartitionFamily[101X
+  
+  [29X[2XBipartitionFamily[102X[32X family
+  
+  [33X[0;0YThe family of all bipartitions is [10XBipartitionFamily[110X.[133X
+  
+  
+  [1X5.2 [33X[0;0YCreating bipartitions[133X[101X
+  
+  [33X[0;0YThere  are several ways of creating bipartitions in [5XGAP[105X, which are described
+  in this section.[133X
+  
+  [1X5.2-1 Bipartition[101X
+  
+  [29X[2XBipartition[102X( [3Xblocks[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0Y[10XBipartition[110X returns the bipartition [10Xf[110X with equivalence classes [3Xblocks[103X, which
+  should  be  a  list  of  duplicate-free  lists whose union is [10X[-n..-1][110X union
+  [10X[1..n][110X for some positive integer [10Xn[110X.[133X
+  
+  [33X[0;0Y[10XBipartition[110X returns an error if the argument does not define a bipartition.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -1 ],[ 2, 3, -3 ], [ -2 ] ] );[127X[104X
+    [4X[28X<bipartition: [ 1, -1 ], [ 2, 3, -3 ], [ -2 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-2 BipartitionByIntRep[101X
+  
+  [29X[2XBipartitionByIntRep[102X( [3Xlist[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0YIt  is  possible  to create a bipartition using its internal representation.
+  The argument [3Xlist[103X must be a list of positive integers not greater than [10Xn[110X, of
+  length  [10X2*n[110X,  and  where [10Xi[110X appears in the list only if [10Xi-1[110X occurs earlier in
+  the list.[133X
+  
+  [33X[0;0YFor example, the internal representation of the bipartition with blocks[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[ 1, -1 ], [ 2, 3, -2 ], [ -3 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Yhas internal representation[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[ 1, 2, 2, 1, 2, 3 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  internal  representation indicates that the number [10X1[110X is in class [10X1[110X, the
+  number  [10X2[110X  is  in  class  [10X2[110X, the number [10X3[110X is in class [10X2[110X, the number [10X-1[110X is in
+  class  [10X1[110X,  the  number  [10X-2[110X  is  in class [10X2[110X, and [10X-3[110X is in class [10X3[110X. As another
+  example,  [10X[  1,  3,  2,  1  ][110X  is  not  the  internal  representation of any
+  bipartition since there is no [10X2[110X before the [10X3[110X in the second position.[133X
+  
+  [33X[0;0YIn its first form [10XBipartitionByIntRep[110X verifies that the argument [3Xlist[103X is the
+  internal representation of a bipartition.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XBipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);                         [127X[104X
+    [4X[28X<bipartition: [ 1, -1 ], [ 2, 3 ], [ -2 ], [ -3 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-3 IdentityBipartition[101X
+  
+  [29X[2XIdentityBipartition[102X( [3Xn[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YThe identity bipartition.[133X
+  
+  [33X[0;0YReturns the identity bipartition with degree [3Xn[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIdentityBipartition(10);[127X[104X
+    [4X[28X<block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [128X[104X
+    [4X[28X [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-4 LeftOne[101X
+  
+  [29X[2XLeftOne[102X( [3Xf[103X ) [32X attribute
+  [29X[2XLeftProjection[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0YThe  [10XLeftProjection[110X  of  a bipartition [3Xf[103X is the bipartition [10X[3Xf[103X[10X*Star([3Xf[103X[10X)[110X. It is
+  so-named,  since  the left and right blocks of the left projection equal the
+  left blocks of [3Xf[103X.[133X
+  
+  [33X[0;0YThe  left  projection  [10Xe[110X  of  [3Xf[103X is also a bipartition with the property that
+  [10Xe*[3Xf[103X[10X=[3Xf[103X[10X[110X. [10XLeftOne[110X and [10XLeftProjection[110X are synonymous.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -1, -2, -6 ], [ 2, 3, 5, -4 ], [127X[104X
+    [4X[25X>[125X [27X[ 6, -3 ], [ -5 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XLeftOne(f);[127X[104X
+    [4X[28X<block bijection: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ], [128X[104X
+    [4X[28X [ 6, -6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XLeftBlocks(f);[127X[104X
+    [4X[28X<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRightBlocks(LeftOne(f));[127X[104X
+    [4X[28X<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XLeftBlocks(LeftOne(f)); [127X[104X
+    [4X[28X<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XLeftOne(f)*f=f;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-5 RightOne[101X
+  
+  [29X[2XRightOne[102X( [3Xf[103X ) [32X attribute
+  [29X[2XRightProjection[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0YThe  [10XRightProjection[110X  of a bipartition [3Xf[103X is the bipartition [10XStar([3Xf[103X[10X)*[3Xf[103X[10X[110X. It is
+  so-named,  since the left and right blocks of the right projection equal the
+  right blocks of [3Xf[103X.[133X
+  
+  [33X[0;0YThe  right  projection  [10Xe[110X  of [3Xf[103X is also a bipartition with the property that
+  [10X[3Xf[103X[10X*e=[3Xf[103X[10X[110X. [10XRightOne[110X and [10XRightProjection[110X are synonymous.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -1, -4 ], [ 2, -2, -3 ], [ 3, 4 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -5 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XRightOne(f);[127X[104X
+    [4X[28X<block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ], [ 5, -5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRightBlocks(RightOne(f));[127X[104X
+    [4X[28X<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XLeftBlocks(RightOne(f));        [127X[104X
+    [4X[28X<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRightBlocks(f);[127X[104X
+    [4X[28X<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xf*RightOne(f)=f;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-6 StarOp[101X
+  
+  [29X[2XStarOp[102X( [3Xf[103X ) [32X operation
+  [29X[2XStar[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0Y[10XStarOp[110X  returns  the  unique  bipartition [10Xg[110X with the property that: [10X[3Xf[103X[10X*g*[3Xf[103X[10X=[3Xf[103X[10X[110X,
+  [10XRightBlocks([3Xf[103X[10X)=LeftBlocks(g)[110X,  and  [10XLeftBlocks([3Xf[103X[10X)=RightBlocks(g)[110X. The star [10Xg[110X
+  can be obtained from [3Xf[103X by changing the sign of every integer in the external
+  representation of [3Xf[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [127X[104X
+    [4X[25X>[125X [27X[ -2, -3 ], [ -5 ] ] );[127X[104X
+    [4X[28X<bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ], [128X[104X
+    [4X[28X [ -5 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xg:=Star(f);[127X[104X
+    [4X[28X<bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ], [128X[104X
+    [4X[28X [ -5 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xf*g*f=f;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XLeftBlocks(f)=RightBlocks(g);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRightBlocks(f)=LeftBlocks(g); [127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-7 RandomBipartition[101X
+  
+  [29X[2XRandomBipartition[102X( [3Xn[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0YIf  [3Xn[103X  is  a  positive  integer,  then  [10XRandomBipartition[110X  returns  a random
+  bipartition of degree [3Xn[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=RandomBipartition(6); [127X[104X
+    [4X[28X<bipartition: [ 1, 2, 3, 4 ], [ 5 ], [ 6, -2, -3, -4 ], [ -1, -5 ], [ -6 ]>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.3 [33X[0;0YChanging the representation of a bipartition[133X[101X
+  
+  [33X[0;0YIt  is  possible  that  a  bipartition can be represented as another type of
+  object,  or  that  another  type  of  [5XGAP[105X  object  can  be  represented as a
+  bipartition.  In  this  section, we describe the functions in the [5XSemigroups[105X
+  package  for changing the representation of bipartition, or for changing the
+  representation of another type of object to that of a bipartition.[133X
+  
+  [33X[0;0YThe     operations    [2XAsPermutation[102X    ([14X5.3-5[114X),    [2XAsPartialPerm[102X    ([14X5.3-4[114X),
+  [2XAsTransformation[102X   ([14X5.3-3[114X)   can   be  used  to  convert  bipartitions  into
+  permutations, partial permutations, or transformations where appropriate.[133X
+  
+  [1X5.3-1 AsBipartition[101X
+  
+  [29X[2XAsBipartition[102X( [3Xf[103X[, [3Xn[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0Y[10XAsBipartition[110X  returns  the  bipartition,  permutation,  transformation,  or
+  partial  permutation  [3Xf[103X,  as  a  bipartition  of degree [3Xn[103X. There are several
+  possible arguments for [10XAsBipartition[110X:[133X
+  
+  [8Xpermutations[108X
+        [33X[0;6YIf   [3Xf[103X   is   a   permutation  and  [3Xn[103X  is  a  positive  integer,  then
+        [10XAsBipartition([3Xf[103X[10X, [3Xn[103X[10X)[110X returns the bipartition on [10X[1..[3Xn[103X[10X][110X with classes [10X[i,
+        i^[3Xf[103X[10X][110X for all [10Xi=1..n[110X.[133X
+  
+        [33X[0;6YIf no positive integer [3Xn[103X is specified, then the largest moved point of
+        [3Xf[103X  is  used  as  the  value  for  [3Xn[103X; see [2XLargestMovedPoint[102X ([14XReference:
+        LargestMovedPoint (for a permutation)[114X).[133X
+  
+  [8Xtransformations[108X
+        [33X[0;6YIf  [3Xf[103X is a transformation and [3Xn[103X is a positive integer such that [3Xf[103X is a
+        transformation   of   [10X[1..[3Xn[103X[10X][110X,   then   [10XAsTransformation[110X   returns  the
+        bipartition with classes [22X(i)f^-1∪ {i}[122X for all [10Xi[110X in the image of [3Xf[103X.[133X
+  
+        [33X[0;6YIf  the  positive integer [3Xn[103X is not specified, then the internal degree
+        of [3Xf[103X is used as the value for [3Xn[103X.[133X
+  
+  [8Xpartial permutations[108X
+        [33X[0;6YIf  [3Xf[103X  is  a  partial  permutation [3Xf[103X and [3Xn[103X is a positive integer, then
+        [10XAsBipartition[110X  returns  the bipartition with classes [10X[i, i^[3Xf[103X[10X][110X for [10Xi[110X in
+        [10X[1..[3Xn[103X[10X][110X.  Thus the degree of the returned bipartition is the maximum of
+        [3Xn[103X and the values [10Xi^[3Xf[103X[10X[110X where [10Xi[110X in [10X[1..[3Xn[103X[10X][110X.[133X
+  
+        [33X[0;6YIf  the  optional argument [3Xn[103X is not present, then the default value of
+        the  maximum  of  the  largest  moved point and the largest image of a
+        moved point of [3Xf[103X plus [10X1[110X is used.[133X
+  
+  [8Xbipartitions[108X
+        [33X[0;6YIf  [3Xf[103X  is  a  bipartition  and  [3Xn[103X  is  a  non-negative  integer,  then
+        [10XAsBipartition[110X returns a bipartition corresponding to [3Xf[103X with degree [3Xn[103X.[133X
+  
+        [33X[0;6YIf [3Xn[103X equals the degree of [3Xf[103X, then [3Xf[103X is returned. If [3Xn[103X is less than the
+        degree  of [3Xf[103X, then this function returns the bipartition obtained from
+        [3Xf[103X  by  removing the values exceeding [3Xn[103X or less than [3X-n[103X from the blocks
+        of [3Xf[103X. If [3Xn[103X is greater than the degree of [3Xf[103X, then this function returns
+        the  bipartition  with the same blocks as [3Xf[103X and the singleton blocks [10Xi[110X
+        and [10X-i[110X for all [10Xi[110X greater than the degree of [3Xf[103X[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Transformation( [ 3, 5, 3, 4, 1, 2 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(f, 5);[127X[104X
+    [4X[28X<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(f);  [127X[104X
+    [4X[28X<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [128X[104X
+    [4X[28X [ 6, -2 ], [ -6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(f, 10);[127X[104X
+    [4X[28X<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [128X[104X
+    [4X[28X [ 6, -2 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ], [ -6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition((1, 3)(2, 4));[127X[104X
+    [4X[28X<block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition((1, 3)(2, 4), 10);[127X[104X
+    [4X[28X<block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], [128X[104X
+    [4X[28X [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xf:=PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 6, 7, 1, 4, 3, 2 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(f, 11);            [127X[104X
+    [4X[28X<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], [128X[104X
+    [4X[28X [ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ], [128X[104X
+    [4X[28X [ -9 ], [ -10 ], [ -11 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(f);[127X[104X
+    [4X[28X<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], [128X[104X
+    [4X[28X [ 6, -2 ], [ 7 ], [ -5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(Transformation( [ 1, 1, 2 ] ), 1);[127X[104X
+    [4X[28X<block bijection: [ 1, -1 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [127X[104X
+    [4X[25X>[125X [27X[ -3, -4, -5, -6 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(f, 0);[127X[104X
+    [4X[28X<empty bipartition>[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(f, 2);[127X[104X
+    [4X[28X<bipartition: [ 1, 2, -2 ], [ -1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(f, 8);[127X[104X
+    [4X[28X<bipartition: [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [ 7 ], [ 8 ], [128X[104X
+    [4X[28X [ -3, -4, -5, -6 ], [ -7 ], [ -8 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-2 AsBlockBijection[101X
+  
+  [29X[2XAsBlockBijection[102X( [3Xf[103X[, [3Xn[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA block bijection or [9Xfail[109X.[133X
+  
+  [33X[0;0YWhen  the  argument [3Xf[103X is a partial perm and [3Xn[103X is a positive integer which is
+  greater  than  the  maximum  of  the degree and codegree of [3Xf[103X, this function
+  returns  a  block bijection corresponding to [3Xf[103X. This block bijection has the
+  same  non-singleton  classes  as  [10Xg:=AsBipartition([3Xf[103X[10X,  [3Xn[103X[10X)[110X and one additional
+  class which is the union the singleton classes of [10Xg[110X.[133X
+  
+  [33X[0;0YIf  the  optional  second argument [3Xn[103X is not present, then the maximum of the
+  degree and codegree of [3Xf[103X plus 1 is used by default. If the second argument [3Xn[103X
+  is not greater than this maximum, then [9Xfail[109X is returned.[133X
+  
+  [33X[0;0YThis is the value at [3Xf[103X of the embedding of the symmetric inverse monoid into
+  the  dual  symmetric  inverse  monoid  given in the FitzGerald-Leech Theorem
+  [FL98].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=PartialPerm( [ 1, 2, 3, 6, 7, 10 ], [ 9, 5, 6, 1, 7, 8 ] ) ;  [127X[104X
+    [4X[28X[2,5][3,6,1,9][10,8](7)[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(f, 11);[127X[104X
+    [4X[28X<bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ], [128X[104X
+    [4X[28X [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], [128X[104X
+    [4X[28X [ -3 ], [ -4 ], [ -10 ], [ -11 ]>[128X[104X
+    [4X[25Xgap>[125X [27XAsBlockBijection(f, 10);[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XAsBlockBijection(f, 11);[127X[104X
+    [4X[28X<block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [128X[104X
+    [4X[28X [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], [128X[104X
+    [4X[28X [ 10, -8 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-3 AsTransformation[101X
+  
+  [29X[2XAsTransformation[102X( [3Xf[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA transformation or [9Xfail[109X.[133X
+  
+  [33X[0;0YWhen  the  argument  [3Xf[103X  is  a  bipartition,  that  mathematically  defines a
+  transformation,  this  function returns that transformation. A bipartition [3Xf[103X
+  defines  a transformation if and only if its right blocks are the image list
+  of a permutation of [10X[1..n][110X where [10Xn[110X is the degree of [3Xf[103X.[133X
+  
+  [33X[0;0YSee [2XIsTransBipartition[102X ([14X5.5-9[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition([[ 1, -3 ], [ 2, -2 ], [ 3, 5, 10, -7 ], [ 4, -12 ], [127X[104X
+    [4X[25X>[125X [27X[ 6, 7, -6 ], [ 8, -5 ], [ 9, -11 ], [ 11, 12, -10 ], [ -1 ], [ -4 ], [127X[104X
+    [4X[25X>[125X [27X[ -8 ], [ -9 ]]);;[127X[104X
+    [4X[25Xgap>[125X [27XAsTransformation(f);[127X[104X
+    [4X[28XTransformation( [ 3, 2, 7, 12, 7, 6, 6, 5, 11, 7, 10, 10 ] )[128X[104X
+    [4X[25Xgap>[125X [27XIsTransBipartition(f);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition([[ 1, 5 ], [ 2, 4, 8, 10 ], [ 3, 6, 7, -1, -2 ], [127X[104X
+    [4X[25X>[125X [27X[ 9, -4, -6, -9 ], [ -3, -5 ], [ -7, -8 ], [ -10 ]]);;[127X[104X
+    [4X[25Xgap>[125X [27XAsTransformation(f);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-4 AsPartialPerm[101X
+  
+  [29X[2XAsPartialPerm[102X( [3Xf[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA partial perm or [9Xfail[109X.[133X
+  
+  [33X[0;0YWhen  the  argument [3Xf[103X is a bipartition that mathematically defines a partial
+  perm, this function returns that partial perm.[133X
+  
+  [33X[0;0YA  bipartition  [3Xf[103X  defines a partial perm if and only if its numbers of left
+  and right blocks both equal its degree.[133X
+  
+  [33X[0;0YSee [2XIsPartialPermBipartition[102X ([14X5.5-12[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3, -10 ], [ 4, -5 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -9 ], [ 6 ], [ 7 ], [ 8, -6 ], [ 9, -3 ], [ 10, -8 ], [127X[104X
+    [4X[25X>[125X [27X[ -1 ], [ -7 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsPartialPermBipartition(f);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XAsPartialPerm(f);[127X[104X
+    [4X[28X[1,4,5,9,3,10,8,6](2)[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition([[ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsPartialPermBipartition(f);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XAsPartialPerm(f);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-5 AsPermutation[101X
+  
+  [29X[2XAsPermutation[102X( [3Xf[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA permutation or [9Xfail[109X.[133X
+  
+  [33X[0;0YWhen  the  argument  [3Xf[103X  is  a  bipartition  that  mathematically  defines  a
+  permutation, this function returns that permutation.[133X
+  
+  [33X[0;0YA  bipartition  [3Xf[103X  defines a permutation if and only if its numbers of left,
+  right, and transverse blocks all equal its degree.[133X
+  
+  [33X[0;0YSee [2XIsPermBipartition[102X ([14X5.5-11[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -6 ], [ 2, -4 ], [ 3, -2 ], [ 4, -5 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -3 ], [ 6, -1 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsPermBipartition(f);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XAsPermutation(f);[127X[104X
+    [4X[28X(1,6)(2,4,5,3)[128X[104X
+    [4X[25Xgap>[125X [27XAsBipartition(last)=f;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.4 [33X[0;0YOperators for bipartitions[133X[101X
+  
+  [8X[10X[3Xf[103X[10X * [3Xg[103X[10X[110X[108X
+        [33X[0;6Yreturns the composition of [3Xf[103X and [3Xg[103X when [3Xf[103X and [3Xg[103X are bipartitions.[133X
+  
+  [8X[10X[3Xf[103X[10X < [3Xg[103X[10X[110X[108X
+        [33X[0;6Yreturns  [9Xtrue[109X if the internal representation of [3Xf[103X is lexicographically
+        less than the internal representation of [3Xg[103X and [9Xfalse[109X if it is not.[133X
+  
+  [8X[10X[3Xf[103X[10X = [3Xg[103X[10X[110X[108X
+        [33X[0;6Yreturns [9Xtrue[109X if the bipartition [3Xf[103X equals the bipartition [3Xg[103X and returns
+        [9Xfalse[109X if it does not.[133X
+  
+  [1X5.4-1 PartialPermLeqBipartition[101X
+  
+  [29X[2XPartialPermLeqBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf   [3Xx[103X   and   [3Xy[103X   are   partial   perm   bipartitions,  i.e.  they  satisfy
+  [2XIsPartialPermBipartition[102X    ([14X5.5-12[114X),    then    this    function    returns
+  [10XAsPartialPerm([3Xx[103X[10X)<AsPartialPerm([3Xy[103X[10X)[110X.[133X
+  
+  [1X5.4-2 NaturalLeqPartialPermBipartition[101X
+  
+  [29X[2XNaturalLeqPartialPermBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThe  [13Xnatural  partial order[113X [22X≤[122X on an inverse semigroup [10XS[110X is defined by [10Xs[110X[22X≤[122X[10Xt[110X if
+  there  exists  an  idempotent  [10Xe[110X  in  [10XS[110X such that [10Xs=et[110X. Hence if [3Xx[103X and [3Xy[103X are
+  partial  perm  bipartitions,  then  [3Xx[103X[22X≤[122X[3Xy[103X if and only if [10XAsPartialPerm([3Xx[103X[10X)[110X is a
+  restriction of [10XAsPartialPerm([3Xy[103X[10X)[110X.[133X
+  
+  [33X[0;0Y[10XNaturalLeqPartialPermBipartition[110X  returns  [9Xtrue[109X  if  [10XAsPartialPerm([3Xx[103X[10X)[110X  is  a
+  restriction of [10XAsPartialPerm([3Xy[103X[10X)[110X and [9Xfalse[109X if it is not. Note that since this
+  is  a  partial  order and not a total order, it is possible that [3Xx[103X and [3Xy[103X are
+  incomparable with respect to the natural partial order.[133X
+  
+  [1X5.4-3 NaturalLeqBlockBijection[101X
+  
+  [29X[2XNaturalLeqBlockBijection[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThe  [13Xnatural  partial order[113X [22X≤[122X on an inverse semigroup [10XS[110X is defined by [10Xs[110X[22X≤[122X[10Xt[110X if
+  there exists an idempotent [10Xe[110X in [10XS[110X such that [10Xs=et[110X. Hence if [3Xx[103X and [3Xy[103X are block
+  bijections, then [3Xx[103X[22X≤[122X[3Xy[103X if and only if [3Xx[103X contains [3Xy[103X.[133X
+  
+  [33X[0;0Y[10XNaturalLeqBlockBijection[110X returns [9Xtrue[109X if [3Xx[103X is contained in [3Xy[103X and [9Xfalse[109X if it
+  is not. Note that since this is a partial order and not a total order, it is
+  possible  that  [3Xx[103X and [3Xy[103X are incomparable with respect to the natural partial
+  order.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [127X[104X
+    [4X[25X>[125X [27X[ 10, -10 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xy:=Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xz:=Bipartition([Union([1..10],[-10..-1])]);;[127X[104X
+    [4X[25Xgap>[125X [27XNaturalLeqBlockBijection(x, y);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XNaturalLeqBlockBijection(y, x);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XNaturalLeqBlockBijection(z, x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XNaturalLeqBlockBijection(z, y);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.4-4 PermLeftQuoBipartition[101X
+  
+  [29X[2XPermLeftQuoBipartition[102X( [3Xf[103X, [3Xg[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA permutation.[133X
+  
+  [33X[0;0YIf  [3Xf[103X  and  [3Xg[103X  are  bipartitions  with  equal  left  and  right blocks, then
+  [10XPermLeftQuoBipartition[110X  returns  the permutation of the indices of the right
+  blocks of [3Xf[103X (and [3Xg[103X) induced by [10XStar([3Xf[103X[10X)*[3Xg[103X[10X[110X.[133X
+  
+  [33X[0;0Y[10XPermLeftQuoBipartition[110X  verifies  that  [3Xf[103X  and  [3Xg[103X  have equal left and right
+  blocks,  and  returns  an  error  if  they  do  not.  The  value returned by
+  [10XPermLeftQuoBipartition([3Xf[103X[10X,[3Xg[103X[10X)[110X    is    the    same   as   that   returned   by
+  [10XPermRightBlocks(RightBlocks([3Xf[103X[10X), Star([3Xf[103X[10X)*[3Xg[103X[10X)[110X. See also [2XPermRightBlocks[102X ([14X5.7-3[114X)
+  and [2XOnRightBlocksBipartitionByPerm[102X ([14X5.4-5[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -1, -2, -8 ], [127X[104X
+    [4X[25X>[125X [27X[ 3, -3, -6, -7, -9 ], [ 9, -4, -5 ], [ -10 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xg:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], [127X[104X
+    [4X[25X>[125X [27X[ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XPermLeftQuoBipartition(f, g);[127X[104X
+    [4X[28X(1,2,3)[128X[104X
+    [4X[25Xgap>[125X [27XStar(f)*g;[127X[104X
+    [4X[28X<bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ], [128X[104X
+    [4X[28X [ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]>[128X[104X
+    [4X[25Xgap>[125X [27XPermRightBlocks(RightBlocks(f), last);[127X[104X
+    [4X[28X(1,2,3)[128X[104X
+  [4X[32X[104X
+  
+  [1X5.4-5 OnRightBlocksBipartitionByPerm[101X
+  
+  [29X[2XOnRightBlocksBipartitionByPerm[102X( [3Xf[103X, [3Xp[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0YIf  [3Xf[103X  is  a  bipartition and [3Xp[103X is a permutation of the indices of the right
+  blocks  of  [3Xf[103X,  then  [10XOnRightBlocksBipartitionByPerm[110X returns the bipartition
+  obtained from [3Xf[103X by rearranging the right blocks of [3Xf[103X according to [3Xp[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -1, -2, -8 ],[127X[104X
+    [4X[25X>[125X [27X[ 3, -3, -6, -7, -9 ], [ 9, -4, -5 ], [ -10 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XOnRightBlocksBipartitionByPerm(f, (1,2,3));[127X[104X
+    [4X[28X<bipartition: [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], [128X[104X
+    [4X[28X [ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ]>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.5 [33X[0;0YAttributes for bipartitons[133X[101X
+  
+  [33X[0;0YIn  this  section  we  describe  various  attributes  that a bipartition can
+  possess.[133X
+  
+  [1X5.5-1 DegreeOfBipartition[101X
+  
+  [29X[2XDegreeOfBipartition[102X( [3Xf[103X ) [32X attribute
+  [29X[2XDegreeOfBipartitionCollection[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
+  
+  [33X[0;0YThe degree of a bipartition is, roughly speaking, the number of points where
+  it  is defined. More precisely, if [3Xf[103X is a bipartition defined on [10X2*n[110X points,
+  then the degree of [3Xf[103X is [10Xn[110X.[133X
+  
+  [33X[0;0YThe  degree of a collection [3Xcoll[103X of bipartitions of equal degree is just the
+  degree  of  any (and every) bipartition in [3Xcoll[103X. The degree of collection of
+  bipartitions of unequal degrees is not defined.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 7, -3, -8 ], [ 2, 6 ], [ 3 ], [ 4, -7, -9 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, 9, -2 ], [ 8, -1, -4, -6 ], [ -5 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XDegreeOfBipartition(f);[127X[104X
+    [4X[28X9[128X[104X
+    [4X[25Xgap>[125X [27Xs:=BrauerMonoid(5);[127X[104X
+    [4X[28X<regular bipartition monoid of degree 5 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsBipartitionCollection(s);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDegreeOfBipartitionCollection(s);[127X[104X
+    [4X[28X5[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-2 RankOfBipartition[101X
+  
+  [29X[2XRankOfBipartition[102X( [3Xf[103X ) [32X attribute
+  [29X[2XNrTransverseBlocks[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe rank of a bipartition.[133X
+  
+  [33X[0;0YWhen  the  argument is a bipartition [3Xf[103X, [10XRankOfBipartition[110X returns the number
+  of  blocks  of  [3Xf[103X  containing  both  positive and negative entries, i.e. the
+  number of transverse blocks of [3Xf[103X.[133X
+  
+  [33X[0;0Y[10XNrTransverseBlocks[110X is just a synonym for [10XRankOfBipartition[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], [127X[104X
+    [4X[25X>[125X [27X[ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ] ] );[127X[104X
+    [4X[28X<bipartition: [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], [128X[104X
+    [4X[28X [ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRankOfBipartition(f);[127X[104X
+    [4X[28X4[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-3 ExtRepOfBipartition[101X
+  
+  [29X[2XExtRepOfBipartition[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA partition of [10X[1..2*n][110X.[133X
+  
+  [33X[0;0YIf  [10Xn[110X  is  the degree of the bipartition [3Xf[103X, then [10XExtRepOfBipartition[110X returns
+  the  partition  of [10X[-n..-1][110X union [10X[1..n][110X corresponding to [3Xf[103X as a sorted list
+  of duplicate-free lists.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ] ] );[127X[104X
+    [4X[28X<block bijection: [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XExtRepOfBipartition(f);[127X[104X
+    [4X[28X[ [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-4 RightBlocks[101X
+  
+  [29X[2XRightBlocks[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe right blocks of a bipartition.[133X
+  
+  [33X[0;0Y[10XRightBlocks[110X returns the right blocks of the bipartition [3Xf[103X.[133X
+  
+  [33X[0;0YThe [13Xright blocks[113X of a bipartition [3Xf[103X are just the intersections of the blocks
+  of  [3Xf[103X  with  [10X[-n..-1][110X  where  [10Xn[110X is the degree of [3Xf[103X, the values in transverse
+  blocks are positive, and the values in non-transverse blocks are negative.[133X
+  
+  [33X[0;0YThe  right blocks of bipartition are [5XGAP[105X objects in their own right, and are
+  not simply a list of blocks of [3Xf[103X; see [14X5.6[114X for more information.[133X
+  
+  [33X[0;0YThe  significance  of this notion lies in the fact that bipartitions [10Xx[110X and [10Xy[110X
+  are  [13XL[113X-related  in the partition monoid if and only if they have equal right
+  blocks.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], [127X[104X
+    [4X[25X>[125X [27X[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XRightBlocks(f);[127X[104X
+    [4X[28X<blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]>[128X[104X
+    [4X[25Xgap>[125X [27XLeftBlocks(f);[127X[104X
+    [4X[28X<blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-5 LeftBlocks[101X
+  
+  [29X[2XLeftBlocks[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe left blocks of a bipartition.[133X
+  
+  [33X[0;0Y[10XLeftBlocks[110X returns the left blocks of the bipartition [3Xf[103X.[133X
+  
+  [33X[0;0YThe  [13Xleft blocks[113X of a bipartition [3Xf[103X are just the intersections of the blocks
+  of [3Xf[103X with [10X[1..n][110X where [10Xn[110X is the degree of [3Xf[103X, the values in transverse blocks
+  are positive, and the values in non-transverse blocks are negative.[133X
+  
+  [33X[0;0YThe  left  blocks of bipartition are [5XGAP[105X objects in their own right, and are
+  not simply a list of blocks of [3Xf[103X; see [14X5.6[114X for more information.[133X
+  
+  [33X[0;0YThe  significance  of this notion lies in the fact that bipartitions [10Xx[110X and [10Xy[110X
+  are  [13XR[113X-related  in  the partition monoid if and only if they have equal left
+  blocks.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], [127X[104X
+    [4X[25X>[125X [27X[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XRightBlocks(f);[127X[104X
+    [4X[28X<blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]>[128X[104X
+    [4X[25Xgap>[125X [27XLeftBlocks(f);[127X[104X
+    [4X[28X<blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-6 NrLeftBlocks[101X
+  
+  [29X[2XNrLeftBlocks[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
+  
+  [33X[0;0YWhen  the  argument  is  a bipartition [3Xf[103X, [10XNrLeftBlocks[110X returns the number of
+  left  blocks  of  [3Xf[103X,  i.e.  the  number  of  blocks of [3Xf[103X intersecting [10X[1..n][110X
+  non-trivially.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, 3, 4, 5, 6, 8 ], [ 7, -2, -3 ], [127X[104X
+    [4X[25X>[125X [27X[ -1, -4, -7, -8 ], [ -5, -6 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XNrLeftBlocks(f);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XLeftBlocks(f);[127X[104X
+    [4X[28X<blocks: [ -1, -2, -3, -4, -5, -6, -8 ], [ 7 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-7 NrRightBlocks[101X
+  
+  [29X[2XNrRightBlocks[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
+  
+  [33X[0;0YWhen  the  argument  is a bipartition [3Xf[103X, [10XNrRightBlocks[110X returns the number of
+  right  blocks  of  [3Xf[103X,  i.e.  the number of blocks of [3Xf[103X intersecting [10X[-n..-1][110X
+  non-trivially.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, 3, 4, 6, -2, -7 ], [ 5, -1, -3, -8 ], [127X[104X
+    [4X[25X>[125X [27X[ 7, -4, -6 ], [ 8 ], [ -5 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XRightBlocks(f);[127X[104X
+    [4X[28X<blocks: [ 1, 3, 8 ], [ 2, 7 ], [ 4, 6 ], [ -5 ]>[128X[104X
+    [4X[25Xgap>[125X [27XNrRightBlocks(f);[127X[104X
+    [4X[28X4[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-8 NrBlocks[101X
+  
+  [29X[2XNrBlocks[102X( [3Xblocks[103X ) [32X attribute
+  [29X[2XNrBlocks[102X( [3Xf[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
+  
+  [33X[0;0YIf  [3Xblocks[103X  is  some blocks or [3Xf[103X is a bipartition, then [10XNrBlocks[110X returns the
+  number of blocks in [3Xblocks[103X or [3Xf[103X, respectively.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ -1, -2, -3, -4 ], [ -5 ], [ 6 ]]);[127X[104X
+    [4X[28X<blocks: [ -1, -2, -3, -4 ], [ -5 ], [ 6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XNrBlocks(blocks);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], [127X[104X
+    [4X[25X>[125X [27X[ -3 ] ] );[127X[104X
+    [4X[28X<bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], [128X[104X
+    [4X[28X [ -3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XNrBlocks(f);[127X[104X
+    [4X[28X4[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-9 IsTransBipartition[101X
+  
+  [29X[2XIsTransBipartition[102X( [3Xf[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf  the  bipartition  [3Xf[103X  defines  a  transformation, then [10XIsTransBipartition[110X
+  returns [9Xtrue[109X, and if not, then [9Xfalse[109X is returned.[133X
+  
+  [33X[0;0YA  bipartition  [3Xf[103X defines a transformation if and only if the number of left
+  blocks equals the number of transverse blocks and the number of right blocks
+  equals the degree.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], [ 6, 7, -9 ], [127X[104X
+    [4X[25X>[125X [27X[ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], [ -8 ], [ -10 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsTransBipartition(f);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], [127X[104X
+    [4X[25X>[125X [27X[ -2 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsTransBipartition(f);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XNumber(PartitionMonoid(3), IsTransBipartition);[127X[104X
+    [4X[28X27[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-10 IsDualTransBipartition[101X
+  
+  [29X[2XIsDualTransBipartition[102X( [3Xf[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf   the   star   of  the  bipartition  [3Xf[103X  defines  a  transformation,  then
+  [10XIsDualTransBipartition[110X returns [9Xtrue[109X, and if not, then [9Xfalse[109X is returned.[133X
+  
+  [33X[0;0YA  bipartition  is the dual of a transformation if and only if its number of
+  right  blocks  equals its number of transverse blocks and its number of left
+  blocks equals its degree.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -8, -9 ], [ 2, -1, -4 ], [ 3 ], [ 4 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -10 ], [ 6, -2, -5 ], [ 7, -3 ], [ 8 ], [ 9, -6, -7 ], [ 10 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsDualTransBipartition(f);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], [127X[104X
+    [4X[25X>[125X [27X[ -2 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsTransBipartition(f);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XNumber(PartitionMonoid(3), IsDualTransBipartition);[127X[104X
+    [4X[28X27[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-11 IsPermBipartition[101X
+  
+  [29X[2XIsPermBipartition[102X( [3Xf[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf  the  bipartition [3Xf[103X defines a permutation, then [10XIsPermBipartition[110X returns
+  [9Xtrue[109X, and if not, then [9Xfalse[109X is returned.[133X
+  
+  [33X[0;0YA bipartition is a permutation if its numbers of left, right, and transverse
+  blocks all equal its degree.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -2, -4, -6 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsPermBipartition(f);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -6 ], [127X[104X
+    [4X[25X>[125X [27X[ 4, -1 ], [ 5, -5 ], [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsPermBipartition(f);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-12 IsPartialPermBipartition[101X
+  
+  [29X[2XIsPartialPermBipartition[102X( [3Xf[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf    the    bipartition    [3Xf[103X    defines   a   partial   permutation,   then
+  [10XIsPartialPermBipartition[110X returns [9Xtrue[109X, and if not, then [9Xfalse[109X is returned.[133X
+  
+  [33X[0;0YA  bipartition [3Xf[103X defines a partial permutation if and only if the numbers of
+  left and right blocks of [3Xf[103X equal the degree of [3Xf[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -2, -4, -6 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsPartialPermBipartition(f);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -3 ], [ 2 ], [ -4 ], [ 3, -6 ], [ 4, -1 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -5 ], [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsPermBipartition(f);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsPartialPermBipartition(f); [127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-13 IsBlockBijection[101X
+  
+  [29X[2XIsBlockBijection[102X( [3Xf[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf  the bipartition [3Xf[103X induces a bijection from the quotient of [10X[1..n][110X by the
+  blocks  of  [3Xf[103X  to  the  quotient  of  [10X[-n..-1][110X  by  the  blocks  of  [3Xf[103X, then
+  [10XIsBlockBijection[110X return [9Xtrue[109X, and if not, then it returns [9Xfalse[109X.[133X
+  
+  [33X[0;0YA bipartition is a block bijection if and only if its number of blocks, left
+  blocks and right blocks are equal.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 5, -2 ], [ 2, 3, -1 ], [127X[104X
+    [4X[25X>[125X [27X[ 6, -5, -6 ], [ -3, -4 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsBlockBijection(f);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -5 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsBlockBijection(f);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-14 IsUniformBlockBijection[101X
+  
+  [29X[2XIsUniformBlockBijection[102X( [3Xx[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YIf  the  bipartition  [3Xx[103X  is  a block bijection where every block contains an
+  equal  number of positive and negative entries, then [10XIsUniformBlockBijection[110X
+  returns [9Xtrue[109X, and otherwise it returns [9Xfalse[109X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx:=Bipartition( [ [ 1, 2, -3, -4 ], [ 3, -5 ], [ 4, -6 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -7 ], [ 6, -8 ], [ 7, -9 ], [ 8, -1 ], [ 9, -2 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsBlockBijection(x); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -5 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIsUniformBlockBijection(x);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.6 [33X[0;0YCreating blocks and their attributes[133X[101X
+  
+  [33X[0;0YAs  described  above the left and right blocks of a bipartition characterise
+  Green's  [13XR[113X-  and  [13XL[113X-relation on the partition monoid; see [2XLeftBlocks[102X ([14X5.5-5[114X)
+  and  [2XRightBlocks[102X  ([14X5.5-4[114X). The left or right blocks of a bipartition are [5XGAP[105X
+  objects in their own right.[133X
+  
+  [33X[0;0YIn  this  section,  we  describe the functions in the [5XSemigroups[105X package for
+  creating and manipulating the left or right blocks of a bipartition.[133X
+  
+  [1X5.6-1 BlocksNC[101X
+  
+  [29X[2XBlocksNC[102X( [3Xclasses[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA blocks.[133X
+  
+  [33X[0;0YThis  function makes it possible to create a [5XGAP[105X object corresponding to the
+  left or right blocks of a bipartition without reference to any bipartitions.[133X
+  
+  [33X[0;0Y[10XBlocksNC[110X  returns  the blocks with equivalence classes [3Xclasses[103X, which should
+  be  a list of duplicate-free lists consisting solely of positive or negative
+  integers,  where the union of the absolute values of the lists is [10X[1..n][110X for
+  some [10Xn[110X. The blocks with positive entries correspond to transverse blocks and
+  the classes with negative entries correspond to non-transverse blocks.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XBlocksNC([[ 1 ], [ 2 ], [ -3, -6 ], [ -4, -5 ]]);[127X[104X
+    [4X[28X<blocks: [ 1 ], [ 2 ], [ -3, -6 ], [ -4, -5 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.6-2 ExtRepOfBlocks[101X
+  
+  [29X[2XExtRepOfBlocks[102X( [3Xblocks[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA list of integers.[133X
+  
+  [33X[0;0YIf  [10Xn[110X  is the degree of a bipartition with left or right blocks [3Xblocks[103X, then
+  [10XExtRepOfBlocks[110X  returns  the  partition  corresponding to [3Xblocks[103X as a sorted
+  list of duplicate-free lists.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ]);;[127X[104X
+    [4X[25Xgap>[125X [27XExtRepOfBlocks(blocks);[127X[104X
+    [4X[28X[ [ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X5.6-3 RankOfBlocks[101X
+  
+  [29X[2XRankOfBlocks[102X( [3Xblocks[103X ) [32X attribute
+  [29X[2XNrTransverseBlocks[102X( [3Xblocks[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
+  
+  [33X[0;0YWhen  the  argument  [3Xblocks[103X  is  the  left or right blocks of a bipartition,
+  [10XRankOfBlocks[110X returns the number of blocks of [3Xblocks[103X containing only positive
+  entries, i.e. the number of transverse blocks in [3Xblocks[103X.[133X
+  
+  [33X[0;0Y[10XNrTransverseBlocks[110X is a synonym of [10XRankOfBlocks[110X in this context.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([ [ -1, -2, -4, -6 ], [ 3, 10, 12 ], [ 5, 7 ], [127X[104X
+    [4X[25X>[125X [27X[ 8 ], [ 9 ], [ -11 ] ]);;[127X[104X
+    [4X[25Xgap>[125X [27XRankOfBlocks(blocks);[127X[104X
+    [4X[28X4[128X[104X
+  [4X[32X[104X
+  
+  [1X5.6-4 DegreeOfBlocks[101X
+  
+  [29X[2XDegreeOfBlocks[102X( [3Xblocks[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
+  
+  [33X[0;0YThe degree of [3Xblocks[103X is the number of points [10Xn[110X where it is defined, i.e. the
+  union of the blocks in [3Xblocks[103X will be [10X[1..n][110X after taking the absolute value
+  of every element.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([ [ -1, -11 ], [ 2 ], [ 3, 5, 6, 7 ], [ 4, 8 ], [127X[104X
+    [4X[25X>[125X [27X[ 9, 10 ], [ 12 ] ]);;[127X[104X
+    [4X[25Xgap>[125X [27XDegreeOfBlocks(blocks);[127X[104X
+    [4X[28X12[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.7 [33X[0;0YActions on blocks[133X[101X
+  
+  [33X[0;0YBipartitions  act  on  left  and  right  blocks  in  several ways, which are
+  described in this section.[133X
+  
+  [1X5.7-1 OnRightBlocks[101X
+  
+  [29X[2XOnRightBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YThe blocks of a bipartition.[133X
+  
+  [33X[0;0Y[10XOnRightBlocks[110X  returns  the  right  blocks of the product [10Xg*[3Xf[103X[10X[110X where [10Xg[110X is any
+  bipartition whose right blocks are equal to [3Xblocks[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 5, 8 ], [ 2, 3, 7 ], [ 6, -3, -4, -5 ], [127X[104X
+    [4X[25X>[125X [27X [ -1, -2, -6 ], [ -7, -8 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xg:=Bipartition( [ [ 1, 5 ], [ 2, 4, 8, -2 ], [ 3, 6, 7, -3, -4 ], [127X[104X
+    [4X[25X>[125X [27X [ -1, -6, -8 ], [ -5, -7 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XRightBlocks(g*f);[127X[104X
+    [4X[28X<blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>[128X[104X
+    [4X[25Xgap>[125X [27XOnRightBlocks(RightBlocks(g), f); [127X[104X
+    [4X[28X<blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.7-2 OnLeftBlocks[101X
+  
+  [29X[2XOnLeftBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YThe blocks of a bipartition.[133X
+  
+  [33X[0;0Y[10XOnLeftBlocks[110X  returns  the  left  blocks  of  the product [10X[3Xf[103X[10X*g[110X where [10Xg[110X is any
+  bipartition whose left blocks are equal to [3Xblocks[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 5, 7, -1, -3, -4, -6 ], [ 2, 3, 6, 8 ], [127X[104X
+    [4X[25X>[125X [27X[ 4, -2, -5, -8 ], [ -7 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xg:=Bipartition( [ [ 1, 3, -4, -5 ], [ 2, 4, 5, 8 ], [ 6, -1, -3 ], [127X[104X
+    [4X[25X>[125X [27X[ 7, -2, -6, -7, -8 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XLeftBlocks(f*g);[127X[104X
+    [4X[28X<blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]>[128X[104X
+    [4X[25Xgap>[125X [27XOnLeftBlocks(LeftBlocks(g), f);[127X[104X
+    [4X[28X<blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.7-3 PermRightBlocks[101X
+  
+  [29X[2XPermRightBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X operation
+  [29X[2XPermLeftBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA permutation.[133X
+  
+  [33X[0;0YIf  [3Xf[103X  is  a  bipartition that stabilises [3Xblocks[103X, i.e. [10XOnRightBlocks([3Xblocks[103X[10X,
+  [3Xf[103X[10X)=[3Xblocks[103X[10X[110X,  then  [10XPermRightBlocks[110X  returns the permutation of the indices of
+  the transverse blocks of [3Xblocks[103X under the action of [3Xf[103X.[133X
+  
+  [33X[0;0Y[10XPermLeftBlocks[110X   is   the   analogue  of  [10XPermRightBlocks[110X  with  respect  to
+  [2XOnLeftBlocks[102X ([14X5.7-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 10 ], [ 2, -7, -9 ], [ 3, 4, 6, 8 ], [ 5, -5 ], [127X[104X
+    [4X[25X>[125X [27X[ 7, 9, -2 ], [ -1, -10 ], [ -3, -4, -6, -8 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ -1, -10 ], [ 2 ], [ -3, -4, -6, -8 ], [ 5 ], [127X[104X
+    [4X[25X>[125X [27X[ 7, 9 ]]);;[127X[104X
+    [4X[25Xgap>[125X [27XOnRightBlocks(blocks, f)=blocks;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XPermRightBlocks(blocks, f);[127X[104X
+    [4X[28X(2,5)[128X[104X
+  [4X[32X[104X
+  
+  [1X5.7-4 InverseRightBlocks[101X
+  
+  [29X[2XInverseRightBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0YIf  [10XOnRightBlocks([3Xblocks[103X[10X,  [3Xf[103X[10X)[110X  has  rank  equal  to the rank of [3Xblocks[103X, then
+  [10XInverseRightBlocks[110X  returns  a bipartition [10Xg[110X such that [10XOnRightBlocks([3Xblocks[103X[10X,
+  [3Xf[103X[10X*g)=[3Xblocks[103X[10X[110X   and   where   [10XPermRightBlocks([3Xblocks[103X[10X,  [3Xf[103X[10X*g)[110X  is  the  identity
+  permutation.[133X
+  
+  [33X[0;0YSee [2XPermRightBlocks[102X ([14X5.7-3[114X) and [2XOnRightBlocks[102X ([14X5.7-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], [127X[104X
+    [4X[25X>[125X [27X[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]]);;[127X[104X
+    [4X[25Xgap>[125X [27XRankOfBlocks(blocks);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XRankOfBlocks(OnRightBlocks(blocks, f));[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xg:=InverseRightBlocks(blocks, f);[127X[104X
+    [4X[28X<bipartition: [ 1, -6 ], [ 2, 3, 4, 5, 6, 7, 8 ], [ -1, -4, -5, -8 ], [128X[104X
+    [4X[28X [ -2, -3, -7 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xblocks;[127X[104X
+    [4X[28X<blocks: [ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XOnRightBlocks(blocks, f*g);[127X[104X
+    [4X[28X<blocks: [ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XPermRightBlocks(blocks, f*g);[127X[104X
+    [4X[28X()[128X[104X
+  [4X[32X[104X
+  
+  [1X5.7-5 InverseLeftBlocks[101X
+  
+  [29X[2XInverseLeftBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  
+  [33X[0;0YIf  [10XOnLeftBlocks([3Xblocks[103X[10X,  [3Xf[103X[10X)[110X  has  rank  equal  to  the rank of [3Xblocks[103X, then
+  [10XInverseLeftBlocks[110X  returns  a  bipartition  [10Xg[110X such that [10XOnLeftBlocks([3Xblocks[103X[10X,
+  g*[3Xf[103X[10X)=[3Xblocks[103X[10X[110X   and   where   [10XPermLeftBlocks([3Xblocks[103X[10X,   g*[3Xf[103X[10X)[110X  is  the  identity
+  permutation.[133X
+  
+  [33X[0;0YSee [2XPermLeftBlocks[102X ([14X5.7-3[114X) and [2XOnLeftBlocks[102X ([14X5.7-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], [127X[104X
+    [4X[25X>[125X [27X[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]]);;[127X[104X
+    [4X[25Xgap>[125X [27XRankOfBlocks(OnLeftBlocks(blocks, f));[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xg:=InverseLeftBlocks(blocks, f);[127X[104X
+    [4X[28X<bipartition: [ 1, 2, 6 ], [ 3, 4, 5, -1, -2, -3, -4, -5, -6, -7, -8 ][128X[104X
+    [4X[28X  , [ 7, 8 ]>[128X[104X
+    [4X[25Xgap>[125X [27XOnLeftBlocks(blocks, g*f);[127X[104X
+    [4X[28X<blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>[128X[104X
+    [4X[25Xgap>[125X [27XPermLeftBlocks(blocks, g*f);          [127X[104X
+    [4X[28X()[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.8 [33X[0;0YVisualising blocks and bipartitions[133X[101X
+  
+  [33X[0;0YThere  are  some  functions  in  [5XSemigroups[105X  for  creating LaTeX pictures of
+  bipartitions  and blocks. Descriptions of these methods can be found in this
+  section.[133X
+  
+  [33X[0;0YThe  functions  described  in  this  section  return  a string, which can be
+  written  to  a  file  using  the function [2XFileString[102X ([14XGAPDoc: FileString[114X) or
+  viewed using [2XSplash[102X ([14X4.8-1[114X).[133X
+  
+  [1X5.8-1 TikzBipartition[101X
+  
+  [29X[2XTikzBipartition[102X( [3Xf[103X[, [3Xopts[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10YA string.[133X
+  
+  [33X[0;0YThis function produces a graphical representation of the bipartition [3Xf[103X using
+  the  [10Xtikz[110X  package for LaTeX. More precisely, this function outputs a string
+  containing  a  minimal  LaTeX  document which can be compiled using LaTeX to
+  produce a picture of [3Xf[103X.[133X
+  
+  [33X[0;0YIf  the  optional second argument [3Xopts[103X is a record with the component [10Xcolors[110X
+  set  to  [9Xtrue[109X,  then the blocks of [3Xf[103X will be colored using the standard [10Xtikz[110X
+  colors.  Due  to  the limited number of colors available in [10Xtikz[110X this option
+  only works when the degree of [3Xf[103X is less than 20.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 5 ], [ 2, 4, -3, -5 ], [ 3, -1, -2 ], [127X[104X
+    [4X[25X>[125X [27X[ -4 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XTikzBipartition(f);[127X[104X
+    [4X[28X"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\[128X[104X
+    [4X[28Xt}\n\\begin{tikzpicture}\n\n  %block #1\n  %vertices and labels\n  \\\[128X[104X
+    [4X[28Xfill(1,2)circle(.125);\n  \\draw(0.95, 2.2) node [above] {{ $1$}};\n \[128X[104X
+    [4X[28X \\fill(5,2)circle(.125);\n  \\draw(4.95, 2.2) node [above] {{ $5$}};\[128X[104X
+    [4X[28X\n\n  %lines\n  \\draw(1,1.875) .. controls (1,1.1) and (5,1.1) .. (5\[128X[104X
+    [4X[28X,1.875);\n\n  %block #2\n  %vertices and labels\n  \\fill(2,2)circle(\[128X[104X
+    [4X[28X.125);\n  \\draw(1.95, 2.2) node [above] {{ $2$}};\n  \\fill(4,2)circ\[128X[104X
+    [4X[28Xle(.125);\n  \\draw(3.95, 2.2) node [above] {{ $4$}};\n  \\fill(3,0)c\[128X[104X
+    [4X[28Xircle(.125);\n  \\draw(3, -0.2) node [below] {{ $-3$}};\n  \\fill(5,0\[128X[104X
+    [4X[28X)circle(.125);\n  \\draw(5, -0.2) node [below] {{ $-5$}};\n\n  %lines\[128X[104X
+    [4X[28X\n  \\draw(2,1.875) .. controls (2,1.3) and (4,1.3) .. (4,1.875);\n  \[128X[104X
+    [4X[28X\\draw(3,0.125) .. controls (3,0.7) and (5,0.7) .. (5,0.125);\n  \\dr\[128X[104X
+    [4X[28Xaw(2,2)--(3,0);\n\n  %block #3\n  %vertices and labels\n  \\fill(3,2)\[128X[104X
+    [4X[28Xcircle(.125);\n  \\draw(2.95, 2.2) node [above] {{ $3$}};\n  \\fill(1\[128X[104X
+    [4X[28X,0)circle(.125);\n  \\draw(1, -0.2) node [below] {{ $-1$}};\n  \\fill\[128X[104X
+    [4X[28X(2,0)circle(.125);\n  \\draw(2, -0.2) node [below] {{ $-2$}};\n\n  %l\[128X[104X
+    [4X[28Xines\n  \\draw(1,0.125) .. controls (1,0.6) and (2,0.6) .. (2,0.125);\[128X[104X
+    [4X[28X\n  \\draw(3,2)--(2,0);\n\n  %block #4\n  %vertices and labels\n  \\f\[128X[104X
+    [4X[28Xill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \[128X[104X
+    [4X[28X %lines\n\\end{tikzpicture}\n\n\\end{document}"[128X[104X
+  [4X[32X[104X
+  
+  [1X5.8-2 TikzBlocks[101X
+  
+  [29X[2XTikzBlocks[102X( [3Xblocks[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA string.[133X
+  
+  [33X[0;0YThis  function produces a graphical representation of the blocks [3Xblocks[103X of a
+  bipartition  using the [10Xtikz[110X package for LaTeX. More precisely, this function
+  outputs  a  string containing a minimal LaTeX document which can be compiled
+  using LaTeX to produce a picture of [3Xblocks[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XTikzBlocks(RightBlocks(f));[127X[104X
+    [4X[28X"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\[128X[104X
+    [4X[28Xt}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \[128X[104X
+    [4X[28X\\draw(1.8,5) node [top] {{$1$}};\n  \\fill(4,2)circle(.125);\n  \\dr\[128X[104X
+    [4X[28Xaw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\[128X[104X
+    [4X[28X.8,3) node [top] {{$3$}};\n  \\draw[ultra thick](2,2)circle(.115);\n \[128X[104X
+    [4X[28X \\draw(1.8,2) node [top] {{$4$}};\n  \\fill(1,2)circle(.125);\n  \\d\[128X[104X
+    [4X[28Xraw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\[128X[104X
+    [4X[28X.8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\[128X[104X
+    [4X[28X and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.9 [33X[0;0YSemigroups of bipartitions[133X[101X
+  
+  [33X[0;0YSemigroups  and  monoids  of bipartitions can be created in the usual way in
+  [5XGAP[105X   using  the  functions  [2XSemigroup[102X  ([14XReference:  Semigroup[114X)  and  [2XMonoid[102X
+  ([14XReference: Monoid[114X).[133X
+  
+  [33X[0;0YIt  is  possible  to  create  inverse semigroups and monoids of bipartitions
+  using   [2XInverseSemigroup[102X  ([14XReference:  InverseSemigroup[114X)  and  [2XInverseMonoid[102X
+  ([14XReference:  InverseMonoid[114X)  when  the  argument  is  a  collection of block
+  bijections  or  partial  perm  bipartions; see [2XIsBlockBijection[102X ([14X5.5-13[114X) and
+  [2XIsPartialPermBipartition[102X ([14X5.5-12[114X).[133X
+  
+  [1X5.9-1 IsBipartitionSemigroup[101X
+  
+  [29X[2XIsBipartitionSemigroup[102X( [3XS[103X ) [32X property
+  [29X[2XIsBipartitionMonoid[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA [13Xbipartition semigroup[113X is simply a semigroup consisting of bipartitions. An
+  object  [3Xobj[103X  is  a  bipartition semigroup in [5XGAP[105X if it satisfies [2XIsSemigroup[102X
+  ([14XReference: IsSemigroup[114X) and [2XIsBipartitionCollection[102X ([14X5.1-2[114X).[133X
+  
+  [33X[0;0YA  [13Xbipartition  monoid[113X is a monoid consisting of bipartitions. An object [3Xobj[103X
+  is  a  bipartition  monoid  in  [5XGAP[105X  if  it  satisfies  [2XIsMonoid[102X ([14XReference:
+  IsMonoid[114X) and [2XIsBipartitionCollection[102X ([14X5.1-2[114X).[133X
+  
+  [33X[0;0YNote   that   it   is  possible  for  a  bipartition  semigroup  to  have  a
+  multiplicative neutral element (i.e. an identity element) but not to satisfy
+  [10XIsBipartitionMonoid[110X. For example,[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], [127X[104X
+    [4X[25X>[125X [27X[ 6, 7, -9 ], [ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], [127X[104X
+    [4X[25X>[125X [27X[ -8 ], [ -10 ] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XS:=Semigroup(f, One(f));[127X[104X
+    [4X[28X<commutative bipartition monoid of degree 10 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XIsMonoid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsBipartitionMonoid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS:=Semigroup( Bipartition( [ [ 1, -3 ], [ 2, -8 ], [ 3, 8, -1 ], [127X[104X
+    [4X[25X>[125X [27X[ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 9, 10, -10 ], [127X[104X
+    [4X[25X>[125X [27X[ -2 ], [ -9 ] ] ), [127X[104X
+    [4X[25X>[125X [27XBipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [127X[104X
+    [4X[25X>[125X [27X[ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [127X[104X
+    [4X[25X>[125X [27X[ -9 ] ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27XOne(S);[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeNeutralElement(S);[127X[104X
+    [4X[28X<bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [128X[104X
+    [4X[28X [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [ -9 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsMonoid(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  this  example  [10XS[110X  cannot  be  converted  into  a  monoid  using [2XAsMonoid[102X
+  ([14XReference:  AsMonoid[114X)  since  the  [2XOne[102X ([14XReference: One[114X) of any element in [10XS[110X
+  differs from the multiplicative neutral element.[133X
+  
+  [33X[0;0YFor more details see [2XIsMagmaWithOne[102X ([14XReference: IsMagmaWithOne[114X).[133X
+  
+  [1X5.9-2 IsBlockBijectionSemigroup[101X
+  
+  [29X[2XIsBlockBijectionSemigroup[102X( [3XS[103X ) [32X property
+  [29X[2XIsBlockBijectionMonoid[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  [13Xblock  bijection  semigroup[113X  is  simply  a  semigroup consisting of block
+  bijections.  A  [13Xblock  bijection  monoid[113X  is  a  monoid  consisting of block
+  bijections.[133X
+  
+  [33X[0;0YAn  object  in  [5XGAP[105X  is  a  block  bijection monoid if it satisfies [2XIsMonoid[102X
+  ([14XReference: IsMonoid[114X) and [2XIsBlockBijectionSemigroup[102X.[133X
+  
+  [33X[0;0YSee [2XIsBlockBijection[102X ([14X5.5-13[114X).[133X
+  
+  [1X5.9-3 IsPartialPermBipartitionSemigroup[101X
+  
+  [29X[2XIsPartialPermBipartitionSemigroup[102X( [3XS[103X ) [32X property
+  [29X[2XIsPartialPermBipartitionMonoid[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  [13Xpartial  perm  bipartition  semigroup[113X is simply a semigroup consisting of
+  partial  perm  bipartitions.  A  [13Xpartial perm bipartition monoid[113X is a monoid
+  consisting of partial perm bipartitions.[133X
+  
+  [33X[0;0YAn  object  in  [5XGAP[105X  is  a  partial  perm bipartition monoid if it satisfies
+  [2XIsMonoid[102X ([14XReference: IsMonoid[114X) and [2XIsPartialPermBipartitionSemigroup[102X.[133X
+  
+  [33X[0;0YSee [2XIsPartialPermBipartition[102X ([14X5.5-12[114X).[133X
+  
+  [1X5.9-4 IsPermBipartitionGroup[101X
+  
+  [29X[2XIsPermBipartitionGroup[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA   [13Xperm  bipartition  group[113X  is  simply  a  semigroup  consisting  of  perm
+  bipartitions.[133X
+  
+  [33X[0;0YSee [2XIsPermBipartition[102X ([14X5.5-11[114X).[133X
+  
+  [1X5.9-5 DegreeOfBipartitionSemigroup[101X
+  
+  [29X[2XDegreeOfBipartitionSemigroup[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
+  
+  [33X[0;0YThe  [13Xdegree[113X  of  a  bipartition  semigroup  [3XS[103X is just the degree of any (and
+  every) element of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDegreeOfBipartitionSemigroup(JonesMonoid(8));[127X[104X
+    [4X[28X8[128X[104X
+  [4X[32X[104X
+  

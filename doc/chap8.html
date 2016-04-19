@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (semigroups) - Chapter 8: Congruences</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap8"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap8_mj.html">[MathJax on]</a></p>
+<p><a id="X82BD951079E3C349" name="X82BD951079E3C349"></a></p>
+<div class="ChapSects"><a href="chap8.html#X82BD951079E3C349">8 <span class="Heading">Congruences</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7D49787B7B2589B2">8.1 <span class="Heading">Creating congruences</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85CE56AC84FA5D33">8.1-1 SemigroupCongruence</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7D65BB067A762CD6">8.2 <span class="Heading">Congruence classes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7CB27F237B59C8C9">8.2-1 CongruenceClassOfElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7E36A01C85E2DCF0">8.2-2 CongruenceClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7C80CD547A5C3E76">8.2-3 NrCongruenceClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7AB683CB7CD1B18D">8.2-4 CongruencesOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F9E84A185A717C1">8.2-5 AsLookupTable</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7A6478D1831DD787">8.3 <span class="Heading">Congruences on Rees matrix semigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F4AFD7F7E163022">8.3-1 IsRMSCongruenceByLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X87A475E4847D3C96">8.3-2 RMSCongruenceByLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7E9AB940868FCC9D">8.3-3 RMSCongruenceClassByLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B19CACF7A37ADBC">8.3-4 IsLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X79027F0580F9D081">8.3-5 CanonicalRepresentative</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7DB7E32E865AD95D">8.3-6 AsSemigroupCongruenceByGeneratingPairs</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85A731257EFB88A1">8.3-7 AsRMSCongruenceByLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7952A5A5789C6F60">8.3-8 MeetSemigroupCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8262D5207DBF3C5B">8.3-9 JoinSemigroupCongruences</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X789450398397141D">8.4 <span class="Heading">Universal congruences</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8751EF557A81A2B1">8.4-1 IsUniversalSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B99C6A47F3D375F">8.4-2 UniversalSemigroupCongruence</a></span>
+</div></div>
+</div>
+
+<h3>8 <span class="Heading">Congruences</span></h3>
+
+<p>Congruences in <strong class="pkg">Semigroups</strong> can be described in several different ways:</p>
+
+
+<ul>
+<li><p>Generating pairs -- the minimal congruence which contains these pairs</p>
+
+</li>
+<li><p>Rees congruences -- the congruence specified by a given ideal</p>
+
+</li>
+<li><p>Universal congruences -- the unique congruence with only one class</p>
+
+</li>
+<li><p>Linked triples -- only for simple or 0-simple semigroups (see below)</p>
+
+</li>
+<li><p>Kernel and trace -- only for inverse semigroups</p>
+
+</li>
+</ul>
+<p>The operation <code class="func">SemigroupCongruence</code> (<a href="chap8.html#X85CE56AC84FA5D33"><span class="RefLink">8.1-1</span></a>) can be used to create any of these, interpreting the arguments in a smart way. The usual way of specifying a congruence will be by giving a set of generating pairs, but a user with an ideal could instead create a Rees congruence or universal congruence.</p>
+
+<p>If a congruence is specified by generating pairs on a simple, 0-simple, or inverse semigroup, then the congruence will be converted automatically to one of the last two items in the above list, to reduce the complexity of any calculations to be performed. The user need not manually specify, or even be aware of, the congruence's linked triple or kernel and trace.</p>
+
+<p><a id="X7D49787B7B2589B2" name="X7D49787B7B2589B2"></a></p>
+
+<h4>8.1 <span class="Heading">Creating congruences</span></h4>
+
+<p><a id="X85CE56AC84FA5D33" name="X85CE56AC84FA5D33"></a></p>
+
+<h5>8.1-1 SemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupCongruence</code>( <var class="Arg">S</var>, <var class="Arg">pairs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A semigroup congruence.</p>
+
+<p>This function returns a semigroup congruence over the semigroup <var class="Arg">S</var>.</p>
+
+<p>If <var class="Arg">pairs</var> is a list of lists of size 2 with elements from <var class="Arg">S</var>, then this function will return the semigroup congruence defined by these generating pairs. The individual pairs may instead be given as separate arguments.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                Transformation( [ 3, 4, 3, 4, 4 ] ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                Transformation( [ 3, 4, 3, 4, 3 ] ),  </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                Transformation( [ 4, 3, 3, 4, 4 ] ));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [ Transformation( [ 3, 4, 3, 4, 3 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              Transformation( [ 1, 2, 1, 2, 1 ] ) ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [ Transformation( [ 4, 3, 4, 3, 4 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              Transformation( [ 3, 4, 3, 4, 3 ] ) ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupCongruence(S, [pair1, pair2]);</span>
+&lt;semigroup congruence over &lt;simple transformation semigroup of 
+ degree 5 with 4 generators&gt; with linked triple (2,4,1)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupCongruence(S, pair1, pair2);</span>
+&lt;semigroup congruence over &lt;simple transformation semigroup of 
+ degree 5 with 4 generators&gt; with linked triple (2,4,1)&gt;</pre></div>
+
+<p><a id="X7D65BB067A762CD6" name="X7D65BB067A762CD6"></a></p>
+
+<h4>8.2 <span class="Heading">Congruence classes</span></h4>
+
+<p><a id="X7CB27F237B59C8C9" name="X7CB27F237B59C8C9"></a></p>
+
+<h5>8.2-1 CongruenceClassOfElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruenceClassOfElement</code>( <var class="Arg">cong</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A congruence class.</p>
+
+<p>This operation is a synonym of <code class="code">EquivalenceClassOfElement</code> in the case that the argument <var class="Arg">cong</var> is a congruence of a semigroup.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">elm := ReesZeroMatrixSemigroupElement(S, 1, (1,3,2), 1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruenceClassOfElement(cong, elm);</span>
+{(1,(1,3,2),1)}</pre></div>
+
+<p><a id="X7E36A01C85E2DCF0" name="X7E36A01C85E2DCF0"></a></p>
+
+<h5>8.2-2 CongruenceClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The classes of congruence.</p>
+
+<p>When <var class="Arg">cong</var> is a congruence of semigroup, this attribute is synonymous with <code class="code">EquivalenceClasses</code>.</p>
+
+<p>The return value is a list containing all the equivalence classes of the semigroup congruence <var class="Arg">cong</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := CongruenceClasses(cong);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(classes);</span>
+9</pre></div>
+
+<p><a id="X7C80CD547A5C3E76" name="X7C80CD547A5C3E76"></a></p>
+
+<h5>8.2-3 NrCongruenceClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A positive integer.</p>
+
+<p>This attribute describes the number of congruence classes in the semigroup congruence <var class="Arg">cong</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrCongruenceClasses(cong);</span>
+9</pre></div>
+
+<p><a id="X7AB683CB7CD1B18D" name="X7AB683CB7CD1B18D"></a></p>
+
+<h5>8.2-4 CongruencesOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The congruences of a semigroup.</p>
+
+<p>This attribute gives a list of the congruences of the semigroup <var class="Arg">S</var>.</p>
+
+<p>At present this only works for simple and 0-simple semigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(s);</span>
+[ &lt;universal semigroup congruence over 
+    &lt;Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )&gt;&gt;, 
+  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+      Sym( [ 1 .. 3 ] )&gt; with linked triple (1,2,2)&gt;, 
+  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+      Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;, 
+  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+      Sym( [ 1 .. 3 ] )&gt; with linked triple (S3,2,2)&gt; ]</pre></div>
+
+<p><a id="X7F9E84A185A717C1" name="X7F9E84A185A717C1"></a></p>
+
+<h5>8.2-5 AsLookupTable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsLookupTable</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list.</p>
+
+<p>This attribute describes the semigroup congruence <var class="Arg">cong</var> as a list of positive integers with length the size of the semigroup over which <var class="Arg">cong</var> is defined.</p>
+
+<p>Each position in the list corresponds to an element of the semigroup (in the order defined by <code class="code">SSortedList</code>) and the integer at that position is a unique identifier for that element's congruence class under <var class="Arg">cong</var>. Hence, two elements are congruent if and only if they have the same number at their two positions in the list.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := Monoid( [ Transformation( [ 1, 2, 2 ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation( [ 3, 1, 3 ] ) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence( s,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      [Transformation([1,2,1]),Transformation([2,1,2])] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsLookupTable(cong);</span>
+[ 1, 2, 3, 4, 5, 6, 3, 2, 1, 6, 5, 1 ]</pre></div>
+
+<p><a id="X7A6478D1831DD787" name="X7A6478D1831DD787"></a></p>
+
+<h4>8.3 <span class="Heading">Congruences on Rees matrix semigroups</span></h4>
+
+<p>This section describes the implementation of congruences of simple and 0-simple semigroups in the <strong class="pkg">Semigroups</strong> package, and the functions associated with them. This code and this part of the manual were written by Michael Torpey. Most of the theorems used in this chapter are from Section 3.5 of <a href="chapBib.html#biBhowie">[How95]</a>.</p>
+
+<p>By the Rees Theorem, any 0-simple semigroup <span class="SimpleMath">S</span> is isomorphic to a <em>Rees 0-matrix semigroup</em> (see <a href="../../../doc/ref/chap51_mj.html#X8225A9EC87A255E6"><span class="RefLink">Reference: Rees Matrix Semigroups</span></a>) over a group, with a regular sandwich matrix. That is,</p>
+
+<p class="pcenter">S \cong \mathcal{M}^0[G; I,\Lambda; P], </p>
+
+<p>where <span class="SimpleMath">G</span> is a group, <span class="SimpleMath">Λ</span> and <span class="SimpleMath">I</span> are non-empty sets, and <span class="SimpleMath">P</span> is regular in the sense that it has no rows or columns consisting soley of zeroes.</p>
+
+<p>The congruences of a Rees 0-matrix semigroup are in 1-1 correspondence with the <em>linked triple</em>, which is a triple of the form <code class="code">[N,S,T]</code> where:</p>
+
+
+<ul>
+<li><p><code class="code">N</code> is a normal subgroup of the underlying group <code class="code">G</code>,</p>
+
+</li>
+<li><p><code class="code">S</code> is an equivalence relation on the columns of <code class="code">P</code>,</p>
+
+</li>
+<li><p><code class="code">T</code> is an equivalence relation on the rows of <code class="code">P</code>,</p>
+
+</li>
+</ul>
+<p>satisfying the following conditions:</p>
+
+
+<ul>
+<li><p>a pair of <code class="code">S</code>-related columns must contain zeroes in precisely the same rows,</p>
+
+</li>
+<li><p>a pair of <code class="code">T</code>-related rows must contain zeroes in precisely the same columns,</p>
+
+</li>
+<li><p>if <code class="code">i</code> and <code class="code">j</code> are <code class="code">S</code>-related, <code class="code">k</code> and <code class="code">l</code> are <code class="code">T</code>-related and the matrix entries <span class="SimpleMath">p_k, i, p_k, j, p_l, i, p_l, j ≠ 0</span>, then <span class="SimpleMath">q_k, l, i, j ∈ N</span>, where</p>
+
+<p class="pcenter">q_{k, l, i, j} = p_{k, i}
+        p_{l, i}^{-1} p_{l, j} p_{k, j}^{-1}.</p>
+
+</li>
+</ul>
+<p>By Theorem 3.5.9 in <a href="chapBib.html#biBhowie">[How95]</a>, for any finite 0-simple Rees 0-matrix semigroup, there is a bijection between its non-universal congruences and its linked triples. In this way, we can internally represent any congruence of such a semigroup by storing its associated linked triple instead of a set of generating pairs, and thus perform many calculations on it more efficiently.</p>
+
+<p>If a congruence is defined by a linked triple <code class="code">(N,S,T)</code>, then a single class of that congruence can be defined by a triple <code class="code">(Nx,i/S,k/S)</code>, where <code class="code">Nx</code> is a right coset of <code class="code">N</code>, <code class="code">i/S</code> is the equivalence class of <code class="code">i</code> in <code class="code">S</code>, and <code class="code">k/S</code> is the equivalence class of <code class="code">k</code> in <code class="code">T</code>. Thus we can internally represent any class of such a congruence as a triple simply consisting of a right coset and two positive integers.</p>
+
+<p>An analogous condition exists for finite simple Rees matrix semigroups without zero.</p>
+
+<p><a id="X7F4AFD7F7E163022" name="X7F4AFD7F7E163022"></a></p>
+
+<h5>8.3-1 IsRMSCongruenceByLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRMSCongruenceByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRZMSCongruenceByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>These categories describe a type of semigroup congruence over a Rees matrix or 0-matrix semigroup. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>) but it is represented internally by its <em>linked triple</em>, and certain functions may take advantage of this information to reduce computation times.</p>
+
+<p>An object of this type may be constructed with <code class="code">RMSCongruenceByLinkedTriple</code> or <code class="code">RZMSCongruenceByLinkedTriple</code>, or this representation may be selected automatically by <code class="func">SemigroupCongruence</code> (<a href="chap8.html#X85CE56AC84FA5D33"><span class="RefLink">8.1-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group( [ (1,4,5), (1,5,3,4) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [  0, (),       0,     0, (3,5),         0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ (),  0,       0, (3,5),     0,         0 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([ (1,4)(3,5), (1,5)(3,4) ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRZMSCongruenceByLinkedTriple(cong);</span>
+true</pre></div>
+
+<p><a id="X87A475E4847D3C96" name="X87A475E4847D3C96"></a></p>
+
+<h5>8.3-2 RMSCongruenceByLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSCongruenceByLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSCongruenceByLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A Rees matrix or 0-matrix semigroup congruence by linked triple.</p>
+
+<p>This function returns a semigroup congruence over the Rees matrix or 0-matrix semigroup <var class="Arg">S</var> corresponding to the linked triple (<var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var>). The argument <var class="Arg">N</var> should be a normal subgroup of the underlying semigroup of <var class="Arg">S</var>; <var class="Arg">colBlocks</var> should be a partition of the columns of the matrix of <var class="Arg">S</var>; and <var class="Arg">rowBlocks</var> should be a partition of the rows of the matrix of <var class="Arg">S</var>. For example, if the matrix has 5 rows, then a possibility for <var class="Arg">rowBlocks</var> might be <code class="code">[ [1,3], [2,5], [4] ]</code>.</p>
+
+<p>If the arguments describe a valid linked triple on <var class="Arg">S</var>, then an object in the category <code class="code">IsRZMSCongruenceByLinkedTriple</code> is returned. This object can be used like any other semigroup congruence in <strong class="pkg">GAP</strong>.</p>
+
+<p>If the arguments describe a triple which is not <em>linked</em> in the sense described above, then this function returns an error.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group( [ (1,4,5), (1,5,3,4) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [  0, (),       0,     0, (3,5),         0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ (),  0,       0, (3,5),     0,         0 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([ (1,4)(3,5), (1,5)(3,4) ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 6x3 over 
+  Group([ (1,4,5), (1,5,3,4) ])&gt; with linked triple (2^2,4,3)&gt;</pre></div>
+
+<p><a id="X7E9AB940868FCC9D" name="X7E9AB940868FCC9D"></a></p>
+
+<h5>8.3-3 RMSCongruenceClassByLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSCongruenceClassByLinkedTriple</code>( <var class="Arg">cong</var>, <var class="Arg">nCoset</var>, <var class="Arg">colClass</var>, <var class="Arg">rowClass</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSCongruenceClassByLinkedTriple</code>( <var class="Arg">cong</var>, <var class="Arg">nCoset</var>, <var class="Arg">colClass</var>, <var class="Arg">rowClass</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A Rees matrix or 0-matrix semigroup congruence class by linked triple.</p>
+
+<p>This operation returns one congruence class of the congruence <var class="Arg">cong</var>, as defined by the other three parameters.</p>
+
+<p>The argument <var class="Arg">cong</var> must be a Rees matrix or 0-matrix semigroup congruence by linked triple. If the linked triple consists of the three parameters <code class="code">N</code>, <code class="code">colBlocks</code> and <code class="code">rowBlocks</code>, then <var class="Arg">nCoset</var> must be a right coset of <code class="code">N</code>, <var class="Arg">colClass</var> must be a positive integer corresponding to a position in the list <code class="code">colBlocks</code>, and <var class="Arg">rowClass</var> must be a positive integer corresponding to a position in the list <code class="code">rowBlocks</code>.</p>
+
+<p>If the arguments are valid, an <code class="code">IsRMSCongruenceClassByLinkedTriple</code> or <code class="code">IsRZMSCongruenceClassByLinkedTriple</code> object is returned, which can be used like any other equivalence class in <strong class="pkg">GAP</strong>. Otherwise, an error is returned.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := Group( [ (1,4,5), (1,5,3,4) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [  0, (),       0,     0, (3,5),         0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ (),  0,       0, (3,5),     0,         0 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := ReesZeroMatrixSemigroup(g, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := Group([ (1,4)(3,5), (1,5)(3,4) ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := RZMSCongruenceClassByLinkedTriple(cong, </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">RightCoset(n,(1,5)),2,3);</span>
+{(2,(3,4),3)}</pre></div>
+
+<p><a id="X7B19CACF7A37ADBC" name="X7B19CACF7A37ADBC"></a></p>
+
+<h5>8.3-4 IsLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This operation returns true if and only if the arguments (<var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var>) describe a linked triple of the Rees matrix or 0-matrix semigroup <var class="Arg">S</var>, as described above.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group( [ (1,4,5), (1,5,3,4) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [  0, (),       0,     0, (3,5),         0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ (),  0,       0, (3,5),     0,         0 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([ (1,4)(3,5), (1,5)(3,4) ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLinkedTriple(S, N, colBlocks, rowBlocks);</span>
+true</pre></div>
+
+<p><a id="X79027F0580F9D081" name="X79027F0580F9D081"></a></p>
+
+<h5>8.3-5 CanonicalRepresentative</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalRepresentative</code>( <var class="Arg">class</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A congruence class.</p>
+
+<p>This attribute gives a canonical representative for the semigroup congruence class <var class="Arg">class</var>. This representative can be used to identify a class uniquely.</p>
+
+<p>At present this only works for simple and 0-simple semigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := CongruenceClasses(cong)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalRepresentative(class);</span>
+(1,(1,2,3),2)</pre></div>
+
+<p><a id="X7DB7E32E865AD95D" name="X7DB7E32E865AD95D"></a></p>
+
+<h5>8.3-6 AsSemigroupCongruenceByGeneratingPairs</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSemigroupCongruenceByGeneratingPairs</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A semigroup congruence.</p>
+
+<p>This operation takes <var class="Arg">cong</var>, a semigroup congruence, and returns the same congruence relation, but described by <strong class="pkg">GAP</strong>'s default method of defining semigroup congruences: a set of generating pairs for the congruence.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSemigroupCongruenceByGeneratingPairs(cong);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )&gt; with 3 generating pairs&gt;</pre></div>
+
+<p><a id="X85A731257EFB88A1" name="X85A731257EFB88A1"></a></p>
+
+<h5>8.3-7 AsRMSCongruenceByLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsRMSCongruenceByLinkedTriple</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsRZMSCongruenceByLinkedTriple</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A Rees matrix or 0-matrix semigroup congruence by linked triple.</p>
+
+<p>This operation takes a semigroup congruence <var class="Arg">cong</var> over a finite simple or 0-simple Rees 0-matrix semigroup, and returns that congruence relation in a new form: as either a congruence by linked triple, or a universal congruence.</p>
+
+<p>If the congruence is not defined over an appropriate type of semigroup, then this function returns an error.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := ReesZeroMatrixSemigroupElement(S, 1, (1,3,2), 1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := ReesZeroMatrixSemigroupElement(S, 1, (), 1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruenceByGeneratingPairs(S, [ [x,y] ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsRZMSCongruenceByLinkedTriple(cong);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;</pre></div>
+
+<p><a id="X7952A5A5789C6F60" name="X7952A5A5789C6F60"></a></p>
+
+<h5>8.3-8 MeetSemigroupCongruences</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MeetSemigroupCongruences</code>( <var class="Arg">c1</var>, <var class="Arg">c2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A semigroup congruence.</p>
+
+<p>This operation returns the <em>meet</em> of the two semigroup congruences <var class="Arg">c1</var> and <var class="Arg">c2</var> -- that is, the largest semigroup congruence contained in both <var class="Arg">c1</var> and <var class="Arg">c2</var>.</p>
+
+<p>At present this only works for simple and 0-simple semigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MeetSemigroupCongruences(congs[2], congs[3]);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )&gt; with linked triple (1,2,2)&gt;</pre></div>
+
+<p><a id="X8262D5207DBF3C5B" name="X8262D5207DBF3C5B"></a></p>
+
+<h5>8.3-9 JoinSemigroupCongruences</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinSemigroupCongruences</code>( <var class="Arg">c1</var>, <var class="Arg">c2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A semigroup congruence.</p>
+
+<p>This operation returns the <em>join</em> of the two semigroup congruences <var class="Arg">c1</var> and <var class="Arg">c2</var> -- that is, the smallest semigroup congruence containing all the relations in both <var class="Arg">c1</var> and <var class="Arg">c2</var>.</p>
+
+<p>At present this only works for simple and 0-simple semigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinSemigroupCongruences(congs[2], congs[3]);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;</pre></div>
+
+<p><a id="X789450398397141D" name="X789450398397141D"></a></p>
+
+<h4>8.4 <span class="Heading">Universal congruences</span></h4>
+
+<p>The linked triples of a completely 0-simple Rees 0-matrix semigroup describe only its non-universal congruences. In any one of these, the zero element of the semigroup is related only to itself. However, for any semigroup <span class="SimpleMath">S</span> the universal relation <span class="SimpleMath">S × S</span> is a congruence; called the <em>universal congruence</em>. The universal congruence on a semigroup has its own unique representation.</p>
+
+<p>Since many things we want to calculate about congruences are trivial in the case of the universal congruence, this package contains a category specifically designed for it, <code class="code">IsUniversalSemigroupCongruence</code>. We also define <code class="code">IsUniversalSemigroupCongruenceClass</code>, which represents the single congruence class of the universal congruence.</p>
+
+<p><a id="X8751EF557A81A2B1" name="X8751EF557A81A2B1"></a></p>
+
+<h5>8.4-1 IsUniversalSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUniversalSemigroupCongruence</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This category describes a type of semigroup congruence, which must refer to the <em>universal semigroup congruence</em> <span class="SimpleMath">S × S</span>. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>).</p>
+
+<p>An object of this type may be constructed with <code class="code">UniversalSemigroupCongruence</code> or this representation may be selected automatically as an alternative to an <code class="code">IsRZMSCongruenceByLinkedTriple</code> object (since the universal congruence cannot be represented by a linked triple).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([ Transformation([ 3, 2, 3 ]) ]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := UniversalSemigroupCongruence(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsUniversalSemigroupCongruence(U);</span>
+true</pre></div>
+
+<p><a id="X7B99C6A47F3D375F" name="X7B99C6A47F3D375F"></a></p>
+
+<h5>8.4-2 UniversalSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniversalSemigroupCongruence</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A universal semigroup congruence.</p>
+
+<p>This operation returns the universal semigroup congruence for the semigroup <var class="Arg">S</var>. It can be used in the same way as any other semigroup congruence object.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UniversalSemigroupCongruence(S);</span>
+&lt;universal semigroup congruence over 
+&lt;Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )&gt;&gt;</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

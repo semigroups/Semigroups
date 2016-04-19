@@ -1,0 +1,392 @@
+  
+  [1X7 [33X[0;0YMatrix semigroups[133X[101X
+  
+  [33X[0;0YThis  chapter  describes the functions in [5XSemigroups[105X for dealing with matrix
+  semigroups.  This part of the manual and the functions described herein were
+  written by Markus Pfeiffer.[133X
+  
+  [33X[0;0YA  [13Xmatrix  semigroup[113X  for the purposes of this document is a subsemigroup of
+  the full monoid of [22Xn × n[122X matrices over a [13Xfinite field[113X [22XF[122X.[133X
+  
+  [33X[0;0YMore general matrix semigroups are planned, but not implemented yet.[133X
+  
+  [33X[0;0Y[5XGAP[105X  provides  a  way  to  define  matrices which are in the filter [2XIsMatrix[102X
+  ([14XReference: IsMatrix[114X). For technical reasons, the matrix semigroup functions
+  in  [5XSemigroups[105X rely on a custom wrapper for matrices [2XIsMatrixOverFiniteField[102X
+  ([14X7.2-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Z(4) * [[1,0], [0,2]];[127X[104X
+    [4X[28X[ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsMatrix(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsMatrixOverFiniteField(x);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xy := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 2>[128X[104X
+    [4X[25Xgap>[125X [27XIsMatrix(y);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsMatrixOverFiniteField(y);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn the following we will refer to matrices in [2XIsMatrix[102X ([14XReference: IsMatrix[114X)
+  by  [13XGAP  library matrices[113X and to matrices in [2XIsMatrixOverFiniteField[102X ([14X7.2-1[114X)
+  by  [13Xmatrices  over finite fields[113X. We take precautions to hide this fact from
+  the user of [5XSemigroups[105X and also provide conversion functions between the two
+  representations.[133X
+  
+  
+  [1X7.1 [33X[0;0YCreating matrix semigroups[133X[101X
+  
+  [33X[0;0YRandom   matrix   semigroups   can   be   created  by  using  the  functions
+  [2XRandomMatrixSemigroup[102X  ([14X2.1-6[114X)  or [2XRandomMatrixMonoid[102X ([14X2.1-6[114X). While this is
+  convenient for testing and playing around, creating semigroups from matrices
+  can  be  a  bit  more  work. We provide a couple of convenience functions to
+  streamline the process.[133X
+  
+  [1X7.1-1 IsMatrixSemigroup[101X
+  
+  [29X[2XIsMatrixSemigroup[102X( [3XS[103X ) [32X property
+  [29X[2XIsMatrixMonoid[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  [13Xmatrix  semigroup[113X  is  simply  a  semigroup consisting of matrices over a
+  finite  field.  An  object  in  [5XGAP[105X  is  a  matrix semigroup if it satisfies
+  [2XIsSemigroup[102X  ([14XReference:  IsSemigroup[114X) and [2XIsMatrixOverFiniteFieldCollection[102X
+  ([14X7.2-2[114X).[133X
+  
+  [33X[0;0YA  [13Xmatrix  monoid[113X  is  simply  a monoid consisting of matrices over a finite
+  field.  An  object  in  [5XGAP[105X  is  a  matrix  monoid  if it satisfies [2XIsMonoid[102X
+  ([14XReference: IsMonoid[114X) and [2XIsMatrixOverFiniteFieldCollection[102X ([14X7.2-2[114X).[133X
+  
+  [33X[0;0YNote  that  it  is  possible for a matrix semigroup to have a multiplicative
+  neutral   element   (i.e.   an   identity   element)   but  not  to  satisfy
+  [10XIsMatrixMonoid[110X.[133X
+  
+  [1X7.1-2 MatrixSemigroup[101X
+  
+  [29X[2XMatrixSemigroup[102X( [3Xlist[103X[, [3XF[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10YA matrix semigroup.[133X
+  
+  [33X[0;0YThis is a helper function to create matrix semigroups from [5XGAP[105X matrices. The
+  argument [3Xlist[103X is a homogeneous list of [5XGAP[105X matrices over a finite field, and
+  the optional argument [3XF[103X is a finite field.[133X
+  
+  [33X[0;0YThe specification of the field [3XF[103X can be necessary to prevent [5XGAP[105X from trying
+  to find a smaller common field for the entries in [3Xlist[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],[127X[104X
+    [4X[25X>[125X [27X                         Z(3) * [[0,0,0], [0,0,1], [0,1,0]]], GF(9));[127X[104X
+    [4X[28X<semigroup of 3x3 matrices over GF(3^2) with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],[127X[104X
+    [4X[25X>[125X [27X                         Z(3) * [[0,0,0], [0,0,1], [0,1,0]]]);[127X[104X
+    [4X[28X<semigroup of 3x3 matrices over GF(3) with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],[127X[104X
+    [4X[25X>[125X [27X                         Z(4) * [[0,0,0], [0,0,1], [0,1,0]]]);[127X[104X
+    [4X[28X<semigroup of 3x3 matrices over GF(2^2) with 2 generators>[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn   addition   to   the   above,   [2XIsomorphismMatrixSemigroup[102X  ([14X2.4-5[114X)  and
+  [2XAsMatrixSemigroup[102X   ([14X2.4-1[114X)  can  be  used  to  create  a  matrix  semigroup
+  isomorphic to an already known semigroup.[133X
+  
+  
+  [1X7.2 [33X[0;0YMatrices in the [5XSemigroups[105X[101X[1X package[133X[101X
+  
+  [33X[0;0YThe  matrix  functions  in  the  [5XSemigroups[105X package use a wrapper object for
+  matrices. In the following these objects are documented.[133X
+  
+  [1X7.2-1 IsMatrixOverFiniteField[101X
+  
+  [29X[2XIsMatrixOverFiniteField[102X( [3Xobj[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThis category contains [5XSemigroups[105X matrix object wrapper. The introduction of
+  this  filter  was  necessary  to  get around [5XGAP[105X limitations with regards to
+  matrices and associative objects.[133X
+  
+  [33X[0;0YThe  behaviour  of  this  object type might be changed or removed completely
+  from the package in the future.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Z(4) * [[1,0], [0,2]];[127X[104X
+    [4X[28X[ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsMatrixOverFiniteField(x);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xy := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 2>[128X[104X
+    [4X[25Xgap>[125X [27XIsMatrixOverFiniteField(y);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-2 IsMatrixOverFiniteFieldCollection[101X
+  
+  [29X[2XIsMatrixOverFiniteFieldCollection[102X( [3Xobj[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YEvery collection of matrices in the category [2XIsMatrixOverFiniteField[102X ([14X7.2-1[114X)
+  belongs  to  the  category  [10XIsMatrixOverFiniteFieldCollection[110X.  For example,
+  matrix semigroup belong to [10XIsMatrixOverFiniteFieldCollection[110X.[133X
+  
+  [1X7.2-3 NewMatrixOverFiniteField[101X
+  
+  [29X[2XNewMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X, [3Xrows[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya new matrix object.[133X
+  
+  [33X[0;0YCreates a new [3Xn[103X-by-[3Xn[103X matrix over the finite field [3XF[103X with constructing filter
+  [3Xfilt[103X.  The matrix itself is given by a list [3Xrows[103X of rows. Currently the only
+  possible value for [3Xfilt[103X is [10XIsPlistMatrixOverFiniteFieldRep[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2,[127X[104X
+    [4X[25X>[125X [27XZ(4)*[[1,0],[0,1]]);[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 2>[128X[104X
+    [4X[25Xgap>[125X [27Xy := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 0, []);[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 0>[128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-4 NewIdentityMatrixOverFiniteField[101X
+  
+  [29X[2XNewIdentityMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation
+  [29X[2XNewZeroMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation
+  
+  [33X[0;0YCreates  a  new  [3Xn[103X-by-[3Xn[103X  zero  or identity matrix with entries in the finite
+  field [3XF[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
+    [4X[25X>[125X [27X                                         GF(4), 2);[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 2>[128X[104X
+    [4X[25Xgap>[125X [27Xy := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
+    [4X[25X>[125X [27X                                     GF(4), 2);[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 2>[128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-5 RowSpaceBasis[101X
+  
+  [29X[2XRowSpaceBasis[102X( [3Xm[103X ) [32X attribute
+  [29X[2XRowSpaceTransformation[102X( [3Xm[103X ) [32X attribute
+  [29X[2XRowSpaceTransformationInv[102X( [3Xm[103X ) [32X attribute
+  
+  [33X[0;0YTo  compute  the value of any of the above attributes, a canonical basis for
+  the   row   space   of  [3Xm[103X  is  computed  along  with  an  invertible  matrix
+  [10XRowSpaceTransformation[110X   such   that   [10Xm   *   RowSpaceTransformation(m)   =
+  RowSpaceBasis(m)[110X.    [10XRowSpaceTransformationInv(m)[110X    is   the   inverse   of
+  [10XRowSpaceTransformation(m)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,[127X[104X
+    [4X[25X>[125X [27XZ(4)^0*[[1,1,0], [0,1,1], [1,1,1]] );[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XRowSpaceBasis(x);[127X[104X
+    [4X[28X<rowbasis of rank 3 over GF(2^2)>[128X[104X
+    [4X[25Xgap>[125X [27XRowSpaceTransformation(x);[127X[104X
+    [4X[28X[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], [128X[104X
+    [4X[28X  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-6 RowRank[101X
+  
+  [29X[2XRowRank[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YLength of a basis of the row space of [3Xm[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,[127X[104X
+    [4X[25X>[125X [27XZ(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );[127X[104X
+    [4X[28X<matrix over GF(5) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XRowRank(x);[127X[104X
+    [4X[28X2[128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-7 RightInverse[101X
+  
+  [29X[2XRightInverse[102X( [3Xm[103X ) [32X attribute
+  [29X[2XLeftInverse[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA matrix over a finite field.[133X
+  
+  [33X[0;0YThese   attributes   contain  a  semigroup  left-inverse,  and  a  semigroup
+  right-inverse of the matrix [3Xm[103X respectively.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,[127X[104X
+    [4X[25X>[125X [27XZ(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XLeftInverse(x);[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(LeftInverse(x) * x);[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 3[128X[104X
+    [4X[28X[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]>[128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-8 DegreeOfMatrixOverFiniteField[101X
+  
+  [29X[2XDegreeOfMatrixOverFiniteField[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YNumber of rows and columns of the matrix [3Xm[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,[127X[104X
+    [4X[25X>[125X [27XZ(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );[127X[104X
+    [4X[28X<matrix over GF(5) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XDegreeOfMatrixOverFiniteField(x);[127X[104X
+    [4X[28X3[128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-9 BaseDomain[101X
+  
+  [29X[2XBaseDomain[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe domain in which entries of [3Xm[103X lie.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,[127X[104X
+    [4X[25X>[125X [27XZ(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );[127X[104X
+    [4X[28X<matrix over GF(5) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XBaseDomain(x);[127X[104X
+    [4X[28XGF(5)[128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-10 TransposedMatImmutable[101X
+  
+  [29X[2XTransposedMatImmutable[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn immutable matrix.[133X
+  
+  [33X[0;0YThis  attribute  contains  an  immutable  copy  of [3Xm[103X. Note that matrices are
+  immutable per default.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,[127X[104X
+    [4X[25X>[125X [27XZ(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );[127X[104X
+    [4X[28X<matrix over GF(5) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XTransposedMatImmutable(x);[127X[104X
+    [4X[28X<matrix over GF(5) of degree 3>[128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-11 AsMatrix[101X
+  
+  [29X[2XAsMatrix[102X( [3Xm[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA matrix.[133X
+  
+  [33X[0;0YTurns a matrix over a finite field into a [5XGAP[105X matrix.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,[127X[104X
+    [4X[25X>[125X [27XZ(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );[127X[104X
+    [4X[28X<matrix over GF(5) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XAsMatrix(x);[127X[104X
+    [4X[28X[ [ Z(5)^0, Z(5)^0, 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X  [ Z(5)^0, Z(5)^0, Z(5)^0 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X7.2-12 ConstructingFilter[101X
+  
+  [29X[2XConstructingFilter[102X( [3Xm[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA filter[133X
+  
+  [33X[0;0YReturn  the  filter that was passed to [2XNewMatrixOverFiniteField[102X ([14X7.2-3[114X) when
+  creating  the  matrix  [3Xm[103X. This is used to create new objects that lie in the
+  same filter.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,[127X[104X
+    [4X[25X>[125X [27XZ(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XConstructingFilter(x);[127X[104X
+    [4X[28X<Representation "IsPlistMatrixOverFiniteFieldRep">[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.3 [33X[0;0YMatrix groups in the [5XSemigroups[105X[101X[1X package[133X[101X
+  
+  [33X[0;0YFor  interfacing  the  semigroups  code  with  [5XGAP[105Xs  library code for matrix
+  groups, the [5XSemigroups[105X package implements matrix groups that delegate to the
+  [5XGAP[105X library.[133X
+  
+  [1X7.3-1 IsMatrixOverFiniteFieldGroup[101X
+  
+  [29X[2XIsMatrixOverFiniteFieldGroup[102X( [3XG[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA [13Xmatrix group[113X is simply a group of invertible matrices over a finite field.
+  An  object  in  [5XSemigroups[105X  is  a  matrix  group  if  it  satisfies  [2XIsGroup[102X
+  ([14XReference: IsGroup[114X) and [2XIsMatrixOverFiniteFieldCollection[102X ([14X7.2-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,[127X[104X
+    [4X[25X>[125X [27XZ(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);[127X[104X
+    [4X[28X<matrix over GF(2^2) of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XG := Group(x);[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XIsMatrixOverFiniteFieldGroup(G);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XG := Group(Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);[127X[104X
+    [4X[28XGroup([ <an immutable 3x3 matrix over GF2> ])[128X[104X
+    [4X[25Xgap>[125X [27XIsGroup(G);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsMatrixOverFiniteFieldGroup(G);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-2 \^[101X
+  
+  [29X[2X\^[102X( [3XG[103X, [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA matrix group over a finite field.[133X
+  
+  [33X[0;0YThe   arguments   of   this   operation,  [3XG[103X  and  [3Xmat[103X,  must  be  categories
+  [2XIsMatrixOverFiniteFieldGroup[102X ([14X7.3-1[114X) and [2XIsMatrixOverFiniteField[102X ([14X7.2-1[114X). If
+  [3XG[103X  consists  of  [10Xd[110X  by [10Xd[110X matrices over [10XGF(q)[110X and [3Xmat[103X is a [10Xd[110X by [10Xd[110X matrix over
+  [10XGF(q)[110X, then [10X[3XG[103X[10X ^ [3Xmat[103X[10X[110X returns the conjugate of [3XG[103X by [3Xmat[103X inside [10XGL(d, q)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,[127X[104X
+    [4X[25X>[125X [27XZ(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;[127X[104X
+    [4X[25Xgap>[125X [27Xy := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,[127X[104X
+    [4X[25X>[125X [27XZ(4) ^ 0 * [[1, 0, 0], [1, 0, 1], [1, 1, 1]] );;[127X[104X
+    [4X[25Xgap>[125X [27XG := Group(x);[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XG ^ y;[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-3 IsomorphismMatrixGroup[101X
+  
+  [29X[2XIsomorphismMatrixGroup[102X( [3XG[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
+  
+  [33X[0;0YIf  [3XG[103X  belongs  to  the  category [2XIsMatrixOverFiniteFieldGroup[102X ([14X7.3-1[114X), then
+  [10XIsomorphismMatrixGroup[110X returns an isomorphism from [3XG[103X into a group consisting
+  of [5XGAP[105X library matrices.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,[127X[104X
+    [4X[25X>[125X [27XZ(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;[127X[104X
+    [4X[25Xgap>[125X [27XG := Group(x);;[127X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismMatrixGroup(G);;[127X[104X
+    [4X[25Xgap>[125X [27XSource(iso); Range(iso);[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+    [4X[28XGroup([128X[104X
+    [4X[28X[ [128X[104X
+    [4X[28X  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])[128X[104X
+  [4X[32X[104X
+  
+  [1X7.3-4 AsMatrixGroup[101X
+  
+  [29X[2XAsMatrixGroup[102X( [3XG[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA group of [5XGAP[105X library matrices over a finite field.[133X
+  
+  [33X[0;0YReturns the image of the isomorphism returned by [14X7.3-3[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,[127X[104X
+    [4X[25X>[125X [27XZ(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;[127X[104X
+    [4X[25Xgap>[125X [27XG := Group(x);[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XAsMatrixGroup(G);[127X[104X
+    [4X[28XGroup([128X[104X
+    [4X[28X[ [128X[104X
+    [4X[28X  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])[128X[104X
+  [4X[32X[104X
+  

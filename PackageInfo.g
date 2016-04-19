@@ -1,102 +1,236 @@
-#############################################################################
-##  
-##  Demo PackageInfo.g for the GitHubPagesForGAP
+############################################################################
 ##
+#W  PackageInfo.g
+#Y  Copyright (C) 2011-15                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+##  <#GAPDoc Label="PKGVERSIONDATA">
+##  <!ENTITY VERSION "2.7.5">
+##  <!ENTITY GAPVERS "4.8.3">
+##  <!ENTITY ORBVERS "4.7.3">
+##  <!ENTITY IOVERS "4.4.4">
+##  <!ENTITY GRAPEVERS "4.5">
+##  <!ENTITY GENSSVERS "1.5">
+##  <!ENTITY ARCHIVENAME "semigroups-2.7.5">
+##  <!ENTITY COPYRIGHTYEARS "2011-16">
+##  <#/GAPDoc>
+
+RecogsFunnyNameFormatterFunction := function(st)
+  if Length(st) = 0 then
+    return st;
+  else
+    return Concatenation(" (", st, ")");
+  fi;
+end;
+
+RecogsFunnyWWWURLFunction := function(re)
+  if IsBound(re.WWWHome) then
+    return re.WWWHome;
+  else
+    return "";
+  fi;
+end;
 
 SetPackageInfo( rec(
 
-PackageName := "GitHubPagesForGAP",
+PackageName := "Semigroups",
+Subtitle := "",
+Version := "2.7.5",
+Date := "19/04/2016",
+ArchiveFormats := ".tar.gz",
 
-Subtitle := "A GitHubPages generator for GAP packages",
-Version := "0.1",
-Date := "21/03/2014", # dd/mm/yyyy format
+SourceRepository := rec(
+    Type := "git",
+    URL := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
+),
 
+IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
+PackageWWWHome  := Concatenation("https://gap-packages.github.io/",
+                                 ~.PackageName),
+README_URL      := Concatenation(~.PackageWWWHome, "/README"),
+PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
+ArchiveURL      := Concatenation(~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", "semigroups-", ~.Version),
 Persons := [
   rec(
-    LastName      := "Horn",
-    FirstNames    := "Max",
+    LastName      := "Mitchell",
+    FirstNames    := "J. D.",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "max.horn@math.uni-giessen.de",
-    WWWHome       := "http://www.quendi.de/math",
-    PostalAddress := Concatenation(
-                       "AG Algebra\n",
-                       "Mathematisches Institut\n",
-                       "Justus-Liebig-Universität Gießen\n",
-                       "Arndtstraße 2\n",
-                       "35392 Gießen\n",
-                       "Germany" ),
-    Place         := "Gießen",
-    Institution   := "Justus-Liebig-Universität Gießen"
+    Email         := "jdm3@st-and.ac.uk",
+    WWWHome       := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/",
+    PostalAddress := Concatenation( [
+                       "Mathematical Institute,",
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
+                       " Scotland"] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
   ),
 
   rec(
-    LastName      := "Thor",
-    FirstNames    := "A. U.",
+    LastName     := "Delgado",
+    FirstNames    := "Manuel",
     IsAuthor      := true,
     IsMaintainer  := false,
-    #Email         := "author@example.com",
+    Email         := "mdelgado@fc.up.pt",
+    WWWHome       := "http://cmup.fc.up.pt/cmup/mdelgado/",
+    Place         := "Porto",
+    Institution   := "Universidade do Porto"
   ),
 
   rec(
-    LastName      := "Itor",
-    FirstNames    := "Jan",
-    IsAuthor      := false,
-    IsMaintainer  := true,
-    #Email         := "janitor@example.com",
+    LastName      := "East",
+    FirstNames    := "J.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "j.east@uws.edu.au",
+    WWWHome       := "http://www.uws.edu.au/staff_profiles/uws_profiles/doctor_james_east",
+    Place         := "Sydney",
+    Institution   := "University of Western Sydney"
   ),
-],
 
-Status := "other",
+  rec(
+    LastName      := "Egri-Nagy",
+    FirstNames    := "Attila",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "attila@egri-nagy.hu",
+    WWWHome       := "http://www.egri-nagy.hu",
+    PostalAddress := Concatenation( [
+                       "University of Hertfordshire\n",
+                       "STRI\n",
+                       "College Lane\n",
+                       "AL10 9AB\n",
+                       "United Kingdom" ] ),
+    Place         := "Hatfield, Herts",
+    Institution   := "UH"
+  ),
+  rec(
+    LastName      := "Jonusas",
+    FirstNames    := "J.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "jj252@st-and.ac.uk",
+    PostalAddress := Concatenation( [
+                       "Mathematical Institute,",
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
+                       " Scotland"] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
+  ),
 
-# The following are not strictly necessary in your own PackageInfo.g
-# (in the sense that update.g only looks at the usual fields
-# like PackageWWWHome, ArchiveURL etc.). But they are convenient
-# if you use exactly the scheme for your package website that we propose.
-GithubUser := "fingolfin",
-GithubRepository := ~.PackageName,
-GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
+   rec(
+    LastName      := "Pfeiffer",
+    FirstNames    := "Markus",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "markus.pfeiffer@morphism.de",
+    WWWHome       := "http://www.morphism.de/~markusp/",
+    PostalAddress := Concatenation( [
+                       "Mathematical Institute,",
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
+                       " Scotland"] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
+  ),
 
-PackageWWWHome := Concatenation("http://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
-README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-# The following assumes you are using the Github releases system. If not, adjust
-# it accordingly.
-ArchiveURL     := Concatenation(~.GithubWWW,
-                    "/releases/download/v", ~.Version, "/",
-                    ~.GithubRepository, "-", ~.Version),
+  rec(
+    LastName      := "Steinberg",
+    FirstNames    := "B.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    WWWHome       := "http://www.sci.ccny.cuny.edu/~benjamin/",
+  ),
 
-ArchiveFormats := ".tar.gz .tar.bz2",
+  rec(
+    LastName      := "Smith",
+    FirstNames    := "J.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    WWWHome       := "http://math.sci.ccny.cuny.edu/people?name=Jhevon_Smith",
+  ),
 
-AbstractHTML := 
-  "This is a pseudo package that contains no actual\
-  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
-  GAP packages that allows to quickly setup GitHub pages.",
+  rec(
+    LastName      := "Torpey",
+    FirstNames    := "M.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "mct25@st-and.ac.uk",
+    PostalAddress := Concatenation( [
+                       "Mathematical Institute,",
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
+                       " Scotland"] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
+  ),
+
+  rec(
+    LastName      := "Wilson",
+    FirstNames    := "W.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "waw7@st-and.ac.uk",
+    WWWHome       := "http://wilf.me",
+    PostalAddress := Concatenation( [
+                       "Mathematical Institute,",
+                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
+                       " Scotland"] ),
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"
+  )],
+
+Status := "deposited",
+
+AbstractHTML :=
+"<p>The <strong class=\"pkg\">Semigroups</strong> package is a <strong class=\"pkg\">GAP</strong> package containing methods for semigroups, monoids, and inverse semigroups, principally of transformations, partial permutations, bipartitions, subsemigroups of regular Rees 0-matrix semigroups, free inverse semigroups, free bands, and semigroups of matrices over finite fields.</p> <p><strong class=\"pkg\">Semigroups</strong> contains more efficient methods than those available in the <strong class=\"pkg\">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups, monoids, and inverse semigroup, calculating their Green's structure, ideals, size, elements, group of units, small generating sets, testing membership, finding the inverses of a regular element, factorizing elements over the generators, and many more. It is also possible to test if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties.</p> <p>There are methods for finding congruences of certain types of semigroups, the normalizer of a semigroup in a permutation group, the maximal subsemigroups of a finite semigroup, and smaller degree partial permutation representations of inverse semigroups. There are functions for producing pictures of the Green's structure of a semigroup, and for drawing bipartitions.</p>",
 
 PackageDoc := rec(
-  BookName  := "GitHubPagesForGAP",
+  BookName  := "Semigroups",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "A GitHubPages generator for GAP packages",
+  LongTitle := "Semigroups",
+  Autoload  := true
 ),
 
-# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">=4.5.5",
-  NeededOtherPackages := [
-    ["GAPDoc", ">= 1.2"],
-    ["IO", ">= 4.1"],
-  ],
-  SuggestedOtherPackages := [["orb", ">= 4.2"]],
-  ExternalConditions := []
+  GAP := ">=4.8.3",
+  NeededOtherPackages := [["orb", ">=4.7.3"], ["io", ">=4.4.4"]],
+
+  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
+                             ["genss", ">=1.5"]],
+
+  ExternalConditions := []),
+
+  BannerString := Concatenation(
+  "----------------------------------------------------------------------",
+  "-------\n",
+  "Loading  Semigroups ", ~.Version, "\n",
+  "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
+        " (", ~.Persons[1].WWWHome, ")\n",
+  "with contributions by:\n",
+  Concatenation(Concatenation(List(~.Persons{[2..Length(~.Persons)-1]},
+       p->["     ",p.FirstNames," ",p.LastName,
+       RecogsFunnyNameFormatterFunction(
+         RecogsFunnyWWWURLFunction(p)),",\n"]))),
+  " and ",~.Persons[Length(~.Persons)].FirstNames," ",
+  ~.Persons[Length(~.Persons)].LastName,
+  RecogsFunnyNameFormatterFunction(
+    RecogsFunnyWWWURLFunction(~.Persons[Length(~.Persons)])),".\n",
+  "-----------------------------------------------------------------------",
+  "------\n"
 ),
 
-AvailabilityTest := ReturnTrue,
-
-Keywords := ["GitHub pages", "GAP"]
-
+  AvailabilityTest := ReturnTrue,
+  Autoload := false,
+  TestFile := "tst/testinstall.tst",
+  Keywords := ["transformation semigroups", "partial permutations",
+  "inverse semigroups", "Green's relations", "free inverse semigroup",
+  "partition monoid", "bipartitions", "Rees matrix semigroups"]
 ));
-
-

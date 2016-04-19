@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (semigroups) - Chapter 7: Matrix semigroups</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap7"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap7.html">[MathJax off]</a></p>
+<p><a id="X79B614AA803BD103" name="X79B614AA803BD103"></a></p>
+<div class="ChapSects"><a href="chap7_mj.html#X79B614AA803BD103">7 <span class="Heading">Matrix semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X789111B68260C0F6">7.1 <span class="Heading">Creating matrix semigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7D01264987F467E7">7.1-1 IsMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7DD7BCE67AA5FAEC">7.1-2 MatrixSemigroup</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7D3D08AB87434A8F">7.2 <span class="Heading">Matrices in the <strong class="pkg">Semigroups</strong> package</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8138424580601F98">7.2-1 IsMatrixOverFiniteField</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7E6406567C547F4A">7.2-2 IsMatrixOverFiniteFieldCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X84F281347ECB62B7">7.2-3 NewMatrixOverFiniteField</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X87C001497EFB0D2E">7.2-4 NewIdentityMatrixOverFiniteField</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X857E626783CCF766">7.2-5 RowSpaceBasis</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X780AA71D82E73A1F">7.2-6 RowRank</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X8733B04781B682E5">7.2-7 RightInverse</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7B46E0067D47D842">7.2-8 DegreeOfMatrixOverFiniteField</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X83CDD42880D663F4">7.2-9 BaseDomain</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X84E313CC78DB0DA9">7.2-10 TransposedMatImmutable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X841E26137DCECFCE">7.2-11 AsMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X78701C6C82D5DCA1">7.2-12 ConstructingFilter</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7_mj.html#X7C2533FA7CF4689B">7.3 <span class="Heading">Matrix groups in the <strong class="pkg">Semigroups</strong> package</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7844208D7DC457D6">7.3-1 IsMatrixOverFiniteFieldGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7B7156F17C6F1D69">7.3-2 \^</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7AC6EABF7FF04D7B">7.3-3 IsomorphismMatrixGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7BC0AEC9851C7B22">7.3-4 AsMatrixGroup</a></span>
+</div></div>
+</div>
+
+<h3>7 <span class="Heading">Matrix semigroups</span></h3>
+
+<p>This chapter describes the functions in <strong class="pkg">Semigroups</strong> for dealing with matrix semigroups. This part of the manual and the functions described herein were written by Markus Pfeiffer.</p>
+
+<p>A <em>matrix semigroup</em> for the purposes of this document is a subsemigroup of the full monoid of <span class="SimpleMath">\(n \times n\)</span> matrices over a <em>finite field</em> <span class="SimpleMath">\(\mathbb{F}\)</span>.</p>
+
+<p>More general matrix semigroups are planned, but not implemented yet.</p>
+
+<p><strong class="pkg">GAP</strong> provides a way to define matrices which are in the filter <code class="func">IsMatrix</code> (<a href="../../../doc/ref/chap24_mj.html#X7E1AE46B862B185F"><span class="RefLink">Reference: IsMatrix</span></a>). For technical reasons, the matrix semigroup functions in <strong class="pkg">Semigroups</strong> rely on a custom wrapper for matrices <code class="func">IsMatrixOverFiniteField</code> (<a href="chap7_mj.html#X8138424580601F98"><span class="RefLink">7.2-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Z(4) * [[1,0], [0,2]];</span>
+[ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrix(x);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrixOverFiniteField(x);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);</span>
+&lt;matrix over GF(2^2) of degree 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrix(y);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrixOverFiniteField(y);</span>
+true</pre></div>
+
+<p>In the following we will refer to matrices in <code class="func">IsMatrix</code> (<a href="../../../doc/ref/chap24_mj.html#X7E1AE46B862B185F"><span class="RefLink">Reference: IsMatrix</span></a>) by <em>GAP library matrices</em> and to matrices in <code class="func">IsMatrixOverFiniteField</code> (<a href="chap7_mj.html#X8138424580601F98"><span class="RefLink">7.2-1</span></a>) by <em>matrices over finite fields</em>. We take precautions to hide this fact from the user of <strong class="pkg">Semigroups</strong> and also provide conversion functions between the two representations.</p>
+
+<p><a id="X789111B68260C0F6" name="X789111B68260C0F6"></a></p>
+
+<h4>7.1 <span class="Heading">Creating matrix semigroups</span></h4>
+
+<p>Random matrix semigroups can be created by using the functions <code class="func">RandomMatrixSemigroup</code> (<a href="chap2_mj.html#X857EBB697BE08DB4"><span class="RefLink">2.1-6</span></a>) or <code class="func">RandomMatrixMonoid</code> (<a href="chap2_mj.html#X857EBB697BE08DB4"><span class="RefLink">2.1-6</span></a>). While this is convenient for testing and playing around, creating semigroups from matrices can be a bit more work. We provide a couple of convenience functions to streamline the process.</p>
+
+<p><a id="X7D01264987F467E7" name="X7D01264987F467E7"></a></p>
+
+<h5>7.1-1 IsMatrixSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>A <em>matrix semigroup</em> is simply a semigroup consisting of matrices over a finite field. An object in <strong class="pkg">GAP</strong> is a matrix semigroup if it satisfies <code class="func">IsSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">Reference: IsSemigroup</span></a>) and <code class="func">IsMatrixOverFiniteFieldCollection</code> (<a href="chap7_mj.html#X7E6406567C547F4A"><span class="RefLink">7.2-2</span></a>).</p>
+
+<p>A <em>matrix monoid</em> is simply a monoid consisting of matrices over a finite field. An object in <strong class="pkg">GAP</strong> is a matrix monoid if it satisfies <code class="func">IsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>) and <code class="func">IsMatrixOverFiniteFieldCollection</code> (<a href="chap7_mj.html#X7E6406567C547F4A"><span class="RefLink">7.2-2</span></a>).</p>
+
+<p>Note that it is possible for a matrix semigroup to have a multiplicative neutral element (i.e. an identity element) but not to satisfy <code class="code">IsMatrixMonoid</code>.</p>
+
+<p><a id="X7DD7BCE67AA5FAEC" name="X7DD7BCE67AA5FAEC"></a></p>
+
+<h5>7.1-2 MatrixSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MatrixSemigroup</code>( <var class="Arg">list</var>[, <var class="Arg">F</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A matrix semigroup.</p>
+
+<p>This is a helper function to create matrix semigroups from <strong class="pkg">GAP</strong> matrices. The argument <var class="Arg">list</var> is a homogeneous list of <strong class="pkg">GAP</strong> matrices over a finite field, and the optional argument <var class="Arg">F</var> is a finite field.</p>
+
+<p>The specification of the field <var class="Arg">F</var> can be necessary to prevent <strong class="pkg">GAP</strong> from trying to find a smaller common field for the entries in <var class="Arg">list</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                         Z(3) * [[0,0,0], [0,0,1], [0,1,0]]], GF(9));</span>
+&lt;semigroup of 3x3 matrices over GF(3^2) with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                         Z(3) * [[0,0,0], [0,0,1], [0,1,0]]]);</span>
+&lt;semigroup of 3x3 matrices over GF(3) with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                         Z(4) * [[0,0,0], [0,0,1], [0,1,0]]]);</span>
+&lt;semigroup of 3x3 matrices over GF(2^2) with 2 generators&gt;</pre></div>
+
+<p>In addition to the above, <code class="func">IsomorphismMatrixSemigroup</code> (<a href="chap2_mj.html#X80B6A19E835618BD"><span class="RefLink">2.4-5</span></a>) and <code class="func">AsMatrixSemigroup</code> (<a href="chap2_mj.html#X7C6F3A667F09BAEC"><span class="RefLink">2.4-1</span></a>) can be used to create a matrix semigroup isomorphic to an already known semigroup.</p>
+
+<p><a id="X7D3D08AB87434A8F" name="X7D3D08AB87434A8F"></a></p>
+
+<h4>7.2 <span class="Heading">Matrices in the <strong class="pkg">Semigroups</strong> package</span></h4>
+
+<p>The matrix functions in the <strong class="pkg">Semigroups</strong> package use a wrapper object for matrices. In the following these objects are documented.</p>
+
+<p><a id="X8138424580601F98" name="X8138424580601F98"></a></p>
+
+<h5>7.2-1 IsMatrixOverFiniteField</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteField</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This category contains <strong class="pkg">Semigroups</strong> matrix object wrapper. The introduction of this filter was necessary to get around <strong class="pkg">GAP</strong> limitations with regards to matrices and associative objects.</p>
+
+<p>The behaviour of this object type might be changed or removed completely from the package in the future.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Z(4) * [[1,0], [0,2]];</span>
+[ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrixOverFiniteField(x);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);</span>
+&lt;matrix over GF(2^2) of degree 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrixOverFiniteField(y);</span>
+true
+</pre></div>
+
+<p><a id="X7E6406567C547F4A" name="X7E6406567C547F4A"></a></p>
+
+<h5>7.2-2 IsMatrixOverFiniteFieldCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>Every collection of matrices in the category <code class="func">IsMatrixOverFiniteField</code> (<a href="chap7_mj.html#X8138424580601F98"><span class="RefLink">7.2-1</span></a>) belongs to the category <code class="code">IsMatrixOverFiniteFieldCollection</code>. For example, matrix semigroup belong to <code class="code">IsMatrixOverFiniteFieldCollection</code>.</p>
+
+<p><a id="X84F281347ECB62B7" name="X84F281347ECB62B7"></a></p>
+
+<h5>7.2-3 NewMatrixOverFiniteField</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">n</var>, <var class="Arg">rows</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: a new matrix object.</p>
+
+<p>Creates a new <var class="Arg">n</var>-by-<var class="Arg">n</var> matrix over the finite field <var class="Arg">F</var> with constructing filter <var class="Arg">filt</var>. The matrix itself is given by a list <var class="Arg">rows</var> of rows. Currently the only possible value for <var class="Arg">filt</var> is <code class="code">IsPlistMatrixOverFiniteFieldRep</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(4)*[[1,0],[0,1]]);</span>
+&lt;matrix over GF(2^2) of degree 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 0, []);</span>
+&lt;matrix over GF(2^2) of degree 0&gt;
+</pre></div>
+
+<p><a id="X87C001497EFB0D2E" name="X87C001497EFB0D2E"></a></p>
+
+<h5>7.2-4 NewIdentityMatrixOverFiniteField</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewIdentityMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewZeroMatrixOverFiniteField</code>( <var class="Arg">filt</var>, <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Creates a new <var class="Arg">n</var>-by-<var class="Arg">n</var> zero or identity matrix with entries in the finite field <var class="Arg">F</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                         GF(4), 2);</span>
+&lt;matrix over GF(2^2) of degree 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                     GF(4), 2);</span>
+&lt;matrix over GF(2^2) of degree 2&gt;
+</pre></div>
+
+<p><a id="X857E626783CCF766" name="X857E626783CCF766"></a></p>
+
+<h5>7.2-5 RowSpaceBasis</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceBasis</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceTransformation</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowSpaceTransformationInv</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>To compute the value of any of the above attributes, a canonical basis for the row space of <var class="Arg">m</var> is computed along with an invertible matrix <code class="code">RowSpaceTransformation</code> such that <code class="code">m * RowSpaceTransformation(m) = RowSpaceBasis(m)</code>. <code class="code">RowSpaceTransformationInv(m)</code> is the inverse of <code class="code">RowSpaceTransformation(m)</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(4)^0*[[1,1,0], [0,1,1], [1,1,1]] );</span>
+&lt;matrix over GF(2^2) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RowSpaceBasis(x);</span>
+&lt;rowbasis of rank 3 over GF(2^2)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RowSpaceTransformation(x);</span>
+[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], 
+  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ]</pre></div>
+
+<p><a id="X780AA71D82E73A1F" name="X780AA71D82E73A1F"></a></p>
+
+<h5>7.2-6 RowRank</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RowRank</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: Length of a basis of the row space of <var class="Arg">m</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );</span>
+&lt;matrix over GF(5) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RowRank(x);</span>
+2
+</pre></div>
+
+<p><a id="X8733B04781B682E5" name="X8733B04781B682E5"></a></p>
+
+<h5>7.2-7 RightInverse</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightInverse</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftInverse</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A matrix over a finite field.</p>
+
+<p>These attributes contain a semigroup left-inverse, and a semigroup right-inverse of the matrix <var class="Arg">m</var> respectively.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );</span>
+&lt;matrix over GF(2^2) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftInverse(x);</span>
+&lt;matrix over GF(2^2) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(LeftInverse(x) * x);</span>
+&lt;matrix over GF(2^2) of degree 3
+[ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0 ] ]&gt;
+</pre></div>
+
+<p><a id="X7B46E0067D47D842" name="X7B46E0067D47D842"></a></p>
+
+<h5>7.2-8 DegreeOfMatrixOverFiniteField</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfMatrixOverFiniteField</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: Number of rows and columns of the matrix <var class="Arg">m</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );</span>
+&lt;matrix over GF(5) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfMatrixOverFiniteField(x);</span>
+3
+</pre></div>
+
+<p><a id="X83CDD42880D663F4" name="X83CDD42880D663F4"></a></p>
+
+<h5>7.2-9 BaseDomain</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseDomain</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The domain in which entries of <var class="Arg">m</var> lie.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );</span>
+&lt;matrix over GF(5) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BaseDomain(x);</span>
+GF(5)
+</pre></div>
+
+<p><a id="X84E313CC78DB0DA9" name="X84E313CC78DB0DA9"></a></p>
+
+<h5>7.2-10 TransposedMatImmutable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatImmutable</code>( <var class="Arg">m</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: An immutable matrix.</p>
+
+<p>This attribute contains an immutable copy of <var class="Arg">m</var>. Note that matrices are immutable per default.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );</span>
+&lt;matrix over GF(5) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransposedMatImmutable(x);</span>
+&lt;matrix over GF(5) of degree 3&gt;
+</pre></div>
+
+<p><a id="X841E26137DCECFCE" name="X841E26137DCECFCE"></a></p>
+
+<h5>7.2-11 AsMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrix</code>( <var class="Arg">m</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A matrix.</p>
+
+<p>Turns a matrix over a finite field into a <strong class="pkg">GAP</strong> matrix.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(5), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(5)^0*[[1,1,0], [0,0,0], [1,1,1]] );</span>
+&lt;matrix over GF(5) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsMatrix(x);</span>
+[ [ Z(5)^0, Z(5)^0, 0*Z(5) ], [ 0*Z(5), 0*Z(5), 0*Z(5) ], 
+  [ Z(5)^0, Z(5)^0, Z(5)^0 ] ]
+</pre></div>
+
+<p><a id="X78701C6C82D5DCA1" name="X78701C6C82D5DCA1"></a></p>
+
+<h5>7.2-12 ConstructingFilter</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConstructingFilter</code>( <var class="Arg">m</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A filter</p>
+
+<p>Return the filter that was passed to <code class="func">NewMatrixOverFiniteField</code> (<a href="chap7_mj.html#X84F281347ECB62B7"><span class="RefLink">7.2-3</span></a>) when creating the matrix <var class="Arg">m</var>. This is used to create new objects that lie in the same filter.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(4)^0*[[1,1,0], [0,0,0], [1,1,1]] );</span>
+&lt;matrix over GF(2^2) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConstructingFilter(x);</span>
+&lt;Representation "IsPlistMatrixOverFiniteFieldRep"&gt;
+</pre></div>
+
+<p><a id="X7C2533FA7CF4689B" name="X7C2533FA7CF4689B"></a></p>
+
+<h4>7.3 <span class="Heading">Matrix groups in the <strong class="pkg">Semigroups</strong> package</span></h4>
+
+<p>For interfacing the semigroups code with <strong class="pkg">GAP</strong>s library code for matrix groups, the <strong class="pkg">Semigroups</strong> package implements matrix groups that delegate to the <strong class="pkg">GAP</strong> library.</p>
+
+<p><a id="X7844208D7DC457D6" name="X7844208D7DC457D6"></a></p>
+
+<h5>7.3-1 IsMatrixOverFiniteFieldGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixOverFiniteFieldGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>A <em>matrix group</em> is simply a group of invertible matrices over a finite field. An object in <strong class="pkg">Semigroups</strong> is a matrix group if it satisfies <code class="func">IsGroup</code> (<a href="../../../doc/ref/chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">Reference: IsGroup</span></a>) and <code class="func">IsMatrixOverFiniteFieldCollection</code> (<a href="chap7_mj.html#X7E6406567C547F4A"><span class="RefLink">7.2-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);</span>
+&lt;matrix over GF(2^2) of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(x);</span>
+&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrixOverFiniteFieldGroup(G);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);</span>
+Group([ &lt;an immutable 3x3 matrix over GF2&gt; ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroup(G);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrixOverFiniteFieldGroup(G);</span>
+false</pre></div>
+
+<p><a id="X7B7156F17C6F1D69" name="X7B7156F17C6F1D69"></a></p>
+
+<h5>7.3-2 \^</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">G</var>, <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A matrix group over a finite field.</p>
+
+<p>The arguments of this operation, <var class="Arg">G</var> and <var class="Arg">mat</var>, must be categories <code class="func">IsMatrixOverFiniteFieldGroup</code> (<a href="chap7_mj.html#X7844208D7DC457D6"><span class="RefLink">7.3-1</span></a>) and <code class="func">IsMatrixOverFiniteField</code> (<a href="chap7_mj.html#X8138424580601F98"><span class="RefLink">7.2-1</span></a>). If <var class="Arg">G</var> consists of <code class="code">d</code> by <code class="code">d</code> matrices over <code class="code">GF(q)</code> and <var class="Arg">mat</var> is a <code class="code">d</code> by <code class="code">d</code> matrix over <code class="code">GF(q)</code>, then <code class="code"><var class="Arg">G</var> ^ <var class="Arg">mat</var></code> returns the conjugate of <var class="Arg">G</var> by <var class="Arg">mat</var> inside <code class="code">GL(d, q)</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(4) ^ 0 * [[1, 0, 0], [1, 0, 1], [1, 1, 1]] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(x);</span>
+&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G ^ y;</span>
+&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;
+</pre></div>
+
+<p><a id="X7AC6EABF7FF04D7B" name="X7AC6EABF7FF04D7B"></a></p>
+
+<h5>7.3-3 IsomorphismMatrixGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismMatrixGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: An isomorphism.</p>
+
+<p>If <var class="Arg">G</var> belongs to the category <code class="func">IsMatrixOverFiniteFieldGroup</code> (<a href="chap7_mj.html#X7844208D7DC457D6"><span class="RefLink">7.3-1</span></a>), then <code class="code">IsomorphismMatrixGroup</code> returns an isomorphism from <var class="Arg">G</var> into a group consisting of <strong class="pkg">GAP</strong> library matrices.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismMatrixGroup(G);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Source(iso); Range(iso);</span>
+&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;
+Group(
+[ 
+  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])</pre></div>
+
+<p><a id="X7BC0AEC9851C7B22" name="X7BC0AEC9851C7B22"></a></p>
+
+<h5>7.3-4 AsMatrixGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrixGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A group of <strong class="pkg">GAP</strong> library matrices over a finite field.</p>
+
+<p>Returns the image of the isomorphism returned by <a href="chap7_mj.html#X7AC6EABF7FF04D7B"><span class="RefLink">7.3-3</span></a>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group(x);</span>
+&lt;group of 3x3 matrices over GF(2^2) with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsMatrixGroup(G);</span>
+Group(
+[ 
+  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], 
+      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
