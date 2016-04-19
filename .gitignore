@@ -51,3 +51,4 @@ src/semigroups++/html
 src/semigroups++
 *.pyc
 lcov*
+*.lab
