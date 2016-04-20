@@ -1,7 +1,8 @@
 ############################################################################
 ##
 #W  reesmat.gi
-#Y  Copyright (C) 2014-15                                James D. Mitchell
+#Y  Copyright (C) 2014-16                                James D. Mitchell
+##                                                       Wilfred A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -386,11 +387,69 @@ fi;
 
 #
 
+InstallMethod(RZMSDigraph,
+"for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local rows, cols, mat, n, m, nredges, out, gr, i, j;
+
+  rows := Rows(R);
+  cols := Columns(R);
+  mat := Matrix(R);
+  n := Length(Columns(R));
+  m := Length(Rows(R));
+  nredges := 0;
+  out := List([1 .. m + n], x -> []);
+  for i in [1 .. m] do
+    for j in [1 .. n] do
+      if mat[cols[j]][rows[i]] <> 0 then
+        nredges := nredges + 2;
+        Add(out[j + m], i);
+        Add(out[i], j + m);
+      fi;
+    od;
+  od;
+  gr := DigraphNC(out);
+  SetIsBipartiteDigraph(gr, true);
+  SetDigraphHasLoops(gr, false);
+  SetDigraphBicomponents(gr, [[1 .. m], [m + 1 .. m + n]]);
+  SetDigraphNrEdges(gr, nredges);
+  SetDigraphVertexLabels(gr, Concatenation(rows, cols));
+  return gr;
+end);
+
+#
+
+InstallMethod(RZMSConnectedComponents,
+"for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local gr, comps, new, n, m, i;
+
+  gr := RZMSDigraph(R);
+  comps := DigraphConnectedComponents(gr);
+  new := List([1 .. Length(comps.comps)], x -> [[], []]);
+  n := Length(Columns(R));
+  m := Length(Rows(R));
+
+  for i in [1 .. m] do
+    Add(new[comps.id[i]][1], Rows(R)[i]);
+  od;
+  for i in [m + 1 .. m + n] do
+    Add(new[comps.id[i]][2], Columns(R)[i - m]);
+  od;
+  return new;
+end);
+
+#############################################################################
+## Methods related to inverse semigroups
+#############################################################################
+
 InstallMethod(IsInverseSemigroup,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
-  local U, mat, seen_col, mat_elts, seen_row_i, G, i, j;
+  local U, elts, mat, row, seen, G, j, i;
 
   if not IsReesZeroMatrixSemigroup(R) then
     TryNextMethod();
@@ -400,45 +459,48 @@ function(R)
 
   if (HasIsInverseSemigroup(U) and not IsInverseSemigroup(U))
       or (HasIsRegularSemigroup(U) and not IsRegularSemigroup(U))
-      or (not IsMonoid(U) and HasIsMonoidAsSemigroup(U)
-          and not IsMonoidAsSemigroup(U))
+      or (HasIsMonoidAsSemigroup(U) and not IsMonoidAsSemigroup(U))
       or (HasGroupOfUnits(U) and GroupOfUnits(U) = fail)
       or Length(Columns(R)) <> Length(Rows(R)) then
     return false;
   fi;
 
   # Check each row and column of mat contains *exactly* one non-zero entry
+  elts := [];
   mat := Matrix(R);
-  seen_col := BlistList([1 .. Length(mat[1])], []);
-  mat_elts := [];
-  for i in Columns(R) do
-    seen_row_i := false;
-    for j in Rows(R) do
-      if mat[i][j] <> 0 then
-        if seen_row_i or seen_col[j] then
+  row := BlistList([1 .. Maximum(Rows(R))], []); # <row[i]> is <true> iff found
+                                                 # a non-zero entry in row <i>
+  for j in Columns(R) do
+    seen := false; # <seen>: <true> iff found a non-zero entry in the col <j>
+    for i in Rows(R) do
+      if mat[j][i] <> 0 then
+        if seen or row[i] then
           return false;
         fi;
-        seen_row_i := true;
-        seen_col[j] := true;
-        AddSet(mat_elts, mat[i][j]);
+        seen := true;
+        row[i] := true;
+        AddSet(elts, mat[j][i]);
       fi;
     od;
-    if not seen_row_i then
+    if not seen then
       return false;
     fi;
   od;
 
+  # Check that non-zero matrix entries are units of the inverse monoid <U>
   G := GroupOfUnits(U);
   return G <> fail
-      and ForAll(mat_elts, x -> x in G)
+      and ForAll(elts, x -> x in G)
       and IsInverseSemigroup(U);
 end);
+
+#
 
 InstallMethod(Idempotents,
 "for an inverse Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup and IsInverseSemigroup],
 function(R)
-  local mat, I, J, star, e, k, out, i, j, x;
+  local mat, I, star, e, out, k, i, j, x;
 
   if not IsReesZeroMatrixSemigroup(R) then
     TryNextMethod();
@@ -446,22 +508,20 @@ function(R)
 
   mat := Matrix(R);
   I := Rows(R);
-  J := Columns(R);
-  star := EmptyPlist(Length(I));
+  star := EmptyPlist(Maximum(I));
   for i in I do
-    for j in J do
+    for j in Columns(R) do
       if mat[j][i] <> 0 then
-        star[i] := j;
+        star[i] := j; # <star[i]> is index such that mat[star[i]][i] <> 0
         break;
       fi;
     od;
   od;
 
   e := Idempotents(UnderlyingSemigroup(R));
-  k := 1;
   out := EmptyPlist(NrIdempotents(R));
-  out[k] := MultiplicativeZero(R);
-
+  out[1] := MultiplicativeZero(R);
+  k := 1;
   for i in I do
     for x in e do
       k := k + 1;
@@ -478,31 +538,33 @@ InstallMethod(Idempotents,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
-  local U, iso, inv, out, mat, i, j;
+  local G, group, iso, inv, mat, out, k, i, j;
 
-  if not IsReesZeroMatrixSemigroup(R) then
+  if not IsReesZeroMatrixSemigroup(R)
+      or not IsGroupAsSemigroup(UnderlyingSemigroup(R)) then
     TryNextMethod();
   fi;
 
-  U := UnderlyingSemigroup(R);
-  if IsGroup(U) then
-    iso := IdentityMapping(U);
-    inv := iso;
-  elif IsGroupAsSemigroup(U) then
-    iso := IsomorphismPermGroup(U);
+  G := UnderlyingSemigroup(R);
+  group := IsGroup(G);
+  if not IsGroup(R) then
+    iso := IsomorphismPermGroup(G);
     inv := InverseGeneralMapping(iso);
-  else
-    TryNextMethod();
   fi;
-
-  out := EmptyPlist(NrIdempotents(R));
-  out[1] := MultiplicativeZero(R);
 
   mat := Matrix(R);
+  out := EmptyPlist(NrIdempotents(R));
+  out[1] := MultiplicativeZero(R);
+  k := 1;
   for i in Rows(R) do
     for j in Columns(R) do
       if mat[j][i] <> 0 then
-        Add(out, RMSElement(R, i, ((mat[j][i] ^ iso) ^ -1) ^ inv, j));
+        k := k + 1;
+        if group then
+          out[k] := RMSElement(R, i, mat[j][i] ^ -1, j);
+        else
+          out[k] := RMSElement(R, i, ((mat[j][i] ^ iso) ^ -1) ^ inv, j);
+        fi;
       fi;
     od;
   od;
@@ -528,19 +590,14 @@ InstallMethod(NrIdempotents,
 "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
-  local U, count, mat, i, j;
+  local count, mat, i, j;
 
-  if not IsReesZeroMatrixSemigroup(R) then
-    TryNextMethod();
-  fi;
-
-  U := UnderlyingSemigroup(R);
-  if not IsGroupAsSemigroup(U) then
+  if not IsReesZeroMatrixSemigroup(R)
+      or not IsGroupAsSemigroup(UnderlyingSemigroup(R)) then
     TryNextMethod();
   fi;
 
   count := 1;
-
   mat := Matrix(R);
   for i in Rows(R) do
     for j in Columns(R) do
@@ -553,226 +610,225 @@ function(R)
   return count;
 end);
 
-InstallMethod(RZMSDigraph,
-"for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
-function(R)
-  local mat, n, m, out, i, j;
-
-  mat := Matrix(R);
-  n := Length(mat);
-  m := Length(mat[1]);
-  out := List([1 .. m + n], x -> []);
-  for i in [1 .. m] do
-    for j in [1 .. n] do
-      if mat[j][i] <> 0 then
-        Add(out[j + m], i);
-        Add(out[i], j + m);
-      fi;
-    od;
-  od;
-  return DigraphNC(out);
-end);
-
-InstallMethod(RZMSConnectedComponents,
-"for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
-function(R)
-  local comps, new, mat, n, m, i;
-
-  comps := DigraphConnectedComponents(RZMSDigraph(R));
-  new := List([1 .. Length(comps.comps)], x -> [[], []]);
-  mat := Matrix(R);
-  n := Length(mat);
-  m := Length(mat[1]);
-  for i in [1 .. m] do
-    Add(new[comps.id[i]][1], i);
-  od;
-  for i in [m + 1 .. m + n] do
-    Add(new[comps.id[i]][2], i - m);
-  od;
-  return new;
-end);
+#############################################################################
+## Normalizations
+#############################################################################
 
 InstallMethod(RZMSNormalization,
 "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(R)
-  local mat, n, m, comp, perm, norm, size, rows, cols, l, x, next_cols,
-  row_perm, col_perm, next_rows, new, out, iso, inv, hom, k, j, i;
+  local T, rows, cols, I, L, lookup_cols, lookup_rows, mat, group, one, r, c,
+  invert, GT, comp, size, p, col, rows_unsorted, cols_unsorted, x, j, cols_todo,
+  rows_todo, new, S, iso, inv, i, k;
 
-  if not IsGroupAsSemigroup(UnderlyingSemigroup(R)) then
-    ErrorNoReturn("Semigroups: RZMSNormalization: usage,\n",
-                  "not yet implemented for when the underlying semigroup is ",
-                  "not a group,");
-  fi;
-  mat := Matrix(R);
-  n := Length(mat);
-  m := Length(mat[1]);
-  comp := ShallowCopy(RZMSConnectedComponents(R));
-  perm := rec();
-  norm := rec();
+  T := UnderlyingSemigroup(R);
 
-  # Sort components by size descending
-  size := List(comp, x -> Length(x[1]) * Length(x[2]));
-  SortParallel(size, comp, function(x, y)
-                             return LT(y, x);
-                           end);
+  rows := Rows(R);
+  cols := Columns(R);
+  I := Length(rows);
+  L := Length(cols);
 
-  perm.row := [1 .. m];
-  perm.col := [1 .. n];
-  norm.row := List(Rows(R), x -> ());
-  norm.col := List(Columns(R), x -> ());
-  for k in [1 .. Number(size, x -> x <> 0)] do
-    rows := ShallowCopy(comp[k][1]); # Rows of RZMS, not rows of matrix
-    cols := ShallowCopy(comp[k][2]); # Cols of RZMS, not cols of matrix
-
-    # Pick the column with the maximum number of non-zero entries to go first
-    l := List(cols, y -> Number(rows, z -> mat[y][z] <> 0));
-    x := Position(l, Maximum(l));
-    next_cols := [cols[x]];
-    Remove(cols, x);
-
-    row_perm := EmptyPlist(Length(rows));
-    col_perm := EmptyPlist(Length(cols));
-    while not IsEmpty(next_cols) do
-      Append(col_perm, next_cols);
-      next_rows := [];
-      for j in next_cols do
-        for i in rows do
-          if mat[j][i] <> 0 then
-            Add(next_rows, i);
-            norm.row[i] := norm.col[j] * mat[j][i];
-          fi;
-        od;
-        rows := Difference(rows, next_rows);
-      od;
-      Append(row_perm, next_rows);
-      next_cols := [];
-      for i in next_rows do
-        for j in cols do
-          if mat[j][i] <> 0 then
-            Add(next_cols, j);
-            norm.col[j] := norm.row[i] * mat[j][i] ^ -1;
-          fi;
-        od;
-        cols := Difference(cols, next_cols);
-      od;
-    od;
-
-    # Store the perm which sorts rows and columns within component <k>
-    perm.row{comp[k][1]} := row_perm;
-    perm.col{comp[k][2]} := col_perm;
+  lookup_cols := EmptyPlist(Maximum(cols));
+  for i in [1 .. L] do
+    lookup_cols[cols[i]] := i;
+  od;
+  lookup_rows := EmptyPlist(Maximum(rows));
+  for i in [1 .. I] do
+    lookup_rows[rows[i]] := i;
   od;
 
-  norm.col_inv := List(norm.col, x -> x ^ -1);
-  norm.row_inv := List(norm.row, x -> x ^ -1);
+  mat := Matrix(R);
+  group := IsGroupAsSemigroup(T);
 
-  # Create the perms to sort rows and columns within components
-  perm.row := PermList(perm.row);
-  perm.col := PermList(perm.col);
+  if group then
+    one := MultiplicativeNeutralElement(T);
+    r := ListWithIdenticalEntries(I, one);
+    c := ListWithIdenticalEntries(L, one);
+    # Not every IsGroupAsSemigroup has the usual inverse operation
+    if IsGroup(T) then
+      invert := InverseOp;
+    else
+      invert := x -> InversesOfSemigroupElement(T, x)[1];
+    fi;
+  fi;
 
-  # Combine with perms which will sort components by size
-  perm.row := PermList(OnTuples(Concatenation(List(comp, x -> x[1])),
-                                perm.row));
-  perm.col := PermList(OnTuples(Concatenation(List(comp, x -> x[2])),
-                                perm.col));
-  perm.row_inv := perm.row ^ -1;
-  perm.col_inv := perm.col ^ -1;
+  GT := function(x, y)
+    return LT(y, x);
+  end;
 
-  # Construct new matrix
-  new := List([1 .. n], x -> EmptyPlist(m));
-  for j in Columns(R) do
-    for i in Rows(R) do
-      if mat[j][i] = 0 then
-        new[j ^ perm.col_inv][i ^ perm.row_inv] := 0;
+  # Sort the connected components of <R> by size (#rows * #colums) descending.
+  # This also sends any zero-columns or zero-rows to the end of the new matrix.
+  comp := ShallowCopy(RZMSConnectedComponents(R));
+  size := List(comp, x -> Length(x[1]) * Length(x[2]));
+  SortParallel(size, comp, GT); # comp[1] defines largest connected component.
+  p := rec(row := EmptyPlist(I), col := EmptyPlist(I));
+
+  for k in [1 .. Length(comp)] do
+    if size[k] = 0 then
+      Append(p.row, comp[k][1]);
+      Append(p.col, comp[k][2]);
+      continue;
+    fi;
+    # The rows and columns contained in the <k>^th largest conn. component.
+    rows := comp[k][1];
+    cols := comp[k][2];
+    rows_unsorted := BlistList(rows, rows);
+    cols_unsorted := BlistList(cols, cols);
+
+    # Choose a column with the max number of non-zero entries to go first
+    x := List(cols, j -> Number(rows, i -> mat[j][i] <> 0));
+    x := Position(x, Maximum(x));
+    j := cols[x];
+    cols_todo := [j];
+    cols_unsorted[x] := false;
+    Add(p.col, j);
+
+    # At each step, for the columns which have just been sorted:
+    # 1. It is necessary to identify <rows_todo>, those unsorted rows which have
+    #    an idempotent in any of the just-sorted columns.
+    # 2. When doing this we also order these rows such that they are contiguous.
+    # 3. If <T> is a group, then for each of these rows <i> we define the
+    #    element <r[i]> of <T> which will, in the normalization, ensure that the
+    #    first non-zero entry of that row is <one>, the identity of <T>.
+    # It is necessary to do the same procedure again, swapping rows and columns.
+
+    while not IsEmpty(cols_todo) do
+      rows_todo := [];
+      for j in cols_todo do
+        x := ListBlist(rows, rows_unsorted);
+        for i in x do
+          if mat[j][i] <> 0 then
+            Add(rows_todo, i);
+            rows_unsorted[PositionSorted(rows, i)] := false;
+            if group then
+              r[i] := c[j] * mat[j][i];
+            fi;
+            Add(p.row, i);
+          fi;
+        od;
+      od;
+      cols_todo := [];
+      for i in rows_todo do
+        x := ListBlist(cols, cols_unsorted);
+        for j in x do
+          if mat[j][i] <> 0 then
+            Add(cols_todo, j);
+            cols_unsorted[PositionSorted(cols, j)] := false;
+            if group then
+              c[j] := r[i] * invert(mat[j][i]);
+            fi;
+            Add(p.col, j);
+          fi;
+        od;
+      od;
+    od;
+  od;
+
+  rows := Rows(R);
+  cols := Columns(R);
+  
+  p.row := List(p.row, x -> lookup_rows[x]);
+  p.col := List(p.col, x -> lookup_cols[x]);
+
+  # p.row takes a row of <R> and gives the corresponding row of <S>.
+  # p.row_i is the inverse of this (to avoid inverting repeatedly).
+  p.row_i := PermList(p.row);
+  p.col_i := PermList(p.col);
+  p.row := p.row_i ^ -1;
+  p.col := p.col_i ^ -1;
+
+  # Construct the normalized RZMS <S>.
+  new := List(cols, x -> EmptyPlist(I));
+  for j in cols do
+    for i in rows do
+      if mat[j][i] <> 0 and group then
+        new[lookup_cols[j] ^ p.col][lookup_rows[i] ^ p.row] := 
+          c[j] * mat[j][i] * invert(r[i]);
       else
-        new[j ^ perm.col_inv][i ^ perm.row_inv] := norm.col[j] * mat[j][i] *
-                                                   norm.row_inv[i];
+        new[lookup_cols[j] ^ p.col][lookup_rows[i] ^ p.row] := mat[j][i];
       fi;
     od;
   od;
+  S := ReesZeroMatrixSemigroup(T, new);
 
-  out := ReesZeroMatrixSemigroup(UnderlyingSemigroup(R), new);
-
+  # Construct isomorphisms between <R> and <S>.
+  # iso: (i, g, l) -> (i ^ p.row, r[i] * g * c[l] ^ -1, l ^ p.col)
   iso := function(x)
     if x![1] = 0 then
-      return MultiplicativeZero(out);
+      return MultiplicativeZero(S);
     fi;
-    return RMSElement(out,
-                      x![1] ^ perm.row_inv,
-                      norm.row[x![1]] * x![2] * norm.col_inv[x![3]],
-                      x![3] ^ perm.col_inv);
+    return RMSElement(S, lookup_rows[x![1]] ^ p.row,
+                         r[x![1]] * x![2] * invert(c[x![3]]),
+                         lookup_cols[x![3]] ^ p.col);
   end;
+  # inv: (i, g, l) -> (a, r[a] ^ -1 * g * c[b], b)
+  #      where a = i ^ (p.row ^ -1) and b = j ^ (r.col ^ -1)
   inv := function(x)
     if x![1] = 0 then
       return MultiplicativeZero(R);
     fi;
     return RMSElement(R,
-                      x![1] ^ perm.row,
-                      norm.row_inv[x![1] ^ perm.row] * x![2]
-                        * norm.col[x![3] ^ perm.col],
-                      x![3] ^ perm.col);
+                      rows[x![1] ^ p.row_i],
+                      invert(r[rows[x![1] ^ p.row_i]]) * x![2]
+                      * c[cols[x![3] ^ p.col_i]],
+                      cols[x![3] ^ p.col_i]);
   end;
 
-  hom := MagmaIsomorphismByFunctionsNC(R, out, iso, inv);
-  # TODO check if the next lines are necessary JDM
-  SetIsInjective(hom, true);
-  SetIsSurjective(hom, true);
-  SetIsTotal(hom, true);
-  return hom;
+  return MagmaIsomorphismByFunctionsNC(R, S, iso, inv);
 end);
+
+# Makes entries in the first row and col of the matrix equal to identity
 
 InstallMethod(RMSNormalization,
 "for a Rees matrix semigroup",
 [IsReesMatrixSemigroup],
 function(R)
-  local G, mat, id, r, c, new, S, iso, inv, hom, i, j;
+  local G, invert, new, r, c, S, lookup_rows, lookup_cols, iso, inv, j, i;
 
   G := UnderlyingSemigroup(R);
   if not IsGroupAsSemigroup(G) then
     ErrorNoReturn("Semigroups: RMSNormalization: usage,\n",
-                  "the underlying semigroup of the Rees matrix semigroup <R> ",
-                  "must be a group,");
+                  "the underlying semigroup <G> of the Rees matrix semigroup ",
+                  "<R> must be a group,");
   fi;
 
-  mat := Matrix(R);
-  id := Identity(G);
-  r := EmptyPlist(Length(Rows(R)));
+  if IsGroup(G) then
+    invert := InverseOp;
+  else
+    invert := x -> InversesOfSemigroupElement(G, x)[1];
+  fi;
 
-  r[1] := id;
-  for i in [2 .. Length(Rows(R))] do
-    r[i] := mat[1][i] ^ -1 * mat[1][1];
-  od;
-  c := List(Columns(R), j -> mat[j][1] ^ -1);
+  new := ShallowCopy(Matrix(R)){Columns(R)}{Rows(R)};
 
-  # Construct new RMS
-  new := List(Columns(R), x -> EmptyPlist(Length(Rows(R))));
-  for i in Rows(R) do
-    for j in Columns(R) do
-      new[j][i] := c[j] * mat[j][i] * r[i];
+  # Construct the normalized RMS <S>
+  r := List([1 .. Length(Rows(R))], i -> invert(new[1][i]) * new[1][1]);
+  c := List([1 .. Length(Columns(R))], j -> invert(new[j][1]));
+  for j in [1 .. Length(Columns(R))] do
+    new[j] := ShallowCopy(new[j]);
+    for i in [1 .. Length(Rows(R))] do
+      new[j][i] := c[j] * new[j][i] * r[i];
     od;
   od;
   S := ReesMatrixSemigroup(G, new);
 
-  iso := function(x)
-    if x![1] = 0 then
-      return MultiplicativeZero(S);
-    fi;
-    return RMSElement(S, x![1], r[x![1]] ^ -1 * x![2] * c[x![3]] ^ -1, x![3]);
-  end;
+  lookup_rows := EmptyPlist(Maximum(Rows(R)));
+  lookup_cols := EmptyPlist(Maximum(Columns(R)));
+  for i in [1 .. Length(Rows(R))] do
+    lookup_rows[Rows(R)[i]] := i;
+  od;
+  for j in [1 .. Length(Columns(R))] do
+    lookup_cols[Columns(R)[j]] := j;
+  od;
 
-  inv := function(x)
-    if x![1] = 0 then
-      return MultiplicativeZero(R);
-    fi;
-    return RMSElement(R, x![1], r[x![1]] * x![2] * c[x![3]], x![3]);
-  end;
+  # Construct isomorphisms between <R> and <S>
+  iso := x -> RMSElement(S, lookup_rows[x![1]],
+                            invert(r[lookup_rows[x![1]]]) * x![2] *
+                            invert(c[lookup_cols[x![3]]]),
+                            lookup_cols[x![3]]);
+  inv := x -> RMSElement(R, Rows(R)[x![1]],
+                            r[x![1]] * x![2] * c[x![3]],
+                            Columns(R)[x![3]]);
 
-  hom := MagmaIsomorphismByFunctionsNC(R, S, iso, inv);
-  # TODO check if the next lines are necessary JDM
-  SetIsInjective(hom, true);
-  SetIsSurjective(hom, true);
-  SetIsTotal(hom, true);
-  return hom;
+  return MagmaIsomorphismByFunctionsNC(R, S, iso, inv);
 end);
