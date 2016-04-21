@@ -592,17 +592,15 @@ end);
 InstallMethod(DegreeOfPBR, "for a pbr",
 [IsPBR], pbr -> pbr![1]);
 
-# can't we use some sort of Floyd-Warshall Algorithm here, the current method
-# involves searching in the same part of the graph repeatedly??
-
 InstallMethod(\*, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)
-  local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, i;
+  local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, tmp, i, j, count;
 
   n := x![1];
 
-  out := Concatenation([n], List([1 ..  2 * n], x -> []));
+  out := Concatenation([n], List([1 .. 2 * n], x -> BlistList([1 .. 2 * n],
+         [])));
 
   x_seen := BlistList([1 .. 2 * n], []);
   y_seen := BlistList([1 .. 2 * n], []);
@@ -616,7 +614,7 @@ function(x, y)
     x_seen[i] := true;
     for j in x![i + 1] do
       if j <= n then
-        AddSet(adj, j);
+        adj[j] := true;
       else # j > n
         y_dfs(j - n, adj);
       fi;
@@ -632,26 +630,58 @@ function(x, y)
     y_seen[i] := true;
     for j in y![i + 1] do
       if j > n then
-        AddSet(adj, j);
+        adj[j] := true;
       else # j <= n
         x_dfs(j + n, adj);
       fi;
     od;
     return;
   end;
+  
+  tmp := [];
 
   for i in [1 .. n] do # find everything connected to vertex i
-    IntersectBlist(x_seen, empty);
-    IntersectBlist(y_seen, empty);
-    x_dfs(i, out[i + 1]);
+    for j in x![i + 1] do 
+      if j <= n then 
+        out[i + 1][j] := true;
+      elif IsBound(tmp[j]) then 
+        UNITE_BLIST(out[i + 1], tmp[j]);
+      else 
+        tmp[j] := BlistList([1 .. 2 * n], []);
+        IntersectBlist(x_seen, empty);
+        IntersectBlist(y_seen, empty);
+        x_seen[i] := true;
+        y_dfs(j - n, tmp[j]);
+        UNITE_BLIST(out[i + 1], tmp[j]);
+      fi;
+      if SizeBlist(out[i + 1]) = 2 * n then 
+        break;
+      fi;
+    od;
   od;
-
+  
   for i in [n + 1 .. 2 * n] do # find everything connected to vertex i
-    IntersectBlist(x_seen, empty);
-    IntersectBlist(y_seen, empty);
-    y_dfs(i, out[i + 1]);
+    for j in y![i + 1] do
+      if j > n then
+        out[i + 1][j] := true;
+      elif IsBound(tmp[j]) then 
+        UNITE_BLIST(out[i + 1], tmp[j]);
+      else 
+        tmp[j] := BlistList([1 .. 2 * n], []);
+        IntersectBlist(x_seen, empty);
+        IntersectBlist(y_seen, empty);
+        y_seen[i] := true;
+        x_dfs(j + n,  tmp[j]);
+        UNITE_BLIST(out[i + 1], tmp[j]);
+      fi;
+      if SizeBlist(out[i + 1]) = 2 * n then 
+        break;
+      fi;
+    od;
   od;
-
+  for i in [2 .. 2 * n + 1] do 
+    out[i] := ListBlist([1 .. 2 * n], out[i]);
+  od;
   return Objectify(PBRType(n), out);
 end);
 
@@ -679,7 +709,7 @@ function(x)
 end);
 
 # These ViewObj and PrintObj methods are here because Print(ext[1]) produces
-# nices output than Print(ViewString(ext[1])). The ViewString and PrintString
+# nicer output than Print(ViewString(ext[1])). The ViewString and PrintString
 # methods are required for use in things like Green's relations.
 
 InstallMethod(ViewObj, "for a pbr", [IsPBR], PrintObj);
