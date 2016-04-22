@@ -420,6 +420,11 @@ function(coll)
 
   gens := Set(ShallowCopy(coll));
   nrgens := Length(gens);
+  
+  if nrgens = 1 then
+    return gens;
+  fi;
+
   deg := ActionDegree(coll);
   coll := Permuted(coll, Random(SymmetricGroup(Length(coll))));
   Sort(coll, function(x, y)

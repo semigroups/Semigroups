@@ -368,6 +368,13 @@ gap> S := Semigroup([PartialPerm([]), PartialPerm([1])]);
 gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
 <trivial partial perm group of rank 1 with 1 generator>
 
+#T# attributes: IrredundantGeneratingSubset: for a set with a single repeated
+# element
+gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
+<transformation semigroup of degree 2 with 2 generators>
+gap> Size(IrredundantGeneratingSubset(S));
+1
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);
 gap> Unbind(t);
