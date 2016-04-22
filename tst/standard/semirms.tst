@@ -1873,5 +1873,33 @@ gap> idems := Idempotents(T);;
 gap> ForAll(idems, IsIdempotent);
 true
 
+#T# MatrixEntries: Test for Issue #164
+gap> mat := [
+>  [Bipartition([[1, 2, 3, 4, -2, -3], [-1], [-4]]), 0, 0, 0],
+>  [0, Bipartition([[1, 3, -1], [2, 4, -2, -3], [-4]]), 0,
+>   Bipartition([[1, 4, -1], [2, 3], [-2], [-3, -4]])],
+>  [0, 0, Bipartition([[1, 2, 3, -3], [4, -1, -4], [-2]]), 0]];;
+gap> R := ReesZeroMatrixSemigroup(PartitionMonoid(4), mat);;
+gap> MatrixEntries(R);
+[ 0, <bipartition: [ 1, 2, 3, 4, -2, -3 ], [ -1 ], [ -4 ]>, 
+  <bipartition: [ 1, 2, 3, -3 ], [ 4, -1, -4 ], [ -2 ]>, 
+  <bipartition: [ 1, 3, -1 ], [ 2, 4, -2, -3 ], [ -4 ]>, 
+  <bipartition: [ 1, 4, -1 ], [ 2, 3 ], [ -2 ], [ -3, -4 ]> ]
+gap> mat := [
+>  [Bipartition([[1, 2, 4], [3, -1, -2], [-3], [-4]]),
+>   Bipartition([[1, -2, -4], [2, 3, 4, -3], [-1]])],
+>  [Bipartition([[1, 2, 4, -1, -4], [3], [-2, -3]]),
+>   Bipartition([[1, 3, -1], [2, 4, -2, -3], [-4]])],
+>  [Bipartition([[1, 2, -2, -3], [3, 4, -1], [-4]]),
+>   Bipartition([[1, -1, -2], [2, 3, -3, -4], [4]])]];;
+gap> R := ReesZeroMatrixSemigroup(PartitionMonoid(4), mat);;
+gap> MatrixEntries(R);
+[ <bipartition: [ 1, 2, 4, -1, -4 ], [ 3 ], [ -2, -3 ]>, 
+  <bipartition: [ 1, 2, 4 ], [ 3, -1, -2 ], [ -3 ], [ -4 ]>, 
+  <bipartition: [ 1, 2, -2, -3 ], [ 3, 4, -1 ], [ -4 ]>, 
+  <bipartition: [ 1, 3, -1 ], [ 2, 4, -2, -3 ], [ -4 ]>, 
+  <bipartition: [ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]>, 
+  <bipartition: [ 1, -1, -2 ], [ 2, 3, -3, -4 ], [ 4 ]> ]
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/semirms.tst");
