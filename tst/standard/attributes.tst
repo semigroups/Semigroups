@@ -422,15 +422,22 @@ gap> T := Semigroup(IrredundantGeneratingSubset(S));;
 gap> S = T;
 true
 
-#T# attributes: IrredundantGeneratingSubset: for a set with one element
+#T# attributes: IrredundantGeneratingSubset: for a set with one element, 1
 gap> IrredundantGeneratingSubset([RandomTransformation(10)]);;
 
-#T# attributes: IrredundantGeneratingSubset: for a set with one element
+#T# attributes: IrredundantGeneratingSubset: for a set with one element, 2
 gap> S := Monoid([Transformation([1, 1]), Transformation([2, 1]),
 >  Transformation([2, 2])], rec(generic := false));
 <transformation monoid of degree 2 with 3 generators>
 gap> Size(IrredundantGeneratingSubset(S));
 2
+
+#T# attributes: IrredundantGeneratingSubset: for a set with a single repeated
+# element
+gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
+<transformation semigroup of degree 2 with 2 generators>
+gap> Size(IrredundantGeneratingSubset(S));
+1
 
 #T# attributes: IsomorphismReesMatrixSemigroup: for a simple semigroup
 gap> S := SemigroupIdeal(

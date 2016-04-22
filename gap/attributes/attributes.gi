@@ -234,6 +234,10 @@ function(coll)
   gens := Set(coll);
   nrgens := Length(gens);
 
+  if nrgens = 1 then
+    return gens;
+  fi;
+
   if IsGeneratorsOfActingSemigroup(coll) then
     deg := ActionDegree(coll);
     Shuffle(coll);
