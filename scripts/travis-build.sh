@@ -11,52 +11,52 @@ SEMIDIR=$(pwd)
 if [ -d src ]
 then
     cd src
-    git clone -b 0.1 --depth=1 https://github.com/james-d-mitchell/semigroupsplusplus.git
+    git clone -b $SEMIGROUPSPLUSPLUS_BR --depth=1 https://github.com/james-d-mitchell/semigroupsplusplus.git
     mv semigroupsplusplus semigroups++
     cd ..
 fi
 cd ..
 
 # Download and compile GAP
-git clone -b master --depth=1 https://github.com/gap-system/gap.git
+git clone -b $GAP_BRANCH --depth=1 https://github.com/gap-system/gap.git
 cd gap
-./configure --with-gmp=system
+./configure --with-gmp=system $GAP_FLAGS
 make
 
 # Get the packages
 mkdir pkg
 cd pkg
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/GAPDoc-1.5.1.tar.gz
-tar xzf GAPDoc-1.5.1.tar.gz
-rm GAPDoc-1.5.1.tar.gz
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/io-4.4.5.tar.gz
-tar xzf io-4.4.5.tar.gz
-rm io-4.4.5.tar.gz
-cd io-4.4.5
-./configure
+curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GAPDOC.tar.gz
+tar xzf $GAPDOC.tar.gz
+rm $GAPDOC.tar.gz
+curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$IO.tar.gz
+tar xzf $IO.tar.gz
+rm $IO.tar.gz
+cd $IO
+./configure $PKG_FLAGS
 make
 cd ..
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/orb-4.7.5.tar.gz
-tar xzf orb-4.7.5.tar.gz
-rm orb-4.7.5.tar.gz
-cd orb-4.7.5
-./configure
+curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$ORB.tar.gz
+tar xzf $ORB.tar.gz
+rm $ORB.tar.gz
+cd $ORB
+./configure $PKG_FLAGS
 make
 cd ..
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/genss-1.6.3.tar.gz
-tar xzf genss-1.6.3.tar.gz
-rm genss-1.6.3.tar.gz
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/grape4r7.tar.gz
-tar xzf grape4r7.tar.gz
-rm grape4r7.tar.gz
+curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GENSS.tar.gz
+tar xzf $GENSS.tar.gz
+rm $GENSS.tar.gz
+curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GRAPE.tar.gz
+tar xzf $GRAPE.tar.gz
+rm $GRAPE.tar.gz
 cd grape
-./configure
+./configure $PKG_FLAGS
 make
 cd ..
-hg clone https://james-d-mitchell@bitbucket.org/james-d-mitchell/digraphs -r 0.5.1
+hg clone https://james-d-mitchell@bitbucket.org/james-d-mitchell/digraphs -r $DIGRAPHS_BR
 cd digraphs
 ./autogen.sh
-./configure
+./configure $PKG_FLAGS
 make
 cd ../../..
 mv $SEMIDIR gap/pkg/semigroups
@@ -64,7 +64,7 @@ cd gap/pkg/semigroups
 if [ -d src ]
 then
     ./autogen.sh
-    ./configure
+    ./configure $PKG_FLAGS
     make
 fi
 cd ../..
