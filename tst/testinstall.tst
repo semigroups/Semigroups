@@ -1327,6 +1327,13 @@ gap> inv := InverseGeneralMapping(iso);;
 gap> ForAll(S, x -> (x ^ iso) ^ inv = x);
 true
 
+#T# Issue 160: Bug in IrreundantGeneratingSubset for a semigroup with a single
+# repeated generator
+gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
+<transformation semigroup of degree 2 with 2 generators>
+gap> IrredundantGeneratingSubset(S);
+[ Transformation( [ 1, 1 ] ) ]
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);
