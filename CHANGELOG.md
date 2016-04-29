@@ -509,8 +509,8 @@ SingularTransformationSemigroup;
 MaximalDClasses, StructureDescriptionMaximalSubgroups,
 StructureDescriptionSchutzenbergerGroups, and IsGreensDLeq.
 
-* the attribute/operation DotDClasses has been introduced. This
-allows the D-class diagram of a semigroup to be viewed.
+* the attribute/operation `DotDClasses` has been introduced. This
+allows the \\(\mathscr{D}\\)-class diagram of a semigroup to be viewed.
 
 * ComponentRepsOfTransformationSemigroup is reintroduced.
 
@@ -534,10 +534,10 @@ Jonusas](http://www-groups.mcs.st-andrews.ac.uk/~julius/) (who wishes
 to acknowledge the support of the Carnegie Trust).
 
 ### Version 1.1 (released 11/06/13)
-A minor release to fix some technical issues in PackageInfo.g, the
-declarations of IsGreens.Class, and a minor change in the output in
+A minor release to fix some technical issues in `PackageInfo.g`, the
+declarations of `IsGreens.Class`, and a minor change in the output in
 one test in everyfunction.tst which was consequence of the
-declarations of IsGreens.Class.
+declarations of `IsGreens.Class`.
 
 ### Version 1.0 (released 07/06/13)
 The package has been renamed from Citrus to [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php). The package
@@ -545,7 +545,7 @@ has been completely overhauled, the performance has been improved,
 and the code has been generalized so that in the future the same
 code can be used to compute with other types of semigroups.  
 
-#Under the name Citrus:
+# Under the name Citrus:
 
 ### Version 0.9999 
 This is the final release of Citrus (the package will be renamed
@@ -611,16 +611,16 @@ of order preserving transformations or partial permutations, the
 symmetric inverse semigroup, the full matrix semigroup over a
 finite field), the endomorphism monoids of the non-abelian groups
 with at most 64 elements have been included in the catalogues of
-examples, the functions InjectionPrincipalFactor,
-IsomorphismReesMatrixSemigroup, and PrincipalFactor, and some
+examples, the functions `InjectionPrincipalFactor`,
+`IsomorphismReesMatrixSemigroup`, and `PrincipalFactor`, and some
 specific properties and attributes of inverse semigroups have been
-introduced (such as IsFactorisableSemigroup and
-PrimitiveIdempotents).
+introduced (such as `IsFactorisableSemigroup` and
+`PrimitiveIdempotents`).
 
 ### Version 0.6 
 fixed a bug relating to the creation of transformation semigroups 
-using MagmaByGenerators. Also added the global variable 
-CitrusOptionsRec containing the default values of the options
+using `MagmaByGenerators`. Also added the global variable 
+`CitrusOptionsRec` containing the default values of the options
 used by Citrus when creating a semigroup. 
 
 ### Version 0.5 
@@ -628,56 +628,56 @@ major changes are: the documentation has been further revised,
 functions for creating semigroups and monoids with certain
 options have been introduced, several functions have had the word
 `Greens' removed from their names to reduce the length, the
-operation ClosureSemigroup has been introduced, the functions
-ReadCitrus and WriteCitrus for reading and writing
+operation `ClosureSemigroup` has been introduced, the functions
+`ReadCitrus` and `WriteCitrus` for reading and writing
 transformations to a file have been introduced, several catalogues
 of examples of transformation semigroups are now included in the
 examples directory, methods for creating a Green's class inside
-another Green's class have been included (such as an R-class of a
-D-class or an H-class of an L-class), the hash functions used for
+another Green's class have been included (such as an \\(\mathscr{R}\\)-class of a
+\\(\mathscr{D}\\)-class or an \\(\mathscr{H}\\)-class of an \\(\mathscr{L}\\)-class), the hash functions used for
 transformations etc have been improved. 
 
 Some minor bugs have been fixed, and new methods or functions with
 the following names have also been introduced:
 
-AntiIsomorphismTransformationSemigroup (for a trans. semigroup),
-IdempotentGeneratedSubsemigp, IsomorphismTransformationSemigroup
-(for a perm. gp), IsomorphismTransformationMonoid (for a perm. gp),
-NrElementsOfRank.
+`AntiIsomorphismTransformationSemigroup` (for a trans. semigroup),
+`IdempotentGeneratedSubsemigp`, `IsomorphismTransformationSemigroup`
+(for a perm. gp), `IsomorphismTransformationMonoid` (for a perm. gp),
+`NrElementsOfRank`.
 
 ### Version 0.4 
 major changes are: the documentation has been updated, some changes
-to core functions for R-classes/image orbits have resulted in a 
+to core functions for \\(\mathscr{R}\\)-classes/image orbits have resulted in a 
 performance improvement, there is a method for the operation
-Factorization allowing an arbitrary element of a transformation
+`Factorization` allowing an arbitrary element of a transformation
 semigroup to be expressed as a product of the generators. 
 
 Some minor bugs have been fixed, and new methods or functions with
 the following names have also been introduced:
 
-OrbSCC, OrbSCCLookup, OrbSCCTruthTable, 
-ReverseSchreierTreeOfSCC, SchreierTreeOfSCC,
-IsomorphismTransformationSemigroup (for a perm. gp). 
+`OrbSCC`, `OrbSCCLookup`, `OrbSCCTruthTable`, 
+`ReverseSchreierTreeOfSCC`, `SchreierTreeOfSCC`,
+`IsomorphismTransformationSemigroup` (for a perm. gp). 
 
 ### Version 0.3 
 fixed a critical (but rare) bug in AddToOrbitsOfKernels that caused
-computations relating to D-classes, H-classes, or L-classes to
-return incorrect answers in some cases. 
+computations relating to \\(\mathscr{D}\\)-classes, \\(\mathscr{H}\\)-classes,
+or \\(\mathscr{L}\\)-classes to return incorrect answers in some cases. 
 
 ### Version 0.2 
-updated the method for \^ for a transformation and perm so that it
+updated the method for `\^` for a transformation and perm so that it
 is more efficient than the library method, same for \* for a perm 
-and transformation. New method for StructureDescription of a
-Brandt semigroup, and IsSubset for a trans. semigroup and trans.
+and transformation. New method for `StructureDescription` of a
+Brandt semigroup, and `IsSubset` for a trans. semigroup and trans.
 coll. 
 
-fixed bugs in IndexPeriodOfTransformation (it returned incorrect
-results) and AsPermutation. Also reduce hash table lengths so that 
+fixed bugs in `IndexPeriodOfTransformation` (it returned incorrect
+results) and `AsPermutation`. Also reduce hash table lengths so that 
 Citrus uses less memory. Fixed bug that triggered an infinite
 loop when trying to find elements of a trivial trans. semigroup.  
 
-added the functions CitrusDefaultMem, CitrusHiMem,
-CitrusLoMem, CitrusVeryLoMem, IsBrandtSemigroup,
-IsLeftSimple, IsMonogenicSemigroup, IsRightSimple,
-IsZeroRectangularBand, IsZeroSimpleSemigroup. 
+added the functions `CitrusDefaultMem`, `CitrusHiMem`,
+`CitrusLoMem`, `CitrusVeryLoMem`, `IsBrandtSemigroup`,
+`IsLeftSimple`, `IsMonogenicSemigroup`, `IsRightSimple`,
+`IsZeroRectangularBand`, `IsZeroSimpleSemigroup`. 
 
