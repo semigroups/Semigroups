@@ -127,7 +127,41 @@
     <C>(x^*)^*=x, xx^*x=x, x^*xx^*=x^*, (xy)^*=y^*x^*.</C>
     <P/>
   </Alt>
-  In this way, the partition monoid is a <E>regular *-semigroup</E>.
+  In this way, the partition monoid is a <E>regular *-semigroup</E>. <P/>
+
+  A bipartition &x; of degree &n; is called <E>planar</E> if there does not exist
+  distinct blocks <M>A, B \in</M> &x;, along with <M>a, a' \in A</M> and
+  <M>b, b' \in B</M> such that <M>a &lt; a'</M>, <M>b &lt; b'</M> and
+  either:
+  <List>
+    <Item>
+      <M>a &lt; b &lt; a' &lt; b'</M>; or
+    </Item>
+    <Item>
+      <M>b &lt; a &lt; b' &lt; a'</M>.
+    </Item>
+  </List>
+  Or equivalently, &x; is planar if for each distinct blocks <M>A, B \in</M> &x;,
+  and each <M>a, a' \in A</M> and <M>b, b' \in B</M> such that <M>a &lt; a'</M>
+  and <M>b &lt; b'</M>, either:
+  <List>
+    <Item>
+      <M>a &lt; a' &lt; b &lt; b'</M>;
+    </Item>
+    <Item>
+      <M>a &lt; b &lt; b' &lt; a'</M>;
+    </Item>
+    <Item>
+      <M>b &lt; a &lt; a' &lt; b'</M>; or
+    </Item>
+    <Item>
+      <M>b &lt; b' &lt; a &lt; a'</M>.
+    </Item>
+  </List>
+  From a graphical perspective, as on Page 873 in 
+  <Cite Key="Halverson2005PartitionAlgebras"/>, a bipartition &x; of degree &n;
+  is planar if it can be represented as a graph without edges crossing inside of
+  the rectangle formed by its vertices &bfn;<M>\cup</M>-&bfn;.
 
   <Section><Heading>The family and categories of bipartitions</Heading>
     <#Include Label="IsBipartition">
