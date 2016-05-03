@@ -778,22 +778,6 @@ end);
 
 #
 
-InstallMethod(FactorisableDualSymmetricInverseSemigroup,
-"for a positive integer", [IsPosInt],
-function(n)
-  local gens;
-  if n = 1 then
-    return DualSymmetricInverseSemigroup(1);
-  fi;
-
-  gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1, 2, -1, -2]],
-                                        List([3 .. n], x -> [x, -x]))));
-  return InverseMonoid(gens);
-end);
-
-#
-
 InstallMethod(BrauerMonoid, "for a positive integer", [IsPosInt],
 function(n)
   local gens;
@@ -866,34 +850,6 @@ function(n)
 
 end);
 
-# TODO: document this!
-
-InstallMethod(TriapsisMonoid, "for a positive integer", [IsPosInt],
-function(n)
-  local gens, next, i, j;
-
-  gens := [];
-  for i in [1 .. n - 2] do
-    next := [];
-    for j in [1 .. i - 1] do
-      next[j] := j;
-      next[n + j] := j;
-    od;
-    next[i] := i;
-    next[i + 1] := i;
-    next[i + 2] := i;
-    next[i + n] := n - 1;
-    next[i + n + 1] := n - 1;
-    next[i + n + 2] := n - 1;
-    for j in [i + 3 .. n] do
-      next[j] := j - 2;
-      next[n + j] := j - 2;
-    od;
-    gens[i] := BipartitionByIntRep(next);
-  od;
-  return Semigroup(gens);
-end);
-
 #
 
 InstallMethod(POI, "for a positive integer",
@@ -952,6 +908,237 @@ function(g)
     s := ClosureSemigroup(s, f);
   od;
   return s;
+end);
+
+#
+
+InstallMethod(PlanarUniformBlockBijectionMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens, next, i, j;
+
+  if n = 1 then
+    return InverseMonoid(BipartitionNC([[1, -1]]));
+  fi;
+
+  gens := [];
+
+  #(2,2)-transapsis generators
+  for i in [1 .. n - 1] do
+    next := [];
+    for j in [1 .. i - 1] do
+      next[j] := j;
+      next[n + j] := j;
+    od;
+    next[i] := i;
+    next[i + 1] := i;
+    next[i + n] := i;
+    next[i + n + 1] := i;
+    for j in [i + 2 .. n] do
+      next[j] := j - 1;
+      next[n + j] := j - 1;
+    od;
+    gens[i] := BipartitionByIntRep(next);
+  od;
+
+  return InverseMonoid(gens);
+end);
+
+#
+
+InstallMethod(UniformBlockBijectionMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local gens;
+  if n = 1 then
+    return InverseMonoid(BipartitionNC([[1, -1]]));
+  fi;
+
+  gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
+  Add(gens, BipartitionNC(Concatenation([[1, 2, -1, -2]],
+                                        List([3 .. n], x -> [x, -x]))));
+  return InverseMonoid(gens);
+end);
+
+#
+
+InstallMethod(ApsisMonoid,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local gens, next, b, i, j;
+
+  if n = 1 and m = 1 then
+    return InverseMonoid(BipartitionNC([[1], [-1]]));
+  fi;
+
+  gens := [];
+
+  if n < m then
+    next := [];
+
+    #degree k identity bipartition
+    for i in [1 .. n] do
+      next[i] := i;
+      next[n + i] := i;
+    od;
+    gens[1] := BipartitionByIntRep(next);
+
+    return InverseMonoid(gens, rec(regular := true));
+  fi;
+
+  #m-apsis generators
+  for i in [1 .. n - m + 1] do
+    next := [];
+    b := 1;
+
+    for j in [1 .. i - 1] do
+      next[j] := b;
+      next[n + j] := b;
+      b := b + 1;
+    od;
+
+    for j in [i .. i + m - 1] do
+      next[j] := b;
+    od;
+    b := b + 1;
+
+    for j in [i + m .. n] do
+      next[j] := b;
+      next[n + j] := b;
+      b := b + 1;
+    od;
+
+    for j in [i .. i + m - 1] do
+      next[n + j] := b;
+    od;
+
+    gens[i] := BipartitionByIntRep(next);
+  od;
+
+  return Monoid(gens, rec(regular := true));
+end);
+
+#
+
+InstallMethod(CrossedApsisMonoid,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local gens;
+
+  if n = 1 then
+    if m = 1 then
+      return InverseMonoid(BipartitionNC([[1], [-1]]));
+    else
+      return InverseMonoid(BipartitionNC([[1, -1]]));
+    fi;
+  fi;
+
+  gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
+  if m <= n then
+    Add(gens, BipartitionNC(Concatenation([[1 .. m]],
+                                          List([m + 1 .. n],
+                                               x -> [x, -x]), [[-m .. -1]])));
+  fi;
+
+  return Monoid(gens, rec(regular := true));
+end);
+
+#
+
+InstallMethod(PlanarModularPartitionMonoid,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local gens, next, b, i, j;
+
+  if n < m then
+    return PlanarUniformBlockBijectionMonoid(n);
+  elif n = 1 then
+    return InverseMonoid(BipartitionNC([[1], [-1]]));
+  fi;
+
+  gens := [];
+
+  #(2,2)-transapsis generators
+  for i in [1 .. n - 1] do
+    next := [];
+    for j in [1 .. i - 1] do
+      next[j] := j;
+      next[n + j] := j;
+    od;
+    next[i] := i;
+    next[i + 1] := i;
+    next[i + n] := i;
+    next[i + n + 1] := i;
+    for j in [i + 2 .. n] do
+      next[j] := j - 1;
+      next[n + j] := j - 1;
+    od;
+    gens[i] := BipartitionByIntRep(next);
+  od;
+
+  #m-apsis generators
+  for i in [1 .. n - m + 1] do
+    next := [];
+    b := 1;
+
+    for j in [1 .. i - 1] do
+      next[j] := b;
+      next[n + j] := b;
+      b := b + 1;
+    od;
+
+    for j in [i .. i + m - 1] do
+      next[j] := b;
+    od;
+    b := b + 1;
+
+    for j in [i + m .. n] do
+      next[j] := b;
+      next[n + j] := b;
+      b := b + 1;
+    od;
+
+    for j in [i .. i + m - 1] do
+      next[n + j] := b;
+    od;
+
+    gens[n - 1 + i] := BipartitionByIntRep(next);
+  od;
+
+  return Monoid(gens, rec(regular := true));
+end);
+
+#
+
+InstallMethod(PlanarPartitionMonoid,
+"for a positive integer",
+[IsPosInt],
+function(n)
+  return PlanarModularPartitionMonoid(1, n);
+end);
+
+#
+
+InstallMethod(ModularPartitionMonoid,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local gens;
+  if n = 1 then
+    return InverseMonoid(BipartitionNC([[1], [-1]]));
+  fi;
+
+  gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
+  Add(gens, BipartitionNC(Concatenation([[1, 2, -1, -2]],
+                                        List([3 .. n], x -> [x, -x]))));
+  if m <= n then
+    Add(gens, BipartitionNC(Concatenation([[1 .. m]],
+                                          List([m + 1 .. n],
+                                               x -> [x, -x]), [[-m .. -1]])));
+  fi;
+  return Monoid(gens, rec(regular := true));
 end);
 
 #
@@ -1070,13 +1257,13 @@ end);
 
 #
 
-InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
+InstallMethod(SingularPlanarUniformBlockBijectionMonoid,
 "for a positive integer", [IsPosInt],
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    Error("Semigroups: SingularFactorisableDualSymmetricInverseSemigroup:",
-          " usage,\nthe argument must be greater than 1");
+    Error("Semigroups: SingularPlanarUniformBlockBijectionMonoid:",
+          " usage,\nthe argument must be greater than 1,");
     return;
   fi;
 
@@ -1086,7 +1273,155 @@ function(n)
   od;
 
   x := Bipartition(blocks);
-  S := FactorisableDualSymmetricInverseSemigroup(n);
+  S := PlanarUniformBlockBijectionMonoid(n);
+  return SemigroupIdeal(S, x);
+end);
+
+#
+
+InstallMethod(SingularUniformBlockBijectionMonoid,
+"for a positive integer", [IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  if n = 1 then
+    Error("Semigroups: SingularUniformBlockBijectionMonoid:",
+          " usage,\nthe argument must be greater than 1,");
+    return;
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+
+  x := Bipartition(blocks);
+  S := UniformBlockBijectionMonoid(n);
+  return SemigroupIdeal(S, x);
+end);
+
+#
+
+InstallMethod(SingularApsisMonoid,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local blocks, x, S, i;
+  if m > n then
+    Error("Semigroups: SingularApsisMonoid:",
+          " usage,\nthe first argument must be less than or equal to the second",
+          " argument,");
+    return;
+  fi;
+
+  blocks := [[1 .. m], [-m .. -1]];
+  for i in [m + 1 .. n] do
+    blocks[i - m + 2] := [i, -i];
+  od;
+
+  x := Bipartition(blocks);
+  S := ApsisMonoid(m, n);
+  return SemigroupIdeal(S, x);
+end);
+
+#
+
+InstallMethod(SingularCrossedApsisMonoid,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local blocks, x, S, i;
+  if m > n then
+    Error("Semigroups: SingularCrossedApsisMonoid:",
+          " usage,\nthe first argument must be less than or equal to the second",
+          " argument,");
+    return;
+  fi;
+
+  blocks := [[1 .. m], [-m .. -1]];
+  for i in [m + 1 .. n] do
+    blocks[i - m + 2] := [i, -i];
+  od;
+
+  x := Bipartition(blocks);
+  S := CrossedApsisMonoid(m, n);
+  return SemigroupIdeal(S, x);
+end);
+
+#
+
+InstallMethod(SingularPlanarModularPartitionMonoid,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local blocks, x, S, i;
+  if n = 1 then
+    if m = 1 then
+      return SemigroupIdeal(PlanarModularPartitionMonoid(1, 1),
+                            Bipartition([[1], [-1]]));
+    else
+      Error("Semigroups: SingularPlanarModularPartitionMonoid:",
+            " usage,\nthe second argument must be greater than 1",
+            " when the first argument is also greater than 1,");
+      return;
+    fi;
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+
+  x := Bipartition(blocks);
+  S := PlanarModularPartitionMonoid(m, n);
+  return SemigroupIdeal(S, x);
+end);
+
+#
+
+InstallMethod(SingularPlanarPartitionMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local blocks, x, S, i;
+  if n = 1 then
+    return SemigroupIdeal(PlanarPartitionMonoid(1), Bipartition([[1], [-1]]));
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+
+  x := Bipartition(blocks);
+  S := PlanarPartitionMonoid(n);
+  return SemigroupIdeal(S, x);
+end);
+
+#
+
+InstallMethod(SingularModularPartitionMonoid,
+"for a positive integer and positive integer",
+[IsPosInt, IsPosInt],
+function(m, n)
+  local blocks, x, S, i;
+  if n = 1 then
+    if m = 1 then
+      return SemigroupIdeal(ModularPartitionMonoid(1, 1),
+                            Bipartition([[1], [-1]]));
+    else
+      Error("Semigroups: SingularModularPartitionMonoid:",
+            " usage,\nthe second argument must be greater than 1",
+            " when the first argument is also greater than 1,");
+      return;
+    fi;
+  fi;
+
+  blocks := [[1, 2, -1, -2]];
+  for i in [3 .. n] do
+    blocks[i - 1] := [i, -i];
+  od;
+
+  x := Bipartition(blocks);
+  S := ModularPartitionMonoid(m, n);
   return SemigroupIdeal(S, x);
 end);
 
