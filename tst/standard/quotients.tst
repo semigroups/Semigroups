@@ -15,10 +15,10 @@ gap> SEMIGROUPS.StartTest();
 
 #T# quotients, OneImmutable
 gap> S := PartitionMonoid(4);
-<regular bipartition *-monoid of degree 4 with 4 generators>
+<regular bipartition *-monoid of size 4140, degree 4 with 4 generators>
 gap> cong := SemigroupCongruence(S, [S.3, S.4]);
-<semigroup congruence over <regular bipartition *-monoid of degree 4 with 4 
- generators> with 1 generating pairs>
+<semigroup congruence over <regular bipartition *-monoid of size 4140, 
+ degree 4 with 4 generators> with 1 generating pairs>
 gap> T := S / cong;;
 gap> Size(T);
 25
@@ -43,7 +43,7 @@ gap> GeneratorsOfSemigroup(T);
 
 #T# quotients, Rees quotient
 gap> S := PartitionMonoid(4);
-<regular bipartition *-monoid of degree 4 with 4 generators>
+<regular bipartition *-monoid of size 4140, degree 4 with 4 generators>
 gap> I := SemigroupIdeal(S, S.4);
 <regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> T := S / I;;

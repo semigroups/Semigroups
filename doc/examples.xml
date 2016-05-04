@@ -175,7 +175,8 @@ gap> Size(S);
 
       <Example><![CDATA[
 gap> S := PartitionMonoid(5);
-<regular bipartition *-monoid of degree 5 with 4 generators>
+<regular bipartition *-monoid of size 115975, degree 5 with 4 
+ generators>
 gap> Size(S);
 115975]]></Example>
     </Description>

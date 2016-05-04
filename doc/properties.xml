@@ -81,7 +81,8 @@ false
 gap> IsBand(IdempotentGeneratedSubsemigroup(S));
 true
 gap> S := PartitionMonoid(4);
-<regular bipartition *-monoid of degree 4 with 4 generators>
+<regular bipartition *-monoid of size 4140, degree 4 with 4 
+ generators>
 gap> M := MinimalIdeal(S);
 <simple bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> IsBand(M);

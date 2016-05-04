@@ -791,3 +791,19 @@ InstallMethod(SmallDegreeTransformationRepresentation,
 # Use the best 1-generated right congruence which contains no congruences
 S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true,
                                                       1gen := true)));
+
+#
+
+InstallMethod(InversesOfSemigroupElementNC,
+"for a group as semigroup and a multiplicative element",
+[IsGroupAsSemigroup, IsMultiplicativeElement],
+function(G, x)
+  local i, iso, inv;
+  i := InverseOp(x);
+  if i <> fail then
+    return [i];
+  fi;
+  iso := IsomorphismPermGroup(G);
+  inv := InverseGeneralMapping(iso);
+  return [((x ^ iso) ^ -1) ^ inv];
+end);
