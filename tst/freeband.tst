@@ -182,13 +182,19 @@ gap> new := NextIterator(iter);
 x1x3x1
 gap> HTValue(ht, new);
 fail
-gap> HTAdd(ht, new, true);
-33159
+gap> HTAdd(ht, new, true) in [35014, 33159];   # for 32-bit and 64-bit mode
+true
 gap> while not IsDoneIterator(iter) do
 > HTAdd(ht, NextIterator(iter), true);
 > od;
-gap> ht;
-<tree hash table len=100003 used=159 colls=1 accs=160>
+gap> ht!.len;
+100003
+gap> ht!.nr;
+159
+gap> ht!.collisions in [0,1];   # for 32-bit and 64-bit mode
+true
+gap> ht!.accesses;
+160
 
 #T# FreeBandTest12: IsFreeBand
 gap> gens := Generators(FreeBand(3));
