@@ -302,7 +302,7 @@ InstallMethod(RectangularBandCons,
 "for a filter and a positive integer and positive integer",
 [IsTransformationSemigroup, IsPosInt, IsPosInt],
 function(filter, m, n)
-  local L, R, div, deg, gens, act, i;
+  local L, R, div, deg, gen, gens, min, out, i;
 
   if m = 1 then
     return RightZeroSemigroup(filter, n);
@@ -319,39 +319,29 @@ function(filter, m, n)
   div := DegreeOfTransformationSemigroup(L);
   deg := div + DegreeOfTransformationSemigroup(R);
 
-  gens := [];
-
-  act := function(l, r, i)
-    if i <= div then
-      return i ^ l;
-    else
-      return (i - div) ^ r + div;
-    fi;
+  gen := function(l, r)
+    return Transformation(Concatenation(ListTransformation(L.(l), div),
+                                        ListTransformation(R.(r)) + div));
   end;
 
-  if m < n then
+  gens := [];
+  min := Minimum(m, n);
 
-    for i in [1 .. m] do
-      Add(gens, Transformation([1 .. deg], j -> act(L.(i), R.(i), j)));
-    od;
+  for i in [1 .. min] do # 'diagonal' generators
+    Add(gens, gen(i, i));
+  od;
 
-    for i in [m + 1 .. n] do
-      Add(gens, Transformation([1 .. deg], j -> act(L.1, R.(i), j)));
-    od;
+  for i in [min + 1 .. n] do # additional generators when n > m
+    Add(gens, gen(1, i));
+  od;
 
-  else
+  for i in [min + 1 .. m] do # additional generators when n < m
+    Add(gens, gen(i, 1));
+  od;
 
-    for i in [1 .. n] do
-      Add(gens, Transformation([1 .. deg], j -> act(L.(i), R.(i), j)));
-    od;
-
-    for i in [n + 1 .. m] do
-      Add(gens, Transformation([1 .. deg], j -> act(L.(i), R.1, j)));
-    od;
-
-  fi;
-
-  return Semigroup(gens);
+  out := Semigroup(gens);
+  SetMinimalSemigroupGeneratingSet(out, GeneratorsOfSemigroup(out));
+  return out;
 end);
 
 InstallMethod(RectangularBandCons,
