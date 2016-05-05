@@ -1,3 +1,4 @@
+*.swp
 *.html
 *.txt
 doc/main.aux
@@ -29,4 +30,5 @@ aclocal.m4
 config.log
 .libs
 libtool
-bin/x86_64-apple-darwin15.3.0-clang-default64
+bin/x86_64-apple-darwin*.*.*-clang-default64
+bin/x86_64-apple-darwin*.*.*-gcc-default64
