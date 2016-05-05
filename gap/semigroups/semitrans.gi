@@ -477,14 +477,17 @@ end);
 
 # not relevant for ideals
 
-InstallMethod(Size, "for a monogenic transformation semigroup",
-[IsTransformationSemigroup and IsMonogenicSemigroup],
+InstallMethod(Size,
+"for a monogenic transformation semigroup with minimal generating set",
+[IsTransformationSemigroup and IsMonogenicSemigroup
+ and HasMinimalSemigroupGeneratingSet],
+4,
 function(S)
   local gen, ind;
-  gen := IrredundantGeneratingSubset(S)[1];
+  gen := MinimalSemigroupGeneratingSet(S)[1];
   ind := IndexPeriodOfTransformation(gen);
-  if ind[1] > 0 then
-    return Sum(ind) - 1;
+  return Sum(ind) - 1;
+end);
   fi;
   return Sum(ind);
 end);

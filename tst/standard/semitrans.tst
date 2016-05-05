@@ -1966,6 +1966,46 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+#T# Size: for a monogenic transformation semigroup, 1
+gap> S := MonogenicSemigroup(1, 1);;
+gap> Size(S);
+1
+gap> S := Semigroup(S);;
+gap> IsMonogenicSemigroup(S);
+true
+gap> Size(S);
+1
+
+#T# Size: for a monogenic transformation semigroup, 2
+gap> S := MonogenicSemigroup(5, 1);;
+gap> Size(S);
+5
+gap> S := Semigroup(S);;
+gap> IsMonogenicSemigroup(S);
+true
+gap> Size(S);
+5
+
+#T# Size: for a monogenic transformation semigroup, 3
+gap> S := MonogenicSemigroup(1, 10);;
+gap> Size(S);
+10
+gap> S := Semigroup(S);;
+gap> IsMonogenicSemigroup(S);
+true
+gap> Size(S);
+10
+
+#T# Size: for a monogenic transformation semigroup, 4
+gap> S := MonogenicSemigroup(7, 11);;
+gap> Size(S);
+17
+gap> S := Semigroup(S);;
+gap> IsMonogenicSemigroup(S);
+true
+gap> Size(S);
+17
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(R);
