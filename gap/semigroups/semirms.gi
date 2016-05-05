@@ -338,7 +338,29 @@ function(R)
 end);
 
 InstallMethod(MatrixEntries, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup], x -> Union(Matrix(x){Columns(x)}{Rows(x)}));
+[IsReesZeroMatrixSemigroup],
+function(R)
+  local mat, elt, zero, i, j;
+
+  mat := Matrix(R);
+  elt := [];
+  zero := false;
+
+  for i in Rows(R) do
+    for j in Columns(R) do
+      if mat[j][i] = 0 then
+        zero := true;
+      else
+        AddSet(elt, mat[j][i]);
+      fi;
+    od;
+  od;
+
+  if zero then
+    return Concatenation([0], elt);
+  fi;
+  return elt;
+end);
 
 #
 

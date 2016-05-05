@@ -1328,6 +1328,13 @@ gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
 gap> IrredundantGeneratingSubset(S);
 [ Transformation( [ 1, 1 ] ) ]
 
+#T# Issue 164: Bug in MatrixEntries for a Rees 0-matrix semigroup
+gap> S := Semigroup(SymmetricInverseMonoid(2));;
+gap> id := Identity(S);;
+gap> R := ReesZeroMatrixSemigroup(S, [[id], [0]]);;
+gap> MatrixEntries(R);
+[ 0, <identity partial perm on [ 1, 2 ]> ]
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);
