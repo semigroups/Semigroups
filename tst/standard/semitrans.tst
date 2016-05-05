@@ -2006,6 +2006,50 @@ true
 gap> Size(S);
 17
 
+#T# Size: for a monogenic transformation monoid, 1
+gap> S := MonogenicSemigroup(1, 1);;
+gap> S := Monoid(S);;
+gap> IsMonogenicMonoid(S);
+true
+gap> Size(S);
+1
+
+#T# Size: for a monogenic transformation monoid, 2
+gap> S := MonogenicSemigroup(5, 1);;
+gap> S := Monoid(S);;
+gap> IsMonogenicMonoid(S);
+true
+gap> Size(S);
+6
+
+#T# Size: for a monogenic transformation semigroup, 3
+gap> S := MonogenicSemigroup(1, 10);;
+gap> S := Monoid(S);;
+gap> IsMonogenicMonoid(S);
+true
+gap> Size(S);
+10
+
+#T# Size: for a monogenic transformation semigroup, 4
+gap> S := MonogenicSemigroup(7, 11);;
+gap> S := Monoid(S);;
+gap> IsMonogenicMonoid(S);
+true
+gap> Size(S);
+18
+
+#T# Size: for a monogenic transformation semigroup, 4
+gap> S := Monoid(Transformation([2, 3, 1]));;
+gap> IsMonogenicMonoid(S);
+true
+gap> Size(S);
+3
+gap> S := Monoid(Transformation([2, 3, 1, 1]));;
+gap> IsMonogenicMonoid(S);
+true
+gap> Size(S);
+4
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(R);
