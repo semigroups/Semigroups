@@ -847,6 +847,15 @@ false
 gap> IsMonogenicSemigroup(S);
 true
 
+#T# properties: IsMonogenicSemigroup, 11
+# test for the ImmediateMethod
+gap> S := CyclicGroup(IsPermGroup, 10);;
+gap> GeneratorsOfSemigroup(S);;
+gap> HasIsMonogenicSemigroup(S);
+true
+gap> IsMonogenicSemigroup(S);
+true
+
 #T# properties: IsMonogenicInverseSemigroup, 1
 gap> IsMonogenicInverseSemigroup(AsSemigroup(IsBooleanMatSemigroup, 
 >                                            Group((1, 2, 3), (2, 3))));

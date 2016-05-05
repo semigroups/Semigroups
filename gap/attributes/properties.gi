@@ -743,8 +743,14 @@ InstallImmediateMethod(IsMonogenicSemigroup,
 IsSemigroup and IsFinite and HasGeneratorsOfSemigroup,
 0,
 function(S)
-  if CanEasilyCompareElements(S)
-      and Length(DuplicateFreeList(GeneratorsOfSemigroup(S))) = 1 then
+  local gens;
+
+  gens := GeneratorsOfSemigroup(S);
+  if CanEasilyCompareElements(S) then
+    gens := DuplicateFreeList(gens);
+  fi;
+  if Length(gens) = 1 then
+    SetMinimalSemigroupGeneratingSet(S, gens);
     return true;
   fi;
   TryNextMethod();
