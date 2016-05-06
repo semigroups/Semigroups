@@ -824,6 +824,29 @@ gap> IsMonogenicSemigroup(FreeInverseSemigroup(1));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsMonogenicSemigroup' on 1 arguments
 
+#T# properties: IsMonogenicSemigroup, 8
+gap> S := SymmetricInverseSemigroup(3);;
+gap> GreensDClasses(S);;
+gap> IsMonogenicSemigroup(S);
+false
+
+#T# properties: IsMonogenicSemigroup, 9
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 3, 2);;
+gap> S := Semigroup(S.1, S.1 ^ 2);;
+gap> GreensDClasses(S);;
+gap> IsMonogenicSemigroup(S);
+true
+
+#T# properties: IsMonogenicSemigroup, 10
+gap> S := Semigroup([
+>  Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]),
+>  Transformation([6, 9, 9, 6, 9, 1, 1, 2, 2, 6]),
+>  Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])]);;
+gap> HasIsMonogenicSemigroup(S);
+false
+gap> IsMonogenicSemigroup(S);
+true
+
 #T# properties: IsMonogenicInverseSemigroup, 1
 gap> IsMonogenicInverseSemigroup(AsSemigroup(IsBooleanMatSemigroup, 
 >                                            Group((1, 2, 3), (2, 3))));
