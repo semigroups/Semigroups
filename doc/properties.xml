@@ -653,6 +653,38 @@ false]]></Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IsMonogenicInverseMonoid">
+  <ManSection>
+    <Prop Name = "IsMonogenicInverseMonoid" Arg = "S"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+   <Description>
+     <C>IsMonogenicInverseMonoid</C> returns <K>true</K> if the monoid
+     <A>S</A> is a monogenic inverse monoid and it returns <K>false</K> if
+     it is not. <P/>
+
+     A inverse monoid is <E>monogenic</E> if it is generated as an inverse
+     monoid by a single element.  See also <Ref Prop =
+       "IsMonogenicInverseSemigroup"/> and <Ref Prop = "IsMonogenicMonoid"/>.
+<Example><![CDATA[
+gap> x := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);;
+gap> S := InverseMonoid(x, x ^ 2, x ^ 3);;
+gap> IsMonogenicMonoid(S);
+false
+gap> IsMonogenicInverseSemigroup(S);
+false
+gap> IsMonogenicInverseMonoid(S);
+true
+gap> x := RandomBlockBijection(100);;
+gap> S := InverseMonoid(x, x ^ 2, x ^ 20);;
+gap> IsMonogenicInverseMonoid(S);
+true
+gap> S := SymmetricInverseMonoid(5);;
+gap> IsMonogenicInverseMonoid(S);
+false]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="IsMonoidAsSemigroup">
   <ManSection>
     <Prop Name = "IsMonoidAsSemigroup" Arg = "S"/>

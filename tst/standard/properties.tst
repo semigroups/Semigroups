@@ -941,6 +941,45 @@ gap> GreensDClasses(S);;
 gap> IsMonogenicMonoid(S);
 true
 
+#T# properties: IsMonogenicInverseMonoid, 1
+gap> S := AsSemigroup(IsBooleanMatSemigroup, SymmetricGroup(3));;
+gap> S := Monoid(S);;
+gap> IsMonogenicInverseMonoid(S);
+false
+
+#T# properties: IsMonogenicInverseMonoid, 2
+gap> IsMonogenicInverseMonoid(SymmetricInverseMonoid(3));
+false
+
+#T# properties: IsMonogenicInverseMonoid, 3
+gap> IsMonogenicInverseMonoid(InverseMonoid(
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [10, 7, 2, 5, 6, 9, 3, 8])));
+true
+
+#T# properties: IsMonogenicInverseMonoid, 4
+gap> IsMonogenicInverseMonoid(InverseMonoid(
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [10, 7, 2, 5, 6, 9, 3, 8]),
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [10, 7, 2, 5, 6, 9, 3, 8])));
+true
+
+#T# properties: IsMonogenicInverseMonoid, 5
+gap> IsMonogenicInverseMonoid(
+> InverseMonoid(Elements(InverseMonoid(
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [10, 7, 2, 5, 6, 9, 3, 8])))));
+true
+
+#T# properties: IsMonogenicInverseMonoid, 6
+gap> IsMonogenicInverseMonoid(BrauerMonoid(3));
+false
+
+#T# properties: IsMonogenicInverseMonoid, 7
+gap> S := FreeGroup(2);;
+gap> GeneratorsOfInverseMonoid(S);;
+gap> IsMonogenicInverseMonoid(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsMonogenicInverseMonoid' on 1 argument\
+s
+
 #T# properties: IsMonoidAsSemigroup, 1
 gap> S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
 > Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));;
