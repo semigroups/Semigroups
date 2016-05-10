@@ -36,6 +36,15 @@ DeclareAttribute("SmallInverseMonoidGeneratingSet",
                  IsMultiplicativeElementWithOneCollection);
 DeclareAttribute("SmallGeneratingSet", IsSemigroup);
 
+DeclareAttribute("MinimalSemigroupGeneratingSet",
+                 IsSemigroup);
+DeclareAttribute("MinimalMonoidGeneratingSet",
+                 IsMonoid);
+DeclareAttribute("MinimalInverseSemigroupGeneratingSet",
+                 IsSemigroup);
+DeclareAttribute("MinimalInverseMonoidGeneratingSet",
+                 IsMonoid);
+
 DeclareAttribute("SmallestElementSemigroup", IsSemigroup);
 DeclareAttribute("LargestElementSemigroup", IsSemigroup);
 

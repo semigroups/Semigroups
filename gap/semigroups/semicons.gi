@@ -147,6 +147,7 @@ function(arg)
   fi;
 
   SetIsZeroSemigroup(S, r = 1 and m < 3);
+  SetMinimalSemigroupGeneratingSet(S, GeneratorsOfSemigroup(S));
 
   return S;
 end);
@@ -451,6 +452,7 @@ function(arg)
   SetIsGroupAsSemigroup(S, IsTrivial(S));
   SetIsRegularSemigroup(S, IsTrivial(S));
   SetIsMonogenicSemigroup(S, n <= 2);
+  SetMinimalSemigroupGeneratingSet(S, GeneratorsOfSemigroup(S));
   return S;
 end);
 

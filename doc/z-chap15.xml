@@ -51,6 +51,7 @@
     <#Include Label = "Generators">
     <#Include Label = "SmallGeneratingSet"> 
     <#Include Label = "IrredundantGeneratingSubset">
+    <#Include Label = "MinimalGeneratingSet">
   
   </Section>
 

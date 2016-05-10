@@ -30,6 +30,7 @@
     <#Include Label = "IsLeftSimple">
     <#Include Label = "IsLeftZeroSemigroup">
     <#Include Label = "IsMonogenicSemigroup">
+    <#Include Label = "IsMonogenicMonoid">
     <#Include Label = "IsMonoidAsSemigroup">
     <#Include Label = "IsOrthodoxSemigroup">
     <#Include Label = "IsRectangularBand">
@@ -64,6 +65,7 @@
     <#Include Label = "IsJoinIrreducible">
     <#Include Label = "IsMajorantlyClosed">
     <#Include Label = "IsMonogenicInverseSemigroup">
+    <#Include Label = "IsMonogenicInverseMonoid">
 
   </Section>
 

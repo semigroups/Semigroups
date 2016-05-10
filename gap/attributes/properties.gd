@@ -28,6 +28,8 @@ DeclareSynonymAttr("IsCombinatorialSemigroup", IsHTrivial);
 DeclareProperty("IsFactorisableInverseMonoid", IsSemigroup);
 DeclareProperty("IsLeftSimple", IsSemigroup);
 DeclareProperty("IsMonogenicInverseSemigroup", IsSemigroup);
+DeclareProperty("IsMonogenicMonoid", IsMonoid);
+DeclareProperty("IsMonogenicInverseMonoid", IsMonoid);
 DeclareOperation("IsRegularSemigroupElementNC",
                  [IsSemigroup, IsMultiplicativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);

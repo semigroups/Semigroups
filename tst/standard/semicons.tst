@@ -582,7 +582,7 @@ gap> IsMonogenicSemigroup(S);
 true
 gap> S := Semigroup(S);;
 gap> HasIsMonogenicSemigroup(S);
-false
+true
 gap> IsMonogenicSemigroup(S);
 true
 
