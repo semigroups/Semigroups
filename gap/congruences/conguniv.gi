@@ -18,11 +18,48 @@ function(S)
   local fam, cong;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-  cong := Objectify(NewType(fam, IsUniversalSemigroupCongruence), rec());
+  cong := Objectify(NewType(fam,
+                            IsSemigroupCongruence and IsAttributeStoringRep),
+                    rec());
   SetSource(cong, S);
   SetRange(cong, S);
+  SetIsUniversalSemigroupCongruence(cong, true);
   return cong;
 end);
+
+#
+
+InstallMethod(IsUniversalSemigroupCongruence,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+function(cong)
+  return NrEquivalenceClasses(cong) = 1;
+end);
+
+#
+
+InstallImmediateMethod(IsUniversalSemigroupCongruence,
+IsSemigroupCongruence and HasNrEquivalenceClasses, 0,
+function(cong)
+  return NrEquivalenceClasses(cong) = 1;
+end);
+
+#
+
+InstallMethod(IsUniversalSemigroupCongruence,
+"for a semigroup congruence",
+[IsRMSCongruenceByLinkedTriple],
+function(cong)
+  return Length(cong!.colBlocks) = 1 and
+         Length(cong!.rowBlocks) = 1 and
+         cong!.n = UnderlyingSemigroup(Range(cong));
+end);
+
+#
+
+InstallImmediateMethod(IsUniversalSemigroupCongruence,
+IsRZMSCongruenceByLinkedTriple, 0,
+ReturnFalse);
 
 #
 
@@ -305,29 +342,28 @@ function(cong)
       # Link zero to a representative of each maximal D-class
       return List(MaximalDClasses(S), cl -> [z, Representative(cl)]);
     fi;
-  else
-    # Use the minimal ideal
-    m := MinimalIdeal(S);
+  fi;
 
-    # Use the linked triple
-    iso := IsomorphismReesMatrixSemigroup(m);
-    r := Range(iso);
-    n := UnderlyingSemigroup(r);
-    colBlocks := [[1 .. Size(Matrix(r)[1])]];
-    rowBlocks := [[1 .. Size(Matrix(r))]];
-    rmscong := RMSCongruenceByLinkedTriple(r, n, colBlocks, rowBlocks);
-    cong := SEMIGROUPS.SimpleCongFromRMSCong(m, iso, rmscong);
-    pairs := ShallowCopy(GeneratingPairsOfSemigroupCongruence(cong));
+  # Otherwise we have no zero: use the minimal ideal
+  m := MinimalIdeal(S);
 
-    if IsSimpleSemigroup(S) then
-      # m = s, so we are done
-    else
-      # We must relate each maximal D-class to the minimal ideal
-      z := GeneratorsOfSemigroupIdeal(m)[1];
-      for d in MaximalDClasses(S) do
-        Add(pairs, [z, Representative(d)]);
-      od;
-    fi;
+  # Use the linked triple
+  iso := IsomorphismReesMatrixSemigroup(m);
+  r := Range(iso);
+  n := UnderlyingSemigroup(r);
+  colBlocks := [[1 .. Size(Matrix(r)[1])]];
+  rowBlocks := [[1 .. Size(Matrix(r))]];
+  rmscong := RMSCongruenceByLinkedTriple(r, n, colBlocks, rowBlocks);
+  cong := SEMIGROUPS.SimpleCongFromRMSCong(m, iso, rmscong);
+  pairs := ShallowCopy(GeneratingPairsOfSemigroupCongruence(cong));
+
+  if IsSimpleSemigroup(S) then
     return pairs;
   fi;
+  # We must relate each maximal D-class to the minimal ideal
+  z := GeneratorsOfSemigroupIdeal(m)[1];
+  for d in MaximalDClasses(S) do
+    Add(pairs, [z, Representative(d)]);
+  od;
+  return pairs;
 end);
