@@ -217,6 +217,48 @@ gap> uni := UniversalSemigroupCongruence(S);;
 gap> GeneratingPairsOfSemigroupCongruence(uni);
 [ [ Transformation( [ 4, 5, 3, 4, 5 ] ), Transformation( [ 5, 5, 3, 5, 5 ] ) 
      ] ]
+gap> S := Monoid([PartialPerm([1], [1]),
+>                 PartialPerm([1, 2], [1, 2]),
+>                 PartialPerm([1], [1])]);;
+gap> uni := UniversalSemigroupCongruence(S);;
+gap> GeneratingPairsOfSemigroupCongruence(uni);
+[ [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ]> ] ]
+gap> S := Semigroup([Transformation([2, 1, 2]),
+>                    Transformation([1, 2, 2])]);;
+gap> uni := UniversalSemigroupCongruence(S);
+<universal semigroup congruence over <transformation semigroup of degree 3 
+ with 2 generators>>
+gap> GeneratingPairsOfSemigroupCongruence(uni);
+[ [ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 1 ] ) ], 
+  [ Transformation( [ 2, 1, 2 ] ), Transformation( [ 1, 2, 1 ] ) ], 
+  [ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 2 ] ) ] ]
+
+#T# IsUniversalSemigroupCongruence for a cong by generating pairs
+gap> S := Semigroup([PartialPerm([1], [2]),
+>                    PartialPerm([1, 2, 3], [2, 3, 1])]);;
+gap> cong := SemigroupCongruence(S, [PartialPerm([1], [1]),
+>                                    PartialPerm([1, 2, 3], [3, 1, 2])]);;
+gap> IsUniversalSemigroupCongruence(cong);
+true
+gap> cong := SemigroupCongruence(S, [PartialPerm([1], [2]),
+>                                    PartialPerm([1], [3])]);;
+gap> IsUniversalSemigroupCongruence(cong);
+false
+
+#T# IsUniversalSemigroupCongruence for an RMS congruence
+gap> S := ReesMatrixSemigroup(SymmetricGroup(4),
+>                             [[(), (), (), ()],
+>                              [(2,4), (), (1,3), ()],
+>                              [(1,2,3,4), (), (1,3,2,4), ()]]);;
+gap> cong := RMSCongruenceByLinkedTriple(S,
+>                                        Group([(2,4,3),(1,4)(2,3),(1,3)(2,4)]),
+>                                        [[1], [2], [3], [4]], [[1],[2, 3]]);;
+gap> IsUniversalSemigroupCongruence(cong);
+false
+gap> cong := RMSCongruenceByLinkedTriple(S, SymmetricGroup(4),
+>                                        [[1, 2, 3, 4]], [[1, 2, 3]]);;
+gap> IsUniversalSemigroupCongruence(cong);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
