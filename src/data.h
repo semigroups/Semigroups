@@ -12,8 +12,8 @@
 #include <assert.h>
 
 #include "src/compiled.h"          // GAP headers
-#include "types.h"                 // types of semigroups
 #include "converter.h"
+#include "gap.hh"
 
 #include "semigroups++/semigroups.h"
 

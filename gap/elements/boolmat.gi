@@ -260,7 +260,7 @@ function(x)
 end);
 
 InstallMethod(IsColTrimBooleanMat, "for a boolean matrix",
-[IsBooleanMat], IS_COL_TRIM_BOOLEAN_MAT);
+[IsBooleanMat], ReturnFail); #FIXME!
 
 InstallMethod(IsTrimBooleanMat, "for a boolean matrix",
 [IsBooleanMat], x -> IsRowTrimBooleanMat(x) and IsColTrimBooleanMat(x));

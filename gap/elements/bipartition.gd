@@ -31,6 +31,7 @@ DeclareAttribute("LeftBlocks", IsBipartition);
 DeclareAttribute("RightBlocks", IsBipartition);
 
 DeclareAttribute("ExtRepOfBipartition", IsBipartition);
+DeclareAttribute("IntRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);
 DeclareOperation("RandomBipartition", [IsPosInt]);

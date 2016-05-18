@@ -440,8 +440,8 @@ function(k, x)
                     x![4]]);
 end);
 
-# if g=RhoInverse(X, f) and f^X=Y (this is a left action), then g^Y=X and g
-# acts on the left like the inverse of g on Y.
+# if g = RhoInverse(X, f) and f ^ X = Y (this is a left action), then
+# g ^ Y = X and g acts on the left like the inverse of f on Y.
 
 InstallMethod(RhoInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> INV_KER_TRANS);
@@ -502,8 +502,8 @@ InstallMethod(LambdaConjugator, "for a transformation semigroup",
 
 InstallMethod(LambdaConjugator, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S ->
-function(f, g)
-  return MappingPermListList(IMAGE_PPERM(f), IMAGE_PPERM(g));
+function(x, y)
+  return MappingPermListList(IMAGE_PPERM(x), IMAGE_PPERM(y));
 end);
 
 InstallMethod(LambdaConjugator, "for a bipartition semigroup",
@@ -511,7 +511,7 @@ InstallMethod(LambdaConjugator, "for a bipartition semigroup",
 
 InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S ->
-function(f, g)
+function(x, y)
   return ();
 end);
 

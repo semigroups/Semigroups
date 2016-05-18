@@ -8,24 +8,18 @@
 #ifndef SRC_BIPART_H_
 #define SRC_BIPART_H_
 
-#include "src/compiled.h"
-#include "src/types.h"
-#include "semigroups++/elements.h"
 #include <assert.h>
 
-static Int                 _RNam_wrapper   = RNamName("wrapper");
+#include "src/compiled.h"
+#include "gap.hh"
+#include "semigroups++/elements.h"
 
-inline Obj wrapper_get (Obj x) {
-  //TODO check that x is a bipartition or blocks and that _RNam_wrapper is set
-  return ElmPRec(x, _RNam_wrapper);
-}
+// C functions
 
-inline Bipartition* bipart_get_cpp (Obj x) {
-  //TODO check that x is a bipartition
-  return CLASS_OBJ<Bipartition>(wrapper_get(x));
-}
+Bipartition* bipart_get_cpp (Obj);
+Obj          bipart_new_obj (Bipartition*);
 
-Obj          bipart_new     (Bipartition* x);
+// GAP level functions
 
 Obj BIPART_NC             (Obj, Obj);
 Obj BIPART_EXT_REP        (Obj, Obj);
@@ -43,7 +37,6 @@ Obj BIPART_LEFT_PROJ      (Obj, Obj);
 Obj BIPART_RIGHT_PROJ     (Obj, Obj);
 Obj BIPART_STAR           (Obj, Obj);
 Obj BIPART_LAMBDA_CONJ    (Obj, Obj, Obj);
-// OnRightBlocksBipartitionByPerm
 Obj BIPART_STAB_ACTION    (Obj, Obj, Obj);
 Obj BIPART_LEFT_BLOCKS    (Obj, Obj);
 Obj BIPART_RIGHT_BLOCKS   (Obj, Obj);
@@ -57,7 +50,6 @@ Obj BLOCKS_NR_BLOCKS      (Obj, Obj);
 Obj BLOCKS_EQ             (Obj, Obj, Obj);
 Obj BLOCKS_LT             (Obj, Obj, Obj);
 Obj BLOCKS_PROJ           (Obj, Obj);
-
 Obj BLOCKS_E_TESTER       (Obj, Obj, Obj);
 Obj BLOCKS_E_CREATOR      (Obj, Obj, Obj);
 Obj BLOCKS_LEFT_ACT       (Obj, Obj, Obj);
