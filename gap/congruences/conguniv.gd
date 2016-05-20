@@ -12,8 +12,8 @@
 ##
 
 # Universal Congruences
-DeclareCategory("IsUniversalSemigroupCongruence",
-                IsSemigroupCongruence and IsAttributeStoringRep and IsFinite);
+DeclareProperty("IsUniversalSemigroupCongruence",
+                IsSemigroupCongruence);
 DeclareCategory("IsUniversalSemigroupCongruenceClass",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsAssociativeElement);

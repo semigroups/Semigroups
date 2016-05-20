@@ -47,14 +47,21 @@ function(S)
   fi;
   R := Range(iso);
   congs := ShallowCopy(CongruencesOfSemigroup(R));
-  for i in [1 .. Length(congs)] do
-    if IsUniversalSemigroupCongruence(congs[i]) then
-      congs[i] := UniversalSemigroupCongruence(S);
-    else
-      congs[i] := SEMIGROUPS.SimpleCongFromRMSCong(S, iso, congs[i]);
-    fi;
-  od;
-  return congs;
+  if IsReesMatrixSemigroup(R) then
+    # The universal congruence has a linked triple
+    return List(congs,
+                cong -> SEMIGROUPS.SimpleCongFromRMSCong(S, iso, cong));
+  else
+    # The universal congruence has no linked triple
+    for i in [1 .. Length(congs)] do
+      if IsRZMSCongruenceByLinkedTriple(congs[i]) then
+        congs[i] := SEMIGROUPS.SimpleCongFromRMSCong(S, iso, congs[i]);
+      else
+        congs[i] := UniversalSemigroupCongruence(S);
+      fi;
+    od;
+    return congs;
+  fi;
 end);
 
 #
