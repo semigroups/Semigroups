@@ -387,12 +387,15 @@ true
 true
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
 gap> Unbind(F);
 gap> Unbind(G);
 gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(iso);
+gap> Unbind(x);
+gap> Unbind(y);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/grpperm.tst");

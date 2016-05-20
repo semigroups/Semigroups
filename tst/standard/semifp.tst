@@ -1498,7 +1498,17 @@ gap> BruteForceInverseCheck(map);
 true
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(BruteForceInverseCheck);
+gap> Unbind(BruteForceIsoCheck);
+gap> Unbind(F);
+gap> Unbind(R);
 gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(inv);
+gap> Unbind(map);
+gap> Unbind(rels);
+gap> Unbind(x);
+gap> Unbind(y);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/semifp.tst");
