@@ -18,7 +18,7 @@ fi
 cd ..
 
 # Download and compile GAP
-git clone -b $GAP_BRANCH --depth=1 https://github.com/gap-system/gap.git
+git clone -b $GAP_BRANCH --depth=1 https://github.com/$GAP_FORK/gap.git
 cd gap
 ./configure --with-gmp=system $GAP_FLAGS
 make

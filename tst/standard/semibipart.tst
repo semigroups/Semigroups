@@ -42,5 +42,12 @@ gap> S := ReesMatrixSemigroup(Group([(1,2)]), [[()]]);
 gap> S := AsSemigroup(IsBlockBijectionSemigroup, S);
 <block bijection group of degree 3 with 1 generator>
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(BruteForceInverseCheck);
+gap> Unbind(BruteForceIsoCheck);
+gap> Unbind(S);
+gap> Unbind(x);
+gap> Unbind(y);
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/semibipart.tst");

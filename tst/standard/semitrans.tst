@@ -2051,11 +2051,18 @@ gap> Size(S);
 4
 
 #T# SEMIGROUPS_UnbindVariables
-gap> Unbind(S);
+gap> Unbind(BruteForceInverseCheck);
+gap> Unbind(BruteForceIsoCheck);
+gap> Unbind(F);
 gap> Unbind(R);
-gap> Unbind(x);
-gap> Unbind(n);
+gap> Unbind(S);
+gap> Unbind(T);
 gap> Unbind(gr);
+gap> Unbind(map);
+gap> Unbind(n);
+gap> Unbind(rels);
+gap> Unbind(x);
+gap> Unbind(y);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/semitrans.tst");

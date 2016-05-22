@@ -1901,5 +1901,28 @@ gap> MatrixEntries(R);
   <bipartition: [ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]>, 
   <bipartition: [ 1, -1, -2 ], [ 2, 3, -3, -4 ], [ 4 ]> ]
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(BruteForceInverseCheck);
+gap> Unbind(BruteForceIsoCheck);
+gap> Unbind(F);
+gap> Unbind(G);
+gap> Unbind(R);
+gap> Unbind(S);
+gap> Unbind(T);
+gap> Unbind(comps);
+gap> Unbind(i);
+gap> Unbind(id);
+gap> Unbind(idems);
+gap> Unbind(inv);
+gap> Unbind(iso);
+gap> Unbind(map);
+gap> Unbind(mat);
+gap> Unbind(occurrence);
+gap> Unbind(rels);
+gap> Unbind(x);
+gap> Unbind(y);
+gap> Unbind(z);
+gap> Unbind(zero);
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/semirms.tst");
