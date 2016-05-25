@@ -3370,1150 +3370,1172 @@ this function takes at most two arguments,
 
 #T# ExamplesTest37: ham-examples
 # planar uniform block bijection monoid
-gap> s := PlanarUniformBlockBijectionMonoid(1);
+gap> S := PlanarUniformBlockBijectionMonoid(1);
 <trivial bipartition group of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := PlanarUniformBlockBijectionMonoid(4);
+gap> S := PlanarUniformBlockBijectionMonoid(4);
 <inverse bipartition monoid of degree 4 with 3 generators>
-gap> Size(s);
+gap> Size(S);
 8
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 3
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 8
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 8
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 8
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 8
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 
 # singular planar uniform block bijection monoid
-gap> s := SingularPlanarUniformBlockBijectionMonoid(4);
+gap> S := SingularPlanarUniformBlockBijectionMonoid(4);
 <inverse bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 4
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 4
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 4
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 4
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 4
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
+gap> SingularPlanarUniformBlockBijectionMonoid(1);
+Error, Semigroups: SingularPlanarUniformBlockBijectionMonoid: usage,
+the argument must be greater than 1,
 
 # uniform block bijection monoid
-gap> s := UniformBlockBijectionMonoid(1);
+gap> S := UniformBlockBijectionMonoid(1);
 <trivial bipartition group of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := UniformBlockBijectionMonoid(4);
+gap> S := UniformBlockBijectionMonoid(4);
 <inverse bipartition monoid of degree 4 with 3 generators>
-gap> Size(s);
+gap> Size(S);
 131
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 3
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 63
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 15
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 5
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 15
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S4" ]
 
 # singular uniform block bijection monoid
-gap> s := SingularUniformBlockBijectionMonoid(4);
+gap> S := SingularUniformBlockBijectionMonoid(4);
 <inverse bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 107
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 62
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 14
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 4
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 14
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
+gap> SingularUniformBlockBijectionMonoid(1);
+Error, Semigroups: SingularUniformBlockBijectionMonoid: usage,
+the argument must be greater than 1,
 
 # apsis monoid
-gap> s := ApsisMonoid(1, 1);
+gap> S := ApsisMonoid(1, 1);
 <commutative inverse bipartition monoid of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 2
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 2
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 2
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 2
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := ApsisMonoid(2, 1);
+gap> S := ApsisMonoid(2, 1);
 <trivial bipartition group of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := ApsisMonoid(3, 2);
+gap> S := ApsisMonoid(3, 2);
 <trivial bipartition group of degree 2 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := ApsisMonoid(3, 4);
+gap> S := ApsisMonoid(3, 4);
 <regular bipartition monoid of degree 4 with 2 generators>
-gap> Size(s);
+gap> Size(S);
 5
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 2
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 5
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 3
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 5
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := ApsisMonoid(5, 4);
+gap> S := ApsisMonoid(5, 4);
 <trivial bipartition group of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 
 # singular apsis monoid
-gap> s := SingularApsisMonoid(1, 1);
+gap> S := SingularApsisMonoid(1, 1);
 <commutative inverse bipartition semigroup ideal of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := SingularApsisMonoid(2, 4);
+gap> S := SingularApsisMonoid(2, 4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 13
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 13
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 5
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 11
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := SingularApsisMonoid(3, 4);
+gap> S := SingularApsisMonoid(3, 4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 4
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 4
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 2
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 4
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
+gap> SingularApsisMonoid(2, 1);
+Error, Semigroups: SingularApsisMonoid: usage,
+the first argument must be less than or equal to the second argument,
 
 # crossed apsis monoid
-gap> s := CrossedApsisMonoid(1, 1);
+gap> S := CrossedApsisMonoid(1, 1);
 <commutative inverse bipartition monoid of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 2
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 2
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 2
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 2
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := CrossedApsisMonoid(2, 1);
+gap> S := CrossedApsisMonoid(2, 1);
 <trivial bipartition group of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := CrossedApsisMonoid(2, 4);
+gap> S := CrossedApsisMonoid(2, 4);
 <regular bipartition monoid of degree 4 with 3 generators>
-gap> Size(s);
+gap> Size(S);
 105
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 3
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 46
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 10
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 3
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 40
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S4" ]
-gap> s := CrossedApsisMonoid(3, 4);
+gap> S := CrossedApsisMonoid(3, 4);
 <regular bipartition monoid of degree 4 with 3 generators>
-gap> Size(s);
+gap> Size(S);
 40
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 3
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 17
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 5
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 17
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "S4" ]
-gap> s := CrossedApsisMonoid(5, 4);
+gap> S := CrossedApsisMonoid(5, 4);
 <regular bipartition monoid of degree 4 with 2 generators>
-gap> Size(s);
+gap> Size(S);
 24
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 2
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "S4" ]
 
 # singular crossed apsis monoid
-gap> s := SingularCrossedApsisMonoid(1, 1);
+gap> S := SingularCrossedApsisMonoid(1, 1);
 <commutative inverse bipartition semigroup ideal of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := SingularCrossedApsisMonoid(2, 4);
+gap> S := SingularCrossedApsisMonoid(2, 4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 81
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 45
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 9
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 39
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
-gap> s := SingularCrossedApsisMonoid(3, 4);
+gap> S := SingularCrossedApsisMonoid(3, 4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 16
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 16
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 4
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 16
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
+gap> SingularCrossedApsisMonoid(2, 1);
+Error, Semigroups: SingularCrossedApsisMonoid: usage,
+the first argument must be less than or equal to the second argument,
 
 # planar modular partition monoid
-gap> s := PlanarModularPartitionMonoid(1, 1);
+gap> S := PlanarModularPartitionMonoid(1, 1);
 <commutative inverse bipartition monoid of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 2
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 2
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 2
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 2
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := PlanarModularPartitionMonoid(2, 1);
+gap> S := PlanarModularPartitionMonoid(2, 1);
 <trivial bipartition group of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := PlanarModularPartitionMonoid(2, 4);
+gap> S := PlanarModularPartitionMonoid(2, 4);
 <regular bipartition monoid of degree 4 with 6 generators>
-gap> Size(s);
+gap> Size(S);
 55
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 6
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 55
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 17
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 8
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 45
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := PlanarModularPartitionMonoid(3, 4);
+gap> S := PlanarModularPartitionMonoid(3, 4);
 <regular bipartition monoid of degree 4 with 5 generators>
-gap> Size(s);
+gap> Size(S);
 16
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 5
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 16
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 10
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 8
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 16
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := PlanarModularPartitionMonoid(5, 4);
+gap> S := PlanarModularPartitionMonoid(5, 4);
 <inverse bipartition monoid of degree 4 with 3 generators>
-gap> Size(s);
+gap> Size(S);
 8
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 3
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 8
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 8
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 8
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 8
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 
 # singular planar modular partition monoid
-gap> s := SingularPlanarModularPartitionMonoid(1, 1);
+gap> S := SingularPlanarModularPartitionMonoid(1, 1);
 <commutative inverse bipartition semigroup ideal of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := SingularPlanarModularPartitionMonoid(2, 4);
+gap> S := SingularPlanarModularPartitionMonoid(2, 4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 52
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 52
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 14
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 5
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 42
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := SingularPlanarModularPartitionMonoid(3, 4);
+gap> S := SingularPlanarModularPartitionMonoid(3, 4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 12
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 12
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 6
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 4
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 12
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := SingularPlanarModularPartitionMonoid(5, 4);
+gap> S := SingularPlanarModularPartitionMonoid(5, 4);
 <inverse bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 4
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 4
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 4
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 4
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 4
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
+gap> SingularPlanarModularPartitionMonoid(2, 1);
+Error, Semigroups: SingularPlanarModularPartitionMonoid: usage,
+the second argument must be greater than 1 when the first argument is also gre\
+ater than 1,
 
 # planar partition monoid
-gap> s := PlanarPartitionMonoid(1);
+gap> S := PlanarPartitionMonoid(1);
 <commutative inverse bipartition monoid of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 2
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 2
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 2
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 2
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := PlanarPartitionMonoid(4);
+gap> S := PlanarPartitionMonoid(4);
 <regular bipartition monoid of degree 4 with 7 generators>
-gap> Size(s);
+gap> Size(S);
 1430
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 7
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1430
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 70
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 5
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 886
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 
 # singular planar partition monoid
-gap> s := SingularPlanarPartitionMonoid(1);
+gap> S := SingularPlanarPartitionMonoid(1);
 <commutative inverse bipartition semigroup ideal of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 1
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 1
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 1
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 true
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := SingularPlanarPartitionMonoid(4);
+gap> S := SingularPlanarPartitionMonoid(4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 1429
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 1429
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 69
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 4
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 885
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 
 # modular partition monoid
-gap> s := ModularPartitionMonoid(1, 1);
+gap> S := ModularPartitionMonoid(1, 1);
 <commutative inverse bipartition monoid of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 2
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 2
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 2
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 2
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := ModularPartitionMonoid(2, 1);
+gap> S := ModularPartitionMonoid(2, 1);
 <commutative inverse bipartition monoid of degree 1 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 2
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 2
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 2
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 2
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 2
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 true
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
-gap> s := ModularPartitionMonoid(2, 4);
+gap> S := ModularPartitionMonoid(2, 4);
 <regular bipartition monoid of degree 4 with 4 generators>
-gap> Size(s);
+gap> Size(S);
 379
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 4
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 211
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 31
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 6
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 127
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S4" ]
-gap> s := ModularPartitionMonoid(3, 4);
+gap> S := ModularPartitionMonoid(3, 4);
 <regular bipartition monoid of degree 4 with 4 generators>
-gap> Size(s);
+gap> Size(S);
 155
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 4
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 87
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 19
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 5
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 39
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S4" ]
-gap> s := ModularPartitionMonoid(5, 4);
+gap> S := ModularPartitionMonoid(5, 4);
 <regular bipartition monoid of degree 4 with 3 generators>
-gap> Size(s);
+gap> Size(S);
 131
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 3
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 63
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 15
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 5
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 15
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 true
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 true
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S4" ]
 
 # singular modular partition monoid
-gap> s := SingularModularPartitionMonoid(2, 4);
+gap> S := SingularModularPartitionMonoid(2, 4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 355
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 210
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 30
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 5
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 126
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
-gap> s := SingularModularPartitionMonoid(3, 4);
+gap> S := SingularModularPartitionMonoid(3, 4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 131
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 86
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 18
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 4
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 38
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
-gap> s := SingularModularPartitionMonoid(5, 4);
+gap> S := SingularModularPartitionMonoid(5, 4);
 <regular bipartition semigroup ideal of degree 4 with 1 generator>
-gap> Size(s);
+gap> Size(S);
 107
-gap> Size(Generators(s));
+gap> Size(Generators(S));
 1
-gap> NrHClasses(s);
+gap> NrHClasses(S);
 62
-gap> NrRClasses(s);
+gap> NrRClasses(S);
 14
-gap> NrDClasses(s);
+gap> NrDClasses(S);
 4
-gap> NrIdempotents(s);
+gap> NrIdempotents(S);
 14
-gap> IsBlockBijectionMonoid(s);
+gap> IsBlockBijectionMonoid(S);
 false
-gap> IsHTrivial(s);
+gap> IsHTrivial(S);
 false
-gap> IsInverseMonoid(s);
+gap> IsInverseMonoid(S);
 false
-gap> IsRegularSemigroup(s);
+gap> IsRegularSemigroup(S);
 true
-gap> IsSimpleSemigroup(s);
+gap> IsSimpleSemigroup(S);
 false
-gap> StructureDescriptionMaximalSubgroups(s);
+gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
+gap> SingularModularPartitionMonoid(1, 1);
+<commutative inverse bipartition semigroup ideal of degree 1 with 1 generator>
+gap> SingularModularPartitionMonoid(2, 1);
+Error, Semigroups: SingularModularPartitionMonoid: usage,
+the second argument must be greater than 1 when the first argument is also gre\
+ater than 1,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(s);

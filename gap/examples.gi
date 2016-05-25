@@ -1262,9 +1262,8 @@ InstallMethod(SingularPlanarUniformBlockBijectionMonoid,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    Error("Semigroups: SingularPlanarUniformBlockBijectionMonoid:",
-          " usage,\nthe argument must be greater than 1,");
-    return;
+    ErrorNoReturn("Semigroups: SingularPlanarUniformBlockBijectionMonoid:",
+                  " usage,\nthe argument must be greater than 1,");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -1284,9 +1283,8 @@ InstallMethod(SingularUniformBlockBijectionMonoid,
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    Error("Semigroups: SingularUniformBlockBijectionMonoid:",
-          " usage,\nthe argument must be greater than 1,");
-    return;
+    ErrorNoReturn("Semigroups: SingularUniformBlockBijectionMonoid:",
+                  " usage,\nthe argument must be greater than 1,");
   fi;
 
   blocks := [[1, 2, -1, -2]];
@@ -1307,10 +1305,9 @@ InstallMethod(SingularApsisMonoid,
 function(m, n)
   local blocks, x, S, i;
   if m > n then
-    Error("Semigroups: SingularApsisMonoid:",
-          " usage,\nthe first argument must be less than or equal to the second",
-          " argument,");
-    return;
+    ErrorNoReturn("Semigroups: SingularApsisMonoid: usage,\n",
+                  "the first argument must be less than or equal to the ",
+                  "second argument,");
   fi;
 
   blocks := [[1 .. m], [-m .. -1]];
@@ -1331,10 +1328,9 @@ InstallMethod(SingularCrossedApsisMonoid,
 function(m, n)
   local blocks, x, S, i;
   if m > n then
-    Error("Semigroups: SingularCrossedApsisMonoid:",
-          " usage,\nthe first argument must be less than or equal to the second",
-          " argument,");
-    return;
+    ErrorNoReturn("Semigroups: SingularCrossedApsisMonoid: usage,\n",
+                  "the first argument must be less than or equal to ",
+                  "the second argument,");
   fi;
 
   blocks := [[1 .. m], [-m .. -1]];
@@ -1359,10 +1355,9 @@ function(m, n)
       return SemigroupIdeal(PlanarModularPartitionMonoid(1, 1),
                             Bipartition([[1], [-1]]));
     else
-      Error("Semigroups: SingularPlanarModularPartitionMonoid:",
-            " usage,\nthe second argument must be greater than 1",
-            " when the first argument is also greater than 1,");
-      return;
+      ErrorNoReturn("Semigroups: SingularPlanarModularPartitionMonoid:",
+                    " usage,\nthe second argument must be greater than 1",
+                    " when the first argument is also greater than 1,");
     fi;
   fi;
 
@@ -1408,10 +1403,9 @@ function(m, n)
       return SemigroupIdeal(ModularPartitionMonoid(1, 1),
                             Bipartition([[1], [-1]]));
     else
-      Error("Semigroups: SingularModularPartitionMonoid:",
-            " usage,\nthe second argument must be greater than 1",
-            " when the first argument is also greater than 1,");
-      return;
+      ErrorNoReturn("Semigroups: SingularModularPartitionMonoid:",
+                    " usage,\nthe second argument must be greater than 1",
+                    " when the first argument is also greater than 1,");
     fi;
   fi;
 

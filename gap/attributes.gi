@@ -420,7 +420,7 @@ function(coll)
 
   gens := Set(ShallowCopy(coll));
   nrgens := Length(gens);
-  
+
   if nrgens = 1 then
     return gens;
   fi;
