@@ -17,16 +17,12 @@ DeclareSynonym("TemperleyLiebMonoid", JonesMonoid);
 DeclareOperation("BrauerMonoid", [IsPosInt]);
 DeclareOperation("PartialBrauerMonoid", [IsPosInt]);
 DeclareOperation("SingularBrauerMonoid", [IsPosInt]);
-DeclareOperation("FactorisableDualSymmetricInverseSemigroup", [IsPosInt]);
-DeclareOperation("SingularFactorisableDualSymmetricInverseSemigroup",
-                 [IsPosInt]);
 DeclareOperation("DualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareSynonym("DualSymmetricInverseMonoid", DualSymmetricInverseSemigroup);
 DeclareOperation("SingularDualSymmetricInverseSemigroup", [IsPosInt]);
 
 DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
 
-DeclareOperation("TriapsisMonoid", [IsPosInt]);
 # DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
 # DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
 DeclareOperation("MunnSemigroup", [IsSemigroup]);
@@ -41,6 +37,25 @@ DeclareOperation("RegularBinaryRelationSemigroup", [IsPosInt]);
 DeclareOperation("SingularTransformationSemigroup", [IsPosInt]);
 DeclareSynonym("SingularTransformationMonoid",
                SingularTransformationSemigroup);
+
+DeclareOperation("PlanarUniformBlockBijectionMonoid", [IsPosInt]);
+DeclareOperation("SingularPlanarUniformBlockBijectionMonoid", [IsPosInt]);
+DeclareOperation("UniformBlockBijectionMonoid", [IsPosInt]);
+DeclareSynonym("FactorisableDualSymmetricInverseSemigroup",
+               UniformBlockBijectionMonoid);
+DeclareOperation("SingularUniformBlockBijectionMonoid", [IsPosInt]);
+DeclareSynonym("SingularFactorisableDualSymmetricInverseSemigroup",
+               SingularUniformBlockBijectionMonoid);
+DeclareOperation("ApsisMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("SingularApsisMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("CrossedApsisMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("SingularCrossedApsisMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("PlanarModularPartitionMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("SingularPlanarModularPartitionMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("PlanarPartitionMonoid", [IsPosInt]);
+DeclareOperation("SingularPlanarPartitionMonoid", [IsPosInt]);
+DeclareOperation("ModularPartitionMonoid", [IsPosInt, IsPosInt]);
+DeclareOperation("SingularModularPartitionMonoid", [IsPosInt, IsPosInt]);
 
 DeclareConstructor("ZeroSemigroupCons", [IsSemigroup, IsPosInt]);
 DeclareConstructor("RectangularBandCons", [IsSemigroup, IsPosInt, IsPosInt]);

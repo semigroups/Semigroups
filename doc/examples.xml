@@ -92,69 +92,6 @@ gap> SingularBrauerMonoid(8);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="FactorisableDualSymmetricInverseSemigroup">
-   <ManSection>
-    <Oper Name="FactorisableDualSymmetricInverseSemigroup" Arg="n"/>
-    <Oper Name="SingularFactorisableDualSymmetricInverseSemigroup" Arg="n"/>
-    <Returns>An inverse bipartition monoid.</Returns>
-    <Description>
-      If <A>n</A> is a positive integer, then this operation returns the largest
-      factorisable inverse subsemigroup of the dual symmetric inverse monoid of
-      degree <A>n</A>. <P/>
-      
-      <C>SingularFactorisableDualSymmetricInverseSemigroup</C> returns the ideal
-      of the factorisable dual symmetric inverse semigroup consisting of the
-      non-invertible elements (i.e. those not in the group of units), when
-      <A>n</A> is at least 2.<P/>
-
-      See <Ref Prop="IsUniformBlockBijection"/>.
-      <Example><![CDATA[
-gap> S:=DualSymmetricInverseMonoid(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
-gap> IsFactorisableSemigroup(S);
-false
-gap> S:=FactorisableDualSymmetricInverseSemigroup(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
-gap> IsFactorisableSemigroup(S);
-true
-gap> S:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
-<inverse bipartition monoid of degree 5 with 3 generators>
-gap> IsFactorisableSemigroup(S);
-true
-]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="DualSymmetricInverseSemigroup">
-   <ManSection>
-    <Oper Name="DualSymmetricInverseSemigroup" Arg="n"/>
-    <Oper Name="DualSymmetricInverseMonoid" Arg="n"/>
-    <Oper Name="SingularDualSymmetricInverseSemigroup" Arg="n"/>
-    <Returns>An inverse bipartition monoid.</Returns>
-    <Description>
-      If <A>n</A> is a positive integer, then these operations return the dual
-      symmetric inverse monoid of degree <A>n</A>, which is the subsemigroup of
-      the partition monoid consisting of the block bijections of degree <A>n</A>.<P/>
-
-      <C>SingularDualSymmetricInverseSemigroup</C> returns the ideal of the
-      dual symmetric inverse monoid consisting of the non-invertible elements
-      (i.e. those not in the group of units), when <A>n</A> is at least 2.<P/>
-      
-      See <Ref Prop="IsBlockBijection"/>.
-
-      <Example><![CDATA[
-gap> Number(PartitionMonoid(3), IsBlockBijection);
-25
-gap> S:=DualSymmetricInverseSemigroup(3);
-<inverse bipartition monoid of degree 3 with 3 generators>
-gap> Size(S);
-25
-]]></Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="PartitionMonoid">
    <ManSection>
     <Oper Name="PartitionMonoid" Arg="n"/>
@@ -179,6 +116,31 @@ gap> Size(S);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="PlanarPartitionMonoid">
+   <ManSection>
+    <Oper Name="PlanarPartitionMonoid" Arg="n"/>
+    <Oper Name="SingularPlanarPartitionMonoid" Arg="n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      If <A>n</A> is a positive integer, then this operation returns the planar
+      partition monoid of degree <A>n</A> which is the monoid consisting of all
+      the planar bipartitions of degree <A>n</A> (planar bipartitions are defined
+      in Chapter <Ref Label="bipartition"/>). <P/>
+
+      <C>SingularPlanarPartitionMonoid</C> returns the ideal of the planar
+      partition monoid consisting of the non-invertible elements
+      (i.e. those not in the group of units). <P/>
+
+      <Example><![CDATA[
+gap> S := PlanarPartitionMonoid(5);
+<regular bipartition monoid of degree 5 with 9 generators>
+gap> Size(S);
+16796
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="PartialTransformationSemigroup">
    <ManSection>
     <Oper Name="PartialTransformationSemigroup" Arg="n"/>
@@ -194,6 +156,168 @@ gap> PartialTransformationSemigroup(8);
 <regular transformation monoid of degree 9 with 4 generators>
 gap> Size(last);
 43046721]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="UniformBlockBijectionMonoid">
+   <ManSection>
+    <Oper Name="UniformBlockBijectionMonoid" Arg="n"/>
+    <Oper Name="FactorisableDualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name="SingularUniformBlockBijectionMonoid" Arg="n"/>
+    <Oper Name="SingularFactorisableDualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name="PlanarUniformBlockBijectionMonoid" Arg="n"/>
+    <Oper Name="SingularPlanarUniformBlockBijectionMonoid" Arg="n"/>
+    <Returns>An inverse bipartition monoid.</Returns>
+    <Description>
+      If <A>n</A> is a positive integer, then this operation returns the uniform
+      block bijection monoid of degree <A>n</A>. The <E>uniform block bijection
+      monoid</E> is the submonoid of the partition monoid consisting of the
+      block bijections of degree &n; where the number of positive integers in a
+      block equals the number of negative integers in that block. 
+      The uniform block bijection monoid is also referred to as the 
+      <E>factorisable dual symmetric inverse semigroup</E>. <P/>
+
+      <C>SingularUniformBlockBijectionMonoid</C> returns the ideal of the
+      uniform block bijection monoid consisting of the non-invertible elements
+      (i.e. those not in the group of units), when <A>n</A> is at least 2. <P/>
+
+      <C>PlanarUniformBlockBijectionMonoid</C> returns the submonoid of the
+      uniform block bijection monoid consisting of the planar elements
+      (i.e. those in the planar partition monoid). <P/>
+
+      <C>SingularPlanarUniformBlockBijectionMonoid</C> returns the ideal of the
+      planar uniform block bijection monoid consisting of the non-invertible
+      elements (i.e. those not in the group of units), when <A>n</A> is
+      at least 2. <P/>
+      <!-- TODO reference -->
+
+      See <Ref Prop="IsUniformBlockBijection"/>.       
+      <Example><![CDATA[
+gap> S := UniformBlockBijectionMonoid(4);
+<inverse bipartition monoid of degree 4 with 3 generators>
+gap> Size(PlanarUniformBlockBijectionMonoid(8));
+128
+gap> S:=DualSymmetricInverseMonoid(4);
+<inverse bipartition monoid of degree 4 with 3 generators>
+gap> IsFactorisableSemigroup(S);
+false
+gap> S:=FactorisableDualSymmetricInverseSemigroup(4);
+<inverse bipartition monoid of degree 4 with 3 generators>
+gap> IsFactorisableSemigroup(S);
+true
+gap> S:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
+<inverse bipartition monoid of degree 5 with 3 generators>
+gap> IsFactorisableSemigroup(S);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DualSymmetricInverseSemigroup">
+   <ManSection>
+    <Oper Name="DualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name="DualSymmetricInverseMonoid" Arg="n"/>
+    <Oper Name="SingularDualSymmetricInverseSemigroup" Arg="n"/>
+    <Returns>An inverse bipartition monoid.</Returns>
+    <Description>
+      If <A>n</A> is a positive integer, then these operations return the dual
+      symmetric inverse monoid of degree <A>n</A>, which is the subsemigroup of
+      the partition monoid consisting of the block bijections of degree <A>n</A>.<P/>
+
+      <C>SingularDualSymmetricInverseSemigroup</C> returns the ideal of the
+      dual symmetric inverse monoid consisting of the non-invertible elements
+      (i.e. those not in the group of units), when <A>n</A> is at least 2.<P/>
+      
+      See <Ref Prop="IsBlockBijection"/>.
+
+      <Example><![CDATA[
+gap> Number(PartitionMonoid(3), IsBlockBijection);
+25
+gap> S := DualSymmetricInverseSemigroup(3);
+<inverse bipartition monoid of degree 3 with 3 generators>
+gap> Size(S);
+25
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ApsisMonoid">
+   <ManSection>
+    <Oper Name="ApsisMonoid" Arg="m, n"/>
+    <Oper Name="SingularApsisMonoid" Arg="m, n"/>
+    <Oper Name="CrossedApsisMonoid" Arg="m, n"/>
+    <Oper Name="SingularCrossedApsisMonoid" Arg="m, n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      If <A>m</A> and <A>n</A> are positive integers, then this operation
+      returns the <A>m</A>-apsis monoid of degree <A>n</A>. The
+      <A>m</A><E>-apsis monoid</E> is the monoid of bipartitions generated when
+      the diapses in generators of the Jones monoid are replaced
+      with <A>m</A>-apses. Note that an <A>m</A><E>-apsis</E> is a block that 
+      contains precisely <A>m</A> consecutive integers. <P/>
+
+      <C>SingularApsisMonoid</C> returns the ideal of the
+      apsis monoid consisting of the non-invertible elements
+      (i.e. those not in the group of units), when <A>m &lt;= n</A>. <P/>
+
+      <C>CrossedApsisGeneratedMonoid</C> returns the semigroup generated by the
+      symmetric group of degree <A>n</A> and the <A>m</A>-apsis monoid of
+      degree <A>n</A>. <P/>
+
+      <C>SingularCrossedApsisMonoid</C> returns the ideal of the
+      crossed apsis monoid consisting of the non-invertible elements
+      (i.e. those not in the group of units), when <A>m &lt;= n</A>.
+      <!-- TODO reference and/or definition -->
+
+      <Example><![CDATA[
+gap> S := ApsisMonoid(3, 7);
+<regular bipartition monoid of degree 7 with 5 generators>
+gap> Size(S);
+320
+gap> Size(CrossedApsisMonoid(4, 9));
+24291981]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ModularPartitionMonoid">
+   <ManSection>
+    <Oper Name="ModularPartitionMonoid" Arg="m, n"/>
+    <Oper Name="SingularModularPartitionMonoid" Arg="m, n"/>
+    <Oper Name="PlanarModularPartitionMonoid" Arg="m, n"/>
+    <Oper Name="SingularPlanarModularPartitionMonoid" Arg="m, n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      If <A>m</A> and <A>n</A> are positive integers, then this operation
+      returns the modular-<A>m</A> partition monoid of degree <A>n</A>. The
+      <E>modular-</E><A>m</A> <E>partition monoid</E> is the submonoid of the
+      partition monoid such that the numbers of positive and negative
+      integers contained in each block are congruent mod <A>m</A>. <P/>
+
+      <C>SingularModularPartitionMonoid</C> returns the ideal of the
+      modular partition monoid consisting of the non-invertible elements
+      (i.e. those not in the group of units), when either
+      <A>m = n = 1</A> or <A>m, n &gt; 1</A>. <P/>
+
+      <C>PlanarModularPartitionMonoid</C> returns the submonoid of the
+      modular-<A>m</A> partition monoid consisting of the planar elements
+      (i.e. those in the planar partition monoid). <P/>
+
+      <C>SingularPlanarModularPartitionMonoid</C> returns the ideal of the
+      planar modular partition monoid consisting of the non-invertible elements
+      (i.e. those not in the group of units), when either
+      <A>m = n = 1</A> or <A>m, n &gt; 1</A>.
+      <!-- TODO reference -->
+
+      <Example><![CDATA[
+gap> S := ModularPartitionMonoid(3, 7);
+<regular bipartition monoid of degree 7 with 4 generators>
+gap> Size(S);
+826897
+gap> Size(PlanarModularPartitionMonoid(4, 9));
+1795]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
