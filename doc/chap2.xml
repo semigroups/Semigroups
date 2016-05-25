@@ -169,13 +169,16 @@ true</Log>
     used to creating semigroups belonging to several standard classes of
     example. See Chapter <Ref Chap="bipartition"/> for more information about
     semigroups of bipartitions. 
-    <#Include Label="EndomorphismsPartition"> 
-    <#Include Label="PartitionMonoid"> 
-    <#Include Label="BrauerMonoid"> 
-    <#Include Label="JonesMonoid"> 
-    <#Include Label="FactorisableDualSymmetricInverseSemigroup">
+    <#Include Label="EndomorphismsPartition">
+    <#Include Label="PartitionMonoid">
+    <#Include Label="PlanarPartitionMonoid">
+    <#Include Label="BrauerMonoid">
+    <#Include Label="JonesMonoid">
+    <#Include Label="PartialTransformationSemigroup">
     <#Include Label="DualSymmetricInverseSemigroup">
-    <#Include Label="PartialTransformationSemigroup"> 
+    <#Include Label="UniformBlockBijectionMonoid">
+    <#Include Label="ApsisMonoid">
+    <#Include Label="ModularPartitionMonoid">
     <#Include Label="GeneralLinearSemigroup">
     <#Include Label="SpecialLinearSemigroup">
     <#Include Label="MunnSemigroup">
