@@ -24,8 +24,8 @@
   representations see Section 5.10 of <Cite Key = "howie"/>.
  
   See also <Ref Chap = "Inverse semigroups and monoids" BookName = "ref"/>,
-  <Ref Chap = "Partial permutations" BookName = "ref"/> and <Ref Sect = "Free
-    Groups, Monoids and Semigroups" BookName = "ref" />.<P/> 
+  <Ref Chap = "Partial permutations" BookName = "ref"/> and 
+  <Ref Sect = "Free Groups, Monoids and Semigroups" BookName = "ref"/>.<P/> 
 
   An element of a free inverse semigroup in &Semigroups; is be displayed, by
   default, as a shortest word corresponding to the element. 
