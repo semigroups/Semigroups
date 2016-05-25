@@ -2,6 +2,38 @@
 
 #### Copyright (C) 2011-16 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 2.8.0 (released 25/05/2016)
+In this release there are some new features and some bug fixes. In this
+version, we welcome [Nick Ham](https://n-ham.github.io) to the contributors to the package.
+
+#### New Features in Version 2.8.0
+The new features in this release are contributed by [Nick Ham](https://n-ham.github.io):
+
+* `ApsisMonoid`
+* `CrossedApsisMonoid`
+* `ModularPartitionMonoid`
+* `PlanarModularPartitionMonoid`
+* `PlanarPartitionMonoid`
+* `PlanarUniformBlockBijectionMonoid`
+* `SingularApsisMonoid`
+* `SingularCrossedApsisMonoid`
+* `SingularModularPartitionMonoid`
+* `SingularPlanarModularPartitionMonoid`
+* `SingularPlanarPartitionMonoid`
+* `SingularPlanarUniformBlockBijectionMonoid`
+* `SingularUniformBlockBijectionMonoid`
+* `UniformBlockBijectionMonoid`
+
+#### Issues Resolved in Version 2.8.0
+
+* [Issue 160](https://github.com/gap-packages/Semigroups/issues/160) `IrreundantGeneratingSubset` behaved incorrectly when given a
+semigroup whose generating set consisted of a single repeated
+element. [[Wilf Wilson](http://wilf.me)]
+* [Issue 164](https://github.com/gap-packages/Semigroups/issues/164) `MatrixEntries` 
+gave an error for Rees 0-matrix semigroups whose
+matrices contain `0`. [[Wilf Wilson](http://wilf.me)]
+* Some tests failed when GAP was compiled in 32-bit mode. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+
 ### Version 2.7.6 (released 19/04/2016)
 This is a very minor release changing the name of the `README` (to `README.md`) in
 the `PackageInfo.g` file.
