@@ -98,9 +98,9 @@ gap> MultiplicativeZero(S);
 <matrix over GF(3) of degree 3>
 gap> MinimalDClass(S);
 <Green's D-class: <matrix over GF(3) of degree 3>>
-gap> M := MaximalSubsemigroups(S);
-[ <semigroup of 3x3 matrices over GF(3) with 4 generators>, 
-  <semigroup of 3x3 matrices over GF(3) with 2 generators> ]
+gap> M := MaximalSubsemigroups(S);;
+gap> List(M, Size);
+[ 133, 9 ]
 gap> List(M, U-> IsMaximalSubsemigroup(S, U));
 [ true, true ]
 
