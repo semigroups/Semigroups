@@ -25,6 +25,7 @@ DeclareOperation("POPI", [IsPosInt]);
 
 # Bipartition semigroups
 DeclareOperation("JonesMonoid", [IsInt]);
+DeclareOperation("AnnularJonesMonoid", [IsInt]);
 DeclareOperation("PartialJonesMonoid", [IsInt]);
 DeclareOperation("MotzkinMonoid", [IsInt]);
 DeclareOperation("BrauerMonoid", [IsInt]);
