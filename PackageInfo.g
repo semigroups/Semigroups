@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.7.6">
+##  <!ENTITY VERSION "2.8.0">
 ##  <!ENTITY GAPVERS "4.8.3">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.7.6">
+##  <!ENTITY ARCHIVENAME "semigroups-2.8.0">
 ##  <!ENTITY COPYRIGHTYEARS "2011-16">
 ##  <#/GAPDoc>
 
@@ -39,8 +39,8 @@ SetPackageInfo( rec(
 
 PackageName := "Semigroups",
 Subtitle := "",
-Version := "2.7.6",
-Date := "19/04/2016",
+Version := "2.8.0",
+Date := "26/05/2016",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -74,7 +74,7 @@ Persons := [
 
   rec(
     LastName     := "Delgado",
-    FirstNames    := "Manuel",
+    FirstNames    := "M.",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "mdelgado@fc.up.pt",
@@ -89,26 +89,30 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "j.east@uws.edu.au",
-    WWWHome       := "http://www.uws.edu.au/staff_profiles/uws_profiles/doctor_james_east",
+    WWWHome       := "http://goo.gl/MuiJu5",
     Place         := "Sydney",
     Institution   := "University of Western Sydney"
   ),
 
   rec(
     LastName      := "Egri-Nagy",
-    FirstNames    := "Attila",
+    FirstNames    := "A.",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "attila@egri-nagy.hu",
     WWWHome       := "http://www.egri-nagy.hu",
-    PostalAddress := Concatenation( [
-                       "University of Hertfordshire\n",
-                       "STRI\n",
-                       "College Lane\n",
-                       "AL10 9AB\n",
-                       "United Kingdom" ] ),
-    Place         := "Hatfield, Herts",
-    Institution   := "UH"
+    Place         := "Akita, Japan",
+    Institution   := "Akita International University"
+  ),
+  rec(
+    LastName      := "Ham",
+    FirstNames    := "N.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "nicholas.charles.ham@gmail.com",
+    WWWHome       := "https://n-ham.github.io",
+    Place         := "Hobart, Tasmania",
+    Institution   := "University of Tasmania"
   ),
   rec(
     LastName      := "Jonusas",
@@ -116,17 +120,14 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "jj252@st-and.ac.uk",
-    PostalAddress := Concatenation( [
-                       "Mathematical Institute,",
-                       " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
-                       " Scotland"] ),
+    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~julius/",
     Place         := "St Andrews",
     Institution   := "University of St Andrews"
   ),
 
    rec(
     LastName      := "Pfeiffer",
-    FirstNames    := "Markus",
+    FirstNames    := "M.",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
@@ -161,6 +162,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
+    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~mct25/",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",

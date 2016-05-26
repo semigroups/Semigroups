@@ -4,8 +4,8 @@
   
   [1X1.1 [33X[0;0YIntroduction[133X[101X
   
-  [33X[0;0YThis  is  the  manual  for  the [5XSemigroups[105X package version 2.7.6. [5XSemigroups[105X
-  2.7.6   is   a   distant   descendant  of  the  Monoid  package  for  GAP  3
+  [33X[0;0YThis  is  the  manual  for  the [5XSemigroups[105X package version 2.8.0. [5XSemigroups[105X
+  2.8.0   is   a   distant   descendant  of  the  Monoid  package  for  GAP  3
   ([7Xhttp://schmidt.nuigalway.ie/monoid/index.html[107X)  by Goetz Pfeiffer, Steve A.
   Linton,  Edmund F. Robertson, and Nik Ruskuc; and the Monoid package for GAP
   4 by J. D. Mitchell.[133X
@@ -17,7 +17,7 @@
   bands.  For  the sake of brevity, we have opted to say [12Xsemigroup[112X to describe
   the aforementioned classes of semigroups.[133X
   
-  [33X[0;0Y[5XSemigroups[105X 2.7.6 contains more efficient methods than those available in the
+  [33X[0;0Y[5XSemigroups[105X 2.8.0 contains more efficient methods than those available in the
   [5XGAP[105X  library  (and in many cases more efficient than any other software) for
   creating  semigroups  and ideals, calculating their Green's structure, size,
   elements, group of units, minimal ideal, and testing membership, finding the
@@ -92,7 +92,7 @@
   [2XSmallestMultiplicationTable[102X  ([14X9.1-2[114X)  to work, and it must be fully compiled
   for the following functions to work:[133X
   
-  [30X    [33X[0;6Y[2XMunnSemigroup[102X ([14X2.5-10[114X)[133X
+  [30X    [33X[0;6Y[2XMunnSemigroup[102X ([14X2.5-13[114X)[133X
   
   [30X    [33X[0;6Y[2XMaximalSubsemigroups[102X ([14X4.5-7[114X)[133X
   
@@ -146,15 +146,15 @@
         want  to  use this function, then please ensure that the [5Xgenss[105X package
         version 1.5 or higher is available.[133X
   
-  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-2.7.6.tar.gz[111X  from  the
+  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-2.8.0.tar.gz[111X  from  the
         Semigroups                       package                       webpage
         ([7Xhttps://gap-packages.github.io/Semigroups[107X).[133X
   
   [30X    [33X[0;6Yunzip  and  untar  the  file,  this  should  create a directory called
-        [11Xsemigroups-2.7.6[111X.[133X
+        [11Xsemigroups-2.8.0[111X.[133X
   
   [30X    [33X[0;6Ylocate  the  [11Xpkg[111X  directory  of your [5XGAP[105X directory, which contains the
-        directories  [11Xlib[111X,  [11Xdoc[111X  and so on. Move the directory [11Xsemigroups-2.7.6[111X
+        directories  [11Xlib[111X,  [11Xdoc[111X  and so on. Move the directory [11Xsemigroups-2.8.0[111X
         into the [11Xpkg[111X directory.[133X
   
   [30X    [33X[0;6Ystart [5XGAP[105X in the usual way.[133X

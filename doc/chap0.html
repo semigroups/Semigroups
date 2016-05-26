@@ -25,7 +25,7 @@
 
 <h1><strong class="pkg">Semigroups</strong></h1>
 
-<p>Version 2.7.6</p>
+<p>Version 2.8.0</p>
 
 </div>
 <p><b>J. D. Mitchell
@@ -37,6 +37,7 @@
 </p><p><b>Manuel Delgado</b>
 </p><p><b>James East</b>
 </p><p><b>Attila Egri-Nagy</b>
+</p><p><b>Nicholas Ham</b>
 </p><p><b>Julius Jonušas</b>
 </p><p><b>Markus Pfeiffer</b>
 </p><p><b>Ben Steinberg</b>
@@ -67,9 +68,11 @@
 
 <p>James East, Attila Egri-Nagy, and Markus Pfeiffer contributed to the part of the package relating to bipartitions. I would like to thank the University of Western Sydney for their support of the development of this part of the package.</p>
 
+<p>Nick Ham contributed many of the standard examples of bipartition semigroups.</p>
+
 <p>Julius Jonušas contributed the part of the package relating to free inverse semigroups, and contributed to the code for ideals.</p>
 
-<p>Yann Peresse and Yanhui Wang contributed to the function <code class="func">MunnSemigroup</code> (<a href="chap2.html#X78FBE6DD7BCA30C1"><span class="RefLink">2.5-10</span></a>).</p>
+<p>Yann Peresse and Yanhui Wang contributed to the function <code class="func">MunnSemigroup</code> (<a href="chap2.html#X78FBE6DD7BCA30C1"><span class="RefLink">2.5-13</span></a>).</p>
 
 <p>Jhevon Smith and Ben Steinberg contributed the function <code class="func">CharacterTableOfInverseSemigroup</code> (<a href="chap4.html#X7C83DF9A7973AF6D"><span class="RefLink">4.7-16</span></a>).</p>
 
@@ -157,22 +160,25 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85C1D4307D0F5FF7">2.5-1 EndomorphismsPartition</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E4B61FF7CCFD74A">2.5-2 PartitionMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79D33B2E7BA3073A">2.5-3 BrauerMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8378FC8B840B9706">2.5-4 JonesMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D4C502582298AA4">2.5-5 FactorisableDualSymmetricInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83C7587C81B985BA">2.5-6 DualSymmetricInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E1A7FF08064440C">2.5-7 PartialTransformationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78F9812D79A457EF">2.5-8 FullMatrixSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B64C74987009BA9">2.5-9 SpecialLinearSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78FBE6DD7BCA30C1">2.5-10 MunnSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87B855227B9870BD">2.5-11 <span class="Heading">Monoids of order preserving functions</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8444092A7967A029">2.5-3 PlanarPartitionMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79D33B2E7BA3073A">2.5-4 BrauerMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8378FC8B840B9706">2.5-5 JonesMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E1A7FF08064440C">2.5-6 PartialTransformationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83C7587C81B985BA">2.5-7 DualSymmetricInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8301C61384168D6F">2.5-8 UniformBlockBijectionMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C82B25F8441928E">2.5-9 ApsisMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7F208DC584C0B9D1">2.5-10 ModularPartitionMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78F9812D79A457EF">2.5-11 FullMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B64C74987009BA9">2.5-12 SpecialLinearSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78FBE6DD7BCA30C1">2.5-13 MunnSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87B855227B9870BD">2.5-14 <span class="Heading">Monoids of order preserving functions</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7894EE357D103806">2.5-12 SingularTransformationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X831612CD78F55B3C">2.5-13 RegularBinaryRelationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8411EBD97A220921">2.5-14 MonogenicSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E4DFDE27BF8B8F7">2.5-15 RectangularBand</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X801FC1D97D832A6F">2.5-16 ZeroSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8672CFA47CA620B2">2.5-17 LeftZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7894EE357D103806">2.5-15 SingularTransformationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X831612CD78F55B3C">2.5-16 RegularBinaryRelationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8411EBD97A220921">2.5-17 MonogenicSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E4DFDE27BF8B8F7">2.5-18 RectangularBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X801FC1D97D832A6F">2.5-19 ZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8672CFA47CA620B2">2.5-20 LeftZeroSemigroup</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chap3.html#X83629803819C4A6F">3 <span class="Heading">Ideals</span></a>

@@ -636,7 +636,28 @@
     [4X[28X115975[128X[104X
   [4X[32X[104X
   
-  [1X2.5-3 BrauerMonoid[101X
+  [1X2.5-3 PlanarPartitionMonoid[101X
+  
+  [29X[2XPlanarPartitionMonoid[102X( [3Xn[103X ) [32X operation
+  [29X[2XSingularPlanarPartitionMonoid[102X( [3Xn[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
+  
+  [33X[0;0YIf [3Xn[103X is a positive integer, then this operation returns the planar partition
+  monoid  of  degree  [3Xn[103X  which  is  the  monoid  consisting  of all the planar
+  bipartitions of degree [3Xn[103X (planar bipartitions are defined in Chapter [14X5[114X).[133X
+  
+  [33X[0;0Y[10XSingularPlanarPartitionMonoid[110X  returns  the  ideal  of  the planar partition
+  monoid  consisting  of  the  non-invertible  elements (i.e. those not in the
+  group of units).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := PlanarPartitionMonoid(5);[127X[104X
+    [4X[28X<regular bipartition monoid of degree 5 with 9 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X16796[128X[104X
+  [4X[32X[104X
+  
+  [1X2.5-4 BrauerMonoid[101X
   
   [29X[2XBrauerMonoid[102X( [3Xn[103X ) [32X operation
   [29X[2XSingularBrauerMonoid[102X( [3Xn[103X ) [32X operation
@@ -661,7 +682,7 @@
     [4X[28X<regular bipartition semigroup ideal of degree 8 with 1 generator>[128X[104X
   [4X[32X[104X
   
-  [1X2.5-4 JonesMonoid[101X
+  [1X2.5-5 JonesMonoid[101X
   
   [29X[2XJonesMonoid[102X( [3Xn[103X ) [32X operation
   [29X[2XTemperleyLiebMonoid[102X( [3Xn[103X ) [32X operation
@@ -684,39 +705,24 @@
     [4X[28X<regular bipartition semigroup ideal of degree 8 with 1 generator>[128X[104X
   [4X[32X[104X
   
-  [1X2.5-5 FactorisableDualSymmetricInverseSemigroup[101X
+  [1X2.5-6 PartialTransformationSemigroup[101X
   
-  [29X[2XFactorisableDualSymmetricInverseSemigroup[102X( [3Xn[103X ) [32X operation
-  [29X[2XSingularFactorisableDualSymmetricInverseSemigroup[102X( [3Xn[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YAn inverse bipartition monoid.[133X
+  [29X[2XPartialTransformationSemigroup[102X( [3Xn[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA transformation monoid.[133X
   
-  [33X[0;0YIf  [3Xn[103X  is  a  positive  integer,  then  this  operation  returns the largest
-  factorisable  inverse  subsemigroup  of the dual symmetric inverse monoid of
-  degree [3Xn[103X.[133X
-  
-  [33X[0;0Y[10XSingularFactorisableDualSymmetricInverseSemigroup[110X  returns  the ideal of the
-  factorisable   dual   symmetric   inverse   semigroup   consisting   of  the
-  non-invertible elements (i.e. those not in the group of units), when [3Xn[103X is at
-  least 2.[133X
-  
-  [33X[0;0YSee [2XIsUniformBlockBijection[102X ([14X5.5-14[114X).[133X
+  [33X[0;0YIf  [3Xn[103X  is  a  positive  integer,  then  this function returns a semigroup of
+  transformations   on  [10X[3Xn[103X[10X+1[110X  points  which  is  isomorphic  to  the  semigroup
+  consisting  of  all  partial  transformation  on  [3Xn[103X  points. This monoid has
+  [10X([3Xn[103X[10X+1)^[3Xn[103X[10X[110X elements.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=DualSymmetricInverseMonoid(4);[127X[104X
-    [4X[28X<inverse bipartition monoid of degree 4 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsFactorisableSemigroup(S);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XS:=FactorisableDualSymmetricInverseSemigroup(4);[127X[104X
-    [4X[28X<inverse bipartition monoid of degree 4 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsFactorisableSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));[127X[104X
-    [4X[28X<inverse bipartition monoid of degree 5 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsFactorisableSemigroup(S);[127X[104X
-    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XPartialTransformationSemigroup(8); [127X[104X
+    [4X[28X<regular transformation monoid of degree 9 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(last);[127X[104X
+    [4X[28X43046721[128X[104X
   [4X[32X[104X
   
-  [1X2.5-6 DualSymmetricInverseSemigroup[101X
+  [1X2.5-7 DualSymmetricInverseSemigroup[101X
   
   [29X[2XDualSymmetricInverseSemigroup[102X( [3Xn[103X ) [32X operation
   [29X[2XDualSymmetricInverseMonoid[102X( [3Xn[103X ) [32X operation
@@ -736,30 +742,130 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XNumber(PartitionMonoid(3), IsBlockBijection);[127X[104X
     [4X[28X25[128X[104X
-    [4X[25Xgap>[125X [27XS:=DualSymmetricInverseSemigroup(3);[127X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseSemigroup(3);[127X[104X
     [4X[28X<inverse bipartition monoid of degree 3 with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X25[128X[104X
   [4X[32X[104X
   
-  [1X2.5-7 PartialTransformationSemigroup[101X
+  [1X2.5-8 UniformBlockBijectionMonoid[101X
   
-  [29X[2XPartialTransformationSemigroup[102X( [3Xn[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA transformation monoid.[133X
+  [29X[2XUniformBlockBijectionMonoid[102X( [3Xn[103X ) [32X operation
+  [29X[2XFactorisableDualSymmetricInverseSemigroup[102X( [3Xn[103X ) [32X operation
+  [29X[2XSingularUniformBlockBijectionMonoid[102X( [3Xn[103X ) [32X operation
+  [29X[2XSingularFactorisableDualSymmetricInverseSemigroup[102X( [3Xn[103X ) [32X operation
+  [29X[2XPlanarUniformBlockBijectionMonoid[102X( [3Xn[103X ) [32X operation
+  [29X[2XSingularPlanarUniformBlockBijectionMonoid[102X( [3Xn[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn inverse bipartition monoid.[133X
   
-  [33X[0;0YIf  [3Xn[103X  is  a  positive  integer,  then  this function returns a semigroup of
-  transformations   on  [10X[3Xn[103X[10X+1[110X  points  which  is  isomorphic  to  the  semigroup
-  consisting  of  all  partial  transformation  on  [3Xn[103X  points. This monoid has
-  [10X([3Xn[103X[10X+1)^[3Xn[103X[10X[110X elements.[133X
+  [33X[0;0YIf  [3Xn[103X  is  a positive integer, then this operation returns the uniform block
+  bijection  monoid  of  degree  [3Xn[103X.  The [13Xuniform block bijection monoid[113X is the
+  submonoid  of  the  partition  monoid  consisting of the block bijections of
+  degree  [10Xn[110X where the number of positive integers in a block equals the number
+  of  negative  integers  in that block. The uniform block bijection monoid is
+  also referred to as the [13Xfactorisable dual symmetric inverse semigroup[113X.[133X
+  
+  [33X[0;0Y[10XSingularUniformBlockBijectionMonoid[110X  returns  the ideal of the uniform block
+  bijection  monoid  consisting of the non-invertible elements (i.e. those not
+  in the group of units), when [3Xn[103X is at least 2.[133X
+  
+  [33X[0;0Y[10XPlanarUniformBlockBijectionMonoid[110X returns the submonoid of the uniform block
+  bijection monoid consisting of the planar elements (i.e. those in the planar
+  partition monoid).[133X
+  
+  [33X[0;0Y[10XSingularPlanarUniformBlockBijectionMonoid[110X  returns  the  ideal of the planar
+  uniform  block  bijection  monoid  consisting of the non-invertible elements
+  (i.e. those not in the group of units), when [3Xn[103X is at least 2.[133X
+  
+  [33X[0;0YSee [2XIsUniformBlockBijection[102X ([14X5.5-14[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XPartialTransformationSemigroup(8); [127X[104X
-    [4X[28X<regular transformation monoid of degree 9 with 4 generators>[128X[104X
-    [4X[25Xgap>[125X [27XSize(last);[127X[104X
-    [4X[28X43046721[128X[104X
+    [4X[25Xgap>[125X [27XS := UniformBlockBijectionMonoid(4);[127X[104X
+    [4X[28X<inverse bipartition monoid of degree 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(PlanarUniformBlockBijectionMonoid(8));[127X[104X
+    [4X[28X128[128X[104X
+    [4X[25Xgap>[125X [27XS:=DualSymmetricInverseMonoid(4);[127X[104X
+    [4X[28X<inverse bipartition monoid of degree 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XS:=FactorisableDualSymmetricInverseSemigroup(4);[127X[104X
+    [4X[28X<inverse bipartition monoid of degree 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));[127X[104X
+    [4X[28X<inverse bipartition monoid of degree 5 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X2.5-8 FullMatrixSemigroup[101X
+  [1X2.5-9 ApsisMonoid[101X
+  
+  [29X[2XApsisMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation
+  [29X[2XSingularApsisMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation
+  [29X[2XCrossedApsisMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation
+  [29X[2XSingularCrossedApsisMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
+  
+  [33X[0;0YIf  [3Xm[103X  and  [3Xn[103X are positive integers, then this operation returns the [3Xm[103X-apsis
+  monoid  of  degree  [3Xn[103X.  The  [3Xm[103X[13X-apsis  monoid[113X  is  the monoid of bipartitions
+  generated  when  the  diapses in generators of the Jones monoid are replaced
+  with  [3Xm[103X-apses.  Note  that  an  [3Xm[103X[13X-apsis[113X is a block that contains precisely [3Xm[103X
+  consecutive integers.[133X
+  
+  [33X[0;0Y[10XSingularApsisMonoid[110X  returns the ideal of the apsis monoid consisting of the
+  non-invertible elements (i.e. those not in the group of units), when [3Xm <= n[103X.[133X
+  
+  [33X[0;0Y[10XCrossedApsisGeneratedMonoid[110X returns the semigroup generated by the symmetric
+  group of degree [3Xn[103X and the [3Xm[103X-apsis monoid of degree [3Xn[103X.[133X
+  
+  [33X[0;0Y[10XSingularCrossedApsisMonoid[110X  returns  the  ideal  of the crossed apsis monoid
+  consisting  of  the  non-invertible elements (i.e. those not in the group of
+  units), when [3Xm <= n[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := ApsisMonoid(3, 7);[127X[104X
+    [4X[28X<regular bipartition monoid of degree 7 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X320[128X[104X
+    [4X[25Xgap>[125X [27XSize(CrossedApsisMonoid(4, 9));[127X[104X
+    [4X[28X24291981[128X[104X
+  [4X[32X[104X
+  
+  [1X2.5-10 ModularPartitionMonoid[101X
+  
+  [29X[2XModularPartitionMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation
+  [29X[2XSingularModularPartitionMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation
+  [29X[2XPlanarModularPartitionMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation
+  [29X[2XSingularPlanarModularPartitionMonoid[102X( [3Xm[103X, [3Xn[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA bipartition monoid.[133X
+  
+  [33X[0;0YIf  [3Xm[103X and [3Xn[103X are positive integers, then this operation returns the modular-[3Xm[103X
+  partition  monoid  of  degree  [3Xn[103X.  The  [13Xmodular-[113X[3Xm[103X  [13Xpartition  monoid[113X  is the
+  submonoid  of  the  partition  monoid  such that the numbers of positive and
+  negative integers contained in each block are congruent mod [3Xm[103X.[133X
+  
+  [33X[0;0Y[10XSingularModularPartitionMonoid[110X  returns  the  ideal of the modular partition
+  monoid  consisting  of  the  non-invertible  elements (i.e. those not in the
+  group of units), when either [3Xm = n = 1[103X or [3Xm, n > 1[103X.[133X
+  
+  [33X[0;0Y[10XPlanarModularPartitionMonoid[110X   returns   the   submonoid  of  the  modular-[3Xm[103X
+  partition monoid consisting of the planar elements (i.e. those in the planar
+  partition monoid).[133X
+  
+  [33X[0;0Y[10XSingularPlanarModularPartitionMonoid[110X returns the ideal of the planar modular
+  partition  monoid  consisting of the non-invertible elements (i.e. those not
+  in the group of units), when either [3Xm = n = 1[103X or [3Xm, n > 1[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := ModularPartitionMonoid(3, 7);[127X[104X
+    [4X[28X<regular bipartition monoid of degree 7 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X826897[128X[104X
+    [4X[25Xgap>[125X [27XSize(PlanarModularPartitionMonoid(4, 9));[127X[104X
+    [4X[28X1795[128X[104X
+  [4X[32X[104X
+  
+  [1X2.5-11 FullMatrixSemigroup[101X
   
   [29X[2XFullMatrixSemigroup[102X( [3Xd[103X, [3Xq[103X ) [32X operation
   [29X[2XGeneralLinearSemigroup[102X( [3Xd[103X, [3Xq[103X ) [32X operation
@@ -778,7 +884,7 @@
     [4X[28X262144[128X[104X
   [4X[32X[104X
   
-  [1X2.5-9 SpecialLinearSemigroup[101X
+  [1X2.5-12 SpecialLinearSemigroup[101X
   
   [29X[2XSpecialLinearSemigroup[102X( [3Xd[103X, [3Xq[103X ) [32X operation
   [29X[2XSLS[102X( [3Xd[103X, [3Xq[103X ) [32X operation
@@ -796,7 +902,7 @@
     [4X[28X141184[128X[104X
   [4X[32X[104X
   
-  [1X2.5-10 MunnSemigroup[101X
+  [1X2.5-13 MunnSemigroup[101X
   
   [29X[2XMunnSemigroup[102X( [3XS[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10YThe Munn semigroup of a semilattice.[133X
@@ -825,7 +931,7 @@
   [4X[32X[104X
   
   
-  [1X2.5-11 [33X[0;0YMonoids of order preserving functions[133X[101X
+  [1X2.5-14 [33X[0;0YMonoids of order preserving functions[133X[101X
   
   [29X[2XOrderEndomorphisms[102X( [3Xn[103X ) [32X operation
   [29X[2XPOI[102X( [3Xn[103X ) [32X operation
@@ -871,7 +977,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X2.5-12 SingularTransformationSemigroup[101X
+  [1X2.5-15 SingularTransformationSemigroup[101X
   
   [29X[2XSingularTransformationSemigroup[102X( [3Xn[103X ) [32X operation
   [29X[2XSingularTransformationMonoid[102X( [3Xn[103X ) [32X operation
@@ -888,7 +994,7 @@
     [4X[28X3005[128X[104X
   [4X[32X[104X
   
-  [1X2.5-13 RegularBinaryRelationSemigroup[101X
+  [1X2.5-16 RegularBinaryRelationSemigroup[101X
   
   [29X[2XRegularBinaryRelationSemigroup[102X( [3Xn[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10YA semigroup of binary relations.[133X
@@ -898,7 +1004,7 @@
   
   [33X[0;0YThis semigroup has nearly [22X2^(n^2)[122X elements.[133X
   
-  [1X2.5-14 MonogenicSemigroup[101X
+  [1X2.5-17 MonogenicSemigroup[101X
   
   [29X[2XMonogenicSemigroup[102X( [[3Xfilt[103X, ][3Xm[103X, [3Xr[103X ) [32X function
   [6XReturns:[106X  [33X[0;10YA monogenic semigroup with index [3Xm[103X and period [3Xr[103X.[133X
@@ -943,7 +1049,7 @@
     [4X[28X with 1 generator>[128X[104X
   [4X[32X[104X
   
-  [1X2.5-15 RectangularBand[101X
+  [1X2.5-18 RectangularBand[101X
   
   [29X[2XRectangularBand[102X( [[3Xfilt[103X, ][3Xm[103X, [3Xn[103X ) [32X function
   [6XReturns:[106X  [33X[0;10YAn [3Xm[103X by [3Xn[103X rectangular band.[133X
@@ -975,7 +1081,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X2.5-16 ZeroSemigroup[101X
+  [1X2.5-19 ZeroSemigroup[101X
   
   [29X[2XZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
   [6XReturns:[106X  [33X[0;10YA zero semigroup of order [3Xn[103X.[133X
@@ -1017,7 +1123,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X2.5-17 LeftZeroSemigroup[101X
+  [1X2.5-20 LeftZeroSemigroup[101X
   
   [29X[2XLeftZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
   [29X[2XRightZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function

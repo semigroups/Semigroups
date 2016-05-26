@@ -58,6 +58,29 @@
   
   [33X[0;0YIn this way, the partition monoid is a [13Xregular *-semigroup[113X.[133X
   
+  [33X[0;0YA  bipartition  [10Xx[110X  of  degree  [10Xn[110X  is  called  [13Xplanar[113X if there does not exist
+  distinct  blocks  [22XA, B ∈[122X [10Xx[110X, along with [22Xa, a' ∈ A[122X and [22Xb, b' ∈ B[122X such that [22Xa <
+  a'[122X, [22Xb < b'[122X and either:[133X
+  
+  [30X    [33X[0;6Y[22Xa < b < a' < b'[122X; or[133X
+  
+  [30X    [33X[0;6Y[22Xb < a < b' < a'[122X.[133X
+  
+  [33X[0;0YOr  equivalently, [10Xx[110X is planar if for each distinct blocks [22XA, B ∈[122X [10Xx[110X, and each
+  [22Xa, a' ∈ A[122X and [22Xb, b' ∈ B[122X such that [22Xa < a'[122X and [22Xb < b'[122X, either:[133X
+  
+  [30X    [33X[0;6Y[22Xa < a' < b < b'[122X;[133X
+  
+  [30X    [33X[0;6Y[22Xa < b < b' < a'[122X;[133X
+  
+  [30X    [33X[0;6Y[22Xb < a < a' < b'[122X; or[133X
+  
+  [30X    [33X[0;6Y[22Xb < b' < a < a'[122X.[133X
+  
+  [33X[0;0YFrom  a  graphical perspective, as on Page 873 in [HR05], a bipartition [10Xx[110X of
+  degree  [10Xn[110X  is  planar  if  it  can  be  represented as a graph without edges
+  crossing inside of the rectangle formed by its vertices [13Xn[113X[22X∪[122X-[13Xn[113X.[133X
+  
   
   [1X5.1 [33X[0;0YThe family and categories of bipartitions[133X[101X
   

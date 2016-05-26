@@ -61,11 +61,11 @@
 
 <h4>1.1 <span class="Heading">Introduction</span></h4>
 
-<p>This is the manual for the <strong class="pkg">Semigroups</strong> package version 2.7.6. <strong class="pkg">Semigroups</strong> 2.7.6 is a distant descendant of the <span class="URL"><a href=" http://schmidt.nuigalway.ie/monoid/index.html">Monoid package for GAP 3</a></span> by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc; and the Monoid package for GAP 4 by J. D. Mitchell.</p>
+<p>This is the manual for the <strong class="pkg">Semigroups</strong> package version 2.8.0. <strong class="pkg">Semigroups</strong> 2.8.0 is a distant descendant of the <span class="URL"><a href=" http://schmidt.nuigalway.ie/monoid/index.html">Monoid package for GAP 3</a></span> by Goetz Pfeiffer, Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc; and the Monoid package for GAP 4 by J. D. Mitchell.</p>
 
 <p>Many of the operations, methods, properties, and functions described in this manual only apply to semigroups of transformations, partial permutations, bipartitions, subsemigroups of regular Rees 0-matrix semigroups over groups, semigroups of matrices over finite fields, free inverse semigroups, and free bands. For the sake of brevity, we have opted to say <strong class="button">semigroup</strong> to describe the aforementioned classes of semigroups.</p>
 
-<p><strong class="pkg">Semigroups</strong> 2.7.6 contains more efficient methods than those available in the <strong class="pkg">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups and ideals, calculating their Green's structure, size, elements, group of units, minimal ideal, and testing membership, finding the inverses of a regular element, and factorizing elements over the generators, and many more; see Chapters <a href="chap2.html#X79A4C070831D989D"><span class="RefLink">2</span></a>, <a href="chap3.html#X83629803819C4A6F"><span class="RefLink">3</span></a>, and <a href="chap4.html#X86BAA72482D1C658"><span class="RefLink">4</span></a>. There are also methods for testing if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties; see Chapter <a href="chap4.html#X86BAA72482D1C658"><span class="RefLink">4</span></a>. The theory behind the main algorithms in <strong class="pkg">Semigroups</strong> will be described in a forthcoming article.</p>
+<p><strong class="pkg">Semigroups</strong> 2.8.0 contains more efficient methods than those available in the <strong class="pkg">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups and ideals, calculating their Green's structure, size, elements, group of units, minimal ideal, and testing membership, finding the inverses of a regular element, and factorizing elements over the generators, and many more; see Chapters <a href="chap2.html#X79A4C070831D989D"><span class="RefLink">2</span></a>, <a href="chap3.html#X83629803819C4A6F"><span class="RefLink">3</span></a>, and <a href="chap4.html#X86BAA72482D1C658"><span class="RefLink">4</span></a>. There are also methods for testing if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties; see Chapter <a href="chap4.html#X86BAA72482D1C658"><span class="RefLink">4</span></a>. The theory behind the main algorithms in <strong class="pkg">Semigroups</strong> will be described in a forthcoming article.</p>
 
 <p>It is harder for <strong class="pkg">Semigroups</strong> to compute Green's \(\mathscr{L}\)- and \(\mathscr{H}\)-classes of a transformation semigroup. The methods used to compute with Green's \(\mathscr{R}\)- and \(\mathscr{D}\)-classes are the most efficient in <strong class="pkg">Semigroups</strong>. Thus, if you are computing with a transformation semigroup, wherever possible, it is advisable to use the commands relating to Green's \(\mathscr{R}\)- or \(\mathscr{D}\)-classes rather than those relating to Green's \(\mathscr{L}\)- or \(\mathscr{H}\)-classes. No such difficulties are present when computing with semigroups of partial permutations, bipartitions, subsemigroups of a regular Rees 0-matrix semigroup over a group, or semigroups of matrices over a finite field.</p>
 
@@ -91,7 +91,7 @@
 
 
 <ul>
-<li><p><code class="func">MunnSemigroup</code> (<a href="chap2.html#X78FBE6DD7BCA30C1"><span class="RefLink">2.5-10</span></a>)</p>
+<li><p><code class="func">MunnSemigroup</code> (<a href="chap2.html#X78FBE6DD7BCA30C1"><span class="RefLink">2.5-13</span></a>)</p>
 
 </li>
 <li><p><code class="func">MaximalSubsemigroups</code> (<a href="chap4.html#X8137E2737C79C07B"><span class="RefLink">4.5-7</span></a>)</p>
@@ -136,13 +136,13 @@
 <li><p><strong class="button">This step is optional:</strong> the non-deterministic version of the function <code class="func">Normalizer</code> (<a href="chap4.html#X87C024AE814BC9D8"><span class="RefLink">4.5-23</span></a>) requires the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> package to be loaded. If you want to use this function, then please ensure that the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> package version 1.5 or higher is available.</p>
 
 </li>
-<li><p>download the package archive <code class="file">semigroups-2.7.6.tar.gz</code> from <span class="URL"><a href="https://gap-packages.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
+<li><p>download the package archive <code class="file">semigroups-2.8.0.tar.gz</code> from <span class="URL"><a href="https://gap-packages.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
 
 </li>
-<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-2.7.6</code>.</p>
+<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-2.8.0</code>.</p>
 
 </li>
-<li><p>locate the <code class="file">pkg</code> directory of your <strong class="pkg">GAP</strong> directory, which contains the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-2.7.6</code> into the <code class="file">pkg</code> directory.</p>
+<li><p>locate the <code class="file">pkg</code> directory of your <strong class="pkg">GAP</strong> directory, which contains the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-2.8.0</code> into the <code class="file">pkg</code> directory.</p>
 
 </li>
 <li><p>start <strong class="pkg">GAP</strong> in the usual way.</p>

@@ -16,6 +16,9 @@
   [[20XGGR68[120X]  [16XGraham,  N.,  Graham,  R.  and Rhodes, J.[116X, [17XMaximal subsemigroups of
   finite semigroups[117X, [18XJ. Combinatorial Theory[118X, [19X4[119X (1968), 203--209.
   
+  [[20XHR05[120X]  [16XHalverson,  T.  and Ram, A.[116X, [17XPartition algebras[117X, [18XEuropean Journal of
+  Combinatorics[118X, Elsevier, [19X26[119X, 6 (2005), 869--921.
+  
   [[20XHow95[120X]  [16XHowie, J. M.[116X, [17XFundamentals of semigroup theory[117X, The Clarendon Press
   Oxford University Press, London Mathematical Society Monographs. New Series,
   [19X12[119X, New York (1995), x+351 pages, ((Oxford Science Publications)).

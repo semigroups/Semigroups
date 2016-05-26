@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 2.7.6
+                                 Version 2.8.0
   
   
                                  J. D. Mitchell
@@ -13,6 +13,8 @@
                                    James East
   
                                 Attila Egri-Nagy
+  
+                                  Nicholas Ham
   
                                  Julius Jonušas
   
@@ -85,11 +87,14 @@
   of  Western  Sydney for their support of the development of this part of the
   package.[133X
   
+  [33X[0;0YNick   Ham   contributed  many  of  the  standard  examples  of  bipartition
+  semigroups.[133X
+  
   [33X[0;0YJulius  Jonušas contributed the part of the package relating to free inverse
   semigroups, and contributed to the code for ideals.[133X
   
   [33X[0;0YYann  Peresse  and  Yanhui  Wang  contributed  to the function [2XMunnSemigroup[102X
-  ([14X2.5-10[114X).[133X
+  ([14X2.5-13[114X).[133X
   
   [33X[0;0YJhevon    Smith    and    Ben    Steinberg    contributed    the    function
   [2XCharacterTableOfInverseSemigroup[102X ([14X4.7-16[114X).[133X
@@ -155,21 +160,24 @@
     2.5 [33X[0;0YStandard examples[133X
       2.5-1 EndomorphismsPartition
       2.5-2 PartitionMonoid
-      2.5-3 BrauerMonoid
-      2.5-4 JonesMonoid
-      2.5-5 FactorisableDualSymmetricInverseSemigroup
-      2.5-6 DualSymmetricInverseSemigroup
-      2.5-7 PartialTransformationSemigroup
-      2.5-8 FullMatrixSemigroup
-      2.5-9 SpecialLinearSemigroup
-      2.5-10 MunnSemigroup
-      2.5-11 [33X[0;0YMonoids of order preserving functions[133X
-      2.5-12 SingularTransformationSemigroup
-      2.5-13 RegularBinaryRelationSemigroup
-      2.5-14 MonogenicSemigroup
-      2.5-15 RectangularBand
-      2.5-16 ZeroSemigroup
-      2.5-17 LeftZeroSemigroup
+      2.5-3 PlanarPartitionMonoid
+      2.5-4 BrauerMonoid
+      2.5-5 JonesMonoid
+      2.5-6 PartialTransformationSemigroup
+      2.5-7 DualSymmetricInverseSemigroup
+      2.5-8 UniformBlockBijectionMonoid
+      2.5-9 ApsisMonoid
+      2.5-10 ModularPartitionMonoid
+      2.5-11 FullMatrixSemigroup
+      2.5-12 SpecialLinearSemigroup
+      2.5-13 MunnSemigroup
+      2.5-14 [33X[0;0YMonoids of order preserving functions[133X
+      2.5-15 SingularTransformationSemigroup
+      2.5-16 RegularBinaryRelationSemigroup
+      2.5-17 MonogenicSemigroup
+      2.5-18 RectangularBand
+      2.5-19 ZeroSemigroup
+      2.5-20 LeftZeroSemigroup
   3 [33X[0;0YIdeals[133X
     3.1 [33X[0;0YCreating ideals[133X
       3.1-1 SemigroupIdeal
