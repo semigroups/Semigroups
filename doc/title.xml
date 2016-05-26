@@ -10,6 +10,7 @@
   <Author>Manuel Delgado</Author>
   <Author>James East</Author>
   <Author>Attila Egri-Nagy</Author>
+  <Author>Nicholas Ham</Author>
   <Author>Julius Jonu&#353;as</Author>
   <Author>Markus Pfeiffer</Author>
   <Author>Ben Steinberg</Author>
@@ -69,7 +70,11 @@
     of Western Sydney for their support of the development of this part of the
     package.
     <P/>
-    
+
+    Nick Ham contributed many of the standard examples of bipartition
+    semigroups.
+    <P/>
+
     Julius Jonu&#353;as contributed the part of the package relating to free
     inverse semigroups, and contributed to the code for ideals.
     <P/>

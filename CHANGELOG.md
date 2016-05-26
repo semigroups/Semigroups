@@ -2,7 +2,7 @@
 
 #### Copyright (C) 2011-16 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
-### Version 2.8.0 (released 25/05/2016)
+### Version 2.8.0 (released 26/05/2016)
 In this release there are some new features and some bug fixes. In this
 version, we welcome [Nick Ham](https://n-ham.github.io) to the contributors to the package.
 
