@@ -4,12 +4,12 @@ compiler:
   - clang
 env:
   global:
-    - SEMIGROUPSPLUSPLUS_BR=0.1
+    - SEMIGROUPSPLUSPLUS_BR=master
     - DIGRAPHS_BR=0.5.1
-    - IO=io-4.4.5
+    - IO=io-4.4.6
     - GAPDOC=GAPDoc-1.5.1
-    - ORB=orb-4.7.5
-    - GENSS=genss-1.6.3
+    - ORB=orb-4.7.6
+    - GENSS=genss-1.6.4
     - GRAPE=grape4r7
   matrix:
     - GAP_BRANCH=master
