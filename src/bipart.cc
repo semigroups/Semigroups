@@ -1146,7 +1146,7 @@ class NrIdempotentsFinder {
           _scc.back().push_back(INT_INTOBJ(ELM_PLIST(comp, j)) - 2);
         }
         _ranks.push_back(_orbit[_scc.back()[0]]->rank());
-        total_load += std::pow(_scc.back().size(), 2);
+        total_load += _scc.back().size() * _scc.back().size();
       }
 
       total_load = total_load / _nr_threads;
