@@ -18,8 +18,154 @@
 
 #include "semigroups++/semigroups.h"
 
-// Imported types and functions from the library, defined at the end of the
-// file
+Obj TheTypeTSemiObj;
+UInt T_SEMI = 0;
+
+// Function to print a T_SEMI Obj.
+
+void TSemiObjPrintFunc (Obj o) {
+  switch (SUBTYPE_OF_T_SEMI(o)) {
+    case SEMIGROUP:
+      Pr("<wrapper for instance of C++ Semigroup class>", 0L, 0L);
+      break;
+    case CONVERTER:
+      Pr("<wrapper for instance of C++ Converter class>", 0L, 0L);
+      break;
+    case BIPART_C:
+      Pr("<wrapper for instance of C++ Bipartition class>", 0L, 0L);
+      break;
+    case BLOCKS:
+      Pr("<wrapper for instance of C++ Blocks class>", 0L, 0L);
+      break;
+    case UF_DATA:
+      Pr("<wrapper for instance of C++ UFData class>", 0L, 0L);
+      break;
+    default:
+      assert(false);
+  }
+}
+
+// Function to free a T_SEMI Obj during garbage collection.
+
+void TSemiObjFreeFunc (Obj o) {
+  switch (SUBTYPE_OF_T_SEMI(o)) {
+    case SEMIGROUP:
+      delete CLASS_OBJ<Semigroup>(o);
+      break;
+    case CONVERTER:
+      delete CLASS_OBJ<Converter>(o);
+      break;
+    case BIPART_C:
+      delete CLASS_OBJ<Bipartition>(o);
+      break;
+    case BLOCKS:
+      delete CLASS_OBJ<Blocks>(o);
+      break;
+    case UF_DATA:
+      //FIXME what to do here?
+      break;
+    default:
+      assert(false);
+  }
+}
+
+// Function to return the GAP-level type of a T_SEMI Obj
+
+Obj TSemiObjTypeFunc (Obj o) {
+  return TheTypeTSemiObj;
+}
+
+void TSemiObjSaveFunc (Obj o) {
+  assert(TNUM_OBJ(o) == T_SEMI);
+
+  SaveUInt8(SUBTYPE_OF_T_SEMI(o));
+
+  switch (SUBTYPE_OF_T_SEMI(o)) {
+    case BIPART_C: {
+      Bipartition* b = CLASS_OBJ<Bipartition>(o);
+      SaveUInt8(b->degree());
+      for (auto it = b->begin(); it < b->end(); it++) {
+        SaveUInt4(*it);
+      }
+      break;
+    }
+    case BLOCKS: {
+      Blocks* b = CLASS_OBJ<Blocks>(o);
+      SaveUInt8(b->degree());
+      if (b->degree() != 0) {
+        SaveUInt8(b->nr_blocks());
+        for (auto it = b->begin(); it < b->end(); it++) {
+          SaveUInt4(*it);
+        }
+        for (auto it = b->lookup_begin(); it < b->lookup_end(); it++) {
+          SaveUInt2(static_cast<UInt4>(*it));
+        }
+      }
+      break;
+    }
+    default: // for T_SEMI Objs of subtype SEMIGROUP, CONVERTER do nothing further
+      break;
+  }
+}
+
+void TSemiObjLoadFunc (Obj o) {
+  assert(TNUM_OBJ(o) == T_SEMI);
+
+  t_semi_subtype_t type = static_cast<t_semi_subtype_t>(LoadUInt8());
+  ADDR_OBJ(o)[0] = (Obj)type;
+
+  switch (type) {
+    case SEMIGROUP: {
+      ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
+      break;
+    }
+    case CONVERTER: {
+      ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
+      break;
+    }
+    case BIPART_C: {
+      UInt8 deg = LoadUInt8();
+      std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+      blocks->reserve(2 * deg);
+
+      for (size_t i = 0; i < 2 * deg; i++) {
+        blocks->push_back(LoadUInt4());
+      }
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new Bipartition(blocks));
+      break;
+    }
+    case BLOCKS: {
+      UInt8 deg = LoadUInt8();
+      if (deg == 0) {
+        ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new Blocks());
+        return;
+      }
+      UInt8 nr_blocks = LoadUInt8();
+
+      std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+      blocks->reserve(deg);
+
+      for (size_t i = 0; i < deg; i++) {
+        blocks->push_back(LoadUInt4());
+      }
+
+      std::vector<bool>* lookup = new std::vector<bool>();
+      lookup->reserve(nr_blocks);
+
+      for (size_t i = 0; i < nr_blocks; i++) {
+        lookup->push_back(static_cast<bool>(LoadUInt2()));
+      }
+
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new Blocks(blocks, lookup, nr_blocks));
+      break;
+    }
+    case UF_DATA: {
+      // FIXME: what to do in this case
+    }
+  }
+}
+
+// Imported types and functions from the library, defined below
 
 Obj HTValue;
 Obj HTAdd;
@@ -52,42 +198,6 @@ Obj IsPBR;
 Obj PBRTypes;
 Obj PBRType;
 
-/*******************************************************************************
- * GAP level print for a T_SEMI
-*******************************************************************************/
-
-void PrintSemi (Obj o) {
-  Pr("<Semigroups package C++ type>", 0L, 0L);
-}
-
-/*******************************************************************************
- * free a Bag of type T_SEMI - this has to go here so that InterfaceBase etc
- * are defined.
-*******************************************************************************/
-
-void SemigroupsBagFreeFunc (Obj o) {
-  //FIXME use switch
-  if (IS_CONVERTER_BAG(o)) {
-    delete CLASS_OBJ<Converter>(o);
-  } else if (IS_SEMIGROUP_BAG(o)) {
-    delete CLASS_OBJ<Semigroup>(o);
-  } else if (IS_GAP_BIPART_BAG(o)) {
-    delete CLASS_OBJ<Bipartition>(o);
-  } else if (IS_GAP_BLOCKS_BAG(o)) {
-    delete CLASS_OBJ<Blocks>(o);
-  }
-}
-
-void SemigroupsMarkSubBags (Obj o) {
-  if ((SIZE_OBJ(o) / sizeof(Obj)) > 2) {
-    for (size_t i = 2; i < (SIZE_OBJ(o) / sizeof(Obj)); i++) {
-      if (ADDR_OBJ(o)[i] != NULL) {
-        MARK_BAG(ADDR_OBJ(o)[i]);
-      }
-    }
-  }
-}
-
 /*****************************************************************************/
 
 typedef Obj (* GVarFunc)(/*arguments*/);
@@ -99,6 +209,7 @@ typedef Obj (* GVarFunc)(/*arguments*/);
    srcfile ":Func" #name }
 
 // Table of functions to export
+// FIXME the filenames are mostly wrong here
 static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_ENUMERATE, 4,
                           "data, limit, lookfunc, looking"),
@@ -251,11 +362,21 @@ static StructGVarFunc GVarFuncs [] = {
 static Int InitKernel( StructInitInfo *module )
 {
     /* init filters and functions                                          */
-    InitHdlrFuncsFromTable( GVarFuncs );
+    InitHdlrFuncsFromTable(GVarFuncs);
+
+    InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
+
+    T_SEMI = RegisterPackageTNUM("TSemiObj", TSemiObjTypeFunc);
+
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
-    PrintObjFuncs[T_SEMI] = PrintSemi;
-    InitMarkFuncBags(T_SEMI, &SemigroupsMarkSubBags);
-    InitFreeFuncBag(T_SEMI, &SemigroupsBagFreeFunc);
+    PrintObjFuncs[T_SEMI] = TSemiObjPrintFunc;
+    SaveObjFuncs[T_SEMI] = TSemiObjSaveFunc;
+    LoadObjFuncs[T_SEMI] = TSemiObjLoadFunc;
+
+    InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
+    InitFreeFuncBag(T_SEMI, &TSemiObjFreeFunc);
+
+    //TODO: CopyObjFuncs, CleanObjFuncs, IsMutableObjFuncs
 
     ImportGVarFromLibrary("HTValue", &HTValue);
     ImportGVarFromLibrary("HTAdd", &HTAdd);
@@ -341,7 +462,7 @@ static StructInitInfo module = {
  /* preSave     = */ 0,
  /* postSave    = */ 0,
  /* postRestore = */ 0,
- /* filename    = */ (char*) "pkg/semigroups/src/interface.cc",
+ /* filename    = */ (char*) "pkg/semigroups/src/gap.cc",
  /* isGapRootR  = */ true
 };
 

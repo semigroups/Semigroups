@@ -5,10 +5,11 @@
  * package that involves GAP directly, i.e. importing functions/variables from
  * GAP and declaring functions for GAP etc.
  *
+ *
  */
 
-#ifndef SRC_GAP_H_ 
-#define SRC_GAP_H_ 
+#ifndef SRC_GAP_H_
+#define SRC_GAP_H_
 
 #ifdef DEBUG
 #include "gap-debug.h"
@@ -24,31 +25,27 @@
 #include <vector>
 
 // The Semigroups package uses the type T_SEMI for GAP Objs which act as
-// wrappers for various C++ objects. Such a GAP Obj can be created using 
+// wrappers for various C++ objects. Such a GAP Obj can be created using
 // OBJ_CLASS and the C++ object can be recovered from the GAP Obj using
 // CLASS_OBJ. The GAP Obj returned by OBJ_CLASS is just a bag of type T_SEMI of
 // the form:
 //
-// [ T_SEMI_SUBTYPE, pointer to C++ class ]
-// 
+// [ t_semi_subtype_t, pointer to C++ class ]
+//
 
-// Define the GAP TNUM T_SEMI
-
-#ifndef T_SEMI
-#define T_SEMI T_SPARE2 //TODO use Register_TNUM when it's available
-#endif
+extern UInt T_SEMI;
 
 // Subtypes of objects that can be stored in a GAP Obj of type T_SEMI
 
 enum t_semi_subtype_t {
   SEMIGROUP  = 0,
   CONVERTER  = 1,
-  GAP_BIPART = 2,
-  GAP_BLOCKS = 3,
+  BIPART_C   = 2,
+  BLOCKS     = 3,
   UF_DATA    = 4
 };
 
-// Get a new GAP Obj containing a pointer to a C++ class of type Class 
+// Get a new GAP Obj containing a pointer to a C++ class of type Class
 
 template <typename Class>
 inline Obj OBJ_CLASS (Class* cpp_class, t_semi_subtype_t type) {
@@ -68,21 +65,9 @@ inline Class* CLASS_OBJ (Obj o) {
 
 // Get the t_semi_subtype_t out of the T_SEMI Obj
 
-inline t_semi_subtype_t SUBTYPE_OF_T_SEMI_OBJ (Obj o) {
+inline t_semi_subtype_t SUBTYPE_OF_T_SEMI (Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
   return static_cast<t_semi_subtype_t>(reinterpret_cast<UInt>(ADDR_OBJ(o)[0]));
-}
-
-//TODO make these into function
-
-#define IS_T_SEMI(o)         (TNUM_OBJ(o) == T_SEMI)
-#define IS_CONVERTER_BAG(o)  (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == CONVERTER)
-#define IS_SEMIGROUP_BAG(o)  (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == SEMIGROUP)
-#define IS_UF_DATA_BAG(o)    (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == UF_DATA)
-#define IS_GAP_BIPART_BAG(o) (IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == GAP_BIPART)
-
-inline bool IS_GAP_BLOCKS_BAG (Obj o) {
-  return IS_T_SEMI(o) && (Int)ADDR_OBJ(o)[0] == GAP_BLOCKS;
 }
 
 // Imported types and functions from the library

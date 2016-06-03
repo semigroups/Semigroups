@@ -1335,6 +1335,10 @@ gap> R := ReesZeroMatrixSemigroup(S, [[id], [0]]);;
 gap> MatrixEntries(R);
 [ 0, <identity partial perm on [ 1, 2 ]> ]
 
+# Test for bug in kernel module 
+gap> AsList(JonesMonoid(1));
+[ <block bijection: [ 1, -1 ]> ]
+
 #T# SEMIGROUPS_UnbindVariables
 # FIXME redo these!
 gap> Unbind(lookingfor);

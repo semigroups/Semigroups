@@ -22,9 +22,6 @@
 
 #include "semigroups++/semigroups.h"
 
-Int RNam_pos = RNamName("pos");
-Int RNam_data = RNamName("data");
-
 /*******************************************************************************
  *******************************************************************************
  * Helper functions
@@ -224,6 +221,7 @@ Obj SEMIGROUP_CURRENT_MAX_WORD_LENGTH (Obj self, Obj data) {
   if (data_type(data) != UNKNOWN) {
     return INTOBJ_INT(data_semigroup(data)->current_max_word_length());
   } else {
+    initRNams();
     if (IsbPRec(data, RNam_words) && LEN_PLIST(ElmPRec(data, RNam_words)) > 0) {
       Obj words = ElmPRec(data, RNam_words);
       return INTOBJ_INT(LEN_PLIST(ELM_PLIST(words, LEN_PLIST(words))));
@@ -252,6 +250,8 @@ Obj SEMIGROUP_CURRENT_SIZE (Obj self, Obj data) {
   if (data_type(data) != UNKNOWN) {
     return INTOBJ_INT(data_semigroup(data)->current_size());
   }
+
+  initRNams();
   return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
 }
 
@@ -261,6 +261,8 @@ Obj SEMIGROUP_CURRENT_SIZE (Obj self, Obj data) {
  ******************************************************************************/
 
 Obj SEMIGROUP_AS_LIST (Obj self, Obj data) {
+  initRNams();
+
   if (data_type(data) != UNKNOWN) {
     std::vector<Element*>* elements =
       data_semigroup(data)->elements(data_report(data));
@@ -295,6 +297,8 @@ Obj SEMIGROUP_AS_LIST (Obj self, Obj data) {
 Obj SEMIGROUP_ELEMENT_NUMBER (Obj self, Obj data, Obj pos) {
 
   size_t nr = INT_INTOBJ(pos);
+
+  initRNams();
 
   // use the element cached in the data record if known
   if (IsbPRec(data, RNam_elts)) {
@@ -339,22 +343,21 @@ Obj SEMIGROUP_AS_SET (Obj self, Obj data) {
   if (data_type(data) == UNKNOWN) {
     ErrorQuit("SEMIGROUP_AS_SET: this shouldn't happen!", 0L, 0L);
     return 0L;
-  } else {
-
-    std::vector<std::pair<Element*, size_t> >*
-      pairs = data_semigroup(data)->sorted_elements();
-    Converter* converter = data_converter(data);
-
-    Obj out = NEW_PLIST(T_PLIST, pairs->size());
-    SET_LEN_PLIST(out, pairs->size());
-
-    size_t i = 1;
-    for (auto x: *pairs) {
-      SET_ELM_PLIST(out, i++, converter->unconvert(x.first));
-      CHANGED_BAG(out);
-    }
-    return out;
   }
+
+  std::vector<std::pair<Element*, size_t> >*
+    pairs = data_semigroup(data)->sorted_elements();
+  Converter* converter = data_converter(data);
+
+  Obj out = NEW_PLIST(T_PLIST, pairs->size());
+  SET_LEN_PLIST(out, pairs->size());
+
+  size_t i = 1;
+  for (auto x: *pairs) {
+    SET_ELM_PLIST(out, i++, converter->unconvert(x.first));
+    CHANGED_BAG(out);
+  }
+  return out;
 }
 
 Obj SEMIGROUP_POSITION_SORTED (Obj self, Obj data, Obj x) {
@@ -391,6 +394,9 @@ Obj SEMIGROUP_ENUMERATE (Obj self, Obj data, Obj limit) {
  ******************************************************************************/
 
 Obj SEMIGROUP_FACTORIZATION (Obj self, Obj data, Obj pos) {
+
+  initRNams();
+
   if (data_type(data) != UNKNOWN) {
     size_t pos_c = INT_INTOBJ(pos);
     Obj words;
@@ -467,6 +473,7 @@ Obj SEMIGROUP_IS_DONE (Obj self, Obj data) {
  ******************************************************************************/
 
 Obj SEMIGROUP_LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
+  initRNams();
   if (data_type(data) != UNKNOWN) {
     if (! IsbPRec(data, RNam_left)) {
       Semigroup* semigroup = data_semigroup(data);
@@ -486,7 +493,7 @@ Obj SEMIGROUP_LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
 
 Obj SEMIGROUP_LENGTH_ELEMENT (Obj self, Obj data, Obj pos) {
   if (data_type(data) != UNKNOWN) {
-    return INTOBJ_INT(data_semigroup(data)->length_non_const(INT_INTOBJ(pos) - 1, 
+    return INTOBJ_INT(data_semigroup(data)->length_non_const(INT_INTOBJ(pos) - 1,
                                                              data_report(data)));
   } else {
     //TODO
@@ -494,24 +501,28 @@ Obj SEMIGROUP_LENGTH_ELEMENT (Obj self, Obj data, Obj pos) {
 }
 
 Obj SEMIGROUP_NEXT_ITERATOR (Obj self, Obj iter) {
+  initRNams();
   Obj pos = INTOBJ_INT(INT_INTOBJ(ElmPRec(iter, RNam_pos)) + 1);
   AssPRec(iter, RNam_pos, pos);
   return SEMIGROUP_ELEMENT_NUMBER(self, ElmPRec(iter, RNam_data), pos);
 }
 
 Obj SEMIGROUP_NEXT_ITERATOR_SORTED (Obj self, Obj iter) {
+  initRNams();
   Obj pos = INTOBJ_INT(INT_INTOBJ(ElmPRec(iter, RNam_pos)) + 1);
   AssPRec(iter, RNam_pos, pos);
   return SEMIGROUP_ELEMENT_NUMBER_SORTED(self, ElmPRec(iter, RNam_data), pos);
 }
 
 Obj SEMIGROUP_IS_DONE_ITERATOR_CC (Obj self, Obj iter) {
+  initRNams();
   Obj data = ElmPRec(iter, RNam_data);
   Int size = data_semigroup(data)->size(data_report(data));
   return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
 }
 
 Obj SEMIGROUP_IS_DONE_ITERATOR (Obj self, Obj iter) {
+  initRNams();
   Int size = INT_INTOBJ(SEMIGROUP_SIZE(self, ElmPRec(iter, RNam_data)));
   return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
 }
@@ -581,6 +592,7 @@ Obj SEMIGROUP_POSITION_CURRENT (Obj self, Obj data, Obj x) {
  ******************************************************************************/
 
 Obj SEMIGROUP_RELATIONS (Obj self, Obj data) {
+  initRNams();
   if (data_type(data) != UNKNOWN) {
     if (! IsbPRec(data, RNam_rules)) {
       Semigroup* semigroup = data_semigroup(data);
@@ -643,6 +655,7 @@ Obj SEMIGROUP_RELATIONS (Obj self, Obj data) {
  ******************************************************************************/
 
 Obj SEMIGROUP_RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
+  initRNams();
   if (data_type(data) != UNKNOWN) {
     if (! IsbPRec(data, RNam_right)) {
       Semigroup* semigroup = data_semigroup(data);
@@ -661,6 +674,7 @@ Obj SEMIGROUP_RIGHT_CAYLEY_GRAPH (Obj self, Obj data) {
  ******************************************************************************/
 
 Obj SEMIGROUP_SIZE (Obj self, Obj data) {
+  initRNams();
   if (data_type(data) != UNKNOWN) {
     bool report = data_report(data);
     return INTOBJ_INT(data_semigroup(data)->size(report));
@@ -671,12 +685,13 @@ Obj SEMIGROUP_SIZE (Obj self, Obj data) {
 }
 
 Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data) {
+  initRNams();
   if (data_type(data) != UNKNOWN) {
     bool report = data_report(data);
     std::vector<size_t> result = std::vector<size_t>();
     data_semigroup(data)->max_word_length_by_rank(result, report);
     Obj out = NEW_PLIST(T_PLIST_CYC, data_degree(data));
-    SET_LEN_PLIST(out, data_degree(data)); 
+    SET_LEN_PLIST(out, data_degree(data));
     size_t i = 0;
     for (; i < result.size(); i++) {
       SET_ELM_PLIST(out, i + 1, INTOBJ_INT(result[i]));

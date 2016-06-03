@@ -24,7 +24,6 @@
 
 static std::vector<size_t> _BUFFER_size_t;
 static std::vector<bool>   _BUFFER_bool;
-static Timer               timer;
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -53,14 +52,17 @@ static inline bool is_blocks_obj (Obj x) {
 
 // To avoid repeatedly calculating RNamName("wrapper") we put it in a variable.
 
-static Int _RNam_wrapper = RNamName("wrapper");
 
 // Returns the "wrapper" component of the GAP bipartition or blocks Obj.
 
 inline Obj obj_get_wrapper (Obj x) {
+
+  initRNams();
+
   assert(is_blocks_obj(x) || is_bipart_obj(x));
-  assert(IsbPRec(x, _RNam_wrapper));
-  return ElmPRec(x, _RNam_wrapper);
+  assert(IsbPRec(x, RNam_wrapper));
+
+  return ElmPRec(x, RNam_wrapper);
 }
 
 // Returns the GAP level type of any (and every) bipartition of the specified
@@ -87,12 +89,14 @@ Bipartition* bipart_get_cpp (Obj x) {
 
 Obj bipart_new_obj (Bipartition* x) {
 
+  initRNams();
+
   // construct GAP wrapper for C++ object
-  Obj wrapper = OBJ_CLASS(x, GAP_BIPART);
+  Obj wrapper = OBJ_CLASS(x, BIPART_C);
 
   // put the GAP wrapper in a plain record and Objectify
   Obj out = NEW_PREC(1);
-  AssPRec(out, _RNam_wrapper, wrapper);
+  AssPRec(out, RNam_wrapper, wrapper);
   TYPE_COMOBJ(out) = bipart_type(x->degree());
   RetypeBag(out, T_COMOBJ);
   CHANGED_BAG(out);
@@ -112,12 +116,14 @@ inline Blocks* blocks_get_cpp (Obj x) {
 
 inline Obj blocks_new_obj (Blocks* x) {
 
+  initRNams();
+
   // construct GAP wrapper for C++ object
-  Obj wrapper = OBJ_CLASS(x, GAP_BLOCKS);
+  Obj wrapper = OBJ_CLASS(x, BLOCKS);
 
   // put the GAP wrapper in a list and Objectify
   Obj out = NEW_PREC(1);
-  AssPRec(out, _RNam_wrapper, wrapper);
+  AssPRec(out, RNam_wrapper, wrapper);
   TYPE_COMOBJ(out) = BlocksType;
   RetypeBag(out, T_COMOBJ);
   CHANGED_BAG(out);
@@ -755,6 +761,8 @@ Obj BLOCKS_NC (Obj self, Obj gap_blocks) {
 Obj BLOCKS_EXT_REP (Obj self, Obj x) {
 
   assert(is_blocks_obj(x));
+
+  initRNams();
 
   Blocks* xx = blocks_get_cpp(x);
   size_t n = xx->degree();
@@ -1421,13 +1429,12 @@ class NrIdempotentsFinder {
     }
 
   std::vector<size_t> go () {
-
+    Timer timer;
     if (_report) {
       std::cout << "Using " << _nr_threads << " / " <<
         std::thread::hardware_concurrency() << " threads" << std::endl;
+      timer.start();
     }
-
-    timer.start();
 
     for (size_t i = 0; i < _nr_threads; i++) {
       _threads.push_back(std::thread(&NrIdempotentsFinder::do_work,

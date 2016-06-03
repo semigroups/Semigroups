@@ -2,7 +2,7 @@
  * Semigroups GAP package
  *
  * This file contains . . .
- * 
+ *
  *
  */
 
@@ -23,18 +23,39 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-static Int RNam_batch_size   = RNamName("batch_size");
-static Int RNam_degree       = RNamName("degree");
-static Int RNam_elts         = RNamName("elts");
-static Int RNam_gens         = RNamName("gens");
-static Int RNam_left         = RNamName("left");
-static Int RNam_report       = RNamName("report");
-static Int RNam_right        = RNamName("right");
-static Int RNam_rules        = RNamName("rules");
-static Int RNam_words        = RNamName("words");
+static Int RNam_batch_size   = 0;
+static Int RNam_converter    = 0;
+static Int RNam_data         = 0;
+static Int RNam_degree       = 0;
+static Int RNam_elts         = 0;
+static Int RNam_gens         = 0;
+static Int RNam_left         = 0;
+static Int RNam_pos          = 0;
+static Int RNam_report       = 0;
+static Int RNam_right        = 0;
+static Int RNam_rules        = 0;
+static Int RNam_semigroup    = 0;
+static Int RNam_words        = 0;
+static Int RNam_wrapper      = 0;
 
-static Int RNam_semigroup    = RNamName("_SEMIGROUPS_semigroup");
-static Int RNam_converter    = RNamName("_SEMIGROUPS_converter");
+static inline void initRNams() {
+  if (!RNam_batch_size) {
+    RNam_batch_size   = RNamName("batch_size");
+    RNam_converter    = RNamName("_SEMIGROUPS_converter");
+    RNam_data         = RNamName("data");
+    RNam_degree       = RNamName("degree");
+    RNam_elts         = RNamName("elts");
+    RNam_gens         = RNamName("gens");
+    RNam_left         = RNamName("left");
+    RNam_pos          = RNamName("pos");
+    RNam_report       = RNamName("report");
+    RNam_right        = RNamName("right");
+    RNam_rules        = RNamName("rules");
+    RNam_semigroup    = RNamName("_SEMIGROUPS_semigroup");
+    RNam_words        = RNamName("words");
+    RNam_wrapper      = RNamName("_SEMIGROUPS_wrapper");
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -44,11 +65,11 @@ static Int RNam_converter    = RNamName("_SEMIGROUPS_converter");
 
 enum DataType {
   UNKNOWN,
-  TRANS2, 
-  TRANS4, 
-  PPERM2, 
-  PPERM4, 
-  BOOL_MAT, 
+  TRANS2,
+  TRANS4,
+  PPERM2,
+  PPERM4,
+  BOOL_MAT,
   BIPART,
   MAX_PLUS_MAT,
   MIN_PLUS_MAT,
@@ -57,7 +78,7 @@ enum DataType {
   PROJ_MAX_PLUS_MAT,
   NTP_MAT,
   INT_MAT,
-  MAT_OVER_PF, 
+  MAT_OVER_PF,
   PBR_TYPE
 };
 
@@ -76,11 +97,11 @@ bool        data_report         (Obj);
 size_t      data_degree         (Obj);
 DataType    data_type           (Obj);
 void        data_init           (Obj);
-void        data_init_semigroup (Obj data, 
+void        data_init_semigroup (Obj data,
                                  Semigroup* semigroup = nullptr);
 void        data_init_converter (Obj);
 void        data_delete         (Obj);
 Semigroup*  data_semigroup      (Obj);
 Converter*  data_converter      (Obj);
 
-#endif 
+#endif

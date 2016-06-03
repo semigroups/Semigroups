@@ -622,7 +622,7 @@ function(x)
     str := "\>\><bipartition:\< ";
   fi;
 
-  ext := BIPART_EXT_REP(x);
+  ext := ExtRepOfBipartition(x);
   Append(str, "\>");
   Append(str, String(ext[1]));
   Append(str, "\<");
@@ -638,7 +638,7 @@ end);
 
 InstallMethod(String, "for a bipartition", [IsBipartition],
 function(x)
-  return Concatenation("Bipartition(", String(BIPART_EXT_REP(x)), ")");
+  return Concatenation("Bipartition(", String(ExtRepOfBipartition(x)), ")");
 end);
 
 InstallMethod(PrintString, "for a bipartition",
@@ -648,7 +648,7 @@ function(x)
   if DegreeOfBipartition(x) = 0 then
     return "\>\>Bipartition(\< \>[]\<)\<";
   fi;
-  ext := BIPART_EXT_REP(x);
+  ext := ExtRepOfBipartition(x);
   str := Concatenation("\>\>Bipartition(\< \>[ ", PrintString(ext[1]));
   for i in [2 .. Length(ext)] do
     Append(str, ",\< \>");
