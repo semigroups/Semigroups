@@ -3,7 +3,7 @@
  *
  * This file defines UFData, a class used to make an equivalence relation on
  * the integers {1 .. n}, using the UNION-FIND METHOD: new pairs can be added
- * and the appropriate classes combined quickly.  
+ * and the appropriate classes combined quickly.
  *
  */
 
@@ -11,11 +11,11 @@
 
 #include "src/compiled.h"
 
-typedef std::vector<size_t>   table_t;
-typedef std::vector<table_t*> blocks_t;
-
 class UFData {
-public:
+ public:
+  typedef std::vector<size_t>   table_t;
+  typedef std::vector<table_t*> blocks_t;
+
   // Copy constructor
   UFData (const UFData& copy) : _size(copy._size),
                                 _table(new table_t(*copy._table)),
@@ -126,6 +126,7 @@ public:
       _table->at(i) = find(i);
     }
   }
+
 private:
   size_t    _size;
   table_t*  _table;

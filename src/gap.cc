@@ -62,7 +62,7 @@ void TSemiObjFreeFunc (Obj o) {
       delete CLASS_OBJ<Blocks>(o);
       break;
     case UF_DATA:
-      //FIXME what to do here?
+      delete CLASS_OBJ<UFData>(o);
       break;
     default:
       assert(false);

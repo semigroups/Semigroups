@@ -3,7 +3,7 @@
  *
  * This file defines UFData, a class used to make an equivalence relation on
  * the integers {1 .. n}, using the UNION-FIND METHOD: new pairs can be added
- * and the appropriate classes combined quickly.  
+ * and the appropriate classes combined quickly.
  *
  */
 
@@ -48,31 +48,31 @@ Obj UF_FLATTEN (Obj self, Obj ufdata) {
 }
 
 Obj UF_TABLE (Obj self, Obj ufdata) {
-  table_t *table    = CLASS_OBJ<UFData>(ufdata)->get_table();
+  UFData::table_t *table    = CLASS_OBJ<UFData>(ufdata)->get_table();
   size_t  size      = table->size();
   Obj     gap_table = NEW_PLIST(T_PLIST, size);
   SET_LEN_PLIST(gap_table, size);
-  for (size_t i=0; i<size; i++) {
+  for (size_t i = 0; i < size; i++) {
     SET_ELM_PLIST(gap_table, i+1, INTOBJ_INT(table->at(i)+1));
   }
   return gap_table;
 }
 
 Obj UF_BLOCKS (Obj self, Obj ufdata) {
-  blocks_t *blocks = CLASS_OBJ<UFData>(ufdata)->get_blocks();
+  UFData::blocks_t *blocks = CLASS_OBJ<UFData>(ufdata)->get_blocks();
   size_t   size    = blocks->size();
   size_t   i, j;
 
   // Rewrite each block as a PLIST object
   std::vector<Obj> obj_list;
   obj_list.reserve(size);
-  for (i=0; i<size; i++) {
+  for (i = 0; i < size; i++) {
     if (blocks->at(i) == nullptr) {
       obj_list.push_back(nullptr);
     } else {
       obj_list.push_back(NEW_PLIST(T_PLIST, blocks->at(i)->size()));
       SET_LEN_PLIST(obj_list[i], blocks->at(i)->size());
-      for (j=0; j<blocks->at(i)->size(); j++) {
+      for (j = 0; j < blocks->at(i)->size(); j++) {
         SET_ELM_PLIST(obj_list[i], j+1, INTOBJ_INT(blocks->at(i)->at(j)+1));
       }
     }
