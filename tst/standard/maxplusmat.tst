@@ -29,10 +29,14 @@ gap> mat * One(mat) = mat;
 true
 gap> mat = One(mat);
 false
-gap> mat2 := RandomMatrix(IsMaxPlusMatrix, 20);
-<20x20 max-plus matrix>
+gap> mat2 := Matrix(IsMaxPlusMatrix, 
+>                   [[0, 1, 1, 0, -infinity], 
+>                    [0, -3, -2, -2, -infinity],
+>                    [-4, 0, -2, 2, -infinity], 
+>                    [1, 1, -6, 3, 1], 
+>                    [-1, 0, -1, 0, -1]]);;
 gap> mat * mat2;
-Matrix(IsMaxPlusMatrix, [[4, 1, 5], [1, -1, 2], [5, 2, 5]])
+Matrix(IsMaxPlusMatrix, [[4, 5, 5], [1, 2, 2], [5, 6, 6]])
 
 #T# maxplusmat: test min-plus matrix code, 1/1
 gap> mat := Matrix(IsMinPlusMatrix, [[-1, infinity],
@@ -48,10 +52,14 @@ gap> mat * One(mat) = mat;
 true
 gap> mat = One(mat);
 false
-gap> mat2 := RandomMatrix(IsMinPlusMatrix, 20);
-<20x20 min-plus matrix>
+gap> mat2 := Matrix(IsMinPlusMatrix, 
+>                   [[0, 1, 1, 0, infinity], 
+>                    [0, -3, -2, -2, infinity],
+>                    [-4, 0, -2, 2, infinity], 
+>                    [1, 1, -6, 3, 1], 
+>                    [-1, 0, -1, 0, -1]]);;
 gap> mat * mat2;
-Matrix(IsMinPlusMatrix, [[-2, -5], [0, -3]])
+Matrix(IsMinPlusMatrix, [[-1, 0], [-1, -4]])
 
 #T# maxplusmat: test tropical max-plus matrix code, 1/1
 gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[3, 2, 4],
@@ -75,10 +83,11 @@ false
 gap> RandomMatrix(IsTropicalMaxPlusMatrix, 20);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `RandomMatrixCons' on 2 arguments
-gap> mat2 := RandomMatrix(IsTropicalMaxPlusMatrix, 20, 9);
-<20x20 tropical max-plus matrix>
+gap> mat2 := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 3, 4, -infinity, 1],
+>  [2, 1, 1, 6, 0], [3, 1, 3, 2, 1], [1, 3, 1, -infinity, -infinity],
+>  [3, 4, -infinity, 3, 1]], 9);;
 gap> mat * mat2;
-Matrix(IsTropicalMaxPlusMatrix, [[4, 5, 6], [2, 2, 6], [2, 2, 3]], 9)
+Matrix(IsTropicalMaxPlusMatrix, [[7, 6, 7], [4, 6, 7], [4, 2, 4]], 9)
 gap> mat3 := RandomMatrix(IsTropicalMaxPlusMatrix, 20, 5);
 <20x20 tropical max-plus matrix>
 gap> mat2 * mat3;
@@ -108,8 +117,9 @@ false
 gap> RandomMatrix(IsTropicalMinPlusMatrix, 20);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `RandomMatrixCons' on 2 arguments
-gap> mat2 := RandomMatrix(IsTropicalMinPlusMatrix, 20, 2);
-<20x20 tropical min-plus matrix>
+gap> mat2 := Matrix(IsTropicalMinPlusMatrix, [[infinity, 2, 1, 1, infinity],
+>  [2, infinity, 2, infinity, 1], [1, infinity, 2, 1, 2],
+>  [0, 1, 1, 1, infinity], [infinity, 0, 0, 0, 0]], 2);;
 gap> mat * mat2;
 Matrix(IsTropicalMinPlusMatrix, [[2, 2], [2, 2]], 2)
 gap> mat3 := RandomMatrix(IsTropicalMinPlusMatrix, 20, 5);
@@ -141,11 +151,12 @@ Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -infinity, -infinity],
 #true
 gap> mat = One(mat);
 false
-gap> mat2 := RandomMatrix(IsProjectiveMaxPlusMatrix, 20);
-<20x20 projective max-plus matrix>
+gap> mat2 := Matrix(IsProjectiveMaxPlusMatrix, [[-3, 0, 0, -infinity, -1], [1,
+> -1, 2, -3, -2], [-2, 2, 2, 0, 0], [-1, 0, 2, 0, 0], [3, -infinity, 4, -2,
+> 1]]);;
 gap> mat * mat2;
-Matrix(IsProjectiveMaxPlusMatrix, [[-6, -6, -5, -4], [-6, -8, -6, -4], 
-  [-1, -3, -2, 0], [-3, -4, -2, -3]])
+Matrix(IsProjectiveMaxPlusMatrix, [[-7, -5, -4, -6], [-6, -6, -5, -10], 
+  [-1, -2, 0, -4], [-4, -3, -1, -3]])
 
 #T# maxplusmat: test projective ntp matrix code, 1/1
 gap> mat := Matrix(IsNTPMatrix, [[0, 0, 0],
@@ -198,10 +209,10 @@ gap> mat * One(mat) = mat;
 true
 gap> mat = One(mat);
 false
-gap> mat3 := RandomMatrix(IsIntegerMatrix, 20);
-<20x20 integer matrix>
+gap> mat3 := Matrix(IsIntegerMatrix, [[2, 2, 0, 1, 0], [2, 3, 0, 1, -2],
+> [-2, -2, -2, 0, 3], [0, 2, -1, 0, 0], [0, 1, 0, -1, -1]]);;
 gap> mat * mat3;
-Matrix(IsIntegerMatrix, [[4, -3, 3], [-6, 1, -9], [0, -5, -8]])
+Matrix(IsIntegerMatrix, [[-6, -8, 0], [8, 11, 2], [8, 8, 6]])
 gap> RandomMatrix(Integers, 20);
 <20x20 integer matrix>
 
