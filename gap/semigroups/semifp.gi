@@ -8,6 +8,43 @@
 #############################################################################
 ##
 
+SEMIGROUPS.InitFpSemigroup := function(S)
+  local rels, out, ext, next, k, rel, i, j;
+
+  Assert(1, IsFpSemigroup(S));
+
+  if IsBound(S!.__fp_semigroup_relations) then 
+    return;
+  fi;
+
+  rels := RelationsOfFpSemigroup(S);
+  out := [];
+  
+  for rel in rels do 
+    next := [[], []];
+    for i in [1, 2] do 
+      ext := ExtRepOfObj(rel[i]);
+      for j in [1, 3 .. Length(ext) - 1] do 
+        k := 0;
+        while k < ext[j + 1] do 
+          Add(next[i], ext[j]);
+          k := k + 1;
+        od;
+      od;
+    od;
+    Add(out, next);
+  od;
+
+  S!.__fp_semigroup_relations := out;
+  S!.__fp_semigroup_nr_gens   := Length(GeneratorsOfSemigroup(S));
+end;
+
+InstallMethod(Size, "for an fp semigroup", [IsFpSemigroup], 
+function(S)
+  SEMIGROUPS.InitFpSemigroup(S);
+  return FP_SEMI_SIZE(S);
+end);
+
 InstallMethod(ViewString, "for an f.p. semigroup element",
 [IsElementOfFpSemigroup], String);
 
