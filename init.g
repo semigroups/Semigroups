@@ -48,6 +48,7 @@ ReadPackage("semigroups/gap/elements/maxplusmat.gd");
 ReadPackage("semigroups/gap/elements/ffmat.gd");
 ReadPackage("semigroups/gap/elements/boolmat.gd");
 ReadPackage("semigroups/gap/elements/trans.gd");
+ReadPackage("semigroups/gap/elements/elements.gd");
 
 ReadPackage("semigroups/gap/semigroups/semi.gd");
 ReadPackage("semigroups/gap/semigroups/grpperm.gd");
