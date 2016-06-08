@@ -6,3 +6,6 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
+InstallMethod(IndexPeriodOfSemigroupElement, "for a partial perm",
+[IsPartialPerm], IndexPeriodOfPartialPerm);

@@ -24,6 +24,24 @@ Matrix(GF(2), [[Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2)],
 gap> EvalString(String(M)) = M;
 true
 
+#T# MatrixTest3: IndexPeriodOfSemigroupElement
+gap> M := Matrix(GF(3),
+> [[Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3)],
+>  [Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3)],
+>  [0*Z(3), Z(3), 0*Z(3), 0*Z(3), 0*Z(3)],
+>  [0*Z(3), 0*Z(3), Z(3), 0*Z(3), 0*Z(3)],
+>  [0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3)]]);;
+gap> IndexPeriodOfSemigroupElement(M);
+[ 3, 1 ]
+gap> M := Matrix(GF(2^2),
+> [[Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2)],
+>  [Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2)],
+>  [0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)],
+>  [0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2)]]);;
+gap> IndexPeriodOfSemigroupElement(M);
+[ 3, 3 ]
+
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(M);
 

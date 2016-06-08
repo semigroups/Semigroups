@@ -6,3 +6,5 @@
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
+
+DeclareOperation("IndexPeriodOfSemigroupElement", [IsMultiplicativeElement]);

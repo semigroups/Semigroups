@@ -875,3 +875,7 @@ function(m)
   od;
   return true;
 end);
+
+InstallMethod(IndexPeriodOfSemigroupElement, "for a matrix over a finite field",
+[IsMatrixOverFiniteField],
+x -> SEMIGROUPS.IndexPeriodByRank(x, RowRank));

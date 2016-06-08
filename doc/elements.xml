@@ -7,3 +7,34 @@
 ##
 #############################################################################
 ##
+
+<#GAPDoc Label="IndexPeriodOfSemigroupElement">
+  <ManSection>
+    <Oper Name = "IndexPeriodOfSemigroupElement" Arg = "x"/>
+    <Returns>A list of two positive integers.</Returns>
+    <Description>
+      If <A>x</A> is a semigroup element, then
+      <C>IndexPeriodOfSemigroupElement(<A>x</A>)</C> returns the pair
+      <C>[m, r]</C>, where <C>m</C> and <C>r</C> are the least positive
+      integers such that <C><A>x</A>^(m + r) = <A>x</A> ^ m</C>.
+
+      The number <C>m</C> is known as the <E>index</E> of <A>x</A>, and the
+      number<C>r</C> is known as the <E>period</E> of <A>x</A>.
+
+      <Example><![CDATA[
+gap> x := Transformation([2, 6, 3, 5, 6, 1]);; 
+gap> IndexPeriodOfSemigroupElement(x);
+[ 2, 3 ]
+gap> m := IndexPeriodOfSemigroupElement(x)[1];;
+gap> r := IndexPeriodOfSemigroupElement(x)[2];;
+gap> x ^ (m + r) = x ^ m;
+true
+gap> x := PartialPerm([2, 3, 5], [2, 3, 5]);;
+gap> IsIdempotent(x);
+true
+gap> IndexPeriodOfSemigroupElement(x);
+[ 1, 1 ]
+]]></Example>
+    </Description> 
+  </ManSection>
+<#/GAPDoc>

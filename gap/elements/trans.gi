@@ -40,3 +40,6 @@ function(im, ker)
   od;
   return TransformationByImageAndKernel(im, flat);
 end);
+
+InstallMethod(IndexPeriodOfSemigroupElement, "for a transformation",
+[IsTransformation], IndexPeriodOfTransformation);
