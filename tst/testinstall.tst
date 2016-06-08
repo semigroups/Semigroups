@@ -251,13 +251,14 @@ true
 gap> Generators(S);
 [ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
 gap> T := Range(IsomorphismTransformationMonoid(G));
-<transformation monoid of degree 4 with 2 generators>
+<transformation monoid of degree 9 with 2 generators>
 gap> Generators(T);
-[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
+[ Transformation( [ 1, 2, 3, 4, 9, 6, 7, 8, 5 ] ), 
+  Transformation( [ 7, 2, 3, 4, 5, 6, 1 ] ) ]
 gap> H := Range(IsomorphismPermGroup(T));
-Group([ (), (2,4), (1,3) ])
+Group([ (), (5,9), (1,7) ])
 gap> IsomorphismGroups(G, H);
-[ (5,9), (1,7) ] -> [ (2,4), (1,3) ]
+[ (5,9), (1,7) ] -> [ (5,9), (1,7) ]
 
 #T# TestInstall15: Issue 22 - takes about 49ms
 gap> x := Transformation([2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11]);;
