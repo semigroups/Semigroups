@@ -712,11 +712,12 @@ Obj SEMIGROUP_CONGRUENCE (Obj self, Obj data) {
     Semigroup* semigroup = data_semigroup(data);
     semigroup->enumerate(-1, data_report(data));
 
+    //std::vector<relation_t> extra;
+    //extra.push_back(make_pair(word_t(1, 1), word_t(1, 4)));
+
     Congruence cong = Congruence(semigroup);
-    std::cout << "number of active cosets = " << cong.nr_active_cosets() << "\n";
     cong.todd_coxeter();
-    std::cout << "number of active cosets = " << cong.nr_active_cosets() << "\n";
-    return INTOBJ_INT(cong.nr_active_cosets());
+    return INTOBJ_INT(cong.nr_active_cosets() - 1);
   } else {
     ErrorQuit("SEMIGROUP_CONGRUENCE: not yet implemented,", 0L, 0L);
     return 0L;
