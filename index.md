@@ -7,8 +7,21 @@ layout: default
 {{site.data.package.abstract}}
 
 The current version of this package is version {{site.data.package.version}}.
-For more information, please refer to [the package manual]({{site.data.package.doc-html}}).
-There is also a [README](README.html) and a [CHANGELOG](CHANGELOG.html) file.
+For more information, please refer to [the package
+manual]({{site.data.package.doc-html}}).  There is also a
+[README.md](README.html) and a [CHANGELOG.md](CHANGELOG.html) file.
+
+## How to cite {{ pkg.name }}
+If you are using BibTeX, you can use the following BibTeX entry for the current 
+version of {{ pkg.name }}:
+
+    @manual{ Mitchell{{site.data.package.year}}aa,
+             Author = { Mitchell, J. D. and others },
+             Month = { {{site.data.package.month}} },
+             Title = { Semigroups - GAP package, Version {{site.data.package.version}} },
+             Doi = { 10.5281/zenodo.53112 },
+             Url = { http://dx.doi.org/10.5281/zenodo.53112 },
+             Year = { {{site.data.package.year}} }}
 
 ## Dependencies
 
