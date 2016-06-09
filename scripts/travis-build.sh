@@ -58,7 +58,7 @@ cd grape
 ./configure $PKG_FLAGS
 make
 cd ..
-hg clone https://james-d-mitchell@bitbucket.org/james-d-mitchell/digraphs -r $DIGRAPHS_BR
+git clone -b $DIGRAPHS_BR --depth=1 https://github.com/gap-packages/Digraphs.git digraphs
 cd digraphs
 ./autogen.sh
 ./configure $PKG_FLAGS
