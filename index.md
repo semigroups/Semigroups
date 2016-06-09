@@ -11,18 +11,6 @@ For more information, please refer to [the package
 manual]({{site.data.package.doc-html}}).  There is also a
 [README.md](README.html) and a [CHANGELOG.md](CHANGELOG.html) file.
 
-## How to cite {{site.data.package.name}}
-If you are using BibTeX, you can use the following BibTeX entry for the current 
-version of {{site.data.package.name}}:
-
-    @manual{ Mitchell{{site.data.package.year}}aa,
-             Author = { Mitchell, J. D. and others },
-             Month = { {{site.data.package.month}} },
-             Title = { Semigroups - GAP package, Version {{site.data.package.version}} },
-             Doi = { 10.5281/zenodo.53112 },
-             Url = { http://dx.doi.org/10.5281/zenodo.53112 },
-             Year = { {{site.data.package.year}} }}
-
 ## Dependencies
 
 This package requires GAP version {{site.data.package.GAP}}
@@ -37,7 +25,6 @@ The following additional GAP packages are not required, but suggested:
 - {% if pkg.url %}<a href="{{ pkg.url }}">{{ pkg.name }}</a>{% else %}{{ pkg.name }}{% endif %} {{ pkg.version }}{% endfor %}
 {% endif %}
 
-
 ## Author{% if site.data.package.authors.size != 1 %}s{% endif %}
 {% for person in site.data.package.authors %}
 {% if person.url %}<a href="{{ person.url }}">{{ person.name }}</a>{% else %}{{ person.name }}{% endif %}{% unless forloop.last %}, {% endunless %}{% else %}
@@ -49,3 +36,15 @@ The following additional GAP packages are not required, but suggested:
 For bug reports, feature requests and suggestions, please use the
 [issue tracker]({{site.github.issues_url}}).
 {% endif %}
+
+## How to cite {{site.data.package.name}}
+If you are using BibTeX, you can use the following BibTeX entry for the current 
+version of {{site.data.package.name}}:
+
+    @manual{ Mitchell{{site.data.package.year}}aa,
+             Author = { Mitchell, J. D. and others },
+             Month = { {{site.data.package.month}} },
+             Title = { Semigroups - GAP package, Version {{site.data.package.version}} },
+             Doi = { 10.5281/zenodo.53112 },
+             Url = { http://dx.doi.org/10.5281/zenodo.53112 },
+             Year = { {{site.data.package.year}} }}
