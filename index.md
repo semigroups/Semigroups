@@ -11,9 +11,9 @@ For more information, please refer to [the package
 manual]({{site.data.package.doc-html}}).  There is also a
 [README.md](README.html) and a [CHANGELOG.md](CHANGELOG.html) file.
 
-## How to cite {{ pkg.name }}
+## How to cite {{site.data.package.name}}
 If you are using BibTeX, you can use the following BibTeX entry for the current 
-version of {{ pkg.name }}:
+version of {{site.data.package.name}}:
 
     @manual{ Mitchell{{site.data.package.year}}aa,
              Author = { Mitchell, J. D. and others },
