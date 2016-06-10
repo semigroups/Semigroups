@@ -536,7 +536,7 @@ gap> BipartitionByIntRep([1, 2, 3, 1]);
 
 # bipartition: BIPART_LAMBDA_CONJ 1/2
 gap> x := Bipartition([[1, 3, -2, -3], [2, -1]]);;
-gap> BIPART_LAMBDA_CONJ(x, RightOne(x));
+gap> BIPART_LAMBDA_CONJ(x, LeftOne(x));
 (1,2)
 
 # bipartition: BIPART_LAMBDA_CONJ 2/2
@@ -604,6 +604,14 @@ true
 gap> BIPART_LAMBDA_CONJ(Bipartition([[1, -2], [2, -3], [3], [-1]]),
 >                       Bipartition([[1, -1, -2], [2, -3], [3]]));
 (1,3,2)
+
+# bipartition: empty bipartition tests for int/ext rep
+gap> x := Bipartition([]);
+<empty bipartition>
+gap> ExtRepOfBipartition(x);
+[  ]
+gap> IntRepOfBipartition(x);
+[  ]
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);

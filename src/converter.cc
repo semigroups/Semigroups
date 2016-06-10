@@ -6,8 +6,8 @@
 *******************************************************************************/
 
 #include "converter.h"
-#include "types.h"
-#include "bipart.h"
+#include "bipart.hh"
+#include "gap.hh"
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -16,7 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
-  assert(IS_BOOL_MAT(o));
+  assert(CALL_1ARGS(IsBooleanMat, o));
   assert(LEN_PLIST(o) > 0);
   assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
 
@@ -70,12 +70,12 @@ Obj BoolMatConverter::unconvert (Element* x) {
 ////////////////////////////////////////////////////////////////////////////////
 
 Bipartition* BipartConverter::convert (Obj o, size_t n) {
-  assert(IS_BIPART(o));
+  assert(CALL_1ARGS(IsBipartition, o));
   return static_cast<Bipartition*>(static_cast<Element*>(bipart_get_cpp(o))->really_copy());
 }
 
 Obj BipartConverter::unconvert (Element* x) {
-  return bipart_new(static_cast<Bipartition*>(x->really_copy()));
+  return bipart_new_obj(static_cast<Bipartition*>(x->really_copy()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +85,7 @@ Obj BipartConverter::unconvert (Element* x) {
 ////////////////////////////////////////////////////////////////////////////////
 
 MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
-  assert(IS_MAT_OVER_SEMI_RING(o));
+  assert(CALL_1ARGS(IsMatrixOverSemiring, o) == True);
   assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
 
@@ -162,7 +162,7 @@ Obj PBRConverter::get_gap_type (size_t deg) {
 // TODO add some more asserts here
 
 PBR* PBRConverter::convert (Obj o, size_t n) {
-  assert(IS_PBR(o));
+  assert(CALL_1ARGS(IsPBR, o));
   size_t m = INT_INTOBJ(ELM_PLIST(o, 1));
   std::vector<std::vector<u_int32_t> >* pbr(new std::vector<std::vector<u_int32_t> >());
   pbr->reserve(m);

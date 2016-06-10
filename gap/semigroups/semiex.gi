@@ -675,6 +675,23 @@ function(n)
   return M;
 end);
 
+InstallMethod(AnnularJonesMonoid, "for an integer", [IsInt],
+function(n)
+  local p, M;
+
+  if n < 0 then
+    ErrorNoReturn("Semigroups: AnnularJonesMonoid: usage,\n",
+                  "the argument <n> must be a non-negative integer,");
+  elif n = 0 or n = 1 then
+    return JonesMonoid(n);
+  fi;
+
+  p := PermList(Concatenation([n], [1 .. n - 1]));
+  M := Monoid(JonesMonoid(n), AsBipartition(p), rec(regular := true));
+  SetIsStarSemigroup(M, true);
+  return M;
+end);
+
 InstallMethod(PartialJonesMonoid, "for an integer",
 [IsInt],
 function(n)

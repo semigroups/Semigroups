@@ -40,34 +40,44 @@ DataType data_type (Obj data) {
 
   switch (TNUM_OBJ(x)) {
     case T_POSOBJ:
-      if (IS_BOOL_MAT(x)) {
+      if (CALL_1ARGS(IsBooleanMat, x) == True) {
         return BOOL_MAT;
-      } else if (IS_MAX_PLUS_MAT(x)) {
+      } else if (CALL_1ARGS(IsMaxPlusMatrix, x) == True) {
         return MAX_PLUS_MAT;
-      } else if (IS_MIN_PLUS_MAT(x)) {
+      } else if (CALL_1ARGS(IsMinPlusMatrix, x) == True) {
         return MIN_PLUS_MAT;
-      } else if (IS_TROP_MAX_PLUS_MAT(x)) {
+      } else if (CALL_1ARGS(IsTropicalMaxPlusMatrix, x) == True) {
         return TROP_MAX_PLUS_MAT;
-      } else if (IS_TROP_MIN_PLUS_MAT(x)) {
+      } else if (CALL_1ARGS(IsTropicalMinPlusMatrix, x) == True) {
         return TROP_MIN_PLUS_MAT;
-      } else if (IS_PROJ_MAX_PLUS_MAT(x)) {
+      } else if (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True) {
         return PROJ_MAX_PLUS_MAT;
-      } else if (IS_NTP_MAT(x)) {
+      } else if (CALL_1ARGS(IsNTPMatrix, x) == True) {
         return NTP_MAT;
-      } else if (IS_INT_MAT(x)) {
+      } else if (CALL_1ARGS(IsIntegerMatrix, x) == True) {
         return INT_MAT;
-      } else if (IS_PBR(x)) {
+      } else if (CALL_1ARGS(IsPBR, x) == True) {
         return PBR_TYPE;
       }
       return UNKNOWN;
     case T_COMOBJ:
-      if (IS_BIPART(x)) {
+      if (CALL_1ARGS(IsBipartition, x) == True) {
         return BIPART;
       }
       // intentional fall through
     default:
       return UNKNOWN;
   }
+}
+
+bool data_has_cpp_semigroup (Obj data) {
+  return IsbPRec(data, RNam_semigroup)
+    && CLASS_OBJ<Semigroup>(ElmPRec(data, RNam_semigroup)) != nullptr;
+}
+
+bool data_has_cpp_converter (Obj data) {
+  return IsbPRec(data, RNam_converter)
+    && CLASS_OBJ<Converter>(ElmPRec(data, RNam_converter)) != nullptr;
 }
 
 /*******************************************************************************
@@ -85,17 +95,19 @@ void data_init (Obj data) {
 
 void data_init_converter (Obj data) {
 
-  if (IsbPRec(data, RNam_converter)) {
+  initRNams();
+
+  if (data_has_cpp_converter(data)) {
     return;
   }
 
   Converter* converter;
   switch (data_type(data)) {
-    case TRANS2:{
+    case TRANS2: {
       converter = new TransConverter<u_int16_t>();
       break;
     }
-    case TRANS4:{
+    case TRANS4: {
       converter = new TransConverter<u_int32_t>();
       break;
     }
@@ -167,7 +179,7 @@ void data_init_converter (Obj data) {
     }
   }
 
-  AssPRec(data, RNam_converter, NewSemigroupsBag(converter, CONVERTER, 2));
+  AssPRec(data, RNam_converter, OBJ_CLASS(converter, CONVERTER));
 }
 
 /*******************************************************************************
@@ -177,16 +189,18 @@ void data_init_converter (Obj data) {
 
 void data_init_semigroup (Obj data, Semigroup* semigroup) {
 
+  initRNams();
+
   if (semigroup != nullptr) {
-    if (IsbPRec(data, RNam_semigroup)) {
+    if (data_has_cpp_semigroup(data)) {
       assert(false);
     }
     semigroup->set_batch_size(data_batch_size(data));
-    AssPRec(data, RNam_semigroup, NewSemigroupsBag(semigroup, SEMIGROUP, 2));
+    AssPRec(data, RNam_semigroup, OBJ_CLASS(semigroup, SEMIGROUP));
     return;
   }
 
-  if (IsbPRec(data, RNam_semigroup)) {
+  if (data_has_cpp_semigroup(data)) {
     return;
   }
 
@@ -202,14 +216,14 @@ void data_init_semigroup (Obj data, Semigroup* semigroup) {
   std::vector<Element*>* gens(new std::vector<Element*>());
   size_t degree = data_degree(data);
 
-  for(size_t i = 1; i <= (size_t) LEN_PLIST(gens_gap); i++) {
+  for (size_t i = 1; i <= (size_t) LEN_PLIST(gens_gap); i++) {
     gens->push_back(converter->convert(ELM_PLIST(gens_gap, i), degree));
   }
 
   semigroup = new Semigroup(gens, degree);
   semigroup->set_batch_size(data_batch_size(data));
 
-  AssPRec(data, RNam_semigroup, NewSemigroupsBag(semigroup, SEMIGROUP, 2));
+  AssPRec(data, RNam_semigroup, OBJ_CLASS(semigroup, SEMIGROUP));
 
   for (Element* x: *gens) {
     x->really_delete();
@@ -222,7 +236,10 @@ void data_init_semigroup (Obj data, Semigroup* semigroup) {
 *******************************************************************************/
 
 Semigroup* data_semigroup (Obj data) {
-  if (!IsbPRec(data, RNam_semigroup)) {
+
+  initRNams();
+
+  if (!data_has_cpp_semigroup(data)) {
     data_init(data);
   }
   return CLASS_OBJ<Semigroup>(ElmPRec(data, RNam_semigroup));
@@ -233,7 +250,10 @@ Semigroup* data_semigroup (Obj data) {
 *******************************************************************************/
 
 Converter* data_converter (Obj data) {
-  if (!IsbPRec(data, RNam_converter)) {
+
+  initRNams();
+
+  if (!data_has_cpp_converter(data)) {
     data_init(data);
   }
   return CLASS_OBJ<Converter>(ElmPRec(data, RNam_converter));
@@ -244,10 +264,13 @@ Converter* data_converter (Obj data) {
 *******************************************************************************/
 
 void data_delete (Obj data) {
-  if (IsbPRec(data, RNam_semigroup)) {
+
+  initRNams();
+
+  if (data_has_cpp_semigroup(data)) {
     delete data_semigroup(data);
   }
-  if (IsbPRec(data, RNam_converter)) {
+  if (data_has_cpp_converter(data)) {
     delete data_converter(data);
   }
 }
@@ -263,9 +286,12 @@ void data_delete (Obj data) {
 *******************************************************************************/
 
 long data_threshold (Obj data) {
+
+  initRNams();
+
   Obj x = data_rep(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_TROP_MAT(x)||IS_NTP_MAT(x));
+  assert(CALL_1ARGS(IsTropicalMatrix, x) || CALL_1ARGS(IsNTPMatrix, x));
   assert(ELM_PLIST(x, 1) != 0);
   assert(IS_PLIST(ELM_PLIST(x, 1)));
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
@@ -278,9 +304,12 @@ long data_threshold (Obj data) {
 *******************************************************************************/
 
 long data_period (Obj data) {
+
+  initRNams();
+
   Obj x = data_rep(data);
   assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_NTP_MAT(x));
+  assert(CALL_1ARGS(IsNTPMatrix, x));
   assert(ELM_PLIST(x, 1) != 0);
   assert(IS_PLIST(ELM_PLIST(x, 1)));
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2) != 0);
@@ -292,22 +321,11 @@ long data_period (Obj data) {
 *
 *******************************************************************************/
 
-/*long data_size_ff (Obj data) {
-  Obj x = data_rep(data);
-  assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(IS_MAT_OVER_PF(x));
-  assert(ELM_PLIST(x, 1) != 0);
-  assert(IS_PLIST(ELM_PLIST(x, 1)));
-  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
-  return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
-}*/
-
-/*******************************************************************************
-*
-*******************************************************************************/
-
 Obj data_rep (Obj data) {
   // TODO more asserts
+
+  initRNams();
+
   assert(IsbPRec(data, RNam_gens));
   assert(LEN_LIST(ElmPRec(data, RNam_gens)) > 0);
   return ELM_PLIST(ElmPRec(data, RNam_gens), 1);
@@ -318,6 +336,9 @@ Obj data_rep (Obj data) {
 *******************************************************************************/
 
 size_t data_batch_size (Obj data) {
+
+  initRNams();
+
   assert(IsbPRec(data, RNam_batch_size));
   assert(IS_INTOBJ(ElmPRec(data, RNam_batch_size)));
   return INT_INTOBJ(ElmPRec(data, RNam_batch_size));
@@ -328,6 +349,9 @@ size_t data_batch_size (Obj data) {
 *******************************************************************************/
 
 bool data_report (Obj data) {
+
+  initRNams();
+
   if (IsbPRec(data, RNam_report)) {
     assert(ElmPRec(data, RNam_report) == True || ElmPRec(data, RNam_report) == False);
     return (ElmPRec(data, RNam_report) == True ? true : false);
@@ -341,6 +365,9 @@ bool data_report (Obj data) {
 
 size_t data_degree (Obj data) {
   //TODO add asserts
+
+  initRNams();
+
   return INT_INTOBJ(ElmPRec(data, RNamName("degree")));
 }
 

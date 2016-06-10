@@ -69,7 +69,7 @@ function(file, x)
   if IO_Write(file, "BIPA") = fail then
     return IO_Error;
   fi;
-  if IO_Pickle(file, BIPART_INT_REP(x)) = IO_Error then
+  if IO_Pickle(file, IntRepOfBipartition(x)) = IO_Error then
     return IO_Error;
   fi;
   return IO_OK;
@@ -338,6 +338,9 @@ end);
 
 InstallMethod(ExtRepOfBipartition, "for a bipartition", [IsBipartition],
 BIPART_EXT_REP);
+
+InstallMethod(IntRepOfBipartition, "for a bipartition", [IsBipartition],
+BIPART_INT_REP);
 
 # xx ^ * - linear - 2 * degree
 
@@ -619,7 +622,7 @@ function(x)
     str := "\>\><bipartition:\< ";
   fi;
 
-  ext := BIPART_EXT_REP(x);
+  ext := ExtRepOfBipartition(x);
   Append(str, "\>");
   Append(str, String(ext[1]));
   Append(str, "\<");
@@ -635,7 +638,7 @@ end);
 
 InstallMethod(String, "for a bipartition", [IsBipartition],
 function(x)
-  return Concatenation("Bipartition(", String(BIPART_EXT_REP(x)), ")");
+  return Concatenation("Bipartition(", String(ExtRepOfBipartition(x)), ")");
 end);
 
 InstallMethod(PrintString, "for a bipartition",
@@ -645,7 +648,7 @@ function(x)
   if DegreeOfBipartition(x) = 0 then
     return "\>\>Bipartition(\< \>[]\<)\<";
   fi;
-  ext := BIPART_EXT_REP(x);
+  ext := ExtRepOfBipartition(x);
   str := Concatenation("\>\>Bipartition(\< \>[ ", PrintString(ext[1]));
   for i in [2 .. Length(ext)] do
     Append(str, ",\< \>");
@@ -722,7 +725,7 @@ function(x)
   fi;
 
   n      := DegreeOfBipartition(x);
-  blocks := BIPART_INT_REP(x);
+  blocks := IntRepOfBipartition(x);
   nrleft := NrLeftBlocks(x);
   im     := [1 .. n] * 0;
 
@@ -749,7 +752,7 @@ function(x)
   fi;
 
   n      := DegreeOfBipartition(x);
-  blocks := BIPART_INT_REP(x);
+  blocks := IntRepOfBipartition(x);
   im     := EmptyPlist(n);
 
   for i in [n + 1 .. 2 * n] do
@@ -773,7 +776,7 @@ function(x)
   fi;
 
   n      := DegreeOfBipartition(x);
-  blocks := BIPART_INT_REP(x);
+  blocks := IntRepOfBipartition(x);
   nr     := NrLeftBlocks(x);
   im     := EmptyPlist(n);
 
@@ -864,7 +867,7 @@ function(f, n)
   if n = deg then
     return f;
   fi;
-  blocks := BIPART_INT_REP(f);
+  blocks := IntRepOfBipartition(f);
   out := [];
   nrblocks := 0;
 
@@ -977,8 +980,8 @@ function(x, y)
     return false;
   fi;
 
-  xblocks := BIPART_INT_REP(x);
-  yblocks := BIPART_INT_REP(y);
+  xblocks := IntRepOfBipartition(x);
+  yblocks := IntRepOfBipartition(y);
   n       := DegreeOfBipartition(x);
 
   lookup := [];
@@ -1010,8 +1013,8 @@ function(x, y)
 
   n := DegreeOfBipartition(x);
 
-  xblocks := BIPART_INT_REP(x);
-  yblocks := BIPART_INT_REP(y);
+  xblocks := IntRepOfBipartition(x);
+  yblocks := IntRepOfBipartition(y);
 
   for i in [n + 1 .. 2 * n] do
     val := xblocks[i];
@@ -1031,7 +1034,7 @@ function(x)
     return false;
   fi;
 
-  blocks := BIPART_INT_REP(x);
+  blocks := IntRepOfBipartition(x);
   n := DegreeOfBipartition(x);
   sizesleft := [1 .. NrBlocks(x)] * 0;
   sizesright := [1 .. NrBlocks(x)] * 0;

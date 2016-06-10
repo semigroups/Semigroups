@@ -1,24 +1,21 @@
 /*
  * Semigroups GAP package
  *
- * This file defines UFData, an object used to make an equivalence relation on
- * the integers {1..n}, using the UNION-FIND METHOD: new pairs can be added and
- * the appropriate classes combined quickly.  It is used in the Semigroups
- * package, particularly in the section related to congruences.
+ * This file defines UFData, a class used to make an equivalence relation on
+ * the integers {1 .. n}, using the UNION-FIND METHOD: new pairs can be added
+ * and the appropriate classes combined quickly.
  *
  */
 
-#include "src/compiled.h"          /* GAP headers                */
-
-#include <assert.h>
-#include <iostream>
 #include <vector>
 
-typedef std::vector<size_t>   table_t;
-typedef std::vector<table_t*> blocks_t;
+#include "src/compiled.h"
 
 class UFData {
-public:
+ public:
+  typedef std::vector<size_t>   table_t;
+  typedef std::vector<table_t*> blocks_t;
+
   // Copy constructor
   UFData (const UFData& copy) : _size(copy._size),
                                 _table(new table_t(*copy._table)),
@@ -129,9 +126,21 @@ public:
       _table->at(i) = find(i);
     }
   }
+
 private:
   size_t    _size;
   table_t*  _table;
   blocks_t* _blocks;
   bool      _haschanged;
 };
+
+// GAP level functions
+
+Obj UF_NEW (Obj self, Obj size);
+Obj UF_COPY (Obj self, Obj ufdata);
+Obj UF_SIZE (Obj self, Obj ufdata);
+Obj UF_FIND (Obj self, Obj ufdata, Obj i);
+Obj UF_UNION (Obj self, Obj ufdata, Obj pair);
+Obj UF_FLATTEN (Obj self, Obj ufdata);
+Obj UF_TABLE (Obj self, Obj ufdata);
+Obj UF_BLOCKS (Obj self, Obj ufdata);
