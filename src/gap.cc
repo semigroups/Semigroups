@@ -25,19 +25,19 @@ UInt T_SEMI = 0;
 
 void TSemiObjPrintFunc (Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case SEMIGROUP:
+    case T_SEMI_SUBTYPE_SEMIGP:
       Pr("<wrapper for instance of C++ Semigroup class>", 0L, 0L);
       break;
-    case CONVERTER:
+    case T_SEMI_SUBTYPE_CONVER:
       Pr("<wrapper for instance of C++ Converter class>", 0L, 0L);
       break;
-    case BIPART_C:
+    case T_SEMI_SUBTYPE_BIPART:
       Pr("<wrapper for instance of C++ Bipartition class>", 0L, 0L);
       break;
-    case BLOCKS:
+    case T_SEMI_SUBTYPE_BLOCKS:
       Pr("<wrapper for instance of C++ Blocks class>", 0L, 0L);
       break;
-    case UF_DATA:
+    case T_SEMI_SUBTYPE_UFDATA:
       Pr("<wrapper for instance of C++ UFData class>", 0L, 0L);
       break;
     default:
@@ -49,19 +49,19 @@ void TSemiObjPrintFunc (Obj o) {
 
 void TSemiObjFreeFunc (Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case SEMIGROUP:
+    case T_SEMI_SUBTYPE_SEMIGP:
       delete CLASS_OBJ<Semigroup>(o);
       break;
-    case CONVERTER:
+    case T_SEMI_SUBTYPE_CONVER:
       delete CLASS_OBJ<Converter>(o);
       break;
-    case BIPART_C:
+    case T_SEMI_SUBTYPE_BIPART:
       delete CLASS_OBJ<Bipartition>(o);
       break;
-    case BLOCKS:
+    case T_SEMI_SUBTYPE_BLOCKS:
       delete CLASS_OBJ<Blocks>(o);
       break;
-    case UF_DATA:
+    case T_SEMI_SUBTYPE_UFDATA:
       delete CLASS_OBJ<UFData>(o);
       break;
     default:
@@ -81,7 +81,7 @@ void TSemiObjSaveFunc (Obj o) {
   SaveUInt8(SUBTYPE_OF_T_SEMI(o));
 
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case BIPART_C: {
+    case T_SEMI_SUBTYPE_BIPART: {
       Bipartition* b = CLASS_OBJ<Bipartition>(o);
       SaveUInt8(b->degree());
       for (auto it = b->begin(); it < b->end(); it++) {
@@ -89,7 +89,7 @@ void TSemiObjSaveFunc (Obj o) {
       }
       break;
     }
-    case BLOCKS: {
+    case T_SEMI_SUBTYPE_BLOCKS: {
       Blocks* b = CLASS_OBJ<Blocks>(o);
       SaveUInt8(b->degree());
       if (b->degree() != 0) {
@@ -103,7 +103,7 @@ void TSemiObjSaveFunc (Obj o) {
       }
       break;
     }
-    default: // for T_SEMI Objs of subtype SEMIGROUP, CONVERTER do nothing further
+    default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_SEMIGP, T_SEMI_SUBTYPE_CONVER do nothing further
       break;
   }
 }
@@ -115,15 +115,15 @@ void TSemiObjLoadFunc (Obj o) {
   ADDR_OBJ(o)[0] = (Obj)type;
 
   switch (type) {
-    case SEMIGROUP: {
+    case T_SEMI_SUBTYPE_SEMIGP: {
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
       break;
     }
-    case CONVERTER: {
+    case T_SEMI_SUBTYPE_CONVER: {
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
       break;
     }
-    case BIPART_C: {
+    case T_SEMI_SUBTYPE_BIPART: {
       UInt8 deg = LoadUInt8();
       std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
       blocks->reserve(2 * deg);
@@ -134,7 +134,7 @@ void TSemiObjLoadFunc (Obj o) {
       ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new Bipartition(blocks));
       break;
     }
-    case BLOCKS: {
+    case T_SEMI_SUBTYPE_BLOCKS: {
       UInt8 deg = LoadUInt8();
       if (deg == 0) {
         ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new Blocks());
@@ -159,7 +159,7 @@ void TSemiObjLoadFunc (Obj o) {
       ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new Blocks(blocks, lookup, nr_blocks));
       break;
     }
-    case UF_DATA: {
+    case T_SEMI_SUBTYPE_UFDATA: {
       // FIXME: what to do in this case
     }
   }

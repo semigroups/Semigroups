@@ -17,11 +17,12 @@
 
 Obj UF_NEW (Obj self, Obj size) {
   assert(IS_INTOBJ(size) && INT_INTOBJ(size) > 0);
-  return OBJ_CLASS(new UFData(INT_INTOBJ(size)), UF_DATA);
+  return OBJ_CLASS(new UFData(INT_INTOBJ(size)), T_SEMI_SUBTYPE_UFDATA);
 }
 
 Obj UF_COPY (Obj self, Obj ufdata) {
-  return OBJ_CLASS(new UFData(*CLASS_OBJ<UFData>(ufdata)), UF_DATA);
+  return OBJ_CLASS(new UFData(*CLASS_OBJ<UFData>(ufdata)),
+                              T_SEMI_SUBTYPE_UFDATA);
 }
 
 Obj UF_SIZE (Obj self, Obj ufdata) {

@@ -38,11 +38,11 @@ extern UInt T_SEMI;
 // Subtypes of objects that can be stored in a GAP Obj of type T_SEMI
 
 enum t_semi_subtype_t {
-  SEMIGROUP  = 0,
-  CONVERTER  = 1,
-  BIPART_C   = 2,
-  BLOCKS     = 3,
-  UF_DATA    = 4
+  T_SEMI_SUBTYPE_SEMIGP = 0,
+  T_SEMI_SUBTYPE_CONVER = 1,
+  T_SEMI_SUBTYPE_BIPART = 2,
+  T_SEMI_SUBTYPE_BLOCKS = 3,
+  T_SEMI_SUBTYPE_UFDATA = 4
 };
 
 // Get a new GAP Obj containing a pointer to a C++ class of type Class

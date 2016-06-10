@@ -179,7 +179,7 @@ void data_init_converter (Obj data) {
     }
   }
 
-  AssPRec(data, RNam_converter, OBJ_CLASS(converter, CONVERTER));
+  AssPRec(data, RNam_converter, OBJ_CLASS(converter, T_SEMI_SUBTYPE_CONVER));
 }
 
 /*******************************************************************************
@@ -196,7 +196,7 @@ void data_init_semigroup (Obj data, Semigroup* semigroup) {
       assert(false);
     }
     semigroup->set_batch_size(data_batch_size(data));
-    AssPRec(data, RNam_semigroup, OBJ_CLASS(semigroup, SEMIGROUP));
+    AssPRec(data, RNam_semigroup, OBJ_CLASS(semigroup, T_SEMI_SUBTYPE_SEMIGP));
     return;
   }
 
@@ -223,7 +223,7 @@ void data_init_semigroup (Obj data, Semigroup* semigroup) {
   semigroup = new Semigroup(gens, degree);
   semigroup->set_batch_size(data_batch_size(data));
 
-  AssPRec(data, RNam_semigroup, OBJ_CLASS(semigroup, SEMIGROUP));
+  AssPRec(data, RNam_semigroup, OBJ_CLASS(semigroup, T_SEMI_SUBTYPE_SEMIGP));
 
   for (Element* x: *gens) {
     x->really_delete();

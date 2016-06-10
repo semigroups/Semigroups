@@ -92,7 +92,7 @@ Obj bipart_new_obj (Bipartition* x) {
   initRNams();
 
   // construct GAP wrapper for C++ object
-  Obj wrapper = OBJ_CLASS(x, BIPART_C);
+  Obj wrapper = OBJ_CLASS(x, T_SEMI_SUBTYPE_BIPART);
 
   // put the GAP wrapper in a plain record and Objectify
   Obj out = NEW_PREC(1);
@@ -119,7 +119,7 @@ inline Obj blocks_new_obj (Blocks* x) {
   initRNams();
 
   // construct GAP wrapper for C++ object
-  Obj wrapper = OBJ_CLASS(x, BLOCKS);
+  Obj wrapper = OBJ_CLASS(x, T_SEMI_SUBTYPE_BLOCKS);
 
   // put the GAP wrapper in a list and Objectify
   Obj out = NEW_PREC(1);
