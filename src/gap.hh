@@ -34,15 +34,15 @@
 //
 
 extern UInt T_SEMI;
+extern UInt T_BIPART;
+extern UInt T_BLOCKS;
 
 // Subtypes of objects that can be stored in a GAP Obj of type T_SEMI
 
 enum t_semi_subtype_t {
   T_SEMI_SUBTYPE_SEMIGP = 0,
   T_SEMI_SUBTYPE_CONVER = 1,
-  T_SEMI_SUBTYPE_BIPART = 2,
-  T_SEMI_SUBTYPE_BLOCKS = 3,
-  T_SEMI_SUBTYPE_UFDATA = 4
+  T_SEMI_SUBTYPE_UFDATA = 2
 };
 
 // Get a new GAP Obj containing a pointer to a C++ class of type Class
@@ -50,8 +50,8 @@ enum t_semi_subtype_t {
 template <typename Class>
 inline Obj OBJ_CLASS (Class* cpp_class, t_semi_subtype_t type) {
   Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
-  ADDR_OBJ(o)[0] = (Obj)type;
-  ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(cpp_class);
+  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(cpp_class);
+  ADDR_OBJ(o)[1] = (Obj)type;
   return o;
 }
 
@@ -59,15 +59,14 @@ inline Obj OBJ_CLASS (Class* cpp_class, t_semi_subtype_t type) {
 
 template <typename Class>
 inline Class* CLASS_OBJ (Obj o) {
-  assert(TNUM_OBJ(o) == T_SEMI);
-  return reinterpret_cast<Class*>(ADDR_OBJ(o)[1]);
+  return reinterpret_cast<Class*>(ADDR_OBJ(o)[0]);
 }
 
 // Get the t_semi_subtype_t out of the T_SEMI Obj
 
 inline t_semi_subtype_t SUBTYPE_OF_T_SEMI (Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
-  return static_cast<t_semi_subtype_t>(reinterpret_cast<UInt>(ADDR_OBJ(o)[0]));
+  return static_cast<t_semi_subtype_t>(reinterpret_cast<UInt>(ADDR_OBJ(o)[1]));
 }
 
 // Imported types and functions from the library
@@ -76,11 +75,6 @@ extern Obj HTValue;
 extern Obj HTAdd;
 extern Obj infinity;
 extern Obj Ninfinity;
-extern Obj IsBipartition;
-extern Obj BipartTypes;
-extern Obj BipartitionType;
-extern Obj IsBlocks;
-extern Obj BlocksType;
 extern Obj IsBooleanMat;
 extern Obj BooleanMatType;
 extern Obj IsMatrixOverSemiring;
@@ -102,5 +96,8 @@ extern Obj IntegerMatrixType;
 extern Obj IsPBR;
 extern Obj PBRTypes;
 extern Obj PBRType;
+
+extern Obj TYPE_BIPART;
+extern Obj TYPES_BIPART;
 
 #endif // SRC_GAP_H_

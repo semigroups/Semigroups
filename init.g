@@ -15,7 +15,7 @@ fi;
 
 # The following are for GAP internal objects of type T_SEMI
 BindGlobal("TSemiObjFamily", NewFamily("TSemiObjFamily"));
-DeclareCategory( "IsTSemiObj", IsObject);
+DeclareCategory("IsTSemiObj", IsObject);
 BindGlobal("TheTypeTSemiObj", NewType(TSemiObjFamily, IsTSemiObj));
 
 # the kernel module makes use of the c functions HTAdd_TreeHash_C and

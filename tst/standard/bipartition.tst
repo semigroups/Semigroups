@@ -352,8 +352,7 @@ true
 # bipartition: \<, for bipartitions 2/2
 gap> Bipartition([[1, 2, 3, -1, -2, -3], [4, -4]]) <
 > Bipartition([[1, 3], [2, -1], [-2, -3]]);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `<' on 2 arguments
+false
 
 # bipartition: PermLeftQuoBipartition, error 1/2
 gap> x := Bipartition([[1, 2], [-1, -2]]);;

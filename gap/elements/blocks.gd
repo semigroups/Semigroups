@@ -8,15 +8,17 @@
 #############################################################################
 ##
 
-DeclareCategory("IsBlocks", IsList);
+DeclareCategoryKernel("IsBlocks", IsList, IS_BLOCKS);
+
 DeclareCategoryCollections("IsBlocks");
 
 BindGlobal("BlocksFamily",
            NewFamily("BlocksFamily", IsBlocks, CanEasilySortElements,
                      CanEasilySortElements));
 
-BindGlobal("BlocksType",
-           NewType(BlocksFamily, IsBlocks and IsComponentObjectRep and
+BindGlobal("TheTypeTBlocksObj",
+           NewType(BlocksFamily, 
+                   IsBlocks and IsComponentObjectRep and
                    IsAttributeStoringRep));
 
 DeclareGlobalFunction("BlocksNC");

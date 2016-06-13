@@ -11,7 +11,7 @@
 #include <iostream>
 #include <time.h>
 
-#include "bipart.hh"
+#include "bipart.h"
 #include "converter.h"
 #include "fropin.hh"
 #include "ufdata.hh"
@@ -19,7 +19,14 @@
 #include "semigroups++/semigroups.h"
 
 Obj TheTypeTSemiObj;
+Obj TheTypeTBlocksObj;
+
+Obj TYPE_BIPART;  // function
+Obj TYPES_BIPART; // plist
+
 UInt T_SEMI = 0;
+UInt T_BIPART = 0;
+UInt T_BLOCKS = 0;
 
 // Function to print a T_SEMI Obj.
 
@@ -31,18 +38,38 @@ void TSemiObjPrintFunc (Obj o) {
     case T_SEMI_SUBTYPE_CONVER:
       Pr("<wrapper for instance of C++ Converter class>", 0L, 0L);
       break;
-    case T_SEMI_SUBTYPE_BIPART:
-      Pr("<wrapper for instance of C++ Bipartition class>", 0L, 0L);
-      break;
-    case T_SEMI_SUBTYPE_BLOCKS:
-      Pr("<wrapper for instance of C++ Blocks class>", 0L, 0L);
-      break;
     case T_SEMI_SUBTYPE_UFDATA:
       Pr("<wrapper for instance of C++ UFData class>", 0L, 0L);
       break;
     default:
       assert(false);
   }
+}
+
+Obj TBipartObjCopyFunc (Obj o, Int mut) {
+  // Bipartition objects are mathematically immutable, so
+  // we don't need to do anything,
+  return o;
+}
+
+Obj TBlocksObjCopyFunc (Obj o, Int mut) {
+  // Blocks objects are mathematically immutable, so
+  // we don't need to do anything,
+  return o;
+}
+
+void TBipartObjCleanFunc (Obj o) { }
+
+void TBlocksObjCleanFunc (Obj o) { }
+
+Int TBipartObjIsMutableObjFuncs (Obj o) {
+  // Bipartition objects are mathematically immutable.
+  return 0L;
+}
+
+Int TBlocksObjIsMutableObjFuncs (Obj o) {
+  // Blocks objects are mathematically immutable.
+  return 0L;
 }
 
 // Function to free a T_SEMI Obj during garbage collection.
@@ -55,12 +82,6 @@ void TSemiObjFreeFunc (Obj o) {
     case T_SEMI_SUBTYPE_CONVER:
       delete CLASS_OBJ<Converter>(o);
       break;
-    case T_SEMI_SUBTYPE_BIPART:
-      delete CLASS_OBJ<Bipartition>(o);
-      break;
-    case T_SEMI_SUBTYPE_BLOCKS:
-      delete CLASS_OBJ<Blocks>(o);
-      break;
     case T_SEMI_SUBTYPE_UFDATA:
       delete CLASS_OBJ<UFData>(o);
       break;
@@ -69,11 +90,29 @@ void TSemiObjFreeFunc (Obj o) {
   }
 }
 
-// Function to return the GAP-level type of a T_SEMI Obj
+void TBipartObjFreeFunc (Obj o) {
+  delete CLASS_OBJ<Bipartition>(o);
+}
+
+void TBlocksObjFreeFunc (Obj o) {
+  delete CLASS_OBJ<Blocks>(o);
+}
+
+// Functions to return the GAP-level type of a T_SEMI Obj
 
 Obj TSemiObjTypeFunc (Obj o) {
   return TheTypeTSemiObj;
 }
+
+Obj TBipartObjTypeFunc (Obj o) {
+  return ELM_PLIST(TYPES_BIPART, CLASS_OBJ<Bipartition>(o)->degree() + 1);
+}
+
+Obj TBlocksObjTypeFunc (Obj o) {
+  return TheTypeTBlocksObj;
+}
+
+// Functions to save T_SEMI, T_BIPART, T_BLOCKS
 
 void TSemiObjSaveFunc (Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
@@ -81,87 +120,131 @@ void TSemiObjSaveFunc (Obj o) {
   SaveUInt8(SUBTYPE_OF_T_SEMI(o));
 
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_BIPART: {
-      Bipartition* b = CLASS_OBJ<Bipartition>(o);
-      SaveUInt8(b->degree());
-      for (auto it = b->begin(); it < b->end(); it++) {
-        SaveUInt4(*it);
-      }
-      break;
+    case T_SEMI_SUBTYPE_UFDATA: {
+      // FIXME: what to do in this case
     }
-    case T_SEMI_SUBTYPE_BLOCKS: {
-      Blocks* b = CLASS_OBJ<Blocks>(o);
-      SaveUInt8(b->degree());
-      if (b->degree() != 0) {
-        SaveUInt8(b->nr_blocks());
-        for (auto it = b->begin(); it < b->end(); it++) {
-          SaveUInt4(*it);
-        }
-        for (auto it = b->lookup_begin(); it < b->lookup_end(); it++) {
-          SaveUInt2(static_cast<UInt4>(*it));
-        }
-      }
-      break;
-    }
-    default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_SEMIGP, T_SEMI_SUBTYPE_CONVER do nothing further
+    default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_SEMIGP,
+             // T_SEMI_SUBTYPE_CONVER do nothing further
       break;
   }
 }
+
+void TBipartObjSaveFunc (Obj o) {
+  Bipartition* b = CLASS_OBJ<Bipartition>(o);
+  SaveUInt8(b->degree());
+  for (auto it = b->begin(); it < b->end(); it++) {
+    SaveUInt4(*it);
+  }
+}
+
+void TBlocksObjSaveFunc (Obj o) {
+  Blocks* b = CLASS_OBJ<Blocks>(o);
+  SaveUInt8(b->degree());
+  if (b->degree() != 0) {
+    SaveUInt8(b->nr_blocks());
+    for (auto it = b->begin(); it < b->end(); it++) {
+      SaveUInt4(*it);
+    }
+    for (auto it = b->lookup_begin(); it < b->lookup_end(); it++) {
+      SaveUInt2(static_cast<UInt4>(*it));
+    }
+  }
+}
+
+// Functions to load T_SEMI, T_BIPART, T_BLOCKS
 
 void TSemiObjLoadFunc (Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
 
   t_semi_subtype_t type = static_cast<t_semi_subtype_t>(LoadUInt8());
-  ADDR_OBJ(o)[0] = (Obj)type;
+  ADDR_OBJ(o)[1] = (Obj)type;
 
   switch (type) {
     case T_SEMI_SUBTYPE_SEMIGP: {
-      ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
+      ADDR_OBJ(o)[0] = static_cast<Obj>(nullptr);
       break;
     }
     case T_SEMI_SUBTYPE_CONVER: {
-      ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
-      break;
-    }
-    case T_SEMI_SUBTYPE_BIPART: {
-      UInt8 deg = LoadUInt8();
-      std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-      blocks->reserve(2 * deg);
-
-      for (size_t i = 0; i < 2 * deg; i++) {
-        blocks->push_back(LoadUInt4());
-      }
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new Bipartition(blocks));
-      break;
-    }
-    case T_SEMI_SUBTYPE_BLOCKS: {
-      UInt8 deg = LoadUInt8();
-      if (deg == 0) {
-        ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new Blocks());
-        return;
-      }
-      UInt8 nr_blocks = LoadUInt8();
-
-      std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
-      blocks->reserve(deg);
-
-      for (size_t i = 0; i < deg; i++) {
-        blocks->push_back(LoadUInt4());
-      }
-
-      std::vector<bool>* lookup = new std::vector<bool>();
-      lookup->reserve(nr_blocks);
-
-      for (size_t i = 0; i < nr_blocks; i++) {
-        lookup->push_back(static_cast<bool>(LoadUInt2()));
-      }
-
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new Blocks(blocks, lookup, nr_blocks));
+      ADDR_OBJ(o)[0] = static_cast<Obj>(nullptr);
       break;
     }
     case T_SEMI_SUBTYPE_UFDATA: {
       // FIXME: what to do in this case
     }
+  }
+}
+
+void TBipartObjMarkSubBags (Obj o) {
+  if (ADDR_OBJ(o)[1] != NULL) {
+    MARK_BAG(ADDR_OBJ(o)[1]);
+  }
+  if (ADDR_OBJ(o)[2] != NULL) {
+    MARK_BAG(ADDR_OBJ(o)[2]);
+  }
+}
+
+void TBipartObjLoadFunc (Obj o) {
+  UInt8 deg = LoadUInt8();
+  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+  blocks->reserve(2 * deg);
+
+  for (size_t i = 0; i < 2 * deg; i++) {
+    blocks->push_back(LoadUInt4());
+  }
+  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Bipartition(blocks));
+}
+
+void TBlocksObjLoadFunc (Obj o) {
+
+  UInt8 deg = LoadUInt8();
+  if (deg == 0) {
+    ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Blocks());
+    return;
+  }
+  UInt8 nr_blocks = LoadUInt8();
+
+  std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
+  blocks->reserve(deg);
+
+  for (size_t i = 0; i < deg; i++) {
+    blocks->push_back(LoadUInt4());
+  }
+
+  std::vector<bool>* lookup = new std::vector<bool>();
+  lookup->reserve(nr_blocks);
+
+  for (size_t i = 0; i < nr_blocks; i++) {
+    lookup->push_back(static_cast<bool>(LoadUInt2()));
+  }
+
+  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Blocks(blocks,
+                                                    lookup,
+                                                    nr_blocks));
+}
+
+// Filters for IS_BIPART, IS_BLOCKS
+
+Obj IsBipartFilt;
+
+Obj IsBipartHandler (Obj self, Obj val) {
+  if (TNUM_OBJ(val) == T_BIPART) {
+    return True;
+  } else if (TNUM_OBJ(val) < FIRST_EXTERNAL_TNUM) {
+    return False;
+  } else {
+    return DoFilter(self, val);
+  }
+}
+
+Obj IsBlocksFilt;
+
+Obj IsBlocksHandler (Obj self, Obj val) {
+  if (TNUM_OBJ(val) == T_BLOCKS) {
+    return True;
+  } else if (TNUM_OBJ(val) < FIRST_EXTERNAL_TNUM) {
+    return False;
+  } else {
+    return DoFilter(self, val);
   }
 }
 
@@ -171,11 +254,6 @@ Obj HTValue;
 Obj HTAdd;
 Obj infinity;
 Obj Ninfinity;
-Obj IsBipartition;
-Obj BipartTypes;
-Obj BipartitionType;
-Obj IsBlocks;
-Obj BlocksType;
 Obj IsBooleanMat;
 Obj BooleanMatType;
 Obj IsMatrixOverSemiring;
@@ -197,6 +275,23 @@ Obj IntegerMatrixType;
 Obj IsPBR;
 Obj PBRTypes;
 Obj PBRType;
+
+/*****************************************************************************
+*V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
+*/
+
+typedef Obj (* GVarFilt)(/*arguments*/);
+
+static StructGVarFilt GVarFilts [] = {
+
+    {"IS_BIPART", "obj", &IsBipartFilt,
+     (GVarFilt)IsBipartHandler, "gap.cc:IS_BIPART"},
+
+    {"IS_BLOCKS", "obj", &IsBlocksFilt,
+     (GVarFilt)IsBlocksHandler, "gap.cc:IS_BLOCKS"},
+
+    { 0, 0, 0, 0, 0 } /* Finish with an empty entry */
+};
 
 /*****************************************************************************/
 
@@ -299,12 +394,6 @@ static StructGVarFunc GVarFuncs [] = {
                           "x"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_LEFT_BLOCKS, 1,
                           "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_PROD, 2,
-                          "x, y"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_EQ, 2,
-                          "x, y"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LT, 2,
-                          "x, y"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_PERM_LEFT_QUO, 2,
                           "x, y"),
     GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LEFT_PROJ, 1,
@@ -359,15 +448,13 @@ static StructGVarFunc GVarFuncs [] = {
 /******************************************************************************
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
-static Int InitKernel( StructInitInfo *module )
-{
+static Int InitKernel(StructInitInfo *module) {
+
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable(GVarFuncs);
 
-    InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
 
     T_SEMI = RegisterPackageTNUM("TSemiObj", TSemiObjTypeFunc);
-
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
     PrintObjFuncs[T_SEMI] = TSemiObjPrintFunc;
     SaveObjFuncs[T_SEMI] = TSemiObjSaveFunc;
@@ -376,7 +463,42 @@ static Int InitKernel( StructInitInfo *module )
     InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
     InitFreeFuncBag(T_SEMI, &TSemiObjFreeFunc);
 
+    InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
+
     //TODO: CopyObjFuncs, CleanObjFuncs, IsMutableObjFuncs
+
+    T_BIPART = RegisterPackageTNUM("TBipartObj", TBipartObjTypeFunc);
+    InfoBags[T_BIPART].name = "bipartition";
+
+    ProdFuncs[T_BIPART][T_BIPART] = BIPART_PROD;
+    EqFuncs[T_BIPART][T_BIPART] = BIPART_EQ;
+    LtFuncs[T_BIPART][T_BIPART] = BIPART_LT;
+
+    CopyObjFuncs[T_BIPART] = &TBipartObjCopyFunc;
+    CleanObjFuncs[T_BIPART] = &TBipartObjCleanFunc;
+    IsMutableObjFuncs[T_BIPART] = &TBipartObjIsMutableObjFuncs;
+
+    InitMarkFuncBags(T_BIPART, &TBipartObjMarkSubBags);
+    InitFreeFuncBag(T_BIPART, &TBipartObjFreeFunc);
+
+    ImportGVarFromLibrary("TYPE_BIPART", &TYPE_BIPART);
+    ImportGVarFromLibrary("TYPES_BIPART", &TYPES_BIPART);
+
+    T_BLOCKS = RegisterPackageTNUM("TBlocksObj", TBlocksObjTypeFunc);
+    InfoBags[T_BLOCKS].name = "blocks";
+
+    EqFuncs[T_BLOCKS][T_BLOCKS] = BLOCKS_EQ;
+    LtFuncs[T_BLOCKS][T_BLOCKS] = BLOCKS_LT;
+
+    CopyObjFuncs[T_BLOCKS] = &TBlocksObjCopyFunc;
+    CleanObjFuncs[T_BLOCKS] = &TBlocksObjCleanFunc;
+    IsMutableObjFuncs[T_BLOCKS] = &TBlocksObjIsMutableObjFuncs;
+
+    InitMarkFuncBags(T_BLOCKS, &MarkNoSubBags);
+    InitFreeFuncBag(T_BLOCKS, &TBlocksObjFreeFunc);
+
+
+    InitCopyGVar("TheTypeTBlocksObj", &TheTypeTBlocksObj);
 
     ImportGVarFromLibrary("HTValue", &HTValue);
     ImportGVarFromLibrary("HTAdd", &HTAdd);
@@ -384,13 +506,10 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary("infinity", &infinity);
     ImportGVarFromLibrary("Ninfinity", &Ninfinity);
 
-    ImportGVarFromLibrary("IsBipartition", &IsBipartition);
-    ImportGVarFromLibrary("IsBlocks", &IsBlocks);
-    ImportGVarFromLibrary("SEMIGROUPS_BipartitionTypes", &BipartTypes);
-    ImportGVarFromLibrary("BipartitionType", &BipartitionType);
-    ImportGVarFromLibrary("BlocksType", &BlocksType );
-
     ImportGVarFromLibrary("SEMIGROUPS_PBRTypes", &PBRTypes);
+    ImportGVarFromLibrary("PBRType", &PBRType);
+
+    ImportGVarFromLibrary("IsPBR", &IsPBR);
     ImportGVarFromLibrary("PBRType", &PBRType);
 
     ImportGVarFromLibrary("IsBooleanMat", &IsBooleanMat);
@@ -427,9 +546,6 @@ static Int InitKernel( StructInitInfo *module )
     ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
     ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
-    ImportGVarFromLibrary("IsPBR", &IsPBR);
-    ImportGVarFromLibrary("PBRType", &PBRType);
-
     /* return success                                                      */
     return 0;
 }
@@ -440,6 +556,7 @@ static Int InitKernel( StructInitInfo *module )
 static Int InitLibrary( StructInitInfo *module )
 {
     /* init filters and functions */
+    InitGVarFiltsFromTable( GVarFilts );
     InitGVarFuncsFromTable( GVarFuncs );
 
     /* return success                                                      */

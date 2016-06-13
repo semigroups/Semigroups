@@ -15,49 +15,52 @@
 # belonging to IsAssociativeElementCollection.
 #############################################################################
 
-BindGlobal("SEMIGROUPS_BipartitionFamilies", []);
-BindGlobal("SEMIGROUPS_BipartitionTypes", []);
-
-InstallGlobalFunction(BipartitionFamily,
+BindGlobal("TYPES_BIPART", []);
+BindGlobal("TYPE_BIPART",
 function(n)
-
-  if not IsInt(n) or n < 0 then
-    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n",
-                  "the argument must be a non-negative integer,");
-  fi;
-
+  local fam, type;
+    
   n := n + 1; # since the degree can be 0
 
-  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then
-    SEMIGROUPS_BipartitionFamilies[n] :=
-          NewFamily(Concatenation("BipartitionFamily", String(n - 1)),
-                    IsBipartition,
-                    CanEasilySortElements,
-                    CanEasilySortElements);
+  if IsBound(TYPES_BIPART[n]) then 
+    return TYPES_BIPART[n];
   fi;
+  
+  fam := NewFamily(Concatenation("BipartitionFamily", String(n - 1)),
+                   IsBipartition,
+                   CanEasilySortElements,
+                   CanEasilySortElements);
 
-  return SEMIGROUPS_BipartitionFamilies[n];
+  type := NewType(fam,
+                  IsBipartition and IsComponentObjectRep and
+                  IsAttributeStoringRep);
+  TYPES_BIPART[n] := type;
+  return type;
 end);
 
-InstallGlobalFunction(BipartitionType,
-function(n)
+#BindGlobal("SEMIGROUPS_BipartitionFamilies", []);
+#
+#InstallGlobalFunction(BipartitionFamily,
+#function(n)
+#
+#  if not IsInt(n) or n < 0 then
+#    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n",
+#                  "the argument must be a non-negative integer,");
+#  fi;
+#
+#  n := n + 1; # since the degree can be 0
+#
+#  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then
+#    SEMIGROUPS_BipartitionFamilies[n] :=
+#          NewFamily(Concatenation("BipartitionFamily", String(n - 1)),
+#                    IsBipartition,
+#                    CanEasilySortElements,
+#                    CanEasilySortElements);
+#  fi;
+#
+#  return SEMIGROUPS_BipartitionFamilies[n];
+#end);
 
-  if not IsInt(n) or n < 0 then
-    ErrorNoReturn("Semigroups: BipartitionType: usage,\n",
-                  "the argument must be a non-negative integer,");
-  fi;
-
-  n := n + 1; # since the degree can be 0
-
-  if not IsBound(SEMIGROUPS_BipartitionTypes[n]) then
-    SEMIGROUPS_BipartitionTypes[n] :=
-           NewType(BipartitionFamily(n),
-                   IsBipartition and IsComponentObjectRep and
-                   IsAttributeStoringRep);
-  fi;
-
-  return SEMIGROUPS_BipartitionTypes[n];
-end);
 
 #############################################################################
 # Pickler
@@ -213,10 +216,6 @@ function(blocks)
   od;
 
   out := BIPART_NC(blocks);
-
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrleft);
-  SetNrBlocks(out, next);
   return out;
 end);
 
@@ -230,18 +229,13 @@ function(n)
   local blocks, out, i;
 
   blocks := EmptyPlist(2 * n);
+
   for i in [1 .. n] do
     blocks[i] := i;
     blocks[i + n] := i;
   od;
 
-  out := BIPART_NC(blocks);
-  SetDegreeOfBipartition(out, n);
-  SetRankOfBipartition(out, n);
-  SetNrLeftBlocks(out, n);
-  SetNrBlocks(out, n);
-
-  return out;
+  return BIPART_NC(blocks);
 end);
 
 InstallMethod(RandomBipartition, "for a random source and pos int",
@@ -299,11 +293,6 @@ function(rs, n)
   od;
 
   out := BIPART_NC(out);
-  SetDegreeOfBipartition(out, n);
-  SetNrLeftBlocks(out, nrblocks);
-  SetNrBlocks(out, nrblocks);
-  SetNrRightBlocks(out, nrblocks);
-
   return out;
 end);
 
@@ -313,15 +302,6 @@ function(n)
 end);
 
 # Operators
-
-InstallMethod(\*, "for a bipartition and bipartition",
-IsIdenticalObj, [IsBipartition, IsBipartition], BIPART_PROD);
-
-InstallMethod(\<, "for a bipartition and bipartition",
-IsIdenticalObj, [IsBipartition, IsBipartition], BIPART_LT);
-
-InstallMethod(\=, "for a bipartition and bipartition",
-IsIdenticalObj, [IsBipartition, IsBipartition], BIPART_EQ);
 
 InstallMethod(PermLeftQuoBipartition, "for a bipartition and bipartition",
 IsIdenticalObj, [IsBipartition, IsBipartition],
@@ -812,7 +792,6 @@ function(x, n)
     fi;
   od;
   out := BIPART_NC(out);
-  SetIsPartialPermBipartition(out, true);
   return out;
 end);
 
@@ -854,7 +833,6 @@ function(f, n)
     fi;
   od;
   out := BIPART_NC(out);
-  SetIsTransBipartition(out, true);
   return out;
 end);
 
@@ -915,9 +893,6 @@ function(f, n)
     od;
   fi;
   out := BIPART_NC(out);
-  SetDegreeOfBipartition(out, n);
-  SetNrBlocks(out, nrblocks);
-  SetNrLeftBlocks(out, nrleft);
   return out;
 end);
 
@@ -964,7 +939,6 @@ function(f, n)
   od;
 
   out := BIPART_NC(out);
-  SetIsBlockBijection(out, true);
   return out;
 end);
 

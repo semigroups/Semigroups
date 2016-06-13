@@ -6,7 +6,7 @@
 *******************************************************************************/
 
 #include "converter.h"
-#include "bipart.hh"
+#include "bipart.h"
 #include "gap.hh"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +70,7 @@ Obj BoolMatConverter::unconvert (Element* x) {
 ////////////////////////////////////////////////////////////////////////////////
 
 Bipartition* BipartConverter::convert (Obj o, size_t n) {
-  assert(CALL_1ARGS(IsBipartition, o));
+  assert(TNUM_OBJ(o) == T_BIPART);
   return static_cast<Bipartition*>(static_cast<Element*>(bipart_get_cpp(o))->really_copy());
 }
 
@@ -151,8 +151,8 @@ Obj MatrixOverSemiringConverter::unconvert (Element* x) {
 ////////////////////////////////////////////////////////////////////////////////
 
 Obj PBRConverter::get_gap_type (size_t deg) {
-  deg++;  
-  if (deg > (size_t) LEN_PLIST(PBRTypes) || 
+  deg++;
+  if (deg > (size_t) LEN_PLIST(PBRTypes) ||
       ELM_PLIST(PBRTypes, deg) == 0) {
     CALL_1ARGS(PBRType, INTOBJ_INT(deg - 1));
   }

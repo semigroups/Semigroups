@@ -8,12 +8,12 @@
 #############################################################################
 ##
 
-DeclareGlobalFunction("BipartitionType");
-DeclareGlobalFunction("BipartitionFamily");
 
-DeclareCategory("IsBipartition",
-                IsMultiplicativeElementWithInverse and
-                IsAssociativeElementWithStar);
+DeclareCategoryKernel("IsBipartition",
+                      IsMultiplicativeElementWithInverse 
+                      and IsAssociativeElementWithStar,
+                      IS_BIPART);
+
 DeclareCategoryCollections("IsBipartition");
 DeclareCategoryCollections("IsBipartitionCollection");
 

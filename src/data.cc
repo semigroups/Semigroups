@@ -37,6 +37,9 @@ DataType data_type (Obj data) {
       return PPERM4;
     }
   }
+  if (TNUM_OBJ(x) == T_BIPART) {
+    return BIPART;
+  }
 
   switch (TNUM_OBJ(x)) {
     case T_POSOBJ:
@@ -60,10 +63,6 @@ DataType data_type (Obj data) {
         return PBR_TYPE;
       }
       return UNKNOWN;
-    case T_COMOBJ:
-      if (CALL_1ARGS(IsBipartition, x) == True) {
-        return BIPART;
-      }
       // intentional fall through
     default:
       return UNKNOWN;
