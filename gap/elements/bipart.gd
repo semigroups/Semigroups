@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  bipartition.gd
+#W  bipart.gd
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -30,7 +30,6 @@ DeclareAttribute("NrBlocks", IsBipartition);
 DeclareAttribute("LeftBlocks", IsBipartition);
 DeclareAttribute("RightBlocks", IsBipartition);
 
-DeclareAttribute("ExtRepOfBipartition", IsBipartition);
 DeclareAttribute("IntRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);

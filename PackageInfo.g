@@ -40,10 +40,10 @@ end);
 
 SetPackageInfo(rec(
 PackageName := "Semigroups",
-Subtitle := "Methods for Semigroups",
-Version := "3.0",
+Subtitle := "",
+Version := "3.0.0",
 Date := "01/01/3000",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-3.0",
+ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-3.0.0",
 ArchiveFormats := ".tar.gz",
 Persons := [
   rec(

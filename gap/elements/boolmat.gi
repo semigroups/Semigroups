@@ -431,7 +431,7 @@ function(x, n)
   local deg, blocks, out, i, block;
 
   deg := DegreeOfBipartition(x);
-  blocks := ShallowCopy(ExtRepOfBipartition(x));
+  blocks := ShallowCopy(ExtRepOfObj(x));
   out := EmptyPlist(n);
 
   for block in blocks do

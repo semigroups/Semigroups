@@ -364,7 +364,7 @@ function(x, n)
   local deg, blocks, out, dom, block, i;
 
   deg    := DegreeOfBipartition(x);
-  blocks := ExtRepOfBipartition(x);
+  blocks := ExtRepOfObj(x);
   out    := [[], []];
   dom := Union([-n .. -1], [1 .. n]);
 

@@ -342,7 +342,7 @@ function(x, opts)
     draw := i -> "  \\draw(";
   fi;
 
-  ext := ExtRepOfBipartition(x);
+  ext := ExtRepOfObj(x);
   n   := DegreeOfBipartition(x);
 
   if opts.beginDocument = true then
