@@ -241,7 +241,7 @@
     <#Include Label = "IsBlocks">
     <#Include Label = "BlocksFamily">
     <#Include Label = "BlocksNC">
-    <#Include Label = "ExtRepOfBlocks">
+    <#Include Label = "ExtRepOfObjBlocks">
     <#Include Label = "RankOfBlocks">
     <#Include Label = "DegreeOfBlocks">
     <#Include Label = "ProjectionFromBlocks">

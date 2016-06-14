@@ -28,7 +28,6 @@ DeclareAttribute("NrBlocks", IsBlocks);
 DeclareAttribute("RankOfBlocks", IsBlocks);
 DeclareAttribute("NrTransverseBlocks", IsBlocks);
 DeclareAttribute("DegreeOfBlocks", IsBlocks);
-DeclareAttribute("ExtRepOfBlocks", IsBlocks);
 DeclareOperation("OnRightBlocks", [IsBlocks, IsBipartition]);
 DeclareOperation("OnLeftBlocks", [IsBlocks, IsBipartition]);
 DeclareOperation("AsDigraph", [IsBlocks]);
