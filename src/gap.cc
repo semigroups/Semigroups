@@ -1,7 +1,7 @@
 /*
  * Semigroups GAP package
  *
- * This file contains...
+ * This file contains ... TODO
  *
  */
 
@@ -11,8 +11,8 @@
 #include <iostream>
 #include <time.h>
 
-#include "bipart.h"
-#include "converter.h"
+#include "src/bipart.h"
+#include "src/converter.h"
 #include "fropin.hh"
 #include "ufdata.hh"
 
@@ -112,12 +112,12 @@ Obj TBlocksObjTypeFunc (Obj o) {
   return TheTypeTBlocksObj;
 }
 
-// Functions to save T_SEMI, T_BIPART, T_BLOCKS
+// Functions to save/load T_SEMI, T_BIPART, T_BLOCKS
 
 void TSemiObjSaveFunc (Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
 
-  SaveUInt8(SUBTYPE_OF_T_SEMI(o));
+  SaveUInt4(SUBTYPE_OF_T_SEMI(o));
 
   switch (SUBTYPE_OF_T_SEMI(o)) {
     case T_SEMI_SUBTYPE_UFDATA: {
@@ -129,34 +129,10 @@ void TSemiObjSaveFunc (Obj o) {
   }
 }
 
-void TBipartObjSaveFunc (Obj o) {
-  Bipartition* b = CLASS_OBJ<Bipartition>(o);
-  SaveUInt8(b->degree());
-  for (auto it = b->begin(); it < b->end(); it++) {
-    SaveUInt4(*it);
-  }
-}
-
-void TBlocksObjSaveFunc (Obj o) {
-  Blocks* b = CLASS_OBJ<Blocks>(o);
-  SaveUInt8(b->degree());
-  if (b->degree() != 0) {
-    SaveUInt8(b->nr_blocks());
-    for (auto it = b->begin(); it < b->end(); it++) {
-      SaveUInt4(*it);
-    }
-    for (auto it = b->lookup_begin(); it < b->lookup_end(); it++) {
-      SaveUInt2(static_cast<UInt4>(*it));
-    }
-  }
-}
-
-// Functions to load T_SEMI, T_BIPART, T_BLOCKS
-
 void TSemiObjLoadFunc (Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
 
-  t_semi_subtype_t type = static_cast<t_semi_subtype_t>(LoadUInt8());
+  t_semi_subtype_t type = static_cast<t_semi_subtype_t>(LoadUInt4());
   ADDR_OBJ(o)[1] = (Obj)type;
 
   switch (type) {
@@ -174,17 +150,16 @@ void TSemiObjLoadFunc (Obj o) {
   }
 }
 
-void TBipartObjMarkSubBags (Obj o) {
-  if (ADDR_OBJ(o)[1] != NULL) {
-    MARK_BAG(ADDR_OBJ(o)[1]);
-  }
-  if (ADDR_OBJ(o)[2] != NULL) {
-    MARK_BAG(ADDR_OBJ(o)[2]);
+void TBipartObjSaveFunc (Obj o) {
+  Bipartition* b = CLASS_OBJ<Bipartition>(o);
+  SaveUInt4(b->degree());
+  for (auto it = b->begin(); it < b->end(); it++) {
+    SaveUInt4(*it);
   }
 }
 
 void TBipartObjLoadFunc (Obj o) {
-  UInt8 deg = LoadUInt8();
+  UInt4 deg = LoadUInt4();
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
   blocks->reserve(2 * deg);
 
@@ -192,16 +167,30 @@ void TBipartObjLoadFunc (Obj o) {
     blocks->push_back(LoadUInt4());
   }
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Bipartition(blocks));
+  assert(ADDR_OBJ(o)[1] == NULL && ADDR_OBJ(o)[2] == NULL);
+}
+
+void TBlocksObjSaveFunc (Obj o) {
+  Blocks* b = CLASS_OBJ<Blocks>(o);
+  SaveUInt4(b->degree());
+  if (b->degree() != 0) {
+    SaveUInt4(b->nr_blocks());
+    for (auto it = b->begin(); it < b->end(); it++) {
+      SaveUInt4(*it);
+    }
+    for (auto it = b->lookup_begin(); it < b->lookup_end(); it++) {
+      SaveUInt1(static_cast<UInt1>(*it));
+    }
+  }
 }
 
 void TBlocksObjLoadFunc (Obj o) {
-
-  UInt8 deg = LoadUInt8();
+  UInt4 deg = LoadUInt4();
   if (deg == 0) {
     ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Blocks());
     return;
   }
-  UInt8 nr_blocks = LoadUInt8();
+  UInt4 nr_blocks = LoadUInt4();
 
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
   blocks->reserve(deg);
@@ -214,12 +203,23 @@ void TBlocksObjLoadFunc (Obj o) {
   lookup->reserve(nr_blocks);
 
   for (size_t i = 0; i < nr_blocks; i++) {
-    lookup->push_back(static_cast<bool>(LoadUInt2()));
+    lookup->push_back(static_cast<bool>(LoadUInt1()));
   }
 
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Blocks(blocks,
                                                     lookup,
                                                     nr_blocks));
+}
+
+void TBipartObjMarkSubBags (Obj o) {
+  if (ADDR_OBJ(o)[1] != NULL) {
+    //assert(TNUM_OBJ(ADDR_OBJ(o)[1]) == T_BLOCKS);
+    MARK_BAG(ADDR_OBJ(o)[1]);
+  }
+  if (ADDR_OBJ(o)[2] != NULL) {
+    //assert(TNUM_OBJ(ADDR_OBJ(o)[2]) == T_BLOCKS);
+    MARK_BAG(ADDR_OBJ(o)[2]);
+  }
 }
 
 // Filters for IS_BIPART, IS_BLOCKS
@@ -451,9 +451,10 @@ static StructGVarFunc GVarFuncs [] = {
 static Int InitKernel(StructInitInfo *module) {
 
     /* init filters and functions                                          */
+    InitHdlrFiltsFromTable(GVarFilts);
     InitHdlrFuncsFromTable(GVarFuncs);
 
-
+    // T_SEMI
     T_SEMI = RegisterPackageTNUM("TSemiObj", TSemiObjTypeFunc);
     InfoBags[T_SEMI].name = "Semigroups package C++ type";
     PrintObjFuncs[T_SEMI] = TSemiObjPrintFunc;
@@ -465,41 +466,49 @@ static Int InitKernel(StructInitInfo *module) {
 
     InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
 
-    //TODO: CopyObjFuncs, CleanObjFuncs, IsMutableObjFuncs
+    //TODO: CopyObjFuncs, CleanObjFuncs, IsMutableObjFuncs for T_SEMI bags
 
+    // T_BIPART
     T_BIPART = RegisterPackageTNUM("TBipartObj", TBipartObjTypeFunc);
     InfoBags[T_BIPART].name = "bipartition";
-
-    ProdFuncs[T_BIPART][T_BIPART] = BIPART_PROD;
-    EqFuncs[T_BIPART][T_BIPART] = BIPART_EQ;
-    LtFuncs[T_BIPART][T_BIPART] = BIPART_LT;
 
     CopyObjFuncs[T_BIPART] = &TBipartObjCopyFunc;
     CleanObjFuncs[T_BIPART] = &TBipartObjCleanFunc;
     IsMutableObjFuncs[T_BIPART] = &TBipartObjIsMutableObjFuncs;
 
+    SaveObjFuncs[T_BIPART] = TBipartObjSaveFunc;
+    LoadObjFuncs[T_BIPART] = TBipartObjLoadFunc;
+
     InitMarkFuncBags(T_BIPART, &TBipartObjMarkSubBags);
     InitFreeFuncBag(T_BIPART, &TBipartObjFreeFunc);
+
+    ProdFuncs[T_BIPART][T_BIPART] = BIPART_PROD;
+    EqFuncs[T_BIPART][T_BIPART] = BIPART_EQ;
+    LtFuncs[T_BIPART][T_BIPART] = BIPART_LT;
 
     ImportGVarFromLibrary("TYPE_BIPART", &TYPE_BIPART);
     ImportGVarFromLibrary("TYPES_BIPART", &TYPES_BIPART);
 
+    // T_BLOCKS
     T_BLOCKS = RegisterPackageTNUM("TBlocksObj", TBlocksObjTypeFunc);
     InfoBags[T_BLOCKS].name = "blocks";
-
-    EqFuncs[T_BLOCKS][T_BLOCKS] = BLOCKS_EQ;
-    LtFuncs[T_BLOCKS][T_BLOCKS] = BLOCKS_LT;
 
     CopyObjFuncs[T_BLOCKS] = &TBlocksObjCopyFunc;
     CleanObjFuncs[T_BLOCKS] = &TBlocksObjCleanFunc;
     IsMutableObjFuncs[T_BLOCKS] = &TBlocksObjIsMutableObjFuncs;
 
+    SaveObjFuncs[T_BLOCKS] = TBlocksObjSaveFunc;
+    LoadObjFuncs[T_BLOCKS] = TBlocksObjLoadFunc;
+
     InitMarkFuncBags(T_BLOCKS, &MarkNoSubBags);
     InitFreeFuncBag(T_BLOCKS, &TBlocksObjFreeFunc);
 
+    EqFuncs[T_BLOCKS][T_BLOCKS] = BLOCKS_EQ;
+    LtFuncs[T_BLOCKS][T_BLOCKS] = BLOCKS_LT;
 
     InitCopyGVar("TheTypeTBlocksObj", &TheTypeTBlocksObj);
 
+    // Import other stuff
     ImportGVarFromLibrary("HTValue", &HTValue);
     ImportGVarFromLibrary("HTAdd", &HTAdd);
 
