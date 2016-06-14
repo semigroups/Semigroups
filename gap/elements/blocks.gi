@@ -30,7 +30,7 @@ BIPART_RIGHT_BLOCKS);
 
 # for backwards compatibility
 InstallGlobalFunction(BlocksNC, BLOCKS_NC);
-InstallMethod(ExtRepOfBlocks, "for blocks", [IsBlocks], BLOCKS_EXT_REP);
+InstallMethod(ExtRepOfObj, "for blocks", [IsBlocks], BLOCKS_EXT_REP);
 
 InstallMethod(ChooseHashFunction, "for blocks",
 [IsBlocks, IsInt],
@@ -60,7 +60,7 @@ InstallMethod(AsDigraph, "for blocks", [IsBlocks],
 function(blocks)
   local ext, out, block, i;
 
-  ext := ExtRepOfBlocks(blocks);
+  ext := ExtRepOfObj(blocks);
   out := List([1 .. DegreeOfBlocks(blocks)], x -> []);
 
   for block in ext do
@@ -106,13 +106,13 @@ InstallMethod(NrTransverseBlocks, "for blocks", [IsBlocks], RankOfBlocks);
 # Printing, viewing etc . . .
 
 InstallMethod(String, "for blocks", [IsBlocks],
-x -> Concatenation("BlocksNC(", String(ExtRepOfBlocks(x)), ")"));
+x -> Concatenation("BlocksNC(", String(ExtRepOfObj(x)), ")"));
 
 InstallMethod(ViewObj, "for blocks", [IsBlocks],
 function(blocks)
   local ext, str, i;
 
-  ext := ExtRepOfBlocks(blocks);
+  ext := ExtRepOfObj(blocks);
   if Length(ext) > 0 then
     Print("<blocks: ");
     if ext[1][1] < 0 then

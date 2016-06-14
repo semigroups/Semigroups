@@ -535,7 +535,7 @@ function(blocks, opts)
 
   # draw the edges
   Append(str, "\n");
-  ext := ExtRepOfBlocks(blocks);
+  ext := ExtRepOfObj(blocks);
   for pos in [1 .. Length(ext)] do
     block := ShallowCopy(ext[pos]);
     Apply(block, AbsInt);

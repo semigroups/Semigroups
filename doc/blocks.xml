@@ -44,7 +44,7 @@ gap> RightProjection(x);
     <Description>
    Every blocks object in &GAP; belongs to the category
     <C>IsBlocks</C>. Basic operations for blocks are
-    <Ref Attr = "ExtRepOfBlocks"/>,
+    <Ref Oper = "ExtRepOfObj" Label = "for a blocks"/>,
     <Ref Attr = "RankOfBlocks"/>,
     <Ref Attr = "DegreeOfBlocks"/>,
     <Ref Oper = "OnRightBlocks"/>, and 
@@ -130,17 +130,17 @@ gap> OnLeftBlocks(LeftBlocks(y), x);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="ExtRepOfBlocks">
+<#GAPDoc Label="ExtRepOfObjBlocks">
   <ManSection>
-    <Attr Name = "ExtRepOfBlocks" Arg = "blocks"/>
+    <Oper Name = "ExtRepOfObj" Arg = "blocks" Label = "for a blocks"/>
     <Returns>A list of integers.</Returns>
     <Description>
        If <C>n</C> is the degree of a bipartition with left or right blocks
-       <A>blocks</A>, then <C>ExtRepOfBlocks</C> returns the partition
+       <A>blocks</A>, then <C>ExtRepOfObj</C> returns the partition
        corresponding to <A>blocks</A> as a sorted list of duplicate-free lists. 
       <Example><![CDATA[
 gap> blocks := BlocksNC([[1, 6], [2, 3, 7], [4, 5], [-8]]);;
-gap> ExtRepOfBlocks(blocks);
+gap> ExtRepOfObj(blocks);
 [ [ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ]]]></Example>
     </Description>
   </ManSection>
