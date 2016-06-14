@@ -30,7 +30,7 @@
 // CLASS_OBJ. The GAP Obj returned by OBJ_CLASS is just a bag of type T_SEMI of
 // the form:
 //
-// [ t_semi_subtype_t, pointer to C++ class ]
+// [ pointer to C++ class, t_semi_subtype_t ]
 //
 
 extern UInt T_SEMI;
