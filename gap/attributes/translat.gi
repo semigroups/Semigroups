@@ -7,6 +7,7 @@
 ##
 #############################################################################
 ##
+
 # (a * b) f = (a) f * b
 
 InstallMethod(TranslationalHull, "for a rectangular band",
@@ -59,56 +60,6 @@ function(S)
 	hull := DirectProduct(Semigroup(leftHullGens), Semigroup(rightHullGens));
 	return hull;
 
-end);
-
-InstallMethod(LeftTranslationsNew, "for a semigroup with known generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local digraph, n, nrgens, nrgraphs, out, colors, gens, i, tempi, revbinbitsi, 
-  j, k;
-
-  digraph  := RightCayleyGraphSemigroup(S);
-  n        := Length(digraph);
-  nrgens   := Length(digraph[1]);
-  nrgraphs := LogInt(nrgens,2) + 1;
-  out      := [];
-  colors   := [];
-
-
-  for i in [1 .. nrgraphs] do
-  	for j in [1 .. n] do
-  	  out[n * (i - 1) + j]    := [];
-  	    for k in [1 .. nrgraphs] do
-  	      if i <> k  then
-  	      	Add(out[n * (i - 1) + j], n * (k - 1) + j);
-  	      fi;
-  	    colors[n * (i - 1) + j] := i;
-  	    od;
-  	od;
-  od;
-  
-  		
-  for i in [1 .. nrgens] do
-  	tempi       := i;
-  	revbinbitsi := [];
-  	while tempi > 0 do
-  		revbinbitsi[LogInt(tempi,2)+1] := 1;
-  		tempi := tempi - 2^LogInt(tempi,2);
-    od;
-    for j in [1 .. nrgraphs] do
-      if IsBound(revbinbitsi[j]) then
-        for k in [1 .. n] do
-        	Add(out[n * (j - 1) + k], n * (j - 1) + digraph[k][i]);
-  		od;
-  	  fi;
-  	od;
-  od;
-  	
-  gens := GeneratorsOfEndomorphismMonoid(Digraph(out), colors);
-  Apply(gens, x -> RestrictedTransformation(x, [1 .. n]));
-  return Semigroup(gens, rec(small := true));
-  #DOESN'T PRESERVE ENDOMORPHISMS
-  #DOES PRESERVE AUTOMORPHISMS? TODO: Prove
 end);
 
 InstallMethod(RightTranslations, "for a semigroup with known generators",

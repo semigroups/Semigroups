@@ -9,6 +9,5 @@
 ##
 
 DeclareAttribute("LeftTranslations", IsSemigroup);
-DeclareAttribute("LeftTranslationsNew", IsSemigroup);
 DeclareAttribute("RightTranslations", IsSemigroup);
 DeclareAttribute("TranslationalHull", IsRectangularBand);
