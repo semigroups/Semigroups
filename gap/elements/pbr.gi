@@ -152,7 +152,7 @@ end);
 InstallMethod(StarOp, "for a pbr", [IsPBR],
 function(x)
   local ext;
-  ext := ShallowCopy(ExtRepOfPBR(x) * -1);
+  ext := ShallowCopy(ExtRepOfObj(x) * -1);
   Apply(ext, ShallowCopy);
   Apply(ext[1], ShallowCopy);
   Apply(ext[2], ShallowCopy);
@@ -685,7 +685,7 @@ function(x, y)
   return Objectify(PBRType(n), out);
 end);
 
-InstallMethod(ExtRepOfPBR, "for a pbr",
+InstallMethod(ExtRepOfObj, "for a pbr",
 [IsPBR],
 function(x)
   local n, out, i, j, k;
@@ -718,7 +718,7 @@ InstallMethod(PrintObj, "for a pbr", [IsPBR],
 function(x)
   local ext;
 
-  ext := ExtRepOfPBR(x);
+  ext := ExtRepOfObj(x);
   Print("\>\>PBR(\>\>", ext[1], "\<\<,");
 
   if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
@@ -737,7 +737,7 @@ InstallMethod(PrintString, "for a pbr",
 function(x)
   local ext, str;
 
-  ext := ExtRepOfPBR(x);
+  ext := ExtRepOfObj(x);
 
   str := Concatenation("\>\>PBR(\>\>", ViewString(ext[1]), "\<\<,");
 
@@ -756,7 +756,7 @@ end);
 InstallMethod(String, "for a pbr", [IsPBR],
 function(x)
   local ext;
-  ext := ExtRepOfPBR(x);
+  ext := ExtRepOfObj(x);
   return Concatenation("PBR(", String(ext[1]), ", ", String(ext[2]), ")");
 end);
 

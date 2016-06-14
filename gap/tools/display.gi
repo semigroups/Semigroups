@@ -157,7 +157,7 @@ InstallMethod(TikzString, "for a pbr and record",
 function(x, opts)
   local ext, n, str, coeff1, coeff2, jj, i, j;
 
-  ext := ExtRepOfPBR(x);
+  ext := ExtRepOfObj(x);
   n   := DegreeOfPBR(x);
   str := ShallowCopy(SEMIGROUPS.TikzInit);
   Append(str, "\\usetikzlibrary{arrows}\n");

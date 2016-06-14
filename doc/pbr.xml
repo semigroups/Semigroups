@@ -18,7 +18,7 @@
       Every PBR in &GAP; belongs to the category <C>IsPBR</C>. Basic operations
       for PBRs are
       <Ref Attr = "DegreeOfPBR"/>,
-      <Ref Attr = "ExtRepOfPBR"/>,
+      <Ref Oper = "ExtRepOfObj" Label = "for a PBR"/>,
       <Ref Oper = "PBRNumber"/>,
       <Ref Oper = "NumberPBR"/>,
       <Ref Oper = "StarOp" Label = "for a PBR"/>,
@@ -199,21 +199,21 @@ gap> DegreeOfPBRCollection(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="ExtRepOfPBR">
+<#GAPDoc Label="ExtRepOfObjPBR">
   <ManSection>
-    <Attr Name = "ExtRepOfPBR" Arg = "x"/>
+    <Oper Name = "ExtRepOfObj" Arg = "x" Label = "for a PBR"/>
     <Returns>A pair of lists of lists of integers.</Returns>
     <Description>
-      If <C>n</C> is the degree of the PBR <A>x</A>, then <C>ExtRepOfPBR</C>
+      If <C>n</C> is the degree of the PBR <A>x</A>, then <C>ExtRepOfObj</C>
       returns the argument required by <Ref Func = "PBR"/> to create a PBR
-      equal to <A>x</A>, i.e. <C>PBR(ExtRepOfPBR(<A>x</A>))</C>
+      equal to <A>x</A>, i.e. <C>PBR(ExtRepOfObj(<A>x</A>))</C>
       returns a PBR equal to <A>x</A>.
       
       <Example><![CDATA[
 gap> x := PBR([[-1, 1], [-2, 2]],
 >             [[-2, -1, 1], [-1, 1, 2]]);
 PBR([ [ -1, 1 ], [ -2, 2 ] ], [ [ -2, -1, 1 ], [ -1, 1, 2 ] ])
-gap> ExtRepOfPBR(x);
+gap> ExtRepOfObj(x);
 [ [ [ -1, 1 ], [ -2, 2 ] ], [ [ -2, -1, 1 ], [ -1, 1, 2 ] ] ]]]></Example>
     </Description>
   </ManSection>
@@ -673,7 +673,7 @@ gap> AsPermutation(x);
     <Description>
       <C>StarOp</C> returns the unique PBR <C>y</C> obtained by exchanging the 
       positive and negative numbers in <A>x</A> (i.e. multiplying  
-      <Ref Attr = "ExtRepOfPBR"/> by <C>-1</C> and swapping its first and
+      <Ref Oper = "ExtRepOfObj" Label = "for a PBR"/> by <C>-1</C> and swapping its first and
       second components).
 
       <Example><![CDATA[
