@@ -42,7 +42,7 @@ ReadPackage("semigroups/gap/options.g");
 
 ReadPackage("semigroups/gap/elements/star.gd");
 ReadPackage("semigroups/gap/elements/pbr.gd");
-ReadPackage("semigroups/gap/elements/bipartition.gd");
+ReadPackage("semigroups/gap/elements/bipart.gd");
 ReadPackage("semigroups/gap/elements/blocks.gd");
 ReadPackage("semigroups/gap/elements/semiringmat.gd");
 ReadPackage("semigroups/gap/elements/maxplusmat.gd");
