@@ -545,7 +545,7 @@ function(x)
     ErrorNoReturn("Semigroups: AsBipartition (for a pbr): usage,\n",
                   "the argument does not satisfy 'IsBipartitionPBR',");
   fi;
-  return Bipartition(Union(ExtRepOfPBR(x)));
+  return Bipartition(Union(ExtRepOfObj(x)));
 end);
 
 InstallMethod(AsBlockBijection, "for a partial perm",
