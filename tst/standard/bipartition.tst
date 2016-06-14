@@ -607,7 +607,7 @@ gap> BIPART_LAMBDA_CONJ(Bipartition([[1, -2], [2, -3], [3], [-1]]),
 # bipartition: empty bipartition tests for int/ext rep
 gap> x := Bipartition([]);
 <empty bipartition>
-gap> ExtRepOfBipartition(x);
+gap> ExtRepOfObj(x);
 [  ]
 gap> IntRepOfBipartition(x);
 [  ]

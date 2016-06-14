@@ -208,7 +208,7 @@
     possess.  
     <#Include Label = "DegreeOfBipartition">
     <#Include Label = "RankOfBipartition">
-    <#Include Label = "ExtRepOfBipartition">
+    <#Include Label = "ExtRepOfObjBipart">
     <#Include Label = "RightBlocks">
     <#Include Label = "LeftBlocks">
     <#Include Label = "NrLeftBlocks">
