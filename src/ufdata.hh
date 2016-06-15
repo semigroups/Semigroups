@@ -36,6 +36,12 @@ class UFData {
   }
   UFData& operator= (UFData const& copy) = delete;
 
+  // Constructor by table
+  UFData (const table_t& table) : _size(table.size()),
+                                  _table(new table_t(table)),
+                                  _blocks(nullptr),
+                                  _haschanged(true) { }
+
   // Constructor by size
   UFData (size_t size) : _size(size),
                          _table(new table_t()),

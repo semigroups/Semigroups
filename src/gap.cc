@@ -18,6 +18,12 @@
 
 #include "semigroups++/semigroups.h"
 
+#if !defined(SIZEOF_VOID_P)
+# error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
+#elif SIZEOF_VOID_P == 4
+#define SYSTEM_IS_32_BIT
+#endif
+
 Obj TheTypeTSemiObj;
 Obj TheTypeTBlocksObj;
 
@@ -27,6 +33,23 @@ Obj TYPES_BIPART; // plist
 UInt T_SEMI = 0;
 UInt T_BIPART = 0;
 UInt T_BLOCKS = 0;
+
+// Save/Load a UInt with length the current wordsize
+inline void SaveUIntBiggest (UInt n) {
+#ifdef SYSTEM_IS_32_BIT
+  SaveUInt4(n);
+#else
+  SaveUInt8(n);
+#endif
+}
+
+inline UInt LoadUIntBiggest () {
+#ifdef SYSTEM_IS_32_BIT
+  return LoadUInt4();
+#else
+  return LoadUInt8();
+#endif
+}
 
 // Function to print a T_SEMI Obj.
 
@@ -121,7 +144,11 @@ void TSemiObjSaveFunc (Obj o) {
 
   switch (SUBTYPE_OF_T_SEMI(o)) {
     case T_SEMI_SUBTYPE_UFDATA: {
-      // FIXME: what to do in this case
+      UFData* uf = CLASS_OBJ<UFData>(o);
+      SaveUIntBiggest(uf->get_size());
+      for (size_t i = 0; i < uf->get_size(); i++) {
+        SaveUIntBiggest(uf->find(i));
+      }
     }
     default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_SEMIGP,
              // T_SEMI_SUBTYPE_CONVER do nothing further
@@ -145,7 +172,14 @@ void TSemiObjLoadFunc (Obj o) {
       break;
     }
     case T_SEMI_SUBTYPE_UFDATA: {
-      // FIXME: what to do in this case
+      size_t size = LoadUIntBiggest();
+      std::vector<size_t>* table = new std::vector<size_t>();
+      table->reserve(size);
+      for (size_t i = 0; i < size; i++) {
+        table->push_back(LoadUIntBiggest());
+      }
+      ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new UFData(*table));
+      break;
     }
   }
 }
