@@ -81,7 +81,7 @@ InstallMethod(SemigroupViewStringPrefix, "for a bipartition semigroup",
 InstallMethod(SemigroupViewStringPrefix, "for a bipartition *-semigroup",
 [IsBipartitionSemigroup and IsStarSemigroup],
 function(S)
-  if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then 
+  if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     TryNextMethod();
   fi;
   return "\>bipartition\< *-";
@@ -91,9 +91,9 @@ InstallMethod(SemigroupViewStringPrefix, "for a block bijection semigroup",
 [IsBlockBijectionSemigroup], S -> "\>block bijection\< ");
 
 InstallMethod(SemigroupViewStringPrefix, "for a block bijection *-semigroup",
-[IsBlockBijectionSemigroup and IsStarSemigroup], 
+[IsBlockBijectionSemigroup and IsStarSemigroup],
 function(S)
-  if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then 
+  if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     TryNextMethod();
   fi;
   return "\>block bijection\< *-";

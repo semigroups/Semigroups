@@ -19,13 +19,13 @@ BindGlobal("TYPES_BIPART", []);
 BindGlobal("TYPE_BIPART",
 function(n)
   local fam, type;
-    
+
   n := n + 1; # since the degree can be 0
 
-  if IsBound(TYPES_BIPART[n]) then 
+  if IsBound(TYPES_BIPART[n]) then
     return TYPES_BIPART[n];
   fi;
-  
+
   fam := NewFamily(Concatenation("BipartitionFamily", String(n - 1)),
                    IsBipartition,
                    CanEasilySortElements,
@@ -202,7 +202,7 @@ end);
 
 InstallMethod(IdentityBipartition, "for a positive integer", [IsPosInt],
 function(n)
-  local blocks, out, i;
+  local blocks, i;
 
   blocks := EmptyPlist(2 * n);
 

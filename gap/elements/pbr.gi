@@ -199,7 +199,7 @@ function(x)
 
   n := x![1];
   for i in [2 .. n + 1] do
-    if Length(x![i]) <> 1 or x![i][1] <= n 
+    if Length(x![i]) <> 1 or x![i][1] <= n
         or not i - 1 in x![x![i][1] + 1] then
       return false;
     fi;
@@ -595,7 +595,7 @@ InstallMethod(DegreeOfPBR, "for a pbr",
 InstallMethod(\*, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)
-  local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, tmp, i, j, count;
+  local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, tmp, i, j;
 
   n := x![1];
 
@@ -637,16 +637,16 @@ function(x, y)
     od;
     return;
   end;
-  
+
   tmp := [];
 
   for i in [1 .. n] do # find everything connected to vertex i
-    for j in x![i + 1] do 
-      if j <= n then 
+    for j in x![i + 1] do
+      if j <= n then
         out[i + 1][j] := true;
-      elif IsBound(tmp[j]) then 
+      elif IsBound(tmp[j]) then
         UNITE_BLIST(out[i + 1], tmp[j]);
-      else 
+      else
         tmp[j] := BlistList([1 .. 2 * n], []);
         IntersectBlist(x_seen, empty);
         IntersectBlist(y_seen, empty);
@@ -654,32 +654,32 @@ function(x, y)
         y_dfs(j - n, tmp[j]);
         UNITE_BLIST(out[i + 1], tmp[j]);
       fi;
-      if SizeBlist(out[i + 1]) = 2 * n then 
+      if SizeBlist(out[i + 1]) = 2 * n then
         break;
       fi;
     od;
   od;
-  
+
   for i in [n + 1 .. 2 * n] do # find everything connected to vertex i
     for j in y![i + 1] do
       if j > n then
         out[i + 1][j] := true;
-      elif IsBound(tmp[j]) then 
+      elif IsBound(tmp[j]) then
         UNITE_BLIST(out[i + 1], tmp[j]);
-      else 
+      else
         tmp[j] := BlistList([1 .. 2 * n], []);
         IntersectBlist(x_seen, empty);
         IntersectBlist(y_seen, empty);
         y_seen[i] := true;
-        x_dfs(j + n,  tmp[j]);
+        x_dfs(j + n, tmp[j]);
         UNITE_BLIST(out[i + 1], tmp[j]);
       fi;
-      if SizeBlist(out[i + 1]) = 2 * n then 
+      if SizeBlist(out[i + 1]) = 2 * n then
         break;
       fi;
     od;
   od;
-  for i in [2 .. 2 * n + 1] do 
+  for i in [2 .. 2 * n + 1] do
     out[i] := ListBlist([1 .. 2 * n], out[i]);
   od;
   return Objectify(PBRType(n), out);
