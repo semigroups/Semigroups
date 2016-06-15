@@ -333,7 +333,7 @@ function(S, gens, opts)
   if (HasIsInverseSemigroup(S) and IsInverseSemigroup(S)) then
     SetIsInverseSemigroup(I, true);
   fi;
-  
+
   if (HasIsStarSemigroup(S) and IsStarSemigroup(S)) then
     SetIsStarSemigroup(I, true);
   fi;

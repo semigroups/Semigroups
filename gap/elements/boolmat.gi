@@ -265,17 +265,17 @@ function(x)
   local n, contained, row, i, j, k;
 
   n := Length(x![1]);
-  for i in [1 .. n - 1] do 
+  for i in [1 .. n - 1] do
     for j in [i + 1 .. n] do
       contained := true;
-      for k in [1 .. n] do 
+      for k in [1 .. n] do
         row := x![k];
-        if (row[j] and not row[i]) then 
+        if (row[j] and not row[i]) then
           contained := false;
           break;
         fi;
       od;
-      if contained then 
+      if contained then
         return false;
       fi;
     od;
