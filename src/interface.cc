@@ -728,8 +728,8 @@ Obj FP_SEMI_SIZE (Obj self, Obj S) {
   initRNams();
   assert(IsbPRec(S, RNam_relations));
 
-  //if (! IsbPRec(S, RNam_congruence)) {
-
+  Congruence* cong;
+  if (! IsbPRec(S, RNam_congruence)) {
     std::vector<relation_t> rels;
     Obj gap_rels = ElmPRec(S, RNam_relations);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
@@ -746,9 +746,14 @@ Obj FP_SEMI_SIZE (Obj self, Obj S) {
       rels.push_back(make_pair(lhs, rhs));
     }
 
-    std::vector<relation_t> extra;
-    Congruence cong = Congruence(INT_INTOBJ(ElmPRec(S, RNam_nr_gens)), rels, extra);
-    cong.todd_coxeter();
-    return INTOBJ_INT(cong.nr_active_cosets() - 1);
-  //}
+    cong = new Congruence(INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
+                          rels,
+                          std::vector<relation_t>());
+    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_FPCONG));
+  } else {
+    cong = CLASS_OBJ<Congruence>(ElmPRec(S, RNam_congruence));
+  }
+
+  cong->todd_coxeter();
+  return INTOBJ_INT(cong->nr_active_cosets() - 1);
 }
