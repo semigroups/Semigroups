@@ -17,6 +17,7 @@
 #include "ufdata.hh"
 
 #include "semigroups++/semigroups.h"
+#include "semigroups++/tc.h"
 
 #if !defined(SIZEOF_VOID_P)
 # error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
@@ -64,6 +65,9 @@ void TSemiObjPrintFunc (Obj o) {
     case T_SEMI_SUBTYPE_UFDATA:
       Pr("<wrapper for instance of C++ UFData class>", 0L, 0L);
       break;
+    case T_SEMI_SUBTYPE_FPCONG:
+      Pr("<wrapper for instance of C++ Congruence class>", 0L, 0L);
+      break;
     default:
       assert(false);
   }
@@ -108,6 +112,8 @@ void TSemiObjFreeFunc (Obj o) {
     case T_SEMI_SUBTYPE_UFDATA:
       delete CLASS_OBJ<UFData>(o);
       break;
+    case T_SEMI_SUBTYPE_FPCONG:
+      delete CLASS_OBJ<Congruence>(o);
     default:
       assert(false);
   }
@@ -150,6 +156,8 @@ void TSemiObjSaveFunc (Obj o) {
         SaveUIntBiggest(uf->find(i));
       }
     }
+    case T_SEMI_SUBTYPE_FPCONG:
+      //FIXME implement this
     default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_SEMIGP,
              // T_SEMI_SUBTYPE_CONVER do nothing further
       break;
@@ -179,6 +187,10 @@ void TSemiObjLoadFunc (Obj o) {
         table->push_back(LoadUIntBiggest());
       }
       ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new UFData(*table));
+      break;
+    }
+    case T_SEMI_SUBTYPE_FPCONG: {
+      // FIXME implement this
       break;
     }
   }
