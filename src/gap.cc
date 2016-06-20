@@ -404,7 +404,7 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_MAX_WORD_LENGTH_BY_RANK, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CONGRUENCE, 1, "data"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CONGRUENCE, 2, "data, extra"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", FP_SEMI_SIZE, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2,
                           "scc1, scc2"),

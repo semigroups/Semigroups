@@ -706,17 +706,30 @@ Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data) {
   }
 }
 
-Obj SEMIGROUP_CONGRUENCE (Obj self, Obj data) {
+Obj SEMIGROUP_CONGRUENCE (Obj self, Obj data, Obj extra_gap) {
+  assert(IS_PLIST(extra_gap));
+  assert(LEN_PLIST(extra_gap) > 0);
   if (data_type(data) != UNKNOWN) {
     initRNams();
     Semigroup* semigroup = data_semigroup(data);
     semigroup->enumerate(-1, data_report(data));
 
-    //std::vector<relation_t> extra;
-    //extra.push_back(make_pair(word_t(1, 1), word_t(1, 4)));
+    std::vector<relation_t> extra;
+    for (size_t i = 1; i <= LEN_PLIST(extra_gap); i++) {
+      Obj    rel1 = ELM_PLIST(ELM_PLIST(extra_gap, i), 1);
+      Obj    rel2 = ELM_PLIST(ELM_PLIST(extra_gap, i), 2);
+      word_t lhs, rhs;
+      for (size_t j = 1; j <= LEN_PLIST(rel1); j++) {
+        lhs.push_back(INT_INTOBJ(ELM_PLIST(rel1, j)) - 1);
+      }
+      for (size_t j = 1; j <= LEN_PLIST(rel2); j++) {
+        rhs.push_back(INT_INTOBJ(ELM_PLIST(rel2, j)) - 1);
+      }
+      extra.push_back(make_pair(lhs, rhs));
+    }
 
-    Congruence cong = Congruence(semigroup);
-    cong.todd_coxeter();
+    Congruence cong = Congruence(semigroup, extra, false);
+    cong.todd_coxeter_finite();
     return INTOBJ_INT(cong.nr_active_cosets() - 1);
   } else {
     ErrorQuit("SEMIGROUP_CONGRUENCE: not yet implemented,", 0L, 0L);
@@ -725,6 +738,42 @@ Obj SEMIGROUP_CONGRUENCE (Obj self, Obj data) {
 }
 
 Obj FP_SEMI_SIZE (Obj self, Obj S) {
+  initRNams();
+  assert(IsbPRec(S, RNam_relations));
+
+  Congruence* cong;
+  if (! IsbPRec(S, RNam_congruence)) {
+    std::vector<relation_t> rels;
+    Obj gap_rels = ElmPRec(S, RNam_relations);
+    for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
+      Obj gap_rel = ELM_PLIST(gap_rels, i);
+      word_t lhs, rhs;
+      Obj gap_lhs = ELM_PLIST(gap_rel, 1);
+      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_lhs); k++) {
+        lhs.push_back(INT_INTOBJ(ELM_PLIST(gap_lhs, k)) - 1);
+      }
+      Obj gap_rhs = ELM_PLIST(gap_rel, 2);
+      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_rhs); k++) {
+        rhs.push_back(INT_INTOBJ(ELM_PLIST(gap_rhs, k)) - 1);
+      }
+      rels.push_back(make_pair(lhs, rhs));
+    }
+
+    cong = new Congruence(INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
+                          rels,
+                          std::vector<relation_t>());
+    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_FPCONG));
+
+  } else {
+    cong = CLASS_OBJ<Congruence>(ElmPRec(S, RNam_congruence));
+  }
+
+  cong->todd_coxeter();
+  return INTOBJ_INT(cong->nr_active_cosets() - 1);
+}
+
+
+Obj SEMIGROUP_CONG (Obj self, Obj S) {
   initRNams();
   assert(IsbPRec(S, RNam_relations));
 

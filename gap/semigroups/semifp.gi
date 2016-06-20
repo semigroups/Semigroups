@@ -19,7 +19,7 @@ SEMIGROUPS.InitFpSemigroup := function(S)
 
   rels := RelationsOfFpSemigroup(S);
   out := [];
-  
+
   for rel in rels do 
     next := [[], []];
     for i in [1, 2] do 
@@ -34,8 +34,8 @@ SEMIGROUPS.InitFpSemigroup := function(S)
     od;
     Add(out, next);
   od;
-
   S!.__fp_semigroup_relations := out;
+
   S!.__fp_semigroup_nr_gens   := Length(GeneratorsOfSemigroup(S));
 end;
 

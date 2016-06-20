@@ -46,6 +46,6 @@ Obj SEMIGROUP_SIZE(Obj, Obj);
 
 Obj FP_SEMI_SIZE(Obj, Obj);
 
-Obj SEMIGROUP_CONGRUENCE(Obj, Obj);
+Obj SEMIGROUP_CONGRUENCE(Obj, Obj, Obj);
 
 #endif // SRC_INTERFACE_H_

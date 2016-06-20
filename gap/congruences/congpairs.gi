@@ -565,12 +565,18 @@ function(_record)
                 "semigroup congruence with generating pairs"),
   [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
   function(cong)
-    local S;
+    local S, pairs, extra;
+    
     S := Range(cong);
-    if not IsFinite(S) then
-      TryNextMethod();
-    fi;
-    return Maximum(AsLookupTable(cong));
+    #if not IsFinite(S) then
+    #  TryNextMethod();
+    #fi;
+    #return Maximum(AsLookupTable(cong));
+    
+    pairs := GeneratingPairsOfRightSemigroupCongruence(cong);
+    extra := List(pairs, x -> 
+                  [Factorization(S, x[1]), Factorization(S, x[2])]);
+    return SEMIGROUP_CONGRUENCE(GenericSemigroupData(S), extra);
   end);
 
   #
