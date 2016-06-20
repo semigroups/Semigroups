@@ -9,13 +9,13 @@
 ##
 # (a * b) f = (a) f * b
 
-InstallMethod(LeftTranslationsSemigroup, "for a rectangular band", 
+InstallMethod(LeftTranslationsSemigroup, "for a semigroup", 
 [IsRectangularBand], 
 function(S) 
 	local fam, type, L;
 	
 	fam := NewFamily( "LeftTranslationsSemigroupElementsFamily",
-					IsTranslationsSemigroupElement);
+					IsLeftTranslationsSemigroupElement);
 	
 	#create the semigroup of left translations
 	L := Objectify(NewType(CollectionsFamily(fam), IsLeftTranslationsSemigroup
@@ -57,13 +57,13 @@ function(L, f)
 		[Transformation(mapAsTransList)]);
 end);
 
-InstallMethod(RightTranslationsSemigroup, "for a rectangular band", 
+InstallMethod(RightTranslationsSemigroup, "for a semigroup", 
 [IsRectangularBand], 
 function(S) 
 	local fam, type, R;
 	
 	fam := NewFamily( "RightTranslationsSemigroupElementsFamily",
-					IsTranslationsSemigroupElement);
+					IsRightTranslationsSemigroupElement);
 	
 	#create the semigroup of right translations
 	R := Objectify(NewType(CollectionsFamily(fam), IsRightTranslationsSemigroup 
@@ -227,7 +227,7 @@ InstallMethod(ViewObj, "for a translational hull",
 [IsTranslationalHull], PrintObj);
 
 InstallMethod(PrintObj, "for a translational hull",
-[IsTranslationalHull],
+[IsTranslationalHull and IsWholeFamily],
 function(H)
 	Print("<translational hull over ", UnderlyingSemigroup(H), ">");
 end);
@@ -263,7 +263,7 @@ function(T)
 end);
 
 InstallMethod(Size, "for the translational hull of a rectangular band",
-[IsTranslationalHull],
+[IsWholeTranslationalHull],
 function(H)
 	local S, L, R;
 	S := UnderlyingSemigroup(H);
@@ -375,21 +375,42 @@ end);
 
 InstallMethod(\*, "for translations of a semigroup",
 IsIdenticalObj,
-[IsTranslationsSemigroupElement, IsTranslationsSemigroupElement],
+[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
 function(x, y)
 	return Objectify(FamilyObj(x)!.type, [x![1]*y![1]]);
 end);
 
 InstallMethod(\=, "for translations of a semigroup",
 IsIdenticalObj,
-[IsTranslationsSemigroupElement, IsTranslationsSemigroupElement],
+[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
 function(x, y) 
 	return x![1] = y![1];
 end);
 
 InstallMethod(\<, "for translations of a semigroup",
 IsIdenticalObj,
-[IsTranslationsSemigroupElement, IsTranslationsSemigroupElement],
+[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
+function(x, y) 
+	return x![1] < y![1];
+end);
+
+InstallMethod(\*, "for translations of a semigroup",
+IsIdenticalObj,
+[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
+function(x, y)
+	return Objectify(FamilyObj(x)!.type, [x![1]*y![1]]);
+end);
+
+InstallMethod(\=, "for translations of a semigroup",
+IsIdenticalObj,
+[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
+function(x, y) 
+	return x![1] = y![1];
+end);
+
+InstallMethod(\<, "for translations of a semigroup",
+IsIdenticalObj,
+[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
 function(x, y) 
 	return x![1] < y![1];
 end);
@@ -426,11 +447,30 @@ function(T)
 	fi;
 end);
 
+InstallMethod(IsWholeFamily, "for a subsemigroup of the translational hull of a rectangular band",
+[IsTranslationalHull],
+function(H) 
+	return Size(H) = Size(TranslationalHullOfFamily(ElementsFamily(FamilyObj(H))));
+end);
 
+InstallMethod(UnderlyingSemigroup, "for a semigroup of left or right translations",
+[IsTranslationsSemigroup],
+function(T)
+	if IsLeftTranslationsSemigroup(T) then
+		return UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(ElementsFamily(
+			FamilyObj(T))));
+	else 
+		return UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(ElementsFamily(
+			FamilyObj(T))));
+	fi;
+end);
 
-
-
-
+InstallMethod(UnderlyingSemigroup, "for a subsemigroup of the translational hull",
+[IsTranslationalHull],
+function(H)
+		return UnderlyingSemigroup(TranslationalHullOfFamily(FamilyObj(
+			Enumerator(H)[1])));
+end);
 
 
 
