@@ -31,6 +31,8 @@ gap> NrIdempotents(S);
 4
 gap> MultiplicativeZero(S);
 fail
+gap> AsSemigroup(IsMaxPlusMatrixSemigroup, S) = S;
+true
 
 # semimaxplus: C++ code working, for natural matrix semigroup
 gap> S := Monoid(Matrix(IsNTPMatrix, [[0, 1, 0], [1, 1, 0], [0, 1, 0]], 1, 2),
@@ -76,6 +78,52 @@ gap> BruteForceInverseCheck := function(map)
 >   return ForAll(Source(map), x -> x = (x ^ map) ^ inv)
 >     and ForAll(Range(map), x -> x = (x ^ inv) ^ map);
 > end;;
+
+# IsomorphismSemigroup: for semigroup of same type
+gap> S := Semigroup(Matrix(IsTropicalMaxPlusMatrix, [[0, 4], [4, 1]], 10));
+<commutative semigroup of 2x2 tropical max-plus matrices with 1 generator>
+gap> AsSemigroup(IsTropicalMaxPlusMatrixSemigroup, 10, S) = S;
+true
+gap> map := IsomorphismSemigroup(IsTropicalMaxPlusMatrixSemigroup, 11, S);;
+gap> T := Range(map);;
+gap> T = S;
+false
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+gap> S := Semigroup(Matrix(IsNTPMatrix, [[0, 0], [1, 3]], 2, 2));
+<commutative semigroup of 2x2 ntp matrices with 1 generator>
+gap> AsSemigroup(IsNTPMatrixSemigroup, 2, 2, S) = S;
+true
+gap> map := IsomorphismSemigroup(IsNTPMatrixSemigroup, 3, 3, S);;
+gap> T := Range(map);;
+gap> T = S;
+false
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
 
 #T# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsMaxPlusMatrixSemigroup

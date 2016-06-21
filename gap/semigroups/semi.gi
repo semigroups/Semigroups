@@ -1275,7 +1275,9 @@ InstallMethod(AsSemigroup, "for a filter and a semigroup",
 [IsFunction and IsOperation, IsSemigroup],
 function(filt, S)
 
-  if filt = IsTransformationSemigroup then
+  if Tester(filt)(S) and filt(S) then 
+    return S;
+  elif filt = IsTransformationSemigroup then
     return Range(IsomorphismTransformationSemigroup(S));
   elif filt = IsPartialPermSemigroup then
     return Range(IsomorphismPartialPermSemigroup(S));
@@ -1307,7 +1309,9 @@ InstallMethod(AsMonoid, "for a filter and a semigroup",
 [IsFunction and IsOperation, IsSemigroup],
 function(filt, S)
 
-  if filt = IsTransformationMonoid then
+  if Tester(filt)(S) and filt(S) then 
+    return S;
+  elif filt = IsTransformationMonoid then
     return Range(IsomorphismTransformationMonoid(S));
   elif filt = IsPartialPermMonoid then
     return Range(IsomorphismPartialPermMonoid(S));

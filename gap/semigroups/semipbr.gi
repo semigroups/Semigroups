@@ -116,6 +116,13 @@ function(filt, S)
                                        AsBipartition);
 end);
 
+InstallMethod(IsomorphismSemigroup,
+"for IsPBRSemigroup and a pbr semigroup",
+[IsPBRSemigroup, IsPBRSemigroup],
+function(filter, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+end);
+
 InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a semigroup",
 [IsPBRMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
 
@@ -135,4 +142,11 @@ function(filt, S)
                                        T,
                                        x -> AsPBR(x, deg),
                                        AsTransformation);
+end);
+
+InstallMethod(IsomorphismMonoid,
+"for IsPBRMonoid and a pbr monoid",
+[IsPBRMonoid, IsPBRMonoid],
+function(filter, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);

@@ -167,6 +167,13 @@ for _IsXMatrix in ["IsMaxPlusMatrix",
   Concatenation("for ", _IsXSemigroup, " and a semigroup"),
   [EvalString(_IsXSemigroup), IsSemigroup],
   SEMIGROUPS.DefaultIsomorphismSemigroup);
+  
+  InstallMethod(IsomorphismSemigroup,
+  Concatenation("for ", _IsXSemigroup, " and a ", _IsXSemigroup),
+  [EvalString(_IsXSemigroup), EvalString(_IsXSemigroup)],
+  function(filter, S)
+    return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+  end);
 
 od;
 
@@ -196,6 +203,16 @@ for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
                                          x -> (x ^ iso1) ^ iso2,
                                          x -> (x ^ inv2) ^ inv1);
   end);
+  
+  InstallMethod(IsomorphismSemigroup,
+  Concatenation("for ", _IsXSemigroup, " and a ", _IsXSemigroup),
+  [EvalString(_IsXSemigroup), IsPosInt, EvalString(_IsXSemigroup)],
+  function(filter, threshold, S)
+    if threshold = ThresholdTropicalMatrix(Representative(S)) then 
+      return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+    fi;
+    TryNextMethod();
+  end);
 od;
 
 Unbind(_IsXMatrix);
@@ -218,6 +235,17 @@ function(filter, threshold, period, S)
                                        Range(iso2),
                                        x -> (x ^ iso1) ^ iso2,
                                        x -> (x ^ inv2) ^ inv1);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsNTPMatrixSemigroup, pos int, pos int, and a semigroup",
+[IsNTPMatrixSemigroup, IsPosInt, IsPosInt, IsNTPMatrixSemigroup],
+function(filter, threshold, period, S)
+  if threshold = ThresholdNTPMatrix(Representative(S)) 
+      and period = PeriodNTPMatrix(Representative(S)) then 
+    return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+  fi;
+  TryNextMethod();
 end);
 
 #############################################################################
