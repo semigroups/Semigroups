@@ -284,21 +284,6 @@ function(filt, S)
 end);
 
 InstallMethod(IsomorphismPartialPermSemigroup,
-"for a group",
-[IsGroup],
-function(G)
-  local iso1, inv1, iso2, inv2;
-  iso1 := IsomorphismPermGroup(G);
-  inv1 := InverseGeneralMapping(iso1);
-  iso2 := IsomorphismPartialPermSemigroup(Range(iso1));
-  inv2 := InverseGeneralMapping(iso2);
-
-  return MagmaIsomorphismByFunctionsNC(G, Range(iso2),
-                                       x -> (x ^ iso1) ^ iso2,
-                                       x -> (x ^ inv2) ^ inv1);
-end);
-
-InstallMethod(IsomorphismPartialPermSemigroup,
 "for a bipartition semigroup with generators",
 [IsBipartitionSemigroup and HasGeneratorsOfSemigroup],
 function(S)

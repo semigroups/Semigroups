@@ -454,11 +454,13 @@ gap> Elements(R);
 [ <identity partial perm on [ 1, 2 ]>, (1,2) ]
 gap> S := DualSymmetricInverseMonoid(5);;
 gap> T := Range(IsomorphismPartialPermSemigroup(S));
-<inverse partial perm monoid of rank 6721 with 3 generators>
+<inverse partial perm monoid of size 6721, rank 6721 with 3 
+ generators>
 gap> SmallerDegreePartialPermRepresentation(T);
-MappingByFunction( <inverse partial perm monoid of rank 6721 with 3 
- generators>, <inverse partial perm semigroup of rank 30 with 3 
- generators>, function( x ) ... end, function( x ) ... end )]]></Example>
+MappingByFunction( <inverse partial perm monoid of size 6721, 
+ rank 6721 with 3 generators>, <inverse partial perm semigroup of 
+ rank 30 with 3 generators>
+ , function( x ) ... end, function( x ) ... end )]]></Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="VagnerPrestonRepresentation">
