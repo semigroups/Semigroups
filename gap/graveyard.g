@@ -1,3 +1,98 @@
+gap> G := Range(IsomorphismFpGroup(AlternatingGroup(5)));
+<fp group of size 60 on the generators [ A_5.1, A_5.2 ]>
+gap> IsomorphismFpSemigroup(G);
+MappingByFunction( <fp group of size 60 on the generators
+[ A_5.1, A_5.2 ]>, <fp semigroup on the generators [ s1, s2, s3, s4, s5
+ ]>, function( x ) ... end, function( x ) ... end )
+gap> map;
+Error, Variable: 'map' must have a value
+not in any function at *stdin*:3
+gap> BruteForceIsoCheck(last);
+true
+gap> BruteForceInverseCheck(last2);
+true
+gap>
+
+# Argh a similar method already exists in the library.
+
+#InstallMethod(IsomorphismFpSemigroup, "for an fp group", 
+#[IsFpGroup], 
+#function(G)
+#  local n, F, id, rels, map, S, inv, i, rel;
+#
+#  n  := Length(GeneratorsOfGroup(G));
+#  F  := FreeSemigroup(2 * n + 1);
+#  id := F.(2 * n + 1);
+#  rels := [[id * id, id]];
+#
+#  for i in [1 .. n] do 
+#    Add(rels, [F.(i) * id, F.(i)]);
+#    Add(rels, [id * F.(i), F.(i)]);
+#    Add(rels, [F.(i) * F.(i + n), id]);
+#    Add(rels, [F.(i + n) * F.(i), id]);
+#  od;
+#
+#  for i in [1 .. n] do 
+#    Add(rels, [F.(i + n) * id, F.(i + n)]);
+#    Add(rels, [id * F.(i + n), F.(i + n)]);
+#  od;
+#
+#  map := function(U, word)
+#    local ext, out, i;
+#
+#    ext := ExtRepOfObj(word);
+#    if Length(ext) = 0 then 
+#      return U.(2 * n + 1);
+#    elif ext[2] > 0 then 
+#      out := U.(ext[1]) ^ ext[2];
+#    else 
+#      out := U.(ext[1] + n) ^ -ext[2];
+#    fi;
+#
+#    for i in [3, 5 .. Length(ext) - 1] do
+#      if ext[i + 1] > 0 then 
+#        out := out * U.(ext[i]) ^ ext[i + 1];
+#      else 
+#        out := out * U.(ext[i] + n) ^ -ext[i + 1];
+#      fi;
+#    od;
+#    return out;
+#  end;
+#
+#  for rel in RelatorsOfFpGroup(G) do
+#    Add(rels, [map(F, rel), id]);
+#  od;
+#  
+#  S := F / rels;
+#  UseIsomorphismRelation(G, S);
+#  
+#  inv := function(x)
+#    local ext, out, i;
+#
+#    ext := ExtRepOfObj(UnderlyingElement(x));
+#
+#    if ext[1] <= n then 
+#      out := G.(ext[1]) ^ ext[2];
+#    elif ext[1] <= 2 * n then 
+#      out := G.(ext[1] - n) ^ -ext[2];
+#    else 
+#      out := One(G);
+#    fi;
+#
+#    for i in [3, 5 .. Length(ext) - 1] do
+#      if ext[i] <= n then 
+#        out := out * G.(ext[i]) ^ ext[i + 1];
+#      elif ext[i] <= 2 * n then 
+#        out := out * G.(ext[i] - n) ^ -ext[i + 1];
+#      fi;
+#    od;
+#
+#    return out;
+#  end;
+#  return MagmaIsomorphismByFunctionsNC(G, S, x -> map(S, x), inv);
+#end);
+
+
 # TODO redo this
 
 #InstallGlobalFunction(SEMIGROUPS.TestAll,
