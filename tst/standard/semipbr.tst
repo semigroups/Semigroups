@@ -41,7 +41,7 @@ gap> S := Semigroup(PBR([[-2, 1, 2], [-2, -1, 1]], [[-2, -1, 1], [-2, -1, 1, 2]]
 >                   PBR([[], []], [[], []]));
 <pbr semigroup of degree 2 with 2 generators>
 gap> T := AsSemigroup(IsPBRSemigroup, S);
-<pbr semigroup of size 8, degree 9 with 2 generators>
+<pbr semigroup of degree 2 with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -307,7 +307,7 @@ true
 gap> S := Monoid( [ PBR([ [ -2 ], [ -2 ], [ -5 ], [ -5 ], [ -5 ], [ -9 ], [ -9 ], [ -9 ], [ -9 ] ], [ [ ], [ 1, 2 ], [ ], [ ], [ 3, 4, 5 ], [ ], [ ], [ ], [ 6, 7, 8, 9 ] ]), PBR([ [ -3 ], [ -4 ], [ -6 ], [ -7 ], [ -8 ], [ -6 ], [ -7 ], [ -7 ], [ -8 ] ], [ [ ], [ ], [ 1 ], [ 2 ], [ ], [ 3, 6 ], [ 4, 7, 8 ], [ 5, 9 ], [ ] ]) ] );
 <pbr monoid of degree 9 with 2 generators>
 gap> T := AsSemigroup(IsPBRSemigroup, S);
-<pbr monoid of size 9, degree 9 with 2 generators>
+<pbr monoid of degree 9 with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -839,7 +839,7 @@ true
 gap> S := Monoid( [ PBR([ [ -2 ], [ -4 ], [ -6 ], [ -4 ], [ -7 ], [ -6 ], [ -7 ] ], [ [ ], [ 1 ], [ ], [ 2, 4 ], [ ], [ 3, 6 ], [ 5, 7 ] ]), PBR([ [ -3 ], [ -5 ], [ -3 ], [ -5 ], [ -5 ], [ -3 ], [ -5 ] ], [ [ ], [ ], [ 1, 3, 6 ], [ ], [ 2, 4, 5, 7 ], [ ], [ ] ]) ] );
 <pbr monoid of degree 7 with 2 generators>
 gap> T := AsMonoid(IsPBRMonoid, S);
-<pbr monoid of size 7, degree 7 with 2 generators>
+<pbr monoid of degree 7 with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
