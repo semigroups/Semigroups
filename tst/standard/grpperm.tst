@@ -20,8 +20,8 @@ gap> BruteForceIsoCheck := function(iso)
 >     return false;
 >   fi;
 >   #homomorphism
->   for x in Source(iso) do
->     for y in Source(iso) do
+>   for x in Generators(Source(iso)) do
+>     for y in Generators(Source(iso)) do
 >       if x ^ iso * y ^ iso <> (x * y) ^ iso then
 >         return false;
 >       fi;

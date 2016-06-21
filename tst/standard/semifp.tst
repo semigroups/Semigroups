@@ -56,8 +56,8 @@ gap> BruteForceIsoCheck := function(iso)
 >   if not IsInjective(iso) or not IsSurjective(iso) then
 >     return false;
 >   fi;
->   for x in Source(iso) do
->     for y in Source(iso) do
+>   for x in Generators(Source(iso)) do
+>     for y in Generators(Source(iso)) do
 >       if x ^ iso * y ^ iso <> (x * y) ^ iso then
 >         return false;
 >       fi;
@@ -1170,19 +1170,19 @@ true
 #   convert from IsReesMatrixSemigroup to IsFpSemigroup
 gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2), (1, 2)], [(), ()]]);
 <Rees matrix semigroup 2x2 over Group([ (1,2) ])>
-gap> T := AsSemigroup(IsFpSemigroup, S);
-<fp semigroup on the generators [ s1, s2, s3 ]>
-gap> Size(S) = Size(T);
+gap> T := AsSemigroup(IsFpSemigroup, R);
+<fp semigroup on the generators [ s1, s2 ]>
+gap> Size(R) = Size(T);
 true
-gap> NrDClasses(S) = NrDClasses(T);
+gap> NrDClasses(R) = NrDClasses(T);
 true
-gap> NrRClasses(S) = NrRClasses(T);
+gap> NrRClasses(R) = NrRClasses(T);
 true
-gap> NrLClasses(S) = NrLClasses(T);
+gap> NrLClasses(R) = NrLClasses(T);
 true
-gap> NrIdempotents(S) = NrIdempotents(T);
+gap> NrIdempotents(R) = NrIdempotents(T);
 true
-gap> map := IsomorphismSemigroup(IsFpSemigroup, S);;
+gap> map := IsomorphismSemigroup(IsFpSemigroup, R);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -1192,19 +1192,19 @@ true
 #   convert from IsReesMatrixSemigroup to IsFpMonoid
 gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2)]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
-gap> T := AsMonoid(IsFpMonoid, S);
-<fp monoid on the generators [ m1, m2 ]>
-gap> Size(S) = Size(T);
+gap> T := AsMonoid(IsFpMonoid, R);
+<fp monoid on the generators [ m1 ]>
+gap> Size(R) = Size(T);
 true
-gap> NrDClasses(S) = NrDClasses(T);
+gap> NrDClasses(R) = NrDClasses(T);
 true
-gap> NrRClasses(S) = NrRClasses(T);
+gap> NrRClasses(R) = NrRClasses(T);
 true
-gap> NrLClasses(S) = NrLClasses(T);
+gap> NrLClasses(R) = NrLClasses(T);
 true
-gap> NrIdempotents(S) = NrIdempotents(T);
+gap> NrIdempotents(R) = NrIdempotents(T);
 true
-gap> map := IsomorphismMonoid(IsFpMonoid, S);;
+gap> map := IsomorphismMonoid(IsFpMonoid, R);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -1215,19 +1215,19 @@ true
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), 
 >                                 [[(1, 2), (1, 2)], [0, ()]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
-gap> T := AsSemigroup(IsFpSemigroup, S);
+gap> T := AsSemigroup(IsFpSemigroup, R);
 <fp semigroup on the generators [ s1, s2, s3 ]>
-gap> Size(S) = Size(T);
+gap> Size(R) = Size(T);
 true
-gap> NrDClasses(S) = NrDClasses(T);
+gap> NrDClasses(R) = NrDClasses(T);
 true
-gap> NrRClasses(S) = NrRClasses(T);
+gap> NrRClasses(R) = NrRClasses(T);
 true
-gap> NrLClasses(S) = NrLClasses(T);
+gap> NrLClasses(R) = NrLClasses(T);
 true
-gap> NrIdempotents(S) = NrIdempotents(T);
+gap> NrIdempotents(R) = NrIdempotents(T);
 true
-gap> map := IsomorphismSemigroup(IsFpSemigroup, S);;
+gap> map := IsomorphismSemigroup(IsFpSemigroup, R);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -1237,19 +1237,19 @@ true
 #   convert from IsReesZeroMatrixSemigroup to IsFpMonoid
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(1, 2)]]);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
-gap> T := AsMonoid(IsFpMonoid, S);
+gap> T := AsMonoid(IsFpMonoid, R);
 <fp monoid on the generators [ m1, m2 ]>
-gap> Size(S) = Size(T);
+gap> Size(R) = Size(T);
 true
-gap> NrDClasses(S) = NrDClasses(T);
+gap> NrDClasses(R) = NrDClasses(T);
 true
-gap> NrRClasses(S) = NrRClasses(T);
+gap> NrRClasses(R) = NrRClasses(T);
 true
-gap> NrLClasses(S) = NrLClasses(T);
+gap> NrLClasses(R) = NrLClasses(T);
 true
-gap> NrIdempotents(S) = NrIdempotents(T);
+gap> NrIdempotents(R) = NrIdempotents(T);
 true
-gap> map := IsomorphismMonoid(IsFpMonoid, S);;
+gap> map := IsomorphismMonoid(IsFpMonoid, R);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);

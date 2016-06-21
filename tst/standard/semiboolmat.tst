@@ -19,8 +19,8 @@ gap> BruteForceIsoCheck := function(iso)
 >   if not IsInjective(iso) or not IsSurjective(iso) then
 >     return false;
 >   fi;
->   for x in Source(iso) do
->     for y in Source(iso) do
+>   for x in Generators(Source(iso)) do
+>     for y in Generators(Source(iso)) do
 >       if x ^ iso * y ^ iso <> (x * y) ^ iso then
 >         return false;
 >       fi;
@@ -596,7 +596,7 @@ gap> rels := [ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s2 ], [ s2^2, s1 ] ];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2 ]>
 gap> T := AsMonoid(IsBooleanMatMonoid, S);
-<commutative monoid of 2x2 boolean matrices with 1 generator>
+<commutative monoid of size 2, 2x2 boolean matrices with 1 generator>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1103,19 +1103,19 @@ true
 #   convert from IsReesMatrixSemigroup to IsBooleanMatSemigroup
 gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2), (1, 2)], [(), ()]]);
 <Rees matrix semigroup 2x2 over Group([ (1,2) ])>
-gap> T := AsSemigroup(IsBooleanMatSemigroup, S);
-<commutative monoid of size 5, 5x5 boolean matrices with 1 generator>
-gap> Size(S) = Size(T);
+gap> T := AsSemigroup(IsBooleanMatSemigroup, R);
+<semigroup of size 8, 9x9 boolean matrices with 2 generators>
+gap> Size(R) = Size(T);
 true
-gap> NrDClasses(S) = NrDClasses(T);
+gap> NrDClasses(R) = NrDClasses(T);
 true
-gap> NrRClasses(S) = NrRClasses(T);
+gap> NrRClasses(R) = NrRClasses(T);
 true
-gap> NrLClasses(S) = NrLClasses(T);
+gap> NrLClasses(R) = NrLClasses(T);
 true
-gap> NrIdempotents(S) = NrIdempotents(T);
+gap> NrIdempotents(R) = NrIdempotents(T);
 true
-gap> map := IsomorphismSemigroup(IsBooleanMatSemigroup, S);;
+gap> map := IsomorphismSemigroup(IsBooleanMatSemigroup, R);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -1125,19 +1125,19 @@ true
 #   convert from IsReesMatrixSemigroup to IsBooleanMatMonoid
 gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2)]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
-gap> T := AsMonoid(IsBooleanMatMonoid, S);
-<commutative monoid of size 5, 5x5 boolean matrices with 1 generator>
-gap> Size(S) = Size(T);
+gap> T := AsMonoid(IsBooleanMatMonoid, R);
+<commutative monoid of size 2, 2x2 boolean matrices with 1 generator>
+gap> Size(R) = Size(T);
 true
-gap> NrDClasses(S) = NrDClasses(T);
+gap> NrDClasses(R) = NrDClasses(T);
 true
-gap> NrRClasses(S) = NrRClasses(T);
+gap> NrRClasses(R) = NrRClasses(T);
 true
-gap> NrLClasses(S) = NrLClasses(T);
+gap> NrLClasses(R) = NrLClasses(T);
 true
-gap> NrIdempotents(S) = NrIdempotents(T);
+gap> NrIdempotents(R) = NrIdempotents(T);
 true
-gap> map := IsomorphismMonoid(IsBooleanMatMonoid, S);;
+gap> map := IsomorphismMonoid(IsBooleanMatMonoid, R);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -1148,19 +1148,19 @@ true
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), 
 >                                 [[(1, 2), (1, 2)], [0, ()]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
-gap> T := AsSemigroup(IsBooleanMatSemigroup, S);
-<commutative monoid of size 5, 5x5 boolean matrices with 1 generator>
-gap> Size(S) = Size(T);
+gap> T := AsSemigroup(IsBooleanMatSemigroup, R);
+<semigroup of size 9, 10x10 boolean matrices with 3 generators>
+gap> Size(R) = Size(T);
 true
-gap> NrDClasses(S) = NrDClasses(T);
+gap> NrDClasses(R) = NrDClasses(T);
 true
-gap> NrRClasses(S) = NrRClasses(T);
+gap> NrRClasses(R) = NrRClasses(T);
 true
-gap> NrLClasses(S) = NrLClasses(T);
+gap> NrLClasses(R) = NrLClasses(T);
 true
-gap> NrIdempotents(S) = NrIdempotents(T);
+gap> NrIdempotents(R) = NrIdempotents(T);
 true
-gap> map := IsomorphismSemigroup(IsBooleanMatSemigroup, S);;
+gap> map := IsomorphismSemigroup(IsBooleanMatSemigroup, R);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -1170,19 +1170,19 @@ true
 #   convert from IsReesZeroMatrixSemigroup to IsBooleanMatMonoid
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(1, 2)]]);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
-gap> T := AsMonoid(IsBooleanMatMonoid, S);
-<commutative monoid of size 5, 5x5 boolean matrices with 1 generator>
-gap> Size(S) = Size(T);
+gap> T := AsMonoid(IsBooleanMatMonoid, R);
+<monoid of size 3, 3x3 boolean matrices with 2 generators>
+gap> Size(R) = Size(T);
 true
-gap> NrDClasses(S) = NrDClasses(T);
+gap> NrDClasses(R) = NrDClasses(T);
 true
-gap> NrRClasses(S) = NrRClasses(T);
+gap> NrRClasses(R) = NrRClasses(T);
 true
-gap> NrLClasses(S) = NrLClasses(T);
+gap> NrLClasses(R) = NrLClasses(T);
 true
-gap> NrIdempotents(S) = NrIdempotents(T);
+gap> NrIdempotents(R) = NrIdempotents(T);
 true
-gap> map := IsomorphismMonoid(IsBooleanMatMonoid, S);;
+gap> map := IsomorphismMonoid(IsBooleanMatMonoid, R);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
@@ -1303,6 +1303,8 @@ true
 gap> S := InverseSemigroup(Bipartition([[1, -1, -3], [2, 3, -2]]));;
 gap> T := AsSemigroup(IsBooleanMatSemigroup, S);
 <semigroup of size 5, 6x6 boolean matrices with 2 generators>
+gap> IsInverseSemigroup(T);
+true
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1324,6 +1326,8 @@ true
 gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsMonoid(IsBooleanMatMonoid, S);
 <monoid of size 6, 6x6 boolean matrices with 2 generators>
+gap> IsInverseMonoid(T);
+true
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1345,6 +1349,8 @@ true
 gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsSemigroup(IsBooleanMatSemigroup, S);
 <monoid of size 6, 6x6 boolean matrices with 2 generators>
+gap> IsInverseMonoid(T);
+true
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);

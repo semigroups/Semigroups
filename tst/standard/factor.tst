@@ -14,11 +14,11 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 #T# FactorTest1: Factorization for a transformation semigroup 1
-gap> gens := [Transformation([3, 4, 1, 2, 1]),
-> Transformation([4, 2, 1, 5, 5]),
-> Transformation([4, 2, 2, 2, 4])];;
-gap> s := Semigroup(gens);;
-gap> ForAll(s, f -> EvaluateWord(gens, Factorization(s, f)) = f);
+gap> S := Semigroup(Transformation([3, 4, 1, 2, 1]),
+>                   Transformation([4, 2, 1, 5, 5]),
+>                   Transformation([4, 2, 2, 2, 4]));;
+gap> ForAll(S, x -> EvaluateWord(GeneratorsOfSemigroup(S), 
+>                                Factorization(S, x)) = x);
 true
 
 #T# FactorTest2: Factorization for a transformation semigroup 2

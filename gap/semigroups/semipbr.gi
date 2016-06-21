@@ -99,6 +99,8 @@ function(filt, S)
                                        AsTransformation);
 end);
 
+# The following is not a monoid isomorphism
+
 InstallMethod(IsomorphismSemigroup,
 "for IsPBRSemigroup and a bipartition semigroup",
 [IsPBRSemigroup, IsBipartitionSemigroup],
@@ -118,7 +120,19 @@ InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a semigroup",
 [IsPBRMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
 
 InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a monoid",
-[IsPBRMonoid, IsMonoid],
-function(filter, S)
-  return IsomorphismSemigroup(IsPBRSemigroup, S);
+[IsPBRMonoid, IsMonoid], SEMIGROUPS.DefaultIsomorphismMonoid);
+
+InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a transformation monoid",
+[IsPBRMonoid, IsTransformationMonoid],
+function(filt, S)
+  local deg, T;
+
+  deg := Maximum(1, DegreeOfTransformationSemigroup(S));
+  T := Monoid(List(GeneratorsOfSemigroup(S), x -> AsPBR(x, deg)));
+  UseIsomorphismRelation(S, T);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       x -> AsPBR(x, deg),
+                                       AsTransformation);
 end);

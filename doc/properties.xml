@@ -18,7 +18,7 @@
       
       <Example><![CDATA[
 gap> G := AsSemigroup(IsTransformationSemigroup, MathieuGroup(11));
-<transformation semigroup of size 7920, degree 11 with 2 generators>
+<transformation group of size 7920, degree 11 with 2 generators>
 gap> R := RectangularBand(3, 2);
 <regular transformation semigroup of size 6, degree 6 with 3 
  generators>
@@ -418,13 +418,14 @@ gap> IsGroupAsSemigroup(S);
 true
 gap> G := SymmetricGroup(5);;
 gap> S := Range(IsomorphismPartialPermSemigroup(G));
-<inverse partial perm semigroup of rank 5 with 2 generators>
+<partial perm group of size 120, rank 5 with 2 generators>
 gap> IsGroupAsSemigroup(S);
 true
 gap> S := SymmetricGroup([1, 2, 10]);;
 gap> T := Range(IsomorphismSemigroup(IsBlockBijectionSemigroup,
 > Range(IsomorphismSemigroup(IsPartialPermSemigroup, S))));
-<inverse block bijection semigroup of degree 11 with 2 generators>
+<inverse block bijection semigroup of size 6, degree 11 with 2 
+ generators>
 gap> IsGroupAsSemigroup(T);
 true]]></Example>
     </Description>

@@ -300,8 +300,8 @@ gap> BruteForceIsoCheck := function(iso)
 >   if not IsInjective(iso) or not IsSurjective(iso) then
 >     return false;
 >   fi;
->   for x in Source(iso) do
->     for y in Source(iso) do
+>   for x in Generators(Source(iso)) do
+>     for y in Generators(Source(iso)) do
 >       if x ^ iso * y ^ iso <> (x * y) ^ iso then
 >         return false;
 >       fi;
@@ -1534,7 +1534,7 @@ gap> rels := [ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s2 ], [ s2^2, s1 ] ];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2 ]>
 gap> T := AsMonoid(IsTransformationMonoid, S);
-<commutative transformation monoid of degree 2 with 1 generator>
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1796,7 +1796,7 @@ true
 #   convert from perm group  to IsTransformationSemigroup
 gap> S := DihedralGroup(IsPermGroup, 6);;
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
-<transformation semigroup of degree 3 with 2 generators>
+<transformation group of degree 3 with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
