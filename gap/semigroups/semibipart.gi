@@ -488,7 +488,7 @@ function(filter, S)
 end);
 
 InstallMethod(IsomorphismSemigroup,
-"for IsBipartitionSemigroup and a block bijection semigroup",
+"for IsBipartitionSemigroup and a bipartition semigroup",
 [IsBipartitionSemigroup, IsBipartitionSemigroup],
 function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);

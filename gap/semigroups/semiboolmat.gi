@@ -51,6 +51,13 @@ InstallMethod(IsomorphismSemigroup,
 [IsBooleanMatSemigroup, IsSemigroup],
 SEMIGROUPS.DefaultIsomorphismSemigroup);
 
+InstallMethod(IsomorphismSemigroup,
+"for IsBooleanMatSemigroup and a boolean mat semigroup",
+[IsBooleanMatSemigroup, IsBooleanMatSemigroup],
+function(filter, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+end);
+
 # It seems necessary that the method below occurs after the fallback method, in
 # order that it be selected.
 
@@ -75,6 +82,13 @@ end);
 
 InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a semigroup",
 [IsBooleanMatMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
+
+InstallMethod(IsomorphismMonoid,
+"for IsBooleanMatMonoid and a boolean mat monoid",
+[IsBooleanMatMonoid, IsBooleanMatMonoid],
+function(filter, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+end);
 
 InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a monoid",
 [IsBooleanMatMonoid, IsMonoid],
