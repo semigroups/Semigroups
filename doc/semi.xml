@@ -184,7 +184,7 @@ MappingByFunction( <transformation semigroup of degree 10 with 2
 <#GAPDoc Label="AsMonoid">
 <ManSection>
   <Oper Name = "AsMonoid" Arg = "[filt, ]S"/>
-  <Returns>A monoid.</Returns>
+  <Returns>A monoid or <K>fail</K>.</Returns>
   <Description>
     <C>AsMonoid(<A>filt</A>, <A>S</A>)</C> is just shorthand for 
     <C>Range(IsomorphismMonoid(<A>filt</A>, <A>S</A>))</C>, when <A>S</A> 
@@ -199,6 +199,10 @@ MappingByFunction( <transformation semigroup of degree 10 with 2
     If <A>S</A> is already in the category of monoids and the first argument
     <A>filt</A> is omitted, then <A>S</A> is returned. 
     <P/>
+
+    If the first argument <A>filt</A> is omitted and the semigroup <A>S</A>
+    is not a monoid, i.e. it does not satisfy <Ref
+      Prop="IsMonoidAsSemigroup"/>, then <K>fail</K> is returned. 
 
     <Example><![CDATA[
 gap> S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
