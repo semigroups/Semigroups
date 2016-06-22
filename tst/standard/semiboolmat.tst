@@ -13,6 +13,13 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
+# Test for a bug in IsomorphismTransformationSemigroup
+gap> S := InverseSemigroup(
+> [Bipartition([[1, -4], [2, -1], [3, -2], [4], [-3]]),
+>  Bipartition([[1, -3], [2], [3], [4, -1], [-2], [-4]])]);;
+gap> S := AsSemigroup(IsBooleanMatSemigroup, S);;
+gap> IsomorphismTransformationSemigroup(S);;
+
 #T# BruteForceIsoCheck helper functions
 gap> BruteForceIsoCheck := function(iso)
 >   local x, y;

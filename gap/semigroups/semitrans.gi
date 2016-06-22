@@ -743,13 +743,11 @@ function(S)
   local n, pts, o, pos, T, i;
 
   n := Length(Representative(S)![1]);
-  pts := EmptyPlist(2 ^ n);
-
+  pts := [];
   for i in [1 .. n] do
     o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlist));
     pts := Union(pts, AsList(o));
   od;
-  ShrinkAllocationPlist(pts);
   pos := List([1 .. n], x -> Position(pts, BlistList([1 .. n], [x])));
   T := Semigroup(List(GeneratorsOfSemigroup(S),
                       x -> TransformationOpNC(x, pts, OnBlist)));
