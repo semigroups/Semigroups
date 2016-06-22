@@ -517,8 +517,8 @@ gap> List(U, IsMonoidAsSemigroup);
 [ false, false, false, false, false, false ]
 gap> IsomorphismTransformationSemigroup(R);
 MappingByFunction( <subsemigroup of 1x1 Rees 0-matrix semigroup 
- with 2 generators>, <commutative transformation monoid of degree 2 with 1 
- generator>, function( x ) ... end, function( x ) ... end )
+ with 2 generators>, <commutative transformation monoid of size 2, degree 2 
+ with 1 generator>, function( x ) ... end, function( x ) ... end )
 gap> IsOrthodoxSemigroup(R);
 true
 gap> IsOrthodoxSemigroup(V);

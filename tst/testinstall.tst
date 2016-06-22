@@ -247,23 +247,25 @@ Group([ (5,9), (1,7) ])
 
 #T# TestInstall14: IsomorphismTransformationSemigroup/Monoid
 gap> IsomorphismTransformationSemigroup(g);
-MappingByFunction( Group([ (5,9), (1,7) ]), <transformation semigroup 
- of size 4, degree 4 with 2 generators>
- , function( x ) ... end, function( x ) ... end )
+MappingByFunction( Group([ (5,9), (1,7) ]), <transformation group of size 4, 
+ degree 9 with 2 generators>
+, <Attribute "AsTransformation">, <Attribute "AsPermutation"> )
 gap> s:=Range(last);
-<transformation semigroup of size 4, degree 4 with 2 generators>
+<transformation group of size 4, degree 9 with 2 generators>
 gap> IsGroupAsSemigroup(s);
 true
 gap> Generators(s);
-[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
+[ Transformation( [ 1, 2, 3, 4, 9, 6, 7, 8, 5 ] ), 
+  Transformation( [ 7, 2, 3, 4, 5, 6, 1 ] ) ]
 gap> t:=Range(IsomorphismTransformationMonoid(g));
-<transformation monoid of size 4, degree 4 with 2 generators>
+<transformation group of size 4, degree 9 with 2 generators>
 gap> Generators(t);
-[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
+[ Transformation( [ 1, 2, 3, 4, 9, 6, 7, 8, 5 ] ), 
+  Transformation( [ 7, 2, 3, 4, 5, 6, 1 ] ) ]
 gap> h:=Range(IsomorphismPermGroup(t));
-Group([ (), (2,4), (1,3) ])
+Group([ (), (5,9), (1,7) ])
 gap> IsomorphismGroups(g, h);
-[ (5,9), (1,7) ] -> [ (2,4), (1,3) ]
+[ (5,9), (1,7) ] -> [ (5,9), (1,7) ]
 
 #T# TestInstall15: Issue 22 - takes about 49ms
 gap> f := Transformation( [ 2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11 ] );
@@ -1025,7 +1027,7 @@ gap> S := Semigroup([[[Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)],
 >                     [Z(2^2)^2, Z(2)^0, 0*Z(2), Z(2)^0]]]);
 <semigroup with 3 generators>
 gap> T := AsTransformationSemigroup(S);
-<transformation semigroup of degree 22 with 3 generators>
+<transformation semigroup of size 21, degree 22 with 3 generators>
 gap> Size(T);
 21
 gap> I := SemigroupIdeal(T, Idempotents(T));

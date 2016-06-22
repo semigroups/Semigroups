@@ -431,7 +431,8 @@ gap> Elements(R);
 [ <identity partial perm on [ 1, 2 ]>, (1,2) ]
 gap> S := DualSymmetricInverseMonoid(5);;
 gap> T := Range(IsomorphismPartialPermSemigroup(S));
-<inverse partial perm monoid of rank 6721 with 3 generators>]]></Example>
+<inverse partial perm monoid of size 6721, rank 6721 with 3 
+ generators>]]></Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="VagnerPrestonRepresentation">

@@ -106,7 +106,7 @@ gap> S:=Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ],
 > [ -2, -3 ], [ -5 ] ] ) ] );
 <bipartition semigroup of degree 6 with 2 generators>
 gap> AsTransformationSemigroup(S);
-<transformation semigroup of degree 12 with 2 generators>
+<transformation semigroup of size 11, degree 12 with 2 generators>
 gap> IsTransitive(last);
 false
 gap> IsTransitive(AsSemigroup(Group((1,2,3))));
@@ -151,7 +151,7 @@ gap> S := Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ],
 > [ -2, -3 ], [ -5 ] ] ) ] );
 <bipartition semigroup of degree 6 with 2 generators>
 gap> AsTransformationSemigroup(S);
-<transformation semigroup of degree 12 with 2 generators>
+<transformation semigroup of size 11, degree 12 with 2 generators>
 gap> AsMatrixSemigroup(S);
 <semigroup of 12x12 matrices over GF(2) with 2 generators>
 gap> T := Semigroup(Transformation([2, 2, 3]), Transformation([3, 1, 3]));

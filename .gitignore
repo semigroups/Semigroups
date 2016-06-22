@@ -33,3 +33,4 @@ libtool
 bin/x86_64-apple-darwin*.*.*-clang-default64
 bin/x86_64-apple-darwin*.*.*-gcc-default64
 gh-pages/*
+*.log
