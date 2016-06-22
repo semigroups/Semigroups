@@ -937,8 +937,7 @@ true
 #   convert from IsTransformationSemigroup to IsPartialPermMonoid
 gap> S := Semigroup( [ Transformation( [ 2, 1 ] ) ] );
 <commutative transformation semigroup of degree 2 with 1 generator>
-gap> T := AsMonoid(IsPartialPermMonoid, S);
-<commutative inverse partial perm monoid of rank 2 with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);;
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1223,8 +1222,9 @@ true
 #   convert from IsBooleanMatMonoid to IsPartialPermMonoid
 gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ true, false, false, false ], [ false, false, false, true ], [ false, false, true, false ], [ false, false, false, true ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false ], [ false, false, false, true ], [ false, false, false, true ], [ false, false, false, true ] ]), Matrix(IsBooleanMat, [ [ false, false, false, true ], [ false, false, false, true ], [ true, false, false, false ], [ false, false, false, true ] ]) ] );
 <monoid of 4x4 boolean matrices with 3 generators>
-gap> T := AsMonoid(IsPartialPermMonoid, S);
-<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);;
+gap> RankOfPartialPermSemigroup(T);
+4
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
