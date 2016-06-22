@@ -173,8 +173,21 @@ true</Log>
     
    <Section Label = "Changing the representation of a semigroup">
      <Heading>Changing the representation of a semigroup</Heading>
+    
+     The &Semigroups; package provides two convenient constructors 
+     <Ref Oper = "IsomorphismSemigroup"/> and 
+     <Ref Oper = "IsomorphismMonoid"/> for changing the representation of a given
+     semigroup or monoid. These methods can be used to
+     find an isomorphism from any semigroup to a semigroup of any other type,
+     provided such an isomorphism exists. <P/>
 
-     In addition, to the library functions
+     Note that at present neither <Ref Oper = "IsomorphismSemigroup"/> nor
+     <Ref Oper = "IsomorphismMonoid"/> can be used to determine whether two
+     given semigroups, or monoids, are isomorphic.<P/>
+
+     Some methods for <Ref Oper = "IsomorphismSemigroup"/> and 
+     <Ref Oper = "IsomorphismMonoid"/> are based on 
+     methods for the &GAP; library operations:
      <List>
        <Item>
          <Ref Oper = "IsomorphismReesMatrixSemigroup" BookName = "ref"/>,
@@ -183,22 +196,69 @@ true</Log>
          <Ref Oper = "AntiIsomorphismTransformationSemigroup" BookName = "ref"/>,
        </Item>
        <Item>
-         <Ref Oper = "IsomorphismTransformationSemigroup" BookName = "ref"/>,
+         <Ref Oper = "IsomorphismTransformationSemigroup" BookName = "ref"/>
+         and 
+         <Ref Oper = "IsomorphismTransformationMonoid" BookName = "ref"/>,
        </Item>
        <Item>
-         <Ref Oper = "IsomorphismPartialPermSemigroup" BookName = "ref"/>,
+         <Ref Oper = "IsomorphismPartialPermSemigroup" BookName = "ref"/> 
+         and 
+         <Ref Oper = "IsomorphismPartialPermMonoid" BookName = "ref"/>,
+       </Item>
+       <Item>
+         <Ref Oper = "IsomorphismFpSemigroup" BookName = "ref"/> 
+         and <C>IsomorphismFpMonoid</C>.
        </Item>
      </List>
-     there are several methods for changing the representation of a semigroup
-     in &Semigroups;. There are also methods for the operations given above for
-     the types of semigroups defined in &Semigroups; which are not mentioned in
-     the reference manual. 
-     <#Include Label = "AsTransformationSemigroup">
-     <#Include Label = "IsomorphismPermGroup">
-     <#Include Label = "IsomorphismBipartitionSemigroup">
-     <#Include Label = "IsomorphismBlockBijectionSemigroup">
-     <#Include Label = "IsomorphismReesZeroMatrixSemigroup">
-     <#Include Label = "IsomorphismPBRSemigroup">
+
+     The operation <Ref Oper = "IsomorphismMonoid"/> can be used to return an
+     isomorphism from a semigroup which is mathematically a monoid (but does not
+     below to the category of monoids in &GAP; <Ref Filt = "IsMonoid" BookName
+       = "ref"/>) into a monoid. This is the primary purpose of the operation
+     <Ref Oper = "IsomorphismMonoid"/>. Either 
+     <Ref Oper = "IsomorphismSemigroup"/> or <Ref Oper = "IsomorphismMonoid"/> 
+     can be used to change the representation of a monoid, but only the latter
+     is guaranteed to return an object in the category of monoids.
+     <P/>
+     
+     <Example><![CDATA[
+gap> S := Monoid(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
+>                Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));;
+gap> AsSemigroup(IsBooleanMatSemigroup, S);
+<monoid of 10x10 boolean matrices with 2 generators>
+gap> AsMonoid(IsBooleanMatMonoid, S);
+<monoid of 10x10 boolean matrices with 2 generators>
+gap> S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
+>                   Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));;
+gap> AsSemigroup(IsBooleanMatSemigroup, S);
+<semigroup of 10x10 boolean matrices with 2 generators>
+gap> AsMonoid(IsBooleanMatMonoid, S);
+<monoid of 8x8 boolean matrices with 2 generators>
+gap> M := Monoid(Bipartition([[1, -3], [2, 3, 6], [4, 7, -6], 
+>                             [5, -8], [8, -4, -5], [-1], 
+>                             [-2], [-7]]),
+>                Bipartition([[1, 3, -6], [2, -8], [4, 8, -1],
+>                             [5], [6, -3, -4], [7], [-2], 
+>                             [-5], [-7]]),
+>                Bipartition([[1, 2, 4, -3, -7, -8], 
+>                             [3, 5, 6, 8, -4, -6], 
+>                             [7, -1, -2, -5]]));;
+gap> AsMonoid(IsPBRMonoid, M);
+<pbr monoid of size 163, degree 163 with 3 generators>
+gap> AsSemigroup(IsPBRSemigroup, M);
+<pbr semigroup of size 163, degree 8 with 4 generators>]]></Example>
+
+     There are some further methods in &Semigroups; for obtaining an isomorphism
+     from a Rees matrix, or 0-matrix, semigroup to another such semigroup with
+     particular properties; <Ref Attr = "RMSNormalization"/> and 
+     <Ref Attr = "RZMSNormalization"/>.  
+
+     <#Include Label = "IsomorphismSemigroup">
+     <#Include Label = "IsomorphismMonoid">
+     <#Include Label = "AsSemigroup">
+     <#Include Label = "AsMonoid">
+     <#Include Label = "RZMSNormalization">
+     <#Include Label = "RMSNormalization">
   </Section>
   
 </Chapter>
