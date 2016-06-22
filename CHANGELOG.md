@@ -2,6 +2,11 @@
 
 #### Copyright (C) 2011-16 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 2.8.1 (released 22/06/2016)
+This is a minor release to update the output in some test file and manual
+examples due to some changes in the GAP library code for semigroup
+isomorphisms.
+
 ### Version 2.8.0 (released 26/05/2016)
 In this release there are some new features and some bug fixes. In this
 version, we welcome [Nick Ham](https://n-ham.github.io) to the contributors to the package.

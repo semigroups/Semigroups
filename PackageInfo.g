@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.8.0">
-##  <!ENTITY GAPVERS "4.8.3">
+##  <!ENTITY VERSION "2.8.1">
+##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.8.0">
+##  <!ENTITY ARCHIVENAME "semigroups-2.8.1">
 ##  <!ENTITY COPYRIGHTYEARS "2011-16">
 ##  <#/GAPDoc>
 
@@ -39,8 +39,8 @@ SetPackageInfo( rec(
 
 PackageName := "Semigroups",
 Subtitle := "",
-Version := "2.8.0",
-Date := "26/05/2016",
+Version := "2.8.1",
+Date := "22/06/2016",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -202,7 +202,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.8.3",
+  GAP := ">=4.9.0",
   NeededOtherPackages := [["orb", ">=4.7.3"], ["io", ">=4.4.4"]],
 
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],
