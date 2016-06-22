@@ -242,7 +242,7 @@ end);
 # the following method is required to beat the method for
 # IsPartialPermCollection in the library.
 
-InstallMethod(One, "for a partial perm semigroup ideal",
+InstallOtherMethod(One, "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
   local pts, x;
