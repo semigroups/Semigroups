@@ -64,6 +64,12 @@ function(filt, S)
   return IsomorphismFpSemigroup(S);
 end);
 
+InstallMethod(AsMonoid, "for an fp semigroup", 
+[IsFpSemigroup],
+function(S)
+  return Range(IsomorphismMonoid(IsFpMonoid, S));
+end);
+
 InstallMethod(IsomorphismMonoid, "for IsFpMonoid and a semigroup",
 [IsFpMonoid, IsSemigroup],
 function(filt, S)

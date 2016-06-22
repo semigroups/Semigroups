@@ -80,6 +80,12 @@ end);
 # the MultiplicativeNeutralElement of the second argument, and reduces the
 # degree accordingly.
 
+InstallMethod(AsMonoid, "for a boolean mat semigroup", 
+[IsBooleanMatSemigroup],
+function(S)
+  return Range(IsomorphismMonoid(IsBooleanMatMonoid, S));
+end);
+
 InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a semigroup",
 [IsBooleanMatMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
 

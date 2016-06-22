@@ -249,6 +249,12 @@ end);
 # important do not change it! They should be ordered from lowest rank to
 # highest so that the correct method is used.
 
+InstallMethod(AsMonoid, "for a bipartition semigroup", 
+[IsBipartitionSemigroup],
+function(S)
+  return Range(IsomorphismMonoid(IsBipartitionMonoid, S));
+end);
+
 InstallMethod(IsomorphismMonoid, "for IsBipartitionMonoid and a semigroup",
 [IsBipartitionMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
 
