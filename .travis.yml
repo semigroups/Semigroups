@@ -12,9 +12,7 @@ env:
     - GRAPE=grape4r7
   matrix:
     - GAP_BRANCH=master
-    - GAP_BRANCH=stable-4.8
     - GAP_BRANCH=master GAP_FLAGS="ABI=32 --host=i686-linux-gnumake" PKG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 --host=i686-linux-gnu"
-    - GAP_BRANCH=stable-4.8 GAP_FLAGS="ABI=32 --host=i686-linux-gnumake" PKG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 --host=i686-linux-gnu"
 addons:
   apt:
     sources:
