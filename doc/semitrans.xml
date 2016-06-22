@@ -113,41 +113,6 @@ true]]></Example>
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="AsTransformationSemigroup">
-<ManSection>
-  <Oper Name = "AsTransformationSemigroup" Arg = "S"/>
-  <Oper Name = "AsPartialPermSemigroup" Arg = "S"/>
-  <Oper Name = "AsBipartitionSemigroup" Arg = "S"/>
-  <Oper Name = "AsBlockBijectionSemigroup" Arg = "S"/>
-  <Oper Name = "AsPBRSemigroup" Arg = "S"/>
-  <Returns>A semigroup.</Returns>
-  <Description>
-    <C>AsTransformationSemigroup(<A>S</A>)</C> is just shorthand for 
-    <C>Range(IsomorphismTransformationSemigroup(<A>S</A>))</C>, when <A>S</A> 
-    is a semigroup; see <Ref Oper = "IsomorphismTransformationSemigroup"
-      BookName = "ref"/> for more details.<P/>
-  
-    The operations: 
-    <List>
-      <Item><C>AsPartialPermSemigroup</C>;</Item>
-      <Item><C>AsBipartitionSemigroup</C>;</Item>
-      <Item><C>AsBlockBijectionSemigroup</C>;</Item>
-      <Item><C>AsPBRSemigroup</C>;</Item>
-    </List>
-    are analogous to <C>AsTransformationSemigroup</C>.
-
-    <Example><![CDATA[
-gap> S := Semigroup(
-> Bipartition([[1, 2], [3, 6, -2], [4, 5, -3, -4], 
->              [-1, -6], [-5]]), 
-> Bipartition([[1, -4], [2, 3, 4, 5], [6], [-1, -6], 
->              [-2, -3], [-5]]));
-<bipartition semigroup of degree 6 with 2 generators>
-gap> AsSemigroup(IsTransformationSemigroup, S);
-<transformation semigroup of size 11, degree 12 with 2 generators>]]></Example>
-  </Description>
-</ManSection>
-<#/GAPDoc>
 
 <#GAPDoc Label="ComponentRepsOfTransformationSemigroup">
 <ManSection>
