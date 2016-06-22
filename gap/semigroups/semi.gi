@@ -1269,7 +1269,7 @@ end);
 # degree of S, whereas if you do AsMonoid(IsPBRMonoid, S), you get a monoid
 # where the degree is equal to the size of S plus 1 (since this is computed by
 # computing an isomorphic transformation monoid, and then this is embedded, as
-# a monoid, into a monoid of pbrs.
+# a monoid, into a monoid of pbrs).
 
 InstallMethod(AsSemigroup, "for a filter and a semigroup",
 [IsFunction and IsOperation, IsSemigroup],
