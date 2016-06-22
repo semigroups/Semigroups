@@ -1309,7 +1309,7 @@ InstallMethod(AsMonoid, "for a filter and a semigroup",
 [IsFunction and IsOperation, IsSemigroup],
 function(filt, S)
 
-  if Tester(filt)(S) and filt(S) then 
+  if IsMonoid(S) and Tester(filt)(S) and filt(S) then 
     return S;
   elif filt = IsTransformationMonoid then
     return Range(IsomorphismTransformationMonoid(S));

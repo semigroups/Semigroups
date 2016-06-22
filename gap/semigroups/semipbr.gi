@@ -123,6 +123,15 @@ function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);
 
+InstallMethod(AsMonoid, "for a PBR semigroup", 
+[IsPBRSemigroup],
+function(S)
+  if MultiplicativeNeutralElement(S) = fail then 
+    return fail; # so that we do the same as the GAP/ref manual says
+  fi;
+  return Range(IsomorphismMonoid(IsPBRMonoid, S));
+end);
+
 InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a semigroup",
 [IsPBRMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
 

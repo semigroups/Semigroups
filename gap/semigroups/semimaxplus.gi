@@ -267,6 +267,9 @@ _InstallIsomorphism0 := function(filter)
   Concatenation("for a semigroup in ", IsXSemigroup),
   [EvalString(IsXSemigroup)],
   function(S)
+    if MultiplicativeNeutralElement(S) = fail then 
+      return fail; # so that we do the same as the GAP/ref manual says
+    fi;
     return Range(IsomorphismMonoid(EvalString(IsXMonoid), S));
   end);
 
@@ -331,6 +334,9 @@ _InstallIsomorphism1 := function(filter)
   Concatenation("for a semigroup in ", IsXSemigroup),
   [EvalString(IsXSemigroup)],
   function(S)
+    if MultiplicativeNeutralElement(S) = fail then 
+      return fail; # so that we do the same as the GAP/ref manual says
+    fi;
     return Range(IsomorphismMonoid(EvalString(IsXMonoid), S));
   end);
 
@@ -403,6 +409,9 @@ Unbind(_InstallIsomorphism1);
 InstallMethod(AsMonoid, "for an ntp matrix semigroup",
 [IsNTPMatrixSemigroup],
 function(S)
+  if MultiplicativeNeutralElement(S) = fail then 
+    return fail; # so that we do the same as the GAP/ref manual says
+  fi;
   return Range(IsomorphismMonoid(IsNTPMatrixMonoid, S));
 end);
 
