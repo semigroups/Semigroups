@@ -292,6 +292,1378 @@ true
 gap> empty_map in s;
 false
 
+#T# helper functions
+gap> BruteForceIsoCheck := function(iso)
+>   local x, y;
+>   if not IsInjective(iso) or not IsSurjective(iso) then
+>     return false;
+>   fi;
+>   for x in Generators(Source(iso)) do
+>     for y in Generators(Source(iso)) do
+>       if x ^ iso * y ^ iso <> (x * y) ^ iso then
+>         return false;
+>       fi;
+>     od;
+>   od;
+>   return true;
+> end;;
+gap> BruteForceInverseCheck := function(map)
+> local inv;
+>   inv := InverseGeneralMapping(map);
+>   return ForAll(Source(map), x -> x = (x ^ map) ^ inv)
+>     and ForAll(Range(map), x -> x = (x ^ inv) ^ map);
+> end;;
+
+#T# AsSemigroup: 
+#   convert from IsPBRSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ PBR([ [ -2 ], [ -2 ] ], [ [ ], [ 1, 2 ] ]) ] );
+<commutative pbr semigroup of degree 2 with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsFpSemigroup to IsPartialPermSemigroup
+gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
+gap> rels := [ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s2 ], [ s2^2, s2 ] ];;
+gap> S := F / rels;
+<fp semigroup on the generators [ s1, s2 ]>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 2, rank 2 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBipartitionSemigroup to IsPartialPermSemigroup
+gap> S := InverseSemigroup( [ Bipartition([ [ 1, -1 ] ]), Bipartition([ [ 1 ], [ -1 ] ]) ] );
+<commutative inverse bipartition monoid of degree 1 with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<commutative inverse partial perm monoid of rank 1 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTransformationSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ Transformation( [ 2, 2 ] ) ] );
+<commutative transformation semigroup of degree 2 with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBooleanMatSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ false, true ], [ false, true ] ]) ] );
+<commutative semigroup of 2x2 boolean matrices with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMaxPlusMatrixSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0 ], [ -infinity, 0 ] ]) ] );
+<commutative semigroup of 2x2 max-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMinPlusMatrixSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0 ], [ infinity, 0 ] ]) ] );
+<commutative semigroup of 2x2 min-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsProjectiveMaxPlusMatrixSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0 ], [ -infinity, 0 ] ]) ] );
+<commutative semigroup of 2x2 projective max-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsIntegerMatrixSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 0, 1 ], [ 0, 1 ] ]) ] );
+<commutative semigroup of 2x2 integer matrices with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMaxPlusMatrixSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0 ], [ -infinity, 0 ] ], 4) ] );
+<commutative semigroup of 2x2 tropical max-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMinPlusMatrixSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0 ], [ infinity, 0 ] ], 1) ] );
+<commutative semigroup of 2x2 tropical min-plus matrices with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsNTPMatrixSemigroup to IsPartialPermSemigroup
+gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 0, 1 ], [ 0, 1 ] ], 2, 5) ] );
+<commutative semigroup of 2x2 ntp matrices with 1 generator>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<trivial partial perm group of rank 1 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsPBRMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ PBR([ [ -2 ], [ -3 ], [ -3 ] ], [ [ ], [ 1 ], [ 2, 3 ] ]), PBR([ [ -3 ], [ -1 ], [ -3 ] ], [ [ 2 ], [ ], [ 1, 3 ] ]) ] );
+<pbr monoid of degree 3 with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsFpMonoid to IsPartialPermSemigroup
+gap> F := FreeMonoid(3);; AssignGeneratorVariables(F);;
+gap> rels := [ [ m1^2, m1 ], [ m1*m2, m2 ], [ m1*m3, m3 ], [ m2*m1, m2 ], [ m3*m1, m3 ], [ m3^2, m2^2 ], [ m2^3, m2^2 ], [ m2^2*m3, m2^2 ], [ m2*m3*m2, m2 ], [ m3*m2^2, m2^2 ], [ m3*m2*m3, m3 ] ];;
+gap> S := F / rels;
+<fp monoid on the generators [ m1, m2, m3 ]>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBipartitionMonoid to IsPartialPermSemigroup
+gap> S := InverseMonoid( [ Bipartition([ [ 1, -2 ], [ 2 ], [ -1 ] ]), Bipartition([ [ 1, -1 ], [ 2, -2 ] ]), Bipartition([ [ 1 ], [ 2, -1 ], [ -2 ] ]) ] );
+<inverse bipartition monoid of degree 2 with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of rank 2 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTransformationMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ Transformation( [ 2, 3, 3 ] ), Transformation( [ 3, 1, 3 ] ) ] );
+<transformation monoid of degree 3 with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);;
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBooleanMatMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true, false ], [ false, false, true ], [ false, false, true ] ]), Matrix(IsBooleanMat, [ [ false, false, true ], [ true, false, false ], [ false, false, true ] ]) ] );
+<monoid of 3x3 boolean matrices with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMaxPlusMatrixMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, -infinity, 0 ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0 ], [ 0, -infinity, -infinity ], [ -infinity, -infinity, 0 ] ]) ] );
+<monoid of 3x3 max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsMinPlusMatrixMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, infinity, 0 ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0 ], [ 0, infinity, infinity ], [ infinity, infinity, 0 ] ]) ] );
+<monoid of 3x3 min-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsProjectiveMaxPlusMatrixMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, -infinity, 0 ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0 ], [ 0, -infinity, -infinity ], [ -infinity, -infinity, 0 ] ]) ] );
+<monoid of 3x3 projective max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsIntegerMatrixMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 0, 1 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ]) ] );
+<monoid of 3x3 integer matrices with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMaxPlusMatrixMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, -infinity, 0 ] ], 5), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0 ], [ 0, -infinity, -infinity ], [ -infinity, -infinity, 0 ] ], 5) ] );
+<monoid of 3x3 tropical max-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsTropicalMinPlusMatrixMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, infinity, 0 ] ], 2), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0 ], [ 0, infinity, infinity ], [ infinity, infinity, 0 ] ], 2) ] );
+<monoid of 3x3 tropical min-plus matrices with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsNTPMatrixMonoid to IsPartialPermSemigroup
+gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 0, 1 ] ], 2, 4), Matrix(IsNTPMatrix, [ [ 0, 0, 1 ], [ 1, 0, 0 ], [ 0, 0, 1 ] ], 2, 4) ] );
+<monoid of 3x3 ntp matrices with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsPBRSemigroup to IsPartialPermMonoid
+gap> S := Semigroup([PBR([[-2], [-1]], [[2], [1]])]);
+<commutative pbr semigroup of degree 2 with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsFpSemigroup to IsPartialPermMonoid
+gap> F := FreeSemigroup(1);; AssignGeneratorVariables(F);;
+gap> rels := [ [ s1^3, s1 ] ];;
+gap> S := F / rels;
+<fp semigroup on the generators [ s1 ]>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsBipartitionSemigroup to IsPartialPermMonoid
+gap> S := InverseSemigroup( [ Bipartition([ [ 1, -2 ], [ 2, -1 ] ]) ] );
+<block bijection group of degree 2 with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);;
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsBipartitionSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Bipartition([ [ 1, -2 ], [ 2, -1 ] ]) ] );
+<block bijection group of degree 2 with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);;
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTransformationSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Transformation( [ 2, 1 ] ) ] );
+<commutative transformation semigroup of degree 2 with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);;
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsBooleanMatSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]) ] );
+<commutative semigroup of 2x2 boolean matrices with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);;
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsMaxPlusMatrixSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0 ], [ 0, -infinity ] ]) ] );
+<commutative semigroup of 2x2 max-plus matrices with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsMinPlusMatrixSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0 ], [ 0, infinity ] ]) ] );
+<commutative semigroup of 2x2 min-plus matrices with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsProjectiveMaxPlusMatrixSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0 ], [ 0, -infinity ] ]) ] );
+<commutative semigroup of 2x2 projective max-plus matrices with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsIntegerMatrixSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 0, 1 ], [ 1, 0 ] ]) ] );
+<commutative semigroup of 2x2 integer matrices with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTropicalMaxPlusMatrixSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0 ], [ 0, -infinity ] ], 5) ] );
+<commutative semigroup of 2x2 tropical max-plus matrices with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTropicalMinPlusMatrixSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0 ], [ 0, infinity ] ], 3) ] );
+<commutative semigroup of 2x2 tropical min-plus matrices with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsNTPMatrixSemigroup to IsPartialPermMonoid
+gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 0, 1 ], [ 1, 0 ] ], 3, 2) ] );
+<commutative semigroup of 2x2 ntp matrices with 1 generator>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsPBRMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ PBR([ [ -1 ], [ -4 ], [ -3 ], [ -4 ] ], [ [ 1 ], [ ], [ 3 ], [ 2, 4 ] ]), PBR([ [ -3 ], [ -4 ], [ -4 ], [ -4 ] ], [ [ ], [ ], [ 1 ], [ 2, 3, 4 ] ]), PBR([ [ -4 ], [ -4 ], [ -1 ], [ -4 ] ], [ [ 3 ], [ ], [ ], [ 1, 2, 4 ] ]) ] );
+<pbr monoid of degree 4 with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsFpMonoid to IsPartialPermMonoid
+gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
+gap> rels := [ [ m2^2, m1^2 ], [ m1^3, m1^2 ], [ m1^2*m2, m1^2 ], [ m1*m2*m1, m1 ], [ m2*m1^2, m1^2 ], [ m2*m1*m2, m2 ] ];;
+gap> S := F / rels;
+<fp monoid on the generators [ m1, m2 ]>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsBipartitionMonoid to IsPartialPermMonoid
+gap> S := InverseMonoid( [ Bipartition([ [ 1, -3 ], [ 2 ], [ 3 ], [ -1 ], [ -2 ] ]), Bipartition([ [ 1, -1 ], [ 2 ], [ 3, -3 ], [ -2 ] ]), Bipartition([ [ 1 ], [ 2 ], [ 3, -1 ], [ -2 ], [ -3 ] ]) ] );
+<inverse bipartition monoid of degree 3 with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTransformationMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ Transformation( [ 1, 4, 3, 4 ] ), Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 1, 4 ] ) ] );
+<transformation monoid of degree 4 with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);;
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsBooleanMatMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ true, false, false, false ], [ false, false, false, true ], [ false, false, true, false ], [ false, false, false, true ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false ], [ false, false, false, true ], [ false, false, false, true ], [ false, false, false, true ] ]), Matrix(IsBooleanMat, [ [ false, false, false, true ], [ false, false, false, true ], [ true, false, false, false ], [ false, false, false, true ] ]) ] );
+<monoid of 4x4 boolean matrices with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);;
+gap> RankOfPartialPermSemigroup(T);
+4
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsMaxPlusMatrixMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, 0 ], [ 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0 ] ]) ] );
+<monoid of 4x4 max-plus matrices with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsMinPlusMatrixMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0 ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, 0 ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, 0 ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, 0 ], [ 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0 ] ]) ] );
+<monoid of 4x4 min-plus matrices with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsProjectiveMaxPlusMatrixMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, 0 ], [ 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0 ] ]) ] );
+<monoid of 4x4 projective max-plus matrices with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsIntegerMatrixMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 1 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 0, 1 ], [ 0, 0, 0, 1 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 0, 1 ], [ 0, 0, 0, 1 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ] ]) ] );
+<monoid of 4x4 integer matrices with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTropicalMaxPlusMatrixMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, 0 ] ], 5), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, 0 ] ], 5), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, 0 ], [ 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0 ] ], 5) ] );
+<monoid of 4x4 tropical max-plus matrices with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsTropicalMinPlusMatrixMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0 ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, 0 ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, 0 ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, 0 ], [ 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0 ] ], 3) ] );
+<monoid of 4x4 tropical min-plus matrices with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid: 
+#   convert from IsNTPMatrixMonoid to IsPartialPermMonoid
+gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 1, 0 ], [ 0, 0, 0, 1 ] ], 1, 2), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0 ], [ 0, 0, 0, 1 ], [ 0, 0, 0, 1 ], [ 0, 0, 0, 1 ] ], 1, 2), Matrix(IsNTPMatrix, [ [ 0, 0, 0, 1 ], [ 0, 0, 0, 1 ], [ 1, 0, 0, 0 ], [ 0, 0, 0, 1 ] ], 1, 2) ] );
+<monoid of 4x4 ntp matrices with 3 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 7, rank 7 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsReesMatrixSemigroup to IsPartialPermSemigroup
+gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[()]]);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> T := AsSemigroup(IsPartialPermSemigroup, R);
+<commutative inverse partial perm semigroup of size 2, rank 2 with 1 
+ generator>
+gap> Size(R) = Size(T);
+true
+gap> NrDClasses(R) = NrDClasses(T);
+true
+gap> NrRClasses(R) = NrRClasses(T);
+true
+gap> NrLClasses(R) = NrLClasses(T);
+true
+gap> NrIdempotents(R) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, R);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid
+#   convert from IsReesMatrixSemigroup to IsPartialPermMonoid
+gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2)]]);
+<Rees matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> T := AsMonoid(IsPartialPermMonoid, R);
+<commutative inverse partial perm monoid of size 2, rank 2 with 1 generator>
+gap> Size(R) = Size(T);
+true
+gap> NrDClasses(R) = NrDClasses(T);
+true
+gap> NrRClasses(R) = NrRClasses(T);
+true
+gap> NrLClasses(R) = NrLClasses(T);
+true
+gap> NrIdempotents(R) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, R);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsReesZeroMatrixSemigroup to IsPartialPermSemigroup
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), 
+>                                 [[(1, 2)]]);
+<Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> T := AsSemigroup(IsPartialPermSemigroup, R);
+<inverse partial perm semigroup of size 3, rank 3 with 2 generators>
+gap> Size(R) = Size(T);
+true
+gap> NrDClasses(R) = NrDClasses(T);
+true
+gap> NrRClasses(R) = NrRClasses(T);
+true
+gap> NrLClasses(R) = NrLClasses(T);
+true
+gap> NrIdempotents(R) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, R);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsMonoid
+#   convert from IsReesZeroMatrixSemigroup to IsPartialPermMonoid
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[()]]);
+<Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
+gap> T := AsMonoid(IsPartialPermMonoid, R);
+<inverse partial perm monoid of size 3, rank 3 with 2 generators>
+gap> Size(R) = Size(T);
+true
+gap> NrDClasses(R) = NrDClasses(T);
+true
+gap> NrRClasses(R) = NrRClasses(T);
+true
+gap> NrLClasses(R) = NrLClasses(T);
+true
+gap> NrIdempotents(R) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, R);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from graph inverse to IsPartialPermSemigroup
+gap> S := GraphInverseSemigroup(Digraph([[2],[]]));
+<finite graph inverse semigroup with 2 vertices, 1 edge>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm semigroup of size 6, rank 6 with 4 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from perm group to IsPartialPermSemigroup
+gap> S := DihedralGroup(IsPermGroup, 6);
+Group([ (1,2,3), (2,3) ])
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<partial perm group of rank 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from perm group to IsPartialPermMonoid
+gap> S := DihedralGroup(IsPermGroup, 6);
+Group([ (1,2,3), (2,3) ])
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<partial perm group of rank 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from non-perm group to IsPartialPermSemigroup
+gap> S := DihedralGroup(6);
+<pc group of size 6 with 2 generators>
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 5 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from non-perm group to IsPartialPermMonoid
+gap> S := DihedralGroup(6);
+<pc group of size 6 with 2 generators>
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 6, rank 6 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBlockBijectionSemigroup to IsPartialPermSemigroup
+gap> S := InverseSemigroup(Bipartition([[1, -1, -3], [2, 3, -2]]));;
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm semigroup of size 5, rank 5 with 2 generators>
+gap> IsInverseSemigroup(T);
+true
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBlockBijectionMonoid to IsPartialPermMonoid
+gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
+gap> T := AsMonoid(IsPartialPermMonoid, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> IsInverseMonoid(T);
+true
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismMonoid(IsPartialPermMonoid, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsBlockBijectionMonoid to IsPartialPermSemigroup
+gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
+gap> T := AsSemigroup(IsPartialPermSemigroup, S);
+<inverse partial perm monoid of size 6, rank 6 with 3 generators>
+gap> IsInverseSemigroup(T) and IsMonoidAsSemigroup(T);
+true
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsPartialPermSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(H1);

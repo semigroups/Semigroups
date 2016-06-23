@@ -99,6 +99,8 @@ function(filt, S)
                                        AsTransformation);
 end);
 
+# The following is not a monoid isomorphism
+
 InstallMethod(IsomorphismSemigroup,
 "for IsPBRSemigroup and a bipartition semigroup",
 [IsPBRSemigroup, IsBipartitionSemigroup],
@@ -114,11 +116,46 @@ function(filt, S)
                                        AsBipartition);
 end);
 
+InstallMethod(IsomorphismSemigroup,
+"for IsPBRSemigroup and a pbr semigroup",
+[IsPBRSemigroup, IsPBRSemigroup],
+function(filter, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+end);
+
+InstallMethod(AsMonoid, "for a PBR semigroup", 
+[IsPBRSemigroup],
+function(S)
+  if MultiplicativeNeutralElement(S) = fail then 
+    return fail; # so that we do the same as the GAP/ref manual says
+  fi;
+  return Range(IsomorphismMonoid(IsPBRMonoid, S));
+end);
+
 InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a semigroup",
 [IsPBRMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
 
 InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a monoid",
-[IsPBRMonoid, IsMonoid],
+[IsPBRMonoid, IsMonoid], SEMIGROUPS.DefaultIsomorphismMonoid);
+
+InstallMethod(IsomorphismMonoid, "for IsPBRMonoid and a transformation monoid",
+[IsPBRMonoid, IsTransformationMonoid],
+function(filt, S)
+  local deg, T;
+
+  deg := Maximum(1, DegreeOfTransformationSemigroup(S));
+  T := Monoid(List(GeneratorsOfSemigroup(S), x -> AsPBR(x, deg)));
+  UseIsomorphismRelation(S, T);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       T,
+                                       x -> AsPBR(x, deg),
+                                       AsTransformation);
+end);
+
+InstallMethod(IsomorphismMonoid,
+"for IsPBRMonoid and a pbr monoid",
+[IsPBRMonoid, IsPBRMonoid],
 function(filter, S)
-  return IsomorphismSemigroup(IsPBRSemigroup, S);
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);

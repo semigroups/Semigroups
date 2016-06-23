@@ -249,6 +249,15 @@ end);
 # important do not change it! They should be ordered from lowest rank to
 # highest so that the correct method is used.
 
+InstallMethod(AsMonoid, "for a bipartition semigroup", 
+[IsBipartitionSemigroup],
+function(S)
+  if MultiplicativeNeutralElement(S) = fail then 
+    return fail; # so that we do the same as the GAP/ref manual says
+  fi;
+  return Range(IsomorphismMonoid(IsBipartitionMonoid, S));
+end);
+
 InstallMethod(IsomorphismMonoid, "for IsBipartitionMonoid and a semigroup",
 [IsBipartitionMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
 
@@ -488,7 +497,7 @@ function(filter, S)
 end);
 
 InstallMethod(IsomorphismSemigroup,
-"for IsBipartitionSemigroup and a block bijection semigroup",
+"for IsBipartitionSemigroup and a bipartition semigroup",
 [IsBipartitionSemigroup, IsBipartitionSemigroup],
 function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);

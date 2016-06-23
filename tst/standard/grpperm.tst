@@ -20,8 +20,8 @@ gap> BruteForceIsoCheck := function(iso)
 >     return false;
 >   fi;
 >   #homomorphism
->   for x in Source(iso) do
->     for y in Source(iso) do
+>   for x in Generators(Source(iso)) do
+>     for y in Generators(Source(iso)) do
 >       if x ^ iso * y ^ iso <> (x * y) ^ iso then
 >         return false;
 >       fi;
@@ -385,6 +385,24 @@ gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
 true
+
+#T# IsomorphismPermGroup
+gap> S := RegularBooleanMatMonoid(2);
+<monoid of 2x2 boolean matrices with 4 generators>
+gap> IsomorphismPermGroup(S);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument must be a semigroup satisfying IsGroupAsSemigroup,
+gap> S := Semigroup([BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
+> BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
+gap> IsomorphismPermGroup(S);
+MappingByFunction( <group of size 6, 3x3 boolean matrices with 2 generators>, 
+<group of size 6, with 2 generators>
+, function( x ) ... end, function( x ) ... end )
+
+#T# IsomorphismPermGroup, infinite 1 / 1
+gap> IsomorphismPermGroup(FreeMonoid(3));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
