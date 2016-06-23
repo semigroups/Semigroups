@@ -32,8 +32,7 @@ function(n)
                    CanEasilySortElements);
 
   type := NewType(fam,
-                  IsBipartition and IsComponentObjectRep and
-                  IsAttributeStoringRep);
+                  IsBipartition and IsInternalRep);
   TYPES_BIPART[n] := type;
   return type;
 end);
