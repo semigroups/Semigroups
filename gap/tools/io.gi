@@ -216,6 +216,7 @@ function(arg)
   fi;
 
   if IsString(name) then
+    name := UserHomeExpand(name);
     file := IO_CompressedFile(name, "r");
     if file = fail then
       ErrorNoReturn("Semigroups: ReadOldGenerators:\n",
