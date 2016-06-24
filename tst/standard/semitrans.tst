@@ -2050,6 +2050,17 @@ true
 gap> Size(S);
 4
 
+# Test LargestElementSemigroup
+gap> gr := Digraph([[2, 3, 4, 5, 7, 8, 9, 10], [3, 5, 6, 7, 10, 1, 8, 9], 
+> [1, 4, 5, 6, 2, 7, 8, 10], [1, 3, 8, 9], [3, 7, 8, 1, 2], 
+> [3, 7, 2, 8, 10], [2, 3, 6, 10, 1, 5, 8], [1, 2, 3, 5, 6, 7, 10, 4, 9], 
+> [1, 2, 8, 4, 10], [1, 3, 6, 8, 9, 2, 7]]);;
+gap> S := EndomorphismMonoid(gr);;
+gap> LargestElementSemigroup(S) = Maximum(AsSet(S)); 
+true
+gap> LargestElementSemigroup(S);
+Transformation( [ 10, 8, 7, 8, 6, 10, 3, 2, 9, 1 ] )
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
