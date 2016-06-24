@@ -9,8 +9,11 @@
 ##
 # (a * b) f = (a) f * b
 
+#TODO: deal with infinite underlying semigroups
+
+
 InstallMethod(LeftTranslationsSemigroup, "for a semigroup", 
-[IsRectangularBand], 
+[IsSemigroup], 
 function(S) 
 	local fam, type, L;
 	
@@ -32,6 +35,7 @@ function(S)
 	return L;
 end);
 
+
 InstallGlobalFunction(LeftTranslation,
 #why not filters? And should it be checked that this really is a translation?
 function(L, f)
@@ -46,7 +50,7 @@ function(L, f)
 		 "semigroup of the semigroup of left translations to itself");
 	fi;
 	
-	#this is a bit dodgy
+	#TODO: this is a bit dodgy - what about infinite underlying semigroups?
 	semiList:=AsList(UnderlyingSemigroup(L));
 	mapAsTransList := [];
 	for i in [1..Length(semiList)] do
@@ -79,6 +83,7 @@ function(S)
 	SetUnderlyingSemigroup(R, S);
 	return R;
 end);
+
 
 InstallGlobalFunction(RightTranslation,
 #why not filters? And should it be checked that this really is a translation?
@@ -154,7 +159,7 @@ end);
 
 
 InstallMethod(ViewObj, "for the semigroup of left or right translations of a rectangular band", 
-	[IsWholeTranslationsSemigroup], 
+	[IsTranslationsSemigroup and IsWholeFamily], 
 function(T)
 	local S;
 	S:=UnderlyingSemigroup(T);
@@ -171,7 +176,7 @@ function(T)
 end);
 
 InstallMethod(PrintObj, "for the semigroup of left or right translations of a rectangular band",
-	[IsWholeTranslationsSemigroup],
+	[IsTranslationsSemigroup and IsWholeFamily],
 function(T)
 	local S;
 	S:=UnderlyingSemigroup(T);
@@ -220,7 +225,7 @@ function(t)
 		Print("<right ");
 	fi;
 	
-	Print("translation on ", S, ">");
+	Print("translation on ", ViewString(S), ">");
 end);
 
 InstallMethod(ViewObj, "for a translational hull", 
@@ -229,7 +234,7 @@ InstallMethod(ViewObj, "for a translational hull",
 InstallMethod(PrintObj, "for a translational hull",
 [IsTranslationalHull and IsWholeFamily],
 function(H)
-	Print("<translational hull over ", UnderlyingSemigroup(H), ">");
+	Print("<translational hull over ", ViewString(UnderlyingSemigroup(H)), ">");
 end);
 
 InstallMethod(ViewObj, "for a translational hull element", 
@@ -240,14 +245,14 @@ InstallMethod(PrintObj, "for a translational hull element",
 function(t)
 	local H;
 	H := TranslationalHullOfFamily(FamilyObj(t));
-	Print("<linked pair of translations on ", UnderlyingSemigroup(H), ">");
+	Print("<linked pair of translations on ", ViewString(UnderlyingSemigroup(H)), ">");
 end);
 
 
 #do I actually need to define Size/enumerator or will it inherit it from IsSemigroup?
 
 InstallMethod(Size, "for the semigroup of left or right translations of a rectangular band", 
-[IsWholeTranslationsSemigroup],
+[IsTranslationsSemigroup and IsWholeFamily],
 function(T)
 	local S, n;
 	S := UnderlyingSemigroup(T);
@@ -263,7 +268,7 @@ function(T)
 end);
 
 InstallMethod(Size, "for the translational hull of a rectangular band",
-[IsWholeTranslationalHull],
+[IsTranslationalHull and IsWholeFamily],
 function(H)
 	local S, L, R;
 	S := UnderlyingSemigroup(H);
@@ -273,7 +278,7 @@ function(H)
 end);
 	
 InstallMethod(Enumerator, "for the semigroup of left or right translations of a rectangular band", 
-[IsWholeTranslationsSemigroup],
+[IsTranslationsSemigroup and IsWholeFamily],
 function(T)
 	local S, semiList, iso, inv, reesMatSemi, L, size, 
 		i, r, s, mapAsReesTransList, f;
@@ -297,7 +302,7 @@ function(T)
 	return EnumeratorByFunctions(T, rec(
 		enum := Enumerator(FullTransformationMonoid(size)),
 		
-		#TODO: find a better way of doing this
+		#TODO: find a better way of doing this - can probably use generators
 		NumberElement := function(enum, x)
 			mapAsReesTransList := [];
 			if L then
@@ -322,14 +327,14 @@ function(T)
 					return ReesMatrixSemigroupElement(reesMatSemi, x[1]^enum!.enum[n], 
 						(), x[3]);
 				end;
-				return LeftTranslation(T, CompositionMapping(InverseGeneralMapping(iso), 
+				return LeftTranslation(T, CompositionMapping(inv, 
 					MappingByFunction(reesMatSemi, reesMatSemi, f), iso));
 			else 
 				f := function(x)
 					return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
 						(), x[3]^enum!.enum[n]);
 				end;
-				return RightTranslation(T, CompositionMapping(InverseGeneralMapping(iso), 
+				return RightTranslation(T, CompositionMapping(inv, 
 					MappingByFunction(reesMatSemi, reesMatSemi, f), iso));
 			fi;
 		end,
@@ -370,6 +375,71 @@ function(H)
 			Print("<enumerator of translational hull>");
 			return;
 		end));
+end);
+
+InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left or right translations of a rectangular band",
+[IsTranslationsSemigroup],
+function(T)
+	local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f;
+	S := UnderlyingSemigroup(T);
+	if not IsRectangularBand(S) then
+		TryNextMethod();
+	fi;
+
+	semiList := AsList(S);
+	iso := IsomorphismReesMatrixSemigroup(S);
+	inv := InverseGeneralMapping(iso);
+	reesMatSemi := Range(iso);
+	L := IsLeftTranslationsSemigroup(T);
+	if L then
+		n := Length(Rows(reesMatSemi));
+	else
+		n := Length(Columns(reesMatSemi));
+	fi;
+	
+	gens := [];
+	for t in GeneratorsOfMonoid(FullTransformationMonoid(n)) do
+		if L then
+				f := function(x)
+					return ReesMatrixSemigroupElement(reesMatSemi, x[1]^t, 
+						(), x[3]);
+				end;
+				Add(gens, LeftTranslation(T, CompositionMapping(inv, 
+				MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+		else 
+				f := function(x)
+					return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
+						(), x[3]^t);
+				end;
+				Add(gens, RightTranslation(T, CompositionMapping(inv, 
+					MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+		fi;
+	od;
+	return gens;
+end);			
+	
+
+InstallMethod(GeneratorsOfSemigroup, "for the translational hull of a rectangular band", 
+[IsTranslationalHull],
+function(H)
+	local S, leftGens, rightGens, l, r, gens;
+	
+	S := UnderlyingSemigroup(H);
+	if not IsRectangularBand(S) then
+		TryNextMethod();
+	fi;
+
+	leftGens := GeneratorsOfSemigroup(LeftTranslationsSemigroup(S));
+	rightGens := GeneratorsOfSemigroup(RightTranslationsSemigroup(S));
+	gens := [];
+	
+	for l in leftGens do
+		for r in rightGens do
+			Add(gens, TranslationalHullElement(H, l, r));
+		od;
+	od;
+	
+	return gens;
 end);
 
 
@@ -472,9 +542,17 @@ function(H)
 			Enumerator(H)[1])));
 end);
 
+SEMIGROUPS.HashFunctionForTranslationalHullElements := function(x, data)
+		return ORB_HashFunctionForTransformations(x![1]![1], data)
+			+ ORB_HashFunctionForTransformations(x![2]![1], data) mod data + 1;
+end;
 
-
-
+InstallMethod(ChooseHashFunction, "for a translational hull element and int",
+[IsTranslationalHullElement, IsInt],
+function(x, hashlen)
+  return rec(func := SEMIGROUPS.HashFunctionForTranslationalHullElements,
+             data := hashlen);
+end);
 
 
 

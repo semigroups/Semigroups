@@ -32,16 +32,10 @@ DeclareSynonymAttr("IsTranslationsSemigroup", IsSemigroup and
 	IsTranslationsSemigroupElementCollection);
 DeclareSynonymAttr("IsTranslationalHull", IsSemigroup and 
 	IsTranslationalHullElementCollection);
-
-
-DeclareSynonymAttr("IsWholeTranslationsSemigroup", IsTranslationsSemigroup and
-	IsWholeFamily);
-DeclareSynonymAttr("IsWholeTranslationalHull", IsTranslationalHull and 
-	IsWholeFamily);
 	
 
-DeclareOperation("LeftTranslationsSemigroup", [IsRectangularBand]);
-DeclareOperation("RightTranslationsSemigroup", [IsRectangularBand]);
+DeclareOperation("LeftTranslationsSemigroup", [IsSemigroup]);
+DeclareOperation("RightTranslationsSemigroup", [IsSemigroup]);
 
 
 DeclareAttribute("UnderlyingSemigroup", IsTranslationsSemigroup);
