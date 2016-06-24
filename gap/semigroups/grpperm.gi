@@ -8,8 +8,140 @@
 #############################################################################
 ##
 
-# in this file there are some methods for perm groups that were not found in
+# In this file there are some methods for perm groups that were not found in
 # the library.
+
+# Returns an iterator of the sorted elements of the stab chain S ^ conj.
+
+SEMIGROUPS.IteratorSortedConjugateStabChain := function(S, conj)
+  local SortedStabChain, record, indices, T, iter;
+
+  # finds the element of the group with stab chain S corresponding to the tuple
+  # <indices>.
+  SortedStabChain := function(S, rep, indices, level)
+    local pnt, x, next, gen;
+
+    if Length(S.generators) = 0  then
+      return rep;
+    fi;
+
+    pnt := S.orbit[1];
+    x := conj * rep;
+    next := AsSet(OnTuples(S.orbit, x))[indices[level]] / x;
+
+    while next <> pnt do
+      gen := S.transversal[next];
+      rep := LeftQuotient(gen ^ conj, rep);
+      next := next ^ gen;
+    od;
+
+    return SortedStabChain(S.stabilizer, rep, indices, level + 1);
+  end;
+
+  record := rec();
+
+  # find the lengths of the orbits in the chain
+  indices := [];
+  T := S;
+
+  while Length(T.generators) <> 0 do
+    Add(indices, [1 .. Length(T.orbit)]);
+    T := T.stabilizer;
+  od;
+
+  record.indices := IteratorOfCartesianProduct(indices);
+  record.stabchain := S;
+
+  record.NextIterator := function(iter)
+    if IsDoneIterator(iter!.indices) then
+      return fail;
+    fi;
+    return SortedStabChain(iter!.stabchain, (), NextIterator(iter!.indices),
+                           1);
+  end;
+
+  record.ShallowCopy := function(iter)
+    return rec(indices := ShallowCopy(iter!.indices),
+               stabchain := iter!.stabchain);
+  end;
+
+  iter := IteratorByNextIterator(record);
+  SetFilterObj(iter, IsIteratorSorted);
+  return iter;
+end;
+
+# Finds the element p of the group G ^ conj with stab chain S ^ conj such that
+# the OnTuples(BaseOfStabChain(S) ^ conj, p) is lexicographically maximum. I.e. 
+# this function returns the same value as:
+#
+# LargestElementStabChain(StabChainOp(G ^ conj, 
+#                                     rec(base := BaseOfStabChain(S) ^ conj)));
+
+
+SEMIGROUPS.LargestElementConjugateStabChain := function(S, rep, conj)
+  local pnt, max, val, gen, i, lrep;
+
+  if Length(S.generators) = 0  then
+    return rep ^ conj;
+  fi;
+
+  pnt := S.orbit[1];
+  max := 0;
+  val := 0;
+  lrep := rep ^ conj;
+
+  for i in S.orbit  do
+    if (i ^ conj) ^ lrep > val  then
+      max := i;
+      val := (i ^ conj) ^ lrep;
+    fi;
+  od;
+
+  while pnt <> max  do
+    gen := S.transversal[max];
+    rep := LeftQuotient(gen, rep);
+    max := max ^ gen;
+  od;
+  return SEMIGROUPS.LargestElementConjugateStabChain(S.stabilizer, 
+                                                     rep,
+                                                     conj);
+end;
+
+# Finds the element p of the group G ^ conj with stab chain S ^ conj such that
+# the OnTuples(BaseOfStabChain(S) ^ conj, p) is lexicographically minimum.
+# Note that since the base of the stab chain can be anything, the return value
+# of this function is not always the identity perm.
+
+SEMIGROUPS.SmallestElementConjugateStabChain := 
+function(S, rep, conj)
+  local pnt, min, val, lrep, gen, i;
+
+  if Length(S.generators) = 0  then
+    return rep ^ conj;
+  fi;
+
+  pnt := S.orbit[1];
+  min := 0;
+  val := infinity;
+  lrep := rep ^ conj;
+
+  for i in S.orbit  do
+    if (i ^ conj) ^ lrep < val  then
+      min := i;
+      val := (i ^ conj) ^ lrep;
+    fi;
+  od;
+
+  while pnt <> min  do
+    gen := S.transversal[min];
+    rep := LeftQuotient(gen, rep);
+    min := min ^ gen;
+  od;
+
+  return SEMIGROUPS.SmallestElementConjugateStabChain(S.stabilizer, 
+                                                      rep,
+                                                      conj);
+end;
 
 # fall back method, same method for ideals
 
@@ -104,10 +236,6 @@ InstallMethod(IsomorphismPermGroup,
 function(S)
   local G, deg;
 
-  if HasIsomorphismPermGroup(S) then
-    return IsomorphismPermGroup(S);
-  fi;
-
   G := Group(List(GeneratorsOfSemigroup(S), AsPermutation));
   UseIsomorphismRelation(S, G);
   deg := DegreeOfBipartitionSemigroup(S);
@@ -139,122 +267,3 @@ function(S)
                                        x -> x ^ inv);
 end);
 
-# returns an iterator of the sorted elements of the stab chain S^conj.
-
-InstallGlobalFunction(IteratorSortedConjugateStabChain,
-function(S, conj)
-  local SortedStabChain, record, indices, T, iter;
-
-  # finds the element of the group with stab chain S corresponding to the tuple
-  # <indices>.
-  SortedStabChain := function(S, rep, indices, level)
-    local pnt, x, next, gen;
-
-    if Length(S.generators) = 0  then
-      return rep;
-    fi;
-
-    pnt := S.orbit[1];
-    x := conj * rep;
-    next := AsSet(OnTuples(S.orbit, x))[indices[level]] / x;
-
-    while next <> pnt do
-      gen := S.transversal[next];
-      rep := LeftQuotient(gen ^ conj, rep);
-      next := next ^ gen;
-    od;
-
-    return SortedStabChain(S.stabilizer, rep, indices, level + 1);
-  end;
-
-  record := rec();
-
-  # find the lengths of the orbits in the chain
-  indices := [];
-  T := S;
-
-  while Length(T.generators) <> 0 do
-    Add(indices, [1 .. Length(T.orbit)]);
-    T := T.stabilizer;
-  od;
-
-  record.indices := IteratorOfCartesianProduct(indices);
-  record.stabchain := S;
-
-  record.NextIterator := function(iter)
-    if IsDoneIterator(iter!.indices) then
-      return fail;
-    fi;
-    return SortedStabChain(iter!.stabchain, (), NextIterator(iter!.indices),
-                           1);
-  end;
-
-  record.ShallowCopy := function(iter)
-    return rec(indices := ShallowCopy(iter!.indices),
-               stabchain := iter!.stabchain);
-  end;
-
-  iter := IteratorByNextIterator(record);
-  SetFilterObj(iter, IsIteratorSorted);
-  return iter;
-end);
-
-# finds the largest element of the stab chain S^conj.
-
-InstallGlobalFunction(LargestElementConjugateStabChain,
-function(S, rep, conj)
-  local pnt, max, val, gen, i;
-
-    if Length(S.generators) = 0  then
-      return rep;
-    fi;
-
-    pnt := S.orbit[1];
-    max := 0;
-    val := 0;
-
-    for i in S.orbit  do
-      if (i ^ conj) ^ rep > val  then
-        max := i;
-        val := (i ^ conj) ^ rep;
-      fi;
-    od;
-
-    while pnt <> max  do
-      gen := S.transversal[max];
-      rep := LeftQuotient(gen ^ conj, rep);
-      max := max ^ gen;
-    od;
-
-    return LargestElementConjugateStabChain(S.stabilizer, rep, conj);
-end);
-
-# finds the smallest element of the stab chain S^conj.
-
-InstallGlobalFunction(SmallestElementConjugateStabChain,
-function(S, rep, conj)
-  local pnt, min, val, gen, i;
-
-    if Length(S.generators) = 0  then
-      return rep;
-    fi;
-
-    pnt := S.orbit[1];
-    min := 0;
-    val := infinity;
-
-    for i in S.orbit  do
-      if (i ^ conj) ^ rep < val  then
-        min := i;
-        val := (i ^ conj) ^ rep;
-      fi;
-    od;
-
-    while pnt <> min  do
-      gen := S.transversal[min];
-      rep := LeftQuotient(gen ^ conj, rep);
-      min := min ^ gen;
-    od;
-
-    return SmallestElementConjugateStabChain(S.stabilizer, rep, conj);
-end);

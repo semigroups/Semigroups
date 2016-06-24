@@ -404,6 +404,191 @@ gap> IsomorphismPermGroup(FreeMonoid(3));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
 
+#T# IsomorphismPermGroup, for a block bijection semigroup
+gap> S := Semigroup(Bipartition([[1, 2, -3, -4], [3, 4, -1, -2]]));;
+gap> IsomorphismPermGroup(S);
+MappingByFunction( <block bijection group of degree 4 with 1 generator>
+, Group([ (1,2) ]), function( x ) ... end, function( x ) ... end )
+gap> BruteForceIsoCheck(last);
+true
+gap> BruteForceInverseCheck(last2);
+true
+
+#T# IteratorSortedConjugateStabChain
+gap> G := AlternatingGroup(5);;
+gap> S := StabChainImmutable(G);;
+gap> iter := SEMIGROUPS.IteratorSortedConjugateStabChain(S, (5, 10));
+<iterator>
+gap> ListIterator(iter) = AsSet(G ^ (5, 10));
+true
+
+#T# SEMIGROUPS.LargestElementConjugateStabChain, 1
+gap> conj := (3,9);;
+gap> G1 := AlternatingGroup(5);;
+gap> base1 := [1 .. 3];;
+gap> G2 := G1 ^ conj;;
+gap> base2 := OnTuples(base1, conj);;
+gap> S1 := StabChainOp(G1, rec(base := base1));
+<stabilizer chain record, Base [ 1, 2, 3 ], Orbit length 5, Size: 60>
+gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+(1,9,4,2,5)
+gap> S2 := StabChainOp(G2, rec(base := base2));
+<stabilizer chain record, Base [ 1, 2, 9 ], Orbit length 5, Size: 60>
+gap> p2 := LargestElementStabChain(S2, ());
+(1,9,4,2,5)
+gap> p1 = p2;
+true
+gap> OnTuples(base1, conj * p1);
+[ 9, 5, 4 ]
+gap> OnTuples(base2, p1);
+[ 9, 5, 4 ]
+gap> OnTuples(base2, p2);
+[ 9, 5, 4 ]
+
+#T# SEMIGROUPS.LargestElementConjugateStabChain, 2
+gap> conj := (1,10,7,4,3,6,2,9,8,5);;
+gap> G1 := AlternatingGroup(5);;
+gap> base1 := [1 .. 3];;
+gap> G2 := G1 ^ conj;;
+gap> base2 := OnTuples(base1, conj);;
+gap> S1 := StabChainOp(G1, rec(base := base1));
+<stabilizer chain record, Base [ 1, 2, 3 ], Orbit length 5, Size: 60>
+gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+()
+gap> S2 := StabChainOp(G2, rec(base := base2));
+<stabilizer chain record, Base [ 10, 9, 6 ], Orbit length 5, Size: 60>
+gap> p2 := LargestElementStabChain(S2, ());
+()
+gap> p1 = p2;
+true
+gap> OnTuples(base1, conj * p1);
+[ 10, 9, 6 ]
+gap> OnTuples(base2, p1);
+[ 10, 9, 6 ]
+gap> OnTuples(base2, p2);
+[ 10, 9, 6 ]
+
+#T# SEMIGROUPS.LargestElementConjugateStabChain, 3
+gap> conj := (1,10,7,4,3,6,2,9,8,5);;
+gap> G1 := AlternatingGroup(10);;
+gap> base1 := [1, 2, 3, 4, 5, 6, 7, 8];;
+gap> G2 := G1 ^ conj;;
+gap> base2 := OnTuples(base1, conj);;
+gap> S1 := StabChainOp(G1, rec(base := base1));
+<stabilizer chain record, Base [ 1, 2, 3, 4, 5, 6, 7, 8 ], Orbit length 
+10, Size: 1814400>
+gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+(1,6,8,2,5,3,7)
+gap> S2 := StabChainOp(G2, rec(base := base2));
+<stabilizer chain record, Base [ 10, 9, 6, 3, 1, 2, 4, 5 ], Orbit length 
+10, Size: 1814400>
+gap> p2 := LargestElementStabChain(S2, ());
+(1,6,8,2,5,3,7)
+gap> p1 = p2;
+true
+gap> OnTuples(base1, conj * p1);
+[ 10, 9, 8, 7, 6, 5, 4, 3 ]
+gap> OnTuples(base2, p1);
+[ 10, 9, 8, 7, 6, 5, 4, 3 ]
+gap> OnTuples(base2, p2);
+[ 10, 9, 8, 7, 6, 5, 4, 3 ]
+
+#T# SEMIGROUPS.LargestElementConjugateStabChain, 4
+gap> conj := (1,13,6,8,4,12,7,5,2,3,11)(9,10);;
+gap> G1 := Group((2,5)(3,4)(7,9,10,8), (7,10)(8,9), (1,2,3,4,5), 
+>               (6,7,8,9,10));;
+gap> base1 := [1, 7, 6];;
+gap> G2 := G1 ^ conj;;
+gap> base2 := OnTuples(base1, conj);;
+gap> S1 := StabChainOp(G1, rec(base := base1));
+<stabilizer chain record, Base [ 1, 7, 6 ], Orbit length 5, Size: 100>
+gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+(5,10)(8,9)
+gap> S2 := StabChainOp(G2, rec(base := base2));
+<stabilizer chain record, Base [ 13, 5, 8 ], Orbit length 5, Size: 100>
+gap> p2 := LargestElementStabChain(S2, ());
+(5,10)(8,9)
+gap> p1 = p2;
+true
+gap> OnTuples(base1, conj * p1);
+[ 13, 10, 9 ]
+gap> OnTuples(base2, p1);
+[ 13, 10, 9 ]
+gap> OnTuples(base2, p2);
+[ 13, 10, 9 ]
+
+#T# SEMIGROUPS.LargestElementConjugateStabChain, 5
+gap> conj := (1,10,4,2,9,11,5,8,3,6)(7,12);;
+gap> G1 := Group((2,5)(3,4)(7,9,10,8), (7,10)(8,9), (1,2,3,4,5), 
+>               (6,7,8,9,10));;
+gap> base1 := [1, 6, 7];;
+gap> G2 := G1 ^ conj;;
+gap> base2 := OnTuples(base1, conj);;
+gap> S1 := StabChainOp(G1, rec(base := base1));
+<stabilizer chain record, Base [ 1, 6, 7 ], Orbit length 5, Size: 100>
+gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+(1,12,11,3)(2,6)(8,9)
+gap> S2 := StabChainOp(G2, rec(base := base2));
+<stabilizer chain record, Base [ 10, 1, 12 ], Orbit length 5, Size: 100>
+gap> p2 := LargestElementStabChain(S2, ());
+(1,12,11,3)(2,6)(8,9)
+gap> p1 = p2;
+true
+gap> OnTuples(base1, conj * p1);
+[ 10, 12, 11 ]
+gap> OnTuples(base2, p1);
+[ 10, 12, 11 ]
+gap> OnTuples(base2, p2);
+[ 10, 12, 11 ]
+
+#T# SEMIGROUPS.LargestElementConjugateStabChain, 6
+gap> conj := (1,10,4,2,9,11,5,8,3,6)(7,12);;
+gap> G1 := Group((2,5)(3,4)(7,9,10,8), (7,10)(8,9), (1,2,3,4,5), 
+>               (6,7,8,9,10));;
+gap> base1 := [1, 2, 6, 7];;
+gap> G2 := G1 ^ conj;;
+gap> base2 := OnTuples(base1, conj);;
+gap> S1 := StabChainOp(G1, rec(base := base1));
+<stabilizer chain record, Base [ 1, 2, 6, 7 ], Orbit length 5, Size: 100>
+gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+(1,12,3,11,4)
+gap> S2 := StabChainOp(G2, rec(base := base2));
+<stabilizer chain record, Base [ 10, 9, 1, 12 ], Orbit length 5, Size: 100>
+gap> p2 := LargestElementStabChain(S2, ());
+(1,12,3,11,4)
+gap> p1 = p2;
+true
+gap> OnTuples(base1, conj * p1);
+[ 10, 9, 12, 3 ]
+gap> OnTuples(base2, p1);
+[ 10, 9, 12, 3 ]
+gap> OnTuples(base2, p2);
+[ 10, 9, 12, 3 ]
+
+#T# SEMIGROUPS.LargestElementConjugateStabChain, 7
+gap> conj := (1,10,4,2,9,11,5,8,3,6)(7,12);;
+gap> G1 := Group((2,5)(3,4)(7,9,10,8), (7,10)(8,9), (1,2,3,4,5), 
+>               (6,7,8,9,10));;
+gap> base1 := [4, 5, 9, 10];;
+gap> G2 := G1 ^ conj;;
+gap> base2 := OnTuples(base1, conj);;
+gap> S1 := StabChainOp(G1, rec(base := base1));
+<stabilizer chain record, Base [ 4, 5, 9, 10 ], Orbit length 5, Size: 100>
+gap> p1 := SEMIGROUPS.LargestElementConjugateStabChain(S1, (), conj);
+(1,11,12,4,3)(2,10,6,8,9)
+gap> S2 := StabChainOp(G2, rec(base := base2));
+<stabilizer chain record, Base [ 2, 8, 11, 4 ], Orbit length 5, Size: 100>
+gap> p2 := LargestElementStabChain(S2, ());
+(1,11,12,4,3)(2,10,6,8,9)
+gap> p1 = p2;
+true
+gap> OnTuples(base1, conj * p1);
+[ 10, 9, 12, 3 ]
+gap> OnTuples(base2, p1);
+[ 10, 9, 12, 3 ]
+gap> OnTuples(base2, p2);
+[ 10, 9, 12, 3 ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
