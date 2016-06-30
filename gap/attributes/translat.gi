@@ -62,7 +62,7 @@ function(L, f)
 end);
 
 InstallMethod(RightTranslationsSemigroup, "for a semigroup", 
-[IsRectangularBand], 
+[IsSemigroup], 
 function(S) 
 	local fam, type, R;
 	
@@ -159,7 +159,7 @@ end);
 
 
 InstallMethod(ViewObj, "for the semigroup of left or right translations of a rectangular band", 
-	[IsTranslationsSemigroup and IsWholeFamily], 
+[IsTranslationsSemigroup and IsWholeFamily], 
 function(T)
 	local S;
 	S:=UnderlyingSemigroup(T);
@@ -176,7 +176,7 @@ function(T)
 end);
 
 InstallMethod(PrintObj, "for the semigroup of left or right translations of a rectangular band",
-	[IsTranslationsSemigroup and IsWholeFamily],
+[IsTranslationsSemigroup and IsWholeFamily],
 function(T)
 	local S;
 	S:=UnderlyingSemigroup(T);
@@ -192,17 +192,20 @@ function(T)
 	return;
 end);
 
-InstallMethod(ViewObj, "for a semigroup of left translations", 
-	[IsLeftTranslationsSemigroup], PrintObj);
+InstallMethod(ViewObj, "for a semigroup of translations", 
+[IsTranslationsSemigroup], PrintObj);
 
-InstallMethod(PrintObj, "for a semigroup of left translations",
-	[IsLeftTranslationsSemigroup and HasGeneratorsOfSemigroup],
-function(L)
-	Print("<semigroup of left translations of ", 
-		UnderlyingSemigroup(L), " with ",
-		Length(GeneratorsOfSemigroup(L)),
+InstallMethod(PrintObj, "for a semigroup of translations",
+[IsTranslationsSemigroup and HasGeneratorsOfSemigroup],
+function(T)
+	Print("<semigroup of ");
+	if IsLeftTranslationsSemigroup(T) then Print("left ");
+	else Print("right ");
+	fi;
+	Print("translations of ", UnderlyingSemigroup(T), " with ",
+		Length(GeneratorsOfSemigroup(T)),
 		" generators");
-	if Length(GeneratorsOfSemigroup(L)) > 1 then
+	if Length(GeneratorsOfSemigroup(T)) > 1 then
 		Print("s");
 	fi;
 	Print(">");
@@ -265,6 +268,24 @@ function(T)
 	fi;
 	
 	return n^n;
+end);
+
+InstallMethod(Size, "for the semigroup of left or right translations of a completely 0-simple semigroup",
+[IsTranslationsSemigroup and IsWholeFamily],
+function(T)
+	local S, G, reesMatSemi, n;
+	S := UnderlyingSemigroup(T);
+	if not (IsZeroSimpleSemigroup(S) and IsFinite(S)) then
+		TryNextMethod();
+	fi;
+	reesMatSemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
+	G := UnderlyingSemigroup(reesMatSemi);
+	if IsLeftTranslationsSemigroup(T) then
+		n := Length(Rows(reesMatSemi));
+	else
+		n := Length(Columns(reesMatSemi));
+	fi;
+	return (n * Size(G) + 1)^n;
 end);
 
 InstallMethod(Size, "for the translational hull of a rectangular band",
@@ -378,7 +399,7 @@ function(H)
 end);
 
 InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left or right translations of a rectangular band",
-[IsTranslationsSemigroup],
+[IsTranslationsSemigroup and IsWholeFamily],
 function(T)
 	local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f;
 	S := UnderlyingSemigroup(T);
@@ -417,7 +438,89 @@ function(T)
 	od;
 	return gens;
 end);			
+
+InstallMethod(GeneratorsOfSemigroup, "for the left/right translations of a finite 0-simple semigroup",
+[IsTranslationsSemigroup and IsWholeFamily],
+function(T)
+	local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f, groupGens,
+				e, a, fa, G, zero;
+				
+	S := UnderlyingSemigroup(T);
+	if not (IsZeroSimpleSemigroup(S) and IsFinite(S)) then
+		TryNextMethod();
+	fi;
 	
+	semiList := AsList(S);
+	iso := IsomorphismReesZeroMatrixSemigroup(S);
+	inv := InverseGeneralMapping(iso);
+	reesMatSemi := Range(iso);
+	zero := MultiplicativeZero(reesMatSemi);
+	L := IsLeftTranslationsSemigroup(T);
+	if L then
+		n := Length(Rows(reesMatSemi));
+	else
+		n := Length(Columns(reesMatSemi));
+	fi;
+	
+	gens := [];
+	G := UnderlyingSemigroup(reesMatSemi);
+	groupGens := GeneratorsOfGroup(G);
+	
+	for t in GeneratorsOfMonoid(PartialTransformationMonoid(n)) do
+		if L then
+			f := function(x)
+				if (x = zero or x[1]^t = n+1) then 
+					return zero;
+				fi;
+				return ReesMatrixSemigroupElement(reesMatSemi, x[1]^t, 
+						x[2], x[3]);
+			end;
+			Add(gens, LeftTranslation(T, CompositionMapping(
+				inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+		else
+			f := function(x)
+				if (x = zero or x[3]^t = n+1) then 
+					return zero;
+				fi;
+				return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
+					x[2], x[3]^t); 
+			end;
+			Add(gens, RightTranslation(T, CompositionMapping(
+				inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+		fi;
+	od;
+	
+	for a in groupGens do
+		fa := function(x)
+			if x = 1 then
+				return a;
+			fi; 
+			return MultiplicativeNeutralElement(G);
+		end;
+		if L then
+			f := function(x)
+				if x = zero then 
+					return zero;
+				fi;
+				return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
+						fa(x[1])*x[2], x[3]);
+			end;
+			Add(gens, LeftTranslation(T, CompositionMapping(
+				inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+		else
+			f := function(x)
+				if x = zero then 
+					return zero;
+				fi;
+				return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
+					x[2]*fa(x[3]), x[3]); 
+			end;
+			Add(gens, RightTranslation(T, CompositionMapping(
+				inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+		fi;
+	od;
+	return gens;
+end);
 
 InstallMethod(GeneratorsOfSemigroup, "for the translational hull of a rectangular band", 
 [IsTranslationalHull],
@@ -543,8 +646,8 @@ function(H)
 end);
 
 SEMIGROUPS.HashFunctionForTranslationalHullElements := function(x, data)
-		return ORB_HashFunctionForTransformations(x![1]![1], data)
-			+ ORB_HashFunctionForTransformations(x![2]![1], data) mod data + 1;
+		return (ORB_HashFunctionForTransformations(x![1]![1], data)
+			+ ORB_HashFunctionForTransformations(x![2]![1], data)) mod data + 1;
 end;
 
 InstallMethod(ChooseHashFunction, "for a translational hull element and int",
@@ -553,6 +656,13 @@ function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForTranslationalHullElements,
              data := hashlen);
 end);
+
+
+
+
+
+
+
 
 
 
