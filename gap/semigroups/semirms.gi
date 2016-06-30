@@ -107,6 +107,12 @@ end);
 ## Isomorphisms
 #############################################################################
 
+InstallMethod(AsMonoid, "for a Rees matrix semigroup", 
+[IsReesMatrixSemigroup], ReturnFail);
+
+InstallMethod(AsMonoid, "for a Rees 0-matrix semigroup", 
+[IsReesZeroMatrixSemigroup], ReturnFail);
+
 InstallMethod(IsomorphismSemigroup,
 "for IsReesMatrixSemigroup and a semigroup",
 [IsReesMatrixSemigroup, IsSemigroup],
@@ -641,7 +647,7 @@ InstallMethod(RZMSNormalization,
 [IsReesZeroMatrixSemigroup],
 function(R)
   local T, rows, cols, I, L, lookup_cols, lookup_rows, mat, group, one, r, c,
-  invert, GT, comp, size, p, col, rows_unsorted, cols_unsorted, x, j, cols_todo,
+  invert, GT, comp, size, p, rows_unsorted, cols_unsorted, x, j, cols_todo,
   rows_todo, new, S, iso, inv, i, k;
 
   T := UnderlyingSemigroup(R);
@@ -749,7 +755,7 @@ function(R)
 
   rows := Rows(R);
   cols := Columns(R);
-  
+
   p.row := List(p.row, x -> lookup_rows[x]);
   p.col := List(p.col, x -> lookup_cols[x]);
 
@@ -765,7 +771,7 @@ function(R)
   for j in cols do
     for i in rows do
       if mat[j][i] <> 0 and group then
-        new[lookup_cols[j] ^ p.col][lookup_rows[i] ^ p.row] := 
+        new[lookup_cols[j] ^ p.col][lookup_rows[i] ^ p.row] :=
           c[j] * mat[j][i] * invert(r[i]);
       else
         new[lookup_cols[j] ^ p.col][lookup_rows[i] ^ p.row] := mat[j][i];

@@ -64,6 +64,15 @@ function(filt, S)
   return IsomorphismFpSemigroup(S);
 end);
 
+InstallMethod(AsMonoid, "for an fp semigroup", 
+[IsFpSemigroup],
+function(S)
+  if MultiplicativeNeutralElement(S) = fail then 
+    return fail; # so that we do the same as the GAP/ref manual says
+  fi;
+  return Range(IsomorphismMonoid(IsFpMonoid, S));
+end);
+
 InstallMethod(IsomorphismMonoid, "for IsFpMonoid and a semigroup",
 [IsFpMonoid, IsSemigroup],
 function(filt, S)
@@ -219,4 +228,48 @@ InstallMethod(AssignGeneratorVariables, "for an free monoid",
 [IsFreeMonoid],
 function(S)
   DoAssignGenVars(GeneratorsOfMonoid(S));
+end);
+
+InstallMethod(IsomorphismFpSemigroup, "for a group",
+[IsGroup], 
+function(G)
+  local iso1, inv1, iso2, inv2;
+
+  if IsFpGroup(G) or IsTrivial(G) or not IsFinite(G) then 
+    TryNextMethod();
+  fi;
+
+  iso1 := IsomorphismFpGroup(G);
+  inv1 := InverseGeneralMapping(iso1);
+  # TODO the method for IsomorphismFpSemigroup uses the generators of G and
+  # their inverses, since we know that G is finite this could be avoided.
+  iso2 := IsomorphismFpSemigroup(Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+
+  return MagmaIsomorphismByFunctionsNC(G,
+                                       Range(iso2),
+                                       x -> (x ^ iso1) ^ iso2,
+                                       x -> (x ^ inv2) ^ inv1);
+end);
+
+InstallMethod(IsomorphismFpMonoid, "for a group",
+[IsGroup], 
+function(G)
+  local iso1, inv1, iso2, inv2;
+  
+  if IsFpGroup(G) or IsTrivial(G) or not IsFinite(G) then 
+    TryNextMethod();
+  fi;
+
+  iso1 := IsomorphismFpGroup(G);
+  inv1 := InverseGeneralMapping(iso1);
+  # TODO the method for IsomorphismFpMonoid uses the generators of G and their
+  # inverses, since we know that G is finite this could be avoided.
+  iso2 := IsomorphismFpMonoid(Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+
+  return MagmaIsomorphismByFunctionsNC(G,
+                                       Range(iso2),
+                                       x -> (x ^ iso1) ^ iso2,
+                                       x -> (x ^ inv2) ^ inv1);
 end);

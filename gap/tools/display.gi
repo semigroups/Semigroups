@@ -157,7 +157,7 @@ InstallMethod(TikzString, "for a pbr and record",
 function(x, opts)
   local ext, n, str, coeff1, coeff2, jj, i, j;
 
-  ext := ExtRepOfPBR(x);
+  ext := ExtRepOfObj(x);
   n   := DegreeOfPBR(x);
   str := ShallowCopy(SEMIGROUPS.TikzInit);
   Append(str, "\\usetikzlibrary{arrows}\n");
@@ -342,7 +342,7 @@ function(x, opts)
     draw := i -> "  \\draw(";
   fi;
 
-  ext := ExtRepOfBipartition(x);
+  ext := ExtRepOfObj(x);
   n   := DegreeOfBipartition(x);
 
   if opts.beginDocument = true then
@@ -535,7 +535,7 @@ function(blocks, opts)
 
   # draw the edges
   Append(str, "\n");
-  ext := ExtRepOfBlocks(blocks);
+  ext := ExtRepOfObj(blocks);
   for pos in [1 .. Length(ext)] do
     block := ShallowCopy(ext[pos]);
     Apply(block, AbsInt);

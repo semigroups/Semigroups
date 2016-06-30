@@ -81,7 +81,7 @@ InstallMethod(SemigroupViewStringPrefix, "for a bipartition semigroup",
 InstallMethod(SemigroupViewStringPrefix, "for a bipartition *-semigroup",
 [IsBipartitionSemigroup and IsStarSemigroup],
 function(S)
-  if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then 
+  if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     TryNextMethod();
   fi;
   return "\>bipartition\< *-";
@@ -91,9 +91,9 @@ InstallMethod(SemigroupViewStringPrefix, "for a block bijection semigroup",
 [IsBlockBijectionSemigroup], S -> "\>block bijection\< ");
 
 InstallMethod(SemigroupViewStringPrefix, "for a block bijection *-semigroup",
-[IsBlockBijectionSemigroup and IsStarSemigroup], 
+[IsBlockBijectionSemigroup and IsStarSemigroup],
 function(S)
-  if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then 
+  if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     TryNextMethod();
   fi;
   return "\>block bijection\< *-";
@@ -248,6 +248,15 @@ end);
 # The relative order of the methods for the constructor IsomorphismSemigroup is
 # important do not change it! They should be ordered from lowest rank to
 # highest so that the correct method is used.
+
+InstallMethod(AsMonoid, "for a bipartition semigroup", 
+[IsBipartitionSemigroup],
+function(S)
+  if MultiplicativeNeutralElement(S) = fail then 
+    return fail; # so that we do the same as the GAP/ref manual says
+  fi;
+  return Range(IsomorphismMonoid(IsBipartitionMonoid, S));
+end);
 
 InstallMethod(IsomorphismMonoid, "for IsBipartitionMonoid and a semigroup",
 [IsBipartitionMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
@@ -488,7 +497,7 @@ function(filter, S)
 end);
 
 InstallMethod(IsomorphismSemigroup,
-"for IsBipartitionSemigroup and a block bijection semigroup",
+"for IsBipartitionSemigroup and a bipartition semigroup",
 [IsBipartitionSemigroup, IsBipartitionSemigroup],
 function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);

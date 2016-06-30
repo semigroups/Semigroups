@@ -184,7 +184,7 @@ function(S, n)
 end);
 
 SEMIGROUPS.ElementRClass := function(R, largest)
-  local o, m, rep, n, base, S, out, scc, y, basei, p, x, i;
+  local o, m, rep, n, base1, S, GroupFunc, out, scc, y, base2, p, x, i;
 
   if Size(R) = 1 then
     return Representative(R);
@@ -195,28 +195,32 @@ SEMIGROUPS.ElementRClass := function(R, largest)
   rep := Representative(R);
 
   n := DegreeOfTransformationSemigroup(Parent(R));
-  base := DuplicateFreeList(ImageListOfTransformation(rep, n));
+  base1 := DuplicateFreeList(ImageListOfTransformation(rep, n));
 
-  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
+  S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base1));
   if largest then
+    GroupFunc := SEMIGROUPS.LargestElementConjugateStabChain;
     out := rep * LargestElementStabChain(S, ());
   else
-    out := rep * SmallestElementConjugateStabChain(S, (), ());
+    GroupFunc := SEMIGROUPS.SmallestElementConjugateStabChain;
+    out := rep * GroupFunc(S, (), ());
   fi;
 
   scc := OrbSCC(o)[m];
 
   for i in [2 .. Length(scc)] do
-    y := EvaluateWord(o!.gens, TraceSchreierTreeOfSCCForward(o, m, scc[i]));
-    basei := DuplicateFreeList(ImageListOfTransformation(rep * y, n));
-    p := MappingPermListList(base, basei);
+    y := rep * EvaluateWord(o!.gens, 
+                            TraceSchreierTreeOfSCCForward(o, m, scc[i]));
+    base2 := DuplicateFreeList(ImageListOfTransformation(y, n));
+    p := MappingPermListList(base1, base2);
+
     if largest then
-      x := rep * y * LargestElementConjugateStabChain(S, (), p);
+      x := y * GroupFunc(S, (), p);
       if x > out then
         out := x;
       fi;
     else
-      x := rep * y * SmallestElementConjugateStabChain(S, (), p);
+      x := y * GroupFunc(S, (), p);
       if x < out then
         out := x;
       fi;
@@ -309,7 +313,9 @@ end);
 InstallMethod(IteratorSorted, "for an R-class",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(R)
-  local o, m, rep, n, scc, base, S, out, x, image, basei, iter, i;
+  local IterFunc, o, m, rep, n, scc, base, S, out, x, image, basei, iter, i;
+  
+  IterFunc := SEMIGROUPS.IteratorSortedConjugateStabChain;
 
   o := LambdaOrb(R);
   m := LambdaOrbSCCIndex(R);
@@ -319,7 +325,7 @@ function(R)
   scc := OrbSCC(o)[m];
   base := DuplicateFreeList(ImageListOfTransformation(rep, n));
   S := StabChainOp(LambdaOrbSchutzGp(o, m), rec(base := base));
-  out := [IteratorByIterator(IteratorSortedConjugateStabChain(S, ()),
+  out := [IteratorByIterator(IterFunc(S, ()),
                              p -> rep * p, [IsIteratorSorted])];
 
   for i in [2 .. Length(scc)] do
@@ -327,8 +333,7 @@ function(R)
                             TraceSchreierTreeOfSCCForward(o, m, scc[i]));
     image := ImageListOfTransformation(x, n);
     basei := DuplicateFreeList(image);
-    iter := IteratorSortedConjugateStabChain(S,
-                                             MappingPermListList(base, basei));
+    iter := IterFunc(S, MappingPermListList(base, basei));
     out[i] := IteratorByIterator(iter,
                                  function(iter, p)
                                    return iter!.rep * p;
@@ -377,7 +382,9 @@ function(S)
 
   n := DegreeOfTransformationSemigroup(S);
 
-  if ConstantTransformation(n, 1) in MinimalIdeal(S) then
+  if n = 0 then 
+    return IdentityTransformation;
+  elif ConstantTransformation(n, 1) in MinimalIdeal(S) then
     return ConstantTransformation(n, 1);
   fi;
 
@@ -391,7 +398,9 @@ function(S)
 
   n := DegreeOfTransformationSemigroup(S);
 
-  if ConstantTransformation(n, n) in MinimalIdeal(S) then
+  if n = 0 then 
+    return IdentityTransformation;
+  elif ConstantTransformation(n, n) in MinimalIdeal(S) then
     return ConstantTransformation(n, n);
   fi;
 
@@ -743,13 +752,11 @@ function(S)
   local n, pts, o, pos, T, i;
 
   n := Length(Representative(S)![1]);
-  pts := EmptyPlist(2 ^ n);
-
+  pts := [];
   for i in [1 .. n] do
     o := Enumerate(Orb(S, BlistList([1 .. n], [i]), OnBlist));
     pts := Union(pts, AsList(o));
   od;
-  ShrinkAllocationPlist(pts);
   pos := List([1 .. n], x -> Position(pts, BlistList([1 .. n], [x])));
   T := Semigroup(List(GeneratorsOfSemigroup(S),
                       x -> TransformationOpNC(x, pts, OnBlist)));

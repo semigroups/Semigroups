@@ -394,20 +394,6 @@ gap> IsomorphismReesMatrixSemigroup(D);
 Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
 the D-class is not a subsemigroup,
 
-#T# attributes: IsomorphismReesMatrixSemigroup, infinite
-gap> IsomorphismReesMatrixSemigroup(FreeInverseSemigroup(2));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphSemigroup' on 1 arguments
-
-#T# attributes: IsomorphismReesZeroMatrixSemigroup, infinite
-gap> IsomorphismReesZeroMatrixSemigroup(FreeSemigroup(2));
-Error, usage: the semigroup must be a finite 0-simple semigroup,
-
-#T# attributes: IsomorphismReesZeroMatrixSemigroup, error, 1/1
-gap> IsomorphismReesZeroMatrixSemigroup(RegularBooleanMatMonoid(2));
-Error, Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,
-the argument must be a 0-simple semigroup,
-
 #T# attributes: IrredundantGeneratingSubset, for a collection of elements
 gap> G := CyclicGroup(3);;
 gap> R := GF(2);;
@@ -438,36 +424,6 @@ gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
 <transformation semigroup of degree 2 with 2 generators>
 gap> Size(IrredundantGeneratingSubset(S));
 1
-
-#T# attributes: IsomorphismReesMatrixSemigroup: for a simple semigroup
-gap> S := SemigroupIdeal(
-> Semigroup([
->   Bipartition([[1, 2, 3, 6, 7, 8, -2, -4, -5, -6], [4, 5, -1, -8], [-3],
->                [-7]]),
->   Bipartition([[1, 5, 8], [2, 7, -3, -6], [3, 4, -4, -7], [6, -1, -5],
->                [-2, -8]])]),
-> [Bipartition([[1, 2, 3, 4, 5, 6, 7, 8, -1, -2, -4, -5, -6, -8], [-3],
->               [-7]])]);;
-gap> IsomorphismReesMatrixSemigroup(S);;
-
-#T# attributes: IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 1/2
-gap> S := Semigroup([Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
->   Transformation([1, 1, 2, 1, 4, 1, 6, 1, 8, 2]),
->   Transformation([1, 5, 1, 3, 1, 9, 1, 7, 1, 7])]);;
-gap> IsomorphismReesZeroMatrixSemigroup(S);;
-
-#T# attributes: IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 2/2
-gap> S := Semigroup([Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
->   Transformation([1, 1, 2, 1, 4, 1, 6, 1, 8, 2]),
->   Transformation([1, 5, 1, 3, 1, 9, 1, 7, 1, 7])]);;
-gap> S := Semigroup(MultiplicativeZero(S), S);;
-gap> IsomorphismReesZeroMatrixSemigroup(S);;
-
-#T# attributes: IsomorphismReesMatrixSemigroup: for a non-simple or non-0-simple
-gap> S := Semigroup(Transformation([2, 1]), Transformation([2, 2]));;
-gap> IsomorphismReesMatrixSemigroup(S);
-Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
-the argument must be a simple semigroup,
 
 #T# attributes: PrincipalFactor: for a D-class
 gap> D := GreensDClassOfElement(
@@ -788,19 +744,6 @@ gap> S := Semigroup([Transformation([1, 2, 3, 3, 5, 5]),
 gap> MultiplicativeNeutralElement(S);
 fail
 
-#T# attributes: IsomorphismPermGroup
-gap> S := RegularBooleanMatMonoid(2);
-<monoid of 2x2 boolean matrices with 4 generators>
-gap> IsomorphismPermGroup(S);
-Error, Semigroups: IsomorphismPermGroup: usage,
-the argument must be a semigroup satisfying IsGroupAsSemigroup,
-gap> S := Semigroup([BooleanMat([[0, 1, 0], [1, 0, 0], [0, 0, 1]]),
-> BooleanMat([[0, 1, 0], [0, 0, 1], [1, 0, 0]])]);;
-gap> IsomorphismPermGroup(S);
-MappingByFunction( <group of size 6, 3x3 boolean matrices with 2 generators>, 
-<group of size 6, with 2 generators>
-, function( x ) ... end, function( x ) ... end )
-
 #T# attributes: GroupOfUnits, for a finite semigroup 1/2
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
@@ -929,21 +872,6 @@ gap> IsSimpleSemigroup(S);
 true
 gap> RepresentativeOfMinimalIdeal(S);
 Matrix(IsBooleanMat, [[0, 1], [1, 0]])
-
-#T# attributes: IsomorphismPermGroup, infinite 1/1
-gap> IsomorphismPermGroup(FreeMonoid(3));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsomorphismPermGroup' on 1 arguments
-
-#T# attribute: IsomorphismReesZeroMatrixSemigroup, bug 1/1
-gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
-<partial perm monoid of rank 1 with 2 generators>
-gap> IsomorphismReesMatrixSemigroup(S);
-Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
-the argument must be a simple semigroup,
-gap> IsomorphismReesZeroMatrixSemigroup(S);;
-gap> Size(Range(last));
-2
 
 #T# attribute: NilpotencyDegree, 1/4
 gap> S := Semigroup([

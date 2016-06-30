@@ -218,7 +218,7 @@ true
 
 #T# properties: IsCongruenceFreeSemigroup, group, 2
 gap> S := AsSemigroup(IsTransformationSemigroup, AlternatingGroup(5));
-<transformation semigroup of size 60, degree 5 with 2 generators>
+<transformation group of size 60, degree 5 with 2 generators>
 gap> IsCongruenceFreeSemigroup(S);
 true
 
@@ -303,7 +303,7 @@ false
 
 #T# properties: IsCliffordSemigroup, group, 5
 gap> S := AsSemigroup(IsPartialPermSemigroup, Group((1, 2, 3)));
-<commutative inverse partial perm semigroup of rank 3 with 1 generator>
+<partial perm group of rank 3 with 1 generator>
 gap> IsCliffordSemigroup(S);
 true
 

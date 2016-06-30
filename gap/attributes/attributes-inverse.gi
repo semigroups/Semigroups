@@ -641,7 +641,7 @@ function(coll, x)
                                         -[1 .. DegreeOfBipartition(x)])]);
     fi;
 
-    reps := List(coll, ExtRepOfBipartition);
+    reps := List(coll, ExtRepOfObj);
     todo := [1 .. DegreeOfBipartition(x)];
     out := [];
     for i in todo do

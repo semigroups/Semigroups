@@ -152,7 +152,7 @@ end);
 InstallMethod(StarOp, "for a pbr", [IsPBR],
 function(x)
   local ext;
-  ext := ShallowCopy(ExtRepOfPBR(x) * -1);
+  ext := ShallowCopy(ExtRepOfObj(x) * -1);
   Apply(ext, ShallowCopy);
   Apply(ext[1], ShallowCopy);
   Apply(ext[2], ShallowCopy);
@@ -199,7 +199,7 @@ function(x)
 
   n := x![1];
   for i in [2 .. n + 1] do
-    if Length(x![i]) <> 1 or x![i][1] <= n 
+    if Length(x![i]) <> 1 or x![i][1] <= n
         or not i - 1 in x![x![i][1] + 1] then
       return false;
     fi;
@@ -353,7 +353,8 @@ function(x, n)
   return AsPBR(AsBipartition(x, n));
 end);
 
-# FIXME the following doesn't define a monoid embedding of P_n into PBR_n
+# TODO The following doesn't define a monoid embedding of P_n into PBR_n. What
+# is a monoid embedding from P_n to PBR_n?
 
 InstallMethod(AsPBR, "for a bipartition",
 [IsBipartition], x -> AsPBR(x, DegreeOfBipartition(x)));
@@ -364,7 +365,7 @@ function(x, n)
   local deg, blocks, out, dom, block, i;
 
   deg    := DegreeOfBipartition(x);
-  blocks := ExtRepOfBipartition(x);
+  blocks := ExtRepOfObj(x);
   out    := [[], []];
   dom := Union([-n .. -1], [1 .. n]);
 
@@ -595,7 +596,7 @@ InstallMethod(DegreeOfPBR, "for a pbr",
 InstallMethod(\*, "for pbrs",
 [IsPBR, IsPBR],
 function(x, y)
-  local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, tmp, i, j, count;
+  local n, out, x_seen, y_seen, empty, x_dfs, y_dfs, tmp, i, j;
 
   n := x![1];
 
@@ -637,16 +638,16 @@ function(x, y)
     od;
     return;
   end;
-  
+
   tmp := [];
 
   for i in [1 .. n] do # find everything connected to vertex i
-    for j in x![i + 1] do 
-      if j <= n then 
+    for j in x![i + 1] do
+      if j <= n then
         out[i + 1][j] := true;
-      elif IsBound(tmp[j]) then 
+      elif IsBound(tmp[j]) then
         UNITE_BLIST(out[i + 1], tmp[j]);
-      else 
+      else
         tmp[j] := BlistList([1 .. 2 * n], []);
         IntersectBlist(x_seen, empty);
         IntersectBlist(y_seen, empty);
@@ -654,38 +655,38 @@ function(x, y)
         y_dfs(j - n, tmp[j]);
         UNITE_BLIST(out[i + 1], tmp[j]);
       fi;
-      if SizeBlist(out[i + 1]) = 2 * n then 
+      if SizeBlist(out[i + 1]) = 2 * n then
         break;
       fi;
     od;
   od;
-  
+
   for i in [n + 1 .. 2 * n] do # find everything connected to vertex i
     for j in y![i + 1] do
       if j > n then
         out[i + 1][j] := true;
-      elif IsBound(tmp[j]) then 
+      elif IsBound(tmp[j]) then
         UNITE_BLIST(out[i + 1], tmp[j]);
-      else 
+      else
         tmp[j] := BlistList([1 .. 2 * n], []);
         IntersectBlist(x_seen, empty);
         IntersectBlist(y_seen, empty);
         y_seen[i] := true;
-        x_dfs(j + n,  tmp[j]);
+        x_dfs(j + n, tmp[j]);
         UNITE_BLIST(out[i + 1], tmp[j]);
       fi;
-      if SizeBlist(out[i + 1]) = 2 * n then 
+      if SizeBlist(out[i + 1]) = 2 * n then
         break;
       fi;
     od;
   od;
-  for i in [2 .. 2 * n + 1] do 
+  for i in [2 .. 2 * n + 1] do
     out[i] := ListBlist([1 .. 2 * n], out[i]);
   od;
   return Objectify(PBRType(n), out);
 end);
 
-InstallMethod(ExtRepOfPBR, "for a pbr",
+InstallMethod(ExtRepOfObj, "for a pbr",
 [IsPBR],
 function(x)
   local n, out, i, j, k;
@@ -718,7 +719,7 @@ InstallMethod(PrintObj, "for a pbr", [IsPBR],
 function(x)
   local ext;
 
-  ext := ExtRepOfPBR(x);
+  ext := ExtRepOfObj(x);
   Print("\>\>PBR(\>\>", ext[1], "\<\<,");
 
   if Length(String(ext[1])) > 72 or Length(String(ext[2])) > 72 then
@@ -737,7 +738,7 @@ InstallMethod(PrintString, "for a pbr",
 function(x)
   local ext, str;
 
-  ext := ExtRepOfPBR(x);
+  ext := ExtRepOfObj(x);
 
   str := Concatenation("\>\>PBR(\>\>", ViewString(ext[1]), "\<\<,");
 
@@ -756,7 +757,7 @@ end);
 InstallMethod(String, "for a pbr", [IsPBR],
 function(x)
   local ext;
-  ext := ExtRepOfPBR(x);
+  ext := ExtRepOfObj(x);
   return Concatenation("PBR(", String(ext[1]), ", ", String(ext[2]), ")");
 end);
 

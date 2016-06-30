@@ -39,7 +39,7 @@ fi;
 
 ReadPackage("semigroups/gap/elements/star.gi");
 ReadPackage("semigroups/gap/elements/pbr.gi");
-ReadPackage("semigroups/gap/elements/bipartition.gi");
+ReadPackage("semigroups/gap/elements/bipart.gi");
 ReadPackage("semigroups/gap/elements/blocks.gi");
 ReadPackage("semigroups/gap/elements/semiringmat.gi");
 ReadPackage("semigroups/gap/elements/maxplusmat.gi");

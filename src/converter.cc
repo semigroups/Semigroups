@@ -17,7 +17,6 @@
 
 BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
   assert(CALL_1ARGS(IsBooleanMat, o));
-  assert(LEN_PLIST(o) > 0);
   assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
 
   size_t m = LEN_BLIST(ELM_PLIST(o, 1));
@@ -86,7 +85,6 @@ Obj BipartConverter::unconvert (Element* x) {
 
 MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   assert(CALL_1ARGS(IsMatrixOverSemiring, o) == True);
-  assert(LEN_PLIST(o) > 0);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
 
   size_t m = LEN_PLIST(ELM_PLIST(o, 1));

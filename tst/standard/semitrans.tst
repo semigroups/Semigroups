@@ -300,8 +300,8 @@ gap> BruteForceIsoCheck := function(iso)
 >   if not IsInjective(iso) or not IsSurjective(iso) then
 >     return false;
 >   fi;
->   for x in Source(iso) do
->     for y in Source(iso) do
+>   for x in Generators(Source(iso)) do
+>     for y in Generators(Source(iso)) do
 >       if x ^ iso * y ^ iso <> (x * y) ^ iso then
 >         return false;
 >       fi;
@@ -1534,7 +1534,7 @@ gap> rels := [ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s2 ], [ s2^2, s1 ] ];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2 ]>
 gap> T := AsMonoid(IsTransformationMonoid, S);
-<commutative transformation monoid of degree 2 with 1 generator>
+<commutative transformation monoid of size 2, degree 2 with 1 generator>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1796,7 +1796,7 @@ true
 #   convert from perm group  to IsTransformationSemigroup
 gap> S := DihedralGroup(IsPermGroup, 6);;
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
-<transformation semigroup of degree 3 with 2 generators>
+<transformation group of degree 3 with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -2049,6 +2049,17 @@ gap> IsMonogenicMonoid(S);
 true
 gap> Size(S);
 4
+
+# Test LargestElementSemigroup
+gap> gr := Digraph([[2, 3, 4, 5, 7, 8, 9, 10], [3, 5, 6, 7, 10, 1, 8, 9], 
+> [1, 4, 5, 6, 2, 7, 8, 10], [1, 3, 8, 9], [3, 7, 8, 1, 2], 
+> [3, 7, 2, 8, 10], [2, 3, 6, 10, 1, 5, 8], [1, 2, 3, 5, 6, 7, 10, 4, 9], 
+> [1, 2, 8, 4, 10], [1, 3, 6, 8, 9, 2, 7]]);;
+gap> S := EndomorphismMonoid(gr);;
+gap> LargestElementSemigroup(S) = Maximum(AsSet(S)); 
+true
+gap> LargestElementSemigroup(S);
+Transformation( [ 10, 8, 7, 8, 6, 10, 3, 2, 9, 1 ] )
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);

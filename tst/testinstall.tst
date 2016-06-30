@@ -245,13 +245,14 @@ Group([ (5,9), (1,7) ])
 gap> G := Group([(5, 9), (1, 7)]);;
 gap> IsomorphismTransformationSemigroup(G);;
 gap> S := Range(last);
-<transformation semigroup of degree 4 with 2 generators>
+<transformation group of degree 9 with 2 generators>
 gap> IsGroupAsSemigroup(S);
 true
 gap> Generators(S);
-[ Transformation( [ 1, 4, 3, 2 ] ), Transformation( [ 3, 2, 1 ] ) ]
+[ Transformation( [ 1, 2, 3, 4, 9, 6, 7, 8, 5 ] ), 
+  Transformation( [ 7, 2, 3, 4, 5, 6, 1 ] ) ]
 gap> T := Range(IsomorphismTransformationMonoid(G));
-<transformation monoid of degree 9 with 2 generators>
+<transformation group of degree 9 with 2 generators>
 gap> Generators(T);
 [ Transformation( [ 1, 2, 3, 4, 9, 6, 7, 8, 5 ] ), 
   Transformation( [ 7, 2, 3, 4, 5, 6, 1 ] ) ]

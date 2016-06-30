@@ -34,7 +34,6 @@ DeclareOperation("UniversalPBR", [IsPosInt]);
 
 DeclareAttribute("DegreeOfPBR", IsPBR);
 DeclareAttribute("DegreeOfPBRCollection", IsPBRCollection);
-DeclareAttribute("ExtRepOfPBR", IsPBR);
 
 DeclareOperation("NumberPBR", [IsPBR]);
 DeclareOperation("PBRNumber", [IsPosInt, IsPosInt]);

@@ -1231,14 +1231,14 @@ end);
 # semigroup will be used, if no better method is installed.
 #
 # It is necessary that all of the methods for IsomorphismSemigroup in a given
-# file must have the same filter IsXSemigroup for the first argument.  (i.e.
+# file have the same filter IsXSemigroup for the first argument.  (i.e.
 # methods for IsomorphismSemgroup(IsXSemigroup, ...) must go in the
 # corresponding file).  Also the methods for IsomorphismSemigroup must appear
 # from lowest to highest rank due to the way that constructors are implemented.
 # If they are not in lowest to highest rank order, then the wrong constructor
 # method is selected (i.e.  the last applicable one is selected).
 #
-# IsomorphisMonoid is only really necessary to convert semigroups with
+# IsomorphismMonoid is only really necessary to convert semigroups with
 # MultiplicativeNeutralElement, which are not in IsMonoid, to monoids. For
 # example,
 #
@@ -1261,12 +1261,23 @@ end);
 # GeneratorsOfSemigroup(S) contains the One(S) (since it is a monoid) and so
 # when we call Semigroup(gens), Semigroup detects that one of the generators is
 # the One of the others, and so returns a monoid.
+#
+# Note also that in the example of semigroups of pbrs, there is a good
+# (semigroup) embedding of the partition monoid, but not a good monoid
+# embedding. So, if you do AsSemigroup(IsPBRSemigroup, S) when S is a
+# bipartition monoid, it returns a semigroup of pbrs with degree equal to the
+# degree of S, whereas if you do AsMonoid(IsPBRMonoid, S), you get a monoid
+# where the degree is equal to the size of S plus 1 (since this is computed by
+# computing an isomorphic transformation monoid, and then this is embedded, as
+# a monoid, into a monoid of pbrs).
 
 InstallMethod(AsSemigroup, "for a filter and a semigroup",
 [IsFunction and IsOperation, IsSemigroup],
 function(filt, S)
 
-  if filt = IsTransformationSemigroup then
+  if Tester(filt)(S) and filt(S) then 
+    return S;
+  elif filt = IsTransformationSemigroup then
     return Range(IsomorphismTransformationSemigroup(S));
   elif filt = IsPartialPermSemigroup then
     return Range(IsomorphismPartialPermSemigroup(S));
@@ -1298,7 +1309,9 @@ InstallMethod(AsMonoid, "for a filter and a semigroup",
 [IsFunction and IsOperation, IsSemigroup],
 function(filt, S)
 
-  if filt = IsTransformationMonoid then
+  if IsMonoid(S) and Tester(filt)(S) and filt(S) then 
+    return S;
+  elif filt = IsTransformationMonoid then
     return Range(IsomorphismTransformationMonoid(S));
   elif filt = IsPartialPermMonoid then
     return Range(IsomorphismPartialPermMonoid(S));

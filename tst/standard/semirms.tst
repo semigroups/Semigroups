@@ -1901,6 +1901,60 @@ gap> MatrixEntries(R);
   <bipartition: [ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]>, 
   <bipartition: [ 1, -1, -2 ], [ 2, 3, -3, -4 ], [ 4 ]> ]
 
+#T# IsomorphismReesMatrixSemigroup, infinite
+gap> IsomorphismReesMatrixSemigroup(FreeInverseSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `CayleyGraphSemigroup' on 1 arguments
+
+#T# IsomorphismReesZeroMatrixSemigroup, infinite
+gap> IsomorphismReesZeroMatrixSemigroup(FreeSemigroup(2));
+Error, usage: the semigroup must be a finite 0-simple semigroup,
+
+#T# IsomorphismReesZeroMatrixSemigroup, error, 1/1
+gap> IsomorphismReesZeroMatrixSemigroup(RegularBooleanMatMonoid(2));
+Error, Semigroups: IsomorphismReesZeroMatrixSemigroup: usage,
+the argument must be a 0-simple semigroup,
+
+#T# IsomorphismReesMatrixSemigroup: for a simple semigroup
+gap> S := SemigroupIdeal(
+> Semigroup([
+>   Bipartition([[1, 2, 3, 6, 7, 8, -2, -4, -5, -6], [4, 5, -1, -8], [-3],
+>                [-7]]),
+>   Bipartition([[1, 5, 8], [2, 7, -3, -6], [3, 4, -4, -7], [6, -1, -5],
+>                [-2, -8]])]),
+> [Bipartition([[1, 2, 3, 4, 5, 6, 7, 8, -1, -2, -4, -5, -6, -8], [-3],
+>               [-7]])]);;
+gap> IsomorphismReesMatrixSemigroup(S);;
+
+#T# IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 1/2
+gap> S := Semigroup([Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
+>   Transformation([1, 1, 2, 1, 4, 1, 6, 1, 8, 2]),
+>   Transformation([1, 5, 1, 3, 1, 9, 1, 7, 1, 7])]);;
+gap> IsomorphismReesZeroMatrixSemigroup(S);;
+
+#T# IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 2/2
+gap> S := Semigroup([Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
+>   Transformation([1, 1, 2, 1, 4, 1, 6, 1, 8, 2]),
+>   Transformation([1, 5, 1, 3, 1, 9, 1, 7, 1, 7])]);;
+gap> S := Semigroup(MultiplicativeZero(S), S);;
+gap> IsomorphismReesZeroMatrixSemigroup(S);;
+
+#T# IsomorphismReesMatrixSemigroup: for a non-simple or non-0-simple
+gap> S := Semigroup(Transformation([2, 1]), Transformation([2, 2]));;
+gap> IsomorphismReesMatrixSemigroup(S);
+Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
+the argument must be a simple semigroup,
+
+#T# IsomorphismReesZeroMatrixSemigroup, bug 1/1
+gap> S := Semigroup(PartialPerm([1]), PartialPerm([]));
+<partial perm monoid of rank 1 with 2 generators>
+gap> IsomorphismReesMatrixSemigroup(S);
+Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
+the argument must be a simple semigroup,
+gap> IsomorphismReesZeroMatrixSemigroup(S);;
+gap> Size(Range(last));
+2
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);

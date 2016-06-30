@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  bipartition.gi
+#W  bipart.gi
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -19,48 +19,23 @@ BindGlobal("TYPES_BIPART", []);
 BindGlobal("TYPE_BIPART",
 function(n)
   local fam, type;
-    
+
   n := n + 1; # since the degree can be 0
 
-  if IsBound(TYPES_BIPART[n]) then 
+  if IsBound(TYPES_BIPART[n]) then
     return TYPES_BIPART[n];
   fi;
-  
+
   fam := NewFamily(Concatenation("BipartitionFamily", String(n - 1)),
                    IsBipartition,
                    CanEasilySortElements,
                    CanEasilySortElements);
 
   type := NewType(fam,
-                  IsBipartition and IsComponentObjectRep and
-                  IsAttributeStoringRep);
+                  IsBipartition and IsInternalRep);
   TYPES_BIPART[n] := type;
   return type;
 end);
-
-#BindGlobal("SEMIGROUPS_BipartitionFamilies", []);
-#
-#InstallGlobalFunction(BipartitionFamily,
-#function(n)
-#
-#  if not IsInt(n) or n < 0 then
-#    ErrorNoReturn("Semigroups: BipartitionFamily: usage,\n",
-#                  "the argument must be a non-negative integer,");
-#  fi;
-#
-#  n := n + 1; # since the degree can be 0
-#
-#  if not IsBound(SEMIGROUPS_BipartitionFamilies[n]) then
-#    SEMIGROUPS_BipartitionFamilies[n] :=
-#          NewFamily(Concatenation("BipartitionFamily", String(n - 1)),
-#                    IsBipartition,
-#                    CanEasilySortElements,
-#                    CanEasilySortElements);
-#  fi;
-#
-#  return SEMIGROUPS_BipartitionFamilies[n];
-#end);
-
 
 #############################################################################
 # Pickler
@@ -226,7 +201,7 @@ end);
 
 InstallMethod(IdentityBipartition, "for a positive integer", [IsPosInt],
 function(n)
-  local blocks, out, i;
+  local blocks, i;
 
   blocks := EmptyPlist(2 * n);
 
@@ -316,7 +291,7 @@ end);
 
 # Attributes
 
-InstallMethod(ExtRepOfBipartition, "for a bipartition", [IsBipartition],
+InstallMethod(ExtRepOfObj, "for a bipartition", [IsBipartition],
 BIPART_EXT_REP);
 
 InstallMethod(IntRepOfBipartition, "for a bipartition", [IsBipartition],
@@ -569,7 +544,7 @@ function(x)
     ErrorNoReturn("Semigroups: AsBipartition (for a pbr): usage,\n",
                   "the argument does not satisfy 'IsBipartitionPBR',");
   fi;
-  return Bipartition(Union(ExtRepOfPBR(x)));
+  return Bipartition(Union(ExtRepOfObj(x)));
 end);
 
 InstallMethod(AsBlockBijection, "for a partial perm",
@@ -602,7 +577,7 @@ function(x)
     str := "\>\><bipartition:\< ";
   fi;
 
-  ext := ExtRepOfBipartition(x);
+  ext := ExtRepOfObj(x);
   Append(str, "\>");
   Append(str, String(ext[1]));
   Append(str, "\<");
@@ -618,7 +593,7 @@ end);
 
 InstallMethod(String, "for a bipartition", [IsBipartition],
 function(x)
-  return Concatenation("Bipartition(", String(ExtRepOfBipartition(x)), ")");
+  return Concatenation("Bipartition(", String(ExtRepOfObj(x)), ")");
 end);
 
 InstallMethod(PrintString, "for a bipartition",
@@ -628,7 +603,7 @@ function(x)
   if DegreeOfBipartition(x) = 0 then
     return "\>\>Bipartition(\< \>[]\<)\<";
   fi;
-  ext := ExtRepOfBipartition(x);
+  ext := ExtRepOfObj(x);
   str := Concatenation("\>\>Bipartition(\< \>[ ", PrintString(ext[1]));
   for i in [2 .. Length(ext)] do
     Append(str, ",\< \>");

@@ -1,0 +1,225 @@
+#############################################################################
+##
+#W  semi.xml
+#Y  Copyright (C) 2016                                  James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsomorphismSemigroup">
+<ManSection>
+  <Oper Name = "IsomorphismSemigroup" Arg = "filt, S"/>
+  <Returns>An isomorphism of semigroups.</Returns>
+  <Description>
+    <C>IsomorphismSemigroup</C> can be used to find an isomorphism from a given
+    semigroup to a semigroup of another type, provided such an isomorphism
+    exists. 
+    <P/>
+
+    The first argument <A>filt</A> must be of the form <C>IsXSemigroup</C>, for
+    example, 
+    <Ref Prop = "IsTransformationSemigroup" BookName = "ref"/>,
+    <Ref Prop = "IsFpSemigroup" BookName = "ref"/>, and 
+    <Ref Prop = "IsPBRSemigroup"/> are some possible values for <A>filt</A>. 
+    Note that <A>filt</A> should not be of the form <C>IsXMonoid</C>; see 
+    <Ref Oper = "IsomorphismMonoid"/>. 
+    The second argument <A>S</A> should be a semigroup.
+    <P/>
+
+    <C>IsomorphismSemigroup</C> returns an isomorphism from <A>S</A> to a
+    semigroup <A>T</A> of the type described by <A>filt</A>, if such an
+    isomorphism exists. More precisely, if <C>T</C> is the range of the
+    returned isomorphism, then <C><A>filt</A>(T)</C> will return <K>true</K>.
+    For example, if <A>filt</A> is <C>IsTransformationSemigroup</C>, then the
+    range of the returned isomorphism will be a transformation semigroup.
+    <P/>
+
+    An error is returned if there is no isomorphism from <A>S</A> to a
+    semigroup satisfying <A>filt</A>. For example, there is no method for
+    <C>IsomorphismSemigroup</C> when <A>filt</A> is, say, <Ref Prop =
+      "IsReesMatrixSemigroup" BookName = "ref"/> and when <A>S</A> is a
+    non-simple semigroup.  Similarly, there is no method when <A>filt</A> is
+    <Ref Prop = "IsPartialPermSemigroup" BookName = "ref"/> and when <A>S</A> is
+    a non-inverse semigroup. 
+    <P/>
+
+    In some cases, if no better method is installed, <C>IsomorphismSemigroup</C>
+    returns an isomorphism found by composing an
+    isomorphism from <A>S</A> to a transformation semigroup <C>T</C>, and an
+    isomorphism from <C>T</C> to a semigroup of type <A>filt</A>.
+    <P/>
+
+    Note that if the argument <A>S</A> belongs to the category of monoids 
+    <Ref Filt="IsMonoid" BookName="ref"/>, then <C>IsomorphismSemigroup</C>
+    will often, but not always, return a monoid isomorphism. 
+
+    <Example><![CDATA[
+gap> S := Semigroup(
+> Bipartition([[1, 2], [3, 6, -2], [4, 5, -3, -4], 
+>              [-1, -6], [-5]]), 
+> Bipartition([[1, -4], [2, 3, 4, 5], [6], [-1, -6], 
+>              [-2, -3], [-5]]));
+<bipartition semigroup of degree 6 with 2 generators>
+gap> IsomorphismSemigroup(IsTransformationSemigroup, S);
+MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 
+ generators>, <transformation semigroup of size 11, degree 12 with 2 
+ generators>, function( x ) ... end, function( x ) ... end )
+gap> IsomorphismSemigroup(IsBooleanMatSemigroup, S);
+MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 
+ generators>, <semigroup of size 11, 12x12 boolean matrices with 2 
+ generators>, function( x ) ... end, function( x ) ... end )
+gap> IsomorphismSemigroup(IsFpSemigroup, S);
+MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 
+ generators>, <fp semigroup on the generators 
+[ s1, s2 ]>, function( x ) ... end, function( x ) ... end )]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsSemigroup">
+<ManSection>
+  <Oper Name = "AsSemigroup" Arg = "filt, S"/>
+  <Returns>A semigroup.</Returns>
+  <Description>
+    <C>AsSemigroup(<A>filt</A>, <A>S</A>)</C> is just shorthand for 
+    <C>Range(IsomorphismSemigroup(<A>filt</A>, <A>S</A>))</C>, when <A>S</A> 
+    is a semigroup; see <Ref Func = "IsomorphismSemigroup"/> for more
+    details.
+    <P/>
+
+    Note that if the argument <A>S</A> belongs to the category of monoids 
+    <Ref Filt="IsMonoid" BookName="ref"/>, then <C>AsSemigroup</C> will often,
+    but not always, return a monoid. A monoid is not returned if there is not a
+    good monoid isomorphism from <A>S</A> to a monoid of the required
+    type, but there is a good semigroup isomorphism.
+    <P/>
+
+    If it is not possible to convert the semigroup <A>S</A>
+    to a semigroup of type <A>filt</A>, then an error is given.
+
+    <Example><![CDATA[
+gap> S := Semigroup(Bipartition([[1, 2], [3, 6, -2],  
+>                                [4, 5, -3, -4], [-1, -6], [-5]]), 
+>                   Bipartition([[1, -4], [2, 3, 4, 5], [6], 
+>                                [-1, -6], [-2, -3], [-5]]));
+<bipartition semigroup of degree 6 with 2 generators>
+gap> AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 11, degree 12 with 2 generators>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsomorphismMonoid">
+<ManSection>
+  <Oper Name = "IsomorphismMonoid" Arg = "filt, S"/>
+  <Returns>An isomorphism of monoids.</Returns>
+  <Description>
+    <C>IsomorphismMonoid</C> can be used to find an isomorphism from a given
+    semigroup which is mathematically a monoid (but might not belong to the
+    category of monoids in &GAP;) to a monoid, provided such an isomorphism
+    exists. 
+    <P/>
+
+    The first argument <A>filt</A> must be of the form <C>IsXMonoid</C>, for
+    example, 
+    <Ref Prop = "IsTransformationMonoid" BookName = "ref"/>,
+    <Ref Prop = "IsFpMonoid" BookName = "ref"/>, and 
+    <Ref Prop = "IsBipartitionMonoid"/> are some possible values for <A>filt</A>. 
+    Note that <A>filt</A> should not be of the form <C>IsXSemigroup</C>; see 
+    <Ref Oper = "IsomorphismSemigroup"/>. 
+    The second argument <A>S</A> should be a semigroup which is mathematically
+    a monoid but which may or may not belong to the category 
+    <Ref Filt="IsMonoid" BookName = "ref"/> of monoids in &GAP;,
+    i.e. <A>S</A> must satisfy <Ref Prop="IsMonoidAsSemigroup"/>.
+    <P/>
+
+    <C>IsomorphismMonoid</C> returns a monoid isomorphism from <A>S</A> to a
+    semigroup <A>T</A> of the type described by <A>filt</A>, if such an
+    isomorphism exists. In this context, a <E>monoid isomorphism</E> is a
+    semigroup isomorphism that maps the 
+    <Ref Attr = "MultiplicativeNeutralElement" BookName = "ref"/> of <A>S</A>
+    to the <Ref Attr = "One" BookName = "ref"/> of <A>T</A>.
+    If <C>T</C> is the range of the
+    returned isomorphism, then <C><A>filt</A>(T)</C> will return <K>true</K>.
+    For example, if <A>filt</A> is <C>IsTransformationMonoid</C>, then the
+    range of the returned isomorphism will be a transformation monoid.
+    <P/>
+
+    An error is returned if there is no isomorphism from <A>S</A> to a monoid
+    satisfying <A>filt</A>. For example, there is no method for
+    <C>IsomorphismMonoid</C> when <A>filt</A> is, say, 
+    <Ref Prop = "IsReesZeroMatrixSemigroup" BookName = "ref"/> and when
+    <A>S</A> is a not 0-simple.  Similarly, there is no method when <A>filt</A>
+    is <Ref Prop = "IsPartialPermMonoid" BookName = "ref"/> and when
+    <A>S</A> is a non-inverse monoid. 
+    <P/>
+
+    In some cases, if no better method is installed, <C>IsomorphismMonoid</C>
+    returns an isomorphism found by composing an
+    isomorphism from <A>S</A> to a transformation monoid <C>T</C>, and an
+    isomorphism from <C>T</C> to a monoid of type <A>filt</A>.
+
+    <Example><![CDATA[
+gap> S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
+>                   Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));
+<transformation semigroup of degree 10 with 2 generators>
+gap> IsomorphismMonoid(IsTransformationMonoid, S);
+MappingByFunction( <transformation semigroup of degree 10 with 2 
+ generators>, <transformation monoid of degree 8 with 2 generators>
+ , function( x ) ... end, function( x ) ... end )
+gap> IsomorphismMonoid(IsBooleanMatMonoid, S);
+MappingByFunction( <transformation semigroup of degree 10 with 2 
+ generators>, <monoid of 8x8 boolean matrices with 2 generators>
+ , function( x ) ... end, function( x ) ... end )
+gap> IsomorphismMonoid(IsFpMonoid, S);
+MappingByFunction( <transformation semigroup of degree 10 with 2 
+ generators>, <fp monoid on the generators 
+[ m1, m2 ]>, function( x ) ... end, function( x ) ... end )]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsMonoid">
+<ManSection>
+  <Oper Name = "AsMonoid" Arg = "[filt, ]S"/>
+  <Returns>A monoid or <K>fail</K>.</Returns>
+  <Description>
+    <C>AsMonoid(<A>filt</A>, <A>S</A>)</C> is just shorthand for 
+    <C>Range(IsomorphismMonoid(<A>filt</A>, <A>S</A>))</C>, when <A>S</A> 
+    is a semigroup or monoid; see <Ref Func = "IsomorphismMonoid"/> for more
+    details.
+    <P/>
+
+    If the first argument <A>filt</A> is omitted and the semigroup <A>S</A>
+    is mathematically a monoid which does not belong to the category of
+    monoids in &GAP;, then <C>AsMonoid</C> returns a monoid (in the category
+    of monoids) isomorphic to <A>S</A> and of the same type as <A>S</A>.
+    If <A>S</A> is already in the category of monoids and the first argument
+    <A>filt</A> is omitted, then <A>S</A> is returned. 
+    <P/>
+
+    If the first argument <A>filt</A> is omitted and the semigroup <A>S</A>
+    is not a monoid, i.e. it does not satisfy <Ref
+      Prop="IsMonoidAsSemigroup"/>, then <K>fail</K> is returned. 
+
+    <Example><![CDATA[
+gap> S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
+>                   Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));;
+gap> AsMonoid(S);
+<transformation monoid of degree 8 with 2 generators>
+gap> AsSemigroup(IsBooleanMatSemigroup, S);
+<semigroup of 10x10 boolean matrices with 2 generators>
+gap> AsMonoid(IsBooleanMatMonoid, S);
+<monoid of 8x8 boolean matrices with 2 generators>
+gap> S := Monoid(Bipartition([[1, -1, -3], [2, 3], [-2]]),
+>                Bipartition([[1, -1], [2, 3, -3], [-2]]));
+<bipartition monoid of degree 3 with 2 generators>
+gap> AsMonoid(IsTransformationMonoid, S);
+<transformation monoid of size 3, degree 3 with 2 generators>
+gap> AsMonoid(S);
+<bipartition monoid of size 3, degree 3 with 2 generators>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

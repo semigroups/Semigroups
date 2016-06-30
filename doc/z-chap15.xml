@@ -210,8 +210,6 @@
 
     <#Include Label = "RZMSDigraph">
     <#Include Label = "RZMSConnectedComponents">
-    <#Include Label = "RZMSNormalization">
-    <#Include Label = "RMSNormalization">
 
   </Section>
 

@@ -111,7 +111,7 @@
     possess.  
     <#Include Label = "StarPBR">
     <#Include Label = "DegreeOfPBR">
-    <#Include Label = "ExtRepOfPBR">
+    <#Include Label = "ExtRepOfObjPBR">
     <#Include Label = "NumberPBR">
     <#Include Label = "IsEmptyPBR">
     <#Include Label = "IsIdentityPBR">
