@@ -38,6 +38,9 @@ DeclareOperation("ClosureInverseSemigroup",
                  [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection,
                   IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
+                 [IsSemigroupWithInverseOp, IsListOrCollection and IsEmpty,
+                  IsRecord]);
+DeclareOperation("ClosureInverseSemigroup",
                  [IsSemigroupWithInverseOp, IsMultiplicativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
                  [IsSemigroupWithInverseOp, IsMultiplicativeElement, IsRecord]);

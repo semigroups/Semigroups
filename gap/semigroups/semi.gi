@@ -79,7 +79,9 @@ end;
 SEMIGROUPS.AddGenerators := function(S, coll, opts)
   local data;
 
-  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
+  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
+      or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
+                                                   coll)) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.AddGenerators: usage,\n",
                   "the arguments do not belong to the same family,");
   fi;
@@ -100,6 +102,11 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
   fi;
 
   data := GenericSemigroupData(S);
+  # Note that SEMIGROUP_ADD_GENERATORS only checks if the generators coll
+  # already belong to the semigroup, it does not perform any further
+  # enumeration of the semigroup. So, in the small generating set code of
+  # Semigroup/MonoidByGenerators we must check if elements of the collection
+  # belong to the semigroup before trying to add them.
   SEMIGROUP_ADD_GENERATORS(data, coll);
   S := Semigroup(data!.gens, opts);
   SetGenericSemigroupData(S, data);
@@ -143,203 +150,263 @@ end);
 ## 3. Semigroup/Monoid/InverseSemigroup/InverseMonoidByGenerators
 #############################################################################
 
-InstallMethod(MagmaByGenerators, "for a multiplicative element collection",
+InstallImmediateMethod(IsTrivial, IsMonoid and HasGeneratorsOfSemigroup, 0,
+function(S)
+  local gens;
+  gens := GeneratorsOfSemigroup(S);
+  if CanEasilyCompareElements(gens) and Length(gens) = 1
+      and gens[1] = One(gens) then
+    return true;
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(MagmaByGenerators,
+"for a finite multiplicative element collection",
 [IsMultiplicativeElementCollection and IsFinite], SemigroupByGenerators);
 
-InstallMethod(SemigroupByGenerators, "for a multiplicative element collection",
+InstallMethod(SemigroupByGenerators,
+"for a finite multiplicative element collection",
 [IsMultiplicativeElementCollection and IsFinite],
 function(coll)
   return SemigroupByGenerators(coll, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 InstallMethod(SemigroupByGenerators,
-"for a multiplicative element collection and record",
+"for a finite multiplicative element collection and record",
 [IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
-  local n, S, SemigroupsAddGenerators, filts, pos, i, x;
+  local n, S, SemigroupsAddGenerators, filts, i, x;
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
-  gens := AsList(gens);
 
-  # try to find a smaller generating set
-  if opts.small and Length(gens) > 1 then
-    gens := Shuffle(SSortedList(gens)); #remove duplicates, permute
-    if IsGeneratorsOfActingSemigroup(gens) then
-      n := ActionDegree(gens);
-      Sort(gens, function(x, y)
-                   return ActionRank(x, n) > ActionRank(y, n);
-                 end);
-      #remove the identity
-      if IsOne(gens[1]) and IsBound(gens[2])
-          and ActionRank(gens[2], n) = n then
-        Remove(gens, 1);
-      fi;
-    else
-      Sort(gens, IsGreensDLeq(Semigroup(gens)));
-      if IsMultiplicativeElementWithOneCollection(gens) and IsOne(gens[1])
-          and gens[1] in Semigroup(gens[2]) then
-        Remove(gens, 1);
-      fi;
+  if CanEasilyCompareElements(gens) then
+    # Check if the One of the generators is a generator
+    if IsMultiplicativeElementWithOneCollection(gens)
+        and Position(gens, One(gens)) <> fail then
+      return MonoidByGenerators(gens, opts);
     fi;
 
-    opts := ShallowCopy(opts);
-    opts.small := false;
-    opts.regular := false;
-    S := Semigroup(gens[1], opts);
+    # Try to find a smaller generating set
+    if opts.small and Length(gens) > 1 then
+      gens := Shuffle(Set(gens));
+      if IsGeneratorsOfActingSemigroup(gens) then
+        n := ActionDegree(gens);
+        Sort(gens, function(x, y)
+                     return ActionRank(x, n) > ActionRank(y, n);
+                   end);
+      else
+        Sort(gens, IsGreensDLeq(Semigroup(gens)));
+      fi;
 
-    SemigroupsAddGenerators := SEMIGROUPS.AddGenerators;
+      opts := ShallowCopy(opts);
+      opts.small := false;
+      opts.regular := false;
 
-    if InfoLevel(InfoSemigroups) > 1 then
-      n := Length(gens);
-      for i in [2 .. n] do
-        S := SemigroupsAddGenerators(S, [gens[i]], opts);
-        Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
-              " generators so far\r");
-      od;
-      Print("\n");
-    else
-      for x in gens do
-        S := SemigroupsAddGenerators(S, [x], opts);
-      od;
+      S := Semigroup(gens[1], opts);
+
+      SemigroupsAddGenerators := SEMIGROUPS.AddGenerators;
+
+      if InfoLevel(InfoSemigroups) > 1 then
+        n := Length(gens);
+        for i in [2 .. n] do
+          if not gens[i] in S then
+            S := SemigroupsAddGenerators(S, [gens[i]], opts);
+          fi;
+          Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
+                " generators so far\n");
+        od;
+      else
+        for x in gens do
+          if not x in S then
+            S := SemigroupsAddGenerators(S, [x], opts);
+          fi;
+        od;
+      fi;
+      return S;
     fi;
-    return S;
   fi;
 
   filts := IsSemigroup and IsAttributeStoringRep;
 
   if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
+    if opts.regular then
+      filts := filts and IsRegularSemigroup;
+    fi;
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
-
-  if opts.regular then
-    SetIsRegularSemigroup(S, true);
-  fi;
-
-  SetGeneratorsOfMagma(S, gens);
-
-  if IsMultiplicativeElementWithOneCollection(gens)
-      and CanEasilyCompareElements(gens)
-      and IsFinite(gens) then
-    pos := Position(gens, One(gens));
-    if pos <> fail then
-      SetFilterObj(S, IsMonoid);
-      if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
-        SetIsTrivial(S, true);
-      elif not IsPartialPermCollection(gens) or One(gens) =
-          One(gens{Concatenation([1 .. pos - 1],
-                                 [pos + 1 .. Length(gens)])}) then
-        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the
-        # One = gens[1] from this, it is not possible to recreate the semigroup
-        # using Monoid(PartialPerm([1])) (since the One in this case is
-        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-        gens := ShallowCopy(gens);
-        Remove(gens, pos);
-      fi;
-      SetGeneratorsOfMonoid(S, gens);
-    fi;
-  fi;
+  SetGeneratorsOfMagma(S, AsList(gens));
 
   return S;
 end);
 
-InstallMethod(MonoidByGenerators, "for a multiplicative element collection",
+InstallMethod(MonoidByGenerators,
+"for a finite multiplicative element collection",
 [IsMultiplicativeElementCollection and IsFinite],
 function(gens)
   return MonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
 InstallMethod(MonoidByGenerators,
-"for a multiplicative element collection and record",
+"for a finite multiplicative element collection and record",
 [IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
-  local n, S, SemigroupsAddGenerators, filts, pos, i, x;
+  local pos, n, S, SemigroupsAddGenerators, filts, i, x;
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
-  gens := AsList(gens);
 
-  if opts.small and Length(gens) > 1 then #small gen. set
-    gens := Shuffle(SSortedList(gens));
-    if IsGeneratorsOfActingSemigroup(gens) then
-      n := ActionDegree(gens);
-      Sort(gens, function(x, y)
-                   return ActionRank(x, n) > ActionRank(y, n);
-                 end);
-
-      if IsOne(gens[1]) and IsBound(gens[2])
-          and ActionRank(gens[2], n) = n then
-        #remove id
-        Remove(gens, 1);
-      fi;
-    else
-      Sort(gens, IsGreensDLeq(Semigroup(gens)));
-      if IsOne(gens[1]) and IsBound(gens[2])
-          and gens[1] in Semigroup(gens[2]) then
-        Remove(gens, 1);
+  if CanEasilyCompareElements(gens) then
+    if (not IsPartialPermCollection(gens) or not opts.small)
+        and IsMultiplicativeElementWithOneCollection(gens)
+        and Length(gens) > 1 then
+      pos := Position(gens, One(gens));
+      if pos <> fail and
+          (not IsPartialPermCollection(gens) or One(gens) =
+           One(gens{Concatenation([1 .. pos - 1],
+                                  [pos + 1 .. Length(gens)])})) then
+        gens := ShallowCopy(gens);
+        Remove(gens, pos);
       fi;
     fi;
 
-    opts := ShallowCopy(opts);
-    opts.small := false;
-    opts.regular := false;
-    S := Monoid(gens[1], opts);
+    # Try to find a smaller generating set
+    if opts.small and Length(gens) > 1 then
+      gens := Shuffle(Set(gens));
+      if IsGeneratorsOfActingSemigroup(gens) then
+        n := ActionDegree(gens);
+        Sort(gens, function(x, y)
+                     return ActionRank(x, n) > ActionRank(y, n);
+                   end);
+      else
+        Sort(gens, IsGreensDLeq(Semigroup(gens)));
+      fi;
 
-    SemigroupsAddGenerators := SEMIGROUPS.AddGenerators;
-    if InfoLevel(InfoSemigroups) > 1 then
-      n := Length(gens);
-      for i in [2 .. n] do
-        if not gens[i] in S then
-          S := SemigroupsAddGenerators(S, [gens[i]], opts);
-        fi;
-        Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
-              " generators so far");
-      od;
-      Print("\n");
-    else
-      for x in gens do
-        if not x in S then
-          S := SemigroupsAddGenerators(S, [x], opts);
-        fi;
-      od;
+      opts         := ShallowCopy(opts);
+      opts.small   := false;
+      opts.regular := false;
+
+      S := Monoid(gens[1], opts);
+
+      SemigroupsAddGenerators := SEMIGROUPS.AddGenerators;
+
+      if InfoLevel(InfoSemigroups) > 1 then
+        n := Length(gens);
+        for i in [2 .. n] do
+          if not gens[i] in S then
+            S := SemigroupsAddGenerators(S, [gens[i]], opts);
+          fi;
+          Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
+                " generators so far\n");
+        od;
+      else
+        for x in gens do
+          if not x in S then
+            S := SemigroupsAddGenerators(S, [x], opts);
+          fi;
+        od;
+      fi;
+      return S;
     fi;
-    return S;
   fi;
 
   filts := IsMonoid and IsAttributeStoringRep;
 
   if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
+    if opts.regular then
+      filts := filts and IsRegularSemigroup;
+    fi;
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
 
-  if opts.regular then
-    SetIsRegularSemigroup(S, true);
+  if CanEasilyCompareElements(gens) and not One(gens) in gens then
+    SetGeneratorsOfMagma(S, Concatenation([One(gens)], gens));
+  else
+    SetGeneratorsOfMagma(S, AsList(gens));
   fi;
 
-  # remove one from gens if it's there.
-  if CanEasilyCompareElements(gens) and IsFinite(gens) then
-    pos := Position(gens, One(gens));
-    if pos <> fail then
-      SetGeneratorsOfMagma(S, gens);
-      if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
-        SetIsTrivial(S, true);
-      elif not IsPartialPermCollection(gens) or One(gens) =
-          One(gens{Concatenation([1 .. pos - 1],
-                                 [pos + 1 .. Length(gens)])}) then
-        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the
-        # One = gens[1] from this, it is not possible to recreate the semigroup
-        # using Monoid(PartialPerm([1])) (since the One in this case is
-        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-        gens := ShallowCopy(gens);
-        Remove(gens, pos);
+  SetGeneratorsOfMagmaWithOne(S, AsList(gens));
+
+  return S;
+end);
+
+InstallMethod(InverseSemigroupByGenerators,
+"for a finite collection",
+[IsCollection and IsFinite],
+function(gens)
+  return InverseSemigroupByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
+end);
+
+InstallMethod(InverseSemigroupByGenerators,
+"for a finite multiplicative element collection and record",
+[IsMultiplicativeElementCollection and IsFinite, IsRecord],
+function(gens, opts)
+  local n, S, filts, i, x;
+
+  if not IsGeneratorsOfInverseSemigroup(gens) then
+    ErrorNoReturn("Semigroups: InverseSemigroupByGenerators: usage,\n",
+                  "the first argument must satisfy ",
+                  "`IsGeneratorsOfInverseSemigroup',");
+  fi;
+
+  opts := SEMIGROUPS.ProcessOptionsRec(opts);
+
+  if CanEasilyCompareElements(gens) then
+    # Check if the One of the generators is a generator
+    if IsMultiplicativeElementWithOneCollection(gens)
+        and Position(gens, One(gens)) <> fail then
+      return InverseMonoidByGenerators(gens, opts);
+    fi;
+
+    # Try to find a smaller generating set
+    if opts.small and Length(gens) > 1 then
+      gens := Shuffle(Set(gens));
+      if IsGeneratorsOfActingSemigroup(gens) then
+        n := ActionDegree(gens);
+        Sort(gens, function(x, y)
+                     return ActionRank(x, n) > ActionRank(y, n);
+                   end);
+      else # Currently there is no way to enter this clause
+        Sort(gens, IsGreensDLeq(InverseSemigroup(gens)));
       fi;
-    else
-      SetGeneratorsOfMagma(S, Concatenation([One(gens)], gens));
+
+      opts := ShallowCopy(opts);
+      opts.small := false;
+
+      S := InverseSemigroup(gens[1], opts);
+
+      if InfoLevel(InfoSemigroups) > 1 then
+        n := Length(gens);
+        for i in [2 .. n] do
+          if not gens[i] in S then
+            S := ClosureInverseSemigroupNC(S, [gens[i]], opts);
+          fi;
+          Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
+                " generators so far\n");
+        od;
+      else
+        for x in gens do
+          if not x in S then
+            S := ClosureInverseSemigroupNC(S, [x], opts);
+          fi;
+        od;
+      fi;
+      return S;
     fi;
   fi;
-  SetGeneratorsOfMagmaWithOne(S, gens);
+
+  filts := IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
+
+  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
+    filts := filts and IsActingSemigroup;
+  fi;
+
+  S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
+  SetGeneratorsOfInverseSemigroup(S, AsList(gens));
+
   return S;
 end);
 
@@ -350,19 +417,12 @@ function(gens)
   return InverseMonoidByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
 end);
 
-InstallMethod(InverseSemigroupByGenerators,
-"for a finite collection",
-[IsCollection and IsFinite],
-function(gens)
-  return InverseSemigroupByGenerators(gens, SEMIGROUPS.DefaultOptionsRec);
-end);
-
 InstallMethod(InverseMonoidByGenerators,
-"for a multiplicative element collection and record",
+"for a finite multiplicative element collection and record",
 [IsMultiplicativeElementCollection and IsMultiplicativeElementWithOneCollection
  and IsFinite, IsRecord],
 function(gens, opts)
-  local n, S, filts, one, pos, x;
+  local pos, n, S, filts, i, x;
 
   if not IsGeneratorsOfInverseSemigroup(gens) then
     ErrorNoReturn("Semigroups: InverseMonoidByGenerators: usage,\n",
@@ -372,22 +432,55 @@ function(gens, opts)
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
 
-  if opts.small and Length(gens) > 1 then
-    gens := Shuffle(Set(gens));
-    if IsGeneratorsOfActingSemigroup(gens) then
-      n := ActionDegree(gens);
-      Sort(gens, function(x, y)
-                   return ActionRank(x, n) > ActionRank(y, n);
-                 end);
+  if CanEasilyCompareElements(gens) then
+    if (not IsPartialPermCollection(gens) or not opts.small)
+        and IsMultiplicativeElementWithOneCollection(gens)
+        and Length(gens) > 1 then
+      pos := Position(gens, One(gens));
+      if pos <> fail and
+          (not IsPartialPermCollection(gens) or One(gens) =
+           One(gens{Concatenation([1 .. pos - 1],
+                                  [pos + 1 .. Length(gens)])})) then
+        gens := ShallowCopy(gens);
+        Remove(gens, pos);
+      fi;
     fi;
-    opts := ShallowCopy(opts);
-    opts.small := false;
-    S := InverseMonoid(gens[1], opts);
 
-    for x in gens do
-      S := ClosureInverseSemigroup(S, x, opts);
-    od;
-    return S;
+    # Try to find a smaller generating set
+    if opts.small and Length(gens) > 1 then
+      gens := Shuffle(Set(gens));
+      if IsGeneratorsOfActingSemigroup(gens) then
+        n := ActionDegree(gens);
+        Sort(gens, function(x, y)
+                     return ActionRank(x, n) > ActionRank(y, n);
+                   end);
+      else # Currently there is no way to enter this clause
+        Sort(gens, IsGreensDLeq(InverseMonoid(gens)));
+      fi;
+
+      opts := ShallowCopy(opts);
+      opts.small := false;
+
+      S := InverseMonoid(gens[1], opts);
+
+      if InfoLevel(InfoSemigroups) > 1 then
+        n := Length(gens);
+        for i in [2 .. n] do
+          if not gens[i] in S then
+            S := ClosureInverseSemigroupNC(S, [gens[i]], opts);
+          fi;
+          Print("at \t", i, " of \t", n, "; \t", Length(Generators(S)),
+                " generators so far\n");
+        od;
+      else
+        for x in gens do
+          if not x in S then
+            S := ClosureInverseSemigroupNC(S, [x], opts);
+          fi;
+        od;
+      fi;
+      return S;
+    fi;
   fi;
 
   filts := IsMagmaWithOne and IsInverseSemigroup and IsAttributeStoringRep;
@@ -397,108 +490,15 @@ function(gens, opts)
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
-  one := One(gens);
-  SetOne(S, one);
-  gens := AsList(gens);
+  SetOne(S, One(gens));
 
-  if CanEasilyCompareElements(gens)
-      and IsFinite(gens) then
-    pos := Position(gens, one);
-    if pos <> fail  then
-      SetGeneratorsOfInverseSemigroup(S, gens);
-      if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
-        SetIsTrivial(S, true);
-      elif not IsPartialPermCollection(gens) or One(gens) =
-          One(gens{Concatenation([1 .. pos - 1],
-                                 [pos + 1 .. Length(gens)])}) then
-        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the
-        # One = gens[1] from this, it is not possible to recreate the semigroup
-        # using Monoid(PartialPerm([1])) (since the One in this case is
-        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-        gens := ShallowCopy(gens);
-        Remove(gens, pos);
-      fi;
-      SetGeneratorsOfInverseMonoid(S, gens);
-    else
-      SetGeneratorsOfInverseMonoid(S, gens);
-      gens := ShallowCopy(gens);
-      Add(gens, one);
-      SetGeneratorsOfInverseSemigroup(S, gens);
-    fi;
+  if CanEasilyCompareElements(gens) and not One(gens) in gens then
+    SetGeneratorsOfInverseSemigroup(S, Concatenation([One(gens)], gens));
   else
-    SetGeneratorsOfInverseMonoid(S, gens);
+    SetGeneratorsOfInverseSemigroup(S, AsList(gens));
   fi;
 
-  return S;
-end);
-
-InstallMethod(InverseSemigroupByGenerators,
-"for a multiplicative element collection and record",
-[IsMultiplicativeElementCollection and IsFinite, IsRecord],
-function(gens, opts)
-  local n, S, filts, pos, x;
-
-  if not IsGeneratorsOfInverseSemigroup(gens) then
-    ErrorNoReturn("Semigroups: InverseSemigroupByGenerators: usage,\n",
-                  "the first argument must satisfy ",
-                  "`IsGeneratorsOfInverseSemigroup',");
-  fi;
-
-  opts := SEMIGROUPS.ProcessOptionsRec(opts);
-
-  if opts.small and Length(gens) > 1 then
-    gens := Shuffle(Set(gens));
-    if IsGeneratorsOfActingSemigroup(gens) then
-      n := ActionDegree(gens);
-      Sort(gens, function(x, y)
-                   return ActionRank(x, n) > ActionRank(y, n);
-                 end);
-    fi;
-
-    opts := ShallowCopy(opts);
-    opts.small := false;
-
-    S := InverseSemigroup(gens[1], opts);
-    for x in gens do
-      if not x in S then
-        S := ClosureInverseSemigroupNC(S, [x], opts);
-      fi;
-    od;
-    return S;
-  fi;
-
-  filts := IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
-
-  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
-    filts := filts and IsActingSemigroup;
-  fi;
-
-  S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
-  gens := AsList(gens);
-  SetGeneratorsOfInverseSemigroup(S, gens);
-
-  if IsMultiplicativeElementWithOneCollection(gens)
-      and CanEasilyCompareElements(gens)
-      and IsFinite(gens) then
-    pos := Position(gens, One(gens));
-    if pos <> fail then
-      SetFilterObj(S, IsMonoid);
-      if Length(gens) = 1 then # Length(gens) <> 0 since One(gens) in gens
-        SetIsTrivial(S, true);
-      elif not IsPartialPermCollection(gens) or One(gens) =
-          One(gens{Concatenation([1 .. pos - 1],
-                                 [pos + 1 .. Length(gens)])}) then
-        # if gens = [PartialPerm([1,2]), PartialPerm([1])], then removing the
-        # One = gens[1] from this, it is not possible to recreate the semigroup
-        # using Monoid(PartialPerm([1])) (since the One in this case is
-        # PartialPerm([1]) not PartialPerm([1,2]) as it should be.
-        gens := ShallowCopy(gens);
-        Remove(gens, pos);
-      fi;
-      SetGeneratorsOfInverseMonoid(S, gens);
-    fi;
-  fi;
-
+  SetGeneratorsOfInverseMonoid(S, AsList(gens));
   return S;
 end);
 
@@ -521,7 +521,7 @@ end);
 #############################################################################
 
 InstallMethod(ClosureInverseSemigroup,
-"for a semigroup with inverse op and multiplicative element coll.",
+"for a semigroup with inverse op and finite multiplicative element coll",
 [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection and IsFinite],
 function(S, coll) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
@@ -546,29 +546,34 @@ function(S, x, opts)
 end);
 
 InstallMethod(ClosureInverseSemigroup,
-"for a semigroup with inverse op, multiplicative elt coll, and record",
+"for a semigroup with inverse op, empty list or collection, and record",
+[IsSemigroupWithInverseOp, IsListOrCollection and IsEmpty, IsRecord],
+function(S, coll, opts)
+  return S;
+end);
+
+InstallMethod(ClosureInverseSemigroup,
+"for a semigroup with inverse op, finite multiplicative elt coll, and record",
 [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection and IsFinite,
  IsRecord],
 function(S, coll, opts)
 
-  if IsEmpty(coll) then
-    return S;
+  if IsSemigroup(coll) then
+    coll := GeneratorsOfSemigroup(coll);
+  elif not IsList(coll) then 
+    coll := AsList(coll);
   fi;
 
-  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
+  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
+      or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
+                                                   coll)) then
     ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
                   "the semigroup and collection of elements are not of the ",
                   "same type,");
-  fi;
-
-  if not IsGeneratorsOfInverseSemigroup(coll) then
+  elif not IsGeneratorsOfInverseSemigroup(coll) then
     ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
                   "the first argument must satisfy ",
                   "`IsGeneratorsOfInverseSemigroup',");
-  fi;
-
-  if IsSemigroup(coll) then
-    coll := GeneratorsOfSemigroup(coll);
   fi;
 
   coll := Set(coll);
@@ -639,7 +644,7 @@ function(S, coll, opts)
 end);
 
 InstallMethod(ClosureSemigroup,
-"for a semigroup and multiplicative element collection",
+"for a semigroup and finite multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection and IsFinite],
 function(S, coll) #FIXME: ShallowCopy?
   return ClosureSemigroup(S, coll, ShallowCopy(SEMIGROUPS.OptionsRec(S)));
@@ -659,62 +664,54 @@ function(S, x, opts)
 end);
 
 InstallMethod(ClosureSemigroup,
-"for a semigroup, multiplicative element collection, and record",
+"for a semigroup, finite multiplicative element collection, and record",
 [IsSemigroup, IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(S, coll, opts)
 
-  if IsEmpty(coll) then
-    return S;
+  if IsSemigroup(coll) then
+    coll := GeneratorsOfSemigroup(coll);
+  elif not IsList(coll) then 
+    coll := AsList(coll);
   fi;
 
-  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll)) then
+  if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
+      or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
+                                                   coll)) then
     ErrorNoReturn("Semigroups: ClosureSemigroup: usage,\n",
                   "the semigroup and collection of elements are not of the ",
                   "same type,");
   fi;
 
-  if IsActingSemigroup(S)
-      and IsActingSemigroupWithFixedDegreeMultiplication(S)
-      and ActionDegree(S) <> ActionDegree(Representative(coll)) then
-    ErrorNoReturn("Semigroups: ClosureSemigroup: usage,\n",
-                  "the degree of the semigroup and collection must be equal,");
-  fi;
-
-  if IsSemigroup(coll) then
-    coll := GeneratorsOfSemigroup(coll);
-  fi;
-
   opts.small := false;
 
   return ClosureSemigroupNC(S,
-                            Filtered(coll, x -> not x in S), # FIXME don't do
-                                                             #       this
+                            Filtered(coll, x -> not x in S),
                             SEMIGROUPS.ProcessOptionsRec(opts));
 end);
 
-# this is the fallback method, coll should consist of elements not in
+# This is the fallback method, coll should consist of elements not in
 # the semigroup
 
 InstallMethod(ClosureSemigroupNC,
-"for a semigroup, multiplicative element collection, and record",
+"for a semigroup, finite multiplicative element collection, and record",
 [IsSemigroup, IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(S, coll, opts)
   local data, T;
 
-  if SEMIGROUPS.IsCCSemigroup(S) then
-    data := SEMIGROUP_CLOSURE(GenericSemigroupData(S),
-                              ShallowCopy(coll),
-                              SEMIGROUPS.DegreeOfSemigroup(S, coll));
-    data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
-                                            and IsAttributeStoringRep), data);
-    T := Semigroup(data!.gens, opts);
-    SetGenericSemigroupData(T, data);
-    data!.genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
-    return T;
-  else
+  if not SEMIGROUPS.IsCCSemigroup(S) then
     Info(InfoWarning, 1, "using default method for ClosureSemigroupNC");
     return Semigroup(S, coll, opts);
   fi;
+
+  data := SEMIGROUP_CLOSURE(GenericSemigroupData(S),
+                            ShallowCopy(coll),
+                            SEMIGROUPS.DegreeOfSemigroup(S, coll));
+  data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
+                                          and IsAttributeStoringRep), data);
+  T := Semigroup(data!.gens, opts);
+  SetGenericSemigroupData(T, data);
+  data!.genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
+  return T;
 end);
 
 InstallMethod(ClosureSemigroupNC,
@@ -821,7 +818,7 @@ SEMIGROUPS.DefaultRandomInverseSemigroup := function(filt, params)
                        RandomInverseSemigroup(IsPartialPermSemigroup,
                                               params[1],
                                               params[2]));
-  elif Length(params) = 2 then
+  elif Length(params) = 4 then
     return AsSemigroup(filt,
                        params[3], # threshold
                        params[4], # period
@@ -829,6 +826,8 @@ SEMIGROUPS.DefaultRandomInverseSemigroup := function(filt, params)
                                               params[1],
                                               params[2]));
   fi;
+  ErrorNoReturn("Semigroups: SEMIGROUPS.DefaultRandomInverseSemigroup: ",
+                "usage,\nthe second arg must have length 2 to 4,");
 end;
 
 SEMIGROUPS.DefaultRandomInverseMonoid := function(filt, params)
@@ -843,7 +842,7 @@ SEMIGROUPS.DefaultRandomInverseMonoid := function(filt, params)
                        RandomInverseMonoid(IsPartialPermMonoid,
                                            params[1],
                                            params[2]));
-  elif Length(params) = 2 then
+  elif Length(params) = 4 then
     return AsMonoid(filt,
                        params[3], # threshold
                        params[4], # period
@@ -851,6 +850,8 @@ SEMIGROUPS.DefaultRandomInverseMonoid := function(filt, params)
                                            params[1],
                                            params[2]));
   fi;
+  ErrorNoReturn("Semigroups: SEMIGROUPS.DefaultRandomInverseMonoid: usage,\n",
+                "the second arg must have length 2 to 4,");
 end;
 
 # TODO RandomSource?
@@ -933,39 +934,38 @@ function(arg)
     fi;
 
     return RandomSemigroupCons(filt, params);
-  else # filt is IsReesMatrixSemigroup or IsReesZeroMatrixSemigroup
-    if Length(arg) >= 2 then # rows I
-      params[1] := arg[2];
-    else
-      params[1] := Random([1 .. 100]);
-    fi;
-    if Length(arg) >= 3 then # cols J
-      params[2] := arg[3];
-    else
-      params[2] := Random([1 .. 100]);
-    fi;
-
-    if Length(arg) >= 4 then # group
-      params[3] := arg[4];
-    else
-      order := Random([1 .. 2047]);
-      i := Random([1 .. NumberSmallGroups(order)]);
-      params[3] := Range(IsomorphismPermGroup(SmallGroup(order, i)));
-    fi;
-
-    if Length(arg) > 4 then
-      ErrorNoReturn("Semigroups: RandomSemigroup: usage,\n",
-                    "there should be at most 4 arguments,");
-    fi;
-
-    if not (IsPosInt(params[1]) and IsPosInt(params[2])
-            and IsPermGroup(params[3])) then
-      ErrorNoReturn("Semigroups: RandomSemigroup: usage,\n",
-                    "the arguments should be rows, columns, and a perm ",
-                    "group,");
-    fi;
-    return RandomSemigroupCons(filt, params);
+  fi;# filt is IsReesMatrixSemigroup or IsReesZeroMatrixSemigroup
+  if Length(arg) >= 2 then # rows I
+    params[1] := arg[2];
+  else
+    params[1] := Random([1 .. 100]);
   fi;
+  if Length(arg) >= 3 then # cols J
+    params[2] := arg[3];
+  else
+    params[2] := Random([1 .. 100]);
+  fi;
+
+  if Length(arg) >= 4 then # group
+    params[3] := arg[4];
+  else
+    order := Random([1 .. 2047]);
+    i := Random([1 .. NumberSmallGroups(order)]);
+    params[3] := Range(IsomorphismPermGroup(SmallGroup(order, i)));
+  fi;
+
+  if Length(arg) > 4 then
+    ErrorNoReturn("Semigroups: RandomSemigroup: usage,\n",
+                  "there should be at most 4 arguments,");
+  fi;
+
+  if not (IsPosInt(params[1]) and IsPosInt(params[2])
+          and IsPermGroup(params[3])) then
+    ErrorNoReturn("Semigroups: RandomSemigroup: usage,\n",
+                  "the arguments should be rows, columns, and a perm ",
+                  "group,");
+  fi;
+  return RandomSemigroupCons(filt, params);
 end);
 
 InstallGlobalFunction(RandomMonoid,

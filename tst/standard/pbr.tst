@@ -139,7 +139,7 @@ false
 gap> S := FullPBRMonoid(1);
 <pbr monoid of degree 1 with 4 generators>
 gap> List(S, NumberPBR);
-[ 3, 15, 5, 7, 8, 1, 4, 11, 13, 16, 6, 2, 9, 12, 14, 10 ]
+[ 7, 3, 15, 5, 8, 1, 4, 11, 13, 16, 6, 2, 9, 12, 14, 10 ]
 gap> Set(List(last, x -> PBRNumber(x, 1))) = AsSet(S);
 true
 

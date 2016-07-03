@@ -689,8 +689,10 @@ gap> StructureDescriptionMaximalSubgroups(S);
 
 #T# attributes: IdempotentGeneratedSubsemigroup
 gap> S := RegularBooleanMatMonoid(3);;
-gap> IdempotentGeneratedSubsemigroup(S);
-<monoid of 3x3 boolean matrices with 122 generators>
+gap> T := IdempotentGeneratedSubsemigroup(S);
+<monoid of 3x3 boolean matrices with 16 generators>
+gap> Size(T);
+381
 
 #T# attributes: InjectionPrincipalFactor
 gap> S := Monoid([BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),

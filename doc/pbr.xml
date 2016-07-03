@@ -243,7 +243,7 @@ gap> ExtRepOfObj(x);
 gap> S := FullPBRMonoid(1);
 <pbr monoid of degree 1 with 4 generators>
 gap> List(S, NumberPBR);
-[ 3, 15, 5, 7, 8, 1, 4, 11, 13, 16, 6, 2, 9, 12, 14, 10 ]]]></Example>
+[ 7, 3, 15, 5, 8, 1, 4, 11, 13, 16, 6, 2, 9, 12, 14, 10 ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

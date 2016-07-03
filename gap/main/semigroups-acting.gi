@@ -82,7 +82,7 @@ function(S, coll, opts)
 
   # set up lambda orb for t
   old_o := LambdaOrb(S);
-  o := StructuralCopy(old_o);
+  o     := StructuralCopy(old_o);
   rho_o := StructuralCopy(RhoOrb(S));
 
   if IsTransformationSemigroup(S) then

@@ -106,21 +106,22 @@ end;
 InstallMethod(GeneratorsSmallest, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local iter, T, x;
+  local iter, gens, T, x;
 
   iter := IteratorSorted(S);
-  T := Semigroup(NextIterator(iter));
+  gens := [NextIterator(iter)];
+  T := Semigroup(gens[1]);
 
   for x in iter do
     if not x in T then
       T := SEMIGROUPS.AddGenerators(T, [x], SEMIGROUPS.OptionsRec(T));
+      Add(gens, x);
       if T = S then
         break;
       fi;
     fi;
   od;
-
-  return GeneratorsOfSemigroup(T);
+  return gens;
 end);
 
 InstallMethod(SmallestElementSemigroup, "for a semigroup",

@@ -266,9 +266,9 @@ false
 
 # Trivial partial perm semigroup: GAP does not know that it is simple
 gap> s := Semigroup(PartialPerm([2], [2]), PartialPerm([2], [2]));
-<commutative partial perm monoid of rank 1 with 1 generator>
+<trivial partial perm group of rank 1 with 1 generator>
 gap> HasIsSimpleSemigroup(s);
-false
+true
 gap> RepresentativeOfMinimalIdeal(s);
 <identity partial perm on [ 2 ]>
 gap> last in s;

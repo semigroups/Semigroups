@@ -544,7 +544,8 @@ function(n)
   Add(gens, Bipartition(Concatenation([[1, 2, -1, -2]],
                                         List([3 .. n], x -> [x, -x]))));
 
-  M := Monoid(gens, rec(regular := true));
+  M := Monoid(gens);
+  SetIsRegularSemigroup(M, true);
   SetIsStarSemigroup(M, true);
   SetSize(M, Bell(2 * n));
   return M;
@@ -614,7 +615,8 @@ function(n)
   Add(gens, Bipartition(Concatenation([[1, 2]],
                                         List([3 .. n],
                                              x -> [x, -x]), [[-1, -2]])));
-  M := Monoid(gens, rec(regular := true));
+  M := Monoid(gens);
+  SetIsRegularSemigroup(M, true);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -639,7 +641,8 @@ function(n)
                                              x -> [x, -x]), [[-1, -2]])));
   Add(gens, AsBipartition(PartialPermNC([2 .. n], [2 .. n]), n));
 
-  M := Monoid(gens, rec(regular := true));
+  M := Monoid(gens);
+  SetIsRegularSemigroup(M, true);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -670,7 +673,8 @@ function(n)
     Add(gens, Bipartition(next));
   od;
 
-  M := Monoid(gens, rec(regular := true));
+  M := Monoid(gens);
+  SetIsRegularSemigroup(M, true);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -687,7 +691,8 @@ function(n)
   fi;
 
   p := PermList(Concatenation([n], [1 .. n - 1]));
-  M := Monoid(JonesMonoid(n), AsBipartition(p), rec(regular := true));
+  M := Monoid(JonesMonoid(n), AsBipartition(p));
+  SetIsRegularSemigroup(M, true);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -719,7 +724,8 @@ function(n)
     Add(gens, Bipartition(next));
   od;
 
-  M := Monoid(gens, rec(regular := true));
+  M := Monoid(gens);
+  SetIsRegularSemigroup(M, true);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -738,7 +744,8 @@ function(n)
 
   gens := List(GeneratorsOfInverseSemigroup(POI(n)),
                x -> AsBipartition(x, n));
-  M := Monoid(JonesMonoid(n), gens, rec(regular := true));
+  M := Monoid(JonesMonoid(n), gens);
+  SetIsRegularSemigroup(M, true);
   SetIsStarSemigroup(M, true);
   return M;
 end);
