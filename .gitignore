@@ -53,3 +53,4 @@ src/semigroups++
 lcov*
 *.lab
 tags
+*.swo
