@@ -52,3 +52,4 @@ src/semigroups++
 *.pyc
 lcov*
 *.lab
+tags
