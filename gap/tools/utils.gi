@@ -88,6 +88,20 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
 
 SEMIGROUPS.TestRec := rec();
 
+SEMIGROUPS.TestRec.reportDiff := function (inp, expout, found, fnam, line, time)
+  Print("\033[31m######## > Diff in ");
+  if IsStream(fnam)  then
+    Print("test stream, line ", line, "\n");
+  else
+    Print(fnam, ":", line, "\n");
+  fi;
+  Print("# Input is:\n", inp);
+  Print("# Expected output:\n", expout);
+  Print("# But found:\n", found);
+  Print("########\033[0m\n");
+  return;
+end;
+
 SEMIGROUPS.StartTest := function()
   local record;
 
@@ -140,7 +154,6 @@ SEMIGROUPS.StartTest := function()
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", SEMIGROUPS.StopTest);
   MakeReadWriteGlobal("STOP_TEST");
-
   return;
 end;
 
@@ -170,7 +183,7 @@ SEMIGROUPS.StopTest := function(file)
 
   # restore default options
   SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;
-
+  
   # timing
   timeofday := IO_gettimeofday();
 
@@ -227,46 +240,13 @@ SEMIGROUPS.Test := function(arg)
                                          [Length(split) - 2 .. Length(split)]},
                                          "/");
 
-  width := SizeScreen()[1] - 3;
-  if not opts.silent then
-    Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  fi;
-  Print("Testing file: ", print_file, "\nwith acting methods ",
-        SEMIGROUPS.ColorizeString("ENABLED", "lightblue"), " . . .\n");
-  if not opts.silent then
-    Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
-  fi;
-
+  Print("Testing file: ", print_file, " (generic := false)\n");
   SEMIGROUPS.DefaultOptionsRec.generic := false;
-  enabled := Test(file);
-  if not opts.silent then
-    Print("\n");
-    if enabled then
-      Print(SEMIGROUPS.ColorizeString("PASSED!", "green"));
-    else
-      Print(SEMIGROUPS.ColorizeString("FAILED!", "red"));
-    fi;
-    Print("\n\n");
-    Print(Concatenation(ListWithIdenticalEntries(width, "#")));
-  fi;
-  Print("\n");
-  Print("Testing file: ", print_file, "\nwith acting methods ",
-        SEMIGROUPS.ColorizeString("DISABLED", "magenta"), " . . .\n");
-
-  if not opts.silent then
-    Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
-  fi;
+  enabled := Test(file, SEMIGROUPS.TestRec);
+  
+  Print("Testing file: ", print_file, " (generic := true)\n");
   SEMIGROUPS.DefaultOptionsRec.generic := true;
-  disabled := Test(file);
-  Print("\n");
-  if not opts.silent then
-    if disabled then
-      Print(SEMIGROUPS.ColorizeString("PASSED!", "green"));
-    else
-      Print(SEMIGROUPS.ColorizeString("FAILED!", "red"));
-    fi;
-    Print("\n\n");
-  fi;
+  disabled := Test(file, SEMIGROUPS.TestRec);
 
   SEMIGROUPS.DefaultOptionsRec.generic := generic;
   return enabled and disabled;
@@ -278,20 +258,24 @@ SEMIGROUPS.ManualExamples := function()
 end;
 
 SEMIGROUPS.RunExamples := function(exlists, excluded)
-  local oldscr, passed, l, sp, bad, s, start_time, test, end_time, elapsed,
-  pex, j, ex, i;
+  local oldscr, passed, pad, l, sp, bad, s, start_time, test, end_time,
+  elapsed, pex, j, ex, i, attedStrin;
 
   oldscr := SizeScreen();
   SizeScreen([72, oldscr[2]]);
   passed := true;
+  pad := function(nr)
+    nr := Length(String(Length(exlists))) - Length(String(nr)) + 1;
+    return List([1 .. nr], x -> ' ');
+  end;
+
   for j in [1 .. Length(exlists)] do
     if j in excluded then
-      Print(SEMIGROUPS.ColorizeString("# Skipping list ", j, " . . .\n",
+      Print(SEMIGROUPS.ColorizeString("# Skipping example ", j, pad(j), " . . .\n",
                                       "back_blue"));
     else
       l := exlists[j];
-      Print(SEMIGROUPS.ColorizeString("# Running list ", j, " . . .",
-                                      "back_gray"));
+      Print("# Running example ", j, pad(j), " . . .");
       START_TEST("");
       for ex in l do
         sp := SplitString(ex[1], "\n", "");
@@ -309,9 +293,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
         pex := TEST.lastTestData;
 
-        Print(SEMIGROUPS.ColorizeString(" elapsed time: ", elapsed,
-                                        "back_gray"));
-        Print("\n");
+        Print(" elapsed time: ", elapsed, "\n");
 
         if Length(bad) > 0 then
           Print(SEMIGROUPS.ColorizeString("# WARNING: Overlong lines ", bad,
@@ -383,26 +365,9 @@ SEMIGROUPS.TestManualExamples := function(arg)
   generic := SEMIGROUPS.DefaultOptionsRec.generic;
 
   SEMIGROUPS.DefaultOptionsRec.generic := false;
-  Print("\n");
-  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("Testing manual examples with acting methods ",
-        SEMIGROUPS.ColorizeString("ENABLED", "lightblue"), " . . .\n");
-  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
   SEMIGROUPS.StartTest();
   passed := SEMIGROUPS.RunExamples(ex, []);
   SEMIGROUPS.StopTest("");
-
-  SEMIGROUPS.DefaultOptionsRec.generic := true;
-  GASMAN("collect");
-  Print("\n");
-  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n");
-  Print("NOT Testing file manual examples with acting methods ",
-        SEMIGROUPS.ColorizeString("DISABLED", "magenta"), " . . .\n");
-  Print(Concatenation(ListWithIdenticalEntries(width, "#")), "\n\n");
-  # SEMIGROUPS.StartTest();
-
-  # SEMIGROUPS.RunExamples(ex, exclude);
-  # SEMIGROUPS.StopTest("");
   #TODO make SEMIGROUPS.StopTest accept no args, or 1 arg
 
   SEMIGROUPS.DefaultOptionsRec.generic := generic;
@@ -426,8 +391,6 @@ InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
   local file_ext, is_testable, dir, contents, elapsed, failed, passed,
   start_time, pass, end_time, elapsed_this_test, str, filename;
-
-  Print("\n");
 
   file_ext := function(str)
     local split;
@@ -465,11 +428,14 @@ function(arg)
                                     "/tst/standard");
   contents := DirectoryContents(dir);
 
-  SemigroupsTestInstall(rec(silent := false));
-
-  elapsed := 0;
   failed  := [];
   passed  := [];
+
+  start_time := IO_gettimeofday();
+  SemigroupsTestInstall(rec(silent := false));
+  end_time := IO_gettimeofday();
+  elapsed := (end_time.tv_sec - start_time.tv_sec) * 1000
+             + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
 
   for filename in contents do
     if file_ext(filename) = "tst" and is_testable(dir, filename) then
@@ -515,3 +481,248 @@ function(arg)
                                   "testinstall.tst"),
                          opts);
 end);
+
+# The following is based on doc/ref/testconsistency.g
+
+# Detect which ManSection should be used to document obj. Returns one of
+# "Func", "Oper", "Meth", "Filt", "Prop", "Attr", "Var", "Fam", "InfoClass"
+#
+# See PRINT_OPERATION where some of the code below is borrowed
+
+SEMIGROUPS.ManSectionType := function(op)
+  local   class, flags, types, catok, repok, propok, seenprop, t;
+  if IsInfoClass(op) then
+    return "InfoClass";
+  elif IsFamily(op) then
+    return "Fam";
+  elif not IsFunction(op) then
+    return "Var";  
+  elif IsFunction(op) and not IsOperation(op) then
+    return "Func";
+  elif IsOperation(op) then
+    class := "Oper";
+    if IS_IDENTICAL_OBJ(op, IS_OBJECT) then
+      class := "Filt";
+    elif op in CONSTRUCTORS then
+      class := "Constructor";
+      # seem to never get one
+    elif IsFilter(op) then
+      class := "Filt";
+      flags := TRUES_FLAGS(FLAGS_FILTER(op));
+      types := INFO_FILTERS{flags};
+      catok := true;
+      repok := true;
+      propok := true;
+      seenprop := false;
+      for t in types do
+        if not t in FNUM_REPS then
+          repok := false;
+        fi;
+        if not t in FNUM_CATS then
+          catok := false;
+        fi;
+        if not t in FNUM_PROS and not t in FNUM_TPRS then
+          propok := false;
+        fi;
+        if t in FNUM_PROS then
+          seenprop := true;
+        fi;
+      od;
+      if seenprop and propok then
+        class := "Prop";
+      elif catok then
+        class := "Filt";
+        # in PRINT_OPERATION - "Category";
+      elif repok then
+        class := "Filt"; 
+        # in PRINT_OPERATION - "Representation";
+      fi;
+    elif Tester(op) <> false  then
+      # op is an attribute
+      class := "Attr";
+    fi;
+    return class;
+  else
+    return fail;
+  fi;    
+end;
+
+# Checks whether ManSections are using the right kind of elements
+
+SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
+  local display_warnings, types, r, x, errcount, name, pos, obj, man, y, yint,
+  referrcount, warncount, type, matches, match, matches2, Label, Arg, stats,
+  elt, t, s;
+  
+  if Length( verbose ) = 0 then
+    display_warnings := false;
+  else
+    display_warnings := verbose[1];
+  fi;
+  types:=[ "Func", "Oper", "Meth", "Filt", "Prop", "Attr", "Var", "Fam",
+           "InfoClass" ];
+  r := ParseTreeXMLString(doc[1]);;
+  CheckAndCleanGapDocTree(r);
+  x := XMLElements( r, types );;
+  errcount := 0;
+  Print("****************************************************************\n");
+  Print("*** Checking types in ManSections \n");
+  Print("****************************************************************\n");
+  for elt in x do
+    name := elt.attributes.Name;
+    if not name in [ "IsBound", "Unbind", "Info", "Assert", "TryNextMethod",
+        "QUIT", "-infinity" ] then
+      if EvalString( Concatenation("IsBound(", name, ")") ) <> true then
+        pos := OriginalPositionDocument(doc[2], elt.start);
+        Print(pos[1], ":", pos[2], " : ", name, " is unbound \n");
+        errcount := errcount + 1;
+      else
+        obj := EvalString(name);
+        man := SEMIGROUPS.ManSectionType(obj);
+        # we allow to use "Meth" for "Oper" but probably should issue a warning
+        # if there is no at least one "Oper" for any "Meth"
+        if (man <> elt.name) and not (man in ["Attr", "Prop", "Oper"] and
+            elt.name = "Meth") then
+          pos := OriginalPositionDocument(doc[2], elt.start);
+          Print(pos[1], ":", pos[2], " : ", name, " uses ", elt.name, 
+                " instead of ", man, "\n");
+          errcount := errcount + 1;
+        fi;
+      fi;
+    fi;
+  od;
+
+  Print("****************************************************************\n");
+  Print("*** Checking types in cross-references \n" );
+  Print("****************************************************************\n");
+  y := XMLElements(r, ["Ref"]);
+  Print("Found ", Length(y), " Ref elements ");
+  yint := Filtered(y, elt ->
+          not IsBound(elt.attributes.BookName) or
+          (IsBound(elt.attributes.BookName) and elt.attributes.BookName="ref"));
+  Print("including ", Length(yint), " within the Reference manual\n");
+  y := Filtered(yint, elt -> ForAny(types, t -> IsBound(elt.attributes.(t))));
+
+  referrcount := 0;
+  warncount := 0;
+  for elt in y do
+    type := First( types, t -> IsBound(elt.attributes.(t)));
+    if type <> fail then
+      matches := Filtered(x, t -> t.attributes.Name=elt.attributes.(type));
+      if Length(matches) = 0 then
+        pos := OriginalPositionDocument(doc[2], elt.start);
+        Print( pos[1], ":", pos[2], " : no match for ", type , ":=", 
+              elt.attributes.(type), "\n" );
+        referrcount:=referrcount+1;
+        continue;
+      elif Length(matches) = 1 then
+        match := matches[1];
+      elif IsBound(elt.attributes.Label) then
+        matches := Filtered( matches, t -> IsBound(t.attributes.Label));
+        matches := Filtered( matches, t -> t.attributes.Label=elt.attributes.Label);
+        if Length(matches) > 1 then
+          Error("Multiple labels - this should not happen!");
+        fi;
+        match := matches[1];
+      else
+        matches2 := Filtered( matches, t -> not IsBound(t.attributes.Label));
+        if Length(matches2)=0 then
+          pos := OriginalPositionDocument(doc[2], elt.start);
+          Print(pos[1], ":", pos[2], 
+                " : no match (wrong type or missing label?) for ", type , ":=",
+                elt.attributes.(type), "\n" );
+          Print("  Suggestions: \n");
+          matches := Filtered( matches, t -> IsBound(t.attributes.Label));
+          for t in matches do
+            Print( "Use ", t.name, " with Label:=\"", t.attributes.Label, 
+                   "\" (for Arg:=\"", t.attributes.Arg, "\")\n");
+          od;
+
+          referrcount := referrcount + 1;
+          continue;
+        elif Length(matches2) > 1 then
+          Error("Multiple labels - this should not happen!");
+        else
+          match := matches[1];
+        fi;
+      fi;
+      if match.name <> type then
+        pos := OriginalPositionDocument(doc[2], elt.start);
+        if display_warnings then
+          Print(pos[1], ":", pos[2], " : Ref to ", elt.attributes.(type), 
+                " uses ", type, " instead of ", match.name, "\n");
+        fi;
+        warncount := warncount + 1;
+      fi;
+    fi;
+  od;
+
+  Print("****************************************************************\n");
+  stats := Collected(List(x, elt -> elt.name));
+  Print("Selected ", Length(x), " ManSections of the following types:\n");
+  for s in stats do
+    Print(s[1], " - ", s[2], "\n");
+  od;
+  Print("Found ", errcount, " errors in ManSection types \n");
+
+  Print("Selected ", Length(y), " Ref elements referring to ManSections \n");
+  Print("Found ", referrcount, " errors and ", warncount, 
+        " warnings in Ref elements \n");
+
+  if display_warnings then
+    Print("To suppress warnings, use CheckManSectionTypes(doc,false) ",
+          "or with one argument\n");
+  else
+    Print("To show warnings, use CheckManSectionTypes(doc,true); \n");
+  fi;
+  Print( "****************************************************************\n" );
+  return errcount=0;
+end;
+
+SEMIGROUPS.CheckDocCoverage := function( doc )
+  local r, x, with, without, mansect, pos, y;
+  r := ParseTreeXMLString(doc[1]);
+  CheckAndCleanGapDocTree(r);
+  x := XMLElements(r, ["ManSection"]);
+  with := 0;
+  without := 0;
+  Print("****************************************************************\n");
+  Print("*** Looking for ManSections having no examples \n" );
+  Print("****************************************************************\n");
+  for mansect in x do
+    pos := OriginalPositionDocument(doc[2], mansect.start);
+    y := XMLElements(mansect, ["Example"]);
+    if Length(y) = 0 then
+      if IsBound(mansect.content[1].attributes) and
+        IsBound(mansect.content[1].attributes.Name) then
+        Print(pos[1], ":", pos[2], " : ", mansect.content[1].attributes.Name);
+      elif IsBound(mansect.content[2].attributes) and
+        IsBound(mansect.content[2].attributes.Name) then
+        Print(pos[1], ":", pos[2], " : ", mansect.content[2].attributes.Name);
+      else
+        Print(pos[1], ":", pos[2], " : ", mansect.content[1].content[1].content);
+      fi;
+      without := without + 1;
+      Print("\n");
+    else
+      with := with + 1;
+    fi;
+  od;
+  Print("****************************************************************\n");
+  Print("*** Doc coverage report \n");
+  Print("****************************************************************\n");
+  Print(Length(x), " mansections \n");
+  Print(with, " with examples \n");
+  Print(without , " without examples \n");
+end;
+
+SEMIGROUPS.CheckManualConsistency := function()
+  local doc;
+
+  doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"), 
+                           "main.xml", 
+                           SEMIGROUPS.DocXMLFiles,
+                           true);
+  SEMIGROUPS.CheckDocCoverage(doc);
+  return SEMIGROUPS.CheckManSectionTypes(doc);
+end;
