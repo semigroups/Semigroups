@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  extreme/bipartition.tst
+#W  extreme/bipart.tst
 #Y  Copyright (C) 2014-15                                 Attila Egri-Nagy
 ##                                                       James D. Mitchell
 ##
@@ -8,7 +8,7 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: extreme/bipartition.tst");
+gap> START_TEST("Semigroups package: extreme/bipart.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -3008,4 +3008,4 @@ gap> Unbind(triples);
 gap> Unbind(x);
 
 #E# 
-gap> STOP_TEST("Semigroups package: extreme/bipartition.tst");
+gap> STOP_TEST("Semigroups package: extreme/bipart.tst");
