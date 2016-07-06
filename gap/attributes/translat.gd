@@ -9,8 +9,10 @@
 ##
 
 DeclareCategory( "IsTranslationsSemigroupElement", IsAssociativeElement);
-DeclareCategory( "IsLeftTranslationsSemigroupElement", IsTranslationsSemigroupElement);
-DeclareCategory( "IsRightTranslationsSemigroupElement", IsTranslationsSemigroupElement);
+DeclareCategory( "IsLeftTranslationsSemigroupElement",
+                IsTranslationsSemigroupElement);
+DeclareCategory( "IsRightTranslationsSemigroupElement",
+                IsTranslationsSemigroupElement);
 DeclareCategory( "IsTranslationalHullElement", IsAssociativeElement);
 
 
@@ -25,18 +27,17 @@ DeclareGlobalFunction("TranslationalHullElement");
 
 
 DeclareSynonymAttr("IsLeftTranslationsSemigroup", IsSemigroup and
-	IsLeftTranslationsSemigroupElementCollection);
+                  IsLeftTranslationsSemigroupElementCollection);
 DeclareSynonymAttr("IsRightTranslationsSemigroup", IsSemigroup and
-	IsRightTranslationsSemigroupElementCollection);
+                  IsRightTranslationsSemigroupElementCollection);
 DeclareSynonymAttr("IsTranslationsSemigroup", IsSemigroup and
-	IsTranslationsSemigroupElementCollection);
+                  IsTranslationsSemigroupElementCollection);
 DeclareSynonymAttr("IsTranslationalHull", IsSemigroup and 
-	IsTranslationalHullElementCollection);
-	
+                  IsTranslationalHullElementCollection);
+  
 
 DeclareOperation("LeftTranslationsSemigroup", [IsSemigroup]);
 DeclareOperation("RightTranslationsSemigroup", [IsSemigroup]);
-
 
 DeclareAttribute("UnderlyingSemigroup", IsTranslationsSemigroup);
 DeclareAttribute("UnderlyingSemigroup", IsTranslationalHull);
@@ -47,11 +48,11 @@ DeclareAttribute("TranslationalHullOfFamily", IsFamily);
 
 
 DeclareAttribute("TypeLeftTranslationsSemigroupElements",
-	IsLeftTranslationsSemigroup);
+                 IsLeftTranslationsSemigroup);
 DeclareAttribute("TypeRightTranslationsSemigroupElements", 
-	IsRightTranslationsSemigroup);
+                 IsRightTranslationsSemigroup);
 DeclareAttribute("TypeTranslationalHullElements",
-	IsTranslationalHull);
+                 IsTranslationalHull);
 
 
 
