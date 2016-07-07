@@ -96,6 +96,8 @@ function(S)
   if HasIsInverseSemigroup(S) and IsInverseSemigroup(S) then
     TryNextMethod();
   fi;
+  # TODO A block bijection *-semigroup is necessarily inverse, install a true
+  # method for this
   return "\>block bijection\< *-";
 end);
 
@@ -141,18 +143,16 @@ function(S)
   return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
 end);
 
-InstallImmediateMethod(IsPartialPermBipartitionSemigroup, IsSemigroup and
-HasGeneratorsOfSemigroup, 0,
+InstallImmediateMethod(IsPartialPermBipartitionSemigroup,
+IsBipartitionSemigroup and HasGeneratorsOfSemigroup, 0,
 function(S)
-  return IsBipartitionSemigroup(S)
-         and ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
+  return ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
 end);
 
-InstallImmediateMethod(IsPermBipartitionGroup, IsSemigroup and
+InstallImmediateMethod(IsPermBipartitionGroup, IsBipartitionSemigroup and
 HasGeneratorsOfSemigroup, 0,
 function(S)
-  return IsBipartitionSemigroup(S)
-         and ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
+  return ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
 end);
 
 InstallMethod(IsBlockBijectionSemigroup, "for a bipartition semigroup ideal",
@@ -161,44 +161,43 @@ function(S)
   if IsBlockBijectionSemigroup(SupersemigroupOfIdeal(S)) then
     return true;
   fi;
-  return IsBipartitionSemigroup(S)
-         and ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
+  return ForAll(GeneratorsOfSemigroup(S), IsBlockBijection);
+  # TODO this could be better only have to check the generators of the ideal
+  # times the generators of the semigroup on the left and right.
 end);
 
-InstallMethod(IsPartialPermBipartitionSemigroup, "for a semigroup ideal",
-[IsSemigroupIdeal],
+InstallMethod(IsPartialPermBipartitionSemigroup,
+"for a bipartition semigroup ideal",
+[IsBipartitionSemigroup and IsSemigroupIdeal],
 function(S)
   if IsPartialPermBipartitionSemigroup(SupersemigroupOfIdeal(S)) then
     return true;
   fi;
-  return IsBipartitionSemigroup(S)
-         and ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
+  return ForAll(GeneratorsOfSemigroup(S), IsPartialPermBipartition);
 end);
 
-InstallMethod(IsPermBipartitionGroup, "for a semigroup ideal",
-[IsSemigroupIdeal],
+InstallMethod(IsPermBipartitionGroup, "for a bipartition semigroup ideal",
+[IsBipartitionSemigroup and IsSemigroupIdeal],
 function(S)
   if IsPermBipartitionGroup(SupersemigroupOfIdeal(S)) then
     return true;
   fi;
-  return IsBipartitionSemigroup(S)
-         and ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
+  return ForAll(GeneratorsOfSemigroup(S), IsPermBipartition);
 end);
 
 InstallMethod(NaturalLeqInverseSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
-  if IsInverseSemigroup(S) then
-    if IsBlockBijectionSemigroup(S) then
-      return NaturalLeqBlockBijection;
-    elif IsPartialPermBipartitionSemigroup(S) then
-      return NaturalLeqPartialPermBipartition;
-    fi;
-    TryNextMethod(); # this should be the default method for a non-inverse op
-                     # semigroup
+  if not IsInverseSemigroup(S) then
+    ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
+                  "the argument is not an inverse semigroup,");
+  elif IsBlockBijectionSemigroup(S) then
+    return NaturalLeqBlockBijection;
+  elif IsPartialPermBipartitionSemigroup(S) then
+    return NaturalLeqPartialPermBipartition;
   fi;
-  ErrorNoReturn("Semigroups: NaturalLeqInverseSemigroup: usage,\n",
-                "the argument is not an inverse semigroup,");
+  TryNextMethod(); # This should be the default method for a non-inverse op
+                   # semigroup
 end);
 
 InstallMethod(NaturalPartialOrder,
@@ -249,10 +248,10 @@ end);
 # important do not change it! They should be ordered from lowest rank to
 # highest so that the correct method is used.
 
-InstallMethod(AsMonoid, "for a bipartition semigroup", 
+InstallMethod(AsMonoid, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
 function(S)
-  if MultiplicativeNeutralElement(S) = fail then 
+  if MultiplicativeNeutralElement(S) = fail then
     return fail; # so that we do the same as the GAP/ref manual says
   fi;
   return Range(IsomorphismMonoid(IsBipartitionMonoid, S));
@@ -388,7 +387,7 @@ function(filter, S)
   inv := function(x)
     local blocks, n, bigblock, lookup, out, i;
 
-    blocks := x!.blocks;
+    blocks := IntRepOfBipartition(x);
     n := DegreeOfBipartition(x);
     bigblock := blocks[n];
 
@@ -434,7 +433,7 @@ function(filter, S)
   inv := function(x)
     local blocks, n, bigblock, lookup, out, i;
 
-    blocks := x!.blocks;
+    blocks := IntRepOfBipartition(x);
     n := DegreeOfBipartition(x);
     bigblock := blocks[n];
 
@@ -467,7 +466,8 @@ InstallMethod(IsomorphismSemigroup,
 function(filt, I)
   local iso, inv, J;
 
-  iso := IsomorphismBipartitionSemigroup(SupersemigroupOfIdeal(I));
+  iso := IsomorphismSemigroup(IsBipartitionSemigroup,
+                              SupersemigroupOfIdeal(I));
   inv := InverseGeneralMapping(iso);
   J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
   UseIsomorphismRelation(I, J);
@@ -477,11 +477,13 @@ end);
 
 InstallMethod(IsomorphismSemigroup,
 "for IsBlockBijectionSemigroup and a semigroup ideal",
-[IsBlockBijectionSemigroup, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsBlockBijectionSemigroup, IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal],
 function(filt, I)
   local iso, inv, J;
 
-  iso := IsomorphismBlockBijectionSemigroup(SupersemigroupOfIdeal(I));
+  iso := IsomorphismSemigroup(IsBlockBijectionSemigroup,
+                              SupersemigroupOfIdeal(I));
   inv := InverseGeneralMapping(iso);
   J := SemigroupIdeal(Range(iso), Images(iso, GeneratorsOfSemigroupIdeal(I)));
   UseIsomorphismRelation(I, J);
@@ -510,12 +512,8 @@ end);
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection",
 [IsBipartitionCollection],
 function(coll)
-  if IsSemigroup(coll) and HasGeneratorsOfSemigroup(coll) then
-    TryNextMethod(); # FIXME why is this necessary?
-  fi;
-
   return ForAll(coll, IsBlockBijection)
-   or ForAll(coll, IsPartialPermBipartition);
+    or ForAll(coll, IsPartialPermBipartition);
 end);
 
 InstallMethod(GeneratorsOfInverseSemigroup,
@@ -538,14 +536,14 @@ end);
 InstallMethod(GeneratorsOfInverseMonoid,
 "for an inverse bipartition monoid with generators",
 [IsBipartitionSemigroup and IsInverseMonoid and HasGeneratorsOfMonoid],
-function(s)
-  local gens, one, pos, f;
+function(S)
+  local gens, one, pos, x;
 
-  gens := ShallowCopy(GeneratorsOfMonoid(s));
-  one := One(s);
-  for f in gens do
-    pos := Position(gens, f ^ -1);
-    if pos <> fail and (f <> f ^ -1 or f = one) then
+  gens := ShallowCopy(GeneratorsOfMonoid(S));
+  one := One(S);
+  for x in gens do
+    pos := Position(gens, x ^ -1);
+    if pos <> fail and (x <> x ^ -1 or x = one) then
       Remove(gens, pos);
     fi;
   od;
@@ -555,15 +553,15 @@ end);
 
 InstallImmediateMethod(GeneratorsOfSemigroup,
 IsBipartitionSemigroup and HasGeneratorsOfInverseSemigroup, 0,
-function(s)
-  local gens, f;
+function(S)
+  local gens, x;
 
-  gens := ShallowCopy(GeneratorsOfInverseSemigroup(s));
-  for f in gens do
-    if not IsPermBipartition(f) then
-      f := f ^ -1;
-      if not f in gens then
-        Add(gens, f);
+  gens := ShallowCopy(GeneratorsOfInverseSemigroup(S));
+  for x in gens do
+    if not IsPermBipartition(x) then
+      x := x ^ -1;
+      if not x in gens then
+        Add(gens, x);
       fi;
     fi;
   od;
@@ -573,15 +571,15 @@ end);
 
 InstallImmediateMethod(GeneratorsOfMonoid,
 IsBipartitionMonoid and HasGeneratorsOfInverseMonoid, 0,
-function(s)
-  local gens, f;
+function(S)
+  local gens, x;
 
-  gens := ShallowCopy(GeneratorsOfInverseMonoid(s));
-  for f in gens do
-    if not IsPermBipartition(f) then
-      f := f ^ -1;
-      if not f in gens then
-        Add(gens, f);
+  gens := ShallowCopy(GeneratorsOfInverseMonoid(S));
+  for x in gens do
+    if not IsPermBipartition(x) then
+      x := x ^ -1;
+      if not x in gens then
+        Add(gens, x);
       fi;
     fi;
   od;
@@ -593,4 +591,4 @@ InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], x -> IsBipartitionSemigroup(Parent(x)));
 
 InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
-[IsBipartitionSemigroup], s -> DegreeOfBipartition(Representative(s)));
+[IsBipartitionSemigroup], S -> DegreeOfBipartition(Representative(S)));

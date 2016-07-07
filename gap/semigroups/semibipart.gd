@@ -19,8 +19,8 @@ DeclareProperty("IsBipartitionSemigroupGreensClass", IsGreensClass);
 DeclareAttribute("DegreeOfBipartitionSemigroup", IsBipartitionSemigroup);
 
 DeclareProperty("IsBlockBijectionSemigroup", IsBipartitionSemigroup);
-DeclareProperty("IsPartialPermBipartitionSemigroup", IsSemigroup);
-DeclareProperty("IsPermBipartitionGroup", IsSemigroup);
+DeclareProperty("IsPartialPermBipartitionSemigroup", IsBipartitionSemigroup);
+DeclareProperty("IsPermBipartitionGroup", IsBipartitionSemigroup);
 InstallTrueMethod(IsGroupAsSemigroup, IsPermBipartitionGroup);
 
 DeclareSynonymAttr("IsBlockBijectionMonoid",

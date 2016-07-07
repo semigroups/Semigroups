@@ -41,6 +41,10 @@ gap> S := ReesMatrixSemigroup(Group([(1,2)]), [[()]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> S := AsSemigroup(IsBlockBijectionSemigroup, S);
 <block bijection group of size 2, degree 3 with 1 generator>
+gap> IsomorphismSemigroup(IsBlockBijectionSemigroup,
+> FullTransformationMonoid(2));
+Error, Semigroups: IsomorphismSemigroup: usage,
+the second arg must be an inverse semigroup,
 
 #T# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsBipartitionSemigroup
@@ -1287,6 +1291,57 @@ gap> BruteForceInverseCheck(map);
 true
 
 #T# AsSemigroup: 
+#   convert from IsPartialPermSemigroup to IsBlockBijectionSemigroup
+#   for an inverse semigroup
+gap> S := SymmetricInverseMonoid(2);;
+gap> T := AsSemigroup(IsBlockBijectionSemigroup, S);
+<inverse block bijection monoid of degree 3 with 2 generators>
+gap> IsInverseSemigroup(T);
+true
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsBlockBijectionSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from IsPartialPermSemigroup to IsBlockBijectionSemigroup
+#   for a non-inverse semigroup
+gap> S := Semigroup( [ PartialPerm( [ 1, 2, 4 ], [ 4, 2, 3 ] ),
+>  PartialPerm( [ 1, 3, 4 ], [ 1, 4, 3 ] ),
+>  PartialPerm( [ 1, 2, 3, 4 ], [ 3, 4, 1, 2 ] ),
+>  PartialPerm( [ 1, 3, 4 ], [ 2, 4, 1 ] ) ] );;
+gap> T := AsSemigroup(IsBlockBijectionSemigroup, S);
+<block bijection semigroup of degree 5 with 4 generators>
+gap> IsInverseSemigroup(T);
+false
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsBlockBijectionSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
 #   convert from IsReesMatrixSemigroup to IsBipartitionSemigroup
 gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(1, 2), (1, 2)], [(), ()]]);
 <Rees matrix semigroup 2x2 over Group([ (1,2) ])>
@@ -1598,6 +1653,26 @@ gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
 true
+gap> S := Semigroup(PartialPerm([1, 2], [2, 1]),
+>                   PartialPerm([1, 2], [3, 1]));
+<partial perm semigroup of rank 2 with 2 generators>
+gap> T := AsSemigroup(IsBipartitionSemigroup, S);
+<bipartition semigroup of degree 3 with 2 generators>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
 
 #T# AsSemigroup: 
 #   convert from IsPartialPermMonoid to IsBipartitionMonoid
@@ -1643,6 +1718,297 @@ gap> map := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
 gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from an ideal to IsBipartitionSemigroup
+gap> S := SingularTransformationMonoid(3);;
+gap> T := AsSemigroup(IsBipartitionSemigroup, S);;
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# AsSemigroup: 
+#   convert from an ideal to IsBlockBijectionSemigroup
+gap> S := SymmetricInverseMonoid(3);;
+gap> S := SemigroupIdeal(S, S.3);;
+gap> T := AsSemigroup(IsBlockBijectionSemigroup, S);
+<inverse bipartition semigroup ideal of degree 4 with 1 generator>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsBlockBijectionSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+# Test IsomorphismSemigroup
+# for IsBlockBijectionSemigroup and IsBlockBijectionSemigroup
+gap> S := DualSymmetricInverseMonoid(3);
+<inverse block bijection monoid of degree 3 with 3 generators>
+gap> map := IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
+MappingByFunction( <inverse block bijection monoid of degree 3 with 3 
+ generators>, <inverse block bijection monoid of degree 3 with 3 generators>
+ , function( object ) ... end, function( object ) ... end )
+
+# Test RandomSemigroup
+gap> S := RandomSemigroup(IsBipartitionSemigroup, 2, 5);;
+gap> IsBipartitionSemigroup(S); 
+true
+gap> DegreeOfBipartitionSemigroup(S);
+5
+gap> Length(GeneratorsOfSemigroup(S));
+2
+gap> S := RandomSemigroup(IsBlockBijectionSemigroup, 2, 5);;
+gap> IsBlockBijectionSemigroup(S); 
+true
+gap> DegreeOfBipartitionSemigroup(S);
+5
+gap> Length(GeneratorsOfSemigroup(S));
+2
+
+# Test RandomMonoid
+gap> S := RandomMonoid(IsBipartitionMonoid, 4, 3);;
+gap> DegreeOfBipartitionSemigroup(S);
+3
+gap> Length(GeneratorsOfMonoid(S));
+4
+gap> S := RandomMonoid(IsBlockBijectionMonoid, 2, 5);;
+gap> IsBlockBijectionMonoid(S); 
+true
+gap> DegreeOfBipartitionSemigroup(S);
+5
+gap> Length(GeneratorsOfMonoid(S));
+2
+
+# Test RandomInverseSemigroup
+gap> S := RandomInverseSemigroup(IsBlockBijectionSemigroup, 2, 5);;
+gap> IsBlockBijectionSemigroup(S); 
+true
+gap> IsInverseSemigroup(S);
+true
+gap> DegreeOfBipartitionSemigroup(S);
+5
+gap> Length(GeneratorsOfInverseSemigroup(S));
+2
+
+# Test RandomInverseMonoid
+gap> S := RandomInverseMonoid(IsBlockBijectionMonoid, 2, 5);;
+gap> IsBlockBijectionMonoid(S); 
+true
+gap> IsInverseMonoid(S);
+true
+gap> DegreeOfBipartitionSemigroup(S);
+5
+gap> Length(GeneratorsOfInverseMonoid(S));
+2
+
+# Test SemigroupViewStringPrefix
+gap> S := Monoid([Bipartition([[1, 3], [2, -2], [-1], [-3]]),
+>  Bipartition([[1, -1], [2, -2], [3, -3]]),
+>  Bipartition([[1, -1], [2, -2], [3], [-3]]),
+>  Bipartition([[1], [2, -2], [3], [-1, -3]])]);;
+gap> IsStarSemigroup(S);
+true
+gap> SemigroupViewStringPrefix(S);
+"\>bipartition\< *-"
+gap> S := Semigroup(DualSymmetricInverseMonoid(4));;
+gap> IsStarSemigroup(S);
+true
+gap> SemigroupViewStringPrefix(S);
+"\>block bijection\< *-"
+
+# Test GroupOfUnits
+gap> S := Semigroup(
+> [Bipartition([[1, 5, 6, 10, 11, 12, 25, -3, -6, -16, -26, -27],
+>     [2, 3, 4, 7, 13, 16, 17, 21, -2, -4, -13, -22, -24],
+>     [8, 14, 18, -5, -7, -10, -19, -21],
+>     [9, 15, 19, 20, 22, -1, -9, -14, -17, -23],
+>     [23, 24, 26, 27, -8, -11, -18, -20], [-12, -15, -25]]),
+>  Bipartition([[1, -1], [2, -2], [3, -3], [4, -4], [5, -5],
+>     [6, -6], [7, -7], [8, -8], [9, -9], [10, -10], [11, -11],
+>     [12, -12], [13, -14], [14, -16], [15, -17], [16, -19],
+>     [17, -20], [18, -21], [19, -22], [20, -23], [21, -24],
+>     [22, -13], [23, -25], [24, -26], [25, -15], [26, -27],
+>     [27, -18]]), 
+>  Bipartition([[1, -2], [2, -3], [3, -5],
+>     [4, -10], [5, -1], [6, -11], [7, -12], [8, -6], [9, -8],
+>     [10, -7], [11, -9], [12, -4], [13, -13], [14, -14],
+>     [15, -18], [16, -16], [17, -21], [18, -15], [19, -19],
+>     [20, -24], [21, -17], [22, -22], [23, -26], [24, -20],
+>     [25, -27], [26, -23], [27, -25]]),
+>  Bipartition([[1, -4], [2, -6], [3, -7], [4, -8], [5, -9],
+>     [6, -10], [7, -11], [8, -1], [9, -12], [10, -2], [11, -3],
+>     [12, -5], [13, -15], [14, -17], [15, -18], [16, -20],
+>     [17, -21], [18, -13], [19, -23], [20, -24], [21, -14],
+>     [22, -25], [23, -26], [24, -16], [25, -27], [26, -19],
+>     [27, -22]])]);;
+gap> GroupOfUnits(S);
+<block bijection group of degree 27 with 3 generators>
+gap> StructureDescription(last);
+"C5 x (C3 : C4)"
+gap> S := Semigroup([Bipartition([[1, 3], [2, -2], [-1], [-3]]),
+>  Bipartition([[1, -1], [2, -2], [3], [-3]]),
+>  Bipartition([[1], [2, -2], [3], [-1, -3]])]);;
+gap> GroupOfUnits(S);
+fail
+
+# Test IsBlockBijectionSemigroup for an ideal
+gap> IsBlockBijectionSemigroup(MinimalIdeal(PartitionMonoid(3)));
+false
+gap> IsBlockBijectionSemigroup(SingularDualSymmetricInverseSemigroup(3));
+true
+gap> IsBlockBijectionSemigroup(OrderEndomorphisms(3));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `IsBlockBijectionSemigroup' on 1 argumen\
+ts
+
+# Test IsPartialPermBipartitionSemigroup for an ideal
+gap> IsPartialPermBipartitionSemigroup(MinimalIdeal(PartitionMonoid(2)));
+false
+gap> S := AsSemigroup(IsBipartitionSemigroup, SymmetricInverseMonoid(2));;
+gap> IsPartialPermBipartitionSemigroup(S);
+true
+gap> IsPartialPermBipartitionSemigroup(MinimalIdeal(S));
+true
+gap> S := Semigroup(AsSemigroup(IsBipartitionSemigroup,
+> SymmetricInverseMonoid(2)));;
+gap> IsPartialPermBipartitionSemigroup(MinimalIdeal(S));
+true
+gap> IsPartialPermBipartitionSemigroup(OrderEndomorphisms(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `IsPartialPermBipartitionSemigroup' on 1\
+ arguments
+gap> IsPermBipartitionGroup(MinimalIdeal(PartitionMonoid(2)));
+false
+gap> S := AsSemigroup(IsBipartitionSemigroup, SymmetricGroup(2));;
+gap> IsPermBipartitionGroup(S);
+true
+gap> IsPermBipartitionGroup(MinimalIdeal(S));
+true
+gap> S := Semigroup(AsSemigroup(IsBipartitionSemigroup,
+> SymmetricInverseMonoid(2)));;
+gap> IsPermBipartitionGroup(MinimalIdeal(S));
+false
+gap> IsPermBipartitionGroup(SingularDualSymmetricInverseSemigroup(3));
+false
+gap> IsPermBipartitionGroup(OrderEndomorphisms(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `IsPermBipartitionGroup' on 1 arguments
+
+# Test NaturalLeqInverseSemigroup
+gap> NaturalLeqInverseSemigroup(DualSymmetricInverseMonoid(3));
+<Operation "NaturalLeqBlockBijection">
+gap> S := SymmetricInverseMonoid(3);;
+gap> NaturalLeqInverseSemigroup(AsSemigroup(IsBipartitionSemigroup,
+>                                           S));
+<Operation "NaturalLeqPartialPermBipartition">
+gap> AsSemigroup(IsTransformationSemigroup, S);
+<transformation monoid of degree 4 with 4 generators>
+gap> AsSemigroup(IsBipartitionSemigroup, last);
+<bipartition monoid of degree 4 with 4 generators>
+gap> NaturalLeqInverseSemigroup(last);
+function( x, y ) ... end
+gap> NaturalLeqInverseSemigroup(PartitionMonoid(2));
+Error, Semigroups: NaturalLeqInverseSemigroup: usage,
+the argument is not an inverse semigroup,
+
+# Test NaturalPartialOrder
+gap> NaturalPartialOrder(DualSymmetricInverseMonoid(3));
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], 
+  [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 9, 16 ], 
+  [ 1, 3, 8, 16 ], [ 1, 2, 11, 18 ], [ 1, 3, 11, 19 ], [ 1, 5, 8, 18 ], 
+  [ 1, 5, 9, 19 ] ]
+gap> o1 := NaturalPartialOrder(AsSemigroup(IsBipartitionSemigroup,
+>                                    SymmetricInverseMonoid(3)));
+[ [ 2, 6, 7, 26, 27, 33, 34 ], [ 7, 27, 34 ], [ 4, 5, 7, 29, 30, 32, 34 ], 
+  [ 7, 30, 34 ], [ 7, 32, 34 ], [ 7, 33, 34 ], [ 34 ], 
+  [ 9, 13, 14, 23, 24, 33, 34 ], [ 14, 24, 34 ], 
+  [ 11, 12, 14, 28, 30, 31, 34 ], [ 14, 30, 34 ], [ 14, 31, 34 ], 
+  [ 14, 33, 34 ], [ 34 ], [ 16, 20, 21, 22, 24, 32, 34 ], [ 21, 24, 34 ], 
+  [ 18, 19, 21, 25, 27, 31, 34 ], [ 21, 27, 34 ], [ 21, 31, 34 ], 
+  [ 21, 32, 34 ], [ 34 ], [ 24, 32, 34 ], [ 24, 33, 34 ], [ 34 ], 
+  [ 27, 31, 34 ], [ 27, 33, 34 ], [ 34 ], [ 30, 31, 34 ], [ 30, 32, 34 ], 
+  [ 34 ], [ 34 ], [ 34 ], [ 34 ], [  ] ]
+gap> gr1 := DigraphReflexiveTransitiveClosure(Digraph(o1));
+<digraph with 34 vertices, 139 edges>
+gap> o2 := NaturalPartialOrder(SymmetricInverseMonoid(3));
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 6 ], [ 1, 2, 7 ], 
+  [ 1, 3, 5 ], [ 1, 3, 7 ], [ 1, 4, 5 ], [ 1, 4, 6 ], [ 1 ], [ 1 ], [ 1 ], 
+  [ 1, 5, 15 ], [ 1, 5, 16 ], [ 1, 6, 14 ], [ 1, 6, 16 ], [ 1, 7, 14 ], 
+  [ 1, 7, 15 ], [ 1, 2, 15 ], [ 1, 2, 16 ], [ 1, 2, 6, 8, 16, 20, 24 ], 
+  [ 1, 2, 7, 9, 15, 22, 23 ], [ 1, 3, 14 ], [ 1, 3, 16 ], 
+  [ 1, 3, 5, 10, 16, 18, 28 ], [ 1, 3, 7, 11, 14, 21, 27 ], [ 1, 4, 14 ], 
+  [ 1, 4, 15 ], [ 1, 4, 5, 12, 15, 17, 32 ], [ 1, 4, 6, 13, 14, 19, 31 ] ]
+gap> gr2 := DigraphReflexiveTransitiveClosure(Digraph(o2));
+<digraph with 34 vertices, 139 edges>
+gap> IsomorphismDigraphs(gr1, gr2);
+(1,25,19,31,14,3,26,20,32,15,33,16,12,27,6,24,5,23,18,13,28,21,4,9,10,30,7,2,
+8,29,22,17,34)
+
+# Test AsMonoid for 1 arg
+gap> S := Semigroup(Transformation([2, 2, 3, 4]));
+<commutative transformation semigroup of degree 2 with 1 generator>
+gap> AsMonoid(S);
+<trivial transformation group of degree 0 with 1 generator>
+gap> T := AsSemigroup(IsBipartitionSemigroup, S);
+<commutative bipartition semigroup of degree 2 with 1 generator>
+gap> IsMonoid(T);
+false
+gap> IsMonoidAsSemigroup(T);
+true
+gap> AsMonoid(T);
+<trivial block bijection group of degree 1 with 1 generator>
+gap> S := Semigroup(Bipartition([[1, 2, -1, -3], [3, -2]]),
+>                   Bipartition([[1, 2, -2, -3], [3, -1]]),
+>                   Bipartition([[1, 2, -3], [3, -1, -2]]),
+>                   Bipartition([[1, 3, -1, -2], [2, -3]]),
+>                   Bipartition([[1, -3], [2, 3, -1, -2]]));
+<block bijection semigroup of degree 3 with 5 generators>
+gap> S := AsMonoid(S);
+fail
+
+# Test GeneratorsOfInverseSemigroup
+gap> S := Monoid(Bipartition([[1, -2], [2, -3], [3, -1]]),
+>                Bipartition([[1, -2], [2, -1], [3, -3]]),
+>                Bipartition([[1], [2, -1], [3, -2], [-3]]),
+>                Bipartition([[1, -2], [2, -3], [3], [-1]]));;
+gap> IsInverseSemigroup(S);
+true
+gap> HasGeneratorsOfInverseSemigroup(S);
+false
+gap> GeneratorsOfInverseSemigroup(S);
+[ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]>, 
+  <block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>, 
+  <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ]>, 
+  <bipartition: [ 1 ], [ 2, -1 ], [ 3, -2 ], [ -3 ]> ]
+gap> InverseSemigroup(last) = S;
+true
+gap> GeneratorsOfInverseMonoid(S);
+[ <block bijection: [ 1, -2 ], [ 2, -3 ], [ 3, -1 ]>, 
+  <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ]>, 
+  <bipartition: [ 1 ], [ 2, -1 ], [ 3, -2 ], [ -3 ]> ]
+gap> InverseMonoid(last) = S;
 true
 
 #T# SEMIGROUPS_UnbindVariables
