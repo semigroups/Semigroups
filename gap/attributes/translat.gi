@@ -667,7 +667,7 @@ end);
 #Finds the transformations on the indices of a completely 0-simple semigroup
 #which are candidates for translations, when combined with a function from
 #the index sets to the group.
-
+#TODO: swap rows/columns if more convenient.
 SEMIGROUPS.FindTranslationTransformations := function(S)
   local iso, reesMatSemi, mat, simpleRows, simpleColumns, nrRows, nrCols,
     transList, partColumns, partColumn, pc, linkedTransList, col, cols, 
@@ -687,6 +687,7 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
       fi;
     od;
   od;
+  #TODO: just use transpose
   simpleColumns := [];
   for i in [1..Length(simpleRows[1])] do
     c := [];
@@ -715,7 +716,7 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
     for pc in partColumns do
       #only check the columns which contain a 1
       #all-zero column can be made by column not in domain of transformation
-      #also, no ones in one partial matrix but not in the other...
+      #no ones in one partial matrix but not in the other...
       if 1 in pc and ForAll(simpleColumns, c -> 1 in c{[1..Length(pc)]} + pc) then
         return false;
       fi;
@@ -759,12 +760,11 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
   while transList[v] <> 0 do
     v := v + 1;
     transList[v] := bt(reject(transList[v-1]));
-    fi;
   od;
   
   linkedTransList := [];
   #last element of transList will be 0, ignore
-  for k in [1..Length(transList) -1 ] do
+  for k in [1..Length(transList) - 1] do
     t := transList[k];
     cols := [];
     for i in [1..Length(simpleRows[1])] do
@@ -796,7 +796,202 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
   return [transList, linkedTransList];
 end;
 
+#For a pair of transformations on the indices of a completely 0-simple semigroup
+#determine the functions to the group associated with the RMS representation
+#which will form translations when combined with the transformations
+SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
+  local reesmatsemi, mat, gplist, gpsize, nrrows, nrcols, invmat,
+        rowtransformedmat, coltransformedmat, zerorow, zerocol, pos,
+        rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, v, r, n, 
+        funcs, changedvals, add, digraph, cc, comp,
+        extend, reject, relssatisfied, bt, foundfuncs;
+  reesmatsemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
+  mat := Matrix(reesmatsemi);
+  gplist := AsList(UnderlyingSemigroup(reesmatsemi));
+  gpsize := Size(gplist);
+  nrrows := Length(mat);
+  nrcols := Length(mat[1]);
+  invmat := List(mat, ShallowCopy);
+  for i in [1..nrrows] do
+    for j in [1..nrcols] do
+      invmat[i][j] := Inverse(invmat[i][j]);
+    od;
+  od; 
+  rowtransformedmat := [];
+  zerorow := [];
+  zerocol := [];
+  for i in [1..nrcols] do
+    zerorow[i] := 0;
+  od;
+  for i in [1..nrrows] do
+    zerocol[i] := 0;
+  od;
+  for i in [1..nrrows] do
+    if t1[i] <> nrrows + 1 then 
+      rowtransformedmat[i] := mat[t1[i]];
+    else
+      rowtransformedmat[i] := zerorow;
+    fi;
+  od;
+  coltransformedmat := [];
+  for i in [1..nrcols] do
+    if t2[i] <> nrcols + 1 then
+      coltransformedmat[i] := TransposedMat(mat)[t2[i]];
+    else
+      coltransformedmat[i] := zerocol;
+    fi;
+  od;
+  coltransformedmat := TransposedMat(coltransformedmat);
 
+  #for ease of checking the constraints, set up lists of linked indices
+  rels := [];
+  for i in [1..nrrows] do
+    for j in [1..nrcols] do
+      if rowtransformedmat[i][j] <> 0 then
+        Add(rels, [i,j]);
+      fi;
+    od;
+  od;
+  rowrels := [];
+  for i in [1..nrrows] do
+    rowrels[i] := [];
+    for j in [1..nrrows] do
+      for k in [1..nrcols] do
+        if [i,k] in rels and [j,k] in rels then
+          rowrels[i][j] := k;
+          break;
+        fi;
+      od;
+    od;
+  od;
+  
+  #get connected components
+  edges := List(rels, r -> [r[1], r[2] + nrrows]);
+  digraph := DigraphByEdges(edges, nrrows + nrcols);
+  cc := DigraphConnectedComponents(digraph);
+  
+  #only deal with enough elements to hit each relation
+  #TODO: check safe to assume components ordered?
+  relpoints := [];
+  for i in cc.comps do
+    if Length(i) > 1 then 
+      Add(relpoints, i[1]);
+    fi;
+  od;            
+  
+  extend := function(funcs)
+    x := ShallowCopy(funcs[1]);
+    y := ShallowCopy(funcs[2]);
+    for r in relpoints do
+      if not IsBound(x[r]) then
+        x[r] := gplist[1];
+        changedvals := [r];
+        comp := cc.comps[cc.id[r]];
+        for n in [2..Length(comp)] do
+          j := comp[n];
+          if j <= nrrows then
+            k := rowrels[r][j];
+            x[j] := coltransformedmat[j][k] * invmat[r][t2[k]] * x[r] *
+                    rowtransformedmat[r][k] * invmat[t1[j]][k];
+            Add(changedvals, j);
+          else
+            break;
+          fi;
+        od;
+        for rel in rels do
+          if rel[1] in changedvals then
+            i := rel[1];
+            j := rel[2];
+            y[j] := invmat[i][t2[j]] * x[i] * rowtransformedmat[i][j];
+          fi;
+        od;
+      return [x,y];
+      fi;
+    od;
+    return fail;
+  end;
+  
+  #TODO: factor out the updating of the functions
+  reject := function(funcs)
+    x := ShallowCopy(funcs[1]);
+    y := ShallowCopy(funcs[2]);
+    for k in [1..Length(relpoints)] do
+      if not IsBound(x[relpoints[k]]) then
+        k := k-1;
+        break;
+      fi;
+    od;
+    r := relpoints[k];
+    pos := Position(gplist, x[r]);
+    if pos < gpsize then
+      x[r] := gplist[pos + 1];
+      changedvals := [r];
+      comp := cc.comps[cc.id[r]];
+      for n in [2..Length(comp)] do
+        j := comp[n];
+        if j <= nrrows then
+          k := rowrels[r][j];
+          x[j] := coltransformedmat[j][k] * invmat[r][t2[k]] * x[r] *
+                  rowtransformedmat[r][k] * invmat[t1[j]][k];
+          Add(changedvals, j);
+        else
+          break;
+        fi;
+      od;
+      for rel in rels do
+        if rel[1] in changedvals then
+            i := rel[1];
+            j := rel[2];
+            y[j] := invmat[i][t2[j]] * x[i] * rowtransformedmat[i][j];
+        fi;
+      od;
+      funcs := [x,y];
+    elif k > 1 then
+      funcs := reject([x{[1..relpoints[k-1]]}, y]);
+    else return 0;
+    fi;
+  
+    return funcs;
+  end;
+  
+  relssatisfied := function(funcs)
+    x := funcs[1];
+    y := funcs[2];
+    for rel in rels do
+      i := rel[1];
+      j := rel[2];
+      
+      if IsBound(x[i]) and IsBound(y[j]) and not 
+          x[i] * rowtransformedmat[i][j] = coltransformedmat[i][j] * y[j] then
+        return false;
+      fi;
+      
+    od;
+    return true;
+  end;
+  
+  bt := function(funcs)
+    if funcs = 0 then
+      return 0;
+    fi;
+    if not relssatisfied(funcs) then
+      funcs := reject(funcs);
+    elif Length(funcs[1]) = nrrows then
+      return funcs;
+    else
+      funcs := extend(funcs);
+    fi;
+    return bt(funcs);
+  end;
+  
+  foundfuncs := [bt([[],[]])];
+  v := 1;
+  while foundfuncs[v] <> 0 do
+    foundfuncs[v+1] := bt(reject(foundfuncs[v]));
+    v := v + 1;
+  od;
+  return foundfuncs;
+end;
 
 InstallMethod(TranslationalHull2, "for a rectangular band",
 [IsRectangularBand], 
