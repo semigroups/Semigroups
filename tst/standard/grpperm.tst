@@ -388,7 +388,7 @@ true
 
 #T# IsomorphismPermGroup
 gap> S := RegularBooleanMatMonoid(2);
-<monoid of 2x2 boolean matrices with 4 generators>
+<monoid of 2x2 boolean matrices with 3 generators>
 gap> IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,

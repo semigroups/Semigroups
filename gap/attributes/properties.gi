@@ -1306,6 +1306,12 @@ end);
 InstallMethod(IsRegularSemigroupElementNC,
 [IsSemigroup, IsMultiplicativeElement], IsRegularSemigroupElement);
 
+InstallMethod(IsRegularSemigroupElement, "for semigroup", IsCollsElms, 
+[IsSemigroup, IsMultiplicativeElement],
+function(S, x)
+  return x in S and IsRegularClass(RClass(S, x));
+end);
+
 # same method for ideals
 
 InstallMethod(IsRightSimple, "for a semigroup", [IsSemigroup],

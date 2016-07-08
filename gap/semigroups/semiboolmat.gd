@@ -20,8 +20,8 @@ InstallTrueMethod(IsFinite, IsBooleanMatSemigroup);
 
 DeclareOperation("RegularBooleanMatMonoid", [IsPosInt]);
 DeclareOperation("GossipMonoid", [IsPosInt]);
-DeclareOperation("UnitriangularBooleanMatrixMonoid", [IsPosInt]);
-DeclareOperation("TriangularBooleanMatrixMonoid", [IsPosInt]);
+DeclareOperation("UnitriangularBooleanMatMonoid", [IsPosInt]);
+DeclareOperation("TriangularBooleanMatMonoid", [IsPosInt]);
 
 DeclareOperation("ReflexiveBooleanMatMonoid", [IsPosInt]);
 DeclareOperation("HallMonoid", [IsPosInt]);

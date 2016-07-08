@@ -1443,6 +1443,148 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+# Test RandomSemigroup
+gap> S := RandomSemigroup(IsBooleanMatSemigroup, 2, 5);;
+gap> IsBooleanMatSemigroup(S); 
+true
+gap> DimensionOfMatrixOverSemiring(S.1);
+5
+gap> Length(GeneratorsOfSemigroup(S));
+2
+
+# Test RandomMonoid
+gap> S := RandomMonoid(IsBooleanMatMonoid, 4, 3);;
+gap> IsBooleanMatMonoid(S); 
+true
+gap> DimensionOfMatrixOverSemiring(S.1);
+3
+gap> Length(GeneratorsOfMonoid(S));
+4
+
+# AsMonoid 1 arg
+gap> S := Semigroup(Transformation([2, 2, 3, 4]));;
+gap> T := AsSemigroup(IsBooleanMatSemigroup, S);;
+gap> IsMonoid(T);
+false
+gap> IsMonoidAsSemigroup(T);
+true
+gap> U := AsMonoid(T);
+<trivial group of 1x1 boolean matrices with 1 generator>
+gap> IsomorphismMonoid(IsBooleanMatMonoid, U);
+MappingByFunction( <trivial group of 1x1 boolean matrices with 1 generator>, 
+<trivial group of 1x1 boolean matrices with 1 generator>
+, function( object ) ... end, function( object ) ... end )
+gap> S := Semigroup( [ Matrix(IsBooleanMat, [[0, 0, 1], [0, 0, 0], [0, 0, 0]]),
+>  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 1, 0]]),
+>  Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [0, 0, 0]]) ] );;
+gap> AsMonoid(S);
+fail
+
+# Test RegularBooleanMatMonoid
+gap> S := RegularBooleanMatMonoid(1);
+<commutative monoid of 1x1 boolean matrices with 1 generator>
+gap> S = FullBooleanMatMonoid(1);
+true
+gap> Size(S);
+2
+gap> S := RegularBooleanMatMonoid(2);
+<monoid of 2x2 boolean matrices with 3 generators>
+gap> Size(S);
+16
+gap> S = FullBooleanMatMonoid(2);
+true
+gap> S := RegularBooleanMatMonoid(3);
+<monoid of 3x3 boolean matrices with 4 generators>
+gap> T := FullBooleanMatMonoid(3);
+<monoid of 3x3 boolean matrices with 5 generators>
+gap> Size(S);
+506
+gap> S = T;
+false
+gap> S = SubsemigroupByProperty(T, x -> IsRegularSemigroupElement(T, x));
+true
+
+# Test GossipMonoid
+gap> S := GossipMonoid(1);
+<trivial group of 1x1 boolean matrices with 1 generator>
+gap> Size(S);
+1
+gap> T := SubsemigroupByProperty(FullBooleanMatMonoid(2),
+>                                IsEquivalenceBooleanMat);
+<commutative monoid of size 2, 2x2 boolean matrices with 1 generator>
+gap> GossipMonoid(3) = SubsemigroupByProperty(FullBooleanMatMonoid(3),
+>                                             IsEquivalenceBooleanMat);
+true
+
+# Test UnitriangularBooleanMatMonoid
+gap> UnitriangularBooleanMatMonoid(1);
+<trivial group of 1x1 boolean matrices with 1 generator>
+gap> n := 2;;
+gap> S := UnitriangularBooleanMatMonoid(n);
+<commutative monoid of 2x2 boolean matrices with 1 generator>
+gap> Size(S) = 2 ^ (n * (n - 1) / 2);
+true
+gap> IsDTrivial(S);
+true
+gap> n := 3;;
+gap> S := UnitriangularBooleanMatMonoid(n);
+<monoid of 3x3 boolean matrices with 3 generators>
+gap> Size(S) = 2 ^ (n * (n - 1) / 2);
+true
+gap> IsDTrivial(S);
+true
+
+# Test TriangularBooleanMatMonoid
+gap> TriangularBooleanMatMonoid(1);
+<trivial group of 1x1 boolean matrices with 1 generator>
+gap> n := 2;;
+gap> S := TriangularBooleanMatMonoid(n);
+<monoid of 2x2 boolean matrices with 3 generators>
+gap> Size(S);
+8
+gap> n := 3;;
+gap> S := TriangularBooleanMatMonoid(n);
+<monoid of 3x3 boolean matrices with 6 generators>
+gap> Size(S);
+64
+
+# Test ReflexiveBooleanMatMonoid
+gap> ReflexiveBooleanMatMonoid(1);
+<trivial group of 1x1 boolean matrices with 1 generator>
+gap> S := ReflexiveBooleanMatMonoid(3);
+<monoid of 3x3 boolean matrices with 8 generators>
+gap> S := ReflexiveBooleanMatMonoid(5);
+<monoid of 5x5 boolean matrices with 1414 generators>
+gap> S := ReflexiveBooleanMatMonoid(6);
+Error, Semigroups: ReflexiveBooleanMatMonoid:
+ generators for this monoid are only known up to dimension 5,
+
+# Test HallBooleanMatMonoid
+gap> HallMonoid(1);
+<trivial group of 1x1 boolean matrices with 1 generator>
+gap> S := HallMonoid(3);
+<monoid of 3x3 boolean matrices with 4 generators>
+gap> Size(S); 
+247
+gap> S := HallMonoid(5);
+<monoid of 5x5 boolean matrices with 12 generators>
+gap> S := HallMonoid(6);
+Error, Semigroups: HallMonoid:
+ generators for this monoid are only known up to dimension 5,
+
+# Test FullBooleanMatBooleanMatMonoid
+gap> FullBooleanMatMonoid(1);
+<commutative monoid of 1x1 boolean matrices with 1 generator>
+gap> S := FullBooleanMatMonoid(3);
+<monoid of 3x3 boolean matrices with 5 generators>
+gap> Size(S) = 2 ^ (3 ^ 2);
+true
+gap> S := FullBooleanMatMonoid(5);
+<monoid of 5x5 boolean matrices with 13 generators>
+gap> S := FullBooleanMatMonoid(6);
+Error, Semigroups: FullBooleanMatMonoid:
+ generators for this monoid are only known up to dimension 5,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);

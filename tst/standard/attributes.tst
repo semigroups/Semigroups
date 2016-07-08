@@ -737,7 +737,7 @@ gap> Display(MultiplicativeNeutralElement(S));
 0 1 0
 1 0 0
 gap> S := RegularBooleanMatMonoid(2);
-<monoid of 2x2 boolean matrices with 4 generators>
+<monoid of 2x2 boolean matrices with 3 generators>
 gap> MultiplicativeNeutralElement(S);
 Matrix(IsBooleanMat, [[1, 0], [0, 1]])
 gap> S := Semigroup([Transformation([1, 2, 3, 3, 5, 5]),

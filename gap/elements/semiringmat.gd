@@ -11,7 +11,7 @@
 # This file contains declarations for matrices over semirings.
 
 DeclareCategory("IsMatrixOverSemiring",
-                    IsMultiplicativeElementWithOne
+                IsMultiplicativeElementWithOne
                 and IsPositionalObjectRep);
 
 DeclareCategoryCollections("IsMatrixOverSemiring");

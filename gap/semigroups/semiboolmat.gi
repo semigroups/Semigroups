@@ -92,17 +92,17 @@ end);
 InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a semigroup",
 [IsBooleanMatMonoid, IsSemigroup], SEMIGROUPS.DefaultIsomorphismMonoid);
 
+InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a monoid",
+[IsBooleanMatMonoid, IsMonoid],
+function(filter, S)
+  return IsomorphismSemigroup(IsBooleanMatSemigroup, S);
+end);
+
 InstallMethod(IsomorphismMonoid,
 "for IsBooleanMatMonoid and a boolean mat monoid",
 [IsBooleanMatMonoid, IsBooleanMatMonoid],
 function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
-end);
-
-InstallMethod(IsomorphismMonoid, "for IsBooleanMatMonoid and a monoid",
-[IsBooleanMatMonoid, IsMonoid],
-function(filter, S)
-  return IsomorphismSemigroup(IsBooleanMatSemigroup, S);
 end);
 
 #############################################################################
@@ -116,6 +116,10 @@ function(n)
 
   if n = 1 then
     return Monoid(BooleanMat([[true]]), BooleanMat([[false]]));
+  elif n = 2 then 
+    return Monoid(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+                  Matrix(IsBooleanMat, [[1, 0], [0, 0]]),
+                  Matrix(IsBooleanMat, [[1, 0], [1, 1]]));
   fi;
 
   gens := [];
@@ -146,6 +150,10 @@ InstallMethod(GossipMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local gens, i, j, x, m;
+  
+  if n = 1 then 
+    return Semigroup(Matrix(IsBooleanMat, [[true]]));
+  fi;
 
   gens := [];
   for i in [1 .. n - 1] do
@@ -162,10 +170,14 @@ function(n)
   return m;
 end);
 
-InstallMethod(UnitriangularBooleanMatrixMonoid, "for a positive integer",
+InstallMethod(UnitriangularBooleanMatMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local gens, x, i, j;
+  
+  if n = 1 then 
+    return Semigroup(Matrix(IsBooleanMat, [[true]]));
+  fi;
 
   gens := [];
   for i in [1 .. n - 1] do
@@ -179,10 +191,14 @@ function(n)
   return Monoid(gens);
 end);
 
-InstallMethod(TriangularBooleanMatrixMonoid, "for a positive integer",
+InstallMethod(TriangularBooleanMatMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local gens, x, i;
+  
+  if n = 1 then 
+    return Semigroup(Matrix(IsBooleanMat, [[true]]));
+  fi;
 
   gens := [];
   for i in [1 .. n] do
@@ -191,7 +207,7 @@ function(n)
     Add(gens, BooleanMat(x));
   od;
 
-  return Monoid(UnitriangularBooleanMatrixMonoid(n), gens);
+  return Monoid(UnitriangularBooleanMatMonoid(n), gens);
 end);
 
 #############################################################################
@@ -209,8 +225,8 @@ function(n)
 
   if not IsBound(SEMIGROUPS.GENERATORS.Reflex[n]) then
     ErrorNoReturn("Semigroups: ReflexiveBooleanMatMonoid:\n ",
-                  "generators for this monoid are only known up to ",
-                  String(Length(SEMIGROUPS.GENERATORS.Reflex[n])), ",");
+                  "generators for this monoid are only known up to dimension ",
+                  String(Length(SEMIGROUPS.GENERATORS.Reflex)), ",");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.Reflex[n]);
@@ -227,8 +243,8 @@ function(n)
 
   if not IsBound(SEMIGROUPS.GENERATORS.Hall[n]) then
     ErrorNoReturn("Semigroups: HallMonoid:\n ",
-                  "generators for this monoid are only known up to ",
-                  String(Length(SEMIGROUPS.GENERATORS.Hall[n])), ",");
+                  "generators for this monoid are only known up to dimension ",
+                  String(Length(SEMIGROUPS.GENERATORS.Hall)), ",");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.Hall[n]);
@@ -245,8 +261,8 @@ function(n)
 
   if not IsBound(SEMIGROUPS.GENERATORS.FullBool[n]) then
     ErrorNoReturn("Semigroups: FullBooleanMatMonoid:\n ",
-                  "generators for this monoid are only known up to ",
-                  String(Length(SEMIGROUPS.GENERATORS.FullBool[n])), ",");
+                  "generators for this monoid are only known up to dimension ",
+                  String(Length(SEMIGROUPS.GENERATORS.FullBool)), ",");
   fi;
 
   return Monoid(SEMIGROUPS.GENERATORS.FullBool[n]);
