@@ -109,7 +109,7 @@ gap> AutomorphismGroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `AutomorphismGroup' on 1 arguments
 
-#T# AutomorphismGroup: for a RZMSGraph with 0 generators
+#T# AutomorphismGroup: for a RZMSDigraph with 0 generators
 gap> func := function(n, i)
 >   local out;
 >   out := ListWithIdenticalEntries(n, 0);

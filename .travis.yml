@@ -9,7 +9,6 @@ env:
     - GAPDOC=GAPDoc-1.5.1
     - ORB=orb-4.7.6
     - GENSS=genss-1.6.4
-    - GRAPE=grape4r7
   matrix:
     - GAP_BRANCH=fix-semi-iso GAP_FORK=james-d-mitchell
     - GAP_BRANCH=fix-semi-iso GAP_FORK=james-d-mitchell GAP_FLAGS="ABI=32 --host=i686-linux-gnumake" PKG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 --host=i686-linux-gnu"

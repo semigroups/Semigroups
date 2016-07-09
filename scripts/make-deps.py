@@ -3,9 +3,9 @@
 This module compiles the dependencies of the Semigroups package.
 """
 
-import argparse, os, sys, subprocess 
+import argparse, os, sys, subprocess
 
-PACKAGES = ["io", "orb", "grape", "digraphs"]
+PACKAGES = ["io", "orb", "digraphs"]
 
 PARSER = argparse.ArgumentParser(prog='make-deps.py', usage='%(prog)s [options]')
 PARSER.add_argument('--gap-root', nargs='?', type=str,

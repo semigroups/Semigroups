@@ -20,6 +20,9 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+if not IsBoundGlobal("SmallestImageSet") 
+    and not IsPackageMarkedForLoading("grape", "4.5") then 
+
 BindGlobal("SmallestImageSet",function(arg)
     local   best,  h,  k,  n,  paths,  level,  min,  goodpaths,  
             orbnums,  orbmins,  gens,  path,  cands,  remset,  bestpt,  
@@ -217,3 +220,4 @@ BindGlobal("SmallestImageSet",function(arg)
         h := Stabilizer(h,min);
     od;
 end);
+fi;

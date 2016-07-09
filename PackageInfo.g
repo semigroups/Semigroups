@@ -14,7 +14,6 @@
 ##  <!ENTITY DIGRAPHSVERS "0.5.1">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
-##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY ARCHIVENAME "semigroups-3.0">
 ##  <!ENTITY COPYRIGHTYEARS "2011-15">
@@ -202,8 +201,7 @@ Dependencies := rec(
                           ["io", ">=4.4.4"],
                           ["digraphs", ">=0.5.1"],
                           ["genss", ">=1.5"]],
-  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"],
-                             ["grape", ">=4.5"]],
+  SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
   ExternalConditions := []),
 
   BannerString := Concatenation(

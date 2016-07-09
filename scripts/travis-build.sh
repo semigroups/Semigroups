@@ -65,13 +65,6 @@ cd ..
 curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GENSS.tar.gz
 tar xzf $GENSS.tar.gz
 rm $GENSS.tar.gz
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GRAPE.tar.gz
-tar xzf $GRAPE.tar.gz
-rm $GRAPE.tar.gz
-cd grape
-./configure $PKG_FLAGS
-make
-cd ..
 git clone -b $DIGRAPHS_BR --depth=1 https://github.com/gap-packages/Digraphs.git digraphs
 cd digraphs
 ./autogen.sh

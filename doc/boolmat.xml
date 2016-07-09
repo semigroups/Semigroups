@@ -444,11 +444,7 @@ gap> Display(AsBooleanMat(x));
         Key="JunttilaKaski"/>. As a consequence, <C>CanonicalBooleanMat</C>
       with a single argument is significantly faster than the versions with 2
       or 3 arguments. 
-      <P/>
 
-      <B>Note that:</B> the 2 and 3 argument versions of this operation only
-      works if the &Grape; package is available. 
-      
       <Example><![CDATA[
 gap> mat := BooleanMat([[1, 1, 1, 0, 0, 0], 
 >                       [0, 0, 0, 1, 0, 1], 

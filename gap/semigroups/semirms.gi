@@ -379,44 +379,7 @@ function(R, i, j)
   return GreensHClassOfElement(R, rep);
 end);
 
-#
-
-if not SEMIGROUPS.IsGrapeLoaded then
-  InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
-  function(R)
-    Info(InfoWarning, 1, GrapeIsNotLoadedString);
-    return fail;
-  end);
-
-else
-
-  InstallMethod(RZMSGraph, "for a RZMS", [IsReesZeroMatrixSemigroup],
-  function(R)
-    local mat, n, m, adj;
-
-    mat := Matrix(R);
-    n := Length(mat);
-    m := Length(mat[1]);
-
-    adj := function(x, y)
-      if x <= m and y > m then
-        return not mat[y - m][x] = 0;
-      elif x > m and y <= m then
-        return not mat[x - m][y] = 0;
-      else
-        return false;
-      fi;
-    end;
-
-    return Graph(Group(()), [1 .. n + m], OnPoints, adj, true);
-  end);
-
-fi;
-
-#
-
-InstallMethod(RZMSDigraph,
-"for a Rees 0-matrix semigroup",
+InstallMethod(RZMSDigraph, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 function(R)
   local rows, cols, mat, n, m, nredges, out, gr, i, j;
@@ -442,7 +405,7 @@ function(R)
   SetDigraphHasLoops(gr, false);
   SetDigraphBicomponents(gr, [[1 .. m], [m + 1 .. m + n]]);
   SetDigraphNrEdges(gr, nredges);
-  SetDigraphVertexLabels(gr, Concatenation(rows, cols));
+  #SetDigraphVertexLabels(gr, Concatenation(rows, cols));
   return gr;
 end);
 

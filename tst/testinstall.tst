@@ -727,11 +727,7 @@ gap> T := Semigroup(Transformation([1, 2, 3, 1]),
 >                   Transformation([1, 3, 3]),
 >                   Transformation([2, 3, 3, 3]),
 >                   Transformation([3, 2, 3, 3]));;
-gap> (not (IsBound(GAPInfo.PackagesLoaded.grape)
-> and Filename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail)) or
-> (IsBound(GAPInfo.PackagesLoaded.grape)
-> and Filename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail
-> and IsIsomorphicSemigroup(S, T));
+gap> IsIsomorphicSemigroup(S, T);
 true
 
 #T# TestInstall45: Issue 97

@@ -162,43 +162,109 @@ SEMIGROUPS.RMSInducedFunction := function(R, l, g, x)
   return out;
 end;
 
-#
+SEMIGROUPS.RZMSInducedFunction := function(R, l, g, x, component)
+  local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb,
+  j, Last, involved, verts, v, new, k;
 
-if SEMIGROUPS.IsGrapeLoaded then
+  mat := Matrix(R);
+  m := Length(mat[1]);
+  n := Length(mat);
+  graph := RZMSDigraph(R);
+  rep := Minimum(component);
+  out := EmptyPlist(m + n);
+  out[rep] := x;
 
-  SEMIGROUPS.RZMSInducedFunction := function(R, l, g, x, component)
-    local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb,
-    j, Last, involved, verts, v, new, k;
+  if Length(component) = Length(DigraphVertices(graph)) then
+    edges := DigraphEdges(graph);
+    bicomps := DigraphBicomponents(graph);
+  else
+    sub := InducedSubdigraph(graph, component);
+    perm := MappingPermListList(DigraphVertexLabels(sub), DigraphVertices(sub));
+    edges := OnTuplesTuples(DigraphEdges(sub), perm ^ -1);
+    bicomps := OnTuplesTuples(DigraphBicomponents(sub), perm ^ -1);
+  fi;
 
-    mat := Matrix(R);
-    m := Length(mat[1]);
-    n := Length(mat);
-    graph := RZMSGraph(R);
-    rep := Minimum(component);
-    out := EmptyPlist(m + n);
-    out[rep] := x;
+  defined := [];
+  orb := [rep];
+  j := 0;
 
-    if Length(component) = Length(Vertices(graph)) then
-      edges := DirectedEdges(graph);
-      bicomps := Bicomponents(graph);
+  repeat
+    j := j + 1;
+    Last := orb[j];
+
+    involved := Filtered(edges, x -> x[1] = Last and not x in defined);
+
+    if not involved = [] then
+      verts := List(involved, x -> x[2]);
+      Append(orb, Filtered(verts, x -> not x in orb));
+
+      for k in [1 .. Length(verts)] do
+        v := verts[k];
+
+        if Last in bicomps[1] then
+          new := mat[v ^ l - m][Last ^ l] * out[Last]
+                * (mat[v - m][Last] ^ g) ^ -1;
+        else
+          new := (mat[Last ^ l - m][v ^ l]) ^ -1 * out[Last]
+                 * (mat[Last - m][v] ^ g);
+        fi;
+
+        if not IsBound(out[v]) then
+          out[v] := new;
+        elif not out[v] = new then
+          return fail;
+        fi;
+        defined := Union(defined, [involved[k], Reversed(involved[k])]);
+      od;
+    fi;
+  until defined = edges;
+
+  return out;
+end;
+
+SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
+  local mat1, mat2, m, n, rmsgraph, components, reps, imagelist, edges,
+  bicomps, sub, perm, defined, orb, j, Last, involved, verts, v, new, i, k;
+
+  mat1 := Matrix(rms1);
+  mat2 := Matrix(rms2);
+  m := Length(mat1[1]);
+  n := Length(mat1);
+  rmsgraph := RZMSDigraph(rms1);
+  components := DigraphConnectedComponents(rmsgraph).comps;
+
+  if not Length(groupelts) = Length(components) then
+    ErrorNoReturn("Semigroups: SEMIGROUPS.RZMStoRZMSInducedFunction: ",
+                  "usage,\nthe 5th argument must be a list of length ",
+                  Length(components), ",");
+  fi;
+
+  reps := List(components, Minimum);
+  imagelist := [];
+  imagelist{reps} := groupelts;
+
+  for i in [1 .. Length(components)] do
+    if Length(components) = 1 then
+      edges := DigraphEdges(rmsgraph);
+      bicomps := DigraphBicomponents(rmsgraph);
     else
-      sub := InducedSubgraph(graph, component);
-      perm := MappingPermListList(VertexNames(sub), Vertices(sub));
-      edges := OnTuplesTuples(DirectedEdges(sub), perm ^ -1);
-      bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ -1);
+      sub := InducedSubdigraph(rmsgraph, components[i]);
+      perm := MappingPermListList(DigraphVertexLabels(sub),
+                                  DigraphVertices(sub));
+      edges := OnTuplesTuples(DigraphEdges(sub), perm ^ -1);
+      bicomps := OnTuplesTuples(DigraphBicomponents(sub), perm ^ -1);
     fi;
 
     defined := [];
-    orb := [rep];
+    orb := [reps[i]];
     j := 0;
 
     repeat
       j := j + 1;
       Last := orb[j];
-
       involved := Filtered(edges, x -> x[1] = Last and not x in defined);
-
       if not involved = [] then
+
         verts := List(involved, x -> x[2]);
         Append(orb, Filtered(verts, x -> not x in orb));
 
@@ -206,429 +272,335 @@ if SEMIGROUPS.IsGrapeLoaded then
           v := verts[k];
 
           if Last in bicomps[1] then
-            new := mat[v ^ l - m][Last ^ l] * out[Last]
-                  * (mat[v - m][Last] ^ g) ^ -1;
+            new := mat2[v ^ l - m][Last ^ l]
+                   * imagelist[Last] * (mat1[v - m][Last] ^ g) ^ -1;
           else
-            new := (mat[Last ^ l - m][v ^ l]) ^ -1 * out[Last]
-                   * (mat[Last - m][v] ^ g);
+            new := (mat2[Last ^ l - m][v ^ l]) ^ -1
+                   * imagelist[Last] * (mat1[Last - m][v] ^ g);
           fi;
 
-          if not IsBound(out[v]) then
-            out[v] := new;
-          elif not out[v] = new then
+          if not IsBound(imagelist[v]) then
+            imagelist[v] := new;
+          elif not imagelist[v] = new then
             return fail;
           fi;
           defined := Union(defined, [involved[k], Reversed(involved[k])]);
         od;
       fi;
     until defined = edges;
-
-    return out;
-  end;
-
-  #
-
-  SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
-    local mat1, mat2, m, n, rmsgraph, components, reps, imagelist, edges,
-    bicomps, sub, perm, defined, orb, j, Last, involved, verts, v, new, i, k;
-
-    mat1 := Matrix(rms1);
-    mat2 := Matrix(rms2);
-    m := Length(mat1[1]);
-    n := Length(mat1);
-    rmsgraph := RZMSGraph(rms1);
-    components := ConnectedComponents(rmsgraph);
-
-    if not Length(groupelts) = Length(components) then
-      ErrorNoReturn("Semigroups: SEMIGROUPS.RZMStoRZMSInducedFunction: ",
-                    "usage,\nthe 5th argument must be a list of length ",
-                    Length(components), ",");
-    fi;
-
-    reps := List(components, Minimum);
-    imagelist := [];
-    imagelist{reps} := groupelts;
-
-    for i in [1 .. Length(components)] do
-      if Length(components) = 1 then
-        edges := DirectedEdges(rmsgraph);
-        bicomps := Bicomponents(rmsgraph);
-      else
-        sub := InducedSubgraph(rmsgraph, components[i]);
-        perm := MappingPermListList(VertexNames(sub), Vertices(sub));
-        edges := OnTuplesTuples(DirectedEdges(sub), perm ^ -1);
-        bicomps := OnTuplesTuples(Bicomponents(sub), perm ^ -1);
-      fi;
-
-      defined := [];
-      orb := [reps[i]];
-      j := 0;
-
-      repeat
-        j := j + 1;
-        Last := orb[j];
-        involved := Filtered(edges, x -> x[1] = Last and not x in defined);
-        if not involved = [] then
-
-          verts := List(involved, x -> x[2]);
-          Append(orb, Filtered(verts, x -> not x in orb));
-
-          for k in [1 .. Length(verts)] do
-            v := verts[k];
-
-            if Last in bicomps[1] then
-              new := mat2[v ^ l - m][Last ^ l]
-                     * imagelist[Last] * (mat1[v - m][Last] ^ g) ^ -1;
-            else
-              new := (mat2[Last ^ l - m][v ^ l]) ^ -1
-                     * imagelist[Last] * (mat1[Last - m][v] ^ g);
-            fi;
-
-            if not IsBound(imagelist[v]) then
-              imagelist[v] := new;
-            elif not imagelist[v] = new then
-              return fail;
-            fi;
-            defined := Union(defined, [involved[k], Reversed(involved[k])]);
-          od;
-        fi;
-      until defined = edges;
-    od;
-    return imagelist;
-  end;
-fi;
+  od;
+  return imagelist;
+end;
 
 #############################################################################
 # 2. Automorphism group functions
 #############################################################################
 
-if not IsBound(GAPInfo.PackagesLoaded.genss) then
-  InstallMethod(AutomorphismGroup, "for a Rees 0-matrix semigroup",
-  [IsReesZeroMatrixSemigroup],
-  function(R)
-    Info(InfoWarning, 1, "the GENSS package is not loaded, ",
-         "and so this function does not work");
-    return fail;
-  end);
-else
-  # don't hit F5 for local variables here, it crashes vim!!
-  InstallMethod(AutomorphismGroup, "for a Rees 0-matrix semigroup",
-  [IsReesZeroMatrixSubsemigroup],
-  function(R)
-    local G, m, n, aut_graph, components, t, aut_group, stab_aut_graph,
-          hom, stab_aut_group, i, V, A, gens1, gens2, U, T, tester,
-          g, x, map, cart, RZMSInducedFunction;
+# don't hit F5 for local variables here, it crashes vim!!
+InstallMethod(AutomorphismGroup, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup],
+function(R)
+  local G, m, n, aut_graph, components, t, aut_group, stab_aut_graph,
+        hom, stab_aut_group, i, V, A, gens1, gens2, U, T, tester,
+        g, x, map, cart, RZMSInducedFunction;
 
-    G := UnderlyingSemigroup(R);
+  G := UnderlyingSemigroup(R);
 
-    if not (IsReesZeroMatrixSemigroup(R) and IsPermGroup(G)
-            and IsZeroSimpleSemigroup(R)) then
-      TryNextMethod(); #TODO write such a method
-    fi;
+  if not (IsReesZeroMatrixSemigroup(R) and IsPermGroup(G)
+          and IsZeroSimpleSemigroup(R)) then
+    TryNextMethod(); #TODO write such a method
+  fi;
 
-    m := Length(Rows(R));
-    n := Length(Columns(R));
+  m := Length(Rows(R));
+  n := Length(Columns(R));
 
-    # automorphism group of the graph . . .
-    SEMIGROUPS.InfoStatement(2, false,
-                             "finding automorphisms of the graph . . . ");
+  # automorphism group of the graph . . .
+  SEMIGROUPS.InfoStatement(2, false,
+                           "finding automorphisms of the graph . . . ");
 
-    aut_graph := AutGroupGraph(RZMSGraph(R), [[1 .. m], [m + 1 .. n + m]]);
+  aut_graph := AutomorphismGroup(RZMSDigraph(R), [[1 .. m], [m + 1 .. n + m]]);
 
-    if Length(GeneratorsOfGroup(aut_graph)) = 0 then
-      aut_graph := Group(());
-    fi;
-    SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
+  if Length(GeneratorsOfGroup(aut_graph)) = 0 then
+    aut_graph := Group(());
+  fi;
+  SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
 
-    Size(aut_graph); # for genss
+  Size(aut_graph); # for genss
 
-    # stabiliser of the matrix under rearranging rows and columns by elements
-    # of the automorphism group of the graph
-    if m * n < 1000 then
-      stab_aut_graph := SEMIGROUPS.StabOfRMSMatrix(aut_graph, R);
-    else
-      stab_aut_graph := Group(());
-    fi;
+  # stabiliser of the matrix under rearranging rows and columns by elements
+  # of the automorphism group of the graph
+  if m * n < 1000 then
+    stab_aut_graph := SEMIGROUPS.StabOfRMSMatrix(aut_graph, R);
+  else
+    stab_aut_graph := Group(());
+  fi;
 
-    # automorphism group of the underlying group
-    SEMIGROUPS.InfoStatement(2, false,
-                             "finding the automorphism group of the group",
-                              " . . . ");
-    aut_group := AutomorphismGroup(G);
-    SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
+  # automorphism group of the underlying group
+  SEMIGROUPS.InfoStatement(2, false,
+                           "finding the automorphism group of the group",
+                            " . . . ");
+  aut_group := AutomorphismGroup(G);
+  SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
 
-    # pointwise stabiliser of the entries in the matrix of R under the
-    # automorphism group of the group
-    stab_aut_group := SEMIGROUPS.StabOfRMSEntries(aut_group, R);
+  # pointwise stabiliser of the entries in the matrix of R under the
+  # automorphism group of the group
+  stab_aut_group := SEMIGROUPS.StabOfRMSEntries(aut_group, R);
 
-    # homomorphism from Aut(G) to a perm rep of Aut(G) / Inn(G)
-    # gaplint: ignore 2
-    hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
-             InnerAutomorphismsAutomorphismGroup(aut_group));
-    hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
+  # homomorphism from Aut(G) to a perm rep of Aut(G) / Inn(G)
+  # gaplint: ignore 2
+  hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
+           InnerAutomorphismsAutomorphismGroup(aut_group));
+  hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
 
-    # V is isomorphic to Aut(Gamma) x (Aut(G) / Inn(G))
-    # U is a subgroup of V contained in the subgroup we are looking for.
-    V := DirectProduct(aut_graph, Image(hom));
+  # V is isomorphic to Aut(Gamma) x (Aut(G) / Inn(G))
+  # U is a subgroup of V contained in the subgroup we are looking for.
+  V := DirectProduct(aut_graph, Image(hom));
 
-    if IsTrivial(stab_aut_graph) and IsTrivial(stab_aut_group) then
-      U := Group(());
-    else
-      gens1 := GeneratorsOfGroup(stab_aut_graph);
-      gens2 := GeneratorsOfGroup(Image(hom, stab_aut_group));
-      U := Group(Concatenation(Images(Embedding(V, 1), gens1),
-                               Images(Embedding(V, 2), gens2)));
-    fi;
+  if IsTrivial(stab_aut_graph) and IsTrivial(stab_aut_group) then
+    U := Group(());
+  else
+    gens1 := GeneratorsOfGroup(stab_aut_graph);
+    gens2 := GeneratorsOfGroup(Image(hom, stab_aut_group));
+    U := Group(Concatenation(Images(Embedding(V, 1), gens1),
+                             Images(Embedding(V, 2), gens2)));
+  fi;
 
-    components := ConnectedComponents(RZMSGraph(R));
-    t := Length(components);
-    Info(InfoSemigroups, 2, "the graph has ", t, " connected components");
+  components := DigraphConnectedComponents(RZMSDigraph(R)).comps;
+  t := Length(components);
+  Info(InfoSemigroups, 2, "the graph has ", t, " connected components");
 
-    T := RightTransversal(G, Centre(G));
-    A := [];
+  T := RightTransversal(G, Centre(G));
+  A := [];
 
-    ##########################################################################
-    # test whether for <x> in <V> there is a <map> such that
-    # phi := [x ^ Projection(V, 1), x ^ Projection(V, 2) ^ hom ^ -1, map]
-    # is a RZMSIsoByTriple, and add <phi> to <A> if it is!
-    ##########################################################################
+  ##########################################################################
+  # test whether for <x> in <V> there is a <map> such that
+  # phi := [x ^ Projection(V, 1), x ^ Projection(V, 2) ^ hom ^ -1, map]
+  # is a RZMSIsoByTriple, and add <phi> to <A> if it is!
+  ##########################################################################
 
-    RZMSInducedFunction := SEMIGROUPS.RZMSInducedFunction;
+  RZMSInducedFunction := SEMIGROUPS.RZMSInducedFunction;
 
-    tester := function(x)
-      local y, found, g, i, tmp, map;
-      y := PreImagesRepresentative(hom, x ^ Projection(V, 2));
-      x := x ^ Projection(V, 1);
-      tmp := [];
+  tester := function(x)
+    local y, found, g, i, tmp, map;
+    y := PreImagesRepresentative(hom, x ^ Projection(V, 2));
+    x := x ^ Projection(V, 1);
+    tmp := [];
+    found := false;
+    for g in T do
+      map := RZMSInducedFunction(R, x, y, g, components[1]);
+      if map <> fail then
+        tmp := tmp + map;
+        found := true;
+        break;
+      fi;
+    od;
+    i := 1;
+    while found and i < t do
+      i := i + 1;
       found := false;
-      for g in T do
-        map := RZMSInducedFunction(R, x, y, g, components[1]);
+      for g in G do
+        map := RZMSInducedFunction(R, x, y, g, components[i]);
         if map <> fail then
           tmp := tmp + map;
           found := true;
           break;
         fi;
       od;
-      i := 1;
-      while found and i < t do
-        i := i + 1;
-        found := false;
-        for g in G do
-          map := RZMSInducedFunction(R, x, y, g, components[i]);
-          if map <> fail then
-            tmp := tmp + map;
-            found := true;
-            break;
-          fi;
-        od;
-      od;
+    od;
 
-      if found then
-        AddSet(A, RZMSIsoByTriple(R, R, [x, y, tmp]));
-      fi;
-      return found;
-    end;
-
-    ##########################################################################
-
-    if U <> V then # some search required
-      Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
-           Size(V), " . . . ");
-      BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
-                                             tester,
-                                             SEMIGROUPS.RMSIsoPruner(U, V));
-    else # U = V
-      Perform(GeneratorsOfGroup(V), tester);
+    if found then
+      AddSet(A, RZMSIsoByTriple(R, R, [x, y, tmp]));
     fi;
+    return found;
+  end;
 
-    cart := [[]];
-    for g in T do
+  ##########################################################################
+
+  if U <> V then # some search required
+    Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
+         Size(V), " . . . ");
+    BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
+                                           tester,
+                                           SEMIGROUPS.RMSIsoPruner(U, V));
+  else # U = V
+    Perform(GeneratorsOfGroup(V), tester);
+  fi;
+
+  cart := [[]];
+  for g in T do
+    map := RZMSInducedFunction(R,
+                               One(aut_graph),
+                               One(aut_group),
+                               g,
+                               components[1]);
+    if map <> fail then
+      Add(cart[1], map);
+    fi;
+  od;
+
+  for i in [2 .. t] do
+    cart[i] := [];
+    for g in G do
       map := RZMSInducedFunction(R,
                                  One(aut_graph),
                                  One(aut_group),
                                  g,
-                                 components[1]);
+                                 components[i]);
       if map <> fail then
-        Add(cart[1], map);
+        Add(cart[i], map);
       fi;
     od;
+  od;
 
-    for i in [2 .. t] do
-      cart[i] := [];
-      for g in G do
-        map := RZMSInducedFunction(R,
-                                   One(aut_graph),
-                                   One(aut_group),
-                                   g,
-                                   components[i]);
-        if map <> fail then
-          Add(cart[i], map);
-        fi;
-      od;
-    od;
+  # put B together
+  for map in EnumeratorOfCartesianProduct(cart) do
+    x := RZMSIsoByTriple(R, R, [One(aut_graph), One(aut_group), Sum(map)]);
+    AddSet(A, x);
+  od;
 
-    # put B together
-    for map in EnumeratorOfCartesianProduct(cart) do
-      x := RZMSIsoByTriple(R, R, [One(aut_graph), One(aut_group), Sum(map)]);
-      AddSet(A, x);
-    od;
+  A := Group(A);
+  SetIsAutomorphismGroupOfRMSOrRZMS(A, true);
+  SetIsFinite(A, true);
 
-    A := Group(A);
+  return A;
+end);
+
+# don't hit F5 for local variables here, it crashes vim!!
+InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
+[IsReesMatrixSemigroup],
+function(R)
+  local G, m, n, aut_graph, aut_group, stab_aut_graph,
+        hom, stab_aut_group, V, A, gens1, gens2, U, T, tester,
+        g, map, gens, RMSInducedFunction;
+
+  G := UnderlyingSemigroup(R);
+  if not (IsReesMatrixSemigroup(R) and IsPermGroup(G)
+          and IsSimpleSemigroup(R)) then
+    TryNextMethod(); #TODO write such a method
+  fi;
+
+  m := Length(Rows(R));
+  n := Length(Columns(R));
+
+  # automorphism group of the graph . . .
+  # this is easy since the graph is complete bipartite
+  SEMIGROUPS.InfoStatement(2, false,
+                           "finding automorphisms of the graph . . . ");
+
+  if n = 1 and m = 1 then
+    gens := GeneratorsOfGroup(AutomorphismGroup(G));
+    if IsEmpty(gens) then
+      gens := [IdentityMapping(G)];
+    fi;
+    A := Group(List(gens, x -> RMSIsoByTriple(R, R,
+                                              [(), x, [One(G), One(G)]])));
     SetIsAutomorphismGroupOfRMSOrRZMS(A, true);
     SetIsFinite(A, true);
-
     return A;
-  end);
-fi;
+  elif n = 2 and m = 1 then
+    aut_graph := Group((2, 3));
+    SetSize(aut_graph, 2);
+  elif n > 2 and m = 1 then
+    aut_graph := Group((2, 3),
+                       PermList(Concatenation([1], [3 .. n + m], [2])));
+    SetSize(aut_graph, Factorial(n));
+  else
+    aut_graph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
+  fi;
+  SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
+  Size(aut_graph); # for genss
 
-#
+  # stabiliser of the matrix under rearranging rows and columns by elements
+  # of the automorphism group of the graph
+  if m * n < 1000 then
+    stab_aut_graph := SEMIGROUPS.StabOfRMSMatrix(aut_graph, R);
+  else
+    stab_aut_graph := Group(());
+  fi;
 
-if not IsBound(GAPInfo.PackagesLoaded.genss) then
-  InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
-  [IsReesMatrixSemigroup],
-  function(R)
-    Info(InfoWarning, 1, "the GENSS package is not loaded, ",
-         "and so this function does not work");
-    return fail;
-  end);
-else
-  # don't hit F5 for local variables here, it crashes vim!!
-  InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
-  [IsReesMatrixSemigroup],
-  function(R)
-    local G, m, n, aut_graph, aut_group, stab_aut_graph,
-          hom, stab_aut_group, V, A, gens1, gens2, U, T, tester,
-          g, map, gens, RMSInducedFunction;
+  # automorphism group of the underlying group
+  SEMIGROUPS.InfoStatement(2, false,
+                           "finding the automorphism group of the group",
+                           " . . . ");
+  aut_group := AutomorphismGroup(G);
+  SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
 
-    G := UnderlyingSemigroup(R);
-    if not (IsReesMatrixSemigroup(R) and IsPermGroup(G)
-            and IsSimpleSemigroup(R)) then
-      TryNextMethod(); #TODO write such a method
-    fi;
+  # pointwise stabiliser of the entries in the matrix of R under the
+  # automorphism group of the group
+  stab_aut_group := SEMIGROUPS.StabOfRMSEntries(aut_group, R);
 
-    m := Length(Rows(R));
-    n := Length(Columns(R));
+  # homomorphism from Aut(G) to a perm rep of Aut(G) / Inn(G)
+  # gaplint: ignore 2
+  hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
+           InnerAutomorphismsAutomorphismGroup(aut_group));
+  hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
 
-    # automorphism group of the graph . . .
-    # this is easy since the graph is complete bipartite
-    SEMIGROUPS.InfoStatement(2, false,
-                             "finding automorphisms of the graph . . . ");
+  # V is isomorphic to Aut(Gamma) x (Aut(G) / Inn(G))
+  # U is a subgroup of V contained in the subgroup we are looking for.
+  V := DirectProduct(aut_graph, Image(hom));
 
-    if n = 1 and m = 1 then
-      gens := GeneratorsOfGroup(AutomorphismGroup(G));
-      if IsEmpty(gens) then
-        gens := [IdentityMapping(G)];
-      fi;
-      A := Group(List(gens, x -> RMSIsoByTriple(R, R,
-                                                [(), x, [One(G), One(G)]])));
-      SetIsAutomorphismGroupOfRMSOrRZMS(A, true);
-      SetIsFinite(A, true);
-      return A;
-    elif n = 2 and m = 1 then
-      aut_graph := Group((2, 3));
-      SetSize(aut_graph, 2);
-    elif n > 2 and m = 1 then
-      aut_graph := Group((2, 3),
-                         PermList(Concatenation([1], [3 .. n + m], [2])));
-      SetSize(aut_graph, Factorial(n));
-    else
-      aut_graph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
-    fi;
-    SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
-    Size(aut_graph); # for genss
+  if IsTrivial(stab_aut_graph) and IsTrivial(stab_aut_group) then
+    U := Group(());
+  else
+    gens1 := GeneratorsOfGroup(stab_aut_graph);
+    gens2 := GeneratorsOfGroup(Image(hom, stab_aut_group));
+    U := Group(Concatenation(Images(Embedding(V, 1), gens1),
+                             Images(Embedding(V, 2), gens2)));
+  fi;
 
-    # stabiliser of the matrix under rearranging rows and columns by elements
-    # of the automorphism group of the graph
-    if m * n < 1000 then
-      stab_aut_graph := SEMIGROUPS.StabOfRMSMatrix(aut_graph, R);
-    else
-      stab_aut_graph := Group(());
-    fi;
+  T := RightTransversal(G, Centre(G));
+  A := [];
 
-    # automorphism group of the underlying group
-    SEMIGROUPS.InfoStatement(2, false,
-                             "finding the automorphism group of the group",
-                             " . . . ");
-    aut_group := AutomorphismGroup(G);
-    SEMIGROUPS.InfoStatement(2, true, "found ", Size(aut_group));
+  ##########################################################################
+  # test whether for <x> in <V> there is a <map> such that
+  # phi := [x ^ Projection(V, 1), x ^ Projection(V, 2) ^ hom ^ -1, map]
+  # is a RMSIsoByTriple, and add <phi> to <A> if it is!
+  ##########################################################################
 
-    # pointwise stabiliser of the entries in the matrix of R under the
-    # automorphism group of the group
-    stab_aut_group := SEMIGROUPS.StabOfRMSEntries(aut_group, R);
+  RMSInducedFunction := SEMIGROUPS.RMSInducedFunction;
 
-    # homomorphism from Aut(G) to a perm rep of Aut(G) / Inn(G)
-    # gaplint: ignore 2
-    hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
-             InnerAutomorphismsAutomorphismGroup(aut_group));
-    hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
-
-    # V is isomorphic to Aut(Gamma) x (Aut(G) / Inn(G))
-    # U is a subgroup of V contained in the subgroup we are looking for.
-    V := DirectProduct(aut_graph, Image(hom));
-
-    if IsTrivial(stab_aut_graph) and IsTrivial(stab_aut_group) then
-      U := Group(());
-    else
-      gens1 := GeneratorsOfGroup(stab_aut_graph);
-      gens2 := GeneratorsOfGroup(Image(hom, stab_aut_group));
-      U := Group(Concatenation(Images(Embedding(V, 1), gens1),
-                               Images(Embedding(V, 2), gens2)));
-    fi;
-
-    T := RightTransversal(G, Centre(G));
-    A := [];
-
-    ##########################################################################
-    # test whether for <x> in <V> there is a <map> such that
-    # phi := [x ^ Projection(V, 1), x ^ Projection(V, 2) ^ hom ^ -1, map]
-    # is a RMSIsoByTriple, and add <phi> to <A> if it is!
-    ##########################################################################
-
-    RMSInducedFunction := SEMIGROUPS.RMSInducedFunction;
-
-    tester := function(x)
-      local y, map, g;
-      y := PreImagesRepresentative(hom, x ^ Projection(V, 2));
-      x := x ^ Projection(V, 1);
-      for g in T do
-        map := RMSInducedFunction(R, x, y, g);
-        if map <> fail then
-          AddSet(A, RMSIsoByTriple(R, R, [x, y, map]));
-          return true;
-        fi;
-      od;
-      return false;
-    end;
-
-    ##########################################################################
-
-    if U <> V then
-      Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
-           Size(V), ". . .");
-      BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
-                                             tester,
-                                             SEMIGROUPS.RMSIsoPruner(U, V));
-    else # U = V
-      Perform(GeneratorsOfGroup(V), tester);
-    fi;
-
+  tester := function(x)
+    local y, map, g;
+    y := PreImagesRepresentative(hom, x ^ Projection(V, 2));
+    x := x ^ Projection(V, 1);
     for g in T do
-      map := RMSInducedFunction(R,
-                                One(aut_graph),
-                                One(aut_group),
-                                g);
+      map := RMSInducedFunction(R, x, y, g);
       if map <> fail then
-        AddSet(A, RMSIsoByTriple(R, R, [One(aut_graph), One(aut_group), map]));
+        AddSet(A, RMSIsoByTriple(R, R, [x, y, map]));
+        return true;
       fi;
     od;
+    return false;
+  end;
 
-    A := Group(A);
-    SetIsAutomorphismGroupOfRMSOrRZMS(A, true);
-    SetIsFinite(A, true);
+  ##########################################################################
 
-    return A;
-  end);
-fi;
+  if U <> V then
+    Info(InfoSemigroups, 2, "backtracking in the direct product of size ",
+         Size(V), ". . .");
+    BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
+                                           tester,
+                                           SEMIGROUPS.RMSIsoPruner(U, V));
+  else # U = V
+    Perform(GeneratorsOfGroup(V), tester);
+  fi;
+
+  for g in T do
+    map := RMSInducedFunction(R,
+                              One(aut_graph),
+                              One(aut_group),
+                              g);
+    if map <> fail then
+      AddSet(A, RMSIsoByTriple(R, R, [One(aut_graph), One(aut_group), map]));
+    fi;
+  od;
+
+  A := Group(A);
+  SetIsAutomorphismGroupOfRMSOrRZMS(A, true);
+  SetIsFinite(A, true);
+
+  return A;
+end);
 
 #############################################################################
 # 3. Methods for automorphism groups
@@ -752,88 +724,77 @@ function(R1, R2)
   return fail;
 end);
 
-#
-if not (SEMIGROUPS.IsGrapeLoaded and SEMIGROUPS.IsGrapeCompiled) then
 
-  InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups",
-  [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
-  function(R1, R2)
-    Info(InfoWarning, 1, GrapeIsNotCompiledString);
+InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups",
+[IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
+function(R1, R2)
+  local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso, tuples,
+        map, l, tup, RZMStoRZMSInducedFunction;
+
+  G1 := UnderlyingSemigroup(R1);
+  G2 := UnderlyingSemigroup(R2);
+
+  if not (IsRegularSemigroup(R1) and IsGroup(G1) and IsRegularSemigroup(R2)
+          and IsGroup(G2)) then
+    ErrorNoReturn("Semigroups: IsomorphismSemigroups: usage,\n",
+                  "the arguments must be regular Rees 0-matrix semigroups ",
+                  "over groups,");
+  fi;
+
+  if not (Size(R1) = Size(R2) and Columns(R1) = Columns(R2)
+          and Rows(R1) = Rows(R2)) then
     return fail;
-  end);
+  fi;
 
-else
+  mat := Matrix(R1);
+  m := Length(mat[1]);
+  n := Length(mat);
 
-  InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups",
-  [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
-  function(R1, R2)
-    local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso, tuples,
-          map, l, tup, RZMStoRZMSInducedFunction;
+  if R1 = R2 then
+    return RZMSIsoByTriple(R1, R2, [(),
+                                    IdentityMapping(G1),
+                                    List([1 .. m + n], x -> One(G2))]);
+  fi;
 
-    G1 := UnderlyingSemigroup(R1);
-    G2 := UnderlyingSemigroup(R2);
+  # every isomorphism of the groups
+  f := IsomorphismGroups(G1, G2);
+  if f = fail then
+    return fail;
+  fi;
+  groupiso := List(AutomorphismGroup(G1), x -> x * f);
 
-    if not (IsRegularSemigroup(R1) and IsGroup(G1) and IsRegularSemigroup(R2)
-            and IsGroup(G2)) then
-      ErrorNoReturn("Semigroups: IsomorphismSemigroups: usage,\n",
-                    "the arguments must be regular Rees 0-matrix semigroups ",
-                    "over groups,");
-    fi;
-
-    if not (Size(R1) = Size(R2) and Columns(R1) = Columns(R2)
-            and Rows(R1) = Rows(R2)) then
+  # every isomorphism of the graphs
+  graph1 := RZMSDigraph(R1);
+  graph2 := RZMSDigraph(R2);
+  if graph1 <> graph2 then
+    g := IsomorphismDigraphs(graph1, graph2);
+    if g = fail then
       return fail;
     fi;
+  else
+    g := ();
+  fi;
+  graphiso := List(AutomorphismGroup(graph1, [[1 .. m], [m + 1 .. n + m]]),
+                   x -> x * g);
 
-    mat := Matrix(R1);
-    m := Length(mat[1]);
-    n := Length(mat);
-
-    if R1 = R2 then
-      return RZMSIsoByTriple(R1, R2, [(),
-                                      IdentityMapping(G1),
-                                      List([1 .. m + n], x -> One(G2))]);
-    fi;
-
-    # every isomorphism of the groups
-    f := IsomorphismGroups(G1, G2);
-    if f = fail then
-      return fail;
-    fi;
-    groupiso := List(AutomorphismGroup(G1), x -> x * f);
-
-    # every isomorphism of the graphs
-    graph1 := RZMSGraph(R1);
-    graph2 := RZMSGraph(R2);
-    if UndirectedEdges(graph1) <> UndirectedEdges(graph2) then
-      g := GraphIsomorphism(graph1, graph2);
-      if g = fail then
-        return fail;
-      fi;
-    else
-      g := ();
-    fi;
-    graphiso := List(AutGroupGraph(graph1, [[1 .. m], [m + 1 .. n + m]]),
-                     x -> x * g);
-
-    # gaplint: ignore 2
-    tuples := EnumeratorOfCartesianProduct(
-                List([1 .. Length(ConnectedComponents(graph1))], x -> G2));
-    #find an induced function, if there is one
-    RZMStoRZMSInducedFunction := SEMIGROUPS.RZMStoRZMSInducedFunction;
-    for l in graphiso do
-      for g in groupiso do
-        for tup in tuples do #FIXME it should be possible to cut this down
-          map := RZMStoRZMSInducedFunction(R1, R2, l, g, tup);
-          if map <> fail then
-            return RZMSIsoByTriple(R1, R2, [l, g, map]);
-          fi;
-        od;
+  # gaplint: ignore 2
+  tuples := EnumeratorOfCartesianProduct(
+              List([1 .. Length(DigraphConnectedComponents(graph1).comps)], 
+                   x -> G2));
+  #find an induced function, if there is one
+  RZMStoRZMSInducedFunction := SEMIGROUPS.RZMStoRZMSInducedFunction;
+  for l in graphiso do
+    for g in groupiso do
+      for tup in tuples do #FIXME it should be possible to cut this down
+        map := RZMStoRZMSInducedFunction(R1, R2, l, g, tup);
+        if map <> fail then
+          return RZMSIsoByTriple(R1, R2, [l, g, map]);
+        fi;
       od;
     od;
-    return fail;
-  end);
-fi;
+  od;
+  return fail;
+end);
 
 #############################################################################
 # 5. RMS/RZMSIsoByTriple

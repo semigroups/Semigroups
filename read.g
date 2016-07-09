@@ -8,34 +8,7 @@
 #############################################################################
 ##
 
-SEMIGROUPS.IsGrapeLoaded := IsPackageMarkedForLoading("grape", "4.5");
-SEMIGROUPS.IsGrapeCompiled :=
-ExternalFilename(DirectoriesPackagePrograms("grape"), "dreadnautB") <> fail;
-
-if not SEMIGROUPS.IsGrapeLoaded then
-  Add(SEMIGROUPS.OmitFromTests, "SmallestMultiplicationTable");
-  BindGlobal("GrapeIsNotLoadedString",
-             Concatenation("the GRAPE package is not loaded and",
-                           " so this function does not work"));
-fi;
-
-if not SEMIGROUPS.IsGrapeCompiled then
-  Add(SEMIGROUPS.OmitFromTests, "MunnSemigroup");
-  Add(SEMIGROUPS.OmitFromTests, "IsIsomorphicSemigroup");
-  Add(SEMIGROUPS.OmitFromTests, "IsomorphismSemigroups");
-  Add(SEMIGROUPS.OmitFromTests, "RZMSInducedFunction");
-  Add(SEMIGROUPS.OmitFromTests, "RZMStoRZMSInducedFunction");
-  BindGlobal("GrapeIsNotCompiledString",
-             Concatenation("the nauty/dreadnaut binaries for the GRAPE ",
-                           "package are not loaded\n#I  and so this function ",
-                           "does not work"));
-fi;
-
-if TestPackageAvailability("genss") = fail then
-  Add(SEMIGROUPS.OmitFromTests, "Normalizer");
-  Add(SEMIGROUPS.OmitFromTests,
-      "SEMIGROUPS_NonDeterministicNormalizer");
-fi;
+ReadPackage("semigroups/gap/smallestimage.g");
 
 ReadPackage("semigroups/gap/elements/star.gi");
 ReadPackage("semigroups/gap/elements/pbr.gi");

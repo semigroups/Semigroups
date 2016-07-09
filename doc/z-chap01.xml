@@ -34,8 +34,7 @@
     representations (based on <Cite Key = "Schein1992aa"/>) and the character
     table of an inverse semigroup.  There are functions for producing pictures
     of the Green's structure of a semigroup, and for drawing graphical
-    representations of the elements of certain semigroups; see Chapter <Ref
-      Sect = "The Grape package"/>. <P/>
+    representations of the elements of certain semigroups. <P/>
 
     Many standard examples of semigroups and classes of semigroups are provided;
     see Section <Ref Sect = "Standard examples"/>.  &Semigroups; also provides
