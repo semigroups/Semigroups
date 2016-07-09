@@ -43,7 +43,7 @@
 #     IsEndomorphismOfPartition(bl, x));
 # end;
 
-# from the `The rank of the semigroup of transformations stabilising a
+# From the `The rank of the semigroup of transformations stabilising a
 # partition of a finite set', by Araujo, Bentz, Mitchell, and Schneider (2014).
 
 InstallMethod(EndomorphismsPartition, "for a list of positive integers",
@@ -63,7 +63,8 @@ function(partition)
   fi;
 
   if not IsSortedList(partition) then
-    Sort(partition); #JDM does this copy? or should we?
+    partition := ShallowCopy(partition);
+    Sort(partition);
   fi;
 
   # preprocessing...
@@ -73,8 +74,7 @@ function(partition)
                   # size
   distinct := []; # indices of blocks with distinct block sizes
   equal := [];    # indices of blocks with at least one other block of equal
-                  # size,
-                # partitioned according to the sizes of the blocks
+                  # size, partitioned according to the sizes of the blocks
   prev := 0;      # size of the previous block
   n := 0;         # the degree of the transformations
   blocks := [];   # the actual blocks of the partition
@@ -181,9 +181,6 @@ function(partition)
                                Concatenation(y));
       Add(gens, AsTransformation(y));
     od;
-  elif s = 1 and r = 0 then
-    Append(gens, List(GeneratorsOfGroup(SymmetricGroup(blocks[1])),
-                      AsTransformation));
   elif s - r = 1 and r >= 1 then
     #JDM this case should be changed as in the previous case
     # 2 generators for the r-1 wreath products of symmetric groups
@@ -343,124 +340,79 @@ InstallMethod(IsFullMatrixSemigroup, "for a semigroup",
 
 #JDM method for IsFullMatrixSemigroup for a matrix semigroup
 
-# undocumented, from the semigroupe manual... JDM is this right?
-
-InstallMethod(MonoidOfMultiplicationByN, "for a positive integer",
-[IsPosInt],
-function(n)
-  local out, i;
-
-  out := EmptyPlist(n);
-  for i in [1 .. n] do
-    out[2 * i - 1] := i;
-    out[2 * i] := i;
-  od;
-
-  return Monoid(Transformation(out{[1 .. n]}),
-                Transformation(out{[n + 1 .. 2 * n]}));
+InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
+function(S)
+  return InverseSemigroup(GeneratorsOfMunnSemigroup(S), rec(small := true));
 end);
 
-if not (SEMIGROUPS.IsGrapeLoaded and SEMIGROUPS.IsGrapeCompiled) then
-  InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
-  function(S)
-    Info(InfoWarning, 1, GrapeIsNotCompiledString);
-    return fail;
-  end);
-else #TODO don't use Grape here!
-  # JDM use ClosureInverseSemigroup to improve things here!
-  InstallMethod(MunnSemigroup, "for a semilattice", [IsSemigroup],
-  function(s)
-    local sl, GraphFromIdeal, IdealOfSemilattice, AutGpIdeal,
-    d, max, ideals, out, min, n, f, j, g, not_iso, k, g_j, g_k, p, i;
+InstallMethod(GeneratorsOfMunnSemigroup, "for a semilattice", [IsSemigroup],
+function(S)
+  local po, au, id, su, gr, out, e, map, p, min, pos, x, i, j, k;
 
-    if not IsSemilattice(s) then
-      Info(InfoWarning, 1, "usage: argument should be a semilattice,");
-      return fail;
+  if not IsSemilattice(S) then
+    ErrorNoReturn("Semigroups: MunnSemigroup: usage,\n", 
+                  "the argument must be a semilattice");
+  fi;
+
+  po := DigraphReflexiveTransitiveClosure(Digraph(PartialOrderOfDClasses(S)));
+  au := []; # automorphism groups partitions by size
+  id := []; # ideals (as sets of indices) partitioned by size
+  su := []; # induced subdigraphs corresponding to ideals
+
+  for x in OutNeighbors(po) do 
+    gr := InducedSubdigraph(po, x);
+    if not IsBound(au[Length(x)]) then 
+      au[Length(x)] := [];
+      id[Length(x)] := [];
+      su[Length(x)] := [];
     fi;
+    Add(au[Length(x)], AutomorphismGroup(gr) 
+                       ^ MappingPermListList(DigraphVertices(gr), x));
+    Add(id[Length(x)], x);
+    Add(su[Length(x)], gr);
+  od;
 
-    sl := PartialOrderOfDClasses(s);
-
-    GraphFromIdeal := function(sl, ideal)
-      local adj, i;
-      adj := [];
-      for i in [1 .. Size(sl)] do
-        if i in ideal then
-          adj[i] := sl[i];
+  out := [PartialPerm(id[Length(id)][1], id[Length(id)][1])];
+  
+  for i in [Length(id), Length(id) - 1 .. 3] do
+    if not IsBound(id[i]) then 
+      continue;
+    fi;
+    for j in [1 .. Length(id[i])] do 
+      e := PartialPermNC(id[i][j], id[i][j]);
+      for p in GeneratorsOfGroup(au[i][j]) do 
+        Add(out, e * p);
+      od;
+      for k in [j + 1 .. Length(id[i])] do
+        map := IsomorphismDigraphs(su[i][j], su[i][k]);
+        if map <> fail then 
+          p := MappingPermListList(id[i][j], DigraphVertices(su[i][j]))
+               * map * MappingPermListList(DigraphVertices(su[i][k]), id[i][k]);
+          Add(out, e * p);
         fi;
       od;
-      return Graph(Group(()), ideal, OnPoints, function(i, j)
-                                                 return j in adj[i];
-                                               end, true);
-    end;
-
-    IdealOfSemilattice := function(sl, i)
-      local out;
-      out := Difference(Union(sl{sl[i]}), sl[i]);
-      return Union(sl[i], Union(List(out, x -> IdealOfSemilattice(sl, x))));
-    end;
-
-    AutGpIdeal := function(sl, ideal)
-      local g;
-      g := GraphFromIdeal(sl, ideal);
-      return AutGroupGraph(g) ^ (MappingPermListList(ideal,
-                                 Vertices(g)) ^ -1);
-    end;
-
-    d := List([1 .. Size(sl)], i -> IdealOfSemilattice(sl, i));
-    max := Maximum(List(d, Length));
-    ideals := List([1 .. max], x -> []);
-
-    for i in [1 .. Length(d)] do
-      Add(ideals[Length(d[i])], d[i]);
     od;
+  od;
+  
+  min := id[1][1][1]; # the index of the element in the minimal ideal
+  Add(out, PartialPermNC([min], [min]));
 
-    out := [];
-
-    min := ideals[1][1][1];
-    n := Size(sl);
-    Add(out, PartialPermNC([min], [min]));
-
-    for i in ideals[2] do
-      for j in ideals[2] do
-        f := ListWithIdenticalEntries(n, 0);
-        f[min] := min;
-        f[Difference(i, [min])[1]] := Difference(j, [min])[1];
-        Add(out, PartialPermNC(f));
-      od;
+  # All ideals of size 2 are isomorphic and have trivial automorphism group
+  for j in [1 .. Length(id[2])] do 
+    e := PartialPermNC(id[2][j], id[2][j]);
+    Add(out, e);
+    pos := Position(id[2][j], min);
+    for k in [j + 1 .. Length(id[2])] do
+      if Position(id[2][k], min) = pos then 
+        Add(out, PartialPermNC(id[2][j], id[2][k]));
+      else 
+        Add(out, PartialPermNC(id[2][j], Reversed(id[2][k])));
+      fi;
     od;
+  od;
 
-    for i in [3 .. Length(ideals)] do
-      while not ideals[i] = [] do
-        j := ideals[i][1];
-        ideals[i] := Difference(ideals[i], [j]);
-        f := PartialPermNC(j, j);
-        g := AutGpIdeal(sl, j);
-        if not IsTrivial(g) then
-          Append(out, List(GeneratorsOfGroup(g), x -> f * x));
-        else
-          Add(out, f);
-        fi;
-        not_iso := [];
-        for k in ideals[i] do
-          g_j := GraphFromIdeal(sl, j);
-          g_k := GraphFromIdeal(sl, k);
-          p := GraphIsomorphism(g_j, g_k);
-          if not p = fail then
-            p := MappingPermListList(j, Vertices(g_j))
-                 * p * MappingPermListList(Vertices(g_k), k);
-            Add(out, f * p);
-            Add(out, PartialPermNC(k, k) * p ^ -1);
-          else
-            Add(not_iso, k);
-          fi;
-        od;
-        ideals[i] := not_iso;
-      od;
-    od;
-
-    return InverseSemigroup(out);
-  end);
-fi;
+  return out;
+end);
 
 InstallMethod(OrderEndomorphisms, "for a positive integer",
 [IsPosInt],

@@ -19,7 +19,8 @@ DeclareSynonym("SingularTransformationMonoid",
                SingularTransformationSemigroup);
 
 # Partial perm semigroups
-DeclareOperation("MunnSemigroup", [IsSemigroup]);
+DeclareAttribute("MunnSemigroup", IsSemigroup);
+DeclareAttribute("GeneratorsOfMunnSemigroup", IsSemigroup);
 DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
 

@@ -256,10 +256,7 @@ true]]></Example>
         ideals of <A>S</A>; called the <E>Munn semigroup</E> of <A>S</A>.<P/> 
 
         This function was written jointly by J. D. Mitchell, Yann Peresse 
-        (St Andrews), Yanhui Wang (York). <P/>
-
-        <B>Please note:</B> the &Grape; package version &GRAPEVERS;
-        or higher must be available and compiled for this function to work.
+        (St Andrews), Yanhui Wang (York).
 
         <Example><![CDATA[
 gap> S := InverseSemigroup(
@@ -270,7 +267,7 @@ gap> S := InverseSemigroup(
 <inverse partial perm semigroup of rank 10 with 2 generators>
 gap> T := InverseSemigroup(Idempotents(S), rec(small := true));;
 gap> M := MunnSemigroup(T);
-<inverse partial perm semigroup of rank 60 with 188 generators>
+<inverse partial perm semigroup of rank 60 with 7 generators>
 gap> NrIdempotents(M);
 60
 gap> NrIdempotents(S);
