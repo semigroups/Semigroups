@@ -349,6 +349,21 @@ function(cong)
   return GeneratingPairsOfSemigroupCongruence(cong);
 end);
 
+# Not sure if this is still required or not. TODO delete or reinstate
+
+#InstallMethod(OneImmutable,
+#"for a congruence class",
+#[IsCongruenceClass],
+#function(class)
+#  local cong, one;
+#  cong := EquivalenceClassRelation(class);
+#  one := One(Range(cong));
+#  if one <> fail then
+#    return EquivalenceClassOfElementNC(cong, one);
+#  fi;
+#  return fail;
+#end);
+
 #
 
 InstallMethod(Enumerator,

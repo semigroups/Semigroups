@@ -123,6 +123,104 @@ _ViewStringForSemigroupsIdeals);
 MakeReadWriteGlobal("_ViewStringForSemigroupsIdeals");
 Unbind(_ViewStringForSemigroupsIdeals);
 
+BindGlobal("_ViewStringForSemigroupsIdeals",
+function(I)
+  local str, suffix, nrgens;
+
+  str := "\><";
+
+  if HasIsTrivial(I) and IsTrivial(I) then
+    Append(str, "\>trivial\< ");
+  else
+    if HasIsCommutative(I) and IsCommutative(I) then
+      Append(str, "\>commutative\< ");
+    fi;
+  fi;
+
+  if not IsGroup(I) then
+    if HasIsTrivial(I) and IsTrivial(I) then
+      # do nothing
+    elif HasIsZeroSimpleSemigroup(I) and IsZeroSimpleSemigroup(I) then
+      Append(str, "\>0-simple\< ");
+    elif HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I) then
+      Append(str, "\>simple\< ");
+    fi;
+
+    if HasIsInverseSemigroup(I) and IsInverseSemigroup(I) then
+      Append(str, "\>inverse\< ");
+    elif HasIsRegularSemigroup(I)
+        and not (HasIsSimpleSemigroup(I) and IsSimpleSemigroup(I)) then
+      if IsRegularSemigroup(I) then
+        Append(str, "\>regular\< ");
+      else
+        Append(str, "\>non-regular\< ");
+      fi;
+    fi;
+  fi;
+
+  Append(str, SemigroupViewStringPrefix(I));
+
+  if HasIsMonoid(I) and IsMonoid(I) then
+    Append(str, "\>monoid\< ");
+  else
+    Append(str, "\>semigroup\< ");
+  fi;
+  Append(str, "\>ideal\< ");
+
+  if HasIsTrivial(I) and not IsTrivial(I) and HasSize(I) then
+    Append(str, "\>of size\> ");
+    Append(str, ViewString(Size(I)));
+    Append(str, ",\<\< ");
+  fi;
+
+  suffix := SemigroupViewStringSuffix(I);
+  if suffix <> ""
+      and not (HasIsTrivial(I) and not IsTrivial(I) and HasSize(I)) then
+    suffix := Concatenation("of ", suffix);
+  fi;
+  Append(str, suffix);
+
+  nrgens := Length(GeneratorsOfSemigroupIdeal(I));
+
+  Append(str, "with\> ");
+  Append(str, ViewString(nrgens));
+  Append(str, "\< generator");
+
+  if nrgens > 1 or nrgens = 0 then
+    Append(str, "s\<");
+  else
+    Append(str, "\<");
+  fi;
+  Append(str, ">\<");
+
+  return str;
+end);
+
+InstallMethod(ViewString,
+"for a semigroup ideal with ideal generators",
+[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+1, #to beat the library method
+_ViewStringForSemigroupsIdeals);
+
+InstallMethod(ViewString,
+"for a semigroup ideal with ideal generators",
+[IsPartialPermSemigroup and IsInverseSemigroup and IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
+_ViewStringForSemigroupsIdeals);
+
+InstallMethod(ViewString,
+"for a semigroup ideal with ideal generators",
+[IsPartialPermMonoid and IsInverseMonoid and IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
+_ViewStringForSemigroupsIdeals);
+
+#
+
+MakeReadWriteGlobal("_ViewStringForSemigroupsIdeals");
+Unbind(_ViewStringForSemigroupsIdeals);
+
+#
+
 InstallMethod(PrintObj,
 "for a semigroup ideal with ideal generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
@@ -253,26 +351,30 @@ function(arg)
     # list of generators
     return SemigroupIdealByGenerators(arg[1], arg[2]);
 
-  elif IsMultiplicativeElement(arg[2])
-      or IsMultiplicativeElementCollection(arg[2]) then
+  elif (IsMultiplicativeElement(arg[2])
+        and IsGeneratorsOfSemigroup([arg[2]]))
+      or (IsMultiplicativeElementCollection(arg[2])
+          and IsGeneratorsOfSemigroup(arg[2]))
+      or (HasIsEmpty(arg[2]) and IsEmpty(arg[2])) then
     # generators and collections of generators
     out := [];
     for i in [2 .. Length(arg)] do
-      if IsMultiplicativeElement(arg[i]) then
+      #so that we can pass the options record in the Semigroups package
+      if i = Length(arg) and IsRecord(arg[i]) then
+        return SemigroupIdealByGenerators(arg[1], out, arg[i]);
+      elif IsMultiplicativeElement(arg[i]) and
+          IsGeneratorsOfSemigroup([arg[i]]) then
         Add(out, arg[i]);
-      elif IsMultiplicativeElementCollection(arg[i]) then
-        if HasGeneratorsOfSemigroup(arg[i]) then
-          Append(out, GeneratorsOfSemigroup(arg[i]));
-        elif HasGeneratorsOfSemigroupIdeal(arg[i]) then
+      elif IsGeneratorsOfSemigroup(arg[i]) then
+        if HasGeneratorsOfSemigroupIdeal(arg[i]) then
           Append(out, GeneratorsOfSemigroupIdeal(arg[i]));
+        elif HasGeneratorsOfSemigroup(arg[i]) then
+          Append(out, GeneratorsOfSemigroup(arg[i]));
         elif IsList(arg[i]) then
           Append(out, arg[i]);
         else
-          Append(out, AsList(arg[1]));
+          Append(out, AsList(arg[i]));
         fi;
-      elif i = Length(arg) and IsRecord(arg[i]) then
-        #so that we can pass the options record in the Semigroups package
-        return SemigroupIdealByGenerators(arg[1], out, arg[i]);
       else
         ErrorNoReturn("Semigroups: SemigroupIdeal: usage,\n",
                       "the second argument must be a ",
@@ -322,6 +424,10 @@ function(S, gens, opts)
   if not opts.generic
       and (IsActingSemigroup(S) or IsGeneratorsOfActingSemigroup(gens)) then
     filts := filts and IsActingSemigroup;
+  fi;
+
+  if IsMatrixSemigroup(S) then
+    filts := filts and IsMatrixSemigroup;
   fi;
 
   I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));

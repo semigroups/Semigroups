@@ -81,7 +81,9 @@ function(S)
 
   reps := ShallowCopy(DClassReps(S));
   p := Sortex(reps, function(x, y)
-                      return RankOfPartialPerm(x) > RankOfPartialPerm(y);
+                      return RankOfPartialPerm(x) > RankOfPartialPerm(y) 
+                             or (RankOfPartialPerm(x) = RankOfPartialPerm(y)
+                                 and x > y);
                     end);
 
   H := List(reps, e -> SchutzenbergerGroup(HClass(S, e)));
@@ -198,7 +200,7 @@ function(S)
   i := Position(Elements(T), MultiplicativeZero(S));
   gr := DigraphReflexiveTransitiveReduction(Digraph(NaturalPartialOrder(T)));
   prims := InNeighboursOfVertex(gr, i);
-  return Elements(T){prims};
+  return Elements(T){prims}; # TODO use EnumeratorSorted here
 end);
 
 InstallMethod(PrimitiveIdempotents, "for acting semigroup with inverse op",
@@ -661,6 +663,7 @@ function(coll, x)
     return Bipartition(out);
 
   elif IsBipartition(x) and IsPartialPermBipartition(x) then
+    #FIXME shouldn't there be a check here like above?
     return AsBipartition(SupremumIdempotentsNC(
                          List(coll, AsPartialPerm), PartialPerm([])),
                          DegreeOfBipartition(x));

@@ -10,6 +10,11 @@
 
 ReadPackage("semigroups/gap/smallestimage.g");
 
+ReadPackage("semigroups/gap/hash.gi");
+ReadPackage("semigroups/gap/matrix.gi");
+ReadPackage("semigroups/gap/semimat.gi");
+ReadPackage("semigroups/gap/grpsmat.gi");
+
 ReadPackage("semigroups/gap/elements/star.gi");
 ReadPackage("semigroups/gap/elements/pbr.gi");
 ReadPackage("semigroups/gap/elements/bipart.gi");

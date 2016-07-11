@@ -236,6 +236,10 @@ function(gens, opts)
     fi;
   fi;
 
+  if IsMatrixObj(gens[1]) then
+    filts := filts and IsMatrixSemigroup;
+  fi;
+
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   SetGeneratorsOfMagma(S, AsList(gens));
 
@@ -257,7 +261,7 @@ function(gens, opts)
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
 
-  if CanEasilyCompareElements(gens) then
+  if CanEasilyCompareElements(gens) or IsMatrixObj(gens[1]) then
     if (not IsPartialPermCollection(gens) or not opts.small)
         and IsMultiplicativeElementWithOneCollection(gens)
         and Length(gens) > 1 then
@@ -318,6 +322,10 @@ function(gens, opts)
     if opts.regular then
       filts := filts and IsRegularSemigroup;
     fi;
+  fi;
+  
+  if IsMatrixObj(gens[1]) then
+    filts := filts and IsMatrixSemigroup;
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));

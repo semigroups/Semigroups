@@ -278,6 +278,8 @@ function(R)
                     Random(Columns(R)), Matrix(ParentAttr(R))]);
 end);
 
+# TODO a proper method here
+
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a collection of Rees 0-matrix semigroup elements",
 [IsReesZeroMatrixSemigroupElementCollection], ReturnFalse);
@@ -480,9 +482,8 @@ function(R)
 
   # Check that non-zero matrix entries are units of the inverse monoid <U>
   G := GroupOfUnits(U);
-  return G <> fail
-      and ForAll(elts, x -> x in G)
-      and IsInverseSemigroup(U);
+
+  return G <> fail and ForAll(elts, x -> x in G) and IsInverseSemigroup(U);
 end);
 
 #

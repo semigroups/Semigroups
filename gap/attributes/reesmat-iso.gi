@@ -323,8 +323,8 @@ function(R)
   if Length(GeneratorsOfGroup(aut_graph)) = 0 then
     aut_graph := Group(());
   fi;
-  SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
 
+  SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
   Size(aut_graph); # for genss
 
   # stabiliser of the matrix under rearranging rows and columns by elements
@@ -507,6 +507,7 @@ function(R)
   else
     aut_graph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
   fi;
+
   SEMIGROUPS.InfoStatement(2, true, Size(aut_graph), " found");
   Size(aut_graph); # for genss
 
@@ -723,7 +724,6 @@ function(R1, R2)
   fi;
   return fail;
 end);
-
 
 InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups",
 [IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],

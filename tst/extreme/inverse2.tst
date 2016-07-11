@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/inverse.tst
+#W  extreme/inverse.tst
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/inverse.tst");
+gap> START_TEST("Semigroups package: standard/inverse2.tst");
 gap> LoadPackage("semigroups", false);;
 
 # 
@@ -954,6 +954,33 @@ gap> for i in [1 .. 100] do NextIterator(iter); od;
 gap> iter := IteratorOfLClasses(s);
 <iterator of L-classes>
 gap> for i in [1 .. 100] do NextIterator(iter); od;
+gap> s:=RandomInverseSemigroup(2,20);;
+gap> iter:=IteratorOfDClassReps(s);
+<iterator>
+gap> s:=RandomInverseSemigroup(2,100);;
+gap> iter:=IteratorOfLClassReps(s);
+<iterator>
+gap> for i in [1..10000] do NextIterator(iter); od;
+gap> s:=RandomInverseSemigroup(2,10);;
+gap> iter:=IteratorOfLClassReps(s);
+<iterator>
+gap> for i in iter do od;
+gap> iter:=IteratorOfDClassReps(s);
+<iterator>
+gap> for i in iter do od;
+gap> iter:=IteratorOfRClassReps(s);
+<iterator>
+gap> for i in iter do od;
+
+#T# InverseTest16
+gap> s:=RandomInverseSemigroup(100,100);
+<inverse partial perm semigroup of rank 100 with 100 generators>
+gap> iter:=IteratorOfRClasses(s);       
+<iterator>
+gap> for i in [1..100] do NextIterator(iter); od;
+gap> iter:=IteratorOfLClasses(s);      
+<iterator>
+gap> for i in [1..100] do NextIterator(iter); od;
 
 #T# InverseTest17
 gap> s := InverseSemigroup(
@@ -1056,4 +1083,4 @@ gap> Unbind(r);
 gap> Unbind(s);
 
 #E# 
-gap> STOP_TEST("Semigroups package: standard/inverse.tst");
+gap> STOP_TEST("Semigroups package: standard/inverse2.tst");

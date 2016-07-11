@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  PackageInfo.g
-#Y  Copyright (C) 2011-15                                James D. Mitchell
+#Y  Copyright (C) 2011-16                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,14 +9,14 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.0">
-##  <!ENTITY GAPVERS "4.8.0">
+##  <!ENTITY VERSION "3.0.0">
+##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.5.1">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.0">
-##  <!ENTITY COPYRIGHTYEARS "2011-15">
+##  <!ENTITY ARCHIVENAME "semigroups-3.0.0">
+##  <!ENTITY COPYRIGHTYEARS "2011-16">
 ##  <#/GAPDoc>
 
 BindGlobal("_RecogsFunnyNameFormatterFunction",
@@ -42,8 +42,21 @@ PackageName := "Semigroups",
 Subtitle := "",
 Version := "3.0.0",
 Date := "01/01/3000",
-ArchiveURL := "http://tinyurl.com/jdmitchell/semigroups/semigroups-3.0.0",
 ArchiveFormats := ".tar.gz",
+
+SourceRepository := rec(
+    Type := "git",
+    URL := Concatenation( "https://github.com/gap-packages/", ~.PackageName ),
+),
+
+IssueTrackerURL := Concatenation(~.SourceRepository.URL, "/issues"),
+PackageWWWHome  := Concatenation("https://gap-packages.github.io/",
+                                 ~.PackageName),
+README_URL      := Concatenation(~.PackageWWWHome, "/README.md"),
+PackageInfoURL  := Concatenation(~.PackageWWWHome, "/PackageInfo.g"),
+ArchiveURL      := Concatenation(~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/", "semigroups-", ~.Version),
 Persons := [
   rec(
     LastName      := "Mitchell",
@@ -51,7 +64,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
-    WWWHome       := "http://tinyurl.com/jdmitchell",
+    WWWHome       := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
@@ -61,8 +74,8 @@ Persons := [
   ),
 
   rec(
-    LastName      := "Delgado",
-    FirstNames    := "Manuel",
+    LastName     := "Delgado",
+    FirstNames    := "M.",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "mdelgado@fc.up.pt",
@@ -77,26 +90,30 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "j.east@uws.edu.au",
-    WWWHome       := "http://www.uws.edu.au/staff_profiles/uws_profiles/doctor_james_east",
+    WWWHome       := "http://goo.gl/MuiJu5",
     Place         := "Sydney",
     Institution   := "University of Western Sydney"
   ),
 
   rec(
     LastName      := "Egri-Nagy",
-    FirstNames    := "Attila",
+    FirstNames    := "A.",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "attila@egri-nagy.hu",
     WWWHome       := "http://www.egri-nagy.hu",
-    PostalAddress := Concatenation( [
-                       "University of Hertfordshire\n",
-                       "STRI\n",
-                       "College Lane\n",
-                       "AL10 9AB\n",
-                       "United Kingdom" ] ),
-    Place         := "Hatfield, Herts",
-    Institution   := "UH"
+    Place         := "Akita, Japan",
+    Institution   := "Akita International University"
+  ),
+  rec(
+    LastName      := "Ham",
+    FirstNames    := "N.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "nicholas.charles.ham@gmail.com",
+    WWWHome       := "https://n-ham.github.io",
+    Place         := "Hobart, Tasmania",
+    Institution   := "University of Tasmania"
   ),
   rec(
     LastName      := "Jonusas",
@@ -108,13 +125,14 @@ Persons := [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
                        " Scotland"] ),
+    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~julius/",
     Place         := "St Andrews",
     Institution   := "University of St Andrews"
   ),
 
    rec(
     LastName      := "Pfeiffer",
-    FirstNames    := "Markus",
+    FirstNames    := "M.",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
@@ -149,6 +167,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
+    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~mct25/",
     PostalAddress := Concatenation( [
                        "Mathematical Institute,",
                        " North Haugh,", " St Andrews,", " Fife,", " KY16 9SS,",
@@ -174,16 +193,9 @@ Persons := [
   )],
 
 Status := "deposited",
-
-README_URL :=
-  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/README.md",
-PackageInfoURL :=
-  "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups/PackageInfo.g",
-
+#FIXME update the AbstractHTML
 AbstractHTML :=
-"<p>The <strong class=\"pkg\">Semigroups</strong> package is a <strong class=\"pkg\">GAP</strong> package containing methods for semigroups, monoids, and inverse semigroups, principally of transformations, partial permutations, bipartitions, subsemigroups of regular Rees 0-matrix semigroups, free inverse semigroups, and free bands.</p>\n\n <p><strong class=\"pkg\">Semigroups</strong> contains more efficient methods than those available in the <strong class=\"pkg\">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups, monoids, and inverse semigroup, calculating their Green's structure, ideals, size, elements, group of units, small generating sets, testing membership, finding the inverses of a regular element, factorizing elements over the generators, and many more. It is also possible to test if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties.</p>\n\n <p>There are methods for finding congruences of certain types of semigroups, the normalizer of a semigroup in a permutation group, the maximal subsemigroups of a finite semigroup, and smaller degree partial permutation representations of inverse semigroups. There are functions for producing pictures of the Green's structure of a semigroup, and for drawing bipartitions.</p>",
-
-PackageWWWHome := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php",
+"<p>The <strong class=\"pkg\">Semigroups</strong> package is a <strong class=\"pkg\">GAP</strong> package containing methods for semigroups, monoids, and inverse semigroups, principally of transformations, partial permutations, bipartitions, subsemigroups of regular Rees 0-matrix semigroups, free inverse semigroups, free bands, and semigroups of matrices over finite fields.</p> <p><strong class=\"pkg\">Semigroups</strong> contains more efficient methods than those available in the <strong class=\"pkg\">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups, monoids, and inverse semigroup, calculating their Green's structure, ideals, size, elements, group of units, small generating sets, testing membership, finding the inverses of a regular element, factorizing elements over the generators, and many more. It is also possible to test if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties.</p> <p>There are methods for finding congruences of certain types of semigroups, the normalizer of a semigroup in a permutation group, the maximal subsemigroups of a finite semigroup, and smaller degree partial permutation representations of inverse semigroups. There are functions for producing pictures of the Green's structure of a semigroup, and for drawing bipartitions.</p>",
 
 PackageDoc := rec(
   BookName  := "Semigroups",
@@ -191,23 +203,24 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Semigroups - Methods for semigroups",
+  LongTitle := "Semigroups",
   Autoload  := true
 ),
 
 Dependencies := rec(
-  GAP := ">=4.8.0",
+  GAP := ">=4.9.0",
   NeededOtherPackages := [["orb", ">=4.7.3"],
                           ["io", ">=4.4.4"],
                           ["digraphs", ">=0.5.1"],
                           ["genss", ">=1.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
+  
   ExternalConditions := []),
 
   BannerString := Concatenation(
   "----------------------------------------------------------------------",
   "-------\n",
-  "Loading  Semigroups ", ~.Version, " - methods for semigroups\n",
+  "Loading  Semigroups ", ~.Version, "\n",
   "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
         " (", ~.Persons[1].WWWHome, ")\n",
   "with contributions by:\n",
@@ -220,8 +233,7 @@ Dependencies := rec(
   _RecogsFunnyNameFormatterFunction(
     _RecogsFunnyWWWURLFunction(~.Persons[Length(~.Persons)])),".\n",
   "-----------------------------------------------------------------------",
-  "------\n"
-),
+  "------\n"),
 
   AvailabilityTest := function()
     if (not "semigroups" in SHOW_STAT()) and

@@ -673,7 +673,7 @@ gap> S := Semigroup(Transformation([3, 2, 1, 5, 4]),
 >                   Transformation([5, 5, 4, 5, 1]), 
 >                   Transformation([4, 5, 4, 3, 3]));;
 gap> iter := IteratorOfRClassReps(S);
-<iterator of R-class reps>
+<iterator>
 gap> NextIterator(iter);
 Transformation( [ 3, 2, 1, 5, 4 ] )
 gap> NextIterator(iter);
@@ -687,7 +687,7 @@ gap> S := InverseSemigroup(ReadGenerators(file, 1));
 gap> NrMovedPoints(S);
 983
 gap> iter := IteratorOfLClassReps(S);
-<iterator of L-class reps>
+<iterator>
 gap> NextIterator(iter);
 <partial perm on 634 pts with degree 1000, codegree 1000>]]></Example>
   </Description>
@@ -737,7 +737,7 @@ gap> gens := [Transformation([2, 4, 1, 5, 4, 4, 7, 3, 8, 1]),
 >             Transformation([10, 7, 3, 7, 1, 9, 8, 8, 4, 10])];;
 gap> S := Semigroup(gens);;
 gap> iter := IteratorOfRClasses(S);
-<iterator of R-classes>
+<iterator>
 gap> for R in iter do
 > if Size(R) > 1 then 
 >   break; fi;
@@ -1006,7 +1006,7 @@ true]]></Example>
 <ManSection>
   <Attr Name = "SchutzenbergerGroup" Arg = "class"/>
   <Returns> 
-    A permutation group.
+    A group.
   </Returns>
   <Description>
   <C>SchutzenbergerGroup</C> returns the generalized Schutzenberger group

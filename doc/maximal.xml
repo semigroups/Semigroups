@@ -79,21 +79,18 @@
       <Item>
         <E>This option is relevant only if <A>S</A> is a regular Rees
           (0-)matrix semigroup over a group.</E>
-
         <P/>
 
         As described at the start of this subsection, <Ref Sect = 
           "Computing maximal subsemigroups" />, a maximal subsemigroup of a
         regular Rees (0-)matrix semigroup over a group is one of 6 possible
         types.
-
         <P/>
         
         If <A>S</A> is a regular Rees (0-)matrix semigroup over a group and
         <C><A>opts</A>.types</C> is a subset of <C>[1 .. 6]</C>, then
         <C>MaximalSubsemigroups</C> will search for those maximal subsemigroups
         of <A>S</A> of the types enumerated by <C><A>opts</A>.types</C>.
-
         <P/>
         
         The default value for this option is <C>[1 .. 6]</C> (i.e. no
@@ -221,5 +218,3 @@ false]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
-
-#EOF

@@ -18,6 +18,7 @@ DeclareAttribute("IdempotentGeneratedSubsemigroup", IsSemigroup);
 DeclareAttribute("InjectionPrincipalFactor", IsGreensDClass);
 DeclareAttribute("InjectionNormalizedPrincipalFactor", IsGreensDClass);
 DeclareAttribute("RepresentativeOfMinimalIdeal", IsSemigroup);
+DeclareOperation("RepresentativeOfMinimalIdealNC", [IsSemigroup]);
 DeclareSynonymAttr("RepresentativeOfMinimalDClass",
                    RepresentativeOfMinimalIdeal);
 DeclareAttribute("MinimalIdeal", IsSemigroup);
@@ -58,3 +59,5 @@ DeclareAttribute("IsGreensDLeq", IsSemigroup);
 
 DeclareAttribute("SmallerDegreeTransformationRepresentation", IsSemigroup);
 DeclareAttribute("SmallDegreeTransformationRepresentation", IsSemigroup);
+DeclareAttribute("UnderlyingSemigroupOfSemigroupWithAdjoinedZero",
+                 IsSemigroup);

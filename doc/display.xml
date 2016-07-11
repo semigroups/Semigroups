@@ -261,7 +261,7 @@ ent}"]]></Log>
           this option is <K>true</K>.
         </Item>
       </List>
-      <Log><![CDATA[
+      <Log><![CDATA[#FIXME
 gap> S := FullTransformationSemigroup(3);
 <full transformation semigroup on 3 pts>
 gap> DotString(S);        
@@ -303,7 +303,7 @@ gap> FileString("t3.dot", DotString(S));
       For details about this file format, and information about how to display
       or edit this format see <URL>http://www.graphviz.org</URL>. <P/>
 
-      <Log><![CDATA[
+      <Log><![CDATA[#FIXME 
 gap> S := DualSymmetricInverseMonoid(4);
 <inverse bipartition monoid on 4 pts with 3 generators>
 gap> DotSemilatticeOfIdempotents(S);

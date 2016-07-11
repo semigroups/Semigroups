@@ -599,7 +599,7 @@ function(data, limit, record)
       fi;
 
       for n in [1 .. repslens[m][ind]] do
-        if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x)) = () then
+        if SchutzGpMembership(I)(schutz, lambdaperm(reps[m][ind][n], x)) then
           if pos <> fail then
             AddSet(poset[i], datalookup[repslookup[m][ind][n]]);
           fi;
@@ -879,7 +879,7 @@ function(x, I)
     return true;
   fi;
   Assert(1, schutz <> false);
-  return SiftedPermutation(schutz, LambdaPerm(I)(reps[m][ind][1], x)) = ();
+  return SchutzGpMembership(I)(schutz, LambdaPerm(I)(reps[m][ind][1], x)) = ();
 end);
 
 # JDM; this method could be removed later...

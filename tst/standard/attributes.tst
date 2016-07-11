@@ -1000,6 +1000,39 @@ gap> S := Semigroup([Transformation([1,3,1]), Transformation([2,2,2])]);;
 gap> SmallerDegreeTransformationRepresentation(S);
 IdentityMapping( <transformation semigroup of degree 3 with 2 generators> )
 
+#T# AttributesTest6:
+# UnderlyingSemigroupOfSemigroupWithAdjoinedZero
+gap> S := FullTransformationMonoid(10);;
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := FullTransformationMonoid(4);;
+gap> SetIsSemigroupWithAdjoinedZero(S, false);
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := SymmetricInverseMonoid(5);;
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := MonogenicSemigroup(4, 1);
+<commutative non-regular transformation semigroup of size 4, degree 5 with 1 
+ generator>
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := Semigroup(Elements(S));
+<transformation semigroup of degree 5 with 4 generators>
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+fail
+gap> S := Semigroup([PartialPerm([]), PartialPerm([1])]);
+<partial perm monoid of rank 1 with 2 generators>
+gap> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
+<trivial partial perm group of rank 1 with 1 generator>
+
+#T# attributes: IrredundantGeneratingSubset: for a set with a single repeated
+# element
+gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
+<transformation semigroup of degree 2 with 2 generators>
+gap> Size(IrredundantGeneratingSubset(S));
+1
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);

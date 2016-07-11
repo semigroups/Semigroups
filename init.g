@@ -40,6 +40,7 @@ SEMIGROUPS.PackageDir := PackageInfo("semigroups")[1]!.InstallationPath;
 
 ReadPackage("semigroups/gap/options.g");
 
+<<<<<<< HEAD
 ReadPackage("semigroups/gap/elements/star.gd");
 ReadPackage("semigroups/gap/elements/pbr.gd");
 ReadPackage("semigroups/gap/elements/bipart.gd");
@@ -111,4 +112,12 @@ ReadPackage("semigroups/gap/fp/freeband.gd");
 
 ReadPackage("semigroups/gap/obsolete.gd");
 
+#FIXME 
+
+ReadPackage("semigroups/gap/hash.gd");
+ReadPackage("semigroups/gap/matrix.gd");
+ReadPackage("semigroups/gap/semimat.gd");
+ReadPackage("semigroups/gap/grpsmat.gd");
+
+DeclareInfoClass("InfoMatrixSemigroups");
 DeclareInfoClass("InfoSemigroups");

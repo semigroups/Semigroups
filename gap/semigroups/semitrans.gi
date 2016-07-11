@@ -407,7 +407,7 @@ function(S)
   return Maximum(List(RClasses(S), SEMIGROUPS.LargestElementRClass));
 end);
 
-# different method required (but not yet given!! JDM) for ideals
+# different method required (but not yet given!! JDM FIXME) for ideals
 
 InstallMethod(IsTransitive,
 "for a transformation semigroup with generators",
@@ -600,26 +600,14 @@ function(gens, n)
   return Length(squashed) = n + Binomial(n, 2);
 end);
 
-InstallMethod(RepresentativeOfMinimalIdeal, "for a transformation semigroup",
+InstallMethod(RepresentativeOfMinimalIdealNC, "for a transformation semigroup",
 [IsTransformationSemigroup], RankFilter(IsActingSemigroup),
 # to beat the default method for acting semigroups
 function(S)
   local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
   marked, squashed, j, t, im, reduced, y, i, k, x;
 
-  if IsSemigroupIdeal(S) and
-      (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
-       or not HasGeneratorsOfSemigroup(S)) then
-    return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
-  fi;
-
   gens := GeneratorsOfSemigroup(S);
-
-  # This catches T_1. This also catches known trivial semigroups.
-  if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
-    return gens[1];
-  fi;
-
   nrgens := Length(gens);
   n := DegreeOfTransformationSemigroup(S); # Smallest n such that S <= T_n
                                            # We must have n >= 2.
@@ -842,6 +830,8 @@ InstallMethod(DegreeOfTransformationSemigroup,
 function(I)
   return DegreeOfTransformationSemigroup(SupersemigroupOfIdeal(I));
 end);
+
+# TODO replace this method with one using Digraphs
 
 InstallMethod(ComponentRepsOfTransformationSemigroup,
 "for a transformation semigroup", [IsTransformationSemigroup],

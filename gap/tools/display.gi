@@ -342,6 +342,12 @@ function(x, opts)
     draw := i -> "  \\draw(";
   fi;
 
+  if IsBound(opts.labels) then 
+    labels := opts.labels;
+  else 
+    labels := true;
+  fi;
+
   ext := ExtRepOfObj(x);
   n   := DegreeOfBipartition(x);
 
@@ -367,22 +373,26 @@ function(x, opts)
         Append(str, fill(j));
         Append(str, String(i));
         Append(str, ", 2)circle(.125);\n");
-        Append(str, draw(j));
-        Append(str, String(i - 0.05));
-        Append(str, ", 2.2) node [above] {$");
-        Append(str, String(i));
-        Append(str, "$};");
-        Append(str, "\n");
+        if labels then 
+          Append(str, draw(j));
+          Append(str, String(i - 0.05));
+          Append(str, ", 2.2) node [above] {$");
+          Append(str, String(i));
+          Append(str, "$};");
+          Append(str, "\n");
+        fi;
       else
         Append(str, fill(j));
-        Append(str, String(- i));
+        Append(str, String(-i));
         Append(str, ", 0)circle(.125);\n");
-        Append(str, draw(j));
-        Append(str, String(- i));
-        Append(str, ", -0.2) node [below] {$-");
-        Append(str, String(- i));
-        Append(str, "$};");
-        Append(str, "\n");
+        if labels then 
+          Append(str, draw(j));
+          Append(str, String(-i));
+          Append(str, ", -0.2) node [below] {$-");
+          Append(str, String(-i));
+          Append(str, "$};");
+          Append(str, "\n");
+        fi;
       fi;
     od;
 

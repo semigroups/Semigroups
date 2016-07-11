@@ -704,28 +704,31 @@ function(S)
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if IsSemigroupIdeal(S) and
+  elif IsSemigroupIdeal(S) and
       (HasRepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S))
        or not HasGeneratorsOfSemigroup(S)) then
     return RepresentativeOfMinimalIdeal(SupersemigroupOfIdeal(S));
-  fi;
-
-  # This catches known trivial semigroups
-  # WW: The idea is to quickly get at an arbitrary element of the semigroup
-  if HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+  elif HasIsSimpleSemigroup(S) and IsSimpleSemigroup(S) then
+    # This catches known trivial semigroups
+    # WW: The idea is to quickly get at an arbitrary element of the semigroup
     return Representative(S);
   fi;
 
+  return RepresentativeOfMinimalIdealNC(S);
+end);
+  
+InstallMethod(RepresentativeOfMinimalIdealNC, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local data, comps;
+
   data := Enumerate(GenericSemigroupData(S));
   comps := GreensRRelation(S)!.data.comps;
-  return SEMIGROUP_AS_LIST(data)[comps[1][1]];
+  return SEMIGROUP_AS_LIST(data)[comps[1][1]]; 
+  #TODO use enumerator here instead
   # the first component (i.e. the inner most) of the strongly connected
   # components of the right Cayley graph corresponds the minimal ideal.
 end);
-
-#
 
 ################################################################################
 # SmallDegreeTransRepFromLattice: used for two user-facing functions (see below)
@@ -807,4 +810,36 @@ function(G, x)
   iso := IsomorphismPermGroup(G);
   inv := InverseGeneralMapping(iso);
   return [((x ^ iso) ^ -1) ^ inv];
+end);
+
+InstallMethod(UnderlyingSemigroupOfSemigroupWithAdjoinedZero,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  local zero, gens, T;
+
+  if HasIsSemigroupWithAdjoinedZero(S)
+      and not IsSemigroupWithAdjoinedZero(S) then
+    return fail;
+  fi;
+
+  zero := MultiplicativeZero(S);
+  if zero = fail then
+    return fail;
+  fi;
+
+  gens := GeneratorsOfSemigroup(S);
+  if Length(gens) = 1 then
+    return fail;
+  fi;
+  if not zero in gens then
+    return fail;
+  fi;
+
+  T := Semigroup(Difference(gens, [zero]));
+
+  if zero in T then
+    return fail;
+  fi;
+  return T;
 end);

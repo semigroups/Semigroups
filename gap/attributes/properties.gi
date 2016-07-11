@@ -512,8 +512,8 @@ function(S)
   iter := IteratorOfRClasses(S);
 
   for x in iter do
-    if (not IsTrivial(SchutzenbergerGroup(x))) or
-        Length(LambdaOrbSCC(x)) > 1 then
+    if (not IsTrivial(SchutzenbergerGroup(x)))
+        or Length(LambdaOrbSCC(x)) > 1 then
       return false;
     fi;
   od;
@@ -663,10 +663,9 @@ function(S)
       fi;
     od;
     return true;
-  else
-    return NrLClasses(S) = NrRClasses(S) and NrIdempotents(S) = NrRClasses(S);
   fi;
 
+  return NrLClasses(S) = NrRClasses(S) and NrIdempotents(S) = NrRClasses(S);
 end);
 
 # same method for ideals
@@ -695,8 +694,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsLeftSimple, "for an inverse semigroup",
-[IsInverseSemigroup],
-IsGroupAsSemigroup);
+[IsInverseSemigroup], IsGroupAsSemigroup);
 
 # different method for ideals without generators
 
@@ -705,6 +703,11 @@ InstallMethod(IsLeftZeroSemigroup,
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local gens, lambda, val, x;
+
+  if HasParent(S) and HasIsLeftZeroSemigroup(Parent(S))
+      and IsLeftZeroSemigroup(Parent(S)) then
+    return true;
+  fi;
 
   gens := GeneratorsOfSemigroup(S);
   lambda := LambdaFunc(S);
@@ -784,7 +787,7 @@ function(S)
 
   I := MinimalIdeal(S);
 
-  if not IsGroupAsSemigroup(I) then
+  if not (IsGroup(I) or IsGroupAsSemigroup(I)) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -911,7 +914,7 @@ function(S)
 
   I := MinimalIdeal(S);
 
-  if not IsGroupAsSemigroup(I) then
+  if not (IsGroup(I) or IsGroupAsSemigroup(I)) then
     Info(InfoSemigroups, 2, "the minimal ideal is not a group.");
     return false;
   elif not IsCyclic(Range(IsomorphismPermGroup(I))) then
@@ -1333,8 +1336,7 @@ end);
 # same method for ideals
 
 InstallMethod(IsRightSimple, "for an inverse semigroup",
-[IsInverseSemigroup],
-IsGroupAsSemigroup);
+[IsInverseSemigroup], IsGroupAsSemigroup);
 
 # different method for ideals
 
@@ -1343,6 +1345,11 @@ InstallMethod(IsRightZeroSemigroup,
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local gens, rho, val, x;
+
+  if HasParent(S) and HasIsRightZeroSemigroup(Parent(S))
+      and IsRightZeroSemigroup(Parent(S)) then
+    return true;
+  fi;
 
   gens := GeneratorsOfSemigroup(S);
   rho := RhoFunc(S);
@@ -1382,7 +1389,11 @@ IsIdempotentGenerated);
 
 InstallMethod(IsSemilattice, "for a semigroup", [IsSemigroup],
 function(S)
-  return IsCommutativeSemigroup(S) and IsInverseSemigroup(S) and IsBand(S);
+  if HasParent(S) and HasIsSemilattice(Parent(S))
+      and IsSemilattice(Parent(S)) then
+    return true;
+  fi;
+  return IsCommutativeSemigroup(S) and IsBand(S);
 end);
 
 # not applicable to ideals
@@ -1393,6 +1404,9 @@ InstallMethod(IsSemilattice,
 function(S)
   if not IsFinite(S) then
     TryNextMethod();
+  elif HasParent(S) and HasIsSemilattice(Parent(S))
+      and IsSemilattice(Parent(S)) then
+    return true;
   fi;
   return ForAll(GeneratorsOfSemigroup(S), IsIdempotent);
 end);
@@ -1421,7 +1435,10 @@ InstallMethod(IsSimpleSemigroup, "for an acting semigroup",
 function(S)
   local gens, lambdafunc, lambdarank, rank, opts, o, pos, iter, name, f;
 
-  if HasIsCompletelyRegularSemigroup(S)
+  if HasIsRegularSemigroup(S) and not IsRegularSemigroup(S) then
+    Info(InfoSemigroups, 2, "the semigroup is not regular");
+    return false;
+  elif HasIsCompletelyRegularSemigroup(S)
       and not IsCompletelyRegularSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not completely regular");
     return false;
@@ -1595,11 +1612,6 @@ function(S)
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if HasParent(S) and HasIsZeroRectangularBand(Parent(S))
-      and IsZeroRectangularBand(Parent(S)) then
-    return S = Parent(S);
   elif not IsZeroSimpleSemigroup(S) then
     Info(InfoSemigroups, 2, "the semigroup is not 0-simple");
     return false;
@@ -1711,7 +1723,13 @@ InstallMethod(IsFinite, "for a finitely presented semigroup",
 function(S)
   if IsEmpty(RelationsOfFpSemigroup(S)) or
       ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2])) then
+#TODO add nr gens is higher than nr relations
     return false;
   fi;
   TryNextMethod();
 end);
+
+InstallMethod(IsSemigroupWithAdjoinedZero,
+"for a semigroup",
+[IsSemigroup],
+x -> UnderlyingSemigroupOfSemigroupWithAdjoinedZero(x) <> fail);

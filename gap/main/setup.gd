@@ -43,6 +43,10 @@ DeclareAttribute("RhoFunc", IsSemigroup);
 
 DeclareAttribute("RhoInverse", IsSemigroup);
 DeclareAttribute("LambdaInverse", IsSemigroup);
+DeclareAttribute("LambdaBound", IsSemigroup);
+DeclareAttribute("RhoBound", IsSemigroup);
+DeclareAttribute("LambdaIdentity", IsSemigroup);
+DeclareAttribute("RhoIdentity", IsSemigroup);
 DeclareAttribute("LambdaPerm", IsSemigroup);
 DeclareAttribute("LambdaConjugator", IsSemigroup);
 
@@ -53,5 +57,6 @@ DeclareAttribute("IdempotentTester", IsSemigroup);
 DeclareAttribute("IdempotentCreator", IsSemigroup);
 
 DeclareAttribute("StabilizerAction", IsSemigroup);
+DeclareAttribute("SchutzGpMembership", IsSemigroup);
 
 DeclareOperation("FakeOne", [IsMultiplicativeElementCollection]);

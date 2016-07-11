@@ -321,8 +321,8 @@ function(S, coll, opts)
             # the Schutzenberger group is neither trivial nor symmetric group
             old := false;
             for n in [1 .. repslens[m][ind]] do
-              if SiftedPermutation(schutz, lambdaperm(reps[m][ind][n], x))
-                  = () then
+              if SchutzGpMembership(s)(schutz, lambdaperm(reps[m][ind][n], x))
+                  then 
                 old := true;
                 old_to_new[i] := repslookup[m][ind][n];
                 break;
@@ -587,7 +587,7 @@ function(x, S)
     return false;
   fi;
 
-  return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
+  return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep, x));
 end);
 
 # same method for inverse ideals
@@ -685,7 +685,7 @@ function(x, S)
     # the D-class rep corresponding to lambda_o and scc.
     rep := LambdaOrbMult(LambdaOrb(S), m, rho_l)[1] * rep;
   fi;
-  return SiftedPermutation(schutz, LambdaPerm(S)(rep, x)) = ();
+  return SchutzGpMembership(s)(schutz, LambdaPerm(s)(rep, f));
 end);
 
 #############################################################################

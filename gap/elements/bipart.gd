@@ -8,7 +8,6 @@
 #############################################################################
 ##
 
-
 DeclareCategoryKernel("IsBipartition",
                       IsMultiplicativeElementWithInverse 
                       and IsAssociativeElementWithStar,

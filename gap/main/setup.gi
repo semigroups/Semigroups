@@ -61,6 +61,10 @@ end);
 # FIXME this shouldn't be here because some RZMS are not acting, if they are
 # defined over a transformation semigroup for example.
 
+InstallMethod(IsGeneratorsOfActingSemigroup,
+"for an matrix over finite field collection",
+[IsMatrixOverFiniteFieldCollection], IsGeneratorsOfSemigroup);
+
 # the largest point involved in the action
 
 InstallMethod(ActionDegree, "for a transformation",
@@ -83,6 +87,9 @@ function(x)
   fi;
 end);
 
+InstallMethod(ActionDegree, "for an matrix over finite field object",
+[IsMatrixOverFiniteField], DegreeOfMatrixOverFiniteField);
+
 InstallMethod(ActionDegree, "for a transformation collection",
 [IsTransformationCollection], DegreeOfTransformationCollection);
 
@@ -103,6 +110,17 @@ function(coll)
   else
     return 0;
   fi;
+end);
+
+InstallMethod(ActionDegree, "for a matrix object collection",
+[IsHomogeneousList and IsMatrixOverFiniteFieldCollection],
+function(coll)
+  if Length(coll) = 0 then
+    Error("Semigroups: ActionDegree: usage,\n",
+          "the argument <coll> must be non-empty");
+    return;
+  fi;
+  return DegreeOfMatrixOverFiniteField(coll[1]);
 end);
 
 InstallMethod(ActionDegree, "for a transformation semigroup",
@@ -130,9 +148,15 @@ function(R)
   fi;
 end);
 
+InstallMethod(ActionDegree, "for an matrix over finite field semigroup",
+[IsMatrixSemigroup],
+function(S)
+    return ActionDegree(Representative(S));
+end);
+
 # the number of points in the range of the action
 
-InstallMethod(ActionRank, "for a transformation and positive integer",
+InstallMethod(ActionRank, "for a transformation and integer",
 [IsTransformation, IsInt], RANK_TRANS_INT);
 
 InstallMethod(ActionRank, "for a transformation semigroup",
@@ -145,7 +169,7 @@ function(s)
   end;
 end);
 
-InstallMethod(ActionRank, "for a partial perm and positive integer",
+InstallMethod(ActionRank, "for a partial perm and integer",
 [IsPartialPerm, IsInt],
 function(f, n)
   return RankOfPartialPerm(f);
@@ -166,7 +190,8 @@ function(S)
   return RankOfBipartition;
 end);
 
-InstallMethod(ActionRank, "for a Rees 0-matrix semigroup element",
+InstallMethod(ActionRank,
+"for a Rees 0-matrix semigroup element and integer",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(f, n)
   local parent;
@@ -192,6 +217,18 @@ function(R)
   end;
 end);
 
+InstallMethod(ActionRank, "for a matrix object and integer",
+[IsMatrixOverFiniteField, IsInt],
+function(x, i)
+  return Rank(RowSpaceBasis(x));
+end);
+
+InstallMethod(ActionRank, "for a matrix semigroup",
+[IsMatrixSemigroup],
+function(S)
+  return x -> Rank(RowSpaceBasis(x));
+end);
+
 # the minimum possible rank of an element
 
 InstallMethod(MinActionRank, "for a transformation semigroup",
@@ -205,6 +242,9 @@ InstallMethod(MinActionRank, "for a bipartition semigroup",
 
 InstallMethod(MinActionRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], x -> 0);
+
+InstallMethod(MinActionRank, "for a matrix semigroup",
+[IsMatrixSemigroup], x -> 0);
 
 # options passed to LambdaOrb(s) when it is created
 
@@ -220,6 +260,9 @@ InstallMethod(LambdaOrbOpts, "for a bipartition semigroup",
 InstallMethod(LambdaOrbOpts, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> rec());
 
+InstallMethod(LambdaOrbOpts, "for a matrix semigroup",
+[IsMatrixSemigroup], s -> rec());
+
 InstallMethod(RhoOrbOpts, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> rec(forflatplainlists := true));
 
@@ -232,8 +275,10 @@ InstallMethod(RhoOrbOpts, "for a bipartition semigroup",
 InstallMethod(RhoOrbOpts, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> rec());
 
-# the lambda and rho acts
+InstallMethod(RhoOrbOpts, "for a matrix semigroup",
+[IsMatrixSemigroup], s -> rec());
 
+# the lambda and rho acts
 InstallMethod(LambdaAct, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
@@ -260,6 +305,12 @@ InstallMethod(LambdaAct, "for a Rees 0-matrix subsemigroup",
   else
     return 0;
   fi;
+end);
+
+InstallMethod(LambdaAct, "for a matrix semigroup",
+[IsMatrixSemigroup],
+s -> function(vsp, mat)
+  return MatrixOverFiniteFieldRowSpaceRightAction(s, vsp, mat);
 end);
 
 InstallMethod(RhoAct, "for a transformation semigroup",
@@ -294,6 +345,13 @@ InstallMethod(RhoAct, "for a Rees 0-matrix subsemigroup",
   fi;
 end);
 
+InstallMethod(RhoAct, "for a matrix semigroup", [IsMatrixSemigroup],
+function(S)
+  return function(vsp, mat)
+    return LambdaAct(S)(vsp, TransposedSMat(mat));
+  end;
+end);
+
 # the seed or dummy start point for LambdaOrb
 
 InstallMethod(LambdaOrbSeed, "for a transformation semigroup",
@@ -308,6 +366,16 @@ InstallMethod(LambdaOrbSeed, "for a bipartition semigroup",
 InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);
 
+InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
+[IsMatrixSemigroup],
+function(s)
+    local deg;
+    deg := DegreeOfMatrixSemigroup(s) + 1;
+    return NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep,
+                                      BaseDomain(s),
+                                      NullMat(deg, deg, BaseDomain(s)));
+end);
+
 # the seed or dummy start point for RhoOrb
 
 InstallMethod(RhoOrbSeed, "for a transformation semigroup",
@@ -321,6 +389,9 @@ InstallMethod(RhoOrbSeed, "for a bipartition semigroup",
 
 InstallMethod(RhoOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);
+
+InstallMethod(RhoOrbSeed, "for a matrix semigroup",
+[IsMatrixSemigroup], LambdaOrbSeed);
 
 # the function calculating the lambda or rho value of an element
 
@@ -350,6 +421,13 @@ InstallMethod(LambdaFunc, "for a Rees 0-matrix subsemigroup",
   fi;
 end);
 
+InstallMethod(LambdaFunc, "for a matrix semigroup",
+[IsMatrixSemigroup],
+s -> function(mat)
+  # a function that returns the row space
+    return RowSpaceBasis(mat);
+end);
+
 InstallMethod(RhoFunc, "for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
@@ -369,6 +447,16 @@ InstallMethod(RhoFunc, "for a bipartition semigroup",
 
 InstallMethod(RhoFunc, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R -> (x -> x![1]));
+
+InstallMethod(RhoFunc, "for a matrix semigroup",
+[IsMatrixSemigroup],
+function(S)
+  # a function that returns the column space
+  return
+    function(mat)
+      return LambdaFunc(S)(TransposedSMat(mat));
+    end;
+end);
 
 # the function used to calculate the rank of lambda or rho value
 
@@ -393,6 +481,10 @@ function(x)
   fi;
 end);
 
+#T Why are there row spaces and matrices passed in here?
+InstallMethod(LambdaRank, "for a matrix semigroup",
+[IsMatrixSemigroup], x -> Rank);
+
 InstallMethod(RhoRank, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> function(x)
   if IsEmpty(x) then
@@ -410,6 +502,12 @@ InstallMethod(RhoRank, "for a bipartition semigroup",
 
 InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R -> LambdaRank(R));
+
+InstallMethod(RhoRank, "for a matrix semigroup",
+[IsMatrixSemigroup],
+function(S)
+  return LambdaRank(S);
+end);
 
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right
 # like the inverse of f on Y.
@@ -443,6 +541,12 @@ end);
 # if g = RhoInverse(X, f) and f ^ X = Y (this is a left action), then
 # g ^ Y = X and g acts on the left like the inverse of f on Y.
 
+InstallMethod(LambdaInverse, "for a matrix semigroup",
+[IsMatrixSemigroup], s ->
+function(rsp, mat)
+  return MatrixOverFiniteFieldLocalRightInverse(s, rsp, mat);
+end);
+
 InstallMethod(RhoInverse, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> INV_KER_TRANS);
 
@@ -472,6 +576,144 @@ end);
 InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BLOCKS_INV_LEFT);
 
+InstallMethod(RhoInverse, "for a matrix semigroup",
+[IsMatrixSemigroup], s ->
+function(rsp, mat)
+  return TransposedSMat(MatrixOverFiniteFieldLocalRightInverse(s,
+                          rsp, TransposedSMat(mat)));
+end);
+
+InstallMethod(LambdaBound, "for a transformation semigroup",
+[IsTransformationSemigroup], s ->
+function(r)
+  if r < 100 then
+    return Factorial(r);
+  else
+    return infinity;
+  fi;
+end);
+InstallMethod(RhoBound, "for a transformation semigroup",
+[IsTransformationSemigroup], LambdaBound);
+
+InstallMethod(LambdaBound, "for a partial perm semigroup",
+[IsPartialPermSemigroup], s ->
+function(r)
+  if r < 100 then
+    return Factorial(r);
+  else
+    return infinity;
+  fi;
+end);
+InstallMethod(RhoBound, "for a partial perm semigroup",
+[IsPartialPermSemigroup], LambdaBound);
+
+InstallMethod(LambdaBound, "for a bipartition semigroup",
+[IsBipartitionSemigroup], s ->
+function(r)
+  if r < 100 then
+    return Factorial(r);
+  else
+    return infinity;
+  fi;
+end);
+InstallMethod(RhoBound, "for a bipartition semigroup",
+[IsBipartitionSemigroup], LambdaBound);
+
+InstallMethod(LambdaBound, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup], s ->
+function(r)
+  if r < 100 then
+    return Factorial(r);
+  else
+    return infinity;
+  fi;
+end);
+
+InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup], LambdaBound);
+
+InstallMethod(LambdaBound, "for a matrix semigroup",
+[IsMatrixSemigroup], s ->
+function(r)
+  local f;
+
+  if r < 100 then
+    f := Representative(s);
+    return Size(GL(DegreeOfMatrixSemigroup(s), BaseDomain(s)));
+  else
+    return infinity;
+  fi;
+end);
+
+InstallMethod(RhoBound, "for a matrix semigroup",
+[IsMatrixSemigroup], LambdaBound);
+
+# LamdaIdentity(s) returns a function that returns
+# the identity element of the Schutzenberger group
+# elements produced by LambdaPerm
+
+# FIXME these functions don't need the argument <r> any more
+
+InstallMethod(LambdaIdentity, "for a transformation semigroup",
+[IsTransformationSemigroup],
+  s -> function(r)
+    return ();
+  end);
+
+InstallMethod(RhoIdentity, "for a transformation semigroup",
+[IsTransformationSemigroup],
+  s -> function(r)
+    return ();
+  end);
+
+InstallMethod(LambdaIdentity, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+  s -> function(r)
+    return ();
+  end);
+
+InstallMethod(RhoIdentity, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+  s -> function(r)
+    return ();
+  end);
+
+InstallMethod(LambdaIdentity, "for a partial perm semigroup",
+[IsBipartitionSemigroup],
+  s -> function(r)
+    return ();
+  end);
+
+InstallMethod(RhoIdentity, "for a partial perm semigroup",
+[IsBipartitionSemigroup],
+  s -> function(r)
+    return ();
+  end);
+
+InstallMethod(LambdaIdentity, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup],
+  s -> function(r)
+    return ();
+  end);
+
+InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSubsemigroup],
+  s -> function(r)
+    return ();
+  end);
+
+InstallMethod(LambdaIdentity, "for a matrix semigroup",
+[IsMatrixSemigroup], S ->
+function(r)
+  return IdentityMatrixOverFiniteField(Representative(S), r);
+end);
+
+InstallMethod(RhoIdentity, "for a matrix semigroup",
+[IsMatrixSemigroup], S ->
+function(r)
+  return IdentityMatrixOverFiniteField(Representative(S), r);
+end);
+
 # LambdaPerm(s) returns a permutation from two acting semigroup elements with
 # equal LambdaFunc and RhoFunc. This is required to check if one of the two
 # elements belongs to the schutz gp of a lambda orb.
@@ -494,8 +736,14 @@ function(x, y)
   return x![2] ^ -1 * y![2];
 end);
 
-# returns a permutation mapping LambdaFunc(S)(x) to LambdaFunc(S)(y) so that
+# Returns a permutation mapping LambdaFunc(S)(x) to LambdaFunc(S)(y) so that
 # yx ^ -1(i) = p(i) when RhoFunc(S)(x) = RhoFunc(S)(y)!!
+
+InstallMethod(LambdaPerm, "for a matrix semigroup",
+[IsMatrixSemigroup], S ->
+function(x, y)
+  return MatrixOverFiniteFieldSchutzGrpElement(S, x, y);
+end);
 
 InstallMethod(LambdaConjugator, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> TRANS_IMG_CONJ);
@@ -513,6 +761,12 @@ InstallMethod(LambdaConjugator, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S ->
 function(x, y)
   return ();
+end);
+
+InstallMethod(LambdaConjugator, "for a matrix semigroup",
+[IsMatrixSemigroup], S ->
+function(x, y)
+    return MatrixOverFiniteFieldLambdaConjugator(S, x, y);
 end);
 
 # the function used to test if there is an idempotent with the specified
@@ -544,6 +798,11 @@ function(j, i)
   return Matrix(parent)[j][i] <> 0;
 end);
 
+InstallMethod(IdempotentTester, "for a matrix semigroup",
+[IsMatrixSemigroup], S -> function(x, y)
+    return MatrixOverFiniteFieldIdempotentTester(S, x, y);
+end);
+
 # the function used to create an idempotent with the specified lambda and rho
 # values.
 
@@ -566,6 +825,11 @@ function(j, i)
   mat := Matrix(ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R))));
   return Objectify(TypeReesMatrixSemigroupElements(R),
                    [i, mat[j][i] ^ -1, j, mat]);
+end);
+
+InstallMethod(IdempotentCreator, "for a matrix semigroup",
+[IsMatrixSemigroup], S -> function(x, y)
+    return MatrixOverFiniteFieldIdempotentCreator(S, x, y);
 end);
 
 # the action of elements of the stabiliser of a lambda-value on any element of
@@ -593,6 +857,12 @@ function(x, p)
   return Objectify(TypeObj(x), [x![1], x![2] * p, x![3], x![4]]);
 end);
 
+InstallMethod(StabilizerAction, "for a matrix semigroup",
+[IsMatrixSemigroup], S ->
+function(x, y)
+  return MatrixOverFiniteFieldStabilizerAction(S, x, y);
+end);
+
 # IsActingSemigroupWithFixedDegreeMultiplication should be <true> if and only
 # if it is only possible to multiply elements of the type in the semigroup with
 # equal degrees.
@@ -613,6 +883,47 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 "for an acting Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup and IsActingSemigroup], ReturnFalse);
 
+InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication,
+                  IsMatrixSemigroup);
+
+InstallMethod(SchutzGpMembership, "for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+  return function(stab, x)
+    return SiftedPermutation(stab, x) = ();
+  end;
+end);
+
+InstallMethod(SchutzGpMembership, "for a partial perm semigroup",
+[IsPartialPermSemigroup],
+function(S)
+  return function(stab, x)
+    return SiftedPermutation(stab, x) = ();
+  end;
+end);
+
+InstallMethod(SchutzGpMembership, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
+function(S)
+  return function(stab, x)
+    return SiftedPermutation(stab, x) = ();
+  end;
+end);
+
+InstallMethod(SchutzGpMembership, "for a bipartition semigroup",
+[IsBipartitionSemigroup],
+function(S)
+  return function(stab, x)
+    return SiftedPermutation(stab, x) = ();
+  end;
+end);
+
+InstallMethod(SchutzGpMembership, "for a matrix semigroup",
+[IsMatrixSemigroup], S ->
+function(stab, x)
+  return x in stab;
+end);
+
 # One or a fake one for those types of object without one.
 
 InstallMethod(FakeOne, "for a transformation collection",
@@ -627,8 +938,11 @@ InstallMethod(FakeOne, "for a bipartition collection",
 InstallMethod(FakeOne, "for a Rees 0-matrix semigroup element collection",
 [IsReesZeroMatrixSemigroupElementCollection], R -> SEMIGROUPS.UniversalFakeOne);
 
-# missing hash functions
+# Matrix semigroup elements
+InstallMethod(FakeOne, "for an FFE coll coll coll",
+[IsFFECollCollColl], One);
 
+# missing hash functions
 InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(x, hashlen)

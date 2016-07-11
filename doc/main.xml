@@ -58,6 +58,7 @@
   <#Include SYSTEM "z-chap08.xml">  <!-- visualising --> 
   <#Include SYSTEM "z-chap09.xml">  <!-- standard examples -->
   <#Include SYSTEM "z-chap10.xml">  <!-- standard constructions-->
+  <#Include SYSTEM "chap10.xml"> <!-- matrix semigroups -->
   <#Include SYSTEM "z-chap11.xml">  <!-- free inverse semigroups -->
   <#Include SYSTEM "z-chap12.xml">  <!-- free bands -->
   <#Include SYSTEM "z-chap13.xml">  <!-- graph inverse semigroups -->

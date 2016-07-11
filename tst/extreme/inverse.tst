@@ -39,7 +39,7 @@ false
 
 #T# InverseCongTest4: Congruence classes
 gap> classx := CongruenceClassOfElement(cong, x);
-{PartialPerm( [ 4 ], [ 5 ] )}
+{[4,5]}
 gap> classy := CongruenceClassOfElement(cong, y);;
 gap> classz := CongruenceClassOfElement(cong, z);;
 gap> classx = classy;

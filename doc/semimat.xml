@@ -1,0 +1,126 @@
+#############################################################################
+##
+#W  semimat.xml
+#Y  Copyright (C) 2014                                    Markus Pfeiffer
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsMatrixSemigroup">
+<ManSection>
+  <Prop Name="IsMatrixSemigroup" Arg="S"/>
+  <Prop Name="IsMatrixMonoid" Arg="S"/>
+  <Returns><K>true</K> or <K>false</K>.</Returns>
+  <Description>
+    A <E>matrix semigroup</E> is simply a semigroup consisting of
+    matrices over a finite field. An object in &GAP; is a matrix semigroup if
+    it satisfies <Ref Prop="IsSemigroup" BookName="ref"/> and 
+    <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>. <P/>
+
+    A <E>matrix monoid</E> is simply a monoid consisting of
+    matrices over a finite field. An object in &GAP; is a matrix monoid if
+    it satisfies <Ref Prop="IsMonoid" BookName="ref"/> and 
+    <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>. <P/>
+
+    Note that it is possible for a matrix semigroup to have a
+    multiplicative neutral element (i.e. an identity element) but not to
+    satisfy <C>IsMatrixMonoid</C>.
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MatrixSemigroup">
+<ManSection>
+  <Func Name="MatrixSemigroup" Arg="list [, F]"/>
+  <Returns>A matrix semigroup.</Returns>
+  <Description>
+    This is a helper function to create matrix semigroups from &GAP; matrices.
+    The argument <A>list</A> is a homogeneous list of &GAP; matrices over a
+    finite field, and the optional argument <A>F</A> is a finite field.<P/>
+
+    The specification of the field <A>F</A> can be necessary to prevent
+    &GAP; from trying to find a smaller common field for the entries in
+    <A>list</A>.
+    <Example><![CDATA[
+gap> S := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],
+>                          Z(3) * [[0,0,0], [0,0,1], [0,1,0]]], GF(9));
+<semigroup of 3x3 matrices over GF(3^2) with 2 generators>
+gap> S := MatrixSemigroup([Z(3) * [[1,0,0], [1,1,0], [0,1,0]],
+>                          Z(3) * [[0,0,0], [0,0,1], [0,1,0]]]);
+<semigroup of 3x3 matrices over GF(3) with 2 generators>
+gap> S := MatrixSemigroup([Z(4) * [[1,0,0], [1,1,0], [0,1,0]],
+>                          Z(4) * [[0,0,0], [0,0,1], [0,1,0]]]);
+<semigroup of 3x3 matrices over GF(2^2) with 2 generators>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc>
+<ManSection>
+  <Attr Name="DegreeOfMatrixSemigroup" Arg="S"/>
+  <Returns>An integer</Returns>
+  <Description>
+    This attribute is the number of rows or columns of any matrix
+    in the matrix semigroup <A>S</A>.
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsomorphismMatrixSemigroup">
+<ManSection>
+  <Attr Name="IsomorphismMatrixSemigroup" Arg="S[, F]"/>
+  <Returns>An isomorphism to a matrix semigroup.</Returns>
+  <Description>
+    This attribute contains an isomorphism from the semigroup <A>S</A>
+    to a matrix semigroup. Currently this is done by taking a standard basis
+    of a vector space suitable dimension and acting on this basis over the field
+    <A>F</A> if <A>F</A> is given, and over <C>GF(2)</C> if <A>F</A> is not given.
+    This will not give an optimal matrix semigroup representation of <A>S</A>.
+  <Example><![CDATA[
+gap> T := Semigroup(Transformation([2, 2, 3]), Transformation([3, 1, 3]));
+<transformation semigroup of degree 3 with 2 generators>
+gap> iso := IsomorphismMatrixSemigroup(T);
+MappingByFunction( <transformation semigroup of degree 3 with 2 
+ generators>, <semigroup of 3x3 matrices over GF(2)
+ with 2 generators>, function( x ) ... end, function( x ) ... end )
+gap> Size(Range(iso));
+5]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsMatrixSemigroupGreensClass">
+  <ManSection>
+    <Prop Name="IsMatrixSemigroupGreensClass" Arg="class"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
+      property <C>IsMatrixSemigroupGreensClass</C> if and only if <C>S</C>
+      is belongs to the category <C>IsMatrixSemigroup</C>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFullMatrixSemigroup">
+  <ManSection>
+    <Prop Name="IsFullMatrixSemigroup" Arg="S"/>      
+    <Prop Name="IsGeneralLinearSemigroup" Arg="S"/>      
+    <Description>
+      <C>IsFullMatrixSemigroup</C> and <C>IsGeneralLinearSemigroup</C> return
+      <K>true</K> if the semigroup <C>S</C> was created using either of the
+      commands <Ref Oper="FullMatrixSemigroup"/> or 
+      <Ref Oper="GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
+
+      <Example><![CDATA[
+gap> S := RandomTransformationSemigroup(4, 4);;
+gap> IsFullMatrixSemigroup(S);
+false
+gap> S := GeneralLinearSemigroup(3, 3);
+<full matrix semigroup 3x3 over GF(3)>
+gap> IsFullMatrixSemigroup(S);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

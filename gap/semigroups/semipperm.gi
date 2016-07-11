@@ -387,7 +387,7 @@ InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
 # the following method is required to beat the method for
 # IsPartialPermCollection in the library.
 
-InstallMethod(One, "for a partial perm semigroup ideal",
+InstallOtherMethod(One, "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
   local pts, x;
@@ -750,7 +750,7 @@ function(S)
   return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
 end);
 
-InstallMethod(RepresentativeOfMinimalIdeal,
+InstallMethod(RepresentativeOfMinimalIdealNC,
 "for a partial perm semigroup with generators",
 [IsPartialPermSemigroup and HasGeneratorsOfSemigroup], 1,
 function(S)
@@ -794,7 +794,9 @@ function(S)
   codeg := Maximum(range);
 
   if min_rank = rank and domain = range then
-    SetIsGroupAsSemigroup(S, true);
+    if not IsGroup(S) then
+      SetIsGroupAsSemigroup(S, true);
+    fi;
     return gens[1];
   fi;
 

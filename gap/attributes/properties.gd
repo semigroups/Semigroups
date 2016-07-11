@@ -14,6 +14,7 @@
 
 #DeclareProperty("IsAbundantSemigroup", IsSemigroup);
 #DeclareProperty("IsAdequateSemigroup", IsSemigroup);
+
 DeclareProperty("IsBlockGroup", IsSemigroup);
 DeclareProperty("IsRTrivial", IsSemigroup);
 DeclareProperty("IsRTrivial", IsGreensDClass);
@@ -38,6 +39,7 @@ DeclareProperty("IsUnitRegularMonoid", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
 DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
+DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
 
 DeclareSynonymAttr("IsRectangularGroup",
                    IsOrthodoxSemigroup and IsSimpleSemigroup);
@@ -58,6 +60,7 @@ InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
 #
 #InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
 #InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
+
 InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
 InstallTrueMethod(IsBlockGroup, IsPartialPermSemigroup);
 InstallTrueMethod(IsDTrivial, IsSemilattice);
@@ -91,3 +94,4 @@ InstallTrueMethod(IsTrivial,
                   IsLeftZeroSemigroup and IsRightZeroSemigroup);
 InstallTrueMethod(IsBand, IsRectangularBand);
 InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
+InstallTrueMethod(IsSemigroupWithAdjoinedZero, IsSemigroup and IsZeroGroup);

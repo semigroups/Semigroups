@@ -72,4 +72,3 @@ cd digraphs
 make
 cd ../../..
 echo -en 'travis_fold:end:InstallPackages\r'
-

@@ -16,5 +16,5 @@ DeclareProperty("IsUniversalSemigroupCongruence",
                 IsSemigroupCongruence);
 DeclareCategory("IsUniversalSemigroupCongruenceClass",
                 IsCongruenceClass and IsAttributeStoringRep and
-                IsAssociativeElement);
+                IsAssociativeElement); #TODO check this works for matrices
 DeclareOperation("UniversalSemigroupCongruence", [IsSemigroup]);

@@ -1610,6 +1610,22 @@ true
 gap> IsRectangularGroup(PartitionMonoid(3));
 false
 
+#T# PropertiesTest58: IsSemigroupWithAdjoinedZero
+gap> S := SymmetricInverseMonoid(10);;
+gap> IsSemigroupWithAdjoinedZero(S);
+false
+gap> S := FullTransformationMonoid(12);;
+gap> IsSemigroupWithAdjoinedZero(S);
+false
+gap> S := ReesMatrixSemigroup(SymmetricGroup(4), [[(1,3,2), (4,2)]]);
+<Rees matrix semigroup 2x1 over Sym( [ 1 .. 4 ] )>
+gap> IsSemigroupWithAdjoinedZero(S);
+false
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(4), [[(1,3,2), (4,2)]]);
+<Rees 0-matrix semigroup 2x1 over Sym( [ 1 .. 4 ] )>
+gap> IsSemigroupWithAdjoinedZero(S);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(I);

@@ -410,7 +410,7 @@ function(S)
   return fail;
 end);
 
-InstallMethod(RepresentativeOfMinimalIdeal,
+InstallMethod(RepresentativeOfMinimalIdealNC,
 "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
 function(S)

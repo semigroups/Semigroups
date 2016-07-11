@@ -76,6 +76,8 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
   </ManSection>
 <#/GAPDoc>
 
+#FIXME reuse this doc then delete it
+
 <#GAPDoc Label="IsomorphismBipartitionSemigroup">
   <ManSection>
     <Attr Name = "IsomorphismBipartitionSemigroup" Arg = "S"/>
@@ -106,6 +108,8 @@ MappingByFunction( <inverse partial perm semigroup of rank 10 with 2
     </Description> 
   </ManSection> 
 <#/GAPDoc>
+
+#FIXME reuse this doc then delete it
 
 <#GAPDoc Label="IsomorphismBlockBijectionSemigroup">
   <ManSection>

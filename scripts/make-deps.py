@@ -12,7 +12,6 @@ PARSER.add_argument('--gap-root', nargs='?', type=str,
                     help='the gap root directory (default: ~/gap)',
                     default='~/gap')
 PARSER.add_argument('--pkg-dir', nargs='?', type=str,
-                    help='the pkg directory (default: ~/gap/pkg/)',
                     default='~/gap/pkg/')
 ARGS = PARSER.parse_args()
 
@@ -26,11 +25,10 @@ ARGS.gap_root = os.path.expanduser(ARGS.gap_root)
 ARGS.pkg_dir = os.path.expanduser(ARGS.pkg_dir)
 
 if not (os.path.exists(ARGS.gap_root) and os.path.isdir(ARGS.gap_root)):
-    sys.exit('ERROR: can\'t GAP root directory!')
+    sys.exit('ERROR: can\'t find GAP root directory!')
 if not (os.path.exists(ARGS.pkg_dir) and os.path.isdir(ARGS.pkg_dir)):
-    sys.exit('ERROR: can\'t pkg directory!')
+    sys.exit('ERROR: can\'t find pkg directory!')
 
-DIR = os.getcwd()
 _SCREEN_WIDTH = int(os.popen('stty size', 'r').read().split()[1]) - 3
 _LINE_OF_HASHES = '\033[35m' + ('#' * _SCREEN_WIDTH) + '\033[0m'
 

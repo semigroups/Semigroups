@@ -571,6 +571,24 @@ gap> IsLinkedTriple(S, SymmetricGroup(2), [], [[1]]);
 Error, Semigroups: IsLinkedTriple: usage,
 the first arg <S> must be a finite simple Rees matrix semigroup,
 
+#T# ReesCongTest6: Enumerator
+gap> s := Semigroup( [ Transformation( [ 1, 1, 3, 1, 3 ] ),
+>                      Transformation( [ 2, 1, 2, 2, 2 ] ),
+>                      Transformation( [ 3, 1, 3, 2, 4 ] ) ] );;
+gap> i := SemigroupIdeal(s, Transformation( [ 1, 1, 1, 3, 1 ] ));;
+gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
+gap> class := CongruenceClassOfElement(cong, Transformation([3,3,3,3,3]));;
+gap> enum := Enumerator(class);
+<enumerator of <non-regular transformation semigroup ideal of size 5, 
+ degree 5 with 1 generator>>
+gap> Size(enum);
+5
+gap> class := CongruenceClassOfElement(cong, Transformation([2,2,2,1,2]));;
+gap> enum := Enumerator(class);
+[ Transformation( [ 2, 2, 2, 1, 2 ] ) ]
+gap> Size(enum);
+1
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);

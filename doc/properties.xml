@@ -114,12 +114,11 @@ gap> S := Semigroup(
 > Transformation([10, 7, 5, 6, 1, 3, 9, 7, 10, 2]));;
 gap> IsBlockGroup(S);
 false
-gap> S := Semigroup(
-> PartialPerm([1, 2], [5, 4]), 
-> PartialPerm([1, 2, 3], [1, 2, 5]), 
-> PartialPerm([1, 2, 3], [2, 1, 5]), 
-> PartialPerm([1, 3, 4], [3, 1, 2]), 
-> PartialPerm([1, 3, 4, 5], [5, 4, 3, 2]));;
+gap> S := Semigroup(PartialPerm([1, 2], [5, 4]), 
+>                   PartialPerm([1, 2, 3], [1, 2, 5]), 
+>                   PartialPerm([1, 2, 3], [2, 1, 5]), 
+>                   PartialPerm([1, 3, 4], [3, 1, 2]), 
+>                   PartialPerm([1, 3, 4, 5], [5, 4, 3, 2]));;
 gap> T := AsSemigroup(IsBlockBijectionSemigroup, S);
 <block bijection semigroup of degree 6 with 5 generators>
 gap> IsBlockGroup(T);
@@ -411,7 +410,7 @@ true]]></Example>
     <Description>
       <C>IsGroupAsSemigroup</C> returns <K>true</K> if and only if the
       semigroup <A>S</A> is mathematically a group.
-      <Example><![CDATA[
+      <Example><![CDATA[FIXME
 gap> S := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]), 
 >                   Transformation([3, 5, 6, 7, 8, 1, 9, 2, 4]));;
 gap> IsGroupAsSemigroup(S);
@@ -448,8 +447,8 @@ true]]></Example>
       An inverse semigroup is idempotent-generated if and only if it is a
       semilattice; see <Ref Prop = "IsSemilattice"/>.<P/>
 
-      Semiband and idempotent-generated are synonymous
-      in this context. 
+      The terms semiband and idempotent-generated are synonymous in this
+      context. 
 
       <Example><![CDATA[
 gap> S := SingularTransformationSemigroup(4);
@@ -1066,6 +1065,38 @@ true
 gap> S := Semigroup(Transformation([2, 2, 4, 4]),
 >                   Transformation([5, 3, 4, 4, 6, 6]));;
 gap> IsCongruenceFreeSemigroup(S);
+false]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsSemigroupWithAdjoinedZero">
+  <ManSection>
+    <Prop Name="IsSemigroupWithAdjoinedZero" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.  </Returns>
+    <Description> 
+      <C>IsSemigroupWithAdjoinedZero</C> returns <K>true</K> if the semigroup
+      <A>S</A> can be expressed as the disjoint union of subsemigroups
+      <M><A>S</A> \setminus \{ 0 \}</M> and <M>\{ 0 \}</M> (where <M>0</M> is
+      the <Ref Attr="MultiplicativeZero"/> of <A>S</A>). <P/>
+
+      If this is not the case, then either <A>S</A> lacks a multiplicative
+      zero, or the set <M><A>S</A> \setminus \{ 0 \}</M> is not a subsemigroup
+      of <A>S</A>, and so <C>IsSemigroupWithAdjoinedZero</C> returns
+      <K>false</K>.
+
+      <Example><![CDATA[
+gap> S := Semigroup( [
+> Transformation( [ 2, 3, 4, 5, 1, 6 ] ),
+> Transformation( [ 2, 1, 3, 4, 5, 6 ] ),
+> Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ] );
+<transformation semigroup of degree 6 with 3 generators>
+gap> IsZeroGroup(S);
+true
+gap> IsSemigroupWithAdjoinedZero(S);
+true
+gap> S := FullTransformationMonoid(4);;
+gap> IsSemigroupWithAdjoinedZero(S);
 false]]></Example>
     </Description>
   </ManSection>
