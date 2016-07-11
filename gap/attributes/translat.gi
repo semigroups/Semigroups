@@ -833,16 +833,6 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
       rowtransformedmat[i] := zerorow;
     fi;
   od;
-  #TODO: avoid transposing matrices, it's taking a long time
-  coltransformedmat := [];
-  for i in [1..nrcols] do
-    if t2[i] <> nrcols + 1 then
-      coltransformedmat[i] := TransposedMat(mat)[t2[i]];
-    else
-      coltransformedmat[i] := zerocol;
-    fi;
-  od;
-  coltransformedmat := TransposedMat(coltransformedmat);
 
   #for ease of checking the constraints, set up lists of linked indices
   rels := [];
@@ -895,10 +885,10 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
         j := comp[n];
         if j <= nrrows then
           k := rowrels[r][j];
-          x[j] := coltransformedmat[j][k] * invmat[r][t2[k]] * x[r] *
+          x[j] := mat[j][t2[k]] * invmat[r][t2[k]] * x[r] *
                     rowtransformedmat[r][k] * invmat[t1[j]][k];
         else
-          j := j-nrrows;
+          j := j - nrrows;
           for rel in rels do
             if rel[1] in comp and rel[2] = j then
               i := rel[1];
@@ -919,7 +909,7 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
       i := rel[1];
       j := rel[2];
       if IsBound(x[i]) and IsBound(y[j]) and not 
-          x[i] * rowtransformedmat[i][j] = coltransformedmat[i][j] * y[j] then
+          x[i] * rowtransformedmat[i][j] = mat[i][t2[j]] * y[j] then
         return false;
       fi;
     od;
