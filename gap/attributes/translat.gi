@@ -802,9 +802,9 @@ end;
 SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
   local reesmatsemi, mat, gplist, gpsize, nrrows, nrcols, invmat,
         rowtransformedmat, coltransformedmat, zerorow, zerocol, pos,
-        rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, v, r, n, 
-        funcs, changedvals, add, digraph, cc, comp,
-        extend, reject, relssatisfied, bt, foundfuncs;
+        rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, r, n, 
+        funcs, digraph, cc, comp, iterator, foundfuncs,
+        relpointvals, relssatisfied, funcsfromrelpointvals, fillin;
   reesmatsemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
   mat := Matrix(reesmatsemi);
   gplist := AsList(UnderlyingSemigroup(reesmatsemi));
@@ -833,6 +833,7 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
       rowtransformedmat[i] := zerorow;
     fi;
   od;
+  #TODO: avoid transposing matrices, it's taking a long time
   coltransformedmat := [];
   for i in [1..nrcols] do
     if t2[i] <> nrcols + 1 then
@@ -877,81 +878,38 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
     if Length(i) > 1 then 
       Add(relpoints, i[1]);
     fi;
-  od;            
+  od;
   
-  extend := function(funcs)
+  #TODO: prove you only need to check the relations once
+  #for all choices of x{relpoints}
+  #i.e., the only possible problem is an inconsistency 
+  #which if it exists will always occur
+  
+  #given a choice of relpoints, fill in everything else possible
+  fillin := function(funcs)
     x := ShallowCopy(funcs[1]);
     y := ShallowCopy(funcs[2]);
     for r in relpoints do
-      if not IsBound(x[r]) then
-        x[r] := gplist[1];
-        changedvals := [r];
-        comp := cc.comps[cc.id[r]];
-        for n in [2..Length(comp)] do
-          j := comp[n];
-          if j <= nrrows then
-            k := rowrels[r][j];
-            x[j] := coltransformedmat[j][k] * invmat[r][t2[k]] * x[r] *
-                    rowtransformedmat[r][k] * invmat[t1[j]][k];
-            Add(changedvals, j);
-          else
-            break;
-          fi;
-        od;
-        for rel in rels do
-          if rel[1] in changedvals then
-            i := rel[1];
-            j := rel[2];
-            y[j] := invmat[i][t2[j]] * x[i] * rowtransformedmat[i][j];
-          fi;
-        od;
-      return [x,y];
-      fi;
-    od;
-    return fail;
-  end;
-  
-  #TODO: factor out the updating of the functions
-  reject := function(funcs)
-    x := ShallowCopy(funcs[1]);
-    y := ShallowCopy(funcs[2]);
-    for k in [1..Length(relpoints)] do
-      if not IsBound(x[relpoints[k]]) then
-        k := k-1;
-        break;
-      fi;
-    od;
-    r := relpoints[k];
-    pos := Position(gplist, x[r]);
-    if pos < gpsize then
-      x[r] := gplist[pos + 1];
-      changedvals := [r];
       comp := cc.comps[cc.id[r]];
       for n in [2..Length(comp)] do
         j := comp[n];
         if j <= nrrows then
           k := rowrels[r][j];
           x[j] := coltransformedmat[j][k] * invmat[r][t2[k]] * x[r] *
-                  rowtransformedmat[r][k] * invmat[t1[j]][k];
-          Add(changedvals, j);
+                    rowtransformedmat[r][k] * invmat[t1[j]][k];
         else
-          break;
+          j := j-nrrows;
+          for rel in rels do
+            if rel[1] in comp and rel[2] = j then
+              i := rel[1];
+              y[j] := invmat[i][t2[j]] * x[i] * rowtransformedmat[i][j];
+              break;
+            fi;
+          od;
         fi;
       od;
-      for rel in rels do
-        if rel[1] in changedvals then
-            i := rel[1];
-            j := rel[2];
-            y[j] := invmat[i][t2[j]] * x[i] * rowtransformedmat[i][j];
-        fi;
-      od;
-      funcs := [x,y];
-    elif k > 1 then
-      funcs := reject([x{[1..relpoints[k-1]]}, y]);
-    else return 0;
-    fi;
-  
-    return funcs;
+    od;
+    return [x,y];
   end;
   
   relssatisfied := function(funcs)
@@ -960,36 +918,44 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
     for rel in rels do
       i := rel[1];
       j := rel[2];
-      
       if IsBound(x[i]) and IsBound(y[j]) and not 
           x[i] * rowtransformedmat[i][j] = coltransformedmat[i][j] * y[j] then
         return false;
       fi;
-      
     od;
     return true;
   end;
   
-  bt := function(funcs)
-    if funcs = 0 then
-      return 0;
-    fi;
-    if not relssatisfied(funcs) then
-      funcs := reject(funcs);
-    elif Length(funcs[1]) = nrrows then
-      return funcs;
-    else
-      funcs := extend(funcs);
-    fi;
-    return bt(funcs);
+  funcsfromrelpointvals := function(relpointvals)
+    x := [1..nrrows];
+    y := [1..nrcols];
+    
+    for i in [1..nrrows] do
+      Unbind(x[i]);
+    od;
+    for i in [1..nrcols] do
+      Unbind(y[i]);
+    od;
+    for i in [1..Length(relpoints)] do
+      x[relpoints[i]] := gplist[relpointvals[i]];
+    od;
+    return fillin([x,y]);
   end;
   
-  foundfuncs := [bt([[],[]])];
-  v := 1;
-  while foundfuncs[v] <> 0 do
-    foundfuncs[v+1] := bt(reject(foundfuncs[v]));
-    v := v + 1;
+  foundfuncs := [];
+  iterator := IteratorOfCartesianProduct(List(relpoints, i -> [1..gpsize]));
+  
+  if IsDoneIterator(iterator) then
+    return foundfuncs;
+  elif not relssatisfied(funcsfromrelpointvals(NextIterator(iterator))) then
+    return foundfuncs;
+  fi;
+  
+  while not IsDoneIterator(iterator) do
+    relpointvals := NextIterator(iterator);
+    Add(foundfuncs, funcsfromrelpointvals(relpointvals));
   od;
+  
   return foundfuncs;
 end;
 
