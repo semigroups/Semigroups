@@ -683,12 +683,12 @@ gap> AddGeneratorsToOrbit(o, [gens[2]]);
 # binary relation monoid)
 gap> B := Monoid(BinaryRelationOnPoints([[2], [1, 2], [1, 3]]),
 >                BinaryRelationOnPoints([[3], [1, 2], [1, 3]]), 
->                BinaryRelationOnPoints([[1, 2, 3], [1, 2], [3]])); 
+>                BinaryRelationOnPoints([[1, 2, 3], [1, 2], [3]]));;
 gap> Size(B);
 16
 gap> IsMonoid(B);
 true
-gap> iso := IsomorphismTransformationSemigroup(B);
+gap> iso := IsomorphismTransformationSemigroup(B);;
 gap> T := Range(iso);
 <transformation monoid of degree 6 with 3 generators>
 gap> Size(T);
@@ -1016,8 +1016,8 @@ gap> I := SemigroupIdeal(T, Idempotents(T));;
 gap> Size(I);
 21
 
-#T# TestInstall64: Bug fixed by changeset 949553d FIXME what was this bug? Add
-# a brief explanation
+#T# TestInstall64: Bug fixed by changeset 949553d 
+# FIXME what was this bug? Add a brief explanation
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> Size(S);
@@ -1051,15 +1051,17 @@ gap> FreeMonoid(infinity, "m", []);
 
 #T# TestInstall65: Issue #131
 gap> S := FullTransformationSemigroup(3);;
-gap> I := SemigroupIdeal(FullTransformationSemigroup(3), Transformation([1,1,2]));;
-gap> T := S/I;;
+gap> I := SemigroupIdeal(FullTransformationSemigroup(3), 
+>                        Transformation([1, 1, 2]));;
+gap> T := S / I;;
 gap> One(T);
-{IdentityTransformation}
+<congruence class of IdentityTransformation>
 
 #T# TestInstall66: Second bug in Issue #131
-gap> I := SemigroupIdeal(FullTransformationSemigroup(3), Transformation([1,1,1]));;
-gap> hom:=HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
-gap> map:=IsomorphismTransformationSemigroup(Range(hom));;
+gap> I := SemigroupIdeal(FullTransformationSemigroup(3), 
+>                        Transformation([1, 1, 1]));;
+gap> hom := HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
+gap> map := IsomorphismTransformationSemigroup(Range(hom));;
 
 #T# Checking for correct non-removal of one from generating sets in
 # SemigroupByGenerators JDM
@@ -1262,7 +1264,7 @@ gap> Semigroup(Bipartition([]));
 <trivial block bijection group of degree 0 with 1 generator>
 gap> JonesMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
-sgap> PartitionMonoid(0);
+gap> PartitionMonoid(0);
 <trivial block bijection group of degree 0 with 1 generator>
 
 #T# Fixed unconvert for matrix over semiring
@@ -1287,16 +1289,6 @@ gap> Semigroup(
 >                          [1, -3, 0], 
 >                          [5, -1, -4]]));
 Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
-
-#T# MaximalSubsemigroups, replacement test for manual example which becomes a
-#log because of the randomness in the generating sets here.
-gap> S := FullTransformationMonoid(4);;
-gap> Length(MaximalSubsemigroups(S)) = 9;
-true
-gap> ForAll(MaximalSubsemigroups(S), M -> M in 
-> [Semigroup(Transformation([1, 4, 2, 3]),
->            Transformation([4, 2, 3, 4]), 
->             Transformation([4, 3, 2, 1])),
 
 #T# Test for Issue 141
 gap> S := Semigroup(Bipartition ([[1, 4], [2, 3], [-1, -4], [-2, -3]]),
@@ -1326,9 +1318,9 @@ false
 #T# MaximalSubsemigroups, replacement test for manual example which becomes a
 #log because of the randomness in the generating sets here.
 gap> S := FullTransformationMonoid(4);;
-gap> (not IsGrapeCompiled) or Length(MaximalSubsemigroups(S)) = 9;
+gap> Length(MaximalSubsemigroups(S)) = 9;
 true
-gap> (not IsGrapeCompiled) or ForAll(MaximalSubsemigroups(S), M -> M in 
+gap> ForAll(MaximalSubsemigroups(S), M -> M in 
 > [Semigroup(Transformation([1, 4, 2, 3]),
 >            Transformation([4, 2, 3, 4]), 
 >            Transformation([4, 3, 2, 1])),

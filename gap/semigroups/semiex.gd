@@ -75,6 +75,7 @@ DeclareAttribute("SEMIGROUPS_MatrixSemigroupViewString",
 DeclareAttribute("SEMIGROUPS_MatrixSemigroupPrintString",
                  IsMatrixSemigroup);
 
+# TODO rename these to GeneralLinearMonoid
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
 DeclareSynonym("GLS", GeneralLinearSemigroup);
 DeclareSynonym("FullMatrixSemigroup", GeneralLinearSemigroup);

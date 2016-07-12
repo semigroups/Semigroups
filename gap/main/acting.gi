@@ -63,8 +63,8 @@ InstallMethod(\in,
 function(x, S)
   local data, ht, lambda, lambdao, l, m, rhoranker, rho, rank, rhoo,
   lambdarhoht, rholookup, rhoranks, lookahead_last, lookahead_fail, nrgens,
-  LookAhead, new, lookfunc, schutz, ind, reps, repslens, max, lambdaperm, n,
-  found, i;
+  LookAhead, new, lookfunc, schutz, ind, reps, repslens, max, membership,
+  lambdaperm, n, found, i;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
       or (IsActingSemigroupWithFixedDegreeMultiplication(S)
@@ -234,7 +234,7 @@ function(x, S)
     return true;
   fi;
 
-  membership := SchutzGpMembership(s);
+  membership := SchutzGpMembership(S);
 
   # if schutz is false, then f has to be an R-rep which it is not...
   if schutz <> false then
@@ -753,8 +753,8 @@ function(data, x, n)
 
   reps := data!.reps[m][ind];
   repslens := data!.repslens[m][ind];
-  membership := SchutzGpMembership(s);
-  lambdaperm := LambdaPerm(s);
+  membership := SchutzGpMembership(S);
+  lambdaperm := LambdaPerm(S);
 
   for n in [1 .. repslens] do
     if membership(schutz, lambdaperm(reps[n], x)) then

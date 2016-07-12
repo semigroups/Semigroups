@@ -332,7 +332,7 @@ end);
 InstallMethod(TikzString, "for a bipartition and record",
 [IsBipartition, IsRecord],
 function(x, opts)
-  local fill, draw, ext, n, str, block, up, down, min, j, i, k;
+  local fill, draw, labels, ext, n, str, block, up, down, min, j, i, k;
 
   if IsBound(opts.colors) and opts.colors = true and NrBlocks(x) < 20 then
     fill := i -> Concatenation("  \\fill[", SEMIGROUPS.TikzColors[i], "](");

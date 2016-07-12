@@ -780,6 +780,35 @@ function(S)
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
+"for semigroup of binary relations with generators",
+[IsSemigroup and IsGeneralMappingCollection and HasGeneratorsOfSemigroup],
+function(S)
+  local n, pts, o, pos, T, i;
+  
+  if not IsBinaryRelationOnPointsRep(Representative(S)) then
+    TryNextMethod();
+  fi;
+  n := DegreeOfBinaryRelation(GeneratorsOfSemigroup(S)[1]);
+  pts := EmptyPlist(2 ^ n);
+
+  for i in [1 .. n] do
+    o := Orb(S, [i], OnPoints);
+    Enumerate(o);
+    pts := Union(pts, AsList(o));
+  od;
+  ShrinkAllocationPlist(pts);
+  pos := List([1 .. n], x -> Position(pts, [x]));
+  T := Semigroup(List(GeneratorsOfSemigroup(S),
+                 x -> TransformationOpNC(x, pts, OnPoints)));
+
+  return MappingByFunction(S, 
+                           T,
+                           x -> TransformationOpNC(x, pts, OnPoints),
+                           x -> BinaryRelationOnPoints(List([1 .. n], i ->
+                                                            pts[pos[i] ^ x])));
+end);
+
+InstallMethod(IsomorphismTransformationSemigroup,
 "for a semigroup ideal",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)

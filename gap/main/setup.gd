@@ -59,4 +59,4 @@ DeclareAttribute("IdempotentCreator", IsSemigroup);
 DeclareAttribute("StabilizerAction", IsSemigroup);
 DeclareAttribute("SchutzGpMembership", IsSemigroup);
 
-DeclareOperation("FakeOne", [IsMultiplicativeElementCollection]);
+DeclareOperation("FakeOne", [IsCollection]);

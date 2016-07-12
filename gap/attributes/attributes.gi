@@ -326,9 +326,6 @@ InstallMethod(SmallMonoidGeneratingSet,
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
   if Length(coll) = 1 then
-    if coll[1] = One(coll) then
-      return [];
-    fi;
     return coll;
   fi;
   return GeneratorsOfMonoid(Monoid(coll, rec(small := true)));

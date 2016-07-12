@@ -54,19 +54,19 @@ function(x, data)
   return res;
 end);
 
-InstallGlobalFunction(SEMIGROUPS_HashFunctionForFFECollColl,
-function(x, data)
-  local i, res;
-  if Length(x) = 0 then
-    return 1;
-  fi;
-  res := 0;
-  for i in [1 .. Length(x)] do
-    res := (res * 1001 + ORB_HashFunctionForPlainFlatList(AsPlist(x[i]), data))
-           mod data + 1;
-  od;
-  return res;
-end);
+#InstallGlobalFunction(SEMIGROUPS_HashFunctionForFFECollColl,
+#function(x, data)
+#  local i, res;
+#  if Length(x) = 0 then
+#    return 1;
+#  fi;
+#  res := 0;
+#  for i in [1 .. Length(x)] do
+#    res := (res * 1001 + ORB_HashFunctionForPlainFlatList(AsPlist(x[i]), data))
+#           mod data + 1;
+#  od;
+#  return res;
+#end);
 
 InstallMethod(ChooseHashFunction,
 "for collections of plist vector over finite fields",
@@ -76,13 +76,13 @@ function(m, hashlen)
              data := hashlen);
 end);
 
-InstallMethod(ChooseHashFunction,
-"for collections of ffeplist vector over finite fields",
-[IsFFECollColl, IsInt],
-function(m, hashlen)
-  return rec(func := SEMIGROUPS_HashFunctionForFFECollColl,
-             data := hashlen);
-end);
+#InstallMethod(ChooseHashFunction,
+#"for collections of ffeplist vector over finite fields",
+#[IsFFECollColl, IsInt],
+#function(m, hashlen)
+#  return rec(func := SEMIGROUPS_HashFunctionForFFECollColl,
+#             data := hashlen);
+#end);
 
 InstallMethod(ChooseHashFunction, "for plist matrices over finite fields",
 [IsPlistMatrixOverFiniteFieldRep, IsInt],

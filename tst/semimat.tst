@@ -11,7 +11,7 @@ gap> START_TEST("Semigroups package: semimat.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
-gap> SemigroupsStartTest();
+gap> SEMIGROUPS.StartTest();
 
 #T# MatrixSemigroupTest1: Create and Size
 gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2), 16,
