@@ -595,6 +595,22 @@ function(x, y)
   return x![1] < y![1];
 end);
 
+InstallMethod(\^, "for a semigroup element and a translation",
+[IsAssociativeElement, IsTranslationsSemigroupElement],
+function(x, t)
+  local list;
+  if IsLeftTranslationsSemigroupElement(t) then
+    list := AsList(UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t))));
+  else
+    list := AsList(UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t))));
+  fi;
+  if not x in list then
+    Error("Semigroups: ^ for a semigroup element and translation: \n",
+          "the first argument must be an element of the domain of the second");
+  fi;
+  return list[Position(list, x)^t![1]];
+end);
+
 InstallMethod(\*, "for translation hull elements (linked pairs)",
 IsIdenticalObj,
 [IsTranslationalHullElement, IsTranslationalHullElement],
@@ -1003,16 +1019,22 @@ function(S)
   
   linkedpairfromfuncs := function(t1, t2, fx, fy)
     fl := function(x)
-      if x[1]^t1 <> nrrows + 1 then
-        return RMSElement(reesmatsemi, x[1]^t1, fx[x[1]] * x[2], x[3]);
+      if x = zero then
+        return zero;
+      fi;
+      if t1[x[1]] <> nrrows + 1 then
+        return RMSElement(reesmatsemi, t1[x[1]], fx[x[1]] * x[2], x[3]);
       else
         return zero;
       fi;
     end;
     
     fr := function(x)
-      if x[3]^t2 <> nrcols + 1 then
-        return RMSElement(reesmatsemi, x[1], x[2] * fy[x[3]], x[3]^t2);
+      if x = zero then
+        return zero;
+      fi;
+      if t2[x[3]] <> nrcols + 1 then
+        return RMSElement(reesmatsemi, x[1], x[2] * fy[x[3]], t2[x[3]]);
       else
         return zero;
       fi;
@@ -1038,8 +1060,8 @@ function(S)
       if not IsEmpty(transfuncs) then
         if not transfuncs[1] = 0 then
           for funcs in transfuncs do
-            fx := transfuncs[1];
-            fy := transfuncs[2];
+            fx := funcs[1];
+            fy := funcs[2];
             unboundpositions := [];
             for j in [1..Length(transfuncs[2])] do
               if not IsBound(transfuncs[2]) then 
