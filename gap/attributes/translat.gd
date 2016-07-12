@@ -58,5 +58,5 @@ DeclareAttribute("TypeTranslationalHullElements",
 
 DeclareAttribute("LeftTranslations", IsSemigroup);
 DeclareAttribute("RightTranslations", IsSemigroup);
-DeclareAttribute("TranslationalHull", IsSemigroup);
-DeclareAttribute("TranslationalHull2", IsRectangularBand);
+DeclareAttribute("TranslationalHullSemigroup", IsSemigroup);
+DeclareAttribute("TranslationalHull", IsZeroSimpleSemigroup and IsFinite);

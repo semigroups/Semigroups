@@ -114,7 +114,7 @@ function(R, f)
   [Transformation(mapAsTransList)]);
 end);
 
-InstallMethod(TranslationalHull, "for a semigroup",
+InstallMethod(TranslationalHullSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
   local fam, type, H;
@@ -793,18 +793,20 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
     linkedTransList[k] := IteratorOfCartesianProduct(possibleCols);
   od;
   
-  return [transList, linkedTransList];
+  return [transList{[1..Length(transList) - 1]}, linkedTransList];
 end;
 
+#TODO: sort out where the failedComponents is going
 #For a pair of transformations on the indices of a completely 0-simple semigroup
 #determine the functions to the group associated with the RMS representation
 #which will form translations when combined with the transformations
-SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
+SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedComponents)
   local reesmatsemi, mat, gplist, gpsize, nrrows, nrcols, invmat,
-        rowtransformedmat, coltransformedmat, zerorow, zerocol, pos,
-        rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, r, n, 
-        funcs, digraph, cc, comp, iterator, foundfuncs,
-        relpointvals, relssatisfied, funcsfromrelpointvals, fillin;
+        rowtransformedmat, zerorow, zerocol, pos, satisfied,
+        rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, r, n, q,
+        funcs, digraph, cc, comp, iterator, foundfuncs, failedcomps,
+        failedtocomplete, relpointvals, 
+        relssatisfied, funcsfromrelpointvals, fillin;
   reesmatsemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
   mat := Matrix(reesmatsemi);
   gplist := AsList(UnderlyingSemigroup(reesmatsemi));
@@ -870,10 +872,15 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
     fi;
   od;
   
-  #TODO: prove you only need to check the relations once
-  #for all choices of x{relpoints}
-  #i.e., the only possible problem is an inconsistency 
-  #which if it exists will always occur
+  #check whether these connected components have already been found to fail
+  for i in [1..Length(failedComponents)] do
+    if ForAny(failedComponents[i][1], comp -> comp in cc.comps) then
+      if failedComponents[i][2] = t1{relpoints} and 
+        failedComponents[i][3] = t2{relpoints} then
+        return [];
+      fi;
+    fi;
+  od;
   
   #given a choice of relpoints, fill in everything else possible
   fillin := function(funcs)
@@ -881,28 +888,46 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
     y := ShallowCopy(funcs[2]);
     for r in relpoints do
       comp := cc.comps[cc.id[r]];
+      failedtocomplete := false;
       for n in [2..Length(comp)] do
         j := comp[n];
         if j <= nrrows then
-          k := rowrels[r][j];
-          x[j] := mat[j][t2[k]] * invmat[r][t2[k]] * x[r] *
-                    rowtransformedmat[r][k] * invmat[t1[j]][k];
-        else
-          j := j - nrrows;
-          for rel in rels do
-            if rel[1] in comp and rel[2] = j then
-              i := rel[1];
-              y[j] := invmat[i][t2[j]] * x[i] * rowtransformedmat[i][j];
+          for q in comp do
+            if IsBound(rowrels[q][j]) and not IsBound(x[j]) then
+              k := rowrels[q][j];
+              x[j] := mat[j][t2[k]] * invmat[q][t2[k]] * x[q] *
+                      rowtransformedmat[q][k] * invmat[t1[j]][k];
               break;
             fi;
           od;
+        if not IsBound(x[j]) then
+          failedtocomplete := true;
+        fi;
+        else
+          j := j - nrrows;
+          if not IsBound(y[j]) then
+            for rel in rels do
+              if rel[1] in comp and rel[2] = j then
+                i := rel[1];
+                y[j] := invmat[i][t2[j]] * x[i] * rowtransformedmat[i][j];
+                break;
+              fi;
+            od;
+          fi;
         fi;
       od;
+      if failedtocomplete then
+        funcs := fillin([x,y]);
+        x := funcs[1];
+        y := funcs[2];
+      fi;
     od;
     return [x,y];
   end;
   
   relssatisfied := function(funcs)
+    failedcomps := [];
+    satisfied := true;
     x := funcs[1];
     y := funcs[2];
     for rel in rels do
@@ -910,10 +935,11 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
       j := rel[2];
       if IsBound(x[i]) and IsBound(y[j]) and not 
           x[i] * rowtransformedmat[i][j] = mat[i][t2[j]] * y[j] then
-        return false;
+          Add(failedcomps, cc.comps[cc.id[i]]);
+          satisfied := false;
       fi;
     od;
-    return true;
+    return satisfied;
   end;
   
   funcsfromrelpointvals := function(relpointvals)
@@ -935,70 +961,111 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2)
   foundfuncs := [];
   iterator := IteratorOfCartesianProduct(List(relpoints, i -> [1..gpsize]));
   
+  #TODO: prove you only need to check the relations once
+  #for all choices of x{relpoints}
+  #i.e., the only possible problem is an inconsistency 
+  #which if it exists will always occur
+  
   if IsDoneIterator(iterator) then
-    return foundfuncs;
+    return [];
   elif not relssatisfied(funcsfromrelpointvals(NextIterator(iterator))) then
-    return foundfuncs;
+    return [0, Set(failedcomps), t1{relpoints}, t2{relpoints}];
   fi;
   
   while not IsDoneIterator(iterator) do
-    relpointvals := NextIterator(iterator);
-    Add(foundfuncs, funcsfromrelpointvals(relpointvals));
+    Add(foundfuncs, funcsfromrelpointvals(NextIterator(iterator)));
   od;
   
   return foundfuncs;
 end;
 
-InstallMethod(TranslationalHull2, "for a rectangular band",
-[IsRectangularBand], 
+#TODO: work out what to actually call this
+InstallMethod(TranslationalHull, "for a finite 0-simple semigroup",
+[IsFinite and IsZeroSimpleSemigroup],
 function(S)
-  local iso, reesMatSemi, reesMat, sizeI, sizeL, leftGens, rightGens, map,
-   mapAsTransList, semiList, leftHullGens, rightHullGens, hull, 
-   reesMappingFunction, i, j, k, l;
+  local tt, failedcomponents, iterator, transfuncs, unboundpositions,
+        L, R, H, linkedpairs, i, j, c, linkedpairfromfuncs, iso, inv, nrrows,
+        nrcols, reesmatsemi, zero, fl, fr, l, r, t1, t2, funcs, fx, fy,
+        partialfunciterator, funcvals;
   
-  iso := IsomorphismReesMatrixSemigroup(S);
-  reesMatSemi := Range(iso);
-  reesMat := Matrix(reesMatSemi);
-  sizeI := Length(reesMat[1]);
-  sizeL := Length(reesMat);
+  iso := IsomorphismReesZeroMatrixSemigroup(S);
+  inv := InverseGeneralMapping(iso);
+  reesmatsemi := Range(iso);
+  nrrows := Length(Matrix(reesmatsemi));
+  nrcols := Length(Matrix(reesmatsemi)[1]);
+  zero := MultiplicativeZero(reesmatsemi);
+  L := LeftTranslationsSemigroup(S);
+  R := RightTranslationsSemigroup(S);
+  H := TranslationalHullSemigroup(S);
+  tt := SEMIGROUPS.FindTranslationTransformations(S);
+  failedcomponents := [];
+  linkedpairs := [];
   
-  leftGens := ShallowCopy(GeneratorsOfMonoid(FullTransformationMonoid(sizeI)));
-  rightGens := ShallowCopy(GeneratorsOfMonoid(FullTransformationMonoid(sizeL)));
-  Add(leftGens, IdentityTransformation);
-  Add(rightGens, IdentityTransformation);
-  
-  leftHullGens:=[];
-  semiList:= AsList(S);
-  for i in [1..Length(leftGens)] do
-    reesMappingFunction := function(x)
-      return ReesMatrixSemigroupElement(reesMatSemi, x[1]^leftGens[i], (), x[3]);
+  linkedpairfromfuncs := function(t1, t2, fx, fy)
+    fl := function(x)
+      if x[1]^t1 <> nrrows + 1 then
+        return RMSElement(reesmatsemi, x[1]^t1, fx[x[1]] * x[2], x[3]);
+      else
+        return zero;
+      fi;
     end;
-    map := CompositionMapping(InverseGeneralMapping(iso), MappingByFunction(
-      reesMatSemi, reesMatSemi, reesMappingFunction), iso);
-    mapAsTransList := [];
-    for l in [1..Length(semiList)] do
-      mapAsTransList[l] := Position(semiList, semiList[l]^map);
-    od;
-    Add(leftHullGens, Transformation(mapAsTransList));
-  od;   
-  
-  rightHullGens:=[];
-  for j in [1..Length(rightGens)] do
-    reesMappingFunction := function(x)
-      return ReesMatrixSemigroupElement(reesMatSemi, x[1], (), x[3]^rightGens[j]);
+    
+    fr := function(x)
+      if x[3]^t2 <> nrcols + 1 then
+        return RMSElement(reesmatsemi, x[1], x[2] * fy[x[3]], x[3]^t2);
+      else
+        return zero;
+      fi;
     end;
-    map := CompositionMapping(InverseGeneralMapping(iso), MappingByFunction(
-      reesMatSemi, reesMatSemi, reesMappingFunction), iso);
-    mapAsTransList := [];
-    for l in [1..Length(semiList)] do
-      mapAsTransList[l] := Position(semiList, semiList[l]^map);
+    
+    l := LeftTranslation(L, CompositionMapping(inv, MappingByFunction(
+      reesmatsemi, reesmatsemi, fl), iso));
+    
+    r := RightTranslation(R, CompositionMapping(inv, MappingByFunction(
+      reesmatsemi, reesmatsemi, fr), iso));
+    
+    return TranslationalHullElement(H, l, r);
+  end;
+  
+  
+  for i in [1..Length(tt[1])] do
+    t1 := tt[1][i];
+    iterator := tt[2][i];
+    while not IsDoneIterator(iterator) do
+      t2 := NextIterator(iterator);
+      transfuncs := SEMIGROUPS.FindTranslationFunctionsToGroup(S, t1, t2, 
+                                                              failedcomponents);
+      if not IsEmpty(transfuncs) then
+        if not transfuncs[1] = 0 then
+          for funcs in transfuncs do
+            fx := transfuncs[1];
+            fy := transfuncs[2];
+            unboundpositions := [];
+            for j in [1..Length(transfuncs[2])] do
+              if not IsBound(transfuncs[2]) then 
+                Add(unboundpositions, i);
+              fi;
+            od;
+            if Length(unboundpositions) > 0 then 
+              c := List([1..Length(unboundpositions)], i -> [1..Length(fy)]);
+              partialfunciterator := IteratorOfCartesianProduct(c);
+              while not IsDoneIterator(partialfunciterator) do
+                funcvals := NextIterator(partialfunciterator);
+                for j in [1..Length(unboundpositions)] do
+                  fy[unboundpositions[j]] := funcvals[j];
+                od;
+                Add(linkedpairs, linkedpairfromfuncs(t1, t2, fx, fy));
+              od;
+            else
+              Add(linkedpairs, linkedpairfromfuncs(t1, t2, fx, fy));
+            fi;
+          od;
+        fi;
+      fi;
     od;
-    Add(rightHullGens, Transformation(mapAsTransList));
   od;
   
-  hull := DirectProduct(Semigroup(leftHullGens), Semigroup(rightHullGens));
-  return hull;
-
+  return linkedpairs;
 end);
 
 InstallMethod(LeftTranslations, "for a semigroup with known generators",
