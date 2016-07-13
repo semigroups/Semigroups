@@ -737,7 +737,11 @@ Obj SEMIGROUP_CONGRUENCE (Obj self, Obj data, Obj extra_gap) {
   }
 }
 
-Obj FP_SEMI_SIZE (Obj self, Obj S) {
+/*******************************************************************************
+ * CongFromFpSemigroup: helper function to convert a GAP FP semigroup object
+ * to a C++ Congruence object, for use with Todd-Coxeter
+ ******************************************************************************/
+Congruence* CongFromFpSemigroup (Obj S) {
   initRNams();
   assert(IsbPRec(S, RNam_relations));
 
@@ -768,6 +772,11 @@ Obj FP_SEMI_SIZE (Obj self, Obj S) {
     cong = CLASS_OBJ<Congruence>(ElmPRec(S, RNam_congruence));
   }
 
+  return cong;
+}
+
+Obj FP_SEMI_SIZE (Obj self, Obj S) {
+  Congruence* cong = CongFromFpSemigroup(S);
   cong->todd_coxeter();
   return INTOBJ_INT(cong->nr_active_cosets() - 1);
 }
