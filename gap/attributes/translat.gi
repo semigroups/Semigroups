@@ -999,7 +999,7 @@ end;
 InstallMethod(TranslationalHull, "for a finite 0-simple semigroup",
 [IsFinite and IsZeroSimpleSemigroup],
 function(S)
-  local tt, failedcomponents, iterator, transfuncs, unboundpositions,
+  local tt, failedcomponents, iterator, transfuncs, unboundpositions, gplist,
         L, R, H, linkedpairs, i, j, c, linkedpairfromfuncs, iso, inv, nrrows,
         nrcols, reesmatsemi, zero, fl, fr, l, r, t1, t2, funcs, fx, fy,
         partialfunciterator, funcvals;
@@ -1007,6 +1007,7 @@ function(S)
   iso := IsomorphismReesZeroMatrixSemigroup(S);
   inv := InverseGeneralMapping(iso);
   reesmatsemi := Range(iso);
+  gplist := AsList(UnderlyingSemigroup(reesmatsemi));
   nrrows := Length(Matrix(reesmatsemi));
   nrcols := Length(Matrix(reesmatsemi)[1]);
   zero := MultiplicativeZero(reesmatsemi);
@@ -1063,18 +1064,18 @@ function(S)
             fx := funcs[1];
             fy := funcs[2];
             unboundpositions := [];
-            for j in [1..Length(transfuncs[2])] do
-              if not IsBound(transfuncs[2]) then 
-                Add(unboundpositions, i);
+            for j in [1..Length(fy)] do
+              if not IsBound(fy[j]) then 
+                Add(unboundpositions, j);
               fi;
             od;
-            if Length(unboundpositions) > 0 then 
-              c := List([1..Length(unboundpositions)], i -> [1..Length(fy)]);
+            if Length(unboundpositions) > 0 then
+              c := List([1..Length(unboundpositions)], i -> [1..Length(gplist)]);
               partialfunciterator := IteratorOfCartesianProduct(c);
               while not IsDoneIterator(partialfunciterator) do
                 funcvals := NextIterator(partialfunciterator);
                 for j in [1..Length(unboundpositions)] do
-                  fy[unboundpositions[j]] := funcvals[j];
+                  fy[unboundpositions[j]] := gplist[funcvals[j]];
                 od;
                 Add(linkedpairs, linkedpairfromfuncs(t1, t2, fx, fy));
               od;
