@@ -17,7 +17,6 @@
 
 # returns the lex-least multiplication table of the semigroup <S>
 
-
 InstallMethod(SmallestMultiplicationTable, "for a semigroup",
 [IsSemigroup],
 function(S)

@@ -578,9 +578,7 @@ gap> s := Semigroup( [ Transformation( [ 1, 1, 3, 1, 3 ] ),
 gap> i := SemigroupIdeal(s, Transformation( [ 1, 1, 1, 3, 1 ] ));;
 gap> cong := ReesCongruenceOfSemigroupIdeal(i);;
 gap> class := CongruenceClassOfElement(cong, Transformation([3,3,3,3,3]));;
-gap> enum := Enumerator(class);
-<enumerator of <non-regular transformation semigroup ideal of size 5, 
- degree 5 with 1 generator>>
+gap> enum := Enumerator(class);;
 gap> Size(enum);
 5
 gap> class := CongruenceClassOfElement(cong, Transformation([2,2,2,1,2]));;

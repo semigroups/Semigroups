@@ -107,10 +107,10 @@ end);
 ## Isomorphisms
 #############################################################################
 
-InstallMethod(AsMonoid, "for a Rees matrix semigroup", 
+InstallMethod(AsMonoid, "for a Rees matrix semigroup",
 [IsReesMatrixSemigroup], ReturnFail);
 
-InstallMethod(AsMonoid, "for a Rees 0-matrix semigroup", 
+InstallMethod(AsMonoid, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup], ReturnFail);
 
 InstallMethod(IsomorphismSemigroup,

@@ -12,11 +12,11 @@
 InstallGlobalFunction(SEMIGROUPS_HashFunctionForPlistMatricesOverFiniteField,
 function(x, data)
   local i, res;
-  if DegreeOfMatrixOverFiniteField(x) = 0 then
+  if DimensionOfMatrixOverSemiring(x) = 0 then
     return 1;
   fi;
   res := 0;
-  for i in [1 .. DegreeOfMatrixOverFiniteField(x)] do
+  for i in [1 .. DimensionOfMatrixOverSemiring(x)] do
     res := (res * 1001
             + ORB_HashFunctionForPlainFlatList(AsPlist(x!.mat[i]), data))
             mod data + 1;

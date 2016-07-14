@@ -136,7 +136,7 @@ InstallMethod(IdempotentGeneratedSubsemigroup,
 [IsSemigroupWithInverseOp and IsActingSemigroup],
 S -> InverseSemigroup(Idempotents(S), rec(small := true)));
 
-# same method for ideals
+# TODO this method was not in stable-2.8, should it still be here?
 
 InstallMethod(InjectionPrincipalFactor, "for a D-class of an acting semigroup",
 [IsGreensDClass and IsActingSemigroupGreensClass],
@@ -147,6 +147,8 @@ function(d)
   if not IsRegularDClass(d) then
     ErrorNoReturn("Semigroups: InjectionPrincipalFactor: usage,\n",
                   "the argument <d> must be a regular D-class,");
+  elif IsMatrixSemigroup(Parent(d)) then
+    TryNextMethod();
   fi;
 
   g := GroupHClass(d);
@@ -161,11 +163,8 @@ function(d)
   inv_r := EmptyPlist(Length(rreps));
 
   lambdaperm := LambdaPerm(Parent(d));
-  if IsTransformationSemigroupGreensClass(d)
-      or IsPartialPermSemigroupGreensClass(d)
-      or IsBipartitionSemigroupGreensClass(d) then
-    leftact := PROD;
-  elif IsReesZeroMatrixSubsemigroup(Parent(d)) then
+
+  if IsReesZeroMatrixSubsemigroup(Parent(d)) then
     leftact := function(x, y)
       if y![1] = 0 then
         return y;
@@ -174,6 +173,8 @@ function(d)
                        [y![1], y![4][rep![3]][rep![1]] ^ -1 * x * rep![2] ^ -1
                         * y![2], y![3], y![4]]);
     end;
+  else
+    leftact := PROD;
   fi;
 
   rightact := StabilizerAction(Parent(d));

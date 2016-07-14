@@ -1295,25 +1295,25 @@ gap> PartialOrderOfDClasses(S);
 gap> S := AsSemigroup(IsTransformationSemigroup, FullPBRMonoid(1));;
 gap> S := Semigroup(S, rec(generic := false));;
 gap> Idempotents(S);
-[ IdentityTransformation, Transformation( [ 2, 2, 8, 6, 2, 6, 2, 8, 13, 8, 6,
-      6, 13, 8, 13, 13 ] ), Transformation( [ 8, 2, 8, 6, 8, 6, 2, 8, 13, 8,
-      6, 6, 13, 8, 13, 13 ] ), 
-  Transformation( [ 3, 2, 3, 4, 10, 6, 7, 8, 9, 10 ] ), 
-  Transformation( [ 4, 6, 9, 4, 4, 6, 6, 13, 9, 9, 4, 6, 13, 13, 9, 13 ] ), 
-  Transformation( [ 9, 6, 9, 4, 9, 6, 6, 13, 9, 9, 4, 6, 13, 13, 9, 13 ] ), 
-  Transformation( [ 5, 7, 10, 11, 5, 12, 7, 14, 15, 10, 11, 12, 16, 14, 15,
-      16 ] ), Transformation( [ 6, 6, 13, 6, 6, 6, 6, 13, 13, 13, 6, 6, 13,
-      13, 13, 13 ] ), Transformation( [ 13, 6, 13, 6, 13, 6, 6, 13, 13, 13, 6,
-     6, 13, 13, 13, 13 ] ), Transformation( [ 7, 7, 14, 12, 7, 12, 7, 14, 16,
+[ Transformation( [ 1, 8, 6, 1, 1, 6, 1, 8, 13, 8, 6, 6, 13, 8, 13, 13 ] ), 
+  Transformation( [ 1, 8, 6, 8, 8, 6, 1, 8, 13, 8, 6, 6, 13, 8, 13, 13 ] ), 
+  Transformation( [ 1, 2, 3, 2, 10, 6, 7, 8, 9, 10 ] ), 
+  Transformation( [ 6, 9, 3, 3, 3, 6, 6, 13, 9, 9, 3, 6, 13, 13, 9, 13 ] ), 
+  Transformation( [ 6, 9, 3, 9, 9, 6, 6, 13, 9, 9, 3, 6, 13, 13, 9, 13 ] ), 
+  IdentityTransformation, Transformation( [ 7, 10, 11, 5, 5, 12, 7, 14, 15,
+      10, 11, 12, 16, 14, 15, 16 ] ), 
+  Transformation( [ 6, 13, 6, 6, 6, 6, 6, 13, 13, 13, 6, 6, 13, 13, 13, 13 ] )
+    , Transformation( [ 6, 13, 6, 13, 13, 6, 6, 13, 13, 13, 6, 6, 13, 13, 13,
+      13 ] ), Transformation( [ 7, 14, 12, 7, 7, 12, 7, 14, 16, 14, 12, 12,
+      16, 14, 16, 16 ] ), Transformation( [ 7, 14, 12, 14, 14, 12, 7, 14, 16,
       14, 12, 12, 16, 14, 16, 16 ] ), 
-  Transformation( [ 14, 7, 14, 12, 14, 12, 7, 14, 16, 14, 12, 12, 16, 14, 16,
-      16 ] ), Transformation( [ 10, 7, 10, 11, 10, 12, 7, 14, 15, 10, 11, 12,
-      16, 14, 15, 16 ] ), Transformation( [ 11, 12, 15, 11, 11, 12, 12, 16,
-      15, 15, 11, 12, 16, 16, 15, 16 ] ), 
-  Transformation( [ 15, 12, 15, 11, 15, 12, 12, 16, 15, 15, 11, 12, 16, 16,
-      15, 16 ] ), Transformation( [ 12, 12, 16, 12, 12, 12, 12, 16, 16, 16,
+  Transformation( [ 7, 10, 11, 10, 10, 12, 7, 14, 15, 10, 11, 12, 16, 14, 15,
+      16 ] ), Transformation( [ 12, 15, 11, 11, 11, 12, 12, 16, 15, 15, 11,
+      12, 16, 16, 15, 16 ] ), 
+  Transformation( [ 12, 15, 11, 15, 15, 12, 12, 16, 15, 15, 11, 12, 16, 16,
+      15, 16 ] ), Transformation( [ 12, 16, 12, 12, 12, 12, 12, 16, 16, 16,
       12, 12, 16, 16, 16, 16 ] ), 
-  Transformation( [ 16, 12, 16, 12, 16, 12, 12, 16, 16, 16, 12, 12, 16, 16,
+  Transformation( [ 12, 16, 12, 16, 16, 12, 12, 16, 16, 16, 12, 12, 16, 16,
       16, 16 ] ) ]
 
 # greens-acting: Idempotents, 2/2

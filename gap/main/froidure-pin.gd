@@ -35,7 +35,8 @@ SEMIGROUPS.IsCCSemigroup := function(S)
            or IsBipartitionSemigroup(S)
            or IsBooleanMatSemigroup(S)
            or IsPBRSemigroup(S)
-           or IsMatrixOverSemiringSemigroup(S);
+           or (IsMatrixOverSemiringSemigroup(S) 
+               and not IsMatrixSemigroup(S));
 end;
 
 # SEMIGROUPS.DegreeOfSemigroup: returns the size of the container required in

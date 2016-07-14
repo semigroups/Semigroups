@@ -11,7 +11,6 @@
 ReadPackage("semigroups/gap/smallestimage.g");
 
 ReadPackage("semigroups/gap/hash.gi");
-ReadPackage("semigroups/gap/matrix.gi");
 ReadPackage("semigroups/gap/semimat.gi");
 ReadPackage("semigroups/gap/grpsmat.gi");
 
@@ -22,6 +21,7 @@ ReadPackage("semigroups/gap/elements/blocks.gi");
 ReadPackage("semigroups/gap/elements/semiringmat.gi");
 ReadPackage("semigroups/gap/elements/maxplusmat.gi");
 ReadPackage("semigroups/gap/elements/boolmat.gi");
+ReadPackage("semigroups/gap/elements/ffmat.gi");
 ReadPackage("semigroups/gap/elements/trans.gi");
 
 ReadPackage("semigroups/gap/semigroups/semi.gi");

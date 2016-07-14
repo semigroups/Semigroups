@@ -64,10 +64,10 @@ function(filt, S)
   return IsomorphismFpSemigroup(S);
 end);
 
-InstallMethod(AsMonoid, "for an fp semigroup", 
+InstallMethod(AsMonoid, "for an fp semigroup",
 [IsFpSemigroup],
 function(S)
-  if MultiplicativeNeutralElement(S) = fail then 
+  if MultiplicativeNeutralElement(S) = fail then
     return fail; # so that we do the same as the GAP/ref manual says
   fi;
   return Range(IsomorphismMonoid(IsFpMonoid, S));
@@ -231,11 +231,11 @@ function(S)
 end);
 
 InstallMethod(IsomorphismFpSemigroup, "for a group",
-[IsGroup], 
+[IsGroup],
 function(G)
   local iso1, inv1, iso2, inv2;
 
-  if IsFpGroup(G) or IsTrivial(G) or not IsFinite(G) then 
+  if IsFpGroup(G) or IsTrivial(G) or not IsFinite(G) then
     TryNextMethod();
   fi;
 
@@ -253,11 +253,11 @@ function(G)
 end);
 
 InstallMethod(IsomorphismFpMonoid, "for a group",
-[IsGroup], 
+[IsGroup],
 function(G)
   local iso1, inv1, iso2, inv2;
-  
-  if IsFpGroup(G) or IsTrivial(G) or not IsFinite(G) then 
+
+  if IsFpGroup(G) or IsTrivial(G) or not IsFinite(G) then
     TryNextMethod();
   fi;
 

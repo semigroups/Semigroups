@@ -18,14 +18,12 @@
     it satisfies <Ref Prop="IsGroup" BookName="ref"/> and 
     <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>.
     <Example><![CDATA[
-gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
-> Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);
-<matrix over GF(2^2) of degree 3>
+gap> x := Matrix(GF(4), Z(4)^0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;
 gap> G := Group(x);
 <group of 3x3 matrices over GF(2^2) with 1 generator>
 gap> IsMatrixOverFiniteFieldGroup(G);
 true
-gap> G := Group(Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);
+gap> G := Group(Z(4)^0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);
 Group([ <an immutable 3x3 matrix over GF2> ])
 gap> IsGroup(G);
 true
@@ -49,15 +47,12 @@ false]]></Example>
     of <A>G</A> by <A>mat</A> inside <C>GL(d, q)</C>.
 
     <Example><![CDATA[
-gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
-> Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;
-gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
-> Z(4) ^ 0 * [[1, 0, 0], [1, 0, 1], [1, 1, 1]] );;
+gap> x := Matrix(GF(4), Z(4)^0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;
+gap> y := Matrix(GF(4), Z(4)^0 * [[1, 0, 0], [1, 0, 1], [1, 1, 1]]);;
 gap> G := Group(x);
 <group of 3x3 matrices over GF(2^2) with 1 generator>
 gap> G ^ y;
-<group of 3x3 matrices over GF(2^2) with 1 generator>
-]]></Example>
+<group of 3x3 matrices over GF(2^2) with 1 generator>]]></Example>
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -72,8 +67,7 @@ gap> G ^ y;
     returns an isomorphism from <A>G</A> into a group consisting of &GAP;
     library matrices.
     <Example><![CDATA[
-gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
-> Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;
+gap> x := Matrix(GF(4), Z(4)^0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;
 gap> G := Group(x);;
 gap> iso := IsomorphismMatrixGroup(G);;
 gap> Source(iso); Range(iso);
@@ -94,8 +88,7 @@ Group(
     Returns the image of the isomorphism returned by <Ref
       Label="IsomorphismMatrixGroup"/>.
     <Example><![CDATA[
-gap> x := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 3,
-> Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]] );;
+gap> x := Matrix(GF(4), Z(4)^0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;
 gap> G := Group(x);
 <group of 3x3 matrices over GF(2^2) with 1 generator>
 gap> AsMatrixGroup(G);

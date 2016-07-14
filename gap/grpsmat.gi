@@ -40,7 +40,7 @@ function(G)
   else
     TryNextMethod(); #FIXME ok?
   fi;
-  deg := DegreeOfMatrixOverFiniteField(gens[1]);
+  deg := DimensionOfMatrixOverSemiring(gens[1]);
   Print("<group of ");
   Print(deg, "x", deg);
   Print(" matrices over ", BaseDomain(G));
@@ -78,15 +78,13 @@ function(G)
   fi;
   gens := GeneratorsOfGroup(G);
   if Length(gens) = 0 then
-    H := Group(AsMatrix(One(G)));
+    H := Group(AsList(One(G)));
     return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
   fi;
   return GroupHomomorphismByFunction(G,
-                                     Group(List(gens, AsMatrix)),
-                                     AsMatrix,
-                                     g ->
-                                     AsMatrixOverFiniteField(Representative(G),
-                                                             g));
+                                     Group(List(gens, AsList)),
+                                     AsList,
+                                     g -> MatrixNC(Representative(G), g));
 end);
 
 InstallMethod(IsomorphismMatrixSemigroup, "for a matrix group",
@@ -101,16 +99,16 @@ function(G, R)
   local gens, iso;
   gens := GeneratorsOfGroup(G);
   if Length(gens) = 0 then
-    Error("Semigroups: IsomorphismMatrixSemigroup: usage,\n",
-          "the group must have at least one generator,");
-    return;
+    ErrorNoReturn("Semigroups: IsomorphismMatrixSemigroup: usage,\n",
+                  "the group must have at least one generator,");
   fi;
-  iso := g -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, R,
-                                       DimensionOfMatrixGroup(G), g);
+  iso := g -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                       R,
+                                       g);
   return GroupHomomorphismByFunction(G,
                                      Group(List(gens, iso)),
                                      iso,
-                                     AsMatrix);
+                                     AsList);
 end);
 
 InstallMethod(AsMatrixGroup, "for an matrix over finite field group",
@@ -129,13 +127,13 @@ InstallMethod(\in,
 [IsMatrixOverFiniteField, IsMatrixOverFiniteFieldGroup],
 function(x, G)
   if BaseDomain(G) <> BaseDomain(x)
-      or DegreeOfMatrixSemigroup(G) <> DegreeOfMatrixOverFiniteField(x) then
+      or DegreeOfMatrixSemigroup(G) <> DimensionOfMatrixOverSemiring(x) then
     return false;
   elif DegreeOfMatrixSemigroup(G) = 0
-      and DegreeOfMatrixOverFiniteField(x) = 0 then
+      and DimensionOfMatrixOverSemiring(x) = 0 then
     return true;
   else
-    return AsMatrix(x) in AsMatrixGroup(G);
+    return AsList(x) in AsMatrixGroup(G);
   fi;
 end);
 
@@ -144,16 +142,15 @@ InstallMethod(\^,
 [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField],
 function(G, x)
   if BaseDomain(G) <> BaseDomain(x)
-      or DegreeOfMatrixSemigroup(G) <> DegreeOfMatrixOverFiniteField(x) then
-    Error("Semigroups: \^ (for matrix over finite field group and matrix ",
-          "over finite field): usage,\n",
-          " the args must have the same base domain, degree, and\n",
-          " the second arg must be invertible,");
-    return;
-  elif IsOne(x) or DegreeOfMatrixOverFiniteField(x) = 0 then
+      or DegreeOfMatrixSemigroup(G) <> DimensionOfMatrixOverSemiring(x) then
+    ErrorNoReturn("Semigroups: \^ (for matrix over finite field ",
+                  "group and matrix over finite field): usage,\n",
+                  " the args must have the same base domain, degree, and\n",
+                  " the second arg must be invertible,");
+  elif IsOne(x) or DimensionOfMatrixOverSemiring(x) = 0 then
     return G;
   else
-    return Range(IsomorphismMatrixSemigroup(AsMatrixGroup(G) ^ AsMatrix(x)));
+    return Range(IsomorphismMatrixSemigroup(AsMatrixGroup(G) ^ AsList(x)));
   fi;
 end);
 
@@ -162,13 +159,12 @@ InstallMethod(ClosureGroup,
 [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField],
 function(G, x)
   if BaseDomain(G) <> BaseDomain(x)
-      or DegreeOfMatrixSemigroup(G) <> DegreeOfMatrixOverFiniteField(x)
+      or DegreeOfMatrixSemigroup(G) <> DimensionOfMatrixOverSemiring(x)
       or Inverse(x) = fail then
-    Error("Semigroups: ClosureGroup (for matrix over finite",
-          " field group and matrix over finite field): usage,\n",
-          " the args must have the same base domain, degree, and\n",
-          " the second arg must be invertible,");
-    return;
+    ErrorNoReturn("Semigroups: ClosureGroup (for matrix over finite",
+                  " field group and matrix over finite field): usage,\n",
+                  " the args must have the same base domain, degree, and\n",
+                  " the second arg must be invertible,");
   fi;
   return ClosureGroup(G, [x]);
 end);
@@ -179,17 +175,17 @@ InstallMethod(ClosureGroup,
 function(G, coll)
   if BaseDomain(G) <> BaseDomain(coll)
       or DegreeOfMatrixSemigroup(G) <>
-         DegreeOfMatrixOverFiniteFieldCollection(coll)
+         DimensionOfMatrixOverSemiringCollection(coll)
       or ForAny(coll, x -> Inverse(x) = fail) then
-    Error("Semigroups: ClosureGroup (for matrix over finite field group",
-          " and matrix over finite field): usage,\n",
-          " the args must have the same base domain, degree, and\n",
-          " every matrix in the second arg must be invertible,");
-    return;
+    ErrorNoReturn("Semigroups: ClosureGroup (for matrix over ",
+                  "finite field group",
+                  " and matrix over finite field): usage,\n",
+                  " the args must have the same base domain, degree, and\n",
+                  " every matrix in the second arg must be invertible,");
   elif DegreeOfMatrixSemigroup(G) = 0 then
     return G;
   fi;
   return Range(IsomorphismMatrixSemigroup(ClosureGroup(AsMatrixGroup(G),
-                                                       List(coll, AsMatrix)),
+                                                       List(coll, AsList)),
                                                        BaseDomain(G)));
 end);

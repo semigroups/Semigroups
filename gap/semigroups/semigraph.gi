@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-InstallMethod(AsMonoid, "for a graph inverse semigroup", 
+InstallMethod(AsMonoid, "for a graph inverse semigroup",
 [IsGraphInverseSemigroup], ReturnFail);
 
 InstallMethod(ViewString, "for a graph inverse semigroup",

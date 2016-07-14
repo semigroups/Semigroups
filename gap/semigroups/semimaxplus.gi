@@ -167,7 +167,7 @@ for _IsXMatrix in ["IsMaxPlusMatrix",
   Concatenation("for ", _IsXSemigroup, " and a semigroup"),
   [EvalString(_IsXSemigroup), IsSemigroup],
   SEMIGROUPS.DefaultIsomorphismSemigroup);
-  
+
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", _IsXSemigroup, " and a ", _IsXSemigroup),
   [EvalString(_IsXSemigroup), EvalString(_IsXSemigroup)],
@@ -203,12 +203,12 @@ for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
                                          x -> (x ^ iso1) ^ iso2,
                                          x -> (x ^ inv2) ^ inv1);
   end);
-  
+
   InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", _IsXSemigroup, " and a ", _IsXSemigroup),
   [EvalString(_IsXSemigroup), IsPosInt, EvalString(_IsXSemigroup)],
   function(filter, threshold, S)
-    if threshold = ThresholdTropicalMatrix(Representative(S)) then 
+    if threshold = ThresholdTropicalMatrix(Representative(S)) then
       return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
     fi;
     TryNextMethod();
@@ -241,8 +241,8 @@ InstallMethod(IsomorphismSemigroup,
 "for IsNTPMatrixSemigroup, pos int, pos int, and a semigroup",
 [IsNTPMatrixSemigroup, IsPosInt, IsPosInt, IsNTPMatrixSemigroup],
 function(filter, threshold, period, S)
-  if threshold = ThresholdNTPMatrix(Representative(S)) 
-      and period = PeriodNTPMatrix(Representative(S)) then 
+  if threshold = ThresholdNTPMatrix(Representative(S))
+      and period = PeriodNTPMatrix(Representative(S)) then
     return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
   fi;
   TryNextMethod();
@@ -263,11 +263,11 @@ _InstallIsomorphism0 := function(filter)
   IsXSemigroup := Concatenation(filter, "Semigroup");
   IsXMonoid := Concatenation(filter, "Monoid");
 
-  InstallMethod(AsMonoid, 
+  InstallMethod(AsMonoid,
   Concatenation("for a semigroup in ", IsXSemigroup),
   [EvalString(IsXSemigroup)],
   function(S)
-    if MultiplicativeNeutralElement(S) = fail then 
+    if MultiplicativeNeutralElement(S) = fail then
       return fail; # so that we do the same as the GAP/ref manual says
     fi;
     return Range(IsomorphismMonoid(EvalString(IsXMonoid), S));
@@ -330,11 +330,11 @@ _InstallIsomorphism1 := function(filter)
   IsXSemigroup := Concatenation(filter, "Semigroup");
   IsXMonoid := Concatenation(filter, "Monoid");
 
-  InstallMethod(AsMonoid, 
+  InstallMethod(AsMonoid,
   Concatenation("for a semigroup in ", IsXSemigroup),
   [EvalString(IsXSemigroup)],
   function(S)
-    if MultiplicativeNeutralElement(S) = fail then 
+    if MultiplicativeNeutralElement(S) = fail then
       return fail; # so that we do the same as the GAP/ref manual says
     fi;
     return Range(IsomorphismMonoid(EvalString(IsXMonoid), S));
@@ -409,7 +409,7 @@ Unbind(_InstallIsomorphism1);
 InstallMethod(AsMonoid, "for an ntp matrix semigroup",
 [IsNTPMatrixSemigroup],
 function(S)
-  if MultiplicativeNeutralElement(S) = fail then 
+  if MultiplicativeNeutralElement(S) = fail then
     return fail; # so that we do the same as the GAP/ref manual says
   fi;
   return Range(IsomorphismMonoid(IsNTPMatrixMonoid, S));

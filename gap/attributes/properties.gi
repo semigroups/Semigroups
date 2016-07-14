@@ -1309,7 +1309,7 @@ end);
 InstallMethod(IsRegularSemigroupElementNC,
 [IsSemigroup, IsMultiplicativeElement], IsRegularSemigroupElement);
 
-InstallMethod(IsRegularSemigroupElement, "for semigroup", IsCollsElms, 
+InstallMethod(IsRegularSemigroupElement, "for semigroup", IsCollsElms,
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
   return x in S and IsRegularClass(RClass(S, x));
@@ -1723,7 +1723,7 @@ InstallMethod(IsFinite, "for a finitely presented semigroup",
 function(S)
   if IsEmpty(RelationsOfFpSemigroup(S)) or
       ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2])) then
-#TODO add nr gens is higher than nr relations
+    #TODO add nr gens is higher than nr relations
     return false;
   fi;
   TryNextMethod();

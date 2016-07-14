@@ -16,7 +16,6 @@ DeclareCategoryKernel("IsBipartition",
 DeclareCategoryCollections("IsBipartition");
 DeclareCategoryCollections("IsBipartitionCollection");
 
-DeclareGlobalFunction("BipartitionNC");
 DeclareGlobalFunction("Bipartition");
 
 DeclareAttribute("DegreeOfBipartition", IsBipartition);

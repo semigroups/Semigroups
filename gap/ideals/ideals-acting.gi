@@ -879,7 +879,7 @@ function(x, I)
     return true;
   fi;
   Assert(1, schutz <> false);
-  return SchutzGpMembership(I)(schutz, LambdaPerm(I)(reps[m][ind][1], x)) = ();
+  return SchutzGpMembership(I)(schutz, LambdaPerm(I)(reps[m][ind][1], x));
 end);
 
 # JDM; this method could be removed later...

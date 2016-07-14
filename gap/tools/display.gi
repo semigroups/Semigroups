@@ -342,9 +342,9 @@ function(x, opts)
     draw := i -> "  \\draw(";
   fi;
 
-  if IsBound(opts.labels) then 
+  if IsBound(opts.labels) then
     labels := opts.labels;
-  else 
+  else
     labels := true;
   fi;
 
@@ -373,7 +373,7 @@ function(x, opts)
         Append(str, fill(j));
         Append(str, String(i));
         Append(str, ", 2)circle(.125);\n");
-        if labels then 
+        if labels then
           Append(str, draw(j));
           Append(str, String(i - 0.05));
           Append(str, ", 2.2) node [above] {$");
@@ -385,7 +385,7 @@ function(x, opts)
         Append(str, fill(j));
         Append(str, String(-i));
         Append(str, ", 0)circle(.125);\n");
-        if labels then 
+        if labels then
           Append(str, draw(j));
           Append(str, String(-i));
           Append(str, ", -0.2) node [below] {$-");

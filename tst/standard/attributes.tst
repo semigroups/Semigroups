@@ -466,7 +466,7 @@ gap> SmallSemigroupGeneratingSet(S);;
 
 #T# attributes: SmallMonoidGeneratingSet: for a singleton set 1/2
 gap> SmallMonoidGeneratingSet([IdentityTransformation]);
-[  ]
+[ IdentityTransformation ]
 
 #T# attributes: SmallMonoidGeneratingSet: for a singleton set 2/2
 gap> SmallMonoidGeneratingSet([Transformation([2, 1, 2])]);
@@ -475,7 +475,7 @@ gap> SmallMonoidGeneratingSet([Transformation([2, 1, 2])]);
 #T# attributes: SmallMonoidGeneratingSet: for a 0 generator monoid
 gap> S := Monoid(Bipartition([[1, -1]]));;
 gap> SmallMonoidGeneratingSet(S);
-[  ]
+[ <block bijection: [ 1, -1 ]> ]
 
 #T# attributes: SmallInverseSemigroupGeneratingSet: for collection > 1 element 
 gap> SmallInverseSemigroupGeneratingSet(
@@ -509,7 +509,7 @@ gap> SmallInverseSemigroupGeneratingSet(S);;
 gap> S := InverseMonoid(PartialPerm([1, 2, 3]));
 <trivial partial perm group of rank 3 with 1 generator>
 gap> SmallInverseMonoidGeneratingSet(S);
-[  ]
+[ <identity partial perm on [ 1, 2, 3 ]> ]
 
 #T# attributes: SmallInverseMonoidGeneratingSet: for > 0 generators 1/2
 gap> S := InverseMonoid([PartialPerm([1, 3], [2, 3]),
@@ -689,8 +689,7 @@ gap> StructureDescriptionMaximalSubgroups(S);
 
 #T# attributes: IdempotentGeneratedSubsemigroup
 gap> S := RegularBooleanMatMonoid(3);;
-gap> T := IdempotentGeneratedSubsemigroup(S);
-<monoid of 3x3 boolean matrices with 16 generators>
+gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> Size(T);
 381
 

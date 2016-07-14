@@ -80,10 +80,10 @@ end);
 # the MultiplicativeNeutralElement of the second argument, and reduces the
 # degree accordingly.
 
-InstallMethod(AsMonoid, "for a boolean mat semigroup", 
+InstallMethod(AsMonoid, "for a boolean mat semigroup",
 [IsBooleanMatSemigroup],
 function(S)
-  if MultiplicativeNeutralElement(S) = fail then 
+  if MultiplicativeNeutralElement(S) = fail then
     return fail; # so that we do the same as the GAP/ref manual says
   fi;
   return Range(IsomorphismMonoid(IsBooleanMatMonoid, S));
@@ -116,7 +116,7 @@ function(n)
 
   if n = 1 then
     return Monoid(BooleanMat([[true]]), BooleanMat([[false]]));
-  elif n = 2 then 
+  elif n = 2 then
     return Monoid(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]),
                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]));
@@ -150,8 +150,8 @@ InstallMethod(GossipMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local gens, i, j, x, m;
-  
-  if n = 1 then 
+
+  if n = 1 then
     return Semigroup(Matrix(IsBooleanMat, [[true]]));
   fi;
 
@@ -174,8 +174,8 @@ InstallMethod(UnitriangularBooleanMatMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local gens, x, i, j;
-  
-  if n = 1 then 
+
+  if n = 1 then
     return Semigroup(Matrix(IsBooleanMat, [[true]]));
   fi;
 
@@ -195,8 +195,8 @@ InstallMethod(TriangularBooleanMatMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local gens, x, i;
-  
-  if n = 1 then 
+
+  if n = 1 then
     return Semigroup(Matrix(IsBooleanMat, [[true]]));
   fi;
 

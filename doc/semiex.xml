@@ -109,7 +109,8 @@ gap> SingularBrauerMonoid(8);
 
       <Example><![CDATA[
 gap> S := PartitionMonoid(5);
-<regular bipartition monoid of degree 5 with 4 generators>
+<regular bipartition *-monoid of size 115975, degree 5 with 4 
+ generators>
 gap> Size(S);
 115975]]></Example>
     </Description>
@@ -175,20 +176,21 @@ gap> Size(S);
       See <Ref Prop="IsUniformBlockBijection"/>.       
       <Example><![CDATA[
 gap> S := UniformBlockBijectionMonoid(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
+<inverse block bijection monoid of degree 4 with 3 generators>
 gap> Size(PlanarUniformBlockBijectionMonoid(8));
 128
 gap> S := DualSymmetricInverseMonoid(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
-gap> IsFactorisableSemigroup(S);
+<inverse block bijection monoid of degree 4 with 3 generators>
+gap> IsFactorisableInverseMonoid(S);
 false
-gap> S := FactorisableDualSymmetricInverseSemigroup(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
-gap> IsFactorisableSemigroup(S);
+gap> S := UniformBlockBijectionMonoid(4);
+<inverse block bijection monoid of degree 4 with 3 generators>
+gap> IsFactorisableInverseMonoid(S);
 true
-gap> S := Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));
+gap> S := AsSemigroup(IsBipartitionSemigroup, 
+>                     SymmetricInverseMonoid(5));
 <inverse bipartition monoid of degree 5 with 3 generators>
-gap> IsFactorisableSemigroup(S);
+gap> IsFactorisableInverseMonoid(S);
 true]]></Example>
     </Description>
   </ManSection>
@@ -277,6 +279,9 @@ gap> PartialTransformationMonoid(8);
 <regular transformation monoid of degree 9 with 4 generators>
 gap> Size(last);
 43046721]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
 <#GAPDoc Label="ModularPartitionMonoid">
    <ManSection>
@@ -341,25 +346,6 @@ gap> Size(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsFullMatrixSemigroup">
-  <ManSection>
-    <Prop Name = "IsFullMatrixSemigroup" Arg = "S"/>      
-    <Prop Name = "IsGeneralLinearSemigroup" Arg = "S"/>      
-    <Description>
-      <C>IsFullMatrixSemigroup</C> and <C>IsGeneralLinearSemigroup</C> return
-      <K>true</K> if the semigroup <C>S</C> was created using either of the
-      commands <Ref Oper = "FullMatrixSemigroup"/> or 
-      <Ref Oper = "GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
-
-      <Example><![CDATA[
-gap> S := RandomSemigroup(IsTransformationSemigroup, 4, 4);;
-gap> IsFullMatrixSemigroup(S);
-false
-gap> S := GeneralLinearSemigroup(3, 3);
-<full matrix semigroup 3x3 over GF(3)>
-gap> IsFullMatrixSemigroup(S);
-true]]></Example>
-
 <#GAPDoc Label="SpecialLinearSemigroup">
 <ManSection>
   <!--<Oper Name="GeneralLinearSemigroup" Arg="d, q"/>
@@ -412,7 +398,7 @@ gap> S := InverseSemigroup(PartialPerm([1, 2, 3, 4, 5, 6, 7, 10],
 >                          PartialPerm([1, 2, 7, 9], 
 >                                      [5, 6, 4, 3]));
 <inverse partial perm semigroup of rank 10 with 2 generators>
-gap> T := IdempotentGeneratedSubsemigroup(S);
+gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> M := MunnSemigroup(T);
 <inverse partial perm semigroup of rank 60 with 7 generators>
 gap> NrIdempotents(M);

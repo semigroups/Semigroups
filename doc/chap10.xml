@@ -22,8 +22,8 @@ gap> IsMatrix(x);
 true
 gap> IsMatrixOverFiniteField(x);
 false
-gap> y := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(4), 2, x);
-<matrix over GF(2^2) of degree 2>
+gap> y := Matrix(GF(4), x);
+Matrix(GF(2^2), [[Z(2^2), 0*Z(2)], [0*Z(2), 0*Z(2)]])
 gap> IsMatrix(y);
 false
 gap> IsMatrixOverFiniteField(y);
@@ -67,11 +67,9 @@ true]]></Example>
   <#Include Label="RowSpaceBasis"/>
   <#Include Label="RowRank"/>
   <#Include Label="RightInverse"/>
-  <#Include Label="DegreeOfMatrixOverFiniteField"/>
   <#Include Label="BaseDomain"/>
   <#Include Label="TransposedMatImmutable"/>
   <#Include Label="AsMatrix"/>
-  <#Include Label="ConstructingFilter"/>
 
 </Section>
 

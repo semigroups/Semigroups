@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  boolean.gd
+#W  boolmat.gd
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -14,7 +14,8 @@
 ## Specializations of declarations for MatrixOverSemiring
 #############################################################################
 
-DeclareCategory("IsBooleanMat", IsMatrixOverSemiring);
+DeclareCategory("IsBooleanMat", IsMatrixOverSemiring and
+                                IsPlistMatrixOverSemiringPositionalRep);
 
 DeclareCategoryCollections("IsBooleanMat");
 DeclareCategoryCollections("IsBooleanMatCollection");

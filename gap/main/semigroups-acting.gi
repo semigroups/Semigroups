@@ -154,6 +154,9 @@ function(S, coll, opts)
   old_data := SemigroupData(S);
   max_rank := MaximumList(List(coll, x -> ActionRank(t)(x)));
 
+  Assert(1, rho_o!.gens = new_data!.gens);
+  Assert(1, o!.gens = new_data!.gens);
+
   ht := new_data!.ht;
   # so far found R-reps
 
@@ -322,7 +325,7 @@ function(S, coll, opts)
             old := false;
             for n in [1 .. repslens[m][ind]] do
               if SchutzGpMembership(S)(schutz, lambdaperm(reps[m][ind][n], x))
-                  then 
+                  then
                 old := true;
                 old_to_new[i] := repslookup[m][ind][n];
                 break;
@@ -350,7 +353,7 @@ function(S, coll, opts)
     new_schreiergen[new_nr] := old_schreiergen[i];
     # by multiplying by gens[j]
     new_schreiermult[new_nr] := pos;  # and ends up in position <pos> of
-                                    # its lambda orb
+                                      # its lambda orb
     htadd(ht, x, new_nr);
     old_to_new[i] := new_nr;
   od;
@@ -375,6 +378,7 @@ function(S, coll, opts)
 
   return t;
 end);
+
 # different method for inverse/regular, same for ideals
 
 InstallMethod(Random, "for an acting semigroup",

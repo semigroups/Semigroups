@@ -209,7 +209,7 @@ SEMIGROUPS.ElementRClass := function(R, largest)
   scc := OrbSCC(o)[m];
 
   for i in [2 .. Length(scc)] do
-    y := rep * EvaluateWord(o!.gens, 
+    y := rep * EvaluateWord(o!.gens,
                             TraceSchreierTreeOfSCCForward(o, m, scc[i]));
     base2 := DuplicateFreeList(ImageListOfTransformation(y, n));
     p := MappingPermListList(base1, base2);
@@ -314,7 +314,7 @@ InstallMethod(IteratorSorted, "for an R-class",
 [IsGreensRClass and IsActingSemigroupGreensClass],
 function(R)
   local IterFunc, o, m, rep, n, scc, base, S, out, x, image, basei, iter, i;
-  
+
   IterFunc := SEMIGROUPS.IteratorSortedConjugateStabChain;
 
   o := LambdaOrb(R);
@@ -382,7 +382,7 @@ function(S)
 
   n := DegreeOfTransformationSemigroup(S);
 
-  if n = 0 then 
+  if n = 0 then
     return IdentityTransformation;
   elif ConstantTransformation(n, 1) in MinimalIdeal(S) then
     return ConstantTransformation(n, 1);
@@ -398,7 +398,7 @@ function(S)
 
   n := DegreeOfTransformationSemigroup(S);
 
-  if n = 0 then 
+  if n = 0 then
     return IdentityTransformation;
   elif ConstantTransformation(n, n) in MinimalIdeal(S) then
     return ConstantTransformation(n, n);
@@ -784,7 +784,7 @@ InstallMethod(IsomorphismTransformationSemigroup,
 [IsSemigroup and IsGeneralMappingCollection and HasGeneratorsOfSemigroup],
 function(S)
   local n, pts, o, pos, T, i;
-  
+
   if not IsBinaryRelationOnPointsRep(Representative(S)) then
     TryNextMethod();
   fi;
@@ -801,7 +801,7 @@ function(S)
   T := Semigroup(List(GeneratorsOfSemigroup(S),
                  x -> TransformationOpNC(x, pts, OnPoints)));
 
-  return MappingByFunction(S, 
+  return MappingByFunction(S,
                            T,
                            x -> TransformationOpNC(x, pts, OnPoints),
                            x -> BinaryRelationOnPoints(List([1 .. n], i ->

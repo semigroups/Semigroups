@@ -779,7 +779,7 @@ function(R1, R2)
 
   # gaplint: ignore 2
   tuples := EnumeratorOfCartesianProduct(
-              List([1 .. Length(DigraphConnectedComponents(graph1).comps)], 
+              List([1 .. Length(DigraphConnectedComponents(graph1).comps)],
                    x -> G2));
   #find an induced function, if there is one
   RZMStoRZMSInducedFunction := SEMIGROUPS.RZMStoRZMSInducedFunction;

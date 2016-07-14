@@ -88,7 +88,7 @@ function(x)
 end);
 
 InstallMethod(ActionDegree, "for an matrix over finite field object",
-[IsMatrixOverFiniteField], DegreeOfMatrixOverFiniteField);
+[IsMatrixOverFiniteField], DimensionOfMatrixOverSemiring);
 
 InstallMethod(ActionDegree, "for a transformation collection",
 [IsTransformationCollection], DegreeOfTransformationCollection);
@@ -116,11 +116,10 @@ InstallMethod(ActionDegree, "for a matrix object collection",
 [IsHomogeneousList and IsMatrixOverFiniteFieldCollection],
 function(coll)
   if Length(coll) = 0 then
-    Error("Semigroups: ActionDegree: usage,\n",
-          "the argument <coll> must be non-empty");
-    return;
+    ErrorNoReturn("Semigroups: ActionDegree: usage,\n",
+                  "the argument <coll> must be non-empty");
   fi;
-  return DegreeOfMatrixOverFiniteField(coll[1]);
+  return DimensionOfMatrixOverSemiring(coll[1]);
 end);
 
 InstallMethod(ActionDegree, "for a transformation semigroup",
@@ -309,8 +308,8 @@ end);
 
 InstallMethod(LambdaAct, "for a matrix semigroup",
 [IsMatrixSemigroup],
-s -> function(vsp, mat)
-  return MatrixOverFiniteFieldRowSpaceRightAction(s, vsp, mat);
+S -> function(vsp, mat)
+  return MatrixOverFiniteFieldRowSpaceRightAction(S, vsp, mat);
 end);
 
 InstallMethod(RhoAct, "for a transformation semigroup",

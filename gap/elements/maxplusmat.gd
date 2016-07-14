@@ -15,7 +15,7 @@
 ## 1. Max-plus matrices
 #############################################################################
 
-DeclareCategory("IsMaxPlusMatrix", IsMatrixOverSemiring);
+DeclareCategory("IsMaxPlusMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSemiringPositionalRep);
 DeclareCategoryCollections("IsMaxPlusMatrix");
 DeclareCategoryCollections("IsMaxPlusMatrixCollection");
 
@@ -32,7 +32,7 @@ BindGlobal("MaxPlusMatrixType",
 ## 2. Min-plus matrices
 #############################################################################
 
-DeclareCategory("IsMinPlusMatrix", IsMatrixOverSemiring);
+DeclareCategory("IsMinPlusMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSemiringPositionalRep);
 DeclareCategoryCollections("IsMinPlusMatrix");
 DeclareCategoryCollections("IsMinPlusMatrixCollection");
 
@@ -49,7 +49,7 @@ BindGlobal("MinPlusMatrixType",
 ## 3. Tropical matrices
 #############################################################################
 
-DeclareCategory("IsTropicalMatrix", IsMatrixOverSemiring);
+DeclareCategory("IsTropicalMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSemiringPositionalRep);
 DeclareCategoryCollections("IsTropicalMatrix");
 
 DeclareAttribute("ThresholdTropicalMatrix", IsTropicalMatrix);
@@ -92,7 +92,7 @@ BindGlobal("TropicalMinPlusMatrixType",
 ## 6. Projective max-plus matrices
 #############################################################################
 
-DeclareCategory("IsProjectiveMaxPlusMatrix", IsMatrixOverSemiring);
+DeclareCategory("IsProjectiveMaxPlusMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSemiringPositionalRep);
 DeclareCategoryCollections("IsProjectiveMaxPlusMatrix");
 DeclareCategoryCollections("IsProjectiveMaxPlusMatrixCollection");
 
@@ -109,7 +109,7 @@ BindGlobal("ProjectiveMaxPlusMatrixType",
 ## 7. NTP (Natural Threshold Period) matrices
 #############################################################################
 
-DeclareCategory("IsNTPMatrix", IsMatrixOverSemiring);
+DeclareCategory("IsNTPMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSemiringPositionalRep);
 DeclareCategoryCollections("IsNTPMatrix");
 DeclareCategoryCollections("IsNTPMatrixCollection");
 
@@ -129,7 +129,7 @@ DeclareAttribute("PeriodNTPMatrix", IsNTPMatrix);
 ## 8. Integer matrices
 #############################################################################
 
-DeclareCategory("IsIntegerMatrix", IsMatrixOverSemiring);
+DeclareCategory("IsIntegerMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSemiringPositionalRep);
 DeclareCategoryCollections("IsIntegerMatrix");
 DeclareCategoryCollections("IsIntegerMatrixCollection");
 

@@ -65,8 +65,10 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "freeband.xml",
                            "freeinverse.xml",
                            "greens.xml",
+                           "grpsmat.xml",
                            "ideals.xml",
                            "isomorph.xml",
+                           "matrix.xml",
                            "maximal.xml",
                            "maxplusmat.xml",
                            "normalizer.xml",
@@ -80,6 +82,7 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "semiex.xml",
                            "semigraph.xml",
                            "semigroups.xml",
+                           "semimat.xml",
                            "semipbr.xml",
                            "semipperm.xml",
                            "semiringmat.xml",
@@ -183,7 +186,7 @@ SEMIGROUPS.StopTest := function(file)
 
   # restore default options
   SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;
-  
+
   # timing
   timeofday := IO_gettimeofday();
 
@@ -214,7 +217,7 @@ SEMIGROUPS.StopTest := function(file)
 end;
 
 SEMIGROUPS.Test := function(arg)
-  local file, opts, generic, split, print_file, width, enabled, disabled;
+  local file, opts, generic, split, print_file, enabled, disabled;
 
   if Length(arg) = 0 then
     ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
@@ -243,7 +246,7 @@ SEMIGROUPS.Test := function(arg)
   Print("Testing file: ", print_file, " (generic := false)\n");
   SEMIGROUPS.DefaultOptionsRec.generic := false;
   enabled := Test(file, SEMIGROUPS.TestRec);
-  
+
   Print("Testing file: ", print_file, " (generic := true)\n");
   SEMIGROUPS.DefaultOptionsRec.generic := true;
   disabled := Test(file, SEMIGROUPS.TestRec);
@@ -259,7 +262,7 @@ end;
 
 SEMIGROUPS.RunExamples := function(exlists, excluded)
   local oldscr, passed, pad, l, sp, bad, s, start_time, test, end_time,
-  elapsed, pex, j, ex, i, attedStrin;
+  elapsed, pex, j, ex, i;
 
   oldscr := SizeScreen();
   SizeScreen([72, oldscr[2]]);
@@ -271,8 +274,8 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
 
   for j in [1 .. Length(exlists)] do
     if j in excluded then
-      Print(SEMIGROUPS.ColorizeString("# Skipping example ", j, pad(j), " . . .\n",
-                                      "back_blue"));
+      Print(SEMIGROUPS.ColorizeString("# Skipping example ", j, pad(j),
+                                      " . . .\n", "back_blue"));
     else
       l := exlists[j];
       Print("# Running example ", j, pad(j), " . . .");
@@ -496,7 +499,7 @@ SEMIGROUPS.ManSectionType := function(op)
   elif IsFamily(op) then
     return "Fam";
   elif not IsFunction(op) then
-    return "Var";  
+    return "Var";
   elif IsFunction(op) and not IsOperation(op) then
     return "Func";
   elif IsOperation(op) then
@@ -534,7 +537,7 @@ SEMIGROUPS.ManSectionType := function(op)
         class := "Filt";
         # in PRINT_OPERATION - "Category";
       elif repok then
-        class := "Filt"; 
+        class := "Filt";
         # in PRINT_OPERATION - "Representation";
       fi;
     elif Tester(op) <> false  then
@@ -544,35 +547,35 @@ SEMIGROUPS.ManSectionType := function(op)
     return class;
   else
     return fail;
-  fi;    
+  fi;
 end;
 
 # Checks whether ManSections are using the right kind of elements
 
 SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
   local display_warnings, types, r, x, errcount, name, pos, obj, man, y, yint,
-  referrcount, warncount, type, matches, match, matches2, Label, Arg, stats,
+  referrcount, warncount, type, matches, match, matches2, stats,
   elt, t, s;
-  
-  if Length( verbose ) = 0 then
+
+  if Length(verbose) = 0 then
     display_warnings := false;
   else
     display_warnings := verbose[1];
   fi;
-  types:=[ "Func", "Oper", "Meth", "Filt", "Prop", "Attr", "Var", "Fam",
-           "InfoClass" ];
-  r := ParseTreeXMLString(doc[1]);;
+  types := ["Func", "Oper", "Meth", "Filt", "Prop", "Attr", "Var", "Fam",
+            "InfoClass"];
+  r := ParseTreeXMLString(doc[1]);
   CheckAndCleanGapDocTree(r);
-  x := XMLElements( r, types );;
+  x := XMLElements(r, types);
   errcount := 0;
   Print("****************************************************************\n");
   Print("*** Checking types in ManSections \n");
   Print("****************************************************************\n");
   for elt in x do
     name := elt.attributes.Name;
-    if not name in [ "IsBound", "Unbind", "Info", "Assert", "TryNextMethod",
-        "QUIT", "-infinity" ] then
-      if EvalString( Concatenation("IsBound(", name, ")") ) <> true then
+    if not name in ["IsBound", "Unbind", "Info", "Assert", "TryNextMethod",
+                    "QUIT", "-infinity"] then
+      if EvalString(Concatenation("IsBound(", name, ")")) <> true then
         pos := OriginalPositionDocument(doc[2], elt.start);
         Print(pos[1], ":", pos[2], " : ", name, " is unbound \n");
         errcount := errcount + 1;
@@ -584,7 +587,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
         if (man <> elt.name) and not (man in ["Attr", "Prop", "Oper"] and
             elt.name = "Meth") then
           pos := OriginalPositionDocument(doc[2], elt.start);
-          Print(pos[1], ":", pos[2], " : ", name, " uses ", elt.name, 
+          Print(pos[1], ":", pos[2], " : ", name, " uses ", elt.name,
                 " instead of ", man, "\n");
           errcount := errcount + 1;
         fi;
@@ -593,7 +596,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
   od;
 
   Print("****************************************************************\n");
-  Print("*** Checking types in cross-references \n" );
+  Print("*** Checking types in cross-references \n");
   Print("****************************************************************\n");
   y := XMLElements(r, ["Ref"]);
   Print("Found ", Length(y), " Ref elements ");
@@ -606,42 +609,45 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
   referrcount := 0;
   warncount := 0;
   for elt in y do
-    type := First( types, t -> IsBound(elt.attributes.(t)));
+    type := First(types, t -> IsBound(elt.attributes.(t)));
     if type <> fail then
       matches := Filtered(x, t -> t.attributes.Name=elt.attributes.(type));
       if Length(matches) = 0 then
         pos := OriginalPositionDocument(doc[2], elt.start);
-        Print( pos[1], ":", pos[2], " : no match for ", type , ":=", 
-              elt.attributes.(type), "\n" );
-        referrcount:=referrcount+1;
+        Print(pos[1], ":", pos[2], " : no match for ", type, " := ",
+              elt.attributes.(type), "\n");
+        referrcount := referrcount + 1;
         continue;
       elif Length(matches) = 1 then
         match := matches[1];
       elif IsBound(elt.attributes.Label) then
-        matches := Filtered( matches, t -> IsBound(t.attributes.Label));
-        matches := Filtered( matches, t -> t.attributes.Label=elt.attributes.Label);
+        matches := Filtered(matches, t -> IsBound(t.attributes.Label));
+        matches := Filtered(matches, t -> t.attributes.Label =
+                                          elt.attributes.Label);
         if Length(matches) > 1 then
-          Error("Multiple labels - this should not happen!");
+          ErrorNoReturn("Semigroups: SEMIGROUPS.CheckManSectionTypes:\n",
+                        "Multiple labels - this should not happen!");
         fi;
         match := matches[1];
       else
-        matches2 := Filtered( matches, t -> not IsBound(t.attributes.Label));
+        matches2 := Filtered(matches, t -> not IsBound(t.attributes.Label));
         if Length(matches2)=0 then
           pos := OriginalPositionDocument(doc[2], elt.start);
-          Print(pos[1], ":", pos[2], 
-                " : no match (wrong type or missing label?) for ", type , ":=",
-                elt.attributes.(type), "\n" );
+          Print(pos[1], ":", pos[2],
+                " : no match (wrong type or missing label?) for ", type, " := ",
+                elt.attributes.(type), "\n");
           Print("  Suggestions: \n");
-          matches := Filtered( matches, t -> IsBound(t.attributes.Label));
+          matches := Filtered(matches, t -> IsBound(t.attributes.Label));
           for t in matches do
-            Print( "Use ", t.name, " with Label:=\"", t.attributes.Label, 
-                   "\" (for Arg:=\"", t.attributes.Arg, "\")\n");
+            Print("Use ", t.name, " with Label := \"", t.attributes.Label,
+                  "\" (for Arg := \"", t.attributes.Arg, "\")\n");
           od;
 
           referrcount := referrcount + 1;
           continue;
         elif Length(matches2) > 1 then
-          Error("Multiple labels - this should not happen!");
+          ErrorNoReturn("Semigroups: SEMIGROUPS.CheckManSectionTypes:\n",
+                        "Multiple labels - this should not happen!");
         else
           match := matches[1];
         fi;
@@ -649,7 +655,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
       if match.name <> type then
         pos := OriginalPositionDocument(doc[2], elt.start);
         if display_warnings then
-          Print(pos[1], ":", pos[2], " : Ref to ", elt.attributes.(type), 
+          Print(pos[1], ":", pos[2], " : Ref to ", elt.attributes.(type),
                 " uses ", type, " instead of ", match.name, "\n");
         fi;
         warncount := warncount + 1;
@@ -666,7 +672,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
   Print("Found ", errcount, " errors in ManSection types \n");
 
   Print("Selected ", Length(y), " Ref elements referring to ManSections \n");
-  Print("Found ", referrcount, " errors and ", warncount, 
+  Print("Found ", referrcount, " errors and ", warncount,
         " warnings in Ref elements \n");
 
   if display_warnings then
@@ -675,11 +681,11 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
   else
     Print("To show warnings, use CheckManSectionTypes(doc,true); \n");
   fi;
-  Print( "****************************************************************\n" );
+  Print("****************************************************************\n");
   return errcount=0;
 end;
 
-SEMIGROUPS.CheckDocCoverage := function( doc )
+SEMIGROUPS.CheckDocCoverage := function(doc)
   local r, x, with, without, mansect, pos, y;
   r := ParseTreeXMLString(doc[1]);
   CheckAndCleanGapDocTree(r);
@@ -687,7 +693,7 @@ SEMIGROUPS.CheckDocCoverage := function( doc )
   with := 0;
   without := 0;
   Print("****************************************************************\n");
-  Print("*** Looking for ManSections having no examples \n" );
+  Print("*** Looking for ManSections having no examples \n");
   Print("****************************************************************\n");
   for mansect in x do
     pos := OriginalPositionDocument(doc[2], mansect.start);
@@ -700,7 +706,8 @@ SEMIGROUPS.CheckDocCoverage := function( doc )
         IsBound(mansect.content[2].attributes.Name) then
         Print(pos[1], ":", pos[2], " : ", mansect.content[2].attributes.Name);
       else
-        Print(pos[1], ":", pos[2], " : ", mansect.content[1].content[1].content);
+        Print(pos[1], ":", pos[2], " : ",
+              mansect.content[1].content[1].content);
       fi;
       without := without + 1;
       Print("\n");
@@ -713,14 +720,14 @@ SEMIGROUPS.CheckDocCoverage := function( doc )
   Print("****************************************************************\n");
   Print(Length(x), " mansections \n");
   Print(with, " with examples \n");
-  Print(without , " without examples \n");
+  Print(without, " without examples \n");
 end;
 
 SEMIGROUPS.CheckManualConsistency := function()
   local doc;
 
-  doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"), 
-                           "main.xml", 
+  doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
+                           "main.xml",
                            SEMIGROUPS.DocXMLFiles,
                            true);
   SEMIGROUPS.CheckDocCoverage(doc);

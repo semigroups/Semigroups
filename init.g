@@ -46,15 +46,17 @@ ReadPackage("semigroups/gap/elements/bipart.gd");
 ReadPackage("semigroups/gap/elements/blocks.gd");
 ReadPackage("semigroups/gap/elements/semiringmat.gd");
 ReadPackage("semigroups/gap/elements/maxplusmat.gd");
+ReadPackage("semigroups/gap/elements/ffmat.gd");
 ReadPackage("semigroups/gap/elements/boolmat.gd");
 ReadPackage("semigroups/gap/elements/trans.gd");
 
-#FIXME 
+#FIXME from here 
 
 ReadPackage("semigroups/gap/hash.gd");
-ReadPackage("semigroups/gap/matrix.gd");
 ReadPackage("semigroups/gap/semimat.gd");
 ReadPackage("semigroups/gap/grpsmat.gd");
+
+#FIXME to here
 
 ReadPackage("semigroups/gap/semigroups/semi.gd");
 ReadPackage("semigroups/gap/semigroups/grpperm.gd");

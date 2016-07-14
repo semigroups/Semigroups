@@ -17,8 +17,7 @@ SEMIGROUPS.DefaultOptionsRec :=
       batch_size := 8192, 
       nr_threads := 4);
 
-SEMIGROUPS.ProcessOptionsRec :=
-function(opts)
+SEMIGROUPS.ProcessOptionsRec := function(opts)
   local n, x;
 
   for x in RecNames(SEMIGROUPS.DefaultOptionsRec) do
@@ -37,8 +36,7 @@ function(opts)
   return opts;
 end;
 
-SEMIGROUPS.OptionsRec :=
-function(S)
+SEMIGROUPS.OptionsRec := function(S)
   if not IsBound(S!.opts) then
     return SEMIGROUPS.DefaultOptionsRec;
   fi;

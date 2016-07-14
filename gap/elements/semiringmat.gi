@@ -85,7 +85,7 @@ end;
 #############################################################################
 
 InstallMethod(IO_Pickle, "for a matrix over semiring",
-[IsFile, IsMatrixOverSemiring],
+[IsFile, IsPlistMatrixOverSemiringPositionalRep],
 function(file, mat)
   local pickle, i;
 
@@ -125,8 +125,8 @@ function(coll)
   if not IsHomogeneousList(coll) then
     return false;
   fi;
-  n := Length(coll[1]![1]);
-  return ForAll(coll, x -> Length(x![1]) = n);
+  n := DimensionOfMatrixOverSemiring(coll[1]);
+  return ForAll(coll, x -> DimensionOfMatrixOverSemiring(x) = n);
 end);
 
 #############################################################################
@@ -135,28 +135,29 @@ end);
 
 # Note that MatrixNC changes its argument in place!!
 
-InstallMethod(MatrixNC, "for a type and homogeneous list",
+InstallMethod(MatrixNC, "for a type and list",
 [IsType, IsList],
 function(type, mat)
   MakeImmutable(mat);
   return Objectify(type, mat);
 end);
 
-InstallMethod(MatrixNC, "for a filter and homogeneous list",
+InstallMethod(MatrixNC, "for a filter and list",
 [IsOperation and IsFunction, IsList],
 function(filter, mat)
   return MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter), mat);
 end);
 
-InstallMethod(MatrixNC, "for a filter, homogeneous list, function",
+InstallMethod(MatrixNC, "for a filter, list, function",
 [IsOperation and IsFunction, IsList, IsFunction],
 function(filter, mat, preproc)
   return MatrixNC(SEMIGROUPS_TypeOfMatrixOverSemiringCons(filter),
                   preproc(mat));
 end);
 
-InstallMethod(MatrixNC, "for a matrix over semiring and homogeneous list",
-[IsMatrixOverSemiring, IsList and IsMutable],
+InstallMethod(MatrixNC,
+"for a plist matrix over semiring positional rep and mutable list",
+[IsPlistMatrixOverSemiringPositionalRep, IsList and IsMutable],
 function(sample, mat)
   local n, filter;
 
@@ -278,15 +279,14 @@ InstallMethod(Matrix, "for a semiring and homogeneous list",
 function(semiring, mat)
   local filter, entry_ok, checker, row;
 
-  if not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
+  if IsField(semiring) and IsFinite(semiring) then
+    return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                    semiring,
+                                    mat);
+  elif not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
     ErrorNoReturn("Semigroups: Matrix: usage,\n",
                   "the 1st argument must be a square table,");
-  fi;
-
-  # IsField required cos there's no method for IsPrimeField for Integers.
-  #if IsField(semiring) and IsFinite(semiring) and IsPrimeField(semiring) then
-  #  filter := IsMatrixOverPrimeField;
-  if IsIntegers(semiring) then
+  elif IsIntegers(semiring) then
     filter := IsIntegerMatrix;
   else
     ErrorNoReturn("Semigroups: Matrix:\n",
@@ -306,11 +306,8 @@ function(semiring, mat)
                     "of type ", NameFunction(filter), ",");
     fi;
   od;
-  mat := List(mat, ShallowCopy);
-  #if IsField(semiring) then
-  #  Add(mat, Size(semiring));
-  #fi;
-  return MatrixNC(filter, mat);
+
+  return MatrixNC(filter, List(mat, ShallowCopy));
 end);
 
 InstallGlobalFunction(RandomMatrix,
@@ -328,9 +325,9 @@ function(arg)
     fi;
   elif Length(arg) = 2 and IsSemiring(arg[1]) and IsPosInt(arg[2]) then
     return RandomMatrixOp(arg[1], arg[2]);
-    #elif Length(arg) = 2 and IsPosInt(arg[1]) and IsPrimeInt(arg[1])
-    #    and IsPosInt(arg[2]) then
-    #  return RandomMatrixOp(GF(arg[1]), arg[2]);
+  elif Length(arg) = 3 and IsSemiring(arg[1]) and IsPosInt(arg[2])
+      and IsList(arg[3]) then
+    return RandomMatrixOp(arg[1], arg[2], arg[3]);
   fi;
 
   ErrorNoReturn("Semigroups: RandomMatrix: usage,\n",
@@ -344,23 +341,24 @@ function(mat)
   local one, dim;
 
   one := One(mat);
-  dim := Length(mat![1]);
+  dim := DimensionOfMatrixOverSemiring(mat);
   if Union(AsList(mat)) <> Union(AsList(one))
-      or ForAny([1 .. dim], i -> Number(mat![i], j -> j = one[1][1]) <> 1) then
+      or ForAny([1 .. dim], i -> Number(mat[i], j -> j = one[1][1]) <> 1) then
     return fail;
   fi;
 
   one := one[1][1];
-  return Transformation(List([1 .. dim], i -> Position(mat![i], one)));
+  return Transformation(List([1 .. dim], i -> Position(mat[i], one)));
 end);
 
 InstallMethod(AsMutableList, "for matrix over semiring",
 [IsMatrixOverSemiring],
-mat -> List([1 .. Length(mat![1])], i -> ShallowCopy(mat![i])));
+mat -> List([1 .. DimensionOfMatrixOverSemiring(mat)],
+            i -> ShallowCopy(mat[i])));
 
 InstallMethod(AsList, "for matrix over semiring",
 [IsMatrixOverSemiring],
-mat -> List([1 .. Length(mat![1])], i -> mat![i]));
+mat -> List([1 .. DimensionOfMatrixOverSemiring(mat)], i -> mat[i]));
 
 InstallMethod(Iterator, "for a matrix over semiring",
 [IsMatrixOverSemiring],
@@ -374,11 +372,11 @@ function(mat)
       return fail;
     fi;
     iter!.pos := iter!.pos + 1;
-    return mat![iter!.pos];
+    return mat[iter!.pos];
   end;
 
   iter.IsDoneIterator := function(iter)
-    if iter!.pos = Length(mat![1]) then
+    if iter!.pos = Length(mat[1]) then
       return true;
     fi;
     return false;
@@ -392,7 +390,7 @@ function(mat)
 end);
 
 InstallMethod(ELM_LIST, "for a matrix over semiring",
-[IsMatrixOverSemiring, IsPosInt],
+[IsPlistMatrixOverSemiringPositionalRep, IsPosInt],
 function(mat, pos)
   if pos > Length(mat![1]) then
     ErrorNoReturn("Semigroups: ELM_LIST (for a matrix over semiring):\n",
@@ -402,17 +400,24 @@ function(mat, pos)
   return mat![pos];
 end);
 
+InstallMethod(IsBound\[\],
+"for a plist matrix over semiring positional rep and pos int",
+[IsPlistMatrixOverSemiringPositionalRep, IsPosInt],
+function(mat, pos)
+  return IsBound(mat![1]) and pos <= Length(mat![1]);
+end);
+
 InstallMethod(TransposedMat, "for a matrix over semiring",
-[IsMatrixOverSemiring],
+[IsPlistMatrixOverSemiringPositionalRep],
 function(x)
   local n, y, i, j;
 
-  n := Length(x![1]);
+  n := DimensionOfMatrixOverSemiring(x);
   y := EmptyPlist(n + 2);
   for i in [1 .. n] do
     y[i] := [];
     for j in [1 .. n] do
-      y[i][j] := x![j][i];
+      y[i][j] := x[j][i];
     od;
   od;
 
@@ -427,7 +432,13 @@ InstallMethod(IsGeneratorsOfInverseSemigroup,
 [IsMatrixOverSemiringCollection], ReturnFalse);
 
 InstallMethod(DimensionOfMatrixOverSemiring, "for a matrix over a semiring",
-[IsMatrixOverSemiring], x -> Length(x![1]));
+[IsMatrixOverSemiring],
+function(mat)
+  if IsBound(mat[1]) then
+    return Length(mat[1]);
+  fi;
+  return 0;
+end);
 
 InstallMethod(Display, "for a matrix over semiring collection",
 [IsMatrixOverSemiringCollection],
@@ -450,12 +461,12 @@ function(x)
   max := 0;
   for i in [1 .. n] do
     for j in [1 .. n] do
-      if x![i][j] = infinity then
+      if x[i][j] = infinity then
         length := 1;
-      elif x![i][j] = -infinity then
+      elif x[i][j] = -infinity then
         length := 2;
       else
-        length := Length(String(x![i][j]));
+        length := Length(String(x[i][j]));
       fi;
       if length > max then
         max := length;
@@ -482,7 +493,7 @@ function(x)
   str := "";
   for i in [1 .. n] do
     for j in [1 .. n] do
-      Append(str, pad(x![i][j]));
+      Append(str, pad(x[i][j]));
     od;
     Remove(str, Length(str));
     Append(str, "\n");
@@ -531,23 +542,27 @@ function(x)
 
   n := DimensionOfMatrixOverSemiring(x);
   str := "\>\>Matrix(\<\>";
-  #if IsMatrixOverPrimeField(x) then
-  #  Append(str, String(BaseField(x)));
-  #else
-  Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
-  #fi;
+  if IsMatrixOverFiniteField(x) then
+    Append(str, String(BaseDomain(x)));
+    if n = 0 then
+      Append(str, "\<, \>[]\<)\<");
+      return str;
+    fi;
+  else
+    Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
+  fi;
   Append(str, "\<, \>[");
   for i in [1 .. n] do
     Append(str, "\>\>[");
     for j in [1 .. n] do
       if IsBooleanMat(x) then
-        if x![i][j] then
+        if x[i][j] then
           Append(str, String(1));
         else
           Append(str, String(0));
         fi;
       else
-        Append(str, String(x![i][j]));
+        Append(str, String(x[i][j]));
       fi;
 
       Append(str, ", ");
@@ -587,7 +602,11 @@ function(x)
 
   n := DimensionOfMatrixOverSemiring(x);
   str := "Matrix(";
-  Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
+  if IsMatrixOverFiniteField(x) then
+    Append(str, String(BaseDomain(x)));
+  else
+    Append(str, NameFunction(SEMIGROUPS_FilterOfMatrixOverSemiring(x)));
+  fi;
   Append(str, ", ");
   Append(str, String(AsList(x)));
 
@@ -606,7 +625,8 @@ function(x)
 end);
 
 InstallMethod(\=, "for matrices over a semiring",
-[IsMatrixOverSemiring, IsMatrixOverSemiring],
+[IsPlistMatrixOverSemiringPositionalRep,
+ IsPlistMatrixOverSemiringPositionalRep],
 function(x, y)
   local n, i;
   if not SEMIGROUPS_FilterOfMatrixOverSemiring(x) =
@@ -631,7 +651,8 @@ function(x, y)
 end);
 
 InstallMethod(\<, "for matrices over a semiring",
-[IsMatrixOverSemiring, IsMatrixOverSemiring],
+[IsPlistMatrixOverSemiringPositionalRep,
+ IsPlistMatrixOverSemiringPositionalRep],
 function(x, y)
   local n, i;
 

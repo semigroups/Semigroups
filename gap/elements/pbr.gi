@@ -601,7 +601,7 @@ function(x, y)
   n := x![1];
 
   out := Concatenation([n], List([1 .. 2 * n], x -> BlistList([1 .. 2 * n],
-         [])));
+                                                              [])));
 
   x_seen := BlistList([1 .. 2 * n], []);
   y_seen := BlistList([1 .. 2 * n], []);

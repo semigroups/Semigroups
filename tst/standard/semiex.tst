@@ -90,7 +90,7 @@ gap> List(Partitions(11), EndomorphismsPartition);
 #T# ExamplesTest37: ham-examples
 # planar uniform block bijection monoid
 gap> S := PlanarUniformBlockBijectionMonoid(1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> Size(S);
 1
 gap> Size(Generators(S));
@@ -116,7 +116,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := PlanarUniformBlockBijectionMonoid(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
+<inverse block bijection monoid of degree 4 with 3 generators>
 gap> Size(S);
 8
 gap> Size(Generators(S));
@@ -175,7 +175,7 @@ the argument must be greater than 1,
 
 # uniform block bijection monoid
 gap> S := UniformBlockBijectionMonoid(1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> Size(S);
 1
 gap> Size(Generators(S));
@@ -201,7 +201,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := UniformBlockBijectionMonoid(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
+<inverse block bijection monoid of degree 4 with 3 generators>
 gap> Size(S);
 131
 gap> Size(Generators(S));
@@ -286,7 +286,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := ApsisMonoid(2, 1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> Size(S);
 1
 gap> Size(Generators(S));
@@ -312,7 +312,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := ApsisMonoid(3, 2);
-<trivial bipartition group of degree 2 with 1 generator>
+<trivial block bijection group of degree 2 with 1 generator>
 gap> Size(S);
 1
 gap> Size(Generators(S));
@@ -338,7 +338,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := ApsisMonoid(3, 4);
-<regular bipartition monoid of degree 4 with 2 generators>
+<regular bipartition *-monoid of degree 4 with 2 generators>
 gap> Size(S);
 5
 gap> Size(Generators(S));
@@ -364,7 +364,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := ApsisMonoid(5, 4);
-<trivial bipartition group of degree 4 with 1 generator>
+<trivial block bijection group of degree 4 with 1 generator>
 gap> Size(S);
 1
 gap> Size(Generators(S));
@@ -418,7 +418,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := SingularApsisMonoid(2, 4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 13
 gap> Size(Generators(S));
@@ -444,7 +444,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := SingularApsisMonoid(3, 4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 4
 gap> Size(Generators(S));
@@ -501,7 +501,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := CrossedApsisMonoid(2, 1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> Size(S);
 1
 gap> Size(Generators(S));
@@ -527,7 +527,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := CrossedApsisMonoid(2, 4);
-<regular bipartition monoid of degree 4 with 3 generators>
+<regular bipartition *-monoid of degree 4 with 3 generators>
 gap> Size(S);
 105
 gap> Size(Generators(S));
@@ -553,7 +553,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S4" ]
 gap> S := CrossedApsisMonoid(3, 4);
-<regular bipartition monoid of degree 4 with 3 generators>
+<regular bipartition *-monoid of degree 4 with 3 generators>
 gap> Size(S);
 40
 gap> Size(Generators(S));
@@ -579,7 +579,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "S4" ]
 gap> S := CrossedApsisMonoid(5, 4);
-<regular bipartition monoid of degree 4 with 2 generators>
+<block bijection group of degree 4 with 2 generators>
 gap> Size(S);
 24
 gap> Size(Generators(S));
@@ -633,7 +633,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := SingularCrossedApsisMonoid(2, 4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 81
 gap> Size(Generators(S));
@@ -659,7 +659,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
 gap> S := SingularCrossedApsisMonoid(3, 4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 16
 gap> Size(Generators(S));
@@ -716,7 +716,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := PlanarModularPartitionMonoid(2, 1);
-<trivial bipartition group of degree 1 with 1 generator>
+<trivial block bijection group of degree 1 with 1 generator>
 gap> Size(S);
 1
 gap> Size(Generators(S));
@@ -742,7 +742,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := PlanarModularPartitionMonoid(2, 4);
-<regular bipartition monoid of degree 4 with 6 generators>
+<regular bipartition *-monoid of degree 4 with 6 generators>
 gap> Size(S);
 55
 gap> Size(Generators(S));
@@ -768,7 +768,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := PlanarModularPartitionMonoid(3, 4);
-<regular bipartition monoid of degree 4 with 5 generators>
+<regular bipartition *-monoid of degree 4 with 5 generators>
 gap> Size(S);
 16
 gap> Size(Generators(S));
@@ -794,7 +794,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := PlanarModularPartitionMonoid(5, 4);
-<inverse bipartition monoid of degree 4 with 3 generators>
+<inverse block bijection monoid of degree 4 with 3 generators>
 gap> Size(S);
 8
 gap> Size(Generators(S));
@@ -848,7 +848,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := SingularPlanarModularPartitionMonoid(2, 4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 52
 gap> Size(Generators(S));
@@ -874,7 +874,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := SingularPlanarModularPartitionMonoid(3, 4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 12
 gap> Size(Generators(S));
@@ -958,7 +958,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := PlanarPartitionMonoid(4);
-<regular bipartition monoid of degree 4 with 7 generators>
+<regular bipartition *-monoid of degree 4 with 7 generators>
 gap> Size(S);
 1430
 gap> Size(Generators(S));
@@ -1012,7 +1012,7 @@ true
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := SingularPlanarPartitionMonoid(4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 1429
 gap> Size(Generators(S));
@@ -1092,7 +1092,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1" ]
 gap> S := ModularPartitionMonoid(2, 4);
-<regular bipartition monoid of degree 4 with 4 generators>
+<regular bipartition *-monoid of degree 4 with 4 generators>
 gap> Size(S);
 379
 gap> Size(Generators(S));
@@ -1118,7 +1118,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S4" ]
 gap> S := ModularPartitionMonoid(3, 4);
-<regular bipartition monoid of degree 4 with 4 generators>
+<regular bipartition *-monoid of degree 4 with 4 generators>
 gap> Size(S);
 155
 gap> Size(Generators(S));
@@ -1144,7 +1144,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S4" ]
 gap> S := ModularPartitionMonoid(5, 4);
-<regular bipartition monoid of degree 4 with 3 generators>
+<regular block bijection *-monoid of degree 4 with 3 generators>
 gap> Size(S);
 131
 gap> Size(Generators(S));
@@ -1172,7 +1172,7 @@ gap> StructureDescriptionMaximalSubgroups(S);
 
 # singular modular partition monoid
 gap> S := SingularModularPartitionMonoid(2, 4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 355
 gap> Size(Generators(S));
@@ -1198,7 +1198,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
 gap> S := SingularModularPartitionMonoid(3, 4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 131
 gap> Size(Generators(S));
@@ -1224,7 +1224,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
 gap> S := SingularModularPartitionMonoid(5, 4);
-<regular bipartition semigroup ideal of degree 4 with 1 generator>
+<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 107
 gap> Size(Generators(S));

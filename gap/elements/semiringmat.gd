@@ -11,11 +11,13 @@
 # This file contains declarations for matrices over semirings.
 
 DeclareCategory("IsMatrixOverSemiring",
-                IsMultiplicativeElementWithOne
-                and IsPositionalObjectRep);
+                IsMultiplicativeElementWithInverse);
 
 DeclareCategoryCollections("IsMatrixOverSemiring");
 DeclareCategoryCollections("IsMatrixOverSemiringCollection");
+
+DeclareRepresentation("IsPlistMatrixOverSemiringPositionalRep", 
+                      IsMatrixOverSemiring and IsPositionalObjectRep, 1);
 
 # IsList rather than IsHomogeneousList to allow us to
 # include the threshold and/or period.
@@ -40,8 +42,13 @@ DeclareOperation("Matrix", [IsSemiring, IsHomogeneousList]);
 DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
                                 IsMatrixOverSemiring]);
 DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsMatrix]);
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
                                 IsMatrixOverSemiring,
                                 IsPosInt]);
+DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
+                                IsMatrixOverSemiring,
+                                IsMatrix]);
 DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
                                 IsMatrixOverSemiring,
                                 IsPosInt,
@@ -76,12 +83,16 @@ DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
                                         IsInt,
                                         IsInt]);
 DeclareOperation("RandomMatrixOp", [IsSemiring, IsPosInt]);
+DeclareOperation("RandomMatrixOp", [IsField and IsFinite, IsPosInt, IsList]);
 
 DeclareAttribute("AsList", IsMatrixOverSemiring);
 DeclareOperation("AsMutableList", [IsMatrixOverSemiring]);
 DeclareOperation("ELM_LIST", [IsMatrixOverSemiring, IsPosInt]);
+DeclareOperation("IsBound[]", [IsMatrixOverSemiring, IsPosInt]);
 DeclareOperation("Iterator", [IsMatrixOverSemiring]);
 DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
+DeclareAttribute("DimensionOfMatrixOverSemiringCollection",
+                 IsMatrixOverSemiringCollection);
 DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
 
 # Cannot use TypeObj since it can contain information about

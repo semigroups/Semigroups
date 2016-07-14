@@ -150,6 +150,17 @@ end);
 ## 3. Semigroup/Monoid/InverseSemigroup/InverseMonoidByGenerators
 #############################################################################
 
+InstallImmediateMethod(IsTrivial, IsMonoid and HasGeneratorsOfMonoid, 0,
+function(S)
+  local gens;
+  gens := GeneratorsOfMonoid(S);
+  if CanEasilyCompareElements(gens) and Length(gens) = 1
+      and gens[1] = One(gens) then
+    return true;
+  fi;
+  TryNextMethod();
+end);
+
 InstallImmediateMethod(IsTrivial, IsMonoid and HasGeneratorsOfSemigroup, 0,
 function(S)
   local gens;
@@ -257,24 +268,12 @@ InstallMethod(MonoidByGenerators,
 "for a finite multiplicative element collection and record",
 [IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(gens, opts)
-  local pos, n, S, SemigroupsAddGenerators, filts, i, x;
+  local mgens, pos, n, S, SemigroupsAddGenerators, filts, i, x;
 
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
+  mgens := ShallowCopy(gens);
 
   if CanEasilyCompareElements(gens) or IsMatrixObj(gens[1]) then
-    if (not IsPartialPermCollection(gens) or not opts.small)
-        and IsMultiplicativeElementWithOneCollection(gens)
-        and Length(gens) > 1 then
-      pos := Position(gens, One(gens));
-      if pos <> fail and
-          (not IsPartialPermCollection(gens) or One(gens) =
-           One(gens{Concatenation([1 .. pos - 1],
-                                  [pos + 1 .. Length(gens)])})) then
-        gens := ShallowCopy(gens);
-        Remove(gens, pos);
-      fi;
-    fi;
-
     # Try to find a smaller generating set
     if opts.small and Length(gens) > 1 then
       gens := Shuffle(Set(gens));
@@ -312,6 +311,15 @@ function(gens, opts)
         od;
       fi;
       return S;
+    elif IsMultiplicativeElementWithOneCollection(gens)
+        and Length(gens) > 1 then
+      pos := Position(gens, One(gens));
+      if pos <> fail and
+          (not IsPartialPermCollection(gens) or One(gens) =
+           One(gens{Concatenation([1 .. pos - 1],
+                                  [pos + 1 .. Length(gens)])})) then
+        Remove(mgens, pos);
+      fi;
     fi;
   fi;
 
@@ -323,7 +331,7 @@ function(gens, opts)
       filts := filts and IsRegularSemigroup;
     fi;
   fi;
-  
+
   if IsMatrixObj(gens[1]) then
     filts := filts and IsMatrixSemigroup;
   fi;
@@ -336,7 +344,7 @@ function(gens, opts)
     SetGeneratorsOfMagma(S, AsList(gens));
   fi;
 
-  SetGeneratorsOfMagmaWithOne(S, AsList(gens));
+  SetGeneratorsOfMagmaWithOne(S, AsList(mgens));
 
   return S;
 end);
@@ -568,7 +576,7 @@ function(S, coll, opts)
 
   if IsSemigroup(coll) then
     coll := GeneratorsOfSemigroup(coll);
-  elif not IsList(coll) then 
+  elif not IsList(coll) then
     coll := AsList(coll);
   fi;
 
@@ -678,7 +686,7 @@ function(S, coll, opts)
 
   if IsSemigroup(coll) then
     coll := GeneratorsOfSemigroup(coll);
-  elif not IsList(coll) then 
+  elif not IsList(coll) then
     coll := AsList(coll);
   fi;
 

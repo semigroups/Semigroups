@@ -496,9 +496,9 @@ function(d)
                             [],
                             fail,
                             rec(PrintObj := function(iter)
-                              Print("<iterator of D-class>");
-                              return;
-                            end));
+                                  Print("<iterator of D-class>");
+                                  return;
+                                end));
 end);
 
 # same method for regular/inverse

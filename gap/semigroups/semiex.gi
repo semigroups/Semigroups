@@ -313,17 +313,17 @@ function(func, args, view, print)
     print := Concatenation(print, "(", String(e), ", ", String(d), ", ",
                            String(q), ")");
   else
-    Error("Semigroups: SEMIGROUPS_MatrixSemigroupConstructor: usage,\n",
-          "there should be 2 or 3 arguments,");
-    return;
+    ErrorNoReturn("Semigroups: SEMIGROUPS_MatrixSemigroupConstructor:",
+                  " usage,\nthere should be 2 or 3 arguments,");
   fi;
   gens := GeneratorsOfGroup(CallFuncList(func, args));
   x := OneMutable(gens[1]);
   x[d][d] := Z(q) * 0;
   gens := List(gens, x ->
                NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
-                                        GF(q), d, x));
-  Add(gens, AsMatrixOverFiniteField(gens[1], x));
+                                        GF(q),
+                                        x));
+  Add(gens, AsMatrix(IsMatrixOverFiniteField, gens[1], x));
   S := Monoid(gens);
   SetSEMIGROUPS_MatrixSemigroupViewString(S, view);
   SetSEMIGROUPS_MatrixSemigroupPrintString(S, print);
@@ -349,7 +349,7 @@ function(S)
   Print("<");
   Print(SEMIGROUPS_MatrixSemigroupViewString(S));
   Print(" monoid ");
-  n := DegreeOfMatrixOverFiniteField(Representative(S));
+  n := DegreeOfMatrixSemigroup(S);
   Print(n, "x", n, " over ", BaseDomain(S));
   Print(">");
 end);
@@ -395,7 +395,7 @@ function(S)
   local po, au, id, su, gr, out, e, map, p, min, pos, x, i, j, k;
 
   if not IsSemilattice(S) then
-    ErrorNoReturn("Semigroups: MunnSemigroup: usage,\n", 
+    ErrorNoReturn("Semigroups: GeneratorsOfMunnSemigroup: usage,\n",
                   "the argument must be a semilattice");
   fi;
 
@@ -404,54 +404,54 @@ function(S)
   id := []; # ideals (as sets of indices) partitioned by size
   su := []; # induced subdigraphs corresponding to ideals
 
-  for x in OutNeighbors(po) do 
+  for x in OutNeighbors(po) do
     gr := InducedSubdigraph(po, x);
-    if not IsBound(au[Length(x)]) then 
+    if not IsBound(au[Length(x)]) then
       au[Length(x)] := [];
       id[Length(x)] := [];
       su[Length(x)] := [];
     fi;
-    Add(au[Length(x)], AutomorphismGroup(gr) 
+    Add(au[Length(x)], AutomorphismGroup(gr)
                        ^ MappingPermListList(DigraphVertices(gr), x));
     Add(id[Length(x)], x);
     Add(su[Length(x)], gr);
   od;
 
   out := [PartialPerm(id[Length(id)][1], id[Length(id)][1])];
-  
+
   for i in [Length(id), Length(id) - 1 .. 3] do
-    if not IsBound(id[i]) then 
+    if not IsBound(id[i]) then
       continue;
     fi;
-    for j in [1 .. Length(id[i])] do 
+    for j in [1 .. Length(id[i])] do
       e := PartialPermNC(id[i][j], id[i][j]);
-      for p in GeneratorsOfGroup(au[i][j]) do 
+      for p in GeneratorsOfGroup(au[i][j]) do
         Add(out, e * p);
       od;
       for k in [j + 1 .. Length(id[i])] do
         map := IsomorphismDigraphs(su[i][j], su[i][k]);
-        if map <> fail then 
+        if map <> fail then
           p := MappingPermListList(id[i][j], DigraphVertices(su[i][j]))
                  * map * MappingPermListList(DigraphVertices(su[i][k]),
-                 id[i][k]);
+                                             id[i][k]);
           Add(out, e * p);
         fi;
       od;
     od;
   od;
-  
+
   min := id[1][1][1]; # the index of the element in the minimal ideal
   Add(out, PartialPermNC([min], [min]));
 
   # All ideals of size 2 are isomorphic and have trivial automorphism group
-  for j in [1 .. Length(id[2])] do 
+  for j in [1 .. Length(id[2])] do
     e := PartialPermNC(id[2][j], id[2][j]);
     Add(out, e);
     pos := Position(id[2][j], min);
     for k in [j + 1 .. Length(id[2])] do
-      if Position(id[2][k], min) = pos then 
+      if Position(id[2][k], min) = pos then
         Add(out, PartialPermNC(id[2][j], id[2][k]));
-      else 
+      else
         Add(out, PartialPermNC(id[2][j], Reversed(id[2][k])));
       fi;
     od;
@@ -718,21 +718,13 @@ function(n)
   return M;
 end);
 
-# TODO n = 0, n = 1 cases here
-
-InstallMethod(MotzkinMonoid, "for a positive integer",
-[IsPosInt],
-function(n)
-  return RegularSemigroup(JonesMonoid(n), AsBipartitionSemigroup(POI(n)));
-end);
-
 # TODO: document this!
 
 InstallMethod(PartialJonesMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   return RegularSemigroup(JonesMonoid(n),
-                          AsSemigroup(IsBipartitionSemigroup, 
+                          AsSemigroup(IsBipartitionSemigroup,
                                       Semigroup(Idempotents(POI(n)))));
 end);
 
@@ -799,7 +791,7 @@ function(n)
   local gens, next, i, j;
 
   if n = 1 then
-    return InverseMonoid(BipartitionNC([[1, -1]]));
+    return InverseMonoid(Bipartition([[1, -1]]));
   fi;
 
   gens := [];
@@ -827,15 +819,16 @@ end);
 
 #
 
-InstallMethod(UniformBlockBijectionMonoid, "for a positive integer", [IsPosInt],
+InstallMethod(UniformBlockBijectionMonoid, "for a positive integer",
+[IsPosInt],
 function(n)
   local gens;
   if n = 1 then
-    return InverseMonoid(BipartitionNC([[1, -1]]));
+    return InverseMonoid(Bipartition([[1, -1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1, 2, -1, -2]],
+  Add(gens, Bipartition(Concatenation([[1, 2, -1, -2]],
                                         List([3 .. n], x -> [x, -x]))));
   return InverseMonoid(gens);
 end);
@@ -846,10 +839,10 @@ InstallMethod(ApsisMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m, n)
-  local gens, next, b, i, j;
+  local gens, next, S, b, i, j;
 
   if n = 1 and m = 1 then
-    return InverseMonoid(BipartitionNC([[1], [-1]]));
+    return InverseMonoid(Bipartition([[1], [-1]]));
   fi;
 
   gens := [];
@@ -863,8 +856,10 @@ function(m, n)
       next[n + i] := i;
     od;
     gens[1] := BipartitionByIntRep(next);
-
-    return InverseMonoid(gens, rec(regular := true));
+    S := InverseMonoid(gens);
+    SetIsRegularSemigroup(S, true);
+    SetIsStarSemigroup(S, true);
+    return S;
   fi;
 
   #m-apsis generators
@@ -896,7 +891,10 @@ function(m, n)
     gens[i] := BipartitionByIntRep(next);
   od;
 
-  return Monoid(gens, rec(regular := true));
+  S := Monoid(gens);
+  SetIsRegularSemigroup(S, true);
+  SetIsStarSemigroup(S, true);
+  return S;
 end);
 
 #
@@ -905,24 +903,27 @@ InstallMethod(CrossedApsisMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m, n)
-  local gens;
+  local gens, S;
 
   if n = 1 then
     if m = 1 then
-      return InverseMonoid(BipartitionNC([[1], [-1]]));
+      return InverseMonoid(Bipartition([[1], [-1]]));
     else
-      return InverseMonoid(BipartitionNC([[1, -1]]));
+      return InverseMonoid(Bipartition([[1, -1]]));
     fi;
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
   if m <= n then
-    Add(gens, BipartitionNC(Concatenation([[1 .. m]],
+    Add(gens, Bipartition(Concatenation([[1 .. m]],
                                           List([m + 1 .. n],
                                                x -> [x, -x]), [[-m .. -1]])));
   fi;
 
-  return Monoid(gens, rec(regular := true));
+  S := Monoid(gens);
+  SetIsRegularSemigroup(S, true);
+  SetIsStarSemigroup(S, true);
+  return S;
 end);
 
 #
@@ -931,12 +932,12 @@ InstallMethod(PlanarModularPartitionMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m, n)
-  local gens, next, b, i, j;
+  local gens, next, b, S, i, j;
 
   if n < m then
     return PlanarUniformBlockBijectionMonoid(n);
   elif n = 1 then
-    return InverseMonoid(BipartitionNC([[1], [-1]]));
+    return InverseMonoid(Bipartition([[1], [-1]]));
   fi;
 
   gens := [];
@@ -988,7 +989,10 @@ function(m, n)
     gens[n - 1 + i] := BipartitionByIntRep(next);
   od;
 
-  return Monoid(gens, rec(regular := true));
+  S := Monoid(gens);
+  SetIsRegularSemigroup(S, true);
+  SetIsStarSemigroup(S, true);
+  return S;
 end);
 
 #
@@ -1006,20 +1010,24 @@ InstallMethod(ModularPartitionMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
 function(m, n)
-  local gens;
+  local gens, S;
+
   if n = 1 then
-    return InverseMonoid(BipartitionNC([[1], [-1]]));
+    return InverseMonoid(Bipartition([[1], [-1]]));
   fi;
 
   gens := List(GeneratorsOfGroup(SymmetricGroup(n)), x -> AsBipartition(x, n));
-  Add(gens, BipartitionNC(Concatenation([[1, 2, -1, -2]],
+  Add(gens, Bipartition(Concatenation([[1, 2, -1, -2]],
                                         List([3 .. n], x -> [x, -x]))));
   if m <= n then
-    Add(gens, BipartitionNC(Concatenation([[1 .. m]],
+    Add(gens, Bipartition(Concatenation([[1 .. m]],
                                           List([m + 1 .. n],
                                                x -> [x, -x]), [[-m .. -1]])));
   fi;
-  return Monoid(gens, rec(regular := true));
+  S := Monoid(gens);
+  SetIsRegularSemigroup(S, true);
+  SetIsStarSemigroup(S, true);
+  return S;
 end);
 
 InstallMethod(SingularPartitionMonoid, "for a positive integer",

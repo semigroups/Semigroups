@@ -44,7 +44,7 @@ gap> N := 333;;
 #T# BipartitionTest2: BASICS
 gap> classes := [[1, 2, 3, -2], [4, -5], [5, -7], [6, -3, -4], [7], [-1],
 > [-6]];;
-gap> f := BipartitionNC(classes);
+gap> f := Bipartition(classes);
 <bipartition: [ 1, 2, 3, -2 ], [ 4, -5 ], [ 5, -7 ], [ 6, -3, -4 ], [ 7 ], 
  [ -1 ], [ -6 ]>
 gap> LeftProjection(f);
@@ -56,7 +56,7 @@ gap> classes2 := [[-6], [1, 2, 3, -2], [4, -5], [5, -7], [6, -3, -4], [-1],
 > [7]];;
 gap> f = Bipartition(classes2);
 true
-gap> f := BipartitionNC([[1, 2, -3, -5, -6], [3, -2, -4], [4, 7],
+gap> f := Bipartition([[1, 2, -3, -5, -6], [3, -2, -4], [4, 7],
 > [5, -7, -8, -9],
 > [6], [8, 9, -1]]);
 <bipartition: [ 1, 2, -3, -5, -6 ], [ 3, -2, -4 ], [ 4, 7 ], [ 5, -7, -8, -9 ]

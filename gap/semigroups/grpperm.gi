@@ -71,12 +71,11 @@ SEMIGROUPS.IteratorSortedConjugateStabChain := function(S, conj)
 end;
 
 # Finds the element p of the group G ^ conj with stab chain S ^ conj such that
-# the OnTuples(BaseOfStabChain(S) ^ conj, p) is lexicographically maximum. I.e. 
+# the OnTuples(BaseOfStabChain(S) ^ conj, p) is lexicographically maximum. I.e.
 # this function returns the same value as:
 #
-# LargestElementStabChain(StabChainOp(G ^ conj, 
+# LargestElementStabChain(StabChainOp(G ^ conj,
 #                                     rec(base := BaseOfStabChain(S) ^ conj)));
-
 
 SEMIGROUPS.LargestElementConjugateStabChain := function(S, rep, conj)
   local pnt, max, val, gen, i, lrep;
@@ -102,7 +101,7 @@ SEMIGROUPS.LargestElementConjugateStabChain := function(S, rep, conj)
     rep := LeftQuotient(gen, rep);
     max := max ^ gen;
   od;
-  return SEMIGROUPS.LargestElementConjugateStabChain(S.stabilizer, 
+  return SEMIGROUPS.LargestElementConjugateStabChain(S.stabilizer,
                                                      rep,
                                                      conj);
 end;
@@ -112,8 +111,7 @@ end;
 # Note that since the base of the stab chain can be anything, the return value
 # of this function is not always the identity perm.
 
-SEMIGROUPS.SmallestElementConjugateStabChain := 
-function(S, rep, conj)
+SEMIGROUPS.SmallestElementConjugateStabChain := function(S, rep, conj)
   local pnt, min, val, lrep, gen, i;
 
   if Length(S.generators) = 0  then
@@ -138,7 +136,7 @@ function(S, rep, conj)
     min := min ^ gen;
   od;
 
-  return SEMIGROUPS.SmallestElementConjugateStabChain(S.stabilizer, 
+  return SEMIGROUPS.SmallestElementConjugateStabChain(S.stabilizer,
                                                       rep,
                                                       conj);
 end;
@@ -266,4 +264,3 @@ function(S)
                                        x -> x ^ iso,
                                        x -> x ^ inv);
 end);
-
