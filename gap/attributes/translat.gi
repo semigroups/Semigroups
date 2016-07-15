@@ -816,11 +816,11 @@ end;
 #For a pair of transformations on the indices of a completely 0-simple semigroup
 #determine the functions to the group associated with the RMS representation
 #which will form translations when combined with the transformations
-SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedComponents)
+SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponents)
   local reesmatsemi, mat, gplist, gpsize, nrrows, nrcols, invmat,
         rowtransformedmat, zerorow, zerocol, pos, satisfied,
-        rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, r, n, q,
-        funcs, digraph, cc, comp, iterator, foundfuncs, failedcomps,
+        rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, r, n, q, c,
+        funcs, digraph, cc, comp, iterator, foundfuncs, failedcomps, vals,
         failedtocomplete, relpointvals, 
         relssatisfied, funcsfromrelpointvals, fillin;
   reesmatsemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
@@ -889,13 +889,24 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedComponen
   od;
   
   #check whether these connected components have already been found to fail
-  for i in [1..Length(failedComponents)] do
-    if ForAny(failedComponents[i][1], comp -> comp in cc.comps) then
-      if failedComponents[i][2] = t1{relpoints} and 
-        failedComponents[i][3] = t2{relpoints} then
-        return [];
+  for i in [1..Length(failedcomponents)] do
+    for j in [1..Length(failedcomponents[i][1])] do
+      c := failedcomponents[i][1][j];
+      if ForAny(cc.comps, comp -> IsSubset(comp, c)) then
+        vals := [[],[]];
+        for k in c do
+          if k <= nrrows then
+            Add(vals[1], k);
+          else
+            Add(vals[2], k - nrrows);
+          fi;
+        od;
+        if t1{vals[1]} = failedcomponents[i][2]{vals[1]} 
+          and t2{vals[2]} = failedcomponents[i][3]{vals[2]} then
+          return [];
+        fi;
       fi;
-    fi;
+    od;
   od;
   
   #given a choice of relpoints, fill in everything else possible
@@ -985,7 +996,7 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedComponen
   if IsDoneIterator(iterator) then
     return [];
   elif not relssatisfied(funcsfromrelpointvals(NextIterator(iterator))) then
-    return [0, Set(failedcomps), t1{relpoints}, t2{relpoints}];
+    return [0, Set(failedcomps), t1, t2];
   fi;
   
   while not IsDoneIterator(iterator) do
@@ -995,7 +1006,6 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedComponen
   return foundfuncs;
 end;
 
-#TODO: work out what to actually call this
 InstallMethod(TranslationalHull, "for a finite 0-simple semigroup",
 [IsFinite and IsZeroSimpleSemigroup],
 function(S)
@@ -1064,7 +1074,7 @@ function(S)
             fx := funcs[1];
             fy := funcs[2];
             unboundpositions := [];
-            for j in [1..Length(fy)] do
+            for j in [1..nrcols] do
               if not IsBound(fy[j]) then 
                 Add(unboundpositions, j);
               fi;
@@ -1083,6 +1093,8 @@ function(S)
               Add(linkedpairs, linkedpairfromfuncs(t1, t2, fx, fy));
             fi;
           od;
+        else
+          Add(failedcomponents, transfuncs{[2,3,4]}); 
         fi;
       fi;
     od;
