@@ -553,42 +553,42 @@ function(H)
 end);
 
 
-InstallMethod(\*, "for translations of a semigroup",
+InstallMethod(\*, "for left translations of a semigroup",
 IsIdenticalObj,
 [IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
 function(x, y)
-  return Objectify(FamilyObj(x)!.type, [x![1]*y![1]]);
+  return Objectify(FamilyObj(x)!.type, [y![1]*x![1]]);
 end);
 
-InstallMethod(\=, "for translations of a semigroup",
+InstallMethod(\=, "for left translations of a semigroup",
 IsIdenticalObj,
 [IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
 function(x, y) 
   return x![1] = y![1];
 end);
 
-InstallMethod(\<, "for translations of a semigroup",
+InstallMethod(\<, "for left translations of a semigroup",
 IsIdenticalObj,
 [IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
 function(x, y) 
   return x![1] < y![1];
 end);
 
-InstallMethod(\*, "for translations of a semigroup",
+InstallMethod(\*, "for right translations of a semigroup",
 IsIdenticalObj,
 [IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
 function(x, y)
   return Objectify(FamilyObj(x)!.type, [x![1]*y![1]]);
 end);
 
-InstallMethod(\=, "for translations of a semigroup",
+InstallMethod(\=, "for right translations of a semigroup",
 IsIdenticalObj,
 [IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
 function(x, y) 
   return x![1] = y![1];
 end);
 
-InstallMethod(\<, "for translations of a semigroup",
+InstallMethod(\<, "for right translations of a semigroup",
 IsIdenticalObj,
 [IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
 function(x, y) 
@@ -821,7 +821,7 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponen
         rowtransformedmat, zerorow, zerocol, pos, satisfied,
         rels, edges, rowrels, relpoints, rel, i, j, k, l, x, y, r, n, q, c,
         funcs, digraph, cc, comp, iterator, foundfuncs, failedcomps, vals,
-        failedtocomplete, relpointvals, 
+        failedtocomplete, relpointvals,
         relssatisfied, funcsfromrelpointvals, fillin;
   reesmatsemi := Range(IsomorphismReesZeroMatrixSemigroup(S));
   mat := Matrix(reesmatsemi);
@@ -995,8 +995,12 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponen
   
   if IsDoneIterator(iterator) then
     return [];
-  elif not relssatisfied(funcsfromrelpointvals(NextIterator(iterator))) then
-    return [0, Set(failedcomps), t1, t2];
+  else
+    funcs := funcsfromrelpointvals(NextIterator(iterator));
+    if not relssatisfied(funcs) then
+      return [0, Set(failedcomps), t1, t2];
+    fi;
+    Add(foundfuncs, funcs);
   fi;
   
   while not IsDoneIterator(iterator) do
@@ -1033,8 +1037,8 @@ function(S)
       if x = zero then
         return zero;
       fi;
-      if t1[x[1]] <> nrrows + 1 then
-        return RMSElement(reesmatsemi, t1[x[1]], fx[x[1]] * x[2], x[3]);
+      if t2[x[1]] <> nrcols + 1 then
+        return RMSElement(reesmatsemi, t2[x[1]], fy[x[1]] * x[2], x[3]);
       else
         return zero;
       fi;
@@ -1044,8 +1048,8 @@ function(S)
       if x = zero then
         return zero;
       fi;
-      if t2[x[3]] <> nrcols + 1 then
-        return RMSElement(reesmatsemi, x[1], x[2] * fy[x[3]], t2[x[3]]);
+      if t1[x[3]] <> nrrows + 1 then
+        return RMSElement(reesmatsemi, x[1], x[2] * fx[x[3]], t1[x[3]]);
       else
         return zero;
       fi;
@@ -1100,7 +1104,7 @@ function(S)
     od;
   od;
   
-  return linkedpairs;
+  return Set(linkedpairs);
 end);
 
 InstallMethod(LeftTranslations, "for a semigroup with known generators",
