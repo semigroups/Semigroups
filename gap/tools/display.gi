@@ -587,8 +587,6 @@ function(blocks, opts)
   return str;
 end);
 
-#
-
 InstallMethod(DotString, "for a semigroup", [IsSemigroup],
 function(S)
   return DotString(S, rec());

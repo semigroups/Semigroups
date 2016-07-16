@@ -886,8 +886,6 @@ function(S)
   return false;
 end);
 
-#
-
 InstallMethod(IsMonogenicMonoid, "for a monoid",
 [IsMonoid],
 function(S)
@@ -948,8 +946,6 @@ function(S)
   return false;
 end);
 
-#
-
 InstallMethod(IsMonogenicInverseMonoid, "for a monoid",
 [IsMonoid],
 function(S)
@@ -960,8 +956,6 @@ function(S)
   fi;
   return IsMonogenicInverseMonoid(AsMonoid(IsPartialPermMonoid, S));
 end);
-
-#
 
 InstallMethod(IsMonogenicInverseMonoid,
 "for a monoid with inverse op",

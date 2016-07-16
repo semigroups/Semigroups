@@ -70,8 +70,6 @@ function(S, kernel, traceBlocks)
   return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
 end);
 
-#
-
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTraceNC,
 [IsInverseSemigroup and IsFinite, IsSemigroup, IsDenseList],
 function(S, kernel, traceBlocks)
@@ -102,8 +100,6 @@ function(S, kernel, traceBlocks)
   return cong;
 end);
 
-#
-
 InstallMethod(ViewObj,
 "for inverse semigroup congruence",
 [IsInverseSemigroupCongruenceByKernelTrace],
@@ -115,8 +111,6 @@ function(cong)
         Size(cong!.traceBlocks), ")>");
 end);
 
-#
-
 InstallMethod(\=,
 "for two inverse semigroup congruences",
 [IsInverseSemigroupCongruenceByKernelTrace,
@@ -126,8 +120,6 @@ function(cong1, cong2)
          cong1!.kernel = cong2!.kernel and
          cong1!.traceBlocks = cong2!.traceBlocks);
 end);
-
-#
 
 InstallMethod(IsSubrelation,
 "for two inverse semigroup congruences",
@@ -143,8 +135,6 @@ function(cong1, cong2)
          and ForAll(cong2!.traceBlocks,
                     b2 -> ForAny(cong1!.traceBlocks, b1 -> IsSubset(b1, b2)));
 end);
-
-#
 
 InstallMethod(ImagesElm,
 "for inverse semigroup congruence and associative element",
@@ -168,8 +158,6 @@ function(cong, elm)
   od;
   return images;
 end);
-
-#
 
 InstallMethod(EquivalenceClasses,
 "for inverse semigroup congruence",
@@ -214,16 +202,12 @@ function(cong)
   return classes;
 end);
 
-#
-
 InstallMethod(NrEquivalenceClasses,
 "for inverse semigroup congruence",
 [IsInverseSemigroupCongruenceByKernelTrace],
 function(cong)
   return Length(EquivalenceClasses(cong));
 end);
-
-#
 
 InstallMethod(AsLookupTable,
 "for inverse semigroup congruence",
@@ -247,8 +231,6 @@ function(cong)
   od;
   return table;
 end);
-
-#
 
 InstallMethod(\in,
 "for dense list and inverse semigroup congruence",
@@ -276,8 +258,6 @@ function(pair, cong)
   return false;
 end);
 
-#
-
 InstallMethod(EquivalenceClassOfElement,
 "for inverse semigroup congruence and associative element",
 [IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
@@ -289,8 +269,6 @@ function(cong, elm)
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
-
-#
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for inverse semigroup congruence and associative element",
@@ -307,8 +285,6 @@ function(cong, elm)
   return class;
 end);
 
-#
-
 InstallMethod(\=,
 "for two inverse semigroup congruence classes",
 [IsInverseSemigroupCongruenceClassByKernelTrace,
@@ -318,8 +294,6 @@ IsInverseSemigroupCongruenceClassByKernelTrace],
          [c1!.rep, c2!.rep] in EquivalenceClassRelation(c1));
 end);
 
-#
-
 InstallMethod(\in,
 "for associative element and inverse semigroup congruence class",
 [IsMultiplicativeElement, IsInverseSemigroupCongruenceClassByKernelTrace],
@@ -328,8 +302,6 @@ function(elm, class)
   cong := EquivalenceClassRelation(class);
   return elm in Range(cong) and [elm, class!.rep] in cong;
 end);
-
-#
 
 InstallMethod(\*,
 "for two inverse semigroup congruence classes",
@@ -344,16 +316,12 @@ function(c1, c2)
                                      c1!.rep * c2!.rep);
 end);
 
-#
-
 InstallMethod(Enumerator,
 "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace],
 function(class)
   return AsList(class);
 end);
-
-#
 
 InstallMethod(AsList,
 "for inverse semigroup congruence class",
@@ -362,8 +330,6 @@ function(class)
   return ImagesElm(EquivalenceClassRelation(class), class!.rep);
 end);
 
-#
-
 InstallMethod(AsSSortedList,
 "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace],
@@ -371,16 +337,12 @@ function(class)
   return SSortedList(AsList(class));
 end);
 
-#
-
 InstallMethod(Size,
 "for inverse semigroup congruence class",
 [IsInverseSemigroupCongruenceClassByKernelTrace],
 function(class)
   return Size(AsList(class));
 end);
-
-#
 
 InstallMethod(TraceOfSemigroupCongruence,
 "for semigroup congruence",
@@ -395,8 +357,6 @@ function(cong)
   return invcong!.traceBlocks;
 end);
 
-#
-
 InstallMethod(KernelOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
@@ -409,8 +369,6 @@ function(cong)
   invcong := AsInverseSemigroupCongruenceByKernelTrace(cong);
   return invcong!.kernel;
 end);
-
-#
 
 InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 "for semigroup congruence with generating pairs",
@@ -428,8 +386,6 @@ function(cong)
                                    List(Idempotents(S), e -> [e]),
                                    GeneratingPairsOfSemigroupCongruence(cong));
 end);
-
-#
 
 InstallMethod(JoinSemigroupCongruences,
 "for inverse semigroup congruence",
@@ -467,8 +423,6 @@ function(c1, c2)
   return SEMIGROUPS.KernelTraceClosure(S, kernel, traceBlocks, []);
 end);
 
-#
-
 InstallMethod(MeetSemigroupCongruences,
 "for two inverse semigroup congruence",
 [IsInverseSemigroupCongruenceByKernelTrace,
@@ -499,8 +453,6 @@ function(c1, c2)
 
   return InverseSemigroupCongruenceByKernelTrace(S, kernel, traceBlocks);
 end);
-
-#
 
 SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   #
@@ -672,8 +624,6 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
 
   return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
 end;
-
-#
 
 InstallMethod(MinimumGroupCongruence,
 "for an inverse semigroup",

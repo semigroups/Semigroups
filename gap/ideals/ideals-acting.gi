@@ -65,15 +65,11 @@ function(I)
   return out;
 end);
 
-#
-
 InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
 [IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   return Length(OrbSCC(LambdaOrb(I))) - 1;
 end);
-
-#
 
 InstallMethod(GreensDClasses, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
@@ -81,8 +77,6 @@ function(I)
   Enumerate(SemigroupIdealData(I));
   return SemigroupIdealData(I)!.dorbit;
 end);
-
-#
 
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
@@ -93,8 +87,6 @@ function(I)
   Enumerate(data);
   return data!.poset;
 end);
-
-#
 
 InstallMethod(DClassReps, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
@@ -178,8 +170,6 @@ function(I)
   return SemigroupData(U);
 end);
 
-#
-
 InstallMethod(GeneratorsOfSemigroup, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
@@ -232,8 +222,6 @@ function(I)
   return GeneratorsOfSemigroup(U);
 end);
 
-#
-
 InstallMethod(GeneratorsOfSemigroup,
 "for an inverse op acting semigroup ideal",
 [IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
@@ -276,8 +264,6 @@ function(I)
 
   return GeneratorsOfSemigroup(U);
 end);
-
-#
 
 InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse op acting semigroup ideal",
@@ -371,13 +357,9 @@ function(I)
   return data;
 end);
 
-#
-
 InstallMethod(SemigroupIdealData, "for an inverse op acting semigroup ideal",
 [IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
 ReturnFail);
-
-#
 
 InstallMethod(ViewObj, [IsSemigroupIdealData],
 function(data)
@@ -394,8 +376,6 @@ function(data)
         Length(RhoOrb(data!.parent)) - 1, " rho-values>");
   return;
 end);
-
-#
 
 InstallMethod(Enumerate, "for semigroup ideal data, limit, looking function",
 [IsSemigroupIdealData, IsCyclotomic, IsFunction],
@@ -753,8 +733,6 @@ function(data, limit, record)
   return data;
 end);
 
-#
-
 InstallMethod(\in,
 "for a multiplicative element and regular acting semigroup ideal",
 [IsMultiplicativeElement,
@@ -906,8 +884,6 @@ function(s)
 
   return size;
 end);
-
-#
 
 InstallMethod(Enumerate,
 "for regular ideal data, limit, and func",

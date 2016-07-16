@@ -27,8 +27,6 @@ function(S)
   return cong;
 end);
 
-#
-
 InstallMethod(IsUniversalSemigroupCongruence,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
@@ -36,15 +34,11 @@ function(cong)
   return NrEquivalenceClasses(cong) = 1;
 end);
 
-#
-
 InstallImmediateMethod(IsUniversalSemigroupCongruence,
 IsSemigroupCongruence and HasNrEquivalenceClasses, 0,
 function(cong)
   return NrEquivalenceClasses(cong) = 1;
 end);
-
-#
 
 InstallMethod(IsUniversalSemigroupCongruence,
 "for a semigroup congruence",
@@ -55,13 +49,9 @@ function(cong)
          cong!.n = UnderlyingSemigroup(Range(cong));
 end);
 
-#
-
 InstallImmediateMethod(IsUniversalSemigroupCongruence,
 IsRZMSCongruenceByLinkedTriple, 0,
 ReturnFalse);
-
-#
 
 InstallMethod(AsLookupTable,
 "for a universal semigroup congruence",
@@ -79,16 +69,12 @@ function(cong)
   Print(">");
 end);
 
-#
-
 InstallMethod(\=,
 "for two universal semigroup congruences",
 [IsUniversalSemigroupCongruence, IsUniversalSemigroupCongruence],
 function(cong1, cong2)
   return Range(cong1) = Range(cong2);
 end);
-
-#
 
 InstallMethod(\=,
 "for universal congruence and RZMS congruence by linked triple",
@@ -97,16 +83,12 @@ function(ucong, cong)
   return false;
 end);
 
-#
-
 InstallMethod(\=,
 "for RZMS congruence by linked triple and universal congruence",
 [IsRZMSCongruenceByLinkedTriple, IsUniversalSemigroupCongruence],
 function(cong, ucong)
   return false;
 end);
-
-#
 
 InstallMethod(\=,
 "for universal congruence and semigroup congruence with generating pairs",
@@ -116,8 +98,6 @@ function(ucong, pcong)
   return Range(ucong) = Range(pcong) and NrEquivalenceClasses(pcong) = 1;
 end);
 
-#
-
 InstallMethod(\=,
 "for universal congruence and semigroup congruence with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
@@ -125,8 +105,6 @@ InstallMethod(\=,
 function(pcong, ucong)
   return Range(ucong) = Range(pcong) and NrEquivalenceClasses(pcong) = 1;
 end);
-
-#
 
 InstallMethod(\in,
 "for dense list and universal semigroup congruence",
@@ -136,8 +114,6 @@ function(pair, cong)
           and pair[1] in Range(cong)
           and pair[2] in Range(cong));
 end);
-
-#
 
 InstallMethod(IsSubrelation,
 "for a universal semigroup congruence and a semigroup congruence",
@@ -150,8 +126,6 @@ function(uni, cong)
   return true;
 end);
 
-#
-
 InstallMethod(IsSubrelation,
 "for a semigroup congruence and a universal semigroup congruence",
 [IsSemigroupCongruence, IsUniversalSemigroupCongruence],
@@ -162,8 +136,6 @@ function(cong, uni)
   fi;
   return uni = cong;
 end);
-
-#
 
 InstallMethod(ImagesElm,
 "for universal semigroup congruence and element",
@@ -176,8 +148,6 @@ function(cong, elm)
   return Elements(Range(cong));
 end);
 
-#
-
 InstallMethod(NrEquivalenceClasses,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
@@ -185,8 +155,6 @@ function(cong)
   return 1;
 end);
 
-#
-
 InstallMethod(JoinSemigroupCongruences,
 "for semigroup congruence and universal congruence",
 [IsSemigroupCongruence, IsUniversalSemigroupCongruence],
@@ -197,8 +165,6 @@ function(cong, ucong)
   fi;
   return ucong;
 end);
-
-#
 
 InstallMethod(JoinSemigroupCongruences,
 "for universal congruence and semigroup congruence",
@@ -211,8 +177,6 @@ function(ucong, cong)
   return ucong;
 end);
 
-#
-
 InstallMethod(MeetSemigroupCongruences,
 "for semigroup congruence and universal congruence",
 [IsSemigroupCongruence, IsUniversalSemigroupCongruence],
@@ -224,8 +188,6 @@ function(cong, ucong)
   return cong;
 end);
 
-#
-
 InstallMethod(MeetSemigroupCongruences,
 "for universal congruence and semigroup congruence",
 [IsUniversalSemigroupCongruence, IsSemigroupCongruence],
@@ -236,8 +198,6 @@ function(ucong, cong)
   fi;
   return cong;
 end);
-
-#
 
 InstallMethod(EquivalenceClasses,
 "for universal semigroup congruence",
@@ -245,8 +205,6 @@ InstallMethod(EquivalenceClasses,
 function(cong)
   return [EquivalenceClassOfElement(cong, Representative(Range(cong)))];
 end);
-
-#
 
 InstallMethod(EquivalenceClassOfElement,
 "for universal semigroup congruence and associative element",
@@ -261,8 +219,6 @@ function(cong, elm)
   return EquivalenceClassOfElementNC(cong, elm);
 end);
 
-#
-
 InstallMethod(EquivalenceClassOfElementNC,
 "for universal semigroup congruence and associative element",
 [IsUniversalSemigroupCongruence, IsMultiplicativeElement],
@@ -276,16 +232,12 @@ function(cong, elm)
   return class;
 end);
 
-#
-
 InstallMethod(\in,
 "for associative element and universal semigroup congruence class",
 [IsMultiplicativeElement, IsUniversalSemigroupCongruenceClass],
 function(elm, class)
   return elm in Parent(class);
 end);
-
-#
 
 InstallMethod(\*,
 "for two universal semigroup congruence classes",
@@ -298,8 +250,6 @@ function(c1, c2)
   return c1;
 end);
 
-#
-
 InstallMethod(Size,
 "for universal semigroup congruence class",
 [IsUniversalSemigroupCongruenceClass],
@@ -307,16 +257,12 @@ function(class)
   return 1;
 end);
 
-#
-
 InstallMethod(\=,
 "for two universal semigroup congruence classes",
 [IsUniversalSemigroupCongruenceClass, IsUniversalSemigroupCongruenceClass],
 function(c1, c2)
   return EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2);
 end);
-
-#
 
 InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for universal semigroup congruence",

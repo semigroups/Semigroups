@@ -43,8 +43,6 @@ function(S)
   return MaximalSubsemigroupsNC(S, rec(number := true));
 end);
 
-#
-
 InstallMethod(MaximalSubsemigroups,
 "for a semigroup",
 [IsSemigroup],
@@ -1130,8 +1128,6 @@ function(R, opts)
   fi;
   return out;
 end);
-
-#
 
 InstallMethod(MaximalSubsemigroupsNC,
 "for a semigroup and a record",

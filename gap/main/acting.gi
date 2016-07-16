@@ -764,8 +764,6 @@ function(data, x, n)
   return fail;
 end);
 
-#
-
 InstallMethod(PositionOfFound, "for semigroup data",
 [IsSemigroupData],
 function(data)

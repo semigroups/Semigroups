@@ -92,8 +92,6 @@ function(arg)
   fi;
 end);
 
-#
-
 InstallGlobalFunction(LeftSemigroupCongruence,
 function(arg)
   local S, pairs;
@@ -132,8 +130,6 @@ function(arg)
     TryNextMethod();
   fi;
 end);
-
-#
 
 InstallGlobalFunction(RightSemigroupCongruence,
 function(arg)
@@ -174,8 +170,6 @@ function(arg)
   fi;
 end);
 
-#
-
 InstallMethod(ViewObj,
 "for a congruence class",
 [IsCongruenceClass],
@@ -184,8 +178,6 @@ function(class)
   ViewObj(Representative(class));
   Print(">");
 end);
-
-#
 
 InstallMethod(ViewObj,
 "for a left congruence class",
@@ -196,8 +188,6 @@ function(class)
   Print(">");
 end);
 
-#
-
 InstallMethod(ViewObj,
 "for a right congruence class",
 [IsRightCongruenceClass],
@@ -207,70 +197,50 @@ function(class)
   Print(">");
 end);
 
-#
-
 InstallMethod(CongruenceClasses,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
 EquivalenceClasses);
-
-#
 
 InstallMethod(LeftCongruenceClasses,
 "for a left semigroup congruence",
 [IsLeftSemigroupCongruence],
 EquivalenceClasses);
 
-#
-
 InstallMethod(RightCongruenceClasses,
 "for a right semigroup congruence",
 [IsRightSemigroupCongruence],
 EquivalenceClasses);
-
-#
 
 InstallMethod(NrCongruenceClasses,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
 NrEquivalenceClasses);
 
-#
-
 InstallMethod(NrLeftCongruenceClasses,
 "for a left semigroup congruence",
 [IsLeftSemigroupCongruence],
 NrEquivalenceClasses);
-
-#
 
 InstallMethod(NrRightCongruenceClasses,
 "for a right semigroup congruence",
 [IsRightSemigroupCongruence],
 NrEquivalenceClasses);
 
-#
-
 InstallMethod(NonTrivialCongruenceClasses,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
 NonTrivialEquivalenceClasses);
-
-#
 
 InstallMethod(NonTrivialLeftCongruenceClasses,
 "for a left semigroup congruence",
 [IsLeftSemigroupCongruence],
 NonTrivialEquivalenceClasses);
 
-#
-
 InstallMethod(NonTrivialRightCongruenceClasses,
 "for a right semigroup congruence",
 [IsRightSemigroupCongruence],
 NonTrivialEquivalenceClasses);
-
-#
 
 InstallMethod(CongruenceClassOfElement,
 "for a semigroup congruence and associative element",
@@ -279,16 +249,12 @@ function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
 end);
 
-#
-
 InstallMethod(LeftCongruenceClassOfElement,
 "for a left semigroup congruence and associative element",
 [IsLeftSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
 end);
-
-#
 
 InstallMethod(RightCongruenceClassOfElement,
 "for a right semigroup congruence and associative element",
@@ -297,16 +263,12 @@ function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
 end);
 
-#
-
 InstallMethod(IsSuperrelation,
 "for two semigroup congruences",
 [IsSemigroupCongruence, IsSemigroupCongruence],
 function(cong1, cong2)
   return IsSubrelation(cong2, cong1);
 end);
-
-#
 
 InstallMethod(OnLeftCongruenceClasses,
 "for a left congruence class and an associative element",
@@ -316,8 +278,6 @@ function(class, elm)
   cong := EquivalenceClassRelation(class);
   return EquivalenceClassOfElementNC(cong, elm * Representative(class));
 end);
-
-#
 
 InstallMethod(OnRightCongruenceClasses,
 "for a right congruence class and an associative element",

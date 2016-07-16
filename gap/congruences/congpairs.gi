@@ -242,8 +242,6 @@ function(data, lookfunc)
   return data;
 end);
 
-#
-
 InstallMethod(IsRightSemigroupCongruence,
 "for a left semigroup congruence with known generating pairs",
 [IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
@@ -264,8 +262,6 @@ function(congl)
     return false;
   fi;
 end);
-
-#
 
 InstallMethod(IsLeftSemigroupCongruence,
 "for a right semigroup congruence with known generating pairs",
@@ -288,8 +284,6 @@ function(congr)
   fi;
 end);
 
-#
-
 InstallMethod(IsSemigroupCongruence,
 "for a left semigroup congruence with known generating pairs",
 [IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
@@ -297,16 +291,12 @@ function(cong)
   return IsRightSemigroupCongruence(cong);
 end);
 
-#
-
 InstallMethod(IsSemigroupCongruence,
 "for a right semigroup congruence with known generating pairs",
 [IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
 function(cong)
   return IsLeftSemigroupCongruence(cong);
 end);
-
-#
 
 BindGlobal("_GenericCongruenceEquality",
 function(c1, c2)
@@ -362,8 +352,6 @@ _GenericCongruenceEquality);
 
 MakeReadWriteGlobal("_GenericCongruenceEquality");
 UnbindGlobal("_GenericCongruenceEquality");
-
-#
 
 ################################################################################
 # We now have some methods which apply to left congruences, right congruences
@@ -953,8 +941,6 @@ Unbind(_record);
 MakeReadWriteGlobal("_InstallMethodsForCongruences");
 UnbindGlobal("_InstallMethodsForCongruences");
 
-#
-
 # Multiplication for congruence classes: only makes sense for 2-sided
 InstallMethod(\*,
 "for two congruence classes",
@@ -985,8 +971,6 @@ function(cong, lcong)
   return ForAll(GeneratingPairsOfLeftSemigroupCongruence(lcong),
                 pair -> SEMIGROUPS.IsPairInXCong(pair, cong));
 end);
-
-#
 
 InstallMethod(IsSubrelation,
 "for semigroup congruence and right semigroup congruence",
@@ -1038,8 +1022,6 @@ function(cong)
   Print(GeneratingPairsOfSemigroupCongruence(cong));
   Print(" )");
 end);
-
-#
 
 ###############################################################################
 # LatticeOfXCongruences function
@@ -1300,8 +1282,6 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   return lattice;
 end;
 
-#
-
 InstallMethod(DotString,
 "for a congruence lattice",
 [SEMIGROUPS_IsCongruenceLattice],
@@ -1309,8 +1289,6 @@ function(latt)
   # Call the below function, with info turned off
   return DotString(latt, rec(info := false));
 end);
-
-#
 
 InstallMethod(DotString,
 "for a congruence lattice and a record",

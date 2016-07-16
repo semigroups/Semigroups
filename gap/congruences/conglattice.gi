@@ -29,16 +29,12 @@ function(latt, x)
   return latt![1][x];
 end);
 
-#
-
 InstallMethod(ViewObj,
 "for a congruence lattice",
 [SEMIGROUPS_IsCongruenceLattice],
 function(latt)
   ViewObj(latt![1]);
 end);
-
-#
 
 InstallMethod(PrintObj,
 "for a congruence lattice",
@@ -47,16 +43,12 @@ function(latt)
   PrintObj(latt![1]);
 end);
 
-#
-
 InstallMethod(Length,
 "for a congruence lattice",
 [SEMIGROUPS_IsCongruenceLattice],
 function(latt)
   return Length(latt![1]);
 end);
-
-#
 
 InstallMethod(IsBound\[\],
 "for a congruence lattice and a positive integer",

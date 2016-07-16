@@ -19,8 +19,6 @@ function(S)
   return HTCreate(LambdaFunc(S)(Representative(S)), record);
 end);
 
-#
-
 InstallMethod(GradedRhoHT, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
@@ -30,15 +28,11 @@ function(S)
   return HTCreate(RhoFunc(S)(Representative(S)), record);
 end);
 
-#
-
 InstallMethod(\in, "for a lambda value and graded lambda orbs",
 [IsObject, IsGradedLambdaOrbs],
 function(lamf, o)
   return not HTValue(GradedLambdaHT(o!.parent), lamf) = fail;
 end);
-
-#
 
 InstallMethod(\in, "for a rho value and graded rho orbs",
 [IsObject, IsGradedRhoOrbs],
@@ -46,15 +40,11 @@ function(rho, o)
   return not HTValue(GradedRhoHT(o!.parent), rho) = fail;
 end);
 
-#
-
 InstallMethod(ELM_LIST, "for graded lambda orbs, and pos int",
 [IsGradedLambdaOrbs, IsPosInt],
 function(o, j)
   return o!.orbits[j];
 end);
-
-#
 
 InstallMethod(ELM_LIST, "for graded rho orbs, and pos int",
 [IsGradedRhoOrbs, IsPosInt],
@@ -296,15 +286,11 @@ function(S)
                        parent := S));
 end);
 
-#
-
 InstallMethod(IsBound\[\], "for graded lambda orbs and pos int",
 [IsGradedLambdaOrbs, IsPosInt],
 function(o, j)
   return IsBound(o!.orbits[j]);
 end);
-
-#
 
 InstallMethod(IsBound\[\], "for graded rho orbs and pos int",
 [IsGradedRhoOrbs, IsPosInt],
@@ -312,23 +298,17 @@ function(o, j)
   return IsBound(o!.orbits[j]);
 end);
 
-#
-
 InstallMethod(Position, "for graded lambda orbs and lambda value",
 [IsGradedLambdaOrbs, IsObject, IsZeroCyc],
 function(o, lamf, n)
   return HTValue(GradedLambdaHT(o!.parent), lamf);
 end);
 
-#
-
 InstallMethod(Position, "for graded rho orbs and rho value",
 [IsGradedRhoOrbs, IsObject, IsZeroCyc],
 function(o, rho, n)
   return HTValue(GradedRhoHT(o!.parent), rho);
 end);
-
-#
 
 InstallMethod(PrintObj, [IsGradedLambdaOrbs],
 function(o)
@@ -337,8 +317,6 @@ function(o)
   Print(" >");
   return;
 end);
-
-#
 
 InstallMethod(PrintObj, [IsGradedRhoOrbs],
 function(o)

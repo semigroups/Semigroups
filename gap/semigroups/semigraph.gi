@@ -49,8 +49,6 @@ function(S)
   DoAssignGenVars(GeneratorsOfInverseSemigroup(S));
 end);
 
-#
-
 InstallMethod(GraphInverseSemigroup, "for a digraph",
 [IsDigraph],
 function(graph)

@@ -141,8 +141,6 @@ SEMIGROUPS.CreateHClass := function(arg)
   return SEMIGROUPS.CreateXClass(arg, HClassType, GreensHRelation);
 end;
 
-#
-
 SEMIGROUPS.SetLambda := function(C)
   local S, o;
 
@@ -475,8 +473,6 @@ function(L)
     return G;
   fi;
 end);
-
-#
 
 InstallMethod(SemigroupDataIndex,
 "for an acting semigroup Green's class",

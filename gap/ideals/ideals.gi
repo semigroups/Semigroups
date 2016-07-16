@@ -214,12 +214,8 @@ InstallMethod(ViewString,
  HasGeneratorsOfSemigroupIdeal], 1, #to beat the library method
 _ViewStringForSemigroupsIdeals);
 
-#
-
 MakeReadWriteGlobal("_ViewStringForSemigroupsIdeals");
 Unbind(_ViewStringForSemigroupsIdeals);
-
-#
 
 InstallMethod(PrintObj,
 "for a semigroup ideal with ideal generators",

@@ -189,15 +189,11 @@ function(I)
   return EnumeratorByFunctions(I, record);
 end);
 
-#
-
 InstallMethod(Size, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   return Length(Enumerator(I));
 end);
-
-#
 
 InstallMethod(\in,
 "for a multiplicative element and semigroup ideal with generators",
@@ -225,8 +221,6 @@ function(I)
 
   return GeneratorsOfSemigroup(U);
 end);
-
-#
 
 InstallMethod(Idempotents, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],

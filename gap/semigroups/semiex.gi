@@ -330,8 +330,6 @@ function(func, args, view, print)
   return S;
 end);
 
-#
-
 InstallMethod(PrintString,
 "for a matrix semigroup with print string attribute",
 [IsMatrixSemigroup and HasGeneratorsOfSemigroup
@@ -728,8 +726,6 @@ function(n)
                                       Semigroup(Idempotents(POI(n)))));
 end);
 
-#
-
 InstallMethod(POI, "for a positive integer", [IsPosInt],
 function(n)
   local out, i;
@@ -747,8 +743,6 @@ function(n)
   od;
   return InverseMonoid(out);
 end);
-
-#
 
 InstallMethod(POPI, "for a positive integer", [IsPosInt],
 function(n)
@@ -817,8 +811,6 @@ function(n)
   return InverseMonoid(gens);
 end);
 
-#
-
 InstallMethod(UniformBlockBijectionMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -832,8 +824,6 @@ function(n)
                                         List([3 .. n], x -> [x, -x]))));
   return InverseMonoid(gens);
 end);
-
-#
 
 InstallMethod(ApsisMonoid,
 "for a positive integer and positive integer",
@@ -897,8 +887,6 @@ function(m, n)
   return S;
 end);
 
-#
-
 InstallMethod(CrossedApsisMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
@@ -925,8 +913,6 @@ function(m, n)
   SetIsStarSemigroup(S, true);
   return S;
 end);
-
-#
 
 InstallMethod(PlanarModularPartitionMonoid,
 "for a positive integer and positive integer",
@@ -995,16 +981,12 @@ function(m, n)
   return S;
 end);
 
-#
-
 InstallMethod(PlanarPartitionMonoid,
 "for a positive integer",
 [IsPosInt],
 function(n)
   return PlanarModularPartitionMonoid(1, n);
 end);
-
-#
 
 InstallMethod(ModularPartitionMonoid,
 "for a positive integer and positive integer",
@@ -1148,8 +1130,6 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
-#
-
 InstallMethod(SingularUniformBlockBijectionMonoid,
 "for a positive integer", [IsPosInt],
 function(n)
@@ -1168,8 +1148,6 @@ function(n)
   S := UniformBlockBijectionMonoid(n);
   return SemigroupIdeal(S, x);
 end);
-
-#
 
 InstallMethod(SingularApsisMonoid,
 "for a positive integer and positive integer",
@@ -1192,8 +1170,6 @@ function(m, n)
   return SemigroupIdeal(S, x);
 end);
 
-#
-
 InstallMethod(SingularCrossedApsisMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],
@@ -1214,8 +1190,6 @@ function(m, n)
   S := CrossedApsisMonoid(m, n);
   return SemigroupIdeal(S, x);
 end);
-
-#
 
 InstallMethod(SingularPlanarModularPartitionMonoid,
 "for a positive integer and positive integer",
@@ -1243,8 +1217,6 @@ function(m, n)
   return SemigroupIdeal(S, x);
 end);
 
-#
-
 InstallMethod(SingularPlanarPartitionMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
@@ -1262,8 +1234,6 @@ function(n)
   S := PlanarPartitionMonoid(n);
   return SemigroupIdeal(S, x);
 end);
-
-#
 
 InstallMethod(SingularModularPartitionMonoid,
 "for a positive integer and positive integer",

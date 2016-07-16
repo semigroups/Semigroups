@@ -291,12 +291,8 @@ function(S)
   return I;
 end);
 
-#
-
 InstallMethod(PrincipalFactor, "for a Green's D-class",
 [IsGreensDClass], D -> Range(InjectionPrincipalFactor(D)));
-
-#
 
 InstallMethod(NormalizedPrincipalFactor, "for a Green's D-class",
 [IsGreensDClass], D -> Range(InjectionNormalizedPrincipalFactor(D)));
@@ -319,8 +315,6 @@ InstallMethod(SmallSemigroupGeneratingSet,
 "for a finite semigroup", [IsSemigroup and IsFinite],
 S -> SmallSemigroupGeneratingSet(GeneratorsOfSemigroup(S)));
 
-#
-
 InstallMethod(SmallMonoidGeneratingSet,
 "for an multiplicative element with one collection",
 [IsMultiplicativeElementWithOneCollection],
@@ -342,8 +336,6 @@ function(S)
   return SmallMonoidGeneratingSet(GeneratorsOfMonoid(S));
 end);
 
-#
-
 InstallMethod(SmallInverseSemigroupGeneratingSet,
 "for a multiplicative element coll",
 [IsMultiplicativeElementCollection],
@@ -359,13 +351,9 @@ function(coll)
                                                        rec(small := true)));
 end);
 
-#
-
 InstallMethod(SmallInverseSemigroupGeneratingSet,
 "for a semigroup with inverse op", [IsSemigroupWithInverseOp],
 S -> SmallSemigroupGeneratingSet(GeneratorsOfInverseSemigroup(S)));
-
-#
 
 InstallMethod(SmallInverseMonoidGeneratingSet,
 "for generators of an inverse monoid",
@@ -384,8 +372,6 @@ function(coll)
   return GeneratorsOfInverseMonoid(InverseMonoid(coll, rec(small := true)));
 end);
 
-#
-
 InstallMethod(SmallInverseMonoidGeneratingSet,
 "for a monoid with inverse op",
 [IsSemigroupWithInverseOp and IsMonoid],
@@ -395,8 +381,6 @@ function(S)
   fi;
   return SmallMonoidGeneratingSet(GeneratorsOfInverseMonoid(S));
 end);
-
-#
 
 InstallMethod(SmallGeneratingSet, "for a semigroup",
 [IsSemigroup],
@@ -414,8 +398,6 @@ function(S)
 
   return SmallSemigroupGeneratingSet(S);
 end);
-
-#
 
 InstallMethod(StructureDescription, "for a Brandt semigroup",
 [IsBrandtSemigroup],
@@ -544,8 +526,6 @@ function(S)
   end;
 end);
 
-#
-
 InstallMethod(MaximalDClasses, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -596,8 +576,6 @@ function(S)
 
   return out;
 end);
-
-#
 
 InstallMethod(IdempotentGeneratedSubsemigroup, "for a semigroup",
 [IsSemigroup],
@@ -775,15 +753,11 @@ SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
   return MappingByFunction(S, R, fun); #, invfun);
 end;
 
-#
-
 InstallMethod(SmallerDegreeTransformationRepresentation,
 "for a semigroup",
 [IsSemigroup],
 # Use the best right congruence which contains no congruences
 S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true)));
-
-#
 
 InstallMethod(SmallDegreeTransformationRepresentation,
 "for a semigroup",
@@ -791,8 +765,6 @@ InstallMethod(SmallDegreeTransformationRepresentation,
 # Use the best 1-generated right congruence which contains no congruences
 S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true,
                                                       1gen := true)));
-
-#
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for a group as semigroup and a multiplicative element",

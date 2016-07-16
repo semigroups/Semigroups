@@ -239,8 +239,6 @@ function(S)
   return SEMIGROUP_AS_LIST(data){data!.idempotents};
 end);
 
-#
-
 InstallMethod(Position,
 "for generic semigroup data, a multiplicative element, zero cyc",
 [IsGenericSemigroupData, IsMultiplicativeElement, IsZeroCyc],
@@ -289,8 +287,6 @@ function(S, x)
   return Position(AsSet(S), x);
 end);
 
-#
-
 InstallMethod(Length, "for generic semigroup data", [IsGenericSemigroupData],
 SEMIGROUP_CURRENT_SIZE);
 
@@ -301,8 +297,6 @@ InstallMethod(ELM_LIST, "for generic semigroup data, and pos int",
 function(data, nr)
   return SEMIGROUP_ELEMENT_NUMBER(data, nr);
 end);
-
-#
 
 InstallMethod(ViewObj, [IsGenericSemigroupData],
 function(data)
@@ -319,8 +313,6 @@ function(data)
   Print("max word length ", SEMIGROUP_CURRENT_MAX_WORD_LENGTH(data), ">");
   return;
 end);
-
-#
 
 InstallMethod(PrintObj, [IsGenericSemigroupData],
 2, # to beat the method for an enumerator!
@@ -454,8 +446,6 @@ end);
 InstallMethod(Enumerate, "for generic semigroup data",
 [IsGenericSemigroupData],
 data -> Enumerate(data, infinity, ReturnFalse));
-
-#
 
 InstallMethod(Enumerate, "for generic semigroup data and cyclotomic",
 [IsGenericSemigroupData, IsCyclotomic],

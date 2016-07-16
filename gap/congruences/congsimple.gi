@@ -25,8 +25,6 @@ function(cong)
         Size(cong!.rmscong!.rowBlocks), ")>");
 end);
 
-#
-
 InstallMethod(CongruencesOfSemigroup,
 "for a (0-)simple or simple semigroup",
 [IsSemigroup],
@@ -64,16 +62,12 @@ function(S)
   fi;
 end);
 
-#
-
 InstallMethod(\=,
 "for two (0-)simple semigroup congruences",
 [IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
 function(cong1, cong2)
   return (Range(cong1) = Range(cong2) and cong1!.rmscong = cong2!.rmscong);
 end);
-
-#
 
 InstallMethod(JoinSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
@@ -88,8 +82,6 @@ function(cong1, cong2)
   return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, join);
 end);
 
-#
-
 InstallMethod(MeetSemigroupCongruences,
 "for two (0-)simple semigroup congruences",
 [IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
@@ -102,8 +94,6 @@ function(cong1, cong2)
   meet := MeetSemigroupCongruences(cong1!.rmscong, cong2!.rmscong);
   return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, meet);
 end);
-
-#
 
 InstallMethod(\in,
 "for an associative element collection and a (0-)simple semigroup congruence",
@@ -124,8 +114,6 @@ function(pair, cong)
   return [pair[1] ^ cong!.iso, pair[2] ^ cong!.iso] in cong!.rmscong;
 end);
 
-#
-
 InstallMethod(ImagesElm,
 "for a (0-)simple semigroup congruence and an associative element",
 [IsSimpleSemigroupCongruence, IsMultiplicativeElement],
@@ -134,8 +122,6 @@ function(cong, elm)
               x -> x ^ InverseGeneralMapping(cong!.iso));
 end);
 
-#
-
 InstallMethod(EquivalenceClasses,
 "for a (0-)simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
@@ -143,8 +129,6 @@ function(cong)
   return List(EquivalenceClasses(cong!.rmscong),
               c -> SEMIGROUPS.SimpleClassFromRMSclass(cong, c));
 end);
-
-#
 
 InstallMethod(EquivalenceClassOfElement,
 "for a (0-)simple semigroup congruence and associative element",
@@ -157,8 +141,6 @@ function(cong, elm)
   return EquivalenceClassOfElementNC(cong, elm);
 end);
 
-#
-
 InstallMethod(EquivalenceClassOfElementNC,
 "for a (0-)simple semigroup congruence and associative element",
 [IsSimpleSemigroupCongruence, IsMultiplicativeElement],
@@ -168,16 +150,12 @@ function(cong, elm)
   return SEMIGROUPS.SimpleClassFromRMSclass(cong, class);
 end);
 
-#
-
 InstallMethod(NrEquivalenceClasses,
 "for a (0-)simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
 function(cong)
   return NrEquivalenceClasses(cong!.rmscong);
 end);
-
-#
 
 InstallMethod(\in,
 "for an associative element and a (0-)simple semigroup congruence class",
@@ -186,16 +164,12 @@ function(elm, class)
   return (elm ^ EquivalenceClassRelation(class)!.iso in class!.rmsclass);
 end);
 
-#
-
 InstallMethod(Enumerator,
 "for a (0-)simple semigroup congruence class",
 [IsSimpleSemigroupCongruenceClass],
 function(class)
   return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
-
-#
 
 InstallMethod(\*,
 "for two (0-)simple semigroup congruence classes",
@@ -205,16 +179,12 @@ function(c1, c2)
                                             c1!.rmsclass * c2!.rmsclass);
 end);
 
-#
-
 InstallMethod(Size,
 "for a (0-)simple semigroup congruence class",
 [IsSimpleSemigroupCongruenceClass],
 function(class)
   return Size(class!.rmsclass);
 end);
-
-#
 
 InstallMethod(\=,
 "for two (0-)simple semigroup congruence classes",
@@ -223,8 +193,6 @@ function(c1, c2)
   return EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) and
          c1!.rmsclass = c2!.rmsclass;
 end);
-
-#
 
 InstallMethod(GeneratingPairsOfSemigroupCongruence,
 "for a (0-)simple semigroup congruence",
@@ -236,8 +204,6 @@ function(cong)
                x -> [x[1] ^ map, x[2] ^ map]);
 end);
 
-#
-
 InstallMethod(CanonicalRepresentative,
 "for a (0-)simple semigroup congruence class",
 [IsSimpleSemigroupCongruenceClass],
@@ -246,16 +212,12 @@ function(class)
          InverseGeneralMapping(class!.iso);
 end);
 
-#
-
 InstallMethod(IsSubrelation,
 "for two (0-)simple semigroup congruences",
 [IsSimpleSemigroupCongruence, IsSimpleSemigroupCongruence],
 function(cong1, cong2)
   return IsSubrelation(cong1!.rmscong, cong2!.rmscong);
 end);
-
-#
 
 InstallMethod(AsLookupTable,
 "for a (0-)simple semigroup congruence",

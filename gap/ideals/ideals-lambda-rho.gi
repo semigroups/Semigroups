@@ -13,8 +13,6 @@ function(o)
   return Concatenation(List(o!.orbits, AsList));
 end);
 
-#
-
 InstallMethod(Enumerate, "for an ideal orb, and a number",
 [IsIdealOrb, IsCyclotomic],
 function(o, limit)
@@ -31,8 +29,6 @@ function(o, limit)
 
   return o;
 end);
-
-#
 
 InstallMethod(Enumerate, "for an ideal orb, a number, and a function",
 [IsIdealOrb, IsCyclotomic, IsFunction],
@@ -53,23 +49,17 @@ function(o, limit, lookfunc)
   return o;
 end);
 
-#
-
 InstallMethod(Length, "for a ideal orb",
 [IsIdealOrb],
 function(o)
   return Sum(o!.lens);
 end);
 
-#
-
 InstallMethod(Length, "for an ideal inverse orb",
 [IsIdealOrb and IsInverseOrb],
 function(o)
   return Length(o!.orbit);
 end);
-
-#
 
 InstallMethod(IsBound\[\], "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt],
@@ -83,8 +73,6 @@ function(o, i)
   od;
   return IsBound(o!.orbits[nr]) and IsBound(o!.orbits[nr][i]);
 end);
-
-#
 
 InstallMethod(IsBound\[\], "for an inverse ideal orb and positive integer",
 [IsIdealOrb and IsInverseOrb, IsPosInt],
@@ -107,16 +95,12 @@ function(o, i)
   return nr;
 end);
 
-#
-
 InstallMethod(ComponentOfIndex,
 "for an inverse ideal orb and positive integer",
 [IsIdealOrb and IsInverseOrb, IsPosInt],
 function(o, i)
   return 1;
 end);
-
-#
 
 InstallMethod(ELM_LIST, "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt],
@@ -130,8 +114,6 @@ function(o, i)
   od;
   return o!.orbits[nr][i];
 end);
-
-#
 
 InstallMethod(ELM_LIST, "for an inverse ideal orb and positive integer",
 [IsIdealOrb and IsInverseOrb, IsPosInt],
@@ -162,8 +144,6 @@ InstallMethod(OrbitGraph, "for an ideal orb",
 function(o)
   return o!.orbitgraph;
 end);
-
-#
 
 InstallMethod(ViewObj, "for a ideal orb",
 [IsIdealOrb],
@@ -231,8 +211,6 @@ function(I)
 
   return Objectify(NewType(fam, IsIdealOrb and IsLambdaOrb), record);
 end);
-
-#
 
 InstallMethod(RhoOrb, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
@@ -572,8 +550,6 @@ function(o, pt, x, pos, gen, ind, lookfunc)
   return len + 1;
 end);
 
-#
-
 InstallMethod(EvaluateWord, "for an ideal orb and an ideal word (Semigroups)",
 [IsIdealOrb, IsList], 2, # to beat the methods for lambda/rho orbs below
 function(o, w)
@@ -593,16 +569,12 @@ function(o, w)
   return res;
 end);
 
-#
-
 InstallMethod(EvaluateWord, "for a lambda orb and a word (Semigroups)",
 [IsLambdaOrb, IsList], 1,
 # to beat the methods for IsXCollection
 function(o, w)
   return EvaluateWord(o!.gens, w);
 end);
-
-#
 
 InstallMethod(EvaluateWord, "for a rho orb and a word (Semigroups)",
 [IsRhoOrb, IsList], 1,

@@ -93,21 +93,15 @@ InstallMethod(DClassOfLClass,
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 SEMIGROUPS.DClassOfXClass);
 
-#
-
 InstallMethod(DClassOfRClass,
 "for an R-class of an inverse op acting semigroup",
 [IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
 SEMIGROUPS.DClassOfXClass);
 
-#
-
 InstallMethod(DClassOfHClass,
 "for an H-class of an inverse op acting semigroup",
 [IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
 SEMIGROUPS.DClassOfXClass);
-
-#
 
 InstallMethod(LClassOfHClass,
 "for an H-class of an inverse op acting semigroup",
@@ -197,8 +191,6 @@ InstallMethod(Size, "for an inverse op L-class",
 [IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
 L -> Size(SchutzenbergerGroup(L)) * Length(LambdaOrbSCC(L)));
 
-#
-
 InstallMethod(\in, "for inverse op D-class",
 [IsMultiplicativeElement,
  IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
@@ -244,8 +236,6 @@ function(x, D)
 
   return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep, x));
 end);
-
-#
 
 InstallMethod(\in,
 "for multiplicative element and inverse op L-class of acting semigroup.",
@@ -384,8 +374,6 @@ function(L)
   od;
   return out;
 end);
-
-#
 
 InstallMethod(GreensHClasses,
 "for an inverse op class of an acting semigroup",

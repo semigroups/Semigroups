@@ -622,8 +622,6 @@ function(H)
   return out;
 end);
 
-#
-
 InstallGlobalFunction(SupremumIdempotentsNC,
 function(coll, x)
   local dom, i, part, rep, reps, out, todo, inter;
@@ -701,8 +699,6 @@ function(S)
 
   return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
 end);
-
-#
 
 InstallMethod(InversesOfSemigroupElementNC,
 "for a semigroup with inverse op and an associative element",

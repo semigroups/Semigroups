@@ -175,8 +175,6 @@ function(data, pos)
   return word1;
 end);
 
-#
-
 InstallMethod(Factorization,
 "for an acting semigroup with generators and element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
@@ -224,8 +222,6 @@ function(S, x)
 
   return word1;
 end);
-
-#
 
 InstallMethod(Factorization,
 "for an acting semigroup with inverse op with generators and element",
@@ -282,8 +278,6 @@ function(S, x)
 
   return word1;
 end);
-
-#
 
 InstallMethod(Factorization,
 "for a regular acting semigroup with generators and element",

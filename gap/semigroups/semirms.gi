@@ -336,8 +336,6 @@ function(I)
   return str;
 end);
 
-#
-
 InstallMethod(MatrixEntries, "for a Rees matrix semigroup",
 [IsReesMatrixSemigroup],
 function(R)
@@ -369,8 +367,6 @@ function(R)
   fi;
   return elt;
 end);
-
-#
 
 InstallMethod(GreensHClassOfElement, "for a RZMS, pos int, and pos int",
 [IsReesZeroMatrixSemigroup, IsPosInt, IsPosInt],
@@ -410,8 +406,6 @@ function(R)
   #SetDigraphVertexLabels(gr, Concatenation(rows, cols));
   return gr;
 end);
-
-#
 
 InstallMethod(RZMSConnectedComponents,
 "for a Rees 0-matrix semigroup",
@@ -485,8 +479,6 @@ function(R)
 
   return G <> fail and ForAll(elts, x -> x in G) and IsInverseSemigroup(U);
 end);
-
-#
 
 InstallMethod(Idempotents,
 "for an inverse Rees 0-matrix subsemigroup",
@@ -563,8 +555,6 @@ function(R)
 
   return out;
 end);
-
-#
 
 InstallMethod(NrIdempotents,
 "for an inverse Rees 0-matrix subsemigroup",

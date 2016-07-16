@@ -48,8 +48,6 @@ function(cong)
   fi;
 end);
 
-#
-
 InstallMethod(ReesCongruenceOfSemigroupIdeal,
 "for a semigroup ideal",
 [IsSemigroupIdeal],
@@ -70,8 +68,6 @@ function(I)
   return cong;
 end);
 
-#
-
 InstallMethod(ViewObj,
 "for a Rees congruence",
 [IsReesCongruence],
@@ -83,8 +79,6 @@ function(cong)
   Print(">");
 end);
 
-#
-
 InstallMethod(PrintObj,
 "for a Rees congruence",
 [IsReesCongruence],
@@ -94,14 +88,10 @@ function(cong)
   Print(" )");
 end);
 
-#
-
 InstallMethod(NrEquivalenceClasses,
 "for a Rees congruence",
 [IsReesCongruence],
 cong -> Size(Range(cong)) - Size(SemigroupIdealOfReesCongruence(cong)) + 1);
-
-#
 
 InstallMethod(\=,
 "for two Rees congrunces",
@@ -110,8 +100,6 @@ function(c1, c2)
   return SemigroupIdealOfReesCongruence(c1) =
          SemigroupIdealOfReesCongruence(c2);
 end);
-
-#
 
 InstallMethod(IsSubrelation,
 "for two Rees congruences",
@@ -127,8 +115,6 @@ function(cong1, cong2)
   i2 := SemigroupIdealOfReesCongruence(cong2);
   return ForAll(GeneratorsOfSemigroupIdeal(i2), gen -> gen in i1);
 end);
-
-#
 
 InstallMethod(\in,
 "for an associative element collection and a Rees congruence",
@@ -150,8 +136,6 @@ function(pair, cong)
   return (pair[1] = pair[2]) or (pair[1] in I and pair[2] in I);
 end);
 
-#
-
 InstallMethod(ImagesElm,
 "for a Rees congruence and an associative element",
 [IsReesCongruence, IsMultiplicativeElement],
@@ -167,8 +151,6 @@ function(cong, elm)
     return [elm];
   fi;
 end);
-
-#
 
 InstallMethod(JoinSemigroupCongruences,
 "for two Rees congruences",
@@ -187,16 +169,12 @@ function(c1, c2)
   return ReesCongruenceOfSemigroupIdeal(I);
 end);
 
-#
-
 #InstallMethod(MeetSemigroupCongruences,
 #"for two Rees congruences",
 #[IsReesCongruence, IsReesCongruence],
 #function(c1, c2)
 #
 #end);
-
-#
 
 InstallMethod(EquivalenceClasses,
 "for a Rees congruence",
@@ -216,8 +194,6 @@ function(cong)
   return classes;
 end);
 
-#
-
 InstallMethod(EquivalenceClassOfElement,
 "for a Rees congruence and an associative element",
 [IsReesCongruence, IsMultiplicativeElement],
@@ -230,8 +206,6 @@ function(cong, elm)
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
-
-#
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for a Rees congruence and an associative element",
@@ -256,8 +230,6 @@ function(cong, elm)
   return class;
 end);
 
-#
-
 InstallMethod(\in,
 "for an associative element and a Rees congruence class",
 [IsMultiplicativeElement, IsReesCongruenceClass],
@@ -269,8 +241,6 @@ function(elm, class)
     return elm = Representative(class);
   fi;
 end);
-
-#
 
 InstallMethod(\*,
 "for two Rees congruence classes",
@@ -291,8 +261,6 @@ function(c1, c2)
                                      Representative(c1) * Representative(c2));
 end);
 
-#
-
 InstallMethod(Size, "for a Rees congruence class",
 [IsReesCongruenceClass],
 function(class)
@@ -305,8 +273,6 @@ function(class)
   return 1;
 end);
 
-#
-
 InstallMethod(\=,
 "for two Rees congruence classes",
 [IsReesCongruenceClass, IsReesCongruenceClass],
@@ -314,8 +280,6 @@ function(c1, c2)
   return (Representative(c1) = Representative(c2))
          or (c1!.is_ideal_class and c2!.is_ideal_class);
 end);
-
-#
 
 InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
 "for a Rees congruence",
@@ -339,8 +303,6 @@ function(cong)
   return cong;
 end);
 
-#
-
 InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for a Rees congruence",
 [IsReesCongruence],
@@ -363,8 +325,6 @@ end);
 #  fi;
 #  return fail;
 #end);
-
-#
 
 InstallMethod(Enumerator,
 "for a Rees congruence class",

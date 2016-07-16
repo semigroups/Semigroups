@@ -71,8 +71,6 @@ SEMIGROUPS.LambdaOrbForNormalizer := function(G, S, func)
   return o;
 end;
 
-#
-
 SEMIGROUPS.DeterministicNormalizer := function(G, S, opts)
   local o, act, deg, U, gens, nrgens, P;
 
@@ -171,8 +169,6 @@ SEMIGROUPS.DeterministicNormalizer := function(G, S, opts)
 
   return SubgroupProperty(U, P);
 end;
-
-#
 
 if IsBound(GAPInfo.PackagesLoaded.genss) then
 
@@ -313,8 +309,6 @@ if not IsBound(POW_KER_PERM) then
   end);
 fi;
 
-#
-
 InstallMethod(Normalizer, "for a transformation semigroup and record",
 [IsTransformationSemigroup, IsRecord],
 function(S, opts)
@@ -334,8 +328,6 @@ InstallMethod(Normalizer, "for a bipartition semigroup and record",
 function(S, opts)
   return Normalizer(SymmetricGroup(DegreeOfBipartitionSemigroup(S)), S, opts);
 end);
-
-#
 
 InstallMethod(Normalizer, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -361,16 +353,12 @@ function(S)
   return SEMIGROUPS.DeterministicNormalizer(SymmetricGroup(deg), S, rec());
 end);
 
-#
-
 InstallMethod(NormalizerOp,
 "for a permutation group and a semigroup",
 [IsPermGroup, IsSemigroup],
 function(G, S)
   return SEMIGROUPS.DeterministicNormalizer(G, S, rec());
 end);
-
-#
 
 if IsBound(GAPInfo.PackagesLoaded.genss) then
 

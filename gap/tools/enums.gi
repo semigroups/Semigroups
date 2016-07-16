@@ -98,8 +98,6 @@ function(obj, baseenum, convert_out, convert_in, filts, record)
   return enum;
 end);
 
-#
-
 BindGlobal("EnumeratorByEnumOfEnums",
 function(obj, record, baseenum, convert, filts)
   local enum, filt;
@@ -631,8 +629,6 @@ function(r)
            convert_out, convert_in, [], record);
 end);
 
-#
-
 InstallGlobalFunction(NumberArrangement,
 function(arr, n)
   local bool, m, mult, factor, out, k, i, j;
@@ -663,8 +659,6 @@ function(arr, n)
   od;
   return out + 1;
 end);
-
-#
 
 InstallGlobalFunction(ArrangementNumber,
 function(r, m, n)
@@ -709,8 +703,6 @@ function(r, m, n)
   out[m] := j;
   return out;
 end);
-
-#
 
 InstallGlobalFunction(EnumeratorOfArrangements,
 function(m, n)

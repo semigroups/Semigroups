@@ -51,8 +51,6 @@ function(S, n, colBlocks, rowBlocks)
   fi;
 end);
 
-#
-
 InstallGlobalFunction(RZMSCongruenceByLinkedTriple,
 function(S, n, colBlocks, rowBlocks)
   local mat, g;
@@ -97,8 +95,6 @@ function(S, n, colBlocks, rowBlocks)
   fi;
 end);
 
-#
-
 InstallGlobalFunction(RMSCongruenceByLinkedTripleNC,
 function(S, n, colBlocks, rowBlocks)
   local fam, cong, colLookup, rowLookup, i, j;
@@ -131,8 +127,6 @@ function(S, n, colBlocks, rowBlocks)
   SetRange(cong, S);
   return cong;
 end);
-
-#
 
 InstallGlobalFunction(RZMSCongruenceByLinkedTripleNC,
 function(S, n, colBlocks, rowBlocks)
@@ -167,8 +161,6 @@ function(S, n, colBlocks, rowBlocks)
   return cong;
 end);
 
-#
-
 InstallMethod(ViewObj,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
@@ -180,8 +172,6 @@ function(cong)
         Size(cong!.colBlocks), ",",
         Size(cong!.rowBlocks), ")>");
 end);
-
-#
 
 InstallMethod(ViewObj,
 "for Rees zero-matrix semigroup congruence by linked triple",
@@ -242,8 +232,6 @@ function(S)
 
   return congs;
 end);
-
-#
 
 InstallMethod(CongruencesOfSemigroup,
 "for finite 0-simple Rees 0-matrix semigroup",
@@ -326,8 +314,6 @@ function(S)
   return congs;
 end);
 
-#
-
 InstallMethod(IsLinkedTriple,
 "for Rees matrix semigroup, group, and two lists",
 [IsReesMatrixSemigroup,
@@ -383,8 +369,6 @@ function(S, n, colBlocks, rowBlocks)
   od;
   return true;
 end);
-
-#
 
 InstallMethod(IsLinkedTriple,
 "for Rees 0-matrix semigroup, group, and two lists",
@@ -470,8 +454,6 @@ function(S, n, colBlocks, rowBlocks)
   return true;
 end);
 
-#
-
 BindGlobal("LinkedElement",
 function(elm)
   local mat, i, u, v, j;
@@ -497,8 +479,6 @@ function(elm)
   fi;
 end);
 
-#
-
 InstallMethod(\=,
 "for two Rees matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
@@ -509,8 +489,6 @@ function(c1, c2)
          c1!.rowBlocks = c2!.rowBlocks);
 end);
 
-#
-
 InstallMethod(\=,
 "for two Rees 0-matrix semigroup congruences by linked triple",
 [IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
@@ -520,8 +498,6 @@ function(c1, c2)
          c1!.colBlocks = c2!.colBlocks and
          c1!.rowBlocks = c2!.rowBlocks);
 end);
-
-#
 
 InstallMethod(IsSubrelation,
 "for two Rees matrix semigroup congruences by linked triple",
@@ -539,8 +515,6 @@ function(cong1, cong2)
                     b2 -> ForAny(cong1!.rowBlocks, b1 -> IsSubset(b1, b2)));
 end);
 
-#
-
 InstallMethod(IsSubrelation,
 "for two Rees 0-matrix semigroup congruences by linked triple",
 [IsRZMSCongruenceByLinkedTriple, IsRZMSCongruenceByLinkedTriple],
@@ -556,8 +530,6 @@ function(cong1, cong2)
          and ForAll(cong2!.rowBlocks,
                     b2 -> ForAny(cong1!.rowBlocks, b1 -> IsSubset(b1, b2)));
 end);
-
-#
 
 InstallMethod(\in,
 "for RMS element coll and a semigroup congruence by linked triple",
@@ -596,8 +568,6 @@ function(pair, cong)
   gpElm := mat[1][i] * a * mat[u][1] * Inverse(mat[1][j] * b * mat[v][1]);
   return gpElm in cong!.n;
 end);
-
-#
 
 InstallMethod(\in,
 "for RZMS elements and semigroup congruence by linked triple",
@@ -650,8 +620,6 @@ function(pair, cong)
   return gpElm in cong!.n;
 end);
 
-#
-
 InstallMethod(ImagesElm,
 "for Rees matrix semigroup congruence by linked triple and element",
 [IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
@@ -683,8 +651,6 @@ function(cong, elm)
   od;
   return images;
 end);
-
-#
 
 InstallMethod(ImagesElm,
 "for Rees 0-matrix semigroup congruence by linked triple and element",
@@ -739,8 +705,6 @@ function(cong, elm)
   return images;
 end);
 
-#
-
 InstallMethod(EquivalenceClasses,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
@@ -765,8 +729,6 @@ function(cong)
   od;
   return list;
 end);
-
-#
 
 InstallMethod(EquivalenceClasses,
 "for Rees 0-matrix semigroup congruence by linked triple",
@@ -795,8 +757,6 @@ function(cong)
   return list;
 end);
 
-#
-
 InstallMethod(NrEquivalenceClasses,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
@@ -808,8 +768,6 @@ function(cong)
          * Size(cong!.colBlocks)       # Number of column blocks
          * Size(cong!.rowBlocks));     # Number of row blocks
 end);
-
-#
 
 InstallMethod(NrEquivalenceClasses,
 "for Rees 0-matrix semigroup congruence by linked triple",
@@ -824,8 +782,6 @@ function(cong)
          + 1);                         # Class containing zero
 end);
 
-#
-
 InstallMethod(Enumerator,
 "for RMS congruence class by linked triple",
 [IsRMSCongruenceClassByLinkedTriple],
@@ -833,16 +789,12 @@ function(class)
   return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
 
-#
-
 InstallMethod(Enumerator,
 "for RZMS congruence class by linked triple",
 [IsRZMSCongruenceClassByLinkedTriple],
 function(class)
   return ImagesElm(EquivalenceClassRelation(class), Representative(class));
 end);
-
-#
 
 InstallMethod(JoinSemigroupCongruences,
 "for two Rees matrix semigroup congruences by linked triple",
@@ -888,8 +840,6 @@ function(c1, c2)
   # Make the congruence and return it
   return RMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
 end);
-
-#
 
 InstallMethod(JoinSemigroupCongruences,
 "for two Rees 0-matrix semigroup congruences by linked triple",
@@ -936,8 +886,6 @@ function(c1, c2)
   return RZMSCongruenceByLinkedTriple(Range(c1), n, colBlocks, rowBlocks);
 end);
 
-#
-
 InstallMethod(MeetSemigroupCongruences,
 "for two Rees matrix semigroup congruences by linked triple",
 [IsRMSCongruenceByLinkedTriple, IsRMSCongruenceByLinkedTriple],
@@ -979,8 +927,6 @@ function(c1, c2)
   # Make the congruence and return it
   return RMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
 end);
-
-#
 
 InstallMethod(MeetSemigroupCongruences,
 "for two Rees 0-matrix semigroup congruences by linked triple",
@@ -1024,8 +970,6 @@ function(c1, c2)
   return RZMSCongruenceByLinkedTripleNC(Range(c1), n, colBlocks, rowBlocks);
 end);
 
-#
-
 InstallMethod(RMSCongruenceClassByLinkedTriple,
 "for semigroup congruence by linked triple, a coset and two positive integers",
 [IsRMSCongruenceByLinkedTriple,
@@ -1049,8 +993,6 @@ function(cong, nCoset, colClass, rowClass)
   fi;
   return RMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
 end);
-
-#
 
 InstallMethod(RZMSCongruenceClassByLinkedTriple,
 "for semigroup congruence by linked triple, a coset and two positive integers",
@@ -1076,8 +1018,6 @@ function(cong, nCoset, colClass, rowClass)
   return RZMSCongruenceClassByLinkedTripleNC(cong, nCoset, colClass, rowClass);
 end);
 
-#
-
 InstallMethod(RMSCongruenceClassByLinkedTripleNC,
 "for semigroup congruence by linked triple, a coset and two positive integers",
 [IsRMSCongruenceByLinkedTriple,
@@ -1094,8 +1034,6 @@ function(cong, nCoset, colClass, rowClass)
   SetRepresentative(class, CanonicalRepresentative(class));
   return class;
 end);
-
-#
 
 InstallMethod(RZMSCongruenceClassByLinkedTripleNC,
 "for semigroup congruence by linked triple, a coset and two positive integers",
@@ -1114,8 +1052,6 @@ function(cong, nCoset, colClass, rowClass)
   return class;
 end);
 
-#
-
 InstallMethod(EquivalenceClassOfElement,
 "for Rees matrix semigroup congruence by linked triple and element",
 [IsRMSCongruenceByLinkedTriple, IsReesMatrixSemigroupElement],
@@ -1129,8 +1065,6 @@ function(cong, elm)
   return EquivalenceClassOfElementNC(cong, elm);
 end);
 
-#
-
 InstallMethod(EquivalenceClassOfElement,
 "for Rees 0-matrix semigroup congruence by linked triple and an element",
 [IsRZMSCongruenceByLinkedTriple, IsReesZeroMatrixSemigroupElement],
@@ -1143,8 +1077,6 @@ function(cong, elm)
   fi;
   return EquivalenceClassOfElementNC(cong, elm);
 end);
-
-#
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for Rees matrix semigroup congruence by linked triple and element",
@@ -1164,8 +1096,6 @@ function(cong, elm)
   SetRepresentative(class, elm);
   return class;
 end);
-
-#
 
 InstallMethod(EquivalenceClassOfElementNC,
 "for Rees 0-matrix semigroup congruence by linked triple and element",
@@ -1191,8 +1121,6 @@ function(cong, elm)
   return class;
 end);
 
-#
-
 InstallMethod(\in,
 "for Rees matrix semigroup element and a congruence class by linked triple",
 [IsReesMatrixSemigroupElement, IsRMSCongruenceClassByLinkedTriple],
@@ -1205,8 +1133,6 @@ function(elm, class)
          cong!.rowLookup[elm[3]] = class!.rowClass and
          LinkedElement(elm) in class!.nCoset);
 end);
-
-#
 
 InstallMethod(\in,
 "for Rees 0-matrix semigroup element and a congruence class by linked triple",
@@ -1226,8 +1152,6 @@ function(elm, class)
          LinkedElement(elm) in class!.nCoset);
 end);
 
-#
-
 InstallMethod(\*,
 "for two RMS congruence classes by linked triple",
 [IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
@@ -1241,8 +1165,6 @@ function(c1, c2)
   elm := Representative(c1) * Representative(c2);
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1), elm);
 end);
-
-#
 
 InstallMethod(\*,
 "for two RZMS congruence classes by linked triple",
@@ -1258,8 +1180,6 @@ function(c1, c2)
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(c1), elm);
 end);
 
-#
-
 InstallMethod(Size,
 "for RMS congruence class by linked triple",
 [IsRMSCongruenceClassByLinkedTriple],
@@ -1270,8 +1190,6 @@ function(class)
          Size(cong!.colBlocks[class!.colClass]) *
          Size(cong!.rowBlocks[class!.rowClass]));
 end);
-
-#
 
 InstallMethod(Size,
 "for RZMS congruence class by linked triple",
@@ -1289,8 +1207,6 @@ function(class)
          Size(cong!.rowBlocks[class!.rowClass]));
 end);
 
-#
-
 InstallMethod(\=,
 "for two congruence classes by linked triple",
 [IsRMSCongruenceClassByLinkedTriple, IsRMSCongruenceClassByLinkedTriple],
@@ -1299,8 +1215,6 @@ function(c1, c2)
          c1!.colClass = c2!.colClass and
          c1!.rowClass = c2!.rowClass);
 end);
-
-#
 
 InstallMethod(\=,
 "for two congruence classes by linked triple",
@@ -1315,8 +1229,6 @@ function(c1, c2)
          c1!.colClass = c2!.colClass and
          c1!.rowClass = c2!.rowClass);
 end);
-
-#
 
 InstallMethod(CanonicalRepresentative,
 "for Rees matrix semigroup congruence class by linked triple",
@@ -1335,8 +1247,6 @@ function(class)
        * mat[u][1] ^ -1;
   return RMSElement(S, i, a, u);
 end);
-
-#
 
 InstallMethod(CanonicalRepresentative,
 "for Rees 0-matrix semigroup congruence class by linked triple",
@@ -1369,8 +1279,6 @@ function(class)
        * mat[u][j] ^ -1;
   return RMSElement(S, i, a, u);
 end);
-
-#
 
 InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for Rees matrix semigroup congruence by linked triple",
@@ -1421,8 +1329,6 @@ function(cong)
   od;
   return pairs;
 end);
-
-#
 
 InstallMethod(GeneratingPairsOfMagmaCongruence,
 "for Rees 0-matrix semigroup congruence by linked triple",
@@ -1481,8 +1387,6 @@ function(cong)
   return pairs;
 end);
 
-#
-
 InstallMethod(AsSemigroupCongruenceByGeneratingPairs,
 "for semigroup congruence",
 [IsSemigroupCongruence],
@@ -1492,8 +1396,6 @@ function(cong)
   pairs := GeneratingPairsOfMagmaCongruence(cong);
   return SemigroupCongruenceByGeneratingPairs(S, pairs);
 end);
-
-#
 
 InstallMethod(AsRMSCongruenceByLinkedTriple,
 "for semigroup congruence by generating pairs",
@@ -1597,8 +1499,6 @@ function(cong)
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
 end);
-
-#
 
 InstallMethod(AsRZMSCongruenceByLinkedTriple,
 "for semigroup congruence by generating pairs",
@@ -1723,8 +1623,6 @@ function(cong)
   SetGeneratingPairsOfMagmaCongruence(cong, pairs);
   return cong;
 end);
-
-#
 
 SEMIGROUPS.AsLookupTableRMS :=
 function(cong)

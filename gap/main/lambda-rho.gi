@@ -34,8 +34,6 @@ function(S)
   return o;
 end);
 
-#
-
 InstallGlobalFunction(LambdaOrbMults,
 function(o, m)
   local scc, gens, one, mults, genpos, inv, trace, i;
@@ -167,8 +165,6 @@ function(o, m)
   return o!.scc_reps[m];
 end);
 
-#
-
 InstallGlobalFunction(RhoOrbRep,
 function(o, m)
   local w;
@@ -186,8 +182,6 @@ function(o, m)
 
   return o!.scc_reps[m];
 end);
-
-#
 
 InstallGlobalFunction(LambdaOrbSchutzGp,
 function(o, m)
@@ -264,8 +258,6 @@ function(o, m)
   return g;
 end);
 
-#
-
 InstallMethod(RhoOrbStabChain, "for a rho orb and scc index",
 [IsOrbit, IsPosInt],
 function(o, m)
@@ -280,8 +272,6 @@ function(o, m)
   return o!.schutzstab[m];
 end);
 
-#
-
 InstallGlobalFunction(LambdaOrbStabChain,
 function(o, m)
 
@@ -294,8 +284,6 @@ function(o, m)
   LambdaOrbSchutzGp(o, m);
   return o!.schutzstab[m];
 end);
-
-#
 
 InstallMethod(RhoOrb, "for an acting semigroup with generators",
 [IsActingSemigroup and HasGeneratorsOfSemigroup],
@@ -405,8 +393,6 @@ function(o, m)
   od;
   return o!.mults;
 end);
-
-#
 
 InstallGlobalFunction(RhoOrbSchutzGp,
 function(o, m)

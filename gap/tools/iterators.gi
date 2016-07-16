@@ -75,8 +75,6 @@ function(arg)
   return fail;
 end);
 
-#
-
 InstallGlobalFunction(IteratorOfArrangements,
 function(n, m)
   local convert;
