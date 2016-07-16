@@ -1,6 +1,6 @@
 ############################################################################r
 ##
-#W  semimat.gi
+#W  semiffmat.gi
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##                                                         Markus Pfeiffer
 ##

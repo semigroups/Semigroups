@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  extreme/semimat.tst
+#W  extreme/semiffmat.tst
 #Y  Copyright (C) 2015                                    Markus Pfeiffer
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: extreme/semimat.tst");
+gap> START_TEST("Semigroups package: extreme/semiffmat.tst");
 gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
@@ -261,4 +261,4 @@ gap> Unbind(upper);
 gap> Unbind(M);
 
 #E#
-gap> STOP_TEST("Semigroups package: extreme/semimat.tst");
+gap> STOP_TEST("Semigroups package: extreme/semiffmat.tst");

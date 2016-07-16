@@ -50,14 +50,6 @@ ReadPackage("semigroups/gap/elements/ffmat.gd");
 ReadPackage("semigroups/gap/elements/boolmat.gd");
 ReadPackage("semigroups/gap/elements/trans.gd");
 
-#FIXME from here 
-
-ReadPackage("semigroups/gap/hash.gd");
-ReadPackage("semigroups/gap/semimat.gd");
-ReadPackage("semigroups/gap/grpsmat.gd");
-
-#FIXME to here
-
 ReadPackage("semigroups/gap/semigroups/semi.gd");
 ReadPackage("semigroups/gap/semigroups/grpperm.gd");
 ReadPackage("semigroups/gap/semigroups/semirms.gd");
@@ -68,10 +60,18 @@ ReadPackage("semigroups/gap/semigroups/semipbr.gd");
 ReadPackage("semigroups/gap/semigroups/semimaxplus.gd");
 ReadPackage("semigroups/gap/semigroups/semiringmat.gd");
 ReadPackage("semigroups/gap/semigroups/semiboolmat.gd");
+ReadPackage("semigroups/gap/semigroups/semiffmat.gd");
+ReadPackage("semigroups/gap/semigroups/grpffmat.gd");
 ReadPackage("semigroups/gap/semigroups/semiex.gd");
 ReadPackage("semigroups/gap/semigroups/semicons.gd");
 ReadPackage("semigroups/gap/semigroups/semigraph.gd");
 ReadPackage("semigroups/gap/semigroups/semifp.gd");
+
+#FIXME from here 
+
+ReadPackage("semigroups/gap/hash.gd");
+
+#FIXME to here
 
 ReadPackage("semigroups/gap/main/froidure-pin.gd");
 ReadPackage("semigroups/gap/main/setup.gd");

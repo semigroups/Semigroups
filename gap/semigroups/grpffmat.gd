@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  grpsmat.gd
+#W  grpffmat.gd
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##                                                       Markus Pfeiffer
 ##

@@ -11,8 +11,6 @@
 ReadPackage("semigroups/gap/smallestimage.g");
 
 ReadPackage("semigroups/gap/hash.gi");
-ReadPackage("semigroups/gap/semimat.gi");
-ReadPackage("semigroups/gap/grpsmat.gi");
 
 ReadPackage("semigroups/gap/elements/star.gi");
 ReadPackage("semigroups/gap/elements/pbr.gi");
@@ -38,6 +36,8 @@ ReadPackage("semigroups/gap/semigroups/semifp.gi");
 ReadPackage("semigroups/gap/semigroups/semiex.gi");
 ReadPackage("semigroups/gap/semigroups/semicons.gi");
 ReadPackage("semigroups/gap/semigroups/semigraph.gi");
+ReadPackage("semigroups/gap/semigroups/semiffmat.gi");
+ReadPackage("semigroups/gap/semigroups/grpffmat.gi");
 
 ReadPackage("semigroups/gap/main/froidure-pin.gi");
 ReadPackage("semigroups/gap/main/setup.gi");
