@@ -781,6 +781,20 @@ Obj FP_SEMI_SIZE (Obj self, Obj S) {
   return INTOBJ_INT(cong->nr_active_cosets() - 1);
 }
 
+Obj FP_SEMI_WORD_PROBLEM (Obj self, Obj S, Obj x, Obj y) {
+  // Do the words x and y represent the same element of S?
+  Congruence* cong = CongFromFpSemigroup(S);
+  cong->todd_coxeter();
+
+  word_t lhs, rhs;
+  for (size_t j = 1; j <= LEN_PLIST(x); j++) {
+    lhs.push_back(INT_INTOBJ(ELM_PLIST(x, j)) - 1);
+  }
+  for (size_t j = 1; j <= LEN_PLIST(y); j++) {
+    rhs.push_back(INT_INTOBJ(ELM_PLIST(y, j)) - 1);
+  }
+  return (cong->word_to_coset(lhs) == cong->word_to_coset(rhs)) ? True : False;
+}
 
 Obj SEMIGROUP_CONG (Obj self, Obj S) {
   initRNams();

@@ -45,6 +45,33 @@ function(S)
   return FP_SEMI_SIZE(S);
 end);
 
+SEMIGROUPS.FpSemigroupWordProblem := function(S, x, y)
+  local lhs, ext, j, k, rhs;
+  SEMIGROUPS.InitFpSemigroup(S);
+
+  # x and y are semigroup elements - we want them as lists of generators
+  lhs := [];
+  ext := ExtRepOfObj(UnderlyingElement(x));
+  for j in [1, 3 .. Length(ext) - 1] do
+    k := 0;
+    while k < ext[j + 1] do
+      Add(lhs, ext[j]);
+      k := k + 1;
+    od;
+  od;
+
+  rhs := [];
+  ext := ExtRepOfObj(UnderlyingElement(y));
+  for j in [1, 3 .. Length(ext) - 1] do
+    k := 0;
+    while k < ext[j + 1] do
+      Add(rhs, ext[j]);
+      k := k + 1;
+    od;
+  od;
+  return FP_SEMI_WORD_PROBLEM(S, lhs, rhs);
+end;
+
 InstallMethod(ViewString, "for an f.p. semigroup element",
 [IsElementOfFpSemigroup], String);
 

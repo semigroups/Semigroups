@@ -45,6 +45,7 @@ Obj SEMIGROUP_RIGHT_CAYLEY_GRAPH(Obj, Obj);
 Obj SEMIGROUP_SIZE(Obj, Obj);
 
 Obj FP_SEMI_SIZE(Obj, Obj);
+Obj FP_SEMI_WORD_PROBLEM(Obj, Obj, Obj, Obj);
 
 Obj SEMIGROUP_CONGRUENCE(Obj, Obj, Obj);
 

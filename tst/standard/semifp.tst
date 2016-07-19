@@ -1513,6 +1513,27 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+#T# SEMIGROUPS.FpSemigroupWordProblem
+gap> S := Semigroup([Transformation([2, 4, 3, 4]),
+>                    Transformation([3, 3, 2, 3]),
+>                    Transformation([3, 4, 4, 1])]);;
+gap> F := AsSemigroup(IsFpSemigroup, S);;
+gap> x := F.1 * F.2 * F.3; y := F.2^2 * F.3;
+s1*s2*s3
+s2^2*s3
+gap> SEMIGROUPS.FpSemigroupWordProblem(F, x, y);
+true
+gap> x := F.2^2 * F.1 * F.2^2 * F.3; y := F.1^2 * F.2 * F.3^4;
+s2^2*s1*s2^2*s3
+s1^2*s2*s3^4
+gap> SEMIGROUPS.FpSemigroupWordProblem(F, x, y);
+true
+gap> x := F.1 * F.1; y := F.2 * F.3;
+s1^2
+s2*s3
+gap> SEMIGROUPS.FpSemigroupWordProblem(F, x, y);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
