@@ -642,17 +642,19 @@ function(x, hashlen)
 
   R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
   if IsMultiplicativeZero(R, x) then
-    x := Representative(UnderlyingSemigroup(R));
+    x := [, Representative(UnderlyingSemigroup(R)), ];
+  fi;
+  if IsNBitsPcWordRep(x![2]) then
     under := ChooseHashFunction(x, hashlen).func;
     data := ChooseHashFunction(x, hashlen).data;
-  elif not (IsNBitsPcWordRep(x![2]) or IsPerm(x![2]) or IsTransformation(x![2])
-            or IsPartialPerm(x![2]) or IsBipartition(x![2])) then
-    ErrorNoReturn("Semigroups: ChooseHashFunction: error, \n",
-                  "cannot hash RZMS elements over this ",
-                  "underlying semigroup");
   else
     under := ChooseHashFunction(x![2], hashlen).func;
     data := ChooseHashFunction(x![2], hashlen).data;
+    if not data = hashlen then
+      ErrorNoReturn("Semigroups: ChooseHashFunction: error, \n",
+                    "cannot hash RZMS elements over this ",
+                    "underlying semigroup");
+    fi;
   fi;
   dataishashlen := data = hashlen;
   func := function(x, hashlen)
