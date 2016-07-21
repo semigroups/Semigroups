@@ -1152,7 +1152,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     # Minimal congs cannot contain each other
     children := ListWithIdenticalEntries(Length(congs), []);
     lattice := Objectify(NewType(FamilyObj(children),
-                                 SEMIGROUPS_IsCongruenceLattice),
+                                 IsCongruenceLattice),
                          [children, congs]);
     return lattice;
   elif IsBound(record.1gen) and record.1gen = true then
@@ -1164,7 +1164,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     Add(congs, _XSemigroupCongruence(S, []), 1);
     # Return the lattice, but don't set any attributes
     lattice := Objectify(NewType(FamilyObj(children),
-                                 SEMIGROUPS_IsCongruenceLattice),
+                                 IsCongruenceLattice),
                          [children, congs]);
     return lattice;
   fi;
@@ -1277,14 +1277,14 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
 
   # Objectify the result
   lattice := Objectify(NewType(FamilyObj(children),
-                               SEMIGROUPS_IsCongruenceLattice),
+                               IsCongruenceLattice),
                        [children, congs]);
   return lattice;
 end;
 
 InstallMethod(DotString,
 "for a congruence lattice",
-[SEMIGROUPS_IsCongruenceLattice],
+[IsCongruenceLattice],
 function(latt)
   # Call the below function, with info turned off
   return DotString(latt, rec(info := false));
@@ -1292,7 +1292,7 @@ end);
 
 InstallMethod(DotString,
 "for a congruence lattice and a record",
-[SEMIGROUPS_IsCongruenceLattice, IsRecord],
+[IsCongruenceLattice, IsRecord],
 function(latt, opts)
   local congs, S, symbols, i, nr, rel, str, j, k;
   # If the user wants info, then change the node labels

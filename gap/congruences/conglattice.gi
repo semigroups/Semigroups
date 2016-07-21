@@ -24,35 +24,35 @@
 
 InstallMethod(\[\],
 "for a congruence lattice",
-[SEMIGROUPS_IsCongruenceLattice, IsObject],
+[IsCongruenceLattice, IsObject],
 function(latt, x)
   return latt![1][x];
 end);
 
 InstallMethod(ViewObj,
 "for a congruence lattice",
-[SEMIGROUPS_IsCongruenceLattice],
+[IsCongruenceLattice],
 function(latt)
   ViewObj(latt![1]);
 end);
 
 InstallMethod(PrintObj,
 "for a congruence lattice",
-[SEMIGROUPS_IsCongruenceLattice],
+[IsCongruenceLattice],
 function(latt)
   PrintObj(latt![1]);
 end);
 
 InstallMethod(Length,
 "for a congruence lattice",
-[SEMIGROUPS_IsCongruenceLattice],
+[IsCongruenceLattice],
 function(latt)
   return Length(latt![1]);
 end);
 
 InstallMethod(IsBound\[\],
 "for a congruence lattice and a positive integer",
-[SEMIGROUPS_IsCongruenceLattice, IsPosInt],
+[IsCongruenceLattice, IsPosInt],
 function(latt, x)
   return IsBound(latt![1][x]);
 end);

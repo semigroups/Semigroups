@@ -16,4 +16,4 @@
 ## methods.
 ##
 
-DeclareCategory("SEMIGROUPS_IsCongruenceLattice", IsList);
+DeclareCategory("IsCongruenceLattice", IsList);
