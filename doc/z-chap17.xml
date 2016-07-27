@@ -38,6 +38,7 @@
     <#Include Label = "IsRegularSemigroup">
     <#Include Label = "IsRightZeroSemigroup">
     <#Include Label = "IsRTrivial">
+    <#Include Label = "IsSemigroupWithAdjoinedZero">
     <#Include Label = "IsSemilattice">
     <#Include Label = "IsSimpleSemigroup">
     <#Include Label = "IsSynchronizingSemigroup">
