@@ -2061,6 +2061,18 @@ true
 gap> LargestElementSemigroup(S);
 Transformation( [ 10, 8, 7, 8, 6, 10, 3, 2, 9, 1 ] )
 
+#T# RepresentativeOfMinimalIdeal: for a transformation group
+gap> S := Semigroup([
+> Transformation([1, 4, 1, 4, 1]),
+> Transformation([4, 1, 4, 1, 4])]);;
+gap> RepresentativeOfMinimalIdeal(S);
+Transformation( [ 1, 4, 1, 4, 1 ] )
+gap> S := Semigroup([
+> Transformation([2, 3, 4, 5, 1]),
+> Transformation([2, 1])]);;
+gap> RepresentativeOfMinimalIdeal(S);
+Transformation( [ 2, 3, 4, 5, 1 ] )
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
