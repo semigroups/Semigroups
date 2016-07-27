@@ -71,6 +71,7 @@
     <#Include Label = "MinimalIdeal">
     <#Include Label = "RepresentativeOfMinimalIdeal">
     <#Include Label = "MultiplicativeZero">
+    <#Include Label = "UnderlyingSemigroupOfSemigroupWithAdjoinedZero">
 
   </Section> 
   
