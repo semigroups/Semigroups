@@ -76,8 +76,8 @@ Matrix(GF(2^2), [])]]></Example>
     Creates a new <A>n</A>-by-<A>n</A> zero or identity matrix with entries
     in the finite field <A>F</A>.
         <Example><![CDATA[
-gap> x := NewIdentityMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
->                                          GF(4), 2);
+gap> x := NewIdentityMatrixOverFiniteField(
+>                   IsPlistMatrixOverFiniteFieldRep, GF(4), 2);
 Matrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
 gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
 >                                      GF(4), 2);
