@@ -2061,6 +2061,24 @@ true
 gap> LargestElementSemigroup(S);
 Transformation( [ 10, 8, 7, 8, 6, 10, 3, 2, 9, 1 ] )
 
+#T# RepresentativeOfMinimalIdeal: for a transformation semigroup on many points
+gap> x := ListWithIdenticalEntries(49999, 1);;
+gap> Add(x, 2);
+gap> x := Transformation(x);;
+gap> S := Semigroup(x);
+<commutative transformation semigroup of degree 50000 with 1 generator>
+gap> RepresentativeOfMinimalIdeal(S);
+<transformation on 50000 pts with rank 1>
+gap> x := ListWithIdenticalEntries(99, 1);;
+gap> Add(x, 2);
+gap> x := Transformation(x);;
+gap> S := Semigroup(x);
+<commutative transformation semigroup of degree 100 with 1 generator>
+gap> Size(S);
+2
+gap> RepresentativeOfMinimalIdeal(S);
+<transformation on 100 pts with rank 1>
+
 #T# RepresentativeOfMinimalIdeal: for a transformation group
 gap> S := Semigroup([
 > Transformation([1, 4, 1, 4, 1]),
