@@ -905,7 +905,7 @@ function(s)
     # <rep> has lambda val in position 1 of GradedLambdaOrb(s, rep, false).
     # We don't rectify the lambda val of <rep> in <o> since we require to
     # enumerate LambdaOrb(s) to do this, if we use GradedLambdaOrb(s, rep,
-    # true) then this get more complicated.
+    # true) then this gets more complicated.
     return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
   end;
 
