@@ -347,13 +347,14 @@ size_t data_batch_size (Obj data) {
 *
 *******************************************************************************/
 
-bool data_report (Obj data) {
+bool rec_get_report (Obj rec) {
+  //TODO assert(o is a prec)
 
   initRNams();
 
-  if (IsbPRec(data, RNam_report)) {
-    assert(ElmPRec(data, RNam_report) == True || ElmPRec(data, RNam_report) == False);
-    return (ElmPRec(data, RNam_report) == True ? true : false);
+  if (IsbPRec(rec, RNam_report)) {
+    assert(ElmPRec(rec, RNam_report) == True || ElmPRec(rec, RNam_report) == False);
+    return (ElmPRec(rec, RNam_report) == True ? true : false);
   }
   return false;
 }

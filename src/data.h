@@ -99,7 +99,7 @@ long        data_period         (Obj);
 long        data_size_ff        (Obj);
 Obj         data_rep            (Obj);
 size_t      data_batch_size     (Obj);
-bool        data_report         (Obj);
+bool        rec_get_report         (Obj);
 size_t      data_degree         (Obj);
 DataType    data_type           (Obj);
 void        data_init           (Obj);

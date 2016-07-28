@@ -1,7 +1,7 @@
 /*
  * Semigroups GAP package
  *
- * This file contains... 
+ * This file contains...
  *
  */
 
@@ -61,7 +61,7 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
   }
   int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + data_batch_size(data)));
 
-  if (data_report(data)) {
+  if (rec_get_report(data)) {
     std::cout << "GAP kernel version\n";
   }
 
