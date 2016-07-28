@@ -149,7 +149,7 @@ function(arg)
     for l in [1 .. Length(o)] do
       HTAdd(onlygradesdata, o[l], [j, k, l]);
     od;
-    # remove this it is only used in once place in this file TODO
+    # remove this it is only used in one place in this file TODO
     o!.position_in_graded := [j, k];
     graded!.lens[j] := k;
   fi;
