@@ -634,8 +634,8 @@ Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
 
 static inline size_t fuse_it(size_t);
 
-static void fuse(u_int32_t, typename std::vector<u_int32_t>::iterator,
-                 u_int32_t, typename std::vector<u_int32_t>::iterator,
+static void fuse(u_int32_t, typename std::vector<u_int32_t>::const_iterator,
+                 u_int32_t, typename std::vector<u_int32_t>::const_iterator,
                  u_int32_t, bool);
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1243,9 +1243,9 @@ static inline size_t fuse_it (size_t i) {
 // it must be at least initialized (and have the appropriate length).
 
 static void fuse (u_int32_t                                 deg,
-                  typename std::vector<u_int32_t>::iterator left_begin,
+                  typename std::vector<u_int32_t>::const_iterator left_begin,
                   u_int32_t                                 left_nr_blocks,
-                  typename std::vector<u_int32_t>::iterator right_begin,
+                  typename std::vector<u_int32_t>::const_iterator right_begin,
                   u_int32_t                                 right_nr_blocks,
                   bool sign) {
 
