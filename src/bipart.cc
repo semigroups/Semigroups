@@ -605,7 +605,9 @@ Obj BIPART_LEFT_BLOCKS (Obj self, Obj x) {
   assert(TNUM_OBJ(x) == T_BIPART);
   if (ADDR_OBJ(x)[1] == NULL) {
     ADDR_OBJ(x)[1] = blocks_new_obj(bipart_get_cpp(x)->left_blocks());
+    CHANGED_BAG(x);
   }
+  assert(TNUM_OBJ(ADDR_OBJ(x)[1]) == T_BLOCKS);
   return ADDR_OBJ(x)[1];
 }
 
@@ -616,7 +618,9 @@ Obj BIPART_RIGHT_BLOCKS (Obj self, Obj x) {
   assert(TNUM_OBJ(x) == T_BIPART);
   if (ADDR_OBJ(x)[2] == NULL) {
     ADDR_OBJ(x)[2] = blocks_new_obj(bipart_get_cpp(x)->right_blocks());
+    CHANGED_BAG(x);
   }
+  assert(TNUM_OBJ(ADDR_OBJ(x)[2]) == T_BLOCKS);
   return ADDR_OBJ(x)[2];
 }
 
