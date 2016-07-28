@@ -727,10 +727,8 @@ Obj SEMIGROUP_CONGRUENCE (Obj self, Obj data, Obj extra_gap) {
       }
       extra.push_back(make_pair(lhs, rhs));
     }
-
-    Congruence cong = Congruence(semigroup, extra, false);
-    cong.todd_coxeter_finite();
-    return INTOBJ_INT(cong.nr_active_cosets() - 1);
+    Congruence* cong = finite_cong_enumerate(semigroup, extra);
+    return INTOBJ_INT(cong->nr_active_cosets() - 1);
   } else {
     ErrorQuit("SEMIGROUP_CONGRUENCE: not yet implemented,", 0L, 0L);
     return 0L;
