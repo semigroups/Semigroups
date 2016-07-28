@@ -11,10 +11,6 @@
 #ifndef SRC_GAP_H_
 #define SRC_GAP_H_
 
-#ifdef DEBUG
-#include "gap-debug.h"
-#endif
-
 #include "data.h"
 #include "interface.h"
 
