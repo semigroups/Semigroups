@@ -114,6 +114,7 @@ void TSemiObjFreeFunc (Obj o) {
       break;
     case T_SEMI_SUBTYPE_FPCONG:
       delete CLASS_OBJ<Congruence>(o);
+      break;
     default:
       assert(false);
   }
