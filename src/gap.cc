@@ -120,10 +120,12 @@ void TSemiObjFreeFunc (Obj o) {
 }
 
 void TBipartObjFreeFunc (Obj o) {
+  assert(TNUM_OBJ(o) == T_BIPART);
   delete CLASS_OBJ<Bipartition>(o);
 }
 
 void TBlocksObjFreeFunc (Obj o) {
+  assert(TNUM_OBJ(o) == T_BLOCKS);
   delete CLASS_OBJ<Blocks>(o);
 }
 
