@@ -715,14 +715,14 @@ Obj SEMIGROUP_CONGRUENCE (Obj self, Obj data, Obj extra_gap) {
     semigroup->enumerate(-1, rec_get_report(data));
 
     std::vector<relation_t> extra;
-    for (size_t i = 1; i <= LEN_PLIST(extra_gap); i++) {
+    for (size_t i = 1; i <= (size_t) LEN_PLIST(extra_gap); i++) {
       Obj    rel1 = ELM_PLIST(ELM_PLIST(extra_gap, i), 1);
       Obj    rel2 = ELM_PLIST(ELM_PLIST(extra_gap, i), 2);
       word_t lhs, rhs;
-      for (size_t j = 1; j <= LEN_PLIST(rel1); j++) {
+      for (size_t j = 1; j <= (size_t) LEN_PLIST(rel1); j++) {
         lhs.push_back(INT_INTOBJ(ELM_PLIST(rel1, j)) - 1);
       }
-      for (size_t j = 1; j <= LEN_PLIST(rel2); j++) {
+      for (size_t j = 1; j <= (size_t) LEN_PLIST(rel2); j++) {
         rhs.push_back(INT_INTOBJ(ELM_PLIST(rel2, j)) - 1);
       }
       extra.push_back(make_pair(lhs, rhs));
@@ -791,10 +791,10 @@ Obj FP_SEMI_WORD_PROBLEM (Obj self, Obj S, Obj x, Obj y) {
   cong->todd_coxeter();
 
   word_t lhs, rhs;
-  for (size_t j = 1; j <= LEN_PLIST(x); j++) {
+  for (size_t j = 1; j <= (size_t) LEN_PLIST(x); j++) {
     lhs.push_back(INT_INTOBJ(ELM_PLIST(x, j)) - 1);
   }
-  for (size_t j = 1; j <= LEN_PLIST(y); j++) {
+  for (size_t j = 1; j <= (size_t) LEN_PLIST(y); j++) {
     rhs.push_back(INT_INTOBJ(ELM_PLIST(y, j)) - 1);
   }
   return (cong->word_to_coset(lhs) == cong->word_to_coset(rhs)) ? True : False;
