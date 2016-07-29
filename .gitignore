@@ -72,3 +72,4 @@ src/pkgconfig.h
 src/semigroups++
 src/stamp-h1
 tags
+tst/workspaces/test-output.w
