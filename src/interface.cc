@@ -708,10 +708,14 @@ Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data) {
   }
 }
 
+/*******************************************************************************
+ * fp_semi_get_cpp_cong: helper function to convert a GAP FP semigroup object
+ * to a C++ Congruence object, and run Todd-Coxeter on it
+ ******************************************************************************/
+// TODO: rename this fn?
 Obj SEMIGROUP_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
   assert(IS_PLIST(genpairs));
   assert(LEN_PLIST(genpairs) > 0);
-
   if (data_type(data) != UNKNOWN) {
 
     std::string str(CSTR_STRING(type));
@@ -747,12 +751,11 @@ Obj SEMIGROUP_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
       extra.push_back(make_pair(lhs, rhs));
     }
 
-
     Congruence* cong = finite_cong_enumerate(type,
                                              semigroup,
                                              extra,
                                              rec_get_report(data));
-
+    // TODO: return a cong?
     return INTOBJ_INT(cong->nr_active_cosets() - 1);
   } else {
     ErrorQuit("SEMIGROUP_CONG_BY_GEN_PAIRS: not yet implemented,", 0L, 0L);
@@ -760,16 +763,16 @@ Obj SEMIGROUP_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
   }
 }
 
+Obj FINITE_CONG_NR_CLASSES (Obj self, Obj data, Obj extra_gap) {
+  Congruence* cong = finite_cong_get_cpp_cong(data, extra_gap);
+  return INTOBJ_INT(cong->nr_active_cosets() - 1);
+}
+
 /*******************************************************************************
- * CongFromFpSemigroup: helper function to convert a GAP FP semigroup object
+ * fp_semi_get_cpp_cong: helper function to convert a GAP FP semigroup object
  * to a C++ Congruence object, for use with Todd-Coxeter
  ******************************************************************************/
-
-// TODO: rename this to: fp_semi_get_cpp_cong
-
-
-
-Congruence* CongFromFpSemigroup (Obj S) {
+Congruence* fp_semi_get_cpp_cong (Obj S) {
   initRNams();
   assert(IsbPRec(S, RNam_relations));
 
@@ -806,14 +809,14 @@ Congruence* CongFromFpSemigroup (Obj S) {
 }
 
 Obj FP_SEMI_SIZE (Obj self, Obj S) {
-  Congruence* cong = CongFromFpSemigroup(S);
+  Congruence* cong = fp_semi_get_cpp_cong(S);
   cong->todd_coxeter();
   return INTOBJ_INT(cong->nr_active_cosets() - 1);
 }
 
 Obj FP_SEMI_WORD_PROBLEM (Obj self, Obj S, Obj x, Obj y) {
   // Do the words x and y represent the same element of S?
-  Congruence* cong = CongFromFpSemigroup(S);
+  Congruence* cong = fp_semi_get_cpp_cong(S);
   cong->todd_coxeter();
 
   word_t lhs, rhs;

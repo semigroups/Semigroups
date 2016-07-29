@@ -560,9 +560,6 @@ function(_record)
 
   #
 
-
-  #
-
   InstallMethod(ViewObj,
   Concatenation("for a ", _record.info_string,
                 "semigroup congruence with generating pairs"),
