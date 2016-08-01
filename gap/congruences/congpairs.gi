@@ -560,24 +560,6 @@ function(_record)
 
   #
 
-  InstallMethod(NrEquivalenceClasses,
-  Concatenation("for a ", _record.info_string,
-                "semigroup congruence with generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong)
-    local S, pairs, extra;
-    
-    S := Range(cong);
-    #if not IsFinite(S) then
-    #  TryNextMethod();
-    #fi;
-    #return Maximum(AsLookupTable(cong));
-    
-    pairs := GeneratingPairsOfRightSemigroupCongruence(cong);
-    extra := List(pairs, x -> 
-                  [Factorization(S, x[1]), Factorization(S, x[2])]);
-    return SEMIGROUP_CONGRUENCE(GenericSemigroupData(S), extra);
-  end);
 
   #
 
@@ -1344,4 +1326,48 @@ function(latt, opts)
   Append(str, " }");
 
   return str;
+end);
+  
+InstallMethod(NrEquivalenceClasses,
+"for a right semigroup congruence with generating pairs",
+[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
+function(cong)
+  local S, pairs, extra;
+
+  S := Range(cong);
+
+  pairs := GeneratingPairsOfRightSemigroupCongruence(cong);
+  extra := List(pairs, x -> 
+           [Factorization(S, x[1]), Factorization(S, x[2])]);
+  return SEMIGROUP_CONG_BY_GEN_PAIRS("right", GenericSemigroupData(S), extra);
+end);
+
+InstallMethod(NrEquivalenceClasses,
+"for a left semigroup congruence with generating pairs",
+[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
+function(cong)
+  local S, pairs, extra;
+
+  S := Range(cong);
+
+  pairs := GeneratingPairsOfLeftSemigroupCongruence(cong);
+  extra := List(pairs, x -> 
+           [Factorization(S, x[1]), Factorization(S, x[2])]);
+  return SEMIGROUP_CONG_BY_GEN_PAIRS("left", GenericSemigroupData(S), extra);
+end);
+
+InstallMethod(NrEquivalenceClasses,
+"for a semigroup congruence with generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(cong)
+  local S, pairs, extra;
+
+  S := Range(cong);
+
+  pairs := GeneratingPairsOfSemigroupCongruence(cong);
+  extra := List(pairs, x -> 
+           [Factorization(S, x[1]), Factorization(S, x[2])]);
+  return SEMIGROUP_CONG_BY_GEN_PAIRS("twosided", 
+                                     GenericSemigroupData(S),
+                                     extra);
 end);

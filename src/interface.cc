@@ -13,6 +13,8 @@
 
 #include <assert.h>
 
+#include <string>
+
 #include "src/compiled.h"
 
 #include "converter.h"
@@ -706,18 +708,35 @@ Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data) {
   }
 }
 
-Obj SEMIGROUP_CONGRUENCE (Obj self, Obj data, Obj extra_gap) {
-  assert(IS_PLIST(extra_gap));
-  assert(LEN_PLIST(extra_gap) > 0);
+Obj SEMIGROUP_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
+  assert(IS_PLIST(genpairs));
+  assert(LEN_PLIST(genpairs) > 0);
+
   if (data_type(data) != UNKNOWN) {
+
+    std::string str(CSTR_STRING(type));
+    cong_t type;
+    if (str == "left") {
+        type = cong_t::LEFT;
+    } else if (str == "right") {
+        type = cong_t::RIGHT;
+    } else if (str == "twosided") {
+        type = cong_t::TWOSIDED;
+    } else {
+        ErrorQuit("SEMIGROUP_CONG_BY_GEN_PAIRS: todo meaningful error,",
+                  0L, 0L);
+        return 0L;
+    }
+
     initRNams();
+
     Semigroup* semigroup = data_semigroup(data);
     semigroup->enumerate(-1, rec_get_report(data));
 
     std::vector<relation_t> extra;
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(extra_gap); i++) {
-      Obj    rel1 = ELM_PLIST(ELM_PLIST(extra_gap, i), 1);
-      Obj    rel2 = ELM_PLIST(ELM_PLIST(extra_gap, i), 2);
+    for (size_t i = 1; i <= (size_t) LEN_PLIST(genpairs); i++) {
+      Obj    rel1 = ELM_PLIST(ELM_PLIST(genpairs, i), 1);
+      Obj    rel2 = ELM_PLIST(ELM_PLIST(genpairs, i), 2);
       word_t lhs, rhs;
       for (size_t j = 1; j <= (size_t) LEN_PLIST(rel1); j++) {
         lhs.push_back(INT_INTOBJ(ELM_PLIST(rel1, j)) - 1);
@@ -727,10 +746,16 @@ Obj SEMIGROUP_CONGRUENCE (Obj self, Obj data, Obj extra_gap) {
       }
       extra.push_back(make_pair(lhs, rhs));
     }
-    Congruence* cong = finite_cong_enumerate(semigroup, extra, rec_get_report(data));
+
+
+    Congruence* cong = finite_cong_enumerate(type,
+                                             semigroup,
+                                             extra,
+                                             rec_get_report(data));
+
     return INTOBJ_INT(cong->nr_active_cosets() - 1);
   } else {
-    ErrorQuit("SEMIGROUP_CONGRUENCE: not yet implemented,", 0L, 0L);
+    ErrorQuit("SEMIGROUP_CONG_BY_GEN_PAIRS: not yet implemented,", 0L, 0L);
     return 0L;
   }
 }
@@ -766,7 +791,8 @@ Congruence* CongFromFpSemigroup (Obj S) {
       rels.push_back(make_pair(lhs, rhs));
     }
 
-    cong = new Congruence(INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
+    cong = new Congruence(cong_t::TWOSIDED,
+                          INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
                           rels,
                           std::vector<relation_t>());
     cong->set_report(rec_get_report(S));
@@ -822,7 +848,8 @@ Obj SEMIGROUP_CONG (Obj self, Obj S) {
       rels.push_back(make_pair(lhs, rhs));
     }
 
-    cong = new Congruence(INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
+    cong = new Congruence(cong_t::TWOSIDED,
+                          INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
                           rels,
                           std::vector<relation_t>());
     AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_FPCONG));
