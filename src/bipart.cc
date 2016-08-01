@@ -290,8 +290,10 @@ Obj BIPART_PERM_LEFT_QUO (Obj self, Obj x, Obj y) {
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
 
-  assert(*xx->left_blocks() == *yy->left_blocks());
-  assert(*xx->right_blocks() == *yy->right_blocks());
+  // The following assertions leak memory since left_blocks and right_blocks
+  // always return pointers to new objects
+  //assert(*xx->left_blocks() == *yy->left_blocks());
+  //assert(*xx->right_blocks() == *yy->right_blocks());
 
   size_t deg  = xx->degree();
   Obj    p    = NEW_PERM4(deg);
@@ -689,9 +691,7 @@ Obj BLOCKS_NC (Obj self, Obj gap_blocks) {
     }
   }
 
-  Obj out = blocks_new_obj(new Blocks(blocks, lookup, nr_blocks));
-
-  return out;
+  return blocks_new_obj(new Blocks(blocks, lookup, nr_blocks));
 }
 
 // Returns the external representation of a GAP blocks Obj, see the description
@@ -1399,6 +1399,7 @@ class NrIdempotentsFinder {
         for (size_t i = 0; i < _nr_threads; i++) {
           out[rank] += _vals[i][j];
         }
+
       } else {
         out[rank] += _scc[_min_scc].size() * _scc[_min_scc].size();
       }
