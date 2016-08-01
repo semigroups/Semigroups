@@ -10,7 +10,7 @@
 // 2) set data!.pos and data!.nr so that the filter IsClosedData gets set at
 // the GAP level
 
-#include <fropin.hh>
+#include <fropin.h>
 
 #include <assert.h>
 #include <iostream>

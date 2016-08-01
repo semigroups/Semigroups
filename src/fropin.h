@@ -1,11 +1,11 @@
 /*
  * Semigroups GAP package
  *
- * This file contains... 
+ * This file contains...
  *
  */
 
-#include "../../../src/compiled.h"
+#include "src/compiled.h"
 
 Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking);
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS (Obj, Obj, Obj);

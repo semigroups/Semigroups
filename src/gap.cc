@@ -13,7 +13,7 @@
 
 #include "src/bipart.h"
 #include "src/converter.h"
-#include "fropin.hh"
+#include "fropin.h"
 #include "ufdata.hh"
 
 #include "semigroups++/semigroups.h"
