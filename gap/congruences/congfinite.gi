@@ -37,9 +37,27 @@ function(cong)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
   extra := List(pairs, x ->
                 [Factorization(S, x[1]), Factorization(S, x[2])]);
   return FINITE_CONG_NR_CLASSES(GenericSemigroupData(S), extra);
+end);
+
+InstallMethod(\in,
+Concatenation("for a multiplicative element collection and ",
+              "a right semigroup congruence with generating pairs"),
+[IsMultiplicativeElementCollection,
+ IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
+function(pair, cong)
+  S := Range(cong);
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+  pairs := GeneratingPairsOfSemigroupCongruence(cong);
+  extra := List(pairs, x ->
+                [Factorization(S, x[1]), Factorization(S, x[2])]);
+  return FINITE_CONG_PAIR_IN(GenericSemigroupData(S),
+                             extra,
+                             MinimalFactorization(S, x),
+                             MinimalFactorization(S, y));
 end);

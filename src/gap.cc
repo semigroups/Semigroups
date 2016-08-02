@@ -410,6 +410,7 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CONG_BY_GEN_PAIRS, 3,
         "type, data, extra"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", FINITE_CONG_NR_CLASSES, 2, "data, extra"),
+    GVAR_FUNC_TABLE_ENTRY("interface.cc", FINITE_CONG_PAIR_IN, 4, "data, extra, x, y"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", FP_SEMI_SIZE, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", FP_SEMI_WORD_PROBLEM, 3, "S, x, y"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2,

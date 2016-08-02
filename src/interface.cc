@@ -768,6 +768,18 @@ Obj FINITE_CONG_NR_CLASSES (Obj self, Obj data, Obj extra_gap) {
   return INTOBJ_INT(cong->nr_active_cosets() - 1);
 }
 
+Obj FINITE_CONG_PAIR_IN (Obj self, Obj data, Obj extra_gap, Obj x, Obj y) {
+  Congruence* cong = finite_cong_get_cpp_cong(data, extra_gap);
+  word_t lhs, rhs;
+  for (size_t j = 1; j <= (size_t) LEN_PLIST(x); j++) {
+    lhs.push_back(INT_INTOBJ(ELM_PLIST(x, j)) - 1);
+  }
+  for (size_t j = 1; j <= (size_t) LEN_PLIST(y); j++) {
+    rhs.push_back(INT_INTOBJ(ELM_PLIST(y, j)) - 1);
+  }
+  return (cong->word_to_coset(lhs) == cong->word_to_coset(rhs)) ? True : False;
+}
+
 /*******************************************************************************
  * fp_semi_get_cpp_cong: helper function to convert a GAP FP semigroup object
  * to a C++ Congruence object, for use with Todd-Coxeter
