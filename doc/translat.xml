@@ -11,8 +11,7 @@
       <C>RightTranslations(<A>S</A>)</C>. For finite 0-simple semigroups and 
       rectangular bands <A>S</A> generating sets and sizes of the translations
       semigroups are known. 
-      For small arbitrary semigroups, it may be possible to explicitly calculate
-      the translations semigroups..
+      It is not currently possible to calculate this for arbitrary semigroups.
       <Example><![CDATA[
 gap> S := RectangularBand(3,4);;
 gap> L := LeftTranslationsSemigroup(S);
@@ -93,31 +92,221 @@ Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
       <C>TranslationalHullElement(<A>H, l, r</A>) returns the linked pair 
       (<A>l, r</A>) of translations.
       <Example> <![CDATA[
-      
+gap> G := SmallGroup(4,2);;
+gap> H := ShallowCopy(AsList(G));;
+gap> Add(H, 0);;
+gap> mat:=List([1..5], x-> List([1..5], y-> Random(H)));;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> L := LeftTranslations(S);;
+gap> R := RightTranslations(S);;
+gap> l := Representative(TranslationalElements(L));;
+gap> r := Representative(TranslationalElements(R));;
+gap> H := TranslationalHull(S);;
+gap> x := TranslationalHullElement(H, l, r);
+<linked pair of translations on <0-simple regular semigroup of size 101, with 
+ 10 generators>>
+gap> x = x * x;
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsXTranslationsSemigroupElement">
+  <ManSection>
+    <Filt Name = "IsTranslationsSemigroupElement" Type="Category">
+    <Filt Name = "IsLeftTranslationsSemigroupElement" Type="Category">
+    <Filt Name = "IsRightTranslationsSemigroupElement" Type="Category">
+    <Description>
+      All, and only, left [right] translations belong to 
+      <C>IsLeftTranslationsSemigroupElement</C> 
+      [<C>IsRightTranslationsSemigroupElement</C>]. 
+      These are both subcategories of <C>IsTranslationsSemigroupElement</C>,
+      which itself is a subcategory of <Ref Filt="IsAssociativeElement"
+      Bookname="ref">.
+      <Example> <![CDATA[
+gap> S := RectangularBand(3,4);;
+gap> l := Representative(TranslationalElements(LeftTranslations(S)));
+<left translation on <simple transformation semigroup of size 12, degree 8 
+ with 4 generators>>
+gap> IsTranslationsSemigroupElement(l);
+true
+gap> IsLeftTranslationsSemigroupElement(l);
+true
+gap> IsRightTranslationsSemigroupElement(l);
+false
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsTranslationalHullElement">
+  <ManSection>
+    <Filt Name="IsTranslationalHullElement" Type="Category">
+    <Description>
+      All, and only, translational hull elements belong to 
+      <C>IsTranslationalHullElement</C>. This is a subcategory of 
+      <Ref Filt="IsAssociativeElement" Bookname="ref">.
+      <Example> <![CDATA[
+gap> G := SmallGroup(4,2);;
+gap> H := ShallowCopy(AsList(G));;
+gap> Add(H, 0);;
+gap> mat:=List([1..5], x-> List([1..5], y-> Random(H)));;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> L := LeftTranslations(S);;
+gap> R := RightTranslations(S);;
+gap> l := Representative(TranslationalElements(L));;
+gap> r := Representative(TranslationalElements(R));;
+gap> H := TranslationalHull(S);;
+gap> x := TranslationalHullElement(H, l, r);;
+gap> IsTranslationalHullElement(x);
+true
+gap> IsTranslationsSemigroupElement(x);
+false
+
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsXTranslationsSemigroup">
+  <ManSection>
+    <Filt Name="IsTranslationsSemigroup" Type="Synonym">
+    <Filt Name="IsLeftTranslationsSemigroup" Type="Synonym">
+    <Filt Name="IsRightTranslationsSemigroup" Type="Synonym">
+    <Description>
+      <C>IsXTranslationsSemigroup(</C> is a synonym for 
+      <C>IsXTranslationsSemigroupElementCollection</C> and
+      <C>IsSemigroup<C>.
+      <Example><![CDATA[
+gap> S := RectangularBand(3,4);;
+gap> L := LeftTranslations(S);;
+gap> R := RightTranslations(S);;
+gap> IsLeftTranslationsSemigroup(L);
+true
+gap> IsTranslationsSemigroup(L);
+true
+gap> IsRightTranslationsSemigroup(L);
+false
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+  
+<#GAPDoc Label="IsTranslationalHull">
+  <ManSection>
+    <Filt Name="IsTranslationalHull" Type="synonym">
+    <Description>
+      <C>IsTranslationalHull</C> is a synonym for <C>IsSemigroup</C> and
+      <Ref Filt="IsTranslationalHullElementCollection">
+      <Example><![CDATA[
+gap> S := RectangularBand(3,3);;
+gap> H := TranslationalHull(S);;
+gap> IsTranslationalHull(H);
+true
+gap> IsTranslationalHull(S);
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="UnderlyingSemigroup">
+  <ManSection>
+    <Attr Name="UnderlyingSemigroup" Arg="S">
+    <Description>
+      <C>UnderlyingSemigroup(<A>S</A>)</C>, for <A>S<A> a semigroup of left or 
+      right translations or a translational hull, returns the semigroup which 
+      elements of <A>S</A> act on.
+      <Example><![CDATA[
+gap> H := TranslationalHull(S);;
+gap> UnderlyingSemigroup(H) = S;
+true
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="XTranslationsSemigroupOfFamily">
+  <ManSection>
+    <Attr Name="LeftTranslationsSemigroupOfFamily" Arg="fam">
+    <Attr Name="RightTranslationsSemigroupOfFamily" Arg="fam">
+    <Returns>The XTranslationsSemigroup used to create objects in the given
+    family </Returns>
+    <Description>
+      When <A>fam</A> is a family of left or right translations,
+      <C>XTranslationsSemigroupOfFamily<C>(<A>fam</A>) returns the left or right
+      translations semigroup which contains the objects of family <A>fam</A>
+      <Example><![CDATA[
+gap> S := RectangularBand(3,3);;
+gap> L := LeftTranslations(S);;
+gap> l := Representative(L);;
+gap> LeftTranslationsSemigroupOfFamily(FamilyObj(l)) = L;
+true
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+<#GAPDoc Label="TranslationalHullOfFamily">
+  <ManSection>
+    <Attr Name="TranslationalHullOfFamily" Arg="fam">
+    <Returns>The translational hull used to create objects in the given
+    family </Returns>
+    <Description>
+      When <A>fam</A> is a family of translational hull elements,
+      <C>TranslationalHullOfFamily<C>(<A>fam</A>) returns the translational hull
+      which contains the objects of family <A>fam</A>
+      <Example><![CDATA[
+gap> S := RectangularBand(3,3);;
+gap> H := LeftTranslations(S);;
+gap> h := Representative(H);;
+gap> TranslationalHullOfFamily(FamilyObj(h)) = H;
+true
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc> 
+
+<#GAPDoc Label="TypeXTranslationsSemigroupElements">
+  <ManSection>
+    <Attr Name="TypeLeftTranslationsSemigroupElements" Arg="L">
+    <Attr Name="TypeRightTranslationsSemigroupElements" Arg="R">
+    <Returns>The type of the elements of the given
+    XTranslationsSemigroup</Returns>
+    <Description>
+      For a semigroup of X translations <A>X</A>, 
+      <C>TypeXTranslationsSemigroup</C>(<A>X</A>) returns the type of the
+      elements of that semigroup.
+      <Example><![CDATA[
+gap> S := RectangularBand(3,3);;
+gap> L := LeftTranslations(S);;
+gap> l := Representative(L);;
+gap> TypeLeftTranslationsSemigroupElements(L) = TypeObj(l);
+true
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc> 
+
+<#GAPDoc Label="TranslationalElements">
+  <ManSection>
+    <Attr Name="TranslationalElements" Arg="S">
+    <Returns>The elements of <A>S</A></Returns>
+    <Description>
+      For <A>S</A> the whole semigroup of left or right translations of a
+      semigroup, or the translational hull of a semigroup, 
+      <C>TranslationalElements</C>(<A>S</A>) returns the calculated semigroup
+      of elements of <A>S</A>, so that <A>S</A> can be manipulated as more than
+      an abstract object.
+      <Example><![CDATA[
+gap> S := RectangularBand(3,3);;
+gap> H := TranslationalHull(S);;
+gap> TranslationalElements(H);
+Semigroup( ... )
+]]>   </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+    
  
  
  

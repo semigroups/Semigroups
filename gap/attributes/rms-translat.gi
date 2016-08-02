@@ -448,7 +448,7 @@ function(H)
         partialfunciterator, funcvals;
   
   S := UnderlyingSemigroup(H);
-  if not IsFinite(S) and IsZeroSimpleSemigroup(S) then
+  if not (IsFinite(S) and IsZeroSimpleSemigroup(S)) then
     TryNextMethod();
   fi;
   iso := IsomorphismReesZeroMatrixSemigroup(S);
