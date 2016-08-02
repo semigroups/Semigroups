@@ -1,0 +1,125 @@
+<#GAPDoc Label="XTranslations">
+  <ManSection>
+    <Attr Name="LeftTranslations" Arg="sgrp" 
+          Label="for a finite semigroup"/>
+    <Attr Name="RightTranslations" Arg="sgrp" 
+          Label="for a finite semigroup"/>
+    <Returns>The semigroup of X translations of the given semigroup</Returns>
+    <Description>
+      <C>LeftTranslations(<A>S</A>)</C> returns the semigroup of left 
+      translations of <A>S</A>, and similarly for 
+      <C>RightTranslations(<A>S</A>)</C>. For finite 0-simple semigroups and 
+      rectangular bands <A>S</A> generating sets and sizes of the translations
+      semigroups are known. 
+      For small arbitrary semigroups, it may be possible to explicitly calculate
+      the translations semigroups..
+      <Example><![CDATA[
+gap> S := RectangularBand(3,4);;
+gap> L := LeftTranslationsSemigroup(S);
+<the semigroup of left translations of <regular transformation semigroup 
+ of size 12, degree 8 with 4 generators>>
+gap> Size(L);
+27
+gap> GeneratorsOfSemigroup(L);
+[ <left translation on <simple transformation semigroup of size 12, degree 8 
+     with 4 generators>>, 
+  <left translation on <simple transformation semigroup of size 12, degree 8 
+     with 4 generators>>, 
+  <left translation on <simple transformation semigroup of size 12, degree 8 
+     with 4 generators>> ]
+]]>
+      </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="XTranslation">
+  <ManSection>
+    <Func Name="LeftTranslation" Arg="L, map">
+    <Func Name="RightTranslation" Arg="R, map">
+    <Returns>An X translation.</Returns>
+    <Description>
+      For the semigroup of X translations and a Mapping on the underlying 
+      semigroup, XTranslation returns the corresponding translation. 
+      
+      XTranslation uses the function <Ref Oper="AsList" Bookname="ref"/> to
+      determine the indices of elements.
+      
+      Note that XTranslation does not check whether the map given defines a 
+      valid translation.
+      <Example><![CDATA[
+gap> S := RectangularBand(3,4);;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> s := AsList(S)[1];;
+gap> f := function(x)
+> return s * x;
+> end;;
+gap> map := MappingByFunction(S, S, f);;
+gap> l := LeftTranslation(L, map);
+<left translation on <regular transformation semigroup of size 12, degree 8 
+ with 4 generators>>
+gap> s^l;
+Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] ) 
+]]> 
+    </Example>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="TranslationalHull">
+  <ManSection>
+    <Attr Name="TranslationalHull" Arg="sgrp" 
+          Label="for a finite semigroup">
+    <Returns>The translational hull of the given semigroup</Returns>
+    <Description>
+      Returns the translational hull of the given semigroup. For finite 0-simple
+      semigroups and rectangular bands, explicit generating sets are known. For
+      small arbitrary semigroups, it may be possible to calculate the
+      translational hull.
+      <Example><![CDATA[
+]]>
+      </Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="TranslationalHullElement">
+  <ManSection>
+    <Attr Name="TranslationalHullElement" Arg="H, l, r"
+          Label="for a given translational hull, left translation, and right
+                translation">
+    <Returns>The element of the translational hull corresponding to the given 
+              left and right translations</Returns>
+    <Description>
+      <C>TranslationalHullElement(<A>H, l, r</A>) returns the linked pair 
+      (<A>l, r</A>) of translations.
+      <Example> <![CDATA[
+      
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+      
