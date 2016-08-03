@@ -12,6 +12,22 @@
 ##
 #############################################################################
 
+SEMIGROUPS.cong_make_cpp_cong := function(cong)
+  local data, type, genpairs;
+  data := GenericSemigroupData(Range(cong));
+  if HasGeneratingPairsOfMagmaCongruence(cong) then
+    type := "twosided";
+    genpairs := GeneratingPairsOfSemigroupCongruence(cong);
+  elif HasGeneratingPairsOfRightMagmaCongruence(cong) then
+    type := "right";
+    genpairs := GeneratingPairsOfRightSemigroupCongruence(cong);
+  elif HasGeneratingPairsOfLeftMagmaCongruence(cong) then
+    type := "left";
+    genpairs := GeneratingPairsOfLeftSemigroupCongruence(cong);
+  fi;
+  return FINITE_CONG_BY_GEN_PAIRS(type, data, genpairs);
+end;
+
 InstallMethod(\in,
 Concatenation("for a multiplicative element collection and ",
               "a right semigroup congruence with generating pairs"),
@@ -23,7 +39,7 @@ function(pair, cong)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  pairs := GeneratingPairsOfSemigroupCongruence(cong);
+  pairs := GeneratingPairsOfRightSemigroupCongruence(cong);
   pairs := List(pairs, x ->
                 [Factorization(S, x[1]), Factorization(S, x[2])]);
   return FINITE_CONG_PAIR_IN("right",
@@ -38,8 +54,10 @@ InstallMethod(NrEquivalenceClasses,
 [IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
 function(cong)
   local S, pairs;
-
   S := Range(cong);
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
 
   pairs := GeneratingPairsOfRightSemigroupCongruence(cong);
   pairs := List(pairs, x ->
@@ -54,6 +72,9 @@ function(cong)
   local S, pairs;
 
   S := Range(cong);
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
 
   pairs := GeneratingPairsOfLeftSemigroupCongruence(cong);
   pairs := List(pairs, x ->
@@ -68,6 +89,9 @@ function(cong)
   local S, pairs;
 
   S := Range(cong);
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
 
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
   pairs := List(pairs, x ->
