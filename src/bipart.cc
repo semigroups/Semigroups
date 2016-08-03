@@ -15,7 +15,7 @@
 #include <thread>
 #include <mutex>
 
-#include "src/semigroups++/timer.hh"
+#include "src/semigroups++/timer.h"
 #include "src/semigroups++/elements.h"
 #include "src/permutat.h"
 #include "src/precord.h"
@@ -1386,8 +1386,7 @@ class NrIdempotentsFinder {
     }
 
     if (_report) {
-      std::cout << "Total ";
-      timer.stop();
+      timer.stop(std::string(__func__) + ": ");
     }
 
     size_t max = *max_element(_ranks.begin(), _ranks.end()) + 1;

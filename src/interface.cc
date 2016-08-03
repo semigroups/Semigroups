@@ -71,11 +71,11 @@ Obj UnconvertElements (Converter* converter, std::vector<Element*>* elements) {
 }
 
 /*******************************************************************************
- * ConvertFromCayleyGraph: helper function to convert a CayleyGraph to a GAP
+ * ConvertFromCayleyGraph: helper function to convert a cayley_graph_t to a GAP
  * plist of GAP plists
  ******************************************************************************/
 
-Obj ConvertFromCayleyGraph (CayleyGraph* graph) {
+Obj ConvertFromCayleyGraph (cayley_graph_t* graph) {
   assert(graph->size() != 0);
   Obj out = NEW_PLIST(T_PLIST, graph->nr_rows());
   SET_LEN_PLIST(out, graph->nr_rows());
@@ -96,7 +96,7 @@ Obj ConvertFromCayleyGraph (CayleyGraph* graph) {
  * ConvertFromWord:
  ******************************************************************************/
 
-Obj ConvertFromWord (Word* vec) {
+Obj ConvertFromWord (word_t* vec) {
   Obj out = NEW_PLIST(T_PLIST_CYC, vec->size());
   SET_LEN_PLIST(out, vec->size());
 
@@ -106,6 +106,7 @@ Obj ConvertFromWord (Word* vec) {
   CHANGED_BAG(out);
   return out;
 }
+
 //FIXME who deletes the Word* vec?
 
 /*******************************************************************************
@@ -714,20 +715,6 @@ Obj SEMIGROUP_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
 
   if (data_type(data) != UNKNOWN) {
 
-    std::string str(CSTR_STRING(type));
-    cong_t type;
-    if (str == "left") {
-        type = cong_t::LEFT;
-    } else if (str == "right") {
-        type = cong_t::RIGHT;
-    } else if (str == "twosided") {
-        type = cong_t::TWOSIDED;
-    } else {
-        ErrorQuit("SEMIGROUP_CONG_BY_GEN_PAIRS: todo meaningful error,",
-                  0L, 0L);
-        return 0L;
-    }
-
     initRNams();
 
     Semigroup* semigroup = data_semigroup(data);
@@ -747,8 +734,7 @@ Obj SEMIGROUP_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
       extra.push_back(make_pair(lhs, rhs));
     }
 
-
-    Congruence* cong = finite_cong_enumerate(type,
+    Congruence* cong = finite_cong_enumerate(std::string(CSTR_STRING(type)),
                                              semigroup,
                                              extra,
                                              rec_get_report(data));
@@ -791,7 +777,7 @@ Congruence* CongFromFpSemigroup (Obj S) {
       rels.push_back(make_pair(lhs, rhs));
     }
 
-    cong = new Congruence(cong_t::TWOSIDED,
+    cong = new Congruence("twosided",
                           INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
                           rels,
                           std::vector<relation_t>());
@@ -848,7 +834,7 @@ Obj SEMIGROUP_CONG (Obj self, Obj S) {
       rels.push_back(make_pair(lhs, rhs));
     }
 
-    cong = new Congruence(cong_t::TWOSIDED,
+    cong = new Congruence("twosided",
                           INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
                           rels,
                           std::vector<relation_t>());
