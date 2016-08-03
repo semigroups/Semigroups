@@ -709,13 +709,13 @@ Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data) {
 }
 
 /*******************************************************************************
- * fp_semi_get_cpp_cong: helper function to convert a GAP FP semigroup object
- * to a C++ Congruence object, and run Todd-Coxeter on it
+ * finite_cong_get_cpp_cong: function to convert a GAP semigroup and pairs to a
+ * C++ Congruence object, and run Todd-Coxeter on it
  ******************************************************************************/
-// TODO: rename this fn?
-Obj SEMIGROUP_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
+Congruence* finite_cong_get_cpp_cong (Obj type,
+                                      Obj data,
+                                      Obj genpairs) {
   assert(IS_PLIST(genpairs));
-  assert(LEN_PLIST(genpairs) > 0);
   if (data_type(data) != UNKNOWN) {
 
     std::string str(CSTR_STRING(type));
@@ -727,7 +727,7 @@ Obj SEMIGROUP_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
     } else if (str == "twosided") {
         type = cong_t::TWOSIDED;
     } else {
-        ErrorQuit("SEMIGROUP_CONG_BY_GEN_PAIRS: todo meaningful error,",
+        ErrorQuit("finite_cong_get_cpp_cong: not a valid type string,",
                   0L, 0L);
         return 0L;
     }
@@ -755,21 +755,30 @@ Obj SEMIGROUP_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
                                              semigroup,
                                              extra,
                                              rec_get_report(data));
-    // TODO: return a cong?
-    return INTOBJ_INT(cong->nr_active_cosets() - 1);
+    return cong;
   } else {
-    ErrorQuit("SEMIGROUP_CONG_BY_GEN_PAIRS: not yet implemented,", 0L, 0L);
+    ErrorQuit("finite_cong_get_cpp_cong: not yet implemented,", 0L, 0L);
     return 0L;
   }
 }
 
-Obj FINITE_CONG_NR_CLASSES (Obj self, Obj data, Obj extra_gap) {
-  Congruence* cong = finite_cong_get_cpp_cong(data, extra_gap);
+/*******************************************************************************
+ * FINITE_CONG_BY_GEN_PAIRS: GAP-level function to convert a GAP semigroup
+ * and pairs to a C++ Congruence object, run Todd-Coxeter on it
+ ******************************************************************************/
+Obj FINITE_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
+  Congruence* cong = finite_cong_get_cpp_cong(type, data, genpairs);
+  return OBJ_CLASS(cong, T_SEMI_SUBTYPE_FPCONG);
+}
+
+Obj FINITE_CONG_NR_CLASSES (Obj self, Obj type, Obj data, Obj genpairs) {
+  Congruence* cong = finite_cong_get_cpp_cong(type, data, genpairs);
   return INTOBJ_INT(cong->nr_active_cosets() - 1);
 }
 
-Obj FINITE_CONG_PAIR_IN (Obj self, Obj data, Obj extra_gap, Obj x, Obj y) {
-  Congruence* cong = finite_cong_get_cpp_cong(data, extra_gap);
+Obj FINITE_CONG_PAIR_IN (Obj self, Obj type, Obj data, Obj genpairs,
+                         Obj x, Obj y) {
+  Congruence* cong = finite_cong_get_cpp_cong(type, data, genpairs);
   word_t lhs, rhs;
   for (size_t j = 1; j <= (size_t) LEN_PLIST(x); j++) {
     lhs.push_back(INT_INTOBJ(ELM_PLIST(x, j)) - 1);

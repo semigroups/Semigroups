@@ -12,52 +12,65 @@
 ##
 #############################################################################
 
-InstallMethod(NrEquivalenceClasses,
-"for a right semigroup congruence with generating pairs",
-[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
-function(cong)
-  local S, pairs, extra;
-  S := Range(cong);
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  pairs := GeneratingPairsOfRightSemigroupCongruence(cong);
-  extra := List(pairs, x ->
-                [Factorization(S, x[1]), Factorization(S, x[2])]);
-  return FINITE_CONG_NR_CLASSES(GenericSemigroupData(S), extra);
-end);
-
-InstallMethod(NrEquivalenceClasses,
-"for a semigroup congruence with generating pairs",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-function(cong)
-  local S, pairs, extra;
-  S := Range(cong);
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-  pairs := GeneratingPairsOfSemigroupCongruence(cong);
-  extra := List(pairs, x ->
-                [Factorization(S, x[1]), Factorization(S, x[2])]);
-  return FINITE_CONG_NR_CLASSES(GenericSemigroupData(S), extra);
-end);
-
 InstallMethod(\in,
 Concatenation("for a multiplicative element collection and ",
               "a right semigroup congruence with generating pairs"),
 [IsMultiplicativeElementCollection,
  IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
 function(pair, cong)
+  local S, pairs;
   S := Range(cong);
   if not IsFinite(S) then
     TryNextMethod();
   fi;
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
-  extra := List(pairs, x ->
+  pairs := List(pairs, x ->
                 [Factorization(S, x[1]), Factorization(S, x[2])]);
-  return FINITE_CONG_PAIR_IN(GenericSemigroupData(S),
-                             extra,
-                             MinimalFactorization(S, x),
-                             MinimalFactorization(S, y));
+  return FINITE_CONG_PAIR_IN("right",
+                             GenericSemigroupData(S),
+                             pairs,
+                             MinimalFactorization(S, pair[1]),
+                             MinimalFactorization(S, pair[2]));
+end);
+
+InstallMethod(NrEquivalenceClasses,
+"for a right semigroup congruence with generating pairs",
+[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
+function(cong)
+  local S, pairs;
+
+  S := Range(cong);
+
+  pairs := GeneratingPairsOfRightSemigroupCongruence(cong);
+  pairs := List(pairs, x ->
+           [Factorization(S, x[1]), Factorization(S, x[2])]);
+  return FINITE_CONG_NR_CLASSES("right", GenericSemigroupData(S), pairs);
+end);
+
+InstallMethod(NrEquivalenceClasses,
+"for a left semigroup congruence with generating pairs",
+[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
+function(cong)
+  local S, pairs;
+
+  S := Range(cong);
+
+  pairs := GeneratingPairsOfLeftSemigroupCongruence(cong);
+  pairs := List(pairs, x ->
+           [Factorization(S, x[1]), Factorization(S, x[2])]);
+  return FINITE_CONG_NR_CLASSES("left", GenericSemigroupData(S), pairs);
+end);
+
+InstallMethod(NrEquivalenceClasses,
+"for a semigroup congruence with generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(cong)
+  local S, pairs;
+
+  S := Range(cong);
+
+  pairs := GeneratingPairsOfSemigroupCongruence(cong);
+  pairs := List(pairs, x ->
+           [Factorization(S, x[1]), Factorization(S, x[2])]);
+  return FINITE_CONG_NR_CLASSES("twosided", GenericSemigroupData(S), pairs);
 end);
