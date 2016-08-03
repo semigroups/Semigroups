@@ -8,17 +8,48 @@
 #############################################################################
 ##
 
-InstallMethod(LeftTranslations, "for a semigroup", 
-[IsSemigroup and IsFinite], 
-function(S) 
-  local L;
-  
-  L := SEMIGROUPS.LeftTranslationsSemigroup(S);
-  TranslationalElements(L);
-  
-  return L;
-end);
+# TODO: Fix arbitrary semigroup translational hull algorithm
 
+#############################################################################
+## This file contains methods for dealing with left and right translation
+## semigroups, as well as translational hulls. 
+## When one of these semigroups is created, the attribute TranslationalElements
+## is calculated. This explicitly calculates the semigroup of elements of the
+## created semigroup.
+## To avoid this calculation at the time of creation, you can call
+## SEMIGROUPS.XTranslationsSemigroup or SEMIGROUPS.TranslationalHull
+##
+## Left/Right translations are stored internally as transformations on the 
+## incides of the underlying semigroup (determined by AsList). Hence, only 
+## finite semigroups are supported.
+##
+## Note that it is not checked whether left/right translations are actually
+## translations when they are created, since this would be too costly.
+## 
+## Much of the implementation in this file was based on the implementation of
+## RMS in reesmatsemi.gi in the GAP libray - in particular, the creation of
+## the semigroups and their relation to their elements.
+##  
+## The code specific to rectangular bands is based on 
+## Howie, J.M. (1995) 'Fundamentals of Semigroup theory'. 
+## United Kingdom: Oxford University Press. (p. 116)
+##
+## This file is organised as follows:
+##    1. Internal functions
+##    2. Functions for the creation of left/right translations semigroup
+##        and translational hulls
+##    3. Methods for (semi-)arbitrary semigroups
+##    4. Methods for rectangular bands
+##    5. Technical methods, eg. PrintObj, *, =, etc.
+##
+#############################################################################
+
+
+#############################################################################
+# 1. Internal Functions
+#############################################################################
+
+# Create the left translations semigroup without calculating the elements
 SEMIGROUPS.LeftTranslationsSemigroup := function(S)
   local fam, type, L;
   
@@ -31,15 +62,99 @@ SEMIGROUPS.LeftTranslationsSemigroup := function(S)
     
   #store the type of the elements in the semigroup
   type := NewType(fam, IsLeftTranslationsSemigroupElement);
-  
   fam!.type := type;
   SetTypeLeftTranslationsSemigroupElements(L, type);
   SetLeftTranslationsSemigroupOfFamily(fam, L); 
   
   SetUnderlyingSemigroup(L, S);
+  SetLeftTranslations(S, L);
+  
   return L;
 end;
 
+# Create the right translations semigroup without calculating the elements
+SEMIGROUPS.RightTranslationsSemigroup := function(S)
+  local fam, type, R;
+  
+  fam := NewFamily( "RightTranslationsSemigroupElementsFamily",
+          IsRightTranslationsSemigroupElement);
+  
+  # create the semigroup of right translations
+  R := Objectify(NewType(CollectionsFamily(fam), IsRightTranslationsSemigroup 
+    and IsWholeFamily and IsAttributeStoringRep), rec());
+    
+  # store the type of the elements in the semigroup
+  type := NewType(fam, IsRightTranslationsSemigroupElement);
+  fam!.type := type;
+  SetTypeRightTranslationsSemigroupElements(R, type);
+  SetRightTranslationsSemigroupOfFamily(fam, R);
+   
+  SetUnderlyingSemigroup(R, S);
+  SetRightTranslations(S, R);
+  
+  return R;
+end;
+
+# Create the translational hull without calculating the elements
+SEMIGROUPS.TranslationalHull := function(S)
+  local fam, type, H;
+  
+  fam := NewFamily( "TranslationalHullElementsFamily", 
+          IsTranslationalHullElement);
+  
+  # create the translational hull
+  H := Objectify(NewType(CollectionsFamily(fam), IsTranslationalHull and
+    IsWholeFamily and IsAttributeStoringRep), rec());
+  
+  # store the type of the elements in the semigroup
+  type := NewType(fam, IsTranslationalHullElement);
+  fam!.type := type;
+  SetTypeTranslationalHullElements(H, type);
+  
+  SetTranslationalHullOfFamily(fam, H);
+  SetUnderlyingSemigroup(H, S);
+  SetTranslationalHull(S, H);
+  
+  return H;
+end;
+
+# Hash linked pairs as sum of underlying transformation hashes
+SEMIGROUPS.HashFunctionForTranslationalHullElements := function(x, data)
+    return (ORB_HashFunctionForTransformations(x![1]![1], data)
+      + ORB_HashFunctionForTransformations(x![2]![1], data)) mod data + 1;
+end;
+
+#############################################################################
+# 2. Creation of translations semigroups, translational hull, and elements
+#############################################################################
+
+# Create and calculate the semigroup of left translations
+InstallMethod(LeftTranslations, "for a semigroup", 
+[IsSemigroup and IsFinite], 
+function(S) 
+  local L;
+  
+  L := SEMIGROUPS.LeftTranslationsSemigroup(S);
+  TranslationalElements(L);
+  
+  return L;
+end);
+
+# Create and calculate the semigroup of right translations
+InstallMethod(RightTranslations, "for a semigroup", 
+[IsSemigroup and IsFinite],
+function(S) 
+  local R;
+  
+  R := SEMIGROUPS.RightTranslationsSemigroup(S);
+  TranslationalElements(R);
+  
+  return R;
+end);
+
+# Create a left translation as an element of a left translations semigroup.
+# Expects a Mapping as the second argument. If you want to create a translation
+# from a transformation on the semigroup indices, use LeftTranslationNC instead.
 InstallGlobalFunction(LeftTranslation,
 function(L, f)
   local semiList, mapAsTransList, i;
@@ -69,38 +184,7 @@ function(L, t)
   return Objectify(TypeLeftTranslationsSemigroupElements(L), [t]);
 end);
 
-InstallMethod(RightTranslations, "for a semigroup", 
-[IsSemigroup and IsFinite], 
-function(S) 
-  local R;
-  
-  R := SEMIGROUPS.RightTranslationsSemigroup(S);
-  TranslationalElements(R);
-  
-  return R;
-end);
-
-SEMIGROUPS.RightTranslationsSemigroup := function(S)
-  local fam, type, R;
-  
-  fam := NewFamily( "RightTranslationsSemigroupElementsFamily",
-          IsRightTranslationsSemigroupElement);
-  
-  #create the semigroup of right translations
-  R := Objectify(NewType(CollectionsFamily(fam), IsRightTranslationsSemigroup 
-    and IsWholeFamily and IsAttributeStoringRep ), rec() );
-    
-  #store the type of the elements in the semigroup
-  type := NewType(fam, IsRightTranslationsSemigroupElement);
-  
-  fam!.type := type;
-  SetTypeRightTranslationsSemigroupElements(R, type);
-  SetRightTranslationsSemigroupOfFamily(fam, R); 
-  SetUnderlyingSemigroup(R, S);
-  
-  return R;
-end;
-
+# Same for right translations.
 InstallGlobalFunction(RightTranslation,
 function(R, f)
   local semiList, mapAsTransList, i;
@@ -130,29 +214,20 @@ function(R, t)
   return Objectify(TypeRightTranslationsSemigroupElements(R), [t]);
 end);
 
+# Creates and calculates the elements of the translational hull.
 InstallMethod(TranslationalHull, "for a semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local fam, type, H;
+  local H;
   
-  fam := NewFamily( "TranslationalHullElementsFamily", 
-          IsTranslationalHullElement);
-  
-  #create the translational hull
-  H := Objectify ( NewType ( CollectionsFamily( fam ), IsTranslationalHull and
-    IsWholeFamily and IsAttributeStoringRep ), rec() );
-  
-  type := NewType(fam, IsTranslationalHullElement);
-  
-  fam!.type := type;
-  SetTypeTranslationalHullElements(H, type);
-  SetTranslationalHullOfFamily(fam, H);
-  SetUnderlyingSemigroup(H, S);
+  H := SEMIGROUPS.TranslationalHull(S);
   TranslationalElements(H);
   
   return H;
 end);
 
+# Creates a linked pair (l, r) from a left translation l and a right
+# translation r, as an element of a translational hull H.
 InstallGlobalFunction(TranslationalHullElement, 
 function(H, l, r) 
   local S, L, R;
@@ -181,338 +256,17 @@ function(H, l, r)
   return Objectify(TypeTranslationalHullElements(H), [l, r]);
 end);
 
-InstallMethod(ViewObj, "for a semigroup of left or right translations",
-[IsTranslationsSemigroup and IsWholeFamily],
-function(T)
-  Print("<the semigroup of");
-  if IsLeftTranslationsSemigroup(T) then Print(" left");
-  else Print(" right"); fi;
-  Print(" translations of ", ViewString(UnderlyingSemigroup(T)), ">");
-end);
-  
+#############################################################################
+# 3. Methods for (semi-)arbitrary semigroups
+#############################################################################
 
-InstallMethod(ViewObj, "for a semigroup of translations", 
-[IsTranslationsSemigroup], PrintObj);
-
-InstallMethod(PrintObj, "for a semigroup of translations",
-[IsTranslationsSemigroup and HasGeneratorsOfSemigroup],
-function(T)
-  Print("<semigroup of ");
-  if IsLeftTranslationsSemigroup(T) then Print("left ");
-  else Print("right ");
-  fi;
-  Print("translations of ", ViewString(UnderlyingSemigroup(T)), " with ",
-    Length(GeneratorsOfSemigroup(T)),
-    " generators");
-  if Length(GeneratorsOfSemigroup(T)) > 1 then
-    Print("s");
-  fi;
-  Print(">");
-  return;
-end);
-
-InstallMethod(ViewObj, "for a translation", 
-[IsTranslationsSemigroupElement], PrintObj);
-
-InstallMethod(PrintObj, "for a translation",
-[IsTranslationsSemigroupElement],
-function(t)
-  local L, S;
-  L := IsLeftTranslationsSemigroupElement(t); 
-  if L then 
-    S := UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t)));
-    Print("<left ");
-  else 
-    S := UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t)));
-    Print("<right ");
-  fi;
-  
-  Print("translation on ", ViewString(S), ">");
-end);
-
-InstallMethod(ViewObj, "for a translational hull", 
-[IsTranslationalHull], PrintObj);
-
-InstallMethod(PrintObj, "for a translational hull",
-[IsTranslationalHull and IsWholeFamily],
-function(H)
-  Print("<translational hull over ", ViewString(UnderlyingSemigroup(H)), ">");
-end);
-
-InstallMethod(ViewObj, "for a translational hull element", 
-[IsTranslationalHullElement], PrintObj);
-
-InstallMethod(PrintObj, "for a translational hull element",
-[IsTranslationalHullElement],
-function(t)
-  local H;
-  H := TranslationalHullOfFamily(FamilyObj(t));
-  Print("<linked pair of translations on ", ViewString(UnderlyingSemigroup(H)), ">");
-end);
-
-InstallMethod(Enumerator, "for a semigroup of left or right translations",
-[IsTranslationsSemigroup],
-function(T)
-  return Enumerator(TranslationalElements(T));
-end);
-
-InstallMethod(Enumerator, "for a semigroup of translational hull elements",
-[IsTranslationalHull],
-function(H)
-  return Enumerator(TranslationalElements(H));
-end);
-
-InstallMethod(Size, "for the semigroup of left or right translations of a rectangular band", 
-[IsTranslationsSemigroup and IsWholeFamily],
-function(T)
-  local S, n;
-  S := UnderlyingSemigroup(T);
-  if not IsRectangularBand(S) then
-    TryNextMethod();
-  fi;
-  if IsLeftTranslationsSemigroup(T) then
-    n := NrRClasses(S);
-  else n := NrLClasses(S);
-  fi;
-  
-  return n^n;
-end);
-
-InstallMethod(Size, "for the translational hull of a rectangular band",
-[IsTranslationalHull and IsWholeFamily],
-function(H)
-  local S, L, R;
-  S := UnderlyingSemigroup(H);
-  if not IsRectangularBand(S) then
-    TryNextMethod();
-  fi;
-  L := LeftTranslations(S);
-  R := RightTranslations(S);
-  return Size(L) * Size(R);
-end);
-
-InstallMethod(Size, "for the left/right translations of a semigroup",
-[IsTranslationsSemigroup and IsWholeFamily],
-function(T)
-  return Size(TranslationalElements(T));
-end);
-
-InstallMethod(Size, "for the translational hull of a semigroup",
-[IsTranslationalHull and IsWholeFamily],
-function(T)
-  return Size(TranslationalElements(T));
-end);
-
-InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left or right translations of a rectangular band",
-[IsTranslationsSemigroup and IsWholeFamily],
-function(T)
-  local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f;
-  S := UnderlyingSemigroup(T);
-  if not IsRectangularBand(S) then
-    TryNextMethod();
-  fi;
-
-  semiList := AsList(S);
-  iso := IsomorphismReesMatrixSemigroup(S);
-  inv := InverseGeneralMapping(iso);
-  reesMatSemi := Range(iso);
-  L := IsLeftTranslationsSemigroup(T);
-  if L then
-    n := Length(Rows(reesMatSemi));
-  else
-    n := Length(Columns(reesMatSemi));
-  fi;
-  
-  gens := [];
-  for t in GeneratorsOfMonoid(FullTransformationMonoid(n)) do
-    if L then
-      f := function(x)
-        return ReesMatrixSemigroupElement(reesMatSemi, x[1]^t, 
-          (), x[3]);
-      end;
-      Add(gens, LeftTranslation(T, CompositionMapping(inv, 
-      MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
-    else 
-      f := function(x)
-        return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
-          (), x[3]^t);
-      end;
-      Add(gens, RightTranslation(T, CompositionMapping(inv, 
-        MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
-    fi;
-  od;
-  return gens;
-end);      
-
-InstallMethod(GeneratorsOfSemigroup, "for the translational hull of a rectangular band", 
-[IsTranslationalHull],
-function(H)
-  local S, leftGens, rightGens, l, r, gens;
-  
-  S := UnderlyingSemigroup(H);
-  if not IsRectangularBand(S) then
-    TryNextMethod();
-  fi;
-
-  leftGens := GeneratorsOfSemigroup(LeftTranslations(S));
-  rightGens := GeneratorsOfSemigroup(RightTranslations(S));
-  gens := [];
-  
-  for l in leftGens do
-    for r in rightGens do
-      Add(gens, TranslationalHullElement(H, l, r));
-    od;
-  od;
-  
-  return gens;
-end);
-
-InstallMethod(TranslationalElements, "for the semigroup of left/right translations of a rectangular band",
-[IsTranslationsSemigroup and IsWholeFamily], 1,
-function(T)
-  if not IsRectangularBand(UnderlyingSemigroup(T)) then
-    TryNextMethod();
-  fi;
-  return Semigroup(GeneratorsOfSemigroup(T));
-end);
-
-InstallMethod(TranslationalElements, "for the translational hull of a rectangular band",
-[IsTranslationalHull and IsWholeFamily], 1,
-function(H)
-  if not IsRectangularBand(UnderlyingSemigroup(H)) then
-    TryNextMethod();
-  fi;
-  return Semigroup(GeneratorsOfSemigroup(H));
-end);
-
-
-InstallMethod(\*, "for left translations of a semigroup",
-IsIdenticalObj,
-[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
-function(x, y)
-  return Objectify(FamilyObj(x)!.type, [y![1]*x![1]]);
-end);
-
-InstallMethod(\=, "for left translations of a semigroup",
-IsIdenticalObj,
-[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
-function(x, y) 
-  return x![1] = y![1];
-end);
-
-InstallMethod(\<, "for left translations of a semigroup",
-IsIdenticalObj,
-[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
-function(x, y) 
-  return x![1] < y![1];
-end);
-
-InstallMethod(\*, "for right translations of a semigroup",
-IsIdenticalObj,
-[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
-function(x, y)
-  return Objectify(FamilyObj(x)!.type, [x![1]*y![1]]);
-end);
-
-InstallMethod(\=, "for right translations of a semigroup",
-IsIdenticalObj,
-[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
-function(x, y) 
-  return x![1] = y![1];
-end);
-
-InstallMethod(\<, "for right translations of a semigroup",
-IsIdenticalObj,
-[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
-function(x, y) 
-  return x![1] < y![1];
-end);
-
-InstallMethod(\^, "for a semigroup element and a translation",
-[IsAssociativeElement, IsTranslationsSemigroupElement],
-function(x, t)
-  local list;
-  if IsLeftTranslationsSemigroupElement(t) then
-    list := AsList(UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t))));
-  else
-    list := AsList(UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t))));
-  fi;
-  if not x in list then
-    Error("Semigroups: ^ for a semigroup element and translation: \n",
-          "the first argument must be an element of the domain of the second");
-  fi;
-  return list[Position(list, x)^t![1]];
-end);
-
-InstallMethod(\*, "for translation hull elements (linked pairs)",
-IsIdenticalObj,
-[IsTranslationalHullElement, IsTranslationalHullElement],
-function(x, y)
-  return Objectify(FamilyObj(x)!.type, [x![1]*y![1], x![2]*y![2]]);
-end);
-
-InstallMethod(\=, "for translational hull elements (linked pairs)",
-IsIdenticalObj,
-[IsTranslationalHullElement, IsTranslationalHullElement],
-function(x, y)
-  return x![1] = y![1] and x![2] = y![2];
-end);
-
-InstallMethod(\<, "for translational hull elements (linked pairs)",
-IsIdenticalObj,
-[IsTranslationalHullElement, IsTranslationalHullElement],
-function(x, y)
-  return x![1] < y![1] or (x![1] = y![1] and x![2] < y![2]);
-end);
-
-InstallMethod(IsWholeFamily, "for a semigroup of translations of a rectangular band",
-[IsTranslationsSemigroup],
-function(T)
-  if IsLeftTranslationsSemigroup(T) then  
-    return Size(T) = Size(LeftTranslationsSemigroupOfFamily(ElementsFamily(
-                                                                FamilyObj(T))));
-  else return Size(T) = Size(RightTranslationsSemigroupOfFamily(ElementsFamily(
-                                                                FamilyObj(T)))); 
-  fi;
-end);
-
-InstallMethod(IsWholeFamily, "for a subsemigroup of the translational hull of a rectangular band",
-[IsTranslationalHull],
-function(H) 
-  return Size(H) = Size(TranslationalHullOfFamily(ElementsFamily(FamilyObj(H))));
-end);
-
-InstallMethod(UnderlyingSemigroup, "for a semigroup of left or right translations",
-[IsTranslationsSemigroup],
-function(T)
-  if IsLeftTranslationsSemigroup(T) then
-    return UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(ElementsFamily(
-                                                                FamilyObj(T))));
-  else 
-    return UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(ElementsFamily(
-                                                                FamilyObj(T))));
-  fi;
-end);
-
-InstallMethod(UnderlyingSemigroup, "for a subsemigroup of the translational hull",
-[IsTranslationalHull],
-function(H)
-    return UnderlyingSemigroup(TranslationalHullOfFamily(FamilyObj(
-      Enumerator(H)[1])));
-end);
-
-SEMIGROUPS.HashFunctionForTranslationalHullElements := function(x, data)
-    return (ORB_HashFunctionForTransformations(x![1]![1], data)
-      + ORB_HashFunctionForTransformations(x![2]![1], data)) mod data + 1;
-end;
-
-InstallMethod(ChooseHashFunction, "for a translational hull element and int",
-[IsTranslationalHullElement, IsInt],
-function(x, hashlen)
-  return rec(func := SEMIGROUPS.HashFunctionForTranslationalHullElements,
-             data := hashlen);
-end);
-
+# This is a backtrack search on functions from the semigroup to itself.
+# Given a set A which hits every L class and R class, a linked pair (f, g) of
+# translations is completely determined by the values on A. Having fixed a_i,
+# we can restrict the values on a_k, k > i, by the linked pair conditions
+# s*a_i f(a_k) = (s*a_i)g a_k and a_k f(a_i * s) = (a_k)g a_i * s,
+# as well as restriction by the translation condition if Sa_i intersect Sa_k is
+# non-empty or a_i S intersect a_k S is non-empty.
 InstallMethod(TranslationalElements, "for the translational hull of an arbitrary finite semigroup",
 [IsTranslationalHull and IsWholeFamily],
 function(H)
@@ -818,7 +572,9 @@ function(H)
   return linkedpairs;
 end);
 
-InstallMethod(LeftTranslations, "for the left translations of a semigroup with known generators",
+# Left translations are the same as edge-label preserving endomorphisms of the
+# right cayley graph
+InstallMethod(TranslationalElements, "for the left translations of a semigroup with known generators",
 [IsLeftTranslationsSemigroup and IsWholeFamily],
 function(L)
   local S, digraph, n, nrgens, out, colors, gens, i, j;
@@ -848,12 +604,13 @@ function(L)
   return Semigroup(gens, rec(small := true));
 end);
 
+# Dual for right translations.
 InstallMethod(TranslationalElements, "for the right translations of a semigroup with known generators",
 [IsRightTranslationsSemigroup and IsWholeFamily],
 function(R)
   local S, digraph, n, nrgens, out, colors, gens, i, j;
 
-  S       := UnderlyingSemigroup(R);
+  S := UnderlyingSemigroup(R);
   if not HasGeneratorsOfSemigroup(S) then
     TryNextMethod();
   fi;
@@ -876,4 +633,351 @@ function(R)
   gens := GeneratorsOfEndomorphismMonoid(Digraph(out), colors);
   Apply(gens, x -> RightTranslationNC(R,RestrictedTransformation(x, [1 .. n])));
   return Semigroup(gens, rec(small := true));
+end);
+
+#############################################################################
+# 4. Methods for rectangular bands
+#############################################################################
+
+# Every transformation on the relevant index set corresponds to a translation.
+# The R classes of an I x J rectangular band correspond to (i, J) for i in I.
+# Dually for L classes.
+InstallMethod(Size, "for the semigroup of left or right translations of a rectangular band", 
+[IsTranslationsSemigroup and IsWholeFamily],
+function(T)
+  local S, n;
+  S := UnderlyingSemigroup(T);
+  if not IsRectangularBand(S) then
+    TryNextMethod();
+  fi;
+  if IsLeftTranslationsSemigroup(T) then
+    n := NrRClasses(S);
+  else n := NrLClasses(S);
+  fi;
+  
+  return n^n;
+end);
+
+# The translational hull of a rectangular band is the direct product of the
+# left translations and right translations
+InstallMethod(Size, "for the translational hull of a rectangular band",
+[IsTranslationalHull and IsWholeFamily],
+function(H)
+  local S, L, R;
+  S := UnderlyingSemigroup(H);
+  if not IsRectangularBand(S) then
+    TryNextMethod();
+  fi;
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
+  return Size(L) * Size(R);
+end);
+
+# Generators of the left/right translations semigroup on the I x J rectangular 
+# band correspond to the generators of the full transformation monoid on I or J. 
+InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left or right translations of a rectangular band",
+[IsTranslationsSemigroup and IsWholeFamily],
+function(T)
+  local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f;
+  S := UnderlyingSemigroup(T);
+  if not IsRectangularBand(S) then
+    TryNextMethod();
+  fi;
+
+  semiList := AsList(S);
+  iso := IsomorphismReesMatrixSemigroup(S);
+  inv := InverseGeneralMapping(iso);
+  reesMatSemi := Range(iso);
+  L := IsLeftTranslationsSemigroup(T);
+  if L then
+    n := Length(Rows(reesMatSemi));
+  else
+    n := Length(Columns(reesMatSemi));
+  fi;
+  
+  gens := [];
+  for t in GeneratorsOfMonoid(FullTransformationMonoid(n)) do
+    if L then
+      f := function(x)
+        return ReesMatrixSemigroupElement(reesMatSemi, x[1]^t, 
+          (), x[3]);
+      end;
+      Add(gens, LeftTranslation(T, CompositionMapping(inv, 
+      MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+    else 
+      f := function(x)
+        return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
+          (), x[3]^t);
+      end;
+      Add(gens, RightTranslation(T, CompositionMapping(inv, 
+        MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+    fi;
+  od;
+  return gens;
+end);      
+
+# Generators of translational hull are the direct product of 
+# generators of left/right translations semigroup
+InstallMethod(GeneratorsOfSemigroup, "for the translational hull of a rectangular band", 
+[IsTranslationalHull],
+function(H)
+  local S, leftGens, rightGens, l, r, gens;
+  
+  S := UnderlyingSemigroup(H);
+  if not IsRectangularBand(S) then
+    TryNextMethod();
+  fi;
+
+  leftGens := GeneratorsOfSemigroup(LeftTranslations(S));
+  rightGens := GeneratorsOfSemigroup(RightTranslations(S));
+  gens := [];
+  
+  for l in leftGens do
+    for r in rightGens do
+      Add(gens, TranslationalHullElement(H, l, r));
+    od;
+  od;
+  
+  return gens;
+end);
+
+# Since we have generators, use them. Rank + 1 to beat generic method.
+InstallMethod(TranslationalElements, "for the semigroup of left/right translations of a rectangular band",
+[IsTranslationsSemigroup and IsWholeFamily], 1,
+function(T)
+  if not IsRectangularBand(UnderlyingSemigroup(T)) then
+    TryNextMethod();
+  fi;
+  return Semigroup(GeneratorsOfSemigroup(T));
+end);
+
+# Since we have generators, use them. Rank + 1 to beat generic method.
+InstallMethod(TranslationalElements, "for the translational hull of a rectangular band",
+[IsTranslationalHull and IsWholeFamily], 1,
+function(H)
+  if not IsRectangularBand(UnderlyingSemigroup(H)) then
+    TryNextMethod();
+  fi;
+  return Semigroup(GeneratorsOfSemigroup(H));
+end);
+
+
+#############################################################################
+# 5. Technical methods
+#############################################################################
+
+InstallMethod(ViewObj, "for a semigroup of left or right translations",
+[IsTranslationsSemigroup and IsWholeFamily],
+function(T)
+  Print("<the semigroup of");
+  if IsLeftTranslationsSemigroup(T) then Print(" left");
+  else Print(" right"); fi;
+  Print(" translations of ", ViewString(UnderlyingSemigroup(T)), ">");
+end);
+  
+InstallMethod(ViewObj, "for a semigroup of translations", 
+[IsTranslationsSemigroup], PrintObj);
+
+InstallMethod(PrintObj, "for a semigroup of translations",
+[IsTranslationsSemigroup and HasGeneratorsOfSemigroup],
+function(T)
+  Print("<semigroup of ");
+  if IsLeftTranslationsSemigroup(T) then Print("left ");
+  else Print("right ");
+  fi;
+  Print("translations of ", ViewString(UnderlyingSemigroup(T)), " with ",
+    Length(GeneratorsOfSemigroup(T)),
+    " generators");
+  if Length(GeneratorsOfSemigroup(T)) > 1 then
+    Print("s");
+  fi;
+  Print(">");
+  return;
+end);
+
+InstallMethod(ViewObj, "for a translation", 
+[IsTranslationsSemigroupElement], PrintObj);
+
+InstallMethod(PrintObj, "for a translation",
+[IsTranslationsSemigroupElement],
+function(t)
+  local L, S;
+  L := IsLeftTranslationsSemigroupElement(t); 
+  if L then 
+    S := UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t)));
+    Print("<left ");
+  else 
+    S := UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t)));
+    Print("<right ");
+  fi;
+  
+  Print("translation on ", ViewString(S), ">");
+end);
+
+InstallMethod(ViewObj, "for a translational hull", 
+[IsTranslationalHull], PrintObj);
+
+InstallMethod(PrintObj, "for a translational hull",
+[IsTranslationalHull and IsWholeFamily],
+function(H)
+  Print("<translational hull over ", ViewString(UnderlyingSemigroup(H)), ">");
+end);
+
+InstallMethod(ViewObj, "for a translational hull element", 
+[IsTranslationalHullElement], PrintObj);
+
+InstallMethod(PrintObj, "for a translational hull element",
+[IsTranslationalHullElement],
+function(t)
+  local H;
+  H := TranslationalHullOfFamily(FamilyObj(t));
+  Print("<linked pair of translations on ", ViewString(UnderlyingSemigroup(H)), ">");
+end);
+
+InstallMethod(Enumerator, "for a semigroup of left or right translations",
+[IsTranslationsSemigroup],
+function(T)
+  return Enumerator(TranslationalElements(T));
+end);
+
+InstallMethod(Enumerator, "for a semigroup of translational hull elements",
+[IsTranslationalHull],
+function(H)
+  return Enumerator(TranslationalElements(H));
+end);
+
+InstallMethod(Size, "for the left/right translations of a semigroup",
+[IsTranslationsSemigroup and IsWholeFamily],
+function(T)
+  return Size(TranslationalElements(T));
+end);
+
+InstallMethod(Size, "for the translational hull of a semigroup",
+[IsTranslationalHull and IsWholeFamily],
+function(T)
+  return Size(TranslationalElements(T));
+end);
+
+# Note the order of multiplication
+InstallMethod(\*, "for left translations of a semigroup",
+IsIdenticalObj,
+[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
+function(x, y)
+  return Objectify(FamilyObj(x)!.type, [y![1]*x![1]]);
+end);
+
+InstallMethod(\=, "for left translations of a semigroup",
+IsIdenticalObj,
+[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
+function(x, y) 
+  return x![1] = y![1];
+end);
+
+InstallMethod(\<, "for left translations of a semigroup",
+IsIdenticalObj,
+[IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
+function(x, y) 
+  return x![1] < y![1];
+end);
+
+# Different order of multiplication
+InstallMethod(\*, "for right translations of a semigroup",
+IsIdenticalObj,
+[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
+function(x, y)
+  return Objectify(FamilyObj(x)!.type, [x![1]*y![1]]);
+end);
+
+InstallMethod(\=, "for right translations of a semigroup",
+IsIdenticalObj,
+[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
+function(x, y) 
+  return x![1] = y![1];
+end);
+
+InstallMethod(\<, "for right translations of a semigroup",
+IsIdenticalObj,
+[IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
+function(x, y) 
+  return x![1] < y![1];
+end);
+
+InstallMethod(\^, "for a semigroup element and a translation",
+[IsAssociativeElement, IsTranslationsSemigroupElement],
+function(x, t)
+  local list;
+  if IsLeftTranslationsSemigroupElement(t) then
+    list := AsList(UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t))));
+  else
+    list := AsList(UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t))));
+  fi;
+  if not x in list then
+    Error("Semigroups: ^ for a semigroup element and translation: \n",
+          "the first argument must be an element of the domain of the second");
+  fi;
+  return list[Position(list, x)^t![1]];
+end);
+
+InstallMethod(\*, "for translation hull elements (linked pairs)",
+IsIdenticalObj,
+[IsTranslationalHullElement, IsTranslationalHullElement],
+function(x, y)
+  return Objectify(FamilyObj(x)!.type, [x![1]*y![1], x![2]*y![2]]);
+end);
+
+InstallMethod(\=, "for translational hull elements (linked pairs)",
+IsIdenticalObj,
+[IsTranslationalHullElement, IsTranslationalHullElement],
+function(x, y)
+  return x![1] = y![1] and x![2] = y![2];
+end);
+
+InstallMethod(\<, "for translational hull elements (linked pairs)",
+IsIdenticalObj,
+[IsTranslationalHullElement, IsTranslationalHullElement],
+function(x, y)
+  return x![1] < y![1] or (x![1] = y![1] and x![2] < y![2]);
+end);
+
+InstallMethod(IsWholeFamily, "for a semigroup of translations of a rectangular band",
+[IsTranslationsSemigroup],
+function(T)
+  if IsLeftTranslationsSemigroup(T) then  
+    return Size(T) = Size(LeftTranslationsSemigroupOfFamily(ElementsFamily(
+                                                                FamilyObj(T))));
+  else return Size(T) = Size(RightTranslationsSemigroupOfFamily(ElementsFamily(
+                                                                FamilyObj(T)))); 
+  fi;
+end);
+
+InstallMethod(IsWholeFamily, "for a subsemigroup of the translational hull of a rectangular band",
+[IsTranslationalHull],
+function(H) 
+  return Size(H) = Size(TranslationalHullOfFamily(ElementsFamily(FamilyObj(H))));
+end);
+
+InstallMethod(UnderlyingSemigroup, "for a semigroup of left or right translations",
+[IsTranslationsSemigroup],
+function(T)
+  if IsLeftTranslationsSemigroup(T) then
+    return UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(ElementsFamily(
+                                                                FamilyObj(T))));
+  else 
+    return UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(ElementsFamily(
+                                                                FamilyObj(T))));
+  fi;
+end);
+
+InstallMethod(UnderlyingSemigroup, "for a subsemigroup of the translational hull",
+[IsTranslationalHull],
+function(H)
+    return UnderlyingSemigroup(TranslationalHullOfFamily(FamilyObj(
+      Enumerator(H)[1])));
+end);
+
+InstallMethod(ChooseHashFunction, "for a translational hull element and int",
+[IsTranslationalHullElement, IsInt],
+function(x, hashlen)
+  return rec(func := SEMIGROUPS.HashFunctionForTranslationalHullElements,
+             data := hashlen);
 end);
