@@ -25,7 +25,9 @@ DeclareGlobalFunction("LeftTranslationNC");
 DeclareGlobalFunction("RightTranslation");
 DeclareGlobalFunction("RightTranslationNC");
 DeclareGlobalFunction("TranslationalHullElement");
-
+DeclareGlobalFunction("LeftTranslationsSemigroup");
+DeclareGlobalFunction("RightTranslationsSemigroup");
+DeclareGlobalFunction("TranslationalHullSemigroup");
 
 DeclareSynonym("IsLeftTranslationsSemigroup", IsSemigroup and
                   IsLeftTranslationsSemigroupElementCollection);

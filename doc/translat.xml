@@ -1,8 +1,10 @@
 <#GAPDoc Label="XTranslations">
   <ManSection>
-    <Attr Name="LeftTranslations" Arg="sgrp" 
+    <Attr Name="LeftTranslations" Arg="sgrp" Label="for a finite semigroup"/>
+    <Attr Name="RightTranslations" Arg="sgrp" Label="for a finite semigroup"/>
+    <Func Name="LeftTranslationsSemigroup" Arg="sgrp" 
           Label="for a finite semigroup"/>
-    <Attr Name="RightTranslations" Arg="sgrp" 
+    <Func Name="RightTranslationsSemigroup" Arg="sgrp" 
           Label="for a finite semigroup"/>
     <Returns>The semigroup of X translations of the given semigroup</Returns>
     <Description>
@@ -12,6 +14,9 @@
       rectangular bands <A>S</A> generating sets and sizes of the translations
       semigroups are known. 
       It is not currently possible to calculate this for arbitrary semigroups.
+      <C>LeftTranslationsSemigroup</C> and <C>RightTranslationsSemigroup</C> do
+      the same thing except that they do not attempt to calculate the elements
+      of the translations semigroup.
       <Example><![CDATA[
 gap> S := RectangularBand(3,4);;
 gap> L := LeftTranslationsSemigroup(S);
@@ -31,6 +36,7 @@ gap> GeneratorsOfSemigroup(L);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
 
 <#GAPDoc Label="XTranslation">
   <ManSection>
@@ -66,14 +72,17 @@ Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
 
 <#GAPDoc Label="TranslationalHull">
   <ManSection>
-    <Attr Name="TranslationalHull" Arg="sgrp" 
+    <Attr Name="TranslationalHull" Arg="sgrp" Label="for a finite semigroup">    
+    <Func Name="TranslationalHullSemigroup" Arg="sgrp" 
           Label="for a finite semigroup">
     <Returns>The translational hull of the given semigroup</Returns>
     <Description>
-      Returns the translational hull of the given semigroup. For finite 0-simple
-      semigroups and rectangular bands, explicit generating sets are known. For
-      small arbitrary semigroups, it may be possible to calculate the
-      translational hull.
+      <C>TranslationalHull</C><A>S</A>returns the translational hull of 
+      <A>S</A>. For finite 0-simple semigroups and rectangular bands, explicit 
+      generating sets are known. For small arbitrary semigroups, it may be 
+      possible to calculate the elements of the translational hull. 
+      <C>TranslationalHullSemigroup</C> does the same thing except that it does
+      not attepmt to calculate the elements of the translational hull.
       <Example><![CDATA[
 ]]>
       </Example>
@@ -97,10 +106,10 @@ gap> H := ShallowCopy(AsList(G));;
 gap> Add(H, 0);;
 gap> mat:=List([1..5], x-> List([1..5], y-> Random(H)));;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
-gap> L := LeftTranslations(S);;
-gap> R := RightTranslations(S);;
-gap> l := Representative(TranslationalElements(L));;
-gap> r := Representative(TranslationalElements(R));;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> R := RightTranslationsSemigroup(S);;
+gap> l := Representative(L);;
+gap> r := Representative(R);;
 gap> H := TranslationalHull(S);;
 gap> x := TranslationalHullElement(H, l, r);
 <linked pair of translations on <0-simple regular semigroup of size 101, with 
@@ -125,7 +134,7 @@ gap> x = x * x;
       Bookname="ref">.
       <Example> <![CDATA[
 gap> S := RectangularBand(3,4);;
-gap> l := Representative(TranslationalElements(LeftTranslations(S)));
+gap> l := Representative(LeftTranslations(S));
 <left translation on <simple transformation semigroup of size 12, degree 8 
  with 4 generators>>
 gap> IsTranslationsSemigroupElement(l);
@@ -154,8 +163,8 @@ gap> mat:=List([1..5], x-> List([1..5], y-> Random(H)));;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> L := LeftTranslations(S);;
 gap> R := RightTranslations(S);;
-gap> l := Representative(TranslationalElements(L));;
-gap> r := Representative(TranslationalElements(R));;
+gap> l := Representative(L);;
+gap> r := Representative(R);;
 gap> H := TranslationalHull(S);;
 gap> x := TranslationalHullElement(H, l, r);;
 gap> IsTranslationalHullElement(x);
@@ -204,6 +213,7 @@ gap> H := TranslationalHull(S);;
 gap> IsTranslationalHull(H);
 true
 gap> IsTranslationalHull(S);
+false
 ]]>   </Example>
     </Description>
   </ManSection>
@@ -286,29 +296,5 @@ true
     </Description>
   </ManSection>
 <#/GAPDoc> 
-
-<#GAPDoc Label="TranslationalElements">
-  <ManSection>
-    <Attr Name="TranslationalElements" Arg="S">
-    <Returns>The elements of <A>S</A></Returns>
-    <Description>
-      For <A>S</A> the whole semigroup of left or right translations of a
-      semigroup, or the translational hull of a semigroup, 
-      <C>TranslationalElements</C>(<A>S</A>) returns the calculated semigroup
-      of elements of <A>S</A>, so that <A>S</A> can be manipulated as more than
-      an abstract object.
-      <Example><![CDATA[
-gap> S := RectangularBand(3,3);;
-gap> H := TranslationalHull(S);;
-gap> TranslationalElements(H);
-Semigroup( ... )
-]]>   </Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc>
     
- 
- 
- 
- 
-      
+#EOF      
