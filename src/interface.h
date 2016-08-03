@@ -47,6 +47,9 @@ Obj SEMIGROUP_SIZE(Obj, Obj);
 Obj FP_SEMI_SIZE(Obj, Obj);
 Obj FP_SEMI_WORD_PROBLEM(Obj, Obj, Obj, Obj);
 
-Obj SEMIGROUP_CONG_BY_GEN_PAIRS(Obj, Obj, Obj, Obj);
+Obj FINITE_CONG_BY_GEN_PAIRS(Obj, Obj, Obj, Obj);
+
+Obj FINITE_CONG_NR_CLASSES(Obj, Obj, Obj, Obj);
+Obj FINITE_CONG_PAIR_IN(Obj, Obj, Obj, Obj, Obj, Obj);
 
 #endif // SRC_INTERFACE_H_
