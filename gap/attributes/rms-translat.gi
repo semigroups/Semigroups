@@ -1,13 +1,27 @@
-InstallMethod(TranslationalElements, "for the semigroup of left/right translations of a finite 0-simple semigroup",
-[IsTranslationsSemigroup and IsWholeFamily], 2,
-function(T)
-  if not (IsFinite(UnderlyingSemigroup(T)) and 
-         IsZeroSimpleSemigroup(UnderlyingSemigroup(T))) then
-     TryNextMethod();
-  fi;
-  return Semigroup(GeneratorsOfSemigroup(T));
-end);
+#############################################################################
+##
+#W  rms-translat.gi
+#Y  Copyright (C) 2016                                            Finn Smith
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
 
+#############################################################################
+## This file contains special methods for translations semigroups and 
+## translational hulls of completely 0-simple seimgroups.
+## 
+## These methods are based on the constructions given in 
+## Petrich, M. (1968) 
+## ‘The translational hull of a completely 0-simple semigroup’,
+## Glasgow Mathematical Journal, 9(01), p. 1. 
+## doi: 10.1017/s0017089500000239
+##
+#############################################################################
+
+# The generators are generators of partial transformation monoid to act on the
+# index sets, together with functions to the generators of the group.
 InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left/right translations of a finite 0-simple semigroup",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
@@ -109,10 +123,10 @@ function(T)
   return (n * Size(G) + 1)^n;
 end);
 
-#Finds the transformations on the indices of a finite 0-simple semigroup
-#which are candidates for translations, when combined with a function from
-#the index sets to the group.
-#TODO: swap rows/columns if more convenient.
+# Finds the transformations on the indices of a finite 0-simple semigroup
+# which are candidates for translations, when combined with a function from
+# the index sets to the group.
+# TODO: swap rows/columns if more convenient.
 SEMIGROUPS.FindTranslationTransformations := function(S)
   local iso, reesMatSemi, mat, simpleRows, simpleColumns, nrRows, nrCols,
     transList, partColumns, partColumn, pc, linkedTransList, col, cols, 
@@ -159,9 +173,9 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
     od;
     
     for pc in partColumns do
-      #only check the columns which contain a 1
-      #all-zero column can be made by column not in domain of transformation
-      #no ones in one partial matrix but not in the other...
+      #Only check the columns which contain a 1 since
+      #all-zero column can be made by column not in domain of transformation.
+      #No ones in one partial matrix but not in the other...
       if 1 in pc and ForAll(simpleColumns, c -> 1 in c{[1..Length(pc)]} + pc) then
         return false;
       fi;
@@ -180,7 +194,7 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
     if q[k] <= nrRows then
       q[k] := q[k] + 1;
     elif k > 1 then
-      q := reject(q{[1..k-1]});
+      q := reject(q{[1 .. k - 1]});
     else return 0;
     fi;
     return q;
@@ -208,13 +222,14 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
   od;
   
   linkedTransList := [];
-  #last element of transList will be 0, ignore
-  for k in [1..Length(transList) - 1] do
+  # Given each row transformation, look for matching column transformations.
+  # Last element of transList will be 0, ignore.
+  for k in [1 .. Length(transList) - 1] do
     t := transList[k];
     cols := [];
-    for i in [1..Length(simpleRows[1])] do
+    for i in [1 .. Length(simpleRows[1])] do
       col := [];
-      for j in [1..nrRows] do
+      for j in [1 .. nrRows] do
         if t[j] = nrRows + 1 then
           col[j] := 0;
         else 
@@ -238,13 +253,14 @@ SEMIGROUPS.FindTranslationTransformations := function(S)
     linkedTransList[k] := IteratorOfCartesianProduct(possibleCols);
   od;
   
-  return [transList{[1..Length(transList) - 1]}, linkedTransList];
+  return [transList{[1 .. Length(transList) - 1]}, linkedTransList];
 end;
 
-#TODO: sort out where the failedComponents is going
-#For a pair of transformations on the indices of a completely 0-simple semigroup
-#determine the functions to the group associated with the RMS representation
-#which will form translations when combined with the transformations
+# For a pair of transformations on the indices of a completely 0-simple semigroup
+# determine the functions to the group associated with the RMS representation
+# which will form translations when combined with the transformations.
+# Connected components here means points in the domains which are related
+# through the linked pair condition given by Petrich.
 SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponents)
   local reesmatsemi, mat, gplist, gpsize, nrrows, nrcols, invmat,
         rowtransformedmat, zerorow, zerocol, pos, satisfied,
@@ -317,7 +333,8 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponen
     fi;
   od;
   
-  #check whether these connected components have already been found to fail
+  # Check whether these connected components have already been found to fail
+  # (on the same values).
   for i in [1..Length(failedcomponents)] do
     for j in [1..Length(failedcomponents[i][1])] do
       c := failedcomponents[i][1][j];
@@ -372,6 +389,8 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponen
           fi;
         fi;
       od;
+      # Might need several passes to fill in everything, since the filling in
+      # propagates through the connected components.
       if failedtocomplete then
         funcs := fillin([x,y]);
         x := funcs[1];
@@ -421,6 +440,7 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponen
   #for all choices of x{relpoints}
   #i.e., the only possible problem is an inconsistency 
   #which if it exists will always occur
+  #True for commutative groups
   
   if IsDoneIterator(iterator) then
     return [];
@@ -439,9 +459,9 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponen
   return foundfuncs;
 end;
 
-InstallMethod(TranslationalElements, "for the translational hull of a finite 0-simple semigroup",
-[IsTranslationalHull and IsWholeFamily], 1,
-function(H)
+# Combine the previous methods to form the translational hull
+# Performance suffers greatly as the size of the group increases.
+SEMIGROUPS.TranslationalHullOfZeroSimpleElements := function(H)
   local S, tt, failedcomponents, iterator, transfuncs, unboundpositions, gplist,
         L, R, linkedpairs, i, j, c, linkedpairfromfuncs, iso, inv, nrrows,
         nrcols, reesmatsemi, zero, fl, fr, l, r, t1, t2, funcs, fx, fy,
@@ -458,8 +478,8 @@ function(H)
   nrrows := Length(Matrix(reesmatsemi));
   nrcols := Length(Matrix(reesmatsemi)[1]);
   zero := MultiplicativeZero(reesmatsemi);
-  L := SEMIGROUPS.LeftTranslationsSemigroup(S);
-  R := SEMIGROUPS.RightTranslationsSemigroup(S);
+  L := LeftTranslations(S);
+  R := RightTranslations(S);
   tt := SEMIGROUPS.FindTranslationTransformations(S);
   failedcomponents := [];
   linkedpairs := [];
@@ -537,5 +557,5 @@ function(H)
   od;
   
   return Semigroup(Set(linkedpairs));
-end);
+end;
 
