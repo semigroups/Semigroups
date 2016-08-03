@@ -39,7 +39,7 @@ enum t_semi_subtype_t {
   T_SEMI_SUBTYPE_SEMIGP = 0,
   T_SEMI_SUBTYPE_CONVER = 1,
   T_SEMI_SUBTYPE_UFDATA = 2,
-  T_SEMI_SUBTYPE_FPCONG = 3
+  T_SEMI_SUBTYPE_CONG   = 3
 };
 
 // Get a new GAP Obj containing a pointer to a C++ class of type Class

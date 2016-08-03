@@ -15,6 +15,14 @@
 
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
                  [IsSemigroupCongruence]);
+
+# This is representation for left/right and two-sided congruences of a finite
+# semigroup.
+DeclareRepresentation("IsFiniteCongruenceByGeneratingPairsRep",
+                      IsEquivalenceRelation and IsAttributeStoringRep,
+                      ["range", "genpairs", "type", "report",
+                       "factored_genpairs"]);
+
 DeclareCategory("SEMIGROUPS_IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("SEMIGROUPS_Enumerate", [IsEquivalenceRelation, IsFunction]);
 DeclareOperation("SEMIGROUPS_Enumerate",

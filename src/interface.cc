@@ -709,72 +709,6 @@ Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data) {
   }
 }
 
-/*******************************************************************************
- * finite_cong_get_cpp_cong: function to convert a GAP semigroup and pairs to a
- * C++ Congruence object, and run Todd-Coxeter on it
- ******************************************************************************/
-Congruence* finite_cong_get_cpp_cong (Obj type,
-                                      Obj data,
-                                      Obj genpairs) {
-  assert(IS_PLIST(genpairs));
-  if (data_type(data) != UNKNOWN) {
-
-    initRNams();
-
-    Semigroup* semigroup = data_semigroup(data);
-    semigroup->enumerate(-1, rec_get_report(data));
-
-    std::vector<relation_t> extra;
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(genpairs); i++) {
-      Obj    rel1 = ELM_PLIST(ELM_PLIST(genpairs, i), 1);
-      Obj    rel2 = ELM_PLIST(ELM_PLIST(genpairs, i), 2);
-      word_t lhs, rhs;
-      for (size_t j = 1; j <= (size_t) LEN_PLIST(rel1); j++) {
-        lhs.push_back(INT_INTOBJ(ELM_PLIST(rel1, j)) - 1);
-      }
-      for (size_t j = 1; j <= (size_t) LEN_PLIST(rel2); j++) {
-        rhs.push_back(INT_INTOBJ(ELM_PLIST(rel2, j)) - 1);
-      }
-      extra.push_back(make_pair(lhs, rhs));
-    }
-
-    Congruence* cong = finite_cong_enumerate(std::string(CSTR_STRING(type)),
-                                             semigroup,
-                                             extra,
-                                             rec_get_report(data));
-    return cong;
-  } else {
-    ErrorQuit("finite_cong_get_cpp_cong: not yet implemented,", 0L, 0L);
-    return 0L;
-  }
-}
-
-/*******************************************************************************
- * FINITE_CONG_BY_GEN_PAIRS: GAP-level function to convert a GAP semigroup
- * and pairs to a C++ Congruence object, run Todd-Coxeter on it
- ******************************************************************************/
-Obj FINITE_CONG_BY_GEN_PAIRS (Obj self, Obj type, Obj data, Obj genpairs) {
-  Congruence* cong = finite_cong_get_cpp_cong(type, data, genpairs);
-  return OBJ_CLASS(cong, T_SEMI_SUBTYPE_FPCONG);
-}
-
-Obj FINITE_CONG_NR_CLASSES (Obj self, Obj type, Obj data, Obj genpairs) {
-  Congruence* cong = finite_cong_get_cpp_cong(type, data, genpairs);
-  return INTOBJ_INT(cong->nr_active_cosets() - 1);
-}
-
-Obj FINITE_CONG_PAIR_IN (Obj self, Obj type, Obj data, Obj genpairs,
-                         Obj x, Obj y) {
-  Congruence* cong = finite_cong_get_cpp_cong(type, data, genpairs);
-  word_t lhs, rhs;
-  for (size_t j = 1; j <= (size_t) LEN_PLIST(x); j++) {
-    lhs.push_back(INT_INTOBJ(ELM_PLIST(x, j)) - 1);
-  }
-  for (size_t j = 1; j <= (size_t) LEN_PLIST(y); j++) {
-    rhs.push_back(INT_INTOBJ(ELM_PLIST(y, j)) - 1);
-  }
-  return (cong->word_to_coset(lhs) == cong->word_to_coset(rhs)) ? True : False;
-}
 
 /*******************************************************************************
  * fp_semi_get_cpp_cong: helper function to convert a GAP FP semigroup object
@@ -807,7 +741,7 @@ Congruence* fp_semi_get_cpp_cong (Obj S) {
                           rels,
                           std::vector<relation_t>());
     cong->set_report(rec_get_report(S));
-    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_FPCONG));
+    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
 
   } else {
     cong = CLASS_OBJ<Congruence>(ElmPRec(S, RNam_congruence));
@@ -837,6 +771,8 @@ Obj FP_SEMI_WORD_PROBLEM (Obj self, Obj S, Obj x, Obj y) {
   return (cong->word_to_coset(lhs) == cong->word_to_coset(rhs)) ? True : False;
 }
 
+
+// TODO rename FP_SEMI_SIZE
 Obj SEMIGROUP_CONG (Obj self, Obj S) {
   initRNams();
   assert(IsbPRec(S, RNam_relations));
@@ -863,7 +799,7 @@ Obj SEMIGROUP_CONG (Obj self, Obj S) {
                           INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
                           rels,
                           std::vector<relation_t>());
-    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_FPCONG));
+    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
   } else {
     cong = CLASS_OBJ<Congruence>(ElmPRec(S, RNam_congruence));
   }

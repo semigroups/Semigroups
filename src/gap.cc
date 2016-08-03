@@ -14,6 +14,7 @@
 #include "src/bipart.h"
 #include "src/converter.h"
 #include "fropin.h"
+#include "fincong.h"
 #include "ufdata.hh"
 
 #include "semigroups++/semigroups.h"
@@ -65,7 +66,7 @@ void TSemiObjPrintFunc (Obj o) {
     case T_SEMI_SUBTYPE_UFDATA:
       Pr("<wrapper for instance of C++ UFData class>", 0L, 0L);
       break;
-    case T_SEMI_SUBTYPE_FPCONG:
+    case T_SEMI_SUBTYPE_CONG:
       Pr("<wrapper for instance of C++ Congruence class>", 0L, 0L);
       break;
     default:
@@ -112,7 +113,7 @@ void TSemiObjFreeFunc (Obj o) {
     case T_SEMI_SUBTYPE_UFDATA:
       delete CLASS_OBJ<UFData>(o);
       break;
-    case T_SEMI_SUBTYPE_FPCONG:
+    case T_SEMI_SUBTYPE_CONG:
       delete CLASS_OBJ<Congruence>(o);
       break;
     default:
@@ -159,7 +160,7 @@ void TSemiObjSaveFunc (Obj o) {
         SaveUIntBiggest(uf->find(i));
       }
     }
-    case T_SEMI_SUBTYPE_FPCONG:
+    case T_SEMI_SUBTYPE_CONG:
       //FIXME implement this
     default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_SEMIGP,
              // T_SEMI_SUBTYPE_CONVER do nothing further
@@ -192,7 +193,7 @@ void TSemiObjLoadFunc (Obj o) {
       ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new UFData(*table));
       break;
     }
-    case T_SEMI_SUBTYPE_FPCONG: {
+    case T_SEMI_SUBTYPE_CONG: {
       // FIXME implement this
       break;
     }
@@ -407,12 +408,12 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_MAX_WORD_LENGTH_BY_RANK, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", FINITE_CONG_BY_GEN_PAIRS, 3,
-                          "type, data, extra"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", FINITE_CONG_NR_CLASSES, 3,
-                          "type, data, genpairs"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", FINITE_CONG_PAIR_IN, 5,
-                          "type, data, genpairs, x, y"),
+    GVAR_FUNC_TABLE_ENTRY("fincong.cc", FIN_CONG_NR_CLASSES, 1,
+                          "cong"),
+    GVAR_FUNC_TABLE_ENTRY("fincong.cc", FIN_CONG_PAIR_IN, 2,
+                          "cong, pair"),
+    GVAR_FUNC_TABLE_ENTRY("fincong.cc", FIN_CONG_LOOKUP, 1,
+                          "cong, pair"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", FP_SEMI_SIZE, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", FP_SEMI_WORD_PROBLEM, 3, "S, x, y"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2,
