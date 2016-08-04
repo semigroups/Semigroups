@@ -26,17 +26,17 @@ gap> cong := SemigroupCongruence(S, gens);
 1 generating pairs>
 gap> NonTrivialCongruenceClasses(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `NonTrivialEquivalenceClasses' on 1 argu\
+Error, no 2nd choice method found for `NonTrivialEquivalenceClasses' on 1 argu\
 ments
 gap> gens in cong;
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `in' on 2 arguments
+Error, no 1st choice method found for `in' on 2 arguments
 gap> AsLookupTable(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `AsLookupTable' on 1 arguments
+Error, no 2nd choice method found for `AsLookupTable' on 1 arguments
 gap> NrCongruenceClasses(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `NrEquivalenceClasses' on 1 arguments
+Error, no 2nd choice method found for `NrEquivalenceClasses' on 1 arguments
 gap> class := CongruenceClassOfElement(cong, x);;
 gap> cong2 := SemigroupCongruence(S, [x ^ 2, x ^ 2]);;
 gap> class := CongruenceClassOfElement(cong2, x);;

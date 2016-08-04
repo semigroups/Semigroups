@@ -104,6 +104,28 @@ function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
 end);
 
+# Empty list constructors to override library function
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a semigroup and an empty list",
+[IsSemigroup, IsList and IsEmpty], 1,
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
+end);
+
+InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
+"for a semigroup and an empty list",
+[IsSemigroup, IsList and IsEmpty], 1,
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
+end);
+
+InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
+"for a semigroup and an empty list",
+[IsSemigroup, IsList and IsEmpty], 1,
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
+end);
+
 InstallMethod(IsRightSemigroupCongruence,
 "for a left semigroup congruence with known generating pairs",
 [IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
@@ -160,180 +182,6 @@ function(cong)
   return IsLeftSemigroupCongruence(cong);
 end);
 
-################################################################################
-# We now have some methods which apply to left congruences, right congruences
-# and 2-sided congruences.  These functions behave only slightly differently for
-# these three types of object, so they are installed by the function
-# _InstallMethodsForCongruences, which takes a record describing the type of
-# object the filters apply to (left, right, or 2-sided).
-#
-# See below for the loop where this function is invoked. It is required to do
-# this in a function so that the values _record,
-# _GeneratingPairsOfXSemigroupCongruence, etc are available (as local
-# variables in the function) when the methods installed in this function are
-# actually called. If we don't use a function here, the values in _record etc
-# are unbound by the time the methods are called.
-################################################################################
-
-BindGlobal("_InstallMethodsForCongruences",
-function(_record)
-  local _GeneratingPairsOfXSemigroupCongruence,
-        _HasGeneratingPairsOfXSemigroupCongruence,
-        _XSemigroupCongruence,
-        _IsXSemigroupCongruence,
-        _IsXCongruenceClass;
-
-  _GeneratingPairsOfXSemigroupCongruence :=
-    EvalString(Concatenation("GeneratingPairsOf",
-                             _record.type_string,
-                             "MagmaCongruence"));
-  _HasGeneratingPairsOfXSemigroupCongruence :=
-    EvalString(Concatenation("HasGeneratingPairsOf",
-                             _record.type_string,
-                             "MagmaCongruence"));
-  _XSemigroupCongruence :=
-    EvalString(Concatenation(_record.type_string,
-                             "SemigroupCongruence"));
-  _IsXSemigroupCongruence :=
-    EvalString(Concatenation("Is",
-                             _record.type_string,
-                             "SemigroupCongruence"));
-  _IsXCongruenceClass :=
-    EvalString(Concatenation("Is",
-                             _record.type_string,
-                             "CongruenceClass"));
-
-  ###########################################################################
-  # LatticeOfXCongruences
-  ###########################################################################
-
-  InstallMethod(EvalString(
-  Concatenation("LatticeOf", _record.type_string, "Congruences")),
-  "for a semigroup",
-  [IsSemigroup],
-  S -> SEMIGROUPS.LatticeOfXCongruences(S, _record.type_string, rec()));
-
-  ###########################################################################
-  # XCongruencesOfSemigroup
-  ###########################################################################
-
-  InstallMethod(EvalString(
-  Concatenation(_record.type_string, "CongruencesOfSemigroup")),
-  "for a semigroup",
-  [IsSemigroup],
-  function(S)
-    local lattice_func;
-    if not IsFinite(S) then
-      TryNextMethod();
-    fi;
-    # Find the lattice of congruences, and retrieve
-    # the list of congruences from inside it
-    lattice_func := EvalString(Concatenation("LatticeOf",
-                                             _record.type_string,
-                                             "Congruences"));
-    return lattice_func(S)![2];
-  end);
-
-  ###########################################################################
-  # MinimalXCongruencesOfSemigroup
-  ###########################################################################
-  InstallMethod(EvalString(
-  Concatenation("Minimal", _record.type_string, "CongruencesOfSemigroup")),
-  "for a semigroup",
-  [IsSemigroup],
-  function(S)
-    local lattice;
-    if not IsFinite(S) then
-      TryNextMethod();
-    fi;
-    # Find the lattice of congruences, and retrieve
-    # the list of congruences from inside it
-    lattice := SEMIGROUPS.LatticeOfXCongruences(S, _record.type_string,
-                                                rec(minimal := true));
-    return lattice![2];
-  end);
-
-  ###########################################################################
-  # methods for classes
-  ###########################################################################
-
-  InstallMethod(EquivalenceClassOfElement,
-  Concatenation("for a ", _record.info_string, "semigroup congruence",
-                " with generating pairs and an associative element"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsMultiplicativeElement],
-  function(cong, elm)
-    if not elm in Range(cong) then
-      ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                    "the second arg <elm> must be in the ",
-                    "semigroup of the first arg <cong>,");
-    fi;
-    return EquivalenceClassOfElementNC(cong, elm);
-  end);
-
-  #
-
-
-  #
-
-  InstallMethod(\in,
-  Concatenation("for an associative element and a ",
-                _record.info_string, "congruence class"),
-  [IsMultiplicativeElement, _IsXCongruenceClass],
-  function(elm, class)
-    if not IsFinite(Parent(class)) then
-      TryNextMethod();
-    fi;
-    return [elm, Representative(class)] in EquivalenceClassRelation(class);
-  end);
-
-  #
-
-  #
-
-  InstallMethod(\=,
-  Concatenation("for two ", _record.info_string, "congruence classes"),
-  [_IsXCongruenceClass, _IsXCongruenceClass],
-  function(class1, class2)
-    if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-      return false;
-    fi;
-    return SEMIGROUPS.IsPairInXCong(
-              [Representative(class1), Representative(class2)],
-              EquivalenceClassRelation(class1));
-  end);
-
-  #
-
-  InstallMethod(AsList,
-  Concatenation("for a ", _record.info_string, "congruence class"),
-  [_IsXCongruenceClass],
-  function(class)
-    return ImagesElm(EquivalenceClassRelation(class), Representative(class));
-  end);
-
-  InstallMethod(Enumerator,
-  Concatenation("for a ", _record.info_string, "congruence class"),
-  [_IsXCongruenceClass], AsList);
-
-  #
-
-end);
-# End of _InstallMethodsForCongruences function
-
-for _record in [rec(type_string := "",
-                    info_string := ""),
-                rec(type_string := "Left",
-                    info_string := "left "),
-                rec(type_string := "Right",
-                    info_string := "right ")] do
-  _InstallMethodsForCongruences(_record);
-od;
-
-Unbind(_record);
-MakeReadWriteGlobal("_InstallMethodsForCongruences");
-UnbindGlobal("_InstallMethodsForCongruences");
-
 # Multiplication for congruence classes: only makes sense for 2-sided
 InstallMethod(\*,
 "for two congruence classes",
@@ -343,13 +191,13 @@ function(class1, class2)
     ErrorNoReturn("Semigroups: \*: usage,\n",
                   "the args must be classes of the same congruence,");
   fi;
-  return CongruenceClassOfElement(EquivalenceClassRelation(class1),
-                                  Representative(class1) *
-                                  Representative(class2));
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(class1),
+                                     Representative(class1) *
+                                     Representative(class2));
 end);
 
 InstallMethod(IsSubrelation,
-Concatenation("for two finite congruence by generating pairs reps"),
+"for two finite congruence by generating pairs reps",
 [IsFiniteCongruenceByGeneratingPairsRep,
  IsFiniteCongruenceByGeneratingPairsRep],
 function(cong1, cong2)
@@ -367,8 +215,8 @@ function(cong1, cong2)
 
   # Test whether cong1 contains all the pairs in cong2
   for pair in cong2!.genpairs do
-    fact_pair := List(pair, x-> MinimalFactorization(S, x));
-    if not FIN_CONG_PAIR_IN(cong, fact_pair) then
+    fact_pair := List(pair, x-> MinimalFactorization(Range(cong1), x));
+    if not FIN_CONG_PAIR_IN(cong1, fact_pair) then
       return false;
     fi;
   od;
@@ -427,6 +275,11 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
         parents, pair, badcong, newchildren, newparents, newcong, i, c, p,
         congs, 2congs, image, next, set_func, lattice, join_func, length, found,
         ignore, start, j, k;
+
+  if not IsFinite(S) then
+    ErrorNoReturn("Semigroups: SEMIGROUPS.LatticeOfXCongruences: usage,\n",
+                  "first argument <S> must be a finite semigroup,");
+  fi;
 
   transrep := IsBound(record.transrep) and record.transrep;
   _XSemigroupCongruence := EvalString(Concatenation(type_string,
@@ -667,6 +520,42 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   return lattice;
 end;
 
+InstallMethod(LatticeOfLeftCongruences,
+"for a semigroup", [IsSemigroup],
+S -> SEMIGROUPS.LatticeOfXCongruences(S, "Left", rec()));
+
+InstallMethod(LatticeOfRightCongruences,
+"for a semigroup", [IsSemigroup],
+S -> SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec()));
+
+InstallMethod(LatticeOfCongruences,
+"for a semigroup", [IsSemigroup],
+S -> SEMIGROUPS.LatticeOfXCongruences(S, "", rec()));
+
+InstallMethod(LeftCongruencesOfSemigroup,
+"for a semigroup", [IsSemigroup],
+S -> LatticeOfLeftCongruences(S)![2]);
+
+InstallMethod(RightCongruencesOfSemigroup,
+"for a semigroup", [IsSemigroup],
+S -> LatticeOfRightCongruences(S)![2]);
+
+InstallMethod(CongruencesOfSemigroup,
+"for a semigroup", [IsSemigroup],
+S -> LatticeOfCongruences(S)![2]);
+
+InstallMethod(MinimalLeftCongruencesOfSemigroup,
+"for a semigroup", [IsSemigroup],
+S -> SEMIGROUPS.LatticeOfXCongruences(S, "Left", rec(minimal := true)));
+
+InstallMethod(MinimalRightCongruencesOfSemigroup,
+"for a semigroup", [IsSemigroup],
+S -> SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(minimal := true)));
+
+InstallMethod(MinimalCongruencesOfSemigroup,
+"for a semigroup", [IsSemigroup],
+S -> SEMIGROUPS.LatticeOfXCongruences(S, "", rec(minimal := true)));
+
 InstallMethod(DotString,
 "for a congruence lattice",
 [IsCongruenceLattice],
@@ -747,7 +636,6 @@ InstallMethod(NrEquivalenceClasses,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep], FIN_CONG_NR_CLASSES);
 
-
 InstallMethod(\=, "for finite semigroup congruences by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep,
  IsFiniteCongruenceByGeneratingPairsRep],
@@ -782,7 +670,7 @@ function(cong)
   return classes;
 end);
 
-  InstallMethod(NonTrivialEquivalenceClasses,
+InstallMethod(NonTrivialEquivalenceClasses,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep],
 function(cong)
@@ -884,24 +772,6 @@ function(c1, c2)
   return SEMIGROUPS.JoinCongruences(RightSemigroupCongruence, c1, c2);
 end);
 
-InstallMethod(ViewObj,
-"for finite semigroup congruence by generating pairs rep",
-[IsFiniteCongruenceByGeneratingPairsRep],
-10, #TODO: should the filter just be ranked higher?
-function(cong)
-  local str;
-  if cong!.type = "left" then
-    str := "left ";
-  elif cong!.type = "right" then
-    str := "right ";
-  else
-    str := "";
-  fi;
-  Print("<", str, "semigroup congruence over ");
-  ViewObj(Range(cong));
-  Print(" with ", Size(cong!.genpairs), " generating pairs>");
-end);
-  
 InstallMethod(CongruenceClassType, 
 "for a finite congruence by gen pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep],
@@ -922,8 +792,20 @@ function(cong)
                            and IsFiniteCongruenceClassByGeneratingPairsRep);
 end);
 
+InstallMethod(EquivalenceClassOfElement,
+"for finite congruence by gen pairs rep and multiplicative element",
+[IsFiniteCongruenceByGeneratingPairsRep, IsMultiplicativeElement],
+function(cong, elm)
+  if not elm in Range(cong) then
+    ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
+                  "the second arg <elm> must be in the ",
+                  "semigroup of the first arg <cong>,");
+  fi;
+  return EquivalenceClassOfElementNC(cong, elm);
+end);
+
 InstallMethod(EquivalenceClassOfElementNC,
-"for finite congruence by gen pairs rep and mult element",
+"for finite congruence by gen pairs rep and multiplicative element",
 [IsFiniteCongruenceByGeneratingPairsRep, IsMultiplicativeElement],
 function(cong, elm)
   local fam, class;
@@ -940,6 +822,41 @@ function(cong, elm)
   return class;
 end);
 
+InstallMethod(\in,
+"for a multiplicative element and a finite congruence class by gen pairs rep",
+[IsMultiplicativeElement, IsFiniteCongruenceClassByGeneratingPairsRep],
+function(elm, class)
+  return [elm, Representative(class)] in EquivalenceClassRelation(class);
+end);
+
+InstallMethod(\=,
+"for two finite congruence classes by gen pairs rep",
+[IsFiniteCongruenceClassByGeneratingPairsRep,
+ IsFiniteCongruenceClassByGeneratingPairsRep],
+function(class1, class2)
+  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+    return false;
+  fi;
+  return FiniteCongruenceClassCosetId(class1)
+         = FiniteCongruenceClassCosetId(class2);
+end);
+
+InstallMethod(AsList,
+"for a finite congruence class by gen pairs rep",
+[IsFiniteCongruenceClassByGeneratingPairsRep],
+function(class)
+  local cong, partition, coset_id;
+  cong := EquivalenceClassRelation(class);
+  partition := FiniteCongruencePartition(cong);
+  coset_id := FiniteCongruenceClassCosetId(class);
+  return partition[coset_id]; # TODO: convert from numbers to elements
+end);
+
+InstallMethod(Enumerator,
+"for a finite congruence class by gen pairs rep",
+[IsFiniteCongruenceClassByGeneratingPairsRep],
+AsList);
+
 InstallMethod(FiniteCongruenceClassCosetId, 
 "for a finite congruence class by gen pairs rep",
 [IsFiniteCongruenceClassByGeneratingPairsRep],
@@ -951,4 +868,3 @@ InstallMethod(Size,
 function(class)
   return 5;
 end);
-
