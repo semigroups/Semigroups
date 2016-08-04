@@ -50,13 +50,13 @@
 SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
   local pair, filter, set_pairs, fam, cong, report, range;
 
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
-  
+
   # Check that the pairs are all lists of length 2
   for pair in genpairs do
-    if not IsList(pair) or Length(pair) <> 2 
+    if not IsList(pair) or Length(pair) <> 2
         or not pair[1] in S or not pair[2] in S then
       ErrorNoReturn("");
     fi;
@@ -82,16 +82,16 @@ SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
   # Create the default type for the elements.
   cong := Objectify(NewType(fam,
           IsFiniteCongruenceByGeneratingPairsRep and filter),
-                    rec(genpairs := Immutable(genpairs), 
+                    rec(genpairs := Immutable(genpairs),
                         report := SEMIGROUPS.OptionsRec(S).report,
                         type := type,
                         range := GenericSemigroupData(S)));
   SetSource(cong, S);
   SetRange(cong, S);
   set_pairs(cong, Immutable(genpairs));
-  
+
   # TODO put this in the C code
-  cong!.factored_genpairs := List(genpairs, x -> [MinimalFactorization(S, x[1]), 
+  cong!.factored_genpairs := List(genpairs, x -> [MinimalFactorization(S, x[1]),
                                                   MinimalFactorization(S, x[2])]);
 
   return cong;
@@ -228,49 +228,10 @@ function(_record)
 
   #
 
-  SEMIGROUPS.IsPairInXCong := function(pair, cong)
-    local S, p1, p2, table, lookfunc;
-
-    S := Range(cong);
-    p1 := Position(GenericSemigroupData(S), pair[1]);
-    p2 := Position(GenericSemigroupData(S), pair[2]);
-
-    # Use lookup table if available
-    if HasAsLookupTable(cong) then
-      table := AsLookupTable(cong);
-      return table[p1] = table[p2];
-    else
-      # Otherwise, begin calculating the lookup table and look for this pair
-      lookfunc := function(data)
-        return UF_FIND(data!.ufdata, p1)
-               = UF_FIND(data!.ufdata, p2);
-      end;
-      return SEMIGROUPS_Enumerate(cong, lookfunc)!.found;
-    fi;
-  end;
-
   #
 
 
   #
-
-  InstallMethod(SEMIGROUPS_Enumerate,
-  Concatenation("for a ", _record.info_string, "semigroup congruence",
-                " with known generating pairs and a function"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsFunction],
-  function(cong, lookfunc)
-    # If we have a lookup table, then we have complete information
-    # and there is nothing left to enumerate
-    if HasAsLookupTable(cong) then
-      return fail;
-    fi;
-    # If the congruence data does not exist, then we need to set it up
-    if not IsBound(cong!.data) then
-      SEMIGROUPS.SetupCongData(cong);
-    fi;
-    return SEMIGROUPS_Enumerate(cong!.data, lookfunc);
-  end);
 
   #
 
@@ -285,17 +246,6 @@ function(_record)
 
 
   #
-
-  InstallMethod(ViewObj,
-  Concatenation("for a ", _record.info_string,
-                "semigroup congruence with generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong)
-    Print("<", _record.info_string, "semigroup congruence over ");
-    ViewObj(Range(cong));
-    Print(" with ", Size(_GeneratingPairsOfXSemigroupCongruence(cong)),
-          " generating pairs>");
-  end);
 
   #
 
@@ -326,7 +276,7 @@ function(_record)
   ###########################################################################
   # LatticeOfXCongruences
   ###########################################################################
-  
+
   InstallMethod(EvalString(
   Concatenation("LatticeOf", _record.type_string, "Congruences")),
   "for a semigroup",
@@ -336,7 +286,7 @@ function(_record)
   ###########################################################################
   # XCongruencesOfSemigroup
   ###########################################################################
-  
+
   InstallMethod(EvalString(
   Concatenation(_record.type_string, "CongruencesOfSemigroup")),
   "for a semigroup",
@@ -884,7 +834,7 @@ function(latt, opts)
 
   return str;
 end);
-  
+
 InstallMethod(\in,
 "for dense list and finite semigroup congruence by generating pairs rep",
 [IsDenseList, IsFiniteCongruenceByGeneratingPairsRep],
@@ -906,7 +856,7 @@ end);
 InstallMethod(NrEquivalenceClasses,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep], FIN_CONG_NR_CLASSES);
-  
+
 InstallMethod(AsLookupTable,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep], FIN_CONG_LOOKUP);
@@ -915,7 +865,7 @@ InstallMethod(\=, "for finite semigroup congruences by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep,
  IsFiniteCongruenceByGeneratingPairsRep],
 function(c1, c2)
-  if c1!.type = c2!.type then 
+  if c1!.type = c2!.type then
     return Range(c1) = Range(c2)
            and ForAll(c1!.factored_genpairs,
                       pair -> FIN_CONG_PAIR_IN(c2, pair))
@@ -967,7 +917,7 @@ end);
 
 SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
   local pairs, cong, ufdata, uf2, i, ii, next, newtable;
-  
+
   if Range(c1) <> Range(c2) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.JoinCongruences: usage,\n",
                   "congruences must be defined over the same semigroup,");
@@ -975,7 +925,7 @@ SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
 
   pairs := Concatenation(ShallowCopy(c1!.genpairs), ShallowCopy(c2!.genpairs));
   cong := constructor(Range(c1), pairs);
-  
+
 # TODO redo this!
   # Join the lookup tables
   #if HasAsLookupTable(c1) and HasAsLookupTable(c2) then
@@ -1003,46 +953,64 @@ SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
   #    fi;
   #  od;
   #  SetAsLookupTable(cong, newtable);
-  #fi; # TODO if one or the other does not have the lookup could do TC on 
+  #fi; # TODO if one or the other does not have the lookup could do TC on
       # which ever is smaller using the pairs of the other.
   return cong;
 end;
 
-InstallMethod(JoinSemigroupCongruences, 
+InstallMethod(JoinSemigroupCongruences,
 "for finite (2-sided) semigroup congruences by generating pairs rep",
-[IsFiniteCongruenceByGeneratingPairsRep and IsSemigroupCongruence, 
+[IsFiniteCongruenceByGeneratingPairsRep and IsSemigroupCongruence,
  IsFiniteCongruenceByGeneratingPairsRep and IsSemigroupCongruence],
 function(c1, c2)
-  if c1!.type <> c2!.type or c1!.type <> "twosided" then 
+  if c1!.type <> c2!.type or c1!.type <> "twosided" then
     TryNextMethod(); # FIXME Error?
-  elif c1 = c2 then 
+  elif c1 = c2 then
     return c1;
   fi;
   return SEMIGROUPS.JoinCongruences(SemigroupCongruence, c1, c2);
 end);
 
-InstallMethod(JoinLeftSemigroupCongruences, 
-"for finite left semigroup congruences by generating pairs rep",
-[IsFiniteCongruenceByGeneratingPairsRep and IsLeftSemigroupCongruence, 
+InstallMethod(JoinLeftSemigroupCongruences,
+"for finite (left) semigroup congruences by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep and IsLeftSemigroupCongruence,
  IsFiniteCongruenceByGeneratingPairsRep and IsLeftSemigroupCongruence],
 function(c1, c2)
-  if c1!.type <> c2!.type or c1!.type <> "left" then 
+  if c1!.type <> c2!.type or c1!.type <> "left" then
     TryNextMethod(); # FIXME Error?
-  elif c1 = c2 then 
+  elif c1 = c2 then
     return c1;
   fi;
   return SEMIGROUPS.JoinCongruences(LeftSemigroupCongruence, c1, c2);
 end);
 
-InstallMethod(JoinRightSemigroupCongruences, 
-"for finite right semigroup congruences by generating pairs rep",
-[IsFiniteCongruenceByGeneratingPairsRep and IsRightSemigroupCongruence, 
+InstallMethod(JoinRightSemigroupCongruences,
+"for finite (right) semigroup congruences by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep and IsRightSemigroupCongruence,
  IsFiniteCongruenceByGeneratingPairsRep and IsRightSemigroupCongruence],
 function(c1, c2)
-  if c1!.type <> c2!.type or c1!.type <> "right" then 
+  if c1!.type <> c2!.type or c1!.type <> "right" then
     TryNextMethod(); # FIXME Error?
-  elif c1 = c2 then 
+  elif c1 = c2 then
     return c1;
   fi;
   return SEMIGROUPS.JoinCongruences(RightSemigroupCongruence, c1, c2);
+end);
+
+InstallMethod(ViewObj,
+"for finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep],
+10, #TODO: should the filter just be ranked higher?
+function(cong)
+  local str;
+  if cong!.type = "left" then
+    str := "left";
+  elif cong!.type = "right" then
+    str := "right";
+  else
+    str := "";
+  fi;
+  Print("<", str, "semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with ", Size(cong!.genpairs), " generating pairs>");
 end);
