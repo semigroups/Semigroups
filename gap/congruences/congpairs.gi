@@ -57,7 +57,7 @@ local fam, cong, type, pair;
     TryNextMethod();
   fi;
   
-  # Check that the pairs are all lists of length length 2
+  # Check that the pairs are all lists of length 2
   for pair in genpairs do
     if not IsList(pair) or Length(pair) <> 2 
         or not pair[1] in S or not pair[2] in S then
@@ -978,7 +978,7 @@ SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
 end;
 
 InstallMethod(JoinSemigroupCongruences, 
-"for finite semigroup (2-sided) congruences by generating pairs rep",
+"for finite (2-sided) semigroup congruences by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep and IsSemigroupCongruence, 
  IsFiniteCongruenceByGeneratingPairsRep and IsSemigroupCongruence],
 function(c1, c2)
@@ -991,7 +991,7 @@ function(c1, c2)
 end);
 
 InstallMethod(JoinLeftSemigroupCongruences, 
-"for finite semigroup (left) congruences by generating pairs rep",
+"for finite left semigroup congruences by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep and IsLeftSemigroupCongruence, 
  IsFiniteCongruenceByGeneratingPairsRep and IsLeftSemigroupCongruence],
 function(c1, c2)
@@ -1004,7 +1004,7 @@ function(c1, c2)
 end);
 
 InstallMethod(JoinRightSemigroupCongruences, 
-"for finite semigroup (right) congruences by generating pairs rep",
+"for finite right semigroup congruences by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep and IsRightSemigroupCongruence, 
  IsFiniteCongruenceByGeneratingPairsRep and IsRightSemigroupCongruence],
 function(c1, c2)

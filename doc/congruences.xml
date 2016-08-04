@@ -306,7 +306,7 @@ gap> LatticeOfRightCongruences(S);
       <A>cong</A> is defined.<P/>
 
       Each position in the list corresponds to an element of the semigroup (in
-      the order defined by <C>SSortedList</C>) and the integer at that position
+      a consistent canonical order) and the integer at that position
       is a unique identifier for that element's congruence class under
       <A>cong</A>.  Hence, two elements are congruent if and only if they have
       the same number at their two positions in the list.<P/>
