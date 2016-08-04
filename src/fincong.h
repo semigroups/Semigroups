@@ -12,6 +12,7 @@
 
 Obj FIN_CONG_NR_CLASSES(Obj, Obj);
 Obj FIN_CONG_PAIR_IN(Obj, Obj, Obj);
-Obj FIN_CONG_LOOKUP(Obj, Obj);
+Obj FIN_CONG_LOOKUP_PART(Obj, Obj);
+Obj FIN_CONG_CLASS_COSET_ID(Obj, Obj);
 
 #endif // SRC_FINCONG_H_

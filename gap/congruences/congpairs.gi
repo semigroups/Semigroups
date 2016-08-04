@@ -11,41 +11,27 @@
 ## generating pairs, using a pair enumeration and union-find method.
 ##
 #############################################################################
-##
-## A congruence here is defined by a semigroup and a list of generating pairs.
-## Most of the work is done by SEMIGROUPS_Enumerate, a hidden function which
-## begins to multiply known pairs in the congruence by the semigroup's
-## generators, checking its results periodically against a supplied "lookfunc"
-## which checks whether some condition has been fulfilled.
-##
-## Any function which requires information about a congruence may call
-## SEMIGROUPS_Enumerate with a lookfunc to allow it to terminate as soon as the
-## necessary information is found, without doing extra work.  Information found
-## so far is then stored in a "congruence data" object, and work may be resumed
-## in subsequent calls to SEMIGROUPS_Enumerate.
-##
-## If all the pairs of the congruence have been found, the congruence data
-## object is discarded, and a lookup table is stored, giving complete
-## information about the congruence classes.  If a lookup table is available,
-## it is always used instead of SEMIGROUPS_Enumerate, which will always return
-## fail from then on.
-##
-## Most methods in this file apply to (two-sided) congruences, as well as left
-## congruences and right congruences.  The _InstallMethodsForCongruences
-## function is called three times when Semigroups is loaded, installing slightly
-## different methods for left, right, and two-sided congruences.  Of course a
-## left congruence may turn out also to be a right congruence, and so on, but
-## the properties HasGeneratingPairsOf(Left/Right)MagmaCongruence allow us to
-## determine which type of relation we are treating it as.
-##
-## See J.M. Howie's "Fundamentals of Semigroup Theory" Section 1.5, and see
-## Michael Torpey's MSc thesis "Computing with Semigroup Congruences" Chapter 2
-## (www-circa.mcs.st-and.ac.uk/~mct25/files/mt5099-report.pdf) for more details.
-##
-#############################################################################
+
+#TODO: A method for MeetXSemigroupCongruences
 
 # This function creates the congruence data object for cong.  It should only
 # be called once.
+
+InstallMethod(FiniteCongruenceLookup,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep], 
+function(cong) 
+  FIN_CONG_LOOKUP_PART(cong);
+  return cong!.__fin_cong_lookup;
+end);
+
+InstallMethod(FiniteCongruencePartition,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep], 
+function(cong) 
+  FIN_CONG_LOOKUP_PART(cong);
+  return cong!.__fin_cong_partition;
+end);
 
 SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
   local pair, filter, set_pairs, fam, cong, report, range;
@@ -174,12 +160,6 @@ function(cong)
   return IsLeftSemigroupCongruence(cong);
 end);
 
-
-# _GenericCongruenceEquality tests equality for any combination of left, right
-# and 2-sided congruences, so it is installed for the six combinations below.
-# If the arguments are the same type of congruence, a different method is used
-
-
 ################################################################################
 # We now have some methods which apply to left congruences, right congruences
 # and 2-sided congruences.  These functions behave only slightly differently for
@@ -222,39 +202,6 @@ function(_record)
     EvalString(Concatenation("Is",
                              _record.type_string,
                              "CongruenceClass"));
-
-  #
-
-
-  #
-
-  #
-
-
-  #
-
-  #
-
-
-  #
-
-
-  #
-
-
-  #
-
-
-  #
-
-  #
-
-
-  #
-
-  #TODO: A method for MeetXSemigroupCongruences
-
-  #
 
   InstallMethod(IsSubrelation,
   Concatenation("for two ", _record.info_string,
@@ -343,25 +290,6 @@ function(_record)
 
   #
 
-  InstallMethod(EquivalenceClassOfElementNC,
-  Concatenation("for a ", _record.info_string, "semigroup congruence",
-                " with generating pairs and an associative element"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsMultiplicativeElement],
-  function(cong, elm)
-    local fam, class;
-    fam := FamilyObj(Range(cong));
-    class := Objectify(NewType(fam, _IsXCongruenceClass
-                               and IsEquivalenceClassDefaultRep),
-                       rec(rep := elm));
-    SetParentAttr(class, Range(cong));
-    SetEquivalenceClassRelation(class, cong);
-    SetRepresentative(class, elm);
-    if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
-      SetIsFinite(class, true);
-    fi;
-    return class;
-  end);
 
   #
 
@@ -377,19 +305,6 @@ function(_record)
   end);
 
   #
-
-  InstallMethod(Size,
-  Concatenation("for a ", _record.info_string, "congruence class"),
-  [_IsXCongruenceClass],
-  function(class)
-    local p, tab;
-    if not IsFinite(Parent(class)) then
-      TryNextMethod();
-    fi;
-    p := Position(GenericSemigroupData(Parent(class)), Representative(class));
-    tab := AsLookupTable(EquivalenceClassRelation(class));
-    return Number(tab, n -> n = tab[p]);
-  end);
 
   #
 
@@ -453,6 +368,7 @@ end);
 ###########################################################################
 # IsSubrelation methods between 1-sided and 2-sided congruences
 ###########################################################################
+
 InstallMethod(IsSubrelation,
 "for semigroup congruence and left semigroup congruence",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
@@ -857,9 +773,6 @@ InstallMethod(NrEquivalenceClasses,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep], FIN_CONG_NR_CLASSES);
 
-InstallMethod(AsLookupTable,
-"for a finite semigroup congruence by generating pairs rep",
-[IsFiniteCongruenceByGeneratingPairsRep], FIN_CONG_LOOKUP);
 
 InstallMethod(\=, "for finite semigroup congruences by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep,
@@ -1014,3 +927,54 @@ function(cong)
   ViewObj(Range(cong));
   Print(" with ", Size(cong!.genpairs), " generating pairs>");
 end);
+  
+InstallMethod(CongruenceClassType, 
+"for a finite congruence by gen pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep],
+function(cong)
+  local IsXCongruenceClass;
+
+  if cong!.type = "right" then 
+    IsXCongruenceClass := IsRightCongruenceClass;
+  elif cong!.type = "left" then  
+    IsXCongruenceClass := IsLeftCongruenceClass;
+  else
+    Assert(1, cong!.type = "twosided");
+    IsXCongruenceClass := IsCongruenceClass;
+  fi;
+
+  return NewType(FamilyObj(Range(cong)), 
+                           IsXCongruenceClass
+                           and IsFiniteCongruenceClassByGeneratingPairsRep);
+end);
+
+InstallMethod(EquivalenceClassOfElementNC,
+"for finite congruence by gen pairs rep and mult element",
+[IsFiniteCongruenceByGeneratingPairsRep, IsMultiplicativeElement],
+function(cong, elm)
+  local fam, class;
+  
+  fam := FamilyObj(Range(cong));
+  class := Objectify(CongruenceClassType(cong),
+                     rec(rep := elm, cong := cong));
+
+  SetParentAttr(class, Range(cong));
+  SetEquivalenceClassRelation(class, cong);
+  SetRepresentative(class, elm);
+  SetIsFinite(class, true);
+
+  return class;
+end);
+
+InstallMethod(FiniteCongruenceClassCosetId, 
+"for a finite congruence class by gen pairs rep",
+[IsFiniteCongruenceClassByGeneratingPairsRep],
+FIN_CONG_CLASS_COSET_ID);
+
+InstallMethod(Size,
+"for a finite congruence class by gen pairs rep",
+[IsFiniteCongruenceClassByGeneratingPairsRep],
+function(class)
+  return 5;
+end);
+

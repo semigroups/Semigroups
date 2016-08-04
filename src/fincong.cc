@@ -10,8 +10,6 @@
 
 #include "semigroups++/tc.h"
 
-static std::vector<size_t> __lookup;
-
 bool fin_cong_has_cpp_cong (Obj cong) {
   initRNams();
   return IsbPRec(cong, RNam_congruence)
@@ -23,6 +21,13 @@ inline Semigroup* cong_range (Obj o) {
   // assert(IsSemigroupCongruenceByGeneratingPairsRep(o));
   Obj data = ElmPRec(o, RNam_fin_cong_range);
   return data_semigroup(data);
+}
+
+inline Converter* cong_range_converter (Obj o) {
+  initRNams();
+  // assert(IsSemigroupCongruenceByGeneratingPairsRep(o));
+  Obj data = ElmPRec(o, RNam_fin_cong_range);
+  return data_converter(data);
 }
 
 inline bool cong_range_type (Obj o) {
@@ -63,6 +68,7 @@ void fin_cong_init (Obj o) {
                                              range,
                                              extra,
                                              rec_get_report(o));
+    cong->compress();
 
     AssPRec(o, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
   } else {
@@ -105,7 +111,12 @@ Obj FIN_CONG_PAIR_IN (Obj self, Obj o, Obj pair) {
   }
 }
 
-Obj FIN_CONG_LOOKUP (Obj self, Obj o) {
+Obj FIN_CONG_LOOKUP_PART (Obj self, Obj o) {
+//TODO assert o is correct type of object
+  if (IsbPRec(o, RNam_fin_cong_lookup)) {
+    assert(IsbPRec(o, RNam_fin_cong_partition));
+    return True;
+  }
 
   if (cong_range_type(o) != UNKNOWN) {
     Congruence* cong = fin_cong_get_cpp(o);
@@ -113,22 +124,53 @@ Obj FIN_CONG_LOOKUP (Obj self, Obj o) {
     bool report = rec_get_report(o);
     word_t word;
 
-    __lookup.clear();
-    __lookup.resize(range->size());
-    size_t next = 1;
+    Obj lookup = NEW_PLIST(T_PLIST_CYC, range->size());
+    SET_LEN_PLIST(lookup, range->size());
 
-    Obj out = NEW_PLIST(T_PLIST_CYC, range->size());
-    SET_LEN_PLIST(out, range->size());
+    Obj partition = NEW_PLIST(T_PLIST_HOM, cong->nr_active_cosets());
+    SET_LEN_PLIST(partition, cong->nr_active_cosets() - 1);
+
+    for (size_t i = 0; i < cong->nr_active_cosets(); i++) {
+      Obj next = NEW_PLIST(T_PLIST_CYC, 0);
+      SET_LEN_PLIST(next, 0);
+      SET_ELM_PLIST(partition, i + 1, next);
+      CHANGED_BAG(partition);
+    }
 
     for (size_t i = 0; i < range->size(); i++) {
       range->factorisation(word, i, report);
       size_t coset = cong->word_to_coset(word);
-      if (__lookup[coset] == 0) {
-        __lookup[coset] = next++;
-      }
-      SET_ELM_PLIST(out, i + 1, INTOBJ_INT(__lookup[coset]));
+      SET_ELM_PLIST(lookup, i + 1, INTOBJ_INT(coset));
+
+      Obj c = ELM_PLIST(partition, coset);
+      AssPlist(c, LEN_PLIST(c) + 1, INTOBJ_INT(i + 1));
+      CHANGED_BAG(partition);
+
       word.clear();
     }
-    return out;
+    AssPRec(o, RNam_fin_cong_partition, partition);
+    AssPRec(o, RNam_fin_cong_lookup, lookup);
+  }
+}
+
+Obj FIN_CONG_CLASS_COSET_ID (Obj self, Obj o) {
+  //TODO assert o is correct type of object
+
+  Obj rep      = ElmPRec(o, RNam_rep);
+  Obj cong_gap = ElmPRec(o, RNam_cong);
+  Obj data     = ElmPRec(cong_gap, RNam_fin_cong_range);
+
+  if (IsbPRec(o, RNam_fin_cong_lookup)) {
+    Obj lookup = ElmPRec(cong_gap, RNam_fin_cong_lookup);
+    return ELM_PLIST(lookup, INT_INTOBJ(SEMIGROUP_POSITION(self, data, rep)));
+  } else if (cong_range_type(cong_gap) != UNKNOWN) {
+    Congruence* cong = fin_cong_get_cpp(cong_gap);
+    Semigroup* range = cong_range(cong_gap);
+
+    word_t word;
+    range->factorisation(word,
+                         INT_INTOBJ(SEMIGROUP_POSITION(self, data, rep)) - 1,
+                         rec_get_report(o));
+    return INTOBJ_INT(cong->word_to_coset(word));
   }
 }

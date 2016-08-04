@@ -23,6 +23,22 @@ DeclareRepresentation("IsFiniteCongruenceByGeneratingPairsRep",
                       ["range", "genpairs", "type", "report",
                        "factored_genpairs"]);
 
+DeclareAttribute("FiniteCongruenceLookup", 
+                 IsFiniteCongruenceByGeneratingPairsRep); 
+DeclareAttribute("FiniteCongruencePartition", 
+                 IsFiniteCongruenceByGeneratingPairsRep); 
+
+DeclareRepresentation("IsFiniteCongruenceClassByGeneratingPairsRep",
+                      IsEquivalenceClass and IsAttributeStoringRep,
+                      ["rep", "cong"]);
+
+DeclareAttribute("FiniteCongruenceClassCosetId",
+                 IsFiniteCongruenceClassByGeneratingPairsRep);
+
+DeclareAttribute("CongruenceClassType",
+                 IsFiniteCongruenceByGeneratingPairsRep);
+
+
 DeclareCategory("SEMIGROUPS_IsSemigroupCongruenceData", IsRecord);
 DeclareOperation("SEMIGROUPS_Enumerate", [IsEquivalenceRelation, IsFunction]);
 DeclareOperation("SEMIGROUPS_Enumerate",
