@@ -47,11 +47,8 @@
 # This function creates the congruence data object for cong.  It should only
 # be called once.
 
-InstallMethod(SemigroupCongruenceByGeneratingPairs, 
-"for a semigroup and list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList],
-function(S, genpairs)
-local fam, cong, type, pair;
+SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
+  local pair, filter, set_pairs, fam, cong, report, range;
 
   if not IsFinite(S) then 
     TryNextMethod();
@@ -65,26 +62,60 @@ local fam, cong, type, pair;
     fi;
   od;
 
+  if type = "left" then
+    filter := IsLeftSemigroupCongruence;
+    set_pairs := SetGeneratingPairsOfLeftMagmaCongruence;
+  elif type = "right" then
+    filter := IsRightSemigroupCongruence;
+    set_pairs := SetGeneratingPairsOfRightMagmaCongruence;
+  elif type = "twosided" then
+    filter := IsSemigroupCongruence;
+    set_pairs := SetGeneratingPairsOfMagmaCongruence;
+  else
+    ErrorNoReturn("Semigroups: SEMIGROUPS.CongByGenPairs: usage,\n",
+                  "<type> must be \"left\", \"right\", or \"twosided\",");
+  fi;
+
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
 
   # Create the default type for the elements.
   cong := Objectify(NewType(fam,
-          IsFiniteCongruenceByGeneratingPairsRep and
-          IsSemigroupCongruence), 
+          IsFiniteCongruenceByGeneratingPairsRep and filter),
                     rec(genpairs := Immutable(genpairs), 
                         report := SEMIGROUPS.OptionsRec(S).report,
-                        type := "twosided",
+                        type := type,
                         range := GenericSemigroupData(S)));
   SetSource(cong, S);
   SetRange(cong, S);
-  SetGeneratingPairsOfMagmaCongruence(cong, Immutable(genpairs));
+  set_pairs(cong, Immutable(genpairs));
   
   # TODO put this in the C code
   cong!.factored_genpairs := List(genpairs, x -> [MinimalFactorization(S, x[1]), 
                                                   MinimalFactorization(S, x[2])]);
 
   return cong;
+end;
+
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a semigroup and a list of generating pairs", IsElmsColls,
+[IsSemigroup, IsList],
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
+end);
+
+InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
+"for a semigroup and a list of generating pairs", IsElmsColls,
+[IsSemigroup, IsList],
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
+end);
+
+InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
+"for a semigroup and a list of generating pairs", IsElmsColls,
+[IsSemigroup, IsList],
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
 end);
 
 InstallMethod(IsRightSemigroupCongruence,
