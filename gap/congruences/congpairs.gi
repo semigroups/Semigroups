@@ -761,7 +761,7 @@ function(_record)
     cong := EquivalenceClassRelation(class);
     S := Range(cong);
 
-    if not IsFinite(S) then
+    if not (HasIsFinite(S) and IsFinite(S)) then
       TryNextMethod();
     fi;
 
@@ -879,7 +879,7 @@ function(_record)
                 _record.info_string, "congruence class"),
   [IsMultiplicativeElement, _IsXCongruenceClass],
   function(elm, class)
-    if not IsFinite(Parent(class)) then
+    if not (HasIsFinite(Parent(class)) and IsFinite(Parent(class))) then
       TryNextMethod();
     fi;
     return [elm, Representative(class)] in EquivalenceClassRelation(class);
@@ -892,7 +892,7 @@ function(_record)
   [_IsXCongruenceClass],
   function(class)
     local p, tab;
-    if not IsFinite(Parent(class)) then
+    if not (HasIsFinite(Parent(class)) and IsFinite(Parent(class))) then
       TryNextMethod();
     fi;
     p := Position(GenericSemigroupData(Parent(class)), Representative(class));
