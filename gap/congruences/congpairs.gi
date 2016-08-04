@@ -203,23 +203,6 @@ function(_record)
                              _record.type_string,
                              "CongruenceClass"));
 
-  InstallMethod(IsSubrelation,
-  Concatenation("for two ", _record.info_string,
-                "semigroup congruences with generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong1, cong2)
-    # Tests whether cong1 contains all the pairs in cong2
-    if Range(cong1) <> Range(cong2) then
-      ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                    "congruences must be defined over the same semigroup,");
-    fi;
-    return ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
-                  pair -> SEMIGROUPS.IsPairInXCong(pair, cong1));
-  end);
-
-  #
-
   ###########################################################################
   # LatticeOfXCongruences
   ###########################################################################
@@ -365,41 +348,32 @@ function(class1, class2)
                                   Representative(class2));
 end);
 
-###########################################################################
-# IsSubrelation methods between 1-sided and 2-sided congruences
-###########################################################################
-
 InstallMethod(IsSubrelation,
-"for semigroup congruence and left semigroup congruence",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
-function(cong, lcong)
-  # Tests whether cong contains all the pairs in lcong
-  if Range(cong) <> Range(lcong) then
+Concatenation("for two finite congruence by generating pairs reps"),
+[IsFiniteCongruenceByGeneratingPairsRep,
+ IsFiniteCongruenceByGeneratingPairsRep],
+function(cong1, cong2)
+  local pair, fact_pair;
+  # Only valid for certain combinations of types
+  if not (cong1!.type = cong2!.type or cong1!.type = "twosided") then
+    TryNextMethod();
+  fi;
+
+  # Check semigroup
+  if Range(cong1) <> Range(cong2) then
     ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
                   "congruences must be defined over the same semigroup,");
   fi;
-  return ForAll(GeneratingPairsOfLeftSemigroupCongruence(lcong),
-                pair -> SEMIGROUPS.IsPairInXCong(pair, cong));
-end);
 
-InstallMethod(IsSubrelation,
-"for semigroup congruence and right semigroup congruence",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
-function(cong, rcong)
-  # Tests whether cong contains all the pairs in rcong
-  if Range(cong) <> Range(rcong) then
-    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                  "congruences must be defined over the same semigroup,");
-  fi;
-  return ForAll(GeneratingPairsOfRightSemigroupCongruence(rcong),
-                pair -> SEMIGROUPS.IsPairInXCong(pair, cong));
+  # Test whether cong1 contains all the pairs in cong2
+  for pair in cong2!.genpairs do
+    fact_pair := List(pair, x-> MinimalFactorization(S, x));
+    if not FIN_CONG_PAIR_IN(cong, fact_pair) then
+      return false;
+    fi;
+  od;
+  return true;
 end);
-
-###########################################################################
-# Some individual methods for congruences
-###########################################################################
 
 InstallMethod(PrintObj,
 "for a left semigroup congruence with known generating pairs",
@@ -917,9 +891,9 @@ InstallMethod(ViewObj,
 function(cong)
   local str;
   if cong!.type = "left" then
-    str := "left";
+    str := "left ";
   elif cong!.type = "right" then
-    str := "right";
+    str := "right ";
   else
     str := "";
   fi;
