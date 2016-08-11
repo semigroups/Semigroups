@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  congruences.gi
+#W  cong.gi
 #Y  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -18,7 +18,7 @@
 ##       congsimple.gi  - (0-)simple semigroups
 ##       conguniv.gi    - Universal congruences
 ##
-## congruences.gd contains declarations for many of these.
+## cong.gd contains declarations for many of these.
 ##
 
 InstallMethod(\= , "for a left and a right semigroup congruence",

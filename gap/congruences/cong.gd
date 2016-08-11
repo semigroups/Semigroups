@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  congruences.gd
+#W  cong.gd
 #Y  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -18,7 +18,7 @@
 ##       congsimple.gi  - (0-)simple semigroups
 ##       conguniv.gi    - Universal congruences
 ##
-## Some general functions are also implemented in congruences.gi
+## Some general functions are also implemented in cong.gi
 ##
 
 # Flexible functions for creating congruences
