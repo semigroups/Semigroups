@@ -1009,16 +1009,19 @@ gap> Matrix(S);
   <Description>
     Any semigroup is isomorphic to a transformation semigroup.  If <A>S</A> is a
     semigroup, then this attribute returns an isomorphism from <A>S</A> to a
-    transformation semigroup with some reasonably low rank.<P/>
+    transformation semigroup with some reasonably low degree.<P/>
 
     If <A>S</A> is already a transformation semigroup, and the function fails to
-    find a transformation semigroup with a lower rank than <A>S</A>, then the
+    find a transformation semigroup with a lower degree than <A>S</A>, then the
     identity mapping will be returned.  There is no guarantee that a
-    representation with smallest possible degree is returned.
+    representation with smallest possible degree is returned.<P/>
 
     See also <Ref Attr="SmallDegreeTransformationRepresentation"/>, a faster
     function which may produce a transformation semigroup with higher degree.
     <P/>
+
+    <B>Warning:</B> This function may take a very long time to return an answer
+    if the argument is not a relatively small semigroup. 
 
 <Example><![CDATA[
 gap> S := Semigroup([PBR([[], []], [[], [-1]]),
@@ -1039,16 +1042,19 @@ gap> Range(iso);
   <Description>
     Any semigroup is isomorphic to a transformation semigroup.  If <A>S</A> is a
     semigroup, then this attribute returns an isomorphism from <A>S</A> to a
-    transformation semigroup with some reasonably low rank.<P/>
+    transformation semigroup with some reasonably low degree.<P/>
 
     If <A>S</A> is already a transformation semigroup, and the function fails to
-    find a transformation semigroup with a lower rank than <A>S</A>, then the
+    find a transformation semigroup with a lower degree than <A>S</A>, then the
     identity mapping will be returned.  There is no guarantee that a
-    representation with smallest possible degree is returned.
+    representation with smallest possible degree is returned.<P/>
 
     See also <Ref Attr="SmallerDegreeTransformationRepresentation"/>, a slower
     function which may produce a transformation semigroup with even lower
     degree. <P/>
+
+    <B>Warning:</B> This function may take a very long time to return an answer
+    if the argument is not a relatively small semigroup. 
 
 <Example><![CDATA[
 gap> S := Semigroup([PBR([[], []], [[], [-1]]),
