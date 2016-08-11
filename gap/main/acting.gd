@@ -25,13 +25,10 @@ DeclareOperation("PositionOfFound", [IsSemigroupData]);
 
 DeclareCategory("SEMIGROUPS_IsUniversalFakeOne", IsAssociativeElement);
 
-SEMIGROUPS.UniversalFakeOneFamily :=
-           NewFamily("SEMIGROUPS.UniversalFakeOneFamily",
-                     SEMIGROUPS_IsUniversalFakeOne,
-                     CanEasilyCompareElements,
-                     CanEasilyCompareElements);
-
 SEMIGROUPS.UniversalFakeOne :=
-           Objectify(NewType(SEMIGROUPS.UniversalFakeOneFamily,
+           Objectify(NewType(NewFamily("SEMIGROUPS.UniversalFakeOneFamily",
+                                       SEMIGROUPS_IsUniversalFakeOne,
+                                       CanEasilyCompareElements,
+                                       CanEasilyCompareElements),
                              SEMIGROUPS_IsUniversalFakeOne),
                      rec());

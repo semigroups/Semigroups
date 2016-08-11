@@ -14,7 +14,7 @@
 #include "src/bipart.h"
 #include "src/converter.h"
 #include "fropin.h"
-#include "fincong.h"
+#include "congpairs.h"
 #include "ufdata.hh"
 
 #include "semigroups++/semigroups.h"
@@ -408,12 +408,12 @@ static StructGVarFunc GVarFuncs [] = {
                           "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_MAX_WORD_LENGTH_BY_RANK, 1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("fincong.cc", FIN_CONG_NR_CLASSES, 1, "cong"),
-    GVAR_FUNC_TABLE_ENTRY("fincong.cc", FIN_CONG_PAIR_IN, 2, "cong, pair"),
-    GVAR_FUNC_TABLE_ENTRY("fincong.cc", FIN_CONG_LOOKUP_PART, 1, "cong"),
-    GVAR_FUNC_TABLE_ENTRY("fincong.cc", FIN_CONG_CLASS_COSET_ID, 1, "class"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", FP_SEMI_SIZE, 1, "S"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", FP_SEMI_WORD_PROBLEM, 3, "S, x, y"),
+    GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_NR_CLASSES, 1, "cong"),
+    GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_IN, 2, "cong, pair"),
+    GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_LOOKUP_PART, 1, "cong"),
+    GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_CLASS_COSET_ID, 1, "class"),
+//GVAR_FUNC_TABLE_ENTRY("interface.cc", FP_SEMI_SIZE, 1, "S"),
+//    GVAR_FUNC_TABLE_ENTRY("interface.cc", FP_SEMI_WORD_PROBLEM, 3, "S, x, y"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS, 2,
                           "scc1, scc2"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", FIND_HCLASSES, 2,

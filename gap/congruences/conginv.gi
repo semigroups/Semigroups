@@ -209,7 +209,7 @@ function(cong)
   return Length(EquivalenceClasses(cong));
 end);
 
-InstallMethod(AsLookupTable,
+InstallMethod(EquivalenceRelationLookup,
 "for inverse semigroup congruence",
 [IsInverseSemigroupCongruenceByKernelTrace],
 function(cong)
@@ -274,9 +274,8 @@ InstallMethod(EquivalenceClassOfElementNC,
 "for inverse semigroup congruence and associative element",
 [IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
 function(cong, elm)
-  local fam, class;
-  fam := FamilyObj(Range(cong));
-  class := Objectify(NewType(fam,
+  local class;
+  class := Objectify(NewType(FamilyObj(Range(cong)),
                              IsInverseSemigroupCongruenceClassByKernelTrace),
                      rec(rep := elm));
   SetParentAttr(class, Range(cong));

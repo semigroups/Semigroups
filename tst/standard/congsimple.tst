@@ -41,7 +41,7 @@ gap> cong = congs[33];
 true
 gap> cong = congs[11];
 false
-gap> AsLookupTable(cong);
+gap> EquivalenceRelationLookup(cong);
 [ 1, 2, 2, 3, 1, 3, 3, 4, 4, 1, 4, 2, 4, 2, 1, 3 ]
 
 #T# SimpleCongTest4: Testing membership in a congruence

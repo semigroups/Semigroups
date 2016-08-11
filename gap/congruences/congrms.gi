@@ -1510,6 +1510,12 @@ function(cong)
   # Extract some information
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
   S := Range(cong);
+  # FIXME shouldn't this work for 0-simple semigroups too? JDM
+  if not IsReesZeroMatrixSemigroup(S) then 
+    ErrorNoReturn("Semigroups: AsRZMSCongruenceByLinkedTriple: usage,\n",
+                  "the argument must be a congruence over a Rees 0-matrix\n",
+                  "semigroup,");
+  fi;
   g := UnderlyingSemigroup(S);
   mat := Matrix(S);
 
@@ -1624,8 +1630,7 @@ function(cong)
   return cong;
 end);
 
-SEMIGROUPS.AsLookupTableRMS :=
-function(cong)
+_EquivalenceRelationLookupRMS := function(cong)
   local S, n, data, elms, table, next, i, x;
   S := Range(cong);
   n := Size(S);
@@ -1644,12 +1649,14 @@ function(cong)
   return table;
 end;
 
-InstallMethod(AsLookupTable,
+InstallMethod(EquivalenceRelationLookup,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
-SEMIGROUPS.AsLookupTableRMS);
+_EquivalenceRelationLookupRMS);
 
-InstallMethod(AsLookupTable,
+InstallMethod(EquivalenceRelationLookup,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
-SEMIGROUPS.AsLookupTableRMS);
+_EquivalenceRelationLookupRMS);
+
+Unbind(_EquivalenceRelationLookupRMS);

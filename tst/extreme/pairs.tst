@@ -103,8 +103,8 @@ gap> gens in cong;
 Error, Semigroups: \in (for a congruence): usage,
 this function currently only works if <cong> is a congruence of a semigroup
 which is known to be finite,
-gap> AsLookupTable(cong);
-Error, Semigroups: AsLookupTable: usage,
+gap> EquivalenceRelationLookup(cong);
+Error, Semigroups: EquivalenceRelationLookup: usage,
 <cong> must be a congruence of a finite semigroup,
 gap> EquivalenceClasses(cong);
 Error, Semigroups: EquivalenceClasses: usage,

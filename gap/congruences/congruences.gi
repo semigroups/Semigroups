@@ -21,6 +21,51 @@
 ## congruences.gd contains declarations for many of these.
 ##
 
+InstallMethod(\= , "for a left and a right semigroup congruence",
+[IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
+function(c1, c2)
+  return Range(c1) = Range(c2)
+    and EquivalenceRelationLookup(c1) = EquivalenceRelationLookup(c2);
+end);
+
+InstallMethod(\= , "for a right and a left semigroup congruence",
+[IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
+function(c1, c2)
+  return Range(c1) = Range(c2)
+    and EquivalenceRelationLookup(c1) = EquivalenceRelationLookup(c2);
+end);
+
+# Multiplication for congruence classes: only makes sense for 2-sided
+
+InstallMethod(\*,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+    ErrorNoReturn("Semigroups: \*: usage,\n",
+                  "the args must be classes of the same congruence,");
+  fi;
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(class1),
+                                     Representative(class1) *
+                                     Representative(class2));
+end);
+
+InstallMethod(\=,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+    and Representative(class1) in class2;
+end);
+
+InstallMethod(\<,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+    and RepresentativeSmallest(class1) < RepresentativeSmallest(class2);
+end);
+
 InstallGlobalFunction(SemigroupCongruence,
 function(arg)
   local S, pairs;
@@ -190,7 +235,6 @@ function(cong)
   Print(" with ",
         Size(GeneratingPairsOfRightSemigroupCongruence(cong)),
         " generating pairs>");
-  Print(" with ", Size(cong!.genpairs), " generating pairs>");
 end);
 
 InstallMethod(ViewObj,

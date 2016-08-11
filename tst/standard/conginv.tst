@@ -285,14 +285,14 @@ gap> IsSubrelation(cong1, cong2);
 Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
 
-#T# AsLookupTable
+#T# EquivalenceRelationLookup
 gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),
 >                           PartialPerm([1, 2], [2, 3])]);;
 gap> pairs := [PartialPerm([], []), PartialPerm([1], [1])];;
 gap> cong := SemigroupCongruence(S, pairs);
 <semigroup congruence over <inverse partial perm semigroup of rank 3 with 2 
  generators> with congruence pair (12,3)>
-gap> AsLookupTable(cong);
+gap> EquivalenceRelationLookup(cong);
 [ 1, 2, 3, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4 ]
 
 #T# SEMIGROUPS_UnbindVariables

@@ -410,9 +410,10 @@ Obj SEMIGROUP_FACTORIZATION (Obj self, Obj data, Obj pos) {
 
       words = NEW_PLIST(T_PLIST, pos_c);
       SET_LEN_PLIST(words, pos_c);
-      SET_ELM_PLIST(words, pos_c,
-                    ConvertFromWord(semigroup->factorisation(pos_c - 1,
-                                                             rec_get_report(data))));
+      SET_ELM_PLIST(words,
+                    pos_c,
+                    ConvertFromWord(semigroup->factorisation(
+                        pos_c - 1, rec_get_report(data))));
       CHANGED_BAG(words);
       AssPRec(data, RNam_words, words);
     } else {
@@ -444,7 +445,10 @@ Obj SEMIGROUP_FACTORIZATION (Obj self, Obj data, Obj pos) {
           SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
           AssPlist(words, pos_c, new_word);
         } else {
-          AssPlist(words, pos_c, ConvertFromWord(semigroup->factorisation(pos_c - 1, rec_get_report(data))));
+          AssPlist(words,
+                   pos_c,
+                   ConvertFromWord(semigroup->factorisation(
+                       pos_c - 1, rec_get_report(data))));
         }
       }
     }
@@ -714,96 +718,96 @@ Obj SEMIGROUP_MAX_WORD_LENGTH_BY_RANK (Obj self, Obj data) {
  * fp_semi_get_cpp_cong: helper function to convert a GAP FP semigroup object
  * to a C++ Congruence object, for use with Todd-Coxeter
  ******************************************************************************/
-Congruence* fp_semi_get_cpp_cong (Obj S) {
-  initRNams();
-  assert(IsbPRec(S, RNam_relations));
-
-  Congruence* cong;
-  if (! IsbPRec(S, RNam_congruence)) {
-    std::vector<relation_t> rels;
-    Obj gap_rels = ElmPRec(S, RNam_relations);
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
-      Obj gap_rel = ELM_PLIST(gap_rels, i);
-      word_t lhs, rhs;
-      Obj gap_lhs = ELM_PLIST(gap_rel, 1);
-      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_lhs); k++) {
-        lhs.push_back(INT_INTOBJ(ELM_PLIST(gap_lhs, k)) - 1);
-      }
-      Obj gap_rhs = ELM_PLIST(gap_rel, 2);
-      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_rhs); k++) {
-        rhs.push_back(INT_INTOBJ(ELM_PLIST(gap_rhs, k)) - 1);
-      }
-      rels.push_back(make_pair(lhs, rhs));
-    }
-
-    cong = new Congruence("twosided",
-                          INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
-                          rels,
-                          std::vector<relation_t>());
-    cong->set_report(rec_get_report(S));
-    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
-
-  } else {
-    cong = CLASS_OBJ<Congruence>(ElmPRec(S, RNam_congruence));
-  }
-
-  return cong;
-}
-
-Obj FP_SEMI_SIZE (Obj self, Obj S) {
-  Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter();
-  return INTOBJ_INT(cong->nr_active_cosets() - 1);
-}
-
-Obj FP_SEMI_WORD_PROBLEM (Obj self, Obj S, Obj x, Obj y) {
-  // Do the words x and y represent the same element of S?
-  Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter();
-
-  word_t lhs, rhs;
-  for (size_t j = 1; j <= (size_t) LEN_PLIST(x); j++) {
-    lhs.push_back(INT_INTOBJ(ELM_PLIST(x, j)) - 1);
-  }
-  for (size_t j = 1; j <= (size_t) LEN_PLIST(y); j++) {
-    rhs.push_back(INT_INTOBJ(ELM_PLIST(y, j)) - 1);
-  }
-  return (cong->word_to_coset(lhs) == cong->word_to_coset(rhs)) ? True : False;
-}
-
-
-// TODO rename FP_SEMI_SIZE
-Obj SEMIGROUP_CONG (Obj self, Obj S) {
-  initRNams();
-  assert(IsbPRec(S, RNam_relations));
-
-  Congruence* cong;
-  if (! IsbPRec(S, RNam_congruence)) {
-    std::vector<relation_t> rels;
-    Obj gap_rels = ElmPRec(S, RNam_relations);
-    for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
-      Obj gap_rel = ELM_PLIST(gap_rels, i);
-      word_t lhs, rhs;
-      Obj gap_lhs = ELM_PLIST(gap_rel, 1);
-      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_lhs); k++) {
-        lhs.push_back(INT_INTOBJ(ELM_PLIST(gap_lhs, k)) - 1);
-      }
-      Obj gap_rhs = ELM_PLIST(gap_rel, 2);
-      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_rhs); k++) {
-        rhs.push_back(INT_INTOBJ(ELM_PLIST(gap_rhs, k)) - 1);
-      }
-      rels.push_back(make_pair(lhs, rhs));
-    }
-
-    cong = new Congruence("twosided",
-                          INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
-                          rels,
-                          std::vector<relation_t>());
-    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
-  } else {
-    cong = CLASS_OBJ<Congruence>(ElmPRec(S, RNam_congruence));
-  }
-
-  cong->todd_coxeter();
-  return INTOBJ_INT(cong->nr_active_cosets() - 1);
-}
+//Congruence* fp_semi_get_cpp_cong (Obj S) {
+//  initRNams();
+//  assert(IsbPRec(S, RNam_relations));
+//
+//  Congruence* cong;
+//  if (! IsbPRec(S, RNam_congruence)) {
+//    std::vector<relation_t> rels;
+//    Obj gap_rels = ElmPRec(S, RNam_relations);
+//    for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
+//      Obj gap_rel = ELM_PLIST(gap_rels, i);
+//      word_t lhs, rhs;
+//      Obj gap_lhs = ELM_PLIST(gap_rel, 1);
+//      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_lhs); k++) {
+//        lhs.push_back(INT_INTOBJ(ELM_PLIST(gap_lhs, k)) - 1);
+//      }
+//      Obj gap_rhs = ELM_PLIST(gap_rel, 2);
+//      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_rhs); k++) {
+//        rhs.push_back(INT_INTOBJ(ELM_PLIST(gap_rhs, k)) - 1);
+//      }
+//      rels.push_back(make_pair(lhs, rhs));
+//    }
+//
+//    cong = new Congruence("twosided",
+//                          INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
+//                          rels,
+//                          std::vector<relation_t>());
+//    cong->set_report(rec_get_report(S));
+//    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
+//
+//  } else {
+//    cong = CLASS_OBJ<Congruence>(ElmPRec(S, RNam_congruence));
+//  }
+//
+//  return cong;
+//}
+//
+//Obj FP_SEMI_SIZE (Obj self, Obj S) {
+//  Congruence* cong = fp_semi_get_cpp_cong(S);
+//  cong->todd_coxeter();
+//  return INTOBJ_INT(cong->nr_active_cosets() - 1);
+//}
+//
+//Obj FP_SEMI_WORD_PROBLEM (Obj self, Obj S, Obj x, Obj y) {
+//  // Do the words x and y represent the same element of S?
+//  Congruence* cong = fp_semi_get_cpp_cong(S);
+//  cong->todd_coxeter();
+//
+//  word_t lhs, rhs;
+//  for (size_t j = 1; j <= (size_t) LEN_PLIST(x); j++) {
+//    lhs.push_back(INT_INTOBJ(ELM_PLIST(x, j)) - 1);
+//  }
+//  for (size_t j = 1; j <= (size_t) LEN_PLIST(y); j++) {
+//    rhs.push_back(INT_INTOBJ(ELM_PLIST(y, j)) - 1);
+//  }
+//  return (cong->word_to_coset(lhs) == cong->word_to_coset(rhs)) ? True : False;
+//}
+//
+//
+//// TODO rename FP_SEMI_SIZE
+//Obj SEMIGROUP_CONG (Obj self, Obj S) {
+//  initRNams();
+//  assert(IsbPRec(S, RNam_relations));
+//
+//  Congruence* cong;
+//  if (! IsbPRec(S, RNam_congruence)) {
+//    std::vector<relation_t> rels;
+//    Obj gap_rels = ElmPRec(S, RNam_relations);
+//    for (size_t i = 1; i <= (size_t) LEN_PLIST(gap_rels); i++) {
+//      Obj gap_rel = ELM_PLIST(gap_rels, i);
+//      word_t lhs, rhs;
+//      Obj gap_lhs = ELM_PLIST(gap_rel, 1);
+//      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_lhs); k++) {
+//        lhs.push_back(INT_INTOBJ(ELM_PLIST(gap_lhs, k)) - 1);
+//      }
+//      Obj gap_rhs = ELM_PLIST(gap_rel, 2);
+//      for (size_t k = 1; k <= (size_t) LEN_PLIST(gap_rhs); k++) {
+//        rhs.push_back(INT_INTOBJ(ELM_PLIST(gap_rhs, k)) - 1);
+//      }
+//      rels.push_back(make_pair(lhs, rhs));
+//    }
+//
+//    cong = new Congruence("twosided",
+//                          INT_INTOBJ(ElmPRec(S, RNam_nr_gens)),
+//                          rels,
+//                          std::vector<relation_t>());
+//    AssPRec(S, RNam_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
+//  } else {
+//    cong = CLASS_OBJ<Congruence>(ElmPRec(S, RNam_congruence));
+//  }
+//
+//  cong->todd_coxeter();
+//  return INTOBJ_INT(cong->nr_active_cosets() - 1);
+//}
