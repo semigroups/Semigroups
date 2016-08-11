@@ -11,7 +11,7 @@
 #include <assert.h>
 
 #include "src/compiled.h"
-#include "gap.hh"
+#include "gap.h"
 #include "semigroups++/elements.h"
 
 // C functions

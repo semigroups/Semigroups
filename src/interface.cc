@@ -20,10 +20,9 @@
 #include "converter.h"
 #include "data.h"
 #include "interface.h"
-#include "gap.hh"
+#include "gap.h"
 
 #include "semigroups++/semigroups.h"
-#include "semigroups++/tc.h"
 
 /*******************************************************************************
  *******************************************************************************

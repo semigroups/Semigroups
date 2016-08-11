@@ -5,7 +5,7 @@
  *
  */
 
-#include <gap.hh>
+#include <gap.h>
 
 #include <assert.h>
 #include <iostream>
@@ -15,7 +15,7 @@
 #include "src/converter.h"
 #include "fropin.h"
 #include "congpairs.h"
-#include "ufdata.hh"
+#include "ufdata.h"
 
 #include "semigroups++/semigroups.h"
 #include "semigroups++/tc.h"

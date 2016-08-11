@@ -13,7 +13,7 @@
 
 #include "src/compiled.h"          // GAP headers
 #include "converter.h"
-#include "gap.hh"
+#include "gap.h"
 
 #include "semigroups++/semigroups.h"
 

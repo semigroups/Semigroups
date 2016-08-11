@@ -7,11 +7,11 @@
  *
  */
 
-#include "ufdata.hh"
+#include "ufdata.h"
 #include <assert.h>
 
 #include "src/compiled.h"
-#include "gap.hh"
+#include "gap.h"
 
 // GAP level functions
 
