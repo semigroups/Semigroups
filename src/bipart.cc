@@ -15,7 +15,7 @@
 #include <thread>
 #include <mutex>
 
-#include "src/semigroups++/timer.hh"
+#include "src/semigroups++/timer.h"
 #include "src/semigroups++/elements.h"
 #include "src/permutat.h"
 #include "src/precord.h"

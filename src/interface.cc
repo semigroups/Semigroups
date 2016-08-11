@@ -72,7 +72,7 @@ Obj UnconvertElements (Converter* converter, std::vector<Element*>* elements) {
  * plist of GAP plists
  ******************************************************************************/
 
-Obj ConvertFromCayleyGraph (CayleyGraph* graph) {
+Obj ConvertFromCayleyGraph (cayley_graph_t* graph) {
   assert(graph->size() != 0);
   Obj out = NEW_PLIST(T_PLIST, graph->nr_rows());
   SET_LEN_PLIST(out, graph->nr_rows());
@@ -93,7 +93,7 @@ Obj ConvertFromCayleyGraph (CayleyGraph* graph) {
  * ConvertFromWord:
  ******************************************************************************/
 
-Obj ConvertFromWord (Word* vec) {
+Obj ConvertFromWord (word_t* vec) {
   Obj out = NEW_PLIST(T_PLIST_CYC, vec->size());
   SET_LEN_PLIST(out, vec->size());
 
