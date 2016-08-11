@@ -22,7 +22,7 @@ SEMIGROUPS.InitFpSemigroup := function(S)
 
   for rel in rels do 
     next := [[], []];
-    for i in [1, 2] do 
+    for i in [1, 2] do
       ext := ExtRepOfObj(rel[i]);
       for j in [1, 3 .. Length(ext) - 1] do 
         k := 0;
@@ -34,43 +34,51 @@ SEMIGROUPS.InitFpSemigroup := function(S)
     od;
     Add(out, next);
   od;
-  S!.__fp_semigroup_relations := out;
 
-  S!.__fp_semigroup_nr_gens   := Length(GeneratorsOfSemigroup(S));
+  S!.__fp_semigroup_relations := out;
+  S!.__fp_semigroup_nrgens    := Length(GeneratorsOfSemigroup(S));
+  S!.report                   := SEMIGROUPS.DefaultOptionsRec.report;
 end;
 
+InstallMethod(ExtRepOfObj, "for an element of an fp semigroup", 
+[IsElementOfFpSemigroup], 
+function(x)
+  return ExtRepOfObj(UnderlyingElement(x));
+end);
+
+InstallMethod(ExtRepOfObj, "for an element of an fp monoid", 
+[IsElementOfFpMonoid], 
+function(x)
+  return ExtRepOfObj(UnderlyingElement(x));
+end);
+
 InstallMethod(Size, "for an fp semigroup", [IsFpSemigroup], 
+
 function(S)
   SEMIGROUPS.InitFpSemigroup(S);
   return FP_SEMI_SIZE(S);
 end);
 
-SEMIGROUPS.FpSemigroupWordProblem := function(S, x, y)
-  local lhs, ext, j, k, rhs;
+InstallMethod(\= , "for two elements of an f.p. semigroup",
+IsIdenticalObj, [IsElementOfFpSemigroup, IsElementOfFpSemigroup],
+function(x1, x2)
+  local S;
+  S := FpSemigroupOfElementOfFpSemigroup(x1);
   SEMIGROUPS.InitFpSemigroup(S);
+  return FP_SEMI_EQ(S, ExtRepOfObj(x1), ExtRepOfObj(x2));
+end);
 
-  # x and y are semigroup elements - we want them as lists of generators
-  lhs := [];
-  ext := ExtRepOfObj(UnderlyingElement(x));
-  for j in [1, 3 .. Length(ext) - 1] do
-    k := 0;
-    while k < ext[j + 1] do
-      Add(lhs, ext[j]);
-      k := k + 1;
-    od;
-  od;
+InstallMethod(\< , "for two elements of a f.p. semigroup",
+IsIdenticalObj, [IsElementOfFpSemigroup, IsElementOfFpSemigroup],
+function(x1, x2)
+  local S;
+  S := FpSemigroupOfElementOfFpSemigroup(x1);
+  SEMIGROUPS.InitFpSemigroup(S);
+  return FP_SEMI_COSET_ID(S, ExtRepOfObj(x1))
+    < FP_SEMI_COSET_ID(S, ExtRepOfObj(x2));
+end);
 
-  rhs := [];
-  ext := ExtRepOfObj(UnderlyingElement(y));
-  for j in [1, 3 .. Length(ext) - 1] do
-    k := 0;
-    while k < ext[j + 1] do
-      Add(rhs, ext[j]);
-      k := k + 1;
-    od;
-  od;
-  return FP_SEMI_WORD_PROBLEM(S, lhs, rhs);
-end;
+#TODO AsSSortedList, RightCayleyGraph, any more?
 
 InstallMethod(ViewString, "for an f.p. semigroup element",
 [IsElementOfFpSemigroup], String);

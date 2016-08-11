@@ -49,6 +49,9 @@ static Int RNam_fin_cong_lookup = 0;
 
 static Int RNam_cong_pairs_congruence = 0;
 
+static Int RNam_fp_semi_rels   = 0;
+static Int RNam_fp_semi_nrgens = 0;
+static Int RNam_fp_semi_cong   = 0;
 
 static inline void initRNams() {
   if (!RNam_batch_size) {
@@ -66,8 +69,6 @@ static inline void initRNams() {
     RNam_semigroup    = RNamName("_SEMIGROUPS_semigroup");
     RNam_words        = RNamName("words");
     RNam_wrapper      = RNamName("_SEMIGROUPS_wrapper");
-    RNam_relations    = RNamName("__fp_semigroup_relations");
-    RNam_nr_gens      = RNamName("__fp_semigroup_nr_gens");
     RNam_rep    = RNamName("rep");
     RNam_cong    = RNamName("cong");
 
@@ -78,6 +79,10 @@ static inline void initRNams() {
 
     RNam_fin_cong_partition = RNamName("__fin_cong_partition");
     RNam_fin_cong_lookup    = RNamName("__fin_cong_lookup");
+
+    RNam_fp_semi_rels   = RNamName("__fp_semigroup_relations");
+    RNam_fp_semi_nrgens = RNamName("__fp_semigroup_nrgens");
+    RNam_fp_semi_cong   = RNamName("__fp_semigroup_cong");
   }
 }
 

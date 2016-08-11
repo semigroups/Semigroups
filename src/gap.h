@@ -11,14 +11,15 @@
 #ifndef SRC_GAP_H_
 #define SRC_GAP_H_
 
-#include "data.h"
-#include "interface.h"
-
-#include "src/compiled.h"
-
 #include <assert.h>
 #include <iostream>
 #include <vector>
+
+#include "src/data.h"
+#include "src/interface.h"
+#include "src/semifp.h"
+
+#include "src/compiled.h"
 
 // The Semigroups package uses the type T_SEMI for GAP Objs which act as
 // wrappers for various C++ objects. Such a GAP Obj can be created using
