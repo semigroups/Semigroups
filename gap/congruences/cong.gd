@@ -40,10 +40,6 @@ DeclareAttribute("MinimalCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("MinimalLeftCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("MinimalRightCongruencesOfSemigroup", IsSemigroup);
 
-DeclareAttribute("LatticeOfCongruences", IsSemigroup);
-DeclareAttribute("LatticeOfLeftCongruences", IsSemigroup);
-DeclareAttribute("LatticeOfRightCongruences", IsSemigroup);
-
 DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
                GeneratingPairsOfLeftMagmaCongruence);
 DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",

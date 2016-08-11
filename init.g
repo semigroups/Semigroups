@@ -112,7 +112,7 @@ ReadPackage("semigroups/gap/congruences/congsimple.gd");
 ReadPackage("semigroups/gap/congruences/congrees.gd");
 ReadPackage("semigroups/gap/congruences/quotients.gd");
 ReadPackage("semigroups/gap/congruences/cong.gd");
-ReadPackage("semigroups/gap/congruences/conglattice.gd");
+ReadPackage("semigroups/gap/congruences/conglatt.gd");
 
 ReadPackage("semigroups/gap/fp/fpsemi.gd");
 ReadPackage("semigroups/gap/fp/freeinverse.gd");

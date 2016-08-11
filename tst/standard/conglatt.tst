@@ -105,8 +105,8 @@ gap> Size(CongruencesOfSemigroup(S));
 #T# MinimalCongruencesOfSemigroup
 gap> S := Semigroup([Transformation([1,3,2]), Transformation([3,1,3])]);;
 gap> min := MinimalCongruencesOfSemigroup(S);
-[ <semigroup congruence over <transformation semigroup of size 13, degree 3 
-     with 2 generators> with 1 generating pairs> ]
+[ <semigroup congruence over <transformation semigroup of degree 3 with 2 
+     generators> with 1 generating pairs> ]
 gap> congs := CongruencesOfSemigroup(S);
 [ <semigroup congruence over <transformation semigroup of size 13, degree 3 
      with 2 generators> with 0 generating pairs>, 
