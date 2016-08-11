@@ -228,7 +228,7 @@ void TBlocksObjSaveFunc (Obj o) {
     for (auto it = b->begin(); it < b->end(); it++) {
       SaveUInt4(*it);
     }
-    for (auto it = b->lookup_begin(); it < b->lookup_end(); it++) {
+    for (auto it = b->lookup()->begin(); it < b->lookup()->end(); it++) {
       SaveUInt1(static_cast<UInt1>(*it));
     }
   }
