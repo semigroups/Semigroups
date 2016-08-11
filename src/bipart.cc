@@ -20,6 +20,7 @@
 #include "src/permutat.h"
 #include "src/precord.h"
 
+
 // Global variables
 
 static std::vector<size_t> _BUFFER_size_t;
@@ -1284,23 +1285,18 @@ static void fuse (u_int32_t                                 deg,
 // The class and functions below implement a parallel idempotent counting
 // method for regular *-semigroups of bipartitions.
 
-// NrIdempotentsFinder is a class for containing the data required for the
+// IdempotentCounter is a class for containing the data required for the
 // search for idempotents.
 
-typedef std::vector<std::vector<size_t>>       thrds_size_t;
-typedef std::vector<std::vector<bool>>         thrds_bool_t;
-typedef std::pair<size_t, size_t>              unpr_t;
-typedef std::vector<std::vector<unpr_t>>       thrds_unpr_t;
+class IdempotentCounter {
 
-// mutex for reporting only
-static std::mutex  mtx;
-
-// FIXME scc_pos uses far too much memory!
-
-class NrIdempotentsFinder {
+  typedef std::vector<std::vector<size_t>> thrds_size_t;
+  typedef std::vector<std::vector<bool>>   thrds_bool_t;
+  typedef std::pair<size_t, size_t> unpr_t;
+  typedef std::vector<std::vector<unpr_t>> thrds_unpr_t;
 
  public:
-  NrIdempotentsFinder (Obj          orbit,
+  IdempotentCounter (Obj          orbit,
                        Obj          scc,
                        Obj          lookup,
                        unsigned int nr_threads,
@@ -1367,16 +1363,19 @@ class NrIdempotentsFinder {
       }
     }
 
-  std::vector<size_t> go () {
+  std::vector<size_t> count () {
+
+    _reporter.report(_report);
+    _reporter.set_level(2);
+    _reporter.set_class_name(*this);
+    _reporter(__func__) << "using " << _nr_threads << " / "
+                        << std::thread::hardware_concurrency() << " threads"
+                        << std::endl;
     Timer timer;
-    if (_report) {
-      std::cout << "Using " << _nr_threads << " / " <<
-        std::thread::hardware_concurrency() << " threads" << std::endl;
-      timer.start();
-    }
+    timer.start();
 
     for (size_t i = 0; i < _nr_threads; i++) {
-      _threads.push_back(std::thread(&NrIdempotentsFinder::do_work,
+      _threads.push_back(std::thread(&IdempotentCounter::thread_counter,
                                      this,
                                      i));
     }
@@ -1385,9 +1384,7 @@ class NrIdempotentsFinder {
       _threads[i].join();
     }
 
-    if (_report) {
-      timer.stop(std::string(__func__) + ": ");
-    }
+    _reporter(__func__) << "elapsed time " << timer.string() << std::endl;
 
     size_t max = *max_element(_ranks.begin(), _ranks.end()) + 1;
     std::vector<size_t> out = std::vector<size_t>(max, 0);
@@ -1409,11 +1406,10 @@ class NrIdempotentsFinder {
 
  private:
 
-  void do_work (size_t thread_id) {
+  void thread_counter (size_t thread_id) {
     Timer timer;
-    if (_report) {
-      timer.start();
-    }
+    timer.start();
+
     for (unpr_t index: _unprocessed[thread_id]) {
       if (tester(thread_id, index.first, index.first)) {
         _vals[thread_id][index.second]++;
@@ -1426,13 +1422,10 @@ class NrIdempotentsFinder {
         }
       }
     }
-
-    if (_report) {
-      mtx.lock();
-      std::cout << "Thread " << thread_id << " is finished, ";
-      timer.stop();
-      mtx.unlock();
-    }
+    _reporter.lock();
+    _reporter(__func__, thread_id + 1) << "finished in " << timer.string()
+                                       << std::endl;
+    _reporter.unlock();
   }
 
   // This is basically the same as BLOCKS_E_TESTER, but is required because we
@@ -1513,8 +1506,12 @@ class NrIdempotentsFinder {
   thrds_unpr_t              _unprocessed;
   thrds_size_t              _vals;
   // map from the scc indices to the rank of elements in that scc
+
+  // for reporting only
+  static Reporter _reporter;
 };
 
+Reporter IdempotentCounter::_reporter;
 
 // GAP-level function
 
@@ -1525,12 +1522,10 @@ Obj BIPART_NR_IDEMPOTENTS (Obj self,
                            Obj nr_threads,
                            Obj report) {
 
-  NrIdempotentsFinder finder = NrIdempotentsFinder(o,
-                                                   scc,
-                                                   lookup,
-                                                   INT_INTOBJ(nr_threads),
-                                                   report);
-  std::vector<size_t> vals = finder.go();
+  IdempotentCounter finder =
+      IdempotentCounter(o, scc, lookup, INT_INTOBJ(nr_threads), report);
+
+  std::vector<size_t> vals = finder.count();
 
   Obj out = NEW_PLIST(T_PLIST_CYC, vals.size());
   SET_LEN_PLIST(out, vals.size());

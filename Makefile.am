@@ -15,7 +15,7 @@ semigroups_la_SOURCES =  src/gap.cc src/converter.cc src/interface.cc src/data.c
 semigroups_la_SOURCES += src/bipart.cc src/ufdata.cc src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semifp.cc
 semigroups_la_SOURCES += src/semigroups++/elements.cc src/semigroups++/blocks.cc
-semigroups_la_SOURCES += src/semigroups++/tc.cc
+semigroups_la_SOURCES += src/semigroups++/semigroups.cc src/semigroups++/tc.cc
 semigroups_la_CXXFLAGS = -std=c++11 -fPIC
 
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
