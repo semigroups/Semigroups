@@ -249,19 +249,18 @@ gap> congs := CongruencesOfSemigroup(S);
       See also <Ref Attr = "CongruencesOfSemigroup"/>. <P/>
 
       <Example><![CDATA[
-gap> S := Semigroup([Transformation([1,3,2]),
->                    Transformation([3,1,3])]);;
+gap> S := Semigroup(Transformation([1, 3, 2]),
+>                   Transformation([3, 1, 3]));;
 gap> min := MinimalCongruencesOfSemigroup(S);
-[ <semigroup congruence over <transformation semigroup of size 13, 
-     degree 3 with 2 generators> with 1 generating pairs> ]
+[ <semigroup congruence over <transformation semigroup of degree 3 
+     with 2 generators> with 1 generating pairs> ]
 gap> minl := MinimalLeftCongruencesOfSemigroup(S);
-[ <left semigroup congruence over <transformation semigroup 
-     of size 13, degree 3 with 2 generators> with 1 generating pairs>,
-  <left semigroup congruence over <transformation semigroup 
-     of size 13, degree 3 with 2 generators> with 1 generating pairs>,
-  <left semigroup congruence over <transformation semigroup 
-     of size 13, degree 3 with 2 generators> with 1 generating pairs> 
- ]]]></Example>
+[ <left semigroup congruence over <transformation semigroup of 
+     degree 3 with 2 generators> with 1 generating pairs>, 
+  <left semigroup congruence over <transformation semigroup of 
+     degree 3 with 2 generators> with 1 generating pairs>, 
+  <left semigroup congruence over <transformation semigroup of 
+     degree 3 with 2 generators> with 1 generating pairs> ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -296,26 +295,35 @@ gap> LatticeOfRightCongruences(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="AsLookupTable">
+<#GAPDoc Label="EquivalenceRelationLookup">
   <ManSection> 
-    <Attr Name = "AsLookupTable" Arg = "cong"/>
+    <Attr Name = "EquivalenceRelationLookup" Arg = "cong"/>
     <Returns>A list.</Returns>
     <Description>
-      This attribute describes the semigroup congruence <A>cong</A> as a list of
-      positive integers with length the size of the semigroup over which
+      This attribute describes the semigroup congruence <A>cong</A> as a list
+      of positive integers with length the size of the semigroup over which
       <A>cong</A> is defined.<P/>
 
       Each position in the list corresponds to an element of the semigroup (in
       a consistent canonical order) and the integer at that position
       is a unique identifier for that element's congruence class under
-      <A>cong</A>.  Hence, two elements are congruent if and only if they have
-      the same number at their two positions in the list.<P/>
+      <A>cong</A>.  The value of <C>EquivalenceRelationLookup</C> has the
+      property that the value in position <C>i</C> is at most <C>i</C> and as
+      such two congruences on a given semigroup are equal if and only if their
+      lookup's are equal.<P/>
+      
+      Two elements of the semigroup on which the congruence is defined
+      are related in the congruence if and only if they have
+      the same number at their respective positions in the lookup.
+      <P/>
+
+      See also <Ref Attr = "EquivalenceRelationPartition" BookName = "ref"/>.
       <Example><![CDATA[
 gap> S := Monoid(Transformation([1, 2, 2]),
 >                Transformation([3, 1, 3]));;
 gap> cong := SemigroupCongruence(S,
 > [Transformation([1, 2, 1]), Transformation([2, 1, 2])]);;
-gap> AsLookupTable(cong);
+gap> EquivalenceRelationLookup(cong);
 [ 1, 2, 3, 4, 5, 6, 2, 3, 6, 4, 5, 6 ]]]></Example>
     </Description>
   </ManSection>

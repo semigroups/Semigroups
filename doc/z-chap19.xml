@@ -76,7 +76,7 @@
     <#Include Label = "CongruencesOfSemigroup">
     <#Include Label = "MinimalCongruencesOfSemigroup">
     <#Include Label = "LatticeOfCongruences">
-    <#Include Label = "AsLookupTable">
+    <#Include Label = "EquivalenceRelationLookup">
     <#Include Label = "OnLeftCongruenceClasses">
     <#Include Label = "OnRightCongruenceClasses">
 
