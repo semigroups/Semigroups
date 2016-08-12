@@ -1,23 +1,20 @@
 //
-// Copyright 2016 James D. Mitchell
+// Semigroups package for GAP
+// Copyright (C) 2016 James D. Mitchell
 //
-// This file is part of the Semigroups package for GAP.  The Semigroups package
-// for GAP is free software: you can redistribute it and/or modify it under the
-// terms of the GNU General Public License as published by the Free Software
-// Foundation, either version 3 of the License, or (at your option) any later
-// version.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
-// The Semigroups package for GAP is distributed in the hope that it will be
-// useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
-// Public License for more details.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
 //
-// You should have received a copy of the GNU General Public License along with
-// The Semigroup package for GAP.  If not, see <http://www.gnu.org/licenses/>.
-
-// This file contains a implementation of the Froidure-Pin Algorithm which can
-// be applied to arbitrary semigroups in GAP (although it won't work well
-// unless there is a hash function defined too).
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 
 #ifndef SRC_FROPIN_H_
 #define SRC_FROPIN_H_
