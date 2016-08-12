@@ -29,6 +29,7 @@ static Int RNam_data         = 0;
 static Int RNam_degree       = 0;
 static Int RNam_elts         = 0;
 static Int RNam_gens         = 0;
+static Int RNam_genslookup   = 0;
 static Int RNam_left         = 0;
 static Int RNam_pos          = 0;
 static Int RNam_report       = 0;
@@ -61,6 +62,7 @@ static inline void initRNams() {
     RNam_degree       = RNamName("degree");
     RNam_elts         = RNamName("elts");
     RNam_gens         = RNamName("gens");
+    RNam_genslookup   = RNamName("genslookup");
     RNam_left         = RNamName("left");
     RNam_pos          = RNamName("pos");
     RNam_report       = RNamName("report");

@@ -6,9 +6,10 @@
  */
 
 
-#include <string>
-
 #include "src/congpairs.h"
+
+#include <string>
+#include <vector>
 
 #include "src/data.h"
 #include "src/fropin.h"
@@ -51,10 +52,9 @@ static void cong_obj_init_cpp_cong(Obj o) {
   initRNams();
 
   Obj genpairs = ElmPRec(o, RNam_genpairs);
-  Obj type     = ElmPRec(o, RNam_fin_cong_type);
   Obj data     = ElmPRec(o, RNam_fin_cong_range);
+  std::string type = std::string(CSTR_STRING(ElmPRec(o, RNam_fin_cong_type)));
   Congruence* cong;
-  word_t                  lhs, rhs;
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
 
@@ -62,6 +62,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
     range->enumerate(-1, rec_get_report(o));
 
     std::vector<relation_t> extra;
+    word_t                  lhs, rhs;
 
     for (size_t i = 1; i <= (size_t) LEN_PLIST(genpairs); i++) {
       Obj lhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 1);
@@ -76,33 +77,26 @@ static void cong_obj_init_cpp_cong(Obj o) {
       lhs.clear();
       rhs.clear();
     }
-    cong = cong_pairs_enumerate(std::string(CSTR_STRING(type)),
+    cong = cong_pairs_enumerate(type,
                                 range,
                                 extra,
                                 rec_get_report(o));
   } else {
-    enumerate_semigroup(0L, data, INTOBJ_INT(-1), 0, False);
+    fropin(data, INTOBJ_INT(-1), 0, False);
 
     Obj                     rules = ElmPRec(data, RNam_rules);
     Obj                     words = ElmPRec(data, RNam_words);
     std::vector<relation_t> rels;
     std::vector<relation_t> extra;
 
+    // convert the rules (i.e. relations) to relation_t's
     for (size_t i = 1; i <= (size_t) LEN_PLIST(rules); i++) {
-      Obj lhs_obj = ELM_PLIST(ELM_PLIST(rules, i), 1);
-      Obj rhs_obj = ELM_PLIST(ELM_PLIST(rules, i), 2);
-      for (size_t j = 1; j <= (size_t) LEN_PLIST(lhs_obj); j++) {
-        lhs.push_back(INT_INTOBJ(ELM_PLIST(lhs_obj, j)) - 1);
-      }
-      for (size_t j = 1; j <= (size_t) LEN_PLIST(rhs_obj); j++) {
-        rhs.push_back(INT_INTOBJ(ELM_PLIST(rhs_obj, j)) - 1);
-      }
-
+      word_t lhs = plist_to_word_t(ELM_PLIST(ELM_PLIST(rules, i), 1));
+      word_t rhs = plist_to_word_t(ELM_PLIST(ELM_PLIST(rules, i), 2));
       rels.push_back(make_pair(lhs, rhs));
-      lhs.clear();
-      rhs.clear();
     }
 
+    // convert the generating pairs to relation_t's
     for (size_t i = 1; i <= (size_t) LEN_PLIST(genpairs); i++) {
       Obj lhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 1);
       Obj rhs_obj = ELM_PLIST(ELM_PLIST(genpairs, i), 2);
@@ -114,12 +108,38 @@ static void cong_obj_init_cpp_cong(Obj o) {
 
       extra.push_back(make_pair(plist_to_word_t(lhs), plist_to_word_t(rhs)));
     }
-    cong = new Congruence(std::string(CSTR_STRING(type)),
-                          LEN_PLIST(ElmPRec(data, RNam_gens)),
-                          rels,
-                          extra);
-    cong->set_report(rec_get_report(o));
-    cong->todd_coxeter();
+
+    size_t nrgens = LEN_PLIST(ElmPRec(data, RNam_gens));
+
+    Obj graph;
+
+    if (type == "left") {
+      // the left Cayley graph
+      graph = ElmPRec(data, RNam_left);
+    } else {
+      assert(type == "right" || type == "twosided");
+      // the right Cayley graph
+      graph = ElmPRec(data, RNam_right);
+    }
+
+    RecVec<size_t> prefill(nrgens, LEN_PLIST(graph) + 1);
+
+    Obj genslookup = ElmPRec(data, RNam_genslookup);
+    for (size_t i = 0; i < nrgens; i++) {
+      prefill.set(0, i, INT_INTOBJ(ELM_PLIST(genslookup, i + 1)));
+    }
+
+    for (size_t i = 1; i <= (size_t) LEN_PLIST(graph); i++) {
+      Obj next = ELM_PLIST(graph, i);
+      for (size_t j = 1; j <= nrgens; j++) {
+        prefill.set(i, j - 1, INT_INTOBJ(ELM_PLIST(next, j)));
+      }
+    }
+    cong = parallel_todd_coxeter(
+        new Congruence(
+            type, nrgens, std::vector<relation_t>(), extra, prefill, 1),
+        new Congruence(type, nrgens, rels, extra, 2),
+        rec_get_report(o));
   }
   cong->compress();
   AssPRec(o, RNam_cong_pairs_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
