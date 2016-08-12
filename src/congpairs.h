@@ -8,6 +8,8 @@
 #ifndef SRC_CONGPAIRS_H_
 #define SRC_CONGPAIRS_H_
 
+#include "src/compiled.h"
+
 // GAP level functions
 
 Obj CONG_PAIRS_NR_CLASSES(Obj, Obj);

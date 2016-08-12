@@ -13,9 +13,12 @@
 #include <fropin.h>
 
 #include <assert.h>
+
+#include <algorithm>
 #include <iostream>
 
-#include "data.h"
+#include "src/data.h"
+#include "semigroups++/report.h"
 
 /*******************************************************************************
  * GAP kernel version of the algorithm for other types of semigroups
@@ -34,9 +37,8 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 }
 
 // assumes the length of data!.elts is at most 2^28
-// TODO move this into the previous section, and put the actual function in another function
 
-Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj looking) {
+Obj fropin (Obj data, Obj limit, Obj lookfunc, Obj looking) {
   Obj   found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
         reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
         empty, oldword, x;
@@ -59,11 +61,15 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
   if (i > nr || (size_t) INT_INTOBJ(limit) <= nr) {
     return data;
   }
-  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t) (nr + data_batch_size(data)));
+  int_limit = std::max((size_t) INT_INTOBJ(limit),
+                       (size_t)(nr + data_batch_size(data)));
 
-  if (rec_get_report(data)) {
-    std::cout << "GAP kernel version\n";
-  }
+  bool report = rec_get_report(data);
+
+  Reporter reporter;
+  reporter.report(report);
+  reporter.start_timer();
+  reporter(__func__) << "limit = " << int_limit << std::endl;
 
   // get everything out of <data>
 
@@ -252,6 +258,15 @@ Obj enumerate_semigroup (Obj self, Obj data, Obj limit, Obj lookfunc, Obj lookin
       }
       len++;
       AssPlist(lenindex, len, INTOBJ_INT(i));
+    }
+    reporter(__func__) << "found " << nr << " elements, " << nrrules
+                        << " rules, max word length "
+                        << len + 1;
+    if (i <= nr) {
+      reporter << ", so far" << std::endl;
+    } else {
+      reporter << ", finished!" << std::endl;
+      reporter.stop_timer();
     }
   }
 

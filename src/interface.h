@@ -8,12 +8,6 @@
 #ifndef SRC_INTERFACE_H_
 #define SRC_INTERFACE_H_
 
-/*******************************************************************************
- *
-*******************************************************************************/
-
-Obj enumerate_semigroup(Obj, Obj, Obj, Obj, Obj);
-
 // GAP level functions
 
 Obj SEMIGROUP_ADD_GENERATORS(Obj, Obj, Obj);

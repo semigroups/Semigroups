@@ -19,8 +19,9 @@
 
 #include "converter.h"
 #include "data.h"
-#include "interface.h"
+#include "fropin.h"
 #include "gap.h"
+#include "interface.h"
 
 #include "semigroups++/semigroups.h"
 
@@ -288,7 +289,7 @@ Obj SEMIGROUP_AS_LIST (Obj self, Obj data) {
     }
     CHANGED_BAG(data);
   } else {
-    enumerate_semigroup(self, data, INTOBJ_INT(-1), 0, False);
+    fropin(data, INTOBJ_INT(-1), 0, False);
   }
   return ElmPRec(data, RNam_elts);
 }
@@ -313,7 +314,7 @@ Obj SEMIGROUP_ELEMENT_NUMBER (Obj self, Obj data, Obj pos) {
   }
 
   if (data_type(data) == UNKNOWN) {
-    enumerate_semigroup(self, data, pos, 0, False);
+    fropin(data, pos, 0, False);
     Obj elts = ElmPRec(data, RNam_elts);
     if (nr <= (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
       return ELM_PLIST(elts, nr);
@@ -388,7 +389,7 @@ Obj SEMIGROUP_ENUMERATE (Obj self, Obj data, Obj limit) {
   if (data_type(data) != UNKNOWN) {
     data_semigroup(data)->enumerate(INT_INTOBJ(limit), rec_get_report(data));
   } else {
-    enumerate_semigroup(self, data, limit, 0, False);
+    fropin(data, limit, 0, False);
   }
   return data;
 }
@@ -457,7 +458,7 @@ Obj SEMIGROUP_FACTORIZATION (Obj self, Obj data, Obj pos) {
     assert(pos_c <= (size_t) LEN_PLIST(ElmPRec(data, RNam_words)));
     return ELM_PLIST(ElmPRec(data, RNam_words), pos_c);
   } else {
-    enumerate_semigroup(self, data, INTOBJ_INT(pos), 0, False);
+    fropin(data, INTOBJ_INT(pos), 0, False);
     return ELM_PLIST(ElmPRec(data, RNam_words), INT_INTOBJ(pos));
   }
 }
@@ -490,7 +491,7 @@ Obj SEMIGROUP_LEFT_CAYLEY_GRAPH (Obj self, Obj data) {
       CHANGED_BAG(data);
     }
   } else {
-    enumerate_semigroup(self, data, INTOBJ_INT(-1), 0, False);
+    fropin(data, INTOBJ_INT(-1), 0, False);
   }
   return ElmPRec(data, RNam_left);
 }
@@ -570,7 +571,7 @@ Obj SEMIGROUP_POSITION (Obj self, Obj data, Obj x) {
       return val;
     }
     Obj limit = SumInt(ElmPRec(data, RNamName("nr")), INTOBJ_INT(1));
-    enumerate_semigroup(self, data,  limit, 0, False);
+    fropin(data,  limit, 0, False);
     pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
     nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
   } while (pos <= nr);
@@ -655,7 +656,7 @@ Obj SEMIGROUP_RELATIONS (Obj self, Obj data) {
       CHANGED_BAG(data);
     }
   } else {
-    enumerate_semigroup(self, data, INTOBJ_INT(-1), 0, False);
+    fropin(data, INTOBJ_INT(-1), 0, False);
   }
   return ElmPRec(data, RNam_rules);
 }
@@ -675,7 +676,7 @@ Obj SEMIGROUP_RIGHT_CAYLEY_GRAPH(Obj self, Obj data) {
       CHANGED_BAG(data);
     }
   } else {
-    enumerate_semigroup(self, data, INTOBJ_INT(-1), 0, False);
+    fropin(data, INTOBJ_INT(-1), 0, False);
   }
   return ElmPRec(data, RNam_right);
 }
@@ -690,7 +691,7 @@ Obj SEMIGROUP_SIZE (Obj self, Obj data) {
     bool report = rec_get_report(data);
     return INTOBJ_INT(data_semigroup(data)->size(report));
   } else {
-    enumerate_semigroup(self, data, INTOBJ_INT(-1), 0, False);
+    fropin(data, INTOBJ_INT(-1), 0, False);
     return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
   }
 }

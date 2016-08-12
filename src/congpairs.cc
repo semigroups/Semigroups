@@ -8,10 +8,10 @@
 
 #include <string>
 
-#include "data.h"
-#include "congpairs.h"
+#include "src/congpairs.h"
 
-//#include "gap-debug.h"
+#include "src/data.h"
+#include "src/fropin.h"
 
 #include "semigroups++/tc.h"
 
@@ -156,7 +156,7 @@ Obj CONG_PAIRS_IN(Obj self, Obj o, Obj pair) {
     range->factorisation(rhs,
                          INT_INTOBJ(SEMIGROUP_POSITION(0L, data, rhs_obj)) - 1);
   } else {
-    enumerate_semigroup(0L, data, INTOBJ_INT(-1), 0, False);
+    fropin(data, INTOBJ_INT(-1), 0, False);
 
     Obj words = ElmPRec(data, RNam_words);
 
@@ -215,7 +215,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, Obj o) {
     }
   } else {
     Obj data = ElmPRec(o, RNam_fin_cong_range);
-    enumerate_semigroup(0L, data, INTOBJ_INT(-1), 0, False);
+    fropin(data, INTOBJ_INT(-1), 0, False);
     Obj words = ElmPRec(data, RNam_words);
 
     lookup = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(words));
@@ -256,7 +256,7 @@ Obj CONG_PAIRS_CLASS_COSET_ID (Obj self, Obj o) {
                          rec_get_report(o));
     return INTOBJ_INT(cong->word_to_coset(word));
   } else {
-    enumerate_semigroup(0L, data, INTOBJ_INT(-1), 0, False);
+    fropin(data, INTOBJ_INT(-1), 0, False);
     Congruence* cong = cong_obj_get_cpp(cong_obj);
 
     Obj word = ELM_PLIST(ElmPRec(data, RNam_words),
