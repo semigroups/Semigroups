@@ -30,15 +30,16 @@ class UFData {
   typedef std::vector<table_t*> blocks_t;
 
   // Copy constructor
-  UFData (const UFData& copy) : _size(copy._size),
-                                _table(new table_t(*copy._table)),
-                                _blocks(nullptr),
-                                _haschanged(copy._haschanged) {
+  UFData(const UFData& copy)
+      : _size(copy._size),
+        _table(new table_t(*copy._table)),
+        _blocks(nullptr),
+        _haschanged(copy._haschanged) {
     if (copy._blocks != nullptr) {
       // Copy the blocks as well
       _blocks = new blocks_t();
       _blocks->reserve(copy._blocks->size());
-      for (auto block: *copy._blocks) {
+      for (auto block : *copy._blocks) {
         if (block == nullptr) {
           _blocks->push_back(nullptr);
         } else {
@@ -47,30 +48,32 @@ class UFData {
       }
     }
   }
-  UFData& operator= (UFData const& copy) = delete;
+  UFData& operator=(UFData const& copy) = delete;
 
   // Constructor by table
-  UFData (const table_t& table) : _size(table.size()),
-                                  _table(new table_t(table)),
-                                  _blocks(nullptr),
-                                  _haschanged(true) { }
+  UFData(const table_t& table)
+      : _size(table.size()),
+        _table(new table_t(table)),
+        _blocks(nullptr),
+        _haschanged(true) {}
 
   // Constructor by size
-  UFData (size_t size) : _size(size),
-                         _table(new table_t()),
-                         _blocks(nullptr),
-                         _haschanged(false) {
+  UFData(size_t size)
+      : _size(size),
+        _table(new table_t()),
+        _blocks(nullptr),
+        _haschanged(false) {
     _table->reserve(size);
-    for (size_t i=0; i<size; i++) {
+    for (size_t i = 0; i < size; i++) {
       _table->push_back(i);
     }
   }
 
   // Destructor
-  ~UFData () {
+  ~UFData() {
     delete _table;
     if (_blocks != nullptr) {
-      for (size_t i=0; i<_blocks->size(); i++) {
+      for (size_t i = 0; i < _blocks->size(); i++) {
         delete _blocks->at(i);
       }
       delete _blocks;
@@ -78,17 +81,21 @@ class UFData {
   }
 
   // Getters
-  size_t   get_size () { return _size; }
-  table_t  *get_table () { return _table; }
+  size_t get_size() {
+    return _size;
+  }
+  table_t* get_table() {
+    return _table;
+  }
 
   // get_blocks
-  blocks_t *get_blocks () {
-    table_t *block;
+  blocks_t* get_blocks() {
+    table_t* block;
     // Is _blocks "bound" yet?
     if (_blocks == nullptr) {
       _blocks = new blocks_t();
       _blocks->reserve(_size);
-      for (size_t i=0; i<_size; i++) {
+      for (size_t i = 0; i < _size; i++) {
         block = new table_t(1, i);
         _blocks->push_back(block);
       }
@@ -96,7 +103,7 @@ class UFData {
     // Do we need to update the blocks?
     if (_haschanged) {
       size_t ii;
-      for (size_t i=0; i<_size; i++) {
+      for (size_t i = 0; i < _size; i++) {
         if (_blocks->at(i) != nullptr) {
           ii = find(i);
           if (ii != i) {
@@ -117,17 +124,17 @@ class UFData {
   }
 
   // find
-  size_t find (size_t i) {
+  size_t find(size_t i) {
     size_t ii;
     do {
       ii = i;
-      i = _table->at(ii);
+      i  = _table->at(ii);
     } while (ii != i);
     return i;
   }
 
   // union
-  void unite (size_t i, size_t j) {
+  void unite(size_t i, size_t j) {
     size_t ii, jj;
     ii = find(i);
     jj = find(j);
@@ -141,12 +148,12 @@ class UFData {
 
   // flatten
   void flatten() {
-    for (size_t i=0; i<_size; i++) {
+    for (size_t i = 0; i < _size; i++) {
       _table->at(i) = find(i);
     }
   }
 
-private:
+ private:
   size_t    _size;
   table_t*  _table;
   blocks_t* _blocks;
@@ -155,11 +162,11 @@ private:
 
 // GAP level functions
 
-Obj UF_NEW (Obj self, Obj size);
-Obj UF_COPY (Obj self, Obj ufdata);
-Obj UF_SIZE (Obj self, Obj ufdata);
-Obj UF_FIND (Obj self, Obj ufdata, Obj i);
-Obj UF_UNION (Obj self, Obj ufdata, Obj pair);
-Obj UF_FLATTEN (Obj self, Obj ufdata);
-Obj UF_TABLE (Obj self, Obj ufdata);
-Obj UF_BLOCKS (Obj self, Obj ufdata);
+Obj UF_NEW(Obj self, Obj size);
+Obj UF_COPY(Obj self, Obj ufdata);
+Obj UF_SIZE(Obj self, Obj ufdata);
+Obj UF_FIND(Obj self, Obj ufdata, Obj i);
+Obj UF_UNION(Obj self, Obj ufdata, Obj pair);
+Obj UF_FLATTEN(Obj self, Obj ufdata);
+Obj UF_TABLE(Obj self, Obj ufdata);
+Obj UF_BLOCKS(Obj self, Obj ufdata);

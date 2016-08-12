@@ -21,13 +21,13 @@
 
 #include <assert.h>
 
-#include "src/compiled.h"
 #include "gap.h"
 #include "semigroups++/elements.h"
+#include "src/compiled.h"
 
 // C functions
 
-inline Bipartition* bipart_get_cpp (Obj x) {
+inline Bipartition* bipart_get_cpp(Obj x) {
   assert(TNUM_OBJ(x) == T_BIPART);
   return CLASS_OBJ<Bipartition>(x);
 }

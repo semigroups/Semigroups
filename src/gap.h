@@ -58,23 +58,22 @@ enum t_semi_subtype_t {
 // Get a new GAP Obj containing a pointer to a C++ class of type Class
 
 template <typename Class>
-inline Obj OBJ_CLASS (Class* cpp_class, t_semi_subtype_t type) {
-  Obj o = NewBag(T_SEMI, 2 * sizeof(Obj));
+inline Obj OBJ_CLASS(Class* cpp_class, t_semi_subtype_t type) {
+  Obj o          = NewBag(T_SEMI, 2 * sizeof(Obj));
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(cpp_class);
-  ADDR_OBJ(o)[1] = (Obj)type;
+  ADDR_OBJ(o)[1] = (Obj) type;
   return o;
 }
 
 // Get a pointer to a C++ object of type Class from GAP Obj of type T_SEMI
 
-template <typename Class>
-inline Class* CLASS_OBJ (Obj o) {
+template <typename Class> inline Class* CLASS_OBJ(Obj o) {
   return reinterpret_cast<Class*>(ADDR_OBJ(o)[0]);
 }
 
 // Get the t_semi_subtype_t out of the T_SEMI Obj
 
-inline t_semi_subtype_t SUBTYPE_OF_T_SEMI (Obj o) {
+inline t_semi_subtype_t SUBTYPE_OF_T_SEMI(Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
   return static_cast<t_semi_subtype_t>(reinterpret_cast<UInt>(ADDR_OBJ(o)[1]));
 }

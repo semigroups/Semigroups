@@ -22,7 +22,7 @@
 #include "src/compiled.h"
 
 Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking);
-Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS (Obj, Obj, Obj);
-Obj FIND_HCLASSES (Obj, Obj, Obj);
+Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj, Obj, Obj);
+Obj FIND_HCLASSES(Obj, Obj, Obj);
 
 #endif // SRC_FROPIN_H_

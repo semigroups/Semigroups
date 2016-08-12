@@ -78,14 +78,14 @@ static Congruence* fp_semi_get_cpp_cong(Obj S) {
 }
 
 Obj FP_SEMI_SIZE(Obj self, Obj S) {
-  //TODO assert S is correct types of args
+  // TODO assert S is correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
   cong->todd_coxeter();
   return INTOBJ_INT(cong->nr_classes());
 }
 
 Obj FP_SEMI_EQ(Obj self, Obj S, Obj x, Obj y) {
-  //TODO assert S, x, y are correct types of args
+  // TODO assert S, x, y are correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
   cong->todd_coxeter();
 
@@ -97,7 +97,7 @@ Obj FP_SEMI_EQ(Obj self, Obj S, Obj x, Obj y) {
 }
 
 Obj FP_SEMI_COSET_ID(Obj self, Obj S, Obj x) {
-  //TODO assert S, x are correct types of args
+  // TODO assert S, x are correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
   cong->todd_coxeter(); // FIXME remove this if not necessary
   return INTOBJ_INT(cong->word_to_coset(ext_rep_obj_to_word_t(x)));

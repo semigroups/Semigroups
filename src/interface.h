@@ -19,7 +19,7 @@
 #ifndef SRC_INTERFACE_H_
 #define SRC_INTERFACE_H_
 
-#include "compiled.h"
+#include "src/compiled.h"
 
 // GAP level functions
 

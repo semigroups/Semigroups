@@ -22,7 +22,7 @@
 #ifndef SRC_SEMIFP_H_
 #define SRC_SEMIFP_H_
 
-#include "compiled.h"
+#include "src/compiled.h"
 
 Obj FP_SEMI_SIZE(Obj, Obj);
 Obj FP_SEMI_EQ(Obj, Obj, Obj, Obj);
