@@ -3,7 +3,7 @@ compiler:
   - gcc
 env:
   global:
-    - SEMIGROUPSPLUSPLUS_BR=tc
+    - SEMIGROUPSPLUSPLUS_BR=master
     - DIGRAPHS_BR=stable-0.5
     - IO=io-4.4.6
     - GAPDOC=GAPDoc-1.5.1
