@@ -23,7 +23,6 @@
 InstallMethod(EquivalenceRelationLookup,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep],
-9,
 function(cong)
   # This will use the coset numbers in the TC table
   CONG_PAIRS_LOOKUP_PART(cong);

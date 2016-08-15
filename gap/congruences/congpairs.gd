@@ -36,8 +36,12 @@ DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
 #   report:   should be true or false, sets whether information is printed
 #             during a computation or not.
 
+DeclareCategory("IsFiniteCongruenceByGeneratingPairs", 
+                IsEquivalenceRelation, RankFilter(IsSemigroupCongruence));
+
 DeclareRepresentation("IsFiniteCongruenceByGeneratingPairsRep",
-                      IsEquivalenceRelation and IsAttributeStoringRep,
+                      IsEquivalenceRelation and IsAttributeStoringRep and
+                      IsFiniteCongruenceByGeneratingPairs,
                       ["range", "genpairs", "type", "report"]);
 
 DeclareAttribute("FiniteCongruenceByGeneratingPairsPartition", 
