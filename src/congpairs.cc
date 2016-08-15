@@ -173,26 +173,32 @@ Obj CONG_PAIRS_IN(Obj self, Obj o, Obj pair) {
   initRNams();
   Obj data = ElmPRec(o, RNam_fin_cong_range);
 
-  Obj    lhs_obj = ELM_LIST(pair, 1);
-  Obj    rhs_obj = ELM_LIST(pair, 2);
+  size_t lhs_pos =
+      INT_INTOBJ(SEMIGROUP_POSITION(0L, data, ELM_LIST(pair, 1)));
+  size_t rhs_pos =
+      INT_INTOBJ(SEMIGROUP_POSITION(0L, data, ELM_LIST(pair, 2)));
+
+  if (IsbPRec(o, RNam_fin_cong_lookup)) {
+    Obj lookup = ElmPRec(o, RNam_fin_cong_lookup);
+    Obj out = True;
+    EQ_INTOBJS(out, ELM_PLIST(lookup, lhs_pos), ELM_PLIST(lookup, rhs_pos));
+    return out;
+  }
+
   word_t lhs, rhs;
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
     Semigroup* range = cong_obj_get_range(o);
 
-    range->factorisation(lhs,
-                         INT_INTOBJ(SEMIGROUP_POSITION(0L, data, lhs_obj)) - 1);
-    range->factorisation(rhs,
-                         INT_INTOBJ(SEMIGROUP_POSITION(0L, data, rhs_obj)) - 1);
+    range->factorisation(lhs, lhs_pos - 1);
+    range->factorisation(rhs, rhs_pos - 1);
   } else {
     fropin(data, INTOBJ_INT(-1), 0, False);
 
     Obj words = ElmPRec(data, RNam_words);
 
-    lhs = plist_to_word_t(
-        ELM_PLIST(words, INT_INTOBJ(SEMIGROUP_POSITION(0L, data, lhs_obj))));
-    rhs = plist_to_word_t(
-        ELM_PLIST(words, INT_INTOBJ(SEMIGROUP_POSITION(0L, data, rhs_obj))));
+    lhs = plist_to_word_t(ELM_PLIST(words, lhs_pos));
+    rhs = plist_to_word_t(ELM_PLIST(words, rhs_pos));
   }
 
   Congruence* cong = cong_obj_get_cpp(o);
