@@ -296,7 +296,7 @@ gap> LatticeOfRightCongruences(S);
 <#/GAPDoc>
 
 <#GAPDoc Label="EquivalenceRelationLookup">
-  <ManSection> 
+  <ManSection>
     <Attr Name = "EquivalenceRelationLookup" Arg = "cong"/>
     <Returns>A list.</Returns>
     <Description>
@@ -304,18 +304,17 @@ gap> LatticeOfRightCongruences(S);
       of positive integers with length the size of the semigroup over which
       <A>cong</A> is defined.<P/>
 
-      Each position in the list corresponds to an element of the semigroup (in
-      a consistent canonical order) and the integer at that position
-      is a unique identifier for that element's congruence class under
-      <A>cong</A>.  The value of <C>EquivalenceRelationLookup</C> has the
-      property that the value in position <C>i</C> is at most <C>i</C> and as
-      such two congruences on a given semigroup are equal if and only if their
-      lookup's are equal.<P/>
-      
-      Two elements of the semigroup on which the congruence is defined
-      are related in the congruence if and only if they have
-      the same number at their respective positions in the lookup.
-      <P/>
+      Each position in the list corresponds to an element of the semigroup (in a
+      consistent canonical order) and the integer at that position is a unique
+      identifier for that element's congruence class under <A>cong</A>.  Two
+      elements of the semigroup on which the congruence is defined are related
+      in the congruence if and only if they have the same number at their
+      respective positions in the lookup.<P/>
+
+      Note that the order in which numbers appear in the list is
+      non-deterministic, and two congruence objects which describe the same
+      equivalence relation might therefore have different lookups.  However, see
+      <Ref Attr = "EquivalenceRelationCanonicalLookup"/>.<P/>
 
       See also <Ref Attr = "EquivalenceRelationPartition" BookName = "ref"/>.
       <Example><![CDATA[
@@ -324,6 +323,41 @@ gap> S := Monoid(Transformation([1, 2, 2]),
 gap> cong := SemigroupCongruence(S,
 > [Transformation([1, 2, 1]), Transformation([2, 1, 2])]);;
 gap> EquivalenceRelationLookup(cong);
+[ 1, 2, 3, 4, 5, 6, 2, 3, 6, 4, 5, 6 ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="EquivalenceRelationCanonicalLookup">
+  <ManSection>
+    <Attr Name = "EquivalenceRelationCanonicalLookup" Arg = "cong"/>
+    <Returns>A list.</Returns>
+    <Description>
+      This attribute describes the semigroup congruence <A>cong</A> as a list
+      of positive integers with length the size of the semigroup over which
+      <A>cong</A> is defined.<P/>
+
+      Each position in the list corresponds to an element of the semigroup (in a
+      consistent canonical order) and the integer at that position is a unique
+      identifier for that element's congruence class under <A>cong</A>.  The
+      value of <C>EquivalenceRelationCanonicalLookup</C> has the property that
+      the first appearance of the value <C>i</C> is strictly later than the
+      first appearance of <C>i-1</C>.  As such, two congruences on a given
+      semigroup are equal if and only if their canonical lookups are equal.<P/>
+      
+      Two elements of the semigroup on which the congruence is defined
+      are related in the congruence if and only if they have
+      the same number at their respective positions in the lookup.
+      <P/>
+
+      See also <Ref Attr = "EquivalenceRelationPartition" BookName = "ref"/> and
+      <Ref Attr = "EquivalenceRelationLookup"/>.
+      <Example><![CDATA[
+gap> S := Monoid(Transformation([1, 2, 2]),
+>                Transformation([3, 1, 3]));;
+gap> cong := SemigroupCongruence(S,
+> [Transformation([1, 2, 1]), Transformation([2, 1, 2])]);;
+gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 5, 6, 2, 3, 6, 4, 5, 6 ]]]></Example>
     </Description>
   </ManSection>

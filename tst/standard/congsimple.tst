@@ -41,7 +41,7 @@ gap> cong = congs[33];
 true
 gap> cong = congs[11];
 false
-gap> EquivalenceRelationLookup(cong);
+gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 2, 3, 1, 3, 3, 4, 4, 1, 4, 2, 4, 2, 1, 3 ]
 
 #T# SimpleCongTest4: Testing membership in a congruence
@@ -145,12 +145,6 @@ gap> congs := CongruencesOfSemigroup(S);
      degree 4 with 2 generators> with linked triple (1,2,2)> ]
 gap> Size(congs);
 2
-
-#T# Robustness against infinite semigroups
-gap> S := FreeSemigroup(2);;
-gap> congs := CongruencesOfSemigroup(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 4th choice method found for `CongruencesOfSemigroup' on 1 arguments
 
 #T# Join/Meet: bad input
 gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])]);;

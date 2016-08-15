@@ -219,14 +219,14 @@ function(cong1, cong2)
   return IsSubrelation(cong1!.rmscong, cong2!.rmscong);
 end);
 
-InstallMethod(EquivalenceRelationLookup,
+InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a (0-)simple semigroup congruence",
 [IsSimpleSemigroupCongruence],
 function(cong)
   local S, rmstable, nrclasses, rmsdata, iso, elms, table, newnums, next, i,
         rmsclass;
   S := Range(cong);
-  rmstable := EquivalenceRelationLookup(cong!.rmscong);
+  rmstable := EquivalenceRelationCanonicalLookup(cong!.rmscong);
   nrclasses := NrEquivalenceClasses(cong!.rmscong);
   rmsdata := GenericSemigroupData(Range(cong!.rmscong));
   iso := cong!.iso;

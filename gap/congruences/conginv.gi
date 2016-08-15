@@ -209,7 +209,7 @@ function(cong)
   return Length(EquivalenceClasses(cong));
 end);
 
-InstallMethod(EquivalenceRelationLookup,
+InstallMethod(EquivalenceRelationCanonicalLookup,
 "for inverse semigroup congruence",
 [IsInverseSemigroupCongruenceByKernelTrace],
 function(cong)

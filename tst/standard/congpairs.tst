@@ -33,8 +33,8 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `in' on 2 arguments
 gap> EquivalenceRelationLookup(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `EquivalenceRelationLookup' on 1 argumen\
-ts
+Error, no 2nd choice method found for `EquivalenceRelationCanonicalLookup' on \
+1 arguments
 gap> NrCongruenceClasses(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `NrEquivalenceClasses' on 1 arguments
@@ -136,7 +136,7 @@ gap> [Transformation([3, 4, 3, 3, 4]), Transformation([1, 3, 4, 1, 3])] in cong;
 false
 gap> [Transformation([3, 4, 3, 3, 4]), Transformation([1, 3, 4, 1, 3])] in cong;
 false
-gap> EquivalenceRelationLookup(cong);
+gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 gap> NonTrivialCongruenceClasses(cong);
@@ -183,7 +183,7 @@ gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
 true
 gap> [Transformation([1, 2, 1, 2, 2]), Transformation([1, 2, 2, 1, 2])] in cong;
 false
-gap> EquivalenceRelationLookup(cong);
+gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 1, 1, 1, 2, 3, 4, 2, 2, 3, 3, 4, 4 ]
 gap> NonTrivialEquivalenceClasses(cong);
 [ <left congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
@@ -248,7 +248,7 @@ gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
 false
 gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
 false
-gap> EquivalenceRelationLookup(cong);
+gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 5, 6, 7, 8, 3, 9, 10, 11, 3, 3, 12, 13 ]
 gap> NonTrivialCongruenceClasses(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -303,7 +303,7 @@ gap> cong := SemigroupCongruence(S, pair);;
 gap> class := CongruenceClassOfElement(cong, Transformation([1, 2, 2, 2, 1]));;
 gap> enum := Enumerator(class);;
 gap> x := enum[1];;
-gap> EquivalenceRelationLookup(cong);;
+gap> EquivalenceRelationCanonicalLookup(cong);;
 gap> Position(enum, Transformation([2, 2, 2, 2, 3]));
 25
 gap> Position(enum, x);
@@ -350,21 +350,14 @@ gap> Unbind(T);
 gap> Unbind(class);
 gap> Unbind(classes);
 gap> Unbind(cong);
+gap> Unbind(cong1);
 gap> Unbind(cong2);
-gap> Unbind(congs);
 gap> Unbind(enum);
 gap> Unbind(gens);
-gap> Unbind(iso);
-gap> Unbind(l);
-gap> Unbind(min);
-gap> Unbind(minl);
-gap> Unbind(minr);
-gap> Unbind(p);
 gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);
 gap> Unbind(pairs);
-gap> Unbind(q);
 gap> Unbind(u);
 gap> Unbind(v);
 gap> Unbind(x);

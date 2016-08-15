@@ -25,14 +25,16 @@ InstallMethod(\= , "for a left and a right semigroup congruence",
 [IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
 function(c1, c2)
   return Range(c1) = Range(c2)
-    and EquivalenceRelationLookup(c1) = EquivalenceRelationLookup(c2);
+         and EquivalenceRelationCanonicalLookup(c1) =
+             EquivalenceRelationCanonicalLookup(c2);
 end);
 
 InstallMethod(\= , "for a right and a left semigroup congruence",
 [IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
 function(c1, c2)
   return Range(c1) = Range(c2)
-    and EquivalenceRelationLookup(c1) = EquivalenceRelationLookup(c2);
+         and EquivalenceRelationCanonicalLookup(c1) =
+             EquivalenceRelationCanonicalLookup(c2);
 end);
 
 # Multiplication for congruence classes: only makes sense for 2-sided
@@ -365,3 +367,18 @@ function(class, elm)
   cong := EquivalenceClassRelation(class);
   return EquivalenceClassOfElementNC(cong, Representative(class) * elm);
 end);
+
+InstallMethod(EquivalenceRelationLookup,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+EquivalenceRelationCanonicalLookup);
+
+InstallMethod(EquivalenceRelationLookup,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+EquivalenceRelationCanonicalLookup);
+
+InstallMethod(EquivalenceRelationLookup,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+EquivalenceRelationCanonicalLookup);

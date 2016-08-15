@@ -14,6 +14,12 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
+#T# Robustness against infinite semigroups
+gap> S := FreeSemigroup(2);;
+gap> congs := CongruencesOfSemigroup(S);
+Error, Semigroups: SEMIGROUPS.LatticeOfXCongruences: usage,
+first argument <S> must be a finite semigroup,
+
 #T# LatticeOfCongruences
 gap> S := PartitionMonoid(2);;
 gap> l := LatticeOfCongruences(S);
@@ -34,8 +40,8 @@ gap> S := OrderEndomorphisms(2);;
 gap> CongruencesOfSemigroup(S);
 [ <semigroup congruence over <regular transformation monoid of size 3, 
      degree 2 with 2 generators> with 0 generating pairs>, 
-  <semigroup congruence over <regular transformation monoid of size 3, 
-     degree 2 with 2 generators> with 1 generating pairs>, 
+  <universal semigroup congruence over <regular transformation monoid 
+     of size 3, degree 2 with 2 generators>>, 
   <semigroup congruence over <regular transformation monoid of size 3, 
      degree 2 with 2 generators> with 1 generating pairs> ]
 gap> l := LatticeOfCongruences(S);
@@ -112,8 +118,8 @@ gap> congs := CongruencesOfSemigroup(S);
      with 2 generators> with 0 generating pairs>, 
   <semigroup congruence over <transformation semigroup of size 13, degree 3 
      with 2 generators> with 1 generating pairs>, 
-  <semigroup congruence over <transformation semigroup of size 13, degree 3 
-     with 2 generators> with 1 generating pairs>, 
+  <universal semigroup congruence over <transformation semigroup of size 13, 
+     degree 3 with 2 generators>>, 
   <semigroup congruence over <transformation semigroup of size 13, degree 3 
      with 2 generators> with 1 generating pairs>, 
   <semigroup congruence over <transformation semigroup of size 13, degree 3 
@@ -160,6 +166,14 @@ gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true,
 >                                                          1gen := true));
 [ [  ], [ 1 ], [ 1 ], [ 1, 3, 6 ], [ 1 ], [ 1 ], [ 1, 2, 9 ], [ 1, 5 ], [ 1 ] 
  ]
+
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(congs);
+gap> Unbind(l);
+gap> Unbind(min);
+gap> Unbind(minl);
+gap> Unbind(minr);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/conglatt.tst");

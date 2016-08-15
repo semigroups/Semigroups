@@ -1630,7 +1630,7 @@ function(cong)
   return cong;
 end);
 
-_EquivalenceRelationLookupRMS := function(cong)
+_EquivalenceRelationCanonicalLookupRMS := function(cong)
   local S, n, data, elms, table, next, i, x;
   S := Range(cong);
   n := Size(S);
@@ -1649,14 +1649,14 @@ _EquivalenceRelationLookupRMS := function(cong)
   return table;
 end;
 
-InstallMethod(EquivalenceRelationLookup,
+InstallMethod(EquivalenceRelationCanonicalLookup,
 "for Rees matrix semigroup congruence by linked triple",
 [IsRMSCongruenceByLinkedTriple],
-_EquivalenceRelationLookupRMS);
+_EquivalenceRelationCanonicalLookupRMS);
 
-InstallMethod(EquivalenceRelationLookup,
+InstallMethod(EquivalenceRelationCanonicalLookup,
 "for Rees 0-matrix semigroup congruence by linked triple",
 [IsRZMSCongruenceByLinkedTriple],
-_EquivalenceRelationLookupRMS);
+_EquivalenceRelationCanonicalLookupRMS);
 
-Unbind(_EquivalenceRelationLookupRMS);
+Unbind(_EquivalenceRelationCanonicalLookupRMS);
