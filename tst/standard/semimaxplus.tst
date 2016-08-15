@@ -391,6 +391,9 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+# Test RandomSemigroup
+gap> RandomSemigroup(IsMaxPlusMatrixSemigroup, 2, 5);;
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 
