@@ -7,17 +7,16 @@ $CXX --version
 # Store this directory
 SEMIDIR=$(pwd)
 
-# Get semigroups++ if appropriate
-echo -en 'travis_fold:start:GetSemigroupsPP\r'
+# Get semigroupsplusplus if appropriate
+echo -en 'travis_fold:start:GetSemigroupsPlusPlus\r'
 if [ -d src ]
 then
     cd src
     git clone -b $SEMIGROUPSPLUSPLUS_BR --depth=1 https://github.com/james-d-mitchell/semigroupsplusplus.git
-    mv semigroupsplusplus semigroups++
     cd ..
 fi
 cd ..
-echo -en 'travis_fold:end:GetSemigroupsPP\r'
+echo -en 'travis_fold:end:GetSemigroupsPlusPlus\r'
 
 # Download and compile GAP
 echo -en 'travis_fold:start:InstallGAP\r'
