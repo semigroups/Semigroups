@@ -146,12 +146,6 @@ gap> congs := CongruencesOfSemigroup(S);
 gap> Size(congs);
 2
 
-#T# Robustness against infinite semigroups
-gap> S := FreeSemigroup(2);;
-gap> congs := CongruencesOfSemigroup(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 4th choice method found for `CongruencesOfSemigroup' on 1 arguments
-
 #T# Join/Meet: bad input
 gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])]);;
 gap> IsRegularSemigroup(S);

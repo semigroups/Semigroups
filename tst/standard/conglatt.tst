@@ -14,6 +14,12 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
+#T# Robustness against infinite semigroups
+gap> S := FreeSemigroup(2);;
+gap> congs := CongruencesOfSemigroup(S);
+Error, Semigroups: SEMIGROUPS.LatticeOfXCongruences: usage,
+first argument <S> must be a finite semigroup,
+
 #T# LatticeOfCongruences
 gap> S := PartitionMonoid(2);;
 gap> l := LatticeOfCongruences(S);
