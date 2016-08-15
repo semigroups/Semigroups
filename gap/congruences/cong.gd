@@ -48,6 +48,7 @@ DeclareSynonym("GeneratingPairsOfRightSemigroupCongruence",
 DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);
 
 DeclareAttribute("EquivalenceRelationLookup", IsEquivalenceRelation);
+DeclareAttribute("EquivalenceRelationCanonicalLookup", IsEquivalenceRelation);
 DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
 
 DeclareOperation("JoinLeftSemigroupCongruences",

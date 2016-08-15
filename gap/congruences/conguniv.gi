@@ -53,7 +53,7 @@ InstallImmediateMethod(IsUniversalSemigroupCongruence,
 IsRZMSCongruenceByLinkedTriple, 0,
 ReturnFalse);
 
-InstallMethod(EquivalenceRelationLookup,
+InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a universal semigroup congruence",
 [IsUniversalSemigroupCongruence],
 function(cong)

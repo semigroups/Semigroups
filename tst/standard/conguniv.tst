@@ -86,10 +86,10 @@ gap> cong := SemigroupCongruence(r, pairs);;
 gap> NrCongruenceClasses(cong);
 1
 
-#T# EquivalenceRelationLookup
+#T# EquivalenceRelationCanonicalLookup
 gap> S := FullTransformationMonoid(2);;
 gap> uni := UniversalSemigroupCongruence(S);;
-gap> EquivalenceRelationLookup(uni);
+gap> EquivalenceRelationCanonicalLookup(uni);
 [ 1, 1, 1, 1 ]
 
 #T# Equality checking
