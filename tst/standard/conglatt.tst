@@ -161,5 +161,13 @@ gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true,
 [ [  ], [ 1 ], [ 1 ], [ 1, 3, 6 ], [ 1 ], [ 1 ], [ 1, 2, 9 ], [ 1, 5 ], [ 1 ] 
  ]
 
+#T# SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(congs);
+gap> Unbind(l);
+gap> Unbind(min);
+gap> Unbind(minl);
+gap> Unbind(minr);
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/conglatt.tst");
