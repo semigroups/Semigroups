@@ -87,7 +87,9 @@ static void cong_obj_init_cpp_cong(Obj o) {
       lhs.clear();
       rhs.clear();
     }
-    cong = cong_pairs_enumerate(type, range, extra, rec_get_report(o));
+    cong = parallel_todd_coxeter(new Congruence(type, range, extra, true, 1),
+                                 new Congruence(type, range, extra, false, 2),
+                                 rec_get_report(o));
   } else {
     fropin(data, INTOBJ_INT(-1), 0, False);
 
