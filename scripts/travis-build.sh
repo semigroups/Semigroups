@@ -13,7 +13,6 @@ if [ -d src ]
 then
     cd src
     git clone -b $SEMIGROUPSPLUSPLUS_BR --depth=1 https://github.com/james-d-mitchell/semigroupsplusplus.git
-    mv semigroupsplusplus semigroups++
     cd ..
 fi
 cd ..

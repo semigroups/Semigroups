@@ -89,7 +89,7 @@ MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
 
   size_t m = LEN_PLIST(ELM_PLIST(o, 1));
 
-  std::vector<long>* matrix(new std::vector<long>());
+  std::vector<int64_t>* matrix(new std::vector<int64_t>());
   matrix->reserve(m);
 
   for (size_t i = 0; i < m; i++) {

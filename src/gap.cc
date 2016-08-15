@@ -16,7 +16,7 @@
 #include "fropin.h"
 #include "ufdata.hh"
 
-#include "semigroups++/semigroups.h"
+#include "semigroupsplusplus/semigroups.h"
 
 #if !defined(SIZEOF_VOID_P)
 # error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined

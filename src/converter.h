@@ -14,7 +14,7 @@
 #include "src/compiled.h"          /* GAP headers                */
 #include "src/pperm.h"
 
-#include "semigroups++/elements.h"
+#include "semigroupsplusplus/elements.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Abstract base class
@@ -274,7 +274,7 @@ class PBRConverter : public Converter {
     PBR* convert   (Obj      o, size_t n);
     Obj  unconvert (Element* x          );
 
-  private: 
+  private:
     Obj get_gap_type (size_t deg);
 };
 

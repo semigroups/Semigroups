@@ -15,8 +15,8 @@
 #include <thread>
 #include <mutex>
 
-#include "src/semigroups++/timer.h"
-#include "src/semigroups++/elements.h"
+#include "src/semigroupsplusplus/timer.h"
+#include "src/semigroupsplusplus/elements.h"
 #include "src/permutat.h"
 #include "src/precord.h"
 
@@ -1357,7 +1357,7 @@ class NrIdempotentsFinder {
       for (size_t i = 0; i < _orbit.size(); i++) {
         size_t comp = INT_INTOBJ(ELM_PLIST(lookup, i + 2)) - 2;
         if (comp != _min_scc) {
-          _unprocessed[thread_id].push_back(make_pair(i, comp));
+          _unprocessed[thread_id].push_back(std::make_pair(i, comp));
           thread_load += _scc[comp].size() - _scc_pos[i];
           if (thread_load >= mean_load && thread_id != _nr_threads - 1) {
             thread_id++;

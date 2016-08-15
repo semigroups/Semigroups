@@ -12,7 +12,7 @@
 
 #include "src/compiled.h"
 #include "gap.hh"
-#include "semigroups++/elements.h"
+#include "semigroupsplusplus/elements.h"
 
 // C functions
 

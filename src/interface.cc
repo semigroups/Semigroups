@@ -20,7 +20,7 @@
 #include "interface.h"
 #include "gap.hh"
 
-#include "semigroups++/semigroups.h"
+#include "semigroupsplusplus/semigroups.h"
 
 /*******************************************************************************
  *******************************************************************************
