@@ -79,12 +79,15 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   local transrep, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children,
         parents, pair, badcong, newchildren, newparents, newcong, i, c, p,
         congs, 2congs, image, next, set_func, lattice, join_func, length, found,
-        ignore, start, j, k;
+        ignore, start, j, k, report;
 
   if not IsFinite(S) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.LatticeOfXCongruences: usage,\n",
                   "first argument <S> must be a finite semigroup,");
   fi;
+
+  report :=  SEMIGROUPS.OptionsRec(S).report;
+  SEMIGROUPS.OptionsRec(S).report := false;
 
   transrep := IsBound(record.transrep) and record.transrep;
   _XSemigroupCongruence := EvalString(Concatenation(type_string,
@@ -197,6 +200,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     lattice := Objectify(NewType(FamilyObj(children),
                                  IsCongruenceLattice),
                          [children, congs]);
+    SEMIGROUPS.OptionsRec(S).report := report;
     return lattice;
   elif IsBound(record.1gen) and record.1gen = true then
     # Add the trivial cong at the start
@@ -209,6 +213,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     lattice := Objectify(NewType(FamilyObj(children),
                                  IsCongruenceLattice),
                          [children, congs]);
+    SEMIGROUPS.OptionsRec(S).report := report;
     return lattice;
   fi;
 
@@ -318,6 +323,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
                                        "CongruencesOfSemigroup"));
   set_func(S, congs);
 
+  SEMIGROUPS.OptionsRec(S).report := report;
   # Objectify the result
   lattice := Objectify(NewType(FamilyObj(children),
                                IsCongruenceLattice),
