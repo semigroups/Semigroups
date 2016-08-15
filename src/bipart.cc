@@ -16,20 +16,21 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-// TODO 1) if we use clear before resize maybe don't need fill
-//      2) in-place product
+// TODO(JDM) 1) if we use clear before resize maybe don't need fill
+//           2) in-place product
 
 #include "src/bipart.h"
 
 #include <algorithm>
 #include <mutex>
+#include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 
 #include "src/permutat.h"
 #include "src/precord.h"
-#include "src/semigroups++/elements.h"
-#include "src/semigroups++/timer.h"
+#include "src/semigroupsplusplus/timer.h"
 
 // Global variables
 
@@ -43,7 +44,6 @@ static std::vector<bool>   _BUFFER_bool;
 // Create a new GAP bipartition Obj from a C++ Bipartition pointer.
 
 Obj bipart_new_obj(Bipartition* x) {
-
   size_t deg = x->degree() + 1;
   if (deg > (size_t) LEN_PLIST(TYPES_BIPART)
       || ELM_PLIST(TYPES_BIPART, deg) == 0) {
@@ -98,7 +98,6 @@ inline Obj blocks_new_obj(Blocks* x) {
 // is valid.
 
 Obj BIPART_NC(Obj self, Obj gap_blocks) {
-
   assert(IS_LIST(gap_blocks));
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
 
@@ -107,7 +106,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
   size_t nr_blocks      = 0;
 
   if (LEN_LIST(gap_blocks) != 0) {
-    if (IS_LIST(ELM_LIST(gap_blocks, 1))) { // gap_blocks is a list of lists
+    if (IS_LIST(ELM_LIST(gap_blocks, 1))) {  // gap_blocks is a list of lists
       nr_blocks = LEN_LIST(gap_blocks);
       for (size_t i = 1; i <= nr_blocks; i++) {
         assert(IS_LIST(ELM_LIST(gap_blocks, i)));
@@ -130,7 +129,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
           }
         }
       }
-    } else { // gap_blocks is the internal rep of a bipartition
+    } else {  // gap_blocks is the internal rep of a bipartition
       blocks->reserve(LEN_LIST(gap_blocks));
       for (size_t i = 1; i <= (size_t) LEN_LIST(gap_blocks) / 2; i++) {
         assert(IS_INTOBJ(ELM_LIST(gap_blocks, i))
@@ -167,7 +166,6 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
 // BIPART_NC for more details.
 
 Obj BIPART_EXT_REP(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);
@@ -197,10 +195,9 @@ Obj BIPART_EXT_REP(Obj self, Obj x) {
 // BIPART_NC for more details.
 
 Obj BIPART_INT_REP(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
-  Bipartition* xx = bipart_get_cpp(x); // get C++ bipartition pointer
+  Bipartition* xx = bipart_get_cpp(x);  // get C++ bipartition pointer
   size_t       n  = xx->degree();
 
   Obj int_rep = NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_CYC), 2 * n);
@@ -215,7 +212,6 @@ Obj BIPART_INT_REP(Obj self, Obj x) {
 // Returns the hash value for a GAP bipartition from the C++ object.
 
 Obj BIPART_HASH(Obj self, Obj x, Obj data) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
   assert(IS_INTOBJ(data));
 
@@ -226,7 +222,6 @@ Obj BIPART_HASH(Obj self, Obj x, Obj data) {
 // is of degree n if it is defined on [-n .. -1] union [1 .. n].
 
 Obj BIPART_DEGREE(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
   return INTOBJ_INT(bipart_get_cpp(x)->degree());
@@ -235,7 +230,6 @@ Obj BIPART_DEGREE(Obj self, Obj x) {
 // Returns the number of blocks in the bipartition from the C++ object.
 
 Obj BIPART_NR_BLOCKS(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
   return INTOBJ_INT(bipart_get_cpp(x)->nr_blocks());
@@ -245,7 +239,6 @@ Obj BIPART_NR_BLOCKS(Obj self, Obj x) {
 // bipartition from the C++ object.
 
 Obj BIPART_NR_LEFT_BLOCKS(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
   return INTOBJ_INT(bipart_get_cpp(x)->nr_left_blocks());
@@ -255,7 +248,6 @@ Obj BIPART_NR_LEFT_BLOCKS(Obj self, Obj x) {
 // bipartition from the C++ object.
 
 Obj BIPART_RANK(Obj self, Obj x, Obj dummy) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
   return INTOBJ_INT(bipart_get_cpp(x)->rank());
@@ -265,7 +257,6 @@ Obj BIPART_RANK(Obj self, Obj x, Obj dummy) {
 // bipartition.
 
 Obj BIPART_PROD(Obj x, Obj y) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
   assert(TNUM_OBJ(y) == T_BIPART);
 
@@ -295,7 +286,6 @@ Int BIPART_LT(Obj x, Obj y) {
 // equal.
 
 Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
   assert(TNUM_OBJ(y) == T_BIPART);
 
@@ -335,7 +325,6 @@ Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
 // Returns the GAP bipartition xx ^ *.
 
 Obj BIPART_LEFT_PROJ(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);
@@ -372,7 +361,6 @@ Obj BIPART_LEFT_PROJ(Obj self, Obj x) {
 // Returns the GAP bipartition x ^ *x.
 
 Obj BIPART_RIGHT_PROJ(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);
@@ -410,7 +398,6 @@ Obj BIPART_RIGHT_PROJ(Obj self, Obj x) {
 // Returns the GAP bipartition x ^ *.
 
 Obj BIPART_STAR(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
   Bipartition* xx  = bipart_get_cpp(x);
@@ -460,7 +447,6 @@ Obj BIPART_STAR(Obj self, Obj x) {
 // left blocks.
 
 Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
   assert(TNUM_OBJ(y) == T_BIPART);
 
@@ -487,7 +473,7 @@ Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
   for (size_t i = deg; i < 2 * deg; i++) {
     if (!seen[yy->block(i)]) {
       seen[yy->block(i)] = true;
-      if (yy->block(i) < nr_left_blocks) { // connected block
+      if (yy->block(i) < nr_left_blocks) {  // connected block
         lookup[yy->block(i)] = next;
       }
       next++;
@@ -503,7 +489,7 @@ Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
   for (size_t i = deg; i < 2 * deg; i++) {
     if (!seen[xx->block(i)]) {
       seen[xx->block(i)] = true;
-      if (xx->block(i) < nr_left_blocks) { // connected block
+      if (xx->block(i) < nr_left_blocks) {  // connected block
         ptrp[next]                = lookup[xx->block(i)];
         src[next]                 = true;
         dst[lookup[xx->block(i)]] = true;
@@ -529,7 +515,6 @@ Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
 // blocks of x permuted by p.
 
 Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
-
   assert(TNUM_OBJ(x) == T_BIPART);
 
   // find the largest moved point of the permutation p
@@ -551,7 +536,7 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
     }
   } else {
     ErrorQuit("usage: <p> must be a perm (not a %s)", (Int) TNAM_OBJ(p), 0L);
-    return 0L; // to keep the compiler happy
+    return 0L;  // to keep the compiler happy
   }
 
   if (pdeg == 0) {
@@ -570,7 +555,7 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
 
   auto tab1 = _BUFFER_size_t.begin();
   auto tab2 = _BUFFER_size_t.begin() + nr_blocks;
-  auto q    = tab2 + nr_blocks; // the inverse of p
+  auto q    = tab2 + nr_blocks;  // the inverse of p
 
   if (TNUM_OBJ(p) == T_PERM2) {
     UInt2* ptr = ADDR_PERM2(p);
@@ -667,7 +652,6 @@ static void fuse(u_int32_t,
 // is valid.
 
 Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
-
   assert(IS_LIST(gap_blocks));
 
   if (LEN_LIST(gap_blocks) == 0) {
@@ -711,7 +695,6 @@ Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
 // before BLOCKS_NC for more details.
 
 Obj BLOCKS_EXT_REP(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BLOCKS);
 
   initRNams();
@@ -744,7 +727,6 @@ Obj BLOCKS_EXT_REP(Obj self, Obj x) {
 // Returns the hash value for a GAP bipartition from the C++ object.
 
 Obj BLOCKS_HASH(Obj self, Obj x, Obj data) {
-
   assert(TNUM_OBJ(x) == T_BLOCKS);
 
   return INTOBJ_INT((blocks_get_cpp(x)->hash_value() % INT_INTOBJ(data)) + 1);
@@ -755,7 +737,6 @@ Obj BLOCKS_HASH(Obj self, Obj x, Obj data) {
 // [1 .. n].
 
 Obj BLOCKS_DEGREE(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BLOCKS);
 
   return INTOBJ_INT(blocks_get_cpp(x)->degree());
@@ -766,7 +747,6 @@ Obj BLOCKS_DEGREE(Obj self, Obj x) {
 // consisting of positive integers).
 
 Obj BLOCKS_RANK(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BLOCKS);
 
   return INTOBJ_INT(blocks_get_cpp(x)->rank());
@@ -776,7 +756,6 @@ Obj BLOCKS_RANK(Obj self, Obj x) {
 // object.
 
 Obj BLOCKS_NR_BLOCKS(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BLOCKS);
 
   return INTOBJ_INT(blocks_get_cpp(x)->nr_blocks());
@@ -786,7 +765,6 @@ Obj BLOCKS_NR_BLOCKS(Obj self, Obj x) {
 // GAP blocks object x.
 
 Obj BLOCKS_PROJ(Obj self, Obj x) {
-
   assert(TNUM_OBJ(x) == T_BLOCKS);
 
   Blocks* blocks = blocks_get_cpp(x);
@@ -817,7 +795,6 @@ Obj BLOCKS_PROJ(Obj self, Obj x) {
 // Check if two GAP blocks objects are equal.
 
 Int BLOCKS_EQ(Obj x, Obj y) {
-
   assert(TNUM_OBJ(x) == T_BLOCKS);
   assert(TNUM_OBJ(y) == T_BLOCKS);
 
@@ -827,7 +804,6 @@ Int BLOCKS_EQ(Obj x, Obj y) {
 // Check if x < y, when x and y are GAP blocks objects.
 
 Int BLOCKS_LT(Obj x, Obj y) {
-
   assert(TNUM_OBJ(x) == T_BLOCKS);
   assert(TNUM_OBJ(y) == T_BLOCKS);
 
@@ -838,7 +814,6 @@ Int BLOCKS_LT(Obj x, Obj y) {
 // left_gap and right blocks equal to right_gap.
 
 Obj BLOCKS_E_TESTER(Obj self, Obj left_gap, Obj right_gap) {
-
   assert(TNUM_OBJ(left_gap) == T_BLOCKS);
   assert(TNUM_OBJ(right_gap) == T_BLOCKS);
 
@@ -893,7 +868,6 @@ Obj BLOCKS_E_TESTER(Obj self, Obj left_gap, Obj right_gap) {
 // left_gap and right blocks equal to right_gap, assuming that this exists.
 
 Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
-
   assert(TNUM_OBJ(left_gap) == T_BLOCKS);
   assert(TNUM_OBJ(right_gap) == T_BLOCKS);
   assert(BLOCKS_E_TESTER(self, left_gap, right_gap) == True);
@@ -955,7 +929,6 @@ Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
 // is a GAP bipartition.
 
 Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
-
   assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
   assert(TNUM_OBJ(x_gap) == T_BIPART);
 
@@ -1007,7 +980,6 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
 // is a GAP bipartition.
 
 Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
-
   assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
   assert(TNUM_OBJ(x_gap) == T_BIPART);
 
@@ -1059,7 +1031,6 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
 // of x_gap on Y.
 
 Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
-
   assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
   assert(TNUM_OBJ(x_gap) == T_BIPART);
 
@@ -1090,7 +1061,7 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
     (*out_blocks)[i] = blocks->block(i);
     u_int32_t j      = fuse_it(x->block(i) + blocks->nr_blocks());
     if (j > blocks->nr_blocks() || tab[j] == (size_t) -1) {
-      (*out_blocks)[i + x->degree()] = blocks->nr_blocks(); // junk
+      (*out_blocks)[i + x->degree()] = blocks->nr_blocks();  // junk
     } else {
       (*out_blocks)[i + x->degree()] = tab[j];
     }
@@ -1146,7 +1117,6 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
 // where <x> is the fused index of the block.
 
 Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
-
   Blocks*      blocks = blocks_get_cpp(blocks_gap);
   Bipartition* x      = bipart_get_cpp(x_gap);
 
@@ -1270,7 +1240,6 @@ static void fuse(u_int32_t                                       deg,
                  typename std::vector<u_int32_t>::const_iterator right_begin,
                  u_int32_t right_nr_blocks,
                  bool      sign) {
-
   _BUFFER_size_t.clear();
   _BUFFER_size_t.reserve(left_nr_blocks + right_nr_blocks);
 
@@ -1311,7 +1280,6 @@ static void fuse(u_int32_t                                       deg,
 // search for idempotents.
 
 class IdempotentCounter {
-
   typedef std::vector<std::vector<size_t>> thrds_size_t;
   typedef std::vector<std::vector<bool>>   thrds_bool_t;
   typedef std::pair<size_t, size_t> unpr_t;
@@ -1338,7 +1306,6 @@ class IdempotentCounter {
         _unprocessed(thrds_unpr_t(_nr_threads, std::vector<unpr_t>())),
         _vals(thrds_size_t(_nr_threads,
                            std::vector<size_t>(LEN_PLIST(scc) - 1, 0))) {
-
     // copy the GAP blocks from the orbit into _orbit
     _orbit.reserve(LEN_LIST(orbit));
     for (Int i = 2; i <= LEN_LIST(orbit); i++) {
@@ -1376,7 +1343,7 @@ class IdempotentCounter {
     for (size_t i = 0; i < _orbit.size(); i++) {
       size_t comp = INT_INTOBJ(ELM_PLIST(lookup, i + 2)) - 2;
       if (comp != _min_scc) {
-        _unprocessed[thread_id].push_back(make_pair(i, comp));
+        _unprocessed[thread_id].push_back(std::make_pair(i, comp));
         thread_load += _scc[comp].size() - _scc_pos[i];
         if (thread_load >= mean_load && thread_id != _nr_threads - 1) {
           thread_id++;
@@ -1387,7 +1354,6 @@ class IdempotentCounter {
   }
 
   std::vector<size_t> count() {
-
     _reporter.report(_report);
     _reporter.set_level(2);
     _reporter.set_class_name(*this);
@@ -1543,7 +1509,6 @@ Obj BIPART_NR_IDEMPOTENTS(Obj self,
                           Obj lookup,
                           Obj nr_threads,
                           Obj report) {
-
   IdempotentCounter finder =
       IdempotentCounter(o, scc, lookup, INT_INTOBJ(nr_threads), report);
 

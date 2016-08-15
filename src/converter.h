@@ -21,10 +21,10 @@
 
 #include <algorithm>
 
-#include "src/compiled.h" /* GAP headers                */
+#include "src/compiled.h"
 #include "src/pperm.h"
 
-#include "semigroups++/elements.h"
+#include "semigroupsplusplus/elements.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Abstract base class

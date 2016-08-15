@@ -23,7 +23,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include "semigroups++/report.h"
+#include "semigroupsplusplus/report.h"
 #include "src/data.h"
 
 /*******************************************************************************

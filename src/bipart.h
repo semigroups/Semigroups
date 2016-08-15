@@ -16,13 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRC_BIPART_H_
-#define SRC_BIPART_H_
+#ifndef SEMIGROUPS_SRC_BIPART_H_
+#define SEMIGROUPS_SRC_BIPART_H_
 
 #include <assert.h>
 
 #include "gap.h"
-#include "semigroups++/elements.h"
+#include "semigroupsplusplus/elements.h"
 #include "src/compiled.h"
 
 // C functions
@@ -76,4 +76,4 @@ Obj BLOCKS_INV_RIGHT(Obj, Obj, Obj);
 
 Obj BIPART_NR_IDEMPOTENTS(Obj, Obj, Obj, Obj, Obj, Obj);
 
-#endif // SRC_BIPART_H_
+#endif  // SEMIGROUPS_SRC_BIPART_H_

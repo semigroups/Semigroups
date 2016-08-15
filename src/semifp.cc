@@ -21,7 +21,7 @@
 
 #include "src/semifp.h"
 
-#include "semigroups++/tc.h"
+#include "semigroupsplusplus/tc.h"
 #include "src/data.h"
 
 static inline word_t plist_to_word_t(Obj plist) {

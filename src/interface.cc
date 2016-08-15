@@ -34,7 +34,7 @@
 #include "gap.h"
 #include "interface.h"
 
-#include "semigroups++/semigroups.h"
+#include "semigroupsplusplus/semigroups.h"
 
 /*******************************************************************************
  *******************************************************************************

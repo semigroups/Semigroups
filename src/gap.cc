@@ -32,8 +32,8 @@
 #include "src/converter.h"
 #include "ufdata.h"
 
-#include "semigroups++/semigroups.h"
-#include "semigroups++/tc.h"
+#include "semigroupsplusplus/semigroups.h"
+#include "semigroupsplusplus/tc.h"
 
 #if !defined(SIZEOF_VOID_P)
 #error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined

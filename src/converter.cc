@@ -20,6 +20,8 @@
 #include "bipart.h"
 #include "gap.h"
 
+using semiring::Semiring;
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 // Boolean matrices
@@ -101,7 +103,7 @@ MatrixOverSemiring* MatrixOverSemiringConverter::convert(Obj o, size_t n) {
 
   size_t m = LEN_PLIST(ELM_PLIST(o, 1));
 
-  std::vector<long>* matrix(new std::vector<long>());
+  std::vector<int64_t>* matrix(new std::vector<int64_t>());
   matrix->reserve(m);
 
   for (size_t i = 0; i < m; i++) {
@@ -138,7 +140,7 @@ Obj MatrixOverSemiringConverter::unconvert(Element* x) {
     Obj row = NEW_PLIST(T_PLIST_CYC, n);
     SET_LEN_PLIST(row, n);
     for (size_t j = 0; j < n; j++) {
-      long entry = xx->at(i * n + j);
+      int64_t entry = xx->at(i * n + j);
       if (entry == _semiring->zero()) {
         SET_ELM_PLIST(row, j + 1, _gap_zero);
       } else {
