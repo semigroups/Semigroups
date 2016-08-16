@@ -106,7 +106,7 @@ function(arg)
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     elif IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S) then
       return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
-    elif IsInverseSemigroup(S) then
+    elif IsSemigroupWithInverseOp(S) then
       return SEMIGROUPS.InverseCongFromPairs(S, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
@@ -128,9 +128,9 @@ function(arg)
       and Parent(arg[2]) = S then
     return ReesCongruenceOfSemigroupIdeal(arg[2]);
   elif Length(arg) = 3
-      and IsInverseSemigroup(arg[2])
+      and IsSemigroupWithInverseOp(arg[2])
       and IsDenseList(arg[3])
-      and IsInverseSemigroup(S) then
+      and IsSemigroupWithInverseOp(S) then
     # We should have the kernel and trace of a congruence on an inverse
     # semigroup
     return InverseSemigroupCongruenceByKernelTrace(S, arg[2], arg[3]);

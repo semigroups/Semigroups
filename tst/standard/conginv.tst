@@ -200,13 +200,13 @@ gap> cong := SemigroupCongruence(S, [Transformation([2, 4, 2, 2]),
 >                                    Transformation([4, 2, 4, 4])]);;
 gap> KernelOfSemigroupCongruence(cong);
 Error, Semigroups: KernelOfSemigroupCongruence: usage,
-the first arg <cong> must be over an inverse semigroup,
+<cong> must be over a semigroup with inverse op,
 gap> TraceOfSemigroupCongruence(cong);
 Error, Semigroups: TraceOfSemigroupCongruence: usage,
-the argument <cong> must be over an inverse semigroup,
+<cong> must be over a semigroup with inverse op,
 gap> AsInverseSemigroupCongruenceByKernelTrace(cong);
 Error, Semigroups: AsInverseSemigroupCongruenceByKernelTrace: usage,
-the argument <cong> must be over an inverse semigroup,
+<cong> must be over a semigroup with inverse op,
 
 #T# AsInverseSemigroupCongruenceByKernelTrace: More tests
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 3, 4]),
