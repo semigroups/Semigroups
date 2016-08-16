@@ -182,8 +182,8 @@ end);
 InstallMethod(IsomorphismFpMonoid, "for a semigroup",
 [IsSemigroup], 8,
 function(S)
-  local sgens, mgens, F, A, lookup, pos, rules, rels, convert, word,
-   is_redundant, Q, map, inv, rule;
+  local sgens, mgens, F, A, start, lookup, spos, mpos, pos, rules, rels,
+  convert, word, is_redundant, Q, map, inv, i, rule;
 
   if not IsMonoidAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismFpMonoid: usage,\n",
@@ -199,7 +199,18 @@ function(S)
 
   F := FreeMonoid(Length(mgens));
   A := GeneratorsOfMonoid(F);
-  lookup := List(sgens, x -> Position(mgens, x));
+  start := [1 .. Length(sgens)] * 0;
+  lookup := [];
+  # make sure we map duplicate generators to the correct values
+  for i in [1 .. Length(sgens)] do
+    spos := Position(sgens, sgens[i]);
+    mpos := Position(mgens, sgens[i], start[spos]);
+    lookup[i] := mpos;
+    if spos <> fail then 
+      start[spos] := mpos;
+    fi;
+  od;
+            
   pos := Position(lookup, fail);
 
   rules := SEMIGROUP_RELATIONS(GenericSemigroupData(S));

@@ -607,9 +607,7 @@ Obj SEMIGROUP_POSITION_CURRENT(Obj self, Obj data, Obj x) {
   return CALL_2ARGS(HTValue, ElmPRec(data, RNamName("ht")), x);
 }
 
-/*******************************************************************************
- * SEMIGROUP_RELATIONS:
- ******************************************************************************/
+//
 
 Obj SEMIGROUP_RELATIONS(Obj self, Obj data) {
   initRNams();
@@ -629,7 +627,7 @@ Obj SEMIGROUP_RELATIONS(Obj self, Obj data) {
       while (relation.size() == 2) {
         Obj next = NEW_PLIST(T_PLIST, 2);
         SET_LEN_PLIST(next, 2);
-        for (size_t i = 0; i < 1; i++) {
+        for (size_t i = 0; i < 2; i++) {
           Obj w = NEW_PLIST(T_PLIST_CYC, 1);
           SET_LEN_PLIST(w, 1);
           SET_ELM_PLIST(w, 1, INTOBJ_INT(relation.at(i) + 1));
