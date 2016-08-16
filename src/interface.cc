@@ -102,22 +102,19 @@ Obj ConvertFromCayleyGraph(cayley_graph_t* graph) {
   return out;
 }
 
-/*******************************************************************************
- * ConvertFromWord:
- ******************************************************************************/
+//
+//
 
-Obj ConvertFromWord(word_t* vec) {
-  Obj out = NEW_PLIST(T_PLIST_CYC, vec->size());
-  SET_LEN_PLIST(out, vec->size());
+Obj word_t_to_plist(word_t const& word) {
+  Obj out = NEW_PLIST(T_PLIST_CYC, word.size());
+  SET_LEN_PLIST(out, word.size());
 
-  for (size_t i = 0; i < vec->size(); i++) {
-    SET_ELM_PLIST(out, i + 1, INTOBJ_INT(vec->at(i) + 1));
+  for (size_t i = 0; i < word.size(); i++) {
+    SET_ELM_PLIST(out, i + 1, INTOBJ_INT(word[i] + 1));
   }
   CHANGED_BAG(out);
   return out;
 }
-
-// FIXME who deletes the Word* vec?
 
 /*******************************************************************************
  *******************************************************************************
@@ -421,13 +418,11 @@ Obj SEMIGROUP_FACTORIZATION(Obj self, Obj data, Obj pos) {
     Obj        words;
     Semigroup* semigroup = data_semigroup(data);
     if (!IsbPRec(data, RNam_words)) {
-
+      word_t w;  // changed in place by the next line
+      semigroup->factorisation(w, pos_c - 1, rec_get_report(data));
       words = NEW_PLIST(T_PLIST, pos_c);
       SET_LEN_PLIST(words, pos_c);
-      SET_ELM_PLIST(words,
-                    pos_c,
-                    ConvertFromWord(semigroup->factorisation(
-                        pos_c - 1, rec_get_report(data))));
+      SET_ELM_PLIST(words, pos_c, word_t_to_plist(w));
       CHANGED_BAG(words);
       AssPRec(data, RNam_words, words);
     } else {
@@ -460,10 +455,9 @@ Obj SEMIGROUP_FACTORIZATION(Obj self, Obj data, Obj pos) {
           SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
           AssPlist(words, pos_c, new_word);
         } else {
-          AssPlist(words,
-                   pos_c,
-                   ConvertFromWord(semigroup->factorisation(
-                       pos_c - 1, rec_get_report(data))));
+          word_t w;  // changed in place by the next line
+          semigroup->factorisation(w, pos_c - 1, rec_get_report(data));
+          AssPlist(words, pos_c, word_t_to_plist(w));
         }
       }
     }
