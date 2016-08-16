@@ -9,15 +9,22 @@
 ##
 
 SEMIGROUPS.InitFpSemigroup := function(S)
-  local rels, out, ext, next, k, rel, i, j;
+  local rels, nrgens, out, next, ext, k, rel, i, j;
 
-  Assert(1, IsFpSemigroup(S));
+  Assert(1, IsFpSemigroup(S) or IsFpMonoid(S));
 
   if IsBound(S!.__fp_semigroup_relations) then 
     return;
   fi;
 
-  rels := RelationsOfFpSemigroup(S);
+  if IsFpMonoid(S) then 
+    rels := RelationsOfFpSemigroup(AsSemigroup(IsFpSemigroup, S));
+    nrgens := Length(GeneratorsOfMonoid(S)) + 1;
+  else
+    rels := RelationsOfFpSemigroup(S);
+    nrgens := Length(GeneratorsOfSemigroup(S));
+  fi;
+
   out := [];
 
   for rel in rels do 
@@ -36,7 +43,7 @@ SEMIGROUPS.InitFpSemigroup := function(S)
   od;
 
   S!.__fp_semigroup_relations := out;
-  S!.__fp_semigroup_nrgens    := Length(GeneratorsOfSemigroup(S));
+  S!.__fp_semigroup_nrgens    := nrgens; 
   S!.report                   := SEMIGROUPS.DefaultOptionsRec.report;
 end;
 
@@ -53,7 +60,12 @@ function(x)
 end);
 
 InstallMethod(Size, "for an fp semigroup", [IsFpSemigroup], 
+function(S)
+  SEMIGROUPS.InitFpSemigroup(S);
+  return FP_SEMI_SIZE(S);
+end);
 
+InstallMethod(Size, "for an fp monoid", [IsFpMonoid], 
 function(S)
   SEMIGROUPS.InitFpSemigroup(S);
   return FP_SEMI_SIZE(S);
@@ -68,6 +80,14 @@ function(x1, x2)
   return FP_SEMI_EQ(S, ExtRepOfObj(x1), ExtRepOfObj(x2));
 end);
 
+InstallMethod(\= , "for two elements of an f.p. monoid",
+IsIdenticalObj, [IsElementOfFpMonoid, IsElementOfFpMonoid],
+function(x1, x2)
+  local map;
+  map := IsomorphismFpSemigroup(FpMonoidOfElementOfFpMonoid(x1));
+  return x1 ^ map = x2 ^ map;
+end);
+
 InstallMethod(\< , "for two elements of a f.p. semigroup",
 IsIdenticalObj, [IsElementOfFpSemigroup, IsElementOfFpSemigroup],
 function(x1, x2)
@@ -78,6 +98,14 @@ function(x1, x2)
     < FP_SEMI_COSET_ID(S, ExtRepOfObj(x2));
 end);
 
+InstallMethod(\< , "for two elements of a f.p. monoid",
+IsIdenticalObj, [IsElementOfFpMonoid, IsElementOfFpMonoid],
+function(x1, x2)
+  local map;
+  map := IsomorphismFpSemigroup(FpMonoidOfElementOfFpMonoid(x1));
+  return x1 ^ map < x2 ^ map;
+end);
+
 #TODO AsSSortedList, RightCayleyGraph, any more?
 
 InstallMethod(ViewString, "for an f.p. semigroup element",
@@ -85,6 +113,62 @@ InstallMethod(ViewString, "for an f.p. semigroup element",
 
 InstallMethod(ViewString, "for an f.p. monoid element",
 [IsElementOfFpMonoid], String);
+
+#InstallMethod(ViewObj, "for an f.p. monoid", 
+#[IsFpMonoid and HasGeneratorsOfMonoid], 
+#function(M)
+#  Print(ViewString(M));
+#end);
+#
+#InstallMethod(ViewString, "for an f.p. monoid", 
+#[IsFpMonoid and HasGeneratorsOfMonoid],
+#function(M)
+#  local str;
+#
+#  str := "<fp monoid with ";
+#  Append(str, String(Length(GeneratorsOfMonoid(M))));
+#  Append(str, " generator");
+#  if Length(GeneratorsOfMonoid(M)) > 1 then
+#    Append(str, "s");
+#  fi;
+#  Append(str, " and ");
+#  Append(str, String(Length(RelationsOfFpMonoid(M))));
+#  Append(str, " relation");
+#  if Length(RelationsOfFpMonoid(M)) > 1 then
+#    Append(str, "s");
+#  fi;
+#  Append(str, ">");
+#
+#  return PRINT_STRINGIFY(str);
+#end);
+#
+#InstallMethod(ViewObj, "for an f.p. semigroup", 
+#[IsFpSemigroup and HasGeneratorsOfSemigroup], 
+#function(M)
+#  Print(ViewString(M));
+#end);
+#
+#InstallMethod(ViewString, "for an f.p. semigroup", 
+#[IsFpSemigroup and HasGeneratorsOfSemigroup],
+#function(M)
+#  local str;
+#
+#  str := "<fp monoid with ";
+#  Append(str, String(Length(GeneratorsOfSemigroup(M))));
+#  Append(str, " generator");
+#  if Length(GeneratorsOfSemigroup(M)) > 1 then
+#    Append(str, "s");
+#  fi;
+#  Append(str, " and ");
+#  Append(str, String(Length(RelationsOfFpSemigroup(M))));
+#  Append(str, " relation");
+#  if Length(RelationsOfFpSemigroup(M)) > 1 then
+#    Append(str, "s");
+#  fi;
+#  Append(str, ">");
+#
+#  return PRINT_STRINGIFY(str);
+#end);
 
 # FIXME this doesn't work very well
 
