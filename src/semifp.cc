@@ -21,6 +21,8 @@
 
 #include "src/semifp.h"
 
+#include <vector>
+
 #include "semigroupsplusplus/tc.h"
 #include "src/data.h"
 
@@ -70,7 +72,6 @@ static Congruence* fp_semi_get_cpp_cong(Obj S) {
                        INT_INTOBJ(ElmPRec(S, RNam_fp_semi_nrgens)),
                        rels,
                        std::vector<relation_t>());
-    cong->set_report(rec_get_report(S));
     AssPRec(S, RNam_fp_semi_cong, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
   }
 
@@ -80,14 +81,14 @@ static Congruence* fp_semi_get_cpp_cong(Obj S) {
 Obj FP_SEMI_SIZE(Obj self, Obj S) {
   // TODO assert S is correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter();
+  cong->todd_coxeter(rec_get_report(S));
   return INTOBJ_INT(cong->nr_classes());
 }
 
 Obj FP_SEMI_EQ(Obj self, Obj S, Obj x, Obj y) {
   // TODO assert S, x, y are correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter();
+  cong->todd_coxeter(rec_get_report(S));
 
   word_t lhs = ext_rep_obj_to_word_t(x);
   word_t rhs = ext_rep_obj_to_word_t(y);
@@ -99,6 +100,6 @@ Obj FP_SEMI_EQ(Obj self, Obj S, Obj x, Obj y) {
 Obj FP_SEMI_COSET_ID(Obj self, Obj S, Obj x) {
   // TODO assert S, x are correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter(); // FIXME remove this if not necessary
+  cong->todd_coxeter(rec_get_report(S));
   return INTOBJ_INT(cong->word_to_coset(ext_rep_obj_to_word_t(x)));
 }
