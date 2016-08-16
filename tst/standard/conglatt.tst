@@ -40,8 +40,8 @@ gap> S := OrderEndomorphisms(2);;
 gap> CongruencesOfSemigroup(S);
 [ <semigroup congruence over <regular transformation monoid of size 3, 
      degree 2 with 2 generators> with 0 generating pairs>, 
-  <universal semigroup congruence over <regular transformation monoid 
-     of size 3, degree 2 with 2 generators>>, 
+  <semigroup congruence over <regular transformation monoid of size 3, 
+     degree 2 with 2 generators> with 1 generating pairs>, 
   <semigroup congruence over <regular transformation monoid of size 3, 
      degree 2 with 2 generators> with 1 generating pairs> ]
 gap> l := LatticeOfCongruences(S);
@@ -118,8 +118,8 @@ gap> congs := CongruencesOfSemigroup(S);
      with 2 generators> with 0 generating pairs>, 
   <semigroup congruence over <transformation semigroup of size 13, degree 3 
      with 2 generators> with 1 generating pairs>, 
-  <universal semigroup congruence over <transformation semigroup of size 13, 
-     degree 3 with 2 generators>>, 
+  <semigroup congruence over <transformation semigroup of size 13, degree 3 
+     with 2 generators> with 1 generating pairs>, 
   <semigroup congruence over <transformation semigroup of size 13, degree 3 
      with 2 generators> with 1 generating pairs>, 
   <semigroup congruence over <transformation semigroup of size 13, degree 3 
