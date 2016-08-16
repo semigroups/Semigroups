@@ -87,9 +87,14 @@ static void cong_obj_init_cpp_cong(Obj o) {
       lhs.clear();
       rhs.clear();
     }
-    cong = parallel_todd_coxeter(new Congruence(type, range, extra, true, 1),
-                                 new Congruence(type, range, extra, false, 2),
-                                 rec_get_report(o));
+    if (range->size() > 1000) {
+      cong = parallel_todd_coxeter(new Congruence(type, range, extra, true, 1),
+                                   new Congruence(type, range, extra, false, 2),
+                                   rec_get_report(o));
+    } else {
+      cong = new Congruence(type, range, extra, true, 1);
+      cong->todd_coxeter(rec_get_report(o));
+    }
   } else {
     fropin(data, INTOBJ_INT(-1), 0, False);
 
@@ -144,11 +149,17 @@ static void cong_obj_init_cpp_cong(Obj o) {
         prefill.set(i, j - 1, INT_INTOBJ(ELM_PLIST(next, j)));
       }
     }
-    cong = parallel_todd_coxeter(
-        new Congruence(
-            type, nrgens, std::vector<relation_t>(), extra, prefill, 1),
-        new Congruence(type, nrgens, rels, extra, 2),
-        rec_get_report(o));
+    if (LEN_PLIST(ElmPRec(data, RNam_elts)) > 1000) {
+      cong = parallel_todd_coxeter(
+          new Congruence(
+              type, nrgens, std::vector<relation_t>(), extra, prefill, 1),
+          new Congruence(type, nrgens, rels, extra, 2),
+          rec_get_report(o));
+    } else {
+      cong = new Congruence(
+          type, nrgens, std::vector<relation_t>(), extra, prefill, 1),
+      cong->todd_coxeter(rec_get_report(o));
+    }
   }
   cong->compress();
   AssPRec(o, RNam_cong_pairs_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
