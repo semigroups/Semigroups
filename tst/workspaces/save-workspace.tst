@@ -33,7 +33,7 @@ gap> uftable2 := UF_NEW(1);;
 gap> uftable3 := UF_NEW(30000);;
 gap> UF_UNION(uftable3, [20222, 234]);;
 
-# Test congruences
+#T# Congruences from semigroupsplusplus
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
@@ -54,6 +54,8 @@ gap> SaveWorkspace(Concatenation(SEMIGROUPS.PackageDir,
 true
 
 # SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(cong);
 gap> Unbind(uftable1);
 gap> Unbind(uftable2);
 gap> Unbind(uftable3);
