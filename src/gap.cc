@@ -24,7 +24,7 @@
 
 #include <assert.h>
 #include <iostream>
-#include <time.h>
+#include <time.h> // FIXME remove this it's not used
 
 #include "congpairs.h"
 #include "fropin.h"
@@ -174,11 +174,10 @@ void TSemiObjSaveFunc(Obj o) {
       for (size_t i = 0; i < uf->get_size(); i++) {
         SaveUIntBiggest(uf->find(i));
       }
+      break;
     }
-    case T_SEMI_SUBTYPE_CONG:
-    // FIXME implement this
     default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_SEMIGP,
-             // T_SEMI_SUBTYPE_CONVER do nothing further
+             // T_SEMI_SUBTYPE_CONVER, T_SEMI_SUBTYPE_CONG do nothing further
       break;
   }
 }
@@ -209,7 +208,7 @@ void TSemiObjLoadFunc(Obj o) {
       break;
     }
     case T_SEMI_SUBTYPE_CONG: {
-      // FIXME implement this
+      ADDR_OBJ(o)[0] = static_cast<Obj>(nullptr);
       break;
     }
   }
