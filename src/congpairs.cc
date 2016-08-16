@@ -88,11 +88,12 @@ static void cong_obj_init_cpp_cong(Obj o) {
       rhs.clear();
     }
     if (range->size() > 1000) {
-      cong = parallel_todd_coxeter(new Congruence(type, range, extra, true, 1),
-                                   new Congruence(type, range, extra, false, 2),
-                                   rec_get_report(o));
+      cong = parallel_todd_coxeter(
+          new Congruence(type, range, extra, true, rec_get_report(o), 1),
+          new Congruence(type, range, extra, false, rec_get_report(o), 2),
+          rec_get_report(o));
     } else {
-      cong = new Congruence(type, range, extra, true, 1);
+      cong = new Congruence(type, range, extra, true, rec_get_report(o), 1);
       cong->todd_coxeter(rec_get_report(o));
     }
   } else {
@@ -157,7 +158,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
           rec_get_report(o));
     } else {
       cong = new Congruence(
-          type, nrgens, std::vector<relation_t>(), extra, prefill, 1),
+          type, nrgens, std::vector<relation_t>(), extra, prefill, 1);
       cong->todd_coxeter(rec_get_report(o));
     }
   }
