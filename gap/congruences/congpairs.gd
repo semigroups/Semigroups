@@ -56,8 +56,12 @@ DeclareAttribute("FiniteCongruenceByGeneratingPairsPartition",
 #
 #   cong: the underlying congruence of the class.
 
+DeclareCategory("IsFiniteCongruenceClassByGeneratingPairs",
+                IsEquivalenceClass, RankFilter(IsCongruenceClass));
+
 DeclareRepresentation("IsFiniteCongruenceClassByGeneratingPairsRep",
-                      IsEquivalenceClass and IsAttributeStoringRep,
+                      IsEquivalenceClass and IsAttributeStoringRep and
+                      IsFiniteCongruenceClassByGeneratingPairs,
                       ["rep", "cong"]);
 
 DeclareAttribute("FiniteCongruenceClassByGeneratingPairsCosetId",

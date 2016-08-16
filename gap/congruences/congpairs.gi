@@ -141,9 +141,12 @@ SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
 
   # Check that the pairs are all lists of length 2
   for pair in genpairs do
-    if not IsList(pair) or Length(pair) <> 2
-        or not pair[1] in S or not pair[2] in S then
-      ErrorNoReturn("");
+    if not IsList(pair) or Length(pair) <> 2 then
+      ErrorNoReturn("Semigroups: SEMIGROUPS.CongByGenPairs: usage,\n",
+                    "<pairs> must all be lists of length 2,");
+    elif not pair[1] in S or not pair[2] in S then
+      ErrorNoReturn("Semigroups: SEMIGROUPS.CongByGenPairs: usage,\n",
+                    "<pairs> must all be lists of elements of <S>,");
     fi;
   od;
 
@@ -349,9 +352,7 @@ InstallMethod(JoinSemigroupCongruences,
 [IsFiniteCongruenceByGeneratingPairsRep and IsSemigroupCongruence,
  IsFiniteCongruenceByGeneratingPairsRep and IsSemigroupCongruence],
 function(c1, c2)
-  if c1!.type <> c2!.type or c1!.type <> "twosided" then
-    TryNextMethod(); # FIXME Error?
-  elif c1 = c2 then
+  if c1 = c2 then
     return c1;
   fi;
   return SEMIGROUPS.JoinCongruences(SemigroupCongruence, c1, c2);
@@ -362,9 +363,7 @@ InstallMethod(JoinLeftSemigroupCongruences,
 [IsFiniteCongruenceByGeneratingPairsRep and IsLeftSemigroupCongruence,
  IsFiniteCongruenceByGeneratingPairsRep and IsLeftSemigroupCongruence],
 function(c1, c2)
-  if c1!.type <> c2!.type or c1!.type <> "left" then
-    TryNextMethod(); # FIXME Error?
-  elif c1 = c2 then
+  if c1 = c2 then
     return c1;
   fi;
   return SEMIGROUPS.JoinCongruences(LeftSemigroupCongruence, c1, c2);
@@ -375,9 +374,7 @@ InstallMethod(JoinRightSemigroupCongruences,
 [IsFiniteCongruenceByGeneratingPairsRep and IsRightSemigroupCongruence,
  IsFiniteCongruenceByGeneratingPairsRep and IsRightSemigroupCongruence],
 function(c1, c2)
-  if c1!.type <> c2!.type or c1!.type <> "right" then
-    TryNextMethod(); # FIXME Error?
-  elif c1 = c2 then
+  if c1 = c2 then
     return c1;
   fi;
   return SEMIGROUPS.JoinCongruences(RightSemigroupCongruence, c1, c2);
@@ -548,8 +545,8 @@ InstallMethod(Size,
 [IsFiniteCongruenceClassByGeneratingPairsRep],
 function(class)
   local cong, part, id;
-
   if HasAsList(class) then 
+    # TODO: This is currently unreachable
     return Size(AsList(class));
   fi;
   cong := EquivalenceClassRelation(class);

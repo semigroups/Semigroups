@@ -115,6 +115,14 @@ gap> CongruenceClassOfElement(v, Representative(classes[5] * classes[2])) =
 >                          Representative(classes[5]) *
 >                          Representative(classes[2]));
 true
+gap> classes[3] = classes[3];
+true
+gap> classes[2] = classes[3];
+false
+gap> AsList(classes[4]);
+[ Transformation( [ 6, 9, 9, 6, 9, 1, 1, 2, 2, 6 ] ) ]
+gap> Size(classes[4]);
+1
 
 #T# A semigroup congruence example
 gap> S := Semigroup([Transformation([2, 1, 1, 2, 1]),
@@ -141,6 +149,13 @@ gap> EquivalenceRelationCanonicalLookup(cong);
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
 gap> NonTrivialCongruenceClasses(cong);
 [ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )> ]
+gap> classes := CongruenceClasses(cong);
+[ <congruence class of Transformation( [ 2, 1, 1, 2, 1 ] )>, 
+  <congruence class of Transformation( [ 1, 3, 4, 1, 3 ] )> ]
+gap> ImagesElm(cong, Transformation([1, 3, 4, 1, 3]));
+[ Transformation( [ 1, 3, 4, 1, 3 ] ) ]
+gap> cong = JoinSemigroupCongruences(cong, cong);
+true
 gap> T := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 3]),
 >                    Transformation([4, 3, 3, 4, 4]),
@@ -177,6 +192,8 @@ gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
 gap> cong := LeftSemigroupCongruence(S, pair1, pair2);
 <left semigroup congruence over <transformation semigroup of degree 5 with 4 
  generators> with 2 generating pairs>
+gap> JoinLeftSemigroupCongruences(cong, cong) = cong;
+true
 gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
 true
 gap> [Transformation([3, 4, 4, 3, 3]), Transformation([1, 2, 2, 1, 1])] in cong;
@@ -220,6 +237,8 @@ gap> pairs := [[Transformation([6, 1, 2, 6, 1, 2, 6]),
 >             [Transformation([2, 3, 5, 1, 4, 6, 1]),
 >              Transformation([5, 6, 2, 5, 6, 3, 5])]];;
 gap> cong := RightSemigroupCongruence(S, pairs);;
+gap> JoinRightSemigroupCongruences(cong, cong) = cong;
+true
 gap> [Transformation([2, 6, 4, 2, 6, 1, 2]),
 >     Transformation([6, 2, 6, 5, 5, 3, 5])] in cong;
 true
@@ -258,6 +277,10 @@ gap> NonTrivialEquivalenceClasses(cong);
 [ <right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )> ]
 gap> IsLeftSemigroupCongruence(cong);
 false
+gap> lcong := LeftSemigroupCongruence(S, pair1, pair2);;
+gap> IsSubrelation(lcong, cong);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `IsSubrelation' on 2 arguments
 
 #T# \in: Bad input
 gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
@@ -344,7 +367,7 @@ gap> cong1 := RightSemigroupCongruence(S, pair1);;
 gap> NrEquivalenceClasses(cong1);
 46656
 
-# Test duplicate generators of semigroup
+#T# Test duplicate generators of semigroup
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
@@ -371,7 +394,7 @@ gap> cong := SemigroupCongruence(S, [S.1, S.2]);;
 gap> NrEquivalenceClasses(cong);
 1
 
-# Test duplicate generators of semigroup as generating pairs
+#T# Test duplicate generators of semigroup as generating pairs
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
@@ -386,6 +409,90 @@ gap> cong := SemigroupCongruence(S, [S.3, S.4]);;
 gap> NrEquivalenceClasses(cong);
 16
 
+#T# JoinSemigroupCongruences
+gap> S := PartitionMonoid(3);;
+gap> pairs1 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
+>                Bipartition([[1, 2, -1, -2, -3], [3]])]];;
+gap> pairs2 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
+>                Bipartition([[1, 2, 3, -1, -2], [-3]])],
+>               [Bipartition([[1, 2, -1, -2], [3, -3]]),
+>                Bipartition([[1, 2, -3], [3, -1, -2]])]];;
+gap> cong1 := SemigroupCongruence(S, pairs1);;
+gap> cong2 := SemigroupCongruence(S, pairs2);;
+gap> cong3 := JoinSemigroupCongruences(cong1, cong2);
+<semigroup congruence over <regular bipartition *-monoid of size 203, 
+ degree 3 with 4 generators> with 3 generating pairs>
+gap> pairs1[1] in cong3;
+true
+gap> pairs2[1] in cong3;
+true
+gap> pairs2[2] in cong3;
+true
+gap> IsSubrelation(cong3, cong1) and IsSubrelation(cong3, cong2);
+true
+gap> IsSubrelation(cong2, cong1);
+false
+
+#T# JoinLeftSemigroupCongruences
+gap> S := PartitionMonoid(3);;
+gap> pairs1 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
+>                Bipartition([[1, 2, -1, -2, -3], [3]])]];;
+gap> pairs2 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
+>                Bipartition([[1, 2, 3, -1, -2], [-3]])],
+>               [Bipartition([[1, 2, -1, -2], [3, -3]]),
+>                Bipartition([[1, 2, -3], [3, -1, -2]])]];;
+gap> cong1 := LeftSemigroupCongruence(S, pairs1);;
+gap> cong2 := LeftSemigroupCongruence(S, pairs2);;
+gap> JoinLeftSemigroupCongruences(cong1, cong2);
+<left semigroup congruence over <regular bipartition *-monoid of size 203, 
+ degree 3 with 4 generators> with 3 generating pairs>
+gap> pairs1[1] in cong3;
+true
+gap> pairs2[1] in cong3;
+true
+gap> pairs2[2] in cong3;
+true
+gap> IsSubrelation(cong3, cong1) and IsSubrelation(cong3, cong2);
+true
+gap> IsSubrelation(cong2, cong1);
+false
+
+#T# JoinRightSemigroupCongruences
+gap> S := PartitionMonoid(3);;
+gap> pairs1 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
+>                Bipartition([[1, 2, -1, -2, -3], [3]])]];;
+gap> pairs2 := [[Bipartition([[1, 2, 3, -1, -2, -3]]),
+>                Bipartition([[1, 2, 3, -1, -2], [-3]])],
+>               [Bipartition([[1, 2, -1, -2], [3, -3]]),
+>                Bipartition([[1, 2, -3], [3, -1, -2]])]];;
+gap> cong1 := RightSemigroupCongruence(S, pairs1);;
+gap> cong2 := RightSemigroupCongruence(S, pairs2);;
+gap> JoinRightSemigroupCongruences(cong1, cong2);
+<right semigroup congruence over <regular bipartition *-monoid of size 203, 
+ degree 3 with 4 generators> with 3 generating pairs>
+gap> pairs1[1] in cong3;
+true
+gap> pairs2[1] in cong3;
+true
+gap> pairs2[2] in cong3;
+true
+gap> IsSubrelation(cong3, cong1) and IsSubrelation(cong3, cong2);
+true
+gap> IsSubrelation(cong2, cong1);
+false
+
+#T# SEMIGROUPS.CongByGenPairs (internal function) bad input
+gap> S := FullTransformationMonoid(3);;
+gap> SEMIGROUPS.CongByGenPairs(S, [[S.1, S.2, S.3]], "right");
+Error, Semigroups: SEMIGROUPS.CongByGenPairs: usage,
+<pairs> must all be lists of length 2,
+gap> SEMIGROUPS.CongByGenPairs(S, [[S.1, S.2], [S.1, 42]], "twosided");
+Error, Semigroups: SEMIGROUPS.CongByGenPairs: usage,
+<pairs> must all be lists of elements of <S>,
+gap> SEMIGROUPS.CongByGenPairs(S, [[S.1, S.2], [S.1, S.3]], "elephant");
+Error, Semigroups: SEMIGROUPS.CongByGenPairs: usage,
+<type> must be "left", "right", or "twosided",
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
@@ -394,12 +501,16 @@ gap> Unbind(classes);
 gap> Unbind(cong);
 gap> Unbind(cong1);
 gap> Unbind(cong2);
+gap> Unbind(cong3);
 gap> Unbind(enum);
 gap> Unbind(gens);
+gap> Unbind(lcong);
 gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);
 gap> Unbind(pairs);
+gap> Unbind(pairs1);
+gap> Unbind(pairs2);
 gap> Unbind(u);
 gap> Unbind(v);
 gap> Unbind(x);
