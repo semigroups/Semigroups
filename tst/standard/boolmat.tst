@@ -315,8 +315,7 @@ gap> Display(AsBooleanMat(x, 8));
 
 #T# boolmat: ChooseHashFunction and SEMIGROUPS_HashFunctionBooleanMat, for
 # boolean mats, 1/1
-gap> S := FullBooleanMatMonoid(2);
-<monoid of 2x2 boolean matrices with 4 generators>
+gap> S := FullBooleanMatMonoid(2);;
 gap> ht := HTCreate(S.1);
 <tree hash table len=100003 used=0 colls=0 accs=0>
 gap> for x in S do
