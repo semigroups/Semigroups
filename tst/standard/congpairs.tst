@@ -344,6 +344,48 @@ gap> cong1 := RightSemigroupCongruence(S, pair1);;
 gap> NrEquivalenceClasses(cong1);
 46656
 
+# Test duplicate generators of semigroup
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
+gap> cong := LeftSemigroupCongruence(S, [S.1, S.2]);;
+gap> NrEquivalenceClasses(cong);
+4
+gap> cong := RightSemigroupCongruence(S, [S.1, S.2]);;
+gap> NrEquivalenceClasses(cong);
+4
+gap> cong := SemigroupCongruence(S, [S.1, S.2]);;
+gap> NrEquivalenceClasses(cong);
+1
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
+gap> cong := LeftSemigroupCongruence(S, [S.1, S.2]);;
+gap> NrEquivalenceClasses(cong);
+4
+gap> cong := RightSemigroupCongruence(S, [S.1, S.2]);;
+gap> NrEquivalenceClasses(cong);
+4
+gap> cong := SemigroupCongruence(S, [S.1, S.2]);;
+gap> NrEquivalenceClasses(cong);
+1
+
+# Test duplicate generators of semigroup as generating pairs
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
+gap> cong := LeftSemigroupCongruence(S, [S.3, S.4]);;
+gap> NrEquivalenceClasses(cong);
+16
+gap> cong := RightSemigroupCongruence(S, [S.3, S.4]);;
+gap> NrEquivalenceClasses(cong);
+16
+gap> cong := SemigroupCongruence(S, [S.3, S.4]);;
+gap> NrEquivalenceClasses(cong);
+16
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
