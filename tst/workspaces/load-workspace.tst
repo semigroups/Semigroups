@@ -48,7 +48,7 @@ true
 gap> [Matrix(IsBooleanMat, [[0, 0], [0, 0]]), 
 >     Matrix(IsBooleanMat, [[0, 1], [1, 0]])] in cong;
 false
-gap> gap> EquivalenceRelationCanonicalLookup(cong);
+gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 1, 2, 1, 1, 3, 1, 1, 2, 1, 3, 1, 1, 2, 4, 3 ]
 
 #############################################################################
