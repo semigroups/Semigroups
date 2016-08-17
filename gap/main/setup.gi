@@ -360,7 +360,10 @@ InstallMethod(LambdaOrbSeed, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S -> [0]);
 
 InstallMethod(LambdaOrbSeed, "for a bipartition semigroup",
-[IsBipartitionSemigroup], S -> EmptyBlocks);
+[IsBipartitionSemigroup], 
+function(S)
+  return BLOCKS_NC([[1 .. DegreeOfBipartitionSemigroup(S) + 1]]);
+end);
 
 InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);
@@ -384,7 +387,10 @@ InstallMethod(RhoOrbSeed, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S -> [0]);
 
 InstallMethod(RhoOrbSeed, "for a bipartition semigroup",
-[IsBipartitionSemigroup], S -> EmptyBlocks);
+[IsBipartitionSemigroup],
+function(S)
+  return BLOCKS_NC([[1 .. DegreeOfBipartitionSemigroup(S) + 1]]);
+end);
 
 InstallMethod(RhoOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);

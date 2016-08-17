@@ -19,7 +19,7 @@
 // TODO(JDM) 1) if we use clear before resize maybe don't need fill
 //           2) in-place product
 
-#include "src/bipart.h"
+#include "bipart.h"
 
 #include <algorithm>
 #include <mutex>
@@ -929,14 +929,17 @@ Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
 // is a GAP bipartition.
 
 Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
-  assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
   assert(TNUM_OBJ(x_gap) == T_BIPART);
+  assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
 
-  Bipartition* x      = bipart_get_cpp(x_gap);
-  Blocks*      blocks = blocks_get_cpp(blocks_gap);
+  Bipartition* x = bipart_get_cpp(x_gap);
+  Blocks* blocks = blocks_get_cpp(blocks_gap);
 
-  if (blocks->nr_blocks() == 0) {
+  if (blocks->degree() != x->degree()) {
+    // hack to allow Lambda/RhoOrbSeed
     return blocks_new_obj(x->left_blocks());
+  } else if (blocks->degree() == 0) {
+    return blocks_gap;
   }
 
   // prepare the _BUFFER_bool for detecting transverse fused blocks
@@ -980,14 +983,17 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
 // is a GAP bipartition.
 
 Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
-  assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
   assert(TNUM_OBJ(x_gap) == T_BIPART);
+  assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
 
-  Bipartition* x      = bipart_get_cpp(x_gap);
-  Blocks*      blocks = blocks_get_cpp(blocks_gap);
+  Bipartition* x = bipart_get_cpp(x_gap);
+  Blocks* blocks = blocks_get_cpp(blocks_gap);
 
-  if (blocks->nr_blocks() == 0) {
+  if (blocks->degree() != x->degree()) {
+    // hack to allow Lambda/RhoOrbSeed
     return blocks_new_obj(x->right_blocks());
+  } else if (blocks->degree() == 0) {
+    return blocks_gap;
   }
 
   // prepare the _BUFFER_bool for detecting transverse fused blocks

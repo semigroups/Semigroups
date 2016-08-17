@@ -1876,7 +1876,7 @@ fail
 # Test IsBlockBijectionSemigroup for an ideal
 gap> IsBlockBijectionSemigroup(MinimalIdeal(PartitionMonoid(3)));
 false
-gap> IsBlockBijectionSemigroup(SingularDualSymmetricInverseSemigroup(3));
+gap> IsBlockBijectionSemigroup(SingularDualSymmetricInverseMonoid(3));
 true
 gap> IsBlockBijectionSemigroup(OrderEndomorphisms(3));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -1910,7 +1910,7 @@ gap> S := Semigroup(AsSemigroup(IsBipartitionSemigroup,
 > SymmetricInverseMonoid(2)));;
 gap> IsPermBipartitionGroup(MinimalIdeal(S));
 false
-gap> IsPermBipartitionGroup(SingularDualSymmetricInverseSemigroup(3));
+gap> IsPermBipartitionGroup(SingularDualSymmetricInverseMonoid(3));
 false
 gap> IsPermBipartitionGroup(OrderEndomorphisms(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound

@@ -234,7 +234,7 @@ true]]></Example>
       the partition monoid consisting of the block bijections of degree
       <A>n</A>.<P/>
 
-      <C>SingularDualSymmetricInverseSemigroup</C> returns the ideal of the
+      <C>SingularDualSymmetricInverseMonoid</C> returns the ideal of the
       dual symmetric inverse monoid consisting of the non-invertible elements
       (i.e. those not in the group of units), when <A>n</A> is at least 2.<P/>
       
