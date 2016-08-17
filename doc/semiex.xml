@@ -176,8 +176,8 @@ gap> Size(S);
       
       <C>PartialUniformBlockBijectionMonoid</C> returns the submonoid of the
       uniform block bijection monoid of degree <C><A>n</A> + 1</C> consisting
-      of those bipartitions with  <C><A>n</A> + 1</C> and  <C>-<A>n</A> - 1</C>
-      in the same block. <P/>
+      of those uniform block bijection with  <C><A>n</A> + 1</C> and
+      <C>-<A>n</A> - 1</C> in the same block. <P/>
 
       See <Ref Prop="IsUniformBlockBijection"/>.       
       <Example><![CDATA[
@@ -212,7 +212,8 @@ true]]></Example>
    <ManSection>
     <Oper Name = "DualSymmetricInverseSemigroup" Arg = "n"/>
     <Oper Name = "DualSymmetricInverseMonoid" Arg = "n"/>
-    <Oper Name = "SingularDualSymmetricInverseSemigroup" Arg = "n"/>
+    <Oper Name = "SingularDualSymmetricInverseMonoid" Arg = "n"/>
+    <Oper Name = "PartialDualSymmetricInverseMonoid" Arg = "n"/>
     <Returns>An inverse bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then these operations return the dual
@@ -224,6 +225,12 @@ true]]></Example>
       dual symmetric inverse monoid consisting of the non-invertible elements
       (i.e. those not in the group of units), when <A>n</A> is at least 2.<P/>
       
+      <C>PartialDualSymmetricInverseMonoid</C> returns the submonoid of the
+      dual symmetric inverse monoid of degree <C><A>n</A> + 1</C> consisting of
+      those block bijections with <C><A>n</A> + 1</C> and  <C>-<A>n</A> - 1</C> in
+      the same block; see <Cite Key="Kudryavtseva2011aa"/> and 
+      <Cite Key="Kudryavtseva2015aa"/>. <P/>
+      
       See <Ref Prop = "IsBlockBijection"/>.
 
       <Example><![CDATA[
@@ -232,7 +239,11 @@ gap> Number(PartitionMonoid(3), IsBlockBijection);
 gap> S := DualSymmetricInverseSemigroup(3);
 <inverse block bijection monoid of degree 3 with 3 generators>
 gap> Size(S);
-25]]></Example>
+25
+gap> S := PartialDualSymmetricInverseMonoid(5);
+<inverse block bijection monoid of degree 6 with 4 generators>
+gap> Size(S);
+29072]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

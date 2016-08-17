@@ -1520,5 +1520,24 @@ gap> S := PartialUniformBlockBijectionMonoid(1);
 gap> List([1 .. 5], n -> NrDClasses(PartialUniformBlockBijectionMonoid(n)));
 [ 2, 4, 7, 12, 19 ]
 
+# Test PartialDualSymmetricInverseMonoid
+gap> S := PartialDualSymmetricInverseMonoid(4);
+<inverse block bijection monoid of degree 5 with 4 generators>
+gap> S := PartialDualSymmetricInverseMonoid(1);
+<commutative inverse block bijection monoid of degree 2 with 1 generator>
+gap> S := PartialDualSymmetricInverseMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> S := PartialDualSymmetricInverseMonoid(2);
+<inverse block bijection monoid of degree 3 with 3 generators>
+gap> List([0 .. 5], n -> NrIdempotents(PartialDualSymmetricInverseMonoid(n)));
+[ 1, 2, 5, 15, 52, 203 ]
+gap> List([0 .. 5], n -> Size(PartialDualSymmetricInverseMonoid(n)));
+[ 0, 2, 8, 80, 1280, 29072 ]
+gap> List([0 .. 5], n -> NrDClasses(PartialDualSymmetricInverseMonoid(n)));
+[ 0, 2, 4, 6, 8, 10 ]
+gap> PartialDualSymmetricInverseMonoid(-1);
+Error, Semigroups: PartialDualSymmetricInverseMonoid: usage,
+the argument <n> must be a non-negative integer,
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/semiex.tst");

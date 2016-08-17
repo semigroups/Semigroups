@@ -547,13 +547,12 @@ function(n)
   return M;
 end);
 
-InstallMethod(DualSymmetricInverseSemigroup, "for an integer",
-[IsInt],
+InstallMethod(DualSymmetricInverseMonoid, "for an integer", [IsInt],
 function(n)
-  local gens, s;
+  local gens;
 
   if n < 0 then
-    ErrorNoReturn("Semigroups: DualSymmetricInverseSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: DualSymmetricInverseMonoid: usage,\n",
                   "the argument <n> must be a non-negative integer,");
   elif n = 0 then
     return Monoid(Bipartition([]));
@@ -569,8 +568,29 @@ function(n)
     Add(gens, Bipartition(Concatenation([[1, 2, -3], [3, -1, -2]],
                                            List([4 .. n], x -> [x, -x]))));
   fi;
-  s := InverseMonoid(gens);
-  return s;
+  return InverseMonoid(gens);
+end);
+
+InstallMethod(PartialDualSymmetricInverseMonoid, "for an integer", [IsInt],
+function(n)
+  local gens;
+
+  if n < 0 then
+    ErrorNoReturn("Semigroups: PartialDualSymmetricInverseMonoid: usage,\n",
+                  "the argument <n> must be a non-negative integer,");
+  elif n = 0 then
+    return Monoid(Bipartition([]));
+  elif n = 1 or n = 2 then
+    return PartialUniformBlockBijectionMonoid(n);
+  fi;
+
+  gens := Set([PermList(Concatenation([2 .. n], [1])), (1, 2)]);
+  gens := List(gens, x -> AsBipartition(x, n + 1));
+  Add(gens, Bipartition(Concatenation([[1, 2, -3], [-1, -2, 3]],
+                                      List([4 .. n + 1], x -> [x, -x]))));
+  Add(gens, Bipartition(Concatenation([[1, n + 1, -1, - n - 1]],
+                                        List([2 .. n], x -> [x, -x]))));
+  return InverseMonoid(gens);
 end);
 
 InstallMethod(BrauerMonoid, "for an integer", [IsInt],
@@ -1112,12 +1132,12 @@ function(n)
   return SemigroupIdeal(S, x);
 end);
 
-InstallMethod(SingularDualSymmetricInverseSemigroup, "for a positive integer",
+InstallMethod(SingularDualSymmetricInverseMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
   local blocks, x, S, i;
   if n = 1 then
-    ErrorNoReturn("Semigroups: SingularDualSymmetricInverseSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: SingularDualSymmetricInverseMonoid: usage,\n",
                   "the argument must be greater than 1,");
   fi;
 

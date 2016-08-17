@@ -37,9 +37,10 @@ DeclareOperation("BrauerMonoid", [IsInt]);
 DeclareOperation("SingularBrauerMonoid", [IsPosInt]);
 DeclareOperation("PartialBrauerMonoid", [IsInt]);
 
-DeclareOperation("DualSymmetricInverseSemigroup", [IsInt]);
-DeclareOperation("SingularDualSymmetricInverseSemigroup", [IsPosInt]);
-DeclareSynonym("DualSymmetricInverseMonoid", DualSymmetricInverseSemigroup);
+DeclareOperation("DualSymmetricInverseMonoid", [IsInt]);
+DeclareOperation("SingularDualSymmetricInverseMonoid", [IsPosInt]);
+DeclareOperation("PartialDualSymmetricInverseMonoid", [IsInt]);
+DeclareSynonym("DualSymmetricInverseSemigroup", DualSymmetricInverseMonoid);
 
 DeclareOperation("PartitionMonoid", [IsInt]);
 DeclareOperation("SingularPartitionMonoid", [IsPosInt]);

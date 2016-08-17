@@ -295,6 +295,9 @@ InstallMethod(NrIdempotentsByRank,
  HasGeneratorsOfSemigroup],
 function(S)
   local o, opts;
+  if DegreeOfBipartitionSemigroup(S) = 0 then 
+    return [1];
+  fi;
   o := Enumerate(LambdaOrb(S));
   opts := SEMIGROUPS.OptionsRec(S);
   return BIPART_NR_IDEMPOTENTS(o,
