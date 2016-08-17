@@ -106,8 +106,6 @@ function(arg)
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     elif IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S) then
       return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
-    elif IsSemigroupWithInverseOp(S) then
-      return SEMIGROUPS.InverseCongFromPairs(S, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     fi;
