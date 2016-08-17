@@ -237,6 +237,7 @@
     to a congruence stored in this format as a "congruence by kernel and
     trace".<P/>
 
+<!--
     <#Include Label = "IsInverseSemigroupCongruenceByKernelTrace">
     <#Include Label = "InverseSemigroupCongruenceByKernelTrace">
     <#Include Label = "AsInverseSemigroupCongruenceByKernelTrace">
@@ -244,6 +245,7 @@
     <#Include Label = "TraceOfSemigroupCongruence">
     <#Include Label = "IsInverseSemigroupCongruenceClassByKernelTrace">
     <#Include Label = "MinimumGroupCongruence">
+-->
   </Section>
 
   <Section>
