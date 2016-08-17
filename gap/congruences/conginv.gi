@@ -275,13 +275,20 @@ InstallMethod(EquivalenceClassOfElementNC,
 [IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
 function(cong, elm)
   local class;
-  class := Objectify(NewType(FamilyObj(Range(cong)),
-                             IsInverseSemigroupCongruenceClassByKernelTrace),
+  class := Objectify(InverseSemigroupCongruenceClassByKernelTraceType(cong),
                      rec(rep := elm));
   SetParentAttr(class, Range(cong));
   SetEquivalenceClassRelation(class, cong);
   SetRepresentative(class, elm);
   return class;
+end);
+
+InstallMethod(InverseSemigroupCongruenceClassByKernelTraceType,
+"for an inverse semigroup congruence",
+[IsInverseSemigroupCongruenceByKernelTrace],
+function(cong)
+  return NewType(FamilyObj(Range(cong)),
+                 IsInverseSemigroupCongruenceClassByKernelTrace);
 end);
 
 InstallMethod(\=,
