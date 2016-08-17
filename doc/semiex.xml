@@ -146,6 +146,7 @@ gap> Size(S);
     <Oper Name="UniformBlockBijectionMonoid" Arg="n"/>
     <Oper Name="FactorisableDualSymmetricInverseSemigroup" Arg="n"/>
     <Oper Name="SingularUniformBlockBijectionMonoid" Arg="n"/>
+    <Oper Name="PartialUniformBlockBijectionMonoid" Arg="n"/>
     <Oper Name="SingularFactorisableDualSymmetricInverseSemigroup" Arg="n"/>
     <Oper Name="PlanarUniformBlockBijectionMonoid" Arg="n"/>
     <Oper Name="SingularPlanarUniformBlockBijectionMonoid" Arg="n"/>
@@ -172,6 +173,11 @@ gap> Size(S);
       elements (i.e. those not in the group of units), when <A>n</A> is
       at least 2. <P/>
       <!-- TODO reference -->
+      
+      <C>PartialUniformBlockBijectionMonoid</C> returns the submonoid of the
+      uniform block bijection monoid of degree <C><A>n</A> + 1</C> consisting
+      of those bipartitions with  <C><A>n</A> + 1</C> and  <C>-<A>n</A> - 1</C>
+      in the same block. <P/>
 
       See <Ref Prop="IsUniformBlockBijection"/>.       
       <Example><![CDATA[
@@ -190,6 +196,12 @@ true
 gap> S := AsSemigroup(IsBipartitionSemigroup, 
 >                     SymmetricInverseMonoid(5));
 <inverse bipartition monoid of degree 5 with 3 generators>
+gap> IsFactorisableInverseMonoid(S);
+true
+gap> S := PartialUniformBlockBijectionMonoid(5);
+<inverse block bijection monoid of degree 6 with 4 generators>
+gap> NrIdempotents(S);
+203
 gap> IsFactorisableInverseMonoid(S);
 true]]></Example>
     </Description>
