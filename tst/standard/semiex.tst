@@ -1539,5 +1539,25 @@ gap> PartialDualSymmetricInverseMonoid(-1);
 Error, Semigroups: PartialDualSymmetricInverseMonoid: usage,
 the argument <n> must be a non-negative integer,
 
+# Test RookPartitionMonoid
+gap> S := RookPartitionMonoid(4);
+<regular bipartition *-monoid of degree 5 with 5 generators>
+gap> Size(S);
+21147
+gap> NrLClasses(S);
+227
+gap> NrRClasses(S);
+227
+gap> NrDClasses(S);
+5
+gap> NrHClasses(S);
+16423
+gap> NrIdempotents(S);
+6255
+gap> IsStarSemigroup(S);
+true
+gap> List([1 .. 3], x -> Size(RookPartitionMonoid(x)));
+[ 5, 52, 877 ]
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/semiex.tst");

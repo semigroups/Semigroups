@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+DeclareSynonym("RookMonoid", SymmetricInverseMonoid);
+
 DeclareProperty("IsPartialPermSemigroupGreensClass", IsGreensClass);
 
 DeclareAttribute("CyclesOfPartialPerm", IsPartialPerm);

@@ -43,6 +43,7 @@ DeclareOperation("PartialDualSymmetricInverseMonoid", [IsInt]);
 DeclareSynonym("DualSymmetricInverseSemigroup", DualSymmetricInverseMonoid);
 
 DeclareOperation("PartitionMonoid", [IsInt]);
+DeclareOperation("RookPartitionMonoid", [IsPosInt]);
 DeclareOperation("SingularPartitionMonoid", [IsPosInt]);
 
 DeclareOperation("UniformBlockBijectionMonoid", [IsPosInt]);

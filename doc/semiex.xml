@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  examples.xml
+#W  semiex.xml
 #Y  Copyright (C) 2011-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -96,23 +96,36 @@ gap> SingularBrauerMonoid(8);
 <#GAPDoc Label="PartitionMonoid">
    <ManSection>
     <Oper Name="PartitionMonoid" Arg="n"/>
+    <Oper Name="RookPartitionMonoid" Arg="n"/>
     <Oper Name="SingularPartitionMonoid" Arg="n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the
       partition monoid of degree <A>n</A> which is the monoid consisting of all
-      the bipartitions of degree <A>n</A>. <P/>
+      the bipartitions of degree <A>n</A>. 
+      <P/>
 
       <C>SingularPartitionMonoid</C> returns the ideal of the
       partition monoid consisting of the non-invertible elements
-      (i.e. those not in the group of units). <P/>
+      (i.e. those not in the group of units).
+      <P/>
+      
+      <C>RookPartitionMonoid</C> returns submonoid of the partition monoid of
+      degree <C><A>n</A> + 1</C> consisting of those bipartitions with
+      <C><A>n</A> + 1</C> and <C>-<A>n</A> - 1</C> in the same block;
+      see <Cite Key="Halverson2005PartitionAlgebras"/>,
+      <Cite Key="Grood2006aa"/>, and <Cite Key="East2016aa"/>.
 
       <Example><![CDATA[
 gap> S := PartitionMonoid(5);
 <regular bipartition *-monoid of size 115975, degree 5 with 4 
  generators>
 gap> Size(S);
-115975]]></Example>
+115975
+gap> S := RookPartitionMonoid(5);
+<regular bipartition *-monoid of degree 6 with 5 generators>
+gap> Size(S);
+678570]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

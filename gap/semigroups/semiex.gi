@@ -863,6 +863,17 @@ function(n)
   return InverseMonoid(gens);
 end);
 
+InstallMethod(RookPartitionMonoid, "for a positive integer", [IsPosInt],
+function(n)
+  local S;
+  S := Monoid(PartialUniformBlockBijectionMonoid(n), 
+               Bipartition(Concatenation([[1], [-1]],
+                                         List([2 .. n + 1], x -> [x, -x]))));
+  SetIsRegularSemigroup(S, true);
+  SetIsStarSemigroup(S, true);
+  return S;
+end);
+
 
 InstallMethod(ApsisMonoid,
 "for a positive integer and positive integer",
