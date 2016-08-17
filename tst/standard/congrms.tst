@@ -81,7 +81,7 @@ gap> n := Group([(2, 4, 3), (1, 4)(2, 3), (1, 3)(2, 4)]);;
 gap> colBlocks := [[1, 2]];;
 gap> rowBlocks := [[1], [2, 3]];;
 gap> cong2 := RMSCongruenceByLinkedTriple(T, n, colBlocks, rowBlocks);;
-gap> AsLookupTable(cong2);
+gap> EquivalenceRelationCanonicalLookup(cong2);
 [ 1, 1, 2, 3, 4, 4, 3, 2, 4, 4, 3, 2, 1, 1, 3, 4, 4, 3, 2, 1, 1, 2, 3, 1, 2, 
   3, 1, 1, 2, 3, 1, 2, 3, 2, 4, 2, 1, 1, 2, 3, 4, 4, 3, 2, 4, 4, 3, 2, 4, 4, 
   3, 2, 1, 2, 3, 3, 4, 2, 2, 3, 2, 4, 3, 2, 4, 4, 3, 2, 4, 3, 2, 3, 2, 3, 2, 
@@ -213,7 +213,7 @@ gap> Size(q);
 #T# ReesMatCongTest8
 # Convert to and from semigroup congruence by generating pairs
 gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[2]);;
-gap> ccong := AsRZMSCongruenceByLinkedTriple(cong);;
+gap> ccong := AsRMSCongruenceByLinkedTriple(cong);;
 gap> congs[2] = ccong;
 true
 
@@ -267,11 +267,11 @@ gap> T := ReesZeroMatrixSemigroup(g, mat);;
 gap> congs1 := CongruencesOfSemigroup(T);;
 gap> Size(congs1);
 13
-gap> AsLookupTable(congs1[8]);
+gap> EquivalenceRelationCanonicalLookup(congs1[8]);
 [ 1, 2, 3, 4, 1, 5, 1, 2, 3, 4, 2, 1, 6, 7, 8, 1, 2, 3, 4, 2, 5, 9, 10, 11, 
   9, 3, 4, 6, 7, 6, 7, 1, 2, 3, 4, 6, 7, 6, 7, 5, 9, 10, 11, 12, 13, 12, 13, 
   3, 4, 6, 7, 10, 11, 12, 13 ]
-gap> AsLookupTable(AsSemigroupCongruenceByGeneratingPairs(congs1[8]));
+gap> EquivalenceRelationCanonicalLookup(AsSemigroupCongruenceByGeneratingPairs(congs1[8]));
 [ 1, 2, 3, 4, 1, 5, 1, 2, 3, 4, 2, 1, 6, 7, 8, 1, 2, 3, 4, 2, 5, 9, 10, 11, 
   9, 3, 4, 6, 7, 6, 7, 1, 2, 3, 4, 6, 7, 6, 7, 5, 9, 10, 11, 12, 13, 12, 13, 
   3, 4, 6, 7, 10, 11, 12, 13 ]

@@ -320,5 +320,5 @@ function(class)
     cong := EquivalenceClassRelation(class);
     return Enumerator(SemigroupIdealOfReesCongruence(cong));
   fi;
-  return AsList(class);
+  return [Representative(class)];
 end);

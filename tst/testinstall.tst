@@ -1397,46 +1397,52 @@ gap> MatrixEntries(R);
 gap> AsList(JonesMonoid(1));
 [ <block bijection: [ 1, -1 ]> ]
 
+# Kernel-trace methods should only be selected for semigroups with inverse op
+gap> S := HallMonoid(2);;
+gap> latt := LatticeOfCongruences(S);
+[ [  ], [ 1, 3, 4 ], [ 1, 4 ], [ 1 ] ]
+
 #T# SEMIGROUPS_UnbindVariables
-# FIXME redo these!
-gap> Unbind(lookingfor);
-gap> Unbind(l);
+gap> Unbind(B);
+gap> Unbind(D);
+gap> Unbind(F);
+gap> Unbind(G);
+gap> Unbind(H);
+gap> Unbind(I);
 gap> Unbind(L);
-gap> Unbind(iter);
-gap> Unbind(file);
-gap> Unbind(cong);
+gap> Unbind(LL);
+gap> Unbind(M);
+gap> Unbind(P);
+gap> Unbind(R);
 gap> Unbind(R1);
 gap> Unbind(R2);
-gap> Unbind(ll);
-gap> Unbind(hom);
-gap> Unbind(tuples);
-gap> Unbind(u);
-gap> Unbind(B);
-gap> Unbind(mat);
-gap> Unbind(map);
-gap> Unbind(G);
-gap> Unbind(F);
-gap> Unbind(I);
-gap> Unbind(H);
-gap> Unbind(M);
 gap> Unbind(S);
-gap> Unbind(R);
 gap> Unbind(T);
+gap> Unbind(U);
 gap> Unbind(V);
-gap> Unbind(d);
-gap> Unbind(g);
+gap> Unbind(c);
+gap> Unbind(cong);
 gap> Unbind(f);
-gap> Unbind(i);
-gap> Unbind(I);
-gap> Unbind(h);
+gap> Unbind(file);
+gap> Unbind(g);
 gap> Unbind(gens);
+gap> Unbind(hom);
+gap> Unbind(i);
+gap> Unbind(id);
+gap> Unbind(inv);
+gap> Unbind(iso);
+gap> Unbind(iter);
+gap> Unbind(latt);
+gap> Unbind(map);
+gap> Unbind(mat);
 gap> Unbind(max);
 gap> Unbind(o);
 gap> Unbind(s);
-gap> Unbind(iso);
 gap> Unbind(t);
-gap> Unbind(y);
+gap> Unbind(tuples);
+gap> Unbind(u);
 gap> Unbind(x);
+gap> Unbind(y);
 gap> Unbind(z);
 
 #E#

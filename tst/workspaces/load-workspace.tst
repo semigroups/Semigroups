@@ -36,6 +36,21 @@ gap> UF_FIND(uftable3, 20222);
 gap> UF_FIND(uftable3, 234);
 234
 
+# Test congruences
+gap> NrEquivalenceClasses(cong);
+4
+gap> [Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
+>     Matrix(IsBooleanMat, [[0, 1], [1, 0]])] in cong;
+true
+gap> [Matrix(IsBooleanMat, [[0, 1], [1, 1]]), 
+>     Matrix(IsBooleanMat, [[0, 1], [1, 0]])] in cong;
+true
+gap> [Matrix(IsBooleanMat, [[0, 0], [0, 0]]), 
+>     Matrix(IsBooleanMat, [[0, 1], [1, 0]])] in cong;
+false
+gap> EquivalenceRelationCanonicalLookup(cong);
+[ 1, 1, 2, 1, 1, 3, 1, 1, 2, 1, 3, 1, 1, 2, 4, 3 ]
+
 #############################################################################
 ##  Tests end here
 #############################################################################

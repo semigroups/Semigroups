@@ -45,6 +45,7 @@ DeclareOperation("PartitionMonoid", [IsInt]);
 DeclareOperation("SingularPartitionMonoid", [IsPosInt]);
 
 DeclareOperation("UniformBlockBijectionMonoid", [IsPosInt]);
+DeclareOperation("PartialUniformBlockBijectionMonoid", [IsPosInt]);
 DeclareOperation("SingularUniformBlockBijectionMonoid", [IsPosInt]);
 DeclareOperation("PlanarUniformBlockBijectionMonoid", [IsPosInt]);
 DeclareOperation("SingularPlanarUniformBlockBijectionMonoid", [IsPosInt]);

@@ -1513,10 +1513,77 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+#T#
+gap> S := Semigroup([Transformation([2, 4, 3, 4]),
+>                    Transformation([3, 3, 2, 3]),
+>                    Transformation([3, 4, 4, 1])]);;
+gap> F := AsSemigroup(IsFpSemigroup, S);;
+gap> x := F.1 * F.2 * F.3; y := F.2^2 * F.3;
+s1*s2*s3
+s2^2*s3
+gap> x = y;
+true
+gap> x := F.2^2 * F.1 * F.2^2 * F.3; y := F.1^2 * F.2 * F.3^4;
+s2^2*s1*s2^2*s3
+s1^2*s2*s3^4
+gap> x = y;
+true
+gap> x := F.1 * F.1; y := F.2 * F.3;
+s1^2
+s2*s3
+gap> x = y;
+false
+
+# Test IsomorphismFpMonoid for semigroup with duplicate generators
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
+gap> T := AsMonoid(IsFpMonoid, S);
+<fp monoid on the generators [ m1, m2, m3, m4 ]>
+gap> RelationsOfFpMonoid(T);
+[ [ m1^2, <identity ...> ], [ m4, m3 ], [ m1*m4, m1*m3 ], [ m2^2, m2 ], 
+  [ m2*m4, m2*m3 ], [ m3*m2, m3 ], [ m3^2, m3 ], [ m3*m4, m3 ], 
+  [ m1*m2*m3, m2*m3 ], [ m2*m1^2, m2 ], [ m2*m1*m3, m1*m3 ], [ m3*m1^2, m3 ], 
+  [ (m1*m2)^2, m2*m1*m2 ], [ (m1*m3)^2, m3*m1*m3 ], [ (m2*m1)^2, m2*m1*m2 ], 
+  [ m2*m3*m1*m2, m2*m1*m2 ], [ m2*m3*m1*m3, m3*m1*m3 ], 
+  [ m3*m1*m2*m1, m3*m1*m2 ], [ (m3*m1)^2, m3*m1*m3 ] ]
+gap> Size(T);
+16
+gap> T := AsSemigroup(IsFpSemigroup, S);
+<fp semigroup on the generators [ s1, s2, s3, s4 ]>
+gap> RelationsOfFpSemigroup(T);
+[ [ s4, s3 ], [ s1*s4, s1*s3 ], [ s2^2, s2 ], [ s2*s4, s2*s3 ], 
+  [ s3*s2, s3 ], [ s3^2, s3 ], [ s3*s4, s3 ], [ s1^3, s1 ], [ s1^2*s2, s2 ], 
+  [ s1^2*s3, s3 ], [ s1*s2*s3, s2*s3 ], [ s2*s1^2, s2 ], [ s2*s1*s3, s1*s3 ], 
+  [ s3*s1^2, s3 ], [ (s1*s2)^2, s2*s1*s2 ], [ (s1*s3)^2, s3*s1*s3 ], 
+  [ (s2*s1)^2, s2*s1*s2 ], [ s2*s3*s1*s2, s2*s1*s2 ], 
+  [ s2*s3*s1*s3, s3*s1*s3 ], [ s3*s1*s2*s1, s3*s1*s2 ], 
+  [ (s3*s1)^2, s3*s1*s3 ] ]
+gap> Size(T);
+16
+
+# Test IsomorphismFpSemigroup for semigroup with multiple duplicate generators
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
+>                   Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
+>                   Matrix(IsBooleanMat, [[0, 1], [1, 0]]));;
+gap> T := AsSemigroup(IsFpSemigroup, S);;
+gap> Size(T) = Size(S);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
 gap> Unbind(F);
+gap> Unbind(G);
 gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(T);

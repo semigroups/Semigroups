@@ -1,13 +1,26 @@
-/*******************************************************************************
- * Semigroups GAP package
- *
- * This file contains converters from GAP to C++ elements and back.
- *
-*******************************************************************************/
+//
+// Semigroups package for GAP
+// Copyright (C) 2016 James D. Mitchell
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 
 #include "converter.h"
 #include "bipart.h"
-#include "gap.hh"
+#include "gap.h"
+
+using semiring::Semiring;
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -15,11 +28,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
+BooleanMat* BoolMatConverter::convert(Obj o, size_t n) const {
   assert(CALL_1ARGS(IsBooleanMat, o));
   assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
 
-  size_t m = LEN_BLIST(ELM_PLIST(o, 1));
+  size_t             m = LEN_BLIST(ELM_PLIST(o, 1));
   std::vector<bool>* x(new std::vector<bool>());
   x->resize(m * m, false);
 
@@ -35,9 +48,9 @@ BooleanMat* BoolMatConverter::convert (Obj o, size_t n) {
   return new BooleanMat(x);
 }
 
-Obj BoolMatConverter::unconvert (Element* x) {
-  size_t n = x->degree();
-  BooleanMat* xx(static_cast<BooleanMat*>(x));
+Obj BoolMatConverter::unconvert(Element const* x) const {
+  size_t      n = x->degree();
+  BooleanMat const * xx(static_cast<BooleanMat const*>(x));
 
   Obj o = NEW_PLIST(T_PLIST, n);
   SET_LEN_PLIST(o, n);
@@ -68,12 +81,13 @@ Obj BoolMatConverter::unconvert (Element* x) {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-Bipartition* BipartConverter::convert (Obj o, size_t n) {
+Bipartition* BipartConverter::convert(Obj o, size_t n) const {
   assert(TNUM_OBJ(o) == T_BIPART);
-  return static_cast<Bipartition*>(static_cast<Element*>(bipart_get_cpp(o))->really_copy());
+  return static_cast<Bipartition*>(
+      static_cast<Element*>(bipart_get_cpp(o))->really_copy());
 }
 
-Obj BipartConverter::unconvert (Element* x) {
+Obj BipartConverter::unconvert(Element const* x) const {
   return bipart_new_obj(static_cast<Bipartition*>(x->really_copy()));
 }
 
@@ -83,7 +97,8 @@ Obj BipartConverter::unconvert (Element* x) {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
+MatrixOverSemiring* MatrixOverSemiringConverter::convert(Obj    o,
+                                                         size_t n) const {
   assert(CALL_1ARGS(IsMatrixOverSemiring, o) == True);
   assert(IS_PLIST(ELM_PLIST(o, 1)));
 
@@ -106,9 +121,9 @@ MatrixOverSemiring* MatrixOverSemiringConverter::convert (Obj o, size_t n) {
   return new MatrixOverSemiring(matrix, _semiring);
 }
 
-Obj MatrixOverSemiringConverter::unconvert (Element* x) {
-  MatrixOverSemiring* xx(static_cast<MatrixOverSemiring*>(x));
-  size_t n = xx->degree();
+Obj MatrixOverSemiringConverter::unconvert(Element const* x) const {
+  MatrixOverSemiring const* xx(static_cast<MatrixOverSemiring const*>(x));
+  size_t                    n = xx->degree();
 
   Obj plist = NEW_PLIST(T_PLIST, n + 2);
   if (_semiring->period() != -1) {
@@ -126,7 +141,7 @@ Obj MatrixOverSemiringConverter::unconvert (Element* x) {
     Obj row = NEW_PLIST(T_PLIST_CYC, n);
     SET_LEN_PLIST(row, n);
     for (size_t j = 0; j < n; j++) {
-      long entry = xx->at(i * n + j);
+      int64_t entry = xx->at(i * n + j);
       if (entry == _semiring->zero()) {
         SET_ELM_PLIST(row, j + 1, _gap_zero);
       } else {
@@ -148,10 +163,9 @@ Obj MatrixOverSemiringConverter::unconvert (Element* x) {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-Obj PBRConverter::get_gap_type (size_t deg) {
+Obj PBRConverter::get_gap_type(size_t deg) const {
   deg++;
-  if (deg > (size_t) LEN_PLIST(PBRTypes) ||
-      ELM_PLIST(PBRTypes, deg) == 0) {
+  if (deg > (size_t) LEN_PLIST(PBRTypes) || ELM_PLIST(PBRTypes, deg) == 0) {
     CALL_1ARGS(PBRType, INTOBJ_INT(deg - 1));
   }
   return ELM_PLIST(PBRTypes, deg);
@@ -159,14 +173,15 @@ Obj PBRConverter::get_gap_type (size_t deg) {
 
 // TODO add some more asserts here
 
-PBR* PBRConverter::convert (Obj o, size_t n) {
+PBR* PBRConverter::convert(Obj o, size_t n) const {
   assert(CALL_1ARGS(IsPBR, o));
-  size_t m = INT_INTOBJ(ELM_PLIST(o, 1));
-  std::vector<std::vector<u_int32_t> >* pbr(new std::vector<std::vector<u_int32_t> >());
+  size_t                               m = INT_INTOBJ(ELM_PLIST(o, 1));
+  std::vector<std::vector<u_int32_t>>* pbr(
+      new std::vector<std::vector<u_int32_t>>());
   pbr->reserve(m);
 
   for (u_int32_t i = 0; i < 2 * m; i++) {
-    Obj adj = ELM_PLIST(o, i + 2);
+    Obj                    adj = ELM_PLIST(o, i + 2);
     std::vector<u_int32_t> next;
     for (u_int32_t j = 1; j <= LEN_PLIST(adj); j++) {
       next.push_back(INT_INTOBJ(ELM_PLIST(adj, j)) - 1);
@@ -178,14 +193,14 @@ PBR* PBRConverter::convert (Obj o, size_t n) {
   return new PBR(pbr);
 }
 
-Obj PBRConverter::unconvert (Element* xx) {
-  PBR* x(static_cast<PBR*>(xx));
-  Obj plist = NEW_PLIST(T_PLIST_TAB, 2 * x->degree() + 1);
+Obj PBRConverter::unconvert(Element const* xx) const {
+  PBR const* x(static_cast<PBR const*>(xx));
+  Obj  plist = NEW_PLIST(T_PLIST_TAB, 2 * x->degree() + 1);
   SET_LEN_PLIST(plist, 2 * x->degree() + 1);
   SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree()));
   for (u_int32_t i = 0; i < 2 * x->degree(); i++) {
     size_t m = x->at(i).size();
-    Obj adj;
+    Obj    adj;
     if (m == 0) {
       adj = NEW_PLIST(T_PLIST_EMPTY, 0);
     } else {

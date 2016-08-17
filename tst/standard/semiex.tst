@@ -1504,5 +1504,21 @@ false
 gap> IsSemigroupWithCommutingIdempotents(S);
 true
 
+# Test PartialUniformBlockBijectionMonoid
+gap> S := PartialUniformBlockBijectionMonoid(5);
+<inverse block bijection monoid of degree 6 with 4 generators>
+gap> S := PartialUniformBlockBijectionMonoid(2);
+<inverse block bijection monoid of degree 3 with 3 generators>
+gap> Size(S);
+8
+gap> List([1 .. 5], n -> NrIdempotents(PartialUniformBlockBijectionMonoid(n)));
+[ 2, 5, 15, 52, 203 ]
+gap> List([1 .. 5], n -> Size(PartialUniformBlockBijectionMonoid(n)));
+[ 2, 8, 53, 512, 6697 ]
+gap> S := PartialUniformBlockBijectionMonoid(1);
+<commutative inverse block bijection monoid of degree 2 with 1 generator>
+gap> List([1 .. 5], n -> NrDClasses(PartialUniformBlockBijectionMonoid(n)));
+[ 2, 4, 7, 12, 19 ]
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/semiex.tst");

@@ -200,13 +200,13 @@ gap> cong := SemigroupCongruence(S, [Transformation([2, 4, 2, 2]),
 >                                    Transformation([4, 2, 4, 4])]);;
 gap> KernelOfSemigroupCongruence(cong);
 Error, Semigroups: KernelOfSemigroupCongruence: usage,
-the first arg <cong> must be over an inverse semigroup,
+<cong> must be over a semigroup with inverse op,
 gap> TraceOfSemigroupCongruence(cong);
 Error, Semigroups: TraceOfSemigroupCongruence: usage,
-the argument <cong> must be over an inverse semigroup,
+<cong> must be over a semigroup with inverse op,
 gap> AsInverseSemigroupCongruenceByKernelTrace(cong);
 Error, Semigroups: AsInverseSemigroupCongruenceByKernelTrace: usage,
-the argument <cong> must be over an inverse semigroup,
+<cong> must be over a semigroup with inverse op,
 
 #T# AsInverseSemigroupCongruenceByKernelTrace: More tests
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 3, 4]),
@@ -285,14 +285,14 @@ gap> IsSubrelation(cong1, cong2);
 Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
 
-#T# AsLookupTable
+#T# EquivalenceRelationCanonicalLookup
 gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),
 >                           PartialPerm([1, 2], [2, 3])]);;
 gap> pairs := [PartialPerm([], []), PartialPerm([1], [1])];;
 gap> cong := SemigroupCongruence(S, pairs);
 <semigroup congruence over <inverse partial perm semigroup of rank 3 with 2 
  generators> with congruence pair (12,3)>
-gap> AsLookupTable(cong);
+gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4 ]
 
 #T# SEMIGROUPS_UnbindVariables

@@ -86,10 +86,10 @@ gap> cong := SemigroupCongruence(r, pairs);;
 gap> NrCongruenceClasses(cong);
 1
 
-#T# AsLookupTable
+#T# EquivalenceRelationCanonicalLookup
 gap> S := FullTransformationMonoid(2);;
 gap> uni := UniversalSemigroupCongruence(S);;
-gap> AsLookupTable(uni);
+gap> EquivalenceRelationCanonicalLookup(uni);
 [ 1, 1, 1, 1 ]
 
 #T# Equality checking
@@ -154,7 +154,7 @@ gap> class * EquivalenceClassOfElement(badcong, PartialPerm([1], [3]));
 Error, Semigroups: \*: usage,
 the args <c1> and <c2> must be over the same congruence,
 gap> Size(class);
-1
+11
 
 #T# Meet and join
 gap> S := Semigroup([Transformation([1, 3, 4, 1]),

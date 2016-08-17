@@ -1,22 +1,33 @@
-/*
- * Semigroups GAP package
- *
- * This file contains some methods for bipartitions
- *
- */
+//
+// Semigroups package for GAP
+// Copyright (C) 2016 James D. Mitchell
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 
-#ifndef SRC_BIPART_H_
-#define SRC_BIPART_H_
+#ifndef SEMIGROUPS_SRC_BIPART_H_
+#define SEMIGROUPS_SRC_BIPART_H_
 
 #include <assert.h>
 
-#include "src/compiled.h"
-#include "gap.hh"
+#include "gap.h"
 #include "semigroupsplusplus/elements.h"
+#include "src/compiled.h"
 
 // C functions
 
-inline Bipartition* bipart_get_cpp (Obj x) {
+inline Bipartition* bipart_get_cpp(Obj x) {
   assert(TNUM_OBJ(x) == T_BIPART);
   return CLASS_OBJ<Bipartition>(x);
 }
@@ -65,4 +76,4 @@ Obj BLOCKS_INV_RIGHT(Obj, Obj, Obj);
 
 Obj BIPART_NR_IDEMPOTENTS(Obj, Obj, Obj, Obj, Obj, Obj);
 
-#endif // SRC_BIPART_H_
+#endif  // SEMIGROUPS_SRC_BIPART_H_

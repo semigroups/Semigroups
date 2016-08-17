@@ -1,6 +1,6 @@
 ############################################################################
 ##
-#W  congruences.gi
+#W  cong.gi
 #Y  Copyright (C) 2015                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -18,8 +18,55 @@
 ##       congsimple.gi  - (0-)simple semigroups
 ##       conguniv.gi    - Universal congruences
 ##
-## congruences.gd contains declarations for many of these.
+## cong.gd contains declarations for many of these.
 ##
+
+InstallMethod(\= , "for a left and a right semigroup congruence",
+[IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
+function(c1, c2)
+  return Range(c1) = Range(c2)
+         and EquivalenceRelationCanonicalLookup(c1) =
+             EquivalenceRelationCanonicalLookup(c2);
+end);
+
+InstallMethod(\= , "for a right and a left semigroup congruence",
+[IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
+function(c1, c2)
+  return Range(c1) = Range(c2)
+         and EquivalenceRelationCanonicalLookup(c1) =
+             EquivalenceRelationCanonicalLookup(c2);
+end);
+
+# Multiplication for congruence classes: only makes sense for 2-sided
+
+InstallMethod(\*,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
+    ErrorNoReturn("Semigroups: \*: usage,\n",
+                  "the args must be classes of the same congruence,");
+  fi;
+  return EquivalenceClassOfElementNC(EquivalenceClassRelation(class1),
+                                     Representative(class1) *
+                                     Representative(class2));
+end);
+
+InstallMethod(\=,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+    and Representative(class1) in class2;
+end);
+
+InstallMethod(\<,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+    and RepresentativeSmallest(class1) < RepresentativeSmallest(class2);
+end);
 
 InstallGlobalFunction(SemigroupCongruence,
 function(arg)
@@ -59,7 +106,7 @@ function(arg)
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     elif IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S) then
       return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
-    elif IsInverseSemigroup(S) then
+    elif IsSemigroupWithInverseOp(S) then
       return SEMIGROUPS.InverseCongFromPairs(S, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
@@ -81,9 +128,9 @@ function(arg)
       and Parent(arg[2]) = S then
     return ReesCongruenceOfSemigroupIdeal(arg[2]);
   elif Length(arg) = 3
-      and IsInverseSemigroup(arg[2])
+      and IsSemigroupWithInverseOp(arg[2])
       and IsDenseList(arg[3])
-      and IsInverseSemigroup(S) then
+      and IsSemigroupWithInverseOp(S) then
     # We should have the kernel and trace of a congruence on an inverse
     # semigroup
     return InverseSemigroupCongruenceByKernelTrace(S, arg[2], arg[3]);
@@ -168,6 +215,39 @@ function(arg)
   else
     TryNextMethod();
   fi;
+end);
+
+InstallMethod(ViewObj,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
+function(cong)
+  Print("<left semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with ",
+        Size(GeneratingPairsOfLeftSemigroupCongruence(cong)),
+        " generating pairs>");
+end);
+
+InstallMethod(ViewObj,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
+function(cong)
+  Print("<right semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with ",
+        Size(GeneratingPairsOfRightSemigroupCongruence(cong)),
+        " generating pairs>");
+end);
+
+InstallMethod(ViewObj,
+"for a semigroup congruence",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(cong)
+  Print("<semigroup congruence over ");
+  ViewObj(Range(cong));
+  Print(" with ",
+        Size(GeneratingPairsOfSemigroupCongruence(cong)),
+        " generating pairs>");
 end);
 
 InstallMethod(ViewObj,
@@ -287,3 +367,18 @@ function(class, elm)
   cong := EquivalenceClassRelation(class);
   return EquivalenceClassOfElementNC(cong, Representative(class) * elm);
 end);
+
+InstallMethod(EquivalenceRelationLookup,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+EquivalenceRelationCanonicalLookup);
+
+InstallMethod(EquivalenceRelationLookup,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+EquivalenceRelationCanonicalLookup);
+
+InstallMethod(EquivalenceRelationLookup,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+EquivalenceRelationCanonicalLookup);

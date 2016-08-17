@@ -16,13 +16,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRC_FROPIN_H_
-#define SRC_FROPIN_H_
+// This file contains some functions for finitely presented semigroups and
+// monoids.
+
+#ifndef SRC_SEMIFP_H_
+#define SRC_SEMIFP_H_
 
 #include "src/compiled.h"
 
-Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking);
-Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj, Obj, Obj);
-Obj FIND_HCLASSES(Obj, Obj, Obj);
+Obj FP_SEMI_SIZE(Obj, Obj);
+Obj FP_SEMI_EQ(Obj, Obj, Obj, Obj);
+Obj FP_SEMI_COSET_ID(Obj, Obj, Obj);
 
-#endif // SRC_FROPIN_H_
+#endif // SRC_SEMIFP_H_

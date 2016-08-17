@@ -16,13 +16,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRC_FROPIN_H_
-#define SRC_FROPIN_H_
+#ifndef SRC_CONGPAIRS_H_
+#define SRC_CONGPAIRS_H_
 
 #include "src/compiled.h"
 
-Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking);
-Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj, Obj, Obj);
-Obj FIND_HCLASSES(Obj, Obj, Obj);
+// GAP level functions
 
-#endif // SRC_FROPIN_H_
+Obj CONG_PAIRS_NR_CLASSES(Obj, Obj);
+Obj CONG_PAIRS_IN(Obj, Obj, Obj);
+Obj CONG_PAIRS_LOOKUP_PART(Obj, Obj);
+Obj CONG_PAIRS_CLASS_COSET_ID(Obj, Obj);
+
+#endif // SRC_CONGPAIRS_H_

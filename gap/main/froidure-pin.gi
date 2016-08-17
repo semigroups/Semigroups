@@ -393,6 +393,7 @@ function(S)
               suffix := [],
               words := []);
 
+  data.report     := SEMIGROUPS.OptionsRec(S).report;
   data.batch_size := SEMIGROUPS.OptionsRec(S).batch_size;
   hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
 

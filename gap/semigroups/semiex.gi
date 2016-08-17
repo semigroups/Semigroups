@@ -825,6 +825,25 @@ function(n)
   return InverseMonoid(gens);
 end);
 
+InstallMethod(PartialUniformBlockBijectionMonoid, "for a positive integer",
+[IsPosInt],
+function(n)
+  local gens;
+  if n = 1 then
+    return InverseMonoid(Bipartition([[1, -1], [2, -2]]),
+                         Bipartition([[1, 2, -1, -2]]));
+  fi;
+
+  gens := Set([PermList(Concatenation([2 .. n], [1])), (1, 2)]);
+  gens := List(gens, x -> AsBipartition(x, n + 1));
+  Add(gens, Bipartition(Concatenation([[1, 2, -1, -2]],
+                                        List([3 .. n + 1], x -> [x, -x]))));
+  Add(gens, Bipartition(Concatenation([[1, n + 1, -1, - n - 1]],
+                                        List([2 .. n], x -> [x, -x]))));
+  return InverseMonoid(gens);
+end);
+
+
 InstallMethod(ApsisMonoid,
 "for a positive integer and positive integer",
 [IsPosInt, IsPosInt],

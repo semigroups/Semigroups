@@ -8,239 +8,229 @@
 #############################################################################
 ##
 ## This file contains functions for any finite semigroup congruence with
-## generating pairs, using a pair enumeration and union-find method.
-##
-#############################################################################
-##
-## A congruence here is defined by a semigroup and a list of generating pairs.
-## Most of the work is done by SEMIGROUPS_Enumerate, a hidden function which
-## begins to multiply known pairs in the congruence by the semigroup's
-## generators, checking its results periodically against a supplied "lookfunc"
-## which checks whether some condition has been fulfilled.
-##
-## Any function which requires information about a congruence may call
-## SEMIGROUPS_Enumerate with a lookfunc to allow it to terminate as soon as the
-## necessary information is found, without doing extra work.  Information found
-## so far is then stored in a "congruence data" object, and work may be resumed
-## in subsequent calls to SEMIGROUPS_Enumerate.
-##
-## If all the pairs of the congruence have been found, the congruence data
-## object is discarded, and a lookup table is stored, giving complete
-## information about the congruence classes.  If a lookup table is available,
-## it is always used instead of SEMIGROUPS_Enumerate, which will always return
-## fail from then on.
-##
-## Most methods in this file apply to (two-sided) congruences, as well as left
-## congruences and right congruences.  The _InstallMethodsForCongruences
-## function is called three times when Semigroups is loaded, installing slightly
-## different methods for left, right, and two-sided congruences.  Of course a
-## left congruence may turn out also to be a right congruence, and so on, but
-## the properties HasGeneratingPairsOf(Left/Right)MagmaCongruence allow us to
-## determine which type of relation we are treating it as.
-##
-## See J.M. Howie's "Fundamentals of Semigroup Theory" Section 1.5, and see
-## Michael Torpey's MSc thesis "Computing with Semigroup Congruences" Chapter 2
-## (www-circa.mcs.st-and.ac.uk/~mct25/files/mt5099-report.pdf) for more details.
+## generating pairs.
 ##
 #############################################################################
 
-# This function creates the congruence data object for cong.  It should only
-# be called once.
+#TODO: A method for MeetXSemigroupCongruences
 
-SEMIGROUPS.SetupCongData := function(cong)
-  # This function creates the congruence data object for cong.  It should only
-  # be called once.
-  local S, elms, genpairs, gendata, pairs, hashlen, ht, treehashsize, data,
-        pairstoapply, pos, found, ufdata;
+#############################################################################
+# Internal attributes
+#############################################################################
 
-  S := Range(cong);
-  elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
+# The following are stored as attributes to avoid recalculation
 
-  # Is this a left, right, or 2-sided congruence?
-  if HasGeneratingPairsOfMagmaCongruence(cong) then
-    genpairs := GeneratingPairsOfSemigroupCongruence(cong);
-  elif HasGeneratingPairsOfLeftMagmaCongruence(cong) then
-    genpairs := GeneratingPairsOfLeftSemigroupCongruence(cong);
-  elif HasGeneratingPairsOfRightMagmaCongruence(cong) then
-    genpairs := GeneratingPairsOfRightSemigroupCongruence(cong);
+InstallMethod(EquivalenceRelationLookup,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep],
+function(cong)
+  # This will use the coset numbers in the TC table
+  CONG_PAIRS_LOOKUP_PART(cong);
+  return cong!.__fin_cong_lookup;
+end);
+
+InstallMethod(EquivalenceRelationCanonicalLookup,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep],
+function(cong)
+  local lookup, max, dictionary, next, out, i, new_nr;
+  lookup := EquivalenceRelationLookup(cong);
+  max := NrEquivalenceClasses(cong);
+  # We assume lookup uses the numbers 1 to max, but in an unknown order
+  dictionary := ListWithIdenticalEntries(max, 0);
+  next := 1;
+  out := EmptyPlist(max);
+  for i in [1 .. Length(lookup)] do
+    new_nr := dictionary[lookup[i]];
+    if new_nr = 0 then
+      dictionary[lookup[i]] := next;
+      new_nr := next;
+      next := next + 1;
+    fi;
+    out[i] := new_nr;
+  od;
+  return out;
+end);
+
+InstallMethod(FiniteCongruenceByGeneratingPairsPartition,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep], 
+function(cong) 
+  CONG_PAIRS_LOOKUP_PART(cong);
+  return cong!.__fin_cong_partition;
+end);
+
+InstallMethod(FiniteCongruenceClassByGeneratingPairsCosetId, 
+"for a finite congruence class by gen pairs rep",
+[IsFiniteCongruenceClassByGeneratingPairsRep],
+CONG_PAIRS_CLASS_COSET_ID);
+
+InstallMethod(FiniteCongruenceClassByGeneratingPairsType, 
+"for a finite congruence by gen pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep],
+function(cong)
+  local IsXCongruenceClass;
+
+  if cong!.type = "right" then 
+    IsXCongruenceClass := IsRightCongruenceClass;
+  elif cong!.type = "left" then  
+    IsXCongruenceClass := IsLeftCongruenceClass;
+  else
+    Assert(1, cong!.type = "twosided");
+    IsXCongruenceClass := IsCongruenceClass;
+  fi;
+   
+  return NewType(FamilyObj(Range(cong)), IsXCongruenceClass
+                 and IsFiniteCongruenceClassByGeneratingPairsRep);
+end);
+
+#############################################################################
+# Internal functions
+#############################################################################
+
+SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
+  local pairs, cong, ufdata, uf2, i, ii, next, newtable;
+
+  if Range(c1) <> Range(c2) then
+    ErrorNoReturn("Semigroups: SEMIGROUPS.JoinCongruences: usage,\n",
+                  "the congruences must be defined over the same semigroup,");
   fi;
 
-  gendata := GenericSemigroupData(S);
-  pairs   := List(genpairs, x -> [Position(gendata, x[1]),
-                                  Position(gendata, x[2])]);
-  hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
+  pairs := Concatenation(ShallowCopy(c1!.genpairs), ShallowCopy(c2!.genpairs));
+  cong := constructor(Range(c1), pairs);
 
-  ht := HTCreate([1, 1], rec(forflatplainlists := true,
-                             treehashsize := hashlen));
+  # TODO redo this!
+  # Join the lookup tables
+  #if HasAsLookupTable(c1) and HasAsLookupTable(c2) then
+  #  # First join the union-find tables
+  #  ufdata := UF_COPY(c1!.ufdata);
+  #  uf2 := c2!.ufdata;
+  #  for i in [1 .. UF_SIZE(uf2)] do
+  #    ii := UF_FIND(uf2, i);
+  #    if ii <> i then
+  #      UF_UNION(ufdata, [i, ii]);
+  #    fi;
+  #  od;
+  #  cong!.ufdata := ufdata;
 
-  data := rec(cong         := cong,
-              pairstoapply := pairs,
-              pos          := 0,
-              ht           := ht,
-              elms         := elms,
-              found        := false,
-              ufdata       := UF_NEW(Size(S)));
-
-  cong!.data := Objectify(NewType(FamilyObj(cong),
-                                  SEMIGROUPS_IsSemigroupCongruenceData),
-                          data);
+  #  # Now normalise this as a lookup table
+  #  next := 1;
+  #  newtable := EmptyPlist(UF_SIZE(ufdata));
+  #  for i in [1 .. UF_SIZE(ufdata)] do
+  #    ii := UF_FIND(ufdata, i);
+  #    if ii = i then
+  #      newtable[i] := next;
+  #      next := next + 1;
+  #    else
+  #      newtable[i] := newtable[ii];
+  #    fi;
+  #  od;
+  #  SetAsLookupTable(cong, newtable);
+  #fi; 
+  # TODO if one or the other does not have the lookup could do TC on
+  # which ever is smaller using the pairs of the other.
+  return cong;
 end;
 
-# Enumerates pairs in the congruence in batches until lookfunc is satisfied
+SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
+  local pair, filter, set_pairs, fam, cong, report, range;
 
-InstallMethod(SEMIGROUPS_Enumerate,
-"for semigroup congruence data and a function",
-[SEMIGROUPS_IsSemigroupCongruenceData, IsFunction],
-function(data, lookfunc)
-  local cong, ufdata, pairstoapply, ht, S, left, right, genstoapply, i, nr, x,
-        check_period, j, y, next, newtable, ii;
-
-  # Restore our place from the congruence data record
-  cong         := data!.cong;
-  ufdata       := data!.ufdata;
-  pairstoapply := data!.pairstoapply;
-  ht           := data!.ht;
-  S            := Range(cong);
-
-  # Find the necessary Cayley graphs
-  if HasGeneratingPairsOfLeftMagmaCongruence(cong) then
-    left := LeftCayleyGraphSemigroup(S);
-  elif HasGeneratingPairsOfRightMagmaCongruence(cong) then
-    right := RightCayleyGraphSemigroup(S);
-  elif HasGeneratingPairsOfMagmaCongruence(cong) then
-    left := LeftCayleyGraphSemigroup(S);
-    right := RightCayleyGraphSemigroup(S);
+  if not IsFinite(S) then
+    TryNextMethod();
   fi;
 
-  genstoapply := [1 .. Size(GeneratorsOfSemigroup(S))];
-  i     := data!.pos;
-  nr    := Size(pairstoapply);
-
-  if i = 0 then
-    # Add the generating pairs themselves
-    for x in pairstoapply do
-      if x[1] <> x[2] and HTValue(ht, x) = fail then
-        HTAdd(ht, x, true);
-        UF_UNION(ufdata, x);
-      fi;
-    od;
-  fi;
-
-  # Have we already found what we were looking for?
-  if lookfunc(data) then
-    data!.found := true;
-    return data;
-  fi;
-
-  # Define how often we check the lookfunc
-  check_period := 200;
-
-  # Main loop: find new pairs and keep multiplying them
-  # We may need left-multiples, right-multiples, or both
-  if HasGeneratingPairsOfMagmaCongruence(cong) then
-    while i < nr do
-      i := i + 1;
-      x := pairstoapply[i];
-      # Add the pair's left-multiples
-      for j in genstoapply do
-        y := [left[x[1]][j], left[x[2]][j]];
-        if y[1] <> y[2] and HTValue(ht, y) = fail then
-          HTAdd(ht, y, true);
-          nr := nr + 1;
-          pairstoapply[nr] := y;
-          UF_UNION(ufdata, y);
-        fi;
-      od;
-      # Add the pair's right-multiples
-      for j in genstoapply do
-        y := [right[x[1]][j], right[x[2]][j]];
-        if y[1] <> y[2] and HTValue(ht, y) = fail then
-          HTAdd(ht, y, true);
-          nr := nr + 1;
-          pairstoapply[nr] := y;
-          UF_UNION(ufdata, y);
-        fi;
-      od;
-      # Check lookfunc periodically
-      if i mod check_period = 0 and lookfunc(data) then
-        # Save our place
-        data!.pos := i;
-        data!.found := true;
-        return data;
-      fi;
-    od;
-  elif HasGeneratingPairsOfLeftMagmaCongruence(cong) then
-    # Main loop: find new pairs and keep multiplying them
-    while i < nr do
-      i := i + 1;
-      x := pairstoapply[i];
-      # Add the pair's left-multiples
-      for j in genstoapply do
-        y := [left[x[1]][j], left[x[2]][j]];
-        if y[1] <> y[2] and HTValue(ht, y) = fail then
-          HTAdd(ht, y, true);
-          nr := nr + 1;
-          pairstoapply[nr] := y;
-          UF_UNION(ufdata, y);
-        fi;
-      od;
-      # Check lookfunc periodically
-      if i mod check_period = 0 and lookfunc(data) then
-        # Save our place
-        data!.pos := i;
-        data!.found := true;
-        return data;
-      fi;
-    od;
-  elif HasGeneratingPairsOfRightMagmaCongruence(cong) then
-    while i < nr do
-      i := i + 1;
-      x := pairstoapply[i];
-      # Add the pair's right-multiples
-      for j in genstoapply do
-        y := [right[x[1]][j], right[x[2]][j]];
-        if y[1] <> y[2] and HTValue(ht, y) = fail then
-          HTAdd(ht, y, true);
-          nr := nr + 1;
-          pairstoapply[nr] := y;
-          UF_UNION(ufdata, y);
-        fi;
-      od;
-      # Check lookfunc periodically
-      if i mod check_period = 0 and lookfunc(data) then
-        # Save our place
-        data!.pos := i;
-        data!.found := true;
-        return data;
-      fi;
-    od;
-  fi;
-
-  # All pairs have been found: save a lookup table
-  next := 1;
-  newtable := EmptyPlist(UF_SIZE(ufdata));
-  for i in [1 .. UF_SIZE(ufdata)] do
-    ii := UF_FIND(ufdata, i);
-    if ii = i then
-      newtable[i] := next;
-      next := next + 1;
-    else
-      newtable[i] := newtable[ii];
+  # Check that the pairs are all lists of length 2
+  for pair in genpairs do
+    if not IsList(pair) or Length(pair) <> 2 then
+      ErrorNoReturn("Semigroups: SEMIGROUPS.CongByGenPairs: usage,\n",
+                    "<pairs> must all be lists of length 2,");
+    elif not pair[1] in S or not pair[2] in S then
+      ErrorNoReturn("Semigroups: SEMIGROUPS.CongByGenPairs: usage,\n",
+                    "<pairs> must all be lists of elements of <S>,");
     fi;
   od;
-  SetAsLookupTable(cong, newtable);
 
-  # Also store the completed union-find table
-  cong!.ufdata := ufdata;
+  if type = "left" then
+    filter := IsLeftSemigroupCongruence;
+    set_pairs := SetGeneratingPairsOfLeftMagmaCongruence;
+  elif type = "right" then
+    filter := IsRightSemigroupCongruence;
+    set_pairs := SetGeneratingPairsOfRightMagmaCongruence;
+  elif type = "twosided" then
+    filter := IsSemigroupCongruence;
+    set_pairs := SetGeneratingPairsOfMagmaCongruence;
+  else
+    ErrorNoReturn("Semigroups: SEMIGROUPS.CongByGenPairs: usage,\n",
+                  "<type> must be \"left\", \"right\", or \"twosided\",");
+  fi;
 
-  # No need for congruence data object any more
-  Unbind(cong!.data);
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
 
-  # Return the data object with important final data
-  data!.found := lookfunc(data);
-  data!.lookup := newtable;
-  return data;
+  # Create the default type for the elements.
+  cong := Objectify(NewType(fam,
+          IsFiniteCongruenceByGeneratingPairsRep and filter),
+                    rec(genpairs := Immutable(genpairs),
+                        report := SEMIGROUPS.OptionsRec(S).report,
+                        type := type,
+                        range := GenericSemigroupData(S)));
+  SetSource(cong, S);
+  SetRange(cong, S);
+  set_pairs(cong, Immutable(genpairs));
+
+  return cong;
+end;
+
+#############################################################################
+# Congruences
+#############################################################################
+
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a semigroup and a list of generating pairs", IsElmsColls,
+[IsSemigroup, IsList],
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
 end);
+
+InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
+"for a semigroup and a list of generating pairs", IsElmsColls,
+[IsSemigroup, IsList],
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
+end);
+
+InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
+"for a semigroup and a list of generating pairs", IsElmsColls,
+[IsSemigroup, IsList],
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
+end);
+
+# Empty list constructors to override library function
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for a semigroup and an empty list",
+[IsSemigroup, IsList and IsEmpty], 1,
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
+end);
+
+InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
+"for a semigroup and an empty list",
+[IsSemigroup, IsList and IsEmpty], 1,
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
+end);
+
+InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
+"for a semigroup and an empty list",
+[IsSemigroup, IsList and IsEmpty], 1,
+function(S, genpairs)
+  return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
+end);
+
+#############################################################################
+# Properties of congruences
+#############################################################################
 
 InstallMethod(IsRightSemigroupCongruence,
 "for a left semigroup congruence with known generating pairs",
@@ -298,697 +288,157 @@ function(cong)
   return IsLeftSemigroupCongruence(cong);
 end);
 
-BindGlobal("_GenericCongruenceEquality",
+#############################################################################
+# Attributes of congruences
+#############################################################################
+
+InstallMethod(NrEquivalenceClasses,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep], CONG_PAIRS_NR_CLASSES);
+
+InstallMethod(EquivalenceClasses,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep],
+function(cong)
+  local part, data, reps, classes, next, i;
+
+  part := FiniteCongruenceByGeneratingPairsPartition(cong);
+  data := GenericSemigroupData(Range(cong));
+  reps := List(part, x -> SEMIGROUP_ELEMENT_NUMBER(data, x[1]));
+
+  classes := EmptyPlist(Length(reps)); 
+  next := 1;
+
+  for i in [1 .. Length(reps)] do  
+    classes[next] := EquivalenceClassOfElementNC(cong, reps[i]);
+    SetFiniteCongruenceClassByGeneratingPairsCosetId(classes[next], i);
+    SetSize(classes[next], Length(part[i]));
+
+    next := next + 1;
+  od;
+
+  return classes;
+end);
+
+InstallMethod(NonTrivialEquivalenceClasses,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep],
+function(cong)
+  return Filtered(EquivalenceClasses(cong), c -> Size(c) > 1);
+end);
+
+#############################################################################
+# Operations for congruences
+#############################################################################
+
+InstallMethod(ImagesElm,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep,
+ IsMultiplicativeElement],
+function(cong, elm)
+  local lookup, data, id, part;
+
+  lookup := EquivalenceRelationLookup(cong);
+  data   := GenericSemigroupData(Range(cong));
+  id     := lookup[Position(data, elm)];
+
+  part   := FiniteCongruenceByGeneratingPairsPartition(cong);
+
+  return List(part[id], i -> SEMIGROUP_ELEMENT_NUMBER(data, i));
+end);
+
+InstallMethod(JoinSemigroupCongruences,
+"for finite (2-sided) semigroup congruences by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep and IsSemigroupCongruence,
+ IsFiniteCongruenceByGeneratingPairsRep and IsSemigroupCongruence],
 function(c1, c2)
-  # This function tests equality of left, right, or 2-sided congruences
-  return Range(c1) = Range(c2) and AsLookupTable(c1) = AsLookupTable(c2);
-end);
-
-# _GenericCongruenceEquality tests equality for any combination of left, right
-# and 2-sided congruences, so it is installed for the six combinations below.
-# If the arguments are the same type of congruence, a different method is used
-
-InstallMethod(\=,
-Concatenation("for a left semigroup congruence with known generating pairs ",
-              "and a right semigroup congruence with known generating pairs"),
-[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence,
- IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
-_GenericCongruenceEquality);
-
-InstallMethod(\=,
-Concatenation("for a right semigroup congruence with known generating pairs ",
-              "and a left semigroup congruence with known generating pairs"),
-[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence,
- IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
-_GenericCongruenceEquality);
-
-InstallMethod(\=,
-Concatenation("for a left semigroup congruence with known generating pairs ",
-              "and a semigroup congruence with known generating pairs"),
-[IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence,
- IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-_GenericCongruenceEquality);
-
-InstallMethod(\=,
-Concatenation("for a right semigroup congruence with known generating pairs ",
-              "and a semigroup congruence with known generating pairs"),
-[IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence,
- IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
-_GenericCongruenceEquality);
-
-InstallMethod(\=,
-Concatenation("for a semigroup congruence with known generating pairs ",
-              "and a left semigroup congruence with known generating pairs"),
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
-_GenericCongruenceEquality);
-
-InstallMethod(\=,
-Concatenation("for a semigroup congruence with known generating pairs ",
-              "and a right semigroup congruence with known generating pairs"),
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
-_GenericCongruenceEquality);
-
-MakeReadWriteGlobal("_GenericCongruenceEquality");
-UnbindGlobal("_GenericCongruenceEquality");
-
-################################################################################
-# We now have some methods which apply to left congruences, right congruences
-# and 2-sided congruences.  These functions behave only slightly differently for
-# these three types of object, so they are installed by the function
-# _InstallMethodsForCongruences, which takes a record describing the type of
-# object the filters apply to (left, right, or 2-sided).
-#
-# See below for the loop where this function is invoked. It is required to do
-# this in a function so that the values _record,
-# _GeneratingPairsOfXSemigroupCongruence, etc are available (as local
-# variables in the function) when the methods installed in this function are
-# actually called. If we don't use a function here, the values in _record etc
-# are unbound by the time the methods are called.
-################################################################################
-
-BindGlobal("_InstallMethodsForCongruences",
-function(_record)
-  local _GeneratingPairsOfXSemigroupCongruence,
-        _HasGeneratingPairsOfXSemigroupCongruence,
-        _XSemigroupCongruence,
-        _IsXSemigroupCongruence,
-        _IsXCongruenceClass;
-
-  _GeneratingPairsOfXSemigroupCongruence :=
-    EvalString(Concatenation("GeneratingPairsOf",
-                             _record.type_string,
-                             "MagmaCongruence"));
-  _HasGeneratingPairsOfXSemigroupCongruence :=
-    EvalString(Concatenation("HasGeneratingPairsOf",
-                             _record.type_string,
-                             "MagmaCongruence"));
-  _XSemigroupCongruence :=
-    EvalString(Concatenation(_record.type_string,
-                             "SemigroupCongruence"));
-  _IsXSemigroupCongruence :=
-    EvalString(Concatenation("Is",
-                             _record.type_string,
-                             "SemigroupCongruence"));
-  _IsXCongruenceClass :=
-    EvalString(Concatenation("Is",
-                             _record.type_string,
-                             "CongruenceClass"));
-
-  #
-
-  InstallMethod(\in,
-  Concatenation("for dense list and ", _record.info_string,
-                "semigroup congruence with known generating pairs"),
-  [IsDenseList, _IsXSemigroupCongruence and
-   _HasGeneratingPairsOfXSemigroupCongruence],
-  function(pair, cong)
-    local S;
-    # Input checks
-    S := Range(cong);
-    if not IsFinite(S) then
-      TryNextMethod();
-    fi;
-    if Size(pair) <> 2 then
-      ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                    "the first arg <pair> must be a list of length 2,");
-    fi;
-    if not (pair[1] in S and pair[2] in S) then
-      ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                    "elements of the first arg <pair> must be\n",
-                    "in the range of the second arg <cong>,");
-    fi;
-    return SEMIGROUPS.IsPairInXCong(pair, cong);
-  end);
-
-  #
-
-  SEMIGROUPS.IsPairInXCong := function(pair, cong)
-    local S, p1, p2, table, lookfunc;
-
-    S := Range(cong);
-    p1 := Position(GenericSemigroupData(S), pair[1]);
-    p2 := Position(GenericSemigroupData(S), pair[2]);
-
-    # Use lookup table if available
-    if HasAsLookupTable(cong) then
-      table := AsLookupTable(cong);
-      return table[p1] = table[p2];
-    else
-      # Otherwise, begin calculating the lookup table and look for this pair
-      lookfunc := function(data)
-        return UF_FIND(data!.ufdata, p1)
-               = UF_FIND(data!.ufdata, p2);
-      end;
-      return SEMIGROUPS_Enumerate(cong, lookfunc)!.found;
-    fi;
-  end;
-
-  #
-
-  InstallMethod(AsLookupTable,
-  Concatenation("for a ", _record.info_string,
-                "semigroup congruence with known generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong)
-    local data;
-    if not IsFinite(Range(cong)) then
-      TryNextMethod();
-    fi;
-    # Enumerate the congruence until all pairs are found
-    data := SEMIGROUPS_Enumerate(cong, ReturnFalse);
-    # Return the resultant lookup table
-    return data!.lookup;
-  end);
-
-  #
-
-  InstallMethod(SEMIGROUPS_Enumerate,
-  Concatenation("for a ", _record.info_string, "semigroup congruence",
-                " with known generating pairs and a function"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsFunction],
-  function(cong, lookfunc)
-    # If we have a lookup table, then we have complete information
-    # and there is nothing left to enumerate
-    if HasAsLookupTable(cong) then
-      return fail;
-    fi;
-    # If the congruence data does not exist, then we need to set it up
-    if not IsBound(cong!.data) then
-      SEMIGROUPS.SetupCongData(cong);
-    fi;
-    return SEMIGROUPS_Enumerate(cong!.data, lookfunc);
-  end);
-
-  #
-
-  InstallMethod(EquivalenceClasses,
-  Concatenation("for a ", _record.info_string,
-                "semigroup congruence with known generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong)
-    local classes, next, tab, elms, i;
-    if not IsFinite(Range(cong)) then
-      TryNextMethod();
-    fi;
-    classes := [];
-    next := 1;
-    tab := AsLookupTable(cong);
-    elms := SEMIGROUP_AS_LIST(GenericSemigroupData(Range(cong)));
-    for i in [1 .. Size(tab)] do
-      if tab[i] = next then
-        classes[next] := EquivalenceClassOfElementNC(cong, elms[i]);
-        next := next + 1;
-      fi;
-    od;
-    return classes;
-  end);
-
-  #
-
-  InstallMethod(NonTrivialEquivalenceClasses,
-  Concatenation("for a ", _record.info_string,
-                "semigroup congruence with known generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong)
-    local classes;
-    if not IsFinite(Range(cong)) then
-      TryNextMethod();
-    fi;
-    classes := EquivalenceClasses(cong);
-    return Filtered(classes, c -> Size(c) > 1);
-  end);
-
-  #
-
-  InstallMethod(\=,
-  Concatenation("for ", _record.info_string,
-                "semigroup congruences with known generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong1, cong2)
-    if not (IsFinite(Range(cong1)) and IsFinite(Range(cong2))) then
-      TryNextMethod();
-    fi;
-    return Range(cong1) = Range(cong2)
-           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong1),
-                      pair -> SEMIGROUPS.IsPairInXCong(pair, cong2))
-           and ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
-                      pair -> SEMIGROUPS.IsPairInXCong(pair, cong1));
-  end);
-
-  #
-
-  InstallMethod(ImagesElm,
-  Concatenation("for a ", _record.info_string, "semigroup congruence",
-                " with known generating pairs and an associative element"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsMultiplicativeElement],
-  function(cong, elm)
-    local lookup, gendata, classNo, elms;
-    if not IsFinite(Range(cong)) then
-      TryNextMethod();
-    fi;
-    lookup := AsLookupTable(cong);
-    gendata := GenericSemigroupData(Range(cong));
-    classNo := lookup[Position(gendata, elm)];
-    elms := SEMIGROUP_AS_LIST(gendata);
-    return elms{Positions(lookup, classNo)};
-  end);
-
-  #
-
-  InstallMethod(NrEquivalenceClasses,
-  Concatenation("for a ", _record.info_string,
-                "semigroup congruence with generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong)
-    local S;
-    S := Range(cong);
-    if not IsFinite(S) then
-      TryNextMethod();
-    fi;
-    return Maximum(AsLookupTable(cong));
-  end);
-
-  #
-
-  InstallMethod(ViewObj,
-  Concatenation("for a ", _record.info_string,
-                "semigroup congruence with generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong)
-    Print("<", _record.info_string, "semigroup congruence over ");
-    ViewObj(Range(cong));
-    Print(" with ", Size(_GeneratingPairsOfXSemigroupCongruence(cong)),
-          " generating pairs>");
-  end);
-
-  #
-
-  InstallMethod(EvalString(
-  Concatenation("Join", _record.type_string, "SemigroupCongruences")),
-  Concatenation("for two ", _record.info_string,
-                "semigroup congruences with generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(c1, c2)
-    local pairs, cong, ufdata, uf2, i, ii, next, newtable;
-    if Range(c1) <> Range(c2) then
-      ErrorNoReturn("Semigroups: Join", _record.type_string,
-                    "SemigroupCongruences: usage,\n",
-                    "congruences must be defined over the same semigroup,");
-    fi;
-    pairs := Concatenation(
-               ShallowCopy(_GeneratingPairsOfXSemigroupCongruence(c1)),
-               ShallowCopy(_GeneratingPairsOfXSemigroupCongruence(c2)));
-    cong := _XSemigroupCongruence(Range(c1), pairs);
-
-    # Join the lookup tables
-    if HasAsLookupTable(c1) and HasAsLookupTable(c2) then
-      # First join the union-find tables
-      ufdata := UF_COPY(c1!.ufdata);
-      uf2 := c2!.ufdata;
-      for i in [1 .. UF_SIZE(uf2)] do
-        ii := UF_FIND(uf2, i);
-        if ii <> i then
-          UF_UNION(ufdata, [i, ii]);
-        fi;
-      od;
-      cong!.ufdata := ufdata;
-
-      # Now normalise this as a lookup table
-      next := 1;
-      newtable := EmptyPlist(UF_SIZE(ufdata));
-      for i in [1 .. UF_SIZE(ufdata)] do
-        ii := UF_FIND(ufdata, i);
-        if ii = i then
-          newtable[i] := next;
-          next := next + 1;
-        else
-          newtable[i] := newtable[ii];
-        fi;
-      od;
-      SetAsLookupTable(cong, newtable);
-    fi;
-
-    return cong;
-  end);
-
-  #
-
-  #TODO: A method for MeetXSemigroupCongruences
-
-  #
-
-  InstallMethod(IsSubrelation,
-  Concatenation("for two ", _record.info_string,
-                "semigroup congruences with generating pairs"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   _IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence],
-  function(cong1, cong2)
-    # Tests whether cong1 contains all the pairs in cong2
-    if Range(cong1) <> Range(cong2) then
-      ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                    "congruences must be defined over the same semigroup,");
-    fi;
-    return ForAll(_GeneratingPairsOfXSemigroupCongruence(cong2),
-                  pair -> SEMIGROUPS.IsPairInXCong(pair, cong1));
-  end);
-
-  #
-
-  ###########################################################################
-  # LatticeOfXCongruences
-  ###########################################################################
-  
-  InstallMethod(EvalString(
-  Concatenation("LatticeOf", _record.type_string, "Congruences")),
-  "for a semigroup",
-  [IsSemigroup],
-  S -> SEMIGROUPS.LatticeOfXCongruences(S, _record.type_string, rec()));
-
-  ###########################################################################
-  # XCongruencesOfSemigroup
-  ###########################################################################
-  
-  InstallMethod(EvalString(
-  Concatenation(_record.type_string, "CongruencesOfSemigroup")),
-  "for a semigroup",
-  [IsSemigroup],
-  function(S)
-    local lattice_func;
-    if not IsFinite(S) then
-      TryNextMethod();
-    fi;
-    # Find the lattice of congruences, and retrieve
-    # the list of congruences from inside it
-    lattice_func := EvalString(Concatenation("LatticeOf",
-                                             _record.type_string,
-                                             "Congruences"));
-    return lattice_func(S)![2];
-  end);
-
-  ###########################################################################
-  # MinimalXCongruencesOfSemigroup
-  ###########################################################################
-  InstallMethod(EvalString(
-  Concatenation("Minimal", _record.type_string, "CongruencesOfSemigroup")),
-  "for a semigroup",
-  [IsSemigroup],
-  function(S)
-    local lattice;
-    if not IsFinite(S) then
-      TryNextMethod();
-    fi;
-    # Find the lattice of congruences, and retrieve
-    # the list of congruences from inside it
-    lattice := SEMIGROUPS.LatticeOfXCongruences(S, _record.type_string,
-                                                rec(minimal := true));
-    return lattice![2];
-  end);
-
-  ###########################################################################
-  # methods for classes
-  ###########################################################################
-
-  InstallMethod(EquivalenceClassOfElement,
-  Concatenation("for a ", _record.info_string, "semigroup congruence",
-                " with generating pairs and an associative element"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsMultiplicativeElement],
-  function(cong, elm)
-    if not elm in Range(cong) then
-      ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
-                    "the second arg <elm> must be in the ",
-                    "semigroup of the first arg <cong>,");
-    fi;
-    return EquivalenceClassOfElementNC(cong, elm);
-  end);
-
-  #
-
-  InstallMethod(EquivalenceClassOfElementNC,
-  Concatenation("for a ", _record.info_string, "semigroup congruence",
-                " with generating pairs and an associative element"),
-  [_IsXSemigroupCongruence and _HasGeneratingPairsOfXSemigroupCongruence,
-   IsMultiplicativeElement],
-  function(cong, elm)
-    local fam, class;
-    fam := FamilyObj(Range(cong));
-    class := Objectify(NewType(fam, _IsXCongruenceClass
-                               and IsEquivalenceClassDefaultRep),
-                       rec(rep := elm));
-    SetParentAttr(class, Range(cong));
-    SetEquivalenceClassRelation(class, cong);
-    SetRepresentative(class, elm);
-    if HasIsFinite(Range(cong)) and IsFinite(Range(cong)) then
-      SetIsFinite(class, true);
-    fi;
-    return class;
-  end);
-
-  #
-
-  InstallMethod(Enumerator,
-  Concatenation("for a ", _record.info_string, "congruence class"),
-  [_IsXCongruenceClass],
-  function(class)
-    local cong, S, enum;
-
-    cong := EquivalenceClassRelation(class);
-    S := Range(cong);
-
-    if not IsFinite(S) then
-      TryNextMethod();
-    fi;
-
-    # cong has been enumerated: return a list
-    if HasAsLookupTable(cong) then
-      return Enumerator(AsList(class));
-    fi;
-
-    # cong has not yet been enumerated: make functions
-    enum := rec();
-
-    enum.ElementNumber := function(enum, pos)
-      local lookfunc, result, table, classno, i;
-      if pos <= enum!.len then
-        return enum!.elms[enum!.list[pos]];
-      fi;
-      lookfunc := function(data)
-        local classno, i;
-        classno := UF_FIND(data!.ufdata, enum!.rep);
-        for i in [1 .. UF_SIZE(data!.ufdata)] do
-          if (not enum!.found[i]) and UF_FIND(data!.ufdata, i) = classno then
-            enum!.found[i] := true;
-            enum!.len := enum!.len + 1;
-            enum!.list[enum!.len] := i;
-          fi;
-        od;
-        return enum!.len >= pos;
-      end;
-      result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
-      if result = fail then
-        # cong has AsLookupTable
-        table := AsLookupTable(enum!.cong);
-        classno := table[enum!.rep];
-        for i in [1 .. Size(Range(enum!.cong))] do
-          if table[i] = classno and not enum!.found[i] then
-            enum!.found[i] := true;
-            enum!.len := enum!.len + 1;
-            enum!.list[enum!.len] := i;
-          fi;
-        od;
-        SetSize(class, enum!.len);
-        SetAsList(class, enum!.list);
-      fi;
-      if pos <= enum!.len then
-        return enum!.elms[enum!.list[pos]];
-      else
-        return fail;
-      fi;
-    end;
-
-    enum.NumberElement := function(enum, elm)
-      local x, lookfunc, result, table, classno, i;
-      x := Position(enum!.gendata, elm);
-      lookfunc := function(data)
-        return UF_FIND(data!.ufdata, x)
-               = UF_FIND(data!.ufdata, enum!.rep);
-      end;
-      result := SEMIGROUPS_Enumerate(enum!.cong, lookfunc);
-      if result = fail then
-        # cong has AsLookupTable
-        table := AsLookupTable(enum!.cong);
-        classno := table[enum!.rep];
-        for i in [1 .. Size(Range(enum!.cong))] do
-          if table[i] = classno and not enum!.found[i] then
-            enum!.found[i] := true;
-            enum!.len := enum!.len + 1;
-            enum!.list[enum!.len] := i;
-            if i = x then
-              result := enum!.len;
-            fi;
-          fi;
-        od;
-        SetSize(class, enum!.len);
-        SetAsList(class, enum!.list);
-        if result = fail then
-          return Position(enum!.list, x);
-        else
-          return result;
-        fi;
-      elif result!.found then
-        # elm is in the class
-        if enum!.found[x] then
-          # elm already has a position
-          return Position(enum!.list, x);
-        else
-          # put elm in the next available position
-          enum!.found[x] := true;
-          enum!.len := enum!.len + 1;
-          enum!.list[enum!.len] := x;
-          return enum!.len;
-        fi;
-      else
-        # elm is not in the class
-        return fail;
-      fi;
-    end;
-
-    enum := EnumeratorByFunctions(class, enum);
-    enum!.cong := EquivalenceClassRelation(UnderlyingCollection(enum));
-    enum!.gendata := GenericSemigroupData(Range(enum!.cong));
-    enum!.elms := SEMIGROUP_AS_LIST(enum!.gendata);
-    enum!.rep := Position(enum!.gendata,
-                          Representative(UnderlyingCollection(enum)));
-    enum!.list := [enum!.rep];
-    enum!.found := BlistList([1 .. Size(Range(enum!.cong))], [enum!.rep]);
-    enum!.len := 1;
-
-    return enum;
-  end);
-
-  #
-
-  InstallMethod(\in,
-  Concatenation("for an associative element and a ",
-                _record.info_string, "congruence class"),
-  [IsMultiplicativeElement, _IsXCongruenceClass],
-  function(elm, class)
-    if not IsFinite(Parent(class)) then
-      TryNextMethod();
-    fi;
-    return [elm, Representative(class)] in EquivalenceClassRelation(class);
-  end);
-
-  #
-
-  InstallMethod(Size,
-  Concatenation("for a ", _record.info_string, "congruence class"),
-  [_IsXCongruenceClass],
-  function(class)
-    local p, tab;
-    if not IsFinite(Parent(class)) then
-      TryNextMethod();
-    fi;
-    p := Position(GenericSemigroupData(Parent(class)), Representative(class));
-    tab := AsLookupTable(EquivalenceClassRelation(class));
-    return Number(tab, n -> n = tab[p]);
-  end);
-
-  #
-
-  InstallMethod(\=,
-  Concatenation("for two ", _record.info_string, "congruence classes"),
-  [_IsXCongruenceClass, _IsXCongruenceClass],
-  function(class1, class2)
-    if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-      return false;
-    fi;
-    return SEMIGROUPS.IsPairInXCong(
-              [Representative(class1), Representative(class2)],
-              EquivalenceClassRelation(class1));
-  end);
-
-  #
-
-  InstallMethod(AsList,
-  Concatenation("for a ", _record.info_string, "congruence class"),
-  [_IsXCongruenceClass],
-  function(class)
-    return ImagesElm(EquivalenceClassRelation(class), Representative(class));
-  end);
-
-  #
-
-end);
-# End of _InstallMethodsForCongruences function
-
-for _record in [rec(type_string := "",
-                    info_string := ""),
-                rec(type_string := "Left",
-                    info_string := "left "),
-                rec(type_string := "Right",
-                    info_string := "right ")] do
-  _InstallMethodsForCongruences(_record);
-od;
-
-Unbind(_record);
-MakeReadWriteGlobal("_InstallMethodsForCongruences");
-UnbindGlobal("_InstallMethodsForCongruences");
-
-# Multiplication for congruence classes: only makes sense for 2-sided
-InstallMethod(\*,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-    ErrorNoReturn("Semigroups: \*: usage,\n",
-                  "the args must be classes of the same congruence,");
+  if c1 = c2 then
+    return c1;
   fi;
-  return CongruenceClassOfElement(EquivalenceClassRelation(class1),
-                                  Representative(class1) *
-                                  Representative(class2));
+  return SEMIGROUPS.JoinCongruences(SemigroupCongruence, c1, c2);
 end);
 
-###########################################################################
-# IsSubrelation methods between 1-sided and 2-sided congruences
-###########################################################################
+InstallMethod(JoinLeftSemigroupCongruences,
+"for finite (left) semigroup congruences by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep and IsLeftSemigroupCongruence,
+ IsFiniteCongruenceByGeneratingPairsRep and IsLeftSemigroupCongruence],
+function(c1, c2)
+  if c1 = c2 then
+    return c1;
+  fi;
+  return SEMIGROUPS.JoinCongruences(LeftSemigroupCongruence, c1, c2);
+end);
+
+InstallMethod(JoinRightSemigroupCongruences,
+"for finite (right) semigroup congruences by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep and IsRightSemigroupCongruence,
+ IsFiniteCongruenceByGeneratingPairsRep and IsRightSemigroupCongruence],
+function(c1, c2)
+  if c1 = c2 then
+    return c1;
+  fi;
+  return SEMIGROUPS.JoinCongruences(RightSemigroupCongruence, c1, c2);
+end);
+
+#############################################################################
+# Operators/comparisons of congruences
+#############################################################################
+
 InstallMethod(IsSubrelation,
-"for semigroup congruence and left semigroup congruence",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsLeftSemigroupCongruence and HasGeneratingPairsOfLeftMagmaCongruence],
-function(cong, lcong)
-  # Tests whether cong contains all the pairs in lcong
-  if Range(cong) <> Range(lcong) then
+"for two finite congruence by generating pairs reps",
+[IsFiniteCongruenceByGeneratingPairsRep,
+ IsFiniteCongruenceByGeneratingPairsRep],
+function(cong1, cong2)
+  local pair, fact_pair;
+  # Only valid for certain combinations of types
+  if not (cong1!.type = cong2!.type or cong1!.type = "twosided") then
+    TryNextMethod();
+  fi;
+
+  # Check semigroup
+  if Range(cong1) <> Range(cong2) then
     ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
                   "congruences must be defined over the same semigroup,");
   fi;
-  return ForAll(GeneratingPairsOfLeftSemigroupCongruence(lcong),
-                pair -> SEMIGROUPS.IsPairInXCong(pair, cong));
+
+  # Test whether cong1 contains all the pairs in cong2
+  return ForAll(cong2!.genpairs, pair -> CONG_PAIRS_IN(cong1, pair));
 end);
 
-InstallMethod(IsSubrelation,
-"for semigroup congruence and right semigroup congruence",
-[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
- IsRightSemigroupCongruence and HasGeneratingPairsOfRightMagmaCongruence],
-function(cong, rcong)
-  # Tests whether cong contains all the pairs in rcong
-  if Range(cong) <> Range(rcong) then
-    ErrorNoReturn("Semigroups: IsSubrelation: usage,\n",
-                  "congruences must be defined over the same semigroup,");
+InstallMethod(\in,
+"for dense list and finite semigroup congruence by generating pairs rep",
+[IsDenseList, IsFiniteCongruenceByGeneratingPairsRep],
+function(pair, cong)
+  local S;
+  S := Range(cong);
+  if Size(pair) <> 2 then
+    ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
+    "the first arg <pair> must be a list of length 2,");
   fi;
-  return ForAll(GeneratingPairsOfRightSemigroupCongruence(rcong),
-                pair -> SEMIGROUPS.IsPairInXCong(pair, cong));
+  if not (pair[1] in S and pair[2] in S) then
+    ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
+    "elements of the first arg <pair> must be\n",
+    "in the range of the second arg <cong>,");
+  fi;
+  return CONG_PAIRS_IN(cong, pair);
 end);
 
-###########################################################################
-# Some individual methods for congruences
-###########################################################################
+InstallMethod(\=, 
+"for finite congruence by generating pairs rep and congruence with gen pairs",
+[IsFiniteCongruenceByGeneratingPairsRep,
+ IsFiniteCongruenceByGeneratingPairsRep],
+function(c1, c2)
+  if c1!.type = c2!.type then
+    return Range(c1) = Range(c2)
+           and ForAll(c1!.genpairs, pair -> CONG_PAIRS_IN(c2, pair))
+           and ForAll(c2!.genpairs, pair -> CONG_PAIRS_IN(c1, pair));
+  fi;
+  TryNextMethod();
+end);
+
+#############################################################################
+# Printing and viewing of congruences
+#############################################################################
 
 InstallMethod(PrintObj,
 "for a left semigroup congruence with known generating pairs",
@@ -1023,319 +473,84 @@ function(cong)
   Print(" )");
 end);
 
-###############################################################################
-# LatticeOfXCongruences function
-###############################################################################
-# This abstract function takes a semigroup 'S', a string 'type_string' and a
-# record 'record'.
-# type_string should be in ["Left", "Right", ""] and describes the sort of
-# relations we want to find (respectively: left congruences, right congruences,
-# two-sided congruences), referred to as 'x congs' below.
-# record may contain any of the following components, which should be set to
-# 'true' to have the stated effect:
-#   * minimal - Return only minimal x-congs
-#   * 1gen - Return only x-congs with a single generating pair
-#   * transrep - Return only x-congs which contain no 2-sided congruences
-###############################################################################
-SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
-  local transrep, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children,
-        parents, pair, badcong, newchildren, newparents, newcong, i, c, p,
-        congs, 2congs, image, next, set_func, lattice, join_func, length, found,
-        ignore, start, j, k;
+#############################################################################
+#############################################################################
+# Congruence classes 
+#############################################################################
+#############################################################################
 
-  transrep := IsBound(record.transrep) and record.transrep;
-  _XSemigroupCongruence := EvalString(Concatenation(type_string,
-                                                    "SemigroupCongruence"));
-  elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
-
-  # Get all non-reflexive pairs in SxS
-  pairs := Combinations(elms, 2);
-
-  # Get all the unique 1-generated congs
-  Info(InfoSemigroups, 1, "Getting all 1-generated congs...");
-  congs1 := [];     # List of all congs found so far
-  nrcongs := 0;     # Number of congs found so far
-  children := [];   # List of lists of children
-  parents := [];    # List of lists of parents
-  for pair in pairs do
-    badcong := false;
-    newchildren := []; # Children of newcong
-    newparents := [];  # Parents of newcong
-    newcong := _XSemigroupCongruence(S, pair);
-    for i in [1 .. Length(congs1)] do
-      if IsSubrelation(congs1[i], newcong) then
-        if IsSubrelation(newcong, congs1[i]) then
-          # This is not a new cong - drop it!
-          badcong := true;
-          break;
-        else
-          Add(newparents, i);
-        fi;
-      elif IsSubrelation(newcong, congs1[i]) then
-        Add(newchildren, i);
-      fi;
-    od;
-    if not badcong then
-      nrcongs := nrcongs + 1;
-      congs1[nrcongs] := newcong;
-      children[nrcongs] := newchildren;
-      parents[nrcongs] := newparents;
-      for c in newchildren do
-        Add(parents[c], nrcongs);
-      od;
-      for p in newparents do
-        Add(children[p], nrcongs);
-      od;
-    fi;
-  od;
-
-  congs := ShallowCopy(congs1);
-  if transrep then
-    # Find and remove any 2-sided congruences, and discard their parents
-    2congs := Set([]);
-    for i in [1 .. Length(congs)] do
-      if not IsBound(congs[i]) then
-        continue;
-      fi;
-      if IsSemigroupCongruence(congs[i]) then
-        # Remove it from the list
-        Unbind(congs[i]);
-        # Remove all its parents
-        for p in parents[i] do
-          Unbind(congs[p]);
-          if p in 2congs then
-            RemoveSet(2congs, p);
-          fi;
-        od;
-        # Store it unless it has 2-sided children
-        if ForAll(children[i], c -> not c in 2congs) then
-          AddSet(2congs, i);
-        fi;
-      fi;
-    od;
-
-    # Remove holes from congs and change children and parents appropriately
-    image := ListWithIdenticalEntries(nrcongs, fail);
-    next := 1;
-    for i in [1 .. nrcongs] do
-      if IsBound(congs[i]) then
-        image[i] := next;
-        next := next + 1;
-      else
-        Unbind(parents[i]);
-        Unbind(children[i]);
-        nrcongs := nrcongs - 1;
-      fi;
-    od;
-    congs := Compacted(congs);
-    parents := Compacted(parents);
-    children := Compacted(children);
-    parents := List(parents, l -> Filtered(List(l, i -> image[i]),
-                                           i -> i <> fail));
-    children := List(children, l -> Filtered(List(l, i -> image[i]),
-                                             i -> i <> fail));
-    2congs := List(2congs, i -> congs1[i]);
-    congs1 := congs;
+InstallMethod(EquivalenceClassOfElement,
+"for finite congruence by gen pairs rep and multiplicative element",
+[IsFiniteCongruenceByGeneratingPairsRep, IsMultiplicativeElement],
+function(cong, elm)
+  if not elm in Range(cong) then
+    ErrorNoReturn("Semigroups: EquivalenceClassOfElement: usage,\n",
+                  "the second arg <elm> must be in the ",
+                  "semigroup of the first arg <cong>,");
   fi;
-
-  # We now have all 1-generated congs, which must include all the minimal
-  # congs.  We can return if necessary.
-  if IsBound(record.minimal) and record.minimal = true then
-    # Find all the minimal congs (those with no children)
-    congs := congs{Positions(children, [])};
-    # Note: we don't include the trivial cong
-    # Set the MinimalXCongruencesOfSemigroup attribute
-    set_func := EvalString(Concatenation("SetMinimal",
-                                         type_string,
-                                         "CongruencesOfSemigroup"));
-    set_func(S, congs);
-    # Minimal congs cannot contain each other
-    children := ListWithIdenticalEntries(Length(congs), []);
-    lattice := Objectify(NewType(FamilyObj(children),
-                                 IsCongruenceLattice),
-                         [children, congs]);
-    return lattice;
-  elif IsBound(record.1gen) and record.1gen = true then
-    # Add the trivial cong at the start
-    children := Concatenation([[]], children + 1);
-    for i in [2 .. nrcongs + 1] do
-      Add(children[i], 1, 1);
-    od;
-    Add(congs, _XSemigroupCongruence(S, []), 1);
-    # Return the lattice, but don't set any attributes
-    lattice := Objectify(NewType(FamilyObj(children),
-                                 IsCongruenceLattice),
-                         [children, congs]);
-    return lattice;
-  fi;
-
-  # Take all their joins
-  Info(InfoSemigroups, 1, "Taking joins...");
-  join_func := EvalString(Concatenation("Join",
-                                        type_string,
-                                        "SemigroupCongruences"));
-  length := 0;
-  found := true;
-  # 'ignore' is a list of congs that we don't try joining
-  ignore := BlistList(congs, []);
-  while found do
-    # There are new congs to try joining
-    start := length + 1;     # New congs start here
-    found := false;          # Have we found any more congs on this sweep?
-    length := Length(congs); # Remember starting position for next sweep
-    for i in [start .. Length(congs)] do # for each new cong
-      for j in [1 .. Length(congs1)] do  # for each 1-generated cong
-        newcong := join_func(congs[i], congs1[j]);
-        badcong := false;  # Is newcong the same as another cong?
-        newchildren := []; # Children of newcong
-        newparents := [];  # Parents of newcong
-        for k in [1 .. Length(congs)] do
-          if IsSubrelation(congs[k], newcong) then
-            if IsSubrelation(newcong, congs[k]) then
-              # This is the same as an old cong - discard it!
-              badcong := true;
-              break;
-            else
-              Add(newparents, k);
-            fi;
-          elif IsSubrelation(newcong, congs[k]) then
-            Add(newchildren, k);
-          fi;
-        od;
-        # Check for 2-sided congs if 'transrep' is set
-        if transrep then
-          if IsSemigroupCongruence(newcong) then
-            badcong := true;
-            Add(2congs, newcong);
-            for p in newparents do
-              ignore[p] := true;
-            od;
-          elif ForAny(2congs, c2 -> IsSubrelation(newcong, c2)) then
-            badcong := true;
-          fi;
-        fi;
-        if not badcong then
-          nrcongs := nrcongs + 1;
-          congs[nrcongs] := newcong;
-          children[nrcongs] := newchildren;
-          parents[nrcongs] := newparents;
-          ignore[nrcongs] := false;
-          for c in newchildren do
-            Add(parents[c], nrcongs);
-          od;
-          for p in newparents do
-            Add(children[p], nrcongs);
-          od;
-          found := true;
-        fi;
-      od;
-    od;
-  od;
-
-  if transrep and (true in ignore) then
-    # Remove any congs in 'ignore'
-    for i in [1 .. Length(congs)] do
-      if ignore[i] then
-        Unbind(congs[i]);
-      fi;
-    od;
-
-    # Remove holes from congs and change children and parents appropriately
-    image := ListWithIdenticalEntries(nrcongs, fail);
-    next := 1;
-    for i in [1 .. nrcongs] do
-      if not ignore[i] then
-        image[i] := next;
-        next := next + 1;
-      else
-        Unbind(parents[i]);
-        Unbind(children[i]);
-        nrcongs := nrcongs - 1;
-      fi;
-    od;
-    congs := Compacted(congs);
-    parents := Compacted(parents);
-    children := Compacted(children);
-    parents := List(parents, l -> Filtered(List(l, i -> image[i]),
-                                           i -> i <> fail));
-    children := List(children, l -> Filtered(List(l, i -> image[i]),
-                                             i -> i <> fail));
-  fi;
-
-  # Add the trivial cong at the start
-  children := Concatenation([[]], children + 1);
-  for i in [2 .. nrcongs + 1] do
-    Add(children[i], 1, 1);
-  od;
-  Add(congs, _XSemigroupCongruence(S, []), 1);
-
-  # We have a list of all the congs
-  set_func := EvalString(Concatenation("Set",
-                                       type_string,
-                                       "CongruencesOfSemigroup"));
-  set_func(S, congs);
-
-  # Objectify the result
-  lattice := Objectify(NewType(FamilyObj(children),
-                               IsCongruenceLattice),
-                       [children, congs]);
-  return lattice;
-end;
-
-InstallMethod(DotString,
-"for a congruence lattice",
-[IsCongruenceLattice],
-function(latt)
-  # Call the below function, with info turned off
-  return DotString(latt, rec(info := false));
+  return EquivalenceClassOfElementNC(cong, elm);
 end);
 
-InstallMethod(DotString,
-"for a congruence lattice and a record",
-[IsCongruenceLattice, IsRecord],
-function(latt, opts)
-  local congs, S, symbols, i, nr, rel, str, j, k;
-  # If the user wants info, then change the node labels
-  if opts.info = true then
-    # The congruences are stored inside the lattice object
-    congs := latt![2];
-    S := Range(congs[1]);
-    symbols := EmptyPlist(Length(latt));
-    for i in [1 .. Length(latt)] do
-      nr := NrEquivalenceClasses(congs[i]);
-      if nr = 1 then
-        symbols[i] := "U";
-      elif nr = Size(S) then
-        symbols[i] := "T";
-      elif IsReesCongruence(congs[i]) then
-        symbols[i] := Concatenation("R", String(i));
-      else
-        symbols[i] := String(i);
-      fi;
-    od;
-  else
-    symbols := List([1 .. Length(latt)], String);
+InstallMethod(EquivalenceClassOfElementNC,
+"for finite congruence by gen pairs rep and multiplicative element",
+[IsFiniteCongruenceByGeneratingPairsRep, IsMultiplicativeElement],
+function(cong, elm)
+  local class;
+  
+  class := Objectify(FiniteCongruenceClassByGeneratingPairsType(cong),
+                     rec(rep := elm, cong := cong));
+
+  SetParentAttr(class, Range(cong));
+  SetEquivalenceClassRelation(class, cong);
+  SetRepresentative(class, elm);
+  SetIsFinite(class, true);
+
+  return class;
+end);
+
+InstallMethod(\in,
+"for a multiplicative element and a finite congruence class by gen pairs rep",
+[IsMultiplicativeElement, IsFiniteCongruenceClassByGeneratingPairsRep],
+function(elm, class)
+  return [elm, Representative(class)] in EquivalenceClassRelation(class);
+end);
+
+InstallMethod(\=,
+"for two finite congruence classes by gen pairs rep", IsIdenticalObj,
+[IsFiniteCongruenceClassByGeneratingPairsRep,
+ IsFiniteCongruenceClassByGeneratingPairsRep],
+function(class1, class2)
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+    and FiniteCongruenceClassByGeneratingPairsCosetId(class1)
+        = FiniteCongruenceClassByGeneratingPairsCosetId(class2);
+end);
+
+InstallMethod(AsList,
+"for a finite congruence class by gen pairs rep",
+[IsFiniteCongruenceClassByGeneratingPairsRep],
+function(class)
+  local cong, part, id, data;
+  cong := EquivalenceClassRelation(class);
+  part := FiniteCongruenceByGeneratingPairsPartition(cong);
+  id   := FiniteCongruenceClassByGeneratingPairsCosetId(class);
+  data := GenericSemigroupData(Range(cong));
+  return List(part[id], i -> SEMIGROUP_ELEMENT_NUMBER(data, i));
+end);
+
+InstallMethod(Enumerator, "for a finite congruence class by gen pairs rep",
+[IsFiniteCongruenceClassByGeneratingPairsRep], AsList);
+
+InstallMethod(Size,
+"for a finite congruence class by gen pairs rep",
+[IsFiniteCongruenceClassByGeneratingPairsRep],
+function(class)
+  local cong, part, id;
+  if HasAsList(class) then 
+    # TODO: This is currently unreachable
+    return Size(AsList(class));
   fi;
-
-  rel := List([1 .. Length(latt)], x -> Filtered(latt[x], y -> x <> y));
-  str := "";
-
-  if Length(rel) < 40 then
-    Append(str, "//dot\ngraph graphname {\n     node [shape=circle]\n");
-  else
-    Append(str, "//dot\ngraph graphname {\n     node [shape=point]\n");
-  fi;
-
-  for i in [1 .. Length(rel)] do
-    j := Difference(rel[i], Union(rel{rel[i]}));
-    i := symbols[i];
-    for k in j do
-      k := symbols[k];
-      Append(str, Concatenation(i, " -- ", k, "\n"));
-    od;
-  od;
-
-  Append(str, " }");
-
-  return str;
+  cong := EquivalenceClassRelation(class);
+  part := FiniteCongruenceByGeneratingPairsPartition(cong);
+  id   := FiniteCongruenceClassByGeneratingPairsCosetId(class);
+  return Size(part[id]);
 end);
