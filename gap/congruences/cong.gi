@@ -111,6 +111,8 @@ function(arg)
            or HasSize(S) or IsReesZeroMatrixSemigroup(S))
           and IsZeroSimpleSemigroup(S)) then
       return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
+    elif IsSemigroupWithInverseOp(S) then
+      return SEMIGROUPS.InverseCongFromPairs(S, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     fi;
