@@ -1032,6 +1032,35 @@ gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
 gap> Size(IrredundantGeneratingSubset(S));
 1
 
+#T# attributes: Size: for a monogenic semigroup with minimal generating set
+gap> S := Semigroup(Transformation([10, 8, 4, 6, 4, 5, 3, 8, 8, 2]));
+<commutative transformation semigroup of degree 10 with 1 generator>
+gap> Size(S);
+5
+gap> S := Semigroup(PBR([
+> [-3, -2, 3], [-4, -2, 3], [-4, -3, -2, 1, 2], [-4, 2, 3, 4]],
+> [[-3, -2, -1, 2, 3, 4], [-3, -1, 1, 3, 4], [-4, -2, 2, 3], [-4, 1, 2, 3]]));;
+gap> Size(S);
+2
+gap> S := Semigroup(Transformation([2, 5, 4, 1, 6, 3, 2]));
+<commutative transformation semigroup of degree 7 with 1 generator>
+gap> Size(S);
+6
+
+#T# attributes: Size: for a monogenic monoid with minimal generating set
+gap> S := Monoid(Transformation([7, 8, 1, 3, 5, 2, 4, 6]));
+<commutative transformation monoid of degree 8 with 1 generator>
+gap> Size(S);
+12
+gap> S := Monoid(Transformation([5, 6, 2, 1, 3, 4, 7, 7]));
+<commutative transformation monoid of degree 8 with 1 generator>
+gap> Size(S);
+7
+gap> S := Monoid(Transformation([4, 5, 5, 7, 1, 7, 4, 3]));
+<commutative transformation monoid of degree 8 with 1 generator>
+gap> Size(S);
+6
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);

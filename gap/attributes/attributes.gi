@@ -811,3 +811,36 @@ function(S)
   fi;
   return T;
 end);
+
+# not relevant for ideals
+
+InstallMethod(Size,
+"for a monogenic semigroup with minimal generating set",
+[IsMonogenicSemigroup and HasMinimalSemigroupGeneratingSet],
+10, # to beat IsActingSemigroup
+function(S)
+  local gen, ind;
+  gen := MinimalSemigroupGeneratingSet(S)[1];
+  ind := IndexPeriodOfSemigroupElement(gen);
+  if ind[1] = 1 then
+    SetIsGroupAsSemigroup(S, true);
+  fi;
+  return Sum(ind) - 1;
+end);
+
+InstallMethod(Size,
+"for a monogenic monoid with minimal generating set",
+[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet],
+5, # to beat IsActingSemigroup
+function(S)
+  local gen, ind;
+  gen := MinimalMonoidGeneratingSet(S)[1];
+  ind := IndexPeriodOfSemigroupElement(gen);
+  if ind[1] = 1 and One(S) in HClass(S, gen) then
+    # <gen> generates the One of S, so the One is not an additional element
+    # Note that this implies that S is a cyclic group
+    SetIsGroupAsSemigroup(S, true);
+    return ind[2];
+  fi;
+  return Sum(ind);
+end);
