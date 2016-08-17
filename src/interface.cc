@@ -58,10 +58,6 @@ ConvertElements(Converter* converter, Obj elements, size_t degree) {
   return out;
 }
 
-/*******************************************************************************
- * UnconvertElements:
- ******************************************************************************/
-
 Obj UnconvertElements(Converter* converter, std::vector<Element*>* elements) {
 
   if (elements->empty()) {

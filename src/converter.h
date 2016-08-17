@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRC_CONVERTER_H_
-#define SRC_CONVERTER_H_
+#ifndef SEMIGROUPS_SRC_CONVERTER_H_
+#define SEMIGROUPS_SRC_CONVERTER_H_
 
 #include <algorithm>
 
@@ -33,8 +33,8 @@
 class Converter {
  public:
   virtual ~Converter() {}
-  virtual Element* convert(Obj, size_t) = 0;
-  virtual Obj      unconvert(Element*) = 0;
+  virtual Element* convert(Obj, size_t) const = 0;
+  virtual Obj      unconvert(Element const*) const = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ class Converter {
 template <typename T> class TransConverter : public Converter {
 
  public:
-  Transformation<T>* convert(Obj o, size_t n) {
+  Transformation<T>* convert(Obj o, size_t n) const override {
     assert(IS_TRANS(o));
 
     auto x = new std::vector<T>();
@@ -72,8 +72,8 @@ template <typename T> class TransConverter : public Converter {
     return new Transformation<T>(x);
   }
 
-  Obj unconvert(Element* x) {
-    auto xx = static_cast<Transformation<T>*>(x);
+  Obj unconvert(Element const* x) const override {
+    auto xx = static_cast<Transformation<T> const*>(x);
     Obj  o  = NEW_TRANS(xx->degree());
 
     T* pto = ((T*) ((Obj*) (ADDR_OBJ(o)) + 3));
@@ -84,7 +84,7 @@ template <typename T> class TransConverter : public Converter {
   }
 
  private:
-  inline Obj NEW_TRANS(size_t deg) {
+  inline Obj NEW_TRANS(size_t deg) const {
     if (deg < 65536) {
       return NEW_TRANS2(deg);
     } else {
@@ -100,7 +100,7 @@ template <typename T> class TransConverter : public Converter {
 template <typename T> class PPermConverter : public Converter {
 
  public:
-  PartialPerm<T>* convert(Obj o, size_t n) {
+  PartialPerm<T>* convert(Obj o, size_t n) const override {
     assert(IS_PPERM(o));
 
     auto x = new std::vector<T>();
@@ -137,8 +137,8 @@ template <typename T> class PPermConverter : public Converter {
   }
 
   // similar to FuncDensePartialPermNC in gap/src/pperm.c
-  Obj unconvert(Element* x) {
-    auto xx  = static_cast<PartialPerm<T>*>(x);
+  Obj unconvert(Element const* x) const override {
+    auto xx  = static_cast<PartialPerm<T> const*>(x);
     T    deg = xx->degree();
 
     // remove trailing 0s
@@ -165,7 +165,7 @@ template <typename T> class PPermConverter : public Converter {
   }
 
  private:
-  void set_codeg(Obj o, T deg, T codeg) {
+  void set_codeg(Obj o, T deg, T codeg) const {
     if (deg < 65536) {
       CODEG_PPERM2(o) = codeg;
     } else {
@@ -173,7 +173,7 @@ template <typename T> class PPermConverter : public Converter {
     }
   }
 
-  inline Obj NEW_PPERM(size_t deg) {
+  inline Obj NEW_PPERM(size_t deg) const {
     if (deg < 65536) {
       return NEW_PPERM2(deg);
     } else {
@@ -182,10 +182,10 @@ template <typename T> class PPermConverter : public Converter {
   }
 
   // FIXME expose these in pperm.h
-  inline UInt2* ADDR_PPERM2(Obj x) {
+  inline UInt2* ADDR_PPERM2(Obj x) const {
     return ((UInt2*) ((Obj*) (ADDR_OBJ(x)) + 2) + 1);
   }
-  inline UInt4* ADDR_PPERM4(Obj x) {
+  inline UInt4* ADDR_PPERM4(Obj x) const {
     return ((UInt4*) ((Obj*) (ADDR_OBJ(x)) + 2) + 1);
   }
 
@@ -199,8 +199,8 @@ template <typename T> class PPermConverter : public Converter {
 class BoolMatConverter : public Converter {
 
  public:
-  BooleanMat* convert(Obj o, size_t n);
-  Obj unconvert(Element* x);
+  BooleanMat* convert(Obj o, size_t n) const override;
+  Obj unconvert(Element const* x) const override;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -210,8 +210,8 @@ class BoolMatConverter : public Converter {
 class BipartConverter : public Converter {
 
  public:
-  Bipartition* convert(Obj o, size_t n);
-  Obj unconvert(Element* x);
+  Bipartition* convert(Obj o, size_t n) const override;
+  Obj unconvert(Element const* x) const override;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -228,8 +228,8 @@ class MatrixOverSemiringConverter : public Converter {
   MatrixOverSemiringConverter(Semiring* semiring, Obj gap_zero, Obj gap_type)
       : _semiring(semiring), _gap_zero(gap_zero), _gap_type(gap_type) {}
 
-  virtual MatrixOverSemiring* convert(Obj o, size_t n);
-  virtual Obj unconvert(Element* x);
+  MatrixOverSemiring* convert(Obj o, size_t n) const override;
+  Obj unconvert(Element const* x) const override;
 
  protected:
   Semiring* _semiring;
@@ -249,12 +249,12 @@ class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
                                    Obj       gap_type)
       : MatrixOverSemiringConverter(semiring, gap_zero, gap_type) {}
 
-  ProjectiveMaxPlusMatrix* convert(Obj o, size_t n) {
+  ProjectiveMaxPlusMatrix* convert(Obj o, size_t n) const override {
     return static_cast<ProjectiveMaxPlusMatrix*>(
         MatrixOverSemiringConverter::convert(o, n));
   }
 
-  Obj unconvert(Element* x) {
+  Obj unconvert(Element const* x) const override {
     return MatrixOverSemiringConverter::unconvert(x);
   }
 };
@@ -266,11 +266,11 @@ class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
 class PBRConverter : public Converter {
 
  public:
-  PBR* convert(Obj o, size_t n);
-  Obj unconvert(Element* x);
+  PBR* convert(Obj o, size_t n) const override;
+  Obj unconvert(Element const* x) const override;
 
  private:
-  Obj get_gap_type(size_t deg);
+  Obj get_gap_type(size_t deg) const;
 };
 
-#endif
+#endif  // SEMIGROUPS_SRC_CONVERTER_H_
