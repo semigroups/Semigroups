@@ -36,7 +36,7 @@ gap> UF_FIND(uftable3, 20222);
 gap> UF_FIND(uftable3, 234);
 234
 
-# Test congruences
+#T# Congruences from semigroupsplusplus
 gap> NrEquivalenceClasses(cong);
 4
 gap> [Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
@@ -56,6 +56,8 @@ gap> EquivalenceRelationCanonicalLookup(cong);
 #############################################################################
 
 # SEMIGROUPS_UnbindVariables
+gap> Unbind(S);
+gap> Unbind(cong);
 gap> Unbind(uftable1);
 gap> Unbind(uftable2);
 gap> Unbind(uftable3);
