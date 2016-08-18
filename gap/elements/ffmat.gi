@@ -706,7 +706,7 @@ function(R, n)
 end);
 
 InstallMethod(IdentityMatrixOverFiniteField,
-"for an matrix over finite field and zero",
+"for a matrix over finite field and zero",
 [IsMatrixOverFiniteField, IsZeroCyc],
 function(mat, n)
   return
@@ -716,7 +716,7 @@ function(mat, n)
 end);
 
 InstallMethod(IdentityMatrixOverFiniteField,
-"for an matrix over finite field and pos int",
+"for a matrix over finite field and pos int",
 [IsMatrixOverFiniteField, IsPosInt],
 function(mat, n)
   return
@@ -725,7 +725,7 @@ function(mat, n)
                                      n);
 end);
 
-#InstallMethod(InverseOp, "for an matrix over finite field",
+#InstallMethod(InverseOp, "for a matrix over finite field",
 #[IsMatrixOverFiniteField],
 #function(smat)
 #  local mat;
@@ -745,12 +745,12 @@ function(filt, sample, mat)
                                   mat);
 end);
 
-InstallMethod(OneMutable, "for an matrix over finite field collection",
+InstallMethod(OneMutable, "for a matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
 coll -> One(Representative(coll)));
 
 InstallMethod(DimensionOfMatrixOverSemiringCollection,
-"for an matrix over finite field collection",
+"for a matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
 function(coll)
   local deg;
@@ -765,7 +765,7 @@ function(coll)
   return deg;
 end);
 
-InstallMethod(BaseDomain, "for an matrix over finite field collection",
+InstallMethod(BaseDomain, "for a matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
 function(coll)
   local base;
@@ -779,21 +779,21 @@ function(coll)
   return base;
 end);
 
-InstallMethod(IsZero, "for an matrix over finite field",
+InstallMethod(IsZero, "for a matrix over finite field",
 [IsMatrixOverFiniteField],
 x -> IsZero(x!.mat));
 
-InstallMethod(OneMutable, "for an matrix over finite field",
+InstallMethod(OneMutable, "for a matrix over finite field",
 [IsMatrixOverFiniteField],
 x -> IdentityMatrixOverFiniteField(x, DimensionOfMatrixOverSemiring(x)));
 
-InstallMethod(\=, "for an matrix over finite field",
+InstallMethod(\=, "for a matrix over finite field",
 [IsMatrixOverFiniteField, IsMatrixOverFiniteField],
 function(x, y)
   return BaseDomain(x) = BaseDomain(y) and x!.mat = y!.mat;
 end);
 
-InstallMethod(\<, "for an matrix over finite field",
+InstallMethod(\<, "for a matrix over finite field",
 [IsMatrixOverFiniteField, IsMatrixOverFiniteField],
 function(x, y)
   return DimensionOfMatrixOverSemiring(x) < DimensionOfMatrixOverSemiring(y)
@@ -842,7 +842,7 @@ function(l, m)
   return l * m!.mat;
 end);
 
-InstallMethod(TransposedSMat, "for an matrix over finite field",
+InstallMethod(TransposedSMat, "for a matrix over finite field",
 [IsMatrixOverFiniteField],
 function(m)
   if DimensionOfMatrixOverSemiring(m) = 0 then
