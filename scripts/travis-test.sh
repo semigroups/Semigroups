@@ -1,5 +1,6 @@
 # If a command fails, exit this script with an error code
 set -e
+set -o pipefail
 
 # Run the standard tests and manual examples
 echo -en 'travis_fold:start:RunTests\r'
