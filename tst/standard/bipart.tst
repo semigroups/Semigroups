@@ -612,6 +612,21 @@ gap> ExtRepOfObj(x);
 gap> IntRepOfBipartition(x);
 [  ]
 
+# Test bipartition of degree 0
+gap> x := Bipartition([]);;
+gap> NrLeftBlocks(x * x);
+0
+gap> NrRightBlocks(x * x);
+0
+gap> DegreeOfBipartition(x * x);
+0
+gap> RightBlocks(x * x);
+<empty blocks>
+gap> LeftBlocks(x * x);
+<empty blocks>
+gap> RankOfBipartition(x * x);
+0
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
 gap> Unbind(N);
