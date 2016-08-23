@@ -76,3 +76,6 @@ InstallTrueMethod(IsFinite, IsNTPMatrixMonoid);
 
 DeclareOperation("FullTropicalMaxPlusMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("FullTropicalMinPlusMonoid", [IsPosInt, IsPosInt]);
+
+DeclareOperation("NormalizeSemigroup", [IsMaxPlusMatrixSemigroup]);
+DeclareOperation("IsTorsion", [IsMaxPlusMatrixSemigroup]);

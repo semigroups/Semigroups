@@ -600,3 +600,94 @@ function(dim, threshold)
 
   return Monoid(gens);
 end);
+
+#############################################################################
+## IsFinite and required methods for max-plus and min-plus matrix semigroups.
+#############################################################################
+
+
+InstallMethod(IsFinite,
+"for a min-plus matrix semigroup",
+[IsMinPlusMatrixSemigroup],
+function(S)
+  local gens, ET, mat, row, val, id;
+  gens := GeneratorsOfSemigroup(S);
+  for mat in gens do
+    for row in mat do
+      for val in row do
+        if val < 0 then
+          TryNextMethod();
+        fi;
+      od;
+    od;
+  od;
+
+  id := Idempotents(Semigroup(
+    List(gens, x -> AsMatrix(IsTropicalMinPlusMatrix, x, 1))));
+
+  for mat in id do
+    mat := AsMatrix(IsMinPlusMatrix, mat);
+    if mat ^ 2 <> mat ^ 3 then
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
+InstallMethod(IsFinite,
+"for max-plus matrix semigroups",
+[IsMaxPlusMatrixSemigroup],
+function(S)
+  return IsTorsion(S);
+end);
+
+InstallMethod(IsTorsion,
+"for max-plus matrix semigroups",
+[IsMaxPlusMatrixSemigroup],
+function(S)
+  local gens, dim, m, rad, s, kappa, g, sim, growth, e, f, x, cycletest,
+      zeroblock, t, irrblocks, ib, circ;
+
+  gens := GeneratorsOfSemigroup(S);
+  dim := Length(gens[1][1]);
+  m := Matrix(IsMaxPlusMatrix, List([1..dim], i -> List([1..dim], j ->
+      Maximum(List([1..Length(gens)], k -> gens[k][i][j])))));
+
+  # Case: SpectralRadius = -infinity
+  rad := SpectralRadius(m);
+  if rad = -infinity then
+    return true;
+  else if rad <> 0 then
+    return false;
+  fi;
+  fi;
+
+  # Case: SpectralRadius = 0
+  s := NormalizeSemigroup(S);
+  gens := List(GeneratorsOfSemigroup(s),
+      x -> Matrix(IsMinPlusMatrix, -AsList(x)));
+  return IsFinite(Semigroup(gens));
+end);
+
+InstallMethod(NormalizeSemigroup,
+"for a finitely generated semigroup of max-plus matrices",
+[IsMaxPlusMatrixSemigroup],
+function(S)
+  local gens, dim, m, i, j, k, diag, critcol, d, ngens;
+  gens := GeneratorsOfSemigroup(S);
+  dim := Length(gens[1][1]);
+
+  ### Sum with respect to max-plus algebra of generators of S.
+  m := Matrix(IsMaxPlusMatrix, List([1..dim], i -> List([1..dim], j ->
+      Maximum(List([1..Length(gens)], k -> gens[k][i][j])))));
+
+  critcol := RadialEigenvector(m);
+  d := List([1..dim], i -> List([1..dim], j -> -infinity));
+  for i in [1..dim] do
+    d[i][i] := critcol[i];
+  od;
+  d := Matrix(IsMaxPlusMatrix, d);
+
+  ngens := List(gens, g -> InverseOp(d)*g*d);
+  return Semigroup(ngens);
+end);
