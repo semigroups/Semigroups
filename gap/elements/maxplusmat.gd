@@ -28,6 +28,10 @@ BindGlobal("MaxPlusMatrixType",
            NewType(MaxPlusMatrixFamily,
                    IsMaxPlusMatrix));
 
+DeclareOperation("SpectralRadius", [IsMaxPlusMatrix]);
+DeclareOperation("UnweightedPrecedenceDigraph", [IsMaxPlusMatrix]);
+DeclareOperation("RadialEigenvector", [IsMaxPlusMatrix]);
+
 #############################################################################
 ## 2. Min-plus matrices
 #############################################################################
