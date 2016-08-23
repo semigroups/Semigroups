@@ -67,6 +67,7 @@ function(S, kernel, traceBlocks)
       od;
     od;
   od;
+  #TODO: check trace is *normal*
   return InverseSemigroupCongruenceByKernelTraceNC(S, kernel, traceBlocks);
 end);
 
@@ -536,7 +537,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   end;
 
   enumerate_trace := function()
-    local x, a, y, j;
+    local a, j, x, y, z;
     if pos = 0 then
       # Add the generating pairs themselves
       for x in pairstoapply do
@@ -545,13 +546,13 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
           UF_UNION(traceUF, x);
           # Add each pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(S) do
-            y := [Position(idsdata, a ^ -1 * idslist[x[1]] * a),
+            z := [Position(idsdata, a ^ -1 * idslist[x[1]] * a),
                   Position(idsdata, a ^ -1 * idslist[x[2]] * a)];
-            if y[1] <> y[2] and HTValue(ht, y) = fail then
-              HTAdd(ht, y, true);
+            if z[1] <> z[2] and HTValue(ht, z) = fail then
+              HTAdd(ht, z, true);
               nr := nr + 1;
-              pairstoapply[nr] := y;
-              UF_UNION(traceUF, y);
+              pairstoapply[nr] := z;
+              UF_UNION(traceUF, z);
             fi;
           od;
         fi;
@@ -569,6 +570,17 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
           nr := nr + 1;
           pairstoapply[nr] := y;
           UF_UNION(traceUF, y);
+          # Add the pair's "conjugate" pairs
+          for a in GeneratorsOfSemigroup(S) do
+            z := [Position(idsdata, a ^ -1 * idslist[x[1]] * a),
+                  Position(idsdata, a ^ -1 * idslist[x[2]] * a)];
+            if z[1] <> z[2] and HTValue(ht, z) = fail then
+              HTAdd(ht, z, true);
+              nr := nr + 1;
+              pairstoapply[nr] := z;
+              UF_UNION(traceUF, z);
+            fi;
+          od;
         fi;
       od;
     od;
