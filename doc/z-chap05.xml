@@ -2,7 +2,7 @@
   <Heading>
     Matrices over semirings
   </Heading>
-  
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -11,49 +11,49 @@
     supported.</B> We use the term <B>matrix</B> to mean <B>square matrix</B>
   everywhere in this manual.
   <P/>
-  
+
   For reference, matrices over the following semirings are currently supported:
   <List>
     <Mark>the Boolean semiring</Mark>
-    <Item> 
+    <Item>
       the set <M>\{0, 1\}</M> where <M>0 + 0 = 0</M>,
       <M>0 + 1 = 1 + 1 = 1 + 0 = 1</M>, <M>1\cdot 0 = 0 \cdot 0 = 0
-        \cdot 1 = 0</M>, and <M>1\cdot 1 = 1</M>. 
+        \cdot 1 = 0</M>, and <M>1\cdot 1 = 1</M>.
     </Item>
 
     <Mark>the max-plus semiring</Mark>
-    <Item> 
+    <Item>
       the set of integers and negative
       infinity <M>\mathbb{Z}\cup \{-\infty\}</M> with operations max and
       plus.
     </Item>
 
     <Mark>the min-plus semiring</Mark>
-    <Item> 
+    <Item>
       the set of integers and
       infinity <M>\mathbb{Z}\cup \{\infty\}</M> with operations min and
       plus;
     </Item>
 
     <Mark>tropical max-plus semirings</Mark>
-    <Item> 
+    <Item>
       the set <M>\{-\infty, 0, 1, \ldots, t\}</M> for some threshold <M>t</M>
       with operations max and plus;
     </Item>
 
     <Mark>tropical min-plus semirings</Mark>
-    <Item> 
+    <Item>
       the set <M>\{0, 1, \ldots, t, \infty\}</M> for some threshold <M>t</M>
       with operations min and plus;
     </Item>
 
     <Mark>the projective max-plus semiring</Mark>
     <Item>
-      the projective max-plus semiring; 
+      the projective max-plus semiring;
     </Item>
 
     <Mark>the semiring <M>\mathbb{N}_{t,p}</M></Mark>
-    <Item> 
+    <Item>
       the semiring
       <M>\mathbb{N}_{t,p} = \{0, 1, \ldots, t, t + 1, \ldots, t + p - 1\}</M>
       for some threshold <M>t</M> and period <M>p</M> under addition and
@@ -77,15 +77,15 @@
     Sect = "Introduction"/>.  In other words, a version of the Froidure-Pin
   Algorithm <Cite Key = "Froidure1997aa"/> is used to compute semigroups of
   these types, i.e it is possible that all of the elements of such a semigroup
-  are enumerated and stored in the memory of your computer.  
-  
+  are enumerated and stored in the memory of your computer.
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section Label = "Matrices over arbitrary semirings">
     <Heading>The category <C>IsMatrixOverSemiring</C></Heading>
     In this section we describe the categories, attributes, and operations
-    for matrices in the category <Ref Filt = "IsMatrixOverSemiring"/>. 
+    for matrices in the category <Ref Filt = "IsMatrixOverSemiring"/>.
 
     <#Include Label = "IsMatrixOverSemiring">
     <#Include Label = "IsMatrixOverSemiringCollection">
@@ -135,7 +135,7 @@
         <Index Key = "*"><C>*</C> (for matrices over a semiring)</Index> returns
         the product of the matrices <A>mat1</A> and <A>mat2</A> of equal
         dimension over the same semiring using the usual matrix multiplication
-        with the operations <C>+</C> and <C>*</C> from the underlying semiring. 
+        with the operations <C>+</C> and <C>*</C> from the underlying semiring.
       </Item>
       <Mark><C><A>mat1</A> &lt; <A>mat2</A></C></Mark>
       <Item>
@@ -152,7 +152,7 @@
         matrix <A>mat2</A> (i.e. the entries are equal and the underlying
         semirings are equal) and returns <K>false</K> if it does not.
       </Item>
-    </List> 
+    </List>
   </Section>
 
   <!--**********************************************************************-->
@@ -162,7 +162,7 @@
     <Heading>
       Boolean matrices
     </Heading>
-    
+
     In this section we describe the operations, properties, and attributes in
     &Semigroups; specifically for Boolean matrices. These are in addition to
     those given elsewhere in this chapter for arbitrary matrices over
@@ -212,7 +212,7 @@
 
     <#Include Label = "BooleanMat">
     <#Include Label = "AsBooleanMat">
-   
+
     <#Include Label = "ContainmentBooleanMats">
     <#Include Label = "OnBlist">
     <#Include Label = "Successors">
@@ -248,15 +248,65 @@
   -->
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-    
+
+  <Section Label = "Max-plus and min-plus matrices">
+    <Heading>
+      Max-plus and min-plus matrices
+    </Heading>
+
+    In this section we describe operations in
+    &Semigroups; specifically for max-plus and min-plus matrices.
+    These are in addition to those given elsewhere in this chapter for
+    arbitrary matrices over semirings. These include:
+
+    <List>
+      <Item>
+        <Ref Oper = "InverseOp"/>
+      </Item>
+      <Item>
+        <Ref Oper = "RadialEigenvector"/>
+      </Item>
+      <Item>
+        <Ref Oper = "SpectralRadius"/>
+      </Item>
+      <Item>
+        <Ref Oper = "UnweightedPrecedenceDigraph"/>
+      </Item>
+    </List>
+
+    <#Include Label = "InverseOp">
+    <#Include Label = "RadialEigenvector">
+    <#Include Label = "SpectralRadius">
+    <#Include Label = "UnweightedPrecedenceDigraph">
+  </Section>
+
   <Section Label = "Matrix semigroups">
     <Heading>
       Matrix semigroups
     </Heading>
-  
-  </Section>
-  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
 
+    In this section we describe operations and attributes in
+    &Semigroups; specifically for matrix semigroups. These are in addition to
+    those given elsewhere in this chapter for arbitrary matrices over
+    semirings. These include: 
+    
+    <List>
+      <Item>
+        <Ref Attr = "IsFinite"/>
+      </Item>
+      <Item>
+        <Ref Attr = "IsTorsion"/>
+      </Item>
+      <Item>
+        <Ref Oper = "NormalizeSemigroup"/>
+      </Item>
+    </List>
+    
+    <#Include Label = "IsXMatrixSemigroup">
+    <#Include Label = "IsFinite">
+    <#Include Label = "IsTorsion">
+    <#Include Label = "NormalizeSemigroup">
+  </Section>
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 </Chapter>
