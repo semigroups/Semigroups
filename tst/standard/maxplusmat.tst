@@ -29,11 +29,11 @@ gap> mat * One(mat) = mat;
 true
 gap> mat = One(mat);
 false
-gap> mat2 := Matrix(IsMaxPlusMatrix, 
->                   [[0, 1, 1, 0, -infinity], 
+gap> mat2 := Matrix(IsMaxPlusMatrix,
+>                   [[0, 1, 1, 0, -infinity],
 >                    [0, -3, -2, -2, -infinity],
->                    [-4, 0, -2, 2, -infinity], 
->                    [1, 1, -6, 3, 1], 
+>                    [-4, 0, -2, 2, -infinity],
+>                    [1, 1, -6, 3, 1],
 >                    [-1, 0, -1, 0, -1]]);;
 gap> mat * mat2;
 Matrix(IsMaxPlusMatrix, [[4, 5, 5], [1, 2, 2], [5, 6, 6]])
@@ -52,11 +52,11 @@ gap> mat * One(mat) = mat;
 true
 gap> mat = One(mat);
 false
-gap> mat2 := Matrix(IsMinPlusMatrix, 
->                   [[0, 1, 1, 0, infinity], 
+gap> mat2 := Matrix(IsMinPlusMatrix,
+>                   [[0, 1, 1, 0, infinity],
 >                    [0, -3, -2, -2, infinity],
->                    [-4, 0, -2, 2, infinity], 
->                    [1, 1, -6, 3, 1], 
+>                    [-4, 0, -2, 2, infinity],
+>                    [1, 1, -6, 3, 1],
 >                    [-1, 0, -1, 0, -1]]);;
 gap> mat * mat2;
 Matrix(IsMinPlusMatrix, [[-1, 0], [-1, -4]])
@@ -129,9 +129,9 @@ Error, Semigroups: * (for tropical min-plus matrices): usage,
 the arguments do not have the same threshold,
 
 #T# maxplusmat: test projective max-plus matrix code, 1/1
-gap> mat := Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0],
->                                       [0, -1, -infinity, -infinity],
->                                       [4, 4, 2, -1],
+gap> mat := Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
+>                                       [0, -1, -infinity, -infinity], 
+>                                       [4, 4, 2, -1], 
 >                                       [1, 1, 0, 3]]);
 Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
   [0, -1, -infinity, -infinity], [4, 4, 2, -1], [1, 1, 0, 3]])
@@ -326,6 +326,30 @@ gap> S := Semigroup(Matrix(IsIntegerMatrix,
 <commutative semigroup of 3x3 integer matrices with 1 generator>
 gap> IsFinite(S);
 true
+
+#T# maxplutmat: InverseOp for a maxplus matrix
+gap> InverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 0],  
+> [0, -infinity, -infinity], [-infinity, 0,  -infinity]]));
+Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity], 
+  [-infinity, -infinity, 0], [0, -infinity, -infinity]])
+gap> InverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, 2], [2, 1]]));
+fail
+gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
+[ 0, -2 ]
+gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[3,-3],[-2,-10]]));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `RadialEigenvector' on 1 arguments
+gap> SpectralRadius(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
+0
+gap> SpectralRadius(Matrix(IsMaxPlusMatrix,
+> [[1, -infinity, 2],[-2, 4, -infinity], [1, 0, 3]]));
+4
+gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -infinity],  
+> [-infinity, -infinity, -infinity], [-infinity, 1, -infinity]]));
+-infinity
+gap> UnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],
+> [-infinity, 10,-2], [-infinity, 2, 1]]));
+<digraph with 3 vertices, 7 edges>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
