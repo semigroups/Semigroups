@@ -563,7 +563,7 @@ InstallGlobalFunction(PBRNC,
 function(arg)
   local left, right, n, i, j;
 
-  arg   := ShallowCopy(arg);
+  arg   := StructuralCopy(arg);
   left  := arg[1];  # things adjacent to positives
   right := arg[2];  # things adjacent to negatives
 
