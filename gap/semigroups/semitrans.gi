@@ -607,17 +607,15 @@ function(S)
   local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
   marked, squashed, j, t, im, reduced, y, i, k, x;
 
-  gens := GeneratorsOfSemigroup(S);
-  nrgens := Length(gens);
   n := DegreeOfTransformationSemigroup(S); # Smallest n such that S <= T_n
                                            # We must have n >= 2.
-
+  gens := GeneratorsOfSemigroup(S);
+  nrgens := Length(gens);
   # Find the minimum rank of a generator
   min_rank := n;
   for i in [1 .. nrgens] do
     rank := RankOfTransformation(gens[i], n);
     if rank = 1 then
-      # SetIsSynchronizingSemigroup(S, true);
       return gens[i];
     elif rank < min_rank then
       min_rank := rank;
@@ -628,6 +626,11 @@ function(S)
   if min_rank = n then
     SetIsGroupAsSemigroup(S, true);
     return gens[1];
+  fi;
+
+  if (HasSize(S) and Size(S) < Binomial(n, 2))
+      or n > 10000 then
+    TryNextMethod();
   fi;
 
   graph := SEMIGROUPS.GraphOfRightActionOnPairs(gens, n, false);
