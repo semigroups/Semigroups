@@ -104,7 +104,12 @@ function(arg)
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
     if not IsFinite(S) then
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
-    elif IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S) then
+    elif ((HasIsSimpleSemigroup(S) or IsActingSemigroup(S)
+           or HasSize(S) or IsReesMatrixSemigroup(S))
+          and IsSimpleSemigroup(S)) or
+         ((HasIsZeroSimpleSemigroup(S) or IsActingSemigroup(S)
+           or HasSize(S) or IsReesZeroMatrixSemigroup(S))
+          and IsZeroSimpleSemigroup(S)) then
       return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);

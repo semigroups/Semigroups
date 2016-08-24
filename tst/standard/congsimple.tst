@@ -130,6 +130,8 @@ true
 #T# SimpleCongTest9: The universal congruence
 gap> S := InverseSemigroup(PartialPerm([1], [2]), PartialPerm([2], [1]));
 <inverse partial perm semigroup of rank 2 with 2 generators>
+gap> IsZeroSimpleSemigroup(S);
+true
 gap> SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <universal semigroup congruence over <0-simple inverse partial perm semigroup 
  of rank 2 with 2 generators>>
@@ -148,12 +150,16 @@ gap> Size(congs);
 
 #T# Join/Meet: bad input
 gap> S := Semigroup([Transformation([3, 3, 3]), Transformation([4, 1, 1, 4])]);;
+gap> IsZeroSimpleSemigroup(S);
+true
 gap> IsRegularSemigroup(S);
 true
 gap> T := Semigroup([Transformation([2, 1, 1, 2, 1]),
 >                    Transformation([3, 4, 3, 4, 4]),
 >                    Transformation([3, 4, 3, 4, 3]),
 >                    Transformation([4, 3, 3, 4, 4])]);;
+gap> IsSimpleSemigroup(T);
+true
 gap> cong1 := SemigroupCongruence(T,
 > [[Transformation([1, 2, 1, 2, 2]),
 >   Transformation([2, 1, 2, 1, 2])],
