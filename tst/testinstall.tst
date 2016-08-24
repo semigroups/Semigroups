@@ -1421,7 +1421,7 @@ true
 gap> ForAll(LClasses(D), L -> ForAll(L, x -> x in L));
 true
 
-#T# Bug in AsInverseSemigroupCongruenceByKernelTrace
+#T# Bug in AsInverseSemigroupCongruenceByKernelTrace - abnormal trace
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [5, 1, 2]),
 >                           PartialPerm([1, 2, 3, 4, 6], [3, 6, 4, 1, 5]),
 >                           PartialPerm([1, 2, 3, 4], [6, 1, 4, 2]),
@@ -1433,6 +1433,19 @@ gap> pairs := [[PartialPerm([5], [1]), PartialPerm([ ], [ ])],
 gap> cong := SemigroupCongruence(S, pairs);;
 gap> NrEquivalenceClasses(cong);
 32
+
+#T# Bug in AsInverseSemigroupCongruenceByKernelTrace - abnormal kernel
+gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 6]),
+>                           PartialPerm([1, 2, 4, 5], [1, 4, 5, 3]),
+>                           PartialPerm([1, 3, 4], [1, 2, 5]),
+>                           PartialPerm([1, 2, 3, 5, 6], [5, 1, 6, 2, 4]),
+>                           PartialPerm([1, 2, 3, 5, 6], [5, 4, 3, 1, 2])]);;
+gap> pairs := [[PartialPerm([2, 5, 6], [1, 6, 5]),
+>               PartialPerm([2, 5, 6], [5, 1, 6])],
+>              [PartialPerm([5], [2]), PartialPerm([1, 5], [5, 4])]];;
+gap> cong := SemigroupCongruence(S, pairs);;
+gap> NrEquivalenceClasses(cong);
+954
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);

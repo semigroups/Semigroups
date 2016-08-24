@@ -516,7 +516,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
     # This takes an inv smgp S, an inv subsemigroup K, and some elms coll,
     # then creates the *normal closure* of K with coll inside S.
     # It assumes K is already normal.
-    local T, opts, x;
+    local T, opts, x, list;
     T := ClosureInverseSemigroup(K, coll);
     while K <> T do
       K := T;
@@ -529,8 +529,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
       end;
       opts.onlygradesdata := fail;
       for x in K do
-        T := ClosureInverseSemigroup(T, AsList(Orb(GeneratorsOfSemigroup(S),
-                                                   x, POW, opts)));
+        list := AsList(Enumerate(Orb(GeneratorsOfSemigroup(S), x, POW, opts)));
+        T := ClosureInverseSemigroup(T, list);
       od;
     od;
     return K;
