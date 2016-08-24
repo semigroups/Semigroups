@@ -391,6 +391,9 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+# Test RandomSemigroup
+gap> RandomSemigroup(IsMaxPlusMatrixSemigroup, 2, 5);;
+
 #T# IsFinite, IsTorsion, NormalizeSemigroup
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
 true

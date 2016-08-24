@@ -142,13 +142,13 @@
       returns the threshold (i.e. the largest integer) of the underlying
       semiring.
       <Example><![CDATA[
-gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
 >  [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 10);
 Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 10)
 gap> ThresholdTropicalMatrix(mat);
 10
-gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
 >   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 3);
 Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 3)
@@ -205,7 +205,8 @@ gap> PeriodNTPMatrix(mat);
     <Description>
       If <A>mat</A> is a max-plus matrix (i.e. belongs to the category <Ref
       Filt = "IsMaxPlusMatrix"/>), then <C>SpectralRadius</C>
-      returns the supremum of the set of eigenvalues of <A>mat</A>.
+      returns the supremum of the set of eigenvalues of <A>mat</A>. This 
+      method is described in <Cite Key="Bacelli1992aa"/>.
       <Example><![CDATA[
 gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],
 > [2, -infinity, 0], [0, 1, 1]]));                  
@@ -222,7 +223,7 @@ gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],
       If <A>mat</A> is an invertible max-plus matrix (i.e. belongs to the
       category <Ref Filt = "IsMaxPlusMatrix"/>) and is a row permutation
       applied to the identity), then <C>InverseOp</C> returns the inverse
-      of <A>mat</A>.
+      of <A>mat</A>. This method is described in <Cite Key="Kacie2009aa"/>.
       <Example><![CDATA[
 gap> InverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 0], 
 > [0, -infinity, -infinity], [-infinity, 0,  -infinity]]));
@@ -241,7 +242,8 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
       If <A>mat</A> is an <K>n</K> by <K>n</K> max-plus matrix (i.e. belongs to
       the category <Ref Filt = "IsMaxPlusMatrix"/>), then
       <C>RadialEigenvector</C> returns an eigenvector corresponding to the
-      eigenvalue equal to the spectral radius of <A>mat</A>.
+      eigenvalue equal to the spectral radius of <A>mat</A>. This method
+      is described in <Cite Key="Kacie2009aa"/>.
       <Example><![CDATA[
 gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
 [ 0, -2 ]
@@ -259,9 +261,9 @@ gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
       Filt = "IsMaxPlusMatrix"/>), then <C>UnweightedPrecedenceDigraph</C>
       returns the unweighted precedence digraph corresponding to <K>mat</K>.
       
-      For an <K>n</K> by <K>n</K> matrix <K>mat</K>, the unweighted precedence digraph is 
-      defined as the digraph on <K>n</K> points where vertex <K>i</K> is 
-      adjacent to vertex <K>j</K> if and only if <K>mat[i,j]</K> is not equal 
+      For an <K>n</K> by <K>n</K> matrix <K>mat</K>, the unweighted precedence
+      digraph is defined as the digraph on <K>n</K> points where vertex <K>i</K>
+      is adjacent to vertex <K>j</K> if and only if <K>mat[i,j]</K> is not equal 
       to <K>-infinity</K>.
       <Example><![CDATA[
 gap> UnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],

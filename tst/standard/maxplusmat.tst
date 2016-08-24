@@ -129,9 +129,9 @@ Error, Semigroups: * (for tropical min-plus matrices): usage,
 the arguments do not have the same threshold,
 
 #T# maxplusmat: test projective max-plus matrix code, 1/1
-gap> mat := Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
->                                       [0, -1, -infinity, -infinity], 
->                                       [4, 4, 2, -1], 
+gap> mat := Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0],
+>                                       [0, -1, -infinity, -infinity],
+>                                       [4, 4, 2, -1],
 >                                       [1, 1, 0, 3]]);
 Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
   [0, -1, -infinity, -infinity], [4, 4, 2, -1], [1, 1, 0, 3]])
