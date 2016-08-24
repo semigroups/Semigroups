@@ -75,7 +75,7 @@ gap> DotString(l) = Concatenation(
 > " -- 36\n }");
 true
 
-#LatticeOfLeft/RightCongruences
+#T# LatticeOfLeft/RightCongruences
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> LatticeOfLeftCongruences(S);
 [ [  ], [ 1, 5, 9 ], [ 1 ], [ 1, 3, 5, 11, 12, 13, 15, 17 ], [ 1 ], 
@@ -107,6 +107,25 @@ gap> LatticeOfCongruences(S);
 [ [  ], [ 1, 3, 4 ], [ 1 ], [ 1, 3 ] ]
 gap> Size(CongruencesOfSemigroup(S));
 4
+
+#T# LatticeOfLeft/RightCongruences with restriction
+gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
+gap> restriction := Subsemigroup(S, [Transformation([1,1,1]),
+>                                    Transformation([2,2,2]),
+>                                    Transformation([3,3,3])]);;
+gap> latt := LatticeOfLeftCongruences(S, restriction);
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+gap> restriction := [Transformation([3, 2, 3]),
+>                    Transformation([3, 1, 3]),
+>                    Transformation([2, 2, 2])];;
+gap> latt := LatticeOfRightCongruences(S, restriction);
+[ [  ], [ 1, 3, 4 ], [ 1 ], [ 1 ] ]
+gap> restriction := [Transformation([3, 1, 3]), Transformation([3, 2, 3])];;
+gap> latt := LatticeOfCongruences(S, restriction);
+[ [  ], [ 1 ] ]
+gap> restriction := [Transformation([3, 3, 3])];;
+gap> latt := LatticeOfCongruences(S, restriction);
+[ [  ] ]
 
 #T# MinimalCongruencesOfSemigroup
 gap> S := Semigroup([Transformation([1,3,2]), Transformation([3,1,3])]);;

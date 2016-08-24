@@ -22,3 +22,10 @@ DeclareCategory("IsCongruenceLattice", IsList);
 DeclareAttribute("LatticeOfCongruences", IsSemigroup);
 DeclareAttribute("LatticeOfLeftCongruences", IsSemigroup);
 DeclareAttribute("LatticeOfRightCongruences", IsSemigroup);
+
+DeclareOperation("LatticeOfCongruences",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("LatticeOfLeftCongruences",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("LatticeOfRightCongruences",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
