@@ -66,6 +66,27 @@ gap> x := Matrix(IsBooleanMat,
 gap> IndexPeriodOfSemigroupElement(x);
 [ 1, 3 ]
 
+#T# elements: SmallestIdempotentPower
+gap> x := PBR([[-3, -2, -1, 1, 2, 3], [-3, -2, -1, 1, 3], [-3, -2, -1, 1, 2]],
+> [[-3, -2, -1, 1, 2], [-3, 2, 3], [-2, -1, 2, 3]]);;
+gap> SmallestIdempotentPower(x);
+2
+gap> x := Transformation(
+> [71, 14, 60, 68, 67, 74, 61, 19, 81, 10, 17, 21, 9, 49, 78,
+>  73, 81, 22, 59, 50, 29, 31, 6, 27, 40, 21, 75, 44, 71, 62, 22, 56, 90, 53,
+>  64, 53, 78, 73, 18, 96, 58, 46, 11, 19, 72, 12, 33, 83, 21, 34, 94, 94, 51,
+>  6, 52, 24, 66, 46, 61, 95, 40, 81, 41, 38, 26, 39, 90, 93, 30, 37, 55, 51,
+>  99, 38, 38, 79, 33, 58, 90, 89, 98, 54, 18, 58, 28, 27, 61, 82, 96, 26, 89,
+>  93, 44, 4, 96, 11, 39, 14, 57, 34]);;
+gap> SmallestIdempotentPower(x);
+42
+gap> x := Transformation([2, 6, 4, 5, 3, 7, 8, 8]);;
+gap> SmallestIdempotentPower(x);
+6
+gap> SmallestIdempotentPower(GeneratorsOfMagma(FreeMagma(1))[1]);
+Error, Semigroups: SmallestIdempotentPower: usage,
+the argument <x> must be the generator of a semigroup,
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(x);
 

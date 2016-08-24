@@ -30,6 +30,7 @@
     </Heading>
     
     <#Include Label = "IndexPeriodOfSemigroupElement">
+    <#Include Label = "SmallestIdempotentPower">
   </Section>
   
   <!--**********************************************************************-->

@@ -8,3 +8,4 @@
 #############################################################################
 
 DeclareOperation("IndexPeriodOfSemigroupElement", [IsMultiplicativeElement]);
+DeclareAttribute("SmallestIdempotentPower", IsMultiplicativeElement);
