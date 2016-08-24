@@ -30,47 +30,27 @@
 # belonging to IsAssociativeElementCollection.
 #############################################################################
 
-BindGlobal("SEMIGROUPS_PBRFamilies", []);
-BindGlobal("SEMIGROUPS_PBRTypes", []);
-
-InstallGlobalFunction(PBRFamily,
+BindGlobal("TYPES_PBR", []);
+BindGlobal("TYPE_PBR",
 function(n)
 
   if not IsInt(n) or n < 0 then
-    ErrorNoReturn("Semigroups: PBRFamily: usage,\n",
+    ErrorNoReturn("Semigroups: TYPE_PBR: usage,\n",
                   "the argument must be a non-negative integer,");
   fi;
 
   n := n + 1; # since the degree can be 0
 
-  if not IsBound(SEMIGROUPS_PBRFamilies[n]) then
-    SEMIGROUPS_PBRFamilies[n] :=
-          NewFamily(Concatenation("PBRFamily", String(n - 1)),
-                    IsPBR,
-                    CanEasilySortElements,
-                    CanEasilySortElements);
+  if not IsBound(TYPES_PBR[n]) then
+    TYPES_PBR[n] := NewType(NewFamily(Concatenation("PBRFamily", 
+                                                    String(n - 1)),
+                                      IsPBR,
+                                      CanEasilySortElements,
+                                      CanEasilySortElements),
+                            IsPBR and IsPositionalObjectRep);
   fi;
 
-  return SEMIGROUPS_PBRFamilies[n];
-end);
-
-InstallGlobalFunction(PBRType,
-function(n)
-
-  if not IsInt(n) or n < 0 then
-    ErrorNoReturn("Semigroups: PBRType: usage,\n",
-                  "the argument must be a non-negative integer,");
-  fi;
-
-  n := n + 1; # since the degree can be 0
-
-  if not IsBound(SEMIGROUPS_PBRTypes[n]) then
-    SEMIGROUPS_PBRTypes[n] :=
-           NewType(PBRFamily(n),
-                   IsPBR and IsPositionalObjectRep);
-  fi;
-
-  return SEMIGROUPS_PBRTypes[n];
+  return TYPES_PBR[n];
 end);
 
 #############################################################################
@@ -95,7 +75,7 @@ IO_Unpicklers.PABR := function(file)
   if x = IO_Error then
     return IO_Error;
   fi;
-  return Objectify(PBRType(x![1]), x);
+  return Objectify(TYPE_PBR(x![1]), x);
 end;
 
 #############################################################################
@@ -587,7 +567,7 @@ function(arg)
   od;
   MakeImmutable(arg);
   arg := Concatenation([Length(arg[1])], Concatenation(arg));
-  return Objectify(PBRType(arg[1]), arg);
+  return Objectify(TYPE_PBR(arg[1]), arg);
 end);
 
 InstallMethod(DegreeOfPBR, "for a pbr",
@@ -683,7 +663,7 @@ function(x, y)
   for i in [2 .. 2 * n + 1] do
     out[i] := ListBlist([1 .. 2 * n], out[i]);
   od;
-  return Objectify(PBRType(n), out);
+  return Objectify(TYPE_PBR(n), out);
 end);
 
 InstallMethod(ExtRepOfObj, "for a pbr",
@@ -802,5 +782,5 @@ function(x)
     out[i + 1] := [i + n];
     out[i + n + 1] := [i];
   od;
-  return Objectify(PBRType(n), out);
+  return Objectify(TYPE_PBR(n), out);
 end);

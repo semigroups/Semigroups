@@ -272,7 +272,6 @@
     creating and manipulating the left or right blocks of a bipartition.
 
     <#Include Label = "IsBlocks">
-    <#Include Label = "BlocksFamily">
     <#Include Label = "BlocksNC">
     <#Include Label = "ExtRepOfObjBlocks">
     <#Include Label = "RankOfBlocks">

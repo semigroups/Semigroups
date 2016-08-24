@@ -20,12 +20,11 @@ DeclareCategory("IsBooleanMat", IsMatrixOverSemiring and
 DeclareCategoryCollections("IsBooleanMat");
 DeclareCategoryCollections("IsBooleanMatCollection");
 
-BindGlobal("BooleanMatFamily",
-           NewFamily("BooleanMatFamily",
-                     IsBooleanMat, CanEasilySortElements,
-                     CanEasilySortElements));
 BindGlobal("BooleanMatType",
-           NewType(BooleanMatFamily,
+           NewType(NewFamily("BooleanMatFamily",
+                             IsBooleanMat, 
+                             CanEasilySortElements,
+                             CanEasilySortElements),
                    IsBooleanMat));
 
 DeclareGlobalFunction("BooleanMat");

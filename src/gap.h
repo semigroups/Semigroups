@@ -103,8 +103,8 @@ extern Obj NTPMatrixType;
 extern Obj IsIntegerMatrix;
 extern Obj IntegerMatrixType;
 extern Obj IsPBR;
-extern Obj PBRTypes;
-extern Obj PBRType;
+extern Obj TYPES_PBR;
+extern Obj TYPE_PBR;
 
 extern Obj TYPE_BIPART;
 extern Obj TYPES_BIPART;

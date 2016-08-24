@@ -12,14 +12,13 @@ DeclareCategoryKernel("IsBlocks", IsList, IS_BLOCKS);
 
 DeclareCategoryCollections("IsBlocks");
 
-BindGlobal("BlocksFamily",
-           NewFamily("BlocksFamily", IsBlocks, CanEasilySortElements,
-                     CanEasilySortElements));
-
 BindGlobal("TheTypeTBlocksObj",
-           NewType(BlocksFamily, 
-                   IsBlocks and IsComponentObjectRep and
-                   IsAttributeStoringRep));
+           NewType(NewFamily("BlocksFamily", 
+                             IsBlocks, 
+                             CanEasilySortElements,
+                             CanEasilySortElements), 
+                   IsBlocks and IsComponentObjectRep
+                   and IsAttributeStoringRep));
 
 DeclareGlobalFunction("BlocksNC");
 

@@ -27,17 +27,6 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="PBRFamily">
-  <ManSection>
-    <Var Name = "PBRFamily"/>
-    <Var Name = "PBRType"/>
-    <Description>
-      The family of all PBRs is <C>PBRFamily</C> and the type
-      of every PBR is <C>PBRType</C>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="IsPBRCollection">
   <ManSection>
     <Filt Name = "IsPBRCollection" Arg = "obj" Type = "Category"/>

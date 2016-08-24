@@ -27,7 +27,6 @@
 
     <#Include Label = "IsPBR">
     <#Include Label = "IsPBRCollection">
-    <#Include Label = "PBRFamily">
   </Section>
 
   <!--**********************************************************************-->

@@ -15,17 +15,16 @@
 ## 1. Max-plus matrices
 #############################################################################
 
-DeclareCategory("IsMaxPlusMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSemiringPositionalRep);
+DeclareCategory("IsMaxPlusMatrix", IsMatrixOverSemiring and
+                                   IsPlistMatrixOverSemiringPositionalRep);
 DeclareCategoryCollections("IsMaxPlusMatrix");
 DeclareCategoryCollections("IsMaxPlusMatrixCollection");
 
-BindGlobal("MaxPlusMatrixFamily",
-           NewFamily("MaxPlusMatrixFamily",
-                     IsMaxPlusMatrix, CanEasilySortElements,
-                     CanEasilySortElements));
-
 BindGlobal("MaxPlusMatrixType",
-           NewType(MaxPlusMatrixFamily,
+           NewType(NewFamily("MaxPlusMatrixFamily",
+                             IsMaxPlusMatrix, 
+                             CanEasilySortElements,
+                             CanEasilySortElements),
                    IsMaxPlusMatrix));
 
 #############################################################################
@@ -36,13 +35,11 @@ DeclareCategory("IsMinPlusMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSem
 DeclareCategoryCollections("IsMinPlusMatrix");
 DeclareCategoryCollections("IsMinPlusMatrixCollection");
 
-BindGlobal("MinPlusMatrixFamily",
-           NewFamily("MinPlusMatrixFamily",
-                     IsMinPlusMatrix, CanEasilySortElements,
-                     CanEasilySortElements));
-
 BindGlobal("MinPlusMatrixType",
-           NewType(MinPlusMatrixFamily,
+           NewType(NewFamily("MinPlusMatrixFamily",
+                             IsMinPlusMatrix, 
+                             CanEasilySortElements,
+                             CanEasilySortElements),
                    IsMinPlusMatrix));
 
 #############################################################################
@@ -62,13 +59,11 @@ DeclareCategory("IsTropicalMaxPlusMatrix", IsTropicalMatrix);
 DeclareCategoryCollections("IsTropicalMaxPlusMatrix");
 DeclareCategoryCollections("IsTropicalMaxPlusMatrixCollection");
 
-BindGlobal("TropicalMaxPlusMatrixFamily",
-           NewFamily("TropicalMaxPlusMatrixFamily",
-                     IsTropicalMaxPlusMatrix, CanEasilySortElements,
-                     CanEasilySortElements));
-
 BindGlobal("TropicalMaxPlusMatrixType",
-           NewType(TropicalMaxPlusMatrixFamily,
+           NewType(NewFamily("TropicalMaxPlusMatrixFamily",
+                             IsTropicalMaxPlusMatrix, 
+                             CanEasilySortElements,
+                             CanEasilySortElements),
                    IsTropicalMaxPlusMatrix));
 
 #############################################################################
@@ -79,13 +74,11 @@ DeclareCategory("IsTropicalMinPlusMatrix", IsTropicalMatrix);
 DeclareCategoryCollections("IsTropicalMinPlusMatrix");
 DeclareCategoryCollections("IsTropicalMinPlusMatrixCollection");
 
-BindGlobal("TropicalMinPlusMatrixFamily",
-           NewFamily("TropicalMinPlusMatrixFamily",
-                     IsTropicalMinPlusMatrix, CanEasilySortElements,
-                     CanEasilySortElements));
-
 BindGlobal("TropicalMinPlusMatrixType",
-           NewType(TropicalMinPlusMatrixFamily,
+           NewType(NewFamily("TropicalMinPlusMatrixFamily",
+                             IsTropicalMinPlusMatrix, 
+                             CanEasilySortElements,
+                             CanEasilySortElements),
                    IsTropicalMinPlusMatrix));
 
 #############################################################################
@@ -96,13 +89,11 @@ DeclareCategory("IsProjectiveMaxPlusMatrix", IsMatrixOverSemiring and IsPlistMat
 DeclareCategoryCollections("IsProjectiveMaxPlusMatrix");
 DeclareCategoryCollections("IsProjectiveMaxPlusMatrixCollection");
 
-BindGlobal("ProjectiveMaxPlusMatrixFamily",
-           NewFamily("ProjectiveMaxPlusMatrixFamily",
-                     IsProjectiveMaxPlusMatrix, CanEasilySortElements,
-                     CanEasilySortElements));
-
 BindGlobal("ProjectiveMaxPlusMatrixType",
-           NewType(ProjectiveMaxPlusMatrixFamily,
+           NewType(NewFamily("ProjectiveMaxPlusMatrixFamily",
+                             IsProjectiveMaxPlusMatrix, 
+                             CanEasilySortElements,
+                             CanEasilySortElements),
                    IsProjectiveMaxPlusMatrix));
 
 #############################################################################
@@ -113,13 +104,11 @@ DeclareCategory("IsNTPMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSemirin
 DeclareCategoryCollections("IsNTPMatrix");
 DeclareCategoryCollections("IsNTPMatrixCollection");
 
-BindGlobal("NTPMatrixFamily",
-           NewFamily("NTPMatrixFamily",
-                     IsNTPMatrix, CanEasilySortElements,
-                     CanEasilySortElements));
-
 BindGlobal("NTPMatrixType",
-           NewType(NTPMatrixFamily,
+           NewType(NewFamily("NTPMatrixFamily",
+                             IsNTPMatrix, 
+                             CanEasilySortElements,
+                             CanEasilySortElements),
                    IsNTPMatrix));
 
 DeclareAttribute("ThresholdNTPMatrix", IsNTPMatrix);
@@ -133,11 +122,9 @@ DeclareCategory("IsIntegerMatrix", IsMatrixOverSemiring and IsPlistMatrixOverSem
 DeclareCategoryCollections("IsIntegerMatrix");
 DeclareCategoryCollections("IsIntegerMatrixCollection");
 
-BindGlobal("IntegerMatrixFamily",
-           NewFamily("IntegerMatrixFamily",
-                     IsIntegerMatrix, CanEasilySortElements,
-                     CanEasilySortElements));
-
 BindGlobal("IntegerMatrixType",
-           NewType(IntegerMatrixFamily,
+           NewType(NewFamily("IntegerMatrixFamily",
+                             IsIntegerMatrix, 
+                             CanEasilySortElements,
+                             CanEasilySortElements),
                    IsIntegerMatrix));
