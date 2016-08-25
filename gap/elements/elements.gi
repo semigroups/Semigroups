@@ -55,7 +55,7 @@ SEMIGROUPS.IndexPeriodByRank := function(x, rank)
     od;
   fi;
 
-  y := x ^ index; 
+  y := x ^ index;
   z := y * x;
   if y = z then
     period := 1;
