@@ -1002,3 +1002,9 @@ function(x)
 
   return true;
 end);
+
+InstallMethod(IndexPeriodOfSemigroupElement, "for a bipartition",
+[IsBipartition],
+function(x)
+  return SEMIGROUPS.IndexPeriodByRank(x, RankOfBipartition);
+end);

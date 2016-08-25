@@ -484,37 +484,6 @@ function(coll, set)
   return IsStronglyConnectedDigraph(Digraph(graph));
 end);
 
-# not relevant for ideals
-
-InstallMethod(Size,
-"for a monogenic transformation semigroup with minimal generating set",
-[IsTransformationSemigroup and IsMonogenicSemigroup
- and HasMinimalSemigroupGeneratingSet],
-4,
-function(S)
-  local gen, ind;
-  gen := MinimalSemigroupGeneratingSet(S)[1];
-  ind := IndexPeriodOfTransformation(gen);
-  return Sum(ind) - 1;
-end);
-
-InstallMethod(Size,
-"for a monogenic transformation monoid with minimal generating set",
-[IsTransformationSemigroup and IsMonogenicMonoid
- and HasMinimalMonoidGeneratingSet],
-4,
-function(S)
-  local gen, ind, n;
-  gen := MinimalMonoidGeneratingSet(S)[1];
-  ind := IndexPeriodOfTransformation(gen);
-  n := DegreeOfTransformation(gen);
-  if RankOfTransformation(gen, n) = n then
-    # <gen> is a permutation, so return its period
-    return ind[2];
-  fi;
-  return Sum(ind);
-end);
-
 # same method for ideals
 
 InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup",

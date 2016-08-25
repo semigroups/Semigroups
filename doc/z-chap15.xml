@@ -26,6 +26,19 @@
   <Section>
     
     <Heading>
+       Properties of elements in a semigroup
+    </Heading>
+    
+    <#Include Label = "IndexPeriodOfSemigroupElement">
+    <#Include Label = "SmallestIdempotentPower">
+  </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
+    
+    <Heading>
       Expressing semigroup elements as words in generators
     </Heading>
 
