@@ -33,6 +33,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+static Int RNam_nr_threads         = 0;
 static Int RNam_batch_size         = 0;
 static Int RNam_converter          = 0;
 static Int RNam_data               = 0;
@@ -66,6 +67,7 @@ static Int RNam_fp_semi_cong   = 0;
 
 static inline void initRNams() {
   if (!RNam_batch_size) {
+    RNam_nr_threads = RNamName("nr_threads");
     RNam_batch_size = RNamName("batch_size");
     RNam_converter  = RNamName("_SEMIGROUPS_converter");
     RNam_data       = RNamName("data");
@@ -129,12 +131,14 @@ enum DataType {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+bool rec_get_report(Obj);
+size_t rec_get_nr_threads(Obj);
+
 long     data_threshold(Obj);
 long     data_period(Obj);
 long     data_size_ff(Obj);
 Obj      data_rep(Obj);
 size_t   data_batch_size(Obj);
-bool     rec_get_report(Obj);
 size_t   data_degree(Obj);
 DataType data_type(Obj);
 void     data_init(Obj);
