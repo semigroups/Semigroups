@@ -30,7 +30,6 @@ gap> Size(S);
 
 # Issue 211
 gap> S := FullMatrixSemigroup(3, 3);;
-gap> S := Semigroup(S, rec(generic := false));; #FIXME remove generic := false
 gap> One(S) in S;
 true
 gap> H := GroupHClass(DClass(S, One(S)));
