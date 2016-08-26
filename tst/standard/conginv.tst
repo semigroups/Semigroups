@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/conginv.tst
-#Y  Copyright (C) 2014-15                                   Michael Torpey
+#Y  Copyright (C) 2014-16                                   Michael Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -13,6 +13,9 @@ gap> LoadPackage("semigroups", false);;
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
 
+# Always use kernel-trace methods if possible in these tests
+gap> SEMIGROUPS.DefaultOptionsRec.cong_by_ker_trace_threshold := 0;;
+
 #T# InverseCongTest1: Create an inverse semigroup congruence
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 >  PartialPerm([1, 2, 4], [3, 1, 5]),
@@ -20,12 +23,12 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 >  PartialPerm([1, 2, 3], [3, 4, 2])]);;
 gap> cong := SemigroupCongruence(S,
 >  [PartialPerm([4], [4]), PartialPerm([2], [1])]);
-<semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
- generators> with congruence pair (41,16)>
+<semigroup congruence over <inverse partial perm semigroup of size 206, 
+ rank 5 with 4 generators> with congruence pair (41,16)>
 gap> ccong := SemigroupCongruenceByGeneratingPairs(S,
 >  [[PartialPerm([4], [4]), PartialPerm([2], [1])]]);
-<semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
- generators> with 1 generating pairs>
+<semigroup congruence over <inverse partial perm semigroup of size 206, 
+ rank 5 with 4 generators> with 1 generating pairs>
 gap> KernelOfSemigroupCongruence(ccong) = cong!.kernel;
 true
 gap> ccong := SemigroupCongruenceByGeneratingPairs(S,
@@ -100,8 +103,8 @@ gap> ccong := SemigroupCongruence(S, pairs);;
 gap> ccong = cong;
 true
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);
-<semigroup congruence over <inverse partial perm semigroup of rank 5 with 4 
- generators> with 1 generating pairs>
+<semigroup congruence over <inverse partial perm semigroup of size 206, 
+ rank 5 with 4 generators> with 1 generating pairs>
 gap> [x, y] in ccong;
 false
 gap> [x, z] in ccong;
@@ -215,13 +218,13 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 3, 4]),
 gap> cong := SemigroupCongruence(S,
 >       [PartialPerm([1], [1]), PartialPerm([], [])],
 >       [PartialPerm([5], [3]), PartialPerm([], [])]);
-<semigroup congruence over <inverse partial perm semigroup of rank 5 with 3 
- generators> with congruence pair (44,19)>
+<semigroup congruence over <inverse partial perm semigroup of size 258, 
+ rank 5 with 3 generators> with congruence pair (44,19)>
 gap> cong := SemigroupCongruence(S,
 >        [PartialPerm([1, 3, 5], [1, 3, 5]),
 >         PartialPerm([1, 2, 4], [3, 1, 2])]);
-<semigroup congruence over <inverse partial perm semigroup of rank 5 with 3 
- generators> with congruence pair (256,3)>
+<semigroup congruence over <inverse partial perm semigroup of size 258, 
+ rank 5 with 3 generators> with congruence pair (256,3)>
 
 #T# MinimumGroupCongruence
 gap> S := InverseSemigroup([PartialPerm([1, 2, 5, 6], [5, 2, 1, 4]),
@@ -250,8 +253,8 @@ gap> pair := [PartialPerm([1, 2], [3, 1]), PartialPerm([], [])];;
 gap> cong := SemigroupCongruence(S, pair);;
 gap> min := MinimumGroupCongruence(S);;
 gap> JoinSemigroupCongruences(cong, min);
-<semigroup congruence over <inverse partial perm monoid of rank 3 with 1 
- generator> with congruence pair (15,1)>
+<semigroup congruence over <inverse partial perm monoid of size 15, rank 3 
+ with 1 generator> with congruence pair (15,1)>
 gap> IsSubrelation(last, cong);
 true
 
@@ -263,8 +266,8 @@ gap> pair2 := [PartialPerm([], []), PartialPerm([1, 2], [1, 2])];;
 gap> cong1 := SemigroupCongruence(S, pair1);;
 gap> cong2 := SemigroupCongruence(S, pair2);;
 gap> MeetSemigroupCongruences(cong1, cong2);
-<semigroup congruence over <inverse partial perm semigroup of rank 3 with 2 
- generators> with congruence pair (12,3)>
+<semigroup congruence over <inverse partial perm semigroup of size 14, rank 3 
+ with 2 generators> with congruence pair (12,3)>
 
 #T# Bad input: different semigroups
 gap> S := InverseSemigroup([PartialPerm([1, 2], [2, 1]),
@@ -290,8 +293,8 @@ gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 2]),
 >                           PartialPerm([1, 2], [2, 3])]);;
 gap> pairs := [PartialPerm([], []), PartialPerm([1], [1])];;
 gap> cong := SemigroupCongruence(S, pairs);
-<semigroup congruence over <inverse partial perm semigroup of rank 3 with 2 
- generators> with congruence pair (12,3)>
+<semigroup congruence over <inverse partial perm semigroup of size 14, rank 3 
+ with 2 generators> with congruence pair (12,3)>
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4 ]
 

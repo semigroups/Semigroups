@@ -28,7 +28,7 @@
   congruence.<P/>
 
   If a congruence is specified by generating pairs on a simple, 0-simple, or
-  inverse semigroup, then the congruence will be converted automatically to one
+  inverse semigroup, then the congruence may be converted automatically to one
   of the last two items in the above list, to reduce the complexity of any
   calculations to be performed.  The user need not manually specify, or even be
   aware of, the congruence's linked triple or kernel and trace.<P/>
@@ -185,7 +185,7 @@
     <#Include Label = "AsRZMSCongruenceByLinkedTriple">
   </Section>
 
-  <Section>
+  <Section Label="Congruences on inverse semigroups">
     <Heading>
       Congruences on inverse semigroups
     </Heading>
@@ -237,6 +237,10 @@
     (that is, the restriction of <C>C</C> to the idempotents).  Hence, we refer
     to a congruence stored in this format as a "congruence by kernel and
     trace".<P/>
+
+    See <C>cong_by_ker_trace_threshold</C> in Section
+    <Ref Sect = "Options when creating semigroups"/>
+    for details on when this method is used. <P/>
 
     <#Include Label = "IsInverseSemigroupCongruenceByKernelTrace">
     <#Include Label = "InverseSemigroupCongruenceByKernelTrace">

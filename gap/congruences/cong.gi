@@ -70,7 +70,7 @@ end);
 
 InstallGlobalFunction(SemigroupCongruence,
 function(arg)
-  local S, pairs;
+  local S, opts, s_opts, x, pairs;
   if not Length(arg) >= 2 then
     ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
                   "at least 2 arguments are required,");
@@ -80,6 +80,20 @@ function(arg)
                   "1st argument <S> must be a semigroup,");
   fi;
   S := arg[1];
+
+  # Set up any options
+  if IsRecord(arg[Length(arg)]) then
+    opts := arg[Length(arg)];
+    arg := arg{[1 .. Length(arg) - 1]};
+  else
+    opts := rec();
+  fi;
+  s_opts := SEMIGROUPS.OptionsRec(S);
+  for x in RecNames(s_opts) do
+    if not IsBound(opts.(x)) then
+      opts.(x) := s_opts.(x);
+    fi;
+  od;
 
   if IsHomogeneousList(arg[2]) then
     # We should have a list of generating pairs
@@ -100,8 +114,11 @@ function(arg)
                     "each pair should contain ",
                     "elements from the semigroup <S>,");
     fi;
+
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
+
+    # Decide which representation to use
     if not IsFinite(S) then
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     elif ((HasIsSimpleSemigroup(S) or IsActingSemigroup(S)
@@ -111,7 +128,8 @@ function(arg)
            or HasSize(S) or IsReesZeroMatrixSemigroup(S))
           and IsZeroSimpleSemigroup(S)) then
       return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
-    elif IsSemigroupWithInverseOp(S) then
+    elif IsSemigroupWithInverseOp(S) and
+         Size(S) >= opts.cong_by_ker_trace_threshold then
       return SEMIGROUPS.InverseCongFromPairs(S, pairs);
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);

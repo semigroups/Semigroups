@@ -65,8 +65,33 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 4, 2]),
 >                           PartialPerm([1, 2, 3], [2, 3, 4]),
 >                           PartialPerm([1, 2, 4], [2, 1, 3])]);;
 gap> SemigroupCongruence(S, [S.1, S.2]);
-<semigroup congruence over <inverse partial perm semigroup of rank 4 with 3 
- generators> with congruence pair (116,1)>
+<semigroup congruence over <inverse partial perm semigroup of size 116, 
+ rank 4 with 3 generators> with 1 generating pairs>
+gap> SemigroupCongruence(S, [S.1, S.2], rec(cong_by_ker_trace_threshold := 1024));
+<semigroup congruence over <inverse partial perm semigroup of size 116, 
+ rank 4 with 3 generators> with 1 generating pairs>
+gap> SemigroupCongruence(S, [S.1, S.2], rec(cong_by_ker_trace_threshold := 0));
+<semigroup congruence over <inverse partial perm semigroup of size 116, 
+ rank 4 with 3 generators> with congruence pair (116,1)>
+
+#T# SemigroupCongruence: Inverse semigroup (low cong_by_ker_trace_threshold)
+gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 4, 2]),
+>                           PartialPerm([1, 2, 3], [2, 3, 4]),
+>                           PartialPerm([1, 2, 4], [2, 1, 3])],
+>                          rec(cong_by_ker_trace_threshold := 100));;
+gap> SemigroupCongruence(S, [S.1, S.2], rec(cong_by_ker_trace_threshold := 100));
+<semigroup congruence over <inverse partial perm semigroup of size 116, 
+ rank 4 with 3 generators> with congruence pair (116,1)>
+
+#T# SemigroupCongruence: Inverse semigroup (high cong_by_ker_trace_threshold)
+gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 4, 2]),
+>                           PartialPerm([1, 2, 3], [2, 3, 4]),
+>                           PartialPerm([1, 2, 4], [2, 1, 3])],
+>                          rec(cong_by_ker_trace_threshold := 100));;
+gap> SemigroupCongruence(S, [S.1, S.2],
+>                        rec(cong_by_ker_trace_threshold := infinity));
+<semigroup congruence over <inverse partial perm semigroup of size 116, 
+ rank 4 with 3 generators> with 1 generating pairs>
 
 #T# SemigroupCongruence: Pairs
 gap> S := Semigroup([Transformation([3, 3, 3]),

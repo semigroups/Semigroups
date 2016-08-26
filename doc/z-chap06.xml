@@ -147,6 +147,19 @@
         This option is ignored when passed to <Ref Oper = "ClosureSemigroup"/>
         or <Ref Oper = "ClosureInverseSemigroup"/>. 
     </Item> 
+
+    <Mark><C>cong_by_ker_trace_threshold</C></Mark>
+    <Item>this should be a positive integer, which specifies a semigroup size.
+        If <A>S</A> is a semigroup with inverse op, and <A>S</A> has a size
+        greater than or equal to this threshold, then any congruence defined on
+        it may use the "kernel and trace" method to perform calculations.  If
+        its size is less than the threshold, then other methods will be used
+        instead.  The "kernel and trace" method has better complexity than the
+        generic method, but has large overheads which make it a poor choice for
+        small semigroups.  The default value for this component is <C>10 ^
+        5</C>.  See Section <Ref Sect = "Congruences on inverse semigroups"/>
+        for more information about the "kernel and trace" method.
+    </Item> 
 </List>
 
     <Example><![CDATA[
