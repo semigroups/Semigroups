@@ -1,13 +1,12 @@
 ############################################################################
 ##
 #W  conglatt.gd
-#Y  Copyright (C) 2015                                   Michael C. Torpey
+#Y  Copyright (C) 2016                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
 ## This file contains functions for a lattice of congruences.
 ##
 ## When the congruences of a semigroup are computed, they form a lattice with
@@ -18,6 +17,8 @@
 ##
 
 DeclareCategory("IsCongruenceLattice", IsList);
+
+DeclareAttribute("CongruencesOfLattice", IsCongruenceLattice);
 
 DeclareAttribute("LatticeOfCongruences", IsSemigroup);
 DeclareAttribute("LatticeOfLeftCongruences", IsSemigroup);

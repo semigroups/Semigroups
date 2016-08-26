@@ -1,13 +1,12 @@
 ############################################################################
 ##
 #W  conglatt.gi
-#Y  Copyright (C) 2015                                   Michael C. Torpey
+#Y  Copyright (C) 2016                                   Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
 ## This file contains functions for a lattice of congruences.
 ##
 ## When the congruences of a semigroup are computed, they form a lattice with
@@ -20,6 +19,13 @@
 ## actual list of lists of integers which defines the containments in the
 ## lattice.  Component 2 in the list is the list of congruences, which is hidden
 ## when this object is used.
+
+InstallMethod(CongruencesOfLattice,
+"for a congruence lattice",
+[IsCongruenceLattice],
+function(latt)
+  return latt![2];
+end);
 
 InstallMethod(\[\],
 "for a congruence lattice",
