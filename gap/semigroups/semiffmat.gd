@@ -9,6 +9,7 @@
 #############################################################################
 ##
 
+
 DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixMonoid", [IsRing, IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt, IsList]);
@@ -20,7 +21,9 @@ DeclareSynonym("IsMatrixMonoid",
                IsMatrixOverFiniteFieldCollection and IsMonoid);
 DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
 DeclareProperty("IsMatrixSemigroupGreensClass", IsGreensClass);
-InstallTrueMethod(CanComputeSize, IsMatrixSemigroup and IsFinite);
+
+InstallTrueMethod(CanComputeSize, IsMatrixSemigroup);
+InstallTrueMethod(IsFinite, IsMatrixSemigroup);
 
 # (mp) This is defined for groups, and already difficult there, so I
 # guess close to impossible to do in matrix semigroups

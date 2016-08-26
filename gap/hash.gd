@@ -11,5 +11,3 @@
 
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistMatricesOverFiniteField");
 DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistRowBasisOverFiniteField");
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionForPlistVectorOverFiniteFields");
-DeclareGlobalFunction("SEMIGROUPS_HashFunctionForFFECollColl");

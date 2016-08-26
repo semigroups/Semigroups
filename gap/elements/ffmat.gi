@@ -59,6 +59,12 @@ function(mat, pos)
 end);
 
 InstallMethod(MatrixNC, "for a matrix over finite field and mutable list",
+[IsMatrixOverFiniteField, IsList],
+function(sample, mat)
+  return MatrixNC(sample, ShallowCopy(mat));
+end);
+
+InstallMethod(MatrixNC, "for a matrix over finite field and mutable list",
 [IsMatrixOverFiniteField, IsList and IsMutable],
 function(sample, mat)
   local filter;
