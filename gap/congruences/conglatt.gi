@@ -197,10 +197,12 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     congs := congs{Positions(children, [])};
     # Note: we don't include the trivial cong
     # Set the MinimalXCongruencesOfSemigroup attribute
-    set_func := EvalString(Concatenation("SetMinimal",
-                                         type_string,
-                                         "CongruencesOfSemigroup"));
-    set_func(S, congs);
+    if not IsBound(record.restriction) then
+      set_func := EvalString(Concatenation("SetMinimal",
+                                           type_string,
+                                           "CongruencesOfSemigroup"));
+      set_func(S, congs);
+    fi;
     # Minimal congs cannot contain each other
     children := ListWithIdenticalEntries(Length(congs), []);
     lattice := Objectify(NewType(FamilyObj(children),
@@ -324,10 +326,12 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   Add(congs, _XSemigroupCongruence(S, []), 1);
 
   # We have a list of all the congs
-  set_func := EvalString(Concatenation("Set",
-                                       type_string,
-                                       "CongruencesOfSemigroup"));
-  set_func(S, congs);
+  if not IsBound(record.restriction) then
+    set_func := EvalString(Concatenation("Set",
+                                         type_string,
+                                         "CongruencesOfSemigroup"));
+    set_func(S, congs);
+  fi;
 
   SEMIGROUPS.OptionsRec(S).report := report;
   # Objectify the result
