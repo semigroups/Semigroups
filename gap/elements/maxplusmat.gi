@@ -218,28 +218,30 @@ InstallMethod(RadialEigenvector,
 "for a max-plus matrix",
 [IsMaxPlusMatrix],
 function(m)
-  local dim, i, j, k, mplus, mstar, diag, crit;
+  local dim, i, k, mplus, mstar, diag, crit;
   dim := Length(AsList(m)[1]);
   ### Method only valid for SpectralRadius = 0.
   if SpectralRadius(m) <> 0 then
     TryNextMethod();
   fi;
-  mplus := List([1..dim], i -> List([1..dim], j ->
-      Maximum(List([1 .. 2*dim], k -> AsList(m^k)[i][j]))));
+  mplus := List([1 .. dim],
+                i -> List([1 .. dim],
+                          j -> Maximum(List([1 .. 2 * dim],
+                                       k -> AsList(m ^ k)[i][j]))));
   mstar := mplus;
-  for i in [1..dim] do
+  for i in [1 .. dim] do
     mstar[i][i] := Maximum(mstar[i][i], 0);
   od;
   crit := false;
   k := 1;
   while crit = false do
-    diag := List([1..dim], i -> AsList(m^k)[i][i]);
+    diag := List([1 .. dim], i -> AsList(m ^ k)[i][i]);
     if 0 in diag then
       crit := Position(diag, 0);
     fi;
-  k := k + 1;
+    k := k + 1;
   od;
-  return List([1..dim], i -> AsList(mstar)[i][crit]);
+  return List([1 .. dim], i -> AsList(mstar)[i][crit]);
 end);
 
 #############################################################################
