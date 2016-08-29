@@ -173,6 +173,11 @@ function(mat)
   return Matrix(IsMaxPlusMatrix, out);
 end);
 
+## Method from lemma 3.1, page 3, in:
+## S. Gaubert, On the burnside problem for semigroups of matrices in the
+## (max, +) algebra, Semigroup Forum, Volume 52, pp 271-292, 1996.
+## http://tinyurl.com/znhk52m
+
 InstallMethod(SpectralRadius,
 "for a max-plus matrix",
 [IsMaxPlusMatrix],
@@ -213,6 +218,10 @@ function(mat)
   # Generate and return digraph object
   return Digraph([1 .. DimensionOfMatrixOverSemiring(mat)], adj);
 end);
+
+## Method from lemma 19, page 36, of:
+## K.G. Farlow, Max-plus Algebra, Thesis.
+## http://tinyurl.com/zzs38s4
 
 InstallMethod(RadialEigenvector,
 "for a max-plus matrix",

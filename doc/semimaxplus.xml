@@ -37,7 +37,10 @@
       <C>IsFinite</C> returns <K>true</K> if <A>S</A> is finite and 
       <K>false</K> otherwise. This method is based on
       <Cite Key="Gaubert1996aa"/> (max-plus) and <Cite Key="Simon1978aa"/>
-      (min-plus). Note, in the min-plus case, all entries must be non-negative.
+      (min-plus). For min-plus matrix semigroups, this method is only 
+      valid if each min-plus matrix in the semigroup contains only non-negative
+      integers. Note, this method is terminating and does not involve 
+      enumerating semigroups.
       <Example><![CDATA[
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
 true
@@ -88,7 +91,7 @@ false
       finitely generated, such that the spectral radius of the matrix equal to
       the sum of the generators (with respect to the max-plus semiring) is zero. 
       <C>NormalizeSemigroup</C> returns  a semigroup of matrices all with 
-      stricly non-positive entries. Note that the output is isomorphic to a 
+      strictly non-positive entries. Note that the output is isomorphic to a 
       min-plus matrix semigroup. This method is based on 
       <Cite Key="Gaubert1996aa"/> and  <Cite Key="Burrell2016aa"/>.
       <Example><![CDATA[

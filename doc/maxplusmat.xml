@@ -221,7 +221,7 @@ gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],
     <Returns>A max-plus matrix.</Returns>
     <Description>
       If <A>mat</A> is an invertible max-plus matrix (i.e. belongs to the
-      category <Ref Filt = "IsMaxPlusMatrix"/>) and is a row permutation
+      category <Ref Filt = "IsMaxPlusMatrix"/> and is a row permutation
       applied to the identity), then <C>InverseOp</C> returns the inverse
       of <A>mat</A>. This method is described in <Cite Key="Kacie2009aa"/>.
       <Example><![CDATA[
@@ -239,7 +239,7 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
     <Oper Name = "RadialEigenvector" Arg = "mat"/>
     <Returns>A vector.</Returns>
     <Description>
-      If <A>mat</A> is an <K>n</K> by <K>n</K> max-plus matrix (i.e. belongs to
+      If <A>mat</A> is a <C>n</C> by <C>n</C> max-plus matrix (i.e. belongs to
       the category <Ref Filt = "IsMaxPlusMatrix"/>), then
       <C>RadialEigenvector</C> returns an eigenvector corresponding to the
       eigenvalue equal to the spectral radius of <A>mat</A>. This method
@@ -259,12 +259,12 @@ gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
     <Description>
       If <A>mat</A> is a max-plus matrix (i.e. belongs to the category <Ref
       Filt = "IsMaxPlusMatrix"/>), then <C>UnweightedPrecedenceDigraph</C>
-      returns the unweighted precedence digraph corresponding to <K>mat</K>.
+      returns the unweighted precedence digraph corresponding to <A>mat</A>.
       
-      For an <K>n</K> by <K>n</K> matrix <K>mat</K>, the unweighted precedence
-      digraph is defined as the digraph on <K>n</K> points where vertex <K>i</K>
-      is adjacent to vertex <K>j</K> if and only if <K>mat[i,j]</K> is not equal 
-      to <K>-infinity</K>.
+      For a <C>n</C> by <C>n</C> matrix <A>mat</A>, the unweighted precedence
+      digraph is defined as the digraph on <C>n</C> points where vertex <C>i</C>
+      is adjacent to vertex <C>j</C> if and only if <A>mat</A><C>[i,j]</C> is 
+      not equal to <C>-infinity</C>.
       <Example><![CDATA[
 gap> UnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],
 > [-infinity, 10,-2], [-infinity, 2, 1]]));
