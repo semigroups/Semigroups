@@ -702,6 +702,8 @@ function(semiring, n)
   return RandomMatrix(IsIntegerMatrix, n);
 end);
 
+#FIXME move this to the correct file
+
 InstallMethod(IsFinite,
 "for a semigroup of matrices of positive integers",
 [IsIntegerMatrixSemigroup],
@@ -731,6 +733,31 @@ function(S)
   od;
 
   return true;
+end);
+
+InstallMethod(InverseOp, "for an integer matrix",
+[IsIntegerMatrix],
+function(mat)
+
+  mat := AsList(mat);
+
+  if DeterminantIntMat(mat) <> 1 then
+    return fail;
+  fi;
+
+  return Matrix(IsIntegerMatrix, InverseOp(mat));
+end);
+
+InstallMethod(Order, "for an integer matrix",
+[IsIntegerMatrix],
+function(mat)
+  return Order(AsList(mat));
+end);
+
+InstallMethod(IsTorsion, "for an integer matrix",
+[IsIntegerMatrix],
+function(mat)
+  return Order(AsList(mat)) <> infinity;
 end);
 
 InstallMethod(AsMatrix,
