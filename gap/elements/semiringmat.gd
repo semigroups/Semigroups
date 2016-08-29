@@ -16,7 +16,7 @@ DeclareCategory("IsMatrixOverSemiring",
 DeclareCategoryCollections("IsMatrixOverSemiring");
 DeclareCategoryCollections("IsMatrixOverSemiringCollection");
 
-DeclareRepresentation("IsPlistMatrixOverSemiringPositionalRep", 
+DeclareRepresentation("IsPlistMatrixOverSemiringPositionalRep",
                       IsMatrixOverSemiring and IsPositionalObjectRep, 1);
 
 # IsList rather than IsHomogeneousList to allow us to
