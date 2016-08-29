@@ -46,6 +46,8 @@ gap> CongruencesOfSemigroup(S);
      degree 2 with 2 generators> with 1 generating pairs> ]
 gap> l := LatticeOfCongruences(S);
 [ [  ], [ 1, 3 ], [ 1 ] ]
+gap> CongruencesOfLattice(l) = CongruencesOfSemigroup(S);
+true
 gap> DotString(l);
 "//dot\ngraph graphname {\n     node [shape=circle]\n2 -- 3\n3 -- 1\n }"
 gap> S := Semigroup([Transformation([1, 4, 3, 1, 4, 2]),
@@ -75,7 +77,7 @@ gap> DotString(l) = Concatenation(
 > " -- 36\n }");
 true
 
-#LatticeOfLeft/RightCongruences
+#T# LatticeOfLeft/RightCongruences
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> LatticeOfLeftCongruences(S);
 [ [  ], [ 1, 5, 9 ], [ 1 ], [ 1, 3, 5, 11, 12, 13, 15, 17 ], [ 1 ], 
@@ -107,6 +109,34 @@ gap> LatticeOfCongruences(S);
 [ [  ], [ 1, 3, 4 ], [ 1 ], [ 1, 3 ] ]
 gap> Size(CongruencesOfSemigroup(S));
 4
+
+#T# LatticeOfLeft/RightCongruences with restriction
+gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
+gap> restriction := Subsemigroup(S, [Transformation([1,1,1]),
+>                                    Transformation([2,2,2]),
+>                                    Transformation([3,3,3])]);;
+gap> latt := LatticeOfLeftCongruences(S, restriction);
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+gap> restriction := [Transformation([3, 2, 3]),
+>                    Transformation([3, 1, 3]),
+>                    Transformation([2, 2, 2])];;
+gap> latt := LatticeOfRightCongruences(S, restriction);
+[ [  ], [ 1, 3, 4 ], [ 1 ], [ 1 ] ]
+gap> CongruencesOfLattice(latt);
+[ <right semigroup congruence over <transformation semigroup of size 11, 
+     degree 3 with 2 generators> with 0 generating pairs>, 
+  <right semigroup congruence over <transformation semigroup of size 11, 
+     degree 3 with 2 generators> with 1 generating pairs>, 
+  <right semigroup congruence over <transformation semigroup of size 11, 
+     degree 3 with 2 generators> with 1 generating pairs>, 
+  <right semigroup congruence over <transformation semigroup of size 11, 
+     degree 3 with 2 generators> with 1 generating pairs> ]
+gap> restriction := [Transformation([3, 1, 3]), Transformation([3, 2, 3])];;
+gap> latt := LatticeOfCongruences(S, restriction);
+[ [  ], [ 1 ] ]
+gap> restriction := [Transformation([3, 3, 3])];;
+gap> latt := LatticeOfCongruences(S, restriction);
+[ [  ] ]
 
 #T# MinimalCongruencesOfSemigroup
 gap> S := Semigroup([Transformation([1,3,2]), Transformation([3,1,3])]);;
@@ -171,9 +201,11 @@ gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true,
 gap> Unbind(S);
 gap> Unbind(congs);
 gap> Unbind(l);
+gap> Unbind(latt);
 gap> Unbind(min);
 gap> Unbind(minl);
 gap> Unbind(minr);
+gap> Unbind(restriction);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/conglatt.tst");
