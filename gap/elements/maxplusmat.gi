@@ -702,39 +702,6 @@ function(semiring, n)
   return RandomMatrix(IsIntegerMatrix, n);
 end);
 
-#FIXME move this to the correct file
-
-InstallMethod(IsFinite,
-"for a semigroup of matrices of positive integers",
-[IsIntegerMatrixSemigroup],
-function(S)
-  local gens, ET, mat, row, val;
-
-  gens := GeneratorsOfSemigroup(S);
-  for mat in gens do
-    for row in mat do
-      for val in row do
-        if val < 0 then
-          TryNextMethod();
-          # FIXME do better than this!
-        fi;
-      od;
-    od;
-  od;
-
-  ET := Idempotents(Semigroup(List(gens,
-                                   x -> AsMatrix(IsNTPMatrix, x, 1, 2))));
-
-  for mat in ET do
-    mat := AsMatrix(IsIntegerMatrix, mat);
-    if mat ^ 2 <> mat ^ 3 then
-      return false;
-    fi;
-  od;
-
-  return true;
-end);
-
 InstallMethod(InverseOp, "for an integer matrix",
 [IsIntegerMatrix],
 function(mat)
