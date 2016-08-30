@@ -15,15 +15,15 @@ DeclareOperation("RandomMatrixMonoid", [IsRing, IsPosInt, IsPosInt]);
 DeclareOperation("RandomMatrixSemigroup", [IsRing, IsPosInt, IsPosInt, IsList]);
 DeclareOperation("RandomMatrixMonoid", [IsRing, IsPosInt, IsPosInt, IsList]);
 
-DeclareSynonym("IsMatrixSemigroup",
+DeclareSynonym("IsMatrixOverFiniteFieldSemigroup",
                IsMatrixOverFiniteFieldCollection and IsSemigroup);
-DeclareSynonym("IsMatrixMonoid",
+DeclareSynonym("IsMatrixOverFiniteFieldMonoid",
                IsMatrixOverFiniteFieldCollection and IsMonoid);
-DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixSemigroup);
-DeclareProperty("IsMatrixSemigroupGreensClass", IsGreensClass);
+DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixOverFiniteFieldSemigroup);
+DeclareProperty("IsMatrixOverFiniteFieldSemigroupGreensClass", IsGreensClass);
 
-InstallTrueMethod(CanComputeSize, IsMatrixSemigroup);
-InstallTrueMethod(IsFinite, IsMatrixSemigroup);
+InstallTrueMethod(CanComputeSize, IsMatrixOverFiniteFieldSemigroup);
+InstallTrueMethod(IsFinite, IsMatrixOverFiniteFieldSemigroup);
 
 # (mp) This is defined for groups, and already difficult there, so I
 # guess close to impossible to do in matrix semigroups

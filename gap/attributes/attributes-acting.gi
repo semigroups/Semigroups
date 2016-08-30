@@ -147,7 +147,7 @@ function(d)
   if not IsRegularDClass(d) then
     ErrorNoReturn("Semigroups: InjectionPrincipalFactor: usage,\n",
                   "the argument <d> must be a regular D-class,");
-  elif IsMatrixSemigroup(Parent(d)) then
+  elif IsMatrixOverFiniteFieldSemigroup(Parent(d)) then
     TryNextMethod();
   fi;
 

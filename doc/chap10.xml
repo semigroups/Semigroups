@@ -46,7 +46,7 @@ true]]></Example>
 
   We provide a couple of convenience functions to streamline the process.
 
-  <#Include Label="IsMatrixSemigroup"/>
+  <#Include Label="IsMatrixOverFiniteFieldSemigroup"/>
   <#Include Label="MatrixSemigroup"/>
 
   In addition to the above, <Ref Attr="IsomorphismMatrixSemigroup"/> and

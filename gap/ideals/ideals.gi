@@ -422,8 +422,8 @@ function(S, gens, opts)
     filts := filts and IsActingSemigroup;
   fi;
 
-  if IsMatrixSemigroup(S) then
-    filts := filts and IsMatrixSemigroup;
+  if IsMatrixOverFiniteFieldSemigroup(S) then
+    filts := filts and IsMatrixOverFiniteFieldSemigroup;
   fi;
 
   I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));

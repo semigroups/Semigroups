@@ -330,17 +330,22 @@ function(func, args, view, print)
   return S;
 end);
 
+# FIXME remove this, there must be another method elsewhere for this, i.e. for
+# matrices over semirings.
+
 InstallMethod(PrintString,
 "for a matrix semigroup with print string attribute",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup
+[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup
  and HasSEMIGROUPS_MatrixSemigroupPrintString],
 SEMIGROUPS_MatrixSemigroupPrintString);
 
 #TODO ViewString
+# FIXME remove this, there must be another method elsewhere for this, i.e. for
+# matrices over semirings.
 
 InstallMethod(ViewObj,
 "for a matrix semigroup with view string attribute",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup
+[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup
  and HasSEMIGROUPS_MatrixSemigroupViewString],
 function(S)
   local n;
