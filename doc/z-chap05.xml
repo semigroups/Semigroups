@@ -249,6 +249,33 @@
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
+  <Section Label = "Integer Matrices">
+    <Heading>
+      Integer Matrices
+    </Heading>
+
+    In this section we describe operations in
+    &Semigroups; specifically for integer matrices.
+    These are in addition to those given elsewhere in this chapter for
+    arbitrary matrices over semirings. These include:
+    <List>
+      <Item>
+        <Ref Oper = "InverseOp" Label = "for an integer matrix"/>
+      </Item>
+      <Item>
+        <Ref Attr = "IsTorsion" Label = "for an integer matrix"/>
+      </Item>
+      <Item>
+        <Ref Oper = "Order"/>
+      </Item>
+    </List>
+    
+
+    <#Include Label = "IntInverseOp">
+    <#Include Label = "IntIsTorsion">
+    <#Include Label = "IntOrder">
+  </Section>
+  
   <Section Label = "Max-plus and min-plus matrices">
     <Heading>
       Max-plus and min-plus matrices

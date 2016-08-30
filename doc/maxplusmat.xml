@@ -198,6 +198,84 @@ gap> PeriodNTPMatrix(mat);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IntInverseOp">
+  <ManSection>
+    <Oper Name = "InverseOp" Arg = "mat" Label = "for an integer matrix"/>
+    <Returns>An integer matrix.</Returns>
+    <Description>
+      If <A>mat</A> is an integer matrix (i.e. belongs to the category 
+      <Ref Filt = "IsIntegerMatrix"/>) with integer matrix inverse, then 
+      <C>InverseOp</C> returns the inverse of <A>mat</A>. Note, an integer
+      matrix has an integer matrix inverse if and only if it has determinant
+      one.
+      <Example><![CDATA[
+gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1], 
+>                                    [0, 1, 0],
+>                                    [1, 0, 0]]);;
+gap> InverseOp(mat);
+Matrix(IsIntegerMatrix, [[0, 0, 1], [0, 1, 0], [-1, 0, 0]])
+gap> mat * InverseOp(mat) = One(mat);
+true
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IntIsTorsion">
+  <ManSection>
+    <Attr Name = "IsTorsion" Arg = "mat" Label = "for an integer matrix"/>
+    <Returns><K>true</K> or <K>false</K></Returns>
+    <Description>
+      If <A>mat</A> is an integer matrix (i.e. belongs to the
+      category <Ref Filt = "IsIntegerMatrix"/>), then <C>IsTorsion</C> returns 
+      <K>true</K> if <A>mat</A> is torsion and <K>false</K> otherwise. 
+      An integer matrix <A>mat</A> is torsion iff there exists an integer 
+      <C>n</C> such that <A>mat</A> raised to the power of <C>n</C> is equal to
+      the identity matrix.
+      <Example><![CDATA[
+gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1], 
+>                                    [0, 1, 0], 
+>                                    [1, 0, 0]]);;
+gap> IsTorsion(mat);
+true
+gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],  
+>                                    [0, -1, 0, 0], 
+>                                    [4, 4, 2, -1], 
+>                                    [1, 1, 0, 3]]);;
+gap> IsTorsion(mat);
+false
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IntOrder">
+  <ManSection>
+    <Oper Name = "Order" Arg = "mat"/>
+    <Returns>An integer or <C>infinity</C>.</Returns>
+    <Description>
+      If <A>mat</A> is an integer matrix (i.e. belongs to the
+      category <Ref Filt = "IsIntegerMatrix"/>), then <C>InverseOp</C> returns 
+      the order of <A>mat</A>. The order of <A>mat</A> is the smallest integer
+      power of <A>mat</A> equal to the identity. If no such integer exists,
+      the order is equal to <C>infinity</C>.
+      <Example><![CDATA[
+gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],
+>                                    [0, -1, 0, 0], 
+>                                    [4, 4, 2, -1], 
+>                                    [1, 1, 0, 3]]);;
+gap> Order(mat);
+infinity
+gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1],
+>                                    [0, 1, 0],
+>                                    [1, 0, 0]]);;
+gap> Order(mat);
+4
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="SpectralRadius">
   <ManSection>
     <Oper Name = "SpectralRadius" Arg = "mat"/>
@@ -209,7 +287,8 @@ gap> PeriodNTPMatrix(mat);
       method is described in <Cite Key="Bacelli1992aa"/>.
       <Example><![CDATA[
 gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],
-> [2, -infinity, 0], [0, 1, 1]]));                  
+>                                            [2, -infinity, 0], 
+>                                            [0, 1, 1]]));                  
 3/2]]></Example>
     </Description>
   </ManSection>
@@ -226,7 +305,8 @@ gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],
       of <A>mat</A>. This method is described in <Cite Key="Kacie2009aa"/>.
       <Example><![CDATA[
 gap> InverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 0], 
-> [0, -infinity, -infinity], [-infinity, 0,  -infinity]]));
+>                                       [0, -infinity, -infinity],  
+>                                       [-infinity, 0,  -infinity]]));
 Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity], 
   [-infinity, -infinity, 0], [0, -infinity, -infinity]])
 ]]></Example>
