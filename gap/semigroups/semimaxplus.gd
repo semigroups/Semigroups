@@ -78,4 +78,4 @@ DeclareOperation("FullTropicalMaxPlusMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("FullTropicalMinPlusMonoid", [IsPosInt, IsPosInt]);
 
 DeclareOperation("NormalizeSemigroup", [IsMaxPlusMatrixSemigroup]);
-DeclareOperation("IsTorsion", [IsMaxPlusMatrixSemigroup]);
+DeclareAttribute("IsTorsion", IsMaxPlusMatrixSemigroup);

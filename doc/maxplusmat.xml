@@ -259,8 +259,8 @@ gap> Order(mat);
       method is described in <Cite Key="Bacelli1992aa"/>.
       <Example><![CDATA[
 gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],
->                                            [2, -infinity, 0], 
->                                            [0, 1, 1]]));                  
+>                                            [2, -infinity, 0],
+>                                            [0, 1, 1]]));          
 3/2]]></Example>
     </Description>
   </ManSection>
