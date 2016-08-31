@@ -16,7 +16,7 @@ DeclareCategory("IsMatrixOverSemiring",
 DeclareCategoryCollections("IsMatrixOverSemiring");
 DeclareCategoryCollections("IsMatrixOverSemiringCollection");
 
-DeclareRepresentation("IsPlistMatrixOverSemiringPositionalRep", 
+DeclareRepresentation("IsPlistMatrixOverSemiringPositionalRep",
                       IsMatrixOverSemiring and IsPositionalObjectRep, 1);
 
 # IsList rather than IsHomogeneousList to allow us to
@@ -94,6 +94,7 @@ DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
 DeclareAttribute("DimensionOfMatrixOverSemiringCollection",
                  IsMatrixOverSemiringCollection);
 DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
+DeclareAttribute("IsTorsion", IsMatrixOverSemiring);
 
 # Cannot use TypeObj since it can contain information about
 # properties satisfied (or not) by the object.
