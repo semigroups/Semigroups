@@ -627,6 +627,13 @@ gap> LeftBlocks(x * x);
 gap> RankOfBipartition(x * x);
 0
 
+#T# bipartition: IndexPeriodOfSemigroupElement, for a bipartition
+gap> x := Bipartition(
+> [[1, 4, -8], [2, -4], [3, 5, -1], [6, -9], [7, -7], [8, -5], [9, 10, -3],
+> [-2], [-6], [-10]]);;
+gap> IndexPeriodOfSemigroupElement(x);
+[ 3, 3 ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
 gap> Unbind(N);

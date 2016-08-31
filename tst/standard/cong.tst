@@ -42,6 +42,8 @@ gap> SemigroupCongruence(S, [S.1, S.2]);
 
 #T# SemigroupCongruence: Simple semigroup
 gap> S := Semigroup(MinimalIdeal(FullTransformationMonoid(5)));;
+gap> IsSimpleSemigroup(S);
+true
 gap> pairs := [
 > [Transformation([1, 1, 1, 1, 1]), Transformation([3, 3, 3, 3, 3])]];;
 gap> SemigroupCongruence(S, pairs);
@@ -50,7 +52,10 @@ gap> SemigroupCongruence(S, pairs);
 
 #T# SemigroupCongruence: 0-simple semigroup
 gap> S := Semigroup(Transformation([1, 2]), Transformation([1, 1]));;
-gap> IsRegularSemigroup(S);;
+gap> IsZeroSimpleSemigroup(S);
+true
+gap> IsRegularSemigroup(S);
+true
 gap> SemigroupCongruence(S, [S.1, S.1]);
 <semigroup congruence over <commutative 0-simple regular transformation 
  monoid of degree 2 with 1 generator> with linked triple (1,1,1)>

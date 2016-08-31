@@ -8,10 +8,10 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="IsMatrixSemigroup">
+<#GAPDoc Label="IsMatrixOverFiniteFieldSemigroup">
 <ManSection>
-  <Prop Name="IsMatrixSemigroup" Arg="S"/>
-  <Prop Name="IsMatrixMonoid" Arg="S"/>
+  <Prop Name="IsMatrixOverFiniteFieldSemigroup" Arg="S"/>
+  <Prop Name="IsMatrixOverFiniteFieldMonoid" Arg="S"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
     A <E>matrix semigroup</E> is simply a semigroup consisting of
@@ -26,7 +26,7 @@
 
     Note that it is possible for a matrix semigroup to have a
     multiplicative neutral element (i.e. an identity element) but not to
-    satisfy <C>IsMatrixMonoid</C>.
+    satisfy <C>IsMatrixOverFiniteFieldMonoid</C>.
   </Description>
 </ManSection>
 <#/GAPDoc>
@@ -91,14 +91,14 @@ gap> Size(Range(iso));
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsMatrixSemigroupGreensClass">
+<#GAPDoc Label="IsMatrixOverFiniteFieldSemigroupGreensClass">
   <ManSection>
-    <Prop Name="IsMatrixSemigroupGreensClass" Arg="class"/>
+    <Prop Name="IsMatrixOverFiniteFieldSemigroupGreensClass" Arg="class"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
-      property <C>IsMatrixSemigroupGreensClass</C> if and only if <C>S</C>
-      is belongs to the category <C>IsMatrixSemigroup</C>.
+      property <C>IsMatrixOverFiniteFieldSemigroupGreensClass</C> if and only if <C>S</C>
+      is belongs to the category <C>IsMatrixOverFiniteFieldSemigroup</C>.
     </Description>
   </ManSection>
 <#/GAPDoc>

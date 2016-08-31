@@ -1,0 +1,75 @@
+#############################################################################
+##
+#W  elements.xml
+#Y  Copyright (C) 2016                                   Wilfred A. Wilson
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IndexPeriodOfSemigroupElement">
+  <ManSection>
+    <Oper Name = "IndexPeriodOfSemigroupElement" Arg = "x"/>
+    <Returns>A list of two positive integers.</Returns>
+    <Description>
+      If <A>x</A> is a semigroup element, then
+      <C>IndexPeriodOfSemigroupElement(<A>x</A>)</C> returns the pair
+      <C>[m, r]</C>, where <C>m</C> and <C>r</C> are the least positive
+      integers such that <C><A>x</A>^(m + r) = <A>x</A> ^ m</C>.
+
+      The number <C>m</C> is known as the <E>index</E> of <A>x</A>, and the
+      number<C>r</C> is known as the <E>period</E> of <A>x</A>.
+
+      <Example><![CDATA[
+gap> x := Transformation([2, 6, 3, 5, 6, 1]);; 
+gap> IndexPeriodOfSemigroupElement(x);
+[ 2, 3 ]
+gap> m := IndexPeriodOfSemigroupElement(x)[1];;
+gap> r := IndexPeriodOfSemigroupElement(x)[2];;
+gap> x ^ (m + r) = x ^ m;
+true
+gap> x := PartialPerm([2, 3, 5], [2, 3, 5]);;
+gap> IsIdempotent(x);
+true
+gap> IndexPeriodOfSemigroupElement(x);
+[ 1, 1 ]
+]]></Example>
+    </Description> 
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SmallestIdempotentPower">
+  <ManSection>
+    <Attr Name = "SmallestIdempotentPower" Arg = "x"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      If <A>x</A> is a semigroup element, then
+      <C>SmallestIdempotentPower(<A>x</A>)</C> returns the least positive
+      integer <C>n</C> such that <C><A>x</A>^n</C> is an idempotent.  The
+      smallest idempotent power of <A>x</A> is the least multiple of the period
+      of <A>x</A> that is greater than or equal to the index of <A>x</A>; see
+      <Ref Oper="IndexPeriodOfSemigroupElement"/>.
+
+      <Example><![CDATA[
+gap> x := Transformation([4, 1, 4, 5, 1]);
+Transformation( [ 4, 1, 4, 5, 1 ] )
+gap> SmallestIdempotentPower(x);
+3
+gap> not IsIdempotent(x) and not IsIdempotent(x ^ 2);
+true
+gap> IsIdempotent(x ^ 3);
+true
+gap> x := Bipartition([[1, 2, -3, -4], [3, -5], [4, -1], [5, -2]]);
+<block bijection: [ 1, 2, -3, -4 ], [ 3, -5 ], [ 4, -1 ], [ 5, -2 ]>
+gap> SmallestIdempotentPower(x);
+4
+gap> x := EmptyPartialPerm();
+<empty partial perm>
+gap> SmallestIdempotentPower(x);
+1
+gap> IsIdempotent(x);
+true]]></Example>
+    </Description> 
+  </ManSection>
+<#/GAPDoc>

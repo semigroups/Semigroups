@@ -231,6 +231,31 @@ function(H)
   return Idempotents(H)[1];
 end);
 
+InstallMethod(IsomorphismPermGroup, "for H-class of a semigroup",
+[IsGreensHClass],
+function(H)
+  local G, p, h;
+
+  if not IsGroupHClass(H) then
+    ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
+                  "the H-class is not a group,");
+  fi;
+
+  G := Group(());
+
+  for h in H do 
+    p := Permutation(h, AsSet(H), OnRight);
+    if not p in G then 
+      G := ClosureGroup(G, p);
+      if Size(G) = Size(H) then 
+        break;
+      fi;
+    fi;
+  od;
+  return MappingByFunction(H, G, h -> Permutation(h, AsSet(H), OnRight));
+end);
+  
+
 InstallMethod(StructureDescription, "for a Green's H-class",
 [IsGreensHClass],
 function(H)

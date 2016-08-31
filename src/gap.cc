@@ -335,8 +335,8 @@ Obj NTPMatrixType;
 Obj IsIntegerMatrix;
 Obj IntegerMatrixType;
 Obj IsPBR;
-Obj PBRTypes;
-Obj PBRType;
+Obj TYPES_PBR;
+Obj TYPE_PBR;
 
 /*****************************************************************************
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
@@ -581,11 +581,10 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("infinity", &infinity);
   ImportGVarFromLibrary("Ninfinity", &Ninfinity);
 
-  ImportGVarFromLibrary("SEMIGROUPS_PBRTypes", &PBRTypes);
-  ImportGVarFromLibrary("PBRType", &PBRType);
+  ImportGVarFromLibrary("TYPES_PBR", &TYPES_PBR);
+  ImportGVarFromLibrary("TYPE_PBR", &TYPE_PBR);
 
   ImportGVarFromLibrary("IsPBR", &IsPBR);
-  ImportGVarFromLibrary("PBRType", &PBRType);
 
   ImportGVarFromLibrary("IsBooleanMat", &IsBooleanMat);
   ImportGVarFromLibrary("BooleanMatType", &BooleanMatType);

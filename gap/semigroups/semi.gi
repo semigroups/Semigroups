@@ -248,7 +248,7 @@ function(gens, opts)
   fi;
 
   if IsMatrixObj(gens[1]) then
-    filts := filts and IsMatrixSemigroup;
+    filts := filts and IsMatrixOverFiniteFieldSemigroup;
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
@@ -333,7 +333,7 @@ function(gens, opts)
   fi;
 
   if IsMatrixObj(gens[1]) then
-    filts := filts and IsMatrixSemigroup;
+    filts := filts and IsMatrixOverFiniteFieldSemigroup;
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));

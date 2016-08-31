@@ -413,12 +413,13 @@ function(pair, cong)
   S := Range(cong);
   if Size(pair) <> 2 then
     ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-    "the first arg <pair> must be a list of length 2,");
-  fi;
-  if not (pair[1] in S and pair[2] in S) then
+                  "the first arg <pair> must be a list of length 2,");
+  elif not (pair[1] in S and pair[2] in S) then
     ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-    "elements of the first arg <pair> must be\n",
-    "in the range of the second arg <cong>,");
+                  "elements of the first arg <pair> must be\n",
+                  "in the range of the second arg <cong>,");
+  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then 
+    return true;
   fi;
   return CONG_PAIRS_IN(cong, pair);
 end);

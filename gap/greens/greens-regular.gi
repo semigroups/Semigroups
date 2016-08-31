@@ -259,24 +259,26 @@ end);
 InstallMethod(NrIdempotents, "for a regular acting *-semigroup",
 [IsRegularStarSemigroup and IsActingSemigroup],
 function(S)
-  local nr, tester, o, scc, lookup, vals, x, i, j;
+  local nr, tester, o, scc, lookup, vals, x, i, j, k;
 
   nr     := 0;
   tester := IdempotentTester(S);
   o      := Enumerate(LambdaOrb(S));
   scc    := OrbSCC(o);
   lookup := OrbSCCLookup(o);
-
-  for i in [2 .. Length(o)] do
-    vals := scc[lookup[i]];
-    x := o[i];
-    for j in vals do
-      if tester(x, o[j]) then
-        nr := nr + 1;
-      fi;
+  
+  for i in [2 .. Length(scc)] do 
+    vals := scc[i];
+    for j in [1 .. Length(vals)] do 
+      nr := nr + 1;
+      x  := o[vals[j]];
+      for k in [j + 1 .. Length(vals)] do 
+        if tester(x, o[vals[k]]) then
+          nr := nr + 2;
+        fi;
+      od;
     od;
   od;
-
   return nr;
 end);
 
@@ -284,7 +286,10 @@ InstallMethod(NrIdempotents, "for a regular star bipartition acting semigroup",
 [IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and
  HasGeneratorsOfSemigroup],
 function(S)
-  return Sum(NrIdempotentsByRank(S));
+  if Length(Enumerate(LambdaOrb(S))) > 10000 then 
+    return Sum(NrIdempotentsByRank(S));
+  fi;
+  TryNextMethod();
 end);
 
 #TODO other methods for this!

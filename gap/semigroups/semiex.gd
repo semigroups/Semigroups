@@ -74,9 +74,9 @@ DeclareOperation("SEMIGROUPS_MatrixSemigroupConstructor",
                  [IsFunction, IsList, IsString, IsString]);
 DeclareOperation("SEMIGROUPS_MatrixGroupConstructor", [IsFunction]);
 DeclareAttribute("SEMIGROUPS_MatrixSemigroupViewString",
-                 IsMatrixSemigroup);
+                 IsMatrixOverFiniteFieldSemigroup);
 DeclareAttribute("SEMIGROUPS_MatrixSemigroupPrintString",
-                 IsMatrixSemigroup);
+                 IsMatrixOverFiniteFieldSemigroup);
 
 # TODO rename these to GeneralLinearMonoid
 DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);

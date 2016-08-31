@@ -370,6 +370,19 @@ bool rec_get_report(Obj rec) {
   return false;
 }
 
+size_t rec_get_nr_threads(Obj rec) {
+  // TODO assert(o is a prec)
+  //
+
+  initRNams();
+
+  if (IsbPRec(rec, RNam_nr_threads)) {
+    assert(IS_INTOBJ(ElmPRec(rec, RNam_nr_threads)));
+    return INT_INTOBJ(ElmPRec(rec, RNam_nr_threads));
+  }
+  return 1;
+}
+
 /*******************************************************************************
 *
 *******************************************************************************/

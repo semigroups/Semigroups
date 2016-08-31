@@ -115,7 +115,6 @@
     <#Include Label = "RandomMatrix">
     <#Include Label = "IsXMatrix"/>
     <#Include Label = "IsXMatrixCollection"/>
-    <#Include Label = "XMatrixFamily"/>
     <#Include Label = "AsList"/>
 
     <!-- the following could go in a section of their own if there are more at

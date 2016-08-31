@@ -165,10 +165,10 @@ Obj MatrixOverSemiringConverter::unconvert(Element const* x) const {
 
 Obj PBRConverter::get_gap_type(size_t deg) const {
   deg++;
-  if (deg > (size_t) LEN_PLIST(PBRTypes) || ELM_PLIST(PBRTypes, deg) == 0) {
-    CALL_1ARGS(PBRType, INTOBJ_INT(deg - 1));
+  if (deg > (size_t) LEN_PLIST(TYPES_PBR) || ELM_PLIST(TYPES_PBR, deg) == 0) {
+    CALL_1ARGS(TYPE_PBR, INTOBJ_INT(deg - 1));
   }
-  return ELM_PLIST(PBRTypes, deg);
+  return ELM_PLIST(TYPES_PBR, deg);
 }
 
 // TODO add some more asserts here

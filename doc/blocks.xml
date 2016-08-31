@@ -53,17 +53,6 @@ gap> RightProjection(x);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="BlocksFamily">
-  <ManSection>
-    <Var Name = "BlocksFamily"/>
-    <Var Name = "BlocksType"/>
-    <Description>
-      The family of all bipartitions is <C>BipartitionFamily</C> and the type
-      of every bipartition is <C>BipartitionType</C>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="BlocksNC">
   <ManSection>
     <Func Name = "BlocksNC" Arg = "classes"/>

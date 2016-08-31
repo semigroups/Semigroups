@@ -14,9 +14,8 @@ if not IsBound(ORBC) then
 fi;
 
 # The following are for GAP internal objects of type T_SEMI
-BindGlobal("TSemiObjFamily", NewFamily("TSemiObjFamily"));
 DeclareCategory("IsTSemiObj", IsObject);
-BindGlobal("TheTypeTSemiObj", NewType(TSemiObjFamily, IsTSemiObj));
+BindGlobal("TheTypeTSemiObj", NewType(NewFamily("TSemiObjFamily"), IsTSemiObj));
 
 # the kernel module makes use of the c functions HTAdd_TreeHash_C and
 # HTValue_TreeHash_C and so we should only use the part of the kernel module
@@ -49,6 +48,7 @@ ReadPackage("semigroups/gap/elements/maxplusmat.gd");
 ReadPackage("semigroups/gap/elements/ffmat.gd");
 ReadPackage("semigroups/gap/elements/boolmat.gd");
 ReadPackage("semigroups/gap/elements/trans.gd");
+ReadPackage("semigroups/gap/elements/elements.gd");
 
 ReadPackage("semigroups/gap/semigroups/semi.gd");
 ReadPackage("semigroups/gap/semigroups/grpperm.gd");

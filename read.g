@@ -21,6 +21,8 @@ ReadPackage("semigroups/gap/elements/maxplusmat.gi");
 ReadPackage("semigroups/gap/elements/boolmat.gi");
 ReadPackage("semigroups/gap/elements/ffmat.gi");
 ReadPackage("semigroups/gap/elements/trans.gi");
+ReadPackage("semigroups/gap/elements/elements.gi");
+ReadPackage("semigroups/gap/elements/pperm.gi");
 
 ReadPackage("semigroups/gap/semigroups/semi.gi");
 ReadPackage("semigroups/gap/semigroups/grpperm.gi");

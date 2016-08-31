@@ -811,3 +811,89 @@ function(S)
   fi;
   return T;
 end);
+
+BindGlobal("_SemigroupSizeByIndexPeriod",
+function(S)
+  local gen, ind;
+  gen := MinimalSemigroupGeneratingSet(S)[1];
+  ind := IndexPeriodOfSemigroupElement(gen);
+  if ind[1] = 1 then
+    SetIsGroupAsSemigroup(S, true);
+  fi;
+  return Sum(ind) - 1;
+end);
+
+InstallMethod(Size,
+"for a monogenic transformation semigroup with minimal generating set",
+[IsMonogenicSemigroup and HasMinimalSemigroupGeneratingSet and
+ IsTransformationSemigroup],
+10, # to beat IsActingSemigroup
+_SemigroupSizeByIndexPeriod);
+
+InstallMethod(Size,
+"for a monogenic partial perm semigroup with minimal generating set",
+[IsMonogenicSemigroup and HasMinimalSemigroupGeneratingSet and
+ IsPartialPermSemigroup],
+10, # to beat IsActingSemigroup
+_SemigroupSizeByIndexPeriod);
+
+InstallMethod(Size,
+"for a monogenic bipartition semigroup with minimal generating set",
+[IsMonogenicSemigroup and HasMinimalSemigroupGeneratingSet and
+ IsBipartitionSemigroup],
+10, # to beat IsActingSemigroup
+_SemigroupSizeByIndexPeriod);
+
+InstallMethod(Size,
+"for a monogenic semigroup of matrices over finite field with minimal gen set",
+[IsMonogenicSemigroup and HasMinimalSemigroupGeneratingSet and
+ IsMatrixOverFiniteFieldCollection],
+_SemigroupSizeByIndexPeriod);
+
+MakeReadWriteGlobal("_SemigroupSizeByIndexPeriod");
+Unbind(_SemigroupSizeByIndexPeriod);
+
+BindGlobal("_MonoidSizeByIndexPeriod",
+function(S)
+  local gen, ind;
+  gen := MinimalMonoidGeneratingSet(S)[1];
+  ind := IndexPeriodOfSemigroupElement(gen);
+  if ind[1] = 1 and One(S) in HClass(S, gen) then
+    # <gen> generates the One of S, so the One is not an additional element
+    # Note that this implies that S is a cyclic group
+    SetIsGroupAsSemigroup(S, true);
+    return ind[2];
+  fi;
+  return Sum(ind);
+end);
+
+InstallMethod(Size,
+"for a monogenic transformation monoid with minimal generating set",
+[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+ IsTransformationSemigroup],
+5, # to beat IsActingSemigroup
+_MonoidSizeByIndexPeriod);
+
+InstallMethod(Size,
+"for a monogenic partial perm monoid with minimal generating set",
+[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+ IsPartialPermSemigroup],
+5, # to beat IsActingSemigroup
+_MonoidSizeByIndexPeriod);
+
+InstallMethod(Size,
+"for a monogenic bipartition monoid with minimal generating set",
+[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+ IsBipartitionSemigroup],
+5, # to beat IsActingSemigroup
+_MonoidSizeByIndexPeriod);
+
+InstallMethod(Size,
+"for a monogenic monoid of matrices over finite field with minimal gen set",
+[IsMonogenicMonoid and HasMinimalMonoidGeneratingSet and
+ IsMatrixOverFiniteFieldCollection],
+5, # to beat IsActingSemigroup
+_MonoidSizeByIndexPeriod);
+
+MakeReadWriteGlobal("_MonoidSizeByIndexPeriod");
+Unbind(_MonoidSizeByIndexPeriod);

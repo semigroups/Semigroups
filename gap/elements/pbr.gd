@@ -21,9 +21,6 @@ DeclareCategory("IsPBR",
 DeclareCategoryCollections("IsPBR");
 DeclareCategoryCollections("IsPBRCollection");
 
-DeclareGlobalFunction("PBRType");
-DeclareGlobalFunction("PBRFamily");
-
 DeclareOperation("PBR", [IsDenseList, IsDenseList]);
 DeclareGlobalFunction("PBRNC");
 DeclareOperation("RandomPBR", [IsPosInt]);

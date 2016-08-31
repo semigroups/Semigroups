@@ -551,7 +551,8 @@ Obj SEMIGROUP_NR_IDEMPOTENTS(Obj self, Obj data) {
   if (data_type(data) == UNKNOWN) {
     ErrorQuit("SEMIGROUP_NR_IDEMPOTENTS: this shouldn't happen!", 0L, 0L);
   }
-  return INTOBJ_INT(data_semigroup(data)->nr_idempotents(rec_get_report(data)));
+  return INTOBJ_INT(data_semigroup(data)->nr_idempotents(
+      rec_get_report(data), rec_get_nr_threads(data)));
 }
 
 /*******************************************************************************

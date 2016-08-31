@@ -493,6 +493,15 @@ gap> SEMIGROUPS.CongByGenPairs(S, [[S.1, S.2], [S.1, S.3]], "elephant");
 Error, Semigroups: SEMIGROUPS.CongByGenPairs: usage,
 <type> must be "left", "right", or "twosided",
 
+# Test \in for pair of the form [x, x]
+gap> S := FreeBand(3);
+<free band on the generators [ x1, x2, x3 ]>
+gap> cong := SemigroupCongruence(S, [S.1, S.1 * S.2]);
+<semigroup congruence over <free band on the generators [ x1, x2, x3 ]> with 
+1 generating pairs>
+gap> [S.1, S.1] in cong;
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);

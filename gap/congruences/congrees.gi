@@ -16,7 +16,7 @@ InstallMethod(IsReesCongruence,
 [IsSemigroupCongruence],
 1, # Prioritise this function over the one in the library
 function(cong)
-  local S, classes, sizes, pos, class, ideal;
+  local S, classes, nontrivial, i, class, ideal;
   # This function is adapted from code in the library
   S := Range(cong);
   if NrEquivalenceClasses(cong) = Size(S) then
@@ -28,18 +28,25 @@ function(cong)
       return false;
     fi;
   else
-    # Find all the non-trivial classes
+    # Search for non-trivial classes
     classes := EquivalenceClasses(cong);
-    sizes := List(classes, Size);
-    pos := PositionsProperty(sizes, n -> n > 1);
-    if Length(pos) > 1 then
-      return false;
-    fi;
+    nontrivial := 0;
+    for i in [1 .. Length(classes)] do
+      if Size(classes[i]) > 1 then
+        if nontrivial = 0 then
+          nontrivial := i;
+        else
+          # Two non-trivial classes
+          return false;
+        fi;
+      fi;
+    od;
+
     # Only one non-trivial class - check it is an ideal
-    class := classes[pos[1]];
+    class := classes[nontrivial];
     ideal := SemigroupIdeal(S, AsList(class));
-    ideal := SemigroupIdeal(S, MinimalIdealGeneratingSet(ideal));
     if Size(class) = Size(ideal) then
+      ideal := SemigroupIdeal(S, MinimalIdealGeneratingSet(ideal));
       SetSemigroupIdealOfReesCongruence(cong, ideal);
       return true;
     else

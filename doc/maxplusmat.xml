@@ -104,34 +104,6 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="XMatrixFamily">
-  <ManSection Label ="XMatrixFamily">
-    <Heading>Matrix types and families</Heading>
-    <Var Name = "BooleanMatFamily"             />
-    <Var Name = "BooleanMatType"               />
-    <Var Name = "MaxPlusMatrixType"            />
-    <Var Name = "MaxPlusMatrixFamily"          />
-    <Var Name = "MinPlusMatrixType"            />
-    <Var Name = "MinPlusMatrixFamily"          />
-    <Var Name = "TropicalMatrixType"           />
-    <Var Name = "TropicalMatrixFamily"         />
-    <Var Name = "TropicalMaxPlusMatrixType"    />
-    <Var Name = "TropicalMaxPlusMatrixFamily"  />
-    <Var Name = "TropicalMinPlusMatrixType"    />
-    <Var Name = "TropicalMinPlusMatrixFamily"  />
-    <Var Name = "ProjectiveMaxPlusMatrixType"  />
-    <Var Name = "ProjectiveMaxPlusMatrixFamily"/>
-    <Var Name = "NTPMatrixType"                />
-    <Var Name = "NTPMatrixFamily"              />
-    <Var Name = "IntegerMatrixType"            />
-    <Var Name = "IntegerMatrixFamily"          />
-    <Description>
-      Every matrix over a semiring in &Semigroups; has family and type equal to
-      one of the above.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="ThresholdTropicalMatrix">
   <ManSection>
     <Attr Name="ThresholdTropicalMatrix" Arg="mat"/>

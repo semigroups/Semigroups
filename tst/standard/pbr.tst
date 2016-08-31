@@ -426,6 +426,16 @@ gap> x = ReadGenerators(filename)[1];
 true
 gap> Exec("rm ", filename);
 
+# Test for no side effects in PBRNC (Issue #193)
+gap> A := [[2, 3], [-3, -2, -1, 2], [-3, -2, 2]];;
+gap> B := [[-2], [-3, 2, 3], [-2, -1]];;
+gap> P := PBR(A, B);
+PBR([ [ 2, 3 ], [ -3, -2, -1, 2 ], [ -3, -2, 2 ] ], 
+  [ [ -2 ], [ -3, 2, 3 ], [ -2, -1 ] ])
+gap> P := PBR(A, B);
+PBR([ [ 2, 3 ], [ -3, -2, -1, 2 ], [ -3, -2, 2 ] ], 
+  [ [ -2 ], [ -3, 2, 3 ], [ -2, -1 ] ])
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(filename);

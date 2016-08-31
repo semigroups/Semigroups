@@ -759,6 +759,23 @@ function(S)
   TryNextMethod();
 end);
 
+InstallImmediateMethod(IsMonogenicMonoid,
+IsMonoid and IsFinite and HasGeneratorsOfMonoid,
+0,
+function(S)
+  local gens;
+
+  gens := GeneratorsOfMonoid(S);
+  if CanEasilyCompareElements(S) then
+    gens := DuplicateFreeList(gens);
+  fi;
+  if Length(gens) = 1 then
+    SetMinimalMonoidGeneratingSet(S, gens);
+    return true;
+  fi;
+  TryNextMethod();
+end);
+
 # same method for ideals
 
 InstallMethod(IsMonogenicSemigroup, "for a semigroup",

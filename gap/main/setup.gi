@@ -148,7 +148,7 @@ function(R)
 end);
 
 InstallMethod(ActionDegree, "for an matrix over finite field semigroup",
-[IsMatrixSemigroup],
+[IsMatrixOverFiniteFieldSemigroup],
 function(S)
     return ActionDegree(Representative(S));
 end);
@@ -223,7 +223,7 @@ function(x, i)
 end);
 
 InstallMethod(ActionRank, "for a matrix semigroup",
-[IsMatrixSemigroup],
+[IsMatrixOverFiniteFieldSemigroup],
 function(S)
   return x -> Rank(RowSpaceBasis(x));
 end);
@@ -243,7 +243,7 @@ InstallMethod(MinActionRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], x -> 0);
 
 InstallMethod(MinActionRank, "for a matrix semigroup",
-[IsMatrixSemigroup], x -> 0);
+[IsMatrixOverFiniteFieldSemigroup], x -> 0);
 
 # options passed to LambdaOrb(s) when it is created
 
@@ -260,7 +260,7 @@ InstallMethod(LambdaOrbOpts, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> rec());
 
 InstallMethod(LambdaOrbOpts, "for a matrix semigroup",
-[IsMatrixSemigroup], s -> rec());
+[IsMatrixOverFiniteFieldSemigroup], s -> rec());
 
 InstallMethod(RhoOrbOpts, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> rec(forflatplainlists := true));
@@ -275,7 +275,7 @@ InstallMethod(RhoOrbOpts, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> rec());
 
 InstallMethod(RhoOrbOpts, "for a matrix semigroup",
-[IsMatrixSemigroup], s -> rec());
+[IsMatrixOverFiniteFieldSemigroup], s -> rec());
 
 # the lambda and rho acts
 InstallMethod(LambdaAct, "for a transformation semigroup",
@@ -307,7 +307,7 @@ InstallMethod(LambdaAct, "for a Rees 0-matrix subsemigroup",
 end);
 
 InstallMethod(LambdaAct, "for a matrix semigroup",
-[IsMatrixSemigroup],
+[IsMatrixOverFiniteFieldSemigroup],
 S -> function(vsp, mat)
   return MatrixOverFiniteFieldRowSpaceRightAction(S, vsp, mat);
 end);
@@ -344,7 +344,7 @@ InstallMethod(RhoAct, "for a Rees 0-matrix subsemigroup",
   fi;
 end);
 
-InstallMethod(RhoAct, "for a matrix semigroup", [IsMatrixSemigroup],
+InstallMethod(RhoAct, "for a matrix semigroup", [IsMatrixOverFiniteFieldSemigroup],
 function(S)
   return function(vsp, mat)
     return LambdaAct(S)(vsp, TransposedSMat(mat));
@@ -369,7 +369,7 @@ InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);
 
 InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
-[IsMatrixSemigroup],
+[IsMatrixOverFiniteFieldSemigroup],
 function(s)
     local deg;
     deg := DegreeOfMatrixSemigroup(s) + 1;
@@ -396,7 +396,7 @@ InstallMethod(RhoOrbSeed, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], S -> -1);
 
 InstallMethod(RhoOrbSeed, "for a matrix semigroup",
-[IsMatrixSemigroup], LambdaOrbSeed);
+[IsMatrixOverFiniteFieldSemigroup], LambdaOrbSeed);
 
 # the function calculating the lambda or rho value of an element
 
@@ -427,7 +427,7 @@ InstallMethod(LambdaFunc, "for a Rees 0-matrix subsemigroup",
 end);
 
 InstallMethod(LambdaFunc, "for a matrix semigroup",
-[IsMatrixSemigroup],
+[IsMatrixOverFiniteFieldSemigroup],
 s -> function(mat)
   # a function that returns the row space
     return RowSpaceBasis(mat);
@@ -454,7 +454,7 @@ InstallMethod(RhoFunc, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R -> (x -> x![1]));
 
 InstallMethod(RhoFunc, "for a matrix semigroup",
-[IsMatrixSemigroup],
+[IsMatrixOverFiniteFieldSemigroup],
 function(S)
   # a function that returns the column space
   return
@@ -488,7 +488,7 @@ end);
 
 #T Why are there row spaces and matrices passed in here?
 InstallMethod(LambdaRank, "for a matrix semigroup",
-[IsMatrixSemigroup], x -> Rank);
+[IsMatrixOverFiniteFieldSemigroup], x -> Rank);
 
 InstallMethod(RhoRank, "for a transformation semigroup",
 [IsTransformationSemigroup], S -> function(x)
@@ -509,7 +509,7 @@ InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R -> LambdaRank(R));
 
 InstallMethod(RhoRank, "for a matrix semigroup",
-[IsMatrixSemigroup],
+[IsMatrixOverFiniteFieldSemigroup],
 function(S)
   return LambdaRank(S);
 end);
@@ -547,7 +547,7 @@ end);
 # g ^ Y = X and g acts on the left like the inverse of f on Y.
 
 InstallMethod(LambdaInverse, "for a matrix semigroup",
-[IsMatrixSemigroup], s ->
+[IsMatrixOverFiniteFieldSemigroup], s ->
 function(rsp, mat)
   return MatrixOverFiniteFieldLocalRightInverse(s, rsp, mat);
 end);
@@ -582,7 +582,7 @@ InstallMethod(RhoInverse, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BLOCKS_INV_LEFT);
 
 InstallMethod(RhoInverse, "for a matrix semigroup",
-[IsMatrixSemigroup], s ->
+[IsMatrixOverFiniteFieldSemigroup], s ->
 function(rsp, mat)
   return TransposedSMat(MatrixOverFiniteFieldLocalRightInverse(s,
                           rsp, TransposedSMat(mat)));
@@ -638,7 +638,7 @@ InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup], LambdaBound);
 
 InstallMethod(LambdaBound, "for a matrix semigroup",
-[IsMatrixSemigroup], s ->
+[IsMatrixOverFiniteFieldSemigroup], s ->
 function(r)
   local f;
 
@@ -651,7 +651,7 @@ function(r)
 end);
 
 InstallMethod(RhoBound, "for a matrix semigroup",
-[IsMatrixSemigroup], LambdaBound);
+[IsMatrixOverFiniteFieldSemigroup], LambdaBound);
 
 # LamdaIdentity(s) returns a function that returns
 # the identity element of the Schutzenberger group
@@ -708,13 +708,13 @@ InstallMethod(RhoIdentity, "for a Rees 0-matrix semigroup",
   end);
 
 InstallMethod(LambdaIdentity, "for a matrix semigroup",
-[IsMatrixSemigroup], S ->
+[IsMatrixOverFiniteFieldSemigroup], S ->
 function(r)
   return IdentityMatrixOverFiniteField(Representative(S), r);
 end);
 
 InstallMethod(RhoIdentity, "for a matrix semigroup",
-[IsMatrixSemigroup], S ->
+[IsMatrixOverFiniteFieldSemigroup], S ->
 function(r)
   return IdentityMatrixOverFiniteField(Representative(S), r);
 end);
@@ -745,7 +745,7 @@ end);
 # yx ^ -1(i) = p(i) when RhoFunc(S)(x) = RhoFunc(S)(y)!!
 
 InstallMethod(LambdaPerm, "for a matrix semigroup",
-[IsMatrixSemigroup], S ->
+[IsMatrixOverFiniteFieldSemigroup], S ->
 function(x, y)
   return MatrixOverFiniteFieldSchutzGrpElement(S, x, y);
 end);
@@ -769,7 +769,7 @@ function(x, y)
 end);
 
 InstallMethod(LambdaConjugator, "for a matrix semigroup",
-[IsMatrixSemigroup], S ->
+[IsMatrixOverFiniteFieldSemigroup], S ->
 function(x, y)
     return MatrixOverFiniteFieldLambdaConjugator(S, x, y);
 end);
@@ -804,7 +804,7 @@ function(j, i)
 end);
 
 InstallMethod(IdempotentTester, "for a matrix semigroup",
-[IsMatrixSemigroup], S -> function(x, y)
+[IsMatrixOverFiniteFieldSemigroup], S -> function(x, y)
     return MatrixOverFiniteFieldIdempotentTester(S, x, y);
 end);
 
@@ -833,7 +833,7 @@ function(j, i)
 end);
 
 InstallMethod(IdempotentCreator, "for a matrix semigroup",
-[IsMatrixSemigroup], S -> function(x, y)
+[IsMatrixOverFiniteFieldSemigroup], S -> function(x, y)
     return MatrixOverFiniteFieldIdempotentCreator(S, x, y);
 end);
 
@@ -863,7 +863,7 @@ function(x, p)
 end);
 
 InstallMethod(StabilizerAction, "for a matrix semigroup",
-[IsMatrixSemigroup], S ->
+[IsMatrixOverFiniteFieldSemigroup], S ->
 function(x, y)
   return MatrixOverFiniteFieldStabilizerAction(S, x, y);
 end);
@@ -889,7 +889,7 @@ InstallMethod(IsActingSemigroupWithFixedDegreeMultiplication,
 [IsReesZeroMatrixSubsemigroup and IsActingSemigroup], ReturnFalse);
 
 InstallTrueMethod(IsActingSemigroupWithFixedDegreeMultiplication,
-                  IsMatrixSemigroup);
+                  IsMatrixOverFiniteFieldSemigroup);
 
 InstallMethod(SchutzGpMembership, "for a transformation semigroup",
 [IsTransformationSemigroup],
@@ -924,7 +924,7 @@ function(S)
 end);
 
 InstallMethod(SchutzGpMembership, "for a matrix semigroup",
-[IsMatrixSemigroup], S ->
+[IsMatrixOverFiniteFieldSemigroup], S ->
 function(stab, x)
   return x in stab;
 end);

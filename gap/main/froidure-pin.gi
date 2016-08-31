@@ -371,6 +371,7 @@ function(S)
     data.report      := SEMIGROUPS.OptionsRec(S).report;
     data.batch_size  := SEMIGROUPS.OptionsRec(S).batch_size;
     data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
+    data.nr_threads  := SEMIGROUPS.OptionsRec(S).nr_threads;
 
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);

@@ -484,37 +484,6 @@ function(coll, set)
   return IsStronglyConnectedDigraph(Digraph(graph));
 end);
 
-# not relevant for ideals
-
-InstallMethod(Size,
-"for a monogenic transformation semigroup with minimal generating set",
-[IsTransformationSemigroup and IsMonogenicSemigroup
- and HasMinimalSemigroupGeneratingSet],
-4,
-function(S)
-  local gen, ind;
-  gen := MinimalSemigroupGeneratingSet(S)[1];
-  ind := IndexPeriodOfTransformation(gen);
-  return Sum(ind) - 1;
-end);
-
-InstallMethod(Size,
-"for a monogenic transformation monoid with minimal generating set",
-[IsTransformationSemigroup and IsMonogenicMonoid
- and HasMinimalMonoidGeneratingSet],
-4,
-function(S)
-  local gen, ind, n;
-  gen := MinimalMonoidGeneratingSet(S)[1];
-  ind := IndexPeriodOfTransformation(gen);
-  n := DegreeOfTransformation(gen);
-  if RankOfTransformation(gen, n) = n then
-    # <gen> is a permutation, so return its period
-    return ind[2];
-  fi;
-  return Sum(ind);
-end);
-
 # same method for ideals
 
 InstallMethod(IsSynchronizingSemigroup, "for a transformation semigroup",
@@ -607,17 +576,15 @@ function(S)
   local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
   marked, squashed, j, t, im, reduced, y, i, k, x;
 
-  gens := GeneratorsOfSemigroup(S);
-  nrgens := Length(gens);
   n := DegreeOfTransformationSemigroup(S); # Smallest n such that S <= T_n
                                            # We must have n >= 2.
-
+  gens := GeneratorsOfSemigroup(S);
+  nrgens := Length(gens);
   # Find the minimum rank of a generator
   min_rank := n;
   for i in [1 .. nrgens] do
     rank := RankOfTransformation(gens[i], n);
     if rank = 1 then
-      # SetIsSynchronizingSemigroup(S, true);
       return gens[i];
     elif rank < min_rank then
       min_rank := rank;
@@ -628,6 +595,11 @@ function(S)
   if min_rank = n then
     SetIsGroupAsSemigroup(S, true);
     return gens[1];
+  fi;
+
+  if (HasSize(S) and Size(S) < Binomial(n, 2))
+      or n > 10000 then
+    TryNextMethod();
   fi;
 
   graph := SEMIGROUPS.GraphOfRightActionOnPairs(gens, n, false);

@@ -40,7 +40,7 @@ function(R, m, n, ranks)
 end);
 
 InstallMethod(GroupOfUnits, "for an matrix over finite field semigroup",
-[IsMatrixSemigroup],
+[IsMatrixOverFiniteFieldSemigroup],
 function(S)
   local r, g, e, U;
 
@@ -64,16 +64,16 @@ function(S)
 end);
 
 InstallMethod(BaseDomain, "for a matrix semigroup",
-[IsMatrixSemigroup], S -> BaseDomain(Representative(S)));
+[IsMatrixOverFiniteFieldSemigroup], S -> BaseDomain(Representative(S)));
 
 InstallMethod(DegreeOfMatrixSemigroup, "for a matrix semigroup",
-[IsMatrixSemigroup], S -> DimensionOfMatrixOverSemiring(Representative(S)));
+[IsMatrixOverFiniteFieldSemigroup], S -> DimensionOfMatrixOverSemiring(Representative(S)));
 
 InstallMethod(DimensionOfMatrixOverSemiringCollection, "for a matrix semigroup",
-[IsMatrixSemigroup], DegreeOfMatrixSemigroup);
+[IsMatrixOverFiniteFieldSemigroup], DegreeOfMatrixSemigroup);
 
-InstallMethod(IsMatrixSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], C -> IsMatrixSemigroup(Parent(C)));
+InstallMethod(IsMatrixOverFiniteFieldSemigroupGreensClass, "for a Green's class",
+[IsGreensClass], C -> IsMatrixOverFiniteFieldSemigroup(Parent(C)));
 
 InstallTrueMethod(IsGeneratorsOfSemigroup, IsMatrixOverFiniteFieldCollection);
 
@@ -149,7 +149,7 @@ end);
 
 InstallMethod(IsomorphismMatrixSemigroup,
 "for a matrix over finite field semigroup",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);
@@ -175,7 +175,7 @@ end);
 
 InstallMethod(IsomorphismMatrixSemigroup,
 "for a matrix semigroup and a ring",
-[IsMatrixSemigroup, IsRing],
+[IsMatrixOverFiniteFieldSemigroup, IsRing],
 function(S, R)
     local f, g;
     if BaseDomain(Representative(S)) = R then
@@ -443,7 +443,7 @@ end);
 
 InstallMethod(ViewString,
 "for an matrix over finite field semigroup with generators",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local gens, deg, res;
   if HasIsMonoid(S) and IsMonoid(S) then
@@ -472,7 +472,7 @@ end);
 
 InstallMethod(ViewObj,
 "for an matrix over finite field semigroup with generators",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local gens, deg;
   if HasIsMonoid(S) and IsMonoid(S) then
@@ -497,14 +497,14 @@ function(S)
 end);
 
 InstallMethod(PrintObj, "for a matrix semigroup with generators",
-[IsMatrixSemigroup and HasGeneratorsOfSemigroup],
+[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   Print("Semigroup(", GeneratorsOfSemigroup(S), ")");
 end);
 
 InstallMethod(ViewObj,
 "for a matrix semigroup ideal with generators of semigroup ideal",
-[IsMatrixSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsMatrixOverFiniteFieldSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(S)
   local deg, gens;
   gens := GeneratorsOfSemigroupIdeal(S);
