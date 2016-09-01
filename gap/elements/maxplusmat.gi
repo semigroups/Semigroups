@@ -149,6 +149,10 @@ function(filter, x, dim)
   return MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, -infinity, 0));
 end);
 
+## Method based on theorem 2, page 19, of:
+## K.G. Farlow, Max-plus Algebra, Thesis.
+## http://tinyurl.com/zzs38s4
+
 InstallMethod(InverseOp,
 "for a max-plus matrix",
 [IsMaxPlusMatrix],
