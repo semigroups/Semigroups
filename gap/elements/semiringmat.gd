@@ -19,6 +19,9 @@ DeclareCategoryCollections("IsMatrixOverSemiringCollection");
 DeclareRepresentation("IsPlistMatrixOverSemiringPositionalRep",
                       IsMatrixOverSemiring and IsPositionalObjectRep, 1);
 
+DeclareOperation("OneMutable", [IsMatrixOverSemiringCollection]);
+DeclareAttribute("OneImmutable", IsMatrixOverSemiringCollection);
+
 # IsList rather than IsHomogeneousList to allow us to
 # include the threshold and/or period.
 DeclareOperation("MatrixNC", [IsType, IsList]);
@@ -84,6 +87,7 @@ DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
                                         IsInt]);
 DeclareOperation("RandomMatrixOp", [IsSemiring, IsPosInt]);
 DeclareOperation("RandomMatrixOp", [IsField and IsFinite, IsPosInt, IsList]);
+DeclareOperation("RandomMatrixOp", [IsField and IsFinite, IsZeroCyc, IsList]);
 
 DeclareAttribute("AsList", IsMatrixOverSemiring);
 DeclareOperation("AsMutableList", [IsMatrixOverSemiring]);

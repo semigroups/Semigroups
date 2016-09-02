@@ -122,7 +122,9 @@ InstallMethod(IsGeneratorsOfSemigroup,
 [IsMatrixOverSemiringCollection],
 function(coll)
   local n;
-  if not IsHomogeneousList(coll) then
+  if IsGreensClass(coll) then 
+    return true;
+  elif not IsHomogeneousList(coll) then
     return false;
   fi;
   n := DimensionOfMatrixOverSemiring(coll[1]);
@@ -427,6 +429,18 @@ end);
 InstallMethod(OneMutable, "for a matrix over semiring",
 [IsMatrixOverSemiring], OneImmutable);
 
+InstallMethod(OneMutable, "for a matrix over semiring collection",
+[IsMatrixOverSemiringCollection], OneImmutable);
+
+InstallMethod(OneImmutable, "for a matrix over semiring collection",
+[IsMatrixOverSemiringCollection], 
+function(coll) 
+  if IsGeneratorsOfSemigroup(coll) then 
+    return OneImmutable(Representative(coll));
+  fi;
+  return fail;
+end);
+
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over semiring coll",
 [IsMatrixOverSemiringCollection], ReturnFalse);
@@ -438,6 +452,22 @@ function(mat)
     return Length(mat[1]);
   fi;
   return 0;
+end);
+
+InstallMethod(DimensionOfMatrixOverSemiringCollection,
+"for a matrix over semiring collection",
+[IsMatrixOverSemiringCollection],
+function(coll)
+  local dim;
+
+  dim := DimensionOfMatrixOverSemiring(coll[1]);
+  if not ForAll(coll, x -> DimensionOfMatrixOverSemiring(x) = dim) then
+    ErrorNoReturn("Semigroups: DimensionOfMatrixOverSemiringCollection: ",
+                  "usage,\nthe argument <coll> must be a collection of",
+                  "matrices of equal dimension,");
+  fi;
+
+  return dim;
 end);
 
 InstallMethod(Display, "for a matrix over semiring collection",
@@ -686,6 +716,3 @@ InstallMethod(ChooseHashFunction, "for a matrix over semiring",
   return rec(func := SEMIGROUPS.HashFunctionMatrixOverSemiring,
              data := hashlen);
 end);
-
-InstallMethod(OneMutable, "for a matrix over semiring",
-[IsMatrixOverSemiring], OneImmutable);

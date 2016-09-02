@@ -347,7 +347,7 @@ end);
 InstallMethod(RhoAct, "for a matrix semigroup", [IsMatrixOverFiniteFieldSemigroup],
 function(S)
   return function(vsp, mat)
-    return LambdaAct(S)(vsp, TransposedSMat(mat));
+    return LambdaAct(S)(vsp, TransposedMat(mat));
   end;
 end);
 
@@ -459,7 +459,7 @@ function(S)
   # a function that returns the column space
   return
     function(mat)
-      return LambdaFunc(S)(TransposedSMat(mat));
+      return LambdaFunc(S)(TransposedMat(mat));
     end;
 end);
 
@@ -584,8 +584,8 @@ InstallMethod(RhoInverse, "for a bipartition semigroup",
 InstallMethod(RhoInverse, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], s ->
 function(rsp, mat)
-  return TransposedSMat(MatrixOverFiniteFieldLocalRightInverse(s,
-                          rsp, TransposedSMat(mat)));
+  return TransposedMat(MatrixOverFiniteFieldLocalRightInverse(s,
+                          rsp, TransposedMat(mat)));
 end);
 
 InstallMethod(LambdaBound, "for a transformation semigroup",
@@ -597,6 +597,7 @@ function(r)
     return infinity;
   fi;
 end);
+
 InstallMethod(RhoBound, "for a transformation semigroup",
 [IsTransformationSemigroup], LambdaBound);
 

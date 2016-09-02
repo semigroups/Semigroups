@@ -235,7 +235,7 @@ function(s, vsp, m)
   elif Rank(vsp) = 0 then
     return vsp;
   else
-    nvsp := SEMIGROUPS_MutableCopyMat(vsp!.rows * m!.mat);
+    nvsp := AsMutableList(vsp!.rows * m!.mat);
   fi;
   TriangulizeMat(nvsp);
 
@@ -263,7 +263,7 @@ function(S, V, mat)
                   "usage,\n nullspace");
   fi;
 
-  W := SEMIGROUPS_MutableCopyMat(V!.rows * mat);
+  W := AsMutableList(V!.rows * mat);
 
   for i in [1 .. k] do
     Append(W[i], V!.rows[i]);
@@ -381,7 +381,7 @@ function(S, x, y)
                                   BaseDomain(x),
                                   Rank(RowSpaceBasis(x)));
   else
-    xse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(x!.mat));
+    xse := SemiEchelonMat(AsMutableList(x!.mat));
     h := Filtered(xse.heads, x -> x <> 0);
     p := NewMatrixOverFiniteField(SEMIGROUPS_FilterOfMatrixOverSemiring(x),
                                   BaseDomain(x),
@@ -390,7 +390,7 @@ function(S, x, y)
                                                    Length(h),
                                                    BaseDomain(x)));
 
-    yse := SemiEchelonMat(SEMIGROUPS_MutableCopyMat(y!.mat));
+    yse := SemiEchelonMat(AsMutableList(y!.mat));
     h := Filtered(yse.heads, x -> x <> 0);
     q := NewMatrixOverFiniteField(SEMIGROUPS_FilterOfMatrixOverSemiring(y),
                                   BaseDomain(y),

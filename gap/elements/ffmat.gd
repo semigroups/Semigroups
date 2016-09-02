@@ -36,14 +36,7 @@ DeclareCategoryCollections("IsMatrixOverFiniteField");
 DeclareCategoryCollections("IsMatrixOverFiniteFieldCollection");
 
 DeclareAttribute("AsList", IsPlistMatrixRep);
-
-#BindGlobal("MatrixOverFiniteFieldFamily",
-#           NewFamily("MatrixOverFiniteFieldFamily",
-#                     IsMatrixOverFiniteField, CanEasilySortElements,
-#                     CanEasilySortElements));
-#BindGlobal("MatrixOverFiniteFieldType",
-#           NewType(MatrixOverFiniteFieldFamily,
-#                   IsMatrixOverFiniteField));
+DeclareOperation("AsMutableList", [IsMatrix]);
 
 #############################################################################
 ## Declarations specifically for finite field vectors
@@ -109,19 +102,9 @@ DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
 #DeclareAttribute("SemigroupInvertable", IsMatrixOverFiniteField);
 #DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
 
-# TODO Remove these
-DeclareSynonym("TransposedSMat", TransposedMat);
-
 DeclareAttribute("RowRank", IsMatrixOverFiniteField);
 DeclareAttribute("ColRank", IsMatrixOverFiniteField);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);
-#DeclareAttribute("TransposedMatImmutable", IsMatrixOverFiniteField);
-
-#DeclareOperation("AsMatrix", [IsMatrixOverFiniteField]);
-#DeclareOperation("AsMatrix", [IsMatrixObj]);
-#DeclareOperation("AsMatrixOverFiniteField",
-#                 [IsMatrixOverFiniteField, IsMatrix]);
-#DeclareOperation("AsMatrixOverFiniteField", [IsMatrix]);
 
 # FIXME shouldn't this be IsMultiplicativeZero??
 DeclareProperty("IsZero", IsMatrixOverFiniteField);
@@ -134,7 +117,6 @@ DeclareProperty("IsZero", IsMatrixOverFiniteField);
 DeclareAttribute("DegreeOfMatrixOverFiniteFieldCollection",
                  IsMatrixOverFiniteFieldCollection);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
-DeclareOperation("OneMutable", [IsMatrixOverFiniteFieldCollection]);
 
 #############################################################################
 ## Declaration of representations of vectors and matrices
@@ -159,16 +141,6 @@ DeclareOperation("OneMutable", [IsMatrixOverFiniteFieldCollection]);
 # ColumnSpaceBasis as Attributes?
 
 # Vectors and matrices stored as GAP Plists
-DeclareRepresentation("IsPlistVectorOverFiniteFieldRep",
-                      IsVectorOverFiniteField and IsComponentObjectRep
-                      and IsAttributeStoringRep, ["vec"]);
-BindGlobal("PlistVectorOverFiniteFieldFamily",
-           NewFamily("PlistVectorOverFiniteFieldFamily",
-                     IsVectorOverFiniteField, CanEasilyCompareElements));
-BindGlobal("PlistVectorOverFiniteFieldType",
-           NewType(PlistVectorOverFiniteFieldFamily,
-                   IsVectorOverFiniteField and
-                   IsPlistVectorOverFiniteFieldRep));
 
 DeclareRepresentation("IsPlistRowBasisOverFiniteFieldRep",
                       IsRowBasisOverFiniteField and IsComponentObjectRep and
@@ -193,16 +165,6 @@ BindGlobal("PlistMatrixOverFiniteFieldType",
                    IsPlistMatrixOverFiniteFieldRep));
 
 # Vectors and matrices from the CVEC package
-DeclareRepresentation("IsCVECVectorOverFiniteFieldRep",
-                      IsVectorOverFiniteField and IsComponentObjectRep and
-                      IsAttributeStoringRep, []);
-BindGlobal("CVECVectorOverFiniteFieldFamily",
-           NewFamily("CVECVectorOverFiniteFieldFamily",
-           IsVectorOverFiniteField, CanEasilyCompareElements));
-BindGlobal("CVECVectorOverFiniteFieldType",
-           NewType(CVECVectorOverFiniteFieldFamily,
-                   IsVectorOverFiniteField and
-                   IsCVECVectorOverFiniteFieldRep));
 
 DeclareRepresentation("IsCVECMatrixOverFiniteFieldRep",
                       IsMatrixOverFiniteField and IsComponentObjectRep and
@@ -222,11 +184,3 @@ BindGlobal("CVECMatrixOverFiniteFieldType",
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
 DeclareGlobalFunction("RandomListOfMatricesWithRanks");
 DeclareGlobalFunction("RandomSquareMatrixOverFiniteFieldWithRanks");
-
-## We need a mutable copy of matrices sometimes to do calculations
-DeclareGlobalFunction("SEMIGROUPS_MutableCopyMat");
-
-## IsZero is an attribute that is stored, and hence we have
-## this function for debugging purposes that checks whether a
-## matrix is actually zero by inspecting all entries
-DeclareGlobalFunction("SEMIGROUPS_CheckReallyZero");
