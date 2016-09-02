@@ -28,7 +28,7 @@ The  following  is  a  summary of the steps that should lead to a successful ins
 * get the [Orb](http://gap-system.github.io/orb/) package version 4.7.3 or higher. 
   Both [Orb](http://gap-system.github.io/orb/) and [Semigroups](https://gap-packages.github.io/Semigroups) perform better if [Orb](http://gap-system.github.io/orb/) is compiled, so compile [Orb](http://gap-system.github.io/orb/)!
 
-* The non-deterministic version of the function `Normalizer` requires the [genss](http://gap-system.github.io/genss/) package to be loaded. If you want to use this function, then please ensure that the [genss](http://gap-system.github.io/genss/) package version 1.5 or higher is available. 
+* get the [genss](http://gap-system.github.io/genss/) package version 1.5 or higher 
 
 * download the package archive `semigroups-x.x.x.tar.gz` from the [Semigroups](https://gap-packages.github.io/Semigroups) webpage.
 
