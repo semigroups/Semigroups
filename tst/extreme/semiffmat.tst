@@ -121,7 +121,7 @@ gap> upper := function(mat)
 >   od;
 >   return true;
 > end;;
-gap> S := GeneralLinearSemigroup(3, 3);
+gap> S := GeneralLinearMonoid(3, 3);
 <general linear monoid 3x3 over GF(3)>
 gap> T := SubsemigroupByProperty(S, upper);
 <monoid of 3x3 matrices over GF(3) with 12 generators>

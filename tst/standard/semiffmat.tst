@@ -29,7 +29,7 @@ gap> Size(S);
 7
 
 # Issue 211
-gap> S := FullMatrixSemigroup(3, 3);;
+gap> S := FullMatrixMonoid(3, 3);;
 gap> One(S) in S;
 true
 gap> H := GroupHClass(DClass(S, One(S)));

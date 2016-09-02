@@ -84,8 +84,8 @@
     <Heading>
       Matrix semigroups
     </Heading>
-    <#Include Label = "GeneralLinearSemigroup">
-    <#Include Label = "IsFullMatrixSemigroup">
+    <#Include Label = "GeneralLinearMonoid">
+    <#Include Label = "IsFullMatrixMonoid">
     
   </Section>
 

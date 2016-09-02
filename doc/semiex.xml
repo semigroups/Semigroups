@@ -359,22 +359,22 @@ gap> Size(PlanarModularPartitionMonoid(4, 9));
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="GeneralLinearSemigroup">
+<#GAPDoc Label="GeneralLinearMonoid">
    <ManSection>
-    <Oper Name="FullMatrixSemigroup" Arg="d, q"/>
-    <Oper Name="GeneralLinearSemigroup" Arg="d, q"/>
-    <Oper Name="GLS" Arg="d, q"/>
-    <Returns>A matrix semigroup.</Returns>
+    <Oper Name="FullMatrixMonoid" Arg="d, q"/>
+    <Oper Name="GeneralLinearMonoid" Arg="d, q"/>
+    <Oper Name="GLM" Arg="d, q"/>
+    <Returns>A matrix Monoid.</Returns>
     <Description>
-      <C>FullMatrixSemigroup</C>, <C>GeneralLinearSemigroup</C>, and <C>GLS</C>
-      are synonyms for each other. They all return the full matrix semigroup,
-      or if you prefer the general linear semigroup, of <A>d</A> by <A>d</A>
+      <C>FullMatrixMonoid</C>, <C>GeneralLinearMonoid</C>, and <C>GLS</C>
+      are synonyms for each other. They all return the full matrix monoid,
+      or if you prefer the general linear monoid, of <A>d</A> by <A>d</A>
       matrices with entries over the field with <A>q</A> elements.  This
-      semigroup has <C><A>q</A> ^ (<A>d</A> ^ 2)</C> elements.
+      monoid has <C><A>q</A> ^ (<A>d</A> ^ 2)</C> elements.
       <P/>
 
       <Example><![CDATA[
-gap> S := FullMatrixSemigroup(3, 4);
+gap> S := FullMatrixMonoid(3, 4);
 <general linear monoid 3x3 over GF(2^2)>
 gap> Size(S);
 262144]]></Example>
@@ -382,25 +382,15 @@ gap> Size(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="SpecialLinearSemigroup">
+<#GAPDoc Label="SpecialLinearMonoid">
 <ManSection>
-  <!--<Oper Name="GeneralLinearSemigroup" Arg="d, q"/>
-  <Oper Name="GeneralUnitarySemigroup" Arg="d, q"/>
-  <Oper Name="SpecialUnitarySemigroup" Arg="d, q"/>
-  <Oper Name="SymplecticSemigroup" Arg="d, q"/>
-  <Oper Name="GeneralOrthogonalSemigroup" Arg="d, q"/>
-  <Oper Name="SpecialOrthogonalSemigroup" Arg="d, q"/>
-  <Oper Name="OmegaSemigroupSemigroup" Arg="d, q"/>
-  <Oper Name="ProjectiveOmegaSemigroup" Arg="d, q"/>
-  <Oper Name="SpecialSemilinearSemigroup" Arg="d, q"/>
-  <Oper Name="GeneralSemilinearSemigroup" Arg="d, q"/>-->
-  <Oper Name="SpecialLinearSemigroup" Arg="d, q"/>
-  <Oper Name="SLS" Arg="d, q"/>
-  <Returns>A matrix semigroup.</Returns>
+  <Oper Name="SpecialLinearMonoid" Arg="d, q"/>
+  <Oper Name="SLM" Arg="d, q"/>
+  <Returns>A matrix monoid.</Returns>
     <Description>
-      <C>SpecialLinearSemigroup</C> and <C>SLS</C> are synonymous.
+      <C>SpecialLinearMonoid</C> and <C>SLS</C> are synonymous.
 
-      The special linear semigroup of <A>d</A> by <A>d</A> matrices
+      The special linear monoid of <A>d</A> by <A>d</A> matrices
       with entries over the field with <A>q</A> elements is generated
       by a generating set for the special linear group of <A>d</A> by
       <A>d</A> matrices over the field with <A>q</A> elements and a
@@ -408,7 +398,7 @@ gap> Size(S);
       <P/><!--FIXME this is not very descriptive-->
 
       <Example><![CDATA[
-gap> S := SLS(3,4);
+gap> S := SLM(3,4);
 <special linear monoid 3x3 over GF(2^2)>
 gap> Size(S);
 141184]]></Example>

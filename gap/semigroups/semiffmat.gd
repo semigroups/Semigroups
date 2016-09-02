@@ -27,8 +27,8 @@ InstallTrueMethod(IsFinite, IsMatrixOverFiniteFieldSemigroup);
 
 # (mp) This is defined for groups, and already difficult there, so I
 # guess close to impossible to do in matrix semigroups
-DeclareProperty("IsFullMatrixSemigroup", IsSemigroup);
-DeclareSynonymAttr("IsGeneralLinearSemigroup", IsFullMatrixSemigroup);
+DeclareProperty("IsFullMatrixMonoid", IsSemigroup);
+DeclareSynonymAttr("IsGeneralLinearMonoid", IsFullMatrixMonoid);
 
 # Right action of a matrix over a field on a row space
 DeclareGlobalFunction("MatrixOverFiniteFieldRowSpaceRightAction");

@@ -79,12 +79,12 @@ DeclareAttribute("SEMIGROUPS_MatrixSemigroupPrintString",
                  IsMatrixOverFiniteFieldSemigroup);
 
 # TODO rename these to GeneralLinearMonoid
-DeclareOperation("GeneralLinearSemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("GLS", GeneralLinearSemigroup);
-DeclareSynonym("FullMatrixSemigroup", GeneralLinearSemigroup);
+DeclareOperation("GeneralLinearMonoid", [IsPosInt, IsPosInt]);
+DeclareSynonym("GLM", GeneralLinearMonoid);
+DeclareSynonym("FullMatrixMonoid", GeneralLinearMonoid);
 
-DeclareOperation("SpecialLinearSemigroup", [IsPosInt, IsPosInt]);
-DeclareSynonym("SLS", SpecialLinearSemigroup);
+DeclareOperation("SpecialLinearMonoid", [IsPosInt, IsPosInt]);
+DeclareSynonym("SLM", SpecialLinearMonoid);
 
 #not implemented or documented
 DeclareOperation("PowerSemigroup", [IsGroup]);

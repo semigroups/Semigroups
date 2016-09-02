@@ -103,23 +103,23 @@ gap> Size(Range(iso));
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsFullMatrixSemigroup">
+<#GAPDoc Label="IsFullMatrixMonoid">
   <ManSection>
-    <Prop Name="IsFullMatrixSemigroup" Arg="S"/>      
-    <Prop Name="IsGeneralLinearSemigroup" Arg="S"/>      
+    <Prop Name="IsFullMatrixMonoid" Arg="S"/>      
+    <Prop Name="IsGeneralLinearMonoid" Arg="S"/>      
     <Description>
-      <C>IsFullMatrixSemigroup</C> and <C>IsGeneralLinearSemigroup</C> return
+      <C>IsFullMatrixMonoid</C> and <C>IsGeneralLinearMonoid</C> return
       <K>true</K> if the semigroup <C>S</C> was created using either of the
-      commands <Ref Oper="FullMatrixSemigroup"/> or 
-      <Ref Oper="GeneralLinearSemigroup"/> and <K>false</K> otherwise. 
+      commands <Ref Oper="FullMatrixMonoid"/> or 
+      <Ref Oper="GeneralLinearMonoid"/> and <K>false</K> otherwise. 
 
       <Example><![CDATA[
 gap> S := RandomSemigroup(IsTransformationSemigroup, 4, 4);;
-gap> IsFullMatrixSemigroup(S);
+gap> IsFullMatrixMonoid(S);
 false
-gap> S := GeneralLinearSemigroup(3, 3);
+gap> S := GeneralLinearMonoid(3, 3);
 <general linear monoid 3x3 over GF(3)>
-gap> IsFullMatrixSemigroup(S);
+gap> IsFullMatrixMonoid(S);
 true]]></Example>
     </Description>
   </ManSection>
