@@ -261,3 +261,48 @@ function(arg)
     return List(line, x -> ReadGeneratorsLine(Chomp(x)));
   fi;
 end);
+
+InstallGlobalFunction(IteratorFromOldGeneratorsFile,
+function(str)
+  local file, ReadGeneratorsLine, record;
+
+  file := IO_CompressedFile(UserHomeExpand(str), "r");
+
+  if file = fail then
+    return fail;
+  fi;
+
+  ReadGeneratorsLine := SEMIGROUPS.ReadGeneratorsLine;
+  record := rec(file := file, curr := ReadGeneratorsLine(IO_ReadLine(file)));
+
+  record.NextIterator := function(iter)
+    local next, line;
+    next := iter!.curr;
+    line := IO_ReadLine(iter!.file);
+    if line <> "" then
+      iter!.curr := ReadGeneratorsLine(line);
+    else
+      iter!.curr := line;
+    fi;
+    return next;
+  end;
+
+  record.IsDoneIterator := function(iter)
+    if iter!.curr = "" then
+      if not iter!.file!.closed then
+        IO_Close(iter!.file);
+      fi;
+      return true;
+    else
+      return false;
+    fi;
+  end;
+
+  record.ShallowCopy := function(iter)
+    local file;
+    file := IO_CompressedFile(str, "r");
+    return rec(file := file, curr := ReadGeneratorsLine(IO_ReadLine(file)));
+  end;
+
+  return IteratorByFunctions(record);
+end);

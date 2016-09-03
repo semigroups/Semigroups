@@ -12,3 +12,4 @@ DeclareGlobalFunction("ReadGenerators");
 DeclareGlobalFunction("ReadOldGenerators");
 DeclareGlobalFunction("WriteGenerators");
 DeclareGlobalFunction("IteratorFromGeneratorsFile");
+DeclareGlobalFunction("IteratorFromOldGeneratorsFile");
