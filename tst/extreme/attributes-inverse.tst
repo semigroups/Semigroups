@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  extreme/attributes-inverse.tst
+#W  extreme/attrinv.tst
 #Y  Copyright (C) 2012-15                                  Wilfred Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 #
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: extreme/attributes-inverse.tst");
+gap> START_TEST("Semigroups package: extreme/attrinv.tst");
 gap> LoadPackage("semigroups", false);;
 
 # 
@@ -714,4 +714,4 @@ gap> Unbind(z);
 gap> Unbind(zz);
 
 #E#
-gap> STOP_TEST("Semigroups package: extreme/attributes-inverse.tst");
+gap> STOP_TEST("Semigroups package: extreme/attrinv.tst");

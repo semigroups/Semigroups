@@ -65,15 +65,15 @@ ReadPackage("semigroups/gap/tools/utils.gi");
 ReadPackage("semigroups/gap/tools/enums.gi");
 ReadPackage("semigroups/gap/tools/iterators.gi");
 
-ReadPackage("semigroups/gap/attributes/attributes.gi");
-ReadPackage("semigroups/gap/attributes/attributes-acting.gi");
-ReadPackage("semigroups/gap/attributes/attributes-inverse.gi");
+ReadPackage("semigroups/gap/attributes/attr.gi");
+ReadPackage("semigroups/gap/attributes/attract.gi");
+ReadPackage("semigroups/gap/attributes/attrinv.gi");
 ReadPackage("semigroups/gap/attributes/factor.gi");
 ReadPackage("semigroups/gap/attributes/isomorph.gi");
 ReadPackage("semigroups/gap/attributes/maximal.gi");
 ReadPackage("semigroups/gap/attributes/normalizer.gi");
 ReadPackage("semigroups/gap/attributes/properties.gi");
-ReadPackage("semigroups/gap/attributes/reesmat-iso.gi");
+ReadPackage("semigroups/gap/attributes/isorms.gi");
 ReadPackage("semigroups/gap/attributes/translat.gi");
 
 ReadPackage("semigroups/gap/congruences/congpairs.gi");

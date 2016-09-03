@@ -241,7 +241,7 @@
     &Semigroups; specifically for matrices over finite fields. These are in
     addition to those given elsewhere in this chapter for arbitrary matrices
     over semirings. These include:
-    <#Include Label = "BaseField">
+    <#Include Label = "BaseDomain">
 
   </Section>
   -->

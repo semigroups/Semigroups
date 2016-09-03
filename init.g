@@ -93,15 +93,15 @@ ReadPackage("semigroups/gap/tools/utils.gd");
 ReadPackage("semigroups/gap/tools/enums.gd");
 ReadPackage("semigroups/gap/tools/iterators.gd");
 
-ReadPackage("semigroups/gap/attributes/attributes.gd");
-ReadPackage("semigroups/gap/attributes/attributes-acting.gd");
-ReadPackage("semigroups/gap/attributes/attributes-inverse.gd");
+ReadPackage("semigroups/gap/attributes/attr.gd");
+ReadPackage("semigroups/gap/attributes/attract.gd");
+ReadPackage("semigroups/gap/attributes/attrinv.gd");
 ReadPackage("semigroups/gap/attributes/factor.gd");
 ReadPackage("semigroups/gap/attributes/isomorph.gd");
 ReadPackage("semigroups/gap/attributes/maximal.gd");
 ReadPackage("semigroups/gap/attributes/normalizer.gd");
 ReadPackage("semigroups/gap/attributes/properties.gd");
-ReadPackage("semigroups/gap/attributes/reesmat-iso.gd");
+ReadPackage("semigroups/gap/attributes/isorms.gd");
 ReadPackage("semigroups/gap/attributes/translat.gd");
 
 ReadPackage("semigroups/gap/congruences/congpairs.gd");

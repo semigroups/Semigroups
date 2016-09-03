@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  attributes.gi
+#W  attr.gi
 #Y  Copyright (C) 2013-16                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.

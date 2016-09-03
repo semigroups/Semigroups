@@ -41,11 +41,9 @@
         Attr = "ThresholdTropicalMatrix"/>; for ntp matrices <Ref
         Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>.
 
-      <!--
-      For matrices over finite fields <Ref Attr = "BaseField"/>; for Boolean
+      For matrices over finite fields <Ref Attr = "BaseDomain"/>; for Boolean
       matrices more details can be found in
       Section <Ref Sect = "Boolean matrices"/>.
-      -->
     </Description>
   </ManSection>
 <#/GAPDoc>

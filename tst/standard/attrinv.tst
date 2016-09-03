@@ -1,20 +1,19 @@
 #############################################################################
 ##
-#W  standard/attributes-inverse.tst
+#W  standard/attrinv.tst
 #Y  Copyright (C) 2015                                   Wilfred A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 #
 #############################################################################
 ##
-gap> START_TEST(Concatenation("Semigroups package: ",
->                             "standard/attributes-inverse.tst"));
+gap> START_TEST("Semigroups package: standard/attrinv.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# attributes-inverse: VagnerPrestonRepresentation, symmetric inv monoid 4 1/1
+#T# attrinv: VagnerPrestonRepresentation, symmetric inv monoid 4 1/1
 gap> S := InverseSemigroup([
 > PartialPerm([2, 3, 4, 1]),
 > PartialPerm([2, 1, 3, 4]),
@@ -27,7 +26,7 @@ gap> iso := VagnerPrestonRepresentation(S);;
 gap> DegreeOfPartialPermSemigroup(Range(iso));
 209
 
-#T# attributes-inverse: SameMinorantsSubgroup, symmetric inv monoid 5 1/2
+#T# attrinv: SameMinorantsSubgroup, symmetric inv monoid 5 1/2
 gap> S := SymmetricInverseSemigroup(5);;
 gap> h := HClass(S, One(S));
 <Green's H-class: <identity partial perm on [ 1, 2, 3, 4, 5 ]>>
@@ -42,7 +41,7 @@ gap> h := HClass(S, MultiplicativeZero(S));
 gap> SameMinorantsSubgroup(h);
 [ <empty partial perm> ]
 
-#T# attributes-inverse: SameMinorantsSubgroup, error 2/2
+#T# attrinv: SameMinorantsSubgroup, error 2/2
 gap> S := FullTransformationMonoid(5);;
 gap> h := HClass(S, One(S));
 <Green's H-class: IdentityTransformation>
@@ -50,7 +49,7 @@ gap> SameMinorantsSubgroup(h);
 Error, Semigroups: SameMinorantsSubgroup: usage,
 the parent semigroup of the group H-class <H> must be inverse,
 
-#T# attributes-inverse: Minorants, error, 1
+#T# attrinv: Minorants, error, 1
 gap> S := SymmetricInverseMonoid(3);;
 gap> f := PartialPerm([1, 2, 3, 4]);;
 gap> Minorants(S, f);
@@ -70,7 +69,7 @@ gap> Minorants(S, f);
   <identity partial perm on [ 1, 3 ]> ]
 gap> f := PartialPerm([1, 3, 2]);;
 
-#T# attributes-inverse: Minorants, not idempotent, 2
+#T# attrinv: Minorants, not idempotent, 2
 gap> S := Semigroup([
 > PartialPerm([1, 2, 3, 4], [1, 2, 3, 4]),
 > PartialPerm([1, 2, 3], [2, 3, 1])]);;
@@ -79,7 +78,7 @@ true
 gap> Minorants(S, GeneratorsOfSemigroup(S)[2]);
 [  ]
 
-#T# attributes-inverse: character tables of inverse acting semigroups
+#T# attrinv: character tables of inverse acting semigroups
 # Some random examples to test consistency of old code with new
 gap> gens := [
 > [PartialPerm([1, 2, 3, 4, 6, 8, 9], [1, 5, 3, 8, 9, 4, 10])],
@@ -574,7 +573,7 @@ gap> CharacterTableOfInverseSemigroup(S[10]);
       <identity partial perm on [ 1, 4 ]>, <identity partial perm on [ 4 ]>, 
       <empty partial perm> ] ]
 
-#T# attributes-inverse: NaturalPartialOrder (for a semigroup), works, 1/1
+#T# attrinv: NaturalPartialOrder (for a semigroup), works, 1/1
 gap> S := InverseSemigroup([Bipartition([[1, -3], [2, -1], [3, 4, -2, -4]]),
 > Bipartition([[1, -1], [2, -3], [3, -2], [4, -4]])]);
 <inverse block bijection semigroup of degree 4 with 2 generators>
@@ -584,7 +583,7 @@ gap> NaturalPartialOrder(AsSemigroup(IsTransformationSemigroup, S));
   [ 9, 11, 13 ], [ 9 ], [ 9, 10, 16 ], [ 8, 9, 16 ], [ 9 ], [ 4, 9, 20 ], 
   [ 9 ], [ 9 ], [ 9 ] ]
 
-#T# attributes-inverse: NaturalPartialOrder (for a semigroup), error, 1/2
+#T# attrinv: NaturalPartialOrder (for a semigroup), error, 1/2
 gap> S := Semigroup(
 > [Matrix(IsTropicalMinPlusMatrix,
 >     [[infinity, 0, infinity, 1, 1, infinity, 3, 2, 3],
@@ -599,12 +598,12 @@ gap> NaturalPartialOrder(S);
 Error, Semigroups: NaturalPartialOrder: usage,
 the argument is not an inverse semigroup,
 
-#T# attributes-inverse: NaturalPartialOrder (for a semigroup), error, 2/2
+#T# attrinv: NaturalPartialOrder (for a semigroup), error, 2/2
 gap> NaturalPartialOrder(FreeInverseSemigroup(2));
 Error, Semigroups: NaturalPartialOrder: usage,
 the argument is not a finite semigroup,
 
-#T# attributes-inverse: NaturalLeqInverseSemigroup (for a semigroup), error, 1/2
+#T# attrinv: NaturalLeqInverseSemigroup (for a semigroup), error, 1/2
 gap> S := Semigroup([PBR(
 >      [[-4, -3, -2, -1, 1, 4, 5, 6], [-6, -5, -4, -3, -2, 2, 6], [-6, -4,
 > -3, -1, 1, 2, 4, 5, 6], [-6, 2, 3, 4], [-4, -2, 3, 6], [-6, -3, 1, 3, 4,
@@ -621,12 +620,12 @@ gap> NaturalLeqInverseSemigroup(S);
 Error, Semigroups: NaturalLeqInverseSemigroup: usage,
 the argument is not an inverse semigroup,
 
-#T# attributes-inverse: NaturalLeqInverseSemigroup (for a semigroup), error, 2/2
+#T# attrinv: NaturalLeqInverseSemigroup (for a semigroup), error, 2/2
 gap> NaturalLeqInverseSemigroup(FreeInverseSemigroup(2));
 Error, Semigroups: NaturalLeqInverseSemigroup: usage,
 the argument is not a finite semigroup,
 
-#T# attributes-inverse: IsGreensDLeq (for an inverse op acting semigroup), 1/1
+#T# attrinv: IsGreensDLeq (for an inverse op acting semigroup), 1/1
 gap> S := InverseSemigroup(
 > [Bipartition([[1, -3], [2, -1], [3, 4, 5, -2, -4, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, -4], [4, 5, -2, -5]])]);
@@ -639,14 +638,14 @@ false
 gap> foo(S.2, S.1);
 true
 
-#T# attributes-inverse: PrimitiveIdempotents, inverse, 1/2
+#T# attrinv: PrimitiveIdempotents, inverse, 1/2
 gap> S := InverseSemigroup([PartialPerm([1, 2], [3, 1]),
 > PartialPerm([1, 2, 3], [1, 3, 4])]);;
 gap> Set(PrimitiveIdempotents(S));
 [ <identity partial perm on [ 1 ]>, <identity partial perm on [ 2 ]>, 
   <identity partial perm on [ 3 ]>, <identity partial perm on [ 4 ]> ]
 
-#T# attributes-inverse: PrimitiveIdempotents, inverse, 2/2
+#T# attrinv: PrimitiveIdempotents, inverse, 2/2
 gap> S := InverseSemigroup(
 > [PartialPerm([1, 2, 3, 5, 6, 11, 12], [4, 3, 7, 5, 1, 11, 12]),
 >  PartialPerm([1, 3, 4, 5, 6, 7, 11, 12], [6, 7, 5, 3, 1, 4, 11, 12]),
@@ -654,17 +653,17 @@ gap> S := InverseSemigroup(
 gap> PrimitiveIdempotents(S);
 [ <identity partial perm on [ 11, 12 ]> ]
 
-#T# attributes-inverse: PrimitiveIdempotents, semigroup, error, 1/2
+#T# attrinv: PrimitiveIdempotents, semigroup, error, 1/2
 gap> PrimitiveIdempotents(FreeSemigroup(2));
 Error, Semigroups: PrimitiveIdempotents: usage,
 the argument is not a finite semigroup,
 
-#T# attributes-inverse: PrimitiveIdempotents, semigroup, error, 2/2
+#T# attrinv: PrimitiveIdempotents, semigroup, error, 2/2
 gap> PrimitiveIdempotents(FreeBand(2));
 Error, Semigroups: PrimitiveIdempotents: usage,
 the argument is not an inverse semigroup,
 
-#T# attributes-inverse: IsJoinIrreducible, 1/4
+#T# attrinv: IsJoinIrreducible, 1/4
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 > PartialPerm([1, 2, 3, 4], [5, 7, 1, 6]),
@@ -686,7 +685,7 @@ the second argument <x> is not an element of the first,
 gap> IsJoinIrreducible(S, MultiplicativeZero(S));
 false
 
-#T# attributes-inverse: IsJoinIrreducible, 2/4
+#T# attrinv: IsJoinIrreducible, 2/4
 gap> S := InverseSemigroup(
 > [PartialPerm([1, 2, 3, 5, 6, 11, 12], [4, 3, 7, 5, 1, 11, 12]),
 >  PartialPerm([1, 3, 4, 5, 6, 7, 11, 12], [6, 7, 5, 3, 1, 4, 11, 12]),
@@ -694,14 +693,14 @@ gap> S := InverseSemigroup(
 gap> IsJoinIrreducible(S, PrimitiveIdempotents(S)[1]);
 true
 
-#T# attributes-inverse: IsJoinIrreducible, 3/4
+#T# attrinv: IsJoinIrreducible, 3/4
 gap> S := DualSymmetricInverseMonoid(3);
 <inverse block bijection monoid of degree 3 with 3 generators>
 gap> x := Bipartition([[1, 2, -1, -2], [3, -3]]);;
 gap> IsJoinIrreducible(S, x);
 true
 
-#T# attributes-inverse: IsJoinIrreducible, 4/4
+#T# attrinv: IsJoinIrreducible, 4/4
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 4, 6], [2, 1, 4, 6]),
 > PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
@@ -713,7 +712,7 @@ gap> x := PartialPerm([1, 2, 4, 6], [2, 3, 1, 4]);;
 gap> IsJoinIrreducible(S, x);
 false
 
-#T# attributes-inverse: IsMajorantlyClosed, 1/1
+#T# attrinv: IsMajorantlyClosed, 1/1
 gap> S := DualSymmetricInverseMonoid(3);
 <inverse block bijection monoid of degree 3 with 3 generators>
 gap> Size(S);
@@ -738,19 +737,19 @@ the second argument should be a subset of the first,
 gap> IsMajorantlyClosed(S, [One(S)]);
 true
 
-#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 1
+#T# attrinv: JoinIrreducibleDClasses, partial perms, 1
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 > PartialPerm([1, 3, 5], [5, 1, 3])]);;
 gap> JoinIrreducibleDClasses(S)[1] = DClass(S, PartialPerm([3], [3]));
 true
 
-#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 2
+#T# attrinv: JoinIrreducibleDClasses, partial perms, 2
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 > PartialPerm([1, 3, 5], [5, 1, 3])]);;
 gap> JoinIrreducibleDClasses(S)[1] = DClass(S, PartialPerm([3], [3]));
 true
 
-#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 3
+#T# attrinv: JoinIrreducibleDClasses, partial perms, 3
 gap> S := Semigroup(
 > [PartialPerm([1, 2, 3, 4], [1, 2, 3, 4]),
 >  PartialPerm([1, 2, 3], [2, 3, 1])]);;
@@ -761,7 +760,7 @@ true
 gap> ForAll(DClassReps(S), x -> IsJoinIrreducible(S, x));
 true
 
-#T# attributes-inverse: JoinIrreducibleDClasses, partial perms, 4
+#T# attrinv: JoinIrreducibleDClasses, partial perms, 4
 gap> S := Semigroup([
 > PartialPerm([1, 2, 3, 4, 5, 7, 6]),
 > PartialPerm([2, 1]),
@@ -775,7 +774,7 @@ gap> Length(D);
 gap> ForAll(reps, x -> ForAny(D, d -> x in d));
 true
 
-#T# attributes-inverse: JoinIrreducibleDClasses, inverse op, 1/?
+#T# attrinv: JoinIrreducibleDClasses, inverse op, 1/?
 gap> S := InverseMonoid([Bipartition([[1, 2, 5, -2, -3, -5], [3, 4, -1, -4]]),
 > Bipartition([[1, 4, -5], [2, 5, -1, -2, -3], [3, -4]])]);;
 gap> jid :=
@@ -784,7 +783,7 @@ gap> jid :=
 gap> JoinIrreducibleDClasses(S) = jid or JoinIrreducibleDClasses(S) = Set(jid);
 true
 
-#T# attributes-inverse: MajorantClosure, 1/1
+#T# attrinv: MajorantClosure, 1/1
 gap> S := DualSymmetricInverseMonoid(3);
 <inverse block bijection monoid of degree 3 with 3 generators>
 gap> Size(S);
@@ -855,7 +854,7 @@ the second argument is not a subset of the first,
 gap> MajorantClosure(S, [One(S)]);
 [ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ]> ]
 
-#T# attributes-inverse: RightCosetsOfInverseSemigroup, 1/2
+#T# attrinv: RightCosetsOfInverseSemigroup, 1/2
 gap> S := InverseMonoid([PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 > PartialPerm([1, 3, 5], [5, 1, 3])]);;
 gap> T := InverseSemigroup(
@@ -895,7 +894,7 @@ gap> RightCosetsOfInverseSemigroup(S, T);
 Error, Semigroups: RightCosetsOfInverseSemigroup: usage,
 the second argument should be a subsemigroup of the first,
 
-#T# attributes-inverse: RightCosetsOfInverseSemigroup, 2/2
+#T# attrinv: RightCosetsOfInverseSemigroup, 2/2
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 > PartialPerm([1, 2, 3, 4], [5, 7, 1, 6]),
@@ -919,7 +918,7 @@ gap> Set(RightCosetsOfInverseSemigroup(S, W));
   [ [4,1,6](2)(3) ], [ [3,5][4,1,7](2), [4,1,7][6,3,5](2) ], [ [2,3,4,1,7] ], 
   [ [3,1,7][4,2,6] ] ]
 
-#T# attributes-inverse: SupremumIdempotents, 1/1
+#T# attrinv: SupremumIdempotents, 1/1
 gap> SupremumIdempotentsNC([], PartialPerm([]));
 <empty partial perm>
 gap> SupremumIdempotentsNC([], Bipartition([[1], [-1]]));
@@ -950,5 +949,4 @@ gap> Unbind(reps);
 gap> Unbind(x);
 
 #E#
-gap> STOP_TEST(Concatenation("Semigroups package: ",
->                            "standard/attributes-inverse.tst"));
+gap> STOP_TEST("Semigroups package: standard/attrinv.tst");

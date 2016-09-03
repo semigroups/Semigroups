@@ -480,7 +480,7 @@ InstallMethod(DisplayString, "for a matrix over semiring collection",
 [IsMatrixOverSemiringCollection],
 coll -> JoinStringsWithSeparator(List(coll, DisplayString), "\n"));
 
-InstallMethod(DisplayString, "for a matrix over semiring collection",
+InstallMethod(DisplayString, "for a matrix over semiring",
 [IsMatrixOverSemiring],
 function(x)
   local n, max, length, pad, str, i, j;

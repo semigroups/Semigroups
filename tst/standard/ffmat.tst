@@ -255,7 +255,61 @@ gap> IdentityMatrixOverFiniteField(Matrix(GF(17), []), 3);
 Matrix(GF(17), [[Z(17)^0, 0*Z(17), 0*Z(17)], [0*Z(17), Z(17)^0, 0*Z(17)], 
   [0*Z(17), 0*Z(17), Z(17)^0]])
 
-# Test 
+#T# Test Matrix, checker, 1/1
+gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5) ^ 2, Z(5) ^ 0]]);
+Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5)^2, Z(5)^0]])
+
+#T# Test One, 1/1
+gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5) ^ 2, Z(5) ^ 0]]);
+Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5)^2, Z(5)^0]])
+gap> One(mat);
+Matrix(GF(5), [[Z(5)^0, 0*Z(5)], [0*Z(5), Z(5)^0]])
+
+#T# Test RandomMatrix, 1/1
+gap> mat := RandomMatrix(GF(5), 10);
+<10x10 finite field matrix>
+
+#T# Test \*, works, 1/3
+gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5), 0 * Z(5)]]);
+Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
+gap> mat ^ 2;
+Matrix(GF(5), [[Z(5)^0, 0*Z(5)], [0*Z(5), Z(5)^0]])
+
+#T# Test \*, wrong dims, 2/3
+gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5), 0 * Z(5)]]);
+Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
+gap> mat2 := Matrix(GF(5), [[Z(5)]]);
+Matrix(GF(5), [[Z(5)]])
+gap> mat * mat2;
+Error, Semigroups: * (for matrices over a finite field): usage,
+the degree or domain of the arguments do not match,
+
+#T# Test \*, wrong base field, 3/3
+gap> mat := Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5), 0 * Z(5)]]);
+Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
+gap> mat2 := Matrix(GF(7), [[0 * Z(7), Z(7) ^ 3], [Z(7), 0 * Z(7)]]);
+Matrix(GF(7), [[0*Z(7), Z(7)^3], [Z(7), 0*Z(7)]])
+gap> mat * mat2;
+Error, Semigroups: * (for matrices over a finite field): usage,
+the degree or domain of the arguments do not match,
+
+#T# Test Display, 1/1
+gap> mat := Matrix(GF(11), [[Z(11) ^ 9, 0 * Z(11), Z(11), Z(11) ^ 9, 0 * Z(11)],
+>   [Z(11) ^ 3, Z(11) ^ 4, 0 * Z(11), Z(11) ^ 2, Z(11) ^ 7],
+>   [Z(11) ^ 9, Z(11) ^ 3, Z(11) ^ 5, Z(11) ^ 4, Z(11) ^ 4],
+>   [Z(11) ^ 6, Z(11), Z(11) ^ 7, Z(11) ^ 3, Z(11) ^ 5],
+>   [0 * Z(11), Z(11) ^ 8, Z(11) ^ 3, Z(11) ^ 6, Z(11) ^ 0]]);
+Matrix(GF(11), [[Z(11)^9, 0*Z(11), Z(11), Z(11)^9, 0*Z(11)], 
+  [Z(11)^3, Z(11)^4, 0*Z(11), Z(11)^2, Z(11)^7], 
+  [Z(11)^9, Z(11)^3, Z(11)^5, Z(11)^4, Z(11)^4], 
+  [Z(11)^6, Z(11), Z(11)^7, Z(11)^3, Z(11)^5], 
+  [0*Z(11), Z(11)^8, Z(11)^3, Z(11)^6, Z(11)^0]])
+gap> Display(mat);
+Z(11)^9 0*Z(11)   Z(11) Z(11)^9 0*Z(11)
+Z(11)^3 Z(11)^4 0*Z(11) Z(11)^2 Z(11)^7
+Z(11)^9 Z(11)^3 Z(11)^5 Z(11)^4 Z(11)^4
+Z(11)^6   Z(11) Z(11)^7 Z(11)^3 Z(11)^5
+0*Z(11) Z(11)^8 Z(11)^3 Z(11)^6 Z(11)^0
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(M);

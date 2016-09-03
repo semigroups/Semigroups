@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# attributes: IsomorphismFpMonoid, 
+#T# Test IsomorphismFpMonoid, 
 gap> S := Monoid(Transformation([1, 3, 4, 1, 3]),
 >                Transformation([2, 4, 1, 5, 5]),
 >                Transformation([2, 5, 3, 5, 3]),
@@ -40,12 +40,12 @@ MappingByFunction( <fp semigroup on the generators [ s1, s2, s3, s4, s5, s6
 gap> ForAll(S, x -> (x ^ map) ^ inv = x);
 true
 
-#T# attributes: IsomorphismFpMonoid, infinite
+#T# Test IsomorphismFpMonoid, infinite
 gap> IsomorphismFpMonoid(FreeMonoid(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsomorphismFpMonoid' on 1 arguments
 
-#T# attributes: IsomorphismFpSemigroup, infinite
+#T# Test IsomorphismFpSemigroup, infinite
 gap> IsomorphismFpSemigroup(FreeInverseSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsomorphismFpSemigroup' on 1 arguments

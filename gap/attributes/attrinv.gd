@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  attributes-inverse.gd
+#W  attrinv.gd
 #Y  Copyright (C) 2013-15                                James D. Mitchell,
 ##                                                       Wilf Wilson,
 ##                                                       Rhiannon Dougall,

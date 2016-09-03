@@ -155,7 +155,10 @@ gap> RowRank(x);
 <ManSection>
   <Attr Name="BaseDomain" Arg="mat" Label="for a matrix over finite field"/>
   <Returns>
-    The field containing the entries of the matrix <A>mat</A>.
+      If <A>mat</A> is a matrix over a finite field (in the category <Ref Filt
+        = "IsMatrixOverSemiring"/>), then <C>BaseDomain</C> returns the finite
+      field specified at the point that <A>mat</A> was created. Every entry in
+      the matrix <A>mat</A> belongs to <C>BaseDomain(<A>mat</A>)</C>. 
   </Returns>
   <Description>
     <Example><![CDATA[

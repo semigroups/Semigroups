@@ -166,8 +166,6 @@ gap> mat := Matrix(IsIntegerMatrix, [[0,2], [3,5]]);
 Matrix(IsIntegerMatrix, [[0, 2], [3, 5]])
 gap> AsList(mat);
 [ [ 0, 2 ], [ 3, 5 ] ]
-]]></Example>
-<!-- Tests including finite fields
 gap> mat := Matrix(GF(7), [[Z(7) ^ 3, Z(7) ^ 2], [Z(7) ^ 4, Z(7)]]);
 Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])
 gap> list := AsList(mat);
@@ -182,9 +180,8 @@ gap> IsMutable(list);
 true
 gap> IsMutable(list[1]);
 true
-gap> mat = Matrix(BaseField(mat), AsList(mat));
-true
--->
+gap> mat = Matrix(BaseDomain(mat), AsList(mat));
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
