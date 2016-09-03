@@ -17,6 +17,9 @@
 //
 
 #include "converter.h"
+
+#include <vector>
+
 #include "bipart.h"
 #include "gap.h"
 
@@ -171,7 +174,7 @@ Obj PBRConverter::get_gap_type(size_t deg) const {
   return ELM_PLIST(TYPES_PBR, deg);
 }
 
-// TODO add some more asserts here
+// TODO(JDM) add some more asserts here
 
 PBR* PBRConverter::convert(Obj o, size_t n) const {
   assert(CALL_1ARGS(IsPBR, o));

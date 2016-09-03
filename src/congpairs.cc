@@ -67,7 +67,6 @@ static void cong_obj_init_cpp_cong(Obj o) {
   Congruence* cong;
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
-
     Semigroup* range = cong_obj_get_range(o);
     range->enumerate(-1, rec_get_report(o));
 
@@ -219,7 +218,7 @@ Obj CONG_PAIRS_IN(Obj self, Obj o, Obj pair) {
 
 Obj CONG_PAIRS_LOOKUP_PART(Obj self, Obj o) {
   initRNams();
-  // TODO assert o is correct type of object
+  // TODO(JDM) assert o is correct type of object
   if (IsbPRec(o, RNam_fin_cong_lookup)) {
     assert(IsbPRec(o, RNam_fin_cong_partition));
     return True;
@@ -249,7 +248,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, Obj o) {
     word_t word;
 
     for (size_t i = 0; i < range->size(); i++) {
-      range->factorisation(word, i, report); // changes word in place
+      range->factorisation(word, i, report);  // changes word in place
       size_t coset = cong->word_to_coset(word);
       SET_ELM_PLIST(lookup, i + 1, INTOBJ_INT(coset));
 
@@ -283,7 +282,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, Obj o) {
 
 Obj CONG_PAIRS_CLASS_COSET_ID(Obj self, Obj o) {
   initRNams();
-  // TODO assert o is correct type of object
+  // TODO(JDM) assert o is correct type of object
 
   Obj rep      = ElmPRec(o, RNam_rep);
   Obj cong_obj = ElmPRec(o, RNam_cong);

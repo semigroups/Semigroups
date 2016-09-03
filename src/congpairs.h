@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRC_CONGPAIRS_H_
-#define SRC_CONGPAIRS_H_
+#ifndef SEMIGROUPS_SRC_CONGPAIRS_H_
+#define SEMIGROUPS_SRC_CONGPAIRS_H_
 
 #include "src/compiled.h"
 
@@ -28,4 +28,4 @@ Obj CONG_PAIRS_IN(Obj, Obj, Obj);
 Obj CONG_PAIRS_LOOKUP_PART(Obj, Obj);
 Obj CONG_PAIRS_CLASS_COSET_ID(Obj, Obj);
 
-#endif // SRC_CONGPAIRS_H_
+#endif  // SEMIGROUPS_SRC_CONGPAIRS_H_

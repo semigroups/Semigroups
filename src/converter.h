@@ -20,6 +20,7 @@
 #define SEMIGROUPS_SRC_CONVERTER_H_
 
 #include <algorithm>
+#include <vector>
 
 #include "src/compiled.h"
 #include "src/pperm.h"
@@ -42,7 +43,6 @@ class Converter {
 ////////////////////////////////////////////////////////////////////////////////
 
 template <typename T> class TransConverter : public Converter {
-
  public:
   Transformation<T>* convert(Obj o, size_t n) const override {
     assert(IS_TRANS(o));
@@ -76,7 +76,7 @@ template <typename T> class TransConverter : public Converter {
     auto xx = static_cast<Transformation<T> const*>(x);
     Obj  o  = NEW_TRANS(xx->degree());
 
-    T* pto = ((T*) ((Obj*) (ADDR_OBJ(o)) + 3));
+    T* pto = reinterpret_cast<T*>(static_cast<Obj*>(ADDR_OBJ(o) + 3));
     for (T i = 0; i < xx->degree(); i++) {
       pto[i] = (*xx)[i];
     }
@@ -98,7 +98,6 @@ template <typename T> class TransConverter : public Converter {
 ////////////////////////////////////////////////////////////////////////////////
 
 template <typename T> class PPermConverter : public Converter {
-
  public:
   PartialPerm<T>* convert(Obj o, size_t n) const override {
     assert(IS_PPERM(o));
@@ -108,7 +107,7 @@ template <typename T> class PPermConverter : public Converter {
 
     size_t i;
     if (TNUM_OBJ(o) == T_PPERM2) {
-      UInt2* pto2 = ADDR_PPERM2(o);
+      UInt2* pto2 = ADDR_PPERM<UInt2>(o);
       for (i = 0; i < std::min((size_t) DEG_PPERM2(o), n); i++) {
         if (pto2[i] == 0) {
           x->push_back(UNDEFINED);
@@ -117,7 +116,7 @@ template <typename T> class PPermConverter : public Converter {
         }
       }
     } else if (TNUM_OBJ(o) == T_PPERM4) {
-      UInt4* pto4 = ADDR_PPERM4(o);
+      UInt4* pto4 = ADDR_PPERM<UInt4>(o);
       for (i = 0; i < std::min((size_t) DEG_PPERM4(o), n); i++) {
         if (pto4[i] == 0) {
           x->push_back(UNDEFINED);
@@ -147,7 +146,7 @@ template <typename T> class PPermConverter : public Converter {
     }
 
     Obj o     = NEW_PPERM(deg);
-    T*  pto   = ((T*) ((Obj*) (ADDR_OBJ(o)) + 2) + 1);
+    T*  pto   = reinterpret_cast<T*>(static_cast<Obj*>(ADDR_OBJ(o)) + 2) + 1;
     T   codeg = 0;
 
     for (T i = 0; i < deg; i++) {
@@ -181,12 +180,9 @@ template <typename T> class PPermConverter : public Converter {
     }
   }
 
-  // FIXME expose these in pperm.h
-  inline UInt2* ADDR_PPERM2(Obj x) const {
-    return ((UInt2*) ((Obj*) (ADDR_OBJ(x)) + 2) + 1);
-  }
-  inline UInt4* ADDR_PPERM4(Obj x) const {
-    return ((UInt4*) ((Obj*) (ADDR_OBJ(x)) + 2) + 1);
+  template <typename UIntT>
+  inline UIntT* ADDR_PPERM(Obj x) const {
+    return reinterpret_cast<UIntT*>(static_cast<Obj*>(ADDR_OBJ(x)) + 2) + 1;
   }
 
   T UNDEFINED = (T) -1;
@@ -197,7 +193,6 @@ template <typename T> class PPermConverter : public Converter {
 ////////////////////////////////////////////////////////////////////////////////
 
 class BoolMatConverter : public Converter {
-
  public:
   BooleanMat* convert(Obj o, size_t n) const override;
   Obj unconvert(Element const* x) const override;
@@ -208,7 +203,6 @@ class BoolMatConverter : public Converter {
 ////////////////////////////////////////////////////////////////////////////////
 
 class BipartConverter : public Converter {
-
  public:
   Bipartition* convert(Obj o, size_t n) const override;
   Obj unconvert(Element const* x) const override;
@@ -219,7 +213,6 @@ class BipartConverter : public Converter {
 ////////////////////////////////////////////////////////////////////////////////
 
 class MatrixOverSemiringConverter : public Converter {
-
  public:
   ~MatrixOverSemiringConverter() {
     delete _semiring;
@@ -242,7 +235,6 @@ class MatrixOverSemiringConverter : public Converter {
 ////////////////////////////////////////////////////////////////////////////////
 
 class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
-
  public:
   ProjectiveMaxPlusMatrixConverter(Semiring* semiring,
                                    Obj       gap_zero,
@@ -264,7 +256,6 @@ class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
 ////////////////////////////////////////////////////////////////////////////////
 
 class PBRConverter : public Converter {
-
  public:
   PBR* convert(Obj o, size_t n) const override;
   Obj unconvert(Element const* x) const override;
