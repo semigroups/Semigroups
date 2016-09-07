@@ -20,16 +20,18 @@
 // package that involves GAP directly, i.e. importing functions/variables from
 // GAP and declaring functions for GAP etc.
 
-#include <gap.h>
+#include "gap.h"
 
 #include <assert.h>
-#include <iostream>
 #include <time.h> // FIXME remove this it's not used
 
+#include <iostream>
+
+#include "bipart.h"
 #include "congpairs.h"
+#include "converter.h"
 #include "fropin.h"
-#include "src/bipart.h"
-#include "src/converter.h"
+#include "ideals.h"
 #include "ufdata.h"
 
 #include "semigroupsplusplus/semigroups.h"
@@ -504,6 +506,7 @@ static StructGVarFunc GVarFuncs[] = {
                           BIPART_NR_IDEMPOTENTS,
                           5,
                           "o, scc, lookup, nr_threads, report"),
+    GVAR_FUNC_TABLE_ENTRY("ideals.cc", IDEAL_SIZE, 1, "prec"),
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };
 

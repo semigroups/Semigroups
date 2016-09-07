@@ -53,7 +53,7 @@ BooleanMat* BoolMatConverter::convert(Obj o, size_t n) const {
 
 Obj BoolMatConverter::unconvert(Element const* x) const {
   size_t      n = x->degree();
-  BooleanMat const * xx(static_cast<BooleanMat const*>(x));
+  BooleanMat const* xx(static_cast<BooleanMat const*>(x));
 
   Obj o = NEW_PLIST(T_PLIST, n);
   SET_LEN_PLIST(o, n);

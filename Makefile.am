@@ -13,7 +13,7 @@ lib_LTLIBRARIES = semigroups.la
 
 semigroups_la_SOURCES =  src/gap.cc src/converter.cc src/interface.cc src/data.cc
 semigroups_la_SOURCES += src/bipart.cc src/ufdata.cc src/fropin.cc src/congpairs.cc
-semigroups_la_SOURCES += src/semifp.cc
+semigroups_la_SOURCES += src/semifp.cc src/ideals.cc
 semigroups_la_SOURCES += src/semigroupsplusplus/elements.cc
 semigroups_la_SOURCES += src/semigroupsplusplus/blocks.cc
 semigroups_la_SOURCES += src/semigroupsplusplus/semigroups.cc 
