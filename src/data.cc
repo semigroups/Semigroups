@@ -18,6 +18,8 @@
 
 #include "data.h"
 
+#include <vector>
+
 // TODO  data_is_valid
 
 /*******************************************************************************
@@ -229,7 +231,7 @@ void data_init_semigroup(Obj data, Semigroup* semigroup) {
     gens->push_back(converter->convert(ELM_PLIST(gens_gap, i), degree));
   }
 
-  semigroup = new Semigroup(gens, degree);
+  semigroup = new Semigroup(gens);
   semigroup->set_batch_size(data_batch_size(data));
 
   AssPRec(data, RNam_semigroup, OBJ_CLASS(semigroup, T_SEMI_SUBTYPE_SEMIGP));
