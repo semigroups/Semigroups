@@ -73,3 +73,4 @@ src/semigroupsplusplus
 src/stamp-h1
 tags
 tst/workspaces/test-output.w
+ltmain.sh
