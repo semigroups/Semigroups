@@ -187,21 +187,21 @@ end;
 
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a semigroup and a list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList],
+[IsSemigroup, IsList], #FIXME change to IsEnumerableSemigroupRep when it exists
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
 end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
 "for a semigroup and a list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList],
+[IsSemigroup, IsList], #FIXME change to IsEnumerableSemigroupRep when it exists
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
 end);
 
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
 "for a semigroup and a list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList],
+[IsSemigroup, IsList], #FIXME change to IsEnumerableSemigroupRep when it exists
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
 end);
@@ -210,6 +210,7 @@ end);
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for a semigroup and an empty list",
 [IsSemigroup, IsList and IsEmpty], 1,
+#FIXME change to IsEnumerableSemigroupRep when it exists
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
 end);
