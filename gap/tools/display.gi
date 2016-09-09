@@ -805,3 +805,37 @@ function(S)
 
   return str;
 end);
+
+InstallMethod(TexString, "for a transformation and a pos int", 
+[IsTransformation, IsPosInt],
+function(f, deg)
+  local str, i;
+
+  if deg < DegreeOfTransformation(f) then 
+    ErrorNoReturn("error");
+  fi;
+  str := "\\begin{pmatrix}\n  ";
+  for i in [1 .. deg] do 
+    Append(str, String(i));
+    if i <> deg then 
+      Append(str, " & ");
+    fi;
+  od;
+  Append(str, " \\\\\n  ");
+  for i in [1 .. deg] do 
+    Append(str, String(i ^ f));
+    if i <> deg then 
+      Append(str, " & ");
+    fi;
+  od;
+  Append(str, "\n\\end{pmatrix}");
+  return str;
+end);
+
+InstallMethod(TexString, "for a transformation collection", 
+[IsTransformationCollection],
+function(coll)
+  local deg;
+  deg := DegreeOfTransformationCollection(coll);
+  return JoinStringsWithSeparator(List(coll, x -> TexString(x, deg)), "\n");
+end);

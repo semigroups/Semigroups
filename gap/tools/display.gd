@@ -12,5 +12,7 @@ DeclareOperation("TikzString", [IsObject]);
 DeclareOperation("TikzString", [IsObject, IsRecord]);
 DeclareOperation("DotString", [IsObject]);
 DeclareOperation("DotString", [IsObject, IsRecord]);
+DeclareOperation("TexString", [IsObject]);
+DeclareOperation("TexString", [IsObject, IsObject]);
 
 DeclareAttribute("DotSemilatticeOfIdempotents", IsInverseSemigroup);
