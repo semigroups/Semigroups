@@ -1402,6 +1402,16 @@ gap> S := HallMonoid(2);;
 gap> latt := LatticeOfCongruences(S);
 [ [  ], [ 1, 3, 4 ], [ 1, 4 ], [ 1 ] ]
 
+# Test bug in \in for high degree transformation semigroup
+gap> S := Semigroup(Transformation([4, 3, 2, 1]),
+>                   Transformation([3, 2, 3, 2]),
+>                   Transformation([1, 1, 2, 4]),
+>                   Transformation([1, 4, 3, 1]));;
+gap> T := Range(AntiIsomorphismTransformationSemigroup(S));;
+gap> M := MaximalSubsemigroups(T);;
+gap> T in M;
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);

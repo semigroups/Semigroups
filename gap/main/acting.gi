@@ -63,8 +63,8 @@ InstallMethod(\in,
 function(x, S)
   local data, ht, lambda, lambdao, l, m, rhoranker, rho, rank, rhoo,
   lambdarhoht, rholookup, rhoranks, lookahead_last, lookahead_fail, nrgens,
-  LookAhead, new, lookfunc, schutz, ind, reps, repslens, max, membership,
-  lambdaperm, n, found, i;
+  LookAhead, new, lookfunc, schutz, ind, reps, repslens, bound, max,
+  membership, lambdaperm, n, found, i;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(x)
       or (IsActingSemigroupWithFixedDegreeMultiplication(S)
@@ -226,9 +226,13 @@ function(x, S)
 
   reps := data!.reps;
   repslens := data!.repslens;
-
-  max := LambdaBound(S)(LambdaRank(S)(lambda)) /
-          Size(LambdaOrbSchutzGp(lambdao, m));
+  
+  bound := LambdaBound(S)(LambdaRank(S)(lambda));
+  if IsPosInt(bound) then 
+    max := bound / Size(LambdaOrbSchutzGp(lambdao, m));
+  else 
+    max := bound;
+  fi;
 
   if repslens[m][ind] = max then
     return true;
