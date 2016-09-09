@@ -11,6 +11,9 @@
 # Transformation semigroups
 DeclareOperation("EndomorphismsPartition", [IsCyclotomicCollection]);
 DeclareOperation("OrderEndomorphisms", [IsPosInt]);
+DeclareOperation("OrderAntiEndomorphisms", [IsPosInt]);
+DeclareOperation("PartialOrderEndomorphisms", [IsPosInt]);
+DeclareOperation("PartialOrderAntiEndomorphisms", [IsPosInt]);
 DeclareOperation("SingularOrderEndomorphisms", [IsPosInt]);
 DeclareOperation("PartialTransformationMonoid", [IsPosInt]);
 DeclareOperation("CatalanMonoid", [IsPosInt]);

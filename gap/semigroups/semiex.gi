@@ -482,6 +482,42 @@ function(n)
   return S;
 end);
 
+InstallMethod(PartialOrderEndomorphisms, "for a positive integer",
+[IsPosInt],
+function(n)
+  local x, gens, S, i;
+
+  x := [1 .. n + 1];
+  gens := [];
+  for i in [1 .. n] do
+    x[i] := n + 1;
+    Add(gens, Transformation(x));
+    x[i] := i;
+  od;
+
+  S := Monoid(OrderEndomorphisms(n), gens);
+  SetIsRegularSemigroup(S, true);
+  return S;
+end);
+
+InstallMethod(OrderAntiEndomorphisms, "for a positive integer",
+[IsPosInt],
+function(n)
+  local S;
+  S := Monoid(OrderEndomorphisms(n), Transformation(Reversed([1 .. n])));
+  SetIsRegularSemigroup(S, true);
+  return S;
+end);
+
+InstallMethod(PartialOrderAntiEndomorphisms, "for a positive integer",
+[IsPosInt],
+function(n)
+  local S;
+  S := Monoid(PartialOrderEndomorphisms(n), Transformation(Reversed([1 .. n])));
+  SetIsRegularSemigroup(S, true);
+  return S;
+end);
+
 InstallMethod(PartialTransformationMonoid, "for a positive integer",
 [IsPosInt],
 function(n)
