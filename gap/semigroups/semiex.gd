@@ -26,6 +26,7 @@ DeclareAttribute("MunnSemigroup", IsSemigroup);
 DeclareAttribute("GeneratorsOfMunnSemigroup", IsSemigroup);
 DeclareOperation("POI", [IsPosInt]);
 DeclareOperation("POPI", [IsPosInt]);
+DeclareOperation("PODI", [IsPosInt]);
 
 # Bipartition semigroups
 DeclareOperation("JonesMonoid", [IsInt]);

@@ -708,7 +708,7 @@ end);
 
 InstallMethod(AnnularJonesMonoid, "for an integer", [IsInt],
 function(n)
-  local p, M;
+  local p, x, M, j;
 
   if n < 0 then
     ErrorNoReturn("Semigroups: AnnularJonesMonoid: usage,\n",
@@ -718,7 +718,14 @@ function(n)
   fi;
 
   p := PermList(Concatenation([n], [1 .. n - 1]));
-  M := Monoid(JonesMonoid(n), AsBipartition(p));
+
+  x := [[1, 2], [-1, -2]];
+  for j in [3 .. n] do
+    Add(x, [j, -j]);
+  od;
+  x := Bipartition(x);
+
+  M := Monoid(x, AsBipartition(p));
   SetIsRegularSemigroup(M, true);
   SetIsStarSemigroup(M, true);
   return M;
@@ -812,6 +819,14 @@ function(n)
   fi;
   return InverseMonoid(PartialPermNC(Concatenation([2 .. n], [1])),
                        PartialPermNC(Concatenation([1 .. n - 2], [n])));
+end);
+
+InstallMethod(PODI, "for a positive integer", [IsPosInt],
+function(n)
+  if n = 1 then
+    return InverseMonoid(PartialPerm([1]), PartialPerm([]));
+  fi;
+  return InverseMonoid(POI(n), PartialPerm(Reversed([1 .. n])));
 end);
 
 # TODO improve and document this
