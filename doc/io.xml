@@ -8,13 +8,13 @@
 #############################################################################
 ##
 
-<#GAPDoc Label="IteratorFromGeneratorsFile">
+<#GAPDoc Label="IteratorFromPickledFile">
   <ManSection> 
-    <Func Name = "IteratorFromGeneratorsFile" Arg = "filename"/>
+    <Func Name = "IteratorFromPickledFile" Arg = "filename"/>
     <Returns>An iterator.</Returns>
     <Description>
       If <A>filename</A> is a string containing the name of a file created using 
-      <Ref Func = "WriteGenerators"/>, then <C>IteratorFromGeneratorsFile</C>
+      <Ref Func = "WriteGenerators"/>, then <C>IteratorFromPickledFile</C>
       returns an iterator <C>iter</C> such that <C>NextIterator(iter)</C>
       returns the next collection of generators stored in the file <A>filename</A>. 
       <P/>
@@ -91,7 +91,7 @@ t210 2 2 6 7 2 6 9 9 1 1 5 3 8 1 9 9 410 510 6</Log>
       of <A>filename</A>.
 
       <Example>
-gap> file := Concatenation(SemigroupsDir(), "/tst/test.gz");;
+gap> file := Concatenation(SEMIGROUPS.PackageDir, "/tst/test-data.gz");;
 gap> ReadGenerators(file, 1378);
 [ Transformation( [ 1, 2, 2 ] ), IdentityTransformation, 
   Transformation( [ 1, 2, 3, 4, 5, 7, 7 ] ), 

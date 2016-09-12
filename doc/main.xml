@@ -58,7 +58,7 @@
   <#Include SYSTEM "z-chap08.xml">  <!-- visualising --> 
   <#Include SYSTEM "z-chap09.xml">  <!-- standard examples -->
   <#Include SYSTEM "z-chap10.xml">  <!-- standard constructions-->
-  <#Include SYSTEM "chap10.xml"> <!-- matrix semigroups -->
+  <#Include SYSTEM "chap10.xml">    <!-- matrix semigroups -->
   <#Include SYSTEM "z-chap11.xml">  <!-- free inverse semigroups -->
   <#Include SYSTEM "z-chap12.xml">  <!-- free bands -->
   <#Include SYSTEM "z-chap13.xml">  <!-- graph inverse semigroups -->
@@ -69,7 +69,8 @@
   <#Include SYSTEM "z-chap18.xml">  <!-- homomorphisms -->
   <#Include SYSTEM "z-chap19.xml">  <!-- congruences -->
   <#Include SYSTEM "z-chap20.xml">  <!-- orbits -->
-  <#Include SYSTEM "z-chap21.xml">  <!-- extending the package -->
+  <#Include SYSTEM "z-chap21.xml">  <!-- utils -->
+  <#Include SYSTEM "z-chap22.xml">  <!-- extending the package -->
 </Body>
 
 <Bibliography Databases="semigroups" />

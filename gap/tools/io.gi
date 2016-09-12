@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-InstallGlobalFunction(IteratorFromGeneratorsFile,
+InstallGlobalFunction(IteratorFromPickledFile,
 function(str)
   local file, record;
 

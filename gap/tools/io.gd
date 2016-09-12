@@ -9,7 +9,8 @@
 ##
 
 DeclareGlobalFunction("ReadGenerators");
-DeclareGlobalFunction("ReadOldGenerators");
 DeclareGlobalFunction("WriteGenerators");
-DeclareGlobalFunction("IteratorFromGeneratorsFile");
+DeclareGlobalFunction("IteratorFromPickledFile");
+
+DeclareGlobalFunction("ReadOldGenerators");
 DeclareGlobalFunction("IteratorFromOldGeneratorsFile");
