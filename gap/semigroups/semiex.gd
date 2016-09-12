@@ -72,17 +72,8 @@ DeclareOperation("SingularPlanarPartitionMonoid", [IsPosInt]);
 DeclareOperation("ModularPartitionMonoid", [IsPosInt, IsPosInt]);
 DeclareOperation("SingularModularPartitionMonoid", [IsPosInt, IsPosInt]);
 
-# Matrix over finite field semigroups
+# Matrix over finite field semigroups MOVE THIS
 
-DeclareOperation("SEMIGROUPS_MatrixSemigroupConstructor",
-                 [IsFunction, IsList, IsString, IsString]);
-DeclareOperation("SEMIGROUPS_MatrixGroupConstructor", [IsFunction]);
-DeclareAttribute("SEMIGROUPS_MatrixSemigroupViewString",
-                 IsMatrixOverFiniteFieldSemigroup);
-DeclareAttribute("SEMIGROUPS_MatrixSemigroupPrintString",
-                 IsMatrixOverFiniteFieldSemigroup);
-
-# TODO rename these to GeneralLinearMonoid
 DeclareOperation("GeneralLinearMonoid", [IsPosInt, IsPosInt]);
 DeclareSynonym("GLM", GeneralLinearMonoid);
 DeclareSynonym("FullMatrixMonoid", GeneralLinearMonoid);

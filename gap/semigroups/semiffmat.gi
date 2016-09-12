@@ -9,6 +9,44 @@
 #############################################################################
 ##
 
+InstallMethod(ViewObj, "for a general linear monoid", 
+[IsGeneralLinearMonoid], 
+7, # to beat the generic method for monoids with generators
+function(S)
+  local n;
+  Print("<general linear monoid ");
+  n := DegreeOfMatrixSemigroup(S);
+  Print(n, "x", n, " over ", BaseDomain(S));
+  Print(">");
+end);
+
+InstallMethod(PrintString, "for general linear monoid",
+[IsGeneralLinearMonoid], 
+5, # to beat the generic method for monoids with generators
+function(M)
+  local rep, str;
+  
+  rep := Representative(M);
+  str :=  Concatenation("GLM(", 
+                        String(DimensionOfMatrixOverSemiring(rep)), 
+                        ", ", 
+                        String(Characteristic(BaseDomain(M))));
+  if Characteristic(BaseDomain(M)) <> 1 then 
+    Append(str, " ^ ");
+    Append(str, String(Log(Size(BaseDomain(M)),
+                           Characteristic(BaseDomain(M)))));
+  fi;
+  Append(str, ")");
+  return str;
+end);
+
+InstallMethod(PrintObj, "for general linear monoid",
+[IsGeneralLinearMonoid], 
+7, # to beat the generic method for monoids with generators
+function(M)
+  Print(PrintString(M));
+end);
+
 #FIXME There should be methods for random semigroup/monoid
 
 InstallMethod(RandomMatrixSemigroup,
