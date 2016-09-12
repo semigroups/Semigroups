@@ -25,6 +25,7 @@
 #include <assert.h>
 
 #include <string>
+#include <utility>
 
 #include "src/compiled.h"
 
@@ -358,7 +359,7 @@ Obj SEMIGROUP_AS_SET(Obj self, Obj data) {
   }
 
   std::vector<std::pair<Element*, size_t>>* pairs =
-      data_semigroup(data)->sorted_elements();
+      data_semigroup(data)->sorted_elements(rec_get_report(data));
   Converter* converter = data_converter(data);
 
   Obj out = NEW_PLIST(T_PLIST, pairs->size());
@@ -384,7 +385,7 @@ Obj SEMIGROUP_POSITION_SORTED(Obj self, Obj data, Obj x) {
     Converter* converter = data_converter(data);
     size_t     pos = semigroup->position_sorted(converter->convert(x, deg),
                                             rec_get_report(data));
-    return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
+    return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   }
 }
 
@@ -567,7 +568,7 @@ Obj SEMIGROUP_POSITION(Obj self, Obj data, Obj x) {
     Converter* converter = data_converter(data);
     size_t     pos =
         semigroup->position(converter->convert(x, deg), rec_get_report(data));
-    return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
+    return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   }
 
   Obj    ht = ElmPRec(data, RNamName("ht"));
@@ -598,7 +599,7 @@ Obj SEMIGROUP_POSITION_CURRENT(Obj self, Obj data, Obj x) {
     Semigroup* semigroup = data_semigroup(data);
     Converter* converter = data_converter(data);
     size_t     pos = semigroup->position_current(converter->convert(x, deg));
-    return (pos == ((size_t) -1) ? Fail : INTOBJ_INT(pos + 1));
+    return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   }
 
   return CALL_2ARGS(HTValue, ElmPRec(data, RNamName("ht")), x);

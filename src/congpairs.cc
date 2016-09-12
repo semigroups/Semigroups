@@ -68,7 +68,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
     Semigroup* range = cong_obj_get_range(o);
-    range->enumerate(-1, rec_get_report(o));
+    range->enumerate(Semigroup::LIMIT_MAX, rec_get_report(o));
 
     std::vector<relation_t> extra;
     word_t                  lhs, rhs;
