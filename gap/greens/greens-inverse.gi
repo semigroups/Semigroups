@@ -275,7 +275,7 @@ function(x, L)
     return false;
   fi;
 
-  return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep, x));
+  return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep ^ -1, x ^ -1));
 end);
 
 #############################################################################

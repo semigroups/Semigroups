@@ -1412,6 +1412,25 @@ gap> M := MaximalSubsemigroups(T);;
 gap> T in M;
 false
 
+# Test for Issue 217 (bug in \in for L-class of inverse semigroups)
+gap> S := InverseMonoid(PartialPerm([2, 3, 4, 5, 6], [1, 2, 3, 4, 5]),
+> PartialPerm([1, 2, 3, 4, 5], [1, 2, 3, 4, 6]),
+> PartialPerm([1, 2, 3, 4, 6], [1, 2, 3, 5, 6]),
+> PartialPerm([1, 2, 3, 5, 6], [1, 2, 4, 5, 6]),
+> PartialPerm([1, 2, 4, 5, 6], [1, 3, 4, 5, 6]),
+> PartialPerm([1, 3, 4, 5, 6], [2, 3, 4, 5, 6]),
+> PartialPerm([1, 2, 3, 4, 5, 6], [6, 5, 4, 3, 2, 1]));;
+gap> NrMaximalSubsemigroups(S);
+11
+gap> y := PartialPerm([1, 2, 3, 4, 5], [6, 5, 4, 2, 1]);;
+gap> D := DClass(S, y);;
+gap> y in D;
+true
+gap> ForAny(LClasses(D), L -> y in L);
+true
+gap> ForAll(LClasses(D), L -> ForAll(L, x -> x in L));
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
