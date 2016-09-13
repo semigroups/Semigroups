@@ -1214,6 +1214,17 @@ gap> Size(Semigroup(x));
 gap> Size(Monoid(x));
 4
 
+# Test for Issue 218
+gap> S := Semigroup(PlanarPartitionMonoid(5), AsBipartition((1,2,3,4,5)), 
+> rec(generic := false));;
+gap> D := DClasses(S)[2];;
+gap> x := Bipartition([[1, -1], [2, -2], [3, -3], [4, -4, -5], [5]]);;
+gap> x in D;
+true
+gap> inj := InjectionPrincipalFactor(D);;
+gap> x ^ inj;
+(3,(1,2,3,4),4)
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);

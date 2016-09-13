@@ -107,7 +107,7 @@ gap> S := Semigroup(x, y);
 gap> D := DClass(S, RMSElement(R, 6, (1, 3, 4, 2), 5));;
 gap> InjectionPrincipalFactor(D);
 Error, Semigroups: InjectionPrincipalFactor: usage,
-the argument <d> must be a regular D-class,
+the argument <D> must be a regular D-class,
 
 #T# attract: InjectionPrincipalFactor 3/6
 gap> R := PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);
