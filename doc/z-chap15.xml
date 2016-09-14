@@ -148,8 +148,8 @@
     <Enum>
       <Item><C>{0};</C></Item>
       <Item>formed by removing <C>0</C>;</Item>
-      <Item>formed by removing a row (a non-zero &R;-class);</Item>
       <Item>formed by removing a column (a non-zero &L;-class);</Item>
+      <Item>formed by removing a row (a non-zero &R;-class);</Item>
       <Item>formed by removing a set of both rows and columns;</Item>
       <Item>isomorphic to a Rees (0-)matrix semigroup of the same dimensions over
         a maximal subgroup of <C>G</C> (in particular, the maximal subsemigroup

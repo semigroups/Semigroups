@@ -176,10 +176,10 @@ gap> MaximalSubsemigroups(R);
 gap> R := ReesMatrixSemigroup(SymmetricGroup(3), [[(), ()], [(), ()]]);
 <Rees matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>
 gap> MaximalSubsemigroups(R);
-[ <Rees matrix semigroup 1x2 over Sym( [ 1 .. 3 ] )>, 
+[ <Rees matrix semigroup 2x1 over Sym( [ 1 .. 3 ] )>, 
+  <Rees matrix semigroup 2x1 over Sym( [ 1 .. 3 ] )>, 
   <Rees matrix semigroup 1x2 over Sym( [ 1 .. 3 ] )>, 
-  <Rees matrix semigroup 2x1 over Sym( [ 1 .. 3 ] )>, 
-  <Rees matrix semigroup 2x1 over Sym( [ 1 .. 3 ] )>, 
+  <Rees matrix semigroup 1x2 over Sym( [ 1 .. 3 ] )>, 
   <subsemigroup of 2x2 Rees matrix semigroup with 2 generators>, 
   <subsemigroup of 2x2 Rees matrix semigroup with 2 generators>, 
   <subsemigroup of 2x2 Rees matrix semigroup with 2 generators>, 
@@ -231,10 +231,10 @@ gap> MaximalSubsemigroups(R, rec(types := [6]));
 gap> R := ReesMatrixSemigroup(SymmetricGroup(2), [[(), (1, 2)], [(), (1, 2)]]);
 <Rees matrix semigroup 2x2 over Sym( [ 1 .. 2 ] )>
 gap> MaximalSubsemigroups(R, rec(D := DClasses(R)[1])); # <opts.D> is specified
-[ <Rees matrix semigroup 1x2 over Sym( [ 1 .. 2 ] )>, 
+[ <Rees matrix semigroup 2x1 over Sym( [ 1 .. 2 ] )>, 
+  <Rees matrix semigroup 2x1 over Sym( [ 1 .. 2 ] )>, 
   <Rees matrix semigroup 1x2 over Sym( [ 1 .. 2 ] )>, 
-  <Rees matrix semigroup 2x1 over Sym( [ 1 .. 2 ] )>, 
-  <Rees matrix semigroup 2x1 over Sym( [ 1 .. 2 ] )>, 
+  <Rees matrix semigroup 1x2 over Sym( [ 1 .. 2 ] )>, 
   <subsemigroup of 2x2 Rees matrix semigroup with 2 generators> ]
 gap> MaximalSubsemigroups(R, rec(types := [6])); # <opts.types> is specified
 [ <subsemigroup of 2x2 Rees matrix semigroup with 2 generators> ]
@@ -242,8 +242,8 @@ gap> x := [RMSElement(R, 1, (), 1),
 >          RMSElement(R, 1, (1, 2), 1)];
 [ (1,(),1), (1,(1,2),1) ]
 gap> MaximalSubsemigroups(R, rec(contain := x)); # <opts.contain> is specified
-[ <Rees matrix semigroup 1x2 over Sym( [ 1 .. 2 ] )>, 
-  <Rees matrix semigroup 2x1 over Sym( [ 1 .. 2 ] )> ]
+[ <Rees matrix semigroup 2x1 over Sym( [ 1 .. 2 ] )>, 
+  <Rees matrix semigroup 1x2 over Sym( [ 1 .. 2 ] )> ]
 gap> Add(x, RMSElement(R, 1, (), 2));
 gap> MaximalSubsemigroups(R, rec(contain := x));
 [ <Rees matrix semigroup 1x2 over Sym( [ 1 .. 2 ] )> ]
@@ -261,13 +261,13 @@ gap> NrMaximalSubsemigroups(R);
 gap> Length(MaximalSubsemigroupsNC(R, rec()));
 7
 gap> MaximalSubsemigroups(R, rec(contain := [RMSElement(R, 1, (1, 2), 1)]));
-[ <Rees matrix semigroup 1x2 over Group([ (1,2), (3,4) ])>, 
-  <Rees matrix semigroup 2x1 over Group([ (1,2), (3,4) ])>, 
+[ <Rees matrix semigroup 2x1 over Group([ (1,2), (3,4) ])>, 
+  <Rees matrix semigroup 1x2 over Group([ (1,2), (3,4) ])>, 
   <subsemigroup of 2x2 Rees matrix semigroup with 2 generators> ]
 gap> MaximalSubsemigroups(R, rec(contain := [RMSElement(R, 1, (1, 2), 1)],
 >                                gens := true));
-[ [ (1,(1,2),1), (1,(3,4),1), (1,(),2) ], 
-  [ (1,(1,2),1), (1,(3,4),1), (2,(),1) ], [ (1,(1,2),1), (2,(),2) ] ]
+[ [ (1,(1,2),1), (1,(3,4),1), (2,(),1) ], 
+  [ (1,(1,2),1), (1,(3,4),1), (1,(),2) ], [ (1,(1,2),1), (2,(),2) ] ]
 
 #T# maximal: MaximalSubsemigroups, for a Rees matrix subsemigroup, 1
 
@@ -306,11 +306,11 @@ gap> R := ReesMatrixSemigroup(Group((1, 2)),
 gap> U := ReesMatrixSubsemigroup(R, [2, 3], Group((1, 2)), [2 .. 4]);
 <Rees matrix semigroup 2x3 over Group([ (1,2) ])>
 gap> MaximalSubsemigroups(U);
-[ <Rees matrix semigroup 1x3 over Group([ (1,2) ])>, 
+[ <Rees matrix semigroup 2x2 over Group([ (1,2) ])>, 
+  <Rees matrix semigroup 2x2 over Group([ (1,2) ])>, 
+  <Rees matrix semigroup 2x2 over Group([ (1,2) ])>, 
   <Rees matrix semigroup 1x3 over Group([ (1,2) ])>, 
-  <Rees matrix semigroup 2x2 over Group([ (1,2) ])>, 
-  <Rees matrix semigroup 2x2 over Group([ (1,2) ])>, 
-  <Rees matrix semigroup 2x2 over Group([ (1,2) ])>, 
+  <Rees matrix semigroup 1x3 over Group([ (1,2) ])>, 
   <subsemigroup of 3x4 Rees matrix semigroup with 3 generators> ]
 
 #T# maximal: MaximalSubsemigroups, for a Rees 0-matrix semigroup, 1

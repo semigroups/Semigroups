@@ -215,9 +215,47 @@ function(R, opts)
   out := [];
   tot := 0;
 
+  # Maximal subsemigroups equal to I x G x L', where L' = L \ {l} for some l
+  # These are the maximal subsemigroups of R of type (iv)
+  if type[3] then
+    Info(InfoSemigroups, 2, "Type 4: looking for maximal subsemigroups ",
+                            "formed by discarding a column...");
+    if L > 1 then
+      lookup_cols := EmptyPlist(Maximum(cols));
+      for i in [1 .. L] do
+        lookup_cols[cols[i]] := i;
+      od;
+      remove := BlistList(Columns(R), Columns(R));
+      i := 0;
+      while i < Length(contain) and SizeBlist(remove) > 0 do
+        i := i + 1;
+        x := contain[i];
+        remove[lookup_cols[x![3]]] := false;
+      od;
+      n := SizeBlist(remove);
+    fi;
+    if L > 1 and n > 0 then
+      Info(InfoSemigroups, 2, "...found ", n, " result(s).");
+      tot := tot + n;
+      if not opts.number then
+        Info(InfoSemigroups, 2, "...creating these maximal subsemigroups.");
+        for l in ListBlist(cols, remove) do
+          x := Difference(cols, [l]);
+          x := ReesMatrixSubsemigroupNC(R, rows, G, x);
+          if opts.gens then
+            x := GeneratorsOfSemigroup(x);
+          fi;
+          Add(out, x);
+        od;
+      fi;
+    else
+      Info(InfoSemigroups, 2, "...found none.");
+    fi;
+  fi;
+
   # Maximal subsemigroups equal to I' x G x L, where I' = I \ {i} for some i
   # These are the maximal subsemigroups of R of type (iii)
-  if type[3] then
+  if type[4] then
     Info(InfoSemigroups, 2, "Type 3: looking for maximal subsemigroups ",
                             "formed by discarding a row...");
     if I > 1 then
@@ -243,44 +281,6 @@ function(R, opts)
         for i in ListBlist(rows, remove) do
           x := Difference(rows, [i]);
           x := ReesMatrixSubsemigroupNC(R, x, G, cols);
-          if opts.gens then
-            x := GeneratorsOfSemigroup(x);
-          fi;
-          Add(out, x);
-        od;
-      fi;
-    else
-      Info(InfoSemigroups, 2, "...found none.");
-    fi;
-  fi;
-
-  # Maximal subsemigroups equal to I x G x L', where L' = L \ {l} for some l
-  # These are the maximal subsemigroups of R of type (iv)
-  if type[4] then
-    Info(InfoSemigroups, 2, "Type 4: looking for maximal subsemigroups ",
-                            "formed by discarding a column...");
-    if L > 1 then
-      lookup_cols := EmptyPlist(Maximum(cols));
-      for i in [1 .. L] do
-        lookup_cols[cols[i]] := i;
-      od;
-      remove := BlistList(Columns(R), Columns(R));
-      i := 0;
-      while i < Length(contain) and SizeBlist(remove) > 0 do
-        i := i + 1;
-        x := contain[i];
-        remove[lookup_cols[x![3]]] := false;
-      od;
-      n := SizeBlist(remove);
-    fi;
-    if L > 1 and n > 0 then
-      Info(InfoSemigroups, 2, "...found ", n, " result(s).");
-      tot := tot + n;
-      if not opts.number then
-        Info(InfoSemigroups, 2, "...creating these maximal subsemigroups.");
-        for l in ListBlist(cols, remove) do
-          x := Difference(cols, [l]);
-          x := ReesMatrixSubsemigroupNC(R, rows, G, x);
           if opts.gens then
             x := GeneratorsOfSemigroup(x);
           fi;
