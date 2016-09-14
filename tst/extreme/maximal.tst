@@ -54,11 +54,11 @@ gap> mat := [[(), (1, 2), (1, 2)(3, 4)], [(), (1, 2), ()]];;
 gap> R := ReesMatrixSemigroup(G, mat); # 3x2 RMS over C2 x C2
 <Rees matrix semigroup 3x2 over Group([ (1,2), (3,4) ])>
 gap> max := MaximalSubsemigroups(R);
-[ <Rees matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
+[ <Rees matrix semigroup 3x1 over Group([ (1,2), (3,4) ])>, 
+  <Rees matrix semigroup 3x1 over Group([ (1,2), (3,4) ])>, 
   <Rees matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
   <Rees matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
-  <Rees matrix semigroup 3x1 over Group([ (1,2), (3,4) ])>, 
-  <Rees matrix semigroup 3x1 over Group([ (1,2), (3,4) ])>, 
+  <Rees matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>, 
   <subsemigroup of 3x2 Rees matrix semigroup with 3 generators> ]
 gap> NrMaximalSubsemigroups(R);
 6
@@ -68,21 +68,21 @@ gap> mat := [[(), (1, 2, 3)], [(), (1, 2, 3)]];;
 gap> R := ReesMatrixSemigroup(G, mat); # 2x2 RMS over C3
 <Rees matrix semigroup 2x2 over Group([ (1,2,3) ])>
 gap> max := MaximalSubsemigroups(R);
-[ <Rees matrix semigroup 1x2 over Group([ (1,2,3) ])>, 
+[ <Rees matrix semigroup 2x1 over Group([ (1,2,3) ])>, 
+  <Rees matrix semigroup 2x1 over Group([ (1,2,3) ])>, 
   <Rees matrix semigroup 1x2 over Group([ (1,2,3) ])>, 
-  <Rees matrix semigroup 2x1 over Group([ (1,2,3) ])>, 
-  <Rees matrix semigroup 2x1 over Group([ (1,2,3) ])>, 
+  <Rees matrix semigroup 1x2 over Group([ (1,2,3) ])>, 
   <subsemigroup of 2x2 Rees matrix semigroup with 2 generators> ]
 gap> G := Group([(1, 2, 3), (1, 2)]);;
 gap> mat := [[(), (1, 3, 2)], [(1, 3), (2, 3)], [(1, 2, 3), ()]];;
 gap> R := ReesMatrixSemigroup(G, mat); # 2x3 RMS over Sym(3)
 <Rees matrix semigroup 2x3 over Group([ (1,2,3), (1,2) ])>
 gap> max := MaximalSubsemigroups(R);
-[ <Rees matrix semigroup 1x3 over Group([ (1,2,3), (1,2) ])>, 
+[ <Rees matrix semigroup 2x2 over Group([ (1,2,3), (1,2) ])>, 
+  <Rees matrix semigroup 2x2 over Group([ (1,2,3), (1,2) ])>, 
+  <Rees matrix semigroup 2x2 over Group([ (1,2,3), (1,2) ])>, 
   <Rees matrix semigroup 1x3 over Group([ (1,2,3), (1,2) ])>, 
-  <Rees matrix semigroup 2x2 over Group([ (1,2,3), (1,2) ])>, 
-  <Rees matrix semigroup 2x2 over Group([ (1,2,3), (1,2) ])>, 
-  <Rees matrix semigroup 2x2 over Group([ (1,2,3), (1,2) ])>, 
+  <Rees matrix semigroup 1x3 over Group([ (1,2,3), (1,2) ])>, 
   <subsemigroup of 2x3 Rees matrix semigroup with 3 generators> ]
 gap> S := max[6]; # a non-RMS subsemigroup of an RMS
 <subsemigroup of 2x3 Rees matrix semigroup with 3 generators>
