@@ -616,6 +616,11 @@ InstallMethod(IsFinite,
 [IsMinPlusMatrixSemigroup],
 function(S)
   local gens, id, mat, row, val;
+
+  if SEMIGROUP_IS_DONE(Enumerate(GenericSemigroupData(S), 8192)) then 
+    return true;
+  fi;
+
   gens := GeneratorsOfSemigroup(S);
   for mat in gens do
     for row in mat do
@@ -655,6 +660,9 @@ InstallMethod(IsFinite,
 "for max-plus matrix semigroups",
 [IsMaxPlusMatrixSemigroup],
 function(S)
+  if SEMIGROUP_IS_DONE(Enumerate(GenericSemigroupData(S), 8192)) then 
+    return true;
+  fi;
   return IsTorsion(S);
 end);
 
