@@ -344,10 +344,10 @@ gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(3), [[(), ()], [(), ()]]);
 <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>
 gap> MaximalSubsemigroups(R);
 [ <subsemigroup of 2x2 Rees 0-matrix semigroup with 4 generators>, 
-  <Rees 0-matrix semigroup 1x2 over Group([ (2,3), (1,2) ])>, 
-  <Rees 0-matrix semigroup 1x2 over Group([ (2,3), (1,2) ])>, 
   <Rees 0-matrix semigroup 2x1 over Group([ (2,3), (1,2) ])>, 
   <Rees 0-matrix semigroup 2x1 over Group([ (2,3), (1,2) ])>, 
+  <Rees 0-matrix semigroup 1x2 over Group([ (2,3), (1,2) ])>, 
+  <Rees 0-matrix semigroup 1x2 over Group([ (2,3), (1,2) ])>, 
   <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
   <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
   <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators>, 
@@ -437,12 +437,12 @@ gap> R := ReesZeroMatrixSemigroup(Group([()]),
 >  [0, (), (), ()]]);
 <Rees 0-matrix semigroup 4x3 over Group(())>
 gap> MaximalSubsemigroups(R);
-[ <Rees 0-matrix semigroup 3x3 over Group(())>, 
-  <Rees 0-matrix semigroup 3x3 over Group(())>, 
-  <Rees 0-matrix semigroup 3x3 over Group(())>, 
-  <Rees 0-matrix semigroup 3x3 over Group(())>, 
+[ <Rees 0-matrix semigroup 4x2 over Group(())>, 
   <Rees 0-matrix semigroup 4x2 over Group(())>, 
-  <Rees 0-matrix semigroup 4x2 over Group(())>, 
+  <Rees 0-matrix semigroup 3x3 over Group(())>, 
+  <Rees 0-matrix semigroup 3x3 over Group(())>, 
+  <Rees 0-matrix semigroup 3x3 over Group(())>, 
+  <Rees 0-matrix semigroup 3x3 over Group(())>, 
   <subsemigroup of 4x3 Rees 0-matrix semigroup with 5 generators>, 
   <subsemigroup of 4x3 Rees 0-matrix semigroup with 5 generators>, 
   <subsemigroup of 4x3 Rees 0-matrix semigroup with 5 generators> ]
@@ -522,8 +522,8 @@ gap> NrMaximalSubsemigroups(R);
 8
 gap> MaximalSubsemigroups(R, rec(contain := [x]));
 [ <subsemigroup of 2x2 Rees 0-matrix semigroup with 4 generators>, 
-  <Rees 0-matrix semigroup 1x2 over Group([ (3,4), (1,2) ])>, 
   <Rees 0-matrix semigroup 2x1 over Group([ (3,4), (1,2) ])>, 
+  <Rees 0-matrix semigroup 1x2 over Group([ (3,4), (1,2) ])>, 
   <subsemigroup of 2x2 Rees 0-matrix semigroup with 6 generators> ]
 gap> MaximalSubsemigroups(R, rec(D := DClass(R, x), number := true));
 7
@@ -539,11 +539,11 @@ gap> MaximalSubsemigroups(R, rec(D := DClass(R, MultiplicativeZero(R)),
 >                                types := [1, 3, 4, 5, 6]));
 0
 gap> MaximalSubsemigroups(R, rec(types := [3], gens := true));
-[ [ (2,(1,2),1), (2,(3,4),1), (2,(),2), 0 ], 
-  [ (1,(1,2),1), (1,(3,4),1), (1,(),2), 0 ] ]
-gap> MaximalSubsemigroups(R, rec(types := [4], gens := true));
 [ [ (1,(1,2),2), (1,(3,4),2), (2,(),2), 0 ], 
   [ (1,(1,2),1), (1,(3,4),1), (2,(),1), 0 ] ]
+gap> MaximalSubsemigroups(R, rec(types := [4], gens := true));
+[ [ (2,(1,2),1), (2,(3,4),1), (2,(),2), 0 ], 
+  [ (1,(1,2),1), (1,(3,4),1), (1,(),2), 0 ] ]
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[(), 0], [(), ()]]);
 <Rees 0-matrix semigroup 2x2 over Group(())>
 gap> MaximalSubsemigroups(R, rec(types := [5], gens := false));
@@ -585,10 +585,10 @@ gap> U := ReesZeroMatrixSubsemigroup(R, [2, 3], SymmetricGroup(3), [2 .. 4]);
 gap> IsReesZeroMatrixSemigroup(U);
 true
 gap> MaximalSubsemigroups(U);
-[ <Rees 0-matrix semigroup 1x3 over Group([ (2,3), (1,2) ])>, 
-  <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>, 
+[ <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>, 
   <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>, 
   <Rees 0-matrix semigroup 2x2 over Group([ (2,3), (1,2) ])>, 
+  <Rees 0-matrix semigroup 1x3 over Group([ (2,3), (1,2) ])>, 
   <subsemigroup of 3x4 Rees 0-matrix semigroup with 5 generators>, 
   <subsemigroup of 3x4 Rees 0-matrix semigroup with 6 generators> ]
 

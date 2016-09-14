@@ -218,7 +218,7 @@ function(R, opts)
   # Maximal subsemigroups equal to I x G x L', where L' = L \ {l} for some l
   # These are the maximal subsemigroups of R of type (iv)
   if type[3] then
-    Info(InfoSemigroups, 2, "Type 4: looking for maximal subsemigroups ",
+    Info(InfoSemigroups, 2, "Type 3: looking for maximal subsemigroups ",
                             "formed by discarding a column...");
     if L > 1 then
       lookup_cols := EmptyPlist(Maximum(cols));
@@ -256,7 +256,7 @@ function(R, opts)
   # Maximal subsemigroups equal to I' x G x L, where I' = I \ {i} for some i
   # These are the maximal subsemigroups of R of type (iii)
   if type[4] then
-    Info(InfoSemigroups, 2, "Type 3: looking for maximal subsemigroups ",
+    Info(InfoSemigroups, 2, "Type 4: looking for maximal subsemigroups ",
                             "formed by discarding a row...");
     if I > 1 then
       # A row can be removed iff it doesn't intersect <contain>.
@@ -511,93 +511,14 @@ function(R, opts)
     Remove(contain, pos);
   fi;
 
-  # Type 3: Maximal subsemigroups I' x G x L + {0} where I' = I \ {i} for some i
-
-  # In the Graham-Houghton bipartite graph, we can remove any vertex <i> in <I>
-  # which is not adjacent to a vertex <l> in <L> which is only adjacent to <i>.
-  # So, we run through the vertices <l> of <L> and find the ones of degree 1,
-  # and we remember the vertices <i> adjacent to such <l>.
-  if type[3] then
-    Info(InfoSemigroups, 2, "Type 3: looking for maximal subsemigroups ",
-                             "formed by discarding a row...");
-    if I > 1 then
-      remove := BlistList(rows, rows);
-      i := 0;
-      while i < Length(contain) and SizeBlist(remove) > 0 do
-        i := i + 1;
-        x := contain[i];
-        remove[lookup_rows[x![1]]] := false;
-      od;
-      n := SizeBlist(remove);
-    fi;
-
-    if I > 1 and SizeBlist(remove) > 0 then
-      dig := RZMSDigraph(R);
-      nbs := OutNeighbours(dig);
-      deg := OutDegrees(dig);
-      l := I;
-      while l < L + I and SizeBlist(remove) > 0 do
-        l := l + 1;
-        if deg[l] = 1 then
-          remove[nbs[l][1]] := false;
-        fi;
-      od;
-      n := SizeBlist(remove);
-    fi;
-
-    if I > 1 and n > 0 then
-      Info(InfoSemigroups, 2, "...found ", n, " result(s).");
-      tot := tot + n;
-      if not opts.number then
-        Info(InfoSemigroups, 2, "creating these maximal subsemigroups.");
-        # Code to produce smaller generating set:
-        #   Check whether removing any particular row leaves a matrix without 0.
-        #   In the case that this happens, 0 must sometimes be included as a gen
-        x := 0;
-        i := 0;
-        r := 0;
-        while x < 2 and i < I do
-          i := i + 1;
-          if deg[i] < L then
-            x := x + 1;
-            r := rows[i]; # Row <i> corresponds to a column of <mat> with 0's
-          fi;
-        od;
-        if x >= 2 then # At least 2 rows correspond to cols of <mat> with 0's
-          r := infinity;
-        fi;
-
-        # Remove each possible row in turn...
-        for i in ListBlist(rows, remove) do
-          x := Difference(rows, [i]);
-          x := ReesZeroMatrixSubsemigroupNC(R, x, G, cols);
-          if opts.gens then
-            x := ShallowCopy(GeneratorsOfSemigroup(x));
-            if opts.zero and (r = 0 or r = i) then # 0 must be a gen.
-              Add(x, Z);
-            fi;
-          else
-            if r = 0 or r = i then
-              x := Semigroup(x, Z);
-            fi;
-            SetIsReesZeroMatrixSemigroup(x, true);
-          fi;
-          Add(out, x);
-        od;
-      fi;
-    else
-      Info(InfoSemigroups, 2, "...found none.");
-    fi;
-  fi;
-
-  # Type 4: Maximal subsemigroups I x G x L' + {0} where L' = L \ {l} for some l
+  # Type 3: Maximal subsemigroups I x G x L' + {0} where L' = L \ {l} for some l
 
   # In the Graham-Houghton bipartite graph, we can remove any vertex <l> in <L>
   # which is not adjacent to a vertex <i> in <I> which is only adjacent to <l>.
   # So, we run through the vertices <i> of <I> and find the ones of degree 1,
   # and we remember the vertices <l> adjacent to such <i>.
-  if type[4] then
-    Info(InfoSemigroups, 2, "Type 4: looking for ",
+  if type[3] then
+    Info(InfoSemigroups, 2, "Type 3: looking for ",
          "maximal subsemigroups formed by discarding a column...");
 
     if L > 1 then
@@ -658,6 +579,85 @@ function(R, opts)
             fi;
           else
             if r = 0 or r = l then
+              x := Semigroup(x, Z);
+            fi;
+            SetIsReesZeroMatrixSemigroup(x, true);
+          fi;
+          Add(out, x);
+        od;
+      fi;
+    else
+      Info(InfoSemigroups, 2, "...found none.");
+    fi;
+  fi;
+
+  # Type 4: Maximal subsemigroups I' x G x L + {0} where I' = I \ {i} for some i
+
+  # In the Graham-Houghton bipartite graph, we can remove any vertex <i> in <I>
+  # which is not adjacent to a vertex <l> in <L> which is only adjacent to <i>.
+  # So, we run through the vertices <l> of <L> and find the ones of degree 1,
+  # and we remember the vertices <i> adjacent to such <l>.
+  if type[4] then
+    Info(InfoSemigroups, 2, "Type 4: looking for maximal subsemigroups ",
+                             "formed by discarding a row...");
+    if I > 1 then
+      remove := BlistList(rows, rows);
+      i := 0;
+      while i < Length(contain) and SizeBlist(remove) > 0 do
+        i := i + 1;
+        x := contain[i];
+        remove[lookup_rows[x![1]]] := false;
+      od;
+      n := SizeBlist(remove);
+    fi;
+
+    if I > 1 and SizeBlist(remove) > 0 then
+      dig := RZMSDigraph(R);
+      nbs := OutNeighbours(dig);
+      deg := OutDegrees(dig);
+      l := I;
+      while l < L + I and SizeBlist(remove) > 0 do
+        l := l + 1;
+        if deg[l] = 1 then
+          remove[nbs[l][1]] := false;
+        fi;
+      od;
+      n := SizeBlist(remove);
+    fi;
+
+    if I > 1 and n > 0 then
+      Info(InfoSemigroups, 2, "...found ", n, " result(s).");
+      tot := tot + n;
+      if not opts.number then
+        Info(InfoSemigroups, 2, "creating these maximal subsemigroups.");
+        # Code to produce smaller generating set:
+        #   Check whether removing any particular row leaves a matrix without 0.
+        #   In the case that this happens, 0 must sometimes be included as a gen
+        x := 0;
+        i := 0;
+        r := 0;
+        while x < 2 and i < I do
+          i := i + 1;
+          if deg[i] < L then
+            x := x + 1;
+            r := rows[i]; # Row <i> corresponds to a column of <mat> with 0's
+          fi;
+        od;
+        if x >= 2 then # At least 2 rows correspond to cols of <mat> with 0's
+          r := infinity;
+        fi;
+
+        # Remove each possible row in turn...
+        for i in ListBlist(rows, remove) do
+          x := Difference(rows, [i]);
+          x := ReesZeroMatrixSubsemigroupNC(R, x, G, cols);
+          if opts.gens then
+            x := ShallowCopy(GeneratorsOfSemigroup(x));
+            if opts.zero and (r = 0 or r = i) then # 0 must be a gen.
+              Add(x, Z);
+            fi;
+          else
+            if r = 0 or r = i then
               x := Semigroup(x, Z);
             fi;
             SetIsReesZeroMatrixSemigroup(x, true);

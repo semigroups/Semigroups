@@ -257,16 +257,16 @@ gap> mat := [
 gap> R1 := ReesZeroMatrixSemigroup(G, mat); # a connected 5x5 RZMS over Sym(3)
 <Rees 0-matrix semigroup 5x5 over Group([ (1,4,2), (1,4,5) ])>
 gap> max := MaximalSubsemigroups(R1);
-[ <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
+[ <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
   <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
   <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
   <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
   <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
-  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
-  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
-  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
-  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
-  <Rees 0-matrix semigroup 5x4 over Group([ (1,4,2), (1,4,5) ])>, 
+  <Rees 0-matrix semigroup 4x5 over Group([ (1,4,2), (1,4,5) ])>, 
   <subsemigroup of 5x5 Rees 0-matrix semigroup with 10 generators>, 
   <subsemigroup of 5x5 Rees 0-matrix semigroup with 10 generators>, 
   <subsemigroup of 5x5 Rees 0-matrix semigroup with 10 generators>, 
