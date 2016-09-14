@@ -601,6 +601,126 @@ function(dim, threshold)
   return Monoid(gens);
 end);
 
+#############################################################################
+## IsFinite and required methods for max-plus and min-plus matrix semigroups.
+#############################################################################
+
+## Method from corollary 10, page 148, of:
+## I. Simon, Limited subsets of the free monoid,
+## Proc. of the 19th Annual Symposium on the Foundations of Computer Science,
+## IEEE, 1978, pp. 143-150.
+## http://tinyurl.com/h8er92u
+
+InstallMethod(IsFinite,
+"for a min-plus matrix semigroup",
+[IsMinPlusMatrixSemigroup],
+function(S)
+  local gens, id, mat, row, val;
+  gens := GeneratorsOfSemigroup(S);
+  for mat in gens do
+    for row in mat do
+      for val in row do
+        if val < 0 then
+          TryNextMethod();
+        fi;
+      od;
+    od;
+  od;
+  id := Idempotents(Semigroup(List(gens,
+                                   x -> AsMatrix(IsTropicalMinPlusMatrix,
+                                                 x,
+                                                 1))));
+  for mat in id do
+    mat := AsMatrix(IsMinPlusMatrix, mat);
+    if mat ^ 2 <> mat ^ 3 then
+      return false;
+    fi;
+  od;
+  return true;
+end);
+
+## The next two methods (IsFinite, IsTorsion for Max-plus) rely primarily on:
+## a)
+## Theorem 2.1 (positive solution to burnside problem) and 
+## theorem 2.2 (decidability of torsion problem), page 2 et.al, from:
+## S. Gaubert, On the burnside problem for semigroups of matrices in the
+## (max, +) algebra, Semigroup Forum, Volume 52, pp 271-292, 1996.
+## http://tinyurl.com/znhk52m
+## b)
+## An unpublished result by J.D Mitchell & S. Burrell relating isomorphism of
+## normalized max-plus matrix semigroups to min-plus matrix semigroups.
+## (N.B.) b) is optional but preferable, for alternatives see a).
+
+InstallMethod(IsFinite,
+"for max-plus matrix semigroups",
+[IsMaxPlusMatrixSemigroup],
+function(S)
+  return IsTorsion(S);
+end);
+
+InstallMethod(IsTorsion,
+"for max-plus matrix semigroups",
+[IsMaxPlusMatrixSemigroup],
+function(S)
+  local gens, dim, func, m, rad, T;
+
+  gens := GeneratorsOfSemigroup(S);
+  dim := Length(gens[1][1]);
+
+  func := function(i)
+    return List([1 .. dim],
+                j -> Maximum(List([1 ..  Length(gens)], k -> gens[k][i][j])));
+  end;
+
+  m := Matrix(IsMaxPlusMatrix, List([1 .. dim], func));
+
+  # Case: SpectralRadius = - infinity
+  rad := SpectralRadius(m);
+  if rad = -infinity then
+    return true;
+  elif rad <> 0 then
+    return false;
+  fi;
+
+  # Case: SpectralRadius = 0
+  T := NormalizeSemigroup(S);
+  gens := List(GeneratorsOfSemigroup(T),
+               x -> Matrix(IsMinPlusMatrix, -AsList(x)));
+  return IsFinite(Semigroup(gens));
+end);
+
+## A method based on the original solution by S. Gaubert (On the burnside 
+## problem for semigroups of matrices in the (max, +) algebra), but 
+## modified by S. Burrell (see thesis http://tinyurl.com/gr94xha).
+
+InstallMethod(NormalizeSemigroup,
+"for a finitely generated semigroup of max-plus matrices",
+[IsMaxPlusMatrixSemigroup],
+function(S)
+  local gens, dim, func, m, critcol, d, ngens, i;
+
+  gens := GeneratorsOfSemigroup(S);
+  dim := Length(gens[1][1]);
+
+  func := function(i)
+    return List([1 .. dim],
+                j -> Maximum(List([1 .. Length(gens)], k -> gens[k][i][j])));
+  end;
+
+  ### Sum with respect to max-plus algebra of generators of S.
+  m := Matrix(IsMaxPlusMatrix, List([1 .. dim], func));
+
+  critcol := RadialEigenvector(m);
+  d := List([1 .. dim], i -> List([1 .. dim], j -> -infinity));
+  for i in [1 .. dim] do
+    d[i][i] := critcol[i];
+  od;
+  d := Matrix(IsMaxPlusMatrix, d);
+
+  ngens := List(gens, g -> InverseOp(d) * g * d);
+  return Semigroup(ngens);
+end);
+
 InstallMethod(IsFinite,
 "for a semigroup of matrices of positive integers",
 [IsIntegerMatrixSemigroup],

@@ -149,6 +149,114 @@ function(filter, x, dim)
   return MatrixNC(filter, SEMIGROUPS.MatrixTrans(x, dim, -infinity, 0));
 end);
 
+## Method based on theorem 2, page 19, of:
+## K.G. Farlow, Max-plus Algebra, Thesis.
+## http://tinyurl.com/zzs38s4
+
+InstallMethod(InverseOp,
+"for a max-plus matrix",
+[IsMaxPlusMatrix],
+function(mat)
+  local dim, seen_rows, seen_cols, out, row, col;
+  dim := DimensionOfMatrixOverSemiring(mat);
+  seen_rows := BlistList([1 .. dim], []);
+  seen_cols := BlistList([1 .. dim], []);
+  out := List([1 .. dim], x -> List([1 .. dim], y -> -infinity));
+  for row in [1 .. dim] do
+    for col in [1 .. dim] do
+      if mat[row][col] <> -infinity then
+        if seen_rows[row] or seen_cols[col] then
+          return fail;
+        fi;
+        seen_rows[row] := true;
+        seen_cols[col] := true;
+        out[col][row] := -mat[row][col];
+      fi;
+    od;
+  od;
+  return Matrix(IsMaxPlusMatrix, out);
+end);
+
+## Method from lemma 3.1, page 3, in:
+## S. Gaubert, On the burnside problem for semigroups of matrices in the
+## (max, +) algebra, Semigroup Forum, Volume 52, pp 271-292, 1996.
+## http://tinyurl.com/znhk52m
+
+InstallMethod(SpectralRadius,
+"for a max-plus matrix",
+[IsMaxPlusMatrix],
+function(mat)
+  local dim, cm, mk, k, max;
+  # Check for -infinity case
+  if DigraphAllSimpleCircuits(UnweightedPrecedenceDigraph(mat)) = [] then
+    return -infinity;
+  fi;
+  # Calculate the maximum cycle mean.
+  dim := Length(AsList(mat)[1]);
+  cm := [];
+  mk := mat;
+  for k in [1 .. dim] do
+    max := Maximum(List([1 .. dim], x -> mk[x][x]));
+    if max <> -infinity then
+      Add(cm, max/k);
+    fi;
+    mk := mk * mat;
+  od;
+  return Maximum(cm);
+end);
+
+InstallMethod(UnweightedPrecedenceDigraph,
+"for a max-plus matrix",
+[IsMaxPlusMatrix],
+function(mat)
+  local adj;
+  # Auxiliary function used to compute the adjacency matrix of the precedence
+  # digraph
+  adj := function(i, j)
+    if mat[i][j] = -infinity then
+      return false;
+    else
+      return true;
+    fi;
+  end;
+  # Generate and return digraph object
+  return Digraph([1 .. DimensionOfMatrixOverSemiring(mat)], adj);
+end);
+
+## Method from lemma 19, page 36, of:
+## K.G. Farlow, Max-plus Algebra, Thesis.
+## http://tinyurl.com/zzs38s4
+
+InstallMethod(RadialEigenvector,
+"for a max-plus matrix",
+[IsMaxPlusMatrix],
+function(m)
+  local dim, i, k, mplus, mstar, diag, crit;
+  dim := Length(AsList(m)[1]);
+  ### Method only valid for SpectralRadius = 0.
+  if SpectralRadius(m) <> 0 then
+    TryNextMethod();
+  fi;
+  mplus := List([1 .. dim],
+                i -> List([1 .. dim],
+                          j -> Maximum(List([1 .. 2 * dim],
+                                       k -> AsList(m ^ k)[i][j]))));
+  mstar := mplus;
+  for i in [1 .. dim] do
+    mstar[i][i] := Maximum(mstar[i][i], 0);
+  od;
+  crit := false;
+  k := 1;
+  while crit = false do
+    diag := List([1 .. dim], i -> AsList(m ^ k)[i][i]);
+    if 0 in diag then
+      crit := Position(diag, 0);
+    fi;
+    k := k + 1;
+  od;
+  return List([1 .. dim], i -> AsList(mstar)[i][crit]);
+end);
+
 #############################################################################
 ## 2. Min-plus matrices
 #############################################################################
