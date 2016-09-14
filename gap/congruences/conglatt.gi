@@ -83,10 +83,7 @@ end);
 # FIXME Monolithic functions = BAD!!! JDM
 
 SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
-  local transrep, _XSemigroupCongruence, elms, pairs, congs1, nrcongs, children,
-        parents, pair, badcong, newchildren, newparents, newcong, i, c, p,
-        congs, 2congs, image, next, set_func, lattice, join_func, length, found,
-        ignore, start, j, k, report;
+  local report, transrep, _XSemigroupCongruence, elms, pairs, total, congs1, nrcongs, children, parents, last_collected, nr, badcong, newchildren, newparents, newcong, congs, 2congs, image, next, set_func, lattice, join_func, length, found, ignore, start, pair, i, c, p, j, k;
 
   if not IsFinite(S) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.LatticeOfXCongruences: usage,\n",
@@ -103,36 +100,51 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
 
   if IsBound(record.restriction) then
     # Only try using pairs from this collection of elements
-    pairs := Combinations(AsList(record.restriction), 2);
+    pairs := IteratorOfCombinations(AsList(record.restriction), 2);
+    total := Binomial(Size(record.restriction), 2);
   else
     # Get all non-reflexive pairs in SxS
-    pairs := Combinations(elms, 2);
+    pairs := IteratorOfCombinations(elms, 2);
+    total := Binomial(Size(elms), 2);
   fi;
 
   # Get all the unique 1-generated congs
-  Info(InfoSemigroups, 1, "Getting all 1-generated congs...");
+  Info(InfoSemigroups, 1, "Find congruences with 1 generating pair . . .");
   congs1 := [];     # List of all congs found so far
   nrcongs := 0;     # Number of congs found so far
   children := [];   # List of lists of children
   parents := [];    # List of lists of parents
+  last_collected := 0;
+  nr := 0;
   for pair in pairs do
     badcong := false;
     newchildren := []; # Children of newcong
     newparents := [];  # Parents of newcong
     newcong := _XSemigroupCongruence(S, pair);
     for i in [1 .. Length(congs1)] do
-      if IsSubrelation(congs1[i], newcong) then
-        if IsSubrelation(newcong, congs1[i]) then
+      if CONG_PAIRS_IN(congs1[i], pair) then 
+       #if IsSubrelation(congs1[i], newcong) then
+         #if IsSubrelation(newcong, congs1[i]) then
+        if CONG_PAIRS_IN(newcong,  congs1[i]!.genpairs[1]) then 
           # This is not a new cong - drop it!
           badcong := true;
           break;
         else
           Add(newparents, i);
         fi;
-      elif IsSubrelation(newcong, congs1[i]) then
+      #elif IsSubrelation(newcong, congs1[i]) then
+      elif CONG_PAIRS_IN(newcong,  congs1[i]!.genpairs[1]) then 
         Add(newchildren, i);
       fi;
     od;
+    nr := nr + 1;
+    if nr > last_collected + 1999 then 
+      if InfoLevel(InfoSemigroups) > 0 then 
+        Print("at ", nr, " of ", total, ", found ", nrcongs, " so far\n");
+      fi;
+      last_collected := nr;
+      GASMAN("collect");
+    fi;
     if not badcong then
       nrcongs := nrcongs + 1;
       congs1[nrcongs] := newcong;
@@ -232,7 +244,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   fi;
 
   # Take all their joins
-  Info(InfoSemigroups, 1, "Taking joins...");
+  Info(InfoSemigroups, 1, "Finding joins of 1-generated congruences . . .");
   join_func := EvalString(Concatenation("Join",
                                         type_string,
                                         "SemigroupCongruences"));
