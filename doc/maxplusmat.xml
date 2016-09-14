@@ -40,6 +40,7 @@
       the rows of a matrix; for tropical matrices <Ref
         Attr = "ThresholdTropicalMatrix"/>; for ntp matrices <Ref
         Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>.
+      <P/>
 
       For matrices over finite fields <Ref Attr = "BaseDomain"/>; for Boolean
       matrices more details can be found in
@@ -174,10 +175,12 @@ gap> PeriodNTPMatrix(mat);
     <Returns>An integer matrix.</Returns>
     <Description>
       If <A>mat</A> is an integer matrix (i.e. belongs to the category 
-      <Ref Filt = "IsIntegerMatrix"/>) with integer matrix inverse, then 
-      <C>InverseOp</C> returns the inverse of <A>mat</A>. Note, an integer
-      matrix has an integer matrix inverse if and only if it has determinant
-      one.
+      <Ref Filt = "IsIntegerMatrix"/>) whose inverse (if it exists) is also an
+      integer matrix, then <C>InverseOp</C> returns the inverse of <A>mat</A>.
+      <P/>
+
+      An integer matrix has an integer matrix inverse if and only if it
+      has determinant one.
       <Example><![CDATA[
 gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1], 
 >                                    [0, 1, 0],
@@ -198,10 +201,12 @@ true
     <Description>
       If <A>mat</A> is an integer matrix (i.e. belongs to the
       category <Ref Filt = "IsIntegerMatrix"/>), then <C>IsTorsion</C> returns 
-      <K>true</K> if <A>mat</A> is torsion and <K>false</K> otherwise. 
-      An integer matrix <A>mat</A> is torsion iff there exists an integer 
-      <C>n</C> such that <A>mat</A> raised to the power of <C>n</C> is equal to
-      the identity matrix.
+      <K>true</K> if <A>mat</A> is torsion and <K>false</K> otherwise. <P/>
+
+      An integer matrix <A>mat</A> is torsion if and only if there exists an
+      integer <C>n</C> such that <A>mat</A> to the power of <C>n</C> is
+      equal to the identity matrix.
+
       <Example><![CDATA[
 gap> mat := Matrix(IsIntegerMatrix, [[0, 0, -1], 
 >                                    [0, 1, 0], 
@@ -252,9 +257,9 @@ gap> Order(mat);
     <Returns>A rational number.</Returns>
     <Description>
       If <A>mat</A> is a max-plus matrix (i.e. belongs to the category <Ref
-      Filt = "IsMaxPlusMatrix"/>), then <C>SpectralRadius</C>
-      returns the supremum of the set of eigenvalues of <A>mat</A>. This 
-      method is described in <Cite Key="Bacelli1992aa"/>.
+        Filt = "IsMaxPlusMatrix"/>), then <C>SpectralRadius</C>
+      returns the supremum of the set of eigenvalues of <A>mat</A>. 
+      This method is described in <Cite Key="Bacelli1992aa"/>.
       <Example><![CDATA[
 gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],
 >                                            [2, -infinity, 0],
@@ -308,13 +313,14 @@ gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
     <Returns>A digraph.</Returns>
     <Description>
       If <A>mat</A> is a max-plus matrix (i.e. belongs to the category <Ref
-      Filt = "IsMaxPlusMatrix"/>), then <C>UnweightedPrecedenceDigraph</C>
+        Filt = "IsMaxPlusMatrix"/>), then <C>UnweightedPrecedenceDigraph</C>
       returns the unweighted precedence digraph corresponding to <A>mat</A>.
+      <P/>
       
-      For a <C>n</C> by <C>n</C> matrix <A>mat</A>, the unweighted precedence
-      digraph is defined as the digraph on <C>n</C> points where vertex <C>i</C>
-      is adjacent to vertex <C>j</C> if and only if <A>mat</A><C>[i,j]</C> is 
-      not equal to <C>-infinity</C>.
+      For an <C>n</C> by <C>n</C> matrix <A>mat</A>, the unweighted precedence
+      digraph is defined as the digraph with <C>n</C> vertices where vertex
+      <C>i</C> is adjacent to vertex <C>j</C> if and only if
+      <A>mat</A><C>[i][j]</C> is not equal to <K>-infinity</K>.
       <Example><![CDATA[
 gap> UnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],
 > [-infinity, 10,-2], [-infinity, 2, 1]]));
