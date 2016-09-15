@@ -1321,6 +1321,12 @@ function(filt, threshold, period, S)
   return Range(IsomorphismSemigroup(filt, threshold, period, S));
 end);
 
+InstallMethod(AsSemigroup, "for a filter, ring, and semigroup",
+[IsFunction and IsOperation, IsRing, IsSemigroup],
+function(filt, R, S)
+  return Range(IsomorphismSemigroup(filt, R, S));
+end);
+
 InstallMethod(AsMonoid, "for a filter and a semigroup",
 [IsFunction and IsOperation, IsSemigroup],
 function(filt, S)
@@ -1349,4 +1355,10 @@ InstallMethod(AsMonoid,
 [IsFunction and IsOperation, IsPosInt, IsPosInt, IsSemigroup],
 function(filt, threshold, period, S)
   return Range(IsomorphismMonoid(filt, threshold, period, S));
+end);
+
+InstallMethod(AsMonoid, "for a filter, ring, and semigroup",
+[IsFunction and IsOperation, IsRing, IsSemigroup],
+function(filt, R, S)
+  return Range(IsomorphismMonoid(filt, R, S));
 end);

@@ -230,6 +230,12 @@ InstallMethod(NewMatrixOverFiniteField,
 [IsPlistMatrixOverFiniteFieldRep, IsField and IsFinite, IsList],
 function(filter, field, list)
   local mat, filter2;
+  
+  if not ForAll(list, v -> ForAll(v, x -> x in field)) then 
+    ErrorNoReturn("Semigroups: NewMatrixOverFiniteField: usage,\n", 
+                  "the entries of the matrix are not all in ", 
+                  field, ",");
+  fi;
 
   filter2 := filter and IsMatrixOverFiniteField;
 

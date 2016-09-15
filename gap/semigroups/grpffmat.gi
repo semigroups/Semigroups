@@ -87,19 +87,23 @@ function(G)
                                      g -> MatrixNC(Representative(G), g));
 end);
 
-InstallMethod(IsomorphismMatrixSemigroup, "for a matrix group",
-[IsMatrixGroup and HasGeneratorsOfGroup],
-function(G)
-  return IsomorphismMatrixSemigroup(G, DefaultFieldOfMatrixGroup(G));
+InstallMethod(IsomorphismSemigroup, 
+"for IsMatrixOverFiniteFieldSemigroup and a matrix group with gens",
+[IsMatrixOverFiniteFieldSemigroup, IsMatrixGroup and HasGeneratorsOfGroup],
+function(filt, G)
+  return IsomorphismSemigroup(filt, DefaultFieldOfMatrixGroup(G), G);
 end);
 
-InstallMethod(IsomorphismMatrixSemigroup, "for a matrix group and ring",
-[IsMatrixGroup and HasGeneratorsOfGroup, IsRing],
-function(G, R)
+InstallMethod(IsomorphismSemigroup, 
+"for IsMatrixOverFiniteFieldSemigroup, ring, and a matrix group with gens",
+[IsMatrixOverFiniteFieldSemigroup, 
+ IsRing, 
+ IsMatrixGroup and HasGeneratorsOfGroup],
+function(filt, R, G)
   local gens, iso;
   gens := GeneratorsOfGroup(G);
   if Length(gens) = 0 then
-    ErrorNoReturn("Semigroups: IsomorphismMatrixSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
                   "the group must have at least one generator,");
   fi;
   iso := g -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
@@ -150,7 +154,8 @@ function(G, x)
   elif IsOne(x) or DimensionOfMatrixOverSemiring(x) = 0 then
     return G;
   else
-    return Range(IsomorphismMatrixSemigroup(AsMatrixGroup(G) ^ AsList(x)));
+    return Range(IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup,
+                                      AsMatrixGroup(G) ^ AsList(x)));
   fi;
 end);
 
@@ -185,7 +190,8 @@ function(G, coll)
   elif DegreeOfMatrixSemigroup(G) = 0 then
     return G;
   fi;
-  return Range(IsomorphismMatrixSemigroup(ClosureGroup(AsMatrixGroup(G),
-                                                       List(coll, AsList)),
-                                                       BaseDomain(G)));
+  return Range(IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup,
+                                    BaseDomain(G),
+                                    ClosureGroup(AsMatrixGroup(G),
+                                                 List(coll, AsList))));
 end);

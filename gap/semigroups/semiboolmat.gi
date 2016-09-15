@@ -58,8 +58,8 @@ function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);
 
-# It seems necessary that the method below occurs after the fallback method, in
-# order that it be selected.
+# It seems necessary that the method below occurs after the fallback method in
+# this file, in order that it be selected.
 
 InstallMethod(IsomorphismSemigroup,
 "for IsBooleanMatSemigroup and a transformation semigroup",

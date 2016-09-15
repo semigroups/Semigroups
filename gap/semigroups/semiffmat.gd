@@ -41,17 +41,3 @@ DeclareGlobalFunction("MatrixOverFiniteFieldLambdaConjugator");
 DeclareGlobalFunction("MatrixOverFiniteFieldIdempotentTester");
 DeclareGlobalFunction("MatrixOverFiniteFieldIdempotentCreator");
 DeclareGlobalFunction("MatrixOverFiniteFieldLocalRightInverse");
-
-# Constructor for matrix semigroups, we want the flexibility
-# to pass a list of generators, a field and a list of generators
-# a field, a row/column dimension, and a list of generators.
-DeclareGlobalFunction("MatrixSemigroup");
-
-# This has to involve a field, otherwise we'll have to choose a default
-# field (rationals?):
-DeclareAttribute("IsomorphismMatrixSemigroup", IsSemigroup);
-DeclareAttribute("AsMatrixSemigroup", IsSemigroup);
-DeclareOperation("IsomorphismMatrixSemigroup", [IsSemigroup, IsRing]);
-#T One would want to choose a representation as well, but this doesn't work
-#DeclareOperation("IsomorphismMatrixSemigroup", [IsSemigroup, IsOperation]);
-DeclareOperation("AsMatrixSemigroup", [IsSemigroup, IsRing]);

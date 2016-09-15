@@ -9,8 +9,190 @@
 #############################################################################
 ##
 
-InstallMethod(ViewObj, "for a general linear monoid", 
-[IsGeneralLinearMonoid], 
+#############################################################################
+## Isomorphisms for semigroups
+#############################################################################
+
+# fallback method: via a transformation semigroup
+
+InstallMethod(IsomorphismSemigroup,
+"for IsMatrixOverFiniteFieldSemigroup and a semigroup",
+[IsMatrixOverFiniteFieldSemigroup, IsSemigroup],
+SEMIGROUPS.DefaultIsomorphismSemigroup);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsMatrixOverFiniteFieldSemigroup, a ring, and a semigroup",
+[IsMatrixOverFiniteFieldSemigroup, IsRing, IsSemigroup],
+function(filt, R, S)
+  local iso1, inv1, iso2, inv2;
+
+  iso1 := IsomorphismTransformationSemigroup(S);
+  inv1 := InverseGeneralMapping(iso1);
+  iso2 := IsomorphismSemigroup(filt, R, Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso2),
+                                       x -> (x ^ iso1) ^ iso2,
+                                       x -> (x ^ inv2) ^ inv1);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsMatrixOverFiniteFieldSemigroup and a finite field matrix semigroup",
+[IsMatrixOverFiniteFieldSemigroup, IsMatrixOverFiniteFieldSemigroup],
+function(filt, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsMatrixOverFiniteFieldSemigroup, ring, and matrix over ff semigroup",
+[IsMatrixOverFiniteFieldSemigroup,
+ IsRing,
+ IsMatrixOverFiniteFieldSemigroup],
+function(filt, R, S)
+  local D, map, inv, T;
+  D := BaseDomain(Representative(S));
+  if D = R then
+    return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+  elif Size(D) <= Size(R) and IsIdenticalObj(FamilyObj(D), FamilyObj(R))  
+      and DegreeOverPrimeField(R) mod DegreeOverPrimeField(D) = 0 then 
+    map := x -> Matrix(R, x);
+    inv := x -> Matrix(D, x);
+    T   := Semigroup(List(GeneratorsOfSemigroup(S), map));
+    return MagmaIsomorphismByFunctionsNC(S, T, map, inv);
+  fi;
+  TryNextMethod(); # take an isomorphism to a transformation semigroup
+end);
+
+# This is for converting semigroups of GAP library matrices over finite fields
+# to IsMatrixOverFiniteFieldSemigroup
+
+InstallMethod(IsomorphismSemigroup,
+"for IsMatrixOverFiniteFieldSemigroup and a semigroup of matrices over a ff",
+[IsMatrixOverFiniteFieldSemigroup,
+ IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl],
+function(filt, S)
+  local R, map, T;
+  R := DefaultFieldOfMatrix(Representative(S));
+  map := x -> Matrix(R, x);
+  T := Semigroup(List(GeneratorsOfSemigroup(S), map));
+  return MagmaIsomorphismByFunctionsNC(S, T, map, AsList);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsMatrixOverFiniteFieldSemigroup and a semigroup of matrices over a ff",
+[IsMatrixOverFiniteFieldSemigroup, 
+ IsRing, 
+ IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl],
+function(filt, R, S)
+  local D, map, T;
+  D := BaseDomain(Representative(S));
+  if Size(D) <= Size(R) and IsIdenticalObj(FamilyObj(D), FamilyObj(R))  
+      and DegreeOverPrimeField(R) mod DegreeOverPrimeField(D) = 0 then 
+    map := x -> Matrix(R, x);
+    T := Semigroup(List(GeneratorsOfSemigroup(S), map));
+    return MagmaIsomorphismByFunctionsNC(S, T, map, AsList);
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsMatrixOverFiniteFieldSemigroup and transformation semigroup with gens",
+[IsMatrixOverFiniteFieldSemigroup,
+ IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+ function(filt, S)
+  return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, GF(2), S);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsMatrixOverFiniteFieldSemigroup, a ring, and a transformation semigroup",
+[IsMatrixOverFiniteFieldSemigroup,
+ IsRing,
+ IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+function(filt, R, S)
+  local n, basis, map, iso, inv, gens;
+
+  n := DegreeOfTransformationSemigroup(S);
+  basis := NewIdentityMatrix(IsPlistMatrixRep, R, n);
+  map := x -> AsList(basis{ImageListOfTransformation(x, n)});
+  iso := x -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+                                       R,
+                                       map(x));
+  inv := x -> Transformation([1 .. n], i -> PositionNonZero(x[i]));
+  gens := List(GeneratorsOfSemigroup(S), iso);
+
+  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens), iso, inv);
+end);
+
+#############################################################################
+## Isomorphisms for monoids
+#############################################################################
+
+InstallMethod(AsMonoid, "for a matrix over finite field semigroup",
+[IsMatrixOverFiniteFieldSemigroup],
+function(S)
+  if MultiplicativeNeutralElement(S) = fail then
+    return fail; # so that we do the same as the GAP/ref manual says
+  fi;
+  return Range(IsomorphismMonoid(IsMatrixOverFiniteFieldMonoid, S));
+end);
+
+InstallMethod(IsomorphismMonoid, 
+"for IsMatrixOverFiniteFieldMonoid and a semigroup",
+[IsMatrixOverFiniteFieldMonoid, IsSemigroup],
+SEMIGROUPS.DefaultIsomorphismMonoid);
+
+InstallMethod(IsomorphismMonoid, 
+"for IsMatrixOverFiniteFieldMonoid, a ring, and a semigroup",
+[IsMatrixOverFiniteFieldMonoid, IsRing, IsSemigroup],
+function(filt, R, S)
+  local iso1, inv1, iso2, inv2;
+
+  iso1 := IsomorphismTransformationMonoid(S);
+  inv1 := InverseGeneralMapping(iso1);
+  iso2 := IsomorphismMonoid(filt, R, Range(iso1));
+  inv2 := InverseGeneralMapping(iso2);
+
+  return MagmaIsomorphismByFunctionsNC(S,
+                                       Range(iso2),
+                                       x -> (x ^ iso1) ^ iso2,
+                                       x -> (x ^ inv2) ^ inv1);
+end);
+
+InstallMethod(IsomorphismMonoid, 
+"for IsMatrixOverFiniteFieldMonoid and a monoid",
+[IsMatrixOverFiniteFieldMonoid, IsMonoid],
+function(filter, S)
+  return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
+end);
+
+InstallMethod(IsomorphismMonoid, 
+"for IsMatrixOverFiniteFieldMonoid, a ring, and a monoid",
+[IsMatrixOverFiniteFieldMonoid, IsRing, IsMonoid],
+function(filter, R, S)
+  return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, R, S);
+end);
+
+InstallMethod(IsomorphismMonoid,
+"for IsMatrixOverFiniteFieldMonoid and a matrix over finite field monoid",
+[IsMatrixOverFiniteFieldMonoid, IsMatrixOverFiniteFieldMonoid],
+function(filter, S)
+  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
+end);
+
+InstallMethod(IsomorphismMonoid,
+"for IsMatrixOverFiniteFieldMonoid, a ring, and a matrix over ff monoid",
+[IsMatrixOverFiniteFieldMonoid, IsRing, IsMatrixOverFiniteFieldMonoid],
+function(filter, R, S)
+  return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, R, S);
+end);
+
+#############################################################################
+## Viewing and printing
+#############################################################################
+
+InstallMethod(ViewObj, "for a general linear monoid",
+[IsGeneralLinearMonoid],
 7, # to beat the generic method for monoids with generators
 function(S)
   local n;
@@ -21,17 +203,17 @@ function(S)
 end);
 
 InstallMethod(PrintString, "for general linear monoid",
-[IsGeneralLinearMonoid], 
+[IsGeneralLinearMonoid],
 5, # to beat the generic method for monoids with generators
 function(M)
   local rep, str;
-  
+
   rep := Representative(M);
-  str :=  Concatenation("GLM(", 
-                        String(DimensionOfMatrixOverSemiring(rep)), 
-                        ", ", 
+  str :=  Concatenation("GLM(",
+                        String(DimensionOfMatrixOverSemiring(rep)),
+                        ", ",
                         String(Characteristic(BaseDomain(M))));
-  if Characteristic(BaseDomain(M)) <> 1 then 
+  if Characteristic(BaseDomain(M)) <> 1 then
     Append(str, " ^ ");
     Append(str, String(Log(Size(BaseDomain(M)),
                            Characteristic(BaseDomain(M)))));
@@ -41,7 +223,7 @@ function(M)
 end);
 
 InstallMethod(PrintObj, "for general linear monoid",
-[IsGeneralLinearMonoid], 
+[IsGeneralLinearMonoid],
 7, # to beat the generic method for monoids with generators
 function(M)
   Print(PrintString(M));
@@ -119,133 +301,7 @@ InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for an matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
 function(coll)
-  return ForAll(coll, x -> x ^ (-1) <> fail);
-end);
-
-#T can we fold this into SemigroupByGenerators maybe?
-InstallGlobalFunction(MatrixSemigroup,
-function(arg)
-  local gens, ring, d;
-
-  if Length(arg) = 1 and IsHomogeneousList(arg[1])
-      and IsFFECollCollColl(arg[1]) then
-    gens := arg[1];
-  elif Length(arg) = 2 and IsField(arg[2]) and
-      IsFFECollCollColl(arg[1]) then
-    gens := arg[1];
-    ring := arg[2];
-  else
-    ErrorNoReturn("Semigroups: MatrixSemigroup: usage,\n",
-                  "either takes a list of standard GAP matrices, or such a ",
-                  "list and a ring as arguments,");
-  fi;
-
-  if not IsBound(ring) then
-     ring := DefaultFieldOfMatrix(Product(gens));
-  fi;
-
-  d := Length(gens[1]);
-
-  gens := List(gens,
-               x -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
-                                             ring,
-                                             x));
-  return Semigroup(gens);
-end);
-
-#T is it inconsistent to have the filter first for NewMatrixOverFiniteField
-#T but last for isomorphism?
-#T Why does it not seem to be possible to do the same as for
-#T constructors? IsObject seems a bit out there
-# FIXME Change to IsomorphismSemigroup!!
-InstallOtherMethod(IsomorphismMatrixSemigroup,
-"for a semigroup of matrices and a constructing filter",
-[IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl, IsObject],
-function(S, filter)
-  local gens, dom, deg, iso;
-  dom := DefaultFieldOfMatrix(Representative(S));
-  deg := Length(Representative(S));
-  iso := x -> NewMatrixOverFiniteField(filter, dom, x);
-  gens := List(GeneratorsOfSemigroup(S), iso);
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens), iso, AsMatrix);
-end);
-
-# This chooses as default representation to be IsPlistMatrixOverFiniteFieldRep
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup of matrices",
-[IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl],
-function(S)
-  return IsomorphismMatrixSemigroup(S, IsPlistMatrixOverFiniteFieldRep);
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-    return IsomorphismMatrixSemigroup(S, GF(2));
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a matrix over finite field semigroup",
-[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup and a ring",
-[IsTransformationSemigroup, IsRing],
-function(S, R)
-  local n, basis, map, iso, gens;
-
-  n := DegreeOfTransformationSemigroup(S);
-  basis := NewIdentityMatrix(IsPlistMatrixRep, R, n);
-  map := x -> AsList(basis{ImageListOfTransformation(x, n)});
-  iso := x -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
-                                       R,
-                                       map(x));
-  gens := List(GeneratorsOfSemigroup(S), iso);
-
-  # gaplint: ignore 2
-  return MagmaIsomorphismByFunctionsNC(S, Semigroup(gens), iso,
-           x -> Transformation(List(x, PositionNonZero)));
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a matrix semigroup and a ring",
-[IsMatrixOverFiniteFieldSemigroup, IsRing],
-function(S, R)
-    local f, g;
-    if BaseDomain(Representative(S)) = R then
-      return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
-    else
-      # This is obviously not ideal!
-      f := IsomorphismTransformationSemigroup(S);
-      g := IsomorphismMatrixSemigroup(Range(f), R);
-      return f * g;
-    fi;
-end);
-
-InstallMethod(IsomorphismMatrixSemigroup,
-"for a semigroup and a ring",
-[IsSemigroup, IsRing],
-function(S, R)
-  local map;
-  map := IsomorphismTransformationSemigroup(S);
-  return map * IsomorphismMatrixSemigroup(Range(map), R);
-end);
-
-# FIXME Remove these!
-
-InstallMethod(AsMatrixSemigroup, "for a semigroup", [IsSemigroup],
-function(S)
-  return Range(IsomorphismMatrixSemigroup(S));
-end);
-
-InstallMethod(AsMatrixSemigroup, "for a semigroup and a ring",
-[IsSemigroup, IsRing],
-function(S, R)
-  return Range(IsomorphismMatrixSemigroup(S, R));
+  return ForAll(coll, x -> x ^ -1 <> fail);
 end);
 
 #############################################################################

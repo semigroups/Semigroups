@@ -312,6 +312,12 @@ function(semiring, mat)
   return MatrixNC(filter, List(mat, ShallowCopy));
 end);
 
+InstallMethod(Matrix, "for a semiring and matrix over semiring",
+[IsSemiring, IsMatrixOverSemiring],
+function(R, mat)
+  return Matrix(R, AsList(mat));
+end);
+
 InstallGlobalFunction(RandomMatrix,
 function(arg)
   if Length(arg) >= 2 and IsOperation(arg[1]) and IsFunction(arg[1])

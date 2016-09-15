@@ -28,7 +28,7 @@ DeclareOperation("InverseMonoidByGenerators",
 DeclareOperation("InverseSemigroupByGenerators",
                  [IsMultiplicativeElementCollection, IsRecord]);
 
-InstallTrueMethod(IsStarSemigroup, 
+InstallTrueMethod(IsStarSemigroup,
                   IsAssociativeElementWithStarCollection and
                   IsSemigroupWithInverseOp);
 
@@ -58,20 +58,26 @@ DeclareOperation("ClosureSemigroupNC",
                  [IsSemigroup, IsListOrCollection, IsRecord]);
 
 DeclareOperation("AsSemigroup", [IsFunction, IsSemigroup]);
+DeclareOperation("AsSemigroup", [IsFunction, IsRing, IsSemigroup]);
 DeclareOperation("AsSemigroup", [IsFunction, IsPosInt, IsSemigroup]);
 DeclareOperation("AsSemigroup", [IsFunction, IsPosInt, IsPosInt, IsSemigroup]);
 DeclareConstructor("IsomorphismSemigroup",
                    [IsSemigroup, IsSemigroup]);
+DeclareConstructor("IsomorphismSemigroup",
+                   [IsSemigroup, IsRing, IsSemigroup]);
 DeclareConstructor("IsomorphismSemigroup",
                    [IsSemigroup, IsPosInt, IsSemigroup]);
 DeclareConstructor("IsomorphismSemigroup",
                    [IsSemigroup, IsPosInt, IsPosInt, IsSemigroup]);
 
 DeclareOperation("AsMonoid", [IsFunction, IsSemigroup]);
+DeclareOperation("AsMonoid", [IsFunction, IsRing, IsSemigroup]);
 DeclareOperation("AsMonoid", [IsFunction, IsPosInt, IsSemigroup]);
 DeclareOperation("AsMonoid", [IsFunction, IsPosInt, IsPosInt, IsSemigroup]);
 DeclareConstructor("IsomorphismMonoid",
                    [IsSemigroup, IsSemigroup]);
+DeclareConstructor("IsomorphismMonoid",
+                   [IsSemigroup, IsRing, IsSemigroup]);
 DeclareConstructor("IsomorphismMonoid",
                    [IsSemigroup, IsPosInt, IsSemigroup]);
 DeclareConstructor("IsomorphismMonoid",

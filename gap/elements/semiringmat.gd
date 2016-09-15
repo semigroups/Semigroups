@@ -41,6 +41,7 @@ DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
 DeclareOperation("Matrix", [IsFunction and IsOperation, IsHomogeneousList,
                             IsInt, IsInt]);
 DeclareOperation("Matrix", [IsSemiring, IsHomogeneousList]);
+DeclareOperation("Matrix", [IsSemiring, IsMatrixOverSemiring]);
 
 DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
                                 IsMatrixOverSemiring]);
@@ -56,8 +57,6 @@ DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
                                 IsMatrixOverSemiring,
                                 IsPosInt,
                                 IsPosInt]);
-DeclareConstructor("AsMatrix", [IsSemiring, IsMatrixOverSemiring]);
-
 DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
                                 IsTransformation,
                                 IsPosInt]);
