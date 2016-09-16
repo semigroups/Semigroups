@@ -142,7 +142,7 @@ gap> upper := function(mat)
 >   od;
 >   return true;
 > end;;
-gap> elms := Filtered(Elements(GLS(3,3)), upper);;
+gap> elms := Filtered(Elements(GLM(3,3)), upper);;
 gap> S := Semigroup(elms[1]);;
 gap> for i in [2 .. Length(elms)] do
 >  S := ClosureSemigroup(S, elms[i]);
@@ -166,7 +166,7 @@ gap> T := Semigroup(Transformation([1, 2, 7, 3, 2, 1, 4, 3]),
 <transformation semigroup of degree 8 with 2 generators>
 gap> Size(T);
 416
-gap> S := AsMatrixSemigroup(T);
+gap> S := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, T);
 <semigroup of 8x8 matrices over GF(2) with 2 generators>
 gap> Size(S);
 416
@@ -244,8 +244,9 @@ gap> StructureDescription(G);
 "PSL(8,2)"
 
 #T# 
-gap> S := AsMatrixSemigroup(Semigroup(Z(4) * [[1, 0, 0], [1, 1, 0], [0, 1, 0]],
->                                     Z(4) * [[0, 0, 0], [0, 0, 1], [0, 1, 0]]));
+gap> S := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, 
+>                     Semigroup(Z(4) * [[1, 0, 0], [1, 1, 0], [0, 1, 0]],
+>                               Z(4) * [[0, 0, 0], [0, 0, 1], [0, 1, 0]]));
 <semigroup of 3x3 matrices over GF(2^2) with 2 generators>
 gap> Size(S);
 27
