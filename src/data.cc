@@ -235,7 +235,7 @@ void data_init_semigroup(Obj data, Semigroup* semigroup) {
   semigroup->set_batch_size(data_batch_size(data));
 
   AssPRec(data, RNam_semigroup, OBJ_CLASS(semigroup, T_SEMI_SUBTYPE_SEMIGP));
-
+  //TODO use really_delete_vec
   for (Element* x : *gens) {
     x->really_delete();
   }

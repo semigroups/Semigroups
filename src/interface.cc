@@ -37,11 +37,15 @@
 
 #include "semigroupsplusplus/semigroups.h"
 
-/*******************************************************************************
- *******************************************************************************
- * Helper functions
- *******************************************************************************
- ******************************************************************************/
+// Helper functions
+
+template <typename T>
+static inline void really_delete_cont(T* cont) {
+  for (Element* x : *cont) {
+    x->really_delete();
+  }
+  delete cont;
+}
 
 /*******************************************************************************
  * ConvertElements:
@@ -131,15 +135,16 @@ Obj SEMIGROUP_ADD_GENERATORS(Obj self, Obj data, Obj coll_gap) {
   assert(IS_PLIST(coll_gap));
   assert(LEN_PLIST(coll_gap) > 0);
 
-  Semigroup*                   semigroup = data_semigroup(data);
-  Converter*                   converter = data_converter(data);
-  std::unordered_set<Element*> coll;
+  Semigroup*                    semigroup = data_semigroup(data);
+  Converter*                    converter = data_converter(data);
+  std::unordered_set<Element*>* coll = new std::unordered_set<Element*>();
 
   for (size_t i = 1; i <= (size_t) LEN_PLIST(coll_gap); i++) {
-    coll.insert(converter->convert(ELM_PLIST(coll_gap, i), semigroup->degree())
-                    ->really_copy());
+    coll->insert(
+        converter->convert(ELM_PLIST(coll_gap, i), semigroup->degree()));
   }
   semigroup->add_generators(coll, rec_get_report(data));
+  really_delete_cont(coll);
 
   Obj gens = ElmPRec(data, RNam_gens); // TODO make this safe
 
@@ -207,10 +212,7 @@ Obj SEMIGROUP_CLOSURE(Obj self, Obj old_data, Obj coll_gap, Obj degree) {
       new Semigroup(*old_semigroup, coll, rec_get_report(old_data)));
   new_semigroup->set_batch_size(data_batch_size(old_data));
 
-  for (Element* x : *coll) {
-    x->really_delete();
-  }
-  delete coll;
+  really_delete_cont(coll);
 
   Obj new_data = NEW_PREC(6);
 
@@ -383,8 +385,9 @@ Obj SEMIGROUP_POSITION_SORTED(Obj self, Obj data, Obj x) {
     size_t     deg       = data_degree(data);
     Semigroup* semigroup = data_semigroup(data);
     Converter* converter = data_converter(data);
-    size_t     pos = semigroup->position_sorted(converter->convert(x, deg),
-                                            rec_get_report(data));
+    Element* xx(converter->convert(x, deg));
+    size_t     pos = semigroup->position_sorted(xx, rec_get_report(data));
+    delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   }
 }
@@ -566,8 +569,9 @@ Obj SEMIGROUP_POSITION(Obj self, Obj data, Obj x) {
     size_t     deg       = data_degree(data);
     Semigroup* semigroup = data_semigroup(data);
     Converter* converter = data_converter(data);
-    size_t     pos =
-        semigroup->position(converter->convert(x, deg), rec_get_report(data));
+    Element* xx(converter->convert(x, deg));
+    size_t     pos = semigroup->position(xx, rec_get_report(data));
+    delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   }
 
@@ -598,7 +602,9 @@ Obj SEMIGROUP_POSITION_CURRENT(Obj self, Obj data, Obj x) {
     size_t     deg       = data_degree(data);
     Semigroup* semigroup = data_semigroup(data);
     Converter* converter = data_converter(data);
-    size_t     pos = semigroup->position_current(converter->convert(x, deg));
+    Element*   xx(converter->convert(x, deg));
+    size_t     pos = semigroup->position_current(xx);
+    delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   }
 
