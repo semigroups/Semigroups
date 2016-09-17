@@ -143,6 +143,13 @@ function(R, n, ranks)
 end);
 
 InstallMethod(RandomMatrixOp,
+"for a finite field, dimension, and pos int",
+[IsField and IsFinite, IsPosInt, IsPosInt],
+function(R, n, rank)
+  return RandomMatrixOp(R, n, [rank]);
+end);
+
+InstallMethod(RandomMatrixOp,
 "for a finite field, 0 dimension, and list of ranks",
 [IsField and IsFinite, IsZeroCyc, IsList],
 function(R, n, ranks)

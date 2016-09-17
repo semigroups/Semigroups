@@ -334,7 +334,7 @@ function(arg)
   elif Length(arg) = 2 and IsSemiring(arg[1]) and IsPosInt(arg[2]) then
     return RandomMatrixOp(arg[1], arg[2]);
   elif Length(arg) = 3 and IsSemiring(arg[1]) and IsPosInt(arg[2])
-      and IsList(arg[3]) then
+      and (IsList(arg[3]) or IsPosInt(arg[3])) then
     return RandomMatrixOp(arg[1], arg[2], arg[3]);
   fi;
 

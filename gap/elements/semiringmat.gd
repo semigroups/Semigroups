@@ -87,6 +87,7 @@ DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
 DeclareOperation("RandomMatrixOp", [IsSemiring, IsPosInt]);
 DeclareOperation("RandomMatrixOp", [IsField and IsFinite, IsPosInt, IsList]);
 DeclareOperation("RandomMatrixOp", [IsField and IsFinite, IsZeroCyc, IsList]);
+DeclareOperation("RandomMatrixOp", [IsField and IsFinite, IsPosInt, IsPosInt]);
 
 DeclareAttribute("AsList", IsMatrixOverSemiring);
 DeclareOperation("AsMutableList", [IsMatrixOverSemiring]);

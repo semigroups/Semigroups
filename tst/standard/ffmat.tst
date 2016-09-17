@@ -292,6 +292,13 @@ Z(11)^9 Z(11)^3 Z(11)^5 Z(11)^4 Z(11)^4
 Z(11)^6   Z(11) Z(11)^7 Z(11)^3 Z(11)^5
 0*Z(11) Z(11)^8 Z(11)^3 Z(11)^6 Z(11)^0
 
+# Test RandomMatrix for finite field, dim, rank
+gap> x := RandomMatrix(GF(3), 3, 1);;
+gap> RowRank(x);
+1
+gap> RowRank(TransposedMat(x));
+1
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(M);
 
