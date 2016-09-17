@@ -479,29 +479,6 @@ function(m)
   SetInverse(m, inv);
 end);
 
-InstallGlobalFunction(RandomListOfMatricesWithRanks,
-function(R, m, n, ranks)
-
-  if not IsRing(R) then
-    ErrorNoReturn("Semigroups: RandomListOfMatricesWithRanks: usage,\n",
-                  "the 1st argument must be a ring,");
-  elif not IsPosInt(m) then
-    ErrorNoReturn("Semigroups: RandomListOfMatricesWithRanks: usage,\n",
-                  "the number of matrices (2nd argument) must be a ",
-                  "positive integer,");
-  elif not IsInt(n) or n < 0 then
-    ErrorNoReturn("Semigroups: RandomListOfMatricesWithRanks: usage,\n",
-                  "the dimension of the matrices (3rd argument) must be a ",
-                  "non-negative integer,");
-  elif ForAny(ranks, x -> (x < 0) or (x > n)) then
-    ErrorNoReturn("Semigroups: RandomListOfMatricesWithRanks: usage,\n",
-                  "the list of ranks (4th argument) must consist of ",
-                  "numbers > 0 and < n,");
-  fi;
-
-  return List([1 .. m], x -> RandomMatrixOp(R, n, ranks));
-end);
-
 #T This will break transparency wrt representations, so we should
 #T really not be doing this and instead use a sample object
 #T or we should be using NewIdentityMatrixOverFiniteField

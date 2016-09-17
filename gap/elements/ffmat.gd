@@ -182,5 +182,3 @@ BindGlobal("CVECMatrixOverFiniteFieldType",
 #############################################################################
 
 DeclareGlobalFunction("ComputeRowSpaceAndTransformation");
-DeclareGlobalFunction("RandomListOfMatricesWithRanks");
-DeclareGlobalFunction("RandomSquareMatrixOverFiniteFieldWithRanks");

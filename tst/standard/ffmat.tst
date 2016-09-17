@@ -224,25 +224,6 @@ gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
 gap> ComputeRowSpaceAndTransformation(y);
 gap> ComputeRowSpaceAndTransformation(Matrix(GF(9), []));
 
-# Test RandomListOfMatricesWithRanks
-gap> RandomListOfMatricesWithRanks("1", 2, 3, [1,3]);
-Error, Semigroups: RandomListOfMatricesWithRanks: usage,
-the 1st argument must be a ring,
-gap> RandomListOfMatricesWithRanks(GF(2), 0, 3, [1,3]);
-Error, Semigroups: RandomListOfMatricesWithRanks: usage,
-the number of matrices (2nd argument) must be a positive integer,
-gap> RandomListOfMatricesWithRanks(GF(2), 3, -1, [1,3]);
-Error, Semigroups: RandomListOfMatricesWithRanks: usage,
-the dimension of the matrices (3rd argument) must be a non-negative integer,
-gap> RandomListOfMatricesWithRanks(GF(2), 3, 0, [1,3]);
-Error, Semigroups: RandomListOfMatricesWithRanks: usage,
-the list of ranks (4th argument) must consist of numbers > 0 and < n,
-gap> RandomListOfMatricesWithRanks(GF(2), 3, 0, [0]);
-[ Matrix(GF(2), []), Matrix(GF(2), []), Matrix(GF(2), []) ]
-gap> ForAll(RandomListOfMatricesWithRanks(GF(2), 3, 3, [2]), 
->           x -> RowRank(x) = 2);
-true
-
 # Test IdentityMatrixOverFiniteField
 gap> IdentityMatrixOverFiniteField(GF(16), 0);
 Matrix(GF(2^4), [])
