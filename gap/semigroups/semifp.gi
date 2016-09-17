@@ -170,6 +170,24 @@ InstallMethod(ViewString, "for an f.p. monoid element",
 #  return PRINT_STRINGIFY(str);
 #end);
 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsFpSemigroup, IsList],
+function(filt, params)
+  if Length(params) < 1 then # nr gens
+    params[1] := Random([1 .. 20]);
+  fi;
+  if not IsPosInt(params[1]) then 
+    ErrorNoReturn();
+  fi;
+  return params;
+end);
+
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsFpMonoid, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsFpSemigroup, params);
+end);
+
 # FIXME this doesn't work very well
 
 InstallMethod(RandomSemigroupCons, "for IsFpSemigroup and a list",

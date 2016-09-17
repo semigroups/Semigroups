@@ -54,6 +54,18 @@ end);
 ## Random
 #############################################################################
 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsPartialPermSemigroup, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+end);
+
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsPartialPermMonoid, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+end);
+
 InstallMethod(RandomSemigroupCons, "for IsPartialPermSemigroup and a list",
 [IsPartialPermSemigroup, IsList],
 function(filt, params)

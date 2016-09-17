@@ -15,6 +15,18 @@
 ## Random - bipartitions
 #############################################################################
 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsBipartitionSemigroup, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+end);
+
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsBipartitionMonoid, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+end);
+
 InstallMethod(RandomSemigroupCons, "for IsBipartitionSemigroup and list",
 [IsBipartitionSemigroup, IsList],
 function(filt, params)
@@ -38,6 +50,18 @@ SEMIGROUPS.DefaultRandomInverseMonoid);
 #############################################################################
 ## Random - block bijections
 #############################################################################
+
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsBlockBijectionSemigroup, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+end);
+
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsBlockBijectionMonoid, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+end);
 
 InstallMethod(RandomSemigroupCons,
 "for IsBlockBijectionSemigroup and a list",

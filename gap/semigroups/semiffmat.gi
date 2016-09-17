@@ -229,34 +229,88 @@ function(M)
   Print(PrintString(M));
 end);
 
-#FIXME There should be methods for random semigroup/monoid
+#############################################################################
+## ?. Random
+#############################################################################
 
-InstallMethod(RandomMatrixSemigroup,
-"for a ring, positive integer, and positive integer",
-[IsRing, IsPosInt, IsPosInt],
-function(R, m, n)
-  return Semigroup(List([1 .. m], x -> RandomMatrixOp(R, n)));
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsMatrixOverFiniteFieldSemigroup, IsList],
+function(filt, params)
+
+  if Length(params) < 1 then # nr gens
+    params[1] := Random([1 .. 20]);
+  elif not IsPosInt(params[1]) then  
+    return "the second argument (number of generators) must be a pos int,";
+  fi;
+  if Length(params) < 2 then # dimension
+    params[2] := Random([1 .. 20]);
+  elif not IsPosInt(params[2]) then  
+    return "the third argument (matrix dimension) must be a pos int,";
+  fi;
+  if Length(params) < 3 then # field
+    params[3] := GF(Random(Primes), Random([1 .. 9]));
+  elif not IsField(params[3]) or not IsFinite(params[3]) then 
+    return "the fourth argument must be a finite field,";
+  fi;
+  if Length(params) < 4 then # ranks
+    params[4] := [1 .. params[2]];
+  elif not IsList(params[4]) 
+      or not ForAll(params[4], x -> IsPosInt(x) and x <= params[2]) then 
+    return "the fifth argument (matrix ranks) must be a list of pos ints,";
+  fi;
+
+  if Length(params) > 4 then
+    return "there must be at most five arguments,";
+  fi;
+
+  return params;
 end);
 
-InstallMethod(RandomMatrixMonoid,
-"for a ring, positive integer, and positive integer",
-[IsRing, IsPosInt, IsPosInt],
-function(R, m, n)
-  return Monoid(List([1 .. m], x -> RandomMatrixOp(R, n)));
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsMatrixOverFiniteFieldMonoid, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsMatrixOverFiniteFieldSemigroup,
+                                          params);
 end);
 
-InstallMethod(RandomMatrixSemigroup,
-"for a ring, positive integer, positive integer, and a list",
-[IsRing, IsPosInt, IsPosInt, IsList],
-function(R, m, n, ranks)
-  return Semigroup(RandomListOfMatricesWithRanks(R, m, n, ranks));
+InstallMethod(RandomSemigroupCons,
+"for IsMatrixOverFiniteFieldSemigroup and list",
+[IsMatrixOverFiniteFieldSemigroup, IsList],
+function(filt, params) # params = [nrgens, dim, field, ranks]
+  return Semigroup(List([1 .. params[1]], i -> RandomMatrix(params[3],
+                                                            params[2],
+                                                            params[4])));
 end);
 
-InstallMethod(RandomMatrixMonoid,
-"for a ring, positive integer, positive integer, and a list",
-[IsRing, IsPosInt, IsPosInt, IsList],
-function(R, m, n, ranks)
-  return Monoid(RandomListOfMatricesWithRanks(R, m, n, ranks));
+InstallMethod(RandomMonoidCons,
+"for IsMatrixOverFiniteFieldMonoid and list",
+[IsMatrixOverFiniteFieldMonoid, IsList],
+function(filt, params) # params = [nrgens, dim, field, ranks]
+  return Monoid(List([1 .. params[1]], i -> RandomMatrix(params[3],
+                                                         params[2],
+                                                         params[4])));
+end);
+
+InstallMethod(RandomInverseSemigroupCons,
+"for IsMatrixOverFiniteFieldSemigroup and list",
+[IsMatrixOverFiniteFieldSemigroup, IsList],
+function(filt, params)
+    return AsSemigroup(filt, 
+                    params[3], 
+                    RandomInverseSemigroup(IsPartialPermSemigroup, 
+                                        params[1], 
+                                        params[2]));
+end);
+
+InstallMethod(RandomInverseMonoidCons,
+"for IsMatrixOverFiniteFieldMonoid and list",
+[IsMatrixOverFiniteFieldMonoid, IsList],
+function(filt, params)
+    return AsMonoid(filt, 
+                    params[3], 
+                    RandomInverseMonoid(IsPartialPermMonoid, 
+                                        params[1], 
+                                        params[2]));
 end);
 
 InstallMethod(GroupOfUnits, "for an matrix over finite field semigroup",
@@ -285,6 +339,7 @@ end);
 
 InstallMethod(BaseDomain, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S -> BaseDomain(Representative(S)));
+
 
 InstallMethod(IsMatrixOverFiniteFieldSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], C -> IsMatrixOverFiniteFieldSemigroup(Parent(C)));

@@ -96,6 +96,9 @@ DeclareConstructor("RandomInverseSemigroupCons", [IsSemigroup, IsList]);
 DeclareGlobalFunction("RandomInverseMonoid");
 DeclareConstructor("RandomInverseMonoidCons", [IsMonoid, IsList]);
 
+DeclareConstructor("SEMIGROUPS_ProcessRandomArgsCons", 
+                   [IsSemigroup, IsList]);
+
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
 DeclareOperation("SubsemigroupByProperty",
                  [IsSemigroup, IsFunction, IsPosInt]);

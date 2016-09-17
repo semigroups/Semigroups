@@ -802,23 +802,23 @@ gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 4);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, 6);;
 gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, "a");;
 Error, Semigroups: RandomSemigroup: usage,
-the parameters must be positive integers,
+the fifth argument (semiring period) must be a pos int,
 gap> RandomSemigroup(IsTransformationSemigroup, "a");;
 Error, Semigroups: RandomSemigroup: usage,
-the parameters must be positive integers,
+the second argument (number of generators) must be a pos int,
 gap> RandomSemigroup(IsReesMatrixSemigroup);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 3);;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 3, SymmetricGroup(3));;
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 3, SymmetricGroup(3), fail);;
 Error, Semigroups: RandomSemigroup: usage,
-there should be at most 4 arguments,
+there must be at most four arguments,
 gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 3, DihedralGroup(2));;
 Error, Semigroups: RandomSemigroup: usage,
-the arguments should be rows, columns, and a perm group,
+the fourth argument must be a perm group,
 gap> RandomSemigroup(IsReesMatrixSemigroup, fail, 3, DihedralGroup(2));;
 Error, Semigroups: RandomSemigroup: usage,
-the arguments should be rows, columns, and a perm group,
+the second argument (number of rows) must be a pos int,
 
 # Test RandomMonoid 1
 gap> RandomMonoid(2, 4);;
@@ -833,10 +833,10 @@ gap> RandomMonoid(IsNTPMatrixMonoid, 2, 4);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 4, 5, 6);;
 gap> RandomMonoid(IsNTPMatrixMonoid, 2, 4, 5, "a");;
 Error, Semigroups: RandomMonoid: usage,
-the parameters must be positive integers,
+the fifth argument (semiring period) must be a pos int,
 gap> RandomMonoid(IsTransformationMonoid, "a");;
 Error, Semigroups: RandomMonoid: usage,
-the parameters must be positive integers,
+the second argument (number of generators) must be a pos int,
 
 # Test RandomInverseSemigroup 1
 gap> RandomInverseSemigroup(2, 4);;
@@ -851,10 +851,10 @@ gap> RandomInverseSemigroup(IsNTPMatrixSemigroup, 2, 4);;
 gap> RandomInverseSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, 6);;
 gap> RandomInverseSemigroup(IsNTPMatrixSemigroup, 2, 4, 5, "a");;
 Error, Semigroups: RandomInverseSemigroup: usage,
-the parameters must be positive integers,
+the fifth argument (semiring period) must be a pos int,
 gap> RandomInverseSemigroup(IsTransformationSemigroup, "a");;
 Error, Semigroups: RandomInverseSemigroup: usage,
-the parameters must be positive integers,
+the second argument (number of generators) must be a pos int,
 
 # Test RandomInverseMonoid 1
 gap> RandomInverseMonoid(2, 4);;
@@ -869,10 +869,10 @@ gap> RandomInverseMonoid(IsNTPMatrixMonoid, 2, 4);;
 gap> RandomInverseMonoid(IsNTPMatrixMonoid, 2, 4, 5, 6);;
 gap> RandomInverseMonoid(IsNTPMatrixMonoid, 2, 4, 5, "a");;
 Error, Semigroups: RandomInverseMonoid: usage,
-the parameters must be positive integers,
+the fifth argument (semiring period) must be a pos int,
 gap> RandomInverseMonoid(IsTransformationMonoid, "a");;
 Error, Semigroups: RandomInverseMonoid: usage,
-the parameters must be positive integers,
+the second argument (number of generators) must be a pos int,
 
 # Test AsSemigroup 1
 gap> S := Monoid(Transformation([3, 4, 2, 4]), Transformation([2, 4, 1, 4]),

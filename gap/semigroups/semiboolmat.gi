@@ -14,6 +14,19 @@
 ## ?. Random
 #############################################################################
 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsBooleanMatSemigroup, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+end);
+
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsBooleanMatMonoid, IsList],
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+end);
+
+
 InstallMethod(RandomSemigroupCons,
 "for IsBooleanMatSemigroup and list",
 [IsBooleanMatSemigroup, IsList],

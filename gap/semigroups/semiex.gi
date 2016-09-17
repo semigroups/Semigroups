@@ -296,8 +296,7 @@ end);
 
 # Matrix semigroups . . .
 
-SEMIGROUPS.MatrixSemigroupConstructor :=
-function(func, args)
+SEMIGROUPS.MatrixSemigroupConstructor := function(func, args)
   local d, q, e, gens, x, S;
 
   if Length(args) = 2 then
@@ -312,7 +311,7 @@ function(func, args)
   #                         String(q), ")");
   else
     ErrorNoReturn("Semigroups: SEMIGROUPS.MatrixSemigroupConstructor:",
-                  " usage,\nthere should be 2 or 3 arguments,");
+                  " usage,\nthere must be 2 or 3 arguments,");
   fi;
   gens := GeneratorsOfGroup(CallFuncList(func, args));
   x := OneMutable(gens[1]);

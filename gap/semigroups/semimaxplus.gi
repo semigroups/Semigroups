@@ -52,6 +52,18 @@ _InstallRandom0 := function(IsXMatrix)
   IsXSemigroup := Concatenation(IsXMatrix, "Semigroup");
   IsXMonoid := Concatenation(IsXMatrix, "Monoid");
 
+  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+  [EvalString(IsXSemigroup), IsList],
+  function(filt, params)
+    return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+  end);
+  
+  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+  [EvalString(IsXMonoid), IsList],
+  function(filt, params)
+    return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
+  end);
+
   InstallMethod(RandomSemigroupCons,
   Concatenation("for ", IsXSemigroup, " and a list"),
   [EvalString(IsXSemigroup), IsList],
@@ -84,11 +96,39 @@ Unbind(_InstallRandom0);
 ## Random for matrices with 1 additional parameters
 #############################################################################
 
+_ProcessArgs1 := function(filt, params)
+  if Length(params) < 1 then # nr gens
+    params[1] := Random([1 .. 20]);
+  elif not IsPosInt(params[1]) then 
+    return "the first argument (number of generators) must be a pos int,";
+  fi;
+  if Length(params) < 2 then # degree / dimension
+    params[2] := Random([1 .. 20]);
+  elif not IsPosInt(params[2]) then 
+    return "the second argument (matrix dimension) must be a pos int,";
+  fi;
+  if Length(params) < 3 then # threshold
+    params[3] := Random([1 .. 20]);
+  elif not IsPosInt(params[3]) then 
+    return "the third argument (semiring threshold) must be a pos int,";
+  fi;
+  if Length(params) > 3 then 
+    return "there must be at most three arguments,";
+  fi;
+  return params;
+end;
+
 _InstallRandom1 := function(IsXMatrix)
   local IsXSemigroup, IsXMonoid;
 
   IsXSemigroup := Concatenation(IsXMatrix, "Semigroup");
   IsXMonoid := Concatenation(IsXMatrix, "Monoid");
+
+  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+  [EvalString(IsXSemigroup), IsList], _ProcessArgs1);
+  
+  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+  [EvalString(IsXMonoid), IsList], _ProcessArgs1);
 
   InstallMethod(RandomSemigroupCons,
   Concatenation("for ", IsXSemigroup, " and a list"),
@@ -118,10 +158,47 @@ od;
 
 Unbind(_IsXMatrix);
 Unbind(_InstallRandom1);
+Unbind(_ProcessArgs1);
 
 #############################################################################
 ## Random for matrices with 2 additional parameters
 #############################################################################
+
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsNTPMatrixSemigroup, IsList], 
+function(filt, params)
+  if Length(params) < 1 then # nr gens
+    params[1] := Random([1 .. 20]);
+  elif not IsPosInt(params[1]) then 
+    return "the second argument (number of generators) must be a pos int,";
+  fi;
+  if Length(params) < 2 then # dimension
+    params[2] := Random([1 .. 20]);
+  elif not IsPosInt(params[2]) then 
+    return "the third argument (matrix dimension) must be a pos int,";
+  fi;
+  if Length(params) < 3 then # threshold
+    params[3] := Random([1 .. 20]);
+  elif not IsPosInt(params[3]) then 
+    return "the fourth argument (semiring threshold) must be a pos int,";
+  fi;
+  if Length(params) < 4 then # period
+    params[4] := Random([1 .. 20]);
+  elif not IsPosInt(params[4]) then 
+    return "the fifth argument (semiring period) must be a pos int,";
+  fi;
+  if Length(params) > 4 then 
+    return "there must be at most five arguments,";
+  fi;
+  
+  return params;
+end);
+
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+[IsNTPMatrixMonoid, IsList], 
+function(filt, params)
+  return SEMIGROUPS_ProcessRandomArgsCons(IsNTPMatrixSemigroup, params);
+end);
 
 InstallMethod(RandomSemigroupCons,
 "for IsNTPMatrixSemigroup and a list",
@@ -144,6 +221,7 @@ function(filt, params)
                                         params[3],
                                         params[4])));
 end);
+
 
 #############################################################################
 ## 1. Isomorphisms
