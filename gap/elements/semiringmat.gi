@@ -466,7 +466,7 @@ InstallMethod(DimensionOfMatrixOverSemiringCollection,
 function(coll)
   local dim;
 
-  dim := DimensionOfMatrixOverSemiring(coll[1]);
+  dim := DimensionOfMatrixOverSemiring(Representative(coll));
   if not ForAll(coll, x -> DimensionOfMatrixOverSemiring(x) = dim) then
     ErrorNoReturn("Semigroups: DimensionOfMatrixOverSemiringCollection: ",
                   "usage,\nthe argument <coll> must be a collection of",
@@ -474,6 +474,17 @@ function(coll)
   fi;
 
   return dim;
+end);
+
+# The next method is required because the previous one will try to enumerate
+# the whole semigroup to check that the elements all have the same dimension,
+# which they have to by default anyway.
+
+InstallMethod(DimensionOfMatrixOverSemiringCollection, 
+"for a matrix over semiring semigroup",
+[IsMatrixOverSemiringSemigroup], 
+function(S)
+  return DimensionOfMatrixOverSemiring(Representative(S));
 end);
 
 InstallMethod(Display, "for a matrix over semiring collection",

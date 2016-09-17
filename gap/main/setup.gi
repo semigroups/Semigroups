@@ -370,12 +370,12 @@ InstallMethod(LambdaOrbSeed, "for a Rees 0-matrix subsemigroup",
 
 InstallMethod(LambdaOrbSeed, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
-function(s)
+function(S)
     local deg;
-    deg := DegreeOfMatrixSemigroup(s) + 1;
+    deg := DimensionOfMatrixOverSemiringCollection(S) + 1;
     return NewRowBasisOverFiniteField(IsPlistRowBasisOverFiniteFieldRep,
-                                      BaseDomain(s),
-                                      NullMat(deg, deg, BaseDomain(s)));
+                                      BaseDomain(S),
+                                      NullMat(deg, deg, BaseDomain(S)));
 end);
 
 # the seed or dummy start point for RhoOrb
@@ -639,13 +639,10 @@ InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup], LambdaBound);
 
 InstallMethod(LambdaBound, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], s ->
+[IsMatrixOverFiniteFieldSemigroup], S ->
 function(r)
-  local f;
-
   if r < 100 then
-    f := Representative(s);
-    return Size(GL(DegreeOfMatrixSemigroup(s), BaseDomain(s)));
+    return Size(GL(DimensionOfMatrixOverSemiringCollection(S), BaseDomain(S)));
   else
     return infinity;
   fi;

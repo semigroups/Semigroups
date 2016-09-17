@@ -72,7 +72,7 @@ InstallMethod(IsomorphismMatrixGroup, "for an matrix over finite field group",
 function(G)
   local H, gens;
 
-  if DegreeOfMatrixSemigroup(G) = 0 then
+  if DimensionOfMatrixOverSemiringCollection(G) = 0 then
     H := TrivialGroup();
     return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
   fi;
@@ -131,9 +131,9 @@ InstallMethod(\in,
 [IsMatrixOverFiniteField, IsMatrixOverFiniteFieldGroup],
 function(x, G)
   if BaseDomain(G) <> BaseDomain(x)
-      or DegreeOfMatrixSemigroup(G) <> DimensionOfMatrixOverSemiring(x) then
+      or DimensionOfMatrixOverSemiringCollection(G) <> DimensionOfMatrixOverSemiring(x) then
     return false;
-  elif DegreeOfMatrixSemigroup(G) = 0
+  elif DimensionOfMatrixOverSemiringCollection(G) = 0
       and DimensionOfMatrixOverSemiring(x) = 0 then
     return true;
   else
@@ -146,7 +146,7 @@ InstallMethod(\^,
 [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField],
 function(G, x)
   if BaseDomain(G) <> BaseDomain(x)
-      or DegreeOfMatrixSemigroup(G) <> DimensionOfMatrixOverSemiring(x) then
+      or DimensionOfMatrixOverSemiringCollection(G) <> DimensionOfMatrixOverSemiring(x) then
     ErrorNoReturn("Semigroups: \^ (for matrix over finite field ",
                   "group and matrix over finite field): usage,\n",
                   " the args must have the same base domain, degree, and\n",
@@ -164,7 +164,7 @@ InstallMethod(ClosureGroup,
 [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField],
 function(G, x)
   if BaseDomain(G) <> BaseDomain(x)
-      or DegreeOfMatrixSemigroup(G) <> DimensionOfMatrixOverSemiring(x)
+      or DimensionOfMatrixOverSemiringCollection(G) <> DimensionOfMatrixOverSemiring(x)
       or Inverse(x) = fail then
     ErrorNoReturn("Semigroups: ClosureGroup (for matrix over finite",
                   " field group and matrix over finite field): usage,\n",
@@ -179,7 +179,7 @@ InstallMethod(ClosureGroup,
 [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteFieldCollection],
 function(G, coll)
   if BaseDomain(G) <> BaseDomain(coll)
-      or DegreeOfMatrixSemigroup(G) <>
+      or DimensionOfMatrixOverSemiringCollection(G) <>
          DimensionOfMatrixOverSemiringCollection(coll)
       or ForAny(coll, x -> Inverse(x) = fail) then
     ErrorNoReturn("Semigroups: ClosureGroup (for matrix over ",
@@ -187,7 +187,7 @@ function(G, coll)
                   " and matrix over finite field): usage,\n",
                   " the args must have the same base domain, degree, and\n",
                   " every matrix in the second arg must be invertible,");
-  elif DegreeOfMatrixSemigroup(G) = 0 then
+  elif DimensionOfMatrixOverSemiringCollection(G) = 0 then
     return G;
   fi;
   return Range(IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup,

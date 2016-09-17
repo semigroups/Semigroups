@@ -19,7 +19,6 @@ DeclareSynonym("IsMatrixOverFiniteFieldSemigroup",
                IsMatrixOverFiniteFieldCollection and IsSemigroup);
 DeclareSynonym("IsMatrixOverFiniteFieldMonoid",
                IsMatrixOverFiniteFieldCollection and IsMonoid);
-DeclareAttribute("DegreeOfMatrixSemigroup", IsMatrixOverFiniteFieldSemigroup);
 DeclareProperty("IsMatrixOverFiniteFieldSemigroupGreensClass", IsGreensClass);
 
 InstallTrueMethod(CanComputeSize, IsMatrixOverFiniteFieldSemigroup);

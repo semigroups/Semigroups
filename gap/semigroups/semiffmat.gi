@@ -197,7 +197,7 @@ InstallMethod(ViewObj, "for a general linear monoid",
 function(S)
   local n;
   Print("<general linear monoid ");
-  n := DegreeOfMatrixSemigroup(S);
+  n := DimensionOfMatrixOverSemiringCollection(S);
   Print(n, "x", n, " over ", BaseDomain(S));
   Print(">");
 end);
@@ -285,12 +285,6 @@ end);
 
 InstallMethod(BaseDomain, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S -> BaseDomain(Representative(S)));
-
-InstallMethod(DegreeOfMatrixSemigroup, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], S -> DimensionOfMatrixOverSemiring(Representative(S)));
-
-InstallMethod(DimensionOfMatrixOverSemiringCollection, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup], DegreeOfMatrixSemigroup);
 
 InstallMethod(IsMatrixOverFiniteFieldSemigroupGreensClass, "for a Green's class",
 [IsGreensClass], C -> IsMatrixOverFiniteFieldSemigroup(Parent(C)));
@@ -519,7 +513,7 @@ function(S, x, y)
     filt := SEMIGROUPS_FilterOfMatrixOverSemiring(Representative(S));
     return NewZeroMatrixOverFiniteField(filt,
                                         BaseDomain(S),
-                                        DegreeOfMatrixSemigroup(S));
+                                        DimensionOfMatrixOverSemiringCollection(S));
   else
     m := AsMatrix(IsMatrixOverFiniteField,
                   Representative(S),
