@@ -43,7 +43,7 @@
   <Section>
     <Heading>Random semigroups</Heading> 
 
-    <#Include Label = "RandomInverseMonoid"> 
+    <#Include Label = "RandomSemigroup"> 
   </Section> 
   
   <Section Label = "Options when creating semigroups">
@@ -160,8 +160,9 @@ gap> S := Semigroup(Transformation([1, 2, 3, 3]),
       then you can simply redefine the value in &GAP;. For example, to change
       the option <C>small</C> from the default value of <A>false</A> use:
 
-    <Log>gap> SEMIGROUPS_DefautlOptionsRec.small := true;
-true</Log>
+<Log><![CDATA[
+gap> SEMIGROUPS_DefautlOptionsRec.small := true;
+true]]></Log>
 
     If you want to change the default values of the options stored in <Ref
       Var = "SEMIGROUPS_DefaultOptionsRec"/> for all &GAP; sessions, then you can

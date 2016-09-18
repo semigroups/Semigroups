@@ -223,3 +223,131 @@ gap> AsMonoid(S);
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="RandomSemigroup">
+<ManSection>
+  <Oper Name = "RandomSemigroup" Arg = "arg..."/>
+  <Oper Name = "RandomMonoid" Arg = "arg..."/>
+  <Oper Name = "RandomInverseSemigroup" Arg = "arg..."/>
+  <Oper Name = "RandomInverseMonoid" Arg = "arg..."/>
+  <Returns>A semigroup.</Returns>
+  <Description>
+    The operations described in this section can be used to generate
+    semigroups, in some sense, at random. There is not guarantee given about
+    the distribution of these semigroups, and this is only intended as a means
+    of generating semigroups for testing and other similar purposes.
+    <P/>
+
+    Roughly speaking, the arguments of <C>RandomSemigroup</C> are a filter
+    specifying the type of the semigroup to be returned, together with some
+    further parameters that describe some attributes of the semigroup to be
+    returned. For instance, we may want to specify the number of generators,
+    and, say, the degree, or dimension, of the elements, where appropriate.
+    The arguments of <C>RandomMonoid</C>, <C>RandomInverseSemigroup</C>, and 
+    <C>RandomInverseMonoid</C> are analogous.
+    <P/>
+
+    If no arguments are specified, then they are all chosen at random, for a
+    truly random experience.
+    <P/>
+    
+    The first argument, if present, should be a filter <A>filter</A>.  For
+    <C>RandomSemigroup</C> and <C>RandomInverseSemigroup</C> the filter
+    <A>filter</A> must be of the form <C>IsXSemigroup</C>. For example, 
+    <Ref Prop = "IsTransformationSemigroup" BookName = "ref"/>, 
+    <Ref Prop = "IsFpSemigroup" BookName = "ref"/>, and 
+    <Ref Prop = "IsPBRSemigroup"/> are some possible values for <A>filter</A>.
+    For <C>RandomMonoid</C> and <C>RandomInverseMonoid</C> the argument
+    <A>filter</A>  must be of the form <C>IsXMonoid</C>; such as <Ref Prop =
+      "IsBipartitionMonoid"/> or <Ref Prop = "IsBooleanMatMonoid"/>.
+    <P/>
+
+    Suppose that the first argument <A>filter</A> is <Ref Prop="IsFpSemigroup"
+      BookName = "ref"/>. Then the only other arguments that can be specified
+    is (and this argument is also optional):
+    <List>
+      <Mark>number of generators</Mark>
+      <Item>
+        The second argument, if present, should be a positive integer <A>m</A>
+        indicating the number of generators that the semigroup should have.
+        If the second argument <A>m</A> is not specified, then a number is
+        selected at random.
+      </Item>
+    </List>
+
+    If <A>filter</A> is a filter such as <Ref
+      Filt="IsTransformationSemigroup"i BookName = "ref"/>, <Ref
+      Filt="IsIntegerMatrixSemigroup"/>, or <Ref
+      Filt="IsProjectiveMaxPlusMatrix"/>,
+    then a further argument can be specified:
+    <List>
+      <Mark>degree / dimension</Mark>
+      <Item>
+        The third argument, if present, should be a positive integer <A>n</A>, 
+        which specifies the degree or dimension of the generators. For example,
+        if the first argument <A>filter</A> is <C>IsTransformationSemigroup</C>, 
+        then the value of this argument is the degree of the transformations in
+        the returned semigroup; or if <A>filter</A> is
+        <C>IsMatrixOverFiniteFieldSemigroup</C>, then this argument is the
+        dimension of the matrices in the returned semigroup.
+      </Item>
+    </List>
+
+    If <A>filter</A> is <Ref Filt="IsTropicalMaxPlusMatrixSemigroup"/>, for
+    example,  then a fourth argument can be given (or not!):
+    <List>
+      <Mark>threshold</Mark>
+      <Item>
+        The fourth argument, if present, should be a positive integer <A>t</A>,
+        which specifies the threshold of the semiring over which the matrices
+        in the returned semigroup are defined. 
+      </Item>
+    </List>
+    
+    You get the idea, the error messages are self-explanatory, and
+    <C>RandomSemigroup</C> works for most of the type of semigroups defined in
+    &GAP;.<P/>
+
+    <C>RandomMonoid</C> is similar to <C>RandomSemigroup</C> except it returns
+    a monoid. Likewise, <C>RandomInverseSemigroup</C> and
+    <C>RandomInverseMonoid</C> return inverse semigroups and monoids, respectively.
+
+    <Log><![CDATA[
+gap> RandomSemigroup();
+<semigroup of 10x10 max-plus matrices with 12 generators>
+gap> RandomMonoid(IsTransformationMonoid);
+<transformation monoid of degree 9 with 7 generators>
+gap> RandomMonoid(IsPartialPermMonoid, 2);
+<partial perm monoid of rank 17 with 2 generators>
+gap> RandomMonoid(IsPartialPermMonoid, 2, 3);
+<partial perm monoid of rank 3 with 2 generators>
+gap> RandomInverseSemigroup(IsTropicalMinPlusMatrixSemigroup);
+<semigroup of 6x6 tropical min-plus matrices with 14 generators>
+gap> RandomInverseSemigroup(IsTropicalMinPlusMatrixSemigroup, 1);
+<semigroup of 6x6 tropical min-plus matrices with 14 generators>
+gap> RandomSemigroup(IsTropicalMinPlusMatrixSemigroup, 2);
+<semigroup of 11x11 tropical min-plus matrices with 2 generators>
+gap> RandomSemigroup(IsTropicalMinPlusMatrixSemigroup, 2, 1);
+<semigroup of 1x1 tropical min-plus matrices with 2 generators>
+gap> RandomSemigroup(IsTropicalMinPlusMatrixSemigroup, 2, 1, 3);
+gap> last.1;
+Matrix(IsTropicalMinPlusMatrix, [[infinity]], 3)
+gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 1, 3, 4);
+<semigroup of 1x1 ntp matrices with 2 generators>
+gap> last.1;
+Matrix(IsNTPMatrix, [[2]], 3, 4)
+gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2);
+<Rees matrix semigroup 2x2 over
+  <permutation group of size 659 with 1 generators>>
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2, Group((1,2), (3,4)));
+<Rees 0-matrix semigroup 2x2 over Group([ (1,2), (3,4) ])>
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 2);
+<monoid of 3x3 matrices over GF(421^4) with 3 generators>
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 2, GF(7));
+<monoid of 3x3 matrices over GF(7) with 2 generators>]]></Log>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+  <Oper Name = "RandomMonoid" Arg = "arg..."/>
+  <Oper Name = "RandomInverseSemigroup" Arg = "arg..."/>
+  <Oper Name = "RandomInverseMonoid" Arg = "arg..."/>
