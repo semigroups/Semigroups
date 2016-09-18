@@ -365,8 +365,6 @@ function(S)
 
     data             := rec();
     data.gens        := ShallowCopy(GeneratorsOfSemigroup(S));
-    data.nr          := 0;
-    data.pos         := 0;
     data.degree      := SEMIGROUPS.DegreeOfSemigroup(S);
     data.report      := SEMIGROUPS.OptionsRec(S).report;
     data.batch_size  := SEMIGROUPS.OptionsRec(S).batch_size;

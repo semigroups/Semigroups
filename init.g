@@ -73,7 +73,7 @@ ReadPackage("semigroups/gap/hash.gd");
 
 #FIXME to here
 
-ReadPackage("semigroups/gap/main/froidure-pin.gd");
+ReadPackage("semigroups/gap/main/fropin.gd");
 ReadPackage("semigroups/gap/main/setup.gd");
 ReadPackage("semigroups/gap/main/acting.gd");
 ReadPackage("semigroups/gap/main/lambda-rho.gd");

@@ -41,7 +41,7 @@ ReadPackage("semigroups/gap/semigroups/semigraph.gi");
 ReadPackage("semigroups/gap/semigroups/semiffmat.gi");
 ReadPackage("semigroups/gap/semigroups/grpffmat.gi");
 
-ReadPackage("semigroups/gap/main/froidure-pin.gi");
+ReadPackage("semigroups/gap/main/fropin.gi");
 ReadPackage("semigroups/gap/main/setup.gi");
 ReadPackage("semigroups/gap/main/acting.gi");
 ReadPackage("semigroups/gap/main/lambda-rho.gi");
