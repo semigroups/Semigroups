@@ -16,12 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-/*******************************************************************************
- *******************************************************************************
- * Headers
- *******************************************************************************
- ******************************************************************************/
-
 #include <assert.h>
 
 #include <string>
@@ -45,6 +39,17 @@ static inline void really_delete_cont(T* cont) {
     x->really_delete();
   }
   delete cont;
+}
+
+Obj word_t_to_plist(word_t const& word) {
+  Obj out = NEW_PLIST(T_PLIST_CYC, word.size());
+  SET_LEN_PLIST(out, word.size());
+
+  for (size_t i = 0; i < word.size(); i++) {
+    SET_ELM_PLIST(out, i + 1, INTOBJ_INT(word[i] + 1));
+  }
+  CHANGED_BAG(out);
+  return out;
 }
 
 /*******************************************************************************
@@ -103,25 +108,7 @@ Obj ConvertFromCayleyGraph(cayley_graph_t* graph) {
   return out;
 }
 
-//
-//
-
-Obj word_t_to_plist(word_t const& word) {
-  Obj out = NEW_PLIST(T_PLIST_CYC, word.size());
-  SET_LEN_PLIST(out, word.size());
-
-  for (size_t i = 0; i < word.size(); i++) {
-    SET_ELM_PLIST(out, i + 1, INTOBJ_INT(word[i] + 1));
-  }
-  CHANGED_BAG(out);
-  return out;
-}
-
-/*******************************************************************************
- *******************************************************************************
- * GAP level functions
- *******************************************************************************
- ******************************************************************************/
+// GAP level functions
 
 /*******************************************************************************
  * SEMIGROUP_ADD_GENERATORS:
