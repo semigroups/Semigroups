@@ -32,6 +32,7 @@
 #include "converter.h"
 #include "fropin.h"
 #include "ideals.h"
+#include "semigrp.h"
 #include "ufdata.h"
 
 #include "semigroupsplusplus/semigroups.h"
@@ -318,6 +319,7 @@ Obj HTValue;
 Obj HTAdd;
 Obj infinity;
 Obj Ninfinity;
+Obj DimensionOfMatrixOverSemiring;
 Obj IsBooleanMat;
 Obj BooleanMatType;
 Obj IsMatrixOverSemiring;
@@ -339,6 +341,7 @@ Obj IntegerMatrixType;
 Obj IsPBR;
 Obj TYPES_PBR;
 Obj TYPE_PBR;
+Obj DegreeOfPBR;
 
 /*****************************************************************************
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
@@ -373,6 +376,8 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // Table of functions to export
 // FIXME the filenames are mostly wrong here
 static StructGVarFunc GVarFuncs[] = {
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
+
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_ENUMERATE,
                           4,
@@ -584,11 +589,14 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("TYPE_PBR", &TYPE_PBR);
 
   ImportGVarFromLibrary("IsPBR", &IsPBR);
+  ImportGVarFromLibrary("DegreeOfPBR", &DegreeOfPBR);
 
   ImportGVarFromLibrary("IsBooleanMat", &IsBooleanMat);
   ImportGVarFromLibrary("BooleanMatType", &BooleanMatType);
 
   ImportGVarFromLibrary("IsMatrixOverSemiring", &IsMatrixOverSemiring);
+  ImportGVarFromLibrary("DimensionOfMatrixOverSemiring",
+                        &DimensionOfMatrixOverSemiring);
 
   ImportGVarFromLibrary("IsMaxPlusMatrix", &IsMaxPlusMatrix);
   ImportGVarFromLibrary("MaxPlusMatrixType", &MaxPlusMatrixType);
@@ -616,6 +624,7 @@ static Int InitKernel(StructInitInfo* module) {
 
   ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
+
 
   /* return success                                                      */
   return 0;

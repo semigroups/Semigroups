@@ -364,12 +364,12 @@ function(S)
   if SEMIGROUPS.IsCCSemigroup(S) then
 
     data             := rec();
+    data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
+    data.batch_size  := SEMIGROUPS.OptionsRec(S).batch_size;
     data.gens        := ShallowCopy(GeneratorsOfSemigroup(S));
     data.degree      := SEMIGROUPS.DegreeOfSemigroup(S);
-    data.report      := SEMIGROUPS.OptionsRec(S).report;
-    data.batch_size  := SEMIGROUPS.OptionsRec(S).batch_size;
-    data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
     data.nr_threads  := SEMIGROUPS.OptionsRec(S).nr_threads;
+    data.report      := SEMIGROUPS.OptionsRec(S).report;
 
     return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
                                            and IsAttributeStoringRep), data);

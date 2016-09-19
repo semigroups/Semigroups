@@ -87,6 +87,7 @@ extern Obj Ninfinity;
 extern Obj IsBooleanMat;
 extern Obj BooleanMatType;
 extern Obj IsMatrixOverSemiring;
+extern Obj DimensionOfMatrixOverSemiring;
 extern Obj IsTropicalMatrix;
 extern Obj MaxPlusMatrixType;
 extern Obj IsMaxPlusMatrix;
@@ -103,6 +104,7 @@ extern Obj NTPMatrixType;
 extern Obj IsIntegerMatrix;
 extern Obj IntegerMatrixType;
 extern Obj IsPBR;
+extern Obj DegreeOfPBR;
 extern Obj TYPES_PBR;
 extern Obj TYPE_PBR;
 

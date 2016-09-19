@@ -32,7 +32,7 @@
 * data_type:
 *******************************************************************************/
 
-DataType data_type(Obj data) {
+en_semi_t data_type(Obj data) {
   Obj x = data_rep(data);
 
   if (IS_TRANS(x)) {

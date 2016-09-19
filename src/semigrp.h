@@ -19,4 +19,8 @@
 #ifndef SEMIGROUPS_SRC_SEMIGRP_H_
 #define SEMIGROUPS_SRC_SEMIGRP_H_
 
+#include "src/compiled.h" // GAP headers
+
+Obj EN_SEMI_SIZE(Obj self, Obj S);
+
 #endif  // SEMIGROUPS_SRC_SEMIGRP_H_

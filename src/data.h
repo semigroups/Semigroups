@@ -106,7 +106,7 @@ static inline void initRNams() {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-enum DataType {
+enum en_semi_t {
   UNKNOWN,
   TRANS2,
   TRANS4,
@@ -140,7 +140,7 @@ long     data_size_ff(Obj);
 Obj      data_rep(Obj);
 size_t   data_batch_size(Obj);
 size_t   data_degree(Obj);
-DataType data_type(Obj);
+en_semi_t data_type(Obj);
 void     data_init(Obj);
 void data_init_semigroup(Obj data, Semigroup* semigroup = nullptr);
 void       data_init_converter(Obj);
