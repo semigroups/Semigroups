@@ -712,7 +712,7 @@ end);
 ################################################################################
 # SmallDegreeTransRepFromLattice: used for two user-facing functions (see below)
 # Returns the smallest degree transformation semigroup corresponding to right
-# congruences found using LatticeOfXCongruences with the given record.
+# congruences found using LatticeOfCongs with the given record.
 ################################################################################
   #TODO: The map should have an invfun included
 SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
@@ -726,7 +726,7 @@ SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
   fi;
 
   # Get all the right congruences which apply here
-  l := SEMIGROUPS.LatticeOfXCongruences(M, "Right", record);
+  l := SEMIGROUPS.LatticeOfCongs(M, "Right", record);
   congs := l![2];
 
   # Find the one with the fewest classes
