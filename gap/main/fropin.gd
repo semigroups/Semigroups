@@ -77,8 +77,17 @@ end;
 
 DeclareCategory("IsGenericSemigroupData", IsList);
 
-# TODO remove everything from here down
 DeclareAttribute("GenericSemigroupData", IsSemigroup, "mutable");
+
+
+# TODO(JDM) increment the rank here. Non-finite semigroups can be enumerable!
+DeclareCategory("IsEnumerableSemigroup", IsSemigroup);
+
+InstallTrueMethod(IsEnumerableSemigroup, IsTransformationSemigroup);
+InstallTrueMethod(IsEnumerableSemigroup, IsPartialPermSemigroup);
+InstallTrueMethod(IsEnumerableSemigroup, IsMatrixOverFiniteFieldSemigroup);
+InstallTrueMethod(IsEnumerableSemigroup, IsBipartitionSemigroup);
+InstallTrueMethod(IsEnumerableSemigroup, IsIntegerMatrixSemigroup);
 
 DeclareOperation("Enumerate", [IsGenericSemigroupData]);
 DeclareOperation("Enumerate", [IsGenericSemigroupData, IsCyclotomic]);
