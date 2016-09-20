@@ -709,68 +709,6 @@ function(S)
   # components of the right Cayley graph corresponds the minimal ideal.
 end);
 
-################################################################################
-# SmallDegreeTransRepFromLattice: used for two user-facing functions (see below)
-# Returns the smallest degree transformation semigroup corresponding to right
-# congruences found using LatticeOfCongs with the given record.
-################################################################################
-  #TODO: The map should have an invfun included
-SEMIGROUPS.SmallDegreeTransRepFromLattice := function(S, record)
-  local M, l, congs, nrclasses, cong, bestcong, classes, fun, R;
-
-  # If S is not a monoid, append an identity
-  if not IsMonoid(S) then
-    M := Monoid(S);
-  else
-    M := S;
-  fi;
-
-  # Get all the right congruences which apply here
-  l := SEMIGROUPS.LatticeOfCongs(M, "Right", record);
-  congs := l![2];
-
-  # Find the one with the fewest classes
-  nrclasses := infinity;
-  for cong in congs do
-    if NrEquivalenceClasses(cong) < nrclasses then
-      bestcong := cong;
-      nrclasses := NrEquivalenceClasses(cong);
-    fi;
-  od;
-
-  # If nrclasses is not lower than the current degree, just return the identity
-  if IsTransformationSemigroup(S)
-      and nrclasses >= DegreeOfTransformationSemigroup(S) then
-    return IdentityMapping(S);
-  fi;
-
-  # Consider the action of M on the classes of cong
-  classes := EquivalenceClasses(bestcong);
-  fun := function(elm)
-    local image;
-    image := List(classes, c -> Position(classes,
-                                         OnRightCongruenceClasses(c, elm)));
-    return Transformation(image);
-  end;
-
-  # Construct the range from the original generators (possibly not a monoid)
-  R := Semigroup(List(GeneratorsOfSemigroup(S), fun));
-  return MappingByFunction(S, R, fun); #, invfun);
-end;
-
-InstallMethod(SmallerDegreeTransformationRepresentation,
-"for a semigroup",
-[IsSemigroup],
-# Use the best right congruence which contains no congruences
-S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true)));
-
-InstallMethod(SmallDegreeTransformationRepresentation,
-"for a semigroup",
-[IsSemigroup],
-# Use the best 1-generated right congruence which contains no congruences
-S -> SEMIGROUPS.SmallDegreeTransRepFromLattice(S, rec(transrep := true,
-                                                      1gen := true)));
-
 InstallMethod(InversesOfSemigroupElementNC,
 "for a group as semigroup and a multiplicative element",
 [IsGroupAsSemigroup, IsMultiplicativeElement],
