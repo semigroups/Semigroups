@@ -24,7 +24,8 @@
 #include <iostream>
 
 #include "semigroupsplusplus/report.h"
-#include "src/data.h"
+#include "data.h"
+#include "semigrp.h"
 
 /*******************************************************************************
  * GAP kernel version of the algorithm for other types of semigroups
@@ -51,6 +52,9 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
   UInt i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
       intval, stop, one;
 
+  if (CALL_1ARGS(IsSemigroup, data) == True) {
+    data = semi_get_en_semi_frp(data);
+  }
   assert(data_type(data) == UNKNOWN);
 
   // TODO if looking check that something in elts doesn't already satisfy the

@@ -191,7 +191,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return SEMIGROUP_RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
+  return EN_SEMI_RIGHT_CAYLEY_GRAPH(S);
 end);
 
 # same method for ideals

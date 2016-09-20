@@ -17,6 +17,78 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
+BindGlobal("SEMIGROUPS_InitEnSemiFrpData", 
+function(S)
+  local data, hashlen, nrgens, nr, val, i;
+
+  if (not IsSemigroup(S)) or Length(GeneratorsOfSemigroup(S)) = 0 then
+    ErrorNoReturn();
+  elif IsBound(S!.__en_semi_frp_data) then 
+    return;
+  fi;
+  
+  data := rec(elts := [],
+              final := [],
+              first := [],
+              found := false,
+              genslookup := [],
+              left := [],
+              len := 1,
+              lenindex := [],
+              nrrules := 0,
+              prefix := [],
+              reduced := [[]],
+              right := [],
+              rules := [],
+              stopper := false,
+              suffix := [],
+              words := []);
+
+  data.report     := SEMIGROUPS.OptionsRec(S).report;
+  data.batch_size := SEMIGROUPS.OptionsRec(S).batch_size;
+  hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
+
+  data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
+  nrgens := Length(data.gens);
+  data.ht := HTCreate(data.gens[1], rec(treehashsize := hashlen));
+  nr := 0;
+  data.one := false;
+  data.pos := 1;
+  data.lenindex[1] := 1;
+  data.genstoapply := [1 .. nrgens];
+
+  # add the generators
+  for i in data.genstoapply do
+    val := HTValue(data.ht, data.gens[i]);
+    if val = fail then # new generator
+      nr := nr + 1;
+      HTAdd(data.ht, data.gens[i], nr);
+      data.elts[nr] := data.gens[i];
+      data.words[nr] := [i];
+      data.first[nr] := i;
+      data.final[nr] := i;
+      data.prefix[nr] := 0;
+      data.suffix[nr] := 0;
+      data.left[nr] := EmptyPlist(nrgens);
+      data.right[nr] := EmptyPlist(nrgens);
+      data.genslookup[i] := nr;
+      data.reduced[nr] := List([1 .. nrgens], ReturnFalse);
+
+      if data.one = false and ForAll(data.gens,
+                                     y -> data.gens[i] * y = y
+                                        and y * data.gens[i] = y) then
+        data.one := nr;
+      fi;
+    else # duplicate generator
+      data.genslookup[i] := val;
+      data.nrrules := data.nrrules + 1;
+      data.rules[data.nrrules] := [[i], [val]];
+    fi;
+  od;
+
+  data.nr := nr;
+  S!.__en_semi_frp_data := data;
+end);
 #############################################################################
 # 1. Internal methods
 #############################################################################
@@ -368,6 +440,7 @@ function(S)
     data.batch_size  := SEMIGROUPS.OptionsRec(S).batch_size;
     data.gens        := ShallowCopy(GeneratorsOfSemigroup(S));
     data.degree      := SEMIGROUPS.DegreeOfSemigroup(S);
+
     data.nr_threads  := SEMIGROUPS.OptionsRec(S).nr_threads;
     data.report      := SEMIGROUPS.OptionsRec(S).report;
 
@@ -440,6 +513,7 @@ function(S)
                                          and IsMutable
                                          and IsAttributeStoringRep), data);
 end);
+
 
 # the main algorithm
 

@@ -39,7 +39,7 @@ static inline word_t plist_to_word_t(Obj plist) {
 static inline bool cong_obj_has_cpp_cong(Obj cong) {
   initRNams();
   return IsbPRec(cong, RNam_cong_pairs_congruence)
-         && CLASS_OBJ<Congruence>(ElmPRec(cong, RNam_cong_pairs_congruence))
+         && CLASS_OBJ<Congruence*>(ElmPRec(cong, RNam_cong_pairs_congruence))
                 != nullptr;
 }
 
@@ -173,7 +173,7 @@ static Congruence* cong_obj_get_cpp(Obj cong) {
   Obj tsemiobj = ElmPRec(cong, RNam_cong_pairs_congruence);
   assert(TNUM_OBJ(tsemiobj) == T_SEMI
          && SUBTYPE_OF_T_SEMI(tsemiobj) == T_SEMI_SUBTYPE_CONG);
-  return CLASS_OBJ<Congruence>(tsemiobj);
+  return CLASS_OBJ<Congruence*>(tsemiobj);
 }
 
 Obj CONG_PAIRS_NR_CLASSES(Obj self, Obj o) {

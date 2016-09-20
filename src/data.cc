@@ -84,12 +84,12 @@ en_semi_t data_type(Obj data) {
 
 bool data_has_cpp_semigroup(Obj data) {
   return IsbPRec(data, RNam_semigroup)
-         && CLASS_OBJ<Semigroup>(ElmPRec(data, RNam_semigroup)) != nullptr;
+         && CLASS_OBJ<Semigroup*>(ElmPRec(data, RNam_semigroup)) != nullptr;
 }
 
 bool data_has_cpp_converter(Obj data) {
   return IsbPRec(data, RNam_converter)
-         && CLASS_OBJ<Converter>(ElmPRec(data, RNam_converter)) != nullptr;
+         && CLASS_OBJ<Converter*>(ElmPRec(data, RNam_converter)) != nullptr;
 }
 
 /*******************************************************************************
@@ -253,7 +253,7 @@ Semigroup* data_semigroup(Obj data) {
   if (!data_has_cpp_semigroup(data)) {
     data_init(data);
   }
-  return CLASS_OBJ<Semigroup>(ElmPRec(data, RNam_semigroup));
+  return CLASS_OBJ<Semigroup*>(ElmPRec(data, RNam_semigroup));
 }
 
 /*******************************************************************************
@@ -267,7 +267,7 @@ Converter* data_converter(Obj data) {
   if (!data_has_cpp_converter(data)) {
     data_init(data);
   }
-  return CLASS_OBJ<Converter>(ElmPRec(data, RNam_converter));
+  return CLASS_OBJ<Converter*>(ElmPRec(data, RNam_converter));
 }
 
 /*******************************************************************************

@@ -20,7 +20,24 @@
 #define SEMIGROUPS_SRC_SEMIGRP_H_
 
 #include "src/compiled.h" // GAP headers
+#include "data.h" // FIXME remove this
+
+//TODO remove this
+Obj semi_get_en_semi_frp(Obj S);
+
+static inline Semigroup* en_semi_get_cpp(Obj en_semi) {
+  return CLASS_OBJ<Semigroup*>(en_semi, 2);
+}
+
+static inline Converter* en_semi_get_converter(Obj en_semi) {
+  return CLASS_OBJ<Converter*>(en_semi, 3);
+}
+
+static inline en_semi_t en_semi_get_type(Obj en_semi) {
+  return static_cast<en_semi_t>(reinterpret_cast<UInt>(ADDR_OBJ(en_semi)[1]));
+}
 
 Obj EN_SEMI_SIZE(Obj self, Obj S);
+Obj EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, Obj S);
 
 #endif  // SEMIGROUPS_SRC_SEMIGRP_H_

@@ -29,8 +29,14 @@
 
 inline Bipartition* bipart_get_cpp(Obj x) {
   assert(TNUM_OBJ(x) == T_BIPART);
-  return CLASS_OBJ<Bipartition>(x);
+  return reinterpret_cast<Bipartition*>(ADDR_OBJ(x)[0]);
 }
+
+inline Blocks* blocks_get_cpp(Obj x) {
+  assert(TNUM_OBJ(x) == T_BLOCKS);
+  return reinterpret_cast<Blocks*>(ADDR_OBJ(x)[0]);
+}
+
 
 Obj bipart_new_obj(Bipartition*);
 

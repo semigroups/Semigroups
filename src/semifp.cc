@@ -51,7 +51,7 @@ static inline word_t ext_rep_obj_to_word_t(Obj ext_rep_obj) {
 static inline bool fp_semi_has_cpp_cong(Obj S) {
   initRNams();
   return IsbPRec(S, RNam_fp_semi_cong)
-         && CLASS_OBJ<Congruence>(ElmPRec(S, RNam_fp_semi_cong)) != nullptr;
+         && CLASS_OBJ<Congruence*>(ElmPRec(S, RNam_fp_semi_cong)) != nullptr;
 }
 
 static Congruence* fp_semi_get_cpp_cong(Obj S) {
@@ -75,7 +75,7 @@ static Congruence* fp_semi_get_cpp_cong(Obj S) {
     AssPRec(S, RNam_fp_semi_cong, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
   }
 
-  return CLASS_OBJ<Congruence>(ElmPRec(S, RNam_fp_semi_cong));
+  return CLASS_OBJ<Congruence*>(ElmPRec(S, RNam_fp_semi_cong));
 }
 
 Obj FP_SEMI_SIZE(Obj self, Obj S) {

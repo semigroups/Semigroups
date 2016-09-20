@@ -87,6 +87,9 @@ void TSemiObjPrintFunc(Obj o) {
     case T_SEMI_SUBTYPE_CONG:
       Pr("<wrapper for instance of C++ Congruence class>", 0L, 0L);
       break;
+    case T_SEMI_SUBTYPE_ENSEMI:
+      Pr("<wrapper for C++ semigroup data>", 0L, 0L);
+      break;
     default:
       assert(false);
   }
@@ -123,16 +126,22 @@ Int TBlocksObjIsMutableObjFuncs(Obj o) {
 void TSemiObjFreeFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
     case T_SEMI_SUBTYPE_SEMIGP:
-      delete CLASS_OBJ<Semigroup>(o);
+      delete CLASS_OBJ<Semigroup*>(o);
       break;
     case T_SEMI_SUBTYPE_CONVER:
-      delete CLASS_OBJ<Converter>(o);
+      delete CLASS_OBJ<Converter*>(o);
       break;
     case T_SEMI_SUBTYPE_UFDATA:
-      delete CLASS_OBJ<UFData>(o);
+      delete CLASS_OBJ<UFData*>(o);
       break;
     case T_SEMI_SUBTYPE_CONG:
-      delete CLASS_OBJ<Congruence>(o);
+      delete CLASS_OBJ<Congruence*>(o);
+      break;
+    case T_SEMI_SUBTYPE_ENSEMI:
+      if (en_semi_get_type(o) != UNKNOWN) {
+        delete en_semi_get_cpp(o);
+        delete en_semi_get_converter(o);
+      }
       break;
     default:
       assert(false);
@@ -141,12 +150,12 @@ void TSemiObjFreeFunc(Obj o) {
 
 void TBipartObjFreeFunc(Obj o) {
   assert(TNUM_OBJ(o) == T_BIPART);
-  delete CLASS_OBJ<Bipartition>(o);
+  delete bipart_get_cpp(o);
 }
 
 void TBlocksObjFreeFunc(Obj o) {
   assert(TNUM_OBJ(o) == T_BLOCKS);
-  delete CLASS_OBJ<Blocks>(o);
+  delete blocks_get_cpp(o);
 }
 
 // Functions to return the GAP-level type of a T_SEMI Obj
@@ -156,7 +165,7 @@ Obj TSemiObjTypeFunc(Obj o) {
 }
 
 Obj TBipartObjTypeFunc(Obj o) {
-  return ELM_PLIST(TYPES_BIPART, CLASS_OBJ<Bipartition>(o)->degree() + 1);
+  return ELM_PLIST(TYPES_BIPART, bipart_get_cpp(o)->degree() + 1);
 }
 
 Obj TBlocksObjTypeFunc(Obj o) {
@@ -172,7 +181,7 @@ void TSemiObjSaveFunc(Obj o) {
 
   switch (SUBTYPE_OF_T_SEMI(o)) {
     case T_SEMI_SUBTYPE_UFDATA: {
-      UFData* uf = CLASS_OBJ<UFData>(o);
+      UFData* uf = CLASS_OBJ<UFData*>(o);
       SaveUIntBiggest(uf->get_size());
       for (size_t i = 0; i < uf->get_size(); i++) {
         SaveUIntBiggest(uf->find(i));
@@ -218,7 +227,7 @@ void TSemiObjLoadFunc(Obj o) {
 }
 
 void TBipartObjSaveFunc(Obj o) {
-  Bipartition* b = CLASS_OBJ<Bipartition>(o);
+  Bipartition* b = bipart_get_cpp(o);
   SaveUInt4(b->degree());
   for (auto it = b->begin(); it < b->end(); it++) {
     SaveUInt4(*it);
@@ -238,7 +247,7 @@ void TBipartObjLoadFunc(Obj o) {
 }
 
 void TBlocksObjSaveFunc(Obj o) {
-  Blocks* b = CLASS_OBJ<Blocks>(o);
+  Blocks* b = blocks_get_cpp(o);
   SaveUInt4(b->degree());
   if (b->degree() != 0) {
     SaveUInt4(b->nr_blocks());
@@ -342,6 +351,11 @@ Obj IsPBR;
 Obj TYPES_PBR;
 Obj TYPE_PBR;
 Obj DegreeOfPBR;
+Obj SEMIGROUPS_InitEnSemiFrpData;
+Obj GeneratorsOfMagma;
+
+//TODO(JDM) remove this it's temporary
+Obj IsSemigroup;
 
 /*****************************************************************************
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
@@ -377,6 +391,7 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // FIXME the filenames are mostly wrong here
 static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
 
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_ENUMERATE,
@@ -625,6 +640,14 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
+  ImportGVarFromLibrary("SEMIGROUPS_InitEnSemiFrpData",
+                        &SEMIGROUPS_InitEnSemiFrpData);
+  
+  ImportGVarFromLibrary("GeneratorsOfMagma",
+                        &GeneratorsOfMagma);
+
+  //TODO(JDM) remove this (it's here temporarily)
+  ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
 
   /* return success                                                      */
   return 0;
