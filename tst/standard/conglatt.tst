@@ -190,10 +190,8 @@ gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
 [ [  ], [ 1 ], [ 1, 5, 8, 13 ], [ 1, 2, 9, 12 ], [ 1 ], [ 1 ], [ 1, 6 ], 
   [ 1 ], [ 1 ], [ 1, 2, 5, 6 ], [ 1, 2, 5, 6, 7, 10 ], [ 1, 2, 9 ], 
   [ 1, 5, 8 ], [ 1, 6, 8, 9 ], [ 1, 6, 7, 8, 9, 14 ] ]
-gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true,
->                                                          1gen := true));
-[ [  ], [ 1 ], [ 1, 5, 8 ], [ 1, 2, 9 ], [ 1 ], [ 1 ], [ 1, 6 ], [ 1 ], [ 1 ] 
- ]
+gap> l := SEMIGROUPS.LatticeOfXCongruences_1gen(S, "Right", rec(transrep := true));
+[ [  ], [ 4, 7 ], [ 1, 8 ], [  ], [  ], [ 5 ], [  ], [  ] ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
