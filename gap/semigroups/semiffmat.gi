@@ -193,7 +193,10 @@ end);
 
 InstallMethod(ViewObj, "for a general linear monoid",
 [IsGeneralLinearMonoid],
-7, # to beat the generic method for monoids with generators
+Maximum(RankFilter(IsMonoid and HasGeneratorsOfMonoid), 
+        RankFilter(IsMatrixOverFiniteFieldSemigroup 
+                   and HasGeneratorsOfSemigroup))
+- RankFilter(IsGeneralLinearMonoid) + 1,
 function(S)
   local n;
   Print("<general linear monoid ");
