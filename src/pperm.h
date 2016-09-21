@@ -37,5 +37,7 @@
 
 #define IS_PPERM(f) (TNUM_OBJ(f) == T_PPERM2 || TNUM_OBJ(f) == T_PPERM4)
 #define DEG_PPERM(f) (TNUM_OBJ(f) == T_PPERM2 ? DEG_PPERM2(f) : DEG_PPERM4(f))
+#define CODEG_PPERM(f) \
+  (UInt)(TNUM_OBJ(f) == T_PPERM2 ? CODEG_PPERM2(f) : CODEG_PPERM4(f))
 
 #endif

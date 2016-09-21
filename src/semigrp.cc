@@ -261,7 +261,8 @@ Obj semi_get_en_semi(GapSemigroup S) {
     deg           = 0;
     GapPlist gens = semi_get_gens(S);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
-      size_t n = DEG_PPERM(ELM_PLIST(gens, i));
+      size_t n = std::max(DEG_PPERM(ELM_PLIST(gens, i)),
+                          CODEG_PPERM(ELM_PLIST(gens, i)));
       if (n > deg) {
         deg = n;
       }
