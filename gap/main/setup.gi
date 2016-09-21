@@ -13,12 +13,12 @@ SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
     return 1;
   fi;
   if IsNBitsPcWordRep(x![2]) then
-    return (x![1] + x![3] + func(x![2], data)) mod data[2] + 1;
+    return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data[2] + 1;
   elif dataishashlen then
-    return (x![1] + x![3] + func(x![2], data)) mod data + 1;
+    return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
   else
     ErrorNoReturn("Semigroups: SEMIGROUPS.HashFunctionRZMSE: error, \n",
-                  "this shouldn't happen");
+                  "this shouldn't happen,");
   fi;
 end;
 
@@ -645,15 +645,15 @@ function(x, hashlen)
     x := [, Representative(UnderlyingSemigroup(R)), ];
   fi;
   if IsNBitsPcWordRep(x![2]) then
-    under := ChooseHashFunction(x, hashlen).func;
-    data := ChooseHashFunction(x, hashlen).data;
+    under := ChooseHashFunction(x![2], hashlen).func;
+    data := ChooseHashFunction(x![2], hashlen).data;
   else
     under := ChooseHashFunction(x![2], hashlen).func;
     data := ChooseHashFunction(x![2], hashlen).data;
     if not data = hashlen then
       ErrorNoReturn("Semigroups: ChooseHashFunction: error, \n",
                     "cannot hash RZMS elements over this ",
-                    "underlying semigroup");
+                    "underlying semigroup,");
     fi;
   fi;
   dataishashlen := data = hashlen;
