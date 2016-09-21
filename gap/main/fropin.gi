@@ -131,7 +131,7 @@ function(S)
   end;
 
   # FIXME this should be Size(S) hack around RZMS
-  enum.Length := enum -> SEMIGROUP_SIZE(GenericSemigroupData(S));
+  enum.Length := enum -> EN_SEMI_SIZE(S);
 
   enum.Membership := function(enum, x)
     return Position(S, x) <> fail;
@@ -139,7 +139,7 @@ function(S)
 
   # FIXME this should be Size(S) hack around RZMS
   enum.IsBound\[\] := function(enum, nr)
-    return nr <= SEMIGROUP_SIZE(GenericSemigroupData(S));
+    return nr <= EN_SEMI_SIZE(S);
   end;
 
   enum := EnumeratorByFunctions(S, enum);
@@ -158,15 +158,16 @@ function(S)
     return IteratorList(AsSSortedList(S));
   fi;
 
-  iter      := rec();
-  iter.pos  := 0;
-  iter.data := GenericSemigroupData(S);
+  iter        := rec();
+  iter.pos    := 0;
+  iter.data   := GenericSemigroupData(S);
+  iter.parent := GenericSemigroupData(S);
 
   iter.NextIterator := SEMIGROUP_NEXT_ITERATOR_SORTED;
   if SEMIGROUPS.IsCCSemigroup(S) then
     iter.IsDoneIterator := SEMIGROUP_IS_DONE_ITERATOR_CC;
   else
-    iter.IsDoneIterator := SEMIGROUP_IS_DONE_ITERATOR;
+    iter.IsDoneIterator := EN_SEMI_IS_DONE_ITERATOR;
   fi;
 
   iter.ShallowCopy := function(iter)
@@ -192,15 +193,16 @@ function(S)
     return IteratorList(AsList(S));
   fi;
 
-  iter      := rec();
-  iter.pos  := 0;
-  iter.data := GenericSemigroupData(S);
+  iter        := rec();
+  iter.pos    := 0;
+  iter.data   := GenericSemigroupData(S);
+  iter.parent := S;
 
   iter.NextIterator := SEMIGROUP_NEXT_ITERATOR;
   if SEMIGROUPS.IsCCSemigroup(S) then
     iter.IsDoneIterator := SEMIGROUP_IS_DONE_ITERATOR_CC;
   else
-    iter.IsDoneIterator := SEMIGROUP_IS_DONE_ITERATOR;
+    iter.IsDoneIterator := EN_SEMI_IS_DONE_ITERATOR;
   fi;
 
   iter.ShallowCopy := function(iter)
@@ -239,7 +241,7 @@ function(S)
   end;
 
   # FIXME this should be Size(S) hack around RZMS
-  enum.Length := enum -> SEMIGROUP_SIZE(GenericSemigroupData(S));
+  enum.Length := enum -> EN_SEMI_SIZE(S);
 
   enum.AsList := function(enum)
     return SEMIGROUP_AS_LIST(GenericSemigroupData(S));
@@ -251,7 +253,7 @@ function(S)
 
   # FIXME this should be Size(S) hack around RZMS
   enum.IsBound\[\] := function(enum, nr)
-    return nr <= SEMIGROUP_SIZE(GenericSemigroupData(S));
+    return nr <= EN_SEMI_SIZE(S);
   end;
 
   enum := EnumeratorByFunctions(S, enum);
@@ -262,8 +264,7 @@ end);
 # different method for ideals
 
 InstallMethod(Size, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-S -> SEMIGROUP_SIZE(GenericSemigroupData(S)));
+[IsSemigroup and HasGeneratorsOfSemigroup], EN_SEMI_SIZE);
 
 # different method for ideals
 
@@ -272,15 +273,6 @@ InstallMethod(\in,
 [IsMultiplicativeElement, IsSemigroup and HasGeneratorsOfSemigroup],
 function(x, S)
   return Position(GenericSemigroupData(S), x) <> fail;
-end);
-
-# this has different meaning than Position in the data
-
-InstallMethod(\in,
-"for a multiplicative element and generic semigroup data",
-[IsMultiplicativeElement, IsGenericSemigroupData],
-function(x, data)
-  return SEMIGROUP_POSITION_CURRENT(data, x) <> fail;
 end);
 
 # different method for ideals

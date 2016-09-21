@@ -28,6 +28,7 @@
 #include "fropin.h"
 #include "gap.h"
 #include "interface.h"
+#include "semigrp.h"
 
 #include "semigroupsplusplus/semigroups.h"
 
@@ -528,12 +529,6 @@ Obj SEMIGROUP_IS_DONE_ITERATOR_CC(Obj self, Obj iter) {
   return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
 }
 
-Obj SEMIGROUP_IS_DONE_ITERATOR(Obj self, Obj iter) {
-  initRNams();
-  Int size = INT_INTOBJ(SEMIGROUP_SIZE(self, ElmPRec(iter, RNam_data)));
-  return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
-}
-
 /*******************************************************************************
  * SEMIGROUP_NR_IDEMPOTENTS:
  ******************************************************************************/
@@ -576,26 +571,6 @@ Obj SEMIGROUP_POSITION(Obj self, Obj data, Obj x) {
     nr  = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
   } while (pos <= nr);
   return CALL_2ARGS(HTValue, ht, x);
-}
-
-/*******************************************************************************
- * SEMIGROUP_POSITION_CURRENT: get the position of <x> with out any further
- * enumeration
- ******************************************************************************/
-
-Obj SEMIGROUP_POSITION_CURRENT(Obj self, Obj data, Obj x) {
-
-  if (data_type(data) != UNKNOWN) {
-    size_t     deg       = data_degree(data);
-    Semigroup* semigroup = data_semigroup(data);
-    Converter* converter = data_converter(data);
-    Element*   xx(converter->convert(x, deg));
-    size_t     pos = semigroup->position_current(xx);
-    delete xx;
-    return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
-  }
-
-  return CALL_2ARGS(HTValue, ElmPRec(data, RNamName("ht")), x);
 }
 
 //
@@ -664,39 +639,4 @@ Obj SEMIGROUP_RELATIONS(Obj self, Obj data) {
     fropin(data, INTOBJ_INT(-1), 0, False);
   }
   return ElmPRec(data, RNam_rules);
-}
-/*******************************************************************************
- * SEMIGROUP_RIGHT_CAYLEY_GRAPH:
- ******************************************************************************/
-
-Obj SEMIGROUP_RIGHT_CAYLEY_GRAPH(Obj self, Obj data) {
-  initRNams();
-  if (data_type(data) != UNKNOWN) {
-    if (!IsbPRec(data, RNam_right)) {
-      Semigroup* semigroup = data_semigroup(data);
-      AssPRec(data,
-              RNam_right,
-              ConvertFromCayleyGraph(
-                  semigroup->right_cayley_graph(rec_get_report(data))));
-      CHANGED_BAG(data);
-    }
-  } else {
-    fropin(data, INTOBJ_INT(-1), 0, False);
-  }
-  return ElmPRec(data, RNam_right);
-}
-
-/*******************************************************************************
- * SEMIGROUP_SIZE:
- ******************************************************************************/
-
-Obj SEMIGROUP_SIZE(Obj self, Obj data) {
-  initRNams();
-  if (data_type(data) != UNKNOWN) {
-    bool report = rec_get_report(data);
-    return INTOBJ_INT(data_semigroup(data)->size(report));
-  } else {
-    fropin(data, INTOBJ_INT(-1), 0, False);
-    return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
-  }
 }

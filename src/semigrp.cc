@@ -24,9 +24,18 @@
 #include "gap.h"
 #include "src/compiled.h"
 
+#ifdef DEBUG
+#define START_FUNC std::cout << __func__ << " called" << std::endl;
+#define STOP_FUNC std::cout << __func__ << " returned" << std::endl;
+#else 
+#define START_FUNC
+#define STOP_FUNC
+#endif
+
 // Typedefs TODO these should go elsewhere
 
 typedef Obj GapSemigroup;
+typedef Obj GapElement;
 typedef Obj GapPlist;
 typedef Obj GapEnumerableSemigroupData;
 typedef Obj GapPRec;
@@ -36,7 +45,9 @@ static Int RNam_GeneratorsOfMagma = RNamName("GeneratorsOfMagma");
 static Int RNam_Representative    = RNamName("Representative");
 
 //static Int RNam_batch_size        = RNamName("batch_size");
-static Int RNam_opts              = RNamName("opts");
+static Int RNam_ht     = RNamName("ht");
+static Int RNam_opts   = RNamName("opts");
+static Int RNam_parent = RNamName("parent");
 //static Int RNam_report            = RNamName("report");
 
 static Int RNam_en_semi_cpp = RNamName("__en_semi_cpp_data");
@@ -46,6 +57,7 @@ static Int RNam_en_semi_frp = RNamName("__en_semi_frp_data");
 
 std::vector<Element*>*
 plist_to_vec(Converter* converter, GapPlist elements, size_t degree) {
+  START_FUNC
   assert(IS_PLIST(elements));
 
   auto out = new std::vector<Element*>();
@@ -54,9 +66,11 @@ plist_to_vec(Converter* converter, GapPlist elements, size_t degree) {
     out->push_back(converter->convert(ELM_LIST(elements, i + 1), degree));
   }
   return out;
+  STOP_FUNC
 }
 
 Obj cayley_graph_t_to_plist(cayley_graph_t* graph) {
+  START_FUNC
   assert(graph->size() != 0);
   Obj out = NEW_PLIST(T_PLIST, graph->nr_rows());
   SET_LEN_PLIST(out, graph->nr_rows());
@@ -73,19 +87,23 @@ Obj cayley_graph_t_to_plist(cayley_graph_t* graph) {
     CHANGED_BAG(out);
   }
   return out;
+  STOP_FUNC
 }
 
 // TODO this should go elsewhere
 template <typename T> static inline void really_delete_cont(T* cont) {
+  START_FUNC
   for (Element* x : *cont) {
     x->really_delete();
   }
   delete cont;
+  STOP_FUNC
 }
 
 // Semigroups
 
 GapPlist semi_get_gens(GapSemigroup semi_gap) {
+  START_FUNC
   initRNams();
   UInt i;
   if (FindPRec(semi_gap, RNam_GeneratorsOfMagma, &i, 1)) {
@@ -102,9 +120,11 @@ GapPlist semi_get_gens(GapSemigroup semi_gap) {
     ErrorQuit("cannot find generators of the semigroup,", 0L, 0L);
     return 0L;
   }
+  STOP_FUNC
 }
 
 Obj semi_get_rep(GapSemigroup S) {
+  START_FUNC
   initRNams();
   UInt i;
   if (FindPRec(S, RNam_Representative, &i, 1)) {
@@ -118,9 +138,11 @@ Obj semi_get_rep(GapSemigroup S) {
       return 0L;
     }
   }
+  STOP_FUNC
 }
 
 size_t semi_get_batch_size(GapSemigroup S) {
+  START_FUNC
   initRNams();
   UInt i;
   if (FindPRec(S, RNam_opts, &i, 1)) {
@@ -133,9 +155,11 @@ size_t semi_get_batch_size(GapSemigroup S) {
   Pr("Using default value of 8192 for reporting!\n", 0L, 0L);
 #endif
   return 8192;
+  STOP_FUNC
 }
 
 static inline bool semi_get_report(GapSemigroup S) {
+  START_FUNC
   initRNams();
   UInt i;
   if (FindPRec(S, RNam_opts, &i, 1)) {
@@ -148,9 +172,11 @@ static inline bool semi_get_report(GapSemigroup S) {
   Pr("Using default value of <false> for reporting!\n", 0L, 0L);
 #endif
   return false;
+  STOP_FUNC
 }
 
 static inline size_t semi_get_threshold(GapSemigroup S) {
+  START_FUNC
   initRNams();
 
   Obj x = semi_get_rep(S);
@@ -161,9 +187,11 @@ static inline size_t semi_get_threshold(GapSemigroup S) {
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
 
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
+  STOP_FUNC
 }
 
 static inline size_t semi_get_period(GapSemigroup S) {
+  START_FUNC
   initRNams();
 
   Obj x = semi_get_rep(S);
@@ -175,6 +203,7 @@ static inline size_t semi_get_period(GapSemigroup S) {
   assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2) != 0);
 
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2));
+  STOP_FUNC
 }
 
 // Enumerable semigroups
@@ -199,6 +228,7 @@ static inline size_t semi_get_period(GapSemigroup S) {
 };*/
 
 Obj semi_get_en_semi(GapSemigroup S) {
+  START_FUNC
   UInt i;
 
   if (FindPRec(S, RNam_en_semi_cpp, &i, 1)) {
@@ -328,9 +358,11 @@ Obj semi_get_en_semi(GapSemigroup S) {
   AssPRec(S, RNam_en_semi_cpp, o);
   CHANGED_BAG(S);
   return o; 
+  STOP_FUNC
 }
 
 Obj semi_get_en_semi_frp(GapSemigroup S) {
+  START_FUNC
   UInt i;
   if (FindPRec(S, RNam_en_semi_frp, &i, 1)) {
     return GET_ELM_PREC(S, i);
@@ -341,33 +373,31 @@ Obj semi_get_en_semi_frp(GapSemigroup S) {
   }
   ErrorQuit("unknown error in SEMIGROUPS_InitEnSemiFrpData,", 0L, 0L);
   return 0L;
+  STOP_FUNC
 }
 
-static inline Semigroup* semi_get_cpp(GapSemigroup S) {
-  return en_semi_get_cpp(semi_get_en_semi(S));
-}
+//static inline Semigroup* semi_get_cpp(GapSemigroup S) {
+//  return en_semi_get_cpp(semi_get_en_semi(S));
+//}
 
-static inline Converter* semi_get_converter(GapSemigroup S) {
-  return en_semi_get_converter(semi_get_en_semi(S));
-}
+//static inline Converter* semi_get_converter(GapSemigroup S) {
+//  return en_semi_get_converter(semi_get_en_semi(S));
+//}
 
-static inline size_t en_semi_get_degree(Obj en_semi) {
-  return CLASS_OBJ<size_t>(en_semi, 4);
-}
+//static inline size_t semi_get_degree(GapSemigroup S) {
+//  return en_semi_get_degree(semi_get_en_semi(S));
+//}
 
-static inline size_t semi_get_degree(GapSemigroup S) {
-  return en_semi_get_degree(semi_get_en_semi(S));
-}
-
-static inline en_semi_t semi_get_type(GapSemigroup S) {
-  return en_semi_get_type(semi_get_en_semi(S));
-}
+//static inline en_semi_t semi_get_type(GapSemigroup S) {
+//  return en_semi_get_type(semi_get_en_semi(S));
+//}
 
 /*bool en_semi_has_cpp_semi(Obj en_semi_data) {
   initRNams();
   UInt i;
   return (FindPRec(en_semi_data, RNam_en_semi_cpp_semi, &i, 1)
           && GET_ELM_PREC(en_semi_data, i) != nullptr);
+  STOP_FUNC
 }
 
 bool en_semi_has_converter(Obj en_semi_data) {
@@ -377,11 +407,54 @@ bool en_semi_has_converter(Obj en_semi_data) {
           && GET_ELM_PREC(en_semi_data, i) != nullptr);
 }*/
 
+static inline size_t en_semi_get_degree(Obj en_semi) {
+  return CLASS_OBJ<size_t>(en_semi, 4);
+  STOP_FUNC
+}
 
 // GAP level functions
  
-Obj EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, GapSemigroup S) {
+Obj EN_SEMI_IS_DONE_ITERATOR(Obj self, Obj iter) {
   initRNams();
+  Int size = INT_INTOBJ(EN_SEMI_SIZE(self, ElmPRec(iter, RNam_parent)));
+  return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
+}
+
+// Get the position of <x> with out any further enumeration
+
+Obj EN_SEMI_POSITION_CURRENT(Obj self, GapSemigroup S, GapElement x) {
+  START_FUNC
+  Obj en_semi = semi_get_en_semi(S);
+
+  if (en_semi_get_type(en_semi) != UNKNOWN) {
+    size_t     deg       = en_semi_get_degree(en_semi);
+    Element*   xx(en_semi_get_converter(en_semi)->convert(x, deg));
+    size_t     pos = en_semi_get_cpp(en_semi)->position_current(xx);
+    delete xx;
+    return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
+  } else {
+    return CALL_2ARGS(HTValue, ElmPRec(semi_get_en_semi_frp(S), RNam_ht), x);
+  }
+  STOP_FUNC
+}
+
+Obj EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, GapSemigroup S) {
+  START_FUNC
+  Obj en_semi = semi_get_en_semi(S);
+
+  if (en_semi_get_type(en_semi) != UNKNOWN) {
+    Semigroup* semi_cpp = en_semi_get_cpp(en_semi);
+    bool       report   = semi_get_report(S);
+    return cayley_graph_t_to_plist(
+        semi_cpp->left_cayley_graph(report));
+  } else {
+    return ElmPRec(fropin(S, INTOBJ_INT(-1), 0, False),  RNam_left);
+  }
+  STOP_FUNC
+}
+
+Obj EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, GapSemigroup S) {
+  START_FUNC
   Obj en_semi = semi_get_en_semi(S);
 
   if (en_semi_get_type(en_semi) != UNKNOWN) {
@@ -392,9 +465,11 @@ Obj EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, GapSemigroup S) {
   } else {
     return ElmPRec(fropin(S, INTOBJ_INT(-1), 0, False),  RNam_right);
   }
+  STOP_FUNC
 }
 
 Obj EN_SEMI_SIZE(Obj self, GapSemigroup S) {
+  START_FUNC
   initRNams();
   Obj en_semi = semi_get_en_semi(S);
 
@@ -405,4 +480,5 @@ Obj EN_SEMI_SIZE(Obj self, GapSemigroup S) {
     Obj data = fropin(S, INTOBJ_INT(-1), 0, False);
     return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
   }
+  STOP_FUNC
 }
