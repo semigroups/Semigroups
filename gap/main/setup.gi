@@ -8,12 +8,18 @@
 #############################################################################
 ##
 
-SEMIGROUPS.HashFunctionRZMSE := function(x, data, func)
+SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
   if x![1] = 0 then
     return 1;
   fi;
-
-  return (x![1] + x![3] + func(x![2], data)) mod data + 1;
+  if IsNBitsPcWordRep(x![2]) then
+    return (x![1] + x![3] + func(x![2], data)) mod data[2] + 1;
+  elif dataishashlen then
+    return (x![1] + x![3] + func(x![2], data)) mod data + 1;
+  else
+    ErrorNoReturn("Semigroups: SEMIGROUPS.HashFunctionRZMSE: error, \n",
+                  "this shouldn't happen");
+  fi;
 end;
 
 ###############################################################################
@@ -949,21 +955,31 @@ InstallMethod(FakeOne, "for an FFE coll coll coll",
 InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(x, hashlen)
-  local R, under, func;
+  local R, data, under, func, dataishashlen;
 
   R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
   if IsMultiplicativeZero(R, x) then
-    x := Representative(UnderlyingSemigroup(R));
+    x := [, Representative(UnderlyingSemigroup(R)), ];
+  fi;
+  if IsNBitsPcWordRep(x![2]) then
     under := ChooseHashFunction(x, hashlen).func;
+    data := ChooseHashFunction(x, hashlen).data;
   else
     under := ChooseHashFunction(x![2], hashlen).func;
+    data := ChooseHashFunction(x![2], hashlen).data;
+    if not data = hashlen then
+      ErrorNoReturn("Semigroups: ChooseHashFunction: error, \n",
+                    "cannot hash RZMS elements over this ",
+                    "underlying semigroup");
+    fi;
   fi;
+  dataishashlen := data = hashlen;
   func := function(x, hashlen)
-    return SEMIGROUPS.HashFunctionRZMSE(x, hashlen, under);
+    return SEMIGROUPS.HashFunctionRZMSE(x, data, under, dataishashlen);
   end;
 
   return rec(func := func,
-             data := hashlen);
+             data := data);
 end);
 
 # fallback method for hashing
