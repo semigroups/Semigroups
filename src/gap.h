@@ -33,6 +33,16 @@
 
 #include "src/compiled.h"
 
+// The following typedefs are used in the Semigroups package kernel module code
+// to increase the readability of the code.
+
+typedef Obj gap_semigroup_t;
+typedef Obj gap_element_t;
+typedef Obj gap_plist_t;
+typedef Obj gap_prec_t;
+typedef Obj gap_cong_t;
+typedef Obj gap_cong_class_t;
+
 // The Semigroups package uses the type T_SEMI for GAP Objs which act as
 // wrappers for various C++ objects. Such a GAP Obj can be created using
 // OBJ_CLASS and the C++ object can be recovered from the GAP Obj using

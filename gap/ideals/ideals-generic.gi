@@ -129,9 +129,9 @@ InstallMethod(Enumerator, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 1, # to beat the library method
 function(I)
-  local record, data, gens, i, pos;
-
-  data := GenericSemigroupData(SupersemigroupOfIdeal(I));
+  local record, data, gens, i, pos, S;
+  S := SupersemigroupOfIdeal(I);
+  data := GenericSemigroupData(S);
 
   record :=
     rec(
@@ -146,7 +146,7 @@ function(I)
 
   gens := GeneratorsOfSemigroupIdeal(I);
   for i in [1 .. Length(gens)] do
-    pos := Position(data, gens[i]); # this should not be fail
+    pos := Position(S, gens[i]); # this should not be fail
     if not IsBound(record.lookup[pos]) then
       record.nr := record.nr + 1;
       record.lookup[pos] := record.nr;
@@ -156,7 +156,7 @@ function(I)
 
   record.NumberElement := function(enum, elt)
     local pos, lookfunc;
-    pos := Position(data, elt);
+    pos := Position(S, elt);
 
     if pos = fail then
       return fail;

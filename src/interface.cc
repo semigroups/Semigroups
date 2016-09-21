@@ -405,6 +405,15 @@ Obj SEMIGROUP_FACTORIZATION(Obj self, Obj data, Obj pos) {
     size_t     pos_c = INT_INTOBJ(pos);
     Obj        words;
     Semigroup* semigroup = data_semigroup(data);
+    // FIXME remove the next line in future versions (when GenericSemigroupData
+    // is gone
+    semigroup->enumerate(rec_get_report(data));
+
+    if (pos_c > semigroup->current_size()) {
+      ErrorQuit("the 2nd argument must be at most %d not %d", 
+                semigroup->current_size(), pos_c);
+    }
+
     if (!IsbPRec(data, RNam_words)) {
       word_t w;  // changed in place by the next line
       semigroup->factorisation(w, pos_c - 1, rec_get_report(data));
@@ -540,40 +549,6 @@ Obj SEMIGROUP_NR_IDEMPOTENTS(Obj self, Obj data) {
   return INTOBJ_INT(data_semigroup(data)->nr_idempotents(
       rec_get_report(data), rec_get_nr_threads(data)));
 }
-
-/*******************************************************************************
- * SEMIGROUP_POSITION:
- ******************************************************************************/
-
-Obj SEMIGROUP_POSITION(Obj self, Obj data, Obj x) {
-
-  if (data_type(data) != UNKNOWN) {
-    size_t     deg       = data_degree(data);
-    Semigroup* semigroup = data_semigroup(data);
-    Converter* converter = data_converter(data);
-    Element* xx(converter->convert(x, deg));
-    size_t     pos = semigroup->position(xx, rec_get_report(data));
-    delete xx;
-    return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
-  }
-
-  Obj    ht = ElmPRec(data, RNamName("ht"));
-  size_t pos, nr;
-
-  do {
-    Obj val = CALL_2ARGS(HTValue, ht, x);
-    if (val != Fail) {
-      return val;
-    }
-    Obj limit = SumInt(ElmPRec(data, RNamName("nr")), INTOBJ_INT(1));
-    fropin(data, limit, 0, False);
-    pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
-    nr  = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
-  } while (pos <= nr);
-  return CALL_2ARGS(HTValue, ht, x);
-}
-
-//
 
 Obj SEMIGROUP_RELATIONS(Obj self, Obj data) {
   initRNams();

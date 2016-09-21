@@ -390,11 +390,12 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // Table of functions to export
 // FIXME the filenames are mostly wrong here
 static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
-    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
-    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_LEFT_CAYLEY_GRAPH, 1, "S"),
-    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_POSITION_CURRENT, 2, "S, x"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_IS_DONE_ITERATOR, 1, "iter"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_POSITION, 2, "S, x"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_POSITION_CURRENT, 2, "S, x"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_LEFT_CAYLEY_GRAPH, 1, "S"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
 
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_ENUMERATE,
@@ -439,7 +440,6 @@ static StructGVarFunc GVarFuncs[] = {
                           SEMIGROUP_CURRENT_NR_RULES,
                           1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION, 2, "data, x"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_POSITION_SORTED,
                           2,

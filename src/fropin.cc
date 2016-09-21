@@ -53,7 +53,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
       intval, stop, one;
 
   if (CALL_1ARGS(IsSemigroup, data) == True) {
-    data = semi_get_en_semi_frp(data);
+    data = semi_obj_get_fropin(data);
   }
   assert(data_type(data) == UNKNOWN);
 

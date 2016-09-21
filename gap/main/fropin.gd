@@ -26,8 +26,13 @@
 DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
 
 DeclareOperation("PositionSortedOp",
-                 [IsSemigroup and HasGeneratorsOfSemigroup,
-                  IsMultiplicativeElement]);
+                 [IsSemigroup, IsMultiplicativeElement]);
+DeclareOperation("PositionOp",
+                 [IsSemigroup, IsMultiplicativeElement, IsZeroCyc]);
+DeclareOperation("Position",
+                 [IsSemigroup, IsMultiplicativeElement]);
+DeclareOperation("Position",
+                 [IsSemigroup, IsMultiplicativeElement, IsZeroCyc]);
 
 SEMIGROUPS.IsCCSemigroup := function(S)
   return IsTransformationSemigroup(S)

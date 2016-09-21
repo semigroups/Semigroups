@@ -512,7 +512,7 @@ S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 InstallMethod(IsGreensDLeq, "for a finite semigroup",
 [IsSemigroup],
 function(S)
-  local digraph, data, id;
+  local digraph, id;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -520,12 +520,11 @@ function(S)
 
   digraph := Digraph(PartialOrderOfDClasses(S));
   digraph := DigraphReflexiveTransitiveClosure(digraph);
-  data := GenericSemigroupData(S);
   id := GreensDRelation(S)!.data.id;
   return function(x, y)
     local i, j;
-    i := id[Position(data, x)];
-    j := id[Position(data, y)];
+    i := id[Position(S, x)];
+    j := id[Position(S, y)];
     # TODO should be a better way of checking the below
     return j in OutNeighboursOfVertex(digraph, i);
   end;
@@ -534,7 +533,7 @@ end);
 InstallMethod(MaximalDClasses, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local gens, partial, data, id, pos, i, out, classes, x;
+  local gens, partial, id, pos, i, out, classes, x;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -542,12 +541,11 @@ function(S)
 
   gens    := GeneratorsOfSemigroup(S);
   partial := PartialOrderOfDClasses(S);
-  data    := GenericSemigroupData(S);
   id      := GreensDRelation(S)!.data.id;
   pos     := [];
 
   for x in gens do
-    i := id[Position(data, x)];
+    i := id[Position(S, x)];
     #index of the D-class containing x
     AddSet(pos, i);
   od;

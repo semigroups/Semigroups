@@ -60,7 +60,7 @@
 SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
   local pos, out, S;
 
-  pos := Position(GenericSemigroupData(Source(rel)), rep);
+  pos := Position(Source(rel), rep);
   if pos = fail then
     ErrorNoReturn("Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,\n",
                   "the element in the 2nd argument does not belong to the ",
@@ -155,7 +155,7 @@ SEMIGROUPS.XClassIndex := function(C)
   local pos;
   if not IsBound(C!.index) then
     # in case of classes created using EquivalenceClassOfElementNC
-    pos := Position(GenericSemigroupData(Parent(C)), Representative(C));
+    pos := Position(Parent(C), Representative(C));
     C!.index := EquivalenceClassRelation(C)!.data.id[pos];
   fi;
   return C!.index;
@@ -184,7 +184,7 @@ InstallMethod(\in,
 [IsMultiplicativeElement, IsGreensClass],
 function(x, C)
   local pos;
-  pos := Position(GenericSemigroupData(Parent(C)), x);
+  pos := Position(Parent(C), x);
   return pos <> fail
     and EquivalenceClassRelation(C)!.data.id[pos] = SEMIGROUPS.XClassIndex(C);
 end);

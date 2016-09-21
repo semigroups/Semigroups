@@ -22,8 +22,7 @@
 #include "src/compiled.h" // GAP headers
 #include "data.h" // FIXME remove this
 
-//TODO remove this
-Obj semi_get_en_semi_frp(Obj S);
+// C++ functions
 
 static inline Semigroup* en_semi_get_cpp(Obj en_semi) {
   return CLASS_OBJ<Semigroup*>(en_semi, 2);
@@ -37,8 +36,14 @@ static inline en_semi_t en_semi_get_type(Obj en_semi) {
   return static_cast<en_semi_t>(reinterpret_cast<UInt>(ADDR_OBJ(en_semi)[1]));
 }
 
+Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t S);
+Obj semi_obj_get_fropin(gap_semigroup_t S);
+en_semi_t semi_obj_get_type(gap_semigroup_t S);
+
+// GAP level functions
 Obj EN_SEMI_IS_DONE_ITERATOR(Obj self, Obj iter);
 Obj EN_SEMI_POSITION_CURRENT(Obj self, Obj S, Obj x);
+Obj EN_SEMI_POSITION(Obj self, Obj S, Obj x);
 Obj EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, Obj S);
 Obj EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, Obj S);
 Obj EN_SEMI_SIZE(Obj self, Obj S);

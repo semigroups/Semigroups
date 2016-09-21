@@ -1,6 +1,6 @@
 ###########################################################################
 ##
-#W  froidure-pin.gi
+#W  fropin.gi
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -233,7 +233,7 @@ function(S)
   enum := rec();
 
   enum.NumberElement := function(enum, x)
-    return Position(GenericSemigroupData(S), x);
+    return Position(S, x);
   end;
 
   enum.ElementNumber := function(enum, nr)
@@ -248,7 +248,7 @@ function(S)
   end;
 
   enum.Membership := function(x, enum)
-    return Position(GenericSemigroupData(S), x) <> fail;
+    return Position(S, x) <> fail;
   end;
 
   # FIXME this should be Size(S) hack around RZMS
@@ -272,7 +272,7 @@ InstallMethod(\in,
 "for a multiplicative element and finite semigroup with generators",
 [IsMultiplicativeElement, IsSemigroup and HasGeneratorsOfSemigroup],
 function(x, S)
-  return Position(GenericSemigroupData(S), x) <> fail;
+  return Position(S, x) <> fail;
 end);
 
 # different method for ideals
@@ -303,29 +303,40 @@ function(S)
   return SEMIGROUP_AS_LIST(data){data!.idempotents};
 end);
 
-InstallMethod(Position,
-"for generic semigroup data, a multiplicative element, zero cyc",
-[IsGenericSemigroupData, IsMultiplicativeElement, IsZeroCyc],
-function(data, x, n)
-  if FamilyObj(x) <> ElementsFamily(FamilyObj(data)) then
+InstallMethod(Position, "for enumerable semigroup and multiplicative element",
+[IsSemigroup, IsMultiplicativeElement],
+function(S, x)
+  return PositionOp(S, x, 0);
+end);
+
+InstallMethod(Position, 
+"for enumerable semigroup, multiplicative element, and zero cyc",
+[IsSemigroup, IsMultiplicativeElement, IsZeroCyc],
+function(S, x, n)
+  return PositionOp(S, x, n);
+end);
+
+InstallMethod(PositionOp,
+"for enumerable semigroup, multiplicative element, and zero cyc",
+[IsSemigroup, IsMultiplicativeElement, IsZeroCyc],
+function(S, x, n)
+  if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
   fi;
 
   if (IsTransformation(x)
-      and DegreeOfTransformation(x) >
-      DegreeOfTransformationCollection(data!.gens))
+      and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
       or (IsPartialPerm(x)
-          and DegreeOfPartialPerm(x) >
-          DegreeOfPartialPermCollection(data!.gens)) then
+          and DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)) then 
     return fail;
   fi;
 
-  return SEMIGROUP_POSITION(data, x);
+  return EN_SEMI_POSITION(S, x);
 end);
 
 InstallMethod(PositionSortedOp,
-"for a semigroup with generators, and object",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
+"for a semigroup and object",
+[IsSemigroup, IsMultiplicativeElement],
 function(S, x)
   local gens;
 

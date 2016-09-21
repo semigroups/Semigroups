@@ -168,12 +168,12 @@ SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
                                ElementsFamily(FamilyObj(S)));
 
   # Create the default type for the elements.
-  cong := Objectify(NewType(fam,
-          IsFiniteCongruenceByGeneratingPairsRep and filter),
+  cong := Objectify(NewType(fam, 
+                            IsFiniteCongruenceByGeneratingPairsRep and filter),
                     rec(genpairs := Immutable(genpairs),
-                        report := SEMIGROUPS.OptionsRec(S).report,
-                        type := type,
-                        range := GenericSemigroupData(S)));
+                        report   := SEMIGROUPS.OptionsRec(S).report,
+                        type     := type,
+                        range    := S));
   SetSource(cong, S);
   SetRange(cong, S);
   set_pairs(cong, Immutable(genpairs));
@@ -341,7 +341,7 @@ function(cong, elm)
 
   lookup := EquivalenceRelationLookup(cong);
   data   := GenericSemigroupData(Range(cong));
-  id     := lookup[Position(data, elm)];
+  id     := lookup[Position(Range(cong), elm)];
 
   part   := FiniteCongruenceByGeneratingPairsPartition(cong);
 
