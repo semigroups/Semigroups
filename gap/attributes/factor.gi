@@ -26,7 +26,7 @@ function(S, x)
                   "of the first argument <S>,");
   fi;
   data := GenericSemigroupData(S);
-  return SEMIGROUP_FACTORIZATION(data, Position(S, x));
+  return EN_SEMI_FACTORIZATION(data, Position(S, x));
 end);
 
 # same method for ideals

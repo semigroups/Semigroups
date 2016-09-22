@@ -391,11 +391,14 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // FIXME the filenames are mostly wrong here
 static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_IS_DONE_ITERATOR, 1, "iter"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_NR_IDEMPOTENTS, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_POSITION, 2, "S, x"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_POSITION_CURRENT, 2, "S, x"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_LEFT_CAYLEY_GRAPH, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_LENGTH_ELEMENT, 2, "S, pos"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_FACTORIZATION, 2, "S, pos"),
 
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_ENUMERATE,
@@ -423,11 +426,6 @@ static StructGVarFunc GVarFuncs[] = {
 
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RELATIONS, 1, "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_FACTORIZATION,
-                          2,
-                          "data, pos"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_NR_IDEMPOTENTS, 1, "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_CLOSURE,
                           3,
                           "old_data, coll, degree"),
@@ -449,10 +447,6 @@ static StructGVarFunc GVarFuncs[] = {
                           SEMIGROUP_CURRENT_MAX_WORD_LENGTH,
                           1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_LENGTH_ELEMENT,
-                          2,
-                          "data, pos"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CAYLEY_TABLE, 1, "data"),
     GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_NR_CLASSES, 1, "cong"),
     GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_IN, 2, "cong, pair"),

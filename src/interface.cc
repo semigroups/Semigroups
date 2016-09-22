@@ -42,7 +42,7 @@ static inline void really_delete_cont(T* cont) {
   delete cont;
 }
 
-Obj word_t_to_plist(word_t const& word) {
+static Obj word_t_to_plist(word_t const& word) {
   Obj out = NEW_PLIST(T_PLIST_CYC, word.size());
   SET_LEN_PLIST(out, word.size());
 
@@ -394,82 +394,6 @@ Obj SEMIGROUP_ENUMERATE(Obj self, Obj data, Obj limit) {
 }
 
 /*******************************************************************************
- * SEMIGROUP_FACTORIZATION:
- ******************************************************************************/
-
-Obj SEMIGROUP_FACTORIZATION(Obj self, Obj data, Obj pos) {
-
-  initRNams();
-
-  if (data_type(data) != UNKNOWN) {
-    size_t     pos_c = INT_INTOBJ(pos);
-    Obj        words;
-    Semigroup* semigroup = data_semigroup(data);
-    // FIXME remove the next line in future versions (when GenericSemigroupData
-    // is gone
-    semigroup->enumerate(rec_get_report(data));
-
-    if (pos_c > semigroup->current_size()) {
-      ErrorQuit("the 2nd argument must be at most %d not %d", 
-                semigroup->current_size(), pos_c);
-    }
-
-    if (!IsbPRec(data, RNam_words)) {
-      word_t w;  // changed in place by the next line
-      semigroup->factorisation(w, pos_c - 1, rec_get_report(data));
-      words = NEW_PLIST(T_PLIST, pos_c);
-      SET_LEN_PLIST(words, pos_c);
-      SET_ELM_PLIST(words, pos_c, word_t_to_plist(w));
-      CHANGED_BAG(words);
-      AssPRec(data, RNam_words, words);
-    } else {
-      words = ElmPRec(data, RNam_words);
-      if (pos_c > (size_t) LEN_PLIST(words) || ELM_PLIST(words, pos_c) == 0) {
-        // avoid retracing the Schreier tree if possible
-        size_t prefix = semigroup->prefix(pos_c - 1) + 1;
-        size_t suffix = semigroup->suffix(pos_c - 1) + 1;
-        if (prefix != 0 && prefix <= (size_t) LEN_PLIST(words)
-            && ELM_PLIST(words, prefix) != 0) {
-          Obj old_word = ELM_PLIST(words, prefix);
-          Obj new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
-          memcpy((void*) ((char*) (ADDR_OBJ(new_word)) + sizeof(Obj)),
-                 (void*) ((char*) (ADDR_OBJ(old_word)) + sizeof(Obj)),
-                 (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
-          SET_ELM_PLIST(new_word,
-                        LEN_PLIST(old_word) + 1,
-                        INTOBJ_INT(semigroup->final_letter(pos_c - 1) + 1));
-          SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
-          AssPlist(words, pos_c, new_word);
-        } else if (suffix != 0 && suffix <= (size_t) LEN_PLIST(words)
-                   && ELM_PLIST(words, suffix) != 0) {
-          Obj old_word = ELM_PLIST(words, suffix);
-          Obj new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
-          memcpy((void*) ((char*) (ADDR_OBJ(new_word)) + 2 * sizeof(Obj)),
-                 (void*) ((char*) (ADDR_OBJ(old_word)) + sizeof(Obj)),
-                 (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
-          SET_ELM_PLIST(
-              new_word, 1, INTOBJ_INT(semigroup->first_letter(pos_c - 1) + 1));
-          SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
-          AssPlist(words, pos_c, new_word);
-        } else {
-          word_t w;  // changed in place by the next line
-          semigroup->factorisation(w, pos_c - 1, rec_get_report(data));
-          AssPlist(words, pos_c, word_t_to_plist(w));
-        }
-      }
-    }
-    CHANGED_BAG(data);
-    assert(IsbPRec(data, RNam_words));
-    assert(IS_PLIST(ElmPRec(data, RNam_words)));
-    assert(pos_c <= (size_t) LEN_PLIST(ElmPRec(data, RNam_words)));
-    return ELM_PLIST(ElmPRec(data, RNam_words), pos_c);
-  } else {
-    fropin(data, INTOBJ_INT(pos), 0, False);
-    return ELM_PLIST(ElmPRec(data, RNam_words), INT_INTOBJ(pos));
-  }
-}
-
-/*******************************************************************************
  * SEMIGROUP_IS_DONE:
  ******************************************************************************/
 
@@ -481,40 +405,6 @@ Obj SEMIGROUP_IS_DONE(Obj self, Obj data) {
   size_t pos = INT_INTOBJ(ElmPRec(data, RNamName("pos")));
   size_t nr  = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
   return (pos > nr ? True : False);
-}
-
-/*******************************************************************************
- * SEMIGROUP_LEFT_CAYLEY_GRAPH:
- ******************************************************************************/
-
-Obj SEMIGROUP_LEFT_CAYLEY_GRAPH(Obj self, Obj data) {
-  initRNams();
-  if (data_type(data) != UNKNOWN) {
-    if (!IsbPRec(data, RNam_left)) {
-      Semigroup* semigroup = data_semigroup(data);
-      AssPRec(data,
-              RNam_left,
-              ConvertFromCayleyGraph(
-                  semigroup->left_cayley_graph(rec_get_report(data))));
-      CHANGED_BAG(data);
-    }
-  } else {
-    fropin(data, INTOBJ_INT(-1), 0, False);
-  }
-  return ElmPRec(data, RNam_left);
-}
-
-/*******************************************************************************
- * SEMIGROUP_LENGTH_ELEMENT:
- ******************************************************************************/
-
-Obj SEMIGROUP_LENGTH_ELEMENT(Obj self, Obj data, Obj pos) {
-  if (data_type(data) != UNKNOWN) {
-    return INTOBJ_INT(data_semigroup(data)->length_non_const(
-        INT_INTOBJ(pos) - 1, rec_get_report(data)));
-  } else {
-    // TODO
-  }
 }
 
 Obj SEMIGROUP_NEXT_ITERATOR(Obj self, Obj iter) {
@@ -536,18 +426,6 @@ Obj SEMIGROUP_IS_DONE_ITERATOR_CC(Obj self, Obj iter) {
   Obj data = ElmPRec(iter, RNam_data);
   Int size = data_semigroup(data)->size(rec_get_report(data));
   return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
-}
-
-/*******************************************************************************
- * SEMIGROUP_NR_IDEMPOTENTS:
- ******************************************************************************/
-
-Obj SEMIGROUP_NR_IDEMPOTENTS(Obj self, Obj data) {
-  if (data_type(data) == UNKNOWN) {
-    ErrorQuit("SEMIGROUP_NR_IDEMPOTENTS: this shouldn't happen!", 0L, 0L);
-  }
-  return INTOBJ_INT(data_semigroup(data)->nr_idempotents(
-      rec_get_report(data), rec_get_nr_threads(data)));
 }
 
 Obj SEMIGROUP_RELATIONS(Obj self, Obj data) {
