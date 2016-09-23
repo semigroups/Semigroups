@@ -48,6 +48,7 @@ Obj EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t S);
 Obj EN_SEMI_POSITION_CURRENT(Obj self, gap_semigroup_t S, gap_element_t x);
 Obj EN_SEMI_POSITION(Obj self, gap_element_t S, gap_element_t x);
 Obj EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, gap_semigroup_t S);
+Obj EN_SEMI_RELATIONS(Obj self, gap_semigroup_t S);
 Obj EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, gap_semigroup_t S);
 Obj EN_SEMI_SIZE(Obj self, gap_semigroup_t S);
 

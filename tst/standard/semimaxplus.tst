@@ -42,8 +42,6 @@ gap> Size(S);
 37
 gap> Length(RelationsOfFpMonoid(Range(IsomorphismFpMonoid(S))));
 12
-gap> GenericSemigroupData(S);
-<closed semigroup data with 37 elements, 17 relations, max word length 7>
 gap> NrDClasses(S);
 8
 gap> NrRClasses(S);

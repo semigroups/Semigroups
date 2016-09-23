@@ -17,7 +17,7 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-BindGlobal("SEMIGROUPS_InitEnSemiFrpData", 
+BindGlobal("INIT_FROPIN", 
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
@@ -89,6 +89,7 @@ function(S)
   data.nr := nr;
   S!.__en_semi_frp_data := data;
 end);
+
 #############################################################################
 # 1. Internal methods
 #############################################################################

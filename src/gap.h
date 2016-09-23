@@ -122,7 +122,7 @@ extern Obj TYPE_PBR;
 
 extern Obj TYPE_BIPART;
 extern Obj TYPES_BIPART;
-extern Obj SEMIGROUPS_InitEnSemiFrpData;
+extern Obj INIT_FROPIN;
 extern Obj GeneratorsOfMagma;
 
 // TODO(JDM) remove this

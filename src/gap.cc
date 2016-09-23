@@ -351,7 +351,7 @@ Obj IsPBR;
 Obj TYPES_PBR;
 Obj TYPE_PBR;
 Obj DegreeOfPBR;
-Obj SEMIGROUPS_InitEnSemiFrpData;
+Obj INIT_FROPIN;
 Obj GeneratorsOfMagma;
 
 //TODO(JDM) remove this it's temporary
@@ -399,6 +399,7 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_LENGTH_ELEMENT, 2, "S, pos"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_FACTORIZATION, 2, "S, pos"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_RELATIONS, 1, "S"),
 
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_ENUMERATE,
@@ -424,7 +425,6 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_AS_LIST, 1, "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_AS_SET, 1, "data"),
 
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RELATIONS, 1, "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_CLOSURE,
                           3,
@@ -620,8 +620,7 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
-  ImportGVarFromLibrary("SEMIGROUPS_InitEnSemiFrpData",
-                        &SEMIGROUPS_InitEnSemiFrpData);
+  ImportGVarFromLibrary("INIT_FROPIN", &INIT_FROPIN);
   
   ImportGVarFromLibrary("GeneratorsOfMagma",
                         &GeneratorsOfMagma);

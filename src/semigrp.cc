@@ -391,13 +391,22 @@ gap_prec_t semi_obj_get_fropin(gap_semigroup_t S) {
   UInt i;
   if (FindPRec(S, RNam_en_semi_frp, &i, 1)) {
     return GET_ELM_PREC(S, i);
+  } else {
+    if (semi_obj_get_type(S) != UNKNOWN) {  // only initialise a record
+      gap_prec_t fp = NEW_PREC(0);
+      SET_LEN_PREC(fp, 0);
+      AssPRec(S, RNam_en_semi_frp, fp);
+      CHANGED_BAG(S);
+      return fp;
+    } else {
+      CALL_1ARGS(INIT_FROPIN, S);
+      if (FindPRec(S, RNam_en_semi_frp, &i, 1)) {
+        return GET_ELM_PREC(S, i);
+      }
+      ErrorQuit("unknown error in INIT_FROPIN,", 0L, 0L);
+      return 0L;
+    }
   }
-  CALL_1ARGS(SEMIGROUPS_InitEnSemiFrpData, S);
-  if (FindPRec(S, RNam_en_semi_frp, &i, 1)) {
-    return GET_ELM_PREC(S, i);
-  }
-  ErrorQuit("unknown error in SEMIGROUPS_InitEnSemiFrpData,", 0L, 0L);
-  return 0L;
 }
 
 //FIXME should be inline
@@ -514,7 +523,7 @@ Obj EN_SEMI_LENGTH_ELEMENT(Obj self, gap_semigroup_t S, gap_int_t pos) {
         INT_INTOBJ(pos) - 1, semi_obj_get_report(S)));
   } else {
     // TODO uncomment!!
-    // return LEN_PLIST(EN_SEMI_FACTORIZATION(self, S, pos));
+    return INTOBJ_INT(LEN_PLIST(EN_SEMI_FACTORIZATION(self, S, pos)));
   }
 }
 
@@ -594,6 +603,74 @@ Obj EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, gap_semigroup_t S) {
     return ElmPRec(fropin(S, INTOBJ_INT(-1), 0, False),  RNam_left);
   }
   STOP_FUNC
+}
+
+Obj EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
+  initRNams();
+  gap_plist_t es = semi_obj_get_en_semi(so);
+  gap_prec_t  fp = semi_obj_get_fropin(so);
+
+  if (en_semi_get_type(es) != UNKNOWN) {
+    if (!IsbPRec(fp, RNam_rules) || LEN_PLIST(ElmPRec(fp, RNam_rules)) == 0) {
+      Semigroup*  semigroup = en_semi_get_cpp(es);
+      bool        report    = semi_obj_get_report(so);
+      gap_plist_t rules     = NEW_PLIST(T_PLIST, semigroup->nrrules(report));
+      SET_LEN_PLIST(rules, semigroup->nrrules(report));
+      size_t nr = 0;
+
+      semigroup->reset_next_relation();
+      std::vector<size_t> relation;
+      semigroup->next_relation(relation, report);
+
+      while (relation.size() == 2) {
+        gap_plist_t next = NEW_PLIST(T_PLIST, 2);
+        SET_LEN_PLIST(next, 2);
+        for (size_t i = 0; i < 2; i++) {
+          gap_plist_t w = NEW_PLIST(T_PLIST_CYC, 1);
+          SET_LEN_PLIST(w, 1);
+          SET_ELM_PLIST(w, 1, INTOBJ_INT(relation[i] + 1));
+          SET_ELM_PLIST(next, i + 1, w);
+          CHANGED_BAG(next);
+        }
+        nr++;
+        SET_ELM_PLIST(rules, nr, next);
+        CHANGED_BAG(rules);
+        semigroup->next_relation(relation, report);
+      }
+
+      while (!relation.empty()) {
+        gap_plist_t old_word =
+            EN_SEMI_FACTORIZATION(self, so, INTOBJ_INT(relation[0] + 1));
+        gap_plist_t new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+        memcpy((void*) ((char*) (ADDR_OBJ(new_word)) + sizeof(Obj)),
+               (void*) ((char*) (ADDR_OBJ(old_word)) + sizeof(Obj)),
+               (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
+        SET_ELM_PLIST(
+            new_word, LEN_PLIST(old_word) + 1, INTOBJ_INT(relation[1] + 1));
+        SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
+
+        gap_plist_t next = NEW_PLIST(T_PLIST, 2);
+        SET_LEN_PLIST(next, 2);
+        SET_ELM_PLIST(next, 1, new_word);
+        CHANGED_BAG(next);
+        SET_ELM_PLIST(
+            next,
+            2,
+            EN_SEMI_FACTORIZATION(self, so, INTOBJ_INT(relation[2] + 1)));
+        CHANGED_BAG(next);
+        nr++;
+        SET_ELM_PLIST(rules, nr, next);
+        CHANGED_BAG(rules);
+        semigroup->next_relation(relation, report);
+      }
+      AssPRec(fp, RNam_rules, rules);
+      CHANGED_BAG(fp);
+      CHANGED_BAG(so);
+    }
+  } else {
+    fropin(so, INTOBJ_INT(-1), 0, False);
+  }
+  return ElmPRec(fp, RNam_rules);
 }
 
 Obj EN_SEMI_RIGHT_CAYLEY_GRAPH(Obj self, gap_semigroup_t S) {

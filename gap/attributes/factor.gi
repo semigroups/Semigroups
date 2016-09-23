@@ -25,8 +25,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   fi;
-  data := GenericSemigroupData(S);
-  return EN_SEMI_FACTORIZATION(data, Position(S, x));
+  return EN_SEMI_FACTORIZATION(S, Position(S, x));
 end);
 
 # same method for ideals
@@ -178,14 +177,17 @@ InstallMethod(Factorization,
 "for an acting semigroup with generators and element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(S, x)
-  local o, l, m, scc, data, pos, rep, word1, word2, p;
+  local pos, o, l, m, scc, data, rep, word1, word2, p;
 
   if not x in S then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
-  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then
-    return MinimalFactorization(S, x);
+  else
+    pos := EN_SEMI_POSITION_CURRENT(S, x);
+    if pos <> fail then
+      return EN_SEMI_FACTORIZATION(S, pos);;
+    fi;
   fi;
 
   o := LambdaOrb(S);
@@ -227,14 +229,17 @@ InstallMethod(Factorization,
 [IsSemigroupWithInverseOp and IsActingSemigroup and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
 function(S, x)
-  local o, gens, l, m, scc, word1, k, rep, word2, p;
+  local pos, o, gens, l, m, scc, word1, k, rep, word2, p;
 
   if not x in S then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
-  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then
-    return MinimalFactorization(S, x);
+  else
+    pos := EN_SEMI_POSITION_CURRENT(S, x);
+    if pos <> fail then
+      return EN_SEMI_FACTORIZATION(S, pos);;
+    fi;
   fi;
 
   o := LambdaOrb(S);
@@ -283,14 +288,17 @@ InstallMethod(Factorization,
 [IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
 function(S, x)
-  local o, gens, l, m, scc, word1, k, rep, p, word2;
+  local pos, o, gens, l, word1, rep, m, scc, k, word2, p;
 
   if not x in S then
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
-  elif HasGenericSemigroupData(S) and x in GenericSemigroupData(S) then
-    return MinimalFactorization(S, x);
+  else
+    pos := EN_SEMI_POSITION_CURRENT(S, x);
+    if pos <> fail then
+      return EN_SEMI_FACTORIZATION(S, pos);;
+    fi;
   fi;
 
   o := RhoOrb(S);

@@ -42,17 +42,6 @@ static inline void really_delete_cont(T* cont) {
   delete cont;
 }
 
-static Obj word_t_to_plist(word_t const& word) {
-  Obj out = NEW_PLIST(T_PLIST_CYC, word.size());
-  SET_LEN_PLIST(out, word.size());
-
-  for (size_t i = 0; i < word.size(); i++) {
-    SET_ELM_PLIST(out, i + 1, INTOBJ_INT(word[i] + 1));
-  }
-  CHANGED_BAG(out);
-  return out;
-}
-
 /*******************************************************************************
  * ConvertElements:
  ******************************************************************************/
@@ -426,70 +415,4 @@ Obj SEMIGROUP_IS_DONE_ITERATOR_CC(Obj self, Obj iter) {
   Obj data = ElmPRec(iter, RNam_data);
   Int size = data_semigroup(data)->size(rec_get_report(data));
   return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
-}
-
-Obj SEMIGROUP_RELATIONS(Obj self, Obj data) {
-  initRNams();
-  if (data_type(data) != UNKNOWN) {
-    if (!IsbPRec(data, RNam_rules)) {
-      Semigroup* semigroup = data_semigroup(data);
-      bool       report    = rec_get_report(data);
-
-      Obj rules = NEW_PLIST(T_PLIST, semigroup->nrrules(report));
-      SET_LEN_PLIST(rules, semigroup->nrrules(report));
-      size_t nr = 0;
-
-      semigroup->reset_next_relation();
-      std::vector<size_t> relation;
-      semigroup->next_relation(relation, report);
-
-      while (relation.size() == 2) {
-        Obj next = NEW_PLIST(T_PLIST, 2);
-        SET_LEN_PLIST(next, 2);
-        for (size_t i = 0; i < 2; i++) {
-          Obj w = NEW_PLIST(T_PLIST_CYC, 1);
-          SET_LEN_PLIST(w, 1);
-          SET_ELM_PLIST(w, 1, INTOBJ_INT(relation.at(i) + 1));
-          SET_ELM_PLIST(next, i + 1, w);
-          CHANGED_BAG(next);
-        }
-        nr++;
-        SET_ELM_PLIST(rules, nr, next);
-        CHANGED_BAG(rules);
-        semigroup->next_relation(relation, report);
-      }
-
-      while (!relation.empty()) {
-
-        Obj old_word =
-            SEMIGROUP_FACTORIZATION(self, data, INTOBJ_INT(relation.at(0) + 1));
-        Obj new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
-        memcpy((void*) ((char*) (ADDR_OBJ(new_word)) + sizeof(Obj)),
-               (void*) ((char*) (ADDR_OBJ(old_word)) + sizeof(Obj)),
-               (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
-        SET_ELM_PLIST(
-            new_word, LEN_PLIST(old_word) + 1, INTOBJ_INT(relation.at(1) + 1));
-        SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
-
-        Obj next = NEW_PLIST(T_PLIST, 2);
-        SET_LEN_PLIST(next, 2);
-        SET_ELM_PLIST(next, 1, new_word);
-        CHANGED_BAG(next);
-        SET_ELM_PLIST(next,
-                      2,
-                      SEMIGROUP_FACTORIZATION(
-                          self, data, INTOBJ_INT(relation.at(2) + 1)));
-        CHANGED_BAG(next);
-        nr++;
-        SET_ELM_PLIST(rules, nr, next);
-        CHANGED_BAG(rules);
-        semigroup->next_relation(relation, report);
-      }
-      AssPRec(data, RNam_rules, rules);
-      CHANGED_BAG(data);
-    }
-  } else {
-    fropin(data, INTOBJ_INT(-1), 0, False);
-  }
-  return ElmPRec(data, RNam_rules);
 }

@@ -264,7 +264,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  rules := SEMIGROUP_RELATIONS(GenericSemigroupData(S));
+  rules := EN_SEMI_RELATIONS(S);
 
   F := FreeSemigroup(Length(GeneratorsOfSemigroup(S)));
   A := GeneratorsOfSemigroup(F);
@@ -315,7 +315,7 @@ function(S)
             
   pos := Position(lookup, fail);
 
-  rules := SEMIGROUP_RELATIONS(GenericSemigroupData(S));
+  rules := EN_SEMI_RELATIONS(S);
   rels := [];
 
   # convert a word in GeneratorsOfSemigroup to a word in GeneratorsOfMonoid
