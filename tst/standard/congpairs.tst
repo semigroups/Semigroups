@@ -502,6 +502,29 @@ gap> cong := SemigroupCongruence(S, [S.1, S.1 * S.2]);
 gap> [S.1, S.1] in cong;
 true
 
+#T# EquivalenceRelationPartition
+gap> S := PartialBrauerMonoid(2);;
+gap> pair := [[Bipartition([[1, 2], [-1], [-2]]),
+>              Bipartition([[1, -1], [2], [-2]])]];;
+gap> cong := SemigroupCongruence(S, pair);;
+gap> EquivalenceRelationPartition(cong);
+[ [ <block bijection: [ 1, -1 ], [ 2, -2 ]> ], 
+  [ <block bijection: [ 1, -2 ], [ 2, -1 ]> ], 
+  [ <bipartition: [ 1, 2 ], [ -1, -2 ]>, 
+      <bipartition: [ 1 ], [ 2 ], [ -1, -2 ]> ], 
+  [ <bipartition: [ 1, -1 ], [ 2 ], [ -2 ]>, 
+      <bipartition: [ 1 ], [ 2, -1 ], [ -2 ]>, 
+      <bipartition: [ 1, 2 ], [ -1 ], [ -2 ]>, 
+      <bipartition: [ 1, -2 ], [ 2 ], [ -1 ]>, 
+      <bipartition: [ 1 ], [ 2, -2 ], [ -1 ]>, 
+      <bipartition: [ 1 ], [ 2 ], [ -1 ], [ -2 ]> ] ]
+gap> cong := SemigroupCongruence(S, []);;
+gap> SortedList(EquivalenceRelationPartition(cong)) = List(Elements(S), x->[x]);
+true
+gap> cong := UniversalSemigroupCongruence(S);;
+gap> Length(EquivalenceRelationPartition(cong)) = 1;
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
