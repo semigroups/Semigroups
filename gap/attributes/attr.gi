@@ -416,9 +416,6 @@ end);
 
 # same method for ideals
 
-# note that IsGroup and IsGroupAsSemigroup are mutually exclusive
-# so the following method is not called for PermGroups etc
-
 InstallMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup],
 function(S)
@@ -503,6 +500,9 @@ end);
 
 InstallMethod(MinimalDClass, "for a semigroup", [IsSemigroup],
 S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
+
+InstallMethod(MultiplicationTable, "for a semigroup", [IsSemigroup], 
+EN_SEMI_CAYLEY_TABLE);
 
 #############################################################################
 ## 2. Methods for attributes where there are known better methods for acting

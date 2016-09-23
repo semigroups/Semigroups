@@ -401,6 +401,7 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_RELATIONS, 1, "S"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_CAYLEY_TABLE, 1, "S"),
 
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_ENUMERATE,
@@ -444,7 +445,6 @@ static StructGVarFunc GVarFuncs[] = {
                           SEMIGROUP_CURRENT_MAX_WORD_LENGTH,
                           1,
                           "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CAYLEY_TABLE, 1, "data"),
     GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_NR_CLASSES, 1, "cong"),
     GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_IN, 2, "cong, pair"),
     GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_LOOKUP_PART, 1, "cong"),

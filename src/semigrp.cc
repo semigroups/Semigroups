@@ -138,7 +138,7 @@ Obj semi_get_rep(gap_semigroup_t S) {
     if (LEN_PLIST(gens) > 0) {
       return ELM_PLIST(gens, 1);
     } else {
-      ErrorQuit("Cannot find a representative of the semigroup!", 0L, 0L);
+      ErrorQuit("cannot find a representative of the semigroup,", 0L, 0L);
       return 0L;
     }
   }
@@ -486,6 +486,29 @@ Obj EN_SEMI_ADD_GENERATORS(Obj self, gap_semigroup_t so, gap_plist_t plist) {
   CHANGED_BAG(so);
 
   return so;
+}
+
+Obj EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
+  Obj es = semi_obj_get_en_semi(so);
+  if (en_semi_get_type(es) != UNKNOWN) {
+    Semigroup*  semigroup = en_semi_get_cpp(es);
+    bool        report    = semi_obj_get_report(so);
+    size_t      n         = semigroup->size(report);
+    gap_plist_t out       = NEW_PLIST(T_PLIST_HOM, n);
+    SET_LEN_PLIST(out, n);
+
+    for (size_t i = 0; i < n; i++) {
+      gap_plist_t next = NEW_PLIST(T_PLIST_CYC, n);
+      SET_LEN_PLIST(next, n);
+      for (size_t j = 0; j < n; j++) {
+        SET_ELM_PLIST(
+            next, j + 1, INTOBJ_INT(semigroup->fast_product(i, j) + 1));
+      }
+      SET_ELM_PLIST(out, i + 1, next);
+      CHANGED_BAG(out);
+    }
+    return out;
+  }
 }
 
 Obj EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {

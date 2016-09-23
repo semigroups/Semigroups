@@ -42,6 +42,7 @@ en_semi_t semi_obj_get_type(gap_semigroup_t S);
 
 // GAP level functions
 Obj EN_SEMI_ADD_GENERATORS(Obj self, gap_semigroup_t S, gap_plist_t coll);
+Obj EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t S);
 Obj EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t S, gap_int_t pos);
 Obj EN_SEMI_IS_DONE_ITERATOR(Obj self, Obj iter);
 Obj EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, gap_semigroup_t S);
