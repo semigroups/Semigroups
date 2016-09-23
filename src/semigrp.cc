@@ -106,7 +106,7 @@ template <typename T> static inline void really_delete_cont(T* cont) {
 
 // Semigroups
 
-gap_plist_t semi_get_gens(gap_semigroup_t semi_gap) {
+gap_plist_t semi_obj_get_gens(gap_semigroup_t semi_gap) {
   START_FUNC
   initRNams();
   UInt i;
@@ -134,7 +134,7 @@ Obj semi_get_rep(gap_semigroup_t S) {
   if (FindPRec(S, RNam_Representative, &i, 1)) {
     return GET_ELM_PREC(S, i);
   } else {
-    gap_plist_t gens = semi_get_gens(S);
+    gap_plist_t gens = semi_obj_get_gens(S);
     if (LEN_PLIST(gens) > 0) {
       return ELM_PLIST(gens, 1);
     } else {
@@ -263,7 +263,7 @@ Obj semi_obj_get_en_semi(gap_semigroup_t S) {
 
   if (IS_TRANS(x)) {
     deg           = 0;
-    gap_plist_t gens = semi_get_gens(S);
+    gap_plist_t gens = semi_obj_get_gens(S);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
       size_t n = DEG_TRANS(ELM_PLIST(gens, i));
       if (n > deg) {
@@ -279,7 +279,7 @@ Obj semi_obj_get_en_semi(gap_semigroup_t S) {
     }
   } else if (IS_PPERM(x)) {
     deg           = 0;
-    gap_plist_t gens = semi_get_gens(S);
+    gap_plist_t gens = semi_obj_get_gens(S);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
       size_t n = std::max(DEG_PPERM(ELM_PLIST(gens, i)),
                           CODEG_PPERM(ELM_PLIST(gens, i)));
@@ -355,7 +355,7 @@ Obj semi_obj_get_en_semi(gap_semigroup_t S) {
   }
 
   if (type != UNKNOWN) {
-    gap_plist_t gens_gap = semi_get_gens(S);
+    gap_plist_t gens_gap = semi_obj_get_gens(S);
 
     std::vector<Element*>* gens = plist_to_vec(converter, gens_gap, deg);
     Semigroup* semi_cpp = new Semigroup(gens);
@@ -444,6 +444,49 @@ static inline size_t en_semi_get_degree(Obj en_semi) {
 }
 
 // GAP level functions
+
+// Add generators to the GAP semigroup Obj <so>. Note that this only works if
+// the degree of every element in plist is less than or equal to the degree of
+// the elements in <semi_cpp>. If this is not the case, then this should not be
+// called but ClosureSemigroup should be instead, on the GAP level.
+
+Obj EN_SEMI_ADD_GENERATORS(Obj self, gap_semigroup_t so, gap_plist_t plist) {
+  Obj es = semi_obj_get_en_semi(so);
+
+  if (en_semi_get_type(es) == UNKNOWN) {
+    ErrorQuit("EN_SEMI_ADD_GENERATORS: this shouldn't happen!", 0L, 0L);
+  }
+
+  assert(IS_PLIST(plist));
+  assert(LEN_PLIST(plist) > 0);
+
+  Semigroup*   semi_cpp  = en_semi_get_cpp(es);
+  size_t const deg       = semi_cpp->degree();
+  Converter*   converter = en_semi_get_converter(es);
+
+  std::unordered_set<Element*>* coll = new std::unordered_set<Element*>();
+
+  for (size_t i = 1; i <= (size_t) LEN_PLIST(plist); i++) {
+    coll->insert(converter->convert(ELM_PLIST(plist, i), deg));
+  }
+
+  semi_cpp->add_generators(coll, semi_obj_get_report(so));
+  really_delete_cont(coll);
+
+  gap_plist_t gens = ElmPRec(so, RNam_GeneratorsOfMagma);
+
+  for (size_t i = 0; i < semi_cpp->nrgens(); i++) {
+    AssPlist(gens, i + 1, converter->unconvert((*semi_cpp->gens())[i]));
+  }
+
+  // Reset the fropin data since none of it is valid any longer
+  gap_prec_t fp = NEW_PREC(0);
+  SET_LEN_PREC(fp, 0);
+  AssPRec(so, RNam_en_semi_frp, fp);
+  CHANGED_BAG(so);
+
+  return so;
+}
 
 Obj EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
   Obj    es    = semi_obj_get_en_semi(so);

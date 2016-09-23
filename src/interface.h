@@ -23,7 +23,6 @@
 
 // GAP level functions
 
-Obj SEMIGROUP_ADD_GENERATORS(Obj, Obj, Obj);
 Obj SEMIGROUP_CAYLEY_TABLE(Obj, Obj);
 Obj SEMIGROUP_CLOSURE(Obj, Obj, Obj, Obj);
 Obj SEMIGROUP_CURRENT_MAX_WORD_LENGTH(Obj, Obj);

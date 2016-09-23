@@ -101,51 +101,6 @@ Obj ConvertFromCayleyGraph(cayley_graph_t* graph) {
 // GAP level functions
 
 /*******************************************************************************
- * SEMIGROUP_ADD_GENERATORS:
- ******************************************************************************/
-
-Obj SEMIGROUP_ADD_GENERATORS(Obj self, Obj data, Obj coll_gap) {
-  if (data_type(data) == UNKNOWN) {
-    ErrorQuit("SEMIGROUP_ADD_GENERATORS: this shouldn't happen!", 0L, 0L);
-  }
-
-  assert(IS_PLIST(coll_gap));
-  assert(LEN_PLIST(coll_gap) > 0);
-
-  Semigroup*                    semigroup = data_semigroup(data);
-  Converter*                    converter = data_converter(data);
-  std::unordered_set<Element*>* coll = new std::unordered_set<Element*>();
-
-  for (size_t i = 1; i <= (size_t) LEN_PLIST(coll_gap); i++) {
-    coll->insert(
-        converter->convert(ELM_PLIST(coll_gap, i), semigroup->degree()));
-  }
-  semigroup->add_generators(coll, rec_get_report(data));
-  really_delete_cont(coll);
-
-  Obj gens = ElmPRec(data, RNam_gens); // TODO make this safe
-
-  for (size_t i = 0; i < semigroup->nrgens(); i++) {
-    AssPlist(gens, i + 1, converter->unconvert(semigroup->gens()->at(i)));
-  }
-
-  if (IsbPRec(data, RNam_left)) {
-    UnbPRec(data, RNam_left);
-  }
-  if (IsbPRec(data, RNam_right)) {
-    UnbPRec(data, RNam_right);
-  }
-  if (IsbPRec(data, RNam_rules)) {
-    UnbPRec(data, RNam_rules);
-  }
-  if (IsbPRec(data, RNam_words)) {
-    UnbPRec(data, RNam_words);
-  }
-
-  return data;
-}
-
-/*******************************************************************************
  * SEMIGROUP_CAYLEY_TABLE: TODO for non-C++
  ******************************************************************************/
 

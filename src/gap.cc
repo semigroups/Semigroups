@@ -390,15 +390,16 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // Table of functions to export
 // FIXME the filenames are mostly wrong here
 static StructGVarFunc GVarFuncs[] = {
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_ADD_GENERATORS, 2, "S, coll"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_FACTORIZATION, 2, "S, pos"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_IS_DONE_ITERATOR, 1, "iter"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_LEFT_CAYLEY_GRAPH, 1, "S"),
+    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_LENGTH_ELEMENT, 2, "S, pos"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_NR_IDEMPOTENTS, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_POSITION, 2, "S, x"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_POSITION_CURRENT, 2, "S, x"),
-    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_LEFT_CAYLEY_GRAPH, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
-    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_LENGTH_ELEMENT, 2, "S, pos"),
-    GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_FACTORIZATION, 2, "S, pos"),
     GVAR_FUNC_TABLE_ENTRY("semigrp.cc", EN_SEMI_RELATIONS, 1, "S"),
 
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
@@ -429,10 +430,6 @@ static StructGVarFunc GVarFuncs[] = {
                           SEMIGROUP_CLOSURE,
                           3,
                           "old_data, coll, degree"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_ADD_GENERATORS,
-                          2,
-                          "data, coll"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_SIZE, 1, "data"),
     GVAR_FUNC_TABLE_ENTRY("interface.cc",
                           SEMIGROUP_CURRENT_NR_RULES,

@@ -77,7 +77,7 @@ end;
 # place, so this should only be used in a function where <S> is created.
 
 SEMIGROUPS.AddGenerators := function(S, coll, opts)
-  local data;
+  local T;
 
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
@@ -101,16 +101,20 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
     return ClosureSemigroup(S, coll, opts);
   fi;
 
-  data := GenericSemigroupData(S);
-  # Note that SEMIGROUP_ADD_GENERATORS only checks if the generators coll
-  # already belong to the semigroup, it does not perform any further
-  # enumeration of the semigroup. So, in the small generating set code of
+  # Note that EN_SEMI_ADD_GENERATORS only checks if the generators coll already
+  # belong to the semigroup, it does not perform any further enumeration of the
+  # semigroup. So, in the small generating set code of
   # Semigroup/MonoidByGenerators we must check if elements of the collection
   # belong to the semigroup before trying to add them.
-  SEMIGROUP_ADD_GENERATORS(data, coll);
-  S := Semigroup(data!.gens, opts);
-  SetGenericSemigroupData(S, data);
-  return S;
+  EN_SEMI_ADD_GENERATORS(S, coll);
+  
+  # We must recreate the semigroup <S> as <T> since <S> may have further
+  # attributes that are no longer valid after the call to
+  # EN_SEMI_ADD_GENERATORS, such as Size etc. In other words, S may no longer
+  # be valid after calling this function if any new generators are added.
+  T := Semigroup(GeneratorsOfMagma(S));
+  T!.__en_semi_cpp_data := S!.__en_semi_cpp_data;
+  return T;
 end;
 
 #############################################################################

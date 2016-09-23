@@ -17,6 +17,9 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
+# This function is used to initialise the data record for an enumerable
+# semigroup which does not have a C++ implementation. 
+
 BindGlobal("INIT_FROPIN", 
 function(S)
   local data, hashlen, nrgens, nr, val, i;
@@ -46,14 +49,14 @@ function(S)
 
   data.report     := SEMIGROUPS.OptionsRec(S).report;
   data.batch_size := SEMIGROUPS.OptionsRec(S).batch_size;
-  hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
+  hashlen         := SEMIGROUPS.OptionsRec(S).hashlen.L;
 
   data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
-  nrgens := Length(data.gens);
-  data.ht := HTCreate(data.gens[1], rec(treehashsize := hashlen));
-  nr := 0;
-  data.one := false;
-  data.pos := 1;
+  nrgens    := Length(data.gens);
+  data.ht   := HTCreate(data.gens[1], rec(treehashsize := hashlen));
+  nr        := 0;
+  data.one  := false;
+  data.pos  := 1;
   data.lenindex[1] := 1;
   data.genstoapply := [1 .. nrgens];
 
