@@ -74,12 +74,31 @@ gap> T.1 * GreensRClasses(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `*' on 2 arguments
 
+#T# quotients, ViewObj
+gap> S := Semigroup([Transformation([2, 3, 2]), Transformation([3, 1, 3])]);;
+gap> pair := [Transformation([3, 2, 3]), Transformation([1, 1, 1])];;
+gap> cong := SemigroupCongruence(S, [pair]);
+<semigroup congruence over <transformation semigroup of degree 3 with 2 
+ generators> with 1 generating pairs>
+gap> Q := S / cong;
+<quotient of <semigroup congruence over <transformation semigroup of degree 3 
+ with 2 generators> with 1 generating pairs>>
+gap> I := MinimalIdeal(S);
+<simple transformation semigroup ideal of degree 3 with 1 generator>
+gap> R := S / I;
+<quotient of <Rees congruence of <simple transformation semigroup ideal of 
+ degree 3 with 1 generator> over <transformation semigroup of degree 3 with 2 
+generators>>>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(I);
 gap> Unbind(J);
+gap> Unbind(Q);
+gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(cong);
+gap> Unbind(pair);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/quotients.tst");
