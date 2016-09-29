@@ -10,9 +10,9 @@
 
 # This file contains method specific to generic ideals of semigroups.
 
-# We use the result of enumerating the GenericSemigroupData of the
-# supersemigroup of an ideal to calculate elements, size, test membership, find
-# idempotents, etc. We get a generating set and use that otherwise.
+# We use the result of running the Froidure-Pin algorithm on the supersemigroup
+# of an ideal to calculate elements, size, test membership, find idempotents,
+# etc. We get a generating set and use that otherwise.
 
 InstallMethod(GeneratorsOfInverseSemigroup,
 "for a semigroup ideal with generators",
@@ -49,10 +49,9 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   indices := enum!.indices;
 
   S := SupersemigroupOfIdeal(UnderlyingCollection(enum));
-  data := GenericSemigroupData(S);
   left := LeftCayleyGraphSemigroup(S);
   right := RightCayleyGraphSemigroup(S);
-  genstoapply := data!.genstoapply;
+  genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
 
   while nr <= limit and i <= nr and not (looking and found) do
 
@@ -131,11 +130,9 @@ InstallMethod(Enumerator, "for a semigroup ideal with generators",
 function(I)
   local record, data, gens, i, pos, S;
   S := SupersemigroupOfIdeal(I);
-  data := GenericSemigroupData(S);
 
   record :=
-    rec(
-         pos := 1,       # the first position in <indices> whose descendants
+    rec( pos := 1,       # the first position in <indices> whose descendants
                          # might not have been installed
          indices := [],  # the indices of elements in <I> in <S>
          nr := 0,        # the length of <indices>
@@ -153,6 +150,8 @@ function(I)
       record.indices[record.nr] := pos;
     fi;
   od;
+  
+  record.enum := Enumerator(S);
 
   record.NumberElement := function(enum, elt)
     local pos, lookfunc;
@@ -174,8 +173,7 @@ function(I)
     if not IsBound(enum!.indices[nr]) then
       SEMIGROUPS.EnumerateIdeal(enum, nr, ReturnFalse);
     fi;
-    #FIXME update this!!
-    return SEMIGROUP_AS_LIST(data)[enum!.indices[nr]];
+    return enum!.enum[enum!.indices[nr]];
   end;
 
   record.IsBound\[\] := function(enum, nr)
@@ -225,26 +223,26 @@ end);
 InstallMethod(Idempotents, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local elts, enum, indices, idempotents, nr, i;
+  local enum1, enum2, indices, idempotents, nr, i;
 
-  elts := SEMIGROUP_AS_LIST(GenericSemigroupData(SupersemigroupOfIdeal(I)));
-  enum := Enumerator(I);
-  if not IsBound(enum!.idempotents) then
-    SEMIGROUPS.EnumerateIdeal(enum, infinity, ReturnFalse);
-    indices := enum!.indices;
+  enum1 := EnumeratorCanonical(SupersemigroupOfIdeal(I));
+  enum2 := Enumerator(I);
+  if not IsBound(enum2!.idempotents) then
+    SEMIGROUPS.EnumerateIdeal(enum2, infinity, ReturnFalse);
+    indices := enum2!.indices;
     idempotents := EmptyPlist(Length(indices));
     nr := 0;
 
     for i in indices do
-      if elts[i] * elts[i] = elts[i] then
+      if enum1[i] * enum1[i] = enum1[i] then
         nr := nr + 1;
         idempotents[nr] := i;
       fi;
     od;
 
-    enum!.idempotents := idempotents;
+    enum2!.idempotents := idempotents;
     ShrinkAllocationPlist(idempotents);
   fi;
 
-  return elts{enum!.idempotents};
+  return enum1{enum2!.idempotents};
 end);

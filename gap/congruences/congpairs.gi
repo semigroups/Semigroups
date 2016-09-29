@@ -301,11 +301,11 @@ InstallMethod(EquivalenceClasses,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep],
 function(cong)
-  local part, data, reps, classes, next, i;
+  local part, enum, reps, classes, next, i;
 
   part := FiniteCongruenceByGeneratingPairsPartition(cong);
-  data := GenericSemigroupData(Range(cong));
-  reps := List(part, x -> SEMIGROUP_ELEMENT_NUMBER(data, x[1]));
+  enum := EnumeratorCanonical(Range(cong));
+  reps := List(part, x -> enum[x[1]]);
 
   classes := EmptyPlist(Length(reps)); 
   next := 1;
@@ -337,15 +337,14 @@ InstallMethod(ImagesElm,
 [IsFiniteCongruenceByGeneratingPairsRep,
  IsMultiplicativeElement],
 function(cong, elm)
-  local lookup, data, id, part;
+  local lookup, enum, id, part;
 
   lookup := EquivalenceRelationLookup(cong);
-  data   := GenericSemigroupData(Range(cong));
+  enum   := EnumeratorCanonical(Range(cong));
   id     := lookup[Position(Range(cong), elm)];
-
   part   := FiniteCongruenceByGeneratingPairsPartition(cong);
 
-  return List(part[id], i -> SEMIGROUP_ELEMENT_NUMBER(data, i));
+  return List(part[id], i -> enum[i]);
 end);
 
 InstallMethod(JoinSemigroupCongruences,
@@ -531,12 +530,13 @@ InstallMethod(AsList,
 "for a finite congruence class by gen pairs rep",
 [IsFiniteCongruenceClassByGeneratingPairsRep],
 function(class)
-  local cong, part, id, data;
+  local cong, part, id, enum;
+  
   cong := EquivalenceClassRelation(class);
   part := FiniteCongruenceByGeneratingPairsPartition(cong);
   id   := FiniteCongruenceClassByGeneratingPairsCosetId(class);
-  data := GenericSemigroupData(Range(cong));
-  return List(part[id], i -> SEMIGROUP_ELEMENT_NUMBER(data, i));
+  enum := EnumeratorCanonical(Range(cong));
+  return List(part[id], i -> enum[i]);
 end);
 
 InstallMethod(Enumerator, "for a finite congruence class by gen pairs rep",

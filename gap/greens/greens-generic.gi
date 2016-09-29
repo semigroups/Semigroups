@@ -81,14 +81,14 @@ end;
 SEMIGROUPS.GreensXClasses := function(S,
                                       GreensXRelation,
                                       GreensXClassOfElement)
-  local comps, elts, out, C, i;
+  local comps, enum, out, C, i;
 
   comps := GreensXRelation(S)!.data.comps;
-  elts := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
-  out := EmptyPlist(Length(comps));
+  enum  := EnumeratorCanonical(S);
+  out   := EmptyPlist(Length(comps));
 
   for i in [1 .. Length(comps)] do
-    C := GreensXClassOfElement(S, elts[comps[i][1]]);
+    C := GreensXClassOfElement(S, enum[comps[i][1]]);
     C!.index := i;
     out[i] := C;
   od;
@@ -96,13 +96,13 @@ SEMIGROUPS.GreensXClasses := function(S,
 end;
 
 SEMIGROUPS.XClassReps := function(S, GreensXRelation)
-  local comps, elts, out, i;
+  local comps, enum, out, i;
 
   comps := GreensXRelation(S)!.data.comps;
-  elts := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
-  out := EmptyPlist(Length(comps));
+  enum  := EnumeratorCanonical(S);
+  out   := EmptyPlist(Length(comps));
   for i in [1 .. Length(comps)] do
-    out[i] := elts[comps[i][1]];
+    out[i] := enum[comps[i][1]];
   od;
   return out;
 end;
@@ -110,19 +110,19 @@ end;
 SEMIGROUPS.GreensXClassesOfClass := function(C,
                                              GreensXRelation,
                                              GreensXClassOfElement)
-  local S, comp, id, seen, elts, out, i;
+  local S, comp, id, seen, enum, out, i;
 
   S := Parent(C);
   comp := EquivalenceClassRelation(C)!.data.comps[C!.index];
   id := GreensXRelation(Parent(C))!.data.id;
   seen := BlistList([1 .. Maximum(id)], []);
-  elts := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
+  enum := EnumeratorCanonical(S);
   out := EmptyPlist(Length(comp));
 
   for i in comp do
     if not seen[id[i]] then
       seen[id[i]] := true;
-      C := GreensXClassOfElement(S, elts[i]);
+      C := GreensXClassOfElement(S, enum[i]);
       C!.index := id[i];
       Add(out, C);
     fi;
@@ -132,19 +132,19 @@ SEMIGROUPS.GreensXClassesOfClass := function(C,
 end;
 
 SEMIGROUPS.XClassRepsOfClass := function(C, GreensXRelation)
-  local S, comp, id, seen, elts, out, i;
+  local S, comp, id, seen, enum, out, i;
 
   S := Parent(C);
   comp := EquivalenceClassRelation(C)!.data.comps[C!.index];
   id := GreensXRelation(Parent(C))!.data.id;
   seen := BlistList([1 .. Maximum(id)], []);
-  elts := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
+  enum := EnumeratorCanonical(S);
   out := EmptyPlist(Length(comp));
 
   for i in comp do
     if not seen[id[i]] then
       seen[id[i]] := true;
-      Add(out, elts[i]);
+      Add(out, enum[i]);
     fi;
   od;
 
@@ -443,10 +443,9 @@ InstallMethod(Enumerator, "for a generic semigroup Green's class",
 [IsGreensClass],
 function(C)
   local data, rel;
-  data := Enumerate(GenericSemigroupData(Parent(C)));
   rel := EquivalenceClassRelation(C);
   # gaplint: ignore 2
-  return SEMIGROUP_AS_LIST(data){
+  return EnumeratorCanonical(Range(rel)){
     rel!.data.comps[SEMIGROUPS.XClassIndex(C)]};
 end);
 
@@ -802,15 +801,14 @@ InstallMethod(Idempotents, "for a Green's class",
 function(C)
   local data, rel, positions, idempotents, x;
 
-  data := Enumerate(GenericSemigroupData(Parent(C)));
+  #data := Enumerate(Parent(C));
   rel := EquivalenceClassRelation(C);
-
-  if IsBound(data!.idempotents) then
-    positions := Intersection(rel!.data.comps[SEMIGROUPS.XClassIndex(C)],
-                              data!.idempotents);
-    # FIXME could just use Enumerator here?
-    return SEMIGROUP_AS_LIST(data){positions};
-  fi;
+  # FIXME 
+  #if IsBound(data!.idempotents) then
+  #  positions := Intersection(rel!.data.comps[SEMIGROUPS.XClassIndex(C)],
+  #                            data!.idempotents);
+  #  return Enumerator(Parent(C)){positions};
+  #fi;
 
   idempotents := [];
 

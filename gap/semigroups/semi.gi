@@ -97,7 +97,6 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
            ## FIXME the above should really be less than, since this should
            # work if the degree of the semigroup is larger than the degree of
            # the collection!
-      or not SEMIGROUPS.IsCCSemigroup(S) then
     return ClosureSemigroup(S, coll, opts);
   fi;
 
@@ -106,7 +105,9 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
   # semigroup. So, in the small generating set code of
   # Semigroup/MonoidByGenerators we must check if elements of the collection
   # belong to the semigroup before trying to add them.
-  EN_SEMI_ADD_GENERATORS(S, coll);
+  if EN_SEMI_ADD_GENERATORS(S, coll) = fail then 
+    return ClosureSemigroup(S, coll, opts);
+  fi;
   
   # We must recreate the semigroup <S> as <T> since <S> may have further
   # attributes that are no longer valid after the call to
@@ -716,22 +717,10 @@ InstallMethod(ClosureSemigroupNC,
 "for a semigroup, finite multiplicative element collection, and record",
 [IsSemigroup, IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(S, coll, opts)
-  local data, T;
-
-  if not SEMIGROUPS.IsCCSemigroup(S) then
-    Info(InfoWarning, 1, "using default method for ClosureSemigroupNC");
-    return Semigroup(S, coll, opts);
-  fi;
-
-  data := SEMIGROUP_CLOSURE(GenericSemigroupData(S),
-                            ShallowCopy(coll),
-                            SEMIGROUPS.DegreeOfSemigroup(S, coll));
-  data := Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
-                                          and IsAttributeStoringRep), data);
-  T := Semigroup(data!.gens, opts);
-  SetGenericSemigroupData(T, data);
-  data!.genstoapply := [1 .. Length(GeneratorsOfSemigroup(T))];
-  return T;
+  local T;
+  T := Semigroup(Concatenation(GeneratorsOfSemigroup(S), coll));
+  # The following does nothing if S / T is not an CPP semigroup
+  return EN_SEMI_CLOSURE(T, S, coll);
 end);
 
 InstallMethod(ClosureSemigroupNC,

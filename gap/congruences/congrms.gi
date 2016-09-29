@@ -1634,8 +1634,7 @@ _EquivalenceRelationCanonicalLookupRMS := function(cong)
   local S, n, data, elms, table, next, i, x;
   S := Range(cong);
   n := Size(S);
-  data := GenericSemigroupData(S);
-  elms := SEMIGROUP_AS_LIST(data);
+  elms := AsListCanonical(S);
   table := EmptyPlist(n);
   next := 1;
   for i in [1 .. n] do

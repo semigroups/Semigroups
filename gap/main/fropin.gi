@@ -97,19 +97,10 @@ end);
 # 1. Internal methods
 #############################################################################
 
-InstallMethod(Iterator, "for semigroup enumerator sorted",
-[IsSemigroupEnumerator and IsSSortedList],
-function(enum)
-  return IteratorSorted(UnderlyingCollection(enum));
-end);
-
 InstallMethod(AsSet, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+[IsEnumerableSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if (not IsActingSemigroup(S)) and SEMIGROUPS.IsCCSemigroup(S) then
-    return SEMIGROUP_AS_SET(GenericSemigroupData(S));
-  fi;
-  TryNextMethod();
+  return EN_SEMI_AS_SET(S);
 end);
 
 InstallMethod(EnumeratorSorted, "for a generic semigroup with generators",
@@ -119,8 +110,13 @@ function(S)
 
   if HasAsSSortedList(S) then
     return AsSSortedList(S);
-  elif not SEMIGROUPS.IsCCSemigroup(S)
-      or Length(GeneratorsOfSemigroup(S)) = 0 then
+  elif Length(GeneratorsOfSemigroup(S)) = 0 
+    or not (IsTransformationSemigroup(S)
+            or IsPartialPermSemigroup(S)
+            or IsBipartitionSemigroup(S)
+            or IsBooleanMatSemigroup(S)
+            or IsPBRSemigroup(S)
+            or IsMatrixOverSemiringSemigroup(S)) then 
     TryNextMethod();
   fi;
 
@@ -131,7 +127,7 @@ function(S)
   end;
 
   enum.ElementNumber := function(enum, nr)
-    return SEMIGROUP_ELEMENT_NUMBER_SORTED(GenericSemigroupData(S), nr);
+    return EN_SEMI_ELEMENT_NUMBER_SORTED(S, nr);
   end;
 
   # FIXME this should be Size(S) hack around RZMS
@@ -167,12 +163,8 @@ function(S)
   iter.data   := GenericSemigroupData(S);
   iter.parent := GenericSemigroupData(S);
 
-  iter.NextIterator := SEMIGROUP_NEXT_ITERATOR_SORTED;
-  if SEMIGROUPS.IsCCSemigroup(S) then
-    iter.IsDoneIterator := SEMIGROUP_IS_DONE_ITERATOR_CC;
-  else
-    iter.IsDoneIterator := EN_SEMI_IS_DONE_ITERATOR;
-  fi;
+  iter.NextIterator   := EN_SEMI_NEXT_ITERATOR_SORTED;
+  iter.IsDoneIterator := EN_SEMI_IS_DONE_ITERATOR;
 
   iter.ShallowCopy := function(iter)
     return rec(pos := 0, data := iter!.data);
@@ -182,54 +174,30 @@ function(S)
 end);
 
 InstallMethod(AsList, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  return SEMIGROUP_AS_LIST(GenericSemigroupData(S));
-end);
+[IsSemigroup and HasGeneratorsOfSemigroup], AsListCanonical);
 
-InstallMethod(Iterator, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 2,
-# to beat the generic method for a Rees matrix semigroup, FIXME!!
-function(S)
-  local iter;
-
-  if HasAsList(S) then
-    return IteratorList(AsList(S));
-  fi;
-
-  iter        := rec();
-  iter.pos    := 0;
-  iter.data   := GenericSemigroupData(S);
-  iter.parent := S;
-
-  iter.NextIterator := SEMIGROUP_NEXT_ITERATOR;
-  if SEMIGROUPS.IsCCSemigroup(S) then
-    iter.IsDoneIterator := SEMIGROUP_IS_DONE_ITERATOR_CC;
-  else
-    iter.IsDoneIterator := EN_SEMI_IS_DONE_ITERATOR;
-  fi;
-
-  iter.ShallowCopy := function(iter)
-    return rec(pos := 0, data := iter!.data);
-  end;
-
-  return IteratorByFunctions(iter);
-end);
-
-InstallMethod(Iterator, "for semigroup enumerator",
-[IsSemigroupEnumerator],
-function(enum)
-  return Iterator(UnderlyingCollection(enum));
-end);
+InstallMethod(AsListCanonical, "for a semigroup", [IsSemigroup],
+EN_SEMI_AS_LIST);
 
 InstallMethod(Enumerator, "for a generic semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup], 2, 
+function(S)
+  if HasAsList(S) then
+    return AsList(S);
+  elif Length(GeneratorsOfSemigroup(S)) = 0 then
+    TryNextMethod();
+  fi;
+  return EnumeratorCanonical(S);
+end);
+
+InstallMethod(EnumeratorCanonical, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 2,
 # to beat the generic method for a Rees matrix semigroup, FIXME!!
 function(S)
   local enum;
 
-  if HasAsList(S) then
-    return IteratorList(AsList(S));
+  if HasAsListCanonical(S) then
+    return AsListCanonical(S);
   elif Length(GeneratorsOfSemigroup(S)) = 0 then
     TryNextMethod();
   fi;
@@ -241,14 +209,14 @@ function(S)
   end;
 
   enum.ElementNumber := function(enum, nr)
-    return SEMIGROUP_ELEMENT_NUMBER(GenericSemigroupData(S), nr);
+    return EN_SEMI_ELEMENT_NUMBER(S, nr);
   end;
 
   # FIXME this should be Size(S) hack around RZMS
   enum.Length := enum -> EN_SEMI_SIZE(S);
 
   enum.AsList := function(enum)
-    return SEMIGROUP_AS_LIST(GenericSemigroupData(S));
+    return AsListCanonical(S);
   end;
 
   enum.Membership := function(x, enum)
@@ -263,6 +231,64 @@ function(S)
   enum := EnumeratorByFunctions(S, enum);
   SetIsSemigroupEnumerator(enum, true);
   return enum;
+end);
+
+InstallMethod(ELMS_LIST, "for an enumerator of a semigroup",
+[IsSemigroupEnumerator, IsList], 
+function(enum, list)
+  local out, y, x;
+
+  out := [];
+  for x in list do 
+    y := enum[x];
+    if y <> fail then 
+      Add(out, y);
+    else 
+      ErrorNoReturn("List Elements, <list>[", x, 
+                    "] must have an assigned value");
+    fi;
+  od;
+  return out;
+end);
+
+InstallMethod(Iterator, "for semigroup enumerator sorted",
+[IsSemigroupEnumerator and IsSSortedList],
+function(enum)
+  return IteratorSorted(UnderlyingCollection(enum));
+end);
+
+InstallMethod(Iterator, "for a generic semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup], 
+2, # to beat the generic method for a Rees matrix semigroup, FIXME!!
+IteratorCanonical);
+
+InstallMethod(IteratorCanonical, "for a generic semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local iter;
+
+  if HasAsListCanonical(S) then
+    return IteratorList(AsListCanonical(S));
+  fi;
+
+  iter        := rec();
+  iter.pos    := 0;
+  iter.parent := S;
+
+  iter.NextIterator   := EN_SEMI_NEXT_ITERATOR;
+  iter.IsDoneIterator := EN_SEMI_IS_DONE_ITERATOR;
+
+  iter.ShallowCopy := function(iter)
+    return rec(pos := 0, parent := S);
+  end;
+
+  return IteratorByFunctions(iter);
+end);
+
+InstallMethod(Iterator, "for semigroup enumerator",
+[IsSemigroupEnumerator],
+function(enum)
+  return Iterator(UnderlyingCollection(enum));
 end);
 
 # different method for ideals
@@ -286,11 +312,11 @@ InstallMethod(Idempotents, "for a generic semigroup with generators",
 function(S)
   local data, elts, idempotents, nr, i;
 
-  data := Enumerate(GenericSemigroupData(S));
-
-  if not IsBound(data!.idempotents) then
-    elts := SEMIGROUP_AS_LIST(data);
-    idempotents := EmptyPlist(Length(elts));
+  Enumerate(S);
+  # FIXME there should be a C method for this
+  if not IsBound(S!.idempotents) then
+    elts := AsList(S);
+    idempotents := [];
     nr := 0;
 
     for i in [1 .. Length(elts)] do
@@ -300,11 +326,10 @@ function(S)
       fi;
     od;
 
-    data!.idempotents := idempotents;
-    ShrinkAllocationPlist(idempotents);
+    S!.idempotents := idempotents; # TODO this should be in the fropin data
   fi;
 
-  return SEMIGROUP_AS_LIST(data){data!.idempotents};
+  return AsList(S){S!.idempotents};
 end);
 
 InstallMethod(Position, "for enumerable semigroup and multiplicative element",
@@ -360,193 +385,42 @@ function(S, x)
        DegreeOfPartialPermCollection(gens)) then
     return fail;
   fi;
-  if SEMIGROUPS.IsCCSemigroup(S) then
-    return SEMIGROUP_POSITION_SORTED(GenericSemigroupData(S), x);
-  fi;
-  return Position(AsSet(S), x);
+  return Position(EnumeratorSorted(S), x);
 end);
 
 InstallMethod(Length, "for generic semigroup data", [IsGenericSemigroupData],
 SEMIGROUP_CURRENT_SIZE);
 
-# FIXME remove this?
-
-InstallMethod(ELM_LIST, "for generic semigroup data, and pos int",
-[IsGenericSemigroupData, IsPosInt],
-function(data, nr)
-  return SEMIGROUP_ELEMENT_NUMBER(data, nr);
-end);
-
-InstallMethod(ViewObj, [IsGenericSemigroupData],
-function(data)
-  Print("<");
-
-  if SEMIGROUP_IS_DONE(data) then
-    Print("closed ");
-  else
-    Print("open ");
-  fi;
-
-  Print("semigroup data with ", SEMIGROUP_CURRENT_SIZE(data), " elements, ");
-  Print(SEMIGROUP_CURRENT_NR_RULES(data), " relations, ");
-  Print("max word length ", SEMIGROUP_CURRENT_MAX_WORD_LENGTH(data), ">");
-  return;
-end);
-
-InstallMethod(PrintObj, [IsGenericSemigroupData],
-2, # to beat the method for an enumerator!
-function(data)
-  local recnames, com, i, nam;
-
-  recnames := ["degree", "elts", "final", "first", "found", "gens",
-               "genslookup", "genstoapply", "ht", "left", "len", "lenindex",
-               "nr", "nrrules", "one", "pos", "prefix", "reduced", "right",
-               "rules", "stopper", "suffix", "words", "leftscc", "rightscc",
-               "leftrightscc", "hclasses", "idempotents", "Interface_CC"];
-
-  Print("\>\>rec(\n\>\>");
-  com := false;
-  i := 1;
-  for nam in Set(recnames) do
-    if IsBound(data!.(nam)) then
-      if com then
-          Print("\<\<,\n\>\>");
-      else
-          com := true;
-      fi;
-      SET_PRINT_OBJ_INDEX(i);
-      i := i + 1;
-      Print(nam, "\< := \>");
-      if nam = "ht" then
-        ViewObj(data!.(nam));
-      else
-        PrintObj(data!.(nam));
-      fi;
-    fi;
-  od;
-  Print(" \<\<\<\<)");
-
-  return;
-end);
-
-# same method for ideals
-
-InstallMethod(GenericSemigroupData, "for a semigroup",
-[IsSemigroup],
+InstallMethod(Display, [IsSemigroup],
 function(S)
-  local data, hashlen, nrgens, nr, val, i;
+  local data;
 
-  if Length(GeneratorsOfSemigroup(S)) = 0 then
-    TryNextMethod();
+  data := GenericSemigroupData(S);
+  Print("<");
+  if SEMIGROUP_IS_DONE(data) then
+    Print("fully ");
+  else
+    Print("partially ");
   fi;
 
-  if SEMIGROUPS.IsCCSemigroup(S) then
-
-    data             := rec();
-    data.genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
-    data.batch_size  := SEMIGROUPS.OptionsRec(S).batch_size;
-    data.gens        := ShallowCopy(GeneratorsOfSemigroup(S));
-    data.degree      := SEMIGROUPS.DegreeOfSemigroup(S);
-
-    data.nr_threads  := SEMIGROUPS.OptionsRec(S).nr_threads;
-    data.report      := SEMIGROUPS.OptionsRec(S).report;
-
-    return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData and IsMutable
-                                           and IsAttributeStoringRep), data);
-  fi;
-
-  data := rec(elts := [],
-              final := [],
-              first := [],
-              found := false,
-              genslookup := [],
-              left := [],
-              len := 1,
-              lenindex := [],
-              nrrules := 0,
-              prefix := [],
-              reduced := [[]],
-              right := [],
-              rules := [],
-              stopper := false,
-              suffix := [],
-              words := []);
-
-  data.report     := SEMIGROUPS.OptionsRec(S).report;
-  data.batch_size := SEMIGROUPS.OptionsRec(S).batch_size;
-  hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
-
-  data.gens := ShallowCopy(GeneratorsOfSemigroup(S));
-  nrgens := Length(data.gens);
-  data.ht := HTCreate(data.gens[1], rec(treehashsize := hashlen));
-  nr := 0;
-  data.one := false;
-  data.pos := 1;
-  data.lenindex[1] := 1;
-  data.genstoapply := [1 .. nrgens];
-
-  # add the generators
-  for i in data.genstoapply do
-    val := HTValue(data.ht, data.gens[i]);
-    if val = fail then # new generator
-      nr := nr + 1;
-      HTAdd(data.ht, data.gens[i], nr);
-      data.elts[nr] := data.gens[i];
-      data.words[nr] := [i];
-      data.first[nr] := i;
-      data.final[nr] := i;
-      data.prefix[nr] := 0;
-      data.suffix[nr] := 0;
-      data.left[nr] := EmptyPlist(nrgens);
-      data.right[nr] := EmptyPlist(nrgens);
-      data.genslookup[i] := nr;
-      data.reduced[nr] := List([1 .. nrgens], ReturnFalse);
-
-      if data.one = false and ForAll(data.gens,
-                                     y -> data.gens[i] * y = y
-                                        and y * data.gens[i] = y) then
-        data.one := nr;
-      fi;
-    else # duplicate generator
-      data.genslookup[i] := val;
-      data.nrrules := data.nrrules + 1;
-      data.rules[data.nrrules] := [[i], [val]];
-    fi;
-  od;
-
-  data.nr := nr;
-
-  return Objectify(NewType(FamilyObj(S), IsGenericSemigroupData
-                                         and IsMutable
-                                         and IsAttributeStoringRep), data);
+  Print("enumerated semigroup with ", SEMIGROUP_CURRENT_SIZE(data), " elements, ");
+  Print(SEMIGROUP_CURRENT_NR_RULES(data), " rules, ");
+  Print("max word length ", EN_SEMI_CURRENT_MAX_WORD_LENGTH(S), ">");
+  return;
 end);
-
 
 # the main algorithm
 
-InstallMethod(Enumerate, "for generic semigroup data",
-[IsGenericSemigroupData],
-data -> Enumerate(data, infinity, ReturnFalse));
+InstallMethod(Enumerate, "for enumerable semigroup and pos int",
+[IsSemigroup, IsPosInt], EN_SEMI_ENUMERATE);
 
-InstallMethod(Enumerate, "for generic semigroup data and cyclotomic",
-[IsGenericSemigroupData, IsCyclotomic],
-function(data, limit)
-  return Enumerate(data, limit, ReturnFalse);
+InstallMethod(Enumerate, "for enumerable semigroup",
+[IsSemigroup], 
+function(S)
+  return Enumerate(S, 18446744073709551615);
 end);
 
-# <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
-# <[1..Length(data!.elts)]>.
-
-if IsBound(SEMIGROUP_ENUMERATE) then
-  # <lookfunc> has arguments <data=S!.semigroupe> and an index <j> in
-  # <[1..Length(data!.elts)]>.
-  InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
-  [IsGenericSemigroupData, IsCyclotomic, IsFunction],
-  function(data, limit, lookfunc)
-    data := SEMIGROUP_ENUMERATE(data, limit, lookfunc, lookfunc <> ReturnFalse);
-    return data;
-  end);
-else
+if not IsBound(EN_SEMI_ENUMERATE) then
   InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
   [IsGenericSemigroupData, IsCyclotomic, IsFunction],
   function(data, limit, lookfunc)

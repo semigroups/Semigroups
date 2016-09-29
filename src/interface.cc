@@ -102,58 +102,6 @@ Obj ConvertFromCayleyGraph(cayley_graph_t* graph) {
 
 
 /*******************************************************************************
- * SEMIGROUP_CLOSURE:
- ******************************************************************************/
-
-Obj SEMIGROUP_CLOSURE(Obj self, Obj old_data, Obj coll_gap, Obj degree) {
-
-  assert(IS_LIST(coll_gap) && LEN_LIST(coll_gap) > 0);
-  assert(data_type(old_data) != UNKNOWN);
-
-  Semigroup* old_semigroup = data_semigroup(old_data);
-  Converter* converter     = data_converter(old_data);
-
-  std::vector<Element*>* coll(
-      ConvertElements(converter, coll_gap, INT_INTOBJ(degree)));
-
-  Semigroup* new_semigroup(
-      new Semigroup(*old_semigroup, coll, rec_get_report(old_data)));
-  new_semigroup->set_batch_size(data_batch_size(old_data));
-
-  really_delete_cont(coll);
-
-  Obj new_data = NEW_PREC(6);
-
-  AssPRec(
-      new_data, RNam_gens, UnconvertElements(converter, new_semigroup->gens()));
-  AssPRec(new_data, RNam_degree, INTOBJ_INT(new_semigroup->degree()));
-  AssPRec(new_data, RNam_report, ElmPRec(old_data, RNam_report));
-  AssPRec(new_data, RNam_batch_size, ElmPRec(old_data, RNam_batch_size));
-
-  data_init_semigroup(new_data, new_semigroup);
-
-  return new_data;
-}
-
-/*******************************************************************************
- * SEMIGROUP_CURRENT_MAX_WORD_LENGTH:
- ******************************************************************************/
-
-Obj SEMIGROUP_CURRENT_MAX_WORD_LENGTH(Obj self, Obj data) {
-  if (data_type(data) != UNKNOWN) {
-    return INTOBJ_INT(data_semigroup(data)->current_max_word_length());
-  } else {
-    initRNams();
-    if (IsbPRec(data, RNam_words) && LEN_PLIST(ElmPRec(data, RNam_words)) > 0) {
-      Obj words = ElmPRec(data, RNam_words);
-      return INTOBJ_INT(LEN_PLIST(ELM_PLIST(words, LEN_PLIST(words))));
-    } else {
-      return INTOBJ_INT(1);
-    }
-  }
-}
-
-/*******************************************************************************
  * SEMIGROUP_CURRENT_NR_RULES:
  ******************************************************************************/
 
@@ -175,89 +123,6 @@ Obj SEMIGROUP_CURRENT_SIZE(Obj self, Obj data) {
 
   initRNams();
   return INTOBJ_INT(LEN_PLIST(ElmPRec(data, RNam_elts)));
-}
-
-/*******************************************************************************
- * SEMIGROUP_AS_LIST: get the elements of the C++ semigroup, store them in
- * data.
- ******************************************************************************/
-
-Obj SEMIGROUP_AS_LIST(Obj self, Obj data) {
-  initRNams();
-
-  if (data_type(data) != UNKNOWN) {
-    std::vector<Element*>* elements =
-        data_semigroup(data)->elements(rec_get_report(data));
-    Converter* converter = data_converter(data);
-
-    if (!IsbPRec(data, RNam_elts)) {
-      Obj out = NEW_PLIST(T_PLIST, elements->size());
-      SET_LEN_PLIST(out, elements->size());
-      for (size_t i = 0; i < elements->size(); i++) {
-        SET_ELM_PLIST(out, i + 1, converter->unconvert(elements->at(i)));
-        CHANGED_BAG(out);
-      }
-      AssPRec(data, RNam_elts, out);
-    } else {
-      Obj out = ElmPRec(data, RNam_elts);
-      for (size_t i = LEN_PLIST(out); i < elements->size(); i++) {
-        AssPlist(out, i + 1, converter->unconvert(elements->at(i)));
-      }
-    }
-    CHANGED_BAG(data);
-  } else {
-    fropin(data, INTOBJ_INT(-1), 0, False);
-  }
-  return ElmPRec(data, RNam_elts);
-}
-
-/*******************************************************************************
- * SEMIGROUP_ELEMENT_NUMBER: get the <pos> element of <S>, do not store them in
- * the data record.
- ******************************************************************************/
-
-Obj SEMIGROUP_ELEMENT_NUMBER(Obj self, Obj data, Obj pos) {
-
-  size_t nr = INT_INTOBJ(pos);
-
-  initRNams();
-
-  // use the element cached in the data record if known
-  if (IsbPRec(data, RNam_elts)) {
-    Obj elts = ElmPRec(data, RNam_elts);
-    if (nr <= (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
-      return ELM_PLIST(elts, nr);
-    }
-  }
-
-  if (data_type(data) == UNKNOWN) {
-    fropin(data, pos, 0, False);
-    Obj elts = ElmPRec(data, RNam_elts);
-    if (nr <= (size_t) LEN_PLIST(elts) && ELM_PLIST(elts, nr) != 0) {
-      return ELM_PLIST(elts, nr);
-    } else {
-      return Fail;
-    }
-  } else {
-    nr--;
-    Semigroup* semigroup = data_semigroup(data);
-    Element*   x         = semigroup->at(nr, rec_get_report(data));
-    return (x == nullptr ? Fail : data_converter(data)->unconvert(x));
-  }
-}
-
-Obj SEMIGROUP_ELEMENT_NUMBER_SORTED(Obj self, Obj data, Obj pos) {
-
-  if (data_type(data) == UNKNOWN) {
-    ErrorQuit(
-        "SEMIGROUP_ELEMENT_NUMBER_SORTED: this shouldn't happen!", 0L, 0L);
-    return 0L;
-  } else {
-    size_t     nr        = INT_INTOBJ(pos) - 1;
-    Semigroup* semigroup = data_semigroup(data);
-    Element*   x         = semigroup->sorted_at(nr, rec_get_report(data));
-    return (x == nullptr ? Fail : data_converter(data)->unconvert(x));
-  }
 }
 
 Obj SEMIGROUP_AS_SET(Obj self, Obj data) {
@@ -301,19 +166,6 @@ Obj SEMIGROUP_POSITION_SORTED(Obj self, Obj data, Obj x) {
 }
 
 /*******************************************************************************
- * SEMIGROUP_ENUMERATE:
- ******************************************************************************/
-
-Obj SEMIGROUP_ENUMERATE(Obj self, Obj data, Obj limit) {
-  if (data_type(data) != UNKNOWN) {
-    data_semigroup(data)->enumerate(INT_INTOBJ(limit), rec_get_report(data));
-  } else {
-    fropin(data, limit, 0, False);
-  }
-  return data;
-}
-
-/*******************************************************************************
  * SEMIGROUP_IS_DONE:
  ******************************************************************************/
 
@@ -327,23 +179,3 @@ Obj SEMIGROUP_IS_DONE(Obj self, Obj data) {
   return (pos > nr ? True : False);
 }
 
-Obj SEMIGROUP_NEXT_ITERATOR(Obj self, Obj iter) {
-  initRNams();
-  Obj pos = INTOBJ_INT(INT_INTOBJ(ElmPRec(iter, RNam_pos)) + 1);
-  AssPRec(iter, RNam_pos, pos);
-  return SEMIGROUP_ELEMENT_NUMBER(self, ElmPRec(iter, RNam_data), pos);
-}
-
-Obj SEMIGROUP_NEXT_ITERATOR_SORTED(Obj self, Obj iter) {
-  initRNams();
-  Obj pos = INTOBJ_INT(INT_INTOBJ(ElmPRec(iter, RNam_pos)) + 1);
-  AssPRec(iter, RNam_pos, pos);
-  return SEMIGROUP_ELEMENT_NUMBER_SORTED(self, ElmPRec(iter, RNam_data), pos);
-}
-
-Obj SEMIGROUP_IS_DONE_ITERATOR_CC(Obj self, Obj iter) {
-  initRNams();
-  Obj data = ElmPRec(iter, RNam_data);
-  Int size = data_semigroup(data)->size(rec_get_report(data));
-  return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
-}

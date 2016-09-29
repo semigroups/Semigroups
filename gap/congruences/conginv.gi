@@ -217,8 +217,7 @@ function(cong)
   S := Range(cong);
   n := Size(S);
   classes := EquivalenceClasses(cong);
-  data := GenericSemigroupData(S);
-  elms := SEMIGROUP_AS_LIST(data);
+  elms := AsListCanonical(S);
   table := EmptyPlist(n);
   next := 1;
   for i in [1 .. n] do
@@ -441,10 +440,10 @@ function(c1, c2)
 
   # Calculate the intersection of the traces
   traceBlocks := [];
-  idsdata := GenericSemigroupData(IdempotentGeneratedSubsemigroup(S));
+  ids := IdempotentGeneratedSubsemigroup(S);
   c2lookup := c2!.traceLookup;
   for block in c1!.traceBlocks do
-    classnos := c2lookup{List(block, x -> Position(idsdata, x))};
+    classnos := c2lookup{List(block, x -> Position(ids, x))};
     for classno in DuplicateFreeList(classnos) do
       Add(traceBlocks, block{Positions(classnos, classno)});
     od;
@@ -465,10 +464,9 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
         NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions,
         compute_kernel, oldLookup, oldKernel, trace_unchanged, kernel_unchanged;
 
-  idsmgp := IdempotentGeneratedSubsemigroup(S);
-  idsdata := GenericSemigroupData(idsmgp);
-  idslist := SEMIGROUP_AS_LIST(idsdata);
-  slist := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
+  idsmgp  := IdempotentGeneratedSubsemigroup(S);
+  idslist := AsListCanonical(idsmgp);
+  slist   := AsListCanonical(S);
 
   # Retrieve the initial information
   kernel := InverseSubsemigroup(S, kernel);

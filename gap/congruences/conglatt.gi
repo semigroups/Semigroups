@@ -96,7 +96,7 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
   transrep := IsBound(record.transrep) and record.transrep;
   _XSemigroupCongruence := EvalString(Concatenation(type_string,
                                                     "SemigroupCongruence"));
-  elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
+  elms := AsListCanonical(S);
 
   if IsBound(record.restriction) then
     # Only try using pairs from this collection of elements

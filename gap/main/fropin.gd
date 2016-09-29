@@ -20,9 +20,6 @@
 # Note that an acting semigroup can have generic data but not the other way
 # around.
 
-# SEMIGROUPS.IsCCSemigroup: returns <true> if the argument is a semigroup to
-# which we can apply the C++ code.
-
 DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
 
 DeclareOperation("PositionSortedOp",
@@ -34,68 +31,18 @@ DeclareOperation("Position",
 DeclareOperation("Position",
                  [IsSemigroup, IsMultiplicativeElement, IsZeroCyc]);
 
-SEMIGROUPS.IsCCSemigroup := function(S)
-  return IsTransformationSemigroup(S)
-           or IsPartialPermSemigroup(S)
-           or IsBipartitionSemigroup(S)
-           or IsBooleanMatSemigroup(S)
-           or IsPBRSemigroup(S)
-           or (IsMatrixOverSemiringSemigroup(S) 
-               and not IsMatrixOverFiniteFieldSemigroup(S));
-end;
-
-# SEMIGROUPS.DegreeOfSemigroup: returns the size of the container required in
-# the C++ code by elements of the semigroup.
-
-SEMIGROUPS.DegreeOfSemigroup := function(arg)
-  local S, coll;
-
-  S := arg[1];
-  if Length(arg) = 1 then
-    coll := [Representative(S)];
-  elif Length(arg) = 2 then
-    coll := arg[2];
-  else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.DegreeOfSemigroup:\n",
-                  "unknown error,");
-  fi;
-
-  if IsTransformationSemigroup(S) then
-    return Maximum(DegreeOfTransformationSemigroup(S),
-                   DegreeOfTransformationCollection(coll));
-  elif IsPartialPermSemigroup(S) then
-    return Maximum(DegreeOfPartialPermSemigroup(S),
-                   CodegreeOfPartialPermSemigroup(S),
-                   DegreeOfPartialPermCollection(coll),
-                   CodegreeOfPartialPermCollection(coll));
-  elif IsMatrixOverSemiringSemigroup(S) then
-    return DimensionOfMatrixOverSemiring(Representative(S));
-  elif IsBipartitionSemigroup(S) then
-    return DegreeOfBipartitionSemigroup(S);
-  elif IsPBRSemigroup(S) then
-    return DegreeOfPBRSemigroup(S);
-  else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.DegreeOfSemigroup:\n",
-                  "unknown error,");
-  fi;
-end;
-
-DeclareCategory("IsGenericSemigroupData", IsList);
-
-DeclareAttribute("GenericSemigroupData", IsSemigroup, "mutable");
-
+DeclareAttribute("AsListCanonical", IsSemigroup);
+DeclareAttribute("EnumeratorCanonical", IsSemigroup);
+DeclareAttribute("IteratorCanonical", IsSemigroup);
 
 # TODO(JDM) increment the rank here. Non-finite semigroups can be enumerable!
-DeclareCategory("IsEnumerableSemigroup", IsSemigroup);
+DeclareProperty("IsEnumerableSemigroup", IsSemigroup);
 
 InstallTrueMethod(IsEnumerableSemigroup, IsTransformationSemigroup);
 InstallTrueMethod(IsEnumerableSemigroup, IsPartialPermSemigroup);
-InstallTrueMethod(IsEnumerableSemigroup, IsMatrixOverFiniteFieldSemigroup);
+InstallTrueMethod(IsEnumerableSemigroup, IsMatrixOverSemiringSemigroup);
 InstallTrueMethod(IsEnumerableSemigroup, IsBipartitionSemigroup);
-InstallTrueMethod(IsEnumerableSemigroup, IsIntegerMatrixSemigroup);
+InstallTrueMethod(IsEnumerableSemigroup, IsPBRSemigroup);
 
-DeclareOperation("Enumerate", [IsGenericSemigroupData]);
-DeclareOperation("Enumerate", [IsGenericSemigroupData, IsCyclotomic]);
-DeclareOperation("Enumerate", [IsGenericSemigroupData,
-                               IsCyclotomic,
-                               IsFunction]);
+DeclareOperation("Enumerate", [IsSemigroup, IsPosInt]);
+DeclareOperation("Enumerate", [IsSemigroup]);

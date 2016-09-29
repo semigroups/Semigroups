@@ -148,10 +148,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  if SEMIGROUPS.IsCCSemigroup(S) then
-    return EN_SEMI_NR_IDEMPOTENTS(S);
-  fi;
-  return Length(Idempotents(S));
+  return EN_SEMI_NR_IDEMPOTENTS(S);
 end);
 
 InstallMethod(GroupOfUnits, "for a semigroup",
@@ -697,14 +694,13 @@ end);
 InstallMethod(RepresentativeOfMinimalIdealNC, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local data, comps;
+  local comps;
 
-  data := Enumerate(GenericSemigroupData(S));
-  comps := GreensRRelation(S)!.data.comps;
-  return SEMIGROUP_AS_LIST(data)[comps[1][1]];
-  #TODO use enumerator here instead
-  # the first component (i.e. the inner most) of the strongly connected
+  # The first component (i.e. the inner most) of the strongly connected
   # components of the right Cayley graph corresponds the minimal ideal.
+
+  comps := GreensRRelation(S)!.data.comps;
+  return EnumeratorCanonical(S)[comps[1][1]];
 end);
 
 ################################################################################
