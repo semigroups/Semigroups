@@ -19,7 +19,6 @@ InstallMethod(MinimalFactorization,
 "for a semigroup and an associative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
-  local data, pos;
   if not x in S then
     ErrorNoReturn("Semigroups: MinimalFactorization:\n",
                   "the second argument <x> is not an element ",
@@ -186,7 +185,7 @@ function(S, x)
   else
     pos := EN_SEMI_POSITION_CURRENT(S, x);
     if pos <> fail then
-      return EN_SEMI_FACTORIZATION(S, pos);;
+      return EN_SEMI_FACTORIZATION(S, pos);
     fi;
   fi;
 
@@ -238,7 +237,7 @@ function(S, x)
   else
     pos := EN_SEMI_POSITION_CURRENT(S, x);
     if pos <> fail then
-      return EN_SEMI_FACTORIZATION(S, pos);;
+      return EN_SEMI_FACTORIZATION(S, pos);
     fi;
   fi;
 
@@ -297,7 +296,7 @@ function(S, x)
   else
     pos := EN_SEMI_POSITION_CURRENT(S, x);
     if pos <> fail then
-      return EN_SEMI_FACTORIZATION(S, pos);;
+      return EN_SEMI_FACTORIZATION(S, pos);
     fi;
   fi;
 

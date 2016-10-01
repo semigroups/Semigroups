@@ -27,8 +27,9 @@ end);
 # <true>
 
 SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
-  local nr, looking, found, i, lookup, indices, S, data, left, right,
-   genstoapply, j, len, lookfunc2, l, k;
+  local nr, looking, found, i, lookup, indices, S, left, right, genstoapply, j,
+  len, lookfunc2, l, k;
+
   nr := enum!.nr;
 
   if limit < nr then # we already know descendants of enum[i]
@@ -128,16 +129,16 @@ InstallMethod(Enumerator, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 1, # to beat the library method
 function(I)
-  local record, data, gens, i, pos, S;
+  local S, record, gens, i, pos;
   S := SupersemigroupOfIdeal(I);
 
   record :=
-    rec( pos := 1,       # the first position in <indices> whose descendants
-                         # might not have been installed
-         indices := [],  # the indices of elements in <I> in <S>
-         nr := 0,        # the length of <indices>
-         lookup := [] ); # if <data!.elts[i]> is an element of <I>, then
-                         # <lookup[i]=Position(Enumerator(I), data!.elts[i])
+    rec(pos := 1,      # the first position in <indices> whose descendants
+                       # might not have been installed
+        indices := [], # the indices of elements in <I> in <S>
+        nr := 0,       # the length of <indices>
+        lookup := []); # if <data!.elts[i]> is an element of <I>, then
+                       # <lookup[i]=Position(Enumerator(I), data!.elts[i])
 
   # add the generators to <record>
 
@@ -150,7 +151,6 @@ function(I)
       record.indices[record.nr] := pos;
     fi;
   od;
-  
   record.enum := Enumerator(S);
 
   record.NumberElement := function(enum, elt)

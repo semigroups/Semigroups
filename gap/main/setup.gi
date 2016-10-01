@@ -344,7 +344,8 @@ InstallMethod(RhoAct, "for a Rees 0-matrix subsemigroup",
   fi;
 end);
 
-InstallMethod(RhoAct, "for a matrix semigroup", [IsMatrixOverFiniteFieldSemigroup],
+InstallMethod(RhoAct, "for a matrix semigroup",
+[IsMatrixOverFiniteFieldSemigroup],
 function(S)
   return function(vsp, mat)
     return LambdaAct(S)(vsp, TransposedMat(mat));
@@ -360,7 +361,7 @@ InstallMethod(LambdaOrbSeed, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S -> [0]);
 
 InstallMethod(LambdaOrbSeed, "for a bipartition semigroup",
-[IsBipartitionSemigroup], 
+[IsBipartitionSemigroup],
 function(S)
   return BLOCKS_NC([[1 .. DegreeOfBipartitionSemigroup(S) + 1]]);
 end);

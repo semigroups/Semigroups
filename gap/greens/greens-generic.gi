@@ -243,18 +243,17 @@ function(H)
 
   G := Group(());
 
-  for h in H do 
+  for h in H do
     p := Permutation(h, AsSet(H), OnRight);
-    if not p in G then 
+    if not p in G then
       G := ClosureGroup(G, p);
-      if Size(G) = Size(H) then 
+      if Size(G) = Size(H) then
         break;
       fi;
     fi;
   od;
   return MappingByFunction(H, G, h -> Permutation(h, AsSet(H), OnRight));
 end);
-  
 
 InstallMethod(StructureDescription, "for a Green's H-class",
 [IsGreensHClass],
@@ -442,7 +441,7 @@ InstallMethod(RClass, "for an H-class", [IsGreensHClass], RClassOfHClass);
 InstallMethod(Enumerator, "for a generic semigroup Green's class",
 [IsGreensClass],
 function(C)
-  local data, rel;
+  local rel;
   rel := EquivalenceClassRelation(C);
   # gaplint: ignore 2
   return EnumeratorCanonical(Range(rel)){
@@ -799,11 +798,11 @@ InstallMethod(NrIdempotents, "for a Green's class",
 InstallMethod(Idempotents, "for a Green's class",
 [IsGreensClass],
 function(C)
-  local data, rel, positions, idempotents, x;
+  local rel, idempotents, x;
 
   #data := Enumerate(Parent(C));
   rel := EquivalenceClassRelation(C);
-  # FIXME 
+  # FIXME
   #if IsBound(data!.idempotents) then
   #  positions := Intersection(rel!.data.comps[SEMIGROUPS.XClassIndex(C)],
   #                            data!.idempotents);

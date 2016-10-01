@@ -16,41 +16,41 @@
 ## Random semigroups
 #############################################################################
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsReesMatrixSemigroup, IsList],
 function(filt, params)
   local order, i;
   if Length(params) < 1 then # rows I
     params[1] := Random([1 .. 100]);
-  elif not IsPosInt(params[1]) then 
+  elif not IsPosInt(params[1]) then
     return "the second argument (number of rows) must be a pos int,";
   fi;
   if Length(params) < 2 then # cols J
     params[2] := Random([1 .. 100]);
-  elif not IsPosInt(params[2]) then 
+  elif not IsPosInt(params[2]) then
     return "the third argument (number of columns) must be a pos int,";
   fi;
   if Length(params) < 3 then # group
     order := Random([1 .. 2047]);
     i := Random([1 .. NumberSmallGroups(order)]);
     params[3] := Range(IsomorphismPermGroup(SmallGroup(order, i)));
-  elif not IsPermGroup(params[3]) then 
+  elif not IsPermGroup(params[3]) then
     return "the fourth argument must be a perm group,";
   fi;
-  if Length(params) > 3 then 
+  if Length(params) > 3 then
     return "there must be at most four arguments,";
   fi;
 
   return params;
 end);
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsReesZeroMatrixSemigroup, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsReesMatrixSemigroup, params);
 end);
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsReesZeroMatrixSemigroup and IsRegularSemigroup, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsReesMatrixSemigroup, params);

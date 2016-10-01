@@ -226,11 +226,11 @@ function(x, S)
 
   reps := data!.reps;
   repslens := data!.repslens;
-  
+
   bound := LambdaBound(S)(LambdaRank(S)(lambda));
-  if IsPosInt(bound) then 
+  if IsPosInt(bound) then
     max := bound / Size(LambdaOrbSchutzGp(lambdao, m));
-  else 
+  else
     max := bound;
   fi;
 

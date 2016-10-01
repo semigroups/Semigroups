@@ -122,7 +122,7 @@ InstallMethod(IsGeneratorsOfSemigroup,
 [IsMatrixOverSemiringCollection],
 function(coll)
   local n;
-  if IsGreensClass(coll) then 
+  if IsGreensClass(coll) then
     return true;
   elif not IsHomogeneousList(coll) then
     return false;
@@ -439,9 +439,9 @@ InstallMethod(OneMutable, "for a matrix over semiring collection",
 [IsMatrixOverSemiringCollection], OneImmutable);
 
 InstallMethod(OneImmutable, "for a matrix over semiring collection",
-[IsMatrixOverSemiringCollection], 
-function(coll) 
-  if IsGeneratorsOfSemigroup(coll) then 
+[IsMatrixOverSemiringCollection],
+function(coll)
+  if IsGeneratorsOfSemigroup(coll) then
     return OneImmutable(Representative(coll));
   fi;
   return fail;
@@ -480,9 +480,9 @@ end);
 # the whole semigroup to check that the elements all have the same dimension,
 # which they have to by default anyway.
 
-InstallMethod(DimensionOfMatrixOverSemiringCollection, 
+InstallMethod(DimensionOfMatrixOverSemiringCollection,
 "for a matrix over semiring semigroup",
-[IsMatrixOverSemiringSemigroup], 
+[IsMatrixOverSemiringSemigroup],
 function(S)
   return DimensionOfMatrixOverSemiring(Representative(S));
 end);

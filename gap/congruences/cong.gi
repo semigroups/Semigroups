@@ -21,7 +21,7 @@
 ## cong.gd contains declarations for many of these.
 ##
 
-InstallMethod(\= , "for a left and a right semigroup congruence",
+InstallMethod(\=, "for a left and a right semigroup congruence",
 [IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
 function(c1, c2)
   return Range(c1) = Range(c2)
@@ -29,7 +29,7 @@ function(c1, c2)
              EquivalenceRelationCanonicalLookup(c2);
 end);
 
-InstallMethod(\= , "for a right and a left semigroup congruence",
+InstallMethod(\=, "for a right and a left semigroup congruence",
 [IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
 function(c1, c2)
   return Range(c1) = Range(c2)
@@ -171,7 +171,8 @@ function(arg)
     fi;
     if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
       ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
-                    "each pair should contain elements from the semigroup <S>,");
+                    "each pair should contain elements from the semigroup ",
+                    "<S>,");
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
@@ -210,7 +211,8 @@ function(arg)
     fi;
     if not ForAll(pairs, p -> p[1] in S and p[2] in S) then
       ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
-                    "each pair should contain elements from the semigroup <S>,");
+                    "each pair should contain elements from the semigroup ",
+                    "<S>,");
     fi;
     # Remove any reflexive pairs
     pairs := Filtered(pairs, p -> p[1] <> p[2]);

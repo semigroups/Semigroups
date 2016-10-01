@@ -266,13 +266,13 @@ function(S)
   o      := Enumerate(LambdaOrb(S));
   scc    := OrbSCC(o);
   lookup := OrbSCCLookup(o);
-  
-  for i in [2 .. Length(scc)] do 
+
+  for i in [2 .. Length(scc)] do
     vals := scc[i];
-    for j in [1 .. Length(vals)] do 
+    for j in [1 .. Length(vals)] do
       nr := nr + 1;
       x  := o[vals[j]];
-      for k in [j + 1 .. Length(vals)] do 
+      for k in [j + 1 .. Length(vals)] do
         if tester(x, o[vals[k]]) then
           nr := nr + 2;
         fi;
@@ -286,7 +286,7 @@ InstallMethod(NrIdempotents, "for a regular star bipartition acting semigroup",
 [IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and
  HasGeneratorsOfSemigroup],
 function(S)
-  if Length(Enumerate(LambdaOrb(S))) > 10000 then 
+  if Length(Enumerate(LambdaOrb(S))) > 10000 then
     return Sum(NrIdempotentsByRank(S));
   fi;
   TryNextMethod();
@@ -300,7 +300,7 @@ InstallMethod(NrIdempotentsByRank,
  HasGeneratorsOfSemigroup],
 function(S)
   local o, opts;
-  if DegreeOfBipartitionSemigroup(S) = 0 then 
+  if DegreeOfBipartitionSemigroup(S) = 0 then
     return [1];
   fi;
   o := Enumerate(LambdaOrb(S));

@@ -133,7 +133,7 @@ SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
 end;
 
 SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
-  local pair, filter, set_pairs, fam, cong, report, range;
+  local filter, set_pairs, fam, cong, report, range, pair;
 
   if not IsFinite(S) then
     TryNextMethod();

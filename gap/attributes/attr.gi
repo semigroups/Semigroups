@@ -498,7 +498,7 @@ end);
 InstallMethod(MinimalDClass, "for a semigroup", [IsSemigroup],
 S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 
-InstallMethod(MultiplicationTable, "for a semigroup", [IsSemigroup], 
+InstallMethod(MultiplicationTable, "for a semigroup", [IsSemigroup],
 EN_SEMI_CAYLEY_TABLE);
 
 #############################################################################

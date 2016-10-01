@@ -15,13 +15,13 @@
 ## Random
 #############################################################################
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsTransformationSemigroup, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
 end);
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsTransformationMonoid, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);

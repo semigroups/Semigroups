@@ -302,13 +302,13 @@ SEMIGROUPS.MatrixSemigroupConstructor := function(func, args)
   if Length(args) = 2 then
     d := args[1];
     q := args[2];
-  #  print := Concatenation(print, "(", String(d), ", ", String(q), ")");
+    # print := Concatenation(print, "(", String(d), ", ", String(q), ")");
   elif Length(args) = 3 then
     e := args[1];
     d := args[2];
     q := args[3];
-  #  print := Concatenation(print, "(", String(e), ", ", String(d), ", ",
-  #                         String(q), ")");
+    #  print := Concatenation(print, "(", String(e), ", ", String(d), ", ",
+    #                         String(q), ")");
   else
     ErrorNoReturn("Semigroups: SEMIGROUPS.MatrixSemigroupConstructor:",
                   " usage,\nthere must be 2 or 3 arguments,");
@@ -887,14 +887,13 @@ end);
 InstallMethod(RookPartitionMonoid, "for a positive integer", [IsPosInt],
 function(n)
   local S;
-  S := Monoid(PartialUniformBlockBijectionMonoid(n), 
+  S := Monoid(PartialUniformBlockBijectionMonoid(n),
                Bipartition(Concatenation([[1], [-1]],
                                          List([2 .. n + 1], x -> [x, -x]))));
   SetIsRegularSemigroup(S, true);
   SetIsStarSemigroup(S, true);
   return S;
 end);
-
 
 InstallMethod(ApsisMonoid,
 "for a positive integer and positive integer",

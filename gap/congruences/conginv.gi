@@ -426,7 +426,7 @@ InstallMethod(MeetSemigroupCongruences,
 [IsInverseSemigroupCongruenceByKernelTrace,
  IsInverseSemigroupCongruenceByKernelTrace],
 function(c1, c2)
-  local S, kernel, traceBlocks, idsdata, c2lookup, block, classnos, classno;
+  local S, kernel, traceBlocks, ids, c2lookup, classnos, block, classno;
   S := Range(c1);
   if S <> Range(c2) then
     ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",

@@ -18,18 +18,20 @@
 #  Springer, Berlin,  1997.
 
 # This function is used to initialise the data record for an enumerable
-# semigroup which does not have a C++ implementation. 
+# semigroup which does not have a C++ implementation.
 
-BindGlobal("INIT_FROPIN", 
+BindGlobal("INIT_FROPIN",
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
   if (not IsSemigroup(S)) or Length(GeneratorsOfSemigroup(S)) = 0 then
-    ErrorNoReturn();
-  elif IsBound(S!.__en_semi_frp_data) then 
+    ErrorNoReturn("Semigroups: INIT_FROPIN: usage,\n",
+                  "the argument must be a semigroup with at least 1 ",
+                  "generator");
+  elif IsBound(S!.__en_semi_frp_data) then
     return;
   fi;
-  
+
   data := rec(elts := [],
               final := [],
               first := [],
@@ -110,13 +112,13 @@ function(S)
 
   if HasAsSSortedList(S) then
     return AsSSortedList(S);
-  elif Length(GeneratorsOfSemigroup(S)) = 0 
-    or not (IsTransformationSemigroup(S)
-            or IsPartialPermSemigroup(S)
-            or IsBipartitionSemigroup(S)
-            or IsBooleanMatSemigroup(S)
-            or IsPBRSemigroup(S)
-            or IsMatrixOverSemiringSemigroup(S)) then 
+  elif Length(GeneratorsOfSemigroup(S)) = 0
+      or not (IsTransformationSemigroup(S)
+              or IsPartialPermSemigroup(S)
+              or IsBipartitionSemigroup(S)
+              or IsBooleanMatSemigroup(S)
+              or IsPBRSemigroup(S)
+              or IsMatrixOverSemiringSemigroup(S)) then
     TryNextMethod();
   fi;
 
@@ -180,7 +182,7 @@ InstallMethod(AsListCanonical, "for a semigroup", [IsSemigroup],
 EN_SEMI_AS_LIST);
 
 InstallMethod(Enumerator, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 2, 
+[IsSemigroup and HasGeneratorsOfSemigroup], 2,
 function(S)
   if HasAsList(S) then
     return AsList(S);
@@ -234,18 +236,18 @@ function(S)
 end);
 
 InstallMethod(ELMS_LIST, "for an enumerator of a semigroup",
-[IsSemigroupEnumerator, IsList], 
+[IsSemigroupEnumerator, IsList],
 function(enum, list)
   local out, y, x;
 
   out := [];
-  for x in list do 
+  for x in list do
     y := enum[x];
-    if y <> fail then 
+    if y <> fail then
       Add(out, y);
-    else 
-      ErrorNoReturn("List Elements, <list>[", x, 
-                    "] must have an assigned value");
+    else
+      ErrorNoReturn("Semigroups: ELMS_LIST: List Elements, <list>[", x,
+                    "] must have an assigned value,");
     fi;
   od;
   return out;
@@ -258,7 +260,7 @@ function(enum)
 end);
 
 InstallMethod(Iterator, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 
+[IsSemigroup and HasGeneratorsOfSemigroup],
 2, # to beat the generic method for a Rees matrix semigroup, FIXME!!
 IteratorCanonical);
 
@@ -310,7 +312,7 @@ end);
 InstallMethod(Idempotents, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  local data, elts, idempotents, nr, i;
+  local elts, idempotents, nr, i;
 
   Enumerate(S);
   # FIXME there should be a C method for this
@@ -338,7 +340,7 @@ function(S, x)
   return PositionOp(S, x, 0);
 end);
 
-InstallMethod(Position, 
+InstallMethod(Position,
 "for enumerable semigroup, multiplicative element, and zero cyc",
 [IsSemigroup, IsMultiplicativeElement, IsZeroCyc],
 function(S, x, n)
@@ -356,7 +358,7 @@ function(S, x, n)
   if (IsTransformation(x)
       and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
       or (IsPartialPerm(x)
-          and DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)) then 
+          and DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)) then
     return fail;
   fi;
 
@@ -403,8 +405,8 @@ function(S)
     Print("partially ");
   fi;
 
-  Print("enumerated semigroup with ", SEMIGROUP_CURRENT_SIZE(data), " elements, ");
-  Print(SEMIGROUP_CURRENT_NR_RULES(data), " rules, ");
+  Print("enumerated semigroup with ", SEMIGROUP_CURRENT_SIZE(data));
+  Print(" elements, ", SEMIGROUP_CURRENT_NR_RULES(data), " rules, ");
   Print("max word length ", EN_SEMI_CURRENT_MAX_WORD_LENGTH(S), ">");
   return;
 end);
@@ -415,7 +417,7 @@ InstallMethod(Enumerate, "for enumerable semigroup and pos int",
 [IsSemigroup, IsPosInt], EN_SEMI_ENUMERATE);
 
 InstallMethod(Enumerate, "for enumerable semigroup",
-[IsSemigroup], 
+[IsSemigroup],
 function(S)
   return Enumerate(S, 18446744073709551615);
 end);

@@ -54,8 +54,8 @@ function(filt, R, S)
   D := BaseDomain(Representative(S));
   if D = R then
     return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
-  elif Size(D) <= Size(R) and IsIdenticalObj(FamilyObj(D), FamilyObj(R))  
-      and DegreeOverPrimeField(R) mod DegreeOverPrimeField(D) = 0 then 
+  elif Size(D) <= Size(R) and IsIdenticalObj(FamilyObj(D), FamilyObj(R))
+      and DegreeOverPrimeField(R) mod DegreeOverPrimeField(D) = 0 then
     map := x -> Matrix(R, x);
     inv := x -> Matrix(D, x);
     T   := Semigroup(List(GeneratorsOfSemigroup(S), map));
@@ -81,14 +81,14 @@ end);
 
 InstallMethod(IsomorphismSemigroup,
 "for IsMatrixOverFiniteFieldSemigroup and a semigroup of matrices over a ff",
-[IsMatrixOverFiniteFieldSemigroup, 
- IsRing, 
+[IsMatrixOverFiniteFieldSemigroup,
+ IsRing,
  IsSemigroup and HasGeneratorsOfSemigroup and IsFFECollCollColl],
 function(filt, R, S)
   local D, map, T;
   D := BaseDomain(Representative(S));
-  if Size(D) <= Size(R) and IsIdenticalObj(FamilyObj(D), FamilyObj(R))  
-      and DegreeOverPrimeField(R) mod DegreeOverPrimeField(D) = 0 then 
+  if Size(D) <= Size(R) and IsIdenticalObj(FamilyObj(D), FamilyObj(R))
+      and DegreeOverPrimeField(R) mod DegreeOverPrimeField(D) = 0 then
     map := x -> Matrix(R, x);
     T := Semigroup(List(GeneratorsOfSemigroup(S), map));
     return MagmaIsomorphismByFunctionsNC(S, T, map, AsList);
@@ -137,12 +137,12 @@ function(S)
   return Range(IsomorphismMonoid(IsMatrixOverFiniteFieldMonoid, S));
 end);
 
-InstallMethod(IsomorphismMonoid, 
+InstallMethod(IsomorphismMonoid,
 "for IsMatrixOverFiniteFieldMonoid and a semigroup",
 [IsMatrixOverFiniteFieldMonoid, IsSemigroup],
 SEMIGROUPS.DefaultIsomorphismMonoid);
 
-InstallMethod(IsomorphismMonoid, 
+InstallMethod(IsomorphismMonoid,
 "for IsMatrixOverFiniteFieldMonoid, a ring, and a semigroup",
 [IsMatrixOverFiniteFieldMonoid, IsRing, IsSemigroup],
 function(filt, R, S)
@@ -159,14 +159,14 @@ function(filt, R, S)
                                        x -> (x ^ inv2) ^ inv1);
 end);
 
-InstallMethod(IsomorphismMonoid, 
+InstallMethod(IsomorphismMonoid,
 "for IsMatrixOverFiniteFieldMonoid and a monoid",
 [IsMatrixOverFiniteFieldMonoid, IsMonoid],
 function(filter, S)
   return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 end);
 
-InstallMethod(IsomorphismMonoid, 
+InstallMethod(IsomorphismMonoid,
 "for IsMatrixOverFiniteFieldMonoid, a ring, and a monoid",
 [IsMatrixOverFiniteFieldMonoid, IsRing, IsMonoid],
 function(filter, R, S)
@@ -193,8 +193,8 @@ end);
 
 InstallMethod(ViewObj, "for a general linear monoid",
 [IsGeneralLinearMonoid],
-Maximum(RankFilter(IsMonoid and HasGeneratorsOfMonoid), 
-        RankFilter(IsMatrixOverFiniteFieldSemigroup 
+Maximum(RankFilter(IsMonoid and HasGeneratorsOfMonoid),
+        RankFilter(IsMatrixOverFiniteFieldSemigroup
                    and HasGeneratorsOfSemigroup))
 - RankFilter(IsGeneralLinearMonoid) + 1,
 function(S)
@@ -212,10 +212,10 @@ function(M)
   local rep, str;
 
   rep := Representative(M);
-  str :=  Concatenation("GLM(",
-                        String(DimensionOfMatrixOverSemiring(rep)),
-                        ", ",
-                        String(Characteristic(BaseDomain(M))));
+  str := Concatenation("GLM(",
+                       String(DimensionOfMatrixOverSemiring(rep)),
+                       ", ",
+                       String(Characteristic(BaseDomain(M))));
   if Characteristic(BaseDomain(M)) <> 1 then
     Append(str, " ^ ");
     Append(str, String(Log(Size(BaseDomain(M)),
@@ -236,29 +236,29 @@ end);
 ## ?. Random
 #############################################################################
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsMatrixOverFiniteFieldSemigroup, IsList],
 function(filt, params)
 
   if Length(params) < 1 then # nr gens
     params[1] := Random([1 .. 20]);
-  elif not IsPosInt(params[1]) then  
+  elif not IsPosInt(params[1]) then
     return "the second argument (number of generators) must be a pos int,";
   fi;
   if Length(params) < 2 then # dimension
     params[2] := Random([1 .. 20]);
-  elif not IsPosInt(params[2]) then  
+  elif not IsPosInt(params[2]) then
     return "the third argument (matrix dimension) must be a pos int,";
   fi;
   if Length(params) < 3 then # field
     params[3] := GF(Random(Primes), Random([1 .. 9]));
-  elif not IsField(params[3]) or not IsFinite(params[3]) then 
+  elif not IsField(params[3]) or not IsFinite(params[3]) then
     return "the fourth argument must be a finite field,";
   fi;
   if Length(params) < 4 then # ranks
     params[4] := [1 .. params[2]];
-  elif not IsList(params[4]) 
-      or not ForAll(params[4], x -> IsPosInt(x) and x <= params[2]) then 
+  elif not IsList(params[4])
+      or not ForAll(params[4], x -> IsPosInt(x) and x <= params[2]) then
     return "the fifth argument (matrix ranks) must be a list of pos ints,";
   fi;
 
@@ -269,7 +269,7 @@ function(filt, params)
   return params;
 end);
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsMatrixOverFiniteFieldMonoid, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsMatrixOverFiniteFieldSemigroup,
@@ -298,21 +298,21 @@ InstallMethod(RandomInverseSemigroupCons,
 "for IsMatrixOverFiniteFieldSemigroup and list",
 [IsMatrixOverFiniteFieldSemigroup, IsList],
 function(filt, params)
-    return AsSemigroup(filt, 
-                    params[3], 
-                    RandomInverseSemigroup(IsPartialPermSemigroup, 
-                                        params[1], 
-                                        params[2]));
+    return AsSemigroup(filt,
+                       params[3],
+                       RandomInverseSemigroup(IsPartialPermSemigroup,
+                                              params[1],
+                                              params[2]));
 end);
 
 InstallMethod(RandomInverseMonoidCons,
 "for IsMatrixOverFiniteFieldMonoid and list",
 [IsMatrixOverFiniteFieldMonoid, IsList],
 function(filt, params)
-    return AsMonoid(filt, 
-                    params[3], 
-                    RandomInverseMonoid(IsPartialPermMonoid, 
-                                        params[1], 
+    return AsMonoid(filt,
+                    params[3],
+                    RandomInverseMonoid(IsPartialPermMonoid,
+                                        params[1],
                                         params[2]));
 end);
 
@@ -343,9 +343,9 @@ end);
 InstallMethod(BaseDomain, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S -> BaseDomain(Representative(S)));
 
-
-InstallMethod(IsMatrixOverFiniteFieldSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], C -> IsMatrixOverFiniteFieldSemigroup(Parent(C)));
+InstallMethod(IsMatrixOverFiniteFieldSemigroupGreensClass,
+"for a Green's class", [IsGreensClass],
+C -> IsMatrixOverFiniteFieldSemigroup(Parent(C)));
 
 InstallTrueMethod(IsGeneratorsOfSemigroup, IsMatrixOverFiniteFieldCollection);
 
@@ -565,13 +565,12 @@ end);
 
 InstallGlobalFunction(MatrixOverFiniteFieldIdempotentCreator,
 function(S, x, y)
-  local filt, m, inv;
+  local filt, dim, m, inv;
 
   if Rank(x) = 0 then
     filt := SEMIGROUPS_FilterOfMatrixOverSemiring(Representative(S));
-    return NewZeroMatrixOverFiniteField(filt,
-                                        BaseDomain(S),
-                                        DimensionOfMatrixOverSemiringCollection(S));
+    dim := DimensionOfMatrixOverSemiringCollection(S);
+    return NewZeroMatrixOverFiniteField(filt, BaseDomain(S), dim);
   else
     m := AsMatrix(IsMatrixOverFiniteField,
                   Representative(S),
@@ -650,7 +649,8 @@ end);
 
 InstallMethod(ViewObj,
 "for a matrix semigroup ideal with generators of semigroup ideal",
-[IsMatrixOverFiniteFieldSemigroup and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsMatrixOverFiniteFieldSemigroup and IsSemigroupIdeal and
+ HasGeneratorsOfSemigroupIdeal],
 function(S)
   local deg, gens;
   gens := GeneratorsOfSemigroupIdeal(S);

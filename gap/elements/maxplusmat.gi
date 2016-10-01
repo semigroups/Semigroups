@@ -232,7 +232,7 @@ InstallMethod(RadialEigenvector,
 [IsMaxPlusMatrix],
 function(m)
   local dim, pows, crit, out, n, i, k;
-  
+
   dim := DimensionOfMatrixOverSemiring(m);
   ### Method only valid for SpectralRadius = 0.
   if SpectralRadius(m) <> 0 then
@@ -240,27 +240,27 @@ function(m)
   fi;
 
   pows := List([1 .. 2 * dim], k -> m ^ k);
-  
+
   # Find first power of <m> with 0 in the diagonal and find the position of 0
   # in the diagonal
-  for n in pows do 
+  for n in pows do
     crit := Position(List([1 .. dim], i -> n[i][i]), 0);
-    if crit <> fail then 
+    if crit <> fail then
       break;
     fi;
   od;
-  
+
   out := [1 .. dim] * -infinity;
 
   for i in [1 .. dim] do
-    for k in [1 .. 2 * dim] do 
-      if pows[k][i][crit] > out[i] then 
+    for k in [1 .. 2 * dim] do
+      if pows[k][i][crit] > out[i] then
         out[i] := pows[k][i][crit];
       fi;
     od;
   od;
 
-  if out[crit] < 0 then 
+  if out[crit] < 0 then
     out[crit] := 0;
   fi;
 

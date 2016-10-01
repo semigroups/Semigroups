@@ -93,8 +93,8 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
           (DegreeOfPartialPermSemigroup(S) <>
            DegreeOfPartialPermCollection(coll)
            or CodegreeOfPartialPermSemigroup(S) <>
-           CodegreeOfPartialPermCollection(coll)))
-           ## FIXME the above should really be less than, since this should
+           CodegreeOfPartialPermCollection(coll))) then
+           # FIXME the above should really be less than, since this should
            # work if the degree of the semigroup is larger than the degree of
            # the collection!
     return ClosureSemigroup(S, coll, opts);
@@ -105,10 +105,10 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
   # semigroup. So, in the small generating set code of
   # Semigroup/MonoidByGenerators we must check if elements of the collection
   # belong to the semigroup before trying to add them.
-  if EN_SEMI_ADD_GENERATORS(S, coll) = fail then 
+  if EN_SEMI_ADD_GENERATORS(S, coll) = fail then
     return ClosureSemigroup(S, coll, opts);
   fi;
-  
+
   # We must recreate the semigroup <S> as <T> since <S> may have further
   # attributes that are no longer valid after the call to
   # EN_SEMI_ADD_GENERATORS, such as Size etc. In other words, S may no longer
@@ -815,26 +815,26 @@ function(S)
   return AsList(S)[Random([1 .. Size(S)])];
 end);
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsSemigroup, IsList],
 function(filt, params)
   if Length(params) < 1 then # nr gens
     params[1] := Random([1 .. 20]);
-  elif not IsPosInt(params[1]) then 
+  elif not IsPosInt(params[1]) then
     return "the second argument (number of generators) must be a pos int,";
   fi;
   if Length(params) < 2 then # degree / dimension
     params[2] := Random([1 .. 20]);
-  elif not IsPosInt(params[2]) then 
+  elif not IsPosInt(params[2]) then
     return "the third argument (degree or dimension) must be a pos int,";
   fi;
-  if Length(params) > 2 then 
+  if Length(params) > 2 then
     return "there must be at most three arguments,";
   fi;
   return params;
 end);
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsMonoid, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
@@ -927,7 +927,7 @@ function(arg)
   fi;
 
   params := SEMIGROUPS_ProcessRandomArgsCons(filt, arg{[2 .. Length(arg)]});
-  if IsString(params) then 
+  if IsString(params) then
     ErrorNoReturn("Semigroups: RandomSemigroup: usage,\n", params);
   fi;
   return RandomSemigroupCons(filt, params);
@@ -963,12 +963,12 @@ function(arg)
                     IsProjectiveMaxPlusMatrixMonoid,
                     IsNTPMatrixMonoid,
                     IsBlockBijectionMonoid,
-                    IsIntegerMatrixMonoid, 
+                    IsIntegerMatrixMonoid,
                     IsMatrixOverFiniteFieldMonoid]);
   fi;
 
   params := SEMIGROUPS_ProcessRandomArgsCons(filt, arg{[2 .. Length(arg)]});
-  if IsString(params) then 
+  if IsString(params) then
     ErrorNoReturn("Semigroups: RandomMonoid: usage,\n", params);
   fi;
   return RandomMonoidCons(filt, params);
@@ -1004,12 +1004,12 @@ function(arg)
                     IsProjectiveMaxPlusMatrixSemigroup,
                     IsNTPMatrixSemigroup,
                     IsBlockBijectionSemigroup,
-                    IsIntegerMatrixSemigroup, 
+                    IsIntegerMatrixSemigroup,
                     IsMatrixOverFiniteFieldSemigroup]);
   fi;
 
   params := SEMIGROUPS_ProcessRandomArgsCons(filt, arg{[2 .. Length(arg)]});
-  if IsString(params) then 
+  if IsString(params) then
     ErrorNoReturn("Semigroups: RandomInverseSemigroup: usage,\n", params);
   fi;
   return RandomInverseSemigroupCons(filt, params);
@@ -1045,12 +1045,12 @@ function(arg)
                     IsProjectiveMaxPlusMatrixMonoid,
                     IsNTPMatrixMonoid,
                     IsBlockBijectionMonoid,
-                    IsIntegerMatrixMonoid, 
+                    IsIntegerMatrixMonoid,
                     IsMatrixOverFiniteFieldMonoid]);
   fi;
 
   params := SEMIGROUPS_ProcessRandomArgsCons(filt, arg{[2 .. Length(arg)]});
-  if IsString(params) then 
+  if IsString(params) then
     ErrorNoReturn("Semigroups: RandomInverseMonoid: usage,\n", params);
   fi;
   return RandomInverseMonoidCons(filt, params);
