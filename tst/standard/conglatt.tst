@@ -17,7 +17,7 @@ gap> SEMIGROUPS.StartTest();
 #T# Robustness against infinite semigroups
 gap> S := FreeSemigroup(2);;
 gap> congs := CongruencesOfSemigroup(S);
-Error, Semigroups: SEMIGROUPS.LatticeOfXCongruences: usage,
+Error, Semigroups: SEMIGROUPS.LatticeOfCongs: usage,
 first argument <S> must be a finite semigroup,
 
 #T# LatticeOfCongruences
@@ -169,12 +169,12 @@ gap> PositionsProperty(minl, c -> IsSubrelation(min[1], c));
 gap> PositionsProperty(minr, c -> IsSubrelation(min[1], c));
 [ 9 ]
 
-#T# SEMIGROUPS.LatticeOfXCongruences transrep
+#T# SEMIGROUPS.LatticeOfCongs transrep
 gap> S := Semigroup( [ Transformation( [ 4, 2, 3, 3 ] ),
 >   Transformation( [ 4, 4, 4, 4 ] ) ] );;
-gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+gap> l := SEMIGROUPS.LatticeOfCongs(S, "Right", rec(transrep := true));
 [ [  ] ]
-gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+gap> l := SEMIGROUPS.LatticeOfCongs(S, "Right", rec(transrep := true));
 [ [  ] ]
 gap> LatticeOfCongruences(S);
 [ [  ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1, 2, 6 ], [ 1 ], 
@@ -183,17 +183,15 @@ gap> LatticeOfRightCongruences(S);
 [ [  ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1, 2, 6 ], [ 1 ], [ 1, 2 ], 
   [ 1, 2, 3, 4, 5, 6, 7, 9 ], [ 1, 3, 6 ] ]
 gap> S := Semigroup([Transformation([1,3,1]), Transformation([2,2,2])]);;
-gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+gap> l := SEMIGROUPS.LatticeOfCongs(S, "Right", rec(transrep := true));
 [ [  ], [ 1 ], [ 1 ] ]
 gap> S := Semigroup([Transformation([2,3,2]), Transformation([3,1,3])]);;
-gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+gap> l := SEMIGROUPS.LatticeOfCongs(S, "Right", rec(transrep := true));
 [ [  ], [ 1 ], [ 1, 5, 8, 13 ], [ 1, 2, 9, 12 ], [ 1 ], [ 1 ], [ 1, 6 ], 
   [ 1 ], [ 1 ], [ 1, 2, 5, 6 ], [ 1, 2, 5, 6, 7, 10 ], [ 1, 2, 9 ], 
   [ 1, 5, 8 ], [ 1, 6, 8, 9 ], [ 1, 6, 7, 8, 9, 14 ] ]
-gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true,
->                                                          1gen := true));
-[ [  ], [ 1 ], [ 1, 5, 8 ], [ 1, 2, 9 ], [ 1 ], [ 1 ], [ 1, 6 ], [ 1 ], [ 1 ] 
- ]
+gap> l := SEMIGROUPS.LatticeOfCongs_1gen(S, "Right", rec(transrep := true));
+[ [  ], [ 4, 7 ], [ 1, 8 ], [  ], [  ], [ 5 ], [  ], [  ] ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

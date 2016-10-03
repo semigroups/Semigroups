@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();;
 
-# LatticeOfXCongruences with 'transrep' flag
+# LatticeOfCongs with 'transrep' flag
 gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), 
 >                      PartialPerm( [ 1, 2 ], [ 3, 1 ] ) ] );;
 gap> l := [ [  ], [ 1, 3 ], [ 1 ], [ 1, 5 ], [ 1 ], [ 1, 2, 3, 10, 21 ], 
@@ -29,7 +29,7 @@ gap> l := [ [  ], [ 1, 3 ], [ 1 ], [ 1, 5 ], [ 1 ], [ 1, 2, 3, 10, 21 ],
 > [ 1, 8, 10, 11, 12, 14, 16, 18, 19, 28, 29, 31, 35, 36 ], 
 > [ 1, 3, 10, 16, 21, 22, 31 ], [ 1, 5, 10, 16, 24, 25, 31 ], [ 1, 12, 16 ], 
 > [ 1, 10, 12, 16, 29, 31, 35 ], [ 1, 2, 3, 16, 17, 20, 22 ] ];;
-gap> l = SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep:=true))![1];
+gap> l = SEMIGROUPS.LatticeOfCongs(S, "Right", rec(transrep:=true))![2];
 true
 gap> p := PartitionMonoid(2);;
 gap> iso := SmallerDegreeTransformationRepresentation(p);;
@@ -38,7 +38,7 @@ gap> q := Range(iso);
 gap> IsIsomorphicSemigroup(p, q);
 true
 gap> S := Semigroup( [ PartialPerm( [ 1, 2 ], [ 2, 1 ] ), PartialPerm( [ 1, 2 ], [ 3, 2 ] ) ] );;
-gap> l := SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(transrep := true));
+gap> l := SEMIGROUPS.LatticeOfCongs(S, "Right", rec(transrep := true));
 [ [  ], [ 1, 3 ], [ 1 ], [ 1, 5 ], [ 1 ], [ 1, 2, 3, 10, 21 ], 
   [ 1, 4, 5, 16, 25 ], [ 1, 12 ], [ 1, 4, 5, 10, 13, 23, 24, 30 ], [ 1 ], 
   [ 1, 8, 12, 16, 35 ], [ 1 ], [ 1, 4, 5 ], [ 1, 2, 3, 16, 17, 20, 22, 37 ], 
