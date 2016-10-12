@@ -981,24 +981,6 @@ gap> InjectionNormalizedPrincipalFactor(DClass(S, S.1));
 Error, Semigroups: InjectionNormalizedPrincipalFactor: usage,
 the argument <D> must be a regular D-class,
 
-#T# SmallDegreeTransformationRepresentation: A monoid
-gap> S := Monoid([PartialPerm([1, 2], [1, 3])]);;
-gap> iso := SmallDegreeTransformationRepresentation(S);;
-gap> T := Range(iso);
-<commutative transformation monoid of degree 3 with 1 generator>
-gap> IsIsomorphicSemigroup(S, T);
-true
-
-#T# SmallDegreeTransformationRepresentation: No improvement
-gap> S := Semigroup([Transformation([1,3,1]), Transformation([2,2,2])]);;
-gap> SmallDegreeTransformationRepresentation(S);
-IdentityMapping( <transformation semigroup of degree 3 with 2 generators> )
-
-#T# SmallerDegreeTransformationRepresentation: No improvement
-gap> S := Semigroup([Transformation([1,3,1]), Transformation([2,2,2])]);;
-gap> SmallerDegreeTransformationRepresentation(S);
-IdentityMapping( <transformation semigroup of degree 3 with 2 generators> )
-
 #T# attrTest6:
 # UnderlyingSemigroupOfSemigroupWithAdjoinedZero
 gap> S := FullTransformationMonoid(10);;
