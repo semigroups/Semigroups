@@ -110,7 +110,7 @@ function(list, S)
     fi;
     depth := depth + 1;
     n := DegreeOfTransformationSemigroup(list[depth]);
-    for x in GeneratorsOfSemigroup(list[depth]) do
+    for x in list[depth] do
       next := Concatenation(image, ImageListOfTransformation(x, n) + deg);
       dfs(next, n + deg, depth);
     od;
