@@ -344,7 +344,7 @@ gap> Size(class);
 
 #T# Test multithreading in TC
 gap> S := DirectProduct(FullTransformationMonoid(6), Semigroup(Transformation([2, 1])));
-<transformation semigroup of degree 8 with 4 generators>
+<transformation monoid of degree 8 with 4 generators>
 gap> pairs := [[Transformation([1, 1, 1, 1, 1, 1, 8, 7]), Transformation([1, 1,
 > 1, 1, 1, 1])],
 > [Transformation([1, 1, 1, 1, 1, 1]), Transformation([2, 2, 2, 2, 2, 2])],

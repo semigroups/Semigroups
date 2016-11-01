@@ -1599,12 +1599,10 @@ false
 #T# properties: IsRectangularGroup, 1
 gap> R := RectangularBand(10, 10);;
 gap> G := AsSemigroup(IsTransformationSemigroup, SymmetricGroup(5));;
-gap> S := DirectProduct(R, G);
-<transformation semigroup of size 12000, degree 18 with 11 generators>
+gap> S := DirectProduct(R, G);;
 gap> IsRectangularGroup(S);
 true
-gap> S := DirectProduct(G, R);
-<transformation semigroup of size 12000, degree 18 with 11 generators>
+gap> S := DirectProduct(G, R);;
 gap> IsRectangularGroup(S);
 true
 gap> IsRectangularGroup(PartitionMonoid(3));
