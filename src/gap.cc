@@ -392,8 +392,11 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ADD_GENERATORS, 2, "S, coll"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_LIST, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_SET, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CAYLEY_TABLE, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_MAX_WORD_LENGTH, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_NR_RULES, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_SIZE, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CLOSURE, 3, "new, old, coll"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER, 2, "S, pos"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER_SORTED, 2, "S, pos"),
@@ -401,9 +404,11 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("semigrp.cc", EN_SEMI_IS_DONE_ITERATOR, 1, "iter"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_LEFT_CAYLEY_GRAPH, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_LENGTH_ELEMENT, 2, "S, pos"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_IS_DONE, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_NR_IDEMPOTENTS, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION, 2, "S, x"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION_CURRENT, 2, "S, x"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION_SORTED, 2, "S, x"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_RELATIONS, 1, "S"),
@@ -411,13 +416,6 @@ static StructGVarFunc GVarFuncs[] = {
 
     GVAR_ENTRY("semigrp.cc", EN_SEMI_NEXT_ITERATOR, 1, "iter"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_NEXT_ITERATOR_SORTED, 1, "iter"),
-
-    GVAR_ENTRY("interface.cc", SEMIGROUP_AS_SET, 1, "data"),
-
-    GVAR_ENTRY("interface.cc", SEMIGROUP_CURRENT_SIZE, 1, "data"),
-    GVAR_ENTRY("interface.cc", SEMIGROUP_CURRENT_NR_RULES, 1, "data"),
-    GVAR_ENTRY("interface.cc", SEMIGROUP_POSITION_SORTED, 2, "data, x"),
-    GVAR_ENTRY("interface.cc", SEMIGROUP_IS_DONE, 1, "data"),
 
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_NR_CLASSES, 1, "cong"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_IN, 2, "cong, pair"),
@@ -589,7 +587,7 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
   ImportGVarFromLibrary("INIT_FROPIN", &INIT_FROPIN);
-  
+
   ImportGVarFromLibrary("GeneratorsOfMagma",
                         &GeneratorsOfMagma);
 

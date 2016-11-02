@@ -34,6 +34,7 @@ DeclareOperation("Position",
 DeclareAttribute("AsListCanonical", IsSemigroup);
 DeclareAttribute("EnumeratorCanonical", IsSemigroup);
 DeclareAttribute("IteratorCanonical", IsSemigroup);
+#TODO PositionCanonical
 
 # TODO(JDM) increment the rank here. Non-finite semigroups can be enumerable!
 DeclareProperty("IsEnumerableSemigroup", IsSemigroup);

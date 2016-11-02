@@ -100,10 +100,7 @@ end);
 #############################################################################
 
 InstallMethod(AsSet, "for a generic semigroup with generators",
-[IsEnumerableSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  return EN_SEMI_AS_SET(S);
-end);
+[IsEnumerableSemigroup and HasGeneratorsOfSemigroup], EN_SEMI_AS_SET);
 
 InstallMethod(EnumeratorSorted, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
@@ -162,14 +159,13 @@ function(S)
 
   iter        := rec();
   iter.pos    := 0;
-  iter.data   := GenericSemigroupData(S);
-  iter.parent := GenericSemigroupData(S);
+  iter.parent := S;
 
   iter.NextIterator   := EN_SEMI_NEXT_ITERATOR_SORTED;
   iter.IsDoneIterator := EN_SEMI_IS_DONE_ITERATOR;
 
   iter.ShallowCopy := function(iter)
-    return rec(pos := 0, data := iter!.data);
+    return rec(pos := 0, parent := iter!.parent);
   end;
 
   return IteratorByFunctions(iter);
@@ -390,23 +386,18 @@ function(S, x)
   return Position(EnumeratorSorted(S), x);
 end);
 
-InstallMethod(Length, "for generic semigroup data", [IsGenericSemigroupData],
-SEMIGROUP_CURRENT_SIZE);
-
 InstallMethod(Display, [IsSemigroup],
 function(S)
-  local data;
 
-  data := GenericSemigroupData(S);
   Print("<");
-  if SEMIGROUP_IS_DONE(data) then
+  if EN_SEMI_IS_DONE(S) then
     Print("fully ");
   else
     Print("partially ");
   fi;
 
-  Print("enumerated semigroup with ", SEMIGROUP_CURRENT_SIZE(data));
-  Print(" elements, ", SEMIGROUP_CURRENT_NR_RULES(data), " rules, ");
+  Print("enumerated semigroup with ", EN_SEMI_CURRENT_SIZE(S));
+  Print(" elements, ", EN_SEMI_CURRENT_NR_RULES(S), " rules, ");
   Print("max word length ", EN_SEMI_CURRENT_MAX_WORD_LENGTH(S), ">");
   return;
 end);

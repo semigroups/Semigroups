@@ -28,7 +28,6 @@
 #include <vector>
 
 #include "src/data.h"
-#include "src/interface.h"
 #include "src/semifp.h"
 
 #include "src/compiled.h"
@@ -127,6 +126,6 @@ extern Obj INIT_FROPIN;
 extern Obj GeneratorsOfMagma;
 
 // TODO(JDM) remove this
-extern Obj IsSemigroup; 
+extern Obj IsSemigroup;
 
 #endif // SRC_GAP_H_

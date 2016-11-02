@@ -27,8 +27,8 @@ end);
 # <true>
 
 SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
-  local nr, looking, found, i, lookup, indices, S, left, right, genstoapply, j,
-  len, lookfunc2, l, k;
+  local nr, looking, found, i, lookup, indices, S, left, right, genstoapply,
+  data, j, len, lookfunc2, l, k;
 
   nr := enum!.nr;
 
@@ -53,6 +53,7 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   left := LeftCayleyGraphSemigroup(S);
   right := RightCayleyGraphSemigroup(S);
   genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
+  data := INIT_FROPIN(S);
 
   while nr <= limit and i <= nr and not (looking and found) do
 

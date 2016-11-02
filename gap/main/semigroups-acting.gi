@@ -513,10 +513,10 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or ActionDegree(x) > ActionDegree(S) then
     return false;
-  elif HasGenericSemigroupData(S) then
-    if x in GenericSemigroupData(S) then
+  elif IsEnumerableSemigroup(S) then 
+    if EN_SEMI_POSITION_CURRENT(S, x) <> fail then
       return true;
-    elif IsClosedData(GenericSemigroupData(S)) then
+    elif EN_SEMI_IS_DONE(S) then
       return false;
     fi;
   fi;
@@ -608,10 +608,10 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or ActionDegree(x) > ActionDegree(S) then
     return false;
-  elif HasGenericSemigroupData(S) then
-    if x in GenericSemigroupData(S) then
+  elif IsEnumerableSemigroup(S) then
+    if EN_SEMI_POSITION_CURRENT(S, x) <> fail then
       return true;
-    elif IsClosedData(GenericSemigroupData(S)) then
+    elif EN_SEMI_IS_DONE(S) then
       return false;
     fi;
   elif HasAsSSortedList(S) then

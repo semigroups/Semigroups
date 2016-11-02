@@ -694,7 +694,7 @@ InstallMethod(IsFinite,
 function(S)
   local gens, id, mat, row, val;
 
-  if SEMIGROUP_IS_DONE(Enumerate(GenericSemigroupData(S), 8192)) then
+  if EN_SEMI_IS_DONE(Enumerate(S, 8192)) then
     return true;
   fi;
 
@@ -737,7 +737,7 @@ InstallMethod(IsFinite,
 "for max-plus matrix semigroups",
 [IsMaxPlusMatrixSemigroup],
 function(S)
-  if SEMIGROUP_IS_DONE(Enumerate(GenericSemigroupData(S), 8192)) then
+  if EN_SEMI_IS_DONE(Enumerate(S, 8192)) then
     return true;
   fi;
   return IsTorsion(S);
