@@ -3,6 +3,7 @@
 #W  standard/semirms.tst
 #Y  Copyright (C) 2015-16                                James D. Mitchell
 ##                                                       Wilfred A. Wilson
+##                                                       Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -1955,6 +1956,78 @@ gap> IsomorphismReesZeroMatrixSemigroup(S);;
 gap> Size(Range(last));
 2
 
+#T# ChooseHashFunction: Test for RZMS elements over pc group
+gap> G := SmallGroup(4, 2);;
+gap> a := AsList(G)[1];; b := AsList(G)[2];;
+gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> x := RMSElement(S, 1, a, 2);;
+gap> func := ChooseHashFunction(x, 25531).func;;
+gap> data := ChooseHashFunction(x, 25531).data;
+[ 101, 25531 ]
+gap> x := RMSElement(S, 2, b, 3);;
+gap> func(x, data);;
+gap> x := MultiplicativeZero(S);;
+gap> func(x, data);;
+
+#T# ChooseHashFunction: Test for RZMS elements over transformation semigroups
+gap> G := FullTransformationMonoid(3);;
+gap> a := AsList(G)[1];; b := AsList(G)[2];;
+gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> x := RMSElement(S, 1, a, 2);;
+gap> func := ChooseHashFunction(x, 25531).func;;
+gap> data := ChooseHashFunction(x, 25531).data;
+25531
+gap> func(x, data);;
+gap> x := MultiplicativeZero(S);;
+gap> func(x, data);;
+gap> func := ChooseHashFunction(x, 25531).func;;
+gap> data := ChooseHashFunction(x, 25531).data;;
+gap> func(x, data);;
+
+#T# ChooseHashFunction: Test for RZMS elements over bipartition semigroups
+gap> G := BrauerMonoid(3);;
+gap> a := AsList(G)[1];; b := AsList(G)[2];;
+gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> x := MultiplicativeZero(S);;
+gap> func := ChooseHashFunction(x, 25531).func;;
+gap> data := ChooseHashFunction(x, 25531).data;
+25531
+gap> func(x, data);;
+gap> func := ChooseHashFunction(x, 25531).func;;
+gap> data := ChooseHashFunction(x, 25531).data;;
+gap> func(x, data);;
+
+#T# HashTables: Over a pc group
+gap> G := SmallGroup(32, 2);;
+gap> a := G.1;; b := G.2;; c := G.3;; d := G.4;; e := G.5;;
+gap> mat := [[a, 0, c, b, 0, a, e], 
+> [b, 0, 0, e, a, b, a], 
+> [0, a, b, a, b, d, d],
+> [a, b, c, d, e, 0, a],
+> [e, a, 0, b, d, e, e],
+> [a, b, c, e, 0, 0, 0],
+> [e, a, 0, b, d, e, a]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> x := RMSElement(S, 1, a, 1);;
+gap> ht := HTCreate(x);;
+gap> for x in S do
+> HTAdd(ht, x, true);
+> od;
+
+#T# ChooseHashFunction: Test for RZMS elements over a group we can't hash yet
+gap> F := FreeGroup("a", "b");;
+gap> G := F / [F.1^2, F.2^3, (F.1 * F.2) ^ 5 ];;
+gap> a := AsList(G)[1];; b := AsList(G)[2];;
+gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> x := MultiplicativeZero(S);;
+gap> func := ChooseHashFunction(x, 25531).func;;
+Error, Semigroups: ChooseHashFunction: error, 
+cannot hash RZMS elements over this underlying semigroup,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
@@ -1963,7 +2036,10 @@ gap> Unbind(G);
 gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(T);
+gap> Unbind(a);
 gap> Unbind(comps);
+gap> Unbind(data);
+gap> Unbind(func);
 gap> Unbind(i);
 gap> Unbind(id);
 gap> Unbind(idems);

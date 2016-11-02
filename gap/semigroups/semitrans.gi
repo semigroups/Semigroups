@@ -80,12 +80,39 @@ function(list, S)
   return Monoid(gens);
 end);
 
+InstallMethod(DirectProductOp, "for a list and a transformation monoid as semigroup",
+[IsList, IsTransformationSemigroup], 1, # to beat the next method
+function(list, S)
+  local gens, deg, m, i, x;
+
+  # Check the arguments.
+  if IsEmpty(list) then
+    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
+                  "the first argument must be a non-empty list,");
+  elif not ForAll(list, T -> IsTransformationSemigroup(T) 
+                  and IsMonoidAsSemigroup(T)) then
+    TryNextMethod();
+  fi;
+
+  gens := ShallowCopy(GeneratorsOfSemigroup(list[1]));
+  deg  := DegreeOfTransformationSemigroup(list[1]);
+
+  for i in [2 .. Length(list)] do
+    m := DegreeOfTransformationSemigroup(list[i]);
+    for x in GeneratorsOfSemigroup(list[i]) do
+      Add(gens, Transformation([1 .. m] + deg, i -> (i - deg) ^ x + deg));
+    od;
+    deg := deg + m;
+  od;
+  return Semigroup(gens);
+end);
+
 # TODO a method for IsMonoidAsSemigroup and IsTransformationSemigroup
 
 InstallMethod(DirectProductOp, "for a list and a transformation semigroup",
 [IsList, IsTransformationSemigroup],
 function(list, S)
-  local D, dfs;
+  local target, D, dfs;
 
   # Check the arguments.
   if IsEmpty(list) then
@@ -94,12 +121,15 @@ function(list, S)
   elif ForAny(list, T -> not IsTransformationSemigroup(T)) then
     TryNextMethod();
   fi;
-
+  
+  target := Product(list, Size);
   D := fail;
 
   dfs := function(image, deg, depth)
     local x, n, next;
-    if depth = Length(list) then
+    if D <> fail and Size(D) = target then 
+      return;
+    elif depth = Length(list) then
       x := Transformation(image);
       if D = fail then
         D := Semigroup(x);
@@ -110,9 +140,12 @@ function(list, S)
     fi;
     depth := depth + 1;
     n := DegreeOfTransformationSemigroup(list[depth]);
-    for x in GeneratorsOfSemigroup(list[depth]) do
+    for x in list[depth] do
       next := Concatenation(image, ImageListOfTransformation(x, n) + deg);
       dfs(next, n + deg, depth);
+      if Size(D) = target then 
+        return;
+      fi;
     od;
     return;
   end;

@@ -52,6 +52,20 @@ function(cong)
   return out;
 end);
 
+InstallMethod(EquivalenceRelationPartition,
+"for a finite semigroup congruence by generating pairs rep",
+[IsFiniteCongruenceByGeneratingPairsRep],
+function(cong)
+  local part, data, out, class;
+  part := FiniteCongruenceByGeneratingPairsPartition(cong);
+  data := GenericSemigroupData(Range(cong));
+  out := [];
+  for class in part do
+    Add(out, List(class, i -> SEMIGROUP_ELEMENT_NUMBER(data, i)));
+  od;
+  return out;
+end);
+
 InstallMethod(FiniteCongruenceByGeneratingPairsPartition,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep], 

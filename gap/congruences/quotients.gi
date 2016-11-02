@@ -1,12 +1,20 @@
 #############################################################################
 ##
 #W  congruences/quotients.gi
-#Y  Copyright (C) 2014-15                                James D. Mitchell
+#Y  Copyright (C) 2014-16                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
+
+InstallMethod(ViewObj, "for a quotient semigroup",
+[IsQuotientSemigroup],
+function(S)
+  Print( "<quotient of ");
+  ViewObj(QuotientSemigroupCongruence(S));
+  Print(">");
+end);
 
 InstallMethod(OneImmutable, "for a quotient semigroup",
 [IsQuotientSemigroup],

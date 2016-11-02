@@ -705,22 +705,12 @@ gap> S := Monoid(
 >  Transformation([2, 2, 1, 3]), Transformation([1, 2, 2, 3]),
 >  Transformation([2, 4, 3, 2]), Transformation([2, 3, 3, 3]));;
 gap> I := SemigroupIdeal(S, S.3);;
+gap> IsRegularSemigroup(I);
+true
 gap> S / I;
-<quotient of Monoid( [ Transformation( [ 3, 3, 3, 3 ] ), 
-  Transformation( [ 2, 4, 2, 4 ] ), Transformation( [ 2, 3, 2, 3 ] ), 
-  Transformation( [ 4, 1, 4, 3 ] ), Transformation( [ 1, 4, 4, 1 ] ), 
-  Transformation( [ 2, 2, 3, 1 ] ), Transformation( [ 2, 4, 3, 4 ] ), 
-  Transformation( [ 2, 2, 1, 2 ] ), Transformation( [ 2, 2, 1, 3 ] ), 
-  Transformation( [ 1, 2, 2, 3 ] ), Transformation( [ 2, 4, 3, 2 ] ), 
-  Transformation( [ 2, 3, 3, 3 ] ) ] ) by ReesCongruenceOfSemigroupIdeal( 
-SemigroupIdeal( 
- Monoid( 
-  [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 2, 4, 2, 4 ] ), Transf\
-ormation( [ 2, 3, 2, 3 ] ), Transformation( [ 4, 1, 4, 3 ] ), Transformation( \
-[ 1, 4, 4, 1 ] ), Transformation( [ 2, 2, 3, 1 ] ), Transformation( [ 2, 4, 3,\
- 4 ] ), Transformation( [ 2, 2, 1, 2 ] ), Transformation( [ 2, 2, 1, 3 ] ), Tr\
-ansformation( [ 1, 2, 2, 3 ] ), Transformation( [ 2, 4, 3, 2 ] ), Transformati\
-on( [ 2, 3, 3, 3 ] ) ] ), [ Transformation( [ 2, 3, 2, 3 ] ) ] ) )>
+<quotient of <Rees congruence of <regular transformation semigroup ideal of 
+ degree 4 with 1 generator> over <transformation monoid of degree 4 with 12 
+generators>>>
 
 #T# TestInstall43: Issue 89
 gap> S := Semigroup(Transformation([2, 1, 3, 1, 4, 3]),

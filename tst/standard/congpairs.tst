@@ -344,7 +344,7 @@ gap> Size(class);
 
 #T# Test multithreading in TC
 gap> S := DirectProduct(FullTransformationMonoid(6), Semigroup(Transformation([2, 1])));
-<transformation semigroup of degree 8 with 4 generators>
+<transformation monoid of degree 8 with 4 generators>
 gap> pairs := [[Transformation([1, 1, 1, 1, 1, 1, 8, 7]), Transformation([1, 1,
 > 1, 1, 1, 1])],
 > [Transformation([1, 1, 1, 1, 1, 1]), Transformation([2, 2, 2, 2, 2, 2])],
@@ -500,6 +500,29 @@ gap> cong := SemigroupCongruence(S, [S.1, S.1 * S.2]);
 <semigroup congruence over <free band on the generators [ x1, x2, x3 ]> with 
 1 generating pairs>
 gap> [S.1, S.1] in cong;
+true
+
+#T# EquivalenceRelationPartition
+gap> S := PartialBrauerMonoid(2);;
+gap> pair := [[Bipartition([[1, 2], [-1], [-2]]),
+>              Bipartition([[1, -1], [2], [-2]])]];;
+gap> cong := SemigroupCongruence(S, pair);;
+gap> EquivalenceRelationPartition(cong);
+[ [ <block bijection: [ 1, -1 ], [ 2, -2 ]> ], 
+  [ <block bijection: [ 1, -2 ], [ 2, -1 ]> ], 
+  [ <bipartition: [ 1, 2 ], [ -1, -2 ]>, 
+      <bipartition: [ 1 ], [ 2 ], [ -1, -2 ]> ], 
+  [ <bipartition: [ 1, -1 ], [ 2 ], [ -2 ]>, 
+      <bipartition: [ 1 ], [ 2, -1 ], [ -2 ]>, 
+      <bipartition: [ 1, 2 ], [ -1 ], [ -2 ]>, 
+      <bipartition: [ 1, -2 ], [ 2 ], [ -1 ]>, 
+      <bipartition: [ 1 ], [ 2, -2 ], [ -1 ]>, 
+      <bipartition: [ 1 ], [ 2 ], [ -1 ], [ -2 ]> ] ]
+gap> cong := SemigroupCongruence(S, []);;
+gap> SortedList(EquivalenceRelationPartition(cong)) = List(Elements(S), x->[x]);
+true
+gap> cong := UniversalSemigroupCongruence(S);;
+gap> Length(EquivalenceRelationPartition(cong)) = 1;
 true
 
 #T# SEMIGROUPS_UnbindVariables
