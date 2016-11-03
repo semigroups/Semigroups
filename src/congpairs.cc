@@ -101,7 +101,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
       cong->todd_coxeter(report);
     }
   } else {
-    gap_prec_t              data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
+    gap_rec_t              data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     gap_list_t              rules = ElmPRec(data, RNam_rules);
     gap_list_t              words = ElmPRec(data, RNam_words);
     std::vector<relation_t> rels;
@@ -207,7 +207,7 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_list_t pair) {
     range->factorisation(lhs, lhs_pos - 1);
     range->factorisation(rhs, rhs_pos - 1);
   } else {
-    gap_prec_t data  = fropin(S, INTOBJ_INT(-1), 0, False);
+    gap_rec_t data  = fropin(S, INTOBJ_INT(-1), 0, False);
     gap_list_t words = ElmPRec(data, RNam_words);
 
     lhs = plist_to_word_t(ELM_PLIST(words, lhs_pos));
@@ -262,7 +262,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
       word.clear();
     }
   } else {
-    gap_prec_t data =
+    gap_rec_t data =
         fropin(cong_obj_get_range_obj(o), INTOBJ_INT(-1), 0, False);
     Obj words = ElmPRec(data, RNam_words);
 
@@ -306,7 +306,7 @@ Obj CONG_PAIRS_CLASS_COSET_ID(Obj self, gap_cong_class_t o) {
         word, INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, rep)) - 1, report);
     return INTOBJ_INT(cong->word_to_coset(word));
   } else {
-    gap_prec_t  data = fropin(range_obj, INTOBJ_INT(-1), 0, False);
+    gap_rec_t  data = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     Congruence* cong = cong_obj_get_cpp(cong_obj);
 
     Obj word = ELM_PLIST(ElmPRec(data, RNam_words),

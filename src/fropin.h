@@ -23,13 +23,13 @@
 #include "src/compiled.h"
 
 // TODO(JDM) write doc
-size_t fropin_prod_by_reduction(gap_prec_t fp, size_t i, size_t j);
+size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j);
 
 // TODO(JDM) write doc
-gap_prec_t fropin(gap_prec_t data, // can also be a gap_semigroup_t
-                  gap_int_t  limit,
-                  gap_func_t lookfunc,
-                  gap_bool_t looking);
+gap_rec_t fropin(gap_rec_t  data,  // can also be a gap_semigroup_t
+                 gap_int_t  limit,
+                 gap_func_t lookfunc,
+                 gap_bool_t looking);
 
 // TODO(JDM) use gap_foo_t and write doc
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj, Obj, Obj);

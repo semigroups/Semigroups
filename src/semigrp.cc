@@ -179,7 +179,7 @@ size_t semi_obj_get_batch_size(gap_semigroup_t so) {
   initRNams();
   UInt i;
   if (FindPRec(so, RNam_opts, &i, 1)) {
-    gap_prec_t opts = GET_ELM_PREC(so, i);
+    gap_rec_t opts = GET_ELM_PREC(so, i);
     if (FindPRec(opts, RNam_batch_size, &i, 1)) {
       return INT_INTOBJ(GET_ELM_PREC(opts, i));
     }
@@ -195,7 +195,7 @@ bool semi_obj_get_report(gap_semigroup_t so) {
   initRNams();
   UInt i;
   if (FindPRec(so, RNam_opts, &i, 1)) {
-    Obj opts = GET_ELM_PREC(so, i);
+    gap_rec_t opts = GET_ELM_PREC(so, i);
     if (FindPRec(opts, RNam_report, &i, 1)) {
       return (GET_ELM_PREC(opts, i) == True ? true : false);
     }
@@ -211,7 +211,7 @@ static inline size_t semi_obj_get_nr_threads(gap_semigroup_t so) {
   initRNams();
   UInt i;
   if (FindPRec(so, RNam_opts, &i, 1)) {
-    Obj opts = GET_ELM_PREC(so, i);
+    gap_rec_t opts = GET_ELM_PREC(so, i);
     if (FindPRec(opts, RNam_nr_threads, &i, 1)) {
       return INT_INTOBJ(GET_ELM_PREC(opts, i));
     }
@@ -225,7 +225,7 @@ static inline size_t semi_obj_get_nr_threads(gap_semigroup_t so) {
 static inline size_t semi_obj_get_threshold(gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   initRNams();
-  Obj x = semi_obj_get_rep(so);
+  gap_element_t x = semi_obj_get_rep(so);
   assert(TNUM_OBJ(x) == T_POSOBJ);
   assert(CALL_1ARGS(IsTropicalMatrix, x) || CALL_1ARGS(IsNTPMatrix, x));
   assert(ELM_PLIST(x, 1) != 0);
@@ -238,7 +238,7 @@ static inline size_t semi_obj_get_threshold(gap_semigroup_t so) {
 static inline size_t semi_obj_get_period(gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   initRNams();
-  Obj x = semi_obj_get_rep(so);
+  gap_element_t x = semi_obj_get_rep(so);
   assert(TNUM_OBJ(x) == T_POSOBJ);
   assert(CALL_1ARGS(IsNTPMatrix, x));
   assert(ELM_PLIST(x, 1) != 0);
@@ -248,7 +248,7 @@ static inline size_t semi_obj_get_period(gap_semigroup_t so) {
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2));
 }
 
-// Initialise the en_semi of the GAP semigroup Obj <so>, the optional 2nd and
+// Initialise the en_semi of the GAP semigroup <so>, the optional 2nd and
 // 3rd args are for use with closure semigroup.
 
 en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
@@ -392,7 +392,7 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
   }
 }
 
-Obj semi_obj_get_en_semi(gap_semigroup_t so) {
+en_semi_obj_t semi_obj_get_en_semi(gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   UInt i;
   if (FindPRec(so, RNam_en_semi_cpp_semi, &i, 1)) {
@@ -407,14 +407,14 @@ Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so) {
   return en_semi_get_semi_cpp(semi_obj_get_en_semi(so));
 }
 
-gap_prec_t semi_obj_get_fropin(gap_semigroup_t so) {
+gap_rec_t semi_obj_get_fropin(gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   UInt i;
   if (FindPRec(so, RNam_en_semi_fropin, &i, 1)) {
     return GET_ELM_PREC(so, i);
   } else {
     if (semi_obj_get_type(so) != UNKNOWN) {  // only initialise a record
-      gap_prec_t fp = NEW_PREC(0);
+      gap_rec_t fp = NEW_PREC(0);
       SET_LEN_PREC(fp, 0);
       AssPRec(so, RNam_en_semi_fropin, fp);
       CHANGED_BAG(so);
@@ -477,7 +477,7 @@ EN_SEMI_ADD_GENERATORS(Obj self, gap_semigroup_t so, gap_list_t plist) {
   }
 
   // Reset the fropin data since none of it is valid any longer
-  gap_prec_t fp = NEW_PREC(0);
+  gap_rec_t fp = NEW_PREC(0);
   SET_LEN_PREC(fp, 0);
   AssPRec(so, RNam_en_semi_fropin, fp);
   CHANGED_BAG(so);
@@ -495,7 +495,7 @@ gap_list_t EN_SEMI_AS_LIST(Obj self, gap_list_t so) {
     Converter* converter = en_semi_get_converter(es);
     return vec_to_plist(converter, elements);
   } else {
-    gap_prec_t fp = fropin(so, INTOBJ_INT(-1), 0, False);
+    gap_rec_t fp = fropin(so, INTOBJ_INT(-1), 0, False);
     return ElmPRec(fp, RNam_elts);
   }
 }
@@ -518,7 +518,7 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     }
     return out;
   } else {
-    gap_prec_t fp  = fropin(so, INTOBJ_INT(-1), 0, False);
+    gap_rec_t fp  = fropin(so, INTOBJ_INT(-1), 0, False);
     gap_list_t out = SHALLOW_COPY_OBJ(ElmPRec(fp, RNam_elts));
     SortDensePlist(out);
     CHANGED_BAG(out);
@@ -578,7 +578,7 @@ gap_int_t EN_SEMI_CURRENT_MAX_WORD_LENGTH(Obj self, gap_semigroup_t so) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_max_word_length());
   } else {
     initRNams();
-    gap_prec_t fp = semi_obj_get_en_semi(so);
+    gap_rec_t fp = semi_obj_get_en_semi(so);
     if (IsbPRec(fp, RNam_words) && LEN_PLIST(ElmPRec(fp, RNam_words)) > 0) {
       gap_list_t words = ElmPRec(fp, RNam_words);
       return INTOBJ_INT(LEN_PLIST(ELM_PLIST(words, LEN_PLIST(words))));
@@ -595,7 +595,7 @@ gap_int_t EN_SEMI_CURRENT_NR_RULES(Obj self, gap_semigroup_t so) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_nrrules());
   } else {
     initRNams();
-    gap_prec_t fp = semi_obj_get_en_semi(so);
+    gap_rec_t fp = semi_obj_get_en_semi(so);
     // TODO could write a function return_if_not_bound_prec(prec, rnam, val)
     // which
     // returns val if rnam is not bound in prec and returns prec.rnam if it is
@@ -615,7 +615,7 @@ gap_int_t EN_SEMI_CURRENT_SIZE(Obj self, gap_semigroup_t so) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_max_word_length());
   } else {
     initRNams();
-    gap_prec_t fp = semi_obj_get_en_semi(so);
+    gap_rec_t fp = semi_obj_get_en_semi(so);
     if (IsbPRec(fp, RNam_elts)) {
       return INTOBJ_INT(LEN_PLIST(ElmPRec(fp, RNam_elts)));
     } else {
@@ -631,7 +631,7 @@ EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos) {
   SEMI_OBJ_CHECK_ARG(so);
   INTOBJ_CHECK_ARG(pos);
 
-  Obj    es = semi_obj_get_en_semi(so);
+  en_semi_obj_t es = semi_obj_get_en_semi(so);
   size_t nr = INT_INTOBJ(pos);
 
   if (en_semi_get_type(es) != UNKNOWN) {
@@ -641,7 +641,7 @@ EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos) {
     return (x == nullptr ? Fail : en_semi_get_converter(es)->unconvert(x));
   } else {
     initRNams();
-    Obj fp = semi_obj_get_fropin(so);
+    gap_rec_t fp = semi_obj_get_fropin(so);
     if (IsbPRec(fp, RNam_elts)) {
       // use the element cached in the data record if known
       gap_list_t elts = ElmPRec(fp, RNam_elts);
@@ -696,7 +696,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
   SEMI_OBJ_CHECK_ARG(so);
   INTOBJ_CHECK_ARG(pos);
 
-  Obj    es    = semi_obj_get_en_semi(so);
+  en_semi_obj_t es = semi_obj_get_en_semi(so);
   size_t pos_c = INT_INTOBJ(pos);
 
   if (en_semi_get_type(es) != UNKNOWN) {
@@ -709,7 +709,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
                 pos_c);
     }
 
-    gap_prec_t fp = semi_obj_get_fropin(so);
+    gap_rec_t fp = semi_obj_get_fropin(so);
     if (!IsbPRec(fp, RNam_words)) {
       // TODO Use FindPRec instead
       word_t w;  // changed in place by the next line
@@ -727,8 +727,8 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
         size_t suffix = semi_cpp->suffix(pos_c - 1) + 1;
         if (prefix != 0 && prefix <= (size_t) LEN_PLIST(words)
             && ELM_PLIST(words, prefix) != 0) {
-          Obj old_word = ELM_PLIST(words, prefix);
-          Obj new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+          gap_list_t old_word = ELM_PLIST(words, prefix);
+          gap_list_t new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
           memcpy((void*) ((char*) (ADDR_OBJ(new_word)) + sizeof(Obj)),
                  (void*) ((char*) (ADDR_OBJ(old_word)) + sizeof(Obj)),
                  (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
@@ -739,8 +739,8 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
           AssPlist(words, pos_c, new_word);
         } else if (suffix != 0 && suffix <= (size_t) LEN_PLIST(words)
                    && ELM_PLIST(words, suffix) != 0) {
-          Obj old_word = ELM_PLIST(words, suffix);
-          Obj new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+          gap_list_t old_word = ELM_PLIST(words, suffix);
+          gap_list_t new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
           memcpy((void*) ((char*) (ADDR_OBJ(new_word)) + 2 * sizeof(Obj)),
                  (void*) ((char*) (ADDR_OBJ(old_word)) + sizeof(Obj)),
                  (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
@@ -761,7 +761,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
     assert(pos_c <= (size_t) LEN_PLIST(ElmPRec(fp, RNam_words)));
     return ELM_PLIST(ElmPRec(fp, RNam_words), pos_c);
   } else {
-    gap_prec_t fp = fropin(so, INTOBJ_INT(pos), 0, False);
+    gap_rec_t fp = fropin(so, INTOBJ_INT(pos), 0, False);
     return ELM_PLIST(ElmPRec(fp, RNam_words), pos_c);
   }
 }
@@ -798,7 +798,7 @@ gap_bool_t EN_SEMI_IS_DONE(Obj self, gap_semigroup_t so) {
     return (en_semi_get_semi_cpp(es)->is_done() ? True : False);
   }
 
-  gap_prec_t fp = semi_obj_get_fropin(so);
+  gap_rec_t fp = semi_obj_get_fropin(so);
 
   size_t pos = INT_INTOBJ(ElmPRec(fp, RNam_pos));
   size_t nr  = INT_INTOBJ(ElmPRec(fp, RNam_nr));
@@ -812,7 +812,7 @@ gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->nr_idempotents(
         semi_obj_get_report(so), semi_obj_get_nr_threads(so)));
   } else {
-    gap_prec_t fp     = fropin(so, INTOBJ_INT(-1), 0, False);
+    gap_rec_t fp     = fropin(so, INTOBJ_INT(-1), 0, False);
     gap_list_t left   = ElmPRec(fp, RNamName("left"));
     gap_list_t last   = ElmPRec(fp, RNamName("final"));
     gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
@@ -845,8 +845,8 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
     delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   } else {
-    Obj    data = semi_obj_get_fropin(so);
-    Obj    ht   = ElmPRec(data, RNam_ht);
+    gap_rec_t data = semi_obj_get_fropin(so);
+    Obj        ht   = ElmPRec(data, RNam_ht);
     size_t pos, nr;
 
     do {
@@ -854,7 +854,7 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
       if (val != Fail) {
         return val;
       }
-      Obj limit = SumInt(ElmPRec(data, RNam_nr), INTOBJ_INT(1));
+      gap_int_t limit = SumInt(ElmPRec(data, RNam_nr), INTOBJ_INT(1));
       fropin(data, limit, 0, False);
       pos = INT_INTOBJ(ElmPRec(data, RNam_pos));
       nr  = INT_INTOBJ(ElmPRec(data, RNam_nr));
@@ -865,7 +865,7 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
 
 // Get the position of <x> with out any further enumeration
 
-Obj EN_SEMI_POSITION_CURRENT(Obj self, gap_semigroup_t so, gap_element_t x) {
+gap_int_t EN_SEMI_POSITION_CURRENT(Obj self, gap_semigroup_t so, gap_element_t x) {
   SEMI_OBJ_CHECK_ARG(so);
 
   en_semi_obj_t es = semi_obj_get_en_semi(so);
@@ -904,7 +904,7 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   initRNams();
   gap_list_t es = semi_obj_get_en_semi(so);
-  gap_prec_t fp = semi_obj_get_fropin(so);
+  gap_rec_t fp = semi_obj_get_fropin(so);
 
   if (en_semi_get_type(es) != UNKNOWN) {
     if (!IsbPRec(fp, RNam_rules) || LEN_PLIST(ElmPRec(fp, RNam_rules)) == 0) {
@@ -991,7 +991,7 @@ gap_int_t EN_SEMI_SIZE(Obj self, gap_semigroup_t so) {
     bool report = semi_obj_get_report(so);
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->size(report));
   } else {
-    Obj fp = fropin(so, INTOBJ_INT(-1), 0, False);
+    gap_rec_t fp = fropin(so, INTOBJ_INT(-1), 0, False);
     return INTOBJ_INT(LEN_PLIST(ElmPRec(fp, RNam_elts)));
   }
 }
@@ -999,20 +999,20 @@ gap_int_t EN_SEMI_SIZE(Obj self, gap_semigroup_t so) {
 // Iterators
 // TODO rename these
 
-gap_bool_t EN_SEMI_IS_DONE_ITERATOR(Obj self, gap_prec_t iter) {
+gap_bool_t EN_SEMI_IS_DONE_ITERATOR(Obj self, gap_rec_t iter) {
   initRNams();
   Int size = INT_INTOBJ(EN_SEMI_SIZE(self, ElmPRec(iter, RNam_parent)));
   return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
 }
 
-gap_element_t EN_SEMI_NEXT_ITERATOR(Obj self, gap_prec_t iter) {
+gap_element_t EN_SEMI_NEXT_ITERATOR(Obj self, gap_rec_t iter) {
   initRNams();
   gap_int_t pos = INTOBJ_INT(INT_INTOBJ(ElmPRec(iter, RNam_pos)) + 1);
   AssPRec(iter, RNam_pos, pos);
   return EN_SEMI_ELEMENT_NUMBER(self, ElmPRec(iter, RNam_parent), pos);
 }
 
-gap_element_t EN_SEMI_NEXT_ITERATOR_SORTED(Obj self, gap_prec_t iter) {
+gap_element_t EN_SEMI_NEXT_ITERATOR_SORTED(Obj self, gap_rec_t iter) {
   initRNams();
   gap_int_t pos = INTOBJ_INT(INT_INTOBJ(ElmPRec(iter, RNam_pos)) + 1);
   AssPRec(iter, RNam_pos, pos);

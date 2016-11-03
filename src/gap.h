@@ -38,7 +38,7 @@
 typedef Obj gap_semigroup_t;
 typedef Obj gap_element_t;
 typedef Obj gap_list_t;
-typedef Obj gap_prec_t;
+typedef Obj gap_rec_t;
 typedef Obj gap_cong_t;
 typedef Obj gap_cong_class_t;
 typedef Obj gap_int_t;

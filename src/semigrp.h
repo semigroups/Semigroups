@@ -64,7 +64,7 @@ bool semi_obj_get_report(gap_semigroup_t so);
 gap_list_t semi_obj_get_gens(gap_semigroup_t so);
 
 Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so);
-gap_prec_t semi_obj_get_fropin(gap_semigroup_t so);
+gap_rec_t semi_obj_get_fropin(gap_semigroup_t so);
 en_semi_t semi_obj_get_type(gap_semigroup_t so);
 
 static inline en_semi_t en_semi_get_type(en_semi_obj_t es) {
@@ -150,8 +150,8 @@ gap_int_t EN_SEMI_SIZE(Obj self, gap_semigroup_t so);
 
 // Iterators
 
-gap_bool_t EN_SEMI_IS_DONE_ITERATOR(Obj self, gap_prec_t iter);
-gap_element_t EN_SEMI_NEXT_ITERATOR(Obj self, gap_prec_t iter);
-gap_element_t EN_SEMI_NEXT_ITERATOR_SORTED(Obj self, gap_prec_t iter);
+gap_bool_t EN_SEMI_IS_DONE_ITERATOR(Obj self, gap_rec_t iter);
+gap_element_t EN_SEMI_NEXT_ITERATOR(Obj self, gap_rec_t iter);
+gap_element_t EN_SEMI_NEXT_ITERATOR_SORTED(Obj self, gap_rec_t iter);
 
 #endif  // SEMIGROUPS_SRC_SEMIGRP_H_

@@ -41,7 +41,7 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 
 // Fast product using left and right Cayley graphs
 
-size_t fropin_prod_by_reduction(gap_prec_t fp, size_t i, size_t j) {
+size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j) {
 
   fropin(fp, INTOBJ_INT(-1), 0, False);
 
