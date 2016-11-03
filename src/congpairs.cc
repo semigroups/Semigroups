@@ -46,7 +46,7 @@ static inline bool cong_obj_has_cpp_cong(Obj cong) {
 
 static inline gap_semigroup_t cong_obj_get_range_obj(gap_cong_t o) {
   initRNams();
-  return ElmPRec(o, RNam_fin_cong_range);
+  return ElmPRec(o, RNam_range);
 }
 
 static inline Semigroup* cong_obj_get_range(gap_cong_t o) {
@@ -67,7 +67,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
 
   gap_plist_t     genpairs  = ElmPRec(o, RNam_genpairs);
   gap_semigroup_t range_obj = cong_obj_get_range_obj(o);
-  std::string type = std::string(CSTR_STRING(ElmPRec(o, RNam_fin_cong_type)));
+  std::string type = std::string(CSTR_STRING(ElmPRec(o, RNam_type)));
   Congruence* cong;
   bool        report = semi_obj_get_report(range_obj);
 
@@ -127,7 +127,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
       extra.push_back(make_pair(plist_to_word_t(lhs), plist_to_word_t(rhs)));
     }
 
-    size_t nrgens = LEN_PLIST(ElmPRec(data, RNam_gens));
+    size_t nrgens = LEN_PLIST(semi_obj_get_gens(range_obj));
 
     Obj graph;
 

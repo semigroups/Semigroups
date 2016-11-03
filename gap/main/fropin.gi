@@ -27,9 +27,9 @@ function(S)
   if (not IsSemigroup(S)) or Length(GeneratorsOfSemigroup(S)) = 0 then
     ErrorNoReturn("Semigroups: INIT_FROPIN: usage,\n",
                   "the argument must be a semigroup with at least 1 ",
-                  "generator");
-  elif IsBound(S!.__en_semi_frp_data) then
-    return S!.__en_semi_frp_data;
+                  "generator,");
+  elif IsBound(S!.__en_semi_fropin) then
+    return S!.__en_semi_fropin;
   fi;
 
   data := rec(elts := [],
@@ -93,7 +93,7 @@ function(S)
   od;
 
   data.nr := nr;
-  S!.__en_semi_frp_data := data;
+  S!.__en_semi_fropin := data;
   return data;
 end);
 

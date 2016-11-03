@@ -114,7 +114,7 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
   # EN_SEMI_ADD_GENERATORS, such as Size etc. In other words, S may no longer
   # be valid after calling this function if any new generators are added.
   T := Semigroup(GeneratorsOfMagma(S));
-  T!.__en_semi_cpp_data := S!.__en_semi_cpp_data;
+  T!.__en_semi_cpp_semi:= S!.__en_semi_cpp_semi;
   return T;
 end;
 

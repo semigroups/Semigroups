@@ -18,6 +18,7 @@
 
 #include "semigrp.h"
 
+#include <string>
 #include <utility>
 
 #include "bipart.h"
@@ -29,29 +30,34 @@
 #define DEBUG
 
 #ifdef DEBUG
-#define SEMI_OBJ_CHECK_ARG(so)                                                 \
-  if (CALL_1ARGS(IsSemigroup, so) != True) {                                   \
-    ErrorQuit(                                                                 \
-        "the argument must be a semigroup not a %s,", (Int) TNAM_OBJ(so), 0L); \
+#define ERROR(obj, message)    \
+  char buf[128];               \
+  strncpy(buf, __func__, sizeof(buf));       \
+  strncat(buf, ": ", (sizeof(buf) * 2));           \
+  strncat(buf, message, (sizeof(buf) * strlen(message)) );        \
+  strncat(buf, " not a %s,",  (sizeof(buf) * 9)); \
+  ErrorQuit(buf, (Int) TNAM_OBJ(obj), 0L);
+
+#define SEMI_OBJ_CHECK_ARG(obj)                    \
+  if (CALL_1ARGS(IsSemigroup, obj) != True) {      \
+    ERROR(obj, "the argument must be a semigroup") \
   }
-#define PLIST_CHECK_ARG(obj)                                                \
-  if (!IS_PLIST(obj)) {                                                     \
-    ErrorQuit(                                                              \
-        "the argument must be a plist not a %s,", (Int) TNAM_OBJ(obj), 0L); \
+#define PLIST_CHECK_ARG(obj)                   \
+  if (!IS_PLIST(obj)) {                        \
+    ERROR(obj, "the argument must be a plist") \
   }
-#define INTOBJ_CHECK_ARG(obj)                                      \
-  if (!IS_INTOBJ(obj) || INT_INTOBJ(obj) < 0) {                    \
-    ErrorQuit("the argument must be a positive integer not a %s,", \
-              (Int) TNAM_OBJ(obj),                                 \
-              0L);                                                 \
+#define INTOBJ_CHECK_ARG(obj)                                  \
+  if (!IS_INTOBJ(obj)) {                                       \
+    ERROR(obj, "the argument must be an integer")              \
+  } else if (INT_INTOBJ(obj) < 0) {                            \
+    ERROR(obj, "the argument must be an non-negative integer") \
   }
-#define EN_SEMI_CHECK_ARG(es)                                \
-  if (TNUM_OBJ(es) != T_SEMI                                 \
-      || SUBTYPE_OF_T_SEMI(es) != T_SEMI_SUBTYPE_ENSEMI) {   \
-    ErrorQuit("the argument must be a T_SEMI Obj of subtype" \
-              " T_SEMI_SUBTYPE_ENSEMI not a %s,",            \
-              (Int) TNAM_OBJ(es),                            \
-              0L);                                           \
+#define EN_SEMI_CHECK_ARG(obj)                              \
+  if (TNUM_OBJ(obj) != T_SEMI                               \
+      || SUBTYPE_OF_T_SEMI(obj) != T_SEMI_SUBTYPE_ENSEMI) { \
+    ERROR(obj,                                              \
+          "the argument must be a T_SEMI Obj of subtype"    \
+          " T_SEMI_SUBTYPE_ENSEMI")                         \
   }
 #else
 #define SEMI_OBJ_CHECK_ARG(so)
@@ -59,7 +65,6 @@
 #define INTOBJ_CHECK_ARG(obj)
 #define EN_SEMI_CHECK_ARG(es)
 #endif
-
 
 std::vector<Element*>*
 plist_to_vec(Converter* converter, gap_plist_t elements, size_t degree) {
@@ -185,7 +190,6 @@ size_t semi_obj_get_batch_size(gap_semigroup_t so) {
 
 bool semi_obj_get_report(gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
-
   initRNams();
   UInt i;
   if (FindPRec(so, RNam_opts, &i, 1)) {
@@ -370,7 +374,7 @@ Obj semi_obj_init_en_semi(gap_semigroup_t so,
     ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(converter);
     ADDR_OBJ(o)[4] = reinterpret_cast<Obj>(deg);
     CHANGED_BAG(o);
-    AssPRec(so, RNam_en_semi_cpp, o);
+    AssPRec(so, RNam_en_semi_cpp_semi, o);
     CHANGED_BAG(so);
     return o;
   } else {
@@ -378,7 +382,7 @@ Obj semi_obj_init_en_semi(gap_semigroup_t so,
     ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(T_SEMI_SUBTYPE_ENSEMI);
     ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(type);
     CHANGED_BAG(o);
-    AssPRec(so, RNam_en_semi_cpp, o);
+    AssPRec(so, RNam_en_semi_cpp_semi, o);
     CHANGED_BAG(so);
     return o;
   }
@@ -387,7 +391,7 @@ Obj semi_obj_init_en_semi(gap_semigroup_t so,
 Obj semi_obj_get_en_semi(gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   UInt i;
-  if (FindPRec(so, RNam_en_semi_cpp, &i, 1)) {
+  if (FindPRec(so, RNam_en_semi_cpp_semi, &i, 1)) {
     return GET_ELM_PREC(so, i);
   }
   return semi_obj_init_en_semi(so);
@@ -402,18 +406,18 @@ Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so) {
 gap_prec_t semi_obj_get_fropin(gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   UInt i;
-  if (FindPRec(so, RNam_en_semi_frp, &i, 1)) {
+  if (FindPRec(so, RNam_en_semi_fropin, &i, 1)) {
     return GET_ELM_PREC(so, i);
   } else {
     if (semi_obj_get_type(so) != UNKNOWN) {  // only initialise a record
       gap_prec_t fp = NEW_PREC(0);
       SET_LEN_PREC(fp, 0);
-      AssPRec(so, RNam_en_semi_frp, fp);
+      AssPRec(so, RNam_en_semi_fropin, fp);
       CHANGED_BAG(so);
       return fp;
     } else {
       CALL_1ARGS(INIT_FROPIN, so);
-      if (FindPRec(so, RNam_en_semi_frp, &i, 1)) {
+      if (FindPRec(so, RNam_en_semi_fropin, &i, 1)) {
         return GET_ELM_PREC(so, i);
       }
       ErrorQuit("unknown error in INIT_FROPIN,", 0L, 0L);
@@ -477,7 +481,7 @@ EN_SEMI_ADD_GENERATORS(Obj self, gap_semigroup_t so, gap_plist_t plist) {
   // Reset the fropin data since none of it is valid any longer
   gap_prec_t fp = NEW_PREC(0);
   SET_LEN_PREC(fp, 0);
-  AssPRec(so, RNam_en_semi_frp, fp);
+  AssPRec(so, RNam_en_semi_fropin, fp);
   CHANGED_BAG(so);
 
   return so;
@@ -594,6 +598,9 @@ gap_int_t EN_SEMI_CURRENT_NR_RULES(Obj self, gap_semigroup_t so) {
   } else {
     initRNams();
     gap_prec_t fp = semi_obj_get_en_semi(so);
+// TODO could write a function return_if_not_bound_prec(prec, rnam, val) which
+// returns val if rnam is not bound in prec and returns prec.rnam if it is
+// bound.
     if (IsbPRec(fp, RNam_nrrules)) {
       return ElmPRec(fp, RNam_nrrules);
     } else {

@@ -84,10 +84,11 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
 
   if (CALL_1ARGS(IsSemigroup, data) == True) {
     report = semi_obj_get_report(data);
-    data = semi_obj_get_fropin(data);
     batch_size = semi_obj_get_batch_size(data);
+    data = semi_obj_get_fropin(data);
   } else {
     gap_semigroup_t parent = ElmPRec(data, RNamName("parent"));
+    assert(CALL_1ARGS(IsSemigroup, parent) == True);
     report = semi_obj_get_report(parent);
     batch_size = semi_obj_get_batch_size(parent);
   }

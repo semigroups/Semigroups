@@ -75,6 +75,7 @@ static inline Converter* en_semi_get_converter(en_semi_obj_t es) {
 
 size_t semi_obj_get_batch_size(gap_semigroup_t so);
 bool semi_obj_get_report(gap_semigroup_t so);
+gap_plist_t semi_obj_get_gens(gap_semigroup_t so);
 
 Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so);
 gap_prec_t semi_obj_get_fropin(gap_semigroup_t so);

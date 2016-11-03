@@ -23,7 +23,6 @@
 #include "gap.h"
 
 #include <assert.h>
-#include <time.h> // FIXME remove this it's not used
 
 #include <iostream>
 
