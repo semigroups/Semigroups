@@ -56,21 +56,55 @@ enum en_semi_t {
 
 // C++ functions
 
+en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
+                                    gap_semigroup_t old_so = 0,
+                                    gap_plist_t     plist  = 0);
+size_t semi_obj_get_batch_size(gap_semigroup_t so);
+bool semi_obj_get_report(gap_semigroup_t so);
+gap_plist_t semi_obj_get_gens(gap_semigroup_t so);
+
+Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so);
+gap_prec_t semi_obj_get_fropin(gap_semigroup_t so);
+en_semi_t semi_obj_get_type(gap_semigroup_t so);
+
 static inline en_semi_t en_semi_get_type(en_semi_obj_t es) {
-  assert(TNUM_OBJ(es) == T_SEMI && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  assert(TNUM_OBJ(es) == T_SEMI
+         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
   return static_cast<en_semi_t>(reinterpret_cast<UInt>(ADDR_OBJ(es)[1]));
 }
 
-static inline Semigroup* en_semi_get_cpp(en_semi_obj_t es) {
-  assert(TNUM_OBJ(es) == T_SEMI && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+static inline gap_semigroup_t en_semi_get_semi_obj(en_semi_obj_t es) {
+  assert(TNUM_OBJ(es) == T_SEMI
+         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
   assert(en_semi_get_type(es) != UNKNOWN);
-  return CLASS_OBJ<Semigroup*>(es, 2);
+  return ADDR_OBJ(es)[5];
+}
+
+static inline Semigroup* en_semi_get_semi_cpp(en_semi_obj_t es) {
+  assert(TNUM_OBJ(es) == T_SEMI
+         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  assert(en_semi_get_type(es) != UNKNOWN);
+
+  Semigroup* semi_cpp = CLASS_OBJ<Semigroup*>(es, 2);
+  if (semi_cpp != nullptr) { // <es> has been loaded from a workspace
+    return semi_cpp;
+  } else {
+    semi_obj_init_en_semi(en_semi_get_semi_obj(es));
+    return CLASS_OBJ<Semigroup*>(es, 2);
+  }
 }
 
 static inline Converter* en_semi_get_converter(en_semi_obj_t es) {
-  assert(TNUM_OBJ(es) == T_SEMI && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  assert(TNUM_OBJ(es) == T_SEMI
+         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
   assert(en_semi_get_type(es) != UNKNOWN);
-  return CLASS_OBJ<Converter*>(es, 3);
+  Converter* converter = CLASS_OBJ<Converter*>(es, 3);
+  if (converter != nullptr) { // <es> has been loaded from a workspace
+    return converter;
+  } else {
+    semi_obj_init_en_semi(en_semi_get_semi_obj(es));
+    return CLASS_OBJ<Converter*>(es, 3);
+  }
 }
 
 static inline size_t en_semi_get_degree(en_semi_obj_t es) {
@@ -80,13 +114,6 @@ static inline size_t en_semi_get_degree(en_semi_obj_t es) {
   return CLASS_OBJ<size_t>(es, 4);
 }
 
-size_t semi_obj_get_batch_size(gap_semigroup_t so);
-bool semi_obj_get_report(gap_semigroup_t so);
-gap_plist_t semi_obj_get_gens(gap_semigroup_t so);
-
-Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so);
-gap_prec_t semi_obj_get_fropin(gap_semigroup_t so);
-en_semi_t semi_obj_get_type(gap_semigroup_t so);
 
 // GAP level functions for IsEnumerableSemigroup
 

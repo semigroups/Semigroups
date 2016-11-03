@@ -125,7 +125,7 @@ void TSemiObjFreeFunc(Obj o) {
       break;
     case T_SEMI_SUBTYPE_ENSEMI:
       if (en_semi_get_type(o) != UNKNOWN) {
-        Semigroup* semi_cpp = en_semi_get_cpp(o);
+        Semigroup* semi_cpp = en_semi_get_semi_cpp(o);
         if (semi_cpp != nullptr) {
           delete semi_cpp;
         }
@@ -181,15 +181,15 @@ void TSemiObjSaveFunc(Obj o) {
       break;
     }
     case T_SEMI_SUBTYPE_ENSEMI: {
-      // [t_semi_subtype_t, en_semi_t, degree]
+      // [t_semi_subtype_t, en_semi_t, degree, semigroup Obj]
       // degree only if en_semi_t != UNKNOWN
       SaveUInt4(en_semi_get_type(o));
       if (en_semi_get_type(o) != UNKNOWN) {
         SaveUInt4(en_semi_get_degree(o));
+        SaveSubObj(en_semi_get_semi_obj(o));
       }
       break;
     }
-
     default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_CONG
              // do nothing further
       break;
@@ -210,6 +210,7 @@ void TSemiObjLoadFunc(Obj o) {
         ADDR_OBJ(o)[2] = static_cast<Obj>(nullptr);  // Semigroup*
         ADDR_OBJ(o)[3] = static_cast<Obj>(nullptr);  // Converter*
         ADDR_OBJ(o)[4] = reinterpret_cast<Obj>(static_cast<size_t>(LoadUInt4()));
+        ADDR_OBJ(o)[5] = LoadSubObj();
       }
       break;
     }
