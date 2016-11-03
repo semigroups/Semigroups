@@ -29,7 +29,7 @@ function(S)
                   "the argument must be a semigroup with at least 1 ",
                   "generator");
   elif IsBound(S!.__en_semi_frp_data) then
-    return;
+    return S!.__en_semi_frp_data;
   fi;
 
   data := rec(elts := [],
@@ -93,7 +93,11 @@ function(S)
 
   data.nr := nr;
   S!.__en_semi_frp_data := data;
+  return data;
 end);
+
+InstallMethod(IsEnumerableSemigroup, "for a semigroup", [IsSemigroup],
+ReturnFalse);
 
 #############################################################################
 # 1. Internal methods
@@ -122,7 +126,7 @@ function(S)
   enum := rec();
 
   enum.NumberElement := function(enum, x)
-    return PositionSorted(S, x);
+    return EN_SEMI_POSITION_SORTED(S, x);
   end;
 
   enum.ElementNumber := function(enum, nr)
@@ -383,7 +387,7 @@ function(S, x)
        DegreeOfPartialPermCollection(gens)) then
     return fail;
   fi;
-  return Position(EnumeratorSorted(S), x);
+  return EN_SEMI_POSITION_SORTED(S, x);
 end);
 
 InstallMethod(Display, [IsSemigroup],
@@ -410,7 +414,7 @@ InstallMethod(Enumerate, "for enumerable semigroup and pos int",
 InstallMethod(Enumerate, "for enumerable semigroup",
 [IsSemigroup],
 function(S)
-  return Enumerate(S, 18446744073709551615);
+  return Enumerate(S, 1152921504606846975);
 end);
 
 if not IsBound(EN_SEMI_ENUMERATE) then

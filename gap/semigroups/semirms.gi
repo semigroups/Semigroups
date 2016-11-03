@@ -282,6 +282,34 @@ function(S)
                                                        rep![3]));
 end);
 
+################################################################################
+# Attributes, operations, and properties
+################################################################################
+
+InstallMethod(IsEnumerableSemigroup, "for a Rees matrix subsemigroup",
+[IsReesMatrixSubsemigroup],
+function(R)
+  return IsEnumerableSemigroup(Parent(R));
+end);
+
+InstallMethod(IsEnumerableSemigroup, "for a Rees matrix subsemigroup",
+[IsReesMatrixSemigroup],
+function(R)
+  return IsEnumerableSemigroup(UnderlyingSemigroup(R));
+end);
+
+InstallMethod(IsEnumerableSemigroup, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
+function(R)
+  return IsEnumerableSemigroup(Parent(R));
+end);
+
+InstallMethod(IsEnumerableSemigroup, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSemigroup],
+function(R)
+  return IsEnumerableSemigroup(UnderlyingSemigroup(R));
+end);
+
 # same method for ideals
 
 InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
