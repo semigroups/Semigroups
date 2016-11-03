@@ -20,8 +20,8 @@
 // package that involves GAP directly, i.e. importing functions/variables from
 // GAP and declaring functions for GAP etc.
 
-#ifndef SRC_GAP_H_
-#define SRC_GAP_H_
+#ifndef SEMIGROUPS_SRC_GAP_H_
+#define SEMIGROUPS_SRC_GAP_H_
 
 #include <assert.h>
 #include <iostream>
@@ -37,7 +37,7 @@
 
 typedef Obj gap_semigroup_t;
 typedef Obj gap_element_t;
-typedef Obj gap_plist_t;
+typedef Obj gap_list_t;
 typedef Obj gap_prec_t;
 typedef Obj gap_cong_t;
 typedef Obj gap_cong_class_t;
@@ -124,7 +124,6 @@ extern Obj TYPES_BIPART;
 extern Obj INIT_FROPIN;
 extern Obj GeneratorsOfMagma;
 
-// TODO(JDM) remove this
 extern Obj IsSemigroup;
 
-#endif // SRC_GAP_H_
+#endif  // SEMIGROUPS_SRC_GAP_H_

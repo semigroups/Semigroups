@@ -65,11 +65,11 @@ static void cong_obj_init_cpp_cong(Obj o) {
 
   initRNams();
 
-  gap_plist_t     genpairs  = ElmPRec(o, RNam_genpairs);
+  gap_list_t      genpairs  = ElmPRec(o, RNam_genpairs);
   gap_semigroup_t range_obj = cong_obj_get_range_obj(o);
-  std::string type = std::string(CSTR_STRING(ElmPRec(o, RNam_type)));
-  Congruence* cong;
-  bool        report = semi_obj_get_report(range_obj);
+  std::string     type      = std::string(CSTR_STRING(ElmPRec(o, RNam_type)));
+  Congruence*     cong;
+  bool            report = semi_obj_get_report(range_obj);
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
     Semigroup* range = cong_obj_get_range(o);
@@ -102,8 +102,8 @@ static void cong_obj_init_cpp_cong(Obj o) {
     }
   } else {
     gap_prec_t              data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
-    gap_plist_t             rules = ElmPRec(data, RNam_rules);
-    gap_plist_t             words = ElmPRec(data, RNam_words);
+    gap_list_t              rules = ElmPRec(data, RNam_rules);
+    gap_list_t              words = ElmPRec(data, RNam_words);
     std::vector<relation_t> rels;
     std::vector<relation_t> extra;
 
@@ -184,7 +184,7 @@ Obj CONG_PAIRS_NR_CLASSES(Obj self, Obj o) {
   return INTOBJ_INT(cong_obj_get_cpp(o)->nr_classes());
 }
 
-Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_plist_t pair) {
+Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_list_t pair) {
   initRNams();
   gap_semigroup_t S = cong_obj_get_range_obj(o);
   size_t lhs_pos    = INT_INTOBJ(EN_SEMI_POSITION(0L, S, ELM_LIST(pair, 1)));
@@ -207,8 +207,8 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_plist_t pair) {
     range->factorisation(lhs, lhs_pos - 1);
     range->factorisation(rhs, rhs_pos - 1);
   } else {
-    gap_prec_t  data  = fropin(S, INTOBJ_INT(-1), 0, False);
-    gap_plist_t words = ElmPRec(data, RNam_words);
+    gap_prec_t data  = fropin(S, INTOBJ_INT(-1), 0, False);
+    gap_list_t words = ElmPRec(data, RNam_words);
 
     lhs = plist_to_word_t(ELM_PLIST(words, lhs_pos));
     rhs = plist_to_word_t(ELM_PLIST(words, rhs_pos));

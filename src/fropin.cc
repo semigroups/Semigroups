@@ -23,9 +23,9 @@
 #include <algorithm>
 #include <iostream>
 
+#include "rnams.h"
 #include "semigroupsplusplus/report.h"
 #include "semigrp.h"
-#include "rnams.h"
 
 // Macros for the GAP version of the algorithm
 
@@ -45,21 +45,21 @@ size_t fropin_prod_by_reduction(gap_prec_t fp, size_t i, size_t j) {
 
   fropin(fp, INTOBJ_INT(-1), 0, False);
 
-  gap_plist_t words = ElmPRec(fp, RNam_words);
+  gap_list_t words = ElmPRec(fp, RNam_words);
 
   if (LEN_PLIST(ELM_PLIST(words, i)) <= LEN_PLIST(ELM_PLIST(words, j))) {
-    gap_plist_t left   = ElmPRec(fp, RNamName("left"));
-    gap_plist_t last   = ElmPRec(fp, RNamName("final"));
-    gap_plist_t prefix = ElmPRec(fp, RNamName("prefix"));
+    gap_list_t left   = ElmPRec(fp, RNamName("left"));
+    gap_list_t last   = ElmPRec(fp, RNamName("final"));
+    gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
     while (i != 0) {
       j = INT_INTOBJ(ELM_PLIST2(left, j, INT_INTOBJ(ELM_PLIST(last, i))));
       i = INT_INTOBJ(ELM_PLIST(prefix, i));
     }
     return j;
   } else {
-    gap_plist_t right  = ElmPRec(fp, RNamName("right"));
-    gap_plist_t first  = ElmPRec(fp, RNamName("first"));
-    gap_plist_t suffix = ElmPRec(fp, RNamName("suffix"));
+    gap_list_t right  = ElmPRec(fp, RNamName("right"));
+    gap_list_t first  = ElmPRec(fp, RNamName("first"));
+    gap_list_t suffix = ElmPRec(fp, RNamName("suffix"));
     while (j != 0) {
       i = INT_INTOBJ(ELM_PLIST2(right, i, INT_INTOBJ(ELM_PLIST(first, i))));
       j = INT_INTOBJ(ELM_PLIST(suffix, j));
@@ -78,18 +78,18 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
       empty, oldword, x;
   UInt i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
       intval, stop, one;
-  bool report;
+  bool   report;
   size_t batch_size;
   initRNams();
 
   if (CALL_1ARGS(IsSemigroup, data) == True) {
-    report = semi_obj_get_report(data);
+    report     = semi_obj_get_report(data);
     batch_size = semi_obj_get_batch_size(data);
-    data = semi_obj_get_fropin(data);
+    data       = semi_obj_get_fropin(data);
   } else {
     gap_semigroup_t parent = ElmPRec(data, RNamName("parent"));
     assert(CALL_1ARGS(IsSemigroup, parent) == True);
-    report = semi_obj_get_report(parent);
+    report     = semi_obj_get_report(parent);
     batch_size = semi_obj_get_batch_size(parent);
   }
   // assert(data_type(data) == UNKNOWN);
@@ -108,8 +108,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
   if (i > nr || (size_t) INT_INTOBJ(limit) <= nr) {
     return data;
   }
-  int_limit = std::max((size_t) INT_INTOBJ(limit),
-                       (size_t)(nr + batch_size));
+  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
 
   Reporter reporter;
   reporter.report(report);
@@ -176,7 +175,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
     while (i <= nr && (UInt) LEN_PLIST(ELM_PLIST(words, i)) == len && !stop) {
       b = INT_INTOBJ(ELM_PLIST(first, i));
       s = INT_INTOBJ(ELM_PLIST(suffix, i));
-      RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC); // from T_PLIST_EMPTY
+      RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC);  // from T_PLIST_EMPTY
       for (j = 1; j <= nrgens; j++) {
         if (s != 0 && ELM_PLIST2(reduced, s, j) == False) {
           r = INT_PLIST2(right, s, j);
@@ -278,14 +277,14 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
             }
           }
         }
-      } // finished applying gens to <elts[i]>
+      }  // finished applying gens to <elts[i]>
       stop = (stop || i == stopper);
       i++;
-    } // finished words of length <len> or <stop>
+    }  // finished words of length <len> or <stop>
     if (i > nr || (UInt) LEN_PLIST(ELM_PLIST(words, i)) != len) {
       if (len > 1) {
         for (j = INT_INTOBJ(ELM_PLIST(lenindex, len)); j <= i - 1; j++) {
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); // from T_PLIST_EMPTY
+          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC);  // from T_PLIST_EMPTY
           p = INT_INTOBJ(ELM_PLIST(prefix, j));
           b = INT_INTOBJ(ELM_PLIST(final, j));
           for (k = 1; k <= nrgens; k++) {
@@ -295,7 +294,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
         }
       } else if (len == 1) {
         for (j = INT_INTOBJ(ELM_PLIST(lenindex, len)); j <= i - 1; j++) {
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); // from T_PLIST_EMPTY
+          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC);  // from T_PLIST_EMPTY
           b = INT_INTOBJ(ELM_PLIST(final, j));
           for (k = 1; k <= nrgens; k++) {
             SET_ELM_PLIST2(
