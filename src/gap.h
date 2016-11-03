@@ -43,6 +43,7 @@ typedef Obj gap_cong_t;
 typedef Obj gap_cong_class_t;
 typedef Obj gap_int_t;
 typedef Obj gap_bool_t;
+typedef Obj gap_func_t;
 
 // The Semigroups package uses the type T_SEMI for GAP Objs which act as
 // wrappers for various C++ objects. Such a GAP Obj can be created using

@@ -139,8 +139,14 @@ void TSemiObjFreeFunc(Obj o) {
       break;
     case T_SEMI_SUBTYPE_ENSEMI:
       if (en_semi_get_type(o) != UNKNOWN) {
-        delete en_semi_get_cpp(o);
-        delete en_semi_get_converter(o);
+        Semigroup* semi_cpp = en_semi_get_cpp(o);
+        if (semi_cpp != nullptr) {
+          delete semi_cpp;
+        }
+        Converter* converter = en_semi_get_converter(o);
+        if (converter != nullptr) {
+          delete converter;
+        }
       }
       break;
     default:
