@@ -60,22 +60,6 @@
 #define EN_SEMI_CHECK_ARG(es)
 #endif
 
-// RNams
-static Int RNam_GeneratorsOfMagma = RNamName("GeneratorsOfMagma");
-static Int RNam_Representative    = RNamName("Representative");
-
-// static Int RNam_batch_size        = RNamName("batch_size");
-static Int RNam_ht      = RNamName("ht");
-static Int RNam_nr      = RNamName("nr");
-static Int RNam_nrrules = RNamName("nrrules");
-static Int RNam_opts    = RNamName("opts");
-static Int RNam_parent  = RNamName("parent");
-// static Int RNam_report            = RNamName("report");
-
-static Int RNam_en_semi_cpp = RNamName("__en_semi_cpp_data");
-static Int RNam_en_semi_frp = RNamName("__en_semi_frp_data");
-
-// TODO initRnams function
 
 std::vector<Element*>*
 plist_to_vec(Converter* converter, gap_plist_t elements, size_t degree) {
@@ -199,7 +183,7 @@ size_t semi_obj_get_batch_size(gap_semigroup_t so) {
   return 8192;
 }
 
-static inline bool semi_obj_get_report(gap_semigroup_t so) {
+bool semi_obj_get_report(gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
 
   initRNams();
@@ -257,27 +241,6 @@ static inline size_t semi_obj_get_period(gap_semigroup_t so) {
 
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2));
 }
-
-// Enumerable semigroups
-
-/*enum en_semi_t {
-  UNKNOWN,
-  TRANS2,
-  TRANS4,
-  PPERM2,
-  PPERM4,
-  BOOL_MAT,
-  BIPART,
-  MAX_PLUS_MAT,
-  MIN_PLUS_MAT,
-  TROP_MAX_PLUS_MAT,
-  TROP_MIN_PLUS_MAT,
-  PROJ_MAX_PLUS_MAT,
-  NTP_MAT,
-  INT_MAT,
-  MAT_OVER_PF,
-  PBR_TYPE
-};*/
 
 // Initialise the en_semi of the GAP semigroup Obj <so>, the optional 2nd and
 // 3rd args are for use with closure semigroup.

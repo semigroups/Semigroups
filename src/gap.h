@@ -27,7 +27,7 @@
 #include <iostream>
 #include <vector>
 
-#include "src/data.h"
+#include "src/rnams.h"
 #include "src/semifp.h"
 
 #include "src/compiled.h"

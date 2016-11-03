@@ -31,7 +31,6 @@
 #include "congpairs.h"
 #include "converter.h"
 #include "fropin.h"
-#include "ideals.h"
 #include "semigrp.h"
 #include "ufdata.h"
 
@@ -478,7 +477,6 @@ static StructGVarFunc GVarFuncs[] = {
                BIPART_NR_IDEMPOTENTS,
                5,
                "o, scc, lookup, nr_threads, report"),
-    GVAR_ENTRY("ideals.cc", IDEAL_SIZE, 1, "prec"),
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };
 

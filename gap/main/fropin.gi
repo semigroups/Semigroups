@@ -41,6 +41,7 @@ function(S)
               len := 1,
               lenindex := [],
               nrrules := 0,
+              parent := S,
               prefix := [],
               reduced := [[]],
               right := [],

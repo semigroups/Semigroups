@@ -24,8 +24,8 @@
 #include <iostream>
 
 #include "semigroupsplusplus/report.h"
-#include "data.h"
 #include "semigrp.h"
+#include "rnams.h"
 
 // Macros for the GAP version of the algorithm
 
@@ -78,12 +78,20 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
       empty, oldword, x;
   UInt i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
       intval, stop, one;
+  bool report;
+  size_t batch_size;
+  initRNams();
 
   if (CALL_1ARGS(IsSemigroup, data) == True) {
+    report = semi_obj_get_report(data);
     data = semi_obj_get_fropin(data);
+    batch_size = semi_obj_get_batch_size(data);
+  } else {
+    gap_semigroup_t parent = ElmPRec(data, RNamName("parent"));
+    report = semi_obj_get_report(parent);
+    batch_size = semi_obj_get_batch_size(parent);
   }
-  initRNams();
-  assert(data_type(data) == UNKNOWN);
+  // assert(data_type(data) == UNKNOWN);
 
   // TODO if looking check that something in elts doesn't already satisfy the
   // lookfunc
@@ -100,9 +108,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
     return data;
   }
   int_limit = std::max((size_t) INT_INTOBJ(limit),
-                       (size_t)(nr + data_batch_size(data)));
-
-  bool report = rec_get_report(data);
+                       (size_t)(nr + batch_size));
 
   Reporter reporter;
   reporter.report(report);

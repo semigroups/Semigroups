@@ -26,7 +26,7 @@
 size_t fropin_prod_by_reduction(gap_prec_t fp, size_t i, size_t j);
 
 // TODO(JDM) write doc
-gap_prec_t fropin(gap_prec_t data,
+gap_prec_t fropin(gap_prec_t data, // can also be a gap_semigroup_t
                   gap_int_t  limit,
                   gap_func_t lookfunc,
                   gap_bool_t looking);

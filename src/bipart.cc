@@ -30,7 +30,7 @@
 
 #include "src/permutat.h"
 #include "src/precord.h"
-#include "src/semigroupsplusplus/timer.h"
+#include "src/semigroupsplusplus/report.h"
 
 // Global variables
 

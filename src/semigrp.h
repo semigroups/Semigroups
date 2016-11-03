@@ -21,10 +21,38 @@
 #ifndef SEMIGROUPS_SRC_SEMIGRP_H_
 #define SEMIGROUPS_SRC_SEMIGRP_H_
 
-#include "data.h"          // FIXME remove this
+#include "converter.h"
+#include "gap.h"
+#include "rnams.h"
+#include "semigroupsplusplus/semigroups.h"
 #include "src/compiled.h"  // GAP headers
 
+// Typedef for readability, an en_semi_obj_t should be an Obj of TNUM_OBJ =
+// T_SEMI and SUBTYPE_OF_T_SEMI = T_SEMI_SUBTYPE_ENSEMI
+
 typedef Obj en_semi_obj_t;
+
+// enum for types of enumerable semigroups, to be stored in the en_semi_obj_t
+// associated to an enumerable semigroup
+
+enum en_semi_t {
+  UNKNOWN,
+  TRANS2,
+  TRANS4,
+  PPERM2,
+  PPERM4,
+  BOOL_MAT,
+  BIPART,
+  MAX_PLUS_MAT,
+  MIN_PLUS_MAT,
+  TROP_MAX_PLUS_MAT,
+  TROP_MIN_PLUS_MAT,
+  PROJ_MAX_PLUS_MAT,
+  NTP_MAT,
+  INT_MAT,
+  MAT_OVER_PF,
+  PBR_TYPE
+};
 
 // C++ functions
 
@@ -44,6 +72,9 @@ static inline Converter* en_semi_get_converter(en_semi_obj_t es) {
   assert(en_semi_get_type(es) != UNKNOWN);
   return CLASS_OBJ<Converter*>(es, 3);
 }
+
+size_t semi_obj_get_batch_size(gap_semigroup_t so);
+bool semi_obj_get_report(gap_semigroup_t so);
 
 Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so);
 gap_prec_t semi_obj_get_fropin(gap_semigroup_t so);

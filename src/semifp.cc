@@ -19,12 +19,14 @@
 // This file contains some functions for finitely presented semigroups and
 // monoids.
 
-#include "src/semifp.h"
+#include "semifp.h"
 
 #include <vector>
 
+#include "gap.h"
 #include "semigroupsplusplus/tc.h"
-#include "src/data.h"
+#include "rnams.h"
+#include "semigrp.h"
 
 static inline word_t plist_to_word_t(Obj plist) {
   word_t word;
@@ -78,17 +80,17 @@ static Congruence* fp_semi_get_cpp_cong(Obj S) {
   return CLASS_OBJ<Congruence*>(ElmPRec(S, RNam_fp_semi_cong));
 }
 
-Obj FP_SEMI_SIZE(Obj self, Obj S) {
+Obj FP_SEMI_SIZE(Obj self, gap_semigroup_t S) {
   // TODO assert S is correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter(rec_get_report(S));
+  cong->todd_coxeter(semi_obj_get_report(S));
   return INTOBJ_INT(cong->nr_classes());
 }
 
 Obj FP_SEMI_EQ(Obj self, Obj S, Obj x, Obj y) {
   // TODO assert S, x, y are correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter(rec_get_report(S));
+  cong->todd_coxeter(semi_obj_get_report(S));
 
   word_t lhs = ext_rep_obj_to_word_t(x);
   word_t rhs = ext_rep_obj_to_word_t(y);
@@ -100,6 +102,6 @@ Obj FP_SEMI_EQ(Obj self, Obj S, Obj x, Obj y) {
 Obj FP_SEMI_COSET_ID(Obj self, Obj S, Obj x) {
   // TODO assert S, x are correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter(rec_get_report(S));
+  cong->todd_coxeter(semi_obj_get_report(S));
   return INTOBJ_INT(cong->word_to_coset(ext_rep_obj_to_word_t(x)));
 }
