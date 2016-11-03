@@ -73,12 +73,6 @@ inline UInt LoadUIntBiggest() {
 
 void TSemiObjPrintFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_SEMIGP:
-      Pr("<wrapper for instance of C++ Semigroup class>", 0L, 0L);
-      break;
-    case T_SEMI_SUBTYPE_CONVER:
-      Pr("<wrapper for instance of C++ Converter class>", 0L, 0L);
-      break;
     case T_SEMI_SUBTYPE_UFDATA:
       Pr("<wrapper for instance of C++ UFData class>", 0L, 0L);
       break;
@@ -86,7 +80,7 @@ void TSemiObjPrintFunc(Obj o) {
       Pr("<wrapper for instance of C++ Congruence class>", 0L, 0L);
       break;
     case T_SEMI_SUBTYPE_ENSEMI:
-      Pr("<wrapper for C++ semigroup data>", 0L, 0L);
+      Pr("<wrapper for C++ semigroup objects>", 0L, 0L);
       break;
     default:
       assert(false);
@@ -123,12 +117,6 @@ Int TBlocksObjIsMutableObjFuncs(Obj o) {
 
 void TSemiObjFreeFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_SEMIGP:
-      delete CLASS_OBJ<Semigroup*>(o);
-      break;
-    case T_SEMI_SUBTYPE_CONVER:
-      delete CLASS_OBJ<Converter*>(o);
-      break;
     case T_SEMI_SUBTYPE_UFDATA:
       delete CLASS_OBJ<UFData*>(o);
       break;
@@ -192,8 +180,18 @@ void TSemiObjSaveFunc(Obj o) {
       }
       break;
     }
-    default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_SEMIGP,
-             // T_SEMI_SUBTYPE_CONVER, T_SEMI_SUBTYPE_CONG do nothing further
+    case T_SEMI_SUBTYPE_ENSEMI: {
+      // [t_semi_subtype_t, en_semi_t, degree]
+      // degree only if en_semi_t != UNKNOWN
+      SaveUInt4(en_semi_get_type(o));
+      if (en_semi_get_type(o) != UNKNOWN) {
+        SaveUInt4(en_semi_get_degree(o));
+      }
+      break;
+    }
+
+    default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_CONG
+             // do nothing further
       break;
   }
 }
@@ -202,15 +200,17 @@ void TSemiObjLoadFunc(Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
 
   t_semi_subtype_t type = static_cast<t_semi_subtype_t>(LoadUInt4());
-  ADDR_OBJ(o)[1]        = (Obj) type;
+  ADDR_OBJ(o)[0]        = (Obj) type;
 
   switch (type) {
-    case T_SEMI_SUBTYPE_SEMIGP: {
-      ADDR_OBJ(o)[0] = static_cast<Obj>(nullptr);
-      break;
-    }
-    case T_SEMI_SUBTYPE_CONVER: {
-      ADDR_OBJ(o)[0] = static_cast<Obj>(nullptr);
+    case T_SEMI_SUBTYPE_ENSEMI: {
+      en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(s_type);
+      if (s_type != UNKNOWN) {
+        ADDR_OBJ(o)[2] = static_cast<Obj>(nullptr);  // Semigroup*
+        ADDR_OBJ(o)[3] = static_cast<Obj>(nullptr);  // Converter*
+        ADDR_OBJ(o)[4] = reinterpret_cast<Obj>(static_cast<size_t>(LoadUInt4()));
+      }
       break;
     }
     case T_SEMI_SUBTYPE_UFDATA: {
@@ -224,7 +224,7 @@ void TSemiObjLoadFunc(Obj o) {
       break;
     }
     case T_SEMI_SUBTYPE_CONG: {
-      ADDR_OBJ(o)[0] = static_cast<Obj>(nullptr);
+      ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
       break;
     }
   }

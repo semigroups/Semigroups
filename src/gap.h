@@ -51,7 +51,7 @@ typedef Obj gap_func_t;
 // CLASS_OBJ. The GAP Obj returned by OBJ_CLASS is just a bag of type T_SEMI of
 // the form:
 //
-// [ pointer to C++ class, t_semi_subtype_t ]
+// [ t_semi_subtype_t, C++ pointer ]
 //
 
 extern UInt T_SEMI;
@@ -61,11 +61,9 @@ extern UInt T_BLOCKS;
 // Subtypes of objects that can be stored in a GAP Obj of type T_SEMI
 
 enum t_semi_subtype_t {
-  T_SEMI_SUBTYPE_SEMIGP = 0,
-  T_SEMI_SUBTYPE_CONVER = 1,
-  T_SEMI_SUBTYPE_UFDATA = 2,
-  T_SEMI_SUBTYPE_CONG   = 3,
-  T_SEMI_SUBTYPE_ENSEMI = 4
+  T_SEMI_SUBTYPE_UFDATA = 0,
+  T_SEMI_SUBTYPE_CONG   = 1,
+  T_SEMI_SUBTYPE_ENSEMI = 2
 };
 
 // Get a new GAP Obj containing a pointer to a C++ class of type Class

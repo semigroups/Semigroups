@@ -30,12 +30,12 @@
 #define DEBUG
 
 #ifdef DEBUG
-#define ERROR(obj, message)    \
-  char buf[128];               \
-  strncpy(buf, __func__, sizeof(buf));       \
-  strncat(buf, ": ", (sizeof(buf) * 2));           \
-  strncat(buf, message, (sizeof(buf) * strlen(message)) );        \
-  strncat(buf, " not a %s,",  (sizeof(buf) * 9)); \
+#define ERROR(obj, message)                               \
+  char buf[128];                                          \
+  strncpy(buf, __func__, sizeof(buf));                    \
+  strncat(buf, ": ", (sizeof(buf) * 2));                  \
+  strncat(buf, message, (sizeof(buf) * strlen(message))); \
+  strncat(buf, " not a %s,", (sizeof(buf) * 9));          \
   ErrorQuit(buf, (Int) TNAM_OBJ(obj), 0L);
 
 #define SEMI_OBJ_CHECK_ARG(obj)                    \
@@ -430,12 +430,6 @@ gap_prec_t semi_obj_get_fropin(gap_semigroup_t so) {
 en_semi_t semi_obj_get_type(gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   return en_semi_get_type(semi_obj_get_en_semi(so));
-}
-
-static inline size_t en_semi_get_degree(Obj es) {
-  EN_SEMI_CHECK_ARG(es);
-  assert(en_semi_get_type(es) != UNKNOWN);
-  return CLASS_OBJ<size_t>(es, 4);
 }
 
 // GAP level functions

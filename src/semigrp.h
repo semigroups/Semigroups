@@ -73,6 +73,13 @@ static inline Converter* en_semi_get_converter(en_semi_obj_t es) {
   return CLASS_OBJ<Converter*>(es, 3);
 }
 
+static inline size_t en_semi_get_degree(en_semi_obj_t es) {
+  assert(TNUM_OBJ(es) == T_SEMI
+         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  assert(en_semi_get_type(es) != UNKNOWN);
+  return CLASS_OBJ<size_t>(es, 4);
+}
+
 size_t semi_obj_get_batch_size(gap_semigroup_t so);
 bool semi_obj_get_report(gap_semigroup_t so);
 gap_plist_t semi_obj_get_gens(gap_semigroup_t so);
