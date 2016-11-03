@@ -29,7 +29,6 @@
 
 // Macros for the GAP version of the algorithm
 
-#define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
 #define INT_PLIST(plist, i) INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j) INT_INTOBJ(ELM_PLIST2(plist, i, j))
 
@@ -61,7 +60,7 @@ size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j) {
     gap_list_t first  = ElmPRec(fp, RNamName("first"));
     gap_list_t suffix = ElmPRec(fp, RNamName("suffix"));
     while (j != 0) {
-      i = INT_INTOBJ(ELM_PLIST2(right, i, INT_INTOBJ(ELM_PLIST(first, i))));
+      i = INT_INTOBJ(ELM_PLIST2(right, i, INT_INTOBJ(ELM_PLIST(first, j))));
       j = INT_INTOBJ(ELM_PLIST(suffix, j));
     }
     return i;

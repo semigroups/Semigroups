@@ -22,6 +22,8 @@
 #include "gap.h"
 #include "src/compiled.h"
 
+#define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
+
 // TODO(JDM) write doc
 size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j);
 
