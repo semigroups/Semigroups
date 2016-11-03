@@ -9,6 +9,21 @@
 
 # TODO: this is not really finished.
 
+InstallMethod(IsEnumerableSemigroup, "for a free band subsemigroup", 
+[IsFreeBandCategory],
+function(S)
+  return Length(GeneratorsOfSemigroup(S)) < 5;
+end);
+
+InstallMethod(IsEnumerableSemigroup, "for a free band subsemigroup", 
+[IsFreeBand],
+function(S)
+  return Length(MinimalSemigroupGeneratingSet(S)) < 5;
+end);
+
+# TODO
+#InstallMethod(FreeBandOfFreeBandElement, 
+
 ###############################################################################
 ## Internal
 ###############################################################################
