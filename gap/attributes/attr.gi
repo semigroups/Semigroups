@@ -498,8 +498,7 @@ end);
 InstallMethod(MinimalDClass, "for a semigroup", [IsSemigroup],
 S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 
-InstallMethod(MultiplicationTable, "for a semigroup", [IsSemigroup],
-EN_SEMI_CAYLEY_TABLE);
+InstallMethod(MultiplicationTable, "for an enumerable semigroup", [IsEnumerableSemigroup], EN_SEMI_CAYLEY_TABLE);
 
 #############################################################################
 ## 2. Methods for attributes where there are known better methods for acting
