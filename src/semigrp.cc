@@ -45,13 +45,13 @@
               (Int) TNAM_OBJ(obj),                                 \
               0L);                                                 \
   }
-#define EN_SEMI_CHECK_ARG(es)                                 \
-  if (TNUM_OBJ(es) != T_SEMI                                  \
-      || SUBTYPE_OF_T_SEMI(es) != T_SEMI_SUBTYPE_ENSEMI) {    \
-    ErrorQuit("the argument must be an T_SEMI Obj of subtype" \
-              " T_SEMI_SUBTYPE_ENSEMI not a %s,",             \
-              (Int) TNAM_OBJ(es),                             \
-              0L);                                            \
+#define EN_SEMI_CHECK_ARG(es)                                \
+  if (TNUM_OBJ(es) != T_SEMI                                 \
+      || SUBTYPE_OF_T_SEMI(es) != T_SEMI_SUBTYPE_ENSEMI) {   \
+    ErrorQuit("the argument must be a T_SEMI Obj of subtype" \
+              " T_SEMI_SUBTYPE_ENSEMI not a %s,",            \
+              (Int) TNAM_OBJ(es),                            \
+              0L);                                           \
   }
 #else
 #define SEMI_OBJ_CHECK_ARG(so)
@@ -59,7 +59,6 @@
 #define INTOBJ_CHECK_ARG(obj)
 #define EN_SEMI_CHECK_ARG(es)
 #endif
-
 
 // RNams
 static Int RNam_GeneratorsOfMagma = RNamName("GeneratorsOfMagma");
@@ -712,7 +711,7 @@ EN_SEMI_ELEMENT_NUMBER_SORTED(Obj self, gap_semigroup_t so, gap_int_t pos) {
 gap_semigroup_t
 EN_SEMI_ENUMERATE(Obj self, gap_semigroup_t so, gap_int_t limit) {
   SEMI_OBJ_CHECK_ARG(so);
-  INTOBJ_CHECK_ARG(limit); // FIXME limit can be -1, remove this
+  INTOBJ_CHECK_ARG(limit);  // FIXME limit can be -1, remove this
 
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
@@ -869,10 +868,9 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
   en_semi_obj_t es = semi_obj_get_en_semi(so);
 
   if (en_semi_get_type(es) != UNKNOWN) {
-    size_t   deg    = en_semi_get_degree(es);
-    Element* xx     = en_semi_get_converter(es)->convert(x, deg);
-    size_t   pos =
-        en_semi_get_cpp(es)->position(xx, semi_obj_get_report(so));
+    size_t   deg = en_semi_get_degree(es);
+    Element* xx  = en_semi_get_converter(es)->convert(x, deg);
+    size_t   pos = en_semi_get_cpp(es)->position(xx, semi_obj_get_report(so));
     delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   } else {
