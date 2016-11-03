@@ -27,11 +27,7 @@
 #include "data.h"
 #include "semigrp.h"
 
-/*******************************************************************************
- * GAP kernel version of the algorithm for other types of semigroups
- *******************************************************************************/
-
-// macros for the GAP version of the algorithm
+// Macros for the GAP version of the algorithm
 
 #define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
 #define INT_PLIST(plist, i) INT_INTOBJ(ELM_PLIST(plist, i))
@@ -43,7 +39,38 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   CHANGED_BAG(plist);
 }
 
-// assumes the length of data!.elts is at most 2^28
+// Fast product using left and right Cayley graphs
+
+size_t fropin_prod_by_reduction(gap_prec_t fp, size_t i, size_t j) {
+
+  fropin(fp, INTOBJ_INT(-1), 0, False);
+
+  gap_plist_t words = ElmPRec(fp, RNam_words);
+
+  if (LEN_PLIST(ELM_PLIST(words, i)) <= LEN_PLIST(ELM_PLIST(words, j))) {
+    gap_plist_t left   = ElmPRec(fp, RNamName("left"));
+    gap_plist_t last   = ElmPRec(fp, RNamName("final"));
+    gap_plist_t prefix = ElmPRec(fp, RNamName("prefix"));
+    while (i != 0) {
+      j = INT_INTOBJ(ELM_PLIST2(left, j, INT_INTOBJ(ELM_PLIST(last, i))));
+      i = INT_INTOBJ(ELM_PLIST(prefix, i));
+    }
+    return j;
+  } else {
+    gap_plist_t right  = ElmPRec(fp, RNamName("right"));
+    gap_plist_t first  = ElmPRec(fp, RNamName("first"));
+    gap_plist_t suffix = ElmPRec(fp, RNamName("suffix"));
+    while (j != 0) {
+      i = INT_INTOBJ(ELM_PLIST2(right, i, INT_INTOBJ(ELM_PLIST(first, i))));
+      j = INT_INTOBJ(ELM_PLIST(suffix, j));
+    }
+    return i;
+  }
+}
+
+// GAP kernel version of the algorithm for other types of semigroups.
+//
+// Assumes the length of data!.elts is at most 2 ^ 28.
 
 Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
   Obj found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
@@ -55,6 +82,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
   if (CALL_1ARGS(IsSemigroup, data) == True) {
     data = semi_obj_get_fropin(data);
   }
+  initRNams();
   assert(data_type(data) == UNKNOWN);
 
   // TODO if looking check that something in elts doesn't already satisfy the
