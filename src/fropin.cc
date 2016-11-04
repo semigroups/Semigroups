@@ -71,23 +71,24 @@ size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j) {
 //
 // Assumes the length of data!.elts is at most 2 ^ 28.
 
-Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
+Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   Obj found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
       reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
-      empty, oldword, x;
+      empty, oldword, x, data;
   UInt i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
       intval, stop, one;
   bool   report;
   size_t batch_size;
   initRNams();
 
-  if (CALL_1ARGS(IsSemigroup, data) == True) {
-    report     = semi_obj_get_report(data);
-    batch_size = semi_obj_get_batch_size(data);
-    data       = semi_obj_get_fropin(data);
+  if (CALL_1ARGS(IsSemigroup, obj) == True) {
+    report     = semi_obj_get_report(obj);
+    batch_size = semi_obj_get_batch_size(obj);
+    data       = semi_obj_get_fropin(obj);
   } else {
-    gap_semigroup_t parent = ElmPRec(data, RNamName("parent"));
+    gap_semigroup_t parent = ElmPRec(obj, RNamName("parent"));
     assert(CALL_1ARGS(IsSemigroup, parent) == True);
+    data       = obj;
     report     = semi_obj_get_report(parent);
     batch_size = semi_obj_get_batch_size(parent);
   }
@@ -321,6 +322,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
   AssPRec(data, RNamName("len"), INTOBJ_INT(len));
 
   CHANGED_BAG(data);
+  CHANGED_BAG(obj);
 
   return data;
 }

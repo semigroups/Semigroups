@@ -32,7 +32,7 @@
 
 typedef Obj en_semi_obj_t;
 
-// enum for types of enumerable semigroups, to be stored in the en_semi_obj_t
+// Enum for types of enumerable semigroups, to be stored in the en_semi_obj_t
 // associated to an enumerable semigroup
 
 enum en_semi_t {
@@ -62,10 +62,8 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
 size_t semi_obj_get_batch_size(gap_semigroup_t so);
 bool semi_obj_get_report(gap_semigroup_t so);
 gap_list_t semi_obj_get_gens(gap_semigroup_t so);
-
-Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so);
+en_semi_obj_t semi_obj_get_en_semi(gap_semigroup_t so);
 gap_rec_t semi_obj_get_fropin(gap_semigroup_t so);
-en_semi_t semi_obj_get_type(gap_semigroup_t so);
 
 static inline en_semi_t en_semi_get_type(en_semi_obj_t es) {
   assert(TNUM_OBJ(es) == T_SEMI
@@ -86,9 +84,9 @@ static inline Semigroup* en_semi_get_semi_cpp(en_semi_obj_t es) {
   assert(en_semi_get_type(es) != UNKNOWN);
 
   Semigroup* semi_cpp = CLASS_OBJ<Semigroup*>(es, 2);
-  if (semi_cpp != nullptr) {  // <es> has been loaded from a workspace
+  if (semi_cpp != nullptr) {
     return semi_cpp;
-  } else {
+  } else {  // <es> has been loaded from a workspace
     semi_obj_init_en_semi(en_semi_get_semi_obj(es));
     return CLASS_OBJ<Semigroup*>(es, 2);
   }
@@ -112,6 +110,16 @@ static inline size_t en_semi_get_degree(en_semi_obj_t es) {
          && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
   assert(en_semi_get_type(es) != UNKNOWN);
   return CLASS_OBJ<size_t>(es, 4);
+}
+
+static inline en_semi_t semi_obj_get_type(gap_semigroup_t so) {
+  assert(CALL_1ARGS(IsSemigroup, so) == True);
+  return en_semi_get_type(semi_obj_get_en_semi(so));
+}
+
+static inline Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so) {
+  assert(CALL_1ARGS(IsSemigroup, so) == True);
+  return en_semi_get_semi_cpp(semi_obj_get_en_semi(so));
 }
 
 // GAP level functions for IsEnumerableSemigroup

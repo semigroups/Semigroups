@@ -73,17 +73,21 @@ inline UInt LoadUIntBiggest() {
 
 void TSemiObjPrintFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UFDATA:
+    case T_SEMI_SUBTYPE_UFDATA: {
       Pr("<wrapper for instance of C++ UFData class>", 0L, 0L);
       break;
-    case T_SEMI_SUBTYPE_CONG:
+    }
+    case T_SEMI_SUBTYPE_CONG: {
       Pr("<wrapper for instance of C++ Congruence class>", 0L, 0L);
       break;
-    case T_SEMI_SUBTYPE_ENSEMI:
+    }
+    case T_SEMI_SUBTYPE_ENSEMI: {
       Pr("<wrapper for C++ semigroup objects>", 0L, 0L);
       break;
-    default:
+    }
+    default: {
       assert(false);
+    }
   }
 }
 
@@ -117,26 +121,30 @@ Int TBlocksObjIsMutableObjFuncs(Obj o) {
 
 void TSemiObjFreeFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UFDATA:
+    case T_SEMI_SUBTYPE_UFDATA: {
       delete CLASS_OBJ<UFData*>(o);
       break;
-    case T_SEMI_SUBTYPE_CONG:
+    }
+    case T_SEMI_SUBTYPE_CONG: {
       delete CLASS_OBJ<Congruence*>(o);
       break;
-    case T_SEMI_SUBTYPE_ENSEMI:
+    }
+    case T_SEMI_SUBTYPE_ENSEMI: {
       if (en_semi_get_type(o) != UNKNOWN) {
         Semigroup* semi_cpp = en_semi_get_semi_cpp(o);
         if (semi_cpp != nullptr) {
+          std::cout << "delete semi_cpp\n";
           delete semi_cpp;
         }
         Converter* converter = en_semi_get_converter(o);
         if (converter != nullptr) {
+          std::cout << "delete converter\n";
           delete converter;
         }
       }
       break;
-    default:
-      assert(false);
+    }
+    default: { assert(false); }
   }
 }
 
@@ -190,9 +198,10 @@ void TSemiObjSaveFunc(Obj o) {
       }
       break;
     }
-    default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_CONG
-             // do nothing further
+    default: {  // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_CONG
+                // do nothing further
       break;
+    }
   }
 }
 
@@ -221,12 +230,15 @@ void TSemiObjLoadFunc(Obj o) {
       for (size_t i = 0; i < size; i++) {
         table->push_back(LoadUIntBiggest());
       }
-      ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new UFData(*table));
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new UFData(*table));
       break;
     }
     case T_SEMI_SUBTYPE_CONG: {
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
       break;
+    }
+    default: {
+      assert(false);
     }
   }
 }
