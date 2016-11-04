@@ -139,7 +139,7 @@ function(I)
         indices := [], # the indices of elements in <I> in <S>
         nr := 0,       # the length of <indices>
         lookup := []); # if <data!.elts[i]> is an element of <I>, then
-                       # <lookup[i]=Position(Enumerator(I), data!.elts[i])
+                       # <lookup[i]=Position(Enumerator(I), Enumerator(S)[i])
 
   # add the generators to <record>
 
@@ -152,7 +152,7 @@ function(I)
       record.indices[record.nr] := pos;
     fi;
   od;
-  record.enum := Enumerator(S);
+  record.enum := EnumeratorCanonical(S);
 
   record.NumberElement := function(enum, elt)
     local pos, lookfunc;

@@ -221,6 +221,7 @@ end);
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a (0-)simple semigroup congruence",
+# FIXME Why does the string say (0-)simple and not simple? 
 [IsSimpleSemigroupCongruence],
 function(cong)
   local S, rmstable, nrclasses, iso, elms, table, newnums, next, rmsclass, i;
@@ -237,7 +238,7 @@ function(cong)
   next    := 1;
 
   for i in [1 .. Length(elms)] do
-    rmsclass := rmstable[Position(S, elms[i] ^ iso)];
+    rmsclass := rmstable[Position(Range(iso), elms[i] ^ iso)];
     if not IsBound(newnums[rmsclass]) then
       newnums[rmsclass] := next;
       next := next + 1;
