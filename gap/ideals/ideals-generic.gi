@@ -52,6 +52,10 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   S := SupersemigroupOfIdeal(UnderlyingCollection(enum));
   left := LeftCayleyGraphSemigroup(S);
   right := RightCayleyGraphSemigroup(S);
+  # FIXME Once the left and right Cayley graphs have been calculated, the
+  # entire data structure of S is known and from this it is relatively easy to
+  # find the entire data structure for I, so there is no point to what follows,
+  # and this whole file should be rewritten.
   genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
   data := INIT_FROPIN(S);
 
@@ -201,7 +205,13 @@ function(x, I)
   return Position(Enumerator(I), x) <> fail;
 end);
 
-#TODO this should be better, more like the method in ideals-acting.gi
+# The method for GeneratorsOfSemigroup for an enumerable semigroup ideal must
+# not rely in any way on the output of the Froidure-Pin algorithm when run on
+# the ideal. In order to run the Froidure-Pin algorithm requires its input
+# semigroup (ideal) to have a generating set, and so if the method below
+# requires the output of the F-P algorithm (Green's relations, etc), then we
+# get caught in an infinite loop: finding the generating set calls the F-P
+# algorithm which tries to find a generating set, and so on.
 
 InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
