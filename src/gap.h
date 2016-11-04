@@ -125,5 +125,7 @@ extern Obj INIT_FROPIN;
 extern Obj GeneratorsOfMagma;
 
 extern Obj IsSemigroup;
+extern Obj IsSemigroupIdeal;
+extern Obj IsActingSemigroup;
 
 #endif  // SEMIGROUPS_SRC_GAP_H_

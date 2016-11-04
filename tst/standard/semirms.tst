@@ -1589,17 +1589,14 @@ true
 # for a Rees 0-matrix semigroup over a non-IsGroup group,
 # and a non-group semigroup
 gap> T := FullTransformationMonoid(4);;
-gap> G := GroupOfUnits(T);
-<transformation group of degree 4 with 2 generators>
+gap> G := GroupOfUnits(T);;
 gap> R := ReesZeroMatrixSemigroup(T,
 > [[0, IdentityTransformation], [IdentityTransformation, 0]]);
 <Rees 0-matrix semigroup 2x2 over <full transformation monoid of degree 4>>
 gap> RZMSNormalization(R);;
 gap> Matrix(Range(last));
 [ [ IdentityTransformation, 0 ], [ 0, IdentityTransformation ] ]
-gap> R := ReesZeroMatrixSemigroup(G, [[Transformation([3, 1, 4, 2])]]);
-<Rees 0-matrix semigroup 1x1 over <transformation group of degree 4 with
-   2 generators>>
+gap> R := ReesZeroMatrixSemigroup(G, [[Transformation([3, 1, 4, 2])]]);;
 gap> RZMSNormalization(R);;
 gap> Matrix(Range(last));
 [ [ IdentityTransformation ] ]
@@ -1767,8 +1764,8 @@ gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 gap> NrIdempotents(R);
 2
 gap> Idempotents(R);
-[ 0, (1,(),1) ]
-gap> Idempotents(R) = Elements(R);
+[ (1,(),1), 0 ]
+gap> AsSet(Idempotents(R)) = Elements(R);
 true
 gap> IsBand(R);
 true
@@ -1781,8 +1778,8 @@ gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [x, x ^ 2]]);
 gap> NrIdempotents(R);
 4
 gap> Idempotents(R);
-[ 0, (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
-  (2,IdentityTransformation,2) ]
+[ (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
+  (2,IdentityTransformation,2), 0 ]
 gap> ForAll(Idempotents(R), IsIdempotent);
 true
 gap> x := Transformation([1, 1, 2]);;
@@ -1904,8 +1901,7 @@ gap> MatrixEntries(R);
 
 #T# IsomorphismReesMatrixSemigroup, infinite
 gap> IsomorphismReesMatrixSemigroup(FreeInverseSemigroup(2));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphSemigroup' on 1 arguments
+Error, usage: the semigroup must be a finite simple semigroup,
 
 #T# IsomorphismReesZeroMatrixSemigroup, infinite
 gap> IsomorphismReesZeroMatrixSemigroup(FreeSemigroup(2));

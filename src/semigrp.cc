@@ -28,7 +28,7 @@
 #include "gap.h"
 #include "src/compiled.h"
 
-//#define DEBUG
+#define DEBUG
 //#include "gap-debug.h"
 
 #ifdef DEBUG
@@ -87,8 +87,8 @@ static inline gap_list_t vec_to_plist(Converter* converter, T* cont) {
   size_t i = 1;
   for (auto x : *cont) {
     SET_ELM_PLIST(out, i++, converter->unconvert(x));
-    CHANGED_BAG(out);
   }
+  CHANGED_BAG(out);
   return out;
 }
 
@@ -139,9 +139,21 @@ gap_list_t semi_obj_get_gens(gap_semigroup_t so) {
     gap_list_t gens = GET_ELM_PREC(so, i);
     PLAIN_LIST(gens);
     CHANGED_BAG(gens);
-    CHANGED_BAG(so);
     return gens;
   } else {
+
+#ifdef DEBUG
+    // This is included since the methods for finding generating sets for
+    // acting semigroup ideals may use the output of the F-P algorithm (Green's
+    // relations etc), and so if we are here we are about to call
+    // GeneratorsOfMagma from inside the F-P algorithm, leading to an infinite
+    // loop.
+    if (CALL_1ARGS(IsSemigroupIdeal, so) == True
+        && CALL_1ARGS(IsActingSemigroup, so) == True) {
+      ErrorQuit("the argument must not be an acting semigroup ideal,", 0L, 0L);
+    }
+#endif
+
     CALL_1ARGS(GeneratorsOfMagma, so);
     if (FindPRec(so, RNam_GeneratorsOfMagma, &i, 1)) {
       gap_list_t gens = GET_ELM_PREC(so, i);
@@ -182,9 +194,6 @@ size_t semi_obj_get_batch_size(gap_semigroup_t so) {
       return INT_INTOBJ(GET_ELM_PREC(opts, i));
     }
   }
-#ifdef DEBUG
-  std::cout << "Using default value of 8192 for reporting!" << std::endl;
-#endif
   return 8192;
 }
 
@@ -198,9 +207,6 @@ bool semi_obj_get_report(gap_semigroup_t so) {
       return (GET_ELM_PREC(opts, i) == True ? true : false);
     }
   }
-#ifdef DEBUG
-  std::cout << "Using default value of <false> for reporting!" << std::endl;
-#endif
   return false;
 }
 
@@ -214,9 +220,6 @@ static inline size_t semi_obj_get_nr_threads(gap_semigroup_t so) {
       return INT_INTOBJ(GET_ELM_PREC(opts, i));
     }
   }
-#ifdef DEBUG
-  std::cout << "Using default value of 1 for number of threads!" << std::endl;
-#endif
   return 1;
 }
 
@@ -635,7 +638,7 @@ gap_int_t EN_SEMI_CURRENT_SIZE(Obj self, gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
-    return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_max_word_length());
+    return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_size());
   } else {
     initRNams();
     gap_rec_t fp = semi_obj_get_en_semi(so);
@@ -821,6 +824,54 @@ gap_int_t EN_SEMI_LENGTH_ELEMENT(Obj self, gap_semigroup_t so, gap_int_t pos) {
   }
 }
 
+gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
+  SEMI_OBJ_CHECK_ARG(so);
+  en_semi_obj_t es = semi_obj_get_en_semi(so);
+  if (en_semi_get_type(es) != UNKNOWN) {
+    Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
+    typename std::vector<size_t>::const_iterator cbegin =
+        semi_cpp->idempotents_cbegin(semi_obj_get_report(so),
+                                     semi_obj_get_nr_threads(so));
+    typename std::vector<size_t>::const_iterator cend =
+        semi_cpp->idempotents_cend();
+    size_t nr = semi_cpp->nr_idempotents();
+    Converter* converter = en_semi_get_converter(es);
+
+    gap_list_t out = NEW_PLIST(T_PLIST, nr);
+    SET_LEN_PLIST(out, nr);
+
+    for (auto it = cend - 1; it >= cbegin; it--) {
+      SET_ELM_PLIST(out, nr--, converter->unconvert((*semi_cpp)[*it]));
+    }
+    CHANGED_BAG(out);
+    return out;
+  } else {
+    // This could probably be better but is also probably not worth the effort
+    // of improving
+    gap_rec_t  fp     = fropin(so, INTOBJ_INT(-1), 0, False);
+    gap_list_t left   = ElmPRec(fp, RNamName("left"));
+    gap_list_t last   = ElmPRec(fp, RNamName("final"));
+    gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
+    gap_list_t elts   = ElmPRec(fp, RNamName("elts"));
+    size_t     size   = LEN_PLIST(left);
+    size_t     nr     = 0;
+    gap_list_t out    = NEW_PLIST(T_PLIST, 0);
+    SET_LEN_PLIST(out, 0);
+    for (size_t pos = 1; pos <= size; pos++) {
+      size_t i = pos, j = pos;
+      while (i != 0) {
+        j = INT_INTOBJ(
+            ELM_PLIST(ELM_PLIST(left, j), INT_INTOBJ(ELM_PLIST(last, i))));
+        i = INT_INTOBJ(ELM_PLIST(prefix, i));
+      }
+      if (j == pos) {
+        AssPlist(out, ++nr, ELM_PLIST(elts, pos));
+      }
+    }
+    return out;
+  }
+}
+
 gap_bool_t EN_SEMI_IS_DONE(Obj self, gap_semigroup_t so) {
   SEMI_OBJ_CHECK_ARG(so);
   en_semi_obj_t es = semi_obj_get_en_semi(so);
@@ -843,6 +894,8 @@ gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->nr_idempotents(
         semi_obj_get_report(so), semi_obj_get_nr_threads(so)));
   } else {
+    // This could probably be better but is also probably not worth the effort
+    // of improving
     gap_rec_t fp     = fropin(so, INTOBJ_INT(-1), 0, False);
     gap_list_t left   = ElmPRec(fp, RNamName("left"));
     gap_list_t last   = ElmPRec(fp, RNamName("final"));

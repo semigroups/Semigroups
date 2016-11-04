@@ -24,7 +24,7 @@ ReadPackage("semigroups/gap/elements/trans.gi");
 ReadPackage("semigroups/gap/elements/elements.gi");
 ReadPackage("semigroups/gap/elements/pperm.gi");
 
-ReadPackage("semigroups/gap/semigroups/semi.gi");
+ReadPackage("semigroups/gap/semigroups/semigrp.gi");
 ReadPackage("semigroups/gap/semigroups/grpperm.gi");
 ReadPackage("semigroups/gap/semigroups/semirms.gi");
 ReadPackage("semigroups/gap/semigroups/semibipart.gi");
@@ -54,7 +54,7 @@ ReadPackage("semigroups/gap/ideals/ideals-acting.gi");
 ReadPackage("semigroups/gap/ideals/ideals-lambda-rho.gi");
 ReadPackage("semigroups/gap/ideals/ideals-generic.gi");
 
-ReadPackage("semigroups/gap/greens/greens-generic.gi");
+ReadPackage("semigroups/gap/greens/gren.gi");
 ReadPackage("semigroups/gap/greens/greens-acting.gi");
 ReadPackage("semigroups/gap/greens/greens-regular.gi");
 ReadPackage("semigroups/gap/greens/greens-inverse.gi");
@@ -86,7 +86,6 @@ ReadPackage("semigroups/gap/congruences/quotients.gi");
 ReadPackage("semigroups/gap/congruences/cong.gi");
 ReadPackage("semigroups/gap/congruences/conglatt.gi");
 
-ReadPackage("semigroups/gap/fp/fpsemi.gi");
 ReadPackage("semigroups/gap/fp/freeinverse.gi");
 ReadPackage("semigroups/gap/fp/freeband.gi");
 

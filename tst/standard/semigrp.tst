@@ -1,13 +1,13 @@
 ############################################################################
 ##
-#W  standard/semi.tst
+#W  standard/semigrp.tst
 #Y  Copyright (C) 2015                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semi.tst");
+gap> START_TEST("Semigroups package: standard/semigrp.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -31,7 +31,7 @@ gap> S := AsSemigroup(IsFpSemigroup, S);
 gap> AsMonoid(S);
 <fp group on the generators [  ]>
 gap> S := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
-<commutative semigroup of 2x2 max-plus matrices with 1 generator>
+<trivial group of 1x1 max-plus matrices with 1 generator>
 gap> AsMonoid(S);
 <trivial group of 1x1 max-plus matrices with 1 generator>
 gap> S := AsSemigroup(IsMinPlusMatrixSemigroup, S);
@@ -923,4 +923,4 @@ gap> T := AsMonoid(IsFpMonoid, S);
 gap> T := AsMonoid(IsBooleanMatMonoid, S);;
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/semi.tst");
+gap> STOP_TEST("Semigroups package: standard/semigrp.tst");

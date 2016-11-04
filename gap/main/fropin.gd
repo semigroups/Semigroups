@@ -17,10 +17,13 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-# Note that an acting semigroup can have generic data but not the other way
-# around.
 
-DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
+DeclareRepresentation("IsEnumerableSemigroupRep", 
+                      IsSemigroup and IsComponentObjectRep,
+                      ["__en_semi_fropin", "__en_semi_cpp_semi"]);
+
+DeclareProperty("IsGeneratorsOfEnumerableSemigroup", 
+                IsMultiplicativeElementCollection);
 
 DeclareOperation("PositionSortedOp",
                  [IsSemigroup, IsMultiplicativeElement]);
@@ -34,16 +37,10 @@ DeclareOperation("Position",
 DeclareAttribute("AsListCanonical", IsSemigroup);
 DeclareAttribute("EnumeratorCanonical", IsSemigroup);
 DeclareOperation("IteratorCanonical", [IsSemigroup]);
+DeclareOperation("PositionCanonical", [IsSemigroup, IsMultiplicativeElement]);
 #TODO PositionCanonical
-
-# TODO(JDM) increment the rank here. Non-finite semigroups can be enumerable!
-DeclareProperty("IsEnumerableSemigroup", IsSemigroup);
-
-InstallTrueMethod(IsEnumerableSemigroup, IsTransformationSemigroup);
-InstallTrueMethod(IsEnumerableSemigroup, IsPartialPermSemigroup);
-InstallTrueMethod(IsEnumerableSemigroup, IsMatrixOverSemiringSemigroup);
-InstallTrueMethod(IsEnumerableSemigroup, IsBipartitionSemigroup);
-InstallTrueMethod(IsEnumerableSemigroup, IsPBRSemigroup);
 
 DeclareOperation("Enumerate", [IsSemigroup, IsPosInt]);
 DeclareOperation("Enumerate", [IsSemigroup]);
+
+DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);

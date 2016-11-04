@@ -349,7 +349,7 @@ true
 #T# attr: RightCayleyGraphSemigroup, infinite
 gap> RightCayleyGraphSemigroup(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphSemigroup' on 1 arguments
+Error, no 2nd choice method found for `CayleyGraphSemigroup' on 1 arguments
 
 #T# attr: LeftCayleyGraphSemigroup
 gap> S := Monoid(BooleanMat([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
@@ -374,7 +374,7 @@ true
 #T# attr: RightCayleyGraphSemigroup, infinite
 gap> LeftCayleyGraphSemigroup(FreeInverseSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
+Error, no 2nd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
 s
 
 #T# attr: IsomorphismReesMatrixSemigroup
@@ -674,7 +674,7 @@ true
 #T# attr: IsGreensDLeq, error
 gap> IsGreensDLeq(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsGreensDLeq' on 1 arguments
+Error, no 2nd choice method found for `IsGreensDLeq' on 1 arguments
 
 #T# attr: MaximalDClasses
 gap> S := RegularBooleanMatMonoid(3);
@@ -778,8 +778,7 @@ gap> NrIdempotents(S);
 
 #T# attr: NrIdempotents, infinite 1/1
 gap> NrIdempotents(FreeSemigroup(2));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `NrIdempotents' on 1 arguments
+Error, resulting list would be too large (length infinity)
 
 #T# attr: RepresentativeOfMinimalIdeal, simple, 1/1
 gap> S := MinimalIdeal(FreeBand(2));
@@ -827,7 +826,7 @@ rguments
 #T# attr: MultiplicativeNeutralElement, infinite 1/1
 gap> MultiplicativeNeutralElement(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MultiplicativeNeutralElement' on 1 argu\
+Error, no 2nd choice method found for `MultiplicativeNeutralElement' on 1 argu\
 ments
 
 #T# attr: MultiplicativeNeutralElement, One 1/1

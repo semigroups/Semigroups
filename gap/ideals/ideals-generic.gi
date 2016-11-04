@@ -130,9 +130,9 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   return enum;
 end;
 
-InstallMethod(Enumerator, "for a semigroup ideal with generators",
-[IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
-1, # to beat the library method
+InstallMethod(Enumerator, "for an enumerable semigroup ideal with generators",
+[IsEnumerableSemigroupRep and IsSemigroupIdeal
+ and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local S, record, gens, i, pos;
   S := SupersemigroupOfIdeal(I);
@@ -149,7 +149,7 @@ function(I)
 
   gens := GeneratorsOfSemigroupIdeal(I);
   for i in [1 .. Length(gens)] do
-    pos := Position(S, gens[i]); # this should not be fail
+    pos := PositionCanonical(S, gens[i]); # this should not be fail
     if not IsBound(record.lookup[pos]) then
       record.nr := record.nr + 1;
       record.lookup[pos] := record.nr;
@@ -160,7 +160,7 @@ function(I)
 
   record.NumberElement := function(enum, elt)
     local pos, lookfunc;
-    pos := Position(S, elt);
+    pos := PositionCanonical(S, elt);
 
     if pos = fail then
       return fail;
@@ -200,7 +200,8 @@ end);
 
 InstallMethod(\in,
 "for a multiplicative element and semigroup ideal with generators",
-[IsMultiplicativeElement, IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsMultiplicativeElement, 
+ IsEnumerableSemigroupRep and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(x, I)
   return Position(Enumerator(I), x) <> fail;
 end);

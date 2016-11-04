@@ -50,7 +50,7 @@ ReadPackage("semigroups/gap/elements/boolmat.gd");
 ReadPackage("semigroups/gap/elements/trans.gd");
 ReadPackage("semigroups/gap/elements/elements.gd");
 
-ReadPackage("semigroups/gap/semigroups/semi.gd");
+ReadPackage("semigroups/gap/semigroups/semigrp.gd");
 ReadPackage("semigroups/gap/semigroups/grpperm.gd");
 ReadPackage("semigroups/gap/semigroups/semirms.gd");
 ReadPackage("semigroups/gap/semigroups/semibipart.gd");
@@ -84,7 +84,7 @@ ReadPackage("semigroups/gap/ideals/ideals.gd");
 ReadPackage("semigroups/gap/ideals/ideals-acting.gd");
 ReadPackage("semigroups/gap/ideals/ideals-lambda-rho.gd");
 
-ReadPackage("semigroups/gap/greens/greens-generic.gd");
+ReadPackage("semigroups/gap/greens/gren.gd");
 ReadPackage("semigroups/gap/greens/greens-acting.gd");
 
 ReadPackage("semigroups/gap/tools/display.gd");
@@ -114,12 +114,10 @@ ReadPackage("semigroups/gap/congruences/quotients.gd");
 ReadPackage("semigroups/gap/congruences/cong.gd");
 ReadPackage("semigroups/gap/congruences/conglatt.gd");
 
-ReadPackage("semigroups/gap/fp/fpsemi.gd");
 ReadPackage("semigroups/gap/fp/freeinverse.gd");
 ReadPackage("semigroups/gap/fp/freeband.gd");
 
 ReadPackage("semigroups/gap/obsolete.gd");
-
 
 DeclareInfoClass("InfoMatrixSemigroups");
 DeclareInfoClass("InfoSemigroups");

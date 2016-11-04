@@ -144,11 +144,7 @@ end);
 InstallMethod(NrIdempotents, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  return EN_SEMI_NR_IDEMPOTENTS(S);
+  return Length(Idempotents(S));
 end);
 
 InstallMethod(GroupOfUnits, "for a semigroup",
@@ -178,28 +174,6 @@ function(S)
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, Range(iso));
   return U;
-end);
-
-# same method for ideals
-
-InstallMethod(RightCayleyGraphSemigroup, "for a semigroup",
-[IsSemigroup], 3,
-function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-  return EN_SEMI_RIGHT_CAYLEY_GRAPH(S);
-end);
-
-# same method for ideals
-
-InstallMethod(LeftCayleyGraphSemigroup, "for a semigroup",
-[IsSemigroup], 3,
-function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-  return EN_SEMI_LEFT_CAYLEY_GRAPH(S);
 end);
 
 # same method for ideals
@@ -498,15 +472,13 @@ end);
 InstallMethod(MinimalDClass, "for a semigroup", [IsSemigroup],
 S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 
-InstallMethod(MultiplicationTable, "for an enumerable semigroup", [IsEnumerableSemigroup], EN_SEMI_CAYLEY_TABLE);
-
 #############################################################################
 ## 2. Methods for attributes where there are known better methods for acting
 ##    semigroups.
 #############################################################################
 
-InstallMethod(IsGreensDLeq, "for a finite semigroup",
-[IsSemigroup],
+InstallMethod(IsGreensDLeq, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep],
 function(S)
   local digraph, id;
 
@@ -519,8 +491,8 @@ function(S)
   id := GreensDRelation(S)!.data.id;
   return function(x, y)
     local i, j;
-    i := id[Position(S, x)];
-    j := id[Position(S, y)];
+    i := id[PositionCanonical(S, x)];
+    j := id[PositionCanonical(S, y)];
     # TODO should be a better way of checking the below
     return j in OutNeighboursOfVertex(digraph, i);
   end;
@@ -529,7 +501,7 @@ end);
 InstallMethod(MaximalDClasses, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local gens, partial, id, pos, i, out, classes, x;
+  local gens, partial, id, enum, pos, i, out, classes, x;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -538,10 +510,11 @@ function(S)
   gens    := GeneratorsOfSemigroup(S);
   partial := PartialOrderOfDClasses(S);
   id      := GreensDRelation(S)!.data.id;
+  enum    := Enumerator(S);
   pos     := [];
 
   for x in gens do
-    i := id[Position(S, x)];
+    i := id[Position(enum, x)];
     #index of the D-class containing x
     AddSet(pos, i);
   od;
@@ -638,20 +611,16 @@ function(D)
 end);
 
 InstallMethod(MultiplicativeNeutralElement,
-"for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+"for an enumerable semigroup with generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
   local D, e;
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if IsMultiplicativeElementWithOneCollection(S) and One(S) in S then
+  elif IsMultiplicativeElementWithOneCollection(S) and One(S) in S then
     return One(S);
-  fi;
-
-  if Length(MaximalDClasses(S)) > 1 then
+  elif Length(MaximalDClasses(S)) > 1 then
     return fail;
   fi;
 

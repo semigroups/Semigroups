@@ -999,7 +999,7 @@ gap> S := Semigroup([[[Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
 >                     [Z(2 ^ 2) ^ 2, Z(2) ^ 0, 0 * Z(2), Z(2) ^ 0]]]);
 <semigroup with 3 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
-<transformation monoid of size 21, degree 21 with 2 generators>
+<transformation semigroup of size 21, degree 22 with 3 generators>
 gap> Size(T);
 21
 gap> I := SemigroupIdeal(T, Idempotents(T));;

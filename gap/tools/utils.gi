@@ -77,7 +77,7 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "orbits.xml",
                            "pbr.xml",
                            "properties.xml",
-                           "semi.xml",
+                           "semigrp.xml",
                            "semibipart.xml",
                            "semicons.xml",
                            "semiex.xml",
@@ -219,7 +219,7 @@ SEMIGROUPS.StopTest := function(file)
 end;
 
 SEMIGROUPS.Test := function(arg)
-  local file, opts, generic, split, print_file, enabled, disabled;
+  local file, opts, generic, split, print_file, string_file, enabled, disabled;
 
   if Length(arg) = 0 then
     ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
@@ -244,6 +244,11 @@ SEMIGROUPS.Test := function(arg)
   print_file := JoinStringsWithSeparator(split{
                                          [Length(split) - 2 .. Length(split)]},
                                          "/");
+  string_file := StringFile(file);
+  if IsEmpty(string_file) then 
+    Print("File: ", print_file, " is empty!\n");
+    return true;
+  fi;
 
   Print("Testing file: ", print_file, " (generic := false)\n");
   SEMIGROUPS.DefaultOptionsRec.generic := false;

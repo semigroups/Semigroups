@@ -187,11 +187,12 @@ void TSemiObjSaveFunc(Obj o) {
       break;
     }
     case T_SEMI_SUBTYPE_ENSEMI: {
-      // [t_semi_subtype_t, en_semi_t, degree, semigroup Obj]
-      // degree only if en_semi_t != UNKNOWN
-      SaveUInt4(en_semi_get_type(o));
+      // [t_semi_subtype_t, semigroup Obj]
+      // only store semigroup Obj if en_semi_get_semi_obj != UNKNOWN
+      //
+      // Don't store any more because we have to run semi_obj_init_en_semi,
+      // which will recalculate the other data anyway
       if (en_semi_get_type(o) != UNKNOWN) {
-        SaveUInt4(en_semi_get_degree(o));
         SaveSubObj(en_semi_get_semi_obj(o));
       }
       break;
@@ -212,11 +213,9 @@ void TSemiObjLoadFunc(Obj o) {
   switch (type) {
     case T_SEMI_SUBTYPE_ENSEMI: {
       en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(s_type);
       if (s_type != UNKNOWN) {
         ADDR_OBJ(o)[2] = static_cast<Obj>(nullptr);  // Semigroup*
         ADDR_OBJ(o)[3] = static_cast<Obj>(nullptr);  // Converter*
-        ADDR_OBJ(o)[4] = reinterpret_cast<Obj>(static_cast<size_t>(LoadUInt4()));
         ADDR_OBJ(o)[5] = LoadSubObj();
       }
       break;
@@ -369,8 +368,9 @@ Obj DegreeOfPBR;
 Obj INIT_FROPIN;
 Obj GeneratorsOfMagma;
 
-//TODO(JDM) remove this it's temporary
 Obj IsSemigroup;
+Obj IsSemigroupIdeal;
+Obj IsActingSemigroup;
 
 /*****************************************************************************
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
@@ -416,10 +416,11 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER, 2, "S, pos"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER_SORTED, 2, "S, pos"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_FACTORIZATION, 2, "S, pos"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_IDEMPOTENTS, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_IS_DONE, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_IS_DONE_ITERATOR, 1, "iter"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_LEFT_CAYLEY_GRAPH, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_LENGTH_ELEMENT, 2, "S, pos"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_IS_DONE, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_NR_IDEMPOTENTS, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION, 2, "S, x"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION_CURRENT, 2, "S, x"),
@@ -605,8 +606,9 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("GeneratorsOfMagma",
                         &GeneratorsOfMagma);
 
-  //TODO(JDM) remove this (it's here temporarily)
   ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
+  ImportGVarFromLibrary("IsSemigroupIdeal", &IsSemigroupIdeal);
+  ImportGVarFromLibrary("IsActingSemigroup", &IsActingSemigroup);
 
   /* return success                                                      */
   return 0;

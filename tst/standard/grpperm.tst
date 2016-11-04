@@ -52,11 +52,9 @@ Error, Semigroups: IsomorphismPermGroup: usage,
 the argument <S> must satisfy IsGroupAsSemigroup,
 
 #T# IsomorphismPermGroup: for a Rees Matrix Semigroup
-gap> R := ReesMatrixSemigroup(Group((1,3,5), (2,4)), [[()]]);
-<Rees matrix semigroup 1x1 over Group([ (1,3,5), (2,4) ])>
+gap> R := ReesMatrixSemigroup(Group((1,3,5), (2,4)), [[()]]);;
 gap> iso := IsomorphismPermGroup(R);;
-gap> G := Range(iso);
-<group of size 6, with 2 generators>
+gap> G := Range(iso);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
 true

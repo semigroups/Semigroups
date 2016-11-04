@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  semi.gi
+#W  semigrp.gi
 #Y  Copyright (C) 2013-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -108,13 +108,13 @@ SEMIGROUPS.AddGenerators := function(S, coll, opts)
   if EN_SEMI_ADD_GENERATORS(S, coll) = fail then
     return ClosureSemigroup(S, coll, opts);
   fi;
-
   # We must recreate the semigroup <S> as <T> since <S> may have further
   # attributes that are no longer valid after the call to
   # EN_SEMI_ADD_GENERATORS, such as Size etc. In other words, S may no longer
   # be valid after calling this function if any new generators are added.
-  T := Semigroup(GeneratorsOfMagma(S));
-  T!.__en_semi_cpp_semi:= S!.__en_semi_cpp_semi;
+  T := Semigroup(GeneratorsOfMagma(S), opts);
+  T!.__en_semi_cpp_semi := S!.__en_semi_cpp_semi;
+  T!.__en_semi_fropin   := S!.__en_semi_fropin;
   return T;
 end;
 
@@ -250,9 +250,11 @@ function(gens, opts)
     if opts.regular then
       filts := filts and IsRegularSemigroup;
     fi;
+  elif IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsEnumerableSemigroupRep;
   fi;
 
-  if IsMatrixObj(gens[1]) then
+  if IsMatrixObj(gens[1]) then #FIXME this clause should be unnecessary now
     filts := filts and IsMatrixOverFiniteFieldSemigroup;
   fi;
 
@@ -335,6 +337,8 @@ function(gens, opts)
     if opts.regular then
       filts := filts and IsRegularSemigroup;
     fi;
+  elif IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsEnumerableSemigroupRep;
   fi;
 
   if IsMatrixObj(gens[1]) then
@@ -423,6 +427,8 @@ function(gens, opts)
 
   if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
+  elif IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsEnumerableSemigroupRep;
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
@@ -508,6 +514,8 @@ function(gens, opts)
 
   if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
+  elif IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsEnumerableSemigroupRep;
   fi;
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
@@ -718,7 +726,7 @@ InstallMethod(ClosureSemigroupNC,
 [IsSemigroup, IsMultiplicativeElementCollection and IsFinite, IsRecord],
 function(S, coll, opts)
   local T;
-  T := Semigroup(Concatenation(GeneratorsOfSemigroup(S), coll));
+  T := Semigroup(Concatenation(GeneratorsOfSemigroup(S), coll), opts);
   # The following does nothing if S / T is not an CPP semigroup
   return EN_SEMI_CLOSURE(T, S, coll);
 end);

@@ -275,7 +275,7 @@ function(S)
   Q := F / rels;
   B := GeneratorsOfSemigroup(Q);
 
-  map := x -> EvaluateWord(B, MinimalFactorization(S, x));
+  map := x -> EvaluateWord(B, Factorization(S, x));
   inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S));
 
   return MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
@@ -336,7 +336,7 @@ function(S)
     # the identity is not a generator, so to avoid adjoining an additional
     # identity in the output, we must add a relation equating the identity with
     # a word in the generators.
-    word := MinimalFactorization(S, MultiplicativeNeutralElement(S));
+    word := Factorization(S, MultiplicativeNeutralElement(S));
     Add(rels, [convert(word), One(F)]);
     # Note that the previously line depends on Factorization always giving a
     # factorization in the GeneratorsOfSemigroup(S), and not in
@@ -389,10 +389,10 @@ function(S)
 
   if sgens = mgens then
     map := x -> EvaluateWord(GeneratorsOfMonoid(Q),
-                             MinimalFactorization(S, x));
+                             Factorization(S, x));
   else
     map := x -> EvaluateWord(GeneratorsOfSemigroup(Q),
-                             MinimalFactorization(S, x));
+                             Factorization(S, x));
   fi;
 
   inv := function(x)
@@ -460,3 +460,43 @@ function(G)
                                        x -> (x ^ iso1) ^ iso2,
                                        x -> (x ^ inv2) ^ inv1);
 end);
+
+SEMIGROUPS.ExtRepObjToWord := function(ext_rep_obj)
+  local n, word, val, pow, i;
+  n    := Length(ext_rep_obj);
+  word := [];
+  for i in [1, 3 .. n - 1] do 
+    val := ext_rep_obj[i];
+    pow := ext_rep_obj[i + 1];
+    while pow > 0 do 
+      Add(word, val);
+      pow := pow - 1;
+    od;
+  od;
+  return word;
+end;
+
+InstallMethod(Factorization, "for an fp semigroup and element", 
+IsCollsElms, [IsFpSemigroup, IsElementOfFpSemigroup],
+function(S, x)
+  return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x));
+end);
+
+## The following method could disappear if there are methods for Green's
+## relations etc so that the other method in attr.gi can be used.
+#
+#InstallMethod(MultiplicativeNeutralElement, "for an fp semigroup",
+#[IsFpSemigroup], 
+#function(S)
+#  local e;
+#
+#  if not IsFinite(S) then 
+#    TryNextMethod();
+#  fi;
+#  for e in Idempotents(S) do 
+#    if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then 
+#      return e;
+#    fi;
+#  od;
+#  return fail;
+#end);

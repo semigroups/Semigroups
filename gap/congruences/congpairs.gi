@@ -354,7 +354,7 @@ function(cong, elm)
 
   lookup := EquivalenceRelationLookup(cong);
   enum   := EnumeratorCanonical(Range(cong));
-  id     := lookup[Position(Range(cong), elm)];
+  id     := lookup[Position(enum, elm)];
   part   := FiniteCongruenceByGeneratingPairsPartition(cong);
 
   return List(part[id], i -> enum[i]);

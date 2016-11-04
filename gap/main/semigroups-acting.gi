@@ -513,7 +513,7 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or ActionDegree(x) > ActionDegree(S) then
     return false;
-  #elif IsEnumerableSemigroup(S) then 
+  #elif IsEnumerableSemigroupRep(S) then 
   #  if EN_SEMI_POSITION_CURRENT(S, x) <> fail then
   #    return true;
   #  elif EN_SEMI_IS_DONE(S) then
@@ -608,7 +608,7 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or ActionDegree(x) > ActionDegree(S) then
     return false;
-  #elif IsEnumerableSemigroup(S) then
+  #elif IsEnumerableSemigroupRep(S) then
   #  if EN_SEMI_POSITION_CURRENT(S, x) <> fail then
   #    return true;
   #  elif EN_SEMI_IS_DONE(S) then

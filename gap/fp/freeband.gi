@@ -9,20 +9,33 @@
 
 # TODO: this is not really finished.
 
-InstallMethod(IsEnumerableSemigroup, "for a free band subsemigroup", 
-[IsFreeBandCategory],
-function(S)
-  return Length(GeneratorsOfSemigroup(S)) < 5;
-end);
-
-InstallMethod(IsEnumerableSemigroup, "for a free band subsemigroup", 
-[IsFreeBand],
-function(S)
-  return Length(MinimalSemigroupGeneratingSet(S)) < 5;
-end);
-
 # TODO
-#InstallMethod(FreeBandOfFreeBandElement, 
+#InstallMethod(FreeBandOfFreeBandElement,
+
+InstallMethod(ContentOfFreeBandElement, "for a free band element",
+[IsFreeBandElement],
+function(w)
+  return ListBlist([1 .. Length(w!.cont)], w!.cont);
+end);
+
+InstallMethod(ContentOfFreeBandElementCollection,
+"for a free band element collection",
+[IsFreeBandElementCollection],
+function(coll)
+  local n, content, w;
+  
+  n := Length(coll[1]!.cont);
+  content := BlistList([1 .. n], []);
+
+  for w in coll do 
+    UniteBlist(content, w!.cont);
+    if SizeBlist(content) = n then 
+      break;
+    fi;
+  od;
+
+  return ListBlist([1 .. n], content);
+end);
 
 ###############################################################################
 ## Internal
@@ -76,7 +89,7 @@ InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
 
 InstallGlobalFunction(FreeBand,
 function(arg)
-  local names, F, type, gens, S, m, ngens;
+  local names, F, type, ngens, gens, word, filts, S, m;
 
   # Get and check the argument list, and construct names if necessary.
   if Length(arg) = 1 and IsInt(arg[1]) and 0 < arg[1] then
@@ -114,10 +127,13 @@ function(arg)
 
   StoreInfoFreeMagma(F, names, IsFreeBandElement);
 
-  S := Objectify(NewType(FamilyObj(gens),
-                         IsFreeBandCategory and
-                         IsAttributeStoringRep),
-                 rec());
+  filts := IsFreeBandCategory and IsAttributeStoringRep;
+
+  if IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsEnumerableSemigroupRep;
+  fi;
+
+  S := Objectify(NewType(FamilyObj(gens), filts), rec());
   SetGeneratorsOfMagma(S, gens);
   SetIsFreeBand(S, true);
   FamilyObj(S)!.semigroup := S;

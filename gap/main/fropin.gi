@@ -17,17 +17,111 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
+InstallTrueMethod(IsEnumerableSemigroupRep, 
+IsSemigroup and IsGeneratorsOfEnumerableSemigroup);
+
+# This is optional, but it is useful in several places, for example, to be able
+# to use MinimalFactorization with a perm group.
+InstallTrueMethod(IsEnumerableSemigroupRep, IsGroup and IsFinite);
+
+# This should be removed ultimately, but is included now because there are too
+# few methods for fp semigroup and monoids at present.
+InstallTrueMethod(IsEnumerableSemigroupRep, IsFpSemigroup and IsFinite);
+InstallTrueMethod(IsEnumerableSemigroupRep, IsFpMonoid and IsFinite);
+
+InstallTrueMethod(IsEnumerableSemigroupRep, 
+IsReesMatrixSubsemigroup and IsGeneratorsOfEnumerableSemigroup);
+
+InstallTrueMethod(IsEnumerableSemigroupRep, 
+IsReesZeroMatrixSubsemigroup and IsGeneratorsOfEnumerableSemigroup);
+
+InstallTrueMethod(IsEnumerableSemigroupRep,
+                  IsQuotientSemigroup and IsGeneratorsOfEnumerableSemigroup);
+
+# Methods for IsGeneratorsOfEnumerableSemigroup
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsGeneratorsOfActingSemigroup);
+
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsBipartitionCollection);
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsTransformationCollection);
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsPartialPermCollection);
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsMatrixOverFiniteFieldCollection);
+
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsPBRCollection);
+
+InstallTrueMethod(IsGeneratorsOfEnumerableSemigroup,
+                  IsGraphInverseSubsemigroup and IsFinite);
+
+InstallMethod(IsGeneratorsOfEnumerableSemigroup,
+"for a matrix over semiring collection", [IsMatrixOverSemiringCollection],
+IsGeneratorsOfSemigroup);
+
+# The HasRows and HasColumns is currently essential due to some problems in the
+# Rees(Zero)MatrixSemigroup code.
+
+InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup,
+IsReesZeroMatrixSubsemigroup and HasRows and HasColumns, 0, 
+function(R)
+  return IsGeneratorsOfEnumerableSemigroup([Representative(R)]);
+end);
+
+InstallMethod(IsGeneratorsOfEnumerableSemigroup,
+"for a Rees 0-matrix semigroup element collection",
+[IsReesZeroMatrixSemigroupElementCollection],
+function(coll)
+  local R;
+  R := ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
+  return IsPermGroup(UnderlyingSemigroup(R))
+    or IsEnumerableSemigroupRep(UnderlyingSemigroup(R));
+end);
+
+InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup, 
+IsQuotientSemigroup and HasQuotientSemigroupPreimage, 0,
+function(S)
+  return IsGeneratorsOfEnumerableSemigroup(QuotientSemigroupPreimage(S));
+end);
+
+# The HasRows and HasColumns is currently essential due to some problems in the
+# Rees(Zero)MatrixSemigroup code.
+
+InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup,
+IsReesMatrixSubsemigroup and HasRows and HasColumns, 0, 
+function(R)
+  return IsGeneratorsOfEnumerableSemigroup([Representative(R)]);
+end);
+
+InstallMethod(IsGeneratorsOfEnumerableSemigroup,
+"for a Rees matrix semigroup element collection",
+[IsReesMatrixSemigroupElementCollection],
+function(coll)
+  local R;
+  R := ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
+  return IsPermGroup(UnderlyingSemigroup(R))
+    or IsEnumerableSemigroupRep(UnderlyingSemigroup(R));
+end);
+
+InstallMethod(IsGeneratorsOfEnumerableSemigroup,
+"for a free band element collection",
+[IsFreeBandElementCollection],
+function(coll)
+  return Length(ContentOfFreeBandElementCollection(coll)) < 5;
+end);
+
+InstallMethod(IsGeneratorsOfEnumerableSemigroup,
+"for a multiplicative element collection",
+[IsMultiplicativeElementCollection], ReturnFalse);
+
 # This function is used to initialise the data record for an enumerable
 # semigroup which does not have a C++ implementation.
 
 BindGlobal("INIT_FROPIN",
 function(S)
   local data, hashlen, nrgens, nr, val, i;
-
-  # FIXME 
-  #if IsSemigroupIdeal(S) then 
-  #  ErrorNoReturn("this shouldn't happen!");
-  #fi;
 
   if (not IsSemigroup(S)) or Length(GeneratorsOfSemigroup(S)) = 0 then
     ErrorNoReturn("Semigroups: INIT_FROPIN: usage,\n",
@@ -102,18 +196,16 @@ function(S)
   return data;
 end);
 
-InstallMethod(IsEnumerableSemigroup, "for a semigroup", [IsSemigroup],
-ReturnFalse);
-
 #############################################################################
 # 1. Internal methods
 #############################################################################
 
-InstallMethod(AsSet, "for a generic semigroup with generators",
-[IsEnumerableSemigroup and HasGeneratorsOfSemigroup], EN_SEMI_AS_SET);
+InstallMethod(AsSet, "for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], EN_SEMI_AS_SET);
 
-InstallMethod(EnumeratorSorted, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(EnumeratorSorted,
+"for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
   local enum;
 
@@ -126,6 +218,8 @@ function(S)
               or IsBooleanMatSemigroup(S)
               or IsPBRSemigroup(S)
               or IsMatrixOverSemiringSemigroup(S)) then
+     # This method only works for semigroups to which the SemigroupsPlusPlus
+     # code applies
     TryNextMethod();
   fi;
 
@@ -139,26 +233,26 @@ function(S)
     return EN_SEMI_ELEMENT_NUMBER_SORTED(S, nr);
   end;
 
-  # FIXME this should be Size(S) hack around RZMS
-  enum.Length := enum -> EN_SEMI_SIZE(S);
+  enum.Length := enum -> Size(S);
 
   enum.Membership := function(enum, x)
-    return Position(S, x) <> fail;
+    return PositionCanonical(S, x) <> fail;
   end;
 
-  # FIXME this should be Size(S) hack around RZMS
   enum.IsBound\[\] := function(enum, nr)
-    return nr <= EN_SEMI_SIZE(S);
+    return nr <= Size(S);
   end;
 
   enum := EnumeratorByFunctions(S, enum);
   SetIsSemigroupEnumerator(enum, true);
   SetIsSSortedList(enum, true);
+
   return enum;
 end);
 
-InstallMethod(IteratorSorted, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 8,
+InstallMethod(IteratorSorted,
+"for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 8,
 # to beat the generic method for transformation semigroups, FIXME
 function(S)
   local iter;
@@ -181,22 +275,23 @@ function(S)
   return IteratorByFunctions(iter);
 end);
 
-InstallMethod(AsList, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], AsListCanonical);
+InstallMethod(AsList, "for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], AsListCanonical);
 
-InstallMethod(AsListCanonical, "for a semigroup", 
-[IsSemigroup and HasGeneratorsOfSemigroup],
-EN_SEMI_AS_LIST);
+InstallMethod(AsListCanonical,
+"for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], EN_SEMI_AS_LIST);
 
-InstallMethod(AsListCanonical, "for a semigroup", 
-[IsSemigroup],
+# FIXME why is the next method required?
+InstallMethod(AsListCanonical, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep],
 function(S)
   GeneratorsOfSemigroup(S);
   return AsListCanonical(S);
 end);
 
-InstallMethod(Enumerator, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 2,
+InstallMethod(Enumerator, "for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 2,
 function(S)
   if HasAsList(S) then
     return AsList(S);
@@ -206,8 +301,9 @@ function(S)
   return EnumeratorCanonical(S);
 end);
 
-InstallMethod(EnumeratorCanonical, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], 2,
+InstallMethod(EnumeratorCanonical,
+"for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 2,
 # to beat the generic method for a Rees matrix semigroup, FIXME!!
 function(S)
   local enum;
@@ -221,7 +317,7 @@ function(S)
   enum := rec();
 
   enum.NumberElement := function(enum, x)
-    return Position(S, x);
+    return PositionCanonical(S, x);
   end;
 
   enum.ElementNumber := function(enum, nr)
@@ -236,7 +332,7 @@ function(S)
   end;
 
   enum.Membership := function(x, enum)
-    return Position(S, x) <> fail;
+    return PositionCanonical(S, x) <> fail;
   end;
 
   # FIXME this should be Size(S) hack around RZMS
@@ -249,7 +345,7 @@ function(S)
   return enum;
 end);
 
-InstallMethod(ELMS_LIST, "for an enumerator of a semigroup",
+InstallMethod(ELMS_LIST, "for a semigroup enumerator and a list",
 [IsSemigroupEnumerator, IsList],
 function(enum, list)
   local out, y, x;
@@ -273,13 +369,14 @@ function(enum)
   return IteratorSorted(UnderlyingCollection(enum));
 end);
 
-InstallMethod(Iterator, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(Iterator, "for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 2, # to beat the generic method for a Rees matrix semigroup, FIXME!!
 IteratorCanonical);
 
-InstallMethod(IteratorCanonical, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IteratorCanonical,
+"for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
   local iter;
 
@@ -309,65 +406,30 @@ end);
 
 # different method for ideals
 
-InstallMethod(Size, "for a generic semigroup with generators",
+InstallMethod(Size, "for an enumerable semigroup with known generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], EN_SEMI_SIZE);
 
 # different method for ideals
 
 InstallMethod(\in,
-"for a multiplicative element and finite semigroup with generators",
-[IsMultiplicativeElement, IsSemigroup and HasGeneratorsOfSemigroup],
+"for multiplicative element and an enumerable semigroup with known generators",
+[IsMultiplicativeElement,
+ IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(x, S)
-  return Position(S, x) <> fail;
+  return PositionCanonical(S, x) <> fail;
 end);
 
 # different method for ideals
 
-InstallMethod(Idempotents, "for a generic semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local elts, idempotents, nr, i;
+InstallMethod(Idempotents, "for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
+EN_SEMI_IDEMPOTENTS);
 
-  Enumerate(S);
-  # FIXME there should be a C method for this
-  if not IsBound(S!.idempotents) then
-    elts := AsList(S);
-    idempotents := [];
-    nr := 0;
-
-    for i in [1 .. Length(elts)] do
-      if elts[i] * elts[i] = elts[i] then
-        nr := nr + 1;
-        idempotents[nr] := i;
-      fi;
-    od;
-
-    S!.idempotents := idempotents; # TODO this should be in the fropin data
-  fi;
-
-  return AsList(S){S!.idempotents};
-end);
-
-# FIXME PositionCanonical and add HasGeneratorsOfSemigroup
-InstallMethod(Position, "for enumerable semigroup and multiplicative element",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
+InstallMethod(PositionCanonical,
+"for an enumerable semigroup with known generators and multiplicative element",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup,
+ IsMultiplicativeElement],
 function(S, x)
-  return PositionOp(S, x, 0);
-end);
-
-# FIXME PositionCanonical and add HasGeneratorsOfSemigroup
-InstallMethod(Position,
-"for enumerable semigroup, multiplicative element, and zero cyc",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement, IsZeroCyc],
-function(S, x, n)
-  return PositionOp(S, x, n);
-end);
-
-# FIXME PositionCanonical and add HasGeneratorsOfSemigroup
-InstallMethod(PositionOp,
-"for enumerable semigroup, multiplicative element, and zero cyc",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement, IsZeroCyc],
-function(S, x, n)
   if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
   fi;
@@ -383,8 +445,9 @@ function(S, x, n)
 end);
 
 InstallMethod(PositionSortedOp,
-"for a semigroup and object",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
+"for an enumerable semigroup with known generators and multiplicative element",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup,
+ IsMultiplicativeElement],
 function(S, x)
   local gens;
 
@@ -407,7 +470,8 @@ function(S, x)
   return EN_SEMI_POSITION_SORTED(S, x);
 end);
 
-InstallMethod(Display, [IsSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(Display, "for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
 
   Print("<");
@@ -425,224 +489,63 @@ end);
 
 # the main algorithm
 
-InstallMethod(Enumerate, "for enumerable semigroup and pos int",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsPosInt], EN_SEMI_ENUMERATE);
+InstallMethod(Enumerate,
+"for an enumerable semigroup with known generators and pos int",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup, IsPosInt],
+EN_SEMI_ENUMERATE);
 
-InstallMethod(Enumerate, "for enumerable semigroup",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(Enumerate, "for an enumerable semigroup with known generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
   return Enumerate(S, 1152921504606846975);
 end);
 
-#FIXME the following won't work!
+# same method for ideals
 
-if not IsBound(EN_SEMI_ENUMERATE) then
-  InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
-  [IsGenericSemigroupData, IsCyclotomic, IsFunction],
-  function(data, limit, lookfunc)
-    local looking, found, i, nr, len, one, stopper, nrrules, elts, gens,
-    nrgens, genstoapply, genslookup, lenindex, first, final, prefix, suffix,
-    words, right, left, reduced, ht, rules, htadd, htvalue, stop, lentoapply,
-    b, s, r, new, newword, val, p, j, k;
+InstallMethod(RightCayleyGraphSemigroup, "for an enumerable semigroup rep",
+[IsEnumerableSemigroupRep], 3,
+function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+  return EN_SEMI_RIGHT_CAYLEY_GRAPH(S);
+end);
 
-    if lookfunc <> ReturnFalse then
-      looking := true;
-      # only applied to new elements, not old ones!!!
-      data!.found := false;
-      # in case we previously looked for something and found it
-    else
-      looking := false;
-    fi;
+# same method for ideals
 
-    found := false;
+InstallMethod(LeftCayleyGraphSemigroup, 
+"for an enumerable semigroup rep",
+[IsEnumerableSemigroupRep], 3,
+function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+  return EN_SEMI_LEFT_CAYLEY_GRAPH(S);
+end);
 
-    i := data!.pos;
-    # current position we are about to apply gens to .. .
-    nr := data!.nr;
-    # number of elements found so far .. .
+InstallMethod(MultiplicationTable, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep], EN_SEMI_CAYLEY_TABLE);
 
-    if i > nr then
-      SetFilterObj(data, IsClosedData);
-      return data;
-    fi;
+InstallMethod(NrIdempotents, "for an enumerable semigroup rep",
+[IsEnumerableSemigroupRep],
+function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  elif HasIdempotents(S) then 
+    return Length(Idempotents(S));
+  fi;
 
-    len := data!.len;
-    # current word length
-    one := data!.one;
-    # < elts[one] > is the mult. neutral element
-    stopper := data!.stopper;
-    # stop when we have applied generators to elts[stopper]
-    nrrules := data!.nrrules;
-    # Length(rules)
+  return EN_SEMI_NR_IDEMPOTENTS(S);
+end);
 
-    elts := data!.elts;
-    # the so far enumerated elements
-    gens := data!.gens;
-    # the generators
-    nrgens := Length(gens);
-    genstoapply := data!.genstoapply;
-    # list of indices of generators to apply in inner loop
-    genslookup := data!.genslookup;
-    # genslookup[i] = Position(elts, gens[i])
-    # this is not always < i + 1 > !
-    lenindex := data!.lenindex;
-    # lenindex[len] = position in < words > and < elts > of
-    # first element of length < len >
-    first := data!.first;
-    # elts[i] = gens[first[i]] * elts[suffix[i]], first letter
-    final := data!.final;
-    # elts[i] = elts[prefix[i]] * gens[final[i]]
-    prefix := data!.prefix;
-    # see final, 0 if prefix is empty i.e. elts[i] is a gen
-    suffix := data!.suffix;
-    # see first, 0 if suffix is empty i.e. elts[i] is a gen
-    words := data!.words;
-    # words[i] is a word in the gens equal to elts[i]
-
-    right := data!.right;
-    # elts[right[i][j]] = elts[i] * gens[j], right Cayley graph
-    left := data!.left;
-    # elts[left[i][j]] = gens[j] * elts[i], left Cayley graph
-    reduced := data!.reduced;
-    # words[right[i][j]] is reduced if reduced[i][j] = true
-    ht := data!.ht;
-    # HTValue(ht, x) = Position(elts, x)
-    rules := data!.rules;
-    # the relations
-
-    if IsBoundGlobal("ORBC") then
-      htadd := HTAdd_TreeHash_C;
-      htvalue := HTValue_TreeHash_C;
-    else
-      htadd := HTAdd;
-      htvalue := HTValue;
-    fi;
-
-    stop := false;
-
-    while i <= nr and not stop do
-      lentoapply := [1 .. len];
-      while i <= nr and Length(words[i]) = len and not stop do
-        b := first[i];
-        s := suffix[i];
-        # elts[i] = gens[b] * elts[s]
-        for j in genstoapply do # consider < elts[i] * gens[j] >
-          if s <> 0 and not reduced[s][j] then
-            # < elts[s] * gens[j] > is not reduced
-            r := right[s][j];
-            # elts[r] = elts[s] * gens[j]
-            if prefix[r] <> 0 then
-              right[i][j] := right[left[prefix[r]][b]][final[r]];
-              # elts[i] * gens[j] = gens[b] * elts[prefix[r]] * gens[final[r]];
-              # reduced[i][j] = ([words[i], j] = words[right[i][j]])
-              reduced[i][j] := false;
-            elif r = one then
-              # < elts[r] > is the identity
-              right[i][j] := genslookup[b];
-              reduced[i][j] := true;
-              # < elts[i] * gens[j] = b > and it is reduced
-            else # prefix[r] = 0, i.e. elts[r] is one of the generators
-              right[i][j] := right[genslookup[b]][final[r]];
-              # elts[i] * gens[j] = gens[b] * gens[final[r]];
-              # reduced[i][j] = ([words[i], j] = words[right[i][j]])
-              reduced[i][j] := false;
-            fi;
-          else # < elts[s] * gens[j] > is reduced
-            new := elts[i] * gens[j];
-            # < newword >= < elts[i] * gens[j] >
-            newword := words[i]{lentoapply};
-            # better than ShallowCopy
-            newword[len + 1] := j;
-            # using Concatenate here is very bad!
-            val := htvalue(ht, new);
-
-            if val <> fail then
-              nrrules := nrrules + 1;
-              rules[nrrules] := [newword, words[val]];
-              right[i][j] := val;
-              # < newword > and < words[val] > represent the same element (but
-              # are not equal) and so < newword > is not reduced
-
-            else # < new > is a new element!
-              nr := nr + 1;
-              htadd(ht, new, nr);
-
-              if one = false
-                  and ForAll(gens, y -> new * y = y and y * new = y) then
-                one := nr;
-              fi;
-
-              if s <> 0 then
-                suffix[nr] := right[s][j];
-              else
-                suffix[nr] := genslookup[j];
-              fi;
-
-              elts[nr] := new;
-              words[nr] := newword;
-              first[nr] := b;
-              final[nr] := j;
-              prefix[nr] := i;
-              right[nr] := EmptyPlist(nrgens);
-              left[nr] := EmptyPlist(nrgens);
-              reduced[nr] := BlistList(genstoapply, []);
-
-              right[i][j] := nr;
-              reduced[i][j] := true;
-
-              if looking and (not found) and lookfunc(data, nr) then
-                found := true;
-                stop := true;
-                data!.found := nr;
-              else
-                stop := nr >= limit;
-              fi;
-            fi;
-          fi;
-        od;
-        # finished applying gens to < elts[i] >
-        stop := (stop or i = stopper);
-        i := i + 1;
-      od;
-      # finished words of length < len > or < looking and found >
-      if i > nr or Length(words[i]) <> len then
-        # process words of length < len > into < left >
-        if len > 1 then
-          for j in [lenindex[len] .. i - 1] do
-            # loop over all words of length < len - 1 >
-            p := prefix[j];
-            b := final[j];
-            for k in genstoapply do
-              left[j][k] := right[left[p][k]][b];
-              # gens[k] * elts[j] = (gens[k] * elts[p]) * gens[b]
-            od;
-          od;
-        elif len = 1 then
-          for j in [lenindex[len] .. i - 1] do
-            # loop over all words of length < 1 >
-            b := final[j];
-            for k in genstoapply do
-              left[j][k] := right[genslookup[k]][b];
-              # gens[k] * elts[j] = elts[k] * gens[b]
-            od;
-          od;
-        fi;
-        len := len + 1;
-        lenindex[len] := i;
-      fi;
-    od;
-
-    data!.nr := nr;
-    data!.nrrules := nrrules;
-    data!.one := one;
-    data!.pos := i;
-    data!.len := len;
-
-    if i > nr then
-      SetFilterObj(data, IsClosedData);
-      # Unbind some of the unnecessary components here!
-    fi;
-
-    return data;
-  end);
-fi;
+InstallMethod(MinimalFactorization,
+"for an enumerable semigroup and a multiplicative element",
+[IsEnumerableSemigroupRep, IsMultiplicativeElement],
+function(S, x)
+  if not x in S then
+    ErrorNoReturn("Semigroups: MinimalFactorization:\n",
+                  "the second argument <x> is not an element ",
+                  "of the first argument <S>,");
+  fi;
+  return EN_SEMI_FACTORIZATION(S, PositionCanonical(S, x));
+end);

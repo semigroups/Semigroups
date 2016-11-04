@@ -720,7 +720,7 @@ false
 gap> S := FreeSemigroup(2);;
 gap> IsInverseSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
+Error, no 2nd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
 s
 
 #T# properties: IsLeftSimple, non-regular, 1
@@ -1002,7 +1002,7 @@ true
 gap> S := FreeSemigroup(1);;
 gap> IsMonoidAsSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MultiplicativeNeutralElement' on 1 argu\
+Error, no 2nd choice method found for `MultiplicativeNeutralElement' on 1 argu\
 ments
 
 #T# properties: IsOrthodoxSemigroup, 1

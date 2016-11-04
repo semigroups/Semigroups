@@ -50,7 +50,6 @@ enum en_semi_t {
   PROJ_MAX_PLUS_MAT,
   NTP_MAT,
   INT_MAT,
-  MAT_OVER_PF,
   PBR_TYPE
 };
 
@@ -122,7 +121,7 @@ static inline Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so) {
   return en_semi_get_semi_cpp(semi_obj_get_en_semi(so));
 }
 
-// GAP level functions for IsEnumerableSemigroup
+// GAP level functions for IsEnumerableSemigroupRep
 
 gap_semigroup_t
 EN_SEMI_ADD_GENERATORS(Obj self, gap_semigroup_t so, gap_list_t coll);
@@ -145,6 +144,7 @@ EN_SEMI_ENUMERATE(Obj self, gap_semigroup_t so, gap_int_t limit);
 gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_list_t EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_LENGTH_ELEMENT(Obj self, gap_semigroup_t so, gap_int_t pos);
+gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so);
 gap_bool_t EN_SEMI_IS_DONE(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x);

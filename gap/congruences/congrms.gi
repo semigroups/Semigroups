@@ -1641,7 +1641,7 @@ _EquivalenceRelationCanonicalLookupRMS := function(cong)
   for i in [1 .. n] do
     if not IsBound(table[i]) then
       for x in ImagesElm(cong, elms[i]) do
-        table[Position(S, x)] := next;
+        table[PositionCanonical(S, x)] := next;
       od;
       next := next + 1;
     fi;

@@ -417,12 +417,16 @@ function(S, gens, opts)
 
   filts := IsMagmaIdeal and IsAttributeStoringRep;
 
-  if not opts.generic
+  if (not opts.generic)
       and (IsActingSemigroup(S) or IsGeneratorsOfActingSemigroup(gens)) then
     filts := filts and IsActingSemigroup;
+  elif IsEnumerableSemigroupRep(S) 
+    and IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsEnumerableSemigroupRep;
   fi;
 
   if IsMatrixOverFiniteFieldSemigroup(S) then
+    # TODO check if this clause is needed any more
     filts := filts and IsMatrixOverFiniteFieldSemigroup;
   fi;
 

@@ -71,9 +71,11 @@ function(S, kernel, traceBlocks)
 end);
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTraceNC,
-[IsSemigroupWithInverseOp and IsFinite, IsSemigroup, IsDenseList],
+[IsSemigroupWithInverseOp and IsFinite and IsEnumerableSemigroupRep, 
+ IsSemigroup, 
+ IsDenseList],
 function(S, kernel, traceBlocks)
-  local traceLookup, fam, cong, i, elm;
+  local traceLookup, ES, fam, cong, i, elm;
   
   # Sort blocks
   traceBlocks := SortedList(List(traceBlocks, SortedList));
@@ -81,9 +83,11 @@ function(S, kernel, traceBlocks)
   # Calculate lookup table for trace
   # Might remove lookup - might never be better than blocks
   traceLookup := [];
+  ES := IdempotentGeneratedSubsemigroup(S);
+
   for i in [1 .. Length(traceBlocks)] do
     for elm in traceBlocks[i] do
-      traceLookup[Position(IdempotentGeneratedSubsemigroup(S), elm)] := i;
+      traceLookup[PositionCanonical(ES, elm)] := i;
     od;
   od;
   # Construct the object

@@ -238,7 +238,7 @@ function(cong)
   next    := 1;
 
   for i in [1 .. Length(elms)] do
-    rmsclass := rmstable[Position(Range(iso), elms[i] ^ iso)];
+    rmsclass := rmstable[PositionCanonical(Range(iso), elms[i] ^ iso)];
     if not IsBound(newnums[rmsclass]) then
       newnums[rmsclass] := next;
       next := next + 1;

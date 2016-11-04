@@ -15,17 +15,6 @@
 
 # this works for infinite semigroups if x is really in there.
 
-InstallMethod(MinimalFactorization,
-"for a semigroup and an associative element",
-[IsSemigroup, IsMultiplicativeElement],
-function(S, x)
-  if not x in S then
-    ErrorNoReturn("Semigroups: MinimalFactorization:\n",
-                  "the second argument <x> is not an element ",
-                  "of the first argument <S>,");
-  fi;
-  return EN_SEMI_FACTORIZATION(S, Position(S, x));
-end);
 
 # same method for ideals
 
@@ -33,8 +22,8 @@ end);
 # library.
 
 InstallMethod(Factorization,
-"for a semigroup and associative element",
-[IsSemigroup, IsMultiplicativeElement],
+"for an enumerable semigroup and multiplicative element",
+[IsEnumerableSemigroupRep, IsMultiplicativeElement],
 function(S, x)
   return MinimalFactorization(S, x);
 end);

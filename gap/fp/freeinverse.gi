@@ -182,6 +182,7 @@ function(arg)
                  rec());
   SetGeneratorsOfInverseSemigroup(S, gens);
   SetIsFreeInverseSemigroup(S, true);
+  SetIsSimpleSemigroup(S, false);
 
   FamilyObj(S)!.semigroup := S;
   F!.semigroup := S;
