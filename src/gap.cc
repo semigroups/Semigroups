@@ -133,12 +133,10 @@ void TSemiObjFreeFunc(Obj o) {
       if (en_semi_get_type(o) != UNKNOWN) {
         Semigroup* semi_cpp = en_semi_get_semi_cpp(o);
         if (semi_cpp != nullptr) {
-          std::cout << "delete semi_cpp\n";
           delete semi_cpp;
         }
         Converter* converter = en_semi_get_converter(o);
         if (converter != nullptr) {
-          std::cout << "delete converter\n";
           delete converter;
         }
       }

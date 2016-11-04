@@ -458,7 +458,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   # equivalence traceBlocks on the idempotents, and a list of pairs in S.
   # It returns the minimal congruence containing "kernel" in its kernel and
   # "traceBlocks" in its trace, and containing all the given pairs
-  #
+  # TODO Review this JDM for use of Elements, AsList etc. Could iterators work
+  # better?
   local idsmgp, idsdata, idslist, slist, kernelgenstoapply, gen, nrk, nr,
         traceUF, i, pos1, j, pos, hashlen, ht, treehashsize, right, genstoapply,
         NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions,

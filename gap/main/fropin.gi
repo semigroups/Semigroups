@@ -24,6 +24,11 @@ BindGlobal("INIT_FROPIN",
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
+  # FIXME 
+  #if IsSemigroupIdeal(S) then 
+  #  ErrorNoReturn("this shouldn't happen!");
+  #fi;
+
   if (not IsSemigroup(S)) or Length(GeneratorsOfSemigroup(S)) = 0 then
     ErrorNoReturn("Semigroups: INIT_FROPIN: usage,\n",
                   "the argument must be a semigroup with at least 1 ",
@@ -179,8 +184,16 @@ end);
 InstallMethod(AsList, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], AsListCanonical);
 
-InstallMethod(AsListCanonical, "for a semigroup", [IsSemigroup],
+InstallMethod(AsListCanonical, "for a semigroup", 
+[IsSemigroup and HasGeneratorsOfSemigroup],
 EN_SEMI_AS_LIST);
+
+InstallMethod(AsListCanonical, "for a semigroup", 
+[IsSemigroup],
+function(S)
+  GeneratorsOfSemigroup(S);
+  return AsListCanonical(S);
+end);
 
 InstallMethod(Enumerator, "for a generic semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], 2,
@@ -335,22 +348,25 @@ function(S)
   return AsList(S){S!.idempotents};
 end);
 
+# FIXME PositionCanonical and add HasGeneratorsOfSemigroup
 InstallMethod(Position, "for enumerable semigroup and multiplicative element",
-[IsSemigroup, IsMultiplicativeElement],
+[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(S, x)
   return PositionOp(S, x, 0);
 end);
 
+# FIXME PositionCanonical and add HasGeneratorsOfSemigroup
 InstallMethod(Position,
 "for enumerable semigroup, multiplicative element, and zero cyc",
-[IsSemigroup, IsMultiplicativeElement, IsZeroCyc],
+[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement, IsZeroCyc],
 function(S, x, n)
   return PositionOp(S, x, n);
 end);
 
+# FIXME PositionCanonical and add HasGeneratorsOfSemigroup
 InstallMethod(PositionOp,
 "for enumerable semigroup, multiplicative element, and zero cyc",
-[IsSemigroup, IsMultiplicativeElement, IsZeroCyc],
+[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement, IsZeroCyc],
 function(S, x, n)
   if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
     return fail;
@@ -368,7 +384,7 @@ end);
 
 InstallMethod(PositionSortedOp,
 "for a semigroup and object",
-[IsSemigroup, IsMultiplicativeElement],
+[IsSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(S, x)
   local gens;
 
@@ -391,7 +407,7 @@ function(S, x)
   return EN_SEMI_POSITION_SORTED(S, x);
 end);
 
-InstallMethod(Display, [IsSemigroup],
+InstallMethod(Display, [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
 
   Print("<");
@@ -410,13 +426,15 @@ end);
 # the main algorithm
 
 InstallMethod(Enumerate, "for enumerable semigroup and pos int",
-[IsSemigroup, IsPosInt], EN_SEMI_ENUMERATE);
+[IsSemigroup and HasGeneratorsOfSemigroup, IsPosInt], EN_SEMI_ENUMERATE);
 
 InstallMethod(Enumerate, "for enumerable semigroup",
-[IsSemigroup],
+[IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   return Enumerate(S, 1152921504606846975);
 end);
+
+#FIXME the following won't work!
 
 if not IsBound(EN_SEMI_ENUMERATE) then
   InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",

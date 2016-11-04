@@ -60,6 +60,13 @@ function(cong)
   return ListWithIdenticalEntries(Size(Range(cong)), 1);
 end);
 
+InstallMethod(EquivalenceRelationPartition,
+"for a universal semigroup congruence",
+[IsUniversalSemigroupCongruence],
+function(cong)
+  return [AsList(Range(cong))];
+end);
+
 InstallMethod(ViewObj,
 "for universal semigroup congruence",
 [IsUniversalSemigroupCongruence],

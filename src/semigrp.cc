@@ -28,8 +28,8 @@
 #include "gap.h"
 #include "src/compiled.h"
 
-#define DEBUG
-#include "gap-debug.h"
+//#define DEBUG
+//#include "gap-debug.h"
 
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
@@ -896,7 +896,8 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
 
 // Get the position of <x> with out any further enumeration
 
-gap_int_t EN_SEMI_POSITION_CURRENT(Obj self, gap_semigroup_t so, gap_element_t x) {
+gap_int_t
+EN_SEMI_POSITION_CURRENT(Obj self, gap_semigroup_t so, gap_element_t x) {
   SEMI_OBJ_CHECK_ARG(so);
 
   en_semi_obj_t es = semi_obj_get_en_semi(so);
