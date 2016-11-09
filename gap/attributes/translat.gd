@@ -25,6 +25,7 @@ DeclareGlobalFunction("LeftTranslationNC");
 DeclareGlobalFunction("RightTranslation");
 DeclareGlobalFunction("RightTranslationNC");
 DeclareGlobalFunction("TranslationalHullElement");
+DeclareGlobalFunction("TranslationalHullElementNC");
 DeclareGlobalFunction("LeftTranslationsSemigroup");
 DeclareGlobalFunction("RightTranslationsSemigroup");
 DeclareGlobalFunction("TranslationalHullSemigroup");

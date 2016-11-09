@@ -436,24 +436,26 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponen
   foundfuncs := [];
   iterator := IteratorOfCartesianProduct(List(relpoints, i -> [1..gpsize]));
   
-  #TODO: prove you only need to check the relations once
-  #for all choices of x{relpoints}
-  #i.e., the only possible problem is an inconsistency 
-  #which if it exists will always occur
-  #True for commutative groups
-  
+  # If S is a commutative group and fails on one choice of relpointvals,
+  # it will fail on all of them.
   if IsDoneIterator(iterator) then
     return [];
   else
     funcs := funcsfromrelpointvals(NextIterator(iterator));
     if not relssatisfied(funcs) then
-      return [0, Set(failedcomps), t1, t2];
+      if not IsCommutative(S) then
+        return [0, Set(failedcomps), t1, t2];
+      fi;
+    else
+      Add(foundfuncs, funcs);
     fi;
-    Add(foundfuncs, funcs);
   fi;
   
   while not IsDoneIterator(iterator) do
-    Add(foundfuncs, funcsfromrelpointvals(NextIterator(iterator)));
+    funcs := funcsfromrelpointvals(NextIterator(iterator));
+    if relssatisfied(funcs) then
+      Add(foundfuncs, funcs);
+    fi;
   od;
   
   return foundfuncs;
@@ -478,8 +480,8 @@ SEMIGROUPS.TranslationalHullOfZeroSimpleElements := function(H)
   nrrows := Length(Matrix(reesmatsemi));
   nrcols := Length(Matrix(reesmatsemi)[1]);
   zero := MultiplicativeZero(reesmatsemi);
-  L := LeftTranslations(S);
-  R := RightTranslations(S);
+  L := LeftTranslationsSemigroup(S);
+  R := RightTranslationsSemigroup(S);
   tt := SEMIGROUPS.FindTranslationTransformations(S);
   failedcomponents := [];
   linkedpairs := [];
@@ -556,6 +558,5 @@ SEMIGROUPS.TranslationalHullOfZeroSimpleElements := function(H)
     od;
   od;
   
-  return Semigroup(Set(linkedpairs));
+  return Set(linkedpairs);
 end;
-
