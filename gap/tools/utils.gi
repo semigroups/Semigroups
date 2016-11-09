@@ -94,6 +94,7 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "semipperm.xml",
                            "semiringmat.xml",
                            "semitrans.xml",
+                           "translat.xml",
                            "utils.xml"];
 
 SEMIGROUPS.TestRec := rec();
