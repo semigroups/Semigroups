@@ -220,8 +220,6 @@ gap> Length(IrredundantGeneratingSubset(V));
 gap> U[1] = Semigroup(IrredundantGeneratingSubset(U[1]));
 true
 
-#T# ReesMatTest16: from greens.xml...
-
 #T# ReesMatTest17: MultiplicativeNeutralElement (for an H-class)
 gap> H := First(HClasses(V), IsRegularClass);
 <Green's H-class: 0>

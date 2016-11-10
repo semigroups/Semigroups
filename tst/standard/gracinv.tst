@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  standard/greens-inverse.tst
+#W  standard/gracinv.tst
 #Y  Copyright (C) 2015                                   Wilfred A. Wilson
 ##                                                       
 ##
@@ -8,13 +8,13 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/greens-inverse.tst");
+gap> START_TEST("Semigroups package: standard/gracinv.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# greens-inverse: SchutzenbergerGroup, for an L-class of an inverse op sgp
+#T# gracinv: SchutzenbergerGroup, for an L-class of an inverse op sgp
 gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
@@ -34,7 +34,7 @@ true
 gap> SchutzenbergerGroup(L);
 Group([ (2,3) ])
 
-#T# greens-inverse: DClassOfXClass, for an X=R/L/H-class
+#T# gracinv: DClassOfXClass, for an X=R/L/H-class
 gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
@@ -63,7 +63,7 @@ true
 gap> D = DClass(S, x);
 true
 
-#T# greens-inverse: LClassOfHClass, for an H-class
+#T# gracinv: LClassOfHClass, for an H-class
 gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
@@ -76,7 +76,7 @@ gap> L := LClassOfHClass(HClass(S, x));
 gap> L = LClass(S, x);
 true
 
-#T# greens-inverse: GreensHClassOfElement, for a Green's class and an element
+#T# gracinv: GreensHClassOfElement, for a Green's class and an element
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 > PartialPerm([1, 2, 4], [4, 6, 3]),
@@ -90,7 +90,7 @@ gap> GreensHClassOfElement(RClass(S, x), x);
 gap> GreensHClassOfElement(LClass(S, x), x);
 <Green's H-class: [3,2,1,4]>
 
-#T# greens-inverse: Size, for an inverse op acting D/L-class
+#T# gracinv: Size, for an inverse op acting D/L-class
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 > PartialPerm([1, 2, 4], [4, 6, 3]),
@@ -102,7 +102,7 @@ gap> Size(DClass(S, x));
 gap> Size(LClass(S, x));
 6
 
-#T# greens-inverse: \in, for a D-class and an element, 1
+#T# gracinv: \in, for a D-class and an element, 1
 gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
@@ -123,7 +123,7 @@ false
 gap> Bipartition([[1, 2, 5, -1, -2, -3], [3, -4], [4, -5]]) in D;
 false
 
-#T# greens-inverse: \in, for a D-class and an element, 2
+#T# gracinv: \in, for a D-class and an element, 2
 gap> S := InverseSemigroup([
 >   PartialPerm([1, 2, 3, 5, 6, 7], [5, 7, 1, 9, 4, 2]),
 >   PartialPerm([1, 2, 3, 6, 8], [2, 6, 7, 9, 1]),
@@ -134,7 +134,7 @@ gap> D := DClass(S, x);;
 gap> PartialPerm([2, 4, 5, 7], [2, 4, 7, 5]) in D;
 false
 
-#T# greens-inverse: \in, for a D-class and an element, 3
+#T# gracinv: \in, for a D-class and an element, 3
 gap> S := SymmetricInverseMonoid(5);
 <symmetric inverse monoid of degree 5>
 gap> x := S.1 * S.2 * S.1;
@@ -145,7 +145,7 @@ gap> D := DClass(S, x);;
 gap> x in D;
 true
 
-#T# greens-inverse: \in, for an L-class and an element, 1
+#T# gracinv: \in, for an L-class and an element, 1
 gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
@@ -166,7 +166,7 @@ false
 gap> Bipartition([[1, 2, 5, -1, -2, -3], [3, -4], [4, -5]]) in L;
 false
 
-#T# greens-inverse: \in, for an L-class and an element, 2
+#T# gracinv: \in, for an L-class and an element, 2
 gap> S := InverseSemigroup([PartialPerm([1, 3], [4, 3]),
 >   PartialPerm([1, 2, 3], [4, 1, 2]),
 >   PartialPerm([1, 2, 4], [4, 5, 1]),
@@ -179,7 +179,7 @@ false
 gap> PartialPerm([1, 4, 5], [4, 2, 1]) in L;
 false
 
-#T# greens-inverse: \in, for an L-class and an element, 3
+#T# gracinv: \in, for an L-class and an element, 3
 gap> S := SymmetricInverseMonoid(5);
 <symmetric inverse monoid of degree 5>
 gap> x := S.1 * S.2 * S.1;
@@ -192,7 +192,7 @@ gap> L := LClass(S, x);;
 gap> x in L;
 true
 
-#T# greens-inverse: \in, for an L-class and an element, 4
+#T# gracinv: \in, for an L-class and an element, 4
 gap> S := InverseSemigroup(PartialPerm([1, 3, 4, 8], [2, 7, 8, 4]),
 > PartialPerm([1, 2, 3, 4, 5, 8], [7, 6, 9, 1, 3, 2]),
 > PartialPerm([1, 2, 3, 4, 5, 6, 7, 9], [2, 8, 3, 7, 1, 5, 9, 6]),
@@ -203,7 +203,7 @@ gap> y := PartialPermNC([2, 3, 5, 6, 7, 8, 9], [2, 3, 5, 6, 7, 8, 9]);;
 gap> x in LClass(S, y);
 true
 
-#T# greens-inverse: XClassReps: for an inverse op acting semigroup
+#T# gracinv: XClassReps: for an inverse op acting semigroup
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4], [7, 6, 2, 1]),
 > PartialPerm([1, 2, 3, 5, 6], [1, 3, 6, 2, 7]),
@@ -239,7 +239,7 @@ gap> RClassReps(S);
   <identity partial perm on [ 7 ]>, [4,7], [3,7], [6,7], [1,7], [5,7], [2,7], 
   <identity partial perm on [ 2, 3, 7 ]>, [5,2,3][6,7] ]
 
-#T# greens-inverse: XClassReps: for an inverse op acting Greens class
+#T# gracinv: XClassReps: for an inverse op acting Greens class
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4], [7, 6, 2, 1]),
 > PartialPerm([1, 2, 3, 5, 6], [1, 3, 6, 2, 7]),
@@ -257,7 +257,7 @@ gap> L := LClass(S, x);;
 gap> HClassReps(L);
 [ <identity partial perm on [ 1, 3, 4, 5, 6 ]>, [7,4,3,6,5](1) ]
 
-#T# greens-inverse: Greens(H/L)Classes, for an inverse op acting D-class
+#T# gracinv: Greens(H/L)Classes, for an inverse op acting D-class
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 4], [1, 3]),
@@ -308,7 +308,7 @@ gap> GreensHClasses(HClass(S, x));
 Error, Semigroups: GreensHClasses: usage,
 an L-, R-, or D-class,
 
-#T# greens-inverse: Nr(H/R/L)Classes, for an inverse op acting semigroup
+#T# gracinv: Nr(H/R/L)Classes, for an inverse op acting semigroup
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 4], [1, 3]),
@@ -321,7 +321,7 @@ gap> NrLClasses(S);
 gap> NrHClasses(S);
 51
 
-#T# greens-inverse: Nr(R/L)Classes, for an inverse op acting Greens class
+#T# gracinv: Nr(R/L)Classes, for an inverse op acting Greens class
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 4], [1, 3]),
@@ -342,7 +342,7 @@ gap> R := LClass(S, x);;
 gap> NrHClasses(R);
 2
 
-#T# greens-inverse: GroupHClassOfGreensDClass, for an inverse op acting D-class
+#T# gracinv: GroupHClassOfGreensDClass, for an inverse op acting D-class
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 4], [1, 3]),
@@ -353,14 +353,14 @@ gap> GroupHClassOfGreensDClass(DClass(S, PartialPerm([])));
 gap> GroupHClassOfGreensDClass(DClass(S, PartialPerm([3, 5], [4, 1])));
 <Green's H-class: <identity partial perm on [ 1, 3 ]>>
 
-#T# greens-inverse: PartialOrderOfDClasses, for an inverse op acting semigroup
+#T# gracinv: PartialOrderOfDClasses, for an inverse op acting semigroup
 gap> S := SymmetricInverseSemigroup(5);;
 gap> S := InverseSemigroup(S, rec(generic := false));;
 gap> OutNeighbours(DigraphReflexiveTransitiveReduction(Digraph(
 > PartialOrderOfDClasses(S))));
 [ [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [  ] ]
 
-#T# greens-inverse: (Nr)Idempotents, for an inv op acting R/L/D-class
+#T# gracinv: (Nr)Idempotents, for an inv op acting R/L/D-class
 gap> S := InverseSemigroup([
 >   Bipartition([[1, -4], [2, 4, 5, 6, -1, -2, -5, -6], [3, -3]]),
 >   Bipartition([[1, -4], [2, -1], [3, -2], [4, 5, 6, -3, -5, -6]]),
@@ -393,7 +393,7 @@ gap> Idempotents(DClass(S, x));
   <block bijection: [ 1, 4, 5, 6, -1, -4, -5, -6 ], [ 2, -2 ], [ 3, -3 ]>, 
   <block bijection: [ 1, 3, 4, 6, -1, -3, -4, -6 ], [ 2, -2 ], [ 5, -5 ]> ]
 
-#T# greens-inverse: (Nr)Idempotents, for an inverse op acting semigroup
+#T# gracinv: (Nr)Idempotents, for an inverse op acting semigroup
 gap> S := InverseSemigroup(SymmetricInverseSemigroup(5),
 > rec(generic := false));;
 gap> Idempotents(S, 3);
@@ -443,7 +443,7 @@ gap> Idempotents(S, -1);
 Error, Semigroups: Idempotents: usage,
 the second argument <n> must be a non-negative integer,
 
-#T# greens-inverse: EnumeratorOfRClasses, for an acting inverse op semigroup
+#T# gracinv: EnumeratorOfRClasses, for an acting inverse op semigroup
 gap> S := InverseSemigroup([
 > Bipartition([[1, -4], [2, 4, 5, 6, -1, -2, -5, -6], [3, -3]]),
 > Bipartition([[1, -4], [2, -1], [3, -2], [4, 5, 6, -3, -5, -6]]),
@@ -479,4 +479,4 @@ gap> Unbind(x);
 gap> Unbind(y);
 
 #E# 
-gap> STOP_TEST("Semigroups package: standard/greens-inverse.tst");
+gap> STOP_TEST("Semigroups package: standard/gracinv.tst");

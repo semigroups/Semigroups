@@ -55,9 +55,9 @@ ReadPackage("semigroups/gap/ideals/ideals-lambda-rho.gi");
 ReadPackage("semigroups/gap/ideals/ideals-generic.gi");
 
 ReadPackage("semigroups/gap/greens/gren.gi");
-ReadPackage("semigroups/gap/greens/greens-acting.gi");
-ReadPackage("semigroups/gap/greens/greens-regular.gi");
-ReadPackage("semigroups/gap/greens/greens-inverse.gi");
+ReadPackage("semigroups/gap/greens/grac.gi");
+ReadPackage("semigroups/gap/greens/gracreg.gi");
+ReadPackage("semigroups/gap/greens/gracinv.gi");
 
 ReadPackage("semigroups/gap/tools/display.gi");
 ReadPackage("semigroups/gap/tools/io.gi");

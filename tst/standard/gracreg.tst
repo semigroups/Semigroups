@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  standard/greens-regular.tst
+#W  standard/gracreg.tst
 #Y  Copyright (C) 2015                                   Wilfred A. Wilson
 ##                                                       
 ##
@@ -8,13 +8,13 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/greens-regular.tst");
+gap> START_TEST("Semigroups package: standard/gracreg.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
 
-# greens-regular: RhoCosets, for a regular Greens class of an acting semigroup, 1
+# gracreg: RhoCosets, for a regular Greens class of an acting semigroup, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -25,7 +25,7 @@ true
 gap> RhoCosets(L);
 [ () ]
 
-# greens-regular: LambdaCosets, for a regular Greens class of an acting semigroup, 1
+# gracreg: LambdaCosets, for a regular Greens class of an acting semigroup, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -36,7 +36,7 @@ true
 gap> LambdaCosets(L);
 [ () ]
 
-# greens-regular: SchutzenbergerGroup, for a regular acting D-class, 1
+# gracreg: SchutzenbergerGroup, for a regular acting D-class, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -45,7 +45,7 @@ gap> D := DClass(S, S.1);;
 gap> SchutzenbergerGroup(D);
 Group([ (1,2), (1,3,2) ])
 
-# greens-regular: SchutzenbergerGroup, for an H-class of a regular acting semigroup, 1
+# gracreg: SchutzenbergerGroup, for an H-class of a regular acting semigroup, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -54,7 +54,7 @@ gap> H := HClass(S, S.1);;
 gap> SchutzenbergerGroup(H);
 Group([ (1,2), (1,3,2) ])
 
-# greens-regular: Size, for a regular D-class of an acting semigroup, 1
+# gracreg: Size, for a regular D-class of an acting semigroup, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -63,7 +63,7 @@ gap> D := DClass(S, S.1);;
 gap> Size(D);
 504
 
-# greens-regular: (D/R)ClassReps, for a regular D-class of an acting semigroup, 1
+# gracreg: (D/R)ClassReps, for a regular D-class of an acting semigroup, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -87,7 +87,7 @@ gap> RClassReps(S);
   Transformation( [ 1, 1, 1, 1, 2 ] ), Transformation( [ 1, 2, 2, 1, 2 ] ), 
   Transformation( [ 1, 2, 1, 1, 2 ] ), Transformation( [ 5, 5, 5, 5, 5 ] ) ]
 
-# greens-regular: Greens(D/R)Classes, for a regular D-class of an acting semigroup, 1
+# gracreg: Greens(D/R)Classes, for a regular D-class of an acting semigroup, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -127,7 +127,7 @@ gap> GreensRClasses(S);
   <Green's R-class: Transformation( [ 1, 2, 1, 1, 2 ] )>, 
   <Green's R-class: Transformation( [ 5, 5, 5, 5, 5 ] )> ]
 
-# greens-regular: Nr(D/R/L/H)Classes: for a regular acting semigroup with gens
+# gracreg: Nr(D/R/L/H)Classes: for a regular acting semigroup with gens
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -145,7 +145,7 @@ gap> NrLClasses(S);
 gap> NrHClasses(S);
 210
 
-# greens-regular: Nr(R/L)Classes: for a regular D-class of an acting semigroup
+# gracreg: Nr(R/L)Classes: for a regular D-class of an acting semigroup
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -158,7 +158,7 @@ gap> NrLClasses(D);
 gap> NrHClasses(D) = last * last2;
 true
 
-# greens-regular: NrHClasses: for a regular D/R/L class of an acting semigroup
+# gracreg: NrHClasses: for a regular D/R/L class of an acting semigroup
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -173,14 +173,14 @@ gap> L := LClass(S, S.2);;
 gap> NrHClasses(L);
 2
 
-# greens-regular: PartialOrderOfDClasses for a regular acting semigroup w gens 1
+# gracreg: PartialOrderOfDClasses for a regular acting semigroup w gens 1
 gap> S := FullTransformationMonoid(4);;
 gap> S := RegularSemigroup(S, rec(generic := false));;
 gap> OutNeighbours(DigraphReflexiveTransitiveReduction(Digraph(
 > PartialOrderOfDClasses(S))));
 [ [ 2 ], [ 3 ], [ 4 ], [  ] ]
 
-# greens-regular: NrIdempotents, for a regular acting semigroup, 1
+# gracreg: NrIdempotents, for a regular acting semigroup, 1
 gap> S := FullTransformationSemigroup(4);;
 gap> NrIdempotents(S);
 41
@@ -191,7 +191,7 @@ gap> S := RegularSemigroup([
 gap> NrIdempotents(S);
 108
 
-# greens-regular: NrRegularDClasses, for a regular acting semigroup, 1
+# gracreg: NrRegularDClasses, for a regular acting semigroup, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -201,7 +201,7 @@ true
 gap> NrRegularDClasses(S);
 4
 
-# greens-regular: IteratorOf(D/L)Classes, for a regular acting semigroup, 1
+# gracreg: IteratorOf(D/L)Classes, for a regular acting semigroup, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -217,7 +217,7 @@ gap> GreensLClasses(S);;
 gap> IteratorOfLClasses(S);
 <iterator>
 
-# greens-regular: EnumeratorOfRClasses, for a regular acting semigroup, 1
+# gracreg: EnumeratorOfRClasses, for a regular acting semigroup, 1
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
@@ -260,4 +260,4 @@ gap> Unbind(S);
 gap> Unbind(e);
 
 #E# 
-gap> STOP_TEST("Semigroups package: standard/greens-regular.tst");
+gap> STOP_TEST("Semigroups package: standard/gracreg.tst");
