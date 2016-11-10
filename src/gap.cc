@@ -403,7 +403,7 @@ typedef Obj (*GVarFunc)(/*arguments*/);
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
 // Table of functions to export
-// FIXME the filenames are mostly wrong here
+
 static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ADD_GENERATORS, 2, "S, coll"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_LIST, 1, "S"),
@@ -438,22 +438,26 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_IN, 2, "cong, pair"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_LOOKUP_PART, 1, "cong"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_CLASS_COSET_ID, 1, "class"),
+
     GVAR_ENTRY("semifp.cc", FP_SEMI_SIZE, 1, "S"),
     GVAR_ENTRY("semifp.cc", FP_SEMI_EQ, 3, "S, x, y"),
     GVAR_ENTRY("semifp.cc", FP_SEMI_COSET_ID, 2, "S, x"),
-    GVAR_ENTRY("interface.cc",
+
+    GVAR_ENTRY("fropin.cc",
                SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS,
                2,
                "scc1, scc2"),
-    GVAR_ENTRY("interface.cc", FIND_HCLASSES, 2, "left, right"),
-    GVAR_ENTRY("interface.c", UF_NEW, 1, "size"),
-    GVAR_ENTRY("interface.c", UF_COPY, 1, "ufdata"),
-    GVAR_ENTRY("interface.c", UF_SIZE, 1, "ufdata"),
-    GVAR_ENTRY("interface.c", UF_FIND, 2, "ufdata, i"),
-    GVAR_ENTRY("interface.c", UF_UNION, 2, "ufdata, pair"),
-    GVAR_ENTRY("interface.c", UF_FLATTEN, 1, "ufdata"),
-    GVAR_ENTRY("interface.c", UF_TABLE, 1, "ufdata"),
-    GVAR_ENTRY("interface.c", UF_BLOCKS, 1, "ufdata"),
+    GVAR_ENTRY("fropin.cc", FIND_HCLASSES, 2, "left, right"),
+
+    GVAR_ENTRY("ufdata.cc", UF_NEW, 1, "size"),
+    GVAR_ENTRY("ufdata.cc", UF_COPY, 1, "ufdata"),
+    GVAR_ENTRY("ufdata.cc", UF_SIZE, 1, "ufdata"),
+    GVAR_ENTRY("ufdata.cc", UF_FIND, 2, "ufdata, i"),
+    GVAR_ENTRY("ufdata.cc", UF_UNION, 2, "ufdata, pair"),
+    GVAR_ENTRY("ufdata.cc", UF_FLATTEN, 1, "ufdata"),
+    GVAR_ENTRY("ufdata.cc", UF_TABLE, 1, "ufdata"),
+    GVAR_ENTRY("ufdata.cc", UF_BLOCKS, 1, "ufdata"),
+
     GVAR_ENTRY("bipart.cc", BIPART_NC, 1, "list"),
     GVAR_ENTRY("bipart.cc", BIPART_EXT_REP, 1, "x"),
     GVAR_ENTRY("bipart.cc", BIPART_INT_REP, 1, "x"),
