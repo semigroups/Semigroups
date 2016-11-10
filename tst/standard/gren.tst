@@ -45,6 +45,47 @@ false
 gap> L < D;
 false
 
+# Test \< for H-classes Issue #198
+gap> S := FullTropicalMinPlusMonoid(2, 2);
+<monoid of 2x2 tropical min-plus matrices with 6 generators>
+gap> H := Set(GeneratorsOfSemigroup(S), x -> HClass(S, x));
+[ <Green's H-class: Matrix(IsTropicalMinPlusMatrix, [[0, infinity], 
+       [infinity, 0]], 2)>, 
+  <Green's H-class: Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], [0, 0]], 2
+       )>, 
+  <Green's H-class: Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], [0, 1]], 2
+       )>, 
+  <Green's H-class: Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], [0, 2]], 2
+       )>, 
+  <Green's H-class: Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], 
+       [1, infinity]], 2)>, 
+  <Green's H-class: Matrix(IsTropicalMinPlusMatrix, [[infinity, 0], 
+       [infinity, infinity]], 2)> ]
+
+# Test \< for H-classes Issue #198
+gap> gens := [
+>  Transformation([1, 3, 4, 1, 5, 5, 5]),
+>  Transformation([1, 4, 1, 3, 5, 5, 5]),
+>  Transformation([3, 3, 1, 2, 5, 5, 5]),
+>  Transformation([4, 4, 2, 3, 5, 5, 5]),
+>  Transformation([1, 1, 3, 4, 5, 5, 6]),
+>  Transformation([1, 2, 2]),
+>  Transformation([1, 4, 3, 4]),
+>  Transformation([1, 2, 4, 4])];;
+gap> S := Semigroup(gens);
+<transformation semigroup of degree 7 with 8 generators>
+gap> D := DClass(S, gens[1]);;
+gap> ForAll(gens{[1 .. 4]}, x -> x in D);
+true
+gap>  NrRClasses(D);
+6
+gap> R := List(gens{[1 .. 3]}, x -> RClass(S, x));;
+gap> IsDuplicateFreeList(R);
+true
+gap> x := Difference(RClasses(D), R);;
+gap> Length(x);
+3
+
 # gren: MultiplicativeNeutralElement, One, for an H-class, 1
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 3, 4, 6, 7], [2, 5, 3, 7, 4, 1]),
