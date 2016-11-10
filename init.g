@@ -66,12 +66,9 @@ ReadPackage("semigroups/gap/semigroups/semiex.gd");
 ReadPackage("semigroups/gap/semigroups/semicons.gd");
 ReadPackage("semigroups/gap/semigroups/semigraph.gd");
 ReadPackage("semigroups/gap/semigroups/semifp.gd");
-
-#FIXME from here 
+ReadPackage("semigroups/gap/semigroups/semiquo.gd");
 
 ReadPackage("semigroups/gap/hash.gd");
-
-#FIXME to here
 
 ReadPackage("semigroups/gap/main/fropin.gd");
 ReadPackage("semigroups/gap/main/setup.gd");
@@ -111,7 +108,6 @@ ReadPackage("semigroups/gap/congruences/conguniv.gd");
 ReadPackage("semigroups/gap/congruences/conginv.gd");
 ReadPackage("semigroups/gap/congruences/congsimple.gd");
 ReadPackage("semigroups/gap/congruences/congrees.gd");
-ReadPackage("semigroups/gap/congruences/quotients.gd");
 ReadPackage("semigroups/gap/congruences/cong.gd");
 ReadPackage("semigroups/gap/congruences/conglatt.gd");
 

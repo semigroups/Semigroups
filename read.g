@@ -40,6 +40,7 @@ ReadPackage("semigroups/gap/semigroups/semicons.gi");
 ReadPackage("semigroups/gap/semigroups/semigraph.gi");
 ReadPackage("semigroups/gap/semigroups/semiffmat.gi");
 ReadPackage("semigroups/gap/semigroups/grpffmat.gi");
+ReadPackage("semigroups/gap/semigroups/semiquo.gi");
 
 ReadPackage("semigroups/gap/main/fropin.gi");
 ReadPackage("semigroups/gap/main/setup.gi");
@@ -83,7 +84,6 @@ ReadPackage("semigroups/gap/congruences/conguniv.gi");
 ReadPackage("semigroups/gap/congruences/conginv.gi");
 ReadPackage("semigroups/gap/congruences/congsimple.gi");
 ReadPackage("semigroups/gap/congruences/congrees.gi");
-ReadPackage("semigroups/gap/congruences/quotients.gi");
 ReadPackage("semigroups/gap/congruences/cong.gi");
 ReadPackage("semigroups/gap/congruences/conglatt.gi");
 

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  congruences/quotients.gi
+#W  semiquo.gi
 #Y  Copyright (C) 2014-16                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
