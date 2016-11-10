@@ -145,6 +145,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_list_t EN_SEMI_LEFT_CAYLEY_GRAPH(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_LENGTH_ELEMENT(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so);
+gap_list_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list);
 gap_bool_t EN_SEMI_IS_DONE(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x);

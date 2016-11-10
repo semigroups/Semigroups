@@ -196,6 +196,14 @@ function(S)
   return data;
 end);
 
+BIND_GLOBAL("FROPIN_GET", function(S, str)
+  if not (IsBound(S!.__en_semi_fropin) 
+          and IsBound(S!.__en_semi_fropin.(str))) then
+    return fail;
+  fi;
+  return S!.__en_semi_fropin.(str);
+end);
+
 #############################################################################
 # 1. Internal methods
 #############################################################################
@@ -423,7 +431,23 @@ end);
 
 InstallMethod(Idempotents, "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
-EN_SEMI_IDEMPOTENTS);
+function(S)
+  local pos, elts;
+  # Positions (canonical) of idempotents.
+  pos := EN_SEMI_IDEMPOTENTS(S); 
+  if HasAsListCanonical(S) then 
+    # Avoids duplicating idempotents in memory in the cpp semigroup case.
+    return AsListCanonical(S){pos};
+  fi;
+  # It could be that we fully enumerated the non-cpp semigroup but just didn't
+  # call AsListCanonical.
+  elts := FROPIN_GET(S, "elts");
+  if elts <> fail and Length(elts) >= pos[Length(pos)] then 
+    return elts{pos};
+  fi;
+  # Uses less memory and may be faster if we don't have AsListCanonical.
+  return EnumeratorCanonical(S){pos}; 
+end);
 
 InstallMethod(PositionCanonical,
 "for an enumerable semigroup with known generators and multiplicative element",

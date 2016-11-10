@@ -53,9 +53,11 @@
 ## 1. Helper functions for the creation of Green's classes/relations . . .
 #############################################################################
 
-# there are no methods for EquivalenceClassOfElementNC in this case since we
-# require the variable <pos> below, and if it can't be determined, then we
-# can't make the Green's class.
+# There are no methods for EquivalenceClassOfElementNC for enumerable semigroup
+# Green's classes because if we create a Green's class without knowing the
+# Green's relations and the related strongly connected components data, then
+# the Green's class won't have the correct type and won't have access to the
+# correct methods. 
 
 SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
   local pos, out, S;
@@ -534,8 +536,15 @@ InstallMethod(GreensJClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup and IsFinite, IsMultiplicativeElement], GreensDClassOfElement);
 
-# No check Green's classes of an element of a semigroup
-# These appear to differ from the non-NC methods, should they really? FIXME
+# No check Green's classes of an element of a semigroup . . .
+
+# The methods for GreensXClassOfElementNC for arbitrary finite semigroup use
+# EquivalenceClassOfElementNC which only have a method in the library, and hence
+# the created classes could not be in IsEnumerableSemigroupGreensClassRep. In
+# any case, calling GreensXRelation(S) (as these methods do) on an
+# enumerable semigroup completely enumerates it, so the only thing we gain here
+# is one constant time check that the representative actually belongs to the
+# semigroup. 
 
 InstallMethod(GreensRClassOfElementNC,
 "for a finite semigroup and multiplicative element",
@@ -544,12 +553,22 @@ function(S, x)
   return EquivalenceClassOfElementNC(GreensRRelation(S), x);
 end);
 
+InstallMethod(GreensRClassOfElementNC,
+"for a finite enumerable semigroup and multiplicative element",
+[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
+GreensRClassOfElement);
+
 InstallMethod(GreensLClassOfElementNC,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElementNC(GreensLRelation(S), x);
 end);
+
+InstallMethod(GreensLClassOfElementNC,
+"for a finite enumerable semigroup and multiplicative element",
+[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
+GreensLClassOfElement);
 
 InstallMethod(GreensHClassOfElementNC,
 "for a finite semigroup and multiplicative element",
@@ -558,12 +577,22 @@ function(S, x)
   return EquivalenceClassOfElementNC(GreensHRelation(S), x);
 end);
 
+InstallMethod(GreensHClassOfElementNC,
+"for a finite enumerable semigroup and multiplicative element",
+[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
+GreensHClassOfElement);
+
 InstallMethod(GreensDClassOfElementNC,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup and IsFinite, IsMultiplicativeElement],
 function(S, x)
   return EquivalenceClassOfElementNC(GreensDRelation(S), x);
 end);
+
+InstallMethod(GreensDClassOfElementNC,
+"for a finite enumerable semigroup and multiplicative element",
+[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
+GreensDClassOfElement);
 
 InstallMethod(GreensJClassOfElementNC,
 "for a finite semigroup and multiplicative element",
@@ -837,32 +866,36 @@ end);
 InstallMethod(NrIdempotents, "for a Green's class",
 [IsGreensClass], C -> Length(Idempotents(C)));
 
-InstallMethod(Idempotents, "for a Green's class",
-[IsGreensClass],
+InstallMethod(NrIdempotents, "for an enumerable semigroup Green's class",
+[IsEnumerableSemigroupGreensClassRep],
 function(C)
-  local rel, idempotents, x;
-
-  #data := Enumerate(Parent(C));
+  local rel, pos;
   rel := EquivalenceClassRelation(C);
-  # FIXME
-  #if IsBound(data!.idempotents) then
-  #  positions := Intersection(rel!.data.comps[SEMIGROUPS.XClassIndex(C)],
-  #                            data!.idempotents);
-  #  return Enumerator(Parent(C)){positions};
-  #fi;
+  pos := EN_SEMI_IDEMS_SUBSET(Range(rel),
+                              rel!.data.comps[SEMIGROUPS.XClassIndex(C)]);
+  return Length(pos);
+end);
 
-  idempotents := [];
+InstallMethod(Idempotents, "for an enumerable semigroup Green's class",
+[IsEnumerableSemigroupGreensClassRep],
+function(C)
+  local rel, pos, elts;
 
-  for x in C do
-    if IsIdempotent(x) then
-      Add(idempotents, x);
-      if IsGreensHClass(C) then
-        break;
-      fi;
-    fi;
-  od;
-
-  return idempotents;
+  rel := EquivalenceClassRelation(C);
+  pos := EN_SEMI_IDEMS_SUBSET(Range(rel),
+                              rel!.data.comps[SEMIGROUPS.XClassIndex(C)]);
+  if HasAsListCanonical(Range(rel)) then 
+    # Avoids duplicating idempotents in memory in the cpp semigroup case.
+    return AsListCanonical(Range(rel)){pos};
+  fi;
+  # It could be that we fully enumerated the non-cpp semigroup but just didn't
+  # call AsListCanonical.
+  elts := FROPIN_GET(Range(rel), "elts");
+  if elts <> fail and Length(elts) >= pos[Length(pos)] then 
+    return elts{pos};
+  fi;
+  # Uses less memory and may be faster if we don't have AsListCanonical.
+  return EnumeratorCanonical(Range(rel)){pos}; 
 end);
 
 #############################################################################

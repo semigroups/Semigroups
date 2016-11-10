@@ -229,6 +229,8 @@ gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
 >  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(generic := true));;
 gap> D := GreensDClassOfElementNC(S, PartialPerm([19]));;
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
+the element in the 2nd argument does not belong to the semigroup,
 
 # gren: GreensJClassOfElement, 1/1
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
