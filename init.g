@@ -84,6 +84,7 @@ ReadPackage("semigroups/gap/ideals/ideals.gd");
 ReadPackage("semigroups/gap/ideals/ideals-acting.gd");
 ReadPackage("semigroups/gap/ideals/ideals-lambda-rho.gd");
 
+ReadPackage("semigroups/gap/greens/gree.gd");
 ReadPackage("semigroups/gap/greens/gren.gd");
 ReadPackage("semigroups/gap/greens/grac.gd");
 

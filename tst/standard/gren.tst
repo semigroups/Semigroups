@@ -36,9 +36,9 @@ false
 gap> L < L;
 false
 gap> L < LL;
-false
-gap> LL < L;
 true
+gap> LL < L;
+false
 gap> D := DClass(L);;
 gap> L = D;
 false
