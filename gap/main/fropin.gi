@@ -119,12 +119,12 @@ InstallMethod(IsGeneratorsOfEnumerableSemigroup,
 # This function is used to initialise the data record for an enumerable
 # semigroup which does not have a C++ implementation.
 
-BindGlobal("INIT_FROPIN",
+BindGlobal("FROPIN",
 function(S)
   local data, hashlen, nrgens, nr, val, i;
 
   if (not IsSemigroup(S)) or Length(GeneratorsOfSemigroup(S)) = 0 then
-    ErrorNoReturn("Semigroups: INIT_FROPIN: usage,\n",
+    ErrorNoReturn("Semigroups: FROPIN: usage,\n",
                   "the argument must be a semigroup with at least 1 ",
                   "generator,");
   elif IsBound(S!.__en_semi_fropin) then

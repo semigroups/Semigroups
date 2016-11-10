@@ -57,7 +57,7 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   # find the entire data structure for I, so there is no point to what follows,
   # and this whole file should be rewritten.
   genstoapply := [1 .. Length(GeneratorsOfSemigroup(S))];
-  data := INIT_FROPIN(S);
+  data := FROPIN(S);
 
   while nr <= limit and i <= nr and not (looking and found) do
 

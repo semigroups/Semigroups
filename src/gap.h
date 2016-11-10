@@ -121,7 +121,7 @@ extern Obj TYPE_PBR;
 
 extern Obj TYPE_BIPART;
 extern Obj TYPES_BIPART;
-extern Obj INIT_FROPIN;
+extern Obj FROPIN;
 extern Obj GeneratorsOfMagma;
 
 extern Obj IsSemigroup;

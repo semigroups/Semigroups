@@ -365,7 +365,7 @@ Obj IsPBR;
 Obj TYPES_PBR;
 Obj TYPE_PBR;
 Obj DegreeOfPBR;
-Obj INIT_FROPIN;
+Obj FROPIN;
 Obj GeneratorsOfMagma;
 
 Obj IsSemigroup;
@@ -606,7 +606,7 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
 
-  ImportGVarFromLibrary("INIT_FROPIN", &INIT_FROPIN);
+  ImportGVarFromLibrary("FROPIN", &FROPIN);
 
   ImportGVarFromLibrary("GeneratorsOfMagma",
                         &GeneratorsOfMagma);

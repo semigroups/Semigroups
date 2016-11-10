@@ -410,11 +410,11 @@ gap_rec_t semi_obj_get_fropin(gap_semigroup_t so) {
       AssPRec(so, RNam_en_semi_fropin, fp);
       return fp;
     } else {
-      CALL_1ARGS(INIT_FROPIN, so);
+      CALL_1ARGS(FROPIN, so);
       if (FindPRec(so, RNam_en_semi_fropin, &i, 1)) {
         return GET_ELM_PREC(so, i);
       }
-      ErrorQuit("unknown error in INIT_FROPIN,", 0L, 0L);
+      ErrorQuit("unknown error in FROPIN,", 0L, 0L);
       return 0L;
     }
   }
