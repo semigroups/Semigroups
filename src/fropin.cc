@@ -41,7 +41,6 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
 // Fast product using left and right Cayley graphs
 
 size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j) {
-
   fropin(fp, INTOBJ_INT(-1), 0, False);
 
   gap_list_t words = ElmPRec(fp, RNam_words);
@@ -94,8 +93,8 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   }
   // assert(data_type(data) == UNKNOWN);
 
-  // TODO if looking check that something in elts doesn't already satisfy the
-  // lookfunc
+  // TODO(JDM) if looking check that something in elts doesn't already satisfy
+  // the lookfunc
 
   // remove nrrules
   if (looking == True) {

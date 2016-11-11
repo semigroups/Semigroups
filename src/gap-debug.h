@@ -18,8 +18,8 @@
 
 // For debugging access to GAP macros
 
-#ifndef SRC_GAP_DEBUG_H_
-#define SRC_GAP_DEBUG_H_
+#ifndef SEMIGROUPS_SRC_GAP_DEBUG_H_
+#define SEMIGROUPS_SRC_GAP_DEBUG_H_
 
 #include "src/compiled.h"
 
@@ -39,11 +39,11 @@ Bag TYPE_POSOBJ_F(Obj x) {
   return TYPE_POSOBJ(x);
 }
 
-unsigned long long TNUM_OBJ_F(Obj x) {
+uint64_t TNUM_OBJ_F(Obj x) {
   return TNUM_OBJ(x);
 }
 
-unsigned long long T_PLIST_F(Obj x) {
+uint64_t T_PLIST_F(Obj x) {
   return T_PLIST;
 }
 
@@ -115,4 +115,4 @@ size_t DEG_PERM4_F(Obj t) {
   return DEG_PERM4(t);
 }
 
-#endif // SRC_GAP_DEBUG_H_
+#endif  // SEMIGROUPS_SRC_GAP_DEBUG_H_

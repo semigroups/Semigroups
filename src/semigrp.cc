@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "bipart.h"
 #include "converter.h"
@@ -29,7 +30,6 @@
 #include "src/compiled.h"
 
 #define DEBUG
-//#include "gap-debug.h"
 
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
@@ -138,7 +138,6 @@ gap_list_t semi_obj_get_gens(gap_semigroup_t so) {
     CHANGED_BAG(gens);
     return gens;
   } else {
-
 #ifdef DEBUG
     // This is included since the methods for finding generating sets for
     // acting semigroup ideals may use the output of the F-P algorithm (Green's
@@ -335,7 +334,6 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
       break;
     }
     case PROJ_MAX_PLUS_MAT: {
-
       converter =
           new ProjectiveMaxPlusMatrixConverter(new semiring::MaxPlusSemiring(),
                                                Ninfinity,
@@ -1322,7 +1320,7 @@ gap_int_t EN_SEMI_SIZE(Obj self, gap_semigroup_t so) {
 }
 
 // Iterators
-// TODO rename these
+// TODO(JDM) rename these
 
 gap_bool_t EN_SEMI_IS_DONE_ITERATOR(Obj self, gap_rec_t iter) {
   initRNams();

@@ -37,7 +37,6 @@ inline Blocks* blocks_get_cpp(Obj x) {
   return reinterpret_cast<Blocks*>(ADDR_OBJ(x)[0]);
 }
 
-
 Obj bipart_new_obj(Bipartition*);
 
 // GAP level functions

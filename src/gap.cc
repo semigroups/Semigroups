@@ -45,8 +45,8 @@
 Obj TheTypeTSemiObj;
 Obj TheTypeTBlocksObj;
 
-Obj TYPE_BIPART;  // function
-Obj TYPES_BIPART; // plist
+Obj TYPE_BIPART;   // function
+Obj TYPES_BIPART;  // plist
 
 UInt T_SEMI   = 0;
 UInt T_BIPART = 0;
@@ -85,9 +85,7 @@ void TSemiObjPrintFunc(Obj o) {
       Pr("<wrapper for C++ semigroup objects>", 0L, 0L);
       break;
     }
-    default: {
-      assert(false);
-    }
+    default: { assert(false); }
   }
 }
 
@@ -213,7 +211,7 @@ void TSemiObjLoadFunc(Obj o) {
   switch (type) {
     case T_SEMI_SUBTYPE_ENSEMI: {
       en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(s_type);
+      ADDR_OBJ(o)[1]   = reinterpret_cast<Obj>(s_type);
       if (s_type != UNKNOWN) {
         ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
         ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
@@ -236,9 +234,7 @@ void TSemiObjLoadFunc(Obj o) {
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
       break;
     }
-    default: {
-      assert(false);
-    }
+    default: { assert(false); }
   }
 }
 
@@ -381,7 +377,6 @@ Obj IsActingSemigroup;
 typedef Obj (*GVarFilt)(/*arguments*/);
 
 static StructGVarFilt GVarFilts[] = {
-
     {"IS_BIPART",
      "obj",
      &IsBipartFilt,
@@ -503,7 +498,6 @@ static StructGVarFunc GVarFuncs[] = {
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel(StructInitInfo* module) {
-
   /* init filters and functions                                          */
   InitHdlrFiltsFromTable(GVarFilts);
   InitHdlrFuncsFromTable(GVarFuncs);
@@ -520,7 +514,7 @@ static Int InitKernel(StructInitInfo* module) {
 
   InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
 
-  // TODO: CopyObjFuncs, CleanObjFuncs, IsMutableObjFuncs for T_SEMI bags
+  // TODO(JDM): CopyObjFuncs, CleanObjFuncs, IsMutableObjFuncs for T_SEMI bags
 
   // T_BIPART
   T_BIPART = RegisterPackageTNUM("TBipartObj", TBipartObjTypeFunc);
@@ -611,8 +605,7 @@ static Int InitKernel(StructInitInfo* module) {
 
   ImportGVarFromLibrary("FROPIN", &FROPIN);
 
-  ImportGVarFromLibrary("GeneratorsOfMagma",
-                        &GeneratorsOfMagma);
+  ImportGVarFromLibrary("GeneratorsOfMagma", &GeneratorsOfMagma);
 
   ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
   ImportGVarFromLibrary("IsSemigroupIdeal", &IsSemigroupIdeal);

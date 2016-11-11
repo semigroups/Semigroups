@@ -192,7 +192,7 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_list_t pair) {
 
   // FIXME check if l/rhs_pos are undefined!!
   if (IsbPRec(o, RNam_fin_cong_lookup)) {
-    // TODO use FindPRec and GET_ELM_PREC
+    // TODO(JDM) use FindPRec and GET_ELM_PREC
     Obj lookup = ElmPRec(o, RNam_fin_cong_lookup);
     Obj out    = True;
     EQ_INTOBJS(out, ELM_PLIST(lookup, lhs_pos), ELM_PLIST(lookup, rhs_pos));
@@ -293,7 +293,7 @@ Obj CONG_PAIRS_CLASS_COSET_ID(Obj self, gap_cong_class_t o) {
   bool            report    = semi_obj_get_report(range_obj);
 
   if (IsbPRec(o, RNam_fin_cong_lookup)) {
-    // TODO Use FindPRec and GET_ELM_PREC
+    // TODO(JDM) Use FindPRec and GET_ELM_PREC
     Obj lookup = ElmPRec(cong_obj, RNam_fin_cong_lookup);
     return ELM_PLIST(lookup,
                      INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, rep)));

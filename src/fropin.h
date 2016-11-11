@@ -37,4 +37,4 @@ gap_rec_t fropin(Obj        data,  // can be gap_semigroup_t or a prec
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj, Obj, Obj);
 Obj FIND_HCLASSES(Obj, Obj, Obj);
 
-#endif // SEMIGROUPS_SRC_FROPIN_H_
+#endif  // SEMIGROUPS_SRC_FROPIN_H_

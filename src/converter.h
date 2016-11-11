@@ -180,8 +180,7 @@ template <typename T> class PPermConverter : public Converter {
     }
   }
 
-  template <typename UIntT>
-  inline UIntT* ADDR_PPERM(Obj x) const {
+  template <typename UIntT> inline UIntT* ADDR_PPERM(Obj x) const {
     return reinterpret_cast<UIntT*>(static_cast<Obj*>(ADDR_OBJ(x)) + 2) + 1;
   }
 
