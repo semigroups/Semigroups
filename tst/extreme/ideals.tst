@@ -842,7 +842,7 @@ gap> I := SemigroupIdeal(S, PartialPerm([1, 3, 4, 5, 7], [1, 3, 4, 5, 7]));
 gap> GeneratorsOfSemigroup(I);;
 
 #T# IdealsTest22
-# test for \in method from ideals-acting.gi (only applies to ideals that know
+# test for \in method from idealact.gi (only applies to ideals that know
 # apriori that they are regular) which partially enumerates the semigroup ideal
 # data
 gap> S := FullTransformationMonoid(6);;

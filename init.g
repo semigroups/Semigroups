@@ -78,8 +78,8 @@ ReadPackage("semigroups/gap/main/graded.gd");
 ReadPackage("semigroups/gap/main/orbits.gd");
 
 ReadPackage("semigroups/gap/ideals/ideals.gd");
-ReadPackage("semigroups/gap/ideals/ideals-acting.gd");
-ReadPackage("semigroups/gap/ideals/ideals-lambda-rho.gd");
+ReadPackage("semigroups/gap/ideals/idealact.gd");
+ReadPackage("semigroups/gap/ideals/ideallam.gd");
 
 ReadPackage("semigroups/gap/greens/gree.gd");
 ReadPackage("semigroups/gap/greens/gren.gd");

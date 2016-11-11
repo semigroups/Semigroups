@@ -48,12 +48,12 @@ ReadPackage("semigroups/gap/main/acting.gi");
 ReadPackage("semigroups/gap/main/lambda-rho.gi");
 ReadPackage("semigroups/gap/main/graded.gi");
 ReadPackage("semigroups/gap/main/orbits.gi");
-ReadPackage("semigroups/gap/main/semigroups-acting.gi");
+ReadPackage("semigroups/gap/main/semiact.gi");
 
 ReadPackage("semigroups/gap/ideals/ideals.gi");
-ReadPackage("semigroups/gap/ideals/ideals-acting.gi");
-ReadPackage("semigroups/gap/ideals/ideals-lambda-rho.gi");
-ReadPackage("semigroups/gap/ideals/ideals-generic.gi");
+ReadPackage("semigroups/gap/ideals/idealact.gi");
+ReadPackage("semigroups/gap/ideals/ideallam.gi");
+ReadPackage("semigroups/gap/ideals/idealenu.gi");
 
 ReadPackage("semigroups/gap/greens/gree.gi");
 ReadPackage("semigroups/gap/greens/gren.gi");
