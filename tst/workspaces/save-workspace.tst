@@ -44,6 +44,46 @@ gap> NrEquivalenceClasses(cong);
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 1, 2, 1, 1, 3, 1, 1, 2, 1, 3, 1, 1, 2, 4, 3 ]
 
+#T# Semigroups from semigroupsplusplus
+gap> T := Semigroup(Matrix(IsBooleanMat, [[0, 1], [0, 0]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 1]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
+gap> Size(T); 
+9
+gap> NrIdempotents(T);
+8
+gap> x := T.1 * T.2 * T.3 ^ 5 * T.2 * T.3;
+Matrix(IsBooleanMat, [[1, 0], [0, 0]])
+gap> Factorization(T, x);
+[ 4 ]
+gap> D := DClass(T, x);;
+gap> id := Idempotents(D);
+[ Matrix(IsBooleanMat, [[0, 1], [0, 1]]), 
+  Matrix(IsBooleanMat, [[1, 1], [0, 0]]), 
+  Matrix(IsBooleanMat, [[1, 1], [1, 1]]), 
+  Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
+  Matrix(IsBooleanMat, [[1, 0], [1, 0]]) ]
+gap> ForAll(id, x -> x in T);
+true
+gap> U := AsSemigroup(IsTransformationSemigroup, T);
+<transformation monoid of size 9, degree 4 with 3 generators>
+gap> Size(U); 
+9
+gap> NrIdempotents(U);
+8
+gap> xx := U.1 * U.2 * U.3 ^ 5 * U.2 * U.3;
+Transformation( [ 2, 2, 4, 4 ] )
+gap> Factorization(U, xx);
+[ 1, 2, 4 ]
+gap> DD := DClass(U, xx);;
+gap> idd := Idempotents(DD);
+[ Transformation( [ 1, 1, 4, 4 ] ), Transformation( [ 2, 2, 4, 4 ] ), 
+  Transformation( [ 3, 3, 3 ] ), Transformation( [ 1, 1, 1 ] ), 
+  Transformation( [ 2, 2, 2 ] ) ]
+gap> ForAll(idd, x -> x in U);
+true
+
 #############################################################################
 ##  Tests end here
 #############################################################################

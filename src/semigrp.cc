@@ -246,16 +246,154 @@ static inline size_t semi_obj_get_period(gap_semigroup_t so) {
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2));
 }
 
+// The en_semi data structure which is an Obj of type T_SEMI organised as
+// follows if <type> is not UNKNOWN:
+//
+//  0: t_semi_subtype_t,
+//  1: en_semi_t         type,
+//  2: gap_semigroup_t   so,
+//  3: size_t            degree,
+//  4: Converter*,
+//  5: Semigroup*
+//
+// To call en_semi_init_converter positions 0 to 3 must already be set, and 4
+// and 5 must be nullptrs. To call en_semi_init_semigroup,
+// en_semi_init_converter must already have been called.
+//
+// If <type> is UNKNOWN, then the en_semi data structure looks like:
+//
+//  [t_semi_subtype_t, en_semi_t type]
+//
+//  and the whole object is only required so that the fact that
+//  its en_semi_t is UNKNOWN.
+
+en_semi_obj_t en_semi_new(en_semi_t type) {
+  Obj o          = NewBag(T_SEMI, (type == UNKNOWN ? 2 : 6) * sizeof(Obj));
+  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(T_SEMI_SUBTYPE_ENSEMI);
+  ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(type);
+  for (size_t pos = 4; pos < (type == UNKNOWN ? 2 : 6); pos++) {
+    ADDR_OBJ(o)[pos] = static_cast<Obj>(nullptr);
+  }
+  CHANGED_BAG(o);
+  return o;
+}
+
+Converter* en_semi_init_converter(en_semi_obj_t es) {
+  assert(en_semi_get_type(es) != UNKNOWN);
+  assert(CLASS_OBJ<Converter*>(es, 4) == nullptr);
+
+  Converter*      converter;
+  gap_semigroup_t so = en_semi_get_semi_obj(es);
+
+  switch (en_semi_get_type(es)) {
+    case TRANS2: {
+      converter = new TransConverter<u_int16_t>();
+      break;
+    }
+    case TRANS4: {
+      converter = new TransConverter<u_int32_t>();
+      break;
+    }
+    case PPERM2: {
+      converter = new PPermConverter<u_int16_t>();
+      break;
+    }
+    case PPERM4: {
+      converter = new PPermConverter<u_int32_t>();
+      break;
+    }
+    case BIPART: {
+      converter = new BipartConverter();
+      break;
+    }
+    case BOOL_MAT: {
+      converter = new BoolMatConverter();
+      break;
+    }
+    case MAX_PLUS_MAT: {
+      converter = new MatrixOverSemiringConverter(
+          new semiring::MaxPlusSemiring(), Ninfinity, MaxPlusMatrixType);
+      break;
+    }
+    case MIN_PLUS_MAT: {
+      converter = new MatrixOverSemiringConverter(
+          new semiring::MinPlusSemiring(), infinity, MinPlusMatrixType);
+      break;
+    }
+    case TROP_MAX_PLUS_MAT: {
+      converter = new MatrixOverSemiringConverter(
+          new semiring::TropicalMaxPlusSemiring(semi_obj_get_threshold(so)),
+          Ninfinity,
+          TropicalMaxPlusMatrixType);
+      break;
+    }
+    case TROP_MIN_PLUS_MAT: {
+      converter = new MatrixOverSemiringConverter(
+          new semiring::TropicalMinPlusSemiring(semi_obj_get_threshold(so)),
+          infinity,
+          TropicalMinPlusMatrixType);
+      break;
+    }
+    case PROJ_MAX_PLUS_MAT: {
+
+      converter =
+          new ProjectiveMaxPlusMatrixConverter(new semiring::MaxPlusSemiring(),
+                                               Ninfinity,
+                                               ProjectiveMaxPlusMatrixType);
+      break;
+    }
+    case NTP_MAT: {
+      converter = new MatrixOverSemiringConverter(
+          new semiring::NaturalSemiring(semi_obj_get_threshold(so),
+                                        semi_obj_get_period(so)),
+          INTOBJ_INT(0),
+          NTPMatrixType);
+      break;
+    }
+    case INT_MAT: {
+      converter = new MatrixOverSemiringConverter(
+          new semiring::Integers(), INTOBJ_INT(0), IntegerMatrixType);
+      break;
+    }
+    case PBR_TYPE: {
+      converter = new PBRConverter();
+      break;
+    }
+    default: { assert(false); }
+  }
+  ADDR_OBJ(es)[4] = reinterpret_cast<Obj>(converter);
+  CHANGED_BAG(es);
+  return converter;
+}
+
+Semigroup* en_semi_init_semigroup(en_semi_obj_t es) {
+  assert(en_semi_get_type(es) != UNKNOWN);
+  assert(CLASS_OBJ<Semigroup*>(es, 5) == nullptr);
+
+  if (en_semi_get_converter(es) == nullptr) {
+    en_semi_init_converter(es);
+  }
+
+  gap_semigroup_t        so        = en_semi_get_semi_obj(es);
+  Converter*             converter = en_semi_get_converter(es);
+  size_t                 deg       = en_semi_get_degree(es);
+  gap_list_t             plist     = semi_obj_get_gens(so);
+  std::vector<Element*>* gens      = plist_to_vec(converter, plist, deg);
+  Semigroup*             semi_cpp  = new Semigroup(gens);
+  really_delete_cont(gens);
+  ADDR_OBJ(es)[5] = reinterpret_cast<Obj>(semi_cpp);
+  return semi_cpp;
+}
+
 // Initialise the en_semi of the GAP semigroup <so>, the optional 2nd and
 // 3rd args are for use with closure semigroup.
 
 en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
-                                    gap_semigroup_t old_so,
-                                    gap_list_t      plist) {
+                                    gap_semigroup_t old_so = 0,
+                                    gap_list_t      plist = 0) {
   CHECK_SEMI_OBJ(so);
-  size_t     deg;
-  en_semi_t  type = UNKNOWN;
-  Converter* converter;
+  size_t    deg;
+  en_semi_t type = UNKNOWN;
 
   gap_element_t x = semi_obj_get_rep(so);
 
@@ -269,11 +407,9 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
       }
     }
     if (deg < 65536) {
-      type      = TRANS2;
-      converter = new TransConverter<u_int16_t>();
+      type = TRANS2;
     } else {
-      type      = TRANS4;
-      converter = new TransConverter<u_int32_t>();
+      type = TRANS4;
     }
   } else if (IS_PPERM(x)) {
     deg = (old_so == 0 ? 0 : semi_obj_get_semi_cpp(old_so)->degree());
@@ -286,107 +422,84 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
       }
     }
     if (deg < 65535) {
-      type      = PPERM2;
-      converter = new PPermConverter<u_int16_t>();
+      type = PPERM2;
     } else {
-      type      = PPERM4;
-      converter = new PPermConverter<u_int32_t>();
+      type = PPERM4;
     }
   } else if (TNUM_OBJ(x) == T_BIPART) {
-    type      = BIPART;
-    deg       = INT_INTOBJ(BIPART_DEGREE(0L, x));
-    converter = new BipartConverter();
+    type = BIPART;
+    deg  = INT_INTOBJ(BIPART_DEGREE(0L, x));
   } else if (CALL_1ARGS(IsBooleanMat, x) == True) {
-    type      = BOOL_MAT;
-    deg       = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
-    converter = new BoolMatConverter();
+    type = BOOL_MAT;
+    deg  = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
   } else if (CALL_1ARGS(IsMaxPlusMatrix, x) == True) {
-    type      = MAX_PLUS_MAT;
-    deg       = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
-    converter = new MatrixOverSemiringConverter(
-        new semiring::MaxPlusSemiring(), Ninfinity, MaxPlusMatrixType);
+    type = MAX_PLUS_MAT;
+    deg  = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
   } else if (CALL_1ARGS(IsMinPlusMatrix, x) == True) {
-    type      = MIN_PLUS_MAT;
-    deg       = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
-    converter = new MatrixOverSemiringConverter(
-        new semiring::MinPlusSemiring(), infinity, MinPlusMatrixType);
+    type = MIN_PLUS_MAT;
+    deg  = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
   } else if (CALL_1ARGS(IsTropicalMaxPlusMatrix, x) == True) {
-    type      = TROP_MAX_PLUS_MAT;
-    deg       = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
-    converter = new MatrixOverSemiringConverter(
-        new semiring::TropicalMaxPlusSemiring(semi_obj_get_threshold(so)),
-        Ninfinity,
-        TropicalMaxPlusMatrixType);
+    type = TROP_MAX_PLUS_MAT;
+    deg  = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
   } else if (CALL_1ARGS(IsTropicalMinPlusMatrix, x) == True) {
-    type      = TROP_MIN_PLUS_MAT;
-    deg       = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
-    converter = new MatrixOverSemiringConverter(
-        new semiring::TropicalMinPlusSemiring(semi_obj_get_threshold(so)),
-        infinity,
-        TropicalMinPlusMatrixType);
+    type = TROP_MIN_PLUS_MAT;
+    deg  = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
   } else if (CALL_1ARGS(IsProjectiveMaxPlusMatrix, x) == True) {
     type = PROJ_MAX_PLUS_MAT;
     deg  = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
-    converter =
-        new ProjectiveMaxPlusMatrixConverter(new semiring::MaxPlusSemiring(),
-                                             Ninfinity,
-                                             ProjectiveMaxPlusMatrixType);
   } else if (CALL_1ARGS(IsNTPMatrix, x) == True) {
-    type      = NTP_MAT;
-    deg       = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
-    converter = new MatrixOverSemiringConverter(
-        new semiring::NaturalSemiring(semi_obj_get_threshold(so),
-                                      semi_obj_get_period(so)),
-        INTOBJ_INT(0),
-        NTPMatrixType);
+    type = NTP_MAT;
+    deg  = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
   } else if (CALL_1ARGS(IsIntegerMatrix, x) == True) {
-    type      = INT_MAT;
-    deg       = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
-    converter = new MatrixOverSemiringConverter(
-        new semiring::Integers(), INTOBJ_INT(0), IntegerMatrixType);
+    type = INT_MAT;
+    deg  = INT_INTOBJ(CALL_1ARGS(DimensionOfMatrixOverSemiring, x));
   } else if (CALL_1ARGS(IsPBR, x) == True) {
-    type      = PBR_TYPE;
-    deg       = INT_INTOBJ(CALL_1ARGS(DegreeOfPBR, x));
-    converter = new PBRConverter();
+    type = PBR_TYPE;
+    deg  = INT_INTOBJ(CALL_1ARGS(DegreeOfPBR, x));
   }
 
+  en_semi_obj_t o = en_semi_new(type);
+
   if (type != UNKNOWN) {
-    Semigroup* semi_cpp;
+    ADDR_OBJ(o)[2] = so;
+    ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(deg);
+    CHANGED_BAG(o);
+
+    Converter* converter = en_semi_init_converter(o);
+
     if (old_so == 0) {
       assert(plist == 0);
-      gap_list_t             plist = semi_obj_get_gens(so);
-      std::vector<Element*>* gens  = plist_to_vec(converter, plist, deg);
-      semi_cpp                     = new Semigroup(gens);
-      really_delete_cont(gens);
-    } else {
+      en_semi_init_semigroup(o);
+    } else {  // Closure semigroup
       assert(plist != 0);
       Semigroup*             old_semi_cpp = semi_obj_get_semi_cpp(old_so);
       std::vector<Element*>* coll         = plist_to_vec(converter, plist, deg);
-      semi_cpp = new Semigroup(*old_semi_cpp, coll, semi_obj_get_report(so));
+      Semigroup*             semi_cpp =
+          new Semigroup(*old_semi_cpp, coll, semi_obj_get_report(so));
+      semi_cpp->set_batch_size(semi_obj_get_batch_size(so));
+      ADDR_OBJ(o)[5] = reinterpret_cast<Obj>(semi_cpp);
+      CHANGED_BAG(o);
       really_delete_cont(coll);
     }
-    semi_cpp->set_batch_size(semi_obj_get_batch_size(so));
-
-    Obj o          = NewBag(T_SEMI, 6 * sizeof(Obj));
-    ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(T_SEMI_SUBTYPE_ENSEMI);
-    ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(type);
-    ADDR_OBJ(o)[2] = reinterpret_cast<Obj>(semi_cpp);
-    ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(converter);
-    ADDR_OBJ(o)[4] = reinterpret_cast<Obj>(deg);
-    ADDR_OBJ(o)[5] = so;
-    CHANGED_BAG(o);
-
-    AssPRec(so, RNam_en_semi_cpp_semi, o);
-    return o;
-  } else {
-    Obj o          = NewBag(T_SEMI, 2 * sizeof(Obj));
-    ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(T_SEMI_SUBTYPE_ENSEMI);
-    ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(type);
-    CHANGED_BAG(o);
-
-    AssPRec(so, RNam_en_semi_cpp_semi, o);
-    return o;
   }
+  AssPRec(so, RNam_en_semi_cpp_semi, o);
+  return o;
+}
+
+Converter* en_semi_get_converter(en_semi_obj_t es) {
+  assert(TNUM_OBJ(es) == T_SEMI
+         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  assert(en_semi_get_type(es) != UNKNOWN);
+  Converter* converter = CLASS_OBJ<Converter*>(es, 4);
+  return (converter != nullptr ? converter : en_semi_init_converter(es));
+}
+
+Semigroup* en_semi_get_semi_cpp(en_semi_obj_t es) {
+  assert(TNUM_OBJ(es) == T_SEMI
+         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  assert(en_semi_get_type(es) != UNKNOWN);
+  Semigroup* semi_cpp = CLASS_OBJ<Semigroup*>(es, 5);
+  return (semi_cpp != nullptr ? semi_cpp : en_semi_init_semigroup(es));
 }
 
 en_semi_obj_t semi_obj_get_en_semi_no_init(gap_semigroup_t so) {
@@ -407,6 +520,16 @@ en_semi_obj_t semi_obj_get_en_semi(gap_semigroup_t so) {
     return GET_ELM_PREC(so, i);
   }
   return semi_obj_init_en_semi(so);
+}
+
+en_semi_t semi_obj_get_type(gap_semigroup_t so) {
+  CHECK_SEMI_OBJ(so);
+  return en_semi_get_type(semi_obj_get_en_semi(so));
+}
+
+Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so) {
+  CHECK_SEMI_OBJ(so);
+  return en_semi_get_semi_cpp(semi_obj_get_en_semi(so));
 }
 
 gap_rec_t semi_obj_get_fropin(gap_semigroup_t so) {
@@ -433,7 +556,6 @@ gap_rec_t semi_obj_get_fropin(gap_semigroup_t so) {
 }
 
 // GAP level functions
-
 
 // Add generators to the GAP semigroup Obj <so>. Note that this only works if
 // the degree of every element in plist is less than or equal to the degree of
@@ -514,7 +636,7 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     }
     return out;
   } else {
-    gap_rec_t fp  = fropin(so, INTOBJ_INT(-1), 0, False);
+    gap_rec_t  fp  = fropin(so, INTOBJ_INT(-1), 0, False);
     gap_list_t out = SHALLOW_COPY_OBJ(ElmPRec(fp, RNam_elts));
     SortDensePlist(out);
     CHANGED_BAG(out);
@@ -548,7 +670,7 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     gap_list_t words = ElmPRec(fp, RNam_words);
     size_t     n     = LEN_PLIST(words);
 
-    gap_list_t out   = NEW_PLIST(T_PLIST_HOM, n);
+    gap_list_t out = NEW_PLIST(T_PLIST_HOM, n);
     SET_LEN_PLIST(out, n);
 
     gap_list_t left   = ElmPRec(fp, RNamName("left"));
@@ -671,7 +793,7 @@ EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos) {
   CHECK_POS_INTOBJ(pos);
 
   en_semi_obj_t es = semi_obj_get_en_semi(so);
-  size_t nr = INT_INTOBJ(pos);
+  size_t        nr = INT_INTOBJ(pos);
 
   if (en_semi_get_type(es) != UNKNOWN) {
     nr--;
@@ -732,12 +854,16 @@ gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist) {
       gap_int_t pos = ELM_LIST(poslist, i);
       if (pos == 0 || !IS_INTOBJ(pos) || INT_INTOBJ(pos) <= 0) {
         ErrorQuit("Semigroups: ELMS_LIST: List Elements, <list>[%d] "
-                  "must be a positive integer,", (Int) i, 0L);
+                  "must be a positive integer,",
+                  (Int) i,
+                  0L);
       }
       Element* x = semi_cpp->at(INT_INTOBJ(pos) - 1, semi_obj_get_report(so));
       if (x == nullptr) {
         ErrorQuit("Semigroups: ELMS_LIST: List Elements, <list>[%d] "
-                  "must be at most %d,", (Int) i, (Int) semi_cpp->size());
+                  "must be at most %d,",
+                  (Int) i,
+                  (Int) semi_cpp->size());
       }
       SET_ELM_PLIST(out, i, en_semi_get_converter(es)->unconvert(x));
       CHANGED_BAG(out);
@@ -747,12 +873,16 @@ gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist) {
       gap_int_t pos = ELM_LIST(poslist, i);
       if (pos == 0 || !IS_INTOBJ(pos) || INT_INTOBJ(pos) <= 0) {
         ErrorQuit("Semigroups: ELMS_LIST: List Elements, <list>[%d] "
-                  "must be a positive integer,", (Int) i, 0L);
+                  "must be a positive integer,",
+                  (Int) i,
+                  0L);
       }
       gap_list_t elts = ElmPRec(fropin(so, pos, 0, False), RNam_elts);
       if (INT_INTOBJ(pos) > LEN_PLIST(elts)) {
         ErrorQuit("Semigroups: ELMS_LIST: List Elements, <list>[%d] "
-                  "must be at most %d,", (Int) i, (Int) LEN_PLIST(elts));
+                  "must be at most %d,",
+                  (Int) i,
+                  (Int) LEN_PLIST(elts));
       }
       SET_ELM_PLIST(out, i, ELM_PLIST(elts, INT_INTOBJ(pos)));
       CHANGED_BAG(out);
@@ -780,14 +910,14 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
   CHECK_SEMI_OBJ(so);
   CHECK_POS_INTOBJ(pos);
 
-  en_semi_obj_t es = semi_obj_get_en_semi_no_init(so);
-  size_t pos_c = INT_INTOBJ(pos);
+  en_semi_obj_t es    = semi_obj_get_en_semi_no_init(so);
+  size_t        pos_c = INT_INTOBJ(pos);
 
   if (es == 0L) {
     ErrorQuit("it is not possible to factorize a not yet enumerated element,",
               0L,
               0L);
-    return 0L; // keep compiler happy
+    return 0L;  // keep compiler happy
   } else if (en_semi_get_type(es) != UNKNOWN) {
     gap_list_t words;
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
@@ -1006,7 +1136,7 @@ gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
   } else {
     // This could probably be better but is also probably not worth the effort
     // of improving
-    gap_rec_t fp     = fropin(so, INTOBJ_INT(-1), 0, False);
+    gap_rec_t  fp     = fropin(so, INTOBJ_INT(-1), 0, False);
     gap_list_t left   = ElmPRec(fp, RNamName("left"));
     gap_list_t last   = ElmPRec(fp, RNamName("final"));
     gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
@@ -1040,8 +1170,8 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   } else {
     gap_rec_t data = semi_obj_get_fropin(so);
-    Obj        ht   = ElmPRec(data, RNam_ht);
-    size_t pos, nr;
+    Obj       ht   = ElmPRec(data, RNam_ht);
+    size_t    pos, nr;
 
     do {
       Obj val = CALL_2ARGS(HTValue, ht, x);
@@ -1100,7 +1230,7 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
   initRNams();
   gap_list_t es = semi_obj_get_en_semi(so);
-  gap_rec_t fp = semi_obj_get_fropin(so);
+  gap_rec_t  fp = semi_obj_get_fropin(so);
 
   if (en_semi_get_type(es) != UNKNOWN) {
     if (!IsbPRec(fp, RNam_rules) || LEN_PLIST(ElmPRec(fp, RNam_rules)) == 0) {

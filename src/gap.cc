@@ -187,13 +187,13 @@ void TSemiObjSaveFunc(Obj o) {
       break;
     }
     case T_SEMI_SUBTYPE_ENSEMI: {
-      // [t_semi_subtype_t, semigroup Obj]
-      // only store semigroup Obj if en_semi_get_semi_obj != UNKNOWN
-      //
-      // Don't store any more because we have to run semi_obj_init_en_semi,
-      // which will recalculate the other data anyway
+      // [t_semi_subtype_t, en_semi_t, gap_semigroup_t, size_t degree]
+      // only store gap_semigroup_t and degree if en_semi_get_semi_obj !=
+      // UNKNOWN.
+      SaveUInt4(en_semi_get_type(o));
       if (en_semi_get_type(o) != UNKNOWN) {
         SaveSubObj(en_semi_get_semi_obj(o));
+        SaveUInt4(en_semi_get_degree(o));
       }
       break;
     }
@@ -213,10 +213,12 @@ void TSemiObjLoadFunc(Obj o) {
   switch (type) {
     case T_SEMI_SUBTYPE_ENSEMI: {
       en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(s_type);
       if (s_type != UNKNOWN) {
-        ADDR_OBJ(o)[2] = static_cast<Obj>(nullptr);  // Semigroup*
-        ADDR_OBJ(o)[3] = static_cast<Obj>(nullptr);  // Converter*
-        ADDR_OBJ(o)[5] = LoadSubObj();
+        ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
+        ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
+        ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);           // Converter*
+        ADDR_OBJ(o)[5] = static_cast<Obj>(nullptr);           // Semigroup*
       }
       break;
     }
