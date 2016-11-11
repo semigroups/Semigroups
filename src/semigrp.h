@@ -139,6 +139,7 @@ gap_element_t
 EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_element_t
 EN_SEMI_ELEMENT_NUMBER_SORTED(Obj self, gap_semigroup_t so, gap_int_t pos);
+gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist);
 gap_semigroup_t
 EN_SEMI_ENUMERATE(Obj self, gap_semigroup_t so, gap_int_t limit);
 gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos);

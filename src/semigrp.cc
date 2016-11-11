@@ -715,6 +715,52 @@ EN_SEMI_ELEMENT_NUMBER_SORTED(Obj self, gap_semigroup_t so, gap_int_t pos) {
   }
 }
 
+gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist) {
+  CHECK_SEMI_OBJ(so);
+  CHECK_LIST(poslist);
+
+  en_semi_obj_t es = semi_obj_get_en_semi(so);
+
+  size_t len = LEN_LIST(poslist);
+
+  gap_list_t out = NEW_PLIST(T_PLIST, len);
+  SET_LEN_PLIST(out, len);
+
+  if (en_semi_get_type(es) != UNKNOWN) {
+    Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
+    for (size_t i = 1; i <= len; i++) {
+      gap_int_t pos = ELM_LIST(poslist, i);
+      if (pos == 0 || !IS_INTOBJ(pos) || INT_INTOBJ(pos) <= 0) {
+        ErrorQuit("Semigroups: ELMS_LIST: List Elements, <list>[%d] "
+                  "must be a positive integer,", (Int) i, 0L);
+      }
+      Element* x = semi_cpp->at(INT_INTOBJ(pos) - 1, semi_obj_get_report(so));
+      if (x == nullptr) {
+        ErrorQuit("Semigroups: ELMS_LIST: List Elements, <list>[%d] "
+                  "must be at most %d,", (Int) i, (Int) semi_cpp->size());
+      }
+      SET_ELM_PLIST(out, i, en_semi_get_converter(es)->unconvert(x));
+      CHANGED_BAG(out);
+    }
+  } else {
+    for (size_t i = 1; i <= len; i++) {
+      gap_int_t pos = ELM_LIST(poslist, i);
+      if (pos == 0 || !IS_INTOBJ(pos) || INT_INTOBJ(pos) <= 0) {
+        ErrorQuit("Semigroups: ELMS_LIST: List Elements, <list>[%d] "
+                  "must be a positive integer,", (Int) i, 0L);
+      }
+      gap_list_t elts = ElmPRec(fropin(so, pos, 0, False), RNam_elts);
+      if (INT_INTOBJ(pos) > LEN_PLIST(elts)) {
+        ErrorQuit("Semigroups: ELMS_LIST: List Elements, <list>[%d] "
+                  "must be at most %d,", (Int) i, (Int) LEN_PLIST(elts));
+      }
+      SET_ELM_PLIST(out, i, ELM_PLIST(elts, INT_INTOBJ(pos)));
+      CHANGED_BAG(out);
+    }
+  }
+  return out;
+}
+
 gap_semigroup_t
 EN_SEMI_ENUMERATE(Obj self, gap_semigroup_t so, gap_int_t limit) {
   CHECK_SEMI_OBJ(so);

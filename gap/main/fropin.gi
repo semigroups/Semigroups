@@ -366,22 +366,16 @@ function(S)
   return enum;
 end);
 
+# The next method is necessary since it does not necessarily involve
+# enumerating the entire semigroup in the case that the semigroup is partially
+# enumerated and <list> only contains indices that are within the so far
+# enumerated range. The default methods in the library do, because they require
+# the length of the enumerator to check that the list of positions is valid.
+
 InstallMethod(ELMS_LIST, "for a semigroup enumerator and a list",
 [IsSemigroupEnumerator, IsList],
 function(enum, list)
-  local out, y, x;
-
-  out := [];
-  for x in list do
-    y := enum[x];
-    if y <> fail then
-      Add(out, y);
-    else
-      ErrorNoReturn("Semigroups: ELMS_LIST: List Elements, <list>[", x,
-                    "] must have an assigned value,");
-    fi;
-  od;
-  return out;
+  return EN_SEMI_ELMS_LIST(UnderlyingCollection(enum), list);
 end);
 
 InstallMethod(Iterator, "for semigroup enumerator sorted",

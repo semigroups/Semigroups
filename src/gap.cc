@@ -415,6 +415,7 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CLOSURE, 3, "new, old, coll"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER, 2, "S, pos"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER_SORTED, 2, "S, pos"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_ELMS_LIST, 2, "S, list"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_FACTORIZATION, 2, "S, pos"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_IDEMPOTENTS, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_IDEMS_SUBSET, 2, "S, list"),
