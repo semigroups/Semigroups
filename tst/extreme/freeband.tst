@@ -27,7 +27,7 @@ MappingByFunction( <free band on the generators [ x1, x2, x3 ]>,
 <transformation semigroup of size 159, degree 160 with 3 generators>
  , function( x ) ... end, function( x ) ... end )
 gap> S := FreeBand(4);
-<free band on the generators [ x1, x2, x3 ]>
+<free band on the generators [ x1, x2, x3, x4 ]>
 gap> AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 332380, degree 332381 with 4 generators>
 

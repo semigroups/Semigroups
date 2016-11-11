@@ -26,21 +26,24 @@ DeclareProperty("IsGeneratorsOfEnumerableSemigroup",
                 IsMultiplicativeElementCollection);
 
 DeclareOperation("PositionSortedOp",
-                 [IsSemigroup, IsMultiplicativeElement]);
+                 [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
 DeclareOperation("PositionOp",
-                 [IsSemigroup, IsMultiplicativeElement, IsZeroCyc]);
+                 [IsEnumerableSemigroupRep, IsMultiplicativeElement, IsZeroCyc]);
 DeclareOperation("Position",
-                 [IsSemigroup, IsMultiplicativeElement]);
+                 [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
 DeclareOperation("Position",
-                 [IsSemigroup, IsMultiplicativeElement, IsZeroCyc]);
+                 [IsEnumerableSemigroupRep, IsMultiplicativeElement,
+                  IsZeroCyc]);
 
-DeclareAttribute("AsListCanonical", IsSemigroup);
-DeclareAttribute("EnumeratorCanonical", IsSemigroup);
-DeclareOperation("IteratorCanonical", [IsSemigroup]);
-DeclareOperation("PositionCanonical", [IsSemigroup, IsMultiplicativeElement]);
-#TODO PositionCanonical
+DeclareAttribute("AsListCanonical", IsEnumerableSemigroupRep);
+DeclareAttribute("EnumeratorCanonical", IsEnumerableSemigroupRep);
+DeclareOperation("IteratorCanonical", [IsEnumerableSemigroupRep]);
+DeclareOperation("PositionCanonical", 
+                 [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
 
-DeclareOperation("Enumerate", [IsSemigroup, IsPosInt]);
-DeclareOperation("Enumerate", [IsSemigroup]);
+DeclareOperation("Enumerate", [IsEnumerableSemigroupRep, IsPosInt]);
+DeclareOperation("Enumerate", [IsEnumerableSemigroupRep]);
+
+DeclareOperation("IsFullyEnumerated", [IsEnumerableSemigroupRep]);
 
 DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);

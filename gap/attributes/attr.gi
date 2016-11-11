@@ -498,8 +498,8 @@ function(S)
   end;
 end);
 
-InstallMethod(MaximalDClasses, "for a semigroup",
-[IsSemigroup],
+InstallMethod(MaximalDClasses, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep],
 function(S)
   local gens, partial, id, enum, pos, i, out, classes, x;
 
@@ -659,8 +659,8 @@ function(S)
   return RepresentativeOfMinimalIdealNC(S);
 end);
 
-InstallMethod(RepresentativeOfMinimalIdealNC, "for a semigroup",
-[IsSemigroup],
+InstallMethod(RepresentativeOfMinimalIdealNC, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep],
 function(S)
   local comps;
 
