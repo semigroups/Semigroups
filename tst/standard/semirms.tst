@@ -1432,29 +1432,27 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
-# FIXME this test currently fails since there are not enough methods for free
-# band Green's classes.
 #T# AsSemigroup: 
 #   convert from a free band to IsReesMatrixSemigroup
-#gap> S := FreeBand(1);
-#<free band on the generators [ x1 ]>
-#gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
-#<Rees matrix semigroup 1x1 over Group(())>
-#gap> Size(S) = Size(T);
-#true
-#gap> NrDClasses(S) = NrDClasses(T);
-#true
-#gap> NrRClasses(S) = NrRClasses(T);
-#true
-#gap> NrLClasses(S) = NrLClasses(T);
-#true
-#gap> NrIdempotents(S) = NrIdempotents(T);
-#true
-#gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
-#gap> BruteForceIsoCheck(map);
-#true
-#gap> BruteForceInverseCheck(map);
-#true
+gap> S := FreeBand(1);
+<free band on the generators [ x1 ]>
+gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
+<Rees matrix semigroup 1x1 over Group(())>
+gap> Size(S) = Size(T);
+true
+gap> NrDClasses(S) = NrDClasses(T);
+true
+gap> NrRClasses(S) = NrRClasses(T);
+true
+gap> NrLClasses(S) = NrLClasses(T);
+true
+gap> NrIdempotents(S) = NrIdempotents(T);
+true
+gap> map := IsomorphismSemigroup(IsReesMatrixSemigroup, S);;
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
 
 #T# RMSNormalization 1:
 # for a Rees matrix semigroup over a group without an inverse op

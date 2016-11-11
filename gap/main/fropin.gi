@@ -105,11 +105,24 @@ function(coll)
     or IsEnumerableSemigroupRep(UnderlyingSemigroup(R));
 end);
 
+# The value 4 in the next method could be 5, but then the Iterator method for
+# FreeBand(4) is very slow because it involves running the Froidure-Pin
+# algorithm on FreeBand(4) to determine the data structure for
+# GreensDRelation(FreeBand(4)) because the D-classes of a free band are used in
+# the Iterator method, and IsEnumerableSemigroupRep's enumerate the semigroup
+# fully in the method for GreensDRelation, but the fully enumerated semigroup
+# is not required for the Iterator method (it does something completely
+# different), and so this is a waste of effort. Basically the only reason to
+# include free bands in IsEnumerableSemigroupRep is that they do not have
+# enough methods installed, and so we just use this for now. 
+
+# FIXME Remove this in the future.
+
 InstallMethod(IsGeneratorsOfEnumerableSemigroup,
 "for a free band element collection",
 [IsFreeBandElementCollection],
 function(coll)
-  return Length(ContentOfFreeBandElementCollection(coll)) < 5;
+  return Length(ContentOfFreeBandElementCollection(coll)) < 4;
 end);
 
 InstallMethod(IsGeneratorsOfEnumerableSemigroup,
