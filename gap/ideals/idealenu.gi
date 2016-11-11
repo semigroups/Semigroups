@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-# This file contains method specific to generic ideals of semigroups.
+# This file contains method specific to ideals of semigroups.
 
 # We use the result of running the Froidure-Pin algorithm on the supersemigroup
 # of an ideal to calculate elements, size, test membership, find idempotents,

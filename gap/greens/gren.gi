@@ -551,7 +551,7 @@ InstallMethod(GreensHClasses, "for a Green's class of an enumerable semigroup",
 function(C)
   if not (IsGreensRClass(C) or IsGreensLClass(C) or IsGreensDClass(C)) then
     ErrorNoReturn("Semigroups: GreensHClasses ",
-                  "(for a generic semigroup Green's class): usage,\n",
+                  "(for an enumerable semigroup Green's class): usage,\n",
                   "the argument should be a Green's R-, L-, or D-class,");
   fi;
   return SEMIGROUPS.GreensXClassesOfClass(C, GreensHRelation,

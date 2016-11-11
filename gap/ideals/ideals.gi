@@ -15,10 +15,8 @@ InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
 InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);
 
-# this is here for generic semigroup ideals
-
-InstallMethod(SupersemigroupOfIdeal, "for a semigroup ideal",
-[IsSemigroupIdeal],
+InstallMethod(SupersemigroupOfIdeal, "for a enumerable semigroup ideal",
+[IsSemigroupIdeal and IsEnumerableSemigroupRep],
 function(I)
 
   if HasSupersemigroupOfIdeal(Parent(I)) then

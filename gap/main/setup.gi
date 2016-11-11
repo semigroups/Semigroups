@@ -62,11 +62,27 @@ function(coll)
   return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
 
-# JDM should remove this since it is not possible to have an generic Rees
-# 0-matrix semigroup (or to specify any of the other options)
-# InstallMethod(IsActingSemigroup, IsReesZeroMatrixSemigroup);
-# FIXME this shouldn't be here because some RZMS are not acting, if they are
-# defined over a transformation semigroup for example.
+# FIXME with the below uncommented many tests fail
+## The HasRows and HasColumns could be removed if it was possible to apply
+## immediate methods to Rees 0-matrix semigroups
+#
+#InstallImmediateMethod(IsGeneratorsOfActingSemigroup,
+#IsReesZeroMatrixSemigroup and HasRows and HasColumns, 0,
+#function(R)
+#  return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
+#end);
+#
+#InstallTrueMethod(IsActingSemigroup, 
+#IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup);
+#
+#InstallImmediateMethod(GeneratorsOfMagma,
+#IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup, 
+#function(R)
+#  return GeneratorsOfReesMatrixSemigroupNC(R, 
+#                                           Rows(R), 
+#                                           UnderlyingSemigroup(R),
+#                                           Columns(R));
+#end);
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
 "for an matrix over finite field collection",

@@ -1314,8 +1314,8 @@ s
 gap> S := Semigroup(SymmetricInverseMonoid(3));;
 gap> H := HClass(S, S.2);;
 gap> GreensHClasses(H);
-Error, Semigroups: GreensHClasses (for a generic semigroup Green's class): usa\
-ge,
+Error, Semigroups: GreensHClasses (for an enumerable semigroup Green's class):\
+ usage,
 the argument should be a Green's R-, L-, or D-class,
 
 # gren: GroupHClass, IsGroupHClass, IsomorphismPermGroup, 1/1
