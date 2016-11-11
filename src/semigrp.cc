@@ -602,7 +602,7 @@ gap_int_t EN_SEMI_CURRENT_MAX_WORD_LENGTH(Obj self, gap_semigroup_t so) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_max_word_length());
   } else {
     initRNams();
-    gap_rec_t fp = semi_obj_get_en_semi(so);
+    gap_rec_t fp = semi_obj_get_fropin(so);
     if (IsbPRec(fp, RNam_words) && LEN_PLIST(ElmPRec(fp, RNam_words)) > 0) {
       gap_list_t words = ElmPRec(fp, RNam_words);
       return INTOBJ_INT(LEN_PLIST(ELM_PLIST(words, LEN_PLIST(words))));
@@ -619,7 +619,7 @@ gap_int_t EN_SEMI_CURRENT_NR_RULES(Obj self, gap_semigroup_t so) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_nrrules());
   } else {
     initRNams();
-    gap_rec_t fp = semi_obj_get_en_semi(so);
+    gap_rec_t fp = semi_obj_get_fropin(so);
     // TODO(JDM) could write a function return_if_not_bound_prec(prec, rnam,
     // val) which returns val if rnam is not bound in prec and returns
     // prec.rnam if it is bound.
@@ -638,7 +638,7 @@ gap_int_t EN_SEMI_CURRENT_SIZE(Obj self, gap_semigroup_t so) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_size());
   } else {
     initRNams();
-    gap_rec_t fp = semi_obj_get_en_semi(so);
+    gap_rec_t fp = semi_obj_get_fropin(so);
     if (IsbPRec(fp, RNam_elts)) {
       return INTOBJ_INT(LEN_PLIST(ElmPRec(fp, RNam_elts)));
     } else {
