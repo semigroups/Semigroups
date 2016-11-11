@@ -143,7 +143,7 @@ InstallMethod(GreensJClassOfElement,
 
 # Green's class of a Green's class (finer from coarser)
 
-# Should these be for IsEnumerableSemigroupGreensClassRep??  FIXME
+# Should these be for IsEnumerableSemigroupGreensClassRep?? 
 
 InstallMethod(GreensRClassOfElement,
 "for a D-class and multiplicative element",
@@ -164,6 +164,38 @@ InstallMethod(GreensHClassOfElement,
 [IsGreensClass, IsMultiplicativeElement],
 function(C, x)
   return EquivalenceClassOfElement(GreensHRelation(Parent(C)), x);
+end);
+
+# Green's classes of an element of a semigroup
+
+# Should these be for IsEnumerableSemigroupGreensClassRep?? 
+
+InstallMethod(GreensRClassOfElement,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+function(S, x)
+  return EquivalenceClassOfElement(GreensRRelation(S), x);
+end);
+
+InstallMethod(GreensLClassOfElement,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+function(S, x)
+  return EquivalenceClassOfElement(GreensLRelation(S), x);
+end);
+
+InstallMethod(GreensHClassOfElement,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+function(S, x)
+  return EquivalenceClassOfElement(GreensHRelation(S), x);
+end);
+
+InstallMethod(GreensDClassOfElement,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+function(S, x)
+  return EquivalenceClassOfElement(GreensDRelation(S), x);
 end);
 
 #############################################################################

@@ -368,39 +368,6 @@ function(rel, rep)
   return SEMIGROUPS.EquivalenceClassOfElement(rel, rep, DClassType);
 end);
 
-# Green's classes of an element of a semigroup
-
-# These look like they could just have IsSemigroup and IsFinite as the
-# argument, can they? FIXME
-
-InstallMethod(GreensRClassOfElement,
-"for a finite enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElement(GreensRRelation(S), x);
-end);
-
-InstallMethod(GreensLClassOfElement,
-"for a finite enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElement(GreensLRelation(S), x);
-end);
-
-InstallMethod(GreensHClassOfElement,
-"for a finite enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElement(GreensHRelation(S), x);
-end);
-
-InstallMethod(GreensDClassOfElement,
-"for a finite enumerable semigroup and multiplicative element",
-[IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElement(GreensDRelation(S), x);
-end);
-
 # No check Green's classes of an element of a semigroup . . .
 
 # The methods for GreensXClassOfElementNC for arbitrary finite semigroup use
