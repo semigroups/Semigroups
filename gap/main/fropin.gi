@@ -445,21 +445,7 @@ end);
 InstallMethod(Idempotents, "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
-  local pos, elts;
-  # Positions (canonical) of idempotents.
-  pos := EN_SEMI_IDEMPOTENTS(S); 
-  if HasAsListCanonical(S) then 
-    # Avoids duplicating idempotents in memory in the cpp semigroup case.
-    return AsListCanonical(S){pos};
-  fi;
-  # It could be that we fully enumerated the non-cpp semigroup but just didn't
-  # call AsListCanonical.
-  elts := FROPIN_GET(S, "elts");
-  if elts <> fail and Length(elts) >= pos[Length(pos)] then 
-    return elts{pos};
-  fi;
-  # Uses less memory and may be faster if we don't have AsListCanonical.
-  return EnumeratorCanonical(S){pos}; 
+  return EnumeratorCanonical(S){EN_SEMI_IDEMPOTENTS(S)}; 
 end);
 
 InstallMethod(PositionCanonical,
@@ -467,18 +453,49 @@ InstallMethod(PositionCanonical,
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
 function(S, x)
-  if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
-    return fail;
-  fi;
-
-  if (IsTransformation(x)
-      and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
+  if FamilyObj(x) <> ElementsFamily(FamilyObj(S))
+      or (IsTransformation(x)
+          and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
       or (IsPartialPerm(x)
           and DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)) then
     return fail;
   fi;
 
   return EN_SEMI_POSITION(S, x);
+end);
+
+# Position exists so that we can call it on objects with an uninitialised data
+# structure, without first having to initialise the data structure to realise
+# that <x> is not in it.
+
+InstallMethod(Position,
+"for an enumerable semigroup, multi. element, zero cyc",
+[IsEnumerableSemigroupRep, IsMultiplicativeElement],
+function(S, x)
+  return PositionOp(S, x, 0);
+end);
+
+InstallMethod(Position,
+"for an enumerable semigroup, multi. element, zero cyc",
+[IsEnumerableSemigroupRep, IsMultiplicativeElement, IsZeroCyc],
+function(S, x, n)
+  return PositionOp(S, x, n);
+end);
+
+InstallMethod(PositionOp,
+"for an enumerable semigroup, multi. element, zero cyc",
+[IsEnumerableSemigroupRep, IsMultiplicativeElement, IsZeroCyc],
+function(S, x, n)
+
+  if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) 
+      or (IsTransformation(x)
+          and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
+      or (IsPartialPerm(x)
+          and DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)) then
+    return fail;
+  fi;
+
+  return EN_SEMI_POSITION_CURRENT(S, x);
 end);
 
 InstallMethod(PositionSortedOp,
@@ -506,6 +523,9 @@ function(S, x)
   fi;
   return EN_SEMI_POSITION_SORTED(S, x);
 end);
+
+InstallMethod(IsFullyEnumerated, "for an enumerable semigroup", 
+[IsEnumerableSemigroupRep], EN_SEMI_IS_DONE);
 
 InstallMethod(Display, "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],

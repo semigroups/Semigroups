@@ -369,6 +369,7 @@ function(rel, rep)
 end);
 
 # Green's classes of an element of a semigroup
+
 # These look like they could just have IsSemigroup and IsFinite as the
 # argument, can they? FIXME
 
@@ -681,21 +682,10 @@ end);
 InstallMethod(Idempotents, "for an enumerable semigroup Green's class",
 [IsEnumerableSemigroupGreensClassRep],
 function(C)
-  local rel, pos, elts;
+  local rel, pos;
 
   rel := EquivalenceClassRelation(C);
   pos := EN_SEMI_IDEMS_SUBSET(Range(rel),
                               rel!.data.comps[SEMIGROUPS.XClassIndex(C)]);
-  if HasAsListCanonical(Range(rel)) then 
-    # Avoids duplicating idempotents in memory in the cpp semigroup case.
-    return AsListCanonical(Range(rel)){pos};
-  fi;
-  # It could be that we fully enumerated the non-cpp semigroup but just didn't
-  # call AsListCanonical.
-  elts := FROPIN_GET(Range(rel), "elts");
-  if elts <> fail and Length(elts) >= pos[Length(pos)] then 
-    return elts{pos};
-  fi;
-  # Uses less memory and may be faster if we don't have AsListCanonical.
   return EnumeratorCanonical(Range(rel)){pos}; 
 end);

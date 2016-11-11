@@ -172,8 +172,9 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := EN_SEMI_POSITION_CURRENT(S, x);
+    pos := Position(S, x); # position in the current data structure if any 
     if pos <> fail then
+      # avoid re-hashing x
       return EN_SEMI_FACTORIZATION(S, pos);
     fi;
   fi;
@@ -224,7 +225,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := EN_SEMI_POSITION_CURRENT(S, x);
+    pos := Position(S, x); # position in the current data structure if any
     if pos <> fail then
       return EN_SEMI_FACTORIZATION(S, pos);
     fi;
@@ -283,7 +284,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := EN_SEMI_POSITION_CURRENT(S, x);
+    pos := Position(S, x); # position in the current data structure if any
     if pos <> fail then
       return EN_SEMI_FACTORIZATION(S, pos);
     fi;

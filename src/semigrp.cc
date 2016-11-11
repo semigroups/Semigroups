@@ -389,8 +389,19 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
   }
 }
 
+en_semi_obj_t semi_obj_get_en_semi_no_init(gap_semigroup_t so) {
+  CHECK_SEMI_OBJ(so);
+  initRNams();
+  UInt i;
+  if (FindPRec(so, RNam_en_semi_cpp_semi, &i, 1)) {
+    return GET_ELM_PREC(so, i);
+  }
+  return 0L;
+}
+
 en_semi_obj_t semi_obj_get_en_semi(gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
+  initRNams();
   UInt i;
   if (FindPRec(so, RNam_en_semi_cpp_semi, &i, 1)) {
     return GET_ELM_PREC(so, i);
@@ -400,6 +411,7 @@ en_semi_obj_t semi_obj_get_en_semi(gap_semigroup_t so) {
 
 gap_rec_t semi_obj_get_fropin(gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
+  initRNams();
   UInt i;
   if (FindPRec(so, RNam_en_semi_fropin, &i, 1)) {
     return GET_ELM_PREC(so, i);
@@ -421,6 +433,7 @@ gap_rec_t semi_obj_get_fropin(gap_semigroup_t so) {
 }
 
 // GAP level functions
+
 
 // Add generators to the GAP semigroup Obj <so>. Note that this only works if
 // the degree of every element in plist is less than or equal to the degree of
@@ -597,11 +610,12 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
 
 gap_int_t EN_SEMI_CURRENT_MAX_WORD_LENGTH(Obj self, gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
-  en_semi_obj_t es = semi_obj_get_en_semi(so);
-  if (en_semi_get_type(es) != UNKNOWN) {
+  en_semi_obj_t es = semi_obj_get_en_semi_no_init(so);
+  if (es == 0L) {
+    return INTOBJ_INT(0);
+  } else if (en_semi_get_type(es) != UNKNOWN) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_max_word_length());
   } else {
-    initRNams();
     gap_rec_t fp = semi_obj_get_fropin(so);
     if (IsbPRec(fp, RNam_words) && LEN_PLIST(ElmPRec(fp, RNam_words)) > 0) {
       gap_list_t words = ElmPRec(fp, RNam_words);
@@ -614,11 +628,12 @@ gap_int_t EN_SEMI_CURRENT_MAX_WORD_LENGTH(Obj self, gap_semigroup_t so) {
 
 gap_int_t EN_SEMI_CURRENT_NR_RULES(Obj self, gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
-  en_semi_obj_t es = semi_obj_get_en_semi(so);
-  if (en_semi_get_type(es) != UNKNOWN) {
+  en_semi_obj_t es = semi_obj_get_en_semi_no_init(so);
+  if (es == 0L) {
+    return INTOBJ_INT(0);
+  } else if (en_semi_get_type(es) != UNKNOWN) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_nrrules());
   } else {
-    initRNams();
     gap_rec_t fp = semi_obj_get_fropin(so);
     // TODO(JDM) could write a function return_if_not_bound_prec(prec, rnam,
     // val) which returns val if rnam is not bound in prec and returns
@@ -633,11 +648,12 @@ gap_int_t EN_SEMI_CURRENT_NR_RULES(Obj self, gap_semigroup_t so) {
 
 gap_int_t EN_SEMI_CURRENT_SIZE(Obj self, gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
-  en_semi_obj_t es = semi_obj_get_en_semi(so);
-  if (en_semi_get_type(es) != UNKNOWN) {
+  en_semi_obj_t es = semi_obj_get_en_semi_no_init(so);
+  if (es == 0L) {
+    return INTOBJ_INT(0);
+  } else if (en_semi_get_type(es) != UNKNOWN) {
     return INTOBJ_INT(en_semi_get_semi_cpp(es)->current_size());
   } else {
-    initRNams();
     gap_rec_t fp = semi_obj_get_fropin(so);
     if (IsbPRec(fp, RNam_elts)) {
       return INTOBJ_INT(LEN_PLIST(ElmPRec(fp, RNam_elts)));
@@ -663,7 +679,6 @@ EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos) {
     Element*   x        = semi_cpp->at(nr, semi_obj_get_report(so));
     return (x == nullptr ? Fail : en_semi_get_converter(es)->unconvert(x));
   } else {
-    initRNams();
     gap_rec_t fp = semi_obj_get_fropin(so);
     if (IsbPRec(fp, RNam_elts)) {
       // use the element cached in the data record if known
@@ -719,10 +734,15 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
   CHECK_SEMI_OBJ(so);
   CHECK_POS_INTOBJ(pos);
 
-  en_semi_obj_t es = semi_obj_get_en_semi(so);
+  en_semi_obj_t es = semi_obj_get_en_semi_no_init(so);
   size_t pos_c = INT_INTOBJ(pos);
 
-  if (en_semi_get_type(es) != UNKNOWN) {
+  if (es == 0L) {
+    ErrorQuit("it is not possible to factorize a not yet enumerated element,",
+              0L,
+              0L);
+    return 0L; // keep compiler happy
+  } else if (en_semi_get_type(es) != UNKNOWN) {
     gap_list_t words;
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
 
@@ -916,9 +936,11 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
 
 gap_bool_t EN_SEMI_IS_DONE(Obj self, gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
-  en_semi_obj_t es = semi_obj_get_en_semi(so);
+  en_semi_obj_t es = semi_obj_get_en_semi_no_init(so);
 
-  if (en_semi_get_type(es) != UNKNOWN) {
+  if (es == 0L) {
+    return False;
+  } else if (en_semi_get_type(es) != UNKNOWN) {
     return (en_semi_get_semi_cpp(es)->is_done() ? True : False);
   }
 
@@ -959,7 +981,6 @@ gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
   }
 }
 
-
 Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
   CHECK_SEMI_OBJ(so);
   en_semi_obj_t es = semi_obj_get_en_semi(so);
@@ -996,9 +1017,10 @@ gap_int_t
 EN_SEMI_POSITION_CURRENT(Obj self, gap_semigroup_t so, gap_element_t x) {
   CHECK_SEMI_OBJ(so);
 
-  en_semi_obj_t es = semi_obj_get_en_semi(so);
-
-  if (en_semi_get_type(es) != UNKNOWN) {
+  en_semi_obj_t es = semi_obj_get_en_semi_no_init(so);
+  if (es == 0L) {
+    return Fail;
+  } else if (en_semi_get_type(es) != UNKNOWN) {
     size_t   deg = en_semi_get_degree(es);
     Element* xx  = en_semi_get_converter(es)->convert(x, deg);
     size_t   pos = en_semi_get_semi_cpp(es)->position_current(xx);
