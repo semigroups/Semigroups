@@ -33,6 +33,8 @@
 #include "semigrp.h"
 #include "ufdata.h"
 
+#include "gap-debug.h"
+
 #include "semigroupsplusplus/semigroups.h"
 #include "semigroupsplusplus/tc.h"
 
@@ -118,6 +120,7 @@ Int TBlocksObjIsMutableObjFuncs(Obj o) {
 // Function to free a T_SEMI Obj during garbage collection.
 
 void TSemiObjFreeFunc(Obj o) {
+  assert(TNUM_OBJ(o) == T_SEMI);
   switch (SUBTYPE_OF_T_SEMI(o)) {
     case T_SEMI_SUBTYPE_UFDATA: {
       delete CLASS_OBJ<UFData*>(o);
@@ -129,14 +132,8 @@ void TSemiObjFreeFunc(Obj o) {
     }
     case T_SEMI_SUBTYPE_ENSEMI: {
       if (en_semi_get_type(o) != UNKNOWN) {
-        Semigroup* semi_cpp = en_semi_get_semi_cpp(o);
-        if (semi_cpp != nullptr) {
-          delete semi_cpp;
-        }
-        Converter* converter = en_semi_get_converter(o);
-        if (converter != nullptr) {
-          delete converter;
-        }
+        delete en_semi_get_semi_cpp(o);
+        delete en_semi_get_converter(o);
       }
       break;
     }
@@ -509,7 +506,7 @@ static Int InitKernel(StructInitInfo* module) {
   SaveObjFuncs[T_SEMI]  = TSemiObjSaveFunc;
   LoadObjFuncs[T_SEMI]  = TSemiObjLoadFunc;
 
-  InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
+  InitMarkFuncBags(T_SEMI, &MarkAllSubBags);
   InitFreeFuncBag(T_SEMI, &TSemiObjFreeFunc);
 
   InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);

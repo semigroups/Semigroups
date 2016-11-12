@@ -101,7 +101,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
       cong->todd_coxeter(report);
     }
   } else {
-    gap_rec_t              data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
+    gap_rec_t               data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     gap_list_t              rules = ElmPRec(data, RNam_rules);
     gap_list_t              words = ElmPRec(data, RNam_words);
     std::vector<relation_t> rels;

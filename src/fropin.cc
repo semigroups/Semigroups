@@ -73,7 +73,7 @@ size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j) {
 Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   Obj found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
       reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
-      empty, oldword, x, data;
+      empty, oldword, x, data, parent;
   UInt i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
       intval, stop, one;
   bool   report;
@@ -81,17 +81,18 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   initRNams();
 
   if (CALL_1ARGS(IsSemigroup, obj) == True) {
+    parent     = obj;
     report     = semi_obj_get_report(obj);
     batch_size = semi_obj_get_batch_size(obj);
     data       = semi_obj_get_fropin(obj);
   } else {
-    gap_semigroup_t parent = ElmPRec(obj, RNamName("parent"));
+    parent = ElmPRec(obj, RNamName("parent"));
     assert(CALL_1ARGS(IsSemigroup, parent) == True);
     data       = obj;
     report     = semi_obj_get_report(parent);
     batch_size = semi_obj_get_batch_size(parent);
   }
-  // assert(data_type(data) == UNKNOWN);
+  assert(semi_obj_get_type(parent) == UNKNOWN);
 
   // TODO(JDM) if looking check that something in elts doesn't already satisfy
   // the lookfunc
@@ -105,6 +106,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
 
   if (i > nr || (size_t) INT_INTOBJ(limit) <= nr) {
+    CHANGED_BAG(parent);
     return data;
   }
   int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
@@ -321,7 +323,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   AssPRec(data, RNamName("len"), INTOBJ_INT(len));
 
   CHANGED_BAG(data);
-  CHANGED_BAG(obj);
+  CHANGED_BAG(parent);
 
   return data;
 }

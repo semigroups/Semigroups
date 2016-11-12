@@ -29,7 +29,7 @@
 #include "gap.h"
 #include "src/compiled.h"
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
@@ -84,8 +84,8 @@ static inline gap_list_t vec_to_plist(Converter* converter, T* cont) {
   size_t i = 1;
   for (auto x : *cont) {
     SET_ELM_PLIST(out, i++, converter->unconvert(x));
+    CHANGED_BAG(out);
   }
-  CHANGED_BAG(out);
   return out;
 }
 
@@ -625,7 +625,7 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
         en_semi_get_semi_cpp(es)->sorted_elements(semi_obj_get_report(so));
     Converter* converter = en_semi_get_converter(es);
 
-    gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, pairs->size());
+    gap_list_t out = NEW_PLIST(T_PLIST+IMMUTABLE, pairs->size());
     SET_LEN_PLIST(out, pairs->size());
     size_t i = 1;
     for (auto x : *pairs) {
@@ -649,7 +649,7 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     Semigroup* semigroup = en_semi_get_semi_cpp(es);
     bool       report    = semi_obj_get_report(so);
     size_t     n         = semigroup->size(report);
-    gap_list_t out       = NEW_PLIST(T_PLIST_HOM, n);
+    gap_list_t out       = NEW_PLIST(T_PLIST, n);
     SET_LEN_PLIST(out, n);
 
     for (size_t i = 0; i < n; i++) {
@@ -668,7 +668,7 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     gap_list_t words = ElmPRec(fp, RNam_words);
     size_t     n     = LEN_PLIST(words);
 
-    gap_list_t out = NEW_PLIST(T_PLIST_HOM, n);
+    gap_list_t out = NEW_PLIST(T_PLIST, n);
     SET_LEN_PLIST(out, n);
 
     gap_list_t left   = ElmPRec(fp, RNamName("left"));
@@ -979,7 +979,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
         }
       }
     }
-
+    CHANGED_BAG(so);
     assert(IsbPRec(fp, RNam_words));
     assert(IS_PLIST(ElmPRec(fp, RNam_words)));
     assert(pos_c <= (size_t) LEN_PLIST(ElmPRec(fp, RNam_words)));
@@ -1177,7 +1177,7 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
         return val;
       }
       gap_int_t limit = SumInt(ElmPRec(data, RNam_nr), INTOBJ_INT(1));
-      fropin(data, limit, 0, False);
+      data = fropin(data, limit, 0, False);
       pos = INT_INTOBJ(ElmPRec(data, RNam_pos));
       nr  = INT_INTOBJ(ElmPRec(data, RNam_nr));
     } while (pos <= nr);
