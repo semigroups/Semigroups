@@ -626,8 +626,8 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     std::vector<std::pair<Element*, size_t>>* pairs =
         en_semi_get_semi_cpp(es)->sorted_elements(semi_obj_get_report(so));
     Converter* converter = en_semi_get_converter(es);
-
-    gap_list_t out = NEW_PLIST(T_PLIST+IMMUTABLE, pairs->size());
+    // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
+    gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT+IMMUTABLE, pairs->size());
     SET_LEN_PLIST(out, pairs->size());
     size_t i = 1;
     for (auto x : *pairs) {
@@ -652,7 +652,7 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     bool       report    = semi_obj_get_report(so);
     size_t     n         = semigroup->size(report);
     assert(n != 0);
-    gap_list_t out       = NEW_PLIST(T_PLIST, n);
+    gap_list_t out       = NEW_PLIST(T_PLIST_HOM, n);
     SET_LEN_PLIST(out, n);
 
     for (size_t i = 0; i < n; i++) {
@@ -672,7 +672,7 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     size_t     n     = LEN_PLIST(words);
     assert(n != 0);
 
-    gap_list_t out = NEW_PLIST(T_PLIST, n);
+    gap_list_t out = NEW_PLIST(T_PLIST_HOM, n);
     SET_LEN_PLIST(out, n);
 
     gap_list_t left   = ElmPRec(fp, RNamName("left"));
