@@ -21,6 +21,8 @@
 #ifndef SEMIGROUPS_SRC_GAP_DEBUG_H_
 #define SEMIGROUPS_SRC_GAP_DEBUG_H_
 
+#include <string>
+
 #include "src/compiled.h"
 
 Bag* ADDR_OBJ_F(Obj x) {
@@ -41,6 +43,10 @@ Bag TYPE_POSOBJ_F(Obj x) {
 
 uint64_t TNUM_OBJ_F(Obj x) {
   return TNUM_OBJ(x);
+}
+
+std::string TNAM_OBJ_F(Obj x) {
+  return TNAM_OBJ(x);
 }
 
 uint64_t T_PLIST_F(Obj x) {
