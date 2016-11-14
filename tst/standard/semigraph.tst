@@ -1,19 +1,19 @@
 #############################################################################
 ##
-#W  standard/graph-inverse.tst
+#W  standard/semigraph.tst
 #Y  Copyright (C) 2014-15                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/graph-inverse.tst");
+gap> START_TEST("Semigroups package: standard/semigraph.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
 
-#T# graph-inverse: test 1
+#T# semigraph: test 1
 gap> gr := Digraph(rec(nrvertices := 5,
 > source := [1, 2, 2, 4, 4], range := [2, 3, 5, 3, 5]));
 <digraph with 5 vertices, 5 edges>
@@ -85,4 +85,4 @@ gap> Unbind(gr);
 gap> Unbind(x);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/graph-inverse.tst");
+gap> STOP_TEST("Semigroups package: standard/semigraph.tst");

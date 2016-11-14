@@ -1,13 +1,13 @@
 #############################################################################
 ##
-#W  standard/quotients.tst
+#W  standard/semiquo.tst
 #Y  Copyright (C) 2015                                  James D. Mitchell 
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/quotients.tst");
+gap> START_TEST("Semigroups package: standard/semiquo.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
@@ -101,4 +101,4 @@ gap> Unbind(cong);
 gap> Unbind(pair);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/quotients.tst");
+gap> STOP_TEST("Semigroups package: standard/semiquo.tst");
