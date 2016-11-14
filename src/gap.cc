@@ -132,8 +132,8 @@ void TSemiObjFreeFunc(Obj o) {
       if (en_semi_get_type(o) != UNKNOWN) {
         // don't use functions to access these since they have too many
         // side effects
-        delete ADDR_OBJ(o)[4];
-        delete ADDR_OBJ(o)[5];
+        delete CLASS_OBJ<Converter*>(o, 4);
+        delete CLASS_OBJ<Semigroup*>(o, 5);
       }
       break;
     }
@@ -224,7 +224,7 @@ void TSemiObjLoadFunc(Obj o) {
       en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
       ADDR_OBJ(o)[1]   = reinterpret_cast<Obj>(s_type);
       if (s_type != UNKNOWN) {
-        assert(SIZE_OBJ(o) == 48);
+        assert(SIZE_OBJ(o) == 6 * SIZEOF_VOID_P);
         ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
         ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
         ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);           // Converter*
