@@ -53,8 +53,6 @@ enum en_semi_t {
   PBR_TYPE
 };
 
-en_semi_obj_t semi_obj_get_en_semi(gap_semigroup_t so);
-
 // C++ functions
 
 size_t semi_obj_get_batch_size(gap_semigroup_t so);

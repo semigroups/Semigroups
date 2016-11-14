@@ -33,8 +33,6 @@
 #include "semigrp.h"
 #include "ufdata.h"
 
-#include "gap-debug.h"
-
 #include "semigroupsplusplus/semigroups.h"
 #include "semigroupsplusplus/tc.h"
 
@@ -132,8 +130,10 @@ void TSemiObjFreeFunc(Obj o) {
     }
     case T_SEMI_SUBTYPE_ENSEMI: {
       if (en_semi_get_type(o) != UNKNOWN) {
-        delete en_semi_get_semi_cpp(o);
-        delete en_semi_get_converter(o);
+        // don't use functions to access these since they have too many
+        // side effects
+        delete ADDR_OBJ(o)[4];
+        delete ADDR_OBJ(o)[5];
       }
       break;
     }
@@ -203,20 +203,9 @@ void TSemiObjLoadFunc(Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
 
   t_semi_subtype_t type = static_cast<t_semi_subtype_t>(LoadUInt4());
-  ADDR_OBJ(o)[0]        = (Obj) type;
+  ADDR_OBJ(o)[0]        = reinterpret_cast<Obj>(type);
 
   switch (type) {
-    case T_SEMI_SUBTYPE_ENSEMI: {
-      en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
-      ADDR_OBJ(o)[1]   = reinterpret_cast<Obj>(s_type);
-      if (s_type != UNKNOWN) {
-        ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
-        ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
-        ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);           // Converter*
-        ADDR_OBJ(o)[5] = static_cast<Obj>(nullptr);           // Semigroup*
-      }
-      break;
-    }
     case T_SEMI_SUBTYPE_UFDATA: {
       size_t               size  = LoadUIntBiggest();
       std::vector<size_t>* table = new std::vector<size_t>();
@@ -229,6 +218,19 @@ void TSemiObjLoadFunc(Obj o) {
     }
     case T_SEMI_SUBTYPE_CONG: {
       ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
+      break;
+    }
+    case T_SEMI_SUBTYPE_ENSEMI: {
+      en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
+      ADDR_OBJ(o)[1]   = reinterpret_cast<Obj>(s_type);
+      if (s_type != UNKNOWN) {
+        assert(SIZE_OBJ(o) == 48);
+        ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
+        ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
+        ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);           // Converter*
+        ADDR_OBJ(o)[5] = static_cast<Obj>(nullptr);           // Semigroup*
+        CHANGED_BAG(o);
+      }
       break;
     }
     default: { assert(false); }
@@ -506,7 +508,7 @@ static Int InitKernel(StructInitInfo* module) {
   SaveObjFuncs[T_SEMI]  = TSemiObjSaveFunc;
   LoadObjFuncs[T_SEMI]  = TSemiObjLoadFunc;
 
-  InitMarkFuncBags(T_SEMI, &MarkAllSubBags);
+  InitMarkFuncBags(T_SEMI, &MarkNoSubBags);
   InitFreeFuncBag(T_SEMI, &TSemiObjFreeFunc);
 
   InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
