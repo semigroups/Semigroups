@@ -29,7 +29,7 @@
 #include "gap.h"
 #include "src/compiled.h"
 
-//#define DEBUG
+#define DEBUG
 
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
@@ -90,6 +90,7 @@ static inline gap_list_t vec_to_plist(Converter* converter, T* cont) {
 }
 
 gap_list_t word_t_to_plist(word_t const& word) {
+  assert(!word.empty());
   gap_list_t out = NEW_PLIST(T_PLIST_CYC, word.size());
   SET_LEN_PLIST(out, word.size());
 
@@ -101,13 +102,14 @@ gap_list_t word_t_to_plist(word_t const& word) {
 }
 
 gap_list_t cayley_graph_t_to_plist(cayley_graph_t* graph) {
-  assert(graph->size() != 0);
+  assert(graph->nr_rows() != 0);
   gap_list_t out = NEW_PLIST(T_PLIST, graph->nr_rows());
   SET_LEN_PLIST(out, graph->nr_rows());
 
   for (size_t i = 0; i < graph->nr_rows(); i++) {
     gap_list_t next = NEW_PLIST(T_PLIST_CYC, graph->nr_cols());
     SET_LEN_PLIST(next, graph->nr_cols());
+    assert(graph->nr_cols() != 0);
     typename std::vector<size_t>::const_iterator end = graph->row_cend(i);
     size_t                                       j   = 1;
     for (auto it = graph->row_cbegin(i); it != end; ++it) {
@@ -649,6 +651,7 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     Semigroup* semigroup = en_semi_get_semi_cpp(es);
     bool       report    = semi_obj_get_report(so);
     size_t     n         = semigroup->size(report);
+    assert(n != 0);
     gap_list_t out       = NEW_PLIST(T_PLIST, n);
     SET_LEN_PLIST(out, n);
 
@@ -667,6 +670,7 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     gap_rec_t  fp    = fropin(so, INTOBJ_INT(-1), 0, False);
     gap_list_t words = ElmPRec(fp, RNam_words);
     size_t     n     = LEN_PLIST(words);
+    assert(n != 0);
 
     gap_list_t out = NEW_PLIST(T_PLIST, n);
     SET_LEN_PLIST(out, n);
@@ -1089,7 +1093,9 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
     gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
 
     for (size_t pos = 1; pos <= (size_t) LEN_LIST(list); pos++) {
-      size_t val = INT_INTOBJ(ELM_LIST(list, pos));
+      gap_int_t ent = ELM_LIST(list, pos);
+      CHECK_POS_INTOBJ(ent);
+      size_t val = INT_INTOBJ(ent);
       size_t i = val, j = val;
       while (i != 0) {
         j = INT_INTOBJ(
