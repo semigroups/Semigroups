@@ -1468,7 +1468,7 @@ false
 
 # Example from Semigroupe manual, Section 6
 gap> S := Monoid(Transformation([2, 3, 4, 4]), 
->                Transformation([4, 1, 2, 4]), rec(generic := true));;
+>                Transformation([4, 1, 2, 4]), rec(acting := false));;
 gap> Size(S);
 15
 gap> Length(RelationsOfFpMonoid(Range(IsomorphismFpMonoid(S))));

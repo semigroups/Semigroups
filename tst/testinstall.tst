@@ -46,7 +46,7 @@ gap> Size(S);
 45936
 
 #T# TestInstall6
-gap> S := Semigroup(IdentityTransformation, rec(generic := false));;
+gap> S := Semigroup(IdentityTransformation, rec(acting := true));;
 gap> LambdaOrb(S);
 <open orbit, 1 points with Schreier tree with log>
 gap> Enumerate(last);
@@ -187,7 +187,7 @@ gap> S := Semigroup(Transformation([1, 2, 3, 4, 5, 6, 7, 8, 9]),
 >                   Transformation([5, 5, 4, 5, 8, 8, 9, 7, 1]),
 >                   Transformation([1, 2, 8, 8, 8, 1, 7, 9, 5]),
 >                   Transformation([7, 2, 7, 2, 5, 5, 1, 8, 9]),
->                   rec(generic := false));;
+>                   rec(acting := true));;
 gap> x := Transformation([7, 7, 4, 2, 1, 8, 8, 9, 5]);;
 gap> D := DClass(S, Transformation([1, 8, 6, 2, 7, 8, 8, 9, 5]));;
 gap> L := LClass(D, x);
@@ -262,7 +262,7 @@ Group([ (), (5,9), (1,7) ])
 #T# TestInstall15: Issue 22 - takes about 49ms
 gap> x := Transformation([2, 12, 10, 7, 6, 11, 8, 3, 4, 5, 1, 11]);;
 gap> S := FullTransformationSemigroup(12);;
-gap> S := Semigroup(S, rec(generic := false, regular := true));;
+gap> S := Semigroup(S, rec(acting := true, regular := true));;
 gap> InversesOfSemigroupElement(S, x);
 [ Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 3, 3, 6, 2 ] ), 
   Transformation( [ 11, 1, 8, 9, 10, 5, 4, 7, 7, 3, 6, 2 ] ), 
@@ -739,7 +739,7 @@ true
 #T# TestInstall45: Issue 97
 # (bug in normalizer and the kernel function POW_KER_TRANS)
 gap> G := Normalizer(SymmetricGroup(3), Semigroup(IdentityTransformation,
->                                                 rec(generic := false)));;
+>                                                 rec(acting := true)));;
 gap> G = SymmetricGroup(3);
 true
 
@@ -838,7 +838,7 @@ true
 gap> S := Semigroup(
 > PartialPerm([1, 2, 3, 4], [2, 3, 4, 1]),
 > PartialPerm([1, 2, 3, 4], [2, 1, 3, 4]),
-> PartialPerm([1, 3], [2, 3]), rec(generic := false));;
+> PartialPerm([1, 3], [2, 3]), rec(acting := true));;
 gap> x := PartialPerm([], []);;
 gap> I := SemigroupIdeal(S, x);;
 gap> L := GreensLClassOfElement(I, x);
@@ -874,7 +874,7 @@ fail
 #T# TestInstall59: Issue 88:
 # Something called by `JoinIrreducibleDClasses` of an acting semigroup ideal
 # of a bipartition semigroup calls `GeneratorsOfSemigroup`
-gap> S := InverseMonoid(DualSymmetricInverseMonoid(6), rec(generic := false));;
+gap> S := InverseMonoid(DualSymmetricInverseMonoid(6), rec(acting := true));;
 gap> x := Bipartition([[1, 2, -3], [3, -1, -2], [4, -4],
 > [5, -5], [6, -6]]);;
 gap> I := SemigroupIdeal(S, x);
@@ -1241,7 +1241,7 @@ gap> S := Semigroup([Bipartition([[1, 2], [-1], [-2]]),
 >  Bipartition([[1], [2], [-1], [-2]])]);;
 gap> IsInverseSemigroup(S);
 false
-gap> S := Semigroup(S, rec(generic := true));;
+gap> S := Semigroup(S, rec(acting := false));;
 gap> IsInverseSemigroup(S);
 false
 

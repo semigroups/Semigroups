@@ -18,7 +18,7 @@ gap> NrIdempotents(FullTransformationMonoid(6));
 1057
 gap> S := FullTransformationSemigroup(6);
 <full transformation monoid of degree 6>
-gap> T := Semigroup(S.1, rec(generic := true));
+gap> T := Semigroup(S.1, rec(acting := false));
 <commutative transformation semigroup of degree 6 with 1 generator>
 gap> EN_SEMI_IDEMPOTENTS(T);
 [ 6 ]

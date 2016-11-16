@@ -274,7 +274,7 @@ end);
 InstallMethod(IteratorSorted,
 "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 8,
-# to beat the generic method for transformation semigroups, FIXME
+# to beat the method for transformation semigroups, FIXME
 function(S)
   local iter;
 
@@ -325,7 +325,7 @@ end);
 InstallMethod(EnumeratorCanonical,
 "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 2,
-# to beat the generic method for a Rees matrix semigroup, FIXME!!
+# to beat the method for a Rees matrix semigroup, FIXME!!
 function(S)
   local enum;
 
@@ -386,7 +386,7 @@ end);
 
 InstallMethod(Iterator, "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
-2, # to beat the generic method for a Rees matrix semigroup, FIXME!!
+2, # to beat the method for a Rees matrix semigroup, FIXME!!
 IteratorCanonical);
 
 InstallMethod(IteratorCanonical,

@@ -259,7 +259,7 @@ true
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 3, 4, 6, 7], [2, 5, 3, 7, 4, 1]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
->  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(generic := true));;
+>  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(acting := false));;
 gap> GreensDClassOfElement(S, PartialPerm([19]));
 Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
@@ -268,7 +268,7 @@ the element in the 2nd argument does not belong to the semigroup,
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 3, 4, 6, 7], [2, 5, 3, 7, 4, 1]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
->  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(generic := true));;
+>  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(acting := false));;
 gap> D := GreensDClassOfElementNC(S, PartialPerm([19]));;
 Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
@@ -277,7 +277,7 @@ the element in the 2nd argument does not belong to the semigroup,
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 3, 4, 6, 7], [2, 5, 3, 7, 4, 1]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
->  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(generic := true));;
+>  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(acting := false));;
 gap> J := GreensJClassOfElement(S, S.2);
 <Green's D-class: [6,4,7,1,2,5](3)>
 
@@ -286,7 +286,7 @@ gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
 >  Transformation([2, 6, 6, 5, 1, 4]), Transformation([3, 2, 5, 5, 6, 4]),
 >  Transformation([3, 5, 3, 4, 1]), Transformation([4, 2, 3, 1, 4, 2]),
 >  Transformation([4, 4, 2, 6, 6, 3]), Transformation([5, 5, 5, 6, 5, 4]),
->  Transformation([6, 3, 1, 3, 1, 6])], rec(generic := true));;
+>  Transformation([6, 3, 1, 3, 1, 6])], rec(acting := false));;
 gap> RClass(S, ConstantTransformation(7, 7));
 Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
@@ -302,7 +302,7 @@ gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
 >  Transformation([2, 6, 6, 5, 1, 4]), Transformation([3, 2, 5, 5, 6, 4]),
 >  Transformation([3, 5, 3, 4, 1]), Transformation([4, 2, 3, 1, 4, 2]),
 >  Transformation([4, 4, 2, 6, 6, 3]), Transformation([5, 5, 5, 6, 5, 4]),
->  Transformation([6, 3, 1, 3, 1, 6])], rec(generic := true));;
+>  Transformation([6, 3, 1, 3, 1, 6])], rec(acting := false));;
 gap> R := RClassNC(S, S.1);
 <Green's R-class: Transformation( [ 2, 2, 1, 2, 4, 4 ] )>
 gap> Size(R);
@@ -328,7 +328,7 @@ gap> S := Monoid(
 >   Bipartition([[1, 4, 6, -1, -2, -4], [2, 5, -5, -6], [3], [-3]]),
 >   Bipartition([[1, 5, -1, -3], [2, 4, 6], [3, -2, -6], [-4, -5]]),
 >   Bipartition([[1, 5, -2], [2, -1, -5], [3, 4, -6], [6, -3], [-4]])],
-> rec(generic := true));;
+> rec(acting := false));;
 gap> D := DClass(S, S.4 * S.5);;
 gap> Size(D);
 12
@@ -383,7 +383,7 @@ gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), [
 > [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (), (1, 3), 0],
 > [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, (), 0],
 > [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ()]]);;
-gap> S := Semigroup(S, rec(generic := true));;
+gap> S := Semigroup(S, rec(acting := false));;
 gap> D := DClass(S, S.4 * S.5);;
 gap> H := HClass(D, MultiplicativeZero(S));
 <Green's H-class: 0>
@@ -399,7 +399,7 @@ gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
 >  Transformation([2, 6, 6, 5, 1, 4]), Transformation([3, 2, 5, 5, 6, 4]),
 >  Transformation([3, 5, 3, 4, 1]), Transformation([4, 2, 3, 1, 4, 2]),
 >  Transformation([4, 4, 2, 6, 6, 3]), Transformation([5, 5, 5, 6, 5, 4]),
->  Transformation([6, 3, 1, 3, 1, 6])], rec(generic := true));;
+>  Transformation([6, 3, 1, 3, 1, 6])], rec(acting := false));;
 gap> R := RClass(S, S.3 * S.1 * S.8);;
 gap> Size(R);
 30
@@ -590,7 +590,7 @@ true
 gap> S := Semigroup([PartialPerm([1, 3, 4, 5, 6], [3, 1, 5, 7, 6]),
 >  PartialPerm([1, 2, 3, 4, 6, 7], [2, 5, 3, 7, 4, 1]),
 >  PartialPerm([1, 2, 4, 5, 6, 7], [3, 5, 7, 1, 6, 2]),
->  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(generic := true));;
+>  PartialPerm([1, 2, 4, 7], [3, 7, 6, 5])], rec(acting := false));;
 gap> DClassReps(S);
 [ <empty partial perm>, [3,1], [6,1], [6,5](1), [3,7](1), [1,3,5][6,7], 
   [6,7](5), <identity partial perm on [ 6 ]>, [2,7][6,5], [6,7](2), 
@@ -890,7 +890,7 @@ gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
 >  Transformation([2, 6, 6, 5, 1, 4]), Transformation([3, 2, 5, 5, 6, 4]),
 >  Transformation([3, 5, 3, 4, 1]), Transformation([4, 2, 3, 1, 4, 2]),
 >  Transformation([4, 4, 2, 6, 6, 3]), Transformation([5, 5, 5, 6, 5, 4]),
->  Transformation([6, 3, 1, 3, 1, 6])], rec(generic := true));;
+>  Transformation([6, 3, 1, 3, 1, 6])], rec(acting := false));;
 gap> GreensLClasses(S);
 [ <Green's L-class: Transformation( [ 2, 2, 2, 2, 2, 2 ] )>, 
   <Green's L-class: Transformation( [ 4, 4, 4, 4, 4, 4 ] )>, 
@@ -1010,7 +1010,7 @@ gap> LClassReps(S);
 
 # gren: R-classes/reps, 1/1
 gap> S := OrderEndomorphisms(5);;
-gap> S := Semigroup(S, rec(generic := true));
+gap> S := Semigroup(S, rec(acting := false));
 <transformation monoid of degree 5 with 5 generators>
 gap> RClasses(S);
 [ <Green's R-class: Transformation( [ 1, 1, 1, 1, 1 ] )>, 
@@ -1041,7 +1041,7 @@ gap> RClassReps(S);
 
 # gren: R-reps, 1/1
 gap> S := OrderEndomorphisms(5);;
-gap> S := Semigroup(S, rec(generic := true));;
+gap> S := Semigroup(S, rec(acting := false));;
 gap> D := DClass(S, S.2 * S.1);
 <Green's D-class: Transformation( [ 1, 1, 2, 3, 4 ] )>
 gap> RClassReps(D);
@@ -1084,7 +1084,7 @@ gap> S := Monoid(
 >  Transformation([4, 2, 4, 2, 2, 2, 2, 3, 2, 4]),
 >  Transformation([4, 2, 4, 2, 2, 2, 4, 3, 2, 2]),
 >  Transformation([5, 5, 5, 5, 5, 5, 5, 5, 5, 5])],
->  rec(generic := true));;
+>  rec(acting := false));;
 gap> HClassReps(S);
 [ Transformation( [ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 ] ), 
   Transformation( [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ] ), 
@@ -1252,7 +1252,7 @@ gap> HClasses(L);
 [ <Green's H-class: Transformation( [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 4 ] )> ]
 
 # gren: H-classes/reps, 2/3
-gap> S := Semigroup(FullTransformationMonoid(5), rec(generic := true));;
+gap> S := Semigroup(FullTransformationMonoid(5), rec(acting := false));;
 gap> x := Transformation([1, 1, 2, 3, 4]);;
 gap> L := LClass(S, x);;
 gap> GreensHClasses(L);
@@ -1320,7 +1320,7 @@ the argument should be a Green's R-, L-, or D-class,
 
 # gren: GroupHClass, IsGroupHClass, IsomorphismPermGroup, 1/1
 gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(4));;
-gap> S := Semigroup(S, rec(generic := true));;
+gap> S := Semigroup(S, rec(acting := false));;
 gap> D := DClass(S, S.2);
 <Green's D-class: Transformation( [ 1, 2, 1, 2, 1, 2, 3, 4, 1, 2, 5, 6, 9,
    10 ] )>
@@ -1355,7 +1355,7 @@ the H-class is not a group,
 
 # gren: PartialOrderOfDClasses, 1/2
 gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));;
-gap> S := Semigroup(S, rec(generic := true));;
+gap> S := Semigroup(S, rec(acting := false));;
 gap> PartialOrderOfDClasses(S);
 [ [ 1 ], [ 1, 2 ], [ 2, 3 ], [ 3, 4 ], [ 2, 3, 5 ], [ 3, 4, 5, 6 ], 
   [ 3, 4, 5, 7 ], [ 3, 4, 5, 8 ], [ 3, 4, 5, 6, 7, 8, 9 ], [ 2, 5, 10 ], 
@@ -1363,7 +1363,7 @@ gap> PartialOrderOfDClasses(S);
 
 # gren: Idempotents, 1/?
 gap> S := AsSemigroup(IsTransformationSemigroup, FullPBRMonoid(1));;
-gap> S := Semigroup(S, rec(generic := true));;
+gap> S := Semigroup(S, rec(acting := false));;
 gap> Idempotents(S);
 [ Transformation( [ 1, 8, 6, 1, 1, 6, 1, 8, 13, 8, 6, 6, 13, 8, 13, 13 ] ), 
   Transformation( [ 1, 2, 3, 2, 10, 6, 7, 8, 9, 10 ] ), 
@@ -1388,7 +1388,7 @@ gap> Idempotents(S);
 
 # gren: Idempotents, 2/2
 gap> S := Semigroup(FullTransformationMonoid(3),
-> rec(generic := true));;
+> rec(acting := false));;
 gap> RClasses(S);;
 gap> Idempotents(S);
 [ IdentityTransformation, Transformation( [ 1, 2, 1 ] ), 
@@ -1420,7 +1420,7 @@ gap> Idempotents(D);
 [  ]
 
 # gren: Idempotents, for a L-class, 1/3
-gap> S := Semigroup(FullTransformationMonoid(5), rec(generic := true));;
+gap> S := Semigroup(FullTransformationMonoid(5), rec(acting := false));;
 gap> x := Transformation([1, 1, 2, 3, 4]);;
 gap> L := LClass(S, x);;
 gap> Idempotents(L);
@@ -1492,7 +1492,7 @@ gap> NrIdempotents(D);
 0
 
 # gren: NrIdempotents, for a L-class, 1/3
-gap> S := Semigroup(FullTransformationMonoid(5), rec(generic := true));;
+gap> S := Semigroup(FullTransformationMonoid(5), rec(acting := false));;
 gap> x := Transformation([1, 1, 2, 3, 4]);;
 gap> L := LClass(S, x);;
 gap> NrIdempotents(L);
@@ -1569,7 +1569,7 @@ gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
 >  Transformation([2, 6, 6, 5, 1, 4]), Transformation([3, 2, 5, 5, 6, 4]),
 >  Transformation([3, 5, 3, 4, 1]), Transformation([4, 2, 3, 1, 4, 2]),
 >  Transformation([4, 4, 2, 6, 6, 3]), Transformation([5, 5, 5, 6, 5, 4]),
->  Transformation([6, 3, 1, 3, 1, 6])], rec(generic := true));;
+>  Transformation([6, 3, 1, 3, 1, 6])], rec(acting := false));;
 gap> NrRegularDClasses(S);
 6
 

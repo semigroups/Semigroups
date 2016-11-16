@@ -11,8 +11,8 @@
 # This file contains methods for ideals of acting semigroups, and it requires
 # some cleaning up.
 
-# Attributes with better methods than the generic ones for
-# IsActingSemigroup.
+# Attributes with better methods than the ones for
+# IsActingSemigroup without IsSemigroupIdeal.
 
 InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
 [IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],

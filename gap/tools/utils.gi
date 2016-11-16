@@ -219,7 +219,7 @@ SEMIGROUPS.StopTest := function(file)
 end;
 
 SEMIGROUPS.Test := function(arg)
-  local file, opts, generic, split, print_file, string_file, enabled, disabled;
+  local file, opts, acting, split, print_file, string_file, enabled, disabled;
 
   if Length(arg) = 0 then
     ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
@@ -239,7 +239,7 @@ SEMIGROUPS.Test := function(arg)
     opts.silent := true;
   fi;
 
-  generic := SEMIGROUPS.DefaultOptionsRec.generic;
+  acting := SEMIGROUPS.DefaultOptionsRec.acting;
   split := SplitString(file, "/");
   print_file := JoinStringsWithSeparator(split{
                                          [Length(split) - 2 .. Length(split)]},
@@ -250,15 +250,15 @@ SEMIGROUPS.Test := function(arg)
     return true;
   fi;
 
-  Print("Testing file: ", print_file, " (generic := false)\n");
-  SEMIGROUPS.DefaultOptionsRec.generic := false;
+  Print("Testing file: ", print_file, " (acting := true)\n");
+  SEMIGROUPS.DefaultOptionsRec.acting := true;
   enabled := Test(file, SEMIGROUPS.TestRec);
 
-  Print("Testing file: ", print_file, " (generic := true)\n");
-  SEMIGROUPS.DefaultOptionsRec.generic := true;
+  Print("Testing file: ", print_file, " (acting := false)\n");
+  SEMIGROUPS.DefaultOptionsRec.acting := false;
   disabled := Test(file, SEMIGROUPS.TestRec);
 
-  SEMIGROUPS.DefaultOptionsRec.generic := generic;
+  SEMIGROUPS.DefaultOptionsRec.acting := acting;
   return enabled and disabled;
 end;
 
@@ -336,7 +336,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
 end;
 
 SEMIGROUPS.TestManualExamples := function(arg)
-  local exclude, ex, omit, width, generic, passed, str;
+  local exclude, ex, omit, width, acting, passed, str;
 
   # TODO add extreme/standard tests for those examples below where it makes
   # sense.
@@ -372,15 +372,15 @@ SEMIGROUPS.TestManualExamples := function(arg)
   fi;
 
   width := SizeScreen()[1] - 3;
-  generic := SEMIGROUPS.DefaultOptionsRec.generic;
+  acting := SEMIGROUPS.DefaultOptionsRec.acting;
 
-  SEMIGROUPS.DefaultOptionsRec.generic := false;
+  SEMIGROUPS.DefaultOptionsRec.acting := true;
   SEMIGROUPS.StartTest();
   passed := SEMIGROUPS.RunExamples(ex, []);
   SEMIGROUPS.StopTest("");
   #TODO make SEMIGROUPS.StopTest accept no args, or 1 arg
 
-  SEMIGROUPS.DefaultOptionsRec.generic := generic;
+  SEMIGROUPS.DefaultOptionsRec.acting := acting;
   return passed;
 end;
 

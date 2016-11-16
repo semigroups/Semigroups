@@ -43,7 +43,7 @@ gap> x := Matrix(GF(2^2),
 >  [0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)],
 >  [0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)],
 >  [0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)]]);;
-gap> S := Monoid(x, rec(generic := true));
+gap> S := Monoid(x, rec(acting := false));
 <monoid of 6x6 matrices over GF(2^2) with 1 generator>
 gap> HasIsFinite(S);
 true

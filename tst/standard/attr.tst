@@ -61,7 +61,7 @@ gap> ForAny(s, x -> IsMultiplicativeZero(s, x));
 false
 
 # Other transformation semigroups
-gap> s := Semigroup(FullTransformationMonoid(10), rec(generic := false));
+gap> s := Semigroup(FullTransformationMonoid(10), rec(acting := true));
 <transformation monoid of degree 10 with 3 generators>
 gap> MultiplicativeZero(s);
 fail
@@ -296,14 +296,14 @@ false
 
 #T# AttributesTest5:
 # MultiplicativeZero where MinimalDClass is known
-gap> s := Semigroup(FullTransformationMonoid(10), rec(generic := false));
+gap> s := Semigroup(FullTransformationMonoid(10), rec(acting := true));
 <transformation monoid of degree 10 with 3 generators>
 gap> MinimalDClass(s);;
 gap> HasSize(last);
 false
 gap> MultiplicativeZero(s);
 fail
-gap> s := Semigroup(s, rec(generic := false));;
+gap> s := Semigroup(s, rec(acting := true));;
 gap> HasMinimalDClass(s);
 false
 gap> Size(MinimalDClass(s));
@@ -322,7 +322,7 @@ gap> HasMinimalDClass(s);
 false
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
-gap> s := Semigroup(gens, rec(generic := false));;
+gap> s := Semigroup(gens, rec(acting := true));;
 gap> MinimalDClass(s);
 <Green's D-class: Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
    4 ] )>
@@ -330,7 +330,7 @@ gap> HasSize(MinimalDClass(s));
 false
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
-gap> s := Semigroup(gens, rec(generic := false));;
+gap> s := Semigroup(gens, rec(acting := true));;
 gap> Size(MinimalDClass(s));
 1
 gap> MultiplicativeZero(s);
@@ -413,7 +413,7 @@ gap> IrredundantGeneratingSubset([RandomTransformation(10)]);;
 
 #T# attr: IrredundantGeneratingSubset: for a set with one element, 2
 gap> S := Monoid([Transformation([1, 1]), Transformation([2, 1]),
->  Transformation([2, 2])], rec(generic := false));
+>  Transformation([2, 2])], rec(acting := true));
 <transformation monoid of degree 2 with 3 generators>
 gap> Size(IrredundantGeneratingSubset(S));
 2
@@ -1197,7 +1197,7 @@ gap> Size(Monoid(x));
 
 # Test for Issue 218
 gap> S := Semigroup(PlanarPartitionMonoid(5), AsBipartition((1,2,3,4,5)), 
-> rec(generic := false));;
+> rec(acting := true));;
 gap> D := DClasses(S)[2];;
 gap> x := Bipartition([[1, -1], [2, -2], [3, -3], [4, -4, -5], [5]]);;
 gap> x in D;

@@ -245,7 +245,7 @@ function(gens, opts)
 
   filts := IsSemigroup and IsAttributeStoringRep;
 
-  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
+  if opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
     if opts.regular then
       filts := filts and IsRegularSemigroup;
@@ -332,7 +332,7 @@ function(gens, opts)
 
   filts := IsMonoid and IsAttributeStoringRep;
 
-  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
+  if opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
     if opts.regular then
       filts := filts and IsRegularSemigroup;
@@ -425,7 +425,7 @@ function(gens, opts)
 
   filts := IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
 
-  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
+  if opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
   elif IsGeneratorsOfEnumerableSemigroup(gens) then 
     filts := filts and IsEnumerableSemigroupRep;
@@ -512,7 +512,7 @@ function(gens, opts)
 
   filts := IsMagmaWithOne and IsInverseSemigroup and IsAttributeStoringRep;
 
-  if not opts.generic and IsGeneratorsOfActingSemigroup(gens) then
+  if opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
   elif IsGeneratorsOfEnumerableSemigroup(gens) then 
     filts := filts and IsEnumerableSemigroupRep;

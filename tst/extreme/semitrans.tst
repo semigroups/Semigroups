@@ -23,7 +23,7 @@ gap> nr := 0;;
 >   nr := 0;
 >   last_collect := 0;;
 >   for gens in iter do
->     S := Semigroup(gens, rec(generic := false));
+>     S := Semigroup(gens, rec(acting := true));
 >     if LargestElementSemigroup(S) <> Maximum(AsList(S)) then
 >       nr := nr + 1;
 >     fi;

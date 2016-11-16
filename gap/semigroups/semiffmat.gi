@@ -207,7 +207,7 @@ end);
 
 InstallMethod(PrintString, "for general linear monoid",
 [IsGeneralLinearMonoid],
-5, # to beat the generic method for monoids with generators
+5, # to beat the method for monoids with generators
 function(M)
   local rep, str;
 
@@ -227,7 +227,7 @@ end);
 
 InstallMethod(PrintObj, "for general linear monoid",
 [IsGeneralLinearMonoid],
-7, # to beat the generic method for monoids with generators
+7, # to beat the method for monoids with generators
 function(M)
   Print(PrintString(M));
 end);

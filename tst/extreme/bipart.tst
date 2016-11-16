@@ -140,7 +140,7 @@ gap> G := GroupOfUnits(PartitionMonoid(5));
 gap> ForAll(G, x -> AsBipartition(AsPermutation(x), 5) = x);
 true
 
-#T# BipartitionTest13: IsomorphismBipartitionSemigroup for a generic semigroup
+# Test IsomorphismBipartitionSemigroup for a enumerable semigroup
 gap> S := Semigroup(
 > Bipartition([[1, 2, 3, -3], [4, -4, -5], [5, -1], [-2]]),
 > Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]),

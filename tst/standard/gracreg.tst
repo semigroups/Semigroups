@@ -18,7 +18,7 @@ gap> SEMIGROUPS.StartTest();
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> L := LClass(S, S.1);;
 gap> HasIsRegularClass(L) and IsRegularClass(L);
 true
@@ -29,7 +29,7 @@ gap> RhoCosets(L);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> L := LClass(S, S.1);;
 gap> HasIsRegularClass(L) and IsRegularClass(L);
 true
@@ -40,7 +40,7 @@ gap> LambdaCosets(L);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> D := DClass(S, S.1);;
 gap> SchutzenbergerGroup(D);
 Group([ (1,2), (1,3,2) ])
@@ -49,7 +49,7 @@ Group([ (1,2), (1,3,2) ])
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> H := HClass(S, S.1);;
 gap> SchutzenbergerGroup(H);
 Group([ (1,2), (1,3,2) ])
@@ -67,7 +67,7 @@ gap> Size(D);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> DClassReps(S);
 [ Transformation( [ 1, 2, 3, 3, 1 ] ), Transformation( [ 2, 4, 3, 5, 5 ] ), 
   Transformation( [ 1, 1, 2, 2, 1 ] ), Transformation( [ 5, 5, 5, 5, 5 ] ) ]
@@ -91,7 +91,7 @@ gap> RClassReps(S);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> GreensDClasses(S);
 [ <Green's D-class: Transformation( [ 1, 2, 3, 3, 1 ] )>, 
   <Green's D-class: Transformation( [ 2, 4, 3, 5, 5 ] )>, 
@@ -131,7 +131,7 @@ gap> GreensRClasses(S);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> IsActingSemigroup(S);
 true
 gap> HasGeneratorsOfSemigroup(S);
@@ -149,7 +149,7 @@ gap> NrHClasses(S);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> D := DClass(S, S.3);;
 gap> NrRClasses(D);
 2
@@ -162,7 +162,7 @@ true
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> D := DClass(S, S.2);;
 gap> NrHClasses(D);
 4
@@ -175,7 +175,7 @@ gap> NrHClasses(L);
 
 # gracreg: PartialOrderOfDClasses for a regular acting semigroup w gens 1
 gap> S := FullTransformationMonoid(4);;
-gap> S := RegularSemigroup(S, rec(generic := false));;
+gap> S := RegularSemigroup(S, rec(acting := true));;
 gap> OutNeighbours(DigraphReflexiveTransitiveReduction(Digraph(
 > PartialOrderOfDClasses(S))));
 [ [ 2 ], [ 3 ], [ 4 ], [  ] ]
@@ -187,7 +187,7 @@ gap> NrIdempotents(S);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> NrIdempotents(S);
 108
 
@@ -195,7 +195,7 @@ gap> NrIdempotents(S);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> NrRegularDClasses(S) = NrDClasses(S);
 true
 gap> NrRegularDClasses(S);
@@ -205,7 +205,7 @@ gap> NrRegularDClasses(S);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> IteratorOfDClasses(S);
 <iterator of D-classes>
 gap> GreensDClasses(S);;
@@ -221,7 +221,7 @@ gap> IteratorOfLClasses(S);
 gap> S := RegularSemigroup([
 > Transformation([1, 2, 3, 3, 1]),
 > Transformation([2, 4, 3, 5, 5]),
-> Transformation([5, 1, 2, 5, 3])], rec(generic := false));;
+> Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> e := EnumeratorOfRClasses(S);
 <enumerator of R-classes of <regular transformation semigroup of degree 5 
  with 3 generators>>

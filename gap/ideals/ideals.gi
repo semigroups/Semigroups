@@ -415,7 +415,7 @@ function(S, gens, opts)
 
   filts := IsMagmaIdeal and IsAttributeStoringRep;
 
-  if (not opts.generic)
+  if opts.acting
       and (IsActingSemigroup(S) or IsGeneratorsOfActingSemigroup(gens)) then
     filts := filts and IsActingSemigroup;
   elif IsEnumerableSemigroupRep(S) 
@@ -463,7 +463,7 @@ function(S, gens, opts)
   SetParent(I, S);
   SetGeneratorsOfMagmaIdeal(I, gens);
 
-  if opts.generic then # to keep the craziness in the library happy!
+  if not opts.acting then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
   elif IsActingSemigroup(I)
       and not (HasIsRegularSemigroup(I) and IsRegularSemigroup(I)) then

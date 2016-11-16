@@ -21,7 +21,7 @@ gap> S := PartialTransformationMonoid(7);
 <regular transformation monoid of degree 8 with 4 generators>
 gap> Size(S);
 2097152
-gap> S := Semigroup(S, rec(generic := true));
+gap> S := Semigroup(S, rec(acting := false));
 <transformation monoid of degree 8 with 4 generators>
 gap> Size(S);
 2097152

@@ -19,7 +19,7 @@ gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
 >  Bipartition([[1, -4], [2, -1], [3, 5, -3, -5], [4, -2]])],
->  rec(generic := false));;
+>  rec(acting := true));;
 gap> x := Bipartition([[1, -2], [2, -4], [3, 4, 5, -1, -3, -5]]);;
 gap> L := LClass(S, x);
 <Green's L-class: <block bijection: [ 1, -2 ], [ 2, -4 ], 
@@ -39,7 +39,7 @@ gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
 >  Bipartition([[1, -4], [2, -1], [3, 5, -3, -5], [4, -2]])],
->  rec(generic := false));;
+>  rec(acting := true));;
 gap> x := Bipartition([[1, -1], [2, -4], [3, -2], [4, 5, -3, -5]]);;
 gap> D := DClassOfLClass(LClass(S, x));
 <Green's D-class: <block bijection: [ 1, 5, -1, -5 ], [ 2, -2 ], [ 3, -3 ], 
@@ -68,7 +68,7 @@ gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
 >  Bipartition([[1, -4], [2, -1], [3, 5, -3, -5], [4, -2]])],
->  rec(generic := false));;
+>  rec(acting := true));;
 gap> x := Bipartition([[1, -4], [2, 3, 5, -2, -3, -5], [4, -1]]);;
 gap> L := LClassOfHClass(HClass(S, x));
 <Green's L-class: <block bijection: [ 1, -1 ], [ 2, -4 ], 
@@ -81,7 +81,7 @@ gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 > PartialPerm([1, 2, 4], [4, 6, 3]),
 > PartialPerm([1, 2, 3, 5], [6, 4, 5, 1])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> x := PartialPerm([4, 1, 2, 0]);;
 gap> GreensHClassOfElement(DClass(S, x), x);
 <Green's H-class: [3,2,1,4]>
@@ -95,7 +95,7 @@ gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
 > PartialPerm([1, 2, 4], [4, 6, 3]),
 > PartialPerm([1, 2, 3, 5], [6, 4, 5, 1])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> x := PartialPerm([4, 1, 2, 0]);;
 gap> Size(DClass(S, x));
 36
@@ -107,7 +107,7 @@ gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
 >  Bipartition([[1, -4], [2, -1], [3, 5, -3, -5], [4, -2]])],
->  rec(generic := false));;
+>  rec(acting := true));;
 gap> x := Bipartition([[1, -4], [2, 3, 5, -2, -3, -5], [4, -1]]);;
 gap> D := DClass(S, x);;
 gap> PartialPerm([]) in D;
@@ -150,7 +150,7 @@ gap> S := InverseSemigroup([
 >  Bipartition([[1, -4], [2, -2], [3, -3], [4, 5, -1, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, 5, -4, -5], [4, -2]]),
 >  Bipartition([[1, -4], [2, -1], [3, 5, -3, -5], [4, -2]])],
->  rec(generic := false));;
+>  rec(acting := true));;
 gap> x := Bipartition([[1, -4], [2, 3, 5, -2, -3, -5], [4, -1]]);;
 gap> L := LClass(S, x);;
 gap> PartialPerm([]) in L;
@@ -171,7 +171,7 @@ gap> S := InverseSemigroup([PartialPerm([1, 3], [4, 3]),
 >   PartialPerm([1, 2, 3], [4, 1, 2]),
 >   PartialPerm([1, 2, 4], [4, 5, 1]),
 >   PartialPerm([1, 3, 4], [5, 2, 1])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> x := PartialPerm([1, 2, 4], [1, 2, 4]);;
 gap> L := LClass(S, x);;
 gap> PartialPerm([4, 5, 6], [4, 2, 1]) in L;
@@ -209,7 +209,7 @@ gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 5, 6], [1, 3, 6, 2, 7]),
 > PartialPerm([1, 3, 4, 6, 7], [1, 6, 3, 5, 4]),
 > PartialPerm([1, 2, 5, 6, 7], [6, 7, 3, 2, 1])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> DClassReps(S);
 [ <identity partial perm on [ 1, 2, 6, 7 ]>, 
   <identity partial perm on [ 1, 2, 3, 6, 7 ]>, 
@@ -245,7 +245,7 @@ gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 5, 6], [1, 3, 6, 2, 7]),
 > PartialPerm([1, 3, 4, 6, 7], [1, 6, 3, 5, 4]),
 > PartialPerm([1, 2, 5, 6, 7], [6, 7, 3, 2, 1])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> x := PartialPerm([1, 3, 4, 5, 6], [1, 3, 4, 5, 6]);;
 gap> D := DClass(S, x);;
 gap> RClassReps(D);
@@ -262,7 +262,7 @@ gap> S := InverseSemigroup([
 > PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 4], [1, 3]),
 > PartialPerm([1, 3, 5], [4, 3, 1])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> GreensLClasses(S);
 [ <Green's L-class: <identity partial perm on [ 2, 3 ]>>, 
   <Green's L-class: [3,1](2)>, 
@@ -313,7 +313,7 @@ gap> S := InverseSemigroup([
 > PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 4], [1, 3]),
 > PartialPerm([1, 3, 5], [4, 3, 1])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> NrRClasses(S);
 15
 gap> NrLClasses(S);
@@ -326,7 +326,7 @@ gap> S := InverseSemigroup([
 > PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 4], [1, 3]),
 > PartialPerm([1, 3, 5], [4, 3, 1])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> x := PartialPerm([1, 3, 4], [5, 3, 1]);;
 gap> D := DClass(S, x);;
 gap> NrRClasses(D);
@@ -347,7 +347,7 @@ gap> S := InverseSemigroup([
 > PartialPerm([1, 2], [3, 2]),
 > PartialPerm([1, 4], [1, 3]),
 > PartialPerm([1, 3, 5], [4, 3, 1])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> GroupHClassOfGreensDClass(DClass(S, PartialPerm([])));
 <Green's H-class: <empty partial perm>>
 gap> GroupHClassOfGreensDClass(DClass(S, PartialPerm([3, 5], [4, 1])));
@@ -355,7 +355,7 @@ gap> GroupHClassOfGreensDClass(DClass(S, PartialPerm([3, 5], [4, 1])));
 
 #T# gracinv: PartialOrderOfDClasses, for an inverse op acting semigroup
 gap> S := SymmetricInverseSemigroup(5);;
-gap> S := InverseSemigroup(S, rec(generic := false));;
+gap> S := InverseSemigroup(S, rec(acting := true));;
 gap> OutNeighbours(DigraphReflexiveTransitiveReduction(Digraph(
 > PartialOrderOfDClasses(S))));
 [ [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [  ] ]
@@ -366,7 +366,7 @@ gap> S := InverseSemigroup([
 >   Bipartition([[1, -4], [2, -1], [3, -2], [4, 5, 6, -3, -5, -6]]),
 >   Bipartition([[1, -4], [2, -5], [3, 5, 6, -2, -3, -6], [4, -1]]),
 >   Bipartition([[1, -5], [2, 5, 6, -3, -4, -6], [3, -2], [4, -1]])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> x := Bipartition([[1, 2, 5, 6, -2, -4, -5, -6], [3, -3], [4, -1]]);;
 gap> NrIdempotents(HClass(S, x));
 0
@@ -395,7 +395,7 @@ gap> Idempotents(DClass(S, x));
 
 #T# gracinv: (Nr)Idempotents, for an inverse op acting semigroup
 gap> S := InverseSemigroup(SymmetricInverseSemigroup(5),
-> rec(generic := false));;
+> rec(acting := true));;
 gap> Idempotents(S, 3);
 [ <identity partial perm on [ 1, 2, 3 ]>, 
   <identity partial perm on [ 3, 4, 5 ]>, 
@@ -414,7 +414,7 @@ gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3], [2, 5, 3]),
 >  PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 >  PartialPerm([1, 3, 5], [5, 1, 3])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> NrIdempotents(S);
 25
 gap> Idempotents(S);
@@ -449,7 +449,7 @@ gap> S := InverseSemigroup([
 > Bipartition([[1, -4], [2, -1], [3, -2], [4, 5, 6, -3, -5, -6]]),
 > Bipartition([[1, -4], [2, -5], [3, 5, 6, -2, -3, -6], [4, -1]]),
 > Bipartition([[1, -5], [2, 5, 6, -3, -4, -6], [3, -2], [4, -1]])],
-> rec(generic := false));;
+> rec(acting := true));;
 gap> e := EnumeratorOfRClasses(S);
 <enumerator of R-classes of <inverse block bijection semigroup of degree 6 
  with 4 generators>>

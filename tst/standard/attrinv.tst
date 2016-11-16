@@ -109,7 +109,7 @@ gap> gens := [
 >  PartialPerm([1, 2, 3, 4], [5, 4, 2, 1]),
 >  PartialPerm([1, 2, 4, 5], [3, 5, 1, 2])],
 > [PartialPerm([1, 2, 3, 5], [4, 1, 2, 3])]];;
-gap> S := List(gens, x -> InverseSemigroup(x, rec(generic := false)));
+gap> S := List(gens, x -> InverseSemigroup(x, rec(acting := true)));
 [ <inverse partial perm semigroup of rank 9 with 1 generator>, 
   <inverse partial perm semigroup of rank 8 with 3 generators>, 
   <inverse partial perm semigroup of rank 7 with 4 generators>, 

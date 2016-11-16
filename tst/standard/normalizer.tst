@@ -7,7 +7,7 @@
 ##
 #############################################################################
 ##
-## TODO: remove generic := false from all of these!
+## TODO: remove acting := true from all of these!
 gap> START_TEST("Semigroups package: standard/normalizer.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -16,7 +16,7 @@ gap> SEMIGROUPS.StartTest();
 
 #T# normalizer: Normalizer, 1/3
 gap> S := Semigroup([Transformation([1, 3, 4, 1]),
-> Transformation([3, 1, 1, 3])], rec(generic := false));;
+> Transformation([3, 1, 1, 3])], rec(acting := true));;
 gap> Normalizer(S);
 Group(())
 gap> Normalizer(S, rec());
@@ -32,7 +32,7 @@ Group(())
 #T# normalizer: Normalizer, 2/3
 gap> S := Semigroup([
 > PartialPerm([1, 2, 3], [2, 4, 1]),
-> PartialPerm([1, 3, 4], [3, 4, 1])], rec(generic := false));;
+> PartialPerm([1, 3, 4], [3, 4, 1])], rec(acting := true));;
 gap> Normalizer(S);
 Group(())
 gap> Normalizer(S, rec());
@@ -40,7 +40,7 @@ Group(())
 
 #T# normalizer: Normalizer, 3/3
 gap> S := Semigroup([Bipartition([[1, 2, -1], [3, -2], [4, -3, -4]]),
-> Bipartition([[1, 4, -3, -4], [2, 3, -1], [-2]])], rec(generic := false));;
+> Bipartition([[1, 4, -3, -4], [2, 3, -1], [-2]])], rec(acting := true));;
 gap> Normalizer(S);
 Group(())
 gap> Normalizer(S, rec());
@@ -65,7 +65,7 @@ rec( lambdastab := true, rhostab := false )
 
 #T# normalizer: SEMIGROUPS.LambdaOrbForNormalizer, 1/1
 gap> S := Semigroup(Transformation([1, 1, 1]), AsTransformation((1, 2, 3)),
-> rec(generic := false));
+> rec(acting := true));
 <transformation semigroup of degree 3 with 2 generators>
 gap> SEMIGROUPS.LambdaOrbForNormalizer(Group((1, 2, 3)), S,
 > function(x, y)
@@ -99,7 +99,7 @@ Error, Semigroups: SEMIGROUPS.DeterministicNormalizer: usage,
 the third argument must be a record,
 
 #T# normalizer: SEMIGROUPS.DeterministicNormalizer, works, 1/1
-gap> S := Semigroup(FullTransformationMonoid(3), rec(generic := false));;
+gap> S := Semigroup(FullTransformationMonoid(3), rec(acting := true));;
 gap> SEMIGROUPS.DeterministicNormalizer(SymmetricGroup(3), S, rec());
 Group([ (2,3), (1,2,3) ])
 gap> SEMIGROUPS.DeterministicNormalizer(SymmetricGroup(3), S,
@@ -135,7 +135,7 @@ Error, Semigroups: SEMIGROUPS.NonDeterministicNormalizer: usage,
 the third arg must be a record,
 
 #T# normalizer: SEMIGROUPS.NonDeterministicNormalizer, trans, 1/1
-gap> S := Semigroup(FullTransformationMonoid(3), rec(generic := false));;
+gap> S := Semigroup(FullTransformationMonoid(3), rec(acting := true));;
 gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S, rec());
 Group([ (1,3,2), (1,3) ])
 gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S,
@@ -146,7 +146,7 @@ gap> SEMIGROUPS.NonDeterministicNormalizer(Group(()), S,
 Group(())
 
 #T# normalizer: SEMIGROUPS.NonDeterministicNormalizer, pperm, 1/1
-gap> S := Semigroup(SymmetricInverseMonoid(3), rec(generic := false));;
+gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;
 gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S, rec());
 Group([ (1,3,2), (1,3) ])
 gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S,
@@ -159,13 +159,13 @@ gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S,
 > rec(rhostab := true, lambdastab := false));
 Group([ (1,2,3), (1,2) ])
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([2]),
-> PartialPerm([3]), rec(generic := false));;
+> PartialPerm([3]), rec(acting := true));;
 gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S, rec(rhostab :=
 > true, lambdastab := false));
 Group([ (2,3) ])
 
 #T# normalizer: SEMIGROUPS.NonDeterministicNormalizer, pperm, 1/1
-gap> S := Semigroup(PartitionMonoid(3), rec(generic := false));;
+gap> S := Semigroup(PartitionMonoid(3), rec(acting := true));;
 gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S, rec());
 Group([ (1,3,2), (2,3) ])
 gap> SEMIGROUPS.NonDeterministicNormalizer(SymmetricGroup(3), S,

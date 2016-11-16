@@ -57,7 +57,7 @@ gap> S := InverseSemigroup(
 gap> x := Bipartition([
 > [1, 3, 4, 5, 7, 8, 9, 10, -1, -2, -5, -6, -7, -8, -9, -10], [2, -3],
 > [6, -4]]);;
-gap> I := SemigroupIdeal(S, x, rec(generic := false));
+gap> I := SemigroupIdeal(S, x, rec(acting := true));
 <inverse bipartition semigroup ideal of degree 10 with 1 generator>
 gap> NrDClasses(I);
 3
@@ -67,9 +67,9 @@ true
 #T# SemigroupData, for an acting semigroup ideal, 1
 gap> S := Semigroup(Transformation([4, 3, 9, 7, 7, 8, 6, 8, 10, 4]),
 >                   Transformation([6, 1, 6, 3, 1, 3, 6, 9, 9, 3]),
->                   rec(generic := false));;
+>                   rec(acting := true));;
 gap> x := Transformation([6, 10, 4, 8, 8, 8, 8, 8, 7, 6]);;
-gap> I := SemigroupIdeal(S, x, rec(generic := false));;
+gap> I := SemigroupIdeal(S, x, rec(acting := true));;
 gap> SemigroupData(I);
 <closed semigroup data with 33 reps, 26 lambda-values, 33 rho-values>
 
@@ -77,7 +77,7 @@ gap> SemigroupData(I);
 gap> S := MotzkinMonoid(5);
 <regular bipartition *-monoid of degree 5 with 10 generators>
 gap> x := Bipartition([[1, -1], [2, -3], [3, -4], [4], [5, -5], [-2]]);;
-gap> I := SemigroupIdeal(S, x, rec(generic := false));;
+gap> I := SemigroupIdeal(S, x, rec(acting := true));;
 gap> SemigroupData(I);
 <open semigroup ideal data with 0 reps, 0 lambda-values, 0 rho-values>
 
@@ -87,7 +87,7 @@ gap> I := SemigroupIdeal(Semigroup(
 >     Transformation([4, 4, 3, 3, 3]), Transformation([4, 5, 5, 1, 4]),
 >     Transformation([5, 5, 2, 1, 5])]),
 >    [Transformation([2, 4, 2, 3, 3]), Transformation([4, 5, 5, 1, 4])],
->   rec(generic := false));
+>   rec(acting := true));
 <non-regular transformation semigroup ideal of degree 5 with 2 generators>
 gap> SemigroupData(I);
 <closed semigroup data with 12 reps, 17 lambda-values, 12 rho-values>
@@ -257,7 +257,7 @@ gap> S := Semigroup(Transformation([1, 3, 4, 1, 3]),
 >                   Transformation([5, 5, 1, 1, 3]));
 <transformation semigroup of degree 5 with 2 generators>
 gap> x := Transformation([1, 3, 4, 1, 3]);;
-gap> I := SemigroupIdeal(S, x, rec(generic := false));;
+gap> I := SemigroupIdeal(S, x, rec(acting := true));;
 gap> SemigroupIdealData(I);
 <closed semigroup ideal data with 10 reps, 10 lambda-values, 8 rho-values>
 

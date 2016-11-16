@@ -247,24 +247,24 @@ gap> NrRClasses(s); NrLClasses(s); NrDClasses(s); NrIdempotents(s);
 9
 22
 
-#T# ClosureSemigroup: testing for generic algorithm performance, 1/?
+#T# ClosureSemigroup: testing for enumerable algorithm performance, 1/?
 gap> S := InverseSemigroup(
 >  PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [2, 3, 4, 5, 6, 7, 1, 8]),
 >  PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 3, 4, 5, 7, 8, 6]),
 >  PartialPerm([1, 2, 3, 5, 6, 7, 8], [5, 6, 7, 1, 2, 3, 4]),
 >  PartialPerm([1, 2, 3, 4, 5, 6, 8], [2, 3, 4, 5, 6, 7, 1]),
->  rec(generic := true));;
+>  rec(acting := false));;
 gap> Size(S);
 1421569
 gap> T := ClosureSemigroup(S, AsPartialPerm((1, 2), 8));
 <partial perm semigroup of rank 8 with 7 generators>
 gap> Size(T);
 1441729
-gap> GenericSemigroupData(T);
+gap> enumerableSemigroupData(T);
 <closed semigroup data with 1441729 elements, 
 1241401 relations, max word length 17>
 
-#T# ClosureSemigroup: testing for generic algorithm performance, 2/?
+#T# ClosureSemigroup: testing for enumerable algorithm performance, 2/?
 gap> gens :=
 > [PBR([[], [-1]], [[2], [-2, 1]]),
 >   PBR([[-2, 1], [-1]], [[2], []]),
@@ -282,7 +282,7 @@ gap> for i in [1 .. 10] do
 > od;
 gap> Size(S);
 65536
-gap> GenericSemigroupData(S);
+gap> enumerableSemigroupData(S);
 <closed semigroup data with 65536 elements, 45409 relations, max word length 
 15>
 
@@ -337,7 +337,7 @@ gap> a;
 [ 7, 498, 743, 3977, 11229, 11817, 11817, 11915, 13679, 13826, 14414, 15002, 
   15198, 16766, 17354 ]
 
-#T# testing generic closure semigroup for bipartitions 
+#T# testing enumerable closure semigroup for bipartitions 
 gap> gens := [Bipartition([[1, 4, -1], [2, -3], [3, 6, -5],
 >   [5, -2, -4, -6]]),
 > Bipartition([[1, -1], [2, 5, 6, -2], [3, -4], [4, -3, -6],

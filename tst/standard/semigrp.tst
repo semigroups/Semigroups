@@ -173,7 +173,7 @@ gap> Size(S);
 
 # SEMIGROUPS.AddGenerators 3
 gap> S := Semigroup(Transformation([2, 4, 3, 4]),
->                   Transformation([3, 3, 2, 3, 3]), rec(generic := true));;
+>                   Transformation([3, 3, 2, 3, 3]), rec(acting := false));;
 gap> S := SEMIGROUPS.AddGenerators(S, 
 >                                 [ConstantTransformation(7, 7)], 
 >                                 SEMIGROUPS.OptionsRec(S));
@@ -185,7 +185,7 @@ gap> Size(S);
 
 # SEMIGROUPS.AddGenerators 3
 gap> S := Semigroup(Transformation([2, 4, 3, 4]),
->                   Transformation([3, 3, 2, 3, 3]), rec(generic := true));;
+>                   Transformation([3, 3, 2, 3, 3]), rec(acting := false));;
 gap> S := SEMIGROUPS.AddGenerators(S, 
 >                                 [Transformation([5, 5, 5, 4, 4])],
 >                                 SEMIGROUPS.OptionsRec(S));
@@ -208,7 +208,7 @@ gap> T = S;
 true
 
 # SEMIGROUPS.AddGenerators 5
-gap> S := Semigroup(PartialPerm([1]), rec(generic := true));
+gap> S := Semigroup(PartialPerm([1]), rec(acting := false));
 <trivial partial perm group of rank 1 with 1 generator>
 gap> S := SEMIGROUPS.AddGenerators(S, 
 >                                  [PartialPerm([3])],
@@ -338,13 +338,13 @@ gap> SetInfoLevel(InfoSemigroups, 0);
 # Test SemigroupByGenerators 5
 gap> S := Semigroup(IdentityTransformation, Transformation([2, 1]),
 > Transformation([2, 1]),
-> rec(generic := true, small := true));
+> rec(acting := false, small := true));
 <commutative transformation monoid of degree 2 with 1 generator>
 
 # Test SemigroupByGenerators 6
 gap> S := Semigroup(BooleanMat([[1, 0], [0, 1]]), 
 > AsSet(FullBooleanMatMonoid(2)), 
-> rec(generic := true, small := true));
+> rec(acting := false, small := true));
 <monoid of 2x2 boolean matrices with 4 generators>
 
 # Test SemigroupByGenerators 7
@@ -420,13 +420,13 @@ gap> SetInfoLevel(InfoSemigroups, 0);
 gap> S := Monoid(IdentityTransformation, Transformation([2, 1]));
 <commutative transformation monoid of degree 2 with 1 generator>
 gap> S := Monoid(IdentityTransformation, Transformation([2, 1]), 
-> rec(generic := true));
+> rec(acting := false));
 <commutative transformation monoid of degree 2 with 1 generator>
 
 # Test MonoidByGenerators 7
 gap> S := Monoid(IdentityTransformation, Transformation([2, 1]),
 > Transformation([2, 1]),
-> rec(generic := true, small := true));
+> rec(acting := false, small := true));
 <commutative transformation monoid of degree 2 with 1 generator>
 
 # Test MonoidByGenerators 8

@@ -493,7 +493,7 @@ function(filter, n)
     Add(gens, Transformation(Concatenation(im, NextIterator(iter))));
   od;
 
-  out := Semigroup(gens, rec(generic := true));
+  out := Semigroup(gens, rec(acting := false));
   SetMultiplicativeZero(out, ConstantTransformation(deg, 1));
 
   return out;
@@ -644,7 +644,7 @@ function(arg)
     Add(gens, Transformation(Concatenation(im, NextIterator(iter))));
   od;
 
-  return Semigroup(gens, rec(generic := true));
+  return Semigroup(gens, rec(acting := false));
 end);
 
 # Right zero semigroup: main method
@@ -709,5 +709,5 @@ function(arg)
   for i in [1 .. n] do
     Add(gens, TransformationByImageAndKernel(NextIterator(iter), ker));
   od;
-  return Semigroup(gens, rec(generic := true));
+  return Semigroup(gens, rec(acting := false));
 end);

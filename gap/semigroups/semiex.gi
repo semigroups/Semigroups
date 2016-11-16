@@ -524,7 +524,7 @@ function(n)
     Add(gens, Transformation(next));
   od;
 
-  return Monoid(gens, rec(generic := true));
+  return Monoid(gens, rec(acting := false));
 end);
 
 InstallMethod(PartitionMonoid, "for an integer",

@@ -334,8 +334,7 @@ function(S)
   return U;
 end);
 
-# this method is better than the generic one for acting semigroups
-#FIXME double check this isn't already in the library
+# This method is better than the one for acting semigroups.
 
 InstallMethod(Random, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
