@@ -199,45 +199,44 @@ end;
 #############################################################################
 
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
-"for a semigroup and a list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList], #FIXME change to IsEnumerableSemigroupRep when it exists
+"for an enumerable semigroup and a list of generating pairs", IsElmsColls,
+[IsEnumerableSemigroupRep, IsList], 
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
 end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
-"for a semigroup and a list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList], #FIXME change to IsEnumerableSemigroupRep when it exists
+"for an enumerable semigroup and a list of generating pairs", IsElmsColls,
+[IsEnumerableSemigroupRep, IsList], 
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
 end);
 
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
-"for a semigroup and a list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList], #FIXME change to IsEnumerableSemigroupRep when it exists
+"for an enumerable semigroup and a list of generating pairs", IsElmsColls,
+[IsEnumerableSemigroupRep, IsList], 
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
 end);
 
 # Empty list constructors to override library function
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
-"for a semigroup and an empty list",
-[IsSemigroup, IsList and IsEmpty], 1,
-#FIXME change to IsEnumerableSemigroupRep when it exists
+"for an enumerable semigroup and an empty list",
+[IsEnumerableSemigroupRep, IsList and IsEmpty], 1,
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
 end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
-"for a semigroup and an empty list",
-[IsSemigroup, IsList and IsEmpty], 1,
+"for an enumerable semigroup and an empty list",
+[IsEnumerableSemigroupRep, IsList and IsEmpty], 1,
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
 end);
 
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
-"for a semigroup and an empty list",
-[IsSemigroup, IsList and IsEmpty], 1,
+"for an enumerable semigroup and an empty list",
+[IsEnumerableSemigroupRep, IsList and IsEmpty], 1,
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
 end);
