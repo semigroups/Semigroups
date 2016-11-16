@@ -162,8 +162,17 @@ SEMIGROUPS.StartTest := function()
   return;
 end;
 
-SEMIGROUPS.StopTest := function(file)
-  local timeofday, record, elapsed, str;
+SEMIGROUPS.StopTest := function(arg...)
+  local file, record, timeofday, elapsed, str;
+  
+  if Length(arg) = 0 then 
+    file := "";
+  elif Length(arg) = 1 and IsString(arg[1]) then 
+    file := arg[1];
+  else
+    ErrorNoReturn("Semigroups: SEMIGROUPS.StopTest: usage,\n", 
+                  "there should be no args or the arg must be a string,");
+  fi;
 
   record := SEMIGROUPS.TestRec;
 
@@ -188,30 +197,26 @@ SEMIGROUPS.StopTest := function(file)
 
   # restore default options
   SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;
-
-  # timing
-  timeofday := IO_gettimeofday();
-
-  elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000
-   + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
-
-  str := "elapsed time: ";
-  Append(str, String(elapsed));
-  Append(str, "ms\n");
-
+  
   if not IsBound(GAPInfo.TestData.START_TIME)  then
       ErrorNoReturn("Semigroups: SEMIGROUPS.StopTest:\n",
                     "`STOP_TEST' command without `START_TEST' command for `",
                     file,
                     "'");
   fi;
+
   Print(GAPInfo.TestData.START_NAME, "\n");
+
+  # Timing
+  timeofday := IO_gettimeofday();
+  elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000
+             + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
+  Print("Elapsed time: ", String(elapsed), "ms\n");
 
   SetAssertionLevel(GAPInfo.TestData.AssertionLevel);
   Unbind(GAPInfo.TestData.AssertionLevel);
   Unbind(GAPInfo.TestData.START_TIME);
   Unbind(GAPInfo.TestData.START_NAME);
-  Print(str);
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", record.STOP_TEST);
   MakeReadWriteGlobal("STOP_TEST");
@@ -219,35 +224,36 @@ SEMIGROUPS.StopTest := function(file)
 end;
 
 SEMIGROUPS.Test := function(arg)
-  local file, opts, acting, split, print_file, string_file, enabled, disabled;
-
-  if Length(arg) = 0 then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
-                  "no arguments have been supplied,");
-  fi;
-
-  file := arg[1];
+  local file, opts, acting, split, pos, range, print_file, string_file,
+  enabled, disabled;
 
   if Length(arg) = 1 then
-    opts := rec();
+    file := arg[1];
   else
-    opts := arg[2];
+    ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
+                  "there must be only 1 argument,");
   fi;
 
-  # TODO process opts
-  if not IsBound(opts.silent) then
-    opts.silent := true;
+  if not IsString(file) then 
+    ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
+                  "the first arg must be a string,");
   fi;
 
   acting := SEMIGROUPS.DefaultOptionsRec.acting;
-  split := SplitString(file, "/");
-  print_file := JoinStringsWithSeparator(split{
-                                         [Length(split) - 2 .. Length(split)]},
-                                         "/");
+
+  split  := SplitString(file, "/");
+  pos    := Position(split, "tst");
+  if pos <> fail then 
+    range := [pos .. Length(split)];
+  else 
+    range := [Length(split) - 2 .. Length(split)];
+  fi;
+  print_file  := JoinStringsWithSeparator(split{range}, "/");
   string_file := StringFile(file);
+
   if IsEmpty(string_file) then 
     Print("File: ", print_file, " is empty!\n");
-    return true;
+    return fail;
   fi;
 
   Print("Testing file: ", print_file, " (acting := true)\n");
@@ -377,8 +383,7 @@ SEMIGROUPS.TestManualExamples := function(arg)
   SEMIGROUPS.DefaultOptionsRec.acting := true;
   SEMIGROUPS.StartTest();
   passed := SEMIGROUPS.RunExamples(ex, []);
-  SEMIGROUPS.StopTest("");
-  #TODO make SEMIGROUPS.StopTest accept no args, or 1 arg
+  SEMIGROUPS.StopTest();
 
   SEMIGROUPS.DefaultOptionsRec.acting := acting;
   return passed;
@@ -442,7 +447,7 @@ function(arg)
   passed  := [];
 
   start_time := IO_gettimeofday();
-  SemigroupsTestInstall(rec(silent := false));
+  SemigroupsTestInstall();
   end_time := IO_gettimeofday();
   elapsed := (end_time.tv_sec - start_time.tv_sec) * 1000
              + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
@@ -450,21 +455,22 @@ function(arg)
   for filename in contents do
     if file_ext(filename) = "tst" and is_testable(dir, filename) then
       start_time := IO_gettimeofday();
-      pass := SEMIGROUPS.Test(Filename(Directory(dir), filename),
-                              rec(silent := false));
+      pass := SEMIGROUPS.Test(Filename(Directory(dir), filename));
 
       end_time := IO_gettimeofday();
       elapsed_this_test := (end_time.tv_sec - start_time.tv_sec) * 1000
                  + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
       elapsed := elapsed + elapsed_this_test;
-      if not pass then
-        Add(failed, [filename,
-                     "FAILED",
-                     Concatenation(String(elapsed_this_test), "ms")]);
-      else
-        Add(passed, [filename,
-                     "PASSED",
-                     Concatenation(String(elapsed_this_test), "ms")]);
+      if pass <> fail then # No test was carried out
+        if not pass then
+          Add(failed, [filename,
+                       "FAILED",
+                       Concatenation(String(elapsed_this_test), "ms")]);
+        else
+          Add(passed, [filename,
+                       "PASSED",
+                       Concatenation(String(elapsed_this_test), "ms")]);
+        fi;
       fi;
     fi;
   od;
@@ -476,20 +482,11 @@ function(arg)
 end);
 
 InstallGlobalFunction(SemigroupsTestInstall,
-function(arg)
-  local opts;
-
-  if Length(arg) = 0 then
-    opts := rec();
-  else
-    opts := arg[1];
-  fi;
-  #TODO check args
+function()
   GASMAN("collect");
   return SEMIGROUPS.Test(Filename(DirectoriesPackageLibrary("semigroups",
                                                             "tst"),
-                                  "testinstall.tst"),
-                         opts);
+                                  "testinstall.tst"));
 end);
 
 # The following is based on doc/ref/testconsistency.g
