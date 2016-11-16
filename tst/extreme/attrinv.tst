@@ -21,7 +21,7 @@ gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 6, 7], [1, 3, 4, 7, 5]),
 >  PartialPerm([1, 2, 3, 4, 5, 7], [3, 2, 4, 6, 1, 5])]);
 <inverse partial perm semigroup of rank 7 with 5 generators>
-gap> iso := IsomorphismBipartitionSemigroup(S);;
+gap> iso := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
 gap> A := Range(iso);
 <inverse bipartition semigroup of degree 7 with 5 generators>
 gap> I := SemigroupIdeal(S, PartialPerm([1, 3, 4, 5, 7], [1, 3, 4, 5, 7]));
@@ -30,29 +30,52 @@ gap> B := InverseSemigroup([
 > Bipartition([[1, -6], [2, -4], [3, -3], [4, 5, 6, 7, -1, -2, -5, -7]]),
 > Bipartition([[1, -4], [2, -5], [3, 6, 7, -2, -3, -7], [4, -1], [5, -6]]),
 > Bipartition([[1, -6], [2, -5], [3, 5, 7, -3, -4, -7], [4, -2], [6, -1]])]);
-<inverse bipartition semigroup of degree 7 with 3 generators>
+<inverse block bijection semigroup of degree 7 with 3 generators>
 gap> J := SemigroupIdeal(B,
 >  Bipartition([[1, -1], [2, 3, 5, 7, -2, -3, -5, -7], [4, -4],
 >    [6, -6]]),
 >  Bipartition([[1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7], [3, -3]]));
 <inverse bipartition semigroup ideal of degree 7 with 2 generators>
-gap> JoinIrreducibleDClasses(S);
-[ <Green's D-class: <identity partial perm on [ 2 ]>> ]
-gap> JoinIrreducibleDClasses(I);
-[ <Green's D-class: <identity partial perm on [ 2 ]>> ]
-gap> JoinIrreducibleDClasses(A);
-[ <Green's D-class: <bipartition: [ 1 ], [ 2, -2 ], [ 3 ], [ 4 ], [ 5 ], 
-      [ 6 ], [ 7 ], [ -1 ], [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>> ]
-gap> JoinIrreducibleDClasses(B);
-[ <Green's D-class: <block bijection: 
-      [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ]>>, 
-  <Green's D-class: <block bijection: [ 1, -1 ], 
-      [ 2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7 ]>> ]
-gap> JoinIrreducibleDClasses(J);
-[ <Green's D-class: <block bijection: 
-      [ 1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ 3, -3 ]>>, 
-  <Green's D-class: <block bijection: 
-      [ 1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7 ], [ 6, -6 ]>> ]
+gap> D := JoinIrreducibleDClasses(S);;
+gap> Length(D) = 1;
+true
+gap> D := D[1];;
+gap> PartialPerm([4], [4]) in D and PartialPerm([3], [6]) in D;
+true
+gap> Size(D);
+49
+gap> D := JoinIrreducibleDClasses(I);;
+gap> Length(D) = 1;
+true
+gap> D := D[1];;
+gap> PartialPerm([4], [4]) in D and PartialPerm([1], [4]) in D;
+true
+gap> Size(D);
+49
+gap> D := JoinIrreducibleDClasses(A);;
+gap> Length(D) = 1;
+true
+gap> D[1] = DClass(A, Bipartition([[1], [2], [3], [4, -4], [5], [6], [7], [-1],
+> [-2], [-3], [-5], [-6], [-7]]));
+true
+gap> Size(D);
+1
+gap> Set(JoinIrreducibleDClasses(B)) = 
+> Set([DClass(B, 
+>             Bipartition([[1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7], 
+>                          [3, -3]])), 
+>      DClass(B, 
+>             Bipartition([[1, -1], 
+>                          [2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7]]))]);
+true
+gap> Set(JoinIrreducibleDClasses(J)) = 
+> Set([DClass(J, 
+>             Bipartition([[1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7], 
+>                          [3, -3]])), 
+>      DClass(J, 
+>             Bipartition([[1, 2, 3, 4, 5, 7, -1, -2, -3, -4, -5, -7], 
+>                          [6, -6]]))]);
+true
 
 #T# AttributesInverseTest2: IsJoinIrreducible
 gap> S := InverseSemigroup([
@@ -61,7 +84,7 @@ gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 5], [5, 2, 7, 3]),
 >  PartialPerm([1, 2, 3, 6, 7], [1, 3, 4, 7, 5]),
 >  PartialPerm([1, 2, 3, 4, 5, 7], [3, 2, 4, 6, 1, 5])]);;
-gap> iso := IsomorphismBipartitionSemigroup(S);;
+gap> iso := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
 gap> A := Range(iso);;
 gap> I := SemigroupIdeal(S,
 > PartialPerm([1, 3, 4, 5, 7], [1, 3, 4, 5, 7]));;
@@ -119,7 +142,7 @@ gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 5], [5, 2, 7, 3]),
 >  PartialPerm([1, 2, 3, 6, 7], [1, 3, 4, 7, 5]),
 >  PartialPerm([1, 2, 3, 4, 5, 7], [3, 2, 4, 6, 1, 5])]);;
-gap> iso := IsomorphismBipartitionSemigroup(S);;
+gap> iso := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
 gap> A := Range(iso);;
 gap> I := SemigroupIdeal(S,
 > PartialPerm([1, 3, 4, 5, 7], [1, 3, 4, 5, 7]));;
@@ -133,12 +156,12 @@ gap> J := SemigroupIdeal(B,
 >  Bipartition([[1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7], [3, -3]]));;
 gap> x := PartialPerm([1, 2, 4, 6], [2, 3, 1, 4]);;
 gap> Minorants(S, x);
-[ <empty partial perm>, [1,2], [2,3], [6,4], [4,1], [1,2,3], [2,3][6,4], 
-  [4,1,2], [2,3][4,1], [1,2][6,4], [6,4,1], [4,1,2,3], [6,4,1,2], 
-  [1,2,3][6,4], [2,3][6,4,1] ]
+[ <empty partial perm>, [2,3], [1,2], [6,4], [4,1], [2,3][4,1], [1,2][6,4], 
+  [2,3][6,4], [6,4,1], [4,1,2], [1,2,3], [4,1,2,3], [2,3][6,4,1], [6,4,1,2], 
+  [1,2,3][6,4] ]
 gap> Minorants(I, x);
-[ <empty partial perm>, [1,2], [2,3], [6,4], [4,1], [1,2,3], [6,4,1], 
-  [2,3][4,1], [1,2][6,4], [4,1,2], [2,3][6,4], [4,1,2,3], [2,3][6,4,1], 
+[ <empty partial perm>, [2,3], [1,2], [4,1], [6,4], [1,2,3], [2,3][4,1], 
+  [1,2][6,4], [2,3][6,4], [6,4,1], [4,1,2], [4,1,2,3], [2,3][6,4,1], 
   [6,4,1,2], [1,2,3][6,4] ]
 gap> Minorants(A, x ^ iso);
 [ <bipartition: [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ -1 ], 
@@ -151,24 +174,24 @@ gap> Minorants(A, x ^ iso);
      [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
   <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ -1 ], 
      [ -2 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
-  <bipartition: [ 1, -2 ], [ 2, -3 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], 
-     [ -1 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
-  <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6 ], [ 7 ], 
-     [ -2 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
-  <bipartition: [ 1, -2 ], [ 2 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6 ], [ 7 ], 
-     [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
   <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4 ], [ 5 ], [ 6, -4 ], [ 7 ], 
      [ -1 ], [ -2 ], [ -5 ], [ -6 ], [ -7 ]>, 
   <bipartition: [ 1, -2 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6, -4 ], [ 7 ], 
      [ -1 ], [ -3 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1, -2 ], [ 2, -3 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], 
+     [ -1 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
   <bipartition: [ 1 ], [ 2 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6, -4 ], [ 7 ], 
      [ -2 ], [ -3 ], [ -5 ], [ -6 ], [ -7 ]>, 
-  <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6, -4 ], [ 7 ], 
-     [ -2 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6 ], [ 7 ], 
+     [ -2 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1, -2 ], [ 2 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6 ], [ 7 ], 
+     [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
   <bipartition: [ 1, -2 ], [ 2, -3 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6 ], [ 7 ], 
      [ -4 ], [ -5 ], [ -6 ], [ -7 ]>, 
   <bipartition: [ 1, -2 ], [ 2 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6, -4 ], [ 7 ], 
      [ -3 ], [ -5 ], [ -6 ], [ -7 ]>, 
+  <bipartition: [ 1 ], [ 2, -3 ], [ 3 ], [ 4, -1 ], [ 5 ], [ 6, -4 ], [ 7 ], 
+     [ -2 ], [ -5 ], [ -6 ], [ -7 ]>, 
   <bipartition: [ 1, -2 ], [ 2, -3 ], [ 3 ], [ 4 ], [ 5 ], [ 6, -4 ], [ 7 ], 
      [ -1 ], [ -5 ], [ -6 ], [ -7 ]> ]
 gap> z := PartialPerm([], []);
@@ -222,9 +245,9 @@ gap> t := PartialPerm([4, 5, 7, 8], [5, 4, 1, 6]);;
 gap> t in U;
 true
 gap> Minorants(U, t);
-[ <empty partial perm>, [7,1], [4,5], [5,4], [8,6], (4,5), [4,5][8,6], 
-  [5,4][8,6], [5,4][7,1], [7,1][8,6], [4,5][7,1], [7,1](4,5), [4,5][7,1][8,6],
-  [8,6](4,5), [5,4][7,1][8,6] ]
+[ <empty partial perm>, [7,1], [4,5], [8,6], [5,4], [5,4][7,1], [7,1][8,6], 
+  [5,4][8,6], [4,5][7,1], [4,5][8,6], (4,5), [8,6](4,5), [5,4][7,1][8,6], 
+  [4,5][7,1][8,6], [7,1](4,5) ]
 
 #T# AttributesInverseTest5: MajorantClosure and IsMajorantlyClosed
 gap> S := InverseSemigroup([
@@ -233,7 +256,7 @@ gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 5], [5, 2, 7, 3]),
 >  PartialPerm([1, 2, 3, 6, 7], [1, 3, 4, 7, 5]),
 >  PartialPerm([1, 2, 3, 4, 5, 7], [3, 2, 4, 6, 1, 5])]);;
-gap> iso := IsomorphismBipartitionSemigroup(S);;
+gap> iso := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
 gap> A := Range(iso);;
 gap> I := SemigroupIdeal(S,
 > PartialPerm([1, 3, 4, 5, 7], [1, 3, 4, 5, 7]));;
@@ -321,7 +344,7 @@ gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 5], [5, 2, 7, 3]),
 >  PartialPerm([1, 2, 3, 6, 7], [1, 3, 4, 7, 5]),
 >  PartialPerm([1, 2, 3, 4, 5, 7], [3, 2, 4, 6, 1, 5])]);;
-gap> iso := IsomorphismBipartitionSemigroup(S);;
+gap> iso := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
 gap> A := Range(iso);;
 gap> B := InverseSemigroup([
 > Bipartition([[1, -6], [2, -4], [3, -3], [4, 5, 6, 7, -1, -2, -5, -7]]),
@@ -432,7 +455,7 @@ gap> C := Bipartition(
 > [[1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7], [3, -3]]);;
 gap> m := MajorantClosure(B, [C]);;
 gap> V := InverseSemigroup(m);
-<inverse bipartition semigroup of degree 7 with 5 generators>
+<inverse block bijection semigroup of degree 7 with 5 generators>
 gap> IsMajorantlyClosed(B, V);
 true
 gap> RightCosetsOfInverseSemigroup(B, V);
@@ -471,7 +494,7 @@ gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 5], [5, 2, 7, 3]),
 >  PartialPerm([1, 2, 3, 6, 7], [1, 3, 4, 7, 5]),
 >  PartialPerm([1, 2, 3, 4, 5, 7], [3, 2, 4, 6, 1, 5])]);;
-gap> iso := IsomorphismBipartitionSemigroup(S);;
+gap> iso := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
 gap> A := Range(iso);;
 gap> B := InverseSemigroup([
 > Bipartition([[1, -6], [2, -4], [3, -3], [4, 5, 6, 7, -1, -2, -5, -7]]),
@@ -575,17 +598,23 @@ gap> f2 := Bipartition([[1, -2], [2], [3], [4], [5], [6], [-1],
 > [-3], [-4], [-5], [-6]]);;
 gap> g := Bipartition([[1, -2], [2], [3, -5], [4], [5], [-1],
 > [-3], [-4]]);;
-gap> S := InverseSemigroup(f, f2, g);;
+gap> S := InverseSemigroup(f);
+<inverse bipartition semigroup of degree 2 with 1 generator>
+gap> NaturalLeqInverseSemigroup(S)(f, f);
+true
 gap> NaturalLeqInverseSemigroup(S)(f, g);
-Error, Semigroups: NaturalLeqPartialPermBipartition: usage,
-the arguments must have equal degree,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `NaturalLeqPartialPermBipartition' on 2 \
+arguments
 gap> NaturalLeqInverseSemigroup(S)(f2, g);
-Error, Semigroups: NaturalLeqPartialPermBipartition: usage,
-the arguments must have equal degree,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `NaturalLeqPartialPermBipartition' on 2 \
+arguments
 gap> NaturalLeqInverseSemigroup(S)(f, f2);
-Error, Semigroups: NaturalLeqPartialPermBipartition: usage,
-the arguments must have equal degree,
-gap> NaturalLeqInverseSemigroup(AsPartialPermSemigroup(S))
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `NaturalLeqPartialPermBipartition' on 2 \
+arguments
+gap> NaturalLeqInverseSemigroup(AsSemigroup(IsPartialPermSemigroup, S))
 > (AsPartialPerm(f), AsPartialPerm(f2));
 true
 gap> AsPartialPerm(f) = AsPartialPerm(f2);
