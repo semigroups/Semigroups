@@ -683,10 +683,10 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
         " warnings in Ref elements \n");
 
   if display_warnings then
-    Print("To suppress warnings, use CheckManSectionTypes(doc,false) ",
+    Print("To suppress warnings, use SEMIGROUPS.CheckManSectionTypes(doc,false) ",
           "or with one argument\n");
   else
-    Print("To show warnings, use CheckManSectionTypes(doc,true); \n");
+    Print("To show warnings, use SEMIGROUPS.CheckManSectionTypes(doc,true); \n");
   fi;
   Print("****************************************************************\n");
   return errcount=0;
@@ -738,5 +738,5 @@ SEMIGROUPS.CheckManualConsistency := function()
                            SEMIGROUPS.DocXMLFiles,
                            true);
   SEMIGROUPS.CheckDocCoverage(doc);
-  return SEMIGROUPS.CheckManSectionTypes(doc);
+  return SEMIGROUPS.CheckManSectionTypes(doc, true);
 end;
