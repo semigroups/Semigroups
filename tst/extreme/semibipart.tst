@@ -38,7 +38,7 @@ MappingByFunction( <bipartition monoid of size 41, degree 4 with 4 generators>
  , <transformation monoid of degree 41 with 4 generators>
  , function( x ) ... end, function( x ) ... end )
 
-#T# BipartitionTest13: IsomorphismBipartitionSemigroup for a generic semigroup
+# IsomorphismBipartitionSemigroup for a enumerable semigroup
 gap> S := Semigroup(
 > Bipartition([[1, 2, 3, -3], [4, -4, -5], [5, -1], [-2]]),
 > Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]),
@@ -284,7 +284,7 @@ gap> ForAll(S, y -> x ^ f * y ^ f = (x * y) ^ f);
 true
 
 #T# BipartitionTest26:
-# Tests of things in greens.xml in the order they appear in that file. 
+# Tests of things in gree.xml in the order they appear in that file. 
 gap> S := Semigroup(
 > Bipartition([[1, -1], [2, -2], [3, -3], [4, -4], [5, -8],
 >      [6, -9], [7, -10], [8, -11], [9, -12], [10, -13], [11, -5],

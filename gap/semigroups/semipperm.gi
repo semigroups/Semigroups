@@ -20,12 +20,12 @@ function(list, S)
   if IsEmpty(list) then
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
                   "the first argument must be a non-empty list,");
-  elif ForAny(list, 
+  elif ForAny(list,
               T -> not (IsPartialPermMonoid(T) and IsInverseMonoid(T))) then
     TryNextMethod();
   fi;
 
-  gens := []; 
+  gens := [];
   deg  := Sum(List(list, DegreeOfPartialPermSemigroup));
   n := 0;
 
@@ -34,11 +34,11 @@ function(list, S)
     for x in GeneratorsOfInverseMonoid(list[i]) do
       func := function(i)
         local j;
-        if i <= n or i > n + m then 
+        if i <= n or i > n + m then
           return i;
         fi;
         j := (i - n) ^ x;
-        if j = 0 then 
+        if j = 0 then
           return 0;
         fi;
         return j + n;
@@ -54,13 +54,13 @@ end);
 ## Random
 #############################################################################
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsPartialPermSemigroup, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
 end);
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsPartialPermMonoid, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);

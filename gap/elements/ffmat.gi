@@ -237,10 +237,10 @@ InstallMethod(NewMatrixOverFiniteField,
 [IsPlistMatrixOverFiniteFieldRep, IsField and IsFinite, IsList],
 function(filter, field, list)
   local mat, filter2;
-  
-  if not ForAll(list, v -> ForAll(v, x -> x in field)) then 
-    ErrorNoReturn("Semigroups: NewMatrixOverFiniteField: usage,\n", 
-                  "the entries of the matrix are not all in ", 
+
+  if not ForAll(list, v -> ForAll(v, x -> x in field)) then
+    ErrorNoReturn("Semigroups: NewMatrixOverFiniteField: usage,\n",
+                  "the entries of the matrix are not all in ",
                   field, ",");
   fi;
 
@@ -641,7 +641,7 @@ SEMIGROUPS.HashFunctionForPlistMatricesOverFiniteField := function(x, data)
 
   if DimensionOfMatrixOverSemiring(x) = 0 then
     return 1;
-  elif IsInt(data.data) then 
+  elif IsInt(data.data) then
     h := ChooseHashFunction(AsList(x), data.data);
     data.func := h.func;
     data.data := h.data;
@@ -655,7 +655,7 @@ SEMIGROUPS.HashFunctionForPlistRowBasisOverFiniteField := function(x, data)
 
   if Rank(x) = 0 then
     return 1;
-  elif IsInt(data.data) then 
+  elif IsInt(data.data) then
     h := ChooseHashFunction(x!.rows, data.data);
     data.func := h.func;
     data.data := h.data;
@@ -668,9 +668,9 @@ InstallMethod(ChooseHashFunction, "for plist matrices over finite fields",
 function(x, hashlen)
   local data;
 
-  if DimensionOfMatrixOverSemiring(x) <> 0 then 
+  if DimensionOfMatrixOverSemiring(x) <> 0 then
     data := ChooseHashFunction(AsList(x), hashlen);
-  else 
+  else
     data := hashlen;
   fi;
   return rec(func := SEMIGROUPS.HashFunctionForPlistMatricesOverFiniteField,
@@ -682,9 +682,9 @@ InstallMethod(ChooseHashFunction, "for plist rowbasis over finite fields",
 function(x, hashlen)
   local data;
 
-  if Rank(x) <> 0 then 
+  if Rank(x) <> 0 then
     data := ChooseHashFunction(x!.rows, hashlen);
-  else 
+  else
     data := hashlen;
   fi;
   return rec(func := SEMIGROUPS.HashFunctionForPlistRowBasisOverFiniteField,

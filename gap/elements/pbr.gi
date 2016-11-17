@@ -42,7 +42,7 @@ function(n)
   n := n + 1; # since the degree can be 0
 
   if not IsBound(TYPES_PBR[n]) then
-    TYPES_PBR[n] := NewType(NewFamily(Concatenation("PBRFamily", 
+    TYPES_PBR[n] := NewType(NewFamily(Concatenation("PBRFamily",
                                                     String(n - 1)),
                                       IsPBR,
                                       CanEasilySortElements,

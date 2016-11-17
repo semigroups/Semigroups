@@ -221,23 +221,24 @@ end);
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a (0-)simple semigroup congruence",
+# FIXME Why does the string say (0-)simple and not simple? 
 [IsSimpleSemigroupCongruence],
 function(cong)
-  local S, rmstable, nrclasses, rmsdata, iso, elms, table, newnums, next, i,
-        rmsclass;
-  S := Range(cong);
-  rmstable := EquivalenceRelationCanonicalLookup(cong!.rmscong);
+  local S, rmstable, nrclasses, iso, elms, table, newnums, next, rmsclass, i;
+
+  S         := Range(cong);
+  rmstable  := EquivalenceRelationCanonicalLookup(cong!.rmscong);
   nrclasses := NrEquivalenceClasses(cong!.rmscong);
-  rmsdata := GenericSemigroupData(Range(cong!.rmscong));
-  iso := cong!.iso;
-  elms := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
+  iso       := cong!.iso;
+  elms      := AsListCanonical(S);
 
   # Renumber the entries so we start at 1
-  table := EmptyPlist(Length(elms));
+  table   := EmptyPlist(Length(elms));
   newnums := EmptyPlist(nrclasses);
-  next := 1;
+  next    := 1;
+
   for i in [1 .. Length(elms)] do
-    rmsclass := rmstable[Position(rmsdata, elms[i] ^ iso)];
+    rmsclass := rmstable[PositionCanonical(Range(iso), elms[i] ^ iso)];
     if not IsBound(newnums[rmsclass]) then
       newnums[rmsclass] := next;
       next := next + 1;

@@ -61,7 +61,7 @@ gap> ForAny(s, x -> IsMultiplicativeZero(s, x));
 false
 
 # Other transformation semigroups
-gap> s := Semigroup(FullTransformationMonoid(10), rec(generic := false));
+gap> s := Semigroup(FullTransformationMonoid(10), rec(acting := true));
 <transformation monoid of degree 10 with 3 generators>
 gap> MultiplicativeZero(s);
 fail
@@ -296,14 +296,14 @@ false
 
 #T# AttributesTest5:
 # MultiplicativeZero where MinimalDClass is known
-gap> s := Semigroup(FullTransformationMonoid(10), rec(generic := false));
+gap> s := Semigroup(FullTransformationMonoid(10), rec(acting := true));
 <transformation monoid of degree 10 with 3 generators>
 gap> MinimalDClass(s);;
 gap> HasSize(last);
 false
 gap> MultiplicativeZero(s);
 fail
-gap> s := Semigroup(s, rec(generic := false));;
+gap> s := Semigroup(s, rec(acting := true));;
 gap> HasMinimalDClass(s);
 false
 gap> Size(MinimalDClass(s));
@@ -322,7 +322,7 @@ gap> HasMinimalDClass(s);
 false
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
-gap> s := Semigroup(gens, rec(generic := false));;
+gap> s := Semigroup(gens, rec(acting := true));;
 gap> MinimalDClass(s);
 <Green's D-class: Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
    4 ] )>
@@ -330,7 +330,7 @@ gap> HasSize(MinimalDClass(s));
 false
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
-gap> s := Semigroup(gens, rec(generic := false));;
+gap> s := Semigroup(gens, rec(acting := true));;
 gap> Size(MinimalDClass(s));
 1
 gap> MultiplicativeZero(s);
@@ -349,7 +349,7 @@ true
 #T# attr: RightCayleyGraphSemigroup, infinite
 gap> RightCayleyGraphSemigroup(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphSemigroup' on 1 arguments
+Error, no 2nd choice method found for `CayleyGraphSemigroup' on 1 arguments
 
 #T# attr: LeftCayleyGraphSemigroup
 gap> S := Monoid(BooleanMat([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
@@ -374,7 +374,7 @@ true
 #T# attr: RightCayleyGraphSemigroup, infinite
 gap> LeftCayleyGraphSemigroup(FreeInverseSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
+Error, no 2nd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
 s
 
 #T# attr: IsomorphismReesMatrixSemigroup
@@ -413,7 +413,7 @@ gap> IrredundantGeneratingSubset([RandomTransformation(10)]);;
 
 #T# attr: IrredundantGeneratingSubset: for a set with one element, 2
 gap> S := Monoid([Transformation([1, 1]), Transformation([2, 1]),
->  Transformation([2, 2])], rec(generic := false));
+>  Transformation([2, 2])], rec(acting := true));
 <transformation monoid of degree 2 with 3 generators>
 gap> Size(IrredundantGeneratingSubset(S));
 2
@@ -674,7 +674,7 @@ true
 #T# attr: IsGreensDLeq, error
 gap> IsGreensDLeq(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsGreensDLeq' on 1 arguments
+Error, no 2nd choice method found for `IsGreensDLeq' on 1 arguments
 
 #T# attr: MaximalDClasses
 gap> S := RegularBooleanMatMonoid(3);
@@ -778,8 +778,7 @@ gap> NrIdempotents(S);
 
 #T# attr: NrIdempotents, infinite 1/1
 gap> NrIdempotents(FreeSemigroup(2));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `NrIdempotents' on 1 arguments
+Error, resulting list would be too large (length infinity)
 
 #T# attr: RepresentativeOfMinimalIdeal, simple, 1/1
 gap> S := MinimalIdeal(FreeBand(2));
@@ -804,7 +803,7 @@ gap> IdempotentGeneratedSubsemigroup(S);
 #T# attr: MaximalDClasses, infinite 1/1
 gap> MaximalDClasses(FreeMonoid(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MaximalDClasses' on 1 arguments
+Error, no 2nd choice method found for `MaximalDClasses' on 1 arguments
 
 #T# attr: StructureDescriptionMaximalSubgroups, infinite 1/1
 gap> StructureDescriptionMaximalSubgroups(FreeMonoid(2));
@@ -827,7 +826,7 @@ rguments
 #T# attr: MultiplicativeNeutralElement, infinite 1/1
 gap> MultiplicativeNeutralElement(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MultiplicativeNeutralElement' on 1 argu\
+Error, no 2nd choice method found for `MultiplicativeNeutralElement' on 1 argu\
 ments
 
 #T# attr: MultiplicativeNeutralElement, One 1/1
@@ -1198,7 +1197,7 @@ gap> Size(Monoid(x));
 
 # Test for Issue 218
 gap> S := Semigroup(PlanarPartitionMonoid(5), AsBipartition((1,2,3,4,5)), 
-> rec(generic := false));;
+> rec(acting := true));;
 gap> D := DClasses(S)[2];;
 gap> x := Bipartition([[1, -1], [2, -2], [3, -3], [4, -4, -5], [5]]);;
 gap> x in D;

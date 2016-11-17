@@ -150,9 +150,7 @@ function(S)
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if not IsGroupAsSemigroup(S) then
+  elif not IsGroupAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
                   "the argument must be a semigroup satisfying ",
                   "IsGroupAsSemigroup,");
@@ -228,8 +226,8 @@ function(S)
 end);
 
 InstallMethod(IsomorphismPermGroup,
-"for a perm bipartition group with generators",
-[IsPermBipartitionGroup and HasGeneratorsOfSemigroup],
+"for a perm bipartition group",
+[IsPermBipartitionGroup],
 1, # to beat the method for IsBlockBijectionSemigroup
 function(S)
   local G, deg;
@@ -245,12 +243,14 @@ function(S)
 end);
 
 InstallMethod(IsomorphismPermGroup,
-"for a block bijection semigroup with generators",
-[IsBlockBijectionSemigroup and HasGeneratorsOfSemigroup],
+"for a bipartition semigroup",
+[IsBipartitionSemigroup],
 function(S)
   local iso, inv;
 
-  if not IsGroupAsSemigroup(S) then
+  if not IsBlockBijectionSemigroup(S) then 
+    TryNextMethod();
+  elif not IsGroupAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
                   "the argument must be a semigroup satisfying ",
                   "IsGroupAsSemigroup,");

@@ -15,13 +15,13 @@
 ## Random
 #############################################################################
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsTransformationSemigroup, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
 end);
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 [IsTransformationMonoid, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
@@ -713,8 +713,9 @@ end);
 # there could be an even faster C/C++ version of this
 # TODO AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
 
-InstallMethod(IsomorphismTransformationSemigroup, "for a finite semigroup",
-[IsSemigroup], 2,
+InstallMethod(IsomorphismTransformationSemigroup, 
+"for an enumerable semigroup",
+[IsEnumerableSemigroupRep], 2,
 # to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
 function(S)
   local cay, deg, gen, next, T, iso, inv, i;

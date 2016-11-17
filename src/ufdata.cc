@@ -34,35 +34,35 @@ Obj UF_NEW(Obj self, Obj size) {
 }
 
 Obj UF_COPY(Obj self, Obj ufdata) {
-  return OBJ_CLASS(new UFData(*CLASS_OBJ<UFData>(ufdata)),
+  return OBJ_CLASS(new UFData(*CLASS_OBJ<UFData*>(ufdata)),
                    T_SEMI_SUBTYPE_UFDATA);
 }
 
 Obj UF_SIZE(Obj self, Obj ufdata) {
-  return INTOBJ_INT(CLASS_OBJ<UFData>(ufdata)->get_size());
+  return INTOBJ_INT(CLASS_OBJ<UFData*>(ufdata)->get_size());
 }
 
 Obj UF_FIND(Obj self, Obj ufdata, Obj i) {
   assert(IS_INTOBJ(i) && INT_INTOBJ(i) > 0);
-  return INTOBJ_INT(CLASS_OBJ<UFData>(ufdata)->find(INT_INTOBJ(i) - 1) + 1);
+  return INTOBJ_INT(CLASS_OBJ<UFData*>(ufdata)->find(INT_INTOBJ(i) - 1) + 1);
 }
 
 Obj UF_UNION(Obj self, Obj ufdata, Obj pair) {
   assert(IS_PLIST(pair) && LEN_PLIST(pair) == 2);
   assert(IS_INTOBJ(ELM_PLIST(pair, 1)) && INT_INTOBJ(ELM_PLIST(pair, 1)) > 0);
   assert(IS_INTOBJ(ELM_PLIST(pair, 2)) && INT_INTOBJ(ELM_PLIST(pair, 2)) > 0);
-  CLASS_OBJ<UFData>(ufdata)->unite(INT_INTOBJ(ELM_PLIST(pair, 1)) - 1,
+  CLASS_OBJ<UFData*>(ufdata)->unite(INT_INTOBJ(ELM_PLIST(pair, 1)) - 1,
                                    INT_INTOBJ(ELM_PLIST(pair, 2)) - 1);
   return 0L;
 }
 
 Obj UF_FLATTEN(Obj self, Obj ufdata) {
-  CLASS_OBJ<UFData>(ufdata)->flatten();
+  CLASS_OBJ<UFData*>(ufdata)->flatten();
   return 0L;
 }
 
 Obj UF_TABLE(Obj self, Obj ufdata) {
-  UFData::table_t* table     = CLASS_OBJ<UFData>(ufdata)->get_table();
+  UFData::table_t* table     = CLASS_OBJ<UFData*>(ufdata)->get_table();
   size_t           size      = table->size();
   Obj              gap_table = NEW_PLIST(T_PLIST, size);
   SET_LEN_PLIST(gap_table, size);
@@ -73,7 +73,7 @@ Obj UF_TABLE(Obj self, Obj ufdata) {
 }
 
 Obj UF_BLOCKS(Obj self, Obj ufdata) {
-  UFData::blocks_t* blocks = CLASS_OBJ<UFData>(ufdata)->get_blocks();
+  UFData::blocks_t* blocks = CLASS_OBJ<UFData*>(ufdata)->get_blocks();
   size_t            size   = blocks->size();
   size_t            i, j;
 

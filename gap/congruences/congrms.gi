@@ -1511,7 +1511,7 @@ function(cong)
   pairs := GeneratingPairsOfSemigroupCongruence(cong);
   S := Range(cong);
   # FIXME shouldn't this work for 0-simple semigroups too? JDM
-  if not IsReesZeroMatrixSemigroup(S) then 
+  if not IsReesZeroMatrixSemigroup(S) then
     ErrorNoReturn("Semigroups: AsRZMSCongruenceByLinkedTriple: usage,\n",
                   "the argument must be a congruence over a Rees 0-matrix\n",
                   "semigroup,");
@@ -1631,17 +1631,17 @@ function(cong)
 end);
 
 _EquivalenceRelationCanonicalLookupRMS := function(cong)
-  local S, n, data, elms, table, next, i, x;
+  local S, n, elms, table, next, i, x;
+
   S := Range(cong);
   n := Size(S);
-  data := GenericSemigroupData(S);
-  elms := SEMIGROUP_AS_LIST(data);
+  elms := AsListCanonical(S);
   table := EmptyPlist(n);
   next := 1;
   for i in [1 .. n] do
     if not IsBound(table[i]) then
       for x in ImagesElm(cong, elms[i]) do
-        table[Position(data, x)] := next;
+        table[PositionCanonical(S, x)] := next;
       od;
       next := next + 1;
     fi;

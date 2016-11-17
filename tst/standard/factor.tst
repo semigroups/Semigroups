@@ -140,7 +140,7 @@ true
 
 #T# factor: Factorization, error, 1/5
 gap> S := Semigroup([Transformation([1, 3, 4, 1]),
-> Transformation([3, 1, 1, 3])], rec(generic := false));;
+> Transformation([3, 1, 1, 3])], rec(acting := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> Factorization(S, x);
 Error, Semigroups: Factorization: usage,
@@ -156,7 +156,7 @@ the second argument <x> is not an element of the first argument <S>,
 
 #T# factor: Factorization, error, 3/5
 gap> S := DualSymmetricInverseMonoid(3);;
-gap> S := InverseSemigroup(S, rec(generic := false));;
+gap> S := InverseSemigroup(S, rec(acting := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> Factorization(S, x);
 Error, Semigroups: Factorization: usage,
@@ -164,14 +164,14 @@ the second argument <x> is not an element of the first argument <S>,
 
 #T# factor: Factorization, error, 4/5
 gap> S := Semigroup(OrderEndomorphisms(3),
->                   rec(generic := false, regular := true));;
+>                   rec(acting := true, regular := true));;
 gap> x := PartialPerm([1, 2, 3], [1, 2, 3]);;
 gap> Factorization(S, x);
 Error, Semigroups: Factorization: usage,
 the second argument <x> is not an element of the first argument <S>,
 
 #T# factor: Factorization, error, 5/5
-gap> S := Semigroup(OrderEndomorphisms(3), rec(generic := false));;
+gap> S := Semigroup(OrderEndomorphisms(3), rec(acting := true));;
 gap> o := LambdaOrb(S);;
 gap> Factorization(o, 2, (1, 2));
 Error, Semigroups: Factorization: usage,
@@ -179,7 +179,7 @@ the third argument <p> does not belong to the Schutzenberger group,
 
 #T# factor: test for epimorphism from free group returning a word with negative
 # powers.
-gap> S := Semigroup(FullTransformationMonoid(8), rec(generic := false));;
+gap> S := Semigroup(FullTransformationMonoid(8), rec(acting := true));;
 gap> x := AsTransformation((1,2,3,5));
 Transformation( [ 2, 3, 5, 4, 1 ] )
 gap> Factorization(S, x);

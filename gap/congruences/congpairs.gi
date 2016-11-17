@@ -56,12 +56,11 @@ InstallMethod(EquivalenceRelationPartition,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep],
 function(cong)
-  local part, data, out, class;
+  local part, out, class;
   part := FiniteCongruenceByGeneratingPairsPartition(cong);
-  data := GenericSemigroupData(Range(cong));
   out := [];
   for class in part do
-    Add(out, List(class, i -> SEMIGROUP_ELEMENT_NUMBER(data, i)));
+    Add(out, List(class, i -> EN_SEMI_ELEMENT_NUMBER(Range(cong), i)));
   od;
   return out;
 end);
@@ -147,7 +146,7 @@ SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
 end;
 
 SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
-  local pair, filter, set_pairs, fam, cong, report, range;
+  local filter, set_pairs, fam, cong, report, range, pair;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -182,12 +181,12 @@ SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
                                ElementsFamily(FamilyObj(S)));
 
   # Create the default type for the elements.
-  cong := Objectify(NewType(fam,
-          IsFiniteCongruenceByGeneratingPairsRep and filter),
+  cong := Objectify(NewType(fam, 
+                            IsFiniteCongruenceByGeneratingPairsRep and filter),
                     rec(genpairs := Immutable(genpairs),
-                        report := SEMIGROUPS.OptionsRec(S).report,
-                        type := type,
-                        range := GenericSemigroupData(S)));
+                        report   := SEMIGROUPS.OptionsRec(S).report,
+                        type     := type,
+                        range    := S));
   SetSource(cong, S);
   SetRange(cong, S);
   set_pairs(cong, Immutable(genpairs));
@@ -200,45 +199,44 @@ end;
 #############################################################################
 
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
-"for a semigroup and a list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList], #FIXME change to IsEnumerableSemigroupRep when it exists
+"for an enumerable semigroup and a list of generating pairs", IsElmsColls,
+[IsEnumerableSemigroupRep, IsList], 
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
 end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
-"for a semigroup and a list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList], #FIXME change to IsEnumerableSemigroupRep when it exists
+"for an enumerable semigroup and a list of generating pairs", IsElmsColls,
+[IsEnumerableSemigroupRep, IsList], 
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
 end);
 
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
-"for a semigroup and a list of generating pairs", IsElmsColls,
-[IsSemigroup, IsList], #FIXME change to IsEnumerableSemigroupRep when it exists
+"for an enumerable semigroup and a list of generating pairs", IsElmsColls,
+[IsEnumerableSemigroupRep, IsList], 
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
 end);
 
 # Empty list constructors to override library function
 InstallMethod(SemigroupCongruenceByGeneratingPairs,
-"for a semigroup and an empty list",
-[IsSemigroup, IsList and IsEmpty], 1,
-#FIXME change to IsEnumerableSemigroupRep when it exists
+"for an enumerable semigroup and an empty list",
+[IsEnumerableSemigroupRep, IsList and IsEmpty], 1,
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
 end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
-"for a semigroup and an empty list",
-[IsSemigroup, IsList and IsEmpty], 1,
+"for an enumerable semigroup and an empty list",
+[IsEnumerableSemigroupRep, IsList and IsEmpty], 1,
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
 end);
 
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
-"for a semigroup and an empty list",
-[IsSemigroup, IsList and IsEmpty], 1,
+"for an enumerable semigroup and an empty list",
+[IsEnumerableSemigroupRep, IsList and IsEmpty], 1,
 function(S, genpairs)
   return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
 end);
@@ -315,11 +313,11 @@ InstallMethod(EquivalenceClasses,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep],
 function(cong)
-  local part, data, reps, classes, next, i;
+  local part, enum, reps, classes, next, i;
 
   part := FiniteCongruenceByGeneratingPairsPartition(cong);
-  data := GenericSemigroupData(Range(cong));
-  reps := List(part, x -> SEMIGROUP_ELEMENT_NUMBER(data, x[1]));
+  enum := EnumeratorCanonical(Range(cong));
+  reps := List(part, x -> enum[x[1]]);
 
   classes := EmptyPlist(Length(reps)); 
   next := 1;
@@ -351,15 +349,14 @@ InstallMethod(ImagesElm,
 [IsFiniteCongruenceByGeneratingPairsRep,
  IsMultiplicativeElement],
 function(cong, elm)
-  local lookup, data, id, part;
+  local lookup, enum, id, part;
 
   lookup := EquivalenceRelationLookup(cong);
-  data   := GenericSemigroupData(Range(cong));
-  id     := lookup[Position(data, elm)];
-
+  enum   := EnumeratorCanonical(Range(cong));
+  id     := lookup[Position(enum, elm)];
   part   := FiniteCongruenceByGeneratingPairsPartition(cong);
 
-  return List(part[id], i -> SEMIGROUP_ELEMENT_NUMBER(data, i));
+  return List(part[id], i -> enum[i]);
 end);
 
 InstallMethod(JoinSemigroupCongruences,
@@ -545,12 +542,13 @@ InstallMethod(AsList,
 "for a finite congruence class by gen pairs rep",
 [IsFiniteCongruenceClassByGeneratingPairsRep],
 function(class)
-  local cong, part, id, data;
+  local cong, part, id, enum;
+  
   cong := EquivalenceClassRelation(class);
   part := FiniteCongruenceByGeneratingPairsPartition(cong);
   id   := FiniteCongruenceClassByGeneratingPairsCosetId(class);
-  data := GenericSemigroupData(Range(cong));
-  return List(part[id], i -> SEMIGROUP_ELEMENT_NUMBER(data, i));
+  enum := EnumeratorCanonical(Range(cong));
+  return List(part[id], i -> enum[i]);
 end);
 
 InstallMethod(Enumerator, "for a finite congruence class by gen pairs rep",

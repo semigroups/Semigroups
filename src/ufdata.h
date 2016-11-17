@@ -20,6 +20,9 @@
 // the integers {1 .. n}, using the UNION-FIND METHOD: new pairs can be added
 // and the appropriate classes combined quickly.
 
+#ifndef SEMIGROUPS_SRC_UFDATA_H_
+#define SEMIGROUPS_SRC_UFDATA_H_
+
 #include <vector>
 
 #include "src/compiled.h"
@@ -51,14 +54,14 @@ class UFData {
   UFData& operator=(UFData const& copy) = delete;
 
   // Constructor by table
-  UFData(const table_t& table)
+  explicit UFData(const table_t& table)
       : _size(table.size()),
         _table(new table_t(table)),
         _blocks(nullptr),
         _haschanged(true) {}
 
   // Constructor by size
-  UFData(size_t size)
+  explicit UFData(size_t size)
       : _size(size),
         _table(new table_t()),
         _blocks(nullptr),
@@ -170,3 +173,5 @@ Obj UF_UNION(Obj self, Obj ufdata, Obj pair);
 Obj UF_FLATTEN(Obj self, Obj ufdata);
 Obj UF_TABLE(Obj self, Obj ufdata);
 Obj UF_BLOCKS(Obj self, Obj ufdata);
+
+#endif  // SEMIGROUPS_SRC_UFDATA_H_

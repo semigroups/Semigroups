@@ -23,16 +23,12 @@
 #include <algorithm>
 #include <iostream>
 
+#include "rnams.h"
 #include "semigroupsplusplus/report.h"
-#include "src/data.h"
+#include "semigrp.h"
 
-/*******************************************************************************
- * GAP kernel version of the algorithm for other types of semigroups
- *******************************************************************************/
+// Macros for the GAP version of the algorithm
 
-// macros for the GAP version of the algorithm
-
-#define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
 #define INT_PLIST(plist, i) INT_INTOBJ(ELM_PLIST(plist, i))
 #define INT_PLIST2(plist, i, j) INT_INTOBJ(ELM_PLIST2(plist, i, j))
 
@@ -42,19 +38,64 @@ inline void SET_ELM_PLIST2(Obj plist, UInt i, UInt j, Obj val) {
   CHANGED_BAG(plist);
 }
 
-// assumes the length of data!.elts is at most 2^28
+// Fast product using left and right Cayley graphs
 
-Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
+size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j) {
+  fropin(fp, INTOBJ_INT(-1), 0, False);
+
+  gap_list_t words = ElmPRec(fp, RNam_words);
+
+  if (LEN_PLIST(ELM_PLIST(words, i)) <= LEN_PLIST(ELM_PLIST(words, j))) {
+    gap_list_t left   = ElmPRec(fp, RNamName("left"));
+    gap_list_t last   = ElmPRec(fp, RNamName("final"));
+    gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
+    while (i != 0) {
+      j = INT_INTOBJ(ELM_PLIST2(left, j, INT_INTOBJ(ELM_PLIST(last, i))));
+      i = INT_INTOBJ(ELM_PLIST(prefix, i));
+    }
+    return j;
+  } else {
+    gap_list_t right  = ElmPRec(fp, RNamName("right"));
+    gap_list_t first  = ElmPRec(fp, RNamName("first"));
+    gap_list_t suffix = ElmPRec(fp, RNamName("suffix"));
+    while (j != 0) {
+      i = INT_INTOBJ(ELM_PLIST2(right, i, INT_INTOBJ(ELM_PLIST(first, j))));
+      j = INT_INTOBJ(ELM_PLIST(suffix, j));
+    }
+    return i;
+  }
+}
+
+// GAP kernel version of the algorithm for other types of semigroups.
+//
+// Assumes the length of data!.elts is at most 2 ^ 28.
+
+Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   Obj found, elts, gens, genslookup, right, left, first, final, prefix, suffix,
       reduced, words, ht, rules, lenindex, newElt, newword, objval, newrule,
-      empty, oldword, x;
+      empty, oldword, x, data, parent;
   UInt i, nr, len, stopper, nrrules, b, s, r, p, j, k, int_limit, nrgens,
       intval, stop, one;
+  bool   report;
+  size_t batch_size;
+  initRNams();
 
-  assert(data_type(data) == UNKNOWN);
+  if (CALL_1ARGS(IsSemigroup, obj) == True) {
+    parent     = obj;
+    report     = semi_obj_get_report(obj);
+    batch_size = semi_obj_get_batch_size(obj);
+    data       = semi_obj_get_fropin(obj);
+  } else {
+    parent = ElmPRec(obj, RNamName("parent"));
+    assert(CALL_1ARGS(IsSemigroup, parent) == True);
+    data       = obj;
+    report     = semi_obj_get_report(parent);
+    batch_size = semi_obj_get_batch_size(parent);
+  }
+  assert(semi_obj_get_type(parent) == UNKNOWN);
 
-  // TODO if looking check that something in elts doesn't already satisfy the
-  // lookfunc
+  // TODO(JDM) if looking check that something in elts doesn't already satisfy
+  // the lookfunc
 
   // remove nrrules
   if (looking == True) {
@@ -65,12 +106,10 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
   nr = INT_INTOBJ(ElmPRec(data, RNamName("nr")));
 
   if (i > nr || (size_t) INT_INTOBJ(limit) <= nr) {
+    CHANGED_BAG(parent);
     return data;
   }
-  int_limit = std::max((size_t) INT_INTOBJ(limit),
-                       (size_t)(nr + data_batch_size(data)));
-
-  bool report = rec_get_report(data);
+  int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
 
   Reporter reporter;
   reporter.report(report);
@@ -137,7 +176,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
     while (i <= nr && (UInt) LEN_PLIST(ELM_PLIST(words, i)) == len && !stop) {
       b = INT_INTOBJ(ELM_PLIST(first, i));
       s = INT_INTOBJ(ELM_PLIST(suffix, i));
-      RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC); // from T_PLIST_EMPTY
+      RetypeBag(ELM_PLIST(right, i), T_PLIST_CYC);  // from T_PLIST_EMPTY
       for (j = 1; j <= nrgens; j++) {
         if (s != 0 && ELM_PLIST2(reduced, s, j) == False) {
           r = INT_PLIST2(right, s, j);
@@ -239,14 +278,14 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
             }
           }
         }
-      } // finished applying gens to <elts[i]>
+      }  // finished applying gens to <elts[i]>
       stop = (stop || i == stopper);
       i++;
-    } // finished words of length <len> or <stop>
+    }  // finished words of length <len> or <stop>
     if (i > nr || (UInt) LEN_PLIST(ELM_PLIST(words, i)) != len) {
       if (len > 1) {
         for (j = INT_INTOBJ(ELM_PLIST(lenindex, len)); j <= i - 1; j++) {
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); // from T_PLIST_EMPTY
+          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC);  // from T_PLIST_EMPTY
           p = INT_INTOBJ(ELM_PLIST(prefix, j));
           b = INT_INTOBJ(ELM_PLIST(final, j));
           for (k = 1; k <= nrgens; k++) {
@@ -256,7 +295,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
         }
       } else if (len == 1) {
         for (j = INT_INTOBJ(ELM_PLIST(lenindex, len)); j <= i - 1; j++) {
-          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC); // from T_PLIST_EMPTY
+          RetypeBag(ELM_PLIST(left, j), T_PLIST_CYC);  // from T_PLIST_EMPTY
           b = INT_INTOBJ(ELM_PLIST(final, j));
           for (k = 1; k <= nrgens; k++) {
             SET_ELM_PLIST2(
@@ -284,6 +323,7 @@ Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking) {
   AssPRec(data, RNamName("len"), INTOBJ_INT(len));
 
   CHANGED_BAG(data);
+  CHANGED_BAG(parent);
 
   return data;
 }

@@ -11,10 +11,10 @@
 # This file contains declarations of everything required for a semigroup
 # belonging to IsActingSemigroup...
 
-DeclareCategory("IsActingSemigroup", IsSemigroup and IsFinite, 8);
-# so that the rank of IsActingSemigroup is higher than that of
-# IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, and
-# IsSemigroupIdeal and IsFinite and HasGeneratorsOfSemigroupIdeal
+# The rank of IsActingSemigroup is incremented by 8 so that it is greater than
+# IsSemigroup and IsFinite and HasGeneratorsOfSemigroup, and IsSemigroupIdeal
+# and IsFinite and HasGeneratorsOfSemigroupIdeal
+DeclareCategory("IsActingSemigroup", IsEnumerableSemigroupRep and IsFinite, 8);
 
 DeclareProperty("IsGeneratorsOfActingSemigroup",
                 IsMultiplicativeElementCollection);

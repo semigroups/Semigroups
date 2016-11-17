@@ -16,4 +16,4 @@ rm pkg/semigroups/tst/workspaces/test-output.w
 echo -en 'travis_fold:end:SaveWorkspaceTests\r'
 
 # Check the logs for invalid phrases
-( ! grep -E "Diff|brk>|#E|Error|# WARNING|fail|Syntax warning|Couldn't open saved workspace" testlog.txt )
+( ! grep -E "Diff|brk>|#E|Error|error|# WARNING|fail|Syntax warning|Couldn't open saved workspace" testlog.txt )

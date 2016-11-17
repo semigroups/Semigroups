@@ -144,13 +144,6 @@ end);
 InstallMethod(NrIdempotents, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  if SEMIGROUPS.IsCCSemigroup(S) then
-    return SEMIGROUP_NR_IDEMPOTENTS(GenericSemigroupData(S));
-  fi;
   return Length(Idempotents(S));
 end);
 
@@ -181,28 +174,6 @@ function(S)
   SetIsGroupAsSemigroup(U, true);
   UseIsomorphismRelation(U, Range(iso));
   return U;
-end);
-
-# same method for ideals
-
-InstallMethod(RightCayleyGraphSemigroup, "for a semigroup",
-[IsSemigroup], 3,
-function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-  return SEMIGROUP_RIGHT_CAYLEY_GRAPH(GenericSemigroupData(S));
-end);
-
-# same method for ideals
-
-InstallMethod(LeftCayleyGraphSemigroup, "for a semigroup",
-[IsSemigroup], 3,
-function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-  return SEMIGROUP_LEFT_CAYLEY_GRAPH(GenericSemigroupData(S));
 end);
 
 # same method for ideals
@@ -416,9 +387,6 @@ end);
 
 # same method for ideals
 
-# note that IsGroup and IsGroupAsSemigroup are mutually exclusive
-# so the following method is not called for PermGroups etc
-
 InstallMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup],
 function(S)
@@ -509,10 +477,10 @@ S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 ##    semigroups.
 #############################################################################
 
-InstallMethod(IsGreensDLeq, "for a finite semigroup",
-[IsSemigroup],
+InstallMethod(IsGreensDLeq, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep],
 function(S)
-  local digraph, data, id;
+  local digraph, id;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -520,21 +488,20 @@ function(S)
 
   digraph := Digraph(PartialOrderOfDClasses(S));
   digraph := DigraphReflexiveTransitiveClosure(digraph);
-  data := GenericSemigroupData(S);
   id := GreensDRelation(S)!.data.id;
   return function(x, y)
     local i, j;
-    i := id[Position(data, x)];
-    j := id[Position(data, y)];
+    i := id[PositionCanonical(S, x)];
+    j := id[PositionCanonical(S, y)];
     # TODO should be a better way of checking the below
     return j in OutNeighboursOfVertex(digraph, i);
   end;
 end);
 
-InstallMethod(MaximalDClasses, "for a semigroup",
-[IsSemigroup],
+InstallMethod(MaximalDClasses, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep],
 function(S)
-  local gens, partial, data, id, pos, i, out, classes, x;
+  local gens, partial, id, enum, pos, i, out, classes, x;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -542,12 +509,12 @@ function(S)
 
   gens    := GeneratorsOfSemigroup(S);
   partial := PartialOrderOfDClasses(S);
-  data    := GenericSemigroupData(S);
   id      := GreensDRelation(S)!.data.id;
+  enum    := Enumerator(S);
   pos     := [];
 
   for x in gens do
-    i := id[Position(data, x)];
+    i := id[Position(enum, x)];
     #index of the D-class containing x
     AddSet(pos, i);
   od;
@@ -644,20 +611,16 @@ function(D)
 end);
 
 InstallMethod(MultiplicativeNeutralElement,
-"for a semigroup with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup],
+"for an enumerable semigroup with generators",
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
   local D, e;
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if IsMultiplicativeElementWithOneCollection(S) and One(S) in S then
+  elif IsMultiplicativeElementWithOneCollection(S) and One(S) in S then
     return One(S);
-  fi;
-
-  if Length(MaximalDClasses(S)) > 1 then
+  elif Length(MaximalDClasses(S)) > 1 then
     return fail;
   fi;
 
@@ -696,17 +659,16 @@ function(S)
   return RepresentativeOfMinimalIdealNC(S);
 end);
 
-InstallMethod(RepresentativeOfMinimalIdealNC, "for a semigroup",
-[IsSemigroup],
+InstallMethod(RepresentativeOfMinimalIdealNC, "for an enumerable semigroup",
+[IsEnumerableSemigroupRep],
 function(S)
-  local data, comps;
+  local comps;
 
-  data := Enumerate(GenericSemigroupData(S));
-  comps := GreensRRelation(S)!.data.comps;
-  return SEMIGROUP_AS_LIST(data)[comps[1][1]];
-  #TODO use enumerator here instead
-  # the first component (i.e. the inner most) of the strongly connected
+  # The first component (i.e. the inner most) of the strongly connected
   # components of the right Cayley graph corresponds the minimal ideal.
+
+  comps := GreensRRelation(S)!.data.comps;
+  return EnumeratorCanonical(S)[comps[1][1]];
 end);
 
 InstallMethod(InversesOfSemigroupElementNC,

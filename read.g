@@ -24,7 +24,7 @@ ReadPackage("semigroups/gap/elements/trans.gi");
 ReadPackage("semigroups/gap/elements/elements.gi");
 ReadPackage("semigroups/gap/elements/pperm.gi");
 
-ReadPackage("semigroups/gap/semigroups/semi.gi");
+ReadPackage("semigroups/gap/semigroups/semigrp.gi");
 ReadPackage("semigroups/gap/semigroups/grpperm.gi");
 ReadPackage("semigroups/gap/semigroups/semirms.gi");
 ReadPackage("semigroups/gap/semigroups/semibipart.gi");
@@ -40,24 +40,26 @@ ReadPackage("semigroups/gap/semigroups/semicons.gi");
 ReadPackage("semigroups/gap/semigroups/semigraph.gi");
 ReadPackage("semigroups/gap/semigroups/semiffmat.gi");
 ReadPackage("semigroups/gap/semigroups/grpffmat.gi");
+ReadPackage("semigroups/gap/semigroups/semiquo.gi");
 
-ReadPackage("semigroups/gap/main/froidure-pin.gi");
+ReadPackage("semigroups/gap/main/fropin.gi");
 ReadPackage("semigroups/gap/main/setup.gi");
 ReadPackage("semigroups/gap/main/acting.gi");
 ReadPackage("semigroups/gap/main/lambda-rho.gi");
 ReadPackage("semigroups/gap/main/graded.gi");
 ReadPackage("semigroups/gap/main/orbits.gi");
-ReadPackage("semigroups/gap/main/semigroups-acting.gi");
+ReadPackage("semigroups/gap/main/semiact.gi");
 
 ReadPackage("semigroups/gap/ideals/ideals.gi");
-ReadPackage("semigroups/gap/ideals/ideals-acting.gi");
-ReadPackage("semigroups/gap/ideals/ideals-lambda-rho.gi");
-ReadPackage("semigroups/gap/ideals/ideals-generic.gi");
+ReadPackage("semigroups/gap/ideals/idealact.gi");
+ReadPackage("semigroups/gap/ideals/ideallam.gi");
+ReadPackage("semigroups/gap/ideals/idealenu.gi");
 
-ReadPackage("semigroups/gap/greens/greens-generic.gi");
-ReadPackage("semigroups/gap/greens/greens-acting.gi");
-ReadPackage("semigroups/gap/greens/greens-regular.gi");
-ReadPackage("semigroups/gap/greens/greens-inverse.gi");
+ReadPackage("semigroups/gap/greens/gree.gi");
+ReadPackage("semigroups/gap/greens/gren.gi");
+ReadPackage("semigroups/gap/greens/grac.gi");
+ReadPackage("semigroups/gap/greens/gracreg.gi");
+ReadPackage("semigroups/gap/greens/gracinv.gi");
 
 ReadPackage("semigroups/gap/tools/display.gi");
 ReadPackage("semigroups/gap/tools/io.gi");
@@ -82,11 +84,9 @@ ReadPackage("semigroups/gap/congruences/conguniv.gi");
 ReadPackage("semigroups/gap/congruences/conginv.gi");
 ReadPackage("semigroups/gap/congruences/congsimple.gi");
 ReadPackage("semigroups/gap/congruences/congrees.gi");
-ReadPackage("semigroups/gap/congruences/quotients.gi");
 ReadPackage("semigroups/gap/congruences/cong.gi");
 ReadPackage("semigroups/gap/congruences/conglatt.gi");
 
-ReadPackage("semigroups/gap/fp/fpsemi.gi");
 ReadPackage("semigroups/gap/fp/freeinverse.gi");
 ReadPackage("semigroups/gap/fp/freeband.gi");
 

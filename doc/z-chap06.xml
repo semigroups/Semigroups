@@ -71,25 +71,28 @@
     <A>S</A> is an ideal of such a semigroup.
   
     <List>
-      <Mark><C>generic</C></Mark>
+      <Mark><C>acting</C></Mark>
       <Item> 
         this component should be <K>true</K> or <K>false</K>. 
         
-        Roughly speaking,
-        there are two types of methods in the &Semigroups; package: exhaustive
-        and non-exhaustive; see Section <Ref Sect = "Introduction"/>.
-        In order for a semigroup to use the non-exhaustive methods in
-        &Semigroups; it must satisfy <C>IsNonExhaustiveSemigroup</C>.  By
+        Roughly speaking, there are two types of methods in the &Semigroups;
+        package: those for semigroups which have to be fully enumerated, and
+        those for semigroups that do not; see Section <Ref Sect =
+          "Introduction"/>.
+        In order for a semigroup to use the latter methods in 
+        &Semigroups; it must satisfy <Ref Prop="IsActingSemigroup"/>.  By
         default any semigroup or monoid of transformations, partial
         permutations, Rees 0-matrix elements, or bipartitions satisfies
-        <C>IsNonExhaustiveSemigroup</C>.<P/>
+        <C>IsActingSemigroup</C>.<P/>
 
-        It might be preferable to use the exhaustive algorithms to compute with
-        a semigroup, or these might be the only methods available. If this is
-        the case, then the value of this component can be set <K>true</K> when
-        the semigroup is created.  Following this none of the non-exhaustive
-        methods in the &Semigroups; package will be used to compute anything
-        about the semigroup.
+        There are cases (such as when it is known <E>a priori</E> that the
+        semigroup is &D;-trivial), when it might be preferable to use the
+        methods that involve fully enumerating a semigroup. In other words, it
+        might be desirable to disable the more sophisticated methods for acting
+        semigroups.  If this is the case, then the value of this component can
+        be set <K>false</K> when the semigroup is created.  Following this none
+        of the special methods for acting semigroup will be used to compute
+        anything about the semigroup.
       </Item>
 
       <Mark><C>regular</C></Mark>

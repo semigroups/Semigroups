@@ -23,7 +23,6 @@
 #include "gap.h"
 
 #include <assert.h>
-#include <time.h> // FIXME remove this it's not used
 
 #include <iostream>
 
@@ -31,7 +30,7 @@
 #include "congpairs.h"
 #include "converter.h"
 #include "fropin.h"
-#include "ideals.h"
+#include "semigrp.h"
 #include "ufdata.h"
 
 #include "semigroupsplusplus/semigroups.h"
@@ -46,8 +45,8 @@
 Obj TheTypeTSemiObj;
 Obj TheTypeTBlocksObj;
 
-Obj TYPE_BIPART;  // function
-Obj TYPES_BIPART; // plist
+Obj TYPE_BIPART;   // function
+Obj TYPES_BIPART;  // plist
 
 UInt T_SEMI   = 0;
 UInt T_BIPART = 0;
@@ -74,20 +73,19 @@ inline UInt LoadUIntBiggest() {
 
 void TSemiObjPrintFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_SEMIGP:
-      Pr("<wrapper for instance of C++ Semigroup class>", 0L, 0L);
-      break;
-    case T_SEMI_SUBTYPE_CONVER:
-      Pr("<wrapper for instance of C++ Converter class>", 0L, 0L);
-      break;
-    case T_SEMI_SUBTYPE_UFDATA:
+    case T_SEMI_SUBTYPE_UFDATA: {
       Pr("<wrapper for instance of C++ UFData class>", 0L, 0L);
       break;
-    case T_SEMI_SUBTYPE_CONG:
+    }
+    case T_SEMI_SUBTYPE_CONG: {
       Pr("<wrapper for instance of C++ Congruence class>", 0L, 0L);
       break;
-    default:
-      assert(false);
+    }
+    case T_SEMI_SUBTYPE_ENSEMI: {
+      Pr("<wrapper for C++ semigroup objects>", 0L, 0L);
+      break;
+    }
+    default: { assert(false); }
   }
 }
 
@@ -120,32 +118,37 @@ Int TBlocksObjIsMutableObjFuncs(Obj o) {
 // Function to free a T_SEMI Obj during garbage collection.
 
 void TSemiObjFreeFunc(Obj o) {
+  assert(TNUM_OBJ(o) == T_SEMI);
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_SEMIGP:
-      delete CLASS_OBJ<Semigroup>(o);
+    case T_SEMI_SUBTYPE_UFDATA: {
+      delete CLASS_OBJ<UFData*>(o);
       break;
-    case T_SEMI_SUBTYPE_CONVER:
-      delete CLASS_OBJ<Converter>(o);
+    }
+    case T_SEMI_SUBTYPE_CONG: {
+      delete CLASS_OBJ<Congruence*>(o);
       break;
-    case T_SEMI_SUBTYPE_UFDATA:
-      delete CLASS_OBJ<UFData>(o);
+    }
+    case T_SEMI_SUBTYPE_ENSEMI: {
+      if (en_semi_get_type(o) != UNKNOWN) {
+        // don't use functions to access these since they have too many
+        // side effects
+        delete CLASS_OBJ<Converter*>(o, 4);
+        delete CLASS_OBJ<Semigroup*>(o, 5);
+      }
       break;
-    case T_SEMI_SUBTYPE_CONG:
-      delete CLASS_OBJ<Congruence>(o);
-      break;
-    default:
-      assert(false);
+    }
+    default: { assert(false); }
   }
 }
 
 void TBipartObjFreeFunc(Obj o) {
   assert(TNUM_OBJ(o) == T_BIPART);
-  delete CLASS_OBJ<Bipartition>(o);
+  delete bipart_get_cpp(o);
 }
 
 void TBlocksObjFreeFunc(Obj o) {
   assert(TNUM_OBJ(o) == T_BLOCKS);
-  delete CLASS_OBJ<Blocks>(o);
+  delete blocks_get_cpp(o);
 }
 
 // Functions to return the GAP-level type of a T_SEMI Obj
@@ -155,7 +158,7 @@ Obj TSemiObjTypeFunc(Obj o) {
 }
 
 Obj TBipartObjTypeFunc(Obj o) {
-  return ELM_PLIST(TYPES_BIPART, CLASS_OBJ<Bipartition>(o)->degree() + 1);
+  return ELM_PLIST(TYPES_BIPART, bipart_get_cpp(o)->degree() + 1);
 }
 
 Obj TBlocksObjTypeFunc(Obj o) {
@@ -171,16 +174,28 @@ void TSemiObjSaveFunc(Obj o) {
 
   switch (SUBTYPE_OF_T_SEMI(o)) {
     case T_SEMI_SUBTYPE_UFDATA: {
-      UFData* uf = CLASS_OBJ<UFData>(o);
+      UFData* uf = CLASS_OBJ<UFData*>(o);
       SaveUIntBiggest(uf->get_size());
       for (size_t i = 0; i < uf->get_size(); i++) {
         SaveUIntBiggest(uf->find(i));
       }
       break;
     }
-    default: // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_SEMIGP,
-             // T_SEMI_SUBTYPE_CONVER, T_SEMI_SUBTYPE_CONG do nothing further
+    case T_SEMI_SUBTYPE_ENSEMI: {
+      // [t_semi_subtype_t, en_semi_t, gap_semigroup_t, size_t degree]
+      // only store gap_semigroup_t and degree if en_semi_get_semi_obj !=
+      // UNKNOWN.
+      SaveUInt4(en_semi_get_type(o));
+      if (en_semi_get_type(o) != UNKNOWN) {
+        SaveSubObj(en_semi_get_semi_obj(o));
+        SaveUInt4(en_semi_get_degree(o));
+      }
       break;
+    }
+    default: {  // for T_SEMI Objs of subtype T_SEMI_SUBTYPE_CONG
+                // do nothing further
+      break;
+    }
   }
 }
 
@@ -188,17 +203,9 @@ void TSemiObjLoadFunc(Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
 
   t_semi_subtype_t type = static_cast<t_semi_subtype_t>(LoadUInt4());
-  ADDR_OBJ(o)[1]        = (Obj) type;
+  ADDR_OBJ(o)[0]        = reinterpret_cast<Obj>(type);
 
   switch (type) {
-    case T_SEMI_SUBTYPE_SEMIGP: {
-      ADDR_OBJ(o)[0] = static_cast<Obj>(nullptr);
-      break;
-    }
-    case T_SEMI_SUBTYPE_CONVER: {
-      ADDR_OBJ(o)[0] = static_cast<Obj>(nullptr);
-      break;
-    }
     case T_SEMI_SUBTYPE_UFDATA: {
       size_t               size  = LoadUIntBiggest();
       std::vector<size_t>* table = new std::vector<size_t>();
@@ -206,18 +213,32 @@ void TSemiObjLoadFunc(Obj o) {
       for (size_t i = 0; i < size; i++) {
         table->push_back(LoadUIntBiggest());
       }
-      ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new UFData(*table));
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new UFData(*table));
       break;
     }
     case T_SEMI_SUBTYPE_CONG: {
-      ADDR_OBJ(o)[0] = static_cast<Obj>(nullptr);
+      ADDR_OBJ(o)[1] = static_cast<Obj>(nullptr);
       break;
     }
+    case T_SEMI_SUBTYPE_ENSEMI: {
+      en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
+      ADDR_OBJ(o)[1]   = reinterpret_cast<Obj>(s_type);
+      if (s_type != UNKNOWN) {
+        assert(SIZE_OBJ(o) == 6 * SIZEOF_VOID_P);
+        ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
+        ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
+        ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);           // Converter*
+        ADDR_OBJ(o)[5] = static_cast<Obj>(nullptr);           // Semigroup*
+        CHANGED_BAG(o);
+      }
+      break;
+    }
+    default: { assert(false); }
   }
 }
 
 void TBipartObjSaveFunc(Obj o) {
-  Bipartition* b = CLASS_OBJ<Bipartition>(o);
+  Bipartition* b = bipart_get_cpp(o);
   SaveUInt4(b->degree());
   for (auto it = b->begin(); it < b->end(); it++) {
     SaveUInt4(*it);
@@ -237,7 +258,7 @@ void TBipartObjLoadFunc(Obj o) {
 }
 
 void TBlocksObjSaveFunc(Obj o) {
-  Blocks* b = CLASS_OBJ<Blocks>(o);
+  Blocks* b = blocks_get_cpp(o);
   SaveUInt4(b->degree());
   if (b->degree() != 0) {
     SaveUInt4(b->nr_blocks());
@@ -318,6 +339,7 @@ Obj HTValue;
 Obj HTAdd;
 Obj infinity;
 Obj Ninfinity;
+Obj DimensionOfMatrixOverSemiring;
 Obj IsBooleanMat;
 Obj BooleanMatType;
 Obj IsMatrixOverSemiring;
@@ -339,6 +361,13 @@ Obj IntegerMatrixType;
 Obj IsPBR;
 Obj TYPES_PBR;
 Obj TYPE_PBR;
+Obj DegreeOfPBR;
+Obj FROPIN;
+Obj GeneratorsOfMagma;
+
+Obj IsSemigroup;
+Obj IsSemigroupIdeal;
+Obj IsActingSemigroup;
 
 /*****************************************************************************
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
@@ -347,7 +376,6 @@ Obj TYPE_PBR;
 typedef Obj (*GVarFilt)(/*arguments*/);
 
 static StructGVarFilt GVarFilts[] = {
-
     {"IS_BIPART",
      "obj",
      &IsBipartFilt,
@@ -367,146 +395,101 @@ static StructGVarFilt GVarFilts[] = {
 
 typedef Obj (*GVarFunc)(/*arguments*/);
 
-#define GVAR_FUNC_TABLE_ENTRY(srcfile, name, nparam, params) \
+#define GVAR_ENTRY(srcfile, name, nparam, params) \
   { #name, nparam, params, (GVarFunc) name, srcfile ":Func" #name }
 
 // Table of functions to export
-// FIXME the filenames are mostly wrong here
-static StructGVarFunc GVarFuncs[] = {
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_ENUMERATE,
-                          4,
-                          "data, limit, lookfunc, looking"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_RIGHT_CAYLEY_GRAPH,
-                          1,
-                          "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_LEFT_CAYLEY_GRAPH,
-                          1,
-                          "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_ELEMENT_NUMBER,
-                          2,
-                          "data, pos"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_ELEMENT_NUMBER_SORTED,
-                          2,
-                          "data, pos"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_NEXT_ITERATOR, 1, "iter"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_NEXT_ITERATOR_SORTED,
-                          1,
-                          "iter"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_IS_DONE_ITERATOR,
-                          1,
-                          "iter"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_IS_DONE_ITERATOR_CC,
-                          1,
-                          "iter"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_AS_LIST, 1, "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_AS_SET, 1, "data"),
 
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_RELATIONS, 1, "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_FACTORIZATION,
-                          2,
-                          "data, pos"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_SIZE, 1, "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_NR_IDEMPOTENTS, 1, "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_CLOSURE,
-                          3,
-                          "old_data, coll, degree"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_ADD_GENERATORS,
-                          2,
-                          "data, coll"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CURRENT_SIZE, 1, "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_CURRENT_NR_RULES,
-                          1,
-                          "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_POSITION, 2, "data, x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_POSITION_CURRENT,
-                          2,
-                          "data, x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_POSITION_SORTED,
-                          2,
-                          "data, x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_IS_DONE, 1, "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_CURRENT_MAX_WORD_LENGTH,
-                          1,
-                          "data"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SEMIGROUP_LENGTH_ELEMENT,
-                          2,
-                          "data, pos"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", SEMIGROUP_CAYLEY_TABLE, 1, "data"),
-    GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_NR_CLASSES, 1, "cong"),
-    GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_IN, 2, "cong, pair"),
-    GVAR_FUNC_TABLE_ENTRY("congpairs.cc", CONG_PAIRS_LOOKUP_PART, 1, "cong"),
-    GVAR_FUNC_TABLE_ENTRY("congpairs.cc",
-                          CONG_PAIRS_CLASS_COSET_ID,
-                          1,
-                          "class"),
-    GVAR_FUNC_TABLE_ENTRY("semifp.cc", FP_SEMI_SIZE, 1, "S"),
-    GVAR_FUNC_TABLE_ENTRY("semifp.cc", FP_SEMI_EQ, 3, "S, x, y"),
-    GVAR_FUNC_TABLE_ENTRY("semifp.cc", FP_SEMI_COSET_ID, 2, "S, x"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc",
-                          SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS,
-                          2,
-                          "scc1, scc2"),
-    GVAR_FUNC_TABLE_ENTRY("interface.cc", FIND_HCLASSES, 2, "left, right"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_NEW, 1, "size"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_COPY, 1, "ufdata"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_SIZE, 1, "ufdata"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_FIND, 2, "ufdata, i"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_UNION, 2, "ufdata, pair"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_FLATTEN, 1, "ufdata"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_TABLE, 1, "ufdata"),
-    GVAR_FUNC_TABLE_ENTRY("interface.c", UF_BLOCKS, 1, "ufdata"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NC, 1, "list"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_EXT_REP, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_INT_REP, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_HASH, 2, "x, data"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_DEGREE, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RANK, 2, "x, nothing"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_BLOCKS, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_NR_LEFT_BLOCKS, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_PERM_LEFT_QUO, 2, "x, y"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LEFT_PROJ, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RIGHT_PROJ, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_STAR, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LAMBDA_CONJ, 2, "x, y"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_STAB_ACTION, 2, "x, p"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_LEFT_BLOCKS, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BIPART_RIGHT_BLOCKS, 1, "x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_NC, 1, "blocks"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_EXT_REP, 1, "blocks"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_DEGREE, 1, "blocks"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_RANK, 1, "blocks"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_NR_BLOCKS, 1, "blocks"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_HASH, 2, "blocks, data"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_PROJ, 1, "blocks"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_EQ, 2, "blocks1, blocks2"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_LT, 2, "blocks1, blocks2"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_E_TESTER, 2, "left, right"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_E_CREATOR, 2, "left, right"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_LEFT_ACT, 2, "blocks, x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_RIGHT_ACT, 2, "blocks, x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_INV_LEFT, 2, "blocks, x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc", BLOCKS_INV_RIGHT, 2, "blocks, x"),
-    GVAR_FUNC_TABLE_ENTRY("bipart.cc",
-                          BIPART_NR_IDEMPOTENTS,
-                          5,
-                          "o, scc, lookup, nr_threads, report"),
-    GVAR_FUNC_TABLE_ENTRY("ideals.cc", IDEAL_SIZE, 1, "prec"),
+static StructGVarFunc GVarFuncs[] = {
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_ADD_GENERATORS, 2, "S, coll"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_LIST, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_SET, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_CAYLEY_TABLE, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_MAX_WORD_LENGTH, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_NR_RULES, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_SIZE, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_CLOSURE, 3, "new, old, coll"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER, 2, "S, pos"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER_SORTED, 2, "S, pos"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_ELMS_LIST, 2, "S, list"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_FACTORIZATION, 2, "S, pos"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_IDEMPOTENTS, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_IDEMS_SUBSET, 2, "S, list"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_IS_DONE, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_IS_DONE_ITERATOR, 1, "iter"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_LEFT_CAYLEY_GRAPH, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_LENGTH_ELEMENT, 2, "S, pos"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_NR_IDEMPOTENTS, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION, 2, "S, x"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION_CURRENT, 2, "S, x"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION_SORTED, 2, "S, x"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_RELATIONS, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_ENUMERATE, 2, "S, limit"),
+
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_NEXT_ITERATOR, 1, "iter"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_NEXT_ITERATOR_SORTED, 1, "iter"),
+
+    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_NR_CLASSES, 1, "cong"),
+    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_IN, 2, "cong, pair"),
+    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_LOOKUP_PART, 1, "cong"),
+    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_CLASS_COSET_ID, 1, "class"),
+
+    GVAR_ENTRY("semifp.cc", FP_SEMI_SIZE, 1, "S"),
+    GVAR_ENTRY("semifp.cc", FP_SEMI_EQ, 3, "S, x, y"),
+    GVAR_ENTRY("semifp.cc", FP_SEMI_COSET_ID, 2, "S, x"),
+
+    GVAR_ENTRY("fropin.cc",
+               SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS,
+               2,
+               "scc1, scc2"),
+    GVAR_ENTRY("fropin.cc", FIND_HCLASSES, 2, "left, right"),
+
+    GVAR_ENTRY("ufdata.cc", UF_NEW, 1, "size"),
+    GVAR_ENTRY("ufdata.cc", UF_COPY, 1, "ufdata"),
+    GVAR_ENTRY("ufdata.cc", UF_SIZE, 1, "ufdata"),
+    GVAR_ENTRY("ufdata.cc", UF_FIND, 2, "ufdata, i"),
+    GVAR_ENTRY("ufdata.cc", UF_UNION, 2, "ufdata, pair"),
+    GVAR_ENTRY("ufdata.cc", UF_FLATTEN, 1, "ufdata"),
+    GVAR_ENTRY("ufdata.cc", UF_TABLE, 1, "ufdata"),
+    GVAR_ENTRY("ufdata.cc", UF_BLOCKS, 1, "ufdata"),
+
+    GVAR_ENTRY("bipart.cc", BIPART_NC, 1, "list"),
+    GVAR_ENTRY("bipart.cc", BIPART_EXT_REP, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BIPART_INT_REP, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BIPART_HASH, 2, "x, data"),
+    GVAR_ENTRY("bipart.cc", BIPART_DEGREE, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BIPART_RANK, 2, "x, nothing"),
+    GVAR_ENTRY("bipart.cc", BIPART_NR_BLOCKS, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BIPART_NR_LEFT_BLOCKS, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BIPART_PERM_LEFT_QUO, 2, "x, y"),
+    GVAR_ENTRY("bipart.cc", BIPART_LEFT_PROJ, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BIPART_RIGHT_PROJ, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BIPART_STAR, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BIPART_LAMBDA_CONJ, 2, "x, y"),
+    GVAR_ENTRY("bipart.cc", BIPART_STAB_ACTION, 2, "x, p"),
+    GVAR_ENTRY("bipart.cc", BIPART_LEFT_BLOCKS, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BIPART_RIGHT_BLOCKS, 1, "x"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_NC, 1, "blocks"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_EXT_REP, 1, "blocks"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_DEGREE, 1, "blocks"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_RANK, 1, "blocks"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_NR_BLOCKS, 1, "blocks"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_HASH, 2, "blocks, data"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_PROJ, 1, "blocks"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_EQ, 2, "blocks1, blocks2"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_LT, 2, "blocks1, blocks2"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_E_TESTER, 2, "left, right"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_E_CREATOR, 2, "left, right"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_LEFT_ACT, 2, "blocks, x"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_RIGHT_ACT, 2, "blocks, x"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_INV_LEFT, 2, "blocks, x"),
+    GVAR_ENTRY("bipart.cc", BLOCKS_INV_RIGHT, 2, "blocks, x"),
+    GVAR_ENTRY("bipart.cc",
+               BIPART_NR_IDEMPOTENTS,
+               5,
+               "o, scc, lookup, nr_threads, report"),
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };
 
@@ -514,7 +497,6 @@ static StructGVarFunc GVarFuncs[] = {
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel(StructInitInfo* module) {
-
   /* init filters and functions                                          */
   InitHdlrFiltsFromTable(GVarFilts);
   InitHdlrFuncsFromTable(GVarFuncs);
@@ -531,7 +513,7 @@ static Int InitKernel(StructInitInfo* module) {
 
   InitCopyGVar("TheTypeTSemiObj", &TheTypeTSemiObj);
 
-  // TODO: CopyObjFuncs, CleanObjFuncs, IsMutableObjFuncs for T_SEMI bags
+  // TODO(JDM): CopyObjFuncs, CleanObjFuncs, IsMutableObjFuncs for T_SEMI bags
 
   // T_BIPART
   T_BIPART = RegisterPackageTNUM("TBipartObj", TBipartObjTypeFunc);
@@ -584,11 +566,14 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("TYPE_PBR", &TYPE_PBR);
 
   ImportGVarFromLibrary("IsPBR", &IsPBR);
+  ImportGVarFromLibrary("DegreeOfPBR", &DegreeOfPBR);
 
   ImportGVarFromLibrary("IsBooleanMat", &IsBooleanMat);
   ImportGVarFromLibrary("BooleanMatType", &BooleanMatType);
 
   ImportGVarFromLibrary("IsMatrixOverSemiring", &IsMatrixOverSemiring);
+  ImportGVarFromLibrary("DimensionOfMatrixOverSemiring",
+                        &DimensionOfMatrixOverSemiring);
 
   ImportGVarFromLibrary("IsMaxPlusMatrix", &IsMaxPlusMatrix);
   ImportGVarFromLibrary("MaxPlusMatrixType", &MaxPlusMatrixType);
@@ -616,6 +601,14 @@ static Int InitKernel(StructInitInfo* module) {
 
   ImportGVarFromLibrary("IsIntegerMatrix", &IsIntegerMatrix);
   ImportGVarFromLibrary("IntegerMatrixType", &IntegerMatrixType);
+
+  ImportGVarFromLibrary("FROPIN", &FROPIN);
+
+  ImportGVarFromLibrary("GeneratorsOfMagma", &GeneratorsOfMagma);
+
+  ImportGVarFromLibrary("IsSemigroup", &IsSemigroup);
+  ImportGVarFromLibrary("IsSemigroupIdeal", &IsSemigroupIdeal);
+  ImportGVarFromLibrary("IsActingSemigroup", &IsActingSemigroup);
 
   /* return success                                                      */
   return 0;

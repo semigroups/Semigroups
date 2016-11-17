@@ -71,12 +71,10 @@ function(x, S)
           and ActionDegree(x) <> ActionDegree(S))
       or (ActionDegree(x) > ActionDegree(S)) then
     return false;
-  elif HasGenericSemigroupData(S) then
-    if x in GenericSemigroupData(S) then
-      return true;
-    elif IsClosedData(GenericSemigroupData(S)) then
-      return false;
-    fi;
+  elif Position(S, x) <> fail then # check if x is already known to be in S
+    return true;
+  elif IsFullyEnumerated(S) then
+    return false;
   elif HasAsSSortedList(S) then
     return x in AsSSortedList(S);
   fi;
@@ -226,11 +224,11 @@ function(x, S)
 
   reps := data!.reps;
   repslens := data!.repslens;
-  
+
   bound := LambdaBound(S)(LambdaRank(S)(lambda));
-  if IsPosInt(bound) then 
+  if IsPosInt(bound) then
     max := bound / Size(LambdaOrbSchutzGp(lambdao, m));
-  else 
+  else
     max := bound;
   fi;
 

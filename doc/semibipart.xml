@@ -89,8 +89,9 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
       <A>S</A> is a transformation semigroup, partial permutation semigroup, or
       a permutation group, on <C>n</C> points,
       <C>IsomorphismBipartitionSemigroup</C> returns the natural embedding of
-      <A>S</A> into the partition monoid on <C>n</C> points. When <A>S</A> is a
-      generic semigroup, this function returns the right regular representation
+      <A>S</A> into the partition monoid on <C>n</C> points.<P/>
+      
+      The default method function returns the right regular representation
       of <A>S</A> acting on <A>S</A> with an identity adjoined.
       <P/>
 

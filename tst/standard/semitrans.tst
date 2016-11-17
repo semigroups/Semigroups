@@ -169,19 +169,19 @@ gap> OutNeighbours(last);
 #T# SemiTransTest7
 # SEMIGROUPS.SmallestElementRClass
 gap> x := Transformation([1, 1, 2]);;
-gap> S := Semigroup(x, rec(generic := false));
+gap> S := Semigroup(x, rec(acting := true));
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> SEMIGROUPS.SmallestElementRClass(RClass(S, x)) = x;
 true
 gap> S := FullTransformationMonoid(5);;
-gap> S := Semigroup(S, rec(generic := false));;
+gap> S := Semigroup(S, rec(acting := true));;
 gap> R := RClass(S, Transformation([3, 2, 4, 2, 1]));
 <Green's R-class: Transformation( [ 3, 2, 4, 2, 1 ] )>
 gap> SEMIGROUPS.SmallestElementRClass(R);
 Transformation( [ 1, 2, 3, 2, 4 ] )
 gap> S := Semigroup([Transformation([4, 4, 3, 6, 5, 1]), 
 >  Transformation([5, 4, 5, 4, 6, 6])]);;
-gap> S := Semigroup(S, rec(generic := false));;
+gap> S := Semigroup(S, rec(acting := true));;
 gap> R := RClass(S, Transformation([4, 4, 5, 6, 6, 5]));
 <Green's R-class: Transformation( [ 4, 4, 5, 6, 6, 5 ] )>
 gap> SEMIGROUPS.SmallestElementRClass(R);
@@ -190,19 +190,19 @@ Transformation( [ 1, 1, 5, 4, 4, 5 ] )
 #T# SemiTransTest8
 # SEMIGROUPS.LargestElementRClass and SEMIGROUPS.SmallestElementRClass
 gap> x := Transformation([1, 1, 2]);;
-gap> S := Semigroup(x, rec(generic := false));
+gap> S := Semigroup(x, rec(acting := true));
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> SEMIGROUPS.LargestElementRClass(RClass(S, x)) = x;
 true
 gap> S := FullTransformationMonoid(5);;
-gap> S := Semigroup(S, rec(generic := false));;
+gap> S := Semigroup(S, rec(acting := true));;
 gap> R := RClass(S, Transformation([4, 2, 4, 1, 2]));
 <Green's R-class: Transformation( [ 1, 3, 1, 2, 3 ] )>
 gap> SEMIGROUPS.LargestElementRClass(R);
 Transformation( [ 5, 4, 5, 3, 4 ] )
 gap> S := Semigroup([Transformation([4, 4, 3, 6, 5, 1]), 
 >  Transformation([5, 4, 5, 4, 6, 6])]);;
-gap> S := Semigroup(S, rec(generic := false));;
+gap> S := Semigroup(S, rec(acting := true));;
 gap> R := RClass(S, Transformation([4, 4, 5, 6, 6, 5]));
 <Green's R-class: Transformation( [ 4, 4, 5, 6, 6, 5 ] )>
 gap> SEMIGROUPS.LargestElementRClass(R);

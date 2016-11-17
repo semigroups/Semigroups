@@ -12,7 +12,7 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
-gap> SEMIGROUPS.DefaultOptionsRec.generic := false;;
+gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
 #T# ActingTest1
 gap> s := Semigroup(Transformation([2, 1, 4, 5, 6, 3]),

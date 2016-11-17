@@ -52,13 +52,13 @@ _InstallRandom0 := function(IsXMatrix)
   IsXSemigroup := Concatenation(IsXMatrix, "Semigroup");
   IsXMonoid := Concatenation(IsXMatrix, "Monoid");
 
-  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
   [EvalString(IsXSemigroup), IsList],
   function(filt, params)
     return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
   end);
-  
-  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+
+  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
   [EvalString(IsXMonoid), IsList],
   function(filt, params)
     return SEMIGROUPS_ProcessRandomArgsCons(IsSemigroup, params);
@@ -99,20 +99,20 @@ Unbind(_InstallRandom0);
 _ProcessArgs1 := function(filt, params)
   if Length(params) < 1 then # nr gens
     params[1] := Random([1 .. 20]);
-  elif not IsPosInt(params[1]) then 
+  elif not IsPosInt(params[1]) then
     return "the first argument (number of generators) must be a pos int,";
   fi;
   if Length(params) < 2 then # degree / dimension
     params[2] := Random([1 .. 20]);
-  elif not IsPosInt(params[2]) then 
+  elif not IsPosInt(params[2]) then
     return "the second argument (matrix dimension) must be a pos int,";
   fi;
   if Length(params) < 3 then # threshold
     params[3] := Random([1 .. 20]);
-  elif not IsPosInt(params[3]) then 
+  elif not IsPosInt(params[3]) then
     return "the third argument (semiring threshold) must be a pos int,";
   fi;
-  if Length(params) > 3 then 
+  if Length(params) > 3 then
     return "there must be at most three arguments,";
   fi;
   return params;
@@ -124,10 +124,10 @@ _InstallRandom1 := function(IsXMatrix)
   IsXSemigroup := Concatenation(IsXMatrix, "Semigroup");
   IsXMonoid := Concatenation(IsXMatrix, "Monoid");
 
-  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
   [EvalString(IsXSemigroup), IsList], _ProcessArgs1);
-  
-  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
+
+  InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
   [EvalString(IsXMonoid), IsList], _ProcessArgs1);
 
   InstallMethod(RandomSemigroupCons,
@@ -164,38 +164,38 @@ Unbind(_ProcessArgs1);
 ## Random for matrices with 2 additional parameters
 #############################################################################
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
-[IsNTPMatrixSemigroup, IsList], 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
+[IsNTPMatrixSemigroup, IsList],
 function(filt, params)
   if Length(params) < 1 then # nr gens
     params[1] := Random([1 .. 20]);
-  elif not IsPosInt(params[1]) then 
+  elif not IsPosInt(params[1]) then
     return "the second argument (number of generators) must be a pos int,";
   fi;
   if Length(params) < 2 then # dimension
     params[2] := Random([1 .. 20]);
-  elif not IsPosInt(params[2]) then 
+  elif not IsPosInt(params[2]) then
     return "the third argument (matrix dimension) must be a pos int,";
   fi;
   if Length(params) < 3 then # threshold
     params[3] := Random([1 .. 20]);
-  elif not IsPosInt(params[3]) then 
+  elif not IsPosInt(params[3]) then
     return "the fourth argument (semiring threshold) must be a pos int,";
   fi;
   if Length(params) < 4 then # period
     params[4] := Random([1 .. 20]);
-  elif not IsPosInt(params[4]) then 
+  elif not IsPosInt(params[4]) then
     return "the fifth argument (semiring period) must be a pos int,";
   fi;
-  if Length(params) > 4 then 
+  if Length(params) > 4 then
     return "there must be at most five arguments,";
   fi;
-  
+
   return params;
 end);
 
-InstallMethod(SEMIGROUPS_ProcessRandomArgsCons, 
-[IsNTPMatrixMonoid, IsList], 
+InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
+[IsNTPMatrixMonoid, IsList],
 function(filt, params)
   return SEMIGROUPS_ProcessRandomArgsCons(IsNTPMatrixSemigroup, params);
 end);
@@ -221,7 +221,6 @@ function(filt, params)
                                         params[3],
                                         params[4])));
 end);
-
 
 #############################################################################
 ## 1. Isomorphisms
@@ -695,7 +694,7 @@ InstallMethod(IsFinite,
 function(S)
   local gens, id, mat, row, val;
 
-  if SEMIGROUP_IS_DONE(Enumerate(GenericSemigroupData(S), 8192)) then 
+  if EN_SEMI_IS_DONE(Enumerate(S, 8192)) then
     return true;
   fi;
 
@@ -724,7 +723,7 @@ end);
 
 ## The next two methods (IsFinite, IsTorsion for Max-plus) rely primarily on:
 ## a)
-## Theorem 2.1 (positive solution to burnside problem) and 
+## Theorem 2.1 (positive solution to burnside problem) and
 ## theorem 2.2 (decidability of torsion problem), page 2 et.al, from:
 ## S. Gaubert, On the burnside problem for semigroups of matrices in the
 ## (max, +) algebra, Semigroup Forum, Volume 52, pp 271-292, 1996.
@@ -738,7 +737,7 @@ InstallMethod(IsFinite,
 "for max-plus matrix semigroups",
 [IsMaxPlusMatrixSemigroup],
 function(S)
-  if SEMIGROUP_IS_DONE(Enumerate(GenericSemigroupData(S), 8192)) then 
+  if EN_SEMI_IS_DONE(Enumerate(S, 8192)) then
     return true;
   fi;
   return IsTorsion(S);
@@ -775,8 +774,8 @@ function(S)
   return IsFinite(Semigroup(gens));
 end);
 
-## A method based on the original solution by S. Gaubert (On the burnside 
-## problem for semigroups of matrices in the (max, +) algebra), but 
+## A method based on the original solution by S. Gaubert (On the burnside
+## problem for semigroups of matrices in the (max, +) algebra), but
 ## modified by S. Burrell (see thesis http://tinyurl.com/gr94xha).
 
 InstallMethod(NormalizeSemigroup,

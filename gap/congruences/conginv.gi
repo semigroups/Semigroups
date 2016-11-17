@@ -71,19 +71,23 @@ function(S, kernel, traceBlocks)
 end);
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTraceNC,
-[IsSemigroupWithInverseOp and IsFinite, IsSemigroup, IsDenseList],
+[IsSemigroupWithInverseOp and IsFinite and IsEnumerableSemigroupRep, 
+ IsSemigroup, 
+ IsDenseList],
 function(S, kernel, traceBlocks)
-  local idsdata, traceLookup, i, elm, fam, cong;
+  local traceLookup, ES, fam, cong, i, elm;
+  
   # Sort blocks
   traceBlocks := SortedList(List(traceBlocks, SortedList));
 
   # Calculate lookup table for trace
   # Might remove lookup - might never be better than blocks
-  idsdata := GenericSemigroupData(IdempotentGeneratedSubsemigroup(S));
   traceLookup := [];
+  ES := IdempotentGeneratedSubsemigroup(S);
+
   for i in [1 .. Length(traceBlocks)] do
     for elm in traceBlocks[i] do
-      traceLookup[Position(idsdata, elm)] := i;
+      traceLookup[PositionCanonical(ES, elm)] := i;
     od;
   od;
   # Construct the object
@@ -217,14 +221,13 @@ function(cong)
   S := Range(cong);
   n := Size(S);
   classes := EquivalenceClasses(cong);
-  data := GenericSemigroupData(S);
-  elms := SEMIGROUP_AS_LIST(data);
+  elms := AsListCanonical(S);
   table := EmptyPlist(n);
   next := 1;
   for i in [1 .. n] do
     if not IsBound(table[i]) then
       for x in First(classes, class -> elms[i] in class) do
-        table[Position(data, x)] := next;
+        table[Position(S, x)] := next;
       od;
       next := next + 1;
     fi;
@@ -427,7 +430,7 @@ InstallMethod(MeetSemigroupCongruences,
 [IsInverseSemigroupCongruenceByKernelTrace,
  IsInverseSemigroupCongruenceByKernelTrace],
 function(c1, c2)
-  local S, kernel, traceBlocks, idsdata, c2lookup, block, classnos, classno;
+  local S, kernel, traceBlocks, ids, c2lookup, classnos, block, classno;
   S := Range(c1);
   if S <> Range(c2) then
     ErrorNoReturn("Semigroups: MeetSemigroupCongruences: usage,\n",
@@ -441,10 +444,10 @@ function(c1, c2)
 
   # Calculate the intersection of the traces
   traceBlocks := [];
-  idsdata := GenericSemigroupData(IdempotentGeneratedSubsemigroup(S));
+  ids := IdempotentGeneratedSubsemigroup(S);
   c2lookup := c2!.traceLookup;
   for block in c1!.traceBlocks do
-    classnos := c2lookup{List(block, x -> Position(idsdata, x))};
+    classnos := c2lookup{List(block, x -> Position(ids, x))};
     for classno in DuplicateFreeList(classnos) do
       Add(traceBlocks, block{Positions(classnos, classno)});
     od;
@@ -459,16 +462,16 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   # equivalence traceBlocks on the idempotents, and a list of pairs in S.
   # It returns the minimal congruence containing "kernel" in its kernel and
   # "traceBlocks" in its trace, and containing all the given pairs
-  #
+  # TODO Review this JDM for use of Elements, AsList etc. Could iterators work
+  # better?
   local idsmgp, idsdata, idslist, slist, kernelgenstoapply, gen, nrk, nr,
         traceUF, i, pos1, j, pos, hashlen, ht, treehashsize, right, genstoapply,
         NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions,
         compute_kernel, oldLookup, oldKernel, trace_unchanged, kernel_unchanged;
 
-  idsmgp := IdempotentGeneratedSubsemigroup(S);
-  idsdata := GenericSemigroupData(idsmgp);
-  idslist := SEMIGROUP_AS_LIST(idsdata);
-  slist := SEMIGROUP_AS_LIST(GenericSemigroupData(S));
+  idsmgp  := IdempotentGeneratedSubsemigroup(S);
+  idslist := AsListCanonical(idsmgp);
+  slist   := AsListCanonical(S);
 
   # Retrieve the initial information
   kernel := InverseSubsemigroup(S, kernel);

@@ -15,10 +15,8 @@ InstallImmediateMethod(IsSemigroupIdeal, IsSemigroup, 0, IsMagmaIdeal);
 InstallTrueMethod(IsSemigroupIdeal, IsMagmaIdeal and IsSemigroup);
 InstallTrueMethod(IsSemigroup, IsSemigroupIdeal);
 
-# this is here for generic semigroup ideals
-
-InstallMethod(SupersemigroupOfIdeal, "for a semigroup ideal",
-[IsSemigroupIdeal],
+InstallMethod(SupersemigroupOfIdeal, "for a enumerable semigroup ideal",
+[IsSemigroupIdeal and IsEnumerableSemigroupRep],
 function(I)
 
   if HasSupersemigroupOfIdeal(Parent(I)) then
@@ -417,12 +415,16 @@ function(S, gens, opts)
 
   filts := IsMagmaIdeal and IsAttributeStoringRep;
 
-  if not opts.generic
+  if opts.acting
       and (IsActingSemigroup(S) or IsGeneratorsOfActingSemigroup(gens)) then
     filts := filts and IsActingSemigroup;
+  elif IsEnumerableSemigroupRep(S) 
+    and IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsEnumerableSemigroupRep;
   fi;
 
   if IsMatrixOverFiniteFieldSemigroup(S) then
+    # TODO check if this clause is needed any more
     filts := filts and IsMatrixOverFiniteFieldSemigroup;
   fi;
 
@@ -461,7 +463,7 @@ function(S, gens, opts)
   SetParent(I, S);
   SetGeneratorsOfMagmaIdeal(I, gens);
 
-  if opts.generic then # to keep the craziness in the library happy!
+  if not opts.acting then # to keep the craziness in the library happy!
     SetActingDomain(I, S);
   elif IsActingSemigroup(I)
       and not (HasIsRegularSemigroup(I) and IsRegularSemigroup(I)) then

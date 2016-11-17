@@ -19,8 +19,8 @@
 // This file contains some functions for finitely presented semigroups and
 // monoids.
 
-#ifndef SRC_SEMIFP_H_
-#define SRC_SEMIFP_H_
+#ifndef SEMIGROUPS_SRC_SEMIFP_H_
+#define SEMIGROUPS_SRC_SEMIFP_H_
 
 #include "src/compiled.h"
 
@@ -28,4 +28,4 @@ Obj FP_SEMI_SIZE(Obj, Obj);
 Obj FP_SEMI_EQ(Obj, Obj, Obj, Obj);
 Obj FP_SEMI_COSET_ID(Obj, Obj, Obj);
 
-#endif // SRC_SEMIFP_H_
+#endif  // SEMIGROUPS_SRC_SEMIFP_H_

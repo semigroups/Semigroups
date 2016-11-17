@@ -16,13 +16,25 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef SRC_FROPIN_H_
-#define SRC_FROPIN_H_
+#ifndef SEMIGROUPS_SRC_FROPIN_H_
+#define SEMIGROUPS_SRC_FROPIN_H_
 
+#include "gap.h"
 #include "src/compiled.h"
 
-Obj fropin(Obj data, Obj limit, Obj lookfunc, Obj looking);
+#define ELM_PLIST2(plist, i, j) ELM_PLIST(ELM_PLIST(plist, i), j)
+
+// TODO(JDM) write doc
+size_t fropin_prod_by_reduction(gap_rec_t fp, size_t i, size_t j);
+
+// TODO(JDM) write doc
+gap_rec_t fropin(Obj        data,  // can be gap_semigroup_t or a prec
+                 gap_int_t  limit,
+                 gap_func_t lookfunc,
+                 gap_bool_t looking);
+
+// TODO(JDM) use gap_foo_t and write doc
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj, Obj, Obj);
 Obj FIND_HCLASSES(Obj, Obj, Obj);
 
-#endif // SRC_FROPIN_H_
+#endif  // SEMIGROUPS_SRC_FROPIN_H_

@@ -9,6 +9,34 @@
 
 # TODO: this is not really finished.
 
+# TODO
+#InstallMethod(FreeBandOfFreeBandElement,
+
+InstallMethod(ContentOfFreeBandElement, "for a free band element",
+[IsFreeBandElement],
+function(w)
+  return ListBlist([1 .. Length(w!.cont)], w!.cont);
+end);
+
+InstallMethod(ContentOfFreeBandElementCollection,
+"for a free band element collection",
+[IsFreeBandElementCollection],
+function(coll)
+  local n, content, w;
+  
+  n := Length(coll[1]!.cont);
+  content := BlistList([1 .. n], []);
+
+  for w in coll do 
+    UniteBlist(content, w!.cont);
+    if SizeBlist(content) = n then 
+      break;
+    fi;
+  od;
+
+  return ListBlist([1 .. n], content);
+end);
+
 ###############################################################################
 ## Internal
 ###############################################################################
@@ -61,7 +89,7 @@ InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
 
 InstallGlobalFunction(FreeBand,
 function(arg)
-  local names, F, type, gens, S, m, ngens;
+  local names, F, type, ngens, gens, word, filts, S, m;
 
   # Get and check the argument list, and construct names if necessary.
   if Length(arg) = 1 and IsInt(arg[1]) and 0 < arg[1] then
@@ -99,15 +127,21 @@ function(arg)
 
   StoreInfoFreeMagma(F, names, IsFreeBandElement);
 
-  S := Objectify(NewType(FamilyObj(gens),
-                         IsFreeBandCategory and
-                         IsAttributeStoringRep),
-                 rec());
+  filts := IsFreeBandCategory and IsAttributeStoringRep and IsWholeFamily and
+           IsFreeBand;
+
+  if IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsEnumerableSemigroupRep;
+  fi;
+
+  S := Objectify(NewType(FamilyObj(gens), filts), 
+                 rec(opts := SEMIGROUPS.DefaultOptionsRec));
+
   SetGeneratorsOfMagma(S, gens);
-  SetIsFreeBand(S, true);
+
   FamilyObj(S)!.semigroup := S;
   F!.semigroup := S;
-  SetIsWholeFamily(S, true);
+
   return S;
 end);
 
@@ -339,12 +373,19 @@ function(s)
   return IteratorByNextIterator(record);
 end);
 
-InstallMethod(GreensDClassOfElement, "for a free band an element",
+# The method below does not apply to S when it is in IsEnumerableSemigroupRep
+# since the rank of IsEnumerableSemigroupRep is highter than that of
+# IsFreeBandCategory. 
+
+InstallMethod(GreensDClassOfElement, "for a free band and element",
 [IsFreeBandCategory, IsFreeBandElement],
 function(S, x)
   local type, D;
-
-  if not x in S then
+  #FIXME in the future when free bands are not in IsEnumerableSemigroupRep,
+  # remove the next two lines
+  if IsEnumerableSemigroupRep(S) then 
+    TryNextMethod();
+  elif not x in S then
     ErrorNoReturn("Semigroups: GreensDClassOfElement: usage,\n",
                   "the element does not belong to the semigroup,");
   fi;
@@ -354,33 +395,10 @@ function(S, x)
   D := Objectify(type, rec());
   SetParent(D, S);
   SetRepresentative(D, x);
-  #SetEquivalenceClassRelation(D, GreensDRelation(S));
-  # TODO Add a new method for GreensDRelations. JJ
-  # JDM  This means basically that there are not enough methods installed here
-  # for free band Green's classes, so it is not possible to use free bands in
-  # GAP properly at the moment.
+  SetEquivalenceClassRelation(D, GreensDRelation(S));
+
   return D;
 end);
-
-#InstallMethod(GreensDRelation, "for a free band",
-#[IsFreeBandCategory],
-#function(S)
-#  local fam, rel;
-#
-#  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
-#                               ElementsFamily(FamilyObj(S)));
-#
-#  rel := Objectify(NewType(fam,
-#                           IsEquivalenceRelation
-#                           and IsEquivalenceRelationDefaultRep
-#                           and IsGreensDRelation),
-#                   rec());
-#  SetSource(rel, S);
-#  SetRange(rel, S);
-#  SetIsFiniteSemigroupGreensRelation(rel, true);
-#
-#  return rel;
-#end);
 
 InstallMethod(ViewString, "for a free band element",
 [IsFreeBandElement], PrintString);

@@ -18,6 +18,8 @@
 
 // Macros for partial perms in case they are not in gap/src/pperm.h
 
+#ifndef SEMIGROUPS_SRC_PPERM_H_
+#define SEMIGROUPS_SRC_PPERM_H_
 #ifndef NEW_PPERM2
 
 #define NEW_PPERM2(deg) \
@@ -37,5 +39,8 @@
 
 #define IS_PPERM(f) (TNUM_OBJ(f) == T_PPERM2 || TNUM_OBJ(f) == T_PPERM4)
 #define DEG_PPERM(f) (TNUM_OBJ(f) == T_PPERM2 ? DEG_PPERM2(f) : DEG_PPERM4(f))
+#define CODEG_PPERM(f) \
+  (UInt)(TNUM_OBJ(f) == T_PPERM2 ? CODEG_PPERM2(f) : CODEG_PPERM4(f))
 
 #endif
+#endif  // SEMIGROUPS_SRC_PPERM_H_

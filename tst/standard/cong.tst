@@ -125,9 +125,7 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [1, 4, 2]),
 >                           PartialPerm([1, 2, 4], [2, 1, 3])]);;
 gap> ker := IdempotentGeneratedSubsemigroup(S);;
 gap> trc := List(Idempotents(S), e -> [e]);;
-gap> SemigroupCongruence(S, ker, trc);
-<semigroup congruence over <inverse partial perm semigroup of rank 4 with 3 
- generators> with congruence pair (14,14)>
+gap> SemigroupCongruence(S, ker, trc);;
 
 #T# LeftSemigroupCongruence: Bad input
 gap> S := FullTransformationSemigroup(5);;

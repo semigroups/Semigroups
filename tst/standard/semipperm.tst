@@ -283,8 +283,6 @@ gap> HasIsGroupAsSemigroup(s);
 false
 gap> RepresentativeOfMinimalIdeal(s);
 (2,3)
-gap> HasIsGroupAsSemigroup(s);
-true
 gap> IsGroupAsSemigroup(s);
 true
 gap> RepresentativeOfMinimalIdeal(s) in s;

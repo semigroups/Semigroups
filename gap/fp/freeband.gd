@@ -15,3 +15,6 @@ DeclareSynonym("IsFreeBandSubsemigroup",
                IsSemigroup and IsFreeBandElementCollection);
 
 DeclareGlobalFunction("FreeBand");
+DeclareAttribute("ContentOfFreeBandElement", IsFreeBandElement);
+DeclareAttribute("ContentOfFreeBandElementCollection",
+                 IsFreeBandElementCollection);

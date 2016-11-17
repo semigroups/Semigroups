@@ -30,7 +30,7 @@
 
 #include "src/permutat.h"
 #include "src/precord.h"
-#include "src/semigroupsplusplus/timer.h"
+#include "src/semigroupsplusplus/report.h"
 
 // Global variables
 
@@ -61,11 +61,6 @@ Obj bipart_new_obj(Bipartition* x) {
 
 // Returns the pointer to the C++ blocks object from the GAP bipartition
 // object.
-
-inline Blocks* blocks_get_cpp(Obj x) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
-  return CLASS_OBJ<Blocks>(x);
-}
 
 // Create a new GAP blocks Obj from a C++ Blocks pointer.
 
