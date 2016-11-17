@@ -1383,11 +1383,11 @@ gap> R := ReesZeroMatrixSemigroup(S, [[id], [0]]);;
 gap> MatrixEntries(R);
 [ 0, <identity partial perm on [ 1, 2 ]> ]
 
-# Test for bug in kernel module 
+#T# Test for bug in kernel module
 gap> AsList(JonesMonoid(1));
 [ <block bijection: [ 1, -1 ]> ]
 
-# Kernel-trace methods should only be selected for semigroups with inverse op
+#T# Kernel-trace methods should only be selected for semigroups with inverse op
 gap> S := HallMonoid(2);;
 gap> latt := LatticeOfCongruences(S);
 [ [  ], [ 1, 3, 4 ], [ 1, 4 ], [ 1 ] ]
@@ -1420,6 +1420,32 @@ gap> ForAny(LClasses(D), L -> y in L);
 true
 gap> ForAll(LClasses(D), L -> ForAll(L, x -> x in L));
 true
+
+#T# Bug in AsInverseSemigroupCongruenceByKernelTrace - abnormal trace
+gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [5, 1, 2]),
+>                           PartialPerm([1, 2, 3, 4, 6], [3, 6, 4, 1, 5]),
+>                           PartialPerm([1, 2, 3, 4], [6, 1, 4, 2]),
+>                           PartialPerm([1, 3, 6], [4, 5, 2]),
+>                           PartialPerm([1, 3, 6], [1, 3, 6])]);;
+gap> pairs := [[PartialPerm([5], [1]), PartialPerm([ ], [ ])],
+>              [PartialPerm([1, 2, 3, 4], [1, 2, 3, 4]),
+>               PartialPerm([1, 3, 4, 6], [1, 3, 4, 6])]];;
+gap> cong := SemigroupCongruence(S, pairs);;
+gap> NrEquivalenceClasses(cong);
+32
+
+#T# Bug in AsInverseSemigroupCongruenceByKernelTrace - abnormal kernel
+gap> S := InverseSemigroup([PartialPerm([1, 2], [1, 6]),
+>                           PartialPerm([1, 2, 4, 5], [1, 4, 5, 3]),
+>                           PartialPerm([1, 3, 4], [1, 2, 5]),
+>                           PartialPerm([1, 2, 3, 5, 6], [5, 1, 6, 2, 4]),
+>                           PartialPerm([1, 2, 3, 5, 6], [5, 4, 3, 1, 2])]);;
+gap> pairs := [[PartialPerm([2, 5, 6], [1, 6, 5]),
+>               PartialPerm([2, 5, 6], [5, 1, 6])],
+>              [PartialPerm([5], [2]), PartialPerm([1, 5], [5, 4])]];;
+gap> cong := SemigroupCongruence(S, pairs);;
+gap> NrEquivalenceClasses(cong);
+954
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
@@ -1456,6 +1482,7 @@ gap> Unbind(map);
 gap> Unbind(mat);
 gap> Unbind(max);
 gap> Unbind(o);
+gap> Unbind(pairs);
 gap> Unbind(s);
 gap> Unbind(t);
 gap> Unbind(tuples);

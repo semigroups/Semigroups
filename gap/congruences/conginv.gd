@@ -21,6 +21,8 @@ DeclareAttribute("TraceOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("KernelOfSemigroupCongruence", IsSemigroupCongruence);
 DeclareAttribute("AsInverseSemigroupCongruenceByKernelTrace",
                  IsSemigroupCongruence);
+DeclareAttribute("InverseSemigroupCongruenceClassByKernelTraceType",
+                 IsInverseSemigroupCongruenceByKernelTrace);
 
 # Congruence Classes
 DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
