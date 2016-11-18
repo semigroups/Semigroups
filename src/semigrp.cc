@@ -52,10 +52,13 @@
   if (!IS_LIST(obj)) {                        \
     ERROR(obj, "the argument must be a list") \
   }
+#define CHECK_INTOBJ(obj)                         \
+  if (!IS_INTOBJ(obj)) {                          \
+    ERROR(obj, "the argument must be an integer") \
+  }
 #define CHECK_POS_INTOBJ(obj)                                  \
-  if (!IS_INTOBJ(obj)) {                                       \
-    ERROR(obj, "the argument must be an integer")              \
-  } else if (INT_INTOBJ(obj) < 0) {                            \
+  CHECK_INTOBJ(obj)                                            \
+  if (INT_INTOBJ(obj) < 0) {                                   \
     ERROR(obj, "the argument must be an non-negative integer") \
   }
 #else
@@ -896,11 +899,12 @@ gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist) {
 gap_semigroup_t
 EN_SEMI_ENUMERATE(Obj self, gap_semigroup_t so, gap_int_t limit) {
   CHECK_SEMI_OBJ(so);
-  CHECK_POS_INTOBJ(limit);  // FIXME limit can be -1, remove this
-
+  CHECK_INTOBJ(limit);
+  size_t c_limit =
+      (INT_INTOBJ(limit) < 0 ? Semigroup::LIMIT_MAX : INT_INTOBJ(limit));
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
-    en_semi_get_semi_cpp(es)->enumerate(INT_INTOBJ(limit),
+    en_semi_get_semi_cpp(es)->enumerate(c_limit,
                                         semi_obj_get_report(so));
   } else {
     fropin(so, limit, 0, False);

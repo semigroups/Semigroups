@@ -41,7 +41,7 @@ DeclareOperation("IteratorCanonical", [IsEnumerableSemigroupRep]);
 DeclareOperation("PositionCanonical", 
                  [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
 
-DeclareOperation("Enumerate", [IsEnumerableSemigroupRep, IsPosInt]);
+DeclareOperation("Enumerate", [IsEnumerableSemigroupRep, IsInt]);
 DeclareOperation("Enumerate", [IsEnumerableSemigroupRep]);
 
 DeclareOperation("IsFullyEnumerated", [IsEnumerableSemigroupRep]);

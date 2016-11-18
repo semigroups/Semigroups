@@ -542,13 +542,13 @@ end);
 
 InstallMethod(Enumerate,
 "for an enumerable semigroup with known generators and pos int",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup, IsPosInt],
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup, IsInt],
 EN_SEMI_ENUMERATE);
 
 InstallMethod(Enumerate, "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
-  return Enumerate(S, 1152921504606846975);
+  return Enumerate(S, -1);
 end);
 
 # same method for ideals
