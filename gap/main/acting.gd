@@ -8,7 +8,7 @@
 #############################################################################
 ##
 
-DeclareCategory("IsSemigroupData", IsList);
+DeclareCategory("IsSemigroupData", IsList and IsComponentObjectRep);
 DeclareFilter("IsClosedData", IsSemigroupData);
 
 DeclareAttribute("SemigroupData", IsActingSemigroup, "mutable");
