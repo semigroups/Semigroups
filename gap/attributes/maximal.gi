@@ -1016,7 +1016,7 @@ function(R, opts)
                 if u < v then
                   candidate := conjugator[u] * con[u][v][1];
                 else
-                  candidate := con[v][u][1] ^ -1 * conjugator[u];
+                  candidate := conjugator[u] * con[v][u][1] ^ -1;
                 fi;
 
                 # define the conjugator for cc <v> if it is not yet defined

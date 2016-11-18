@@ -777,6 +777,54 @@ gap> S := Monoid([
 gap> NrMaximalSubsemigroups(S);
 5
 
+#T# Fix for Issue #230
+# MaximalSubsemigroups subsemigroups for a Rees 0-matrix semigroup was failing
+# to find certain maximal subsemigroups of type 6 (intersect every H-class) when
+# the option 'contain' was being used.
+gap> G := Group([(1, 5, 4, 3, 2), (1, 5)(2, 4)]);;
+gap> mat := [
+> [(), 0, 0, 0, 0, 0],
+> [0, (), 0, 0, 0, 0],
+> [0, 0, (), 0, 0, 0],
+> [0, 0, 0, (), 0, 0],
+> [0, 0, 0, 0, (), 0],
+> [0, 0, 0, 0, 0, ()]];;
+gap> R := ReesZeroMatrixSemigroup(G, mat);
+<Rees 0-matrix semigroup 6x6 over Group([ (1,5,4,3,2), (1,5)(2,4) ])>
+gap> gens := [
+>  RMSElement(R, 1,(),6),
+>  RMSElement(R, 1,(1,5,4,3,2),2),
+>  RMSElement(R, 1,(1,5,4,3,2),3),
+>  RMSElement(R, 1,(1,5,4,3,2),4),
+>  RMSElement(R, 1,(1,5,4,3,2),5),
+>  RMSElement(R, 1,(1,5)(2,4),1),
+>  RMSElement(R, 2,(1,2,3,4,5),1),
+>  RMSElement(R, 3,(1,2,3,4,5),1),
+>  RMSElement(R, 4,(1,2,3,4,5),1),
+>  RMSElement(R, 5,(1,2,3,4,5),1),
+>  RMSElement(R, 6,(),1)];;
+gap> M := Semigroup(gens);
+<subsemigroup of 6x6 Rees 0-matrix semigroup with 11 generators>
+gap> contain := [
+>  RMSElement(R, 1,(1,5)(2,4),6),
+>  RMSElement(R, 1,(),6),
+>  RMSElement(R, 2,(1,2,3,4,5),1),
+>  RMSElement(R, 2,(),5),
+>  RMSElement(R, 3,(),2),
+>  RMSElement(R, 3,(1,3)(4,5),4),
+>  RMSElement(R, 4,(),3),
+>  RMSElement(R, 4,(1,3)(4,5),3),
+>  RMSElement(R, 5,(1,3)(4,5),4),
+>  RMSElement(R, 5,(),2),
+>  RMSElement(R, 6,(1,5,4,3,2),5),
+>  RMSElement(R, 6,(),1)];;
+gap> IsSubset(M, contain);
+true
+gap> max := MaximalSubsemigroups(R, rec(types := [6], contain := contain));
+[ <subsemigroup of 6x6 Rees 0-matrix semigroup with 17 generators> ]
+gap> M in max;
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(R);
 gap> Unbind(S);

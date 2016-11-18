@@ -1447,6 +1447,31 @@ gap> cong := SemigroupCongruence(S, pairs);;
 gap> NrEquivalenceClasses(cong);
 954
 
+#T# Fix for Issue 230: bug in MaximalSubsemigroups
+gap> mat := [
+> [(), 0, 0, 0, 0, 0],
+> [0, (), 0, 0, 0, 0],
+> [0, 0, (), 0, 0, 0],
+> [0, 0, 0, (), 0, 0],
+> [0, 0, 0, 0, (), 0],
+> [0, 0, 0, 0, 0, ()]];;
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 5, 4, 3, 2), (1, 5)(2, 4)]), mat);;
+gap> contain := [
+>  RMSElement(R, 1,(1,5)(2,4),6),
+>  RMSElement(R, 1,(),6),
+>  RMSElement(R, 2,(1,2,3,4,5),1),
+>  RMSElement(R, 2,(),5),
+>  RMSElement(R, 3,(),2),
+>  RMSElement(R, 3,(1,3)(4,5),4),
+>  RMSElement(R, 4,(),3),
+>  RMSElement(R, 4,(1,3)(4,5),3),
+>  RMSElement(R, 5,(1,3)(4,5),4),
+>  RMSElement(R, 5,(),2),
+>  RMSElement(R, 6,(1,5,4,3,2),5),
+>  RMSElement(R, 6,(),1)];;
+gap> MaximalSubsemigroups(R, rec(number := true, contain := contain));
+1
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
