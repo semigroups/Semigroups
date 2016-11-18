@@ -386,7 +386,7 @@ InstallMethod(MaximalSubsemigroupsNC,
 "for a Rees 0-matrix subsemigroup and a record",
 [IsReesZeroMatrixSubsemigroup, IsRecord],
 function(R, opts)
-  local Z, x, type, contain, mat, rows, cols, I, L, G, lookup_cols, lookup_rows,
+  local zero, x, type, contain, mat, rows, cols, I, L, G, lookup_cols, lookup_rows,
   out, tot, dig, pos, remove, i, n, nbs, deg, l, r, dig_contain, count,
   rectangles, bicomp_I, bicomp_L, b, invert, gens, one, reps, i1, l1, a, H1, l2,
   i2, H2, rows_in, rows_out, cols_in, cols_out, failed, iso, inv, R_n, iso_p,
@@ -401,7 +401,7 @@ function(R, opts)
     TryNextMethod();
   fi;
 
-  Z := MultiplicativeZero(R);
+  zero := MultiplicativeZero(R);
 
   opts := ShallowCopy(opts); # in case <opts> is immutable
 
@@ -421,7 +421,7 @@ function(R, opts)
   if IsBound(opts.D) then
     # A regular RZMS over a group has two D-classes: {0} and R\{0}.
     x := Representative(opts.D);
-    if x = Z then
+    if x = zero then
       opts.types := Intersection(opts.types, [2]);
     else
       opts.types := Intersection(opts.types, [1, 3, 4, 5, 6]);
@@ -459,17 +459,17 @@ function(R, opts)
   if type[1] then
     Info(InfoSemigroups, 2, "Type 1: looking for a maximal subsemigroup {0}",
                             "...");
-    if I = 1 and L = 1 and IsTrivial(G) and IsSubset([Z], contain) then
+    if I = 1 and L = 1 and IsTrivial(G) and IsSubset([zero], contain) then
       tot := tot + 1;
       if not opts.number then
         if opts.gens then
           if opts.zero then
-            Add(out, [Z]);
+            Add(out, [zero]);
           else
             Add(out, []);
           fi;
         else
-          Add(out, Semigroup(Z));
+          Add(out, Semigroup(zero));
         fi;
       fi;
       Info(InfoSemigroups, 2, "...found one result.");
@@ -487,12 +487,12 @@ function(R, opts)
     Info(InfoSemigroups, 2, "Type 2: looking for a maximal subsemigroup ",
                             "formed by discarding 0...");
     dig := RZMSDigraph(R);
-    if IsCompleteBipartiteDigraph(dig) and not Z in contain then
+    if IsCompleteBipartiteDigraph(dig) and not zero in contain then
       tot := tot + 1;
       if not opts.number then
         if opts.gens then
           x := ShallowCopy(GeneratorsOfSemigroup(R));
-          pos := Position(x, Z); # The 0 of <R> is necessarily contained in x
+          pos := Position(x, zero); # The 0 of <R> is necessarily contained in x
           Remove(x, pos);
         else
           x := ReesZeroMatrixSubsemigroupNC(R, rows, G, cols);
@@ -506,7 +506,7 @@ function(R, opts)
   fi;
 
   # All other maximal subsemigroups contain 0, so remove it from <contain>.
-  pos := Position(contain, Z);
+  pos := Position(contain, zero);
   if not pos = fail then
     Remove(contain, pos);
   fi;
@@ -575,11 +575,11 @@ function(R, opts)
           if opts.gens then
             x := ShallowCopy(GeneratorsOfSemigroup(x));
             if opts.zero and (r = 0 or r = l) then # 0 is necessarily a gen.
-              Add(x, Z);
+              Add(x, zero);
             fi;
           else
             if r = 0 or r = l then
-              x := Semigroup(x, Z);
+              x := Semigroup(x, zero);
             fi;
             SetIsReesZeroMatrixSemigroup(x, true);
           fi;
@@ -654,11 +654,11 @@ function(R, opts)
           if opts.gens then
             x := ShallowCopy(GeneratorsOfSemigroup(x));
             if opts.zero and (r = 0 or r = i) then # 0 must be a gen.
-              Add(x, Z);
+              Add(x, zero);
             fi;
           else
             if r = 0 or r = i then
-              x := Semigroup(x, Z);
+              x := Semigroup(x, zero);
             fi;
             SetIsReesZeroMatrixSemigroup(x, true);
           fi;
@@ -1016,7 +1016,7 @@ function(R, opts)
                 if u < v then
                   candidate := conjugator[u] * con[u][v][1];
                 else
-                  candidate := con[v][u][1] ^ -1 * conjugator[u];
+                  candidate := conjugator[u] * con[v][u][1] ^ -1;
                 fi;
 
                 # define the conjugator for cc <v> if it is not yet defined
@@ -1064,7 +1064,7 @@ function(R, opts)
       # TODO only need generating set for idempotents - don't not *every* idem
       idems := ShallowCopy(Idempotents(R));
       if not opts.zero or not IsCompleteBipartiteDigraph(RZMSDigraph(R_n)) then
-        Remove(idems, Position(idems, Z));
+        Remove(idems, Position(idems, zero));
       fi;
 
       # Max subsemigroup arising from <max[i]> <--> Transversal of <results[i]>
