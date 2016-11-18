@@ -609,6 +609,34 @@ end);
 ## 2. Technical Green's classes stuff . . .
 #############################################################################
 
+# Different method for regular/inverse
+
+InstallMethod(\<, "for Green's D-classes of an acting semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass,
+ IsGreensDClass and IsActingSemigroupGreensClass],
+function(x, y)
+  local scc;
+  if Parent(x) <> Parent(y) or x = y then  
+    return false;
+  fi;
+  scc  := OrbSCCLookup(SemigroupData(Parent(x)));
+  return scc[SemigroupDataIndex(x)] < scc[SemigroupDataIndex(y)];
+end);
+
+# Different method for regular/inverse
+
+InstallMethod(\<, "for Green's R-classes of an acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass,
+ IsGreensRClass and IsActingSemigroupGreensClass],
+function(x, y)
+  if Parent(x) <> Parent(y) or x = y then 
+    return false;
+  fi;
+  return SemigroupDataIndex(x) < SemigroupDataIndex(y);
+end);
+
+#TODO a method for L-classes?
+
 InstallMethod(IsRegularDClass, "for a Green's D-class",
 [IsGreensDClass and IsActingSemigroupGreensClass], IsRegularClass);
 

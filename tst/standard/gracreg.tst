@@ -247,9 +247,54 @@ gap> RClass(FullTransformationMonoid(6),
 > Transformation([3, 1, 2, 6, 4, 5])) in e;
 false
 
-# the following is highlighting a bug
+# FIXME the following is highlighting a bug
 #gap> e[1] in e;
 #true
+
+#Test \< for Green's classes of a regular semigroup
+gap> S := SymmetricInverseMonoid(5);;
+gap> Set([DClass(S, S.2) < DClass(S, S.3), DClass(S, S.3) < DClass(S, S.2)]);
+[ true, false ]
+gap> DClass(S, S.3) < DClass(S, S.3);
+false
+gap> Set([RClass(S, S.2) < RClass(S, S.3), RClass(S, S.3) < RClass(S, S.2)]);
+[ true, false ]
+gap> RClass(S, S.3) < RClass(S, S.3);
+false
+gap> Set([LClass(S, S.2) < LClass(S, S.3), LClass(S, S.3) < LClass(S, S.2)]);
+[ true, false ]
+gap> LClass(S, S.3) < LClass(S, S.3);
+false
+gap> T := Semigroup(Transformation([2, 4, 3, 4]));;
+gap> RClass(S, S.2) < RClass(T, T.1);
+false
+gap> DClass(S, S.2) < DClass(T, T.1);
+false
+
+#Test \< for regular Green's classes of a non-regular semigroup
+gap> S := Semigroup(Transformation([6, 5, 3, 3, 3, 1]), 
+>                   Transformation([5, 2, 5, 5, 1, 4]));;
+gap> R1 := GreensRClassOfElement(S, Transformation([1, 3, 3, 3, 3]));;
+gap> R2 := GreensRClassOfElement(S, Transformation([1, 2, 1, 1, 5, 5]));;
+gap> IsRegularClass(R1); IsRegularClass(R2);
+true
+true
+gap> Set([R1 < R2, R2 < R1]);
+[ true, false ]
+gap> L1 := GreensLClassOfElement(S, Transformation([1, 3, 3, 3, 3]));;
+gap> L2 := GreensLClassOfElement(S, Transformation([1, 2, 1, 1, 5, 5]));;
+gap> IsRegularClass(L1); IsRegularClass(L2);
+true
+true
+gap> Set([L1 < L2, L2 < L1]);
+[ true, false ]
+gap> D1 := GreensDClassOfElement(S, Transformation([1, 3, 3, 3, 3]));;
+gap> D2 := GreensDClassOfElement(S, Transformation([1, 2, 1, 1, 5, 5]));;
+gap> IsRegularClass(D1); IsRegularClass(D2);
+true
+true
+gap> Set([D1 < D2, D2 < D1]);
+[ true, false ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);

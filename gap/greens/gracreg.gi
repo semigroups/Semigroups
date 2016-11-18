@@ -67,6 +67,54 @@ function(H)
   return LambdaOrbSchutzGp(LambdaOrb(H), LambdaOrbSCCIndex(H)) ^ p;
 end);
 
+# Same method for inverse
+
+InstallMethod(\<, "for Green's D-classes of a regular semigroup",
+[IsGreensDClass and IsActingSemigroupGreensClass and IsRegularClass,
+ IsGreensDClass and IsActingSemigroupGreensClass and IsRegularClass],
+function(x, y)
+  local S, scc;
+  if Parent(x) <> Parent(y) or x = y then 
+    return false;
+  elif not IsRegularSemigroup(Parent(x)) then 
+    TryNextMethod();
+  fi;
+  S    := Parent(x);
+  scc  := OrbSCCLookup(LambdaOrb(S));
+  return scc[Position(LambdaOrb(S), LambdaFunc(S)(Representative(x)))] 
+         < scc[Position(LambdaOrb(S), LambdaFunc(S)(Representative(y)))];
+end);
+
+# Same method for inverse
+
+InstallMethod(\<, "for Green's R-classes of a regular acting semigroup",
+[IsGreensRClass and IsActingSemigroupGreensClass and IsRegularClass,
+ IsGreensRClass and IsActingSemigroupGreensClass and IsRegularClass],
+function(x, y)
+  if Parent(x) <> Parent(y) or x = y then 
+    return false;
+  elif not IsRegularSemigroup(Parent(x)) then 
+    TryNextMethod();
+  fi;
+  return RhoFunc(Parent(x))(Representative(x)) 
+         < RhoFunc(Parent(x))(Representative(y));
+end);
+
+# Same method for inverse
+
+InstallMethod(\<, "for Green's L-classes of a regular acting semigroup",
+[IsGreensLClass and IsActingSemigroupGreensClass and IsRegularClass,
+ IsGreensLClass and IsActingSemigroupGreensClass and IsRegularClass],
+function(x, y)
+  if Parent(x) <> Parent(y) or x = y then 
+    return false;
+  elif not IsRegularSemigroup(Parent(x)) then 
+    TryNextMethod();
+  fi;
+  return LambdaFunc(Parent(x))(Representative(x)) 
+         < LambdaFunc(Parent(x))(Representative(y));
+end);
+
 #############################################################################
 ## 2. Individual classes . . .
 #############################################################################

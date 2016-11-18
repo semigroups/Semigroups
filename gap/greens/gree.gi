@@ -44,6 +44,24 @@
 
 #TODO move this to the library 
 
+InstallMethod(\=, "for Green's relations", 
+[IsGreensRelation, IsGreensRelation],
+function(rel1, rel2)
+  if Source(rel1) <> Source(rel2) then
+    return false; # This is different than in the libary
+  elif IsGreensRRelation(rel1) then
+    return IsGreensRRelation(rel2);
+  elif IsGreensLRelation(rel1) then
+    return IsGreensLRelation(rel2);
+  elif IsGreensHRelation(rel1) then
+    return IsGreensHRelation(rel2);
+  elif IsGreensDRelation(rel1) then
+    return IsGreensDRelation(rel2);
+  elif IsGreensJRelation(rel1) then
+    return IsGreensJRelation(rel2);
+  fi;
+end);
+
 InstallMethod(\=, "for Green's classes",
 [IsGreensClass, IsGreensClass],
 function(x, y)

@@ -30,6 +30,8 @@ true
 gap> DDD := DClass(S, Representative(L));;
 gap> DDD = DD;
 true
+gap> DD < D; 
+false
 
 # grac: DClassOfRClass, 1/1
 gap> S := Semigroup([Transformation([2, 2, 1, 2, 4, 4]),
@@ -1626,6 +1628,25 @@ gap> H := HClass(S,
 > Transformation([10, 10, 10, 10, 10, 10, 10, 7, 10, 10]));;
 gap> SchutzenbergerGroup(H);
 Group(())
+
+# Test < for Green's classes
+gap> S := Semigroup(Transformation([2, 4, 3, 4]), 
+>                   Transformation([3, 3, 2, 3]));;
+gap> IsRegularSemigroup(S);
+false
+gap> Set([DClass(S, S.2) < DClass(S, S.1), DClass(S, S.1) < DClass(S, S.2)]);
+[ true, false ]
+gap> DClass(S, S.1) < DClass(S, S.1);
+false
+gap> Set([RClass(S, S.2) < RClass(S, S.1), RClass(S, S.1) < RClass(S, S.2)]);
+[ true, false ]
+gap> RClass(S, S.1) < RClass(S, S.1);
+false
+gap> T := Semigroup(Transformation([2, 4, 3, 4]));;
+gap> RClass(S, S.2) < RClass(T, T.1);
+false
+gap> DClass(S, S.2) < DClass(T, T.1);
+false
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
