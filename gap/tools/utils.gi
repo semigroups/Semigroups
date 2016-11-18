@@ -151,26 +151,28 @@ SEMIGROUPS.StartTest := function()
   # set default options
   SEMIGROUPS.DefaultOptionsRec.report := false;
 
-  # timing
-  record.timeofday := IO_gettimeofday();
-
   record.STOP_TEST := STOP_TEST;
 
   UnbindGlobal("STOP_TEST");
   BindGlobal("STOP_TEST", SEMIGROUPS.StopTest);
   MakeReadWriteGlobal("STOP_TEST");
+
+  # timing
+  record.timeofday := IO_gettimeofday();
   return;
 end;
 
 SEMIGROUPS.StopTest := function(arg...)
-  local file, record, timeofday, elapsed, str;
-  
-  if Length(arg) = 0 then 
+  local timeofday, file, record, elapsed;
+
+  timeofday := IO_gettimeofday();
+
+  if Length(arg) = 0 then
     file := "";
-  elif Length(arg) = 1 and IsString(arg[1]) then 
+  elif Length(arg) = 1 and IsString(arg[1]) then
     file := arg[1];
   else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.StopTest: usage,\n", 
+    ErrorNoReturn("Semigroups: SEMIGROUPS.StopTest: usage,\n",
                   "there should be no args or the arg must be a string,");
   fi;
 
@@ -197,7 +199,7 @@ SEMIGROUPS.StopTest := function(arg...)
 
   # restore default options
   SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;
-  
+
   if not IsBound(GAPInfo.TestData.START_TIME)  then
       ErrorNoReturn("Semigroups: SEMIGROUPS.StopTest:\n",
                     "`STOP_TEST' command without `START_TEST' command for `",
@@ -208,10 +210,14 @@ SEMIGROUPS.StopTest := function(arg...)
   Print(GAPInfo.TestData.START_NAME, "\n");
 
   # Timing
-  timeofday := IO_gettimeofday();
   elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000
              + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
   Print("Elapsed time: ", String(elapsed), "ms\n");
+  if IsBound(SEMIGROUPS.TestRec.elapsed_last_test) then
+    SEMIGROUPS.TestRec.elapsed_last2_test :=
+      SEMIGROUPS.TestRec.elapsed_last_test;
+  fi;
+  SEMIGROUPS.TestRec.elapsed_last_test  := elapsed;
 
   SetAssertionLevel(GAPInfo.TestData.AssertionLevel);
   Unbind(GAPInfo.TestData.AssertionLevel);
@@ -224,8 +230,8 @@ SEMIGROUPS.StopTest := function(arg...)
 end;
 
 SEMIGROUPS.Test := function(arg)
-  local file, opts, acting, split, pos, range, print_file, string_file,
-  enabled, disabled;
+  local file, acting, split, pos, range, print_file, string_file, enabled,
+  disabled;
 
   if Length(arg) = 1 then
     file := arg[1];
@@ -234,7 +240,7 @@ SEMIGROUPS.Test := function(arg)
                   "there must be only 1 argument,");
   fi;
 
-  if not IsString(file) then 
+  if not IsString(file) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
                   "the first arg must be a string,");
   fi;
@@ -243,15 +249,15 @@ SEMIGROUPS.Test := function(arg)
 
   split  := SplitString(file, "/");
   pos    := Position(split, "tst");
-  if pos <> fail then 
+  if pos <> fail then
     range := [pos .. Length(split)];
-  else 
+  else
     range := [Length(split) - 2 .. Length(split)];
   fi;
   print_file  := JoinStringsWithSeparator(split{range}, "/");
   string_file := StringFile(file);
 
-  if IsEmpty(string_file) then 
+  if IsEmpty(string_file) then
     Print("File: ", print_file, " is empty!\n");
     return fail;
   fi;
@@ -404,8 +410,8 @@ end);
 
 InstallGlobalFunction(SemigroupsTestStandard,
 function(arg)
-  local file_ext, is_testable, dir, contents, elapsed, failed, passed,
-  start_time, pass, end_time, elapsed_this_test, str, filename;
+  local file_ext, is_testable, dir, contents, failed, passed, elapsed, pass,
+  elapsed_this_test, str, filename;
 
   file_ext := function(str)
     local split;
@@ -446,20 +452,15 @@ function(arg)
   failed  := [];
   passed  := [];
 
-  start_time := IO_gettimeofday();
   SemigroupsTestInstall();
-  end_time := IO_gettimeofday();
-  elapsed := (end_time.tv_sec - start_time.tv_sec) * 1000
-             + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+  elapsed := SEMIGROUPS.TestRec.elapsed_last_test +
+             SEMIGROUPS.TestRec.elapsed_last2_test;
 
   for filename in contents do
     if file_ext(filename) = "tst" and is_testable(dir, filename) then
-      start_time := IO_gettimeofday();
       pass := SEMIGROUPS.Test(Filename(Directory(dir), filename));
-
-      end_time := IO_gettimeofday();
-      elapsed_this_test := (end_time.tv_sec - start_time.tv_sec) * 1000
-                 + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+      elapsed_this_test := SEMIGROUPS.TestRec.elapsed_last_test
+                           + SEMIGROUPS.TestRec.elapsed_last2_test;
       elapsed := elapsed + elapsed_this_test;
       if pass <> fail then # No test was carried out
         if not pass then
@@ -680,10 +681,11 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
         " warnings in Ref elements \n");
 
   if display_warnings then
-    Print("To suppress warnings, use SEMIGROUPS.CheckManSectionTypes(doc,false) ",
-          "or with one argument\n");
+    Print("To suppress warnings, use SEMIGROUPS.CheckManSectionTypes",
+          "(doc,false) or with one argument\n");
   else
-    Print("To show warnings, use SEMIGROUPS.CheckManSectionTypes(doc,true); \n");
+    Print("To show warnings, use SEMIGROUPS.CheckManSectionTypes(doc,true);",
+          "\n");
   fi;
   Print("****************************************************************\n");
   return errcount=0;
