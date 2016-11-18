@@ -64,7 +64,7 @@ gap> cong := SemigroupCongruence(i,
 <semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with 2 generating pairs>
 gap> KernelOfSemigroupCongruence(cong);
-<inverse partial perm semigroup of size 19, rank 3 with 5 generators>
+<inverse partial perm semigroup of rank 3 with 5 generators>
 ]]></Example>
     </Description>
   </ManSection>
