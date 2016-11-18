@@ -489,7 +489,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
     AddSet(kernelgenstoapply, gen);
   od;
   nrk := Length(kernelgenstoapply);
-  Elements(kernel);
+  Enumerate(kernel);
   pairstoapply := List(pairstoapply,
                        x -> [PositionCanonical(idsmgp, RightOne(x[1])),
                              PositionCanonical(idsmgp, RightOne(x[2]))]);
@@ -620,7 +620,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
     if kernelgenstoapply <> [] then
       kernel := NormalClosureInverseSemigroup(S, kernel,
                                               kernelgenstoapply);
-      Elements(kernel);
+      Enumerate(kernel);
       kernelgenstoapply := [];
       nrk := 0;
     fi;
