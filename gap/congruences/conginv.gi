@@ -490,16 +490,17 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   od;
   nrk := Length(kernelgenstoapply);
   Elements(kernel);
-  pairstoapply := List(pairstoapply, x -> [Position(idsmgp, RightOne(x[1])),
-                                           Position(idsmgp, RightOne(x[2]))]);
+  pairstoapply := List(pairstoapply,
+                       x -> [PositionCanonical(idsmgp, RightOne(x[1])),
+                             PositionCanonical(idsmgp, RightOne(x[2]))]);
   nr := Length(pairstoapply);
 
   # Calculate traceUF from traceBlocks
   traceUF := UF_NEW(Length(idslist));
   for i in [1 .. Length(traceBlocks)] do
-    pos1 := Position(idsmgp, traceBlocks[i][1]);
+    pos1 := PositionCanonical(idsmgp, traceBlocks[i][1]);
     for j in [2 .. Length(traceBlocks[i])] do
-      UF_UNION(traceUF, [pos1, Position(idsmgp, traceBlocks[i][j])]);
+      UF_UNION(traceUF, [pos1, PositionCanonical(idsmgp, traceBlocks[i][j])]);
     od;
   od;
   UF_FLATTEN(traceUF);
@@ -549,8 +550,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
           UF_UNION(traceUF, x);
           # Add each pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(S) do
-            z := [Position(idsmgp, a ^ -1 * idslist[x[1]] * a),
-                  Position(idsmgp, a ^ -1 * idslist[x[2]] * a)];
+            z := [PositionCanonical(idsmgp, a ^ -1 * idslist[x[1]] * a),
+                  PositionCanonical(idsmgp, a ^ -1 * idslist[x[2]] * a)];
             if z[1] <> z[2] and HTValue(ht, z) = fail then
               HTAdd(ht, z, true);
               nr := nr + 1;
@@ -575,8 +576,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
           UF_UNION(traceUF, y);
           # Add the pair's "conjugate" pairs
           for a in GeneratorsOfSemigroup(S) do
-            z := [Position(idsmgp, a ^ -1 * idslist[x[1]] * a),
-                  Position(idsmgp, a ^ -1 * idslist[x[2]] * a)];
+            z := [PositionCanonical(idsmgp, a ^ -1 * idslist[x[1]] * a),
+                  PositionCanonical(idsmgp, a ^ -1 * idslist[x[2]] * a)];
             if z[1] <> z[2] and HTValue(ht, z) = fail then
               HTAdd(ht, z, true);
               nr := nr + 1;
@@ -596,14 +597,14 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
     traceBlocks := UF_BLOCKS(traceUF);
     for a in slist do
       if a in kernel then
-        e := Position(idsmgp, LeftOne(a));
-        f := Position(idsmgp, RightOne(a));
+        e := PositionCanonical(idsmgp, LeftOne(a));
+        f := PositionCanonical(idsmgp, RightOne(a));
         if traceTable[e] <> traceTable[f] then
           nr := nr + 1;
           pairstoapply[nr] := [e, f];
         fi;
       else
-        classno := traceTable[Position(idsmgp, RightOne(a))];
+        classno := traceTable[PositionCanonical(idsmgp, RightOne(a))];
         for e in traceBlocks[classno] do
           if a * idslist[e] in kernel then
             nrk := nrk + 1;
