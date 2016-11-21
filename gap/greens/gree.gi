@@ -140,6 +140,9 @@ InstallMethod(GreensJRelation, "for a finite semigroup",
 ## 3. Individual classes . . .
 #############################################################################
 
+InstallMethod(IsGreensClassNC, "for a Green's class", 
+[IsGreensClass], ReturnFalse);
+
 InstallMethod(OneImmutable, "for an H-class",
 [IsGreensHClass],
 function(H)
@@ -159,9 +162,13 @@ InstallMethod(GreensJClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup and IsFinite, IsMultiplicativeElement], GreensDClassOfElement);
 
+InstallMethod(GreensJClassOfElementNC,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement], GreensJClassOfElement);
+
 # Green's class of a Green's class (finer from coarser)
 
-# Should these be for IsEnumerableSemigroupGreensClassRep?? 
+# FIXME Should these be for IsEnumerableSemigroupGreensClassRep?? 
 
 InstallMethod(GreensRClassOfElement,
 "for a D-class and multiplicative element",
@@ -184,9 +191,25 @@ function(C, x)
   return EquivalenceClassOfElement(GreensHRelation(Parent(C)), x);
 end);
 
+# TODO could include InfoWarning statement here, to say that this is just using
+# GreensRClassOfElement
+
+InstallMethod(GreensRClassOfElementNC,
+"for a D-class and multiplicative element",
+[IsGreensDClass, IsMultiplicativeElement], GreensRClassOfElement);
+
+InstallMethod(GreensLClassOfElementNC,
+"for a D-class and multiplicative element",
+[IsGreensDClass, IsMultiplicativeElement], GreensLClassOfElement);
+
+InstallMethod(GreensHClassOfElementNC,
+"for a Green's class and multiplicative element",
+[IsGreensClass, IsMultiplicativeElement], GreensHClassOfElement);
+
 # Green's classes of an element of a semigroup
 
-# Should these be for IsEnumerableSemigroupGreensClassRep?? 
+# FIXME Should these be for IsEnumerableSemigroupRep?? In particular, to what
+# type of semigroup do they apply?
 
 InstallMethod(GreensRClassOfElement,
 "for a finite semigroup and multiplicative element",
