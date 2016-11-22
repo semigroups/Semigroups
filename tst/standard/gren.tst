@@ -349,11 +349,11 @@ the element in the 2nd argument does not belong to the semigroup,
 gap> x := Bipartition([[1, 4, -1, -2, -6], [2, 3, 5, -4],
 > [6, -3], [-5]]);;
 gap> LClassNC(D, x);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `GreensLClassOfElementNC' on 2 arguments
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
+the element in the 2nd argument does not belong to the semigroup,
 gap> RClassNC(D, x);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `GreensRClassOfElementNC' on 2 arguments
+Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
+the element in the 2nd argument does not belong to the semigroup,
 
 # gren: GreensHClassOfElement, 1/1
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), [
@@ -388,8 +388,7 @@ gap> D := DClass(S, S.4 * S.5);;
 gap> H := HClass(D, MultiplicativeZero(S));
 <Green's H-class: 0>
 gap> H := HClassNC(D, MultiplicativeZero(S));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `GreensHClassOfElementNC' on 2 arguments
+<Green's H-class: 0>
 gap> H := HClass(D, IdentityTransformation);
 Error, Semigroups: SEMIGROUPS.EquivalenceClassOfElement: usage,
 the element in the 2nd argument does not belong to the semigroup,
