@@ -287,10 +287,19 @@ Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
 
-  // The following assertions leak memory since left_blocks and right_blocks
-  // always return pointers to new objects
-  // assert(*xx->left_blocks() == *yy->left_blocks());
-  // assert(*xx->right_blocks() == *yy->right_blocks());
+  // The following is done to avoid leaking memory
+#ifdef DEBUG
+  Blocks* xb = xx->left_blocks();
+  Blocks* yb = yy->left_blocks();
+  assert(*xb == *yb);
+  delete xb;
+  delete yb;
+  Blocks* xb = xx->right_blocks();
+  Blocks* yb = yy->right_blocks();
+  assert(*xb == *yb);
+  delete xb;
+  delete yb;
+#endif
 
   size_t deg  = xx->degree();
   Obj    p    = NEW_PERM4(deg);
@@ -448,7 +457,13 @@ Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
 
-  assert(*xx->left_blocks() == *yy->left_blocks());
+#ifdef DEBUG
+  Blocks* lb = xx->left_blocks();
+  Blocks* rb = xx->right_blocks();
+  assert(*lb == *rb);
+  delete lb;
+  delete rb;
+#endif
 
   size_t deg            = xx->degree();
   size_t nr_left_blocks = xx->nr_left_blocks();
