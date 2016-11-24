@@ -65,6 +65,7 @@
 #define CHECK_SEMI_OBJ(so)
 #define CHECK_PLIST(obj)
 #define CHECK_LIST(obj)
+#define CHECK_INTOBJ(obj)
 #define CHECK_POS_INTOBJ(obj)
 #endif
 
@@ -286,7 +287,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
   assert(en_semi_get_type(es) != UNKNOWN);
   assert(CLASS_OBJ<Converter*>(es, 4) == nullptr);
 
-  Converter*      converter;
+  Converter*      converter = nullptr;
   gap_semigroup_t so = en_semi_get_semi_obj(es);
 
   switch (en_semi_get_type(es)) {
