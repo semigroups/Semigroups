@@ -853,9 +853,9 @@ Obj BLOCKS_E_TESTER(Obj self, Obj left_gap, Obj right_gap) {
   //     and right
 
   fuse(left->degree(),
-       left->begin(),
+       left->cbegin(),
        left->nr_blocks(),
-       right->begin(),
+       right->cbegin(),
        right->nr_blocks(),
        true);
 
@@ -886,9 +886,9 @@ Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
   Blocks* right = blocks_get_cpp(right_gap);
 
   fuse(left->degree(),
-       left->begin(),
+       left->cbegin(),
        left->nr_blocks(),
-       right->begin(),
+       right->cbegin(),
        right->nr_blocks(),
        false);
 
@@ -962,7 +962,7 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
   fuse(x->degree(),
        x->begin() + x->degree(),
        x->nr_blocks(),
-       blocks->begin(),
+       blocks->cbegin(),
        blocks->nr_blocks(),
        true);
 
@@ -1013,7 +1013,7 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
       blocks->lookup()->begin(), blocks->lookup()->end(), _BUFFER_bool.begin());
 
   fuse(x->degree(),
-       blocks->begin(),
+       blocks->cbegin(),
        blocks->nr_blocks(),
        x->begin(),
        x->nr_blocks(),
@@ -1054,7 +1054,7 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
   Bipartition* x      = bipart_get_cpp(x_gap);
 
   fuse(x->degree(),
-       blocks->begin(),
+       blocks->cbegin(),
        blocks->nr_blocks(),
        x->begin() + x->degree(),
        x->nr_blocks(),
@@ -1144,7 +1144,7 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
       blocks->lookup()->begin(), blocks->lookup()->end(), _BUFFER_bool.begin());
 
   fuse(x->degree(),
-       blocks->begin(),
+       blocks->cbegin(),
        blocks->nr_blocks(),
        x->begin(),
        x->nr_blocks(),
@@ -1455,8 +1455,8 @@ class IdempotentCounter {
       _fuse_tab[thread_id].push_back(i);
     }
 
-    for (auto left_it = left->begin(), right_it = right->begin();
-         left_it < left->begin() + left->degree();
+    for (auto left_it = left->cbegin(), right_it = right->cbegin();
+         left_it < left->cbegin() + left->degree();
          left_it++, right_it++) {
       size_t j = fuse_it(thread_id, *left_it);
       size_t k = fuse_it(thread_id, *right_it + left->nr_blocks());

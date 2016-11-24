@@ -262,7 +262,7 @@ void TBlocksObjSaveFunc(Obj o) {
   SaveUInt4(b->degree());
   if (b->degree() != 0) {
     SaveUInt4(b->nr_blocks());
-    for (auto it = b->begin(); it < b->end(); it++) {
+    for (auto it = b->cbegin(); it < b->cend(); it++) {
       SaveUInt4(*it);
     }
     for (auto it = b->lookup()->begin(); it < b->lookup()->end(); it++) {
