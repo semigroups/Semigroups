@@ -29,7 +29,7 @@
 #include "gap.h"
 #include "src/compiled.h"
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
@@ -86,7 +86,7 @@ static inline gap_list_t vec_to_plist(Converter* converter, T* cont) {
   gap_list_t out = NEW_PLIST(T_PLIST, cont->size());
   SET_LEN_PLIST(out, cont->size());
   size_t i = 1;
-  for (auto x : *cont) {
+  for (auto const& x : *cont) {
     SET_ELM_PLIST(out, i++, converter->unconvert(x));
     CHANGED_BAG(out);
   }
@@ -634,7 +634,7 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT+IMMUTABLE, pairs->size());
     SET_LEN_PLIST(out, pairs->size());
     size_t i = 1;
-    for (auto x : *pairs) {
+    for (auto const& x : *pairs) {
       SET_ELM_PLIST(out, i++, converter->unconvert(x.first));
       CHANGED_BAG(out);
     }
@@ -1199,7 +1199,7 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
 // Get the position of <x> with out any further enumeration
 
 gap_int_t
-EN_SEMI_POSITION_CURRENT(Obj self, gap_semigroup_t so, gap_element_t x) {
+EN_SEMI_CURRENT_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
   CHECK_SEMI_OBJ(so);
 
   en_semi_obj_t es = semi_obj_get_en_semi_no_init(so);
@@ -1208,7 +1208,7 @@ EN_SEMI_POSITION_CURRENT(Obj self, gap_semigroup_t so, gap_element_t x) {
   } else if (en_semi_get_type(es) != UNKNOWN) {
     size_t   deg = en_semi_get_degree(es);
     Element* xx  = en_semi_get_converter(es)->convert(x, deg);
-    size_t   pos = en_semi_get_semi_cpp(es)->position_current(xx);
+    size_t   pos = en_semi_get_semi_cpp(es)->current_position(xx);
     delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   } else {
@@ -1229,7 +1229,7 @@ EN_SEMI_POSITION_SORTED(Obj self, gap_semigroup_t so, gap_element_t x) {
     size_t     deg      = en_semi_get_degree(es);
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     Element*   xx       = en_semi_get_converter(es)->convert(x, deg);
-    size_t     pos = semi_cpp->position_sorted(xx, semi_obj_get_report(so));
+    size_t     pos = semi_cpp->sorted_position(xx, semi_obj_get_report(so));
     delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   }

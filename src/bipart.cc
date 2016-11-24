@@ -30,7 +30,7 @@
 
 #include "src/permutat.h"
 #include "src/precord.h"
-#include "src/semigroupsplusplus/report.h"
+#include "src/semigroupsplusplus/util/report.h"
 
 // Global variables
 
@@ -267,7 +267,7 @@ Obj BIPART_PROD(Obj x, Obj y) {
 // Check if the GAP bipartitions x and y are equal.
 
 Int BIPART_EQ(Obj x, Obj y) {
-  return (bipart_get_cpp(x)->equals(bipart_get_cpp(y)) ? 1L : 0L);
+  return (*bipart_get_cpp(x) == *bipart_get_cpp(y) ? 1L : 0L);
 }
 
 // Check if x < y for the GAP bipartitions x and y.
@@ -1370,9 +1370,8 @@ class IdempotentCounter {
   }
 
   std::vector<size_t> count() {
-    _reporter.report(_report);
-    _reporter.set_level(2);
     _reporter.set_class_name(*this);
+    _reporter.set_report(_report);
     _reporter(__func__) << "using " << _nr_threads << " / "
                         << std::thread::hardware_concurrency() << " threads"
                         << std::endl;

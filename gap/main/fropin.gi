@@ -489,7 +489,7 @@ function(S, x, n)
     return fail;
   fi;
 
-  return EN_SEMI_POSITION_CURRENT(S, x);
+  return EN_SEMI_CURRENT_POSITION(S, x);
 end);
 
 InstallMethod(PositionSortedOp,

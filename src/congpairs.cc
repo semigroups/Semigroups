@@ -25,7 +25,7 @@
 #include "rnams.h"
 #include "semigrp.h"
 
-#include "semigroupsplusplus/tc.h"
+#include "semigroupsplusplus/cong.h"
 
 static inline word_t plist_to_word_t(Obj plist) {
   word_t word;
@@ -154,14 +154,13 @@ static void cong_obj_init_cpp_cong(Obj o) {
       }
     }
     if (LEN_PLIST(ElmPRec(data, RNam_elts)) > 1000) {
-      cong = parallel_todd_coxeter(
-          new Congruence(
-              type, nrgens, std::vector<relation_t>(), extra, prefill, 1),
-          new Congruence(type, nrgens, rels, extra, 2),
-          report);
+      cong =
+          parallel_todd_coxeter(new Congruence(type, nrgens, extra, prefill, 1),
+                                new Congruence(type, nrgens, rels, extra, 2),
+                                report);
     } else {
       cong = new Congruence(
-          type, nrgens, std::vector<relation_t>(), extra, prefill, 1);
+          type, nrgens, extra, prefill, 1);
       cong->todd_coxeter(report);
     }
   }

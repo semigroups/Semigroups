@@ -24,7 +24,7 @@
 #include <vector>
 
 #include "gap.h"
-#include "semigroupsplusplus/tc.h"
+#include "semigroupsplusplus/cong.h"
 #include "rnams.h"
 #include "semigrp.h"
 

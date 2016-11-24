@@ -17,7 +17,7 @@ semigroups_la_SOURCES += src/semifp.cc src/semigrp.cc
 semigroups_la_SOURCES += src/semigroupsplusplus/elements.cc
 semigroups_la_SOURCES += src/semigroupsplusplus/blocks.cc
 semigroups_la_SOURCES += src/semigroupsplusplus/semigroups.cc 
-semigroups_la_SOURCES += src/semigroupsplusplus/tc.cc
+semigroups_la_SOURCES += src/semigroupsplusplus/cong.cc
 semigroups_la_CXXFLAGS = -std=c++11 -fPIC
 
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H

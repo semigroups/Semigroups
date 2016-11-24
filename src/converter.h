@@ -50,7 +50,7 @@ template <typename T> class TransConverter : public Converter {
     auto x = new std::vector<T>();
     x->reserve(n);
 
-    size_t i;
+    size_t i = 0;
     if (TNUM_OBJ(o) == T_TRANS2) {
       UInt2* pto2 = ADDR_TRANS2(o);
       for (i = 0; i < std::min((size_t) DEG_TRANS2(o), n); i++) {
@@ -105,7 +105,7 @@ template <typename T> class PPermConverter : public Converter {
     auto x = new std::vector<T>();
     x->reserve(n);
 
-    size_t i;
+    size_t i = 0;
     if (TNUM_OBJ(o) == T_PPERM2) {
       UInt2* pto2 = ADDR_PPERM<UInt2>(o);
       for (i = 0; i < std::min((size_t) DEG_PPERM2(o), n); i++) {

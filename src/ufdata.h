@@ -42,7 +42,7 @@ class UFData {
       // Copy the blocks as well
       _blocks = new blocks_t();
       _blocks->reserve(copy._blocks->size());
-      for (auto block : *copy._blocks) {
+      for (auto const& block : *copy._blocks) {
         if (block == nullptr) {
           _blocks->push_back(nullptr);
         } else {

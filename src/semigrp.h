@@ -93,6 +93,8 @@ gap_list_t EN_SEMI_AS_LIST(Obj self, gap_semigroup_t so);
 gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_CURRENT_MAX_WORD_LENGTH(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_CURRENT_NR_RULES(Obj self, gap_semigroup_t so);
+gap_int_t
+EN_SEMI_CURRENT_POSITION(Obj self, gap_semigroup_t so, gap_element_t x);
 gap_int_t EN_SEMI_CURRENT_SIZE(Obj self, gap_semigroup_t so);
 gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so);
 gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
@@ -114,8 +116,6 @@ gap_list_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list);
 gap_bool_t EN_SEMI_IS_DONE(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x);
-gap_int_t
-EN_SEMI_POSITION_CURRENT(Obj self, gap_semigroup_t so, gap_element_t x);
 gap_int_t
 EN_SEMI_POSITION_SORTED(Obj self, gap_semigroup_t so, gap_element_t x);
 gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so);

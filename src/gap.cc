@@ -34,7 +34,7 @@
 #include "ufdata.h"
 
 #include "semigroupsplusplus/semigroups.h"
-#include "semigroupsplusplus/tc.h"
+#include "semigroupsplusplus/cong.h"
 
 #if !defined(SIZEOF_VOID_P)
 #error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
@@ -407,6 +407,7 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CAYLEY_TABLE, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_MAX_WORD_LENGTH, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_NR_RULES, 1, "S"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_POSITION, 2, "S, x"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_SIZE, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CLOSURE, 3, "new, old, coll"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER, 2, "S, pos"),
@@ -421,7 +422,6 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("semigrp.cc", EN_SEMI_LENGTH_ELEMENT, 2, "S, pos"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_NR_IDEMPOTENTS, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION, 2, "S, x"),
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION_CURRENT, 2, "S, x"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_POSITION_SORTED, 2, "S, x"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_RIGHT_CAYLEY_GRAPH, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_SIZE, 1, "S"),

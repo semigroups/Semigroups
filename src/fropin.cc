@@ -24,7 +24,7 @@
 #include <iostream>
 
 #include "rnams.h"
-#include "semigroupsplusplus/report.h"
+#include "semigroupsplusplus/util/report.h"
 #include "semigrp.h"
 
 // Macros for the GAP version of the algorithm
@@ -112,7 +112,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
 
   Reporter reporter;
-  reporter.report(report);
+  reporter.set_report(report);
   reporter.start_timer();
   reporter(__func__) << "limit = " << int_limit << std::endl;
 
