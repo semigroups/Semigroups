@@ -28,6 +28,10 @@
 #include "rnams.h"
 #include "semigrp.h"
 
+using semigroupsplusplus::word_t;
+using semigroupsplusplus::Congruence;
+using semigroupsplusplus::relation_t;
+
 static inline word_t plist_to_word_t(Obj plist) {
   word_t word;
   for (size_t i = 1; i <= (size_t) LEN_PLIST(plist); i++) {

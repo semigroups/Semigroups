@@ -29,7 +29,16 @@
 #include "gap.h"
 #include "src/compiled.h"
 
-//#define DEBUG
+using semigroupsplusplus::word_t;
+using semigroupsplusplus::cayley_graph_t;
+using semigroupsplusplus::MaxPlusSemiring;
+using semigroupsplusplus::MinPlusSemiring;
+using semigroupsplusplus::TropicalMaxPlusSemiring;
+using semigroupsplusplus::TropicalMinPlusSemiring;
+using semigroupsplusplus::NaturalSemiring;
+using semigroupsplusplus::Integers;
+
+// #define DEBUG
 
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
@@ -317,38 +326,38 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
     }
     case MAX_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter(
-          new semiring::MaxPlusSemiring(), Ninfinity, MaxPlusMatrixType);
+          new MaxPlusSemiring(), Ninfinity, MaxPlusMatrixType);
       break;
     }
     case MIN_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter(
-          new semiring::MinPlusSemiring(), infinity, MinPlusMatrixType);
+          new MinPlusSemiring(), infinity, MinPlusMatrixType);
       break;
     }
     case TROP_MAX_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter(
-          new semiring::TropicalMaxPlusSemiring(semi_obj_get_threshold(so)),
+          new TropicalMaxPlusSemiring(semi_obj_get_threshold(so)),
           Ninfinity,
           TropicalMaxPlusMatrixType);
       break;
     }
     case TROP_MIN_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter(
-          new semiring::TropicalMinPlusSemiring(semi_obj_get_threshold(so)),
+          new TropicalMinPlusSemiring(semi_obj_get_threshold(so)),
           infinity,
           TropicalMinPlusMatrixType);
       break;
     }
     case PROJ_MAX_PLUS_MAT: {
       converter =
-          new ProjectiveMaxPlusMatrixConverter(new semiring::MaxPlusSemiring(),
+          new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(),
                                                Ninfinity,
                                                ProjectiveMaxPlusMatrixType);
       break;
     }
     case NTP_MAT: {
       converter = new MatrixOverSemiringConverter(
-          new semiring::NaturalSemiring(semi_obj_get_threshold(so),
+          new NaturalSemiring(semi_obj_get_threshold(so),
                                         semi_obj_get_period(so)),
           INTOBJ_INT(0),
           NTPMatrixType);
@@ -356,7 +365,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
     }
     case INT_MAT: {
       converter = new MatrixOverSemiringConverter(
-          new semiring::Integers(), INTOBJ_INT(0), IntegerMatrixType);
+          new Integers(), INTOBJ_INT(0), IntegerMatrixType);
       break;
     }
     case PBR_TYPE: {

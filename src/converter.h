@@ -27,6 +27,16 @@
 
 #include "semigroupsplusplus/elements.h"
 
+using semigroupsplusplus::Element;
+using semigroupsplusplus::Transformation;
+using semigroupsplusplus::PartialPerm;
+using semigroupsplusplus::BooleanMat;
+using semigroupsplusplus::Semiring;
+using semigroupsplusplus::MatrixOverSemiring;
+using semigroupsplusplus::ProjectiveMaxPlusMatrix;
+using semigroupsplusplus::PBR;
+using semigroupsplusplus::Bipartition;
+
 ////////////////////////////////////////////////////////////////////////////////
 // Abstract base class
 ////////////////////////////////////////////////////////////////////////////////

@@ -27,6 +27,8 @@
 #include "semigroupsplusplus/util/report.h"
 #include "semigrp.h"
 
+using semigroupsplusplus::Reporter;
+
 // Macros for the GAP version of the algorithm
 
 #define INT_PLIST(plist, i) INT_INTOBJ(ELM_PLIST(plist, i))

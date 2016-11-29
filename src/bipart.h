@@ -25,6 +25,9 @@
 #include "semigroupsplusplus/elements.h"
 #include "src/compiled.h"
 
+using semigroupsplusplus::Bipartition;
+using semigroupsplusplus::Blocks;
+
 // C functions
 
 inline Bipartition* bipart_get_cpp(Obj x) {

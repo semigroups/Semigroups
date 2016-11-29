@@ -27,6 +27,8 @@
 #include "semigroupsplusplus/semigroups.h"
 #include "src/compiled.h"  // GAP headers
 
+using semigroupsplusplus::Semigroup;
+
 // Typedef for readability, an en_semi_obj_t should be an Obj of TNUM_OBJ =
 // T_SEMI and SUBTYPE_OF_T_SEMI = T_SEMI_SUBTYPE_ENSEMI
 

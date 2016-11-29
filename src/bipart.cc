@@ -32,6 +32,9 @@
 #include "src/precord.h"
 #include "src/semigroupsplusplus/util/report.h"
 
+using semigroupsplusplus::Reporter;
+using semigroupsplusplus::Timer;
+
 // Global variables
 
 static std::vector<size_t> _BUFFER_size_t;

@@ -36,6 +36,8 @@
 #include "semigroupsplusplus/semigroups.h"
 #include "semigroupsplusplus/cong.h"
 
+using semigroupsplusplus::Congruence;
+
 #if !defined(SIZEOF_VOID_P)
 #error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
 #elif SIZEOF_VOID_P == 4
