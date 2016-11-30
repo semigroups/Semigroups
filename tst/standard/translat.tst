@@ -9,7 +9,6 @@
 ##
 gap> START_TEST("Semigroups package: standard/translat.tst");
 gap> LoadPackage("semigroups", false);;
-
 gap> SEMIGROUPS.StartTest();
 
 #T# Creation of translations semigroups
@@ -133,7 +132,7 @@ gap> GeneratorsOfSemigroup(R);
   <right translation on <0-simple regular semigroup of size 37, with 6 
      generators>>, <right translation on <0-simple regular semigroup 
      of size 37, with 6 generators>> ]
-          
+
 #T# A tiny bit of brute force checking   
 gap> SEMIGROUPS.bruteforcetranshull := function(S)
 >   local a, d, L, R, H, linkedpairs, dclasses, rclasses, lclasses, reps, i, j, 

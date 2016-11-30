@@ -8,17 +8,19 @@
 #############################################################################
 ##
 
-DeclareCategory( "IsTranslationsSemigroupElement", IsAssociativeElement);
-DeclareCategory( "IsLeftTranslationsSemigroupElement",
+DeclareCategory("IsTranslationsSemigroupElement", IsAssociativeElement and
+                  IsMultiplicativeElementWithOne);
+DeclareCategory("IsLeftTranslationsSemigroupElement",
                 IsTranslationsSemigroupElement);
-DeclareCategory( "IsRightTranslationsSemigroupElement",
+DeclareCategory("IsRightTranslationsSemigroupElement",
                 IsTranslationsSemigroupElement);
-DeclareCategory( "IsTranslationalHullElement", IsAssociativeElement);
+DeclareCategory("IsTranslationalHullElement", IsAssociativeElement and
+                  IsMultiplicativeElementWithOne);
 
-DeclareCategoryCollections( "IsTranslationsSemigroupElement");
-DeclareCategoryCollections( "IsLeftTranslationsSemigroupElement");
-DeclareCategoryCollections( "IsRightTranslationsSemigroupElement");
-DeclareCategoryCollections( "IsTranslationalHullElement" );
+DeclareCategoryCollections("IsTranslationsSemigroupElement");
+DeclareCategoryCollections("IsLeftTranslationsSemigroupElement");
+DeclareCategoryCollections("IsRightTranslationsSemigroupElement");
+DeclareCategoryCollections("IsTranslationalHullElement" );
 
 DeclareGlobalFunction("LeftTranslation");
 DeclareGlobalFunction("LeftTranslationNC");
@@ -46,7 +48,6 @@ DeclareAttribute("LeftTranslationsSemigroupOfFamily", IsFamily);
 DeclareAttribute("RightTranslationsSemigroupOfFamily", IsFamily);
 DeclareAttribute("TranslationalHullOfFamily", IsFamily);
 
-
 DeclareAttribute("TypeLeftTranslationsSemigroupElements",
                  IsLeftTranslationsSemigroup);
 DeclareAttribute("TypeRightTranslationsSemigroupElements", 
@@ -55,8 +56,9 @@ DeclareAttribute("TypeTranslationalHullElements",
                  IsTranslationalHull);
 
 
-DeclareAttribute("LeftTranslations", IsSemigroup);
-DeclareAttribute("RightTranslations", IsSemigroup);
+DeclareAttribute("LeftTranslations", IsSemigroup and IsFinite);
+DeclareAttribute("RightTranslations", IsSemigroup and IsFinite);
 DeclareAttribute("TranslationalHull", IsSemigroup and IsFinite);
+DeclareAttribute("InnerTranslationalHull", IsSemigroup and IsFinite);
 DeclareAttribute("TranslationalElements", IsTranslationsSemigroup and IsWholeFamily);
 DeclareAttribute("TranslationalElements", IsTranslationalHull and IsWholeFamily);
