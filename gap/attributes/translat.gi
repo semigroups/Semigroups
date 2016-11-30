@@ -22,7 +22,6 @@
 ## incides of the underlying semigroup (determined by AsList). Hence, only 
 ## finite semigroups are supported.
 ##
-## 
 ## Much of the implementation in this file was based on the implementation of
 ## RMS in reesmatsemi.gi in the GAP library - in particular, the creation of
 ## the semigroups and their relation to their elements.
@@ -142,7 +141,6 @@ end;
 # s*a_i f(a_k) = (s*a_i)g a_k and a_k f(a_i * s) = (a_k)g a_i * s,
 # as well as restriction by the translation condition if Sa_i intersect Sa_k is
 # non-empty or a_i S intersect a_k S is non-empty.
-# TODO: make this work
 SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
   local S, multtable, transpose, reps, repspos, dclasses, lclasses, rclasses,
         d, f, g, i, j, k, m, n, p, r, s, slist, fposrepk, gposrepk,
@@ -772,6 +770,25 @@ function(S)
   return H;
 end);
 
+# Creates the ideal of the translational hull consisting of 
+# all inner bitranslations
+InstallMethod(InnerTranslationalHull, "for a semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local I, H, L, R, l, r, s;
+  
+  I := [];
+  H := TranslationalHullSemigroup(S);
+  for s in S do
+    L := LeftTranslationsSemigroup(S);
+    R := RightTranslationsSemigroup(S);
+    l := LeftTranslation(L, MappingByFunction(S, S, x -> s * x));
+    r := RightTranslation(R, MappingByFunction(S, S, x -> x * s));
+    Add(I, TranslationalHullElement(H, l, r));
+  od;
+  return Monoid(I);
+end);
+
 # Creates a linked pair (l, r) from a left translation l and a right
 # translation r, as an element of a translational hull H.
 InstallGlobalFunction(TranslationalHullElement, 
@@ -1179,4 +1196,17 @@ InstallMethod(ChooseHashFunction, "for a translational hull element and int",
 function(x, hashlen)
   return rec(func := SEMIGROUPS.HashFunctionForTranslationalHullElements,
              data := hashlen);
+end);
+
+InstallMethod(OneOp, "for a translational hull",
+[IsTranslationalHullElement],
+function(h)
+  local H, L, R, S, l, r;
+  H := TranslationalHullOfFamily(FamilyObj(h));
+  S := UnderlyingSemigroup(H);
+  L := LeftTranslationsSemigroup(S);
+  R := RightTranslationsSemigroup(S);
+  l := LeftTranslation(L, MappingByFunction(S, S, x -> x));
+  r := RightTranslation(R, MappingByFunction(S, S, x -> x));
+  return TranslationalHullElement(H, l, r);
 end);
