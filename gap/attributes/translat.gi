@@ -1210,3 +1210,19 @@ function(h)
   r := RightTranslation(R, MappingByFunction(S, S, x -> x));
   return TranslationalHullElement(H, l, r);
 end);
+
+InstallMethod(OneOp, "for a semigroup of translations",
+[IsTranslationsSemigroupElement],
+function(t)
+  local T, S, l, r;
+  if IsLeftTranslationsSemigroupElement(t) then
+    T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
+    S := UnderlyingSemigroup(T);
+    return LeftTranslation(T, MappingByFunction(S, S, x -> x));
+  else
+    T := RightTranslationsSemigroupOfFamily(FamilyObj(t));
+    S := UnderlyingSemigroup(T);
+    return RightTranslation(T, MappingByFunction(S, S, x -> x));
+  fi;
+end);
+
