@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  extreme/transform.tst
-#Y  Copyright (C) 2011-15                                James D. Mitchell
+#Y  Copyright (C) 2011-16                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -136,7 +136,7 @@ gap> g1 := Transformation([1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10]);;
 gap> g2 := Transformation([2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7]);;
 gap> s := Monoid(g1, g2);;
 gap> d := GreensDClasses(s);;
-gap> h := GroupHClassOfGreensDClass(d[3]);
+gap> h := GroupHClassOfGreensDClass(MinimalDClass(s));
 <Green's H-class: Transformation( [ 4, 2, 2, 4, 5, 6, 7, 7, 7 ] )>
 gap> perm := IsomorphismPermGroup(h);;
 gap> Size(Range(perm)) = Size(h);
@@ -144,7 +144,10 @@ true
 gap> g1 := Transformation([2, 1, 4, 5, 6, 7, 3, 2, 1]);;
 gap> g2 := Transformation([2, 1, 4, 2, 1, 4, 2, 1, 4]);;
 gap> m18 := Monoid(g1, g2);;
-gap> dc := GreensDClasses(m18)[2];;
+gap> d := GreensDClasses(m18);;
+gap> i := Position(d, DClass(m18, Transformation([2, 1, 4, 5, 6, 7, 3, 2, 1])));;
+gap> dc := d[i];
+<Green's D-class: Transformation( [ 2, 1, 4, 5, 6, 7, 3, 2, 1 ] )>
 gap> RankOfTransformation(Representative(dc));
 7
 gap> hc := GroupHClassOfGreensDClass(dc);
@@ -191,7 +194,7 @@ Transformation( [ 1, 2, 4, 4, 4, 8, 8, 8 ] )
 gap> PermutationOfImage(last);
 ()
 gap> x := Transformation([3, 4, 4, 6, 1, 3, 3, 7, 1]);;
-gap> IndexPeriodOfTransformation(x);
+gap> IndexPeriodOfSemigroupElement(x);
 [ 2, 3 ]
 gap> x ^ 2 = x ^ 5;
 true
@@ -210,10 +213,12 @@ gap> InversesOfSemigroupElement(s, f);
 gap> IsRegularSemigroupElement(s, f);
 false
 gap> f := Transformation([1, 9, 7, 5, 5, 1, 9, 5, 1]);;
-gap> inv := InversesOfSemigroupElement(s, f);
-[ Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ), 
-  Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), 
-  Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ) ]
+gap> inv := InversesOfSemigroupElement(s, f);;
+gap> Sort(inv);
+gap> inv;
+[ Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), 
+  Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ), 
+  Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ) ]
 gap> IsRegularSemigroupElement(s, f);
 true
 gap> ForAll(inv, g -> f * g * f = f and g * f * g = g);
@@ -250,17 +255,19 @@ gap> ForAny([1 .. 11], i -> f ^ (2 * i) = f ^ i);
 false
 gap> s := FullTransformationSemigroup(6);;
 gap> f := Transformation([2, 1, 3, 4, 5, 1]);;
-gap> InversesOfSemigroupElement(s, f);
-[ Transformation( [ 2, 1, 3, 4, 5, 2 ] ), 
-  Transformation( [ 2, 1, 3, 4, 5, 5 ] ), 
-  Transformation( [ 2, 1, 3, 4, 5, 1 ] ), 
-  Transformation( [ 2, 1, 3, 4, 5, 4 ] ), 
+gap> inv := InversesOfSemigroupElement(s, f);;
+gap> Sort(inv);
+gap> inv;
+[ Transformation( [ 2, 1, 3, 4, 5, 1 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 2 ] ), 
   Transformation( [ 2, 1, 3, 4, 5, 3 ] ), 
-  Transformation( [ 6, 1, 3, 4, 5, 6 ] ), 
-  Transformation( [ 6, 1, 3, 4, 5, 5 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 4 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 5 ] ), 
   Transformation( [ 6, 1, 3, 4, 5, 1 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 3 ] ), 
   Transformation( [ 6, 1, 3, 4, 5, 4 ] ), 
-  Transformation( [ 6, 1, 3, 4, 5, 3 ] ) ]
+  Transformation( [ 6, 1, 3, 4, 5, 5 ] ), 
+  Transformation( [ 6, 1, 3, 4, 5, 6 ] ) ]
 gap> ForAll(last, g -> f * g * f = f and g * f * g = g);
 true
 gap> gens := [
@@ -272,14 +279,17 @@ gap> gens := [
 >  Transformation([2, 4, 3, 2]), Transformation([2, 3, 3, 3])];;
 gap> s := Monoid(gens);;
 gap> f := Transformation([3, 1, 1, 3]);;
-gap> d := DClass(s, f);
-<Green's D-class: Transformation( [ 2, 4, 4, 2 ] )>
+gap> d := DClass(s, f);;
 gap> Size(s);;
 gap> Size(d);
 84
 gap> f in d;
 true
-gap> List(GreensDClasses(s), Size);
+gap> Transformation([2, 4, 4, 2]) in d;
+true
+gap> a := List(GreensDClasses(s), Size);;
+gap> Sort(a);
+gap> a;
 [ 1, 4, 84, 90 ]
 gap> MultiplicativeZero(s);
 fail

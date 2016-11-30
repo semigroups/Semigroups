@@ -18,7 +18,7 @@ gap> file := Concatenation(SEMIGROUPS.PackageDir,
 >                          "/tst/extreme/data/graphc8.gz");;
 gap> nr := 0;;
 > if IO_FindExecutable("gzip") <> fail then 
->   iter := IteratorFromGeneratorsFile(file);;
+>   iter := IteratorFromPickledFile(file);;
 >   i := 0;;
 >   nr := 0;
 >   last_collect := 0;;
