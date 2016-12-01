@@ -108,9 +108,7 @@ end;
 ## 1. Default methods, for which there are currently no better methods.
 #############################################################################
 
-InstallMethod(GeneratorsSmallest, "for a semigroup",
-[IsSemigroup],
-function(S)
+_GeneratorsSmallest := function(S)
   local iter, gens, T, x;
 
   iter := IteratorSorted(S);
@@ -127,7 +125,15 @@ function(S)
     fi;
   od;
   return gens;
-end);
+end;
+
+InstallMethod(GeneratorsSmallest, "for a transformation semigroup",
+[IsTransformationSemigroup and IsGroup], _GeneratorsSmallest);
+
+InstallMethod(GeneratorsSmallest, "for a semigroup",
+[IsSemigroup], _GeneratorsSmallest);
+
+Unbind(_GeneratorsSmallest);
 
 InstallMethod(SmallestElementSemigroup, "for a semigroup",
 [IsSemigroup],
