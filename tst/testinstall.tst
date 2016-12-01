@@ -1478,6 +1478,26 @@ gap> S := Semigroup(IdentityTransformation);;
 gap> GeneratorsSmallest(S);
 [ IdentityTransformation ]
 
+# Fix issue with duplicate generators and ClosureSemigroup
+gap> gens := [Transformation([1, 2, 1]), 
+>             IdentityTransformation,
+>             Transformation([1, 2, 4, 6, 6, 5]), 
+>             Transformation([2, 1, 3, 5, 5]),
+>             Transformation([5, 4, 4, 2, 1]), 
+>             Transformation([5, 4, 6, 2, 1, 6]),
+>             Transformation([6, 6, 3, 4, 5, 1])];;
+gap> S := Semigroup(gens[1], gens[1]);;
+gap> Size(S);
+1
+gap> for x in gens do 
+>   S := ClosureSemigroup(S, x);
+>   Size(S);
+> od;
+gap> Size(S);
+119
+gap> Size(Semigroup(S));
+119
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
