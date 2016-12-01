@@ -43,6 +43,7 @@ static Int RNam_report            = 0;
 static Int RNam_Representative    = 0;
 static Int RNam_right             = 0;
 static Int RNam_rules             = 0;
+static Int RNam_Size              = 0;
 static Int RNam_type              = 0;
 static Int RNam_words             = 0;
 
@@ -80,6 +81,7 @@ static inline void initRNams() {
     RNam_Representative    = RNamName("Representative");
     RNam_right             = RNamName("right");
     RNam_rules             = RNamName("rules");
+    RNam_Size              = RNamName("Size");
     RNam_type              = RNamName("type");
     RNam_words             = RNamName("words");
 

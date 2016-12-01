@@ -395,6 +395,15 @@ Semigroup* en_semi_init_semigroup(en_semi_obj_t es) {
   Semigroup*             semi_cpp  = new Semigroup(gens);
   really_delete_cont(gens);
   ADDR_OBJ(es)[5] = reinterpret_cast<Obj>(semi_cpp);
+
+  if (IsbPRec(so, RNam_Size)) {
+    semi_cpp->set_batch_size(INT_INTOBJ(ElmPRec(so, RNam_Size)));
+  } else if (IsbPRec(so, RNam_opts)) {
+    gap_rec_t opts = ElmPRec(so, RNam_opts);
+    if (IsbPRec(opts, RNam_batch_size)) {
+      semi_cpp->set_batch_size(INT_INTOBJ(ElmPRec(opts, RNam_batch_size)));
+    }
+  }
   return semi_cpp;
 }
 
