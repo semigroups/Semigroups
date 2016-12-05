@@ -803,7 +803,7 @@ gap> IdempotentGeneratedSubsemigroup(S);
 #T# attr: MaximalDClasses, infinite 1/1
 gap> MaximalDClasses(FreeMonoid(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `MaximalDClasses' on 1 arguments
+Error, no 3rd choice method found for `MaximalDClasses' on 1 arguments
 
 #T# attr: StructureDescriptionMaximalSubgroups, infinite 1/1
 gap> StructureDescriptionMaximalSubgroups(FreeMonoid(2));

@@ -585,51 +585,19 @@ InstallMethod(HClassReps, "for a Green's class of an enumerable semigroup",
 C -> SEMIGROUPS.XClassRepsOfClass(C, GreensHRelation));
 
 ## Partial order of D-classes
+# There is duplicate code in here and in maximal D-classes
 
 InstallMethod(PartialOrderOfDClasses, "for a finite enumerable semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
 function(S)
-  local comps, id, right_id, left_id, right_comps, left_comps, right, left,
-   genstoapply, out, seen, i, j, k, l;
+  local l, r, gr;
+  
+  l := LeftCayleyGraphSemigroup(S);;
+  r := RightCayleyGraphSemigroup(S);;
+  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));;
+  gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);;
 
-  comps       := GreensDRelation(S)!.data.comps;
-  id          := GreensDRelation(S)!.data.id;
-  right_id    := GreensRRelation(S)!.data.id;
-  left_id     := GreensLRelation(S)!.data.id;
-  right_comps := GreensRRelation(S)!.data.comps;
-  left_comps  := GreensLRelation(S)!.data.comps;
-  right       := RightCayleyGraphSemigroup(S);
-  left        := LeftCayleyGraphSemigroup(S);
-
-  genstoapply := [1 .. Length(right[1])];
-  out := [];
-
-  for i in [1 .. Length(comps)] do # loop over D-classes
-    out[i] := [];
-    seen := BlistList([1 .. Maximum(left_id)], []);
-    for j in comps[i] do           # loop over L-classes of a D-class
-      if not seen[left_id[j]] then
-        seen[left_id[j]] := true;
-        for k in left_comps[left_id[j]] do
-          for l in genstoapply do
-            AddSet(out[i], id[right[k][l]]);
-          od;
-        od;
-      fi;
-    od;
-    seen := BlistList([1 .. Maximum(right_id)], []);
-    for j in comps[i] do           # loop over R-classes of a D-class
-      if not seen[right_id[j]] then
-        seen[right_id[j]] := true;
-        for k in right_comps[right_id[j]] do
-          for l in genstoapply do
-            AddSet(out[i], id[left[k][l]]);
-          od;
-        od;
-      fi;
-    od;
-  od;
-  return out;
+  return List(OutNeighboursCopy(gr), Set);
 end);
 
 #############################################################################
