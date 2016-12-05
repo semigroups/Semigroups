@@ -881,3 +881,16 @@ function(R)
 
   return MagmaIsomorphismByFunctionsNC(R, S, iso, inv);
 end);
+
+InstallMethod(IsIdempotentGenerated, "for a Rees 0-matrix semigroup", 
+[IsReesZeroMatrixSemigroup], 
+function(R)
+  local RR;
+  if not IsConnectedDigraph(RZMSDigraph(R)) then 
+    return false;
+  fi;
+  RR := Range(RZMSNormalization(R));
+  return Group(Filtered(MatrixEntries(RR), x -> x <> 0)) =
+    UnderlyingSemigroup(RR);
+end);
+
