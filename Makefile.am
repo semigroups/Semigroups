@@ -1,5 +1,5 @@
 #
-# semigroups: Methods for semigroups
+# Semigroups
 #
 # This file is part of the build system of a GAP kernel extension.
 # Requires automake.
@@ -38,7 +38,6 @@ endif
 
 distclean-local:
 	rm -rf bin/*
-	(cd doc ; ./clean)
 
 doc: doc/manual.six
 
