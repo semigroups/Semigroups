@@ -408,9 +408,24 @@ function()
   return;
 end);
 
-InstallGlobalFunction(SemigroupsTestStandard,
-function(arg)
-  local file_ext, is_testable, dir, contents, failed, passed, elapsed, pass,
+InstallGlobalFunction(SemigroupsTestStandard, 
+function()
+  local dir;
+  dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
+                                    "/tst/standard");
+  return SEMIGROUPS.RunTestsDir(dir);
+end);
+
+InstallGlobalFunction(SemigroupsTestExtreme, 
+function()
+  local dir;
+  dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
+                                    "/tst/extreme");
+  return SEMIGROUPS.RunTestsDir(dir);
+end);
+
+SEMIGROUPS.RunTestsDir := function(dir)
+  local file_ext, is_testable, contents, failed, passed, elapsed, pass,
   elapsed_this_test, str, filename;
 
   file_ext := function(str)
@@ -445,8 +460,6 @@ function(arg)
     PRINT_STRINGIFY(" . . .\n\n");
   fi;
 
-  dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-                                    "/tst/standard");
   contents := DirectoryContents(dir);
 
   failed  := [];
@@ -480,7 +493,7 @@ function(arg)
   GASMAN("collect");
 
   return [failed, passed];
-end);
+end;
 
 InstallGlobalFunction(SemigroupsTestInstall,
 function()
