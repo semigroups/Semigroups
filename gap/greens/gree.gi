@@ -40,12 +40,13 @@
 
 # This method differs from the library one in that it always returns true or
 # false, whereas the library method gives an error if the types of the classes
-# are not the same. 
+# are not the same.  But unfortunately this disagrees with the definition of
+# equality of congruences...
 
 #TODO move this to the library 
 
 InstallMethod(\=, "for Green's relations", 
-[IsGreensRelation, IsGreensRelation],
+[IsGreensRelation, IsGreensRelation], 5, # to beat the method for congruences
 function(rel1, rel2)
   if Source(rel1) <> Source(rel2) then
     return false; # This is different than in the libary
