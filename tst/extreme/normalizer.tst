@@ -15,6 +15,7 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
+gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
 # NormalizerTest3
 #gap> S:=Semigroup(
