@@ -12,6 +12,7 @@ gap> LoadPackage( "semigroups", false );;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
+gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
 #T# MatrixSemigroupTest1: Create and Size
 gap> M := Matrix(GF(2),
