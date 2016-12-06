@@ -355,12 +355,14 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
 
   id = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, n);
   SET_LEN_PLIST(id, n);
-  seen = NewBag(T_DATOBJ, (LEN_PLIST(comps2) + 1) * sizeof(UInt));
-  ptr  = (UInt*) ADDR_OBJ(seen);
-
   // init id
   for (i = 1; i <= n; i++) {
     SET_ELM_PLIST(id, i, INTOBJ_INT(0));
+  }
+
+  seen = NewBag(T_DATOBJ, (LEN_PLIST(comps2) + 1) * sizeof(UInt));
+  ptr  = (UInt*) ADDR_OBJ(seen);
+  for (i = 0; i < LEN_PLIST(comps2) + 1; i++) {
     ptr[i] = 0;
   }
 

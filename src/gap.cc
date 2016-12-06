@@ -145,6 +145,7 @@ void TSemiObjFreeFunc(Obj o) {
 
 void TBipartObjFreeFunc(Obj o) {
   assert(TNUM_OBJ(o) == T_BIPART);
+  bipart_get_cpp(o)->really_delete();
   delete bipart_get_cpp(o);
 }
 

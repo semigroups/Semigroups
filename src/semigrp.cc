@@ -141,6 +141,7 @@ gap_list_t cayley_graph_t_to_plist(cayley_graph_t* graph) {
 template <typename T> static inline void really_delete_cont(T* cont) {
   for (Element* x : *cont) {
     x->really_delete();
+    delete x;
   }
   delete cont;
 }
@@ -502,10 +503,10 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
       std::vector<Element*>* coll         = plist_to_vec(converter, plist, deg);
       Semigroup*             semi_cpp =
           new Semigroup(*old_semi_cpp, coll, semi_obj_get_report(so));
+      really_delete_cont(coll);
       semi_cpp->set_batch_size(semi_obj_get_batch_size(so));
       ADDR_OBJ(o)[5] = reinterpret_cast<Obj>(semi_cpp);
       CHANGED_BAG(o);
-      really_delete_cont(coll);
     }
   }
   AssPRec(so, RNam_en_semi_cpp_semi, o);
@@ -1211,6 +1212,7 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
     Element* xx  = en_semi_get_converter(es)->convert(x, deg);
     size_t   pos =
         en_semi_get_semi_cpp(es)->position(xx, semi_obj_get_report(so));
+    xx->really_delete();
     delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   } else {
@@ -1245,6 +1247,7 @@ EN_SEMI_CURRENT_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
     size_t   deg = en_semi_get_degree(es);
     Element* xx  = en_semi_get_converter(es)->convert(x, deg);
     size_t   pos = en_semi_get_semi_cpp(es)->current_position(xx);
+    xx->really_delete();
     delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   } else {
@@ -1266,6 +1269,7 @@ EN_SEMI_POSITION_SORTED(Obj self, gap_semigroup_t so, gap_element_t x) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     Element*   xx       = en_semi_get_converter(es)->convert(x, deg);
     size_t     pos = semi_cpp->sorted_position(xx, semi_obj_get_report(so));
+    xx->really_delete();
     delete xx;
     return (pos == Semigroup::UNDEFINED ? Fail : INTOBJ_INT(pos + 1));
   }
