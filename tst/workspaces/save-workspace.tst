@@ -84,6 +84,69 @@ gap> idd := Idempotents(DD);
 gap> ForAll(idd, x -> x in U);
 true
 
+#T# Bipartitions
+gap> y := Bipartition([[1, 3], [2, 4, -1], [5, 6, -2, -3], [-4, -5], [-6]]);
+<bipartition: [ 1, 3 ], [ 2, 4, -1 ], [ 5, 6, -2, -3 ], [ -4, -5 ], [ -6 ]>
+gap> IsBipartition(y);
+true
+gap> DegreeOfBipartition(y);
+6
+gap> RankOfBipartition(y);
+2
+gap> NrTransverseBlocks(y);
+2
+gap> NrLeftBlocks(y);
+3
+gap> NrRightBlocks(y);
+4
+gap> NrBlocks(y);
+5
+gap> LeftBlocks(y);
+<blocks: [ 1, 3 ], [ 2*, 4* ], [ 5*, 6* ]>
+gap> RightBlocks(y);
+<blocks: [ 1* ], [ 2*, 3* ], [ 4, 5 ], [ 6 ]>
+gap> IntRepOfBipartition(y);
+[ 1, 2, 1, 2, 3, 3, 2, 3, 3, 4, 4, 5 ]
+gap> LeftProjection(y);
+<bipartition: [ 1, 3 ], [ 2, 4, -2, -4 ], [ 5, 6, -5, -6 ], [ -1, -3 ]>
+gap> RightProjection(y);
+<bipartition: [ 1, -1 ], [ 2, 3, -2, -3 ], [ 4, 5 ], [ 6 ], [ -4, -5 ], 
+ [ -6 ]>
+gap> One(y);
+<block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], 
+ [ 6, -6 ]>
+gap> IsBlockBijection(y);
+false
+gap> IsUniformBlockBijection(y);
+false
+gap> IsTransBipartition(y);
+false
+gap> IsDualTransBipartition(y);
+false
+gap> IsPermBipartition(y);
+false
+gap> IsPartialPermBipartition(y);
+false
+
+#T# Blocks
+gap> b := BlocksNC([[1, 3], [-2, -4, -7], [5, 6, 8, 9], [10]]);
+<blocks: [ 1*, 3* ], [ 2, 4, 7 ], [ 5*, 6*, 8*, 9* ], [ 10* ]>
+gap> ProjectionFromBlocks(b);
+<bipartition: [ 1, 3, -1, -3 ], [ 2, 4, 7 ], [ 5, 6, 8, 9, -5, -6, -8, -9 ], 
+ [ 10, -10 ], [ -2, -4, -7 ]>
+gap> NrBlocks(b);
+4
+gap> RankOfBlocks(b);
+3
+gap> NrTransverseBlocks(b);
+3
+gap> DegreeOfBlocks(b);
+10
+gap> AsDigraph(b);
+<digraph with 10 vertices, 23 edges>
+gap> CanonicalBlocks(b);
+<blocks: [ 1*, 2*, 3*, 4* ], [ 5, 6, 7 ], [ 8*, 9* ], [ 10* ]>
+
 #############################################################################
 ##  Tests end here
 #############################################################################
