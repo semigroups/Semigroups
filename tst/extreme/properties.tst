@@ -174,19 +174,17 @@ gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
 > Transformation([7, 1, 2, 2, 2, 7, 4, 5]),
 > Transformation([8, 8, 5, 1, 7, 5, 2, 8])];;
 gap> s := Semigroup(gens);;
-gap> iter := IteratorOfDClasses(s);
-<iterator of D-classes>
+gap> iter := IteratorOfDClasses(s);;
 gap> repeat
 >   d := NextIterator(iter);
 > until IsDoneIterator(iter) or IsLTrivial(d);
-gap> d;
-<Green's D-class: Transformation( [ 2, 8, 3, 7, 1, 5, 2, 6 ] )>
+gap> d = DClass(s, Transformation([2, 8, 3, 7, 1, 5, 2, 6])) 
+> or d = DClass(s, Transformation([5, 5, 5, 5, 5, 5, 5, 5]));
+true
 gap> IsLTrivial(d);
 true
-gap> IsRTrivial(d);
+gap> Size(d) in [1, 8];
 true
-gap> Size(d);
-1
 gap> repeat
 >   d := NextIterator(iter);
 > until IsDoneIterator(iter) or not IsLTrivial(d) and IsRTrivial(d);
@@ -522,7 +520,7 @@ gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]),
 >   Transformation([7, 1, 4, 3, 2, 7, 7, 6, 6, 5]),
 >   Transformation([7, 10, 10, 1, 7, 9, 10, 4, 2, 10]),
 >   Transformation([10, 7, 10, 8, 8, 7, 5, 9, 1, 9])];;
-gap> s := Semigroup(gens);;
+gap> s := Semigroup(gens, rec(acting := true));;
 gap> IsRegularSemigroup(s);
 false
 
@@ -821,9 +819,7 @@ true
 gap> t := Transformation([1, 1, 2]);;
 gap> s := Semigroup(t);
 <commutative transformation semigroup of degree 3 with 1 generator>
-gap> I := SemigroupIdeal(s, t ^ 2);
-<commutative regular transformation semigroup ideal of degree 3 with
-  1 generator>
+gap> I := SemigroupIdeal(s, t ^ 2);;
 gap> HasIsZeroSemigroup(s);
 false
 gap> IsZeroSemigroup(I); # parent does not know it is zero
