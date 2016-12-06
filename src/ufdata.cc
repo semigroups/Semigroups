@@ -64,13 +64,16 @@ Obj UF_FLATTEN(Obj self, Obj ufdata) {
 Obj UF_TABLE(Obj self, Obj ufdata) {
   UFData::table_t* table     = CLASS_OBJ<UFData*>(ufdata)->get_table();
   size_t           size      = table->size();
-  Obj              gap_table = NEW_PLIST(T_PLIST, size);
+  Obj              gap_table = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, size);
+  // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(gap_table, size);
   for (size_t i = 0; i < size; i++) {
     SET_ELM_PLIST(gap_table, i + 1, INTOBJ_INT(table->at(i) + 1));
   }
   return gap_table;
 }
+
+// FIXME it is not valid to store Obj's inside a C++ container such as a vector
 
 Obj UF_BLOCKS(Obj self, Obj ufdata) {
   UFData::blocks_t* blocks = CLASS_OBJ<UFData*>(ufdata)->get_blocks();
@@ -83,8 +86,9 @@ Obj UF_BLOCKS(Obj self, Obj ufdata) {
   for (i = 0; i < size; i++) {
     if (blocks->at(i) == nullptr) {
       obj_list.push_back(nullptr);
+      // FIXME how can this occur?
     } else {
-      obj_list.push_back(NEW_PLIST(T_PLIST, blocks->at(i)->size()));
+      obj_list.push_back(NEW_PLIST(T_PLIST_CYC, blocks->at(i)->size()));
       SET_LEN_PLIST(obj_list[i], blocks->at(i)->size());
       for (j = 0; j < blocks->at(i)->size(); j++) {
         SET_ELM_PLIST(obj_list[i], j + 1, INTOBJ_INT(blocks->at(i)->at(j) + 1));
@@ -93,7 +97,7 @@ Obj UF_BLOCKS(Obj self, Obj ufdata) {
   }
 
   // Put these blocks into an overall PLIST
-  Obj gap_blocks = NEW_PLIST(T_PLIST, size);
+  Obj gap_blocks = NEW_PLIST(T_PLIST, size); // FIXME should this be T_PLIST_TAB?
   SET_LEN_PLIST(gap_blocks, size);
   for (i = 0; i < size; i++) {
     SET_ELM_PLIST(gap_blocks, i + 1, obj_list[i]);

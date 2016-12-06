@@ -169,8 +169,8 @@ Obj BIPART_EXT_REP(Obj self, Obj x) {
   Bipartition* xx = bipart_get_cpp(x);
   size_t       n  = xx->degree();
 
-  Obj ext_rep =
-      NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_HOM), xx->nr_blocks());
+  Obj ext_rep = NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_TAB) + IMMUTABLE,
+                          xx->nr_blocks());
   SET_LEN_PLIST(ext_rep, (Int) xx->nr_blocks());
 
   for (size_t i = 0; i < 2 * n; i++) {
@@ -198,7 +198,8 @@ Obj BIPART_INT_REP(Obj self, Obj x) {
   Bipartition* xx = bipart_get_cpp(x);  // get C++ bipartition pointer
   size_t       n  = xx->degree();
 
-  Obj int_rep = NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_CYC), 2 * n);
+  Obj int_rep =
+      NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_CYC) + IMMUTABLE, 2 * n);
   SET_LEN_PLIST(int_rep, (Int) 2 * n);
 
   for (size_t i = 0; i < 2 * n; i++) {
@@ -715,8 +716,8 @@ Obj BLOCKS_EXT_REP(Obj self, Obj x) {
   Blocks* xx = blocks_get_cpp(x);
   size_t  n  = xx->degree();
 
-  Obj ext_rep =
-      NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_HOM), xx->nr_blocks());
+  Obj ext_rep = NEW_PLIST((n == 0 ? T_PLIST_EMPTY : T_PLIST_TAB) + IMMUTABLE,
+                          xx->nr_blocks());
   SET_LEN_PLIST(ext_rep, (Int) xx->nr_blocks());
 
   for (size_t i = 0; i < n; i++) {

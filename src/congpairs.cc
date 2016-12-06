@@ -234,12 +234,12 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   gap_semigroup_t range_obj = cong_obj_get_range_obj(o);
   bool            report    = semi_obj_get_report(range_obj);
 
-  Obj partition = NEW_PLIST(T_PLIST_HOM, cong->nr_classes());
+  Obj partition = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, cong->nr_classes());
   SET_LEN_PLIST(partition, cong->nr_classes());
 
   for (size_t i = 0; i < cong->nr_classes(); i++) {
-    Obj next = NEW_PLIST(T_PLIST_CYC, 0);
-    SET_LEN_PLIST(next, 0);
+    Obj next = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
+    SET_LEN_PLIST(next, 0); // should never be 0 later on, so this should be ok
     SET_ELM_PLIST(partition, i + 1, next);
     CHANGED_BAG(partition);
   }
@@ -249,7 +249,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   if (cong_obj_get_range_type(o) != UNKNOWN) {
     Semigroup* range = cong_obj_get_range(o);
 
-    lookup = NEW_PLIST(T_PLIST_CYC, range->size());
+    lookup = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, range->size());
     SET_LEN_PLIST(lookup, range->size());
 
     word_t word;
@@ -270,7 +270,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
         fropin(cong_obj_get_range_obj(o), INTOBJ_INT(-1), 0, False);
     Obj words = ElmPRec(data, RNam_words);
 
-    lookup = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(words));
+    lookup = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(words));
     SET_LEN_PLIST(lookup, LEN_PLIST(words));
 
     for (size_t i = 1; i <= (size_t) LEN_PLIST(words); i++) {

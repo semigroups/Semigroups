@@ -53,11 +53,11 @@ Obj BoolMatConverter::unconvert(Element const* x) const {
   size_t      n = x->degree();
   BooleanMat const* xx(static_cast<BooleanMat const*>(x));
 
-  Obj o = NEW_PLIST(T_PLIST, n);
+  Obj o = NEW_PLIST(T_PLIST_TAB_RECT + IMMUTABLE, n);
   SET_LEN_PLIST(o, n);
 
   for (size_t i = 0; i < n; i++) {
-    Obj blist = NewBag(T_BLIST, SIZE_PLEN_BLIST(n));
+    Obj blist = NewBag(T_BLIST + IMMUTABLE, SIZE_PLEN_BLIST(n));
     SET_LEN_BLIST(blist, n);
     for (size_t j = 0; j < n; j++) {
       if ((*xx)[i * n + j]) {
@@ -126,7 +126,7 @@ Obj MatrixOverSemiringConverter::unconvert(Element const* x) const {
   MatrixOverSemiring const* xx(static_cast<MatrixOverSemiring const*>(x));
   size_t                    n = xx->degree();
 
-  Obj plist = NEW_PLIST(T_PLIST, n + 2);
+  Obj plist = NEW_PLIST(T_PLIST_HOM + IMMUTABLE, n + 2);
   if (_semiring->period() != -1) {
     SET_LEN_PLIST(plist, n + 2);
     SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
@@ -136,10 +136,11 @@ Obj MatrixOverSemiringConverter::unconvert(Element const* x) const {
     SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
   } else {
     SET_LEN_PLIST(plist, n);
+    RetypeBag(plist, T_PLIST_TAB_RECT + IMMUTABLE);
   }
 
   for (size_t i = 0; i < n; i++) {
-    Obj row = NEW_PLIST(T_PLIST_CYC, n);
+    Obj row = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, n);
     SET_LEN_PLIST(row, n);
     for (size_t j = 0; j < n; j++) {
       int64_t entry = xx->at(i * n + j);
@@ -196,16 +197,17 @@ PBR* PBRConverter::convert(Obj o, size_t n) const {
 
 Obj PBRConverter::unconvert(Element const* xx) const {
   PBR const* x(static_cast<PBR const*>(xx));
-  Obj  plist = NEW_PLIST(T_PLIST_TAB, 2 * x->degree() + 1);
+  Obj  plist = NEW_PLIST(T_PLIST + IMMUTABLE, 2 * x->degree() + 1);
+  // can't use T_PLIST_TAB/HOM here because some of the subplists might be empty
   SET_LEN_PLIST(plist, 2 * x->degree() + 1);
   SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree()));
   for (u_int32_t i = 0; i < 2 * x->degree(); i++) {
     size_t m = x->at(i).size();
     Obj    adj;
     if (m == 0) {
-      adj = NEW_PLIST(T_PLIST_EMPTY, 0);
+      adj = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
     } else {
-      adj = NEW_PLIST(T_PLIST_CYC, m);
+      adj = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, m);
       for (size_t j = 0; j < x->at(i).size(); j++) {
         SET_ELM_PLIST(adj, j + 1, INTOBJ_INT(x->at(i).at(j) + 1));
       }

@@ -92,7 +92,8 @@ plist_to_vec(Converter* converter, gap_list_t elements, size_t degree) {
 
 template <typename T>
 static inline gap_list_t vec_to_plist(Converter* converter, T* cont) {
-  gap_list_t out = NEW_PLIST(T_PLIST, cont->size());
+  gap_list_t out = NEW_PLIST((cont->size() == 0 ? T_PLIST_EMPTY : T_PLIST_HOM),
+                             cont->size());
   SET_LEN_PLIST(out, cont->size());
   size_t i = 1;
   for (auto const& x : *cont) {
@@ -104,7 +105,8 @@ static inline gap_list_t vec_to_plist(Converter* converter, T* cont) {
 
 gap_list_t word_t_to_plist(word_t const& word) {
   assert(!word.empty());
-  gap_list_t out = NEW_PLIST(T_PLIST_CYC, word.size());
+  gap_list_t out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, word.size());
+  // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(out, word.size());
 
   for (size_t i = 0; i < word.size(); i++) {
@@ -116,11 +118,13 @@ gap_list_t word_t_to_plist(word_t const& word) {
 
 gap_list_t cayley_graph_t_to_plist(cayley_graph_t* graph) {
   assert(graph->nr_rows() != 0);
-  gap_list_t out = NEW_PLIST(T_PLIST, graph->nr_rows());
+  gap_list_t out = NEW_PLIST(T_PLIST_TAB_RECT, graph->nr_rows());
+  // this is intentionally not IMMUTABLE
   SET_LEN_PLIST(out, graph->nr_rows());
 
   for (size_t i = 0; i < graph->nr_rows(); i++) {
     gap_list_t next = NEW_PLIST(T_PLIST_CYC, graph->nr_cols());
+    // this is intentionally not IMMUTABLE
     SET_LEN_PLIST(next, graph->nr_cols());
     assert(graph->nr_cols() != 0);
     typename std::vector<size_t>::const_iterator end = graph->row_cend(i);
@@ -674,11 +678,14 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     bool       report    = semi_obj_get_report(so);
     size_t     n         = semigroup->size(report);
     assert(n != 0);
-    gap_list_t out       = NEW_PLIST(T_PLIST_HOM, n);
+    gap_list_t out = NEW_PLIST(T_PLIST_TAB_RECT, n);
+    // this is intentionally not IMMUTABLE
+
     SET_LEN_PLIST(out, n);
 
     for (size_t i = 0; i < n; i++) {
       gap_list_t next = NEW_PLIST(T_PLIST_CYC, n);
+      // this is intentionally not IMMUTABLE
       SET_LEN_PLIST(next, n);
       for (size_t j = 0; j < n; j++) {
         SET_ELM_PLIST(
@@ -694,7 +701,8 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     size_t     n     = LEN_PLIST(words);
     assert(n != 0);
 
-    gap_list_t out = NEW_PLIST(T_PLIST_HOM, n);
+    gap_list_t out = NEW_PLIST(T_PLIST_TAB_RECT, n);
+    // this is intentionally not IMMUTABLE
     SET_LEN_PLIST(out, n);
 
     gap_list_t left   = ElmPRec(fp, RNamName("left"));
@@ -707,6 +715,7 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
 
     for (size_t i = 1; i <= n; i++) {
       gap_list_t next = NEW_PLIST(T_PLIST_CYC, n);
+      // this is intentionally not IMMUTABLE
       SET_LEN_PLIST(next, n);
       for (size_t j = 1; j <= n; j++) {
         size_t ii = i, jj = j;
@@ -869,7 +878,8 @@ gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist) {
 
   size_t len = LEN_LIST(poslist);
 
-  gap_list_t out = NEW_PLIST(T_PLIST, len);
+  gap_list_t out = NEW_PLIST((len == 0 ? T_PLIST_EMPTY : T_PLIST_HOM), len);
+  // this is intentionally not IMMUTABLE
   SET_LEN_PLIST(out, len);
 
   if (en_semi_get_type(es) != UNKNOWN) {
@@ -958,7 +968,8 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
       // TODO(JDM) Use FindPRec instead
       word_t w;  // changed in place by the next line
       semi_cpp->factorisation(w, pos_c - 1, semi_obj_get_report(so));
-      words = NEW_PLIST(T_PLIST, pos_c);
+      words = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, pos_c);
+      // IMMUTABLE since it should not be altered on the GAP level
       SET_LEN_PLIST(words, pos_c);
       SET_ELM_PLIST(words, pos_c, word_t_to_plist(w));
       CHANGED_BAG(words);
@@ -973,7 +984,9 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
         if (prefix != 0 && prefix <= (size_t) LEN_PLIST(words)
             && ELM_PLIST(words, prefix) != 0) {
           gap_list_t old_word = ELM_PLIST(words, prefix);
-          gap_list_t new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+          gap_list_t new_word =
+              NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
+          // IMMUTABLE since it should not be altered on the GAP level
           memcpy((void*) ((char*) (ADDR_OBJ(new_word)) + sizeof(Obj)),
                  (void*) ((char*) (ADDR_OBJ(old_word)) + sizeof(Obj)),
                  (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
@@ -987,7 +1000,9 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
         } else if (suffix != 0 && suffix <= (size_t) LEN_PLIST(words)
                    && ELM_PLIST(words, suffix) != 0) {
           gap_list_t old_word = ELM_PLIST(words, suffix);
-          gap_list_t new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+          gap_list_t new_word =
+              NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
+          // IMMUTABLE since it should not be altered on the GAP level
           memcpy((void*) ((char*) (ADDR_OBJ(new_word)) + 2 * sizeof(Obj)),
                  (void*) ((char*) (ADDR_OBJ(old_word)) + sizeof(Obj)),
                  (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
@@ -1055,7 +1070,8 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
     size_t nr = semi_cpp->nr_idempotents();
     assert(nr != 0);
 
-    gap_list_t out = NEW_PLIST(T_PLIST_CYC, nr);
+    gap_list_t out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, nr);
+    // IMMUTABLE since it should not be altered on the GAP level
     SET_LEN_PLIST(out, nr);
 
     for (auto it = cend - 1; it >= cbegin; it--) {
@@ -1070,7 +1086,8 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
     gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
     size_t     size   = LEN_PLIST(left);
     size_t     nr     = 0;
-    gap_list_t out    = NEW_PLIST(T_PLIST_CYC, 0);
+    gap_list_t out    = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
+    // IMMUTABLE since it should not be altered on the GAP level
     SET_LEN_PLIST(out, 0);
     for (size_t pos = 1; pos <= size; pos++) {
       size_t i = pos, j = pos;
@@ -1094,7 +1111,8 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
 
   en_semi_obj_t es = semi_obj_get_en_semi(so);
 
-  gap_list_t out = NEW_PLIST(T_PLIST_CYC, 0);
+  gap_list_t out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
+  // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(out, 0);
   size_t len = 0;
 
@@ -1132,7 +1150,7 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
   }
   assert(len == (size_t) LEN_PLIST(out));
   if (len == 0) {
-    RetypeBag(out, T_PLIST_EMPTY);
+    RetypeBag(out, T_PLIST_EMPTY + IMMUTABLE);
   }
   return out;
 }
@@ -1263,7 +1281,9 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
     if (!IsbPRec(fp, RNam_rules) || LEN_PLIST(ElmPRec(fp, RNam_rules)) == 0) {
       Semigroup* semigroup = en_semi_get_semi_cpp(es);
       bool       report    = semi_obj_get_report(so);
-      gap_list_t rules     = NEW_PLIST(T_PLIST, semigroup->nrrules(report));
+      gap_list_t rules =
+          NEW_PLIST(T_PLIST_TAB_RECT + IMMUTABLE, semigroup->nrrules(report));
+      // IMMUTABLE since it should not be altered on the GAP level
       SET_LEN_PLIST(rules, semigroup->nrrules(report));
       size_t nr = 0;
 
@@ -1272,10 +1292,12 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
       semigroup->next_relation(relation, report);
 
       while (relation.size() == 2) {
-        gap_list_t next = NEW_PLIST(T_PLIST, 2);
+        gap_list_t next = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, 2);
+        // IMMUTABLE since it should not be altered on the GAP level
         SET_LEN_PLIST(next, 2);
         for (size_t i = 0; i < 2; i++) {
-          gap_list_t w = NEW_PLIST(T_PLIST_CYC, 1);
+          gap_list_t w = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 1);
+          // IMMUTABLE since it should not be altered on the GAP level
           SET_LEN_PLIST(w, 1);
           SET_ELM_PLIST(w, 1, INTOBJ_INT(relation[i] + 1));
           SET_ELM_PLIST(next, i + 1, w);
@@ -1290,7 +1312,9 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
       while (!relation.empty()) {
         gap_list_t old_word =
             EN_SEMI_FACTORIZATION(self, so, INTOBJ_INT(relation[0] + 1));
-        gap_list_t new_word = NEW_PLIST(T_PLIST_CYC, LEN_PLIST(old_word) + 1);
+        gap_list_t new_word =
+            NEW_PLIST(T_PLIST_CYC + IMMUTABLE, LEN_PLIST(old_word) + 1);
+        // IMMUTABLE since it should not be altered on the GAP level
         memcpy((void*) ((char*) (ADDR_OBJ(new_word)) + sizeof(Obj)),
                (void*) ((char*) (ADDR_OBJ(old_word)) + sizeof(Obj)),
                (size_t)(LEN_PLIST(old_word) * sizeof(Obj)));
@@ -1298,7 +1322,8 @@ gap_list_t EN_SEMI_RELATIONS(Obj self, gap_semigroup_t so) {
             new_word, LEN_PLIST(old_word) + 1, INTOBJ_INT(relation[1] + 1));
         SET_LEN_PLIST(new_word, LEN_PLIST(old_word) + 1);
 
-        gap_list_t next = NEW_PLIST(T_PLIST, 2);
+        gap_list_t next = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, 2);
+        // IMMUTABLE since it should not be altered on the GAP level
         SET_LEN_PLIST(next, 2);
         SET_ELM_PLIST(next, 1, new_word);
         CHANGED_BAG(next);
