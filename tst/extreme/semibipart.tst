@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  standard/semibipart.tst
+#W  extreme/semibipart.tst
 #Y  Copyright (C) 2014-15                                 Attila Egri-Nagy
 ##                                                       James D. Mitchell
 ##
@@ -8,34 +8,35 @@
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/semibipart.tst");
+gap> START_TEST("Semigroups package: extreme/semibipart.tst");
 gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
+gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
 #T# BipartitionTest1: IsomorphismTransformationMonoid, IsomorphismTransformationSemigroup
 gap> S := DualSymmetricInverseMonoid(4);
-<inverse bipartition monoid of degree 4 with 3 generators>
+<inverse block bijection monoid of degree 4 with 3 generators>
 gap> IsomorphismTransformationMonoid(S);
-MappingByFunction( <inverse bipartition monoid of size 339, degree 4 with 3 
- generators>, <transformation monoid of degree 339 with 3 generators>
- , function( x ) ... end, function( x ) ... end )
+MappingByFunction( <inverse block bijection monoid of size 339, degree 4 with 
+ 3 generators>, <transformation monoid of size 339, degree 339 with 3 
+ generators>, function( x ) ... end, function( x ) ... end )
 gap> S := Semigroup(Bipartition([[1, 2, 3, 4, -2, -3], [-1], [-4]]),
 >  Bipartition([[1, 2, -1, -3], [3, 4, -2, -4]]),
 >  Bipartition([[1, 3, -1], [2, 4, -2, -3], [-4]]),
 >  Bipartition([[1, -4], [2], [3, -2], [4, -1], [-3]]));;
 gap> IsomorphismTransformationSemigroup(S);
 MappingByFunction( <bipartition semigroup of size 284, degree 4 with 4 
- generators>, <transformation semigroup of degree 285 with 4 generators>
- , function( x ) ... end, function( x ) ... end )
+ generators>, <transformation semigroup of size 284, degree 285 with 4 
+ generators>, function( x ) ... end, function( x ) ... end )
 gap> S := Monoid(Bipartition([[1, 2, -2], [3], [4, -3, -4], [-1]]),
 >  Bipartition([[1, 3, -3, -4], [2, 4, -1, -2]]),
 >  Bipartition([[1, -1, -2], [2, 3, -3, -4], [4]]),
 >  Bipartition([[1, 4, -4], [2, -1], [3, -2, -3]]));;
 gap> IsomorphismTransformationMonoid(S);
 MappingByFunction( <bipartition monoid of size 41, degree 4 with 4 generators>
- , <transformation monoid of degree 41 with 4 generators>
+ , <transformation monoid of size 41, degree 41 with 4 generators>
  , function( x ) ... end, function( x ) ... end )
 
 # IsomorphismBipartitionSemigroup for a enumerable semigroup
@@ -52,9 +53,9 @@ gap> IsRegularDClass(D);
 true
 gap> R := PrincipalFactor(D);
 <Rees 0-matrix semigroup 12x15 over Group(())>
-gap> f := IsomorphismBipartitionSemigroup(R);
+gap> f := IsomorphismSemigroup(IsBipartitionSemigroup, R);
 MappingByFunction( <Rees 0-matrix semigroup 12x15 over Group(())>, 
-<bipartition semigroup of degree 182 with 181 generators>
+<bipartition semigroup of size 181, degree 182 with 26 generators>
  , function( x ) ... end, function( x ) ... end )
 gap> g := InverseGeneralMapping(f);;
 gap> ForAll(R, x -> (x ^ f) ^ g = x);
@@ -69,9 +70,9 @@ gap> gens := [Transformation([3, 4, 1, 2, 1]),
 >   Transformation([4, 2, 1, 5, 5]),
 >   Transformation([4, 2, 2, 2, 4])];;
 gap> s := Semigroup(gens);;
-gap> S := Range(IsomorphismBipartitionSemigroup(s));
+gap> S := Range(IsomorphismSemigroup(IsBipartitionSemigroup, s));
 <bipartition semigroup of degree 5 with 3 generators>
-gap> f := IsomorphismBipartitionSemigroup(s);
+gap> f := IsomorphismSemigroup(IsBipartitionSemigroup, s);
 MappingByFunction( <transformation semigroup of degree 5 with 3 generators>, 
 <bipartition semigroup of degree 5 with 3 generators>
  , function( x ) ... end, <Attribute "AsTransformation"> )
@@ -95,7 +96,7 @@ gap> S := Semigroup(Transformation([1, 3, 4, 1, 3]),
 > Transformation([2, 5, 3, 5, 3]),
 > Transformation([4, 1, 2, 2, 1]),
 > Transformation([5, 5, 1, 1, 3]));;
-gap> T := Range(IsomorphismBipartitionSemigroup(S));
+gap> T := Range(IsomorphismSemigroup(IsBipartitionSemigroup, S));
 <bipartition semigroup of degree 5 with 5 generators>
 gap> f := IsomorphismTransformationSemigroup(T);
 MappingByFunction( <bipartition semigroup of degree 5 with 5 generators>, 
@@ -121,7 +122,7 @@ gap> S := Semigroup(
 >  PartialPerm([1, 2, 3], [4, 1, 2]),
 >  PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 >  PartialPerm([1, 3, 5], [5, 1, 3])]);;
-gap> T := Range(IsomorphismBipartitionSemigroup(S));
+gap> T := Range(IsomorphismSemigroup(IsBipartitionSemigroup, S));
 <bipartition semigroup of degree 5 with 5 generators>
 gap> Generators(S);
 [ [2,3,4](1), [1,2,5](3), [3,2,1,4], [3,1,2,4,5], (1,5,3) ]
@@ -141,7 +142,7 @@ gap> IsInverseSemigroup(S);
 false
 gap> IsInverseSemigroup(T);
 false
-gap> f := IsomorphismBipartitionSemigroup(S);;
+gap> f := IsomorphismSemigroup(IsBipartitionSemigroup, S);;
 gap> g := InverseGeneralMapping(f);;
 gap> ForAll(S, x -> (x ^ f) ^ g = x);
 true
@@ -177,13 +178,14 @@ gap> S := Semigroup(
 > Bipartition([[1, -5], [2, 3, 4, 5], [-1], [-2], [-3, -4]]),
 > Bipartition([[1, -4], [2], [3, -2], [4, 5, -1], [-3, -5]]));;
 gap> IsomorphismPartialPermSemigroup(S);
-fail
+Error, IsomorphismPartialPermSemigroup: usage,
+the argument must be an inverse semigroup,
 gap> Range(IsomorphismTransformationSemigroup(S));
-<transformation semigroup of degree 208 with 5 generators>
+<transformation semigroup of size 207, degree 208 with 5 generators>
 
 #T# BipartitionTest19: IsomorphismBipartitionSemigroup for a perm group
 gap> G := DihedralGroup(IsPermGroup, 10);;
-gap> f := IsomorphismBipartitionSemigroup(G);;
+gap> f := IsomorphismSemigroup(IsBipartitionSemigroup, G);;
 gap> g := InverseGeneralMapping(f);;
 gap> ForAll(G, x -> (x ^ f) ^ g = x);
 true
@@ -194,11 +196,8 @@ true
 
 #T# BipartitionTest20: IsomorphismPermGroup
 gap> G := GroupOfUnits(PartitionMonoid(5));
-<bipartition group of degree 5 with 2 generators>
-gap> IsomorphismPermGroup(G);
-MappingByFunction( <bipartition group of degree 5 with 2 generators>
-, Group([ (1,2,3,4,5), (1,
-2) ]), <Attribute "AsPermutation">, function( x ) ... end )
+<block bijection group of degree 5 with 2 generators>
+gap> IsomorphismPermGroup(G);;
 gap> f := last;; g := InverseGeneralMapping(f);;
 gap> ForAll(G, x -> ForAll(G, y -> (x * y) ^ f = x ^ f * y ^ f));
 true
@@ -206,23 +205,21 @@ gap> ForAll(G, x -> (x ^ f) ^ g = x);
 true
 gap> ForAll(Range(f), x -> (x ^ g) ^ f = x);
 true
-gap> D := DClass(PartitionMonoid(5),
-> Bipartition([[1], [2, -3], [3, -4], [4, -5], [5], [-1],
->   [-2]]));;
-gap> G := GroupHClass(D);
-<Green's H-class: <bipartition: [ 1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4, -5 ], 
-  [ 5 ], [ -1 ]>>
-gap> IsomorphismPermGroup(G);
-MappingByFunction( <Green's H-class: <bipartition: [ 1 ], [ 2, -2 ], 
-  [ 3, -3 ], [ 4, -4, -5 ], [ 5 ], [ -1 ]>>, Group([ (2,4,3), (3,
-4) ]), function( x ) ... end, function( x ) ... end )
+gap> S := PartitionMonoid(5);;
+gap> D := DClass(S,
+> Bipartition([[1], [2, -3], [3, -4], [4, -5], [5], [-1], [-2]]));;
+gap> G := GroupHClass(D);;
+gap> G = HClass(S, Bipartition([[1], [2, -1, -2], [3, -3], 
+> [4, -4, -5], [5]]));
+true
+gap> IsomorphismPermGroup(G);;
 
 #T# BipartitionTest21: IsomorphismBipartitionSemigroup
 # for an inverse semigroup of partial perms
 gap> S := InverseSemigroup(
 > PartialPerm([1, 3, 5, 7, 9], [7, 6, 5, 10, 1]),
 > PartialPerm([1, 2, 3, 4, 6, 10], [9, 10, 4, 2, 5, 6]));;
-gap> T := Range(IsomorphismBipartitionSemigroup(S));
+gap> T := Range(IsomorphismSemigroup(IsBipartitionSemigroup, S));
 <inverse bipartition semigroup of degree 10 with 2 generators>
 gap> Size(S);
 281
@@ -230,8 +227,8 @@ gap> Size(T);
 281
 gap> IsomorphismPartialPermSemigroup(T);
 MappingByFunction( <inverse bipartition semigroup of size 281, degree 10 with 
- 2 generators>, <inverse partial perm semigroup of rank 9 with 4 generators>
- , <Operation "AsPartialPerm">, function( x ) ... end )
+ 2 generators>, <inverse partial perm semigroup of size 281, rank 9 with 2 
+ generators>, <Operation "AsPartialPerm">, function( x ) ... end )
 gap> Size(Range(last));
 281
 gap> f := last2;; g := InverseGeneralMapping(f);;
@@ -243,9 +240,9 @@ true
 gap> S := InverseSemigroup(
 > PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]),
 > PartialPerm([1, 2, 3, 4, 6, 7, 8, 10], [3, 8, 1, 9, 4, 10, 5, 6]));;
-gap> T := Range(IsomorphismBlockBijectionSemigroup(S));
-<inverse bipartition semigroup of degree 11 with 2 generators>
-gap> f := IsomorphismBlockBijectionSemigroup(S);;
+gap> T := Range(IsomorphismSemigroup(IsBlockBijectionSemigroup, S));
+<inverse block bijection semigroup of degree 11 with 2 generators>
+gap> f := IsomorphismSemigroup(IsBlockBijectionSemigroup, S);;
 gap> g := InverseGeneralMapping(f);;
 gap> ForAll(S, x -> (x ^ f) ^ g = x);
 true
@@ -267,13 +264,13 @@ gap> Size(S);
 90
 gap> IsInverseSemigroup(S);
 false
-gap> T := Range(IsomorphismBlockBijectionSemigroup(S));
-<bipartition semigroup of degree 11 with 2 generators>
+gap> T := Range(IsomorphismSemigroup(IsBlockBijectionSemigroup, S));
+<block bijection semigroup of size 90, degree 11 with 2 generators>
 gap> Size(T);
 90
 gap> IsInverseSemigroup(T);
 false
-gap> f := IsomorphismBlockBijectionSemigroup(S);;
+gap> f := IsomorphismSemigroup(IsBlockBijectionSemigroup, S);;
 gap> g := InverseGeneralMapping(f);;
 gap> ForAll(S, x -> (x ^ f) ^ g = x);
 true
@@ -294,7 +291,7 @@ gap> S := Semigroup(
 >      [12, -12], [13, -9]]),
 >  Bipartition([[1, 7, -10, -12], [2, 3, 4, 6, 10, 13, -13],
 >      [5, 12, -1], [8, 9, 11], [-2, -9], [-3, -7, -8], [-4],
->      [-5], [-6, -11]]));
+>      [-5], [-6, -11]]), rec(acting := true));
 <bipartition semigroup of degree 13 with 3 generators>
 gap> f := Bipartition([[1, 2, 3, 4, 7, 8, 11, 13], [5, 9], [6, 10, 12],
 > [-1, -2, -6], [-3], [-4, -8], [-5, -11], [-7, -10, -13], [-9],
@@ -338,9 +335,9 @@ gap> DD := DClass(HH);
  <bipartition: [ 1, 2, 5, 6, 7, 8, 9, 10, 11, 12, -1, -10, -12, -13 ], 
   [ 3, 4, 13 ], [ -2, -9 ], [ -3, -7, -8 ], [ -4 ], [ -5 ], [ -6, -11 ]>>
 gap> DD < D;
-false
-gap> D < DD;
 true
+gap> D < DD;
+false
 gap> D = DD;
 false
 gap> S := Semigroup(
@@ -430,12 +427,12 @@ gap> LClasses(DClass(H));
 [ <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], 
       [ -4, -5 ]>>, 
   <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>,
-  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ]>>,
-  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ]>>,
   <Green's L-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>>,
-  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ]>>,
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ]>>,
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ]>>,
   <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -5 ], [ -3 ], 
       [ -4 ]>>, 
+  <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ]>>,
   <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4, -5 ], [ -1 ]>>,
   <Green's L-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], [ -2 ], 
       [ -4, -5 ]>> ]
@@ -458,12 +455,12 @@ gap> HClasses(RClass(H));
 [ <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], 
       [ -4, -5 ]>>, 
   <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>>,
-  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ]>>,
-  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ]>>,
   <Green's H-class: <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>>,
-  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ]>>,
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ]>>,
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ]>>,
   <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -5 ], [ -3 ], 
       [ -4 ]>>, 
+  <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ]>>,
   <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4, -5 ], [ -1 ]>>,
   <Green's H-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], [ -2 ], 
       [ -4, -5 ]>> ]
@@ -693,9 +690,8 @@ gap> DClassReps(S);
   <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -5 ], [ 2, -4 ], [ 7, -3, -8 ], 
      [ -2, -6, -7 ]>, <bipartition: [ 1, 3, 4, 5, -1, -7 ], [ 2, -6 ], [ 6 ], 
      [ 7, -3 ], [ 8, -4 ], [ -2, -5, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 6, 7, -1, -7, -8 ], [ 2, 5, 8, -6 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 3, 4, -8 ], [ 2, 6, 8, -1 ], 
-     [ 5, 7, -2, -3, -4, -7 ], [ -5 ], [ -6 ]>, 
+  <bipartition: [ 1, 3, 4, -8 ], [ 2, 6, 8, -1 ], [ 5, 7, -2, -3, -4, -7 ], 
+     [ -5 ], [ -6 ]>, 
   <bipartition: [ 1, 4, 8, -4, -6, -8 ], [ 2, 3, 6, -3, -5 ], [ 5, -1, -7 ], 
      [ 7 ], [ -2 ]>, 
   <bipartition: [ 1, -6 ], [ 2, 3, 4, -2, -8 ], [ 5, 6, 7, -1, -3 ], [ 8 ], 
@@ -717,11 +713,13 @@ gap> DClassReps(S);
      [ -3, -5, -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 4, 7, 8, -2, -4 ], [ 3, 5, 6, -1, -6 ], 
      [ -3, -5, -7 ], [ -8 ]>, 
-  <bipartition: [ 1, 2, 5, 6, 7, -1, -7, -8 ], [ 3, 8, -6 ], [ 4 ], 
-     [ -2, -4 ], [ -3, -5 ]>, <bipartition: [ 1, 2, 3, 4, 5, 8, -1, -6, -7 ], 
-     [ 6 ], [ 7, -3 ], [ -2, -5, -8 ], [ -4 ]>, 
-  <bipartition: [ 1, 4, 5, 8, -1, -7, -8 ], [ 2, 3, 6, -6 ], [ 7 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+  <bipartition: [ 1, 2, 4, 7, -1, -2, -4, -7 ], [ 3, 5, -5 ], [ 6, 8 ], 
+     [ -3 ], [ -6, -8 ]>, <bipartition: [ 1, 2, 5, 6, 7, -1, -2, -4, -7 ], 
+     [ 3, 8, -5 ], [ 4 ], [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 8, -1, -6, -7 ], [ 6 ], [ 7, -3 ], 
+     [ -2, -5, -8 ], [ -4 ]>, 
+  <bipartition: [ 1, 4, 5, 8, -5 ], [ 2, 3, 6, -1, -2, -4, -7 ], [ 7 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 3, 4, 5, 6, 8, -4 ], [ 2 ], [ 7, -5 ], [ -1, -2, -3, -6 ]
       , [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 4, 5, 7, -1, -4, -5 ], [ 3, -3, -8 ], [ 6, 8 ], 
@@ -733,35 +731,35 @@ gap> DClassReps(S);
      [ 3, 5, 6, -4 ], [ -2, -5, -8 ]>, 
   <bipartition: [ 1, 5, -4 ], [ 2, 3, 4, 6, 7, 8, -1, -6, -7 ], 
      [ -2, -5, -8 ], [ -3 ]>, 
-  <bipartition: [ 1, 5, 6, 7, -1, -7, -8 ], [ 2, 3, 4, -6 ], [ 8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+  <bipartition: [ 1, 5, 6, 7, -5 ], [ 2, 3, 4, -1, -2, -4, -7 ], [ 8 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 4, -8 ], [ 2, 3, 5, 6, 7, 8, -1 ], [ -2, -3, -4, -7 ], 
      [ -5 ], [ -6 ]>, <bipartition: [ 1, 2, 3, 4, 7, 8, -3, -4, -5, -6, -8 ], 
      [ 5, 6, -1, -7 ], [ -2 ]>, 
-  <bipartition: [ 1, 2, 3, 7 ], [ 4, 5, 6, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
   <bipartition: [ 1, 2, 4, 7, -3, -4, -5, -6, -8 ], [ 3 ], [ 5, -1, -7 ], 
      [ 6, 8 ], [ -2 ]>, <bipartition: [ 1, 2, 5, 6, 7, -3, -4, -5, -6, -8 ], 
      [ 3, 8, -1, -7 ], [ 4 ], [ -2 ]>, 
   <bipartition: [ 1, 5, 8, -1, -3, -5, -7 ], [ 2, 3, 4, -4, -6, -8 ], 
-     [ 6, 7 ], [ -2 ]>, <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -7, -8 ], 
-     [ 2, 7, -6 ], [ -2, -4 ], [ -3, -5 ]>, 
+     [ 6, 7 ], [ -2 ]>, <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -2, -4, -7 ], 
+     [ 2, 7, -5 ], [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 7, 8, -1, -3, -4, -6 ], [ 5, 6, -2, -5 ], 
      [ -7, -8 ]>, <bipartition: [ 1, 2, 5, 6, 7, -1, -3, -4, -6 ], 
      [ 3, 8, -2, -5 ], [ 4 ], [ -7, -8 ]>, 
   <bipartition: [ 1, 7, 8, -2, -5 ], [ 2, 3, 5 ], [ 4 ], [ 6, -1, -3, -4, -6 ]
-      , [ -7, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 8, -6 ], [ 2, 7, -1, -7, -8 ], [ 6 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+      , [ -7, -8 ]>, <bipartition: [ 1, 3, 4, 5, 8, -1, -2, -4, -7 ], 
+     [ 2, 7, -5 ], [ 6 ], [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 5, 8 ], [ 2, 3, 4, 6, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, 6, -4, -8 ], [ 7, 8, -1, -2, -3, -5, -6 ], 
      [ -7 ]>, <bipartition: [ 1, 4, -1, -6 ], [ 2, 3, 5, 6, 7, 8, -2, -4 ], 
      [ -3, -5, -7 ], [ -8 ]>, 
   <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -6 ], [ 2, 7, -2, -4 ], 
-     [ -3, -5, -7 ], [ -8 ]>, <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -7, -8 ], 
-     [ 2 ], [ 7, -6 ], [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 2, 4, 5, 7, -4 ], [ 3, -5 ], [ 6, 8 ], [ -1, -2, -3, -6 ]
-      , [ -7 ], [ -8 ]>, <bipartition: [ 1, 2, 5, 6, 7, -1, -3, -5, -8 ], 
-     [ 3, 8, -4 ], [ 4 ], [ -2, -6, -7 ]>, 
+     [ -3, -5, -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -2, -4, -7 ], [ 2 ], [ 7, -5 ], 
+     [ -3 ], [ -6, -8 ]>, <bipartition: [ 1, 2, 4, 5, 7, -4 ], [ 3, -5 ], 
+     [ 6, 8 ], [ -1, -2, -3, -6 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 5, 6, 7, -1, -3, -5, -8 ], [ 3, 8, -4 ], [ 4 ], 
+     [ -2, -6, -7 ]>, 
   <bipartition: [ 1, 4, -4 ], [ 2, 3, 5, 6, 7, 8, -1, -3, -6, -7 ], 
      [ -2, -5, -8 ]>, <bipartition: [ 1, 3, 4, 6, 7, -1, -3, -6, -7 ], 
      [ 2, 5, 8, -4 ], [ -2, -5, -8 ]>, 
@@ -775,17 +773,17 @@ gap> DClassReps(S);
      [ 2, 7, -1, -7 ], [ 6 ], [ -2 ]>, 
   <bipartition: [ 1, 5, 6, 7, -1, -7 ], [ 2, 3, 4, -3, -4, -5, -6, -8 ], 
      [ 8 ], [ -2 ]>, 
-  <bipartition: [ 1, 4, -6 ], [ 2, 3, 5, 6, 7, 8, -1, -7, -8 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -3, -4, -6 ], [ 2 ], 
+  <bipartition: [ 1, 4, -5 ], [ 2, 3, 5, 6, 7, 8, -1, -2, -4, -7 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -3, -4, -6 ], [ 2 ], 
      [ 7, -2, -5 ], [ -7, -8 ]>, 
-  <bipartition: [ 1, 4, -1, -7, -8 ], [ 2, 7, 8, -6 ], [ 3, 5, 6 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+  <bipartition: [ 1, 4, -5 ], [ 2, 7, 8, -1, -2, -4, -7 ], [ 3, 5, 6 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 5, 6, 7, -2, -4 ], [ 2, 3, 4, -1, -6 ], [ 8 ], 
      [ -3, -5, -7 ], [ -8 ]>, 
   <bipartition: [ 1, 4, -2, -4 ], [ 2, 3, 5, 6, 7, 8, -1, -6 ], 
      [ -3, -5, -7 ], [ -8 ]>, 
-  <bipartition: [ 1, 2, 4, 5, 7, -1, -7, -8 ], [ 3, -6 ], [ 6, 8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+  <bipartition: [ 1, 2, 4, 5, 7, -1, -2, -4, -7 ], [ 3, -5 ], [ 6, 8 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 3, 4, 5, 6, 8, -4 ], [ 2, 7, -1, -3, -5, -8 ], 
      [ -2, -6, -7 ]>, <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -3, -5, -8 ], 
      [ 2 ], [ 7, -4 ], [ -2, -6, -7 ]>, 
@@ -1024,12 +1022,13 @@ gap> RClassReps(S);
   <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -5 ], [ 2, -4 ], [ 7, -3, -8 ], 
      [ -2, -6, -7 ]>, <bipartition: [ 1, 3, 4, 5, -1, -7 ], [ 2, -6 ], [ 6 ], 
      [ 7, -3 ], [ 8, -4 ], [ -2, -5, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 6, 7, -1, -7, -8 ], [ 2, 5, 8, -6 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 3, 4, -8 ], [ 2, 6, 8, -1 ], 
+  <bipartition: [ 1, 3, 4, 6, 7, -5 ], [ 2, 5, 8, -1, -2, -4, -7 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 3, 4, -8 ], [ 2, 6, 8, -1 ], 
      [ 5, 7, -2, -3, -4, -7 ], [ -5 ], [ -6 ]>, 
   <bipartition: [ 1, 4, 8, -4, -6, -8 ], [ 2, 3, 6, -3, -5 ], [ 5, -1, -7 ], 
-     [ 7 ], [ -2 ]>, <bipartition: [ 1, 5, -1, -7, -8 ], [ 2, 3, 4, 6, 7 ], 
-     [ 8, -6 ], [ -2, -4 ], [ -3, -5 ]>, 
+     [ 7 ], [ -2 ]>, 
+  <bipartition: [ 1, 5, -1, -2, -4, -7 ], [ 2, 3, 4, 6, 7 ], [ 8, -5 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, -6 ], [ 2, 3, 4, -2, -8 ], [ 5, 6, 7, -1, -3 ], [ 8 ], 
      [ -4, -7 ], [ -5 ]>, 
   <bipartition: [ 1, 7, 8, -1, -3, -4, -6 ], [ 2, 3, 4 ], [ 5, -2, -5 ], 
@@ -1069,36 +1068,37 @@ gap> RClassReps(S);
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 5, -1, -6 ], [ 2, 3, 4, 6, 7, 8, -2, -4 ], 
      [ -3, -5, -7 ], [ -8 ]>, 
-  <bipartition: [ 1, 2, 4, 7, -6 ], [ 3, 5, -1, -7, -8 ], [ 6, 8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, -1, -7, -8 ], [ 2, 3, 4, 5, 6, 7, -6 ], [ 8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, <bipartition: [ 1, 2, 3, 5, 7, 8, -1, -7, -8 ], 
-     [ 4 ], [ 6, -6 ], [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 5, -6 ], [ 2, 3, 4, 6, 7, 8, -1, -7, -8 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 2, 3, 4, -7 ], [ 5, 6, 7, 8 ], 
+  <bipartition: [ 1, 2, 4, 7, -1, -2, -4, -7 ], [ 3, 5, -5 ], [ 6, 8 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, -5 ], [ 2, 3, 4, 5, 6, 7, -1, -2, -4, -7 ], [ 8 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 5, 7, 8, -5 ], [ 4 ], [ 6, -1, -2, -4, -7 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 5, -1, -2, -4, -7 ], [ 2, 3, 4, 6, 7, 8, -5 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 2, 3, 4, -7 ], [ 5, 6, 7, 8 ], 
      [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, 7, -7 ], [ 6, 8 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 7, 8, -1, -7, -8 ], [ 5, 6, -6 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 2, 3, 4, 7, -1, -7, -8 ], [ 5, -6 ], 
-     [ 6, 8 ], [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 2, 6, 7, 8, -1, -7, -8 ], [ 3, 4, 5, -6 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 2, 5, 6, 7, -1, -7, -8 ], [ 3, 8, -6 ], 
-     [ 4 ], [ -2, -4 ], [ -3, -5 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 7, 8, -1, -2, -4, -7 ], [ 5, 6, -5 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 2, 3, 4, 7, -5 ], [ 5, -1, -2, -4, -7 ], 
+     [ 6, 8 ], [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 2, 6, 7, 8, -5 ], [ 3, 4, 5, -1, -2, -4, -7 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 2, 5, 6, 7, -1, -2, -4, -7 ], 
+     [ 3, 8, -5 ], [ 4 ], [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, 8, -1, -6, -7 ], [ 6 ], [ 7, -3 ], 
      [ -2, -5, -8 ], [ -4 ]>, 
   <bipartition: [ 1, 3, 4 ], [ 2, 5, 6, 7, 8, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 4, 5, 8, -1, -7, -8 ], [ 2, 3, 6, -6 ], [ 7 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 8, -6 ], [ 2, 3, 4, 5, -1, -7, -8 ], [ 6, 7 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 7, 8, -6 ], [ 2, 3, 5, 6, -1, -7, -8 ], [ 4 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, -6 ], [ 5, 7, 8, -1, -7, -8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 2, 3, 4, -6 ], [ 5, 6, 7, 8, -1, -7, -8 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 2, 5, 6, 7 ], [ 3, 8, -7 ], [ 4 ], 
+  <bipartition: [ 1, 4, 5, 8, -5 ], [ 2, 3, 6, -1, -2, -4, -7 ], [ 7 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 8, -1, -2, -4, -7 ], [ 2, 3, 4, 5, -5 ], [ 6, 7 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 7, 8, -5 ], [ 2, 3, 5, 6, -1, -2, -4, -7 ], [ 4 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, -5 ], [ 5, 7, 8, -1, -2, -4, -7 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, -1, -2, -4, -7 ], [ 5, 6, 7, 8, -5 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 2, 5, 6, 7 ], [ 3, 8, -7 ], [ 4 ], 
      [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 3, 4, 5, 6, 8, -4 ], [ 2 ], [ 7, -5 ], [ -1, -2, -3, -6 ]
       , [ -7 ], [ -8 ]>, 
@@ -1116,35 +1116,34 @@ gap> RClassReps(S);
   <bipartition: [ 1 ], [ 2, 4 ], [ 3, 5, 6, 7, -1, -3, -5, -8 ], [ 8, -4 ], 
      [ -2, -6, -7 ]>, <bipartition: [ 1, 2, 4, 5, 7, -1, -6, -7 ], [ 3, -3 ], 
      [ 6, 8 ], [ -2, -5, -8 ], [ -4 ]>, 
-  <bipartition: [ 1, 2, 8, -6 ], [ 3, 4, 5, 6, 7, -1, -7, -8 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 3, 4, 5, 7, 8, -7 ], [ 2 ], [ 6 ], 
+  <bipartition: [ 1, 2, 8, -1, -2, -4, -7 ], [ 3, 4, 5, 6, 7, -5 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 3, 4, 5, 7, 8, -7 ], [ 2 ], [ 6 ], 
      [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 3, 4, 6, 7, -7 ], [ 2, 5, 8 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 3, 4, -4 ], [ 2, 5, 6, 7, 8, -1, -3, -6, -7 ], 
-     [ -2, -5, -8 ]>, 
-  <bipartition: [ 1 ], [ 2, 3, 4, -6 ], [ 5, 6, 7, -1, -7, -8 ], [ 8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 8, -1, -7, -8 ], [ 5, -6 ], [ 6, 7 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+     [ -2, -5, -8 ]>, <bipartition: [ 1 ], [ 2, 3, 4, -1, -2, -4, -7 ], 
+     [ 5, 6, 7, -5 ], [ 8 ], [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 8, -5 ], [ 5, -1, -2, -4, -7 ], [ 6, 7 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 6, 7, 8, -7 ], [ 2, 3, 5 ], [ 4 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 4, -1, -3, -7 ], [ 2, 7, 8, -6 ], [ 3, 5, 6, -4 ], 
-     [ -2, -5, -8 ]>, 
-  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 5, 6, 7, -1, -7, -8 ], [ 8, -6 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+     [ -2, -5, -8 ]>, <bipartition: [ 1 ], [ 2, 4 ], [ 3, 5, 6, 7, -5 ], 
+     [ 8, -1, -2, -4, -7 ], [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 5, -4 ], [ 2, 3, 4, 6, 7, 8, -1, -6, -7 ], 
      [ -2, -5, -8 ], [ -3 ]>, 
-  <bipartition: [ 1, 5, 6, 7, -1, -7, -8 ], [ 2, 3, 4, -6 ], [ 8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, 8, -6 ], 
-     [ 5, 7, -1, -7, -8 ], [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 2, 3, 4, -1, -7, -8 ], [ 5, 6, 7, -6 ], [ 8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+  <bipartition: [ 1, 5, 6, 7, -5 ], [ 2, 3, 4, -1, -2, -4, -7 ], [ 8 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, 8, -1, -2, -4, -7 ], [ 5, 7, -5 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, -5 ], [ 5, 6, 7, -1, -2, -4, -7 ], [ 8 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 4, -8 ], [ 2, 3, 5, 6, 7, 8, -1 ], [ -2, -3, -4, -7 ], 
      [ -5 ], [ -6 ]>, <bipartition: [ 1, 2, 3, 4, 7, 8, -3, -4, -5, -6, -8 ], 
      [ 5, 6, -1, -7 ], [ -2 ]>, 
-  <bipartition: [ 1, 2, 3, 7 ], [ 4, 5, 6, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 7 ], [ 4, 5, 6, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 4, 7, -3, -4, -5, -6, -8 ], [ 3 ], [ 5, -1, -7 ], 
      [ 6, 8 ], [ -2 ]>, <bipartition: [ 1, 2, 6, 7, 8, -3, -4, -5, -6, -8 ], 
      [ 3, 4, 5, -1, -7 ], [ -2 ]>, 
@@ -1155,16 +1154,16 @@ gap> RClassReps(S);
   <bipartition: [ 1, 7, 8, -1, -7 ], [ 2, 3, 5, 6, -3, -4, -5, -6, -8 ], 
      [ 4 ], [ -2 ]>, <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, -1, -7 ], 
      [ 5, 7, 8, -3, -4, -5, -6, -8 ], [ -2 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -7, -8 ], [ 2, 7, -6 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 3, 4, -6 ], [ 2, 6, 8, -1, -7, -8 ], 
-     [ 5, 7 ], [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 2, 4, 7, 8, -1, -7, -8 ], [ 3, 5, 6, -6 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 3, 4 ], [ 2, 6, 8, -1, -7, -8 ], 
-     [ 5, 7, -6 ], [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 5, 8, -6 ], [ 2, 3, 4, -1, -7, -8 ], [ 6, 7 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 2, 4, 7, 8, -7 ], [ 3, 5, 6 ], [ -1, -2 ], 
-     [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -2, -4, -7 ], [ 2, 7, -5 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 3, 4, -5 ], [ 2, 6, 8, -1, -2, -4, -7 ], 
+     [ 5, 7 ], [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 2, 4, 7, 8, -1, -2, -4, -7 ], [ 3, 5, 6, -5 ], [ -3 ], 
+     [ -6, -8 ]>, 
+  <bipartition: [ 1, 3, 4 ], [ 2, 6, 8, -5 ], [ 5, 7, -1, -2, -4, -7 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 5, 8, -1, -2, -4, -7 ], [ 2, 3, 4, -5 ], [ 6, 7 ], 
+     [ -3 ], [ -6, -8 ]>, <bipartition: [ 1, 2, 4, 7, 8, -7 ], [ 3, 5, 6 ], 
+     [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 5 ], [ 2, 3, 4, 6, 7, 8, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 3, 4, 7, 8, -1, -3, -4, -6 ], [ 5, 6, -2, -5 ], 
@@ -1180,17 +1179,17 @@ gap> RClassReps(S);
   <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, -7 ], [ 5, 7, 8 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 3, 5, 6, 8, -1, -3, -4, -6 ], [ 2, 4, 7, -2, -5 ], 
-     [ -7, -8 ]>, <bipartition: [ 1, 2, 3, 4, 6, 8, -1, -7, -8 ], 
-     [ 5, 7, -6 ], [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 3, 5, 6, 8, -6 ], [ 2, 4, 7, -1, -7, -8 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 2, 3, 4, 5, 6, -1, -7, -8 ], 
-     [ 7, 8, -6 ], [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 7, -1, -7, -8 ], [ 2, -6 ], [ 6 ], [ 8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 6, 7, 8, -1, -7, -8 ], [ 2, 3, 5, -6 ], [ 4 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 3, 5, 6, 8, -1, -7, -8 ], [ 2 ], [ 4, 7, -6 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+     [ -7, -8 ]>, <bipartition: [ 1, 2, 3, 4, 6, 8, -1, -2, -4, -7 ], 
+     [ 5, 7, -5 ], [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 3, 5, 6, 8, -1, -2, -4, -7 ], [ 2, 4, 7, -5 ], [ -3 ], 
+     [ -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6, -5 ], [ 7, 8, -1, -2, -4, -7 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 3, 4, 5, 7, -5 ], [ 2, -1, -2, -4, -7 ], 
+     [ 6 ], [ 8 ], [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 6, 7, 8, -5 ], [ 2, 3, 5, -1, -2, -4, -7 ], [ 4 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 3, 5, 6, 8, -5 ], [ 2 ], [ 4, 7, -1, -2, -4, -7 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 3, 4, 5, 8, -7 ], [ 2, 7 ], [ 6 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 3, 4, 6, 8 ], [ 5, 7, -7 ], [ -1, -2 ], 
@@ -1203,19 +1202,19 @@ gap> RClassReps(S);
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 6, 7, 8 ], [ 3, 4, 5, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 8, -6 ], [ 2, 7, -1, -7, -8 ], [ 6 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 3, 4, -6 ], [ 2, 6, 8 ], [ 5, 7, -1, -7, -8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 5, 8 ], [ 2, 3, 4, 6, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 8, -1, -2, -4, -7 ], [ 2, 7, -5 ], [ 6 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 3, 4, -1, -2, -4, -7 ], [ 2, 6, 8 ], [ 5, 7, -5 ], 
+     [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 5, 8 ], [ 2, 3, 4, 6, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 5, 8, -7 ], [ 2, 3, 4 ], [ 6, 7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, 6, -4, -8 ], [ 7, 8, -1, -2, -3, -5, -6 ], 
-     [ -7 ]>, <bipartition: [ 1, 3, 4, 5, 7, -1, -7, -8 ], [ 2, 6, 8, -6 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 6, 7, 8, -1, -7, -8 ], [ 2, -6 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 2, 3, 4, 5, 8, -2, -4 ], [ 6 ], 
+     [ -7 ]>, <bipartition: [ 1, 3, 4, 5, 7, -5 ], [ 2, 6, 8, -1, -2, -4, -7 ]
+      , [ -3 ], [ -6, -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 6, 7, 8, -5 ], [ 2, -1, -2, -4, -7 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 2, 3, 4, 5, 8, -2, -4 ], [ 6 ], 
      [ 7, -1, -6 ], [ -3, -5, -7 ], [ -8 ]>, 
   <bipartition: [ 1, 4, -1, -6 ], [ 2, 3, 5, 6, 7, 8, -2, -4 ], 
      [ -3, -5, -7 ], [ -8 ]>, 
@@ -1235,10 +1234,9 @@ gap> RClassReps(S);
      [ -3, -5, -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 4, 7, -7 ], [ 3, 5 ], [ 6, 8 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -7, -8 ], [ 2 ], [ 7, -6 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
-  <bipartition: [ 1, 4 ], [ 2, 3, 5, 6, 7, 8, -7 ], [ -1, -2 ], 
-     [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 6, 8, -1, -2, -4, -7 ], [ 2 ], [ 7, -5 ], 
+     [ -3 ], [ -6, -8 ]>, <bipartition: [ 1, 4 ], [ 2, 3, 5, 6, 7, 8, -7 ], 
+     [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 3, 4, 5, 6, 8 ], [ 2 ], [ 7, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 4, 5, 7, -4 ], [ 3, -5 ], [ 6, 8 ], [ -1, -2, -3, -6 ]
@@ -1246,8 +1244,8 @@ gap> RClassReps(S);
      [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 3, 4, 8, -7 ], [ 5 ], [ 6, 7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 5, 8 ], [ 2, 4, 7 ], [ 3, 6 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 5, 8 ], [ 2, 4, 7 ], [ 3, 6 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1 ], [ 2, 4 ], [ 3, 5, 6, 7, -7 ], [ 8 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 3, 4, 5, 6, 8, -7 ], [ 2, 7 ], [ -1, -2 ], 
@@ -1300,26 +1298,26 @@ gap> RClassReps(S);
   <bipartition: [ 1, -1, -7 ], [ 2, 3, 4, 5, 6, 7, -3, -4, -5, -6, -8 ], 
      [ 8 ], [ -2 ]>, <bipartition: [ 1, 2, 3, 5, 7, 8, -1, -7 ], [ 4 ], 
      [ 6, -3, -4, -5, -6, -8 ], [ -2 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 8 ], [ 6, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 7 ], [ 6, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 5, 6, 7, 8 ], [ 4 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 7, 8 ], [ 6 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 8 ], [ 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 7 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 5, 7, 8 ], [ 2, 3, 4 ], [ 6 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 5, 6, 7, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 8 ], [ 6, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 7 ], [ 6, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, 8 ], [ -1, -2, -3, -6 ], [ -4, -5 ], 
+     [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 5, 6, 7, 8 ], [ 4 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 7, 8 ], [ 6 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6, 8 ], [ 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6, 7 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 5, 7, 8 ], [ 2, 3, 4 ], [ 6 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 5, 6, 7, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 7, -3, -4, -5, -6, -8 ], [ 5, -1, -7 ], 
      [ 6, 8 ], [ -2 ]>, <bipartition: [ 1, 2, 3, 4, 5, 8, -7 ], [ 6 ], [ 7 ], 
      [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
@@ -1349,8 +1347,8 @@ gap> RClassReps(S);
      [ 5, 7, 8, -1, -7 ], [ -2 ]>, 
   <bipartition: [ 1, 2, 5, 6, 7, -7 ], [ 3, 8 ], [ 4 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 4, -6 ], [ 2, 3, 5, 6, 7, 8, -1, -7, -8 ], [ -2, -4 ], 
-     [ -3, -5 ]>, <bipartition: [ 1, 8 ], [ 2, 3, 4, 5, -7 ], [ 6, 7 ], 
+  <bipartition: [ 1, 4, -5 ], [ 2, 3, 5, 6, 7, 8, -1, -2, -4, -7 ], [ -3 ], 
+     [ -6, -8 ]>, <bipartition: [ 1, 8 ], [ 2, 3, 4, 5, -7 ], [ 6, 7 ], 
      [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 3, 4, 5, 6, 8 ], [ 2, 7, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
@@ -1381,8 +1379,8 @@ gap> RClassReps(S);
   <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6 ], [ 5, 7, 8, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 3, 4, 8, -1, -3, -4, -6 ], [ 5, -2, -5 ], [ 6, 7 ], 
-     [ -7, -8 ]>, <bipartition: [ 1, 4, -1, -7, -8 ], [ 2, 7, 8, -6 ], 
-     [ 3, 5, 6 ], [ -2, -4 ], [ -3, -5 ]>, 
+     [ -7, -8 ]>, <bipartition: [ 1, 4, -5 ], [ 2, 7, 8, -1, -2, -4, -7 ], 
+     [ 3, 5, 6 ], [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 7, 8 ], [ 5, 6, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 3, 4, 7 ], [ 5, -7 ], [ 6, 8 ], [ -1, -2 ], 
@@ -1407,8 +1405,8 @@ gap> RClassReps(S);
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 4, -7 ], [ 2, 3, 5, 6, 7, 8 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 6, 8 ], [ 5, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 6, 8 ], [ 5, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 5, -1, -2, -3, -5, -6 ], [ 2, 3, 4, 6, 7, 8, -4, -8 ], 
      [ -7 ]>, <bipartition: [ 1, 5, 6, 7, -2, -4 ], [ 2, 3, 4, -1, -6 ], 
      [ 8 ], [ -3, -5, -7 ], [ -8 ]>, 
@@ -1428,17 +1426,17 @@ gap> RClassReps(S);
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 6, 7, 8, -7 ], [ 3, 4, 5 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 2, 4, 5, 7, -1, -7, -8 ], [ 3, -6 ], [ 6, 8 ], 
-     [ -2, -4 ], [ -3, -5 ]>, 
+  <bipartition: [ 1, 2, 4, 5, 7, -1, -2, -4, -7 ], [ 3, -5 ], [ 6, 8 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, 8, -4 ], [ 6 ], [ 7, -5 ], [ -1, -2, -3, -6 ]
       , [ -7 ], [ -8 ]>, <bipartition: [ 1, 2, 3, 4 ], [ 5, 6, 7, 8, -7 ], 
      [ -1, -2 ], [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 3, 4, 7, 8, -7 ], [ 5, 6 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 8 ], [ 2, 7 ], [ 6 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 8 ], [ 5 ], [ 6, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 8 ], [ 2, 7 ], [ 6 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 8 ], [ 5 ], [ 6, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, -7 ], [ 5, 6, 7 ], [ 8 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 2, 4, 7, -4 ], [ 3, 5, -1, -3, -5, -8 ], [ 6, 8 ], 
@@ -1479,8 +1477,8 @@ gap> RClassReps(S);
   <bipartition: [ 1, 8, -4 ], [ 2, 3, 4, 5, -1, -3, -5, -8 ], [ 6, 7 ], 
      [ -2, -6, -7 ]>, <bipartition: [ 1, 3, 4, 5, 7, -1, -3, -5, -8 ], 
      [ 2, 6, 8, -4 ], [ -2, -6, -7 ]>, 
-  <bipartition: [ 1, 4 ], [ 2, 3, 5, 6, 7, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 4 ], [ 2, 3, 5, 6, 7, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 5, 6, 7, -1, -3, -6, -7 ], [ 2, 3, 4, -4 ], [ 8 ], 
      [ -2, -5, -8 ]>, <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, 8, -4 ], 
      [ 5, 7, -1, -3, -6, -7 ], [ -2, -5, -8 ]>, 
@@ -1503,41 +1501,41 @@ gap> RClassReps(S);
      [ 8 ], [ -2 ]>, 
   <bipartition: [ 1, 6, 7, 8, -1, -7 ], [ 2, 3, 5, -3, -4, -5, -6, -8 ], 
      [ 4 ], [ -2 ]>, <bipartition: [ 1, 2, 4, 7 ], [ 3, 5 ], [ 6, 8 ], 
-     [ -1, -7 ], [ -2 ], [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4 ], [ 2, 5, 6, 7, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 5, 6, 7 ], [ 3, 8 ], [ 4 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 6, 7, 8 ], [ 2 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 7 ], [ 6 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 5 ], [ 2, 3, 4, 6, 7 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 7, 8 ], [ 2 ], [ 6 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 6, 7 ], [ 2, 5, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1 ], [ 2, 3, 4, 5, 6, 7 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 6, 7, 8 ], [ 2, 3, 5 ], [ 4 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 4, 5, 7 ], [ 3 ], [ 6, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 4, 7, 8 ], [ 3, 5, 6 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 5 ], [ 2, 3, 4, 6, 7, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6 ], [ 5, 7, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5 ], [ 6, 7 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 6, 7, 8 ], [ 3, 4, 5 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 7 ], [ 2, 6, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 5, 8 ], [ 2, 3, 4 ], [ 6, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+     [ -1, -2, -3, -6 ], [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4 ], [ 2, 5, 6, 7, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 5, 6, 7 ], [ 3, 8 ], [ 4 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 6, 7, 8 ], [ 2 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 7 ], [ 6 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 5 ], [ 2, 3, 4, 6, 7 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 7, 8 ], [ 2 ], [ 6 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4, 6, 7 ], [ 2, 5, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1 ], [ 2, 3, 4, 5, 6, 7 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 6, 7, 8 ], [ 2, 3, 5 ], [ 4 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 4, 5, 7 ], [ 3 ], [ 6, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 4, 7, 8 ], [ 3, 5, 6 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 5 ], [ 2, 3, 4, 6, 7, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6 ], [ 5, 7, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5 ], [ 6, 7 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 6, 7, 8 ], [ 3, 4, 5 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 7 ], [ 2, 6, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 5, 8 ], [ 2, 3, 4 ], [ 6, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 6, 8, -1, -7 ], [ 5, 7, -3, -4, -5, -6, -8 ], 
      [ -2 ]>, 
   <bipartition: [ 1, 3, 5, 6, 8, -1, -7 ], [ 2, 4, 7, -3, -4, -5, -6, -8 ], 
@@ -1639,16 +1637,17 @@ gap> RClassReps(S);
   <bipartition: [ 1, 2, 3, 4, 6, 8, -2, -4 ], [ 5, 7, -1, -6 ], 
      [ -3, -5, -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 8, -1, -6 ], [ 5, -2, -4 ], [ 6, 7 ], 
-     [ -3, -5, -7 ], [ -8 ]>, <bipartition: [ 1, 2, 3, 4, 5, 8, -1, -7, -8 ], 
-     [ 6 ], [ 7, -6 ], [ -2, -4 ], [ -3, -5 ]>, 
+     [ -3, -5, -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 8, -1, -2, -4, -7 ], [ 6 ], [ 7, -5 ], 
+     [ -3 ], [ -6, -8 ]>, 
   <bipartition: [ 1, 2, 3, 5, 7, 8 ], [ 4 ], [ 6, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 7, 8 ], [ 5, 6 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 7 ], [ 5 ], [ 6, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 7, 8 ], [ 2, 3, 5, 6 ], [ 4 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 7, 8 ], [ 5, 6 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 7 ], [ 5 ], [ 6, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 7, 8 ], [ 2, 3, 5, 6 ], [ 4 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 7, -4 ], [ 5, -1, -3, -5, -8 ], [ 6, 8 ], 
      [ -2, -6, -7 ]>, 
   <bipartition: [ 1, 2, 6, 7, 8, -4 ], [ 3, 4, 5, -1, -3, -5, -8 ], 
@@ -1720,32 +1719,32 @@ gap> RClassReps(S);
   <bipartition: [ 1, 4, 5, 8, -1, -7 ], [ 2, 3, 6, -3, -4, -5, -6, -8 ], 
      [ 7 ], [ -2 ]>, <bipartition: [ 1, 3, 5, 6, 8, -1, -7 ], [ 2 ], 
      [ 4, 7, -3, -4, -5, -6, -8 ], [ -2 ]>, 
-  <bipartition: [ 1, 4, 5, 8 ], [ 2, 3, 6 ], [ 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 8 ], [ 2, 3, 4, 5 ], [ 6, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 6, 8 ], [ 2 ], [ 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 8 ], [ 3, 4, 5, 6, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 5, 6, 7 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 6, 8 ], [ 2, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4 ], [ 2, 6, 8 ], [ 5, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 6 ], [ 2, 7, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 5, 6, 7 ], [ 2, 3, 4 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, 8 ], [ 5, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 5, 6, 8 ], [ 2 ], [ 4, 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 8 ], [ 6 ], [ 7 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 2, 3, 4 ], [ 5, 6, 7 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 4, 5, 8 ], [ 2, 3, 6 ], [ 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 8 ], [ 2, 3, 4, 5 ], [ 6, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 6, 8 ], [ 2 ], [ 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 8 ], [ 3, 4, 5, 6, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 5, 6, 7 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 6, 8 ], [ 2, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4 ], [ 2, 6, 8 ], [ 5, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 6 ], [ 2, 7, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 5, 6, 7 ], [ 2, 3, 4 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1 ], [ 2, 4 ], [ 3, 6, 8 ], [ 5, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 5, 6, 8 ], [ 2 ], [ 4, 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 8 ], [ 6 ], [ 7 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4 ], [ 5, 6, 7 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, -3, -4, -5, -6, -8 ], [ 5, 6, 7, -1, -7 ], 
      [ 8 ], [ -2 ]>, 
   <bipartition: [ 1, 4, -1, -7 ], [ 2, 3, 5, 6, 7, 8, -3, -4, -5, -6, -8 ], 
@@ -1849,8 +1848,8 @@ gap> RClassReps(S);
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 6, 7, 8 ], [ 2, 3, 5, -7 ], [ 4 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 2, 3, 5, 7, 8 ], [ 4 ], [ 6 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 5, 7, 8 ], [ 4 ], [ 6 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 7, 8, -4 ], [ 5, 6, -1, -3, -5, -8 ], 
      [ -2, -6, -7 ]>, 
   <bipartition: [ 1, 2, 3, 4, -1, -3, -5, -8 ], [ 5, 6, 7, -4 ], [ 8 ], 
@@ -1918,8 +1917,8 @@ gap> RClassReps(S);
   <bipartition: [ 1, 5, -1, -7 ], [ 2, 3, 4, 6, 7 ], [ 8, -3, -4, -5, -6, -8 ]
       , [ -2 ]>, 
   <bipartition: [ 1, 3, 4, 5, 6, 7, 8, -1, -7 ], [ 2, -3, -4, -5, -6, -8 ], 
-     [ -2 ]>, <bipartition: [ 1, 3, 5, 6, 8 ], [ 2, 4, 7 ], [ -1, -7 ], 
-     [ -2 ], [ -3, -4, -5, -6, -8 ]>, 
+     [ -2 ]>, <bipartition: [ 1, 3, 5, 6, 8 ], [ 2, 4, 7 ], [ -1, -2, -3, -6 ]
+      , [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 4, -3, -4, -5, -6, -8 ], [ 2, 3, 5, 6, 7, 8, -1, -7 ], 
      [ -2 ]>, <bipartition: [ 1, 2, 3, 4, 7, 8, -1, -3, -5, -7 ], 
      [ 5, 6, -4, -6, -8 ], [ -2 ]>, 
@@ -1990,10 +1989,10 @@ gap> RClassReps(S);
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
   <bipartition: [ 1, 3, 5, 6, 8 ], [ 2 ], [ 4, 7, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6 ], [ 7, 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 3, 4, 5, 7 ], [ 2 ], [ 6 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6 ], [ 7, 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 3, 4, 5, 7 ], [ 2 ], [ 6 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 5, 7, 8, -1, -3, -5, -8 ], [ 4 ], [ 6, -4 ], 
      [ -2, -6, -7 ]>, 
   <bipartition: [ 1, 2, 3, 4, -1, -3, -5, -8 ], [ 5, 6, 7, 8, -4 ], 
@@ -2109,10 +2108,10 @@ gap> RClassReps(S);
      [ -3, -5, -7 ], [ -8 ]>, 
   <bipartition: [ 1, 3, 4, 5, 6, 7, 8 ], [ 2, -7 ], [ -1, -2 ], 
      [ -3, -6, -8 ], [ -4 ], [ -5 ]>, 
-  <bipartition: [ 1 ], [ 2, 3, 4 ], [ 5, 6, 7 ], [ 8 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
-  <bipartition: [ 1, 4 ], [ 2, 7, 8 ], [ 3, 5, 6 ], [ -1, -7 ], [ -2 ], 
-     [ -3, -4, -5, -6, -8 ]>, 
+  <bipartition: [ 1 ], [ 2, 3, 4 ], [ 5, 6, 7 ], [ 8 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
+  <bipartition: [ 1, 4 ], [ 2, 7, 8 ], [ 3, 5, 6 ], [ -1, -2, -3, -6 ], 
+     [ -4, -5 ], [ -7 ], [ -8 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, 6, -1, -3, -5, -8 ], [ 7, 8, -4 ], 
      [ -2, -6, -7 ]>, <bipartition: [ 1, 3, 4, 5, 7, -1, -3, -5, -8 ], 
      [ 2, -4 ], [ 6 ], [ 8 ], [ -2, -6, -7 ]>, 
@@ -2630,25 +2629,25 @@ gap> RClassReps(S);
 gap> LClassReps(D);
 [ <bipartition: [ 1, 2, 3, 4, 5, -2 ], [ -1, -3 ], [ -4, -5 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4 ], [ -1, -5 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ]>, 
   <block bijection: [ 1, 2, 3, 4, 5, -1, -2, -3, -4, -5 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3 ], [ -4, -5 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, -3, -5 ], [ -1, -2, -4 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -5 ], [ -3 ], [ -4 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, -1, -2, -3, -5 ], [ -4 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, -2, -3, -4, -5 ], [ -1 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], [ -2 ], [ -4, -5 ]> ]
 gap> x := Bipartition([[1, 3, 4, 6, 7, -3, -4, -5, -6, -8],
 > [2, 5, 8, -1, -7], [-2]]);;
 gap> D := DClass(S, x);
-<Green's D-class: <bipartition: [ 1, 3, 4, 6, 7, -3, -4, -5, -6, -8 ], 
-  [ 2, 5, 8, -1, -7 ], [ -2 ]>>
+<Green's D-class: <bipartition: [ 1, 2, 4, 7, 8, -3, -4, -5, -6, -8 ], 
+  [ 3, 5, 6, -1, -7 ], [ -2 ]>>
 gap> LClassReps(D);
-[ <bipartition: [ 1, 3, 4, 6, 7, -3, -4, -5, -6, -8 ], [ 2, 5, 8, -1, -7 ], 
+[ <bipartition: [ 1, 2, 4, 7, 8, -3, -4, -5, -6, -8 ], [ 3, 5, 6, -1, -7 ], 
      [ -2 ]> ]
 gap> L := LClass(S, Bipartition([[1], [2, 4], [3, 6, -3, -4, -5, -6, -8],
 > [5, 7, 8, -1, -7], [-2]]));
-<Green's L-class: <bipartition: [ 1, 3, 4, 6, 7, -3, -4, -5, -6, -8 ], 
-  [ 2, 5, 8, -1, -7 ], [ -2 ]>>
+<Green's L-class: <bipartition: [ 1, 2, 4, 7, 8, -3, -4, -5, -6, -8 ], 
+  [ 3, 5, 6, -1, -7 ], [ -2 ]>>
 gap> LL := LClassNC(S, Bipartition([[1, 3, 4, 6, 7, -3, -4, -5, -6, -8], [2,
 > 5, 8, -1, -7], [-2]]));
 <Green's L-class: <bipartition: [ 1, 3, 4, 6, 7, -3, -4, -5, -6, -8 ], 
@@ -2671,8 +2670,8 @@ fail
 gap> IsRegularDClass(D);
 false
 gap> D := DClass(S, x);
-<Green's D-class: <bipartition: [ 1, 3, 4, 6, 7, -4, -6, -8 ], 
-  [ 2, 5, 8, -1, -3, -5, -7 ], [ -2 ]>>
+<Green's D-class: <bipartition: [ 1, 2, 4, 7, 8, -4, -6, -8 ], 
+  [ 3, 5, 6, -1, -3, -5, -7 ], [ -2 ]>>
 gap> IsRegularDClass(D);
 false
 gap> x := Bipartition([[1, 7, 8, -2, -5], [2, 3, 5, 6, -1, -3, -4, -6],
@@ -2715,63 +2714,63 @@ gap> NrRClasses(D);
 gap> NrDClasses(S);
 190
 gap> PartialOrderOfDClasses(S);
-[ [ 3, 19, 20, 21 ], [ 3, 9, 33, 39, 43 ], [ 3, 34 ], 
-  [ 3, 9, 19, 22, 23, 24, 26, 35, 39 ], [ 3, 9, 27, 33, 39 ], 
-  [ 3, 22, 25, 36, 40 ], [ 3, 25, 26, 27, 38 ], [ 3, 9, 23, 28, 29, 30, 42 ], 
-  [ 3, 9, 21, 22, 24, 27, 30, 31, 33, 34, 37, 38, 39, 42, 43, 50, 57, 59 ], 
-  [ 3, 9, 20, 22, 28, 32 ], [ 3, 24, 33, 34, 35, 36, 37 ], [ 3, 9, 31 ], 
-  [ 3, 39, 40, 41 ], [ 3, 9, 22, 27, 37 ], [ 3, 9, 24, 33, 41 ], 
-  [ 3, 9, 21, 29, 32 ], [ 3, 9, 22, 27, 31, 33, 34, 42 ], 
-  [ 3, 9, 21, 22, 30, 38, 39, 43 ], [ 3, 19 ], [ 3, 44 ], 
-  [ 3, 21, 34, 44, 45, 60, 61, 84, 107, 108, 109, 126, 127, 128, 154, 155, 
-      183 ], 
-  [ 3, 22, 34, 36, 40, 46, 48, 54, 65, 72, 76, 84, 92, 107, 115, 134, 135, 
-      143, 153, 171 ], [ 3, 19, 23, 26 ], 
-  [ 3, 24, 34, 52, 82, 85, 94, 97, 109, 111, 117, 118, 123, 128, 133, 139, 
-      151, 165, 182 ], [ 3, 34, 46, 47, 53, 58 ], [ 3, 26, 47 ], 
-  [ 3, 27, 34, 48, 63, 65, 66, 67, 85, 86, 87, 90, 91, 110, 111, 112, 156 ], 
+[ [ 3, 18, 19, 20 ], [ 3, 21, 33, 38, 43 ], [ 3, 42 ], 
+  [ 3, 18, 21, 22, 23, 24, 26, 34, 38 ], [ 3, 21, 27, 33, 38 ], 
+  [ 3, 22, 25, 35, 39 ], [ 3, 25, 26, 27, 37 ], [ 3, 21, 23, 28, 29, 30, 41 ],
+  [ 3, 19, 21, 22, 28, 32 ], [ 3, 24, 33, 34, 35, 36, 42 ], [ 3, 21, 31 ], 
+  [ 3, 38, 39, 40 ], [ 3, 21, 22, 27, 36 ], [ 3, 21, 24, 33, 40 ], 
+  [ 3, 20, 21, 29, 32 ], [ 3, 21, 22, 27, 31, 33, 41, 42 ], 
+  [ 3, 20, 21, 22, 30, 37, 38, 43 ], [ 3, 18 ], [ 3, 44 ], 
+  [ 3, 20, 42, 44, 45, 60, 61, 84, 107, 108, 109, 126, 127, 128, 154, 155, 
+      183 ], [ 3, 20, 21, 22, 24, 27, 30, 31, 33, 36, 37, 38, 41, 42, 43, 50, 
+      57, 59 ], 
+  [ 3, 22, 35, 39, 42, 46, 48, 54, 65, 72, 76, 84, 92, 107, 115, 134, 135, 
+      143, 153, 171 ], [ 3, 18, 23, 26 ], 
+  [ 3, 24, 42, 52, 82, 85, 94, 97, 109, 111, 117, 118, 123, 128, 133, 139, 
+      151, 165, 182 ], [ 3, 42, 46, 47, 53, 58 ], [ 3, 26, 47 ], 
+  [ 3, 27, 42, 48, 63, 65, 66, 67, 85, 86, 87, 90, 91, 110, 111, 112, 156 ], 
   [ 3, 49 ], [ 3, 50, 59 ], 
-  [ 3, 30, 34, 51, 69, 118, 134, 143, 144, 145, 162, 163, 164, 165, 174, 176, 
+  [ 3, 30, 42, 51, 69, 118, 134, 143, 144, 145, 162, 163, 164, 165, 174, 176, 
       189 ], 
-  [ 3, 31, 34, 56, 60, 67, 68, 75, 78, 91, 102, 127, 132, 137, 145, 148, 163, 
-      173, 180 ], [ 3, 34, 44, 49, 57 ], 
-  [ 3, 33, 34, 36, 52, 54, 55, 56, 70, 74, 75, 93, 94, 95, 96, 119, 166 ], 
-  [ 34 ], [ 3, 33, 36, 52 ], [ 3, 53 ], 
-  [ 3, 34, 37, 72, 97, 135, 136, 137, 138, 147, 148, 149, 150, 151, 167, 169, 
-      185 ], [ 3, 34, 38, 45, 51, 63, 70, 79, 83, 87, 96, 104, 138, 141, 150, 
+  [ 3, 31, 42, 56, 60, 67, 68, 75, 78, 91, 102, 127, 132, 137, 145, 148, 163, 
+      173, 180 ], [ 3, 42, 44, 49, 57 ], 
+  [ 3, 33, 35, 42, 52, 54, 55, 56, 70, 74, 75, 93, 94, 95, 96, 119, 166 ], 
+  [ 3, 33, 35, 52 ], [ 3, 53 ], 
+  [ 3, 36, 42, 72, 97, 135, 136, 137, 138, 147, 148, 149, 150, 151, 167, 169, 
+      185 ], [ 3, 37, 42, 45, 51, 63, 70, 79, 83, 87, 96, 104, 138, 141, 150, 
       154, 158, 164, 181 ], 
-  [ 3, 34, 39, 40, 76, 77, 78, 79, 81, 82, 101, 102, 103, 104, 122, 123, 152 ]
-    , [ 3, 58 ], [ 3, 39 ], 
-  [ 3, 34, 42, 55, 66, 74, 77, 90, 101, 108, 116, 126, 131, 136, 144, 147, 
-      162, 172, 179 ], 
-  [ 3, 34, 43, 83, 105, 139, 153, 171, 172, 173, 179, 180, 181, 182, 186, 
+  [ 3, 38, 39, 42, 76, 77, 78, 79, 81, 82, 101, 102, 103, 104, 122, 123, 152 ]
+    , [ 3, 58 ], [ 3, 38 ], 
+  [ 3, 41, 42, 55, 66, 74, 77, 90, 101, 108, 116, 126, 131, 136, 144, 147, 
+      162, 172, 179 ], [ 42 ], 
+  [ 3, 42, 43, 83, 105, 139, 153, 171, 172, 173, 179, 180, 181, 182, 186, 
       188, 190 ], [ 3 ], [ 3 ], 
-  [ 3, 34, 46, 53, 58, 62, 64, 73, 89, 98, 100, 106, 114, 125, 130, 142, 146, 
+  [ 3, 42, 46, 53, 58, 62, 64, 73, 89, 98, 100, 106, 114, 125, 130, 142, 146, 
       161, 170, 178 ], [ 3, 47, 62, 71, 80 ], [ 3, 64 ], [ 3 ], 
-  [ 3, 34, 49, 50, 68, 92, 115, 116, 117, 131, 132, 133, 141, 157, 158, 159, 
-      184 ], [ 3 ], [ 3, 34 ], [ 3, 34, 71 ], [ 3, 73 ], [ 3 ], [ 3 ], 
-  [ 3, 34, 44, 49, 57, 61, 69, 86, 95, 103, 105, 110, 119, 122, 149, 157, 
-      169, 176, 188 ], [ 3, 34, 80 ], 
-  [ 3, 34, 59, 81, 93, 112, 152, 155, 156, 159, 166, 167, 174, 183, 184, 185, 
+  [ 3, 42, 49, 50, 68, 92, 115, 116, 117, 131, 132, 133, 141, 157, 158, 159, 
+      184 ], [ 3 ], [ 3, 42 ], [ 3, 42, 71 ], [ 3, 73 ], [ 3 ], [ 3 ], 
+  [ 3, 42, 44, 49, 57, 61, 69, 86, 95, 103, 105, 110, 119, 122, 149, 157, 
+      169, 176, 188 ], [ 3, 42, 80 ], 
+  [ 3, 42, 59, 81, 93, 112, 152, 155, 156, 159, 166, 167, 174, 183, 184, 185, 
       186, 189, 190 ], [ 3 ], [ 3 ], 
-  [ 3, 19, 34, 62, 71, 80, 88, 99, 113, 120, 121, 124, 129, 140, 160, 168, 
-      175, 177, 187 ], [ 3 ], [ 3, 34, 88 ], [ 3, 89 ], [ 3 ], [ 3 ], [ 3 ], 
-  [ 3 ], [ 3 ], [ 3, 71 ], [ 3, 98 ], [ 3, 34, 99 ], [ 3 ], [ 3 ], 
-  [ 3, 100 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 80 ], [ 3 ], [ 3, 34 ], [ 3 ], 
-  [ 3, 106 ], [ 3, 34 ], [ 3 ], [ 3 ], [ 3, 88 ], [ 3, 34, 113 ], [ 3 ], 
-  [ 3 ], [ 3, 114 ], [ 3 ], [ 3, 34 ], [ 3 ], [ 3 ], [ 3, 34 ], 
-  [ 3, 34, 120 ], [ 3, 99 ], [ 3, 34, 121 ], [ 3 ], [ 3 ], [ 3 ], [ 3 ], 
-  [ 3 ], [ 3, 34, 124 ], [ 3, 125 ], [ 3 ], [ 3, 34 ], [ 3 ], [ 3, 34 ], 
-  [ 3 ], [ 3, 113 ], [ 3, 34, 129 ], [ 3, 130 ], [ 3 ], [ 3, 34 ], [ 3, 34 ], 
-  [ 3 ], [ 3, 120 ], [ 3, 121 ], [ 3 ], [ 3, 34 ], [ 3, 124 ], [ 3, 19, 34 ], 
-  [ 3 ], [ 3 ], [ 3, 34 ], [ 3, 129 ], [ 3, 34, 140 ], [ 3 ], [ 3 ], 
-  [ 3, 34 ], [ 3, 142 ], [ 3, 146 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 34 ], 
-  [ 3, 140 ], [ 3 ], [ 3, 34, 160 ], [ 3, 161 ], [ 3 ], [ 3 ], 
-  [ 3, 34, 168 ], [ 3 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 34 ], [ 3 ], [ 3, 170 ], 
-  [ 3 ], [ 3 ], [ 3 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 160 ], [ 3, 34, 175 ], 
-  [ 3 ], [ 3 ], [ 3 ], [ 3, 34 ], [ 3 ], [ 3 ], [ 3, 168 ], [ 3 ], 
-  [ 3, 34, 177 ], [ 3, 178 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 175 ], [ 3 ], 
-  [ 3, 177 ], [ 3, 34, 187 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 34 ], [ 3 ], [ 3 ], 
+  [ 3, 18, 42, 62, 71, 80, 88, 99, 113, 120, 121, 124, 129, 140, 160, 168, 
+      175, 177, 187 ], [ 3 ], [ 3, 42, 88 ], [ 3, 89 ], [ 3 ], [ 3 ], [ 3 ], 
+  [ 3 ], [ 3 ], [ 3, 71 ], [ 3, 98 ], [ 3, 42, 99 ], [ 3 ], [ 3 ], 
+  [ 3, 100 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 80 ], [ 3 ], [ 3, 42 ], [ 3 ], 
+  [ 3, 106 ], [ 3, 42 ], [ 3 ], [ 3 ], [ 3, 88 ], [ 3, 42, 113 ], [ 3 ], 
+  [ 3 ], [ 3, 114 ], [ 3 ], [ 3, 42 ], [ 3 ], [ 3 ], [ 3, 42 ], 
+  [ 3, 42, 120 ], [ 3, 99 ], [ 3, 42, 121 ], [ 3 ], [ 3 ], [ 3 ], [ 3 ], 
+  [ 3 ], [ 3, 42, 124 ], [ 3, 125 ], [ 3 ], [ 3, 42 ], [ 3 ], [ 3, 42 ], 
+  [ 3 ], [ 3, 113 ], [ 3, 42, 129 ], [ 3, 130 ], [ 3 ], [ 3, 42 ], [ 3, 42 ], 
+  [ 3 ], [ 3, 120 ], [ 3, 121 ], [ 3 ], [ 3, 42 ], [ 3, 124 ], [ 3, 18, 42 ], 
+  [ 3 ], [ 3 ], [ 3, 42 ], [ 3, 129 ], [ 3, 42, 140 ], [ 3 ], [ 3 ], 
+  [ 3, 42 ], [ 3, 142 ], [ 3, 146 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 42 ], 
+  [ 3, 140 ], [ 3 ], [ 3, 42, 160 ], [ 3, 161 ], [ 3 ], [ 3 ], 
+  [ 3, 42, 168 ], [ 3 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 42 ], [ 3 ], [ 3, 170 ], 
+  [ 3 ], [ 3 ], [ 3 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 160 ], [ 3, 42, 175 ], 
+  [ 3 ], [ 3 ], [ 3 ], [ 3, 42 ], [ 3 ], [ 3 ], [ 3, 168 ], [ 3 ], 
+  [ 3, 42, 177 ], [ 3, 178 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 175 ], [ 3 ], 
+  [ 3, 177 ], [ 3, 42, 187 ], [ 3 ], [ 3 ], [ 3 ], [ 3, 42 ], [ 3 ], [ 3 ], 
   [ 3 ], [ 3 ], [ 3, 187 ], [ 3 ], [ 3 ], [ 3 ] ]
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
@@ -2783,9 +2782,9 @@ gap> S := Semigroup(
 >  Bipartition([[1, 2, -3], [3, -4], [4, -8], [5, -1, -2],
 >      [6, -5], [7, -6], [8, -7]]),
 >  Bipartition([[1, 2, -7], [3, -1, -2], [4, -8], [5, -4],
->     [6, -5], [7, -3], [8, -6]]));;
+>     [6, -5], [7, -3], [8, -6]]), rec(acting := true));;
 gap> iso := IsomorphismPermGroup(S);
-MappingByFunction( <bipartition group of degree 8 with 2 generators>
+MappingByFunction( <block bijection group of degree 8 with 2 generators>
 , Group([ (1,2,3,7,6,5,4), (1,6,2)
 (3,7,5,4) ]), function( x ) ... end, function( x ) ... end )
 gap> inv := InverseGeneralMapping(iso);;
@@ -2814,4 +2813,4 @@ gap> Unbind(s);
 gap> Unbind(x);
 
 #E# 
-gap> STOP_TEST("Semigroups package: standard/semibipart.tst");
+gap> STOP_TEST("Semigroups package: extreme/semibipart.tst");
