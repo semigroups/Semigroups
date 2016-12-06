@@ -1,17 +1,18 @@
 #############################################################################
 ##
-#W  standard/reesmat.tst
+#W  extreme/reesmat.tst
 #Y  Copyright (C) 2011-15                               James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: standard/reesmat.tst");
+gap> START_TEST("Semigroups package: extreme/reesmat.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
+gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
 #T# ReesMatTest2
 # Some semigroups to which the methods in Semigroups should not apply
@@ -77,12 +78,12 @@ gap> S := Semigroup(
 gap> R := PrincipalFactor(DClasses(S)[40]);
 <Rees 0-matrix semigroup 26x5 over Group([ (5,8)(6,9), (1,6,9), (1,6) ])>
 gap> U := MaximalSubsemigroups(R){[31 .. 36]};
-[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
+[ <subsemigroup of 26x5 Rees 0-matrix semigroup with 47 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 51 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 39 generators>, 
   <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators>, 
-  <subsemigroup of 26x5 Rees 0-matrix semigroup with 53 generators> ]
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 41 generators>, 
+  <subsemigroup of 26x5 Rees 0-matrix semigroup with 45 generators> ]
 gap> V := Semigroup(MultiplicativeZero(R),
 > RMSElement(R, 13, (1, 6)(5, 8), 3),
 > RMSElement(R, 1, (1, 6), 3),
@@ -100,13 +101,13 @@ gap> V := Semigroup(MultiplicativeZero(R),
 
 #T# ReesMatTest5: StuctureDescriptionMaximalSubgroups
 gap> StructureDescriptionMaximalSubgroups(U[1]);
-[ "1", "C2 x C2" ]
+[ "1", "D12" ]
 gap> StructureDescriptionMaximalSubgroups(V);
 [ "1", "D12" ]
 
 #T# ReesMatTest6: StructureDescriptionSchutzenbergerGroups 
 gap> StructureDescriptionSchutzenbergerGroups(U[5]);
-[ "1", "C2 x C2" ]
+[ "1", "D12" ]
 
 #T# ReesMatTest7: MinimalDClass
 gap> List(U, MinimalDClass);
@@ -119,7 +120,7 @@ gap> MinimalDClass(V);
 gap> MaximalDClasses(V);
 [ <Green's D-class: (13,(1,6)(5,8),3)>, <Green's D-class: (22,(1,6),1)> ]
 gap> MaximalDClasses(U[4]);
-[ <Green's D-class: (1,(),1)> ]
+[ <Green's D-class: (2,(5,8)(6,9),4)>, <Green's D-class: (1,(5,8)(6,9),1)> ]
 gap> V := Semigroup(MultiplicativeZero(R),
 > RMSElement(R, 13, (1, 6)(5, 8), 3),
 > RMSElement(R, 1, (1, 6), 3),
@@ -145,7 +146,7 @@ gap> ForAll(D, x ->
 true
 
 #T# ReesMatTest10: SmallGeneratingSet
-gap> Length(SmallGeneratingSet(V)) < Length(Generators(V));
+gap> Length(SmallGeneratingSet(V)) <= Length(Generators(V));
 true
 gap> Apply(U, x -> Semigroup(SmallGeneratingSet(x)));
 
@@ -201,9 +202,9 @@ fail
 #T# ReesMatTest14: IdempotentGeneratedSubsemigroup
 gap> eV := IdempotentGeneratedSubsemigroup(V);;
 gap> Size(eV);
-15
+16
 gap> Size(V);
-505
+421
 gap> List(U, IdempotentGeneratedSubsemigroup);;
 gap> List(last, Size);
 [ 47, 47, 47, 47, 47, 47 ]
@@ -226,7 +227,7 @@ gap> H := First(HClasses(V), IsRegularClass);
 gap> MultiplicativeNeutralElement(H);
 0
 gap> H := First(HClasses(V), x -> not IsRegularClass(x));
-<Green's H-class: (13,(1,9)(5,8),5)>
+<Green's H-class: (1,(1,6),3)>
 gap> MultiplicativeNeutralElement(H);
 fail
 gap> h := RMSElement(ParentAttr(U[5]), 17, (1, 9)(5, 8), 5);
@@ -236,26 +237,27 @@ gap> H := GreensHClassOfElement(U[5], h);
 gap> IsRegularClass(H);
 true
 gap> e := MultiplicativeNeutralElement(H);
-(17,(1,9)(5,8),5)
+(17,(1,6),5)
 gap> e ^ 2;
-(17,(1,9)(5,8),5)
+(17,(1,6),5)
 gap> e = h;
-true
+false
 gap> ForAll(H, x -> x * e = x and e * x = x);
 true
 gap> h := RMSElement(ParentAttr(U[5]), 21, (1, 9, 6)(5, 8), 5);
 (21,(1,9,6)(5,8),5)
 gap> H := GreensHClassOfElement(U[5], h);
-<Green's H-class: (21,(1,9,6)(5,8),5)>
+Error, Semigroups: GreensHClassOfElement: usage,
+the element does not belong to the semigroup,
 gap> IsRegularClass(H);
-false
+true
 gap> MultiplicativeNeutralElement(H);
-fail
+(17,(1,6),5)
 
 #T# ReesMatTest18: StructureDescription (for an H-class) 
 gap> H := First(HClasses(U[5]), IsRegularClass);;
 gap> StructureDescription(H);
-"C2 x C2"
+"D12"
 
 #T# ReesMatTest19: Random
 gap> Random(V);;
@@ -263,13 +265,13 @@ gap> List(U, Random);; #FIXME no this is not expected
 
 #T# ReesMatTest20: DClassOf.Class etc
 gap> H := First(HClasses(V), x -> not IsRegularClass(x));
-<Green's H-class: (13,(1,9)(5,8),5)>
+<Green's H-class: (1,(1,6),3)>
 gap> DClass(H);
-<Green's D-class: (13,(1,6)(5,8),3)>
+<Green's D-class: (1,(1,6),3)>
 gap> RClass(H);
-<Green's R-class: (13,(1,6)(5,8),3)>
+<Green's R-class: (1,(1,6),3)>
 gap> LClass(H);
-<Green's L-class: (13,(1,9)(5,8),5)>
+<Green's L-class: (1,(1,6),3)>
 gap> LClass(H) < LClass(V, Representative(V));
 false
 
@@ -277,83 +279,46 @@ false
 gap> RClasses(V);
 [ <Green's R-class: 0>, <Green's R-class: (13,(1,6)(5,8),3)>, 
   <Green's R-class: (1,(1,6),3)>, <Green's R-class: (7,(1,6)(5,8),3)>, 
-  <Green's R-class: (23,(6,9),3)>, <Green's R-class: (22,(1,6),1)>, 
-  <Green's R-class: (11,(1,6),3)>, <Green's R-class: (2,(6,9),3)>, 
-  <Green's R-class: (24,(5,8)(6,9),3)>, <Green's R-class: (6,(1,9)(5,8),1)>, 
-  <Green's R-class: (15,(1,6,9),3)>, <Green's R-class: (22,(),3)>, 
-  <Green's R-class: (6,(1,9,6)(5,8),3)> ]
+  <Green's R-class: (23,(5,8)(6,9),3)>, <Green's R-class: (22,(1,6),1)>, 
+  <Green's R-class: (11,(1,9,6),1)>, <Green's R-class: (2,(),1)>, 
+  <Green's R-class: (24,(5,8),1)>, <Green's R-class: (6,(1,9)(5,8),1)>, 
+  <Green's R-class: (15,(1,6,9)(5,8),3)>, <Green's R-class: (22,(),3)>, 
+  <Green's R-class: (6,(1,9,6)(5,8),3)>, <Green's R-class: (11,(1,9),3)>, 
+  <Green's R-class: (2,(1,6),3)>, <Green's R-class: (24,(1,6)(5,8),3)> ]
 gap> LClasses(V);
 [ <Green's L-class: 0>, <Green's L-class: (13,(1,6)(5,8),3)>, 
-  <Green's L-class: (13,(1,9,6),2)>, <Green's L-class: (13,(1,9)(5,8),5)>, 
-  <Green's L-class: (13,(1,9)(5,8),4)>, <Green's L-class: (1,(1,6),3)>, 
-  <Green's L-class: (1,(1,9,6)(5,8),2)>, <Green's L-class: (1,(1,9),5)>, 
-  <Green's L-class: (1,(1,9),4)>, <Green's L-class: (1,(5,8),3)>, 
-  <Green's L-class: (1,(6,9),2)>, <Green's L-class: (1,(1,6,9)(5,8),5)>, 
-  <Green's L-class: (1,(1,6,9)(5,8),4)>, <Green's L-class: (1,(5,8)(6,9),3)>, 
-  <Green's L-class: (1,(),2)>, <Green's L-class: (1,(1,6)(5,8),5)>, 
-  <Green's L-class: (1,(1,6)(5,8),4)>, <Green's L-class: (1,(1,9,6)(5,8),3)>, 
-  <Green's L-class: (1,(1,6),2)>, <Green's L-class: (1,(5,8),5)>, 
-  <Green's L-class: (1,(5,8),4)>, <Green's L-class: (1,(1,9),3)>, 
-  <Green's L-class: (1,(1,6,9)(5,8),2)>, <Green's L-class: (1,(6,9),5)>, 
-  <Green's L-class: (1,(6,9),4)>, <Green's L-class: (1,(1,6,9),3)>, 
-  <Green's L-class: (1,(1,9)(5,8),2)>, <Green's L-class: (1,(1,9,6),5)>, 
-  <Green's L-class: (1,(1,9,6),4)>, <Green's L-class: (1,(1,9,6),3)>, 
-  <Green's L-class: (1,(1,6)(5,8),2)>, <Green's L-class: (1,(),5)>, 
-  <Green's L-class: (1,(),4)>, <Green's L-class: (1,(1,9)(5,8),3)>, 
-  <Green's L-class: (1,(1,6,9),2)>, <Green's L-class: (1,(5,8)(6,9),5)>, 
-  <Green's L-class: (1,(5,8)(6,9),4)>, <Green's L-class: (1,(1,6,9)(5,8),3)>, 
-  <Green's L-class: (1,(1,9),2)>, <Green's L-class: (1,(1,9,6)(5,8),5)>, 
-  <Green's L-class: (1,(1,9,6)(5,8),4)>, <Green's L-class: (1,(1,6)(5,8),3)>, 
-  <Green's L-class: (1,(1,9,6),2)>, <Green's L-class: (1,(1,9)(5,8),5)>, 
-  <Green's L-class: (1,(1,9)(5,8),4)>, <Green's L-class: (1,(),3)>, 
-  <Green's L-class: (1,(5,8)(6,9),2)>, <Green's L-class: (1,(1,6,9),5)>, 
-  <Green's L-class: (1,(1,6,9),4)>, <Green's L-class: (1,(6,9),3)>, 
-  <Green's L-class: (1,(5,8),2)>, <Green's L-class: (1,(1,6),5)>, 
-  <Green's L-class: (1,(1,6),4)>, <Green's L-class: (22,(1,6),1)>, 
-  <Green's L-class: (15,(1,6,9),3)>, <Green's L-class: (15,(1,9)(5,8),2)>, 
-  <Green's L-class: (15,(1,9,6),5)>, <Green's L-class: (15,(1,9,6),4)>, 
-  <Green's L-class: (15,(5,8)(6,9),3)>, <Green's L-class: (15,(),2)>, 
-  <Green's L-class: (15,(1,6)(5,8),5)>, <Green's L-class: (15,(1,6)(5,8),4)>, 
-  <Green's L-class: (15,(5,8),3)>, <Green's L-class: (15,(6,9),2)>, 
-  <Green's L-class: (15,(1,6,9)(5,8),5)>, 
-  <Green's L-class: (15,(1,6,9)(5,8),4)>, <Green's L-class: (15,(1,9)(5,8),3)>
-    , <Green's L-class: (15,(1,6,9),2)>, <Green's L-class: (15,(5,8)(6,9),5)>,
-  <Green's L-class: (15,(5,8)(6,9),4)>, <Green's L-class: (15,(1,9,6),3)>, 
-  <Green's L-class: (15,(1,6)(5,8),2)>, <Green's L-class: (15,(),5)>, 
-  <Green's L-class: (15,(),4)>, <Green's L-class: (15,(1,6),3)>, 
-  <Green's L-class: (15,(1,9,6)(5,8),2)>, <Green's L-class: (15,(1,9),5)>, 
-  <Green's L-class: (15,(1,9),4)>, <Green's L-class: (15,(1,9),3)>, 
-  <Green's L-class: (15,(1,6,9)(5,8),2)>, <Green's L-class: (15,(6,9),5)>, 
-  <Green's L-class: (15,(6,9),4)>, <Green's L-class: (15,(1,9,6)(5,8),3)>, 
-  <Green's L-class: (15,(1,6),2)>, <Green's L-class: (15,(5,8),5)>, 
-  <Green's L-class: (15,(5,8),4)>, <Green's L-class: (15,(1,6)(5,8),3)>, 
-  <Green's L-class: (15,(1,9,6),2)>, <Green's L-class: (15,(1,9)(5,8),5)>, 
-  <Green's L-class: (15,(1,9)(5,8),4)>, <Green's L-class: (15,(1,6,9)(5,8),3)>
-    , <Green's L-class: (15,(1,9),2)>, <Green's L-class: (15,(1,9,6)(5,8),5)>,
-  <Green's L-class: (15,(1,9,6)(5,8),4)>, <Green's L-class: (15,(6,9),3)>, 
-  <Green's L-class: (15,(5,8),2)>, <Green's L-class: (15,(1,6),5)>, 
-  <Green's L-class: (15,(1,6),4)>, <Green's L-class: (15,(),3)>, 
-  <Green's L-class: (15,(5,8)(6,9),2)>, <Green's L-class: (15,(1,6,9),5)>, 
-  <Green's L-class: (15,(1,6,9),4)>, <Green's L-class: (22,(),3)>, 
-  <Green's L-class: (22,(5,8)(6,9),2)>, <Green's L-class: (22,(1,6,9),5)>, 
-  <Green's L-class: (22,(1,6,9),4)> ]
+  <Green's L-class: (13,(1,9,6)(5,8),2)>, <Green's L-class: (1,(1,6),3)>, 
+  <Green's L-class: (1,(1,9,6),2)>, <Green's L-class: (1,(1,6,9),3)>, 
+  <Green's L-class: (1,(1,9),2)>, <Green's L-class: (1,(5,8),3)>, 
+  <Green's L-class: (1,(5,8)(6,9),2)>, <Green's L-class: (1,(1,6)(5,8),3)>, 
+  <Green's L-class: (1,(1,9,6)(5,8),2)>, <Green's L-class: (1,(1,6,9)(5,8),3)>
+    , <Green's L-class: (1,(1,9)(5,8),2)>, <Green's L-class: (1,(),3)>, 
+  <Green's L-class: (1,(6,9),2)>, <Green's L-class: (1,(1,9,6),3)>, 
+  <Green's L-class: (1,(1,6),2)>, <Green's L-class: (1,(6,9),3)>, 
+  <Green's L-class: (1,(),2)>, <Green's L-class: (1,(1,9)(5,8),3)>, 
+  <Green's L-class: (1,(1,6,9)(5,8),2)>, <Green's L-class: (1,(1,9,6)(5,8),3)>
+    , <Green's L-class: (1,(1,6)(5,8),2)>, <Green's L-class: (1,(5,8)(6,9),3)>
+    , <Green's L-class: (1,(5,8),2)>, <Green's L-class: (1,(1,9),3)>, 
+  <Green's L-class: (1,(1,6,9),2)>, <Green's L-class: (22,(1,6),1)>, 
+  <Green's L-class: (22,(),5)>, <Green's L-class: (22,(),4)>, 
+  <Green's L-class: (22,(),3)>, <Green's L-class: (22,(6,9),2)> ]
 gap> DClasses(V);
 [ <Green's D-class: 0>, <Green's D-class: (13,(1,6)(5,8),3)>, 
   <Green's D-class: (1,(1,6),3)>, <Green's D-class: (22,(1,6),1)>, 
-  <Green's D-class: (15,(1,6,9),3)>, <Green's D-class: (22,(),3)> ]
+  <Green's D-class: (22,(),3)> ]
 gap> NrHClasses(V);
-131
+58
 gap> NrLClasses(V);
-106
+32
 gap> reps := ShallowCopy(RClassReps(U[2]));;
 gap> Sort(reps);
 gap> List(reps, RowOfReesZeroMatrixSemigroupElement) = [0 .. 26];
-true
+false
 gap> LClassReps(R);
 [ (1,(1,5,3,7)(2,8,4,6),1), 0 ]
 gap> d := DClassReps(U[4]);;
 gap> Length(d);
-2
+4
 gap> IsDuplicateFreeList(d);
 true
 gap> ForAll(d, x -> x in U[4]);
@@ -369,11 +334,11 @@ true
 
 #T# ReesMatTest23: GroupHClass
 gap> D := Filtered(DClasses(U[1]), IsRegularClass)[2];
-<Green's D-class: 0>
+<Green's D-class: (7,(5,8)(6,9),2)>
 gap> GroupHClass(D);
-<Green's H-class: 0>
+<Green's H-class: (7,(),2)>
 gap> StructureDescription(last);
-"1"
+"D12"
 gap> D := First(DClasses(V), IsRegularClass);
 <Green's D-class: 0>
 gap> GroupHClass(D);
@@ -383,39 +348,39 @@ gap> StructureDescription(last);
 
 #T# ReesMatTest24: Idempotents
 gap> Idempotents(V);
-[ 0, (13,(1,9,6),3), (13,(1,9,6),2), (7,(),3), (7,(),2), (23,(1,6),5), 
-  (23,(1,6),4), (22,(),1), (11,(1,6),3), (11,(1,6),2), (2,(5,8)(6,9),5), 
-  (2,(5,8)(6,9),4), (24,(),5), (24,(),4), (6,(1,6),1) ]
+[ 0, (13,(1,9,6)(5,8),3), (13,(1,9,6)(5,8),2), (7,(),3), (7,(),2), (23,(),3), 
+  (23,(),2), (22,(),5), (22,(),4), (11,(5,8)(6,9),1), (2,(),5), (2,(),4), 
+  (24,(),1), (6,(1,6),1), (15,(1,6),3), (15,(1,6),2) ]
 gap> ForAll(last, IsIdempotent);
 true
 gap> reps := ShallowCopy(Idempotents(U[2]));;
 gap> Sort(reps);
 gap> reps;
-[ 0, (1,(),1), (2,(5,8)(6,9),4), (2,(5,8)(6,9),5), (3,(5,8)(6,9),4), 
-  (3,(5,8)(6,9),5), (4,(),4), (4,(),5), (5,(5,8)(6,9),4), (5,(5,8)(6,9),5), 
+[ 0, (1,(),1), (2,(),4), (2,(),5), (3,(5,8)(6,9),4), (3,(5,8)(6,9),5), 
+  (4,(5,8)(6,9),4), (4,(5,8)(6,9),5), (5,(5,8)(6,9),4), (5,(5,8)(6,9),5), 
   (6,(1,6),1), (7,(),2), (7,(),3), (8,(1,9)(5,8),2), (8,(1,9)(5,8),3), 
-  (9,(1,9),2), (9,(1,9),3), (10,(),1), (11,(1,6),2), (11,(1,6),3), 
-  (12,(1,6)(5,8),2), (12,(1,6)(5,8),3), (13,(1,9,6),2), (13,(1,9,6),3), 
-  (14,(5,8)(6,9),1), (15,(1,9),1), (16,(1,9,6)(5,8),2), (16,(1,9,6)(5,8),3), 
-  (17,(1,9)(5,8),4), (17,(1,9)(5,8),5), (18,(1,9,6)(5,8),2), 
-  (18,(1,9,6)(5,8),3), (19,(1,9,6)(5,8),2), (19,(1,9,6)(5,8),3), (20,(),2), 
-  (20,(),3), (21,(1,9,6)(5,8),2), (21,(1,9,6)(5,8),3), (22,(),1), 
-  (23,(1,6),4), (23,(1,6),5), (24,(),4), (24,(),5), (25,(),4), (25,(),5), 
+  (9,(1,9),2), (9,(1,9),3), (10,(),1), (11,(5,8)(6,9),1), (12,(1,9),1), 
+  (13,(1,9,6)(5,8),2), (13,(1,9,6)(5,8),3), (14,(1,9,6),2), (14,(1,9,6),3), 
+  (15,(1,6),2), (15,(1,6),3), (16,(1,6)(5,8),2), (16,(1,6)(5,8),3), 
+  (17,(1,6),4), (17,(1,6),5), (18,(1,9)(5,8),4), (18,(1,9)(5,8),5), 
+  (19,(1,9,6)(5,8),2), (19,(1,9,6)(5,8),3), (20,(1,9,6)(5,8),2), 
+  (20,(1,9,6)(5,8),3), (21,(1,9,6)(5,8),2), (21,(1,9,6)(5,8),3), (22,(),4), 
+  (22,(),5), (23,(),2), (23,(),3), (24,(),1), (25,(),4), (25,(),5), 
   (26,(1,9),2), (26,(1,9),3) ]
 gap> ForAll(last, IsIdempotent);
 true
 
 #T# ReesMatTest25: IsRegularClass
 gap> Number(RClasses(V), IsRegularClass);
-9
+10
 gap> Number(DClasses(V), IsRegularClass);
 3
 gap> NrRegularDClasses(V);
 3
 gap> Number(DClasses(U[4]), IsRegularClass);
-2
+3
 gap> NrRegularDClasses(U[4]);
-2
+3
 gap> Number(LClasses(U[4]), IsRegularClass);
 6
 
@@ -425,19 +390,19 @@ true
 gap> ForAll(U, x -> NrIdempotents(x) = Length(Idempotents(x)));
 true
 gap> List(DClasses(V), NrIdempotents);
-[ 1, 12, 0, 2, 0, 0 ]
+[ 1, 8, 0, 7, 0 ]
 gap> List(RClasses(V), NrIdempotents);
-[ 1, 2, 0, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0 ]
+[ 1, 2, 0, 2, 2, 2, 1, 2, 1, 1, 2, 0, 0, 0, 0, 0 ]
 gap> List(LClasses(R), NrIdempotents);
 [ 1, 1 ]
 
 #T# ReesMatTest27: PartialOrderOfDClasses
 gap> PartialOrderOfDClasses(V);
-[ [ 1 ], [ 1, 2, 3, 5 ], [ 1, 3, 6 ], [ 1, 4, 6 ], [ 1, 5, 6 ], [ 1, 6 ] ]
+[ [ 1 ], [ 1, 2, 3 ], [ 1, 3, 5 ], [ 1, 4, 5 ], [ 1, 5 ] ]
 gap> PartialOrderOfDClasses(U[1]);
-[ [ 1, 2 ], [ 2 ] ]
+[ [ 1, 3, 4 ], [ 2, 3, 4 ], [ 3, 4 ], [ 4 ] ]
 gap> PartialOrderOfDClasses(U[2]);
-[ [ 1, 2 ], [ 2 ] ]
+[ [ 1, 3, 4 ], [ 2, 3, 4 ], [ 3, 4 ], [ 4 ] ]
 
 #T# ReesMatTest28: from properties.xml...
 gap> IsBand(V);
@@ -509,14 +474,14 @@ gap> List(U, IsMonoidAsSemigroup);
 [ false, false, false, false, false, false ]
 gap> IsomorphismTransformationSemigroup(R);
 MappingByFunction( <subsemigroup of 1x1 Rees 0-matrix semigroup 
- with 2 generators>, <commutative transformation monoid of degree 2 with 1 
- generator>, function( x ) ... end, function( x ) ... end )
+ with 2 generators>, <commutative transformation monoid of size 2, degree 2 
+ with 1 generator>, function( x ) ... end, function( x ) ... end )
 gap> IsOrthodoxSemigroup(R);
 true
 gap> IsOrthodoxSemigroup(V);
 false
 gap> List(U, IsOrthodoxSemigroup);
-[ true, true, true, true, true, true ]
+[ false, false, false, false, false, false ]
 gap> R := ReesZeroMatrixSemigroup(Group(()), [[(), (), ()], [(), (), ()]]);
 <Rees 0-matrix semigroup 3x2 over Group(())>
 gap> R := Semigroup(Difference(Generators(R), [MultiplicativeZero(R)]));
@@ -528,7 +493,7 @@ false
 gap> List(U, IsRectangularBand);
 [ false, false, false, false, false, false ]
 gap> List(U, IsRegularSemigroup);
-[ true, true, true, true, true, true ]
+[ false, false, false, false, false, false ]
 gap> IsRegularSemigroup(V);
 false
 gap> UU := IdempotentGeneratedSubsemigroup(R);;
@@ -587,12 +552,12 @@ gap> for i in [2 .. 12] do
 gap> V;
 <subsemigroup of 26x5 Rees 0-matrix semigroup with 11 generators>
 gap> Size(V);
-505
+421
 
 #T# ReesMatTest30: from slp.xml...
 gap> x := RMSElement(V, 22, (1, 6, 9), 1);;
 gap> Factorization(V, x);
-[ 6, 10, 10, 6 ]
+[ 6, 7, 6, 9, 6 ]
 gap> EvaluateWord(Generators(V), last);
 (22,(1,6,9),1)
 gap> x := MultiplicativeZero(R);;
@@ -724,7 +689,7 @@ gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> IsInverseSemigroup(R);
 true
-gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 true
 
 #
@@ -737,7 +702,7 @@ gap> R := ReesZeroMatrixSemigroup(T, [[Transformation([2, 1])]]);
    1 generator>>
 gap> IsInverseSemigroup(R);
 true
-gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 true
 
 #T# ReesMatTest101: IsInverseSemigroup (false because of underlying semigroup)
@@ -750,7 +715,7 @@ gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);
   degree 3 with 1 generator>>
 gap> IsInverseSemigroup(R);
 false
-gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 false
 
 # T is known not to be regular
@@ -760,7 +725,7 @@ false
 gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);;
 gap> IsInverseSemigroup(R);
 false
-gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 false
 
 # T is known not to be a monoid
@@ -770,7 +735,7 @@ false
 gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);;
 gap> IsInverseSemigroup(R);
 false
-gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 false
 
 # T is known not to have group of units
@@ -780,7 +745,7 @@ fail
 gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);;
 gap> IsInverseSemigroup(R);
 false
-gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 false
 
 # T does not have a group of units
@@ -788,7 +753,7 @@ gap> T := Semigroup(x);;
 gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [0, x ^ 2]]);;
 gap> IsInverseSemigroup(R);
 false
-gap> IsInverseSemigroup(AsTransformationSemigroup(R));
+gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
 false
 
 #T# ReesMatTest102: IsInverseSemigroup (false because of matrix)
@@ -872,8 +837,8 @@ gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 gap> NrIdempotents(R);
 2
 gap> Idempotents(R);
-[ 0, (1,(),1) ]
-gap> Idempotents(R) = Elements(R);
+[ (1,(),1), 0 ]
+gap> Set(Idempotents(R)) = Elements(R);
 true
 gap> IsBand(R);
 true
@@ -888,8 +853,8 @@ gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [x, x ^ 2]]);
 gap> NrIdempotents(R);
 4
 gap> Idempotents(R);
-[ 0, (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
-  (2,IdentityTransformation,2) ]
+[ (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
+  (2,IdentityTransformation,2), 0 ]
 gap> ForAll(Idempotents(R), x -> x * x = x);
 true
 gap> ForAll(R, x -> x in Idempotents(R) or not IsIdempotent(x));
@@ -905,7 +870,7 @@ gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [0, x ^ 2]]);
 gap> NrIdempotents(R);
 3
 gap> Idempotents(R);
-[ 0, (1,Transformation( [ 1, 1, 1 ] ),1), (2,Transformation( [ 1, 1, 1 ] ),2) 
+[ (1,Transformation( [ 1, 1, 1 ] ),1), (2,Transformation( [ 1, 1, 1 ] ),2), 0 
  ]
 gap> ForAll(Idempotents(R), x -> x * x = x);
 true
@@ -1017,7 +982,7 @@ gap> SetUnderlyingSemigroup(T, G);
 gap> NrIdempotents(T);
 3
 gap> Idempotents(T);
-[ 0, (2,(1,2)(3,4),1), (3,(1,4,2)(3),2) ]
+[ (2,(1,2)(3,4),1), (3,(1,4,2)(3),2), 0 ]
 
 #T# ReesMatTest106: Test for Issue #128
 gap> S := SymmetricInverseMonoid(5);;
@@ -1041,14 +1006,18 @@ IdentityTransformation
 gap> R := ReesZeroMatrixSemigroup(T, [[id]]);
 <Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 4>>
 gap> RZMSNormalization(R);
-Error, Semigroups: RZMSNormalization: usage,
-not yet implemented for when the underlying semigroup is not IsGroup,
+MappingByFunction( <Rees 0-matrix semigroup 1x1 over 
+  <full transformation monoid of degree 4>>, 
+<Rees 0-matrix semigroup 1x1 over <full transformation monoid of degree 4>>
+ , function( x ) ... end, function( x ) ... end )
 gap> R := ReesZeroMatrixSemigroup(G, [[id]]);
 <Rees 0-matrix semigroup 1x1 over <transformation group of degree 4 with
    2 generators>>
 gap> RZMSNormalization(R);
-Error, Semigroups: RZMSNormalization: usage,
-not yet implemented for when the underlying semigroup is not IsGroup,
+MappingByFunction( <Rees 0-matrix semigroup 1x1 over <transformation group of 
+  degree 4 with 2 generators>>, <Rees 0-matrix semigroup 1x1 over 
+<transformation group of degree 4 with 2 generators>>
+, function( x ) ... end, function( x ) ... end )
 
 #T# ReesMatTest108: RZMSNormalization, example 1
 gap> G := SymmetricGroup(5);;
@@ -1188,4 +1157,4 @@ gap> Unbind(z);
 gap> Unbind(zero);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/reesmat.tst");
+gap> STOP_TEST("Semigroups package: extreme/reesmat.tst");
