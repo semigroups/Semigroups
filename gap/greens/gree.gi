@@ -333,10 +333,16 @@ InstallTrueMethod(IsHClassOfRegularSemigroup,
 #############################################################################
 
 InstallMethod(IteratorOfDClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite], GreensDClasses);
+[IsSemigroup and IsFinite], 
+function(S)
+  return IteratorList(GreensDClasses(S));
+end);
 
 InstallMethod(IteratorOfRClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite], GreensRClasses);
+[IsSemigroup and IsFinite], 
+function(S)
+  return IteratorList(GreensRClasses(S));
+end);
 
 #############################################################################
 ## 8. Viewing, printing, etc . . .
