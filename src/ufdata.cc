@@ -73,34 +73,24 @@ Obj UF_TABLE(Obj self, Obj ufdata) {
   return gap_table;
 }
 
-// FIXME it is not valid to store Obj's inside a C++ container such as a vector
-
 Obj UF_BLOCKS(Obj self, Obj ufdata) {
-  UFData::blocks_t* blocks = CLASS_OBJ<UFData*>(ufdata)->get_blocks();
-  size_t            size   = blocks->size();
-  size_t            i, j;
+  UFData::blocks_t const* blocks = CLASS_OBJ<UFData*>(ufdata)->get_blocks();
+  size_t                  size   = blocks->size();
+  size_t                  i, j;
 
-  // Rewrite each block as a PLIST object
-  std::vector<Obj> obj_list;
-  obj_list.reserve(size);
-  for (i = 0; i < size; i++) {
-    if (blocks->at(i) == nullptr) {
-      obj_list.push_back(nullptr);
-      // FIXME how can this occur?
-    } else {
-      obj_list.push_back(NEW_PLIST(T_PLIST_CYC, blocks->at(i)->size()));
-      SET_LEN_PLIST(obj_list[i], blocks->at(i)->size());
-      for (j = 0; j < blocks->at(i)->size(); j++) {
-        SET_ELM_PLIST(obj_list[i], j + 1, INTOBJ_INT(blocks->at(i)->at(j) + 1));
-      }
-    }
-  }
-
-  // Put these blocks into an overall PLIST
-  Obj gap_blocks = NEW_PLIST(T_PLIST, size); // FIXME should this be T_PLIST_TAB?
+  // Rewrite each block as a PLIST object, and put it into a PLIST.
+  Obj gap_blocks = NEW_PLIST(T_PLIST, size);
   SET_LEN_PLIST(gap_blocks, size);
   for (i = 0; i < size; i++) {
-    SET_ELM_PLIST(gap_blocks, i + 1, obj_list[i]);
+    if ((*blocks)[i] != nullptr) { // nullptr represents a hole in the list
+      Obj block = NEW_PLIST(T_PLIST_CYC, (*blocks)[i]->size());
+      SET_LEN_PLIST(block, (*blocks)[i]->size());
+      for (j = 0; j < (*blocks)[i]->size(); j++) {
+        SET_ELM_PLIST(block, j + 1, INTOBJ_INT((*(*blocks)[i])[j] + 1));
+      }
+      SET_ELM_PLIST(gap_blocks, i + 1, block);
+      CHANGED_BAG(gap_blocks);
+    }
   }
 
   return gap_blocks;
