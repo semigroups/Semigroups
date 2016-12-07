@@ -111,3 +111,58 @@ function(x)
   od;
   return pow;
 end);
+
+SEMIGROUPS.RandomIDTest := function(S, llhs, lrhs)
+  local varl, varr, idl, idr, tup, sztup, iter, i, nr, list, i2, bl, pos, npos,
+  i3;
+  idl := EmptyPlist(Size(llhs));
+  idr := EmptyPlist(Size(lrhs));
+  tup := EmptyPlist(1);
+  if Maximum(llhs) < Maximum(lrhs) then
+    sztup := Maximum(lrhs);
+  else
+    sztup := Maximum(llhs);
+  fi;
+  iter := IteratorOfTuples(S, sztup);
+  for i in iter do
+    tup := i;
+    nr := 0;
+    list := EmptyPlist(sztup);
+    for i2 in llhs do
+      bl := i2 in list;
+      if bl = false then
+        nr := nr + 1;
+        list[nr] := i2;
+        pos := Positions(llhs, i2);
+        npos := Size(pos);
+        for i3 in [1 .. npos] do
+          idl[pos[i3]] := tup[i2];
+        od;
+      fi;
+    od;
+    list := EmptyPlist(sztup);
+    nr := 0;
+    for i2 in lrhs do
+      bl := i2 in list;
+      if bl = false then
+        nr := nr + 1;
+        list[nr] := i2;
+        pos := Positions(lrhs, i2);
+        npos := Size(pos);
+        for i3 in [1 .. npos] do
+          idr[pos[i3]] := tup[i2];
+        od;
+      fi;
+    od;
+    for i2 in [1 .. Size(idl) - 1] do
+      idl[i2 + 1] := idl[i2] * idl[i2 + 1];
+    od;
+    for i2 in [1 .. Size(idr) - 1] do
+      idr[i2 + 1] := idr[i2] * idr[i2 + 1];
+    od;
+    if idl[Size(idl)] <> idr[Size(idr)] then
+      return false;
+    fi;
+  od;
+  return true;
+end;
