@@ -481,18 +481,6 @@ true
 gap> IsSubrelation(cong2, cong1);
 false
 
-#T# SEMIGROUPS.CongByGenPairs (internal function) bad input
-gap> S := FullTransformationMonoid(3);;
-gap> SEMIGROUPS.CongByGenPairs(S, [[S.1, S.2, S.3]], "right");
-Error, Semigroups: SEMIGROUPS.CongByGenPairs: usage,
-<pairs> must all be lists of length 2,
-gap> SEMIGROUPS.CongByGenPairs(S, [[S.1, S.2], [S.1, 42]], "twosided");
-Error, Semigroups: SEMIGROUPS.CongByGenPairs: usage,
-<pairs> must all be lists of elements of <S>,
-gap> SEMIGROUPS.CongByGenPairs(S, [[S.1, S.2], [S.1, S.3]], "elephant");
-Error, Semigroups: SEMIGROUPS.CongByGenPairs: usage,
-<type> must be "left", "right", or "twosided",
-
 # Test \in for pair of the form [x, x]
 gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>

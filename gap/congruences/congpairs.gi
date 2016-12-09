@@ -145,8 +145,15 @@ SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
   return cong;
 end;
 
-SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
-  local filter, set_pairs, fam, cong, report, range, pair;
+#############################################################################
+# Congruences
+#############################################################################
+
+InstallMethod(SemigroupCongruenceByGeneratingPairs,
+"for an enumerable semigroup and a list of generating pairs",
+[IsEnumerableSemigroupRep, IsList], RankFilter(IsList and IsEmpty),
+function(S, genpairs)
+  local fam, cong, report, type, range, pair;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -155,90 +162,105 @@ SEMIGROUPS.CongByGenPairs := function(S, genpairs, type)
   # Check that the pairs are all lists of length 2
   for pair in genpairs do
     if not IsList(pair) or Length(pair) <> 2 then
-      ErrorNoReturn("Semigroups: SEMIGROUPS.CongByGenPairs: usage,\n",
-                    "<pairs> must all be lists of length 2,");
+      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+                    "usage,\n<pairs> must all be lists of length 2,");
     elif not pair[1] in S or not pair[2] in S then
-      ErrorNoReturn("Semigroups: SEMIGROUPS.CongByGenPairs: usage,\n",
-                    "<pairs> must all be lists of elements of <S>,");
+      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+                    "usage,\n<pairs> must all be lists of elements of <S>,");
     fi;
   od;
-
-  if type = "left" then
-    filter := IsLeftSemigroupCongruence;
-    set_pairs := SetGeneratingPairsOfLeftMagmaCongruence;
-  elif type = "right" then
-    filter := IsRightSemigroupCongruence;
-    set_pairs := SetGeneratingPairsOfRightMagmaCongruence;
-  elif type = "twosided" then
-    filter := IsSemigroupCongruence;
-    set_pairs := SetGeneratingPairsOfMagmaCongruence;
-  else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.CongByGenPairs: usage,\n",
-                  "<type> must be \"left\", \"right\", or \"twosided\",");
-  fi;
 
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
 
   # Create the default type for the elements.
   cong := Objectify(NewType(fam, 
-                            IsFiniteCongruenceByGeneratingPairsRep and filter),
+                            IsFiniteCongruenceByGeneratingPairsRep
+                            and IsSemigroupCongruence),
                     rec(genpairs := Immutable(genpairs),
                         report   := SEMIGROUPS.OptionsRec(S).report,
-                        type     := type,
+                        type     := "twosided",
                         range    := S));
   SetSource(cong, S);
   SetRange(cong, S);
-  set_pairs(cong, Immutable(genpairs));
-
+  SetGeneratingPairsOfMagmaCongruence(cong, cong!.genpairs);
   return cong;
-end;
-
-#############################################################################
-# Congruences
-#############################################################################
-
-InstallMethod(SemigroupCongruenceByGeneratingPairs,
-"for an enumerable semigroup and a list of generating pairs", IsElmsColls,
-[IsEnumerableSemigroupRep, IsList], 
-function(S, genpairs)
-  return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
 end);
 
 InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
-"for an enumerable semigroup and a list of generating pairs", IsElmsColls,
-[IsEnumerableSemigroupRep, IsList], 
+"for an enumerable semigroup and a list of generating pairs",
+[IsEnumerableSemigroupRep, IsList], RankFilter(IsList and IsEmpty),
 function(S, genpairs)
-  return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
+  local fam, cong, report, type, range, pair;
+
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+
+  # Check that the pairs are all lists of length 2
+  for pair in genpairs do
+    if not IsList(pair) or Length(pair) <> 2 then
+      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+                    "usage,\n<pairs> must all be lists of length 2,");
+    elif not pair[1] in S or not pair[2] in S then
+      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+                    "usage,\n<pairs> must all be lists of elements of <S>,");
+    fi;
+  od;
+
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
+
+  # Create the default type for the elements.
+  cong := Objectify(NewType(fam, 
+                            IsFiniteCongruenceByGeneratingPairsRep
+                            and IsLeftSemigroupCongruence),
+                    rec(genpairs := Immutable(genpairs),
+                        report   := SEMIGROUPS.OptionsRec(S).report,
+                        type     := "left",
+                        range    := S));
+  SetSource(cong, S);
+  SetRange(cong, S);
+  SetGeneratingPairsOfLeftMagmaCongruence(cong, cong!.genpairs);
+  return cong;
 end);
 
 InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
-"for an enumerable semigroup and a list of generating pairs", IsElmsColls,
-[IsEnumerableSemigroupRep, IsList], 
+"for an enumerable semigroup and a list of generating pairs",
+[IsEnumerableSemigroupRep, IsList], RankFilter(IsList and IsEmpty),
 function(S, genpairs)
-  return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
-end);
+  local fam, cong, report, type, range, pair;
 
-# Empty list constructors to override library function
-InstallMethod(SemigroupCongruenceByGeneratingPairs,
-"for an enumerable semigroup and an empty list",
-[IsEnumerableSemigroupRep, IsList and IsEmpty], 1,
-function(S, genpairs)
-  return SEMIGROUPS.CongByGenPairs(S, genpairs, "twosided");
-end);
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
 
-InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
-"for an enumerable semigroup and an empty list",
-[IsEnumerableSemigroupRep, IsList and IsEmpty], 1,
-function(S, genpairs)
-  return SEMIGROUPS.CongByGenPairs(S, genpairs, "left");
-end);
+  # Check that the pairs are all lists of length 2
+  for pair in genpairs do
+    if not IsList(pair) or Length(pair) <> 2 then
+      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+                    "usage,\n<pairs> must all be lists of length 2,");
+    elif not pair[1] in S or not pair[2] in S then
+      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+                    "usage,\n<pairs> must all be lists of elements of <S>,");
+    fi;
+  od;
 
-InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
-"for an enumerable semigroup and an empty list",
-[IsEnumerableSemigroupRep, IsList and IsEmpty], 1,
-function(S, genpairs)
-  return SEMIGROUPS.CongByGenPairs(S, genpairs, "right");
+  fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
+                               ElementsFamily(FamilyObj(S)));
+
+  # Create the default type for the elements.
+  cong := Objectify(NewType(fam, 
+                            IsFiniteCongruenceByGeneratingPairsRep
+                            and IsRightSemigroupCongruence),
+                    rec(genpairs := Immutable(genpairs),
+                        report   := SEMIGROUPS.OptionsRec(S).report,
+                        type     := "right",
+                        range    := S));
+  SetSource(cong, S);
+  SetRange(cong, S);
+  SetGeneratingPairsOfRightMagmaCongruence(cong, cong!.genpairs);
+  return cong;
 end);
 
 #############################################################################
