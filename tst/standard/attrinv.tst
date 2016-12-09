@@ -77,6 +77,11 @@ gap> IsInverseSemigroup(S);
 true
 gap> Minorants(S, GeneratorsOfSemigroup(S)[2]);
 [  ]
+gap> S := Semigroup(S, rec(acting := false));;
+gap> IsInverseSemigroup(S);
+true
+gap> Minorants(S, GeneratorsOfSemigroup(S)[1]);
+[ <identity partial perm on [ 1, 2, 3 ]> ]
 
 #T# attrinv: character tables of inverse acting semigroups
 # Some random examples to test consistency of old code with new
@@ -663,6 +668,51 @@ gap> PrimitiveIdempotents(FreeBand(2));
 Error, Semigroups: PrimitiveIdempotents: usage,
 the argument is not an inverse semigroup,
 
+#T# attrinv: PrimitiveIdempotents, transformation semigroups
+gap> S := InverseSemigroup([
+>  Bipartition([[1, -1, -2], [2, 3, -3], [4, -4]]),
+>  Bipartition([[1, 2, 3, -4], [4, -1, -2, -3]])]);
+<inverse block bijection semigroup of degree 4 with 2 generators>
+gap> PrimitiveIdempotents(S);
+[ <block bijection: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]> ]
+gap> S := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of size 6, degree 7 with 3 generators>
+gap> PrimitiveIdempotents(S);
+[ Transformation( [ 4, 2, 4, 4, 4, 4, 4 ] ) ]
+
+#
+gap> S := InverseSemigroup([
+>  PartialPerm([1, 2, 3, 5], [2, 5, 4, 1]),
+>  PartialPerm([1, 2, 4], [3, 4, 2]),
+>  PartialPerm([1, 2, 3, 5], [1, 4, 3, 2])]);
+<inverse partial perm semigroup of rank 5 with 3 generators>
+gap> x := ShallowCopy(PrimitiveIdempotents(S));;
+gap> Sort(x);
+gap> x;
+[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 2 ]>, 
+  <identity partial perm on [ 3 ]>, <identity partial perm on [ 4 ]>, 
+  <identity partial perm on [ 5 ]> ]
+gap> T := AsSemigroup(IsBlockBijectionSemigroup, S);
+<inverse block bijection semigroup of degree 6 with 3 generators>
+gap> x := ShallowCopy(PrimitiveIdempotents(T));;
+gap> Sort(x);
+gap> x;
+[ <block bijection: [ 1, 2, 3, 4, 6, -1, -2, -3, -4, -6 ], [ 5, -5 ]>, 
+  <block bijection: [ 1, 2, 3, 5, 6, -1, -2, -3, -5, -6 ], [ 4, -4 ]>, 
+  <block bijection: [ 1, 2, 4, 5, 6, -1, -2, -4, -5, -6 ], [ 3, -3 ]>, 
+  <block bijection: [ 1, 3, 4, 5, 6, -1, -3, -4, -5, -6 ], [ 2, -2 ]>, 
+  <block bijection: [ 1, -1 ], [ 2, 3, 4, 5, 6, -2, -3, -4, -5, -6 ]> ]
+gap> T := AsSemigroup(IsTransformationSemigroup, S);
+<transformation semigroup of degree 6 with 6 generators>
+gap> x := ShallowCopy(PrimitiveIdempotents(T));;
+gap> Sort(x);
+gap> x;
+[ Transformation( [ 1, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 6, 2, 6, 6, 6, 6 ] ), 
+  Transformation( [ 6, 6, 3, 6, 6, 6 ] ), 
+  Transformation( [ 6, 6, 6, 4, 6, 6 ] ), 
+  Transformation( [ 6, 6, 6, 6, 5, 6 ] ) ]
+
 #T# attrinv: IsJoinIrreducible, 1/4
 gap> S := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4], [4, 1, 2, 6]),
@@ -740,6 +790,9 @@ true
 #T# attrinv: JoinIrreducibleDClasses, partial perms, 1
 gap> S := InverseSemigroup([PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 > PartialPerm([1, 3, 5], [5, 1, 3])]);;
+gap> JoinIrreducibleDClasses(S)[1] = DClass(S, PartialPerm([3], [3]));
+true
+gap> S := InverseSemigroup(S, rec(acting := false));;
 gap> JoinIrreducibleDClasses(S)[1] = DClass(S, PartialPerm([3], [3]));
 true
 
@@ -923,7 +976,7 @@ gap> SupremumIdempotentsNC([], PartialPerm([]));
 <empty partial perm>
 gap> SupremumIdempotentsNC([], Bipartition([[1], [-1]]));
 <bipartition: [ 1 ], [ -1 ]>
-gap> SupremumIdempotentsNC([], RandomBipartition(1));
+gap> SupremumIdempotentsNC([], Bipartition([[1, -1]]));
 <block bijection: [ 1, -1 ]>
 gap> SupremumIdempotentsNC(Idempotents(DualSymmetricInverseMonoid(3)),
 > RandomBlockBijection(3));
@@ -932,6 +985,17 @@ gap> SupremumIdempotentsNC(Transformation([1, 1]), 1);
 Error, Semigroups: SupremumIdempotentsNC: usage,
 the argument is not a collection of partial perms, block bijections,
 or partial perm bipartitions,
+
+#T# attrinv: InversesOfSemigroupElementNC, 1/1
+gap> S := InverseSemigroup(
+>  [Bipartition([[1, 2, 4, -2, -3], [3, -4, -5], [5, -1]]),
+>   Bipartition([[1, 2, 3, 4, 5, -1, -2, -3, -4, -5]]),
+>   Bipartition([[1, 2, 3, 4, -2, -3], [5, -1, -4, -5]])]);;
+gap> x := Bipartition([[1, -3, -5], [2, 3, 4, 5, -1, -2, -4]]);;
+gap> InversesOfSemigroupElementNC(S, x);
+[ <block bijection: [ 1, 2, 4, -2, -3, -4, -5 ], [ 3, 5, -1 ]> ]
+gap> x in last;
+false
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
