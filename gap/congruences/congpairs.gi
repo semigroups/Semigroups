@@ -162,10 +162,10 @@ function(S, genpairs)
   # Check that the pairs are all lists of length 2
   for pair in genpairs do
     if not IsList(pair) or Length(pair) <> 2 then
-      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs: ",
                     "usage,\n<pairs> must all be lists of length 2,");
     elif not pair[1] in S or not pair[2] in S then
-      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs: ",
                     "usage,\n<pairs> must all be lists of elements of <S>,");
     fi;
   od;
@@ -200,10 +200,10 @@ function(S, genpairs)
   # Check that the pairs are all lists of length 2
   for pair in genpairs do
     if not IsList(pair) or Length(pair) <> 2 then
-      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+      ErrorNoReturn("Semigroups: LeftSemigroupCongruenceByGeneratingPairs: ",
                     "usage,\n<pairs> must all be lists of length 2,");
     elif not pair[1] in S or not pair[2] in S then
-      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+      ErrorNoReturn("Semigroups: LeftSemigroupCongruenceByGeneratingPairs: ",
                     "usage,\n<pairs> must all be lists of elements of <S>,");
     fi;
   od;
@@ -238,10 +238,10 @@ function(S, genpairs)
   # Check that the pairs are all lists of length 2
   for pair in genpairs do
     if not IsList(pair) or Length(pair) <> 2 then
-      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+      ErrorNoReturn("Semigroups: RightSemigroupCongruenceByGeneratingPairs: ",
                     "usage,\n<pairs> must all be lists of length 2,");
     elif not pair[1] in S or not pair[2] in S then
-      ErrorNoReturn("Semigroups: SemigroupCongruenceByGeneratingPairs:",
+      ErrorNoReturn("Semigroups: RightSemigroupCongruenceByGeneratingPairs: ",
                     "usage,\n<pairs> must all be lists of elements of <S>,");
     fi;
   od;
@@ -581,10 +581,6 @@ InstallMethod(Size,
 [IsFiniteCongruenceClassByGeneratingPairsRep],
 function(class)
   local cong, part, id;
-  if HasAsList(class) then 
-    # TODO: This is currently unreachable
-    return Size(AsList(class));
-  fi;
   cong := EquivalenceClassRelation(class);
   part := FiniteCongruenceByGeneratingPairsPartition(cong);
   id   := FiniteCongruenceClassByGeneratingPairsCosetId(class);

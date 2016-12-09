@@ -513,6 +513,42 @@ gap> cong := UniversalSemigroupCongruence(S);;
 gap> Length(EquivalenceRelationPartition(cong)) = 1;
 true
 
+#T# SemigroupCongruenceByGeneratingPairs bad input
+gap> S := FullTransformationMonoid(3);;
+gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
+Error, Semigroups: SemigroupCongruenceByGeneratingPairs: usage,
+<pairs> must all be lists of length 2,
+gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
+Error, Semigroups: SemigroupCongruenceByGeneratingPairs: usage,
+<pairs> must all be lists of elements of <S>,
+gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
+Error, Semigroups: LeftSemigroupCongruenceByGeneratingPairs: usage,
+<pairs> must all be lists of length 2,
+gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
+Error, Semigroups: LeftSemigroupCongruenceByGeneratingPairs: usage,
+<pairs> must all be lists of elements of <S>,
+gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2, S.3]]);
+Error, Semigroups: RightSemigroupCongruenceByGeneratingPairs: usage,
+<pairs> must all be lists of length 2,
+gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2], [S.1, 42]]);
+Error, Semigroups: RightSemigroupCongruenceByGeneratingPairs: usage,
+<pairs> must all be lists of elements of <S>,
+
+#T# SemigroupCongruenceByGeneratingPairs for infinite semigroups
+gap> S := Semigroup(
+>    [Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+>     Matrix(IsMaxPlusMatrix, [[-infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+gap> pairs := [[S.1, S.2]];;
+gap> SemigroupCongruenceByGeneratingPairs(S, pairs);
+<semigroup congruence over <infinite semigroup 3x3 max-plus matrices with 2 
+ generators> with 1 generating pairs>
+gap> LeftSemigroupCongruenceByGeneratingPairs(S, pairs);
+<left semigroup congruence over <infinite semigroup 3x3 max-plus matrices 
+ with 2 generators> with 1 generating pairs>
+gap> RightSemigroupCongruenceByGeneratingPairs(S, pairs);
+<right semigroup congruence over <infinite semigroup 3x3 max-plus matrices 
+ with 2 generators> with 1 generating pairs>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
