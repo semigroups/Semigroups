@@ -216,6 +216,23 @@ gap> cong := RightSemigroupCongruence(S, pairs);
 gap> RightCongruenceClassOfElement(cong, Transformation([3,4,3,3]));
 <right congruence class of Transformation( [ 3, 4, 3, 3 ] )>
 
+#T# Equality of left and right congruences
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
+>                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
+gap> lcong := LeftSemigroupCongruence(S, [S.1, S.2]);;
+gap> rcong := RightSemigroupCongruence(S, [S.1, S.2]);;
+gap> lcong = rcong;
+false
+gap> rcong = lcong;
+false
+gap> lcong := LeftSemigroupCongruence(S, []);;
+gap> rcong := RightSemigroupCongruence(S, []);;
+gap> lcong = rcong;
+true
+gap> rcong = lcong;
+true
+
 #T# OnLeftCongruenceClasses
 gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
 >                 Transformation( [ 3, 4, 3, 4, 4 ] ),
@@ -267,6 +284,36 @@ gap> CongruenceClasses(cong) * class;
 [ <congruence class of Transformation( [ 4, 4, 4, 4 ] )>, 
   <congruence class of Transformation( [ 4, 4, 4, 4 ] )> ]
 
+#T# Equivalence classes
+gap> S := Semigroup(
+> [Transformation([1, 4, 3, 4]), Transformation([2, 3, 4, 2])]);;
+gap> pair := [Transformation([2, 3, 4, 2]), Transformation([4, 4, 4, 4])];;
+gap> cong1 := SemigroupCongruence(S, pair);;
+gap> cong2 := SemigroupCongruence(S, []);;
+gap> class1a := CongruenceClassOfElement(cong1, Transformation([4, 4, 4, 4]));;
+gap> class1b := CongruenceClassOfElement(cong1, Transformation([2, 3, 4, 2]));;
+gap> class1c := CongruenceClassOfElement(cong1, Transformation([1, 4, 3, 4]));;
+gap> class2 := CongruenceClassOfElement(cong2, Transformation([4, 4, 4, 4]));;
+gap> class1a * class1b;
+<congruence class of Transformation( [ 2, 2, 2, 2 ] )>
+gap> class1b * class1a;
+<congruence class of Transformation( [ 4, 4, 4, 4 ] )>
+gap> class1a * class2;
+Error, Semigroups: \*: usage,
+the args must be classes of the same congruence,
+gap> class1a = class1b;
+true
+gap> class1a = class2;
+false
+gap> class1a < class1b;
+false
+gap> class1b < class1a;
+false
+gap> class1c < class1a;
+true
+gap> class1a < class2;
+false
+
 #T# IsSuperrelation
 gap> S := Semigroup(
 > [Transformation([1, 4, 3, 4]), Transformation([2, 3, 4, 2])]);;
@@ -282,16 +329,22 @@ gap> Unbind(I);
 gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(class);
+gap> Unbind(class1a);
+gap> Unbind(class1b);
+gap> Unbind(class1c);
+gap> Unbind(class2);
 gap> Unbind(cong);
 gap> Unbind(cong1);
 gap> Unbind(cong2);
 gap> Unbind(elm);
 gap> Unbind(iso);
 gap> Unbind(ker);
+gap> Unbind(lcong);
 gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);
 gap> Unbind(pairs);
+gap> Unbind(rcong);
 gap> Unbind(rmscong);
 gap> Unbind(trc);
 gap> Unbind(x);

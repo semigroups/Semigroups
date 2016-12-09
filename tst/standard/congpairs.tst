@@ -101,10 +101,10 @@ gap> classes := Set(CongruenceClasses(v));
 gap> CongruenceClasses(u)[1] in classes;
 false
 gap> classes[1] * CongruenceClasses(u)[1];
-Error, Semigroups: *: usage,
+Error, Semigroups: \*: usage,
 the args must be classes of the same congruence,
 gap> CongruenceClasses(u)[1] * classes[1];
-Error, Semigroups: *: usage,
+Error, Semigroups: \*: usage,
 the args must be classes of the same congruence,
 gap> classes[3] * classes[4];
 <congruence class of Transformation( [ 9, 1, 1, 9, 1, 2, 2, 6, 6, 9 ] )>

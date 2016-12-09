@@ -44,20 +44,12 @@ InstallMethod(\*,
 [IsCongruenceClass, IsCongruenceClass],
 function(class1, class2)
   if EquivalenceClassRelation(class1) <> EquivalenceClassRelation(class2) then
-    ErrorNoReturn("Semigroups: \*: usage,\n",
+    ErrorNoReturn("Semigroups: \\*: usage,\n",
                   "the args must be classes of the same congruence,");
   fi;
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(class1),
                                      Representative(class1) *
                                      Representative(class2));
-end);
-
-InstallMethod(\=,
-"for two congruence classes",
-[IsCongruenceClass, IsCongruenceClass],
-function(class1, class2)
-  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
-    and Representative(class1) in class2;
 end);
 
 InstallMethod(\<,
