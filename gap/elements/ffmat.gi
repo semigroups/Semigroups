@@ -382,7 +382,11 @@ end);
 #T Trying to use "Inverse" in the semigroup sense here leads to problems
 #T with other operations, so we have to be very careful.
 
-InstallMethod(InverseOp, "for a plist matrix over finite field",
+InstallMethod(InverseMutable, "for a plist matrix over finite field",
+[IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
+InverseImmutable);
+
+InstallMethod(InverseImmutable, "for a plist matrix over finite field",
 [IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
 function(m)
   local x;

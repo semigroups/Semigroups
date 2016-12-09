@@ -59,3 +59,6 @@ DeclareAttribute("IsGreensDLeq", IsSemigroup);
 
 DeclareAttribute("UnderlyingSemigroupOfSemigroupWithAdjoinedZero",
                  IsSemigroup);
+
+DeclareOperation("InversesOfSemigroupElementNC",
+                 [IsSemigroup, IsMultiplicativeElement]);

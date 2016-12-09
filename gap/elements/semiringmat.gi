@@ -447,6 +447,18 @@ function(coll)
   return fail;
 end);
 
+InstallMethod(InverseMutable, "for a matrix over semiring",
+[IsMatrixOverSemiring],
+function(mat)
+  return fail;
+end);
+
+InstallMethod(InverseImmutable, "for a matrix over semiring",
+[IsMatrixOverSemiring],
+function(mat)
+  return fail;
+end);
+
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over semiring coll",
 [IsMatrixOverSemiringCollection], ReturnFalse);

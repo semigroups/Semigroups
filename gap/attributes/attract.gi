@@ -136,24 +136,10 @@ InstallMethod(IdempotentGeneratedSubsemigroup,
 [IsSemigroupWithInverseOp and IsActingSemigroup],
 S -> InverseSemigroup(Idempotents(S), rec(small := true)));
 
-# same method for ideals
-
-InstallMethod(InversesOfSemigroupElement,
-"for an acting semigroup and multiplicative element",
-[IsActingSemigroup, IsMultiplicativeElement],
-function(S, x)
-
-  if x in S then
-    return InversesOfSemigroupElementNC(S, x);
-  fi;
-
-  return fail;
-end);
-
 # different method for ideals
 
 InstallMethod(InversesOfSemigroupElementNC,
-"for an acting semigroup and associative element",
+"for an acting semigroup and multiplicative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
 function(s, f)
   local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades,

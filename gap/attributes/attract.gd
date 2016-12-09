@@ -11,7 +11,5 @@
 # This file contains declarations relating to attributes which only apply to
 # acting semigroups.
 
-DeclareOperation("InversesOfSemigroupElementNC",
-                 [IsSemigroup, IsMultiplicativeElement]);
 DeclareAttribute("StructureDescriptionSchutzenbergerGroups",
                  IsSemigroup and IsFinite);

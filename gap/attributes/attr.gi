@@ -702,13 +702,39 @@ InstallMethod(InversesOfSemigroupElementNC,
 [IsGroupAsSemigroup, IsMultiplicativeElement],
 function(G, x)
   local i, iso, inv;
-  i := InverseOp(x);
-  if i <> fail then
-    return [i];
+  if IsMultiplicativeElementWithInverse(x) then 
+    i := InverseOp(x);
+    if i <> fail then
+      return [i];
+    fi;
   fi;
   iso := IsomorphismPermGroup(G);
   inv := InverseGeneralMapping(iso);
   return [((x ^ iso) ^ -1) ^ inv];
+end);
+
+InstallMethod(InversesOfSemigroupElementNC, 
+"for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement],
+function(S, x)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
+  return Filtered(AsSet(S), y -> x * y * x = x and y * x * y = y);
+end);
+
+InstallMethod(InversesOfSemigroupElement, 
+"for a semigroup and a multiplicative element",
+[IsSemigroup, IsMultiplicativeElement], 1, # to beat the library method
+function(S, x)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  elif not x in S then 
+    ErrorNoReturn("Semigroups: InversesOfSemigroupElement: usage,\n", 
+                  "the second arg (a mult. element) must belong to the first ", 
+                  "arg (a semigroup),");
+  fi;
+  return InversesOfSemigroupElementNC(S, x);
 end);
 
 InstallMethod(UnderlyingSemigroupOfSemigroupWithAdjoinedZero,
