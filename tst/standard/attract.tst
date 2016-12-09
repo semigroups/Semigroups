@@ -175,7 +175,8 @@ gap> S := Semigroup([PartialPerm([1, 2, 3, 4], [1, 2, 5, 3]),
 > PartialPerm([1, 2, 3, 5], [4, 3, 5, 1])]);;
 gap> x := PartialPerm([1, 2, 3, 5], [5, 2, 6, 4]);;
 gap> InversesOfSemigroupElement(S, x);
-fail
+Error, Semigroups: InversesOfSemigroupElement: usage,
+the second arg (a mult. element) must belong to the first arg (a semigroup),
 
 #T# attract: InversesOfSemigroupElementNC, closed rho orb
 gap> S := Semigroup([

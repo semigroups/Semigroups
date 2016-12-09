@@ -265,6 +265,12 @@ fail
 gap> Size(MinimalIdeal(s)) = 1;
 false
 
+# Test MultiplicativeZero (for an infinite semigroup)
+#gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+#>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+#gap> MultiplicativeZero(S); 
+# FIXME Enters an infinite loop in a library method because S is not finite
+
 # Ideals
 gap> s := InverseSemigroup([
 > Bipartition([[1, -1], [2, 6, -4, -6], [3, -5], [4, -2],
@@ -389,10 +395,16 @@ gap> PrincipalFactor(D);
 <Rees 0-matrix semigroup 12x15 over Group(())>
 
 #T# attr: IsomorphismReesMatrixSemigroup, error, 1/1
-gap> D := DClass(FullTransformationMonoid(3), Transformation([1, 2, 1]));;
+gap> S := FullTransformationMonoid(3);;
+gap> D := DClass(S, Transformation([1, 2, 1]));;
 gap> IsomorphismReesMatrixSemigroup(D);
 Error, Semigroups: IsomorphismReesMatrixSemigroup: usage,
 the D-class is not a subsemigroup,
+gap> D := MinimalDClass(S);;
+gap> IsomorphismReesMatrixSemigroup(D);
+MappingByFunction( <Green's D-class: Transformation( [ 1, 1, 1 ] )>, 
+<Rees matrix semigroup 1x3 over Group(())>
+ , function( x ) ... end, function( x ) ... end )
 
 #T# attr: IrredundantGeneratingSubset, for a collection of elements
 gap> G := CyclicGroup(3);;
@@ -650,6 +662,11 @@ gap> S := SymmetricGroup(3);;
 gap> StructureDescription(S);
 "S3"
 
+#T# Test StructureDescription for a group as semigroup
+gap> S := Monoid(IdentityTransformation);;
+gap> StructureDescription(S);
+"1"
+
 #T# attr: IsGreensDLeq
 gap> S := RegularBooleanMatMonoid(3);;
 gap> foo := IsGreensDLeq(S);
@@ -670,6 +687,13 @@ gap> foo(z, y);
 false
 gap> foo(y, z);
 true
+
+# Test IsGreensDLeq for an infinite enumerable semigroup
+gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+gap> IsGreensDLeq(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsGreensDLeq' on 1 arguments
 
 #T# attr: IsGreensDLeq, error
 gap> IsGreensDLeq(FreeSemigroup(2));
@@ -744,6 +768,20 @@ gap> S := Semigroup([Transformation([1, 2, 3, 3, 5, 5]),
 <transformation semigroup of degree 6 with 2 generators>
 gap> MultiplicativeNeutralElement(S);
 fail
+gap> S := Semigroup(Transformation([4, 5, 1, 3, 8, 5, 8, 2]),
+>                   Transformation([4, 2, 3, 2, 8, 2, 8, 6]),
+>                   Transformation([6, 8, 4, 2, 2, 8, 2, 6]),
+>                   Transformation([4, 2, 6, 2, 8, 2, 8, 6]),
+>                   Transformation([2, 8, 6, 4, 2, 8, 2, 4]),
+>                   Transformation([4, 6, 6, 2, 4, 6, 4]),
+>                   Transformation([2, 6, 2, 8, 2, 2, 2, 8]),
+>                   Transformation([5, 4, 4, 5, 8, 8, 5, 5]),
+>                   Transformation([2, 2, 6, 8, 6, 6, 6, 8]),
+>                   Transformation([2, 8, 8, 6, 8, 8, 6, 6]), 
+>                   rec(acting := false));; 
+>  # acting := false is required to test a particular bit of code
+gap> MultiplicativeNeutralElement(S);
+fail
 
 #T# attr: GroupOfUnits, for a finite semigroup 1/2
 gap> S := RegularBooleanMatMonoid(3);
@@ -803,7 +841,7 @@ gap> IdempotentGeneratedSubsemigroup(S);
 #T# attr: MaximalDClasses, infinite 1/1
 gap> MaximalDClasses(FreeMonoid(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `MaximalDClasses' on 1 arguments
+Error, no 2nd choice method found for `MaximalDClasses' on 1 arguments
 
 #T# attr: StructureDescriptionMaximalSubgroups, infinite 1/1
 gap> StructureDescriptionMaximalSubgroups(FreeMonoid(2));
@@ -1205,6 +1243,76 @@ true
 gap> inj := InjectionPrincipalFactor(D);;
 gap> x ^ inj;
 (3,(1,2,3,4),4)
+
+# Test GeneratorsSmallest
+gap> S := Semigroup(IdentityTransformation);;
+gap> GeneratorsSmallest(S);
+[ IdentityTransformation ]
+gap> S := FullBooleanMatMonoid(2);;
+gap> GeneratorsSmallest(S);
+[ Matrix(IsBooleanMat, [[0, 0], [0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0], [0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 0], [1, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0], [1, 1]]), 
+  Matrix(IsBooleanMat, [[0, 1], [0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 1], [0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
+  Matrix(IsBooleanMat, [[0, 1], [1, 1]]) ]
+gap> S = Semigroup(last);
+true
+
+# Test SmallestElementSemigroup (for a semigroup)
+gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]]),
+>  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 1, 1]])]);;
+gap> SmallestElementSemigroup(S);
+Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]])
+gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+gap> SmallestElementSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `SmallestElementSemigroup' on 1 argument\
+s
+
+# Test LargestElementSemigroup (for a semigroup)
+gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]]),
+>  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 1, 1]])]);;
+gap> LargestElementSemigroup(S);
+Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [1, 1, 1]])
+gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+gap> LargestElementSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `LargestElementSemigroup' on 1 arguments
+
+# Test InversesOfSemigroup (for a group as semigroup)
+gap> S := Semigroup(Transformation([2, 3, 1, 3, 3]));;
+gap> IsGroupAsSemigroup(S);
+true
+gap> InversesOfSemigroupElement(S, S.1);
+[ Transformation( [ 3, 1, 2, 1, 1 ] ) ]
+gap> Inverse(S.1);
+fail
+gap> S := Semigroup(PartialPerm([2, 3, 1]), rec(acting := false));;
+gap> IsGroupAsSemigroup(S);
+true
+gap> InversesOfSemigroupElement(S, S.1);
+[ (1,3,2) ]
+
+# Test InversesOfSemigroup (for a semigroup)
+#gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+#>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+#gap> InversesOfSemigroupElement(S, S.1);
+# FIXME This test fails due to the library method
+gap> S := Semigroup(Transformation([2, 3, 1, 3, 3]));;
+gap> InversesOfSemigroupElement(S, Transformation([1, 3, 2]));
+Error, Semigroups: InversesOfSemigroupElement: usage,
+the second arg (a mult. element) must belong to the first arg (a semigroup),
+gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]]),
+>  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 1, 1]])]);;
+gap> InversesOfSemigroupElement(S, S.1);
+[  ]
+gap> InversesOfSemigroupElement(S, S.1 * S.2 * S.1);
+[ Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [0, 0, 1]]) ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);

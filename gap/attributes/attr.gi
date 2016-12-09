@@ -85,9 +85,6 @@ SEMIGROUPS.InjectionPrincipalFactor := function(D, constructor)
     i := PositionProperty(R, y -> y in RClass(D, x));
     j := PositionProperty(L, y -> y in LClass(D, x));
 
-    if i = fail or j = fail then
-      return fail;
-    fi;
     return Objectify(TypeReesMatrixSemigroupElements(rms),
                      [i, (rep * RR[i] * x * LL[j]) ^ map, j, mat]);
   end;
@@ -138,12 +135,18 @@ Unbind(_GeneratorsSmallest);
 InstallMethod(SmallestElementSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
   return NextIterator(IteratorSorted(S));
 end);
 
 InstallMethod(LargestElementSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
   return EnumeratorSorted(S)[Size(S)];
 end);
 
@@ -396,9 +399,6 @@ end);
 InstallMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup],
 function(S)
-  if IsGroup(S) then
-    TryNextMethod();
-  fi;
   return StructureDescription(Range(IsomorphismPermGroup(S)));
 end);
 
@@ -522,38 +522,6 @@ function(S)
   gr := DigraphRemoveLoops(gr);
 
   return List(DigraphSources(gr), x -> DClasses(S)[x]);
-end);
-
-InstallMethod(MaximalDClasses, "for a semigroup",
-[IsSemigroup],
-function(S)
-  local gens, partial, id, enum, pos, i, out, classes, x;
-
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-
-  gens    := GeneratorsOfSemigroup(S);
-  partial := PartialOrderOfDClasses(S);
-  id      := GreensDRelation(S)!.data.id;
-  enum    := Enumerator(S);
-  pos     := [];
-
-  for x in gens do
-    i := id[Position(enum, x)];
-    #index of the D-class containing x
-    AddSet(pos, i);
-  od;
-
-  out := [];
-  classes := GreensDClasses(S);
-  for i in pos do
-    if not ForAny([1 .. Length(partial)], j -> j <> i and i in partial[j]) then
-      Add(out, classes[i]);
-    fi;
-  od;
-
-  return out;
 end);
 
 # same method for ideals
