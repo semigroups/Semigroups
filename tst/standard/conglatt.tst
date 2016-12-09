@@ -75,6 +75,13 @@ gap> DotString(l) = Concatenation(
 > " -- 31\n40 -- 39\n40 -- 41\n41 -- 32\n41 -- 33\n41 -- 35\n }");
 true
 
+#T# Left/RightCongruences (as a list)
+gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
+gap> Size(LeftCongruencesOfSemigroup(S));
+21
+gap> Size(RightCongruencesOfSemigroup(S));
+31
+
 #T# LatticeOfLeft/RightCongruences
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> LatticeOfLeftCongruences(S);
@@ -87,8 +94,6 @@ gap> LatticeOfLeftCongruences(S);
   [ 1, 3, 5, 8, 9, 11, 12, 13, 15, 16, 17, 21 ], 
   [ 1, 3, 6, 9, 10, 11, 12, 13, 15, 16, 17, 20, 21 ], [ 1, 3, 6, 12, 13, 17 ],
   [ 1, 3, 9, 11, 12, 13, 15, 16, 17 ] ]
-gap> Size(LeftCongruencesOfSemigroup(S));
-21
 gap> LatticeOfRightCongruences(S);
 [ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 5, 8, 14, 24 ], 
   [ 1, 3, 5, 10, 12, 23 ], [ 1 ], [ 1, 4, 8, 10 ], [ 1 ], [ 1 ], [ 1 ], 
@@ -101,8 +106,6 @@ gap> LatticeOfRightCongruences(S);
   [ 1, 10, 14 ], [ 1, 12, 14 ], 
   [ 1, 4, 5, 11, 12, 14, 20, 21, 22, 23, 24, 29, 31 ], 
   [ 1, 5, 12, 14, 23, 24, 29 ] ]
-gap> Size(RightCongruencesOfSemigroup(S));
-31
 gap> LatticeOfCongruences(S);
 [ [  ], [ 1, 3, 4 ], [ 1 ], [ 1, 3 ] ]
 gap> Size(CongruencesOfSemigroup(S));
@@ -135,6 +138,19 @@ gap> latt := LatticeOfCongruences(S, restriction);
 gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
 [ [  ] ]
+
+#T# LatticeOf(Left/Right)Congruences with invalid restriction
+gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
+gap> restriction := [Transformation([1,1,1]), Transformation([2,2,2,2])];;
+gap> LatticeOfCongruences(S, restriction);
+Error, Semigroups: LatticeOfCongruences: usage,
+<restriction> must only contain elements in the semigroup <S>,
+gap> LatticeOfLeftCongruences(S, restriction);
+Error, Semigroups: LatticeOfLeftCongruences: usage,
+<restriction> must only contain elements in the semigroup <S>,
+gap> LatticeOfRightCongruences(S, restriction);
+Error, Semigroups: LatticeOfRightCongruences: usage,
+<restriction> must only contain elements in the semigroup <S>,
 
 #T# PrincipalCongruencesOfSemigroup
 gap> S := Semigroup(Transformation([1, 3, 2]),
@@ -197,9 +213,27 @@ gap> PositionsProperty(minl, c -> IsSubrelation(min[1], c));
 gap> PositionsProperty(minr, c -> IsSubrelation(min[1], c));
 [ 9 ]
 
+#T# Biggish example which forces garbage collection
+gap> info := InfoLevel(InfoSemigroups);;
+gap> SetInfoLevel(InfoSemigroups, 2);;
+gap> S := Semigroup([Transformation([4, 2, 4, 4, 1]),
+>                    Transformation([4, 4, 1, 2, 2]),
+>                    Transformation([3, 3, 1, 2, 5])]);;
+gap> MinimalCongruencesOfSemigroup(S);
+#I  Find congruences with 1 generating pair . . .
+at 2000 of 2278, found 42 so far
+[ <semigroup congruence over <transformation semigroup of degree 5 with 3 
+     generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 5 with 3 
+     generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 5 with 3 
+     generators> with 1 generating pairs> ]
+gap> SetInfoLevel(InfoSemigroups, info);;
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(congs);
+gap> Unbind(info);
 gap> Unbind(l);
 gap> Unbind(latt);
 gap> Unbind(min);

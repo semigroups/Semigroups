@@ -282,7 +282,8 @@ InstallMethod(LatticeOfLeftCongruences,
 function(S, restriction)
   if not ForAll(restriction, x -> x in S) then
     ErrorNoReturn("Semigroups: LatticeOfLeftCongruences: usage,\n",
-                  "<restriction> must only contain elements in the <S>");
+                  "<restriction> must only contain elements ",
+                  "in the semigroup <S>,");
   fi;
   return SEMIGROUPS.LatticeOfXCongruences(S, "Left",
                                           rec(restriction := restriction));
@@ -294,7 +295,8 @@ InstallMethod(LatticeOfRightCongruences,
 function(S, restriction)
   if not ForAll(restriction, x -> x in S) then
     ErrorNoReturn("Semigroups: LatticeOfRightCongruences: usage,\n",
-                  "<restriction> must only contain elements in the <S>");
+                  "<restriction> must only contain elements ",
+                  "in the semigroup <S>,");
   fi;
   return SEMIGROUPS.LatticeOfXCongruences(S, "Right",
                                           rec(restriction := restriction));
@@ -306,7 +308,8 @@ InstallMethod(LatticeOfCongruences,
 function(S, restriction)
   if not ForAll(restriction, x -> x in S) then
     ErrorNoReturn("Semigroups: LatticeOfCongruences: usage,\n",
-                  "<restriction> must only contain elements in the <S>");
+                  "<restriction> must only contain elements ",
+                  "in the semigroup <S>,");
   fi;
   return SEMIGROUPS.LatticeOfXCongruences(S, "",
                                           rec(restriction := restriction));
