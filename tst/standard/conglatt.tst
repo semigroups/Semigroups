@@ -214,26 +214,20 @@ gap> PositionsProperty(minr, c -> IsSubrelation(min[1], c));
 [ 9 ]
 
 #T# Biggish example which forces garbage collection
-gap> info := InfoLevel(InfoSemigroups);;
-gap> SetInfoLevel(InfoSemigroups, 2);;
 gap> S := Semigroup([Transformation([4, 2, 4, 4, 1]),
 >                    Transformation([4, 4, 1, 2, 2]),
 >                    Transformation([3, 3, 1, 2, 5])]);;
 gap> MinimalCongruencesOfSemigroup(S);
-#I  Find congruences with 1 generating pair . . .
-at 2000 of 2278, found 42 so far
 [ <semigroup congruence over <transformation semigroup of degree 5 with 3 
      generators> with 1 generating pairs>, 
   <semigroup congruence over <transformation semigroup of degree 5 with 3 
      generators> with 1 generating pairs>, 
   <semigroup congruence over <transformation semigroup of degree 5 with 3 
      generators> with 1 generating pairs> ]
-gap> SetInfoLevel(InfoSemigroups, info);;
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(congs);
-gap> Unbind(info);
 gap> Unbind(l);
 gap> Unbind(latt);
 gap> Unbind(min);

@@ -140,9 +140,8 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     od;
     nr := nr + 1;
     if nr > last_collected + 1999 then 
-      if InfoLevel(InfoSemigroups) > 0 then 
-        Print("at ", nr, " of ", total, ", found ", nrcongs, " so far\n");
-      fi;
+      Info(InfoSemigroups, 1, "Pair ", nr, " of ", total, ": ", nrcongs,
+           " congruences found so far");
       last_collected := nr;
       GASMAN("collect");
     fi;
