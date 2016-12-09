@@ -200,6 +200,18 @@ function(cong)
   return classes;
 end);
 
+InstallMethod(NonTrivialEquivalenceClasses,
+"for a Rees congruence",
+[IsReesCongruence],
+function(cong)
+  local I;
+  I := SemigroupIdealOfReesCongruence(cong);
+  if Size(I) = 1 then
+    return [];
+  fi;
+  return [EquivalenceClassOfElementNC(cong, I.1)];
+end);
+
 InstallMethod(EquivalenceClassOfElement,
 "for a Rees congruence and a multiplicative element",
 [IsReesCongruence, IsMultiplicativeElement],
