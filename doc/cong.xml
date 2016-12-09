@@ -246,7 +246,8 @@ gap> congs := CongruencesOfSemigroup(S);
       is also a left congruence, but that a minimal congruence may not be a
       minimal left congruence. <P/>
 
-      See also <Ref Attr = "CongruencesOfSemigroup"/>. <P/>
+      See also <Ref Attr = "CongruencesOfSemigroup"/> and
+      <Ref Attr = "PrincipalCongruencesOfSemigroup"/>. <P/>
 
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([1, 3, 2]),
@@ -261,6 +262,48 @@ gap> minl := MinimalLeftCongruencesOfSemigroup(S);
      degree 3 with 2 generators> with 1 generating pairs>, 
   <left semigroup congruence over <transformation semigroup of 
      degree 3 with 2 generators> with 1 generating pairs> ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PrincipalCongruencesOfSemigroup">
+  <ManSection>
+    <Attr Name = "PrincipalCongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "PrincipalLeftCongruencesOfSemigroup" Arg = "S"/>
+    <Attr Name = "PrincipalRightCongruencesOfSemigroup" Arg = "S"/>
+    <Returns>A list.</Returns>
+    <Description>
+      If <A>S</A> is a semigroup, then the attribute
+      <C>PrincipalCongruencesOfSemigroup</C> gives a list of all the congruences
+      on <A>S</A> which are <E>principal</E>.  A congruence is principal if and
+      only if it is non-trivial and can be defined by a single generating pair.
+      <P/>
+
+      <C>PrincipalLeftCongruencesOfSemigroup</C> and
+      <C>PrincipalRightCongruencesOfSemigroup</C> do the same thing, but for
+      left congruences and right congruences respectively.  Note that any
+      congruence is a left congruence and a right congruence, but that a
+      principal congruence may not be a principal left congruence or a principal
+      right congruence. <P/>
+
+      See also <Ref Attr = "CongruencesOfSemigroup"/> and
+      <Ref Attr = "MinimalCongruencesOfSemigroup"/>. <P/>
+
+      <Example><![CDATA[
+gap> S := Semigroup(Transformation([1, 3, 2]),
+>                   Transformation([3, 1, 3]));;
+gap> congs := PrincipalCongruencesOfSemigroup(S);
+[ <semigroup congruence over <transformation semigroup of degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 3 
+     with 2 generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 3 
+     with 2 generators> with 1 generating pairs> ]
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

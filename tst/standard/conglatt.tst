@@ -136,6 +136,34 @@ gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
 [ [  ] ]
 
+#T# PrincipalCongruencesOfSemigroup
+gap> S := Semigroup(Transformation([1, 3, 2]),
+>                   Transformation([3, 1, 3]));;
+gap> congs := PrincipalCongruencesOfSemigroup(S);
+[ <semigroup congruence over <transformation semigroup of degree 3 with 2 
+     generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 3 with 2 
+     generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 3 with 2 
+     generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 3 with 2 
+     generators> with 1 generating pairs>, 
+  <semigroup congruence over <transformation semigroup of degree 3 with 2 
+     generators> with 1 generating pairs> ]
+
+#T# PrincipalLeft/RightCongruencesOfSemigroup
+gap> S := Semigroup([Transformation([1, 1]), Transformation([2, 1])]);;
+gap> Length(PrincipalLeftCongruencesOfSemigroup(S));
+3
+gap> Length(PrincipalRightCongruencesOfSemigroup(S));
+4
+gap> PrincipalRightCongruencesOfSemigroup(S)[1];
+<right semigroup congruence over <transformation semigroup of degree 2 with 2 
+ generators> with 1 generating pairs>
+gap> PrincipalLeftCongruencesOfSemigroup(S)[2]; 
+<left semigroup congruence over <transformation semigroup of degree 2 with 2 
+ generators> with 1 generating pairs>
+
 #T# MinimalCongruencesOfSemigroup
 gap> S := Semigroup([Transformation([1,3,2]), Transformation([3,1,3])]);;
 gap> min := MinimalCongruencesOfSemigroup(S);

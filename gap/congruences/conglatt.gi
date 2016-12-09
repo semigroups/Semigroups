@@ -182,12 +182,6 @@ SEMIGROUPS.LatticeOfXCongruences := function(S, type_string, record)
     SEMIGROUPS.OptionsRec(S).report := report;
     return lattice;
   elif IsBound(record.1gen) and record.1gen = true then
-    # Add the trivial cong at the start
-    children := Concatenation([[]], children + 1);
-    for i in [2 .. nrcongs + 1] do
-      Add(children[i], 1, 1);
-    od;
-    Add(congs, _XSemigroupCongruence(S, []), 1);
     # Return the lattice, but don't set any attributes
     lattice := Objectify(NewType(FamilyObj(children),
                                  IsCongruenceLattice),
@@ -341,6 +335,18 @@ S -> SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(minimal := true))![2]);
 InstallMethod(MinimalCongruencesOfSemigroup,
 "for a semigroup", [IsSemigroup],
 S -> SEMIGROUPS.LatticeOfXCongruences(S, "", rec(minimal := true))![2]);
+
+InstallMethod(PrincipalLeftCongruencesOfSemigroup,
+"for a semigroup", [IsSemigroup],
+S -> SEMIGROUPS.LatticeOfXCongruences(S, "Left", rec(1gen := true))![2]);
+
+InstallMethod(PrincipalRightCongruencesOfSemigroup,
+"for a semigroup", [IsSemigroup],
+S -> SEMIGROUPS.LatticeOfXCongruences(S, "Right", rec(1gen := true))![2]);
+
+InstallMethod(PrincipalCongruencesOfSemigroup,
+"for a semigroup", [IsSemigroup],
+S -> SEMIGROUPS.LatticeOfXCongruences(S, "", rec(1gen := true))![2]);
 
 InstallMethod(DotString,
 "for a congruence lattice",

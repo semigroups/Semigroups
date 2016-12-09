@@ -75,6 +75,7 @@
     <#Include Label = "NrEquivalenceClasses">
     <#Include Label = "CongruencesOfSemigroup">
     <#Include Label = "MinimalCongruencesOfSemigroup">
+    <#Include Label = "PrincipalCongruencesOfSemigroup">
     <#Include Label = "LatticeOfCongruences">
     <#Include Label = "CongruencesOfLattice">
     <#Include Label = "EquivalenceRelationLookup">
