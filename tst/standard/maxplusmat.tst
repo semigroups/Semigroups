@@ -544,6 +544,64 @@ gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -infinity],
 > [-infinity, -infinity, -infinity], [-infinity, 1, -infinity]]));
 -infinity
 
+# Test AsMatrix (for a transformation)
+gap> AsMatrix(IsMaxPlusMatrix, IdentityTransformation);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsMatrix' on 3 arguments
+gap> AsMatrix(IsMaxPlusMatrix, Transformation([2, 1, 1]));
+Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity], 
+  [0, -infinity, -infinity], [0, -infinity, -infinity]])
+gap> AsMatrix(IsMinPlusMatrix, IdentityTransformation);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsMatrix' on 3 arguments
+gap> AsMatrix(IsMinPlusMatrix, Transformation([2, 1, 1]));
+Matrix(IsMinPlusMatrix, [[infinity, 0, infinity], [0, infinity, infinity], 
+  [0, infinity, infinity]])
+gap> AsMatrix(IsTropicalMinPlusMatrix, IdentityTransformation, 5);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsMatrix' on 4 arguments
+gap> AsMatrix(IsTropicalMinPlusMatrix, Transformation([2, 1, 1]), 5);
+Matrix(IsTropicalMinPlusMatrix, [[infinity, 0, infinity], 
+  [0, infinity, infinity], [0, infinity, infinity]], 5)
+gap> AsMatrix(IsTropicalMaxPlusMatrix, IdentityTransformation, 5);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsMatrix' on 4 arguments
+gap> AsMatrix(IsTropicalMaxPlusMatrix, Transformation([2, 1, 1]), 5);
+Matrix(IsTropicalMaxPlusMatrix, [[-infinity, 0, -infinity], 
+  [0, -infinity, -infinity], [0, -infinity, -infinity]], 5)
+gap> AsMatrix(IsProjectiveMaxPlusMatrix, IdentityTransformation);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsMatrix' on 3 arguments
+gap> AsMatrix(IsProjectiveMaxPlusMatrix, Transformation([2, 1, 1]));
+Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, 0, -infinity], 
+  [0, -infinity, -infinity], [0, -infinity, -infinity]])
+gap> AsMatrix(IsNTPMatrix, Transformation([2, 1, 1]), 3, 3);
+Matrix(IsNTPMatrix, [[0, 1, 0], [1, 0, 0], [1, 0, 0]], 3, 3)
+gap> AsMatrix(IsNTPMatrix, IdentityTransformation, 3, 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsMatrix' on 5 arguments
+gap> AsMatrix(IsIntegerMatrix, Transformation([2, 1, 1]));
+Matrix(IsIntegerMatrix, [[0, 1, 0], [1, 0, 0], [1, 0, 0]])
+gap> AsMatrix(IsIntegerMatrix, IdentityTransformation);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsMatrix' on 3 arguments
+
+# Test SEMIGROUPS_TypeViewStringOfMatrixOverSemiring and RandomMatrix
+gap> RandomMatrix(IsMaxPlusMatrix, 10);
+<10x10 max-plus matrix>
+gap> RandomMatrix(IsMinPlusMatrix, 10);
+<10x10 min-plus matrix>
+gap> RandomMatrix(IsProjectiveMaxPlusMatrix, 10);
+<10x10 projective max-plus matrix>
+
+# Test NTPMatrix entry checker
+gap> x := Matrix(IsNTPMatrix, [[100, 1], [0, 0]], 5, 10);
+Error, Semigroups: Matrix: usage,
+the entries in the 2nd argument do not define a matrix of type IsNTPMatrix,
+gap> x := Matrix(IsNTPMatrix, [[1, 1], [0, 0]], 5, -10);
+Error, Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons: usage,
+ the threshold and period must be non-negative,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(mat);
