@@ -634,6 +634,39 @@ gap> x := Bipartition(
 gap> IndexPeriodOfSemigroupElement(x);
 [ 3, 3 ]
 
+# Test TYPE_BIPART
+gap> TYPE_BIPART(3);;
+gap> TYPE_BIPART(3);;
+
+# Test pickling
+gap> filename := Concatenation(SEMIGROUPS.PackageDir, "/tst/standard/bipart.p");;
+gap> x := Bipartition(
+> [[1, 4, -8], [2, -4], [3, 5, -1], [6, -9], [7, -7], [8, -5], [9, 10, -3],
+> [-2], [-6], [-10]]);;
+gap> WriteGenerators(filename, [x]);
+IO_OK
+gap> x = ReadGenerators(filename)[1];
+true
+gap> Exec("rm ", filename);
+
+# Test identity bipartition of degree 0
+gap> IdentityBipartition(0);
+<empty bipartition>
+
+# Test String
+gap> x := Bipartition(
+> [[1, 4, -8], [2, -4], [3, 5, -1], [6, -9], [7, -7], [8, -5], [9, 10, -3],
+> [-2], [-6], [-10]]);;
+gap> String(x);
+"Bipartition([ [ 1, 4, -8 ], [ 2, -4 ], [ 3, 5, -1 ], [ 6, -9 ], [ 7, -7 ], [ \
+8, -5 ], [ 9, 10, -3 ], [ -2 ], [ -6 ], [ -10 ] ])"
+gap> x = EvalString(String(x));
+true
+
+# Test PrintString (for degree 0)
+gap> PrintString(IdentityBipartition(0));
+"\>\>Bipartition(\< \>[]\<)\<"
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
 gap> Unbind(N);
