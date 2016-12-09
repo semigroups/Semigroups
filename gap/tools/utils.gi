@@ -94,7 +94,7 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
 SEMIGROUPS.TestRec := rec();
 
 SEMIGROUPS.TestRec.reportDiff := function (inp, expout, found, fnam, line, time)
-  Print("\033[31m######## > Diff in ");
+  Print("\033[31m######## > Diff in:\n");
   if IsStream(fnam)  then
     Print("test stream, line ", line, "\n");
   else
@@ -327,7 +327,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
         if test = false then
           for i in [1 .. Length(pex[1])] do
             if EQ(pex[2][i], pex[4][i]) <> true then
-              Print("\033[31m########> Diff in \n",
+              Print("\033[31m########> Diff in:\n",
                     "# ", ex[2][1], ":", ex[2][2],
                     "\n# Input is:\n");
               PrintFormattedString(pex[1][i]);
