@@ -158,7 +158,8 @@ function(arg)
     # semigroup
     return InverseSemigroupCongruenceByKernelTrace(S, arg[2], arg[3]);
   else
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
+                  "the arguments are not valid for this function,");
   fi;
 end);
 
@@ -198,7 +199,8 @@ function(arg)
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
     return LeftSemigroupCongruenceByGeneratingPairs(S, pairs);
   else
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: LeftSemigroupCongruence: usage,\n",
+                  "the arguments are not valid for this function,");
   fi;
 end);
 
@@ -238,7 +240,8 @@ function(arg)
     pairs := Filtered(pairs, p -> p[1] <> p[2]);
     return RightSemigroupCongruenceByGeneratingPairs(S, pairs);
   else
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: RightSemigroupCongruence: usage,\n",
+                  "the arguments are not valid for this function,");
   fi;
 end);
 

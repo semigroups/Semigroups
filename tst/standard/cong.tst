@@ -32,7 +32,8 @@ Error, Semigroups: SemigroupCongruence: usage,
 each pair should contain elements from the semigroup <S>,
 gap> S := FullTransformationSemigroup(6);;
 gap> SemigroupCongruence(S, 12, 13, 100);
-"TRY_NEXT_METHOD"
+Error, Semigroups: SemigroupCongruence: usage,
+the arguments are not valid for this function,
 
 #T# SemigroupCongruence: Infinite semigroup
 gap> S := FreeSemigroup(2);;
@@ -170,7 +171,8 @@ Error, Semigroups: LeftSemigroupCongruence: usage,
 each pair should contain elements from the semigroup <S>,
 gap> S := FullTransformationSemigroup(6);;
 gap> LeftSemigroupCongruence(S, 12, 13, 100);
-"TRY_NEXT_METHOD"
+Error, Semigroups: LeftSemigroupCongruence: usage,
+the arguments are not valid for this function,
 
 #T# RightSemigroupCongruence: Bad input
 gap> S := FullTransformationSemigroup(5);;
@@ -191,7 +193,8 @@ Error, Semigroups: RightSemigroupCongruence: usage,
 each pair should contain elements from the semigroup <S>,
 gap> S := FullTransformationSemigroup(6);;
 gap> RightSemigroupCongruence(S, 12, 13, 100);
-"TRY_NEXT_METHOD"
+Error, Semigroups: RightSemigroupCongruence: usage,
+the arguments are not valid for this function,
 
 #T# LeftSemigroupCongruence: Pairs
 gap> S := Semigroup([Transformation([3, 3, 3]),
