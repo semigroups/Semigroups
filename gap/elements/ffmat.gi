@@ -23,16 +23,19 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
 "for IsPlistMatrixOverFiniteFieldRep",
 [IsPlistMatrixOverFiniteFieldRep], x -> PlistMatrixOverFiniteFieldType);
 
-# FIXME it is not currently possible to create any type of matrix except
+# TODO it is not currently possible to create any type of matrix except
 # IsPlistMatrixOverFiniteFieldRep
 
-InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
-"for a cvec matrix over a finite field",
-[IsCVECMatrixOverFiniteFieldRep], x -> IsCVECMatrixOverFiniteFieldRep);
+# The next two methods are commented out because they cannot be used at
+# present.
 
-InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
-"for IsCVECMatrixOverFiniteFieldRep",
-[IsCVECMatrixOverFiniteFieldRep], x -> CVECMatrixOverFiniteFieldType);
+#InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
+#"for a cvec matrix over a finite field",
+#[IsCVECMatrixOverFiniteFieldRep], x -> IsCVECMatrixOverFiniteFieldRep);
+
+#InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
+#"for IsCVECMatrixOverFiniteFieldRep",
+#[IsCVECMatrixOverFiniteFieldRep], x -> CVECMatrixOverFiniteFieldType);
 
 InstallMethod(ELM_LIST, "for a plist matrix over finite field and pos int",
 [IsPlistMatrixOverFiniteFieldRep, IsPosInt],
@@ -54,7 +57,7 @@ end);
 
 # This should be used with caution, it can create corrupt objects
 
-InstallMethod(MatrixNC, "for a matrix over finite field and mutable list",
+InstallMethod(MatrixNC, "for a matrix over finite field and list",
 [IsMatrixOverFiniteField, IsList],
 function(sample, mat)
   return MatrixNC(sample, ShallowCopy(mat));
@@ -153,10 +156,10 @@ InstallMethod(RandomMatrixOp,
 "for a finite field, 0 dimension, and list of ranks",
 [IsField and IsFinite, IsZeroCyc, IsList],
 function(R, n, ranks)
-
   if ForAny(ranks, x -> (x < 0) or (x > n)) then
     ErrorNoReturn("Semigroups: RandomMatrixOp: usage,\n",
-                  "the list of ranks has to consist of numbers > 0 and < n,");
+                  "the list of ranks has to consist of numbers >= 0 and <= ", 
+                  n, ",");
   fi;
   return Matrix(R, []);
 end);
@@ -316,6 +319,9 @@ end);
 InstallMethod(TransposedMatImmutable, "for a plist matrix over finite field",
 [IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
 function(m)
+  if DimensionOfMatrixOverSemiring(m) = 0 then 
+    return m;
+  fi;
   return AsMatrix(IsMatrixOverFiniteField, m, TransposedMat(m!.mat));
 end);
 
@@ -571,7 +577,13 @@ InstallMethod(\<, "for a matrix over finite field",
 function(x, y)
   return DimensionOfMatrixOverSemiring(x) < DimensionOfMatrixOverSemiring(y)
     or (DimensionOfMatrixOverSemiring(x) = DimensionOfMatrixOverSemiring(y)
-        and BaseDomain(x) < BaseDomain(y))
+        and BaseDomain(x) <> BaseDomain(y) 
+        and Characteristic(BaseDomain(x)) < Characteristic(BaseDomain(y)))
+    or (DimensionOfMatrixOverSemiring(x) = DimensionOfMatrixOverSemiring(y)
+        and BaseDomain(x) <> BaseDomain(y) 
+        and Characteristic(BaseDomain(x)) = Characteristic(BaseDomain(y))
+        and DegreeOverPrimeField(BaseDomain(x))
+            < DegreeOverPrimeField(BaseDomain(y)))
     or (DimensionOfMatrixOverSemiring(x) = DimensionOfMatrixOverSemiring(y)
         and BaseDomain(x) = BaseDomain(y) and x!.mat < y!.mat);
 end);
@@ -615,16 +627,6 @@ function(l, m)
   return l * m!.mat;
 end);
 
-InstallMethod(TransposedMat, "for an matrix over finite field",
-[IsMatrixOverFiniteField],
-function(m)
-  if DimensionOfMatrixOverSemiring(m) = 0 then
-    return m;
-  else
-    return AsMatrix(IsMatrixOverFiniteField, m, TransposedMat(m!.mat));
-  fi;
-end);
-
 InstallMethod(AsMutableList, "for a matrix", [IsMatrix],
 function(m)
   local res, r;
@@ -645,8 +647,9 @@ SEMIGROUPS.HashFunctionForPlistMatricesOverFiniteField := function(x, data)
 
   if DimensionOfMatrixOverSemiring(x) = 0 then
     return 1;
-  elif IsInt(data.data) then
-    h := ChooseHashFunction(AsList(x), data.data);
+  elif IsInt(data) then
+    h := ChooseHashFunction(AsList(x), data);
+    data := rec();
     data.func := h.func;
     data.data := h.data;
   fi;
@@ -659,8 +662,9 @@ SEMIGROUPS.HashFunctionForPlistRowBasisOverFiniteField := function(x, data)
 
   if Rank(x) = 0 then
     return 1;
-  elif IsInt(data.data) then
-    h := ChooseHashFunction(x!.rows, data.data);
+  elif IsInt(data) then
+    h := ChooseHashFunction(x!.rows, data);
+    data := rec();
     data.func := h.func;
     data.data := h.data;
   fi;
@@ -678,7 +682,7 @@ function(x, hashlen)
     data := hashlen;
   fi;
   return rec(func := SEMIGROUPS.HashFunctionForPlistMatricesOverFiniteField,
-             data := ChooseHashFunction(AsList(x), hashlen));
+             data := data);
 end);
 
 InstallMethod(ChooseHashFunction, "for plist rowbasis over finite fields",

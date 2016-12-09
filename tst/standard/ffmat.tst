@@ -20,6 +20,17 @@ Matrix(GF(2), [[Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2)],
   [0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0], [0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)], 
   [0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0]])
 
+# Test NewMatrixOverFiniteField failure
+gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2),
+> Z(3) * [[1, 0, 1, 0], [0, 1, 0, 1], [0, 1, 0, 0], [0, 0, 0, 1]]);
+Error, Semigroups: NewMatrixOverFiniteField: usage,
+the entries of the matrix are not all in GF(2),
+gap> M := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep, GF(2),
+> [[Z(3), 0 * Z(3), Z(3), 0 * Z(3)], [0 * Z(3), Z(3), 0 * Z(3), Z(3)],
+>  [0 * Z(3), Z(3), 0 * Z(3), 0 * Z(3)], [0 * Z(3), 0 * Z(3), 0 * Z(3), Z(4)]]);
+Error, Semigroups: NewMatrixOverFiniteField: usage,
+the entries of the matrix are not all in GF(2),
+
 #T# MatrixTest2: EvalPrintString
 gap> EvalString(String(M)) = M;
 true
@@ -298,6 +309,109 @@ gap> RowRank(x);
 1
 gap> RowRank(TransposedMat(x));
 1
+
+# Test MatrixNC
+gap> x := Matrix(GF(3), [[Z(3)^0, 0*Z(3), Z(3)], [Z(3), 0*Z(3), Z(3)],
+> [Z(3)^0, Z(3)^0, Z(3)]]);;
+gap> y := Matrix(GF(3), [[0*Z(3), Z(3), Z(3)^0], [0*Z(3), Z(3)^0, 0*Z(3)],
+>  [Z(3), 0*Z(3), Z(3)]]);;
+gap> z := MatrixNC(y, AsList(x));
+Matrix(GF(3), [[Z(3)^0, 0*Z(3), Z(3)], [Z(3), 0*Z(3), Z(3)], 
+  [Z(3)^0, Z(3)^0, Z(3)]])
+gap> z = x;
+true
+
+# Test RandomMatrix
+gap> RandomMatrix(GF(11), 0, []);
+Matrix(GF(11), [])
+gap> RandomMatrix(GF(11), 0, [0]);
+Matrix(GF(11), [])
+gap> RandomMatrix(GF(11), 0, [1]);
+Error, Semigroups: RandomMatrixOp: usage,
+the list of ranks has to consist of numbers >= 0 and <= 0,
+
+# Test AsList for IsPlistMatrixRep 
+gap> S := Semigroup(Transformation([2, 3, 1]));;
+gap> IsGroupAsSemigroup(S);
+true
+gap> IsGroupAsSemigroup(AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S));
+true
+
+# Test BaseDomain (error)
+gap> coll := [Matrix(GF(3), [[Z(3), Z(3), 0*Z(3)], 
+>                            [Z(3), Z(3)^0, Z(3)],
+>                            [0*Z(3), 0*Z(3), Z(3)]]), 
+>             Matrix(GF(2^2), [[Z(2^2)^2, Z(2^2)^2, Z(2)^0], 
+>                              [Z(2)^0, 0*Z(2), Z(2)^0],
+>                              [0*Z(2), 0*Z(2), Z(2^2)^2]])];;
+gap> BaseDomain(coll);
+Error, Semigroups: BaseDomain: usage,
+the argument <coll> must be a collection of matrices over the same finite fiel\
+d,
+
+# Test OneMutable
+gap> x := Matrix(GF(3), [[Z(3)^0, 0*Z(3), Z(3)], [Z(3), 0*Z(3), Z(3)],
+> [Z(3)^0, Z(3)^0, Z(3)]]);;
+gap> OneMutable(x);
+Matrix(GF(3), [[Z(3)^0, 0*Z(3), 0*Z(3)], [0*Z(3), Z(3)^0, 0*Z(3)], 
+  [0*Z(3), 0*Z(3), Z(3)^0]])
+
+# Test \< 
+gap> x := Matrix(GF(3), [[Z(3)^0, 0*Z(3), Z(3)], [Z(3), 0*Z(3), Z(3)],
+> [Z(3)^0, Z(3)^0, Z(3)]]);;
+gap> y := Matrix(GF(3), [[0*Z(3), Z(3), Z(3)^0], [0*Z(3), Z(3)^0, 0*Z(3)],
+>  [Z(3), 0*Z(3), Z(3)]]);;
+gap> x < y;
+false
+gap> y < x;
+true
+gap> x < x;
+false
+
+# Test vector multiplication
+gap> x := Matrix(GF(3), [[Z(3)^0, 0*Z(3), Z(3)], [Z(3), 0*Z(3), Z(3)],
+> [Z(3)^0, Z(3)^0, Z(3)]]);;
+gap> [] * x;
+[  ]
+gap> [Z(3), Z(3)^0] * x;
+[ Z(3)^0, 0*Z(3), 0*Z(3) ]
+gap> AsList(x) * x;
+[ [ 0*Z(3), Z(3), 0*Z(3) ], [ Z(3)^0, Z(3), Z(3) ], [ Z(3), Z(3), Z(3) ] ]
+gap> AsList(x) * x = AsList(x * x);
+true
+
+# Test TransposedMat
+gap> x := Matrix(GF(2^2), [[0*Z(2), Z(2)^0, 0*Z(2)], [Z(2)^0, Z(2^2)^2, Z(2^2)],
+>  [0*Z(2), 0*Z(2), 0*Z(2)]]);;
+gap> TransposedMat(x);
+Matrix(GF(2^2), [[0*Z(2), Z(2)^0, 0*Z(2)], [Z(2)^0, Z(2^2)^2, 0*Z(2)], 
+  [0*Z(2), Z(2^2), 0*Z(2)]])
+gap> TransposedMat(TransposedMat(x)) = x;
+true
+gap> TransposedMat(Matrix(GF(11), []));
+Matrix(GF(11), [])
+
+# Test hashing (for finite field matrices)
+gap> x := Matrix(GF(2^2), [[0*Z(2), Z(2)^0, 0*Z(2)], [Z(2)^0, Z(2^2)^2, Z(2^2)],
+>  [0*Z(2), 0*Z(2), 0*Z(2)]]);;
+gap> ht := HTCreate(x);;
+gap> HTAdd(ht, x, true);;
+gap> HTAdd(ht, Matrix(GF(11), []), true);;
+gap> ht := HTCreate(Matrix(GF(11), []));;
+gap> HTAdd(ht, Matrix(GF(11), []), true);;
+gap> HTAdd(ht, Matrix(GF(7), []), true);;
+gap> HTAdd(ht, x, true);;
+
+# Test hashing (for finite field row basis)
+gap> x := Matrix(GF(2^2), [[0*Z(2), Z(2)^0, 0*Z(2)], [Z(2)^0, Z(2^2)^2, Z(2^2)],
+>  [0*Z(2), 0*Z(2), 0*Z(2)]]);;
+gap> ht := HTCreate(RowSpaceBasis(x));;
+gap> HTAdd(ht, RowSpaceBasis(x), true);;
+gap> HTAdd(ht, RowSpaceBasis(Matrix(GF(11), [])), true);;
+gap> ht := HTCreate(RowSpaceBasis(Matrix(GF(11), [])));;
+gap> HTAdd(ht, RowSpaceBasis(Matrix(GF(11), [])), true);;
+gap> HTAdd(ht, RowSpaceBasis(Matrix(GF(7), [])), true);;
+gap> HTAdd(ht, RowSpaceBasis(x), true);;
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(M);
