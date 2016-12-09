@@ -212,6 +212,20 @@ true
 gap> IsZeroSimpleSemigroup(FreeSemigroup(5));
 false
 
+#T# properties: IsZeroSimpleSemigroup, finite, 5
+gap> S := ReesZeroMatrixSemigroup(Group(()), [[0, 0], [0, 0]]);;
+gap> S := AsSemigroup(IsTransformationSemigroup, S);;
+gap> IsZeroSimpleSemigroup(S);
+false
+
+#T# properties: IsZeroSimpleSemigroup, finite inverse, 6
+gap> S := SymmetricInverseMonoid(2);;
+gap> S := AsSemigroup(IsBooleanMatSemigroup, S);;
+gap> IsInverseSemigroup(S);
+true
+gap> IsZeroSimpleSemigroup(S);
+false
+
 #T# properties: IsCongruenceFreeSemigroup, trivial, 1
 gap> IsCongruenceFreeSemigroup(TrivialSemigroup());
 true
@@ -372,6 +386,14 @@ gap> IsCompletelyRegularSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsCompletelyRegularSemigroup' on 1 argu\
 ments
+
+#T# properties: IsCompletelyRegularSemigroup, 4
+gap> T := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));
+<transformation monoid of degree 8 with 5 generators>
+gap> IsRegularSemigroup(T); 
+false
+gap> IsCompletelyRegularSemigroup(T);
+false
 
 #T# properties: IsCompletelySimpleSemigroup, 1
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[0, -4], [-4, -1]]),
@@ -538,8 +560,17 @@ true
 #T# properties: IsXTrivial, acting, false, 5
 gap> S := Semigroup(
 >  Bipartition([[1, 2, 3, 4, 5, -6], [6, -1, -2, -3, -4, -5]]),
->  Bipartition([[1, 2, 6, -1, -5, -6], [3, 5, -2, -3], [4, -4]]));
-<block bijection semigroup of degree 6 with 2 generators>
+>  Bipartition([[1, 2, 6, -1, -5, -6], [3, 5, -2, -3], [4, -4]]));;
+gap> IsHTrivial(S);
+false
+gap> IsLTrivial(S);
+false
+gap> IsRTrivial(S);
+false
+gap> S := Semigroup(
+>  Bipartition([[1, 2, 3, 4, 5, -6], [6, -1, -2, -3, -4, -5]]),
+>  Bipartition([[1, 2, 6, -1, -5, -6], [3, 5, -2, -3], [4, -4]]));;
+gap> Size(S);;
 gap> IsHTrivial(S);
 false
 gap> IsLTrivial(S);
@@ -547,39 +578,34 @@ false
 gap> IsRTrivial(S);
 false
 
-# #T# properties: IsXTrivial, D-class, 6
-# gap> S := Semigroup(
-# > [Matrix(GF(5), [[0 * Z(5), Z(5) ^ 3], [Z(5) ^ 2, Z(5) ^ 0]]),
-# >  Matrix(GF(5), [[Z(5) ^ 0, Z(5)], [Z(5), Z(5) ^ 3]]),
-# >  Matrix(GF(5), [[Z(5) ^ 0, Z(5) ^ 3], [0 * Z(5), 0 * Z(5)]]),
-# >  Matrix(GF(5), [[Z(5), Z(5) ^ 0], [0 * Z(5), Z(5) ^ 3]]),
-# >  Matrix(GF(5), [[Z(5), Z(5) ^ 0], [Z(5) ^ 0, Z(5)]]),
-# >  Matrix(GF(5), [[Z(5) ^ 2, 0 * Z(5)], [Z(5), 0 * Z(5)]]),
-# >  Matrix(GF(5), [[Z(5) ^ 2, Z(5)], [0 * Z(5), 0 * Z(5)]])]);;
-# gap> D := GreensDClassOfElement(S,
-# > Matrix(GF(5), [[Z(5) ^ 3, Z(5) ^ 2], [Z(5) ^ 3, Z(5)]]));
-# <Green's D-class: Matrix(GF(5), [[Z(5)^3, Z(5)^2], [Z(5)^3, Z(5)]])>
-# gap> IsHTrivial(D);
-# false
-# gap> IsLTrivial(D);
-# false
-# gap> IsRTrivial(D);
-# false
+#T# properties: IsXTrivial, acting, true, 5
+gap> S :=  
+> Monoid(Transformation([1, 1, 1, 2, 1, 5, 3]),
+>  Transformation([1, 2, 1, 2]), Transformation([1, 1, 1, 3, 1, 2, 5]),
+>  Transformation([1, 1, 3, 3]), Transformation([1, 2, 3, 4, 1, 2]),
+>  Transformation([1, 1, 3, 4, 5, 5]),
+>  Transformation([1, 2, 3, 4, 1, 6, 3]),
+>  Transformation([1, 2, 1, 4, 5, 6, 5]));;
+gap> IsRTrivial(S);
+true
+gap> S := AsSemigroup(IsBipartitionSemigroup, S);;
+gap> IsRTrivial(S);
+true
 
 #T# properties: IsXTrivial, infinite semigroup, 7
 gap> S := FreeSemigroup(2);;
 gap> IsHTrivial(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsHTrivial' on 1 arguments
+Error, no 2nd choice method found for `IsHTrivial' on 1 arguments
 gap> IsLTrivial(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsLTrivial' on 1 arguments
+Error, no 2nd choice method found for `IsLTrivial' on 1 arguments
 gap> IsRTrivial(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsRTrivial' on 1 arguments
+Error, no 2nd choice method found for `IsRTrivial' on 1 arguments
 gap> IsDTrivial(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsRTrivial' on 1 arguments
+Error, no 2nd choice method found for `IsRTrivial' on 1 arguments
 
 #T# properties: IsLTrivial, rho, 1/1
 gap> S := FullTransformationMonoid(3);;
@@ -643,6 +669,13 @@ true
 gap> IsGroupAsSemigroup(Semigroup(Transformation([1])));
 true
 
+#T# properties: IsGroupAsSemigroup, for maximal rank acting semigroup, 6
+gap> S := Semigroup(Transformation([2, 3, 1]));;
+gap> IsGroupAsSemigroup(S);
+true
+gap> IsGroupAsSemigroup(AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S));
+true
+
 #T# properties: IsIdempotentGenerated, 1
 gap> S :=
 > Semigroup(
@@ -681,6 +714,12 @@ gap> S := FreeSemigroup(1);;
 gap> IsIdempotentGenerated(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsIdempotentGenerated' on 1 arguments
+
+#T# properties: IsIdempotentGenerated, 5
+gap> S := AsSemigroup(IsBooleanMatSemigroup, 
+>                     SingularTransformationMonoid(3));;
+gap> IsIdempotentGenerated(S);
+true
 
 #T# properties: IsInverseSemigroup, 1
 gap> S := Semigroup([PartialPerm([1, 2, 3, 5], [2, 3, 5, 7]),
@@ -740,17 +779,16 @@ gap> IsLeftSimple(S);
 true
 
 # #T# properties: IsLeftSimple, known L-classes, 3
-# gap> S := Monoid([Matrix(GF(11), [[0 * Z(11)]]),
-# >  Matrix(GF(11), [[Z(11)]]),
-# >  Matrix(GF(11), [[Z(11) ^ 4]]),
-# >  Matrix(GF(11), [[Z(11) ^ 5]]),
-# >  Matrix(GF(11), [[Z(11) ^ 8]]),
-# >  Matrix(GF(11), [[Z(11) ^ 9]])]);
-# <monoid of 1x1 prime field matrices with 6 generators>
-# gap> NrLClasses(S);
-# 2
-# gap> IsLeftSimple(S);
-# false
+gap> S := Monoid([Matrix(GF(11), [[0 * Z(11)]]),
+>  Matrix(GF(11), [[Z(11)]]),
+>  Matrix(GF(11), [[Z(11) ^ 4]]),
+>  Matrix(GF(11), [[Z(11) ^ 5]]),
+>  Matrix(GF(11), [[Z(11) ^ 8]]),
+>  Matrix(GF(11), [[Z(11) ^ 9]])]);;
+gap> NrLClasses(S);
+2
+gap> IsLeftSimple(S);
+false
 
 #T# properties: IsLeftSimple, acting, 4
 gap> S := JonesMonoid(3);
@@ -785,11 +823,21 @@ gap> S := AsSemigroup(IsTransformationSemigroup,
 gap> IsLeftZeroSemigroup(S);
 false
 
-#T# properties: IsLeftZeroSemigroup, 2
+#T# properties: IsLeftZeroSemigroup, 3
 gap> S := FreeSemigroup(1);;
 gap> IsLeftZeroSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsLeftZeroSemigroup' on 1 arguments
+
+#T# properties: IsLeftZeroSemigroup, 4
+gap> S := LeftZeroSemigroup(IsTransformationSemigroup, 4);;
+gap> S := Semigroup(S, rec(acting := true));;
+gap> IsLeftZeroSemigroup(S);
+true
+gap> I := SemigroupIdeal(S, S.1);;
+gap> GeneratorsOfSemigroup(I);;
+gap> IsLeftZeroSemigroup(I);
+true
 
 #T# properties: IsMonogenicSemigroup, 1
 gap> S := Semigroup(MonogenicSemigroup(10, 10));
@@ -1163,6 +1211,38 @@ gap> S := ReesMatrixSemigroup(Group([(1, 2)]),
 gap> IsRegularSemigroup(AsSemigroup(IsBipartitionSemigroup, S));
 true
 
+#T# properties: IsRegularSemigroup, 8
+gap> S := Semigroup(Transformation([3, 1, 3, 5, 4, 5, 5, 7]),
+>                   Transformation([1, 1, 8, 4, 4, 4, 6, 2]),
+>                   Transformation([2, 7, 7, 2, 8, 6, 7, 3]),
+>                   Transformation([4, 2, 5, 7, 2, 5, 8, 5]),
+>                   Transformation([2, 5, 2, 1, 2, 8, 3, 6]),
+>                   Transformation([8, 6, 7, 2, 2, 4, 6, 5]),
+>                   Transformation([4, 8, 5, 2, 5, 8, 4, 2]),
+>                   Transformation([4, 1, 4, 4, 2, 2, 3, 5]), 
+>                   rec(acting := true));;
+gap> data := SemigroupData(S);;
+gap> Enumerate(data, 500);;
+gap> IsRegularSemigroup(S);
+false
+
+#T# properties: IsRegularSemigroup, 9
+gap> S := Semigroup(FullTransformationMonoid(4));;
+gap> Size(S);;
+gap> IsRegularSemigroup(S);
+true
+gap> S := Semigroup(PartitionMonoid(3));;
+gap> Size(S);;
+gap> IsRegularSemigroup(S);
+true
+
+#T# properties: IsRegularSemigroup, 9
+gap> S := Semigroup(PartitionMonoid(3));;
+gap> IsStarSemigroup(S);
+true
+gap> IsRegularSemigroup(S);
+true
+
 #T# properties: IsRegularElementSemigroup, 1/8
 gap> S := Semigroup([Transformation([6, 9, 10, 1, 11, 3, 6, 6, 2, 10, 12, 2]),
 >  Transformation([7, 8, 8, 11, 2, 11, 10, 2, 11, 4, 4, 7])]);
@@ -1250,6 +1330,18 @@ true
 gap> IsRegularSemigroupElementNC(S, Bipartition([[1, -1], [2, 3, -2, -3]]));
 true
 
+#T# properties: IsRegularElementSemigroup (for non-acting semigroup) 9
+gap> S := RegularBooleanMatMonoid(3);;
+gap> x := Matrix(IsBooleanMat, [[1, 0, 1], [1, 0, 0], [0, 0, 1]]);;
+gap> IsRegularSemigroupElement(S, x);
+true
+
+#T# properties: IsRegularElementSemigroup (for acting semigroup) 9
+gap> S := Semigroup(FullTransformationMonoid(3));;
+gap> Size(S);;
+gap> IsRegularSemigroupElementNC(S, Transformation([4, 4, 4, 4]));
+false
+
 #T# properties: IsRightSimple, non-regular, 1
 gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
@@ -1316,6 +1408,16 @@ gap> IsRightZeroSemigroup(FreeSemigroup(10));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsRightZeroSemigroup' on 1 arguments
 
+#T# properties: IsRightZeroSemigroup, 4
+gap> S := RightZeroSemigroup(IsTransformationSemigroup, 4);;
+gap> S := Semigroup(S, rec(acting := true));;
+gap> IsRightZeroSemigroup(S);
+true
+gap> I := SemigroupIdeal(S, S.1);;
+gap> GeneratorsOfSemigroup(I);;
+gap> IsRightZeroSemigroup(I);
+true
+
 #T# properties: IsSemilattice, 1/?
 gap> T := Monoid([Transformation([6, 2, 3, 4, 6, 6]),
 >   Transformation([1, 6, 6, 4, 5, 6]),
@@ -1346,6 +1448,20 @@ gap> T := Semigroup(T);;
 gap> IsInverseSemigroup(T);;
 gap> I := SemigroupIdeal(T, T.1);
 <inverse transformation semigroup ideal of degree 6 with 1 generator>
+gap> IsSemilattice(I);
+true
+gap> T := Semigroup(T);;
+gap> IsInverseSemigroup(T);;
+gap> IsSemilattice(T);
+true
+gap> I := SemigroupIdeal(T, T.1);;
+gap> GeneratorsOfSemigroup(I);;
+gap> IsSemilattice(I);
+true
+gap> T := Semigroup(T);;
+gap> IsSemilattice(T);
+true
+gap> I := SemigroupIdeal(T, T.1);;
 gap> IsSemilattice(I);
 true
 gap> IsSemilattice(FreeInverseSemigroup(1));
@@ -1384,6 +1500,15 @@ gap> S := Semigroup([Transformation([4, 1, 6, 6, 6, 6]),
 <transformation semigroup of degree 6 with 4 generators>
 gap> I := SemigroupIdeal(S, S.1);;
 gap> IsSimpleSemigroup(I);
+false
+
+# Test IsSimpleSemigroup (for a semigroup that magically knows it is not
+# regular)
+gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));;
+gap> HasIsRegularSemigroup(S);
+false
+gap> SetIsRegularSemigroup(S, false);
+gap> IsSimpleSemigroup(S);
 false
 
 #T# properties: IsTrivial, 1
@@ -1450,6 +1575,30 @@ gap> IsRegularSemigroup(S);
 true
 gap> IsUnitRegularMonoid(S);
 false
+
+# Test IsUnitRegularMonoid (for a non-regular non-acting semigroup)
+gap> IsUnitRegularMonoid(FullBooleanMatMonoid(3));
+false
+
+# Test IsUnitRegularMonoid (for a non-acting semigroup with no group of units)
+gap> IsUnitRegularMonoid(LeftZeroSemigroup(4));
+false
+gap> IsUnitRegularMonoid(LeftZeroSemigroup(1));
+true
+gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([1], [1]), 
+>                                      PartialPerm([], [])));
+true
+gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([2, 1]), 
+>                                      PartialPerm([], [])));
+true
+gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([1], [1]), 
+>                                      PartialPerm([], []), rec(acting :=
+>                                      false)));
+true
+gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([2, 1]), 
+>                                      PartialPerm([], []), rec(acting :=
+>                                      false)));
+true
 
 #T# properties: IsZeroGroup, 1
 gap> IsZeroGroup(JonesMonoid(3));

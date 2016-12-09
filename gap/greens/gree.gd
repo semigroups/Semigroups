@@ -83,3 +83,7 @@ DeclareSynonymAttr("LClasses", GreensLClasses);
 DeclareSynonymAttr("RClasses", GreensRClasses);
 
 DeclareAttribute("OneImmutable", IsGreensHClass);
+
+DeclareProperty("IsHTrivial", IsGreensClass);
+DeclareProperty("IsLTrivial", IsGreensDClass);
+DeclareProperty("IsRTrivial", IsGreensDClass);

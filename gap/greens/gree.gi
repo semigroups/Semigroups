@@ -28,9 +28,11 @@
 ##
 ##   6. Regularity of Green's classes
 ##
-##   7. Iterators, enumerators etc
+##   7. Properties of Green's classes
 ##
-##   8. Viewing, printing, displaying
+##   8. Iterators, enumerators etc
+##
+##   9. Viewing, printing, displaying
 ##
 #############################################################################
 
@@ -329,7 +331,20 @@ InstallTrueMethod(IsHClassOfRegularSemigroup,
                   IsInverseOpClass and IsGreensHClass);
 
 #############################################################################
-## 7. Enumerators, iterators etc
+## 7. Properties of Green's classes . . .
+#############################################################################
+
+InstallMethod(IsHTrivial, "for a Green's class",
+[IsGreensClass], C -> NrHClasses(C) = Size(C));
+
+InstallMethod(IsLTrivial, "for a Green's D-class",
+[IsGreensDClass], D -> NrLClasses(D) = Size(D));
+
+InstallMethod(IsRTrivial, "for a Green's D-class",
+[IsGreensDClass], D -> NrRClasses(D) = Size(D));
+
+#############################################################################
+## 8. Enumerators, iterators etc
 #############################################################################
 
 InstallMethod(IteratorOfDClasses, "for a finite semigroup",
@@ -345,7 +360,7 @@ function(S)
 end);
 
 #############################################################################
-## 8. Viewing, printing, etc . . .
+## 9. Viewing, printing, etc . . .
 #############################################################################
 
 # Viewing, printing, etc
