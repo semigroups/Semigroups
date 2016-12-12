@@ -20,8 +20,9 @@ DeclareCategory("IsFreeInverseSemigroupElement", IsAssociativeElement);
 DeclareCategoryCollections("IsFreeInverseSemigroupElement");
 
 DeclareCategory("IsFreeInverseSemigroupCategory",
-                IsSemigroupWithInverseOp and
-                IsFreeInverseSemigroupElementCollection);
+                IsInverseSemigroup
+                and IsGeneratorsOfInverseSemigroup
+                and IsFreeInverseSemigroupElementCollection);
 DeclareProperty("IsFreeInverseSemigroup", IsSemigroup);
 
 DeclareGlobalFunction("FreeInverseSemigroup");

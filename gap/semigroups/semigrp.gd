@@ -17,8 +17,6 @@
 
 InstallTrueMethod(IsSemigroup, IsInverseSemigroup);
 
-DeclareCategory("IsSemigroupWithInverseOp",
-                IsInverseSemigroup);
 DeclareOperation("SemigroupByGenerators",
                  [IsMultiplicativeElementCollection, IsRecord]);
 DeclareOperation("MonoidByGenerators",
@@ -30,20 +28,25 @@ DeclareOperation("InverseSemigroupByGenerators",
 
 InstallTrueMethod(IsStarSemigroup,
                   IsAssociativeElementWithStarCollection and
-                  IsSemigroupWithInverseOp);
+                  IsInverseSemigroup and IsGeneratorsOfInverseSemigroup);
 
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection]);
+                 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+                  IsMultiplicativeElementCollection]);
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsSemigroupWithInverseOp, IsMultiplicativeElementCollection,
+                 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+                  IsMultiplicativeElementCollection,
                   IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsSemigroupWithInverseOp, IsListOrCollection and IsEmpty,
+                 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+                  IsListOrCollection and IsEmpty,
                   IsRecord]);
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsSemigroupWithInverseOp, IsMultiplicativeElement]);
+                 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+                  IsMultiplicativeElement]);
 DeclareOperation("ClosureInverseSemigroup",
-                 [IsSemigroupWithInverseOp, IsMultiplicativeElement, IsRecord]);
+                 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+                  IsMultiplicativeElement, IsRecord]);
 DeclareGlobalFunction("ClosureInverseSemigroupNC");
 
 DeclareOperation("ClosureSemigroup",
@@ -106,7 +109,9 @@ DeclareOperation("SubsemigroupByProperty",
 DeclareOperation("InverseSubsemigroupByProperty",
                  [IsSemigroup, IsFunction]);
 DeclareOperation("InverseSubsemigroupByProperty",
-                 [IsSemigroupWithInverseOp, IsFunction, IsPosInt]);
+                 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+                  IsFunction, 
+                  IsPosInt]);
 
 # undocumented
 DeclareGlobalFunction("RegularSemigroup");

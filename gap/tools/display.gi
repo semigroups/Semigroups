@@ -765,8 +765,8 @@ function(S, opts)
 end);
 
 InstallMethod(DotSemilatticeOfIdempotents,
-"for an acting semigroup with inverse op",
-[IsSemigroupWithInverseOp and IsActingSemigroup],
+"for an acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
 function(S)
   local U, rel, elts, str, nr, V, j, i, k, D, v;
 
@@ -806,25 +806,28 @@ function(S)
   return str;
 end);
 
-InstallMethod(TexString, "for a transformation and a pos int", 
+InstallMethod(TexString, "for a transformation and a pos int",
 [IsTransformation, IsPosInt],
 function(f, deg)
   local str, i;
 
-  if deg < DegreeOfTransformation(f) then 
-    ErrorNoReturn("error");
+  if deg < DegreeOfTransformation(f) then
+    ErrorNoReturn("Semigroups: TexString: usage,\n",
+                  "the second argument (the degree) should be at ",
+                  "least the degree of the first argument (a ",
+                  "transformation),");
   fi;
   str := "\\begin{pmatrix}\n  ";
-  for i in [1 .. deg] do 
+  for i in [1 .. deg] do
     Append(str, String(i));
-    if i <> deg then 
+    if i <> deg then
       Append(str, " & ");
     fi;
   od;
   Append(str, " \\\\\n  ");
-  for i in [1 .. deg] do 
+  for i in [1 .. deg] do
     Append(str, String(i ^ f));
-    if i <> deg then 
+    if i <> deg then
       Append(str, " & ");
     fi;
   od;
@@ -832,7 +835,7 @@ function(f, deg)
   return str;
 end);
 
-InstallMethod(TexString, "for a transformation collection", 
+InstallMethod(TexString, "for a transformation collection",
 [IsTransformationCollection],
 function(coll)
   local deg;

@@ -13,11 +13,6 @@
 
 # same method for ideals
 
-# this works for infinite semigroups if x is really in there.
-
-
-# same method for ideals
-
 # this is declared in the library, but there is no method for semigroups in the
 # library.
 
@@ -96,7 +91,7 @@ function(o, m, p)
   fi;
 
   # express <elt> as a word in the generators of the Schutzenberger group
-  if (not IsSemigroupWithInverseOp(o!.parent)) and Size(G) <= 1024 then
+  if (not IsInverseActingSemigroupRep(o!.parent)) and Size(G) <= 1024 then
     iso := IsomorphismTransformationSemigroup(G);
     word := MinimalFactorization(Range(iso), p ^ iso);
   else
@@ -113,7 +108,7 @@ function(o, m, p)
   for i in word do
     if i > 0 then
       Append(out, factors[i]);
-    elif IsSemigroupWithInverseOp(o!.parent) then
+    elif IsInverseActingSemigroupRep(o!.parent) then
       Append(out, Reversed(factors[-i]) * -1);
     else
       Append(out, Concatenation(List([1 .. Order(G.(-i)) - 1],
@@ -172,7 +167,7 @@ function(S, x)
                   "the second argument <x> is not an element ",
                   "of the first argument <S>,");
   else
-    pos := Position(S, x); # position in the current data structure if any 
+    pos := Position(S, x); # position in the current data structure if any
     if pos <> fail then
       # avoid re-hashing x
       return EN_SEMI_FACTORIZATION(S, pos);
@@ -214,8 +209,8 @@ function(S, x)
 end);
 
 InstallMethod(Factorization,
-"for an acting semigroup with inverse op with generators and element",
-[IsSemigroupWithInverseOp and IsActingSemigroup and HasGeneratorsOfSemigroup,
+"for an acting inverse semigroup rep with generators and element",
+[IsInverseActingSemigroupRep and HasGeneratorsOfSemigroup,
  IsMultiplicativeElement],
 function(S, x)
   local pos, o, gens, l, m, scc, word1, k, rep, word2, p;

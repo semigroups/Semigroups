@@ -829,7 +829,7 @@ gap> s := InverseSemigroup([
 > PartialPerm([1, 2, 3, 4, 5, 6, 9], [1, 5, 9, 2, 6, 10, 7]),
 > PartialPerm([1, 3, 4, 7, 8, 9], [9, 4, 1, 6, 2, 8])]);
 <inverse partial perm semigroup of rank 10 with 2 generators>
-gap> ForAll(RClasses(s), IsRegularClass);
+gap> ForAll(RClasses(s), IsRegularGreensClass);
 true
 
 #T# InverseTest15

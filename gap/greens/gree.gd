@@ -9,11 +9,12 @@
 ##
 
 # This file contains methods for Green's relations and classes of semigroups
-# where the particular representation of the Green's classes is not important. 
+# where the particular representation of the Green's classes is not important.
 
 DeclareProperty("IsGreensClassNC", IsGreensClass);
-DeclareProperty("IsRegularClass", IsGreensClass);
-DeclareCategory("IsHClassOfRegularSemigroup", IsGreensClass);
+DeclareProperty("IsRegularGreensClass", IsGreensClass);
+
+InstallTrueMethod(IsRegularGreensClass, IsRegularDClass);
 
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 

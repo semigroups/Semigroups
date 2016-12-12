@@ -65,7 +65,7 @@
     <P/>
     
     <#Include Label = "\&lt;">
-    <#Include Label = "IsRegularClass">
+    <#Include Label = "IsRegularGreensClass">
     <#Include Label = "IsGreensClassNC">
     <#Include Label = "IsTransformationSemigroupGreensClass">
     <#Include Label = "IsBipartitionSemigroupGreensClass">

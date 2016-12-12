@@ -105,7 +105,8 @@ end;
 ## 1. Default methods, for which there are currently no better methods.
 #############################################################################
 
-_GeneratorsSmallest := function(S)
+BindGlobal("_GeneratorsSmallest",
+function(S)
   local iter, gens, T, x;
 
   iter := IteratorSorted(S);
@@ -122,7 +123,7 @@ _GeneratorsSmallest := function(S)
     fi;
   od;
   return gens;
-end;
+end);
 
 InstallMethod(GeneratorsSmallest, "for a transformation semigroup",
 [IsTransformationSemigroup and IsGroup], _GeneratorsSmallest);
@@ -130,12 +131,13 @@ InstallMethod(GeneratorsSmallest, "for a transformation semigroup",
 InstallMethod(GeneratorsSmallest, "for a semigroup",
 [IsSemigroup], _GeneratorsSmallest);
 
+MakeReadWriteGlobal("_GeneratorsSmallest");
 Unbind(_GeneratorsSmallest);
 
 InstallMethod(SmallestElementSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   return NextIterator(IteratorSorted(S));
@@ -144,7 +146,7 @@ end);
 InstallMethod(LargestElementSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   return EnumeratorSorted(S)[Size(S)];
@@ -337,7 +339,8 @@ function(coll)
 end);
 
 InstallMethod(SmallInverseSemigroupGeneratingSet,
-"for a semigroup with inverse op", [IsSemigroupWithInverseOp],
+"for an inverse semigroup with inverse op", 
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 S -> SmallSemigroupGeneratingSet(GeneratorsOfInverseSemigroup(S)));
 
 InstallMethod(SmallInverseMonoidGeneratingSet,
@@ -358,8 +361,8 @@ function(coll)
 end);
 
 InstallMethod(SmallInverseMonoidGeneratingSet,
-"for a monoid with inverse op",
-[IsSemigroupWithInverseOp and IsMonoid],
+"for an inverse monoid with inverse op",
+[IsInverseMonoid and IsGeneratorsOfInverseSemigroup],
 function(S)
   if IsEmpty(GeneratorsOfInverseMonoid(S)) then
     return GeneratorsOfInverseMonoid(S);
@@ -511,14 +514,14 @@ InstallMethod(MaximalDClasses, "for an enumerable semigroup",
 function(S)
   local l, r, gr;
 
-  if NrDClasses(S) = 1 then 
+  if NrDClasses(S) = 1 then
     return DClasses(S);
   fi;
 
-  l := LeftCayleyGraphSemigroup(S);;
-  r := RightCayleyGraphSemigroup(S);;
-  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));;
-  gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);;
+  l := LeftCayleyGraphSemigroup(S);
+  r := RightCayleyGraphSemigroup(S);
+  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
+  gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);
   gr := DigraphRemoveLoops(gr);
 
   return List(DigraphSources(gr), x -> DClasses(S)[x]);
@@ -550,16 +553,6 @@ function(S)
     TryNextMethod();
   fi;
   return Semigroup(Idempotents(S), rec(small := true));
-end);
-
-InstallMethod(IdempotentGeneratedSubsemigroup,
-"for an inverse op semigroup",
-[IsSemigroupWithInverseOp],
-function(S)
-  if not IsFinite(S) then
-    TryNextMethod();
-  fi;
-  return InverseSemigroup(Idempotents(S), rec(small := true));
 end);
 
 InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
@@ -670,7 +663,7 @@ InstallMethod(InversesOfSemigroupElementNC,
 [IsGroupAsSemigroup, IsMultiplicativeElement],
 function(G, x)
   local i, iso, inv;
-  if IsMultiplicativeElementWithInverse(x) then 
+  if IsMultiplicativeElementWithInverse(x) then
     i := InverseOp(x);
     if i <> fail then
       return [i];
@@ -681,25 +674,25 @@ function(G, x)
   return [((x ^ iso) ^ -1) ^ inv];
 end);
 
-InstallMethod(InversesOfSemigroupElementNC, 
+InstallMethod(InversesOfSemigroupElementNC,
 "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   return Filtered(AsSet(S), y -> x * y * x = x and y * x * y = y);
 end);
 
-InstallMethod(InversesOfSemigroupElement, 
+InstallMethod(InversesOfSemigroupElement,
 "for a semigroup and a multiplicative element",
 [IsSemigroup, IsMultiplicativeElement], 1, # to beat the library method
 function(S, x)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
-  elif not x in S then 
-    ErrorNoReturn("Semigroups: InversesOfSemigroupElement: usage,\n", 
-                  "the second arg (a mult. element) must belong to the first ", 
+  elif not x in S then
+    ErrorNoReturn("Semigroups: InversesOfSemigroupElement: usage,\n",
+                  "the second arg (a mult. element) must belong to the first ",
                   "arg (a semigroup),");
   fi;
   return InversesOfSemigroupElementNC(S, x);

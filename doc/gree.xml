@@ -84,9 +84,9 @@ gap> A := GreensRClassOfElement(S, Transformation([2, 1, 3, 1]));
 gap> B := GreensRClassOfElement(S, Transformation([1, 2, 3, 4]));
 <Green's R-class: IdentityTransformation>
 gap> A < B;
-true
-gap> B < A;
 false
+gap> B < A;
+true
 gap> IsGreensLessThanOrEqual(A, B);
 true
 gap> IsGreensLessThanOrEqual(B, A);
@@ -473,7 +473,7 @@ gap> HClassReps(L);
       See also 
       <Ref Prop = "IsGroupHClass" BookName = "ref"/>, 
       <Ref Prop = "IsRegularDClass" BookName = "ref"/>, 
-      <Ref Prop = "IsRegularClass"/>, 
+      <Ref Prop = "IsRegularGreensClass"/>, 
       and <Ref Prop = "IsRegularSemigroup"/>.
 
       <Example><![CDATA[
@@ -538,7 +538,7 @@ gap> StructureDescription(GroupHClass(last));
   wider class of objects as described above.<P/>
   
   See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>, 
-  <Ref Prop = "IsRegularClass"/>
+  <Ref Prop = "IsRegularGreensClass"/>
   <Ref Prop = "IsGroupHClass" BookName = "ref"/>, 
   <Ref Attr = "NrIdempotents"/>, and
   <Ref Attr = "GroupHClass"/>. 
@@ -587,9 +587,9 @@ gap> Idempotents(S, 0);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsRegularClass">
+<#GAPDoc Label="IsRegularGreensClass">
   <ManSection>
-    <Prop Name="IsRegularClass" Arg="class"/>
+    <Prop Name="IsRegularGreensClass" Arg="class"/>
     <Returns>
       <K>true</K> or <K>false</K>.
     </Returns>
@@ -613,13 +613,13 @@ gap> S := Monoid(Transformation([10, 8, 7, 4, 1, 4, 10, 10, 7, 2]),
 >                Transformation([5, 2, 5, 5, 9, 10, 8, 3, 8, 10]));;
 gap> f := Transformation([1, 1, 10, 8, 8, 8, 1, 1, 10, 8]);;
 gap> R := RClass(S, f);;
-gap> IsRegularClass(R);
+gap> IsRegularGreensClass(R);
 true
 gap> S := Monoid(Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]), 
 >                Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2]));;
 gap> f := Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2]);;
 gap> R := RClass(S, f);;
-gap> IsRegularClass(R);
+gap> IsRegularGreensClass(R);
 false
 gap> NrIdempotents(R);
 0
@@ -628,17 +628,17 @@ gap> S := Semigroup(Transformation([2, 1, 3, 1]),
 >                   Transformation([4, 2, 3, 3]));;
 gap> f := Transformation([4, 2, 3, 3]);;
 gap> L := GreensLClassOfElement(S, f);;
-gap> IsRegularClass(L);
+gap> IsRegularGreensClass(L);
 false
 gap> R := GreensRClassOfElement(S, f);;
-gap> IsRegularClass(R);
+gap> IsRegularGreensClass(R);
 false
 gap> g := Transformation([4, 4, 4, 4]);;
 gap> IsRegularSemigroupElement(S, g);
 true
-gap> IsRegularClass(LClass(S, g));
+gap> IsRegularGreensClass(LClass(S, g));
 true
-gap> IsRegularClass(RClass(S, g));
+gap> IsRegularGreensClass(RClass(S, g));
 true
 gap> IsRegularDClass(DClass(S, g));
 true
@@ -871,7 +871,7 @@ gap> NrRClasses(S);
   See also <Ref Attr = "Idempotents" BookName = "ref"/> and 
   <Ref Attr = "Idempotents"/>, 
   <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
-  <Ref Prop = "IsRegularClass"/>
+  <Ref Prop = "IsRegularGreensClass"/>
   <Ref Prop = "IsGroupHClass" BookName = "ref"/>, and
   <Ref Attr = "GroupHClass"/>.
 
@@ -927,7 +927,7 @@ gap> NrIdempotents(D);
     <C>RegularDClasses</C> returns a list of the regular &D;-classes of the
     semigroup <A>S</A>. <P/>
 
-    See also <Ref Func = "IsRegularClass"/> and 
+    See also <Ref Func = "IsRegularGreensClass"/> and 
     <Ref Func = "IsRegularDClass" BookName = "ref"/>.  
 
     <Example><![CDATA[

@@ -220,8 +220,8 @@ function(S)
   elif IsPartialPermBipartitionSemigroup(S) then
     return NaturalLeqPartialPermBipartition;
   fi;
-  TryNextMethod(); # This should be the default method for a non-inverse op
-                   # semigroup
+  TryNextMethod(); # This should be the default method for an
+                   # inverse semigroup
 end);
 
 InstallMethod(NaturalPartialOrder,

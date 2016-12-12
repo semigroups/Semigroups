@@ -335,7 +335,7 @@ function(d, q)
   S := SEMIGROUPS.MatrixSemigroupConstructor(GL, [d, q]);
   SetSize(S, q ^ (d * d));
   SetIsGeneralLinearMonoid(S, true);
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   return S;
 end);
 
@@ -443,7 +443,7 @@ function(n)
   od;
 
   S := Monoid(gens);
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   return S;
 end);
 
@@ -461,7 +461,7 @@ function(n)
   od;
 
   S := Monoid(OrderEndomorphisms(n), gens);
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   return S;
 end);
 
@@ -470,7 +470,7 @@ InstallMethod(OrderAntiEndomorphisms, "for a positive integer",
 function(n)
   local S;
   S := Monoid(OrderEndomorphisms(n), Transformation(Reversed([1 .. n])));
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   return S;
 end);
 
@@ -479,7 +479,7 @@ InstallMethod(PartialOrderAntiEndomorphisms, "for a positive integer",
 function(n)
   local S;
   S := Monoid(PartialOrderEndomorphisms(n), Transformation(Reversed([1 .. n])));
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   return S;
 end);
 
@@ -503,7 +503,7 @@ function(n)
     S := Monoid(List([a, b, c, d], TransformationNC));
   fi;
 
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   return S;
 end);
 
@@ -547,7 +547,7 @@ function(n)
                                         List([3 .. n], x -> [x, -x]))));
 
   M := Monoid(gens);
-  SetIsRegularSemigroup(M, true);
+  SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
   SetSize(M, Bell(2 * n));
   return M;
@@ -617,7 +617,7 @@ function(n)
                                         List([3 .. n],
                                              x -> [x, -x]), [[-1, -2]])));
   M := Monoid(gens);
-  SetIsRegularSemigroup(M, true);
+  SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -634,7 +634,7 @@ function(n)
   S := Semigroup(BrauerMonoid(n),
                  AsSemigroup(IsBipartitionSemigroup,
                              SymmetricInverseMonoid(n)));
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(S, true);
   return S;
 end);
@@ -666,7 +666,7 @@ function(n)
   od;
 
   M := Monoid(gens);
-  SetIsRegularSemigroup(M, true);
+  SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -691,7 +691,7 @@ function(n)
   x := Bipartition(x);
 
   M := Monoid(x, AsBipartition(p));
-  SetIsRegularSemigroup(M, true);
+  SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -724,7 +724,7 @@ function(n)
   od;
 
   M := Monoid(gens);
-  SetIsRegularSemigroup(M, true);
+  SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -744,7 +744,7 @@ function(n)
   gens := List(GeneratorsOfInverseSemigroup(POI(n)),
                x -> AsBipartition(x, n));
   M := Monoid(JonesMonoid(n), gens);
-  SetIsRegularSemigroup(M, true);
+  SetFilterObj(M, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(M, true);
   return M;
 end);
@@ -890,7 +890,7 @@ function(n)
   S := Monoid(PartialUniformBlockBijectionMonoid(n),
                Bipartition(Concatenation([[1], [-1]],
                                          List([2 .. n + 1], x -> [x, -x]))));
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(S, true);
   return S;
 end);
@@ -917,7 +917,7 @@ function(m, n)
     od;
     gens[1] := BipartitionByIntRep(next);
     S := InverseMonoid(gens);
-    SetIsRegularSemigroup(S, true);
+    SetFilterObj(S, IsRegularActingSemigroupRep);
     SetIsStarSemigroup(S, true);
     return S;
   fi;
@@ -952,7 +952,7 @@ function(m, n)
   od;
 
   S := Monoid(gens);
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(S, true);
   return S;
 end);
@@ -979,7 +979,7 @@ function(m, n)
   fi;
 
   S := Monoid(gens);
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(S, true);
   return S;
 end);
@@ -1046,7 +1046,7 @@ function(m, n)
   od;
 
   S := Monoid(gens);
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(S, true);
   return S;
 end);
@@ -1077,7 +1077,7 @@ function(m, n)
                                                x -> [x, -x]), [[-m .. -1]])));
   fi;
   S := Monoid(gens);
-  SetIsRegularSemigroup(S, true);
+  SetFilterObj(S, IsRegularActingSemigroupRep);
   SetIsStarSemigroup(S, true);
   return S;
 end);

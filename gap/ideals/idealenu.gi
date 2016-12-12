@@ -15,9 +15,9 @@
 # etc. We get a generating set and use that otherwise.
 
 InstallMethod(GeneratorsOfInverseSemigroup,
-"for a semigroup ideal with generators",
-[IsSemigroupIdeal and IsSemigroupWithInverseOp and
- HasGeneratorsOfSemigroupIdeal],
+"for an inverse semigroup ideal with inverse op and generators",
+[IsSemigroupIdeal and IsInverseSemigroup 
+ and IsGeneratorsOfInverseSemigroup and HasGeneratorsOfSemigroupIdeal],
 function(I)
   # TODO could remove inverses...
   return GeneratorsOfSemigroup(I);
@@ -200,8 +200,9 @@ end);
 
 InstallMethod(\in,
 "for a multiplicative element and semigroup ideal with generators",
-[IsMultiplicativeElement, 
- IsEnumerableSemigroupRep and IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
+[IsMultiplicativeElement,
+ IsEnumerableSemigroupRep and IsSemigroupIdeal
+ and HasGeneratorsOfSemigroupIdeal],
 function(x, I)
   return Position(Enumerator(I), x) <> fail;
 end);

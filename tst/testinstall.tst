@@ -707,10 +707,7 @@ gap> S := Monoid(
 gap> I := SemigroupIdeal(S, S.3);;
 gap> IsRegularSemigroup(I);
 true
-gap> S / I;
-<quotient of <Rees congruence of <regular transformation semigroup ideal of 
- degree 4 with 1 generator> over <transformation monoid of degree 4 with 12 
-generators>>>
+gap> S / I;;
 
 #T# TestInstall43: Issue 89
 gap> S := Semigroup(Transformation([2, 1, 3, 1, 4, 3]),
@@ -1497,6 +1494,31 @@ gap> Size(S);
 119
 gap> Size(Semigroup(S));
 119
+
+# Test Issue #237
+gap> T := Semigroup([
+>  Transformation([1, 2, 6, 4, 5, 6]),
+>  Transformation([1, 2, 3, 4, 6, 6]),
+>  Transformation([1, 2, 3, 6, 5, 6]),
+>  Transformation([1, 6, 6, 4, 5, 6]),
+>  Transformation([1, 6, 3, 4, 6, 6]),
+>  Transformation([1, 6, 3, 6, 5, 6]),
+>  Transformation([6, 2, 3, 6, 5, 6]),
+>  Transformation([6, 2, 6, 4, 5, 6]),
+>  Transformation([6, 2, 3, 4, 6, 6])]);;
+gap> x := Transformation([1, 6, 3, 6, 6, 6]);;
+gap> y := Transformation([6, 6, 3, 6, 6, 6]);;
+gap> IsIdempotent(x) and IsIdempotent(y) and x in T and y in T;
+true
+gap> I := IdempotentGeneratedSubsemigroup(T);;
+gap> IsGreensDLeq(I)(x, y);
+true
+gap> T := Semigroup(T);;
+gap> I := IdempotentGeneratedSubsemigroup(T);;
+gap> IsInverseSemigroup(I);
+true
+gap> IsGreensDLeq(I)(x, y);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);

@@ -1178,7 +1178,7 @@ gap> gens := [Transformation([10, 8, 7, 4, 1, 4, 10, 10, 7, 2]),
 gap> s := Monoid(gens);;
 gap> f := Transformation([1, 1, 10, 8, 8, 8, 1, 1, 10, 8]);;
 gap> r := RClass(s, f);;
-gap> IsRegularClass(r);
+gap> IsRegularGreensClass(r);
 true
 gap> Set(Idempotents(r));
 [ Transformation( [ 2, 2, 3, 5, 5, 5, 2, 2, 3, 5 ] ), 
@@ -1194,19 +1194,19 @@ gap> f := Transformation([5, 9, 8, 8, 8, 8, 5, 5, 8, 5]);;
 gap> r := RClass(s, f);;
 gap> NrIdempotents(r);
 6
-gap> IsRegularClass(r);
+gap> IsRegularGreensClass(r);
 true
 gap> f := Transformation([8, 9, 3, 3, 3, 3, 8, 8, 3, 10]);;
 gap> r := RClass(s, f);;
 gap> Idempotents(r);;
-gap> IsRegularClass(r);
+gap> IsRegularGreensClass(r);
 true
 gap> gens := [Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]),
 > Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2])];;
 gap> s := Monoid(gens);;
 gap> f := Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2]);;
 gap> r := RClass(s, f);;
-gap> IsRegularClass(r);
+gap> IsRegularGreensClass(r);
 false
 gap> Idempotents(r);
 [  ]

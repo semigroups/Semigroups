@@ -38,4 +38,5 @@ SEMIGROUPS.InverseCongFromPairs := function(S, pairs)
 end;
 
 # Special congruences
-DeclareAttribute("MinimumGroupCongruence", IsSemigroupWithInverseOp);
+DeclareAttribute("MinimumGroupCongruence", 
+                 IsInverseSemigroup and IsGeneratorsOfInverseSemigroup);

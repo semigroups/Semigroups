@@ -8,11 +8,11 @@
 #############################################################################
 ##
 
-# This file contains methods for Green's classes and relations for inverse op
-# acting semigroups.
+# This file contains methods for Green's classes and relations for acting
+# semigroups in IsInverseActingSemigroupRep.
 
-## See the start of grac.gi for details of how to create Green's
-## classes of acting semigroups.
+# See the start of grac.gi for details of how to create Green's
+# classes of acting semigroups.
 
 # Methods here are similar to methods in gracreg.gi but without any use of
 # RhoAnything!
@@ -38,7 +38,7 @@
 ## 1. Helper functions for the creation of Green's classes . . .
 #############################################################################
 
-# the following is only for inverse op semigroups!
+# The following is only for inverse semigroups rep!
 
 SEMIGROUPS.DClassOfXClass := function(X)
   local D;
@@ -67,8 +67,9 @@ end;
 
 # same method for inverse ideals
 
-InstallMethod(SchutzenbergerGroup, "for an inverse op L-class",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(SchutzenbergerGroup,
+"for an L-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensLClass],
 function(L)
   local o, m, p;
 
@@ -89,23 +90,20 @@ end);
 #############################################################################
 
 InstallMethod(DClassOfLClass,
-"for an L-class of an inverse op acting semigroup",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
-SEMIGROUPS.DClassOfXClass);
+"for an L-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensLClass], SEMIGROUPS.DClassOfXClass);
 
 InstallMethod(DClassOfRClass,
-"for an R-class of an inverse op acting semigroup",
-[IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
-SEMIGROUPS.DClassOfXClass);
+"for an R-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensRClass], SEMIGROUPS.DClassOfXClass);
 
 InstallMethod(DClassOfHClass,
-"for an H-class of an inverse op acting semigroup",
-[IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
-SEMIGROUPS.DClassOfXClass);
+"for an H-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensHClass], SEMIGROUPS.DClassOfXClass);
 
 InstallMethod(LClassOfHClass,
-"for an H-class of an inverse op acting semigroup",
-[IsInverseOpClass and IsGreensHClass and IsActingSemigroupGreensClass],
+"for an H-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensHClass],
 function(H)
   local L;
   L := SEMIGROUPS.CreateLClass(H);
@@ -117,8 +115,8 @@ end);
 # same method for inverse ideals
 
 InstallMethod(GreensDClassOfElementNC,
-"for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroup and IsSemigroupWithInverseOp,
+"for an inverse acting semigroup rep, mult. element, and bool",
+[IsInverseActingSemigroupRep,
  IsMultiplicativeElement,
  IsBool],
 function(S, x, isGreensClassNC)
@@ -133,8 +131,8 @@ end);
 # same method for inverse ideals
 
 InstallMethod(GreensLClassOfElementNC,
-"for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroup and IsSemigroupWithInverseOp,
+"for an inverse acting semigroup rep, mult. element, and bool",
+[IsInverseActingSemigroupRep,
  IsMultiplicativeElement,
  IsBool],
 function(S, x, isGreensClassNC)
@@ -148,8 +146,8 @@ end);
 # same method for inverse ideals
 
 InstallMethod(GreensHClassOfElementNC,
-"for an inverse op acting semigroup, element, and bool",
-[IsActingSemigroup and IsSemigroupWithInverseOp,
+"for an inverse acting semigroup rep, mult. element, and bool",
+[IsInverseActingSemigroupRep,
  IsMultiplicativeElement,
  IsBool],
 function(S, x, isGreensClassNC)
@@ -162,8 +160,10 @@ end);
 # same method for inverse ideals
 
 InstallMethod(GreensHClassOfElementNC,
-"for a inverse op class, element, and bool",
-[IsInverseOpClass and IsActingSemigroupGreensClass, IsMultiplicativeElement,
+Concatenation("for a Green's class of an inverse acting semigroup rep",
+              "mult. element, and bool"),
+[IsInverseActingRepGreensClass,
+ IsMultiplicativeElement,
  IsBool],
 function(C, x, isGreensClassNC)
   local H;
@@ -181,19 +181,19 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(Size, "for an inverse op D-class",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(Size, "for a D-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensDClass],
 D -> Size(SchutzenbergerGroup(D)) * Length(LambdaOrbSCC(D)) ^ 2);
 
 # same method for inverse ideals
 
-InstallMethod(Size, "for an inverse op L-class",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(Size, "for an L-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensLClass],
 L -> Size(SchutzenbergerGroup(L)) * Length(LambdaOrbSCC(L)));
 
-InstallMethod(\in, "for inverse op D-class",
-[IsMultiplicativeElement,
- IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(\in,
+"for a mult. element and D-class of an inverse acting semigroup rep",
+[IsMultiplicativeElement, IsInverseActingRepGreensClass and IsGreensDClass],
 function(x, D)
   local S, rep, m, o, scc, l, schutz;
 
@@ -238,9 +238,9 @@ function(x, D)
 end);
 
 InstallMethod(\in,
-"for multiplicative element and inverse op L-class of acting semigroup.",
-[IsMultiplicativeElement, IsInverseOpClass and IsGreensLClass and
- IsActingSemigroupGreensClass],
+"for a mult. element and L-class of an inverse acting semigroup rep",
+[IsMultiplicativeElement,
+ IsInverseActingRepGreensClass and IsGreensLClass],
 function(x, L)
   local S, rep, o, m, scc, l, schutz;
 
@@ -285,8 +285,8 @@ end);
 # This is required since it is used elsewhere in the code that DClassReps of an
 # inverse semigroup are all idempotents.
 
-InstallMethod(DClassReps, "for an inverse op acting semigroup",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
+InstallMethod(DClassReps, "for an inverse acting semigroup rep",
+[IsInverseActingSemigroupRep],
 function(S)
   local o, out, m;
   o := LambdaOrb(S);
@@ -299,8 +299,8 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensDClasses, "for an acting semigroup with inverse op",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
+InstallMethod(GreensDClasses, "for an acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
 function(S)
   local o, scc, out, CreateDClass, D, i;
 
@@ -323,8 +323,10 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(GreensLClasses, "for inverse op D-class of acting semigroup",
-[IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
+InstallMethod(GreensLClasses,
+"for a D-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass
+ and IsGreensDClass],
 function(D)
   local reps, out, CreateLClass, CopyLambda, i;
 
@@ -345,20 +347,23 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(RClassReps, "for an acting semigroup with inverse op",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
+InstallMethod(RClassReps, "for an acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
 S -> List(LClassReps(S), x -> Inverse(x)));
 
 # same method for inverse ideals
 
-InstallMethod(RClassReps, "for a D-class of an inverse op acting semigroup",
-[IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
+InstallMethod(RClassReps,
+"for a D-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass
+ and IsGreensDClass],
 D -> List(LClassReps(D), x -> Inverse(x)));
 
 # same method for inverse ideals
 
-InstallMethod(HClassReps, "for an inverse op L-class",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+InstallMethod(HClassReps,
+"for an L-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensLClass],
 function(L)
   local o, m, scc, mults, rep, out, nr, i;
   o := LambdaOrb(L);
@@ -376,8 +381,8 @@ function(L)
 end);
 
 InstallMethod(GreensHClasses,
-"for an inverse op class of an acting semigroup",
-[IsInverseOpClass and IsActingSemigroupGreensClass],
+"for a Green's class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass],
 function(C)
   local reps, out, setter, CreateHClass, CopyLambda, i;
 
@@ -409,42 +414,44 @@ function(C)
   return out;
 end);
 
-#############################################################################
+# same method for inverse ideals
+
+InstallMethod(NrRClasses, "for an acting inverse semigroup rep",
+[IsInverseActingSemigroupRep], NrLClasses);
 
 # same method for inverse ideals
 
-InstallMethod(NrRClasses, "for an acting semigroup with inverse op",
-[IsActingSemigroup and IsSemigroupWithInverseOp], NrLClasses);
+InstallMethod(NrRClasses,
+"for a D-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensDClass], NrLClasses);
 
 # same method for inverse ideals
 
-InstallMethod(NrRClasses, "for inverse op D-class",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
-NrLClasses);
+InstallMethod(NrHClasses,
+"for a D-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass
+ and IsGreensDClass], D -> Length(LambdaOrbSCC(D)) ^ 2);
 
 # same method for inverse ideals
 
-InstallMethod(NrHClasses, "for an inverse op D-class of acting semigroup",
-[IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensDClass],
-D -> Length(LambdaOrbSCC(D)) ^ 2);
+InstallMethod(NrHClasses,
+"for an L-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass
+ and IsGreensLClass], L -> Length(LambdaOrbSCC(L)));
 
 # same method for inverse ideals
 
-InstallMethod(NrHClasses, "for an inverse op L-class of acting semigroup",
-[IsActingSemigroupGreensClass and IsInverseOpClass and IsGreensLClass],
-L -> Length(LambdaOrbSCC(L)));
+InstallMethod(NrHClasses, "for an acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
+function(S)
+  return Sum(List(OrbSCC(Enumerate(LambdaOrb(S))), x -> Length(x) ^ 2)) - 1;
+end);
 
 # same method for inverse ideals
 
-InstallMethod(NrHClasses, "for an acting semigroup with inverse op",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
-S ->
-Sum(List(OrbSCC(Enumerate(LambdaOrb(S))), x -> Length(x) ^ 2)) - 1);
-
-# same method for inverse ideals
-
-InstallMethod(GroupHClassOfGreensDClass, "for an inverse op D-class",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(GroupHClassOfGreensDClass,
+"for a D-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensDClass],
 function(D)
   local H;
   H := GreensHClassOfElementNC(D, Representative(D));
@@ -454,8 +461,9 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(PartialOrderOfDClasses, "for acting semigroup with inverse op",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
+InstallMethod(PartialOrderOfDClasses,
+"for acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
 function(S)
   local D, n, out, o, gens, lookup, lambdafunc, i, x, y;
 
@@ -486,15 +494,15 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(Idempotents, "for acting semigroup with inverse op",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
-function(s)
+InstallMethod(Idempotents, "for acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
+function(S)
   local o, creator, r, out, i;
 
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   Enumerate(o, infinity);
 
-  creator := IdempotentCreator(s);
+  creator := IdempotentCreator(S);
   r := Length(o);
   out := EmptyPlist(r - 1);
 
@@ -507,8 +515,8 @@ end);
 # same method for inverse ideals
 
 InstallMethod(Idempotents,
-"for acting semigroup with inverse op and non-negative integer",
-[IsActingSemigroup and IsSemigroupWithInverseOp, IsInt],
+"for acting inverse semigroup rep and non-negative integer",
+[IsInverseActingSemigroupRep, IsInt],
 function(S, n)
   local o, creator, out, rank, nr, i;
 
@@ -543,8 +551,9 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(Idempotents, "for an inverse op D-class",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
+InstallMethod(Idempotents,
+"for a D-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensDClass],
 function(D)
   local creator, o;
   creator := IdempotentCreator(Parent(D));
@@ -554,41 +563,42 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(Idempotents, "for an inverse op L-class",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
-L -> [RightOne(Representative(L))]);
+InstallMethod(Idempotents,
+"for an L-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensLClass], L -> [RightOne(Representative(L))]);
 
 # same method for inverse ideals
 
-InstallMethod(Idempotents, "for an inverse op R-class",
-[IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
+InstallMethod(Idempotents,
+"for an R-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensRClass],
 R -> [LeftOne(Representative(R))]);
 
 # Number of idempotents . . .
 
 # same method for inverse ideals
 
-InstallMethod(NrIdempotents, "for an acting semigroup with inverse op",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
+InstallMethod(NrIdempotents, "for an acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
 S -> Length(Enumerate(LambdaOrb(S))) - 1);
 
 # same method for inverse ideals
 
-InstallMethod(NrIdempotents, "for an inverse op D-class",
-[IsInverseOpClass and IsGreensDClass and IsActingSemigroupGreensClass],
-NrLClasses);
+InstallMethod(NrIdempotents,
+"for a D-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensDClass], NrLClasses);
 
 # same method for inverse ideals
 
-InstallMethod(NrIdempotents, "for an inverse op L-class",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
-L -> 1);
+InstallMethod(NrIdempotents,
+"for an L-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensLClass], L -> 1);
 
 # same method for inverse ideals
 
-InstallMethod(NrIdempotents, "for an inverse op R-class",
-[IsInverseOpClass and IsGreensRClass and IsActingSemigroupGreensClass],
-R -> 1);
+InstallMethod(NrIdempotents,
+"for an R-class of an inverse acting semigroup rep",
+[IsInverseActingRepGreensClass and IsGreensRClass], R -> 1);
 
 #############################################################################
 ## 5. Iterators and enumerators . . .
@@ -596,15 +606,16 @@ R -> 1);
 
 # FIXME move this elsewhere
 
-# JDM again this method might not nec. if inverse op semigroups have RhoOrb
-# method
+# JDM again this method might not nec. if acting inverse semigroups rep
+# have RhoOrb method
 
 # Notes: the only purpose for this is the method for NumberElement.  Otherwise
 # use (if nothing much is known) IteratorOfRClasses or if everything is know
 # just use RClasses.
 
-InstallMethod(EnumeratorOfRClasses, "for an inverse op acting semigroup",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
+InstallMethod(EnumeratorOfRClasses,
+"for an inverse acting semigroup rep",
+[IsInverseActingSemigroupRep],
 function(S)
 
   Enumerate(LambdaOrb(S));

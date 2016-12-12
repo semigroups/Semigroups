@@ -810,7 +810,7 @@ true]]></Example>
       regular if and only if it is an inverse semigroup.<P/>
 
       See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
-      <Ref Func = "IsRegularClass"/>,   
+      <Ref Func = "IsRegularGreensClass"/>,   
       and <Ref Func = "IsRegularSemigroupElement" BookName = "ref"/>.
       
       <Example><![CDATA[

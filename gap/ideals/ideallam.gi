@@ -252,8 +252,8 @@ end);
 # acting on the right by the generators (and their inverses) of the
 # supersemigroup. Hence we require a different case here.
 
-InstallMethod(LambdaOrb, "for an inverse op acting semigroup ideal",
-[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(LambdaOrb, "for an inverse acting semigroup rep ideal",
+[IsInverseActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   local record, gens, lambdafunc, o, ht, nr, nrgens, lambda, InstallPointInOrb,
    x, i;

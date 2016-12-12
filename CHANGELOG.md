@@ -607,7 +607,7 @@ of partial perms.
 A minor release fixing several bugs relating to partial
 permutations and monoids thereof, pointed out by Jack Schmidt.
 More specifically, MultiplicativeZero sometimes incorrectly
-returned fail for a inverse semigroup of partial permutations,
+returned fail for an inverse semigroup of partial permutations,
 sometimes PartialPerm incorrectly returned fail when given a dense
 range as an argument, sometimes the size of an inverse monoid was 1
 more than the correct value, and RestrictedPP sometimes failed when

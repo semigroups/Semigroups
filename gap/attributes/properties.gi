@@ -303,8 +303,9 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse op semigroup",
-[IsSemigroupWithInverseOp],
+InstallMethod(IsEUnitaryInverseSemigroup,
+"for an inverse semigroup with inverse op",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 function(S)
   if not IsFinite(S) then
     TryNextMethod();
@@ -426,7 +427,7 @@ end);
 # same method for inverse ideals
 
 InstallMethod(IsLTrivial, "for an inverse acting semigroup",
-[IsSemigroupWithInverseOp and IsActingSemigroup],
+[IsInverseActingSemigroupRep],
 function(S)
   if HasParent(S) and HasIsLTrivial(Parent(S)) and IsLTrivial(Parent(S)) then
     return true;
@@ -643,7 +644,7 @@ function(S)
   if HasGreensDClasses(S) then
     iter := GreensDClasses(S);
     for x in iter do
-      if not IsRegularClass(x)
+      if not IsRegularGreensClass(x)
           or NrRClasses(x) <> NrLClasses(x)
           or NrIdempotents(x) <> NrRClasses(x) then
         return false;
@@ -841,8 +842,8 @@ end);
 # same method for ideals
 
 InstallMethod(IsMonogenicInverseSemigroup,
-"for a semigroup with inverse op",
-[IsSemigroupWithInverseOp],
+"for an inverse semigroup with inverse op",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 function(S)
   local gens, I, y, i;
 
@@ -962,8 +963,8 @@ function(S)
 end);
 
 InstallMethod(IsMonogenicInverseMonoid,
-"for a monoid with inverse op",
-[IsMonoid and IsSemigroupWithInverseOp],
+"for an inverse monoid with inverse op",
+[IsInverseMonoid and IsGeneratorsOfInverseSemigroup],
 function(S)
   local gens, I, y, i;
 
@@ -1310,7 +1311,7 @@ InstallMethod(IsRegularSemigroupElementNC,
 InstallMethod(IsRegularSemigroupElement, "for semigroup", IsCollsElms,
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
-  return x in S and IsRegularClass(RClass(S, x));
+  return x in S and IsRegularGreensClass(RClass(S, x));
 end);
 
 # same method for ideals

@@ -274,7 +274,7 @@ end);
 # different method for inverse
 
 InstallMethod(Enumerator, "for a regular D-class of an acting semigroup",
-[IsGreensDClass and IsRegularClass and IsActingSemigroupGreensClass],
+[IsGreensDClass and IsRegularGreensClass and IsActingSemigroupGreensClass],
 function(d)
   local record, convert_out, convert_in, rho_scc, lambda_scc;
 
@@ -339,11 +339,9 @@ function(d)
            convert_out, convert_in, [], record);
 end);
 
-#this method is unnecesary if we write a method for RhoOrb of a inverse op
-#D-class JDM
-
 InstallMethod(Enumerator, "for a D-class of an inverse acting semigroup",
-[IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+[IsGreensDClass and IsInverseActingRepGreensClass
+ and IsActingSemigroupGreensClass],
 function(d)
   local record, convert_out, convert_in, lambda_scc;
 
@@ -509,11 +507,10 @@ function(l)
     convert_out, convert_in, [], record);
 end);
 
-#this method is unnecesary if we write a method for RhoOrb of a inverse op
-#L-class JDM
-
-InstallMethod(Enumerator, "for L-class of an inverse op acting semigroup",
-[IsGreensLClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+InstallMethod(Enumerator,
+"for L-class of an inverse acting semigroup rep",
+[IsGreensLClass and IsInverseActingRepGreensClass
+ and IsActingSemigroupGreensClass],
 function(l)
   local record, convert_out, convert_in, scc;
 

@@ -427,7 +427,7 @@ end);
 #FIXME move this!
 
 InstallMethod(Iterator, "for a regular D-class of an acting semigroup",
-[IsGreensDClass and IsRegularClass and IsActingSemigroupGreensClass],
+[IsGreensDClass and IsRegularGreensClass and IsActingSemigroupGreensClass],
 function(d)
   local iter, baseiter, convert;
 
@@ -466,8 +466,10 @@ end);
 #semigroups
 #FIXME move this!
 
-InstallMethod(Iterator, "for a D-class of an inverse acting semigroup",
-[IsGreensDClass and IsInverseOpClass and IsActingSemigroupGreensClass],
+InstallMethod(Iterator,
+"for a D-class of an inverse acting semigroup rep",
+[IsGreensDClass and IsInverseActingRepGreensClass
+ and IsActingSemigroupGreensClass],
 function(d)
   local iter, scc, baseiter, convert;
 
@@ -956,7 +958,7 @@ S -> IteratorByIterator(IteratorOfLClassData(S),
 #FIXME move this!
 
 InstallMethod(IteratorOfDClassData, "for inverse acting semigroup",
-[IsActingSemigroup and IsSemigroupWithInverseOp and IsRegularSemigroup],
+[IsInverseActingSemigroupRep and IsRegularSemigroup],
 function(s)
   local graded, record, o, scc, func;
 
@@ -1009,8 +1011,8 @@ end);
 
 #FIXME move this!
 
-InstallMethod(IteratorOfRClassData, "for acting semigroup with inverse op",
-[IsSemigroupWithInverseOp and IsActingSemigroup],
+InstallMethod(IteratorOfRClassData, "for acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
 function(s)
   local o, func, iter, lookup;
 
@@ -1051,8 +1053,8 @@ end);
 
 #FIXME move this!
 
-InstallMethod(IteratorOfLClassReps, "for acting semigroup with inverse op",
-[IsSemigroupWithInverseOp and IsActingSemigroup],
+InstallMethod(IteratorOfLClassReps, "for acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
 S -> IteratorByIterator(IteratorOfRClassData(S),
                         x -> Inverse(x[4]),
                         [],
@@ -1065,7 +1067,8 @@ S -> IteratorByIterator(IteratorOfRClassData(S),
 #FIXME move this!
 
 InstallMethod(Iterator, "for an L-class of an inverse acting semigroup",
-[IsInverseOpClass and IsGreensLClass and IsActingSemigroupGreensClass],
+[IsInverseActingRepGreensClass and IsGreensLClass
+ and IsActingSemigroupGreensClass],
 function(L)
   local iter, m, baseiter, convert;
 

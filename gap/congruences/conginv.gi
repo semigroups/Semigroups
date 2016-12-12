@@ -16,7 +16,9 @@
 ##
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTrace,
-[IsSemigroupWithInverseOp and IsFinite, IsSemigroupWithInverseOp, IsDenseList],
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup and IsFinite,
+ IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsDenseList],
 function(S, kernel, traceBlocks)
   local a, x, traceClass, f, l, e;
   # Check that the kernel is an inverse subsemigroup
@@ -38,7 +40,8 @@ function(S, kernel, traceBlocks)
     for x in GeneratorsOfSemigroup(S) do
       if not a ^ x in kernel then
         ErrorNoReturn("Semigroups: InverseSemigroupCongruenceByKernelTrace: ",
-                      "usage,\nthe second arg <kernel> must be self-conjugate,");
+                      "usage,\nthe second arg <kernel> must be ",
+                      "self-conjugate,");
       fi;
     od;
   od;
@@ -72,12 +75,13 @@ function(S, kernel, traceBlocks)
 end);
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTraceNC,
-[IsSemigroupWithInverseOp and IsFinite and IsEnumerableSemigroupRep, 
- IsSemigroup, 
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup 
+ and IsFinite and IsEnumerableSemigroupRep,
+ IsSemigroup,
  IsDenseList],
 function(S, kernel, traceBlocks)
   local traceLookup, ES, fam, cong, i, elm;
-  
+
   # Sort blocks
   traceBlocks := SortedList(List(traceBlocks, SortedList));
 
@@ -218,7 +222,7 @@ InstallMethod(EquivalenceRelationCanonicalLookup,
 "for inverse semigroup congruence",
 [IsInverseSemigroupCongruenceByKernelTrace],
 function(cong)
-  local S, n, classes, data, elms, table, next, i, x;
+  local S, n, classes, elms, table, next, i, x;
   S := Range(cong);
   n := Size(S);
   classes := EquivalenceClasses(cong);
@@ -359,9 +363,10 @@ InstallMethod(TraceOfSemigroupCongruence,
 [IsSemigroupCongruence],
 function(cong)
   local invcong;
-  if not IsSemigroupWithInverseOp(Range(cong)) then
+  if not IsInverseSemigroup(Range(cong)) 
+      and IsGeneratorsOfInverseSemigroup(Range(cong)) then
     ErrorNoReturn("Semigroups: TraceOfSemigroupCongruence: usage,\n",
-                  "<cong> must be over a semigroup with inverse op,");
+                  "<cong> must be over an inverse semigroup with inverse op,");
   fi;
   invcong := AsInverseSemigroupCongruenceByKernelTrace(cong);
   return invcong!.traceBlocks;
@@ -372,9 +377,10 @@ InstallMethod(KernelOfSemigroupCongruence,
 [IsSemigroupCongruence],
 function(cong)
   local invcong;
-  if not IsSemigroupWithInverseOp(Range(cong)) then
+  if not IsInverseSemigroup(Range(cong)) 
+      and IsGeneratorsOfInverseSemigroup(Range(cong)) then
     ErrorNoReturn("Semigroups: KernelOfSemigroupCongruence: usage,\n",
-                  "<cong> must be over a semigroup with inverse op,");
+                  "<cong> must be over an inverse semigroup with inverse op,");
   fi;
   invcong := AsInverseSemigroupCongruenceByKernelTrace(cong);
   return invcong!.kernel;
@@ -386,10 +392,10 @@ InstallMethod(AsInverseSemigroupCongruenceByKernelTrace,
 function(cong)
   local S;
   S := Range(cong);
-  if not IsSemigroupWithInverseOp(S) then
+  if not (IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S)) then
     ErrorNoReturn("Semigroups: AsInverseSemigroupCongruenceByKernelTrace: ",
                   "usage,\n",
-                  "<cong> must be over a semigroup with inverse op,");
+                  "<cong> must be over an inverse semigroup with inverse op,");
   fi;
   return SEMIGROUPS.KernelTraceClosure(S,
                                    IdempotentGeneratedSubsemigroup(S),
@@ -648,8 +654,8 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
 end;
 
 InstallMethod(MinimumGroupCongruence,
-"for an inverse semigroup",
-[IsSemigroupWithInverseOp],
+"for an inverse semigroup with inverse op",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 # This is the maximum congruence whose quotient is a group
 function(S)
   local ker, leq, n, x, traceBlocks;

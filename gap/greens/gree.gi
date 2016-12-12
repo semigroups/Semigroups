@@ -9,7 +9,7 @@
 ##
 
 # This file contains methods for Green's relations and classes of semigroups
-# where the particular representation of the Green's classes is not important. 
+# where the particular representation of the Green's classes is not important.
 
 #############################################################################
 ##
@@ -45,9 +45,9 @@
 # are not the same.  But unfortunately this disagrees with the definition of
 # equality of congruences...
 
-#TODO move this to the library 
+#TODO move this to the library
 
-InstallMethod(\=, "for Green's relations", 
+InstallMethod(\=, "for Green's relations",
 [IsGreensRelation, IsGreensRelation], 5, # to beat the method for congruences
 function(rel1, rel2)
   if Source(rel1) <> Source(rel2) then
@@ -68,7 +68,7 @@ end);
 InstallMethod(\=, "for Green's classes",
 [IsGreensClass, IsGreensClass],
 function(x, y)
-  if EquivalenceClassRelation(x) = EquivalenceClassRelation(y) then 
+  if EquivalenceClassRelation(x) = EquivalenceClassRelation(y) then
     # the classes are of the same type
     return Parent(x) = Parent(y) and Representative(x) in y;
   fi;
@@ -78,7 +78,7 @@ end);
 InstallMethod(\<, "for Green's classes",
 [IsGreensClass, IsGreensClass],
 function(x, y)
-  if EquivalenceClassRelation(x) = EquivalenceClassRelation(y) then 
+  if EquivalenceClassRelation(x) = EquivalenceClassRelation(y) then
     return Parent(x) = Parent(y)
            and RepresentativeSmallest(x) < RepresentativeSmallest(y);
   fi;
@@ -86,7 +86,7 @@ function(x, y)
 end);
 
 InstallMethod(IsRegularDClass, "for a D-class of a semigroup",
-[IsGreensDClass], IsRegularClass);
+[IsGreensDClass], IsRegularGreensClass);
 
 InstallMethod(MultiplicativeNeutralElement,
 "for a H-class of a semigroup", [IsGreensHClass],
@@ -143,7 +143,7 @@ InstallMethod(GreensJRelation, "for a finite semigroup",
 ## 3. Individual classes . . .
 #############################################################################
 
-InstallMethod(IsGreensClassNC, "for a Green's class", 
+InstallMethod(IsGreensClassNC, "for a Green's class",
 [IsGreensClass], ReturnFalse);
 
 InstallMethod(OneImmutable, "for an H-class",
@@ -171,7 +171,7 @@ InstallMethod(GreensJClassOfElementNC,
 
 # Green's class of a Green's class (finer from coarser)
 
-# FIXME Should these be for IsEnumerableSemigroupGreensClassRep?? 
+# FIXME Should these be for IsEnumerableSemigroupGreensClassRep??
 
 InstallMethod(GreensRClassOfElement,
 "for a D-class and multiplicative element",
@@ -322,13 +322,8 @@ InstallMethod(Idempotents, "for a Green's class",
 ## 6. Regular classes . . .
 #############################################################################
 
-InstallMethod(IsRegularClass, "for a Green's class",
+InstallMethod(IsRegularGreensClass, "for a Green's class",
 [IsGreensClass], C -> First(Enumerator(C), x -> IsIdempotent(x)) <> fail);
-
-InstallTrueMethod(IsRegularClass, IsRegularDClass);
-InstallTrueMethod(IsRegularClass, IsInverseOpClass);
-InstallTrueMethod(IsHClassOfRegularSemigroup,
-                  IsInverseOpClass and IsGreensHClass);
 
 #############################################################################
 ## 7. Properties of Green's classes . . .
@@ -348,13 +343,13 @@ InstallMethod(IsRTrivial, "for a Green's D-class",
 #############################################################################
 
 InstallMethod(IteratorOfDClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite], 
+[IsSemigroup and IsFinite],
 function(S)
   return IteratorList(GreensDClasses(S));
 end);
 
 InstallMethod(IteratorOfRClasses, "for a finite semigroup",
-[IsSemigroup and IsFinite], 
+[IsSemigroup and IsFinite],
 function(S)
   return IteratorList(GreensRClasses(S));
 end);

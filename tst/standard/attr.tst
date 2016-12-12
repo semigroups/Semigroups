@@ -743,7 +743,7 @@ fail
 gap> x := BooleanMat([[0, 0, 0], [1, 1, 0], [0, 0, 0]]);;
 gap> x ^ map;
 fail
-gap> D := First(DClasses(S), x -> not IsRegularClass(x));
+gap> D := First(DClasses(S), x -> not IsRegularGreensClass(x));
 <Green's D-class: Matrix(IsBooleanMat, [[1, 0, 1], [1, 1, 0], [0, 0, 1]])>
 gap> InjectionPrincipalFactor(D);
 Error, Semigroups: InjectionPrincipalFactor: usage,

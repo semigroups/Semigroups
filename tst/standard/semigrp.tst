@@ -253,16 +253,19 @@ gap> S := Monoid(
 > Bipartition([[1, -1], [2], [3], [4], [5, -6],
 >      [6], [7, -3], [8, -5], [9, -7], [10, -2], [-4], [-8],
 >      [-9], [-10]]));;
-gap> IsSemigroupWithInverseOp(S);
+gap> IsInverseActingSemigroupRep(S);
 false
 gap> IsGeneratorsOfInverseSemigroup(S);
 true
 gap> S := Semigroup(S);;
 gap> IsInverseSemigroup(S);
 true
-gap> IsSemigroupWithInverseOp(S);
-true
+gap> IsInverseActingSemigroupRep(S);
+false
 gap> IsGeneratorsOfInverseSemigroup(S);
+true
+gap> S := InverseSemigroup(S);;
+gap> IsInverseActingSemigroupRep(S) or not IsActingSemigroup(S);
 true
 
 # Test Generators 1

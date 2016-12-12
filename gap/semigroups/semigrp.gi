@@ -126,7 +126,7 @@ InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a semigroup with generators",
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  if IsSemigroupWithInverseOp(S) then
+  if IsInverseActingSemigroupRep(S) then
     return true;
   fi;
   return IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S));
@@ -245,12 +245,12 @@ function(gens, opts)
 
   filts := IsSemigroup and IsAttributeStoringRep;
 
+  if opts.regular then
+    filts := filts and IsRegularActingSemigroupRep;
+  fi;
   if opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
-    if opts.regular then
-      filts := filts and IsRegularSemigroup;
-    fi;
-  elif IsGeneratorsOfEnumerableSemigroup(gens) then 
+  elif IsGeneratorsOfEnumerableSemigroup(gens) then
     filts := filts and IsEnumerableSemigroupRep;
   fi;
 
@@ -332,12 +332,13 @@ function(gens, opts)
 
   filts := IsMonoid and IsAttributeStoringRep;
 
+  if opts.regular then
+    filts := filts and IsRegularActingSemigroupRep;
+  fi;
+
   if opts.acting and IsGeneratorsOfActingSemigroup(gens) then
     filts := filts and IsActingSemigroup;
-    if opts.regular then
-      filts := filts and IsRegularSemigroup;
-    fi;
-  elif IsGeneratorsOfEnumerableSemigroup(gens) then 
+  elif IsGeneratorsOfEnumerableSemigroup(gens) then
     filts := filts and IsEnumerableSemigroupRep;
   fi;
 
@@ -426,8 +427,8 @@ function(gens, opts)
   filts := IsMagma and IsInverseSemigroup and IsAttributeStoringRep;
 
   if opts.acting and IsGeneratorsOfActingSemigroup(gens) then
-    filts := filts and IsActingSemigroup;
-  elif IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsInverseActingSemigroupRep;
+  elif IsGeneratorsOfEnumerableSemigroup(gens) then
     filts := filts and IsEnumerableSemigroupRep;
   fi;
 
@@ -510,11 +511,11 @@ function(gens, opts)
     fi;
   fi;
 
-  filts := IsMagmaWithOne and IsInverseSemigroup and IsAttributeStoringRep;
+  filts := IsMagmaWithOne and IsInverseMonoid and IsAttributeStoringRep;
 
   if opts.acting and IsGeneratorsOfActingSemigroup(gens) then
-    filts := filts and IsActingSemigroup;
-  elif IsGeneratorsOfEnumerableSemigroup(gens) then 
+    filts := filts and IsInverseActingSemigroupRep;
+  elif IsGeneratorsOfEnumerableSemigroup(gens) then
     filts := filts and IsEnumerableSemigroupRep;
   fi;
 
@@ -550,8 +551,9 @@ end);
 #############################################################################
 
 InstallMethod(ClosureInverseSemigroup,
-"for a semigroup with inverse op and finite multiplicative element coll",
-[IsSemigroupWithInverseOp, IsMultiplicativeElementCollection and IsFinite],
+"for an inverse semigroup with inverse op and finite mult. element coll",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsMultiplicativeElementCollection and IsFinite],
 function(S, coll) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
                                  coll,
@@ -559,8 +561,9 @@ function(S, coll) #FIXME is the ShallowCopy really necessary?
 end);
 
 InstallMethod(ClosureInverseSemigroup,
-"for a semigroup with inverse op and a multiplicative element",
-[IsSemigroupWithInverseOp, IsMultiplicativeElement],
+"for an inverse semigroup with inverse op and a multiplicative element",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsMultiplicativeElement],
 function(S, x) #FIXME is the ShallowCopy really necessary?
   return ClosureInverseSemigroup(S,
                                  [x],
@@ -568,22 +571,27 @@ function(S, x) #FIXME is the ShallowCopy really necessary?
 end);
 
 InstallMethod(ClosureInverseSemigroup,
-"for semigroup with inverse op, multiplicative element, record",
-[IsSemigroupWithInverseOp, IsMultiplicativeElement, IsRecord],
+"for inverse semigroup with inverse op, multiplicative element, record",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, 
+ IsMultiplicativeElement, 
+ IsRecord],
 function(S, x, opts)
   return ClosureInverseSemigroup(S, [x], opts);
 end);
 
 InstallMethod(ClosureInverseSemigroup,
-"for a semigroup with inverse op, empty list or collection, and record",
-[IsSemigroupWithInverseOp, IsListOrCollection and IsEmpty, IsRecord],
+"for an inverse semigroup with inverse op, empty list or coll, and record",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, 
+ IsListOrCollection and IsEmpty, 
+ IsRecord],
 function(S, coll, opts)
   return S;
 end);
 
 InstallMethod(ClosureInverseSemigroup,
-"for a semigroup with inverse op, finite multiplicative elt coll, and record",
-[IsSemigroupWithInverseOp, IsMultiplicativeElementCollection and IsFinite,
+"for an inverse semigroup with inverse op, finite mult elt coll, and record",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsMultiplicativeElementCollection and IsFinite,
  IsRecord],
 function(S, coll, opts)
 
@@ -771,8 +779,8 @@ function(S, func, limit)
 end);
 
 InstallMethod(InverseSubsemigroupByProperty,
-"for a semigroup with inverse op, function, positive integer",
-[IsSemigroupWithInverseOp, IsFunction, IsPosInt],
+"for an inverse semigroup with inverse op, function, positive integer",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, IsFunction, IsPosInt],
 function(S, func, limit)
   local iter, T, x;
 
@@ -805,8 +813,8 @@ function(S, func)
 end);
 
 InstallMethod(InverseSubsemigroupByProperty,
-"for semigroup with inverse op and function",
-[IsSemigroupWithInverseOp, IsFunction],
+"for inverse semigroup with inverse op and function",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, IsFunction],
 function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);

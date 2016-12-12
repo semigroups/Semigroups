@@ -11,6 +11,16 @@
 #############################################################################
 ##
 
+InstallMethod(IdempotentGeneratedSubsemigroup,
+"for an inverse semigroup with inverse op",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
+function(S)
+  if not IsFinite(S) then
+    TryNextMethod();
+  fi;
+  return InverseSemigroup(Idempotents(S), rec(small := true));
+end);
+
 # fall back method
 
 InstallMethod(NaturalPartialOrder, "for a semigroup",
@@ -152,8 +162,8 @@ end);
 
 # same method for ideals
 
-InstallMethod(IsGreensDLeq, "for an inverse op acting semigroup",
-[IsSemigroupWithInverseOp and IsActingSemigroup],
+InstallMethod(IsGreensDLeq, "for an inverse acting semigroup rep",
+[IsInverseActingSemigroupRep],
 function(S)
   local partial, o, comp_index;
 
@@ -203,8 +213,8 @@ function(S)
   return Elements(T){prims}; # TODO use EnumeratorSorted here
 end);
 
-InstallMethod(PrimitiveIdempotents, "for acting semigroup with inverse op",
-[IsSemigroupWithInverseOp and IsActingSemigroup],
+InstallMethod(PrimitiveIdempotents, "for acting inverse semigroup rep",
+[IsInverseActingSemigroupRep],
 function(s)
   local o, scc, rank, min, l, min2, m;
 
@@ -238,8 +248,9 @@ end);
 # TODO a non-inverse-op version of this
 
 InstallMethod(IsJoinIrreducible,
-"for semigroup with inverse op and an associative element",
-[IsSemigroupWithInverseOp, IsMultiplicativeElement],
+"for inverse semigroup with inverse op and an associative element",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsMultiplicativeElement],
 function(S, x)
   local elts, leq, y, i, k, j, sup;
 
@@ -285,8 +296,9 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed,
-"for semigroups with inverse op",
-[IsSemigroupWithInverseOp, IsSemigroupWithInverseOp],
+"for inverse semigroup with inverse op and inverse semigroup with inverse op",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, 
+ IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     ErrorNoReturn("Semigroups: IsMajorantlyClosed: usage,\n",
@@ -298,8 +310,9 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosed,
-"for a semigroup with inverse op and associative element collection",
-[IsSemigroupWithInverseOp, IsMultiplicativeElementCollection],
+"for an inverse semigroup with inverse op and mult. element collection",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsMultiplicativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
     ErrorNoReturn("Semigroups: IsMajorantlyClosed: usage,\n",
@@ -311,8 +324,9 @@ end);
 # same method for ideals
 
 InstallMethod(IsMajorantlyClosedNC,
-"for a semigroup with inverse op and associative element collection",
-[IsSemigroupWithInverseOp, IsMultiplicativeElementCollection],
+"for an inverse semigroup with inverse op and mult. element collection",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsMultiplicativeElementCollection],
 function(S, T)
   local leq, t, iter, u;
 
@@ -418,8 +432,8 @@ end);
 # same method for ideals
 
 InstallMethod(JoinIrreducibleDClasses,
-"for semigroup with inverse op",
-[IsSemigroupWithInverseOp],
+"for inverse semigroup with inverse op",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 function(S)
   return Filtered(GreensDClasses(S),
                   x -> IsJoinIrreducible(S, Representative(x)));
@@ -428,8 +442,8 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosure,
-"for semigroup with inverse op and semigroup",
-[IsSemigroupWithInverseOp, IsSemigroup],
+"for inverse semigroup with inverse op and semigroup",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, IsSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then
     ErrorNoReturn("Semigroups: MajorantClosure: usage,\n",
@@ -441,8 +455,8 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosure,
-"for a semigroup with inverse op and associative element collections",
-[IsSemigroupWithInverseOp,
+"for an inverse semigroup with inverse op and mult. element collection",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
  IsMultiplicativeElementCollection],
 function(S, T)
   if not IsSubset(S, T) then
@@ -455,8 +469,8 @@ end);
 # same method for ideals
 
 InstallMethod(MajorantClosureNC,
-"for a semigroup with inverse op and associative element collections",
-[IsSemigroupWithInverseOp,
+"for an inverse semigroup with inverse op and mult. element collection",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
  IsMultiplicativeElementCollection],
 function(S, T)
   local elts, n, out, ht, k, leq, val, t, i;
@@ -494,8 +508,9 @@ end);
 # same method for ideals
 
 InstallMethod(Minorants,
-"for a semigroup with inverse op and associative element collections",
-[IsSemigroupWithInverseOp, IsMultiplicativeElement],
+"for an inverse semigroup and multiplicative element",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsMultiplicativeElement],
 function(S, f)
   local elts, i, out, rank, j, leq, k;
 
@@ -548,9 +563,9 @@ end);
 # TODO: rename this RightCosets
 
 InstallMethod(RightCosetsOfInverseSemigroup,
-"for two semigroups with inverse op",
-[IsSemigroupWithInverseOp,
- IsSemigroupWithInverseOp],
+"for inverse semigroup and inverse semigroup",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 function(S, T)
   local elts, min, usedreps, out, coset, s, t;
 
@@ -595,16 +610,14 @@ end);
 # same method for ideals
 
 InstallMethod(SameMinorantsSubgroup,
-"for a group H-class of a semigroup with inverse op",
+"for a group H-class of an inverse semigroup with inverse op",
 [IsGroupHClass],
 function(H)
   local S, e, F, out, x, leq;
 
   S := Parent(H);
 
-  # FIXME IsInverseOpClass should work for non-acting semigroup too
-  #       and then this could then become a filter for the method
-  if not IsSemigroupWithInverseOp(S) then
+  if not IsGeneratorsOfInverseSemigroup(S) then
     ErrorNoReturn("Semigroups: SameMinorantsSubgroup: usage,\n",
                   "the parent semigroup of the group H-class <H> must be ",
                   "inverse,");
@@ -674,8 +687,8 @@ end);
 # same method for ideals
 
 InstallMethod(VagnerPrestonRepresentation,
-"for a semigroup with inverse operation",
-[IsSemigroupWithInverseOp],
+"for an inverse semigroup with inverse op",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 function(S)
   local gens, elts, out, iso, T, inv, i;
 
@@ -701,8 +714,9 @@ function(S)
 end);
 
 InstallMethod(InversesOfSemigroupElementNC,
-"for a semigroup with inverse op and an associative element",
-[IsSemigroupWithInverseOp and IsActingSemigroup, IsMultiplicativeElement],
+"for an inverse semigroup and a multiplicative element",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
+ IsMultiplicativeElement], SUM_FLAGS + 1,
 function(S, elm)
   return [elm ^ -1];
 end);

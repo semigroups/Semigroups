@@ -1383,7 +1383,7 @@ gap> Idempotents(L);
 gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 5 generators>
 gap> L := LClass(S, Transformation([1, 1, 1, 2, 1, 3, 5]));;
-gap> IsRegularClass(L);
+gap> IsRegularGreensClass(L);
 false
 gap> Idempotents(L);
 [  ]
@@ -1454,7 +1454,7 @@ gap> NrIdempotents(L);
 gap> S := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 5 generators>
 gap> L := LClass(S, Transformation([1, 1, 1, 2, 1, 3, 5]));;
-gap> IsRegularClass(L);
+gap> IsRegularGreensClass(L);
 false
 gap> NrIdempotents(L);
 0
@@ -1488,32 +1488,32 @@ gap> R := First(RClasses(S),
 > x -> Transformation([9, 10, 4, 9, 10, 4, 4, 3, 3, 6]) in x);;
 gap> NrIdempotents(R);
 0
-gap> IsRegularClass(R);
+gap> IsRegularGreensClass(R);
 false
 
 # grac: NrIdempotents, for an R-class, 3/3
 gap> S := Semigroup(Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]),
 >                    Transformation([3, 8, 1, 9, 9, 4, 10, 5, 10, 6]));;
 gap> R := RClass(S, Transformation([6, 9, 9, 6, 9, 1, 1, 2, 2, 6]));;
-gap> IsRegularClass(R);
+gap> IsRegularGreensClass(R);
 true
 gap> NrIdempotents(R);
 7
 
-# grac: IsRegularClass, for an R-class, 1/1
+# grac: IsRegularGreensClass, for an R-class, 1/1
 gap> S := Semigroup(Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]),
 >                    Transformation([3, 8, 1, 9, 9, 4, 10, 5, 10, 6]));;
 gap> R := First(RClasses(S),
 > x -> Transformation([9, 10, 4, 9, 10, 4, 4, 3, 3, 6]) in x);;
-gap> IsRegularClass(R);
+gap> IsRegularGreensClass(R);
 false
 
-# grac: IsRegularClass, for an R-class in group of units, 1/1
+# grac: IsRegularGreensClass, for an R-class in group of units, 1/1
 gap> S := Monoid(Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]),
 >                 Transformation([3, 8, 1, 9, 9, 4, 10, 5, 10, 6]));;
 gap> S := AsSemigroup(IsBipartitionSemigroup, S);;
 gap> R := RClass(S, IdentityBipartition(10));;
-gap> IsRegularClass(R);
+gap> IsRegularGreensClass(R);
 true
 
 # grac: NrRegularDClasses, 1/1

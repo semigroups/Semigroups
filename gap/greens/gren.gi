@@ -49,7 +49,7 @@
 # Green's classes because if we create a Green's class without knowing the
 # Green's relations and the related strongly connected components data, then
 # the Green's class won't have the correct type and won't have access to the
-# correct methods. 
+# correct methods.
 
 SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
   local pos, out, S;
@@ -63,7 +63,6 @@ SEMIGROUPS.EquivalenceClassOfElement := function(rel, rep, type)
 
   out := rec();
   S := Source(rel);
-  # TODO set IsInverseOpClass here???
   ObjectifyWithAttributes(out, type(S), EquivalenceClassRelation, rel,
                           Representative, rep, ParentAttr, S);
 
@@ -165,7 +164,7 @@ end;
 # should be used (it is identical)! FIXME
 
 InstallMethod(AsSSortedList, "for a Green's class",
-[IsEnumerableSemigroupGreensClassRep], 
+[IsEnumerableSemigroupGreensClassRep],
 C -> ConstantTimeAccessList(EnumeratorSorted(C)));
 
 InstallMethod(Size, "for an enumerable semigroup Green's class",
@@ -227,7 +226,7 @@ InstallMethod(GreensRRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
   local fam, rel;
-  if IsActingSemigroup(S) then 
+  if IsActingSemigroup(S) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
@@ -252,7 +251,7 @@ InstallMethod(GreensLRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
   local fam, rel;
-  if IsActingSemigroup(S) then 
+  if IsActingSemigroup(S) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
@@ -277,7 +276,7 @@ InstallMethod(GreensDRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
   local fam, data, rel;
-  if IsActingSemigroup(S) then 
+  if IsActingSemigroup(S) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
@@ -303,7 +302,7 @@ InstallMethod(GreensHRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
   local fam, data, rel;
-  if IsActingSemigroup(S) then 
+  if IsActingSemigroup(S) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
@@ -376,7 +375,7 @@ end);
 # any case, calling GreensXRelation(S) (as these methods do) on an
 # enumerable semigroup completely enumerates it, so the only thing we gain here
 # is one constant time check that the representative actually belongs to the
-# semigroup. 
+# semigroup.
 
 InstallMethod(GreensRClassOfElementNC,
 "for a finite semigroup and multiplicative element",
@@ -539,7 +538,8 @@ function(C)
                                           GreensLClassOfElement);
 end);
 
-InstallMethod(GreensRClasses, "for a Green's D-class of an enumerable semigroup",
+InstallMethod(GreensRClasses,
+"for a Green's D-class of an enumerable semigroup",
 [IsGreensDClass and IsEnumerableSemigroupGreensClassRep],
 function(C)
   return SEMIGROUPS.GreensXClassesOfClass(C, GreensRRelation,
@@ -573,15 +573,15 @@ InstallMethod(HClassReps, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep], S -> SEMIGROUPS.XClassReps(S, GreensHRelation));
 
 InstallMethod(RClassReps, "for a Green's D-class of an enumerable semigroup",
-[IsGreensDClass and IsEnumerableSemigroupGreensClassRep], 
+[IsGreensDClass and IsEnumerableSemigroupGreensClassRep],
 D -> SEMIGROUPS.XClassRepsOfClass(D, GreensRRelation));
 
 InstallMethod(LClassReps, "for a Green's D-class of an enumerable semigroup",
-[IsGreensDClass and IsEnumerableSemigroupGreensClassRep], 
+[IsGreensDClass and IsEnumerableSemigroupGreensClassRep],
 D -> SEMIGROUPS.XClassRepsOfClass(D, GreensLRelation));
 
 InstallMethod(HClassReps, "for a Green's class of an enumerable semigroup",
-[IsGreensClass and IsEnumerableSemigroupGreensClassRep], 
+[IsGreensClass and IsEnumerableSemigroupGreensClassRep],
 C -> SEMIGROUPS.XClassRepsOfClass(C, GreensHRelation));
 
 ## Partial order of D-classes
@@ -591,11 +591,11 @@ InstallMethod(PartialOrderOfDClasses, "for a finite enumerable semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local l, r, gr;
-  
-  l := LeftCayleyGraphSemigroup(S);;
-  r := RightCayleyGraphSemigroup(S);;
-  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));;
-  gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);;
+
+  l  := LeftCayleyGraphSemigroup(S);
+  r  := RightCayleyGraphSemigroup(S);
+  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
+  gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);
 
   return List(OutNeighboursCopy(gr), Set);
 end);
@@ -622,5 +622,5 @@ function(C)
   rel := EquivalenceClassRelation(C);
   pos := EN_SEMI_IDEMS_SUBSET(Range(rel),
                               rel!.data.comps[SEMIGROUPS.XClassIndex(C)]);
-  return EnumeratorCanonical(Range(rel)){pos}; 
+  return EnumeratorCanonical(Range(rel)){pos};
 end);

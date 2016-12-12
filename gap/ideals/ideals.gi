@@ -409,7 +409,6 @@ InstallMethod(SemigroupIdealByGeneratorsNC,
 [IsSemigroup, IsMultiplicativeElementCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
-
   opts := SEMIGROUPS.ProcessOptionsRec(opts);
   gens := AsList(gens);
 
@@ -418,8 +417,11 @@ function(S, gens, opts)
   if opts.acting
       and (IsActingSemigroup(S) or IsGeneratorsOfActingSemigroup(gens)) then
     filts := filts and IsActingSemigroup;
-  elif IsEnumerableSemigroupRep(S) 
-    and IsGeneratorsOfEnumerableSemigroup(gens) then 
+    if opts.regular then
+      filts := filts and IsRegularActingSemigroupRep;
+    fi;
+  elif IsEnumerableSemigroupRep(S)
+    and IsGeneratorsOfEnumerableSemigroup(gens) then
     filts := filts and IsEnumerableSemigroupRep;
   fi;
 
@@ -430,20 +432,23 @@ function(S, gens, opts)
 
   I := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
 
-  if IsSemigroupWithInverseOp(S) then
-    SetFilterObj(I, IsSemigroupWithInverseOp);
+  if IsInverseActingSemigroupRep(S) then
+    SetFilterObj(I, IsInverseActingSemigroupRep);
+  elif IsRegularActingSemigroupRep(S) then  
+    SetFilterObj(I, IsRegularActingSemigroupRep);
   fi;
 
   if (HasIsInverseSemigroup(S) and IsInverseSemigroup(S)) then
     SetIsInverseSemigroup(I, true);
+    if HasIsGeneratorsOfInverseSemigroup(S) then 
+      SetIsGeneratorsOfInverseSemigroup(I, IsGeneratorsOfInverseSemigroup(S));
+    fi;
+  elif (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) then
+    SetIsRegularSemigroup(I, true);
   fi;
 
   if (HasIsStarSemigroup(S) and IsStarSemigroup(S)) then
     SetIsStarSemigroup(I, true);
-  fi;
-
-  if (HasIsRegularSemigroup(S) and IsRegularSemigroup(S)) or opts.regular then
-    SetIsRegularSemigroup(I, true);
   fi;
 
   if (HasIsRegularSemigroup(S) and not IsRegularSemigroup(S)) then
@@ -475,8 +480,9 @@ function(S, gens, opts)
   return I;
 end);
 
-InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],
+InstallMethod(MaximalDClasses,
+"for an inverse acting semigroup ideal rep",
+[IsInverseActingSemigroupRep and IsSemigroupIdeal],
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
 
@@ -505,7 +511,7 @@ end);
 # different method for inverse
 
 InstallMethod(MaximalDClasses, "for a regular acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+[IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   local data, pos, partial, classes, out, i;
 
@@ -602,20 +608,20 @@ end);
 # method for IsSemigroup.
 
 InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupWithInverseOp and IsSemigroupIdeal],
+[IsInverseActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   return Length(OrbSCC(LambdaOrb(I))) - 1;
 end);
 
 InstallMethod(NrDClasses, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+[IsRegularActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   Enumerate(SemigroupIdealData(I));
   return Length(SemigroupIdealData(I)!.dorbit);
 end);
 
 InstallMethod(GreensDClasses, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+[IsRegularActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   Enumerate(SemigroupIdealData(I));
   return SemigroupIdealData(I)!.dorbit;
@@ -623,7 +629,7 @@ end);
 
 InstallMethod(PartialOrderOfDClasses,
 "for a regular acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+[IsRegularActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   local data;
 
@@ -633,7 +639,7 @@ function(I)
 end);
 
 InstallMethod(DClassReps, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+[IsRegularActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   local data;
 

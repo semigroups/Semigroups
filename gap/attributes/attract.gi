@@ -124,18 +124,6 @@ function(S)
   return out;
 end);
 
-# same method for ideals
-
-InstallMethod(IdempotentGeneratedSubsemigroup, "for an acting semigroup",
-[IsActingSemigroup], S -> Semigroup(Idempotents(S), rec(small := true)));
-
-# same method for ideals
-
-InstallMethod(IdempotentGeneratedSubsemigroup,
-"for an inverse op acting semigroup",
-[IsSemigroupWithInverseOp and IsActingSemigroup],
-S -> InverseSemigroup(Idempotents(S), rec(small := true)));
-
 # different method for ideals
 
 InstallMethod(InversesOfSemigroupElementNC,
@@ -146,7 +134,6 @@ function(s, f)
    rho_f, lambdarank, creator, inv, out, k, g, i, name, rho;
 
   regular := IsRegularSemigroup(s);
-
   if not (regular or IsRegularSemigroupElementNC(s, f)) then
     return [];
   fi;

@@ -421,8 +421,8 @@ end);
 
 # different method for inverse, same method for ideals
 
-InstallMethod(Random, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(Random, "for a regular acting semigroup rep",
+[IsRegularActingSemigroupRep],
 function(S)
   local gens, i, w, x, o, m;
 
@@ -462,8 +462,9 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(Random, "for an acting semigroup with inverse op and generators",
-[IsActingSemigroup and IsSemigroupWithInverseOp],
+InstallMethod(Random,
+"for an acting inverse semigroup rep and generators",
+[IsInverseActingSemigroupRep],
 function(S)
   local gens, i, w, x, o, m;
 
@@ -503,8 +504,9 @@ end);
 
 # different method for inverse, same method for ideals
 
-InstallMethod(\in, "for a multiplicative element and regular acting semigroup",
-[IsMultiplicativeElement, IsActingSemigroup and IsRegularSemigroup],
+InstallMethod(\in, 
+"for a multiplicative element and regular acting semigroup rep",
+[IsMultiplicativeElement, IsRegularActingSemigroupRep],
 function(x, S)
   local pos_lambda, pos_rho, m, schutz, n, rep;
 
@@ -596,8 +598,8 @@ end);
 # TODO clean this up
 
 InstallMethod(\in,
-"for a multiplicative element and acting semigroup with inversion",
-[IsMultiplicativeElement, IsActingSemigroup and IsSemigroupWithInverseOp],
+"for a multiplicative element and inverse acting semigroup rep",
+[IsMultiplicativeElement, IsInverseActingSemigroupRep],
 function(x, S)
   local o, lambda, lambda_l, rho, rho_l, m, schutz, scc, rep;
 
@@ -688,12 +690,10 @@ function(x, S)
   return SchutzGpMembership(S)(schutz, LambdaPerm(S)(rep, x));
 end);
 
-#############################################################################
-
 # different method for inverse semigroups
 
-InstallMethod(Size, "for a regular acting semigroup",
-[IsRegularSemigroup and IsActingSemigroup],
+InstallMethod(Size, "for a regular acting semigroup rep",
+[IsRegularActingSemigroupRep],
 function(s)
   local lambda_o, rho_o, nr, lambda_scc, rho_scc, r, rhofunc, lookup,
   rho, m;
@@ -719,8 +719,8 @@ end);
 
 # same method for inverse ideals
 
-InstallMethod(Size, "for an acting semigroup with inverse",
-[IsActingSemigroup and IsSemigroupWithInverseOp], 10,
+InstallMethod(Size, "for an acting inverse semigroup rep",
+[IsInverseActingSemigroupRep], 10,
 function(s)
   local o, scc, r, nr, m;
 

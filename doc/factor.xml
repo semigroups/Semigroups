@@ -26,7 +26,7 @@
 
       <Mark>for inverse semigroups</Mark>
       <Item>
-         When <A>S</A> is a inverse semigroup and <A>x</A> belongs to <A>S</A>,
+         When <A>S</A> is an inverse semigroup and <A>x</A> belongs to <A>S</A>,
          <C>Factorization</C> return a word in the generators of <A>S</A> that
          is equal to <A>x</A>. In this case, a word is a list of non-zero
          integers where an entry <C>i</C> corresponds to

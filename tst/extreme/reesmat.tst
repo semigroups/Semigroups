@@ -135,7 +135,7 @@ gap> V := Semigroup(MultiplicativeZero(R),
 > RMSElement(R, 22, (1, 9), 1));;
 
 #T# ReesMatTest9: PrincipalFactor
-gap> D := Filtered(DClasses(V), IsRegularClass)[2];
+gap> D := Filtered(DClasses(V), IsRegularGreensClass)[2];
 <Green's D-class: (13,(1,6)(5,8),3)>
 gap> inj := InjectionPrincipalFactor(D);; inv := InverseGeneralMapping(inj);;
 gap> ForAll(D, x -> (x ^ inj) ^ inv = x);
@@ -222,11 +222,11 @@ gap> U[1] = Semigroup(IrredundantGeneratingSubset(U[1]));
 true
 
 #T# ReesMatTest17: MultiplicativeNeutralElement (for an H-class)
-gap> H := First(HClasses(V), IsRegularClass);
+gap> H := First(HClasses(V), IsRegularGreensClass);
 <Green's H-class: 0>
 gap> MultiplicativeNeutralElement(H);
 0
-gap> H := First(HClasses(V), x -> not IsRegularClass(x));
+gap> H := First(HClasses(V), x -> not IsRegularGreensClass(x));
 <Green's H-class: (1,(1,6),3)>
 gap> MultiplicativeNeutralElement(H);
 fail
@@ -234,7 +234,7 @@ gap> h := RMSElement(ParentAttr(U[5]), 17, (1, 9)(5, 8), 5);
 (17,(1,9)(5,8),5)
 gap> H := GreensHClassOfElement(U[5], h);
 <Green's H-class: (17,(1,9)(5,8),5)>
-gap> IsRegularClass(H);
+gap> IsRegularGreensClass(H);
 true
 gap> e := MultiplicativeNeutralElement(H);
 (17,(1,6),5)
@@ -249,13 +249,13 @@ gap> h := RMSElement(ParentAttr(U[5]), 21, (1, 9, 6)(5, 8), 5);
 gap> H := GreensHClassOfElement(U[5], h);
 Error, Semigroups: GreensHClassOfElement: usage,
 the element does not belong to the semigroup,
-gap> IsRegularClass(H);
+gap> IsRegularGreensClass(H);
 true
 gap> MultiplicativeNeutralElement(H);
 (17,(1,6),5)
 
 #T# ReesMatTest18: StructureDescription (for an H-class) 
-gap> H := First(HClasses(U[5]), IsRegularClass);;
+gap> H := First(HClasses(U[5]), IsRegularGreensClass);;
 gap> StructureDescription(H);
 "D12"
 
@@ -264,7 +264,7 @@ gap> Random(V);;
 gap> List(U, Random);; #FIXME no this is not expected
 
 #T# ReesMatTest20: DClassOf.Class etc
-gap> H := First(HClasses(V), x -> not IsRegularClass(x));
+gap> H := First(HClasses(V), x -> not IsRegularGreensClass(x));
 <Green's H-class: (1,(1,6),3)>
 gap> DClass(H);
 <Green's D-class: (1,(1,6),3)>
@@ -333,13 +333,13 @@ gap> ForAll(last, IsIdempotent);
 true
 
 #T# ReesMatTest23: GroupHClass
-gap> D := Filtered(DClasses(U[1]), IsRegularClass)[2];
+gap> D := Filtered(DClasses(U[1]), IsRegularGreensClass)[2];
 <Green's D-class: (7,(5,8)(6,9),2)>
 gap> GroupHClass(D);
 <Green's H-class: (7,(),2)>
 gap> StructureDescription(last);
 "D12"
-gap> D := First(DClasses(V), IsRegularClass);
+gap> D := First(DClasses(V), IsRegularGreensClass);
 <Green's D-class: 0>
 gap> GroupHClass(D);
 <Green's H-class: 0>
@@ -370,18 +370,18 @@ gap> reps;
 gap> ForAll(last, IsIdempotent);
 true
 
-#T# ReesMatTest25: IsRegularClass
-gap> Number(RClasses(V), IsRegularClass);
+#T# ReesMatTest25: IsRegularGreensClass
+gap> Number(RClasses(V), IsRegularGreensClass);
 10
-gap> Number(DClasses(V), IsRegularClass);
+gap> Number(DClasses(V), IsRegularGreensClass);
 3
 gap> NrRegularDClasses(V);
 3
-gap> Number(DClasses(U[4]), IsRegularClass);
+gap> Number(DClasses(U[4]), IsRegularGreensClass);
 3
 gap> NrRegularDClasses(U[4]);
 3
-gap> Number(LClasses(U[4]), IsRegularClass);
+gap> Number(LClasses(U[4]), IsRegularGreensClass);
 6
 
 #T# ReesMatTest26: NrIdempotents

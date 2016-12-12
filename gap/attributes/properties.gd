@@ -41,22 +41,12 @@ DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
 DeclareSynonymAttr("IsRectangularGroup",
                    IsOrthodoxSemigroup and IsSimpleSemigroup);
 
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-                                            IsPartialPermSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-                                            IsBlockBijectionSemigroup);
-InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-                                            IsPartialPermBipartitionSemigroup);
-
-# The following method is invalid. For example, if we have a semigroup of
-# bipartitions, which does not consist of partial perm bipartitions or block
-# bijections, but which is a group, say, then InverseOp(any element) = fail,
-# but it satisfies IsInverseSemigroup, IsRegularStarSemigroup.
-#InstallTrueMethod(IsSemigroupWithInverseOp, IsInverseSemigroup and
-#                                            IsRegularStarSemigroup);
-#
-#InstallTrueMethod(IsAbundantSemigroup, IsRegularSemigroup);
-#InstallTrueMethod(IsAdequateSemigroup, IsAbundantSemigroup and IsBlockGroup);
+InstallTrueMethod(IsGeneratorsOfInverseSemigroup, 
+                  IsInverseSemigroup and IsPartialPermSemigroup);
+InstallTrueMethod(IsGeneratorsOfInverseSemigroup, 
+                  IsInverseSemigroup and IsBlockBijectionSemigroup);
+InstallTrueMethod(IsGeneratorsOfInverseSemigroup, 
+                  IsInverseSemigroup and IsPartialPermBipartitionSemigroup);
 
 InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
 InstallTrueMethod(IsBlockGroup, IsPartialPermSemigroup);

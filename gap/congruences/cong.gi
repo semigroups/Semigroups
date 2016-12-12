@@ -120,7 +120,7 @@ function(arg)
            or HasSize(S) or IsReesZeroMatrixSemigroup(S))
           and IsZeroSimpleSemigroup(S)) then
       return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
-    elif IsSemigroupWithInverseOp(S) and
+    elif IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S) and
          Size(S) >= opts.cong_by_ker_trace_threshold then
       return SEMIGROUPS.InverseCongFromPairs(S, pairs);
     else
@@ -143,9 +143,11 @@ function(arg)
       and Parent(arg[2]) = S then
     return ReesCongruenceOfSemigroupIdeal(arg[2]);
   elif Length(arg) = 3
-      and IsSemigroupWithInverseOp(arg[2])
+      and IsInverseSemigroup(arg[2]) 
+      and IsGeneratorsOfInverseSemigroup(arg[2])
       and IsDenseList(arg[3])
-      and IsSemigroupWithInverseOp(S) then
+      and IsInverseSemigroup(S) 
+      and IsGeneratorsOfInverseSemigroup(S) then
     # We should have the kernel and trace of a congruence on an inverse
     # semigroup
     return InverseSemigroupCongruenceByKernelTrace(S, arg[2], arg[3]);

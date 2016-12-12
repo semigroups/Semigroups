@@ -10,8 +10,14 @@
 
 ## This file contains methods for Green's classes of regular acting semigroups.
 
-## See the start of grac.gi for details of how to create Green's
-## classes of acting semigroups.
+# See the start of grac.gi for details of how to create Green's classes of
+# acting semigroups.
+
+# There are two types of methods here, those for IsRegularGreensClass (i.e.
+# those Green's classes containing an idempotent) and those for
+# IsRegularActingRepGreensClass (i.e. those that are known from the point of
+# creation that they belong to a regular semigroup, which knew from its point
+# of creation that it was regular).
 
 #############################################################################
 ## This file contains methods for Green's classes etc for acting semigroups.
@@ -37,7 +43,7 @@
 #############################################################################
 
 InstallMethod(RhoCosets, "for a regular class of an acting semigroup",
-[IsRegularClass and IsActingSemigroupGreensClass],
+[IsRegularGreensClass and IsActingSemigroupGreensClass],
 function(C)
   local S;
   S := Parent(C);
@@ -45,18 +51,19 @@ function(C)
 end);
 
 InstallMethod(LambdaCosets, "for a regular class of an acting semigroup",
-[IsRegularClass and IsActingSemigroupGreensClass], RhoCosets);
+[IsRegularGreensClass and IsActingSemigroupGreensClass], RhoCosets);
 
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for D-class of regular acting semigroup",
-[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+[IsRegularGreensClass and IsGreensDClass and IsActingSemigroupGreensClass],
 D -> LambdaOrbSchutzGp(LambdaOrb(D), LambdaOrbSCCIndex(D)));
 
 # same method for inverse
 
-InstallMethod(SchutzenbergerGroup, "for H-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsHClassOfRegularSemigroup and
+InstallMethod(SchutzenbergerGroup,
+"for H-class of regular acting semigroup rep",
+[IsRegularActingRepGreensClass and
  IsGreensHClass],
 function(H)
   local S, rep, p;
@@ -67,51 +74,61 @@ function(H)
   return LambdaOrbSchutzGp(LambdaOrb(H), LambdaOrbSCCIndex(H)) ^ p;
 end);
 
+# The following methods (for \< for Green's classes) should not be applied to
+# IsRegularGreensClass since they rely on the fact that these are Green's
+# classes of a regular semigroup, which uses the data structures of semigroup
+# that knew it was regular from the point of creation.
+
 # Same method for inverse
 
-InstallMethod(\<, "for Green's D-classes of a regular semigroup",
-[IsGreensDClass and IsActingSemigroupGreensClass and IsRegularClass,
- IsGreensDClass and IsActingSemigroupGreensClass and IsRegularClass],
+InstallMethod(\<,
+"for a Green's D-classes of a regular acting semigroup rep",
+[IsGreensDClass and IsActingSemigroupGreensClass and
+ IsRegularActingRepGreensClass,
+ IsGreensDClass and IsActingSemigroupGreensClass and
+ IsRegularActingRepGreensClass],
 function(x, y)
   local S, scc;
-  if Parent(x) <> Parent(y) or x = y then 
+  if Parent(x) <> Parent(y) or x = y then
     return false;
-  elif not IsRegularSemigroup(Parent(x)) then 
+  elif not IsRegularSemigroup(Parent(x)) then
     TryNextMethod();
   fi;
   S    := Parent(x);
   scc  := OrbSCCLookup(LambdaOrb(S));
-  return scc[Position(LambdaOrb(S), LambdaFunc(S)(Representative(x)))] 
+  return scc[Position(LambdaOrb(S), LambdaFunc(S)(Representative(x)))]
          < scc[Position(LambdaOrb(S), LambdaFunc(S)(Representative(y)))];
 end);
 
 # Same method for inverse
 
-InstallMethod(\<, "for Green's R-classes of a regular acting semigroup",
-[IsGreensRClass and IsActingSemigroupGreensClass and IsRegularClass,
- IsGreensRClass and IsActingSemigroupGreensClass and IsRegularClass],
+InstallMethod(\<,
+"for a Green's R-classes of a regular acting semigroup rep",
+[IsGreensRClass and IsRegularActingRepGreensClass,
+ IsGreensRClass and IsRegularActingRepGreensClass],
 function(x, y)
-  if Parent(x) <> Parent(y) or x = y then 
+  if Parent(x) <> Parent(y) or x = y then
     return false;
-  elif not IsRegularSemigroup(Parent(x)) then 
+  elif not IsRegularSemigroup(Parent(x)) then
     TryNextMethod();
   fi;
-  return RhoFunc(Parent(x))(Representative(x)) 
+  return RhoFunc(Parent(x))(Representative(x))
          < RhoFunc(Parent(x))(Representative(y));
 end);
 
 # Same method for inverse
 
-InstallMethod(\<, "for Green's L-classes of a regular acting semigroup",
-[IsGreensLClass and IsActingSemigroupGreensClass and IsRegularClass,
- IsGreensLClass and IsActingSemigroupGreensClass and IsRegularClass],
+InstallMethod(\<,
+"for a Green's L-classes of a regular acting semigroup rep",
+[IsGreensLClass and IsRegularActingRepGreensClass,
+ IsGreensLClass and IsRegularActingRepGreensClass],
 function(x, y)
-  if Parent(x) <> Parent(y) or x = y then 
+  if Parent(x) <> Parent(y) or x = y then
     return false;
-  elif not IsRegularSemigroup(Parent(x)) then 
+  elif not IsRegularSemigroup(Parent(x)) then
     TryNextMethod();
   fi;
-  return LambdaFunc(Parent(x))(Representative(x)) 
+  return LambdaFunc(Parent(x))(Representative(x))
          < LambdaFunc(Parent(x))(Representative(y));
 end);
 
@@ -120,7 +137,7 @@ end);
 #############################################################################
 
 InstallMethod(Size, "for a regular D-class of an acting semigroup",
-[IsRegularClass and IsGreensDClass and IsActingSemigroupGreensClass],
+[IsRegularDClass and IsActingSemigroupGreensClass],
 function(D)
   return Size(SchutzenbergerGroup(D)) * Length(LambdaOrbSCC(D))
    * Length(RhoOrbSCC(D));
@@ -139,8 +156,15 @@ end);
 # method. Anyway the data of an ideal must be enumerated to the end to know the
 # DClassReps, and to know the LambdaOrb, so these methods are equal.
 
-InstallMethod(DClassReps, "for a regular acting semigroup with generators",
-[IsRegularSemigroup and IsActingSemigroup and HasGeneratorsOfSemigroup],
+# Do not use the following method for IsRegularSemigroup, in case a semigroup
+# learns it is regular after it is created, since the order of the D-class reps
+# and D-classes might be important and should not change depending on what the
+# semigroup learns about itself.
+
+InstallMethod(DClassReps,
+"for a regular acting semigroup rep with generators",
+[IsRegularActingSemigroupRep
+ and HasGeneratorsOfSemigroup],
 function(S)
   local o, out, m;
   o := LambdaOrb(S);
@@ -153,8 +177,15 @@ end);
 
 # different method for inverse/ideals
 
-InstallMethod(GreensDClasses, "for a regular acting semigroup with generators",
-[IsRegularSemigroup and IsActingSemigroup and HasGeneratorsOfSemigroup],
+# Do not use the following method for IsRegularSemigroup, in case a semigroup
+# learns it is regular after it is created, since the order of the D-class reps
+# and D-classes might be important and should not change depending on what the
+# semigroup learns about itself.
+
+InstallMethod(GreensDClasses,
+"for a regular acting semigroup rep with generators",
+[IsRegularActingSemigroupRep
+ and HasGeneratorsOfSemigroup],
 function(S)
   local o, scc, out, SetRho, RectifyRho, D, i;
 
@@ -178,14 +209,25 @@ end);
 
 # same method for inverse/ideals
 
-InstallMethod(RClassReps, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+# Do not use the following method for IsRegularSemigroup, in case a semigroup
+# learns it is regular after it is created, since the order of the D-class reps
+# and D-classes might be important and should not change depending on what the
+# semigroup learns about itself.
+
+InstallMethod(RClassReps,
+"for a regular acting semigroup rep",
+[IsRegularActingSemigroupRep],
 S -> Concatenation(List(GreensDClasses(S), RClassReps)));
 
 # same method for inverse/ideals
 
-InstallMethod(GreensRClasses, "for a regular acting semigroup",
-[IsActingSemigroup and IsRegularSemigroup],
+# Do not use the following method for IsRegularSemigroup, in case a semigroup
+# learns it is regular after it is created, since the order of the D-class reps
+# and D-classes might be important and should not change depending on what the
+# semigroup learns about itself.
+
+InstallMethod(GreensRClasses, "for a regular acting semigroup rep",
+[IsRegularActingSemigroupRep],
 S -> Concatenation(List(GreensDClasses(S), GreensRClasses)));
 
 #############################################################################
@@ -205,7 +247,7 @@ S -> Length(Enumerate(LambdaOrb(S))) - 1);
 # same method for inverse semigroups
 
 InstallMethod(NrLClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
+[IsActingSemigroupGreensClass and IsRegularDClass],
 D -> Length(LambdaOrbSCC(D)));
 
 # different method for inverse semigroups, same for ideals
@@ -217,32 +259,38 @@ S -> Length(Enumerate(RhoOrb(S), infinity)) - 1);
 # different method for inverse semigroups
 
 InstallMethod(NrRClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
+[IsActingSemigroupGreensClass and IsRegularGreensClass and IsGreensDClass],
 D -> Length(RhoOrbSCC(D)));
 
 # different method for inverse semigroups
 
 InstallMethod(NrHClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensDClass],
+[IsActingSemigroupGreensClass and IsRegularGreensClass and IsGreensDClass],
 R -> Length(LambdaOrbSCC(R)) * Length(RhoOrbSCC(R)));
 
 # different method for inverse semigroups
 
 InstallMethod(NrHClasses, "for a L-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensLClass],
+[IsActingSemigroupGreensClass and IsRegularGreensClass and IsGreensLClass],
 L -> Length(RhoOrbSCC(L)));
 
 # same method for inverse semigroups
 
 InstallMethod(NrHClasses, "for a R-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularClass and IsGreensRClass],
+[IsActingSemigroupGreensClass and IsRegularGreensClass and IsGreensRClass],
 R -> Length(LambdaOrbSCC(R)));
 
 # different method for inverse/ideals
 
+# Do not use the following method for IsRegularSemigroup, in case a semigroup
+# learns it is regular after it is created, since the order of the D-class reps
+# and D-classes might be important and should not change depending on what the
+# semigroup learns about itself.
+
 InstallMethod(PartialOrderOfDClasses,
-"for a regular acting semigroup with generators",
-[IsActingSemigroup and IsRegularSemigroup and HasGeneratorsOfSemigroup],
+"for a regular acting semigroup rep with generators",
+[IsRegularActingSemigroupRep
+ and HasGeneratorsOfSemigroup],
 function(S)
   local D, n, out, o, gens, lookup, lambdafunc, i, x, y;
 
@@ -377,6 +425,9 @@ InstallMethod(NrRegularDClasses, "for a regular acting semigroup",
 
 # different method for inverse
 
+# Use IsRegularSemigroup instead of IsRegularActingSemigroupRep since the order
+# does not matter.
+
 InstallMethod(IteratorOfLClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(S)
@@ -396,6 +447,9 @@ function(S)
 end);
 
 # same method for inverse
+
+# Use IsRegularSemigroup instead of IsRegularActingSemigroupRep since the order
+# does not matter.
 
 InstallMethod(IteratorOfDClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
@@ -419,6 +473,9 @@ end);
 # Notes: the only purpose for this is the method for NumberElement.  Otherwise
 # use (if nothing much is known) IteratorOfRClasses or if everything is know
 # just use RClasses.
+
+# Use IsRegularSemigroup instead of IsRegularActingSemigroupRep since the order
+# does not matter.
 
 InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],

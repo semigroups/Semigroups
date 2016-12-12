@@ -234,7 +234,7 @@ gap> gens := [Transformation([3, 6, 4, 2, 4, 5]),
 > Transformation([4, 6, 3, 3, 1, 2]),
 > Transformation([1, 6, 4, 4, 5, 4])];;
 gap> s := Semigroup(gens);;
-gap> Number(GreensRClasses(s), IsRegularClass);
+gap> Number(GreensRClasses(s), IsRegularGreensClass);
 98
 gap> Number(RClassReps(s), x -> IsRegularSemigroupElement(s, x));
 98

@@ -24,9 +24,6 @@ DeclareRepresentation("IsEnumerableSemigroupGreensRelationRep",
                       IsComponentObjectRep and IsGreensRelation, 
                       ["data"]);
 
-InstallTrueMethod(IsEnumerableSemigroupGreensClassRep,
-IsActingSemigroupGreensClass);
-
 DeclareAttribute("DClassType", IsEnumerableSemigroupRep);
 DeclareAttribute("HClassType", IsEnumerableSemigroupRep);
 DeclareAttribute("LClassType", IsEnumerableSemigroupRep);

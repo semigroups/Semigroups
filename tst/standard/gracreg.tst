@@ -20,7 +20,7 @@ gap> S := RegularSemigroup([
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> L := LClass(S, S.1);;
-gap> HasIsRegularClass(L) and IsRegularClass(L);
+gap> HasIsRegularGreensClass(L) and IsRegularGreensClass(L);
 true
 gap> RhoCosets(L);
 [ () ]
@@ -31,7 +31,7 @@ gap> S := RegularSemigroup([
 > Transformation([2, 4, 3, 5, 5]),
 > Transformation([5, 1, 2, 5, 3])], rec(acting := true));;
 gap> L := LClass(S, S.1);;
-gap> HasIsRegularClass(L) and IsRegularClass(L);
+gap> HasIsRegularGreensClass(L) and IsRegularGreensClass(L);
 true
 gap> LambdaCosets(L);
 [ () ]
@@ -276,21 +276,21 @@ gap> S := Semigroup(Transformation([6, 5, 3, 3, 3, 1]),
 >                   Transformation([5, 2, 5, 5, 1, 4]));;
 gap> R1 := GreensRClassOfElement(S, Transformation([1, 3, 3, 3, 3]));;
 gap> R2 := GreensRClassOfElement(S, Transformation([1, 2, 1, 1, 5, 5]));;
-gap> IsRegularClass(R1); IsRegularClass(R2);
+gap> IsRegularGreensClass(R1); IsRegularGreensClass(R2);
 true
 true
 gap> Set([R1 < R2, R2 < R1]);
 [ true, false ]
 gap> L1 := GreensLClassOfElement(S, Transformation([1, 3, 3, 3, 3]));;
 gap> L2 := GreensLClassOfElement(S, Transformation([1, 2, 1, 1, 5, 5]));;
-gap> IsRegularClass(L1); IsRegularClass(L2);
+gap> IsRegularGreensClass(L1); IsRegularGreensClass(L2);
 true
 true
 gap> Set([L1 < L2, L2 < L1]);
 [ true, false ]
 gap> D1 := GreensDClassOfElement(S, Transformation([1, 3, 3, 3, 3]));;
 gap> D2 := GreensDClassOfElement(S, Transformation([1, 2, 1, 1, 5, 5]));;
-gap> IsRegularClass(D1); IsRegularClass(D2);
+gap> IsRegularGreensClass(D1); IsRegularGreensClass(D2);
 true
 true
 gap> Set([D1 < D2, D2 < D1]);

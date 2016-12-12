@@ -615,7 +615,7 @@ gap> GreensDClasses(I);
   <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
   <Green's D-class: Transformation( [ 1, 2, 4, 2, 6, 5 ] )>, 
   <Green's D-class: Transformation( [ 2, 4, 1, 4 ] )> ]
-gap> Number(GreensDClasses(I), IsRegularClass);
+gap> Number(GreensDClasses(I), IsRegularGreensClass);
 4
 gap> I := SemigroupIdeal(S, gensI);;
 gap> NrRegularDClasses(I);
@@ -625,14 +625,14 @@ gap> GreensDClasses(J);
   <Green's D-class: Transformation( [ 1, 2, 5, 5, 5, 5 ] )>, 
   <Green's D-class: Transformation( [ 6, 5, 5, 5, 5, 5 ] )>, 
   <Green's D-class: Transformation( [ 6, 6, 6, 6, 6, 6 ] )> ]
-gap> Number(GreensDClasses(J), IsRegularClass);
+gap> Number(GreensDClasses(J), IsRegularGreensClass);
 4
 gap> J := SemigroupIdeal(S, gensJ);;
 gap> NrRegularDClasses(J);
 4
 gap> Size(GreensDClasses(K));
 735
-gap> Number(GreensDClasses(K), IsRegularClass);
+gap> Number(GreensDClasses(K), IsRegularGreensClass);
 5
 gap> K := SemigroupIdeal(T, gensK);;
 gap> NrRegularDClasses(K);
@@ -847,7 +847,7 @@ gap> GeneratorsOfSemigroup(I);;
 # test for \in method from idealact.gi (only applies to ideals that know
 # apriori that they are regular) which partially enumerates the semigroup ideal
 # data
-gap> S := FullTransformationMonoid(6);;
+gap> S := RegularSemigroup(FullTransformationMonoid(6));;
 gap> x := Transformation([6, 5, 1, 5, 1, 2]);;
 gap> I := SemigroupIdeal(S, x);
 <regular transformation semigroup ideal of degree 6 with 1 generator>

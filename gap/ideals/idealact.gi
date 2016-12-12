@@ -14,8 +14,9 @@
 # Attributes with better methods than the ones for
 # IsActingSemigroup without IsSemigroupIdeal.
 
-InstallMethod(MaximalDClasses, "for a inverse op acting semigroup ideal",
-[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(MaximalDClasses,
+"for an inverse acting semigroup rep ideal",
+[IsInverseActingSemigroupRep and IsSemigroupIdeal],
 function(S)
   local gens, partial, pos, o, scc, out, classes, x, i;
 
@@ -44,7 +45,7 @@ end);
 # different method for inverse
 
 InstallMethod(MaximalDClasses, "for a regular acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+[IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   local data, pos, partial, classes, out, i;
 
@@ -66,20 +67,20 @@ function(I)
 end);
 
 InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
-[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
+[IsInverseActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   return Length(OrbSCC(LambdaOrb(I))) - 1;
 end);
 
 InstallMethod(GreensDClasses, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+[IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   Enumerate(SemigroupIdealData(I));
   return SemigroupIdealData(I)!.dorbit;
 end);
 
 InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+[IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   local data;
 
@@ -89,7 +90,7 @@ function(I)
 end);
 
 InstallMethod(DClassReps, "for an acting semigroup ideal",
-[IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+[IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   local data;
 
@@ -100,8 +101,8 @@ end);
 
 # the really technical stuff...
 
-InstallMethod(SemigroupData, "for a regular acting semigroup ideal",
-[IsActingSemigroup and IsRegularSemigroup and IsSemigroupIdeal],
+InstallMethod(SemigroupData, "for a regular acting semigroup ideal rep",
+[IsRegularActingSemigroupRep and IsSemigroupIdeal],
 SemigroupIdealData);
 
 # JDM this method should become obsolete in time...
@@ -111,12 +112,11 @@ InstallMethod(SemigroupData, "for an acting semigroup ideal",
 [IsActingSemigroup and IsSemigroupIdeal],
 function(I)
   local data, pos, partial, classes, D, U, inj, i, j, C;
-
   # the maximal D-classes of the supersemigroup of <I> contained in <I>
-  data := SemigroupIdealData(I);
+  data := Enumerate(SemigroupIdealData(I));
   pos := [1 .. data!.genspos - 1];
   # the D-classes of the generators in positions
-  # [1..n-1] in data!.dorbit
+  # [1 .. n - 1] in data!.dorbit
   partial := data!.poset;
   classes := data!.dorbit;
   D := [];
@@ -140,8 +140,6 @@ function(I)
   od;
 
   i := 0;
-  partial := data!.poset;
-  D := data!.dorbit;
 
   while Size(U) <> Size(I) do
     i := i + 1;
@@ -149,7 +147,7 @@ function(I)
     while Size(U) <> Size(I) and j < Length(partial[i]) do
       j := j + 1;
       if Length(partial[i]) = 1 or partial[i][j] <> i then
-        C := D[partial[i][j]];
+        C := classes[partial[i][j]];
         if IsRegularDClass(C) then
           inj := InverseGeneralMapping(InjectionPrincipalFactor(C));
           U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
@@ -175,7 +173,7 @@ InstallMethod(GeneratorsOfSemigroup, "for an acting semigroup ideal",
 function(I)
   local data, pos, partial, classes, D, U, inj, i, j;
 
-  if not IsRegularSemigroup(I) then
+  if not IsRegularActingSemigroupRep(I) then
     return SemigroupData(I)!.gens;
   fi;
 
@@ -223,8 +221,8 @@ function(I)
 end);
 
 InstallMethod(GeneratorsOfSemigroup,
-"for an inverse op acting semigroup ideal",
-[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
+"for an inverse acting semigroup rep ideal",
+[IsInverseActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   local U, partial, D, pos, inj, i, j, C, gens;
 
@@ -265,13 +263,20 @@ function(I)
   return GeneratorsOfSemigroup(U);
 end);
 
+# Do not use IsInverseActingSemigroupRep here since
+# IsGeneratorsOfInverseSemigroup
+
 InstallMethod(GeneratorsOfInverseSemigroup,
-"for an inverse op acting semigroup ideal",
-[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
+"for an inverse acting semigroup ideal rep",
+[IsInverseActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   local U, i, partial, D, pos, inj, gens, j, C;
 
-  if HasGeneratorsOfSemigroup(I) then
+  if not IsGeneratorsOfInverseSemigroup(I) then 
+    ErrorNoReturn("Semigroups: GeneratorsOfInverseSemigroup: usage,\n", 
+                  "the first argument (an ideal) must satisfy ", 
+                  "`IsGeneratorsOfInverseSemigroup`,");
+  elif HasGeneratorsOfSemigroup(I) then
     # TODO could remove inverses...
     return GeneratorsOfSemigroup(I);
   fi;
@@ -357,8 +362,9 @@ function(I)
   return data;
 end);
 
-InstallMethod(SemigroupIdealData, "for an inverse op acting semigroup ideal",
-[IsSemigroupWithInverseOp and IsActingSemigroup and IsSemigroupIdeal],
+InstallMethod(SemigroupIdealData,
+"for an inverse acting semigroup rep ideal",
+[IsInverseActingSemigroupRep and IsSemigroupIdeal],
 ReturnFail);
 
 InstallMethod(ViewObj, [IsSemigroupIdealData],
@@ -724,9 +730,10 @@ function(data, limit, record)
     SetFilterObj(rhoo, IsClosed);
     SetFilterObj(data, IsClosedData);
     if not HasIsRegularSemigroup(I) then
-      SetIsRegularSemigroup(I, ForAll(regular, x -> x = true));
+      SetIsRegularSemigroup(I, ForAll(regular, x -> x));
     fi;
     if IsRegularSemigroup(I) then
+      SetFilterObj(I, IsRegularActingSemigroupRep);
       SetGreensDClasses(I, d);
     fi;
   fi;
@@ -736,7 +743,7 @@ end);
 InstallMethod(\in,
 "for a multiplicative element and regular acting semigroup ideal",
 [IsMultiplicativeElement,
- IsActingSemigroup and IsSemigroupIdeal and IsRegularSemigroup],
+ IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(x, I)
   local data, ht, xx, o, scc, scclookup, l, lookfunc, m, lambdarhoht,
         schutz, ind, reps;

@@ -24,6 +24,14 @@ ReadPackage("semigroups/gap/elements/trans.gi");
 ReadPackage("semigroups/gap/elements/elements.gi");
 ReadPackage("semigroups/gap/elements/pperm.gi");
 
+ReadPackage("semigroups/gap/main/fropin.gi");
+ReadPackage("semigroups/gap/main/setup.gi");
+ReadPackage("semigroups/gap/main/acting.gi");
+ReadPackage("semigroups/gap/main/lambda-rho.gi");
+ReadPackage("semigroups/gap/main/graded.gi");
+ReadPackage("semigroups/gap/main/orbits.gi");
+ReadPackage("semigroups/gap/main/semiact.gi");
+
 ReadPackage("semigroups/gap/semigroups/semigrp.gi");
 ReadPackage("semigroups/gap/semigroups/grpperm.gi");
 ReadPackage("semigroups/gap/semigroups/semirms.gi");
@@ -41,14 +49,6 @@ ReadPackage("semigroups/gap/semigroups/semigraph.gi");
 ReadPackage("semigroups/gap/semigroups/semiffmat.gi");
 ReadPackage("semigroups/gap/semigroups/grpffmat.gi");
 ReadPackage("semigroups/gap/semigroups/semiquo.gi");
-
-ReadPackage("semigroups/gap/main/fropin.gi");
-ReadPackage("semigroups/gap/main/setup.gi");
-ReadPackage("semigroups/gap/main/acting.gi");
-ReadPackage("semigroups/gap/main/lambda-rho.gi");
-ReadPackage("semigroups/gap/main/graded.gi");
-ReadPackage("semigroups/gap/main/orbits.gi");
-ReadPackage("semigroups/gap/main/semiact.gi");
 
 ReadPackage("semigroups/gap/ideals/ideals.gi");
 ReadPackage("semigroups/gap/ideals/idealact.gi");
