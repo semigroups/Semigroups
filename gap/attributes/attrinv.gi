@@ -248,7 +248,7 @@ end);
 # TODO a non-inverse-op version of this
 
 InstallMethod(IsJoinIrreducible,
-"for inverse semigroup with inverse op and an associative element",
+"for inverse semigroup with inverse op and a multiplicative element",
 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
  IsMultiplicativeElement],
 function(S, x)

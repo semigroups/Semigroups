@@ -15,4 +15,4 @@ DeclareAttribute("SemigroupIdealOfReesCongruence", IsReesCongruence);
 
 DeclareCategory("IsReesCongruenceClass",
                 IsCongruenceClass and IsAttributeStoringRep and
-                IsAssociativeElement);
+                IsMultiplicativeElement);

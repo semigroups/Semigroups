@@ -124,7 +124,7 @@ function(cong1, cong2)
 end);
 
 InstallMethod(\in,
-"for an associative element collection and a Rees congruence",
+"for a multiplicative element collection and a Rees congruence",
 [IsMultiplicativeElementCollection, IsReesCongruence],
 function(pair, cong)
   local S, I;
@@ -144,7 +144,7 @@ function(pair, cong)
 end);
 
 InstallMethod(ImagesElm,
-"for a Rees congruence and an associative element",
+"for a Rees congruence and a multiplicative element",
 [IsReesCongruence, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
@@ -202,7 +202,7 @@ function(cong)
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a Rees congruence and an associative element",
+"for a Rees congruence and a multiplicative element",
 [IsReesCongruence, IsMultiplicativeElement],
 function(cong, elm)
   # Check that the args make sense
@@ -215,7 +215,7 @@ function(cong, elm)
 end);
 
 InstallMethod(EquivalenceClassOfElementNC,
-"for a Rees congruence and an associative element",
+"for a Rees congruence and a multiplicative element",
 [IsReesCongruence, IsMultiplicativeElement],
 function(cong, elm)
   local is_ideal_class, fam, class;
@@ -238,7 +238,7 @@ function(cong, elm)
 end);
 
 InstallMethod(\in,
-"for an associative element and a Rees congruence class",
+"for a multiplicative element and a Rees congruence class",
 [IsMultiplicativeElement, IsReesCongruenceClass],
 function(elm, class)
   if class!.is_ideal_class then

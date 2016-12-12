@@ -146,7 +146,7 @@ function(cong1, cong2)
 end);
 
 InstallMethod(ImagesElm,
-"for inverse semigroup congruence and associative element",
+"for inverse semigroup congruence and multiplicative element",
 [IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
 function(cong, elm)
   local S, images, e, b;
@@ -267,7 +267,7 @@ function(pair, cong)
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for inverse semigroup congruence and associative element",
+"for inverse semigroup congruence and multiplicative element",
 [IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
@@ -279,7 +279,7 @@ function(cong, elm)
 end);
 
 InstallMethod(EquivalenceClassOfElementNC,
-"for inverse semigroup congruence and associative element",
+"for inverse semigroup congruence and multiplicative element",
 [IsInverseSemigroupCongruenceByKernelTrace, IsMultiplicativeElement],
 function(cong, elm)
   local class;
@@ -309,7 +309,7 @@ IsInverseSemigroupCongruenceClassByKernelTrace],
 end);
 
 InstallMethod(\in,
-"for associative element and inverse semigroup congruence class",
+"for multiplicative element and inverse semigroup congruence class",
 [IsMultiplicativeElement, IsInverseSemigroupCongruenceClassByKernelTrace],
 function(elm, class)
   local cong;

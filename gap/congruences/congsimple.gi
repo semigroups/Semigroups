@@ -96,7 +96,7 @@ function(cong1, cong2)
 end);
 
 InstallMethod(\in,
-"for an associative element collection and a (0-)simple semigroup congruence",
+"for a multiplicative element collection and a (0-)simple semigroup congruence",
 [IsMultiplicativeElementCollection, IsSimpleSemigroupCongruence],
 function(pair, cong)
   local S;
@@ -115,7 +115,7 @@ function(pair, cong)
 end);
 
 InstallMethod(ImagesElm,
-"for a (0-)simple semigroup congruence and an associative element",
+"for a (0-)simple semigroup congruence and a multiplicative element",
 [IsSimpleSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   return List(ImagesElm(cong!.rmscong, elm ^ cong!.iso),
@@ -131,7 +131,7 @@ function(cong)
 end);
 
 InstallMethod(EquivalenceClassOfElement,
-"for a (0-)simple semigroup congruence and associative element",
+"for a (0-)simple semigroup congruence and multiplicative element",
 [IsSimpleSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   if not elm in Range(cong) then
@@ -142,7 +142,7 @@ function(cong, elm)
 end);
 
 InstallMethod(EquivalenceClassOfElementNC,
-"for a (0-)simple semigroup congruence and associative element",
+"for a (0-)simple semigroup congruence and multiplicative element",
 [IsSimpleSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   local class;
@@ -158,7 +158,7 @@ function(cong)
 end);
 
 InstallMethod(\in,
-"for an associative element and a (0-)simple semigroup congruence class",
+"for a multiplicative element and a (0-)simple semigroup congruence class",
 [IsMultiplicativeElement, IsSimpleSemigroupCongruenceClass],
 function(elm, class)
   return (elm ^ EquivalenceClassRelation(class)!.iso in class!.rmsclass);

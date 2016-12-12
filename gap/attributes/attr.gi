@@ -303,7 +303,7 @@ InstallMethod(SmallSemigroupGeneratingSet,
 S -> SmallSemigroupGeneratingSet(GeneratorsOfSemigroup(S)));
 
 InstallMethod(SmallMonoidGeneratingSet,
-"for an multiplicative element with one collection",
+"for a multiplicative element with one collection",
 [IsMultiplicativeElementWithOneCollection],
 function(coll)
   if Length(coll) = 1 then

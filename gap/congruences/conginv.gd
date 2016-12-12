@@ -27,7 +27,7 @@ DeclareAttribute("InverseSemigroupCongruenceClassByKernelTraceType",
 # Congruence Classes
 DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
                 IsCongruenceClass and IsAttributeStoringRep and
-                IsAssociativeElement);
+                IsMultiplicativeElement);
 
 SEMIGROUPS.InverseCongFromPairs := function(S, pairs)
   local cong;

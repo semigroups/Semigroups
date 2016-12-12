@@ -345,21 +345,21 @@ InstallMethod(NonTrivialRightCongruenceClasses,
 NonTrivialEquivalenceClasses);
 
 InstallMethod(CongruenceClassOfElement,
-"for a semigroup congruence and associative element",
+"for a semigroup congruence and multiplicative element",
 [IsSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
 end);
 
 InstallMethod(LeftCongruenceClassOfElement,
-"for a left semigroup congruence and associative element",
+"for a left semigroup congruence and multiplicative element",
 [IsLeftSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
 end);
 
 InstallMethod(RightCongruenceClassOfElement,
-"for a right semigroup congruence and associative element",
+"for a right semigroup congruence and multiplicative element",
 [IsRightSemigroupCongruence, IsMultiplicativeElement],
 function(cong, elm)
   return EquivalenceClassOfElement(cong, elm);
@@ -373,7 +373,7 @@ function(cong1, cong2)
 end);
 
 InstallMethod(OnLeftCongruenceClasses,
-"for a left congruence class and an associative element",
+"for a left congruence class and a multiplicative element",
 [IsLeftCongruenceClass, IsMultiplicativeElement],
 function(class, elm)
   local cong;
@@ -382,7 +382,7 @@ function(class, elm)
 end);
 
 InstallMethod(OnRightCongruenceClasses,
-"for a right congruence class and an associative element",
+"for a right congruence class and a multiplicative element",
 [IsRightCongruenceClass, IsMultiplicativeElement],
 function(class, elm)
   local cong;

@@ -31,7 +31,7 @@ function(S)
                                   GeneratorsOfSemigroup(T)));
 end);
 
-InstallMethod(\*, "for associative coll coll and congruence class",
+InstallMethod(\*, "for multiplicative coll coll and congruence class",
 [IsMultiplicativeElementCollColl, IsCongruenceClass],
 function(list, nonlist)
   if ForAll(list, IsCongruenceClass) then
@@ -40,7 +40,7 @@ function(list, nonlist)
   TryNextMethod();
 end);
 
-InstallMethod(\*, "for congruence class and associative coll coll",
+InstallMethod(\*, "for congruence class and multiplicative coll coll",
 [IsCongruenceClass, IsMultiplicativeElementCollColl],
 function(nonlist, list)
   if ForAll(list, IsCongruenceClass) then

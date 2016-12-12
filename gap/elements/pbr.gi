@@ -327,7 +327,7 @@ InstallMethod(AsPBR, "for a multiplicative element",
 [IsMultiplicativeElement], x -> AsPBR(AsBipartition(x)));
 
 InstallMethod(AsPBR,
-"for an associative element and pos int",
+"for a multiplicative element and pos int",
 [IsMultiplicativeElement, IsPosInt],
 function(x, n)
   return AsPBR(AsBipartition(x, n));
