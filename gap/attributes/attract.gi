@@ -28,23 +28,18 @@ end);
 InstallMethod(IsGreensDLeq, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local partial, data, comp_index;
+  local gr, data;
 
-  partial := PartialOrderOfDClasses(S);
+  gr := Digraph(PartialOrderOfDClasses(S));
+  gr := DigraphReflexiveTransitiveClosure(gr);
   data := SemigroupData(S);
 
-  comp_index := function(x, y)
-    if y in partial[x] then
-      return true;
-    elif Length(partial[x]) = 1 and partial[partial[x][1]] = partial[x] then
-      return false;
-    fi;
-    return ForAny(partial[x], z -> z <> x and comp_index(z, y));
-  end;
-
-  return function(x, y)
-    return comp_index(OrbSCCLookup(data)[Position(data, x)] - 1,
-                      OrbSCCLookup(data)[Position(data, y)] - 1);
+  return 
+  function(x, y)
+    local u, v;
+    u := OrbSCCLookup(data)[Position(data, x)] - 1;
+    v := OrbSCCLookup(data)[Position(data, y)] - 1;
+    return IsReachable(gr, u, v);
   end;
 end);
 
