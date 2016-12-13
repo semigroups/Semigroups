@@ -683,7 +683,7 @@ true
 gap> S := FullTransformationMonoid(2);
 <full transformation monoid of degree 2>
 gap> T := ClosureSemigroup(S, FullTransformationMonoid(4), rec());
-<transformation monoid of degree 4 with 4 generators>
+<transformation monoid of degree 4 with 3 generators>
 gap> Size(T);
 256
 gap> T = FullTransformationMonoid(4);
@@ -924,6 +924,16 @@ gap> T := AsMonoid(IsPartialPermMonoid, S);;
 gap> T := AsMonoid(IsFpMonoid, S);
 <fp monoid on the generators [ m1, m2, m3, m4 ]>
 gap> T := AsMonoid(IsBooleanMatMonoid, S);;
+
+# Test ClosureSemigroup
+gap> S := FullTransformationMonoid(5);;
+gap> T := Semigroup(One(S));
+<trivial transformation group of degree 0 with 1 generator>
+gap> U := ClosureSemigroup(T, AsSet(S));;
+gap> Length(GeneratorsOfSemigroup(U)) <= 20;
+true
+gap> T;
+<trivial transformation group of degree 0 with 1 generator>
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/semigrp.tst");

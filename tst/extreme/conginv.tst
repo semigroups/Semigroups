@@ -12,7 +12,6 @@ gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
-gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
 # Always use kernel-trace methods if possible in these tests
 gap> SEMIGROUPS.DefaultOptionsRec.cong_by_ker_trace_threshold := 0;;

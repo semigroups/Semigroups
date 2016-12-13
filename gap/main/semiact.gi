@@ -54,8 +54,10 @@ end;
 ## Methods for some standard things for acting semigroups.
 
 InstallMethod(ClosureSemigroupNC,
-"for an acting semigroup, multiplicative element coll, and record",
-[IsActingSemigroup, IsMultiplicativeElementCollection, IsRecord],
+"for an acting semigroup, finite list of mult. elts, and record",
+[IsActingSemigroup, 
+ IsMultiplicativeElementCollection and IsList and IsFinite, 
+ IsRecord],
 function(S, coll, opts)
   local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup,
   rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr,
@@ -65,6 +67,25 @@ function(S, coll, opts)
   nr_new_gens, nr_old_gens, lambda, lambdaact, lambdaperm, rho, old_to_new,
   htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old,
   n, j;
+
+  if Size(coll) > 1 then 
+    Shuffle(coll);
+    n := ActionDegree(coll);
+    Sort(coll, function(x, y)
+                 return ActionRank(x, n) > ActionRank(y, n);
+               end);
+
+    opts.small := false;
+
+    for x in coll do
+      if not x in S then
+        S := ClosureSemigroupNC(S, [x], opts);
+      fi;
+    od;
+    return S;
+  fi;
+  
+  # Size(coll) = 1 . . .
 
   # init the semigroup or monoid
   if IsMonoid(S) and One(coll) = One(S) then
@@ -175,7 +196,7 @@ function(S, coll, opts)
 
   reps := new_data!.reps;
   # reps grouped by equal lambda and rho value
-  # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x))
+  # HTValue(lambdarhoht, Concatenation(lambda(x), rho(x)))
 
   lambdarhoht := new_data!.lambdarhoht;
   rholookup := new_data!.rholookup;
@@ -377,6 +398,66 @@ function(S, coll, opts)
   new_data!.genstoapply := [1 .. nr_new_gens];
 
   return t;
+end);
+
+InstallMethod(ClosureInverseSemigroupNC,
+"for an inverse acting semigroup rep, finite list of mult. elts, and record",
+[IsInverseActingSemigroupRep, 
+ IsMultiplicativeElementCollection and IsList and IsFinite, 
+ IsRecord],
+function(S, coll, opts)
+  local gens, T, o, n, x;
+
+  if IsSemigroupIdeal(S) then
+    TryNextMethod();
+  fi;
+
+  if Size(coll) > 1 then 
+    Shuffle(coll);
+    n := ActionDegree(coll);
+    Sort(coll, function(x, y)
+                 return ActionRank(x, n) > ActionRank(y, n);
+               end);
+
+    opts.small := false;
+
+    for x in coll do
+      if not x in S then
+        S := ClosureInverseSemigroupNC(S, [x], opts);
+      fi;
+    od;
+
+    return S;
+  fi;
+
+  gens := GeneratorsOfInverseSemigroup(S);
+  T := InverseSemigroupByGenerators(Concatenation(gens, coll), opts);
+
+  if not IsIdempotent(coll[1]) then
+    Add(coll, coll[1] ^ -1);
+  fi;
+
+  o := StructuralCopy(LambdaOrb(S));
+  AddGeneratorsToOrbit(o, coll);
+
+  #remove everything related to strongly connected components
+  Unbind(o!.scc);
+  Unbind(o!.trees);
+  Unbind(o!.scc_lookup);
+  Unbind(o!.mults);
+  Unbind(o!.schutz);
+  Unbind(o!.reverse);
+  Unbind(o!.rev);
+  Unbind(o!.truth);
+  Unbind(o!.schutzstab);
+  Unbind(o!.factorgroups);
+  Unbind(o!.factors);
+
+  o!.parent := T;
+  o!.scc_reps := [FakeOne(Generators(T))];
+
+  SetLambdaOrb(T, o);
+  return T;
 end);
 
 # different method for inverse/regular, same for ideals

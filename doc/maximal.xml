@@ -101,10 +101,10 @@
 gap> S := FullTransformationSemigroup(3);
 <full transformation monoid of degree 3>
 gap> MaximalSubsemigroups(S);
-[ <transformation semigroup of degree 3 with 8 generators>, 
-  <transformation semigroup of degree 3 with 8 generators>, 
-  <transformation semigroup of degree 3 with 8 generators>, 
-  <transformation semigroup of degree 3 with 8 generators>, 
+[ <transformation semigroup of degree 3 with 7 generators>, 
+  <transformation semigroup of degree 3 with 7 generators>, 
+  <transformation semigroup of degree 3 with 7 generators>, 
+  <transformation semigroup of degree 3 with 7 generators>, 
   <transformation monoid of degree 3 with 5 generators> ]
 gap> MaximalSubsemigroups(S,
 > rec(gens := true,

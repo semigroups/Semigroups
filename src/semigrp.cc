@@ -286,24 +286,14 @@ static inline size_t semi_obj_get_period(gap_semigroup_t so) {
 //  and the whole object is only required so that the fact that
 //  its en_semi_t is UNKNOWN.
 
-en_semi_obj_t en_semi_new(en_semi_t type) {
-  Obj o          = NewBag(T_SEMI, (type == UNKNOWN ? 2 : 6) * sizeof(Obj));
-  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(T_SEMI_SUBTYPE_ENSEMI);
-  ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(type);
-  for (size_t pos = 4; pos < (type == UNKNOWN ? 2 : 6); pos++) {
-    ADDR_OBJ(o)[pos] = static_cast<Obj>(nullptr);
-  }
-  CHANGED_BAG(o);
-  return o;
-}
-
 Converter* en_semi_init_converter(en_semi_obj_t es) {
   assert(en_semi_get_type(es) != UNKNOWN);
   assert(CLASS_OBJ<Converter*>(es, 4) == nullptr);
 
   Converter*      converter = nullptr;
+  // semigroup Obj is required to get the threshold etc for matrices over a
+  // semiring
   gap_semigroup_t so = en_semi_get_semi_obj(es);
-
   switch (en_semi_get_type(es)) {
     case TRANS2: {
       converter = new TransConverter<u_int16_t>();
@@ -363,7 +353,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
     case NTP_MAT: {
       converter = new MatrixOverSemiringConverter(
           new NaturalSemiring(semi_obj_get_threshold(so),
-                                        semi_obj_get_period(so)),
+                              semi_obj_get_period(so)),
           INTOBJ_INT(0),
           NTPMatrixType);
       break;
@@ -387,6 +377,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
 Semigroup* en_semi_init_semigroup(en_semi_obj_t es) {
   assert(en_semi_get_type(es) != UNKNOWN);
   assert(CLASS_OBJ<Semigroup*>(es, 5) == nullptr);
+  initRNams();
 
   if (en_semi_get_converter(es) == nullptr) {
     en_semi_init_converter(es);
@@ -412,12 +403,9 @@ Semigroup* en_semi_init_semigroup(en_semi_obj_t es) {
   return semi_cpp;
 }
 
-// Initialise the en_semi of the GAP semigroup <so>, the optional 2nd and
-// 3rd args are for use with closure semigroup.
+// Initialise the en_semi of the GAP semigroup <so>.
 
-en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
-                                    gap_semigroup_t old_so = 0,
-                                    gap_list_t      plist = 0) {
+en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
   size_t    deg;
   en_semi_t type = UNKNOWN;
@@ -425,7 +413,7 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
   gap_element_t x = semi_obj_get_rep(so);
 
   if (IS_TRANS(x)) {
-    deg = (old_so == 0 ? 0 : semi_obj_get_semi_cpp(old_so)->degree());
+    deg             = 0;
     gap_list_t gens = semi_obj_get_gens(so);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
       size_t n = DEG_TRANS(ELM_PLIST(gens, i));
@@ -439,7 +427,7 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
       type = TRANS4;
     }
   } else if (IS_PPERM(x)) {
-    deg = (old_so == 0 ? 0 : semi_obj_get_semi_cpp(old_so)->degree());
+    deg             = 0;
     gap_list_t gens = semi_obj_get_gens(so);
     for (size_t i = 1; i <= (size_t) LEN_PLIST(gens); i++) {
       size_t n = std::max(DEG_PPERM(ELM_PLIST(gens, i)),
@@ -485,29 +473,16 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so,
     deg  = INT_INTOBJ(CALL_1ARGS(DegreeOfPBR, x));
   }
 
-  en_semi_obj_t o = en_semi_new(type);
+  Obj o          = NewBag(T_SEMI, (type == UNKNOWN ? 2 : 6) * sizeof(Obj));
+  ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(T_SEMI_SUBTYPE_ENSEMI);
+  ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(type);
 
   if (type != UNKNOWN) {
     ADDR_OBJ(o)[2] = so;
     ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(deg);
+    ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);
+    ADDR_OBJ(o)[5] = static_cast<Obj>(nullptr);
     CHANGED_BAG(o);
-
-    Converter* converter = en_semi_init_converter(o);
-
-    if (old_so == 0) {
-      assert(plist == 0);
-      en_semi_init_semigroup(o);
-    } else {  // Closure semigroup
-      assert(plist != 0);
-      Semigroup*             old_semi_cpp = semi_obj_get_semi_cpp(old_so);
-      std::vector<Element*>* coll         = plist_to_vec(converter, plist, deg);
-      Semigroup*             semi_cpp =
-          new Semigroup(*old_semi_cpp, coll, semi_obj_get_report(so));
-      really_delete_cont(coll);
-      semi_cpp->set_batch_size(semi_obj_get_batch_size(so));
-      ADDR_OBJ(o)[5] = reinterpret_cast<Obj>(semi_cpp);
-      CHANGED_BAG(o);
-    }
   }
   AssPRec(so, RNam_en_semi_cpp_semi, o);
   return o;
@@ -528,6 +503,8 @@ Semigroup* en_semi_get_semi_cpp(en_semi_obj_t es) {
   Semigroup* semi_cpp = CLASS_OBJ<Semigroup*>(es, 5);
   return (semi_cpp != nullptr ? semi_cpp : en_semi_init_semigroup(es));
 }
+
+// Functions for semigroup Obj's i.e. gap_semigroup_t
 
 en_semi_obj_t semi_obj_get_en_semi_no_init(gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
@@ -607,12 +584,7 @@ EN_SEMI_ADD_GENERATORS(Obj self, gap_semigroup_t so, gap_list_t plist) {
   size_t const deg       = semi_cpp->degree();
   Converter*   converter = en_semi_get_converter(es);
 
-  std::unordered_set<Element*>* coll = new std::unordered_set<Element*>();
-
-  for (size_t i = 1; i <= (size_t) LEN_PLIST(plist); i++) {
-    coll->insert(converter->convert(ELM_PLIST(plist, i), deg));
-  }
-
+  std::vector<Element*>* coll = plist_to_vec(converter, plist, deg);
   semi_cpp->add_generators(coll, semi_obj_get_report(so));
   really_delete_cont(coll);
 
@@ -746,6 +718,11 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
 // This takes a newly constructed semigroup <new_so> which is generated by
 // <old_so> and <plist>, and it transfers any information known about the
 // <old_so>s cpp semigroup to <new_so>.
+//
+// The reason that <new_so> must be generated by <old_so> and <plist> (and not
+// nothing, for example) is that when we call semi_obj_init_en_semi below, we
+// must have the full generating set to correctly determine the degree of the
+// C++ semigroup. Also if the type is UNKNOWN, then we just return new_so.
 
 gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
                                 gap_semigroup_t new_so,
@@ -758,9 +735,42 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
   en_semi_obj_t es = semi_obj_get_en_semi(old_so);
 
   if (en_semi_get_type(es) == UNKNOWN) {
-    return new_so;
+    return new_so; // TODO(JDM) this could be better
   }
-  semi_obj_init_en_semi(new_so, old_so, plist);
+  // Find the type, semigroup Obj, and degree. This would be unnecessary if
+  // transformations and partial perms were of fixed degree, we could just copy
+  // the type, and the semigroup Obj from old_so's en_semi Obj. Again note that
+  // new_so must have the the generators of old_so and plist as generators for
+  // this to work.
+  es = semi_obj_init_en_semi(new_so);
+
+  size_t                 deg       = en_semi_get_degree(es);
+  Converter*             converter = en_semi_get_converter(es);
+  std::vector<Element*>* coll      = plist_to_vec(converter, plist, deg);
+
+  Semigroup* old_semi_cpp = semi_obj_get_semi_cpp(old_so);
+  Semigroup* new_semi_cpp =
+      old_semi_cpp->copy_closure(coll, semi_obj_get_report(new_so));
+  really_delete_cont(coll);
+
+  new_semi_cpp->set_batch_size(semi_obj_get_batch_size(new_so));
+  ADDR_OBJ(es)[5] = reinterpret_cast<Obj>(new_semi_cpp);
+  CHANGED_BAG(es);
+
+  // Reset the generators of the new semigroup
+  gap_list_t gens = NEW_PLIST(T_PLIST_HOM, new_semi_cpp->nrgens());
+
+  for (size_t i = 0; i < new_semi_cpp->nrgens(); i++) {
+    AssPlist(gens, i + 1, converter->unconvert((*new_semi_cpp->gens())[i]));
+  }
+  AssPRec(new_so, RNam_GeneratorsOfMagma, gens);
+  CHANGED_BAG(new_so);
+
+  // Reset the fropin data since none of it is valid any longer, if any
+  gap_rec_t fp = NEW_PREC(0);
+  SET_LEN_PREC(fp, 0);
+  AssPRec(new_so, RNam_en_semi_fropin, fp);
+
   return new_so;
 }
 

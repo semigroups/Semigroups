@@ -580,15 +580,6 @@ function(S, x, opts)
 end);
 
 InstallMethod(ClosureInverseSemigroup,
-"for an inverse semigroup with inverse op, empty list or coll, and record",
-[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, 
- IsListOrCollection and IsEmpty, 
- IsRecord],
-function(S, coll, opts)
-  return S;
-end);
-
-InstallMethod(ClosureInverseSemigroup,
 "for an inverse semigroup with inverse op, finite mult elt coll, and record",
 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
  IsMultiplicativeElementCollection and IsFinite,
@@ -620,63 +611,79 @@ function(S, coll, opts)
                                    SEMIGROUPS.ProcessOptionsRec(opts));
 end);
 
-InstallGlobalFunction(ClosureInverseSemigroupNC,
+InstallMethod(ClosureInverseSemigroupNC,
+"for an inverse semigroup, finite list of mult. element, and record",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, 
+ IsMultiplicativeElementCollection and IsFinite and IsList, 
+ IsRecord],
 function(S, coll, opts)
-  local gens, T, o, n, x;
+  local n, x, T, U, i;
+  
+  # Cannot use AddGenerators here because sometimes it will call
+  # ClosureSemigroup, which leads us right back here.
+  coll := Set(coll);
+  n    := Length(coll);
 
-  if coll = [] then
-    Info(InfoSemigroups, 2, "the elements in the collection belong to the ",
-         "semigroup,");
-    return S;
-  elif not IsActingSemigroup(S) or IsSemigroupIdeal(S) then
-    return InverseSemigroup(S, coll, opts);
-  fi;
-
-  if Length(coll) = 1 then
-    gens := GeneratorsOfInverseSemigroup(S);
-    T := InverseSemigroupByGenerators(Concatenation(gens, coll), opts);
-
-    if not IsIdempotent(coll[1]) then
-      Add(coll, coll[1] ^ -1);
-    fi;
-
-    o := StructuralCopy(LambdaOrb(S));
-    AddGeneratorsToOrbit(o, coll);
-
-    #remove everything related to strongly connected components
-    Unbind(o!.scc);
-    Unbind(o!.trees);
-    Unbind(o!.scc_lookup);
-    Unbind(o!.mults);
-    Unbind(o!.schutz);
-    Unbind(o!.reverse);
-    Unbind(o!.rev);
-    Unbind(o!.truth);
-    Unbind(o!.schutzstab);
-    Unbind(o!.factorgroups);
-    Unbind(o!.factors);
-
-    o!.parent := T;
-    o!.scc_reps := [FakeOne(Generators(T))];
-
-    SetLambdaOrb(T, o);
-    return T;
-  fi;
-
-  Shuffle(coll);
-  n := ActionDegree(coll);
-  Sort(coll, function(x, y)
-               return ActionRank(x, n) > ActionRank(y, n);
-             end);
-
-  opts.small := false;
-
-  for x in coll do
-    if not x in S then
-      S := ClosureInverseSemigroupNC(S, [x], opts);
+  for i in [1 .. n] do 
+    x := coll[i] ^ -1;
+    if not x in coll then 
+      Add(coll, x);
     fi;
   od;
 
+  # TODO sort by decreasing degree if appropriate
+  coll         := Shuffle(coll);
+  opts         := ShallowCopy(opts);
+  opts.small   := false;
+  opts.regular := false;
+  
+  # The new semigroup Semigroup(S, coll, opts) is required here so that the
+  # kernel functions for initialising a C++ semigroup can be used on it, even
+  # though it is then thrown away at the end of this function. 
+  T := EN_SEMI_CLOSURE(Semigroup(S, coll, opts), S, coll);
+
+  if IsBound(T!.__en_semi_cpp_semi) then 
+    # We must recreate the semigroup <T> since Semigroup(S, coll, opts) may have
+    # further attributes (such as those arising from immediate methods) that are
+    # no longer valid after the call to EN_SEMI_CLOSURE, such as Size etc. In
+    # other words, T may no longer be valid after calling this function if any
+    # new generators are added.
+    coll := [];
+    for x in GeneratorsOfMagma(T) do 
+      if not x in coll and not x ^ -1 in coll then 
+        AddSet(coll, x);
+      fi;
+    od;
+    U := InverseSemigroup(coll, opts);
+    U!.__en_semi_cpp_semi := T!.__en_semi_cpp_semi;
+    U!.__en_semi_fropin   := T!.__en_semi_fropin;
+    return U;
+  else 
+    return T;
+  fi;
+end);
+
+# Both of these methods are required for ClosureInverseSemigroup(NC) and an
+# empty list because ClosureInverseSemigroup might be called with an empty
+# list, it might be that all of the elements in the collection passed to
+# ClosureInverseSemigroup already belong to the semigroup, in which case we
+# call ClosureInverseSemigroupNC with an empty list.
+
+InstallMethod(ClosureInverseSemigroup,
+"for an inverse semigroup, empty list or collection, and record",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, 
+ IsListOrCollection and IsEmpty, 
+ IsRecord],
+function(S, coll, opts)
+  return S;
+end);
+
+InstallMethod(ClosureInverseSemigroupNC,
+"for an inverse semigroup, empty list, and record",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, 
+ IsList and IsEmpty, 
+ IsRecord],
+function(S, coll, opts)
   return S;
 end);
 
@@ -726,22 +733,61 @@ function(S, coll, opts)
                             SEMIGROUPS.ProcessOptionsRec(opts));
 end);
 
-# This is the fallback method, coll should consist of elements not in
-# the semigroup
+# This is the fallback method
 
 InstallMethod(ClosureSemigroupNC,
 "for a semigroup, finite multiplicative element collection, and record",
-[IsSemigroup, IsMultiplicativeElementCollection and IsFinite, IsRecord],
+[IsSemigroup, 
+ IsMultiplicativeElementCollection and IsFinite and IsList, 
+ IsRecord],
 function(S, coll, opts)
-  local T;
-  T := Semigroup(Concatenation(GeneratorsOfSemigroup(S), coll), opts);
-  # The following does nothing if S / T is not an CPP semigroup
-  return EN_SEMI_CLOSURE(T, S, coll);
+  local T, U;
+
+  # Cannot use AddGenerators here because sometimes it will call
+  # ClosureSemigroup, which leads us right back here.
+
+  # TODO sort by decreasing degree if appropriate
+  coll         := Shuffle(Set(coll));
+  opts         := ShallowCopy(opts);
+  opts.small   := false;
+  opts.regular := false;
+  
+  # The new semigroup Semigroup(S, coll, opts) is required here so that the
+  # kernel functions for initialising a C++ semigroup can be used on it, even
+  # though it is then thrown away at the end of this function. 
+  T := EN_SEMI_CLOSURE(Semigroup(S, coll, opts), S, coll);
+  
+  if IsBound(T!.__en_semi_cpp_semi) then 
+    # We must recreate the semigroup <T> since Semigroup(S, coll, opts) may have
+    # further attributes (such as those arising from immediate methods) that are
+    # no longer valid after the call to EN_SEMI_CLOSURE, such as Size etc. In
+    # other words, T may no longer be valid after calling this function if any
+    # new generators are added.
+    U := Semigroup(GeneratorsOfMagma(T), opts);
+    U!.__en_semi_cpp_semi := T!.__en_semi_cpp_semi;
+    U!.__en_semi_fropin   := T!.__en_semi_fropin;
+    return U;
+  else 
+    return T;
+  fi;
+end);
+
+# Both of these methods are required for ClosureSemigroup(NC) and an empty list
+# because ClosureSemigroup might be called with an empty list, it might be that
+# all of the elements in the collection passed to ClosureSemigroup already
+# belong to the semigroup, in which case we call ClosureSemigroupNC with an
+# empty list.
+
+InstallMethod(ClosureSemigroup,
+"for a semigroup, empty list or collection, and record",
+[IsSemigroup, IsListOrCollection and IsEmpty, IsRecord],
+function(S, coll, opts)
+  return S;
 end);
 
 InstallMethod(ClosureSemigroupNC,
-"for a semigroup, empty collection, and record",
-[IsSemigroup, IsListOrCollection and IsEmpty, IsRecord],
+"for a semigroup, empty list, and record",
+[IsSemigroup, IsList and IsEmpty, IsRecord],
 function(S, coll, opts)
   return S;
 end);
