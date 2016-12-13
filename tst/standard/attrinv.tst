@@ -997,6 +997,18 @@ gap> InversesOfSemigroupElementNC(S, x);
 gap> x in last;
 false
 
+#T# attrinv: IdempotentGeneratedSubsemigroup
+gap> IdempotentGeneratedSubsemigroup(FreeInverseSemigroup(2));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 4th choice method found for `IdempotentGeneratedSubsemigroup' on 1 a\
+rguments
+gap> S := InverseSemigroup([
+>  PartialPerm([1, 2, 3, 4], [6, 2, 4, 3]),
+>  PartialPerm([1, 2, 3, 5], [5, 6, 3, 2]),
+>  PartialPerm([1, 2, 5], [3, 5, 4])]);;
+gap> IdempotentGeneratedSubsemigroup(S);
+<inverse partial perm semigroup of rank 6 with 14 generators>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(I);
