@@ -97,13 +97,13 @@ gap> CharacterTableOfInverseSemigroup(S);
 <#GAPDoc Label="PrimitiveIdempotents">
 <ManSection>
   <Attr Name = "PrimitiveIdempotents" Arg = "S"/>
-  <Returns>A list of idempotent partial permutations.</Returns>
+  <Returns>A list of elements.</Returns>
   <Description>
     An idempotent in an inverse semigroup <A>S</A> is <E>primitive</E> if it is
     non-zero and minimal with respect to the 
     <Ref Attr="NaturalPartialOrder" BookName="ref"/> on <A>S</A>.
     <C>PrimitiveIdempotents</C> returns the list of primitive idempotents in
-    the inverse semigroup of partial permutations <A>S</A>. 
+    the inverse semigroup <A>S</A>. 
     <Example><![CDATA[
 gap> S := InverseMonoid(
 > PartialPerm([1], [4]),
