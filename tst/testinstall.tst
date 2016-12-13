@@ -1495,7 +1495,7 @@ gap> Size(S);
 gap> Size(Semigroup(S));
 119
 
-# Test Issue #237
+# Test Issue #237 part 1
 gap> T := Semigroup([
 >  Transformation([1, 2, 6, 4, 5, 6]),
 >  Transformation([1, 2, 3, 4, 6, 6]),
@@ -1519,6 +1519,24 @@ gap> IsInverseSemigroup(I);
 true
 gap> IsGreensDLeq(I)(x, y);
 true
+
+# Test Issue #237 part 2
+gap> T := Semigroup([
+>  Transformation([1, 2, 6, 4, 5, 6]),
+>  Transformation([1, 2, 3, 4, 6, 6]),
+>  Transformation([1, 2, 3, 6, 5, 6]),
+>  Transformation([1, 6, 6, 4, 5, 6]),
+>  Transformation([1, 6, 3, 4, 6, 6]),
+>  Transformation([1, 6, 3, 6, 5, 6]),
+>  Transformation([6, 2, 3, 6, 5, 6]),
+>  Transformation([6, 2, 6, 4, 5, 6]),
+>  Transformation([6, 2, 3, 4, 6, 6])]);;
+gap> Set(PrimitiveIdempotents(T));
+[ Transformation( [ 1, 6, 6, 6, 6, 6 ] ), 
+  Transformation( [ 6, 2, 6, 6, 6, 6 ] ), 
+  Transformation( [ 6, 6, 3, 6, 6, 6 ] ), 
+  Transformation( [ 6, 6, 6, 4, 6, 6 ] ), 
+  Transformation( [ 6, 6, 6, 6, 5, 6 ] ) ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);

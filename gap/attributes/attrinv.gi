@@ -42,7 +42,10 @@ function(S)
                        "fully enumerates its argument!");
 
   elts := ShallowCopy(Elements(S));
-  p    := Sortex(elts, IsGreensDLeq(S)) ^ -1;
+  func := function(x, y)
+    return x <> y and IsGreensDLeq(S)(x, y);
+  end;
+  p    := Sortex(elts, func) ^ -1;
   func := NaturalLeqInverseSemigroup(S);
   out  := List([1 .. Size(S)], x -> []);
 
@@ -195,9 +198,7 @@ function(S)
   if not IsFinite(S) then
     ErrorNoReturn("Semigroups: PrimitiveIdempotents: usage,\n",
                   "the argument is not a finite semigroup,");
-  fi;
-
-  if not IsInverseSemigroup(S) then
+  elif not IsInverseSemigroup(S) then
     ErrorNoReturn("Semigroups: PrimitiveIdempotents: usage,\n",
                   "the argument is not an inverse semigroup,");
   fi;
