@@ -46,7 +46,6 @@ function(cong)
     class := classes[nontrivial];
     ideal := SemigroupIdeal(S, AsList(class));
     if Size(class) = Size(ideal) then
-      ideal := SemigroupIdeal(S, MinimalIdealGeneratingSet(ideal));
       SetSemigroupIdealOfReesCongruence(cong, ideal);
       return true;
     else
