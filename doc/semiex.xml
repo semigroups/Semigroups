@@ -426,7 +426,7 @@ gap> S := InverseSemigroup(PartialPerm([1, 2, 3, 4, 5, 6, 7, 10],
 <inverse partial perm semigroup of rank 10 with 2 generators>
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> M := MunnSemigroup(T);
-<inverse partial perm semigroup of rank 60 with 7 generators>
+<inverse partial perm semigroup of rank 60 with 6 generators>
 gap> NrIdempotents(M);
 60
 gap> NrIdempotents(S);
