@@ -211,8 +211,8 @@ function(gens, opts)
         Sort(gens, function(x, y)
                      return ActionRank(x, n) > ActionRank(y, n);
                    end);
-      else
-        Sort(gens, IsGreensDLeq(Semigroup(gens)));
+      elif Length(gens) < 120 then 
+        Sort(gens, IsGreensDGreaterThanFunc(Semigroup(gens)));
       fi;
 
       opts := ShallowCopy(opts);
@@ -289,8 +289,8 @@ function(gens, opts)
         Sort(gens, function(x, y)
                      return ActionRank(x, n) > ActionRank(y, n);
                    end);
-      else
-        Sort(gens, IsGreensDLeq(Semigroup(gens)));
+      elif Length(gens) < 120 then 
+        Sort(gens, IsGreensDGreaterThanFunc(Semigroup(gens)));
       fi;
 
       opts         := ShallowCopy(opts);
@@ -395,8 +395,9 @@ function(gens, opts)
         Sort(gens, function(x, y)
                      return ActionRank(x, n) > ActionRank(y, n);
                    end);
-      else # Currently there is no way to enter this clause
-        Sort(gens, IsGreensDLeq(InverseSemigroup(gens)));
+      elif Length(gens) < 120 then   
+        # Currently there is no way to enter this clause
+        Sort(gens, IsGreensDGreaterThanFunc(InverseSemigroup(gens)));
       fi;
 
       opts := ShallowCopy(opts);
@@ -482,8 +483,9 @@ function(gens, opts)
         Sort(gens, function(x, y)
                      return ActionRank(x, n) > ActionRank(y, n);
                    end);
-      else # Currently there is no way to enter this clause
-        Sort(gens, IsGreensDLeq(InverseMonoid(gens)));
+      elif Length(gens) < 120 then 
+        # Currently there is no way to enter this clause
+        Sort(gens, IsGreensDGreaterThanFunc(InverseMonoid(gens)));
       fi;
 
       opts := ShallowCopy(opts);

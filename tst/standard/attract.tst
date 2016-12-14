@@ -21,23 +21,23 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 5], [2, 1, 5]),
 gap> IsMultiplicativeZero(S, PartialPerm([]));
 true
 
-#T# attract: IsGreensDLeq
+#T# attract: IsGreensDGreaterThanFunc
 gap> S := Semigroup([PartialPerm([1, 2, 3], [4, 5, 1]),
 >                    PartialPerm([1, 2, 4], [1, 5, 4])]);;
 gap> x := PartialPerm([1, 3], [4, 1]);;
 gap> y := PartialPerm([1, 4], [1, 4]);;
-gap> foo := IsGreensDLeq(S);;
+gap> foo := IsGreensDGreaterThanFunc(S);;
 gap> foo(x, y);
 false
 gap> foo(y, x);
 true
 gap> S := InverseSemigroup(S);;
-gap> foo := IsGreensDLeq(S);
+gap> foo := IsGreensDGreaterThanFunc(S);
 function( x, y ) ... end
 gap> foo(y, x);
-true
+false
 gap> foo(x, y);
-true
+false
 gap> z := RepresentativeOfMinimalIdeal(S);
 <empty partial perm>
 gap> foo(x, z);

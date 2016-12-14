@@ -486,24 +486,27 @@ S -> GreensDClassOfElementNC(S, RepresentativeOfMinimalIdeal(S)));
 ##    semigroups.
 #############################################################################
 
-InstallMethod(IsGreensDLeq, "for an enumerable semigroup",
+InstallMethod(IsGreensDGreaterThanFunc, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
-  local digraph, id;
+  local gr, id;
 
   if not IsFinite(S) then
     TryNextMethod();
   fi;
 
-  digraph := Digraph(PartialOrderOfDClasses(S));
-  digraph := DigraphReflexiveTransitiveClosure(digraph);
+  gr := Digraph(PartialOrderOfDClasses(S));
+  gr := DigraphReflexiveTransitiveClosure(gr);
   id := GreensDRelation(S)!.data.id;
+
   return function(x, y)
-    local i, j;
-    i := id[PositionCanonical(S, x)];
-    j := id[PositionCanonical(S, y)];
-    # TODO should be a better way of checking the below
-    return j in OutNeighboursOfVertex(digraph, i);
+    local u, v;
+    if x = y then 
+      return false;
+    fi;
+    u := id[PositionCanonical(S, x)];
+    v := id[PositionCanonical(S, y)];
+    return u <> v and IsReachable(gr, u, v);
   end;
 end);
 

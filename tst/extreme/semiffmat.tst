@@ -154,7 +154,7 @@ gap> Size(S);
 729
 
 #T# MatrixSemigroups5:  
-gap> func := IsGreensDLeq(S);
+gap> func := IsGreensDGreaterThanFunc(S);
 function( x, y ) ... end
 gap> x := Random(S);;
 gap> y := Random(S);;

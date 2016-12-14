@@ -29,7 +29,7 @@
     <#Include Label = "NrRegularDClasses">
     <#Include Label = "NrXClasses">
     <#Include Label = "PartialOrderOfDClasses">
-    <#Include Label = "IsGreensDLeq">
+    <#Include Label = "IsGreensDGreaterThanFunc">
 
   </Section>
   

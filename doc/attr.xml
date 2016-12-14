@@ -31,12 +31,12 @@ gap> StructureDescription(H);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsGreensDLeq">
+<#GAPDoc Label="IsGreensDGreaterThanFunc">
 <ManSection>
-  <Attr Name="IsGreensDLeq" Arg="S"/>
+  <Attr Name="IsGreensDGreaterThanFunc" Arg="S"/>
   <Returns>A function.</Returns>
   <Description>
-    <C>IsGreensDLeq(<A>S</A>)</C> returns a function <C>func</C> such that for
+    <C>IsGreensDGreaterThanFunc(<A>S</A>)</C> returns a function <C>func</C> such that for
     any two elements <C>x</C> and <C>y</C> of <A>S</A>, <C>func(x, y)</C>
     return <K>true</K> if the &D;-class of <C>x</C> in <A>S</A> is greater than
     or equal to the &D;-class of <C>y</C> in <A>S</A> under the usual ordering
@@ -52,7 +52,7 @@ gap> reps := ShallowCopy(AsSet(DClassReps(S)));
   Transformation( [ 1, 3, 1, 3, 3 ] ), 
   Transformation( [ 1, 3, 4, 1, 3 ] ), 
   Transformation( [ 2, 4, 1, 5, 5 ] ) ]
-gap> Sort(reps, IsGreensDLeq(S));
+gap> Sort(reps, IsGreensDGreaterThanFunc(S));
 gap> reps;
 [ Transformation( [ 2, 4, 1, 5, 5 ] ), 
   Transformation( [ 1, 3, 4, 1, 3 ] ), 
@@ -62,9 +62,9 @@ gap> IsGreensLessThanOrEqual(DClass(S, reps[2]),
 >                            DClass(S, reps[1]));
 true
 gap> S := DualSymmetricInverseMonoid(4);;
-gap> IsGreensDLeq(S)(S.1, S.3);                      
+gap> IsGreensDGreaterThanFunc(S)(S.1, S.3);                      
 true
-gap> IsGreensDLeq(S)(S.3, S.1);
+gap> IsGreensDGreaterThanFunc(S)(S.3, S.1);
 false
 gap> IsGreensLessThanOrEqual(DClass(S, S.3), 
 >                            DClass(S, S.1));

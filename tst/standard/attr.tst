@@ -667,9 +667,9 @@ gap> S := Monoid(IdentityTransformation);;
 gap> StructureDescription(S);
 "1"
 
-#T# attr: IsGreensDLeq
+#T# attr: IsGreensDGreaterThanFunc
 gap> S := RegularBooleanMatMonoid(3);;
-gap> foo := IsGreensDLeq(S);
+gap> foo := IsGreensDGreaterThanFunc(S);
 function( x, y ) ... end
 gap> x := BooleanMat([[1, 0, 1], [1, 1, 0], [1, 0, 1]]);;
 gap> y := BooleanMat([[1, 0, 1], [0, 0, 0], [1, 0, 0]]);;
@@ -688,17 +688,19 @@ false
 gap> foo(y, z);
 true
 
-# Test IsGreensDLeq for an infinite enumerable semigroup
+# Test IsGreensDGreaterThanFunc for an infinite enumerable semigroup
 gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
 >  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
-gap> IsGreensDLeq(S);
+gap> IsGreensDGreaterThanFunc(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `IsGreensDLeq' on 1 arguments
+Error, no 3rd choice method found for `IsGreensDGreaterThanFunc' on 1 argument\
+s
 
-#T# attr: IsGreensDLeq, error
-gap> IsGreensDLeq(FreeSemigroup(2));
+#T# attr: IsGreensDGreaterThanFunc, error
+gap> IsGreensDGreaterThanFunc(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `IsGreensDLeq' on 1 arguments
+Error, no 2nd choice method found for `IsGreensDGreaterThanFunc' on 1 argument\
+s
 
 #T# attr: MaximalDClasses
 gap> S := RegularBooleanMatMonoid(3);

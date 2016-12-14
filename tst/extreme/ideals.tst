@@ -296,7 +296,7 @@ gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 5]),
 >  Transformation([6, 4, 5, 5, 1, 6])]);;
 gap> I := SemigroupIdeal(S, Transformation([1, 3, 4, 1, 3, 5]));;
 gap> J := SemigroupIdeal(S, Transformation([1, 5, 3, 5, 5, 5]));;
-gap> IsGreensDLeq(I); IsGreensDLeq(J);
+gap> IsGreensDGreaterThanFunc(I); IsGreensDGreaterThanFunc(J);
 function( x, y ) ... end
 function( x, y ) ... end
 gap> Length(MaximalDClasses(I));

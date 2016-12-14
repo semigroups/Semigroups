@@ -630,14 +630,14 @@ gap> NaturalLeqInverseSemigroup(FreeInverseSemigroup(2));
 Error, Semigroups: NaturalLeqInverseSemigroup: usage,
 the argument is not a finite semigroup,
 
-#T# attrinv: IsGreensDLeq (for an inverse op acting semigroup), 1/1
+#T# attrinv: IsGreensDGreaterThanFunc (for an inverse op acting semigroup), 1/1
 gap> S := InverseSemigroup(
 > [Bipartition([[1, -3], [2, -1], [3, 4, 5, -2, -4, -5]]),
 >  Bipartition([[1, -1], [2, -3], [3, -4], [4, 5, -2, -5]])]);
 <inverse block bijection semigroup of degree 5 with 2 generators>
 gap> Size(S);
 39
-gap> foo := IsGreensDLeq(S);;
+gap> foo := IsGreensDGreaterThanFunc(S);;
 gap> foo(S.1, S.2);
 false
 gap> foo(S.2, S.1);

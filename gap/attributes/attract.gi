@@ -25,7 +25,7 @@ end);
 # TODO take the transitive closure of the partial order and use that instead of
 # comp_index
 
-InstallMethod(IsGreensDLeq, "for an acting semigroup",
+InstallMethod(IsGreensDGreaterThanFunc, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
   local gr, data;
@@ -37,9 +37,12 @@ function(S)
   return 
   function(x, y)
     local u, v;
+    if x = y then 
+      return false;
+    fi;
     u := OrbSCCLookup(data)[Position(data, x)] - 1;
     v := OrbSCCLookup(data)[Position(data, y)] - 1;
-    return IsReachable(gr, u, v);
+    return u <> v and IsReachable(gr, u, v);
   end;
 end);
 

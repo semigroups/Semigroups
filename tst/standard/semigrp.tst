@@ -315,7 +315,7 @@ gap> S := Semigroup(AsSet(FullTransformationMonoid(3)), rec(small := true));
 
 # Test SemigroupByGenerators 2
 gap> S := Semigroup(AsSet(FullBooleanMatMonoid(2)), rec(small := true));
-<monoid of 2x2 boolean matrices with 4 generators>
+<monoid of 2x2 boolean matrices with 3 generators>
 
 # Test SemigroupByGenerators 4
 gap> SetInfoLevel(InfoSemigroups, 2);
@@ -326,16 +326,16 @@ at 	4 of 	16; 	2 generators so far
 at 	5 of 	16; 	2 generators so far
 at 	6 of 	16; 	2 generators so far
 at 	7 of 	16; 	3 generators so far
-at 	8 of 	16; 	3 generators so far
-at 	9 of 	16; 	3 generators so far
-at 	10 of 	16; 	3 generators so far
-at 	11 of 	16; 	3 generators so far
-at 	12 of 	16; 	3 generators so far
-at 	13 of 	16; 	3 generators so far
-at 	14 of 	16; 	3 generators so far
-at 	15 of 	16; 	3 generators so far
-at 	16 of 	16; 	3 generators so far
-<monoid of 2x2 boolean matrices with 3 generators>
+at 	8 of 	16; 	4 generators so far
+at 	9 of 	16; 	4 generators so far
+at 	10 of 	16; 	4 generators so far
+at 	11 of 	16; 	4 generators so far
+at 	12 of 	16; 	4 generators so far
+at 	13 of 	16; 	4 generators so far
+at 	14 of 	16; 	4 generators so far
+at 	15 of 	16; 	4 generators so far
+at 	16 of 	16; 	4 generators so far
+<monoid of 2x2 boolean matrices with 4 generators>
 gap> SetInfoLevel(InfoSemigroups, 0); 
 
 # Test SemigroupByGenerators 5
@@ -391,7 +391,7 @@ gap> S := Monoid(AsSet(FullTransformationMonoid(3)), rec(small := true));
 
 # Test MonoidByGenerators 2
 gap> S := Monoid(AsSet(FullBooleanMatMonoid(2)), rec(small := true));
-<monoid of 2x2 boolean matrices with 3 generators>
+<monoid of 2x2 boolean matrices with 4 generators>
 
 # Test MonoidByGenerators 3
 gap> S := Monoid(BrauerMonoid(4), rec(regular := true));;
@@ -406,17 +406,17 @@ at 	3 of 	16; 	2 generators so far
 at 	4 of 	16; 	2 generators so far
 at 	5 of 	16; 	2 generators so far
 at 	6 of 	16; 	2 generators so far
-at 	7 of 	16; 	2 generators so far
-at 	8 of 	16; 	3 generators so far
-at 	9 of 	16; 	3 generators so far
-at 	10 of 	16; 	3 generators so far
-at 	11 of 	16; 	3 generators so far
-at 	12 of 	16; 	3 generators so far
-at 	13 of 	16; 	3 generators so far
-at 	14 of 	16; 	3 generators so far
-at 	15 of 	16; 	3 generators so far
-at 	16 of 	16; 	3 generators so far
-<monoid of 2x2 boolean matrices with 3 generators>
+at 	7 of 	16; 	3 generators so far
+at 	8 of 	16; 	4 generators so far
+at 	9 of 	16; 	4 generators so far
+at 	10 of 	16; 	4 generators so far
+at 	11 of 	16; 	4 generators so far
+at 	12 of 	16; 	4 generators so far
+at 	13 of 	16; 	4 generators so far
+at 	14 of 	16; 	4 generators so far
+at 	15 of 	16; 	4 generators so far
+at 	16 of 	16; 	4 generators so far
+<monoid of 2x2 boolean matrices with 4 generators>
 gap> SetInfoLevel(InfoSemigroups, 0); 
 
 # Test MonoidByGenerators 5

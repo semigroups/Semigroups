@@ -1511,13 +1511,13 @@ gap> y := Transformation([6, 6, 3, 6, 6, 6]);;
 gap> IsIdempotent(x) and IsIdempotent(y) and x in T and y in T;
 true
 gap> I := IdempotentGeneratedSubsemigroup(T);;
-gap> IsGreensDLeq(I)(x, y);
+gap> IsGreensDGreaterThanFunc(I)(x, y);
 true
 gap> T := Semigroup(T);;
 gap> I := IdempotentGeneratedSubsemigroup(T);;
 gap> IsInverseSemigroup(I);
 true
-gap> IsGreensDLeq(I)(x, y);
+gap> IsGreensDGreaterThanFunc(I)(x, y);
 true
 
 # Test Issue #237 part 2
