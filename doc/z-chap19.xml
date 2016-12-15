@@ -72,7 +72,9 @@
     <#Include Label = "CongruenceClassOfElement">
     <#Include Label = "CongruenceClasses">
     <#Include Label = "NonTrivialEquivalenceClasses">
+    <#Include Label = "NonTrivialCongruenceClasses">
     <#Include Label = "NrEquivalenceClasses">
+    <#Include Label = "NrCongruenceClasses">
     <#Include Label = "CongruencesOfSemigroup">
     <#Include Label = "MinimalCongruencesOfSemigroup">
     <#Include Label = "PrincipalCongruencesOfSemigroup">
