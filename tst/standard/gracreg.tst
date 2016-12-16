@@ -296,6 +296,37 @@ true
 gap> Set([D1 < D2, D2 < D1]);
 [ true, false ]
 
+# Test NrIdempotents for a regular star bipartition semigroup
+gap> S := JonesMonoid(15);
+<regular bipartition *-monoid of degree 15 with 14 generators>
+gap> NrIdempotents(S);
+3923351
+gap> S := JonesMonoid(10);
+<regular bipartition *-monoid of degree 10 with 9 generators>
+gap> NrIdempotents(S);
+8944
+gap> S := JonesMonoid(0);;
+gap> NrIdempotents(S);
+1
+gap> NrIdempotentsByRank(S);
+[ 1 ]
+
+# Test Size for a regular D-class
+gap> S := PartitionMonoid(4);;
+gap> D := DClass(S, S.4);;
+gap> IsRegularDClass(D);
+true
+gap> Size(D);
+600
+
+# Test NrLClasses for a regular D-class
+gap> S := PartitionMonoid(3);;
+gap> D := DClass(S, S.1);;
+gap> IsRegularDClass(D);
+true
+gap> NrLClasses(D);
+1
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(H);

@@ -91,8 +91,6 @@ function(x, y)
   local S, scc;
   if Parent(x) <> Parent(y) or x = y then
     return false;
-  elif not IsRegularSemigroup(Parent(x)) then
-    TryNextMethod();
   fi;
   S    := Parent(x);
   scc  := OrbSCCLookup(LambdaOrb(S));
@@ -109,8 +107,6 @@ InstallMethod(\<,
 function(x, y)
   if Parent(x) <> Parent(y) or x = y then
     return false;
-  elif not IsRegularSemigroup(Parent(x)) then
-    TryNextMethod();
   fi;
   return RhoFunc(Parent(x))(Representative(x))
          < RhoFunc(Parent(x))(Representative(y));
@@ -125,8 +121,6 @@ InstallMethod(\<,
 function(x, y)
   if Parent(x) <> Parent(y) or x = y then
     return false;
-  elif not IsRegularSemigroup(Parent(x)) then
-    TryNextMethod();
   fi;
   return LambdaFunc(Parent(x))(Representative(x))
          < LambdaFunc(Parent(x))(Representative(y));
@@ -383,7 +377,7 @@ InstallMethod(NrIdempotents, "for a regular star bipartition acting semigroup",
 [IsRegularStarSemigroup and IsActingSemigroup and IsBipartitionSemigroup and
  HasGeneratorsOfSemigroup],
 function(S)
-  if Length(Enumerate(LambdaOrb(S))) > 10000 then
+  if Length(Enumerate(LambdaOrb(S))) > 5000 then
     return Sum(NrIdempotentsByRank(S));
   fi;
   TryNextMethod();
