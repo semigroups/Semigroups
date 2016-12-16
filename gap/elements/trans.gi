@@ -10,9 +10,20 @@
 InstallMethod(CanonicalTransformation, "for a transformation",
 [IsTransformation],
 function(f)
-  local digraph;
+  return CanonicalTransformation(f, DegreeOfTransformation(f));
+end);
 
-  digraph := AsDigraph(f);
+InstallMethod(CanonicalTransformation, "for a transformation",
+[IsTransformation, IsInt],
+function(f, n)
+  local digraph;
+  if n < DegreeOfTransformation(f) then 
+    ErrorNoReturn("Semigroups: CanonicalTransformation: usage,\n", 
+                  "the second argument (an integer) must be at least ", 
+                  "the degree of the first argument (a transformation),");
+  fi;
+
+  digraph := AsDigraph(f, n);
   return AsTransformation(OnDigraphs(digraph,
                                      DigraphCanonicalLabelling(digraph)));
 end);
@@ -31,8 +42,8 @@ function(im, ker)
 
   if flat <> [1 .. Length(flat)] then
     ErrorNoReturn("Semigroups: TransformationByImageAndKernel: usage,\n",
-                  "the union of the arguments must be [1 .. ", Length(flat),
-                  "],");
+                  "the union of the second argument (a partition) must ", 
+                  "be [1 .. ", Length(flat), "],");
   fi;
 
   for i in [1 .. Length(ker)] do

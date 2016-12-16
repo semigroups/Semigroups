@@ -8,5 +8,6 @@
 #############################################################################
 
 DeclareAttribute("CanonicalTransformation", IsTransformation);
+DeclareOperation("CanonicalTransformation", [IsTransformation, IsInt]);
 DeclareOperation("TransformationByImageAndKernel",
                  [IsHomogeneousList, IsCyclotomicCollColl]);
