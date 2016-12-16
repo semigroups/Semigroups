@@ -298,8 +298,8 @@ Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
   assert(*xb == *yb);
   delete xb;
   delete yb;
-  Blocks* xb = xx->right_blocks();
-  Blocks* yb = yy->right_blocks();
+  xb = xx->right_blocks();
+  yb = yy->right_blocks();
   assert(*xb == *yb);
   delete xb;
   delete yb;

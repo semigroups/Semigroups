@@ -38,6 +38,25 @@
 
 using semigroupsplusplus::Congruence;
 
+// Prevent compilation if the DEBUG and NDEBUG flags are both set
+#if defined(DEBUG) && defined(NDEBUG)
+#error When compiling with -DDEBUG you must also use -UNDEBUG
+#endif
+
+#ifdef DEBUG
+#include "gap-debug.h"
+#include "semigroupsplusplus/util/timer.h"
+using semigroupsplusplus::Timer;
+
+Obj SEMIGROUPS_IS_OPTIMIZED(Obj self) {
+  Timer t;
+  t.start();
+  for (UInt i = 0; i < 10000000; i++) {}
+  t.stop();
+  return (t.elapsed() > 2000 ? False : True);
+}
+#endif
+
 #if !defined(SIZEOF_VOID_P)
 #error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
 #elif SIZEOF_VOID_P == 4
@@ -70,6 +89,7 @@ inline UInt LoadUIntBiggest() {
   return LoadUInt8();
 #endif
 }
+
 
 // Function to print a T_SEMI Obj.
 
@@ -404,6 +424,10 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // Table of functions to export
 
 static StructGVarFunc GVarFuncs[] = {
+#ifdef DEBUG
+    GVAR_ENTRY("gap.cc", SEMIGROUPS_IS_OPTIMIZED, 0, ""),
+#endif
+
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ADD_GENERATORS, 2, "S, coll"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_LIST, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_SET, 1, "S"),

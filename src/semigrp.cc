@@ -38,8 +38,6 @@ using semigroupsplusplus::TropicalMinPlusSemiring;
 using semigroupsplusplus::NaturalSemiring;
 using semigroupsplusplus::Integers;
 
-// #define DEBUG
-
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
   char buf[128];                                          \
