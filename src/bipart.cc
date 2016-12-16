@@ -462,11 +462,11 @@ Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
   Bipartition* yy = bipart_get_cpp(y);
 
 #ifdef DEBUG
-  Blocks* lb = xx->left_blocks();
-  Blocks* rb = xx->right_blocks();
-  assert(*lb == *rb);
-  delete lb;
-  delete rb;
+  Blocks* xb = xx->left_blocks();
+  Blocks* yb = yy->left_blocks();
+  assert(*xb == *yb);
+  delete xb;
+  delete yb;
 #endif
 
   size_t deg            = xx->degree();
