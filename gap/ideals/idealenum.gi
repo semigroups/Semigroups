@@ -19,7 +19,7 @@
 
 InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse semigroup ideal with inverse op and generators",
-[IsSemigroupIdeal and IsInverseSemigroup 
+[IsSemigroupIdeal and IsInverseSemigroup
  and IsGeneratorsOfInverseSemigroup and HasGeneratorsOfSemigroupIdeal],
 function(I)
   # TODO could remove inverses...

@@ -66,34 +66,43 @@ function(I)
   return out;
 end);
 
-InstallMethod(NrDClasses, "for an inverse acting semigroup ideal",
+# This is here so that for regular ideals this method has higher rank than the
+# method for IsSemigroup.
+
+InstallMethod(NrDClasses, "for an inverse acting semigroup ideal rep",
 [IsInverseActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   return Length(OrbSCC(LambdaOrb(I))) - 1;
 end);
 
-InstallMethod(GreensDClasses, "for an acting semigroup ideal",
+InstallMethod(NrDClasses, "for a regular acting semigroup ideal rep",
+[IsRegularActingSemigroupRep and IsSemigroupIdeal],
+function(I)
+  Enumerate(SemigroupIdealData(I));
+  return Length(SemigroupIdealData(I)!.dorbit);
+end);
+
+InstallMethod(GreensDClasses, "for a regular acting semigroup ideal rep",
 [IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   Enumerate(SemigroupIdealData(I));
   return SemigroupIdealData(I)!.dorbit;
 end);
 
-InstallMethod(PartialOrderOfDClasses, "for an acting semigroup ideal",
+InstallMethod(PartialOrderOfDClasses, 
+"for a regular acting semigroup ideal rep",
 [IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   local data;
-
   data := SemigroupIdealData(I);
   Enumerate(data);
   return data!.poset;
 end);
 
-InstallMethod(DClassReps, "for an acting semigroup ideal",
+InstallMethod(DClassReps, "for a regular acting semigroup ideal rep",
 [IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)
   local data;
-
   data := SemigroupIdealData(I);
   Enumerate(data);
   return List(data!.dorbit, Representative);
