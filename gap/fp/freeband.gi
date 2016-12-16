@@ -48,8 +48,6 @@ SEMIGROUPS.FreeBandElmToWord := function(elem)
 
   if elem!.word <> fail then
     return elem!.word;
-  elif tuple = [] then
-    out := [];
   elif tuple![2] = 0 then # tuple corresponds to one the generators
     out := [tuple![1]];
   else

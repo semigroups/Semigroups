@@ -224,6 +224,20 @@ false
 gap> IsFreeBand(Semigroup([gens[1] * gens[2], gens[1]]));
 false
 
+# Test ContentOfFreeBandElement
+gap> S := FreeBand(3);;
+gap> x := EvaluateWord(GeneratorsOfSemigroup(S), 
+>                      [1, 1, 3, 2, 1, 2, 1, 1, 1, 1]);
+x1x3x2x3x2x1
+gap> ContentOfFreeBandElement(x);
+[ 1, 2, 3 ]
+gap> ContentOfFreeBandElement(S.2 * S.1);
+[ 1, 2 ]
+
+# Test ViewObj for large number of generators
+gap> FreeBand(100);
+<free band with 100 generators>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(S);
