@@ -53,7 +53,7 @@ ReadPackage("semigroups/gap/semigroups/semiquo.gi");
 ReadPackage("semigroups/gap/ideals/ideals.gi");
 ReadPackage("semigroups/gap/ideals/idealact.gi");
 ReadPackage("semigroups/gap/ideals/ideallam.gi");
-ReadPackage("semigroups/gap/ideals/idealenu.gi");
+ReadPackage("semigroups/gap/ideals/idealenum.gi");
 
 ReadPackage("semigroups/gap/greens/gree.gi");
 ReadPackage("semigroups/gap/greens/gren.gi");

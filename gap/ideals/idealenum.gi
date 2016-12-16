@@ -1,6 +1,6 @@
 ###########################################################################
 ##
-#W  idealenu.gi
+#W  idealenum.gi
 #Y  Copyright (C) 2014                                   James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -10,7 +10,10 @@
 
 # This file contains method specific to ideals of semigroups.
 
-# We use the result of running the Froidure-Pin algorithm on the supersemigroup
+# TODO This whole file should be rewritten, there is not good code coverage for
+# this file for this reason.
+
+# We use the result of running the Froidure-Pin algorithm on the supersemigroup
 # of an ideal to calculate elements, size, test membership, find idempotents,
 # etc. We get a generating set and use that otherwise.
 
