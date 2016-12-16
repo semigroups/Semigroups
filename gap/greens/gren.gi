@@ -145,13 +145,13 @@ SEMIGROUPS.XClassRepsOfClass := function(C, GreensXRelation)
 end;
 
 SEMIGROUPS.XClassIndex := function(C)
-  local pos;
-  if not IsBound(C!.index) then
-    # in case of classes created using EquivalenceClassOfElementNC
-    # FIXME I don't think this can ever occur now.
-    pos := PositionCanonical(Parent(C), Representative(C));
-    C!.index := EquivalenceClassRelation(C)!.data.id[pos];
-  fi;
+  #local pos;
+  #if not IsBound(C!.index) then
+  #  in case of classes created using EquivalenceClassOfElementNC
+  #  FIXME I don't think this can ever occur now.
+  #  pos := PositionCanonical(Parent(C), Representative(C));
+  #  C!.index := EquivalenceClassRelation(C)!.data.id[pos];
+  #fi;
   return C!.index;
 end;
 

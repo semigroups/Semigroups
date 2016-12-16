@@ -1641,6 +1641,53 @@ Mat\<, \>[\>\>[1, 1, 0]\<, \<\>\>[1, 0, 1]\<, \<\>\>[0, 1, 1]\<\<]\<)\<\<\<\> \
 )\<,\< \>\>\>Matrix(\<\>IsBooleanMat\<, \>[\>\>[0, 1, 0]\<, \<\>\>[0, 0, 1]\<,\
  \<\>\>[1, 0, 0]\<\<]\<)\<\<)\<\<"
 
+# Test NrXClasses for an enumerable semigroup
+gap> S := RegularBooleanMatMonoid(3);;
+gap> NrLClasses(S);
+54
+gap> NrRClasses(S);
+54
+gap> NrHClasses(S);
+402
+gap> NrDClasses(S);
+10
+
+# Test GreensLClasses for a D-class of an enumerable semigroup
+gap> S := RegularBooleanMatMonoid(3);;
+gap> D := DClass(S, S.3 * S.4);
+<Green's D-class: Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [1, 0, 0]])>
+gap> GreensLClasses(D);
+[ <Green's L-class: Matrix(IsBooleanMat, [[0, 1, 0], [1, 0, 0], [0, 0, 0]])>, 
+  <Green's L-class: Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 1], [0, 0, 0]])>, 
+  <Green's L-class: Matrix(IsBooleanMat, [[0, 0, 1], [1, 0, 0], [0, 0, 0]])>, 
+  <Green's L-class: Matrix(IsBooleanMat, [[1, 0, 1], [0, 1, 0], [1, 1, 1]])>, 
+  <Green's L-class: Matrix(IsBooleanMat, [[0, 1, 1], [1, 0, 0], [1, 1, 1]])>, 
+  <Green's L-class: Matrix(IsBooleanMat, [[1, 1, 0], [0, 0, 1], [1, 1, 1]])>, 
+  <Green's L-class: Matrix(IsBooleanMat, [[1, 1, 0], [1, 0, 1], [1, 1, 1]])>, 
+  <Green's L-class: Matrix(IsBooleanMat, [[1, 1, 0], [0, 1, 1], [1, 1, 1]])>, 
+  <Green's L-class: Matrix(IsBooleanMat, [[0, 1, 1], [1, 0, 1], [1, 1, 1]])> ]
+
+# Test GreensXClasses for an infinite enumerable semigroup
+gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[0, 2], [-1, 0]]));;
+gap> GreensLClasses(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
+s
+gap> GreensRClasses(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `CayleyGraphSemigroup' on 1 arguments
+gap> GreensHClasses(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
+s
+gap> GreensDClasses(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
+s
+gap> GreensJClasses(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `GreensJClasses' on 1 arguments
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(DD);
