@@ -165,6 +165,17 @@ gap> I := SemigroupIdeal(S, x);;
 gap> I = Semigroup(GeneratorsOfSemigroup(I));
 true
 
+# Test GeneratorsOfInverseSemigroup
+gap> S := InverseSemigroup(PartialPerm([1, 2, 3], [2, 1, 4]),
+>                          PartialPerm([1, 3, 4], [1, 3, 2]),
+>                          PartialPerm([1, 4], [3, 4]),
+>                          PartialPerm([1, 2, 3, 4], [3, 4, 1, 2]),
+>                          PartialPerm([1, 2, 3, 4], [4, 1, 2, 3]));;
+gap> x := PartialPerm([1, 3], [1, 3]);;
+gap> I := SemigroupIdeal(S, x);;
+gap> GeneratorsOfSemigroup(I);;
+gap> GeneratorsOfInverseSemigroup(I);;
+
 #T# \in, for a regular acting semigroup ideal, wrong type, 1
 gap> S := PartialTransformationMonoid(5);;
 gap> x := Transformation([5, 6, 2, 3, 4, 6]);;

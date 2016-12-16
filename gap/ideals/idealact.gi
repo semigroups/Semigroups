@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  idealac.gi
+#W  idealact.gi
 #Y  Copyright (C) 2013-15                                 James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
@@ -263,20 +263,13 @@ function(I)
   return GeneratorsOfSemigroup(U);
 end);
 
-# Do not use IsInverseActingSemigroupRep here since
-# IsGeneratorsOfInverseSemigroup
-
 InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse acting semigroup ideal rep",
 [IsInverseActingSemigroupRep and IsSemigroupIdeal],
 function(I)
   local U, i, partial, D, pos, inj, gens, j, C;
 
-  if not IsGeneratorsOfInverseSemigroup(I) then 
-    ErrorNoReturn("Semigroups: GeneratorsOfInverseSemigroup: usage,\n", 
-                  "the first argument (an ideal) must satisfy ", 
-                  "`IsGeneratorsOfInverseSemigroup`,");
-  elif HasGeneratorsOfSemigroup(I) then
+  if HasGeneratorsOfSemigroup(I) then
     # TODO could remove inverses...
     return GeneratorsOfSemigroup(I);
   fi;
