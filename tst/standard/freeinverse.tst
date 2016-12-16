@@ -96,6 +96,24 @@ a*b
 gap> IsDoneIterator(iter);
 false
 
+# Test Iterator, for a free inverse semigroup
+gap> iter := Iterator(FreeInverseSemigroup(["a", "b"]));;
+gap> for i in [1 .. 1000] do 
+> NextIterator(iter);
+> od;
+gap> iter := Iterator(FreeInverseSemigroup(["a"]));;
+gap> list1 := [];;
+gap> for i in [1 .. 100] do 
+> Add(list1, NextIterator(iter));
+> od;
+gap> list2 := [];;
+gap> iter := ShallowCopy(iter);;
+gap> for i in [1 .. 100] do 
+> Add(list2, NextIterator(iter));
+> od;
+gap> list1 = list2;
+true
+
 #T# FreeInverseTest5: CanonicalForm
 gap> S := FreeInverseSemigroup(3);
 <free inverse semigroup on the generators [ x1, x2, x3 ]>
@@ -109,6 +127,30 @@ gap> CanonicalForm((S.1 ^ -1) * S.1);
 "x1^-1x1"
 gap> CanonicalForm((S.1 ^ -1) * S.1 * (S.1 ^ -1) * S.1);
 "x1^-1x1"
+
+# Test ViewObj with different user preferences
+gap> S := FreeInverseSemigroup(3);;
+gap> w := S.1 * (S.2^ -1) * S.2 * (S.1 ^ -1);;
+gap> CanonicalForm(w);
+"x1x2^-1x2x1^-1"
+gap> MinimalWord(w);
+"x1*x1^-1*x1*x2^-1*x2*x1^-1"
+gap> w;
+x1*x1^-1*x1*x2^-1*x2*x1^-1
+gap> SetUserPreference("semigroups", 
+>                      "FreeInverseSemigroupElementDisplay",
+>                      "bananas");
+gap> w;
+x1x2^-1x2x1^-1
+
+# Test MinimalWord
+gap> iter := Iterator(FreeInverseSemigroup(3));;
+gap> x := NextIterator(iter);;
+gap> for i in [1 .. 10] do
+> y := x;
+> x := NextIterator(iter);
+> MinimalWord(x * y);
+> od; 
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

@@ -94,11 +94,16 @@ function(iter)
   return output;
 end);
 
-BindGlobal("ShallowCopy_FreeInverseSemigroup", iter -> rec(
-                 semigroup := iter!.semigroup,
-                 seq       := iter!.seq,
-                 words     := iter!.words,
-                 iter_list := ShallowCopy( iter!.iter_list ) ) );
+BindGlobal("ShallowCopy_FreeInverseSemigroup",
+function(iter)
+  local gens, iter_list;
+  gens := GeneratorsOfInverseSemigroup(iter!.semigroup);
+  iter_list := [Iterator(FreeGroup(Length(gens)))];
+  return rec(semigroup := iter!.semigroup,
+             seq       := iter!.seq,
+             words     := iter!.words,
+             iter_list := iter_list);
+end);
 
 InstallMethod(Iterator, "for a free inverse semigroup",
 [IsFreeInverseSemigroupCategory],
@@ -153,10 +158,10 @@ function(arg)
     ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
                   "the number of generators of a free inverse semigroup must ",
                   "be non-zero,");
-  elif not IsFinite(names) then
-    ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
-                  "the number of generators of a free inverse semigroup must ",
-                  "be finite,");
+  #elif not IsFinite(names) then
+  #  ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
+  #                "the number of generators of a free inverse semigroup must ",
+  #                "be finite,");
   fi;
 
   F := NewFamily("FreeInverseSemigroupElementsFamily",
