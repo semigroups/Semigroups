@@ -194,6 +194,34 @@ function(C, x)
   return EquivalenceClassOfElement(GreensHRelation(Parent(C)), x);
 end);
 
+InstallMethod(GreensRClassOfElementNC,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+function(S, x)
+  return EquivalenceClassOfElementNC(GreensRRelation(S), x);
+end);
+
+InstallMethod(GreensLClassOfElementNC,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+function(S, x)
+  return EquivalenceClassOfElementNC(GreensLRelation(S), x);
+end);
+
+InstallMethod(GreensHClassOfElementNC,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+function(S, x)
+  return EquivalenceClassOfElementNC(GreensHRelation(S), x);
+end);
+
+InstallMethod(GreensDClassOfElementNC,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement],
+function(S, x)
+  return EquivalenceClassOfElementNC(GreensDRelation(S), x);
+end);
+
 # TODO could include InfoWarning statement here, to say that this is just using
 # GreensRClassOfElement
 
@@ -214,9 +242,6 @@ InstallMethod(GreensJClassOfElementNC,
 [IsSemigroup and IsFinite, IsMultiplicativeElement], GreensDClassOfElementNC);
 
 # Green's classes of an element of a semigroup
-
-# FIXME Should these be for IsEnumerableSemigroupRep?? In particular, to what
-# type of semigroup do they apply?
 
 InstallMethod(GreensRClassOfElement,
 "for a finite semigroup and multiplicative element",
@@ -256,6 +281,43 @@ function(S, x)
     TryNextMethod();
   fi;
   return EquivalenceClassOfElement(GreensDRelation(S), x);
+end);
+
+# Green's class of a Green's class (coarser from finer)
+
+InstallMethod(DClassOfRClass, "for an R-class of a semigroup",
+[IsGreensRClass],
+function(R)
+  return EquivalenceClassOfElement(GreensDRelation(Parent(R)),
+                                   Representative(R));
+end);
+
+InstallMethod(DClassOfLClass, "for an L-class of a semigroup",
+[IsGreensLClass],
+function(L)
+  return EquivalenceClassOfElement(GreensDRelation(Parent(L)),
+                                   Representative(L));
+end);
+
+InstallMethod(DClassOfHClass, "for an H-class of a semigroup",
+[IsGreensHClass],
+function(H)
+  return EquivalenceClassOfElement(GreensDRelation(Parent(H)),
+                                   Representative(H));
+end);
+
+InstallMethod(RClassOfHClass, "for an H-class of a semigroup",
+[IsGreensHClass],
+function(H)
+  return EquivalenceClassOfElement(GreensRRelation(Parent(H)),
+                                   Representative(H));
+end);
+
+InstallMethod(LClassOfHClass, "for an H-class of a semigroup",
+[IsGreensHClass],
+function(H)
+  return EquivalenceClassOfElement(GreensLRelation(Parent(H)),
+                                   Representative(H));
 end);
 
 

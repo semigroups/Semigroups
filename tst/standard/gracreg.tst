@@ -305,7 +305,7 @@ gap> S := JonesMonoid(10);
 <regular bipartition *-monoid of degree 10 with 9 generators>
 gap> NrIdempotents(S);
 8944
-gap> S := JonesMonoid(0);;
+gap> S := Semigroup(JonesMonoid(0), rec(acting := true));;
 gap> NrIdempotents(S);
 1
 gap> NrIdempotentsByRank(S);

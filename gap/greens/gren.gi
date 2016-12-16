@@ -377,24 +377,12 @@ end);
 # is one constant time check that the representative actually belongs to the
 # semigroup.
 
-InstallMethod(GreensRClassOfElementNC,
-"for a finite semigroup and multiplicative element",
-[IsSemigroup and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElementNC(GreensRRelation(S), x);
-end);
 
 InstallMethod(GreensRClassOfElementNC,
 "for a finite enumerable semigroup and multiplicative element",
 [IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
 GreensRClassOfElement);
 
-InstallMethod(GreensLClassOfElementNC,
-"for a finite semigroup and multiplicative element",
-[IsSemigroup and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElementNC(GreensLRelation(S), x);
-end);
 
 InstallMethod(GreensLClassOfElementNC,
 "for a finite enumerable semigroup and multiplicative element",
@@ -402,67 +390,15 @@ InstallMethod(GreensLClassOfElementNC,
 GreensLClassOfElement);
 
 InstallMethod(GreensHClassOfElementNC,
-"for a finite semigroup and multiplicative element",
-[IsSemigroup and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElementNC(GreensHRelation(S), x);
-end);
-
-InstallMethod(GreensHClassOfElementNC,
 "for a finite enumerable semigroup and multiplicative element",
 [IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
 GreensHClassOfElement);
-
-InstallMethod(GreensDClassOfElementNC,
-"for a finite semigroup and multiplicative element",
-[IsSemigroup and IsFinite, IsMultiplicativeElement],
-function(S, x)
-  return EquivalenceClassOfElementNC(GreensDRelation(S), x);
-end);
 
 InstallMethod(GreensDClassOfElementNC,
 "for a finite enumerable semigroup and multiplicative element",
 [IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
 GreensDClassOfElement);
 
-
-# Green's class of a Green's class (coarser from finer)
-# Should these be for IsEnumerableSemigroupGreensClassRep?? FIXME
-
-InstallMethod(DClassOfRClass, "for an R-class of a semigroup",
-[IsGreensRClass],
-function(R)
-  return EquivalenceClassOfElement(GreensDRelation(Parent(R)),
-                                   Representative(R));
-end);
-
-InstallMethod(DClassOfLClass, "for an L-class of a semigroup",
-[IsGreensLClass],
-function(L)
-  return EquivalenceClassOfElement(GreensDRelation(Parent(L)),
-                                   Representative(L));
-end);
-
-InstallMethod(DClassOfHClass, "for an H-class of a semigroup",
-[IsGreensHClass],
-function(H)
-  return EquivalenceClassOfElement(GreensDRelation(Parent(H)),
-                                   Representative(H));
-end);
-
-InstallMethod(RClassOfHClass, "for an H-class of a semigroup",
-[IsGreensHClass],
-function(H)
-  return EquivalenceClassOfElement(GreensRRelation(Parent(H)),
-                                   Representative(H));
-end);
-
-InstallMethod(LClassOfHClass, "for an H-class of a semigroup",
-[IsGreensHClass],
-function(H)
-  return EquivalenceClassOfElement(GreensLRelation(Parent(H)),
-                                   Representative(H));
-end);
 
 #############################################################################
 ## 5. Collections of classes, and reps

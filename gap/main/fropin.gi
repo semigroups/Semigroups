@@ -135,8 +135,8 @@ InstallMethod(IsGeneratorsOfEnumerableSemigroup,
 BindGlobal("FROPIN",
 function(S)
   local data, hashlen, nrgens, nr, val, i;
-
-  if (not IsSemigroup(S)) or Length(GeneratorsOfSemigroup(S)) = 0 then
+  if (not IsEnumerableSemigroupRep(S)) 
+      or Length(GeneratorsOfSemigroup(S)) = 0 then
     ErrorNoReturn("Semigroups: FROPIN: usage,\n",
                   "the argument must be a semigroup with at least 1 ",
                   "generator,");
@@ -422,7 +422,7 @@ end);
 # different method for ideals
 
 InstallMethod(Size, "for an enumerable semigroup with known generators",
-[IsSemigroup and HasGeneratorsOfSemigroup], EN_SEMI_SIZE);
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], EN_SEMI_SIZE);
 
 # different method for ideals
 
