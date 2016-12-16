@@ -10,19 +10,21 @@
 ## This file contains functions for a poset of congruences.
 ##
 ## When the congruences of a semigroup are computed, they form a lattice with
-## respect to containment.  The information about how the congruences lie in
+## respect to containment.  The information about the congruences' positions in
 ## this lattice may be stored in an IsCongruencePoset object (a component object
-## based on a record) and can be retrieved from this object with the following
-## methods.
+## based on a record) and can be retrieved from this object using the methods in
+## this file.
 ##
-## Most of these methods simply redirect to the partial order defined by this
-## object, that is a list of lists describing the partial order of the
-## congruences with respect to containment.
+## The list of congruences in the poset is stored as an attribute
+## CongruencesOfPoset.  The partial order of the poset is stored as a digraph,
+## where an edge (i,j) is present if and only if congruence j is a subrelation
+## of congruence i.  When a congruence poset is displayed, it appears to the
+## user as the list of out-neighbours of that digraph.
 ##
 
 InstallMethod(\[\],
-"for a congruence poset",
-[IsCongruencePoset, IsObject],
+"for a congruence poset and a positive integer",
+[IsCongruencePoset, IsPosInt],
 function(poset, x)
   return OutNeighboursOfVertex(poset!.po, x);
 end);
@@ -55,19 +57,21 @@ function(poset, x)
   return x >= 1 and x <= Length(poset);
 end);
 
-SEMIGROUPS.PrincipalXCongruencePoset := function(S, restriction, cong_func)
-  if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.PrincipalXCongruencePoset: usage,\n",
-                  "first argument <S> must be a finite semigroup,");
+SEMIGROUPS.PrincipalXCongruencePoset :=
+function(S, restriction, cong_func, calling_func)
+  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
+    ErrorNoReturn("Semigroups: ", calling_func, ": usage,\n",
+                  "first argument <S> must be an enumerable finite semigroup,");
   fi;
   if not IsSubset(S, restriction) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.PrincipalXCongruencePoset: usage,\n",
+    ErrorNoReturn("Semigroups: ", calling_func, ": usage,\n",
                   "<restriction> must be a subset of <S>,");
   fi;
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S, restriction, cong_func);
 end;
 
-SEMIGROUPS.PrincipalXCongruencePosetNC := function(S, restriction, cong_func)
+SEMIGROUPS.PrincipalXCongruencePosetNC :=
+function(S, restriction, cong_func)
   local report, pairs, total, congs, nrcongs, children, parents, last_collected,
         nr, pair, badcong, newchildren, newparents, newcong, i, c, p, po, poset;
 
@@ -134,26 +138,19 @@ SEMIGROUPS.PrincipalXCongruencePosetNC := function(S, restriction, cong_func)
   poset := Objectify(NewType(FamilyObj(children), IsCongruencePoset),
                      rec(po := po));
   SetCongruencesOfPoset(poset, congs);
-  SetRange(poset, S);
+  SetUnderlyingSemigroupOfCongruencePoset(poset, S);
   return poset;
 end;
 
 InstallMethod(MinimalCongruences,
 "for a congruence poset",
 [IsCongruencePoset],
-function(poset)
-  # Return all the congruences with no children
-  return CongruencesOfPoset(poset){DigraphSinks(poset!.po)};
-end);
+poset -> CongruencesOfPoset(poset){DigraphSinks(poset!.po)});
 
 InstallMethod(MinimalCongruences,
 "for a list or collection",
 [IsListOrCollection],
-function(coll)
-  local poset;
-  poset := PosetOfCongruences(coll);
-  return MinimalCongruences(poset);
-end);
+coll -> MinimalCongruences(PosetOfCongruences(coll)));
 
 InstallMethod(JoinSemilatticeOfCongruences,
 "for a congruence poset and a function",
@@ -175,7 +172,7 @@ function(poset, join_func)
   congs := ShallowCopy(CongruencesOfPoset(poset));
   princ_congs := ShallowCopy(congs);
   nrcongs := Length(congs);
-  S := Range(poset);
+  S := UnderlyingSemigroupOfCongruencePoset(poset);
 
   # Suppress reporting
   report := SEMIGROUPS.OptionsRec(S).report;
@@ -237,7 +234,7 @@ function(poset, join_func)
   poset := Objectify(NewType(FamilyObj(children), IsCongruencePoset),
                      rec(po := po));
   SetCongruencesOfPoset(poset, congs);
-  SetRange(poset, S);
+  SetUnderlyingSemigroupOfCongruencePoset(poset, S);
   return poset;
 end);
 
@@ -253,7 +250,7 @@ end);
 SEMIGROUPS.AddTrivialCongruence := function(poset, cong_func)
   local S, children, parents, congs, nrcongs, i, po;
   # Extract the info
-  S := Range(poset);
+  S := UnderlyingSemigroupOfCongruencePoset(poset);
   children := OutNeighboursCopy(poset!.po);
   parents := List(InNeighbours(poset!.po), ShallowCopy);
   #TODO: Use InNeighboursCopy when it's available in Digraphs
@@ -274,7 +271,7 @@ SEMIGROUPS.AddTrivialCongruence := function(poset, cong_func)
   poset := Objectify(NewType(FamilyObj(children), IsCongruencePoset),
                      rec(po := po));
   SetCongruencesOfPoset(poset, congs);
-  SetRange(poset, S);
+  SetUnderlyingSemigroupOfCongruencePoset(poset, S);
   return poset;
 end;
 
@@ -314,7 +311,7 @@ function(coll)
                      rec(po := po));
   SetCongruencesOfPoset(poset, congs);
   if nrcongs > 0 then
-    SetRange(poset, Range(congs[1]));
+    SetUnderlyingSemigroupOfCongruencePoset(poset, Range(congs[1]));
   fi;
   return poset;
 end);
@@ -336,8 +333,7 @@ InstallMethod(LatticeOfLeftCongruences,
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
   local poset;
-  poset := SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                                LeftSemigroupCongruence);
+  poset := PosetOfPrincipalLeftCongruences(S, restriction);
   poset := JoinSemilatticeOfCongruences(poset, JoinLeftSemigroupCongruences);
   poset := SEMIGROUPS.AddTrivialCongruence(poset, LeftSemigroupCongruence);
   return poset;
@@ -348,8 +344,7 @@ InstallMethod(LatticeOfRightCongruences,
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
   local poset;
-  poset := SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                                RightSemigroupCongruence);
+  poset := PosetOfPrincipalRightCongruences(S, restriction);
   poset := JoinSemilatticeOfCongruences(poset, JoinRightSemigroupCongruences);
   poset := SEMIGROUPS.AddTrivialCongruence(poset, RightSemigroupCongruence);
   return poset;
@@ -360,8 +355,7 @@ InstallMethod(LatticeOfCongruences,
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
   local poset;
-  poset := SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                                SemigroupCongruence);
+  poset := PosetOfPrincipalCongruences(S, restriction);
   poset := JoinSemilatticeOfCongruences(poset, JoinSemigroupCongruences);
   poset := SEMIGROUPS.AddTrivialCongruence(poset, SemigroupCongruence);
   return poset;
@@ -379,6 +373,47 @@ InstallMethod(CongruencesOfSemigroup,
 "for a semigroup", [IsSemigroup],
 S -> CongruencesOfPoset(LatticeOfCongruences(S)));
 
+InstallMethod(PosetOfPrincipalLeftCongruences,
+"for a semigroup", [IsSemigroup],
+S -> PosetOfPrincipalLeftCongruences(S, S));
+
+InstallMethod(PosetOfPrincipalRightCongruences,
+"for a semigroup", [IsSemigroup],
+S -> PosetOfPrincipalRightCongruences(S, S));
+
+InstallMethod(PosetOfPrincipalCongruences,
+"for a semigroup", [IsSemigroup],
+S -> PosetOfPrincipalCongruences(S, S));
+
+InstallMethod(PosetOfPrincipalLeftCongruences,
+"for a semigroup and a multiplicative element collection",
+[IsSemigroup, IsMultiplicativeElementCollection],
+function(S, restriction)
+  return SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
+                                              LeftSemigroupCongruence,
+                                              "PosetOfPrincipalLeftCongruences"
+                                             );
+end);
+
+InstallMethod(PosetOfPrincipalRightCongruences,
+"for a semigroup and a multiplicative element collection",
+[IsSemigroup, IsMultiplicativeElementCollection],
+function(S, restriction)
+  return SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
+                                              RightSemigroupCongruence,
+                                              "PosetOfPrincipalRightCongruences"
+                                             );
+end);
+
+InstallMethod(PosetOfPrincipalCongruences,
+"for a semigroup and a multiplicative element collection",
+[IsSemigroup, IsMultiplicativeElementCollection],
+function(S, restriction)
+  return SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
+                                              SemigroupCongruence,
+                                              "PosetOfPrincipalCongruences");
+end);
+
 InstallMethod(MinimalLeftCongruencesOfSemigroup,
 "for a semigroup", [IsSemigroup],
 S -> MinimalLeftCongruencesOfSemigroup(S, S));
@@ -395,30 +430,21 @@ InstallMethod(MinimalLeftCongruencesOfSemigroup,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  local poset;
-  poset := SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                                LeftSemigroupCongruence);
-  return MinimalCongruences(poset);
+  return MinimalCongruences(PosetOfPrincipalLeftCongruences(S, restriction));
 end);
 
 InstallMethod(MinimalRightCongruencesOfSemigroup,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  local poset;
-  poset := SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                                RightSemigroupCongruence);
-  return MinimalCongruences(poset);
+  return MinimalCongruences(PosetOfPrincipalRightCongruences(S, restriction));
 end);
 
 InstallMethod(MinimalCongruencesOfSemigroup,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  local poset;
-  poset := SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                                SemigroupCongruence);
-  return MinimalCongruences(poset);
+  return MinimalCongruences(PosetOfPrincipalCongruences(S, restriction));
 end);
 
 InstallMethod(PrincipalLeftCongruencesOfSemigroup,
@@ -437,30 +463,21 @@ InstallMethod(PrincipalLeftCongruencesOfSemigroup,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  local poset;
-  poset := SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                                LeftSemigroupCongruence);
-  return CongruencesOfPoset(poset);
+  return CongruencesOfPoset(PosetOfPrincipalLeftCongruences(S, restriction));
 end);
 
 InstallMethod(PrincipalRightCongruencesOfSemigroup,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  local poset;
-  poset := SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                                RightSemigroupCongruence);
-  return CongruencesOfPoset(poset);
+  return CongruencesOfPoset(PosetOfPrincipalRightCongruences(S, restriction));
 end);
 
 InstallMethod(PrincipalCongruencesOfSemigroup,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  local poset;
-  poset := SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                                SemigroupCongruence);
-  return CongruencesOfPoset(poset);
+  return CongruencesOfPoset(PosetOfPrincipalCongruences(S, restriction));
 end);
 
 InstallMethod(DotString,

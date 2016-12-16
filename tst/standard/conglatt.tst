@@ -17,8 +17,8 @@ gap> SEMIGROUPS.StartTest();
 #T# Robustness against infinite semigroups
 gap> S := FreeSemigroup(2);;
 gap> congs := CongruencesOfSemigroup(S);
-Error, Semigroups: SEMIGROUPS.PrincipalXCongruencePoset: usage,
-first argument <S> must be a finite semigroup,
+Error, Semigroups: PosetOfPrincipalCongruences: usage,
+first argument <S> must be an enumerable finite semigroup,
 
 #T# LatticeOfCongruences
 gap> S := PartitionMonoid(2);;
@@ -143,13 +143,73 @@ gap> latt := LatticeOfCongruences(S, restriction);
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> restriction := [Transformation([1,1,1]), Transformation([2,2,2,2])];;
 gap> LatticeOfCongruences(S, restriction);
-Error, Semigroups: SEMIGROUPS.PrincipalXCongruencePoset: usage,
+Error, Semigroups: PosetOfPrincipalCongruences: usage,
 <restriction> must be a subset of <S>,
 gap> LatticeOfLeftCongruences(S, restriction);
-Error, Semigroups: SEMIGROUPS.PrincipalXCongruencePoset: usage,
+Error, Semigroups: PosetOfPrincipalLeftCongruences: usage,
 <restriction> must be a subset of <S>,
 gap> LatticeOfRightCongruences(S, restriction);
-Error, Semigroups: SEMIGROUPS.PrincipalXCongruencePoset: usage,
+Error, Semigroups: PosetOfPrincipalRightCongruences: usage,
+<restriction> must be a subset of <S>,
+
+#T# Left/RightCongruences (as a list)
+gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
+gap> Size(LeftCongruencesOfSemigroup(S));
+21
+gap> Size(RightCongruencesOfSemigroup(S));
+31
+
+#T# PosetOfPrincipalLeft/RightCongruences
+gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
+gap> PosetOfPrincipalLeftCongruences(S);
+[ [ 8, 11 ], [  ], [ 1, 2, 8, 11, 12 ], [ 2, 7, 10, 11, 12 ], [ 2 ], 
+  [ 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12 ], [ 10, 12 ], [ 11 ], [ 2, 11, 12 ], 
+  [ 12 ], [  ], [  ] ]
+gap> PosetOfPrincipalRightCongruences(S);
+[ [  ], [  ], [  ], [  ], [ 1, 4, 7, 13 ], [ 2, 4, 9, 11 ], [  ], 
+  [ 3, 7, 9 ], [  ], [  ], [  ], [ 2, 7, 10 ], [  ], [ 1, 9, 10 ], 
+  [ 1, 2, 3 ] ]
+gap> PosetOfPrincipalCongruences(S);
+[ [ 2, 3 ], [  ], [ 2 ] ]
+gap> Size(PrincipalCongruencesOfSemigroup(S));
+3
+
+#T# PosetOfPrincipalLeft/RightCongruences with restriction
+gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
+gap> restriction := Subsemigroup(S, [Transformation([1,1,1]),
+>                                    Transformation([2,2,2]),
+>                                    Transformation([3,3,3])]);;
+gap> latt := PosetOfPrincipalLeftCongruences(S, restriction);
+[ [  ], [  ], [  ] ]
+gap> restriction := [Transformation([3, 2, 3]),
+>                    Transformation([3, 1, 3]),
+>                    Transformation([2, 2, 2])];;
+gap> latt := PosetOfPrincipalRightCongruences(S, restriction);
+[ [ 2, 3 ], [  ], [  ] ]
+gap> CongruencesOfPoset(latt);
+[ <right semigroup congruence over <transformation semigroup of degree 3 with 
+     2 generators> with 1 generating pairs>, <right semigroup congruence over 
+    <transformation semigroup of degree 3 with 2 generators> with 
+    1 generating pairs>, <right semigroup congruence over <transformation 
+     semigroup of degree 3 with 2 generators> with 1 generating pairs> ]
+gap> restriction := [Transformation([3, 1, 3]), Transformation([3, 2, 3])];;
+gap> latt := PosetOfPrincipalCongruences(S, restriction);
+[ [  ] ]
+gap> restriction := [Transformation([3, 3, 3])];;
+gap> latt := PosetOfPrincipalCongruences(S, restriction);
+[  ]
+
+#T# PosetOfPrincipal(Left/Right)Congruences with invalid restriction
+gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
+gap> restriction := [Transformation([1,1,1]), Transformation([2,2,2,2])];;
+gap> PosetOfPrincipalCongruences(S, restriction);
+Error, Semigroups: PosetOfPrincipalCongruences: usage,
+<restriction> must be a subset of <S>,
+gap> PosetOfPrincipalLeftCongruences(S, restriction);
+Error, Semigroups: PosetOfPrincipalLeftCongruences: usage,
+<restriction> must be a subset of <S>,
+gap> PosetOfPrincipalRightCongruences(S, restriction);
+Error, Semigroups: PosetOfPrincipalRightCongruences: usage,
 <restriction> must be a subset of <S>,
 
 #T# PrincipalCongruencesOfSemigroup

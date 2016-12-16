@@ -92,7 +92,9 @@
     <#Include Label = "PrincipalCongruencesOfSemigroup">
     <#Include Label = "IsCongruencePoset">
     <#Include Label = "LatticeOfCongruences">
+    <#Include Label = "PosetOfPrincipalCongruences">
     <#Include Label = "CongruencesOfPoset">
+    <#Include Label = "UnderlyingSemigroupOfCongruencePoset">
     <#Include Label = "PosetOfCongruences">
     <#Include Label = "JoinSemilatticeOfCongruences">
     <#Include Label = "MinimalCongruences">
