@@ -510,23 +510,16 @@ function(S)
   end;
 end);
 
-# There is duplicate code in here and in partial order of D-classes
-
 InstallMethod(MaximalDClasses, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
-  local l, r, gr;
+  local gr;
 
   if NrDClasses(S) = 1 then
     return DClasses(S);
   fi;
 
-  l := LeftCayleyGraphSemigroup(S);
-  r := RightCayleyGraphSemigroup(S);
-  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
-  gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);
-  gr := DigraphRemoveLoops(gr);
-
+  gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
   return List(DigraphSources(gr), x -> DClasses(S)[x]);
 end);
 
