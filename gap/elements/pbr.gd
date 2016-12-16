@@ -21,6 +21,8 @@ DeclareCategory("IsPBR",
 DeclareCategoryCollections("IsPBR");
 DeclareCategoryCollections("IsPBRCollection");
 
+InstallTrueMethod(IsGeneratorsOfSemigroup, IsPBRCollection);
+
 DeclareOperation("PBR", [IsDenseList, IsDenseList]);
 DeclareGlobalFunction("PBRNC");
 DeclareOperation("RandomPBR", [IsPosInt]);

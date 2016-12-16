@@ -57,6 +57,9 @@ gap> DegreeOfPBRCollection([y]);
 gap> DegreeOfPBRCollection([x, y]);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `DegreeOfPBRCollection' on 1 arguments
+gap> coll := [x, y];;
+gap> IsPBRCollection(coll);
+false
 gap> DegreeOfPBRCollection(FullPBRMonoid(1));
 1
 gap> Semigroup(x, y);
@@ -186,6 +189,9 @@ PBR([ [ -3, 1, 2 ], [ -3, 1, 2 ], [ -2, 3 ], [  ], [  ], [  ], [  ], [  ],
       [  ], [  ] ],
   [ [ -1 ], [ -2, 3 ], [ -3, 1, 2 ], [  ], [  ], [  ], [  ], [  ], [  ], [  ] 
      ])
+gap> AsPBR(x);
+PBR([ [ -3, 1, 2 ], [ -3, 1, 2 ], [ -2, 3 ] ], 
+  [ [ -1 ], [ -2, 3 ], [ -3, 1, 2 ] ])
 
 #T# pbr: AsPBR, for a boolean mat, fail, 1/1
 gap> x := Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 0], [0, 0, 0]]);;
@@ -226,6 +232,15 @@ gap> x := Matrix(IsBooleanMat, [[1, 1, 1, 0], [1, 1, 0, 0],
 >                               [0, 1, 0, 1], [1, 0, 0, 1]]);;
 gap> AsPBR(x, 2);
 PBR([ [ -1, 1 ] ], [ [ -1, 1 ] ])
+
+# AsPBR for a mult. element
+gap> AsPBR((1,2,3));
+PBR([ [ -2, 1 ], [ -3, 2 ], [ -1, 3 ] ], [ [ -1, 3 ], [ -2, 1 ], [ -3, 2 ] ])
+gap> AsPBR((1,2,3), 10);
+PBR([ [ -2, 1 ], [ -3, 2 ], [ -1, 3 ], [ -4, 4 ], [ -5, 5 ], [ -6, 6 ], 
+      [ -7, 7 ], [ -8, 8 ], [ -9, 9 ], [ -10, 10 ] ],
+  [ [ -1, 3 ], [ -2, 1 ], [ -3, 2 ], [ -4, 4 ], [ -5, 5 ], [ -6, 6 ], 
+      [ -7, 7 ], [ -8, 8 ], [ -9, 9 ], [ -10, 10 ] ])
 
 #T# pbr: AsTransformation, for a pbr, 1/1
 gap> x := PBR([[-3], [-1], [-3]],
@@ -435,6 +450,41 @@ PBR([ [ 2, 3 ], [ -3, -2, -1, 2 ], [ -3, -2, 2 ] ],
 gap> P := PBR(A, B);
 PBR([ [ 2, 3 ], [ -3, -2, -1, 2 ], [ -3, -2, 2 ] ], 
   [ [ -2 ], [ -3, 2, 3 ], [ -2, -1 ] ])
+
+# Test TYPE_PBR errors
+gap> TYPE_PBR("a");
+Error, Semigroups: TYPE_PBR: usage,
+the argument must be a non-negative integer,
+gap> TYPE_PBR(-1);
+Error, Semigroups: TYPE_PBR: usage,
+the argument must be a non-negative integer,
+
+# Test String
+gap> x := PBR([[-1, 1], [-3, 2], [-2, 3]], [[-1, 1], [-2, 3], [-3, 2]]);;
+gap> String(x);
+"PBR([ [ -1, 1 ], [ -3, 2 ], [ -2, 3 ] ], [ [ -1, 1 ], [ -2, 3 ], [ -3, 2 ] ])\
+"
+gap> x = EvalString(String(x));
+true
+
+# Test \* 
+gap> x := PBR(
+>  [ [ -6, -5, -4, -3, -1, 1, 2, 4, 6 ], [ -2, -1, 1, 2, 4, 6 ],
+>      [ -5, -4, -2, 2, 6 ], [ -5, -4, -3, -2, -1, 2, 3, 5, 6 ],
+>      [ -6, -5, -3, -1, 1, 2, 3, 5, 6 ], [ -4, -3, -1, 3, 4, 5, 6 ] ],
+>  [ [ -5, -4, -1, 1, 2, 3, 4, 5, 6 ], [ -5, -3, -2, -1, 1, 2, 3, 4 ],
+>      [ -5, -3, 4, 5 ], [ -5, -2, -1, 1, 2, 6 ], [ -6, -2, 4, 5 ],
+>      [ -6, -5, -4, -2, -1, 1, 2, 3, 5, 6 ] ]);;
+gap> y := PBR(
+>  [ [ -5, -3, -1, 2, 6 ], [ -5, -4, 2, 4, 5, 6 ], [ -6, -5, -2, 1, 4, 5, 6 ],
+>      [ -6, -3, -2, 3, 4 ], [ -5, -2, -1, 1, 2, 3, 5, 6 ],
+>      [ -6, -4, -3, -2, -1, 2, 3, 4, 5, 6 ] ],
+>  [ [ -6, -4, -3, 1, 2, 4, 5, 6 ], [ -6, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6 ],
+>      [ -5, -3, -2, 2, 3, 4, 5, 6 ], [ -6, -5, -4, -3, 2, 3, 4, 6 ],
+>      [ -6, -5, -2, -1, 1, 2, 3, 4, 6 ], [ -5, -3, -2, -1, 1, 2, 4, 5, 6 ]
+>      ]);;
+gap> IsUniversalPBR(x * y);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

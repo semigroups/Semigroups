@@ -148,22 +148,7 @@ function(coll)
     return DegreeOfPBRSemigroup(coll);
   fi;
 
-  deg := DegreeOfPBR(coll[1]);
-  if not ForAll(coll, x -> DegreeOfPBR(x) = deg) then
-    ErrorNoReturn("Semigroups: DegreeOfPBRCollection: usage,\n",
-                  "the argument <coll> must be a collection of PBRs ",
-                  "of equal degree,");
-  fi;
-
-  return deg;
-end);
-
-InstallMethod(IsGeneratorsOfSemigroup, "for a PBR collection",
-[IsPBRCollection],
-function(coll)
-  local deg;
-  deg := DegreeOfPBR(coll[1]);
-  return ForAll(coll, x -> DegreeOfPBR(x) = deg);
+  return DegreeOfPBR(coll[1]);
 end);
 
 InstallMethod(IsBipartitionPBR, "for a pbr",
