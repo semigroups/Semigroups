@@ -260,6 +260,8 @@ SEMIGROUPS.Test := function(arg)
   if IsEmpty(string_file) then
     Print("File: ", print_file, " is empty!\n");
     return fail;
+  elif Length(string_file) < 600 then 
+    Print("File: ", print_file, " probably contains no tests!\n");
   fi;
 
   Print("Testing file: ", print_file, " (acting := true)\n");
