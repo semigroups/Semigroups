@@ -894,3 +894,27 @@ function(R)
     UnderlyingSemigroup(RR);
 end);
 
+# The next two methods are just copies of the methods in the library but with
+# the rank increased so they are used in favour of the method for
+# IsEnumerableSemigroupRep 
+
+InstallMethod(Size, "for a Rees matrix semigroup", 
+[IsReesMatrixSemigroup], 
+RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
+function(R)
+  if Size(UnderlyingSemigroup(R)) = infinity then
+    return infinity;
+  fi;
+  return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R));
+end);
+
+InstallMethod(Size, "for a Rees 0-matrix semigroup", 
+[IsReesZeroMatrixSemigroup],
+RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
+function(R)
+  if Size(UnderlyingSemigroup(R)) = infinity then
+    return infinity;
+  fi;
+  return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R)) + 1;
+end);
+
