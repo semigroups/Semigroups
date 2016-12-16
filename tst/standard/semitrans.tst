@@ -331,7 +331,7 @@ true
 gap> S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 10);;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <Rees 0-matrix semigroup 9x1 over Group(())>, 
-<transformation semigroup of size 10, degree 11 with 9 generators>
+<commutative transformation semigroup of size 10, degree 11 with 9 generators>
  , function( x ) ... end, function( x ) ... end )
 gap> BruteForceIsoCheck(map);
 true
@@ -2093,9 +2093,10 @@ Transformation( [ 2, 3, 4, 5, 1 ] )
 
 #T# Test DirectProduct for non-monoids
 gap> S := ZeroSemigroup(3);
-<non-regular transformation semigroup of size 3, degree 4 with 2 generators>
+<commutative non-regular transformation semigroup of size 3, degree 4 with 2 
+ generators>
 gap> T := DirectProduct(S, S);
-<transformation semigroup of size 9, degree 8 with 8 generators>
+<commutative transformation semigroup of size 9, degree 8 with 8 generators>
 gap> T := Semigroup(T);
 <transformation semigroup of degree 8 with 8 generators>
 gap> Size(T);
