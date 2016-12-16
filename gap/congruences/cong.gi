@@ -424,12 +424,15 @@ function(class, elm)
   return EquivalenceClassOfElementNC(cong, Representative(class) * elm);
 end);
 
-SEMIGROUPS.GenericCongLookup := function(cong)
+BindGlobal("_GenericCongLookup",
+function(cong)
   local S, lookup, class, nr, elm;
   S := Range(cong);
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.GenericCongLookup: usage,\n",
+    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
                   "<cong> must be over a finite semigroup,");
+  elif not IsEnumerableSemigroupRep(S) then
+    TryNextMethod();
   fi;
   lookup := [1 .. Size(S)];
   for class in NonTrivialEquivalenceClasses(cong) do
@@ -439,24 +442,28 @@ SEMIGROUPS.GenericCongLookup := function(cong)
     od;
   od;
   return lookup;
-end;
+end);
 
 InstallMethod(EquivalenceRelationLookup,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
-SEMIGROUPS.GenericCongLookup);
+_GenericCongLookup);
 
 InstallMethod(EquivalenceRelationLookup,
 "for a left semigroup congruence",
 [IsLeftSemigroupCongruence],
-SEMIGROUPS.GenericCongLookup);
+_GenericCongLookup);
 
 InstallMethod(EquivalenceRelationLookup,
 "for a right semigroup congruence",
 [IsRightSemigroupCongruence],
-SEMIGROUPS.GenericCongLookup);
+_GenericCongLookup);
 
-SEMIGROUPS.GenericCongCanonicalLookup := function(cong)
+MakeReadWriteGlobal("_GenericCongLookup");
+Unbind(_GenericCongLookup);
+
+BindGlobal("_GenericCongCanonicalLookup",
+function(cong)
   local lookup, max, dictionary, next, out, i, new_nr;
   lookup := EquivalenceRelationLookup(cong);
   max := Maximum(lookup);
@@ -474,19 +481,22 @@ SEMIGROUPS.GenericCongCanonicalLookup := function(cong)
     out[i] := new_nr;
   od;
   return out;
-end;
+end);
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
-SEMIGROUPS.GenericCongCanonicalLookup);
+_GenericCongCanonicalLookup);
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a left semigroup congruence",
 [IsLeftSemigroupCongruence],
-SEMIGROUPS.GenericCongCanonicalLookup);
+_GenericCongCanonicalLookup);
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a right semigroup congruence",
 [IsRightSemigroupCongruence],
-SEMIGROUPS.GenericCongCanonicalLookup);
+_GenericCongCanonicalLookup);
+
+MakeReadWriteGlobal("_GenericCongCanonicalLookup");
+Unbind(_GenericCongCanonicalLookup);

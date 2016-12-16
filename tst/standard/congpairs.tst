@@ -32,7 +32,7 @@ gap> gens in cong;
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `in' on 2 arguments
 gap> EquivalenceRelationLookup(cong);
-Error, Semigroups: SEMIGROUPS.GenericCongLookup: usage,
+Error, Semigroups: EquivalenceRelationLookup: usage,
 <cong> must be over a finite semigroup,
 gap> NrCongruenceClasses(cong);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound

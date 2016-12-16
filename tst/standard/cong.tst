@@ -392,10 +392,10 @@ Error, no 2nd choice method found for `ImagesSet' on 2 arguments
 gap> F := FreeSemigroup(2);;
 gap> cong := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(F, [F.1]));;
 gap> EquivalenceRelationLookup(cong);
-Error, Semigroups: SEMIGROUPS.GenericCongLookup: usage,
+Error, Semigroups: EquivalenceRelationLookup: usage,
 <cong> must be over a finite semigroup,
 gap> EquivalenceRelationCanonicalLookup(cong);
-Error, Semigroups: SEMIGROUPS.GenericCongLookup: usage,
+Error, Semigroups: EquivalenceRelationLookup: usage,
 <cong> must be over a finite semigroup,
 
 #T# Equality for different types of congruence, both with pairs
