@@ -471,6 +471,137 @@ false
 gap> IsGeneratorsOfSemigroup([coll[1]]);
 true
 
+# Test AsTransformation
+gap> mat := Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]);;
+gap> AsTransformation(mat);
+fail
+gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, 0], [-infinity, 0]]);;
+gap> AsTransformation(mat);
+Transformation( [ 2, 2 ] )
+
+# Test AsMatrix
+gap> mat := AsMatrix(IsMaxPlusMatrix, Transformation([2, 2]));
+Matrix(IsMaxPlusMatrix, [[-infinity, 0], [-infinity, 0]])
+
+# Test IsGeneratorsOfSemigroup
+gap> S := Semigroup(Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10));
+<commutative semigroup of 2x2 tropical max-plus matrices with 1 generator>
+gap> IsGeneratorsOfSemigroup(DClass(S, S.1));
+true
+gap> coll := [Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10),
+>             Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 11)];;
+gap> IsGeneratorsOfSemigroup(coll);
+false
+gap> coll := [Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10),
+>             Matrix(IsTropicalMinPlusMatrix, [[2, 2], [0, 1]], 10)];;
+gap> IsGeneratorsOfSemigroup(coll);
+false
+gap> coll := [Matrix(IsTropicalMaxPlusMatrix, [[2]], 10),
+>             Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10)];;
+gap> IsGeneratorsOfSemigroup(coll);
+false
+gap> coll := [Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10),
+>             Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 9, 10)];;
+gap> IsGeneratorsOfSemigroup(coll);
+false
+gap> coll := [Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10),
+>             Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 9)];;
+gap> IsGeneratorsOfSemigroup(coll);
+false
+
+# Test Matrix for a finite field
+gap> mat := Matrix(GF(3), [[Z(3)]]);
+Matrix(GF(3), [[Z(3)]])
+gap> Matrix(GF(3), mat);
+Matrix(GF(3), [[Z(3)]])
+
+# Test RandomMatrix for a finite field
+gap> mat := RandomMatrix(GF(3), 3, 2);;
+gap> RowRank(mat);
+2
+gap> mat := RandomMatrix(GF(3), 3, [2, 3]);;
+gap> RowRank(mat) in [2, 3];
+true
+
+# Test OneImmutable, fails
+gap> coll := [Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10),
+>             Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 9)];;
+gap> OneImmutable(coll);
+fail
+
+# Test InverseMutable, fails
+gap> InverseMutable(Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10));
+fail
+
+# Test InverseImmutable, fails
+gap> InverseImmutable(Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10));
+fail
+
+# Test DimensionOfMatrixOverSemiring for zero dim
+gap> mat := Matrix(GF(3), []);;
+gap> DimensionOfMatrixOverSemiring(mat);
+0
+
+# Test DimensionOfMatrixOverSemiringCollection, for a list
+gap> coll := [Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10),
+>             Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 9)];;
+gap> DimensionOfMatrixOverSemiringCollection(coll);
+2
+gap> coll := [Matrix(IsTropicalMaxPlusMatrix, [[2]], 10),
+>             Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10)];;
+gap> DimensionOfMatrixOverSemiringCollection(coll);
+Error, Semigroups: DimensionOfMatrixOverSemiringCollection: usage,
+the argument <coll> must be a collection of matrices of equal dimension,
+
+# Test DimensionOfMatrixOverSemiringCollection, for a semigroup
+gap> S := Semigroup(Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10));;
+gap> DimensionOfMatrixOverSemiringCollection(S);
+2
+
+# Test PrintString for 0 dim
+gap> mat := Matrix(GF(3), []);;
+gap> PrintString(mat);
+"\>\>Matrix(\<\>GF(3)\<, \>[]\<)\<"
+
+# Test String
+gap> mat := Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10);;
+gap> String(mat);
+"Matrix(IsNTPMatrix, [ [ 2, 2 ], [ 0, 1 ] ], 10, 10)"
+gap> mat = EvalString(String(mat));
+true
+gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10);;
+gap> String(mat);
+"Matrix(IsTropicalMaxPlusMatrix, [ [ 2, 2 ], [ 0, 1 ] ], 10)"
+gap> mat = EvalString(String(mat));
+true
+gap> mat := Matrix(GF(3), []);;
+gap> String(mat);
+"Matrix(GF(3), [ ])"
+gap> mat = EvalString(String(mat));
+true
+
+# Test IsBound
+gap> mat := Matrix(IsNTPMatrix, [[2, 2], [0, 1]], 10, 10);;
+gap> IsBound(mat[10]);
+false
+gap> IsBound(mat[1]);
+true
+gap> IsBound(mat[3]);
+false
+
+# Test \<
+gap> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10) < 
+> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 11);
+true
+gap> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10) < 
+> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10);
+false
+
+# Test Matrix for a finite field and list consisting of an empty list
+gap> Matrix(GF(3), [[]]);
+Error, Semigroups: Matrix: usage,
+the 1st argument must be a square table,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(ht);

@@ -209,6 +209,10 @@ InstallMethod(GreensHClassOfElementNC,
 "for a Green's class and multiplicative element",
 [IsGreensClass, IsMultiplicativeElement], GreensHClassOfElement);
 
+InstallMethod(GreensJClassOfElementNC,
+"for a finite semigroup and multiplicative element",
+[IsSemigroup and IsFinite, IsMultiplicativeElement], GreensDClassOfElementNC);
+
 # Green's classes of an element of a semigroup
 
 # FIXME Should these be for IsEnumerableSemigroupRep?? In particular, to what
@@ -216,31 +220,44 @@ InstallMethod(GreensHClassOfElementNC,
 
 InstallMethod(GreensRClassOfElement,
 "for a finite semigroup and multiplicative element",
-[IsSemigroup and IsFinite, IsMultiplicativeElement],
+[IsSemigroup, IsMultiplicativeElement],
 function(S, x)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
   return EquivalenceClassOfElement(GreensRRelation(S), x);
 end);
 
 InstallMethod(GreensLClassOfElement,
 "for a finite semigroup and multiplicative element",
-[IsSemigroup and IsFinite, IsMultiplicativeElement],
+[IsSemigroup, IsMultiplicativeElement],
 function(S, x)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
   return EquivalenceClassOfElement(GreensLRelation(S), x);
 end);
 
 InstallMethod(GreensHClassOfElement,
 "for a finite semigroup and multiplicative element",
-[IsSemigroup and IsFinite, IsMultiplicativeElement],
+[IsSemigroup, IsMultiplicativeElement],
 function(S, x)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
   return EquivalenceClassOfElement(GreensHRelation(S), x);
 end);
 
 InstallMethod(GreensDClassOfElement,
 "for a finite semigroup and multiplicative element",
-[IsSemigroup and IsFinite, IsMultiplicativeElement],
+[IsSemigroup, IsMultiplicativeElement],
 function(S, x)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
   return EquivalenceClassOfElement(GreensDRelation(S), x);
 end);
+
 
 #############################################################################
 ## 4. Collections of classes, and reps

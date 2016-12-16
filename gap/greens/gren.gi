@@ -425,9 +425,6 @@ InstallMethod(GreensDClassOfElementNC,
 [IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
 GreensDClassOfElement);
 
-InstallMethod(GreensJClassOfElementNC,
-"for a finite semigroup and multiplicative element",
-[IsSemigroup and IsFinite, IsMultiplicativeElement], GreensDClassOfElementNC);
 
 # Green's class of a Green's class (coarser from finer)
 # Should these be for IsEnumerableSemigroupGreensClassRep?? FIXME

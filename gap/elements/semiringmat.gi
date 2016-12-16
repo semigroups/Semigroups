@@ -122,9 +122,18 @@ InstallMethod(IsGeneratorsOfSemigroup,
 [IsMatrixOverSemiringCollection],
 function(coll)
   local n;
-  if IsGreensClass(coll) then
+  if IsGreensClass(coll) or IsSemigroup(coll) then
     return true;
-  elif not IsHomogeneousList(coll) then
+  elif (IsTropicalMaxPlusMatrixCollection(coll) 
+        or IsTropicalMinPlusMatrixCollection(coll)) 
+      and ForAny(coll, x -> ThresholdTropicalMatrix(x)
+                            <> ThresholdTropicalMatrix(coll[1])) then 
+    return false;
+  elif IsNTPMatrixCollection(coll) 
+      and (ForAny(coll, x -> ThresholdNTPMatrix(x)
+                             <> ThresholdNTPMatrix(coll[1])) 
+           or ForAny(coll, x -> PeriodNTPMatrix(x)
+                                <> PeriodNTPMatrix(coll[1]))) then 
     return false;
   fi;
   n := DimensionOfMatrixOverSemiring(coll[1]);
@@ -281,13 +290,14 @@ InstallMethod(Matrix, "for a semiring and homogeneous list",
 function(semiring, mat)
   local filter, entry_ok, checker, row;
 
-  if IsField(semiring) and IsFinite(semiring) then
+  if not IsEmpty(mat) and (not IsRectangularTable(mat) 
+      or Length(mat) <> Length(mat[1])) then
+    ErrorNoReturn("Semigroups: Matrix: usage,\n",
+                  "the 1st argument must be a square table,");
+  elif IsField(semiring) and IsFinite(semiring) then
     return NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
                                     semiring,
                                     mat);
-  elif not IsRectangularTable(mat) or Length(mat) <> Length(mat[1]) then
-    ErrorNoReturn("Semigroups: Matrix: usage,\n",
-                  "the 1st argument must be a square table,");
   elif IsIntegers(semiring) then
     filter := IsIntegerMatrix;
   else
@@ -414,7 +424,7 @@ InstallMethod(IsBound\[\],
 "for a plist matrix over semiring positional rep and pos int",
 [IsPlistMatrixOverSemiringPositionalRep, IsPosInt],
 function(mat, pos)
-  return IsBound(mat![1]) and pos <= Length(mat![1]);
+  return IsBound(mat![pos]) and pos <= Length(mat![1]);
 end);
 
 InstallMethod(TransposedMat, "for a matrix over semiring",
@@ -483,7 +493,7 @@ function(coll)
   dim := DimensionOfMatrixOverSemiring(Representative(coll));
   if not ForAll(coll, x -> DimensionOfMatrixOverSemiring(x) = dim) then
     ErrorNoReturn("Semigroups: DimensionOfMatrixOverSemiringCollection: ",
-                  "usage,\nthe argument <coll> must be a collection of",
+                  "usage,\nthe argument <coll> must be a collection of ",
                   "matrices of equal dimension,");
   fi;
 
