@@ -92,7 +92,7 @@ InstallMethod(AsBipartitionSemigroup, "for a semigroup",
 function(S)
   SEMIGROUPS.PrintObsolete("AsBipartitionSemigroup",
                            "AsSemigroup(IsBipartitionSemigroup, S)");
-  return AsSemigroup(IsBipartition, S);
+  return AsSemigroup(IsBipartitionSemigroup, S);
 end);
 
 InstallMethod(AsTransformationSemigroup, "for a semigroup",
