@@ -1391,7 +1391,7 @@ gap_int_t EN_SEMI_SIZE(Obj self, gap_semigroup_t so) {
 gap_bool_t EN_SEMI_IS_DONE_ITERATOR(Obj self, gap_rec_t iter) {
   initRNams();
   Int size = INT_INTOBJ(EN_SEMI_SIZE(self, ElmPRec(iter, RNam_parent)));
-  return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) == size ? True : False);
+  return (INT_INTOBJ(ElmPRec(iter, RNam_pos)) >= size ? True : False);
 }
 
 gap_element_t EN_SEMI_NEXT_ITERATOR(Obj self, gap_rec_t iter) {

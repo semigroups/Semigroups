@@ -1670,20 +1670,17 @@ gap> GreensLClasses(D);
 # Test GreensXClasses for an infinite enumerable semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[0, 2], [-1, 0]]));;
 gap> GreensLClasses(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
-s
+Error, Semigroups: LeftCayleyGraphSemigroup: usage,
+the first argument (a semigroup) must be finite,
 gap> GreensRClasses(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphSemigroup' on 1 arguments
+Error, Semigroups: RightCayleyGraphSemigroup: usage,
+the first argument (a semigroup) must be finite,
 gap> GreensHClasses(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
-s
+Error, Semigroups: LeftCayleyGraphSemigroup: usage,
+the first argument (a semigroup) must be finite,
 gap> GreensDClasses(S);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
-s
+Error, Semigroups: LeftCayleyGraphSemigroup: usage,
+the first argument (a semigroup) must be finite,
 gap> GreensJClasses(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `GreensJClasses' on 1 arguments

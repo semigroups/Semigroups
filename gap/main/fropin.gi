@@ -80,12 +80,6 @@ function(coll)
     or IsEnumerableSemigroupRep(UnderlyingSemigroup(R));
 end);
 
-InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup, 
-IsQuotientSemigroup and HasQuotientSemigroupPreimage, 0,
-function(S)
-  return IsGeneratorsOfEnumerableSemigroup(QuotientSemigroupPreimage(S));
-end);
-
 # The HasRows and HasColumns is currently essential due to some problems in the
 # Rees(Zero)MatrixSemigroup code.
 
@@ -103,6 +97,12 @@ function(coll)
   R := ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
   return IsPermGroup(UnderlyingSemigroup(R))
     or IsEnumerableSemigroupRep(UnderlyingSemigroup(R));
+end);
+
+InstallImmediateMethod(IsGeneratorsOfEnumerableSemigroup, 
+IsQuotientSemigroup and HasQuotientSemigroupPreimage, 0,
+function(S)
+  return IsGeneratorsOfEnumerableSemigroup(QuotientSemigroupPreimage(S));
 end);
 
 # The value 4 in the next method could be 5, but then the Iterator method for
@@ -209,20 +209,27 @@ function(S)
   return data;
 end);
 
-BIND_GLOBAL("FROPIN_GET", function(S, str)
-  if not (IsBound(S!.__en_semi_fropin) 
-          and IsBound(S!.__en_semi_fropin.(str))) then
-    return fail;
-  fi;
-  return S!.__en_semi_fropin.(str);
-end);
-
 #############################################################################
 # 1. Internal methods
 #############################################################################
 
+# This is a fallback method in case we don't know any better way to check this
+
+InstallMethod(IsFinite, "for an enumerable semigroup with known generators", 
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 
+function(S) 
+  return EN_SEMI_SIZE(S) < infinity;
+end);
+
 InstallMethod(AsSet, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], EN_SEMI_AS_SET);
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 
+function(S)
+  if not IsFinite(S) then 
+    ErrorNoReturn("Semigroups: AsSet: usage,\n", 
+                  "the first argument (a semigroup) must be finite,");
+  fi;
+  return EN_SEMI_AS_SET(S);
+end);
 
 InstallMethod(EnumeratorSorted,
 "for an enumerable semigroup with known generators",
@@ -230,8 +237,9 @@ InstallMethod(EnumeratorSorted,
 function(S)
   local enum;
 
-  if HasAsSSortedList(S) then
-    return AsSSortedList(S);
+  if not IsFinite(S) then 
+    ErrorNoReturn("Semigroups: EnumeratorSorted: usage,\n", 
+                  "the first argument (a semigroup) must be finite,");
   elif Length(GeneratorsOfSemigroup(S)) = 0
       or not (IsTransformationSemigroup(S)
               or IsPartialPermSemigroup(S)
@@ -256,7 +264,7 @@ function(S)
 
   enum.Length := enum -> Size(S);
 
-  enum.Membership := function(enum, x)
+  enum.Membership := function(x, enum)
     return PositionCanonical(S, x) <> fail;
   end;
 
@@ -277,7 +285,6 @@ InstallMethod(IteratorSorted,
 # to beat the method for transformation semigroups, FIXME
 function(S)
   local iter;
-
   if HasAsSSortedList(S) then
     return IteratorList(AsSSortedList(S));
   fi;
@@ -301,9 +308,17 @@ InstallMethod(AsList, "for an enumerable semigroup with known generators",
 
 InstallMethod(AsListCanonical,
 "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], EN_SEMI_AS_LIST);
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 
+function(S)
+  if not IsFinite(S) then 
+    ErrorNoReturn("Semigroups: AsListCanonical: usage,\n", 
+                  "the first argument (a semigroup) must be finite,");
+  fi;
+  return EN_SEMI_AS_LIST(S);
+end);
 
-# FIXME why is the next method required?
+# For ideals and other generatorless enumerable semigroups
+
 InstallMethod(AsListCanonical, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
@@ -313,14 +328,7 @@ end);
 
 InstallMethod(Enumerator, "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 2,
-function(S)
-  if HasAsList(S) then
-    return AsList(S);
-  elif Length(GeneratorsOfSemigroup(S)) = 0 then
-    TryNextMethod();
-  fi;
-  return EnumeratorCanonical(S);
-end);
+EnumeratorCanonical);
 
 InstallMethod(EnumeratorCanonical,
 "for an enumerable semigroup with known generators",
@@ -331,8 +339,6 @@ function(S)
 
   if HasAsListCanonical(S) then
     return AsListCanonical(S);
-  elif Length(GeneratorsOfSemigroup(S)) = 0 then
-    TryNextMethod();
   fi;
 
   enum := rec();
@@ -346,7 +352,13 @@ function(S)
   end;
 
   # FIXME this should be Size(S) hack around RZMS
-  enum.Length := enum -> EN_SEMI_SIZE(S);
+  enum.Length := function(enum)
+    if not IsFinite(S) then 
+      return infinity;
+    else 
+      return EN_SEMI_SIZE(S);
+    fi;
+  end;
 
   enum.AsList := function(enum)
     return AsListCanonical(S);
@@ -356,9 +368,8 @@ function(S)
     return PositionCanonical(S, x) <> fail;
   end;
 
-  # FIXME this should be Size(S) hack around RZMS
   enum.IsBound\[\] := function(enum, nr)
-    return nr <= EN_SEMI_SIZE(S);
+    return nr <= Length(enum);
   end;
 
   enum := EnumeratorByFunctions(S, enum);
@@ -422,7 +433,13 @@ end);
 # different method for ideals
 
 InstallMethod(Size, "for an enumerable semigroup with known generators",
-[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], EN_SEMI_SIZE);
+[IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup], 
+function(S)
+  if not IsFinite(S) then 
+    return infinity;
+  fi;
+  return EN_SEMI_SIZE(S);
+end);
 
 # different method for ideals
 
@@ -439,6 +456,9 @@ end);
 InstallMethod(Idempotents, "for an enumerable semigroup with known generators",
 [IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup],
 function(S)
+  if not IsFinite(S) then 
+    TryNextMethod();
+  fi;
   return EnumeratorCanonical(S){EN_SEMI_IDEMPOTENTS(S)}; 
 end);
 
@@ -460,17 +480,13 @@ end);
 
 # Position exists so that we can call it on objects with an uninitialised data
 # structure, without first having to initialise the data structure to realise
-# that <x> is not in it.
+# that <x> is not in it. 
+
+# This returns the current position of x, if it is already known to belong to
+# S.
 
 InstallMethod(Position,
-"for an enumerable semigroup, multi. element, zero cyc",
-[IsEnumerableSemigroupRep, IsMultiplicativeElement],
-function(S, x)
-  return PositionOp(S, x, 0);
-end);
-
-InstallMethod(Position,
-"for an enumerable semigroup, multi. element, zero cyc",
+"for an enumerable semigroup, mult. element, zero cyc",
 [IsEnumerableSemigroupRep, IsMultiplicativeElement, IsZeroCyc],
 function(S, x, n)
   return PositionOp(S, x, n);
@@ -499,22 +515,17 @@ InstallMethod(PositionSortedOp,
 function(S, x)
   local gens;
 
-  if not (IsAssociativeElement(x) or IsMatrixOverSemiring(x))
-      or FamilyObj(x) <> ElementsFamily(FamilyObj(S)) then
+  if FamilyObj(x) <> ElementsFamily(FamilyObj(S)) 
+      or (IsTransformation(x)
+          and DegreeOfTransformation(x) > DegreeOfTransformationSemigroup(S))
+      or (IsPartialPerm(x)
+          and DegreeOfPartialPerm(x) > DegreeOfPartialPermSemigroup(S)) then
     return fail;
+  elif not IsFinite(S) then 
+    ErrorNoReturn("Semigroups: PositionSortedOp: usage,\n", 
+                  "the first argument (a semigroup) must be finite,");
   fi;
 
-  gens := GeneratorsOfSemigroup(S);
-
-  if (IsTransformation(x)
-      and DegreeOfTransformation(x) >
-      DegreeOfTransformationCollection(gens))
-      or
-      (IsPartialPerm(x)
-       and DegreeOfPartialPerm(x) >
-       DegreeOfPartialPermCollection(gens)) then
-    return fail;
-  fi;
   return EN_SEMI_POSITION_SORTED(S, x);
 end);
 
@@ -557,7 +568,8 @@ InstallMethod(RightCayleyGraphSemigroup, "for an enumerable semigroup rep",
 [IsEnumerableSemigroupRep], 3,
 function(S)
   if not IsFinite(S) then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: RightCayleyGraphSemigroup: usage,\n", 
+                  "the first argument (a semigroup) must be finite,");
   fi;
   return EN_SEMI_RIGHT_CAYLEY_GRAPH(S);
 end);
@@ -569,13 +581,21 @@ InstallMethod(LeftCayleyGraphSemigroup,
 [IsEnumerableSemigroupRep], 3,
 function(S)
   if not IsFinite(S) then
-    TryNextMethod();
+    ErrorNoReturn("Semigroups: LeftCayleyGraphSemigroup: usage,\n", 
+                  "the first argument (a semigroup) must be finite,");
   fi;
   return EN_SEMI_LEFT_CAYLEY_GRAPH(S);
 end);
 
 InstallMethod(MultiplicationTable, "for an enumerable semigroup",
-[IsEnumerableSemigroupRep], EN_SEMI_CAYLEY_TABLE);
+[IsEnumerableSemigroupRep],
+function(S)
+  if not IsFinite(S) then
+    ErrorNoReturn("Semigroups: MultiplicationTable: usage,\n", 
+                  "the first argument (a semigroup) must be finite,");
+  fi;
+  return EN_SEMI_CAYLEY_TABLE(S);
+end);
 
 InstallMethod(NrIdempotents, "for an enumerable semigroup rep",
 [IsEnumerableSemigroupRep],
