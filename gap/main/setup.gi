@@ -105,9 +105,8 @@ InstallMethod(ActionDegree, "for a Rees 0-matrix semigroup element",
 function(x)
   if x![1] = 0 then
     return 0;
-  else
-    return NrMovedPoints(x![2]) + 1;
   fi;
+  return NrMovedPoints(x![2]) + 1;
 end);
 
 InstallMethod(ActionDegree, "for an matrix over finite field object",
@@ -130,18 +129,13 @@ function(coll)
   if ForAny(coll, x -> x![1] <> 0) then
     R := ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
     return NrMovedPoints(UnderlyingSemigroup(R)) + 1;
-  else
-    return 0;
   fi;
+  return 0;
 end);
 
 InstallMethod(ActionDegree, "for a matrix object collection",
 [IsHomogeneousList and IsMatrixOverFiniteFieldCollection],
 function(coll)
-  if Length(coll) = 0 then
-    ErrorNoReturn("Semigroups: ActionDegree: usage,\n",
-                  "the argument <coll> must be non-empty");
-  fi;
   return DimensionOfMatrixOverSemiring(coll[1]);
 end);
 
@@ -165,9 +159,8 @@ function(R)
   if ForAny(GeneratorsOfSemigroup(R), x -> x![1] <> 0) then
     parent := ReesMatrixSemigroupOfFamily(ElementsFamily(FamilyObj(R)));
     return NrMovedPoints(UnderlyingSemigroup(parent)) + 1;
-  else
-    return 0;
   fi;
+  return 0;
 end);
 
 InstallMethod(ActionDegree, "for an matrix over finite field semigroup",
