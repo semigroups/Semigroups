@@ -37,8 +37,8 @@ function(G)
     gens := GeneratorsOfGroup(G);
   elif HasGeneratorsOfSemigroup(G) then
     gens := GeneratorsOfSemigroup(G);
-  else
-    TryNextMethod(); #FIXME ok?
+  #else
+  #  TryNextMethod(); #FIXME ok?
   fi;
   deg := DimensionOfMatrixOverSemiring(gens[1]);
   Print("<group of ");
@@ -77,10 +77,10 @@ function(G)
     return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
   fi;
   gens := GeneratorsOfGroup(G);
-  if Length(gens) = 0 then
-    H := Group(AsList(One(G)));
-    return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
-  fi;
+  #if Length(gens) = 0 then
+  #  H := Group(AsList(One(G)));
+  #  return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
+  #fi;
   return GroupHomomorphismByFunction(G,
                                      Group(List(gens, AsList)),
                                      AsList,
@@ -102,10 +102,11 @@ InstallMethod(IsomorphismSemigroup,
 function(filt, R, G)
   local gens, iso;
   gens := GeneratorsOfGroup(G);
-  if Length(gens) = 0 then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-                  "the group must have at least one generator,");
-  fi;
+  # FIXME delete this or find an example where it applies
+  #if Length(gens) = 0 then
+  #  ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
+  #                "the group must have at least one generator,");
+  #fi;
   iso := g -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
                                        R,
                                        g);
@@ -137,9 +138,8 @@ function(x, G)
   elif DimensionOfMatrixOverSemiringCollection(G) = 0
       and DimensionOfMatrixOverSemiring(x) = 0 then
     return true;
-  else
-    return AsList(x) in AsMatrixGroup(G);
   fi;
+  return AsList(x) in AsMatrixGroup(G);
 end);
 
 InstallMethod(\^,
@@ -155,10 +155,9 @@ function(G, x)
                   " the second arg must be invertible,");
   elif IsOne(x) or DimensionOfMatrixOverSemiring(x) = 0 then
     return G;
-  else
-    return Range(IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup,
-                                      AsMatrixGroup(G) ^ AsList(x)));
   fi;
+  return Range(IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup,
+                                    AsMatrixGroup(G) ^ AsList(x)));
 end);
 
 InstallMethod(ClosureGroup,
