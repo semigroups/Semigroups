@@ -60,7 +60,10 @@ function(cong)
   part := FiniteCongruenceByGeneratingPairsPartition(cong);
   out := [];
   for class in part do
-    Add(out, List(class, i -> EN_SEMI_ELEMENT_NUMBER(Range(cong), i)));
+    if Size(class) > 1 then
+      # Non-trivial classes only
+      Add(out, List(class, i -> EN_SEMI_ELEMENT_NUMBER(Range(cong), i)));
+    fi;
   od;
   return out;
 end);
