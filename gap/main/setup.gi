@@ -85,7 +85,7 @@ end);
 #end);
 
 InstallMethod(IsGeneratorsOfActingSemigroup,
-"for an matrix over finite field collection",
+"for a matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection], IsGeneratorsOfSemigroup);
 
 # the largest point involved in the action
@@ -109,7 +109,7 @@ function(x)
   return NrMovedPoints(x![2]) + 1;
 end);
 
-InstallMethod(ActionDegree, "for an matrix over finite field object",
+InstallMethod(ActionDegree, "for a matrix over finite field object",
 [IsMatrixOverFiniteField], DimensionOfMatrixOverSemiring);
 
 InstallMethod(ActionDegree, "for a transformation collection",
@@ -163,7 +163,7 @@ function(R)
   return 0;
 end);
 
-InstallMethod(ActionDegree, "for an matrix over finite field semigroup",
+InstallMethod(ActionDegree, "for a matrix over finite field semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
 function(S)
     return ActionDegree(Representative(S));

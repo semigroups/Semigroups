@@ -609,19 +609,19 @@ end);
 
 #T This might call for a separate VectorOverFiniteField implementaion actually
 #T At least check lengths
-InstallOtherMethod(\*, "for an empty list and an matrix over finite field",
+InstallOtherMethod(\*, "for an empty list and a matrix over finite field",
 [IsList and IsEmpty, IsMatrixOverFiniteField],
 function(l, m)
   return l;
 end);
 
-InstallMethod(\*, "for a list of vectors and an matrix over finite field",
+InstallMethod(\*, "for a list of vectors and a matrix over finite field",
 [IsFFECollection, IsMatrixOverFiniteField],
 function(l, m)
   return l * m!.mat;
 end);
 
-InstallMethod(\*, "for a list of vectors and an matrix over finite field",
+InstallMethod(\*, "for a list of vectors and a matrix over finite field",
 [IsFFECollColl, IsMatrixOverFiniteField],
 function(l, m)
   return l * m!.mat;

@@ -11,7 +11,7 @@
 
 # TODO special cases for 0 dimensional matrices over finite fields
 
-InstallMethod(IsomorphismPermGroup, "for an matrix over finite field group",
+InstallMethod(IsomorphismPermGroup, "for a matrix over finite field group",
 [IsMatrixOverFiniteFieldGroup],
 function(G)
   local iso1, iso2;
@@ -52,22 +52,22 @@ function(G)
 end);
 
 InstallMethod(IsGeneratorsOfMagmaWithInverses,
-"for an matrix over finite field collection",
+"for a matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
 function(coll)
   return ForAll(coll, x -> Inverse(x) <> fail);
 end);
 
 InstallMethod(GeneratorsOfGroup,
-"for an matrix over finite field group with semigroup generators",
+"for a matrix over finite field group with semigroup generators",
 [IsMatrixOverFiniteFieldGroup and HasGeneratorsOfSemigroup],
 GeneratorsOfSemigroup);
 
 InstallMethod(GeneratorsOfSemigroup,
-"for an matrix over finite field group with group generators",
+"for a matrix over finite field group with group generators",
 [IsMatrixOverFiniteFieldGroup and HasGeneratorsOfGroup], GeneratorsOfGroup);
 
-InstallMethod(IsomorphismMatrixGroup, "for an matrix over finite field group",
+InstallMethod(IsomorphismMatrixGroup, "for a matrix over finite field group",
 [IsMatrixOverFiniteFieldGroup],
 function(G)
   local H, gens;
@@ -116,19 +116,19 @@ function(filt, R, G)
                                      AsList);
 end);
 
-InstallMethod(AsMatrixGroup, "for an matrix over finite field group",
+InstallMethod(AsMatrixGroup, "for a matrix over finite field group",
 [IsMatrixOverFiniteFieldGroup], G -> Range(IsomorphismMatrixGroup(G)));
 
-InstallMethod(Size, "for an matrix over finite field group",
+InstallMethod(Size, "for a matrix over finite field group",
 [IsMatrixOverFiniteFieldGroup and HasGeneratorsOfSemigroup],
 S -> Size(Range(IsomorphismMatrixGroup(S))));
 
-InstallMethod(Size, "for an matrix over finite field group",
+InstallMethod(Size, "for a matrix over finite field group",
 [IsMatrixOverFiniteFieldGroup and HasGeneratorsOfGroup],
 S -> Size(Range(IsomorphismMatrixGroup(S))));
 
 InstallMethod(\in,
-"for an matrix over finite field and matrix over finite field group",
+"for a matrix over finite field and matrix over finite field group",
 [IsMatrixOverFiniteField, IsMatrixOverFiniteFieldGroup],
 function(x, G)
   if BaseDomain(G) <> BaseDomain(x)
@@ -143,7 +143,7 @@ function(x, G)
 end);
 
 InstallMethod(\^,
-"for an matrix over finite field group and matrix over finite field",
+"for a matrix over finite field group and matrix over finite field",
 [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField],
 function(G, x)
   if BaseDomain(G) <> BaseDomain(x)
@@ -161,7 +161,7 @@ function(G, x)
 end);
 
 InstallMethod(ClosureGroup,
-"for an matrix over finite field group and matrix over finite field",
+"for a matrix over finite field group and matrix over finite field",
 [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField],
 function(G, x)
   if BaseDomain(G) <> BaseDomain(x)
@@ -177,7 +177,7 @@ function(G, x)
 end);
 
 InstallMethod(ClosureGroup,
-"for an matrix over finite field group and collection",
+"for a matrix over finite field group and collection",
 [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteFieldCollection],
 function(G, coll)
   if BaseDomain(G) <> BaseDomain(coll)

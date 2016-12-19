@@ -316,7 +316,7 @@ function(filt, params)
                                         params[2]));
 end);
 
-InstallMethod(GroupOfUnits, "for an matrix over finite field semigroup",
+InstallMethod(GroupOfUnits, "for a matrix over finite field semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
 function(S)
   local r, g, e, U;
@@ -346,19 +346,17 @@ InstallMethod(BaseDomain, "for a matrix semigroup",
 InstallTrueMethod(IsGeneratorsOfSemigroup, IsMatrixOverFiniteFieldCollection);
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,
-"for an matrix over finite field collection",
+"for a matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
 function(coll)
   return ForAll(coll, x -> x ^ -1 <> fail);
 end);
 
 #############################################################################
-##
 ## Methods for acting semigroups setup
-##
 #############################################################################
 
-InstallOtherMethod(FakeOne, "for an matrix over finite field collection",
+InstallOtherMethod(FakeOne, "for a matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
 function(coll)
   if IsGeneratorsOfActingSemigroup(coll) then
@@ -663,7 +661,7 @@ function(S)
 end);
 
 InstallMethod(IsGeneratorsOfSemigroup,
-"for an matrix over finite field collection",
+"for a matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
 function(coll)
   if ForAny(coll, x -> DimensionOfMatrixOverSemiring(x)
