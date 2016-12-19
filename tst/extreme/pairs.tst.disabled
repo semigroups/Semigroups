@@ -89,31 +89,22 @@ gap> c := EquivalenceClasses(cong);;
 gap> Size(c) = 85;
 true
 
-#T# PairsCongTest2: Checking robustness against infinite semigroups
-gap> s := FreeSemigroup(1);
-<free semigroup on the generators [ s1 ]>
-gap> x := GeneratorsOfSemigroup(s)[1];
-s1
-gap> gens := [x ^ 2, x ^ 4];
-[ s1^2, s1^4 ]
-gap> cong := SemigroupCongruence(s, gens);
+#T# Free semigroups
+gap> F := FreeSemigroup(1);;
+gap> x := GeneratorsOfSemigroup(F)[1];;
+gap> pair := [x ^ 2, x ^ 4];;
+gap> cong := SemigroupCongruence(F, pair);
 <semigroup congruence over <free semigroup on the generators [ s1 ]> with 
 1 generating pairs>
-gap> gens in cong;
-Error, Semigroups: \in (for a congruence): usage,
-this function currently only works if <cong> is a congruence of a semigroup
-which is known to be finite,
+gap> pair in cong;
+true
 gap> EquivalenceRelationLookup(cong);
-Error, Semigroups: EquivalenceRelationLookup: usage,
-<cong> must be a congruence of a finite semigroup,
+fail
 gap> EquivalenceClasses(cong);
-Error, Semigroups: EquivalenceClasses: usage,
-this function currently only works if <cong> is a congruence of a semigroup
-which is known to be finite,
+[ <congruence class of s1>, <congruence class of s1^2>, 
+  <congruence class of s1^3> ]
 gap> NrCongruenceClasses(cong);
-Error, Semigroups: NrCongruenceClasses: usage,
-this function currently only works if <cong> is a congruence of a semigroup
-which is known to be finite,
+3
 
 #T# PairsCongTest3: \= for two semigroup congruences
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
@@ -3270,6 +3261,9 @@ gap> l := LatticeOfCongruences(S);
   [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13 ], [ 1, 2, 3, 4, 7, 8, 9 ], [ 1 ], 
   [ 1 ], [ 1, 7, 8 ], [ 1, 3 ], [ 1, 2, 3, 7, 10 ], [ 1, 3, 4, 8, 10 ], 
   [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12 ] ]
+
+#T# Check robustness against non-free infinite semigroups
+#TODO!
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(P);
