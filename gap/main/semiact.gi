@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+# The code coverage for this file is not as good as it could be.
+
 SEMIGROUPS.ChangeDegreeOfTransformationSemigroup := function(o, old_deg, t)
   local deg, extra, ht, max, i, orb;
   deg := DegreeOfTransformationSemigroup(t);
@@ -476,6 +478,7 @@ function(s)
       w := List([1 .. i], x -> Random([1 .. Length(gens)]));
       return EvaluateWord(gens, w);
     elif IsSemigroupIdeal(s) and HasGeneratorsOfSemigroupIdeal(s) then
+      # This clause is currently unreachable
       x := Random([1 .. Length(GeneratorsOfSemigroupIdeal(s))]);
       gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(s));
 
@@ -600,6 +603,9 @@ function(x, S)
     return true;
   elif IsFullyEnumerated(S) then
     return false;
+  elif HasAsSSortedList(S) then
+    # This is currently unreachable
+    return x in AsSSortedList(S);
   fi;
 
   if not (IsMonoid(S) and IsOne(x)) then
@@ -618,10 +624,6 @@ function(x, S)
            "semigroup.");
       return false;
     fi;
-  fi;
-
-  if HasAsSSortedList(S) then
-    return x in AsSSortedList(S);
   fi;
 
   pos_lambda := Position(Enumerate(LambdaOrb(S)), LambdaFunc(S)(x));
