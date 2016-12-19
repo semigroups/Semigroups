@@ -611,8 +611,5 @@ function(S)
   return gens;
 end);
 
-InstallMethod(IsBipartitionSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x -> IsBipartitionSemigroup(Parent(x)));
-
 InstallMethod(DegreeOfBipartitionSemigroup, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> DegreeOfBipartition(Representative(S)));

@@ -343,10 +343,6 @@ end);
 InstallMethod(BaseDomain, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S -> BaseDomain(Representative(S)));
 
-InstallMethod(IsMatrixOverFiniteFieldSemigroupGreensClass,
-"for a Green's class", [IsGreensClass],
-C -> IsMatrixOverFiniteFieldSemigroup(Parent(C)));
-
 InstallTrueMethod(IsGeneratorsOfSemigroup, IsMatrixOverFiniteFieldCollection);
 
 InstallMethod(IsGeneratorsOfInverseSemigroup,

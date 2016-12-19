@@ -341,11 +341,6 @@ function(S, rank)
                               x -> RankOfTransformation(x, deg) = rank);
 end);
 
-# different method required (but not yet given!!) for ideals
-
-InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
-
 InstallMethod(IteratorSorted, "for an acting transformation semigroup",
 [IsTransformationSemigroup and IsActingSemigroup],
 function(S)

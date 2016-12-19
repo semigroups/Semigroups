@@ -97,18 +97,6 @@ gap> Size(Range(iso));
 </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsMatrixOverFiniteFieldSemigroupGreensClass">
-  <ManSection>
-    <Prop Name="IsMatrixOverFiniteFieldSemigroupGreensClass" Arg="class"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description>
-      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
-      property <C>IsMatrixOverFiniteFieldSemigroupGreensClass</C> if and only if <C>S</C>
-      is belongs to the category <C>IsMatrixOverFiniteFieldSemigroup</C>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="IsFullMatrixMonoid">
   <ManSection>
     <Prop Name="IsFullMatrixMonoid" Arg="S"/>      

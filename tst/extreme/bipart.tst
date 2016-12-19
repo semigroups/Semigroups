@@ -485,8 +485,6 @@ gap> MultiplicativeNeutralElement(H);
 <bipartition: [ 1, 2, 3, 4, 7, 8, 11, 13 ], [ 5, 9 ], [ 6, 10, 12 ], 
  [ -1, -2, -6 ], [ -3 ], [ -4, -8 ], [ -5, -11 ], [ -7, -10, -13 ], [ -9 ], 
  [ -12 ]>
-gap> IsBipartitionSemigroupGreensClass(H);
-true
 gap> StructureDescription(H);
 "1"
 gap> H := HClassNC(S, f);

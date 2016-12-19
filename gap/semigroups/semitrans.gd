@@ -8,8 +8,6 @@
 #############################################################################
 ##
 
-DeclareProperty("IsTransformationSemigroupGreensClass", IsGreensClass);
-
 DeclareOperation("\^", [IsTransformationCollection, IsPerm]);
 DeclareAttribute("FixedPoints", IsTransformationSemigroup);
 DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);

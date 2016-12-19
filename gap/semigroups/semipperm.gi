@@ -141,9 +141,6 @@ InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup",
 [IsPartialPermSemigroup], RankOfPartialPermCollection);
 
-InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x -> IsPartialPermSemigroup(Parent(x)));
-
 InstallMethod(Enumerator, "for a symmetric inverse monoid",
 [IsSymmetricInverseMonoid],
 Maximum(RankFilter(IsActingSemigroup),
@@ -431,9 +428,6 @@ function(S)
 
   return U;
 end);
-
-InstallMethod(IsPartialPermSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x -> IsPartialPermSemigroup(Parent(x)));
 
 # the following method is required to beat the method for
 # IsPartialPermCollection in the library.

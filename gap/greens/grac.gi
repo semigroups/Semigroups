@@ -1638,7 +1638,7 @@ function(H)
                   "the H-class is not a group,");
   fi;
 
-  if IsMatrixOverFiniteFieldSemigroupGreensClass(H) then
+  if IsMatrixOverFiniteFieldSemigroup(Parent(H)) then
     iso := IsomorphismPermGroup(SchutzenbergerGroup(H));
     inv := InverseGeneralMapping(iso);
     # gaplint: ignore 3

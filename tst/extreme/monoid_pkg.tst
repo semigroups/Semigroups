@@ -808,8 +808,6 @@ gap> b := Transformation([2, 3, 1, 5, 4, 1]);;
 gap> M := Semigroup(a, b);;
 gap> GreensLClassOfElement(M, a);
 <Green's L-class: Transformation( [ 2, 1, 4, 5, 6, 3 ] )>
-gap> IsTransformationSemigroupGreensClass(last);
-true
 gap> f := FreeSemigroup(3);;
 gap> a := f.1;; b := f.2;; c := f.3;;
 gap> s := f / [[a ^ 2, a], [b ^ 2, b], [c ^ 2, c], [a * b, a],
@@ -819,8 +817,6 @@ gap> Size(s);
 3
 gap> GreensLClassOfElement(s, s.1);
 <Green's L-class: s1>
-gap> IsTransformationSemigroupGreensClass(last);
-false
 gap> gens := [Transformation([2, 2, 5, 2, 3]),
 > Transformation([2, 5, 3, 5, 3])];;
 gap> S := Semigroup(gens);;

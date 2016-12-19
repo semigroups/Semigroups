@@ -67,9 +67,6 @@
     <#Include Label = "\&lt;">
     <#Include Label = "IsRegularGreensClass">
     <#Include Label = "IsGreensClassNC">
-    <#Include Label = "IsTransformationSemigroupGreensClass">
-    <#Include Label = "IsBipartitionSemigroupGreensClass">
-    <#Include Label = "IsPartialPermSemigroupGreensClass">
 
   </Section>
   

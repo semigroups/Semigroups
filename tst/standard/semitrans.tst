@@ -247,18 +247,13 @@ gap> true;;
 gap> true;;
 
 #T# SemiTransTest12
-# IsTransformationSemigroupGreensClass
 gap> S := Semigroup(PartialPerm([2, 3], [1, 4]));;
 gap> R := RClass(S, RepresentativeOfMinimalIdeal(S));
 <Green's R-class: <empty partial perm>>
-gap> IsTransformationSemigroupGreensClass(R);
-false
 gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 5]), 
 >  Transformation([5, 1, 6, 1, 6, 3])]);;
 gap> R := HClass(S, Transformation([4, 5, 3, 4, 5, 5]));
 <Green's H-class: Transformation( [ 4, 5, 3, 4, 5, 5 ] )>
-gap> IsTransformationSemigroupGreensClass(R);
-true
 
 #T# SemiTransTest13
 # EndomorphismMonoid

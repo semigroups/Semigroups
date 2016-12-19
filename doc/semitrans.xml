@@ -251,15 +251,3 @@ Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-
-<#GAPDoc Label="IsTransformationSemigroupGreensClass">
-  <ManSection>
-    <Prop Name = "IsTransformationSemigroupGreensClass" Arg = "class"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description>
-      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
-      property <C>IsTransformationSemigroupGreensClass</C> if and only if
-      <C>S</C> is a semigroup of transformations. 
-    </Description> 
-  </ManSection>
-<#/GAPDoc>
