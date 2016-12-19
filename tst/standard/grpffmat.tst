@@ -41,8 +41,8 @@ gap> S := Semigroup(
 > [ Matrix(GF(2), [[0*Z(2), Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2), Z(2)^0],
 >   [Z(2)^0, 0*Z(2), 0*Z(2)]]) ]);;
 gap> map := IsomorphismPermGroup(S);
-MappingByFunction( <semigroup of 3x3 matrices over GF(2) with 1 generator>, 
-<group of size 3, with 1 generator>
+MappingByFunction( <group of size 3, 3x3 matrices over GF(2) with 1 generator>
+, <group of size 3, with 1 generator>
 , function( x ) ... end, function( x ) ... end )
 gap> BruteForceInverseCheck(map);
 true
@@ -79,7 +79,7 @@ MappingByFunction( <group of 1x1 matrices over GF(3) with 1 generator>, Group(
 
 # ClosureGroup
 gap> G := GroupOfUnits(GLM(3,3));
-<monoid of 3x3 matrices over GF(3) with 2 generators>
+<group of 3x3 matrices over GF(3) with 2 generators>
 gap> IsMatrixOverFiniteFieldGroup(G);
 false
 gap> G := Group(GeneratorsOfSemigroup(G));

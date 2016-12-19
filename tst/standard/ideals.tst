@@ -179,7 +179,7 @@ gap> I := SemigroupIdeal(S, S.1, rec(regular := true));
 <regular transformation semigroup ideal of degree 3 with 1 generator>
 gap> S := GLM(3, 2);;
 gap> I := SemigroupIdeal(S, S.3);
-<ideal of semigroup of 3x3 matrices over GF(2) with 1 generator>
+<regular semigroup ideal of 3x3 matrices over GF(2) with 1 generator>
 gap> IsMatrixOverFiniteFieldSemigroup(I);
 true
 gap> S := PartitionMonoid(3);;

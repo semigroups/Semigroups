@@ -1581,7 +1581,7 @@ true
 
 # Test SLM
 gap> S := SLM(3, 3);
-<monoid of 3x3 matrices over GF(3) with 3 generators>
+<regular monoid of 3x3 matrices over GF(3) with 3 generators>
 gap> Size(S);
 14067
 gap> NrLClasses(S);
@@ -1603,11 +1603,7 @@ false
 gap> S := InverseSemigroup(PartialPerm([1, 2, 3, 4, 5, 6, 7, 10], 
 >                                      [4, 6, 7, 3, 8, 2, 9, 5]),
 >                          PartialPerm([1, 2, 7, 9], 
->                                      [5, 6, 4, 3]));
-<inverse partial perm semigroup of rank 10 with 2 generators>
-gap> MunnSemigroup(S);
-Error, Semigroups: GeneratorsOfMunnSemigroup: usage,
-the argument must be a semilattice,
+>                                      [5, 6, 4, 3]));;
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> M := MunnSemigroup(T);
 <inverse partial perm semigroup of rank 60 with 9 generators>
@@ -1615,6 +1611,9 @@ gap> NrIdempotents(M);
 60
 gap> NrIdempotents(S);
 60
+gap> MunnSemigroup(S);
+Error, Semigroups: GeneratorsOfMunnSemigroup: usage,
+the argument must be a semilattice,
 
 # Test OrderEndomorphisms
 gap> S := OrderEndomorphisms(4);
@@ -1887,8 +1886,7 @@ gap> PODI(5);
 <inverse partial perm monoid of rank 5 with 6 generators>
 
 # SingularPartitionMonoid
-gap> SingularPartitionMonoid(1);
-<commutative regular bipartition semigroup ideal of degree 1 with 1 generator>
+gap> SingularPartitionMonoid(1);;
 gap> SingularPartitionMonoid(2);
 <regular bipartition *-semigroup ideal of degree 2 with 1 generator>
 gap> SingularPartitionMonoid(5);

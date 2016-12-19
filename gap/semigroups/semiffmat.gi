@@ -343,8 +343,6 @@ end);
 InstallMethod(BaseDomain, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S -> BaseDomain(Representative(S)));
 
-InstallTrueMethod(IsGeneratorsOfSemigroup, IsMatrixOverFiniteFieldCollection);
-
 InstallMethod(IsGeneratorsOfInverseSemigroup,
 "for a matrix over finite field collection",
 [IsMatrixOverFiniteFieldCollection],
@@ -578,86 +576,14 @@ function(S, x, y)
   fi;
 end);
 
-#TODO this method is probably redundant.
-
-InstallMethod(ViewString,
-"for an matrix over finite field semigroup with generators",
-[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(SemigroupViewStringSuffix,
+"for a matrix over finite field semigroup",
+[IsMatrixOverFiniteFieldSemigroup],
 function(S)
-  local gens, deg, res;
-  if HasIsMonoid(S) and IsMonoid(S) then
-    gens := GeneratorsOfMonoid(S);
-    deg := DimensionOfMatrixOverSemiring(gens[1]);
-    res := "<monoid of ";
-    Append(res, Concatenation(String(deg), "x", String(deg)));
-    Append(res, " matrices\<\> over ");
-    Append(res, String(BaseDomain(S)));
-    Append(res, Concatenation("\<\> with ", Length(gens), " generator"));
-  else
-    gens := GeneratorsOfSemigroup(S);
-    deg := DimensionOfMatrixOverSemiring(gens[1]);
-    res := "<semigroup of ";
-    Append(res, Concatenation(String(deg), "x", String(deg)));
-    Append(res, " matrices\<\> over ");
-    Append(res, String(BaseDomain(S)));
-    Append(res, Concatenation("\<\> with ", Length(gens), " generator"));
-  fi;
-  if Length(gens) > 1 then
-    Append(res, "s");
-  fi;
-  Append(res, ">");
-  return res;
-end);
-
-InstallMethod(ViewObj,
-"for an matrix over finite field semigroup with generators",
-[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local gens, deg;
-  if HasIsMonoid(S) and IsMonoid(S) then
-    gens := GeneratorsOfMonoid(S);
-    deg := DimensionOfMatrixOverSemiring(gens[1]);
-    Print("<monoid of ");
-    Print(deg, "x", deg);
-    Print(" matrices\<\> over ", BaseDomain(S));
-    Print("\<\> with ", Length(gens), " generator");
-  else
-    gens := GeneratorsOfSemigroup(S);
-    deg := DimensionOfMatrixOverSemiring(gens[1]);
-    Print("<semigroup of ");
-    Print(deg, "x", deg);
-    Print(" matrices\<\> over ", BaseDomain(S));
-    Print("\<\> with ", Length(gens), " generator");
-  fi;
-  if Length(gens) > 1 then
-    Print("s");
-  fi;
-  Print(">");
-end);
-
-InstallMethod(PrintObj, "for a matrix semigroup with generators",
-[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  Print("Semigroup(", GeneratorsOfSemigroup(S), ")");
-end);
-
-InstallMethod(ViewObj,
-"for a matrix semigroup ideal with generators of semigroup ideal",
-[IsMatrixOverFiniteFieldSemigroup and IsSemigroupIdeal and
- HasGeneratorsOfSemigroupIdeal],
-function(S)
-  local deg, gens;
-  gens := GeneratorsOfSemigroupIdeal(S);
-  deg := DimensionOfMatrixOverSemiring(gens[1]);
-  Print("<ideal of semigroup of ");
-  Print(deg, "x", deg);
-  Print(" matrices over ", BaseDomain(gens[1]));
-  Print(" with ", Length(gens), " generator");
-
-  if Length(gens) > 1 then
-    Print("s");
-  fi;
-  Print(">");
+  local n;
+  n := ViewString(DimensionOfMatrixOverSemiring(Representative(S)));
+  return Concatenation("\>\>", n, "x", n, "\< \>matrices\< \>over\< \>",
+                       ViewString(BaseDomain(S)), "\<\< ");
 end);
 
 InstallMethod(IsGeneratorsOfSemigroup,

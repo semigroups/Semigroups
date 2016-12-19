@@ -44,7 +44,7 @@ gap> x := Matrix(GF(2^2),
 >  [0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)],
 >  [0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)]]);;
 gap> S := Monoid(x, rec(acting := false));
-<monoid of 6x6 matrices over GF(2^2) with 1 generator>
+<commutative monoid of 6x6 matrices over GF(2^2) with 1 generator>
 gap> HasIsFinite(S);
 true
 gap> Size(S);
@@ -395,7 +395,7 @@ gap> S := Semigroup(Transformation([1, 2, 2, 2, 2]),
 gap> AsMonoid(S);
 <commutative transformation monoid of degree 2 with 1 generator>
 gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, S);
-<monoid of 2x2 matrices over GF(2) with 1 generator>
+<commutative monoid of 2x2 matrices over GF(2) with 1 generator>
 gap> map := IsomorphismMonoid(IsMatrixOverFiniteFieldMonoid, S);;
 gap> BruteForceIsoCheck(map);
 true
@@ -404,11 +404,11 @@ true
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
 gap> AsMonoid(T);
-<monoid of 2x2 matrices over GF(2) with 1 generator>
+<commutative monoid of 2x2 matrices over GF(2) with 1 generator>
 gap> U := Semigroup(List(Generators(T), AsList));
 <semigroup with 2 generators>
 gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, U);
-<monoid of 2x2 matrices over GF(2) with 1 generator>
+<commutative monoid of 2x2 matrices over GF(2) with 1 generator>
 gap> map := IsomorphismMonoid(IsMatrixOverFiniteFieldMonoid, U);;
 gap> BruteForceIsoCheck(map);
 true
@@ -433,6 +433,181 @@ gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, GF(4), S);
 <monoid of 2x2 matrices over GF(2^2) with 3 generators>
 gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, GF(3), S);
 <monoid of 16x16 matrices over GF(3) with 3 generators>
+
+# Test PrintString
+gap> PrintString(GLM(3, 3));
+"GLM(3, 3 ^ 1)"
+gap> PrintString(GLM(3, 9));
+"GLM(3, 3 ^ 2)"
+
+# ViewObj
+gap> GLM(3, 9);
+<general linear monoid 3x3 over GF(3^2)>
+
+# RandomSemigroup
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup);;
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, 2);;
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3);;
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7));;
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [1, 3]);;
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, 1, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the third argument (matrix dimension) must be a pos int,
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, 1, 2, Integers);
+Error, Semigroups: RandomSemigroup: usage,
+the fourth argument must be a finite field,
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [0]);;
+Error, Semigroups: RandomSemigroup: usage,
+the fifth argument (matrix ranks) must be a list of pos ints,
+gap> RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [1], 10);;
+Error, Semigroups: RandomSemigroup: usage,
+there must be at most five arguments,
+
+# RandomInverseSemigroup
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup);;
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2);;
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3);;
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7));;
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [1, 3]);;
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, "a");
+Error, Semigroups: RandomInverseSemigroup: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 1, "a");
+Error, Semigroups: RandomInverseSemigroup: usage,
+the third argument (matrix dimension) must be a pos int,
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 1, 2, Integers);
+Error, Semigroups: RandomInverseSemigroup: usage,
+the fourth argument must be a finite field,
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [0]);;
+Error, Semigroups: RandomInverseSemigroup: usage,
+the fifth argument (matrix ranks) must be a list of pos ints,
+gap> RandomInverseSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 3, GF(7), [1], 10);;
+Error, Semigroups: RandomInverseSemigroup: usage,
+there must be at most five arguments,
+
+# RandomMonoid
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid);;
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid, 2);;
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3);;
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3, GF(7));;
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3, GF(7), [1, 3]);;
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid, "a");
+Error, Semigroups: RandomMonoid: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid, 1, "a");
+Error, Semigroups: RandomMonoid: usage,
+the third argument (matrix dimension) must be a pos int,
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid, 1, 2, Integers);
+Error, Semigroups: RandomMonoid: usage,
+the fourth argument must be a finite field,
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3, GF(7), [0]);;
+Error, Semigroups: RandomMonoid: usage,
+the fifth argument (matrix ranks) must be a list of pos ints,
+gap> RandomMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3, GF(7), [1], 10);;
+Error, Semigroups: RandomMonoid: usage,
+there must be at most five arguments,
+
+# RandomInverseMonoid
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid);;
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2);;
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3);;
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3, GF(7));;
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3, GF(7), [1, 3]);;
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, "a");
+Error, Semigroups: RandomInverseMonoid: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 1, "a");
+Error, Semigroups: RandomInverseMonoid: usage,
+the third argument (matrix dimension) must be a pos int,
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 1, 2, Integers);
+Error, Semigroups: RandomInverseMonoid: usage,
+the fourth argument must be a finite field,
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3, GF(7), [0]);;
+Error, Semigroups: RandomInverseMonoid: usage,
+the fifth argument (matrix ranks) must be a list of pos ints,
+gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 3, GF(7), [1], 10);;
+Error, Semigroups: RandomInverseMonoid: usage,
+there must be at most five arguments,
+
+# IsGeneratorsOfSemigroup
+gap> coll := [Matrix(GF(2), [[Z(2) ^ 0, 0 * Z(2)], [Z(2) ^ 0, Z(2) ^ 0]]),
+>  Matrix(GF(2), [[Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0], [0 * Z(2), Z(2) ^ 0, 0 *
+>  Z(2)], [Z(2) ^ 0, 0 * Z(2), 0 * Z(2)]])];;
+gap> IsGeneratorsOfSemigroup(coll);
+false
+
+# GroupOfUnits
+gap> GroupOfUnits(GLM(2,2));
+<group of 2x2 matrices over GF(2) with 2 generators>
+
+# IsGeneratorsOfInverseSemigroup
+gap> IsGeneratorsOfInverseSemigroup(Generators(GroupOfUnits(GLM(2,2))));
+true
+gap> IsGeneratorsOfInverseSemigroup(Generators(GLM(2,2)));
+false
+
+# FakeOne
+gap> coll := [Matrix(GF(2), [[Z(2) ^ 0, 0 * Z(2)], [Z(2) ^ 0, Z(2) ^ 0]]),
+>  Matrix(GF(2), [[Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0], [0 * Z(2), Z(2) ^ 0, 0 *
+>  Z(2)], [Z(2) ^ 0, 0 * Z(2), 0 * Z(2)]])];;
+gap> FakeOne(coll);
+fail
+
+# GroupOfUnits, for not a monoid
+gap> S := GLM(2, 2);
+<general linear monoid 2x2 over GF(2)>
+gap> SemigroupIdeal(S, S.3);
+<regular semigroup ideal of 2x2 matrices over GF(2) with 1 generator>
+gap> GroupOfUnits(last);
+fail
+
+# MatrixOverFiniteFieldLocalRightInverse for 0 dim
+gap> x := Matrix(GF(3), []);;
+gap> MatrixOverFiniteFieldLocalRightInverse(fail, RowSpaceBasis(x), x);
+Error, Semigroups: MatrixOverFiniteFieldLocalRightInverse: usage,
+ nullspace
+
+# MatrixOverFiniteFieldSchutzGrpElement for 0 dim
+gap> x := Matrix(GF(3), []);;
+gap> MatrixOverFiniteFieldSchutzGrpElement(GLM(2, 2), x, x);
+Matrix(GF(3), [])
+
+# MatrixOverFiniteFieldSchutzGrpElement error
+gap> x := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
+>  [0*Z(3), Z(3), Z(3)^0]]);;
+gap> y := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
+>  [0*Z(3), 0*Z(3), 0*Z(3)]]);;
+gap> MatrixOverFiniteFieldSchutzGrpElement(GLM(3, 3), x, y);
+Error, Semigroups: MatrixOverFiniteFieldSchutzGrpElement: error,
+the found element is not invertible,
+
+# MatrixOverFiniteFieldStabilizerAction
+gap> y := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
+>  [0*Z(3), 0*Z(3), 0*Z(3)]]);;
+gap> MatrixOverFiniteFieldStabilizerAction(GLM(3, 3), y, 0);
+Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)], 
+  [0*Z(3), 0*Z(3), 0*Z(3)]])
+gap> x := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
+>  [0*Z(3), Z(3), Z(3)^0]]);;
+gap> MatrixOverFiniteFieldStabilizerAction(GLM(3, 3),  Matrix(GF(3),
+> [[Z(3)]]), x);
+Matrix(GF(3), [[0*Z(3)]])
+
+# MatrixOverFiniteFieldLambdaConjugator
+gap> y := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
+>  [0*Z(3), 0*Z(3), 0*Z(3)]]);;
+gap> MatrixOverFiniteFieldLambdaConjugator(GLM(3, 3), y, fail);
+Matrix(GF(3), [])
+
+# MatrixOverFiniteFieldIdempotentCreator
+gap> y := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
+>  [0*Z(3), 0*Z(3), 0*Z(3)]]);;
+gap> MatrixOverFiniteFieldIdempotentCreator(GLM(3, 3), RowSpaceBasis(y), fail);
+Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)], 
+  [0*Z(3), 0*Z(3), 0*Z(3)]])
 
 #E# 
 gap> STOP_TEST("Semigroups package: standard/semiffmat.tst");
