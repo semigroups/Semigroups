@@ -29,15 +29,11 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `NonTrivialEquivalenceClasses' on 1 argu\
 ments
 gap> gens in cong;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `in' on 2 arguments
+true
 gap> EquivalenceRelationLookup(cong);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `EquivalenceRelationCanonicalLookup' on \
-1 arguments
+fail
 gap> NrCongruenceClasses(cong);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `NrEquivalenceClasses' on 1 arguments
+3
 gap> class := CongruenceClassOfElement(cong, x);;
 gap> cong2 := SemigroupCongruence(S, [x ^ 2, x ^ 2]);;
 gap> class := CongruenceClassOfElement(cong2, x);;
