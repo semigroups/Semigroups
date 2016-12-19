@@ -1,3 +1,28 @@
+# TODO improve and document this
+# FIXME this doesn't work
+
+#InstallMethod(PowerSemigroup, "for a group", [IsGroup],
+#function(g)
+#  local act, dom, gens, s, i, f;
+#
+#  act := function(A, B)
+#    return Union(List(A, x -> x * B));
+#  end;
+#  dom := Combinations(Elements(g));
+#  Sort(dom, function(x, y)
+#              return Length(x) < Length(y);
+#            end);
+#  gens := [TransformationOp(dom[1], dom, act)];
+#  s := Semigroup(gens);
+#  i := 2;
+#
+#  while Size(s) < 2 ^ Size(g) do
+#    i := i + 1;
+#    f := TransformationOp(dom[i], dom, act);
+#    s := ClosureSemigroup(s, f);
+#  od;
+#  return s;
+#end);
 if not IsBound(EN_SEMI_ENUMERATE) then
   InstallMethod(Enumerate, "for generic semigroup data, cyclotomic, function",
   [IsGenericSemigroupData, IsCyclotomic, IsFunction],
