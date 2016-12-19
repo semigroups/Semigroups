@@ -427,7 +427,7 @@ end);
 #FIXME move this!
 
 InstallMethod(Iterator, "for a regular D-class of an acting semigroup",
-[IsGreensDClass and IsRegularGreensClass and IsActingSemigroupGreensClass],
+[IsRegularDClass and IsActingSemigroupGreensClass],
 function(d)
   local iter, baseiter, convert;
 

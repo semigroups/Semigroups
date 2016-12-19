@@ -56,7 +56,7 @@ InstallMethod(LambdaCosets, "for a regular class of an acting semigroup",
 # same method for inverse
 
 InstallMethod(SchutzenbergerGroup, "for D-class of regular acting semigroup",
-[IsRegularGreensClass and IsGreensDClass and IsActingSemigroupGreensClass],
+[IsRegularDClass and IsActingSemigroupGreensClass],
 D -> LambdaOrbSchutzGp(LambdaOrb(D), LambdaOrbSCCIndex(D)));
 
 # same method for inverse
@@ -253,13 +253,13 @@ S -> Length(Enumerate(RhoOrb(S), infinity)) - 1);
 # different method for inverse semigroups
 
 InstallMethod(NrRClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularGreensClass and IsGreensDClass],
+[IsActingSemigroupGreensClass and IsRegularDClass],
 D -> Length(RhoOrbSCC(D)));
 
 # different method for inverse semigroups
 
 InstallMethod(NrHClasses, "for a D-class of regular acting semigroup",
-[IsActingSemigroupGreensClass and IsRegularGreensClass and IsGreensDClass],
+[IsActingSemigroupGreensClass and IsRegularDClass],
 R -> Length(LambdaOrbSCC(R)) * Length(RhoOrbSCC(R)));
 
 # different method for inverse semigroups

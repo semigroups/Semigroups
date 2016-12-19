@@ -274,7 +274,7 @@ end);
 # different method for inverse
 
 InstallMethod(Enumerator, "for a regular D-class of an acting semigroup",
-[IsGreensDClass and IsRegularGreensClass and IsActingSemigroupGreensClass],
+[IsRegularDClass and IsActingSemigroupGreensClass],
 function(d)
   local record, convert_out, convert_in, rho_scc, lambda_scc;
 
