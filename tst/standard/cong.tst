@@ -376,8 +376,7 @@ gap> F := FreeSemigroup(2);;
 gap> cong1 := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(F, [F.1]));;
 gap> cong2 := SemigroupCongruence(F, [F.1, F.1^2]);;
 gap> cong1 = cong2;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `PreImagesSet' on 2 arguments
+false
 gap> F := FreeSemigroup(2);;
 gap> cong1 := LeftSemigroupCongruence(F, [F.1, F.2]);;
 gap> cong2 := RightSemigroupCongruence(F, [F.1, F.2]);;

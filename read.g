@@ -86,6 +86,7 @@ ReadPackage("semigroups", "gap/congruences/congsimple.gi");
 ReadPackage("semigroups", "gap/congruences/congrees.gi");
 ReadPackage("semigroups", "gap/congruences/cong.gi");
 ReadPackage("semigroups", "gap/congruences/conglatt.gi");
+ReadPackage("semigroups", "gap/congruences/congfree.gi");
 
 ReadPackage("semigroups", "gap/fp/freeinverse.gi");
 ReadPackage("semigroups", "gap/fp/freeband.gi");
