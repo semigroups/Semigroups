@@ -12,24 +12,23 @@ gap> LoadPackage("semigroups", false);;
 
 #
 gap> SEMIGROUPS.StartTest();
-gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
-# ClosureSemigroupNC, for an acting semigroup
+# ClosureSemigroup, for an acting semigroup
 gap> S := Semigroup(IdentityTransformation);;
 gap> Size(S);
 1
 gap> S := ClosureSemigroup(S, AsSet(FullTransformationMonoid(3)));;
 gap> Size(S);
 27
-gap> S := Semigroup(S.3);;
+gap> S := Semigroup(Transformation([2, 1, 2]));;
 gap> Size(S);
 2
 gap> S := ClosureSemigroup(S, AsSet(OrderEndomorphisms(5)));;
 gap> Size(S);
-526
+576
 gap> S := ClosureSemigroup(S, AsSet(OrderAntiEndomorphisms(5)));;
 gap> Size(S);
-1527
+1927
 gap> S := Semigroup(IdentityTransformation);;
 gap> S := ClosureSemigroup(S, Transformation([2, 1]));;
 gap> S := AsSemigroup(IsTransformationSemigroup, 
@@ -50,16 +49,17 @@ gap> Size(S);
 gap> S := ClosureInverseSemigroup(S, AsSet(SymmetricInverseMonoid(6)));;
 gap> Size(S);
 13327
-gap> S := InverseSemigroup(S.3);;
+gap> S := InverseSemigroup(PartialPerm([1, 2, 3, 4, 5, 6], 
+> [1, 3, 4, 5, 2, 6]));;
 gap> Size(S);
-2
+4
 gap> S := ClosureInverseSemigroup(S, AsSet(POPI(6)));;
 gap> Size(S);
 13327
 gap> S := InverseSemigroup(PartialPerm([1 .. 3]));;
 gap> S := ClosureInverseSemigroup(S, PartialPerm([2, 1]));;
 gap> I := SemigroupIdeal(S, S.1);;
-gap> ClosureInverseSemigroupNC(I, [PartialPerm([1 .. 7])], rec());;
+gap> ClosureInverseSemigroup(I, PartialPerm([1 .. 7]));;
 
 # Random, for an acting semigroup
 gap> S := Semigroup(FullTransformationMonoid(4), rec(acting := true));;
@@ -87,7 +87,7 @@ gap> Random(I);;
 
 # Random, for an inverse acting semigroup rep
 gap> S := POPI(5);;
-gap> IsInverseActingSemigroupRep(S); 
+gap> IsInverseActingSemigroupRep(S) or not IsActingSemigroup(S); 
 true
 gap> Random(S);;
 gap> NrRClasses(S);;
@@ -135,8 +135,8 @@ gap> Size(S);
 1
 
 # \in, for an inverse acting semigroup rep
-gap> S := InverseSemigroup(POPI(5), rec(regular := true));;
-gap> IsInverseActingSemigroupRep(S); 
+gap> S := InverseSemigroup(POPI(5));;
+gap> IsInverseActingSemigroupRep(S) or not IsActingSemigroup(S); 
 true
 gap> ConstantTransformation(6, 1) in S;
 false

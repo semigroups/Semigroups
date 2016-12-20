@@ -105,17 +105,22 @@ end;
 ## 1. Default methods, for which there are currently no better methods.
 #############################################################################
 
+# Don't use ClosureSemigroup here since the order of the generators matters
+# and ClosureSemigroup shuffles the generators.
+
 BindGlobal("_GeneratorsSmallest",
 function(S)
   local iter, gens, T, x;
 
   iter := IteratorSorted(S);
   gens := [NextIterator(iter)];
-  T := Semigroup(gens[1]);
+  T    := Semigroup(gens);
 
   for x in iter do
     if not x in T then
-      T := SEMIGROUPS.AddGenerators(T, [x], SEMIGROUPS.OptionsRec(T));
+      T := SEMIGROUPS.ClosureSemigroupDestructive(T, 
+                                                  [x],
+                                                  SEMIGROUPS.OptionsRec(T));
       Add(gens, x);
       if T = S then
         break;
@@ -129,7 +134,7 @@ InstallMethod(GeneratorsSmallest, "for a transformation semigroup",
 [IsTransformationSemigroup and IsGroup], _GeneratorsSmallest);
 
 InstallMethod(GeneratorsSmallest, "for a semigroup",
-[IsSemigroup], _GeneratorsSmallest);
+[IsEnumerableSemigroupRep], _GeneratorsSmallest);
 
 MakeReadWriteGlobal("_GeneratorsSmallest");
 Unbind(_GeneratorsSmallest);

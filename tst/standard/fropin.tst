@@ -13,7 +13,7 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-# Test idempotents work with AddGenerators
+# Test idempotents work with ClosureSemigroupDestructive
 gap> NrIdempotents(FullTransformationMonoid(6));
 1057
 gap> S := FullTransformationSemigroup(6);
@@ -22,11 +22,11 @@ gap> T := Semigroup(S.1, rec(acting := false));
 <commutative transformation semigroup of degree 6 with 1 generator>
 gap> EN_SEMI_IDEMPOTENTS(T);
 [ 6 ]
-gap> T := SEMIGROUPS.AddGenerators(T, [S.2], T!.opts);
+gap> T := SEMIGROUPS.ClosureSemigroupDestructive(T, [S.2], T!.opts);
 <transformation semigroup of degree 6 with 2 generators>
 gap> EN_SEMI_IDEMPOTENTS(T);
 [ 6 ]
-gap> T := SEMIGROUPS.AddGenerators(T, [S.3], T!.opts);
+gap> T := SEMIGROUPS.ClosureSemigroupDestructive(T, [S.3], T!.opts);
 <transformation semigroup of degree 6 with 3 generators>
 gap> EN_SEMI_IDEMPOTENTS(T);;
 gap> Length(last);

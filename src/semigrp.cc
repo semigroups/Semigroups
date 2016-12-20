@@ -559,48 +559,6 @@ gap_rec_t semi_obj_get_fropin(gap_semigroup_t so) {
 
 // GAP level functions
 
-// Add generators to the GAP semigroup Obj <so>. Note that this only works if
-// the degree of every element in plist is less than or equal to the degree of
-// the elements in <so>. If this is not the case, then this should not be
-// called but ClosureSemigroup should be instead, on the GAP level.
-
-gap_semigroup_t
-EN_SEMI_ADD_GENERATORS(Obj self, gap_semigroup_t so, gap_list_t plist) {
-  CHECK_SEMI_OBJ(so);
-  CHECK_PLIST(plist);
-
-  en_semi_obj_t es = semi_obj_get_en_semi(so);
-
-  if (en_semi_get_type(es) == UNKNOWN) {
-    return Fail;
-  }
-
-  assert(IS_PLIST(plist));
-  assert(LEN_PLIST(plist) > 0);
-
-  Semigroup*   semi_cpp  = en_semi_get_semi_cpp(es);
-  size_t const deg       = semi_cpp->degree();
-  Converter*   converter = en_semi_get_converter(es);
-
-  std::vector<Element*>* coll = plist_to_vec(converter, plist, deg);
-  semi_cpp->add_generators(coll, semi_obj_get_report(so));
-  really_delete_cont(coll);
-
-  gap_list_t gens = ElmPRec(so, RNam_GeneratorsOfMagma);
-
-  for (size_t i = 0; i < semi_cpp->nrgens(); i++) {
-    AssPlist(gens, i + 1, converter->unconvert((*semi_cpp->gens())[i]));
-  }
-  CHANGED_BAG(so);
-
-  // Reset the fropin data since none of it is valid any longer
-  gap_rec_t fp = NEW_PREC(0);
-  SET_LEN_PREC(fp, 0);
-  AssPRec(so, RNam_en_semi_fropin, fp);
-
-  return so;
-}
-
 gap_list_t EN_SEMI_AS_LIST(Obj self, gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
   en_semi_obj_t es = semi_obj_get_en_semi(so);
@@ -770,6 +728,48 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
   AssPRec(new_so, RNam_en_semi_fropin, fp);
 
   return new_so;
+}
+
+// Add generators to the GAP semigroup Obj <so>. Note that this only works if
+// the degree of every element in plist is less than or equal to the degree of
+// the elements in <so>. If this is not the case, then this should not be
+// called but ClosureSemigroup should be instead, on the GAP level.
+
+gap_semigroup_t
+EN_SEMI_CLOSURE_DEST(Obj self, gap_semigroup_t so, gap_list_t plist) {
+  CHECK_SEMI_OBJ(so);
+  CHECK_PLIST(plist);
+
+  en_semi_obj_t es = semi_obj_get_en_semi(so);
+
+  if (en_semi_get_type(es) == UNKNOWN) {
+    return Fail;
+  }
+
+  assert(IS_PLIST(plist));
+  assert(LEN_PLIST(plist) > 0);
+
+  Semigroup*   semi_cpp  = en_semi_get_semi_cpp(es);
+  size_t const deg       = semi_cpp->degree();
+  Converter*   converter = en_semi_get_converter(es);
+
+  std::vector<Element*>* coll = plist_to_vec(converter, plist, deg);
+  semi_cpp->closure(coll, semi_obj_get_report(so));
+  really_delete_cont(coll);
+
+  gap_list_t gens = ElmPRec(so, RNam_GeneratorsOfMagma);
+
+  for (size_t i = 0; i < semi_cpp->nrgens(); i++) {
+    AssPlist(gens, i + 1, converter->unconvert((*semi_cpp->gens())[i]));
+  }
+  CHANGED_BAG(so);
+
+  // Reset the fropin data since none of it is valid any longer
+  gap_rec_t fp = NEW_PREC(0);
+  SET_LEN_PREC(fp, 0);
+  AssPRec(so, RNam_en_semi_fropin, fp);
+
+  return so;
 }
 
 gap_int_t EN_SEMI_CURRENT_MAX_WORD_LENGTH(Obj self, gap_semigroup_t so) {

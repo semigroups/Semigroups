@@ -209,8 +209,7 @@ function(I)
   od;
 
   i := 0;
-  partial := data!.poset;
-  D := data!.dorbit;
+  classes := data!.dorbit;
 
   while Size(U) <> Size(I) do
     i := i + 1;
@@ -218,7 +217,7 @@ function(I)
     while Size(U) <> Size(I) and j < Length(partial[i]) do
       j := j + 1;
       if Length(partial[i]) = 1 or partial[i][j] <> i then
-        inj := InjectionPrincipalFactor(D[partial[i][j]]);
+        inj := InjectionPrincipalFactor(classes[partial[i][j]]);
         inj := InverseGeneralMapping(inj);
         U := ClosureSemigroup(U, OnTuples(GeneratorsOfSemigroup(Source(inj)),
                                           inj));

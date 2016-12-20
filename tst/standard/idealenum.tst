@@ -104,37 +104,20 @@ gap> Idempotents(I);
   Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 0], [1, 1, 1]]) ]
 gap> GeneratorsOfSemigroup(I);
 [ Matrix(IsBooleanMat, [[1, 1, 1], [1, 0, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [0, 1, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [1, 1, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 0], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 0], [1, 0, 0], [1, 1, 0]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 0, 1], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 1, 1], [1, 1, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 0], [0, 1, 0], [1, 1, 0]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [0, 1, 1], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[1, 1, 0], [1, 1, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [1, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 0], [1, 1, 0], [1, 1, 0]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [1, 1, 1], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 0], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 1, 1], [0, 1, 0], [0, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 0], [1, 0, 0], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [0, 0, 0], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [0, 1, 1]]), 
-  Matrix(IsBooleanMat, [[0, 1, 0], [1, 1, 0], [1, 1, 0]]), 
-  Matrix(IsBooleanMat, [[0, 1, 1], [1, 1, 1], [0, 0, 0]]), 
-  Matrix(IsBooleanMat, [[0, 1, 1], [0, 0, 1], [0, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [0, 0, 0], [1, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [1, 1, 1], [1, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [1, 0, 0], [1, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [0, 0, 1], [1, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [0, 1, 0], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[0, 0, 0], [1, 0, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[0, 0, 0], [1, 1, 1], [1, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 0, 1], [1, 0, 1]]), 
-  Matrix(IsBooleanMat, [[1, 1, 1], [1, 0, 0], [1, 1, 1]]), 
+  Matrix(IsBooleanMat, [[1, 0, 1], [1, 0, 0], [1, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 1], [1, 1, 1]]), 
+  Matrix(IsBooleanMat, [[1, 0, 0], [1, 1, 0], [1, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 1, 1], [0, 1, 1], [0, 0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [1, 0, 1], [1, 0, 0]]), 
+  Matrix(IsBooleanMat, [[1, 0, 0], [1, 1, 1], [1, 1, 1]]), 
+  Matrix(IsBooleanMat, [[0, 1, 0], [0, 0, 0], [0, 1, 1]]), 
   Matrix(IsBooleanMat, [[1, 1, 1], [0, 0, 1], [1, 1, 1]]), 
-  Matrix(IsBooleanMat, [[1, 0, 1], [1, 0, 1], [1, 1, 1]]) ]
+  Matrix(IsBooleanMat, [[1, 0, 0], [1, 1, 0], [0, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [0, 1, 0], [1, 1, 1]]), 
+  Matrix(IsBooleanMat, [[1, 0, 1], [0, 0, 0], [0, 0, 1]]), 
+  Matrix(IsBooleanMat, [[0, 1, 0], [0, 1, 0], [1, 1, 0]]), 
+  Matrix(IsBooleanMat, [[1, 1, 0], [1, 0, 0], [0, 0, 0]]), 
+  Matrix(IsBooleanMat, [[0, 0, 0], [1, 1, 1], [1, 1, 0]]) ]
 gap> S.1 in I;
 false
 gap> ForAll(GeneratorsOfSemigroup(I), x -> x in I);
@@ -177,9 +160,8 @@ gap> S := InverseSemigroup(SymmetricInverseMonoid(4), rec(acting := false));
 <inverse partial perm monoid of rank 4 with 3 generators>
 gap> I := SemigroupIdeal(S, S.3);;
 gap> GeneratorsOfInverseSemigroup(I);
-[ [4,3,2,1], <identity partial perm on [ 2, 3, 4 ]>, 
-  <identity partial perm on [ 1, 2, 3 ]>, [4,3,1](2), [4,3,2](1), [2,3,4,1], 
-  [1,2,3,4], [4,1,2,3], [3,1](2,4) ]
+[ [4,3,2,1], [3,1,2](4), [2,4,1,3], [4,2,3,1], [3,1](2)(4), [4,1](2)(3), 
+  [1,3,4,2], (1,2)(3), [1,3,2,4] ]
 
 #
 gap> STOP_TEST("Semigroups package: standard/idealenum.tst");
