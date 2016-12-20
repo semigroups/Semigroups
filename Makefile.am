@@ -44,7 +44,7 @@ doc: doc/manual.six
 doc/manual.six: doc/*.xml PackageInfo.g
 	($(GAPROOT)/bin/gap.sh -A makedoc.g)
 
-debug: CXXFLAGS = -g3 -O0 -std=c++11 -Wall -Wextra -Wno-unused-parameter -Wtype-limits -Wformat-security -Wpointer-arith -Wno-div-by-zero -Wreturn-type -Woverloaded-shift-op-parentheses -Wstring-conversion -Wswitch -Wsizeof-array-argument -Wloop-analysis -Wunused-label -ferror-limit=100 -fno-omit-frame-pointer -fcolor-diagnostics -fno-omit-frame-pointer -Wno-c++11-extensions -Wtautological-constant-out-of-range-compare -UNDEBUG -DDEBUG
+debug: CXXFLAGS = -g3 -O0 -std=c++11 -Wall -Wextra -Wno-unused-parameter -Wtype-limits -Wformat-security -Wpointer-arith -Wno-div-by-zero -Wreturn-type -Wswitch -Wsizeof-array-argument -Wunused-label -fno-omit-frame-pointer -fno-omit-frame-pointer -Wno-c++11-extensions -UNDEBUG -DDEBUG
 debug: clean all
 
 .PHONY: debug
