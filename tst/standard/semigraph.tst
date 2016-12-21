@@ -61,6 +61,8 @@ gap> String(gr);
 "Digraph( [ [ 2 ], [ 3, 5 ], [ ], [ 3, 5 ], [ ] ] )"
 gap> String(S);
 "GraphInverseSemigroup( Digraph( [ [ 2 ], [ 3, 5 ], [ ], [ 3, 5 ], [ ] ] ) )"
+gap> EvalString(String(S)) = S;
+false
 gap> gr := Digraph([[1]]);
 <digraph with 1 vertex, 1 edge>
 gap> S := GraphInverseSemigroup(gr);
@@ -78,6 +80,33 @@ gap> e_1 ^ -1 * e_1 = v_1;
 true
 gap> e_1 * e_1 ^ -1 = v_1;
 false
+
+# Test Source/Range
+gap> gr := Digraph(rec(nrvertices := 5,
+> source := [1, 2, 2, 4, 4], range := [2, 3, 5, 3, 5]));;
+gap> S := GraphInverseSemigroup(gr);
+<finite graph inverse semigroup with 5 vertices, 5 edges>
+gap> s := MultiplicativeZero(S);
+0
+gap> Source(s);
+Error, Semigroups: Source: usage,
+the argument <x> must not be the zero,
+gap> Range(s);
+Error, Semigroups: Range: usage,
+the argument <x> must not be the zero,
+
+# Test \*
+gap> gr := Digraph(rec(nrvertices := 5,
+> source := [1, 2, 3], range := [2, 3, 4]));;
+gap> S := GraphInverseSemigroup(gr);
+<finite graph inverse semigroup with 5 vertices, 3 edges>
+gap> AssignGeneratorVariables(S);
+gap> y := e_1 * e_2 * e_3;
+e_1e_2e_3
+gap> x := (e_1 * e_2) ^ -1;
+e_2^-1e_1^-1
+gap> x * y;
+e_3
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
