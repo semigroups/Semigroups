@@ -615,6 +615,9 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
           if a * idslist[e] in kernel then
             nrk := nrk + 1;
             AddSet(kernelgenstoapply, a);
+            break; 
+            # JDM is this correct? Why repeatedly add the same a to
+            # kernelgenstoapply? 
           fi;
         od;
       fi;

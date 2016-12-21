@@ -29,6 +29,7 @@ DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
                 IsCongruenceClass and IsAttributeStoringRep and
                 IsMultiplicativeElement);
 
+# FIXME remove this function, insert it into the SemigroupCongruence function
 SEMIGROUPS.InverseCongFromPairs := function(S, pairs)
   local cong;
   cong := SemigroupCongruenceByGeneratingPairs(S, pairs);
