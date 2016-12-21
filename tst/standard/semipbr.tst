@@ -1459,6 +1459,23 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+# Test RandomSemigroup/Monoid
+gap> RandomSemigroup(IsPBRSemigroup);;
+gap> RandomSemigroup(IsPBRSemigroup, 1);;
+gap> RandomSemigroup(IsPBRSemigroup, 1, 2);;
+gap> RandomMonoid(IsPBRMonoid);;
+gap> RandomMonoid(IsPBRMonoid, 1);;
+gap> RandomMonoid(IsPBRMonoid, 1, 2);;
+
+# Test FullPBR
+gap> FullPBRMonoid(1);
+<pbr monoid of degree 1 with 4 generators>
+gap> FullPBRMonoid(2);
+<pbr monoid of degree 2 with 10 generators>
+gap> FullPBRMonoid(3);
+Error, Semigroups: FullPBRMonoid: usage,
+the argument <n> must be at most 2,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
