@@ -390,7 +390,84 @@ gap> BruteForceInverseCheck(map);
 true
 
 # Test RandomSemigroup
+gap> RandomSemigroup(IsMaxPlusMatrixSemigroup);;
+gap> RandomSemigroup(IsMaxPlusMatrixSemigroup, 2);;
 gap> RandomSemigroup(IsMaxPlusMatrixSemigroup, 2, 5);;
+gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup);;
+gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2);;
+gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, 5);;
+gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, 2, 2);;
+gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, "a");;
+Error, Semigroups: RandomSemigroup: usage,
+the third argument (matrix dimension) must be a pos int,
+gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, 2, "a");;
+Error, Semigroups: RandomSemigroup: usage,
+the fourth argument (semiring threshold) must be a pos int,
+gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 2, 2, 2, 2);;
+Error, Semigroups: RandomSemigroup: usage,
+there must be at most four arguments,
+gap> RandomMonoid(IsMaxPlusMatrixMonoid);;
+gap> RandomMonoid(IsMaxPlusMatrixMonoid, 2);;
+gap> RandomMonoid(IsMaxPlusMatrixMonoid, 2, 5);;
+gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid);;
+gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2);;
+gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, 5);;
+gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, 2, 2);;
+gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, "a");
+Error, Semigroups: RandomMonoid: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, "a");;
+Error, Semigroups: RandomMonoid: usage,
+the third argument (matrix dimension) must be a pos int,
+gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, 2, "a");;
+Error, Semigroups: RandomMonoid: usage,
+the fourth argument (semiring threshold) must be a pos int,
+gap> RandomMonoid(IsTropicalMaxPlusMatrixMonoid, 2, 2, 2, 2);;
+Error, Semigroups: RandomMonoid: usage,
+there must be at most four arguments,
+gap> RandomSemigroup(IsNTPMatrixSemigroup);;
+gap> RandomSemigroup(IsNTPMatrixSemigroup, 2);;
+gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 5);;
+gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, 2);;
+gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, 2, 2);;
+gap> RandomSemigroup(IsNTPMatrixSemigroup, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, "a");;
+Error, Semigroups: RandomSemigroup: usage,
+the third argument (matrix dimension) must be a pos int,
+gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, "a");;
+Error, Semigroups: RandomSemigroup: usage,
+the fourth argument (semiring threshold) must be a pos int,
+gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, 2, "a");;
+Error, Semigroups: RandomSemigroup: usage,
+the fifth argument (semiring period) must be a pos int,
+gap> RandomSemigroup(IsNTPMatrixSemigroup, 2, 2, 2, 2, 2);;
+Error, Semigroups: RandomSemigroup: usage,
+there must be at most five arguments,
+gap> RandomMonoid(IsNTPMatrixMonoid);;
+gap> RandomMonoid(IsNTPMatrixMonoid, 2);;
+gap> RandomMonoid(IsNTPMatrixMonoid, 2, 5);;
+gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, 2);;
+gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, 2, 2);;
+gap> RandomMonoid(IsNTPMatrixMonoid, "a");
+Error, Semigroups: RandomMonoid: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomMonoid(IsNTPMatrixMonoid, 2, "a");;
+Error, Semigroups: RandomMonoid: usage,
+the third argument (matrix dimension) must be a pos int,
+gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, "a");;
+Error, Semigroups: RandomMonoid: usage,
+the fourth argument (semiring threshold) must be a pos int,
+gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, 2, "a");;
+Error, Semigroups: RandomMonoid: usage,
+the fifth argument (semiring period) must be a pos int,
+gap> RandomMonoid(IsNTPMatrixMonoid, 2, 2, 2, 2, 2);;
+Error, Semigroups: RandomMonoid: usage,
+there must be at most five arguments,
 
 #T# IsFinite, IsTorsion, NormalizeSemigroup
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
@@ -410,7 +487,8 @@ gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix, [[infinity, 0], [5, 4]])));
 false
 gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix, [[1, 0], [0, infinity]])));
 true
-gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix, [[infinity, -2], [2, 1]])));;
+gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix, [[infinity, -2], [2, 1]])));
+true
 gap> NormalizeSemigroup(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
 <commutative semigroup of 2x2 max-plus matrices with 1 generator>
 gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
@@ -418,6 +496,93 @@ true
 gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,
 > [[1, -infinity, 2],[-2, 4, -infinity], [1, 0, 3]])));
 false
+
+# AsMonoid
+gap> S := AsSemigroup(IsMaxPlusMatrixSemigroup,
+> Semigroup(Transformation([1, 2, 3, 3, 3])));
+<commutative semigroup of 5x5 max-plus matrices with 1 generator>
+gap> AsMonoid(S);
+<trivial group of 1x1 max-plus matrices with 1 generator>
+gap> S := AsSemigroup(IsMaxPlusMatrixSemigroup,
+> Semigroup(Transformation([1, 1]), Transformation([2, 2])));
+<semigroup of 2x2 max-plus matrices with 2 generators>
+gap> AsMonoid(S);
+fail
+gap> S := AsSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, 
+> Semigroup(Transformation([1, 2, 3, 3, 3])));
+<commutative semigroup of 5x5 tropical max-plus matrices with 1 generator>
+gap> AsMonoid(S);
+<trivial group of 1x1 tropical max-plus matrices with 1 generator>
+gap> S := AsSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, 
+> Semigroup(Transformation([1, 1]), Transformation([2, 2])));
+<semigroup of 2x2 tropical max-plus matrices with 2 generators>
+gap> AsMonoid(S);
+fail
+gap> S := AsSemigroup(IsNTPMatrixSemigroup, 3, 4, 
+> Semigroup(Transformation([1, 2, 3, 3, 3])));
+<commutative semigroup of 5x5 ntp matrices with 1 generator>
+gap> AsMonoid(S);
+<trivial group of 1x1 ntp matrices with 1 generator>
+gap> S := AsSemigroup(IsNTPMatrixSemigroup, 3, 4, 
+> Semigroup(Transformation([1, 1]), Transformation([2, 2])));
+<semigroup of 2x2 ntp matrices with 2 generators>
+gap> AsMonoid(S);
+fail
+
+# IsomorphismMonoid
+gap> IsomorphismMonoid(IsMaxPlusMatrixMonoid,
+> Semigroup(Transformation([1, 2, 3, 3, 3])));
+MappingByFunction( <commutative transformation semigroup of degree 5 with 1 
+ generator>, <trivial group of 1x1 max-plus matrices with 1 generator>
+, function( x ) ... end, function( x ) ... end )
+gap> IsomorphismMonoid(IsTropicalMaxPlusMatrixMonoid, 3,
+> Semigroup(Transformation([1, 2, 3, 3, 3])));
+MappingByFunction( <commutative transformation semigroup of degree 5 with 1 
+ generator>, <trivial group of 1x1 tropical max-plus matrices with 1 generator
+ >, function( x ) ... end, function( x ) ... end )
+gap> IsomorphismMonoid(IsNTPMatrixMonoid, 3, 4,
+> Semigroup(Transformation([1, 2, 3, 3, 3])));
+MappingByFunction( <commutative transformation semigroup of degree 5 with 1 
+ generator>, <trivial group of 1x1 ntp matrices with 1 generator>
+, function( x ) ... end, function( x ) ... end )
+
+# FullTropicalMaxPlusMonoid
+gap> FullTropicalMaxPlusMonoid(3, 1);
+Error, Semigroups: FullTropicalMaxPlusMonoid: usage,
+the dimension must be 2,
+gap> S := FullTropicalMaxPlusMonoid(2, 1);
+<monoid of 2x2 tropical max-plus matrices with 6 generators>
+gap> Size(S);
+81
+gap> S := FullTropicalMaxPlusMonoid(2, 2);
+<monoid of 2x2 tropical max-plus matrices with 9 generators>
+gap> Size(S);
+256
+gap> S := FullTropicalMaxPlusMonoid(2, 3);
+<monoid of 2x2 tropical max-plus matrices with 13 generators>
+gap> Size(S);
+625
+
+# FullTropicalMinPlusMonoid
+gap> S := FullTropicalMinPlusMonoid(2, 1);
+<monoid of 2x2 tropical min-plus matrices with 5 generators>
+gap> Size(S);
+81
+gap> S := FullTropicalMinPlusMonoid(2, 2);
+<monoid of 2x2 tropical min-plus matrices with 6 generators>
+gap> Size(S);
+256
+gap> S := FullTropicalMinPlusMonoid(2, 3);
+<monoid of 2x2 tropical min-plus matrices with 7 generators>
+gap> Size(S);
+625
+gap> S := FullTropicalMinPlusMonoid(3, 1);
+<monoid of 3x3 tropical min-plus matrices with 11 generators>
+gap> Size(S);
+19683
+gap> S := FullTropicalMinPlusMonoid(4, 3);
+Error, Semigroups: FullTropicalMinPlusMonoid: usage,
+the dimension must be 2 or 3,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

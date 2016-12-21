@@ -100,20 +100,20 @@ _ProcessArgs1 := function(filt, params)
   if Length(params) < 1 then # nr gens
     params[1] := Random([1 .. 20]);
   elif not IsPosInt(params[1]) then
-    return "the first argument (number of generators) must be a pos int,";
+    return "the second argument (number of generators) must be a pos int,";
   fi;
   if Length(params) < 2 then # degree / dimension
     params[2] := Random([1 .. 20]);
   elif not IsPosInt(params[2]) then
-    return "the second argument (matrix dimension) must be a pos int,";
+    return "the third argument (matrix dimension) must be a pos int,";
   fi;
   if Length(params) < 3 then # threshold
     params[3] := Random([1 .. 20]);
   elif not IsPosInt(params[3]) then
-    return "the third argument (semiring threshold) must be a pos int,";
+    return "the fourth argument (semiring threshold) must be a pos int,";
   fi;
   if Length(params) > 3 then
-    return "there must be at most three arguments,";
+    return "there must be at most four arguments,";
   fi;
   return params;
 end;
@@ -397,8 +397,8 @@ Unbind(_InstallIsomorphism0);
 ## 1 additional parameters!!!
 #############################################################################
 
-## These are installed inside a function so that the value of IsXMatrix and #
-## IsXSemigroup are retained as a local variables.
+# These are installed inside a function so that the value of IsXMatrix and
+# IsXSemigroup are retained as a local variables.
 
 _InstallIsomorphism1 := function(filter)
   local IsXMatrix, IsXSemigroup, IsXMonoid;

@@ -1004,7 +1004,7 @@ true
 # Test RandomSemigroup
 gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, 3, "a");
 Error, Semigroups: RandomSemigroup: usage,
-the third argument (semiring threshold) must be a pos int,
+the fourth argument (semiring threshold) must be a pos int,
 gap> RandomSemigroup(IsSemigroup, 3, 3, "a");
 Error, Semigroups: RandomSemigroup: usage,
 there must be at most three arguments,
