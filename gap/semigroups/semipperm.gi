@@ -125,8 +125,6 @@ end;
 InstallMethod(Idempotents, "for a partial perm semigroup and pos int",
 [IsPartialPermSemigroup, IsInt],
 function(S, rank)
-  local deg;
-  deg := DegreeOfPartialPermSemigroup(S);
   return Filtered(Idempotents(S),
                               x -> RankOfPartialPerm(x) = rank);
 end);
@@ -438,7 +436,12 @@ function(I)
   local pts, x;
 
   if HasGeneratorsOfSemigroup(I) then
-    return One(GeneratorsOfSemigroup(I));
+    x := One(GeneratorsOfSemigroup(I));
+    if x in I then 
+      return x;
+    else 
+      return fail;
+    fi;
   fi;
 
   pts := Union(ComponentsOfPartialPermSemigroup(I));
@@ -450,6 +453,8 @@ function(I)
   return fail;
 end);
 
+# FIXME this cannot be correct
+
 InstallMethod(CodegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
@@ -457,12 +462,16 @@ function(I)
   return CodegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
 
+# FIXME this cannot be correct
+
 InstallMethod(DegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
 [IsPartialPermSemigroup and IsSemigroupIdeal],
 function(I)
   return DegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
+
+# FIXME this cannot be correct
 
 InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
@@ -515,9 +524,11 @@ end);
 InstallMethod(ComponentRepsOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, reps, next, opts, gens, o, out, i;
+  local deg, pts, reps, next, opts, gens, o, out, i;
 
-  pts := [1 .. DegreeOfPartialPermSemigroup(S)];
+  deg  := Maximum(DegreeOfPartialPermSemigroup(S), 
+                  CodegreeOfPartialPermSemigroup(S));
+  pts  := [1 .. deg];
   reps := BlistList(pts, []);
   # true=its a rep, false=not seen it, fail=its not a rep
   next := 1;
@@ -566,9 +577,11 @@ end);
 InstallMethod(ComponentsOfPartialPermSemigroup,
 "for a partial perm semigroup", [IsPartialPermSemigroup],
 function(S)
-  local pts, comp, next, nr, opts, gens, o, out, i;
+  local deg, pts, comp, next, nr, opts, gens, o, out, i;
 
-  pts := [1 .. DegreeOfPartialPermSemigroup(S)];
+  deg  := Maximum(DegreeOfPartialPermSemigroup(S), 
+                  CodegreeOfPartialPermSemigroup(S));
+  pts  := [1 .. deg];
   comp := BlistList(pts, []);
   # integer=its component index, false=not seen it
   next := 1;

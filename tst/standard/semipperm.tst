@@ -1662,6 +1662,150 @@ true
 gap> BruteForceInverseCheck(map);
 true
 
+# Test DirectProductOp
+gap> DirectProductOp([], Semigroup(PartialPerm([1 .. 3])));
+Error, Semigroups: DirectProductOp: usage,
+the first argument must be a non-empty list,
+gap> DirectProductOp([Semigroup(IdentityTransformation)],
+> Semigroup(PartialPerm([1 .. 3])));
+<group with 1 generators>
+gap> S := DirectProduct(SymmetricInverseMonoid(3), SymmetricInverseMonoid(3));
+<inverse partial perm monoid of rank 6 with 6 generators>
+gap> Size(S) = 34 ^ 2;
+true
+
+# Test RandomSemigroup
+gap> RandomSemigroup(IsPartialPermSemigroup);;
+gap> RandomSemigroup(IsPartialPermSemigroup, 2);;
+gap> RandomSemigroup(IsPartialPermSemigroup, 2, 2);;
+gap> RandomInverseSemigroup(IsPartialPermSemigroup);;
+gap> RandomInverseSemigroup(IsPartialPermSemigroup, 2);;
+gap> RandomInverseSemigroup(IsPartialPermSemigroup, 2, 2);;
+gap> RandomMonoid(IsPartialPermMonoid);;
+gap> RandomMonoid(IsPartialPermMonoid, 2);;
+gap> RandomMonoid(IsPartialPermMonoid, 2, 2);;
+gap> RandomInverseMonoid(IsPartialPermMonoid);;
+gap> RandomInverseMonoid(IsPartialPermMonoid, 2);;
+gap> RandomInverseMonoid(IsPartialPermMonoid, 2, 2);;
+
+# Test Idempotents, for partial perm semigroup and rank
+gap> S := Semigroup(SymmetricInverseMonoid(3));
+<partial perm monoid of rank 3 with 4 generators>
+gap> Idempotents(S, 0);
+[ <empty partial perm> ]
+gap> Set(Idempotents(S, 1));
+[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 2 ]>, 
+  <identity partial perm on [ 3 ]> ]
+gap> Idempotents(S, 2);
+[ <identity partial perm on [ 1, 2 ]>, <identity partial perm on [ 2, 3 ]>, 
+  <identity partial perm on [ 1, 3 ]> ]
+gap> Idempotents(S, 3);
+[ <identity partial perm on [ 1, 2, 3 ]> ]
+
+# Test Enumerator for symmetric inverse monoid
+gap> en := Enumerator(SymmetricInverseMonoid(3));
+<enumerator of <symmetric inverse monoid of degree 3>>
+gap> en[1];
+<empty partial perm>
+gap> en[2];
+<identity partial perm on [ 1 ]>
+gap> en[34];
+(1,3)(2)
+gap> en[35];
+fail
+gap> Position(en, PartialPerm([1 .. 4]));
+fail
+gap> ForAll(en, x -> x = en[Position(en, x)]);
+true
+gap> ForAll([1 .. Length(en)], i -> i = Position(en, en[i]));
+true
+
+# Test NumberSubsetOfEqualSize 
+gap> NumberSubsetOfEqualSize([], 10);
+1
+
+# Test IsomorphismPartialPermSemigroup
+gap> S := Semigroup([PartialPerm([1, 2], [1, 2]),
+>  PartialPerm([1, 3], [2, 1]), PartialPerm([1, 2], [3, 2])]);
+<partial perm semigroup of rank 3 with 3 generators>
+gap> T := AsSemigroup(IsBipartitionSemigroup, S);;
+gap> IsomorphismPartialPermSemigroup(T);
+MappingByFunction( <bipartition semigroup of degree 3 with 3 generators>, 
+<partial perm semigroup of rank 3 with 3 generators>
+ , <Operation "AsPartialPerm">, function( x ) ... end )
+gap> I := SemigroupIdeal(T, T.1 * T.2 * T.3);;
+gap> IsomorphismPartialPermSemigroup(I);;
+
+# Test GroupOfUnits
+gap> S := SymmetricInverseMonoid(4);;
+gap> GroupOfUnits(S);
+<partial perm group of rank 4 with 2 generators>
+gap> GroupOfUnits(SemigroupIdeal(S, S.3));
+fail
+
+# Test One for an ideal
+gap> S := SymmetricInverseMonoid(4);;
+gap> I := SemigroupIdeal(S, S.3);;
+gap> One(I);
+fail
+gap> I := SemigroupIdeal(S, S.1);;
+gap> One(I);
+<identity partial perm on [ 1, 2, 3, 4 ]>
+gap> S := SymmetricInverseMonoid(4);;
+gap> I := SemigroupIdeal(S, S.3);;
+gap> GeneratorsOfSemigroup(I);;
+gap> One(I);
+fail
+gap> I := SemigroupIdeal(S, S.1);;
+gap> GeneratorsOfSemigroup(I);;
+gap> One(I);
+<identity partial perm on [ 1, 2, 3, 4 ]>
+
+# Test Codegree/degree/rank for an ideal
+gap> S := SymmetricInverseMonoid(4);;
+gap> I := SemigroupIdeal(S, S.3);;
+gap> CodegreeOfPartialPermSemigroup(I);
+4
+gap> DegreeOfPartialPermSemigroup(I);
+4
+gap> RankOfPartialPermSemigroup(I);
+4
+
+# Test ComponentRepsOfPartialPermSemigroup
+gap> S := Semigroup([PartialPerm([1, 2, 3, 5, 6, 7, 8], [9, 6, 11, 2, 3, 10, 4])
+>    , PartialPerm([1, 2, 3, 4, 5, 7, 10], [2, 6, 9, 3, 5, 10, 1]),
+>  PartialPerm([1, 3, 4, 5, 6, 8], [8, 9, 1, 10, 6, 11]),
+>  PartialPerm([1, 2, 3, 5, 6, 7, 8], [7, 3, 4, 5, 2, 11, 8]),
+>  PartialPerm([1, 2, 3, 4, 5, 6, 7], [1, 10, 8, 6, 4, 9, 5])]);;
+gap> ComponentRepsOfPartialPermSemigroup(S);
+[ 1 ]
+gap> ComponentsOfPartialPermSemigroup(S);
+[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] ]
+gap> I := SemigroupIdeal(S, S.5);;
+gap> ComponentRepsOfPartialPermSemigroup(I);
+[ 1 ]
+gap> CyclesOfPartialPermSemigroup(I);
+[ [ 1, 2, 6, 3, 8, 4, 10, 7, 5 ] ]
+
+# Test NaturalLeqInverseSemigroup
+gap> S := Semigroup([PartialPerm([1, 2, 3, 5, 6, 7, 8], [9, 6, 11, 2, 3, 10, 4])
+>    , PartialPerm([1, 2, 3, 4, 5, 7, 10], [2, 6, 9, 3, 5, 10, 1]),
+>  PartialPerm([1, 3, 4, 5, 6, 8], [8, 9, 1, 10, 6, 11]),
+>  PartialPerm([1, 2, 3, 5, 6, 7, 8], [7, 3, 4, 5, 2, 11, 8]),
+>  PartialPerm([1, 2, 3, 4, 5, 6, 7], [1, 10, 8, 6, 4, 9, 5])]);;
+gap> NaturalLeqInverseSemigroup(S);
+Error, Semigroups: NaturalLeqInverseSemigroup: usage,
+the argument is not an inverse semigroup,
+
+# Test SmallerDegreePartialPermRepresentation for enumerable semigroup
+gap> S := Range(VagnerPrestonRepresentation(DualSymmetricInverseMonoid(3)));;
+gap> S := Semigroup(S, rec(acting := false));
+<partial perm monoid of rank 25 with 3 generators>
+gap> SmallerDegreePartialPermRepresentation(S);
+MappingByFunction( <inverse partial perm monoid of rank 25 with 3 generators>
+ , <inverse partial perm semigroup of rank 6 with 3 generators>
+ , function( x ) ... end, function( x ) ... end )
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(H1);
