@@ -1260,7 +1260,9 @@ gap> GeneratorsSmallest(S);
   Matrix(IsBooleanMat, [[0, 1], [0, 1]]), 
   Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
   Matrix(IsBooleanMat, [[0, 1], [1, 1]]) ]
-gap> S = Semigroup(last);
+gap> S = Semigroup(GeneratorsSmallest(S));
+true
+gap> IsSet(GeneratorsSmallest(S));
 true
 
 # Test SmallestElementSemigroup (for a semigroup)
