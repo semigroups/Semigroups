@@ -1579,6 +1579,68 @@ gap> T := AsSemigroup(IsFpSemigroup, S);;
 gap> Size(T) = Size(S);
 true
 
+# Test ExtRepOfObj for an element of an fp monoid
+gap> S := RegularBooleanMatMonoid(2);;
+gap> T := AsMonoid(IsFpMonoid, S);;
+gap> ExtRepOfObj(T.1);
+[ 1, 1 ]
+
+# Test RandomSemigroup
+gap> RandomSemigroup(IsFpSemigroup);;
+gap> RandomSemigroup(IsFpSemigroup, 3);
+<fp semigroup on the generators [ s1, s2, s3 ]>
+gap> RandomSemigroup(IsFpSemigroup, 5, 5);
+<fp semigroup on the generators [ s1, s2, s3, s4, s5 ]>
+gap> RandomSemigroup(IsFpSemigroup, "a");
+Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
+the parameter must be pos ints,
+
+# Test RandomMonoid
+gap> RandomMonoid(IsFpMonoid);;
+gap> RandomMonoid(IsFpMonoid, 3);
+<fp monoid on the generators [ m1, m2, m3 ]>
+gap> RandomMonoid(IsFpMonoid, 5, 5);
+<fp monoid on the generators [ m1, m2, m3, m4, m5 ]>
+gap> RandomMonoid(IsFpMonoid, "a");
+Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
+the parameter must be pos ints,
+
+# Test RandomInverseSemigroup
+gap> RandomInverseSemigroup(IsFpSemigroup);;
+gap> RandomInverseSemigroup(IsFpSemigroup, 3);;
+gap> RandomInverseSemigroup(IsFpSemigroup, 5, 5);;
+gap> RandomInverseSemigroup(IsFpSemigroup, "a");
+Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
+the parameter must be pos ints,
+
+# Test RandomInverseMonoid
+gap> RandomInverseMonoid(IsFpMonoid);;
+gap> RandomInverseMonoid(IsFpMonoid, 3);;
+gap> RandomInverseMonoid(IsFpMonoid, 5, 5);;
+gap> RandomInverseMonoid(IsFpMonoid, "a");
+Error, Semigroups: SEMIGROUPS_ProcessRandomArgsCons: usage,
+the parameter must be pos ints,
+
+# Test AsMonoid
+gap> S := SingularTransformationMonoid(3);
+<regular transformation semigroup ideal of degree 3 with 1 generator>
+gap> S := AsSemigroup(IsFpSemigroup, S);;
+gap> AsMonoid(S);
+fail
+gap> S := Semigroup(Transformation([1,2,3,3,3]));
+<commutative transformation semigroup of degree 5 with 1 generator>
+gap> S := AsSemigroup(IsFpSemigroup, S);
+<fp semigroup on the generators [ s1 ]>
+gap> AsMonoid(S);
+<fp group on the generators [  ]>
+
+# Test IsomorphismFpMonoid, fail
+gap> S := SingularTransformationMonoid(3);
+<regular transformation semigroup ideal of degree 3 with 1 generator>
+gap> IsomorphismFpMonoid(S);
+Error, Semigroups: IsomorphismFpMonoid: usage,
+the first argument (a semigroup) must satisfy `IsMonoidAsSemigroup`,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);

@@ -175,11 +175,13 @@ InstallMethod(SEMIGROUPS_ProcessRandomArgsCons,
 function(filt, params)
   if Length(params) < 1 then # nr gens
     params[1] := Random([1 .. 20]);
+    params[2] := Random([1 .. 8]);
+  elif Length(params) < 2 then # degree
+    params[2] := Random([1 .. 8]);
   fi;
-  if not IsPosInt(params[1]) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS_ProcessRandomArgsCons ",
-                  " (for an fp semigroup): usage,\n",
-                  "the first parameter must be a pos int,");
+  if not ForAll(params, IsPosInt) then
+    ErrorNoReturn("Semigroups: SEMIGROUPS_ProcessRandomArgsCons: ",
+                  "usage,\nthe parameter must be pos ints,");
   fi;
   return params;
 end);
@@ -229,9 +231,9 @@ InstallMethod(RandomInverseMonoidCons, "for IsFpMonoid and a list",
 [IsFpMonoid, IsList],
 function(filt, params)
   return AsMonoid(IsFpMonoid,
-                     CallFuncList(RandomInverseMonoid,
-                                  Concatenation([IsPartialPermMonoid],
-                                                params)));
+                  CallFuncList(RandomInverseMonoid,
+                               Concatenation([IsPartialPermMonoid],
+                                              params)));
 end);
 
 InstallMethod(IsomorphismSemigroup, "for IsFpSemigroup and a semigroup",
@@ -291,8 +293,8 @@ function(S)
 
   if not IsMonoidAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismFpMonoid: usage,\n",
-                  "the semigroup given as first argument must have a ",
-                  "multiplicative neutral element,");
+                  "the first argument (a semigroup) must ",
+                  "satisfy `IsMonoidAsSemigroup`,");
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
