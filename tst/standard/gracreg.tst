@@ -246,10 +246,8 @@ fail
 gap> RClass(FullTransformationMonoid(6),
 > Transformation([3, 1, 2, 6, 4, 5])) in e;
 false
-
-# FIXME the following is highlighting a bug
-#gap> e[1] in e;
-#true
+gap> e[1] in e;
+true
 
 #Test \< for Green's classes of a regular semigroup
 gap> S := SymmetricInverseMonoid(5);;
@@ -297,10 +295,11 @@ gap> Set([D1 < D2, D2 < D1]);
 [ true, false ]
 
 # Test NrIdempotents for a regular star bipartition semigroup
-gap> S := JonesMonoid(15);
-<regular bipartition *-monoid of degree 15 with 14 generators>
-gap> NrIdempotents(S);
-3923351
+# This test takes too long!
+# gap> S := JonesMonoid(15);
+# <regular bipartition *-monoid of degree 15 with 14 generators>
+# gap> NrIdempotents(S);
+# 3923351 
 gap> S := JonesMonoid(10);
 <regular bipartition *-monoid of degree 10 with 9 generators>
 gap> NrIdempotents(S);
