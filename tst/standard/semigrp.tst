@@ -900,5 +900,125 @@ true
 gap> T;
 <trivial transformation group of degree 0 with 1 generator>
 
+# Test IsGeneratorsOfInverseSemigroup
+gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;
+gap> IsGeneratorsOfInverseSemigroup(S);
+true
+gap> S := Semigroup(Transformation([1, 1]));;
+gap> IsGeneratorsOfInverseSemigroup(S);
+false
+
+# Test ClosureMonoid
+gap> S := Semigroup(PartialPerm([1]));;
+gap> T := ClosureMonoid(S, [PartialPerm([2 .. 5])]);
+<partial perm monoid of rank 5 with 2 generators>
+gap> One(T);
+<identity partial perm on [ 1, 2, 3, 4, 5 ]>
+gap> T := ClosureSemigroup(S, [PartialPerm([2 .. 5])]);
+<partial perm semigroup of rank 4 with 2 generators>
+gap> One(T);
+fail
+gap> T := ClosureMonoid(SymmetricInverseMonoid(3), PartialPerm([1 .. 4]));
+<partial perm monoid of rank 4 with 6 generators>
+gap> T := ClosureMonoid(SymmetricInverseMonoid(3), PartialPerm([1 .. 4]),
+> rec());
+<partial perm monoid of rank 4 with 6 generators>
+gap> Size(T);
+35
+gap> One(T);
+<identity partial perm on [ 1, 2, 3, 4 ]>
+gap> M := ClosureMonoid(SymmetricInverseMonoid(2), SymmetricInverseMonoid(3));;
+gap> Size(M);
+34
+gap> M = SymmetricInverseMonoid(3);
+true
+gap> M := ClosureMonoid(POPI(3), DClass(M, PartialPerm([1 .. 3])));
+<partial perm monoid of rank 3 with 4 generators>
+gap> Size(M);
+34
+gap> M = SymmetricInverseMonoid(3);
+true
+gap> M := ClosureMonoid(OrderEndomorphisms(3),
+>                       DClass(M, PartialPerm([1 .. 3])));
+Error, Semigroups: ClosureMonoid: usage,
+the first argument (a monoid) and the second argument (a mult. element with on\
+e coll.) cannot be used to generate a semigroup,
+
+# Test IsTrivial immediate method for monoids
+gap> S := Monoid(PartialPerm([1]));
+<trivial partial perm group of rank 1 with 1 generator>
+gap> S := Monoid(IdentityTransformation);
+<trivial transformation group of degree 0 with 1 generator>
+
+# InverseSemigroupByGenerators, enumerable semigroup rep
+gap> S := InverseSemigroup(PartialPerm([2, 1, 3]), rec(acting := false));;
+gap> S := InverseMonoid(PartialPerm([2, 1, 3]), rec(acting := false));;
+
+# Test ClosureSemigroup for an empty list
+gap> S := Semigroup(Transformation([1, 1]));;
+gap> ClosureSemigroup(S, [], rec()) = S;
+true
+gap> IsIdenticalObj(ClosureSemigroup(S, [], rec()), S);
+true
+gap> S := Semigroup(Transformation([1, 1]));;
+gap> ClosureSemigroupOrMonoidNC(Semigroup, S, [], rec()) = S;
+true
+gap> IsIdenticalObj(ClosureSemigroupOrMonoidNC(Semigroup, S, [], rec()), S);
+true
+
+# Test ClosureInverseMonoid
+gap> ClosureInverseMonoid(SymmetricInverseMonoid(3), PartialPerm([4 .. 6]));
+<inverse partial perm monoid of rank 6 with 5 generators>
+gap> ClosureInverseMonoid(SymmetricInverseMonoid(3), PartialPerm([4 .. 6]),
+> rec());
+<inverse partial perm monoid of rank 6 with 5 generators>
+gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
+> Bipartition( [ [ 1, 2, -2 ], [ 3, -1 ], [ -3 ] ] ));
+Error, Semigroups: ClosureInverseSemigroup: usage,
+the second argument must satisfy `IsGeneratorsOfInverseSemigroup',
+gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
+> DualSymmetricInverseMonoid(4));
+Error, Semigroups: ClosureInverseSemigroup: usage,
+the first argument (a semigroup) and the second argument (a mult. element coll\
+.) cannot be used to generate a semigroup,
+gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
+> DClass(DualSymmetricInverseMonoid(3), IdentityBipartition(3)));
+<inverse block bijection monoid of degree 3 with 3 generators>
+gap> S := InverseMonoid(DualSymmetricInverseMonoid(3), rec(acting := false));
+<inverse block bijection monoid of degree 3 with 3 generators>
+gap> ClosureInverseMonoid(S, DClass(S, IdentityBipartition(3)));
+<inverse block bijection monoid of degree 3 with 3 generators>
+
+# Test ClosureInverseMonoid for an empty list
+gap> S := InverseMonoid(PartialPerm([1]));;
+gap> ClosureInverseMonoid(S, [], rec()) = S;
+true
+gap> IsIdenticalObj(ClosureInverseMonoid(S, [], rec()), S);
+true
+gap> S := InverseMonoid(PartialPerm([1]));;
+gap> ClosureInverseSemigroupOrMonoidNC(InverseMonoid, S, [], rec()) = S;
+true
+gap> IsIdenticalObj(ClosureInverseSemigroupOrMonoidNC(InverseMonoid, S, [], rec()), S);
+true
+
+# Test RandomSemigroup
+gap> RandomSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, 3, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the third argument (semiring threshold) must be a pos int,
+gap> RandomSemigroup(IsSemigroup, 3, 3, "a");
+Error, Semigroups: RandomSemigroup: usage,
+there must be at most three arguments,
+gap> RandomSemigroup(IsSemigroup, 3, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the third argument (degree or dimension) must be a pos int,
+gap> RandomMonoid(IsMonoid);;
+
+# Test AsSemigroup for a filter, ring, and semigroup
+gap> S := FullTransformationMonoid(3);;
+gap> AsSemigroup(IsMatrixOverFiniteFieldSemigroup, GF(3), S);
+<monoid of 3x3 matrices over GF(3) with 3 generators>
+gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, GF(3), S);
+<monoid of 3x3 matrices over GF(3) with 3 generators>
+
 #E#
 gap> STOP_TEST("Semigroups package: standard/semigrp.tst");

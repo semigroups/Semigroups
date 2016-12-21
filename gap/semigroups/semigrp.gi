@@ -125,6 +125,7 @@ InstallMethod(IsGeneratorsOfInverseSemigroup,
 [IsSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   if IsInverseActingSemigroupRep(S) then
+    # There is currently no way to enter this!
     return true;
   fi;
   return IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S));
@@ -466,10 +467,10 @@ function(S, coll, opts)
   # coll is copied here to avoid doing it repeatedly in
   # ClosureSemigroupOrMonoidNC
 
-  if not IsList(coll) then
-    coll := AsList(coll);
-  elif IsSemigroup(coll) then
+  if IsSemigroup(coll) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
+  elif not IsList(coll) then
+    coll := AsList(coll);
   else
     coll := ShallowCopy(coll);
   fi;
@@ -504,10 +505,10 @@ function(S, coll, opts)
   # coll is copied here to avoid doing it repeatedly in
   # ClosureSemigroupOrMonoidNC
 
-  if not IsList(coll) then
-    coll := AsList(coll);
-  elif IsSemigroup(coll) then
+  if IsSemigroup(coll) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
+  elif not IsList(coll) then
+    coll := AsList(coll);
   else
     coll := ShallowCopy(coll);
   fi;
@@ -518,10 +519,10 @@ function(S, coll, opts)
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
-    ErrorNoReturn("Semigroups: ClosureSemigroup: usage,\n",
-                  "the first argument (a semigroup) and the second argument ",
-                  "(a mult. element coll.) cannot be used to generate a ",
-                  "semigroup,");
+    ErrorNoReturn("Semigroups: ClosureMonoid: usage,\n",
+                  "the first argument (a monoid) and the second argument ",
+                  "(a mult. element with one coll.) cannot be used to ", 
+                  "generate a semigroup,");
   fi;
 
   # opts is copied and processed here to avoid doing it repeatedly in
@@ -667,10 +668,10 @@ function(S, coll, opts)
     ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
                   "the second argument must satisfy ",
                   "`IsGeneratorsOfInverseSemigroup',");
-  elif not IsList(coll) then
-    coll := AsList(coll);
   elif IsSemigroup(coll) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
+  elif not IsList(coll) then
+    coll := AsList(coll);
   else
     coll := ShallowCopy(coll);
   fi;
@@ -711,10 +712,10 @@ function(S, coll, opts)
     ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
                   "the second argument must satisfy ",
                   "`IsGeneratorsOfInverseSemigroup',");
-  elif not IsList(coll) then
-    coll := AsList(coll);
   elif IsSemigroup(coll) then
     coll := ShallowCopy(GeneratorsOfSemigroup(coll));
+  elif not IsList(coll) then
+    coll := AsList(coll);
   else
     coll := ShallowCopy(coll);
   fi;
@@ -783,6 +784,7 @@ function(Constructor, S, coll, opts)
   if T = S then 
     return S;
   elif not IsBound(T!.__en_semi_cpp_semi) then
+    # Currently there is no way to enter this clause
     return T;
   else
     # We must recreate the semigroup <T> since Semigroup(S, coll, opts) may have
