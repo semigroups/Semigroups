@@ -39,6 +39,8 @@ Transformation( [ 1, 1, 1, 1, 1, 1, 1 ] )
 Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1 ] )
 Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )
 Transformation( [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] )
+gap> IsSynchronizingSemigroup(MinimalIdeal(FullTransformationMonoid(3)));
+true
 
 #T# SemiTransTest2
 # IsSynchronizingSemigroup
@@ -2096,6 +2098,225 @@ gap> T := Semigroup(T);
 <transformation semigroup of degree 8 with 8 generators>
 gap> Size(T);
 9
+gap> DirectProductOp([], Monoid(Transformation([1, 1])));
+Error, Semigroups: DirectProductOp: usage,
+the first argument must be a non-empty list,
+gap> DirectProductOp([], Semigroup(Transformation([1, 1])));
+Error, Semigroups: DirectProductOp: usage,
+the first argument must be a non-empty list,
+gap> DirectProductOp([Semigroup(PartialPerm([1 .. 3]))],
+> Semigroup(Transformation([1, 1])));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `DirectProductOp' on 2 arguments
+gap> DirectProductOp([Semigroup(PartialPerm([1 .. 3]))],
+> Monoid(Transformation([1, 1])));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 4th choice method found for `DirectProductOp' on 2 arguments
+gap> S := DirectProduct(FullTransformationMonoid(3), FullTransformationMonoid(3));
+<transformation monoid of size 729, degree 6 with 6 generators>
+gap> Size(S) = 27 ^ 2;
+true
+gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]), 
+> Transformation([1, 1, 3, 3, 3]));;
+gap> S := DirectProduct(S, S);
+<transformation semigroup of degree 10 with 4 generators>
+
+# Test RandomSemigroup
+gap> RandomSemigroup(IsTransformationSemigroup);;
+gap> RandomSemigroup(IsTransformationSemigroup, 2);;
+gap> RandomSemigroup(IsTransformationSemigroup, 2, 2);;
+gap> RandomSemigroup(IsTransformationSemigroup, "a");;
+Error, Semigroups: RandomSemigroup: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomSemigroup(IsTransformationSemigroup, 2, "a");;
+Error, Semigroups: RandomSemigroup: usage,
+the third argument (degree or dimension) must be a pos int,
+gap> RandomMonoid(IsTransformationMonoid);;
+gap> RandomMonoid(IsTransformationMonoid, 2);;
+gap> RandomMonoid(IsTransformationMonoid, 2, 2);;
+gap> RandomMonoid(IsTransformationMonoid, "a");;
+Error, Semigroups: RandomMonoid: usage,
+the second argument (number of generators) must be a pos int,
+gap> RandomMonoid(IsTransformationMonoid, 2, "a");;
+Error, Semigroups: RandomMonoid: usage,
+the third argument (degree or dimension) must be a pos int,
+
+# Test IsConnectedTransformationSemigroup
+gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]), 
+> Transformation([1, 1, 3, 3, 3]));;
+gap> IsConnectedTransformationSemigroup(S);
+false
+gap> S := DirectProduct(S, S);;
+gap> IsConnectedTransformationSemigroup(S);
+false
+gap> S := FullTransformationMonoid(3);;
+gap> IsConnectedTransformationSemigroup(S);
+true
+
+# Test IsConnectedTransformationSemigroup
+gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]), 
+>                   Transformation([1, 1, 3, 3, 3]));;
+gap> IsTransitive(S);
+false
+gap> IsTransitive(S, 1);
+true
+gap> IsTransitive(S, 2);
+false
+gap> S := FullTransformationMonoid(3);;
+gap> IsTransitive(S, 1);
+true
+gap> IsTransitive(S, 2);
+true
+gap> IsTransitive(S, 3);
+true
+gap> IsTransitive(S, 4);
+false
+gap> IsTransitive(S, [1 .. 3]);
+true
+gap> IsTransitive(S, [1 .. 5]);
+false
+gap> IsTransitive(S, [1, 3]);
+false
+gap> IsTransitive(S, [3, 1]);
+Error, Semigroups: IsTransitive: usage,
+the second argument <set> must be a set of positive integers
+
+# Test Idempotents with specified ranks
+gap> S := Semigroup(FullTransformationMonoid(3), rec(acting := false));;
+gap> Set(Idempotents(S, 0));
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `Idempotents' on 2 arguments
+gap> Set(Idempotents(S, 1));
+[ Transformation( [ 1, 1, 1 ] ), Transformation( [ 2, 2, 2 ] ), 
+  Transformation( [ 3, 3, 3 ] ) ]
+gap> Set(Idempotents(S, 2));
+[ Transformation( [ 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
+  Transformation( [ 1, 2, 2 ] ), Transformation( [ 1, 3, 3 ] ), 
+  Transformation( [ 2, 2 ] ), Transformation( [ 3, 2, 3 ] ) ]
+gap> Set(Idempotents(S, 3));
+[ IdentityTransformation ]
+gap> Set(Idempotents(S, 4));
+[  ]
+
+# Test IteratorSorted 
+gap> S1 := Semigroup(FullTransformationMonoid(3), rec(acting := false));;
+gap> S2 := Semigroup(FullTransformationMonoid(3), rec(acting := true));;
+gap> iter1 := IteratorSorted(S1);;
+gap> iter2 := IteratorSorted(S2);;
+gap> for x in iter1 do 
+> if not x = NextIterator(iter2) then 
+> Print("Problem in IteratorSorted\n");
+> fi;
+> od;
+gap> S1 := Semigroup(FullTransformationMonoid(3), rec(acting := false));;
+gap> S2 := Semigroup(FullTransformationMonoid(3), rec(acting := true));;
+gap> AsSet(S2);;
+gap> iter1 := IteratorSorted(S1);;
+gap> iter2 := IteratorSorted(S2);;
+gap> for x in iter1 do 
+> if not x = NextIterator(iter2) then 
+> Print("Problem in IteratorSorted\n");
+> fi;
+> od;
+
+# Test \< for transformation semigroups
+gap> coll := [ Semigroup( [ Transformation( [ 2, 2, 2, 4, 3 ] ),
+>      Transformation( [ 5, 2, 2, 1, 5 ] ) ] ),
+>  Semigroup( [ Transformation( [ 4, 4, 3, 1, 2 ] ),
+>      Transformation( [ 4, 1, 4, 2, 4 ] ) ] ),
+>  Semigroup( [ Transformation( [ 3, 5, 1, 5, 1 ] ),
+>      Transformation( [ 4, 5, 5, 5, 3 ] ) ] ) ];;
+gap> IsSet(coll);
+false
+gap> Sort(coll);
+gap> coll[1] < coll[1];
+false
+gap> S := Semigroup(coll[1], Transformation([6, 6, 6, 6, 6, 6]));;
+gap> coll[1] < S;
+true
+gap> S < coll[1];
+false
+gap> S := Semigroup(AsTransformation((2,3,4)));;
+gap> T := Semigroup(S, Transformation([2, 2, 2, 2]));;
+gap> S < T;
+true
+gap> T < S;
+false
+
+# Test Smallest/LargestElementSemigroup
+gap> S := Semigroup(AsTransformation((2,3,4)), 
+>                   Transformation([2, 2, 2, 2]));;
+gap> SmallestElementSemigroup(S);
+IdentityTransformation
+gap> LargestElementSemigroup(S);
+Transformation( [ 4, 4, 4, 4 ] )
+gap> S := Semigroup(IdentityTransformation);;
+gap> SmallestElementSemigroup(S);
+IdentityTransformation
+gap> LargestElementSemigroup(S);
+IdentityTransformation
+gap> S := Semigroup(FullTransformationMonoid(3));;
+gap> SmallestElementSemigroup(S);
+Transformation( [ 1, 1, 1 ] )
+gap> LargestElementSemigroup(S);
+Transformation( [ 3, 3, 3 ] )
+
+# Test IsomorphismTransformationSemigroup for an ideal
+gap> S := FullTransformationMonoid(3);
+<full transformation monoid of degree 3>
+gap> map := IsomorphismTransformationSemigroup(MinimalIdeal(S));
+MappingByFunction( <simple transformation semigroup ideal of degree 3 with
+  1 generator>, <regular transformation semigroup ideal of degree 3 with
+ 1 generator>, function( x ) ... end, function( x ) ... end )
+gap> BruteForceInverseCheck(map);
+true
+gap> BruteForceIsoCheck(map);
+true
+
+# Test GroupOfUnits
+gap> S := FullTransformationMonoid(3);;
+gap> GroupOfUnits(S);
+<transformation group of degree 3 with 2 generators>
+gap> S := SingularTransformationMonoid(3);;
+gap> GroupOfUnits(S);
+fail
+
+# Test ComponentRepsOfTransformationSemigroup
+gap> S := FullTransformationMonoid(3);;
+gap> S := DirectProduct(S, S, S, S);;
+gap> ComponentRepsOfTransformationSemigroup(S);
+[ 1, 4, 7, 10 ]
+gap> ComponentsOfTransformationSemigroup(S);
+[ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ], [ 10, 11, 12 ] ]
+gap> CyclesOfTransformationSemigroup(S);
+[ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], 
+  [ 11 ], [ 12 ], [ 1, 2 ], [ 1, 2, 3 ], [ 4, 5 ], [ 4, 5, 6 ], [ 7, 8 ], 
+  [ 7, 8, 9 ], [ 10, 11 ], [ 10, 11, 12 ] ]
+gap> S := SemigroupIdeal(S, S.1);;
+gap> ComponentRepsOfTransformationSemigroup(S);
+[ 1, 4, 7, 10 ]
+gap> ComponentsOfTransformationSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `DigraphOfActionOnPoints' on 1 arguments
+gap> CyclesOfTransformationSemigroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `DigraphOfActionOnPoints' on 1 arguments
+
+# Test IsomorphismSemigroup for a semigroup of binary relations on points
+gap> B := Monoid(BinaryRelationOnPoints([[2], [1, 2], [1, 3]]),
+>                BinaryRelationOnPoints([[3], [1, 2], [1, 3]]), 
+>                BinaryRelationOnPoints([[1, 2, 3], [1, 2], [3]]));;
+gap> Size(B);
+16
+gap> IsMonoid(B);
+true
+gap> iso := IsomorphismTransformationSemigroup(B);;
+gap> T := Range(iso);
+<transformation monoid of degree 6 with 3 generators>
+gap> Size(T);
+16
+gap> IsMonoid(T);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);

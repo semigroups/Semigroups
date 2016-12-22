@@ -107,8 +107,6 @@ function(list, S)
   return Semigroup(gens);
 end);
 
-# TODO a method for IsMonoidAsSemigroup and IsTransformationSemigroup
-
 InstallMethod(DirectProductOp, "for a list and a transformation semigroup",
 [IsList, IsTransformationSemigroup],
 function(list, S)
@@ -116,6 +114,8 @@ function(list, S)
 
   # Check the arguments.
   if IsEmpty(list) then
+    # This is currently unreachable since the previous method is used and this
+    # is detected there.
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
                   "the first argument must be a non-empty list,");
   elif ForAny(list, T -> not IsTransformationSemigroup(T)) then
@@ -407,11 +407,12 @@ function(S, T)
     fi;
   od;
 
-  if IsDoneIterator(SS) and IsDoneIterator(TT) then
-    return true;
-  else
-    return IsDoneIterator(SS);
+  if IsDoneIterator(SS) and IsDoneIterator(TT) then 
+    # This line is executed by the tests but does not show as such in the code
+    # coverage.
+    return false; # S = T
   fi;
+  return IsDoneIterator(SS);
 end);
 
 InstallMethod(SmallestElementSemigroup,
@@ -480,9 +481,11 @@ function(coll, n)
   graph := EmptyPlist(n);
 
   for i in [1 .. n] do
-    graph[i] := EmptyPlist(nrgens);
+    graph[i] := [];
     for x in coll do
-      Add(graph[i], i ^ x);
+      if i ^ x <= n then 
+        AddSet(graph[i], i ^ x);
+      fi;
     od;
   od;
 
@@ -716,6 +719,8 @@ function(S)
   local cay, deg, gen, next, T, iso, inv, i;
 
   if not IsFinite(S) then
+    # This is unreachable in tests, since there is not other method that
+    # terminates
     TryNextMethod();
   fi;
 
