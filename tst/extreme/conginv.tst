@@ -33,7 +33,8 @@ gap> NrEquivalenceClasses(cong);
 gap> IsReesCongruence(cong);
 true
 gap> SemigroupIdealOfReesCongruence(cong);
-<inverse partial perm semigroup ideal of rank 8 with 1 generator>
+<inverse partial perm semigroup ideal of size 57500, rank 8 with
+  57500 generators>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

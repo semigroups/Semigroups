@@ -77,10 +77,12 @@ function(G)
     return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
   fi;
   gens := GeneratorsOfGroup(G);
-  #if Length(gens) = 0 then
-  #  H := Group(AsList(One(G)));
-  #  return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
-  #fi;
+  # Do not delete the next if statement it is required, run
+  # extreme/semiffmat.tst
+  if Length(gens) = 0 then
+    H := Group(AsList(One(G)));
+    return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
+  fi;
   return GroupHomomorphismByFunction(G,
                                      Group(List(gens, AsList)),
                                      AsList,

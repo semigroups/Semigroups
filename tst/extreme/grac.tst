@@ -585,7 +585,6 @@ gap> b := Transformation([2, 3, 1, 5, 4, 1]);;
 gap> M := Semigroup(a, b);;
 gap> GreensLClassOfElement(M, a);
 <Green's L-class: Transformation( [ 2, 1, 4, 5, 6, 3 ] )>
-true
 gap> f := FreeSemigroup(3);;
 gap> a := f.1;; b := f.2;; c := f.3;;
 gap> s := f / [

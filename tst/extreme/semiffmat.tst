@@ -34,7 +34,7 @@ gap> M := Matrix(GF(2),
 > [ Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0 ]
 > ]);;
 gap> S := Semigroup(M);
-<semigroup of 16x16 matrices over GF(2) with 1 generator>
+<commutative semigroup of 16x16 matrices over GF(2) with 1 generator>
 gap> Size(S);
 7161
 gap> NrDClasses(S);
@@ -93,7 +93,7 @@ gap> Size(S);
 gap> NrIdempotents(S);
 42
 gap> MinimalIdeal(S);
-<ideal of semigroup of 3x3 matrices over GF(3) with 1 generator>
+<simple semigroup ideal of 3x3 matrices over GF(3) with 1 generator>
 gap> Size(last);
 1
 gap> MultiplicativeZero(S);
@@ -125,7 +125,7 @@ gap> upper := function(mat)
 gap> S := GeneralLinearMonoid(3, 3);
 <general linear monoid 3x3 over GF(3)>
 gap> T := SubsemigroupByProperty(S, upper);
-<monoid of 3x3 matrices over GF(3) with 12 generators>
+<monoid of size 729, 3x3 matrices over GF(3) with 12 generators>
 gap> Size(T);
 729
 

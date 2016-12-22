@@ -473,8 +473,8 @@ gap> M := SemigroupIdeal(R, gens);
 <non-regular bipartition semigroup ideal of degree 7 with 4 generators>
 gap> Length(MaximalDClasses(M));
 10
-gap> Length(GeneratorsOfSemigroup(M));
-95
+gap> Length(GeneratorsOfSemigroup(M)) < 100;
+true
 gap> StructureDescriptionSchutzenbergerGroups(M);
 [ "1" ]
 gap> StructureDescriptionMaximalSubgroups(M);
@@ -595,25 +595,25 @@ gap> GreensDClasses(I);
   <Green's D-class: Transformation( [ 3, 4, 6, 3, 2, 1 ] )>, 
   <Green's D-class: Transformation( [ 1, 6, 5, 4, 5, 6 ] )>, 
   <Green's D-class: Transformation( [ 5, 5, 1, 5, 5, 2 ] )>, 
-  <Green's D-class: Transformation( [ 2, 2, 2, 2, 6, 2 ] )>, 
+  <Green's D-class: Transformation( [ 2, 2, 6, 2, 2, 2 ] )>, 
   <Green's D-class: Transformation( [ 5, 5, 5, 5, 5, 5 ] )>, 
-  <Green's D-class: Transformation( [ 2, 6, 5, 6, 4, 1 ] )>, 
-  <Green's D-class: Transformation( [ 6, 5, 2, 5, 1, 4 ] )>, 
   <Green's D-class: Transformation( [ 5, 2, 6, 2, 4, 1 ] )>, 
-  <Green's D-class: Transformation( [ 2, 6, 5, 6, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 6, 5, 2, 5, 1, 4 ] )>, 
   <Green's D-class: Transformation( [ 6, 5, 2, 5, 4, 1 ] )>, 
-  <Green's D-class: Transformation( [ 4, 6, 3, 6, 1, 2 ] )>, 
-  <Green's D-class: Transformation( [ 6, 3, 4, 3, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 2, 6, 5, 6, 1, 4 ] )>, 
+  <Green's D-class: Transformation( [ 2, 6, 5, 6, 4, 1 ] )>, 
   <Green's D-class: Transformation( [ 3, 4, 6, 4, 1, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 6, 3, 6, 2, 1 ] )>, 
-  <Green's D-class: Transformation( [ 6, 3, 4, 3, 1, 2 ] )>, 
   <Green's D-class: Transformation( [ 3, 4, 6, 4, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 6, 3, 4, 3, 2, 1 ] )>, 
+  <Green's D-class: Transformation( [ 4, 6, 3, 6, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 6, 3, 4, 3, 1, 2 ] )>, 
+  <Green's D-class: Transformation( [ 4, 6, 3, 6, 2, 1 ] )>, 
   <Green's D-class: Transformation( [ 2, 4, 1, 2 ] )>, 
-  <Green's D-class: Transformation( [ 4, 1, 2, 1, 6, 5 ] )>, 
   <Green's D-class: Transformation( [ 1, 2, 4, 2 ] )>, 
   <Green's D-class: Transformation( [ 2, 4, 1, 4, 6, 5 ] )>, 
-  <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
   <Green's D-class: Transformation( [ 1, 2, 4, 2, 6, 5 ] )>, 
+  <Green's D-class: Transformation( [ 4, 1, 2, 1, 6, 5 ] )>, 
+  <Green's D-class: Transformation( [ 4, 1, 2, 1 ] )>, 
   <Green's D-class: Transformation( [ 2, 4, 1, 4 ] )> ]
 gap> Number(GreensDClasses(I), IsRegularGreensClass);
 4
@@ -649,9 +649,9 @@ gap> GreensLClasses(I){[51 .. 60]};
   <Green's L-class: Transformation( [ 2, 2, 2, 2, 2, 2 ] )>, 
   <Green's L-class: Transformation( [ 3, 3, 3, 3, 3, 3 ] )>, 
   <Green's L-class: Transformation( [ 4, 4, 4, 4, 4, 4 ] )>, 
-  <Green's L-class: Transformation( [ 2, 6, 5, 6, 4, 1 ] )>, 
-  <Green's L-class: Transformation( [ 6, 5, 2, 5, 1, 4 ] )>, 
-  <Green's L-class: Transformation( [ 5, 2, 6, 2, 4, 1 ] )> ]
+  <Green's L-class: Transformation( [ 6, 5, 2, 5, 4, 1 ] )>, 
+  <Green's L-class: Transformation( [ 2, 6, 5, 6, 1, 4 ] )>, 
+  <Green's L-class: Transformation( [ 6, 5, 2, 5, 1, 4 ] )> ]
 gap> Size(GreensRClasses(I));
 156
 gap> Size(GreensHClasses(J));
@@ -671,9 +671,9 @@ gap> GreensRClasses(J){[97 .. 103]};
 gap> Size(GreensHClasses(K));
 1555
 gap> GreensHClasses(K){[1337 .. 1342]};
-[ <Green's H-class: [1,5][4,3,6](2)>, <Green's H-class: [1,2,3,6][4,5]>, 
-  <Green's H-class: [1,3,6][4,2,5]>, <Green's H-class: [1,3,6][4,5](2)>, 
-  <Green's H-class: [1,5][4,2,3,6]>, <Green's H-class: [1,2,5][4,3,6]> ]
+[ <Green's H-class: [1,5,6](2,3)>, <Green's H-class: [4,3,5,2,6]>, 
+  <Green's H-class: [4,5,6](2,3)>, <Green's H-class: [4,6,2,5,3]>, 
+  <Green's H-class: [1,6][4,2](3)(5)>, <Green's H-class: [1,2,6](3)(5)> ]
 gap> Size(GreensLClasses(K));
 917
 gap> Size(GreensRClasses(K));
@@ -686,21 +686,23 @@ gap> DClassReps(J);
   Transformation( [ 6, 5, 5, 5, 5, 5 ] ), 
   Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ]
 gap> LClassReps(L){[10 .. 20]};
-[ <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -3, -5, -6, -7 ], [ -4 ]>, 
-  <block bijection: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -3, -4, -5, -6, -7 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7 ], [ -3 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -4, -6 ], [ -3, -5, -7 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -3, -4, -5, -6 ], [ -7 ]>, 
+[ <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -3, -5 ], [ -1, -2, -4, -6 ], [ -7 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -2, -5 ], [ -1, -3, -4, -7 ], [ -6 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -4, -6 ], [ -3, -5 ], [ -7 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -5, -7 ], [ -2, -3, -4 ], [ -6 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -3 ], [ -4, -7 ], [ -5 ], 
+     [ -6 ]>, <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -3 ], [ -1 ], 
+     [ -2, -4, -7 ], [ -5 ], [ -6 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -6, -7 ], [ -2 ], [ -3, -4 ], 
+     [ -5 ]>, <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -3, -4, -5, -7 ], 
+     [ -2 ], [ -6 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -3, -4, -5, -6 ], [ -7 ]>, 
   <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -2, -3, -4, -7 ], [ -1, -5 ], [ -6 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -4, -5, -6 ], [ -2, -7 ], [ -3 ]>, 
-  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -3, -4, -5, -6 ], [ -1, -7 ], [ -2 ]> ]
+  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -6 ], [ -1, -2, -3, -4, -5 ], [ -7 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -5 ], [ -1, -3, -4, -6, -7 ], [ -2 ]>, 
+  <bipartition: [ 1, 2, 3, 4, 5, 6, 7, -1, -2, -4, -6 ], [ -3, -5, -7 ]> ]
 
 #T# IdealsTest14: GreensXClassOfElement
 gap> GreensDClassOfElement(I, Transformation([2, 2, 6, 2, 5, 5]));
-<Green's D-class: Transformation( [ 2, 2, 1, 2, 2, 5 ] )>
+<Green's D-class: Transformation( [ 2, 2, 5, 2, 2, 1 ] )>
 gap> GreensDClassOfElement(J, Transformation([6, 6, 4, 2, 4, 2]));
 <Green's D-class: Transformation( [ 2, 1, 5, 5, 5, 5 ] )>
 gap> GreensDClassOfElement(K, PartialPerm([1, 4, 5, 6], [6, 2, 1, 3]));
@@ -741,21 +743,21 @@ gap> List(ideals, NrRegularDClasses);
 #T# IdealsTest17: Idempotents, (and with integer)
 gap> L := SemigroupIdeal(R, gensL);;
 gap> Idempotents(A){[444 .. 450]};
-[ Transformation( [ 6, 6, 5, 5, 5, 6 ] ), 
-  Transformation( [ 1, 1, 5, 5, 5, 1 ] ), 
-  Transformation( [ 6, 6, 3, 3, 3, 6 ] ), 
-  Transformation( [ 6, 6, 4, 4, 4, 6 ] ), 
-  Transformation( [ 1, 1, 4, 4, 4, 1 ] ), 
-  Transformation( [ 2, 2, 4, 4, 4, 2 ] ), 
-  Transformation( [ 1, 1, 6, 1, 1, 6 ] ) ]
+[ Transformation( [ 1, 3, 3, 4, 5, 3 ] ), 
+  Transformation( [ 4, 3, 3, 4, 5, 3 ] ), 
+  Transformation( [ 1, 2, 2, 1, 5, 2 ] ), 
+  Transformation( [ 1, 6, 6, 1, 5, 6 ] ), 
+  Transformation( [ 4, 2, 2, 4, 5, 2 ] ), 
+  Transformation( [ 1, 3, 3, 1, 5, 3 ] ), 
+  Transformation( [ 4, 6, 6, 4, 5, 6 ] ) ]
 gap> Idempotents(B){[444 .. 450]};
-[ Transformation( [ 4, 4, 4, 4, 6, 6 ] ), 
-  Transformation( [ 1, 1, 1, 1, 6, 6 ] ), 
-  Transformation( [ 2, 2, 2, 2, 6, 6 ] ), 
-  Transformation( [ 3, 3, 3, 3, 5, 5 ] ), 
-  Transformation( [ 4, 4, 4, 4, 5, 5 ] ), 
-  Transformation( [ 4, 4, 4, 4, 4, 4 ] ), 
-  Transformation( [ 6, 6, 6, 6, 6, 6 ] ) ]
+[ Transformation( [ 6, 6, 5, 6, 5, 6 ] ), 
+  Transformation( [ 1, 1, 3, 1, 3, 1 ] ), 
+  Transformation( [ 2, 2, 5, 2, 5, 2 ] ), 
+  Transformation( [ 4, 4, 5, 4, 5, 4 ] ), 
+  Transformation( [ 1, 6, 6, 6, 5, 6 ] ), 
+  Transformation( [ 1, 3, 3, 3, 5, 3 ] ), 
+  Transformation( [ 1, 4, 4, 4, 5, 4 ] ) ]
 gap> Idempotents(C){[444 .. 450]};
 [ Transformation( [ 1, 6, 3, 6, 1, 6 ] ), Transformation( [ 1, 3, 3, 1, 3 ] ),
   Transformation( [ 1, 3, 3, 1, 6, 6 ] ), Transformation( [ 1, 3, 3, 3, 1 ] ),
@@ -774,11 +776,11 @@ gap> Idempotents(L, 2);
      [ -6 ]>, 
   <bipartition: [ 1, 7, -1, -7 ], [ 2, 3, 4, 5, 6, -3, -4, -5, -6 ], [ -2 ]>, 
   <bipartition: [ 1, 4, 5, 6, -1, -4, -5, -6 ], [ 2 ], [ 3, 7, -2, -7 ], 
-     [ -3 ]>, <bipartition: [ 1, 5, -1, -5 ], [ 2, 3, 4, 6, -2, -3, -4, -7 ], 
-     [ 7 ], [ -6 ]>, 
+     [ -3 ]>, <bipartition: [ 1, 3, 4, 5, 7, -1, -2, -3, -4, -5 ], [ 2 ], 
+     [ 6, -6 ], [ -7 ]>, 
   <bipartition: [ 1, 3, 4, 6 ], [ 2, 5, -5 ], [ 7, -1, -3, -4, -6, -7 ], 
-     [ -2 ]>, <bipartition: [ 1, 3, 4, 5, 7, -1, -2, -3, -4, -5 ], [ 2 ], 
-     [ 6, -6 ], [ -7 ]> ]
+     [ -2 ]>, <bipartition: [ 1, 5, -1, -5 ], [ 2, 3, 4, 6, -2, -3, -4, -7 ], 
+     [ 7 ], [ -6 ]> ]
 
 #T# IdealsTest18: NrIdempotents
 gap> List(ideals, NrIdempotents);
@@ -800,14 +802,10 @@ gap> PartialOrderOfDClasses(I);
 gap> PartialOrderOfDClasses(J);
 [ [ 1, 2, 3 ], [ 2, 3, 4 ], [ 3, 4 ], [ 4 ] ]
 gap> PartialOrderOfDClasses(A);
-[ [ 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 
-      24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34 ], [ 2, 4, 5, 6, 9, 34 ], 
-  [ 4, 5, 6, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 
-      26, 27, 28, 29, 30, 31, 32, 33 ], [ 4, 5, 7 ], [ 5, 7 ], 
-  [ 4, 5, 6, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 
-      26, 27, 28, 29, 30, 31, 32, 33 ], [ 7 ], 
-  [ 4, 5, 6, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 
-      26, 27, 28, 29, 30, 31, 32, 33 ], 
+[ [ 2, 3, 4, 5, 7, 9 ], [ 2, 4, 5, 7, 9, 34 ], [ 4, 5, 7 ], [ 4, 5, 6 ], 
+  [ 5, 6 ], [ 6 ], 
+  [ 4, 5, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 
+      26, 27, 28, 29, 30, 31, 32, 33 ], [ 4, 5, 7 ], 
   [ 4, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 
       26, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 
       45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58 ], [ 4, 5 ], 

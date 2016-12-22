@@ -7,7 +7,6 @@
 ##
 #############################################################################
 ##
-
 gap> START_TEST("Semigroups package: extreme/maximal.tst");
 gap> LoadPackage("semigroups", false);;
 
@@ -167,8 +166,8 @@ false
 gap> IsZeroSimpleSemigroup(R);
 true
 gap> MaximalSubsemigroups(R);
-[ <subsemigroup of 1x1 Rees 0-matrix semigroup with 3 generators>, 
-  <subsemigroup of 1x1 Rees 0-matrix semigroup with 3 generators>, 
+[ <subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>, 
+  <subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>, 
   <subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators> ]
 gap> t1 := Transformation([4, 3, 1, 3]);;
 gap> t2 := Transformation([3, 3, 2, 2]);;

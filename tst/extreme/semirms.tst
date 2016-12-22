@@ -1,13 +1,13 @@
-#############################################################################
+############################################################################
 ##
-#W  extreme/reesmat.tst
-#Y  Copyright (C) 2011-15                               James D. Mitchell
+#W  extreme/semirms.tst
+#Y  Copyright (C) 2016                                  James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: extreme/reesmat.tst");
+gap> START_TEST("Semigroups package: extreme/semirms.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -193,7 +193,7 @@ true
 gap> R := Semigroup(Generators(R));
 <subsemigroup of 1x1 Rees 0-matrix semigroup with 3 generators>
 gap> GroupOfUnits(R);
-<subsemigroup of 1x1 Rees 0-matrix semigroup with 2 generators>
+<subsemigroup of 1x1 Rees 0-matrix semigroup with 8 generators>
 gap> GroupOfUnits(V);
 fail
 gap> GroupOfUnits(U[5]);
@@ -836,8 +836,8 @@ gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group(())>
 gap> NrIdempotents(R);
 2
-gap> Idempotents(R);
-[ (1,(),1), 0 ]
+gap> Set(Idempotents(R));
+[ 0, (1,(),1) ]
 gap> Set(Idempotents(R)) = Elements(R);
 true
 gap> IsBand(R);
@@ -852,9 +852,9 @@ gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [x, x ^ 2]]);
   degree 2 with 1 generator>>
 gap> NrIdempotents(R);
 4
-gap> Idempotents(R);
-[ (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
-  (2,IdentityTransformation,2), 0 ]
+gap> Set(Idempotents(R));
+[ 0, (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
+  (2,IdentityTransformation,2) ]
 gap> ForAll(Idempotents(R), x -> x * x = x);
 true
 gap> ForAll(R, x -> x in Idempotents(R) or not IsIdempotent(x));
@@ -981,8 +981,8 @@ gap> T := ReesZeroMatrixSubsemigroup(R, [2, 3], G, [1, 2]);;
 gap> SetUnderlyingSemigroup(T, G);
 gap> NrIdempotents(T);
 3
-gap> Idempotents(T);
-[ (2,(1,2)(3,4),1), (3,(1,4,2)(3),2), 0 ]
+gap> Set(Idempotents(T));
+[ 0, (2,(1,2)(3,4),1), (3,(1,4,2)(3),2) ]
 
 #T# ReesMatTest106: Test for Issue #128
 gap> S := SymmetricInverseMonoid(5);;
@@ -1156,5 +1156,5 @@ gap> Unbind(y);
 gap> Unbind(z);
 gap> Unbind(zero);
 
-#E#
-gap> STOP_TEST("Semigroups package: extreme/reesmat.tst");
+#
+gap> STOP_TEST("Semigroups package: extreme/semirms.tst");
