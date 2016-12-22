@@ -31,7 +31,8 @@ ments
 gap> gens in cong;
 true
 gap> EquivalenceRelationLookup(cong);
-fail
+Error, Semigroups: EquivalenceRelationLookup: usage,
+<cong> must be over a finite semigroup,
 gap> NrCongruenceClasses(cong);
 3
 gap> class := CongruenceClassOfElement(cong, x);;
@@ -492,9 +493,7 @@ gap> pair := [[Bipartition([[1, 2], [-1], [-2]]),
 >              Bipartition([[1, -1], [2], [-2]])]];;
 gap> cong := SemigroupCongruence(S, pair);;
 gap> EquivalenceRelationPartition(cong);
-[ [ <block bijection: [ 1, -1 ], [ 2, -2 ]> ], 
-  [ <block bijection: [ 1, -2 ], [ 2, -1 ]> ], 
-  [ <bipartition: [ 1, 2 ], [ -1, -2 ]>, 
+[ [ <bipartition: [ 1, 2 ], [ -1, -2 ]>, 
       <bipartition: [ 1 ], [ 2 ], [ -1, -2 ]> ], 
   [ <bipartition: [ 1, -1 ], [ 2 ], [ -2 ]>, 
       <bipartition: [ 1 ], [ 2, -1 ], [ -2 ]>, 
@@ -503,7 +502,7 @@ gap> EquivalenceRelationPartition(cong);
       <bipartition: [ 1 ], [ 2, -2 ], [ -1 ]>, 
       <bipartition: [ 1 ], [ 2 ], [ -1 ], [ -2 ]> ] ]
 gap> cong := SemigroupCongruence(S, []);;
-gap> SortedList(EquivalenceRelationPartition(cong)) = List(Elements(S), x->[x]);
+gap> EquivalenceRelationPartition(cong) = [];
 true
 gap> cong := UniversalSemigroupCongruence(S);;
 gap> Length(EquivalenceRelationPartition(cong)) = 1;

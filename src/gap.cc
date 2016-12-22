@@ -428,7 +428,6 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("gap.cc", SEMIGROUPS_IS_OPTIMIZED, 0, ""),
 #endif
 
-    GVAR_ENTRY("semigrp.cc", EN_SEMI_ADD_GENERATORS, 2, "S, coll"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_LIST, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_SET, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CAYLEY_TABLE, 1, "S"),
@@ -437,6 +436,7 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_POSITION, 2, "S, x"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CURRENT_SIZE, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CLOSURE, 3, "new, old, coll"),
+    GVAR_ENTRY("semigrp.cc", EN_SEMI_CLOSURE_DEST, 2, "S, coll"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER, 2, "S, pos"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELEMENT_NUMBER_SORTED, 2, "S, pos"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_ELMS_LIST, 2, "S, list"),

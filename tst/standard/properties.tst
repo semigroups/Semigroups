@@ -1431,7 +1431,8 @@ gap> T := Monoid([Transformation([6, 2, 3, 4, 6, 6]),
 gap> IsSemilattice(T);
 true
 gap> I := SemigroupIdeal(T, T.1);
-<inverse transformation semigroup ideal of degree 6 with 1 generator>
+<commutative inverse transformation semigroup ideal of degree 6 with
+  1 generator>
 gap> IsSemilattice(I);
 true
 gap> T := Semigroup(T);

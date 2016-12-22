@@ -21,9 +21,32 @@
 ## cong.gd contains declarations for many of these.
 ##
 
+InstallMethod(\=, "for two semigroup congruences",
+[IsSemigroupCongruence, IsSemigroupCongruence],
+function(c1, c2)
+  if not IsFinite(Range(c1)) then
+    TryNextMethod();
+  fi;
+  return Range(c1) = Range(c2)
+         and EquivalenceRelationCanonicalLookup(c1) =
+             EquivalenceRelationCanonicalLookup(c2);
+end);
+
+InstallMethod(\=, "for two semigroup congruences with generating pairs",
+[IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
+ IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence],
+function(c1, c2)
+  return Range(c1) = Range(c2)
+         and ForAll(GeneratingPairsOfSemigroupCongruence(c1), p -> p in c2)
+         and ForAll(GeneratingPairsOfSemigroupCongruence(c2), p -> p in c1);
+end);
+
 InstallMethod(\=, "for a left and a right semigroup congruence",
 [IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
 function(c1, c2)
+  if not IsFinite(Range(c1)) then
+    TryNextMethod();
+  fi;
   return Range(c1) = Range(c2)
          and EquivalenceRelationCanonicalLookup(c1) =
              EquivalenceRelationCanonicalLookup(c2);
@@ -32,6 +55,9 @@ end);
 InstallMethod(\=, "for a right and a left semigroup congruence",
 [IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
 function(c1, c2)
+  if not IsFinite(Range(c1)) then
+    TryNextMethod();
+  fi;
   return Range(c1) = Range(c2)
          and EquivalenceRelationCanonicalLookup(c1) =
              EquivalenceRelationCanonicalLookup(c2);
@@ -50,6 +76,14 @@ function(class1, class2)
   return EquivalenceClassOfElementNC(EquivalenceClassRelation(class1),
                                      Representative(class1) *
                                      Representative(class2));
+end);
+
+InstallMethod(\=,
+"for two congruence classes",
+[IsCongruenceClass, IsCongruenceClass],
+function(class1, class2)
+  return EquivalenceClassRelation(class1) = EquivalenceClassRelation(class2)
+         and Representative(class1) in class2;
 end);
 
 InstallMethod(\<,
@@ -143,10 +177,10 @@ function(arg)
       and Parent(arg[2]) = S then
     return ReesCongruenceOfSemigroupIdeal(arg[2]);
   elif Length(arg) = 3
-      and IsInverseSemigroup(arg[2]) 
+      and IsInverseSemigroup(arg[2])
       and IsGeneratorsOfInverseSemigroup(arg[2])
       and IsDenseList(arg[3])
-      and IsInverseSemigroup(S) 
+      and IsInverseSemigroup(S)
       and IsGeneratorsOfInverseSemigroup(S) then
     # We should have the kernel and trace of a congruence on an inverse
     # semigroup
@@ -390,17 +424,79 @@ function(class, elm)
   return EquivalenceClassOfElementNC(cong, Representative(class) * elm);
 end);
 
+BindGlobal("_GenericCongLookup",
+function(cong)
+  local S, lookup, class, nr, elm;
+  S := Range(cong);
+  if not IsFinite(S) then
+    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
+                  "<cong> must be over a finite semigroup,");
+  elif not IsEnumerableSemigroupRep(S) then
+    TryNextMethod();
+  fi;
+  lookup := [1 .. Size(S)];
+  for class in NonTrivialEquivalenceClasses(cong) do
+    nr := PositionCanonical(S, Representative(class));
+    for elm in class do
+      lookup[PositionCanonical(S, elm)] := nr;
+    od;
+  od;
+  return lookup;
+end);
+
 InstallMethod(EquivalenceRelationLookup,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
-EquivalenceRelationCanonicalLookup);
+_GenericCongLookup);
 
 InstallMethod(EquivalenceRelationLookup,
 "for a left semigroup congruence",
 [IsLeftSemigroupCongruence],
-EquivalenceRelationCanonicalLookup);
+_GenericCongLookup);
 
 InstallMethod(EquivalenceRelationLookup,
 "for a right semigroup congruence",
 [IsRightSemigroupCongruence],
-EquivalenceRelationCanonicalLookup);
+_GenericCongLookup);
+
+MakeReadWriteGlobal("_GenericCongLookup");
+Unbind(_GenericCongLookup);
+
+BindGlobal("_GenericCongCanonicalLookup",
+function(cong)
+  local lookup, max, dictionary, next, out, i, new_nr;
+  lookup := EquivalenceRelationLookup(cong);
+  max := Maximum(lookup);
+  # We do not know whether the maximum is NrEquivalenceClasses(cong)
+  dictionary := ListWithIdenticalEntries(max, 0);
+  next := 1;
+  out := EmptyPlist(max);
+  for i in [1 .. Length(lookup)] do
+    new_nr := dictionary[lookup[i]];
+    if new_nr = 0 then
+      dictionary[lookup[i]] := next;
+      new_nr := next;
+      next := next + 1;
+    fi;
+    out[i] := new_nr;
+  od;
+  return out;
+end);
+
+InstallMethod(EquivalenceRelationCanonicalLookup,
+"for a semigroup congruence",
+[IsSemigroupCongruence],
+_GenericCongCanonicalLookup);
+
+InstallMethod(EquivalenceRelationCanonicalLookup,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+_GenericCongCanonicalLookup);
+
+InstallMethod(EquivalenceRelationCanonicalLookup,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+_GenericCongCanonicalLookup);
+
+MakeReadWriteGlobal("_GenericCongCanonicalLookup");
+Unbind(_GenericCongCanonicalLookup);

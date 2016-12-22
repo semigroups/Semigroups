@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+# Not attempting to get high code coverage here since this file will have to be
+# completely rewritten.
+
 # things for graded orbits
 
 InstallMethod(GradedLambdaHT, "for an acting semigroup",

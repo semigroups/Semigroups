@@ -8,6 +8,8 @@
 #############################################################################
 ##
 
+# The code coverage for this file is not as good as it could be.
+
 SEMIGROUPS.ChangeDegreeOfTransformationSemigroup := function(o, old_deg, t)
   local deg, extra, ht, max, i, orb;
   deg := DegreeOfTransformationSemigroup(t);
@@ -53,12 +55,13 @@ end;
 
 ## Methods for some standard things for acting semigroups.
 
-InstallMethod(ClosureSemigroupNC,
-"for an acting semigroup, finite list of mult. elts, and record",
-[IsActingSemigroup, 
+InstallMethod(ClosureSemigroupOrMonoidNC,
+"for a function, acting semigroup, finite list of mult. elts, and record",
+[IsFunction,
+ IsActingSemigroup, 
  IsMultiplicativeElementCollection and IsList and IsFinite, 
  IsRecord],
-function(S, coll, opts)
+function(Constructor, S, coll, opts)
   local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup,
   rho_ht, new_data, old_data, max_rank, ht, new_orb, old_orb, new_nr, old_nr,
   graph, old_graph, reps, lambdarhoht, rholookup, repslookup, orblookup1,
@@ -68,33 +71,32 @@ function(S, coll, opts)
   htadd, htvalue, i, x, pos, m, rank, rhox, l, ind, pt, schutz, data_val, old,
   n, j;
 
+  # opts must be copied and processed before calling this function
+  # coll must be copied before calling this function
+
+  #TODO split this into two methods, one for collections and the other for
+  # single elements
   if Size(coll) > 1 then 
-    Shuffle(coll);
+    coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
     Sort(coll, function(x, y)
                  return ActionRank(x, n) > ActionRank(y, n);
                end);
 
-    opts.small := false;
-
     for x in coll do
-      if not x in S then
-        S := ClosureSemigroupNC(S, [x], opts);
-      fi;
+      S := ClosureSemigroupOrMonoidNC(Constructor, S, [x], opts);
     od;
     return S;
   fi;
   
   # Size(coll) = 1 . . .
 
-  # init the semigroup or monoid
-  if IsMonoid(S) and One(coll) = One(S) then
-    # it can be that these One's differ, and hence we shouldn't call Monoid
-    # here
-    t := Monoid(S, coll, opts);
-  else
-    t := Semigroup(S, coll, opts);
+  if coll[1] in S then 
+    return S;
   fi;
+
+  # init the semigroup or monoid
+  t := Constructor(S, coll, opts);
 
   # if nothing is known about s, then return t
   if not HasLambdaOrb(S) or IsSemigroupIdeal(S) then
@@ -400,38 +402,43 @@ function(S, coll, opts)
   return t;
 end);
 
-InstallMethod(ClosureInverseSemigroupNC,
-"for an inverse acting semigroup rep, finite list of mult. elts, and record",
-[IsInverseActingSemigroupRep, 
+InstallMethod(ClosureInverseSemigroupOrMonoidNC,
+"for a function, inverse acting semigroup, finite list of mult. elts, and rec",
+[IsFunction, 
+ IsInverseActingSemigroupRep, 
  IsMultiplicativeElementCollection and IsList and IsFinite, 
  IsRecord],
-function(S, coll, opts)
+function(Constructor, S, coll, opts)
   local gens, T, o, n, x;
 
+  # opts must be copied and processed before calling this function
+  # coll must be copied before calling this function
+  
   if IsSemigroupIdeal(S) then
     TryNextMethod();
   fi;
 
+  #TODO split this into two methods
   if Size(coll) > 1 then 
-    Shuffle(coll);
+    coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
     Sort(coll, function(x, y)
                  return ActionRank(x, n) > ActionRank(y, n);
                end);
 
-    opts.small := false;
-
     for x in coll do
-      if not x in S then
-        S := ClosureInverseSemigroupNC(S, [x], opts);
-      fi;
+      S := ClosureInverseSemigroupOrMonoidNC(Constructor, S, [x], opts);
     od;
 
     return S;
   fi;
+  
+  if coll[1] in S then 
+    return S;
+  fi;
 
   gens := GeneratorsOfInverseSemigroup(S);
-  T := InverseSemigroupByGenerators(Concatenation(gens, coll), opts);
+  T := Constructor(Concatenation(gens, coll), opts);
 
   if not IsIdempotent(coll[1]) then
     Add(coll, coll[1] ^ -1);
@@ -476,6 +483,7 @@ function(s)
       w := List([1 .. i], x -> Random([1 .. Length(gens)]));
       return EvaluateWord(gens, w);
     elif IsSemigroupIdeal(s) and HasGeneratorsOfSemigroupIdeal(s) then
+      # This clause is currently unreachable
       x := Random([1 .. Length(GeneratorsOfSemigroupIdeal(s))]);
       gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(s));
 
@@ -600,6 +608,9 @@ function(x, S)
     return true;
   elif IsFullyEnumerated(S) then
     return false;
+  elif HasAsSSortedList(S) then
+    # This is currently unreachable
+    return x in AsSSortedList(S);
   fi;
 
   if not (IsMonoid(S) and IsOne(x)) then
@@ -618,10 +629,6 @@ function(x, S)
            "semigroup.");
       return false;
     fi;
-  fi;
-
-  if HasAsSSortedList(S) then
-    return x in AsSSortedList(S);
   fi;
 
   pos_lambda := Position(Enumerate(LambdaOrb(S)), LambdaFunc(S)(x));

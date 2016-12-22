@@ -105,17 +105,22 @@ end;
 ## 1. Default methods, for which there are currently no better methods.
 #############################################################################
 
+# Don't use ClosureSemigroup here since the order of the generators matters
+# and ClosureSemigroup shuffles the generators.
+
 BindGlobal("_GeneratorsSmallest",
 function(S)
   local iter, gens, T, x;
 
   iter := IteratorSorted(S);
   gens := [NextIterator(iter)];
-  T := Semigroup(gens[1]);
+  T    := Semigroup(gens);
 
   for x in iter do
     if not x in T then
-      T := SEMIGROUPS.AddGenerators(T, [x], SEMIGROUPS.OptionsRec(T));
+      T := SEMIGROUPS.ClosureSemigroupDestructive(T, 
+                                                  [x],
+                                                  SEMIGROUPS.OptionsRec(T));
       Add(gens, x);
       if T = S then
         break;
@@ -129,7 +134,7 @@ InstallMethod(GeneratorsSmallest, "for a transformation semigroup",
 [IsTransformationSemigroup and IsGroup], _GeneratorsSmallest);
 
 InstallMethod(GeneratorsSmallest, "for a semigroup",
-[IsSemigroup], _GeneratorsSmallest);
+[IsEnumerableSemigroupRep], _GeneratorsSmallest);
 
 MakeReadWriteGlobal("_GeneratorsSmallest");
 Unbind(_GeneratorsSmallest);
@@ -510,23 +515,16 @@ function(S)
   end;
 end);
 
-# There is duplicate code in here and in partial order of D-classes
-
 InstallMethod(MaximalDClasses, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
-  local l, r, gr;
+  local gr;
 
   if NrDClasses(S) = 1 then
     return DClasses(S);
   fi;
 
-  l := LeftCayleyGraphSemigroup(S);
-  r := RightCayleyGraphSemigroup(S);
-  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
-  gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);
-  gr := DigraphRemoveLoops(gr);
-
+  gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
   return List(DigraphSources(gr), x -> DClasses(S)[x]);
 end);
 

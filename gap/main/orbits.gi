@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+# Not attempting to get high code coverage here since this file will have to be
+# completely rewritten.
+
 InstallGlobalFunction(OrbSCCIndex,
 function(o, x)
   local pos;

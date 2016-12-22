@@ -324,10 +324,98 @@ gap> cong2 := SemigroupCongruence(S, pair2);;
 gap> IsSuperrelation(cong1, cong2);
 true
 
+#T# Equality for different types of congruence class
+gap> S := FullTransformationMonoid(4);;
+gap> I := SemigroupIdeal(S, Transformation([1,1,2,2]));;
+gap> reescong := ReesCongruenceOfSemigroupIdeal(I);;
+gap> pair := [Transformation([1, 1, 2, 2]), Transformation([1, 1, 1, 1])];;
+gap> cong := SemigroupCongruence(S, pair);;
+gap> reesclass := EquivalenceClassOfElement(reescong, pair[1]);
+<congruence class of Transformation( [ 1, 1, 2, 2 ] )>
+gap> class := EquivalenceClassOfElement(cong, Transformation([1,1,2,2]));
+<congruence class of Transformation( [ 1, 1, 2, 2 ] )>
+gap> class = reesclass;
+true
+gap> cong := SemigroupCongruence(S, []);;
+gap> class := EquivalenceClassOfElement(cong, Transformation([1,1,2,2]));;
+gap> class = reesclass;
+false
+gap> cong := UniversalSemigroupCongruence(S);;
+gap> class := EquivalenceClassOfElement(cong, Transformation([1,1,2,2]));;
+gap> class = reesclass;
+false
+
+#T# EquivalenceRelation(Canonical)Lookup
+gap> S := FullTransformationMonoid(3);;
+gap> I := SemigroupIdeal(S, Transformation([1, 1, 2]));;
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
+gap> EquivalenceRelationLookup(cong);
+[ 1, 2, 3, 11, 5, 6, 11, 8, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 
+  11, 11, 11, 11, 11, 11, 11 ]
+gap> EquivalenceRelationCanonicalLookup(cong);
+[ 1, 2, 3, 4, 5, 6, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+  4, 4 ]
+
+# EquivalenceRelationCanonicalLookup with an RMS cong
+gap> S := ReesMatrixSemigroup(SymmetricGroup(3), [[(1,2), ()], [(), (1,3)]]);
+<Rees matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>
+gap> cong := RMSCongruenceByLinkedTriple(S, Group((1,2,3)),
+>                                        [[1],[2]], [[1,2]]);;
+gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);;
+gap> cong := RMSCongruenceByLinkedTriple(S, Group((1,2,3)),
+>                                        [[1],[2]], [[1,2]]);;
+gap> EquivalenceRelationCanonicalLookup(cong);
+[ 1, 2, 3, 1, 2, 2, 2, 1, 1, 3, 4, 4, 2, 1, 1, 2, 3, 4, 4, 4, 3, 3, 3, 4 ]
+gap> EquivalenceRelationCanonicalLookup(ccong);
+[ 1, 2, 3, 1, 2, 2, 2, 1, 1, 3, 4, 4, 2, 1, 1, 2, 3, 4, 4, 4, 3, 3, 3, 4 ]
+gap> cong = ccong;
+true
+
+# Two infinite congruences (will try next method)
+gap> F := FreeSemigroup(2);;
+gap> cong1 := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(F, [F.1]));;
+gap> cong2 := SemigroupCongruence(F, [F.1, F.1^2]);;
+gap> cong1 = cong2;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `PreImagesSet' on 2 arguments
+gap> F := FreeSemigroup(2);;
+gap> cong1 := LeftSemigroupCongruence(F, [F.1, F.2]);;
+gap> cong2 := RightSemigroupCongruence(F, [F.1, F.2]);;
+gap> cong1 = cong2;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `ImagesSet' on 2 arguments
+gap> cong2 = cong1;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `ImagesSet' on 2 arguments
+
+# EquivalenceRelationLookup with an infinite semigroup
+gap> F := FreeSemigroup(2);;
+gap> cong := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(F, [F.1]));;
+gap> EquivalenceRelationLookup(cong);
+Error, Semigroups: EquivalenceRelationLookup: usage,
+<cong> must be over a finite semigroup,
+gap> EquivalenceRelationCanonicalLookup(cong);
+Error, Semigroups: EquivalenceRelationLookup: usage,
+<cong> must be over a finite semigroup,
+
+#T# Equality for different types of congruence, both with pairs
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
+>                                 [[(1,2), ()], [(), (1,3)]]);;
+gap> cong1 := RMSCongruenceByLinkedTriple(S, Group((1,2,3)),
+>                                         [[1], [2]], [[1, 2]]);;
+gap> ideal := SemigroupIdeal(S, [MultiplicativeZero(S)]);;
+gap> cong2 := ReesCongruenceOfSemigroupIdeal(ideal);;
+gap> GeneratingPairsOfSemigroupCongruence(cong1);;
+gap> GeneratingPairsOfSemigroupCongruence(cong2);;
+gap> cong1 = cong2;
+false
+
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(F);
 gap> Unbind(I);
 gap> Unbind(R);
 gap> Unbind(S);
+gap> Unbind(ccong);
 gap> Unbind(class);
 gap> Unbind(class1a);
 gap> Unbind(class1b);
@@ -337,6 +425,7 @@ gap> Unbind(cong);
 gap> Unbind(cong1);
 gap> Unbind(cong2);
 gap> Unbind(elm);
+gap> Unbind(ideal);
 gap> Unbind(iso);
 gap> Unbind(ker);
 gap> Unbind(lcong);
@@ -345,6 +434,8 @@ gap> Unbind(pair1);
 gap> Unbind(pair2);
 gap> Unbind(pairs);
 gap> Unbind(rcong);
+gap> Unbind(reesclass);
+gap> Unbind(reescong);
 gap> Unbind(rmscong);
 gap> Unbind(trc);
 gap> Unbind(x);

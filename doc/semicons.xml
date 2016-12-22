@@ -177,13 +177,13 @@ true]]></Example>
 
         <Example><![CDATA[
 gap> S := ZeroSemigroup(5);
-<non-regular transformation semigroup of size 5, degree 5 with 4 
- generators>
+<commutative non-regular transformation semigroup of size 5, degree 5 
+ with 4 generators>
 gap> IsZeroSemigroup(S);
 true
 gap> S := ZeroSemigroup(IsPartialPermSemigroup, 15);
-<non-regular partial perm semigroup of size 15, rank 14 with 14 
- generators>
+<commutative non-regular partial perm semigroup of size 15, rank 14 
+ with 14 generators>
 gap> Size(S);
 15
 gap> z := MultiplicativeZero(S);

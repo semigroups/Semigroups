@@ -341,11 +341,6 @@ function(S, rank)
                               x -> RankOfTransformation(x, deg) = rank);
 end);
 
-# different method required (but not yet given!!) for ideals
-
-InstallMethod(IsTransformationSemigroupGreensClass, "for a Green's class",
-[IsGreensClass], x -> IsTransformationSemigroup(Parent(x)));
-
 InstallMethod(IteratorSorted, "for an acting transformation semigroup",
 [IsTransformationSemigroup and IsActingSemigroup],
 function(S)
@@ -939,16 +934,17 @@ InstallMethod(EndomorphismMonoid, "for a digraph",
 function(digraph)
   local hook, S;
 
-  if HasGeneratorsOfEndomorphismMonoidAttr(digraph) then
+  if HasGeneratorsOfEndomorphismMonoidAttr(digraph) 
+      or SEMIGROUPS.DefaultOptionsRec.acting = false then
     return Monoid(GeneratorsOfEndomorphismMonoidAttr(digraph),
                   rec(small := true));
   fi;
+ 
+  S := [AsMonoid(IsTransformationMonoid, AutomorphismGroup(digraph))];
 
   hook := function(S, f)
-    S[1] := ClosureSemigroup(S[1], f);
+    S[1] := ClosureMonoid(S[1], f);
   end;
-
-  S := [AsMonoid(IsTransformationMonoid, AutomorphismGroup(digraph))];
 
   return HomomorphismDigraphsFinder(digraph, digraph, hook, S, infinity,
                                     fail, false, DigraphVertices(digraph), [],

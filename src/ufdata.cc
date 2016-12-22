@@ -52,7 +52,7 @@ Obj UF_UNION(Obj self, Obj ufdata, Obj pair) {
   assert(IS_INTOBJ(ELM_PLIST(pair, 1)) && INT_INTOBJ(ELM_PLIST(pair, 1)) > 0);
   assert(IS_INTOBJ(ELM_PLIST(pair, 2)) && INT_INTOBJ(ELM_PLIST(pair, 2)) > 0);
   CLASS_OBJ<UFData*>(ufdata)->unite(INT_INTOBJ(ELM_PLIST(pair, 1)) - 1,
-                                   INT_INTOBJ(ELM_PLIST(pair, 2)) - 1);
+                                    INT_INTOBJ(ELM_PLIST(pair, 2)) - 1);
   return 0L;
 }
 
@@ -79,8 +79,8 @@ Obj UF_BLOCKS(Obj self, Obj ufdata) {
   size_t                  i, j;
 
   // Rewrite each block as a PLIST object, and put it into a PLIST.
-  Obj gap_blocks = NEW_PLIST(T_PLIST, size);
-  SET_LEN_PLIST(gap_blocks, size);
+  Obj gap_blocks = NEW_PLIST(T_PLIST, 0);
+  SET_LEN_PLIST(gap_blocks, 0);
   for (i = 0; i < size; i++) {
     if ((*blocks)[i] != nullptr) { // nullptr represents a hole in the list
       Obj block = NEW_PLIST(T_PLIST_CYC, (*blocks)[i]->size());
@@ -88,10 +88,11 @@ Obj UF_BLOCKS(Obj self, Obj ufdata) {
       for (j = 0; j < (*blocks)[i]->size(); j++) {
         SET_ELM_PLIST(block, j + 1, INTOBJ_INT((*(*blocks)[i])[j] + 1));
       }
-      SET_ELM_PLIST(gap_blocks, i + 1, block);
-      CHANGED_BAG(gap_blocks);
+      AssPlist(gap_blocks, i + 1, block);
     }
   }
-
+  if (LEN_PLIST(gap_blocks) == 0) {
+    RetypeBag(gap_blocks, T_PLIST_EMPTY);
+  }
   return gap_blocks;
 }

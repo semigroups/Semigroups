@@ -109,12 +109,12 @@ gap> MaximalSubsemigroups(S);
 gap> MaximalSubsemigroups(S,
 > rec(gens := true,
 >     D := DClass(S, Transformation([2, 2, 3]))));
-[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 2, 2, 2 ] ), 
-      Transformation( [ 3, 3, 3 ] ), IdentityTransformation, 
+[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 3, 3, 3 ] ), 
+      Transformation( [ 2, 2, 2 ] ), IdentityTransformation, 
       Transformation( [ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ) ] ]
 gap> MaximalSubsemigroups(S,
 > rec(contain := [Transformation([2, 3, 1])]));
-[ <transformation semigroup of degree 3 with 8 generators>, 
+[ <transformation semigroup of degree 3 with 7 generators>, 
   <transformation monoid of degree 3 with 5 generators> ]
 gap> R := PrincipalFactor(
 > DClass(FullTransformationMonoid(4), Transformation([2, 2])));

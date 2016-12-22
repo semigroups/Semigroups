@@ -135,7 +135,7 @@ gap> S := GraphInverseSemigroup(Digraph([[2],[]]));
 gap> AsMonoid(S);
 fail
 
-# SEMIGROUPS.AddGenerators 1
+# SEMIGROUPS.ClosureSemigroupDestructive 1
 gap> gens := 
 > [ Matrix(IsBooleanMat, [[0, 0, 0, 1, 0], [0, 1, 1, 1, 1], [1, 1, 1, 1, 0],
 >       [1, 0, 1, 1, 1], [0, 1, 0, 1, 1]]),
@@ -151,18 +151,18 @@ gap> x := Matrix(IsBooleanMat, [[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 1, 0],
 > [1, 0, 0, 1]]);;
 gap> S := Semigroup(gens);
 <semigroup of 5x5 boolean matrices with 5 generators>
-gap> SEMIGROUPS.AddGenerators(S, [x], SEMIGROUPS.OptionsRec(S));
-Error, Semigroups: SEMIGROUPS.AddGenerators: usage,
+gap> SEMIGROUPS.ClosureSemigroupDestructive(S, [x], SEMIGROUPS.OptionsRec(S));
+Error, Semigroups: SEMIGROUPS.ClosureSemigroupDestructive: usage,
 the arguments do not belong to the same family,
-gap> SEMIGROUPS.AddGenerators(S, [IdentityTransformation],
+gap> SEMIGROUPS.ClosureSemigroupDestructive(S, [IdentityTransformation],
 > SEMIGROUPS.OptionsRec(S));
-Error, Semigroups: SEMIGROUPS.AddGenerators: usage,
+Error, Semigroups: SEMIGROUPS.ClosureSemigroupDestructive: usage,
 the arguments do not belong to the same family,
 
-# SEMIGROUPS.AddGenerators 2
+# SEMIGROUPS.ClosureSemigroupDestructive 2
 gap> S := Semigroup(Transformation([2, 4, 3, 4]),
 >                   Transformation([3, 3, 2, 3, 3]));;
-gap> SEMIGROUPS.AddGenerators(S, 
+gap> SEMIGROUPS.ClosureSemigroupDestructive(S, 
 >                             [ConstantTransformation(7, 7)], 
 >                             SEMIGROUPS.OptionsRec(S));
 <transformation semigroup of degree 7 with 3 generators>
@@ -171,10 +171,10 @@ true
 gap> Size(S);
 6
 
-# SEMIGROUPS.AddGenerators 3
+# SEMIGROUPS.ClosureSemigroupDestructive 3
 gap> S := Semigroup(Transformation([2, 4, 3, 4]),
 >                   Transformation([3, 3, 2, 3, 3]), rec(acting := false));;
-gap> S := SEMIGROUPS.AddGenerators(S, 
+gap> S := SEMIGROUPS.ClosureSemigroupDestructive(S, 
 >                                 [ConstantTransformation(7, 7)], 
 >                                 SEMIGROUPS.OptionsRec(S));
 <transformation semigroup of degree 7 with 3 generators>
@@ -183,10 +183,10 @@ true
 gap> Size(S);
 7
 
-# SEMIGROUPS.AddGenerators 3
+# SEMIGROUPS.ClosureSemigroupDestructive 3
 gap> S := Semigroup(Transformation([2, 4, 3, 4]),
 >                   Transformation([3, 3, 2, 3, 3]), rec(acting := false));;
-gap> S := SEMIGROUPS.AddGenerators(S, 
+gap> S := SEMIGROUPS.ClosureSemigroupDestructive(S, 
 >                                 [Transformation([5, 5, 5, 4, 4])],
 >                                 SEMIGROUPS.OptionsRec(S));
 <transformation semigroup of degree 5 with 3 generators>
@@ -195,22 +195,22 @@ true
 gap> Size(S);
 14
 
-# SEMIGROUPS.AddGenerators 4
+# SEMIGROUPS.ClosureSemigroupDestructive 4
 gap> S := FreeBand(3);
 <free band on the generators [ x1, x2, x3 ]>
 gap> T := Semigroup(S.1, S.2);
 <semigroup with 2 generators>
-gap> T := SEMIGROUPS.AddGenerators(T, [S.3], SEMIGROUPS.OptionsRec(T));
+gap> T := SEMIGROUPS.ClosureSemigroupDestructive(T, [S.3], SEMIGROUPS.OptionsRec(T));
 <semigroup with 3 generators>
 gap> Size(T);
 159
 gap> T = S;
 true
 
-# SEMIGROUPS.AddGenerators 5
+# SEMIGROUPS.ClosureSemigroupDestructive 5
 gap> S := Semigroup(PartialPerm([1]), rec(acting := false));
 <trivial partial perm group of rank 1 with 1 generator>
-gap> S := SEMIGROUPS.AddGenerators(S, 
+gap> S := SEMIGROUPS.ClosureSemigroupDestructive(S, 
 >                                  [PartialPerm([3])],
 >                                  SEMIGROUPS.OptionsRec(S));
 <partial perm semigroup of rank 1 with 2 generators>
@@ -320,21 +320,6 @@ gap> S := Semigroup(AsSet(FullBooleanMatMonoid(2)), rec(small := true));
 # Test SemigroupByGenerators 4
 gap> SetInfoLevel(InfoSemigroups, 2);
 gap> S := Semigroup(AsSet(FullBooleanMatMonoid(2)), rec(small := true));
-at 	2 of 	16; 	1 generators so far
-at 	3 of 	16; 	2 generators so far
-at 	4 of 	16; 	2 generators so far
-at 	5 of 	16; 	2 generators so far
-at 	6 of 	16; 	2 generators so far
-at 	7 of 	16; 	3 generators so far
-at 	8 of 	16; 	4 generators so far
-at 	9 of 	16; 	4 generators so far
-at 	10 of 	16; 	4 generators so far
-at 	11 of 	16; 	4 generators so far
-at 	12 of 	16; 	4 generators so far
-at 	13 of 	16; 	4 generators so far
-at 	14 of 	16; 	4 generators so far
-at 	15 of 	16; 	4 generators so far
-at 	16 of 	16; 	4 generators so far
 <monoid of 2x2 boolean matrices with 4 generators>
 gap> SetInfoLevel(InfoSemigroups, 0); 
 
@@ -364,8 +349,6 @@ gap> S := Semigroup(Transformation([2, 1]), Transformation([2, 1]),
 gap> SetInfoLevel(InfoSemigroups, 2);
 gap> S := Semigroup(GeneratorsOfMonoid(FullBooleanMatMonoid(2)), 
 > rec(small := true));
-at 	2 of 	3; 	2 generators so far
-at 	3 of 	3; 	3 generators so far
 <semigroup of 2x2 boolean matrices with 3 generators>
 gap> SetInfoLevel(InfoSemigroups, 0); 
 
@@ -401,21 +384,6 @@ gap> Size(S);
 # Test MonoidByGenerators 4
 gap> SetInfoLevel(InfoSemigroups, 2);
 gap> S := Monoid(AsSet(FullBooleanMatMonoid(2)), rec(small := true));
-at 	2 of 	16; 	1 generators so far
-at 	3 of 	16; 	2 generators so far
-at 	4 of 	16; 	2 generators so far
-at 	5 of 	16; 	2 generators so far
-at 	6 of 	16; 	2 generators so far
-at 	7 of 	16; 	3 generators so far
-at 	8 of 	16; 	4 generators so far
-at 	9 of 	16; 	4 generators so far
-at 	10 of 	16; 	4 generators so far
-at 	11 of 	16; 	4 generators so far
-at 	12 of 	16; 	4 generators so far
-at 	13 of 	16; 	4 generators so far
-at 	14 of 	16; 	4 generators so far
-at 	15 of 	16; 	4 generators so far
-at 	16 of 	16; 	4 generators so far
 <monoid of 2x2 boolean matrices with 4 generators>
 gap> SetInfoLevel(InfoSemigroups, 0); 
 
@@ -458,8 +426,6 @@ gap> S := InverseSemigroup(PartialPerm([1]),
 >                          PartialPerm([1], [2]), 
 >                          PartialPerm([2, 1]),
 >                          rec(small := true));
-at 	2 of 	3; 	2 generators so far
-at 	3 of 	3; 	2 generators so far
 <inverse partial perm semigroup of rank 2 with 2 generators>
 gap> SetInfoLevel(InfoSemigroups, 0); 
 
@@ -485,8 +451,6 @@ gap> S := InverseMonoid(PartialPerm([1]),
 >                          PartialPerm([1], [2]), 
 >                          PartialPerm([2, 1]),
 >                          rec(small := true));
-at 	2 of 	3; 	2 generators so far
-at 	3 of 	3; 	2 generators so far
 <inverse partial perm monoid of rank 2 with 2 generators>
 gap> SetInfoLevel(InfoSemigroups, 0); 
 
@@ -556,15 +520,16 @@ gap> Size(S);
 gap> T := ClosureInverseSemigroup(S, 
 > [Bipartition([[1, 2, -2], [3, -1], [-3]])], rec());
 Error, Semigroups: ClosureInverseSemigroup: usage,
-the semigroup and collection of elements are not of the same type,
+the second argument must satisfy `IsGeneratorsOfInverseSemigroup',
 gap> T := ClosureInverseSemigroup(S, 
 > [PartialPerm([])], rec());
 Error, Semigroups: ClosureInverseSemigroup: usage,
-the semigroup and collection of elements are not of the same type,
+the first argument (a semigroup) and the second argument (a mult. element coll\
+.) cannot be used to generate a semigroup,
 gap> T := ClosureInverseSemigroup(S, 
 > [Bipartition([[1, 2, -4], [3, 4, -2], [-1, -3]])], rec());
 Error, Semigroups: ClosureInverseSemigroup: usage,
-the first argument must satisfy `IsGeneratorsOfInverseSemigroup',
+the second argument must satisfy `IsGeneratorsOfInverseSemigroup',
 
 # Test ClosureInverseSemigroup 5
 gap> S := InverseSemigroup(Bipartition([[1, -4], [2, 3, -1], [4, -2, -3]]),
@@ -590,12 +555,12 @@ gap> T := ClosureInverseSemigroup(S, DClass(PartitionMonoid(3),
 gap> Size(T);
 25
 
-# Test ClosureInverseSemigroupNC 1
+# Test ClosureInverseSemigroupOrMonoidNC 1
 gap> S := SymmetricInverseMonoid(5);
 <symmetric inverse monoid of degree 5>
 gap> I := SemigroupIdeal(S, S.3);
 <inverse partial perm semigroup ideal of rank 5 with 1 generator>
-gap> T := ClosureInverseSemigroupNC(I, [S.1], rec());;
+gap> T := ClosureInverseSemigroup(I, [S.1], rec());;
 gap> Size(T);
 1431
 gap> Size(S);
@@ -682,8 +647,7 @@ true
 # Test ClosureSemigroup 2
 gap> S := FullTransformationMonoid(2);
 <full transformation monoid of degree 2>
-gap> T := ClosureSemigroup(S, FullTransformationMonoid(4), rec());
-<transformation monoid of degree 4 with 3 generators>
+gap> T := ClosureSemigroup(S, FullTransformationMonoid(4));;
 gap> Size(T);
 256
 gap> T = FullTransformationMonoid(4);
@@ -694,7 +658,8 @@ gap> S := Semigroup(Bipartition([[1, 3, -3], [2], [-1, -2]]),
 >                   Bipartition([[1, -3], [2, 3, -1], [-2]]));;
 gap> T := ClosureSemigroup(S, IdentityBipartition(4));
 Error, Semigroups: ClosureSemigroup: usage,
-the semigroup and collection of elements are not of the same type,
+the first argument (a semigroup) and the second argument (a mult. element coll\
+.) cannot be used to generate a semigroup,
 
 # Test ClosureSemigroup 4
 gap> S := Semigroup(Bipartition([[1, 3, -3], [2], [-1, -2]]),

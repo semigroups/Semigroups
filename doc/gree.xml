@@ -49,18 +49,6 @@ fail]]></Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsBipartitionSemigroupGreensClass">
-  <ManSection>
-    <Prop Name = "IsBipartitionSemigroupGreensClass" Arg = "class"/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description>
-      A Green's class <A>class</A> of a semigroup <C>S</C> satisfies the
-      property <C>IsBipartitionSemigroupGreensClass</C> if and only if <C>S</C>
-      is a semigroup of bipartitions. 
-    </Description> 
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="\&lt;">
   <ManSection><Heading>Less than for Green's classes</Heading>
     <Meth Name = "\&lt;" Arg = 'left-expr, right-expr' Label = "for Green's classes"/>

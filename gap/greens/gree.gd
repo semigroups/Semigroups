@@ -15,6 +15,7 @@ DeclareProperty("IsGreensClassNC", IsGreensClass);
 DeclareProperty("IsRegularGreensClass", IsGreensClass);
 
 InstallTrueMethod(IsRegularGreensClass, IsRegularDClass);
+InstallTrueMethod(IsRegularDClass, IsRegularGreensClass and IsGreensDClass);
 
 DeclareAttribute("SchutzenbergerGroup", IsGreensClass);
 

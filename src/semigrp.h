@@ -89,8 +89,6 @@ Semigroup* en_semi_get_semi_cpp(en_semi_obj_t es);
 
 // GAP level functions for IsEnumerableSemigroupRep
 
-gap_semigroup_t
-EN_SEMI_ADD_GENERATORS(Obj self, gap_semigroup_t so, gap_list_t coll);
 gap_list_t EN_SEMI_AS_LIST(Obj self, gap_semigroup_t so);
 gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so);
 gap_int_t EN_SEMI_CURRENT_MAX_WORD_LENGTH(Obj self, gap_semigroup_t so);
@@ -103,6 +101,8 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
                                 gap_semigroup_t new_so,
                                 gap_semigroup_t old_so,
                                 gap_list_t      plist);
+gap_semigroup_t
+EN_SEMI_CLOSURE_DEST(Obj self, gap_semigroup_t so, gap_list_t coll);
 gap_element_t
 EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos);
 gap_element_t

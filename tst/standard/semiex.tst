@@ -1559,5 +1559,383 @@ true
 gap> List([1 .. 3], x -> Size(RookPartitionMonoid(x)));
 [ 5, 52, 877 ]
 
+# Test GLM
+gap> S := GLM(3, 3);
+<general linear monoid 3x3 over GF(3)>
+gap> Size(S);
+19683
+gap> NrLClasses(S);
+28
+gap> NrRClasses(S);
+28
+gap> NrDClasses(S);
+4
+gap> NrHClasses(S);
+340
+gap> NrIdempotents(S);
+236
+gap> IsRegularSemigroup(S);
+true
+gap> IsFullMatrixMonoid(S);
+true
+
+# Test SLM
+gap> S := SLM(3, 3);
+<regular monoid of 3x3 matrices over GF(3) with 3 generators>
+gap> Size(S);
+14067
+gap> NrLClasses(S);
+28
+gap> NrRClasses(S);
+28
+gap> NrDClasses(S);
+4
+gap> NrHClasses(S);
+340
+gap> NrIdempotents(S);
+236
+gap> IsRegularSemigroup(S);
+true
+gap> IsFullMatrixMonoid(S);
+false
+
+# Test MunnSemigroup
+gap> S := InverseSemigroup(PartialPerm([1, 2, 3, 4, 5, 6, 7, 10], 
+>                                      [4, 6, 7, 3, 8, 2, 9, 5]),
+>                          PartialPerm([1, 2, 7, 9], 
+>                                      [5, 6, 4, 3]));;
+gap> T := IdempotentGeneratedSubsemigroup(S);;
+gap> M := MunnSemigroup(T);;
+gap> NrIdempotents(M);
+60
+gap> NrIdempotents(S);
+60
+gap> MunnSemigroup(S);
+Error, Semigroups: GeneratorsOfMunnSemigroup: usage,
+the argument must be a semilattice,
+
+# Test OrderEndomorphisms
+gap> S := OrderEndomorphisms(4);
+<regular transformation monoid of degree 4 with 4 generators>
+gap> Size(S);
+35
+gap> NrLClasses(S);
+15
+gap> NrRClasses(S);
+8
+gap> NrDClasses(S);
+4
+gap> NrHClasses(S);
+35
+gap> NrIdempotents(S);
+21
+gap> IsRegularSemigroup(S);
+true
+gap> S := OrderEndomorphisms(1);
+<trivial transformation group of degree 0 with 1 generator>
+gap> Size(S);
+1
+gap> NrLClasses(S);
+1
+gap> NrRClasses(S);
+1
+gap> NrDClasses(S);
+1
+gap> NrHClasses(S);
+1
+gap> NrIdempotents(S);
+1
+gap> IsRegularSemigroup(S);
+true
+
+# Test PartialOrderEndomorphisms
+gap> S := PartialOrderEndomorphisms(4);
+<regular transformation monoid of degree 5 with 8 generators>
+gap> Size(S);
+192
+gap> NrLClasses(S);
+16
+gap> NrRClasses(S);
+41
+gap> NrDClasses(S);
+5
+gap> NrHClasses(S);
+192
+gap> NrIdempotents(S);
+76
+gap> IsRegularSemigroup(S);
+true
+gap> S := PartialOrderEndomorphisms(1);
+<commutative regular transformation monoid of degree 2 with 1 generator>
+
+# Test OrderAntiEndomorphisms
+gap> S := OrderAntiEndomorphisms(4);
+<regular transformation monoid of degree 4 with 5 generators>
+gap> Size(S);
+66
+gap> NrLClasses(S);
+15
+gap> NrRClasses(S);
+8
+gap> NrDClasses(S);
+4
+gap> NrHClasses(S);
+35
+gap> NrIdempotents(S);
+21
+gap> IsRegularSemigroup(S);
+true
+gap> S := OrderAntiEndomorphisms(1);
+<trivial transformation group of degree 0 with 1 generator>
+
+# Test PartialOrderAntiEndomorphisms
+gap> S := PartialOrderAntiEndomorphisms(4);
+<regular transformation monoid of degree 5 with 9 generators>
+gap> Size(S);
+323
+gap> NrLClasses(S);
+16
+gap> NrRClasses(S);
+41
+gap> NrDClasses(S);
+5
+gap> NrHClasses(S);
+192
+gap> NrIdempotents(S);
+76
+gap> IsRegularSemigroup(S);
+true
+gap> S := PartialOrderAntiEndomorphisms(1);
+<regular transformation monoid of degree 2 with 2 generators>
+
+# Test PartialTranformationMonoid
+gap> S := PartialTransformationMonoid(1);
+<commutative regular transformation monoid of degree 2 with 1 generator>
+gap> Size(S);
+2
+gap> NrLClasses(S);
+2
+gap> NrRClasses(S);
+2
+gap> NrDClasses(S);
+2
+gap> NrHClasses(S);
+2
+gap> NrIdempotents(S);
+2
+gap> IsRegularSemigroup(S);
+true
+gap> S := PartialTransformationMonoid(2);
+<regular transformation monoid of degree 3 with 3 generators>
+gap> Size(S);
+9
+gap> NrLClasses(S);
+4
+gap> NrRClasses(S);
+5
+gap> NrDClasses(S);
+3
+gap> NrHClasses(S);
+8
+gap> NrIdempotents(S);
+6
+gap> IsRegularSemigroup(S);
+true
+gap> S := PartialTransformationMonoid(4);
+<regular transformation monoid of degree 5 with 4 generators>
+gap> Size(S);
+625
+gap> NrLClasses(S);
+16
+gap> NrRClasses(S);
+52
+gap> NrDClasses(S);
+5
+gap> NrHClasses(S);
+252
+gap> NrIdempotents(S);
+104
+gap> IsRegularSemigroup(S);
+true
+
+# PartitionMonoid
+gap> PartitionMonoid(-1);
+Error, Semigroups: PartitionMonoid: usage,
+the argument <n> must be a non-negative integer,
+gap> PartitionMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> PartitionMonoid(1);
+<commutative bipartition monoid of degree 1 with 1 generator>
+gap> PartitionMonoid(5);
+<regular bipartition *-monoid of size 115975, degree 5 with 4 generators>
+
+# DualSymmetricInverseMonoid
+gap> DualSymmetricInverseMonoid(-1);
+Error, Semigroups: DualSymmetricInverseMonoid: usage,
+the argument <n> must be a non-negative integer,
+gap> DualSymmetricInverseMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> DualSymmetricInverseMonoid(1);
+<trivial block bijection group of degree 1 with 1 generator>
+gap> DualSymmetricInverseMonoid(2);
+<inverse block bijection monoid of degree 2 with 2 generators>
+gap> DualSymmetricInverseMonoid(5);
+<inverse block bijection monoid of degree 5 with 3 generators>
+
+# BrauerMonoid
+gap> BrauerMonoid(-1);
+Error, Semigroups: BrauerMonoid: usage,
+the argument <n> must be a non-negative integer,
+gap> BrauerMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> BrauerMonoid(1);
+<trivial block bijection group of degree 1 with 1 generator>
+gap> BrauerMonoid(2);
+<regular bipartition *-monoid of degree 2 with 2 generators>
+gap> BrauerMonoid(5);
+<regular bipartition *-monoid of degree 5 with 3 generators>
+
+# PartialBrauerMonoid
+gap> PartialBrauerMonoid(-1);
+Error, Semigroups: PartialBrauerMonoid: usage,
+the argument <n> must be a non-negative integer,
+gap> PartialBrauerMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> PartialBrauerMonoid(1);
+<regular bipartition *-monoid of degree 1 with 2 generators>
+gap> PartialBrauerMonoid(2);
+<regular bipartition *-monoid of degree 2 with 5 generators>
+gap> PartialBrauerMonoid(5);
+<regular bipartition *-monoid of degree 5 with 8 generators>
+
+# JonesMonoid
+gap> JonesMonoid(-1);
+Error, Semigroups: JonesMonoid: usage,
+the argument <n> must be a non-negative integer,
+gap> JonesMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> JonesMonoid(1);
+<trivial block bijection group of degree 1 with 1 generator>
+gap> JonesMonoid(2);
+<commutative regular bipartition *-monoid of degree 2 with 1 generator>
+gap> JonesMonoid(5);
+<regular bipartition *-monoid of degree 5 with 4 generators>
+
+# AnnularJonesMonoid
+gap> AnnularJonesMonoid(-1);
+Error, Semigroups: AnnularJonesMonoid: usage,
+the argument <n> must be a non-negative integer,
+gap> AnnularJonesMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> AnnularJonesMonoid(1);
+<trivial block bijection group of degree 1 with 1 generator>
+gap> AnnularJonesMonoid(2);
+<regular bipartition *-monoid of degree 2 with 2 generators>
+gap> AnnularJonesMonoid(5);
+<regular bipartition *-monoid of degree 5 with 2 generators>
+
+# PartialJonesMonoid
+gap> PartialJonesMonoid(-1);
+Error, Semigroups: PartialJonesMonoid: usage,
+the argument <n> must be a non-negative integer,
+gap> PartialJonesMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> PartialJonesMonoid(1);
+<commutative bipartition monoid of degree 1 with 1 generator>
+gap> PartialJonesMonoid(2);
+<regular bipartition *-monoid of degree 2 with 3 generators>
+gap> PartialJonesMonoid(5);
+<regular bipartition *-monoid of degree 5 with 9 generators>
+
+# MotzkinMonoid
+gap> MotzkinMonoid(-1);
+Error, Semigroups: MotzkinMonoid: usage,
+the argument <n> must be a non-negative integer,
+gap> MotzkinMonoid(0);
+<trivial block bijection group of degree 0 with 1 generator>
+gap> MotzkinMonoid(1);
+<regular bipartition *-monoid of degree 1 with 2 generators>
+gap> MotzkinMonoid(2);
+<regular bipartition *-monoid of degree 2 with 4 generators>
+gap> MotzkinMonoid(5);
+<regular bipartition *-monoid of degree 5 with 10 generators>
+
+# POI
+gap> POI(1);
+<inverse partial perm monoid of rank 1 with 2 generators>
+gap> POI(2);
+<inverse partial perm monoid of rank 2 with 2 generators>
+gap> POI(5);
+<inverse partial perm monoid of rank 5 with 5 generators>
+
+# POPI
+gap> POPI(1);
+<inverse partial perm monoid of rank 1 with 2 generators>
+gap> POPI(2);
+<inverse partial perm monoid of rank 2 with 2 generators>
+gap> POPI(5);
+<inverse partial perm monoid of rank 5 with 2 generators>
+
+# PODI
+gap> PODI(1);
+<inverse partial perm monoid of rank 1 with 2 generators>
+gap> PODI(2);
+<inverse partial perm monoid of rank 2 with 3 generators>
+gap> PODI(5);
+<inverse partial perm monoid of rank 5 with 6 generators>
+
+# SingularPartitionMonoid
+gap> SingularPartitionMonoid(1);;
+gap> SingularPartitionMonoid(2);
+<regular bipartition *-semigroup ideal of degree 2 with 1 generator>
+gap> SingularPartitionMonoid(5);
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
+
+# SingularTransformationMonoid
+gap> SingularTransformationMonoid(1);
+Error, Semigroups: SingularTransformationSemigroup: usage,
+the argument must be greater than 1,
+gap> SingularTransformationMonoid(2);
+<regular transformation semigroup ideal of degree 2 with 1 generator>
+gap> SingularTransformationMonoid(5);
+<regular transformation semigroup ideal of degree 5 with 1 generator>
+
+# SingularOrderEndomorphisms
+gap> SingularOrderEndomorphisms(1);
+Error, Semigroups: SingularOrderEndomorphisms: usage,
+the argument must be greater than 1,
+gap> SingularOrderEndomorphisms(2);
+<regular transformation semigroup ideal of degree 2 with 1 generator>
+gap> SingularOrderEndomorphisms(5);
+<regular transformation semigroup ideal of degree 5 with 1 generator>
+
+# SingularBrauerMonoid
+gap> SingularBrauerMonoid(1);
+Error, Semigroups: SingularBrauerMonoid: usage,
+the argument must be greater than 1,
+gap> SingularBrauerMonoid(2);
+<regular bipartition *-semigroup ideal of degree 2 with 1 generator>
+gap> SingularBrauerMonoid(5);
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
+
+# SingularJonesMonoid
+gap> SingularJonesMonoid(1);
+Error, Semigroups: SingularJonesMonoid: usage,
+the argument must be greater than 1,
+gap> SingularJonesMonoid(2);
+<commutative regular bipartition *-semigroup ideal of degree 2 with
+  1 generator>
+gap> SingularJonesMonoid(5);
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
+
+# SingularDualSymmetricInverseMonoid
+gap> SingularDualSymmetricInverseMonoid(1);
+Error, Semigroups: SingularDualSymmetricInverseMonoid: usage,
+the argument must be greater than 1,
+gap> SingularDualSymmetricInverseMonoid(2);
+<inverse bipartition semigroup ideal of degree 2 with 1 generator>
+gap> SingularDualSymmetricInverseMonoid(5);
+<inverse bipartition semigroup ideal of degree 5 with 1 generator>
+
 #E# 
 gap> STOP_TEST("Semigroups package: standard/semiex.tst");

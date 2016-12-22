@@ -19,7 +19,7 @@
 
 InstallMethod(GeneratorsOfInverseSemigroup,
 "for an inverse semigroup ideal with inverse op and generators",
-[IsSemigroupIdeal and IsInverseSemigroup 
+[IsSemigroupIdeal and IsInverseSemigroup
  and IsGeneratorsOfInverseSemigroup and HasGeneratorsOfSemigroupIdeal],
 function(I)
   # TODO could remove inverses...
@@ -221,18 +221,9 @@ end);
 InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
-  local U, opts, enum, x;
-
-  U := Semigroup(GeneratorsOfSemigroupIdeal(I));
-  opts := SEMIGROUPS.OptionsRec(U);
-  enum := Enumerator(I);
-
-  for x in enum do
-    if not x in U then # excluding this check makes this run much much slower!!
-      U := SEMIGROUPS.AddGenerators(U, [x], opts);
-    fi;
-  od;
-
+  local U;
+  U := ClosureSemigroup(Semigroup(GeneratorsOfSemigroupIdeal(I)),
+                        Enumerator(I));
   return GeneratorsOfSemigroup(U);
 end);
 
