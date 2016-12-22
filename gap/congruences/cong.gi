@@ -96,7 +96,7 @@ end);
 
 InstallGlobalFunction(SemigroupCongruence,
 function(arg)
-  local S, opts, s_opts, x, pairs;
+  local S, opts, s_opts, x, pairs, cong;
   if not Length(arg) >= 2 then
     ErrorNoReturn("Semigroups: SemigroupCongruence: usage,\n",
                   "at least 2 arguments are required,");
@@ -156,7 +156,10 @@ function(arg)
       return SEMIGROUPS.SimpleCongFromPairs(S, pairs);
     elif IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S) and
          Size(S) >= opts.cong_by_ker_trace_threshold then
-      return SEMIGROUPS.InverseCongFromPairs(S, pairs);
+      cong := SemigroupCongruenceByGeneratingPairs(S, pairs);
+      cong := AsInverseSemigroupCongruenceByKernelTrace(cong);
+      SetGeneratingPairsOfMagmaCongruence(cong, pairs);
+      return cong;
     else
       return SemigroupCongruenceByGeneratingPairs(S, pairs);
     fi;
