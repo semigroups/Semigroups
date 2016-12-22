@@ -222,7 +222,7 @@ InstallMethod(GeneratorsOfSemigroup, "for a semigroup ideal with generators",
 [IsSemigroupIdeal and HasGeneratorsOfSemigroupIdeal],
 function(I)
   local U;
-  U := ClosureSemigroup(Semigroup(GeneratorsOfSemigroupIdeal(I)),
+  U := ClosureSemigroup(Semigroup(MinimalIdealGeneratingSet(I)),
                         Enumerator(I));
   return GeneratorsOfSemigroup(U);
 end);

@@ -237,7 +237,7 @@ function(I)
   Info(InfoWarning, 2, "finding a generating set of a semigroup ideal!");
 
   # find generators for I...
-  U := InverseSemigroup(GeneratorsOfSemigroupIdeal(I));
+  U := InverseSemigroup(MinimalIdealGeneratingSet(I));
   partial := PartialOrderOfDClasses(I);
   D := GreensDClasses(I);
 
