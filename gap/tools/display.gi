@@ -333,7 +333,7 @@ InstallMethod(TikzString, "for a bipartition and record",
 [IsBipartition, IsRecord],
 function(x, opts)
   local fill, draw, labels, ext, n, str, block, up, down, min, j, i, k;
-
+  # TODO process options
   if IsBound(opts.colors) and opts.colors = true and NrBlocks(x) < 20 then
     fill := i -> Concatenation("  \\fill[", SEMIGROUPS.TikzColors[i], "](");
     draw := i -> Concatenation("  \\draw[", SEMIGROUPS.TikzColors[i], "](");
@@ -596,6 +596,7 @@ function(S, opts)
             Append(str, gp);
           else
             if opts.idempotentsemilattice then
+              x := HClass(d, RMSElement(RMS, row, Identity(G), col) ^ inv);
               Append(str, " PORT=\"e");
               Append(str, String(Position(elts, Idempotents(x)[1])));
               Append(str, "\"");
@@ -651,8 +652,8 @@ function(S, opts)
 end);
 
 InstallMethod(DotSemilatticeOfIdempotents,
-"for an acting inverse semigroup rep",
-[IsInverseActingSemigroupRep],
+"for inverse semigroup with inverse op",
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 function(S)
   local U, rel, elts, str, nr, V, j, i, k, D, v;
 
@@ -719,6 +720,12 @@ function(f, deg)
   od;
   Append(str, "\n\\end{pmatrix}");
   return str;
+end);
+
+InstallMethod(TexString, "for a transformation",
+[IsTransformation],
+function(f)
+  return TexString(f, DegreeOfTransformation(f));
 end);
 
 InstallMethod(TexString, "for a transformation collection",
