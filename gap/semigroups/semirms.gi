@@ -240,12 +240,12 @@ end);
 InstallMethod(MultiplicativeZero, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
-  local rep, zero;
-
+  local rep, x;
   rep := Representative(R);
-  zero := MultiplicativeZero(ReesMatrixSemigroupOfFamily(FamilyObj(rep)));
-  if IsReesMatrixSemigroup(R) or zero in R then
-    return zero;
+  x := MultiplicativeZero(ReesMatrixSemigroupOfFamily(FamilyObj(rep)));
+  if (HasIsReesZeroMatrixSemigroup(R) and IsReesZeroMatrixSemigroup(R)) 
+      or x in R then
+    return x;
   fi;
   return fail;
 end);
@@ -256,7 +256,7 @@ InstallMethod(IsomorphismPermGroup,
 "for a subsemigroup of a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(S)
-  local rep, G;
+  local rep, mat, G;
 
   if not IsGroupAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
@@ -269,16 +269,18 @@ function(S)
     return MagmaIsomorphismByFunctionsNC(S, Group(()), x -> (), x -> rep);
   fi;
 
-  G := Group(List(GeneratorsOfSemigroup(S), x -> x![2]));
+  mat := Matrix(ReesMatrixSemigroupOfFamily(FamilyObj(rep)));
+  G := Group(List(GeneratorsOfSemigroup(S), x -> x![2] * mat[x![3]][x![1]]));
   UseIsomorphismRelation(S, G);
 
   # gaplint: ignore 4
   return MagmaIsomorphismByFunctionsNC(S,
                                        G,
-                                       x -> x![2],
+                                       x -> x![2] * mat[x![3]][x![1]],
                                        x -> RMSElement(S,
                                                        rep![1],
-                                                       x,
+                                                       x *  mat[rep![3]][rep![1]] ^
+                                                       -1,
                                                        rep![3]));
 end);
 
@@ -315,22 +317,18 @@ end);
 InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(S)
-  local R, G, i, j, U;
+  local x, R, G, U;
+
+  x := MultiplicativeNeutralElement(S);
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
+  elif IsMultiplicativeZero(S, x) then 
+    U := Semigroup(x);
+  else 
+    U := Semigroup(RClassNC(S, x), rec(small := true));
   fi;
-
-  R := GreensRClassOfElementNC(S, MultiplicativeNeutralElement(S));
-  G := SchutzenbergerGroup(R);
-  i := MultiplicativeNeutralElement(S)![1];
-  j := MultiplicativeNeutralElement(S)![3];
-
-  U := Semigroup(List(GeneratorsOfGroup(G), x -> RMSElement(S, i, x, j)));
-
   SetIsGroupAsSemigroup(U, true);
-  UseIsomorphismRelation(U, G);
-
   return U;
 end);
 
@@ -587,7 +585,9 @@ end);
 
 InstallMethod(Idempotents,
 "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup],
+[IsReesZeroMatrixSubsemigroup], 
+RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup) -
+RankFilter(IsReesZeroMatrixSubsemigroup) + 1,
 function(R)
   local G, group, iso, inv, mat, out, k, i, j;
 
@@ -902,9 +902,10 @@ InstallMethod(Size, "for a Rees matrix semigroup",
 [IsReesMatrixSemigroup], 
 RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
 function(R)
-  if Size(UnderlyingSemigroup(R)) = infinity then
-    return infinity;
-  fi;
+  # This is unreachable
+  #if Size(UnderlyingSemigroup(R)) = infinity then
+  #  return infinity;
+  #fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R));
 end);
 
@@ -912,9 +913,10 @@ InstallMethod(Size, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
 function(R)
-  if Size(UnderlyingSemigroup(R)) = infinity then
-    return infinity;
-  fi;
+  # This is unreachable
+  #if Size(UnderlyingSemigroup(R)) = infinity then
+  #  return infinity;
+  #fi;
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R)) + 1;
 end);
 

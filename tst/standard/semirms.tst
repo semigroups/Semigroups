@@ -1762,7 +1762,7 @@ gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);
 gap> NrIdempotents(R);
 2
 gap> Idempotents(R);
-[ (1,(),1), 0 ]
+[ 0, (1,(),1) ]
 gap> AsSet(Idempotents(R)) = Elements(R);
 true
 gap> IsBand(R);
@@ -1776,8 +1776,8 @@ gap> R := ReesZeroMatrixSemigroup(T, [[x, 0], [x, x ^ 2]]);
 gap> NrIdempotents(R);
 4
 gap> Idempotents(R);
-[ (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
-  (2,IdentityTransformation,2), 0 ]
+[ 0, (1,Transformation( [ 2, 1 ] ),1), (1,Transformation( [ 2, 1 ] ),2), 
+  (2,IdentityTransformation,2) ]
 gap> ForAll(Idempotents(R), IsIdempotent);
 true
 gap> x := Transformation([1, 1, 2]);;
@@ -1871,31 +1871,41 @@ true
 
 #T# MatrixEntries: Test for Issue #164
 gap> mat := [
->  [Bipartition([[1, 2, 3, 4, -2, -3], [-1], [-4]]), 0, 0, 0],
->  [0, Bipartition([[1, 3, -1], [2, 4, -2, -3], [-4]]), 0,
->   Bipartition([[1, 4, -1], [2, 3], [-2], [-3, -4]])],
->  [0, 0, Bipartition([[1, 2, 3, -3], [4, -1, -4], [-2]]), 0]];;
-gap> R := ReesZeroMatrixSemigroup(PartitionMonoid(4), mat);;
+>  [Bipartition([[1, 2, 3, -2, -3], [-1]]), 0, 0, 0],
+>  [0, Bipartition([[1, 3, -1], [2, -2, -3]]), 0,
+>   Bipartition([[1, -1], [2, 3], [-2], [-3]])],
+>  [0, 0, Bipartition([[1, 2, 3, -3], [-1], [-2]]), 0]];
+[ [ <bipartition: [ 1, 2, 3, -2, -3 ], [ -1 ]>, 0, 0, 0 ], 
+  [ 0, <block bijection: [ 1, 3, -1 ], [ 2, -2, -3 ]>, 0, 
+      <bipartition: [ 1, -1 ], [ 2, 3 ], [ -2 ], [ -3 ]> ], 
+  [ 0, 0, <bipartition: [ 1, 2, 3, -3 ], [ -1 ], [ -2 ]>, 0 ] ]
+gap> R := ReesZeroMatrixSemigroup(PartitionMonoid(3), mat);;
 gap> MatrixEntries(R);
-[ 0, <bipartition: [ 1, 2, 3, 4, -2, -3 ], [ -1 ], [ -4 ]>, 
-  <bipartition: [ 1, 2, 3, -3 ], [ 4, -1, -4 ], [ -2 ]>, 
-  <bipartition: [ 1, 3, -1 ], [ 2, 4, -2, -3 ], [ -4 ]>, 
-  <bipartition: [ 1, 4, -1 ], [ 2, 3 ], [ -2 ], [ -3, -4 ]> ]
+[ 0, <bipartition: [ 1, 2, 3, -2, -3 ], [ -1 ]>, 
+  <bipartition: [ 1, 2, 3, -3 ], [ -1 ], [ -2 ]>, 
+  <block bijection: [ 1, 3, -1 ], [ 2, -2, -3 ]>, 
+  <bipartition: [ 1, -1 ], [ 2, 3 ], [ -2 ], [ -3 ]> ]
 gap> mat := [
->  [Bipartition([[1, 2, 4], [3, -1, -2], [-3], [-4]]),
->   Bipartition([[1, -2, -4], [2, 3, 4, -3], [-1]])],
->  [Bipartition([[1, 2, 4, -1, -4], [3], [-2, -3]]),
->   Bipartition([[1, 3, -1], [2, 4, -2, -3], [-4]])],
->  [Bipartition([[1, 2, -2, -3], [3, 4, -1], [-4]]),
->   Bipartition([[1, -1, -2], [2, 3, -3, -4], [4]])]];;
-gap> R := ReesZeroMatrixSemigroup(PartitionMonoid(4), mat);;
+>  [Bipartition([[1, 2], [3, -1, -2], [-3]]),
+>   Bipartition([[1, -2], [2, 3, -3], [-1]])],
+>  [Bipartition([[1, 2, -1], [3], [-2, -3]]),
+>   Bipartition([[1, 3, -1], [2, -2, -3]])],
+>  [Bipartition([[1, 2, -2, -3], [3, -1]]),
+>   Bipartition([[1, -1, -2], [2, 3, -3]])]];
+[ [ <bipartition: [ 1, 2 ], [ 3, -1, -2 ], [ -3 ]>, 
+      <bipartition: [ 1, -2 ], [ 2, 3, -3 ], [ -1 ]> ], 
+  [ <bipartition: [ 1, 2, -1 ], [ 3 ], [ -2, -3 ]>, 
+      <block bijection: [ 1, 3, -1 ], [ 2, -2, -3 ]> ], 
+  [ <block bijection: [ 1, 2, -2, -3 ], [ 3, -1 ]>, 
+      <block bijection: [ 1, -1, -2 ], [ 2, 3, -3 ]> ] ]
+gap> R := ReesZeroMatrixSemigroup(PartitionMonoid(3), mat);;
 gap> MatrixEntries(R);
-[ <bipartition: [ 1, 2, 4, -1, -4 ], [ 3 ], [ -2, -3 ]>, 
-  <bipartition: [ 1, 2, 4 ], [ 3, -1, -2 ], [ -3 ], [ -4 ]>, 
-  <bipartition: [ 1, 2, -2, -3 ], [ 3, 4, -1 ], [ -4 ]>, 
-  <bipartition: [ 1, 3, -1 ], [ 2, 4, -2, -3 ], [ -4 ]>, 
-  <bipartition: [ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]>, 
-  <bipartition: [ 1, -1, -2 ], [ 2, 3, -3, -4 ], [ 4 ]> ]
+[ <bipartition: [ 1, 2, -1 ], [ 3 ], [ -2, -3 ]>, 
+  <block bijection: [ 1, 2, -2, -3 ], [ 3, -1 ]>, 
+  <bipartition: [ 1, 2 ], [ 3, -1, -2 ], [ -3 ]>, 
+  <block bijection: [ 1, 3, -1 ], [ 2, -2, -3 ]>, 
+  <block bijection: [ 1, -1, -2 ], [ 2, 3, -3 ]>, 
+  <bipartition: [ 1, -2 ], [ 2, 3, -3 ], [ -1 ]> ]
 
 #T# IsomorphismReesMatrixSemigroup, infinite
 gap> IsomorphismReesMatrixSemigroup(FreeInverseSemigroup(2));
@@ -2021,6 +2031,288 @@ gap> x := MultiplicativeZero(S);;
 gap> func := ChooseHashFunction(x, 25531).func;;
 Error, Semigroups: ChooseHashFunction: error, 
 cannot hash RZMS elements over this underlying semigroup,
+
+# RandomSemigroup
+gap> RandomSemigroup(IsReesMatrixSemigroup);;
+gap> RandomSemigroup(IsReesMatrixSemigroup, 2);;
+gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2);;
+gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2, Group(()));;
+gap> RandomSemigroup(IsReesMatrixSemigroup, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the second argument (number of rows) must be a pos int,
+gap> RandomSemigroup(IsReesMatrixSemigroup, 2, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the third argument (number of columns) must be a pos int,
+gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the fourth argument must be a perm group,
+gap> RandomSemigroup(IsReesMatrixSemigroup, 2, 2, Group(()), 1);
+Error, Semigroups: RandomSemigroup: usage,
+there must be at most four arguments,
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup);;
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2);;
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2);;
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2, Group(()));;
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the second argument (number of rows) must be a pos int,
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the third argument (number of columns) must be a pos int,
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the fourth argument must be a perm group,
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2, Group(()), 1);
+Error, Semigroups: RandomSemigroup: usage,
+there must be at most four arguments,
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup);;
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2);;
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2);;
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2, Group(()));;
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the second argument (number of rows) must be a pos int,
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the third argument (number of columns) must be a pos int,
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2, "a");
+Error, Semigroups: RandomSemigroup: usage,
+the fourth argument must be a perm group,
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2, Group(()), 1);
+Error, Semigroups: RandomSemigroup: usage,
+there must be at most four arguments,
+
+# Test RMSElementNC
+gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), (1, 3), (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);
+<Rees matrix semigroup 3x4 over Sym( [ 1 .. 4 ] )>
+gap> x := RMSElementNC(R, 1, (1,2), 1);
+(1,(1,2),1)
+gap> x in R;
+true
+
+# Test MultiplicativeZero
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), 0, (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);
+<Rees 0-matrix semigroup 3x4 over Sym( [ 1 .. 4 ] )>
+gap> R := Semigroup(R);;
+gap> MultiplicativeZero(R);
+0
+
+# Test IsomorphismPermGroup
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), 0, (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);
+<Rees 0-matrix semigroup 3x4 over Sym( [ 1 .. 4 ] )>
+gap> IsomorphismPermGroup(R);
+Error, Semigroups: IsomorphismPermGroup: usage,
+the argument <S> must be a subsemigroup of a Rees 0-matrix semigroup satisfyin\
+g IsGroupAsSemigroup,
+gap> S := Semigroup(MultiplicativeZero(R));;
+gap> IsomorphismPermGroup(S);
+MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 
+ with 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
+gap> S := Semigroup(RMSElementNC(R, 1, (1,2,3), 1));;
+gap> map := IsomorphismPermGroup(S);
+MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 
+ with 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+gap> S := Semigroup(RMSElementNC(R, 1, (1,3), 1));;
+gap> map := IsomorphismPermGroup(S);
+MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 
+ with 1 generator>, Group([ (1,
+2) ]), function( x ) ... end, function( x ) ... end )
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+# Test GroupOfUnits
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), 0, (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);;
+gap> GroupOfUnits(R);
+fail
+gap> S := Semigroup(MultiplicativeZero(R));;
+gap> GroupOfUnits(S);
+<subsemigroup of 3x4 Rees 0-matrix semigroup with 1 generator>
+gap> S := Semigroup(RMSElementNC(R, 1, (1,3), 1));;
+gap> GroupOfUnits(S);
+<subsemigroup of 3x4 Rees 0-matrix semigroup with 2 generators>
+gap> S := Semigroup(RMSElementNC(R, 2, (1,3), 3));;
+gap> GroupOfUnits(S);
+fail
+
+# Test Random
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), 0, (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);;
+gap> Random(R) in R;
+true
+
+# Test ViewString for a Rees 0-matrix semigroup ideal
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), 0, (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);;
+gap> I := SemigroupIdeal(R, MultiplicativeZero(R));
+<regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsTrivial(I);
+true
+gap> I;;
+gap> I := SemigroupIdeal(R, MultiplicativeZero(R));
+<regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsCommutative(I) and IsSimpleSemigroup(I);
+true
+gap> I;;
+gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1,3), 1));
+<regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsCommutative(I);
+false
+gap> I;
+<regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsZeroSimpleSemigroup(I);
+true
+gap> I;
+<0-simple regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(), 0], [0, ()]]);
+<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 4 ] )>
+gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (), 2));
+<regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsInverseSemigroup(I);
+true
+gap> I;
+<inverse Rees 0-matrix semigroup ideal with 1 generator>
+gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1,3), 1), 
+>                           RMSElementNC(R, 2, (1,3), 3));
+<regular Rees 0-matrix semigroup ideal with 2 generators>
+gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1,3), 3));
+<regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[0, 0], [0, 0]]);
+<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 4 ] )>
+gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1,3), 2));
+<Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsRegularSemigroup(I);
+false
+gap> I;
+<commutative non-regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(), ()], [(), ()]]);
+<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 4 ] )>
+gap> S := Semigroup(DClass(R, RMSElement(R, 1, (), 1)));
+<subsemigroup of 2x2 Rees 0-matrix semigroup with 96 generators>
+gap> IsSimpleSemigroup(S);
+true
+gap> I := SemigroupIdeal(S, S.1);
+<regular Rees 0-matrix semigroup ideal with 1 generator>
+gap> IsSimpleSemigroup(I);
+true
+gap> I;
+<simple Rees 0-matrix semigroup ideal with 1 generator>
+
+# Test MatrixEntries for an RMS
+gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), (1, 3), (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);
+<Rees matrix semigroup 3x4 over Sym( [ 1 .. 4 ] )>
+gap> MatrixEntries(R);
+[ (), (3,4), (2,4,3), (1,2), (1,2,3,4), (1,2,4,3), (1,3,2), (1,3), 
+  (1,3)(2,4), (1,4,2) ]
+
+# Test GreensHClassOfElement for RZMS
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), 0, (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);;
+gap> H := GreensHClassOfElement(R, 1, 1);
+<Green's H-class: (1,(1,2,3,4),1)>
+gap> IsGroupHClass(H);
+true
+gap> H := GreensHClassOfElement(R, 2, 3);
+<Green's H-class: (2,(1,2,3,4),3)>
+gap> IsGroupHClass(H);
+false
+gap> H := GreensHClassOfElement(R, 3, 2);
+<Green's H-class: (3,(1,2,3,4),2)>
+gap> IsGroupHClass(H);
+true
+
+# Test Idempotents 
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), 0, (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);;
+gap> Idempotents(R);
+[ 0, (1,(1,2,3),1), (1,(),2), (1,(3,4),3), (1,(),4), (2,(),1), 
+  (2,(1,3)(2,4),2), (2,(2,3,4),4), (3,(1,2,4),1), (3,(1,4,3,2),2), 
+  (3,(1,3,4,2),3), (3,(1,2),4) ]
+gap> G := AsSemigroup(IsTransformationSemigroup, SymmetricGroup(4));
+<transformation group of size 24, degree 4 with 2 generators>
+gap> R := ReesZeroMatrixSemigroup(G, [[IdentityTransformation,
+>                                      IdentityTransformation]]);
+<Rees 0-matrix semigroup 2x1 over <transformation group of size 24, 
+  degree 4 with 2 generators>>
+gap> Idempotents(R);
+[ 0, (1,IdentityTransformation,1), (2,IdentityTransformation,1) ]
+gap> R := ReesZeroMatrixSemigroup(ZeroSemigroup(2), 
+> [[Transformation([1, 1, 2]), Transformation([1, 1, 2])]]); 
+<Rees 0-matrix semigroup 2x1 over <commutative non-regular transformation 
+  semigroup of size 2, degree 3 with 1 generator>>
+gap> Idempotents(R);
+[ (1,Transformation( [ 1, 1, 1 ] ),1), (2,Transformation( [ 1, 1, 1 ] ),1), 0 
+ ]
+
+# Test IsIdempotentGenerated
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), 0, (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);;
+gap> IsIdempotentGenerated(R);
+true
+gap> R := PrincipalFactor(DClass(FullTransformationMonoid(5),
+> Transformation([1, 1, 2, 3, 4])));;
+gap> IsIdempotentGenerated(R);
+true
+gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
+> [[(), 0], [0, ()]]);
+<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 4 ] )>
+gap> IsIdempotentGenerated(R);
+false
+
+# Test Size for infinite RMS and RZMS
+gap> S := FreeSemigroup(2);;
+gap> R := ReesZeroMatrixSemigroup(S, [[S.1]]);
+<Rees 0-matrix semigroup 1x1 over <free semigroup on the generators 
+ [ s1, s2 ]>>
+gap> Size(R);
+infinity
+gap> R := ReesMatrixSemigroup(S, [[S.1]]);
+<Rees matrix semigroup 1x1 over <free semigroup on the generators [ s1, s2 ]>>
+gap> Size(R);
+infinity
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
