@@ -40,9 +40,23 @@ DeclareAttribute("MinimalCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("MinimalLeftCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("MinimalRightCongruencesOfSemigroup", IsSemigroup);
 
+DeclareOperation("MinimalCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("MinimalLeftCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("MinimalRightCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+
 DeclareAttribute("PrincipalCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("PrincipalLeftCongruencesOfSemigroup", IsSemigroup);
 DeclareAttribute("PrincipalRightCongruencesOfSemigroup", IsSemigroup);
+
+DeclareOperation("PrincipalCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("PrincipalLeftCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
+DeclareOperation("PrincipalRightCongruencesOfSemigroup",
+                 [IsSemigroup, IsMultiplicativeElementCollection]);
 
 DeclareSynonym("GeneratingPairsOfLeftSemigroupCongruence",
                GeneratingPairsOfLeftMagmaCongruence);

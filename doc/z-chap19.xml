@@ -75,15 +75,29 @@
     <#Include Label = "NonTrivialCongruenceClasses">
     <#Include Label = "NrEquivalenceClasses">
     <#Include Label = "NrCongruenceClasses">
-    <#Include Label = "CongruencesOfSemigroup">
-    <#Include Label = "MinimalCongruencesOfSemigroup">
-    <#Include Label = "PrincipalCongruencesOfSemigroup">
-    <#Include Label = "LatticeOfCongruences">
-    <#Include Label = "CongruencesOfLattice">
     <#Include Label = "EquivalenceRelationLookup">
     <#Include Label = "EquivalenceRelationCanonicalLookup">
     <#Include Label = "OnLeftCongruenceClasses">
     <#Include Label = "OnRightCongruenceClasses">
+
+  </Section>
+
+  <Section>
+    <Heading>
+      Finding the congruences of a semigroup
+    </Heading>
+
+    <#Include Label = "CongruencesOfSemigroup">
+    <#Include Label = "MinimalCongruencesOfSemigroup">
+    <#Include Label = "PrincipalCongruencesOfSemigroup">
+    <#Include Label = "IsCongruencePoset">
+    <#Include Label = "LatticeOfCongruences">
+    <#Include Label = "PosetOfPrincipalCongruences">
+    <#Include Label = "CongruencesOfPoset">
+    <#Include Label = "UnderlyingSemigroupOfCongruencePoset">
+    <#Include Label = "PosetOfCongruences">
+    <#Include Label = "JoinSemilatticeOfCongruences">
+    <#Include Label = "MinimalCongruences">
 
   </Section>
 
