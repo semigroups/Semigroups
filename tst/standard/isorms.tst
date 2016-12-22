@@ -319,11 +319,13 @@ gap> G := AutomorphismGroup(R);
 gap> G.1 = G.2;
 false
 gap> CompositionMapping2(G.1, G.2);
-((), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (), (), () ])
+((), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( [ (1,2,3) ] ), 
+[ (1,2,3) ], [ (1,3,2) ] ), [ (), (1,3,2), (1,3,2), (1,2,3) ])
 gap> R.1 ^ G.1;
 (1,(),1)
 gap> G.1 ^ -1;
-((), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (1,3,2), (), (1,3,2) ])
+((), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( [ (1,2,3) ] ), 
+[ (1,3,2) ], [ (1,2,3) ] ), [ (), (), (1,3,2), (1,3,2) ])
 gap> IsOne(G.1);
 false
 gap> IsOne(One(G.1 * G.2));
@@ -332,8 +334,8 @@ gap> Print(G.1); true;
 RZMSIsoByTriple ( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), 
 [ [ (1,2,3), 0 ], [ 0, (1,2,3) ] ] ), ReesZeroMatrixSemigroup( Group( 
 [ (1,2,3) ] ), [ [ (1,2,3), 0 ], [ 0, (1,2,3) ] 
- ] ), (), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (1,2,3), (), (1,2,3) 
- ] )true
+ ] ), (), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( 
+[ (1,2,3) ] ), [ (1,2,3) ], [ (1,3,2) ] ), [ (), (), (1,3,2), (1,3,2) ] )true
 
 #T# \=: RZMS and RZMS elements 2/2
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3)]),
@@ -349,11 +351,13 @@ gap> H := AutomorphismGroup(S);
 gap> G.1 = H.1;
 false
 gap> CompositionMapping2(G.1, G.2);
-((), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (), (), () ])
+((), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( [ (1,2,3) ] ), 
+[ (1,2,3) ], [ (1,3,2) ] ), [ (), (1,3,2), (1,3,2), (1,2,3) ])
 gap> R.1 ^ G.1;
 (1,(),1)
 gap> G.1 ^ -1;
-((), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (1,3,2), (), (1,3,2) ])
+((), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( [ (1,2,3) ] ), 
+[ (1,3,2) ], [ (1,2,3) ] ), [ (), (), (1,3,2), (1,3,2) ])
 gap> IsOne(G.1);
 false
 gap> IsOne(One(G.1 * G.2));
@@ -362,8 +366,8 @@ gap> Print(G.1); true;
 RZMSIsoByTriple ( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), 
 [ [ (1,2,3), 0 ], [ 0, (1,2,3) ] ] ), ReesZeroMatrixSemigroup( Group( 
 [ (1,2,3) ] ), [ [ (1,2,3), 0 ], [ 0, (1,2,3) ] 
- ] ), (), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (1,2,3), (), (1,2,3) 
- ] )true
+ ] ), (), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( 
+[ (1,2,3) ] ), [ (1,2,3) ], [ (1,3,2) ] ), [ (), (), (1,3,2), (1,3,2) ] )true
 gap> PreImagesRepresentative(G.2, R.1);
 (1,(),1)
 gap> ImagesElm(G.2, R.1);

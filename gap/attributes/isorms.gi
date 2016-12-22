@@ -8,14 +8,8 @@
 #############################################################################
 ##
 
-# FIXME
-# 1) \< and \= are incompatible, it could be that map1 < map2 and map1 = map2
-#
-
-# TODO
-#
-# 1) SEMIGROUPS.HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to have
-#    their own type)
+# TODO SEMIGROUPS.HashFunctionMatrixOfRMS (requires RZMS/RMS matrices to have
+# their own type)
 
 #############################################################################
 ## This file contains functions for isomorphisms and automorphisms of Rees
@@ -884,8 +878,12 @@ end);
 InstallMethod(\<, "for objects in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
 function(x, y)
-  return (x[1] < y[1]) or (x[1] = y[1] and x[2] < y[2])
-    or (x[1] = y[1] and x[2] = y[2] and x[3] < y[3]);
+  if Source(x) <> Source(y) or Range(x) <> Range(y) then
+    return Source(x) < Source(y) 
+      or Source(x) = Source(y) and Range(x) < Range(y);
+  fi;
+  return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
+         < OnTuples(GeneratorsOfSemigroup(Source(x)), y);
 end);
 
 #
@@ -893,8 +891,12 @@ end);
 InstallMethod(\<, "for objects in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
 function(x, y)
-  return (x[1] < y[1]) or (x[1] = y[1] and x[2] < y[2])
-    or (x[1] = y[1] and x[2] = y[2] and x[3] < y[3]);
+  if Source(x) <> Source(y) or Range(x) <> Range(y) then
+    return Source(x) < Source(y) 
+      or Source(x) = Source(y) and Range(x) < Range(y);
+  fi;
+  return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
+         < OnTuples(GeneratorsOfSemigroup(Source(x)), y);
 end);
 
 #
