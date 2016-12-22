@@ -8,6 +8,10 @@
 #############################################################################
 ##
 
+# TODO what happens when we copy an iterator from pickled file, while the
+# original iterator is not finished?? Is there a problem with having the file
+# open twice? 
+
 InstallGlobalFunction(IteratorFromPickledFile,
 function(str)
   local file, record;
@@ -82,6 +86,8 @@ function(arg)
   fi;
 
   if line_nr <> 0 then
+    # When the first arg is a file this means get the line_nr-th entry from the
+    # last read entry and not necessarily from the start of the file
     i := 0;
     repeat
       i := i + 1;
@@ -93,7 +99,7 @@ function(arg)
     fi;
     if obj = IO_Nothing then
       ErrorNoReturn("Semigroups: ReadGenerators:\n",
-                    "the file only has ", i - 1, " rows,");
+                    "the file only has ", i - 1, " further entries,");
     fi;
     return obj;
   else
@@ -139,6 +145,7 @@ function(arg)
     name := UserHomeExpand(name);
     file := IO_CompressedFile(name, mode);
     if file = fail then
+      # Cannot test this
       ErrorNoReturn("Semigroups: WriteGenerators:\n",
                     "couldn't open the file ", name, ",");
     fi;
