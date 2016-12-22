@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+# No attempt has been made to get good test coverage for this file, since it
+# will hopefully be binned in the near future. 
+
 # technical...
 
 # <convert_in> must return <fail> if it is not possible to convert

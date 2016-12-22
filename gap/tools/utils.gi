@@ -9,6 +9,9 @@
 ##
 ## this file contains utilies for use with the Semigroups package.
 
+# No attempt has been made to get good test coverage for this file, since it
+# will hopefully be binned in the near future. 
+
 #############################################################################
 # 1. Put things in the record SEMIGROUPS.
 #############################################################################

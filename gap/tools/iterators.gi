@@ -8,6 +8,9 @@
 #############################################################################
 ##
 
+# No attempt has been made to get good test coverage for this file, since it
+# will hopefully be binned in the near future. 
+
 InstallGlobalFunction(IteratorSortedOp,
 function(arg)
   local record, iter;
