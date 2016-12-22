@@ -80,7 +80,6 @@ end;
 
 SEMIGROUPS.ClosureSemigroupDestructive := function(S, coll, opts)
   local T;
-
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
@@ -544,6 +543,14 @@ InstallMethod(ClosureSemigroupOrMonoidNC,
  IsRecord],
 function(Constructor, S, coll, opts)
   local n, T, U;
+ 
+  # EN_SEMI_CLOSURE copies the C++ semigroup if any whenever it is called, so
+  # it is essential to filter coll to remove any elements that are already in S
+  # here. 
+  coll := Filtered(coll, x -> not x in S);
+  if IsEmpty(coll) then 
+    return S;
+  fi;
 
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
@@ -750,6 +757,14 @@ InstallMethod(ClosureInverseSemigroupOrMonoidNC,
  IsRecord],
 function(Constructor, S, coll, opts)
   local n, x, T, U, i;
+  
+  # EN_SEMI_CLOSURE copies the C++ semigroup if any whenever it is called, so
+  # it is essential to filter coll to remove any elements that are already in S
+  # here. 
+  coll := Filtered(coll, x -> not x in S);
+  if IsEmpty(coll) then 
+    return S;
+  fi;
 
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function

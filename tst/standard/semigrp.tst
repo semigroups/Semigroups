@@ -320,7 +320,7 @@ gap> S := Semigroup(AsSet(FullBooleanMatMonoid(2)), rec(small := true));
 # Test SemigroupByGenerators 4
 gap> SetInfoLevel(InfoSemigroups, 2);
 gap> S := Semigroup(AsSet(FullBooleanMatMonoid(2)), rec(small := true));
-<monoid of 2x2 boolean matrices with 4 generators>
+<monoid of 2x2 boolean matrices with 3 generators>
 gap> SetInfoLevel(InfoSemigroups, 0); 
 
 # Test SemigroupByGenerators 5
@@ -374,7 +374,7 @@ gap> S := Monoid(AsSet(FullTransformationMonoid(3)), rec(small := true));
 
 # Test MonoidByGenerators 2
 gap> S := Monoid(AsSet(FullBooleanMatMonoid(2)), rec(small := true));
-<monoid of 2x2 boolean matrices with 4 generators>
+<monoid of 2x2 boolean matrices with 3 generators>
 
 # Test MonoidByGenerators 3
 gap> S := Monoid(BrauerMonoid(4), rec(regular := true));;

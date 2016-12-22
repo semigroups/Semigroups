@@ -121,7 +121,7 @@ gap> MaximalSubsemigroups(S, rec(types := 0));
 gap> R := ReesMatrixSemigroup(FullTransformationMonoid(2), [[x]]);;
 gap> MaximalSubsemigroups(R, rec(types := 0));
 [ <subsemigroup of 1x1 Rees matrix semigroup with 2 generators>, 
-  <subsemigroup of 1x1 Rees matrix semigroup with 4 generators> ]
+  <subsemigroup of 1x1 Rees matrix semigroup with 3 generators> ]
 gap> R := ReesZeroMatrixSemigroup(S, [[x, 0]]);;
 gap> MaximalSubsemigroups(R, rec(types := 0));
 [ <Rees 0-matrix semigroup ideal with 2 generators>, 
@@ -203,7 +203,7 @@ gap> R := ReesMatrixSemigroup(S, [[One(S)]]);
 <Rees matrix semigroup 1x1 over <full transformation monoid of degree 2>>
 gap> MaximalSubsemigroups(R);
 [ <subsemigroup of 1x1 Rees matrix semigroup with 2 generators>, 
-  <subsemigroup of 1x1 Rees matrix semigroup with 4 generators> ]
+  <subsemigroup of 1x1 Rees matrix semigroup with 3 generators> ]
 
 #T# maximal: MaximalSubsemigroups, for a Rees matrix semigroup, 3
 

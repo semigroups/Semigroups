@@ -705,6 +705,23 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
   std::vector<Element*>* coll      = plist_to_vec(converter, plist, deg);
 
   Semigroup* old_semi_cpp = semi_obj_get_semi_cpp(old_so);
+
+  // CAUTION: copy_closure always copies old_semi_cpp regardless of whether or
+  // not every element in coll belongs to old_semi_cpp!! Only call this
+  // function if coll contains some elements not in old_semi_cpp. We check in
+  // the GAP to avoid creating new_so at all, and also to avoid sorting etc a
+  // collection of elements that belong to the semigroup.
+#ifdef DEBUG
+  bool valid = false;
+  for (auto const& x : *coll) {
+    if (!old_semi_cpp->test_membership(x)) {
+      valid = true;
+      break;
+    }
+  }
+  assert(valid);
+#endif
+
   Semigroup* new_semi_cpp =
       old_semi_cpp->copy_closure(coll, semi_obj_get_report(new_so));
   really_delete_cont(coll);
