@@ -241,6 +241,27 @@ gap> IsSubrelation(c4, c1);
 Error, Semigroups: IsSubrelation: usage,
 congruences must be defined over the same semigroup,
 
+#T# EquivalenceRelation(Canonical)Lookup
+gap> S := FullTransformationMonoid(3);;
+gap> I := SemigroupIdeal(S, Transformation([1, 1, 2]));;
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);
+<Rees congruence of <regular transformation semigroup ideal of degree 3 with
+  1 generator> over <full transformation monoid of degree 3>>
+gap> EquivalenceRelationLookup(cong);
+[ 1, 2, 3, 11, 5, 6, 11, 8, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 
+  11, 11, 11, 11, 11, 11, 11 ]
+gap> EquivalenceRelationCanonicalLookup(cong);
+[ 1, 2, 3, 4, 5, 6, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+  4, 4 ]
+
+#T# Trivial congruence as Rees
+gap> S := SymmetricInverseMonoid(3);;
+gap> cong := ReesCongruenceOfSemigroupIdeal(MinimalIdeal(S));;
+gap> EquivalenceRelationLookup(cong) = [1 .. 34];
+true
+gap> EquivalenceRelationCanonicalLookup(cong) = [1 .. 34];
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(I);
 gap> Unbind(J);
