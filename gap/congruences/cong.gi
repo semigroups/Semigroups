@@ -503,3 +503,17 @@ _GenericCongCanonicalLookup);
 
 MakeReadWriteGlobal("_GenericCongCanonicalLookup");
 Unbind(_GenericCongCanonicalLookup);
+
+InstallMethod(NrEquivalenceClasses,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+function(cong)
+  return Length(EquivalenceClasses(cong));
+end);
+
+InstallMethod(NrEquivalenceClasses,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+function(cong)
+  return Length(EquivalenceClasses(cong));
+end);
