@@ -459,7 +459,7 @@ end);
 
 # don't hit F5 for local variables here, it crashes vim!!
 InstallMethod(AutomorphismGroup, "for a Rees matrix semigroup",
-[IsReesMatrixSemigroup],
+[IsReesMatrixSemigroup and IsWholeFamily],
 function(R)
   local G, m, n, aut_graph, aut_group, stab_aut_graph,
         hom, stab_aut_group, V, A, gens1, gens2, U, T, tester,
@@ -641,7 +641,7 @@ function(G)
 end);
 
 InstallMethod(IdentityMapping, "for a Rees matrix semigroup",
-[IsReesMatrixSemigroup],
+[IsReesMatrixSemigroup and IsWholeFamily],
 function(R)
   local G;
   G := UnderlyingSemigroup(R);
@@ -653,7 +653,7 @@ function(R)
 end);
 
 InstallMethod(IdentityMapping, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
+[IsReesZeroMatrixSemigroup and IsWholeFamily],
 function(R)
   local G, tup;
   G := UnderlyingSemigroup(R);
@@ -666,7 +666,8 @@ end);
 #############################################################################
 
 InstallMethod(IsomorphismSemigroups, "for Rees matrix semigroups",
-[IsReesMatrixSemigroup, IsReesMatrixSemigroup],
+[IsReesMatrixSemigroup and IsWholeFamily, 
+ IsReesMatrixSemigroup and IsWholeFamily],
 function(R1, R2)
   local mat, m, n, g, g1, g2, iso, isograph, isogroup, map, l, tup,
   RMSInducedFunction;
@@ -714,7 +715,8 @@ function(R1, R2)
 end);
 
 InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups",
-[IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup],
+[IsReesZeroMatrixSemigroup and IsWholeFamily, 
+ IsReesZeroMatrixSemigroup and IsWholeFamily],
 function(R1, R2)
   local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso, tuples,
         map, l, tup, RZMStoRZMSInducedFunction;

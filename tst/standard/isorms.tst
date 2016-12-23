@@ -373,6 +373,34 @@ gap> PreImagesRepresentative(G.2, R.1);
 gap> ImagesElm(G.2, R.1);
 [ (1,(),1) ]
 
+# Issue #167, problem with IsomorphismSemigroups for RMS and RZMS when one of
+# the arguments was did not satisfy IsWholeFamily
+gap> R := ReesMatrixSemigroup(Group(()), [[(), ()],[(),()]]);;
+gap> W := Semigroup(RMSElement(R, 2, (), 2));;
+gap> S := ReesMatrixSemigroup(Group(()), [[()]]);;
+gap> IsTrivial(S) and IsTrivial(W);
+true
+gap> IsomorphismSemigroups(S, S);
+((), IdentityMapping( Group( [ () ] ) ), [ (), () ])
+gap> IsomorphismSemigroups(W, W);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `IsomorphismSemigroups' on 2 arguments
+gap> IsomorphismSemigroups(S, W);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `IsomorphismSemigroups' on 2 arguments
+gap> IsomorphismSemigroups(W, S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `IsomorphismSemigroups' on 2 arguments
+gap> map := IsomorphismReesMatrixSemigroup(W);;
+gap> WW := Range(map);
+<Rees matrix semigroup 1x1 over Group(())>
+gap> IsomorphismSemigroups(S, WW);
+((), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [  ], 
+[  ] ), [ (), () ])
+gap> IsomorphismSemigroups(WW, S);
+((), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [  ], 
+[  ] ), [ (), () ])
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
 gap> Unbind(H);
