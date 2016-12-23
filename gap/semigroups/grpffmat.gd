@@ -15,8 +15,10 @@
 
 DeclareSynonym("IsMatrixOverFiniteFieldGroup", 
                IsGroup and IsMatrixOverFiniteFieldSemigroup);
-DeclareAttribute("IsomorphismMatrixGroup", IsMatrixOverFiniteFieldGroup);
-DeclareAttribute("AsMatrixGroup", IsMatrixOverFiniteFieldGroup);
-# FIXME This has no installed methods
-# DeclareAttribute("AsMatrixOverFiniteFieldGroup", IsMatrixGroup);
+
+DeclareAttribute("IsomorphismMatrixGroup", 
+                 IsMatrixOverFiniteFieldSemigroup);
+DeclareAttribute("AsMatrixGroup", 
+                 IsMatrixOverFiniteFieldSemigroup);
+
 DeclareOperation("\^", [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField]);

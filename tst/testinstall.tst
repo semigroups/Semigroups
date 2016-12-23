@@ -1051,14 +1051,12 @@ gap> hom := HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
 gap> map := IsomorphismTransformationSemigroup(Range(hom));;
 
 #T# Checking for correct non-removal of one from generating sets in
-# SemigroupByGenerators JDM
+# SemigroupByGenerators 
 gap> S := Semigroup(PartialPerm([1]));
 <trivial partial perm group of rank 1 with 1 generator>
 gap> GeneratorsOfSemigroup(S);
 [ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfMonoid(S);
-[ <identity partial perm on [ 1 ]> ]
-gap> GeneratorsOfGroup(S);
 [ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfInverseSemigroup(S);
 [ <identity partial perm on [ 1 ]> ]
@@ -1070,15 +1068,9 @@ gap> GeneratorsOfSemigroup(S);
 [ IdentityTransformation ]
 gap> GeneratorsOfMonoid(S);
 [ IdentityTransformation ]
-gap> GeneratorsOfGroup(S);
-[ IdentityTransformation ]
-gap> GeneratorsOfInverseSemigroup(S);
-[ IdentityTransformation ]
-gap> GeneratorsOfInverseMonoid(S);
-[ IdentityTransformation ]
 
 #T# Checking for correct non-removal of one from generating sets in
-# MonoidByGenerators JDM
+# MonoidByGenerators 
 gap> S := Monoid(PartialPerm([1]));
 <trivial partial perm group of rank 1 with 1 generator>
 gap> S := Monoid(PartialPerm([1]));
@@ -1086,8 +1078,6 @@ gap> S := Monoid(PartialPerm([1]));
 gap> GeneratorsOfSemigroup(S);
 [ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfMonoid(S);
-[ <identity partial perm on [ 1 ]> ]
-gap> GeneratorsOfGroup(S);
 [ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfInverseSemigroup(S);
 [ <identity partial perm on [ 1 ]> ]
@@ -1099,12 +1089,6 @@ gap> GeneratorsOfSemigroup(S);
 [ IdentityTransformation ]
 gap> GeneratorsOfMonoid(S);
 [ IdentityTransformation ]
-gap> GeneratorsOfGroup(S);
-[ IdentityTransformation ]
-gap> GeneratorsOfInverseSemigroup(S);
-[ IdentityTransformation ]
-gap> GeneratorsOfInverseMonoid(S);
-[ IdentityTransformation ]
 
 #T# Checking for correct non-removal of one from generating sets in
 # InverseSemigroupByGenerators JDM
@@ -1113,8 +1097,6 @@ gap> S := InverseSemigroup(PartialPerm([1]));
 gap> GeneratorsOfSemigroup(S);
 [ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfMonoid(S);
-[ <identity partial perm on [ 1 ]> ]
-gap> GeneratorsOfGroup(S);
 [ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfInverseSemigroup(S);
 [ <identity partial perm on [ 1 ]> ]
@@ -1125,8 +1107,6 @@ gap> S := InverseSemigroup(IdentityTransformation);
 gap> GeneratorsOfSemigroup(S);
 [ IdentityTransformation ]
 gap> GeneratorsOfMonoid(S);
-[ IdentityTransformation ]
-gap> GeneratorsOfGroup(S);
 [ IdentityTransformation ]
 gap> GeneratorsOfInverseSemigroup(S);
 [ IdentityTransformation ]
@@ -1141,8 +1121,6 @@ gap> GeneratorsOfSemigroup(S);
 [ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfMonoid(S);
 [ <identity partial perm on [ 1 ]> ]
-gap> GeneratorsOfGroup(S);
-[ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfInverseSemigroup(S);
 [ <identity partial perm on [ 1 ]> ]
 gap> GeneratorsOfInverseMonoid(S);
@@ -1152,8 +1130,6 @@ gap> S := InverseMonoid(IdentityTransformation);
 gap> GeneratorsOfSemigroup(S);
 [ IdentityTransformation ]
 gap> GeneratorsOfMonoid(S);
-[ IdentityTransformation ]
-gap> GeneratorsOfGroup(S);
 [ IdentityTransformation ]
 gap> GeneratorsOfInverseSemigroup(S);
 [ IdentityTransformation ]

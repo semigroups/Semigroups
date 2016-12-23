@@ -1668,7 +1668,8 @@ Error, Semigroups: DirectProductOp: usage,
 the first argument must be a non-empty list,
 gap> DirectProductOp([Semigroup(IdentityTransformation)],
 > Semigroup(PartialPerm([1 .. 3])));
-<group with 1 generators>
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `DirectProductOp' on 2 arguments
 gap> S := DirectProduct(SymmetricInverseMonoid(3), SymmetricInverseMonoid(3));
 <inverse partial perm monoid of rank 6 with 6 generators>
 gap> Size(S) = 34 ^ 2;

@@ -499,6 +499,9 @@ function(S)
     local S, o, m;
     S := enum!.parent;
     o := RhoOrb(S);
+    if nr + 1 > Length(OrbSCCLookup(o)) then 
+      return fail;
+    fi;
     m := OrbSCCLookup(o)[nr + 1];
     return
       GreensRClassOfElementNC(S,

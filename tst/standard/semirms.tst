@@ -1302,7 +1302,7 @@ true
 gap> F := FreeMonoid(0);; AssignGeneratorVariables(F);;
 gap> rels := [ ];;
 gap> S := F / rels;
-<fp group on the generators [  ]>
+<fp monoid on the generators [  ]>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group(())>
 gap> Size(S) = Size(T);

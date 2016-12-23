@@ -658,7 +658,9 @@ InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
 InstallMethod(LambdaBound, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
 function(r)
-  if r < 100 then
+  if r = 0 then 
+    return 1;
+  elif r < 100 then
     return Size(GL(DimensionOfMatrixOverSemiringCollection(S), BaseDomain(S)));
   else
     return infinity;

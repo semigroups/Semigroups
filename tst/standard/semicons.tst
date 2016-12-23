@@ -554,7 +554,7 @@ false
 gap> AsList(S);
 [ IdentityTransformation ]
 gap> IsGroup(S);
-true
+false
 gap> S := Semigroup(S);;
 gap> HasSize(S);
 false
@@ -573,7 +573,7 @@ false
 gap> AsList(S);
 [ IdentityTransformation ]
 gap> IsGroup(S);
-true
+false
 
 #T# constructions: ZeroSemigroup: known properties and attributes, n = 2
 gap> S := ZeroSemigroup(2);;

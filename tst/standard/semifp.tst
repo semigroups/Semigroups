@@ -92,7 +92,7 @@ gap> RelationsOfFpSemigroup(S);
 gap> S := TrivialSemigroup();
 <trivial transformation group of degree 0 with 1 generator>
 gap> S := AsMonoid(IsFpMonoid, S);
-<fp group on the generators [  ]>
+<fp monoid on the generators [  ]>
 
 #T# AsFpMonoid 2: 2 element semilattice
 gap> S := Semigroup(PartialPerm([1]), PartialPerm([], []));
@@ -1632,7 +1632,7 @@ gap> S := Semigroup(Transformation([1,2,3,3,3]));
 gap> S := AsSemigroup(IsFpSemigroup, S);
 <fp semigroup on the generators [ s1 ]>
 gap> AsMonoid(S);
-<fp group on the generators [  ]>
+<fp monoid on the generators [  ]>
 
 # Test IsomorphismFpMonoid, fail
 gap> S := SingularTransformationMonoid(3);

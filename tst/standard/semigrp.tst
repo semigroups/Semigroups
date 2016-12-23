@@ -29,7 +29,7 @@ gap> AsMonoid(T);
 gap> S := AsSemigroup(IsFpSemigroup, S);
 <fp semigroup on the generators [ s1 ]>
 gap> AsMonoid(S);
-<fp group on the generators [  ]>
+<fp monoid on the generators [  ]>
 gap> S := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <trivial group of 1x1 max-plus matrices with 1 generator>
 gap> AsMonoid(S);

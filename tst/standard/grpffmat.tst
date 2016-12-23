@@ -67,8 +67,8 @@ true
 # IsomorphismMatrixGroup
 gap> S := Semigroup(Matrix(GF(3), []));;
 gap> IsomorphismMatrixGroup(S);
-MappingByFunction( <group of 0x0 matrices over GF(3) with 
-1 generator>, <pc group of size 1 with 
+MappingByFunction( <trivial group of 0x0 matrices over GF(3) with 1 generator>
+, <pc group of size 1 with 
 0 generators>, function( x ) ... end, function( x ) ... end )
 gap> S := Semigroup(Matrix(GF(3), [[Z(3)]]));;
 gap> G := Group(One(S));
@@ -104,7 +104,7 @@ Error, Semigroups: ^ (for matrix over finite field group and matrix over finit\
 e field): usage,
  the args must have the same base domain, degree, and
  the second arg must be invertible,
-gap> S := Semigroup(Matrix(GF(3), []));;
+gap> S := Group(Matrix(GF(3), []));;
 gap> ClosureGroup(S, S);
 <group of 0x0 matrices over GF(3) with 1 generator>
 
@@ -124,7 +124,7 @@ gap> Size(G);
 11232
 gap> S := Semigroup(Matrix(GF(3), []));;
 gap> IsMatrixOverFiniteFieldGroup(S);
-true
+false
 gap> Size(S);
 1
 
@@ -142,12 +142,12 @@ gap> G := GroupOfUnits(GLM(3,3));;
 gap> G := Group(GeneratorsOfSemigroup(G));;
 gap> G ^ One(G);
 <group of 3x3 matrices over GF(3) with 3 generators>
-gap> S := Semigroup(Matrix(GF(3), []));;
-gap> S ^ Matrix(GF(3), []);
-<group of 0x0 matrices over GF(3) with 1 generator>
 gap> G ^ Matrix(GF(3), [[Z(3), 0 * Z(3), Z(3)], [Z(3) ^ 0, Z(3) ^ 0, Z(3) ^ 0], [
 > Z(3), Z(3), Z(3) ^ 0]]);
 <group of 3x3 matrices over GF(3) with 3 generators>
+gap> G := Group(Matrix(GF(3), []));;
+gap> G ^ Matrix(GF(3), []);
+<group of 0x0 matrices over GF(3) with 1 generator>
 
 #
 gap> STOP_TEST("Semigroups package: standard/grpffmat.tst");

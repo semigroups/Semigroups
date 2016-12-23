@@ -37,8 +37,6 @@ function(G)
     gens := GeneratorsOfGroup(G);
   elif HasGeneratorsOfSemigroup(G) then
     gens := GeneratorsOfSemigroup(G);
-  #else
-  #  TryNextMethod(); #FIXME ok?
   fi;
   deg := DimensionOfMatrixOverSemiring(gens[1]);
   Print("<group of ");
@@ -67,16 +65,31 @@ InstallMethod(GeneratorsOfSemigroup,
 "for a matrix over finite field group with group generators",
 [IsMatrixOverFiniteFieldGroup and HasGeneratorsOfGroup], GeneratorsOfGroup);
 
-InstallMethod(IsomorphismMatrixGroup, "for a matrix over finite field group",
-[IsMatrixOverFiniteFieldGroup],
+InstallMethod(IsomorphismMatrixGroup, 
+"for a matrix over finite field group as semigroup",
+[IsMatrixOverFiniteFieldSemigroup],
 function(G)
   local H, gens;
+
+  if not IsGroupAsSemigroup(G) then 
+    ErrorNoReturn("Semigroup: IsomorphismMatrixGroup: usage,\n",
+                  "the argument must be a group (as semigroup),");
+  fi;
 
   if DimensionOfMatrixOverSemiringCollection(G) = 0 then
     H := TrivialGroup();
     return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
   fi;
-  gens := GeneratorsOfGroup(G);
+
+  if HasGeneratorsOfGroup(G) then 
+    gens := GeneratorsOfGroup(G);
+  else
+    gens := GeneratorsOfSemigroup(G);
+    if not IsGeneratorsOfMagmaWithInverses(gens) then 
+      TryNextMethod();
+    fi;
+  fi;
+
   # Do not delete the next if statement it is required, run
   # extreme/semiffmat.tst
   if Length(gens) = 0 then
@@ -104,11 +117,6 @@ InstallMethod(IsomorphismSemigroup,
 function(filt, R, G)
   local gens, iso;
   gens := GeneratorsOfGroup(G);
-  # FIXME delete this or find an example where it applies
-  #if Length(gens) = 0 then
-  #  ErrorNoReturn("Semigroups: IsomorphismSemigroup: usage,\n",
-  #                "the group must have at least one generator,");
-  #fi;
   iso := g -> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
                                        R,
                                        g);
@@ -118,11 +126,14 @@ function(filt, R, G)
                                      AsList);
 end);
 
-InstallMethod(AsMatrixGroup, "for a matrix over finite field group",
-[IsMatrixOverFiniteFieldGroup], G -> Range(IsomorphismMatrixGroup(G)));
+InstallMethod(AsMatrixGroup, 
+"for a matrix over finite field group as semigroup",
+[IsMatrixOverFiniteFieldSemigroup], 
+G -> Range(IsomorphismMatrixGroup(G)));
 
-InstallMethod(Size, "for a matrix over finite field group",
-[IsMatrixOverFiniteFieldGroup and HasGeneratorsOfSemigroup],
+InstallMethod(Size, "for a matrix over finite field group as semigroup",
+[IsMatrixOverFiniteFieldSemigroup and HasGeneratorsOfSemigroup and
+ IsGeneratorsOfMagmaWithInverses],
 S -> Size(Range(IsomorphismMatrixGroup(S))));
 
 InstallMethod(Size, "for a matrix over finite field group",
@@ -130,8 +141,9 @@ InstallMethod(Size, "for a matrix over finite field group",
 S -> Size(Range(IsomorphismMatrixGroup(S))));
 
 InstallMethod(\in,
-"for a matrix over finite field and matrix over finite field group",
-[IsMatrixOverFiniteField, IsMatrixOverFiniteFieldGroup],
+"for a matrix and matrix over finite field group as semigroup",
+[IsMatrixOverFiniteField, IsMatrixOverFiniteFieldSemigroup and
+ IsGroupAsSemigroup],
 function(x, G)
   if BaseDomain(G) <> BaseDomain(x)
       or DimensionOfMatrixOverSemiringCollection(G)

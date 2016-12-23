@@ -149,7 +149,9 @@ function(obj, record, baseenum, convert, filts)
   #
   record.ElementNumber := function(enum, pos)
     local enumofenums, baseenum, i;
-
+    if pos > Length(enum) then 
+      return fail;
+    fi;
     enumofenums := enum!.enumofenums;
     baseenum := enum!.baseenum;
 
