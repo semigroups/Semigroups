@@ -130,6 +130,10 @@ function(S)
   return IsGeneratorsOfInverseSemigroup(GeneratorsOfSemigroup(S));
 end);
 
+#TODO(later) the next method should really be in the library
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a list", 
+[IsList], ReturnFalse);
+
 InstallMethod(Generators, "for a semigroup",
 [IsSemigroup],
 function(S)
