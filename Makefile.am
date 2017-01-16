@@ -14,10 +14,18 @@ lib_LTLIBRARIES = semigroups.la
 semigroups_la_SOURCES =  src/gap.cc src/converter.cc src/bipart.cc 
 semigroups_la_SOURCES += src/ufdata.cc src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semifp.cc src/semigrp.cc
-semigroups_la_SOURCES += src/semigroupsplusplus/elements.cc
 semigroups_la_SOURCES += src/semigroupsplusplus/blocks.cc
-semigroups_la_SOURCES += src/semigroupsplusplus/semigroups.cc 
 semigroups_la_SOURCES += src/semigroupsplusplus/cong.cc
+semigroups_la_SOURCES += src/semigroupsplusplus/elements.cc
+semigroups_la_SOURCES += src/semigroupsplusplus/kbfp.cc
+semigroups_la_SOURCES += src/semigroupsplusplus/kbp.cc
+semigroups_la_SOURCES += src/semigroupsplusplus/p.cc
+semigroups_la_SOURCES += src/semigroupsplusplus/rws.cc
+semigroups_la_SOURCES += src/semigroupsplusplus/rwse.cc
+semigroups_la_SOURCES += src/semigroupsplusplus/semigroups.cc 
+semigroups_la_SOURCES += src/semigroupsplusplus/tc.cc 
+semigroups_la_SOURCES += src/semigroupsplusplus/util/uf.cc 
+
 semigroups_la_CXXFLAGS = -std=c++11 -O3 -g -DNDEBUG
 
 semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H

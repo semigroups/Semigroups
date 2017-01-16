@@ -24,8 +24,8 @@
 #include <vector>
 
 #include "gap.h"
-#include "semigroupsplusplus/cong.h"
 #include "rnams.h"
+#include "semigroupsplusplus/cong.h"
 #include "semigrp.h"
 
 using semigroupsplusplus::word_t;
@@ -87,25 +87,26 @@ static Congruence* fp_semi_get_cpp_cong(Obj S) {
 Obj FP_SEMI_SIZE(Obj self, gap_semigroup_t S) {
   // TODO(JDM) assert S is correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter(semi_obj_get_report(S));
+  cong->set_report(semi_obj_get_report(S));
   return INTOBJ_INT(cong->nr_classes());
 }
 
 Obj FP_SEMI_EQ(Obj self, Obj S, Obj x, Obj y) {
   // TODO(JDM) assert S, x, y are correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter(semi_obj_get_report(S));
+  cong->set_report(semi_obj_get_report(S));
 
   word_t lhs = ext_rep_obj_to_word_t(x);
   word_t rhs = ext_rep_obj_to_word_t(y);
 
-  return ((cong->word_to_coset(lhs) == cong->word_to_coset(rhs)) ? True
-                                                                 : False);
+  return ((cong->word_to_class_index(lhs) == cong->word_to_class_index(rhs))
+              ? True
+              : False);
 }
 
 Obj FP_SEMI_COSET_ID(Obj self, Obj S, Obj x) {
   // TODO(JDM) assert S, x are correct types of args
   Congruence* cong = fp_semi_get_cpp_cong(S);
-  cong->todd_coxeter(semi_obj_get_report(S));
-  return INTOBJ_INT(cong->word_to_coset(ext_rep_obj_to_word_t(x)));
+  cong->set_report(semi_obj_get_report(S));
+  return INTOBJ_INT(cong->word_to_class_index(ext_rep_obj_to_word_t(x)));
 }

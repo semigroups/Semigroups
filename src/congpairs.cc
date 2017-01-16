@@ -78,7 +78,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
     Semigroup* range = cong_obj_get_range(o);
-    range->enumerate(Semigroup::LIMIT_MAX, report);
+    range->set_report(report);
 
     std::vector<relation_t> extra;
     word_t                  lhs, rhs;
@@ -96,15 +96,9 @@ static void cong_obj_init_cpp_cong(Obj o) {
       lhs.clear();
       rhs.clear();
     }
-    if (range->size() > 1000) {
-      cong = parallel_todd_coxeter(
-          new Congruence(type, range, extra, true, report, 1),
-          new Congruence(type, range, extra, false, report, 2),
-          report);
-    } else {
-      cong = new Congruence(type, range, extra, true, report, 1);
-      cong->todd_coxeter(report);
-    }
+    cong = new Congruence(type, range, extra);
+    cong->set_report(report);
+    cong->run();
   } else {
     gap_rec_t               data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     gap_list_t              rules = ElmPRec(data, RNam_rules);
@@ -158,16 +152,10 @@ static void cong_obj_init_cpp_cong(Obj o) {
         prefill.set(i, j - 1, INT_INTOBJ(ELM_PLIST(next, j)));
       }
     }
-    if (LEN_PLIST(ElmPRec(data, RNam_elts)) > 1000) {
-      cong =
-          parallel_todd_coxeter(new Congruence(type, nrgens, extra, prefill, 1),
-                                new Congruence(type, nrgens, rels, extra, 2),
-                                report);
-    } else {
-      cong = new Congruence(
-          type, nrgens, extra, prefill, 1);
-      cong->todd_coxeter(report);
-    }
+    cong = new Congruence(type, nrgens, std::vector<relation_t>(), extra);
+    cong->set_report(report);
+    cong->set_prefill(prefill);
+    cong->run();
   }
   cong->compress();
   AssPRec(o, RNam_cong_pairs_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
@@ -219,7 +207,7 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_list_t pair) {
   }
 
   Congruence* cong = cong_obj_get_cpp(o);
-  return (cong->word_to_coset(lhs) == cong->word_to_coset(rhs) ? True : False);
+  return (cong->word_to_class_index(lhs) == cong->word_to_class_index(rhs) ? True : False);
 }
 
 Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
@@ -248,15 +236,15 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
   if (cong_obj_get_range_type(o) != UNKNOWN) {
     Semigroup* range = cong_obj_get_range(o);
+    range->set_report(report);
 
     lookup = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, range->size());
     SET_LEN_PLIST(lookup, range->size());
 
     word_t word;
-
     for (size_t i = 0; i < range->size(); i++) {
-      range->factorisation(word, i, report);  // changes word in place
-      size_t coset = cong->word_to_coset(word);
+      range->factorisation(word, i);  // changes word in place
+      size_t coset = cong->word_to_class_index(word);
       SET_ELM_PLIST(lookup, i + 1, INTOBJ_INT(coset));
 
       Obj c = ELM_PLIST(partition, coset);
@@ -274,7 +262,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
     SET_LEN_PLIST(lookup, LEN_PLIST(words));
 
     for (size_t i = 1; i <= (size_t) LEN_PLIST(words); i++) {
-      size_t coset = cong->word_to_coset(plist_to_word_t(ELM_PLIST(words, i)));
+      size_t coset = cong->word_to_class_index(plist_to_word_t(ELM_PLIST(words, i)));
       SET_ELM_PLIST(lookup, i, INTOBJ_INT(coset));
 
       Obj c = ELM_PLIST(partition, coset);
@@ -304,11 +292,12 @@ Obj CONG_PAIRS_CLASS_COSET_ID(Obj self, gap_cong_class_t o) {
   } else if (cong_obj_get_range_type(cong_obj) != UNKNOWN) {
     Congruence* cong  = cong_obj_get_cpp(cong_obj);
     Semigroup*  range = cong_obj_get_range(cong_obj);
+    range->set_report(report);
 
     word_t word;
     range->factorisation(
-        word, INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, rep)) - 1, report);
-    return INTOBJ_INT(cong->word_to_coset(word));
+        word, INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, rep)) - 1);
+    return INTOBJ_INT(cong->word_to_class_index(word));
   } else {
     gap_rec_t  data = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     Congruence* cong = cong_obj_get_cpp(cong_obj);
@@ -316,6 +305,6 @@ Obj CONG_PAIRS_CLASS_COSET_ID(Obj self, gap_cong_class_t o) {
     Obj word = ELM_PLIST(ElmPRec(data, RNam_words),
                          INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, rep)));
 
-    return INTOBJ_INT(cong->word_to_coset(plist_to_word_t(word)));
+    return INTOBJ_INT(cong->word_to_class_index(plist_to_word_t(word)));
   }
 }
