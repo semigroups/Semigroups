@@ -24,10 +24,10 @@
 #include <iostream>
 
 #include "rnams.h"
-#include "semigroupsplusplus/util/report.h"
+#include "libsemigroups/util/report.h"
 #include "semigrp.h"
 
-using semigroupsplusplus::Reporter;
+using libsemigroups::Reporter;
 
 // Macros for the GAP version of the algorithm
 

@@ -36,7 +36,7 @@ gap> UF_FIND(uftable3, 20222);
 gap> UF_FIND(uftable3, 234);
 234
 
-#T# Congruences from semigroupsplusplus
+#T# Congruences from libsemigroups
 gap> NrEquivalenceClasses(cong);
 4
 gap> [Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
@@ -51,7 +51,7 @@ false
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 1, 2, 1, 1, 3, 1, 1, 2, 1, 3, 1, 1, 2, 4, 3 ]
 
-#T# Semigroups from semigroupsplusplus
+#T# Semigroups from libsemigroups
 gap> Size(T); 
 9
 gap> NrIdempotents(T);

@@ -33,10 +33,10 @@
 #include "semigrp.h"
 #include "ufdata.h"
 
-#include "semigroupsplusplus/semigroups.h"
-#include "semigroupsplusplus/cong.h"
+#include "libsemigroups/semigroups.h"
+#include "libsemigroups/cong.h"
 
-using semigroupsplusplus::Congruence;
+using libsemigroups::Congruence;
 
 // Prevent compilation if the DEBUG and NDEBUG flags are both set
 #if defined(DEBUG) && defined(NDEBUG)
@@ -45,8 +45,8 @@ using semigroupsplusplus::Congruence;
 
 #ifdef DEBUG
 #include "gap-debug.h"
-#include "semigroupsplusplus/util/timer.h"
-using semigroupsplusplus::Timer;
+#include "libsemigroups/util/timer.h"
+using libsemigroups::Timer;
 
 Obj SEMIGROUPS_IS_OPTIMIZED(Obj self) {
   Timer t;

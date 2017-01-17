@@ -247,7 +247,7 @@ function(S)
               or IsBooleanMatSemigroup(S)
               or IsPBRSemigroup(S)
               or IsMatrixOverSemiringSemigroup(S)) then
-     # This method only works for semigroups to which the SemigroupsPlusPlus
+     # This method only works for semigroups to which the libsemigroups
      # code applies
     TryNextMethod();
   fi;

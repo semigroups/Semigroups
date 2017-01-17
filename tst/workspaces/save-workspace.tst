@@ -33,7 +33,7 @@ gap> uftable2 := UF_NEW(1);;
 gap> uftable3 := UF_NEW(30000);;
 gap> UF_UNION(uftable3, [20222, 234]);;
 
-#T# Congruences from semigroupsplusplus
+#T# Congruences from libsemigroups
 gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]), 
@@ -44,7 +44,7 @@ gap> NrEquivalenceClasses(cong);
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 1, 2, 1, 1, 3, 1, 1, 2, 1, 3, 1, 1, 2, 4, 3 ]
 
-#T# Semigroups from semigroupsplusplus
+#T# Semigroups from libsemigroups
 gap> T := Semigroup(Matrix(IsBooleanMat, [[0, 1], [0, 0]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 1]]), 

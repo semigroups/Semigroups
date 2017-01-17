@@ -25,17 +25,17 @@
 #include "src/compiled.h"
 #include "src/pperm.h"
 
-#include "semigroupsplusplus/elements.h"
+#include "libsemigroups/elements.h"
 
-using semigroupsplusplus::Element;
-using semigroupsplusplus::Transformation;
-using semigroupsplusplus::PartialPerm;
-using semigroupsplusplus::BooleanMat;
-using semigroupsplusplus::Semiring;
-using semigroupsplusplus::MatrixOverSemiring;
-using semigroupsplusplus::ProjectiveMaxPlusMatrix;
-using semigroupsplusplus::PBR;
-using semigroupsplusplus::Bipartition;
+using libsemigroups::Element;
+using libsemigroups::Transformation;
+using libsemigroups::PartialPerm;
+using libsemigroups::BooleanMat;
+using libsemigroups::Semiring;
+using libsemigroups::MatrixOverSemiring;
+using libsemigroups::ProjectiveMaxPlusMatrix;
+using libsemigroups::PBR;
+using libsemigroups::Bipartition;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Abstract base class

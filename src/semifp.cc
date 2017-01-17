@@ -25,12 +25,12 @@
 
 #include "gap.h"
 #include "rnams.h"
-#include "semigroupsplusplus/cong.h"
+#include "libsemigroups/cong.h"
 #include "semigrp.h"
 
-using semigroupsplusplus::word_t;
-using semigroupsplusplus::Congruence;
-using semigroupsplusplus::relation_t;
+using libsemigroups::word_t;
+using libsemigroups::Congruence;
+using libsemigroups::relation_t;
 
 static inline word_t plist_to_word_t(Obj plist) {
   word_t word;

@@ -22,11 +22,11 @@
 #include <assert.h>
 
 #include "gap.h"
-#include "semigroupsplusplus/elements.h"
+#include "libsemigroups/elements.h"
 #include "src/compiled.h"
 
-using semigroupsplusplus::Bipartition;
-using semigroupsplusplus::Blocks;
+using libsemigroups::Bipartition;
+using libsemigroups::Blocks;
 
 // C functions
 

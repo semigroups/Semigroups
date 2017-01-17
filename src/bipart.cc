@@ -30,10 +30,10 @@
 
 #include "src/permutat.h"
 #include "src/precord.h"
-#include "src/semigroupsplusplus/util/report.h"
+#include "src/libsemigroups/util/report.h"
 
-using semigroupsplusplus::Reporter;
-using semigroupsplusplus::Timer;
+using libsemigroups::Reporter;
+using libsemigroups::Timer;
 
 // Global variables
 

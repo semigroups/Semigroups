@@ -29,14 +29,14 @@
 #include "gap.h"
 #include "src/compiled.h"
 
-using semigroupsplusplus::word_t;
-using semigroupsplusplus::cayley_graph_t;
-using semigroupsplusplus::MaxPlusSemiring;
-using semigroupsplusplus::MinPlusSemiring;
-using semigroupsplusplus::TropicalMaxPlusSemiring;
-using semigroupsplusplus::TropicalMinPlusSemiring;
-using semigroupsplusplus::NaturalSemiring;
-using semigroupsplusplus::Integers;
+using libsemigroups::word_t;
+using libsemigroups::cayley_graph_t;
+using libsemigroups::MaxPlusSemiring;
+using libsemigroups::MinPlusSemiring;
+using libsemigroups::TropicalMaxPlusSemiring;
+using libsemigroups::TropicalMinPlusSemiring;
+using libsemigroups::NaturalSemiring;
+using libsemigroups::Integers;
 
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
