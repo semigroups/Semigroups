@@ -435,7 +435,7 @@ gap> S := DualSymmetricInverseMonoid(3);
 <inverse block bijection monoid of degree 3 with 3 generators>
 gap> IsFactorisableInverseMonoid(S);
 false
-gap> T := InverseSemigroup(FactorisableDualSymmetricInverseSemigroup(3));
+gap> T := InverseSemigroup(FactorisableDualSymmetricInverseMonoid(3));
 <inverse block bijection monoid of degree 3 with 3 generators>
 gap> IsFactorisableInverseMonoid(T);
 true

@@ -25,3 +25,7 @@ DeclareOperation("AsBlockBijectionSemigroup", [IsSemigroup]);
 
 DeclareOperation("IsomorphismBipartitionSemigroup", [IsSemigroup]);
 DeclareOperation("IsomorphismBlockBijectionSemigroup", [IsSemigroup]);
+
+DeclareOperation("FactorisableDualSymmetricInverseSemigroup", [IsPosInt]);
+DeclareOperation("SingularFactorisableDualSymmetricInverseSemigroup",
+                 [IsPosInt]);

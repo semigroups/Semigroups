@@ -119,3 +119,22 @@ function(S)
                            "IsBlockBijectionSemigroup, S)");
   return IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
 end);
+
+InstallMethod(FactorisableDualSymmetricInverseSemigroup, "for a positive integer",
+[IsPosInt],
+function(n)
+  SEMIGROUPS.PrintObsolete("FactorisableDualSymmetricInverseSemigroup",
+                           "FactorisableDualSymmetricInverseMonoid(",
+                           n, ")");
+  return FactorisableDualSymmetricInverseMonoid(n);
+end);
+
+InstallMethod(SingularFactorisableDualSymmetricInverseSemigroup,
+"for a positive integer",
+[IsPosInt],
+function(n)
+  SEMIGROUPS.PrintObsolete("SingularFactorisableDualSymmetricInverseSemigroup",
+                           "SingularFactorisableDualSymmetricInverseMonoid(",
+                           n, ")");
+  return SingularFactorisableDualSymmetricInverseMonoid(n);
+end);
