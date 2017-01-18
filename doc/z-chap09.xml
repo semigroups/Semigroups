@@ -53,6 +53,7 @@
     <#Include Label = "BrauerMonoid"> 
     <#Include Label = "JonesMonoid"> 
     <#Include Label = "UniformBlockBijectionMonoid">
+    <#Include Label = "ApsisMonoid">
     <#Include Label = "DualSymmetricInverseSemigroup">
   </Section>
   
