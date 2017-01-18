@@ -407,6 +407,9 @@ end);
 InstallMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup],
 function(S)
+  if IsGroup(S) then
+    TryNextMethod();
+  fi;
   return StructureDescription(Range(IsomorphismPermGroup(S)));
 end);
 

@@ -49,6 +49,8 @@ gap> Size(MinimalIdeal(S));
 8
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -125,6 +127,8 @@ gap> Size(MinimalIdeal(S));
 8
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -200,6 +204,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 8
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -283,6 +289,8 @@ gap> Size(MinimalIdeal(S));
 7
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -357,6 +365,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 5
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -434,6 +444,8 @@ gap> Size(MinimalIdeal(S));
 4
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -509,6 +521,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 4
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -586,6 +600,8 @@ gap> Size(MinimalIdeal(S));
 4
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -659,6 +675,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 20160
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -736,6 +754,8 @@ gap> Size(MinimalIdeal(S));
 8
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -809,6 +829,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 11
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -885,6 +907,8 @@ gap> Size(MinimalIdeal(S));
 10
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -960,6 +984,8 @@ gap> Size(MinimalIdeal(S));
 5
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -1033,6 +1059,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 1
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -1108,6 +1136,8 @@ gap> Size(MinimalIdeal(S));
 12
 gap> IsBlockGroup(S);
 true
+gap> IsSemigroupWithCommutingIdempotents(S);
+true
 gap> IsCliffordSemigroup(S);
 true
 gap> IsCommutative(S);
@@ -1182,6 +1212,8 @@ gap> Size(MinimalIdeal(S));
 1
 gap> IsBlockGroup(S);
 true
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -1255,6 +1287,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 36
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -1330,6 +1364,8 @@ gap> Size(MinimalIdeal(S));
 96
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -1403,6 +1439,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 8
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -1478,6 +1516,8 @@ gap> Size(MinimalIdeal(S));
 10080
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -1551,6 +1591,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 8
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -1626,6 +1668,8 @@ gap> Size(MinimalIdeal(S));
 1
 gap> IsBlockGroup(S);
 true
+gap> IsSemigroupWithCommutingIdempotents(S);
+true
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -1699,6 +1743,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 1
 gap> IsBlockGroup(S);
+true
+gap> IsSemigroupWithCommutingIdempotents(S);
 true
 gap> IsCliffordSemigroup(S);
 false
@@ -1774,6 +1820,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 720
 gap> IsBlockGroup(S);
+true
+gap> IsSemigroupWithCommutingIdempotents(S);
 true
 gap> IsCliffordSemigroup(S);
 true
@@ -1857,6 +1905,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 1
 gap> IsBlockGroup(S);
+true
+gap> IsSemigroupWithCommutingIdempotents(S);
 true
 gap> IsCliffordSemigroup(S);
 true
@@ -1950,6 +2000,8 @@ gap> Size(MinimalIdeal(S));
 24
 gap> IsBlockGroup(S);
 true
+gap> IsSemigroupWithCommutingIdempotents(S);
+true
 gap> IsCliffordSemigroup(S);
 true
 gap> IsCommutative(S);
@@ -2025,6 +2077,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 16
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -2105,6 +2159,8 @@ gap> Size(MinimalIdeal(S));
 1152
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -2180,6 +2236,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 16
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false
@@ -2261,6 +2319,8 @@ gap> Size(MinimalIdeal(S));
 7
 gap> IsBlockGroup(S);
 false
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
 gap> IsCliffordSemigroup(S);
 false
 gap> IsCommutative(S);
@@ -2336,6 +2396,8 @@ gap> if GroupOfUnits(S) <> fail then
 gap> Size(MinimalIdeal(S));
 9
 gap> IsBlockGroup(S);
+false
+gap> IsSemigroupWithCommutingIdempotents(S);
 false
 gap> IsCliffordSemigroup(S);
 false

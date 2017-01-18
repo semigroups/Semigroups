@@ -58,7 +58,7 @@ true
 gap> IsRegularSemigroup(S);
 true
 gap> SemigroupCongruence(S, [S.1, S.1]);
-<semigroup congruence over <commutative 0-simple regular transformation 
+<semigroup congruence over <commutative 0-simple inverse transformation 
  monoid of degree 2 with 1 generator> with linked triple (1,1,1)>
 
 #T# SemigroupCongruence: Inverse semigroup
@@ -122,7 +122,7 @@ gap> pairs := [ReesZeroMatrixSemigroupElement(R, 1, (), 1),
 >              ReesZeroMatrixSemigroupElement(R, 1, (), 1)];;
 gap> rmscong := SemigroupCongruence(R, pairs);;
 gap> SemigroupCongruence(S, iso, rmscong);
-<semigroup congruence over <commutative 0-simple regular transformation 
+<semigroup congruence over <commutative 0-simple inverse transformation 
  monoid of degree 2 with 1 generator> with linked triple (1,1,1)>
 
 #T# SemigroupCongruence: Bad R(Z)MS Input

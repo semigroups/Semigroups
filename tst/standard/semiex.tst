@@ -1144,7 +1144,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S4" ]
 gap> S := ModularPartitionMonoid(5, 4);
-<regular block bijection *-monoid of degree 4 with 3 generators>
+<inverse block bijection monoid of degree 4 with 3 generators>
 gap> Size(S);
 131
 gap> Size(Generators(S));
@@ -1224,7 +1224,7 @@ false
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2" ]
 gap> S := SingularModularPartitionMonoid(5, 4);
-<regular bipartition *-semigroup ideal of degree 4 with 1 generator>
+<inverse bipartition semigroup ideal of degree 4 with 1 generator>
 gap> Size(S);
 107
 gap> Size(Generators(S));
@@ -1666,7 +1666,7 @@ gap> NrIdempotents(S);
 gap> IsRegularSemigroup(S);
 true
 gap> S := PartialOrderEndomorphisms(1);
-<commutative regular transformation monoid of degree 2 with 1 generator>
+<commutative inverse transformation monoid of degree 2 with 1 generator>
 
 # Test OrderAntiEndomorphisms
 gap> S := OrderAntiEndomorphisms(4);
@@ -1710,7 +1710,7 @@ gap> S := PartialOrderAntiEndomorphisms(1);
 
 # Test PartialTranformationMonoid
 gap> S := PartialTransformationMonoid(1);
-<commutative regular transformation monoid of degree 2 with 1 generator>
+<commutative inverse transformation monoid of degree 2 with 1 generator>
 gap> Size(S);
 2
 gap> NrLClasses(S);
@@ -1817,7 +1817,7 @@ gap> JonesMonoid(0);
 gap> JonesMonoid(1);
 <trivial block bijection group of degree 1 with 1 generator>
 gap> JonesMonoid(2);
-<commutative regular bipartition *-monoid of degree 2 with 1 generator>
+<commutative inverse bipartition monoid of degree 2 with 1 generator>
 gap> JonesMonoid(5);
 <regular bipartition *-monoid of degree 5 with 4 generators>
 
@@ -1923,8 +1923,7 @@ gap> SingularJonesMonoid(1);
 Error, Semigroups: SingularJonesMonoid: usage,
 the argument must be greater than 1,
 gap> SingularJonesMonoid(2);
-<commutative regular bipartition *-semigroup ideal of degree 2 with
-  1 generator>
+<commutative inverse bipartition semigroup ideal of degree 2 with 1 generator>
 gap> SingularJonesMonoid(5);
 <regular bipartition *-semigroup ideal of degree 5 with 1 generator>
 
