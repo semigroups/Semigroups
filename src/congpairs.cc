@@ -225,6 +225,10 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   Obj partition = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, cong->nr_classes());
   SET_LEN_PLIST(partition, cong->nr_classes());
 
+  // Map a class index to a new index in the range [1..nrclasses]
+  std::unordered_map<size_t, size_t> class_dictionary;
+  size_t next_unused_class_index = 1;
+
   for (size_t i = 0; i < cong->nr_classes(); i++) {
     Obj next = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
     SET_LEN_PLIST(next, 0); // should never be 0 later on, so this should be ok
@@ -244,10 +248,19 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
     word_t word;
     for (size_t i = 0; i < range->size(); i++) {
       range->factorisation(word, i);  // changes word in place
-      size_t coset = cong->word_to_class_index(word);
-      SET_ELM_PLIST(lookup, i + 1, INTOBJ_INT(coset));
+      size_t class_index = cong->word_to_class_index(word);
 
-      Obj c = ELM_PLIST(partition, coset);
+      auto it = class_dictionary.find(class_index);
+      if (it == class_dictionary.end()) {
+        class_dictionary.emplace(class_index, next_unused_class_index);
+        class_index = next_unused_class_index++;
+      } else {
+        class_index = it->second;
+      }
+
+      SET_ELM_PLIST(lookup, i + 1, INTOBJ_INT(class_index));
+
+      Obj c = ELM_PLIST(partition, class_index);
       AssPlist(c, LEN_PLIST(c) + 1, INTOBJ_INT(i + 1));
       CHANGED_BAG(partition);
 
@@ -262,10 +275,19 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
     SET_LEN_PLIST(lookup, LEN_PLIST(words));
 
     for (size_t i = 1; i <= (size_t) LEN_PLIST(words); i++) {
-      size_t coset = cong->word_to_class_index(plist_to_word_t(ELM_PLIST(words, i)));
-      SET_ELM_PLIST(lookup, i, INTOBJ_INT(coset));
+      size_t class_index = cong->word_to_class_index(plist_to_word_t(ELM_PLIST(words, i)));
 
-      Obj c = ELM_PLIST(partition, coset);
+      auto it = class_dictionary.find(class_index);
+      if (it == class_dictionary.end()) {
+        class_dictionary.emplace(class_index, next_unused_class_index);
+        class_index = next_unused_class_index++;
+      } else {
+        class_index = it->second;
+      }
+
+      SET_ELM_PLIST(lookup, i, INTOBJ_INT(class_index));
+
+      Obj c = ELM_PLIST(partition, class_index);
       AssPlist(c, LEN_PLIST(c) + 1, INTOBJ_INT(i));
       CHANGED_BAG(partition);
     }
