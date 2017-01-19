@@ -216,10 +216,12 @@ gap> Idempotents(FullTransformationMonoid(3), 4);
 [  ]
 gap> Idempotents(FullTransformationMonoid(3), 3);
 [ IdentityTransformation ]
-gap> Idempotents(FullTransformationMonoid(3), 2);
-[ Transformation( [ 1, 2, 1 ] ), Transformation( [ 1, 2, 2 ] ), 
-  Transformation( [ 3, 2, 3 ] ), Transformation( [ 2, 2 ] ), 
-  Transformation( [ 1, 3, 3 ] ), Transformation( [ 1, 1 ] ) ]
+gap> x := Idempotents(FullTransformationMonoid(3), 2);;
+gap> Sort(x);
+gap> x;
+[ Transformation( [ 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
+  Transformation( [ 1, 2, 2 ] ), Transformation( [ 1, 3, 3 ] ), 
+  Transformation( [ 2, 2 ] ), Transformation( [ 3, 2, 3 ] ) ]
 gap> Idempotents(FullTransformationMonoid(3), 1);
 [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 2, 2, 2 ] ), 
   Transformation( [ 3, 3, 3 ] ) ]
