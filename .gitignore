@@ -69,7 +69,7 @@ src/.deps
 src/.dirstamp
 src/.libs
 src/pkgconfig.h
-src/semigroupsplusplus
+src/libsemigroups
 src/stamp-h1
 tags
 tst/workspaces/test-output.w
