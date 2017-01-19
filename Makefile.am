@@ -16,14 +16,14 @@ semigroups_la_SOURCES += src/ufdata.cc src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semifp.cc src/semigrp.cc
 semigroups_la_SOURCES += src/libsemigroups/blocks.cc
 semigroups_la_SOURCES += src/libsemigroups/cong.cc
+semigroups_la_SOURCES += src/libsemigroups/cong/kbfp.cc
+semigroups_la_SOURCES += src/libsemigroups/cong/kbp.cc
+semigroups_la_SOURCES += src/libsemigroups/cong/p.cc
+semigroups_la_SOURCES += src/libsemigroups/cong/tc.cc 
 semigroups_la_SOURCES += src/libsemigroups/elements.cc
-semigroups_la_SOURCES += src/libsemigroups/kbfp.cc
-semigroups_la_SOURCES += src/libsemigroups/kbp.cc
-semigroups_la_SOURCES += src/libsemigroups/p.cc
 semigroups_la_SOURCES += src/libsemigroups/rws.cc
 semigroups_la_SOURCES += src/libsemigroups/rwse.cc
 semigroups_la_SOURCES += src/libsemigroups/semigroups.cc 
-semigroups_la_SOURCES += src/libsemigroups/tc.cc 
 semigroups_la_SOURCES += src/libsemigroups/util/uf.cc 
 
 semigroups_la_CXXFLAGS = -std=c++11 -O3 -g -DNDEBUG
