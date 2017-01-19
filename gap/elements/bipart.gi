@@ -911,6 +911,28 @@ function(f, n)
   return out;
 end);
 
+InstallMethod(AsBlockBijection, "for a bipartition and pos int",
+[IsBipartition, IsPosInt],
+function(x, n)
+  if not IsPartialPermBipartition(x) then
+    ErrorNoReturn("Semigroups: AsBlockBijection (for a bipartition and pos ",
+                  "int):\n",
+                  "the argument <x> must be a partial perm bipartition,");
+  fi;
+  return AsBlockBijection(AsPartialPerm(x), n);
+end);
+
+InstallMethod(AsBlockBijection, "for a bipartition",
+[IsBipartition],
+function(x)
+  if not IsPartialPermBipartition(x) then
+    ErrorNoReturn("Semigroups: AsBlockBijection (for a bipartition):\n",
+                  "the argument <x> must be a partial perm bipartition,");
+  fi;
+  return AsBlockBijection(AsPartialPerm(x));
+end);
+
+
 InstallMethod(NaturalLeqBlockBijection, "for a bipartition and bipartition",
 IsIdenticalObj, [IsBipartition, IsBipartition],
 function(x, y)
