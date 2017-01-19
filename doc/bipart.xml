@@ -433,8 +433,8 @@ the argument does not define a partial perm,]]></Example>
 
       If the optional second argument <A>n</A> is not present, then the maximum
       of the degree and codegree of <A>x</A> plus 1 is used by default. If the
-      second argument <A>n</A> is not greater than this maximum, then
-      <K>fail</K> is returned.
+      second argument <A>n</A> is not greater than this maximum, then an Error
+      is returned.
       <P/>
 
       This is the value at <A>x</A> of the embedding of the symmetric inverse
@@ -450,8 +450,8 @@ gap> AsBipartition(x, 11);
  [ -3 ], [ -4 ], [ -10 ], [ -11 ]>
 gap> AsBlockBijection(x, 10);
 Error, Semigroups: AsBlockBijection (for a partial perm and pos int):
-the 2nd argument must be at least the maximum of the degree and
-codegree of the 1st argument,
+the 2nd argument must be strictly greater than the maximum of the
+degree and codegree of the 1st argument,
 gap> AsBlockBijection(x, 11);
 <block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], 
  [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], 

@@ -402,8 +402,8 @@ gap> AsBlockBijection(PartialPerm([4, 1, 3, 2]), 0);
 # bipartition: AsBlockBijection, for a partial perm and pos int, error 1/1
 gap> AsBlockBijection(PartialPerm([1, 3, 2, 4]), 1);
 Error, Semigroups: AsBlockBijection (for a partial perm and pos int):
-the 2nd argument must be at least the maximum of the degree and
-codegree of the 1st argument,
+the 2nd argument must be strictly greater than the maximum of the
+degree and codegree of the 1st argument,
 
 # bipartition: IsUniformBlockBijection, for a bipartition 1/3
 gap> IsUniformBlockBijection(Bipartition([[1, 2, -1, -2], [3, -3]]));

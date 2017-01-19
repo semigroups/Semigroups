@@ -882,8 +882,8 @@ function(f, n)
   if n <= Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then
     ErrorNoReturn("Semigroups: AsBlockBijection (for a partial perm and pos ",
                   "int):\n",
-                  "the 2nd argument must be at least the maximum of the ",
-                  "degree and\ncodegree of the 1st argument,");
+                  "the 2nd argument must be strictly greater than the maximum ",
+                  "of the\ndegree and codegree of the 1st argument,");
   fi;
 
   nr := 0;
