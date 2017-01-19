@@ -554,12 +554,6 @@ function(x)
                                      CodegreeOfPartialPerm(x)) + 1);
 end);
 
-InstallMethod(AsBlockBijection, "for a partial perm and zero",
-[IsPartialPerm, IsZeroCyc],
-function(x, n)
-  return Bipartition([]);
-end);
-
 # Viewing, printing etc
 
 InstallMethod(ViewString, "for a bipartition",

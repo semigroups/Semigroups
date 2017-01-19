@@ -397,7 +397,8 @@ gap> AsBipartition(Bipartition([[1, 2, -1, -2], [3, -3]]), 0);
 
 # bipartition: AsBlockBijection, for a partial perm and 0 1/1
 gap> AsBlockBijection(PartialPerm([4, 1, 3, 2]), 0);
-<empty bipartition>
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsBlockBijection' on 2 arguments
 
 # bipartition: AsBlockBijection, for a partial perm and pos int, error 1/1
 gap> AsBlockBijection(PartialPerm([1, 3, 2, 4]), 1);
