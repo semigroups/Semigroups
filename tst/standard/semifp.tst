@@ -1624,6 +1624,7 @@ the parameter must be pos ints,
 # Test AsMonoid
 gap> S := SingularTransformationMonoid(3);
 <regular transformation semigroup ideal of degree 3 with 1 generator>
+gap> GeneratorsOfSemigroup(S);;
 gap> S := AsSemigroup(IsFpSemigroup, S);;
 gap> AsMonoid(S);
 fail
