@@ -28,12 +28,12 @@
 #include <utility>
 #include <vector>
 
+#include "src/libsemigroups/semigroups.h"
 #include "src/permutat.h"
 #include "src/precord.h"
-#include "src/libsemigroups/util/report.h"
 
-using libsemigroups::Reporter;
 using libsemigroups::Timer;
+using libsemigroups::glob_reporter;
 
 // Global variables
 
@@ -1311,9 +1311,7 @@ class IdempotentCounter {
                     Obj          lookup,
                     unsigned int nr_threads,
                     Obj          report)
-      :
-
-        _nr_threads(std::min(nr_threads, std::thread::hardware_concurrency())),
+      : _nr_threads(std::min(nr_threads, std::thread::hardware_concurrency())),
         _fuse_tab(thrds_size_t(_nr_threads, std::vector<size_t>())),
         _lookup(thrds_bool_t(_nr_threads, std::vector<bool>())),
         _min_scc(),
@@ -1374,11 +1372,11 @@ class IdempotentCounter {
   }
 
   std::vector<size_t> count() {
-    _reporter.set_class_name(*this);
-    _reporter.set_report(_report);
-    _reporter(__func__) << "using " << _nr_threads << " / "
-                        << std::thread::hardware_concurrency() << " threads"
-                        << std::endl;
+    glob_reporter.reset_thread_ids();
+    glob_reporter.set_report(_report);
+    REPORT("using " << _nr_threads << " / "
+                    << std::thread::hardware_concurrency()
+                    << " threads");
     Timer timer;
     timer.start();
 
@@ -1391,7 +1389,7 @@ class IdempotentCounter {
       _threads[i].join();
     }
 
-    _reporter(__func__) << "elapsed time " << timer.string() << std::endl;
+    REPORT(timer.string("elapsed time = "));
 
     size_t              max = *max_element(_ranks.begin(), _ranks.end()) + 1;
     std::vector<size_t> out = std::vector<size_t>(max, 0);
@@ -1428,10 +1426,7 @@ class IdempotentCounter {
         }
       }
     }
-    _reporter.lock();
-    _reporter(__func__, thread_id + 1) << "finished in " << timer.string()
-                                       << std::endl;
-    _reporter.unlock();
+    REPORT("finished in " << timer.string());
   }
 
   // This is basically the same as BLOCKS_E_TESTER, but is required because we
@@ -1513,12 +1508,7 @@ class IdempotentCounter {
   thrds_unpr_t             _unprocessed;
   thrds_size_t             _vals;
   // map from the scc indices to the rank of elements in that scc
-
-  // for reporting only
-  static Reporter _reporter;
 };
-
-Reporter IdempotentCounter::_reporter;
 
 // GAP-level function
 
@@ -1528,9 +1518,7 @@ Obj BIPART_NR_IDEMPOTENTS(Obj self,
                           Obj lookup,
                           Obj nr_threads,
                           Obj report) {
-  IdempotentCounter finder =
-      IdempotentCounter(o, scc, lookup, INT_INTOBJ(nr_threads), report);
-
+  IdempotentCounter finder(o, scc, lookup, INT_INTOBJ(nr_threads), report);
   std::vector<size_t> vals = finder.count();
 
   Obj out = NEW_PLIST(T_PLIST_CYC, vals.size());

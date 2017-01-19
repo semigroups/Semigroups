@@ -27,7 +27,8 @@
 #include "libsemigroups/util/report.h"
 #include "semigrp.h"
 
-using libsemigroups::Reporter;
+using libsemigroups::Timer;
+using libsemigroups::glob_reporter;
 
 // Macros for the GAP version of the algorithm
 
@@ -113,10 +114,11 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   }
   int_limit = std::max((size_t) INT_INTOBJ(limit), (size_t)(nr + batch_size));
 
-  Reporter reporter;
-  reporter.set_report(report);
-  reporter.start_timer();
-  reporter(__func__) << "limit = " << int_limit << std::endl;
+  glob_reporter.set_report(report);
+  REPORT_FROM_FUNC("limit = " << int_limit);
+
+  Timer timer;
+  timer.start();
 
   // get everything out of <data>
 
@@ -308,13 +310,17 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
       len++;
       AssPlist(lenindex, len, INTOBJ_INT(i));
     }
-    reporter(__func__) << "found " << nr << " elements, " << nrrules
-                       << " rules, max word length " << len + 1;
     if (i <= nr) {
-      reporter << ", so far" << std::endl;
+      REPORT_FROM_FUNC("found " << nr << " elements, " << nrrules
+                                << " rules, max word length "
+                                << len + 1
+                                << ", so far");
     } else {
-      reporter << ", finished!" << std::endl;
-      reporter.stop_timer();
+      REPORT_FROM_FUNC("found " << nr << " elements, " << nrrules
+                                << " rules, max word length "
+                                << len + 1
+                                << ", finished!");
+      REPORT_FROM_FUNC(timer.string("elapsed time = "));
     }
   }
 
