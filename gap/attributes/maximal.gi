@@ -1061,10 +1061,13 @@ function(R, opts)
     if not failed and not opts.number then
       Info(InfoSemigroups, 2, "...creating these maximal subsemigroups.");
 
-      # TODO only need generating set for idempotents - don't not *every* idem
-      idems := ShallowCopy(Idempotents(R));
+      idems := GeneratorsOfSemigroup(IdempotentGeneratedSubsemigroup(R));
+      idems := ShallowCopy(idems);
       if not opts.zero or not IsCompleteBipartiteDigraph(RZMSDigraph(R_n)) then
-        Remove(idems, Position(idems, zero));
+        x := Position(idems, zero);
+        if x <> fail then
+          Remove(idems, x);
+        fi;
       fi;
 
       # Max subsemigroup arising from <max[i]> <--> Transversal of <results[i]>
