@@ -44,24 +44,28 @@ echo -en 'travis_fold:end:BuildSemigroups\r'
 # Get the packages
 echo -en 'travis_fold:start:InstallPackages\r'
 cd pkg
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GAPDOC.tar.gz
+echo "Downloading $GAPDOC..."
+curl -LO http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GAPDOC.tar.gz
 tar xzf $GAPDOC.tar.gz
 rm $GAPDOC.tar.gz
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$IO.tar.gz
+echo "Downloading $IO..."
+curl -LO http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$IO.tar.gz
 tar xzf $IO.tar.gz
 rm $IO.tar.gz
 cd $IO
 ./configure $PKG_FLAGS
 make
 cd ..
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$ORB.tar.gz
+echo "Downloading $ORB..."
+curl -LO http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$ORB.tar.gz
 tar xzf $ORB.tar.gz
 rm $ORB.tar.gz
 cd $ORB
 ./configure $PKG_FLAGS
 make
 cd ..
-curl -O http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GENSS.tar.gz
+echo "Downloading $GENSS..."
+curl -LO http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GENSS.tar.gz
 tar xzf $GENSS.tar.gz
 rm $GENSS.tar.gz
 git clone -b $DIGRAPHS_BR --depth=1 https://github.com/gap-packages/Digraphs.git digraphs
