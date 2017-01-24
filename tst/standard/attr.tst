@@ -1400,6 +1400,268 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `InversesOfSemigroupElementNC' on 2 argu\
 ments
 
+#T# attr: IdempotentGeneratedSubsemigroup, 2
+gap> S := FullTransformationMonoid(3);;
+gap> I := IdempotentGeneratedSubsemigroup(S);;
+gap> HasIsIdempotentGenerated(I);
+true
+gap> IsIdempotentGenerated(I);
+true
+
+#T# attr: IdempotentGeneratedSubsemigroup, for an Rees matrix semigroup, 1
+# TryNextMethod()
+
+# Error: infinite
+gap> S := FreeSemigroup(1);
+<free semigroup on the generators [ s1 ]>
+gap> R := ReesMatrixSemigroup(S, [[S.1]]);
+<Rees matrix semigroup 1x1 over <free semigroup on the generators [ s1 ]>>
+gap> IdempotentGeneratedSubsemigroup(R);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 4th choice method found for `IdempotentGeneratedSubsemigroup' on 1 a\
+rguments
+
+# not a Rees matrix semigroup
+gap> x := Transformation([2, 2]);;
+gap> R := ReesMatrixSemigroup(FullTransformationMonoid(2),
+>                             [[IdentityTransformation, x],
+>                              [x, x]]);
+<Rees matrix semigroup 2x2 over <full transformation monoid of degree 2>>
+gap> S := Semigroup(RMSElement(R, 1, IdentityTransformation, 1),
+>                   RMSElement(R, 2, IdentityTransformation, 2));
+<subsemigroup of 2x2 Rees matrix semigroup with 2 generators>
+gap> IsReesMatrixSubsemigroup(S);
+true
+gap> IsReesMatrixSemigroup(S);
+false
+gap> I := IdempotentGeneratedSubsemigroup(S);;
+gap> HasIsIdempotentGenerated(I);
+true
+gap> IsIdempotentGenerated(I);
+true
+gap> Size(I) = 5;
+true
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+
+# not over a group
+gap> x := Transformation([2, 2]);;
+gap> R := ReesMatrixSemigroup(FullTransformationMonoid(2),
+>                             [[IdentityTransformation, x],
+>                              [x, x]]);
+<Rees matrix semigroup 2x2 over <full transformation monoid of degree 2>>
+gap> I := IdempotentGeneratedSubsemigroup(R);;
+gap> HasIsIdempotentGenerated(I);
+true
+gap> IsIdempotentGenerated(I);
+true
+gap> Size(I) = 9;
+true
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+
+#T# attr: IdempotentGeneratedSubsemigroup, for an Rees matrix semigroup, 2
+
+# Rectangular bands
+gap> R := RectangularBand(IsReesMatrixSemigroup, 1, 1);
+<Rees matrix semigroup 1x1 over Group(())>
+gap> I := IdempotentGeneratedSubsemigroup(R);
+<subsemigroup of 1x1 Rees matrix semigroup with 1 generator>
+gap> I = R;
+true
+gap> HasIsIdempotentGenerated(I);
+true
+gap> IsIdempotentGenerated(I);
+true
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> R := RectangularBand(IsReesMatrixSemigroup, 3, 1);
+<Rees matrix semigroup 3x1 over Group(())>
+gap> I := IdempotentGeneratedSubsemigroup(R);
+<subsemigroup of 3x1 Rees matrix semigroup with 3 generators>
+gap> I = R;
+true
+gap> HasIsIdempotentGenerated(I);
+true
+gap> IsIdempotentGenerated(I);
+true
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> R := RectangularBand(IsReesMatrixSemigroup, 1, 3);
+<Rees matrix semigroup 1x3 over Group(())>
+gap> I := IdempotentGeneratedSubsemigroup(R);
+<subsemigroup of 1x3 Rees matrix semigroup with 3 generators>
+gap> I = R;
+true
+gap> HasIsIdempotentGenerated(I);
+true
+gap> IsIdempotentGenerated(I);
+true
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> R := RectangularBand(IsReesMatrixSemigroup, 2, 2);
+<Rees matrix semigroup 2x2 over Group(())>
+gap> I := IdempotentGeneratedSubsemigroup(R);
+<subsemigroup of 2x2 Rees matrix semigroup with 2 generators>
+gap> I = R;
+true
+gap> HasIsIdempotentGenerated(I);
+true
+gap> IsIdempotentGenerated(I);
+true
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+
+# Subsemigroup, giving non-standard matrix
+gap> x := [[(2, 3, 5), (1, 2, 4)(3, 5), (1, 3, 5, 2, 4)],
+>          [(1, 3, 5, 4), (2, 3, 5, 4), (1, 3, 5)(2, 4)],
+>          [(2, 3, 5), (1, 5, 4, 3, 2), ()],
+>          [(1, 4, 2, 5), (1, 2)(3, 5), (1, 5, 3, 2, 4)],
+>          [(1, 4)(2, 3, 5), (1, 2)(4, 5), (1, 3, 4, 2, 5)]];;
+gap> G := SymmetricGroup(5);;
+gap> R := ReesMatrixSemigroup(G, x);
+<Rees matrix semigroup 3x5 over Sym( [ 1 .. 5 ] )>
+gap> S := ReesMatrixSubsemigroup(R, [2], G, [4]);
+<Rees matrix semigroup 1x1 over Sym( [ 1 .. 5 ] )>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<subsemigroup of 3x5 Rees matrix semigroup with 1 generator>
+gap> GeneratorsOfSemigroup(I);
+[ (2,(1,2)(3,5),4) ]
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> S := ReesMatrixSubsemigroup(R, [2], G, [3, 4, 5]);
+<Rees matrix semigroup 1x3 over Sym( [ 1 .. 5 ] )>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<subsemigroup of 3x5 Rees matrix semigroup with 3 generators>
+gap> GeneratorsOfSemigroup(I);
+[ (2,(1,2,3,4,5),3), (2,(1,2)(3,5),4), (2,(1,2)(4,5),5) ]
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> S := ReesMatrixSubsemigroup(R, [2, 3], G, [4]);
+<Rees matrix semigroup 2x1 over Sym( [ 1 .. 5 ] )>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<subsemigroup of 3x5 Rees matrix semigroup with 2 generators>
+gap> GeneratorsOfSemigroup(I);
+[ (2,(1,2)(3,5),4), (3,(1,4,2,3,5),4) ]
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> S := ReesMatrixSubsemigroup(R, [2, 3], G, [4, 5]);
+<Rees matrix semigroup 2x2 over Sym( [ 1 .. 5 ] )>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<subsemigroup of 3x5 Rees matrix semigroup with 2 generators>
+gap> GeneratorsOfSemigroup(I);
+[ (2,(1,2)(3,5),4), (3,(1,5,2,4,3),5) ]
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+
+#T# attr: IdempotentGeneratedSubsemigroup, for an Rees 0-matrix semigroup, 1
+# TryNextMethod()
+
+# Error: infinite
+gap> S := FreeSemigroup(1);
+<free semigroup on the generators [ s1 ]>
+gap> R := ReesZeroMatrixSemigroup(S, [[S.1]]);
+<Rees 0-matrix semigroup 1x1 over <free semigroup on the generators [ s1 ]>>
+gap> IdempotentGeneratedSubsemigroup(R);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 4th choice method found for `IdempotentGeneratedSubsemigroup' on 1 a\
+rguments
+
+# not a Rees matrix semigroup
+gap> x := Transformation([2, 2]);;
+gap> R := ReesZeroMatrixSemigroup(FullTransformationMonoid(2),
+>                                 [[IdentityTransformation, 0],
+>                                  [0, x]]);
+<Rees 0-matrix semigroup 2x2 over <full transformation monoid of degree 2>>
+gap> S := Semigroup(RMSElement(R, 1, IdentityTransformation, 1),
+>                   RMSElement(R, 2, IdentityTransformation, 2));
+<subsemigroup of 2x2 Rees 0-matrix semigroup with 2 generators>
+gap> IsReesZeroMatrixSubsemigroup(S);
+true
+gap> IsReesZeroMatrixSemigroup(S);
+false
+gap> I := IdempotentGeneratedSubsemigroup(S);;
+gap> HasIsIdempotentGenerated(I);
+true
+gap> IsIdempotentGenerated(I);
+true
+gap> Size(I) = 3;
+true
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+
+# not over a group
+gap> x := Transformation([2, 2]);;
+gap> R := ReesZeroMatrixSemigroup(FullTransformationMonoid(2),
+>                                 [[IdentityTransformation, 0],
+>                                  [x, x]]);
+<Rees 0-matrix semigroup 2x2 over <full transformation monoid of degree 2>>
+gap> I := IdempotentGeneratedSubsemigroup(R);;
+gap> HasIsIdempotentGenerated(I);
+true
+gap> IsIdempotentGenerated(I);
+true
+gap> Size(I) = 10;
+true
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+
+#T# attr: IdempotentGeneratedSubsemigroup, for an Rees 0-matrix semigroup, 2
+
+# Subsemigroup, giving non-standard matrix, 1
+gap> R := ReesZeroMatrixSemigroup(Group(()), [[(), ()], [(), ()]]);
+<Rees 0-matrix semigroup 2x2 over Group(())>
+gap> S := Semigroup(RMSElement(R, 2, (), 2), MultiplicativeZero(R));
+<subsemigroup of 2x2 Rees 0-matrix semigroup with 2 generators>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<subsemigroup of 2x2 Rees 0-matrix semigroup with 2 generators>
+gap> I = S;
+true
+gap> Elements(I);
+[ 0, (2,(),2) ]
+
+# Subsemigroup, giving non-standard matrix, 2
+gap> x := [[(1, 3, 5)(2, 4), (1, 4, 3, 2, 5), (1, 3, 5)(2, 4)],
+>          [(2, 4, 5, 3), 0, (1, 4, 5, 3)],
+>          [(3, 5, 4), 0, (1, 4, 5)(2, 3)],
+>          [0, 0, (1, 3, 4, 2)],
+>          [(2, 3, 4), (1, 2, 5, 4, 3), (1, 5, 3)(2, 4)]];;
+gap> G := SymmetricGroup(5);;
+gap> R := ReesZeroMatrixSemigroup(G, x);
+<Rees 0-matrix semigroup 3x5 over Sym( [ 1 .. 5 ] )>
+gap> S := ReesZeroMatrixSubsemigroup(R, [2], G, [4]);
+<Rees 0-matrix semigroup 1x1 over Sym( [ 1 .. 5 ] )>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<subsemigroup of 3x5 Rees 0-matrix semigroup with 1 generator>
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> I = Semigroup(Idempotents(S));
+true
+gap> S := ReesZeroMatrixSubsemigroup(R, [2], G, [3, 4, 5]);
+<Rees 0-matrix semigroup 1x3 over Sym( [ 1 .. 5 ] )>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<subsemigroup of 3x5 Rees 0-matrix semigroup with 2 generators>
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> I = Semigroup(Idempotents(S));
+true
+gap> S := ReesZeroMatrixSubsemigroup(R, [2, 3], G, [4]);
+<Rees 0-matrix semigroup 2x1 over Sym( [ 1 .. 5 ] )>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<subsemigroup of 3x5 Rees 0-matrix semigroup with 2 generators>
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> I = Semigroup(Idempotents(S));
+true
+gap> S := ReesZeroMatrixSubsemigroup(R, [2, 3], G, [4, 5]);
+<Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 5 ] )>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<subsemigroup of 3x5 Rees 0-matrix semigroup with 3 generators>
+gap> ForAll(GeneratorsOfSemigroup(I), IsIdempotent);
+true
+gap> I = Semigroup(Idempotents(S));
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);
