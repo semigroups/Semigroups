@@ -412,12 +412,17 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
     if k = 0 then
       return 0;
     fi;
+    if k = m + 1 then
+      return k;
+    fi;
     if k = m then
-      if not IsBound(g[repspos[k]]) then
-        g[repspos[k]] := possiblegrepvals[k][1];
-      fi;
-      if not (propagatef(k) = fail or propagateg(k) = fail) then
-        return k;
+      if not (propagatef(k) = fail or restrictfromf(k) = fail) then
+        if not IsBound(g[repspos[k]]) then
+          g[repspos[k]] := possiblegrepvals[k][1];
+        fi;
+        if not propagateg(k) = fail then
+          return m + 1;
+        fi;
       fi;
       return bt(reject(k));
     elif not (propagatef(k) = fail or restrictfromf(k) = fail) then
@@ -450,9 +455,9 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
   
   k := extendf(0);
   k := bt(k);
-  while k <> 0 do
+  while k = m + 1 do
     Add(linkedpairs, [ShallowCopy(f), ShallowCopy(g)]);
-    k := bt(reject(k));
+    k := bt(reject(k - 1));
   od;
   
   linkedpairsunsorted := [];
@@ -684,7 +689,7 @@ function(R, x)
           "the first argument must be a semigroup of right translations");
     return;
   fi;
-  
+
   if IsGeneralMapping(x) then
     if not (S = Source(x) and Source(x) = Range(x)) then
       Error("Semigroups: RightTranslation (from Mapping): \n",
@@ -867,6 +872,32 @@ end);
 #############################################################################
 # 3. Methods for rectangular bands
 #############################################################################
+
+# For rectangular bands, don't calculate AsList for LeftTranslations 
+# Just get generators
+InstallMethod(LeftTranslations, "for a RZMS semigroup",
+[IsSemigroup and IsFinite and IsZeroSimpleSemigroup],
+function(S) 
+  local L;
+  
+  L := LeftTranslationsSemigroup(S);
+  GeneratorsOfSemigroup(L);
+  
+  return L;
+end);
+
+# For RZMS, don't calculate AsList for RightTranslations 
+# Just get generators
+InstallMethod(RightTranslations, "for a RZMS semigroup",
+[IsSemigroup and IsFinite and IsZeroSimpleSemigroup],
+function(S) 
+  local R;
+  
+  R := RightTranslationsSemigroup(S);
+  GeneratorsOfSemigroup(R);
+  
+  return R;
+end);
 
 # Every transformation on the relevant index set corresponds to a translation.
 # The R classes of an I x J rectangular band correspond to (i, J) for i in I.
