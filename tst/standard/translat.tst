@@ -28,7 +28,7 @@ gap> Size(L);
 gap> Size(R);
 256
 
-#T# creation of translations semigroups it can't calclate
+#T# Creation of translations semigroups it can't calclate
 gap> S := SingularTransformationSemigroup(10);
 <regular transformation semigroup ideal of degree 10 with 1 generator>
 gap> S := SingularTransformationSemigroup(10);;
@@ -195,6 +195,22 @@ true
 gap> S := RectangularBand(2,3);;
 gap> Size(Semigroup(GeneratorsOfSemigroup(TranslationalHull(S))))
 > = Size(SEMIGROUPS.bruteforcetranshull(S));
+true
+
+#T# OneOp for translations semigroups elements and translational hull elements
+gap> G := SmallGroup(6, 1);;
+gap> a := G.1;; b := G.2;;
+gap> mat := [[a, 0, b],
+> [b, a, 0],
+> [0, a, b]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> IsSemigroup(S) and IsFinite(S) and IsZeroSimpleSemigroup(S);;
+gap> L := LeftTranslations(S);;
+gap> R := RightTranslations(S);;
+gap> H := TranslationalHull(S);;
+gap> OneOp(L.1) = LeftTranslation(L, MappingByFunction(S, S, x -> x));
+true
+gap> OneOp(R.1) = RightTranslation(R, MappingByFunction(S, S, x -> x));
 true
 
 #T# SEMIGROUPS_UnbindVariables
