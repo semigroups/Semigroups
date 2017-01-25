@@ -20,6 +20,32 @@
 ##
 #############################################################################
 
+# For RZMS, don't calculate AsList when LeftTranslations is called
+# Just get generators
+InstallMethod(LeftTranslations, "for a RZMS semigroup",
+[IsSemigroup and IsFinite and IsZeroSimpleSemigroup],
+function(S) 
+  local L;
+  
+  L := LeftTranslationsSemigroup(S);
+  GeneratorsOfSemigroup(L);
+  
+  return L;
+end);
+
+# For RZMS, don't calculate AsList when RightTranslations is called
+# Just get generators
+InstallMethod(RightTranslations, "for a RZMS semigroup",
+[IsSemigroup and IsFinite and IsZeroSimpleSemigroup],
+function(S) 
+  local R;
+  
+  R := RightTranslationsSemigroup(S);
+  GeneratorsOfSemigroup(R);
+  
+  return R;
+end);
+
 # The generators are generators of partial transformation monoid to act on the
 # index sets, together with functions to the generators of the group.
 InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left/right translations of a finite 0-simple semigroup",
