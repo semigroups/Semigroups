@@ -530,7 +530,7 @@ function(S)
   gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
   gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);
 
-  return List(OutNeighboursCopy(gr), Set);
+  return List(OutNeighbours(gr), Set);
 end);
 
 #############################################################################
