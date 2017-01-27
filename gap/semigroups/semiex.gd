@@ -55,9 +55,9 @@ DeclareOperation("PartialUniformBlockBijectionMonoid", [IsPosInt]);
 DeclareOperation("SingularUniformBlockBijectionMonoid", [IsPosInt]);
 DeclareOperation("PlanarUniformBlockBijectionMonoid", [IsPosInt]);
 DeclareOperation("SingularPlanarUniformBlockBijectionMonoid", [IsPosInt]);
-DeclareSynonym("FactorisableDualSymmetricInverseSemigroup",
+DeclareSynonym("FactorisableDualSymmetricInverseMonoid",
                UniformBlockBijectionMonoid);
-DeclareSynonym("SingularFactorisableDualSymmetricInverseSemigroup",
+DeclareSynonym("SingularFactorisableDualSymmetricInverseMonoid",
                SingularUniformBlockBijectionMonoid);
 
 DeclareOperation("ApsisMonoid", [IsPosInt, IsPosInt]);

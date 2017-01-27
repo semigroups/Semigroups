@@ -157,10 +157,10 @@ gap> Size(S);
 <#GAPDoc Label="UniformBlockBijectionMonoid">
    <ManSection>
     <Oper Name="UniformBlockBijectionMonoid" Arg="n"/>
-    <Oper Name="FactorisableDualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name="FactorisableDualSymmetricInverseMonoid" Arg="n"/>
     <Oper Name="SingularUniformBlockBijectionMonoid" Arg="n"/>
     <Oper Name="PartialUniformBlockBijectionMonoid" Arg="n"/>
-    <Oper Name="SingularFactorisableDualSymmetricInverseSemigroup" Arg="n"/>
+    <Oper Name="SingularFactorisableDualSymmetricInverseMonoid" Arg="n"/>
     <Oper Name="PlanarUniformBlockBijectionMonoid" Arg="n"/>
     <Oper Name="SingularPlanarUniformBlockBijectionMonoid" Arg="n"/>
     <Returns>An inverse bipartition monoid.</Returns>
@@ -171,7 +171,7 @@ gap> Size(S);
       block bijections of degree &n; where the number of positive integers in a
       block equals the number of negative integers in that block. 
       The uniform block bijection monoid is also referred to as the 
-      <E>factorisable dual symmetric inverse semigroup</E>. <P/>
+      <E>factorisable dual symmetric inverse monoid</E>. <P/>
 
       <C>SingularUniformBlockBijectionMonoid</C> returns the ideal of the
       uniform block bijection monoid consisting of the non-invertible elements
