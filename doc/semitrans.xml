@@ -209,7 +209,10 @@ gap> CyclesOfTransformationSemigroup(S);
 
 <#GAPDoc Label="IsSynchronizingSemigroup">
   <ManSection>
-    <Oper Name = "IsSynchronizingSemigroup" Arg = "S[, n]"/>
+    <Prop Name = "IsSynchronizingSemigroup" Arg = "S"
+      Label = "for a transformation semigroup" />
+    <Oper Name = "IsSynchronizingSemigroup" Arg = "S, n"
+      Label = "for a transformation semigroup and a positive integer" />
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       For a positive integer <A>n</A>,
@@ -226,9 +229,10 @@ gap> CyclesOfTransformationSemigroup(S);
       <A>S</A>.
       <P/>
       
-      Note that the semigroup consisting of the identity
-      transformation has degree <C>0</C>, and for this special case the
-      function <C>IsSynchronizingSemigroup</C> will return <K>false</K>.<P/>
+      Note that the semigroup consisting of the identity transformation is the
+      unique transformation semigroup with degree <C>0</C>. In this special
+      case, the function <C>IsSynchronizingSemigroup</C> will return
+      <K>false</K>.<P/>
 
       <Example><![CDATA[
 gap> S := Semigroup(

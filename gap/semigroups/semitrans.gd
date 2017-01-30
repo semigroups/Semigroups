@@ -26,7 +26,7 @@ DeclareProperty("IsConnectedTransformationSemigroup",
 DeclareAttribute("CyclesOfTransformationSemigroup",
                  IsTransformationSemigroup);
 
-DeclareOperation("IsSynchronizingSemigroup", [IsTransformationSemigroup]);
+DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareOperation("IsSynchronizingSemigroup",
                  [IsTransformationSemigroup, IsPosInt]);
 

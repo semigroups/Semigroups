@@ -590,6 +590,9 @@ function(S, n)
 
   if n = 1 then
     return true;
+  elif HasIsSynchronizingSemigroup(S)
+      and n <= DegreeOfTransformationSemigroup(S) then
+    return IsSynchronizingSemigroup(S);
   fi;
 
   if HasGeneratorsOfSemigroup(S) then
