@@ -871,6 +871,10 @@ function(S)
   return U;
 end);
 
+InstallMethod(DegreeOfTransformationCollection,
+"for a transformation semigroup",
+[IsTransformationSemigroup], DegreeOfTransformationSemigroup);
+
 InstallMethod(DegreeOfTransformationSemigroup,
 "for a transformation semigroup ideal",
 [IsTransformationSemigroup and IsSemigroupIdeal],
