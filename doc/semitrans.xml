@@ -210,7 +210,6 @@ gap> CyclesOfTransformationSemigroup(S);
 <#GAPDoc Label="IsSynchronizingSemigroup">
   <ManSection>
     <Oper Name = "IsSynchronizingSemigroup" Arg = "S[, n]"/>
-    <Oper Name = "IsSynchronizingTransformationCollection" Arg = "coll[, n]"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       For a positive integer <A>n</A>,
@@ -226,10 +225,6 @@ gap> CyclesOfTransformationSemigroup(S);
       <Ref Oper = "DegreeOfTransformationSemigroup" BookName = "ref"/> for
       <A>S</A>.
       <P/>
-
-      The operation <C>IsSynchronizingTransformationCollection</C> behaves in
-      the same way as <C>IsSynchronizingSemigroup</C> but can be applied to any
-      collection of transformations and not only semigroups. <P/>
       
       Note that the semigroup consisting of the identity
       transformation has degree <C>0</C>, and for this special case the

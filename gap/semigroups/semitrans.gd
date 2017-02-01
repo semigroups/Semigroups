@@ -26,8 +26,6 @@ DeclareAttribute("CyclesOfTransformationSemigroup",
 DeclareOperation("IsSynchronizingSemigroup", [IsTransformationSemigroup]);
 DeclareOperation("IsSynchronizingSemigroup",
                  [IsTransformationSemigroup, IsPosInt]);
-DeclareOperation("IsSynchronizingTransformationCollection",
-                 [IsTransformationCollection, IsPosInt]);
 
 DeclareProperty("IsTransitive", IsTransformationSemigroup);
 DeclareOperation("IsTransitive", [IsTransformationCollection, IsPosInt]);

@@ -138,3 +138,12 @@ function(n)
                            n, ")");
   return SingularFactorisableDualSymmetricInverseMonoid(n);
 end);
+
+InstallMethod(IsSynchronizingTransformationCollection,
+"for a transformation collection and a positive integer",
+[IsTransformationCollection, IsPosInt],
+function(coll, n)
+  SEMIGROUPS.PrintObsolete("IsSynchronizingTransformationCollection",
+                           "IsSynchronizingSemigroup(Semigroup(coll), n)");
+  return IsSynchronizingSemigroup(Semigroup(coll), n);
+end);

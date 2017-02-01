@@ -29,3 +29,6 @@ DeclareOperation("IsomorphismBlockBijectionSemigroup", [IsSemigroup]);
 DeclareOperation("FactorisableDualSymmetricInverseSemigroup", [IsPosInt]);
 DeclareOperation("SingularFactorisableDualSymmetricInverseSemigroup",
                  [IsPosInt]);
+
+DeclareOperation("IsSynchronizingTransformationCollection",
+                 [IsTransformationCollection, IsPosInt]);

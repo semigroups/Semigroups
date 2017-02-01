@@ -550,30 +550,21 @@ function(S)
   return IsSynchronizingSemigroup(S, deg);
 end);
 
+# this method comes from PJC's slides from the Lisbon Workshop in July 2014
+
 # same method for ideals
 
 InstallMethod(IsSynchronizingSemigroup,
 "for a transformation semigroup and positive integer",
 [IsTransformationSemigroup, IsPosInt],
 function(S, n)
-  local gens;
+  local gens, all_perms, r, graph, marked, squashed, x, i, j;
 
   if HasGeneratorsOfSemigroup(S) then
     gens := GeneratorsOfSemigroup(S);
   else
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
   fi;
-
-  return IsSynchronizingTransformationCollection(gens, n);
-end);
-
-# this method comes from PJC's slides from the Lisbon Workshop in July 2014
-
-InstallMethod(IsSynchronizingTransformationCollection,
-"for a transformation collection and positive integer",
-[IsTransformationCollection, IsPosInt],
-function(gens, n)
-  local all_perms, r, graph, marked, squashed, x, i, j;
 
   if n = 1 then
     return true;

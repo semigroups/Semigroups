@@ -81,5 +81,13 @@ gap> IsomorphismBlockBijectionSemigroup(SymmetricInverseMonoid(3));;
 #I  `IsomorphismBlockBijectionSemigroup` is no longer supported
 #I  use `IsomorphismSemigroup(IsBlockBijectionSemigroup, S)` instead!
 
+# IsSynchronizingTransformationCollection
+gap> IsSynchronizingTransformationCollection([
+>  Transformation([2, 3, 4, 1]),
+>  Transformation([2, 1]),
+>  Transformation([1, 2, 3, 1])], 4);;
+#I  `IsSynchronizingTransformationCollection` is no longer supported
+#I  use `IsSynchronizingSemigroup(Semigroup(coll), n)` instead!
+
 #
 gap> STOP_TEST("Semigroups package: standard/obsolete.tst");
