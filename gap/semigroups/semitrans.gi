@@ -207,7 +207,13 @@ InstallMethod(DigraphOfActionOnPoints,
 "for a transformation semigroup with known generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  return DigraphOfActionOnPoints(S, DegreeOfTransformationSemigroup(S));
+  local n;
+
+  n := DegreeOfTransformationSemigroup(S);
+  if n = 0 then
+    return EmptyDigraph(0);
+  fi;
+  return DigraphOfActionOnPoints(S, n);
 end);
 
 InstallMethod(DigraphOfActionOnPoints,
@@ -222,6 +228,9 @@ function(S, n)
     x := gens[i];
     for j in [1 .. n] do
       k := j ^ x;
+      if k > n then
+        return fail;
+      fi;
       AddSet(out[j], k);
     od;
   od;
