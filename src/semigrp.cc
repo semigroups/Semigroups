@@ -1102,8 +1102,9 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
+    semi_cpp->set_max_threads(semi_obj_get_nr_threads(so));
     typename std::vector<size_t>::const_iterator cbegin =
-        semi_cpp->idempotents_cbegin(semi_obj_get_nr_threads(so));
+        semi_cpp->idempotents_cbegin();
     typename std::vector<size_t>::const_iterator cend =
         semi_cpp->idempotents_cend();
     size_t nr = semi_cpp->nr_idempotents();
@@ -1158,11 +1159,12 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
-    size_t     nrt      = semi_obj_get_nr_threads(so);
+    semi_cpp->set_max_threads(semi_obj_get_nr_threads(so));
+
     for (size_t pos = 1; pos <= (size_t) LEN_LIST(list); pos++) {
       gap_int_t ent = ELM_LIST(list, pos);
       CHECK_POS_INTOBJ(ent);
-      if (semi_cpp->is_idempotent(INT_INTOBJ(ent) - 1, nrt)) {
+      if (semi_cpp->is_idempotent(INT_INTOBJ(ent) - 1)) {
         AssPlist(out, ++len, ent);
       }
     }
@@ -1217,7 +1219,9 @@ gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
-    return INTOBJ_INT(semi_cpp->nr_idempotents(semi_obj_get_nr_threads(so)));
+    semi_cpp->set_max_threads(semi_obj_get_nr_threads(so));
+
+    return INTOBJ_INT(semi_cpp->nr_idempotents());
   } else {
     // This could probably be better but is also probably not worth the effort
     // of improving
