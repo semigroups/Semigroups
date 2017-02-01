@@ -61,8 +61,9 @@ DeclareOperation("AsBipartition", [IsPBR, IsZeroCyc]);
 DeclareOperation("AsBipartition", [IsPBR]);
 
 DeclareOperation("AsBlockBijection", [IsPartialPerm, IsPosInt]);
-DeclareOperation("AsBlockBijection", [IsPartialPerm, IsZeroCyc]);
 DeclareOperation("AsBlockBijection", [IsPartialPerm]);
+DeclareOperation("AsBlockBijection", [IsBipartition, IsPosInt]);
+DeclareOperation("AsBlockBijection", [IsBipartition]);
 
 DeclareProperty("IsBlockBijection", IsBipartition);
 DeclareProperty("IsUniformBlockBijection", IsBipartition);

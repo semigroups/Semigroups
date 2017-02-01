@@ -554,12 +554,6 @@ function(x)
                                      CodegreeOfPartialPerm(x)) + 1);
 end);
 
-InstallMethod(AsBlockBijection, "for a partial perm and zero",
-[IsPartialPerm, IsZeroCyc],
-function(x, n)
-  return Bipartition([]);
-end);
-
 # Viewing, printing etc
 
 InstallMethod(ViewString, "for a bipartition",
@@ -882,8 +876,8 @@ function(f, n)
   if n <= Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then
     ErrorNoReturn("Semigroups: AsBlockBijection (for a partial perm and pos ",
                   "int):\n",
-                  "the 2nd argument must be at least the maximum of the ",
-                  "degree and\ncodegree of the 1st argument,");
+                  "the 2nd argument must be strictly greater than the maximum ",
+                  "of the\ndegree and codegree of the 1st argument,");
   fi;
 
   nr := 0;
@@ -916,6 +910,28 @@ function(f, n)
   out := BIPART_NC(out);
   return out;
 end);
+
+InstallMethod(AsBlockBijection, "for a bipartition and pos int",
+[IsBipartition, IsPosInt],
+function(x, n)
+  if not IsPartialPermBipartition(x) then
+    ErrorNoReturn("Semigroups: AsBlockBijection (for a bipartition and pos ",
+                  "int):\n",
+                  "the argument <x> must be a partial perm bipartition,");
+  fi;
+  return AsBlockBijection(AsPartialPerm(x), n);
+end);
+
+InstallMethod(AsBlockBijection, "for a bipartition",
+[IsBipartition],
+function(x)
+  if not IsPartialPermBipartition(x) then
+    ErrorNoReturn("Semigroups: AsBlockBijection (for a bipartition):\n",
+                  "the argument <x> must be a partial perm bipartition,");
+  fi;
+  return AsBlockBijection(AsPartialPerm(x));
+end);
+
 
 InstallMethod(NaturalLeqBlockBijection, "for a bipartition and bipartition",
 IsIdenticalObj, [IsBipartition, IsBipartition],

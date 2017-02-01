@@ -397,13 +397,14 @@ gap> AsBipartition(Bipartition([[1, 2, -1, -2], [3, -3]]), 0);
 
 # bipartition: AsBlockBijection, for a partial perm and 0 1/1
 gap> AsBlockBijection(PartialPerm([4, 1, 3, 2]), 0);
-<empty bipartition>
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsBlockBijection' on 2 arguments
 
 # bipartition: AsBlockBijection, for a partial perm and pos int, error 1/1
 gap> AsBlockBijection(PartialPerm([1, 3, 2, 4]), 1);
 Error, Semigroups: AsBlockBijection (for a partial perm and pos int):
-the 2nd argument must be at least the maximum of the degree and
-codegree of the 1st argument,
+the 2nd argument must be strictly greater than the maximum of the
+degree and codegree of the 1st argument,
 
 # bipartition: IsUniformBlockBijection, for a bipartition 1/3
 gap> IsUniformBlockBijection(Bipartition([[1, 2, -1, -2], [3, -3]]));
@@ -666,6 +667,47 @@ true
 # Test PrintString (for degree 0)
 gap> PrintString(IdentityBipartition(0));
 "\>\>Bipartition(\< \>[]\<)\<"
+
+#T# bipartition: AsBlockBijection, for a partial perm bipartition
+gap> x := Bipartition([[1, 3], [2, 4, -2], [5, -1, -3, -4], [-5]]);;
+gap> AsBlockBijection(x);
+Error, Semigroups: AsBlockBijection (for a bipartition):
+the argument <x> must be a partial perm bipartition,
+gap> AsBlockBijection(x, 3);
+Error, Semigroups: AsBlockBijection (for a bipartition and pos int):
+the argument <x> must be a partial perm bipartition,
+gap> n := 4;;
+gap> S := SymmetricInverseMonoid(n);
+<symmetric inverse monoid of degree 4>
+gap> gens := List(GeneratorsOfInverseMonoid(S), AsBipartition);;
+gap> ForAll(gens, IsPartialPermBipartition);
+true
+gap> for x in gens do
+>   for y in gens do
+>     if not AsBlockBijection(x * y, n + 1)
+>         = AsBlockBijection(x, n + 1) * AsBlockBijection(y, n + 1) then
+>       Print("fail\n");
+>     fi;
+>   od;
+> od;
+gap> AsBlockBijection(One(gens[1])) = IdentityBipartition(5);
+true
+gap> x := Bipartition([[1, -4], [2, -1], [3], [4], [-2], [-3]]);;
+gap> AsBlockBijection(x, 0);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `AsBlockBijection' on 2 arguments
+gap> AsBlockBijection(x, 3);
+Error, Semigroups: AsBlockBijection (for a partial perm and pos int):
+the 2nd argument must be strictly greater than the maximum of the
+degree and codegree of the 1st argument,
+gap> AsBlockBijection(x, 4);
+Error, Semigroups: AsBlockBijection (for a partial perm and pos int):
+the 2nd argument must be strictly greater than the maximum of the
+degree and codegree of the 1st argument,
+gap> AsBlockBijection(x);
+<block bijection: [ 1, -4 ], [ 2, -1 ], [ 3, 4, 5, -2, -3, -5 ]>
+gap> AsBlockBijection(x, 6);
+<block bijection: [ 1, -4 ], [ 2, -1 ], [ 3, 4, 5, 6, -2, -3, -5, -6 ]>
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
