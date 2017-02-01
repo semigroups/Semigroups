@@ -31,7 +31,7 @@ DeclareProperty("IsMonogenicInverseMonoid", IsMonoid);
 DeclareOperation("IsRegularSemigroupElementNC",
                  [IsSemigroup, IsMultiplicativeElement]);
 DeclareProperty("IsRightSimple", IsSemigroup);
-DeclareSynonymAttr("IsSemigroupWithCommutingIdempotents", IsBlockGroup);
+DeclareProperty("IsSemigroupWithCommutingIdempotents", IsSemigroup);
 DeclareProperty("IsUnitRegularMonoid", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
@@ -48,8 +48,12 @@ InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
 InstallTrueMethod(IsGeneratorsOfInverseSemigroup, 
                   IsInverseSemigroup and IsPartialPermBipartitionSemigroup);
 
-InstallTrueMethod(IsBlockGroup, IsInverseSemigroup);
-InstallTrueMethod(IsBlockGroup, IsPartialPermSemigroup);
+InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsCommutativeSemigroup);
+InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsInverseSemigroup);
+InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsPartialPermSemigroup);
+InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsBlockBijectionSemigroup);
+InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsNilpotentSemigroup);
+InstallTrueMethod(IsBlockGroup, IsSemigroupWithCommutingIdempotents);
 InstallTrueMethod(IsDTrivial, IsSemilattice);
 InstallTrueMethod(IsHTrivial, IsLTrivial);
 InstallTrueMethod(IsHTrivial, IsRTrivial);

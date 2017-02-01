@@ -72,6 +72,27 @@ function(S)
   return true;
 end);
 
+InstallMethod(IsSemigroupWithCommutingIdempotents, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local ids, n, i, j;
+  ids := Idempotents(S);
+  n := Length(ids);
+  for i in [1 .. n - 1] do
+    for j in [i + 1 .. n] do
+      if ids[i] * ids[j] <> ids[j] * ids[i] then
+        return false;
+      fi;
+    od;
+  od;
+  return true;
+end);
+
+InstallMethod(IsSemigroupWithCommutingIdempotents,
+"for a semigroup with idempotent generated subsemigroup",
+[IsSemigroup and HasIdempotentGeneratedSubsemigroup],
+S -> IsCommutativeSemigroup(IdempotentGeneratedSubsemigroup(S)));
+
 # same method for ideals
 
 InstallMethod(IsBrandtSemigroup, "for a semigroup",

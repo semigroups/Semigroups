@@ -94,12 +94,10 @@ true]]></Example>
 <#GAPDoc Label="IsBlockGroup">
   <ManSection>
     <Prop Name = "IsBlockGroup" Arg = "S"/>
-    <Prop Name = "IsSemigroupWithCommutingIdempotents" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      <C>IsBlockGroup</C> and <C>IsSemigroupWithCommutingIdempotents</C> return
-      <K>true</K> if the semigroup <A>S</A> is a block group and <K>false</K>
-      if it is not.<P/>
+      <C>IsBlockGroup</C> returns <K>true</K> if the semigroup <A>S</A> is a
+      block group and <K>false</K> if it is not.<P/>
 
       A semigroup <A>S</A> is a <E>block group</E> if every &L;-class and every
       &R;-class of <A>S</A> contains at most one idempotent. Every semigroup
@@ -843,6 +841,40 @@ gap> S := Semigroup(Transformation([1, 2, 3, 3, 1]),
 gap> IsRightZeroSemigroup(S);
 true]]></Example>
     </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsSemigroupWithCommutingIdempotents">
+  <ManSection>
+    <Prop Name = "IsSemigroupWithCommutingIdempotents" Arg = "S"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      <C>IsSemigroupWithIdempotents</C> returns <K>true</K> if the idempotents
+      of the semigroup <A>S</A> commute, and <K>false</K> if they do not. Note
+      that such an semigroup is also a block group; see <Ref
+        Prop="IsBlockGroup"/>. <P/>
+
+      Note that the idempotents commute in any inverse semigroup, in any
+      semigroup of partial permutations, and in any semigroup of block
+      bijections. 
+      <Example><![CDATA[
+gap> x := Transformation([2, 2]);;
+gap> y := Transformation([1, 3, 3]);;
+gap> S := Semigroup(x, y);
+<transformation semigroup of degree 3 with 2 generators>
+gap> IsSemigroupWithCommutingIdempotents(S);
+true
+gap> S := FullTransformationMonoid(4);
+<full transformation monoid of degree 4>
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
+gap> W := Semigroup([
+>  Bipartition([[1, 2, 3, -1, -2, -4], [4, -3]]),
+>  Bipartition([[1, 2, -4], [3, -3], [4, -1, -2]])]);
+<block bijection semigroup of degree 4 with 2 generators>
+gap> IsSemigroupWithCommutingIdempotents(S);
+true]]></Example>
+    </Description> 
   </ManSection>
 <#/GAPDoc>
 

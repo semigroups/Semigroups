@@ -172,6 +172,9 @@ true
 #T# properties: IsBlockGroup, for an infinite semigroup, 5/?
 gap> S := FreeSemigroup(1);;
 gap> IsBlockGroup(S);
+true
+gap> S := FreeSemigroup(2);;
+gap> IsBlockGroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsBlockGroup' on 1 arguments
 
@@ -1772,6 +1775,59 @@ false
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(4), [[(1,3,2), (4,2)]]);
 <Rees 0-matrix semigroup 2x1 over Sym( [ 1 .. 4 ] )>
 gap> IsSemigroupWithAdjoinedZero(S);
+true
+
+#T# properties: IsSemigroupWithCommutingIdempotents, 1
+gap> S := SymmetricInverseMonoid(3);;
+gap> IsSemigroupWithCommutingIdempotents(S);
+true
+gap> S := FullTransformationMonoid(4);;
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
+
+# Example of a block group whose idempotents do not commute
+gap> S := Semigroup([Transformation([2, 2]), Transformation([1, 3, 3])]);;
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
+gap> IsBlockGroup(S);
+true
+
+#
+gap> S := MonogenicSemigroup(5, 8);;
+gap> IsSemigroupWithCommutingIdempotents(S);
+true
+gap> S := Semigroup([
+> Transformation([6, 9, 9, 10, 13, 1, 9, 9, 9, 4, 9, 9, 5, 9, 9, 9, 9, 9,
+>  9, 1]),
+> Transformation([7, 9, 9, 11, 14, 2, 9, 9, 9, 16, 9, 9, 18, 9, 9, 9, 9, 9,
+>  9, 2]),
+> Transformation([8, 9, 9, 12, 15, 3, 9, 9, 9, 17, 9, 9, 19, 9, 9, 9, 9, 9,
+>  9, 3]),
+> Transformation([9, 6, 9, 9, 9, 9, 1, 9, 9, 9, 4, 9, 9, 5, 9, 10, 9, 13, 9,
+>  4]),
+> Transformation([9, 9, 6, 9, 9, 9, 9, 1, 9, 9, 9, 4, 9, 9, 5, 9, 10, 9, 13,
+>  5])]);;
+gap> IsSemigroupWithCommutingIdempotents(S);
+true
+
+#T# properties: IsSemigroupWithCommutingIdempotents, 2
+gap> S := FullTransformationMonoid(3);;
+gap> IdempotentGeneratedSubsemigroup(S);;
+gap> IsSemigroupWithCommutingIdempotents(S);
+false
+gap> S := Semigroup([
+> Transformation([6, 9, 9, 10, 13, 1, 9, 9, 9, 4, 9, 9, 5, 9, 9, 9, 9, 9,
+>  9, 1]),
+> Transformation([7, 9, 9, 11, 14, 2, 9, 9, 9, 16, 9, 9, 18, 9, 9, 9, 9, 9,
+>  9, 2]),
+> Transformation([8, 9, 9, 12, 15, 3, 9, 9, 9, 17, 9, 9, 19, 9, 9, 9, 9, 9,
+>  9, 3]),
+> Transformation([9, 6, 9, 9, 9, 9, 1, 9, 9, 9, 4, 9, 9, 5, 9, 10, 9, 13, 9,
+>  4]),
+> Transformation([9, 9, 6, 9, 9, 9, 9, 1, 9, 9, 9, 4, 9, 9, 5, 9, 10, 9, 13,
+>  5])]);;
+gap> IdempotentGeneratedSubsemigroup(S);;
+gap> IsSemigroupWithCommutingIdempotents(S);
 true
 
 #T# SEMIGROUPS_UnbindVariables
