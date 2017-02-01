@@ -2318,6 +2318,41 @@ gap> Size(T);
 gap> IsMonoid(T);
 true
 
+#T# semitrans: DigraphOfActionOnPairs, 1
+gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1));
+<digraph with 0 vertices, 0 edges>
+gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 1);
+<digraph with 1 vertex, 0 edges>
+gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 3);
+<digraph with 6 vertices, 3 edges>
+gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 2);
+<digraph with 3 vertices, 1 edge>
+gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), 0);
+<digraph with 0 vertices, 0 edges>
+gap> IsEmptyDigraph(gr);
+true
+gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(2), 0);
+<digraph with 0 vertices, 0 edges>
+gap> IsEmptyDigraph(gr);
+true
+gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1), -1);
+Error, Semigroups: DigraphOfActionOnPairs: usage,
+the second argument <n> must be non-negative,
+gap> S := FullTransformationMonoid(4);
+<full transformation monoid of degree 4>
+gap> gr := DigraphOfActionOnPairs(S);
+<digraph with 10 vertices, 19 edges>
+gap> HasDigraphOfActionOnPairs(S);
+true
+gap> OutNeighbours(gr);
+[ [  ], [  ], [  ], [  ], [ 5, 8 ], [ 6, 9, 8 ], [ 7, 5, 9, 1 ], 
+  [ 8, 10, 6 ], [ 9, 6, 7, 5 ], [ 10, 7, 6 ] ]
+gap> DigraphVertexLabels(gr);
+[ 1, 2, 3, 4, [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ], [ 3, 4 ] ]
+gap> DigraphEdgeLabels(gr);
+[ [  ], [  ], [  ], [  ], [ 1, 2 ], [ 1, 2, 3 ], [ 1, 2, 3, 4 ], [ 1, 2, 3 ], 
+  [ 1, 2, 3, 4 ], [ 1, 2, 4 ] ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);

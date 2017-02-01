@@ -283,49 +283,77 @@ SEMIGROUPS.LargestElementRClass := function(R)
   return SEMIGROUPS.ElementRClass(R, true);
 end;
 
-# stop_on_isolated_pair:
-#   if true, this function returns false if there is an isolated pair-vertex
-# TODO should this be a Digraph??
-# FIXME make this a digraph
-SEMIGROUPS.GraphOfRightActionOnPairs := function(gens, n, stop_on_isolated_pair)
-  local nrgens, nrpairs, PairNumber, NumberPair, in_nbs, labels, pair,
-  isolated_pair, act, range, i, j;
-  nrgens     := Length(gens);
-  nrpairs    := Binomial(n, 2);
+InstallMethod(DigraphOfActionOnPairs,
+"for a transformation semigroup",
+[IsTransformationSemigroup],
+function(S)
+  local n;
+
+  n := DegreeOfTransformationSemigroup(S);
+  if n = 0 then
+    return EmptyDigraph(0);
+  fi;
+  return DigraphOfActionOnPairs(S, n);
+end);
+
+InstallMethod(DigraphOfActionOnPairs,
+"for a transformation semigroup and int",
+[IsTransformationSemigroup, IsInt],
+function(S, n)
+  local gens, PairNumber, NumberPair, nr, nrpairs, out_nbs, inn_nbs, label,
+  pair, range, gr, i, j;
+
+  if n < 0 then
+    ErrorNoReturn("Semigroups: DigraphOfActionOnPairs: usage,\n",
+                  "the second argument <n> must be non-negative,");
+  fi;
+
+  gens := GeneratorsOfSemigroup(S);
+
+  if ForAny(gens, x -> ForAny([1 .. n], i -> i ^ x > n)) then
+    return fail;
+  elif n <= 1 then
+    return EmptyDigraph(n);
+  fi;
+
+  if HasDigraphOfActionOnPairs(S)
+      and DegreeOfTransformationSemigroup(S) = n then
+    return DigraphOfActionOnPairs(S);
+  fi;
+
   PairNumber := Concatenation([1 .. n], Combinations([1 .. n], 2));
-  # Currently assume <x> is sorted and is a valid combination of [1 .. n]
   NumberPair := function(n, x)
+    # This function assumes that <x> is a sorted subset of [1 .. n]
     if Length(x) = 1 then
       return x[1];
     fi;
     return n + Binomial(n, 2) - Binomial(n + 1 - x[1], 2) + x[2] - x[1];
   end;
 
-  in_nbs := List([1 .. n + nrpairs], x -> []);
-  labels := List([1 .. n + nrpairs], x -> []);
-  for i in [(n + 1) .. (n + nrpairs)] do
+  nr := Length(gens);
+  nrpairs := Binomial(n, 2);
+  out_nbs := List([1 .. n + nrpairs], x -> []);
+  inn_nbs := List([1 .. n + nrpairs], x -> []);
+  label   := List([1 .. n + nrpairs], x -> []);
+
+  for i in [n + 1 .. n + nrpairs] do
     pair := PairNumber[i];
-    isolated_pair := true;
-    for j in [1 .. nrgens] do
-      act := OnSets(pair, gens[j]);
-      range := NumberPair(n, act);
-      Add(in_nbs[range], i);
-      Add(labels[range], j);
-      if range <> i and isolated_pair then
-        isolated_pair := false;
+    for j in [1 .. nr] do
+      range := NumberPair(n, OnSets(pair, gens[j]));
+      if not i in inn_nbs[range] then
+        Add(inn_nbs[range], i);
+        Add(out_nbs[i], range);
+        Add(label[i], j);
       fi;
     od;
-    if stop_on_isolated_pair and isolated_pair then
-      return false;
-    fi;
   od;
 
-  return rec(degree := n,
-             in_nbs := in_nbs,
-             labels := labels,
-             PairNumber := PairNumber,
-             NumberPair := NumberPair);
-end;
+  gr := Digraph(out_nbs);
+  SetInNeighbours(gr, inn_nbs);
+  SetDigraphEdgeLabels(gr, label);
+  SetDigraphVertexLabels(gr, PairNumber);
+  return gr;
+end);
 
 # FIXME can probably do better than this
 
@@ -558,16 +586,16 @@ InstallMethod(IsSynchronizingSemigroup,
 "for a transformation semigroup and positive integer",
 [IsTransformationSemigroup, IsPosInt],
 function(S, n)
-  local gens, all_perms, r, graph, marked, squashed, x, i, j;
+  local gens, all_perms, r, gr, inn, marked, squashed, x, i, j;
+
+  if n = 1 then
+    return true;
+  fi;
 
   if HasGeneratorsOfSemigroup(S) then
     gens := GeneratorsOfSemigroup(S);
   else
     gens := GeneratorsOfSemigroup(SupersemigroupOfIdeal(S));
-  fi;
-
-  if n = 1 then
-    return true;
   fi;
 
   all_perms := true;
@@ -583,16 +611,24 @@ function(S, n)
     return false; # S = <gens> is a group of transformations
   fi;
 
-  graph := SEMIGROUPS.GraphOfRightActionOnPairs(gens, n, true);
+  if n = DegreeOfTransformationSemigroup(S) then
+    gr := DigraphOfActionOnPairs(S);
+  else
+    gr := DigraphOfActionOnPairs(S, n);
+  fi;
 
-  if graph = false then
+  # Check if any pairs are isolated in gr
+  if ForAny([n + 1 .. DigraphNrVertices(gr)],
+            v -> OutDegreeOfVertex(gr, v) = 0) then
     return false;
   fi;
 
-  marked := BlistList([1 .. n + Binomial(n, 2)], []);
+  inn := InNeighbours(gr);
+
+  marked := BlistList(DigraphVertices(gr), []);
   squashed := [1 .. n];
   for i in squashed do
-    for j in graph.in_nbs[i] do
+    for j in inn[i] do
       if not marked[j] then
         marked[j] := true;
         Add(squashed, j);
@@ -600,15 +636,15 @@ function(S, n)
     od;
   od;
 
-  return Length(squashed) = n + Binomial(n, 2);
+  return Length(squashed) = DigraphNrVertices(gr);
 end);
 
 InstallMethod(RepresentativeOfMinimalIdealNC, "for a transformation semigroup",
 [IsTransformationSemigroup], RankFilter(IsActingSemigroup),
 # to beat the default method for acting semigroups
 function(S)
-  local gens, nrgens, n, min_rank, rank, min_rank_index, graph, nrpairs, elts,
-  marked, squashed, j, t, im, reduced, y, i, k, x;
+  local n, gens, nrgens, min_rank, rank, min_rank_index, gr, inn, elts, marked,
+  squashed, j, t, im, NumberPair, reduced, y, i, k, x;
 
   n := DegreeOfTransformationSemigroup(S); # Smallest n such that S <= T_n
                                            # We must have n >= 2.
@@ -636,22 +672,22 @@ function(S)
     TryNextMethod();
   fi;
 
-  graph := SEMIGROUPS.GraphOfRightActionOnPairs(gens, n, false);
+  gr := DigraphOfActionOnPairs(S);
+  inn := InNeighbours(gr);
 
   # find a word describing a path from each collapsible pair to a singleton
-  nrpairs := Binomial(n, 2);
-  elts := EmptyPlist(n + nrpairs);
-  marked := BlistList([1 .. n + nrpairs], []);
+  elts := EmptyPlist(DigraphNrVertices(gr));
+  marked := BlistList(DigraphVertices(gr), []);
   squashed := [1 .. n];
   for i in squashed do
-    for k in [1 .. Length(graph.in_nbs[i])] do
-      j := graph.in_nbs[i][k];
+    for k in [1 .. Length(inn[i])] do
+      j := inn[i][k];
       if not marked[j] then
         marked[j] := true;
         if i <= n then
-          elts[j] := [graph.labels[i][k]];
+          elts[j] := [DigraphEdgeLabel(gr, j, i)];
         else
-          elts[j] := Concatenation([graph.labels[i][k]], elts[i]);
+          elts[j] := Concatenation([DigraphEdgeLabel(gr, j, i)], elts[i]);
         fi;
         Add(squashed, j);
       fi;
@@ -661,11 +697,16 @@ function(S)
   t := gens[min_rank_index];
   im := ImageSetOfTransformation(t, n);
 
+  NumberPair := function(n, x)
+    # This function assumes that <x> is a sorted 2-subset of [1 .. n]
+    return n + Binomial(n, 2) - Binomial(n + 1 - x[1], 2) + x[2] - x[1];
+  end;
+
   # find a word in S of minimal rank by repeatedly collapsing pairs in im(t)
   while true do
     reduced := false;
     for x in IteratorOfCombinations(im, 2) do
-      y := graph.NumberPair(n, x);
+      y := NumberPair(n, x);
       if marked[y] then
         t := t * EvaluateWord(gens, elts[y]);
         im := ImageSetOfTransformation(t, n);

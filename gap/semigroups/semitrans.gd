@@ -13,6 +13,9 @@ DeclareAttribute("FixedPoints", IsTransformationSemigroup);
 DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
 DeclareOperation("DigraphOfActionOnPoints",
                  [IsTransformationSemigroup, IsPosInt]);
+DeclareAttribute("DigraphOfActionOnPairs", IsTransformationSemigroup);
+DeclareOperation("DigraphOfActionOnPairs",
+                 [IsTransformationSemigroup, IsInt]);
 
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
                  IsTransformationSemigroup);
