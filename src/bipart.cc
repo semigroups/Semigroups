@@ -34,6 +34,7 @@
 
 using libsemigroups::Timer;
 using libsemigroups::glob_reporter;
+using libsemigroups::Element;
 
 // Global variables
 
@@ -262,10 +263,10 @@ Obj BIPART_PROD(Obj x, Obj y) {
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
 
-  Bipartition* z = new Bipartition(xx->degree());
+  Element* z = new Bipartition(xx->degree());
   z->redefine(xx, yy);
 
-  return bipart_new_obj(z);
+  return bipart_new_obj(static_cast<Bipartition*>(z));
 }
 
 // Check if the GAP bipartitions x and y are equal.
