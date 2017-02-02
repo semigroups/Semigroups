@@ -166,9 +166,8 @@ function(poset, join_func)
   fi;
 
   # Extract the info
-  children := OutNeighboursCopy(poset!.po);
-  parents := List(InNeighbours(poset!.po), ShallowCopy);
-  #TODO: Use InNeighboursCopy when it's available in Digraphs
+  children := OutNeighboursMutableCopy(poset!.po);
+  parents := InNeighboursMutableCopy(poset!.po);
   congs := ShallowCopy(CongruencesOfPoset(poset));
   princ_congs := ShallowCopy(congs);
   nrcongs := Length(congs);
@@ -251,9 +250,8 @@ SEMIGROUPS.AddTrivialCongruence := function(poset, cong_func)
   local S, children, parents, congs, nrcongs, i, po;
   # Extract the info
   S := UnderlyingSemigroupOfCongruencePoset(poset);
-  children := OutNeighboursCopy(poset!.po);
-  parents := List(InNeighbours(poset!.po), ShallowCopy);
-  #TODO: Use InNeighboursCopy when it's available in Digraphs
+  children := OutNeighboursMutableCopy(poset!.po);
+  parents := InNeighboursMutableCopy(poset!.po);
   congs := ShallowCopy(CongruencesOfPoset(poset));
 
   # Add the trivial congruence
