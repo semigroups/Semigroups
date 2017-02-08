@@ -40,7 +40,7 @@ gap> GeneratorsOfSemigroup(L);
   <ManSection>
     <Func Name="LeftTranslation" Arg="L, map"/>
     <Func Name="RightTranslation" Arg="R, map"/>
-    <Returns>An X translation.</Returns>
+    <Returns>A left or right translation.</Returns>
     <Description>
       For the semigroup of left of right translations and a Mapping on the 
       underlying semigroup, LeftTranslation and RightTranslation return 
