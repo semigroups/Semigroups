@@ -191,9 +191,10 @@
     <#Include Label = "ComponentRepsOfTransformationSemigroup">
     <#Include Label = "ComponentsOfTransformationSemigroup">
     <#Include Label = "CyclesOfTransformationSemigroup">
+    <#Include Label = "DigraphOfActionOnPairs">
+    <#Include Label = "GeneratorsSmallest">
     <#Include Label = "IsTransitive">
     <#Include Label = "SmallestElementSemigroup">
-    <#Include Label = "GeneratorsSmallest">
   
   </Section>
   

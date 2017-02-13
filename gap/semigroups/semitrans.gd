@@ -13,6 +13,9 @@ DeclareAttribute("FixedPoints", IsTransformationSemigroup);
 DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
 DeclareOperation("DigraphOfActionOnPoints",
                  [IsTransformationSemigroup, IsPosInt]);
+DeclareAttribute("DigraphOfActionOnPairs", IsTransformationSemigroup);
+DeclareOperation("DigraphOfActionOnPairs",
+                 [IsTransformationSemigroup, IsInt]);
 
 DeclareAttribute("ComponentRepsOfTransformationSemigroup",
                  IsTransformationSemigroup);
@@ -23,11 +26,9 @@ DeclareProperty("IsConnectedTransformationSemigroup",
 DeclareAttribute("CyclesOfTransformationSemigroup",
                  IsTransformationSemigroup);
 
-DeclareOperation("IsSynchronizingSemigroup", [IsTransformationSemigroup]);
+DeclareProperty("IsSynchronizingSemigroup", IsTransformationSemigroup);
 DeclareOperation("IsSynchronizingSemigroup",
                  [IsTransformationSemigroup, IsPosInt]);
-DeclareOperation("IsSynchronizingTransformationCollection",
-                 [IsTransformationCollection, IsPosInt]);
 
 DeclareProperty("IsTransitive", IsTransformationSemigroup);
 DeclareOperation("IsTransitive", [IsTransformationCollection, IsPosInt]);
