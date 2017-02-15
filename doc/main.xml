@@ -1,9 +1,9 @@
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
    [ <!ENTITY Semigroups "<Package>Semigroups</Package>">
    <!ENTITY Smallsemi "<Alt Not='Text'><URL
-   Text='Smallsemi'>http://www-history.mcs.st-and.ac.uk/~jamesm/smallsemi.php</URL></Alt><Alt Only='Text'><Package>Smallsemi</Package></Alt>">
+   Text='Smallsemi'>http://www-groups.mcs.st-and.ac.uk/~jamesm/smallsemi.php</URL></Alt><Alt Only='Text'><Package>Smallsemi</Package></Alt>">
      <!ENTITY Digraphs "<Alt Not='Text'><URL
-     Text='Digraphs'>http://www-history.mcs.st-and.ac.uk/~jamesm/digraphs.php</URL></Alt><Alt
+     Text='Digraphs'>https://gap-packages.github.io/Digraphs</URL></Alt><Alt
      Only='Text'><Package>Digraphs</Package></Alt>">
      <!ENTITY Orb "<Alt Not='Text'><URL Text='Orb'>
      http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html

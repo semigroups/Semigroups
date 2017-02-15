@@ -171,7 +171,7 @@ gap> S := Semigroup(Transformation([1, 2, 3, 3]),
 <commutative transformation semigroup of degree 4 with 1 generator>]]></Example>
 
       The default values of the options described above are stored in a global
-      variable named <Ref Var = "SEMIGROUPS_DefaultOptionsRec"/>. If you want to
+      variable named <Ref Var = "SEMIGROUPS.DefaultOptionsRec"/>. If you want to
       change the default values of these options for a single &GAP; session,
       then you can simply redefine the value in &GAP;. For example, to change
       the option <C>small</C> from the default value of <A>false</A> use:
@@ -181,10 +181,10 @@ gap> SEMIGROUPS_DefautlOptionsRec.small := true;
 true]]></Log>
 
     If you want to change the default values of the options stored in <Ref
-      Var = "SEMIGROUPS_DefaultOptionsRec"/> for all &GAP; sessions, then you can
+      Var = "SEMIGROUPS.DefaultOptionsRec"/> for all &GAP; sessions, then you can
     edit these values in the file <C>semigroups/gap/options.g</C>. <P/>
 
-    <#Include Label = "SEMIGROUPS_DefaultOptionsRec">
+    <#Include Label = "SEMIGROUPS.DefaultOptionsRec">
 
    </Section>
     

@@ -19,9 +19,9 @@
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="SEMIGROUPS_DefaultOptionsRec">
+<#GAPDoc Label="SEMIGROUPS.DefaultOptionsRec">
   <ManSection>    
-     <Var Name = "SEMIGROUPS_DefaultOptionsRec"/>    
+     <Var Name = "SEMIGROUPS.DefaultOptionsRec"/>    
      <Description>
        This global variable is a record whose components contain the default
        values of certain options for semigroups.  A description of these
@@ -29,7 +29,7 @@
        <Ref Sect = "Options when creating semigroups"/>.
        <P/>
 
-       The value of <C>SEMIGROUPS_DefaultOptionsRec</C> is defined in the file
+       The value of <C>SEMIGROUPS.DefaultOptionsRec</C> is defined in the file
        <C>semigroups/gap/options.g</C> as: TODO update this!!
        <Log>rec(exhaustive := true, hashlen := rec(L := 25013, M := 6257, S :=
          251), regular := false, small := false)</Log>

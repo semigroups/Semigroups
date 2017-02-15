@@ -67,7 +67,7 @@ gap> o;
       semigroup and the argument <A>w</A> should be a list of positive integers
       less than or equal to the length of <A>gens</A>.  This operation evaluates
       the word <A>w</A> in the generators <A>gens</A>. More precisely,
-      <C>EvaluateWord</C> returns the equivalent of: 
+      <C>EvaluateWord(<A>gens</A>, <A>w</A>)</C> returns the equivalent of: 
       <Log>Product(List(w, i -> gens[i]));</Log> 
       see also <Ref Meth = "Factorization"/>.<P/>
       <List>

@@ -89,6 +89,8 @@
   </ManSection>
 <#/GAPDoc>
 
+<!-- TODO this documentation is out of date and incorrect -->
+
 <#GAPDoc Label="TikzString">
   <ManSection>
     <Oper Name="TikzString" Arg="obj[, options]"/>

@@ -9,6 +9,8 @@
 #############################################################################
 ##
 
+<!-- TODO add references to Donoven/Mitchell/Wilson paper -->
+
 <#GAPDoc Label="MaximalSubsemigroups">
 <ManSection>
   <Attr Name = "MaximalSubsemigroups" Arg = "S" Label="for a finite semigroup"/>

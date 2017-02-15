@@ -400,7 +400,7 @@ gap> Size(S);
   <Oper Name="SLM" Arg="d, q"/>
   <Returns>A matrix monoid.</Returns>
     <Description>
-      <C>SpecialLinearMonoid</C> and <C>SLS</C> are synonymous.
+      <C>SpecialLinearMonoid</C> and <C>SLM</C> are synonymous.
 
       The special linear monoid of <A>d</A> by <A>d</A> matrices
       with entries over the field with <A>q</A> elements is generated
@@ -427,7 +427,7 @@ gap> Size(S);
         inverse semigroup of partial permutations of isomorphisms of principal
         ideals of <A>S</A>; called the <E>Munn semigroup</E> of <A>S</A>.<P/> 
 
-        This function was written jointly by J. D. Mitchell, Yann Peresse 
+        This function was written jointly by J. D. Mitchell, Yann P&#233;resse
         (St Andrews), Yanhui Wang (York).
 
         <Example><![CDATA[

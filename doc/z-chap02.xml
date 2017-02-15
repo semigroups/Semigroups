@@ -39,7 +39,7 @@
 
       <Item> 
         download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
-        <URL Text = "the Semigroups package webpage" >http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php</URL>.
+        <URL Text = "the Semigroups package webpage" >https://gap-packages.github.io/Semigroups</URL>.
       </Item>
     
       <Item> 
@@ -71,7 +71,9 @@ make]]></Listing>
         type <C>LoadPackage("semigroups");</C>
       </Item>
     </List>
-  
+
+    <!-- TODO put in the correct version -->
+
     <E><B>Please note that</B> from Version ??: &Semigroups; can only be loaded
       if it has been compiled.</E><P/>
 
