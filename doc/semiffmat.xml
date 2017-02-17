@@ -16,12 +16,12 @@
   <Description>
     A <E>matrix semigroup</E> is simply a semigroup consisting of
     matrices over a finite field. An object in &GAP; is a matrix semigroup if
-    it satisfies <Ref Prop="IsSemigroup" BookName="ref"/> and 
+    it satisfies <Ref Prop="IsSemigroup" BookName="ref"/> and
     <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>. <P/>
 
     A <E>matrix monoid</E> is simply a monoid consisting of
     matrices over a finite field. An object in &GAP; is a matrix monoid if
-    it satisfies <Ref Prop="IsMonoid" BookName="ref"/> and 
+    it satisfies <Ref Prop="IsMonoid" BookName="ref"/> and
     <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>. <P/>
 
     Note that it is possible for a matrix semigroup to have a
@@ -97,12 +97,12 @@ gap> Size(Range(iso));
 
 <#GAPDoc Label="IsFullMatrixMonoid">
   <ManSection>
-    <Prop Name="IsFullMatrixMonoid" Arg="S"/>      
-    <Prop Name="IsGeneralLinearMonoid" Arg="S"/>      
+    <Prop Name="IsFullMatrixMonoid" Arg="S"/>
+    <Prop Name="IsGeneralLinearMonoid" Arg="S"/>
     <Description>
       <C>IsFullMatrixMonoid</C> and <C>IsGeneralLinearMonoid</C> return
       <K>true</K> if the semigroup <C>S</C> was created using either of the
-      commands <Ref Oper="FullMatrixMonoid"/> or 
+      commands <Ref Oper="FullMatrixMonoid"/> or
       <Ref Oper="GeneralLinearMonoid"/> and <K>false</K> otherwise. 
 
       <Example><![CDATA[

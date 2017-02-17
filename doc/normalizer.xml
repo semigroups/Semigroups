@@ -10,27 +10,27 @@
 
 <#GAPDoc Label="Normalizer">
   <ManSection>
-    <Oper Name = "Normalizer" Arg = "G, S[, opts]" 
+    <Oper Name = "Normalizer" Arg = "G, S[, opts]"
       Label = "for a perm group, semigroup, record"/>
-    <Oper Name = "Normalizer" Arg = "S[, opts]" 
+    <Oper Name = "Normalizer" Arg = "S[, opts]"
       Label = "for a semigroup, record"/>
     <Returns>A permutation group.</Returns>
-    <Description> 
+    <Description>
       In its first form, this function returns the normalizer of the
       transformation, partial perm, or bipartition semigroup <A>S</A> in the
       permutation group <A>G</A>.  In its second form, the normalizer of
       <A>S</A> in the symmetric group on <C>[1 .. n]</C> where <C>n</C> is the
       degree of <A>S</A> is returned.<P/>
-      
+
       The <B>normalizer</B> of a transformation semigroup <A>S</A> in a
       permutation group <A>G</A> in the subgroup <C>H</C> of <A>G</A> consisting
       of those elements in <C>g</C> in <A>G</A> conjugating <A>S</A> to
       <A>S</A>, i.e. <C><A>S</A> ^ g = <A>S</A></C>. <P/>
-      
+
       Analogous definitions can be given for a partial perm and bipartition
       semigroups.<P/>
 
-      The method used by this operation is based on Section 3 in 
+      The method used by this operation is based on Section 3 in
       <Cite Key="Araujo2010aa"/>.<P/>
 
       The optional final argument <A>opts</A> allows you to specify various
@@ -40,7 +40,7 @@
       performance. <P/>
 
       The argument <A>opts</A> should be a record, and the available options are:
-      
+
       <List>
         <Mark>random</Mark>
         <Item>
@@ -52,7 +52,7 @@
 
           The default value for this option is <K>false</K>.
         </Item>
-          
+
         <Mark>lambdastab</Mark>
         <Item>
           If this option has the value <K>true</K>, then <C>Normalizer</C>
@@ -76,7 +76,7 @@
 
           The default value for this option is <K>true</K>.
         </Item>
-      </List> 
+      </List>
 
       <Log><![CDATA[FIXME
 gap> S := BrauerMonoid(8);
@@ -90,6 +90,6 @@ gap> Normalizer(S, rec(random := true, lambdastab := false));
 #I  Have 40136 points in new orbit.
 Group(())]]></Log>
 
-    </Description> 
-  </ManSection> 
+    </Description>
+  </ManSection>
 <#/GAPDoc>

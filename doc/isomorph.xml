@@ -19,20 +19,20 @@
       isomorphic to the semigroup <A>S</A>. <C>SmallestMultiplicationTable</C>
       is an isomorphism invariant of semigroups, and so it can, for example, be
       used to check if two semigroups are isomorphic. <P/>
-      
+
       Due to the high complexity of computing the smallest multiplication table
-      of a semigroup, this function only performs well for semigroups with 
-      at most approximately 50 elements.<P/> 
-      
-      <C>SmallestMultiplicationTable</C> is based on the function 
+      of a semigroup, this function only performs well for semigroups with
+      at most approximately 50 elements.<P/>
+
+      <C>SmallestMultiplicationTable</C> is based on the function
       <Ref Attr = "IdSmallSemigroup" BookName = "Smallsemi"/> by Andreas
       Distler.<P/>
 
       <Example><![CDATA[
 gap> S := Semigroup(
-> Bipartition([[1, 2, 3, -1, -3], [-2]]), 
-> Bipartition([[1, 2, 3, -1], [-2], [-3]]), 
-> Bipartition([[1, 2, 3], [-1], [-2, -3]]), 
+> Bipartition([[1, 2, 3, -1, -3], [-2]]),
+> Bipartition([[1, 2, 3, -1], [-2], [-3]]),
+> Bipartition([[1, 2, 3], [-1], [-2, -3]]),
 > Bipartition([[1, 2, -1], [3, -2], [-3]]));;
 gap> Size(S);
 8
@@ -55,12 +55,12 @@ gap> SmallestMultiplicationTable(S);
       This operation attempts to determine if the semigroups <A>S</A> and
       <A>T</A> are isomorphic, it returns <K>true</K> if they are and
       <K>false</K> if they are not. <P/>
-      
+
       At present this only works for rather small semigroups, with approximately
       50 elements or less.
 
       <Example><![CDATA[
-gap> S := Semigroup(PartialPerm([1, 2, 4], [3, 5, 1]), 
+gap> S := Semigroup(PartialPerm([1, 2, 4], [3, 5, 1]),
 >                   PartialPerm([1, 3, 5], [4, 3, 2]));;
 gap> Size(S);
 11
@@ -82,20 +82,20 @@ true]]></Example>
       This operation returns an isomorphism from the semigroup <A>S</A>
       and to the semigroup <A>T</A> if it exists, and it returns <K>fail</K> if
       it does not.<P/>
-      
+
       At present this only works for Rees matrix semigroups and Rees 0-matrix
       semigroups.
-      
+
       <Example><![CDATA[
-gap> D := DClass(FullTransformationMonoid(5), 
+gap> D := DClass(FullTransformationMonoid(5),
 >                Transformation([1, 2, 3, 4, 1]));;
 gap> S := PrincipalFactor(D);;
 gap> StructureDescription(UnderlyingSemigroup(S));
 "S4"
 gap> S;
 <Rees 0-matrix semigroup 10x5 over S4>
-gap> D := DClass(PartitionMonoid(5), 
->                Bipartition([[1], [2, -2], [3, -3], 
+gap> D := DClass(PartitionMonoid(5),
+>                Bipartition([[1], [2, -2], [3, -3],
 >                             [4, -4], [5, -5], [-1]]));;
 gap> T := PrincipalFactor(D);;
 gap> StructureDescription(UnderlyingSemigroup(T));
@@ -104,7 +104,7 @@ gap> T;
 <Rees 0-matrix semigroup 15x15 over S4>
 gap> IsomorphismSemigroups(S, T);
 fail
-gap> I := SemigroupIdeal(FullTransformationMonoid(5), 
+gap> I := SemigroupIdeal(FullTransformationMonoid(5),
 >                        Transformation([1, 1, 2, 3, 4]));;
 gap> T := PrincipalFactor(DClass(I, I.1));;
 gap> StructureDescription(UnderlyingSemigroup(T));

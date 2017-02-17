@@ -6,7 +6,7 @@
     <Email>jdm3@st-and.ac.uk</Email>
     <Homepage>http://tinyurl.com/jdmitchell</Homepage>
   </Author>
-  
+
   <Author>Manuel Delgado</Author>
   <Author>James East</Author>
   <Author>Attila Egri-Nagy</Author>
@@ -33,24 +33,24 @@
     efficient methods for semigroups or ideals consisting of transformations,
     partial permutations, bipartitions, partitioned binary relations
     subsemigroups of regular Rees 0-matrix semigroups, and matrices of various
-    semirings including boolean or tropical matrices. 
+    semirings including boolean or tropical matrices.
     <P/>
-    
+
     &Semigroups; contains efficient methods for creating semigroups, monoids,
     and inverse semigroup, calculating their Green's structure, ideals, size,
     elements, group of units, small generating sets, testing membership,
     finding the inverses of a regular element, factorizing elements over the
     generators, and more. It is possible to test if a semigroup satisfies a
     particular property, such as if it is regular, simple, inverse, completely
-    regular, and a variety of further properties. 
+    regular, and a variety of further properties.
     <P/>
-    
+
     There are methods for finding presentations for a semigroup, congruences,
     the normalizer of a semigroup in a permutation group, the maximal
     subsemigroups of a finite semigroup, and smaller degree partial permutation
     representations and the character tables of inverse semigroups. There are
     functions for producing pictures of the Green's structure of a semigroup,
-    and for drawing graphical representations of certain types of elements. 
+    and for drawing graphical representations of certain types of elements.
   </Abstract>
 
   <Acknowledgements>
@@ -58,12 +58,12 @@
     Neubueser, M. R. Quick, E. F. Robertson, and N. Ruskuc for their help and
     suggestions.  Special thanks go to J. Araujo for his mathematical
     suggestions and to M. Neunhoeffer for his invaluable help in improving the
-    efficiency of the package. 
+    efficiency of the package.
     <P/>
 
     Manuel Delgado and Attila Egri-Nagy contributed to the functions
     <Ref Func = "Splash"/> and <Ref Oper = "DotString"/>.<P/>
-      
+
     James East, Attila Egri-Nagy, and Markus Pfeiffer contributed to the part of
     the package relating to bipartitions. I would like to thank the University
     of Western Sydney for their support of the development of this part of the
@@ -81,7 +81,7 @@
     Yann P&#233;resse and Yanhui Wang contributed to the function <Ref
       Oper = "MunnSemigroup"/>.<P/>
 
-    Jhevon Smith and Ben Steinberg contributed the function 
+    Jhevon Smith and Ben Steinberg contributed the function
     <Ref Attr = "CharacterTableOfInverseSemigroup"/>.<P/>
 
     Michael Torpey contributed the part of the package relating to congruences.
@@ -99,7 +99,7 @@
     <P/>
 
     We would also like to acknowledge the support of EPSRC grant number
-    GR/S/56085/01.    
+    GR/S/56085/01.
   </Acknowledgements>
 
 </TitlePage>

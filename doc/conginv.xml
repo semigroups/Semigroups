@@ -77,7 +77,7 @@ gap> KernelOfSemigroupCongruence(cong);
       trace. <P/>
 
       See <Cite Key = "Howie1995aa"/> section 5.3 for more details.
-      
+
       <Example><![CDATA[
 gap> I := InverseSemigroup([
 >  PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;
@@ -110,7 +110,7 @@ gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
 
       See <Cite Key = "Howie1995aa"/> Section 5.3 for more details.  See also
       <Ref Attr = "InverseSemigroupCongruenceByKernelTrace"/>.
-      
+ 
       <Example><![CDATA[
 gap> S := InverseSemigroup([
 >  PartialPerm([3, 6, 7, 8, 0, 1, 2, 5]),
@@ -157,7 +157,7 @@ true]]></Example>
 
 <#GAPDoc Label="InverseSemigroupCongruenceByKernelTrace">
   <ManSection>
-    <Func Name = "InverseSemigroupCongruenceByKernelTrace" 
+    <Func Name = "InverseSemigroupCongruenceByKernelTrace"
       Arg = "S, kernel, traceBlocks"/>
     <Returns>
       An inverse semigroup congruence by kernel and trace.
@@ -172,7 +172,7 @@ true]]></Example>
 
       See also <Ref Attr = "KernelOfSemigroupCongruence"/> and
       <Ref Attr = "TraceOfSemigroupCongruence"/>.
-      
+ 
       <Example><![CDATA[
 gap> S := InverseSemigroup([
 >   PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;

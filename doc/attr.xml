@@ -16,7 +16,7 @@
       <C>StructureDescription</C> returns the value of
       <Ref Attr="StructureDescription" BookName="ref"/> when it is applied to
       a group isomorphic to the group &H;-class <A>class</A>. If <A>class</A> is
-      not a group &H;-class, then <K>fail</K> is returned. 
+      not a group &H;-class, then <K>fail</K> is returned.
       <Example><![CDATA[
 gap> S := Semigroup(
 > PartialPerm([1, 2, 3, 4, 6, 7, 8, 9],
@@ -27,7 +27,7 @@ gap> H := HClass(S,  PartialPerm([1, 2, 3, 4, 7, 9],
 >                                [1, 7, 3, 4, 9, 2]));;
 gap> StructureDescription(H);
 "C6"]]></Example>
-    </Description> 
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -40,7 +40,7 @@ gap> StructureDescription(H);
     any two elements <C>x</C> and <C>y</C> of <A>S</A>, <C>func(x, y)</C>
     return <K>true</K> if the &D;-class of <C>x</C> in <A>S</A> is greater than
     or equal to the &D;-class of <C>y</C> in <A>S</A> under the usual ordering
-    of Green's &D;-classes of a semigroup. 
+    of Green's &D;-classes of a semigroup.
 
   <Example><![CDATA[
 gap> S := Semigroup(Transformation([1, 3, 4, 1, 3]),
@@ -58,15 +58,15 @@ gap> reps;
   Transformation( [ 1, 3, 4, 1, 3 ] ), 
   Transformation( [ 1, 3, 1, 3, 3 ] ), 
   Transformation( [ 1, 1, 1, 1, 1 ] ) ]
-gap> IsGreensLessThanOrEqual(DClass(S, reps[2]), 
+gap> IsGreensLessThanOrEqual(DClass(S, reps[2]),
 >                            DClass(S, reps[1]));
 true
 gap> S := DualSymmetricInverseMonoid(4);;
-gap> IsGreensDGreaterThanFunc(S)(S.1, S.3);                      
+gap> IsGreensDGreaterThanFunc(S)(S.1, S.3);
 true
 gap> IsGreensDGreaterThanFunc(S)(S.3, S.1);
 false
-gap> IsGreensLessThanOrEqual(DClass(S, S.3), 
+gap> IsGreensLessThanOrEqual(DClass(S, S.3),
 >                            DClass(S, S.1));
 true
 gap> IsGreensLessThanOrEqual(DClass(S, S.1),
@@ -79,25 +79,25 @@ false]]></Example>
 <#GAPDoc Label="StructureDescriptionMaximalSubgroups">
   <ManSection>
     <Attr Name="StructureDescriptionMaximalSubgroups" Arg="S"/>
-    <Returns>Distinct structure descriptions of the maximal subgroups 
+    <Returns>Distinct structure descriptions of the maximal subgroups
       of a semigroup.</Returns>
     <Description>
       <C>StructureDescriptionMaximalSubgroups</C> returns the distinct values of
       <Ref Attr="StructureDescription" BookName="ref"/> when it is applied to
-      the maximal subgroups of the semigroup <A>S</A>. 
+      the maximal subgroups of the semigroup <A>S</A>.
     <Example><![CDATA[
 gap> S := DualSymmetricInverseSemigroup(6);
 <inverse block bijection monoid of degree 6 with 3 generators>
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S3", "S4", "S5", "S6" ]
-gap> S := Semigroup( 
->  PartialPerm([1, 3, 4, 5, 8], 
->              [8, 3, 9, 4, 5]), 
->  PartialPerm([1, 2, 3, 4, 8], 
->              [10, 4, 1, 9, 6]), 
->  PartialPerm([1, 2, 3, 4, 5, 6, 7, 10], 
->              [4, 1, 6, 7, 5, 3, 2, 10]), 
->  PartialPerm([1, 2, 3, 4, 6, 8, 10], 
+gap> S := Semigroup(
+>  PartialPerm([1, 3, 4, 5, 8],
+>              [8, 3, 9, 4, 5]),
+>  PartialPerm([1, 2, 3, 4, 8],
+>              [10, 4, 1, 9, 6]),
+>  PartialPerm([1, 2, 3, 4, 5, 6, 7, 10],
+>              [4, 1, 6, 7, 5, 3, 2, 10]),
+>  PartialPerm([1, 2, 3, 4, 6, 8, 10],
 >              [4, 9, 10, 3, 1, 5, 2]));;
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "C3", "C4" ]]]></Example>
@@ -143,11 +143,11 @@ gap> MinimalDClass(S);
     <Description>
       <C>MaximalDClasses</C> returns the maximal &D;-classes with respect to
       the partial order of &D;-classes. <P/>
-      
+
       See also <Ref Attr="PartialOrderOfDClasses"/>,
       <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and
       <Ref Attr="MinimalDClass"/>.
-      
+
       <Example><![CDATA[
 gap> MaximalDClasses(BrauerMonoid(8));
 [ <Green's D-class: <block bijection: [ 1, -1 ], [ 2, -2 ], 
@@ -181,7 +181,7 @@ gap> MaximalDClasses(S);
     <P/>
 
     See <Ref Attr="InjectionPrincipalFactor"/> and <Ref
-      Attr="InjectionNormalizedPrincipalFactor"/> for more details. 
+      Attr="InjectionNormalizedPrincipalFactor"/> for more details.
     <Example><![CDATA[
 gap> S := Semigroup([PartialPerm([1, 2, 3], [1, 3, 4]),
 >  PartialPerm([1, 2, 3], [2, 5, 3]),
@@ -220,16 +220,16 @@ gap> NormalizedPrincipalFactor(D);
     <Log>
       X(SmallXGeneratingSet(coll))=X(coll);
     </Log>
-    where <C>X</C> is any of 
+    where <C>X</C> is any of
     <Ref Func="Semigroup" BookName="ref"/>,
-    <Ref Func="Monoid" BookName="ref"/>, 
+    <Ref Func="Monoid" BookName="ref"/>,
     <Ref Func="InverseSemigroup" BookName="ref"/>, or
     <Ref Func="InverseMonoid" BookName="ref"/>.<P/>
 
     If the number of generators for <A>S</A> is already relatively small, then
     these functions will often return the original generating set.  These
-    functions may return different results in different &GAP; sessions.<P/> 
-    
+    functions may return different results in different &GAP; sessions.<P/>
+
     <C>SmallGeneratingSet</C> returns the smallest of the returned values of
     <C>SmallXGeneratingSet</C> which is applicable to <A>coll</A>; see <Ref
       Func="Generators"/>.<P/>
@@ -258,8 +258,8 @@ gap> SmallGeneratingSet(S);
   Transformation( [ 4, 4, 3, 3, 5 ] ) ]
 gap> S := RandomInverseMonoid(IsPartialPermMonoid, 10000, 10);;
 gap> SmallGeneratingSet(S);
-[ [ 1 .. 10 ] -> [ 3, 2, 4, 5, 6, 1, 7, 10, 9, 8 ], 
-  [ 1 .. 10 ] -> [ 5, 10, 8, 9, 3, 2, 4, 7, 6, 1 ], 
+[ [ 1 .. 10 ] -> [ 3, 2, 4, 5, 6, 1, 7, 10, 9, 8 ],
+  [ 1 .. 10 ] -> [ 5, 10, 8, 9, 3, 2, 4, 7, 6, 1 ],
   [ 1, 3, 4, 5, 6, 7, 8, 9, 10 ] -> [ 1, 6, 4, 8, 2, 10, 7, 3, 9 ] ]
 gap> M := MathieuGroup(24);;
 gap> mat := List([1 .. 1000], x -> Random(M));;
@@ -272,7 +272,7 @@ gap> Length(SmallGeneratingSet(U));
 84
 gap> S := RandomSemigroup(IsBipartitionSemigroup, 100, 4);
 <bipartition semigroup of degree 4 with 96 generators>
-gap> Length(SmallGeneratingSet(S));       
+gap> Length(SmallGeneratingSet(S));
 13]]></Log>
     </Description>
   </ManSection>
@@ -297,9 +297,9 @@ gap> Length(SmallGeneratingSet(S));
     <Log>
       X(MinimalXGeneratingSet(S))=S;
     </Log>
-    where <C>X</C> is any of 
+    where <C>X</C> is any of
     <Ref Func="Semigroup" BookName="ref"/>,
-    <Ref Func="Monoid" BookName="ref"/>, 
+    <Ref Func="Monoid" BookName="ref"/>,
     <Ref Func="InverseSemigroup" BookName="ref"/>, or
     <Ref Func="InverseMonoid" BookName="ref"/>.<P/>
 
@@ -338,7 +338,7 @@ gap> MinimalInverseMonoidGeneratingSet(S);
     </Returns>
     <Description>
       <C>MultiplicativeZero</C> returns the zero element of the semigroup
-      <A>S</A> if it exists and <K>fail</K> if it does not. 
+      <A>S</A> if it exists and <K>fail</K> if it does not.
       See also <Ref Attr="MultiplicativeZero" BookName="ref"/>.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([1, 4, 2, 6, 6, 5, 2]),
@@ -366,7 +366,7 @@ gap> S := DualSymmetricInverseMonoid(6);
 <inverse block bijection monoid of degree 6 with 3 generators>
 gap> MultiplicativeZero(S);
 <block bijection: [ 1, 2, 3, 4, 5, 6, -1, -2, -3, -4, -5, -6 ]>]]>
-</Example> 
+</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -374,19 +374,19 @@ gap> MultiplicativeZero(S);
 <#GAPDoc Label="MinimalIdeal">
   <ManSection>
     <Attr Name="MinimalIdeal" Arg="S"/>
-    <Returns> 
-    The minimal ideal of a semigroup. 
+    <Returns>
+    The minimal ideal of a semigroup.
     </Returns>
     <Description>
     The minimal ideal of a semigroup is the least ideal with respect to
-    containment. <P/> 
+    containment. <P/>
 
     It is significantly easier to find the minimal &D;-class of a semigroup,
     than to find its &D;-classes. <P/>
 
     See also <Ref Attr="RepresentativeOfMinimalIdeal"/>,
     <Ref Attr="PartialOrderOfDClasses"/>,
-    <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and 
+    <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>, and
     <Ref Attr="MinimalDClass"/>.
     <Example><![CDATA[
 gap> S := Semigroup(
@@ -422,7 +422,7 @@ gap> MinimalIdeal(BrauerMonoid(6));
     <Description>
       The minimal ideal of a semigroup is the least ideal with respect to
       containment.<P/>
-      
+
       This method returns a representative element of the
       minimal ideal of <A>S</A> without having
       to create the minimal ideal itself.
@@ -431,10 +431,10 @@ gap> MinimalIdeal(BrauerMonoid(6));
       However, the element will coincide with the zero element of <A>S</A>
       if one exists.
       <P/>
-      
+
       This method works particularly well if <A>S</A> is a semigroup
       of transformations or partial permutations.<P/>
-    
+
       See also <Ref Attr="MinimalIdeal"/> and <Ref Attr="MinimalDClass"/>.
     <Example><![CDATA[
 gap> S := SymmetricInverseSemigroup(10);;
@@ -464,8 +464,8 @@ gap> MinimalDClass(S);
   <Description>
     If the semigroup <A>S</A> is mathematically a group, so that it satisfies
     <Ref Prop="IsGroupAsSemigroup"/>, then <C>IsomorphismPermGroup</C> returns
-    an isomorphism to a permutation group.<P/> 
-   
+    an isomorphism to a permutation group.<P/>
+
     If <A>S</A> is not a group then an error is given.
 
 <Example><![CDATA[
@@ -473,7 +473,7 @@ gap> S := Semigroup(Transformation([2, 2, 3, 4, 6, 8, 5, 5]),
 >                   Transformation([3, 3, 8, 2, 5, 6, 4, 4]));;
 gap> IsGroupAsSemigroup(S);
 true
-gap> Range(IsomorphismPermGroup(S)); 
+gap> Range(IsomorphismPermGroup(S));
 Group([ (5,6,8), (2,3,8,4) ])
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
@@ -512,9 +512,9 @@ true]]></Example>
       If a semigroup <A>S</A> has an identity <C>e</C>, then the <E>group of
         units</E> of <A>S</A> is the set of those <C>s</C> in <A>S</A> such that
       there exists <C>t</C> in <A>S</A> where <C>s*t=t*s=e</C>. Equivalently,
-      the group of units is the &H;-class of the identity of <A>S</A>.<P/> 
-      
-      See also 
+      the group of units is the &H;-class of the identity of <A>S</A>.<P/>
+
+      See also
       <Ref Oper="GreensHClassOfElement" BookName="ref"/>,
       <Ref Prop="IsMonoidAsSemigroup"/>, and
       <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
@@ -556,33 +556,33 @@ gap> StructureDescription(GroupOfUnits(S));
 <#GAPDoc Label="IdempotentGeneratedSubsemigroup">
   <ManSection>
     <Attr Name="IdempotentGeneratedSubsemigroup" Arg="S"/>
-    <Returns>A semigroup.  
+    <Returns>A semigroup.
     </Returns>
-    <Description> 
+    <Description>
       <C>IdempotentGeneratedSubsemigroup</C> returns the subsemigroup of the
       semigroup <A>S</A> generated by the idempotents of <A>S</A>.<P/>
-      
+
       See also <Ref Attr="Idempotents"/> and <Ref Attr="SmallGeneratingSet"/>.
 <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 1]), 
->                   Transformation([2, 1]), 
->                   Transformation([1, 2, 2]), 
->                   Transformation([1, 2, 3, 4, 5, 1]), 
->                   Transformation([1, 2, 3, 4, 5, 5]), 
->                   Transformation([1, 2, 3, 4, 6, 5]), 
+gap> S := Semigroup(Transformation([1, 1]),
+>                   Transformation([2, 1]),
+>                   Transformation([1, 2, 2]),
+>                   Transformation([1, 2, 3, 4, 5, 1]),
+>                   Transformation([1, 2, 3, 4, 5, 5]),
+>                   Transformation([1, 2, 3, 4, 6, 5]),
 >                   Transformation([1, 2, 3, 5, 4]),
->                   Transformation([1, 2, 3, 7, 4, 5, 7]), 
->                   Transformation([1, 2, 4, 8, 8, 3, 8, 7]), 
->                   Transformation([1, 2, 8, 4, 5, 6, 7, 8]), 
+>                   Transformation([1, 2, 3, 7, 4, 5, 7]),
+>                   Transformation([1, 2, 4, 8, 8, 3, 8, 7]),
+>                   Transformation([1, 2, 8, 4, 5, 6, 7, 8]),
 >                   Transformation([7, 7, 7, 4, 5, 6, 1]));;
-gap> IdempotentGeneratedSubsemigroup(S) = 
-> Monoid(Transformation([1, 1]), 
+gap> IdempotentGeneratedSubsemigroup(S) =
+> Monoid(Transformation([1, 1]),
 >        Transformation([1, 2, 1]),
->        Transformation([1, 2, 2]), 
+>        Transformation([1, 2, 2]),
 >        Transformation([1, 2, 3, 1]),
->        Transformation([1, 2, 3, 2]), 
+>        Transformation([1, 2, 3, 2]),
 >        Transformation([1, 2, 3, 4, 1]),
->        Transformation([1, 2, 3, 4, 2]), 
+>        Transformation([1, 2, 3, 4, 2]),
 >        Transformation([1, 2, 3, 4, 4]),
 >        Transformation([1, 2, 3, 4, 5, 1]),
 >        Transformation([1, 2, 3, 4, 5, 2]),
@@ -598,7 +598,7 @@ gap> S := SymmetricInverseSemigroup(5);
 <symmetric inverse monoid of degree 5>
 gap> IdempotentGeneratedSubsemigroup(S);
 <inverse partial perm monoid of rank 5 with 5 generators>
-gap> S := DualSymmetricInverseSemigroup(5); 
+gap> S := DualSymmetricInverseSemigroup(5);
 <inverse block bijection monoid of degree 5 with 3 generators>
 gap> IdempotentGeneratedSubsemigroup(S);
 <inverse block bijection monoid of degree 5 with 10 generators>
@@ -614,7 +614,7 @@ true]]></Example>
   <Attr Name="InjectionNormalizedPrincipalFactor" Arg="D"/>
   <Attr Name="IsomorphismReesMatrixSemigroup" Arg="D" Label="for a D-class"/>
   <Returns>A injective mapping.</Returns>
-  <Description> 
+  <Description>
     If the &D;-class <A>D</A> is a subsemigroup of a semigroup <C>S</C>, then
     the <E>principal factor</E> of <A>D</A> is just <A>D</A> itself.  If
     <A>D</A> is not a subsemigroup of <C>S</C>, then the principal factor of
@@ -644,7 +644,7 @@ true]]></Example>
 
     If <A>D</A> is not a semigroup, then the function returned by
     <C>InjectionPrincipalFactor</C> is an injective function from <A>D</A> to a
-    Rees 0-matrix semigroup isomorphic to the principal factor of <A>D</A>; see 
+    Rees 0-matrix semigroup isomorphic to the principal factor of <A>D</A>; see
     <Ref Func="ReesZeroMatrixSemigroup" BookName="ref"/>. In this case,
     <C>IsomorphismReesMatrixSemigroup</C> and
     <C>IsomorphismReesZeroMatrixSemigroup</C> returns an error.<P/>
@@ -654,7 +654,7 @@ true]]></Example>
     <Ref Attr="RMSNormalization"/> as appropriate.<P/>
 
     See also <Ref Attr="PrincipalFactor"/>.
-    
+
     <Example><![CDATA[
 gap> S := InverseSemigroup(
 > PartialPerm([1, 2, 3, 6, 8, 10],
@@ -695,7 +695,7 @@ MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ],
   <Attr Name="IsomorphismReesMatrixSemigroup" Arg="S" Label="for a semigroup"/>
   <Attr Name="IsomorphismReesZeroMatrixSemigroup" Arg="S"/>
   <Returns>An isomorphism.</Returns>
-  <Description> 
+  <Description>
     If the semigroup <A>S</A> is finite and simple, then
     <C>IsomorphismReesMatrixSemigroup</C> returns an isomorphism to a Rees
     matrix semigroup.  If <A>S</A> is finite and 0-simple, then
@@ -703,7 +703,7 @@ MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ],
     0-matrix semigroup.<P/>
 
     See also <Ref Attr="InjectionPrincipalFactor"/>.
-    
+
     <Example><![CDATA[
 gap> S := Semigroup(PartialPerm([1]));
 <trivial partial perm group of rank 1 with 1 generator>
@@ -722,13 +722,13 @@ gap> Range(IsomorphismReesZeroMatrixSemigroup(S));
 <#GAPDoc Label="IrredundantGeneratingSubset">
   <ManSection>
     <Oper Name="IrredundantGeneratingSubset" Arg="coll"/>
-    <Returns>    
+    <Returns>
       A list of irredundant generators.
     </Returns>
     <Description>
       If <A>coll</A> is a collection of elements of a semigroup, then this
       function returns a subset <C>U</C> of <A>coll</A> such that no element of
-      <C>U</C> is generated by the other elements of <C>U</C>.<P/> 
+      <C>U</C> is generated by the other elements of <C>U</C>.<P/>
 
       <Log><![CDATA[
 gap> S := Semigroup([
@@ -803,12 +803,12 @@ gap> IrredundantGeneratingSubset(last);
     corresponds to the vertex <M>j + n</M>.
 
     <P/>
-    
+
     Two vertices <M>v</M> and <M>w</M> in
     <C>RZMSDigraph(</C><A>R</A><C>)</C> are adjacent if and only if <M>v\in
       I</M>, <M>w - n\in \Lambda</M>, and <C>P[w - n][v]</C> <M>\neq 0</M>.
     <P/>
-    
+
     This digraph is commonly called the <E>Graham-Houghton graph</E> of
     <A>R</A>.
 <Example><![CDATA[
@@ -981,7 +981,7 @@ gap> Matrix(S);
     semigroup for which <Ref Prop="IsGroupAsSemigroup"/> returns <K>true</K>),
     then <C>RMSNormalization</C> returns an isomorphism from <A>R</A> to a
     <E>normalized</E> Rees matrix semigroup <C>S</C> over <C>G</C>. <P/>
-    
+
     The semigroup <C>S</C> is normalized in the sense that the first entry of
     each row and column of the <Ref Attr="Matrix" BookName="ref"/> of <C>S</C>
     is the identity element of <C>G</C>.
@@ -1039,7 +1039,7 @@ gap> MultiplicativeZero(S);
 <empty partial perm>
 gap> G := UnderlyingSemigroupOfSemigroupWithAdjoinedZero(S);
 fail]]>
-</Example> 
+</Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

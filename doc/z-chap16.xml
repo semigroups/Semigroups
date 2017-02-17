@@ -2,19 +2,19 @@
   <Heading>
     Attributes of inverse semigroups
   </Heading>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   In this chapter we describe the attributes which are specific
-  to inverse semigroups that can be determined using &Semigroups;.<P/> 
+  to inverse semigroups that can be determined using &Semigroups;.<P/>
 
-  The functions 
+  The functions
   <List>
     <Item><Ref Oper = "IsJoinIrreducible"/></Item>
     <Item><Ref Oper = "IsMajorantlyClosed"/></Item>
     <Item><Ref Attr = "JoinIrreducibleDClasses"/></Item>
-    <Item><Ref Oper = "MajorantClosure"/></Item> 
+    <Item><Ref Oper = "MajorantClosure"/></Item>
     <Item><Ref Oper = "Minorants"/></Item>
     <Item><Ref Oper = "RightCosetsOfInverseSemigroup"/></Item>
     <Item><Ref Attr = "SmallerDegreePartialPermRepresentation"/></Item>
@@ -29,11 +29,11 @@
   <!--**********************************************************************-->
 
   <Section>
-    
+ 
     <Heading>
       Attributes of inverse semigroups
     </Heading>
-    
+ 
     <#Include Label = "NaturalLeqInverseSemigroup">
     <#Include Label = "JoinIrreducibleDClasses">
     <#Include Label = "MajorantClosure">
@@ -49,5 +49,5 @@
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  
+ 
 </Chapter>

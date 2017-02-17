@@ -41,7 +41,7 @@ gap> OrbSCCTruthTable(o);
     <Description>
     If <C>OnRightBlocks(<A>blocks</A>, <A>x</A>)</C> has rank equal to the rank
     of <A>blocks</A>, then <C>InverseRightBlocks</C> returns a bipartition
-    <C>g</C> such that 
+    <C>g</C> such that
     <C>OnRightBlocks(<A>blocks</A>, <A>x</A> * g) = <A>blocks</A></C>
     and where <C>PermRightBlocks(<A>blocks</A>, <A>x</A> * g)</C> is the identity
     permutation.
@@ -49,7 +49,7 @@ gap> OrbSCCTruthTable(o);
 
     See <Ref Oper = "PermRightBlocks"/> and <Ref Oper = "OnRightBlocks"/>.
     <Example><![CDATA[
-gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7], 
+gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7],
 >                      [6, -1], [-3], [-5, -6, -8]]);;
 gap> blocks := BlocksNC([[-1, -4, -5, -8], [-2, -3, -7], [6]]);;
 gap> RankOfBlocks(blocks);
@@ -76,7 +76,7 @@ gap> PermRightBlocks(blocks, x * y);
     <Description>
     If <C>OnLeftBlocks(<A>blocks</A>, <A>x</A>)</C> has rank equal to the rank
     of <A>blocks</A>, then <C>InverseLeftBlocks</C> returns a bipartition
-    <C>g</C> such that 
+    <C>g</C> such that
     <C>OnLeftBlocks(<A>blocks</A>, g * <A>x</A>) = <A>blocks</A></C>
     and where <C>PermLeftBlocks(<A>blocks</A>, g * <A>x</A>)</C> is the
     identity permutation.
@@ -84,7 +84,7 @@ gap> PermRightBlocks(blocks, x * y);
 
     See <Ref Oper = "PermLeftBlocks"/> and <Ref Oper = "OnLeftBlocks"/>.
     <Example><![CDATA[
-gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7], 
+gap> x := Bipartition([[1, 4, 7, 8, -4], [2, 3, 5, -2, -7],
 >                      [6, -1], [-3], [-5, -6, -8]]);;
 gap> blocks := BlocksNC([[-1, -2, -6], [3, 4, 5], [-7, -8]]);;
 gap> RankOfBlocks(OnLeftBlocks(blocks, x));
@@ -94,7 +94,7 @@ gap> y := InverseLeftBlocks(blocks, x);
   , [ 7, 8 ]>
 gap> OnLeftBlocks(blocks, y * x);
 <blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>
-gap> PermLeftBlocks(blocks, y * x);          
+gap> PermLeftBlocks(blocks, y * x);
 ()]]></Example>
     </Description>
   </ManSection>
@@ -111,10 +111,10 @@ gap> PermLeftBlocks(blocks, y * x);
       transverse blocks of <A>blocks</A> under the action of <A>x</A>.<P/>
 
       <C>PermLeftBlocks</C> is the analogue of <C>PermRightBlocks</C> with
-      respect to <Ref Oper = "OnLeftBlocks"/>. 
+      respect to <Ref Oper = "OnLeftBlocks"/>.
 
       <Example><![CDATA[
-gap> x := Bipartition([[1, 10], [2, -7, -9], [3, 4, 6, 8], [5, -5], 
+gap> x := Bipartition([[1, 10], [2, -7, -9], [3, 4, 6, 8], [5, -5],
 >                      [7, 9, -2], [-1, -10], [-3, -4, -6, -8]]);;
 gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5],
 >                        [7, 9]]);;
@@ -137,7 +137,7 @@ gap> PermRightBlocks(blocks, x);
       <C>OnRightBlocksBipartitionByPerm</C> returns the bipartition obtained
       from <A>x</A> by rearranging the right blocks of <A>x</A> according to
       <A>p</A>.
-      
+
       <Example><![CDATA[
 gap> x := Bipartition([[1, 4, 6, 7, 8, 10], [2, 5, -1, -2, -8],
 >                      [3, -3, -6, -7, -9], [9, -4, -5], [-10]]);;
@@ -148,7 +148,7 @@ gap> OnRightBlocksBipartitionByPerm(x, (1, 2, 3));
   </ManSection>
 <#/GAPDoc>
 
-<!-- JDM improve --> 
+<!-- JDM improve -->
 <#GAPDoc Label="IsAbundantSemigroup">
   <ManSection>
     <Prop Name="IsAbundantSemigroup" Arg="S"/>
@@ -159,7 +159,7 @@ gap> OnRightBlocksBipartitionByPerm(x, (1, 2, 3));
       A transformation semigroup is <E>abundant</E> if and only if for all
       <M>f\in S</M> there exists an idempotent <M>e\in S</M> such that
       <M>\textrm{ker}(f) = \textrm{ker}(e)</M>.  <!-- hmm is this right, or do we
-      require the existence of an idempotent e' such that im(e')=im(f) too? --> 
+      require the existence of an idempotent e' such that im(e')=im(f) too? -->
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([1, 3, 2, 3]),
 >                   Transformation([1, 4, 1, 2]),
@@ -168,12 +168,12 @@ gap> S := Semigroup(Transformation([1, 3, 2, 3]),
 gap> IsAbundantSemigroup(S);
 true
 gap> IsRegularSemigroup(S);
-false]]></Example> 
+false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<!-- JDM improve --> 
+<!-- JDM improve -->
 <#GAPDoc Label="IsAdequateSemigroup">
   <ManSection>
     <Prop Name = "IsAdequateSemigroup" Arg = "S"/>
@@ -182,7 +182,7 @@ false]]></Example>
     </Returns>
     <Description>
       A transformation semigroup is <E>adequate</E> if it is abundant and its
-      idempotents commute. See <Ref Prop="IsAbundantSemigroup"/> and 
+      idempotents commute. See <Ref Prop="IsAbundantSemigroup"/> and
       <Ref Prop="IsBlockGroup"/>.
       <Example><![CDATA[
 gap> S := Semigroup([
@@ -197,7 +197,7 @@ gap> S := Semigroup([
 >  Transformation([2, 4, 1, 1]),
 >  Transformation([3, 4, 2, 2])]);;
 gap> IsAdequateSemigroup(S);
-false]]></Example> 
+false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -214,7 +214,7 @@ false]]></Example>
 
    <C>IsomorphismTransformationMonoid</C> returns an isomorphism from
    the monoid <A>S</A> to a monoid of transformations. <P/>
-   
+
    We only describe <C>IsomorphismTransformationMonoid</C>,
    the corresponding statements for <C>IsomorphismTransformationSemigroup</C>
    also hold.
@@ -222,17 +222,17 @@ false]]></Example>
    <List>
      <Mark>Partial permutation semigroups</Mark>
      <Item>
-       If <A>S</A> is a partial permutation monoid, then this function 
+       If <A>S</A> is a partial permutation monoid, then this function
        returns an isomorphism from <A>S</A> to a monoid of partial permutations
        on <C>[1 .. LargestMovedPoint(<A>S</A>) + 1]</C> obtained using
        <Ref Oper="AsTransformation" BookName="ref"/>. The inverse of this
-       isomorphism is obtained using 
-       <Ref Func="AsPartialPerm" BookName="ref"/>; see 
-     <Ref Attr="LargestMovedPoint" Label="for a partial perm" BookName="ref"/>, 
-     <Ref Func="InverseMonoid" BookName="ref"/> and 
+       isomorphism is obtained using
+       <Ref Func="AsPartialPerm" BookName="ref"/>; see
+     <Ref Attr="LargestMovedPoint" Label="for a partial perm" BookName="ref"/>,
+     <Ref Func="InverseMonoid" BookName="ref"/> and
      <Ref Func="Monoid" BookName="ref"/>.
      </Item>
-     
+
     <Mark>Permutation groups</Mark>
     <Item>
       If <A>S</A> is a permutation group, then this function returns an
@@ -279,11 +279,11 @@ gap> Size(S); Size(T);
   <ManSection>
     <Oper Name="IsIrredundantGeneratingSet" Arg="[S, ]U"/>
     <Description>
-      returns <K>true</K> if <C>u</C> is not an element of the subsemigroup 
+      returns <K>true</K> if <C>u</C> is not an element of the subsemigroup
       generated by <C>U</C> without <C>u</C> for all <C>u</C> in <C>U</C>.<P/>
 
-      If the optional first argument is present, then 
-      <C>IsIrredundantGeneratingSet</C> first checks that <C>U</C> generates 
+      If the optional first argument is present, then
+      <C>IsIrredundantGeneratingSet</C> first checks that <C>U</C> generates
       <A>S</A>.
 
       <Example></Example>
@@ -297,7 +297,7 @@ gap> Size(S); Size(T);
     <Func Name="Semigroup" Arg="obj1, obj2, ... [, opts]"/>
     <Returns>A monoid or semigroup.</Returns>
     <Description>
- 
+
       If <A>obj1</A>, <A>obj2</A>, ... are (any combination) of
       transformations, transformation semigroups, or lists of transformations,
       then <C>Monoid</C> or <C>Semigroup</C> returns the monoid or semigroup
@@ -306,11 +306,11 @@ gap> Size(S); Size(T);
       If present, the optional final argument <A>opts</A> should be a record
       containing the values of the options for the semigroup being created, as
       described in Section <Ref Sect="opts"/>.<P/>
-      
+
       When applied to arguments other than transformations or transformation
       collections these functions behave precisely as described in the
       reference manual. Please consult <Ref Func="Monoid" BookName="ref"/> and
-      <Ref Func="Semigroup" BookName="ref"/> for further details.<P/> 
+      <Ref Func="Semigroup" BookName="ref"/> for further details.<P/>
 
       As an example of how the syntax provided by &Semigroups; can be
       convenient:
@@ -398,11 +398,11 @@ gap> Size(S);
 
       If present, the optional second argument <A>opts</A> should be a record
       containing the values of the options for the semigroup being created, as
-      described in Section <Ref Sect="opts"/>.<P/> 
+      described in Section <Ref Sect="opts"/>.<P/>
 
       When applied to arguments other than transformations or transformation
       collections these functions behave precisely as described in the
-      reference manual. Please consult 
+      reference manual. Please consult
       <Ref Func="MonoidByGenerators" BookName="ref"/> and
       <Ref Func="SemigroupByGenerators" BookName="ref"/> for further details.
     </Description>
@@ -417,9 +417,9 @@ gap> Size(S);
     </Returns>
     <Description>
       If <A>iter</A> satisfies <Ref Prop="IsIterator" BookName="ref"/> and
-      <C>IsSemigroupsPkgIterator</C>, then <C>UnderlyingSemigroupOfIterator</C> 
-      returns <A>iter!.s</A>, which is set during the creation of the 
-      iterator.  
+      <C>IsSemigroupsPkgIterator</C>, then <C>UnderlyingSemigroupOfIterator</C>
+      returns <A>iter!.s</A>, which is set during the creation of the
+      iterator.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -431,7 +431,7 @@ gap> Size(S);
     <Returns>An idempotent transformation.</Returns>
     <Description>
       Returns a random idempotent with image set <A>img</A> of degree <A>m</A>
-      after checking that the maximum value in <A>img</A> is at most <A>m</A>. 
+      after checking that the maximum value in <A>img</A> is at most <A>m</A>.
       <P/>
 
       <C>RandomIdempotentNC</C> returns a random idempotent with image set
@@ -443,7 +443,7 @@ gap> RandomIdempotent([1, 2, 3], 5);
 Transformation( [ 1, 2, 3, 1, 3 ] )
 gap> RandomIdempotent([1, 2, 3], 4);
 Transformation( [ 1, 2, 3, 3 ] )
-gap> RandomIdempotent([1, 2, 3], 3);            
+gap> RandomIdempotent([1, 2, 3], 3);
 Transformation( [ 1, 2, 3 ] )
 gap> RandomIdempotent([1, 2, 4, 5, 6], 10);
 Transformation( [ 1, 2, 6, 4, 5, 6, 2, 5, 1, 6 ] )</Log>
@@ -457,8 +457,8 @@ Transformation( [ 1, 2, 6, 4, 5, 6, 2, 5, 1, 6 ] )</Log>
     <Returns><K>true</K> or <K>false</K>.
     </Returns>
     <Description>
-      This function returns <K>true</K> if <A>f</A> is a regular element of the 
-      transformation semigroup <A>S</A> and <K>false</K> if it is not.<P/> 
+      This function returns <K>true</K> if <A>f</A> is a regular element of the
+      transformation semigroup <A>S</A> and <K>false</K> if it is not.<P/>
 
       A transformation <A>f</A> is <E>regular</E> in a transformation semigroup
       <A>S</A> if it lies inside a regular &D;-class; see <Ref
@@ -506,7 +506,7 @@ true</Example>
       on <A>list</A> and <K>false</K> if it is not. If <A>list</A> is not
       duplicate free, then <K>false</K> is returned. <P/>
 
-      See also <Ref Attr="ImageListOfTransformation" BookName="ref"/> and 
+      See also <Ref Attr="ImageListOfTransformation" BookName="ref"/> and
       <Ref Oper="Transformation" BookName="ref"/>.
       <Example>
 gap> f := Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]);;
@@ -533,7 +533,7 @@ true</Example>
       to <A>img</A> after first checking that <Ref
       Func="IsInjectiveTransOnList"/> holds with argument <A>ker, img</A>.  <P/>
 
-     <C>IdempotentNC</C> returns an idempotent with 
+     <C>IdempotentNC</C> returns an idempotent with
      <Ref Func="CanonicalTransSameKernel"/>
      equal to <A>ker</A> and image set equal to <A>img</A> without
      checking that <Ref Func="IsInjectiveTransOnList"/> holds.
@@ -566,7 +566,7 @@ Transformation( [ 6, 2, 3, 6, 5, 6, 7, 2, 5, 10 ] )</Example>
       definition of <C>g</C> in previous paragraph by <C>n</C>. <P/>
 
       It is also possible to use <C>AsTransformation</C> to convert
-      permutations and binary relations into transformations; see 
+      permutations and binary relations into transformations; see
       <Ref Func="AsTransformation" BookName="ref"/>.
 
       <Example>
@@ -577,12 +577,12 @@ gap> AsTransformation(f, 12);
 Transformation( [ 3, 1, 4, 2, 5, 12, 12, 6, 12, 7, 12, 12 ] )
 gap> AsTransformation(f, 14);
 Transformation( [ 3, 1, 4, 2, 5, 14, 14, 6, 14, 7, 14, 14, 14, 14 ] )</Example>
-    </Description> 
-  </ManSection> 
+    </Description>
+  </ManSection>
 <#/GAPDoc>
 <#GAPDoc Label="AsPermutation">
 <ManSection>
-<!-- JDM remove transformations --> 
+<!-- JDM remove transformations -->
     <Oper Name="AsPermutation" Arg="f  [, set]"/>
     <Returns>A permutation.</Returns>
     <Description>
@@ -593,8 +593,8 @@ Transformation( [ 3, 1, 4, 2, 5, 14, 14, 6, 14, 7, 14, 14, 14, 14 ] )</Example>
 
       If the optional argument <A>set</A> is not specified, then the image set
       of <A>f</A> is used by default for transformations and the range of
-      <A>f</A> is used by default for partial permutations; see 
-      <Ref Attr="ImageSetOfTransformation" BookName="ref"/> and 
+      <A>f</A> is used by default for partial permutations; see
+      <Ref Attr="ImageSetOfTransformation" BookName="ref"/> and
       <Ref Func="RangeSetOfPartialPerm"/>.
 
 <Example>
@@ -633,7 +633,7 @@ gap> AsPermutation(f ^ -1 * f);
     <Returns>the number of elements of a given rank. </Returns>
     <Description><C>NrElementsOfRank</C> returns the number of elements of the
     semigroup <A>S</A> of partial permutations or transformations with rank
-    <A>n</A>; see 
+    <A>n</A>; see
     <Ref Func="RankOfPartialPerm" BookName="ref"/> and
     <Ref Attr="RankOfTransformation" BookName="ref"/>.
 
@@ -671,18 +671,18 @@ gap> Binomial(5, 4) ^ 2 * Factorial(4);
   <Attr Name="GradedKernelsOfTransSemigroup" Arg="S"/>
   <Returns>A list of images or kernels.</Returns>
   <Description>
-  <C>GradedImagesOfTransSemigroup</C> returns a list where the <C>i</C>th 
+  <C>GradedImagesOfTransSemigroup</C> returns a list where the <C>i</C>th
   entry is a list of all the images of transformations in the
-  transformation semigroup <A>S</A> with size 
-  <C>i</C>.  
+  transformation semigroup <A>S</A> with size
+  <C>i</C>.
   <P/>
-  
-  <C>GradedKernelsOfTransSemigroup</C> returns a list where the <C>i</C>th 
+
+  <C>GradedKernelsOfTransSemigroup</C> returns a list where the <C>i</C>th
   entry is a list of the values of <Ref Func="CanonicalTransSameKernel"/> for
   all transformations in <A>S</A> with rank <C>i</C>.
   <P/>
 
-  See also <Ref Attr="ImagesOfTransSemigroup"/> and 
+  See also <Ref Attr="ImagesOfTransSemigroup"/> and
   <Ref Attr="KernelsOfTransSemigroup"/>.
   <Example>
 gap> S := Semigroup([
@@ -693,7 +693,7 @@ gap> GradedImagesOfTransSemigroup(S);
   [  ], [  ] ]
 gap> GradedKernelsOfTransSemigroup(S);
 [ [ [ 1, 1, 1, 1, 1 ] ], [ [ 1, 2, 1, 1, 1 ], [ 1, 1, 1, 2, 2 ] ], 
-  [ [ 1, 1, 2, 3, 3 ] ], [  ], [  ] ]</Example> 
+  [ [ 1, 1, 2, 3, 3 ] ], [  ], [  ] ]</Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
@@ -707,10 +707,10 @@ gap> GradedKernelsOfTransSemigroup(S);
   The argument <A>S</A> should be a transformation semigroup and the optional
   second argument <A>n</A> should be a positive integer not greater than the
   degree of <A>S</A>.  <C>ImagesOfTransSemigroup</C> returns the  <Ref
-    Func="Orb" BookName="orb"/> object: 
+    Func="Orb" BookName="orb"/> object:
   <Log>Orb(S, [1 .. Degree(S)], OnSets);</Log> which contains the image sets of
   all the transformations belonging to <A>S</A>.  <P/>
-  
+
   <C>KernelsOfTransSemigroup</C> returns the <Ref Func="Orb" BookName="orb"/>
   object: <Log>Orb(S, [1 .. Degree(S)], OnKernelsAntiAction);</Log> <P/> If the
   optional second argument <A>n</A> (a positive integer) is present, then only
@@ -722,7 +722,7 @@ gap> GradedKernelsOfTransSemigroup(S);
 
   See also <Ref Func="GradedImagesOfTransSemigroup"/>,
   <Ref Func="GradedKernelsOfTransSemigroup"/>,
-  <Ref Func="OnKernelsAntiAction"/>, and 
+  <Ref Func="OnKernelsAntiAction"/>, and
   <Ref Func="CanonicalTransSameKernel"/>
   <Example>
 gap>  S := Semigroup(
@@ -764,15 +764,15 @@ gap> o := ImagesOfTransSemigroup(S); Enumerate(o); AsList(o);
 <#/GAPDoc>
 
 <#GAPDoc Label="OnKernelsAntiAction">
-  <ManSection> 
+  <ManSection>
     <Func Name="OnKernelsAntiAction" Arg="ker, f"/>
     <Returns>
-      A list of positive integers. 
+      A list of positive integers.
     </Returns>
     <Description>
     The argument <A>ker</A> should equal <C>CanonicalTransSameKernel(g);</C>
     for some transformation <C>g</C> with degree equal to the degree of the
-    transformation <A>f</A>. 
+    transformation <A>f</A>.
 
     <C>OnKernelsAntiAction</C> returns <C>CanonicalTransSameKernel(f*g)</C>.
     See also <Ref Func="CanonicalTransSameKernel"/>.

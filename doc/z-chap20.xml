@@ -5,7 +5,7 @@
   <Section><Heading>Looking for something in an orbit</Heading>
     The functions described in this section supplement the &Orb; package by
     providing methods for finding something in an orbit, with the possibility
-    of continuing the orbit enumeration at some later point. 
+    of continuing the orbit enumeration at some later point.
 
     <#Include Label="EnumeratePosition">
     <#Include Label="LookForInOrb">

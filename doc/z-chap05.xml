@@ -268,13 +268,13 @@
         <Ref Oper = "Order"/>
       </Item>
     </List>
-    
+ 
 
     <#Include Label = "IntInverseOp">
     <#Include Label = "IntIsTorsion">
     <#Include Label = "IntOrder">
   </Section>
-  
+ 
   <Section Label = "Max-plus and min-plus matrices">
     <Heading>
       Max-plus and min-plus matrices
@@ -314,8 +314,8 @@
     In this section we describe operations and attributes in
     &Semigroups; specifically for matrix semigroups. These are in addition to
     those given elsewhere in this chapter for arbitrary matrices over
-    semirings. These include: 
-    
+    semirings. These include:
+ 
     <List>
       <Item>
         <Ref Attr = "IsFinite"/>
@@ -327,13 +327,13 @@
         <Ref Oper = "NormalizeSemigroup"/>
       </Item>
     </List>
-    
+ 
     <#Include Label = "IsXMatrixSemigroup">
     <#Include Label = "IsFinite">
     <#Include Label = "IsTorsion">
     <#Include Label = "NormalizeSemigroup">
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 

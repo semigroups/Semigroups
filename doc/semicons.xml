@@ -170,7 +170,7 @@ true]]></Example>
           <Item><C>IsBooleanMatSemigroup</C>,</Item>
           <Item><C>IsReesZeroMatrixSemigroup</C>
             (provided that <C><A>n</A> &gt; 1</C>).</Item>
-        </List>       
+        </List>
 
         See <Ref Prop="IsZeroSemigroup"/> for more information about zero
         semigroups.
@@ -221,7 +221,7 @@ true]]></Example>
         See <Ref Prop="IsLeftZeroSemigroup"/> and <Ref
           Prop="IsRightZeroSemigroup"/> for more information about left zero
         and right zero semigroups.
-      
+ 
         <Example><![CDATA[
 gap> S := LeftZeroSemigroup(20);
 <transformation semigroup of degree 6 with 20 generators>

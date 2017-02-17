@@ -28,14 +28,14 @@ gap> IsMatrix(y);
 false
 gap> IsMatrixOverFiniteField(y);
 true]]></Example>
-   
+
   In the following we will refer to matrices in <Ref Filt="IsMatrix" BookName="ref"/>
   by <E>GAP library matrices</E> and to matrices in
   <Ref Filt="IsMatrixOverFiniteField"/> by <E>matrices over finite fields</E>.
-  
+
   We take precautions to hide this fact from the user of &Semigroups; and
   also provide conversion functions between the two representations.
- 
+
 <Section Label = "sect:Matrix semigroups">
   <Heading>Creating matrix semigroups</Heading>
 
@@ -75,7 +75,7 @@ true]]></Example>
 
 <Section Label = "sect:Semigroups matrix groups">
   <Heading>Matrix groups in the &Semigroups; package</Heading>
-  
+
   For interfacing the semigroups code with &GAP;s library code for
   matrix groups, the &Semigroups; package implements matrix groups
   that delegate to the &GAP; library.

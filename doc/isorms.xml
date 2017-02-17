@@ -23,20 +23,20 @@
           an isomorphism of the underlying graph of <C>S</C> to the underlying
           graph of of <C>T</C>
         </Item>
-        
+
         <Item>
           an isomorphism from <C>G</C> to <C>H</C>
         </Item>
-        
+
         <Item>
           a function from <C>Rows(S)</C> union <C>Columns(S)</C> to <C>H</C>
         </Item>
-      
+
       </Enum>
 
       belong to the categories <C>IsRMSIsoByTriple</C> and
       <C>IsRZMSIsoByTriple</C>.  Basic operators for such isomorphism are given
-      in <Ref Subsect = 
+      in <Ref Subsect =
         "Operators for isomorphisms of Rees (0-)matrix semigroup by triples"/>,
       and basic operations are:
 
@@ -45,26 +45,26 @@
       <Ref Oper = "ELM_LIST" Label = "for IsRMSIsoByTriple"/>,
       <Ref Func = "CompositionMapping" BookName = "ref"/>,
       <Ref Oper = "ImagesElm" Label = "for IsRMSIsoByTriple"/>,
-      <Ref Oper = "ImagesRepresentative" Label = "for IsRMSIsoByTriple"/>, 
+      <Ref Oper = "ImagesRepresentative" Label = "for IsRMSIsoByTriple"/>,
       <Ref Attr = "InverseGeneralMapping" Label = "for IsRMSIsoByTriple"/>,
       <Ref Oper = "PreImagesRepresentative" BookName = "ref"/>,
       <Ref Prop = "IsOne" Label = "for IsRMSIsoByTriple"/>.
-      
+
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="ELM_LIST">
   <ManSection>
-    <Oper Name = "ELM_LIST" Label = "for IsRMSIsoByTriple" 
+    <Oper Name = "ELM_LIST" Label = "for IsRMSIsoByTriple"
       Arg = "map, pos"/>
     <Returns>
       A component of an isomorphism of Rees (0-)matrix semigroups by triple.
     </Returns>
     <Description>
       <C>ELM_LIST(<A>map</A>, <A>i</A>)</C> returns the <C>i</C>th component of
-      the Rees (0-)matrix semigroup isomorphism by triple <A>map</A> when 
-      <C>i = 1, 2, 3</C>. 
+      the Rees (0-)matrix semigroup isomorphism by triple <A>map</A> when
+      <C>i = 1, 2, 3</C>.
       <P/>
 
       The components of an isomorphism of Rees (0-)matrix semigroups by triple
@@ -74,7 +74,7 @@
             An isomorphism of the underlying graphs of the source and range of
             <A>map</A>, respectively.
           </Item>
-          
+
           <Item>
             An isomorphism of the underlying groups of the source and range of
             <A>map</A>, respectively.
@@ -82,7 +82,7 @@
 
           <Item>
             An function from the union of the rows and columns of the source of
-            <A>map</A> to the underlying group of the range of <A>map</A>. 
+            <A>map</A> to the underlying group of the range of <A>map</A>.
           </Item>
         </Enum>
     </Description>
@@ -91,9 +91,9 @@
 
 <#GAPDoc Label="CompositionMapping2">
   <ManSection>
-    <Oper Name = "CompositionMapping2" Label = "for IsRMSIsoByTriple" 
+    <Oper Name = "CompositionMapping2" Label = "for IsRMSIsoByTriple"
       Arg = "map1, map2"/>
-    <Oper Name = "CompositionMapping2" Label = "for IsRZMSIsoByTriple" 
+    <Oper Name = "CompositionMapping2" Label = "for IsRZMSIsoByTriple"
       Arg = "map1, map2"/>
     <Returns>
       A Rees (0-)matrix semigroup by triple.
@@ -116,7 +116,7 @@
         </Item>
 
         <Item>
-          the componentwise product of <C><A>map1</A>[1] * <A>map2</A>[3]</C> 
+          the componentwise product of <C><A>map1</A>[1] * <A>map2</A>[3]</C>
           and  <C><A>map1</A>[3] * <A>map2</A>[2]</C>.
         </Item>
       </Enum>
@@ -155,7 +155,7 @@ gap> CompositionMapping2(G.2, G.3);
 <#GAPDoc Label="ImagesElm">
   <ManSection>
     <Oper Name = "ImagesElm" Label = "for IsRMSIsoByTriple" Arg = "map, pt"/>
-    <Oper Name = "ImagesRepresentative" Label = "for IsRMSIsoByTriple" 
+    <Oper Name = "ImagesRepresentative" Label = "for IsRMSIsoByTriple"
       Arg = "map, pt"/>
     <Returns>
       An element of a Rees (0-)matrix semigroup or a list containing such an
@@ -167,18 +167,18 @@ gap> CompositionMapping2(G.2, G.3);
       specified by a triple and <A>pt</A> is an element of the source of
       <A>map</A>, then <C>ImagesRepresentative(<A>map</A>, <A>pt</A>) =
       <A>pt</A> ^ <A>map</A></C> returns the image of <A>pt</A> under
-      <A>map</A>.  
+      <A>map</A>.
       <P/>
-      
+
       The image of <A>pt</A> under <A>map</A> of <C>Range(<A>map</A>)</C> is the
       element with components:
-      
+
       <Enum>
         <Item>
-          <C><A>pt</A>[1] ^ <A>map</A>[1]</C> 
+          <C><A>pt</A>[1] ^ <A>map</A>[1]</C>
         </Item>
         <Item>
-          <C>(<A>pt</A>[1] ^ <A>map</A>[3]) * (<A>pt</A>[2] ^ <A>map</A>[2]) 
+          <C>(<A>pt</A>[1] ^ <A>map</A>[3]) * (<A>pt</A>[2] ^ <A>map</A>[2])
             * (<A>pt</A>[3] ^ <A>map</A>[3]) ^ -1</C>
         </Item>
         <Item>

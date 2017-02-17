@@ -16,17 +16,17 @@
     <Description>
       A <E>PBR semigroup</E> is simply a semigroup consisting of
       PBRs. An object <A>obj</A> is a PBR semigroup in &GAP; if
-      it satisfies <Ref Prop = "IsSemigroup" BookName = "ref"/> and 
+      it satisfies <Ref Prop = "IsSemigroup" BookName = "ref"/> and
       <Ref Filt = "IsPBRCollection"/>.<P/>
 
       A <E>PBR monoid</E> is a monoid consisting of PBRs. 
       An object <A>obj</A> is a PBR monoid in &GAP; if it satisfies 
-      <Ref Prop = "IsMonoid" BookName = "ref"/> and 
+      <Ref Prop = "IsMonoid" BookName = "ref"/> and
       <Ref Filt = "IsPBRCollection"/>.<P/>
 
       Note that it is possible for a PBR semigroup to have a multiplicative
       neutral element (i.e. an identity element) but not to satisfy
-      <C>IsPBRMonoid</C>. For example, 
+      <C>IsPBRMonoid</C>. For example,
 
       <Example><![CDATA[
 gap> x := PBR([[-2, -1, 3], [-2, 2], [-3, -2, 1, 2, 3]],
@@ -89,14 +89,14 @@ gap> DegreeOfPBRSemigroup(S);
   <ManSection>
     <Attr Name = "IsomorphismPBRSemigroup" Arg = "S"/>
     <Returns>An isomorphism.</Returns>
-    <Description> 
+    <Description>
       If <A>S</A> is a semigroup, then <C>IsomorphismPBRSemigroup</C> returns
       an isomorphism from <A>S</A> to a PBR semigroup. When <A>S</A> is a
-      transformation or bipartition semigroup of degree <C>n</C>, 
+      transformation or bipartition semigroup of degree <C>n</C>,
       <C>IsomorphismPBRSemigroup</C> returns the
       natural embedding of <A>S</A> into the full pbr monoid on <C>n</C>
       points. <P/>
-      
+ 
       When <A>S</A> is any other type of semigroup, this function returns the
       composition of an isomorphism from <A>S</A> to a transformation
       semigroup, and an isomorphism from that transformation semigroup into a
@@ -110,17 +110,17 @@ gap> S := InverseSemigroup([
 > PartialPerm([3, 8, 1, 9, 0, 4, 10, 5, 0, 6])]);;
 gap> AsSemigroup(IsPBRSemigroup, S);
 <pbr semigroup of degree 11 with 4 generators>]]></Example>
-    </Description> 
-  </ManSection> 
+    </Description>
+  </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="FullPBRMonoid">
   <ManSection>
     <Oper Name = "FullPBRMonoid" Arg = "S"/>
     <Returns>A PBR monoid.</Returns>
-    <Description> 
+    <Description>
       If <A>n</A> is a positive integer not greater than <C>2</C>, then
-      this operations returns the monoid consisting of all of the PBRs of 
+      this operations returns the monoid consisting of all of the PBRs of
       degree <A>n</A>; called the <B>full PBR monoid</B>.
       <P/>
 
@@ -131,6 +131,6 @@ gap> S := FullPBRMonoid(1);
 <pbr monoid of degree 1 with 4 generators>
 gap> S := FullPBRMonoid(2);
 <pbr monoid of degree 2 with 10 generators>]]></Example>
-    </Description> 
-  </ManSection> 
+    </Description>
+  </ManSection>
 <#/GAPDoc>

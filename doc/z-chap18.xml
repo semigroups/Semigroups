@@ -1,38 +1,38 @@
 <Chapter Label = "Semigroup homomorphisms">
   <Heading>
     Semigroup homomorphisms
-  </Heading> 
+  </Heading>
 
   In this chapter we describe the various ways to define a homomorphism from a
   semigroup to another semigroup.
   <P/>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
     <Heading>
       Isomorphisms of arbitrary semigroups
-    </Heading> 
+    </Heading>
 
-    <#Include Label = "IsIsomorphicSemigroup"> 
-    <#Include Label = "SmallestMultiplicationTable"> 
+    <#Include Label = "IsIsomorphicSemigroup">
+    <#Include Label = "SmallestMultiplicationTable">
     <#Include Label = "IsomorphismSemigroups">
 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  
+ 
   <Section>
     <Heading>
       Isomorphisms of Rees (0-)matrix semigroups
-    </Heading> 
+    </Heading>
 
     PREAMBLE
 
     <!--********************************************************************-->
-    
+ 
     <Subsection Label = "Operators for isomorphisms of Rees (0-)matrix
       semigroup by triples">
 
@@ -41,7 +41,7 @@
       </Heading>
 
       <List>
-        
+ 
         <Mark><C><A>map</A>[<A>i</A>]</C></Mark>
         <Item>
           <Index Key = "ELM_LIST"><C>ELM_LIST</C> (for Rees (0-)matrix semigroup
@@ -55,7 +55,7 @@
 
         <Mark><C><A>map1</A> * <A>map2</A></C></Mark>
         <Item>
-          <Index Key = "*"><C> * </C> 
+          <Index Key = "*"><C> * </C>
             (for Rees (0-)matrix semigroup isomorphisms by triples)
           </Index>
           returns the composition of <A>map2</A> and <A>map1</A>;
@@ -79,23 +79,23 @@
           returns <K>true</K> if the Rees (0-)matrix semigroup
           isomorphisms by triple <A>map1</A> and <A>map2</A> have equal source and
           range, and are equal as functions, and <K>false</K> otherwise. <P/>
-          
+ 
           It is possible for <A>map1</A> and <A>map2</A> to be equal but to
-          have distinct components. 
+          have distinct components.
         </Item>
-        
+ 
         <Mark><C><A>pt</A> ^ <A>map</A></C></Mark>
         <Item>
           <Index Key = "^"><C> ^ </C>
             (for Rees (0-)matrix semigroup isomorphisms by triples)
           </Index>
           returns the image of the element <A>pt</A> of the source of
-          <A>map</A> under the isomorphism <A>map</A>; see 
+          <A>map</A> under the isomorphism <A>map</A>; see
           <Ref Oper = "ImagesElm" Label = "for IsRMSIsoByTriple"/>.
         </Item>
-        
-      </List> 
-  
+ 
+      </List>
+ 
     </Subsection>
 
     <#Include Label = "IsRMSIsoByTriple">
@@ -106,7 +106,7 @@
     <!--********************************************************************-->
 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 

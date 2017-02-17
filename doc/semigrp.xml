@@ -19,11 +19,11 @@
     <P/>
 
     The first argument <A>filt</A> must be of the form <C>IsXSemigroup</C>, for
-    example, 
+    example,
     <Ref Prop = "IsTransformationSemigroup" BookName = "ref"/>,
-    <Ref Prop = "IsFpSemigroup" BookName = "ref"/>, and 
+    <Ref Prop = "IsFpSemigroup" BookName = "ref"/>, and
     <Ref Prop = "IsPBRSemigroup"/> are some possible values for <A>filt</A>. 
-    Note that <A>filt</A> should not be of the form <C>IsXMonoid</C>; see 
+    Note that <A>filt</A> should not be of the form <C>IsXMonoid</C>; see
     <Ref Oper = "IsomorphismMonoid"/>. 
     The second argument <A>S</A> should be a semigroup.
     <P/>
@@ -83,8 +83,8 @@ MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2
   <Oper Name = "AsSemigroup" Arg = "filt, S"/>
   <Returns>A semigroup.</Returns>
   <Description>
-    <C>AsSemigroup(<A>filt</A>, <A>S</A>)</C> is just shorthand for 
-    <C>Range(IsomorphismSemigroup(<A>filt</A>, <A>S</A>))</C>, when <A>S</A> 
+    <C>AsSemigroup(<A>filt</A>, <A>S</A>)</C> is just shorthand for
+    <C>Range(IsomorphismSemigroup(<A>filt</A>, <A>S</A>))</C>, when <A>S</A>
     is a semigroup; see <Ref Func = "IsomorphismSemigroup"/> for more
     details.
     <P/>
@@ -124,14 +124,14 @@ gap> AsSemigroup(IsTransformationSemigroup, S);
     <P/>
 
     The first argument <A>filt</A> must be of the form <C>IsXMonoid</C>, for
-    example, 
+    example,
     <Ref Prop = "IsTransformationMonoid" BookName = "ref"/>,
-    <Ref Prop = "IsFpMonoid" BookName = "ref"/>, and 
+    <Ref Prop = "IsFpMonoid" BookName = "ref"/>, and
     <Ref Prop = "IsBipartitionMonoid"/> are some possible values for <A>filt</A>. 
-    Note that <A>filt</A> should not be of the form <C>IsXSemigroup</C>; see 
+    Note that <A>filt</A> should not be of the form <C>IsXSemigroup</C>; see
     <Ref Oper = "IsomorphismSemigroup"/>. 
     The second argument <A>S</A> should be a semigroup which is mathematically
-    a monoid but which may or may not belong to the category 
+    a monoid but which may or may not belong to the category
     <Ref Filt="IsMonoid" BookName = "ref"/> of monoids in &GAP;,
     i.e. <A>S</A> must satisfy <Ref Prop="IsMonoidAsSemigroup"/>.
     <P/>
@@ -139,7 +139,7 @@ gap> AsSemigroup(IsTransformationSemigroup, S);
     <C>IsomorphismMonoid</C> returns a monoid isomorphism from <A>S</A> to a
     semigroup <A>T</A> of the type described by <A>filt</A>, if such an
     isomorphism exists. In this context, a <E>monoid isomorphism</E> is a
-    semigroup isomorphism that maps the 
+    semigroup isomorphism that maps the
     <Ref Attr = "MultiplicativeNeutralElement" BookName = "ref"/> of <A>S</A>
     to the <Ref Attr = "One" BookName = "ref"/> of <A>T</A>.
     If <C>T</C> is the range of the
@@ -150,7 +150,7 @@ gap> AsSemigroup(IsTransformationSemigroup, S);
 
     An error is returned if there is no isomorphism from <A>S</A> to a monoid
     satisfying <A>filt</A>. For example, there is no method for
-    <C>IsomorphismMonoid</C> when <A>filt</A> is, say, 
+    <C>IsomorphismMonoid</C> when <A>filt</A> is, say,
     <Ref Prop = "IsReesZeroMatrixSemigroup" BookName = "ref"/> and when
     <A>S</A> is a not 0-simple.  Similarly, there is no method when <A>filt</A>
     is <Ref Prop = "IsPartialPermMonoid" BookName = "ref"/> and when
@@ -187,8 +187,8 @@ MappingByFunction( <transformation semigroup of degree 10 with 2
   <Oper Name = "AsMonoid" Arg = "[filt, ]S"/>
   <Returns>A monoid or <K>fail</K>.</Returns>
   <Description>
-    <C>AsMonoid(<A>filt</A>, <A>S</A>)</C> is just shorthand for 
-    <C>Range(IsomorphismMonoid(<A>filt</A>, <A>S</A>))</C>, when <A>S</A> 
+    <C>AsMonoid(<A>filt</A>, <A>S</A>)</C> is just shorthand for
+    <C>Range(IsomorphismMonoid(<A>filt</A>, <A>S</A>))</C>, when <A>S</A>
     is a semigroup or monoid; see <Ref Func = "IsomorphismMonoid"/> for more
     details.
     <P/>
@@ -244,19 +244,19 @@ gap> AsMonoid(S);
     further parameters that describe some attributes of the semigroup to be
     returned. For instance, we may want to specify the number of generators,
     and, say, the degree, or dimension, of the elements, where appropriate.
-    The arguments of <C>RandomMonoid</C>, <C>RandomInverseSemigroup</C>, and 
+    The arguments of <C>RandomMonoid</C>, <C>RandomInverseSemigroup</C>, and
     <C>RandomInverseMonoid</C> are analogous.
     <P/>
 
     If no arguments are specified, then they are all chosen at random, for a
     truly random experience.
     <P/>
-    
+ 
     The first argument, if present, should be a filter <A>filter</A>.  For
     <C>RandomSemigroup</C> and <C>RandomInverseSemigroup</C> the filter
-    <A>filter</A> must be of the form <C>IsXSemigroup</C>. For example, 
-    <Ref Prop = "IsTransformationSemigroup" BookName = "ref"/>, 
-    <Ref Prop = "IsFpSemigroup" BookName = "ref"/>, and 
+    <A>filter</A> must be of the form <C>IsXSemigroup</C>. For example,
+    <Ref Prop = "IsTransformationSemigroup" BookName = "ref"/>,
+    <Ref Prop = "IsFpSemigroup" BookName = "ref"/>, and
     <Ref Prop = "IsPBRSemigroup"/> are some possible values for <A>filter</A>.
     For <C>RandomMonoid</C> and <C>RandomInverseMonoid</C> the argument
     <A>filter</A>  must be of the form <C>IsXMonoid</C>; such as <Ref Prop =
@@ -284,9 +284,9 @@ gap> AsMonoid(S);
     <List>
       <Mark>degree / dimension</Mark>
       <Item>
-        The third argument, if present, should be a positive integer <A>n</A>, 
+        The third argument, if present, should be a positive integer <A>n</A>,
         which specifies the degree or dimension of the generators. For example,
-        if the first argument <A>filter</A> is <C>IsTransformationSemigroup</C>, 
+        if the first argument <A>filter</A> is <C>IsTransformationSemigroup</C>,
         then the value of this argument is the degree of the transformations in
         the returned semigroup; or if <A>filter</A> is
         <C>IsMatrixOverFiniteFieldSemigroup</C>, then this argument is the
@@ -304,7 +304,7 @@ gap> AsMonoid(S);
         in the returned semigroup are defined. 
       </Item>
     </List>
-    
+ 
     You get the idea, the error messages are self-explanatory, and
     <C>RandomSemigroup</C> works for most of the type of semigroups defined in
     &GAP;.<P/>

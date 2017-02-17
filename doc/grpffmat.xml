@@ -15,7 +15,7 @@
   <Description>
     A <E>matrix group</E> is simply a group of invertible matrices over a
     finite field. An object in &Semigroups; is a matrix group if
-    it satisfies <Ref Prop="IsGroup" BookName="ref"/> and 
+    it satisfies <Ref Prop="IsGroup" BookName="ref"/> and
     <Ref Filt = "IsMatrixOverFiniteFieldCollection"/>.
     <Example><![CDATA[
 gap> x := Matrix(GF(4), Z(4)^0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;
@@ -35,7 +35,7 @@ false]]></Example>
 
 <#GAPDoc Label="MatrixGroupOperation">
 <ManSection>
-  <Oper Name="\^" Arg="G, mat" 
+  <Oper Name="\^" Arg="G, mat"
     Label="for a matrix over finite field group and matrix over finite field"/>
   <Returns>A matrix group over a finite field.</Returns>
   <Description>
@@ -63,7 +63,7 @@ gap> G ^ y;
   <Returns>An isomorphism.</Returns>
   <Description>
     If <A>G</A> belongs to the category <Ref Prop =
-      "IsMatrixOverFiniteFieldGroup"/>, then <C>IsomorphismMatrixGroup</C> 
+      "IsMatrixOverFiniteFieldGroup"/>, then <C>IsomorphismMatrixGroup</C>
     returns an isomorphism from <A>G</A> into a group consisting of &GAP;
     library matrices.
     <Example><![CDATA[

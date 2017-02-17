@@ -12,11 +12,11 @@
   <!--**********************************************************************-->
 
   <Section>
-    
+ 
     <Heading>
       Random elements of a semigroup
     </Heading>
-    
+ 
     <#Include Label = "Random">
   </Section>
 
@@ -24,20 +24,20 @@
   <!--**********************************************************************-->
 
   <Section>
-    
+ 
     <Heading>
        Properties of elements in a semigroup
     </Heading>
-    
+ 
     <#Include Label = "IndexPeriodOfSemigroupElement">
     <#Include Label = "SmallestIdempotentPower">
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
-    
+ 
     <Heading>
       Expressing semigroup elements as words in generators
     </Heading>
@@ -45,7 +45,7 @@
     It is possible to express an element of a semigroup as a word in the
     generators of that semigroup. This section describes how to accomplish this
     in &Semigroups;.<P/>
-    
+ 
     <#Include Label = "EvaluateWord">
     <#Include Label = "Factorization">
     <#Include Label = "MinimalFactorization">
@@ -60,12 +60,12 @@
     <Heading>
       Generating sets
     </Heading>
-    
+ 
     <#Include Label = "Generators">
-    <#Include Label = "SmallGeneratingSet"> 
+    <#Include Label = "SmallGeneratingSet">
     <#Include Label = "IrredundantGeneratingSubset">
     <#Include Label = "MinimalGeneratingSet">
-  
+ 
   </Section>
 
   <!--**********************************************************************-->
@@ -78,16 +78,16 @@
     </Heading>
 
     In this section we describe the attributes of a semigroup that can be found
-    using the &Semigroups; package. 
+    using the &Semigroups; package.
     <P/>
-    
+ 
     <#Include Label = "MinimalIdeal">
     <#Include Label = "RepresentativeOfMinimalIdeal">
     <#Include Label = "MultiplicativeZero">
     <#Include Label = "UnderlyingSemigroupOfSemigroupWithAdjoinedZero">
 
-  </Section> 
-  
+  </Section>
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -96,15 +96,15 @@
     <Heading>
       Group of units and identity elements
     </Heading>
-  
+ 
     <#Include Label = "GroupOfUnits">
     <!--TODO add man entry for MultiplicativeNeutralElement-->
 
-  </Section> 
-  
+  </Section>
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  
+ 
   <Section>
 
     <Heading>
@@ -115,11 +115,11 @@
     <#Include Label = "NrIdempotents">
     <#Include Label = "IdempotentGeneratedSubsemigroup">
 
-  </Section>  
-  
+  </Section>
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  
+ 
   <Section Label = "Computing maximal subsemigroups">
 
     <Heading>
@@ -176,12 +176,12 @@
     </Heading>
 
     <#Include Label = "Normalizer">
-  
+ 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  
+ 
   <Section>
 
     <Heading>
@@ -195,12 +195,12 @@
     <#Include Label = "GeneratorsSmallest">
     <#Include Label = "IsTransitive">
     <#Include Label = "SmallestElementSemigroup">
-  
+ 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-    
+ 
   <Section>
 
     <Heading>

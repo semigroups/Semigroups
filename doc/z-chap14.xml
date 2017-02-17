@@ -3,9 +3,9 @@
     Green's relations
   </Heading>
 
-  In this chapter we describe the functions in &Semigroups; for 
-  computing Green's classes and related properties of semigroups. 
-  
+  In this chapter we describe the functions in &Semigroups; for
+  computing Green's classes and related properties of semigroups.
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -14,9 +14,9 @@
     <Heading>
       Creating Green's classes and representatives
     </Heading>
-    
+ 
     In this section, we describe the methods in the &Semigroups; package for
-    creating Green's classes. 
+    creating Green's classes.
     <P/>
 
     <#Include Label = "XClassOfYClass">
@@ -32,49 +32,49 @@
     <#Include Label = "IsGreensDGreaterThanFunc">
 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  
+ 
   <Section>
 
     <Heading>
       Iterators and enumerators of classes and representatives
     </Heading>
-    
+ 
     In this section, we describe the methods in the &Semigroups; package for
-    incrementally determining Green's classes or their representatives. 
+    incrementally determining Green's classes or their representatives.
     <P/>
 
-    <#Include Label = "IteratorOfXClassReps"> 
-    <#Include Label = "IteratorOfXClasses"> 
+    <#Include Label = "IteratorOfXClassReps">
+    <#Include Label = "IteratorOfXClasses">
 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
-    
+ 
     <Heading>
       Properties of Green's classes
     </Heading>
-    
+ 
     In this section, we describe the properties and operators of Green's
     classes that are available in the &Semigroups; package
     <P/>
-    
+ 
     <#Include Label = "\&lt;">
     <#Include Label = "IsRegularGreensClass">
     <#Include Label = "IsGreensClassNC">
 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  
+ 
   <Section>
-    
+ 
     <Heading>
       Attributes of Green's classes
     </Heading>
@@ -91,9 +91,9 @@
     <#Include Label = "StructureDescription">
     <#Include Label = "InjectionPrincipalFactor">
     <#Include Label = "PrincipalFactor">
-    
+ 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 

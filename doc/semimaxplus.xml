@@ -34,12 +34,12 @@
     <Description>
       If <A>S</A> is a max-plus or min-plus matrix semigroup (i.e. belongs to
       the category <Ref Filt = "IsMaxPlusMatrixSemigroup"/>), then
-      <C>IsFinite</C> returns <K>true</K> if <A>S</A> is finite and 
+      <C>IsFinite</C> returns <K>true</K> if <A>S</A> is finite and
       <K>false</K> otherwise. This method is based on
       <Cite Key="Gaubert1996aa"/> (max-plus) and <Cite Key="Simon1978aa"/>
-      (min-plus). For min-plus matrix semigroups, this method is only 
+      (min-plus). For min-plus matrix semigroups, this method is only
       valid if each min-plus matrix in the semigroup contains only non-negative
-      integers. Note, this method is terminating and does not involve 
+      integers. Note, this method is terminating and does not involve
       enumerating semigroups.
       <Example><![CDATA[
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,
@@ -71,11 +71,11 @@ true
     <Description>
       If <A>S</A> is a max-plus matrix semigroup (i.e. belongs to the
       category <Ref Filt = "IsMaxPlusMatrixSemigroup"/>), then
-      <C>IsTorsion</C> returns <K>true</K> if <A>S</A> is torsion and 
-      <K>false</K> otherwise. This method is based on 
+      <C>IsTorsion</C> returns <K>true</K> if <A>S</A> is torsion and
+      <K>false</K> otherwise. This method is based on
       <Cite Key="Gaubert1996aa"/> and draws on <Cite Key="Burrell2016aa"/>,
       <Cite Key="Bacelli1992aa"/> and <Cite Key="Kacie2009aa"/>.
-      
+ 
       <Example><![CDATA[
 gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,
 >                              [[0, -3],
@@ -97,12 +97,12 @@ false
     <Returns>A semigroup.</Returns>
     <Description>
       This method applies to max-plus matrix semigroups (i.e. those belonging to
-      the category <Ref Filt = "IsMaxPlusMatrixSemigroup"/>) that are 
+      the category <Ref Filt = "IsMaxPlusMatrixSemigroup"/>) that are
       finitely generated, such that the spectral radius of the matrix equal to
       the sum of the generators (with respect to the max-plus semiring) is zero. 
-      <C>NormalizeSemigroup</C> returns  a semigroup of matrices all with 
-      strictly non-positive entries. Note that the output is isomorphic to a 
-      min-plus matrix semigroup. This method is based on 
+      <C>NormalizeSemigroup</C> returns  a semigroup of matrices all with
+      strictly non-positive entries. Note that the output is isomorphic to a
+      min-plus matrix semigroup. This method is based on
       <Cite Key="Gaubert1996aa"/> and  <Cite Key="Burrell2016aa"/>.
       <Example><![CDATA[
 gap> NormalizeSemigroup(Semigroup(Matrix(IsMaxPlusMatrix,

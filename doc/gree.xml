@@ -16,8 +16,8 @@
       A Green's class <A>class</A> of a semigroup <C>S</C> satisfies
       <C>IsGreensClassNC</C> if it was not known to &GAP; that the
       representative of <A>class</A> was an element of <C>S</C> at the point
-      that <A>class</A> was created. 
-    </Description> 
+      that <A>class</A> was created.
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -29,7 +29,7 @@
       If the &H;-class <A>H</A> of a semigroup <C>S</C> is a subgroup of
       <C>S</C>, then <C>MultiplicativeNeutralElement</C> returns the identity of
       <A>H</A>. If <A>H</A> is not a subgroup of <C>S</C>, then <K>fail</K> is
-      returned. 
+      returned.
       <Example><![CDATA[
 gap> S := Semigroup([PartialPerm([1, 5, 2]),
 >  PartialPerm([2, 0, 4]), PartialPerm([4, 1, 5]),
@@ -41,7 +41,7 @@ gap> MultiplicativeNeutralElement(H);
 gap> H := HClass(S, PartialPerm([1, 4]));;
 gap> MultiplicativeNeutralElement(H);
 fail]]></Example>
-    </Description> 
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -53,14 +53,14 @@ fail]]></Example>
       The Green's class <A>left-expr</A> is less than or equal to
       <A>right-expr</A> if they belong to the same
       semigroup and the representative of <A>left-expr</A> is less than the
-      representative of <A>right-expr</A> under <C>&lt;</C>; see also 
+      representative of <A>right-expr</A> under <C>&lt;</C>; see also
       <Ref Attr="Representative" BookName="ref"/>.
       <P/>
-      
+
       Please note that this is not the usual order on the Green's classes of a
       semigroup as defined in <Ref Sect="Green's Relations" BookName="ref"/>.
       See also <Ref Oper="IsGreensLessThanOrEqual" BookName="ref"/>.
-     
+
       <Example><![CDATA[
 gap> S := FullTransformationSemigroup(4);;
 gap> A := GreensRClassOfElement(S, Transformation([2, 1, 3, 1]));
@@ -102,7 +102,7 @@ true]]></Example>
      <C>XClassOfYClass</C> returns the <C>X</C>-class containing the
      <C>Y</C>-class <A>class</A> where <C>X</C> and <C>Y</C> should be replaced
      by an appropriate choice of <C>D, H, L,</C> and <C>R</C>.<P/>
-     
+
       Note that if it is not known to &GAP; whether or not the representative
       of <A>class</A> is an element of the semigroup containing <A>class</A>,
       then no attempt is made to check this.<P/>
@@ -110,21 +110,21 @@ true]]></Example>
       The same result can be produced using:
       <Log>First(GreensXClasses(S), x -> Representative(x) in class);</Log>
       but this might be substantially slower. Note that <C>XClassOfYClass</C>
-      is also likely to be faster than 
+      is also likely to be faster than
       <Log>GreensXClassOfElement(S, Representative(class));</Log>
       <P/>
 
       <C>DClass</C> can also be used as a synonym for <C>DClassOfHClass</C>,
       <C>DClassOfLClass</C>, and <C>DClassOfRClass</C>;
-      <C>LClass</C> as a synonym for <C>LClassOfHClass</C>; and 
-      <C>RClass</C> as a synonym for <C>RClassOfHClass</C>. 
-      
+      <C>LClass</C> as a synonym for <C>LClassOfHClass</C>; and
+      <C>RClass</C> as a synonym for <C>RClassOfHClass</C>.
+
       See also <Ref Oper = "GreensDClassOfElement" BookName = "ref"/>
       and <Ref Oper = "GreensDClassOfElementNC"/>.
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 3, 2]), 
->                   Transformation([2, 1, 3]), 
->                   Transformation([3, 2, 1]), 
+gap> S := Semigroup(Transformation([1, 3, 2]),
+>                   Transformation([2, 1, 3]),
+>                   Transformation([3, 2, 1]),
 >                   Transformation([1, 3, 1]));;
 gap> R := GreensRClassOfElement(S, Transformation([3, 2, 1]));
 <Green's R-class: Transformation( [ 3, 2, 1 ] )>
@@ -176,7 +176,7 @@ true]]></Example>
       <Mark><C>GreensDClasses</C> and <C>DClasses</C></Mark>
       <Item>
         <A>X</A> should be a semigroup.
-      </Item>                              
+      </Item>
 
       <Mark><C>GreensHClasses</C> and <C>HClasses</C></Mark>
       <Item>
@@ -185,20 +185,20 @@ true]]></Example>
 
       <Mark><C>GreensLClasses</C> and <C>LClasses</C></Mark>
       <Item>
-        <A>X</A> can be a semigroup or &D;-class.  
+        <A>X</A> can be a semigroup or &D;-class.
       </Item>
 
       <Mark><C>GreensRClasses</C> and <C>RClasses</C></Mark>
       <Item>
         <A>X</A> can be a semigroup or &D;-class.
       </Item>
-      </List>   
-     
+      </List>
+
       Note that <C>GreensXClasses</C> and <C>XClasses</C> are synonyms and have
       identical output. The shorter command is provided for the sake of
       convenience.<P/>
 
-      See also <Ref Attr = "DClassReps"/>, <Ref Func = "IteratorOfDClassReps"/>, 
+      See also <Ref Attr = "DClassReps"/>, <Ref Func = "IteratorOfDClassReps"/>,
       <Ref Func = "IteratorOfDClasses"/>, and <Ref Func = "NrDClasses"/>.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([3, 4, 4, 4]),
@@ -269,7 +269,7 @@ gap> GreensRClasses(D);
     <Oper Name = "GreensDClassOfElement" Arg = "X, f"/>
     <Func Name = "DClass" Arg = "X, f"/>
     <Oper Name = "GreensHClassOfElement" Arg = "X, f"/>
-    <Oper Name = "GreensHClassOfElement" Arg = "R, i, j" 
+    <Oper Name = "GreensHClassOfElement" Arg = "R, i, j"
       Label = "for a Rees matrix semigroup"/>
     <Func Name = "HClass" Arg = "X, f"/>
     <Func Name = "HClass" Arg = "R, i, j" Label = "for a Rees matrix semigroup"/>
@@ -282,7 +282,7 @@ gap> GreensRClasses(D);
       These functions produce essentially the same output as the &GAP; library
       functions with the same names; see <Ref Oper = "GreensDClassOfElement"
       BookName = "ref"/>.  The main difference is that these functions can be
-      applied to a wider class of objects: 
+      applied to a wider class of objects:
       <List>
       <Mark><C>GreensDClassOfElement</C> and <C>DClass</C></Mark>
       <Item>
@@ -302,7 +302,7 @@ gap> GreensRClasses(D);
 
       <Mark><C>GreensLClassOfElement</C> and <C>LClass</C></Mark>
       <Item>
-        <A>X</A> can be a semigroup or &D;-class.  
+        <A>X</A> can be a semigroup or &D;-class.
       </Item>
 
       <Mark><C>GreensRClassOfElement</C> and <C>RClass</C></Mark>
@@ -310,7 +310,7 @@ gap> GreensRClasses(D);
         <A>X</A> can be a semigroup or &D;-class.
       </Item>
       </List>
-     
+
       Note that <C>GreensXClassOfElement</C> and <C>XClass</C> are synonyms and
       have identical output. The shorter command is provided for the sake of
       convenience.<P/>
@@ -339,31 +339,31 @@ gap> GreensRClasses(D);
       attempt to verify this is made. <P/>
 
       Note that <C>GreensXClassOfElementNC</C> and <C>XClassNC</C> are synonyms
-      and have identical output. The shorter command is provided for the sake 
+      and have identical output. The shorter command is provided for the sake
       of convenience. <P/>
 
-      It can be quicker to compute the class of an element using 
-      <C>GreensRClassOfElementNC</C>, say, than using 
+      It can be quicker to compute the class of an element using
+      <C>GreensRClassOfElementNC</C>, say, than using
       <C>GreensRClassOfElement</C>
-      if it is known <E>a priori</E> that <A>f</A> 
+      if it is known <E>a priori</E> that <A>f</A>
       is an element of <A>X</A>. On the other
       hand, if <A>f</A> is not an element of <A>X</A>, then the results of this
-      computation are unpredictable.<P/> 
+      computation are unpredictable.<P/>
 
       For example, if <Log>x := Transformation([15, 18, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]);</Log>
       in the semigroup <A>X</A> of order-preserving mappings on 20 points, then
       <Log>GreensRClassOfElementNC(X, x);</Log>
-      returns an answer relatively quickly, whereas 
+      returns an answer relatively quickly, whereas
       <Log>GreensRClassOfElement(X, x)</Log>
       can take a signficant amount of time to return a value.<P/>
-  
+
       See also <Ref Oper="GreensRClassOfElement" BookName="ref"/> and <Ref
       Oper="RClassOfHClass"/>.
 
       <Example><![CDATA[
 gap> S := RandomSemigroup(IsTransformationSemigroup, 2, 1000);;
 gap> x := [1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 1];;
-gap> x := EvaluateWord(Generators(S), x);;                            
+gap> x := EvaluateWord(Generators(S), x);;
 gap> R := GreensRClassOfElementNC(S, x);;
 gap> Size(R);
 1
@@ -390,9 +390,9 @@ gap> Size(L);
       <C>XClassReps</C> returns a list of the representatives of the Green's
       classes of <A>obj</A>, which can be a semigroup, &D;-, &L;-, or &R;-class
       where appropriate.<P/>
-      
-      The same output can be obtained by calling, for example: 
-      
+
+      The same output can be obtained by calling, for example:
+
       <Log>List(GreensXClasses(obj), Representative);</Log>
 
       Note that if the Green's classes themselves are not required, then
@@ -444,22 +444,22 @@ gap> HClassReps(L);
       <K>fail</K> if it is not.
     </Returns>
     <Description>
-      <C>GroupHClass</C> is a synonym for 
+      <C>GroupHClass</C> is a synonym for
       <Ref Attr = "GroupHClassOfGreensDClass" BookName = "ref"/>. <P/>
-      
-      See also 
-      <Ref Prop = "IsGroupHClass" BookName = "ref"/>, 
-      <Ref Prop = "IsRegularDClass" BookName = "ref"/>, 
-      <Ref Prop = "IsRegularGreensClass"/>, 
+
+      See also
+      <Ref Prop = "IsGroupHClass" BookName = "ref"/>,
+      <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
+      <Ref Prop = "IsRegularGreensClass"/>,
       and <Ref Prop = "IsRegularSemigroup"/>.
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 6, 7, 2, 6, 1, 1, 5]), 
+gap> S := Semigroup(Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
 >                   Transformation([3, 8, 1, 4, 5, 6, 7, 1]));;
 gap> IsRegularSemigroup(S);
 false
 gap> iter := IteratorOfDClasses(S);;
-gap> repeat D := NextIterator(iter); until IsRegularDClass(D);   
+gap> repeat D := NextIterator(iter); until IsRegularDClass(D);
 gap> D;
 <Green's D-class: Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )>
 gap> NrIdempotents(D);
@@ -495,10 +495,10 @@ gap> StructureDescription(GroupHClass(last));
 <#GAPDoc Label="Idempotents">
   <ManSection>
   <Attr Name = "Idempotents" Arg = "obj[, n]"/>
-  <Returns>A list of idempotents.</Returns> 
+  <Returns>A list of idempotents.</Returns>
   <Description>
   The argument <A>obj</A> should be a semigroup, &D;-class, &H;-class,
-  &L;-class, or &R;-class.<P/> 
+  &L;-class, or &R;-class.<P/>
 
   If the optional second argument <A>n</A> is present and <A>obj</A> is a
   semigroup, then a list of the idempotents in <A>obj</A> of rank <A>n</A> is
@@ -506,21 +506,21 @@ gap> StructureDescription(GroupHClass(last));
   the second version of the function will probably be faster. However, if the
   optional second argument is present, then nothing is stored in <A>obj</A> and
   so every time the function is called the computation must be repeated.
-  <P/> 
+  <P/>
 
   This functions produce essentially the same output as the &GAP; library
   function with the same name; see <Ref Oper = "Idempotents" BookName =
     "ref"/>.  The main difference is that this function can be applied to a
   wider class of objects as described above.<P/>
-  
-  See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>, 
+
+  See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
   <Ref Prop = "IsRegularGreensClass"/>
-  <Ref Prop = "IsGroupHClass" BookName = "ref"/>, 
+  <Ref Prop = "IsGroupHClass" BookName = "ref"/>,
   <Ref Attr = "NrIdempotents"/>, and
-  <Ref Attr = "GroupHClass"/>. 
+  <Ref Attr = "GroupHClass"/>.
 
   <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 3, 4, 1]), 
+gap> S := Semigroup(Transformation([2, 3, 4, 1]),
 >                   Transformation([3, 3, 1, 1]));;
 gap> Idempotents(S, 1);
 [  ]
@@ -556,7 +556,7 @@ gap> S := InverseSemigroup(
 gap> Idempotents(S, 1);
 [ <identity partial perm on [ 4 ]> ]
 gap> Idempotents(S, 0);
-[  ]]]></Example> 
+[  ]]]></Example>
   </Description>
   </ManSection>
 <#/GAPDoc>
@@ -569,17 +569,17 @@ gap> Idempotents(S, 0);
     </Returns>
     <Description>
       This function returns <K>true</K> if <A>class</A> is a regular Green's
-      class and <K>false</K> if it is not. 
-      See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>, 
-      <Ref Prop = "IsGroupHClass" BookName = "ref"/>, 
+      class and <K>false</K> if it is not.
+      See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
+      <Ref Prop = "IsGroupHClass" BookName = "ref"/>,
       <Ref Attr = "GroupHClassOfGreensDClass" BookName = "ref"/>,
-      <Ref Oper = "GroupHClass"/>, <Ref Oper = "NrIdempotents"/>, 
-      <Ref Oper = "Idempotents"/>, and 
+      <Ref Oper = "GroupHClass"/>, <Ref Oper = "NrIdempotents"/>,
+      <Ref Oper = "Idempotents"/>, and
       <Ref Oper = "IsRegularSemigroupElement" BookName = "ref"/>.
       <P/>
 
-      The function <C>IsRegularDClass</C> produces the same output as the 
-      &GAP; library functions with the same name; see 
+      The function <C>IsRegularDClass</C> produces the same output as the
+      &GAP; library functions with the same name; see
       <Ref Oper="IsRegularDClass" BookName="ref"/>.
 
       <Example><![CDATA[
@@ -589,7 +589,7 @@ gap> f := Transformation([1, 1, 10, 8, 8, 8, 1, 1, 10, 8]);;
 gap> R := RClass(S, f);;
 gap> IsRegularGreensClass(R);
 true
-gap> S := Monoid(Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]), 
+gap> S := Monoid(Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]),
 >                Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2]));;
 gap> f := Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2]);;
 gap> R := RClass(S, f);;
@@ -597,8 +597,8 @@ gap> IsRegularGreensClass(R);
 false
 gap> NrIdempotents(R);
 0
-gap> S := Semigroup(Transformation([2, 1, 3, 1]), 
->                   Transformation([3, 1, 2, 1]), 
+gap> S := Semigroup(Transformation([2, 1, 3, 1]),
+>                   Transformation([3, 1, 2, 1]),
 >                   Transformation([4, 2, 3, 3]));;
 gap> f := Transformation([4, 2, 3, 3]);;
 gap> L := GreensLClassOfElement(S, f);;
@@ -628,7 +628,7 @@ false]]></Example>
   <Func Name = "IteratorOfHClassReps" Arg = "S"/>
   <Func Name = "IteratorOfLClassReps" Arg = "S"/>
   <Func Name = "IteratorOfRClassReps" Arg = "S"/>
-  <Returns> 
+  <Returns>
   An iterator.
   </Returns>
   <Description>
@@ -641,10 +641,10 @@ false]]></Example>
   Attr = "GreensRClasses"/>, and <Ref Oper = "IteratorOfRClasses"/>.<P/>
 
   <Example><![CDATA[
-gap> S := Semigroup(Transformation([3, 2, 1, 5, 4]), 
->                   Transformation([5, 4, 3, 2, 1]), 
->                   Transformation([5, 4, 3, 2, 1]), 
->                   Transformation([5, 5, 4, 5, 1]), 
+gap> S := Semigroup(Transformation([3, 2, 1, 5, 4]),
+>                   Transformation([5, 4, 3, 2, 1]),
+>                   Transformation([5, 4, 3, 2, 1]),
+>                   Transformation([5, 5, 4, 5, 1]),
 >                   Transformation([4, 5, 4, 3, 3]));;
 gap> iter := IteratorOfRClassReps(S);
 <iterator of R-class reps>
@@ -678,8 +678,8 @@ gap> NextIterator(iter);
   An iterator.
   </Returns>
 
-  <Description>   
-    Returns an iterator of the Green's classes in the semigroup <A>S</A>.  
+  <Description>
+    Returns an iterator of the Green's classes in the semigroup <A>S</A>.
     See <Ref Sect = "Iterators" BookName = "ref"/> for more information on
     iterators.<P/>
 
@@ -687,16 +687,16 @@ gap> NextIterator(iter);
     of a semigroup with a particular property but do not necessarily want to
     compute all of the &R;-classes.<P/>
 
-    See also <Ref Attr = "GreensRClasses"/>, 
-    <Ref Oper = "GreensRClasses" BookName = "ref"/>, 
-    <Ref Attr = "NrRClasses"/>, and 
+    See also <Ref Attr = "GreensRClasses"/>,
+    <Ref Oper = "GreensRClasses" BookName = "ref"/>,
+    <Ref Attr = "NrRClasses"/>, and
     <Ref Oper = "IteratorOfRClassReps"/>.<P/>
 
     The transformation semigroup in the example below has 25147892 elements but
     it only takes a fraction of a second to find a non-trivial &R;-class. The
     inverse semigroup of partial permutations in the example below has size
     158122047816 but it only takes a fraction of a second to find an &R;-class
-    with more than 1000 elements. 
+    with more than 1000 elements.
 
   <Example><![CDATA[
 gap> gens := [Transformation([2, 4, 1, 5, 4, 4, 7, 3, 8, 1]),
@@ -722,25 +722,25 @@ gap> R;
 gap> Size(R);
 21600
 gap> S := InverseSemigroup(
->  PartialPerm([1, 2, 3, 4, 5, 6, 7, 10, 11, 19, 20], 
+>  PartialPerm([1, 2, 3, 4, 5, 6, 7, 10, 11, 19, 20],
 >              [19, 4, 11, 15, 3, 20, 1, 14, 8, 13, 17]),
->  PartialPerm([1, 2, 3, 4, 6, 7, 8, 14, 15, 16, 17], 
+>  PartialPerm([1, 2, 3, 4, 6, 7, 8, 14, 15, 16, 17],
 >              [15, 14, 20, 19, 4, 5, 1, 13, 11, 10, 3]),
->  PartialPerm([1, 2, 4, 6, 7, 8, 9, 10, 14, 15, 18], 
+>  PartialPerm([1, 2, 4, 6, 7, 8, 9, 10, 14, 15, 18],
 >              [7, 2, 17, 10, 1, 19, 9, 3, 11, 16, 18]),
->  PartialPerm([1, 2, 3, 4, 5, 7, 8, 9, 11, 12, 13, 16], 
+>  PartialPerm([1, 2, 3, 4, 5, 7, 8, 9, 11, 12, 13, 16],
 >              [8, 3, 18, 1, 4, 13, 12, 7, 19, 20, 2, 11]),
->  PartialPerm([1, 2, 3, 4, 5, 6, 7, 9, 11, 15, 16, 17, 20], 
+>  PartialPerm([1, 2, 3, 4, 5, 6, 7, 9, 11, 15, 16, 17, 20],
 >              [7, 17, 13, 4, 6, 9, 18, 10, 11, 19, 5, 2, 8]),
->  PartialPerm([1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 18], 
+>  PartialPerm([1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 18],
 >              [10, 20, 11, 7, 13, 8, 4, 9, 2, 18, 17, 6, 15]),
->  PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 17, 18], 
+>  PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 17, 18],
 >              [10, 20, 18, 1, 14, 16, 9, 5, 15, 4, 8, 12, 19, 11]),
->  PartialPerm([1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 15, 16, 19, 20], 
+>  PartialPerm([1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 15, 16, 19, 20],
 >              [13, 6, 1, 2, 11, 7, 16, 18, 9, 10, 4, 14, 15, 5, 17]),
->  PartialPerm([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 20], 
+>  PartialPerm([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 20],
 >              [5, 3, 12, 9, 20, 15, 8, 16, 13, 1, 17, 11, 14, 10, 2]),
->  PartialPerm([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 17, 18, 19, 20], 
+>  PartialPerm([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 17, 18, 19, 20],
 >              [8, 3, 9, 20, 2, 12, 14, 15, 4, 18, 13, 1, 17, 19, 5]));;
 gap> iter := IteratorOfRClasses(S);
 <iterator of R-classes>
@@ -764,7 +764,7 @@ gap> Size(R);
   <Returns>
     A positive integer.
   </Returns>
-  <Description>  
+  <Description>
   <C>NrXClasses</C> returns the number of Green's classes in <A>obj</A> where
   <A>obj</A> can be a semigroup, &D;-, &L;-, or &R;-class where appropriate.
   If the actual Green's classes are not required, then it is  more efficient to
@@ -773,10 +773,10 @@ gap> Size(R);
   <P/>
 
   See also <Ref Attr = "GreensRClasses"/>,
-  <Ref Oper = "GreensRClasses" BookName = "ref"/>, 
+  <Ref Oper = "GreensRClasses" BookName = "ref"/>,
   <Ref Func = "IteratorOfRClasses"/>, and
   <Ref Func = "IteratorOfRClassReps"/>.
-  
+
   <Example><![CDATA[
 gap> S := Semigroup(
 >  Transformation([1, 2, 5, 4, 3, 8, 7, 6]),
@@ -835,7 +835,7 @@ gap> NrRClasses(S);
 <ManSection>
   <Attr Name = "NrIdempotents" Arg = "obj"/>
   <Returns>
-   A positive integer.  
+   A positive integer.
   </Returns>
   <Description>
    This function returns the number of idempotents in <A>obj</A> where
@@ -845,17 +845,17 @@ gap> NrRClasses(S);
    the idempotents themselves are not created when <C>NrIdempotents</C> is
    called.<P/>
 
-  See also <Ref Attr = "Idempotents" BookName = "ref"/> and 
-  <Ref Attr = "Idempotents"/>, 
+  See also <Ref Attr = "Idempotents" BookName = "ref"/> and
+  <Ref Attr = "Idempotents"/>,
   <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
   <Ref Prop = "IsRegularGreensClass"/>
   <Ref Prop = "IsGroupHClass" BookName = "ref"/>, and
   <Ref Attr = "GroupHClass"/>.
 
   <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 3, 4, 1]), 
+gap> S := Semigroup(Transformation([2, 3, 4, 1]),
 >                   Transformation([3, 3, 1, 1]));;
-gap> NrIdempotents(S);   
+gap> NrIdempotents(S);
 5
 gap> f := Transformation([2, 2, 4, 4]);;
 gap> R := GreensRClassOfElement(S, f);;
@@ -875,13 +875,13 @@ gap> H := GroupHClass(D);;
 gap> NrIdempotents(H);
 1
 gap> S := InverseSemigroup(
-> PartialPerm([1, 2, 3, 5, 7, 9, 10], 
+> PartialPerm([1, 2, 3, 5, 7, 9, 10],
 >              [6, 7, 2, 9, 1, 5, 3]),
-> PartialPerm([1, 2, 3, 5, 6, 7, 9, 10], 
+> PartialPerm([1, 2, 3, 5, 6, 7, 9, 10],
 >             [8, 1, 9, 4, 10, 5, 6, 7]));;
 gap> NrIdempotents(S);
 236
-gap> f := PartialPerm([2, 3, 7, 9, 10], 
+gap> f := PartialPerm([2, 3, 7, 9, 10],
 >                     [7, 2, 1, 5, 3]);;
 gap> D := DClassNC(S, f);;
 gap> NrIdempotents(D);
@@ -896,7 +896,7 @@ gap> NrIdempotents(D);
   <Attr Name = "RegularDClasses" Arg = "S"/>
   <Returns>
     A positive integer, or a list.
-  </Returns> 
+  </Returns>
   <Description>
     <C>NrRegularDClasses</C> returns the number of regular &D;-classes of the
     semigroup <A>S</A>.<P/>
@@ -904,22 +904,22 @@ gap> NrIdempotents(D);
     <C>RegularDClasses</C> returns a list of the regular &D;-classes of the
     semigroup <A>S</A>. <P/>
 
-    See also <Ref Func = "IsRegularGreensClass"/> and 
-    <Ref Func = "IsRegularDClass" BookName = "ref"/>.  
+    See also <Ref Func = "IsRegularGreensClass"/> and
+    <Ref Func = "IsRegularDClass" BookName = "ref"/>.
 
     <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 3, 4, 1, 3, 5]), 
+gap> S := Semigroup(Transformation([1, 3, 4, 1, 3, 5]),
 >                   Transformation([5, 1, 6, 1, 6, 3]));;
-gap> NrRegularDClasses(S); 
+gap> NrRegularDClasses(S);
 3
-gap> NrDClasses(S); 
+gap> NrDClasses(S);
 7
 gap> AsSet(RegularDClasses(S));
 [ <Green's D-class: Transformation( [ 1, 3, 4, 1, 3, 3 ] )>, 
   <Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )>, 
   <Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )> ]]]></Example>
   </Description>
-</ManSection> 
+</ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="PartialOrderOfDClasses">
@@ -938,22 +938,22 @@ gap> AsSet(RegularDClasses(S));
     The partial order on the &D;-classes is defined by <M>x\leq y</M> if and only
     if <M>S ^ 1xS ^ 1</M> is a subset of  <M>S ^ 1yS ^ 1</M>. <P/>
 
-    See also <Ref Attr = "GreensDClasses"/>, 
-    <Ref Attr = "GreensDClasses" BookName = "ref"/>, 
+    See also <Ref Attr = "GreensDClasses"/>,
+    <Ref Attr = "GreensDClasses" BookName = "ref"/>,
     <Ref Oper = "IsGreensLessThanOrEqual" BookName = "ref"/>,
     and <Ref Oper="\&lt;" Label="for Green's classes"/>.
   <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 4, 1, 2]), 
+gap> S := Semigroup(Transformation([2, 4, 1, 2]),
 >                   Transformation([3, 3, 4, 1]));;
 gap> PartialOrderOfDClasses(S);
 [ [ 3 ], [ 2, 3 ], [ 3, 4 ], [ 4 ] ]
-gap> IsGreensLessThanOrEqual(GreensDClasses(S)[1], 
+gap> IsGreensLessThanOrEqual(GreensDClasses(S)[1],
 >                            GreensDClasses(S)[2]);
 false
-gap> IsGreensLessThanOrEqual(GreensDClasses(S)[2], 
+gap> IsGreensLessThanOrEqual(GreensDClasses(S)[2],
 >                            GreensDClasses(S)[1]);
 false
-gap> IsGreensLessThanOrEqual(GreensDClasses(S)[3], 
+gap> IsGreensLessThanOrEqual(GreensDClasses(S)[3],
 >                            GreensDClasses(S)[1]);
 true
 gap> S := InverseSemigroup(
@@ -961,7 +961,7 @@ gap> S := InverseSemigroup(
 > PartialPerm([1, 3, 5], [5, 1, 3]));;
 gap> Size(S);
 58
-gap> PartialOrderOfDClasses(S);              
+gap> PartialOrderOfDClasses(S);
 [ [ 1, 3 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ], [ 5 ] ]
 gap> IsGreensLessThanOrEqual(GreensDClasses(S)[1],
 >                            GreensDClasses(S)[2]);
@@ -972,7 +972,7 @@ true
 gap> IsGreensLessThanOrEqual(GreensDClasses(S)[3],
 >                            GreensDClasses(S)[4]);
 false
-gap> IsGreensLessThanOrEqual(GreensDClasses(S)[4], 
+gap> IsGreensLessThanOrEqual(GreensDClasses(S)[4],
 >                            GreensDClasses(S)[3]);
 true]]></Example>
   </Description>
@@ -982,15 +982,15 @@ true]]></Example>
 <#GAPDoc Label="SchutzenbergerGroup">
 <ManSection>
   <Attr Name = "SchutzenbergerGroup" Arg = "class"/>
-  <Returns> 
+  <Returns>
     A group.
   </Returns>
   <Description>
   <C>SchutzenbergerGroup</C> returns the generalized Schutzenberger group
   (defined below) of the &R;-, &D;-, &L;-, or &H;-class <A>class</A>.  <P/>
-  
+
   If <C>f</C> is an element of a semigroup of transformations or partial
-  permutations and <C>im(f)</C> denotes the image of <C>f</C>, then the 
+  permutations and <C>im(f)</C> denotes the image of <C>f</C>, then the
   <E>generalized Schutzenberger group</E> of <C>im(f)</C> is the permutation
   group
   <Alt Not = "Text">
@@ -1003,7 +1003,7 @@ true]]></Example>
 </Alt><P/>
   The generalized Schutzenberger group of the kernel <C>ker(f)</C> of a
   transformation <C>f</C> or the domain <C>dom(f)</C> of a
-  partial permutation <C>f</C> is defined analogously. 
+  partial permutation <C>f</C> is defined analogously.
   <P/>
 
   The generalized Schutzenberger group of a Green's class is then defined as
@@ -1016,32 +1016,32 @@ true]]></Example>
     </Item>
     <Mark>&L;-class</Mark>
     <Item>
-      The generalized Schutzenberger group of the kernel or domain of the 
+      The generalized Schutzenberger group of the kernel or domain of the
       representative of the &L;-class.
     </Item>
     <Mark>&H;-class</Mark>
     <Item>
-      The intersection of the generalized Schutzenberger groups of the   
+      The intersection of the generalized Schutzenberger groups of the
       &R;- and &L;-class containing the &H;-class.
     </Item>
     <Mark>&D;-class</Mark>
     <Item>
-      The intersection of the generalized Schutzenberger groups of the   
+      The intersection of the generalized Schutzenberger groups of the
       &R;- and &L;-class containing the representative of the &D;-class.
     </Item>
   </List>
-       
+
   <Example><![CDATA[
-gap> S := Semigroup(Transformation([4, 4, 3, 5, 3]), 
->                   Transformation([5, 1, 1, 4, 1]), 
+gap> S := Semigroup(Transformation([4, 4, 3, 5, 3]),
+>                   Transformation([5, 1, 1, 4, 1]),
 >                   Transformation([5, 5, 4, 4, 5]));;
 gap> f := Transformation([5, 5, 4, 4, 5]);;
 gap> SchutzenbergerGroup(RClass(S, f));
 Group([ (4,5) ])
 gap> S := InverseSemigroup(
-> PartialPerm([1, 2, 3, 7], 
+> PartialPerm([1, 2, 3, 7],
 >             [9, 2, 4, 8]),
-> PartialPerm([1, 2, 6, 7, 8, 9, 10], 
+> PartialPerm([1, 2, 6, 7, 8, 9, 10],
 >             [6, 8, 4, 5, 9, 1, 3]),
 > PartialPerm([1, 2, 3, 5, 6, 7, 8, 9],
 >             [7, 4, 1, 6, 9, 5, 2, 3]));;

@@ -16,17 +16,17 @@
     <Description>
       A <E>bipartition semigroup</E> is simply a semigroup consisting of
       bipartitions. An object <A>obj</A> is a bipartition semigroup in &GAP; if
-      it satisfies <Ref Prop = "IsSemigroup" BookName = "ref"/> and 
+      it satisfies <Ref Prop = "IsSemigroup" BookName = "ref"/> and
       <Ref Filt = "IsBipartitionCollection"/>.<P/>
 
       A <E>bipartition monoid</E> is a monoid consisting of bipartitions. 
       An object <A>obj</A> is a bipartition monoid in &GAP; if it satisfies 
-      <Ref Prop = "IsMonoid" BookName = "ref"/> and 
+      <Ref Prop = "IsMonoid" BookName = "ref"/> and
       <Ref Filt = "IsBipartitionCollection"/>.<P/>
 
       Note that it is possible for a bipartition semigroup to have a
       multiplicative neutral element (i.e. an identity element) but not to
-      satisfy <C>IsBipartitionMonoid</C>. For example, 
+      satisfy <C>IsBipartitionMonoid</C>. For example,
 
       <Example><![CDATA[
 gap> x := Bipartition([
@@ -84,14 +84,14 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
     <Attr Name = "IsomorphismBipartitionSemigroup" Arg = "S"/>
     <Attr Name = "IsomorphismBipartitionMonoid" Arg = "S"/>
     <Returns>An isomorphism.</Returns>
-    <Description> 
+    <Description>
       If <A>S</A> is a semigroup, then <C>IsomorphismBipartitionSemigroup</C>
       returns an isomorphism from <A>S</A> to a bipartition semigroup. When
       <A>S</A> is a transformation semigroup, partial permutation semigroup, or
       a permutation group, on <C>n</C> points,
       <C>IsomorphismBipartitionSemigroup</C> returns the natural embedding of
       <A>S</A> into the partition monoid on <C>n</C> points.<P/>
-      
+ 
       The default method function returns the right regular representation
       of <A>S</A> acting on <A>S</A> with an identity adjoined.
       <P/>
@@ -107,8 +107,8 @@ gap> IsomorphismSemigroup(IsBipartitionSemigroup, S);
 MappingByFunction( <inverse partial perm semigroup of rank 10 with 2 
  generators>, <inverse bipartition semigroup of degree 10 with 2 
  generators>, function( x ) ... end, <Operation "AsPartialPerm"> )]]></Example>
-    </Description> 
-  </ManSection> 
+    </Description>
+  </ManSection>
 <#/GAPDoc>
 
 #FIXME reuse this doc then delete it
@@ -126,7 +126,7 @@ MappingByFunction( <inverse partial perm semigroup of rank 10 with 2
 
       See <Ref Oper = "AsBlockBijection"/> for more details. 
 <Example><![CDATA[
-gap> S := SymmetricInverseMonoid(4);                                    
+gap> S := SymmetricInverseMonoid(4);
 <symmetric inverse monoid of degree 4>
 gap> IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
 MappingByFunction( <symmetric inverse monoid of degree 4>, 
@@ -140,8 +140,8 @@ gap> IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
 MappingByFunction( <partial perm semigroup of rank 3 with 2 
  generators>, <block bijection semigroup of degree 5 with 2 
  generators>, function( x ) ... end, function( x ) ... end )]]></Example>
-    </Description> 
-  </ManSection> 
+    </Description>
+  </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsBlockBijectionSemigroup">
@@ -153,14 +153,14 @@ MappingByFunction( <partial perm semigroup of rank 3 with 2
       A <E>block bijection semigroup</E> is simply a semigroup consisting of
       block bijections.  A <E>block bijection monoid</E> is a monoid consisting
       of block bijections.<P/>
-      
+ 
       An object in &GAP; is a block bijection monoid if it satisfies
       <Ref Prop = "IsMonoid" BookName = "ref"/> and <Ref
         Filt = "IsBlockBijectionSemigroup"/>.<P/>
-      
+ 
       See <Ref Filt = "IsBlockBijection"/>.
-    </Description> 
-  </ManSection> 
+    </Description>
+  </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsPartialPermBipartitionSemigroup">
@@ -172,14 +172,14 @@ MappingByFunction( <partial perm semigroup of rank 3 with 2
       A <E>partial perm bipartition semigroup</E> is simply a semigroup
       consisting of partial perm bipartitions.  A <E>partial perm bipartition
         monoid</E> is a monoid consisting of partial perm bipartitions.<P/>
-     
+ 
       An object in &GAP; is a partial perm bipartition monoid
-      if it satisfies <Ref Prop = "IsMonoid" BookName = "ref"/> and 
+      if it satisfies <Ref Prop = "IsMonoid" BookName = "ref"/> and
       <Ref Filt = "IsPartialPermBipartitionSemigroup"/>.<P/>
-      
+ 
       See <Ref Filt = "IsPartialPermBipartition"/>.
-    </Description> 
-  </ManSection> 
+    </Description>
+  </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsPermBipartitionGroup">
@@ -191,7 +191,7 @@ MappingByFunction( <partial perm semigroup of rank 3 with 2
       bipartitions.<P/>
 
       See <Ref Filt = "IsPermBipartition"/>.<P/>
-    </Description> 
-  </ManSection> 
+    </Description>
+  </ManSection>
 <#/GAPDoc>
 

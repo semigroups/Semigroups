@@ -2,7 +2,7 @@
   <Heading>
     The &Semigroups; package
   </Heading>
-  <Index Key = "Semigroups">&Semigroups; package overview</Index>	
+  <Index Key = "Semigroups">&Semigroups; package overview</Index>
 
   <Section Label = "Introduction">
     <Heading>
@@ -10,7 +10,7 @@
     </Heading>
 
     This is the manual for the &Semigroups; package for &GAP; version &VERSION;.
-    &Semigroups; &VERSION; is a distant descendant of the  
+    &Semigroups; &VERSION; is a distant descendant of the
     <URL Text = "Monoid package for GAP 3">
       http://schmidt.nuigalway.ie/monoid/index.html</URL> by Goetz Pfeiffer,
     Steve A. Linton, Edmund F. Robertson, and Nik Ruskuc.<P/>
@@ -20,7 +20,7 @@
     structure, size, elements, group of units, minimal ideal, and testing
     membership, finding the inverses of a regular element, and factorizing
     elements over the generators, and much more; see Chapters
-    <Ref Chap = "Creating semigroups and monoids"/>, <Ref Chap = "Ideals"/>, and  
+    <Ref Chap = "Creating semigroups and monoids"/>, <Ref Chap = "Ideals"/>, and
     <Ref Chap = "Green's relations"/>. There
     are methods for testing if semigroups satisfy  particular
     properties, such as if they are regular, simple, inverse, completely
@@ -50,7 +50,7 @@
 
     There are three fundamental types of algorithms in the &Semigroups; package,
     those for semigroups of:
-    <Enum> 
+    <Enum>
       <Item>
         transformations, partial permutations, bipartitions, subsemigroups
         of regular Rees 0-matrix semigroups over groups, and matrices over a
@@ -74,38 +74,38 @@
         partitioned binary relations as defined in <Cite
           Key = "Martin2011aa"/>, and matrices over the following semirings:
         <List>
-          <Item> 
+          <Item>
             the <E>Boolean semiring</E> <M>\{0, 1\}</M> where <M>0 + 0 = 0</M>,
             <M>0 + 1 = 1 + 1 = 1 + 0 = 1</M>, and <M>1\cdot 0 = 0 \cdot 0 = 0
               \cdot 1 = 0</M>
           </Item>
-          <Item> 
+          <Item>
             finite fields;
           </Item>
-          <Item> 
+          <Item>
             the <E>max-plus semiring</E> of natural numbers and negative
             infinity <M>\mathbb{N}\cup \{-\infty\}</M> with operations max and
             plus;
           </Item>
-          <Item> 
+          <Item>
             the <E>min-plus semiring</E> of natural numbers and
             infinity <M>\mathbb{N}\cup \{\infty\}</M> with operations min and
             plus;
           </Item>
-          <Item> 
+          <Item>
             the <E>tropical max-plus semiring</E> <M>\{-\infty, 0, 1,
               \ldots, t\}</M> for some threshold <M>t</M> with operations max
             and plus;
           </Item>
-          <Item> 
+          <Item>
             the <E>tropical min-plus semiring</E> <M>\{0, 1,
               \ldots, t, \infty\}</M> for some threshold <M>t</M> with
             operations min and plus;
           </Item>
-          <Item> 
+          <Item>
             the <E>projective max-plus semiring</E> ... TODO
           </Item>
-          <Item> 
+          <Item>
             the semiring <M>\mathbb{N}_{t, p} = \{0, 1,
               \ldots, t, t + 1, \ldots, t + p - 1\}</M> for some threshold
             <M>t</M> and period <M>p</M> under addition and mutliplication

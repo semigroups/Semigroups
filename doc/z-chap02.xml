@@ -1,6 +1,6 @@
 <Chapter Label = "Installing Semigroups">
   <Heading>Installing &Semigroups;</Heading>
-    
+
   <Section Label = "For those in a hurry">
     <Heading>For those in a hurry</Heading>
     In this section we give a brief description of how to start using
@@ -15,21 +15,21 @@
     successful installation of &Semigroups;:
 
     <List>
-      
-      <Item> 
+
+      <Item>
         ensure that the &IO; package version &IOVERS; or higher is available.
         &IO; must be compiled before &Semigroups; can be loaded.
       </Item>
-      
-      <Item> 
+
+      <Item>
         ensure that the &Orb; package version &ORBVERS; or higher is available.
-        &Orb; and &Semigroups; both perform better if &Orb; is compiled. 
+        &Orb; and &Semigroups; both perform better if &Orb; is compiled.
       </Item>
-      
-      <Item> 
+
+      <Item>
         ensure that the &Digraphs; package version &DIGRAPHSVERS; or higher is
         available.  &Digraphs; must be compiled before &Semigroups; can be
-        loaded. 
+        loaded.
       </Item>
 
       <Item>
@@ -37,20 +37,20 @@
         available.
       </Item>
 
-      <Item> 
+      <Item>
         download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
         <URL Text = "the Semigroups package webpage" >https://gap-packages.github.io/Semigroups</URL>.
       </Item>
-    
-      <Item> 
+
+      <Item>
         unzip and untar the file, this should create a directory called
         <F>&ARCHIVENAME;</F>.
       </Item>
-    
-      <Item> 
+
+      <Item>
         locate the <F>pkg</F> directory of your &GAP; directory, which contains
         the directories <F>lib</F>, <F>doc</F> and so on. Move the directory
-        <F>&ARCHIVENAME;</F> into the <F>pkg</F> directory.  
+        <F>&ARCHIVENAME;</F> into the <F>pkg</F> directory.
       </Item>
 
       <Item>
@@ -59,15 +59,15 @@
         <Listing>
 <![CDATA[./configure
 make]]></Listing>
-        Further information about this step can be found in Section 
-        <Ref Sect = "Compiling the kernel module"/>. 
+        Further information about this step can be found in Section
+        <Ref Sect = "Compiling the kernel module"/>.
       </Item>
 
       <Item>
         start &GAP; in the usual way (i.e. type <C>gap</C> at the command line).
       </Item>
-  
-      <Item> 
+
+      <Item>
         type <C>LoadPackage("semigroups");</C>
       </Item>
     </List>
@@ -78,16 +78,16 @@ make]]></Listing>
       if it has been compiled.</E><P/>
 
     If you want to check that the package is working correctly, you
-    should run some of the tests described in Section 
+    should run some of the tests described in Section
     <Ref Sect = "Testing your installation"/>.
   </Section>
-  
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section Label = "Optional package dependencies">
     <Heading>Optional package dependencies</Heading>
-    
+
     <!--********************************************************************-->
 
     The &Semigroups; package is written in &GAP; and C++ code and requires the
@@ -95,7 +95,7 @@ make]]></Listing>
     components of actions, which underpin many of the features of &Semigroups;.
     The &IO; package is used to read and write transformations, partial
     permutations, and bipartitions to a file. <P/>
-    
+
     <!--********************************************************************-->
 
     <Subsection Label = "genss">
@@ -108,7 +108,7 @@ make]]></Listing>
       It must be installed for &Semigroups; to load.
     </Subsection>
   </Section>
-  
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -145,7 +145,7 @@ make]]></Listing>
     setup of the original GAP compilation. For example you have to specify 32-bit
     or 64-bit mode correctly!
   </Section>
-  
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -159,16 +159,16 @@ make]]></Listing>
 
     <#Include Label = "SemigroupsMakeDoc">
   </Section>
-  
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-    
+
   <Section Label = "Testing your installation">
     <Heading>Testing your installation</Heading>
-    
+
     In this section we describe how to test that &Semigroups; is working as
-    intended.  To test that &Semigroups; is installed correctly use 
-    <Ref Func = "SemigroupsTestInstall"/> or for more extensive tests use 
+    intended.  To test that &Semigroups; is installed correctly use
+    <Ref Func = "SemigroupsTestInstall"/> or for more extensive tests use
     <Ref Func = "SemigroupsTestStandard"/>. Please note that it will take a few
     seconds for <Ref Func = "SemigroupsTestInstall"/> to finish and it may take
     several minutes for <Ref Func = "SemigroupsTestStandard"/> to finish.
@@ -179,14 +179,14 @@ make]]></Listing>
     properly installed.  If you continue having problems, please use the <URL
       Text = "issue
       tracker">http://bitbucket.org/james-d-mitchell/semigroups/issues</URL> to
-    report the issues you are having. 
+    report the issues you are having.
 
     <#Include Label = "SemigroupsTestInstall">
     <#Include Label = "SemigroupsTestStandard">
     <!--<#Include Label = "SemigroupsTestManualExamples">-->
 
   </Section>
-  
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -194,7 +194,7 @@ make]]></Listing>
     <Heading>More information during a computation</Heading>
     <#Include Label = "InfoSemigroups">
   </Section>
-  
+
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 

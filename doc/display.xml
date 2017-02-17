@@ -20,16 +20,16 @@
       The string <A>str</A> must correspond to a valid <C>dot</C> or
       <C>LaTeX</C> text file and you must have have <C>GraphViz</C> and
       <C>pdflatex</C> installed on your computer.  For details about these file
-      formats, see <URL>http://www.latex-project.org</URL> and 
+      formats, see <URL>http://www.latex-project.org</URL> and
       <URL>http://www.graphviz.org</URL>.<P/>
-      
+
       This function is provided to allow convenient, immediate viewing of the
       pictures produced by the functions:
-      <Ref Func="TikzString"/>, <Ref Func="TikzString"/>, 
+      <Ref Func="TikzString"/>, <Ref Func="TikzString"/>,
       <Ref Func="DotSemilatticeOfIdempotents"/>, and <Ref Func="DotString"/>.<P/>
 
       The optional second argument <A>opts</A> should be a record with
-      components corresponding to various options, given below. 
+      components corresponding to various options, given below.
 
       <List>
         <Mark>path</Mark>
@@ -44,12 +44,12 @@
           this should be a string representing the name of the directory in
           <C>path</C> where you want <C>Splash</C> to do its work. This function
           will create this directory if does not already exist. <P/>
-    
+
           The default value of this option is <C>"tmp.viz"</C> if the option
-          <C>path</C> is present, and the result of 
+          <C>path</C> is present, and the result of
           <Ref Func="DirectoryTemporary" BookName="ref"/> is used otherwise.
         </Item>
-          
+
         <Mark>filename</Mark>
         <Item>
           this should be a string representing the name of the file where
@@ -69,14 +69,14 @@
           a &LaTeX; or <C>dot</C> document. You can specify this option in
           <A>str</A> directly by making the first line <C>"%latex"</C> or
           <C>"//dot"</C>.  There is no default value for this option, this
-          option must be specified in <A>str</A> or in <A>opt.type</A>. 
+          option must be specified in <A>str</A> or in <A>opt.type</A>.
         </Item>
 
         <Mark>filetype</Mark>
         <Item>
           this should be a string representing the type of file which
           <C>Splash</C> should produce. For &LaTeX; files, this option is
-          ignored and the default value <C>"pdf"</C> is used. 
+          ignored and the default value <C>"pdf"</C> is used.
         </Item>
       </List>
 
@@ -208,7 +208,7 @@ ent}"]]></Log>
       the &D;-classes of the semigroup <A>S</A> together with the eggbox
       diagram of each &D;-class. The output is in <C>dot</C> format (also known
       as <C>GraphViz</C>) format. For details about this file format, and
-      information about how to display or edit this format see 
+      information about how to display or edit this format see
       <URL>http://www.graphviz.org</URL>.
       <P/>
 
@@ -224,16 +224,16 @@ ent}"]]></Log>
       The &D;-classes are numbered according to their index in
       <C>GreensDClasses(<A>S</A>)</C>, so that an <C>i</C> appears next to the
       eggbox diagram of <C>GreensDClasses(<A>S</A>)[i]</C>. A line from one
-      &D;-class to another indicates that the higher &D;-class is greater than 
-      the lower one in the &D;-order on <A>S</A>. 
+      &D;-class to another indicates that the higher &D;-class is greater than
+      the lower one in the &D;-order on <A>S</A>.
       <P/>
 
       If the optional second argument <A>options</A> is present, it can be used
-      to specify some options for output. 
+      to specify some options for output.
 
       <List>
         <Mark>number</Mark>
-        <Item> 
+        <Item>
           if <C><A>options</A>.number</C> is <K>false</K>, then the &D;-classes
           in the diagram are not numbered according to their index in the list
           of &D;-classes of <A>S</A>. The default value for this option is
@@ -241,13 +241,13 @@ ent}"]]></Log>
         </Item>
 
         <Mark>maximal</Mark>
-        <Item> 
+        <Item>
           if <C><A>options</A>.maximal</C> is <K>true</K>, then the structure
           description of the group &H;-classes is displayed; see
           <Ref Attr="StructureDescription" BookName="ref"/>. Setting
           this attribute to <K>true</K> can adversely affect the performance of
           <C>DotString</C>. The default value for this option is
-          <K>false</K>. 
+          <K>false</K>.
         </Item>
 
         <Mark>normal</Mark>
@@ -301,7 +301,7 @@ gap> FileString("t3.dot", DotString(S));
         Attr="Inverse" BookName="ref"/>. The idempotents are grouped by the
       &D;-class they belong to.
       <P/>
-      
+
       The output is in <C>dot</C> format (also known as <C>GraphViz</C>) format.
       For details about this file format, and information about how to display
       or edit this format see <URL>http://www.graphviz.org</URL>. <P/>

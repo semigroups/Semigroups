@@ -19,7 +19,7 @@
     if and only if they have the same content i.e. the set of generators
     appearing in any factorization of the elements. Therefore, a &D;-class of
     a free band element <A> x </A> is the set of elements of <A> S </A> which
-    have the same content as <A> x </A>. 
+    have the same content as <A> x </A>.
 <Example><![CDATA[
 gap> S := FreeBand(3, "b");
 <free band on the generators [ b1, b2, b3 ]>
@@ -104,7 +104,7 @@ false
     <Filt Name = "IsFreeBandElement" Type = "Category"/>
     <Description>
     <C>IsFreeBandElement</C> is a <C>Category</C> containing the
-    elements of a free band.  
+    elements of a free band.
 <Example><![CDATA[
 gap> IsFreeBandElement(Generators(FreeBand(4))[1]);
 true
