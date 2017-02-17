@@ -716,6 +716,8 @@ gap> StructureDescriptionMaximalSubgroups(S);
 #T# attr: IdempotentGeneratedSubsemigroup
 gap> S := RegularBooleanMatMonoid(3);;
 gap> T := IdempotentGeneratedSubsemigroup(S);;
+gap> HasIsIdempotentGenerated(T) and IsIdempotentGenerated(T);
+true
 gap> Size(T);
 381
 
@@ -833,8 +835,10 @@ Error, no 3rd choice method found for `MinimalIdeal' on 1 arguments
 
 #T# attr: IdempotentGeneratedSubsemigroup, inverse op 1/1
 gap> S := DualSymmetricInverseMonoid(2);;
-gap> IdempotentGeneratedSubsemigroup(S);
+gap> T := IdempotentGeneratedSubsemigroup(S);
 <commutative inverse block bijection monoid of degree 2 with 1 generator>
+gap> HasIsIdempotentGenerated(T) and IsIdempotentGenerated(T);
+true
 
 #T# attr: MultiplicativeZero, infinite 1/1
 #gap> MultiplicativeZero(FreeMonoid(2)); 

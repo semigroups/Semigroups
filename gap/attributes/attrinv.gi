@@ -15,12 +15,15 @@ InstallMethod(IdempotentGeneratedSubsemigroup,
 "for an inverse semigroup with inverse op",
 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 function(S)
+  local out;
   if not IsFinite(S) then
     TryNextMethod();
   fi;
   # Use acting := false since the output of this is a semilattice which is
   # J-trivial and hence it is better to use the Froidure-Pin Algorithm
-  return InverseSemigroup(Idempotents(S), rec(small := true, acting := false));
+  out := InverseSemigroup(Idempotents(S), rec(small := true, acting := false));
+  SetIsSemilattice(out, true);
+  return out;
 end);
 
 # fall back method
