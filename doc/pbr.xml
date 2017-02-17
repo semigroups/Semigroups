@@ -369,8 +369,7 @@ false]]></Example>
     all the elements satisfying <C>IsTransformationPBR</C>.
     
     <Example><![CDATA[
-gap> x := PBR([[-3], [-1], [-3]],
->             [[2], [], [1, 3]]);
+gap> x := PBR([[-3], [-1], [-3]], [[2], [], [1, 3]]);
 PBR([ [ -3 ], [ -1 ], [ -3 ] ], [ [ 2 ], [  ], [ 1, 3 ] ])
 gap> IsTransformationPBR(x);
 true
@@ -380,8 +379,7 @@ gap> AsPBR(x) * AsPBR(x) = AsPBR(x ^ 2);
 true
 gap> Number(FullPBRMonoid(1), IsTransformationPBR);
 1
-gap> x := PBR([[-2, -1, 2], [-2, 1, 2]], 
->             [[-1, 1], [-2]]);
+gap> x := PBR([[-2, -1, 2], [-2, 1, 2]], [[-1, 1], [-2]]);
 PBR([ [ -2, -1, 2 ], [ -2, 1, 2 ] ], [ [ -1, 1 ], [ -2 ] ])
 gap> IsTransformationPBR(x);
 false]]></Example>
@@ -445,7 +443,7 @@ gap> x := PBR([[-1, 1], [2]], [[-1, 1], [-2]]);
 PBR([ [ -1, 1 ], [ 2 ] ], [ [ -1, 1 ], [ -2 ] ])
 gap> IsPartialPermPBR(x);
 true
-gap> x := PartialPerm( [ 1, 2 ], [ 3, 1 ] );
+gap> x := PartialPerm([3, 1]);
 [2,1,3]
 gap> AsPBR(x) * AsPBR(x) = AsPBR(x ^ 2);
 true
@@ -479,13 +477,13 @@ gap> Number(FullPBRMonoid(1), IsPartialPermPBR);
     of the full PBR monoid of degree <C>n</C>).
 
   <Example><![CDATA[
-gap> x := PBR([ [ -2, 1 ], [ -4, 2 ], [ -1, 3 ], [ -3, 4 ] ], 
-> [ [ -1, 3 ], [ -2, 1 ], [ -3, 4 ], [ -4, 2 ] ]);;
+gap> x := PBR([[-2, 1], [-4, 2], [-1, 3], [-3, 4]],
+> [[-1, 3], [-2, 1], [-3, 4], [-4, 2]]);;
 gap> IsPermPBR(x);
 true
-gap> x := (1,5)(2,4,3);
+gap> x := (1, 5)(2, 4, 3);
 (1,5)(2,4,3)
-gap> y := (1,4,3)(2,5);
+gap> y := (1, 4, 3)(2, 5);
 (1,4,3)(2,5)
 gap> AsPBR(x) * AsPBR(y) = AsPBR(x * y);
 true
@@ -570,7 +568,7 @@ PBR([ [ -2 ], [ -2 ] ], [ [  ], [ 1, 2 ] ])
 gap> AsPBR(x, 4);
 PBR([ [ -2 ], [ -2 ], [ -1 ], [ -4 ] ], 
   [ [ 3 ], [ 1, 2 ], [  ], [ 4 ] ])
-gap> x := PartialPerm([1, 2], [4, 3]);
+gap> x := PartialPerm([4, 3]);
 [1,4][2,3]
 gap> AsPBR(x);
 PBR([ [ -4 ], [ -3 ], [  ], [  ] ], [ [  ], [  ], [ 2 ], [ 1 ] ])
@@ -579,7 +577,7 @@ PBR([ [  ], [  ] ], [ [  ], [  ] ])
 gap> AsPBR(x, 5);
 PBR([ [ -4 ], [ -3 ], [  ], [  ], [  ] ], 
   [ [  ], [  ], [ 2 ], [ 1 ], [  ] ])
-gap> x := (1,3)(2,4);
+gap> x := (1, 3)(2, 4);
 (1,3)(2,4)
 gap> AsPBR(x);
 PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ] ], 
@@ -601,8 +599,7 @@ PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ], [ -5, 5 ] ],
       transformation. 
 
       <Example><![CDATA[
-gap> x := PBR([[-3,], [-3], [-2]], 
->             [[], [3], [1, 2]]);;
+gap> x := PBR([[-3,], [-3], [-2]], [[], [3], [1, 2]]);;
 gap> IsTransformationPBR(x);
 true
 gap> AsTransformation(x);
@@ -666,8 +663,7 @@ gap> AsPermutation(x);
       second components).
 
       <Example><![CDATA[
-gap> x := PBR([[], [-1], []], 
->             [[-3, -2, 2, 3], [-2, 1], []]);;
+gap> x := PBR([[], [-1], []], [[-3, -2, 2, 3], [-2, 1], []]);;
 gap> Star(x);
 PBR([ [ -3, -2, 2, 3 ], [ -1, 2 ], [  ] ], [ [  ], [ 1 ], [  ] ])]]></Example>
     </Description>

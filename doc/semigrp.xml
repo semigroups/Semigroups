@@ -56,11 +56,11 @@
     will often, but not always, return a monoid isomorphism. 
 
     <Example><![CDATA[
-gap> S := Semigroup(
-> Bipartition([[1, 2], [3, 6, -2], [4, 5, -3, -4], 
->              [-1, -6], [-5]]), 
-> Bipartition([[1, -4], [2, 3, 4, 5], [6], [-1, -6], 
->              [-2, -3], [-5]]));
+gap> S := Semigroup([
+> Bipartition([
+>   [1, 2], [3, 6, -2], [4, 5, -3, -4], [-1, -6], [-5]]),
+> Bipartition([
+>   [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);
 <bipartition semigroup of degree 6 with 2 generators>
 gap> IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2 
@@ -100,10 +100,11 @@ MappingByFunction( <bipartition semigroup of size 11, degree 6 with 2
     to a semigroup of type <A>filt</A>, then an error is given.
 
     <Example><![CDATA[
-gap> S := Semigroup(Bipartition([[1, 2], [3, 6, -2],  
->                                [4, 5, -3, -4], [-1, -6], [-5]]), 
->                   Bipartition([[1, -4], [2, 3, 4, 5], [6], 
->                                [-1, -6], [-2, -3], [-5]]));
+gap> S := Semigroup([
+> Bipartition([
+>   [1, 2], [3, 6, -2], [4, 5, -3, -4], [-1, -6], [-5]]),
+> Bipartition([
+>   [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);
 <bipartition semigroup of degree 6 with 2 generators>
 gap> AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 11, degree 12 with 2 generators>]]></Example>

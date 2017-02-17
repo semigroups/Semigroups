@@ -86,9 +86,9 @@ gap> BlocksNC([[1], [2], [-3, -6], [-4, -5]]);
       <C>g * <A>x</A></C> where <C>g</C> is any bipartition whose right blocks
       are equal to <A>blocks</A>. 
       <Example><![CDATA[
-gap> x := Bipartition([[1, 4, 5, 8], [2, 3, 7], [6, -3, -4, -5], 
->                      [ -1, -2, -6 ], [ -7, -8 ] ] );;
-gap> y := Bipartition([[1, 5], [2, 4, 8, -2], [3, 6, 7, -3, -4], 
+gap> x := Bipartition([[1, 4, 5, 8], [2, 3, 7], [6, -3, -4, -5],
+>                      [-1, -2, -6], [-7, -8]]);;
+gap> y := Bipartition([[1, 5], [2, 4, 8, -2], [3, 6, 7, -3, -4],
 >                      [-1, -6, -8], [-5, -7]]);;
 gap> RightBlocks(y * x);
 <blocks: [ 1, 2, 6 ], [ 3*, 4*, 5* ], [ 7, 8 ]>
@@ -107,10 +107,10 @@ gap> OnRightBlocks(RightBlocks(y), x);
         y</C> where <C>y</C> is any bipartition whose left blocks are equal to
       <A>blocks</A>. 
       <Example><![CDATA[
-gap> x := Bipartition([[1, 5, 7, -1, -3, -4, -6], [2, 3, 6, 8], 
-> [4, -2, -5, -8], [-7]]);;
-gap> y := Bipartition([[1, 3, -4, -5], [2, 4, 5, 8], [6, -1, -3], 
-> [7, -2, -6, -7, -8]]);;
+gap> x := Bipartition([[1, 5, 7, -1, -3, -4, -6], [2, 3, 6, 8],
+>                      [4, -2, -5, -8], [-7]]);;
+gap> y := Bipartition([[1, 3, -4, -5], [2, 4, 5, 8], [6, -1, -3],
+>                      [7, -2, -6, -7, -8]]);;
 gap> LeftBlocks(x * y);
 <blocks: [ 1*, 4*, 5*, 7* ], [ 2, 3, 6, 8 ]>
 gap> OnLeftBlocks(LeftBlocks(y), x);

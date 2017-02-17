@@ -23,14 +23,15 @@
       <E>generating pairs</E>.  See <Ref Func="SemigroupCongruence"/>.
 
       <Example><![CDATA[
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
->                 Transformation( [ 3, 4, 3, 4, 4 ] ), 
->                 Transformation( [ 3, 4, 3, 4, 3 ] ),  
->                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup([
+>   Transformation([2, 1, 1, 2, 1]),
+>   Transformation([3, 4, 3, 4, 4]),
+>   Transformation([3, 4, 3, 4, 3]),
+>   Transformation([4, 3, 3, 4, 4])]);;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> cong := SemigroupCongruence(S, [pair1, pair2]);
 <semigroup congruence over <simple transformation semigroup of 
  degree 5 with 4 generators> with linked triple (2,4,1)>
@@ -54,14 +55,15 @@ true]]></Example>
       of <E>generating pairs</E>.  See <Ref Func="LeftSemigroupCongruence"/>.
 
       <Example><![CDATA[
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
->                 Transformation( [ 3, 4, 3, 4, 4 ] ), 
->                 Transformation( [ 3, 4, 3, 4, 3 ] ),  
->                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup([
+>   Transformation([2, 1, 1, 2, 1]),
+>   Transformation([3, 4, 3, 4, 4]),
+>   Transformation([3, 4, 3, 4, 3]),
+>   Transformation([4, 3, 3, 4, 4])]);;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> cong := LeftSemigroupCongruence(S, [pair1, pair2]);
 <left semigroup congruence over <transformation semigroup of degree 5 
  with 4 generators> with 2 generating pairs>
@@ -85,14 +87,15 @@ true]]></Example>
       of <E>generating pairs</E>.  See <Ref Func="RightSemigroupCongruence"/>.
 
       <Example><![CDATA[
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
->                 Transformation( [ 3, 4, 3, 4, 4 ] ), 
->                 Transformation( [ 3, 4, 3, 4, 3 ] ),  
->                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup([
+>   Transformation([2, 1, 1, 2, 1]),
+>   Transformation([3, 4, 3, 4, 4]),
+>   Transformation([3, 4, 3, 4, 3]),
+>   Transformation([4, 3, 3, 4, 4])]);;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> RightSemigroupCongruence(S, [pair1, pair2]);
 <right semigroup congruence over <transformation semigroup of 
  degree 5 with 4 generators> with 2 generating pairs>
@@ -116,10 +119,11 @@ true]]></Example>
       arguments.<P/>
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]), 
->                   Transformation([3, 4, 3, 4, 4]), 
->                   Transformation([3, 4, 3, 4, 3]),  
->                   Transformation([4, 3, 3, 4, 4]));;
+gap> S := Semigroup([
+>   Transformation([2, 1, 1, 2, 1]),
+>   Transformation([3, 4, 3, 4, 4]),
+>   Transformation([3, 4, 3, 4, 3]),
+>   Transformation([4, 3, 3, 4, 4])]);;
 gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
 >              Transformation([1, 2, 1, 2, 1])];;
 gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
@@ -148,10 +152,11 @@ gap> SemigroupCongruence(S, pair1, pair2);
       instead be given as separate arguments.<P/>
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]), 
->                   Transformation([3, 4, 3, 4, 4]), 
->                   Transformation([3, 4, 3, 4, 3]),  
->                   Transformation([4, 3, 3, 4, 4]));;
+gap> S := Semigroup([
+>   Transformation([2, 1, 1, 2, 1]),
+>   Transformation([3, 4, 3, 4, 4]),
+>   Transformation([3, 4, 3, 4, 3]),
+>   Transformation([4, 3, 3, 4, 4])]);;
 gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
 >              Transformation([1, 2, 1, 2, 1])];;
 gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
@@ -180,10 +185,11 @@ gap> LeftSemigroupCongruence(S, pair1, pair2);
       instead be given as separate arguments.<P/>
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]), 
->                 Transformation([3, 4, 3, 4, 4]), 
->                 Transformation([3, 4, 3, 4, 3]),  
->                 Transformation([4, 3, 3, 4, 4]));;
+gap> S := Semigroup([
+>   Transformation([2, 1, 1, 2, 1]),
+>   Transformation([3, 4, 3, 4, 4]),
+>   Transformation([3, 4, 3, 4, 3]),
+>   Transformation([4, 3, 3, 4, 4])]);;
 gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
 >              Transformation([1, 2, 1, 2, 1])];;
 gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
@@ -227,7 +233,7 @@ gap> RightSemigroupCongruence(S, pair1, pair2);
 
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
-> [[(), (1,3,2)],[(1,2), 0]]);;
+> [[(), (1,3,2)], [(1,2), 0]]);;
 gap> congs := CongruencesOfSemigroup(S);
 [ <universal semigroup congruence over 
     <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>>, 
@@ -381,8 +387,8 @@ gap> congs := PrincipalCongruencesOfSemigroup(S);
 
       See also <Ref Attr = "EquivalenceRelationPartition" BookName = "ref"/>.
       <Example><![CDATA[
-gap> S := Monoid(Transformation([1, 2, 2]),
->                Transformation([3, 1, 3]));;
+gap> S := Monoid([
+>  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
 gap> cong := SemigroupCongruence(S,
 > [Transformation([1, 2, 1]), Transformation([2, 1, 2])]);;
 gap> lookup := EquivalenceRelationLookup(cong);;
@@ -421,8 +427,8 @@ false]]></Example>
       See also <Ref Attr = "EquivalenceRelationLookup"/> and
       <Ref Attr = "EquivalenceRelationPartition" BookName = "ref"/>.
       <Example><![CDATA[
-gap> S := Monoid(Transformation([1, 2, 2]),
->                Transformation([3, 1, 3]));;
+gap> S := Monoid([
+>  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
 gap> cong := SemigroupCongruence(S,
 > [Transformation([1, 2, 1]), Transformation([2, 1, 2])]);;
 gap> EquivalenceRelationCanonicalLookup(cong);
@@ -465,8 +471,8 @@ gap> NrEquivalenceClasses(cong);
       <Ref Filt="IsSemigroupCongruence"/>.<P/>
 
       <Example><![CDATA[
-gap> S := Monoid([Transformation([1, 2, 2]),
->                 Transformation([3, 1, 3])]);;
+gap> S := Monoid([
+>  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
 gap> pair := [Transformation([1, 2, 1]), Transformation([2, 1, 2])];;
 gap> cong := SemigroupCongruence(S, pair);;
 gap> NrCongruenceClasses(cong);
@@ -540,8 +546,8 @@ gap> Set(classes);
       <Ref Filt="IsSemigroupCongruence"/>.<P/>
 
       <Example><![CDATA[
-gap> S := Monoid([Transformation([1, 2, 2]),
->                 Transformation([3, 1, 3])]);;
+gap> S := Monoid([
+>  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
 gap> cong := RightSemigroupCongruence(S, [Transformation([1, 2, 1]),
 >                                         Transformation([2, 1, 2])]);;
 gap> classes := NonTrivialRightCongruenceClasses(cong);;
@@ -563,12 +569,12 @@ gap> Set(classes);
       semigroup congruence when the congruence class is created.
 
       <Example><![CDATA[
-gap> S := Monoid([Transformation( [ 1, 2, 2 ] ),
->                 Transformation( [ 3, 1, 3 ] )]);;
-gap> cong := SemigroupCongruence(S, [Transformation( [ 1, 2, 1 ] ), 
->                                    Transformation( [ 2, 1, 2 ] )]);;
+gap> S := Monoid([
+>  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
+gap> cong := SemigroupCongruence(S, [Transformation([1, 2, 1]),
+>                                    Transformation([2, 1, 2])]);;
 gap> class := EquivalenceClassOfElement(cong,
->                                       Transformation([ 3, 1, 1 ] ));
+>                                       Transformation([3, 1, 1]));
 <congruence class of Transformation( [ 3, 1, 1 ] )>
 gap> IsCongruenceClass(class);
 true]]></Example>
@@ -586,13 +592,13 @@ true]]></Example>
       left semigroup congruence when the class is created.
 
       <Example><![CDATA[
-gap> S := Monoid([Transformation( [ 1, 2, 2 ] ),
->                 Transformation( [ 3, 1, 3 ] )]);;
-gap> pairs := [Transformation( [ 1, 2, 1 ] ), 
->              Transformation( [ 2, 1, 2 ] )];;
+gap> S := Monoid([
+>  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
+gap> pairs := [Transformation([1, 2, 1]),
+>              Transformation([2, 1, 2])];;
 gap> cong := LeftSemigroupCongruence(S, pairs);;
 gap> class := EquivalenceClassOfElement(cong,
->                                       Transformation( [ 3, 1, 1 ] ));
+>                                       Transformation([3, 1, 1]));
 <left congruence class of Transformation( [ 3, 1, 1 ] )>
 gap> IsLeftCongruenceClass(class);
 true]]></Example>
@@ -610,13 +616,13 @@ true]]></Example>
       right semigroup congruence when the class is created.
 
       <Example><![CDATA[
-gap> S := Monoid([Transformation( [ 1, 2, 2 ] ),
->                 Transformation( [ 3, 1, 3 ] )]);;
-gap> pairs := [Transformation( [ 1, 2, 1 ] ),
->              Transformation( [ 2, 1, 2 ] )];;
+gap> S := Monoid([
+>  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
+gap> pairs := [Transformation([1, 2, 1]),
+>              Transformation([2, 1, 2])];;
 gap> cong := RightSemigroupCongruence(S, pairs);;
 gap> class := EquivalenceClassOfElement(cong,
->                                       Transformation( [ 3, 1, 1 ] ));
+>                                       Transformation([3, 1, 1]));
 <right congruence class of Transformation( [ 3, 1, 1 ] )>
 gap> IsRightCongruenceClass(class);
 true]]></Example>
@@ -643,7 +649,7 @@ true]]></Example>
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
 > [[(), (1, 3, 2)], [(1, 2), 0]]);;
 gap> cong := CongruencesOfSemigroup(S)[3];;
-gap> elm := ReesZeroMatrixSemigroupElement(S, 1, (1,3,2), 1);;
+gap> elm := ReesZeroMatrixSemigroupElement(S, 1, (1, 3, 2), 1);;
 gap> CongruenceClassOfElement(cong, elm);
 <congruence class of (1,(1,3,2),1)>
 ]]></Example>
@@ -667,8 +673,8 @@ gap> CongruenceClassOfElement(cong, elm);
       <Ref Filt="IsSemigroupCongruence"/>.<P/>
 
       <Example><![CDATA[
-gap> S := Monoid([Transformation([1, 2, 2]),
->                 Transformation([3, 1, 3])]);;
+gap> S := Monoid([
+>  Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;
 gap> pair := [Transformation([1, 2, 1]), Transformation([2, 1, 2])];;
 gap> cong := SemigroupCongruence(S, pair);;
 gap> classes := CongruenceClasses(cong);;
@@ -788,21 +794,22 @@ gap> JoinSemigroupCongruences(congs[2], congs[3]);
     <Ref Filt="IsLeftCongruenceClass"/>. <P/>
 
     <Example><![CDATA[
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
->                 Transformation( [ 3, 4, 3, 4, 4 ] ),
->                 Transformation( [ 3, 4, 3, 4, 3 ] ),
->                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup([
+>   Transformation([2, 1, 1, 2, 1]),
+>   Transformation([3, 4, 3, 4, 4]),
+>   Transformation([3, 4, 3, 4, 3]),
+>   Transformation([4, 3, 3, 4, 4])]);;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> cong := LeftSemigroupCongruence(S, [pair1, pair2]);
 <left semigroup congruence over <transformation semigroup of degree 5 
  with 4 generators> with 2 generating pairs>
-gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> x := Transformation([3, 4, 3, 4, 3]);;
 gap> class := LeftCongruenceClassOfElement(cong, x);
 <left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
-gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> elm := Transformation([1, 2, 2, 1, 2]);;
 gap> OnLeftCongruenceClasses(class, elm);
 <left congruence class of Transformation( [ 3, 4, 4, 3, 4 ] )>
 ]]></Example>
@@ -826,21 +833,22 @@ gap> OnLeftCongruenceClasses(class, elm);
     <Ref Filt="IsRightCongruenceClass"/>. <P/>
 
     <Example><![CDATA[
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
->                 Transformation( [ 3, 4, 3, 4, 4 ] ),
->                 Transformation( [ 3, 4, 3, 4, 3 ] ),
->                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup([
+>   Transformation([2, 1, 1, 2, 1]),
+>   Transformation([3, 4, 3, 4, 4]),
+>   Transformation([3, 4, 3, 4, 3]),
+>   Transformation([4, 3, 3, 4, 4])]);;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> cong := RightSemigroupCongruence(S, [pair1, pair2]);
 <right semigroup congruence over <transformation semigroup of 
  degree 5 with 4 generators> with 2 generating pairs>
-gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> x := Transformation([3, 4, 3, 4, 3]);;
 gap> class := RightCongruenceClassOfElement(cong, x);
 <right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
-gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> elm := Transformation([1, 2, 2, 1, 2]);;
 gap> OnRightCongruenceClasses(class, elm);
 <right congruence class of Transformation( [ 2, 1, 2, 1, 2 ] )>
 ]]></Example>

@@ -408,19 +408,20 @@ true]]></Example>
     <Description>
       <C>IsGroupAsSemigroup</C> returns <K>true</K> if and only if the
       semigroup <A>S</A> is mathematically a group.
-      <Example><![CDATA[FIXME
+      <Example><![CDATA[
 gap> S := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]), 
 >                   Transformation([3, 5, 6, 7, 8, 1, 9, 2, 4]));;
 gap> IsGroupAsSemigroup(S);
 true
 gap> G := SymmetricGroup(5);;
-gap> S := Range(IsomorphismPartialPermSemigroup(G));
+gap> IsGroupAsSemigroup(G);
+true
+gap> S := AsSemigroup(IsPartialPermSemigroup, G);
 <partial perm group of size 120, rank 5 with 2 generators>
 gap> IsGroupAsSemigroup(S);
 true
-gap> S := SymmetricGroup([1, 2, 10]);;
-gap> T := Range(IsomorphismSemigroup(IsBlockBijectionSemigroup,
-> Range(IsomorphismSemigroup(IsPartialPermSemigroup, S))));
+gap> G := SymmetricGroup([1, 2, 10]);;
+gap> T := AsSemigroup(IsBlockBijectionSemigroup, G);
 <inverse block bijection semigroup of size 6, degree 11 with 2 
  generators>
 gap> IsGroupAsSemigroup(T);

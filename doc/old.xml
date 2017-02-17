@@ -116,8 +116,8 @@ gap> PermLeftBlocks(blocks, y * x);
       <Example><![CDATA[
 gap> x := Bipartition([[1, 10], [2, -7, -9], [3, 4, 6, 8], [5, -5], 
 >                      [7, 9, -2], [-1, -10], [-3, -4, -6, -8]]);;
-gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5], 
->                        [ 7, 9 ]]);;
+gap> blocks := BlocksNC([[-1, -10], [2], [-3, -4, -6, -8], [5],
+>                        [7, 9]]);;
 gap> OnRightBlocks(blocks, x) = blocks;
 true
 gap> PermRightBlocks(blocks, x);
@@ -141,7 +141,7 @@ gap> PermRightBlocks(blocks, x);
       <Example><![CDATA[
 gap> x := Bipartition([[1, 4, 6, 7, 8, 10], [2, 5, -1, -2, -8],
 >                      [3, -3, -6, -7, -9], [9, -4, -5], [-10]]);;
-gap> OnRightBlocksBipartitionByPerm(x, (1,2,3));
+gap> OnRightBlocksBipartitionByPerm(x, (1, 2, 3));
 <bipartition: [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], 
  [ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ]>]]></Example>
     </Description>
@@ -185,15 +185,17 @@ false]]></Example>
       idempotents commute. See <Ref Prop="IsAbundantSemigroup"/> and 
       <Ref Prop="IsBlockGroup"/>.
       <Example><![CDATA[
-gap> S := Semigroup(Transformation( [ 1, 7, 3, 8, 4, 2, 6, 5, 9 ] ),
->   Transformation( [ 1, 8, 6, 2, 3, 7, 4, 5, 9 ] ),
->   Transformation( [ 1, 9, 9, 9, 5, 6, 7, 9, 9 ] ));;
+gap> S := Semigroup([
+>   Transformation([1, 7, 3, 8, 4, 2, 6, 5, 9]),
+>   Transformation([ 1, 8, 6, 2, 3, 7, 4, 5, 9]),
+>   Transformation([ 1, 9, 9, 9, 5, 6, 7, 9, 9])]);;
 gap> IsAdequateSemigroup(S);
 true
-gap> S := Semigroup( Transformation( [ 1, 3, 2, 3 ] ),
->  Transformation( [ 1, 4, 1, 2 ] ),
->  Transformation( [ 2, 4, 1, 1 ] ),
->  Transformation( [ 3, 4, 2, 2 ] ) );;
+gap> S := Semigroup([
+>  Transformation([1, 3, 2, 3]),
+>  Transformation([1, 4, 1, 2]),
+>  Transformation([2, 4, 1, 1]),
+>  Transformation([3, 4, 2, 2])]);;
 gap> IsAdequateSemigroup(S);
 false]]></Example> 
     </Description>
@@ -222,7 +224,7 @@ false]]></Example>
      <Item>
        If <A>S</A> is a partial permutation monoid, then this function 
        returns an isomorphism from <A>S</A> to a monoid of partial permutations
-       on <C>[1..LargestMovedPoint(<A>S</A>)+1]</C> obtained using 
+       on <C>[1 .. LargestMovedPoint(<A>S</A>) + 1]</C> obtained using
        <Ref Oper="AsTransformation" BookName="ref"/>. The inverse of this
        isomorphism is obtained using 
        <Ref Func="AsPartialPerm" BookName="ref"/>; see 
@@ -235,8 +237,8 @@ false]]></Example>
     <Item>
       If <A>S</A> is a permutation group, then this function returns an
       isomorphism from <A>S</A> to a transformation monoid acting on the set
-      <C>[1..NrMovedPoints(<A>S</A>)]</C> obtained using 
-      <Ref Oper="AsTransformation" BookName="ref"/>; see 
+      <C>[1 .. NrMovedPoints(<A>S</A>)]</C> obtained using
+      <Ref Oper="AsTransformation" BookName="ref"/>; see
       <Ref Attr="NrMovedPoints" BookName="ref"/>.
     </Item>
 
@@ -249,21 +251,22 @@ false]]></Example>
   </List>
 
   <Example>
-gap> S:=Semigroup( Transformation( [ 1, 4, 6, 2, 5, 3, 7, 8, 9, 9 ] ),
-> Transformation( [ 6, 3, 2, 7, 5, 1, 8, 8, 9, 9 ] ) );;
+gap> S := Semigroup([
+> Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),
+> Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));;
 gap> IsTransformationMonoid(S);
 false
 gap> IsMonoidAsSemigroup(S);
 true
-gap> M:=Range(IsomorphismTransformationMonoid(S));
+gap> M := AsMonoid(IsTransformationMonoid, S);
 &lt;transformation monoid on 8 pts with 2 generators>
 gap> IsTransformationMonoid(M);
 true
-gap> S:=InverseMonoid(
->  PartialPerm( [ 1, 2, 3 ], [ 4, 2, 3 ] ),
->  PartialPerm( [ 1, 2, 4 ], [ 1, 3, 2 ] ),
->  PartialPerm( [ 1, 2, 4 ], [ 4, 1, 2 ] ) );;
-gap> T:=Range(IsomorphismTransformationMonoid(S));
+gap> S := InverseMonoid([
+>  PartialPerm([4, 2, 3]),
+>  PartialPerm([1, 3, 0, 2]),
+>  PartialPerm([4, 1, 0, 2])]);;
+gap> T := AsMonoid(IsTransformationMonoid, S);
 &lt;transformation monoid on 5 pts with 5 generators>
 gap> Size(S); Size(T);
 117
@@ -316,12 +319,14 @@ gap> Size(S); Size(T);
       Idempotents(T)));</C>.
 
       <Example>
-gap> S:=Semigroup(Transformation( [ 1, 3, 4, 1, 3, 5 ] ), 
-> Transformation( [ 5, 1, 6, 1, 6, 3 ] ) );;
-gap> f:=Transformation( [ 2, 4, 6, 1, 6, 5 ] );;
-gap> T:=Monoid(Transformation( [ 4, 1, 2, 6, 2, 1 ] ),
-> Transformation( [ 5, 2, 5, 3, 5, 3 ] ) );;
-gap> U:=Semigroup(S, f, Idempotents(T));
+gap> S := Semigroup([
+>  Transformation([1, 3, 4, 1, 3, 5]),
+>  Transformation([5, 1, 6, 1, 6, 3]));;
+gap> f := Transformation([2, 4, 6, 1, 6, 5]);;
+gap> T := Monoid([
+> Transformation([4, 1, 2, 6, 2, 1]),
+> Transformation([5, 2, 5, 3, 5, 3]));;
+gap> U := Semigroup(S, f, Idempotents(T));
 &lt;semigroup with 14 generators>
 gap> Size(U);
 2182
@@ -355,24 +360,25 @@ gap> NrRClasses(U);
       the same value as: <C>U:=Semigroup(Concatenation(Generators(S), [f],
         Idempotents(T)));</C>.
       <Example>
-gap> S:=InverseSemigroup(
-> PartialPerm( [ 1, 2, 3, 4, 6, 8, 9, 10, 11, 13, 14, 16, 17, 18, 20 ], 
-> [ 2, 14, 5, 8, 11, 12, 16, 17, 18, 9, 13, 15, 20, 6, 4 ] ),
-> PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 17 ], 
-> [ 2, 14, 8, 19, 5, 1, 3, 16, 6, 9, 10, 17, 12, 20 ] ));;
-gap> f:=PartialPerm( 
-> [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 
->  18, 20, 22, 23, 25, 26, 30, 31, 32, 33, 34, 39, 40, 42, 43, 45 ], 
-> [ 4, 47, 34, 19, 32, 22, 12, 15, 16, 45, 49, 8, 24, 40, 17, 
->  46, 14, 6, 44, 2, 48, 41, 10, 31, 18, 50, 23, 5, 37, 11, 38, 30, 21 ] );;
-gap> S:=InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigroup(10)));
+gap> S := InverseSemigroup([
+> PartialPerm([2, 14, 5, 8, 0, 11, 0, 12, 16, 17, 18, 0, 9, 13,
+>              0, 15, 20, 6, 0, 4]),
+> PartialPerm([2, 14, 8, 19, 5, 1, 3, 16, 6, 0, 0, 9, 10, 17, 12,
+>              0, 20])]);;
+gap> f := PartialPerm(
+> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+>  18, 20, 22, 23, 25, 26, 30, 31, 32, 33, 34, 39, 40, 42, 43, 45],
+> [4, 47, 34, 19, 32, 22, 12, 15, 16, 45, 49, 8, 24, 40, 17,
+>  46, 14, 6, 44, 2, 48, 41, 10, 31, 18, 50, 23, 5, 37, 11, 38, 30, 21]);;
+gap> S := InverseSemigroup(S, f,
+>  Idempotents(SymmetricInverseSemigroup(10)));
 &lt;inverse semigroup with 1027 generators>
-gap> S:=InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigroup(10)),
-> rec(small:=true));
+gap> S := InverseSemigroup(S, f,
+>  Idempotents(SymmetricInverseSemigroup(10)), rec(small := true));
 &lt;inverse semigroup with 13 generators>
 gap> Size(S);
 17147970
-gap> S:=InverseMonoid(Generators(S));
+gap> S := InverseMonoid(Generators(S));
 &lt;inverse monoid with 13 generators>
 gap> Size(S);
 17147971</Example>
@@ -463,19 +469,22 @@ Transformation( [ 1, 2, 6, 4, 5, 6, 2, 5, 1, 6 ] )</Log>
       Attr="ImageSetOfTransformation" BookName="ref"/>.
 
       <Example>
-gap> S:=Monoid(Transformation([2,2,4,4,5,6]),Transformation([5,3,4,4,6,6]));;
-gap> f:=Generators(S)[1];;
+gap> S := Monoid([
+> Transformation([2, 2, 4, 4, 5, 6]),
+> Transformation([5, 3, 4, 4, 6, 6]));;
+gap> f := Generators(S)[1];;
 gap> IsRegularTransformation(S, f);
 true
-gap> img:=ImageSetOfTransformation(f);
+gap> img := ImageSetOfTransformation(f);
 [ 2, 4, 5, 6 ]
-gap> o:=Orb(S, img, OnSets);; Enumerate(o);
+gap> o := Orb(S, img, OnSets);; Enumerate(o);
 &lt;closed orbit, 3 points>
-gap> ForAny(o, x-> IsInjectiveTransOnList(f, x));
+gap> ForAny(o, x -> IsInjectiveTransOnList(f, x));
 true
 gap> IsRegularTransformation(S, Generators(S)[2]);
 false
-gap> IsRegularTransformation(FullTransformationSemigroup(6), Generators(S)[2]);
+gap> IsRegularTransformation(FullTransformationSemigroup(6),
+>                            Generators(S)[2]);
 true</Example>
     </Description>
   </ManSection>
@@ -500,14 +509,14 @@ true</Example>
       See also <Ref Attr="ImageListOfTransformation" BookName="ref"/> and 
       <Ref Oper="Transformation" BookName="ref"/>.
       <Example>
-gap> f:=Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] );;
-gap> IsInjectiveTransOnList(f, [1,5]);
+gap> f := Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5]);;
+gap> IsInjectiveTransOnList(f, [1, 5]);
 true
-gap> IsInjectiveTransOnList(f, [5,1]);
+gap> IsInjectiveTransOnList(f, [5, 1]);
 true
-gap> IsInjectiveTransOnList(f, [5,1,5,1,1,]);
+gap> IsInjectiveTransOnList(f, [5, 1, 5, 1, 1]);
 false
-gap> IsInjectiveTransOnList([1,2,3,4,5], [5,1,2,3]);   
+gap> IsInjectiveTransOnList([1, 2, 3, 4, 5], [5, 1, 2, 3]);
 true</Example>
     </Description>
   </ManSection>
@@ -529,10 +538,10 @@ true</Example>
      equal to <A>ker</A> and image set equal to <A>img</A> without
      checking that <Ref Func="IsInjectiveTransOnList"/> holds.
       <Example>
-gap> f:=Transformation( [ 10, 2, 3, 10, 5, 10, 7, 2, 5, 6 ] );;
-gap> ker:=CanonicalTransSameKernel(f);
+gap> f := Transformation([10, 2, 3, 10, 5, 10, 7, 2, 5, 6]);;
+gap> ker := CanonicalTransSameKernel(f);
 [ 1, 2, 3, 1, 4, 1, 5, 2, 4, 6 ]
-gap> img:=ImageSetOfTransformation(f);
+gap> img := ImageSetOfTransformation(f);
 [ 2, 3, 5, 6, 7, 10 ]
 gap> Idempotent(ker, img);
 Transformation( [ 6, 2, 3, 6, 5, 6, 7, 2, 5, 10 ] )</Example>
@@ -561,7 +570,7 @@ Transformation( [ 6, 2, 3, 6, 5, 6, 7, 2, 5, 10 ] )</Example>
       <Ref Func="AsTransformation" BookName="ref"/>.
 
       <Example>
-gap> f:=PartialPerm([ 1, 2, 3, 4, 5, 8, 10 ], [ 3, 1, 4, 2, 5, 6, 7 ]);;
+gap> f:=PartialPerm([3, 1, 4, 2, 5, 0, 0, 6, 0, 7]);;
 gap> AsTransformation(f);
 Transformation( [ 3, 1, 4, 2, 5, 11, 11, 6, 11, 7, 11 ] )
 gap> AsTransformation(f, 12);
@@ -589,30 +598,30 @@ Transformation( [ 3, 1, 4, 2, 5, 14, 14, 6, 14, 7, 14, 14, 14, 14 ] )</Example>
       <Ref Func="RangeSetOfPartialPerm"/>.
 
 <Example>
-gap> f:=Transformation( [ 5, 8, 3, 5, 8, 6, 2, 2, 7, 8 ] );;
+gap> f := Transformation([5, 8, 3, 5, 8, 6, 2, 2, 7, 8]);;
 gap> AsPermutation(f);
 fail
-gap> f:=Transformation( [ 8, 2, 10, 2, 4, 4, 7, 6, 9, 10 ] );;
+gap> f := Transformation([8, 2, 10, 2, 4, 4, 7, 6, 9, 10]);;
 gap> AsPermutation(f);
 fail
-gap> f:=Transformation( [ 1, 3, 6, 6, 2, 10, 2, 3, 10, 5 ] );;
+gap> f := Transformation([1, 3, 6, 6, 2, 10, 2, 3, 10, 5]);;
 gap> AsPermutation(f);
 (2,3,6,10,5)
-gap> f:=Transformation( [ 5, 2, 8, 4, 1, 8, 10, 3, 5, 7 ] );;
-gap> AsPermutation(f);       
+gap> f := Transformation([5, 2, 8, 4, 1, 8, 10, 3, 5, 7]);;
+gap> AsPermutation(f);
 (1,5)(3,8)(7,10)
-gap> AsPermutation(f, [1,5]);
+gap> AsPermutation(f, [1, 5]);
 (1,5)
-gap> AsPermutation(f, [3,8,7,10]);
+gap> AsPermutation(f, [3, 8, 7, 10]);
 (3,8)(7,10)
-gap> f:=PartialPerm([ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ],
-> [ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ]);;
+gap> f := PartialPerm([3, 12, 14, 4, 11, 18, 17, 2, 0, 9, 5, 15,
+>  0, 0, 0, 8, 20, 10, 19]);;
 gap> AsPermutation(f);
 fail
-gap> AsPermutation(f, [4,5,11]);
+gap> AsPermutation(f, [4, 5, 11]);
 (5,11)
-gap> f:=RandomPartialPerm(20);;
-gap> AsPermutation(f^-1*f);
+gap> f := RandomPartialPerm(20);;
+gap> AsPermutation(f ^ -1 * f);
 ()</Example>
     </Description>
   </ManSection>
@@ -629,28 +638,29 @@ gap> AsPermutation(f^-1*f);
     <Ref Attr="RankOfTransformation" BookName="ref"/>.
 
     <Example>
-gap> S:=Semigroup( Transformation( [ 1, 3, 4, 1, 3 ] ), 
-> Transformation( [ 2, 4, 1, 5, 5 ] ), 
-> Transformation( [ 2, 5, 3, 5, 3 ] ), 
-> Transformation( [ 4, 1, 2, 2, 1 ] ), 
->  Transformation( [ 5, 5, 1, 1, 3 ] ) );;
+gap> S := Semigroup([
+> Transformation([1, 3, 4, 1, 3]),
+> Transformation([2, 4, 1, 5, 5]),
+> Transformation([2, 5, 3, 5, 3]),
+> Transformation([4, 1, 2, 2, 1]),
+> Transformation([5, 5, 1, 1, 3]));;
 gap> NrElementsOfRank(S, 10);
 0
 gap> Size(S);
 602
-gap> List([1..5], x-> NrElementsOfRank(S, x));
+gap> List([1 .. 5], x -> NrElementsOfRank(S, x));
 [ 5, 260, 336, 1, 0 ]
 gap> Sum(last);
 602
-gap> T:=FullTransformationSemigroup(5);;
-gap> List([1..5], x-> NrElementsOfRank(T, x));
+gap> T := FullTransformationSemigroup(5);;
+gap> List([1 .. 5], x -> NrElementsOfRank(T, x));
 [ 5, 300, 1500, 1200, 120 ]
 gap> Sum(last);
 3125
-gap> S:=SymmetricInverseSemigroup(5);;
+gap> S := SymmetricInverseSemigroup(5);;
 gap> NrElementsOfRank(S, 4);
 600
-gap> Binomial(5,4)^2*Factorial(4);
+gap> Binomial(5, 4) ^ 2 * Factorial(4);
 600</Example>
   </Description>
   </ManSection>
@@ -675,8 +685,9 @@ gap> Binomial(5,4)^2*Factorial(4);
   See also <Ref Attr="ImagesOfTransSemigroup"/> and 
   <Ref Attr="KernelsOfTransSemigroup"/>.
   <Example>
-gap> S:=Semigroup(Transformation( [ 1, 5, 1, 1, 1 ] ), 
-> Transformation( [ 4, 4, 5, 2, 2 ] ));;
+gap> S := Semigroup([
+> Transformation([1, 5, 1, 1, 1]),
+> Transformation([4, 4, 5, 2, 2])]);;
 gap> GradedImagesOfTransSemigroup(S);
 [ [ [ 1 ], [ 4 ], [ 2 ], [ 5 ] ], [ [ 1, 5 ], [ 2, 4 ] ], [ [ 2, 4, 5 ] ], 
   [  ], [  ] ]
@@ -704,45 +715,46 @@ gap> GradedKernelsOfTransSemigroup(S);
   object: <Log>Orb(S, [1 .. Degree(S)], OnKernelsAntiAction);</Log> <P/> If the
   optional second argument <A>n</A> (a positive integer) is present, then only
   the images or kernels of size at least <A>n</A> are found.<P/>
- 
-  Note that the image/kernel <C>[1..Degree(S)]</C> always occurs in both orbits
+
+  Note that the image/kernel <C>[1 .. Degree(S)]</C> always occurs in both orbits
   even if there is no element of <A>S</A> with image/kernel equal to
-  <C>[1..Degree(S)]</C>.<P/>
+  <C>[1 .. Degree(S)]</C>.<P/>
 
   See also <Ref Func="GradedImagesOfTransSemigroup"/>,
   <Ref Func="GradedKernelsOfTransSemigroup"/>,
   <Ref Func="OnKernelsAntiAction"/>, and 
   <Ref Func="CanonicalTransSameKernel"/>
   <Example>
-gap>  S:=Semigroup( Transformation( [ 6, 4, 4, 4, 6, 1 ] ), 
-> Transformation( [ 6, 5, 1, 6, 2, 2 ] ) );;
-gap> o:=ImagesOfTransSemigroup(S, 6); Enumerate(o); AsList(o);
+gap>  S := Semigroup(
+> Transformation([6, 4, 4, 4, 6, 1]),
+> Transformation([6, 5, 1, 6, 2, 2]));;
+gap> o := ImagesOfTransSemigroup(S, 6); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 1 points with Schreier tree with grading>
 [ [ 1 .. 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 5); Enumerate(o); AsList(o);
+gap> o := ImagesOfTransSemigroup(S, 5); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 1 points with Schreier tree with grading>
 [ [ 1 .. 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 4); Enumerate(o); AsList(o);
+gap> o := ImagesOfTransSemigroup(S, 4); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 2 points with Schreier tree with grading>
 [ [ 1 .. 6 ], [ 1, 2, 5, 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 3); Enumerate(o); AsList(o);
+gap> o := ImagesOfTransSemigroup(S, 3); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 4 points with Schreier tree with grading>
 [ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 5, 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 2); Enumerate(o); AsList(o);
+gap> o := ImagesOfTransSemigroup(S, 2); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 8 points with Schreier tree with grading>
 [ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ],
   [ 2, 5 ], [ 4, 6 ] ]
-gap> o:=ImagesOfTransSemigroup(S, 1); Enumerate(o); AsList(o);
+gap> o := ImagesOfTransSemigroup(S, 1); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree with grading>
 &lt;closed orbit, 13 points with Schreier tree with grading>
 [ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ],
   [ 2, 5 ], [ 4, 6 ], [ 6 ], [ 1 ], [ 2 ], [ 4 ], [ 5 ] ]
-gap> o:=ImagesOfTransSemigroup(S); Enumerate(o); AsList(o);
+gap> o := ImagesOfTransSemigroup(S); Enumerate(o); AsList(o);
 &lt;open orbit, 1 points with Schreier tree>
 &lt;closed orbit, 13 points with Schreier tree>
 [ [ 1 .. 6 ], [ 1, 4, 6 ], [ 1, 2, 5, 6 ], [ 2, 6 ], [ 2, 5, 6 ], [ 1, 4 ],
@@ -766,13 +778,13 @@ gap> o:=ImagesOfTransSemigroup(S); Enumerate(o); AsList(o);
     See also <Ref Func="CanonicalTransSameKernel"/>.
 
     <Example>
-gap> f:=Transformation( [ 3, 6, 9, 2, 4, 2, 2, 2, 8, 2 ] );;
-gap> g:=Transformation( [ 7, 1, 4, 3, 2, 7, 7, 6, 6, 5 ] );;
-gap> ker:=CanonicalTransSameKernel(f);
+gap> f := Transformation([3, 6, 9, 2, 4, 2, 2, 2, 8, 2]);;
+gap> g := Transformation([7, 1, 4, 3, 2, 7, 7, 6, 6, 5]);;
+gap> ker := CanonicalTransSameKernel(f);
 [ 1, 2, 3, 4, 5, 4, 4, 4, 6, 4 ]
 gap> OnKernelsAntiAction(ker, g);
 [ 1, 2, 1, 3, 4, 1, 1, 1, 1, 5 ]
-gap> CanonicalTransSameKernel(g*f);
+gap> CanonicalTransSameKernel(g * f);
 [ 1, 2, 1, 3, 4, 1, 1, 1, 1, 5 ]</Example>
     </Description>
   </ManSection>

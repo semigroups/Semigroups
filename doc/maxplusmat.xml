@@ -113,14 +113,20 @@
       returns the threshold (i.e. the largest integer) of the underlying
       semiring.
       <Example><![CDATA[
-gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
->  [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 10);
+gap> mat := Matrix(IsTropicalMaxPlusMatrix,
+> [[0, 3, 0, 2],
+>  [1, 1, 1, 0],
+>  [-infinity, 1, -infinity, 1],
+>  [0, -infinity, 2, -infinity]], 10);
 Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 10)
 gap> ThresholdTropicalMatrix(mat);
 10
-gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0],
->   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 3);
+gap> mat := Matrix(IsTropicalMaxPlusMatrix,
+> [[0, 3, 0, 2],
+>  [1, 1, 1, 0],
+>  [-infinity, 1, -infinity, 1],
+>  [0, -infinity, 2, -infinity]], 3);
 Matrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], 
   [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 3)
 gap> ThresholdTropicalMatrix(mat);
@@ -300,7 +306,7 @@ Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity],
       eigenvalue equal to the spectral radius of <A>mat</A>. This method
       is described in <Cite Key="Kacie2009aa"/>.
       <Example><![CDATA[
-gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
+gap> RadialEigenvector(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));
 [ 0, -2 ]
 ]]></Example>
     </Description>
@@ -323,7 +329,7 @@ gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
       <A>mat</A><C>[i][j]</C> is not equal to <K>-infinity</K>.
       <Example><![CDATA[
 gap> UnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],
-> [-infinity, 10,-2], [-infinity, 2, 1]]));
+> [-infinity, 10, -2], [-infinity, 2, 1]]));
 <digraph with 3 vertices, 7 edges>
 ]]></Example>
     </Description>

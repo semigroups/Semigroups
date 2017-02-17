@@ -46,7 +46,7 @@ gap> x := BooleanMat([[true, false], [true, true]]);
 Matrix(IsBooleanMat, [[1, 0], [1, 1]])
 gap> y := BooleanMat([[1, 0], [1, 1]]);
 Matrix(IsBooleanMat, [[1, 0], [1, 1]])
-gap> z := BooleanMat([[1], [1,2]]);
+gap> z := BooleanMat([[1], [1, 2]]);
 Matrix(IsBooleanMat, [[1, 0], [1, 1]])
 gap> x = y;
 true
@@ -321,13 +321,13 @@ gap> BlistNumber(2, 10);
       </List>
 
   <Example><![CDATA[
-gap> Display(AsBooleanMat((1,2), 5));
+gap> Display(AsBooleanMat((1, 2), 5));
 0 1 0 0 0
 1 0 0 0 0
 0 0 1 0 0
 0 0 0 1 0
 0 0 0 0 1
-gap> Display(AsBooleanMat((1,2)));
+gap> Display(AsBooleanMat((1, 2)));
 0 1
 1 0
 gap> x := Transformation([1, 3, 4, 1, 3]);;
@@ -356,8 +356,7 @@ gap> Display(AsBooleanMat(x));
 1 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 1 0 0 0 0 0
-gap> x := Bipartition([[1, 4, -2, -3], 
->                      [2, 3, 5, -5], [-1, -4]]);
+gap> x := Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]);
 <bipartition: [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ]>
 gap> y := AsBooleanMat(x);
 <10x10 boolean matrix>
@@ -397,9 +396,9 @@ gap> Display(AsBooleanMat(x, 11));
 0 0 0 0 0 1 0 0 1 0 0
 0 1 1 0 1 0 0 0 0 1 0
 0 0 0 0 0 0 0 0 0 0 0
-gap> x := PBR([[-1, 1], [2, 3], [-3, 2, 3]],
->             [[-1, 1, 2], [-3, -1, 1, 3], 
->              [-3, -1, 1, 2, 3]]);;
+gap> x := PBR(
+> [[-1, 1], [2, 3], [-3, 2, 3]],
+> [[-1, 1, 2], [-3, -1, 1, 3], [-3, -1, 1, 2, 3]]);;
 gap> AsBooleanMat(x);
 Matrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0], 
   [0, 1, 1, 0, 0, 1], [1, 1, 0, 1, 0, 0], [1, 0, 1, 1, 0, 1], 

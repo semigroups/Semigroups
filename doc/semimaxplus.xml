@@ -42,16 +42,22 @@
       integers. Note, this method is terminating and does not involve 
       enumerating semigroups.
       <Example><![CDATA[
-gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
+gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,
+>                              [[0, -3],
+>                               [-2, -10]])));
 true
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,
-> [[1, -infinity, 2],[-2, 4, -infinity], [1, 0, 3]])));
-false
-gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix, 
->                              [[infinity, 0], [5, 4]])));
+>                              [[1, -infinity, 2],
+>                               [-2, 4, -infinity],
+>                               [1, 0, 3]])));
 false
 gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix,
->                              [[1, 0], [0, infinity]])));
+>                              [[infinity, 0],
+>                               [5, 4]])));
+false
+gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix,
+>                              [[1, 0],
+>                               [0, infinity]])));
 true
 ]]></Example>
     </Description>
@@ -71,10 +77,14 @@ true
       <Cite Key="Bacelli1992aa"/> and <Cite Key="Kacie2009aa"/>.
       
       <Example><![CDATA[
-gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
+gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,
+>                              [[0, -3],
+>                               [-2, -10]])));
 true
 gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,
-> [[1, -infinity, 2],[-2, 4, -infinity], [1, 0, 3]])));
+>                               [[1, -infinity, 2],
+>                                [-2, 4, -infinity],
+>                                [1, 0, 3]])));
 false
 ]]></Example>
     </Description>
@@ -95,8 +105,9 @@ false
       min-plus matrix semigroup. This method is based on 
       <Cite Key="Gaubert1996aa"/> and  <Cite Key="Burrell2016aa"/>.
       <Example><![CDATA[
-gap> NormalizeSemigroup(Semigroup(
->  Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
+gap> NormalizeSemigroup(Semigroup(Matrix(IsMaxPlusMatrix,
+>                                        [[0, -3],
+>                                         [-2, -10]])));
 <commutative semigroup of 2x2 max-plus matrices with 1 generator>
 ]]></Example>
     </Description>

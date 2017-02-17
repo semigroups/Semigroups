@@ -31,18 +31,14 @@
       <A>H</A>. If <A>H</A> is not a subgroup of <C>S</C>, then <K>fail</K> is
       returned. 
       <Example><![CDATA[
-gap> S := Semigroup(
->  PartialPerm([1, 2, 3], [1, 5, 2]), 
->  PartialPerm([1, 3], [2, 4]), 
->  PartialPerm([1, 2, 3], [4, 1, 5]), 
->  PartialPerm([1, 3, 5], [1, 3, 4]), 
->  PartialPerm([1, 2, 4, 5], [1, 2, 3, 5]), 
->  PartialPerm([1, 2, 3, 5], [1, 3, 2, 5]), 
->  PartialPerm([1, 4, 5], [5, 4, 3]));;
-gap> H := HClass(S, PartialPerm([1, 2], [1, 2]));;
+gap> S := Semigroup([PartialPerm([1, 5, 2]),
+>  PartialPerm([2, 0, 4]), PartialPerm([4, 1, 5]),
+>  PartialPerm([1, 0, 3, 0, 4]), PartialPerm([1, 2, 0, 3, 5]),
+>  PartialPerm([1, 3, 2, 0, 5]), PartialPerm([5, 0, 0, 4, 3])]);;
+gap> H := HClass(S, PartialPerm([1, 2]));;
 gap> MultiplicativeNeutralElement(H);
 <identity partial perm on [ 1, 2 ]>
-gap> H := HClass(S, PartialPerm([1, 2], [1, 4]));;
+gap> H := HClass(S, PartialPerm([1, 4]));;
 gap> MultiplicativeNeutralElement(H);
 fail]]></Example>
     </Description> 
@@ -80,11 +76,8 @@ true
 gap> IsGreensLessThanOrEqual(B, A);
 false
 gap> S := SymmetricInverseSemigroup(4);;
-gap> A := GreensJClassOfElement(S, 
->                               PartialPerm([1, 2, 3], 
->                                           [1, 3, 4]));;
-gap> B := GreensJClassOfElement(S, 
->                               PartialPerm([1, 2], [3, 1]));;
+gap> A := GreensJClassOfElement(S, PartialPerm([1, 3, 4]));;
+gap> B := GreensJClassOfElement(S, PartialPerm([3, 1]));;
 gap> A < B;
 true
 gap> B < A;
@@ -140,10 +133,8 @@ gap> DClassOfRClass(R);
 gap> IsGreensDClass(DClassOfRClass(R));
 true
 gap> S := InverseSemigroup(
-> PartialPerm([1, 2, 3, 6, 8, 10], 
->             [2, 6, 7, 9, 1, 5]), 
-> PartialPerm([1, 2, 3, 4, 6, 7, 8, 10],
->             [3, 8, 1, 9, 4, 10, 5, 6]));
+> PartialPerm([2, 6, 7, 0, 0, 9, 0, 1, 0, 5]),
+> PartialPerm([3, 8, 1, 9, 0, 4, 10, 5, 0, 6]));
 <inverse partial perm semigroup of rank 10 with 2 generators>
 gap> x := S.1;
 [3,7][8,1,2,6,9][10,5]
@@ -152,8 +143,7 @@ gap> H := HClass(S, x);
 gap> R := RClassOfHClass(H);
 <Green's R-class: [3,7][8,1,2,6,9][10,5]>
 gap> L := LClass(H);;
-gap> L = LClass(S, PartialPerm([1, 2, 5, 6, 7, 9], 
->                              [1, 2, 5, 6, 7, 9]));
+gap> L = LClass(S, PartialPerm([1, 2, 0, 0, 5, 6, 7, 0, 9]));
 true
 gap> DClass(R) = DClass(L);
 true
@@ -239,8 +229,8 @@ gap> R := GreensRClasses(D)[1];
 gap> GreensHClasses(R);
 [ <Green's H-class: Transformation( [ 3, 4, 4, 4 ] )>, 
   <Green's H-class: Transformation( [ 1, 2, 2, 2 ] )> ]
-gap> S := InverseSemigroup( PartialPerm( [ 1, 2, 3 ], [ 2, 4, 1 ] ),
-> PartialPerm( [ 1, 3, 4 ], [ 3, 4, 1 ] ) );;
+gap> S := InverseSemigroup([
+> PartialPerm([2, 4, 1]), PartialPerm([3, 0, 4, 1])]);;
 gap> GreensDClasses(S);
 [ <Green's D-class: <identity partial perm on [ 1, 2, 4 ]>>, 
   <Green's D-class: <identity partial perm on [ 1, 3, 4 ]>>, 
@@ -380,8 +370,7 @@ gap> Size(R);
 gap> L := GreensLClassOfElementNC(S, x);;
 gap> Size(L);
 1
-gap> x := PartialPerm([1, 2, 3, 4, 7, 8, 9, 10],
->                     [2, 3, 4, 5, 6, 8, 10, 11]);;
+gap> x := PartialPerm([2, 3, 4, 5, 0, 0, 6, 8, 10, 11]);;
 gap> L := LClass(POI(13), x);
 <Green's L-class: [1,2,3,4,5,6,8][7,10,11]>
 gap> Size(L);
@@ -493,10 +482,9 @@ false
 gap> GroupHClass(D);
 fail
 gap> S := InverseSemigroup(
-> PartialPerm([1, 2, 3, 5], [2, 1, 6, 3]),
-> PartialPerm([1, 2, 3, 6], [3, 5, 2, 6]));;
+> PartialPerm([2, 1, 6, 0, 3]), PartialPerm([3, 5, 2, 0, 0, 6]));;
 gap> x := PartialPerm([1 .. 3], [6, 3, 1]);;
-gap> First(DClasses(S), x-> not IsTrivial(GroupHClass(x)));
+gap> First(DClasses(S), x -> not IsTrivial(GroupHClass(x)));
 <Green's D-class: <identity partial perm on [ 1, 2 ]>>
 gap> StructureDescription(GroupHClass(last));
 "C2"]]></Example>
@@ -563,10 +551,8 @@ gap> H := GroupHClass(D);
 gap> Idempotents(H);
 [ Transformation( [ 1, 1, 3, 3 ] ) ]
 gap> S := InverseSemigroup(
-> PartialPerm([1, 2, 3, 4, 5, 7], 
->             [10, 6, 3, 4, 9, 1]),
-> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8], 
->             [6, 10, 7, 4, 8, 2, 9, 1]));;
+> PartialPerm([10, 6, 3, 4, 9, 0, 1]),
+> PartialPerm([6, 10, 7, 4, 8, 2, 9, 1]));;
 gap> Idempotents(S, 1);
 [ <identity partial perm on [ 4 ]> ]
 gap> Idempotents(S, 0);
@@ -727,8 +713,9 @@ gap> S := Semigroup(gens);;
 gap> iter := IteratorOfRClasses(S);
 <iterator of R-classes>
 gap> for R in iter do
-> if Size(R) > 1 then 
->   break; fi;
+>   if Size(R) > 1 then
+>     break;
+>   fi;
 > od;
 gap> R;
 <Green's R-class: Transformation( [ 6, 4, 1, 6, 6, 8, 9, 6, 2, 2 ] )>
@@ -757,7 +744,9 @@ gap> S := InverseSemigroup(
 >              [8, 3, 9, 20, 2, 12, 14, 15, 4, 18, 13, 1, 17, 19, 5]));;
 gap> iter := IteratorOfRClasses(S);
 <iterator of R-classes>
-gap> repeat R := NextIterator(iter); until Size(R)>1000;
+gap> repeat
+>   R := NextIterator(iter);
+> until Size(R) > 1000;
 gap> R;
 <Green's R-class: [8,3][11,5][13,1][15,2][17,6][19,7]>
 gap> Size(R);
@@ -790,11 +779,11 @@ gap> Size(R);
   
   <Example><![CDATA[
 gap> S := Semigroup(
-> Transformation([1, 2, 5, 4, 3, 8, 7, 6]),
-> Transformation([1, 6, 3, 4, 7, 2, 5, 8]),
-> Transformation([2, 1, 6, 7, 8, 3, 4, 5]),
-> Transformation([3, 2, 3, 6, 1, 6, 1, 2]),
-> Transformation([5, 2, 3, 6, 3, 4, 7, 4]));;
+>  Transformation([1, 2, 5, 4, 3, 8, 7, 6]),
+>  Transformation([1, 6, 3, 4, 7, 2, 5, 8]),
+>  Transformation([2, 1, 6, 7, 8, 3, 4, 5]),
+>  Transformation([3, 2, 3, 6, 1, 6, 1, 2]),
+>  Transformation([5, 2, 3, 6, 3, 4, 7, 4]));;
 gap> x := Transformation([2, 5, 4, 7, 4, 3, 6, 3]);;
 gap> R := RClass(S, x);
 <Green's R-class: Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )>

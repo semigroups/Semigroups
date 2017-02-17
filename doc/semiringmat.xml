@@ -162,11 +162,13 @@ Matrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)]]></Example>
       underlying list of lists of the matrix over semiring <A>mat</A>.
       
       <Example><![CDATA[
-gap> mat := Matrix(IsIntegerMatrix, [[0,2], [3,5]]);
+gap> mat := Matrix(IsIntegerMatrix, [[0, 2],
+>                                    [3, 5]]);
 Matrix(IsIntegerMatrix, [[0, 2], [3, 5]])
 gap> AsList(mat);
 [ [ 0, 2 ], [ 3, 5 ] ]
-gap> mat := Matrix(GF(7), [[Z(7) ^ 3, Z(7) ^ 2], [Z(7) ^ 4, Z(7)]]);
+gap> mat := Matrix(GF(7), [[Z(7) ^ 3, Z(7) ^ 2],
+>                          [Z(7) ^ 4, Z(7)]]);
 Matrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])
 gap> list := AsList(mat);
 [ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ]
@@ -240,9 +242,11 @@ true]]></Example>
       <C>DimensionOfMatrixOverSemiring</C> returns the dimension <C>n</C> of
       <A>mat</A>.
       <Example><![CDATA[
-gap> x := BooleanMat([[1, 0, 0, 1], [0, 1, 1, 0], 
->                     [1, 0, 1, 1], [0, 0, 0, 1]]);
-Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1], 
+gap> x := BooleanMat([[1, 0, 0, 1],
+>                     [0, 1, 1, 0],
+>                     [1, 0, 1, 1],
+>                     [0, 0, 0, 1]]);
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1],
   [0, 0, 0, 1]])
 gap> DimensionOfMatrixOverSemiring(x);
 4]]></Example>

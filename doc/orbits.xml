@@ -94,10 +94,11 @@ gap> o;
       <C>One(<A>gens</A>)</C> if <A>gens</A> belongs to the category
       <Ref Filt = "IsMultiplicativeElementWithOne" BookName = "ref"/>.
 <Example><![CDATA[
-gap> gens := [Transformation([2, 4, 4, 6, 8, 8, 6, 6]), 
-> Transformation([2, 7, 4, 1, 4, 6, 5, 2]), 
-> Transformation([3, 6, 2, 4, 2, 2, 2, 8]), 
-> Transformation([4, 3, 6, 4, 2, 1, 2, 6]), 
+gap> gens := [
+> Transformation([2, 4, 4, 6, 8, 8, 6, 6]),
+> Transformation([2, 7, 4, 1, 4, 6, 5, 2]),
+> Transformation([3, 6, 2, 4, 2, 2, 2, 8]),
+> Transformation([4, 3, 6, 4, 2, 1, 2, 6]),
 > Transformation([4, 5, 1, 3, 8, 5, 8, 2])];;
 gap> S := Semigroup(gens);;
 gap> x := Transformation([1, 4, 6, 1, 7, 2, 7, 6]);;
@@ -106,7 +107,7 @@ gap> word := Factorization(S, x);
 gap> EvaluateWord(gens, word);
 Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )
 gap> S := SymmetricInverseMonoid(10);;
-gap> x := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);
+gap> x := PartialPerm([2, 6, 7, 0, 0, 9, 0, 1, 0, 5]);
 [3,7][8,1,2,6,9][10,5]
 gap> word := Factorization(S, x);
 [ -2, -2, -2, -2, -3, -2, -2, -2, -2, -2, 5, 2, 5, 5, 2, 5, 2, 2, 2, 
@@ -234,10 +235,10 @@ gap> Position(o, last);
     <Ref Func = "ReverseSchreierTreeOfSCC"/>, and 
     <Ref Func = "TraceSchreierTreeOfSCCForward"/>.
 <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 2, 1, 4, 4]), 
->                   Transformation([3, 3, 3, 4, 5]),
->                   Transformation([5, 1, 4, 5, 5]));;
-gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true, 
+gap> S := Semigroup([Transformation([2, 2, 1, 4, 4]),
+>                    Transformation([3, 3, 3, 4, 5]),
+>                    Transformation([5, 1, 4, 5, 5])]);;
+gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true,
 > schreier := true));;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3, 7, 5, 6, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
@@ -277,11 +278,12 @@ gap> Position(o, last);
     <Ref Func = "SchreierTreeOfSCC"/>, and 
     <Ref Func = "TraceSchreierTreeOfSCCForward"/>.
     <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 3, 4, 1]), 
-> Transformation([2, 4, 1, 2]),
-> Transformation([3, 1, 1, 3]), 
-> Transformation([3, 3, 4, 1]));;
-gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true, 
+gap> S := Semigroup([
+>  Transformation([1, 3, 4, 1]),
+>  Transformation([2, 4, 1, 2]),
+>  Transformation([3, 1, 1, 3]),
+>  Transformation([3, 3, 4, 1])]);;
+gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true,
 > schreier := true));;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
@@ -320,11 +322,11 @@ gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
     <Ref Func = "SchreierTreeOfSCC"/>, and 
     <Ref Func = "TraceSchreierTreeOfSCCBack"/>.
     <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 3, 4, 1]), 
->                   Transformation([2, 4, 1, 2]),
->                   Transformation([3, 1, 1, 3]), 
->                   Transformation([3, 3, 4, 1]));;
-gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true, 
+gap> S := Semigroup([Transformation([1, 3, 4, 1]),
+>                    Transformation([2, 4, 1, 2]),
+>                    Transformation([3, 1, 1, 3]),
+>                    Transformation([3, 3, 4, 1])]);;
+gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true,
 > schreier := true));;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]

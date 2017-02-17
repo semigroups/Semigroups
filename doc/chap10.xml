@@ -16,7 +16,7 @@
   For technical reasons, the matrix semigroup functions in &Semigroups; rely
   on a custom wrapper for matrices <Ref Filt="IsMatrixOverFiniteField"/>.<P/>
   <Example><![CDATA[
-gap> x := Z(4) * [[1,0], [0,2]];
+gap> x := Z(4) * [[1, 0], [0, 2]];
 [ [ Z(2^2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ]
 gap> IsMatrix(x);
 true

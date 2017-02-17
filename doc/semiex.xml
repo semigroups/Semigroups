@@ -410,7 +410,7 @@ gap> Size(S);
       <P/><!--FIXME this is not very descriptive-->
 
       <Example><![CDATA[
-gap> S := SLM(3,4);
+gap> S := SLM(3, 4);
 <special linear monoid 3x3 over GF(2^2)>
 gap> Size(S);
 141184]]></Example>
@@ -431,10 +431,9 @@ gap> Size(S);
         (St Andrews), Yanhui Wang (York).
 
         <Example><![CDATA[
-gap> S := InverseSemigroup(PartialPerm([1, 2, 3, 4, 5, 6, 7, 10], 
->                                      [4, 6, 7, 3, 8, 2, 9, 5]),
->                          PartialPerm([1, 2, 7, 9], 
->                                      [5, 6, 4, 3]));
+gap> S := InverseSemigroup([
+> PartialPerm([1, 2, 3, 4, 5, 6, 7, 10], [4, 6, 7, 3, 8, 2, 9, 5]),
+> PartialPerm([1, 2, 7, 9], [5, 6, 4, 3])]);
 <inverse partial perm semigroup of rank 10 with 2 generators>
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> M := MunnSemigroup(T);
@@ -546,7 +545,7 @@ gap> S := POI(10);
 <inverse partial perm monoid of rank 10 with 10 generators>
 gap> Size(S);
 184756
-gap> Binomial(20,10);
+gap> Binomial(20, 10);
 184756
 gap> IsSubsemigroup(POPI(10), POI(10));
 true

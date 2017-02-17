@@ -20,14 +20,11 @@
       if and only if they are related by <A>cong</A>.
 
       <Example><![CDATA[
-gap> i := InverseSemigroup(
-> PartialPerm([1, 2], [2, 3]),
-> PartialPerm([1, 3], [2, 3]));;
-gap> cong := SemigroupCongruence(i,
-> [[PartialPerm([2, 3], [1, 3]),
->   PartialPerm([2], [1])],
->  [PartialPerm([], []),
->   PartialPerm([1, 2], [1, 2])]]);
+gap> I := InverseSemigroup([
+>  PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;
+gap> cong := SemigroupCongruence(I,
+> [[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],
+>  [PartialPerm([]), PartialPerm([1, 2])]]);
 <semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with 2 generating pairs>
 gap> TraceOfSemigroupCongruence(cong);
@@ -53,14 +50,11 @@ gap> TraceOfSemigroupCongruence(cong);
       is, the inverse subsemigroup consisting of all elements which are related
       to an idempotent by <A>cong</A>. <P/>
       <Example><![CDATA[
-gap> i := InverseSemigroup(
-> PartialPerm([1, 2], [2, 3]),
-> PartialPerm([1, 3], [2, 3]));;
-gap> cong := SemigroupCongruence(i,
-> [[PartialPerm([2, 3], [1, 3]),
->   PartialPerm([2], [1])],
->  [PartialPerm([], []),
->   PartialPerm([1, 2], [1, 2])]]);
+gap> I := InverseSemigroup([
+>  PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;
+gap> cong := SemigroupCongruence(I,
+> [[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],
+>  [PartialPerm([]), PartialPerm([1, 2])]]);
 <semigroup congruence over <inverse partial perm semigroup 
  of size 19, rank 3 with 2 generators> with 2 generating pairs>
 gap> KernelOfSemigroupCongruence(cong);
@@ -85,14 +79,11 @@ gap> KernelOfSemigroupCongruence(cong);
       See <Cite Key = "Howie1995aa"/> section 5.3 for more details.
       
       <Example><![CDATA[
-gap> i := InverseSemigroup([
-> PartialPerm([1, 2], [2, 3]),
-> PartialPerm([1, 3], [2, 3])]);;
-gap> cong := SemigroupCongruenceByGeneratingPairs(i,
-> [[PartialPerm([2, 3], [1, 3]),
->    PartialPerm([2], [1])],
->  [PartialPerm([], []),
->    PartialPerm([1, 2], [1, 2])]]);
+gap> I := InverseSemigroup([
+>  PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(I,
+> [[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],
+>  [PartialPerm([]), PartialPerm([1, 2])]]);
 <semigroup congruence over <inverse partial perm semigroup of rank 3 
  with 2 generators> with 2 generating pairs>
 gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
@@ -121,10 +112,10 @@ gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
       <Ref Attr = "InverseSemigroupCongruenceByKernelTrace"/>.
       
       <Example><![CDATA[
-gap> S := InverseSemigroup( 
-> [ PartialPerm([1, 2, 3, 4, 6, 7, 8], [3, 6, 7, 8, 1, 2, 5]),
->   PartialPerm([1, 2, 3, 5, 6, 8], [5, 6, 7, 9, 4, 8]),
->   PartialPerm([1, 2, 3, 4, 5, 6, 8], [5, 1, 8, 6, 9, 4, 7]) ]);;
+gap> S := InverseSemigroup([
+>  PartialPerm([3, 6, 7, 8, 0, 1, 2, 5]),
+>  PartialPerm([5, 6, 7, 0, 9, 4, 0, 8]),
+>  PartialPerm([5, 1, 8, 6, 9, 4, 0, 7])]);;
 gap> cong := SemigroupCongruence(S, []);
 <semigroup congruence over <inverse partial perm semigroup 
  of size 117859, rank 9 with 3 generators> with congruence pair (228,
@@ -150,15 +141,12 @@ true]]></Example>
       See <Cite Key = "Howie1995aa"/> Section 5.3 for more details.
 
       <Example><![CDATA[
-gap> i := InverseSemigroup([
-> PartialPerm([1, 2], [2, 3]),
-> PartialPerm([1, 3], [2, 3])],
+gap> I := InverseSemigroup([
+>  PartialPerm([2, 3]), PartialPerm([2, 0, 3])],
 > rec(cong_by_ker_trace_threshold := 0));;
-gap> cong := SemigroupCongruence(i,
-> [[PartialPerm([2, 3], [1, 3]),
->   PartialPerm([2], [1])],
->  [PartialPerm([], []),
->   PartialPerm([1, 2], [1, 2])]]);;
+gap> cong := SemigroupCongruence(I,
+> [[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],
+>  [PartialPerm([]), PartialPerm([1, 2])]]);;
 gap> class := CongruenceClassOfElement(cong,
 >                                      PartialPerm([1, 2], [2, 3]));;
 gap> IsInverseSemigroupCongruenceClassByKernelTrace(class);
@@ -187,21 +175,17 @@ true]]></Example>
       
       <Example><![CDATA[
 gap> S := InverseSemigroup([
-> PartialPerm([1, 2], [2, 3]),
-> PartialPerm([1, 3], [2, 3])]);;
+>   PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;
 gap> kernel := InverseSemigroup([
-> PartialPerm([1, 3], [1, 3]),
-> PartialPerm([2, 3], [2, 3]),
-> PartialPerm([1, 2], [1, 2]), 
-> PartialPerm([1], [3]),
-> PartialPerm([1], [2])]);;
-gap> trace := [[PartialPerm([2, 3], [2, 3])], 
->              [PartialPerm([1, 2], [1, 2])], 
->              [PartialPerm([1, 3], [1, 3])], 
->              [PartialPerm([3], [3]),
->               PartialPerm([2], [2]), 
->               PartialPerm([1], [1]),
->               PartialPerm([], [])]];;
+>   PartialPerm([1, 0, 3]), PartialPerm([0, 2, 3]),
+>   PartialPerm([1, 2]), PartialPerm([3]),
+>   PartialPerm([2])]);;
+gap> trace := [
+>  [PartialPerm([0, 2, 3])],
+>  [PartialPerm([1, 2])],
+>  [PartialPerm([1, 0, 3])],
+>  [PartialPerm([0, 0, 3]), PartialPerm([0, 2]),
+>   PartialPerm([1]), PartialPerm([], [])]];;
 gap> cong := InverseSemigroupCongruenceByKernelTrace(S, kernel, trace);
 <semigroup congruence over <inverse partial perm semigroup of rank 3 
  with 2 generators> with congruence pair (13,4)>]]></Example>
@@ -220,9 +204,9 @@ gap> cong := InverseSemigroupCongruenceByKernelTrace(S, kernel, trace);
       least congruence on <A>S</A> whose quotient is a group. <P/>
 
       <Example><![CDATA[
-gap> S := InverseSemigroup(
->       [PartialPerm([1,2,5,6], [5,2,1,4]),
->        PartialPerm([1,2,3,4,5,7], [1,4,6,3,5,2])]);;
+gap> S := InverseSemigroup([
+>   PartialPerm([5, 2, 0, 0, 1, 4]),
+>   PartialPerm([1, 4, 6, 3, 5, 0, 2])]);;
 gap> cong := MinimumGroupCongruence(S);
 <semigroup congruence over <inverse partial perm semigroup of rank 7 
  with 2 generators> with congruence pair (59,1)>
