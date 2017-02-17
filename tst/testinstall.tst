@@ -1514,6 +1514,19 @@ gap> Set(PrimitiveIdempotents(T));
   Transformation( [ 6, 6, 6, 4, 6, 6 ] ), 
   Transformation( [ 6, 6, 6, 6, 5, 6 ] ) ]
 
+#T# Issue 253: IsIdempotentGenerated
+
+# Problem with IsIdempotentGenerated for ideals
+gap> S := Semigroup([Transformation([3, 2, 1]), Transformation([2, 2, 2])]);
+<transformation semigroup of degree 3 with 2 generators>
+gap> IsIdempotentGenerated(S);
+false
+gap> I := SemigroupIdeal(S, S.1 ^ 2);;
+gap> IsIdempotentGenerated(I);
+false
+gap> I = S;
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);

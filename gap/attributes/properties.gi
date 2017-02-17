@@ -594,13 +594,18 @@ end);
 InstallMethod(IsIdempotentGenerated, "for a semigroup",
 [IsSemigroup],
 function(S)
-  local gens, T, min, new;
+  local gens, T, ranks, min, new, max, i;
 
   if not IsFinite(S) then
     TryNextMethod();
   fi;
 
-  gens := Generators(S);
+  if HasIsMonoidAsSemigroup(S) and IsMonoidAsSemigroup(S)
+      and not IsTrivial(GroupOfUnits(S)) then
+    return false;
+  fi;
+
+  gens := GeneratorsOfSemigroup(S);
 
   if ForAll(gens, IsIdempotent) then
     Info(InfoSemigroups, 2, "all the generators are idempotents");
@@ -610,12 +615,21 @@ function(S)
   if HasIdempotentGeneratedSubsemigroup(S) or not IsActingSemigroup(S) then
     T := IdempotentGeneratedSubsemigroup(S);
   else
-    min := MinimumList(List(gens, x -> ActionRank(S)(x)));
-    new := Filtered(Idempotents(S), x -> ActionRank(S)(x) >= min);
+    ranks := List(gens, x -> ActionRank(S)(x));
+    min := MinimumList(ranks);
+    if HasIdempotents(S) then
+      new := Filtered(Idempotents(S), x -> ActionRank(S)(x) >= min);
+    else
+      max := MaximumList(ranks);
+      new := [];
+      for i in [min .. max] do
+        Append(new, Idempotents(S, i));
+      od;
+    fi;
     if new = [] then
       return false;
     fi;
-    T := Semigroup(new);
+    T := Semigroup(new, rec(acting := true));
   fi;
 
   # T is not always the idempotent generated subsemigroup!
@@ -1441,7 +1455,7 @@ function(S)
   elif not IsFinite(S) then
     TryNextMethod();
   fi;
-  return ForAll(GreensDClasses(S), IsTrivial);
+  return IsDTrivial(S);
 end);
 
 InstallMethod(IsSimpleSemigroup, "for a finite semigroup",
