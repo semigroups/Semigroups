@@ -898,6 +898,21 @@ function(R)
   return Semigroup(Filtered(MatrixEntries(N), x -> x <> 0)) = U;
 end);
 
+InstallMethod(IsIdempotentGenerated, "for a Rees matrix subsemigroup",
+[IsReesMatrixSubsemigroup],
+function(R)
+  local U, N;
+  if not IsReesMatrixSemigroup(R) then
+    TryNextMethod();
+  fi;
+  U := UnderlyingSemigroup(R);
+  if not IsGroupAsSemigroup(U) then
+    TryNextMethod();
+  fi;
+  N := Range(RMSNormalization(R));
+  return Semigroup(MatrixEntries(N)) = U;
+end);
+
 # The next two methods are just copies of the methods in the library but with
 # the rank increased so they are used in favour of the method for
 # IsEnumerableSemigroupRep

@@ -2346,6 +2346,63 @@ gap> R := ReesZeroMatrixSemigroup(S, [[IdentityTransformation]]);
   generators>>
 gap> IsIdempotentGenerated(R);
 true
+
+#T# IsIdempotentGenerated, for an RMS
+gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
+> [[(1, 3, 2), (), (1, 4, 2)],
+>  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
+>  [(3, 4), (), (1, 2, 4, 3)],
+>  [(), (2, 4, 3), (1, 2)]]);;
+gap> IsIdempotentGenerated(R);
+true
+
+# ReesMatrixSubsemigroup is not a ReesMatrixSemigroup
+gap> R := ReesMatrixSemigroup(SymmetricInverseMonoid(1),
+> [[PartialPerm([]), PartialPerm([])]]);
+<Rees matrix semigroup 2x1 over <symmetric inverse monoid of degree 1>>
+gap> S := Semigroup(RMSElement(R, 1, PartialPerm([1]), 1),
+>                   RMSElement(R, 2, PartialPerm([]), 1));
+<subsemigroup of 2x1 Rees matrix semigroup with 2 generators>
+gap> IsIdempotentGenerated(S);
+false
+
+# UnderlyingSemigroup is not IsGroup
+gap> R := ReesMatrixSemigroup(Semigroup(Transformation([2, 1])),
+> [[Transformation([2, 1])]]);
+<Rees matrix semigroup 1x1 over <commutative transformation semigroup of 
+  degree 2 with 1 generator>>
+gap> IsIdempotentGenerated(R);
+false
+gap> R := ReesMatrixSemigroup(Semigroup(Transformation([2, 1])),
+> [[IdentityTransformation, IdentityTransformation],
+>  [IdentityTransformation, Transformation([2, 1])]]);
+<Rees matrix semigroup 2x2 over <commutative transformation semigroup of 
+  degree 2 with 1 generator>>
+gap> IsIdempotentGenerated(R);
+true
+
+# UnderlyingSemigroup is not IsGroupAsSemigroup
+gap> mat := [[
+>  Transformation([2, 3, 1]),
+>  Transformation([2, 1]),
+>  Transformation([1, 2, 1])]];;
+gap> R := ReesMatrixSemigroup(FullTransformationMonoid(3), mat);
+<Rees matrix semigroup 3x1 over <full transformation monoid of degree 3>>
+gap> IsIdempotentGenerated(R);
+false
+gap> R = Semigroup(Idempotents(R));
+false
+gap> S := Monoid([
+>  Transformation([1, 2, 3, 1]), Transformation([2, 1, 3, 1]),
+>  Transformation([2, 3, 3, 1]), Transformation([3, 2, 3, 1]),
+>  Transformation([3, 3, 1, 2]), Transformation([3, 4, 1, 1]),
+>  Transformation([4, 1, 2, 2]), Transformation([4, 2, 3, 3])]);;
+gap> R := ReesMatrixSemigroup(S, [[IdentityTransformation]]);
+<Rees matrix semigroup 1x1 over <transformation monoid of degree 4 with 8 
+  generators>>
+gap> IsIdempotentGenerated(R);
+true
+
 # Test Size for infinite RMS and RZMS
 gap> S := FreeSemigroup(2);;
 gap> R := ReesZeroMatrixSemigroup(S, [[S.1]]);
