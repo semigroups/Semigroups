@@ -182,10 +182,9 @@ gap> S := ClosureInverseSemigroup(S, T);
     <Description>
       Returns  a  random  inverse  monoid  or semigroup of partial
       permutations with degree at most <A>n</A>  with <A>m</A> generators.
-      <Log><![CDATA[
-gap> S := RandomInverseSemigroup(IsPartialPermSemigroup, 
->                                10, 10);
-<inverse partial perm semigroup on 10 pts with 9 generators>
+      <Log><![CDATA[FIXME
+gap> S := RandomInverseSemigroup(IsPartialPermSemigroup, 10, 10);
+<inverse partial perm semigroup of rank 10 with 10 generators>
 gap> S := RandomInverseMonoid(IsTransformationSemigroup, 10, 10);   
 <transformation monoid of degree 10 with 20 generators>]]></Log>
     </Description>
@@ -221,9 +220,9 @@ gap> S := RandomTransformationSemigroup(5, 5);
       <A>n</A> with <A>m</A> generators.
       <Log><![CDATA[
 gap> S := RandomPartialPermSemigroup(5, 5);
-<partial perm semigroup of rank 4 with 5 generators>
+<partial perm semigroup of rank 5 with 5 generators>
 gap> S := RandomPartialPermMonoid(5, 5);
-<partial perm monoid of degree 5 with 5 generators>]]></Log>
+<partial perm monoid of rank 5 with 5 generators>]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>

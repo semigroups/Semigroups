@@ -263,28 +263,29 @@ ent}"]]></Log>
           this option is <K>true</K>.
         </Item>
       </List>
-      <Log><![CDATA[#FIXME
-gap> S := FullTransformationSemigroup(3);
-<full transformation semigroup on 3 pts>
-gap> DotString(S);        
-"digraph  DClasses {\nnode [shape=plaintext]\nedge [color=red,arrowhe\
-ad=none]\n1 [shape=box style=dotted label=<\n<TABLE BORDER=\"0\" CELL\
-BORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"1\">\n<TR BO\
-RDER=\"0\"><TD COLSPAN=\"1\" BORDER=\"0\" >1</TD></TR><TR><TD BGCOLOR\
-=\"grey\">*</TD></TR>\n</TABLE>>];\n2 [shape=box style=dotted label=<\
-\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING\
-=\"0\" PORT=\"2\">\n<TR BORDER=\"0\"><TD COLSPAN=\"3\" BORDER=\"0\" >\
-2</TD></TR><TR><TD BGCOLOR=\"grey\">*</TD><TD BGCOLOR=\"grey\">*</TD>\
-<TD></TD></TR>\n<TR><TD BGCOLOR=\"grey\">*</TD><TD></TD><TD BGCOLOR=\
-\"grey\">*</TD></TR>\n<TR><TD></TD><TD BGCOLOR=\"grey\">*</TD><TD BGC\
-OLOR=\"grey\">*</TD></TR>\n</TABLE>>];\n3 [shape=box style=dotted lab\
-el=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPA\
-CING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER=\"0\
-\" >3</TD></TR><TR><TD BGCOLOR=\"grey\">*</TD></TR>\n<TR><TD BGCOLOR=\
-\"grey\">*</TD></TR>\n<TR><TD BGCOLOR=\"grey\">*</TD></TR>\n</TABLE>>\
-];\n1 -> 2\n2 -> 3\n }"
+      <Log><![CDATA[
+gap> S := FullTransformationMonoid(3);
+<full transformation monoid of degree 3>
+gap> DotString(S);
+"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=blac\
+k,arrowhead=none]\n1 [shape=box style=invisible label=<\n<TABLE BORDE\
+R=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"\
+1\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\" > 1</TD></TR>\
+<TR><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n2 [shape=box style\
+=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\
+\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR BORDER=\"0\"><TD COLSPAN=\"\
+3\" BORDER = \"0\" > 2</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD><TD BG\
+COLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLO\
+R=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</T\
+D></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><T\
+D BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n3 [shape=box style=invis\
+ible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\"\
+ CELLSPACING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BO\
+RDER = \"0\" > 3</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><\
+TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD></TR>\
+\n</TABLE>>];\n1 -> 2\n2 -> 3\n }"
 gap> FileString("t3.dot", DotString(S));
-966]]></Log>
+1040]]></Log>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -305,17 +306,17 @@ gap> FileString("t3.dot", DotString(S));
       For details about this file format, and information about how to display
       or edit this format see <URL>http://www.graphviz.org</URL>. <P/>
 
-      <Log><![CDATA[#FIXME 
+      <Example><![CDATA[
 gap> S := DualSymmetricInverseMonoid(4);
-<inverse bipartition monoid on 4 pts with 3 generators>
+<inverse block bijection monoid of degree 4 with 3 generators>
 gap> DotSemilatticeOfIdempotents(S);
-"graph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph cluste\
-r_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 8 12 13 \n}\nsubgraph clus\
-ter_3{\n2 3 10 4 6 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3 -- \
-1\n4 -- 1\n5 -- 2\n5 -- 3\n5 -- 4\n6 -- 1\n7 -- 1\n8 -- 2\n8 -- 6\n8 \
--- 7\n9 -- 1\n10 -- 1\n11 -- 2\n11 -- 9\n11 -- 10\n12 -- 3\n12 -- 6\n\
-12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15 -\
-- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"]]></Log>
+"//dot\ngraph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph \
+cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
+ cluster_3{\n2 10 6 3 4 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3\
+ -- 1\n4 -- 1\n5 -- 2\n5 -- 3\n5 -- 4\n6 -- 1\n7 -- 1\n8 -- 2\n8 -- 6\
+\n8 -- 7\n9 -- 1\n10 -- 1\n11 -- 2\n11 -- 9\n11 -- 10\n12 -- 3\n12 -- \
+6\n12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15\
+ -- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

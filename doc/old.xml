@@ -433,13 +433,13 @@ gap> Size(S);
       <A>img</A> is at most <A>m</A>.
 
       <Log>
-gap> RandomIdempotent([ 1, 2, 3 ], 5);
+gap> RandomIdempotent([1, 2, 3], 5);
 Transformation( [ 1, 2, 3, 1, 3 ] )
-gap> RandomIdempotent([ 1, 2, 3 ], 4);
+gap> RandomIdempotent([1, 2, 3], 4);
 Transformation( [ 1, 2, 3, 3 ] )
-gap> RandomIdempotent([ 1, 2, 3 ], 3);            
+gap> RandomIdempotent([1, 2, 3], 3);            
 Transformation( [ 1, 2, 3 ] )
-gap> RandomIdempotent([ 1, 2, 4, 5, 6 ], 10);
+gap> RandomIdempotent([1, 2, 4, 5, 6], 10);
 Transformation( [ 1, 2, 6, 4, 5, 6, 2, 5, 1, 6 ] )</Log>
     </Description>
   </ManSection>
@@ -697,11 +697,11 @@ gap> GradedKernelsOfTransSemigroup(S);
   second argument <A>n</A> should be a positive integer not greater than the
   degree of <A>S</A>.  <C>ImagesOfTransSemigroup</C> returns the  <Ref
     Func="Orb" BookName="orb"/> object: 
-  <Log>Orb(S, [1..Degree(S)], OnSets);</Log> which contains the image sets of
+  <Log>Orb(S, [1 .. Degree(S)], OnSets);</Log> which contains the image sets of
   all the transformations belonging to <A>S</A>.  <P/>
   
   <C>KernelsOfTransSemigroup</C> returns the <Ref Func="Orb" BookName="orb"/>
-  object: <Log>Orb(S, [1,..Degree(S)], OnKernelsAntiAction);</Log> <P/> If the
+  object: <Log>Orb(S, [1 .. Degree(S)], OnKernelsAntiAction);</Log> <P/> If the
   optional second argument <A>n</A> (a positive integer) is present, then only
   the images or kernels of size at least <A>n</A> are found.<P/>
  

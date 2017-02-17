@@ -177,7 +177,7 @@ gap> S := Semigroup(Transformation([1, 2, 3, 3]),
       the option <C>small</C> from the default value of <A>false</A> use:
 
 <Log><![CDATA[
-gap> SEMIGROUPS_DefautlOptionsRec.small := true;
+gap> SEMIGROUPS.DefaultOptionsRec.small := true;
 true]]></Log>
 
     If you want to change the default values of the options stored in <Ref
