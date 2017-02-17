@@ -1527,6 +1527,17 @@ false
 gap> I = S;
 true
 
+# Problem with IsIdempotentGenerated for Rees 0-matrix semigroups over
+# non-groups
+gap> mat := [[
+>  Transformation([2, 3, 1]),
+>  Transformation([2, 1]),
+>  Transformation([1, 2, 1])]];;
+gap> R := ReesZeroMatrixSemigroup(FullTransformationMonoid(3), mat);
+<Rees 0-matrix semigroup 3x1 over <full transformation monoid of degree 3>>
+gap> IsIdempotentGenerated(R);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
