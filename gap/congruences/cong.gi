@@ -427,14 +427,11 @@ function(class, elm)
   return EquivalenceClassOfElementNC(cong, Representative(class) * elm);
 end);
 
-BindGlobal("_GenericCongLookup",
-function(cong)
+SEMIGROUPS._GenericCongLookup := function(cong)
   local S, lookup, class, nr, elm;
+
   S := Range(cong);
-  if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
-                  "<cong> must be over a finite semigroup,");
-  elif not IsEnumerableSemigroupRep(S) then
+  if not IsEnumerableSemigroupRep(S) then
     TryNextMethod();
   fi;
   lookup := [1 .. Size(S)];
@@ -445,25 +442,40 @@ function(cong)
     od;
   od;
   return lookup;
-end);
+end;
 
 InstallMethod(EquivalenceRelationLookup,
 "for a semigroup congruence",
 [IsSemigroupCongruence],
-_GenericCongLookup);
+function(cong)
+  if not IsFinite(Range(cong)) then
+    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
+                  "<cong> must be over a finite semigroup,");
+  fi;
+  return SEMIGROUPS._GenericCongLookup(cong);
+end);
 
 InstallMethod(EquivalenceRelationLookup,
 "for a left semigroup congruence",
 [IsLeftSemigroupCongruence],
-_GenericCongLookup);
+function(cong)
+  if not IsFinite(Range(cong)) then
+    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
+                  "<cong> must be over a finite semigroup,");
+  fi;
+  return SEMIGROUPS._GenericCongLookup(cong);
+end);
 
 InstallMethod(EquivalenceRelationLookup,
 "for a right semigroup congruence",
 [IsRightSemigroupCongruence],
-_GenericCongLookup);
-
-MakeReadWriteGlobal("_GenericCongLookup");
-Unbind(_GenericCongLookup);
+function(cong)
+  if not IsFinite(Range(cong)) then
+    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
+                  "<cong> must be over a finite semigroup,");
+  fi;
+  return SEMIGROUPS._GenericCongLookup(cong);
+end);
 
 BindGlobal("_GenericCongCanonicalLookup",
 function(cong)

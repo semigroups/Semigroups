@@ -57,19 +57,6 @@ function(poset, x)
   return x >= 1 and x <= Length(poset);
 end);
 
-SEMIGROUPS.PrincipalXCongruencePoset := function(S, restriction,
-                                                 cong_func, calling_func)
-  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
-    ErrorNoReturn("Semigroups: ", calling_func, ": usage,\n",
-                  "first argument <S> must be an enumerable finite semigroup,");
-  fi;
-  if not IsSubset(S, restriction) then
-    ErrorNoReturn("Semigroups: ", calling_func, ": usage,\n",
-                  "<restriction> must be a subset of <S>,");
-  fi;
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S, restriction, cong_func);
-end;
-
 SEMIGROUPS.PrincipalXCongruencePosetNC := function(S, restriction, cong_func)
   local report, pairs, total, congs, nrcongs, children, parents, last_collected,
         nr, pair, badcong, newchildren, newparents, newcong, i, c, p, po, poset;
@@ -386,29 +373,45 @@ InstallMethod(PosetOfPrincipalLeftCongruences,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  return
-    SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                         LeftSemigroupCongruence,
-                                         "PosetOfPrincipalLeftCongruences");
+  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
+    ErrorNoReturn("Semigroups: PosetOfPrincipalLeftCongruences: usage,\n",
+                  "first argument <S> must be an enumerable finite semigroup,");
+  elif not IsSubset(S, restriction) then
+    ErrorNoReturn("Semigroups: PosetOfPrincipalLeftCongruences: usage,\n",
+                  "<restriction> must be a subset of <S>,");
+  fi;
+  return SEMIGROUPS.PrincipalXCongruencePosetNC(S, restriction,
+                                                LeftSemigroupCongruence);
 end);
 
 InstallMethod(PosetOfPrincipalRightCongruences,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  return
-    SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                         RightSemigroupCongruence,
-                                         "PosetOfPrincipalRightCongruences");
+  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
+    ErrorNoReturn("Semigroups: PosetOfPrincipalRightCongruences: usage,\n",
+                  "first argument <S> must be an enumerable finite semigroup,");
+  elif not IsSubset(S, restriction) then
+    ErrorNoReturn("Semigroups: PosetOfPrincipalRightCongruences: usage,\n",
+                  "<restriction> must be a subset of <S>,");
+  fi;
+  return SEMIGROUPS.PrincipalXCongruencePosetNC(S, restriction,
+                                                RightSemigroupCongruence);
 end);
 
 InstallMethod(PosetOfPrincipalCongruences,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  return SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                              SemigroupCongruence,
-                                              "PosetOfPrincipalCongruences");
+  if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
+    ErrorNoReturn("Semigroups: PosetOfPrincipalCongruences: usage,\n",
+                  "first argument <S> must be an enumerable finite semigroup,");
+  elif not IsSubset(S, restriction) then
+    ErrorNoReturn("Semigroups: PosetOfPrincipalCongruences: usage,\n",
+                  "<restriction> must be a subset of <S>,");
+  fi;
+  return SEMIGROUPS.PrincipalXCongruencePosetNC(S, restriction,
+                                                SemigroupCongruence);
 end);
 
 InstallMethod(MinimalLeftCongruencesOfSemigroup,
