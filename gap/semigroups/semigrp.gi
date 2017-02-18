@@ -486,8 +486,8 @@ function(S, coll, opts)
                                                    coll)) then
     ErrorNoReturn("Semigroups: ClosureSemigroup: usage,\n",
                   "the first argument (a semigroup) and the second argument ",
-                  "(a mult. element coll.) cannot be used to generate a ",
-                  "semigroup,");
+                  "(a multiplicative\nelement collection) cannot be used to ",
+                  "generate a semigroup,");
   fi;
 
   # opts is copied and processed here to avoid doing it repeatedly in
@@ -524,8 +524,8 @@ function(S, coll, opts)
                                                    coll)) then
     ErrorNoReturn("Semigroups: ClosureMonoid: usage,\n",
                   "the first argument (a monoid) and the second argument ",
-                  "(a mult. element with one coll.) cannot be used to ", 
-                  "generate a semigroup,");
+                  "(a multiplicative\nelement with one collection) cannot be ",
+                  "used to generate a monoid,");
   fi;
 
   # opts is copied and processed here to avoid doing it repeatedly in
@@ -695,8 +695,8 @@ function(S, coll, opts)
                                                    coll)) then
     ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
                   "the first argument (a semigroup) and the second argument ",
-                  "(a mult. element coll.) cannot be used to generate a ",
-                  "semigroup,");
+                  "(a multiplicative\nelement collection) cannot be used to ",
+                  "generate an inverse semigroup,");
   fi;
 
   # opts is copied and processed here to avoid doing it repeatedly in
@@ -720,7 +720,7 @@ function(S, coll, opts)
   # ClosureSemigroupOrMonoidNC
 
   if not IsGeneratorsOfInverseSemigroup(coll) then
-    ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: ClosureInverseMonoid: usage,\n",
                   "the second argument must satisfy ",
                   "`IsGeneratorsOfInverseSemigroup',");
   elif IsSemigroup(coll) then
@@ -737,10 +737,10 @@ function(S, coll, opts)
   if ElementsFamily(FamilyObj(S)) <> FamilyObj(Representative(coll))
       or not IsGeneratorsOfSemigroup(Concatenation(GeneratorsOfSemigroup(S),
                                                    coll)) then
-    ErrorNoReturn("Semigroups: ClosureInverseSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: ClosureInverseMonoid: usage,\n",
                   "the first argument (a semigroup) and the second argument ",
-                  "(a mult. element coll.) cannot be used to generate a ",
-                  "semigroup,");
+                  "(a multiplicative\nelement collection) cannot be used to ",
+                  "generate an inverse monoid,");
   fi;
   
   # opts is copied and processed here to avoid doing it repeatedly in

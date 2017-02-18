@@ -72,7 +72,7 @@ function(G)
   local H, gens;
 
   if not IsGroupAsSemigroup(G) then 
-    ErrorNoReturn("Semigroup: IsomorphismMatrixGroup: usage,\n",
+    ErrorNoReturn("Semigroups: IsomorphismMatrixGroup: usage,\n",
                   "the argument must be a group (as semigroup),");
   fi;
 

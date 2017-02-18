@@ -18,7 +18,7 @@ SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
   elif dataishashlen then
     return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
   else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.HashFunctionRZMSE: error, \n",
+    ErrorNoReturn("Semigroups: SEMIGROUPS.HashFunctionRZMSE: error,\n",
                   "this shouldn't happen,");
   fi;
 end;
@@ -981,7 +981,7 @@ function(x, hashlen)
     under := ChooseHashFunction(x![2], hashlen).func;
     data := ChooseHashFunction(x![2], hashlen).data;
     if not data = hashlen then
-      ErrorNoReturn("Semigroups: ChooseHashFunction: error, \n",
+      ErrorNoReturn("Semigroups: ChooseHashFunction: error,\n",
                     "cannot hash RZMS elements over this ",
                     "underlying semigroup,");
     fi;

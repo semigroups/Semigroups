@@ -524,8 +524,8 @@ the second argument must satisfy `IsGeneratorsOfInverseSemigroup',
 gap> T := ClosureInverseSemigroup(S, 
 > [PartialPerm([])], rec());
 Error, Semigroups: ClosureInverseSemigroup: usage,
-the first argument (a semigroup) and the second argument (a mult. element coll\
-.) cannot be used to generate a semigroup,
+the first argument (a semigroup) and the second argument (a multiplicative
+element collection) cannot be used to generate an inverse semigroup,
 gap> T := ClosureInverseSemigroup(S, 
 > [Bipartition([[1, 2, -4], [3, 4, -2], [-1, -3]])], rec());
 Error, Semigroups: ClosureInverseSemigroup: usage,
@@ -658,8 +658,8 @@ gap> S := Semigroup(Bipartition([[1, 3, -3], [2], [-1, -2]]),
 >                   Bipartition([[1, -3], [2, 3, -1], [-2]]));;
 gap> T := ClosureSemigroup(S, IdentityBipartition(4));
 Error, Semigroups: ClosureSemigroup: usage,
-the first argument (a semigroup) and the second argument (a mult. element coll\
-.) cannot be used to generate a semigroup,
+the first argument (a semigroup) and the second argument (a multiplicative
+element collection) cannot be used to generate a semigroup,
 
 # Test ClosureSemigroup 4
 gap> S := Semigroup(Bipartition([[1, 3, -3], [2], [-1, -2]]),
@@ -941,8 +941,8 @@ true
 gap> M := ClosureMonoid(OrderEndomorphisms(3),
 >                       DClass(M, PartialPerm([1 .. 3])));
 Error, Semigroups: ClosureMonoid: usage,
-the first argument (a monoid) and the second argument (a mult. element with on\
-e coll.) cannot be used to generate a semigroup,
+the first argument (a monoid) and the second argument (a multiplicative
+element with one collection) cannot be used to generate a monoid,
 
 # Test IsTrivial immediate method for monoids
 gap> S := Monoid(PartialPerm([1]));
@@ -974,13 +974,13 @@ gap> ClosureInverseMonoid(SymmetricInverseMonoid(3), PartialPerm([4 .. 6]),
 <inverse partial perm monoid of rank 6 with 5 generators>
 gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
 > Bipartition( [ [ 1, 2, -2 ], [ 3, -1 ], [ -3 ] ] ));
-Error, Semigroups: ClosureInverseSemigroup: usage,
+Error, Semigroups: ClosureInverseMonoid: usage,
 the second argument must satisfy `IsGeneratorsOfInverseSemigroup',
 gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
 > DualSymmetricInverseMonoid(4));
-Error, Semigroups: ClosureInverseSemigroup: usage,
-the first argument (a semigroup) and the second argument (a mult. element coll\
-.) cannot be used to generate a semigroup,
+Error, Semigroups: ClosureInverseMonoid: usage,
+the first argument (a semigroup) and the second argument (a multiplicative
+element collection) cannot be used to generate an inverse monoid,
 gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
 > DClass(DualSymmetricInverseMonoid(3), IdentityBipartition(3)));
 <inverse block bijection monoid of degree 3 with 3 generators>

@@ -16,7 +16,7 @@ gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
 # SEMIGROUPS.HashFunctionRZMSE
 gap> SEMIGROUPS.HashFunctionRZMSE([1, (), 2], "bananas", ReturnFail, false);
-Error, Semigroups: SEMIGROUPS.HashFunctionRZMSE: error, 
+Error, Semigroups: SEMIGROUPS.HashFunctionRZMSE: error,
 this shouldn't happen,
 
 # ActionDegree for an RZMS
