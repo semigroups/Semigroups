@@ -57,6 +57,16 @@ cd $ORB
 ./configure $PKG_FLAGS
 make
 cd ..
+echo "Downloading $PROFILING..."
+curl -LO https://github.com/gap-packages/profiling/releases/download/v$PROFILING/profiling-$PROFILING.tar.gz
+tar xzf profiling-$PROFILING.tar.gz
+rm profiling-$PROFILING.tar.gz
+mv profiling-$PROFILING profiling
+cd profiling
+./autogen.sh
+./configure $PKG_FLAGS
+make
+cd ..
 echo "Downloading $GENSS..."
 curl -LO http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GENSS.tar.gz
 tar xzf $GENSS.tar.gz

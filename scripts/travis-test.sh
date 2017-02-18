@@ -18,5 +18,20 @@ cd pkg/semigroups
 echo -e "\nRunning gaplint..."
 ../../../gaplint/gaplint.py gap/*/*.gi | tee -a ../../testlog.txt
 
+# Run coverage checks
+if [ ! -z "$COVERAGE" ]; then
+  echo -e "\nPerforming code coverage tests..."
+  for testfile in tst/standard/*.tst; do
+    filename=${testfile##*/}
+    if [ ! `grep -E "$filename" .covignore` ]; then
+      scripts/travis-coverage.py $testfile | tee -a ../../testlog.txt
+    else
+      echo -e "\033[35mignoring $filename, since it is listed in .covignore\033[0m"
+    fi
+  done
+else
+  echo -e "\nNot performing code coverage tests..."
+fi
+
 # Check the logs for invalid phrases
-( ! grep -E "Diff|brk>|#E|Error|error|# WARNING|fail|Syntax warning|Couldn't open saved workspace" ../../testlog.txt )
+( ! grep -E "Diff|brk>|#E|Error|error|# WARNING|fail|Syntax warning|Couldn't open saved workspace|insufficient" ../../testlog.txt )
