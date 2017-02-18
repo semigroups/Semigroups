@@ -50,7 +50,7 @@
           <C><A>map</A>[i]</C> returns the <A>i</A>th component of the Rees
           (0-)matrix semigroup isomorphism by triple <A>map</A> when
           <C><A>i</A> = 1, 2, 3</C>; see
-          <Ref Oper = "ELM_LIST" Label = "for IsRMSIsoByTriple"/>. 
+          <Ref Oper = "ELM_LIST" Label = "for IsRMSIsoByTriple"/>.
         </Item>
 
         <Mark><C><A>map1</A> * <A>map2</A></C></Mark>
@@ -97,6 +97,11 @@
       </List> 
   
     </Subsection>
+
+    <#Include Label = "IsRMSIsoByTriple">
+    <#Include Label = "ELM_LIST">
+    <#Include Label = "CompositionMapping2">
+    <#Include Label = "ImagesElm">
 
     <!--********************************************************************-->
 
