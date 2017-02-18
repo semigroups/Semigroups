@@ -70,32 +70,32 @@ end);
 
 InstallMethod(FiniteCongruenceByGeneratingPairsPartition,
 "for a finite semigroup congruence by generating pairs rep",
-[IsFiniteCongruenceByGeneratingPairsRep], 
-function(cong) 
+[IsFiniteCongruenceByGeneratingPairsRep],
+function(cong)
   CONG_PAIRS_LOOKUP_PART(cong);
   return cong!.__fin_cong_partition;
 end);
 
-InstallMethod(FiniteCongruenceClassByGeneratingPairsCosetId, 
+InstallMethod(FiniteCongruenceClassByGeneratingPairsCosetId,
 "for a finite congruence class by gen pairs rep",
 [IsFiniteCongruenceClassByGeneratingPairsRep],
 CONG_PAIRS_CLASS_COSET_ID);
 
-InstallMethod(FiniteCongruenceClassByGeneratingPairsType, 
+InstallMethod(FiniteCongruenceClassByGeneratingPairsType,
 "for a finite congruence by gen pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep],
 function(cong)
   local IsXCongruenceClass;
 
-  if cong!.type = "right" then 
+  if cong!.type = "right" then
     IsXCongruenceClass := IsRightCongruenceClass;
-  elif cong!.type = "left" then  
+  elif cong!.type = "left" then
     IsXCongruenceClass := IsLeftCongruenceClass;
   else
     Assert(1, cong!.type = "twosided");
     IsXCongruenceClass := IsCongruenceClass;
   fi;
-   
+
   return NewType(FamilyObj(Range(cong)), IsXCongruenceClass
                  and IsFiniteCongruenceClassByGeneratingPairsRep);
 end);
@@ -105,7 +105,7 @@ end);
 #############################################################################
 
 SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
-  local pairs, cong, ufdata, uf2, i, ii, next, newtable;
+  local pairs, cong;
 
   if Range(c1) <> Range(c2) then
     ErrorNoReturn("Semigroups: SEMIGROUPS.JoinCongruences: usage,\n",
@@ -142,7 +142,7 @@ SEMIGROUPS.JoinCongruences := function(constructor, c1, c2)
   #    fi;
   #  od;
   #  SetAsLookupTable(cong, newtable);
-  #fi; 
+  #fi;
   # TODO if one or the other does not have the lookup could do TC on
   # which ever is smaller using the pairs of the other.
   return cong;
@@ -156,7 +156,7 @@ InstallMethod(SemigroupCongruenceByGeneratingPairs,
 "for an enumerable semigroup and a list of generating pairs",
 [IsEnumerableSemigroupRep, IsList], RankFilter(IsList and IsEmpty),
 function(S, genpairs)
-  local fam, cong, report, type, range, pair;
+  local fam, cong, pair;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -177,7 +177,7 @@ function(S, genpairs)
                                ElementsFamily(FamilyObj(S)));
 
   # Create the default type for the elements.
-  cong := Objectify(NewType(fam, 
+  cong := Objectify(NewType(fam,
                             IsFiniteCongruenceByGeneratingPairsRep
                             and IsSemigroupCongruence),
                     rec(genpairs := Immutable(genpairs),
@@ -194,7 +194,7 @@ InstallMethod(LeftSemigroupCongruenceByGeneratingPairs,
 "for an enumerable semigroup and a list of generating pairs",
 [IsEnumerableSemigroupRep, IsList], RankFilter(IsList and IsEmpty),
 function(S, genpairs)
-  local fam, cong, report, type, range, pair;
+  local fam, cong, pair;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -215,7 +215,7 @@ function(S, genpairs)
                                ElementsFamily(FamilyObj(S)));
 
   # Create the default type for the elements.
-  cong := Objectify(NewType(fam, 
+  cong := Objectify(NewType(fam,
                             IsFiniteCongruenceByGeneratingPairsRep
                             and IsLeftSemigroupCongruence),
                     rec(genpairs := Immutable(genpairs),
@@ -232,7 +232,7 @@ InstallMethod(RightSemigroupCongruenceByGeneratingPairs,
 "for an enumerable semigroup and a list of generating pairs",
 [IsEnumerableSemigroupRep, IsList], RankFilter(IsList and IsEmpty),
 function(S, genpairs)
-  local fam, cong, report, type, range, pair;
+  local fam, cong, pair;
 
   if not IsFinite(S) then
     TryNextMethod();
@@ -253,7 +253,7 @@ function(S, genpairs)
                                ElementsFamily(FamilyObj(S)));
 
   # Create the default type for the elements.
-  cong := Objectify(NewType(fam, 
+  cong := Objectify(NewType(fam,
                             IsFiniteCongruenceByGeneratingPairsRep
                             and IsRightSemigroupCongruence),
                     rec(genpairs := Immutable(genpairs),
@@ -344,10 +344,10 @@ function(cong)
   enum := EnumeratorCanonical(Range(cong));
   reps := List(part, x -> enum[x[1]]);
 
-  classes := EmptyPlist(Length(reps)); 
+  classes := EmptyPlist(Length(reps));
   next := 1;
 
-  for i in [1 .. Length(reps)] do  
+  for i in [1 .. Length(reps)] do
     classes[next] := EquivalenceClassOfElementNC(cong, reps[i]);
     SetFiniteCongruenceClassByGeneratingPairsCosetId(classes[next], i);
     SetSize(classes[next], Length(part[i]));
@@ -426,7 +426,6 @@ InstallMethod(IsSubrelation,
 [IsFiniteCongruenceByGeneratingPairsRep,
  IsFiniteCongruenceByGeneratingPairsRep],
 function(cong1, cong2)
-  local pair, fact_pair;
   # Only valid for certain combinations of types
   if not (cong1!.type = cong2!.type or cong1!.type = "twosided") then
     TryNextMethod();
@@ -455,13 +454,13 @@ function(pair, cong)
     ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
                   "elements of the first arg <pair> must be\n",
                   "in the range of the second arg <cong>,");
-  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then 
+  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
     return true;
   fi;
   return CONG_PAIRS_IN(cong, pair);
 end);
 
-InstallMethod(\=, 
+InstallMethod(\=,
 "for finite congruence by generating pairs rep and congruence with gen pairs",
 [IsFiniteCongruenceByGeneratingPairsRep,
  IsFiniteCongruenceByGeneratingPairsRep],
@@ -513,7 +512,7 @@ end);
 
 #############################################################################
 #############################################################################
-# Congruence classes 
+# Congruence classes
 #############################################################################
 #############################################################################
 
@@ -534,7 +533,7 @@ InstallMethod(EquivalenceClassOfElementNC,
 [IsFiniteCongruenceByGeneratingPairsRep, IsMultiplicativeElement],
 function(cong, elm)
   local class;
-  
+
   class := Objectify(FiniteCongruenceClassByGeneratingPairsType(cong),
                      rec(rep := elm, cong := cong));
 
@@ -568,7 +567,7 @@ InstallMethod(AsList,
 [IsFiniteCongruenceClassByGeneratingPairsRep],
 function(class)
   local cong, part, id, enum;
-  
+
   cong := EquivalenceClassRelation(class);
   part := FiniteCongruenceByGeneratingPairsPartition(cong);
   id   := FiniteCongruenceClassByGeneratingPairsCosetId(class);

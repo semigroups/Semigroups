@@ -15,3 +15,5 @@ ELM_LIST
 TransposedMat
 RandomMatrixOp
 Iterator
+_ProcessArgs
+_EquivalenceRelationCanonicalLookupRMS

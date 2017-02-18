@@ -118,7 +118,7 @@ function(S)
 
   for x in iter do
     if not x in T then
-      T := SEMIGROUPS.ClosureSemigroupDestructive(T, 
+      T := SEMIGROUPS.ClosureSemigroupDestructive(T,
                                                   [x],
                                                   SEMIGROUPS.OptionsRec(T));
       Add(gens, x);
@@ -344,7 +344,7 @@ function(coll)
 end);
 
 InstallMethod(SmallInverseSemigroupGeneratingSet,
-"for an inverse semigroup with inverse op", 
+"for an inverse semigroup with inverse op",
 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 S -> SmallSemigroupGeneratingSet(GeneratorsOfInverseSemigroup(S)));
 
@@ -509,7 +509,7 @@ function(S)
 
   return function(x, y)
     local u, v;
-    if x = y then 
+    if x = y then
       return false;
     fi;
     u := id[PositionCanonical(S, x)];

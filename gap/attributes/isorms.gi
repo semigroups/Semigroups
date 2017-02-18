@@ -666,7 +666,7 @@ end);
 #############################################################################
 
 InstallMethod(IsomorphismSemigroups, "for Rees matrix semigroups",
-[IsReesMatrixSemigroup and IsWholeFamily, 
+[IsReesMatrixSemigroup and IsWholeFamily,
  IsReesMatrixSemigroup and IsWholeFamily],
 function(R1, R2)
   local mat, m, n, g, g1, g2, iso, isograph, isogroup, map, l, tup,
@@ -715,7 +715,7 @@ function(R1, R2)
 end);
 
 InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups",
-[IsReesZeroMatrixSemigroup and IsWholeFamily, 
+[IsReesZeroMatrixSemigroup and IsWholeFamily,
  IsReesZeroMatrixSemigroup and IsWholeFamily],
 function(R1, R2)
   local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso, tuples,
@@ -863,7 +863,7 @@ InstallMethod(\<, "for objects in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
 function(x, y)
   if Source(x) <> Source(y) or Range(x) <> Range(y) then
-    return Source(x) < Source(y) 
+    return Source(x) < Source(y)
       or Source(x) = Source(y) and Range(x) < Range(y);
   fi;
   return OnTuples(GeneratorsOfSemigroup(Source(x)), x)
@@ -874,7 +874,7 @@ InstallMethod(\<, "for objects in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
 function(x, y)
   if Source(x) <> Source(y) or Range(x) <> Range(y) then
-    return Source(x) < Source(y) 
+    return Source(x) < Source(y)
       or Source(x) = Source(y) and Range(x) < Range(y);
   fi;
   return OnTuples(GeneratorsOfSemigroup(Source(x)), x)

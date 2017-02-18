@@ -57,8 +57,8 @@ function(poset, x)
   return x >= 1 and x <= Length(poset);
 end);
 
-SEMIGROUPS.PrincipalXCongruencePoset :=
-function(S, restriction, cong_func, calling_func)
+SEMIGROUPS.PrincipalXCongruencePoset := function(S, restriction,
+                                                 cong_func, calling_func)
   if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
     ErrorNoReturn("Semigroups: ", calling_func, ": usage,\n",
                   "first argument <S> must be an enumerable finite semigroup,");
@@ -70,8 +70,7 @@ function(S, restriction, cong_func, calling_func)
   return SEMIGROUPS.PrincipalXCongruencePosetNC(S, restriction, cong_func);
 end;
 
-SEMIGROUPS.PrincipalXCongruencePosetNC :=
-function(S, restriction, cong_func)
+SEMIGROUPS.PrincipalXCongruencePosetNC := function(S, restriction, cong_func)
   local report, pairs, total, congs, nrcongs, children, parents, last_collected,
         nr, pair, badcong, newchildren, newparents, newcong, i, c, p, po, poset;
 
@@ -387,20 +386,20 @@ InstallMethod(PosetOfPrincipalLeftCongruences,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  return SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                              LeftSemigroupCongruence,
-                                              "PosetOfPrincipalLeftCongruences"
-                                             );
+  return
+    SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
+                                         LeftSemigroupCongruence,
+                                         "PosetOfPrincipalLeftCongruences");
 end);
 
 InstallMethod(PosetOfPrincipalRightCongruences,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
-  return SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
-                                              RightSemigroupCongruence,
-                                              "PosetOfPrincipalRightCongruences"
-                                             );
+  return
+    SEMIGROUPS.PrincipalXCongruencePoset(S, restriction,
+                                         RightSemigroupCongruence,
+                                         "PosetOfPrincipalRightCongruences");
 end);
 
 InstallMethod(PosetOfPrincipalCongruences,

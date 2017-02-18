@@ -58,8 +58,8 @@ end;
 InstallMethod(ClosureSemigroupOrMonoidNC,
 "for a function, acting semigroup, finite list of mult. elts, and record",
 [IsFunction,
- IsActingSemigroup, 
- IsMultiplicativeElementCollection and IsList and IsFinite, 
+ IsActingSemigroup,
+ IsMultiplicativeElementCollection and IsList and IsFinite,
  IsRecord],
 function(Constructor, S, coll, opts)
   local t, old_o, o, rho_o, old_deg, oht, scc, old_scc, lookup, old_lookup,
@@ -76,7 +76,7 @@ function(Constructor, S, coll, opts)
 
   #TODO split this into two methods, one for collections and the other for
   # single elements
-  if Size(coll) > 1 then 
+  if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
     Sort(coll, function(x, y)
@@ -88,10 +88,10 @@ function(Constructor, S, coll, opts)
     od;
     return S;
   fi;
-  
+
   # Size(coll) = 1 . . .
 
-  if coll[1] in S then 
+  if coll[1] in S then
     return S;
   fi;
 
@@ -404,22 +404,22 @@ end);
 
 InstallMethod(ClosureInverseSemigroupOrMonoidNC,
 "for a function, inverse acting semigroup, finite list of mult. elts, and rec",
-[IsFunction, 
- IsInverseActingSemigroupRep, 
- IsMultiplicativeElementCollection and IsList and IsFinite, 
+[IsFunction,
+ IsInverseActingSemigroupRep,
+ IsMultiplicativeElementCollection and IsList and IsFinite,
  IsRecord],
 function(Constructor, S, coll, opts)
   local gens, T, o, n, x;
 
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
-  
+
   if IsSemigroupIdeal(S) then
     TryNextMethod();
   fi;
 
   #TODO split this into two methods
-  if Size(coll) > 1 then 
+  if Size(coll) > 1 then
     coll := Shuffle(Set(coll));
     n := ActionDegree(coll);
     Sort(coll, function(x, y)
@@ -432,8 +432,8 @@ function(Constructor, S, coll, opts)
 
     return S;
   fi;
-  
-  if coll[1] in S then 
+
+  if coll[1] in S then
     return S;
   fi;
 
@@ -593,7 +593,7 @@ end);
 
 # different method for inverse, same method for ideals
 
-InstallMethod(\in, 
+InstallMethod(\in,
 "for a multiplicative element and regular acting semigroup rep",
 [IsMultiplicativeElement, IsRegularActingSemigroupRep],
 function(x, S)

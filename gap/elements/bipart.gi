@@ -441,8 +441,8 @@ function(f, g)
   if ForAll([1 .. n], i -> i ^ g <= n) then
     return f * AsBipartition(g, DegreeOfBipartition(f));
   fi;
-  ErrorNoReturn("Semigroups: \\* (for a bipartition and partial perm): usage,\n",
-                "the partial perm must map [1 .. ", String(n), "] into\n",
+  ErrorNoReturn("Semigroups: \\* (for a bipartition and partial perm): usage,",
+                "\nthe partial perm must map [1 .. ", String(n), "] into\n",
                 "[1 .. ", String(n), "],");
 end);
 
@@ -931,7 +931,6 @@ function(x)
   fi;
   return AsBlockBijection(AsPartialPerm(x));
 end);
-
 
 InstallMethod(NaturalLeqBlockBijection, "for a bipartition and bipartition",
 IsIdenticalObj, [IsBipartition, IsBipartition],

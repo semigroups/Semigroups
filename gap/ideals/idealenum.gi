@@ -141,7 +141,7 @@ function(I)
   S := SupersemigroupOfIdeal(I);
 
   record :=
-    rec(pos := 1,      # the first position in <indices> whose descendants
+    rec(pos := 1, #      the first position in <indices> whose descendants
                        # might not have been installed
         indices := [], # the indices of elements in <I> in <S>
         nr := 0,       # the length of <indices>

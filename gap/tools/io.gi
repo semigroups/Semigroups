@@ -10,7 +10,7 @@
 
 # TODO what happens when we copy an iterator from pickled file, while the
 # original iterator is not finished?? Is there a problem with having the file
-# open twice? 
+# open twice?
 
 InstallGlobalFunction(IteratorFromPickledFile,
 function(str)

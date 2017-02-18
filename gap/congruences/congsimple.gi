@@ -221,7 +221,7 @@ end);
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a (0-)simple semigroup congruence",
-# FIXME Why does the string say (0-)simple and not simple? 
+# FIXME Why does the string say (0-)simple and not simple?
 [IsSimpleSemigroupCongruence],
 function(cong)
   local S, rmstable, nrclasses, iso, elms, table, newnums, next, rmsclass, i;

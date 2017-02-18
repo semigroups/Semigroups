@@ -11,7 +11,7 @@
 InstallMethod(ViewObj, "for a quotient semigroup",
 [IsQuotientSemigroup],
 function(S)
-  Print( "<quotient of ");
+  Print("<quotient of ");
   ViewObj(QuotientSemigroupCongruence(S));
   Print(">");
 end);

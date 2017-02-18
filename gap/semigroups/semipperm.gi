@@ -437,9 +437,9 @@ function(I)
 
   if HasGeneratorsOfSemigroup(I) then
     x := One(GeneratorsOfSemigroup(I));
-    if x in I then 
+    if x in I then
       return x;
-    else 
+    else
       return fail;
     fi;
   fi;
@@ -526,7 +526,7 @@ InstallMethod(ComponentRepsOfPartialPermSemigroup,
 function(S)
   local deg, pts, reps, next, opts, gens, o, out, i;
 
-  deg  := Maximum(DegreeOfPartialPermSemigroup(S), 
+  deg  := Maximum(DegreeOfPartialPermSemigroup(S),
                   CodegreeOfPartialPermSemigroup(S));
   pts  := [1 .. deg];
   reps := BlistList(pts, []);
@@ -579,7 +579,7 @@ InstallMethod(ComponentsOfPartialPermSemigroup,
 function(S)
   local deg, pts, comp, next, nr, opts, gens, o, out, i;
 
-  deg  := Maximum(DegreeOfPartialPermSemigroup(S), 
+  deg  := Maximum(DegreeOfPartialPermSemigroup(S),
                   CodegreeOfPartialPermSemigroup(S));
   pts  := [1 .. deg];
   comp := BlistList(pts, []);

@@ -158,10 +158,10 @@ function(arg)
     ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
                   "the number of generators of a free inverse semigroup must ",
                   "be non-zero,");
-  #elif not IsFinite(names) then
-  #  ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
-  #                "the number of generators of a free inverse semigroup must ",
-  #                "be finite,");
+    #elif not IsFinite(names) then
+    #  ErrorNoReturn("Semigroups: FreeInverseSemigroup: usage,\n",
+    #                "the number of generators of a free inverse semigroup ",
+    #                "must be finite,");
   fi;
 
   F := NewFamily("FreeInverseSemigroupElementsFamily",

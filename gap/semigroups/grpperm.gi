@@ -248,7 +248,7 @@ InstallMethod(IsomorphismPermGroup,
 function(S)
   local iso, inv;
 
-  if not IsBlockBijectionSemigroup(S) then 
+  if not IsBlockBijectionSemigroup(S) then
     TryNextMethod();
   elif not IsGroupAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",

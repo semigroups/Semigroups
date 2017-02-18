@@ -120,7 +120,8 @@ function(S)
   return IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
 end);
 
-InstallMethod(FactorisableDualSymmetricInverseSemigroup, "for a positive integer",
+InstallMethod(FactorisableDualSymmetricInverseSemigroup,
+"for a positive integer",
 [IsPosInt],
 function(n)
   SEMIGROUPS.PrintObsolete("FactorisableDualSymmetricInverseSemigroup",

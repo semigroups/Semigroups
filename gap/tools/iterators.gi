@@ -9,7 +9,7 @@
 ##
 
 # No attempt has been made to get good test coverage for this file, since it
-# will hopefully be binned in the near future. 
+# will hopefully be binned in the near future.
 
 InstallGlobalFunction(IteratorSortedOp,
 function(arg)
@@ -523,9 +523,9 @@ function(h)
                             [],
                             fail,
                             rec(PrintObj := function(iter)
-                              Print("<iterator of H-class>");
-                              return;
-                            end));
+                                  Print("<iterator of H-class>");
+                                  return;
+                                end));
 end);
 
 # same method for regular, different method for inverse
@@ -556,9 +556,9 @@ function(l)
                             [],
                             fail,
                             rec(PrintObj := function(iter)
-                              Print("<iterator of L-class>");
-                              return;
-                            end));
+                                  Print("<iterator of L-class>");
+                                  return;
+                                end));
 end);
 
 # Notes: this method makes Iterator of a semigroup much better!!
@@ -589,9 +589,9 @@ function(r)
                             [],
                             fail,
                             rec(PrintObj := function(iter)
-                              Print("<iterator of R-class>");
-                              return;
-                            end));
+                                  Print("<iterator of R-class>");
+                                  return;
+                                end));
 end);
 
 # JDM could use IteratorOfRClasses here instead, not sure which is better...
@@ -755,9 +755,9 @@ S -> IteratorByIterator(IteratorOfDClasses(S), Representative,
                         [],
                         fail,
                         rec(PrintObj := function(iter)
-                          Print("<iterator of D-class reps>");
-                          return;
-                        end)));
+                              Print("<iterator of D-class reps>");
+                              return;
+                            end)));
 
 #JDM could be a different method for regular/inverse using IteratorOfHClassData
 #(not yet written), see inverse_old.gi in semigroups-dev
@@ -770,9 +770,9 @@ S -> IteratorByIterator(IteratorOfHClasses(S),
                         [],
                         fail,
                         rec(PrintObj := function(iter)
-                          Print("<iterator of H-class reps>");
-                          return;
-                        end)));
+                              Print("<iterator of H-class reps>");
+                              return;
+                            end)));
 
 # different method for regular/inverse
 #FIXME move this!
@@ -784,9 +784,9 @@ S -> IteratorByIterator(IteratorOfLClasses(S),
                         [],
                         fail,
                         rec(PrintObj := function(iter)
-                          Print("<iterator of L-class reps>");
-                          return;
-                        end)));
+                              Print("<iterator of L-class reps>");
+                              return;
+                            end)));
 
 # same method for inverse/regular.
 #FIXME move this!
@@ -798,9 +798,9 @@ S -> IteratorByIterator(IteratorOfRClassData(S),
                         [],
                         fail,
                         rec(PrintObj := function(iter)
-                          Print("<iterator of R-class reps>");
-                          return;
-                        end)));
+                              Print("<iterator of R-class reps>");
+                              return;
+                            end)));
 
 # for regular acting semigroups...
 #FIXME move this!
@@ -935,12 +935,12 @@ function(s)
   fi;
   return IteratorByIterator(IteratorOfDClassData(s),
                             x -> x[6],
-                        [],
-                        fail,
-                        rec(PrintObj := function(iter)
-                          Print("<iterator of D-class reps>");
-                          return;
-                        end));
+                            [],
+                            fail,
+                            rec(PrintObj := function(iter)
+                                  Print("<iterator of D-class reps>");
+                                  return;
+                                end));
 end);
 
 # different method for inverse
@@ -953,9 +953,9 @@ S -> IteratorByIterator(IteratorOfLClassData(S),
                         [],
                         fail,
                         rec(PrintObj := function(iter)
-                          Print("<iterator of L-class reps>");
-                          return;
-                        end)));
+                              Print("<iterator of L-class reps>");
+                              return;
+                            end)));
 
 #for inverse acting semigroups...
 #FIXME move this!
@@ -1063,9 +1063,9 @@ S -> IteratorByIterator(IteratorOfRClassData(S),
                         [],
                         fail,
                         rec(PrintObj := function(iter)
-                          Print("<iterator of L-class reps>");
-                          return;
-                        end)));
+                              Print("<iterator of L-class reps>");
+                              return;
+                            end)));
 
 #FIXME move this!
 

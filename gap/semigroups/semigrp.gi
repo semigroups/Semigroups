@@ -21,8 +21,8 @@
 ##
 ##   4. RegularSemigroup
 ##
-##   5. ClosureSemigroup/Monoid 
-## 
+##   5. ClosureSemigroup/Monoid
+##
 ##   6. ClosureInverseSemigroup/Monoid
 ##
 ##   7. Subsemigroups
@@ -131,7 +131,7 @@ function(S)
 end);
 
 #TODO(later) the next method should really be in the library
-InstallMethod(IsGeneratorsOfInverseSemigroup, "for a list", 
+InstallMethod(IsGeneratorsOfInverseSemigroup, "for a list",
 [IsList], ReturnFalse);
 
 InstallMethod(Generators, "for a semigroup",
@@ -477,7 +477,7 @@ function(S, coll, opts)
   else
     coll := ShallowCopy(coll);
   fi;
- 
+
   # This error has to come after coll is turned into a list, otherwise it may
   # fail in Concatenation(GeneratorsOfSemigroup(S), coll).
 
@@ -515,7 +515,7 @@ function(S, coll, opts)
   else
     coll := ShallowCopy(coll);
   fi;
- 
+
   # This error has to come after coll is turned into a list, otherwise it may
   # fail in Concatenation(GeneratorsOfSemigroup(S), coll).
 
@@ -547,18 +547,18 @@ InstallMethod(ClosureSemigroupOrMonoidNC,
  IsRecord],
 function(Constructor, S, coll, opts)
   local n, T, U;
- 
+
   # EN_SEMI_CLOSURE copies the C++ semigroup if any whenever it is called, so
   # it is essential to filter coll to remove any elements that are already in S
-  # here. 
+  # here.
   coll := Filtered(coll, x -> not x in S);
-  if IsEmpty(coll) then 
+  if IsEmpty(coll) then
     return S;
   fi;
 
   # opts must be copied and processed before calling this function
   # coll must be copied before calling this function
-  
+
   coll := Shuffle(Set(coll));
   if IsGeneratorsOfActingSemigroup(coll) then
     n := ActionDegree(coll);
@@ -574,7 +574,7 @@ function(Constructor, S, coll, opts)
   # though it is then thrown away at the end of this function.
   T := EN_SEMI_CLOSURE(Constructor(S, coll, opts), S, coll);
 
-  if T = S then 
+  if T = S then
     return S;
   elif not IsBound(T!.__en_semi_cpp_semi) then
     return T;
@@ -635,7 +635,7 @@ InstallMethod(ClosureInverseSemigroup,
 "for an inverse semigroup with inverse op and a multiplicative element",
 [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
  IsMultiplicativeElement],
-function(S, x) 
+function(S, x)
   return ClosureInverseSemigroup(S, [x], SEMIGROUPS.OptionsRec(S));
 end);
 
@@ -643,7 +643,7 @@ InstallMethod(ClosureInverseMonoid,
 "for an inverse monoid with inverse op and a mult. element with one",
 [IsInverseMonoid and IsGeneratorsOfInverseSemigroup,
  IsMultiplicativeElementWithOne],
-function(S, x) 
+function(S, x)
   return ClosureInverseMonoid(S, [x], SEMIGROUPS.OptionsRec(S));
 end);
 
@@ -686,7 +686,7 @@ function(S, coll, opts)
   else
     coll := ShallowCopy(coll);
   fi;
-  
+
   # This error has to come after coll is turned into a list, otherwise it may
   # fail in Concatenation(GeneratorsOfSemigroup(S), coll).
 
@@ -730,7 +730,7 @@ function(S, coll, opts)
   else
     coll := ShallowCopy(coll);
   fi;
-  
+
   # This error has to come after coll is turned into a list, otherwise it may
   # fail in Concatenation(GeneratorsOfSemigroup(S), coll).
 
@@ -742,7 +742,7 @@ function(S, coll, opts)
                   "(a multiplicative\nelement collection) cannot be used to ",
                   "generate an inverse monoid,");
   fi;
-  
+
   # opts is copied and processed here to avoid doing it repeatedly in
   # ClosureInverseSemigroupOrMonoidNC
 
@@ -761,12 +761,12 @@ InstallMethod(ClosureInverseSemigroupOrMonoidNC,
  IsRecord],
 function(Constructor, S, coll, opts)
   local n, x, T, U, i;
-  
+
   # EN_SEMI_CLOSURE copies the C++ semigroup if any whenever it is called, so
   # it is essential to filter coll to remove any elements that are already in S
-  # here. 
+  # here.
   coll := Filtered(coll, x -> not x in S);
-  if IsEmpty(coll) then 
+  if IsEmpty(coll) then
     return S;
   fi;
 
@@ -799,8 +799,8 @@ function(Constructor, S, coll, opts)
   # kernel functions for initialising a C++ semigroup can be used on it, even
   # though it is then thrown away at the end of this function.
   T := EN_SEMI_CLOSURE(Semigroup(S, coll, opts), S, coll);
-  
-  if T = S then 
+
+  if T = S then
     return S;
   elif not IsBound(T!.__en_semi_cpp_semi) then
     # Currently there is no way to enter this clause
@@ -858,7 +858,6 @@ function(Constructor, S, coll, opts)
   return S;
 end);
 
-
 #############################################################################
 ## 7. Subsemigroups
 #############################################################################
@@ -884,8 +883,8 @@ function(S, func, limit)
   while Size(T) < limit and not IsDoneIterator(iter) do
     x := NextIterator(iter);
     if func(x) and not x in T then
-      T := SEMIGROUPS.ClosureSemigroupDestructive(T, 
-                                                  [x], 
+      T := SEMIGROUPS.ClosureSemigroupDestructive(T,
+                                                  [x],
                                                   SEMIGROUPS.OptionsRec(T));
     fi;
   od;

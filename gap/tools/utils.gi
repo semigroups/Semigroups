@@ -10,7 +10,7 @@
 ## this file contains utilies for use with the Semigroups package.
 
 # No attempt has been made to get good test coverage for this file, since it
-# will hopefully be binned in the near future. 
+# will hopefully be binned in the near future.
 
 #############################################################################
 # 1. Put things in the record SEMIGROUPS.
@@ -265,7 +265,7 @@ SEMIGROUPS.Test := function(arg)
   if IsEmpty(string_file) then
     Print("File: ", print_file, " is empty!\n");
     return fail;
-  elif Length(string_file) < 600 then 
+  elif Length(string_file) < 600 then
     Print("File: ", print_file, " probably contains no tests!\n");
   fi;
 
@@ -415,7 +415,7 @@ function()
   return;
 end);
 
-InstallGlobalFunction(SemigroupsTestStandard, 
+InstallGlobalFunction(SemigroupsTestStandard,
 function()
   local dir;
   dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
@@ -423,7 +423,7 @@ function()
   return SEMIGROUPS.RunTestsDir(dir);
 end);
 
-InstallGlobalFunction(SemigroupsTestExtreme, 
+InstallGlobalFunction(SemigroupsTestExtreme,
 function()
   local dir;
   dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
@@ -609,8 +609,8 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
         man := SEMIGROUPS.ManSectionType(obj);
         # we allow to use "Meth" for "Oper" but probably should issue a warning
         # if there is no at least one "Oper" for any "Meth"
-        if (man <> elt.name) and not (man in ["Attr", "Prop", "Oper"] and
-            elt.name = "Meth") then
+        if (man <> elt.name) and
+            not (man in ["Attr", "Prop", "Oper"] and elt.name = "Meth") then
           pos := OriginalPositionDocument(doc[2], elt.start);
           Print(pos[1], ":", pos[2], " : ", name, " uses ", elt.name,
                 " instead of ", man, "\n");
@@ -625,9 +625,9 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
   Print("****************************************************************\n");
   y := XMLElements(r, ["Ref"]);
   Print("Found ", Length(y), " Ref elements ");
-  yint := Filtered(y, elt ->
-          not IsBound(elt.attributes.BookName) or
-          (IsBound(elt.attributes.BookName) and elt.attributes.BookName="ref"));
+  yint := Filtered(y, elt -> not IsBound(elt.attributes.BookName)
+                             or (IsBound(elt.attributes.BookName)
+                                 and elt.attributes.BookName="ref"));
   Print("including ", Length(yint), " within the Reference manual\n");
   y := Filtered(yint, elt -> ForAny(types, t -> IsBound(elt.attributes.(t))));
 
@@ -726,10 +726,10 @@ SEMIGROUPS.CheckDocCoverage := function(doc)
     y := XMLElements(mansect, ["Example"]);
     if Length(y) = 0 then
       if IsBound(mansect.content[1].attributes) and
-        IsBound(mansect.content[1].attributes.Name) then
+          IsBound(mansect.content[1].attributes.Name) then
         Print(pos[1], ":", pos[2], " : ", mansect.content[1].attributes.Name);
       elif IsBound(mansect.content[2].attributes) and
-        IsBound(mansect.content[2].attributes.Name) then
+          IsBound(mansect.content[2].attributes.Name) then
         Print(pos[1], ":", pos[2], " : ", mansect.content[2].attributes.Name);
       else
         Print(pos[1], ":", pos[2], " : ",

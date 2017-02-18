@@ -565,7 +565,8 @@ end);
 
 InstallMethod(Idempotents,
 "for an L-class of an inverse acting semigroup rep",
-[IsInverseActingRepGreensClass and IsGreensLClass], L -> [RightOne(Representative(L))]);
+[IsInverseActingRepGreensClass and IsGreensLClass],
+L -> [RightOne(Representative(L))]);
 
 # same method for inverse ideals
 

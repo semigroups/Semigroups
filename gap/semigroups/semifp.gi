@@ -467,10 +467,10 @@ SEMIGROUPS.ExtRepObjToWord := function(ext_rep_obj)
   local n, word, val, pow, i;
   n    := Length(ext_rep_obj);
   word := [];
-  for i in [1, 3 .. n - 1] do 
+  for i in [1, 3 .. n - 1] do
     val := ext_rep_obj[i];
     pow := ext_rep_obj[i + 1];
-    while pow > 0 do 
+    while pow > 0 do
       Add(word, val);
       pow := pow - 1;
     od;
@@ -478,27 +478,27 @@ SEMIGROUPS.ExtRepObjToWord := function(ext_rep_obj)
   return word;
 end;
 
-InstallMethod(Factorization, "for an fp semigroup and element", 
-IsCollsElms, [IsFpSemigroup, IsElementOfFpSemigroup],
-function(S, x)
-  return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x));
-end);
-
 ## The following method could disappear if there are methods for Green's
 ## relations etc so that the other method in attr.gi can be used.
 #
 #InstallMethod(MultiplicativeNeutralElement, "for an fp semigroup",
-#[IsFpSemigroup], 
+#[IsFpSemigroup],
 #function(S)
 #  local e;
 #
-#  if not IsFinite(S) then 
+#  if not IsFinite(S) then
 #    TryNextMethod();
 #  fi;
-#  for e in Idempotents(S) do 
-#    if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then 
+#  for e in Idempotents(S) do
+#    if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then
 #      return e;
 #    fi;
 #  od;
 #  return fail;
 #end);
+
+InstallMethod(Factorization, "for an fp semigroup and element",
+IsCollsElms, [IsFpSemigroup, IsElementOfFpSemigroup],
+function(S, x)
+  return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x));
+end);

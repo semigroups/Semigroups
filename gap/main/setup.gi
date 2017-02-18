@@ -14,7 +14,8 @@ SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
   fi;
   #Use some big primes that are near the default hash table size
   if IsNBitsPcWordRep(x![2]) then
-    return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data[2] + 1;
+    return (104723 * x![1] + 104729 * x![3] + func(x![2], data))
+      mod data[2] + 1;
   elif dataishashlen then
     return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
   else
@@ -72,14 +73,14 @@ end);
 #  return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 #end);
 #
-#InstallTrueMethod(IsActingSemigroup, 
+#InstallTrueMethod(IsActingSemigroup,
 #IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup);
 #
 #InstallImmediateMethod(GeneratorsOfMagma,
-#IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup, 
+#IsReesZeroMatrixSemigroup and IsGeneratorsOfActingSemigroup,
 #function(R)
-#  return GeneratorsOfReesMatrixSemigroupNC(R, 
-#                                           Rows(R), 
+#  return GeneratorsOfReesMatrixSemigroupNC(R,
+#                                           Rows(R),
 #                                           UnderlyingSemigroup(R),
 #                                           Columns(R));
 #end);
@@ -658,7 +659,7 @@ InstallMethod(RhoBound, "for a Rees 0-matrix semigroup",
 InstallMethod(LambdaBound, "for a matrix semigroup",
 [IsMatrixOverFiniteFieldSemigroup], S ->
 function(r)
-  if r = 0 then 
+  if r = 0 then
     return 1;
   elif r < 100 then
     return Size(GL(DimensionOfMatrixOverSemiringCollection(S), BaseDomain(S)));
@@ -972,7 +973,8 @@ function(x, hashlen)
 
   R := ReesMatrixSemigroupOfFamily(FamilyObj(x));
   if IsMultiplicativeZero(R, x) then
-    x := [, Representative(UnderlyingSemigroup(R)), ];
+    x := EmptyPlist(3);
+    x[2] := Representative(UnderlyingSemigroup(R));
   fi;
   if IsNBitsPcWordRep(x![2]) then
     under := ChooseHashFunction(x![2], hashlen).func;

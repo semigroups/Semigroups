@@ -17,9 +17,9 @@ InstallMethod(CanonicalTransformation, "for a transformation",
 [IsTransformation, IsInt],
 function(f, n)
   local digraph;
-  if n < DegreeOfTransformation(f) then 
-    ErrorNoReturn("Semigroups: CanonicalTransformation: usage,\n", 
-                  "the second argument (an integer) must be at least ", 
+  if n < DegreeOfTransformation(f) then
+    ErrorNoReturn("Semigroups: CanonicalTransformation: usage,\n",
+                  "the second argument (an integer) must be at least ",
                   "the degree of the first argument (a transformation),");
   fi;
 
@@ -42,7 +42,7 @@ function(im, ker)
 
   if flat <> [1 .. Length(flat)] then
     ErrorNoReturn("Semigroups: TransformationByImageAndKernel: usage,\n",
-                  "the union of the second argument (a partition) must ", 
+                  "the union of the second argument (a partition) must ",
                   "be [1 .. ", Length(flat), "],");
   fi;
 

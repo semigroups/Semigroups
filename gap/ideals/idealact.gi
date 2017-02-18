@@ -89,7 +89,7 @@ function(I)
   return SemigroupIdealData(I)!.dorbit;
 end);
 
-InstallMethod(PartialOrderOfDClasses, 
+InstallMethod(PartialOrderOfDClasses,
 "for a regular acting semigroup ideal rep",
 [IsSemigroupIdeal and IsRegularActingSemigroupRep],
 function(I)

@@ -142,12 +142,9 @@ end);
 InstallMethod(DegreeOfPBRCollection, "for a PBR collection",
 [IsPBRCollection],
 function(coll)
-  local deg;
-
   if IsPBRSemigroup(coll) then
     return DegreeOfPBRSemigroup(coll);
   fi;
-
   return DegreeOfPBR(coll[1]);
 end);
 

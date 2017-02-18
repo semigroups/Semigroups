@@ -243,7 +243,7 @@ function(R)
   local rep, x;
   rep := Representative(R);
   x := MultiplicativeZero(ReesMatrixSemigroupOfFamily(FamilyObj(rep)));
-  if (HasIsReesZeroMatrixSemigroup(R) and IsReesZeroMatrixSemigroup(R)) 
+  if (HasIsReesZeroMatrixSemigroup(R) and IsReesZeroMatrixSemigroup(R))
       or x in R then
     return x;
   fi;
@@ -256,7 +256,7 @@ InstallMethod(IsomorphismPermGroup,
 "for a subsemigroup of a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(S)
-  local rep, mat, G;
+  local r, mat, G, iso;
 
   if not IsGroupAsSemigroup(S) then
     ErrorNoReturn("Semigroups: IsomorphismPermGroup: usage,\n",
@@ -264,24 +264,19 @@ function(S)
                   "semigroup satisfying IsGroupAsSemigroup,");
   fi;
 
-  rep := Representative(S);
-  if rep![1] = 0 then # special case for the group consisting of 0
-    return MagmaIsomorphismByFunctionsNC(S, Group(()), x -> (), x -> rep);
+  r := Representative(S);
+  if r![1] = 0 then # special case for the group consisting of 0
+    return MagmaIsomorphismByFunctionsNC(S, Group(()), x -> (), x -> r);
   fi;
 
-  mat := Matrix(ReesMatrixSemigroupOfFamily(FamilyObj(rep)));
+  mat := Matrix(ReesMatrixSemigroupOfFamily(FamilyObj(r)));
   G := Group(List(GeneratorsOfSemigroup(S), x -> x![2] * mat[x![3]][x![1]]));
   UseIsomorphismRelation(S, G);
 
-  # gaplint: ignore 4
-  return MagmaIsomorphismByFunctionsNC(S,
-                                       G,
-                                       x -> x![2] * mat[x![3]][x![1]],
-                                       x -> RMSElement(S,
-                                                       rep![1],
-                                                       x *  mat[rep![3]][rep![1]] ^
-                                                       -1,
-                                                       rep![3]));
+  iso := MagmaIsomorphismByFunctionsNC;
+  return iso(S, G,
+             x -> x![2] * mat[x![3]][x![1]],
+             x -> RMSElement(S, r![1], x * mat[r![3]][r![1]] ^ -1, r![3]));
 end);
 
 ################################################################################
@@ -291,25 +286,29 @@ end);
 # This method is only required because of some problems in the library code for
 # Rees (0-)matrix semigroups.
 
-InstallMethod(Representative, 
-"for a Rees 0-matrix subsemigroup with rows, columns and matrix", 
-[IsReesZeroMatrixSubsemigroup and HasRows and HasColumns and HasMatrix], 
+InstallMethod(Representative,
+"for a Rees 0-matrix subsemigroup with rows, columns and matrix",
+[IsReesZeroMatrixSubsemigroup and HasRows and HasColumns and HasMatrix],
 function(R)
-  return Objectify(TypeReesMatrixSemigroupElements(R), 
-   [Rows(R)[1], Representative(UnderlyingSemigroup(R)), Columns(R)[1],
-    Matrix(R)]);
+  return Objectify(TypeReesMatrixSemigroupElements(R),
+                   [Rows(R)[1],
+                    Representative(UnderlyingSemigroup(R)),
+                    Columns(R)[1],
+                    Matrix(R)]);
 end);
 
 # This method is only required because of some problems in the library code for
 # Rees (0-)matrix semigroups.
 
-InstallMethod(Representative, 
-"for a Rees matrix subsemigroup with rows, columns, and matrix", 
-[IsReesMatrixSubsemigroup and HasRows and HasColumns and HasMatrix], 
+InstallMethod(Representative,
+"for a Rees matrix subsemigroup with rows, columns, and matrix",
+[IsReesMatrixSubsemigroup and HasRows and HasColumns and HasMatrix],
 function(R)
-  return Objectify(TypeReesMatrixSemigroupElements(R), 
-   [Rows(R)[1], Representative(UnderlyingSemigroup(R)), Columns(R)[1],
-    Matrix(R)]);
+  return Objectify(TypeReesMatrixSemigroupElements(R),
+                   [Rows(R)[1],
+                    Representative(UnderlyingSemigroup(R)),
+                    Columns(R)[1],
+                    Matrix(R)]);
 end);
 
 # same method for ideals
@@ -317,15 +316,15 @@ end);
 InstallMethod(GroupOfUnits, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(S)
-  local x, R, G, U;
+  local x, U;
 
   x := MultiplicativeNeutralElement(S);
 
   if MultiplicativeNeutralElement(S) = fail then
     return fail;
-  elif IsMultiplicativeZero(S, x) then 
+  elif IsMultiplicativeZero(S, x) then
     U := Semigroup(x);
-  else 
+  else
     U := Semigroup(RClassNC(S, x), rec(small := true));
   fi;
   SetIsGroupAsSemigroup(U, true);
@@ -585,7 +584,7 @@ end);
 
 InstallMethod(Idempotents,
 "for a Rees 0-matrix subsemigroup",
-[IsReesZeroMatrixSubsemigroup], 
+[IsReesZeroMatrixSubsemigroup],
 RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup) -
 RankFilter(IsReesZeroMatrixSubsemigroup) + 1,
 function(R)
@@ -882,11 +881,11 @@ function(R)
   return MagmaIsomorphismByFunctionsNC(R, S, iso, inv);
 end);
 
-InstallMethod(IsIdempotentGenerated, "for a Rees 0-matrix semigroup", 
-[IsReesZeroMatrixSemigroup], 
+InstallMethod(IsIdempotentGenerated, "for a Rees 0-matrix semigroup",
+[IsReesZeroMatrixSemigroup],
 function(R)
   local RR;
-  if not IsConnectedDigraph(RZMSDigraph(R)) then 
+  if not IsConnectedDigraph(RZMSDigraph(R)) then
     return false;
   fi;
   RR := Range(RZMSNormalization(R));
@@ -896,10 +895,10 @@ end);
 
 # The next two methods are just copies of the methods in the library but with
 # the rank increased so they are used in favour of the method for
-# IsEnumerableSemigroupRep 
+# IsEnumerableSemigroupRep
 
-InstallMethod(Size, "for a Rees matrix semigroup", 
-[IsReesMatrixSemigroup], 
+InstallMethod(Size, "for a Rees matrix semigroup",
+[IsReesMatrixSemigroup],
 RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
 function(R)
   # This is unreachable
@@ -909,7 +908,7 @@ function(R)
   return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R));
 end);
 
-InstallMethod(Size, "for a Rees 0-matrix semigroup", 
+InstallMethod(Size, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSemigroup],
 RankFilter(IsEnumerableSemigroupRep and HasGeneratorsOfSemigroup),
 function(R)
@@ -917,6 +916,6 @@ function(R)
   #if Size(UnderlyingSemigroup(R)) = infinity then
   #  return infinity;
   #fi;
-  return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R)) + 1;
+  return Length(Rows(R)) * Size(UnderlyingSemigroup(R)) * Length(Columns(R))
+         + 1;
 end);
-

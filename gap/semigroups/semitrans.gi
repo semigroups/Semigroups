@@ -80,7 +80,8 @@ function(list, S)
   return Monoid(gens);
 end);
 
-InstallMethod(DirectProductOp, "for a list and a transformation monoid as semigroup",
+InstallMethod(DirectProductOp,
+"for a list and a transformation monoid as semigroup",
 [IsList, IsTransformationSemigroup], 1, # to beat the next method
 function(list, S)
   local gens, deg, m, i, x;
@@ -89,7 +90,7 @@ function(list, S)
   if IsEmpty(list) then
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
                   "the first argument must be a non-empty list,");
-  elif not ForAll(list, T -> IsTransformationSemigroup(T) 
+  elif not ForAll(list, T -> IsTransformationSemigroup(T)
                   and IsMonoidAsSemigroup(T)) then
     TryNextMethod();
   fi;
@@ -121,13 +122,13 @@ function(list, S)
   elif ForAny(list, T -> not IsTransformationSemigroup(T)) then
     TryNextMethod();
   fi;
-  
+
   target := Product(list, Size);
   D := fail;
 
   dfs := function(image, deg, depth)
     local x, n, next;
-    if D <> fail and Size(D) = target then 
+    if D <> fail and Size(D) = target then
       return;
     elif depth = Length(list) then
       x := Transformation(image);
@@ -143,7 +144,7 @@ function(list, S)
     for x in list[depth] do
       next := Concatenation(image, ImageListOfTransformation(x, n) + deg);
       dfs(next, n + deg, depth);
-      if Size(D) = target then 
+      if Size(D) = target then
         return;
       fi;
     od;
@@ -444,7 +445,7 @@ function(S, T)
     fi;
   od;
 
-  if IsDoneIterator(SS) and IsDoneIterator(TT) then 
+  if IsDoneIterator(SS) and IsDoneIterator(TT) then
     # This line is executed by the tests but does not show as such in the code
     # coverage.
     return false; # S = T
@@ -520,7 +521,7 @@ function(coll, n)
   for i in [1 .. n] do
     graph[i] := [];
     for x in coll do
-      if i ^ x <= n then 
+      if i ^ x <= n then
         AddSet(graph[i], i ^ x);
       fi;
     od;
@@ -755,7 +756,7 @@ end);
 # there could be an even faster C/C++ version of this
 # TODO AntiIsomorphismTransformationSemigroup using LeftCayleyGraph
 
-InstallMethod(IsomorphismTransformationSemigroup, 
+InstallMethod(IsomorphismTransformationSemigroup,
 "for an enumerable semigroup",
 [IsEnumerableSemigroupRep], 2,
 # to beat the method in the library (which has "and HasGeneratorsOfSemigroup")
@@ -987,12 +988,12 @@ InstallMethod(EndomorphismMonoid, "for a digraph",
 function(digraph)
   local hook, S;
 
-  if HasGeneratorsOfEndomorphismMonoidAttr(digraph) 
+  if HasGeneratorsOfEndomorphismMonoidAttr(digraph)
       or SEMIGROUPS.DefaultOptionsRec.acting = false then
     return Monoid(GeneratorsOfEndomorphismMonoidAttr(digraph),
                   rec(small := true));
   fi;
- 
+
   S := [AsMonoid(IsTransformationMonoid, AutomorphismGroup(digraph))];
 
   hook := function(S, f)

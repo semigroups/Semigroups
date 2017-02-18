@@ -175,7 +175,7 @@ function(S)
 
   return function(x, y)
     local u, v;
-    if x = y then 
+    if x = y then
       return false;
     fi;
     u := OrbSCCLookup(o)[Position(o, LambdaFunc(S)(x))] - 1;
@@ -294,7 +294,7 @@ end);
 
 InstallMethod(IsMajorantlyClosed,
 "for inverse semigroup with inverse op and inverse semigroup with inverse op",
-[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup, 
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
  IsInverseSemigroup and IsGeneratorsOfInverseSemigroup],
 function(S, T)
   if not IsSubsemigroup(S, T) then

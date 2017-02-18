@@ -247,7 +247,7 @@ InstallMethod(GreensRClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   return EquivalenceClassOfElement(GreensRRelation(S), x);
@@ -257,7 +257,7 @@ InstallMethod(GreensLClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   return EquivalenceClassOfElement(GreensLRelation(S), x);
@@ -267,7 +267,7 @@ InstallMethod(GreensHClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   return EquivalenceClassOfElement(GreensHRelation(S), x);
@@ -277,7 +277,7 @@ InstallMethod(GreensDClassOfElement,
 "for a finite semigroup and multiplicative element",
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
-  if not IsFinite(S) then 
+  if not IsFinite(S) then
     TryNextMethod();
   fi;
   return EquivalenceClassOfElement(GreensDRelation(S), x);
@@ -319,7 +319,6 @@ function(H)
   return EquivalenceClassOfElement(GreensLRelation(Parent(H)),
                                    Representative(H));
 end);
-
 
 #############################################################################
 ## 4. Collections of classes, and reps

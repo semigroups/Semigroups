@@ -158,7 +158,7 @@ InstallMethod(RandomMatrixOp,
 function(R, n, ranks)
   if ForAny(ranks, x -> (x < 0) or (x > n)) then
     ErrorNoReturn("Semigroups: RandomMatrixOp: usage,\n",
-                  "the list of ranks has to consist of numbers >= 0 and <= ", 
+                  "the list of ranks has to consist of numbers >= 0 and <= ",
                   n, ",");
   fi;
   return Matrix(R, []);
@@ -319,7 +319,7 @@ end);
 InstallMethod(TransposedMatImmutable, "for a plist matrix over finite field",
 [IsMatrixOverFiniteField and IsPlistMatrixOverFiniteFieldRep],
 function(m)
-  if DimensionOfMatrixOverSemiring(m) = 0 then 
+  if DimensionOfMatrixOverSemiring(m) = 0 then
     return m;
   fi;
   return AsMatrix(IsMatrixOverFiniteField, m, TransposedMat(m!.mat));
@@ -577,10 +577,10 @@ InstallMethod(\<, "for a matrix over finite field",
 function(x, y)
   return DimensionOfMatrixOverSemiring(x) < DimensionOfMatrixOverSemiring(y)
     or (DimensionOfMatrixOverSemiring(x) = DimensionOfMatrixOverSemiring(y)
-        and BaseDomain(x) <> BaseDomain(y) 
+        and BaseDomain(x) <> BaseDomain(y)
         and Characteristic(BaseDomain(x)) < Characteristic(BaseDomain(y)))
     or (DimensionOfMatrixOverSemiring(x) = DimensionOfMatrixOverSemiring(y)
-        and BaseDomain(x) <> BaseDomain(y) 
+        and BaseDomain(x) <> BaseDomain(y)
         and Characteristic(BaseDomain(x)) = Characteristic(BaseDomain(y))
         and DegreeOverPrimeField(BaseDomain(x))
             < DegreeOverPrimeField(BaseDomain(y)))

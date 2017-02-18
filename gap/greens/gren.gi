@@ -377,12 +377,10 @@ end);
 # is one constant time check that the representative actually belongs to the
 # semigroup.
 
-
 InstallMethod(GreensRClassOfElementNC,
 "for a finite enumerable semigroup and multiplicative element",
 [IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
 GreensRClassOfElement);
-
 
 InstallMethod(GreensLClassOfElementNC,
 "for a finite enumerable semigroup and multiplicative element",
@@ -398,7 +396,6 @@ InstallMethod(GreensDClassOfElementNC,
 "for a finite enumerable semigroup and multiplicative element",
 [IsEnumerableSemigroupRep and IsFinite, IsMultiplicativeElement],
 GreensDClassOfElement);
-
 
 #############################################################################
 ## 5. Collections of classes, and reps

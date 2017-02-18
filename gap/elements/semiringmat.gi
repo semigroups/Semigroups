@@ -124,16 +124,16 @@ function(coll)
   local n;
   if IsGreensClass(coll) or IsSemigroup(coll) then
     return true;
-  elif (IsTropicalMaxPlusMatrixCollection(coll) 
-        or IsTropicalMinPlusMatrixCollection(coll)) 
+  elif (IsTropicalMaxPlusMatrixCollection(coll)
+        or IsTropicalMinPlusMatrixCollection(coll))
       and ForAny(coll, x -> ThresholdTropicalMatrix(x)
-                            <> ThresholdTropicalMatrix(coll[1])) then 
+                            <> ThresholdTropicalMatrix(coll[1])) then
     return false;
-  elif IsNTPMatrixCollection(coll) 
+  elif IsNTPMatrixCollection(coll)
       and (ForAny(coll, x -> ThresholdNTPMatrix(x)
-                             <> ThresholdNTPMatrix(coll[1])) 
+                             <> ThresholdNTPMatrix(coll[1]))
            or ForAny(coll, x -> PeriodNTPMatrix(x)
-                                <> PeriodNTPMatrix(coll[1]))) then 
+                                <> PeriodNTPMatrix(coll[1]))) then
     return false;
   fi;
   n := DimensionOfMatrixOverSemiring(coll[1]);
@@ -290,8 +290,8 @@ InstallMethod(Matrix, "for a semiring and homogeneous list",
 function(semiring, mat)
   local filter, entry_ok, checker, row;
 
-  if not IsEmpty(mat) and (not IsRectangularTable(mat) 
-      or Length(mat) <> Length(mat[1])) then
+  if not IsEmpty(mat)
+      and (not IsRectangularTable(mat) or Length(mat) <> Length(mat[1])) then
     ErrorNoReturn("Semigroups: Matrix: usage,\n",
                   "the 1st argument must be a square table,");
   elif IsField(semiring) and IsFinite(semiring) then
@@ -341,10 +341,10 @@ function(arg)
         return RandomMatrixCons(arg[1], arg[2], arg[3], arg[4]);
       fi;
     fi;
-  elif Length(arg) = 2 and IsSemiring(arg[1]) 
+  elif Length(arg) = 2 and IsSemiring(arg[1])
       and (IsInt(arg[2]) and arg[2] >= 0) then
     return RandomMatrixOp(arg[1], arg[2]);
-  elif Length(arg) = 3 and IsSemiring(arg[1]) 
+  elif Length(arg) = 3 and IsSemiring(arg[1])
       and (IsInt(arg[2]) and arg[2] >= 0)
       and (IsList(arg[3]) or IsPosInt(arg[3])) then
     return RandomMatrixOp(arg[1], arg[2], arg[3]);

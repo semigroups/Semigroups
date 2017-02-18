@@ -252,9 +252,10 @@ InstallMethod(\in,
 "for a multiplicative element and a Rees congruence class",
 [IsMultiplicativeElement, IsReesCongruenceClass],
 function(elm, class)
+  local rel;
   if class!.is_ideal_class then
-    return elm in SemigroupIdealOfReesCongruence(
-                    EquivalenceClassRelation(class));
+    rel := EquivalenceClassRelation(class);
+    return elm in SemigroupIdealOfReesCongruence(rel);
   else
     return elm = Representative(class);
   fi;

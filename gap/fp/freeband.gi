@@ -23,13 +23,13 @@ InstallMethod(ContentOfFreeBandElementCollection,
 [IsFreeBandElementCollection],
 function(coll)
   local n, content, w;
-  
+
   n := Length(coll[1]!.cont);
   content := BlistList([1 .. n], []);
 
-  for w in coll do 
+  for w in coll do
     UniteBlist(content, w!.cont);
-    if SizeBlist(content) = n then 
+    if SizeBlist(content) = n then
       break;
     fi;
   od;
@@ -87,7 +87,7 @@ InstallTrueMethod(IsFinite, IsFreeBandSubsemigroup);
 
 InstallGlobalFunction(FreeBand,
 function(arg)
-  local names, F, type, ngens, gens, word, filts, S, m;
+  local names, F, type, ngens, gens, filts, S, m;
 
   # Get and check the argument list, and construct names if necessary.
   if Length(arg) = 1 and IsInt(arg[1]) and 0 < arg[1] then
@@ -128,11 +128,11 @@ function(arg)
   filts := IsFreeBandCategory and IsAttributeStoringRep and IsWholeFamily and
            IsFreeBand;
 
-  if IsGeneratorsOfEnumerableSemigroup(gens) then 
+  if IsGeneratorsOfEnumerableSemigroup(gens) then
     filts := filts and IsEnumerableSemigroupRep;
   fi;
 
-  S := Objectify(NewType(FamilyObj(gens), filts), 
+  S := Objectify(NewType(FamilyObj(gens), filts),
                  rec(opts := SEMIGROUPS.DefaultOptionsRec));
 
   SetGeneratorsOfMagma(S, gens);
@@ -373,7 +373,7 @@ end);
 
 # The method below does not apply to S when it is in IsEnumerableSemigroupRep
 # since the rank of IsEnumerableSemigroupRep is highter than that of
-# IsFreeBandCategory. 
+# IsFreeBandCategory.
 
 InstallMethod(GreensDClassOfElement, "for a free band and element",
 [IsFreeBandCategory, IsFreeBandElement],
@@ -381,7 +381,7 @@ function(S, x)
   local type, D;
   #FIXME in the future when free bands are not in IsEnumerableSemigroupRep,
   # remove the next two lines
-  if IsEnumerableSemigroupRep(S) then 
+  if IsEnumerableSemigroupRep(S) then
     TryNextMethod();
   elif not x in S then
     ErrorNoReturn("Semigroups: GreensDClassOfElement: usage,\n",

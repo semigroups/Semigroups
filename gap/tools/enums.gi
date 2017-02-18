@@ -9,7 +9,7 @@
 ##
 
 # No attempt has been made to get good test coverage for this file, since it
-# will hopefully be binned in the near future. 
+# will hopefully be binned in the near future.
 
 # technical...
 
@@ -149,7 +149,7 @@ function(obj, record, baseenum, convert, filts)
   #
   record.ElementNumber := function(enum, pos)
     local enumofenums, baseenum, i;
-    if pos > Length(enum) then 
+    if pos > Length(enum) then
       return fail;
     fi;
     enumofenums := enum!.enumofenums;

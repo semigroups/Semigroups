@@ -386,13 +386,13 @@ InstallMethod(MaximalSubsemigroupsNC,
 "for a Rees 0-matrix subsemigroup and a record",
 [IsReesZeroMatrixSubsemigroup, IsRecord],
 function(R, opts)
-  local zero, x, type, contain, mat, rows, cols, I, L, G, lookup_cols, lookup_rows,
-  out, tot, dig, pos, remove, i, n, nbs, deg, l, r, dig_contain, count,
-  rectangles, bicomp_I, bicomp_L, b, invert, gens, one, reps, i1, l1, a, H1, l2,
-  i2, H2, rows_in, rows_out, cols_in, cols_out, failed, iso, inv, R_n, iso_p,
-  inv_p, ccs, comp_row, comp_col, comp, con, sup, m, lim, P, max, q, same_coset,
-  results, V, normal, trans, len, T, success, visited, conjugator, queue, u,
-  candidate, idems, recursion, genset, k, j, t, v, choice, gen;
+  local zero, x, type, contain, mat, rows, cols, I, L, G, lookup_cols,
+  lookup_rows, out, tot, dig, pos, remove, i, n, nbs, deg, l, r, dig_contain,
+  count, rectangles, bicomp_I, bicomp_L, b, invert, gens, one, reps, i1, l1, a,
+  H1, l2, i2, H2, rows_in, rows_out, cols_in, cols_out, failed, iso, inv, R_n,
+  iso_p, inv_p, ccs, comp_row, comp_col, comp, con, sup, m, lim, P, max, q,
+  same_coset, results, V, normal, trans, len, T, success, visited, conjugator,
+  queue, u, candidate, idems, recursion, genset, k, j, t, v, choice, gen;
 
   if not IsFinite(R)
       or not IsReesZeroMatrixSemigroup(R)

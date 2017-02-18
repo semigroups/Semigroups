@@ -65,13 +65,13 @@ InstallMethod(GeneratorsOfSemigroup,
 "for a matrix over finite field group with group generators",
 [IsMatrixOverFiniteFieldGroup and HasGeneratorsOfGroup], GeneratorsOfGroup);
 
-InstallMethod(IsomorphismMatrixGroup, 
+InstallMethod(IsomorphismMatrixGroup,
 "for a matrix over finite field group as semigroup",
 [IsMatrixOverFiniteFieldSemigroup],
 function(G)
   local H, gens;
 
-  if not IsGroupAsSemigroup(G) then 
+  if not IsGroupAsSemigroup(G) then
     ErrorNoReturn("Semigroups: IsomorphismMatrixGroup: usage,\n",
                   "the argument must be a group (as semigroup),");
   fi;
@@ -81,11 +81,11 @@ function(G)
     return GroupHomomorphismByFunction(G, H, x -> One(H), x -> One(G));
   fi;
 
-  if HasGeneratorsOfGroup(G) then 
+  if HasGeneratorsOfGroup(G) then
     gens := GeneratorsOfGroup(G);
   else
     gens := GeneratorsOfSemigroup(G);
-    if not IsGeneratorsOfMagmaWithInverses(gens) then 
+    if not IsGeneratorsOfMagmaWithInverses(gens) then
       TryNextMethod();
     fi;
   fi;
@@ -126,9 +126,9 @@ function(filt, R, G)
                                      AsList);
 end);
 
-InstallMethod(AsMatrixGroup, 
+InstallMethod(AsMatrixGroup,
 "for a matrix over finite field group as semigroup",
-[IsMatrixOverFiniteFieldSemigroup], 
+[IsMatrixOverFiniteFieldSemigroup],
 G -> Range(IsomorphismMatrixGroup(G)));
 
 InstallMethod(Size, "for a matrix over finite field group as semigroup",

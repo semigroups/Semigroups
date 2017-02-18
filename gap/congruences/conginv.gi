@@ -75,7 +75,7 @@ function(S, kernel, traceBlocks)
 end);
 
 InstallGlobalFunction(InverseSemigroupCongruenceByKernelTraceNC,
-[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup 
+[IsInverseSemigroup and IsGeneratorsOfInverseSemigroup
  and IsFinite and IsEnumerableSemigroupRep,
  IsSemigroup,
  IsDenseList],
@@ -257,7 +257,7 @@ function(pair, cong)
   fi;
   # Is (a^-1 a, b^-1 b) in the trace?
   if pair[1] ^ -1 * pair[1] in
-     First(cong!.traceBlocks, c -> pair[2] ^ -1 * pair[2] in c) then
+      First(cong!.traceBlocks, c -> pair[2] ^ -1 * pair[2] in c) then
     # Is ab^-1 in the kernel?
     if pair[1] * pair[2] ^ -1 in cong!.kernel then
       return true;
@@ -302,7 +302,7 @@ end);
 InstallMethod(\=,
 "for two inverse semigroup congruence classes",
 [IsInverseSemigroupCongruenceClassByKernelTrace,
-IsInverseSemigroupCongruenceClassByKernelTrace],
+ IsInverseSemigroupCongruenceClassByKernelTrace],
               function(c1, c2)
   return(EquivalenceClassRelation(c1) = EquivalenceClassRelation(c2) and
          [c1!.rep, c2!.rep] in EquivalenceClassRelation(c1));
@@ -363,7 +363,7 @@ InstallMethod(TraceOfSemigroupCongruence,
 [IsSemigroupCongruence],
 function(cong)
   local invcong;
-  if not IsInverseSemigroup(Range(cong)) 
+  if not IsInverseSemigroup(Range(cong))
       and IsGeneratorsOfInverseSemigroup(Range(cong)) then
     ErrorNoReturn("Semigroups: TraceOfSemigroupCongruence: usage,\n",
                   "<cong> must be over an inverse semigroup with inverse op,");
@@ -377,7 +377,7 @@ InstallMethod(KernelOfSemigroupCongruence,
 [IsSemigroupCongruence],
 function(cong)
   local invcong;
-  if not IsInverseSemigroup(Range(cong)) 
+  if not IsInverseSemigroup(Range(cong))
       and IsGeneratorsOfInverseSemigroup(Range(cong)) then
     ErrorNoReturn("Semigroups: KernelOfSemigroupCongruence: usage,\n",
                   "<cong> must be over an inverse semigroup with inverse op,");
@@ -397,10 +397,11 @@ function(cong)
                   "usage,\n",
                   "<cong> must be over an inverse semigroup with inverse op,");
   fi;
-  return SEMIGROUPS.KernelTraceClosure(S,
-                                   IdempotentGeneratedSubsemigroup(S),
-                                   List(Idempotents(S), e -> [e]),
-                                   GeneratingPairsOfSemigroupCongruence(cong));
+  return
+    SEMIGROUPS.KernelTraceClosure(S,
+                                  IdempotentGeneratedSubsemigroup(S),
+                                  List(Idempotents(S), e -> [e]),
+                                  GeneratingPairsOfSemigroupCongruence(cong));
 end);
 
 InstallMethod(JoinSemigroupCongruences,
@@ -471,17 +472,17 @@ function(c1, c2)
 end);
 
 SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
-  #
+  local idsmgp, idslist, slist, kernelgenstoapply, gen, nrk, nr,
+        traceUF, i, pos1, j, pos, hashlen, ht, right, genstoapply,
+        NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions,
+        compute_kernel, oldLookup, oldKernel, trace_unchanged, kernel_unchanged;
+
   # This function takes an inverse semigroup S, a subsemigroup ker, an
   # equivalence traceBlocks on the idempotents, and a list of pairs in S.
   # It returns the minimal congruence containing "kernel" in its kernel and
   # "traceBlocks" in its trace, and containing all the given pairs
   # TODO Review this JDM for use of Elements, AsList etc. Could iterators work
   # better?
-  local idsmgp, idslist, slist, kernelgenstoapply, gen, nrk, nr,
-        traceUF, i, pos1, j, pos, hashlen, ht, treehashsize, right, genstoapply,
-        NormalClosureInverseSemigroup, enumerate_trace, enforce_conditions,
-        compute_kernel, oldLookup, oldKernel, trace_unchanged, kernel_unchanged;
 
   idsmgp  := IdempotentGeneratedSubsemigroup(S);
   idslist := AsListCanonical(idsmgp);
@@ -523,10 +524,10 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   # The functions that do the work:
   #
   NormalClosureInverseSemigroup := function(S, K, coll)
+    local T, opts, x, list;
     # This takes an inv smgp S, an inv subsemigroup K, and some elms coll,
     # then creates the *normal closure* of K with coll inside S.
     # It assumes K is already normal.
-    local T, opts, x, list;
     T := ClosureInverseSemigroup(K, coll);
     while K <> T do
       K := T;
@@ -615,9 +616,9 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
           if a * idslist[e] in kernel then
             nrk := nrk + 1;
             AddSet(kernelgenstoapply, a);
-            break; 
+            break;
             # JDM is this correct? Why repeatedly add the same a to
-            # kernelgenstoapply? 
+            # kernelgenstoapply?
           fi;
         od;
       fi;

@@ -34,10 +34,10 @@ function(S)
   gr := DigraphReflexiveTransitiveClosure(gr);
   data := SemigroupData(S);
 
-  return 
+  return
   function(x, y)
     local u, v;
-    if x = y then 
+    if x = y then
       return false;
     fi;
     u := OrbSCCLookup(data)[Position(data, x)] - 1;
