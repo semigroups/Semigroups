@@ -593,7 +593,7 @@ InstallMethod(\*, "for matrices over finite field",
 function(x, y)
   if DimensionOfMatrixOverSemiring(x) <> DimensionOfMatrixOverSemiring(y)
       or BaseDomain(x) <> BaseDomain(y) then
-    ErrorNoReturn("Semigroups: \* (for matrices over a finite field): ",
+    ErrorNoReturn("Semigroups: \\* (for matrices over a finite field): ",
                   "usage,\nthe degree or domain of the arguments do not ",
                   "match,");
   fi;

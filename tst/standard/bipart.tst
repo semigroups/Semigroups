@@ -280,7 +280,7 @@ gap> Bipartition([[1], [2], [3, -3], [-1, -2]]) * (1, 3, 2);
 
 # bipartition: \*, for bipartition and perm 2/2
 gap> Bipartition([[1], [2], [3, -3], [-1, -2]]) * (1, 2)(4, 5);
-Error, Semigroups: * (for a bipartition and perm): usage,
+Error, Semigroups: \* (for a bipartition and perm): usage,
 the largest moved point of the perm must not be greater
 than the degree of the bipartition,
 
@@ -290,7 +290,7 @@ gap> (1, 2) * Bipartition([[1], [2], [3, -3], [-1, -2]]);
 
 # bipartition: \*, for perm and bipartition 2/2
 gap> (1, 2, 4) * Bipartition([[1], [2], [3, -3], [-1, -2]]);
-Error, Semigroups: * (for a perm and bipartition): usage,
+Error, Semigroups: \* (for a perm and bipartition): usage,
 the largest moved point of the perm must not be greater
 than the degree of the bipartition,
 
@@ -302,7 +302,7 @@ gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
 # bipartition: \*, for bipartition and transformation 2/2
 gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
 > Transformation([3, 4, 2, 4]);
-Error, Semigroups: * (for a bipartition and transformation): usage,
+Error, Semigroups: \* (for a bipartition and transformation): usage,
 the degree of the transformation must not be greater
 than the degree of the bipartition,
 
@@ -314,7 +314,7 @@ gap> Transformation([1, 3, 2])
 # bipartition: \*, for transformation and bipartition 2/2
 gap> Transformation([1, 4, 4, 1]) *
 > Bipartition([[1, 3], [2, -1], [-2, -3]]);
-Error, Semigroups: * (for a transformation and bipartition): usage,
+Error, Semigroups: \* (for a transformation and bipartition): usage,
 the degree of the transformation must not be greater
 than the degree of the bipartition,
 
@@ -326,7 +326,7 @@ gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
 # bipartition: \*, for bipartition and partial perm 2/2
 gap> Bipartition([[1, 2, -1, -2], [3, -3]]) *
 > PartialPerm([3, 2, 4]);
-Error, Semigroups: * (for a bipartition and partial perm): usage,
+Error, Semigroups: \* (for a bipartition and partial perm): usage,
 the partial perm must map [1 .. 3] into
 [1 .. 3],
 
@@ -336,7 +336,7 @@ gap> PartialPerm([1, 3, 2]) * Bipartition([[1, 3], [2, -1], [-2, -3]]);
 
 # bipartition: \*, for partial perm and bipartition 2/2
 gap> PartialPerm([1, 4]) * Bipartition([[1, 3], [2, -1], [-2, -3]]);
-Error, Semigroups: * (for a partial perm and a bipartition): usage,
+Error, Semigroups: \* (for a partial perm and a bipartition): usage,
 the partial perm must map [1 .. 3] into
 [1 .. 3],
 

@@ -91,7 +91,7 @@ Matrix(IsTropicalMaxPlusMatrix, [[7, 6, 7], [4, 6, 7], [4, 2, 4]], 9)
 gap> mat3 := RandomMatrix(IsTropicalMaxPlusMatrix, 20, 5);
 <20x20 tropical max-plus matrix>
 gap> mat2 * mat3;
-Error, Semigroups: * (for tropical max-plus matrices): usage,
+Error, Semigroups: \* (for tropical max-plus matrices): usage,
 the arguments do not have the same threshold,
 
 #T# maxplusmat: test tropical min-plus matrix code, 1/1
@@ -125,7 +125,7 @@ Matrix(IsTropicalMinPlusMatrix, [[2, 2], [2, 2]], 2)
 gap> mat3 := RandomMatrix(IsTropicalMinPlusMatrix, 20, 5);
 <20x20 tropical min-plus matrix>
 gap> mat2 * mat3;
-Error, Semigroups: * (for tropical min-plus matrices): usage,
+Error, Semigroups: \* (for tropical min-plus matrices): usage,
 the arguments do not have the same threshold,
 
 #T# maxplusmat: test projective max-plus matrix code, 1/1
@@ -183,7 +183,7 @@ Error, no 1st choice method found for `RandomMatrixCons' on 3 arguments
 gap> mat2 := RandomMatrix(IsNTPMatrix, 20, 4, 2);
 <20x20 ntp matrix>
 gap> mat * mat2;
-Error, Semigroups: * (for ntp matrices): usage,
+Error, Semigroups: \* (for ntp matrices): usage,
 the arguments must be matrices over the same semiring,
 gap> mat3 := RandomMatrix(IsNTPMatrix, 21, 4, 2);
 <21x21 ntp matrix>

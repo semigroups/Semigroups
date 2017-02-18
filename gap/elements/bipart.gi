@@ -393,7 +393,7 @@ function(x, p)
   if LargestMovedPoint(p) <= DegreeOfBipartition(x) then
     return x * AsBipartition(p, DegreeOfBipartition(x));
   fi;
-  ErrorNoReturn("Semigroups: \* (for a bipartition and perm): usage,\n",
+  ErrorNoReturn("Semigroups: \\* (for a bipartition and perm): usage,\n",
                 "the largest moved point of the perm must not be greater\n",
                 "than the degree of the bipartition,");
 end);
@@ -404,7 +404,7 @@ function(p, x)
   if LargestMovedPoint(p) <= DegreeOfBipartition(x) then
     return AsBipartition(p, DegreeOfBipartition(x)) * x;
   fi;
-  ErrorNoReturn("Semigroups: \* (for a perm and bipartition): usage,\n",
+  ErrorNoReturn("Semigroups: \\* (for a perm and bipartition): usage,\n",
                 "the largest moved point of the perm must not be greater\n",
                 "than the degree of the bipartition,");
 end);
@@ -415,7 +415,7 @@ function(x, f)
   if DegreeOfTransformation(f) <= DegreeOfBipartition(x) then
     return x * AsBipartition(f, DegreeOfBipartition(x));
   fi;
-  ErrorNoReturn("Semigroups: \* (for a bipartition and transformation): ",
+  ErrorNoReturn("Semigroups: \\* (for a bipartition and transformation): ",
                 "usage,\n",
                 "the degree of the transformation must not be greater\n",
                 "than the degree of the bipartition,");
@@ -427,7 +427,7 @@ function(f, g)
   if DegreeOfTransformation(f) <= DegreeOfBipartition(g) then
     return AsBipartition(f, DegreeOfBipartition(g)) * g;
   fi;
-  ErrorNoReturn("Semigroups: \* (for a transformation and bipartition): ",
+  ErrorNoReturn("Semigroups: \\* (for a transformation and bipartition): ",
                 "usage,\n",
                 "the degree of the transformation must not be greater\n",
                 "than the degree of the bipartition,");
@@ -441,7 +441,7 @@ function(f, g)
   if ForAll([1 .. n], i -> i ^ g <= n) then
     return f * AsBipartition(g, DegreeOfBipartition(f));
   fi;
-  ErrorNoReturn("Semigroups: \* (for a bipartition and partial perm): usage,\n",
+  ErrorNoReturn("Semigroups: \\* (for a bipartition and partial perm): usage,\n",
                 "the partial perm must map [1 .. ", String(n), "] into\n",
                 "[1 .. ", String(n), "],");
 end);
@@ -454,7 +454,7 @@ function(f, g)
   if ForAll([1 .. n], i -> i ^ f <= n) then
     return AsBipartition(f, DegreeOfBipartition(g)) * g;
   fi;
-  ErrorNoReturn("Semigroups: \* (for a partial perm and a bipartition): ",
+  ErrorNoReturn("Semigroups: \\* (for a partial perm and a bipartition): ",
                 "usage,\n",
                 "the partial perm must map [1 .. ", String(n), "] into\n",
                 "[1 .. ", String(n), "],");

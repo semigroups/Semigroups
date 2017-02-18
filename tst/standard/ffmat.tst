@@ -273,7 +273,7 @@ Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
 gap> mat2 := Matrix(GF(5), [[Z(5)]]);
 Matrix(GF(5), [[Z(5)]])
 gap> mat * mat2;
-Error, Semigroups: * (for matrices over a finite field): usage,
+Error, Semigroups: \* (for matrices over a finite field): usage,
 the degree or domain of the arguments do not match,
 
 #T# Test \*, wrong base field, 3/3
@@ -282,7 +282,7 @@ Matrix(GF(5), [[0*Z(5), Z(5)^3], [Z(5), 0*Z(5)]])
 gap> mat2 := Matrix(GF(7), [[0 * Z(7), Z(7) ^ 3], [Z(7), 0 * Z(7)]]);
 Matrix(GF(7), [[0*Z(7), Z(7)^3], [Z(7), 0*Z(7)]])
 gap> mat * mat2;
-Error, Semigroups: * (for matrices over a finite field): usage,
+Error, Semigroups: \* (for matrices over a finite field): usage,
 the degree or domain of the arguments do not match,
 
 #T# Test Display, 1/1

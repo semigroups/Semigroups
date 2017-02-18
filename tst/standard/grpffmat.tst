@@ -100,8 +100,8 @@ Error, Semigroups: ClosureGroup (for matrix over finite field group and matrix\
  the args must have the same base domain, degree, and
  every matrix in the second arg must be invertible,
 gap> G ^ x;
-Error, Semigroups: ^ (for matrix over finite field group and matrix over finit\
-e field): usage,
+Error, Semigroups: \^ (for matrix over finite field group and matrix over fini\
+te field): usage,
  the args must have the same base domain, degree, and
  the second arg must be invertible,
 gap> S := Group(Matrix(GF(3), []));;

@@ -163,7 +163,7 @@ function(G, x)
   if BaseDomain(G) <> BaseDomain(x)
       or DimensionOfMatrixOverSemiringCollection(G)
          <> DimensionOfMatrixOverSemiring(x) then
-    ErrorNoReturn("Semigroups: \^ (for matrix over finite field ",
+    ErrorNoReturn("Semigroups: \\^ (for matrix over finite field ",
                   "group and matrix over finite field): usage,\n",
                   " the args must have the same base domain, degree, and\n",
                   " the second arg must be invertible,");

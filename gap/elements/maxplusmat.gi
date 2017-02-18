@@ -379,7 +379,7 @@ function(x, y)
   n := Minimum(Length(x![1]), Length(y![1]));
   threshold := ThresholdTropicalMatrix(x);
   if threshold <> ThresholdTropicalMatrix(y) then
-    ErrorNoReturn("Semigroups: \* (for tropical max-plus matrices): usage,\n",
+    ErrorNoReturn("Semigroups: \\* (for tropical max-plus matrices): usage,\n",
                   "the arguments do not have the same threshold,");
   fi;
   xy := List([1 .. n], x -> EmptyPlist(n));
@@ -489,7 +489,7 @@ function(x, y)
   threshold := ThresholdTropicalMatrix(x);
 
   if threshold <> ThresholdTropicalMatrix(y) then
-    ErrorNoReturn("Semigroups: \* (for tropical min-plus matrices): usage,\n",
+    ErrorNoReturn("Semigroups: \\* (for tropical min-plus matrices): usage,\n",
                   "the arguments do not have the same threshold,");
   fi;
 
@@ -696,7 +696,7 @@ function(x, y)
   threshold := ThresholdNTPMatrix(x);
 
   if period <> PeriodNTPMatrix(y) or threshold <> ThresholdNTPMatrix(y) then
-    ErrorNoReturn("Semigroups: \* (for ntp matrices): usage,\n",
+    ErrorNoReturn("Semigroups: \\* (for ntp matrices): usage,\n",
                   "the arguments must be matrices over the same semiring,");
   fi;
 
