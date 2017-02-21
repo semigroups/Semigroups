@@ -135,14 +135,15 @@ SEMIGROUPS.RMSInducedFunction := function(R, l, g, x)
   n := Length(mat);
   out := EmptyPlist(m + n);
   out[1] := x;
-  #FIXME for loop for this and the next
-  out{[m + 1 .. n + m]} := List([m + 1 .. n + m],
-                                v -> mat[v ^ l - m][1 ^ l] * x
-                                         * (mat[v - m][1] ^ g) ^ -1);
 
-  out{[2 .. m]} := List([2 .. m],
-                        v -> (mat[(m + 1) ^ l - m][v ^ l]) ^ -1 * out[m + 1]
-                             * (mat[1][v] ^ g));
+  for i in [m + 1 .. m + n] do
+    out[i] := mat[i ^ l - m][1 ^ l] * x * (mat[i - m][1] ^ g) ^ -1;
+  od;
+
+  for i in [2 .. m] do
+    out[i] := mat[(m + 1) ^ l - m][i ^ l] ^ -1 * out[m + 1] * (mat[1][i] ^ g);
+  od;
+
   for j in [m + 2 .. n + m] do
     for i in [2 .. m] do
       if mat[j ^ l - m][i ^ l] <> out[j] * mat[j - m][i] ^ g * out[i] ^ -1 then
