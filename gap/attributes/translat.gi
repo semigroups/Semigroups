@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  translat.gi
-#Y  Copyright (C) 2015-16                     James D. Mitchell, Finn Smith
+#Y  Copyright (C) 2015-17                     James D. Mitchell, Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

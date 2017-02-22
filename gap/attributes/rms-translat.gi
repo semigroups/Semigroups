@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  rms-translat.gi
-#Y  Copyright (C) 2016                                            Finn Smith
+#Y  Copyright (C) 2016-17                                         Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
