@@ -142,7 +142,7 @@ end;
 # as well as restriction by the translation condition if Sa_i intersect Sa_k is
 # non-empty or a_i S intersect a_k S is non-empty.
 SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
-  local S, multtable, transpose, reps, repspos, dclasses, lclasses, rclasses,
+  local S, reps, repspos, dclasses, lclasses, rclasses,
         d, f, g, i, j, k, m, n, p, r, s, slist, fposrepk, gposrepk,
         possiblefrepvals, possiblegrepvals, whenboundfvals, whenboundgvals, pos,
         multtablepositionsets, transposepositionsets, posrepsks, posfrepsks,
@@ -163,9 +163,6 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
   for i in [1 .. n] do
     sortinglist[i] := Position(undosortinglist, i);
   od;
-  
-  multtable := MultiplicationTable(S);
-  transpose := TransposedMat(multtable);
   
   # TODO: for now, choose the reps by L/R classes - but better to choose 
   # minimal set A such that SA = AS = S.
@@ -202,17 +199,20 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
       od;
     fi;
   od;
-  
   m := Size(reps);
-  
+
+  #store which elements of the semigroups multiply each given element to form
+  #another given element
+  #eg., if a * b = a * c = d, with (a,b,c,d) having indices (i,j,k,l) 
+  #in the multiplication table, then we store [j,k] in the cell [i][l] 
   multtablepositionsets := List([1 .. n], x -> []);
   transposepositionsets := List([1 .. n], x -> []);
   for i in [1 .. n] do
     for j in [1 .. n] do
-      multtablepositionsets[i][j] := PositionsProperty(multtable[i],
-                                                       x -> x = j);
-      transposepositionsets[i][j] := PositionsProperty(transpose[i],
-                                                       x -> x = j);
+      multtablepositionsets[i][j] := PositionsProperty(slist,
+                                               x -> slist[i] * x = slist[j]);
+      transposepositionsets[i][j] := PositionsProperty(slist,
+                                               x -> x * slist[i] = slist[j]);
     od;
   od;
     
@@ -261,7 +261,7 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
         #restrict by the translation condition
         for p in multtablepositionsets[repspos[i]][posrepsks] do
           fvalsi := transposepositionsets[p][posfrepsks];
-          UniteSet(ftransrestrictionatstage[i][k], 
+          UniteSet(ftransrestrictionatstage[i][k],
                     Difference(possiblefrepvals[i], fvalsi));
           possiblefrepvals[i] := Intersection(possiblefrepvals[i], fvalsi);
         od;
@@ -349,19 +349,19 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
   
   unrestrict := function(k, unrestrictf)
     for i in [1 .. n] do
-        if whenboundgvals[i] = k then
-          Unbind(g[i]);
-          whenboundgvals[i] := 0;
-        fi;
-      od;
-      for i in [k .. m] do
-        UniteSet(possiblegrepvals[i], gtransrestrictionatstage[i][k]);
-        UniteSet(possiblefrepvals[i], flinkedrestrictionatstage[i][k]);
-        gtransrestrictionatstage[i][k] := [];
-        flinkedrestrictionatstage[i][k] := [];
-      od; 
+      if whenboundgvals[i] = k then
+        Unbind(g[i]);
+        whenboundgvals[i] := 0;
+      fi;
+    od;
+    for i in [k .. m] do
+      UniteSet(possiblegrepvals[i], gtransrestrictionatstage[i][k]);
+      UniteSet(possiblefrepvals[i], flinkedrestrictionatstage[i][k]);
+      gtransrestrictionatstage[i][k] := [];
+      flinkedrestrictionatstage[i][k] := [];
+    od; 
   
-    if(unrestrictf) then
+    if unrestrictf then
       for i in [1 .. n] do
         if whenboundfvals[i] = k then
           Unbind(f[i]);
@@ -378,7 +378,7 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
   end;
   
   reject := function(k)
-    if k = 0 then
+    if k = 0 then 
       return 0;
     fi;
     fposrepk := Position(possiblefrepvals[k], f[repspos[k]]);
@@ -387,20 +387,36 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
     else
       gposrepk := 0;
     fi;
-    if gposrepk < Size(possiblegrepvals[k]) then
+    
+    if gposrepk = 0 then
+      if fposrepk < Size(possiblefrepvals[k]) then
+        f[repspos[k]] := possiblefrepvals[k][fposrepk + 1];
+        unrestrict(k, true);
+        return k;
+      else
+        unrestrict(k, true);
+        return reject(k - 1);
+      fi;
+    elif gposrepk < Size(possiblegrepvals[k]) then
       g[repspos[k]] := possiblegrepvals[k][gposrepk + 1];
       unrestrict(k, false);
       return k;
     elif fposrepk < Size(possiblefrepvals[k]) then
       f[repspos[k]] := possiblefrepvals[k][fposrepk + 1];
-      Unbind(g[repspos[k]]);
+      if whenboundgvals[repspos[k]] = 0 then
+        Unbind(g[repspos[k]]);
+      fi;
       unrestrict(k, true);
       return k;
     else
       if whenboundfvals[repspos[k]] = 0 then
+        #this occurs iff f[repspos[k]] was set at stage k
+        #and not propagated from another rep
         Unbind(f[repspos[k]]);
       fi;
       if whenboundgvals[repspos[k]] = 0 then
+        #this occurs iff g[repspos[k]] was set at stage k
+        #and not propagated from another rep
         Unbind(g[repspos[k]]);
       fi;
       unrestrict(k, true);
@@ -411,11 +427,9 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
   bt := function(k)
     if k = 0 then
       return 0;
-    fi;
-    if k = m + 1 then
+    elif k = m + 1 then
       return k;
-    fi;
-    if k = m then
+    elif k = m then
       if not (propagatef(k) = fail or restrictfromf(k) = fail) then
         if not IsBound(g[repspos[k]]) then
           g[repspos[k]] := possiblegrepvals[k][1];
@@ -434,7 +448,7 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
       else
         return bt(reject(k));
       fi;
-    else 
+    else
       return bt(reject(k));
     fi;
   end;
