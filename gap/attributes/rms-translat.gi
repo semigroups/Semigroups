@@ -488,7 +488,7 @@ end;
 
 # Combine the previous methods to form the translational hull
 # Performance suffers greatly as the size of the group increases.
-SEMIGROUPS.TranslationalHullOfZeroSimpleElements := function(H)
+SEMIGROUPS.TranslationalHullElementsOfZeroSimple := function(H)
   local S, tt, failedcomponents, iterator, transfuncs, unboundpositions, gplist,
         L, R, linkedpairs, i, j, c, linkedpairfromfuncs, iso, inv, nrrows,
         nrcols, reesmatsemi, zero, fl, fr, l, r, t1, t2, funcs, fx, fy,
