@@ -8,7 +8,6 @@ $CXX --version
 SEMIDIR=$(pwd)
 
 # Get libsemigroups if appropriate
-echo -en 'travis_fold:start:GetLIBSEMIGROUPS\r'
 if [ -d src ]
 then
     cd src
@@ -16,20 +15,16 @@ then
     cd ..
 fi
 cd ..
-echo -en 'travis_fold:end:GetLIBSEMIGROUPS\r'
 
 # Download and compile GAP
-echo -en 'travis_fold:start:InstallGAP\r'
 git clone -b $GAP_BRANCH --depth=1 https://github.com/$GAP_FORK/gap.git
 cd gap
 ./configure --with-gmp=system $GAP_FLAGS
 make
 mkdir pkg
 cd ..
-echo -en 'travis_fold:end:InstallGAP\r'
 
 # Compile the Semigroups package
-echo -en 'travis_fold:start:BuildSemigroups\r'
 mv $SEMIDIR gap/pkg/semigroups
 cd gap/pkg/semigroups
 if [ -d src ]
@@ -39,10 +34,8 @@ then
     make
 fi
 cd ../..
-echo -en 'travis_fold:end:BuildSemigroups\r'
 
 # Get the packages
-echo -en 'travis_fold:start:InstallPackages\r'
 cd pkg
 echo "Downloading $GAPDOC..."
 curl -LO http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GAPDOC.tar.gz
@@ -74,4 +67,3 @@ cd digraphs
 ./configure $PKG_FLAGS
 make
 cd ../../..
-echo -en 'travis_fold:end:InstallPackages\r'
