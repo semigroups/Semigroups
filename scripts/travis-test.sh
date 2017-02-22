@@ -13,5 +13,10 @@ echo "LoadPackage(\"semigroups\", false); SemigroupsTestInstall(); Test(\"pkg/se
 echo "LoadPackage(\"semigroups\", false); Test(\"pkg/semigroups/tst/workspaces/load-workspace.tst\"); SemigroupsTestInstall(); quit; quit; quit;" | bin/gap.sh -L pkg/semigroups/tst/workspaces/test-output.w -A -r -m 1g -T 2>&1 | tee -a testlog.txt
 rm pkg/semigroups/tst/workspaces/test-output.w
 
+# Run gaplint
+cd pkg/semigroups
+echo -e "\nRunning gaplint..."
+../../../gaplint/gaplint.py gap/*/*.gi | tee -a ../../testlog.txt
+
 # Check the logs for invalid phrases
-( ! grep -E "Diff|brk>|#E|Error|error|# WARNING|fail|Syntax warning|Couldn't open saved workspace" testlog.txt )
+( ! grep -E "Diff|brk>|#E|Error|error|# WARNING|fail|Syntax warning|Couldn't open saved workspace" ../../testlog.txt )

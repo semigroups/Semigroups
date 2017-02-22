@@ -67,3 +67,7 @@ cd digraphs
 ./configure $PKG_FLAGS
 make
 cd ../../..
+
+# Get gaplint
+echo "Downloading gaplint..."
+hg clone https://bitbucket.org/james-d-mitchell/gaplint
