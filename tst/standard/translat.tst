@@ -159,6 +159,64 @@ gap> R := RightTranslations(S);
 gap> Size(R);
 55
 
+#T# Translations and translational hulls of monoids that couldn't be calculated
+gap> S := BrauerMonoid(5);;
+gap> L := LeftTranslations(S);
+Monoid( 
+[ <left translation on <regular bipartition *-monoid of size 945, degree 5 
+     with 3 generators>>, <left translation on <regular bipartition *-monoid 
+     of size 945, degree 5 with 3 generators>>, 
+  <left translation on <regular bipartition *-monoid of size 945, degree 5 
+     with 3 generators>>, <left translation on <regular bipartition *-monoid 
+     of size 945, degree 5 with 3 generators>> ] )
+gap> Size(L);
+945
+gap> R := RightTranslations(S);
+Monoid( 
+[ <right translation on <regular bipartition *-monoid of size 945, degree 5 
+     with 3 generators>>, <right translation on <regular bipartition *-monoid 
+     of size 945, degree 5 with 3 generators>>, 
+  <right translation on <regular bipartition *-monoid of size 945, degree 5 
+     with 3 generators>>, <right translation on <regular bipartition *-monoid 
+     of size 945, degree 5 with 3 generators>> ] )
+gap> Size(R);
+945
+gap> H := TranslationalHull(S);
+Monoid( 
+[ <linked pair of translations on <regular bipartition *-monoid of size 945, 
+     degree 5 with 3 generators>>, <linked pair of translations on 
+    <regular bipartition *-monoid of size 945, degree 5 with 3 generators>>, 
+  <linked pair of translations on <regular bipartition *-monoid of size 945, 
+     degree 5 with 3 generators>>, <linked pair of translations on 
+    <regular bipartition *-monoid of size 945, degree 5 with 3 generators>> 
+ ] )
+gap> Size(H);
+945
+gap> S := FullTransformationMonoid(5);;
+gap> L := LeftTranslations(S);
+Monoid( [ <left translation on <full transformation monoid of degree 5>>, 
+  <left translation on <full transformation monoid of degree 5>>, 
+  <left translation on <full transformation monoid of degree 5>>, 
+  <left translation on <full transformation monoid of degree 5>> ] )
+gap> Size(L);
+3125
+gap> R := RightTranslations(S);
+Monoid( [ <right translation on <full transformation monoid of degree 5>>, 
+  <right translation on <full transformation monoid of degree 5>>, 
+  <right translation on <full transformation monoid of degree 5>>, 
+  <right translation on <full transformation monoid of degree 5>> ] )
+gap> Size(R);
+3125
+gap> H := TranslationalHull(S);
+Monoid( 
+[ <linked pair of translations on <full transformation monoid of degree 5>>, 
+  <linked pair of translations on <full transformation monoid of degree 5>>, 
+  <linked pair of translations on <full transformation monoid of degree 5>>, 
+  <linked pair of translations on <full transformation monoid of degree 5>> 
+ ] )
+gap> Size(H);
+3125
+
 #T# A tiny bit of brute force checking   
 gap> SEMIGROUPS.bruteforcetranshull := function(S)
 >   local a, d, L, R, H, linkedpairs, dclasses, rclasses, lclasses, reps, i, j, 
