@@ -351,7 +351,6 @@ SEMIGROUPS.FindTranslationFunctionsToGroup := function(S, t1, t2, failedcomponen
   cc := DigraphConnectedComponents(digraph);
   
   #only deal with enough elements to hit each relation
-  #TODO: check safe to assume components ordered?
   relpoints := [];
   for i in cc.comps do
     if Length(i) > 1 then 
