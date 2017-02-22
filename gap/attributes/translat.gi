@@ -7,7 +7,8 @@
 ##
 #############################################################################
 ##
-
+#TODO Translations semigroups can currently forget their generators
+#TODO SEMIGROUPS.TranslationalHullElements can be called again after Representative
 #############################################################################
 ## This file contains methods for dealing with left and right translation
 ## semigroups, as well as translational hulls. 
@@ -1101,7 +1102,6 @@ function(H)
   return Immutable(AsList(SEMIGROUPS.TranslationalHullElements(H)));
 end);
 
-#TODO: fix this so SEMIGROUPS.TranslationsSemigroupElements is not called later
 InstallMethod(Representative, "for a semigroup of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
@@ -1111,7 +1111,6 @@ function(T)
   return Representative(SEMIGROUPS.TranslationsSemigroupElements(T));
 end);
 
-#TODO: fix this so SEMIGROUPS.TranslationalHullElements is not called later
 InstallMethod(Representative, "for a translational hull",
 [IsTranslationalHull and IsWholeFamily],
 function(H)
