@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  standard/attributes.tst
-#Y  Copyright (C) 2016                                            Finn Smith
+#W  standard/translat.tst
+#Y  Copyright (C) 2016-17                                          Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -12,7 +12,6 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 #T# Creation of translations semigroups
-# creation of left/right translations semigroups (without calculation)
 gap> S := RectangularBand(3,4);;
 gap> L := LeftTranslationsSemigroup(S);
 <the semigroup of left translations of <regular transformation semigroup 
@@ -237,21 +236,6 @@ true
 gap> Size(H);
 32
 
-#T# Make sure the generic method and special methods agree for hulls
-gap> S := RectangularBand(2,3);;
-gap> H := TranslationalHull(S);;
-gap> Semigroup(SEMIGROUPS.TranslationalHullElementsGeneric(H)) = H;
-true
-gap> G := SmallGroup(6, 1);;
-gap> a := G.1;; b := G.2;;
-gap> mat := [[a, 0, b],
-> [b, a, 0],
-> [0, a, b]];;
-gap> S := ReesZeroMatrixSemigroup(G, mat);;
-gap> H := TranslationalHull(S);;
-gap> Semigroup(SEMIGROUPS.TranslationalHullElementsGeneric(H)) = H;
-true
-
 #T# OneOp for translations semigroups elements and translational hull elements
 gap> G := SmallGroup(6, 1);;
 gap> a := G.1;; b := G.2;;
@@ -267,11 +251,25 @@ gap> OneOp(L.1) = LeftTranslation(L, MappingByFunction(S, S, x -> x));
 true
 gap> OneOp(R.1) = RightTranslation(R, MappingByFunction(S, S, x -> x));
 true
+gap> OneOp(Representative(H)) = TranslationalHullElement(
+> H, OneOp(L.1), OneOp(R.1));
+true
+
+#T# Make sure the generic method and special methods agree for hulls
+gap> Semigroup(SEMIGROUPS.TranslationalHullElementsGeneric(H)) = H;
+true
+gap> S := RectangularBand(2,3);;
+gap> H := TranslationalHull(S);;
+gap> Semigroup(SEMIGROUPS.TranslationalHullElementsGeneric(H)) = H;
+true
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(a);
+gap> Unbind(b);
 gap> Unbind(G);
 gap> Unbind(L);
 gap> Unbind(H);
+gap> Unbind(mat);
 gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(SEMIGROUPS.bruteforcetranshull);
