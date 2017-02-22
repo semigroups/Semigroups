@@ -9,6 +9,7 @@
 ##
 
 # TODO: Left/right translations of a monoid are all left/right multiplications
+# TODO: Translational hull of monoid is inner translational hull
 
 #############################################################################
 ## This file contains methods for dealing with left and right translation
@@ -149,7 +150,7 @@ SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
         possrepsk, possgrepsk, undosortinglist, sortinglist, p1, p2, L, R,
         fvalsi, gvalsi, ftransrestrictionatstage, gtransrestrictionatstage, 
         flinkedrestrictionatstage, glinkedrestrictionatstage, 
-        extendf, extendg, reject, propagatef, propagateg, restrictfromf,
+        extendf, reject, propagatef, propagateg, restrictfromf,
         restrictfromg, bt, unrestrict, linkedpairs, linkedpairsunsorted;
 
   S := UnderlyingSemigroup(H);
