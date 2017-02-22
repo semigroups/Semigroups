@@ -49,6 +49,7 @@ ReadPackage("semigroups", "gap/elements/ffmat.gd");
 ReadPackage("semigroups", "gap/elements/boolmat.gd");
 ReadPackage("semigroups", "gap/elements/trans.gd");
 ReadPackage("semigroups", "gap/elements/elements.gd");
+ReadPackage("semigroups", "gap/elements/pperm.gd");
 
 ReadPackage("semigroups", "gap/main/fropin.gd");
 ReadPackage("semigroups", "gap/main/semiact.gd");

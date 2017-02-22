@@ -10,7 +10,6 @@
 
 DeclareSynonym("RookMonoid", SymmetricInverseMonoid);
 
-DeclareAttribute("CyclesOfPartialPerm", IsPartialPerm);
 DeclareAttribute("CyclesOfPartialPermSemigroup",
                  IsPartialPermSemigroup);
 DeclareAttribute("ComponentRepsOfPartialPermSemigroup",
