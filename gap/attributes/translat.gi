@@ -59,9 +59,9 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
     return Semigroup(GeneratorsOfSemigroup(T));
   elif HasGeneratorsOfSemigroup(S) then
     if IsLeftTranslationsSemigroup(T) then
-      return SEMIGROUPS.LeftTranslationsSemigroupWithGeneratorsElements(T);
+      return SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators(T);
     else 
-      return SEMIGROUPS.RightTranslationsSemigroupWithGeneratorsElements(T); 
+      return SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators(T); 
     fi;
   fi;
   Error("Semigroups: TranslationsSemigroupElements: \n",
@@ -75,15 +75,15 @@ SEMIGROUPS.TranslationalHullElements := function(H)
   if IsRectangularBand(S) then
     return Semigroup(GeneratorsOfSemigroup(H));
   elif IsZeroSimpleSemigroup(S) then
-    return SEMIGROUPS.TranslationalHullOfZeroSimpleElements(H);
+    return SEMIGROUPS.TranslationalHullElementsOfZeroSimple(H);
   else
-    return SEMIGROUPS.TranslationalHullOfArbitraryElements(H);
+    return SEMIGROUPS.TranslationalHullElementsGeneric(H);
   fi;
 end;
     
 # Left translations are the same as edge-label preserving endomorphisms of the
 # right cayley graph
-SEMIGROUPS.LeftTranslationsSemigroupWithGeneratorsElements := function(L)
+SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators := function(L)
   local S, digraph, n, nrgens, out, colors, gens, i, j;
   
   S := UnderlyingSemigroup(L);
@@ -109,7 +109,7 @@ SEMIGROUPS.LeftTranslationsSemigroupWithGeneratorsElements := function(L)
 end;
 
 # Dual for right translations.
-SEMIGROUPS.RightTranslationsSemigroupWithGeneratorsElements := function(R)
+SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators := function(R)
   local S, digraph, n, nrgens, out, colors, gens, i, j;
 
   S := UnderlyingSemigroup(R);
@@ -142,7 +142,7 @@ end;
 # s*a_i f(a_k) = (s*a_i)g a_k and a_k f(a_i * s) = (a_k)g a_i * s,
 # as well as restriction by the translation condition if Sa_i intersect Sa_k is
 # non-empty or a_i S intersect a_k S is non-empty.
-SEMIGROUPS.TranslationalHullOfArbitraryElements := function(H)
+SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   local S, reps, repspos, dclasses, lclasses, rclasses,
         d, f, g, i, j, k, m, n, p, r, s, slist, fposrepk, gposrepk,
         possiblefrepvals, possiblegrepvals, whenboundfvals, whenboundgvals, pos,
