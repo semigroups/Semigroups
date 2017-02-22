@@ -485,9 +485,9 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
     od;
     Add(linkedpairsunsorted, [ShallowCopy(p1), ShallowCopy(p2)]);
   od;
-  Apply(linkedpairsunsorted, x -> TranslationalHullElement(H, 
-                                  LeftTranslation(L, Transformation(x[1])),
-                                  RightTranslation(R, Transformation(x[2]))));
+  Apply(linkedpairsunsorted, x -> TranslationalHullElementNC(H, 
+                                  LeftTranslationNC(L, Transformation(x[1])),
+                                  RightTranslationNC(R, Transformation(x[2]))));
   return linkedpairsunsorted;
 end;
 
