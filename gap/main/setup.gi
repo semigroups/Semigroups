@@ -1,28 +1,12 @@
 ###########################################################################
 ##
 #W  setup.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+#Y  Copyright (C) 2013-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-
-SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
-  if x![1] = 0 then
-    return 1;
-  fi;
-  #Use some big primes that are near the default hash table size
-  if IsNBitsPcWordRep(x![2]) then
-    return (104723 * x![1] + 104729 * x![3] + func(x![2], data))
-      mod data[2] + 1;
-  elif dataishashlen then
-    return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
-  else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.HashFunctionRZMSE: error,\n",
-                  "this shouldn't happen,");
-  fi;
-end;
 
 ###############################################################################
 # Setup - install the basic things required for specific acting semigroups    #
@@ -197,7 +181,7 @@ function(s)
   return RankOfPartialPerm;
 end);
 
-InstallMethod(ActionRank, "for a bipartition",
+InstallMethod(ActionRank, "for a bipartition and integer",
 [IsBipartition, IsInt], BIPART_RANK);
 
 InstallMethod(ActionRank, "for a bipartition semigroup",
@@ -439,9 +423,8 @@ InstallMethod(LambdaFunc, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R -> function(x)
   if x![1] <> 0 then
     return x![3];
-  else
-    return 0;
   fi;
+  return 0;
 end);
 
 InstallMethod(LambdaFunc, "for a matrix semigroup",
@@ -527,10 +510,7 @@ InstallMethod(RhoRank, "for a Rees 0-matrix subsemigroup",
 [IsReesZeroMatrixSubsemigroup], R -> LambdaRank(R));
 
 InstallMethod(RhoRank, "for a matrix semigroup",
-[IsMatrixOverFiniteFieldSemigroup],
-function(S)
-  return LambdaRank(S);
-end);
+[IsMatrixOverFiniteFieldSemigroup], S -> LambdaRank(S));
 
 # if g=LambdaInverse(X, f) and X^f=Y, then Y^g=X and g acts on the right
 # like the inverse of f on Y.
@@ -701,13 +681,13 @@ InstallMethod(RhoIdentity, "for a partial perm semigroup",
     return ();
   end);
 
-InstallMethod(LambdaIdentity, "for a partial perm semigroup",
+InstallMethod(LambdaIdentity, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
   s -> function(r)
     return ();
   end);
 
-InstallMethod(RhoIdentity, "for a partial perm semigroup",
+InstallMethod(RhoIdentity, "for a bipartition semigroup",
 [IsBipartitionSemigroup],
   s -> function(r)
     return ();
@@ -966,7 +946,25 @@ InstallMethod(FakeOne, "for an FFE coll coll coll",
 [IsFFECollCollColl], One);
 
 # missing hash functions
-InstallMethod(ChooseHashFunction, "for a Rees 0-matrix semigroup element",
+
+SEMIGROUPS.HashFunctionRZMSE := function(x, data, func, dataishashlen)
+  if x![1] = 0 then
+    return 1;
+  fi;
+  #Use some big primes that are near the default hash table size
+  if IsNBitsPcWordRep(x![2]) then
+    return (104723 * x![1] + 104729 * x![3] + func(x![2], data))
+      mod data[2] + 1;
+  elif dataishashlen then
+    return (104723 * x![1] + 104729 * x![3] + func(x![2], data)) mod data + 1;
+  else
+    ErrorNoReturn("Semigroups: SEMIGROUPS.HashFunctionRZMSE: error,\n",
+                  "this shouldn't happen,");
+  fi;
+end;
+
+InstallMethod(ChooseHashFunction,
+"for a Rees 0-matrix semigroup element and integer",
 [IsReesZeroMatrixSemigroupElement, IsInt],
 function(x, hashlen)
   local R, data, under, func, dataishashlen;
