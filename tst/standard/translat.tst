@@ -133,6 +133,33 @@ gap> GeneratorsOfSemigroup(R);
      generators>>, <right translation on <0-simple regular semigroup 
      of size 37, with 6 generators>> ]
 
+#T# Test translations generation by digraph endomorphisms
+gap> S := ZeroSemigroup(4);;
+gap> L := SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators(
+> LeftTranslations(S));
+<semigroup of left translations of <commutative non-regular transformation 
+ semigroup of size 4, degree 4 with 3 generators> with 17 generatorss>
+gap> Size(L);
+64
+gap> R := SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators(
+> RightTranslations(S));
+<semigroup of right translations of <commutative non-regular transformation 
+ semigroup of size 4, degree 4 with 3 generators> with 17 generatorss>
+
+#T# Further test translations generation by digraph endomorphisms
+gap> S := Semigroup([Transformation([2,4,4,1]), Transformation([2,3,2,1]), 
+> Transformation([3,3,3])]);;
+gap> L := LeftTranslations(S);
+<the semigroup of left translations of <transformation semigroup of size 49, 
+ degree 4 with 3 generators>>
+gap> Size(L);
+123
+gap> R := RightTranslations(S);
+<the semigroup of right translations of <transformation semigroup of size 49, 
+ degree 4 with 3 generators>>
+gap> Size(R);
+55
+
 #T# A tiny bit of brute force checking   
 gap> SEMIGROUPS.bruteforcetranshull := function(S)
 >   local a, d, L, R, H, linkedpairs, dclasses, rclasses, lclasses, reps, i, j, 
@@ -195,6 +222,34 @@ true
 gap> S := RectangularBand(2,3);;
 gap> Size(Semigroup(GeneratorsOfSemigroup(TranslationalHull(S))))
 > = Size(SEMIGROUPS.bruteforcetranshull(S));
+true
+
+#T# Test translational hull method for arbitrary semigroups
+gap> S := ZeroSemigroup(4);;
+gap> Size(TranslationalHull(S));
+4096
+gap> S := Semigroup([Transformation([1,1,2,2]), Transformation([3,4,3,1])]);;
+gap> H := TranslationalHull(S);
+<translational hull over <transformation semigroup of size 23, degree 4 with 
+ 2 generators>>
+gap> H = Semigroup(H);
+true
+gap> Size(H);
+32
+
+#T# Make sure the generic method and special methods agree for hulls
+gap> S := RectangularBand(2,3);;
+gap> H := TranslationalHull(S);;
+gap> Semigroup(SEMIGROUPS.TranslationalHullElementsGeneric(H)) = H;
+true
+gap> G := SmallGroup(6, 1);;
+gap> a := G.1;; b := G.2;;
+gap> mat := [[a, 0, b],
+> [b, a, 0],
+> [0, a, b]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> H := TranslationalHull(S);;
+gap> Semigroup(SEMIGROUPS.TranslationalHullElementsGeneric(H)) = H;
 true
 
 #T# OneOp for translations semigroups elements and translational hull elements
