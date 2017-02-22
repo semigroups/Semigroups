@@ -142,6 +142,7 @@ gap> ConstantTransformation(6, 1) in S;
 false
 gap> PartialPerm([1]) in S;
 true
+gap> AsSSortedList(S);;
 gap> Enumerate(S);;
 gap> S.1 in S;
 true
@@ -151,6 +152,29 @@ gap> PartialPerm([5, 3]) in S;
 true
 gap> PartialPerm([1 .. 6]) in S;
 false
+gap> PartialPerm([5, 4, 3, 2, 1]) in S;
+false
+gap> S := InverseSemigroup(PartialPerm([5], [5]));;
+gap> IsInverseActingSemigroupRep(S) or not IsActingSemigroup(S); 
+true
+gap> PartialPerm([2, 1]) in S;
+false
+gap> S := InverseSemigroup(PartialPerm([0, 3, 2]));;
+gap> IsInverseActingSemigroupRep(S) or not IsActingSemigroup(S); 
+true
+gap> MinimalIdeal(S);;
+gap> PartialPerm([]) in S;
+false
+gap> PartialPerm([2, 0, 3]) in S;
+false
+gap> S := InverseSemigroup([
+> PartialPerm([2], [3]), PartialPerm([2, 3], [1, 4]),
+> PartialPerm([2, 3], [2, 1]), PartialPerm([2, 4], [2, 3]),
+> PartialPerm([2, 3], [3, 4]), PartialPerm([1, 3], [2, 3])]);;
+gap> IsInverseActingSemigroupRep(S) or not IsActingSemigroup(S); 
+true
+gap> Number(SymmetricInverseMonoid(4), x -> x in S) = Size(S);
+true
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/semiact.tst");

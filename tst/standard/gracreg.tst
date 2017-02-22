@@ -231,6 +231,8 @@ gap> e[1];
 <Green's R-class: Transformation( [ 1, 2, 3, 3, 1 ] )>
 gap> e[Length(e)];
 <Green's R-class: Transformation( [ 2, 3, 3, 3, 3 ] )>
+gap> e[Length(e) + 1];
+fail
 gap> Position(e, e[1]);
 1
 gap> Position(e, e[28]);
@@ -294,7 +296,7 @@ true
 gap> Set([D1 < D2, D2 < D1]);
 [ true, false ]
 
-# Test NrIdempotents for a regular star bipartition semigroup
+#T# Test NrIdempotents for a regular star bipartition semigroup
 # This test takes too long!
 # gap> S := JonesMonoid(15);
 # <regular bipartition *-monoid of degree 15 with 14 generators>
@@ -309,6 +311,14 @@ gap> NrIdempotents(S);
 1
 gap> NrIdempotentsByRank(S);
 [ 1 ]
+gap> S := Semigroup(JonesMonoid(3), rec(acting := true));
+<bipartition monoid of degree 3 with 2 generators>
+gap> IsRegularSemigroup(S) and IsStarSemigroup(S);
+true
+gap> NrIdempotents(S);
+5
+gap> NrIdempotentsByRank(S);
+[ 0, 4, 0, 1 ]
 
 # Test Size for a regular D-class
 gap> S := PartitionMonoid(4);;

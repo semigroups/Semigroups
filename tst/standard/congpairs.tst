@@ -133,6 +133,14 @@ gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
 gap> cong := SemigroupCongruence(S, pair1, pair2);
 <semigroup congruence over <transformation semigroup of degree 5 with 4 
  generators> with 2 generating pairs>
+gap> Print(cong); Print("\n");
+SemigroupCongruence( Semigroup( [ Transformation( [ 2, 1, 1, 2, 1 ] ), 
+  Transformation( [ 3, 4, 3, 4, 3 ] ), Transformation( [ 4, 3, 3, 4, 4 ] ), 
+  Transformation( [ 1, 3, 4, 1, 3 ] ) ] ), 
+[ [ Transformation( [ 3, 4, 3, 4, 3 ] ), Transformation( [ 1, 2, 1, 2, 1 ] ) ]
+    , 
+  [ Transformation( [ 4, 3, 4, 3, 4 ] ), Transformation( [ 3, 4, 3, 4, 3 ] ) 
+     ] ] )
 gap> [Transformation([4, 4, 3, 4, 4]), Transformation([3, 3, 1, 3, 3])] in cong;
 true
 gap> [Transformation([4, 4, 3, 4, 4]), Transformation([3, 3, 1, 3, 3])] in cong;
@@ -218,6 +226,13 @@ gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 7, 5]),
 gap> pair := [Transformation([1, 1, 1, 1, 1, 4, 1]),
 >             Transformation([1, 6, 5, 7, 5, 6, 7])];;
 gap> cong := LeftSemigroupCongruence(S, pair);;
+gap> Print(cong); Print("\n");
+LeftSemigroupCongruence( Semigroup( 
+[ Transformation( [ 1, 3, 4, 1, 3, 7, 5 ] ), 
+  Transformation( [ 5, 7, 1, 6, 1, 7, 6 ] ) ] ), 
+[ 
+  [ Transformation( [ 1, 1, 1, 1, 1, 4, 1 ] ), 
+      Transformation( [ 1, 6, 5, 7, 5, 6, 7 ] ) ] ] )
 gap> [Transformation([7, 1, 7, 7, 1, 5, 5]),
 >     Transformation([1, 7, 1, 1, 7, 1, 1])] in cong;
 true
@@ -256,6 +271,14 @@ gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
 gap> cong := RightSemigroupCongruence(S, pair1, pair2);
 <right semigroup congruence over <transformation semigroup of degree 5 with 4 
  generators> with 2 generating pairs>
+gap> Print(cong); Print("\n");
+RightSemigroupCongruence( Semigroup( [ Transformation( [ 2, 1, 1, 2, 1 ] ), 
+  Transformation( [ 3, 4, 3, 4, 4 ] ), Transformation( [ 3, 4, 3, 4, 3 ] ), 
+  Transformation( [ 4, 3, 3, 4, 4 ] ) ] ), 
+[ [ Transformation( [ 3, 4, 3, 4, 3 ] ), Transformation( [ 1, 2, 1, 2, 1 ] ) ]
+    , 
+  [ Transformation( [ 4, 3, 4, 3, 4 ] ), Transformation( [ 3, 4, 3, 4, 3 ] ) 
+     ] ] )
 gap> [Transformation([3, 4, 3, 4, 3]), Transformation([1, 2, 1, 2, 1])] in cong;
 true
 gap> [Transformation([3, 4, 3, 4, 3]), Transformation([1, 2, 1, 2, 1])] in cong;

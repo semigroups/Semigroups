@@ -1773,8 +1773,9 @@ gap> RankOfPartialPermSemigroup(I);
 4
 
 # Test ComponentRepsOfPartialPermSemigroup
-gap> S := Semigroup([PartialPerm([1, 2, 3, 5, 6, 7, 8], [9, 6, 11, 2, 3, 10, 4])
->    , PartialPerm([1, 2, 3, 4, 5, 7, 10], [2, 6, 9, 3, 5, 10, 1]),
+gap> S := Semigroup([
+>  PartialPerm([1, 2, 3, 5, 6, 7, 8], [9, 6, 11, 2, 3, 10, 4]),
+>  PartialPerm([1, 2, 3, 4, 5, 7, 10], [2, 6, 9, 3, 5, 10, 1]),
 >  PartialPerm([1, 3, 4, 5, 6, 8], [8, 9, 1, 10, 6, 11]),
 >  PartialPerm([1, 2, 3, 5, 6, 7, 8], [7, 3, 4, 5, 2, 11, 8]),
 >  PartialPerm([1, 2, 3, 4, 5, 6, 7], [1, 10, 8, 6, 4, 9, 5])]);;
@@ -1786,6 +1787,8 @@ gap> I := SemigroupIdeal(S, S.5);;
 gap> ComponentRepsOfPartialPermSemigroup(I);
 [ 1 ]
 gap> CyclesOfPartialPermSemigroup(I);
+[ [ 1, 2, 6, 3, 8, 4, 10, 7, 5 ] ]
+gap> CyclesOfPartialPermSemigroup(S);
 [ [ 1, 2, 6, 3, 8, 4, 10, 7, 5 ] ]
 
 # Test NaturalLeqInverseSemigroup

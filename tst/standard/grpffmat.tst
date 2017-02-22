@@ -76,6 +76,17 @@ gap> G := Group(One(S));
 gap> IsomorphismMatrixGroup(G);
 MappingByFunction( <group of 1x1 matrices over GF(3) with 1 generator>, Group(
 [ [ [ Z(3)^0 ] ] ]), <Attribute "AsList">, function( g ) ... end )
+gap> S := Semigroup(Matrix(GF(2),
+>                   [[Z(2) ^ 0, 0 * Z(2)], [0 * Z(2), 0 * Z(2)]]));
+<commutative semigroup of 2x2 matrices over GF(2) with 1 generator>
+gap> IsGroupAsSemigroup(S);
+true
+gap> IsomorphismMatrixGroup(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `IsomorphismMatrixGroup' on 1 arguments
+gap> IsomorphismMatrixGroup(SLM(2, 2));
+Error, Semigroups: IsomorphismMatrixGroup: usage,
+the argument must be a group (as semigroup),
 
 # ClosureGroup
 gap> G := GroupOfUnits(GLM(3,3));

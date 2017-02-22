@@ -1476,6 +1476,33 @@ gap> FullPBRMonoid(3);
 Error, Semigroups: FullPBRMonoid: usage,
 the argument <n> must be at most 2,
 
+#T# AsMonoid, for a PBR semigroup
+gap> S := Semigroup([
+>  PBR([[-3, -2, -1, 1, 2], [-3, -2, 1, 2], [-3]],
+>      [[], [-2, -1, 1, 2, 3], [-3, -2, -1]]),
+>  PBR([[-3, 3], [-2, -1, 2, 3], [-1, 1, 2, 3]],
+>      [[-3], [-3, -2, -1, 3], [-3, -1, 3]]),
+>  PBR([[-3, -2, -1, 1, 2, 3], [-3, -2, -1, 1, 2, 3],
+>       [-3, -2, -1, 1, 2, 3]],
+>      [[-3, -2, -1, 1, 2, 3], [-3, -2, -1, 2, 3], [1, 2, 3]]),
+>  PBR([[3], [], []], [[], [], []]),
+>  PBR([[-3, -2, -1, 1, 2, 3], [-3, -2, -1, 1, 2, 3],
+>       [-3, -2, -1, 1, 2]],
+>      [[-3, -2, -1, 1, 2, 3], [-3, -2, -1, 1, 2, 3],
+>       [-3, -2, -1, 1, 2, 3]]),
+>  PBR([[-2, -1, 3], [-3, -1], [2, 3]],
+>      [[-2, 1, 2], [2, 3], [-1, 1, 2]])]);;
+gap> AsMonoid(S);
+fail
+gap> S := Semigroup(S, PBR([[-1], [-2], [-3]], [[1], [2], [3]]));
+<pbr monoid of degree 3 with 6 generators>
+gap> S := Semigroup([
+> PBR([[-2, 1, 2], [-1, 1, 2]], [[1], [2]]),
+> PBR([[-2, 1, 2], [-1, 1, 2]], [[2], [1]])]);
+<pbr semigroup of degree 2 with 2 generators>
+gap> AsMonoid(S);
+<pbr monoid of size 4, degree 4 with 2 generators>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
