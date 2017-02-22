@@ -431,9 +431,6 @@ SEMIGROUPS._GenericCongLookup := function(cong)
   local S, lookup, class, nr, elm;
 
   S := Range(cong);
-  if not IsEnumerableSemigroupRep(S) then
-    TryNextMethod();
-  fi;
   lookup := [1 .. Size(S)];
   for class in NonTrivialEquivalenceClasses(cong) do
     nr := PositionCanonical(S, Representative(class));
@@ -455,27 +452,9 @@ function(cong)
   return SEMIGROUPS._GenericCongLookup(cong);
 end);
 
-InstallMethod(EquivalenceRelationLookup,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-function(cong)
-  if not IsFinite(Range(cong)) then
-    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
-                  "<cong> must be over a finite semigroup,");
-  fi;
-  return SEMIGROUPS._GenericCongLookup(cong);
-end);
-
-InstallMethod(EquivalenceRelationLookup,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
-function(cong)
-  if not IsFinite(Range(cong)) then
-    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
-                  "<cong> must be over a finite semigroup,");
-  fi;
-  return SEMIGROUPS._GenericCongLookup(cong);
-end);
+# We could add an equivalent Left/RightSemigroupCongruence, but currently these
+# can only be created by generating pairs, and such a congruence has a better
+# method for EquivalenceRelationLookup
 
 BindGlobal("_GenericCongCanonicalLookup",
 function(cong)
@@ -515,17 +494,3 @@ _GenericCongCanonicalLookup);
 
 MakeReadWriteGlobal("_GenericCongCanonicalLookup");
 Unbind(_GenericCongCanonicalLookup);
-
-InstallMethod(NrEquivalenceClasses,
-"for a right semigroup congruence",
-[IsRightSemigroupCongruence],
-function(cong)
-  return Length(EquivalenceClasses(cong));
-end);
-
-InstallMethod(NrEquivalenceClasses,
-"for a left semigroup congruence",
-[IsLeftSemigroupCongruence],
-function(cong)
-  return Length(EquivalenceClasses(cong));
-end);
