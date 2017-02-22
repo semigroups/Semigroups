@@ -57,7 +57,9 @@ DeclareAttribute("TypeTranslationalHullElements",
 
 
 DeclareAttribute("LeftTranslations", IsSemigroup and IsFinite);
+DeclareAttribute("InnerLeftTranslations", IsSemigroup and IsFinite);
 DeclareAttribute("RightTranslations", IsSemigroup and IsFinite);
+DeclareAttribute("InnerRightTranslations", IsSemigroup and IsFinite);
 DeclareAttribute("TranslationalHull", IsSemigroup and IsFinite);
 DeclareAttribute("InnerTranslationalHull", IsSemigroup and IsFinite);
 DeclareAttribute("TranslationalElements", IsTranslationsSemigroup and IsWholeFamily);
