@@ -8,9 +8,6 @@
 #############################################################################
 ##
 
-# TODO: Left/right translations of a monoid are all left/right multiplications
-# TODO: Translational hull of monoid is inner translational hull
-
 #############################################################################
 ## This file contains methods for dealing with left and right translation
 ## semigroups, as well as translational hulls. 
@@ -34,9 +31,10 @@
 ## This file is organised as follows:
 ##    1. Internal functions
 ##    2. Functions for the creation of left/right translations semigroup
-##        and translational hulls
+##        and translational hulls, and their elements
 ##    3. Methods for rectangular bands
-##    4. Technical methods, eg. PrintObj, *, =, etc.
+##    4. Methods for monoids
+##    5. Technical methods, eg. PrintObj, *, =, etc.
 ##
 #############################################################################
 
@@ -80,7 +78,7 @@ SEMIGROUPS.TranslationalHullElements := function(H)
     return SEMIGROUPS.TranslationalHullElementsGeneric(H);
   fi;
 end;
-    
+
 # Left translations are the same as edge-label preserving endomorphisms of the
 # right cayley graph
 SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators := function(L)
@@ -509,7 +507,7 @@ function(S)
   #create the semigroup of left translations
   L := Objectify(NewType(CollectionsFamily(fam), IsLeftTranslationsSemigroup
                          and IsWholeFamily and IsAttributeStoringRep), rec());
-    
+  
   #store the type of the elements in the semigroup
   type := NewType(fam, IsLeftTranslationsSemigroupElement);
   fam!.type := type;
@@ -536,7 +534,7 @@ function(S)
   # create the semigroup of right translations
   R := Objectify(NewType(CollectionsFamily(fam), IsRightTranslationsSemigroup 
     and IsWholeFamily and IsAttributeStoringRep), rec());
-    
+  
   # store the type of the elements in the semigroup
   type := NewType(fam, IsRightTranslationsSemigroupElement);
   fam!.type := type;
@@ -588,6 +586,27 @@ function(S)
   return L;
 end);
 
+# Create and calculate the semigroup of inner left translations
+InstallMethod(InnerLeftTranslations, "for a semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local A, I, L, l, s;
+  
+  I := [];
+  L := LeftTranslationsSemigroup(S);
+  
+  if HasGeneratorsOfSemigroup(S) then
+    A := GeneratorsOfSemigroup(S);
+  else
+    A := S;
+  fi;
+  for s in A do
+    l := LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
+    Add(I, l);
+  od;
+  return Monoid(I);
+end);
+
 # Create and calculate the semigroup of right translations
 InstallMethod(RightTranslations, "for a semigroup", 
 [IsSemigroup and IsFinite],
@@ -598,6 +617,27 @@ function(S)
   AsList(R);
   
   return R;
+end);
+
+# Create and calculate the semigroup of inner right translations
+InstallMethod(InnerRightTranslations, "for a semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local A, I, R, r, s;
+  
+  I := [];
+  R := RightTranslationsSemigroup(S);
+  
+  if HasGeneratorsOfSemigroup(S) then
+    A := GeneratorsOfSemigroup(S);
+  else
+    A := S;
+  fi;
+  for s in A do
+    r := RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
+    Add(I, r);
+  od;
+  return Monoid(I);
 end);
 
 # Create a left translation as an element of a left translations semigroup.
@@ -795,16 +835,21 @@ end);
 InstallMethod(InnerTranslationalHull, "for a semigroup",
 [IsSemigroup and IsFinite],
 function(S)
-  local I, H, L, R, l, r, s;
+  local A, I, H, L, R, l, r, s;
   
   I := [];
   H := TranslationalHullSemigroup(S);
-  for s in S do
-    L := LeftTranslationsSemigroup(S);
-    R := RightTranslationsSemigroup(S);
-    l := LeftTranslation(L, MappingByFunction(S, S, x -> s * x));
-    r := RightTranslation(R, MappingByFunction(S, S, x -> x * s));
-    Add(I, TranslationalHullElement(H, l, r));
+  L := LeftTranslationsSemigroup(S);
+  R := RightTranslationsSemigroup(S);
+  if HasGeneratorsOfSemigroup(S) then
+    A := GeneratorsOfSemigroup(S);
+  else
+    A := S;
+  fi;
+  for s in A do
+    l := LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
+    r := RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
+    Add(I, TranslationalHullElementNC(H, l, r));
   od;
   return Monoid(I);
 end);
@@ -885,13 +930,13 @@ function(H, l, r)
 end);
 
 #############################################################################
-# 3. Methods for rectangular bands
+# 3. Methods for rectangular bands 
 #############################################################################
 
 # For rectangular bands, don't calculate AsList for LeftTranslations 
 # Just get generators
-InstallMethod(LeftTranslations, "for a RZMS semigroup",
-[IsSemigroup and IsFinite and IsZeroSimpleSemigroup],
+InstallMethod(LeftTranslations, "for a rectangular band",
+[IsSemigroup and IsFinite and IsRectangularBand],
 function(S) 
   local L;
   
@@ -901,10 +946,10 @@ function(S)
   return L;
 end);
 
-# For RZMS, don't calculate AsList for RightTranslations 
+# For rectangular bands, don't calculate AsList for RightTranslations 
 # Just get generators
-InstallMethod(RightTranslations, "for a RZMS semigroup",
-[IsSemigroup and IsFinite and IsZeroSimpleSemigroup],
+InstallMethod(RightTranslations, "for a rectangular band",
+[IsSemigroup and IsFinite and IsRectangularBand],
 function(S) 
   local R;
   
@@ -1017,7 +1062,31 @@ function(H)
 end);
 
 #############################################################################
-# 4. Technical methods
+# 4. Methods for monoids 
+#############################################################################
+
+# Translations of a monoid are all inner translations
+InstallMethod(LeftTranslations, "for a monoid",
+[IsMonoid and IsFinite],
+function(S)
+  return InnerLeftTranslations(S);
+end);
+
+InstallMethod(RightTranslations, "for a monoid",
+[IsMonoid and IsFinite],
+function(S)
+  return InnerRightTranslations(S);
+end);
+
+# Translational hull of a monoid is inner translational hull
+InstallMethod(TranslationalHull, "for a monoid",
+[IsMonoid and IsFinite],
+function(S)
+  return InnerTranslationalHull(S);
+end);
+
+#############################################################################
+# 5. Technical methods
 #############################################################################
 
 InstallMethod(AsList, "for a semigroup of left or right translations",
