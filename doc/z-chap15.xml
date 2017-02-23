@@ -68,7 +68,6 @@
     <#Include Label = "UnderlyingSemigroup">
     <#Include Label = "XTranslationsSemigroupOfFamily">
     <#Include Label = "TranslationalHullOfFamily">
-    <#Include Label = "TypeXTranslationsSemigroupElements">
     
   </Section>
 

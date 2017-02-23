@@ -18,19 +18,18 @@
       <Example><![CDATA[
 gap> S := RectangularBand(3,4);;
 gap> L := LeftTranslationsSemigroup(S);
-<the semigroup of left translations of <regular transformation semigroup 
- of size 12, degree 8 with 4 generators>>
+<the semigroup of left translations of <regular transformation 
+ semigroup of size 12, degree 8 with 4 generators>>
 gap> Size(L);
 27
 gap> GeneratorsOfSemigroup(L);
-[ <left translation on <simple transformation semigroup of size 12, degree 8 
-     with 4 generators>>, 
-  <left translation on <simple transformation semigroup of size 12, degree 8 
-     with 4 generators>>, 
-  <left translation on <simple transformation semigroup of size 12, degree 8 
-     with 4 generators>> ]
-]]>
-      </Example>
+[ <left translation on <simple transformation semigroup of size 12, 
+     degree 8 with 4 generators>>, 
+  <left translation on <simple transformation semigroup of size 12, 
+     degree 8 with 4 generators>>, 
+  <left translation on <simple transformation semigroup of size 12, 
+     degree 8 with 4 generators>> ]
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -54,12 +53,11 @@ gap> f := function(x)
 > end;;
 gap> map := MappingByFunction(S, S, f);;
 gap> l := LeftTranslation(L, map);
-<left translation on <regular transformation semigroup of size 12, degree 8 
- with 4 generators>>
+<left translation on <regular transformation semigroup of size 12, 
+ degree 8 with 4 generators>>
 gap> s^l;
-Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] ) 
-]]> 
-      </Example>
+Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -84,10 +82,9 @@ gap> mat := [[a, 0, b],
 > [0, a, b]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> H := TranslationalHull(S);
-<translational hull over <0-simple regular semigroup of size 55, with 6 
- generators>>
-]]>
-      </Example>
+<translational hull over <0-simple regular semigroup of size 55, with 
+ 6 generators>>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -103,20 +100,19 @@ gap> H := TranslationalHull(S);
       <A>H</A>.
       <Example> <![CDATA[
 gap> G := SmallGroup(4,2);;
-gap> H := ShallowCopy(AsList(G));;
-gap> Add(H, 0);;
-gap> mat:=List([1..5], x-> List([1..5], y-> Random(H)));;
+gap> A := AsList(G);;
+gap> mat := [ [A[1], 0],
+> [A[2], A[2]] ];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> L := LeftTranslationsSemigroup(S);;
 gap> R := RightTranslationsSemigroup(S);;
-gap> l := Representative(L);;
-gap> r := Representative(R);;
+gap> l := LeftTranslation(L, MappingByFunction(S, S, s -> S.1 * s));;
+gap> r := RightTranslation(R, MappingByFunction(S, S, s -> s * S.1));;
 gap> H := TranslationalHull(S);;
 gap> x := TranslationalHullElement(H, l, r);
-<linked pair of translations on <0-simple regular semigroup of size 101, with 
- 10 generators>>
-gap> x = x * x;
-]]>   </Example>
+<linked pair of translations on <0-simple regular semigroup 
+ of size 17, with 4 generators>>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -135,15 +131,15 @@ gap> x = x * x;
       <Example> <![CDATA[
 gap> S := RectangularBand(3,4);;
 gap> l := Representative(LeftTranslations(S));
-<left translation on <simple transformation semigroup of size 12, degree 8 
- with 4 generators>>
+<left translation on <simple transformation semigroup of size 12, 
+ degree 8 with 4 generators>>
 gap> IsTranslationsSemigroupElement(l);
 true
 gap> IsLeftTranslationsSemigroupElement(l);
 true
 gap> IsRightTranslationsSemigroupElement(l);
 false
-]]>   </Example>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -157,22 +153,21 @@ false
       <Ref Filt="IsAssociativeElement" BookName="ref"/>.
       <Example> <![CDATA[
 gap> G := SmallGroup(4,2);;
-gap> H := ShallowCopy(AsList(G));;
-gap> Add(H, 0);;
-gap> mat:=List([1..5], x-> List([1..5], y-> Random(H)));;
+gap> A := AsList(G);;
+gap> mat := [ [A[1], 0, A[1]],
+> [A[2], A[2], A[4]]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> L := LeftTranslations(S);;
 gap> R := RightTranslations(S);;
-gap> l := Representative(L);;
-gap> r := Representative(R);;
+gap> l := OneOp(Representative(L));;
+gap> r := OneOp(Representative(R));;
 gap> H := TranslationalHull(S);;
 gap> x := TranslationalHullElement(H, l, r);;
 gap> IsTranslationalHullElement(x);
 true
 gap> IsTranslationsSemigroupElement(x);
 false
-
-]]>   </Example>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -196,7 +191,7 @@ gap> IsTranslationsSemigroup(L);
 true
 gap> IsRightTranslationsSemigroup(L);
 false
-]]>   </Example>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -214,7 +209,7 @@ gap> IsTranslationalHull(H);
 true
 gap> IsTranslationalHull(S);
 false
-]]>   </Example>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -230,7 +225,7 @@ false
 gap> H := TranslationalHull(S);;
 gap> UnderlyingSemigroup(H) = S;
 true
-]]>   </Example>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -251,7 +246,7 @@ gap> L := LeftTranslations(S);;
 gap> l := Representative(L);;
 gap> LeftTranslationsSemigroupOfFamily(FamilyObj(l)) = L;
 true
-]]>   </Example>
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -267,34 +262,13 @@ true
       which contains the objects of family <A>fam</A>
       <Example><![CDATA[
 gap> S := RectangularBand(3,3);;
-gap> H := LeftTranslations(S);;
+gap> H := TranslationalHull(S);;
 gap> h := Representative(H);;
 gap> TranslationalHullOfFamily(FamilyObj(h)) = H;
 true
-]]>   </Example>
+]]></Example>
     </Description>
   </ManSection>
-<#/GAPDoc> 
-
-<#GAPDoc Label="TypeXTranslationsSemigroupElements">
-  <ManSection>
-    <Attr Name="TypeLeftTranslationsSemigroupElements" Arg="L"/>
-    <Attr Name="TypeRightTranslationsSemigroupElements" Arg="R"/>
-    <Returns>The type of the elements of the given
-    XTranslationsSemigroup</Returns>
-    <Description>
-      For a semigroup of X translations <A>X</A>, 
-      <C>TypeXTranslationsSemigroup</C>(<A>X</A>) returns the type of the
-      elements of that semigroup.
-      <Example><![CDATA[
-gap> S := RectangularBand(3,3);;
-gap> L := LeftTranslations(S);;
-gap> l := Representative(L);;
-gap> TypeLeftTranslationsSemigroupElements(L) = TypeObj(l);
-true
-]]>   </Example>
-    </Description>
-  </ManSection>
-<#/GAPDoc> 
+<#/GAPDoc>
     
 #EOF
