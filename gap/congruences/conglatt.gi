@@ -61,6 +61,10 @@ SEMIGROUPS.PrincipalXCongruencePosetNC := function(S, restriction, cong_func)
   local report, pairs, total, congs, nrcongs, children, parents, last_collected,
         nr, pair, badcong, newchildren, newparents, newcong, i, c, p, po, poset;
 
+  # Display warning
+  Info(InfoSemigroups, 1,
+       "Finding a semigroup's congruences can take a very long time!");
+
   # Suppress reporting
   report := SEMIGROUPS.OptionsRec(S).report;
   SEMIGROUPS.OptionsRec(S).report := false;
