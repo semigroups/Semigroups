@@ -31,12 +31,14 @@
 #include "converter.h"
 #include "fropin.h"
 #include "semigrp.h"
-#include "ufdata.h"
+#include "uf.h"
 
 #include "libsemigroups/semigroups.h"
 #include "libsemigroups/cong.h"
+#include "libsemigroups/util/uf.h"
 
 using libsemigroups::Congruence;
+using libsemigroups::UF;
 
 // Prevent compilation if the DEBUG and NDEBUG flags are both set
 #if defined(DEBUG) && defined(NDEBUG)
@@ -95,8 +97,8 @@ inline UInt LoadUIntBiggest() {
 
 void TSemiObjPrintFunc(Obj o) {
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UFDATA: {
-      Pr("<wrapper for instance of C++ UFData class>", 0L, 0L);
+    case T_SEMI_SUBTYPE_UF: {
+      Pr("<wrapper for instance of C++ UF class>", 0L, 0L);
       break;
     }
     case T_SEMI_SUBTYPE_CONG: {
@@ -142,8 +144,8 @@ Int TBlocksObjIsMutableObjFuncs(Obj o) {
 void TSemiObjFreeFunc(Obj o) {
   assert(TNUM_OBJ(o) == T_SEMI);
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UFDATA: {
-      delete CLASS_OBJ<UFData*>(o);
+    case T_SEMI_SUBTYPE_UF: {
+      delete CLASS_OBJ<UF*>(o);
       break;
     }
     case T_SEMI_SUBTYPE_CONG: {
@@ -196,8 +198,8 @@ void TSemiObjSaveFunc(Obj o) {
   SaveUInt4(SUBTYPE_OF_T_SEMI(o));
 
   switch (SUBTYPE_OF_T_SEMI(o)) {
-    case T_SEMI_SUBTYPE_UFDATA: {
-      UFData* uf = CLASS_OBJ<UFData*>(o);
+    case T_SEMI_SUBTYPE_UF: {
+      UF* uf = CLASS_OBJ<UF*>(o);
       SaveUIntBiggest(uf->get_size());
       for (size_t i = 0; i < uf->get_size(); i++) {
         SaveUIntBiggest(uf->find(i));
@@ -229,14 +231,14 @@ void TSemiObjLoadFunc(Obj o) {
   ADDR_OBJ(o)[0]        = reinterpret_cast<Obj>(type);
 
   switch (type) {
-    case T_SEMI_SUBTYPE_UFDATA: {
+    case T_SEMI_SUBTYPE_UF: {
       size_t               size  = LoadUIntBiggest();
       std::vector<size_t>* table = new std::vector<size_t>();
       table->reserve(size);
       for (size_t i = 0; i < size; i++) {
         table->push_back(LoadUIntBiggest());
       }
-      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new UFData(*table));
+      ADDR_OBJ(o)[1] = reinterpret_cast<Obj>(new UF(*table));
       break;
     }
     case T_SEMI_SUBTYPE_CONG: {
@@ -473,14 +475,14 @@ static StructGVarFunc GVarFuncs[] = {
                "scc1, scc2"),
     GVAR_ENTRY("fropin.cc", FIND_HCLASSES, 2, "left, right"),
 
-    GVAR_ENTRY("ufdata.cc", UF_NEW, 1, "size"),
-    GVAR_ENTRY("ufdata.cc", UF_COPY, 1, "ufdata"),
-    GVAR_ENTRY("ufdata.cc", UF_SIZE, 1, "ufdata"),
-    GVAR_ENTRY("ufdata.cc", UF_FIND, 2, "ufdata, i"),
-    GVAR_ENTRY("ufdata.cc", UF_UNION, 2, "ufdata, pair"),
-    GVAR_ENTRY("ufdata.cc", UF_FLATTEN, 1, "ufdata"),
-    GVAR_ENTRY("ufdata.cc", UF_TABLE, 1, "ufdata"),
-    GVAR_ENTRY("ufdata.cc", UF_BLOCKS, 1, "ufdata"),
+    GVAR_ENTRY("uf.cc", UF_NEW, 1, "size"),
+    GVAR_ENTRY("uf.cc", UF_COPY, 1, "uf"),
+    GVAR_ENTRY("uf.cc", UF_SIZE, 1, "uf"),
+    GVAR_ENTRY("uf.cc", UF_FIND, 2, "uf, i"),
+    GVAR_ENTRY("uf.cc", UF_UNION, 2, "uf, pair"),
+    GVAR_ENTRY("uf.cc", UF_FLATTEN, 1, "uf"),
+    GVAR_ENTRY("uf.cc", UF_TABLE, 1, "uf"),
+    GVAR_ENTRY("uf.cc", UF_BLOCKS, 1, "uf"),
 
     GVAR_ENTRY("bipart.cc", BIPART_NC, 1, "list"),
     GVAR_ENTRY("bipart.cc", BIPART_EXT_REP, 1, "x"),

@@ -16,53 +16,56 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-// This file defines UFData, a class used to make an equivalence relation on
-// the integers {1 .. n}, using the UNION-FIND METHOD: new pairs can be added
-// and the appropriate classes combined quickly.
+// This file uses UF, a class in libsemigroups used to make an equivalence
+// relation on the integers {1 .. n}, using the UNION-FIND METHOD: new pairs can
+// be added and the appropriate classes combined quickly.
 
-#include "ufdata.h"
 #include <assert.h>
 
 #include "gap.h"
 #include "src/compiled.h"
 
+#include "libsemigroups/util/uf.h"
+
+using libsemigroups::UF;
+
 // GAP level functions
 
 Obj UF_NEW(Obj self, Obj size) {
   assert(IS_INTOBJ(size) && INT_INTOBJ(size) > 0);
-  return OBJ_CLASS(new UFData(INT_INTOBJ(size)), T_SEMI_SUBTYPE_UFDATA);
+  return OBJ_CLASS(new UF(INT_INTOBJ(size)), T_SEMI_SUBTYPE_UF);
 }
 
-Obj UF_COPY(Obj self, Obj ufdata) {
-  return OBJ_CLASS(new UFData(*CLASS_OBJ<UFData*>(ufdata)),
-                   T_SEMI_SUBTYPE_UFDATA);
+Obj UF_COPY(Obj self, Obj uf) {
+  return OBJ_CLASS(new UF(*CLASS_OBJ<UF*>(uf)),
+                   T_SEMI_SUBTYPE_UF);
 }
 
-Obj UF_SIZE(Obj self, Obj ufdata) {
-  return INTOBJ_INT(CLASS_OBJ<UFData*>(ufdata)->get_size());
+Obj UF_SIZE(Obj self, Obj uf) {
+  return INTOBJ_INT(CLASS_OBJ<UF*>(uf)->get_size());
 }
 
-Obj UF_FIND(Obj self, Obj ufdata, Obj i) {
+Obj UF_FIND(Obj self, Obj uf, Obj i) {
   assert(IS_INTOBJ(i) && INT_INTOBJ(i) > 0);
-  return INTOBJ_INT(CLASS_OBJ<UFData*>(ufdata)->find(INT_INTOBJ(i) - 1) + 1);
+  return INTOBJ_INT(CLASS_OBJ<UF*>(uf)->find(INT_INTOBJ(i) - 1) + 1);
 }
 
-Obj UF_UNION(Obj self, Obj ufdata, Obj pair) {
+Obj UF_UNION(Obj self, Obj uf, Obj pair) {
   assert(IS_PLIST(pair) && LEN_PLIST(pair) == 2);
   assert(IS_INTOBJ(ELM_PLIST(pair, 1)) && INT_INTOBJ(ELM_PLIST(pair, 1)) > 0);
   assert(IS_INTOBJ(ELM_PLIST(pair, 2)) && INT_INTOBJ(ELM_PLIST(pair, 2)) > 0);
-  CLASS_OBJ<UFData*>(ufdata)->unite(INT_INTOBJ(ELM_PLIST(pair, 1)) - 1,
+  CLASS_OBJ<UF*>(uf)->unite(INT_INTOBJ(ELM_PLIST(pair, 1)) - 1,
                                     INT_INTOBJ(ELM_PLIST(pair, 2)) - 1);
   return 0L;
 }
 
-Obj UF_FLATTEN(Obj self, Obj ufdata) {
-  CLASS_OBJ<UFData*>(ufdata)->flatten();
+Obj UF_FLATTEN(Obj self, Obj uf) {
+  CLASS_OBJ<UF*>(uf)->flatten();
   return 0L;
 }
 
-Obj UF_TABLE(Obj self, Obj ufdata) {
-  UFData::table_t* table     = CLASS_OBJ<UFData*>(ufdata)->get_table();
+Obj UF_TABLE(Obj self, Obj uf) {
+  UF::table_t* table     = CLASS_OBJ<UF*>(uf)->get_table();
   size_t           size      = table->size();
   Obj              gap_table = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, size);
   // IMMUTABLE since it should not be altered on the GAP level
@@ -73,8 +76,8 @@ Obj UF_TABLE(Obj self, Obj ufdata) {
   return gap_table;
 }
 
-Obj UF_BLOCKS(Obj self, Obj ufdata) {
-  UFData::blocks_t const* blocks = CLASS_OBJ<UFData*>(ufdata)->get_blocks();
+Obj UF_BLOCKS(Obj self, Obj uf) {
+  UF::blocks_t const* blocks = CLASS_OBJ<UF*>(uf)->get_blocks();
   size_t                  size   = blocks->size();
   size_t                  i, j;
 
