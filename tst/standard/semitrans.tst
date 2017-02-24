@@ -2813,6 +2813,24 @@ gap> Unbind(rels);
 gap> Unbind(x);
 gap> Unbind(y);
 
+#T# Tests Wreath Product of Full Transformation Monoid and group of order 2
+gap> T3 := FullTransformationMonoid(3);;
+gap> C21 := Group((1,3));;
+gap> T3WPC21 := WreathProduct(T3,C21);;
+gap> Size(T3WPC21) = 39366;
+true
+gap> C22 := Group((1,2));;             
+gap> T3WPC22 := WreathProduct(T3,C22);;
+gap> Size(T3WPC22) = 1458;                 
+true
+
+#T# Tests Wreath Product of monoids that do not satisfy IsTransformationMonoid
+gap> SS := Semigroup(Transformation([1,2,3,3,3]));;
+gap> C2 := Group((1,2));;
+gap> WW := WreathProduct(SS,C2);;
+gap> Size(WW) = 2;
+true
+
 #E#
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semitrans.tst");
