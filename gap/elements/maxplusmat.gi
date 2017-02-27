@@ -679,9 +679,9 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons, "for IsNTPMatrix",
 InstallMethod(SEMIGROUPS_MatrixOverSemiringEntryCheckerCons,
 "for IsNTPMatrix, pos int, pos int", [IsNTPMatrix, IsInt, IsInt],
 function(filter, threshold, period)
-  if threshold < 0 or period < 0 then
+  if threshold < 0 or period <= 0 then
     ErrorNoReturn("Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons:",
-                  " usage,\n the threshold and period must be non-negative,");
+                  " usage,\n the threshold must be >=0 and the period > 0,");
   fi;
   return x -> (IsInt(x) and x >= 0 and x <= threshold + period - 1);
 end);

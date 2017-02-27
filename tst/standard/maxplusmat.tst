@@ -158,7 +158,7 @@ gap> mat * mat2;
 Matrix(IsProjectiveMaxPlusMatrix, [[-7, -5, -4, -6], [-6, -6, -5, -10], 
   [-1, -2, 0, -4], [-4, -3, -1, -3]])
 
-#T# maxplusmat: test projective ntp matrix code, 1/1
+#T# maxplusmat: test ntp matrix code, 1/1
 gap> mat := Matrix(IsNTPMatrix, [[0, 0, 0],
 >                         [2, 0, 1],
 >                         [2, 2, 2]],
@@ -189,6 +189,11 @@ gap> mat3 := RandomMatrix(IsNTPMatrix, 21, 4, 2);
 <21x21 ntp matrix>
 gap> mat3 * mat2;
 <20x20 ntp matrix>
+
+# Test period can't be 0
+gap> A := Matrix(IsNTPMatrix, [[1, 0], [1, 1]], 59, 0);
+Error, Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons: usage,
+ the threshold must be >=0 and the period > 0,
 
 #T# maxplusmat: test integer matrix code, 1/1
 gap> mat := Matrix(IsIntegerMatrix, [[-1, -2, 0],
@@ -600,7 +605,7 @@ Error, Semigroups: Matrix: usage,
 the entries in the 2nd argument do not define a matrix of type IsNTPMatrix,
 gap> x := Matrix(IsNTPMatrix, [[1, 1], [0, 0]], 5, -10);
 Error, Semigroups: SEMIGROUPS_MatrixOverSemiringEntryCheckerCons: usage,
- the threshold and period must be non-negative,
+ the threshold must be >=0 and the period > 0,
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
