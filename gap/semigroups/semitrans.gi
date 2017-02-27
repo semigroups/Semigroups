@@ -753,12 +753,13 @@ function(S)
   return t;
 end);
 
-InstallMethod(WreathProduct, "for a monoid and a permutation group",
+InstallMethod(WreathProduct, "for a transformation semigroup and a permutation group",
 [IsTransformationSemigroup, IsPermGroup],
 function(S, G)
   local maps, gensS, next, reps, n, i, g, x, m;
   if not IsMonoidAsSemigroup(S) then
-    ErrorNoReturn("S should be a monoid");
+    ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
+                    "the first argument <S> should be a monoid,");
   fi;
  
   m := LargestMovedPoint(G);
@@ -780,7 +781,7 @@ function(S, G)
   od;
 
   #If there is only 1 generator there is nothing else to do
-  #If there are more than one generator, copy them to each distinct orbit of G
+  #If there are more than one generators, copy them to each distinct orbit of G
   if not Size(gensS) = 1 then
     reps := List(Orbits(G, [1 .. m], OnPoints), Representative);
     for i in reps do 
