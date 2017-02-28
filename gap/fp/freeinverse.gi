@@ -324,8 +324,8 @@ end);
 InstallMethod(CanonicalForm, "for a free inverse semigroup element",
 [IsFreeInverseSemigroupElement],
 function(tree)
-  local output, maxleftreduced, maxleftreducedpath, pivot, i, InvertGenerator,
-         children, fork, tail, groupelem;
+  local InvertGenerator, children, fork, tail, maxleftreducedpath,
+  maxleftreduced, groupelem, i, mlr, output, pivot;
 
   InvertGenerator := function(n)
     if n mod 2 = 0 then
@@ -382,19 +382,15 @@ function(tree)
   od;
   groupelem := Reversed(List(groupelem, x -> tree![5][x]));
 
-  if Length(maxleftreduced) = 1 and
-       Length(maxleftreduced[1]) = 2 and
-       Length(groupelem) > 0 and
-      ((maxleftreduced[1][1] mod 2 = 1 and maxleftreduced[1][2] =
-        maxleftreduced[1][1] + 1) or
-       (maxleftreduced[1][1] mod 2 = 0 and maxleftreduced[1][2] =
-        maxleftreduced[1][1] - 1)) then
+  mlr := maxleftreduced;
+  if Length(mlr) = 1 and Length(mlr[1]) = 2 and Length(groupelem) > 0 and
+      ((mlr[1][1] mod 2 = 1 and mlr[1][2] = mlr[1][1] + 1) or
+       (mlr[1][1] mod 2 = 0 and mlr[1][2] = mlr[1][1] - 1)) then
     output := Concatenation(List(groupelem, x -> FamilyObj(tree)!.names[x]));
   else
     output :=
-          Concatenation(List(Concatenation(Concatenation(Set(maxleftreduced)),
-                                           groupelem),
-                        x -> FamilyObj(tree)!.names[x]));
+          Concatenation(List(Concatenation(Concatenation(Set(mlr)), groupelem),
+                             x -> FamilyObj(tree)!.names[x]));
   fi;
   return output;
 end);
