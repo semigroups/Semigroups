@@ -437,6 +437,21 @@ gap> S := Semigroup([Transformation([1, 1]), Transformation([1, 1])]);
 gap> Size(IrredundantGeneratingSubset(S));
 1
 
+#T# attr: IrredundantGeneratingSubset: test info statements
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 4, 1);;
+gap> S := Semigroup(Elements(S));
+<transformation semigroup of degree 5 with 4 generators>
+gap> x := InfoLevel(InfoSemigroups);;
+gap> SetInfoLevel(InfoSemigroups, 3);
+gap> IrredundantGeneratingSubset(S);
+at 	1 of 	4 with 	0 redundant, 	0 non-redundant
+at 	2 of 	4 with 	0 redundant, 	1 non-redundant
+at 	3 of 	4 with 	1 redundant, 	1 non-redundant
+at 	4 of 	4 with 	2 redundant, 	1 non-redundant
+
+[ Transformation( [ 1, 1, 2, 3, 4 ] ) ]
+gap> SetInfoLevel(InfoSemigroups, x);
+
 #T# attr: PrincipalFactor: for a D-class
 gap> D := GreensDClassOfElement(
 >  Semigroup(
@@ -484,10 +499,15 @@ gap> SmallMonoidGeneratingSet([IdentityTransformation]);
 gap> SmallMonoidGeneratingSet([Transformation([2, 1, 2])]);
 [ Transformation( [ 2, 1, 2 ] ) ]
 
-#T# attr: SmallMonoidGeneratingSet: for a 0 generator monoid
+#T# attr: SmallMonoidGeneratingSet: for a 0 generator monoid, 1
 gap> S := Monoid(Bipartition([[1, -1]]));;
 gap> SmallMonoidGeneratingSet(S);
 [ <block bijection: [ 1, -1 ]> ]
+
+#T# attr: SmallMonoidGeneratingSet: for a 0 generator monoid, 2
+gap> S := FreeMonoid(0);;
+gap> SmallMonoidGeneratingSet(S);
+[  ]
 
 #T# attr: SmallInverseSemigroupGeneratingSet: for collection > 1 element 
 gap> SmallInverseSemigroupGeneratingSet(
@@ -517,11 +537,21 @@ gap> S :=
 >   PartialPerm([1, 2, 3, 5], [4, 1, 2, 3])]);;
 gap> SmallInverseSemigroupGeneratingSet(S);;
 
-#T# attr: SmallInverseMonoidGeneratingSet: for 0 generators
+#T# attr: SmallInverseMonoidGeneratingSet: for 0 generators, 1
 gap> S := InverseMonoid(PartialPerm([1, 2, 3]));
 <trivial partial perm group of rank 3 with 1 generator>
 gap> SmallInverseMonoidGeneratingSet(S);
 [ <identity partial perm on [ 1, 2, 3 ]> ]
+
+#T# attr: SmallInverseMonoidGeneratingSet: for 0 generators, 2
+gap> S := Group(IdentityTransformation);
+<transformation group of degree 0 with 1 generator>
+gap> S := Subgroup(S, []);
+<trivial transformation group of degree 0 with 0 generators>
+gap> IsInverseMonoid(S) and IsGeneratorsOfInverseSemigroup(S);
+true
+gap> SmallInverseMonoidGeneratingSet(S);
+[  ]
 
 #T# attr: SmallInverseMonoidGeneratingSet: for > 0 generators 1/2
 gap> S := InverseMonoid([PartialPerm([1, 3], [2, 3]),
@@ -687,6 +717,8 @@ gap> foo(z, y);
 false
 gap> foo(y, z);
 true
+gap> foo(z, z);
+false
 
 # Test IsGreensDGreaterThanFunc for an infinite enumerable semigroup
 gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
@@ -840,9 +872,18 @@ gap> T := IdempotentGeneratedSubsemigroup(S);
 gap> HasIsIdempotentGenerated(T) and IsIdempotentGenerated(T);
 true
 
-#T# attr: MultiplicativeZero, infinite 1/1
+#T# attr: MultiplicativeZero, infinite, 1
 #gap> MultiplicativeZero(FreeMonoid(2)); 
 #FIXME this causes an infinite loop in the GAP library code
+
+#T# attr: MultiplicativeZero, infinite, 2
+gap> F := FreeSemigroup(2);;
+gap> x := [[F.1 * F.1, F.1], [F.1 * F.2, F.1], [F.2 * F.1, F.1]];;
+gap> T := F / x;
+<fp semigroup on the generators [ s1, s2 ]>
+gap> SetIsFinite(T, false);
+gap> MultiplicativeZero(T);
+s1
 
 #T# attr: MaximalDClasses, infinite 1/1
 gap> MaximalDClasses(FreeMonoid(2));
@@ -867,25 +908,35 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 4th choice method found for `IdempotentGeneratedSubsemigroup' on 1 a\
 rguments
 
-#T# attr: MultiplicativeNeutralElement, infinite 1/1
+#T# attr: MultiplicativeNeutralElement, infinite, 1
 gap> MultiplicativeNeutralElement(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `MultiplicativeNeutralElement' on 1 argu\
 ments
 
-#T# attr: MultiplicativeNeutralElement, One 1/1
+#T# attr: MultiplicativeNeutralElement, infinite, 2
+gap> S := Semigroup([
+> Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]),
+> Matrix(IsMaxPlusMatrix, [[0, 0], [1, -3]])]);
+<semigroup of 2x2 max-plus matrices with 2 generators>
+gap> MultiplicativeNeutralElement(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 3rd choice method found for `MultiplicativeNeutralElement' on 1 argu\
+ments
+
+#T# attr: MultiplicativeNeutralElement, One, 1
 gap> S := Semigroup(Transformation([1, 3, 2]));
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> MultiplicativeNeutralElement(S);
 IdentityTransformation
 
-#T# attr: MultiplicativeNeutralElement, One 1/2
+#T# attr: MultiplicativeNeutralElement, One, 2
 gap> S := Semigroup(Transformation([3, 1, 3]));
 <commutative transformation semigroup of degree 3 with 1 generator>
 gap> MultiplicativeNeutralElement(S);
 fail
 
-#T# attr: MultiplicativeNeutralElement, One 2/2
+#T# attr: MultiplicativeNeutralElement, One, 3
 gap> S := Semigroup(
 > [BooleanMat([[true, false, false], [true, false, true], [true, true, true]]),
 >  BooleanMat([[true, false, false], [true, true, true], [true, true, false]]),
@@ -902,6 +953,12 @@ gap> S := Semigroup(
 >              [false, false, false]])]);;
 gap> MultiplicativeNeutralElement(S);
 fail
+
+#T# attr: MultiplicativeNeutralElement, One, 4
+gap> S := Semigroup([PBR([[-2], [-1]], [[1], [2]])]);
+<commutative pbr semigroup of degree 2 with 1 generator>
+gap>  MultiplicativeNeutralElement(S);
+PBR([ [ -1 ], [ -2 ] ], [ [ 1 ], [ 2 ] ])
 
 #T# attr: RepresentativeOfMinimalIdeal, infinite 1/1
 gap> RepresentativeOfMinimalIdeal(FreeSemigroup(2));
@@ -1292,7 +1349,7 @@ gap> LargestElementSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `LargestElementSemigroup' on 1 arguments
 
-# Test InversesOfSemigroup (for a group as semigroup)
+#T# attr: InversesOfSemigroupElement, for a group as semigroup
 gap> S := Semigroup(Transformation([2, 3, 1, 3, 3]));;
 gap> IsGroupAsSemigroup(S);
 true
@@ -1305,9 +1362,14 @@ gap> IsGroupAsSemigroup(S);
 true
 gap> InversesOfSemigroupElement(S, S.1);
 [ (1,3,2) ]
+gap> S := SymmetricGroup(3);
+Sym( [ 1 .. 3 ] )
+gap> InversesOfSemigroupElement(S, (1, 3, 2));
+[ (1,2,3) ]
 
-# Test InversesOfSemigroup (for a semigroup)
-#gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+#T# attr: InversesOfSemigroupElement, for a semigroup
+#gap> S := Semigroup([
+#>  Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
 #>  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
 #gap> InversesOfSemigroupElement(S, S.1);
 # FIXME This test fails due to the library method
@@ -1321,6 +1383,16 @@ gap> InversesOfSemigroupElement(S, S.1);
 [  ]
 gap> InversesOfSemigroupElement(S, S.1 * S.2 * S.1);
 [ Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [0, 0, 1]]) ]
+
+#T# InversesOfSemigroupElement, for an infinite semigroup, 1
+gap> S := FreeSemigroup(1);
+<free semigroup on the generators [ s1 ]>
+gap> InversesOfSemigroupElement(S, IdentityTransformation);
+Error, usage: the 2nd argument must be an element of the 1st,
+gap> InversesOfSemigroupElementNC(S, S.1);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `InversesOfSemigroupElementNC' on 2 argu\
+ments
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);

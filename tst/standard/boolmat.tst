@@ -106,6 +106,60 @@ gap> y := BooleanMat([[1, 0, 0],
 gap> x * y;
 Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 0], [0, 0, 0]])
 
+#T# boolmat: \< for boolean mats, 1
+gap> a := BooleanMat([[0]]);;
+gap> b := BooleanMat([[0, 1],
+>                     [0, 0]]);;
+gap> c := BooleanMat([[1, 0, 1],
+>                     [1, 1, 0],
+>                     [1, 0, 0]]);;
+gap> d := BooleanMat([[1, 0, 1],
+>                     [1, 1, 0],
+>                     [1, 0, 1]]);;
+gap> e := BooleanMat([[1, 0, 1],
+>                     [1, 1, 0],
+>                     [1, 0, 1]]);;
+
+# test different dimensions
+gap> a < b;
+true
+gap> a < c;
+true
+gap> b < a;
+false
+gap> b < c;
+true
+gap> c < a;
+false
+gap> c < b;
+false
+
+# test identical obj
+gap> a < a;
+false
+gap> b < b;
+false
+gap> c < c;
+false
+gap> d < d;
+false
+gap> e < e;
+false
+
+# test same dimension
+gap> c < d;
+true
+gap> c < e;
+true
+gap> d < c;
+false
+gap> d < e;
+false
+gap> e < c;
+false
+gap> e < d;
+false
+
 #T# boolmat: OneImmutable, for boolean mats, 1/1
 gap> x := BooleanMat([[1, 0, 0],
 >                     [1, 0, 1],

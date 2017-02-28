@@ -548,17 +548,29 @@ gap> BIPART_LAMBDA_CONJ(LeftOne(x), x);
 gap> PrintString(Bipartition([[1, 2, -1, -2], [3, -3]]));
 "\>\>Bipartition(\< \>[ [ 1, 2, -1, -2 ],\< \>[ 3, -3 ] \<] )\<"
 
-# bipartition: PrintString, for a bipartition collection 1/2
+# bipartition: PrintString, for a bipartition collection, 1
 gap> PrintString([Bipartition([[1, 2, -1, -2], [3, -3]]),
 > Bipartition([[1, 2, -1, -2], [3, -3]])]);
 "\>[ \>\>\>Bipartition(\< \>[ [ 1, 2, -1, -2 ],\< \>[ 3, -3 ] \<] )\<,\<\n \>\
 \>\>Bipartition(\< \>[ [ 1, 2, -1, -2 ],\< \>[ 3, -3 ] \<] )\< ]\<\n"
 
-# bipartition: PrintString, for a bipartition collection 2/2
+# bipartition: PrintString, for a bipartition collection, 2
 gap> S := Semigroup(Bipartition([[1, 2, -1, -2], [3, -3]]));;
 gap> PrintString(S);
 "\>Semigroup(\>\n\>\>[ \>\>\>Bipartition(\< \>[ [ 1, 2, -1, -2 ],\< \>[ 3, -3 \
 ] \<] )\< ]\<\n\<\> \<)\<\<"
+
+# bipartition: PrintString, for a bipartition collection, 3
+gap> x := GreensRClassOfElement(
+> Semigroup([
+>   Bipartition([[1, 2, 3, -1, -3], [-2]]),
+>   Bipartition([[1, 2, -2], [3], [-1], [-3]])]),
+>   Bipartition([[1, 2, -1, -3], [3], [-2]]));;
+gap> PrintString(x);
+"\>\>\>GreensRClassOfElement\<(\>\>Semigroup(\>\n\>\>[ \>\>\>Bipartition(\< \>\
+[ [ 1, 2, 3, -1, -3 ],\< \>[ -2 ] \<] )\<,\<\n \>\>\>Bipartition(\< \>[ [ 1, 2\
+, -2 ],\< \>[ 3 ],\< \>[ -1 ],\< \>[ -3 ] \<] )\< ]\<\n\<\> \<)\<\<,\< \>\>\>B\
+ipartition(\< \>[ [ 1, 2, -1, -3 ],\< \>[ 3 ],\< \>[ -2 ] \<] )\<\<)\<\<"
 
 # bipartition: DegreeOfBipartitionCollection, for a semigroup 1/1
 gap> DegreeOfBipartitionCollection(PartitionMonoid(2));
@@ -640,7 +652,8 @@ gap> TYPE_BIPART(3);;
 gap> TYPE_BIPART(3);;
 
 # Test pickling
-gap> filename := Concatenation(SEMIGROUPS.PackageDir, "/tst/standard/bipart.p");;
+gap> filename := Concatenation(SEMIGROUPS.PackageDir,
+> "/tst/standard/bipart.p");;
 gap> x := Bipartition(
 > [[1, 4, -8], [2, -4], [3, 5, -1], [6, -9], [7, -7], [8, -5], [9, 10, -3],
 > [-2], [-6], [-10]]);;
@@ -649,6 +662,17 @@ IO_OK
 gap> x = ReadGenerators(filename)[1];
 true
 gap> Exec("rm ", filename);
+gap> filename := Concatenation(SEMIGROUPS.PackageDir,
+> "/tst/standard/bipart.tst");;
+gap> f := IO_File(filename, "r");;
+gap> IO_Unpicklers.BIPA(f);
+No unpickler for magic value "####"
+Maybe you have to load a package for this to work?
+IO_Error
+gap> IO_Pickle(f, x);
+IO_Error
+gap> IO_Close(f);
+true
 
 # Test identity bipartition of degree 0
 gap> IdentityBipartition(0);

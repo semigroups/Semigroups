@@ -47,10 +47,7 @@ function(file, x)
   if IO_Write(file, "BIPA") = fail then
     return IO_Error;
   fi;
-  if IO_Pickle(file, IntRepOfBipartition(x)) = IO_Error then
-    return IO_Error;
-  fi;
-  return IO_OK;
+  return IO_Pickle(file, IntRepOfBipartition(x));
 end);
 
 IO_Unpicklers.BIPA := function(file)
