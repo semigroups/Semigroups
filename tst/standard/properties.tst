@@ -712,7 +712,7 @@ gap> S := Semigroup([PartialPerm([1, 2, 4, 5], [1, 2, 4, 5]),
 gap> IsIdempotentGenerated(S);
 false
 
-#T# properties: IsIdempotentGenerated, 4
+#T# properties: IsIdempotentGenerated, 6
 gap> S := FreeSemigroup(1);;
 gap> IsIdempotentGenerated(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -722,6 +722,38 @@ Error, no 3rd choice method found for `IsIdempotentGenerated' on 1 arguments
 gap> S := AsSemigroup(IsBooleanMatSemigroup, 
 >                     SingularTransformationMonoid(3));;
 gap> IsIdempotentGenerated(S);
+true
+
+#T# properties: IsIdempotentGenerated, 7
+
+# Performance testing: T_9 used to take seconds
+gap> S := FullTransformationMonoid(9);;
+gap> S := Monoid(S, rec(acting := true));;
+gap> IsIdempotentGenerated(S);
+false
+gap> S := Semigroup(GeneratorsOfMonoid(S), rec(acting := true));;
+gap> IsIdempotentGenerated(S);
+false
+
+# Coverage and performance testing
+gap> S := FullTransformationMonoid(8);;
+gap> S := Semigroup(GeneratorsOfMonoid(S), rec(acting := true));;
+gap> IsIdempotentGenerated(S);
+false
+gap> S := Semigroup(S, rec(acting := true));;
+gap> Idempotents(S);;
+gap> IsIdempotentGenerated(S);
+false
+
+#T# properties: IsIdempotentGenerated, 8
+gap> S := Semigroup([Transformation([3, 2, 1]), Transformation([2, 2, 2])]);
+<transformation semigroup of degree 3 with 2 generators>
+gap> IsIdempotentGenerated(S);
+false
+gap> I := SemigroupIdeal(S, S.1 ^ 2);;
+gap> IsIdempotentGenerated(I);
+false
+gap> I = S;
 true
 
 #T# properties: IsInverseSemigroup, 1

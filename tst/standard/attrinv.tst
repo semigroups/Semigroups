@@ -1006,7 +1006,9 @@ gap> S := InverseSemigroup([
 >  PartialPerm([1, 2, 3, 4], [6, 2, 4, 3]),
 >  PartialPerm([1, 2, 3, 5], [5, 6, 3, 2]),
 >  PartialPerm([1, 2, 5], [3, 5, 4])]);;
-gap> IdempotentGeneratedSubsemigroup(S);;
+gap> S := IdempotentGeneratedSubsemigroup(S);;
+gap> HasIsIdempotentGenerated(S) and IsIdempotentGenerated(S);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);

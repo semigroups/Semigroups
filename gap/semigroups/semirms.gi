@@ -881,16 +881,36 @@ function(R)
   return MagmaIsomorphismByFunctionsNC(R, S, iso, inv);
 end);
 
-InstallMethod(IsIdempotentGenerated, "for a Rees 0-matrix semigroup",
-[IsReesZeroMatrixSemigroup],
+InstallMethod(IsIdempotentGenerated, "for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
 function(R)
-  local RR;
-  if not IsConnectedDigraph(RZMSDigraph(R)) then
+  local U, N;
+  if not IsReesZeroMatrixSemigroup(R) then
+    TryNextMethod();
+  elif not IsConnectedDigraph(RZMSDigraph(R)) then
     return false;
   fi;
-  RR := Range(RZMSNormalization(R));
-  return Group(Filtered(MatrixEntries(RR), x -> x <> 0)) =
-    UnderlyingSemigroup(RR);
+  U := UnderlyingSemigroup(R);
+  if not IsGroupAsSemigroup(U) then
+    TryNextMethod();
+  fi;
+  N := Range(RZMSNormalization(R));
+  return Semigroup(Filtered(MatrixEntries(N), x -> x <> 0)) = U;
+end);
+
+InstallMethod(IsIdempotentGenerated, "for a Rees matrix subsemigroup",
+[IsReesMatrixSubsemigroup],
+function(R)
+  local U, N;
+  if not IsReesMatrixSemigroup(R) then
+    TryNextMethod();
+  fi;
+  U := UnderlyingSemigroup(R);
+  if not IsGroupAsSemigroup(U) then
+    TryNextMethod();
+  fi;
+  N := Range(RMSNormalization(R));
+  return Semigroup(MatrixEntries(N)) = U;
 end);
 
 # The next two methods are just copies of the methods in the library but with

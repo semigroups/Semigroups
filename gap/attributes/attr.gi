@@ -553,10 +553,13 @@ end);
 InstallMethod(IdempotentGeneratedSubsemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
+  local out;
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return Semigroup(Idempotents(S), rec(small := true));
+  out := Semigroup(Idempotents(S), rec(small := true));
+  SetIsIdempotentGenerated(out, true);
+  return out;
 end);
 
 InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",

@@ -1514,6 +1514,30 @@ gap> Set(PrimitiveIdempotents(T));
   Transformation( [ 6, 6, 6, 4, 6, 6 ] ), 
   Transformation( [ 6, 6, 6, 6, 5, 6 ] ) ]
 
+#T# Issue 253: IsIdempotentGenerated
+
+# Problem with IsIdempotentGenerated for ideals
+gap> S := Semigroup([Transformation([3, 2, 1]), Transformation([2, 2, 2])]);
+<transformation semigroup of degree 3 with 2 generators>
+gap> IsIdempotentGenerated(S);
+false
+gap> I := SemigroupIdeal(S, S.1 ^ 2);;
+gap> IsIdempotentGenerated(I);
+false
+gap> I = S;
+true
+
+# Problem with IsIdempotentGenerated for Rees 0-matrix semigroups over
+# non-groups
+gap> mat := [[
+>  Transformation([2, 3, 1]),
+>  Transformation([2, 1]),
+>  Transformation([1, 2, 1])]];;
+gap> R := ReesZeroMatrixSemigroup(FullTransformationMonoid(3), mat);
+<Rees 0-matrix semigroup 3x1 over <full transformation monoid of degree 3>>
+gap> IsIdempotentGenerated(R);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
