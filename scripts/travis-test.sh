@@ -34,4 +34,4 @@ else
 fi
 
 # Check the logs for invalid phrases
-( ! grep -E "Diff|brk>|#E|Error|error|# WARNING|fail|Syntax warning|Couldn't open saved workspace|insufficient" ../../testlog.txt )
+( ! grep -E "Diff|brk>|#E|Error|error|# WARNING|fail|Syntax warning|Couldn't open saved workspace|insufficient|WARNING|FAILED!" ../../testlog.txt )
