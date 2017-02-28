@@ -406,12 +406,7 @@ end);
 
 InstallMethod(StructureDescription, "for a group as semigroup",
 [IsGroupAsSemigroup],
-function(S)
-  if IsGroup(S) then
-    TryNextMethod();
-  fi;
-  return StructureDescription(Range(IsomorphismPermGroup(S)));
-end);
+S -> StructureDescription(Range(IsomorphismPermGroup(S))));
 
 # same method for ideals
 
@@ -422,9 +417,7 @@ function(S)
 
   if not IsFinite(S) then
     TryNextMethod();
-  fi;
-
-  if IsSemigroupIdeal(S)
+  elif IsSemigroupIdeal(S)
       and HasMultiplicativeZero(SupersemigroupOfIdeal(S)) then
     return MultiplicativeZero(SupersemigroupOfIdeal(S));
   fi;
