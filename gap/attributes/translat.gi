@@ -1023,14 +1023,14 @@ function(T)
         return ReesMatrixSemigroupElement(reesMatSemi, x[1]^t, 
           (), x[3]);
       end;
-      Add(gens, LeftTranslation(T, CompositionMapping(inv, 
+      Add(gens, LeftTranslationNC(T, CompositionMapping(inv, 
       MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
     else 
       f := function(x)
         return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
           (), x[3]^t);
       end;
-      Add(gens, RightTranslation(T, CompositionMapping(inv, 
+      Add(gens, RightTranslationNC(T, CompositionMapping(inv, 
         MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
     fi;
   od;
@@ -1055,7 +1055,7 @@ function(H)
   
   for l in leftGens do
     for r in rightGens do
-      Add(gens, TranslationalHullElement(H, l, r));
+      Add(gens, TranslationalHullElementNC(H, l, r));
     od;
   od;
   
