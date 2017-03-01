@@ -270,5 +270,66 @@ true
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="InnerXTranslations">
+  <ManSection>
+    <Attr Name="InnerLeftTranslations" Arg="sgrp"/>
+    <Attr Name="InnerRightTranslations" Arg="sgrp"/>
+    <Returns>The monoid of inner left or right translations of a semigroup.
+    </Returns>
+    <Description>
+      For a finite semigroup <A>S</A>, <C>InnerLeftTranslations</C><A>S</A> 
+      returns the inner left translations of S. These are the translations 
+      defined by left multiplication by a fixed element of <A>S</A>.
+      <C>InnerRightTranslations</C><A>S</A> returns the inner right translations
+      of <A>S</A>. These are the translations defined by right multiplication by
+      a fixed element of <A>S</A>.
+      <Example><![CDATA[
+gap> S := Semigroup([Transformation([2,2,3,1]), 
+> Transformation([1,4,3,3])]);;
+gap> L := InnerLeftTranslations(S);
+Monoid( 
+[ <left translation on <transformation semigroup of size 24, degree 4 
+     with 2 generators>>, 
+  <left translation on <transformation semigroup of size 24, degree 4 
+     with 2 generators>> ] )
+gap> R := InnerRightTranslations(S);
+Monoid( 
+[ <right translation on <transformation semigroup of size 24, 
+     degree 4 with 2 generators>>, 
+  <right translation on <transformation semigroup of size 24, 
+     degree 4 with 2 generators>> ] )
+gap> Size(L) = Size(S);
+true
+gap> Size(L) = Size(R);
+true
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="InnerTranslationalHull">
+  <ManSection>
+    <Attr Name="InnerTranslationalHull" Arg="sgrp"/>
+    <Returns>The monoid of linked inner left/right translations of a semigroup
+    </Returns>
+    <Description>
+      For a finite semigroup <A>S</A>, <C>InnerTranslationalHull</C><A>S</A> 
+      returns the inner bitranslations of S. These are the pairs of left and  
+      right translations defined respectively by left multiplication 
+      and right multiplication by the same fixed element of <A>S</A>.
+      <Example><![CDATA[
+gap> S := Semigroup([Transformation([2,2,3,1]), 
+> Transformation([1,4,3,3])]);;
+gap> InnerTranslationalHull(S);
+Monoid( 
+[ <linked pair of translations on <transformation semigroup 
+     of size 24, degree 4 with 2 generators>>, 
+  <linked pair of translations on <transformation semigroup 
+     of size 24, degree 4 with 2 generators>> ] )
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
     
 #EOF
