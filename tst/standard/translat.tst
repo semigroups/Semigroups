@@ -28,8 +28,6 @@ gap> Size(R);
 256
 
 #T# Creation of translations semigroups it can't calclate
-gap> S := SingularTransformationSemigroup(10);
-<regular transformation semigroup ideal of degree 10 with 1 generator>
 gap> S := SingularTransformationSemigroup(10);;
 gap> LeftTranslationsSemigroup(S);
 <the semigroup of left translations of <regular transformation semigroup 
@@ -42,95 +40,88 @@ gap> TranslationalHullSemigroup(S);
  degree 10 with 1 generator>>
 
 #T# with calculation - rectangular bands
-gap> S := RectangularBand(3,4);
-<regular transformation semigroup of size 12, degree 8 with 4 generators>
+gap> S := RectangularBand(3,3);
+<regular transformation semigroup of size 9, degree 7 with 3 generators>
 gap> L := LeftTranslations(S);
 <the semigroup of left translations of <simple transformation semigroup 
- of size 12, degree 8 with 4 generators>>
+ of size 9, degree 7 with 3 generators>>
 gap> R := RightTranslations(S);
 <the semigroup of right translations of <simple transformation semigroup 
- of size 12, degree 8 with 4 generators>>
+ of size 9, degree 7 with 3 generators>>
 gap> H := TranslationalHull(S);
-<translational hull over <simple transformation semigroup of size 12, 
- degree 8 with 4 generators>>
+<translational hull over <simple transformation semigroup of size 9, degree 7 
+ with 3 generators>>
 gap> Size(L);
 27
 gap> GeneratorsOfSemigroup(L);
-[ <left translation on <simple transformation semigroup of size 12, degree 8 
-     with 4 generators>>, 
-  <left translation on <simple transformation semigroup of size 12, degree 8 
-     with 4 generators>>, 
-  <left translation on <simple transformation semigroup of size 12, degree 8 
-     with 4 generators>> ]
+[ <left translation on <simple transformation semigroup of size 9, degree 7 
+     with 3 generators>>, 
+  <left translation on <simple transformation semigroup of size 9, degree 7 
+     with 3 generators>>, 
+  <left translation on <simple transformation semigroup of size 9, degree 7 
+     with 3 generators>> ]
 gap> GeneratorsOfSemigroup(R);
-[ <right translation on <simple transformation semigroup of size 12, degree 8 
-     with 4 generators>>, 
-  <right translation on <simple transformation semigroup of size 12, degree 8 
-     with 4 generators>>, 
-  <right translation on <simple transformation semigroup of size 12, degree 8 
-     with 4 generators>> ]
+[ <right translation on <simple transformation semigroup of size 9, degree 7 
+     with 3 generators>>, 
+  <right translation on <simple transformation semigroup of size 9, degree 7 
+     with 3 generators>>, 
+  <right translation on <simple transformation semigroup of size 9, degree 7 
+     with 3 generators>> ]
 gap> GeneratorsOfSemigroup(H);
-[ <linked pair of translations on <simple transformation semigroup 
-     of size 12, degree 8 with 4 generators>>, 
-  <linked pair of translations on <simple transformation semigroup 
-     of size 12, degree 8 with 4 generators>>, 
-  <linked pair of translations on <simple transformation semigroup 
-     of size 12, degree 8 with 4 generators>>, 
-  <linked pair of translations on <simple transformation semigroup 
-     of size 12, degree 8 with 4 generators>>, 
-  <linked pair of translations on <simple transformation semigroup 
-     of size 12, degree 8 with 4 generators>>, 
-  <linked pair of translations on <simple transformation semigroup 
-     of size 12, degree 8 with 4 generators>>, 
-  <linked pair of translations on <simple transformation semigroup 
-     of size 12, degree 8 with 4 generators>>, 
-  <linked pair of translations on <simple transformation semigroup 
-     of size 12, degree 8 with 4 generators>>, 
-  <linked pair of translations on <simple transformation semigroup 
-     of size 12, degree 8 with 4 generators>> ]
+[ <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>>, <linked pair of translations on 
+    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
+  <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>>, <linked pair of translations on 
+    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
+  <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>>, <linked pair of translations on 
+    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
+  <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>>, <linked pair of translations on 
+    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
+  <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>> ]
 
 #T# small RZMS
 gap> G := SmallGroup(4,2);;
 gap> H := AsList(G);;
-gap> mat := [ [H[1], 0, H[1]],
-> [H[2], H[2], H[4]],
-> [0, H[3], 0]];;
+gap> mat := [ [H[1], 0],
+> [H[2], H[2]] ];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> L := LeftTranslations(S);
 <the semigroup of left translations of <0-simple regular semigroup 
- of size 37, with 6 generators>>
+ of size 17, with 4 generators>>
 gap> R := RightTranslations(S);
 <the semigroup of right translations of <0-simple regular semigroup 
- of size 37, with 6 generators>>
+ of size 17, with 4 generators>>
 gap> H := TranslationalHull(S);
-<translational hull over <0-simple regular semigroup of size 37, with 6 
+<translational hull over <0-simple regular semigroup of size 17, with 4 
  generators>>
 gap> Size(H);
-45
+21
 gap> Size(L);
-2197
+81
 gap> Size(R);
-2197
+81
 gap> GeneratorsOfSemigroup(L);
-[ <left translation on <0-simple regular semigroup of size 37, with 6 
+[ <left translation on <0-simple regular semigroup of size 17, with 4 
      generators>>, <left translation on <0-simple regular semigroup 
-     of size 37, with 6 generators>>, 
-  <left translation on <0-simple regular semigroup of size 37, with 6 
+     of size 17, with 4 generators>>, 
+  <left translation on <0-simple regular semigroup of size 17, with 4 
      generators>>, <left translation on <0-simple regular semigroup 
-     of size 37, with 6 generators>>, 
-  <left translation on <0-simple regular semigroup of size 37, with 6 
-     generators>>, <left translation on <0-simple regular semigroup 
-     of size 37, with 6 generators>> ]
+     of size 17, with 4 generators>>, 
+  <left translation on <0-simple regular semigroup of size 17, with 4 
+     generators>> ]
 gap> GeneratorsOfSemigroup(R);
-[ <right translation on <0-simple regular semigroup of size 37, with 6 
+[ <right translation on <0-simple regular semigroup of size 17, with 4 
      generators>>, <right translation on <0-simple regular semigroup 
-     of size 37, with 6 generators>>, 
-  <right translation on <0-simple regular semigroup of size 37, with 6 
+     of size 17, with 4 generators>>, 
+  <right translation on <0-simple regular semigroup of size 17, with 4 
      generators>>, <right translation on <0-simple regular semigroup 
-     of size 37, with 6 generators>>, 
-  <right translation on <0-simple regular semigroup of size 37, with 6 
-     generators>>, <right translation on <0-simple regular semigroup 
-     of size 37, with 6 generators>> ]
+     of size 17, with 4 generators>>, 
+  <right translation on <0-simple regular semigroup of size 17, with 4 
+     generators>> ]
 
 #T# Test translations generation by digraph endomorphisms
 gap> S := ZeroSemigroup(4);;
@@ -285,21 +276,20 @@ true
 gap> S := ZeroSemigroup(4);;
 gap> Size(TranslationalHull(S));
 4096
-gap> S := Semigroup([Transformation([1,1,2,2]), Transformation([3,4,3,1])]);;
+gap> S := Semigroup([Transformation([1,1,2]), Transformation([3,1,3])]);;
 gap> H := TranslationalHull(S);
-<translational hull over <transformation semigroup of size 23, degree 4 with 
+<translational hull over <transformation semigroup of size 11, degree 3 with 
  2 generators>>
 gap> H = Semigroup(H);
 true
 gap> Size(H);
-32
+13
 
 #T# OneOp for translations semigroups elements and translational hull elements
 gap> G := SmallGroup(6, 1);;
 gap> a := G.1;; b := G.2;;
-gap> mat := [[a, 0, b],
-> [b, a, 0],
-> [0, a, b]];;
+gap> mat := [[a, 0],
+> [b, a]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> IsSemigroup(S) and IsFinite(S) and IsZeroSimpleSemigroup(S);;
 gap> L := LeftTranslations(S);;
@@ -314,10 +304,6 @@ gap> OneOp(Representative(H)) = TranslationalHullElement(
 true
 
 #T# Make sure the generic method and special methods agree for hulls
-gap> Semigroup(SEMIGROUPS.TranslationalHullElementsGeneric(H)) = H;
-true
-gap> S := RectangularBand(2,3);;
-gap> H := TranslationalHull(S);;
 gap> Semigroup(SEMIGROUPS.TranslationalHullElementsGeneric(H)) = H;
 true
 
