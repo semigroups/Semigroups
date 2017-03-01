@@ -59,8 +59,10 @@
     All methods in this section are only applicable to finite semigroups.
     <#Include Label = "XTranslations">
     <#Include Label = "XTranslation">
+    <#Include Label = "InnerXTranslations">
     <#Include Label = "TranslationalHull">
     <#Include Label = "TranslationalHullElement">
+    <#Include Label = "InnerTranslationalHull">
     <#Include Label = "IsXTranslationsSemigroupElement">
     <#Include Label = "IsTranslationalHullElement">
     <#Include Label = "IsXTranslationsSemigroup">
