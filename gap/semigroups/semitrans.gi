@@ -753,7 +753,8 @@ function(S)
   return t;
 end);
 
-InstallMethod(WreathProduct, "for a transformation semigroup and a permutation group",
+InstallMethod(WreathProduct,
+"for a transformation semigroup and a permutation group",
 [IsTransformationSemigroup, IsPermGroup],
 function(S, G)
   local maps, gensS, next, reps, n, i, g, x, m;
@@ -761,20 +762,20 @@ function(S, G)
     ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
                     "the first argument <S> should be a monoid,");
   fi;
- 
+
   m := LargestMovedPoint(G);
   maps := []; # the final generating set for the wreath product
 
   gensS := ShallowCopy(GeneratorsOfSemigroup(S));
   n := DegreeOfTransformationCollection(gensS);
-  for i in [1 .. Length(gensS)] do 
+  for i in [1 .. Length(gensS)] do
     gensS[i] := OnTuples([1 .. n], gensS[i]);
   od;
-  
+
   # move copies of S as by the action induced by G
   next := [1 .. m * n];
-  for g in GeneratorsOfGroup(G) do 
-    for i in [1 .. m] do 
+  for g in GeneratorsOfGroup(G) do
+    for i in [1 .. m] do
       next{[1 .. n] + (i ^ g - 1) * n} := gensS[1] + (i - 1) * n;
     od;
     Add(maps, Transformation(next));
@@ -784,7 +785,7 @@ function(S, G)
   #If there are more than one generators, copy them to each distinct orbit of G
   if not Size(gensS) = 1 then
     reps := List(Orbits(G, [1 .. m], OnPoints), Representative);
-    for i in reps do 
+    for i in reps do
       next := [1 .. n * m];
       for x in gensS do
         next{[1 .. n] + (i - 1) * n} := x + (i - 1) * n;
