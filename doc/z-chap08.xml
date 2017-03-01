@@ -9,11 +9,11 @@
   semigroup and for visualising certain types of elements of a semigroup. There
   is also a function <Ref Func = "Splash"/> for automatically processing the
   output of <Ref Oper = "TikzString"/> and <Ref Oper = "DotString"/> and
-  opening the resulting pdf file. 
+  opening the resulting pdf file.
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  
+ 
   <Section>
 
     <Heading>
@@ -22,12 +22,12 @@
 
     In this section we describe the function <Ref Func = "Splash"/> for
     automatically processing and opening the strings output by <Ref Oper =
-      "TikzString"/> and <Ref Oper = "DotString"/> 
+      "TikzString"/> and <Ref Oper = "DotString"/>
 
     <#Include Label = "Splash"/>
 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -38,9 +38,9 @@
     </Heading>
 
     In this section, we describe the operations in &Semigroups; for creating
-    pictures in <C>dot</C> format. 
+    pictures in <C>dot</C> format.
     <P/>
-    
+ 
     The operations described in this section return strings, which
     can be written to a file using the function <Ref Func = "FileString"
       BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash"/>.
@@ -49,7 +49,7 @@
     <#Include Label = "DotSemilatticeOfIdempotents"/>
 
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -59,7 +59,7 @@
     </Heading>
 
     In this section, we describe the operations in &Semigroups; for creating
-    pictures in <C>tikz</C> format. 
+    pictures in <C>tikz</C> format.
     <P/>
 
     The functions described in this section return a string, which can be

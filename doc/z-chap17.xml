@@ -17,9 +17,9 @@
     </Heading>
 
     In this section we describe the properties of a semigroup that can be
-    determined using the &Semigroups; package. 
+    determined using the &Semigroups; package.
     <P/>
-    
+ 
     <#Include Label = "IsBand">
     <#Include Label = "IsBlockGroup">
     <#Include Label = "IsCommutativeSemigroup">
@@ -47,18 +47,18 @@
     <#Include Label = "IsZeroRectangularBand">
     <#Include Label = "IsZeroSemigroup">
     <#Include Label = "IsZeroSimpleSemigroup">
-    
+ 
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  
+ 
   <Section>
-    
+ 
     <Heading>
       Properties of inverse semigroups
     </Heading>
-    
+ 
     <#Include Label = "IsCliffordSemigroup">
     <#Include Label = "IsBrandtSemigroup">
     <#Include Label = "IsEUnitaryInverseSemigroup">

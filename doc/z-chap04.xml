@@ -12,7 +12,7 @@
   Although, mathematically, bipartitions are a special type of PBR, in
   &Semigroups; bipartitions and PBRs are currently distinct types of objects.
   It is possible to change the representation from bipartition to PBR, and from
-  PBR to bipartition, when appropriate; see Section 
+  PBR to bipartition, when appropriate; see Section
   <Ref Sect = "Changing the representation of a PBR"/> for more
   details. The reason for this distinct is largely historical, bipartition
   appeared in the literature, and in the &Semigroups; package, before PBRs.
@@ -43,7 +43,7 @@
     <#Include Label = "IdentityPBR">
     <#Include Label = "UniversalPBR">
   </Section>
-  
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -54,16 +54,16 @@
     section, we describe the functions in the &Semigroups; package for changing
     the representation of PBR, or for changing the representation of another
     type of object to that of a PBR.
-    <P/> 
+    <P/>
 
-    The  operations  
-    <Ref Oper = "AsPermutation" Label = "for a PBR"/>, 
-    <Ref Oper = "AsPartialPerm" Label = "for a PBR"/>, 
+    The  operations
+    <Ref Oper = "AsPermutation" Label = "for a PBR"/>,
+    <Ref Oper = "AsPartialPerm" Label = "for a PBR"/>,
     <Ref Oper = "AsTransformation" Label = "for a PBR"/>,
     <Ref Oper = "AsBipartition"/>,
-    <Ref Oper = "AsBooleanMat"/> 
+    <Ref Oper = "AsBooleanMat"/>
     can be used  to convert PBRs into permutations, partial permutations,
-    transformations, bipartitions, and boolean matrices where  appropriate.  
+    transformations, bipartitions, and boolean matrices where  appropriate.
 
     <#Include Label = "AsPBR"/>
     <#Include Label = "AsTransformationPBR"/>
@@ -81,7 +81,7 @@
       <Item>
         <Index Key = "*"><C> * </C> (for PBRs)</Index>
         returns the product of <A>x</A> and <A>y</A> when <A>x</A> and
-        <A>y</A> are PBRs. 
+        <A>y</A> are PBRs.
       </Item>
       <Mark><C><A>x</A> &lt; <A>y</A></C></Mark>
       <Item>
@@ -97,9 +97,9 @@
         returns <K>true</K> if the PBR <A>x</A> equals the
         PBR <A>y</A> and returns <K>false</K> if it does not.
       </Item>
-    </List> 
+    </List>
     <!--TODO document Star -->
-  </Section>    
+  </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
@@ -107,7 +107,7 @@
   <Section Label = "Attributes for PBRs">
   <Heading>Attributes for PBRs</Heading>
     In this section we describe various attributes that a PBR can
-    possess.  
+    possess.
     <#Include Label = "StarPBR">
     <#Include Label = "DegreeOfPBR">
     <#Include Label = "ExtRepOfObjPBR">
@@ -130,13 +130,13 @@
     <Heading>
       Semigroups of PBRs
     </Heading>
-    
+ 
     Semigroups and monoids of PBRs can be created in the usual way in
-    &GAP; using the functions <Ref Func = "Semigroup" BookName = "ref"/> and 
-    <Ref Func = "Monoid" BookName = "ref"/>; see Chapter 
-    <Ref Chap = "Creating semigroups and monoids"/> for more details. 
+    &GAP; using the functions <Ref Func = "Semigroup" BookName = "ref"/> and
+    <Ref Func = "Monoid" BookName = "ref"/>; see Chapter
+    <Ref Chap = "Creating semigroups and monoids"/> for more details.
     <P/>
-    
+ 
     It is possible to create inverse semigroups and monoids of PBRs
     using <Ref Func = "InverseSemigroup" BookName = "ref"/> and <Ref
       Func = "InverseMonoid" BookName = "ref"/> when the argument is a collection
@@ -144,11 +144,11 @@
     bipartitions, the collection satisfies <C>IsGeneratorsOfInverseSemigroup</C>.
     <P/>
 
-    Note that every PBR semigroup in &Semigroups; is finite. 
+    Note that every PBR semigroup in &Semigroups; is finite.
 
     <#Include Label = "IsPBRSemigroup">
     <#Include Label = "DegreeOfPBRSemigroup">
 
   </Section>
-  
+ 
 </Chapter>

@@ -1,9 +1,9 @@
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
    [ <!ENTITY Semigroups "<Package>Semigroups</Package>">
    <!ENTITY Smallsemi "<Alt Not='Text'><URL
-   Text='Smallsemi'>http://www-history.mcs.st-and.ac.uk/~jamesm/smallsemi.php</URL></Alt><Alt Only='Text'><Package>Smallsemi</Package></Alt>">
+   Text='Smallsemi'>http://www-groups.mcs.st-and.ac.uk/~jamesm/smallsemi.php</URL></Alt><Alt Only='Text'><Package>Smallsemi</Package></Alt>">
      <!ENTITY Digraphs "<Alt Not='Text'><URL
-     Text='Digraphs'>http://www-history.mcs.st-and.ac.uk/~jamesm/digraphs.php</URL></Alt><Alt
+     Text='Digraphs'>https://gap-packages.github.io/Digraphs</URL></Alt><Alt
      Only='Text'><Package>Digraphs</Package></Alt>">
      <!ENTITY Orb "<Alt Not='Text'><URL Text='Orb'>
      http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html
@@ -50,12 +50,12 @@
 <Body>
   <#Include SYSTEM "z-chap01.xml">  <!-- intro -->
   <#Include SYSTEM "z-chap02.xml">  <!-- installation instructions -->
-  <#Include SYSTEM "z-chap03.xml">  <!-- bipartitions and blocks --> 
+  <#Include SYSTEM "z-chap03.xml">  <!-- bipartitions and blocks -->
   <#Include SYSTEM "z-chap04.xml">  <!-- partitioned binary relation -->
   <#Include SYSTEM "z-chap05.xml">  <!-- matrices over semirings -->
   <#Include SYSTEM "z-chap06.xml">  <!-- creating semigroups and monoids -->
   <#Include SYSTEM "z-chap07.xml">  <!-- ideals -->
-  <#Include SYSTEM "z-chap08.xml">  <!-- visualising --> 
+  <#Include SYSTEM "z-chap08.xml">  <!-- visualising -->
   <#Include SYSTEM "z-chap09.xml">  <!-- standard examples -->
   <#Include SYSTEM "z-chap10.xml">  <!-- standard constructions-->
   <#Include SYSTEM "chap10.xml">    <!-- matrix semigroups -->

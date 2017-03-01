@@ -16,7 +16,7 @@
     <M>X</M> if there is a map <M>f</M> from <M>F</M> to <M>X</M> such that for
     every inverse semigroup <M>S</M> and a map <M>g</M> from <M>X</M> to
     <M>S</M> there exists a unique homomorphism <M>g'</M> from <M>F</M> to
-    <M>S</M> such that <M>fg' = g</M>. Moreover, by this universal property, 
+    <M>S</M> such that <M>fg' = g</M>. Moreover, by this universal property,
     every inverse semigroup can be expressed as a quotient of a free inverse
     semigroup.
     <P/>
@@ -33,7 +33,7 @@
     See also <Ref Chap = "Inverse semigroups and monoids" BookName = "ref"/>,
     <Ref Chap = "Partial permutations" BookName = "ref"/> and <Ref Sect = "Free
       Groups, Monoids and Semigroups" BookName = "ref" />.
-    <P/> 
+    <P/>
 
     An element of a free inverse semigroup in &Semigroups; is displayed, by
     default, as a shortest word corresponding to the element.  However, there
@@ -73,26 +73,26 @@
     <List>
       <Mark>minimal </Mark>
       <Item> With this option selected, &GAP; will display a shortest word
-        corresponding to the free inverse semigroup element. However, 
+        corresponding to the free inverse semigroup element. However,
         this shortest word is not unique. This is a default setting.
       </Item>
 
       <Mark>canonical</Mark>
-      <Item> With this option selected, &GAP; will display a free inverse 
+      <Item> With this option selected, &GAP; will display a free inverse
         semigroup element in the canonical form.
       </Item>
     </List>
 
     <Example><![CDATA[
-gap> SetUserPreference("semigroups", 
+gap> SetUserPreference("semigroups",
 >                      "FreeInverseSemigroupElementDisplay",
 >                      "minimal");
 gap> S := FreeInverseSemigroup(2);
 <free inverse semigroup on the generators [ x1, x2 ]>
 gap> S.1 * S.2;
 x1*x2
-gap> SetUserPreference("semigroups", 
->                      "FreeInverseSemigroupElementDisplay", 
+gap> SetUserPreference("semigroups",
+>                      "FreeInverseSemigroupElementDisplay",
 >                      "canonical");
 gap> S.1 * S.2;
 x1x2x2^-1x1^-1x1x2]]></Example>
@@ -120,7 +120,7 @@ x1x2x2^-1x1^-1x1x2]]></Example>
         </Item>
       </List>
 
-      <#Include Label = "CanonicalForm"> 
+      <#Include Label = "CanonicalForm">
       <#Include Label = "MinimalWord">
     </Section>
 

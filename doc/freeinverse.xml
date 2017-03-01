@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  freeinverse.xml
-#Y  Copyright (C) 2011-14                                   Julius Jonusas 
+#Y  Copyright (C) 2011-14                                   Julius Jonusas
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -19,8 +19,8 @@
     A free inverse semigroup.
   </Returns>
   <Description>
-    Returns a free inverse semigroup on <A>rank</A> generators, where 
-    <A>rank</A> is a positive integer. If <A>rank</A> is not 
+    Returns a free inverse semigroup on <A>rank</A> generators, where
+    <A>rank</A> is a positive integer. If <A>rank</A> is not
     specified, the number of <A>names</A> is used. If <C>S</C> is a
     free inverse semigroup, then the generators can be accessed by
     <C>S.1</C>, <C>S.2</C> and so on.
@@ -63,7 +63,7 @@ b]]></Example>
     <Prop Name="IsFreeInverseSemigroup" Arg="S" />
     <Returns> <K>true</K> or <K>false</K> </Returns>
     <Description>
-      Attempts to determine whether the given semigroup <A> S </A> is a free
+      Attempts to determine whether the given semigroup <A>S</A> is a free
       inverse semigroup.
     </Description>
   </ManSection>
@@ -74,7 +74,7 @@ b]]></Example>
     <Filt Name="IsFreeInverseSemigroupElement" Type='Category'/>
     <Description>
       Every element of a free inverse semigroup belongs to the category
-      <C>IsFreeInverseSemigroupElement</C>. 
+      <C>IsFreeInverseSemigroupElement</C>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -93,7 +93,7 @@ b]]></Example>
 
 <#GAPDoc Label="CanonicalForm" >
   <ManSection>
-    <Attr Name = "CanonicalForm" Arg = "w" 
+    <Attr Name = "CanonicalForm" Arg = "w"
       Label = "for a free inverse semigroup element" />
     <Returns> A string. </Returns>
     <Description>
@@ -114,10 +114,10 @@ gap> CanonicalForm(x ^ 3 * y ^ 3);
 
 <#GAPDoc Label="MinimalWord" >
   <ManSection>
-    <Attr Name = "MinimalWord" Arg = "w" 
+    <Attr Name = "MinimalWord" Arg = "w"
       Label = "for free inverse semigroup element" />
-    <Returns> 
-      A string. 
+    <Returns>
+      A string.
     </Returns>
     <Description>
       For an element <A>w</A> of a free inverse semigroup <C>S</C>,

@@ -19,7 +19,7 @@
     For an alternative description of a free band. Suppose that <M> X </M> is a
     non-empty set and <M> X ^ + </M> a free semigroup on <M> X </M>. Also suppose
     that <M> b </M> is the smallest congurance on <M> X ^ + </M> containing the set
-    <Display> \{(w ^ 2, w) : w \in X ^ + \}. </Display> Then the free band on 
+    <Display> \{(w ^ 2, w) : w \in X ^ + \}. </Display> Then the free band on
     <M> X </M> is isomorphic to the quotient of <M> X ^ + </M> by <M> b </M>.
     See Section 4.5 of <Cite Key = "Howie1995aa" /> for more information on
     free bands.
@@ -51,6 +51,6 @@
       </Item>
     </List>
 
-    <#Include Label = "GreensDClassOfElement" > 
+    <#Include Label = "GreensDClassOfElement" >
   </Section>
 </Chapter>

@@ -9,6 +9,8 @@
 #############################################################################
 ##
 
+<!-- TODO add references to Donoven/Mitchell/Wilson paper -->
+
 <#GAPDoc Label="MaximalSubsemigroups">
 <ManSection>
   <Attr Name = "MaximalSubsemigroups" Arg = "S" Label="for a finite semigroup"/>
@@ -24,7 +26,7 @@
     are based on <Cite Key="Graham1968aa"/>.
 
     <P/>
-    
+
     It is computationally expensive to search for the maximal subsemigroups of a
     semigroup, and so computations involving <C>MaximalSubsemigroups</C> may be
     very lengthy. A substantial amount of information on the progress of
@@ -81,18 +83,18 @@
           (0-)matrix semigroup over a group.</E>
         <P/>
 
-        As described at the start of this subsection, <Ref Sect = 
+        As described at the start of this subsection, <Ref Sect =
           "Computing maximal subsemigroups" />, a maximal subsemigroup of a
         regular Rees (0-)matrix semigroup over a group is one of 6 possible
         types.
         <P/>
-        
+
         If <A>S</A> is a regular Rees (0-)matrix semigroup over a group and
         <C><A>opts</A>.types</C> is a subset of <C>[1 .. 6]</C>, then
         <C>MaximalSubsemigroups</C> will search for those maximal subsemigroups
         of <A>S</A> of the types enumerated by <C><A>opts</A>.types</C>.
         <P/>
-        
+
         The default value for this option is <C>[1 .. 6]</C> (i.e. no
         restriction).
       </Item>
@@ -107,8 +109,7 @@ gap> MaximalSubsemigroups(S);
   <transformation semigroup of degree 3 with 7 generators>, 
   <transformation monoid of degree 3 with 5 generators> ]
 gap> MaximalSubsemigroups(S,
-> rec(gens := true,
->     D := DClass(S, Transformation([2, 2, 3]))));
+> rec(gens := true, D := DClass(S, Transformation([2, 2, 3]))));
 [ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 3, 3, 3 ] ), 
       Transformation( [ 2, 2, 2 ] ), IdentityTransformation, 
       Transformation( [ 2, 3, 1 ] ), Transformation( [ 2, 1 ] ) ] ]
@@ -119,10 +120,9 @@ gap> MaximalSubsemigroups(S,
 gap> R := PrincipalFactor(
 > DClass(FullTransformationMonoid(4), Transformation([2, 2])));
 <Rees 0-matrix semigroup 6x4 over Group([ (2,3,4), (2,4) ])>
-gap> MaximalSubsemigroups(R,
-> rec(types := [5],
->     contain := [RMSElement(R, 1, (), 1),
->                 RMSElement(R, 1, (2,3), 2)]));
+gap> MaximalSubsemigroups(R, rec(types := [5],
+>   contain := [RMSElement(R, 1, (), 1),
+>               RMSElement(R, 1, (2, 3), 2)]));
 [ <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>, 
   <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>, 
   <subsemigroup of 6x4 Rees 0-matrix semigroup with 10 generators>, 
@@ -142,12 +142,12 @@ gap> MaximalSubsemigroups(R,
     returns the number of non-empty maximal subsemigroups of <A>S</A>.  The
     methods used by <C>MaximalSubsemigroups</C> are based on <Cite
       Key="Graham1968aa"/>.
-    
+
     <P/>
 
     It can be significantly faster to find the number of maximal subsemigroups
     of a semigroup than to find the maximal subsemigroups themselves.
-    
+
     <P/>
 
     Unless the maximal subsemigroups of <A>S</A> are already known, the command
@@ -174,9 +174,7 @@ gap> NrMaximalSubsemigroups(S);
 gap> R := PrincipalFactor(
 > DClass(FullTransformationMonoid(4), Transformation([2, 2])));
 <Rees 0-matrix semigroup 6x4 over Group([ (2,3,4), (2,4) ])>
-gap> MaximalSubsemigroups(R,
-> rec(number := true,
->     types := [3, 4]));
+gap> MaximalSubsemigroups(R, rec(number := true, types := [3, 4]));
 10]]></Example>
   </Description>
 </ManSection>
@@ -193,7 +191,7 @@ gap> MaximalSubsemigroups(R,
     returns <K>true</K> if and only if <A>T</A> is a maximal subsemigroup of
     <A>S</A>.
     <P/>
-    
+
     A <E>maximal subsemigroup</E> of <A>S</A> is a proper subsemigroup of
     <A>S</A> which is contained in no other proper subsemigroup of <A>S</A>.
 
@@ -201,7 +199,7 @@ gap> MaximalSubsemigroups(R,
 gap> S := ZeroSemigroup(2);;
 gap> IsMaximalSubsemigroup(S, Semigroup(MultiplicativeZero(S)));
 true
-gap> S := FullTransformationSemigroup(4);                              
+gap> S := FullTransformationSemigroup(4);
 <full transformation monoid of degree 4>
 gap> T := Semigroup(Transformation([3, 4, 1, 2]),
 >                   Transformation([1, 4, 2, 3]),
@@ -213,7 +211,7 @@ gap> R := Semigroup(Transformation([3, 4, 1, 2]),
 >                   Transformation([1, 4, 2, 2]),
 >                   Transformation([2, 1, 1, 3]));
 <transformation semigroup of degree 4 with 3 generators>
-gap> IsMaximalSubsemigroup(S, R); 
+gap> IsMaximalSubsemigroup(S, R);
 false]]></Example>
   </Description>
 </ManSection>

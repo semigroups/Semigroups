@@ -47,7 +47,7 @@ gap> RightProjection(x);
     <Ref Oper = "ExtRepOfObj" Label = "for a blocks"/>,
     <Ref Attr = "RankOfBlocks"/>,
     <Ref Attr = "DegreeOfBlocks"/>,
-    <Ref Oper = "OnRightBlocks"/>, and 
+    <Ref Oper = "OnRightBlocks"/>, and
     <Ref Oper = "OnLeftBlocks"/>.
     </Description>
   </ManSection>
@@ -61,7 +61,7 @@ gap> RightProjection(x);
       This function makes it possible to create a &GAP; object corresponding
       to the left or right blocks of a bipartition without reference to any
       bipartitions.
-      <P/> 
+      <P/>
 
       <C>BlocksNC</C> returns the blocks with equivalence
       classes <A>classes</A>, which should be a list of duplicate-free lists
@@ -86,13 +86,13 @@ gap> BlocksNC([[1], [2], [-3, -6], [-4, -5]]);
       <C>g * <A>x</A></C> where <C>g</C> is any bipartition whose right blocks
       are equal to <A>blocks</A>. 
       <Example><![CDATA[
-gap> x := Bipartition([[1, 4, 5, 8], [2, 3, 7], [6, -3, -4, -5], 
->                      [ -1, -2, -6 ], [ -7, -8 ] ] );;
-gap> y := Bipartition([[1, 5], [2, 4, 8, -2], [3, 6, 7, -3, -4], 
+gap> x := Bipartition([[1, 4, 5, 8], [2, 3, 7], [6, -3, -4, -5],
+>                      [-1, -2, -6], [-7, -8]]);;
+gap> y := Bipartition([[1, 5], [2, 4, 8, -2], [3, 6, 7, -3, -4],
 >                      [-1, -6, -8], [-5, -7]]);;
 gap> RightBlocks(y * x);
 <blocks: [ 1, 2, 6 ], [ 3*, 4*, 5* ], [ 7, 8 ]>
-gap> OnRightBlocks(RightBlocks(y), x); 
+gap> OnRightBlocks(RightBlocks(y), x);
 <blocks: [ 1, 2, 6 ], [ 3*, 4*, 5* ], [ 7, 8 ]>]]></Example>
     </Description>
   </ManSection>
@@ -107,10 +107,10 @@ gap> OnRightBlocks(RightBlocks(y), x);
         y</C> where <C>y</C> is any bipartition whose left blocks are equal to
       <A>blocks</A>. 
       <Example><![CDATA[
-gap> x := Bipartition([[1, 5, 7, -1, -3, -4, -6], [2, 3, 6, 8], 
-> [4, -2, -5, -8], [-7]]);;
-gap> y := Bipartition([[1, 3, -4, -5], [2, 4, 5, 8], [6, -1, -3], 
-> [7, -2, -6, -7, -8]]);;
+gap> x := Bipartition([[1, 5, 7, -1, -3, -4, -6], [2, 3, 6, 8],
+>                      [4, -2, -5, -8], [-7]]);;
+gap> y := Bipartition([[1, 3, -4, -5], [2, 4, 5, 8], [6, -1, -3],
+>                      [7, -2, -6, -7, -8]]);;
 gap> LeftBlocks(x * y);
 <blocks: [ 1*, 4*, 5*, 7* ], [ 2, 3, 6, 8 ]>
 gap> OnLeftBlocks(LeftBlocks(y), x);
@@ -149,7 +149,7 @@ gap> ExtRepOfObj(blocks);
       <C>NrTransverseBlocks</C> is a synonym of <C>RankOfBlocks</C> in this
       context. 
       <Example><![CDATA[
-gap> blocks := BlocksNC([[-1, -2, -4, -6], [3, 10, 12], [5, 7], 
+gap> blocks := BlocksNC([[-1, -2, -4, -6], [3, 10, 12], [5, 7],
 >                        [8], [9], [-11]]);;
 gap> RankOfBlocks(blocks);
 4]]></Example>
@@ -163,7 +163,7 @@ gap> RankOfBlocks(blocks);
     <Returns>A non-negative integer.</Returns>
     <Description>
       The degree of <A>blocks</A> is the number of points <C>n</C> where
-      it is defined, i.e. the union of the blocks in <A>blocks</A> will be 
+      it is defined, i.e. the union of the blocks in <A>blocks</A> will be
       <C>[1 .. n]</C> after taking the absolute value of every element. 
       <Example><![CDATA[
 gap> blocks := BlocksNC([[-1, -11], [2], [3, 5, 6, 7], [4, 8], [9, 10],

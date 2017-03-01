@@ -26,12 +26,14 @@
     lexicographic comparison of their <C>GeneratorsSmallest</C>. However, due to
     the complexity of determining the <C>GeneratorsSmallest</C>, this is not the
     method used by the &Semigroups; package when comparing transformation
-    semigroups.  
+    semigroups.
 
     <Example><![CDATA[
-gap> S := Monoid(
-> Transformation([1, 3, 4, 1]), Transformation([2, 4, 1, 2]), 
-> Transformation([3, 1, 1, 3]), Transformation([3, 3, 4, 1]));
+gap> S := Monoid([
+>  Transformation([1, 3, 4, 1]),
+>  Transformation([2, 4, 1, 2]),
+>  Transformation([3, 1, 1, 3]),
+>  Transformation([3, 3, 4, 1])]);
 <transformation monoid of degree 4 with 4 generators>
 gap> GeneratorsSmallest(S);
 [ Transformation( [ 1, 1, 1, 1 ] ), Transformation( [ 1, 1, 1, 2 ] ), 
@@ -58,15 +60,15 @@ gap> GeneratorsSmallest(S);
     transformation semigroup <A>S</A>, respectively. Smallest means the first
     element in the sorted set of elements of <A>S</A> and largest means the last
     element in the set of elements. <P/>
-    
+
     It is not necessary to find the elements of the semigroup to determine the
     smallest or largest element, and this function has considerable better
-    performance than the equivalent <C>Elements(<A>S</A>)[1]</C> and 
+    performance than the equivalent <C>Elements(<A>S</A>)[1]</C> and
     <C>Elements(<A>S</A>)[Size(<A>S</A>)]</C>.
 
     <Example><![CDATA[
 gap> S := Monoid(
-> Transformation([1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10]), 
+> Transformation([1, 4, 11, 11, 7, 2, 6, 2, 5, 5, 10]),
 > Transformation([2, 4, 4, 2, 10, 5, 11, 11, 11, 6, 7]));
 <transformation monoid of degree 11 with 2 generators>
 gap> SmallestElementSemigroup(S);
@@ -93,15 +95,16 @@ Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )]]></Example>
     <C>IsTransitive</C> returns <K>true</K> if <A>S</A> is transitive on
     <C>[1 .. <A>n</A>]</C>, and <K>false</K> if it is not. <P/>
 
-    If the optional second argument is not provided, then the degree of 
+    If the optional second argument is not provided, then the degree of
     <A>S</A> is used by default; see <Ref
-      Attr = "DegreeOfTransformationSemigroup" BookName = "ref"/>. 
+      Attr = "DegreeOfTransformationSemigroup" BookName = "ref"/>.
 
     <Example><![CDATA[
-gap> S := Semigroup(Bipartition([[1, 2], [3, 6, -2], 
->                                [4, 5, -3, -4], [-1, -6], [-5]]), 
->                   Bipartition([[1, -4], [2, 3, 4, 5], [6], [-1, -6], 
->                                [-2, -3], [-5]]));
+gap> S := Semigroup([
+>  Bipartition([
+>    [1, 2], [3, 6, -2], [4, 5, -3, -4], [-1, -6], [-5]]),
+>  Bipartition([
+>    [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);
 <bipartition semigroup of degree 6 with 2 generators>
 gap> AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 11, degree 12 with 2 generators>
@@ -119,19 +122,20 @@ true]]></Example>
   <Oper Name="AsMatrixSemigroup" Arg="S[, F]"/>
   <Returns>A semigroup.</Returns>
   <Description>
-    
+
     <C>AsMatrixSemigroup</C> returns the range of an isomorphism from <A>S</A>
     to a semigroup of matrices over <C>GF(2)</C>. If the optional argument
     <A>F</A> is present, then <C>AsMatrixSemigroup</C> returns an isomorphic
     semigroup over the finite field <A>F</A>.
 
     <Example><![CDATA[
-gap> S := Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ], 
-> [ 4, 5, -3, -4 ], [ -1, -6 ], [ -5 ] ] ), 
-> Bipartition( [ [ 1, -4 ], [ 2, 3, 4, 5 ], [ 6 ], [ -1, -6 ], 
-> [ -2, -3 ], [ -5 ] ] ) ] );
+gap> S := Semigroup([
+> Bipartition([
+>   [1, 2], [3, 6, -2], [4, 5, -3, -4], [-1, -6], [-5]]),
+> Bipartition([
+>   [1, -4], [2, 3, 4, 5], [6], [-1, -6], [-2, -3], [-5]])]);
 <bipartition semigroup of degree 6 with 2 generators>
-gap> AsTransformationSemigroup(S);
+gap> AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 11, degree 12 with 2 generators>
 gap> AsMatrixSemigroup(S);
 <semigroup of 12x12 matrices over GF(2) with 2 generators>
@@ -150,16 +154,16 @@ gap> Size(S);
   <Attr Name = "ComponentRepsOfTransformationSemigroup" Arg = "S"/>
   <Returns>The representatives of components of a transformation semigroup.</Returns>
   <Description>
-    This function returns the representatives of the components of the 
+    This function returns the representatives of the components of the
     action of the transformation semigroup <A>S</A> on the set of positive
     integers not greater than the degree of <A>S</A>. <P/>
-    
-    The representatives are the least set of points such that every point can 
+
+    The representatives are the least set of points such that every point can
     be reached from some representative under the action of <A>S</A>.
 
     <Example><![CDATA[
 gap> S := Semigroup(
-> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]), 
+> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),
 > Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
 gap> ComponentRepsOfTransformationSemigroup(S);
 [ 2, 3, 8 ]]]></Example>
@@ -175,10 +179,10 @@ gap> ComponentRepsOfTransformationSemigroup(S);
     This function returns the components of the action of the transformation
     semigroup <A>S</A> on the set of positive integers not greater than the
     degree of <A>S</A>; the components of <A>S</A> partition this set.
-    
+
     <Example><![CDATA[
 gap> S := Semigroup(
-> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]), 
+> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),
 > Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
 gap> ComponentsOfTransformationSemigroup(S);
 [ [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ] ]]]></Example>
@@ -196,7 +200,7 @@ gap> ComponentsOfTransformationSemigroup(S);
     integers not greater than the degree of <A>S</A>.
     <Example><![CDATA[
 gap> S := Semigroup(
-> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]), 
+> Transformation([11, 11, 9, 6, 4, 1, 4, 1, 6, 7, 12, 5]),
 > Transformation([12, 10, 7, 10, 4, 1, 12, 9, 11, 9, 1, 12]));;
 gap> CyclesOfTransformationSemigroup(S);
 [ [ 12 ], [ 1, 11 ], [ 1, 11, 12, 5, 4, 6 ], 
@@ -224,11 +228,11 @@ gap> CyclesOfTransformationSemigroup(S);
       <P/>
 
       If the optional second argument is not specified, then <A>n</A> will be
-      taken to be the value of 
+      taken to be the value of
       <Ref Oper = "DegreeOfTransformationSemigroup" BookName = "ref"/> for
       <A>S</A>.
       <P/>
-      
+
       Note that the semigroup consisting of the identity transformation is the
       unique transformation semigroup with degree <C>0</C>. In this special
       case, the function <C>IsSynchronizingSemigroup</C> will return
@@ -236,12 +240,12 @@ gap> CyclesOfTransformationSemigroup(S);
 
       <Example><![CDATA[
 gap> S := Semigroup(
-> Transformation([1, 1, 8, 7, 6, 6, 4, 1, 8, 9]), 
+> Transformation([1, 1, 8, 7, 6, 6, 4, 1, 8, 9]),
 > Transformation([5, 8, 7, 6, 10, 8, 7, 6, 9, 7]));;
 gap> IsSynchronizingSemigroup(S, 10);
 true
 gap> S := Semigroup(
-> Transformation([3, 8, 1, 1, 9, 9, 8, 7, 9, 6]), 
+> Transformation([3, 8, 1, 1, 9, 9, 8, 7, 9, 6]),
 > Transformation([7, 6, 8, 7, 5, 6, 8, 7, 8, 9]));;
 gap> IsSynchronizingSemigroup(S, 10);
 false
@@ -265,7 +269,7 @@ Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
       representing the <Ref Oper="OnSets" BookName="ref"/> action of <A>S</A> on
       the pairs of points in <C>[1 ..  <A>n</A>]</C>.
       <P/>
-      
+
       If the optional argument <A>n</A> is not specified, then by default the
       degree of <A>S</A> will be chosen for <A>n</A>; see <Ref
         Attr="DegreeOfTransformationSemigroup" BookName="ref" />. If the

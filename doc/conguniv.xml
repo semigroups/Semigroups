@@ -56,7 +56,7 @@ true]]></Example>
 <#/GAPDoc>
 
 <#GAPDoc Label="UniversalSemigroupCongruence">
-<ManSection> 
+<ManSection>
   <Oper Name = "UniversalSemigroupCongruence" Arg = "S"/>
   <Returns>A universal semigroup congruence.</Returns>
   <Description>
@@ -64,7 +64,7 @@ true]]></Example>
     semigroup <A>S</A>.  It can be used in the same way as any other
     semigroup congruence object.
     <Example><![CDATA[
-gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3), 
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
 > [[(), (1, 3, 2)], [(1, 2), 0]]);;
 gap> UniversalSemigroupCongruence(S);
 <universal semigroup congruence over 

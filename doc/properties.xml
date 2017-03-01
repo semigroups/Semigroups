@@ -14,8 +14,8 @@
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A semigroup is <E>rectangular group</E> if it is the direct product of a
-      group and a rectangular band. Or equivalently, if it is orthodox and simple. 
-      
+      group and a rectangular band. Or equivalently, if it is orthodox and simple.
+
       <Example><![CDATA[
 gap> G := AsSemigroup(IsTransformationSemigroup, MathieuGroup(11));
 <transformation group of size 7920, degree 11 with 2 generators>
@@ -31,7 +31,7 @@ true
 gap> IsRectangularGroup(S);
 true
 gap> IsRectangularGroup(JonesMonoid(3));
-false]]></Example> 
+false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -46,10 +46,10 @@ false]]></Example>
       A monoid is <E>unit regular</E> if and only if for every <C>>x</C> in
       <A>S</A> there exists an element <C>y</C> in the group of units of
       <A>S</A> such that <C>x*y*x=x</C>.
-      
+
       <Example><![CDATA[
 gap> IsUnitRegularMonoid(FullTransformationMonoid(3));
-true]]></Example> 
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -61,15 +61,15 @@ true]]></Example>
     <Description>
       <C>IsBand</C> returns <K>true</K> if every element of the semigroup
       <A>S</A> is an idempotent and <K>false</K> if it is not. An inverse
-      semigroup is band if and only if it is a semilattice; see 
+      semigroup is band if and only if it is a semilattice; see
       <Ref Prop="IsSemilattice"/>.
 
       <Example><![CDATA[
 gap> S := Semigroup(
-> Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 1]), 
-> Transformation([2, 2, 2, 5, 5, 5, 8, 8, 8, 2]), 
-> Transformation([3, 3, 3, 6, 6, 6, 9, 9, 9, 3]), 
-> Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 4]), 
+> Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 1]),
+> Transformation([2, 2, 2, 5, 5, 5, 8, 8, 8, 2]),
+> Transformation([3, 3, 3, 6, 6, 6, 9, 9, 9, 3]),
+> Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 4]),
 > Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 7]));;
 gap> IsBand(S);
 true
@@ -86,7 +86,7 @@ gap> S := PartitionMonoid(4);
 gap> M := MinimalIdeal(S);
 <simple bipartition *-semigroup ideal of degree 4 with 1 generator>
 gap> IsBand(M);
-true]]></Example> 
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -101,7 +101,7 @@ true]]></Example>
 
       A semigroup <A>S</A> is a <E>block group</E> if every &L;-class and every
       &R;-class of <A>S</A> contains at most one idempotent. Every semigroup
-      of partial permutations is a block group.  
+      of partial permutations is a block group.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([5, 6, 7, 3, 1, 4, 2, 8]),
 >                   Transformation([3, 6, 8, 5, 7, 4, 2, 8]));;
@@ -112,10 +112,10 @@ gap> S := Semigroup(
 > Transformation([10, 7, 5, 6, 1, 3, 9, 7, 10, 2]));;
 gap> IsBlockGroup(S);
 false
-gap> S := Semigroup(PartialPerm([1, 2], [5, 4]), 
->                   PartialPerm([1, 2, 3], [1, 2, 5]), 
->                   PartialPerm([1, 2, 3], [2, 1, 5]), 
->                   PartialPerm([1, 3, 4], [3, 1, 2]), 
+gap> S := Semigroup(PartialPerm([1, 2], [5, 4]),
+>                   PartialPerm([1, 2, 3], [1, 2, 5]),
+>                   PartialPerm([1, 2, 3], [2, 1, 5]),
+>                   PartialPerm([1, 3, 4], [3, 1, 2]),
 >                   PartialPerm([1, 3, 4, 5], [5, 4, 3, 2]));;
 gap> T := AsSemigroup(IsBlockBijectionSemigroup, S);
 <block bijection semigroup of degree 6 with 5 generators>
@@ -124,13 +124,13 @@ true
 gap> IsBlockGroup(AsSemigroup(IsBipartitionSemigroup, S));
 true
 gap> S := Semigroup(
-> Bipartition([[1, -2], [2, -3], [3, -4], [4, -1]]), 
-> Bipartition([[1, -2], [2, -1], [3, -3], [4, -4]]), 
-> Bipartition([[1, 2, -3], [3, -1, -2], [4, -4]]), 
+> Bipartition([[1, -2], [2, -3], [3, -4], [4, -1]]),
+> Bipartition([[1, -2], [2, -1], [3, -3], [4, -4]]),
+> Bipartition([[1, 2, -3], [3, -1, -2], [4, -4]]),
 > Bipartition([[1, -1], [2, -2], [3, -3], [4, -4]]));;
 gap> IsBlockGroup(S);
 true]]></Example>
-    </Description> 
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -160,13 +160,13 @@ gap> T := Range(IsomorphismPartialPermSemigroup(S));;
 gap> IsBrandtSemigroup(T);
 true
 gap> S := DualSymmetricInverseMonoid(4);;
-gap> D := DClass(S, 
+gap> D := DClass(S,
 > Bipartition( [ [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ] ] ));;
 gap> R := InjectionPrincipalFactor(D);;
 gap> S := Semigroup(PreImages(R, GeneratorsOfSemigroup(Range(R))));;
 gap> IsBrandtSemigroup(S);
 true]]></Example>
-    </Description> 
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -177,10 +177,10 @@ true]]></Example>
     <Description>
       <C>IsCliffordSemigroup</C> returns <K>true</K> if the semigroup <A>S</A>
       is  regular and its idempotents are central, and <K>false</K> if it is
-      not.  
+      not.
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 2, 4, 5, 6, 3, 7, 8]), 
->                   Transformation([3, 3, 4, 5, 6, 2, 7, 8]), 
+gap> S := Semigroup(Transformation([1, 2, 4, 5, 6, 3, 7, 8]),
+>                   Transformation([3, 3, 4, 5, 6, 2, 7, 8]),
 >                   Transformation([1, 2, 5, 3, 6, 8, 4, 4]));;
 gap> IsCliffordSemigroup(S);
 true
@@ -205,11 +205,11 @@ true]]></Example>
         Prop = "IsCommutative" BookName = "ref"/> can also be used to test if a
       semigroup is commutative.<P/>
 
-      A semigroup <A>S</A> is <E>commutative</E> if 
+      A semigroup <A>S</A> is <E>commutative</E> if
       <C>x * y = y * x</C> for all <C>x, y</C> in <A>S</A>.
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]), 
+gap> S := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]),
 >                   Transformation([3, 5, 6, 7, 8, 1, 9, 2, 4]));;
 gap> IsCommutativeSemigroup(S);
 true
@@ -221,9 +221,9 @@ gap> S := InverseSemigroup(
 gap> IsCommutativeSemigroup(S);
 false
 gap> S := Semigroup(
-> Bipartition([[1, 2, 3, 6, 7, -1, -4, -6], 
->              [4, 5, 8, -2, -3, -5, -7, -8]]), 
->  Bipartition([[1, 2, -3, -4], [3, -5], [4, -6], [5, -7], 
+> Bipartition([[1, 2, 3, 6, 7, -1, -4, -6],
+>              [4, 5, 8, -2, -3, -5, -7, -8]]),
+>  Bipartition([[1, 2, -3, -4], [3, -5], [4, -6], [5, -7],
 >               [6, -8], [7, -1], [8, -2]]));;
 gap> IsCommutativeSemigroup(S);
 true]]></Example>
@@ -237,14 +237,14 @@ true]]></Example>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       <C>IsCompletelyRegularSemigroup</C> returns <K>true</K> if every element
-      of the semigroup <A>S</A> is contained in a subgroup of <A>S</A>.<P/> 
-      
+      of the semigroup <A>S</A> is contained in a subgroup of <A>S</A>.<P/>
+
       An inverse semigroup is completely regular if and only if it is a
-      Clifford semigroup; see <Ref Prop = "IsCliffordSemigroup"/>. 
+      Clifford semigroup; see <Ref Prop = "IsCliffordSemigroup"/>.
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 2, 4, 3, 6, 5, 4]), 
->                   Transformation([1, 2, 5, 6, 3, 4, 5]), 
+gap> S := Semigroup(Transformation([1, 2, 4, 3, 6, 5, 4]),
+>                   Transformation([1, 2, 5, 6, 3, 4, 5]),
 >                   Transformation([2, 1, 2, 2, 2, 2, 2]));;
 gap> IsCompletelyRegularSemigroup(S);
 true
@@ -253,10 +253,10 @@ true
 gap> T := Range(IsomorphismPartialPermSemigroup(S));;
 gap> IsCompletelyRegularSemigroup(T);
 true
-gap> IsCliffordSemigroup(T);         
+gap> IsCliffordSemigroup(T);
 true
 gap> S := Semigroup(
-> Bipartition([[1, 3, -4], [2, 4, -1, -2], [-3]]), 
+> Bipartition([[1, 3, -4], [2, 4, -1, -2], [-3]]),
 > Bipartition([[1, -1], [2, 3, 4, -3], [-2, -4]]));;
 gap> IsCompletelyRegularSemigroup(S);
 false]]></Example>
@@ -280,23 +280,23 @@ false]]></Example>
       &L;-relation, &H;-relation, &D;-relation, respectively, on the
       semigroup <A>S</A> is trivial and <K>false</K> if it is not.
       These properties can also be applied to a Green's class instead of a
-      semigroup where applicable. 
-      <P/> 
+      semigroup where applicable.
+      <P/>
 
-      For inverse semigroups, the properties of being 
+      For inverse semigroups, the properties of being
       &R;-trivial, &L;-trivial, &D;-trivial, and a semilattice are equivalent;
       see <Ref Prop="IsSemilattice"/>.
       <P/>
 
       A semigroup is <E>aperiodic</E> if its contains no non-trivial
-      subgroups (equivalently, all of its group &H;-classes 
-      are trivial). A finite semigroup is aperiodic if and only if it is 
+      subgroups (equivalently, all of its group &H;-classes
+      are trivial). A finite semigroup is aperiodic if and only if it is
       &H;-trivial. <P/>
 
-      <E>Combinatorial</E> is a synonym for aperiodic in this context. 
+      <E>Combinatorial</E> is a synonym for aperiodic in this context.
       <Example><![CDATA[
 gap> S := Semigroup(
->  Transformation([1, 5, 1, 3, 7, 10, 6, 2, 7, 10]), 
+>  Transformation([1, 5, 1, 3, 7, 10, 6, 2, 7, 10]),
 >  Transformation([4, 4, 5, 6, 7, 7, 7, 4, 3, 10]));;
 gap> IsHTrivial(S);
 true
@@ -326,7 +326,7 @@ false]]></Example>
     <Alt Only = "Text">
       for s in S and e in E, es in E implies s in E.
     </Alt><P/>
-    Equivalently, <A>S</A> is <E>E-unitary</E> if <A>E</A> is closed in the 
+    Equivalently, <A>S</A> is <E>E-unitary</E> if <A>E</A> is closed in the
     natural partial order (see Proposition 5.9.1 in <Cite Key="Howie1995aa"/>):
     <Alt Not = "Text">
       <Display>
@@ -340,9 +340,9 @@ false]]></Example>
 
     This condition is equivalent to <A>E</A> being majorantly closed in
     <A>S</A>.  See <Ref Oper = "IdempotentGeneratedSubsemigroup"/> and <Ref
-      Oper = "IsMajorantlyClosed"/>.    
-    Hence an inverse semigroup of partial permutations, block bijections or 
-    partial permutation bipartitions is <E>E-unitary</E> if and only if the 
+      Oper = "IsMajorantlyClosed"/>.
+    Hence an inverse semigroup of partial permutations, block bijections or
+    partial permutation bipartitions is <E>E-unitary</E> if and only if the
     idempotent semilattice is majorantly closed.
     <Example><![CDATA[
 gap> S := InverseSemigroup(
@@ -378,11 +378,11 @@ gap> StructureDescription(U);
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
     An inverse monoid is <E>factorisable</E> if every element is the product
-    of an element of the group of units and an idempotent; see also 
+    of an element of the group of units and an idempotent; see also
     <Ref Attr = "GroupOfUnits"/> and <Ref Attr = "Idempotents"/>. Hence an
     inverse semigroup of partial permutations is factorisable if and only if
     each of its generators is the restriction of some element in the group of
-    units. 
+    units.
 
     <Example><![CDATA[
 gap> S := InverseSemigroup(
@@ -390,7 +390,7 @@ gap> S := InverseSemigroup(
 > PartialPerm([1, 2, 3, 5], [4, 1, 5, 2]));;
 gap> IsFactorisableInverseMonoid(S);
 false
-gap> IsFactorisableInverseMonoid(SymmetricInverseSemigroup(5)); 
+gap> IsFactorisableInverseMonoid(SymmetricInverseSemigroup(5));
 true
 gap> IsFactorisableInverseMonoid(DualSymmetricInverseMonoid(5));
 false
@@ -408,19 +408,20 @@ true]]></Example>
     <Description>
       <C>IsGroupAsSemigroup</C> returns <K>true</K> if and only if the
       semigroup <A>S</A> is mathematically a group.
-      <Example><![CDATA[FIXME
-gap> S := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]), 
+      <Example><![CDATA[
+gap> S := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]),
 >                   Transformation([3, 5, 6, 7, 8, 1, 9, 2, 4]));;
 gap> IsGroupAsSemigroup(S);
 true
 gap> G := SymmetricGroup(5);;
-gap> S := Range(IsomorphismPartialPermSemigroup(G));
+gap> IsGroupAsSemigroup(G);
+true
+gap> S := AsSemigroup(IsPartialPermSemigroup, G);
 <partial perm group of size 120, rank 5 with 2 generators>
 gap> IsGroupAsSemigroup(S);
 true
-gap> S := SymmetricGroup([1, 2, 10]);;
-gap> T := Range(IsomorphismSemigroup(IsBlockBijectionSemigroup,
-> Range(IsomorphismSemigroup(IsPartialPermSemigroup, S))));
+gap> G := SymmetricGroup([1, 2, 10]);;
+gap> T := AsSemigroup(IsBlockBijectionSemigroup, G);
 <inverse block bijection semigroup of size 6, degree 11 with 2 
  generators>
 gap> IsGroupAsSemigroup(T);
@@ -432,21 +433,21 @@ true]]></Example>
 <#GAPDoc Label="IsIdempotentGenerated">
   <ManSection><Heading>IsIdempotentGenerated</Heading>
     <Prop Name = "IsIdempotentGenerated" Arg = "S"/>
-    <Prop Name = "IsSemiBand" Arg = "S"/>
+    <Prop Name = "IsSemiband" Arg = "S"/>
     <Returns>
       <K>true</K> or <K>false</K>.
     </Returns>
     <Description>
-      <C>IsIdempotentGenerated</C> and <C>IsSemiBand</C> return 
+      <C>IsIdempotentGenerated</C> and <C>IsSemiband</C> return
       <K>true</K> if the semigroup <A>S</A> is generated by its idempotents and
-      <K>false</K> if it is not.  See also <Ref Attr = "Idempotents"/> and 
+      <K>false</K> if it is not.  See also <Ref Attr = "Idempotents"/> and
       <Ref Attr = "IdempotentGeneratedSubsemigroup"/>. <P/>
 
       An inverse semigroup is idempotent-generated if and only if it is a
       semilattice; see <Ref Prop = "IsSemilattice"/>.<P/>
 
       The terms semiband and idempotent-generated are synonymous in this
-      context. 
+      context.
 
       <Example><![CDATA[
 gap> S := SingularTransformationSemigroup(4);
@@ -472,13 +473,13 @@ true]]></Example>
     not. If <A>S</A> is monoid, then <C>IsInverseMonoid</C> returns <K>true</K>
     if <A>S</A> is an inverse monoid and <K>false</K> if it is not.<P/>
 
-    A semigroup is an <E>inverse semigroup</E> if every element 
+    A semigroup is an <E>inverse semigroup</E> if every element
     <C>x</C> has a unique semigroup inverse, that is, a unique
     element <C>y</C> such that <C>x * y * x = x</C> and <C>y * x * y = y</C>.
 
     <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 2, 4, 5, 6, 3]), 
->                   Transformation([3, 3, 4, 5, 6, 2]), 
+gap> S := Semigroup(Transformation([1, 2, 4, 5, 6, 3]),
+>                   Transformation([3, 3, 4, 5, 6, 2]),
 >                   Transformation([1, 2, 5, 3, 6, 8, 4, 4]));
 gap> IsInverseSemigroup(S);
 true]]></Example>
@@ -492,28 +493,28 @@ true]]></Example>
     <Prop Name = "IsRightSimple" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-    <C>IsLeftSimple</C> and <C>IsRightSimple</C> returns <K>true</K> if the 
+    <C>IsLeftSimple</C> and <C>IsRightSimple</C> returns <K>true</K> if the
     semigroup <A>S</A> has only one &L;-class or one &R;-class,
     respectively, and returns <K>false</K> if it has more than one. <P/>
 
     An inverse semigroup is left simple if and only if it is right simple if
     and only if it is a group; see <Ref Prop="IsGroupAsSemigroup"/>.
 <Example><![CDATA[
-gap> S := Semigroup(Transformation([6, 7, 9, 6, 8, 9, 8, 7, 6]), 
->                   Transformation([6, 8, 9, 6, 8, 8, 7, 9, 6]), 
->                   Transformation([6, 8, 9, 7, 8, 8, 7, 9, 6]), 
->                   Transformation([6, 9, 8, 6, 7, 9, 7, 8, 6]), 
->                   Transformation([6, 9, 9, 6, 8, 8, 7, 9, 6]), 
->                   Transformation([6, 9, 9, 7, 8, 8, 6, 9, 7]), 
->                   Transformation([7, 8, 8, 7, 9, 9, 7, 8, 6]), 
->                   Transformation([7, 9, 9, 7, 6, 9, 6, 8, 7]), 
->                   Transformation([8, 7, 6, 9, 8, 6, 8, 7, 9]), 
->                   Transformation([9, 6, 6, 7, 8, 8, 7, 6, 9]), 
->                   Transformation([9, 6, 6, 7, 9, 6, 9, 8, 7]), 
->                   Transformation([9, 6, 7, 9, 6, 6, 9, 7, 8]), 
->                   Transformation([9, 6, 8, 7, 9, 6, 9, 8, 7]), 
->                   Transformation([9, 7, 6, 8, 7, 7, 9, 6, 8]), 
->                   Transformation([9, 7, 7, 8, 9, 6, 9, 7, 8]), 
+gap> S := Semigroup(Transformation([6, 7, 9, 6, 8, 9, 8, 7, 6]),
+>                   Transformation([6, 8, 9, 6, 8, 8, 7, 9, 6]),
+>                   Transformation([6, 8, 9, 7, 8, 8, 7, 9, 6]),
+>                   Transformation([6, 9, 8, 6, 7, 9, 7, 8, 6]),
+>                   Transformation([6, 9, 9, 6, 8, 8, 7, 9, 6]),
+>                   Transformation([6, 9, 9, 7, 8, 8, 6, 9, 7]),
+>                   Transformation([7, 8, 8, 7, 9, 9, 7, 8, 6]),
+>                   Transformation([7, 9, 9, 7, 6, 9, 6, 8, 7]),
+>                   Transformation([8, 7, 6, 9, 8, 6, 8, 7, 9]),
+>                   Transformation([9, 6, 6, 7, 8, 8, 7, 6, 9]),
+>                   Transformation([9, 6, 6, 7, 9, 6, 9, 8, 7]),
+>                   Transformation([9, 6, 7, 9, 6, 6, 9, 7, 8]),
+>                   Transformation([9, 6, 8, 7, 9, 6, 9, 8, 7]),
+>                   Transformation([9, 7, 6, 8, 7, 7, 9, 6, 8]),
+>                   Transformation([9, 7, 7, 8, 9, 6, 9, 7, 8]),
 >                   Transformation([9, 8, 8, 9, 6, 7, 6, 8, 9]));;
 gap> IsRightSimple(S);
 false
@@ -543,14 +544,14 @@ true]]></Example>
 
       A semigroup is a <E>left zero semigroup</E> if <C>x*y=x</C> for
       all <C>x,y</C>. An inverse semigroup is a left zero semigroup if and only
-      if it is trivial. 
+      if it is trivial.
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 1, 4, 3, 5]), 
+gap> S := Semigroup(Transformation([2, 1, 4, 3, 5]),
 >                   Transformation([3, 2, 3, 1, 1]));;
 gap> IsRightZeroSemigroup(S);
 false
-gap> S := Semigroup(Transformation([1, 2, 3, 3, 1]), 
+gap> S := Semigroup(Transformation([1, 2, 3, 3, 1]),
 >                   Transformation([1, 2, 3, 3, 3]));;
 gap> IsLeftZeroSemigroup(S);
 true]]></Example>
@@ -575,7 +576,7 @@ gap> S := Semigroup(
 > Transformation(
 >  [2, 2, 2, 11, 10, 8, 10, 11, 2, 11, 10, 2, 11, 11, 10]),
 > Transformation(
->  [2, 2, 2, 8, 11, 15, 11, 10, 2, 10, 11, 2, 10, 4, 7]), 
+>  [2, 2, 2, 8, 11, 15, 11, 10, 2, 10, 11, 2, 10, 4, 7]),
 > Transformation(
 >  [2, 2, 2, 11, 10, 8, 10, 11, 2, 11, 10, 2, 11, 11, 10]),
 > Transformation(
@@ -583,9 +584,9 @@ gap> S := Semigroup(
 gap> IsMonogenicSemigroup(S);
 true
 gap> S := Semigroup(
-> Bipartition([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -2, -5, -7, -9], 
->              [-1, -10], [-3, -4, -6, -8]]), 
->  Bipartition([[1, 4, 7, 8, -2], [2, 3, 5, 10, -5], 
+> Bipartition([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -2, -5, -7, -9],
+>              [-1, -10], [-3, -4, -6, -8]]),
+>  Bipartition([[1, 4, 7, 8, -2], [2, 3, 5, 10, -5],
 >               [6, 9, -7, -9], [-1, -10], [-3, -4, -6, -8]]));;
 gap> IsMonogenicSemigroup(S);
 true
@@ -692,7 +693,7 @@ false]]></Example>
       semigroup <A>S</A> is mathematically a monoid, i.e. if and only if it
       contains a <Ref Attr = "MultiplicativeNeutralElement" BookName = "ref"/>.
       <P/>
-      
+
       It is possible that a semigroup which satisfies
       <C>IsMonoidAsSemigroup</C> is not in the &GAP; category <Ref
         Prop = "IsMonoid" BookName = "ref"/>. This is possible if the <Ref
@@ -702,7 +703,7 @@ false]]></Example>
       possess the attributes of a monoid (such as, <Ref
         Attr = "GeneratorsOfMonoid" BookName = "ref"/>).<P/>
 
-     See also <Ref Attr = "One" BookName = "ref"/>, 
+     See also <Ref Attr = "One" BookName = "ref"/>,
      <Ref Prop = "IsInverseMonoid" BookName = "ref"/>
      and <Ref Oper = "IsomorphismTransformationMonoid" BookName = "ref"/>.
       <Example><![CDATA[
@@ -734,20 +735,20 @@ true]]></Example>
     <Prop Name = "IsOrthodoxSemigroup" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      <C>IsOrthodoxSemigroup</C> returns <K>true</K> if the semigroup 
+      <C>IsOrthodoxSemigroup</C> returns <K>true</K> if the semigroup
       <A>S</A> is orthodox and <K>false</K> if it is not.<P/>
 
       A semigroup is <E>orthodox</E> if it is regular and its idempotent
       elements form a subsemigroup.  Every inverse semigroup is also an
       orthodox semigroup.<P/>
 
-      See also <Ref Prop="IsRegularSemigroup"/> and 
+      See also <Ref Prop="IsRegularSemigroup"/> and
       <Ref Prop="IsRegularSemigroup" BookName="ref"/>.
 
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 1, 1, 4, 5, 4]), 
->                   Transformation([1, 2, 3, 1, 1, 2]), 
->                   Transformation([1, 2, 3, 1, 1, 3]), 
+gap> S := Semigroup(Transformation([1, 1, 1, 4, 5, 4]),
+>                   Transformation([1, 2, 3, 1, 1, 2]),
+>                   Transformation([1, 2, 3, 1, 1, 3]),
 >                   Transformation([5, 5, 5, 5, 5, 5]));;
 gap> IsOrthodoxSemigroup(S);
 true
@@ -764,10 +765,10 @@ true]]></Example>
     <Prop Name = "IsRectangularBand" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      <C>IsRectangularBand</C> returns <K>true</K> if the semigroup <A>S</A> 
+      <C>IsRectangularBand</C> returns <K>true</K> if the semigroup <A>S</A>
       is a rectangular band and <K>false</K> if it is not.<P/>
-      
-      A semigroup <A>S</A> is a <E>rectangular band</E> if for all 
+
+      A semigroup <A>S</A> is a <E>rectangular band</E> if for all
       <M>x, y, z</M>  in <A>S</A>
       we have that <M>x ^ 2 = x</M> and <M>xyz = xz</M>.<P/>
 
@@ -781,10 +782,10 @@ true]]></Example>
       An inverse semigroup is a rectangular band if and only if it is a group.
       <Example><![CDATA[
 gap> S := Semigroup(
-> Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 1]), 
-> Transformation([2, 2, 2, 5, 5, 5, 8, 8, 8, 2]), 
-> Transformation([3, 3, 3, 6, 6, 6, 9, 9, 9, 3]), 
-> Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 4]), 
+> Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 1]),
+> Transformation([2, 2, 2, 5, 5, 5, 8, 8, 8, 2]),
+> Transformation([3, 3, 3, 6, 6, 6, 9, 9, 9, 3]),
+> Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 4]),
 > Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 7]));;
 gap> IsRectangularBand(S);
 true
@@ -799,18 +800,18 @@ true]]></Example>
     <Prop Name = "IsRegularSemigroup" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      <C>IsRegularSemigroup</C> returns <K>true</K> if the semigroup 
+      <C>IsRegularSemigroup</C> returns <K>true</K> if the semigroup
       <A>S</A> is regular and <K>false</K> if it is not. <P/>
 
-      A semigroup <C>S</C> is <E>regular</E> if for all <C>x</C> in <C>S</C> 
+      A semigroup <C>S</C> is <E>regular</E> if for all <C>x</C> in <C>S</C>
       there exists <C>y</C> in <C>S</C> such that <C>x * y * x = x</C>. Every
       inverse semigroup is regular, and a semigroup of partial permutations is
       regular if and only if it is an inverse semigroup.<P/>
 
       See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
-      <Ref Func = "IsRegularGreensClass"/>,   
+      <Ref Func = "IsRegularGreensClass"/>,
       and <Ref Func = "IsRegularSemigroupElement" BookName = "ref"/>.
-      
+
       <Example><![CDATA[
 gap> IsRegularSemigroup(FullTransformationSemigroup(5));
 true
@@ -827,16 +828,16 @@ true]]></Example>
     <Description>
       <C>IsRightZeroSemigroup</C> returns <K>true</K> if the <A>S</A> is a
       right zero semigroup and <K>false</K> if it is not.<P/>
-      
+
       A semigroup <C>S</C> is a <E>right zero semigroup</E> if <C>x * y = y</C>
       for all <C>x, y</C> in <C>S</C>. An inverse semigroup is a right zero
-      semigroup if and only if it is trivial. 
+      semigroup if and only if it is trivial.
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 1, 4, 3, 5]), 
+gap> S := Semigroup(Transformation([2, 1, 4, 3, 5]),
 >                   Transformation([3, 2, 3, 1, 1]));;
 gap> IsRightZeroSemigroup(S);
 false
-gap> S := Semigroup(Transformation([1, 2, 3, 3, 1]), 
+gap> S := Semigroup(Transformation([1, 2, 3, 3, 1]),
 >                   Transformation([1, 2, 4, 4, 1]));;
 gap> IsRightZeroSemigroup(S);
 true]]></Example>
@@ -856,7 +857,7 @@ true]]></Example>
 
       Note that the idempotents commute in any inverse semigroup, in any
       semigroup of partial permutations, and in any semigroup of block
-      bijections. 
+      bijections.
       <Example><![CDATA[
 gap> x := Transformation([2, 2]);;
 gap> y := Transformation([1, 3, 3]);;
@@ -874,7 +875,7 @@ gap> W := Semigroup([
 <block bijection semigroup of degree 4 with 2 generators>
 gap> IsSemigroupWithCommutingIdempotents(S);
 true]]></Example>
-    </Description> 
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
@@ -885,18 +886,18 @@ true]]></Example>
     <Description>
       <C>IsSemilattice</C> returns <K>true</K> if the semigroup
       <A>S</A> is a semilattice and <K>false</K> if it is not. <P/>
-      
+
       A semigroup is a <E>semilattice</E> if it is commutative and every
       element is an idempotent. The idempotents of an inverse semigroup form a
-      semilattice. 
+      semilattice.
       <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 5, 1, 7, 3, 7, 7]), 
+gap> S := Semigroup(Transformation([2, 5, 1, 7, 3, 7, 7]),
 >                   Transformation([3, 6, 5, 7, 2, 1, 7]));;
 gap> Size(S);
 631
 gap> IsInverseSemigroup(S);
 true
-gap> A := Semigroup(Idempotents(S)); 
+gap> A := Semigroup(Idempotents(S));
 <transformation semigroup of degree 7 with 32 generators>
 gap> IsSemilattice(A);
 true
@@ -914,9 +915,9 @@ true]]></Example>
     <Prop Name="IsCompletelySimpleSemigroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      <C>IsSimpleSemigroup</C> returns <K>true</K> if the semigroup 
+      <C>IsSimpleSemigroup</C> returns <K>true</K> if the semigroup
       <A>S</A> is simple and <K>false</K> if it is not.<P/>
-      
+
       A semigroup is <E>simple</E> if it has no proper 2-sided ideals. A
       semigroup is <E>completely simple</E> if it is simple and possesses
       minimal left and right ideals. A finite semigroup is simple if and only
@@ -924,9 +925,9 @@ true]]></Example>
       if it is a group.
       <Example><![CDATA[
 gap> S := Semigroup(
->  Transformation([2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 2]), 
->  Transformation([1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 3]), 
->  Transformation([1, 7, 3, 9, 5, 11, 7, 1, 9, 3, 11, 5, 5]), 
+>  Transformation([2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 2]),
+>  Transformation([1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 3]),
+>  Transformation([1, 7, 3, 9, 5, 11, 7, 1, 9, 3, 11, 5, 5]),
 >  Transformation([7, 7, 9, 9, 11, 11, 1, 1, 3, 3, 5, 5, 7]));;
 gap> IsSimpleSemigroup(S);
 true
@@ -945,14 +946,14 @@ gap> R := Range(IsomorphismReesMatrixSemigroup(
   <ManSection>
     <Prop Name="IsZeroGroup" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description> 
-      <C>IsZeroGroup</C> returns <K>true</K> if the semigroup 
+    <Description>
+      <C>IsZeroGroup</C> returns <K>true</K> if the semigroup
       <A>S</A> is a zero group and <K>false</K> if it is not.<P/>
 
-      A semigroup <C>S</C> is a <E>zero group</E> if there exists an 
+      A semigroup <C>S</C> is a <E>zero group</E> if there exists an
       element <C>z</C> in <C>S</C> such that <C>S</C> without <C>z</C> is a
       group and <C>x*z=z*x=z</C> for all <C>x</C> in <C>S</C>.
-      Every zero group is an inverse semigroup. 
+      Every zero group is an inverse semigroup.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([2, 2, 3, 4, 6, 8, 5, 5, 9]),
 >                   Transformation([3, 3, 8, 2, 5, 6, 4, 4, 9]),
@@ -973,7 +974,7 @@ true]]></Example>
     <Prop Name = "IsZeroRectangularBand" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      <C>IsZeroRectangularBand</C> returns <K>true</K> if the semigroup 
+      <C>IsZeroRectangularBand</C> returns <K>true</K> if the semigroup
       <A>S</A> is a zero rectangular band and <K>false</K> if it is not.<P/>
 
       A semigroup is a <E>0-rectangular band</E> if it is 0-simple and
@@ -983,49 +984,49 @@ true]]></Example>
       0-group; see <Ref Prop="IsZeroGroup"/>.
 <Example><![CDATA[
 gap> S := Semigroup(
->  Transformation([1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1, 13, 
+>  Transformation([1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1, 13,
 >                  1, 1, 21, 1, 1, 1, 1, 1, 25, 26, 1]),
-> Transformation([1, 5, 1, 5, 11, 1, 1, 14, 1, 16, 17, 1, 1, 19, 1, 
+> Transformation([1, 5, 1, 5, 11, 1, 1, 14, 1, 16, 17, 1, 1, 19, 1,
 >                 11, 1, 1, 1, 23, 1, 16, 19, 1, 1, 1]),
-> Transformation([1, 4, 8, 1, 10, 1, 8, 1, 1, 1, 10, 1, 8, 10, 1, 1, 
+> Transformation([1, 4, 8, 1, 10, 1, 8, 1, 1, 1, 10, 1, 8, 10, 1, 1,
 >                 20, 1, 22, 1, 8, 1, 1, 1, 1, 1]),
-> Transformation([1, 6, 6, 1, 1, 1, 6, 1, 1, 1, 1, 1, 6, 1, 6, 1, 1, 
+> Transformation([1, 6, 6, 1, 1, 1, 6, 1, 1, 1, 1, 1, 6, 1, 6, 1, 1,
 >                 6, 1, 1, 24, 1, 1, 1, 1, 6]));;
-gap> D := DClass(S, 
+gap> D := DClass(S,
 > Transformation([1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8, 1, 1, 1,
 >                 1, 1, 1, 1, 1, 1, 1, 1, 1]));;
-gap> IsZeroRectangularBand(Semigroup(D)); 
+gap> IsZeroRectangularBand(Semigroup(D));
 true
 gap> IsZeroRectangularBand(Semigroup(GreensDClasses(S)[1]));
 false]]></Example>
     </Description>
-  </ManSection>  
+  </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsZeroSemigroup">
   <ManSection>
     <Prop Name = "IsZeroSemigroup" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description> 
-      <C>IsZeroSemigroup</C> returns <K>true</K> if the semigroup 
+    <Description>
+      <C>IsZeroSemigroup</C> returns <K>true</K> if the semigroup
       <A>S</A> is a zero semigroup and <K>false</K> if it is not.<P/>
 
-      A semigroup <C>S</C> is a <E>zero semigroup</E> if there exists an 
+      A semigroup <C>S</C> is a <E>zero semigroup</E> if there exists an
       element <C>z</C> in <C>S</C> such that <C>x*y=z</C> for all <C>x,y</C>
       in <C>S</C>. An inverse semigroup is a zero semigroup if and only if it
-      is trivial. 
+      is trivial.
 
       <Example><![CDATA[
 gap> S := Semigroup(
-> Transformation([4, 7, 6, 3, 1, 5, 3, 6, 5, 9]), 
+> Transformation([4, 7, 6, 3, 1, 5, 3, 6, 5, 9]),
 > Transformation([5, 3, 5, 1, 9, 3, 8, 7, 4, 3]));;
 gap> IsZeroSemigroup(S);
 false
 gap> S := Semigroup(
->  Transformation([7, 8, 8, 8, 5, 8, 8, 8]), 
->  Transformation([8, 8, 8, 8, 5, 7, 8, 8]), 
->  Transformation([8, 7, 8, 8, 5, 8, 8, 8]), 
->  Transformation([8, 8, 8, 7, 5, 8, 8, 8]), 
+>  Transformation([7, 8, 8, 8, 5, 8, 8, 8]),
+>  Transformation([8, 8, 8, 8, 5, 7, 8, 8]),
+>  Transformation([8, 7, 8, 8, 5, 8, 8, 8]),
+>  Transformation([8, 8, 8, 7, 5, 8, 8, 8]),
 >  Transformation([8, 8, 7, 8, 5, 8, 8, 8]));;
 gap> IsZeroSemigroup(S);
 true
@@ -1050,13 +1051,13 @@ Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )]]></Example>
 
       <Example><![CDATA[
 gap> S := Semigroup(
->  Transformation([1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 5, 17, 
->                  17, 17, 17, 17, 17]), 
->  Transformation([1, 17, 17, 17, 11, 17, 17, 17, 17, 17, 17, 17, 
->                  17, 17, 17, 17, 17]), 
->  Transformation([1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 4, 17, 
->                  17, 17, 17, 17, 17]), 
->  Transformation([1, 17, 17, 5, 17, 17, 17, 17, 17, 17, 17, 17, 
+>  Transformation([1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 5, 17,
+>                  17, 17, 17, 17, 17]),
+>  Transformation([1, 17, 17, 17, 11, 17, 17, 17, 17, 17, 17, 17,
+>                  17, 17, 17, 17, 17]),
+>  Transformation([1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 4, 17,
+>                  17, 17, 17, 17, 17]),
+>  Transformation([1, 17, 17, 5, 17, 17, 17, 17, 17, 17, 17, 17,
 >                  17, 17, 17, 17, 17]));;
 gap> IsZeroSimpleSemigroup(S);
 true
@@ -1073,9 +1074,9 @@ false]]></Example>
   <ManSection>
     <Prop Name = "IsCongruenceFreeSemigroup" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
-    <Description> 
-      <C>IsCongruenceFreeSemigroup</C> returns <K>true</K> if the semigroup 
-      <A>S</A> is a congruence-free semigroup and <K>false</K> if it is 
+    <Description>
+      <C>IsCongruenceFreeSemigroup</C> returns <K>true</K> if the semigroup
+      <A>S</A> is a congruence-free semigroup and <K>false</K> if it is
       not.<P/>
 
       A semigroup <A>S</A> is <E>congruence-free</E> if it has no non-trivial
@@ -1084,9 +1085,9 @@ false]]></Example>
       A semigroup with zero is congruence-free if and only if it is isomorphic
       to a regular Rees 0-matrix semigroup <C>R</C> whose underlying semigroup
       is the trivial group, no two rows of the matrix of <C>R</C> are identical,
-      and no two columns are identical; see Theorem 3.7.1 in 
+      and no two columns are identical; see Theorem 3.7.1 in
       <Cite Key = "Howie1995aa"/>.<P/>
-     
+
       A semigroup without zero is congruence-free if and only if it is a simple
       group or has order 2; see Theorem 3.7.2 in <Cite Key = "Howie1995aa"/>.
 
@@ -1106,7 +1107,7 @@ false]]></Example>
   <ManSection>
     <Prop Name="IsSemigroupWithAdjoinedZero" Arg="S"/>
     <Returns><K>true</K> or <K>false</K>.  </Returns>
-    <Description> 
+    <Description>
       <C>IsSemigroupWithAdjoinedZero</C> returns <K>true</K> if the semigroup
       <A>S</A> can be expressed as the disjoint union of subsemigroups
       <M><A>S</A> \setminus \{ 0 \}</M> and <M>\{ 0 \}</M> (where <M>0</M> is

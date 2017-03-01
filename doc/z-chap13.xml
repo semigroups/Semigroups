@@ -1,7 +1,7 @@
 <Chapter Label = "GraphInverseSemigroups">
   <Heading>
     Graph inverse semigroups
-  </Heading> 
+  </Heading>
 
   In this chapter we describe a class of semigroups arising from directed
   graphs. <P/>
@@ -9,12 +9,12 @@
   <Section>
     <Heading>
       Creating graph inverse semigroups
-    </Heading> 
+    </Heading>
 
-    <#Include Label = "GraphInverseSemigroup"> 
-    <#Include Label = "RangeSourceGraphInverseSemigroupElement"> 
-    <#Include Label = "IsVertex"> 
-    <#Include Label = "IsGraphInverseSemigroup"> 
-    <#Include Label = "GraphOfGraphInverseSemigroup"> 
+    <#Include Label = "GraphInverseSemigroup">
+    <#Include Label = "RangeSourceGraphInverseSemigroupElement">
+    <#Include Label = "IsVertex">
+    <#Include Label = "IsGraphInverseSemigroup">
+    <#Include Label = "GraphOfGraphInverseSemigroup">
   </Section>
 </Chapter>

@@ -9,14 +9,14 @@
 ##
 
 <#GAPDoc Label="EnumeratePosition">
-  <ManSection> 
+  <ManSection>
     <Func Name = "EnumeratePosition" Arg = "o, val[, onlynew]"/>
     <Returns>
       A positive integer or <K>fail</K>.
     </Returns>
-    <Description> 
+    <Description>
       This function returns the position of the value <A>val</A> in the orbit
-      <A>o</A>. If <A>o</A> is closed, then this is equivalent to doing 
+      <A>o</A>. If <A>o</A> is closed, then this is equivalent to doing
       <C>Position(<A>o</A>, <A>val</A>)</C>. However, if <A>o</A> is open, then
       the orbit is enumerated until <A>val</A> is found, in which case the
       position of <A>val</A> is returned, or the enumeration ends, in which
@@ -31,7 +31,7 @@
 <#/GAPDoc>
 
 <#GAPDoc Label="LookForInOrb">
-  <ManSection> 
+  <ManSection>
     <Func Name = "LookForInOrb" Arg = "o, func, start"/>
     <Returns>
       <K>false</K> or a positive integer.
@@ -44,7 +44,7 @@
       (inclusive) and the orbit will be enumerated until <A>func</A> returns
       <K>true</K> or the enumeration ends. In the former case, the position of
       the first point in <A>o</A> for which <A>func</A> returns <K>true</K> is
-      returned, and in the latter <K>false</K> is returned.  
+      returned, and in the latter <K>false</K> is returned.
 <Example><![CDATA[
 gap> o := Orb(SymmetricGroup(100), 1, OnPoints);
 <open Int-orbit, 1 points>
@@ -59,16 +59,16 @@ gap> o;
 <#/GAPDoc>
 
 <#GAPDoc Label="EvaluateWord">
-  <ManSection> 
+  <ManSection>
     <Oper Name = "EvaluateWord" Arg = "gens, w"/>
     <Returns>A semigroup element.</Returns>
-    <Description> 
+    <Description>
       The argument <A>gens</A> should be a collection of generators of a
       semigroup and the argument <A>w</A> should be a list of positive integers
       less than or equal to the length of <A>gens</A>.  This operation evaluates
       the word <A>w</A> in the generators <A>gens</A>. More precisely,
-      <C>EvaluateWord</C> returns the equivalent of: 
-      <Log>Product(List(w, i -> gens[i]));</Log> 
+      <C>EvaluateWord(<A>gens</A>, <A>w</A>)</C> returns the equivalent of:
+      <Log>Product(List(w, i -> gens[i]));</Log>
       see also <Ref Meth = "Factorization"/>.<P/>
       <List>
         <Mark>for elements of a semigroup</Mark>
@@ -79,7 +79,7 @@ gap> o;
           <C>gens[w[1]] * gens[w[2]] * .. . * gens[w[n]]</C> when the length of
           <A>w</A> is <C>n</C>.
         </Item>
-        
+
         <Mark>for elements of an inverse semigroup</Mark>
         <Item>
           When <A>gens</A> is a list of elements with a semigroup inverse and
@@ -94,10 +94,11 @@ gap> o;
       <C>One(<A>gens</A>)</C> if <A>gens</A> belongs to the category
       <Ref Filt = "IsMultiplicativeElementWithOne" BookName = "ref"/>.
 <Example><![CDATA[
-gap> gens := [Transformation([2, 4, 4, 6, 8, 8, 6, 6]), 
-> Transformation([2, 7, 4, 1, 4, 6, 5, 2]), 
-> Transformation([3, 6, 2, 4, 2, 2, 2, 8]), 
-> Transformation([4, 3, 6, 4, 2, 1, 2, 6]), 
+gap> gens := [
+> Transformation([2, 4, 4, 6, 8, 8, 6, 6]),
+> Transformation([2, 7, 4, 1, 4, 6, 5, 2]),
+> Transformation([3, 6, 2, 4, 2, 2, 2, 8]),
+> Transformation([4, 3, 6, 4, 2, 1, 2, 6]),
 > Transformation([4, 5, 1, 3, 8, 5, 8, 2])];;
 gap> S := Semigroup(gens);;
 gap> x := Transformation([1, 4, 6, 1, 7, 2, 7, 6]);;
@@ -106,12 +107,12 @@ gap> word := Factorization(S, x);
 gap> EvaluateWord(gens, word);
 Transformation( [ 1, 4, 6, 1, 7, 2, 7, 6 ] )
 gap> S := SymmetricInverseMonoid(10);;
-gap> x := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);
+gap> x := PartialPerm([2, 6, 7, 0, 0, 9, 0, 1, 0, 5]);
 [3,7][8,1,2,6,9][10,5]
 gap> word := Factorization(S, x);
 [ -2, -2, -2, -2, -3, -2, -2, -2, -2, -2, 5, 2, 5, 5, 2, 5, 2, 2, 2, 
   2, -3, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 3, 2 ]
-gap> EvaluateWord(GeneratorsOfSemigroup(S), word); 
+gap> EvaluateWord(GeneratorsOfSemigroup(S), word);
 [3,7][8,1,2,6,9][10,5]]]></Example>
     </Description>
   </ManSection>
@@ -155,8 +156,8 @@ gap> OrbSCC(o);
       <C>OrbSCCLookup(o)[i]</C> equals the index of the strongly connected
       component containing <C>o[i]</C>.  <P/>
 
-      See also <Ref Func = "OrbSCC"/>. 
-      
+      See also <Ref Func = "OrbSCC"/>.
+
 <Example><![CDATA[
 gap> S := FullTransformationSemigroup(4);;
 gap> o := LambdaOrb(S);;
@@ -165,7 +166,7 @@ gap> OrbSCC(o);
   [ 13, 14, 15, 16 ] ]
 gap> OrbSCCLookup(o);
 [ 1, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5 ]
-gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; 
+gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7];
 1
 3
 4]]></Example>
@@ -178,9 +179,9 @@ gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7];
     <Func Name = "ReverseSchreierTreeOfSCC" Arg = "o, i"/>
     <Returns>
       The reverse Schreier tree corresponding to the <A>i</A>th strongly
-      connected component of an orbit. 
+      connected component of an orbit.
     </Returns>
-    <Description> 
+    <Description>
       If <A>o</A> is an orbit created by the <Package>Orb</Package> package with
       the option <C>orbitgraph = true</C> and action <C>act</C>, and <A>i</A> is a
       positive integer, then <C>ReverseSchreierTreeOfSCC(<A>o</A>, <A>i</A>)</C>
@@ -189,15 +190,15 @@ gap> OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7];
         gen, pos]</C> corresponds to a tree with root <C>OrbSCC(o)[i][1]</C> and a
       path from every element of <C>OrbSCC(o)[i]</C> to the root. <P/>
 
-      See also <Ref Func = "OrbSCC"/>, 
-      <Ref Func = "TraceSchreierTreeOfSCCBack"/>, 
-      <Ref Func = "SchreierTreeOfSCC"/>, and 
+      See also <Ref Func = "OrbSCC"/>,
+      <Ref Func = "TraceSchreierTreeOfSCCBack"/>,
+      <Ref Func = "SchreierTreeOfSCC"/>, and
       <Ref Func = "TraceSchreierTreeOfSCCForward"/>.
 <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 2, 1, 4, 4]), 
+gap> S := Semigroup(Transformation([2, 2, 1, 4, 4]),
 >                   Transformation([3, 3, 3, 4, 5]),
 >                   Transformation([5, 1, 4, 5, 5]));;
-gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true, 
+gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true,
 > schreier := true));;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3, 7, 5, 6, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
@@ -218,10 +219,10 @@ gap> Position(o, last);
     <Func Name = "SchreierTreeOfSCC" Arg = "o, i"/>
     <Returns>
       The Schreier tree corresponding to the <A>i</A>th strongly
-      connected component of an orbit. 
+      connected component of an orbit.
     </Returns>
 
-    <Description> 
+    <Description>
     If <A>o</A> is an orbit created by the <Package>Orb</Package> package with
     the option <C>orbitgraph = true</C> and action <C>act</C>, and <A>i</A> is a
     positive integer, then <C>SchreierTreeOfSCC(<A>o</A>, <A>i</A>)</C> returns
@@ -230,14 +231,14 @@ gap> Position(o, last);
 ]</C> corresponds to a tree with root <C>OrbSCC(o)[i][1]</C> and a path
     from the root to every element of <C>OrbSCC(o)[i]</C>. <P/>
 
-    See also <Ref Func = "OrbSCC"/>, <Ref Func = "TraceSchreierTreeOfSCCBack"/>, 
-    <Ref Func = "ReverseSchreierTreeOfSCC"/>, and 
+    See also <Ref Func = "OrbSCC"/>, <Ref Func = "TraceSchreierTreeOfSCCBack"/>,
+    <Ref Func = "ReverseSchreierTreeOfSCC"/>, and
     <Ref Func = "TraceSchreierTreeOfSCCForward"/>.
 <Example><![CDATA[
-gap> S := Semigroup(Transformation([2, 2, 1, 4, 4]), 
->                   Transformation([3, 3, 3, 4, 5]),
->                   Transformation([5, 1, 4, 5, 5]));;
-gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true, 
+gap> S := Semigroup([Transformation([2, 2, 1, 4, 4]),
+>                    Transformation([3, 3, 3, 4, 5]),
+>                    Transformation([5, 1, 4, 5, 5])]);;
+gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true,
 > schreier := true));;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3, 7, 5, 6, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
@@ -254,7 +255,7 @@ gap> Position(o, last);
 <#/GAPDoc>
 
 <#GAPDoc Label="TraceSchreierTreeOfSCCBack"/>
-  <ManSection> 
+  <ManSection>
     <Oper Name = "TraceSchreierTreeOfSCCBack" Arg = "orb, m, nr"/>
     <Returns>A word in the generators.</Returns>
     <Description>
@@ -264,7 +265,7 @@ gap> Position(o, last);
     the number of a strongly connected component of <A>orb</A>, and <C>nr</C>
     must be the number of a point in  the  <A>m</A>th strongly connect
     component of <A>orb</A>. <P/>
-    
+
     This operation traces the result of <Ref
     Func = "ReverseSchreierTreeOfSCC"/> and with arguments <A>orb</A> and
     <A>m</A> and returns a word in the generators that maps the point with
@@ -272,20 +273,21 @@ gap> Position(o, last);
     component of <A>orb</A>.  Here, a word is a list of integers, where
     positive integers are numbers of  generators.
 
-    See also <Ref Func = "OrbSCC"/>, 
-    <Ref Func = "ReverseSchreierTreeOfSCC"/>, 
-    <Ref Func = "SchreierTreeOfSCC"/>, and 
+    See also <Ref Func = "OrbSCC"/>,
+    <Ref Func = "ReverseSchreierTreeOfSCC"/>,
+    <Ref Func = "SchreierTreeOfSCC"/>, and
     <Ref Func = "TraceSchreierTreeOfSCCForward"/>.
     <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 3, 4, 1]), 
-> Transformation([2, 4, 1, 2]),
-> Transformation([3, 1, 1, 3]), 
-> Transformation([3, 3, 4, 1]));;
-gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true, 
+gap> S := Semigroup([
+>  Transformation([1, 3, 4, 1]),
+>  Transformation([2, 4, 1, 2]),
+>  Transformation([3, 1, 1, 3]),
+>  Transformation([3, 3, 4, 1])]);;
+gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true,
 > schreier := true));;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
-gap> ReverseSchreierTreeOfSCC(o, 4);               
+gap> ReverseSchreierTreeOfSCC(o, 4);
 [ [ ,,, fail, 4, 1, 1, 3 ], [ ,,, fail, 4, 4, 4, 4 ] ]
 gap> TraceSchreierTreeOfSCCBack(o, 4, 7);
 [ 1 ]
@@ -296,7 +298,7 @@ gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
 <#/GAPDoc>
 
 <#GAPDoc Label="TraceSchreierTreeOfSCCForward"/>
-  <ManSection> 
+  <ManSection>
     <Oper Name = "TraceSchreierTreeOfSCCForward" Arg = "orb, m, nr"/>
     <Returns>
       A word in the generators.
@@ -308,23 +310,23 @@ gap> TraceSchreierTreeOfSCCBack(o, 4, 8);
       must be the number of a strongly connected component of <A>orb</A>, and
       <C>nr</C> must be the number of a point in  the  <A>m</A>th strongly
       connect component of <A>orb</A>. <P/>
-    
+
       This operation traces the result of <Ref Func = "SchreierTreeOfSCC"/> and
       with arguments <A>orb</A> and <A>m</A> and returns a word in the
       generators that maps the first point in the <A>m</A>th strongly connected
       component of <A>orb</A> to the point with number <A>nr</A>.  Here, a word
       is a list of integers, where positive integers are numbers of generators.
 
-    See also <Ref Func = "OrbSCC"/>, 
-    <Ref Func = "ReverseSchreierTreeOfSCC"/>, 
-    <Ref Func = "SchreierTreeOfSCC"/>, and 
+    See also <Ref Func = "OrbSCC"/>,
+    <Ref Func = "ReverseSchreierTreeOfSCC"/>,
+    <Ref Func = "SchreierTreeOfSCC"/>, and
     <Ref Func = "TraceSchreierTreeOfSCCBack"/>.
     <Example><![CDATA[
-gap> S := Semigroup(Transformation([1, 3, 4, 1]), 
->                   Transformation([2, 4, 1, 2]),
->                   Transformation([3, 1, 1, 3]), 
->                   Transformation([3, 3, 4, 1]));;
-gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true, 
+gap> S := Semigroup([Transformation([1, 3, 4, 1]),
+>                    Transformation([2, 4, 1, 2]),
+>                    Transformation([3, 1, 1, 3]),
+>                    Transformation([3, 3, 4, 1])]);;
+gap> o := Orb(S, [1 .. 4], OnSets, rec(orbitgraph := true,
 > schreier := true));;
 gap> OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
