@@ -247,6 +247,8 @@
     <#Include Label = "NrLeftBlocks">
     <#Include Label = "NrRightBlocks">
     <#Include Label = "NrBlocks">
+    <#Include Label = "DomainOfBipartition">
+    <#Include Label = "CodomainOfBipartition">
     <#Include Label = "IsTransBipartition">
     <#Include Label = "IsDualTransBipartition">
     <#Include Label = "IsPermBipartition">
