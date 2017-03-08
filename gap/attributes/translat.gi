@@ -164,42 +164,12 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
     sortinglist[i] := Position(undosortinglist, i);
   od;
   
-  # TODO: for now, choose the reps by L/R classes - but better to choose 
-  # minimal set A such that SA = AS = S.
-  dclasses := DClasses(S);
-  reps := [];
+  reps := GeneratorsOfSemigroup(S);
   repspos := [];
-  
-  # choose diagonally through the D classes for now
-  for d in dclasses do
-    lclasses := ShallowCopy(LClasses(d));
-    rclasses := ShallowCopy(RClasses(d));
-    for i in [1 .. Minimum(Size(lclasses), Size(rclasses)) - 1] do
-      r := Representative(Intersection(lclasses[1], rclasses[1]));
-      Add(reps, r);
-      Add(repspos, Position(slist, r));
-      Remove(lclasses, 1);
-      Remove(rclasses, 1);
-    od;
-    if Size(lclasses) > Size(rclasses) then
-      #Size(rclasses) = 1
-      for j in [1 .. Size(lclasses)] do
-        r := Representative(Intersection(lclasses[1], rclasses[1]));
-        Add(reps, r);
-        Add(repspos, Position(slist, r));
-        Remove(lclasses, 1);
-      od;
-    else
-      #Size(lclasses) = 1
-      for j in [1 .. Size(rclasses)] do
-        r := Representative(Intersection(lclasses[1], rclasses[1]));
-        Add(reps, r);
-        Add(repspos, Position(slist, r));
-        Remove(rclasses, 1);
-      od;
-    fi;
-  od;
   m := Size(reps);
+  for i in [1 .. m] do
+    repspos[i] := Position(slist, reps[i]);
+  od;
 
   #store which elements of the semigroups multiply each given element to form
   #another given element
