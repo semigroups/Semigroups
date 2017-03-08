@@ -291,6 +291,30 @@ end);
 
 # Attributes
 
+InstallMethod(DomainOfBipartition, "for a bipartition", [IsBipartition],
+function(x)
+  local out;
+  out := [];
+  for x in ExtRepOfObj(LeftBlocks(x)) do
+    if IsPosInt(x[1]) then
+      Append(out, x);
+    fi;
+  od;
+  return out;
+end);
+
+InstallMethod(CodomainOfBipartition, "for a bipartition", [IsBipartition],
+function(x)
+  local out;
+  out := [];
+  for x in ExtRepOfObj(RightBlocks(x)) do
+    if IsPosInt(x[1]) then
+      Append(out, -x);
+    fi;
+  od;
+  return out;
+end);
+
 InstallMethod(ExtRepOfObj, "for a bipartition", [IsBipartition],
 BIPART_EXT_REP);
 

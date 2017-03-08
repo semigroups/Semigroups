@@ -709,6 +709,34 @@ gap> AsBlockBijection(x);
 gap> AsBlockBijection(x, 6);
 <block bijection: [ 1, -4 ], [ 2, -1 ], [ 3, 4, 5, 6, -2, -3, -5, -6 ]>
 
+#T# DomainOfBipartition and CodomainOfBipartition
+gap> x := Bipartition([]);
+<empty bipartition>
+gap> DomainOfBipartition(x);
+[  ]
+gap> CodomainOfBipartition(x);
+[  ]
+gap> x := Bipartition([[1, -3], [2, -2], [3, -4], [4, -1]]);;
+gap> DomainOfBipartition(x);
+[ 1, 2, 3, 4 ]
+gap> CodomainOfBipartition(x);
+[ -1, -2, -3, -4 ]
+gap> x := Bipartition([[1, 2], [3], [4], [-1], [-2, -3], [-4]]);;
+gap> DomainOfBipartition(x);
+[  ]
+gap> CodomainOfBipartition(x);
+[  ]
+gap> x := Bipartition([[1], [2, 6, -1, -2, -3], [3, -4], [4, -5], [5, -6]]);;
+gap> DomainOfBipartition(x);
+[ 2, 6, 3, 4, 5 ]
+gap> CodomainOfBipartition(x);
+[ -1, -2, -3, -4, -5, -6 ]
+gap> x := Bipartition([[1, -1, -4], [2, 3, 6, -2, -3], [4, 5, -5], [-6]]);;
+gap> DomainOfBipartition(x);
+[ 1, 2, 3, 6, 4, 5 ]
+gap> CodomainOfBipartition(x);
+[ -1, -4, -2, -3, -5 ]
+
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
 gap> Unbind(N);

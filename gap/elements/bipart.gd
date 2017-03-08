@@ -28,6 +28,9 @@ DeclareAttribute("NrBlocks", IsBipartition);
 DeclareAttribute("LeftBlocks", IsBipartition);
 DeclareAttribute("RightBlocks", IsBipartition);
 
+DeclareAttribute("DomainOfBipartition", IsBipartition);
+DeclareAttribute("CodomainOfBipartition", IsBipartition);
+
 DeclareAttribute("IntRepOfBipartition", IsBipartition);
 DeclareSynonymAttr("LeftProjection", LeftOne);
 DeclareSynonymAttr("RightProjection", RightOne);
