@@ -589,10 +589,10 @@ function(mat)
   # calculate a canonical representative of the digraph, use colors to prevent
   # the two sets of vertices in the bipartite graph from being swapped (which
   # corresponds to swapping rows and columns of the Boolean matrix.
-  colors := Concatenation([1 .. Length(mat![1])] * 0,
-                          [1 .. Length(mat![1])] * 0 + 1);
+  colors := Concatenation([1 .. Length(mat![1])] * 0 + 1,
+                          [1 .. Length(mat![1])] * 0 + 2);
 
-  p  := DIGRAPH_CANONICAL_LABELING_COLORS(gr, colors);
+  p  := DigraphCanonicalLabelling(gr, colors);
   return _AsBooleanMat(OnDigraphs(gr, p));
 end);
 
