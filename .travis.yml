@@ -4,7 +4,7 @@ compiler:
 env:
   global:
     - LIBSEMIGROUPS_BR=master
-    - DIGRAPHS_BR=stable-0.6
+    - DIGRAPHS_BR=stable-0.7
     - IO=io-4.4.6
     - GAPDOC=GAPDoc-1.5.1
     - ORB=orb-4.7.6
