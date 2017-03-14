@@ -9,7 +9,7 @@
 ##
 
 DeclareCategoryKernel("IsBipartition",
-                      IsMultiplicativeElementWithInverse 
+                      IsMultiplicativeElementWithInverse
                       and IsAssociativeElementWithStar,
                       IS_BIPART);
 

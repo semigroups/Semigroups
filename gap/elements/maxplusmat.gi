@@ -198,7 +198,7 @@ function(mat)
   for k in [1 .. dim] do
     max := Maximum(List([1 .. dim], x -> mk[x][x]));
     if max <> -infinity then
-      Add(cm, max/k);
+      Add(cm, max / k);
     fi;
     mk := mk * mat;
   od;
@@ -234,7 +234,7 @@ function(m)
   local dim, pows, crit, out, n, i, k;
 
   dim := DimensionOfMatrixOverSemiring(m);
-  ### Method only valid for SpectralRadius = 0.
+  # Method only valid for SpectralRadius = 0.
   if SpectralRadius(m) <> 0 then
     TryNextMethod();
   fi;

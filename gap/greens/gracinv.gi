@@ -653,7 +653,7 @@ function(S)
     end,
 
    PrintObj := function(enum)
-     Print( "<enumerator of R-classes of ", ViewString(S), ">");
+     Print("<enumerator of R-classes of ", ViewString(S), ">");
      return;
    end));
 end);

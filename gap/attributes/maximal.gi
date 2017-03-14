@@ -10,7 +10,7 @@
 ##
 
 # WAW A more complicated version incorporating some maximal subsemigroup theory
-##### did not seem to perform significantly better, and so was removed.
+#     did not seem to perform significantly better, and so was removed.
 
 InstallMethod(IsMaximalSubsemigroup, "for a semigroup and a semigroup",
 [IsSemigroup, IsSemigroup],

@@ -16,5 +16,5 @@ DeclareCategory("IsRegularActingSemigroupRep",
                 IsRegularSemigroup and IsActingSemigroup);
 
 DeclareCategory("IsInverseActingSemigroupRep",
-                IsInverseSemigroup and IsGeneratorsOfInverseSemigroup 
+                IsInverseSemigroup and IsGeneratorsOfInverseSemigroup
                 and IsRegularActingSemigroupRep);

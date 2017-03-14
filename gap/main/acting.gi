@@ -34,7 +34,7 @@ function(S)
               init := false,
               lambdarhoht := [],
               lenreps := [0],
-              orbit := [[,,,FakeOne(gens)]],
+              orbit := [[,,, FakeOne(gens)]],
               orblookup1 := [],
               orblookup2 := [],
               parent := S,

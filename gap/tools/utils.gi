@@ -99,7 +99,7 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
 
 SEMIGROUPS.TestRec := rec();
 
-SEMIGROUPS.TestRec.reportDiff := function (inp, expout, found, fnam, line, time)
+SEMIGROUPS.TestRec.reportDiff := function(inp, expout, found, fnam, line, time)
   Print("\033[31m######## > Diff in:\n");
   if IsStream(fnam)  then
     Print("test stream, line ", line, "\n");
@@ -628,7 +628,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
   Print("Found ", Length(y), " Ref elements ");
   yint := Filtered(y, elt -> not IsBound(elt.attributes.BookName)
                              or (IsBound(elt.attributes.BookName)
-                                 and elt.attributes.BookName="ref"));
+                                 and elt.attributes.BookName = "ref"));
   Print("including ", Length(yint), " within the Reference manual\n");
   y := Filtered(yint, elt -> ForAny(types, t -> IsBound(elt.attributes.(t))));
 
@@ -637,7 +637,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
   for elt in y do
     type := First(types, t -> IsBound(elt.attributes.(t)));
     if type <> fail then
-      matches := Filtered(x, t -> t.attributes.Name=elt.attributes.(type));
+      matches := Filtered(x, t -> t.attributes.Name = elt.attributes.(type));
       if Length(matches) = 0 then
         pos := OriginalPositionDocument(doc[2], elt.start);
         Print(pos[1], ":", pos[2], " : no match for ", type, " := ",
@@ -657,7 +657,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
         match := matches[1];
       else
         matches2 := Filtered(matches, t -> not IsBound(t.attributes.Label));
-        if Length(matches2)=0 then
+        if Length(matches2) = 0 then
           pos := OriginalPositionDocument(doc[2], elt.start);
           Print(pos[1], ":", pos[2],
                 " : no match (wrong type or missing label?) for ", type, " := ",
@@ -709,7 +709,7 @@ SEMIGROUPS.CheckManSectionTypes := function(doc, verbose...)
           "\n");
   fi;
   Print("****************************************************************\n");
-  return errcount=0;
+  return errcount = 0;
 end;
 
 SEMIGROUPS.CheckDocCoverage := function(doc)

@@ -17,10 +17,10 @@ DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
                  [IsSemigroupCongruence]);
 
 # This is a representation for left/right/two-sided congruences of a finite
-# semigroup by generating pairs. 
+# semigroup by generating pairs.
 #
 # The components are:
-#  
+#
 #   range:    the semigroup over which the congruence is defined
 #
 #   genpairs: the list of generating pairs (pairs of elements of the range)
@@ -32,11 +32,11 @@ DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
 #             learn that it is a left congruence after being created as a right
 #             congruence. This component only refers to the type of congruence
 #             that was created.
-#   
+#
 #   report:   should be true or false, sets whether information is printed
 #             during a computation or not.
 
-DeclareCategory("IsFiniteCongruenceByGeneratingPairs", 
+DeclareCategory("IsFiniteCongruenceByGeneratingPairs",
                 IsEquivalenceRelation, RankFilter(IsSemigroupCongruence));
 
 DeclareRepresentation("IsFiniteCongruenceByGeneratingPairsRep",
@@ -44,14 +44,14 @@ DeclareRepresentation("IsFiniteCongruenceByGeneratingPairsRep",
                       IsFiniteCongruenceByGeneratingPairs,
                       ["range", "genpairs", "type", "report"]);
 
-DeclareAttribute("FiniteCongruenceByGeneratingPairsPartition", 
-                 IsFiniteCongruenceByGeneratingPairsRep); 
+DeclareAttribute("FiniteCongruenceByGeneratingPairsPartition",
+                 IsFiniteCongruenceByGeneratingPairsRep);
 
 # This is a representation for classes of a left/right/two-sided congruence of
-# a finite semigroup by generating pairs. 
+# a finite semigroup by generating pairs.
 #
 # The components are:
-#  
+#
 #   rep:  an arbitrary representative of the class
 #
 #   cong: the underlying congruence of the class.

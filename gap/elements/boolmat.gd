@@ -22,7 +22,7 @@ DeclareCategoryCollections("IsBooleanMatCollection");
 
 BindGlobal("BooleanMatType",
            NewType(NewFamily("BooleanMatFamily",
-                             IsBooleanMat, 
+                             IsBooleanMat,
                              CanEasilySortElements,
                              CanEasilySortElements),
                    IsBooleanMat));

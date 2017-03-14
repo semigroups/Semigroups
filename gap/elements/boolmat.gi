@@ -412,7 +412,7 @@ function(x, n)
   local y, i;
 
   y := EmptyPlist(n);
-  for i in [2 ..  2 * x![1] + 1] do
+  for i in [2 .. 2 * x![1] + 1] do
     Add(y, BlistList([1 .. n], x![i]));
   od;
   for i in [2 * x![1] + 1 .. n] do

@@ -58,7 +58,7 @@ DeclareAttribute("BaseDomain", IsVectorOverFiniteField);
 
 DeclareCategory("IsRowBasisOverFiniteField", IsCollection);
 DeclareCategoryCollections("IsRowBasisOverFiniteField");
-DeclareConstructor("NewRowBasisOverFiniteField", 
+DeclareConstructor("NewRowBasisOverFiniteField",
                    [IsRowBasisOverFiniteField, IsRing, IsList]);
 
 DeclareAttribute("BaseDomain", IsRowBasisOverFiniteField);
@@ -150,7 +150,7 @@ BindGlobal("PlistRowBasisOverFiniteFieldFamily",
            IsRowBasisOverFiniteField, CanEasilyCompareElements));
 BindGlobal("PlistRowBasisOverFiniteFieldType",
            NewType(PlistRowBasisOverFiniteFieldFamily,
-                   IsRowBasisOverFiniteField 
+                   IsRowBasisOverFiniteField
                    and IsPlistRowBasisOverFiniteFieldRep));
 
 DeclareRepresentation("IsPlistMatrixOverFiniteFieldRep",

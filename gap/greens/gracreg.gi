@@ -499,7 +499,7 @@ function(S)
     local S, o, m;
     S := enum!.parent;
     o := RhoOrb(S);
-    if nr + 1 > Length(OrbSCCLookup(o)) then 
+    if nr + 1 > Length(OrbSCCLookup(o)) then
       return fail;
     fi;
     m := OrbSCCLookup(o)[nr + 1];
@@ -509,7 +509,7 @@ function(S)
    end,
 
    PrintObj := function(enum)
-     Print( "<enumerator of R-classes of ", ViewString(S), ">");
+     Print("<enumerator of R-classes of ", ViewString(S), ">");
      return;
    end));
 end);

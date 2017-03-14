@@ -13,12 +13,12 @@
 # matrices over finite fields. These essentially just delegate to the
 # library methods via an isomorphism.
 
-DeclareSynonym("IsMatrixOverFiniteFieldGroup", 
+DeclareSynonym("IsMatrixOverFiniteFieldGroup",
                IsGroup and IsMatrixOverFiniteFieldSemigroup);
 
-DeclareAttribute("IsomorphismMatrixGroup", 
+DeclareAttribute("IsomorphismMatrixGroup",
                  IsMatrixOverFiniteFieldSemigroup);
-DeclareAttribute("AsMatrixGroup", 
+DeclareAttribute("AsMatrixGroup",
                  IsMatrixOverFiniteFieldSemigroup);
 
 DeclareOperation("\^", [IsMatrixOverFiniteFieldGroup, IsMatrixOverFiniteField]);

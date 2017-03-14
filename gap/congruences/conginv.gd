@@ -30,5 +30,5 @@ DeclareCategory("IsInverseSemigroupCongruenceClassByKernelTrace",
                 IsMultiplicativeElement);
 
 # Special congruences
-DeclareAttribute("MinimumGroupCongruence", 
+DeclareAttribute("MinimumGroupCongruence",
                  IsInverseSemigroup and IsGeneratorsOfInverseSemigroup);

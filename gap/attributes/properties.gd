@@ -41,17 +41,18 @@ DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
 DeclareSynonymAttr("IsRectangularGroup",
                    IsOrthodoxSemigroup and IsSimpleSemigroup);
 
-InstallTrueMethod(IsGeneratorsOfInverseSemigroup, 
+InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
                   IsInverseSemigroup and IsPartialPermSemigroup);
-InstallTrueMethod(IsGeneratorsOfInverseSemigroup, 
+InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
                   IsInverseSemigroup and IsBlockBijectionSemigroup);
-InstallTrueMethod(IsGeneratorsOfInverseSemigroup, 
+InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
                   IsInverseSemigroup and IsPartialPermBipartitionSemigroup);
 
 InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsCommutativeSemigroup);
 InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsInverseSemigroup);
 InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsPartialPermSemigroup);
-InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsBlockBijectionSemigroup);
+InstallTrueMethod(IsSemigroupWithCommutingIdempotents,
+                  IsBlockBijectionSemigroup);
 InstallTrueMethod(IsSemigroupWithCommutingIdempotents, IsNilpotentSemigroup);
 InstallTrueMethod(IsBlockGroup, IsSemigroupWithCommutingIdempotents);
 InstallTrueMethod(IsDTrivial, IsSemilattice);

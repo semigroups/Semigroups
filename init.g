@@ -27,7 +27,6 @@ if _SEMIGROUPS_SO <> fail then
 fi;
 Unbind(_SEMIGROUPS_SO);
 
-
 if not IsBound(UserHomeExpand) then
   BindGlobal("UserHomeExpand", USER_HOME_EXPAND);
 fi;

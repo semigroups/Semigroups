@@ -81,7 +81,9 @@ DeclareOperation("ClosureSemigroup",
                  [IsSemigroup, IsMultiplicativeElement]);
 
 DeclareOperation("ClosureMonoid",
-                 [IsMonoid, IsMultiplicativeElementWithOneCollection, IsRecord]);
+                 [IsMonoid,
+                  IsMultiplicativeElementWithOneCollection,
+                  IsRecord]);
 DeclareOperation("ClosureMonoid",
                  [IsMonoid, IsMultiplicativeElementWithOneCollection]);
 DeclareOperation("ClosureMonoid",
@@ -135,7 +137,7 @@ DeclareConstructor("RandomInverseSemigroupCons", [IsSemigroup, IsList]);
 DeclareGlobalFunction("RandomInverseMonoid");
 DeclareConstructor("RandomInverseMonoidCons", [IsMonoid, IsList]);
 
-DeclareConstructor("SEMIGROUPS_ProcessRandomArgsCons", 
+DeclareConstructor("SEMIGROUPS_ProcessRandomArgsCons",
                    [IsSemigroup, IsList]);
 
 DeclareOperation("SubsemigroupByProperty", [IsSemigroup, IsFunction]);
@@ -146,7 +148,7 @@ DeclareOperation("InverseSubsemigroupByProperty",
                  [IsSemigroup, IsFunction]);
 DeclareOperation("InverseSubsemigroupByProperty",
                  [IsInverseSemigroup and IsGeneratorsOfInverseSemigroup,
-                  IsFunction, 
+                  IsFunction,
                   IsPosInt]);
 
 # undocumented

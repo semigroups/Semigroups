@@ -2047,7 +2047,7 @@ function(S)
       Length := enum -> NrRClasses(S),
 
       PrintObj := function(enum)
-        Print( "<enumerator of R-classes of ", ViewString(S), ">");
+        Print("<enumerator of R-classes of ", ViewString(S), ">");
         return;
       end));
 

@@ -14,14 +14,14 @@
 # the strongly connected compontents of the appropriate Cayley graph, it
 # contains two subcomponents consisting of the actual components and a lookup
 # table <t> such that the value of <t[i]> is the index of the class containing
-# EnumeratorCanonical(S)[i], where S is the semigroup. 
+# EnumeratorCanonical(S)[i], where S is the semigroup.
 
-DeclareRepresentation("IsEnumerableSemigroupGreensClassRep", 
-                      IsComponentObjectRep and IsGreensClass, 
+DeclareRepresentation("IsEnumerableSemigroupGreensClassRep",
+                      IsComponentObjectRep and IsGreensClass,
                       ["data"]);
 
-DeclareRepresentation("IsEnumerableSemigroupGreensRelationRep", 
-                      IsComponentObjectRep and IsGreensRelation, 
+DeclareRepresentation("IsEnumerableSemigroupGreensRelationRep",
+                      IsComponentObjectRep and IsGreensRelation,
                       ["data"]);
 
 DeclareAttribute("DClassType", IsEnumerableSemigroupRep);

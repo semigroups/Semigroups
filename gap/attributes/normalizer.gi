@@ -281,7 +281,7 @@ SEMIGROUPS.NonDeterministicNormalizer := function(G, S, opts)
                               StrictlyUseCandidates := true));
 
   P := function(x)
-  local i, pt;
+    local i, pt;
     i := 0;
     repeat
       i := i + 1;

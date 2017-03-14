@@ -17,18 +17,19 @@
 #  Foundations of computational mathematics (Rio de Janeiro, 1997), 112-126,
 #  Springer, Berlin,  1997.
 
-
-DeclareRepresentation("IsEnumerableSemigroupRep", 
+DeclareRepresentation("IsEnumerableSemigroupRep",
                       IsSemigroup and IsComponentObjectRep,
                       ["__en_semi_fropin", "__en_semi_cpp_semi"]);
 
-DeclareProperty("IsGeneratorsOfEnumerableSemigroup", 
+DeclareProperty("IsGeneratorsOfEnumerableSemigroup",
                 IsMultiplicativeElementCollection);
 
 DeclareOperation("PositionSortedOp",
                  [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
 DeclareOperation("PositionOp",
-                 [IsEnumerableSemigroupRep, IsMultiplicativeElement, IsZeroCyc]);
+                 [IsEnumerableSemigroupRep,
+                  IsMultiplicativeElement,
+                  IsZeroCyc]);
 DeclareOperation("Position",
                  [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
 DeclareOperation("Position",
@@ -38,7 +39,7 @@ DeclareOperation("Position",
 DeclareAttribute("AsListCanonical", IsEnumerableSemigroupRep);
 DeclareAttribute("EnumeratorCanonical", IsEnumerableSemigroupRep);
 DeclareOperation("IteratorCanonical", [IsEnumerableSemigroupRep]);
-DeclareOperation("PositionCanonical", 
+DeclareOperation("PositionCanonical",
                  [IsEnumerableSemigroupRep, IsMultiplicativeElement]);
 
 DeclareOperation("Enumerate", [IsEnumerableSemigroupRep, IsInt]);
