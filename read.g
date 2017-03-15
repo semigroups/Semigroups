@@ -77,6 +77,7 @@ ReadPackage("semigroups", "gap/attributes/normalizer.gi");
 ReadPackage("semigroups", "gap/attributes/properties.gi");
 ReadPackage("semigroups", "gap/attributes/isorms.gi");
 ReadPackage("semigroups", "gap/attributes/translat.gi");
+ReadPackage("semigroups", "gap/attributes/ident.gi");
 
 ReadPackage("semigroups", "gap/congruences/congpairs.gi");
 ReadPackage("semigroups", "gap/congruences/congrms.gi");

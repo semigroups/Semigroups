@@ -1,0 +1,38 @@
+<Chapter Label = "Identity checking and operations with identities">
+
+  <Heading>
+    Identities in semigroups
+  </Heading>
+
+  In this chapter we decribe the methods that are available in &Semigroups; for
+  verifying identities that hold in a semigroup, and operations that relate to
+  these identities.
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Verifying identities in subsemigroups">
+
+    <Heading>
+      Identities in subsemigroups
+    </Heading>
+
+    The &Semigroups; package provides methods to verify whether an identity
+    holds for all elements of a finite semigroup. An <E>identity</E> is an
+    equality whose right hand side and left hand side are finite words from a
+    set of variables.
+
+    <#Include Label = "VerifyIdentity">
+    <#Include Label = "NrLettersIdentity">
+    <#Include Label = "ReverseIdentity">
+    <#Include Label = "RandomTable">
+    <#Include Label = "RandomTuple">
+    <#Include Label = "GroupAlgebraProduct">
+    <#Include Label = "RandomAssociativityTest">
+
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+</Chapter>

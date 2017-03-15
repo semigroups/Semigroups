@@ -68,6 +68,7 @@
   <#Include SYSTEM "z-chap17.xml">  <!-- properties of semigroups and inverse semigroups -->
   <#Include SYSTEM "z-chap18.xml">  <!-- homomorphisms -->
   <#Include SYSTEM "z-chap19.xml">  <!-- congruences -->
+  <#Include SYSTEM "z-chap23.xml">  <!-- identity checking and operations with identities -->
   <#Include SYSTEM "z-chap20.xml">  <!-- orbits -->
   <#Include SYSTEM "z-chap21.xml">  <!-- utils -->
   <#Include SYSTEM "z-chap22.xml">  <!-- extending the package -->

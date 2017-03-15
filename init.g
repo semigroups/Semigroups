@@ -102,6 +102,7 @@ ReadPackage("semigroups", "gap/attributes/normalizer.gd");
 ReadPackage("semigroups", "gap/attributes/properties.gd");
 ReadPackage("semigroups", "gap/attributes/isorms.gd");
 ReadPackage("semigroups", "gap/attributes/translat.gd");
+ReadPackage("semigroups", "gap/attributes/ident.gd");
 
 ReadPackage("semigroups", "gap/congruences/congpairs.gd");
 ReadPackage("semigroups", "gap/congruences/congrms.gd");

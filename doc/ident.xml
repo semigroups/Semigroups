@@ -1,0 +1,171 @@
+#############################################################################
+##
+#W  ident.xml
+#Y  Copyright (C) 2017                                  Fernando Flores Brito
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="VerifyIdentity">
+  <ManSection>
+    <Oper Name = "VerifyIdentity" Arg = "S, id"/>
+    <Returns><K>true</K> or a counterexample.</Returns>
+    <Description>
+      For a semigroup <A>S</A> and an identity given as a list of two lists of
+      positive integers <A>id</A>, the first list being its left hand side word
+      and the second list being its right hand side word, the function
+      <C>VerifyIdentity(<A>S</A>, <A>id</A>)</C> determines whether the identity
+      <C><A>id[1]</A> = <A>id[2]</A></C> holds in <A>S</A>. The identity must be
+      such that the set of variables of one of its sides (be it its right hand
+      side or its left hand side) must be a proper subset of the set of
+      variables of the other side. Suppose you wanted to test whether the
+      identity <C>x * y = y * x</C> holds in the cyclic group of order 2. That
+      is to say, to test whether it is abelian. You would then assign each
+      distinct variable a positive natural number, in order, starting from 1,
+      and put each side in lists. In this case we have two variables, x would be
+      1, y would be 2, the left hand side would correspond to the list
+      <C>[1, 2]</C> and the right hand side would correspond to the list
+      <C>[2, 1]</C>. The output would be:
+
+      <Example><![CDATA[
+gap> C := Group((1,5));;
+gap> VerifyIdentity(C, [[1, 2], [2, 1]]);
+true
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="NrLettersIdentity">
+  <ManSection>
+    <Oper Name = "NrLettersIdentity" Arg = "id"/>
+    <Returns>the number of letters of an identity.</Returns>
+    <Description>
+      For an identity <A>id</A> given as a list of two lists of positive
+      integers, the first list being its left hand side word and the second list
+      being its right hand side word, the function
+      <C>NrLettersIdentity(<A>id</A>)</C> determines the number of variables in
+      the identity. The identity must be such that the set of variables of one
+      of its sides (be it its right hand side or its left hand side) must be a
+      proper subset of the set of variables of the other side.
+
+      <Example><![CDATA[
+gap> id := [[1, 2], [2, 1, 3]];;
+gap> NrLettersIdentity(id);
+3
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ReverseIdentity">
+  <ManSection>
+    <Oper Name = "ReverseIdentity" Arg = "id"/>
+    <Returns>the reverse identity of an identity.</Returns>
+    <Description>
+      For an identity <A>id</A> given as a list of two lists of positive
+      integers, the first list being its left hand side word and the second list
+      being its right hand side word, the function
+      <C>ReverseIdentity(<A>id</A>)</C> outputs the reverse identity of
+      <A>id</A>. The identity must be such that the set of variables of one of
+      its sides (be it its right hand side or its left hand side) must be a
+      proper subset of the set of variables of the other side.
+
+      <Example><![CDATA[
+gap> id := [[1, 2], [2, 1, 3]];;
+gap> ReverseIdentity(id);
+[ [ 2, 1 ], [ 3, 1, 2 ] ]
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomTable">
+  <ManSection>
+    <Oper Name = "RandomTable" Arg = "n"/>
+    <Returns>An <C>n x n</C> matrix.</Returns>
+    <Description>
+      For the positive integer <A>n</A>, <C>RandomTable(<A>n</A>)</C> outputs an
+      <C>n x n </C> matrix with entries randomly taken from <C>[1 .. n]</C>.
+      This matrix can be interpreted as a multiplication table of <C>n</C>
+      elements.
+
+      <Example><![CDATA[
+gap> RandomTable(3);
+[ [ 2, 2, 3 ], [ 2, 1, 2 ], [ 3, 3, 2 ] ]
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomTuple">
+  <ManSection>
+    <Oper Name = "RandomTuple" Arg = "n"/>
+    <Returns>An <C>n</C>-tuple.</Returns>
+    <Description>
+      For the positive integer <A>n</A>, <C>RandomTuple(<A>n</A>)</C> outputs an
+      <C>n</C>-tuple with entries randomly taken from <C>[0, 1]</C>. This tuple
+      can be tought of as a member of a group algebra over the integers modulo
+      2.
+
+      <Example><![CDATA[
+gap> RandomTuple(5);
+[ 1, 0, 0, 0, 1 ]
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="GroupAlgebraProduct">
+  <ManSection>
+    <Oper Name = "GroupAlgebraProduct" Arg = "table, list1, list2"/>
+    <Returns>The product of <C>list1</C> and <C>list2</C></Returns>
+    <Description>
+      For the multiplication table <A>table</A>, and two homogeneous lists of
+      the same size with entries from <C>[0, 1]</C>, <C>list1</C> and
+      <C>list2</C>,
+      <C>GroupAlgebraProduct(<A>table</A>, <A>list1</A>, <A>list2</A>)</C>
+      outputs the multiplication of <C>list1</C> and <C>list2</C> when
+      considered as elements of the group algebra over the integers modulo 2
+      induced by the multiplication table <C>table</C>.
+
+      <Example><![CDATA[
+gap> a := RandomTuple(3);
+[ 0, 1, 0 ]
+gap> b := RandomTuple(3);
+[ 0, 0, 1 ]
+gap> table := RandomTable(3);
+[ [ 1, 1, 1 ], [ 1, 1, 2 ], [ 2, 1, 2 ] ]
+gap> GroupAlgebraProduct(table, a, b);
+[ 0, 1, 0 ]
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RandomAssociativityTest">
+  <ManSection>
+    <Oper Name = "RandomAssociativityTest" Arg = "table"/>
+    <Returns><K>true</K> or <K>false</K></Returns>
+    <Description>
+      For the multiplication table <A>table</A>,
+      <C>RandomAssociativityTest(<A>table</A>)</C> implements the random test
+      described by Rajagopalan and Schulman to determine whether the binary
+      operation described by the multiplication table <C>table</C> is
+      associative. <C>RandomAssociativityTest(<A>table</A>)</C> uses the
+      <C>Nr3NilpotentSemigroups</C> function of the smallsemi package,
+      therefore smallsemi should be loaded before using this function.
+      <Example><![CDATA[
+gap> table :=RandomTable(3);
+[ [ 2, 2, 2 ], [ 3, 1, 3 ], [ 2, 3, 2 ] ]
+gap> RandomAssociativityTest(table);
+false
+gap> table2 := [[1, 1, 1], [1, 1, 1], [1, 1, 1]];;
+gap> RandomAssociativityTest(table2);
+true
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
