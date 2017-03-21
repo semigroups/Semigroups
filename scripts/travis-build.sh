@@ -57,16 +57,19 @@ cd $ORB
 ./configure $PKG_FLAGS
 make
 cd ..
-echo "Downloading $PROFILING..."
-curl -LO https://github.com/gap-packages/profiling/releases/download/v$PROFILING/profiling-$PROFILING.tar.gz
-tar xzf profiling-$PROFILING.tar.gz
-rm profiling-$PROFILING.tar.gz
-mv profiling-$PROFILING profiling
-cd profiling
-./autogen.sh
-./configure $PKG_FLAGS
-make
-cd ..
+# Only install profiling package if we'll run coverage checks
+if [ ! -z "$COVERAGE" ]; then
+  echo "Downloading $PROFILING..."
+  curl -LO https://github.com/gap-packages/profiling/releases/download/v$PROFILING/profiling-$PROFILING.tar.gz
+  tar xzf profiling-$PROFILING.tar.gz
+  rm profiling-$PROFILING.tar.gz
+  mv profiling-$PROFILING profiling
+  cd profiling
+  ./autogen.sh
+  ./configure $PKG_FLAGS
+  make
+  cd ..
+fi
 echo "Downloading $GENSS..."
 curl -LO http://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$GENSS.tar.gz
 tar xzf $GENSS.tar.gz
@@ -80,4 +83,4 @@ cd ../../..
 
 # Get gaplint
 echo "Downloading gaplint..."
-hg clone https://bitbucket.org/james-d-mitchell/gaplint
+git clone -b master --depth=1 https://github.com/james-d-mitchell/gaplint
