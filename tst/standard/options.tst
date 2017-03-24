@@ -53,4 +53,5 @@ rec( acting := false, batch_size := 8192,
   regular := false, report := false, small := false )
 
 #
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/options.tst");

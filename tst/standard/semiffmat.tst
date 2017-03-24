@@ -610,4 +610,5 @@ Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
   [0*Z(3), 0*Z(3), 0*Z(3)]])
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semiffmat.tst");

@@ -179,4 +179,5 @@ Group(())
 gap> Unbind(S);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/normalizer.tst");

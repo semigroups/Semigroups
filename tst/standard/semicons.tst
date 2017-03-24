@@ -826,4 +826,5 @@ gap> S := RightZeroSemigroup(9);
 gap> Unbind(S);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semicons.tst");

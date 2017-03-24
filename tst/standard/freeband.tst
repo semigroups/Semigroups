@@ -255,4 +255,5 @@ gap> Unbind(y);
 gap> Unbind(z);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/freeband.tst");

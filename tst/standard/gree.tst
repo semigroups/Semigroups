@@ -1359,4 +1359,5 @@ gap> LClassOfHClass(GreensHClassOfElementNC(S, S.1));
 <Green's L-class: <object>>
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/gree.tst");

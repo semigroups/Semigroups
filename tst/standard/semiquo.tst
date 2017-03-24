@@ -101,4 +101,5 @@ gap> Unbind(cong);
 gap> Unbind(pair);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semiquo.tst");

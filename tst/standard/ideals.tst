@@ -303,4 +303,5 @@ gap> IsFactorisableInverseMonoid(I);
 false
 
 #
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/ideals.tst");

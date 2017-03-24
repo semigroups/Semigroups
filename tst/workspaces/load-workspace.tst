@@ -158,4 +158,5 @@ gap> Unbind(uftable2);
 gap> Unbind(uftable3);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: workspaces/load-workspace.tst");

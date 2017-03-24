@@ -1884,4 +1884,5 @@ gap> Unbind(t);
 gap> Unbind(x);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/grac.tst");

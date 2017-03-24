@@ -1157,4 +1157,5 @@ gap> Unbind(z);
 gap> Unbind(zero);
 
 #
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/semirms.tst");

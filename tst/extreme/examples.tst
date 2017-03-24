@@ -2447,4 +2447,5 @@ gap> Unbind(S);
 gap> Unbind(gens);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/examples.tst");

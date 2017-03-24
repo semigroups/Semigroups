@@ -297,4 +297,5 @@ gap> Unbind(yclass);
 gap> Unbind(z);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/congrees.tst");

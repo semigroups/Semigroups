@@ -924,4 +924,5 @@ gap> Unbind(semis);
 gap> Unbind(t);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/properties.tst");

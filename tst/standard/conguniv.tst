@@ -276,4 +276,5 @@ gap> Unbind(uniS);
 gap> Unbind(uniT);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/conguniv.tst");

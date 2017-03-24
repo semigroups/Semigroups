@@ -844,4 +844,5 @@ gap> Unbind(t2);
 gap> Unbind(t3);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/maximal.tst");

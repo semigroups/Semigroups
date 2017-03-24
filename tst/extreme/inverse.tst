@@ -1161,4 +1161,5 @@ gap> Unbind(r);
 gap> Unbind(s);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/inverse.tst");

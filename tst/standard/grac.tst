@@ -1666,4 +1666,5 @@ gap> Unbind(x);
 gap> Unbind(y);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/grac.tst");

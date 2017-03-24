@@ -611,4 +611,5 @@ gap> Unbind(row);
 gap> Unbind(x);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semiringmat.tst");

@@ -1873,4 +1873,5 @@ gap> Unbind(gens);
 gap> Unbind(x);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/properties.tst");

@@ -614,4 +614,5 @@ gap> Unbind(mat2);
 gap> Unbind(mat3);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/maxplusmat.tst");

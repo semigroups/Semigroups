@@ -41,4 +41,5 @@ gap> Unbind(S);
 gap> Unbind(cong);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/conginv.tst");

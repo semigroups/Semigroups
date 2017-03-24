@@ -440,4 +440,5 @@ gap> Unbind(trc);
 gap> Unbind(x);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/cong.tst");

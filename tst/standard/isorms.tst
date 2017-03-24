@@ -414,4 +414,5 @@ gap> Unbind(mat);
 gap> Unbind(mat1);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/isorms.tst");

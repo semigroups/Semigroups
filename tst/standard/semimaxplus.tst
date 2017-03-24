@@ -588,4 +588,5 @@ the dimension must be 2 or 3,
 gap> Unbind(S);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semimaxplus.tst");

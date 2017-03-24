@@ -345,4 +345,5 @@ gap> Unbind(S);
 gap> Unbind(e);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/gracreg.tst");

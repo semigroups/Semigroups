@@ -946,4 +946,5 @@ gap> Unbind(R);
 gap> Unbind(schutz);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/setup.tst");

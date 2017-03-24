@@ -161,4 +161,5 @@ gap> G ^ Matrix(GF(3), []);
 <group of 0x0 matrices over GF(3) with 1 generator>
 
 #
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/grpffmat.tst");

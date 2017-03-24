@@ -417,4 +417,5 @@ gap> HTAdd(ht, RowSpaceBasis(x), true);;
 gap> Unbind(M);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/ffmat.tst");

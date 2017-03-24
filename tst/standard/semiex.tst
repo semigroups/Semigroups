@@ -1937,4 +1937,5 @@ gap> SingularDualSymmetricInverseMonoid(5);
 <inverse bipartition semigroup ideal of degree 5 with 1 generator>
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semiex.tst");

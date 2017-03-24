@@ -100,4 +100,5 @@ gap> SingularFactorisableDualSymmetricInverseSemigroup(3);;
 #I  use `SingularFactorisableDualSymmetricInverseMonoid(3)` instead!
 
 #
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/obsolete.tst");

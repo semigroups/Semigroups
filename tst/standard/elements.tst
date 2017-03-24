@@ -91,4 +91,5 @@ the argument <x> must be the generator of a semigroup,
 gap> Unbind(x);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/elements.tst");

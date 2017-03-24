@@ -114,4 +114,5 @@ gap> Unbind(gr);
 gap> Unbind(x);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/semigraph.tst");

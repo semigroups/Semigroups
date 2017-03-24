@@ -87,4 +87,5 @@ gap> Unbind(S);
 gap> Unbind(T);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/isomorph.tst");

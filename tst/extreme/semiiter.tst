@@ -52,4 +52,5 @@ gap> A := AsSet(S);; # ~320ms
 gap> for a in A do od; # ~33ms
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/semiiter.tst");

@@ -725,4 +725,5 @@ the second argument (the degree) should be at least the degree of the first ar\
 gument (a transformation),
 
 #
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/display.tst");

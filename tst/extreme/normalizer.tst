@@ -183,4 +183,5 @@ gap> Unbind(G);
 gap> Unbind(S);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/normalizer.tst");

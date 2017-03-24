@@ -4649,4 +4649,5 @@ gap> Unbind(schutz);
 gap> Unbind(stab);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/misc.tst");

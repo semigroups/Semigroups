@@ -2811,4 +2811,5 @@ gap> Unbind(s);
 gap> Unbind(x);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/semibipart.tst");

@@ -474,4 +474,5 @@ Error, Semigroups: MinimalFactorization:
 the second argument <x> is not an element of the first argument <S>,
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/fropin.tst");

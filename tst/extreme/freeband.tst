@@ -32,4 +32,5 @@ gap> AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 332380, degree 332381 with 4 generators>
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/freeband.tst");

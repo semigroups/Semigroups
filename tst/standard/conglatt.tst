@@ -358,4 +358,5 @@ gap> Unbind(poset);
 gap> Unbind(restriction);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/conglatt.tst");

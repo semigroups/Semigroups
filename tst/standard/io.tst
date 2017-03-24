@@ -182,4 +182,5 @@ gap> IsDoneIterator(it);
 true
 
 #
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/io.tst");

@@ -169,4 +169,5 @@ gap> I = InverseSemigroup(GeneratorsOfInverseSemigroup(I));
 true
 
 #
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/idealenum.tst");

@@ -56,4 +56,5 @@ fail
 gap> Unbind(M);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/trans.tst");
