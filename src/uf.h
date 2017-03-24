@@ -23,6 +23,8 @@
 #ifndef SEMIGROUPS_SRC_UF_H_
 #define SEMIGROUPS_SRC_UF_H_
 
+#include "src/compiled.h"
+
 // GAP level functions
 
 Obj UF_NEW(Obj self, Obj size);

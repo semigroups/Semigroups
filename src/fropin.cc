@@ -207,8 +207,10 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
           len     = LEN_PLIST(oldword);
           newword = NEW_PLIST(T_PLIST_CYC, len + 1);
 
-          memcpy((void*) ((char*) (ADDR_OBJ(newword)) + sizeof(Obj)),
-                 (void*) ((char*) (ADDR_OBJ(oldword)) + sizeof(Obj)),
+          memcpy(reinterpret_cast<void*>(
+                     reinterpret_cast<char*>(ADDR_OBJ(newword)) + sizeof(Obj)),
+                 reinterpret_cast<void*>(
+                     reinterpret_cast<char*>(ADDR_OBJ(oldword)) + sizeof(Obj)),
                  (size_t)(len * sizeof(Obj)));
           SET_ELM_PLIST(newword, len + 1, INTOBJ_INT(j));
           SET_LEN_PLIST(newword, len + 1);
@@ -320,7 +322,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
                                 << " rules, max word length "
                                 << len + 1
                                 << ", finished!");
-      REPORT_FROM_FUNC(timer.string("elapsed time = "));
+      REPORT_FROM_FUNC(timer.string("elapsed time = "));  // NOLINT()
     }
   }
 
@@ -367,7 +369,7 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   }
 
   seen = NewBag(T_DATOBJ, (LEN_PLIST(comps2) + 1) * sizeof(UInt));
-  ptr  = (UInt*) ADDR_OBJ(seen);
+  ptr  = reinterpret_cast<UInt*>(ADDR_OBJ(seen));
   for (i = 0; i < LEN_PLIST(comps2) + 1; i++) {
     ptr[i] = 0;
   }
@@ -385,9 +387,9 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
       SET_LEN_PLIST(new_comp, 0);
       for (j = 1; j <= LEN_PLIST(comp1); j++) {
         k = INT_INTOBJ(ELM_PLIST(id2, INT_INTOBJ(ELM_PLIST(comp1, j))));
-        if ((UInt*) ADDR_OBJ(seen)[k] == 0) {
-          ((UInt*) ADDR_OBJ(seen))[k] = 1;
-          comp2                       = ELM_PLIST(comps2, k);
+        if (reinterpret_cast<UInt*>(ADDR_OBJ(seen))[k] == 0) {
+          reinterpret_cast<UInt*>(ADDR_OBJ(seen))[k] = 1;
+          comp2                                      = ELM_PLIST(comps2, k);
           for (l = 1; l <= LEN_PLIST(comp2); l++) {
             x = ELM_PLIST(comp2, l);
             SET_ELM_PLIST(id, INT_INTOBJ(x), INTOBJ_INT(nr));
@@ -439,15 +441,15 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
   nrcomps = LEN_PLIST(comps);
 
   buf     = NewBag(T_DATOBJ, (2 * n + nrcomps + 1) * sizeof(UInt));
-  nextpos = (UInt*) ADDR_OBJ(buf);
+  nextpos = reinterpret_cast<UInt*>(ADDR_OBJ(buf));
 
   nextpos[1] = 1;
   for (i = 2; i <= nrcomps; i++) {
     nextpos[i] = nextpos[i - 1] + LEN_PLIST(ELM_PLIST(comps, i - 1));
   }
 
-  sorted = (UInt*) ADDR_OBJ(buf) + nrcomps;
-  lookup = (UInt*) ADDR_OBJ(buf) + nrcomps + n;
+  sorted = reinterpret_cast<UInt*>(ADDR_OBJ(buf)) + nrcomps;
+  lookup = reinterpret_cast<UInt*>(ADDR_OBJ(buf)) + nrcomps + n;
   for (i = 1; i <= n; i++) {
     j                  = INT_INTOBJ(ELM_PLIST(rightid, i));
     sorted[nextpos[j]] = i;
@@ -465,8 +467,8 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
   init   = 0;
 
   for (i = 1; i <= n; i++) {
-    sorted = (UInt*) ADDR_OBJ(buf) + nrcomps;
-    lookup = (UInt*) ADDR_OBJ(buf) + nrcomps + n;
+    sorted = reinterpret_cast<UInt*>(ADDR_OBJ(buf)) + nrcomps;
+    lookup = reinterpret_cast<UInt*>(ADDR_OBJ(buf)) + nrcomps + n;
     j      = sorted[i];
     k      = INT_INTOBJ(ELM_PLIST(rightid, j));
     if (k > rindex) {
@@ -484,8 +486,8 @@ Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {
       SET_LEN_PLIST(comps, hindex);
       CHANGED_BAG(comps);
 
-      sorted = (UInt*) ADDR_OBJ(buf) + nrcomps;
-      lookup = (UInt*) ADDR_OBJ(buf) + nrcomps + n;
+      sorted = reinterpret_cast<UInt*>(ADDR_OBJ(buf)) + nrcomps;
+      lookup = reinterpret_cast<UInt*>(ADDR_OBJ(buf)) + nrcomps + n;
     }
     k    = lookup[k];
     comp = ELM_PLIST(comps, k);

@@ -20,6 +20,8 @@
 // relation on the integers {1 .. n}, using the UNION-FIND METHOD: new pairs can
 // be added and the appropriate classes combined quickly.
 
+#include "uf.h"
+
 #include <assert.h>
 
 #include "gap.h"

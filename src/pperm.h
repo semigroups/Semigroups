@@ -34,8 +34,10 @@
 #define DEG_PPERM4(f) \
   ((UInt)(SIZE_OBJ(f) - sizeof(UInt4) - 2 * sizeof(Obj)) / sizeof(UInt4))
 
-#define CODEG_PPERM2(f) (*(UInt2*) ((Obj*) (ADDR_OBJ(f)) + 2))
-#define CODEG_PPERM4(f) (*(UInt4*) ((Obj*) (ADDR_OBJ(f)) + 2))
+#define CODEG_PPERM2(f) \
+  (*reinterpret_cast<UInt2*>(reinterpret_cast<Obj*>((ADDR_OBJ(f)) + 2)))
+#define CODEG_PPERM4(f) \
+  (*reinterpret_cast<UInt4*>(reinterpret_cast<Obj*>((ADDR_OBJ(f)) + 2)))
 
 #define IS_PPERM(f) (TNUM_OBJ(f) == T_PPERM2 || TNUM_OBJ(f) == T_PPERM4)
 #define DEG_PPERM(f) (TNUM_OBJ(f) == T_PPERM2 ? DEG_PPERM2(f) : DEG_PPERM4(f))

@@ -671,7 +671,7 @@ static StructInitInfo module = {
     /* preSave     = */ 0,
     /* postSave    = */ 0,
     /* postRestore = */ 0,
-    /* filename    = */ (char*) "pkg/semigroups/src/gap.cc",
+    /* filename    = */ (char*) "pkg/semigroups/src/gap.cc", // NOLINT()
     /* isGapRootR  = */ true};
 
 extern "C" StructInitInfo* Init__Dynamic(void) {
