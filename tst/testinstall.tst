@@ -682,7 +682,7 @@ gap> AddGeneratorsToOrbit(o, [gens[2]]);
 # (problem with IsomorphismTransformationSemigroup when applied to a
 # binary relation monoid)
 gap> B := Monoid(BinaryRelationOnPoints([[2], [1, 2], [1, 3]]),
->                BinaryRelationOnPoints([[3], [1, 2], [1, 3]]), 
+>                BinaryRelationOnPoints([[3], [1, 2], [1, 3]]),
 >                BinaryRelationOnPoints([[1, 2, 3], [1, 2], [3]]));;
 gap> Size(B);
 16
@@ -1038,14 +1038,14 @@ gap> FreeMonoid(infinity, "m", []);
 
 #T# TestInstall65: Issue #131
 gap> S := FullTransformationSemigroup(3);;
-gap> I := SemigroupIdeal(FullTransformationSemigroup(3), 
+gap> I := SemigroupIdeal(FullTransformationSemigroup(3),
 >                        Transformation([1, 1, 2]));;
 gap> T := S / I;;
 gap> One(T);
 <congruence class of IdentityTransformation>
 
 #T# TestInstall66: Second bug in Issue #131
-gap> I := SemigroupIdeal(FullTransformationSemigroup(3), 
+gap> I := SemigroupIdeal(FullTransformationSemigroup(3),
 >                        Transformation([1, 1, 1]));;
 gap> hom := HomomorphismQuotientSemigroup(ReesCongruenceOfSemigroupIdeal(I));;
 gap> map := IsomorphismTransformationSemigroup(Range(hom));;
@@ -1244,12 +1244,12 @@ Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 #T# Test for not being allowed to generate a semigroup with matrices of
 # different dimensions
 gap> Semigroup(
-> Matrix(IsIntegerMatrix, [[0, -3, 0, -2],  
->                          [-1, 1, -1, 0], 
+> Matrix(IsIntegerMatrix, [[0, -3, 0, -2],
+>                          [-1, 1, -1, 0],
 >                          [0, 1, 0, 1],
->                          [0, 0, 2, 0]]), 
-> Matrix(IsIntegerMatrix, [[4, 0, -2], 
->                          [1, -3, 0], 
+>                          [0, 0, 2, 0]]),
+> Matrix(IsIntegerMatrix, [[4, 0, -2],
+>                          [1, -3, 0],
 >                          [5, -1, -4]]));
 Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 
@@ -1260,20 +1260,20 @@ gap> PartialOrderOfDClasses(S);
 [ [ 1 ] ]
 
 #T# Test for Issue 144
-gap> S := Semigroup([ Bipartition( [ [ 1, 2 ], [ -1 ], [ -2 ] ] ), 
->   Bipartition( [ [ 1, -1 ], [ 2 ], [ -2 ] ] ), 
->   Bipartition( [ [ 1 ], [ 2, -1 ], [ -2 ] ] ), 
->   Bipartition( [ [ 1, -2 ], [ 2 ], [ -1 ] ] ), 
->   Bipartition( [ [ 1 ], [ 2, -2 ], [ -1 ] ] ), 
->   Bipartition( [ [ 1 ], [ 2 ], [ -1 ], [ -2 ] ] ) ]);;
+gap> S := Semigroup([Bipartition([[1, 2], [-1], [-2]]),
+>   Bipartition([[1, -1], [2], [-2]]),
+>   Bipartition([[1], [2, -1], [-2]]),
+>   Bipartition([[1, -2], [2], [-1]]),
+>   Bipartition([[1], [2, -2], [-1]]),
+>   Bipartition([[1], [2], [-1], [-2]])]);
 gap> IsInverseSemigroup(S);
 false
-gap> S := Semigroup([ Bipartition( [ [ 1, 2 ], [ -1 ], [ -2 ] ] ), 
->   Bipartition( [ [ 1, -1 ], [ 2 ], [ -2 ] ] ), 
->   Bipartition( [ [ 1 ], [ 2, -1 ], [ -2 ] ] ), 
->   Bipartition( [ [ 1, -2 ], [ 2 ], [ -1 ] ] ), 
->   Bipartition( [ [ 1 ], [ 2, -2 ], [ -1 ] ] ), 
->   Bipartition( [ [ 1 ], [ 2 ], [ -1 ], [ -2 ] ] ) ]);;
+gap> S := Semigroup([Bipartition([[1, 2], [-1], [-2]]),
+>   Bipartition([[1, -1], [2], [-2]]),
+>   Bipartition([[1], [2, -1], [-2]]),
+>   Bipartition([[1, -2], [2], [-1]]),
+>   Bipartition([[1], [2, -2], [-1]]),
+>   Bipartition([[1], [2], [-1], [-2]])]);
 gap> NrDClasses(S);;
 gap> IsInverseSemigroup(S);
 false
@@ -1283,48 +1283,48 @@ false
 gap> S := FullTransformationMonoid(4);;
 gap> Length(MaximalSubsemigroups(S)) = 9;
 true
-gap> ForAll(MaximalSubsemigroups(S), M -> M in 
+gap> ForAll(MaximalSubsemigroups(S), M -> M in
 > [Semigroup(Transformation([1, 4, 2, 3]),
->            Transformation([4, 2, 3, 4]), 
->            Transformation([4, 3, 2, 1])),
->  Semigroup(Transformation([1, 1, 2, 3]),
->            Transformation([1, 2, 4, 3]), 
 >            Transformation([4, 2, 3, 4]),
 >            Transformation([4, 3, 2, 1])),
 >  Semigroup(Transformation([1, 1, 2, 3]),
->            Transformation([1, 3, 1, 2]), 
+>            Transformation([1, 2, 4, 3]),
+>            Transformation([4, 2, 3, 4]),
+>            Transformation([4, 3, 2, 1])),
+>  Semigroup(Transformation([1, 1, 2, 3]),
+>            Transformation([1, 3, 1, 2]),
 >            Transformation([1, 4, 3, 2]),
 >            Transformation([2, 1, 4, 3])),
->  Semigroup(Transformation([1, 3, 2]), 
+>  Semigroup(Transformation([1, 3, 2]),
 >            Transformation([2, 1, 3, 1]),
->            Transformation([3, 4, 1, 2]), 
+>            Transformation([3, 4, 1, 2]),
 >            Transformation([3, 4, 1, 3])),
 >  Semigroup(Transformation([1, 2, 4, 3]),
->            Transformation([1, 4, 2, 3]), 
+>            Transformation([1, 4, 2, 3]),
 >            Transformation([2, 3, 1, 1]),
->            Transformation([2, 3, 1, 2]), 
+>            Transformation([2, 3, 1, 2]),
 >            Transformation([4, 2, 3, 4])),
 >  Semigroup(Transformation([1, 1, 2, 3]),
->            Transformation([1, 3, 2]), 
+>            Transformation([1, 3, 2]),
 >            Transformation([3, 1, 2]),
 >            Transformation([4, 1, 2, 4])),
->  Semigroup(Transformation([2, 1]), 
+>  Semigroup(Transformation([2, 1]),
 >            Transformation([2, 3, 1, 1]),
->            Transformation([4, 1, 2, 4]), 
+>            Transformation([4, 1, 2, 4]),
 >            Transformation([4, 1, 3, 2])),
 >  Semigroup(Transformation([2, 1, 3, 1]),
->            Transformation([3, 4, 1, 3]), 
+>            Transformation([3, 4, 1, 3]),
 >            Transformation([4, 2, 1, 3]),
 >            Transformation([4, 2, 3, 1])),
->  Semigroup(Transformation([2, 1]), 
+>  Semigroup(Transformation([2, 1]),
 >            Transformation([2, 3, 4, 1]),
->            Transformation([3, 1, 3, 3]), 
+>            Transformation([3, 1, 3, 3]),
 >            Transformation([4, 3, 3, 4]))]);
 true
 
 #T# Test for not being allowed to generate a semigroup with bipartitions of
 # different degree
-gap> Semigroup(Bipartition([[-1,1]]), Bipartition([]));
+gap> Semigroup(Bipartition([[-1, 1]]), Bipartition([]));
 Error, Usage: Semigroup(<gen>,...), Semigroup(<gens>), Semigroup(<D>),
 
 #T# Issue 150: Bug in RepresentativeOfMinimalIdeal
@@ -1400,9 +1400,9 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [5, 1, 2]),
 >                           PartialPerm([1, 2, 3, 4], [6, 1, 4, 2]),
 >                           PartialPerm([1, 3, 6], [4, 5, 2]),
 >                           PartialPerm([1, 3, 6], [1, 3, 6])]);;
-gap> pairs := [[PartialPerm([5], [1]), PartialPerm([ ], [ ])],
+gap> pairs := [[PartialPerm([5], [1]), PartialPerm([], [])],
 >              [PartialPerm([1, 2, 3, 4], [1, 2, 3, 4]),
->               PartialPerm([1, 3, 4, 6], [1, 3, 4, 6])]];;
+>               PartialPerm([1, 3, 4, 6], [1, 3, 4, 6])]];
 gap> cong := SemigroupCongruence(S, pairs);;
 gap> NrEquivalenceClasses(cong);
 32
@@ -1430,18 +1430,18 @@ gap> mat := [
 > [0, 0, 0, 0, 0, ()]];;
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 5, 4, 3, 2), (1, 5)(2, 4)]), mat);;
 gap> contain := [
->  RMSElement(R, 1,(1,5)(2,4),6),
->  RMSElement(R, 1,(),6),
->  RMSElement(R, 2,(1,2,3,4,5),1),
->  RMSElement(R, 2,(),5),
->  RMSElement(R, 3,(),2),
->  RMSElement(R, 3,(1,3)(4,5),4),
->  RMSElement(R, 4,(),3),
->  RMSElement(R, 4,(1,3)(4,5),3),
->  RMSElement(R, 5,(1,3)(4,5),4),
->  RMSElement(R, 5,(),2),
->  RMSElement(R, 6,(1,5,4,3,2),5),
->  RMSElement(R, 6,(),1)];;
+>  RMSElement(R, 1, (1, 5)(2, 4), 6),
+>  RMSElement(R, 1, (), 6),
+>  RMSElement(R, 2, (1, 2, 3, 4, 5), 1),
+>  RMSElement(R, 2, (), 5),
+>  RMSElement(R, 3, (), 2),
+>  RMSElement(R, 3, (1, 3)(4, 5), 4),
+>  RMSElement(R, 4, (), 3),
+>  RMSElement(R, 4, (1, 3)(4, 5), 3),
+>  RMSElement(R, 5, (1, 3)(4, 5), 4),
+>  RMSElement(R, 5, (), 2),
+>  RMSElement(R, 6, (1, 5, 4, 3, 2), 5),
+>  RMSElement(R, 6, (), 1)];
 gap> MaximalSubsemigroups(R, rec(number := true, contain := contain));
 1
 
@@ -1452,17 +1452,17 @@ gap> GeneratorsSmallest(S);
 [ IdentityTransformation ]
 
 # Fix issue with duplicate generators and ClosureSemigroup
-gap> gens := [Transformation([1, 2, 1]), 
+gap> gens := [Transformation([1, 2, 1]),
 >             IdentityTransformation,
->             Transformation([1, 2, 4, 6, 6, 5]), 
+>             Transformation([1, 2, 4, 6, 6, 5]),
 >             Transformation([2, 1, 3, 5, 5]),
->             Transformation([5, 4, 4, 2, 1]), 
+>             Transformation([5, 4, 4, 2, 1]),
 >             Transformation([5, 4, 6, 2, 1, 6]),
 >             Transformation([6, 6, 3, 4, 5, 1])];;
 gap> S := Semigroup(gens[1], gens[1]);;
 gap> Size(S);
 1
-gap> for x in gens do 
+gap> for x in gens do
 >   S := ClosureSemigroup(S, x);
 >   Size(S);
 > od;

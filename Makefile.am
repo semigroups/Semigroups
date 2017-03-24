@@ -50,4 +50,7 @@ doc/manual.six: doc/*.xml PackageInfo.g
 debug: CXXFLAGS = -g3 -O0 -std=c++11 -Wall -Wextra -Wno-unused-parameter -Wtype-limits -Wformat-security -Wpointer-arith -Wno-div-by-zero -Wreturn-type -Wswitch -Wsizeof-array-argument -Wunused-label -fno-omit-frame-pointer -fno-omit-frame-pointer -Wno-c++11-extensions -UNDEBUG -DDEBUG
 debug: clean all
 
-.PHONY: debug
+lint: 
+	gaplint *.g gap/*.gi gap/*.gd gap/*/* doc/*.xml
+
+.PHONY: debug, lint

@@ -23,8 +23,8 @@ gap> S := Semigroup(
 >             [1, 9, 4, 3, 5, 2, 10, 7]),
 > PartialPerm([1, 2, 4, 7, 8, 9],
 >             [6, 2, 4, 9, 1, 3]));;
-gap> H := HClass(S,  PartialPerm([1, 2, 3, 4, 7, 9],
->                                [1, 7, 3, 4, 9, 2]));;
+gap> H := HClass(S, PartialPerm([1, 2, 3, 4, 7, 9],
+>                               [1, 7, 3, 4, 9, 2]));
 gap> StructureDescription(H);
 "C6"]]></Example>
     </Description>
@@ -185,7 +185,7 @@ gap> MaximalDClasses(S);
     <Example><![CDATA[
 gap> S := Semigroup([PartialPerm([1, 2, 3], [1, 3, 4]),
 >  PartialPerm([1, 2, 3], [2, 5, 3]),
->  PartialPerm([1, 2, 3, 4], [ 2, 4, 1, 5]),
+>  PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 >  PartialPerm([1, 3, 5], [5, 1, 3])]);;
 gap> PrincipalFactor(MinimalDClass(S));
 <Rees matrix semigroup 1x1 over Group(())>
@@ -402,7 +402,7 @@ gap> Elements(MinimalIdeal(S));
   Transformation( [ 8, 8, 8, 8, 8, 8, 8, 8, 8, 8 ] ) ]
 gap> x := Transformation([8, 8, 8, 8, 8, 8, 8, 8, 8, 8]);;
 gap> D := DClass(S, x);;
-gap> ForAll(GreensDClasses(S), x-> IsGreensLessThanOrEqual(D, x));
+gap> ForAll(GreensDClasses(S), x -> IsGreensLessThanOrEqual(D, x));
 true
 gap> MinimalIdeal(POI(10));
 <partial perm group of rank 10>
@@ -861,10 +861,10 @@ true]]></Example>
     ordering of the connected components in the result in unspecified.
 <Example><![CDATA[
 gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(5),
-> [[(), 0, (1,3), (4,5), 0],
->  [0, (), 0, 0, (1,3,4,5)],
->  [0, 0, (1,5)(2,3), 0, 0],
->  [0, (2,3)(1,4), 0, 0, 0]]);
+> [[(), 0, (1, 3), (4, 5), 0],
+>  [0, (), 0, 0, (1, 3, 4, 5)],
+>  [0, 0, (1, 5)(2, 3), 0, 0],
+>  [0, (2, 3)(1, 4), 0, 0, 0]]);
 <Rees 0-matrix semigroup 5x4 over Sym( [ 1 .. 5 ] )>
 gap> RZMSConnectedComponents(R);
 [ [ [ 1, 3, 4 ], [ 1, 3 ] ], [ [ 2, 5 ], [ 2, 4 ] ] ]]]></Example>
@@ -958,10 +958,10 @@ gap> S := Range(iso);
 gap> Matrix(S);
 [ [ (), 0, 0 ], [ 0, (), 0 ], [ 0, 0, () ] ]
 gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
-> [[0, 0, 0, (1,3,2)],
->  [(2,3), 0, 0, 0],
->  [0, 0, (1,3), (1,2)],
->  [0, (4,1,2,3), 0, 0]]);
+> [[0, 0, 0, (1, 3, 2)],
+>  [(2, 3), 0, 0, 0],
+>  [0, 0, (1, 3), (1, 2)],
+>  [0, (4, 1, 2, 3), 0, 0]]);
 <Rees 0-matrix semigroup 4x4 over Sym( [ 1 .. 4 ] )>
 gap> S := Range(RZMSNormalization(R));
 <Rees 0-matrix semigroup 4x4 over Sym( [ 1 .. 4 ] )>
@@ -987,9 +987,9 @@ gap> Matrix(S);
     is the identity element of <C>G</C>.
 <Example><![CDATA[
 gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
-> [[(1,2), (2,4,3), (2,1,4)],
->  [(1,3,2), (1,2)(3,4), ()],
->  [(2,3), (1,3,2,4), (2,3)]]);
+> [[(1, 2), (2, 4, 3), (2, 1, 4)],
+>  [(1, 3, 2), (1, 2)(3, 4), ()],
+>  [(2, 3), (1, 3, 2, 4), (2, 3)]]);
 <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>
 gap> iso := RMSNormalization(R);
 MappingByFunction( <Rees matrix semigroup 3x3 over Sym( [ 1 .. 4 ] )>

@@ -101,7 +101,7 @@ Matrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])]]></Example>
     <C>RowSpaceTransformationInv(m)</C> is the inverse
     of <C>RowSpaceTransformation(m)</C>.
 <Example><![CDATA[
-gap> x := Matrix(GF(4), Z(4)^0 * [[1, 1, 0], [0, 1, 1], [1, 1, 1]]);
+gap> x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 1], [1, 1, 1]]);
 Matrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0, Z(2)^0], 
   [Z(2)^0, Z(2)^0, Z(2)^0]])
 gap> RowSpaceBasis(x);
@@ -122,7 +122,7 @@ gap> RowSpaceTransformation(x);
     These attributes contain a semigroup left-inverse, and a semigroup
     right-inverse of the matrix <A>m</A> respectively.
         <Example><![CDATA[
-gap> x := Matrix(GF(4), Z(4)^0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
+gap> x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
 Matrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2), 0*Z(2)], 
   [Z(2)^0, Z(2)^0, Z(2)^0]])
 gap> LeftInverse(x);
@@ -142,7 +142,7 @@ Z(2)^0 Z(2)^0 0*Z(2)
   <Returns>Length of a basis of the row space of <A>m</A>.</Returns>
   <Description>
         <Example><![CDATA[
-gap> x := Matrix(GF(5), Z(5)^0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
+gap> x := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
 Matrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], 
   [Z(5)^0, Z(5)^0, Z(5)^0]])
 gap> RowRank(x);
@@ -162,7 +162,7 @@ gap> RowRank(x);
   </Returns>
   <Description>
     <Example><![CDATA[
-gap> x := Matrix(GF(5), Z(5)^0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
+gap> x := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
 Matrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], 
   [Z(5)^0, Z(5)^0, Z(5)^0]])
 gap> BaseDomain(x);
@@ -182,7 +182,7 @@ GF(5)]]></Example>
     This attribute contains an immutable copy of <A>m</A>. Note that matrices
     are immutable by default.
     <Example><![CDATA[
-gap> x := Matrix(GF(5), Z(5)^0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
+gap> x := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
 Matrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], 
   [Z(5)^0, Z(5)^0, Z(5)^0]])
 gap> TransposedMatImmutable(x);
@@ -203,7 +203,7 @@ Matrix(GF(5), [[Z(5)^0, 0*Z(5), Z(5)^0], [Z(5)^0, 0*Z(5), Z(5)^0],
     when creating the matrix <A>m</A>. This is used to create new objects that
     lie in the same filter.
     <Example><![CDATA[
-gap> x := Matrix(GF(4), Z(4)^0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
+gap> x := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);
 gap> ConstructingFilter(x);
 <Representation "IsPlistMatrixOverFiniteFieldRep">
 ]]></Example>

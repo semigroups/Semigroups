@@ -146,8 +146,7 @@ gap> NrRightBlocks(x);
       transverse block of <A>x</A>, where <C>n</C> is the degree of <A>x</A>
       (see <Ref Attr="DegreeOfBipartition"/>).
       <Example><![CDATA[
-gap> x := Bipartition([
->  [1, 2] , [3, 4, 5, -5], [6, -6], [-1, -2, -3], [-4]]);
+gap> x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6], [-1, -2, -3], [-4]]);
 <bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ], 
  [ -4 ]>
 gap> DomainOfBipartition(x);
@@ -167,8 +166,7 @@ gap> DomainOfBipartition(x);
       in a transverse block of <A>x</A>, where <C>n</C> is the degree of
       <A>x</A> (see <Ref Attr="DegreeOfBipartition"/>).
       <Example><![CDATA[
-gap> x := Bipartition([
->  [1, 2] , [3, 4, 5, -5], [6, -6], [-1, -2, -3], [-4]]);
+gap> x := Bipartition([[1, 2], [3, 4, 5, -5], [6, -6], [-1, -2, -3], [-4]]);
 <bipartition: [ 1, 2 ], [ 3, 4, 5, -5 ], [ 6, -6 ], [ -1, -2, -3 ], 
  [ -4 ]>
 gap> CodomainOfBipartition(x);
@@ -610,8 +608,8 @@ gap> AsBipartition(x);
  [ 6, -2 ], [ 7 ], [ -5 ]>
 gap> AsBipartition(Transformation([1, 1, 2]), 1);
 <block bijection: [ 1, -1 ]>
-gap> x := Bipartition( [ [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ],
->                        [ -3, -4, -5, -6 ] ] );;
+gap> x := Bipartition([[1, 2, -2], [3], [4, 5, 6, -1],
+>                      [-3, -4, -5, -6]]);
 gap> AsBipartition(x, 0);
 <empty bipartition>
 gap> AsBipartition(x, 2);

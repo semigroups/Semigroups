@@ -287,7 +287,7 @@ gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],
       <Example><![CDATA[
 gap> InverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 0],
 >                                       [0, -infinity, -infinity],
->                                       [-infinity, 0,  -infinity]]));
+>                                       [-infinity, 0, -infinity]]));
 Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity], 
   [-infinity, -infinity, 0], [0, -infinity, -infinity]])
 ]]></Example>

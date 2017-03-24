@@ -118,7 +118,7 @@ gap> S;
 <transformation monoid of degree 8 with 4 generators>
 gap> Size(S);
 233606
-gap> gens:=
+gap> gens :=
 > [Matrix(GF(5 ^ 2), [[Z(5 ^ 2), Z(5 ^ 2) ^ 13],
 >                     [0 * Z(5), Z(5 ^ 2) ^ 14]]),
 >  Matrix(GF(5 ^ 2), [[Z(5 ^ 2) ^ 21, Z(5) ^ 0],

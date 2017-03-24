@@ -28,9 +28,9 @@
 
       <Example><![CDATA[
 gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
-gap> mat := [[ 0,  0, (1, 4, 5),      0,      0, (1, 4, 3, 5)],
->            [ 0, (),         0,      0, (3, 5),            0],
->            [(),  0,         0, (3, 5),      0,            0]];;
+gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
+>            [0, (), 0, 0, (3, 5), 0],
+>            [(), 0, 0, (3, 5), 0, 0]];
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
@@ -62,9 +62,9 @@ true]]></Example>
 
       <Example><![CDATA[
 gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
-gap> mat := [[ 0,  0, (1, 4, 5),      0,      0, (1, 4, 3, 5)],
->            [ 0, (),         0,      0, (3, 5),            0],
->            [(),  0,         0, (3, 5),      0,            0]];;
+gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
+>            [0, (), 0, 0, (3, 5), 0],
+>            [(), 0, 0, (3, 5), 0, 0]];
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
@@ -105,9 +105,9 @@ true]]></Example>
       described above, then this function returns an error.
       <Example><![CDATA[
 gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
-gap> mat := [[ 0,  0, (1, 4, 5),      0,      0, (1, 4, 3, 5)],
->            [ 0, (),         0,      0, (3, 5),            0],
->            [(),  0,         0, (3, 5),      0,            0]];;
+gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
+>            [0, (), 0, 0, (3, 5), 0],
+>            [(), 0, 0, (3, 5), 0, 0]];
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
@@ -147,9 +147,9 @@ gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);
       error is returned.
       <Example><![CDATA[
 gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
-gap> mat := [[ 0,  0, (1, 4, 5),      0,      0, (1, 4, 3, 5)],
->            [ 0, (),         0,      0, (3, 5),            0],
->            [(),  0,         0, (3, 5),      0,            0]];;
+gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
+>            [0, (), 0, 0, (3, 5), 0],
+>            [(), 0, 0, (3, 5), 0, 0]];
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
@@ -172,9 +172,9 @@ gap> class := RZMSCongruenceClassByLinkedTriple(cong,
       the Rees matrix or 0-matrix semigroup <A>S</A>, as described above.
       <Example><![CDATA[
 gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
-gap> mat := [[ 0,  0, (1, 4, 5),      0,      0, (1, 4, 3, 5)],
->            [ 0, (),         0,      0, (3, 5),            0],
->            [(),  0,         0, (3, 5),      0,            0]];;
+gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
+>            [0, (), 0, 0, (3, 5), 0],
+>            [(), 0, 0, (3, 5), 0, 0]];
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;

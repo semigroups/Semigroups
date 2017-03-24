@@ -110,7 +110,7 @@ gap> IsFreeBandElement(Generators(FreeBand(4))[1]);
 true
 gap> IsFreeBandElement(Transformation([1, 3, 4, 1]));
 false
-gap> IsFreeBandElement((1,2,3,4));
+gap> IsFreeBandElement((1, 2, 3, 4));
 false
 ]]></Example>
     </Description>

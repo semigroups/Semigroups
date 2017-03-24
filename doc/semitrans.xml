@@ -110,7 +110,7 @@ gap> AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 11, degree 12 with 2 generators>
 gap> IsTransitive(last);
 false
-gap> IsTransitive(AsSemigroup(Group((1,2,3))));
+gap> IsTransitive(AsSemigroup(Group((1, 2, 3))));
 true]]></Example>
   </Description>
 </ManSection>
