@@ -233,7 +233,7 @@ gap> RightSemigroupCongruence(S, pair1, pair2);
 
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
->                                 [[(), (1, 3, 2)], [(1, 2), 0]]);
+>                                 [[(), (1, 3, 2)], [(1, 2), 0]]);;
 gap> congs := CongruencesOfSemigroup(S);
 [ <universal semigroup congruence over 
     <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>>, 
@@ -447,7 +447,7 @@ gap> EquivalenceRelationCanonicalLookup(cong);
 
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
->                                 [[(), (1, 3, 2)], [(1, 2), 0]]);
+>                                 [[(), (1, 3, 2)], [(1, 2), 0]]);;
 gap> cong := CongruencesOfSemigroup(S)[3];;
 gap> NrEquivalenceClasses(cong);
 9]]></Example>
@@ -496,7 +496,7 @@ gap> NrRightCongruenceClasses(cong);
       congruence.
       <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
->                                 [[(), (1, 3, 2)], [(1, 2), 0]]);
+>                                 [[(), (1, 3, 2)], [(1, 2), 0]]);;
 gap> cong := CongruencesOfSemigroup(S)[3];;
 gap> AsSemigroupCongruenceByGeneratingPairs(cong);
 <semigroup congruence over <Rees 0-matrix semigroup 2x2 over 

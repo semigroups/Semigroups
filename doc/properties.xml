@@ -161,7 +161,7 @@ gap> IsBrandtSemigroup(T);
 true
 gap> S := DualSymmetricInverseMonoid(4);;
 gap> D := DClass(S,
->                Bipartition([[1, 2, 3, -1, -2, -3], [4, -4]]));
+>                Bipartition([[1, 2, 3, -1, -2, -3], [4, -4]]));;
 gap> R := InjectionPrincipalFactor(D);;
 gap> S := Semigroup(PreImages(R, GeneratorsOfSemigroup(Range(R))));;
 gap> IsBrandtSemigroup(S);

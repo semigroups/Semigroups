@@ -30,7 +30,7 @@
 gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
 gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
 >            [0, (), 0, 0, (3, 5), 0],
->            [(), 0, 0, (3, 5), 0, 0]];
+>            [(), 0, 0, (3, 5), 0, 0]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
@@ -107,7 +107,7 @@ true]]></Example>
 gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
 gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
 >            [0, (), 0, 0, (3, 5), 0],
->            [(), 0, 0, (3, 5), 0, 0]];
+>            [(), 0, 0, (3, 5), 0, 0]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
@@ -149,7 +149,7 @@ gap> cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);
 gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
 gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
 >            [0, (), 0, 0, (3, 5), 0],
->            [(), 0, 0, (3, 5), 0, 0]];
+>            [(), 0, 0, (3, 5), 0, 0]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;
@@ -174,7 +174,7 @@ gap> class := RZMSCongruenceClassByLinkedTriple(cong,
 gap> G := Group([(1, 4, 5), (1, 5, 3, 4)]);;
 gap> mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],
 >            [0, (), 0, 0, (3, 5), 0],
->            [(), 0, 0, (3, 5), 0, 0]];
+>            [(), 0, 0, (3, 5), 0, 0]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;
 gap> colBlocks := [[1], [2, 5], [3, 6], [4]];;

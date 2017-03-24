@@ -270,8 +270,9 @@ gap> PosetOfCongruences(coll);
       <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(2);;
 gap> pair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;
-gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];
-gap> pair3 := [PartialPerm([1, 2], [1, 2]), PartialPerm([1, 2], [2, 1])];
+gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;
+gap> pair3 := [PartialPerm([1, 2], [1, 2]), 
+>              PartialPerm([1, 2], [2, 1])];;
 gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair2),
 >             RightSemigroupCongruence(S, pair3)];;
@@ -308,8 +309,9 @@ gap> JoinSemilatticeOfCongruences(coll, JoinRightSemigroupCongruences);
       <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(2);;
 gap> pair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;
-gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];
-gap> pair3 := [PartialPerm([1, 2], [1, 2]), PartialPerm([1, 2], [2, 1])];
+gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;
+gap> pair3 := [PartialPerm([1, 2], [1, 2]),
+>              PartialPerm([1, 2], [2, 1])];;
 gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair2),
 >             RightSemigroupCongruence(S, pair3)];;
