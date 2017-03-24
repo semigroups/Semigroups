@@ -98,7 +98,6 @@ static void cong_obj_init_cpp_cong(Obj o) {
     }
     cong = new Congruence(type, range, extra);
     cong->set_report(report);
-    cong->run();
   } else {
     gap_rec_t               data  = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     gap_list_t              rules = ElmPRec(data, RNam_rules);
@@ -155,9 +154,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
     cong = new Congruence(type, nrgens, std::vector<relation_t>(), extra);
     cong->set_report(report);
     cong->set_prefill(prefill);
-    cong->run();
   }
-  cong->compress();
   AssPRec(o, RNam_cong_pairs_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
 }
 
@@ -199,7 +196,7 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_list_t pair) {
     range->factorisation(lhs, lhs_pos - 1);
     range->factorisation(rhs, rhs_pos - 1);
   } else {
-    gap_rec_t data  = fropin(S, INTOBJ_INT(-1), 0, False);
+    gap_rec_t  data  = fropin(S, INTOBJ_INT(-1), 0, False);
     gap_list_t words = ElmPRec(data, RNam_words);
 
     lhs = plist_to_word_t(ELM_PLIST(words, lhs_pos));
@@ -207,7 +204,9 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_list_t pair) {
   }
 
   Congruence* cong = cong_obj_get_cpp(o);
-  return (cong->word_to_class_index(lhs) == cong->word_to_class_index(rhs) ? True : False);
+  return (cong->word_to_class_index(lhs) == cong->word_to_class_index(rhs)
+              ? True
+              : False);
 }
 
 Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
@@ -231,7 +230,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
 
   for (size_t i = 0; i < cong->nr_classes(); i++) {
     Obj next = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
-    SET_LEN_PLIST(next, 0); // should never be 0 later on, so this should be ok
+    SET_LEN_PLIST(next, 0);  // should never be 0 later on, so this should be ok
     SET_ELM_PLIST(partition, i + 1, next);
     CHANGED_BAG(partition);
   }
@@ -275,7 +274,8 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
     SET_LEN_PLIST(lookup, LEN_PLIST(words));
 
     for (size_t i = 1; i <= (size_t) LEN_PLIST(words); i++) {
-      size_t class_index = cong->word_to_class_index(plist_to_word_t(ELM_PLIST(words, i)));
+      size_t class_index =
+          cong->word_to_class_index(plist_to_word_t(ELM_PLIST(words, i)));
 
       auto it = class_dictionary.find(class_index);
       if (it == class_dictionary.end()) {
@@ -319,9 +319,9 @@ Obj CONG_PAIRS_CLASS_COSET_ID(Obj self, gap_cong_class_t o) {
     word_t word;
     range->factorisation(
         word, INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, rep)) - 1);
-    return INTOBJ_INT(cong->word_to_class_index(word));
+    return INTOBJ_INT(cong->word_to_class_index(word) + 1);
   } else {
-    gap_rec_t  data = fropin(range_obj, INTOBJ_INT(-1), 0, False);
+    gap_rec_t   data = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     Congruence* cong = cong_obj_get_cpp(cong_obj);
 
     Obj word = ELM_PLIST(ElmPRec(data, RNam_words),
