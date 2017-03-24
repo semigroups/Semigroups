@@ -288,7 +288,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
   assert(en_semi_get_type(es) != UNKNOWN);
   assert(CLASS_OBJ<Converter*>(es, 4) == nullptr);
 
-  Converter*      converter = nullptr;
+  Converter* converter = nullptr;
   // semigroup Obj is required to get the threshold etc for matrices over a
   // semiring
   gap_semigroup_t so = en_semi_get_semi_obj(es);
@@ -342,10 +342,8 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
       break;
     }
     case PROJ_MAX_PLUS_MAT: {
-      converter =
-          new ProjectiveMaxPlusMatrixConverter(new MaxPlusSemiring(),
-                                               Ninfinity,
-                                               ProjectiveMaxPlusMatrixType);
+      converter = new ProjectiveMaxPlusMatrixConverter(
+          new MaxPlusSemiring(), Ninfinity, ProjectiveMaxPlusMatrixType);
       break;
     }
     case NTP_MAT: {
@@ -566,8 +564,8 @@ gap_list_t EN_SEMI_AS_LIST(Obj self, gap_semigroup_t so) {
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
-    std::vector<Element*>* elements = semi_cpp->elements();
-    Converter* converter = en_semi_get_converter(es);
+    std::vector<Element*>* elements  = semi_cpp->elements();
+    Converter*             converter = en_semi_get_converter(es);
     return vec_to_plist(converter, elements);
   } else {
     return ElmPRec(fropin(so, INTOBJ_INT(-1), 0, False), RNam_elts);
@@ -586,7 +584,7 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
         semi_cpp->sorted_elements();
     Converter* converter = en_semi_get_converter(es);
     // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
-    gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT+IMMUTABLE, pairs->size());
+    gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, pairs->size());
     SET_LEN_PLIST(out, pairs->size());
     size_t i = 1;
     for (auto const& x : *pairs) {
@@ -696,7 +694,7 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
   en_semi_obj_t es = semi_obj_get_en_semi(old_so);
 
   if (en_semi_get_type(es) == UNKNOWN) {
-    return new_so; // TODO(JDM) this could be better
+    return new_so;  // TODO(JDM) this could be better
   }
   // Find the type, semigroup Obj, and degree. This would be unnecessary if
   // transformations and partial perms were of fixed degree, we could just copy
@@ -711,11 +709,11 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
 
   Semigroup* old_semi_cpp = semi_obj_get_semi_cpp(old_so);
 
-  // CAUTION: copy_closure always copies old_semi_cpp regardless of whether or
-  // not every element in coll belongs to old_semi_cpp!! Only call this
-  // function if coll contains some elements not in old_semi_cpp. We check in
-  // the GAP to avoid creating new_so at all, and also to avoid sorting etc a
-  // collection of elements that belong to the semigroup.
+// CAUTION: copy_closure always copies old_semi_cpp regardless of whether or
+// not every element in coll belongs to old_semi_cpp!! Only call this
+// function if coll contains some elements not in old_semi_cpp. We check in
+// the GAP to avoid creating new_so at all, and also to avoid sorting etc a
+// collection of elements that belong to the semigroup.
 #ifdef DEBUG
   bool valid = false;
   for (auto const& x : *coll) {
@@ -1251,8 +1249,8 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
   en_semi_obj_t es = semi_obj_get_en_semi(so);
 
   if (en_semi_get_type(es) != UNKNOWN) {
-    size_t   deg = en_semi_get_degree(es);
-    Element* xx  = en_semi_get_converter(es)->convert(x, deg);
+    size_t     deg      = en_semi_get_degree(es);
+    Element*   xx       = en_semi_get_converter(es)->convert(x, deg);
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
     size_t pos = semi_cpp->position(xx);
@@ -1270,9 +1268,9 @@ Obj EN_SEMI_POSITION(Obj self, gap_semigroup_t so, gap_element_t x) {
         return val;
       }
       gap_int_t limit = SumInt(ElmPRec(data, RNam_nr), INTOBJ_INT(1));
-      data = fropin(data, limit, 0, False);
-      pos = INT_INTOBJ(ElmPRec(data, RNam_pos));
-      nr  = INT_INTOBJ(ElmPRec(data, RNam_nr));
+      data            = fropin(data, limit, 0, False);
+      pos             = INT_INTOBJ(ElmPRec(data, RNam_pos));
+      nr              = INT_INTOBJ(ElmPRec(data, RNam_nr));
     } while (pos <= nr);
     return CALL_2ARGS(HTValue, ht, x);
   }

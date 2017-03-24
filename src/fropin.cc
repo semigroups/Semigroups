@@ -23,8 +23,8 @@
 #include <algorithm>
 #include <iostream>
 
-#include "rnams.h"
 #include "libsemigroups/util/report.h"
+#include "rnams.h"
 #include "semigrp.h"
 
 using libsemigroups::Timer;

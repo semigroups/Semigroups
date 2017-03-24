@@ -23,8 +23,8 @@
 
 #include "converter.h"
 #include "gap.h"
-#include "rnams.h"
 #include "libsemigroups/semigroups.h"
+#include "rnams.h"
 #include "src/compiled.h"  // GAP headers
 
 using libsemigroups::Semigroup;

@@ -37,8 +37,7 @@ Obj UF_NEW(Obj self, Obj size) {
 }
 
 Obj UF_COPY(Obj self, Obj uf) {
-  return OBJ_CLASS(new UF(*CLASS_OBJ<UF*>(uf)),
-                   T_SEMI_SUBTYPE_UF);
+  return OBJ_CLASS(new UF(*CLASS_OBJ<UF*>(uf)), T_SEMI_SUBTYPE_UF);
 }
 
 Obj UF_SIZE(Obj self, Obj uf) {
@@ -55,7 +54,7 @@ Obj UF_UNION(Obj self, Obj uf, Obj pair) {
   assert(IS_INTOBJ(ELM_PLIST(pair, 1)) && INT_INTOBJ(ELM_PLIST(pair, 1)) > 0);
   assert(IS_INTOBJ(ELM_PLIST(pair, 2)) && INT_INTOBJ(ELM_PLIST(pair, 2)) > 0);
   CLASS_OBJ<UF*>(uf)->unite(INT_INTOBJ(ELM_PLIST(pair, 1)) - 1,
-                                    INT_INTOBJ(ELM_PLIST(pair, 2)) - 1);
+                            INT_INTOBJ(ELM_PLIST(pair, 2)) - 1);
   return 0L;
 }
 
@@ -66,8 +65,8 @@ Obj UF_FLATTEN(Obj self, Obj uf) {
 
 Obj UF_TABLE(Obj self, Obj uf) {
   UF::table_t* table     = CLASS_OBJ<UF*>(uf)->get_table();
-  size_t           size      = table->size();
-  Obj              gap_table = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, size);
+  size_t       size      = table->size();
+  Obj          gap_table = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, size);
   // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(gap_table, size);
   for (size_t i = 0; i < size; i++) {
@@ -78,14 +77,14 @@ Obj UF_TABLE(Obj self, Obj uf) {
 
 Obj UF_BLOCKS(Obj self, Obj uf) {
   UF::blocks_t const* blocks = CLASS_OBJ<UF*>(uf)->get_blocks();
-  size_t                  size   = blocks->size();
-  size_t                  i, j;
+  size_t              size   = blocks->size();
+  size_t              i, j;
 
   // Rewrite each block as a PLIST object, and put it into a PLIST.
   Obj gap_blocks = NEW_PLIST(T_PLIST, 0);
   SET_LEN_PLIST(gap_blocks, 0);
   for (i = 0; i < size; i++) {
-    if ((*blocks)[i] != nullptr) { // nullptr represents a hole in the list
+    if ((*blocks)[i] != nullptr) {  // nullptr represents a hole in the list
       Obj block = NEW_PLIST(T_PLIST_CYC, (*blocks)[i]->size());
       SET_LEN_PLIST(block, (*blocks)[i]->size());
       for (j = 0; j < (*blocks)[i]->size(); j++) {

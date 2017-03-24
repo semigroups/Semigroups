@@ -50,7 +50,7 @@ BooleanMat* BoolMatConverter::convert(Obj o, size_t n) const {
 }
 
 Obj BoolMatConverter::unconvert(Element const* x) const {
-  size_t      n = x->degree();
+  size_t            n = x->degree();
   BooleanMat const* xx(static_cast<BooleanMat const*>(x));
 
   Obj o = NEW_PLIST(T_PLIST_TAB_RECT + IMMUTABLE, n);
@@ -197,7 +197,7 @@ PBR* PBRConverter::convert(Obj o, size_t n) const {
 
 Obj PBRConverter::unconvert(Element const* xx) const {
   PBR const* x(static_cast<PBR const*>(xx));
-  Obj  plist = NEW_PLIST(T_PLIST + IMMUTABLE, 2 * x->degree() + 1);
+  Obj        plist = NEW_PLIST(T_PLIST + IMMUTABLE, 2 * x->degree() + 1);
   // can't use T_PLIST_TAB/HOM here because some of the subplists might be empty
   SET_LEN_PLIST(plist, 2 * x->degree() + 1);
   SET_ELM_PLIST(plist, 1, INTOBJ_INT(x->degree()));

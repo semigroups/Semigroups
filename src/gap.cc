@@ -33,8 +33,8 @@
 #include "semigrp.h"
 #include "uf.h"
 
-#include "libsemigroups/semigroups.h"
 #include "libsemigroups/cong.h"
+#include "libsemigroups/semigroups.h"
 #include "libsemigroups/util/uf.h"
 
 using libsemigroups::Congruence;
@@ -53,7 +53,8 @@ using libsemigroups::Timer;
 Obj SEMIGROUPS_IS_OPTIMIZED(Obj self) {
   Timer t;
   t.start();
-  for (UInt i = 0; i < 10000000; i++) {}
+  for (UInt i = 0; i < 10000000; i++) {
+  }
   t.stop();
   return (t.elapsed() > 2000 ? False : True);
 }
@@ -91,7 +92,6 @@ inline UInt LoadUIntBiggest() {
   return LoadUInt8();
 #endif
 }
-
 
 // Function to print a T_SEMI Obj.
 

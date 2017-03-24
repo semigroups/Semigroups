@@ -24,8 +24,8 @@
 #include <vector>
 
 #include "gap.h"
-#include "rnams.h"
 #include "libsemigroups/cong.h"
+#include "rnams.h"
 #include "semigrp.h"
 
 using libsemigroups::word_t;

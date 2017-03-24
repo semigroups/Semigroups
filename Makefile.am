@@ -53,4 +53,7 @@ debug: clean all
 lint: 
 	gaplint *.g gap/*.gi gap/*.gd gap/*/* doc/*.xml
 
+format: 
+	clang-format -i src/*.h src/*.cc
+
 .PHONY: debug, lint

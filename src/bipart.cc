@@ -292,7 +292,7 @@ Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
 
-  // The following is done to avoid leaking memory
+// The following is done to avoid leaking memory
 #ifdef DEBUG
   Blocks* xb = xx->left_blocks();
   Blocks* yb = yy->left_blocks();
@@ -947,8 +947,8 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
   assert(TNUM_OBJ(x_gap) == T_BIPART);
   assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
 
-  Bipartition* x = bipart_get_cpp(x_gap);
-  Blocks* blocks = blocks_get_cpp(blocks_gap);
+  Bipartition* x      = bipart_get_cpp(x_gap);
+  Blocks*      blocks = blocks_get_cpp(blocks_gap);
 
   if (blocks->degree() != x->degree()) {
     // hack to allow Lambda/RhoOrbSeed
@@ -1001,8 +1001,8 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
   assert(TNUM_OBJ(x_gap) == T_BIPART);
   assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
 
-  Bipartition* x = bipart_get_cpp(x_gap);
-  Blocks* blocks = blocks_get_cpp(blocks_gap);
+  Bipartition* x      = bipart_get_cpp(x_gap);
+  Blocks*      blocks = blocks_get_cpp(blocks_gap);
 
   if (blocks->degree() != x->degree()) {
     // hack to allow Lambda/RhoOrbSeed
@@ -1519,7 +1519,7 @@ Obj BIPART_NR_IDEMPOTENTS(Obj self,
                           Obj lookup,
                           Obj nr_threads,
                           Obj report) {
-  IdempotentCounter finder(o, scc, lookup, INT_INTOBJ(nr_threads), report);
+  IdempotentCounter   finder(o, scc, lookup, INT_INTOBJ(nr_threads), report);
   std::vector<size_t> vals = finder.count();
 
   Obj out = NEW_PLIST(T_PLIST_CYC, vals.size());
