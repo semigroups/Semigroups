@@ -1260,20 +1260,20 @@ gap> PartialOrderOfDClasses(S);
 [ [ 1 ] ]
 
 #T# Test for Issue 144
-gap> S := Semigroup([Bipartition([[1, 2], [-1], [-2]]),
->   Bipartition([[1, -1], [2], [-2]]),
->   Bipartition([[1], [2, -1], [-2]]),
->   Bipartition([[1, -2], [2], [-1]]),
->   Bipartition([[1], [2, -2], [-1]]),
->   Bipartition([[1], [2], [-1], [-2]])]);
+gap> S := Semigroup(Bipartition([[1, 2], [-1], [-2]]),
+>                   Bipartition([[1, -1], [2], [-2]]),
+>                   Bipartition([[1], [2, -1], [-2]]),
+>                   Bipartition([[1, -2], [2], [-1]]),
+>                   Bipartition([[1], [2, -2], [-1]]),
+>                   Bipartition([[1], [2], [-1], [-2]]));;
 gap> IsInverseSemigroup(S);
 false
-gap> S := Semigroup([Bipartition([[1, 2], [-1], [-2]]),
->   Bipartition([[1, -1], [2], [-2]]),
->   Bipartition([[1], [2, -1], [-2]]),
->   Bipartition([[1, -2], [2], [-1]]),
->   Bipartition([[1], [2, -2], [-1]]),
->   Bipartition([[1], [2], [-1], [-2]])]);
+gap> S := Semigroup(Bipartition([[1, 2], [-1], [-2]]),
+>                   Bipartition([[1, -1], [2], [-2]]),
+>                   Bipartition([[1], [2, -1], [-2]]),
+>                   Bipartition([[1, -2], [2], [-1]]),
+>                   Bipartition([[1], [2, -2], [-1]]),
+>                   Bipartition([[1], [2], [-1], [-2]]));;
 gap> NrDClasses(S);;
 gap> IsInverseSemigroup(S);
 false
@@ -1402,7 +1402,7 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [5, 1, 2]),
 >                           PartialPerm([1, 3, 6], [1, 3, 6])]);;
 gap> pairs := [[PartialPerm([5], [1]), PartialPerm([], [])],
 >              [PartialPerm([1, 2, 3, 4], [1, 2, 3, 4]),
->               PartialPerm([1, 3, 4, 6], [1, 3, 4, 6])]];
+>               PartialPerm([1, 3, 4, 6], [1, 3, 4, 6])]];;
 gap> cong := SemigroupCongruence(S, pairs);;
 gap> NrEquivalenceClasses(cong);
 32
@@ -1428,7 +1428,8 @@ gap> mat := [
 > [0, 0, 0, (), 0, 0],
 > [0, 0, 0, 0, (), 0],
 > [0, 0, 0, 0, 0, ()]];;
-gap> R := ReesZeroMatrixSemigroup(Group([(1, 5, 4, 3, 2), (1, 5)(2, 4)]), mat);;
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 5, 4, 3, 2), (1, 5)(2, 4)]),
+>                                 mat);;
 gap> contain := [
 >  RMSElement(R, 1, (1, 5)(2, 4), 6),
 >  RMSElement(R, 1, (), 6),
@@ -1441,7 +1442,7 @@ gap> contain := [
 >  RMSElement(R, 5, (1, 3)(4, 5), 4),
 >  RMSElement(R, 5, (), 2),
 >  RMSElement(R, 6, (1, 5, 4, 3, 2), 5),
->  RMSElement(R, 6, (), 1)];
+>  RMSElement(R, 6, (), 1)];;
 gap> MaximalSubsemigroups(R, rec(number := true, contain := contain));
 1
 
