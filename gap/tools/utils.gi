@@ -97,7 +97,7 @@ SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
                            "semitrans.xml",
                            "utils.xml"];
 
-SEMIGROUPS.TestRec := rec();
+SEMIGROUPS.TestRec := rec(elapsed_last_test := 0);
 
 SEMIGROUPS.TestRec.reportDiff := function(inp, expout, found, fnam, line, time)
   Print("\033[31m######## > Diff in:\n");
@@ -156,33 +156,15 @@ SEMIGROUPS.StartTest := function()
 
   # set default options
   SEMIGROUPS.DefaultOptionsRec.report := false;
-
-  record.STOP_TEST := STOP_TEST;
-
-  UnbindGlobal("STOP_TEST");
-  BindGlobal("STOP_TEST", SEMIGROUPS.StopTest);
-  MakeReadWriteGlobal("STOP_TEST");
-
-  # timing
-  record.timeofday := IO_gettimeofday();
   return;
 end;
 
-SEMIGROUPS.StopTest := function(arg...)
-  local timeofday, file, record, elapsed;
-
-  timeofday := IO_gettimeofday();
-
-  if Length(arg) = 0 then
-    file := "";
-  elif Length(arg) = 1 and IsString(arg[1]) then
-    file := arg[1];
-  else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.StopTest: usage,\n",
-                  "there should be no args or the arg must be a string,");
-  fi;
+SEMIGROUPS.StopTest := function()
+  local record;
 
   record := SEMIGROUPS.TestRec;
+  record.elapsed_last2_test := record.elapsed_last_test;
+  record.elapsed_last_test := Runtime() - GAPInfo.TestData.START_TIME;
 
   # restore info levels
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
@@ -205,33 +187,6 @@ SEMIGROUPS.StopTest := function(arg...)
 
   # restore default options
   SEMIGROUPS.DefaultOptionsRec := record.SEMIGROUPS_DefaultOptionsRec;
-
-  if not IsBound(GAPInfo.TestData.START_TIME)  then
-      ErrorNoReturn("Semigroups: SEMIGROUPS.StopTest:\n",
-                    "`STOP_TEST' command without `START_TEST' command for `",
-                    file,
-                    "'");
-  fi;
-
-  Print(GAPInfo.TestData.START_NAME, "\n");
-
-  # Timing
-  elapsed := (timeofday.tv_sec - record.timeofday.tv_sec) * 1000
-             + Int((timeofday.tv_usec - record.timeofday.tv_usec) / 1000);
-  Print("Elapsed time: ", String(elapsed), "ms\n");
-  if IsBound(SEMIGROUPS.TestRec.elapsed_last_test) then
-    SEMIGROUPS.TestRec.elapsed_last2_test :=
-      SEMIGROUPS.TestRec.elapsed_last_test;
-  fi;
-  SEMIGROUPS.TestRec.elapsed_last_test  := elapsed;
-
-  SetAssertionLevel(GAPInfo.TestData.AssertionLevel);
-  Unbind(GAPInfo.TestData.AssertionLevel);
-  Unbind(GAPInfo.TestData.START_TIME);
-  Unbind(GAPInfo.TestData.START_NAME);
-  UnbindGlobal("STOP_TEST");
-  BindGlobal("STOP_TEST", record.STOP_TEST);
-  MakeReadWriteGlobal("STOP_TEST");
   return;
 end;
 
@@ -323,7 +278,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
         pex := TEST.lastTestData;
 
-        Print(" elapsed time: ", elapsed, "\n");
+        Print("msecs: ", elapsed, "\n");
 
         if Length(bad) > 0 then
           Print(SEMIGROUPS.ColorizeString("# WARNING: Overlong lines ", bad,
@@ -468,14 +423,12 @@ SEMIGROUPS.RunTestsDir := function(dir)
     PRINT_STRINGIFY(" . . .\n\n");
   fi;
 
-  contents := DirectoryContents(dir);
+  contents := ["../testinstall.tst"];
+  Append(contents, DirectoryContents(dir));
 
   failed  := [];
   passed  := [];
-
-  SemigroupsTestInstall();
-  elapsed := SEMIGROUPS.TestRec.elapsed_last_test +
-             SEMIGROUPS.TestRec.elapsed_last2_test;
+  elapsed := 0;
 
   for filename in contents do
     if file_ext(filename) = "tst" and is_testable(dir, filename) then
@@ -487,17 +440,17 @@ SEMIGROUPS.RunTestsDir := function(dir)
         if not pass then
           Add(failed, [filename,
                        "FAILED",
-                       Concatenation(String(elapsed_this_test), "ms")]);
+                       Concatenation("msecs: ", String(elapsed_this_test))]);
         else
           Add(passed, [filename,
                        "PASSED",
-                       Concatenation(String(elapsed_this_test), "ms")]);
+                       Concatenation("msecs: ", String(elapsed_this_test))]);
         fi;
       fi;
     fi;
   od;
 
-  Print("TOTAL elapsed time: ", String(elapsed), "ms\n\n");
+  Print("Total msecs: ", String(elapsed), "\n");
   GASMAN("collect");
 
   return [failed, passed];
