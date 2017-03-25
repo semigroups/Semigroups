@@ -240,14 +240,27 @@ end);
 InstallMethod(MultiplicativeZero, "for a Rees 0-matrix semigroup",
 [IsReesZeroMatrixSubsemigroup],
 function(R)
-  local rep, x;
-  rep := Representative(R);
-  x := MultiplicativeZero(ReesMatrixSemigroupOfFamily(FamilyObj(rep)));
+  local super, x, gens, row, col, i;
+
+  super := ReesMatrixSemigroupOfFamily(FamilyObj(Representative(R)));
+  x := MultiplicativeZero(super);
   if (HasIsReesZeroMatrixSemigroup(R) and IsReesZeroMatrixSemigroup(R))
       or x in R then
     return x;
   fi;
-  return fail;
+
+  gens := GeneratorsOfSemigroup(R);
+  row := RowOfReesZeroMatrixSemigroupElement(gens[1]);
+  col := ColumnOfReesZeroMatrixSemigroupElement(gens[1]);
+  for i in [2 .. Length(gens)] do
+    x := gens[i];
+    if RowOfReesZeroMatrixSemigroupElement(x) <> row or
+        ColumnOfReesZeroMatrixSemigroupElement(x) <> col then
+      return fail;
+    fi;
+  od;
+
+  TryNextMethod();
 end);
 
 # same method for ideals

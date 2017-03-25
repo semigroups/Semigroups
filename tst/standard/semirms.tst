@@ -2094,7 +2094,7 @@ gap> x := RMSElementNC(R, 1, (1,2), 1);
 gap> x in R;
 true
 
-# Test MultiplicativeZero
+#T# semirms: MultiplicativeZero, for a Rees 0-matrix semigroup, 1
 gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 > [[(1, 3, 2), (), (1, 4, 2)],
 >  [(), (1, 3)(2, 4), (1, 2, 3, 4)],
@@ -2104,6 +2104,49 @@ gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 gap> R := Semigroup(R);;
 gap> MultiplicativeZero(R);
 0
+
+#T# semirms: MultiplicativeZero, for a Rees 0-matrix subsemigroup, 1
+gap> R := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
+gap> U := Semigroup(RMSElement(R, 1, (), 1));;
+gap> MultiplicativeZero(U);
+(1,(),1)
+gap> IsTrivial(U);
+true
+gap> R := ReesZeroMatrixSemigroup(
+>  Semigroup([Transformation([1, 1]), Transformation([2, 2])]),
+>  [[Transformation([1, 1])]]);;
+gap> U := Semigroup(RMSElement(R, 1, Transformation([1, 1]), 1));
+<subsemigroup of 1x1 Rees 0-matrix semigroup with 1 generator>
+gap> MultiplicativeZero(U);
+(1,Transformation( [ 1, 1 ] ),1)
+
+#T# semirms: MultiplicativeZero, for a Rees 0-matrix subsemigroup, 2
+gap> G := SymmetricGroup(3);;
+gap> R := ReesZeroMatrixSemigroup(G,
+> [[(), 0, (1, 2)],
+>  [(), (1, 3, 2), (1, 2)],
+>  [(1, 3), 0, (1, 3, 2)]]);
+<Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 3 ] )>
+gap> U := ReesZeroMatrixSubsemigroup(R, [1], G, [1, 3]);
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 3 generators>
+gap> MultiplicativeZero(U);
+fail
+gap> U := ReesZeroMatrixSubsemigroup(R, [1, 3], G, [1]);
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 3 generators>
+gap> MultiplicativeZero(U);
+fail
+gap> U := ReesZeroMatrixSubsemigroup(R, [1, 3], G, [1, 3]);
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 4 generators>
+gap> MultiplicativeZero(U);
+fail
+gap> U := ReesZeroMatrixSubsemigroup(R, [3], G, [3]);
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 2 generators>
+gap> MultiplicativeZero(U);
+fail
+gap> U := ReesZeroMatrixSubsemigroup(R, [1], Group(()), [1]);
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 1 generator>
+gap> MultiplicativeZero(U);
+(1,(),1)
 
 # Test IsomorphismPermGroup
 gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
