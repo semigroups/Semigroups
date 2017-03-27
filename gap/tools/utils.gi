@@ -278,7 +278,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
         pex := TEST.lastTestData;
 
-        Print("msecs: ", elapsed, "\n");
+        Print(" msecs: ", elapsed, "\n");
 
         if Length(bad) > 0 then
           Print(SEMIGROUPS.ColorizeString("# WARNING: Overlong lines ", bad,
