@@ -50,7 +50,7 @@ function(id)
     ErrorNoReturn("Semigroups: NrLettersIdentity: usage,\n",
                   "the argument must be a list of size 2,");
   elif ForAny(id, x -> not IsHomogeneousList(x)) and not IsPosInt(id[1][1])
-    and not IsPosInt(id[2][1]) then
+       and not IsPosInt(id[2][1]) then
     ErrorNoReturn("Semigroups: NrLettersIdentity: usage,\n",
                   "the argument must be a list of lists of positive integers,");
   fi;
@@ -69,7 +69,7 @@ function(id)
     ErrorNoReturn("Semigroups: ReverseIdentity: usage,\n",
                   "the argument must be a list of size 2,");
   elif ForAny(id, x -> not IsHomogeneousList(x)) and not IsPosInt(id[1][1])
-    and not IsPosInt(id[2][1]) then
+       and not IsPosInt(id[2][1]) then
     ErrorNoReturn("Semigroups: ReverseIdentity: usage,\n",
                   "the argument must be a list of lists of positive integers,");
   fi;
@@ -86,7 +86,7 @@ end);
 InstallMethod(RandomTuple, "for a positive integer",
 [IsPosInt],
 function(n)
-  return List([1 .. n], x-> Random([0, 1]));
+  return List([1 .. n], x -> Random([0, 1]));
 end);
 
 InstallMethod(GroupAlgebraProduct,
@@ -123,7 +123,7 @@ function(table)
   local n, delta, nr, t, i;
 
   n := Length(table);
-  delta := Float(Nr3NilpotentSemigroups(n, "Labelled") / n ^ (n ^ 2)) / 10^17;
+  delta := Float(Nr3NilpotentSemigroups(n, "Labelled") / n ^ (n ^ 2)) / 10 ^ 17;
   nr := Int(Ceil(Log2(1 / delta)));
 
   for i in [1 .. nr] do
@@ -131,7 +131,7 @@ function(table)
     if GroupAlgebraProduct(table, GroupAlgebraProduct(table, t[1], t[2]), t[3])
         <> GroupAlgebraProduct(table, t[1], GroupAlgebraProduct(table,
                                                                 t[2], t[3]))
-    then
+        then
       return false;
     fi;
   od;
