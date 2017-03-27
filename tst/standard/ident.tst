@@ -102,7 +102,7 @@ gap> IsHomogeneousList(t);
 true
 gap> Length(t) = 5;
 true
-gap> IsPosInt(t[1]);
+gap> IsInt(t[1]);
 true
 
 #
