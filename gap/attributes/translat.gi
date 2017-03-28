@@ -8,7 +8,6 @@
 #############################################################################
 ##
 #TODO Translations semigroups can currently forget their generators
-#TODO SEMIGROUPS.TranslationalHullElements can be called again after Representative
 #############################################################################
 ## This file contains methods for dealing with left and right translation
 ## semigroups, as well as translational hulls. 
@@ -175,14 +174,13 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   #another given element
   #eg., if a * b = a * c = d, with (a,b,c,d) having indices (i,j,k,l) 
   #in the multiplication table, then we store [j,k] in the cell [i][l] 
-  multtablepositionsets := List([1 .. n], x -> []);
-  transposepositionsets := List([1 .. n], x -> []);
+  multtablepositionsets := List([1 .. n], x -> List([1 .. n], y -> []));
+  transposepositionsets := List([1 .. n], x -> List([1 .. n], y -> []));
   for i in [1 .. n] do
     for j in [1 .. n] do
-      multtablepositionsets[i][j] := PositionsProperty(slist,
-                                               x -> slist[i] * x = slist[j]);
-      transposepositionsets[i][j] := PositionsProperty(slist,
-                                               x -> x * slist[i] = slist[j]);
+      pos := Position(slist, slist[i] * slist[j]);
+      Add(multtablepositionsets[i][pos], j);
+      Add(transposepositionsets[j][pos], i);
     od;
   od;
     
@@ -1075,19 +1073,25 @@ end);
 InstallMethod(Representative, "for a semigroup of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
-  if HasAsList(T) then
-    return Representative(AsList(T));
+  local S, l, r;
+  S := UnderlyingSemigroup(T);
+  if IsLeftTranslationsSemigroup(T) then
+    return LeftTranslation(T, MappingByFunction(S, S, x -> x));
+  else
+    return RightTranslation(T, MappingByFunction(S, S, x -> x));
   fi;
-  return Representative(SEMIGROUPS.TranslationsSemigroupElements(T));
 end);
 
 InstallMethod(Representative, "for a translational hull",
 [IsTranslationalHull and IsWholeFamily],
 function(H)
-  if HasAsList(H) then
-    return Representative(AsList(H));
-  fi;
-  return Representative(SEMIGROUPS.TranslationalHullElements(H));
+  local L, R, S, l, r;
+  S := UnderlyingSemigroup(H);
+  L := LeftTranslationsSemigroup(S);
+  R := RightTranslationsSemigroup(S);
+  l := LeftTranslation(L, MappingByFunction(S, S, x -> x));
+  r := RightTranslation(R, MappingByFunction(S, S, x -> x));
+  return TranslationalHullElement(H, l, r);
 end);
 
 InstallMethod(ViewObj, "for a semigroup of left or right translations",
@@ -1245,7 +1249,8 @@ function(T)
   if IsLeftTranslationsSemigroup(T) then  
     return Size(T) = Size(LeftTranslationsSemigroupOfFamily(ElementsFamily(
                                                                 FamilyObj(T))));
-  else return Size(T) = Size(RightTranslationsSemigroupOfFamily(ElementsFamily(
+  else 
+    return Size(T) = Size(RightTranslationsSemigroupOfFamily(ElementsFamily(
                                                                 FamilyObj(T)))); 
   fi;
 end);
