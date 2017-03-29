@@ -58,7 +58,7 @@ function(table)
                  od;
 
                  return List(xy, val -> val mod 2);
-               end;    
+               end;
 
   nr3NilAll := function(n)
                  return Sum([2 .. Int(n + 1 / 2 - RootInt(n - 1))], k ->
