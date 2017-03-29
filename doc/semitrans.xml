@@ -400,7 +400,7 @@ gap> FixedPointsOfTransformationSemigroup(S);
 
       <Example><![CDATA[
 gap> T := FullTransformationMonoid(3);;
-gap> C := Group((1,3));;
+gap> C := Group((1, 3));;
 gap> W := WreathProduct(T, C);
 <transformation monoid of degree 9 with 8 generators>
 gap> Size(W);
