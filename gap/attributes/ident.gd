@@ -13,9 +13,5 @@
 
 DeclareOperation("VerifyIdentity",
                  [IsMultiplicativeElementCollection, IsHomogeneousList]);
-DeclareOperation("NrLettersIdentity",
-                 [IsHomogeneousList]);
-DeclareOperation("ReverseIdentity",
-                 [IsHomogeneousList]);
 DeclareOperation("RandomAssociativityTest",
                  [IsTable]);

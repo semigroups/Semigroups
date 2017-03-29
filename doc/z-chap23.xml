@@ -23,8 +23,6 @@
     set of variables.
 
     <#Include Label = "VerifyIdentity">
-    <#Include Label = "NrLettersIdentity">
-    <#Include Label = "ReverseIdentity">
     <#Include Label = "RandomAssociativityTest">
 
   </Section>

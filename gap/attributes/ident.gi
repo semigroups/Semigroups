@@ -19,11 +19,12 @@ function(coll, id)
                   "the second argument must be a non-empty list,");
   elif Size(id) <> 2 then
     ErrorNoReturn("Semigroups: VerifyIdentity: usage,\n",
-                  "the second argument must be a list of size 2,");
-  elif ForAny(id, x -> not IsHomogeneousList(x)) and not IsPosInt(id[1][1])
-      and not IsPosInt(id[2][1]) then
+                  "the second argument must be a list of two lists of ",
+                  "positive integers,");
+  elif ForAny(id, x -> not IsHomogeneousList(x)) or not IsPosInt(id[1][1])
+       or not IsPosInt(id[2][1]) then
     ErrorNoReturn("Semigroups: VerifyIdentity: usage,\n",
-                  "the second argument must be a list of lists of ",
+                  "the second argument must be a list of two lists of ",
                   "positive integers,");
   fi;
 
@@ -37,44 +38,6 @@ function(coll, id)
     fi;
   od;
   return true;
-end);
-
-InstallMethod(NrLettersIdentity, "for a homogeneous list",
-[IsHomogeneousList],
-function(id)
-
-  if IsEmpty(id) then
-    ErrorNoReturn("Semigroups: NrLettersIdentity: usage,\n",
-                  "the argument must be a non-empty list,");
-  elif Size(id) <> 2 then
-    ErrorNoReturn("Semigroups: NrLettersIdentity: usage,\n",
-                  "the argument must be a list of size 2,");
-  elif ForAny(id, x -> not IsHomogeneousList(x)) and not IsPosInt(id[1][1])
-       and not IsPosInt(id[2][1]) then
-    ErrorNoReturn("Semigroups: NrLettersIdentity: usage,\n",
-                  "the argument must be a list of lists of positive integers,");
-  fi;
-
-  return Maximum(Maximum(id[1]), Maximum(id[2]));
-end);
-
-InstallMethod(ReverseIdentity, "for a homogeneous list",
-[IsHomogeneousList],
-function(id)
-
-  if IsEmpty(id) then
-    ErrorNoReturn("Semigroups: ReverseIdentity: usage,\n",
-                  "the argument must be a non-empty list,");
-  elif Size(id) <> 2 then
-    ErrorNoReturn("Semigroups: ReverseIdentity: usage,\n",
-                  "the argument must be a list of size 2,");
-  elif ForAny(id, x -> not IsHomogeneousList(x)) and not IsPosInt(id[1][1])
-       and not IsPosInt(id[2][1]) then
-    ErrorNoReturn("Semigroups: ReverseIdentity: usage,\n",
-                  "the argument must be a list of lists of positive integers,");
-  fi;
-
-  return List(id, Reversed);
 end);
 
 InstallMethod(RandomAssociativityTest, "for a table",

@@ -51,15 +51,20 @@ gap> RZ := RightZeroSemigroup(5);;
 gap> VerifyIdentity(RZ, [[1, 2], [2]]);
 true
 
-#T# Test NrLettersIdentity
-gap> NrLettersIdentity([[1, 2], [2,1]]);
-2
-gap> NrLettersIdentity([[1, 2], [2, 1, 3]]);
-3
+#T# VerifyIdentity Error Messages
+gap> VerifyIdentity(T3, []);
+Error, Semigroups: VerifyIdentity: usage,
+the second argument must be a non-empty list,
+gap> VerifyIdentity(T3, [[1, 2]]);     
+Error, Semigroups: VerifyIdentity: usage,
+the second argument must be a list of two lists of positive integers,
+gap> VerifyIdentity(T3, [['x', 'y'], ['y', 'x']]);
+Error, Semigroups: VerifyIdentity: usage,
+the second argument must be a list of two lists of positive integers,
 
-#T# Test ReverseIdentity
-gap> ReverseIdentity([[1, 2], [2, 1, 3]]);
-[ [ 2, 1 ], [ 3, 1, 2 ] ]
+#T# VerifyIdentity Counterexamples
+gap> VerifyIdentity(T3, [[1, 1], [1]]);
+[ [ Transformation( [ 1, 1, 2 ] ) ] ]
 
 #T# Test RandomAssociativityTest
 gap> out := EmptyPlist(3 ^ 9);;
