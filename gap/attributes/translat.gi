@@ -142,20 +142,23 @@ end;
 # non-empty or a_i S intersect a_k S is non-empty.
 SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   local S, reps, repspos, dclasses, lclasses, rclasses,
-        d, f, g, i, j, k, m, n, p, r, s, slist, fposrepk, gposrepk,
+        I, d, e, f, g, i, j, k, m, n, p, r, s, y, slist, fposrepk, gposrepk,
         possiblefrepvals, possiblegrepvals, whenboundfvals, whenboundgvals, pos,
         multtablepositionsets, transposepositionsets, posrepsks, posfrepsks,
         possrepsk, possgrepsk, undosortinglist, sortinglist, p1, p2, L, R,
         fvalsi, gvalsi, ftransrestrictionatstage, gtransrestrictionatstage, 
         flinkedrestrictionatstage, glinkedrestrictionatstage, 
         extendf, reject, propagatef, propagateg, restrictfromf,
-        restrictfromg, bt, unrestrict, linkedpairs, linkedpairsunsorted;
+        restrictfromg, bt, unrestrict, linkedpairs, linkedpairsunsorted,
+        possibleidempotentfvals, possibleidempotentgvals,
+        possiblefrepvalsfromidempotent, possiblegrepvalsfromidempotent,
+        multtable;
 
   S := UnderlyingSemigroup(H);
   L := LeftTranslationsSemigroup(S);
   R := RightTranslationsSemigroup(S);
   n := Size(S);
-  slist := ShallowCopy(AsList(S));
+  slist := ShallowCopy(AsList(S));;
   undosortinglist := [1 .. n];
   SortParallel(slist, undosortinglist);
   sortinglist := [];
@@ -183,7 +186,54 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
       Add(transposepositionsets[j][pos], i);
     od;
   od;
-    
+
+  #only rely on the values in these lists that correspond to idempotents
+  possibleidempotentfvals := [1 .. n];
+  possibleidempotentgvals := [1 .. n];
+  for e in Idempotents(S) do
+    possibleidempotentfvals[Position(slist, e)] := PositionsProperty(slist,
+                                                   x -> x * e = x);
+    possibleidempotentgvals[Position(slist, e)] := PositionsProperty(slist,
+                                                   x -> e * x = x);
+  od;
+  
+  possiblefrepvals := List([1 .. m], x -> [1 .. n]);
+  possiblegrepvals := List([1 .. m], x -> [1 .. n]);
+  
+  #restrict values for f, g based on idemopotents
+  #if e is an idempotent with r_i * s = e
+  #then f(r_i)*s = f(r_i)*s*r_i * s
+  #and f(r_i) satisfies f(r_i) * s = x for some value x such that x * e = e
+  for i in [1 .. m] do
+    for s in S do
+      if IsIdempotent(reps[i] * s) then
+        possiblefrepvals[i] := Intersection(possiblefrepvals[i],
+                                            PositionsProperty(slist,
+                                             x -> x * s = x * s * reps[i] * s));
+        possiblefrepvalsfromidempotent := [];
+        for y in possibleidempotentfvals[Position(slist, reps[i] * s)] do
+          UniteSet(possiblefrepvalsfromidempotent,
+                    transposepositionsets[Position(slist, s)][y]);
+        od;
+        possiblefrepvals[i] := Intersection(possiblefrepvals[i],
+                                              possiblefrepvalsfromidempotent);
+      fi;
+      
+      if IsIdempotent(s * reps[i]) then
+        possiblegrepvals[i] := Intersection(possiblegrepvals[i],
+                                            PositionsProperty(slist,
+                                             x -> s * x = s * reps[i] * s * x));
+        possiblegrepvalsfromidempotent := [];
+        for y in possibleidempotentgvals[Position(slist, s * reps[i])] do
+          UniteSet(possiblegrepvalsfromidempotent,
+                    multtablepositionsets[Position(slist, s)][y]);
+        od;
+        possiblegrepvals[i] := Intersection(possiblegrepvals[i],
+                                              possiblegrepvalsfromidempotent);
+      fi;
+    od;
+  od;
+  
   extendf := function(k)
     f[repspos[k + 1]] := possiblefrepvals[k + 1][1];
     return k + 1;
@@ -199,7 +249,8 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
           return fail;
         fi;
       else
-        f[pos] := Position(slist, slist[f[repspos[k]]] * s);
+        posfrepsks := Position(slist, slist[f[repspos[k]]] * s);
+        f[pos] := posfrepsks;
         whenboundfvals[pos] := k;
       fi;
     od;
@@ -232,6 +283,9 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
           UniteSet(ftransrestrictionatstage[i][k],
                     Difference(possiblefrepvals[i], fvalsi));
           possiblefrepvals[i] := Intersection(possiblefrepvals[i], fvalsi);
+          if Size(possiblefrepvals[i]) = 0 then
+            return fail;
+          fi;
         od;
         
         #deal with the cases reps[i] = reps[k] * s and reps[i] * t = reps[k]
@@ -240,6 +294,9 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
           UniteSet(ftransrestrictionatstage[i][k],
                     Difference(possiblefrepvals[i], fvalsi));
           possiblefrepvals[i] := Intersection(possiblefrepvals[i], fvalsi);
+          if Size(possiblefrepvals[i]) = 0 then
+            return fail;
+          fi;
         fi;
       od;
       for p in multtablepositionsets[repspos[i]][repspos[k]] do
@@ -247,10 +304,10 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
         UniteSet(ftransrestrictionatstage[i][k], 
                   Difference(possiblefrepvals[i], fvalsi));
         possiblefrepvals[i] := Intersection(possiblefrepvals[i], fvalsi);
+        if Size(possiblefrepvals[i]) = 0 then
+          return fail;
+        fi;
       od;
-      if Size(possiblefrepvals[i]) = 0 then
-        return fail;
-      fi;
     od;
     for i in [k .. m] do
       for s in S do
@@ -426,8 +483,6 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   flinkedrestrictionatstage := List([1..m], x -> List([1..m], y -> []));
   gtransrestrictionatstage := List([1..m], x -> List([1..m], y -> []));
   glinkedrestrictionatstage := List([1..m], x -> List([1..m], y -> []));
-  possiblefrepvals := List([1 .. m], x -> [1 .. n]);
-  possiblegrepvals := ShallowCopy(possiblefrepvals);
   whenboundfvals := List([1 .. n], x -> 0);
   whenboundgvals := ShallowCopy(whenboundfvals);
   linkedpairs := [];
