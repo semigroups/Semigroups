@@ -159,12 +159,7 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   R := RightTranslationsSemigroup(S);
   n := Size(S);
   slist := ShallowCopy(AsList(S));;
-  undosortinglist := [1 .. n];
-  SortParallel(slist, undosortinglist);
-  sortinglist := [];
-  for i in [1 .. n] do
-    sortinglist[i] := Position(undosortinglist, i);
-  od;
+  multtable := MultiplicationTable(S);
   
   reps := GeneratorsOfSemigroup(S);
   repspos := [];
@@ -181,7 +176,7 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   transposepositionsets := List([1 .. n], x -> List([1 .. n], y -> []));
   for i in [1 .. n] do
     for j in [1 .. n] do
-      pos := Position(slist, slist[i] * slist[j]);
+      pos := multtable[i][j];
       Add(multtablepositionsets[i][pos], j);
       Add(transposepositionsets[j][pos], i);
     od;
@@ -240,17 +235,16 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   end;
   
   propagatef := function(k)
-    for s in S do
-      pos := Position(slist, reps[k] * s);
+    for i in [1 .. n] do
+      pos := multtable[repspos[k]][i];
       if IsBound(f[pos]) then
-        if not f[pos] = Position(slist, slist[f[repspos[k]]] * s) then
+        if not f[pos] = multtable[f[repspos[k]]][i] then
           UniteSet(glinkedrestrictionatstage[k][k], possiblegrepvals[k]);
           possiblegrepvals[k] := [];
           return fail;
         fi;
       else
-        posfrepsks := Position(slist, slist[f[repspos[k]]] * s);
-        f[pos] := posfrepsks;
+        f[pos] := multtable[f[repspos[k]]][i];
         whenboundfvals[pos] := k;
       fi;
     od;
@@ -258,14 +252,14 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   end;
   
   propagateg := function(k)
-    for s in S do
-      pos := Position(slist, s * reps[k]);
+    for i in [1 .. n] do
+      pos := multtable[i][repspos[k]];
       if IsBound(g[pos]) then
-        if not g[pos] = Position(slist, s * slist[g[repspos[k]]]) then
+        if not g[pos] = multtable[i][g[repspos[k]]] then
           return fail;
         fi;
       else
-        g[pos] := Position(slist, s * slist[g[repspos[k]]]);
+        g[pos] := multtable[i][g[repspos[k]]];
         whenboundgvals[pos] := k;
       fi;
     od;
@@ -274,9 +268,9 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   
   restrictfromf := function(k)
     for i in [k + 1 .. m] do
-      for s in S do
-        posrepsks := Position(slist, reps[k] * s);
-        posfrepsks := Position(slist, slist[f[repspos[k]]] * s);
+      for j in [1 .. n] do
+        posrepsks := multtable[repspos[k]][j];
+        posfrepsks := multtable[f[repspos[k]]][j];
         #restrict by the translation condition
         for p in multtablepositionsets[repspos[i]][posrepsks] do
           fvalsi := transposepositionsets[p][posfrepsks];
@@ -287,9 +281,9 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
             return fail;
           fi;
         od;
-        
-        #deal with the cases reps[i] = reps[k] * s and reps[i] * t = reps[k]
-        if reps[i] = reps[k] * s then 
+
+        #deal with the cases reps[i] = reps[k] * slist[j]
+        if repspos[i] = multtable[k][j] then 
           fvalsi := [posfrepsks];
           UniteSet(ftransrestrictionatstage[i][k],
                     Difference(possiblefrepvals[i], fvalsi));
@@ -299,6 +293,7 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
           fi;
         fi;
       od;
+      #deal with the cases reps[i] * slist[j] = reps[k]
       for p in multtablepositionsets[repspos[i]][repspos[k]] do
         fvalsi := transposepositionsets[p][f[repspos[k]]];  
         UniteSet(ftransrestrictionatstage[i][k], 
@@ -310,18 +305,16 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
       od;
     od;
     for i in [k .. m] do
-      for s in S do
-        posrepsks := Position(slist, reps[k] * s);
+      for j in [1 .. n] do
         #restrict by the linked pair condition
-        gvalsi := transposepositionsets[posrepsks][Position(slist, 
-                      reps[i] * slist[f[Position(slist, reps[k] * s)]])];  
+        posrepsks := multtable[repspos[k]][j];
+        gvalsi := transposepositionsets[posrepsks][multtable[repspos[i]][f[posrepsks]]];
         UniteSet(glinkedrestrictionatstage[i][k], 
                   Difference(possiblegrepvals[i], gvalsi));
         possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
       od;
       #deal with linked condition on reps[k]
-      gvalsi := transposepositionsets[repspos[k]][Position(slist, 
-                  reps[i] * slist[f[repspos[k]]])];
+      gvalsi := transposepositionsets[repspos[k]][multtable[repspos[i]][f[repspos[k]]]];
       UniteSet(glinkedrestrictionatstage[i][k],
                 Difference(possiblegrepvals[i], gvalsi));
       possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
@@ -334,9 +327,9 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
   
   restrictfromg := function(k)
     for i in [k + 1 .. m] do
-      for s in S do
-        possrepsk := Position(slist, s * reps[k]);
-        possgrepsk := Position(slist, s * slist[g[repspos[k]]]);
+      for j in [1 .. n] do
+        possrepsk := multtable[j][repspos[k]]; 
+        possgrepsk := multtable[j][g[repspos[k]]];
         for p in transposepositionsets[repspos[i]][possrepsk] do
           gvalsi := multtablepositionsets[p][possgrepsk];
           UniteSet(gtransrestrictionatstage[i][k],
@@ -345,7 +338,7 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
         od;
         
         #deal with the cases reps[i] = s * reps[k] and s * reps[i] = reps[k]
-        if reps[i] = s * reps[k] then 
+        if repspos[i] = multtable[j][repspos[k]] then 
           gvalsi := [possgrepsk];
           UniteSet(gtransrestrictionatstage[i][k],
                     Difference(possiblegrepvals[i], gvalsi));
@@ -359,8 +352,7 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
           possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
         od;
         
-        fvalsi := multtablepositionsets[possrepsk][Position(slist, 
-                      slist[g[possrepsk]] * reps[i])];  
+        fvalsi := multtablepositionsets[possrepsk][multtable[g[possrepsk]][repspos[i]]];
         UniteSet(flinkedrestrictionatstage[i][k], 
                   Difference(possiblefrepvals[i], fvalsi));
         possiblefrepvals[i] := Intersection(possiblefrepvals[i], fvalsi);
@@ -497,20 +489,10 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
     k := bt(reject(k - 1));
   od;
   
-  linkedpairsunsorted := [];
-  for p in linkedpairs do
-    p1 := [];
-    p2 := [];
-    for i in [1 .. n] do
-      p1[i] := undosortinglist[p[1][sortinglist[i]]];
-      p2[i] := undosortinglist[p[2][sortinglist[i]]];
-    od;
-    Add(linkedpairsunsorted, [ShallowCopy(p1), ShallowCopy(p2)]);
-  od;
-  Apply(linkedpairsunsorted, x -> TranslationalHullElementNC(H, 
-                                  LeftTranslationNC(L, Transformation(x[1])),
-                                  RightTranslationNC(R, Transformation(x[2]))));
-  return linkedpairsunsorted;
+  Apply(linkedpairs, x -> TranslationalHullElementNC(H, 
+                            LeftTranslationNC(L, Transformation(x[1])),
+                            RightTranslationNC(R, Transformation(x[2]))));
+  return linkedpairs;
 end;
 
 #############################################################################
