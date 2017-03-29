@@ -61,7 +61,7 @@ gap> NrLettersIdentity([[1, 2], [2, 1, 3]]);
 gap> ReverseIdentity([[1, 2], [2, 1, 3]]);
 [ [ 2, 1 ], [ 3, 1, 2 ] ]
 
-#T# Test GroupAlgebraProduct
+#T# Test RandomAssociativityTest
 gap> out := EmptyPlist(3 ^ 9);;
 gap> nr := 0;;
 gap> iter1 := IteratorOfTuples([1..3], 3);;
@@ -75,35 +75,9 @@ gap> for tup1 in iter1 do
 >     od;
 >   od;
 > od;
-gap> x := [1, 0, 1];;
-gap> y := [1, 1, 0];;
-gap> GroupAlgebraProduct(out[1729], x, y);
-[ 0, 0, 0 ]
-gap> GroupAlgebraProduct(out[19000], x, y);
-[ 1, 0, 1 ]
-
-#T# Test RandomAssociativityTest
 gap> f := Collected(List(out, x -> RandomAssociativityTest(x)));;
 gap> f[2][2] < 19570;
 false
-
-#T# Test RandomTable
-gap> g := RandomTable(3);;
-gap> IsHomogeneousList(g);
-true
-gap> Size(g) = 3;
-true
-gap> IsPosInt(g[1][1]);
-true
-
-#T# Test RandomTuple
-gap> t := RandomTuple(5);;
-gap> IsHomogeneousList(t);
-true
-gap> Length(t) = 5;
-true
-gap> IsInt(t[1]);
-true
 
 #
 gap> STOP_TEST("Semigroups package: standard/ident.tst");

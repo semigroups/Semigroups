@@ -77,61 +77,40 @@ function(id)
   return List(id, Reversed);
 end);
 
-InstallMethod(RandomTable, "for a positive integer",
-[IsPosInt],
-function(n)
-  return List([1 .. n], x -> List([1 .. n], y -> Random([1 .. n])));
-end);
-
-InstallMethod(RandomTuple, "for a positive integer",
-[IsPosInt],
-function(n)
-  return List([1 .. n], x -> Random([0, 1]));
-end);
-
-InstallMethod(GroupAlgebraProduct,
-"for a table a homogeneous list and a homogeneous list",
-[IsTable, IsHomogeneousList, IsHomogeneousList],
-function(table, x, y)
-  local n, xy, r, s;
-
-  if Length(x) <> Length(y) then
-    ErrorNoReturn("Semigroups: GroupAlgebraProduct: usage,\n",
-                  "the second and third arguments must be lists of the same ",
-                  "size,");
-  elif ForAny(x, w -> not w in [0, 1]) or ForAny(y, w -> not w in [0, 1]) then
-    ErrorNoReturn("Semigroups: GroupAlgebraProduct: usage,\n",
-                  "the second and third arguments should be lists whose ",
-                  "entries are in [0, 1],");
-  fi;
-
-  n := Length(table);
-  xy := [1 .. n] * 0;
-
-  for r in [1 .. n] do
-    for s in [1 .. n] do
-      xy[table[r][s]] := (xy[table[r][s]] + x[r] * y[s]);
-    od;
-  od;
-
-  return List(xy, val -> val mod 2);
-end);
-
 InstallMethod(RandomAssociativityTest, "for a table",
 [IsTable],
 function(table)
-  local n, delta, nr, t, i;
+  local n, delta, nr, t, i, GAProduct, nr3NilAll;
+
+  GAProduct := function(tab, x, y)
+                 local n, xy, r, s;
+
+                 n := Length(tab);
+                 xy := [1 .. n] * 0;
+
+                 for r in [1 .. n] do
+                   for s in [1 .. n] do
+                     xy[tab[r][s]] := (xy[tab[r][s]] + x[r] * y[s]);
+                   od;
+                 od;
+
+                 return List(xy, val -> val mod 2);
+               end;    
+
+  nr3NilAll := function( n )
+                 return Sum([2 .. Int(n + 1 / 2 - RootInt(n - 1))], k ->
+                            Binomial(n, k) * k * Sum([0 .. k - 1], i -> (-1) ^
+                            i * Binomial(k - 1, i) * (k - i) ^ ((n - k) ^ 2)));
+               end;
 
   n := Length(table);
-  delta := Float(Nr3NilpotentSemigroups(n, "Labelled") / n ^ (n ^ 2)) / 10 ^ 17;
+  delta := Float(nr3NilAll(n) / n ^ (n ^ 2)) / 10 ^ 17;
   nr := Int(Ceil(Log2(1 / delta)));
 
   for i in [1 .. nr] do
-    t := List([1 .. 3], x -> RandomTuple(n));
-    if GroupAlgebraProduct(table, GroupAlgebraProduct(table, t[1], t[2]), t[3])
-        <> GroupAlgebraProduct(table, t[1], GroupAlgebraProduct(table,
-                                                                t[2], t[3]))
-        then
+    t := List([1 .. 3], x -> List([1 .. n], x -> Random([0, 1])));
+    if GAProduct(table, GAProduct(table, t[1], t[2]), t[3])
+       <> GAProduct(table, t[1], GAProduct(table, t[2], t[3])) then
       return false;
     fi;
   od;

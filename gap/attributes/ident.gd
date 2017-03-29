@@ -17,11 +17,5 @@ DeclareOperation("NrLettersIdentity",
                  [IsHomogeneousList]);
 DeclareOperation("ReverseIdentity",
                  [IsHomogeneousList]);
-DeclareOperation("RandomTable",
-                 [IsPosInt]);
-DeclareOperation("RandomTuple",
-                 [IsPosInt]);
-DeclareOperation("GroupAlgebraProduct",
-                 [IsTable, IsHomogeneousList, IsHomogeneousList]);
 DeclareOperation("RandomAssociativityTest",
                  [IsTable]);

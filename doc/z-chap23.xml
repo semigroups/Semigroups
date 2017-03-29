@@ -25,9 +25,6 @@
     <#Include Label = "VerifyIdentity">
     <#Include Label = "NrLettersIdentity">
     <#Include Label = "ReverseIdentity">
-    <#Include Label = "RandomTable">
-    <#Include Label = "RandomTuple">
-    <#Include Label = "GroupAlgebraProduct">
     <#Include Label = "RandomAssociativityTest">
 
   </Section>
