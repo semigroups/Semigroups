@@ -93,8 +93,7 @@ gap> ReverseIdentity(id);
       operation described by the multiplication table <C>table</C> is
       associative.
       <Example><![CDATA[
-gap> table := RandomTable(3);
-[ [ 2, 2, 2 ], [ 3, 1, 3 ], [ 2, 3, 2 ] ]
+gap> table := [[2, 2, 2], [3, 1, 3], [2, 3, 2]];;
 gap> RandomAssociativityTest(table);
 false
 gap> table2 := [[1, 1, 1], [1, 1, 1], [1, 1, 1]];;

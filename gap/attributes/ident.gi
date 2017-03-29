@@ -97,7 +97,7 @@ function(table)
                  return List(xy, val -> val mod 2);
                end;    
 
-  nr3NilAll := function( n )
+  nr3NilAll := function(n)
                  return Sum([2 .. Int(n + 1 / 2 - RootInt(n - 1))], k ->
                             Binomial(n, k) * k * Sum([0 .. k - 1], i -> (-1) ^
                             i * Binomial(k - 1, i) * (k - i) ^ ((n - k) ^ 2)));
@@ -110,7 +110,7 @@ function(table)
   for i in [1 .. nr] do
     t := List([1 .. 3], x -> List([1 .. n], x -> Random([0, 1])));
     if GAProduct(table, GAProduct(table, t[1], t[2]), t[3])
-       <> GAProduct(table, t[1], GAProduct(table, t[2], t[3])) then
+        <> GAProduct(table, t[1], GAProduct(table, t[2], t[3])) then
       return false;
     fi;
   od;
