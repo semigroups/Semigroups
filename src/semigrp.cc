@@ -26,7 +26,7 @@
 #include "bipart.h"
 #include "converter.h"
 #include "fropin.h"
-#include "gap.h"
+#include "pkg.h"
 #include "src/compiled.h"
 
 using libsemigroups::word_t;

@@ -23,8 +23,8 @@
 
 #include <vector>
 
-#include "gap.h"
 #include "libsemigroups/cong.h"
+#include "pkg.h"
 #include "rnams.h"
 #include "semigrp.h"
 

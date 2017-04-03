@@ -20,8 +20,8 @@
 // package that involves GAP directly, i.e. importing functions/variables from
 // GAP and declaring functions for GAP etc.
 
-#ifndef SEMIGROUPS_SRC_GAP_H_
-#define SEMIGROUPS_SRC_GAP_H_
+#ifndef SEMIGROUPS_SRC_PKG_H_
+#define SEMIGROUPS_SRC_PKG_H_
 
 #include <assert.h>
 #include <iostream>
@@ -128,4 +128,4 @@ extern Obj IsSemigroup;
 extern Obj IsSemigroupIdeal;
 extern Obj IsActingSemigroup;
 
-#endif  // SEMIGROUPS_SRC_GAP_H_
+#endif  // SEMIGROUPS_SRC_PKG_H_

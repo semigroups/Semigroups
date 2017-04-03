@@ -20,7 +20,7 @@
 // package that involves GAP directly, i.e. importing functions/variables from
 // GAP and declaring functions for GAP etc.
 
-#include "gap.h"
+#include "pkg.h"
 
 #include <assert.h>
 
@@ -405,13 +405,13 @@ static StructGVarFilt GVarFilts[] = {
      "obj",
      &IsBipartFilt,
      (GVarFilt) IsBipartHandler,
-     "gap.cc:IS_BIPART"},
+     "pkg.cc:IS_BIPART"},
 
     {"IS_BLOCKS",
      "obj",
      &IsBlocksFilt,
      (GVarFilt) IsBlocksHandler,
-     "gap.cc:IS_BLOCKS"},
+     "pkg.cc:IS_BLOCKS"},
 
     {0, 0, 0, 0, 0} /* Finish with an empty entry */
 };
@@ -427,7 +427,7 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 
 static StructGVarFunc GVarFuncs[] = {
 #ifdef DEBUG
-    GVAR_ENTRY("gap.cc", SEMIGROUPS_IS_OPTIMIZED, 0, ""),
+    GVAR_ENTRY("pkg.cc", SEMIGROUPS_IS_OPTIMIZED, 0, ""),
 #endif
 
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_LIST, 1, "S"),
@@ -674,7 +674,7 @@ static StructInitInfo module = {
     /* preSave     = */ 0,
     /* postSave    = */ 0,
     /* postRestore = */ 0,
-    /* filename    = */ (char*) "pkg/semigroups/src/gap.cc", // NOLINT()
+    /* filename    = */ (char*) "pkg/semigroups/src/pkg.cc",  // NOLINT()
     /* isGapRootR  = */ true};
 
 extern "C" StructInitInfo* Init__Dynamic(void) {

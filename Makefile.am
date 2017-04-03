@@ -11,7 +11,7 @@ GAPINSTALLLIB = $(abs_top_srcdir)/$(BINARCHDIR)/semigroups.so
 
 lib_LTLIBRARIES = semigroups.la
 
-semigroups_la_SOURCES =  src/gap.cc src/converter.cc src/bipart.cc 
+semigroups_la_SOURCES =  src/pkg.cc src/converter.cc src/bipart.cc 
 semigroups_la_SOURCES += src/uf.cc src/fropin.cc src/congpairs.cc
 semigroups_la_SOURCES += src/semifp.cc src/semigrp.cc
 semigroups_la_SOURCES += src/libsemigroups/blocks.cc

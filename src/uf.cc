@@ -24,7 +24,7 @@
 
 #include <assert.h>
 
-#include "gap.h"
+#include "pkg.h"
 #include "src/compiled.h"
 
 #include "libsemigroups/util/uf.h"

@@ -21,8 +21,8 @@
 
 #include <assert.h>
 
-#include "gap.h"
 #include "libsemigroups/elements.h"
+#include "pkg.h"
 #include "src/compiled.h"
 
 using libsemigroups::Bipartition;
