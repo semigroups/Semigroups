@@ -10,6 +10,7 @@ INITIALDIR=`pwd`
 cd ..
 git clone -b $GAP_BRANCH --depth=1 https://github.com/$GAP_FORK/gap.git gap
 cd gap
+./autogen.sh
 ./configure --with-gmp=system $GAP_FLAGS
 make
 mkdir pkg
