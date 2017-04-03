@@ -1909,11 +1909,11 @@ gap> MatrixEntries(R);
 
 #T# IsomorphismReesMatrixSemigroup, infinite
 gap> IsomorphismReesMatrixSemigroup(FreeInverseSemigroup(2));
-Error, usage: the semigroup must be a finite simple semigroup,
+Error, the argument must be a finite simple semigroup
 
 #T# IsomorphismReesZeroMatrixSemigroup, infinite
 gap> IsomorphismReesZeroMatrixSemigroup(FreeSemigroup(2));
-Error, usage: the semigroup must be a finite 0-simple semigroup,
+Error, the argument must be a finite 0-simple semigroup
 
 #T# IsomorphismReesZeroMatrixSemigroup, error, 1/1
 gap> IsomorphismReesZeroMatrixSemigroup(RegularBooleanMatMonoid(2));
