@@ -221,7 +221,7 @@ bool semi_obj_get_report(gap_semigroup_t so) {
       return (GET_ELM_PREC(opts, i) == True ? true : false);
     }
   }
-  return false;
+  return true;
 }
 
 static inline size_t semi_obj_get_nr_threads(gap_semigroup_t so) {
