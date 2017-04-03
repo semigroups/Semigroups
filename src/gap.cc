@@ -483,6 +483,9 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("uf.cc", UF_FLATTEN, 1, "uf"),
     GVAR_ENTRY("uf.cc", UF_TABLE, 1, "uf"),
     GVAR_ENTRY("uf.cc", UF_BLOCKS, 1, "uf"),
+    GVAR_ENTRY("uf.cc", UF_NR_BLOCKS, 1, "uf"),
+    GVAR_ENTRY("uf.cc", UF_BLOCK_REPS, 1, "uf"),
+    GVAR_ENTRY("uf.cc", UF_JOIN, 2, "uf1, uf2"),
 
     GVAR_ENTRY("bipart.cc", BIPART_NC, 1, "list"),
     GVAR_ENTRY("bipart.cc", BIPART_EXT_REP, 1, "x"),

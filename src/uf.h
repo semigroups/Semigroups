@@ -23,6 +23,7 @@
 #ifndef SEMIGROUPS_SRC_UF_H_
 #define SEMIGROUPS_SRC_UF_H_
 
+#include "gap.h"
 #include "src/compiled.h"
 
 // GAP level functions
@@ -35,5 +36,8 @@ Obj UF_UNION(Obj self, Obj uf, Obj pair);
 Obj UF_FLATTEN(Obj self, Obj uf);
 Obj UF_TABLE(Obj self, Obj uf);
 Obj UF_BLOCKS(Obj self, Obj uf);
+Obj UF_NR_BLOCKS(Obj self, Obj uf);
+Obj UF_BLOCK_REPS(Obj self, Obj uf);
+Obj UF_JOIN(Obj self, Obj uf1, Obj uf2);
 
 #endif  // SEMIGROUPS_SRC_UF_H_

@@ -100,3 +100,36 @@ Obj UF_BLOCKS(Obj self, Obj uf) {
   }
   return gap_blocks;
 }
+
+gap_int_t UF_NR_BLOCKS(Obj self, Obj uf) {
+  assert(TNUM_OBJ(uf) == T_SEMI && SUBTYPE_OF_T_SEMI(uf) == T_SEMI_SUBTYPE_UF);
+  return INTOBJ_INT(CLASS_OBJ<UF*>(uf)->nr_blocks());
+}
+
+gap_list_t UF_BLOCK_REPS(Obj self, Obj uf) {
+  assert(TNUM_OBJ(uf) == T_SEMI && SUBTYPE_OF_T_SEMI(uf) == T_SEMI_SUBTYPE_UF);
+  UF* uf_cpp = CLASS_OBJ<UF*>(uf);
+  uf_cpp->reset_next_rep();
+  size_t next_rep = uf_cpp->next_rep();
+
+  gap_list_t out = NEW_PLIST(T_PLIST_CYC, 0);
+  SET_LEN_PLIST(out, 0);
+  size_t nr = 0;
+
+  while (next_rep < uf_cpp->get_size()) {
+    AssPlist(out, ++nr, INTOBJ_INT(next_rep + 1));
+    next_rep = uf_cpp->next_rep();
+  }
+  return out;
+}
+
+Obj UF_JOIN(Obj self, Obj uf1, Obj uf2) {
+  assert(TNUM_OBJ(uf1) == T_SEMI
+         && SUBTYPE_OF_T_SEMI(uf1) == T_SEMI_SUBTYPE_UF);
+  assert(TNUM_OBJ(uf2) == T_SEMI
+         && SUBTYPE_OF_T_SEMI(uf2) == T_SEMI_SUBTYPE_UF);
+  assert(CLASS_OBJ<UF*>(uf1)->get_size() == CLASS_OBJ<UF*>(uf2)->get_size());
+  Obj uf_join = UF_COPY(self, uf1);
+  CLASS_OBJ<UF*>(uf_join)->join(CLASS_OBJ<UF*>(uf2));
+  return uf_join;
+}
