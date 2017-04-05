@@ -11,12 +11,12 @@
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "3.0.0">
 ##  <!ENTITY GAPVERS "4.9.0">
-##  <!ENTITY DIGRAPHSVERS "0.6.0">
-##  <!ENTITY ORBVERS "4.7.3">
+##  <!ENTITY DIGRAPHSVERS "0.7.1">
+##  <!ENTITY ORBVERS "4.7.5">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY ARCHIVENAME "semigroups-3.0.0">
-##  <!ENTITY COPYRIGHTYEARS "2011-16">
+##  <!ENTITY COPYRIGHTYEARS "2011-17">
 ##  <#/GAPDoc>
 
 BindGlobal("_RecogsFunnyNameFormatterFunction",
@@ -211,9 +211,9 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.9.0",
-  NeededOtherPackages := [["orb", ">=4.7.3"],
+  NeededOtherPackages := [["orb", ">=4.7.5"],
                           ["io", ">=4.4.4"],
-                          ["digraphs", ">=0.6.0"],
+                          ["digraphs", ">=0.7.1"],
                           ["genss", ">=1.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
 
