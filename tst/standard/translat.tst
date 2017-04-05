@@ -278,8 +278,8 @@ gap> Size(TranslationalHull(S));
 4096
 gap> S := Semigroup([Transformation([1,1,2]), Transformation([3,1,3])]);;
 gap> H := TranslationalHull(S);
-<translational hull over <transformation semigroup of size 11, degree 3 with 
- 2 generators>>
+<translational hull over <regular transformation semigroup of size 11, 
+ degree 3 with 2 generators>>
 gap> H = Semigroup(H);
 true
 gap> Size(H);
@@ -304,8 +304,26 @@ gap> OneOp(Representative(H)) = TranslationalHullElement(
 true
 
 #T# Make sure the generic method and special methods agree for hulls
-gap> Semigroup(SEMIGROUPS.TranslationalHullElementsGeneric(H)) = H;
+gap> Semigroup(SEMIGROUPS.TranslationalHullElementsByGenerators(H)) = H;
 true
+
+#T# TranslationalHull for semigroups which are not IsEnumerable
+gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);;
+gap> S := AsSemigroup(IsFpSemigroup, S);;
+gap> IsEnumerableSemigroupRep(S);
+false
+gap> H := TranslationalHull(S);;
+gap> for h in TranslationalHull(S) do
+> l := h![1];
+> r := h![2];
+> for s in S do
+> for t in S do
+> if not s * (t^l) = (s ^ r) * t then
+> Print(s, t, h);
+> fi;
+> od;
+> od;
+> od;
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(a);

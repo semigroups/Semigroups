@@ -75,7 +75,7 @@ SEMIGROUPS.TranslationalHullElements := function(H)
   elif IsZeroSimpleSemigroup(S) then
     return SEMIGROUPS.TranslationalHullElementsOfZeroSimple(H);
   else
-    return SEMIGROUPS.TranslationalHullElementsGeneric(H);
+    return SEMIGROUPS.TranslationalHullElementsByGenerators(H);
   fi;
 end;
 
@@ -140,9 +140,9 @@ end;
 # s*a_i f(a_k) = (s*a_i)g a_k and a_k f(a_i * s) = (a_k)g a_i * s,
 # as well as restriction by the translation condition if Sa_i intersect Sa_k is
 # non-empty or a_i S intersect a_k S is non-empty.
-SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
-  local S, reps, repspos, dclasses, lclasses, rclasses,
-        I, d, e, f, g, i, j, k, m, n, p, r, s, y, slist, fposrepk, gposrepk,
+SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
+  local X, iso, inv, S, reps, repspos, dclasses, lclasses, rclasses,
+        I, d, e, f, g, i, j, k, m, n, p, r, s, x, y, slist, fposrepk, gposrepk,
         possiblefrepvals, possiblegrepvals, whenboundfvals, whenboundgvals, pos,
         multtablepositionsets, transposepositionsets, posrepsks, posfrepsks,
         possrepsk, possgrepsk, undosortinglist, sortinglist, p1, p2, L, R,
@@ -152,13 +152,30 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
         restrictfromg, bt, unrestrict, linkedpairs, linkedpairsunsorted,
         possibleidempotentfvals, possibleidempotentgvals,
         possiblefrepvalsfromidempotent, possiblegrepvalsfromidempotent,
-        multtable;
-
-  S := UnderlyingSemigroup(H);
-  L := LeftTranslationsSemigroup(S);
-  R := RightTranslationsSemigroup(S);
-  n := Size(S);
-  slist := ShallowCopy(AsList(S));;
+        multtable, xlist, isolist, invlist;
+  
+  X := UnderlyingSemigroup(H);
+  n := Size(X);
+  
+  if not IsEnumerableSemigroupRep(X) then
+    iso := IsomorphismSemigroup(IsTransformationSemigroup, X);
+    inv := InverseGeneralMapping(iso);
+    S := Range(iso);
+    xlist := AsList(X);
+    slist := AsListCanonical(S);
+    isolist := [1 .. n];
+    invlist := [1 .. n];
+    for i in [1 .. n] do
+      isolist[i] := Position(slist, xlist[i]^iso);
+      invlist[i] := Position(xlist, slist[i]^inv);
+    od;
+  else
+    S := X;
+    slist := AsListCanonical(S);
+  fi;
+  
+  L := LeftTranslationsSemigroup(X);
+  R := RightTranslationsSemigroup(X);
   multtable := MultiplicationTable(S);
   
   reps := GeneratorsOfSemigroup(S);
@@ -489,9 +506,19 @@ SEMIGROUPS.TranslationalHullElementsGeneric := function(H)
     k := bt(reject(k - 1));
   od;
   
-  Apply(linkedpairs, x -> TranslationalHullElementNC(H, 
-                            LeftTranslationNC(L, Transformation(x[1])),
-                            RightTranslationNC(R, Transformation(x[2]))));
+  if not IsEnumerableSemigroupRep(S) then
+    for x in linkedpairs do
+      for i in [1 .. n] do
+        x[1][i] := invlist[x[1][isolist[i]]];
+        x[2][i] := invlist[x[2][isolist[i]]];
+      od;
+    od;
+  else
+    Apply(linkedpairs, x -> TranslationalHullElementNC(H, 
+                              LeftTranslationNC(L, Transformation(x[1])),
+                              RightTranslationNC(R, Transformation(x[2]))));
+  fi;
+  
   return linkedpairs;
 end;
 
