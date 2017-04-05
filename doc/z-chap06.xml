@@ -4,7 +4,7 @@
   </Heading>
 
   In this chapter we describe the various ways that semigroups and monoids can
-  be created in &Semigroups;, the options that are available at the time of
+  be created in &Semigroups;, and the options that are available at the time of
   creation.
  
   <Section Label = "Acting semigroups"><!--TODOFIXME: move this-->
@@ -80,6 +80,7 @@
         those for semigroups that do not; see Section <Ref Sect =
           "Introduction"/>.
         In order for a semigroup to use the latter methods in
+        <!-- the reference to IsActingSemigroup does not work -->
         &Semigroups; it must satisfy <Ref Prop="IsActingSemigroup"/>.  By
         default any semigroup or monoid of transformations, partial
         permutations, Rees 0-matrix elements, or bipartitions satisfies

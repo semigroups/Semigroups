@@ -129,7 +129,7 @@
     The &Semigroups; package provides methods to calculate the maximal
     subsemigroups of a finite semigroup, subject to various conditions.  A
     <E>maximal subsemigroup</E> of a semigroup is a proper subsemigroup
-    which is contained in no other proper subsemigroup of the semigroup.
+    that is contained in no other proper subsemigroup of the semigroup.
 
     <P/>
 

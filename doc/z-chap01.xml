@@ -116,7 +116,7 @@
         (written in C++) is used to compute semigroups of these types. The
         implementation in &Semigroups; performs at least as well as the C
         programme <Cite Key = "Pin2009aa"/> by Jean-Eric Pin. This algorithm
-        out performs the algorithms for acting semigroups when applied to
+        outperforms the algorithms for acting semigroups when applied to
         semigroups with small (trivial) subgroups, and is also used for
         semigroups to which the algorithms described in <Cite Key =
           "Mitchell2015aa"/> do not apply. It is possible to specify which

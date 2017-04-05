@@ -234,7 +234,7 @@ gap> AsMonoid(S);
   <Returns>A semigroup.</Returns>
   <Description>
     The operations described in this section can be used to generate
-    semigroups, in some sense, at random. There is not guarantee given about
+    semigroups, in some sense, at random. There is no guarantee given about
     the distribution of these semigroups, and this is only intended as a means
     of generating semigroups for testing and other similar purposes.
     <P/>
@@ -261,6 +261,7 @@ gap> AsMonoid(S);
     For <C>RandomMonoid</C> and <C>RandomInverseMonoid</C> the argument
     <A>filter</A>  must be of the form <C>IsXMonoid</C>; such as <Ref Prop =
       "IsBipartitionMonoid"/> or <Ref Prop = "IsBooleanMatMonoid"/>.
+    <!-- FIXME the reference to IsBooleanMatMonoid does not work -->
     <P/>
 
     Suppose that the first argument <A>filter</A> is <Ref Prop="IsFpSemigroup"
