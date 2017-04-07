@@ -60,7 +60,7 @@ gap> D[1] = DClass(A, Bipartition([[1], [2], [3], [4, -4], [5], [6], [7], [-1],
 true
 gap> Size(D);
 1
-gap> Set(JoinIrreducibleDClasses(B)) = 
+gap> Set(JoinIrreducibleDClasses(B)) =
 > Set([DClass(B, 
 >             Bipartition([[1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7], 
 >                          [3, -3]])), 
@@ -68,7 +68,7 @@ gap> Set(JoinIrreducibleDClasses(B)) =
 >             Bipartition([[1, -1], 
 >                          [2, 3, 4, 5, 6, 7, -2, -3, -4, -5, -6, -7]]))]);
 true
-gap> Set(JoinIrreducibleDClasses(J)) = 
+gap> Set(JoinIrreducibleDClasses(J)) =
 > Set([DClass(J, 
 >             Bipartition([[1, 2, 4, 5, 6, 7, -1, -2, -4, -5, -6, -7], 
 >                          [3, -3]])), 

@@ -248,11 +248,12 @@ false
 #T# IsUniversalSemigroupCongruence for an RMS congruence
 gap> S := ReesMatrixSemigroup(SymmetricGroup(4),
 >                             [[(), (), (), ()],
->                              [(2,4), (), (1,3), ()],
->                              [(1,2,3,4), (), (1,3,2,4), ()]]);;
-gap> cong := RMSCongruenceByLinkedTriple(S,
->                                        Group([(2,4,3),(1,4)(2,3),(1,3)(2,4)]),
->                                        [[1], [2], [3], [4]], [[1],[2, 3]]);;
+>                              [(2, 4), (), (1, 3), ()],
+>                              [(1, 2, 3, 4), (), (1, 3, 2, 4), ()]]);;
+gap> cong := RMSCongruenceByLinkedTriple(S, Group([(2, 4, 3),
+>                                                  (1, 4)(2, 3),
+>                                                  (1, 3)(2, 4)]),
+>                                        [[1], [2], [3], [4]], [[1], [2, 3]]);;
 gap> IsUniversalSemigroupCongruence(cong);
 false
 gap> cong := RMSCongruenceByLinkedTriple(S, SymmetricGroup(4),

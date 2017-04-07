@@ -889,7 +889,7 @@ gap> ForAll(enum, x -> enum[Position(enum, x)] = x);
 true
 gap> s := Semigroup(gens);
 <partial perm semigroup of rank 8 with 10 generators>
-gap> d := DClass(s, PartialPerm([1,3,6],[7,4,8]));
+gap> d := DClass(s, PartialPerm([1, 3, 6], [7, 4, 8]));
 <Green's D-class: [1,7][3,4][6,8]>
 gap> enum := Enumerator(d);
 <enumerator of D-class>

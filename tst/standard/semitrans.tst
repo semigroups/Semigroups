@@ -145,8 +145,9 @@ gap> GeneratorsOfSemigroup(S);
 [ IdentityTransformation, Transformation( [ 1, 2, 3, 7, 4, 5, 6 ] ), 
   Transformation( [ 1, 2, 3, 5, 4 ] ), Transformation( [ 1, 2, 3, 4, 5, 5 ] ) 
  ]
-gap> S := Semigroup([Transformation([2, 6, 7, 2, 6, 1, 1, 5]), 
->  Transformation([3, 8, 1, 4, 5, 6, 7, 1]), 
+gap> S := Semigroup([
+> Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
+>  Transformation([3, 8, 1, 4, 5, 6, 7, 1]),
 >  Transformation([4, 3, 2, 7, 7, 6, 6, 5])]);;
 gap> GeneratorsOfSemigroup(S ^ (1, 7, 8, 6, 10)(3, 9, 5, 4));
 [ Transformation( [ 1, 10, 2, 10, 5, 4, 2, 7, 8, 7 ] ), 
@@ -159,8 +160,9 @@ gap> DigraphOfActionOnPoints(FullTransformationSemigroup(4));
 <digraph with 4 vertices, 9 edges>
 gap> OutNeighbours(last);
 [ [ 1, 2 ], [ 1, 2, 3 ], [ 3, 4 ], [ 1, 4 ] ]
-gap> S := Semigroup([Transformation([2, 6, 7, 2, 6, 1, 1, 5]), 
->  Transformation([3, 8, 1, 4, 5, 6, 7, 1]), 
+gap> S := Semigroup([
+> Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
+>  Transformation([3, 8, 1, 4, 5, 6, 7, 1]),
 >  Transformation([4, 3, 2, 7, 7, 6, 6, 5])]);;
 gap> DigraphOfActionOnPoints(S);
 <digraph with 8 vertices, 22 edges>
@@ -181,7 +183,8 @@ gap> R := RClass(S, Transformation([3, 2, 4, 2, 1]));
 <Green's R-class: Transformation( [ 3, 2, 4, 2, 1 ] )>
 gap> SEMIGROUPS.SmallestElementRClass(R);
 Transformation( [ 1, 2, 3, 2, 4 ] )
-gap> S := Semigroup([Transformation([4, 4, 3, 6, 5, 1]), 
+gap> S := Semigroup([
+> Transformation([4, 4, 3, 6, 5, 1]),
 >  Transformation([5, 4, 5, 4, 6, 6])]);;
 gap> S := Semigroup(S, rec(acting := true));;
 gap> R := RClass(S, Transformation([4, 4, 5, 6, 6, 5]));
@@ -202,7 +205,8 @@ gap> R := RClass(S, Transformation([4, 2, 4, 1, 2]));
 <Green's R-class: Transformation( [ 1, 3, 1, 2, 3 ] )>
 gap> SEMIGROUPS.LargestElementRClass(R);
 Transformation( [ 5, 4, 5, 3, 4 ] )
-gap> S := Semigroup([Transformation([4, 4, 3, 6, 5, 1]), 
+gap> S := Semigroup([
+> Transformation([4, 4, 3, 6, 5, 1]),
 >  Transformation([5, 4, 5, 4, 6, 6])]);;
 gap> S := Semigroup(S, rec(acting := true));;
 gap> R := RClass(S, Transformation([4, 4, 5, 6, 6, 5]));
@@ -223,8 +227,9 @@ gap> Idempotents(FullTransformationMonoid(3), 2);
 gap> Idempotents(FullTransformationMonoid(3), 1);
 [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 2, 2, 2 ] ), 
   Transformation( [ 3, 3, 3 ] ) ]
-gap> S := Semigroup([Transformation([5, 1, 3, 1, 4, 2, 5, 2]), 
->  Transformation([7, 1, 7, 4, 2, 5, 6, 3]), 
+gap> S := Semigroup([
+> Transformation([5, 1, 3, 1, 4, 2, 5, 2]),
+>  Transformation([7, 1, 7, 4, 2, 5, 6, 3]),
 >  Transformation([8, 4, 6, 5, 7, 8, 8, 7])]);;
 gap> Idempotents(S, 9);
 [  ]
@@ -252,7 +257,8 @@ gap> true;;
 gap> S := Semigroup(PartialPerm([2, 3], [1, 4]));;
 gap> R := RClass(S, RepresentativeOfMinimalIdeal(S));
 <Green's R-class: <empty partial perm>>
-gap> S := Semigroup([Transformation([1, 3, 4, 1, 3, 5]), 
+gap> S := Semigroup([
+> Transformation([1, 3, 4, 1, 3, 5]),
 >  Transformation([5, 1, 6, 1, 6, 3])]);;
 gap> R := HClass(S, Transformation([4, 5, 3, 4, 5, 5]));
 <Green's H-class: Transformation( [ 4, 5, 3, 4, 5, 5 ] )>
@@ -373,7 +379,8 @@ gap> BruteForceInverseCheck(map);
 true
 
 #T# isomorphism from block bijection semigroup to transformation semigroup
-gap> S := Semigroup([Bipartition([[1, 3, -2, -5], [2, 4, -1], [5, -3, -4]]),
+gap> S := Semigroup([
+> Bipartition([[1, 3, -2, -5], [2, 4, -1], [5, -3, -4]]),
 >  Bipartition([[1, 3, -1], [2, 4, -2, -3], [5, -4, -5]]),
 >  Bipartition([[1, 4, 5, -2], [2, 3, -1, -3, -4, -5]]),
 >  Bipartition([[1, -5], [2, 3, -1, -2], [4, -4], [5, -3]]),
@@ -413,10 +420,14 @@ gap> BruteForceInverseCheck(map);
 true
 
 #T# isomorphism from boolean mat semigroup to transformation semigroup
-gap> S := Monoid(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
->                Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
->                Matrix(IsBooleanMat, [[1, 0], [1, 1]]),
->                Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
+gap> S := Monoid(Matrix(IsBooleanMat,
+>        [[0, 1], [1, 0]]),
+>                Matrix(IsBooleanMat,
+>        [[0, 1], [1, 0]]),
+>                Matrix(IsBooleanMat,
+>        [[1, 0], [1, 1]]),
+>                Matrix(IsBooleanMat,
+>        [[1, 0], [0, 0]]));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <monoid of 2x2 boolean matrices with 4 generators>, 
 <transformation monoid of degree 4 with 4 generators>
@@ -427,8 +438,10 @@ gap> BruteForceInverseCheck(map);
 true
 
 #T# isomorphism from max plus mat semigroup to transformation semigroup
-gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[0, -4], [-4, -1]]),
->                   Matrix(IsMaxPlusMatrix, [[0, -3], [-3, -1]]));;
+gap> S := Semigroup(Matrix(IsMaxPlusMatrix,
+>        [[0, -4], [-4, -1]]),
+>                   Matrix(IsMaxPlusMatrix,
+>        [[0, -3], [-3, -1]]));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <semigroup of size 26, 2x2 max-plus matrices with 2 
  generators>, <transformation semigroup of size 26, degree 27 with 2 
@@ -439,8 +452,10 @@ gap> BruteForceInverseCheck(map);
 true
 
 #T# isomorphism from min plus mat semigroup to transformation semigroup
-gap> S := Semigroup(Matrix(IsMinPlusMatrix, [[0, 4], [4, 1]]),
->                   Matrix(IsMinPlusMatrix, [[0, 3], [3, 1]]));;
+gap> S := Semigroup(Matrix(IsMinPlusMatrix,
+>        [[0, 4], [4, 1]]),
+>                   Matrix(IsMinPlusMatrix,
+>        [[0, 3], [3, 1]]));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <semigroup of size 26, 2x2 min-plus matrices with 2 
  generators>, <transformation semigroup of size 26, degree 27 with 2 
@@ -452,8 +467,10 @@ true
 
 #T# isomorphism from tropical max plus mat semigroup to transformation
 #   semigroup
-gap> S := Semigroup(Matrix(IsTropicalMaxPlusMatrix, [[0, 4], [4, 1]], 10),
->                   Matrix(IsTropicalMaxPlusMatrix, [[0, 3], [3, 1]], 10));;
+gap> S := Semigroup(Matrix(IsTropicalMaxPlusMatrix,
+>        [[0, 4], [4, 1]], 10),
+>                   Matrix(IsTropicalMaxPlusMatrix,
+>        [[0, 3], [3, 1]], 10));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <semigroup of size 13, 2x2 tropical max-plus matrices with 
  2 generators>, <transformation semigroup of size 13, degree 14 with 2 
@@ -465,8 +482,10 @@ true
 
 #T# isomorphism from tropical min plus mat semigroup to transformation
 #   semigroup
-gap> S := Semigroup(Matrix(IsTropicalMinPlusMatrix, [[0, 4], [4, 1]], 5),
->                   Matrix(IsTropicalMinPlusMatrix, [[0, 3], [3, 1]], 5));;
+gap> S := Semigroup(Matrix(IsTropicalMinPlusMatrix,
+>        [[0, 4], [4, 1]], 5),
+>                   Matrix(IsTropicalMinPlusMatrix,
+>        [[0, 3], [3, 1]], 5));;
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <semigroup of size 18, 2x2 tropical min-plus matrices with 
  2 generators>, <transformation semigroup of size 18, degree 19 with 2 
@@ -480,18 +499,21 @@ true
 #   semigroup. This is the general linear semigroup over the field with 3
 #   elements
 gap> S := Monoid(
-> Matrix(IsNTPMatrix, [[1, 0, 0],
->                      [0, 2, 0],
->                      [0, 0, 2]],
->                     0, 3),
-> Matrix(IsNTPMatrix, [[1, 0, 2],
->                      [1, 0, 0],
->                      [0, 1, 0]],
->                     0, 3),
-> Matrix(IsNTPMatrix, [[2, 0, 0],
->                      [0, 2, 0],
->                      [0, 0, 0]],
->                     0, 3));
+> Matrix(IsNTPMatrix,
+>        [[1, 0, 0],
+>         [0, 2, 0],
+>         [0, 0, 2]],
+>        0, 3),
+> Matrix(IsNTPMatrix,
+>        [[1, 0, 2],
+>         [1, 0, 0],
+>         [0, 1, 0]],
+>        0, 3),
+> Matrix(IsNTPMatrix,
+>        [[2, 0, 0],
+>         [0, 2, 0],
+>         [0, 0, 0]],
+>        0, 3));
 <monoid of 3x3 ntp matrices with 3 generators>
 gap> IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <monoid of size 19683, 3x3 ntp matrices with 3 generators>
@@ -502,9 +524,12 @@ MappingByFunction( <monoid of size 19683, 3x3 ntp matrices with 3 generators>
 #   semigroup. This is the general linear semigroup over the field with 2
 #   elements
 gap> S := Monoid(
-> Matrix(IsNTPMatrix, [[1, 1], [0, 1]], 0, 2),
-> Matrix(IsNTPMatrix, [[0, 1], [1, 0]], 0, 2),
-> Matrix(IsNTPMatrix, [[1, 0], [0, 0]], 0, 2));
+> Matrix(IsNTPMatrix,
+>        [[1, 1], [0, 1]], 0, 2),
+> Matrix(IsNTPMatrix,
+>        [[0, 1], [1, 0]], 0, 2),
+> Matrix(IsNTPMatrix,
+>        [[1, 0], [0, 0]], 0, 2));
 <monoid of 2x2 ntp matrices with 3 generators>
 gap> map := IsomorphismSemigroup(IsTransformationSemigroup, S);
 MappingByFunction( <monoid of size 16, 2x2 ntp matrices with 3 generators>, 
@@ -517,8 +542,9 @@ true
 
 #T# isomorphism from an integer mat semigroup to transformation semigroup
 gap> S := Semigroup(
->  Matrix(IsIntegerMatrix, [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
->        , [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>  Matrix(IsIntegerMatrix,
+>     [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -534,8 +560,9 @@ gap> S := Semigroup(
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]),
->  Matrix(IsIntegerMatrix, [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
->        , [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>  Matrix(IsIntegerMatrix,
+>     [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>      [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -551,8 +578,9 @@ gap> S := Semigroup(
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]),
->  Matrix(IsIntegerMatrix, [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
->        , [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>  Matrix(IsIntegerMatrix,
+>     [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>      [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -568,8 +596,9 @@ gap> S := Semigroup(
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]),
->  Matrix(IsIntegerMatrix, [[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
->        , [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>  Matrix(IsIntegerMatrix,
+>     [[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
 >      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
 >      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -596,7 +625,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ PBR([ [ -2 ], [ -1 ], [ -2 ], [ -2 ] ], [ [ 2 ], [ 1, 3, 4 ], [ ], [ ] ]), PBR([ [ -3 ], [ -3 ], [ -3 ], [ -3 ] ], [ [ ], [ ], [ 1, 2, 3, 4 ], [ ] ]) ] );
+gap> S := Semigroup([
+> PBR([[-2], [-1], [-2], [-2]], [[2], [1, 3, 4], [], []]),
+> PBR([[-3], [-3], [-3], [-3]], [[], [], [1, 2, 3, 4], []])]);
 <pbr semigroup of degree 4 with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 2 generators>
@@ -619,7 +650,7 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpSemigroup to IsTransformationSemigroup
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
-gap> rels := [ [ s1*s2, s2 ], [ s2^2, s2 ], [ s1^3, s1 ] ];;
+gap> rels := [[s1 * s2, s2], [s2 ^ 2, s2], [s1 ^ 3, s1]];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2 ]>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
@@ -642,7 +673,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Bipartition([ [ 1, 3, 4, -2 ], [ 2, -1 ], [ -3 ], [ -4 ] ]), Bipartition([ [ 1, 2, 3, 4, -3 ], [ -1 ], [ -2 ], [ -4 ] ]) ] );
+gap> S := Semigroup([
+> Bipartition([[1, 3, 4, -2], [2, -1], [-3], [-4]]),
+> Bipartition([[1, 2, 3, 4, -3], [-1], [-2], [-4]])]);
 <bipartition semigroup of degree 4 with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of degree 4 with 2 generators>
@@ -664,7 +697,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Transformation( [ 2, 1, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ) ] );
+gap> S := Semigroup([
+> Transformation([2, 1, 2, 2]), Transformation([3, 3, 3, 3])]);
 <transformation semigroup of degree 4 with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of degree 4 with 2 generators>
@@ -686,7 +720,17 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ false, true, false, false ], [ true, false, false, false ], [ false, true, false, false ], [ false, true, false, false ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false ], [ false, false, true, false ], [ false, false, true, false ], [ false, false, true, false ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsBooleanMat,
+>        [[false, true, false, false],
+>         [true, false, false, false],
+>         [false, true, false, false],
+>         [false, true, false, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, false, true, false],
+>         [false, false, true, false],
+>         [false, false, true, false],
+>         [false, false, true, false]])]);
 <semigroup of 4x4 boolean matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of degree 4 with 2 generators>
@@ -708,7 +752,17 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, 0, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity]])]);
 <semigroup of 4x4 max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 2 generators>
@@ -730,7 +784,17 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity, infinity ], [ 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity ], [ infinity, 0, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, 0, infinity, infinity],
+>         [0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity],
+>         [infinity, 0, infinity, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity]])]);
 <semigroup of 4x4 min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 2 generators>
@@ -752,7 +816,17 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, 0, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity]])]);
 <semigroup of 4x4 projective max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 2 generators>
@@ -774,7 +848,17 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 1, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0, 0],
+>         [1, 0, 0, 0],
+>         [0, 1, 0, 0],
+>         [0, 1, 0, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 1, 0],
+>         [0, 0, 1, 0],
+>         [0, 0, 1, 0],
+>         [0, 0, 1, 0]])]);
 <semigroup of 4x4 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 2 generators>
@@ -796,7 +880,17 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity ] ], 3), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity ] ], 3) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, 0, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity]], 3),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity]], 3)]);
 <semigroup of 4x4 tropical max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 2 generators>
@@ -818,7 +912,17 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity, infinity ], [ 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity ], [ infinity, 0, infinity, infinity ] ], 5), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity ] ], 5) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, 0, infinity, infinity],
+>         [0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity],
+>         [infinity, 0, infinity, infinity]], 5),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity]], 5)]);
 <semigroup of 4x4 tropical min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 2 generators>
@@ -840,7 +944,17 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsTransformationSemigroup
-gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0, 0 ], [ 1, 0, 0, 0 ], [ 0, 1, 0, 0 ], [ 0, 1, 0, 0 ] ], 5, 1), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ], [ 0, 0, 1, 0 ] ], 5, 1) ] );
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix,
+>        [[0, 1, 0, 0],
+>         [1, 0, 0, 0],
+>         [0, 1, 0, 0],
+>         [0, 1, 0, 0]], 5, 1),
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 1, 0],
+>         [0, 0, 1, 0],
+>         [0, 0, 1, 0],
+>         [0, 0, 1, 0]], 5, 1)]);
 <semigroup of 4x4 ntp matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 2 generators>
@@ -862,7 +976,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsReesZeroMatrixSemigroup to IsTransformationSemigroup
-gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ () ], [ () ] ] );
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[()], [()]]);
 <Rees 0-matrix semigroup 1x2 over Group([ (1,2) ])>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 3 generators>
@@ -884,7 +998,7 @@ true
 
 #T# AsMonoid: 
 #   convert from IsReesZeroMatrixSemigroup to IsTransformationMonoid
-gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ () ] ] );
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[()]]);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 3, degree 3 with 2 generators>
@@ -906,7 +1020,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsReesMatrixSemigroup to IsTransformationSemigroup
-gap> S := ReesMatrixSemigroup( Group( [ (1,2) ] ), [ [ () ], [ () ] ] );
+gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[()], [()]]);
 <Rees matrix semigroup 1x2 over Group([ (1,2) ])>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 4, degree 5 with 2 generators>
@@ -928,7 +1042,7 @@ true
 
 #T# AsMonoid: 
 #   convert from IsReesMatrixSemigroup to IsTransformationMonoid
-gap> S := ReesMatrixSemigroup( Group( [ (1,2) ] ), [ [ () ] ] );
+gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[()]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
@@ -950,7 +1064,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsReesZeroMatrixSemigroup to IsTransformationSemigroup
-gap> S := ReesZeroMatrixSemigroup( Group( [ (1,2) ] ), [ [ () ], [ 0 ] ] );
+gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[()], [0]]);
 <Rees 0-matrix semigroup 1x2 over Group([ (1,2) ])>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 4 generators>
@@ -972,7 +1086,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsPBRMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ PBR([ [ -2 ], [ -3 ], [ -2 ] ], [ [ ], [ 1, 3 ], [ 2 ] ]), PBR([ [ -2 ], [ -2 ], [ -2 ] ], [ [ ], [ 1, 2, 3 ], [ ] ]) ] );
+gap> S := Monoid([
+> PBR([[-2], [-3], [-2]], [[], [1, 3], [2]]),
+> PBR([[-2], [-2], [-2]], [[], [1, 2, 3], []])]);
 <pbr monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -995,7 +1111,7 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpMonoid to IsTransformationSemigroup
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
-gap> rels := [ [ m1*m2, m2 ], [ m2^2, m2 ], [ m1^3, m1 ], [ m2*m1^2, m2 ] ];;
+gap> rels := [[m1 * m2, m2], [m2 ^ 2, m2], [m1 ^ 3, m1], [m2 * m1 ^ 2, m2]];;
 gap> S := F / rels;
 <fp monoid on the generators [ m1, m2 ]>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
@@ -1018,7 +1134,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Bipartition([ [ 1, 3, -2 ], [ 2, -3 ], [ -1 ] ]), Bipartition([ [ 1, 2, 3, -2 ], [ -1 ], [ -3 ] ]) ] );
+gap> S := Monoid([
+> Bipartition([[1, 3, -2], [2, -3], [-1]]),
+> Bipartition([[1, 2, 3, -2], [-1], [-3]])]);
 <bipartition monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of degree 3 with 2 generators>
@@ -1040,7 +1158,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTransformationMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Transformation( [ 2, 3, 2 ] ), Transformation( [ 2, 2, 2 ] ) ] );
+gap> S := Monoid([
+> Transformation([2, 3, 2]), Transformation([2, 2, 2])]);
 <transformation monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of degree 3 with 2 generators>
@@ -1062,7 +1181,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBooleanMatMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true, false ], [ false, false, true ], [ false, true, false ] ]), Matrix(IsBooleanMat, [ [ false, true, false ], [ false, true, false ], [ false, true, false ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsBooleanMat,
+>        [[false, true, false],
+>         [false, false, true],
+>         [false, true, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, true, false],
+>         [false, true, false],
+>         [false, true, false]])]);
 <monoid of 3x3 boolean matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of degree 3 with 2 generators>
@@ -1084,7 +1211,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, -infinity, 0],
+>         [-infinity, 0, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity]])]);
 <monoid of 3x3 max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1106,7 +1241,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, 0, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, infinity, 0],
+>         [infinity, 0, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, 0, infinity],
+>         [infinity, 0, infinity]])]);
 <monoid of 3x3 min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1128,7 +1271,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, -infinity, 0],
+>         [-infinity, 0, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity]])]);
 <monoid of 3x3 projective max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1150,7 +1301,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0],
+>         [0, 0, 1],
+>         [0, 1, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0],
+>         [0, 1, 0],
+>         [0, 1, 0]])]);
 <monoid of 3x3 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1172,7 +1331,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ], 5), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ], 5) ] );
+gap> S := Monoid([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, -infinity, 0],
+>         [-infinity, 0, -infinity]], 5),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity]], 5)]);
 <monoid of 3x3 tropical max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1194,7 +1361,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, 0, infinity ] ], 1), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ], 1) ] );
+gap> S := Monoid([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, infinity, 0],
+>         [infinity, 0, infinity]], 1),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, 0, infinity],
+>         [infinity, 0, infinity]], 1)]);
 <monoid of 3x3 tropical min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1216,7 +1391,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixMonoid to IsTransformationSemigroup
-gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ], 1, 3), Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ], 1, 3) ] );
+gap> S := Monoid([
+> Matrix(IsNTPMatrix,
+>        [[0, 1, 0],
+>         [0, 0, 1],
+>         [0, 1, 0]], 1, 3),
+> Matrix(IsNTPMatrix,
+>        [[0, 1, 0],
+>         [0, 1, 0],
+>         [0, 1, 0]], 1, 3)]);
 <monoid of 3x3 ntp matrices with 2 generators>
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1238,7 +1421,9 @@ true
 
 #T# AsMonoid: 
 #   convert from IsPBRMonoid to IsTransformationMonoid
-gap> S := Monoid( [ PBR([ [ -2 ], [ -3 ], [ -2 ] ], [ [ ], [ 1, 3 ], [ 2 ] ]), PBR([ [ -2 ], [ -2 ], [ -2 ] ], [ [ ], [ 1, 2, 3 ], [ ] ]) ] );
+gap> S := Monoid([
+> PBR([[-2], [-3], [-2]], [[], [1, 3], [2]]),
+> PBR([[-2], [-2], [-2]], [[], [1, 2, 3], []])]);
 <pbr monoid of degree 3 with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1261,7 +1446,7 @@ true
 #T# AsMonoid: 
 #   convert from IsFpMonoid to IsTransformationMonoid
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
-gap> rels := [ [ m1*m2, m2 ], [ m2^2, m2 ], [ m1^3, m1 ], [ m2*m1^2, m2 ] ];;
+gap> rels := [[m1 * m2, m2], [m2 ^ 2, m2], [m1 ^ 3, m1], [m2 * m1 ^ 2, m2]];;
 gap> S := F / rels;
 <fp monoid on the generators [ m1, m2 ]>
 gap> T := AsMonoid(IsTransformationMonoid, S);
@@ -1284,7 +1469,9 @@ true
 
 #T# AsMonoid: 
 #   convert from IsBipartitionMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Bipartition([ [ 1, 3, -2 ], [ 2, -3 ], [ -1 ] ]), Bipartition([ [ 1, 2, 3, -2 ], [ -1 ], [ -3 ] ]) ] );
+gap> S := Monoid([
+> Bipartition([[1, 3, -2], [2, -3], [-1]]),
+> Bipartition([[1, 2, 3, -2], [-1], [-3]])]);
 <bipartition monoid of degree 3 with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of degree 3 with 2 generators>
@@ -1306,7 +1493,8 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTransformationMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Transformation( [ 2, 3, 2 ] ), Transformation( [ 2, 2, 2 ] ) ] );
+gap> S := Monoid([
+> Transformation([2, 3, 2]), Transformation([2, 2, 2])]);
 <transformation monoid of degree 3 with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of degree 3 with 2 generators>
@@ -1328,7 +1516,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsBooleanMatMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true, false ], [ false, false, true ], [ false, true, false ] ]), Matrix(IsBooleanMat, [ [ false, true, false ], [ false, true, false ], [ false, true, false ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsBooleanMat,
+>        [[false, true, false],
+>         [false, false, true],
+>         [false, true, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, true, false],
+>         [false, true, false],
+>         [false, true, false]])]);
 <monoid of 3x3 boolean matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of degree 3 with 2 generators>
@@ -1350,7 +1546,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsMaxPlusMatrixMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, -infinity, 0],
+>         [-infinity, 0, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity]])]);
 <monoid of 3x3 max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1372,7 +1576,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsMinPlusMatrixMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, 0, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, infinity, 0],
+>         [infinity, 0, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, 0, infinity],
+>         [infinity, 0, infinity]])]);
 <monoid of 3x3 min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1394,7 +1606,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, -infinity, 0],
+>         [-infinity, 0, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity]])]);
 <monoid of 3x3 projective max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1416,7 +1636,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsIntegerMatrixMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0],
+>         [0, 0, 1],
+>         [0, 1, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0],
+>         [0, 1, 0],
+>         [0, 1, 0]])]);
 <monoid of 3x3 integer matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1438,7 +1666,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ] ], 4), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ], 4) ] );
+gap> S := Monoid([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, -infinity, 0],
+>         [-infinity, 0, -infinity]], 4),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity]], 4)]);
 <monoid of 3x3 tropical max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1460,7 +1696,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, infinity, 0 ], [ infinity, 0, infinity ] ], 5), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ], 5) ] );
+gap> S := Monoid([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, infinity, 0],
+>         [infinity, 0, infinity]], 5),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, 0, infinity],
+>         [infinity, 0, infinity]], 5)]);
 <monoid of 3x3 tropical min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1482,7 +1726,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsNTPMatrixMonoid to IsTransformationMonoid
-gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 1, 0 ] ], 5, 1), Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ], 5, 1) ] );
+gap> S := Monoid([
+> Matrix(IsNTPMatrix,
+>        [[0, 1, 0],
+>         [0, 0, 1],
+>         [0, 1, 0]], 5, 1),
+> Matrix(IsNTPMatrix,
+>        [[0, 1, 0],
+>         [0, 1, 0],
+>         [0, 1, 0]], 5, 1)]);
 <monoid of 3x3 ntp matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 5, degree 5 with 2 generators>
@@ -1504,7 +1756,9 @@ true
 
 #T# AsMonoid: 
 #   convert from IsPBRSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ PBR([ [ -1 ], [ -2 ], [ -2 ], [ -2 ], [ -2 ] ], [ [ 1 ], [ 2, 3, 4, 5 ], [ ], [ ], [ ] ]), PBR([ [ -2 ], [ -1 ], [ -1 ], [ -1 ], [ -1 ] ], [ [ 2, 3, 4, 5 ], [ 1 ], [ ], [ ], [ ] ]) ] );
+gap> S := Semigroup([
+> PBR([[-1], [-2], [-2], [-2], [-2]], [[1], [2, 3, 4, 5], [], [], []]),
+> PBR([[-2], [-1], [-1], [-1], [-1]], [[2, 3, 4, 5], [1], [], [], []])]);
 <pbr semigroup of degree 5 with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
@@ -1527,7 +1781,7 @@ true
 #T# AsMonoid: 
 #   convert from IsFpSemigroup to IsTransformationMonoid
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
-gap> rels := [ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s2 ], [ s2^2, s1 ] ];;
+gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s2], [s2 ^ 2, s1]];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2 ]>
 gap> T := AsMonoid(IsTransformationMonoid, S);
@@ -1550,7 +1804,9 @@ true
 
 #T# AsMonoid: 
 #   convert from IsBipartitionSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Bipartition([ [ 1, -1 ], [ 2, 3, 4, 5, -2 ], [ -3 ], [ -4 ], [ -5 ] ]), Bipartition([ [ 1, -2 ], [ 2, 3, 4, 5, -1 ], [ -3 ], [ -4 ], [ -5 ] ]) ] );
+gap> S := Semigroup([
+> Bipartition([[1, -1], [2, 3, 4, 5, -2], [-3], [-4], [-5]]),
+> Bipartition([[1, -2], [2, 3, 4, 5, -1], [-3], [-4], [-5]])]);
 <bipartition semigroup of degree 5 with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of degree 2 with 1 generator>
@@ -1572,7 +1828,8 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTransformationSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Transformation( [ 1, 2, 2, 2, 2 ] ), Transformation( [ 2, 1, 1, 1, 1 ] ) ] );
+gap> S := Semigroup([
+> Transformation([1, 2, 2, 2, 2]), Transformation([2, 1, 1, 1, 1])]);
 <transformation semigroup of degree 5 with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of degree 2 with 1 generator>
@@ -1594,7 +1851,19 @@ true
 
 #T# AsMonoid: 
 #   convert from IsBooleanMatSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ true, false, false, false, false ], [ false, true, false, false, false ], [ false, true, false, false, false ], [ false, true, false, false, false ], [ false, true, false, false, false ] ]), Matrix(IsBooleanMat, [ [ false, true, false, false, false ], [ true, false, false, false, false ], [ true, false, false, false, false ], [ true, false, false, false, false ], [ true, false, false, false, false ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsBooleanMat,
+>        [[true, false, false, false, false],
+>         [false, true, false, false, false],
+>         [false, true, false, false, false],
+>         [false, true, false, false, false],
+>         [false, true, false, false, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, true, false, false, false],
+>         [true, false, false, false, false],
+>         [true, false, false, false, false],
+>         [true, false, false, false, false],
+>         [true, false, false, false, false]])]);
 <semigroup of 5x5 boolean matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of degree 2 with 1 generator>
@@ -1616,7 +1885,19 @@ true
 
 #T# AsMonoid: 
 #   convert from IsMaxPlusMatrixSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, 0, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity]])]);
 <semigroup of 5x5 max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
@@ -1638,7 +1919,19 @@ true
 
 #T# AsMonoid: 
 #   convert from IsMinPlusMatrixSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMinPlusMatrix,
+>        [[0, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, 0, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity]])]);
 <semigroup of 5x5 min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
@@ -1660,7 +1953,19 @@ true
 
 #T# AsMonoid: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, 0, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity]])]);
 <semigroup of 5x5 projective max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
@@ -1682,7 +1987,19 @@ true
 
 #T# AsMonoid: 
 #   convert from IsIntegerMatrixSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 1, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsIntegerMatrix,
+>        [[1, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0, 0, 0],
+>         [1, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0]])]);
 <semigroup of 5x5 integer matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
@@ -1704,7 +2021,19 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ] ], 4), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ] ], 4) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity]], 4),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, 0, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity]], 4)]);
 <semigroup of 5x5 tropical max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
@@ -1726,7 +2055,19 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ] ], 1), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity ] ], 1) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[0, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity]], 1),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, 0, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity]], 1)]);
 <semigroup of 5x5 tropical min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
@@ -1748,7 +2089,19 @@ true
 
 #T# AsMonoid: 
 #   convert from IsNTPMatrixSemigroup to IsTransformationMonoid
-gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 1, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0 ] ], 3, 5), Matrix(IsNTPMatrix, [ [ 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0 ] ], 3, 5) ] );
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix,
+>        [[1, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0]], 3, 5),
+> Matrix(IsNTPMatrix,
+>        [[0, 1, 0, 0, 0],
+>         [1, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0]], 3, 5)]);
 <semigroup of 5x5 ntp matrices with 2 generators>
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <commutative transformation monoid of size 2, degree 2 with 1 generator>
@@ -1833,7 +2186,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBlockBijectionSemigroup to IsTransformationSemigroup
-gap> S := InverseSemigroup(Bipartition([[1, -1, -3], [2, 3, -2]]));;
+gap> S := InverseSemigroup(Bipartition([[1, -1, -3],
+>         [2, 3, -2]]));;
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation semigroup of size 5, degree 6 with 2 generators>
 gap> Size(S) = Size(T);
@@ -1854,7 +2208,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBlockBijectionMonoid to IsTransformationMonoid
-gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
+gap> S := InverseMonoid([
+> Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsMonoid(IsTransformationMonoid, S);
 <transformation monoid of size 6, degree 6 with 2 generators>
 gap> Size(S) = Size(T);
@@ -1875,7 +2230,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBlockBijectionMonoid to IsTransformationSemigroup
-gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
+gap> S := InverseMonoid([
+> Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsSemigroup(IsTransformationSemigroup, S);
 <transformation monoid of size 6, degree 6 with 2 generators>
 gap> Size(S) = Size(T);
@@ -2048,12 +2404,12 @@ gap> Size(S);
 4
 
 # Test LargestElementSemigroup
-gap> gr := Digraph([[2, 3, 4, 5, 7, 8, 9, 10], [3, 5, 6, 7, 10, 1, 8, 9], 
-> [1, 4, 5, 6, 2, 7, 8, 10], [1, 3, 8, 9], [3, 7, 8, 1, 2], 
-> [3, 7, 2, 8, 10], [2, 3, 6, 10, 1, 5, 8], [1, 2, 3, 5, 6, 7, 10, 4, 9], 
+gap> gr := Digraph([[2, 3, 4, 5, 7, 8, 9, 10], [3, 5, 6, 7, 10, 1, 8, 9],
+> [1, 4, 5, 6, 2, 7, 8, 10], [1, 3, 8, 9], [3, 7, 8, 1, 2],
+> [3, 7, 2, 8, 10], [2, 3, 6, 10, 1, 5, 8], [1, 2, 3, 5, 6, 7, 10, 4, 9],
 > [1, 2, 8, 4, 10], [1, 3, 6, 8, 9, 2, 7]]);;
 gap> S := EndomorphismMonoid(gr);;
-gap> LargestElementSemigroup(S) = Maximum(AsSet(S)); 
+gap> LargestElementSemigroup(S) = Maximum(AsSet(S));
 true
 gap> LargestElementSemigroup(S);
 Transformation( [ 10, 8, 7, 8, 6, 10, 3, 2, 9, 1 ] )
@@ -2116,7 +2472,7 @@ gap> S := DirectProduct(FullTransformationMonoid(3), FullTransformationMonoid(3)
 <transformation monoid of size 729, degree 6 with 6 generators>
 gap> Size(S) = 27 ^ 2;
 true
-gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]), 
+gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]),
 > Transformation([1, 1, 3, 3, 3]));;
 gap> S := DirectProduct(S, S);
 <transformation semigroup of degree 10 with 4 generators>
@@ -2142,7 +2498,7 @@ Error, Semigroups: RandomMonoid: usage,
 the third argument (degree or dimension) must be a pos int,
 
 # Test IsConnectedTransformationSemigroup
-gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]), 
+gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]),
 > Transformation([1, 1, 3, 3, 3]));;
 gap> IsConnectedTransformationSemigroup(S);
 false
@@ -2154,7 +2510,7 @@ gap> IsConnectedTransformationSemigroup(S);
 true
 
 # Test IsConnectedTransformationSemigroup
-gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]), 
+gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]),
 >                   Transformation([1, 1, 3, 3, 3]));;
 gap> IsTransitive(S);
 false
@@ -2203,8 +2559,8 @@ gap> S1 := Semigroup(FullTransformationMonoid(3), rec(acting := false));;
 gap> S2 := Semigroup(FullTransformationMonoid(3), rec(acting := true));;
 gap> iter1 := IteratorSorted(S1);;
 gap> iter2 := IteratorSorted(S2);;
-gap> for x in iter1 do 
-> if not x = NextIterator(iter2) then 
+gap> for x in iter1 do
+> if not x = NextIterator(iter2) then
 > Print("Problem in IteratorSorted\n");
 > fi;
 > od;
@@ -2213,19 +2569,22 @@ gap> S2 := Semigroup(FullTransformationMonoid(3), rec(acting := true));;
 gap> AsSet(S2);;
 gap> iter1 := IteratorSorted(S1);;
 gap> iter2 := IteratorSorted(S2);;
-gap> for x in iter1 do 
-> if not x = NextIterator(iter2) then 
+gap> for x in iter1 do
+> if not x = NextIterator(iter2) then
 > Print("Problem in IteratorSorted\n");
 > fi;
 > od;
 
 # Test \< for transformation semigroups
-gap> coll := [ Semigroup( [ Transformation( [ 2, 2, 2, 4, 3 ] ),
->      Transformation( [ 5, 2, 2, 1, 5 ] ) ] ),
->  Semigroup( [ Transformation( [ 4, 4, 3, 1, 2 ] ),
->      Transformation( [ 4, 1, 4, 2, 4 ] ) ] ),
->  Semigroup( [ Transformation( [ 3, 5, 1, 5, 1 ] ),
->      Transformation( [ 4, 5, 5, 5, 3 ] ) ] ) ];;
+gap> coll := [Semigroup([
+>      Transformation([2, 2, 2, 4, 3]),
+>      Transformation([5, 2, 2, 1, 5])]),
+>  Semigroup([
+>      Transformation([4, 4, 3, 1, 2]),
+>      Transformation([4, 1, 4, 2, 4])]),
+>  Semigroup([
+>      Transformation([3, 5, 1, 5, 1]),
+>      Transformation([4, 5, 5, 5, 3])])];;
 gap> IsSet(coll);
 false
 gap> Sort(coll);
@@ -2236,7 +2595,7 @@ gap> coll[1] < S;
 true
 gap> S < coll[1];
 false
-gap> S := Semigroup(AsTransformation((2,3,4)));;
+gap> S := Semigroup(AsTransformation((2, 3, 4)));;
 gap> T := Semigroup(S, Transformation([2, 2, 2, 2]));;
 gap> S < T;
 true
@@ -2244,7 +2603,7 @@ gap> T < S;
 false
 
 # Test Smallest/LargestElementSemigroup
-gap> S := Semigroup(AsTransformation((2,3,4)), 
+gap> S := Semigroup(AsTransformation((2, 3, 4)),
 >                   Transformation([2, 2, 2, 2]));;
 gap> SmallestElementSemigroup(S);
 IdentityTransformation
@@ -2304,7 +2663,7 @@ Error, no 2nd choice method found for `DigraphOfActionOnPoints' on 1 arguments
 
 # Test IsomorphismSemigroup for a semigroup of binary relations on points
 gap> B := Monoid(BinaryRelationOnPoints([[2], [1, 2], [1, 3]]),
->                BinaryRelationOnPoints([[3], [1, 2], [1, 3]]), 
+>                BinaryRelationOnPoints([[3], [1, 2], [1, 3]]),
 >                BinaryRelationOnPoints([[1, 2, 3], [1, 2], [3]]));;
 gap> Size(B);
 16

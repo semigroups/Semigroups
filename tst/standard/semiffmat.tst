@@ -36,13 +36,13 @@ gap> BruteForceInverseCheck := function(map)
 > end;;
 
 # Issue 210
-gap> x := Matrix(GF(2^2),
-> [[Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)],
->  [Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)],
->  [0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)],
->  [0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)],
->  [0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)],
->  [0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)]]);;
+gap> x := Matrix(GF(2 ^ 2),
+> [[Z(2 ^ 2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [Z(2 ^ 2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), 0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)]]);;
 gap> S := Monoid(x, rec(acting := false));
 <commutative monoid of 6x6 matrices over GF(2^2) with 1 generator>
 gap> HasIsFinite(S);
@@ -60,8 +60,9 @@ gap> H := GroupHClass(DClass(S, One(S)));
 gap> IsomorphismPermGroup(H);;
 
 # Test AsSemigroup
-gap> S := Semigroup([Z(3) * [[1, 0, 0], [1, 1, 0], [0, 1, 0]],
->                    Z(3) * [[0, 0, 0], [0, 0, 1], [0, 1, 0]]]);
+gap> S := Semigroup([
+> Z(3) * [[1, 0, 0], [1, 1, 0], [0, 1, 0]],
+> Z(3) * [[0, 0, 0], [0, 0, 1], [0, 1, 0]]]);
 <semigroup with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 3x3 matrices over GF(3) with 2 generators>
@@ -92,7 +93,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ PBR([ [ -1 ], [ -4 ], [ -3 ], [ -4 ], [ -1 ] ], [ [ 1, 5 ], [ ], [ 3 ], [ 2, 4 ], [ ] ]), PBR([ [ -3 ], [ -2 ], [ -3 ], [ -3 ], [ -2 ] ], [ [ ], [ 2, 5 ], [ 1, 3, 4 ], [ ], [ ] ]) ] );
+gap> S := Semigroup([
+> PBR([[-1], [-4], [-3], [-4], [-1]], [[1, 5], [], [3], [2, 4], []]),
+> PBR([[-3], [-2], [-3], [-3], [-2]], [[], [2, 5], [1, 3, 4], [], []])]);
 <pbr semigroup of degree 5 with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -114,7 +117,19 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMatrixOverFiniteFieldSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Matrix(GF(2), [ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2) ], [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2) ] ]), Matrix(GF(2), [ [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2) ] ]) ] );
+gap> S := Semigroup([
+> Matrix(GF(2),
+>        [[Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>         [0 * Z(2), 0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2)],
+>         [0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
+>         [0 * Z(2), 0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2)],
+>         [Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)]]),
+> Matrix(GF(2),
+>        [[0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
+>         [0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>         [0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
+>         [0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
+>         [0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)]])]);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -137,7 +152,9 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpSemigroup to IsMatrixOverFiniteFieldSemigroup
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
-gap> rels := [ [ s1^2, s1 ], [ s2^2, s2 ], [ s1*s2*s1, s1*s2 ], [ s2*s1*s2, s1*s2 ] ];;
+gap> rels := [[s1 ^ 2, s1], [s2 ^ 2, s2],
+>             [s1 * s2 * s1, s1 * s2],
+>             [s2 * s1 * s2, s1 * s2]];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2 ]>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
@@ -160,7 +177,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Bipartition([ [ 1, 5, -1 ], [ 2, 4, -4 ], [ 3, -3 ], [ -2 ], [ -5 ] ]), Bipartition([ [ 1, 3, 4, -3 ], [ 2, 5, -2 ], [ -1 ], [ -4 ], [ -5 ] ]) ] );
+gap> S := Semigroup([
+> Bipartition([[1, 5, -1], [2, 4, -4], [3, -3], [-2], [-5]]),
+> Bipartition([[1, 3, 4, -3], [2, 5, -2], [-1], [-4], [-5]])]);
 <bipartition semigroup of degree 5 with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -182,7 +201,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Transformation( [ 1, 4, 3, 4, 1 ] ), Transformation( [ 3, 2, 3, 3, 2 ] ) ] );
+gap> S := Semigroup([
+> Transformation([1, 4, 3, 4, 1]), Transformation([3, 2, 3, 3, 2])]);
 <transformation semigroup of degree 5 with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -204,7 +224,19 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ true, false, false, false, false ], [ false, false, false, true, false ], [ false, false, true, false, false ], [ false, false, false, true, false ], [ true, false, false, false, false ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false, false ], [ false, true, false, false, false ], [ false, false, true, false, false ], [ false, false, true, false, false ], [ false, true, false, false, false ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsBooleanMat,
+>        [[true, false, false, false, false],
+>         [false, false, false, true, false],
+>         [false, false, true, false, false],
+>         [false, false, false, true, false],
+>         [true, false, false, false, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, false, true, false, false],
+>         [false, true, false, false, false],
+>         [false, false, true, false, false],
+>         [false, false, true, false, false],
+>         [false, true, false, false, false]])]);
 <semigroup of 5x5 boolean matrices with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -226,7 +258,19 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity]])]);
 <semigroup of 5x5 max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -248,7 +292,19 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity ], [ 0, infinity, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMinPlusMatrix,
+>        [[0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity],
+>         [0, infinity, infinity, infinity, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, infinity, 0, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity]])]);
 <semigroup of 5x5 min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -270,7 +326,19 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity]])]);
 <semigroup of 5x5 projective max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -292,7 +360,19 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], [ 1, 0, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 1, 0, 0, 0 ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsIntegerMatrix,
+>        [[1, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0],
+>         [0, 0, 1, 0, 0],
+>         [0, 0, 0, 1, 0],
+>         [1, 0, 0, 0, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 1, 0, 0],
+>         [0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0],
+>         [0, 0, 1, 0, 0],
+>         [0, 1, 0, 0, 0]])]);
 <semigroup of 5x5 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -314,7 +394,19 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity ] ], 3), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity ] ], 3) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity]], 3),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity]], 3)]);
 <semigroup of 5x5 tropical max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -336,7 +428,19 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity ], [ 0, infinity, infinity, infinity, infinity ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity ] ], 3) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity],
+>         [0, infinity, infinity, infinity, infinity]], 3),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, infinity, 0, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity]], 3)]);
 <semigroup of 5x5 tropical min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -358,7 +462,19 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsMatrixOverFiniteFieldSemigroup
-gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], [ 1, 0, 0, 0, 0 ] ], 1, 5), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0, 0 ], [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 1, 0, 0, 0 ] ], 1, 5) ] );
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix,
+>        [[1, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0],
+>         [0, 0, 1, 0, 0],
+>         [0, 0, 0, 1, 0],
+>         [1, 0, 0, 0, 0]], 1, 5),
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 1, 0, 0],
+>         [0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0],
+>         [0, 0, 1, 0, 0],
+>         [0, 1, 0, 0, 0]], 1, 5)]);
 <semigroup of 5x5 ntp matrices with 2 generators>
 gap> T := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 <semigroup of 5x5 matrices over GF(2) with 2 generators>
@@ -380,8 +496,11 @@ true
 
 # IsomorphismSemigroup convert from semigroup of partial perms to
 # IsMatrixOverFiniteFieldSemigroup with a field other than GF(2)
-gap> S := Semigroup( [ PartialPerm( [ 1, 2, 3 ], [ 3, 1, 2 ] ),
->  PartialPerm( [ 1 ], [ 1 ] ) ] );;
+gap> S := Semigroup([
+> PartialPerm([1, 2, 3],
+>         [3, 1, 2]),
+>  PartialPerm([1],
+>         [1])]);;
 gap> map := IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, GF(7), S);;
 gap> BruteForceIsoCheck(map);
 true
@@ -421,14 +540,19 @@ gap> BruteForceInverseCheck(map);
 true
 
 # Test AsMonoid
-gap> S := Semigroup([Z(3) * [[1, 0, 0], [1, 1, 0], [0, 1, 0]],
->                    Z(3) * [[0, 0, 0], [0, 0, 1], [0, 1, 0]]]);;
+gap> S := Semigroup([
+>  Z(3) * [[1, 0, 0],
+>         [1, 1, 0],
+>         [0, 1, 0]],
+>  Z(3) * [[0, 0, 0],
+>         [0, 0, 1],
+>         [0, 1, 0]]]);;
 gap> S := AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);;
 gap> AsMonoid(S);
 fail
-gap> S := GeneralLinearMonoid(2, 2);; 
+gap> S := GeneralLinearMonoid(2, 2);;
 gap> map := IsomorphismMonoid(IsMatrixOverFiniteFieldMonoid, S);;
-gap> S := GeneralLinearMonoid(2, 2);; 
+gap> S := GeneralLinearMonoid(2, 2);;
 gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, GF(4), S);
 <monoid of 2x2 matrices over GF(2^2) with 3 generators>
 gap> AsMonoid(IsMatrixOverFiniteFieldMonoid, GF(3), S);
@@ -533,26 +657,36 @@ Error, Semigroups: RandomInverseMonoid: usage,
 there must be at most five arguments,
 
 # IsGeneratorsOfSemigroup
-gap> coll := [Matrix(GF(2), [[Z(2) ^ 0, 0 * Z(2)], [Z(2) ^ 0, Z(2) ^ 0]]),
->  Matrix(GF(2), [[Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0], [0 * Z(2), Z(2) ^ 0, 0 *
->  Z(2)], [Z(2) ^ 0, 0 * Z(2), 0 * Z(2)]])];;
+gap> coll := [
+>  Matrix(GF(2),
+>         [[Z(2) ^ 0, 0 * Z(2)],
+>          [Z(2) ^ 0, Z(2) ^ 0]]),
+>  Matrix(GF(2),
+>         [[Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0],
+>          [0 * Z(2), Z(2) ^ 0, 0 * Z(2)],
+>          [Z(2) ^ 0, 0 * Z(2), 0 * Z(2)]])];;
 gap> IsGeneratorsOfSemigroup(coll);
 false
 
 # GroupOfUnits
-gap> GroupOfUnits(GLM(2,2));
+gap> GroupOfUnits(GLM(2, 2));
 <group of 2x2 matrices over GF(2) with 2 generators>
 
 # IsGeneratorsOfInverseSemigroup
-gap> IsGeneratorsOfInverseSemigroup(Generators(GroupOfUnits(GLM(2,2))));
+gap> IsGeneratorsOfInverseSemigroup(Generators(GroupOfUnits(GLM(2, 2))));
 true
-gap> IsGeneratorsOfInverseSemigroup(Generators(GLM(2,2)));
+gap> IsGeneratorsOfInverseSemigroup(Generators(GLM(2, 2)));
 false
 
 # FakeOne
-gap> coll := [Matrix(GF(2), [[Z(2) ^ 0, 0 * Z(2)], [Z(2) ^ 0, Z(2) ^ 0]]),
->  Matrix(GF(2), [[Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0], [0 * Z(2), Z(2) ^ 0, 0 *
->  Z(2)], [Z(2) ^ 0, 0 * Z(2), 0 * Z(2)]])];;
+gap> coll := [
+>  Matrix(GF(2),
+>         [[Z(2) ^ 0, 0 * Z(2)],
+>          [Z(2) ^ 0, Z(2) ^ 0]]),
+>  Matrix(GF(2),
+>         [[Z(2) ^ 0, Z(2) ^ 0, Z(2) ^ 0],
+>          [0 * Z(2), Z(2) ^ 0, 0 * Z(2)],
+>          [Z(2) ^ 0, 0 * Z(2), 0 * Z(2)]])];;
 gap> FakeOne(coll);
 fail
 
@@ -576,35 +710,42 @@ gap> MatrixOverFiniteFieldSchutzGrpElement(GLM(2, 2), x, x);
 Matrix(GF(3), [])
 
 # MatrixOverFiniteFieldSchutzGrpElement error
-gap> x := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
->  [0*Z(3), Z(3), Z(3)^0]]);;
-gap> y := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
->  [0*Z(3), 0*Z(3), 0*Z(3)]]);;
+gap> x := Matrix(GF(3),
+> [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [0 * Z(3), 0 * Z(3), 0 * Z(3)],
+>  [0 * Z(3), Z(3), Z(3) ^ 0]]);;
+gap> y := Matrix(GF(3),
+> [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [0 * Z(3), 0 * Z(3), 0 * Z(3)],
+>  [0 * Z(3), 0 * Z(3), 0 * Z(3)]]);;
 gap> MatrixOverFiniteFieldSchutzGrpElement(GLM(3, 3), x, y);
 Error, Semigroups: MatrixOverFiniteFieldSchutzGrpElement: error,
 the found element is not invertible,
 
 # MatrixOverFiniteFieldStabilizerAction
-gap> y := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
->  [0*Z(3), 0*Z(3), 0*Z(3)]]);;
+gap> y := Matrix(GF(3),
+> [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [0 * Z(3), 0 * Z(3), 0 * Z(3)],
+>  [0 * Z(3), 0 * Z(3), 0 * Z(3)]]);;
 gap> MatrixOverFiniteFieldStabilizerAction(GLM(3, 3), y, 0);
 Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)], 
   [0*Z(3), 0*Z(3), 0*Z(3)]])
-gap> x := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
->  [0*Z(3), Z(3), Z(3)^0]]);;
-gap> MatrixOverFiniteFieldStabilizerAction(GLM(3, 3),  Matrix(GF(3),
+gap> x := Matrix(GF(3),
+> [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [0 * Z(3), 0 * Z(3), 0 * Z(3)],
+>  [0 * Z(3), Z(3), Z(3) ^ 0]]);;
+gap> MatrixOverFiniteFieldStabilizerAction(GLM(3, 3),
+> Matrix(GF(3),
 > [[Z(3)]]), x);
 Matrix(GF(3), [[0*Z(3)]])
 
 # MatrixOverFiniteFieldLambdaConjugator
-gap> y := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
->  [0*Z(3), 0*Z(3), 0*Z(3)]]);;
+gap> y := Matrix(GF(3),
+> [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [0 * Z(3), 0 * Z(3), 0 * Z(3)],
+>  [0 * Z(3), 0 * Z(3), 0 * Z(3)]]);;
 gap> MatrixOverFiniteFieldLambdaConjugator(GLM(3, 3), y, fail);
 Matrix(GF(3), [])
 
 # MatrixOverFiniteFieldIdempotentCreator
-gap> y := Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)],
->  [0*Z(3), 0*Z(3), 0*Z(3)]]);;
+gap> y := Matrix(GF(3),
+> [[0 * Z(3), 0 * Z(3), 0 * Z(3)], [0 * Z(3), 0 * Z(3), 0 * Z(3)],
+>  [0 * Z(3), 0 * Z(3), 0 * Z(3)]]);;
 gap> MatrixOverFiniteFieldIdempotentCreator(GLM(3, 3), RowSpaceBasis(y), fail);
 Matrix(GF(3), [[0*Z(3), 0*Z(3), 0*Z(3)], [0*Z(3), 0*Z(3), 0*Z(3)], 
   [0*Z(3), 0*Z(3), 0*Z(3)]])

@@ -130,7 +130,7 @@ gap> CanonicalForm((S.1 ^ -1) * S.1 * (S.1 ^ -1) * S.1);
 
 # Test ViewObj with different user preferences
 gap> S := FreeInverseSemigroup(3);;
-gap> w := S.1 * (S.2^ -1) * S.2 * (S.1 ^ -1);;
+gap> w := S.1 * (S.2 ^ -1) * S.2 * (S.1 ^ -1);;
 gap> CanonicalForm(w);
 "x1x2^-1x2x1^-1"
 gap> MinimalWord(w);

@@ -1032,7 +1032,7 @@ gap> ForAny(rr, x -> x in enum);
 false
 gap> ForAny(rr, x -> not Position(enum, x) = fail);
 false
-gap> ForAll(rr, x ->  Position(enum, x) = fail);
+gap> ForAll(rr, x -> Position(enum, x) = fail);
 true
 gap> f := Transformation([2, 2, 6, 4, 1, 6, 3, 2]);;
 gap> s := Semigroup(gens);
@@ -1653,7 +1653,7 @@ gap> gens := [Transformation([2, 8, 3, 7, 1, 5, 2, 6]),
 gap> s := Semigroup(gens);;
 gap> f := Transformation([3, 2, 5, 3, 5, 3, 3, 3]);;
 gap> d := DClass(s, f);;
-gap> d = DClass(s, Transformation( [ 8, 1, 5, 8, 5, 8, 8, 8 ] ));
+gap> d = DClass(s, Transformation([8, 1, 5, 8, 5, 8, 8, 8]));
 true
 gap> f := Transformation([6, 4, 8, 8, 8, 4, 6, 4]);;
 gap> l := LClass(d, f);
@@ -1703,7 +1703,7 @@ gap> s := Monoid(gens);;
 gap> GreensDClasses(s);;
 gap> f := Transformation([8, 5, 10, 5, 8, 5, 5, 5, 5, 10]);;
 gap> d := DClass(s, f);;
-gap> d = DClass(s, Transformation( [ 3, 9, 3, 4, 9, 3, 4, 3, 4, 3 ] ));
+gap> d = DClass(s, Transformation([3, 9, 3, 4, 9, 3, 4, 3, 4, 3]));
 true
 gap> f := Transformation([6, 4, 5, 6, 4, 4, 6, 6, 4, 5]);;
 gap> h := GreensHClassOfElement(d, f);

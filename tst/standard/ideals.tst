@@ -281,7 +281,7 @@ gap> IsCommutativeSemigroup(I);
 true
 
 #Test IsTrivial
-gap> S := Semigroup(Matrix(IsBooleanMat, [[1,1],[1,1]]));
+gap> S := Semigroup(Matrix(IsBooleanMat, [[1, 1], [1, 1]]));
 <commutative semigroup of 2x2 boolean matrices with 1 generator>
 gap> I := SemigroupIdeal(S, S.1);
 <commutative semigroup ideal of 2x2 boolean matrices with 1 generator>

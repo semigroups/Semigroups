@@ -37,7 +37,7 @@ gap> BruteForceInverseCheck := function(map)
 
 # IsomorphismSemigroup for IsBlockBijection checks if the semigroup is inverse
 # inside the method and not in the filter to enter the method.
-gap> S := ReesMatrixSemigroup(Group([(1,2)]), [[()]]);
+gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[()]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> S := AsSemigroup(IsBlockBijectionSemigroup, S);
 <block bijection group of size 2, degree 3 with 1 generator>
@@ -48,7 +48,9 @@ the second arg must be an inverse semigroup,
 
 #T# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ PBR([ [ -2, 1, 2 ], [ -2, 1, 2 ] ], [ [ -1 ], [ -2, 1, 2 ] ]), PBR([ [ -1, 1, 2 ], [ -1, 1, 2 ] ], [ [ -1, 1, 2 ], [ -2 ] ]) ] );
+gap> S := Semigroup([
+> PBR([[-2, 1, 2], [-2, 1, 2]], [[-1], [-2, 1, 2]]),
+> PBR([[-1, 1, 2], [-1, 1, 2]], [[-1, 1, 2], [-2]])]);
 <pbr semigroup of degree 2 with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 2, degree 3 with 2 generators>
@@ -71,7 +73,7 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpSemigroup to IsBipartitionSemigroup
 gap> F := FreeSemigroup(2);; AssignGeneratorVariables(F);;
-gap> rels := [ [ s1^2, s1 ], [ s1*s2, s2 ], [ s2*s1, s1 ], [ s2^2, s2 ] ];;
+gap> rels := [[s1 ^ 2, s1], [s1 * s2, s2], [s2 * s1, s1], [s2 ^ 2, s2]];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2 ]>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
@@ -94,7 +96,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Bipartition([ [ 1, 2, -2 ], [ -1 ] ]), Bipartition([ [ 1, 2, -1 ], [ -2 ] ]) ] );
+gap> S := Semigroup([
+> Bipartition([[1, 2, -2], [-1]]),
+> Bipartition([[1, 2, -1], [-2]])]);
 <bipartition semigroup of degree 2 with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of degree 2 with 2 generators>
@@ -116,7 +120,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Transformation( [ 2, 2 ] ), Transformation( [ 1, 1 ] ) ] );
+gap> S := Semigroup([
+> Transformation([2, 2]), Transformation([1, 1])]);
 <transformation semigroup of degree 2 with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of degree 2 with 2 generators>
@@ -138,7 +143,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ false, true ], [ false, true ] ]), Matrix(IsBooleanMat, [ [ true, false ], [ true, false ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsBooleanMat,
+>        [[false, true], [false, true]]),
+> Matrix(IsBooleanMat,
+>        [[true, false], [true, false]])]);
 <semigroup of 2x2 boolean matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of degree 2 with 2 generators>
@@ -160,7 +169,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0 ], [ -infinity, 0 ] ]), Matrix(IsMaxPlusMatrix, [ [ 0, -infinity ], [ 0, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, 0], [-infinity, 0]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[0, -infinity], [0, -infinity]])]);
 <semigroup of 2x2 max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 2, degree 3 with 2 generators>
@@ -182,7 +195,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0 ], [ infinity, 0 ] ]), Matrix(IsMinPlusMatrix, [ [ 0, infinity ], [ 0, infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, 0], [infinity, 0]]),
+> Matrix(IsMinPlusMatrix,
+>        [[0, infinity], [0, infinity]])]);
 <semigroup of 2x2 min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 2, degree 3 with 2 generators>
@@ -204,7 +221,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0 ], [ -infinity, 0 ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ 0, -infinity ], [ 0, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, 0], [-infinity, 0]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[0, -infinity], [0, -infinity]])]);
 <semigroup of 2x2 projective max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 2, degree 3 with 2 generators>
@@ -226,7 +247,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 0, 1 ], [ 0, 1 ] ]), Matrix(IsIntegerMatrix, [ [ 1, 0 ], [ 1, 0 ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsIntegerMatrix,
+>        [[0, 1], [0, 1]]),
+> Matrix(IsIntegerMatrix,
+>        [[1, 0], [1, 0]])]);
 <semigroup of 2x2 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 2, degree 3 with 2 generators>
@@ -248,7 +273,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0 ], [ -infinity, 0 ] ], 5), Matrix(IsTropicalMaxPlusMatrix, [ [ 0, -infinity ], [ 0, -infinity ] ], 5) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, 0], [-infinity, 0]], 5),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[0, -infinity], [0, -infinity]], 5)]);
 <semigroup of 2x2 tropical max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 2, degree 3 with 2 generators>
@@ -270,7 +299,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0 ], [ infinity, 0 ] ], 5), Matrix(IsTropicalMinPlusMatrix, [ [ 0, infinity ], [ 0, infinity ] ], 5) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, 0], [infinity, 0]], 5),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[0, infinity], [0, infinity]], 5)]);
 <semigroup of 2x2 tropical min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 2, degree 3 with 2 generators>
@@ -292,7 +325,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsBipartitionSemigroup
-gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 0, 1 ], [ 0, 1 ] ], 1, 4), Matrix(IsNTPMatrix, [ [ 1, 0 ], [ 1, 0 ] ], 1, 4) ] );
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix,
+>        [[0, 1], [0, 1]], 1, 4),
+> Matrix(IsNTPMatrix,
+>        [[1, 0], [1, 0]], 1, 4)]);
 <semigroup of 2x2 ntp matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 2, degree 3 with 2 generators>
@@ -314,7 +351,12 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsPBRMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ] ], [ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ] ]), PBR([ [ -3, -2, 1, 2, 3 ], [ -3, -2, 1, 2, 3 ], [ -3, -2, 1, 2, 3 ] ], [ [ -1 ], [ -3, -2, 1, 2, 3 ], [ -3, -2, 1, 2, 3 ] ]), PBR([ [ -3, 1, 2, 3 ], [ -3, 1, 2, 3 ], [ -3, 1, 2, 3 ] ], [ [ -2, -1 ], [ -2, -1 ], [ -3, 1, 2, 3 ] ]) ] );
+gap> S := Monoid([
+> PBR([[-1, 1], [-2, 2], [-3, 3]], [[-1, 1], [-2, 2], [-3, 3]]),
+> PBR([[-3, -2, 1, 2, 3], [-3, -2, 1, 2, 3], [-3, -2, 1, 2, 3]],
+>     [[-1], [-3, -2, 1, 2, 3], [-3, -2, 1, 2, 3]]),
+> PBR([[-3, 1, 2, 3], [-3, 1, 2, 3], [-3, 1, 2, 3]],
+>     [[-2, -1], [-2, -1], [-3, 1, 2, 3]])]);
 <pbr monoid of degree 3 with 3 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of size 4, degree 4 with 3 generators>
@@ -337,7 +379,8 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpMonoid to IsBipartitionSemigroup
 gap> F := FreeMonoid(3);; AssignGeneratorVariables(F);;
-gap> rels := [ [ m1^2, m1 ], [ m1*m2, m2 ], [ m1*m3, m3 ], [ m2*m1, m2 ], [ m2^2, m2 ], [ m2*m3, m3 ], [ m3*m1, m3 ], [ m3*m2, m2 ], [ m3^2, m3 ] ];;
+gap> rels := [[m1 ^ 2, m1], [m1 * m2, m2], [m1 * m3, m3], [m2 * m1, m2],
+> [m2 ^ 2, m2], [m2 * m3, m3], [m3 * m1, m3], [m3 * m2, m2], [m3 ^ 2, m3]];;
 gap> S := F / rels;
 <fp monoid on the generators [ m1, m2, m3 ]>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
@@ -360,7 +403,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Bipartition([ [ 1, 2, 3, -2, -3 ], [ -1 ] ]), Bipartition([ [ 1, 2, 3, -3 ], [ -1, -2 ] ]) ] );
+gap> S := Monoid([
+> Bipartition([[1, 2, 3, -2, -3], [-1]]),
+> Bipartition([[1, 2, 3, -3], [-1, -2]])]);
 <bipartition monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of degree 3 with 2 generators>
@@ -382,7 +427,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTransformationMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Transformation( [ 2, 2, 2 ] ), Transformation( [ 3, 3, 3 ] ) ] );
+gap> S := Monoid([
+> Transformation([2, 2, 2]), Transformation([3, 3, 3])]);
 <transformation monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of degree 3 with 2 generators>
@@ -404,7 +450,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBooleanMatMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true, false ], [ false, true, false ], [ false, true, false ] ]), Matrix(IsBooleanMat, [ [ false, false, true ], [ false, false, true ], [ false, false, true ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsBooleanMat,
+>   [[false, true, false], [false, true, false], [false, true, false]]),
+> Matrix(IsBooleanMat,
+>   [[false, false, true], [false, false, true], [false, false, true]])]);
 <monoid of 3x3 boolean matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of degree 3 with 2 generators>
@@ -426,7 +476,16 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0 ], [ -infinity, -infinity, 0 ], [ -infinity, -infinity, 0 ] ]) ] );
+gap> x := -infinity;;
+gap> S := Monoid([
+> Matrix(IsMaxPlusMatrix,
+> [[x, 0, x],
+>  [x, 0, x],
+>  [x, 0, x]]),
+> Matrix(IsMaxPlusMatrix,
+>  [[x, x, 0],
+>   [x, x, 0],
+>   [x, x, 0]])]);
 <monoid of 3x3 max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of size 3, degree 3 with 2 generators>
@@ -448,7 +507,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0 ], [ infinity, infinity, 0 ], [ infinity, infinity, 0 ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsMinPlusMatrix,
+>  [[infinity, 0, infinity],
+>   [infinity, 0, infinity],
+>   [infinity, 0, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>  [[infinity, infinity, 0],
+>   [infinity, infinity, 0],
+>   [infinity, infinity, 0]])]);
 <monoid of 3x3 min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of size 3, degree 3 with 2 generators>
@@ -470,7 +537,16 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0 ], [ -infinity, -infinity, 0 ], [ -infinity, -infinity, 0 ] ]) ] );
+gap> x := -infinity;;
+gap> S := Monoid([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>   [[x, 0, x],
+>    [x, 0, x],
+>    [x, 0, x]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>   [[x, x, 0],
+>   [x, x, 0],
+>   [x, x, 0]])]);
 <monoid of 3x3 projective max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of size 3, degree 3 with 2 generators>
@@ -492,7 +568,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1 ], [ 0, 0, 1 ], [ 0, 0, 1 ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0], [0, 1, 0], [0, 1, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 1], [0, 0, 1], [0, 0, 1]])]);
 <monoid of 3x3 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of size 3, degree 3 with 2 generators>
@@ -514,7 +594,16 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ], 2), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0 ], [ -infinity, -infinity, 0 ], [ -infinity, -infinity, 0 ] ], 2) ] );
+gap> x := -infinity;;
+gap> S := Monoid([
+> Matrix(IsTropicalMaxPlusMatrix,
+>  [[x, 0, x],
+>   [x, 0, x],
+>   [x, 0, x]], 2),
+> Matrix(IsTropicalMaxPlusMatrix,
+>  [[x, x, 0],
+>   [x, x, 0],
+>   [x, x, 0]], 2)]);
 <monoid of 3x3 tropical max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of size 3, degree 3 with 2 generators>
@@ -536,7 +625,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ], 5), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0 ], [ infinity, infinity, 0 ], [ infinity, infinity, 0 ] ], 5) ] );
+gap> S := Monoid([
+> Matrix(IsTropicalMinPlusMatrix,
+>   [[infinity, 0, infinity],
+>    [infinity, 0, infinity],
+>    [infinity, 0, infinity]], 5),
+> Matrix(IsTropicalMinPlusMatrix,
+>   [[infinity, infinity, 0],
+>    [infinity, infinity, 0],
+>    [infinity, infinity, 0]], 5)]);
 <monoid of 3x3 tropical min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of size 3, degree 3 with 2 generators>
@@ -558,7 +655,11 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixMonoid to IsBipartitionSemigroup
-gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ], 1, 5), Matrix(IsNTPMatrix, [ [ 0, 0, 1 ], [ 0, 0, 1 ], [ 0, 0, 1 ] ], 1, 5) ] );
+gap> S := Monoid([
+> Matrix(IsNTPMatrix,
+>        [[0, 1, 0], [0, 1, 0], [0, 1, 0]], 1, 5),
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 1], [0, 0, 1], [0, 0, 1]], 1, 5)]);
 <monoid of 3x3 ntp matrices with 2 generators>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition monoid of size 3, degree 3 with 2 generators>
@@ -580,7 +681,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsPBRSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ PBR([ [ -2, 1 ], [ -1, 2 ], [ -3, 3 ], [ -4, 4 ] ], [ [ -1, 2 ], [ -2, 1 ], [ -3, 3 ], [ -4, 4 ] ]), PBR([ [ 1, 3 ], [ -3, 2, 4 ], [ 1, 3 ], [ -3, 2, 4 ] ], [ [ -4, -2, -1 ], [ -4, -2, -1 ], [ -3, 2, 4 ], [ -4, -2, -1 ] ]), PBR([ [ -4, -3, -2, -1, 1, 2, 3, 4 ], [ -4, -3, -2, -1, 1, 2, 3, 4 ], [ -4, -3, -2, -1, 1, 2, 3, 4 ], [ -4, -3, -2, -1, 1, 2, 3, 4 ] ], [ [ -4, -3, -2, -1, 1, 2, 3, 4 ], [ -4, -3, -2, -1, 1, 2, 3, 4 ], [ -4, -3, -2, -1, 1, 2, 3, 4 ], [ -4, -3, -2, -1, 1, 2, 3, 4 ] ]) ] );
+gap> S := Semigroup([
+> PBR([[-2, 1], [-1, 2], [-3, 3], [-4, 4]],
+>     [[-1, 2], [-2, 1], [-3, 3], [-4, 4]]),
+> PBR([[1, 3], [-3, 2, 4], [1, 3], [-3, 2, 4]],
+>     [[-4, -2, -1], [-4, -2, -1], [-3, 2, 4], [-4, -2, -1]]),
+> PBR([[-4, -3, -2, -1, 1, 2, 3, 4], [-4, -3, -2, -1, 1, 2, 3, 4],
+>      [-4, -3, -2, -1, 1, 2, 3, 4], [-4, -3, -2, -1, 1, 2, 3, 4]],
+>     [[-4, -3, -2, -1, 1, 2, 3, 4], [-4, -3, -2, -1, 1, 2, 3, 4],
+>      [-4, -3, -2, -1, 1, 2, 3, 4], [-4, -3, -2, -1, 1, 2, 3, 4]])]);
 <pbr semigroup of degree 4 with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
@@ -603,7 +712,9 @@ true
 #T# AsMonoid: 
 #   convert from IsFpSemigroup to IsBipartitionMonoid
 gap> F := FreeSemigroup(3);; AssignGeneratorVariables(F);;
-gap> rels := [ [ s1*s3, s3 ], [ s2*s1, s2 ], [ s2^2, s2 ], [ s3*s1, s3 ], [ s3^2, s3 ], [ s1^3, s1 ], [ s1^2*s2, s2 ], [ s2*s3*s2, s2 ], [ s3*s2*s3, s3 ] ];;
+gap> rels := [[s1 * s3, s3], [s2 * s1, s2], [s2 ^ 2, s2], [s3 * s1, s3],
+>             [s3 ^ 2, s3], [s1 ^ 3, s1], [s1 ^ 2 * s2, s2], [s2 * s3 * s2, s2],
+>             [s3 * s2 * s3, s3]];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2, s3 ]>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
@@ -626,7 +737,10 @@ true
 
 #T# AsMonoid: 
 #   convert from IsBipartitionMonoid to IsBipartitionMonoid
-gap> S := Semigroup( [ Bipartition([ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ] ]), Bipartition([ [ 1, 3 ], [ 2, 4, -3 ], [ -1, -2, -4 ] ]), Bipartition([ [ 1, 2, 3, 4, -1, -2, -3, -4 ] ]) ] );
+gap> S := Semigroup([
+> Bipartition([[1, -2], [2, -1], [3, -3], [4, -4]]),
+> Bipartition([[1, 3], [2, 4, -3], [-1, -2, -4]]),
+> Bipartition([[1, 2, 3, 4, -1, -2, -3, -4]])]);
 <bipartition semigroup of degree 4 with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
@@ -648,7 +762,10 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTransformationSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ Transformation( [ 4, 2, 3, 1 ] ), Transformation( [ 5, 2, 7, 2, 5, 2, 7, 5 ] ), Transformation( [ 3, 6, 3, 3, 8, 6, 3, 8 ] ) ] );
+gap> S := Semigroup([
+> Transformation([4, 2, 3, 1]),
+> Transformation([5, 2, 7, 2, 5, 2, 7, 5]),
+> Transformation([3, 6, 3, 3, 8, 6, 3, 8])]);
 <transformation semigroup of degree 8 with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of degree 8 with 3 generators>
@@ -670,7 +787,34 @@ true
 
 #T# AsMonoid: 
 #   convert from IsBooleanMatSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ false, false, false, true, false, false, false, false ], [ false, true, false, false, false, false, false, false ], [ false, false, true, false, false, false, false, false ], [ true, false, false, false, false, false, false, false ], [ false, false, false, false, true, false, false, false ], [ false, false, false, false, false, true, false, false ], [ false, false, false, false, false, false, true, false ], [ false, false, false, false, false, false, false, true ] ]), Matrix(IsBooleanMat, [ [ false, false, false, false, true, false, false, false ], [ false, true, false, false, false, false, false, false ], [ false, false, false, false, false, false, true, false ], [ false, true, false, false, false, false, false, false ], [ false, false, false, false, true, false, false, false ], [ false, true, false, false, false, false, false, false ], [ false, false, false, false, false, false, true, false ], [ false, false, false, false, true, false, false, false ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false, false, false, false, false ], [ false, false, false, false, false, true, false, false ], [ false, false, true, false, false, false, false, false ], [ false, false, true, false, false, false, false, false ], [ false, false, false, false, false, false, false, true ], [ false, false, false, false, false, true, false, false ], [ false, false, true, false, false, false, false, false ], [ false, false, false, false, false, false, false, true ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsBooleanMat,
+>        [[false, false, false, true, false, false, false, false],
+>         [false, true, false, false, false, false, false, false],
+>         [false, false, true, false, false, false, false, false],
+>         [true, false, false, false, false, false, false, false],
+>         [false, false, false, false, true, false, false, false],
+>         [false, false, false, false, false, true, false, false],
+>         [false, false, false, false, false, false, true, false],
+>         [false, false, false, false, false, false, false, true]]),
+> Matrix(IsBooleanMat,
+>        [[false, false, false, false, true, false, false, false],
+>         [false, true, false, false, false, false, false, false],
+>         [false, false, false, false, false, false, true, false],
+>         [false, true, false, false, false, false, false, false],
+>         [false, false, false, false, true, false, false, false],
+>         [false, true, false, false, false, false, false, false],
+>         [false, false, false, false, false, false, true, false],
+>         [false, false, false, false, true, false, false, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, false, true, false, false, false, false, false],
+>         [false, false, false, false, false, true, false, false],
+>         [false, false, true, false, false, false, false, false],
+>         [false, false, true, false, false, false, false, false],
+>         [false, false, false, false, false, false, false, true],
+>         [false, false, false, false, false, true, false, false],
+>         [false, false, true, false, false, false, false, false],
+>         [false, false, false, false, false, false, false, true]])]);
 <semigroup of 8x8 boolean matrices with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of degree 8 with 3 generators>
@@ -692,7 +836,35 @@ true
 
 #T# AsMonoid: 
 #   convert from IsMaxPlusMatrixSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ]) ] );
+gap> x := -infinity;;
+gap> S := Semigroup([
+> Matrix(IsMaxPlusMatrix,
+>        [[x, x, x, 0, x, x, x, x],
+>         [x, 0, x, x, x, x, x, x],
+>         [x, x, 0, x, x, x, x, x],
+>         [0, x, x, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, 0]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[x, x, x, x, 0, x, x, x],
+>         [x, 0, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, 0, x],
+>         [x, 0, x, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x],
+>         [x, 0, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, 0, x, x, x]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x],
+>         [x, x, 0, x, x, x, x, x],
+>         [x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0],
+>         [x, x, x, x, x, 0, x, x],
+>         [x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0]])]);
 <semigroup of 8x8 max-plus matrices with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
@@ -714,7 +886,34 @@ true
 
 #T# AsMonoid: 
 #   convert from IsMinPlusMatrixSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMinPlusMatrix,
+>  [[infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity],
+>   [infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [0, infinity, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0]]),
+> Matrix(IsMinPlusMatrix,
+>  [[infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>   [infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>   [infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>   [infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>   [infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>  [[infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>   [infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0],
+>   [infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>   [infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0]])]);
 <semigroup of 8x8 min-plus matrices with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
@@ -736,7 +935,35 @@ true
 
 #T# AsMonoid: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ]) ] );
+gap> x := -infinity;;
+gap> S := Semigroup([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[x, x, x, 0, x, x, x, x],
+>         [x, 0, x, x, x, x, x, x],
+>         [x, x, 0, x, x, x, x, x],
+>         [0, x, x, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, 0]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[x, x, x, x, 0, x, x, x],
+>         [x, 0, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, 0, x],
+>         [x, 0, x, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x],
+>         [x, 0, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, 0, x, x, x]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x],
+>         [x, x, 0, x, x, x, x, x],
+>         [x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0],
+>         [x, x, x, x, x, 0, x, x],
+>         [x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0]])]);
 <semigroup of 8x8 projective max-plus matrices with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
@@ -758,7 +985,34 @@ true
 
 #T# AsMonoid: 
 #   convert from IsIntegerMatrixSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 0, 1, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1],
+>         [0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1]])]);
 <semigroup of 8x8 integer matrices with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
@@ -780,7 +1034,35 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ], 5), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ] ], 5), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ], 5) ] );
+gap> x := -infinity;;
+gap> S := Semigroup([
+> Matrix(IsTropicalMaxPlusMatrix,
+>  [[x, x, x, 0, x, x, x, x],
+>   [x, 0, x, x, x, x, x, x],
+>   [x, x, 0, x, x, x, x, x],
+>   [0, x, x, x, x, x, x, x],
+>   [x, x, x, x, 0, x, x, x],
+>   [x, x, x, x, x, 0, x, x],
+>   [x, x, x, x, x, x, 0, x],
+>   [x, x, x, x, x, x, x, 0]], 5),
+> Matrix(IsTropicalMaxPlusMatrix,
+>  [[x, x, x, x, 0, x, x, x],
+>   [x, 0, x, x, x, x, x, x],
+>   [x, x, x, x, x, x, 0, x],
+>   [x, 0, x, x, x, x, x, x],
+>   [x, x, x, x, 0, x, x, x],
+>   [x, 0, x, x, x, x, x, x],
+>   [x, x, x, x, x, x, 0, x],
+>   [x, x, x, x, 0, x, x, x]], 5),
+> Matrix(IsTropicalMaxPlusMatrix,
+>  [[x, x, 0, x, x, x, x, x],
+>   [x, x, x, x, x, 0, x, x],
+>   [x, x, 0, x, x, x, x, x],
+>   [x, x, 0, x, x, x, x, x],
+>   [x, x, x, x, x, x, x, 0],
+>   [x, x, x, x, x, 0, x, x],
+>   [x, x, 0, x, x, x, x, x],
+>   [x, x, x, x, x, x, x, 0]], 5)]);
 <semigroup of 8x8 tropical max-plus matrices with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
@@ -802,7 +1084,37 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ] ], 3) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMinPlusMatrix,
+>  [[infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity],
+>   [infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [0, infinity, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0]],
+>  3),
+> Matrix(IsTropicalMinPlusMatrix,
+>  [[infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>   [infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>   [infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>   [infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>   [infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity]],
+>  3),
+> Matrix(IsTropicalMinPlusMatrix,
+>  [[infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>   [infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0],
+>   [infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>   [infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>   [infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0]],
+>  3)]);
 <semigroup of 8x8 tropical min-plus matrices with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
@@ -824,7 +1136,34 @@ true
 
 #T# AsMonoid: 
 #   convert from IsNTPMatrixSemigroup to IsBipartitionMonoid
-gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ] ], 3, 4), Matrix(IsNTPMatrix, [ [ 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0 ] ], 3, 4), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ] ], 3, 4) ] );
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 0, 1, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1]], 3, 4),
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0]], 3, 4),
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1],
+>         [0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1]], 3, 4)]);
 <semigroup of 8x8 ntp matrices with 3 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 8, degree 8 with 3 generators>
@@ -846,7 +1185,15 @@ true
 
 #T# AsMonoid: 
 #   convert from IsPBRMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ PBR([ [ -2 ], [ -2 ], [ -5 ], [ -7 ], [ -5 ], [ -9 ], [ -7 ], [ -10 ], [ -9 ], [ -10 ], [ -12 ], [ -12 ] ], [ [ ], [ 1, 2 ], [ ], [ ], [ 3, 5 ], [ ], [ 4, 7 ], [ ], [ 6, 9 ], [ 8, 10 ], [ ], [ 11, 12 ] ]), PBR([ [ -3 ], [ -4 ], [ -6 ], [ -4 ], [ -8 ], [ -6 ], [ -4 ], [ -8 ], [ -11 ], [ -8 ], [ -11 ], [ -11 ] ], [ [ ], [ ], [ 1 ], [ 2, 4, 7 ], [ ], [ 3, 6 ], [ ], [ 5, 8, 10 ], [ ], [ ], [ 9, 11, 12 ], [ ] ]) ] );
+gap> S := Monoid([
+> PBR([[-2], [-2], [-5], [-7], [-5], [-9], [-7], [-10], [-9], [-10],
+>      [-12], [-12]],
+>     [[], [1, 2], [], [], [3, 5], [], [4, 7], [], [6, 9], [8, 10], [],
+>      [11, 12]]),
+> PBR([[-3], [-4], [-6], [-4], [-8], [-6], [-4], [-8], [-11], [-8], [-11],
+>      [-11]],
+>     [[], [], [1], [2, 4, 7], [], [3, 6], [], [5, 8, 10], [], [], [9, 11, 12],
+>      []])]);
 <pbr monoid of degree 12 with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 12, degree 12 with 2 generators>
@@ -869,7 +1216,10 @@ true
 #T# AsMonoid: 
 #   convert from IsFpMonoid to IsBipartitionMonoid
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
-gap> rels := [ [ m1^2, m1 ], [ m1*m2^2, m1*m2 ], [ m2^3, m2^2 ], [ (m1*m2)^2, m1*m2 ] ];;
+gap> rels := [[m1 ^ 2, m1],
+>         [m1 * m2 ^ 2, m1 * m2],
+>         [m2 ^ 3, m2 ^ 2],
+>         [(m1 * m2) ^ 2, m1 * m2]];;
 gap> S := F / rels;
 <fp monoid on the generators [ m1, m2 ]>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
@@ -892,7 +1242,9 @@ true
 
 #T# AsMonoid: 
 #   convert from IsBipartitionMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Bipartition([ [ 1, 2, -2 ], [ 3 ], [ 4 ], [ -1, -3 ], [ -4 ] ]), Bipartition([ [ 1, 4, -4 ], [ 2 ], [ 3, -1, -2, -3 ] ]) ] );
+gap> S := Monoid([
+> Bipartition([[1, 2, -2], [3], [4], [-1, -3], [-4]]),
+> Bipartition([[1, 4, -4], [2], [3, -1, -2, -3]])]);
 <bipartition monoid of degree 4 with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of degree 4 with 2 generators>
@@ -914,7 +1266,9 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTransformationMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Transformation( [ 2, 2, 5, 7, 5, 9, 7, 10, 9, 10, 12, 12 ] ), Transformation( [ 3, 4, 6, 4, 8, 6, 4, 8, 11, 8, 11, 11 ] ) ] );
+gap> S := Monoid([
+> Transformation([2, 2, 5, 7, 5, 9, 7, 10, 9, 10, 12, 12]),
+> Transformation([3, 4, 6, 4, 8, 6, 4, 8, 11, 8, 11, 11])]);
 <transformation monoid of degree 12 with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of degree 12 with 2 generators>
@@ -936,7 +1290,57 @@ true
 
 #T# AsMonoid: 
 #   convert from IsBooleanMatMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true, false, false, false, false, false, false, false, false, false, false ], [ false, true, false, false, false, false, false, false, false, false, false, false ], [ false, false, false, false, true, false, false, false, false, false, false, false ], [ false, false, false, false, false, false, true, false, false, false, false, false ], [ false, false, false, false, true, false, false, false, false, false, false, false ], [ false, false, false, false, false, false, false, false, true, false, false, false ], [ false, false, false, false, false, false, true, false, false, false, false, false ], [ false, false, false, false, false, false, false, false, false, true, false, false ], [ false, false, false, false, false, false, false, false, true, false, false, false ], [ false, false, false, false, false, false, false, false, false, true, false, false ], [ false, false, false, false, false, false, false, false, false, false, false, true ], [ false, false, false, false, false, false, false, false, false, false, false, true ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false, false, false, false, false, false, false, false, false ], [ false, false, false, true, false, false, false, false, false, false, false, false ], [ false, false, false, false, false, true, false, false, false, false, false, false ], [ false, false, false, true, false, false, false, false, false, false, false, false ], [ false, false, false, false, false, false, false, true, false, false, false, false ], [ false, false, false, false, false, true, false, false, false, false, false, false ], [ false, false, false, true, false, false, false, false, false, false, false, false ], [ false, false, false, false, false, false, false, true, false, false, false, false ], [ false, false, false, false, false, false, false, false, false, false, true, false ], [ false, false, false, false, false, false, false, true, false, false, false, false ], [ false, false, false, false, false, false, false, false, false, false, true, false ], [ false, false, false, false, false, false, false, false, false, false, true, false ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsBooleanMat,
+>        [[false, true, false, false, false, false, false, false, false, false,
+>          false, false],
+>         [false, true, false, false, false, false, false, false, false, false,
+>          false, false],
+>         [false, false, false, false, true, false, false, false, false, false,
+>          false, false],
+>         [false, false, false, false, false, false, true, false, false, false,
+>          false, false],
+>         [false, false, false, false, true, false, false, false, false, false,
+>          false, false],
+>         [false, false, false, false, false, false, false, false, true, false,
+>          false, false],
+>         [false, false, false, false, false, false, true, false, false, false,
+>          false, false],
+>         [false, false, false, false, false, false, false, false, false, true,
+>          false, false],
+>         [false, false, false, false, false, false, false, false, true, false,
+>          false, false],
+>         [false, false, false, false, false, false, false, false, false, true,
+>          false, false],
+>         [false, false, false, false, false, false, false, false, false, false,
+>          false, true],
+>         [false, false, false, false, false, false, false, false, false, false,
+>          false, true]]),
+> Matrix(IsBooleanMat,
+>        [[false, false, true, false, false, false, false, false, false, false,
+>          false, false],
+>         [false, false, false, true, false, false, false, false, false, false,
+>          false, false],
+>         [false, false, false, false, false, true, false, false, false, false,
+>          false, false],
+>         [false, false, false, true, false, false, false, false, false, false,
+>          false, false],
+>         [false, false, false, false, false, false, false, true, false, false,
+>          false, false],
+>         [false, false, false, false, false, true, false, false, false, false,
+>          false, false],
+>         [false, false, false, true, false, false, false, false, false, false,
+>          false, false],
+>         [false, false, false, false, false, false, false, true, false, false,
+>          false, false],
+>         [false, false, false, false, false, false, false, false, false, false,
+>          true, false],
+>         [false, false, false, false, false, false, false, true, false, false,
+>          false, false],
+>         [false, false, false, false, false, false, false, false, false, false,
+>          true, false],
+>         [false, false, false, false, false, false, false, false, false, false,
+>          true, false]])]);
 <monoid of 12x12 boolean matrices with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of degree 12 with 2 generators>
@@ -958,7 +1362,34 @@ true
 
 #T# AsMonoid: 
 #   convert from IsMaxPlusMatrixMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ] ]) ] );
+gap> x := -infinity;;
+gap> S := Monoid([
+> Matrix(IsMaxPlusMatrix,
+>        [[x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[x, x, 0, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x]])]);
 <monoid of 12x12 max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 12, degree 12 with 2 generators>
@@ -980,7 +1411,34 @@ true
 
 #T# AsMonoid: 
 #   convert from IsMinPlusMatrixMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ] ]) ] );
+gap> x := infinity;;
+gap> S := Monoid([
+> Matrix(IsMinPlusMatrix,
+>        [[x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0]]),
+> Matrix(IsMinPlusMatrix,
+>        [[x, x, 0, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x]])]);
 <monoid of 12x12 min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 12, degree 12 with 2 generators>
@@ -1002,7 +1460,34 @@ true
 
 #T# AsMonoid: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ] ]) ] );
+gap> x := -infinity;;
+gap> S := Monoid([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[x, x, 0, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x]])]);
 <monoid of 12x12 projective max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 12, degree 12 with 2 generators>
@@ -1024,7 +1509,33 @@ true
 
 #T# AsMonoid: 
 #   convert from IsIntegerMatrixMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]])]);
 <monoid of 12x12 integer matrices with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 12, degree 12 with 2 generators>
@@ -1046,7 +1557,34 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0 ] ], 5), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ] ], 5) ] );
+gap> x := -infinity;;
+gap> S := Monoid([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0]], 5),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[x, x, 0, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x]], 5)]);
 <monoid of 12x12 tropical max-plus matrices with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 12, degree 12 with 2 generators>
@@ -1068,7 +1606,34 @@ true
 
 #T# AsMonoid: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0 ] ], 2), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ] ], 2) ] );
+gap> x := infinity;;
+gap> S := Monoid([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, 0, x, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, 0, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, 0, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, 0, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, 0, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0],
+>         [x, x, x, x, x, x, x, x, x, x, x, 0]], 2),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[x, x, 0, x, x, x, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, 0, x, x, x, x, x, x],
+>         [x, x, x, 0, x, x, x, x, x, x, x, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, 0, x, x, x, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x],
+>         [x, x, x, x, x, x, x, x, x, x, 0, x]], 2)]);
 <monoid of 12x12 tropical min-plus matrices with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 12, degree 12 with 2 generators>
@@ -1090,7 +1655,33 @@ true
 
 #T# AsMonoid: 
 #   convert from IsNTPMatrixMonoid to IsBipartitionMonoid
-gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ], 5, 5), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ] ], 5, 5) ] );
+gap> S := Monoid([
+> Matrix(IsNTPMatrix,
+>        [[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]], 5, 5),
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]], 5, 5)]);
 <monoid of 12x12 ntp matrices with 2 generators>
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <bipartition monoid of size 12, degree 12 with 2 generators>
@@ -1156,7 +1747,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsReesZeroMatrixSemigroup to IsBipartitionSemigroup
-gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), 
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]),
 >                                 [[(1, 2)]]);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> T := AsSemigroup(IsBipartitionSemigroup, R);
@@ -1201,7 +1792,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from graph inverse to IsBipartitionSemigroup
-gap> S := GraphInverseSemigroup(Digraph([[2],[]]));
+gap> S := GraphInverseSemigroup(Digraph([[2], []]));
 <finite graph inverse semigroup with 2 vertices, 1 edge>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 6, degree 7 with 4 generators>
@@ -1246,7 +1837,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBlockBijectionMonoid to IsBipartitionMonoid
-gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
+gap> S := InverseMonoid([
+> Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <inverse block bijection monoid of degree 3 with 1 generator>
 gap> IsInverseMonoid(T);
@@ -1269,7 +1861,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBlockBijectionMonoid to IsBipartitionSemigroup
-gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
+gap> S := InverseMonoid([
+> Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <inverse block bijection monoid of degree 3 with 1 generator>
 gap> IsInverseSemigroup(T) and IsMonoidAsSemigroup(T);
@@ -1317,10 +1910,11 @@ true
 #T# AsSemigroup: 
 #   convert from IsPartialPermSemigroup to IsBlockBijectionSemigroup
 #   for a non-inverse semigroup
-gap> S := Semigroup( [ PartialPerm( [ 1, 2, 4 ], [ 4, 2, 3 ] ),
->  PartialPerm( [ 1, 3, 4 ], [ 1, 4, 3 ] ),
->  PartialPerm( [ 1, 2, 3, 4 ], [ 3, 4, 1, 2 ] ),
->  PartialPerm( [ 1, 3, 4 ], [ 2, 4, 1 ] ) ] );;
+gap> S := Semigroup([
+> PartialPerm([1, 2, 4], [4, 2, 3]),
+>  PartialPerm([1, 3, 4], [1, 4, 3]),
+>  PartialPerm([1, 2, 3, 4], [3, 4, 1, 2]),
+>  PartialPerm([1, 3, 4], [2, 4, 1])]);;
 gap> T := AsSemigroup(IsBlockBijectionSemigroup, S);
 <block bijection semigroup of degree 5 with 4 generators>
 gap> IsInverseSemigroup(T);
@@ -1387,7 +1981,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsReesZeroMatrixSemigroup to IsBipartitionSemigroup
-gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), 
+gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]),
 >                                 [[(1, 2), (1, 2)], [0, ()]]);
 <Rees 0-matrix semigroup 2x2 over Group([ (1,2) ])>
 gap> T := AsSemigroup(IsBipartitionSemigroup, R);
@@ -1432,7 +2026,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from graph inverse to IsBipartitionSemigroup
-gap> S := GraphInverseSemigroup(Digraph([[2],[]]));
+gap> S := GraphInverseSemigroup(Digraph([[2], []]));
 <finite graph inverse semigroup with 2 vertices, 1 edge>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 6, degree 7 with 4 generators>
@@ -1454,7 +2048,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from free band to IsBipartitionSemigroup
-gap> S := FreeBand(2); 
+gap> S := FreeBand(2);
 <free band on the generators [ x1, x2 ]>
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <bipartition semigroup of size 6, degree 7 with 2 generators>
@@ -1587,7 +2181,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBlockBijectionMonoid to IsBipartitionMonoid
-gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
+gap> S := InverseMonoid([
+> Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsMonoid(IsBipartitionMonoid, S);
 <inverse block bijection monoid of degree 3 with 1 generator>
 gap> IsInverseMonoid(T);
@@ -1610,7 +2205,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBlockBijectionMonoid to IsBipartitionSemigroup
-gap> S := InverseMonoid([Bipartition([[1, -1, -3], [2, 3, -2]])]);;
+gap> S := InverseMonoid([
+> Bipartition([[1, -1, -3], [2, 3, -2]])]);;
 gap> T := AsSemigroup(IsBipartitionSemigroup, S);
 <inverse block bijection monoid of degree 3 with 1 generator>
 gap> IsInverseSemigroup(T) and IsMonoidAsSemigroup(T);
@@ -1773,14 +2369,14 @@ MappingByFunction( <inverse block bijection monoid of degree 3 with 3
 
 # Test RandomSemigroup
 gap> S := RandomSemigroup(IsBipartitionSemigroup, 2, 5);;
-gap> IsBipartitionSemigroup(S); 
+gap> IsBipartitionSemigroup(S);
 true
 gap> DegreeOfBipartitionSemigroup(S);
 5
 gap> Length(GeneratorsOfSemigroup(S));
 2
 gap> S := RandomSemigroup(IsBlockBijectionSemigroup, 2, 5);;
-gap> IsBlockBijectionSemigroup(S); 
+gap> IsBlockBijectionSemigroup(S);
 true
 gap> DegreeOfBipartitionSemigroup(S);
 5
@@ -1794,7 +2390,7 @@ gap> DegreeOfBipartitionSemigroup(S);
 gap> Length(GeneratorsOfMonoid(S));
 4
 gap> S := RandomMonoid(IsBlockBijectionMonoid, 2, 5);;
-gap> IsBlockBijectionMonoid(S); 
+gap> IsBlockBijectionMonoid(S);
 true
 gap> DegreeOfBipartitionSemigroup(S);
 5
@@ -1803,7 +2399,7 @@ gap> Length(GeneratorsOfMonoid(S));
 
 # Test RandomInverseSemigroup
 gap> S := RandomInverseSemigroup(IsBlockBijectionSemigroup, 2, 5);;
-gap> IsBlockBijectionSemigroup(S); 
+gap> IsBlockBijectionSemigroup(S);
 true
 gap> IsInverseSemigroup(S);
 true
@@ -1814,7 +2410,7 @@ gap> Length(GeneratorsOfInverseSemigroup(S));
 
 # Test RandomInverseMonoid
 gap> S := RandomInverseMonoid(IsBlockBijectionMonoid, 2, 5);;
-gap> IsBlockBijectionMonoid(S); 
+gap> IsBlockBijectionMonoid(S);
 true
 gap> IsInverseMonoid(S);
 true
@@ -1824,7 +2420,8 @@ gap> Length(GeneratorsOfInverseMonoid(S));
 2
 
 # Test SemigroupViewStringPrefix
-gap> S := Monoid([Bipartition([[1, 3], [2, -2], [-1], [-3]]),
+gap> S := Monoid([
+>  Bipartition([[1, 3], [2, -2], [-1], [-3]]),
 >  Bipartition([[1, -1], [2, -2], [3, -3]]),
 >  Bipartition([[1, -1], [2, -2], [3], [-3]]),
 >  Bipartition([[1], [2, -2], [3], [-1, -3]])]);;
@@ -1850,7 +2447,7 @@ gap> S := Semigroup(
 >     [12, -12], [13, -14], [14, -16], [15, -17], [16, -19],
 >     [17, -20], [18, -21], [19, -22], [20, -23], [21, -24],
 >     [22, -13], [23, -25], [24, -26], [25, -15], [26, -27],
->     [27, -18]]), 
+>     [27, -18]]),
 >  Bipartition([[1, -2], [2, -3], [3, -5],
 >     [4, -10], [5, -1], [6, -11], [7, -12], [8, -6], [9, -8],
 >     [10, -7], [11, -9], [12, -4], [13, -13], [14, -14],
@@ -1867,7 +2464,8 @@ gap> GroupOfUnits(S);
 <block bijection group of degree 27 with 3 generators>
 gap> StructureDescription(last);
 "C5 x (C3 : C4)"
-gap> S := Semigroup([Bipartition([[1, 3], [2, -2], [-1], [-3]]),
+gap> S := Semigroup([
+>  Bipartition([[1, 3], [2, -2], [-1], [-3]]),
 >  Bipartition([[1, -1], [2, -2], [3], [-3]]),
 >  Bipartition([[1], [2, -2], [3], [-1, -3]])]);;
 gap> GroupOfUnits(S);

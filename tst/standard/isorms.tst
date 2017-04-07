@@ -375,7 +375,7 @@ gap> ImagesElm(G.2, R.1);
 
 # Issue #167, problem with IsomorphismSemigroups for RMS and RZMS when one of
 # the arguments was did not satisfy IsWholeFamily
-gap> R := ReesMatrixSemigroup(Group(()), [[(), ()],[(),()]]);;
+gap> R := ReesMatrixSemigroup(Group(()), [[(), ()], [(), ()]]);;
 gap> W := Semigroup(RMSElement(R, 2, (), 2));;
 gap> S := ReesMatrixSemigroup(Group(()), [[()]]);;
 gap> IsTrivial(S) and IsTrivial(W);

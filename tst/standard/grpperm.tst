@@ -52,13 +52,13 @@ Error, Semigroups: IsomorphismPermGroup: usage,
 the argument <S> must satisfy IsGroupAsSemigroup,
 
 #T# IsomorphismPermGroup: for a Rees Matrix Semigroup
-gap> R := ReesMatrixSemigroup(Group((1,3,5), (2,4)), [[()]]);;
+gap> R := ReesMatrixSemigroup(Group((1, 3, 5), (2, 4)), [[()]]);;
 gap> iso := IsomorphismPermGroup(R);;
 gap> G := Range(iso);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
 true
-gap> R := ReesMatrixSemigroup(Group((1,3,5), (2,4)), [[(1,5,3), ()]]);
+gap> R := ReesMatrixSemigroup(Group((1, 3, 5), (2, 4)), [[(1, 5, 3), ()]]);
 <Rees matrix semigroup 2x1 over Group([ (1,3,5), (2,4) ])>
 gap> iso := IsomorphismPermGroup(R);
 Error, Semigroups: IsomorphismPermGroup: usage,
@@ -68,27 +68,27 @@ the argument must be a semigroup satisfying IsGroupAsSemigroup,
 gap> F := FreeSemigroup(2);
 <free semigroup on the generators [ s1, s2 ]>
 gap> S := F /
-> [[F.1^3,F.1],
-> [F.1^2*F.2,F.1*F.2],
-> [F.1*F.2*F.1,F.2*F.1],
-> [F.2*F.1^2,F.1*F.2^2],
-> [F.2*F.1*F.2,F.1*F.2],
-> [F.2^2*F.1,F.2*F.1],
-> [F.2^3,F.2]];
+> [[F.1 ^ 3, F.1],
+> [F.1 ^ 2 * F.2, F.1 * F.2],
+> [F.1 * F.2 * F.1, F.2 * F.1],
+> [F.2 * F.1 ^ 2, F.1 * F.2 ^ 2],
+> [F.2 * F.1 * F.2, F.1 * F.2],
+> [F.2 ^ 2 * F.1, F.2 * F.1],
+> [F.2 ^ 3, F.2]];
 <fp semigroup on the generators [ s1, s2 ]>
 gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 gap> S := F /
-> [[F.1^3,F.2^2],
-> [F.1*F.2^2,F.1],
-> [F.2^2*F.1,F.1],
-> [F.2^3,F.2],
-> [(F.1*F.2)^2*F.1,F.2*F.1^2*F.2],
-> [(F.2*F.1)^2*F.2,F.1^2*F.2*F.1^2],
-> [(F.1^2*F.2)^2,(F.2*F.1)^2],
-> [(F.2*F.1^2)^2,(F.1*F.2)^2],
-> [F.2*(F.1*F.2*F.1)^2,(F.1*F.2*F.1)^2*F.2]];
+> [[F.1 ^ 3, F.2 ^ 2],
+> [F.1 * F.2 ^ 2, F.1],
+> [F.2 ^ 2 * F.1, F.1],
+> [F.2 ^ 3, F.2],
+> [(F.1 * F.2) ^ 2 * F.1, F.2 * F.1 ^ 2 * F.2],
+> [(F.2 * F.1) ^ 2 * F.2, F.1 ^ 2 * F.2 * F.1 ^ 2],
+> [(F.1 ^ 2 * F.2) ^ 2, (F.2 * F.1) ^ 2],
+> [(F.2 * F.1 ^ 2) ^ 2, (F.1 * F.2) ^ 2],
+> [F.2 * (F.1 * F.2 * F.1) ^ 2, (F.1 * F.2 * F.1) ^ 2 * F.2]];
 <fp semigroup on the generators [ s1, s2 ]>
 gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
@@ -193,17 +193,18 @@ true
 true
 gap> G := Range(iso);
 Group([ (1,2,3) ])
-gap> S := Monoid([Matrix(IsMaxPlusMatrix,[[0,-infinity,-infinity,-infinity],
->                                         [-infinity,-infinity,0,-infinity],
->                                         [-infinity,-infinity,-infinity,0],
->                                         [-infinity,-infinity,-infinity,0]])]);
+gap> S := Monoid([Matrix(IsMaxPlusMatrix,
+> [[0, -infinity, -infinity, -infinity],
+>  [-infinity, -infinity, 0, -infinity],
+>  [-infinity, -infinity, -infinity, 0],
+>  [-infinity, -infinity, -infinity, 0]])]);
 <commutative monoid of 4x4 max-plus matrices with 1 generator>
 gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
 #T# IsomorphismPermGroup: for a Min Plus Matrix Semigroup
-gap> S := Semigroup( [ Matrix(IsMinPlusMatrix,
+gap> S := Semigroup([Matrix(IsMinPlusMatrix,
 >                             [[infinity, 0, infinity, infinity],
 >                              [infinity, infinity, 0, infinity],
 >                              [infinity, infinity, infinity, 0],
@@ -212,7 +213,7 @@ gap> S := Semigroup( [ Matrix(IsMinPlusMatrix,
 >                             [[infinity, infinity, 0, infinity],
 >                              [infinity, infinity, infinity, 0],
 >                              [0, infinity, infinity, infinity],
->                              [infinity, 0, infinity, infinity]]) ] );
+>                              [infinity, 0, infinity, infinity]])]);
 <semigroup of 4x4 min-plus matrices with 2 generators>
 gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
@@ -224,7 +225,7 @@ gap> S := Semigroup(
 > [Matrix(IsMinPlusMatrix, [[infinity, 0, infinity], [0, infinity, infinity],
 >     [infinity, 0, infinity]]),
 > Matrix(IsMinPlusMatrix, [[infinity, infinity, 0], [infinity, infinity, 0],
->     [0, infinity, infinity]]) ] );;
+>     [0, infinity, infinity]])]);;
 gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
@@ -238,16 +239,16 @@ gap> S := Semigroup(
 > Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, -infinity, 0],
 >     [-infinity, -infinity, 0, -infinity],
 >     [-infinity, 0, -infinity, -infinity],
->     [0, -infinity, -infinity, -infinity]], 2) ] );;
+>     [0, -infinity, -infinity, -infinity]], 2)]);;
 gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
 true
 gap> G := Range(iso);
 Group([ (1,3)(2,4), (1,4)(2,3) ])
-gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [[3, 0], [2, 1]], 3),
+gap> S := Semigroup([Matrix(IsTropicalMaxPlusMatrix, [[3, 0], [2, 1]], 3),
 >  Matrix(IsTropicalMaxPlusMatrix, [[1, 1], [0, -infinity]], 3),
->  Matrix(IsTropicalMaxPlusMatrix, [[1, -infinity], [1, 0]], 3) ] );;
+>  Matrix(IsTropicalMaxPlusMatrix, [[1, -infinity], [1, 0]], 3)]);;
 gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
@@ -326,9 +327,9 @@ the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
 #T# IsomorphismPermGroup: for a Block Bijection Semigroup
 gap> S := InverseSemigroup(
-> [Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ],
->    [ 6, -6 ] ] ), Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -4 ],
->    [ 4, -5 ], [ 5, -3 ], [ 6, -6 ]])]);;
+> [Bipartition([[1, -2], [2, -1], [3, -3], [4, -4], [5, -5],
+>    [6, -6]]), Bipartition([[1, -1], [2, -2], [3, -4],
+>    [4, -5], [5, -3], [6, -6]])]);;
 gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
@@ -336,17 +337,17 @@ true
 gap> G := Range(iso);
 Group([ (1,2), (3,4,5) ])
 gap> S :=
-> Semigroup( [ Bipartition( [ [ 1, 4, -4 ], [ 2, -3 ], [ 3, -1, -2 ] ] ),
->  Bipartition( [ [ 1, 2, -2, -3 ], [ 3, -1 ], [ 4, -4 ]])]);;
+> Semigroup([Bipartition([[1, 4, -4], [2, -3], [3, -1, -2]]),
+>  Bipartition([[1, 2, -2, -3], [3, -1], [4, -4]])]);;
 gap> iso := IsomorphismPermGroup(S);
 Error, Semigroups: IsomorphismPermGroup: usage,
 the argument must be a semigroup satisfying IsGroupAsSemigroup,
 
 #T# IsomorphismPermGroup: for a block bijection monoid
 gap> S := InverseMonoid(
-> [Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ],
->    [ 6, -6 ] ] ), Bipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -4 ],
->    [ 4, -5 ], [ 5, -3 ], [ 6, -6 ]])]);;
+> [Bipartition([[1, -2], [2, -1], [3, -3], [4, -4], [5, -5],
+>    [6, -6]]), Bipartition([[1, -1], [2, -2], [3, -4],
+>    [4, -5], [5, -3], [6, -6]])]);;
 gap> iso := IsomorphismPermGroup(S);;
 gap> BruteForceIsoCheck(iso); BruteForceInverseCheck(iso);
 true
@@ -421,7 +422,7 @@ gap> ListIterator(iter) = AsSet(G ^ (5, 10));
 true
 
 #T# SEMIGROUPS.LargestElementConjugateStabChain, 1
-gap> conj := (3,9);;
+gap> conj := (3, 9);;
 gap> G1 := AlternatingGroup(5);;
 gap> base1 := [1 .. 3];;
 gap> G2 := G1 ^ conj;;
@@ -450,7 +451,7 @@ gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 1, 2, 4 ]
 
 #T# SEMIGROUPS.LargestElementConjugateStabChain, 2
-gap> conj := (1,10,7,4,3,6,2,9,8,5);;
+gap> conj := (1, 10, 7, 4, 3, 6, 2, 9, 8, 5);;
 gap> G1 := AlternatingGroup(5);;
 gap> base1 := [1 .. 3];;
 gap> G2 := G1 ^ conj;;
@@ -479,7 +480,7 @@ gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 1, 3, 6 ]
 
 #T# SEMIGROUPS.LargestElementConjugateStabChain, 3
-gap> conj := (1,10,7,4,3,6,2,9,8,5);;
+gap> conj := (1, 10, 7, 4, 3, 6, 2, 9, 8, 5);;
 gap> G1 := AlternatingGroup(10);;
 gap> base1 := [1, 2, 3, 4, 5, 6, 7, 8];;
 gap> G2 := G1 ^ conj;;
@@ -511,9 +512,9 @@ gap> OnTuples(base2, q1);
 #[ 1, 2, 3, 4, 5, 6, 7, 8 ]
 
 #T# SEMIGROUPS.LargestElementConjugateStabChain, 4
-gap> conj := (1,13,6,8,4,12,7,5,2,3,11)(9,10);;
-gap> G1 := Group((2,5)(3,4)(7,9,10,8), (7,10)(8,9), (1,2,3,4,5), 
->               (6,7,8,9,10));;
+gap> conj := (1, 13, 6, 8, 4, 12, 7, 5, 2, 3, 11)(9, 10);;
+gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
+>               (6, 7, 8, 9, 10));;
 gap> base1 := [1, 7, 6];;
 gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;
@@ -541,9 +542,9 @@ gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 2, 4, 5 ]
 
 #T# SEMIGROUPS.LargestElementConjugateStabChain, 5
-gap> conj := (1,10,4,2,9,11,5,8,3,6)(7,12);;
-gap> G1 := Group((2,5)(3,4)(7,9,10,8), (7,10)(8,9), (1,2,3,4,5), 
->               (6,7,8,9,10));;
+gap> conj := (1, 10, 4, 2, 9, 11, 5, 8, 3, 6)(7, 12);;
+gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
+>               (6, 7, 8, 9, 10));;
 gap> base1 := [1, 6, 7];;
 gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;
@@ -571,9 +572,9 @@ gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 2, 1, 3 ]
 
 #T# SEMIGROUPS.LargestElementConjugateStabChain, 6
-gap> conj := (1,10,4,2,9,11,5,8,3,6)(7,12);;
-gap> G1 := Group((2,5)(3,4)(7,9,10,8), (7,10)(8,9), (1,2,3,4,5), 
->               (6,7,8,9,10));;
+gap> conj := (1, 10, 4, 2, 9, 11, 5, 8, 3, 6)(7, 12);;
+gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
+>               (6, 7, 8, 9, 10));;
 gap> base1 := [1, 2, 6, 7];;
 gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;
@@ -601,9 +602,9 @@ gap> Minimum(List(G2, x -> OnTuples(base2, x)));
 [ 2, 6, 1, 3 ]
 
 #T# SEMIGROUPS.LargestElementConjugateStabChain, 7
-gap> conj := (1,10,4,2,9,11,5,8,3,6)(7,12);;
-gap> G1 := Group((2,5)(3,4)(7,9,10,8), (7,10)(8,9), (1,2,3,4,5), 
->               (6,7,8,9,10));;
+gap> conj := (1, 10, 4, 2, 9, 11, 5, 8, 3, 6)(7, 12);;
+gap> G1 := Group((2, 5)(3, 4)(7, 9, 10, 8), (7, 10)(8, 9), (1, 2, 3, 4, 5), 
+>               (6, 7, 8, 9, 10));;
 gap> base1 := [4, 5, 9, 10];;
 gap> G2 := G1 ^ conj;;
 gap> base2 := OnTuples(base1, conj);;

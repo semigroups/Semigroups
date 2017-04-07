@@ -203,7 +203,7 @@ gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
 gap> cong := LeftSemigroupCongruence(S, pairs);
 <left semigroup congruence over <transformation semigroup of degree 4 with 2 
  generators> with 1 generating pairs>
-gap> LeftCongruenceClassOfElement(cong, Transformation([3,4,3,3]));
+gap> LeftCongruenceClassOfElement(cong, Transformation([3, 4, 3, 3]));
 <left congruence class of Transformation( [ 3, 4, 3, 3 ] )>
 
 #T# RightSemigroupCongruence: Pairs
@@ -213,12 +213,12 @@ gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
 gap> cong := RightSemigroupCongruence(S, pairs);
 <right semigroup congruence over <transformation semigroup of degree 4 with 2 
  generators> with 1 generating pairs>
-gap> RightCongruenceClassOfElement(cong, Transformation([3,4,3,3]));
+gap> RightCongruenceClassOfElement(cong, Transformation([3, 4, 3, 3]));
 <right congruence class of Transformation( [ 3, 4, 3, 3 ] )>
 
 #T# Equality of left and right congruences
-gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]), 
->                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]), 
+gap> S := Semigroup(Matrix(IsBooleanMat, [[0, 1], [1, 0]]),
+>                   Matrix(IsBooleanMat, [[1, 0], [1, 1]]),
 >                   Matrix(IsBooleanMat, [[1, 0], [0, 0]]));;
 gap> lcong := LeftSemigroupCongruence(S, [S.1, S.2]);;
 gap> rcong := RightSemigroupCongruence(S, [S.1, S.2]);;
@@ -234,40 +234,40 @@ gap> rcong = lcong;
 true
 
 #T# OnLeftCongruenceClasses
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
->                 Transformation( [ 3, 4, 3, 4, 4 ] ),
->                 Transformation( [ 3, 4, 3, 4, 3 ] ),
->                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
+>                 Transformation([3, 4, 3, 4, 4]),
+>                 Transformation([3, 4, 3, 4, 3]),
+>                 Transformation([4, 3, 3, 4, 4]));;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> cong := LeftSemigroupCongruence(S, [pair1, pair2]);
 <left semigroup congruence over <transformation semigroup of degree 5 with 4 
  generators> with 2 generating pairs>
-gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> x := Transformation([3, 4, 3, 4, 3]);;
 gap> class := LeftCongruenceClassOfElement(cong, x);
 <left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
-gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> elm := Transformation([1, 2, 2, 1, 2]);;
 gap> OnLeftCongruenceClasses(class, elm);
 <left congruence class of Transformation( [ 3, 4, 4, 3, 4 ] )>
 
 #T# OnRightCongruenceClasses
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ),
->                 Transformation( [ 3, 4, 3, 4, 4 ] ),
->                 Transformation( [ 3, 4, 3, 4, 3 ] ),
->                 Transformation( [ 4, 3, 3, 4, 4 ] ));;
-gap> pair1 := [Transformation( [ 3, 4, 3, 4, 3 ] ),
->              Transformation( [ 1, 2, 1, 2, 1 ] )];;
-gap> pair2 := [Transformation( [ 4, 3, 4, 3, 4 ] ),
->              Transformation( [ 3, 4, 3, 4, 3 ] )];;
+gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
+>                 Transformation([3, 4, 3, 4, 4]),
+>                 Transformation([3, 4, 3, 4, 3]),
+>                 Transformation([4, 3, 3, 4, 4]));;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> pair2 := [Transformation([4, 3, 4, 3, 4]),
+>              Transformation([3, 4, 3, 4, 3])];;
 gap> cong := RightSemigroupCongruence(S, [pair1, pair2]);
 <right semigroup congruence over <transformation semigroup of degree 5 with 4 
  generators> with 2 generating pairs>
-gap> x := Transformation( [ 3, 4, 3, 4, 3 ] );;
+gap> x := Transformation([3, 4, 3, 4, 3]);;
 gap> class := RightCongruenceClassOfElement(cong, x);
 <right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )>
-gap> elm := Transformation( [ 1, 2, 2, 1, 2 ] );;
+gap> elm := Transformation([1, 2, 2, 1, 2]);;
 gap> OnRightCongruenceClasses(class, elm);
 <right congruence class of Transformation( [ 2, 1, 2, 1, 2 ] )>
 
@@ -326,22 +326,22 @@ true
 
 #T# Equality for different types of congruence class
 gap> S := FullTransformationMonoid(4);;
-gap> I := SemigroupIdeal(S, Transformation([1,1,2,2]));;
+gap> I := SemigroupIdeal(S, Transformation([1, 1, 2, 2]));;
 gap> reescong := ReesCongruenceOfSemigroupIdeal(I);;
 gap> pair := [Transformation([1, 1, 2, 2]), Transformation([1, 1, 1, 1])];;
 gap> cong := SemigroupCongruence(S, pair);;
 gap> reesclass := EquivalenceClassOfElement(reescong, pair[1]);
 <congruence class of Transformation( [ 1, 1, 2, 2 ] )>
-gap> class := EquivalenceClassOfElement(cong, Transformation([1,1,2,2]));
+gap> class := EquivalenceClassOfElement(cong, Transformation([1, 1, 2, 2]));
 <congruence class of Transformation( [ 1, 1, 2, 2 ] )>
 gap> class = reesclass;
 true
 gap> cong := SemigroupCongruence(S, []);;
-gap> class := EquivalenceClassOfElement(cong, Transformation([1,1,2,2]));;
+gap> class := EquivalenceClassOfElement(cong, Transformation([1, 1, 2, 2]));;
 gap> class = reesclass;
 false
 gap> cong := UniversalSemigroupCongruence(S);;
-gap> class := EquivalenceClassOfElement(cong, Transformation([1,1,2,2]));;
+gap> class := EquivalenceClassOfElement(cong, Transformation([1, 1, 2, 2]));;
 gap> class = reesclass;
 false
 
@@ -357,13 +357,13 @@ gap> EquivalenceRelationCanonicalLookup(cong);
   4, 4 ]
 
 # EquivalenceRelationCanonicalLookup with an RMS cong
-gap> S := ReesMatrixSemigroup(SymmetricGroup(3), [[(1,2), ()], [(), (1,3)]]);
+gap> S := ReesMatrixSemigroup(SymmetricGroup(3), [[(1, 2), ()], [(), (1, 3)]]);
 <Rees matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>
-gap> cong := RMSCongruenceByLinkedTriple(S, Group((1,2,3)),
->                                        [[1],[2]], [[1,2]]);;
+gap> cong := RMSCongruenceByLinkedTriple(S, Group((1, 2, 3)),
+>                                        [[1], [2]], [[1, 2]]);;
 gap> ccong := AsSemigroupCongruenceByGeneratingPairs(cong);;
-gap> cong := RMSCongruenceByLinkedTriple(S, Group((1,2,3)),
->                                        [[1],[2]], [[1,2]]);;
+gap> cong := RMSCongruenceByLinkedTriple(S, Group((1, 2, 3)),
+>                                        [[1], [2]], [[1, 2]]);;
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 1, 2, 2, 2, 1, 1, 3, 4, 4, 2, 1, 1, 2, 3, 4, 4, 4, 3, 3, 3, 4 ]
 gap> EquivalenceRelationCanonicalLookup(ccong);
@@ -374,7 +374,7 @@ true
 # Two infinite congruences (will try next method)
 gap> F := FreeSemigroup(2);;
 gap> cong1 := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(F, [F.1]));;
-gap> cong2 := SemigroupCongruence(F, [F.1, F.1^2]);;
+gap> cong2 := SemigroupCongruence(F, [F.1, F.1 ^ 2]);;
 gap> cong1 = cong2;
 false
 gap> F := FreeSemigroup(2);;
@@ -399,8 +399,8 @@ Error, Semigroups: EquivalenceRelationLookup: usage,
 
 #T# Equality for different types of congruence, both with pairs
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
->                                 [[(1,2), ()], [(), (1,3)]]);;
-gap> cong1 := RMSCongruenceByLinkedTriple(S, Group((1,2,3)),
+>                                 [[(1, 2), ()], [(), (1, 3)]]);;
+gap> cong1 := RMSCongruenceByLinkedTriple(S, Group((1, 2, 3)),
 >                                         [[1], [2]], [[1, 2]]);;
 gap> ideal := SemigroupIdeal(S, [MultiplicativeZero(S)]);;
 gap> cong2 := ReesCongruenceOfSemigroupIdeal(ideal);;

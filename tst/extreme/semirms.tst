@@ -792,7 +792,7 @@ false
 gap> R := ReesZeroMatrixSemigroup(S, [[id, 0, 0], [0, 0, id], [0, zero, 0]]);;
 gap> IsInverseSemigroup(R);
 false
-gap> y := PartialPerm([1,2,3,4,0]);
+gap> y := PartialPerm([1, 2, 3, 4, 0]);
 <identity partial perm on [ 1, 2, 3, 4 ]>
 gap> R := ReesZeroMatrixSemigroup(S, [[id, 0, 0], [0, 0, id], [0, y, 0]]);;
 gap> IsInverseSemigroup(R);

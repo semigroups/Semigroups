@@ -38,8 +38,8 @@ gap> BruteForceInverseCheck := function(map)
 
 # IsomorphismPermGroup
 gap> S := Semigroup(
-> [ Matrix(GF(2), [[0*Z(2), Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2), Z(2)^0],
->   [Z(2)^0, 0*Z(2), 0*Z(2)]]) ]);;
+> [Matrix(GF(2), [[0 * Z(2), Z(2) ^ 0, 0 * Z(2)], [0 * Z(2), 0 * Z(2), Z(2) ^ 0],
+>   [Z(2) ^ 0, 0 * Z(2), 0 * Z(2)]])]);;
 gap> map := IsomorphismPermGroup(S);
 MappingByFunction( <group of size 3, 3x3 matrices over GF(2) with 1 generator>
 , <group of size 3, with 1 generator>
@@ -48,7 +48,7 @@ gap> BruteForceInverseCheck(map);
 true
 gap> BruteForceIsoCheck(map);
 true
-gap> G := GroupOfUnits(GLM(2,2));;
+gap> G := GroupOfUnits(GLM(2, 2));;
 gap> IsMatrixOverFiniteFieldGroup(G);
 false
 gap> G := Group(GeneratorsOfSemigroup(G));
@@ -89,7 +89,7 @@ Error, Semigroups: IsomorphismMatrixGroup: usage,
 the argument must be a group (as semigroup),
 
 # ClosureGroup
-gap> G := GroupOfUnits(GLM(3,3));
+gap> G := GroupOfUnits(GLM(3, 3));
 <group of 3x3 matrices over GF(3) with 2 generators>
 gap> IsMatrixOverFiniteFieldGroup(G);
 false
@@ -97,9 +97,9 @@ gap> G := Group(GeneratorsOfSemigroup(G));
 <group of 3x3 matrices over GF(3) with 3 generators>
 gap> IsMatrixOverFiniteFieldGroup(G);
 true
-gap> x := Matrix(GF(3), [[Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3)],
->  [0*Z(3), Z(3), Z(3)^0, Z(3)], [0*Z(3), Z(3), 0*Z(3), Z(3)^0],
->  [Z(3), Z(3)^0, 0*Z(3), Z(3)^0]]);;
+gap> x := Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3), Z(3) ^ 0, 0 * Z(3)],
+>  [0 * Z(3), Z(3), Z(3) ^ 0, Z(3)], [0 * Z(3), Z(3), 0 * Z(3), Z(3) ^ 0],
+>  [Z(3), Z(3) ^ 0, 0 * Z(3), Z(3) ^ 0]]);;
 gap> ClosureGroup(G, x);
 Error, Semigroups: ClosureGroup (for matrix over finite field group and matrix\
  over finite field): usage,
@@ -120,7 +120,7 @@ gap> ClosureGroup(S, S);
 <group of 0x0 matrices over GF(3) with 1 generator>
 
 # IsomorphismSemigroup
-gap> G := GroupOfUnits(GLM(3,3));;
+gap> G := GroupOfUnits(GLM(3, 3));;
 gap> G := Group(List(GeneratorsOfSemigroup(G), AsList));
 <matrix group with 3 generators>
 gap> IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, G);
@@ -129,7 +129,7 @@ MappingByFunction( <matrix group with 3 generators>, <group of 3x
 3 generators>, function( g ) ... end, <Attribute "AsList"> )
 
 # Size
-gap> G := GroupOfUnits(GLM(3,3));;
+gap> G := GroupOfUnits(GLM(3, 3));;
 gap> G := Group(GeneratorsOfSemigroup(G));;
 gap> Size(G);
 11232
@@ -140,16 +140,16 @@ gap> Size(S);
 1
 
 # \in 
-gap> G := GroupOfUnits(GLM(3,3));;
+gap> G := GroupOfUnits(GLM(3, 3));;
 gap> G := Group(GeneratorsOfSemigroup(G));;
-gap> Matrix(GF(2^2), [[Z(2^2)^2, Z(2^2)], [0*Z(2), 0*Z(2)]]) in G;
+gap> Matrix(GF(2 ^ 2), [[Z(2 ^ 2) ^ 2, Z(2 ^ 2)], [0 * Z(2), 0 * Z(2)]]) in G;
 false
 gap> S := Semigroup(Matrix(GF(3), []));;
 gap> Matrix(GF(3), []) in S;
 true
 
 # \^ for matrix group and matrix
-gap> G := GroupOfUnits(GLM(3,3));;
+gap> G := GroupOfUnits(GLM(3, 3));;
 gap> G := Group(GeneratorsOfSemigroup(G));;
 gap> G ^ One(G);
 <group of 3x3 matrices over GF(3) with 3 generators>

@@ -203,7 +203,7 @@ gap> ht!.len;
 100003
 gap> ht!.nr;
 159
-gap> ht!.collisions in [0,1];   # for 32-bit and 64-bit mode
+gap> ht!.collisions in [0, 1]; # for 32-bit and 64-bit mode
 true
 gap> ht!.accesses;
 160

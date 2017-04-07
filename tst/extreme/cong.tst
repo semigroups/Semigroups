@@ -1,14 +1,14 @@
 #############################################################################
 ##
-#W  extreme/pairs.tst
+#W  extreme/cong.tst
 #Y  Copyright (C) 2014-15                                   Michael Torpey
-##                                                          Wilfred Wilson
+##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-gap> START_TEST("Semigroups package: extreme/pairs.tst");
+gap> START_TEST("Semigroups package: extreme/cong.tst");
 gap> LoadPackage("semigroups", false);;
 
 # Set info levels and user preferences
@@ -3289,4 +3289,4 @@ gap> Unbind(z);
 
 #E#
 gap> SEMIGROUPS.StopTest();
-gap> STOP_TEST("Semigroups package: extreme/pairs.tst");
+gap> STOP_TEST("Semigroups package: extreme/cong.tst");

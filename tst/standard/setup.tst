@@ -172,7 +172,7 @@ gap> rank(MultiplicativeZero(R));
 0
 
 # ActionRank, for a matrix over FF
-gap> x := Matrix(GF(2), [[0*Z(2), 0*Z(2)], [0*Z(2), Z(2)^0]]);;
+gap> x := Matrix(GF(2), [[0 * Z(2), 0 * Z(2)], [0 * Z(2), Z(2) ^ 0]]);;
 gap> ActionRank(x, 10);
 1
 
@@ -807,7 +807,7 @@ gap> x(RMSElement(R, 1, (), 1), ());
 # StabilizerAction, for a matrix over FF semigroup
 gap> S := GLM(2, 3);;
 gap> x := StabilizerAction(S);;
-gap> x(One(S), Matrix(GF(3), [[Z(3)^0, 0*Z(3)], [0*Z(3), Z(3)^0]]));
+gap> x(One(S), Matrix(GF(3), [[Z(3) ^ 0, 0 * Z(3)], [0 * Z(3), Z(3) ^ 0]]));
 Matrix(GF(3), [[Z(3)^0, 0*Z(3)], [0*Z(3), Z(3)^0]])
 
 #T# IsActingSemigroupWithFixedDegreeMultiplication

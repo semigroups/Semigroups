@@ -61,18 +61,18 @@ gap> S := Semigroup([Transformation([1, 1, 2, 1]),
 >                    Transformation([3, 3, 1, 2])]);;
 gap> l := LatticeOfCongruences(S);;
 gap> DotString(l) = Concatenation(
-> "//dot\ngraph graphname {\n     node [shape=point]\n2 -- 3\n2 -- 7\n3 -- 8\n4 ",
-> "-- 1\n5 -- 22\n6 -- 5\n6 -- 18\n7 -- 8\n7 -- 25\n8 -- 9\n9 -- 1\n10 -- 33\n11 ",
-> "-- 5\n11 -- 23\n12 -- 5\n13 -- 10\n13 -- 41\n14 -- 1\n15 -- 9\n16 -- 2\n16 -- ",
-> "17\n16 -- 31\n17 -- 3\n17 -- 33\n18 -- 16\n18 -- 22\n18 -- 26\n19 -- 6\n19 -- ",
-> "11\n19 -- 12\n19 -- 20\n20 -- 18\n20 -- 23\n20 -- 27\n20 -- 36\n21 -- 2\n21 --",
-> " 24\n21 -- 30\n22 -- 10\n22 -- 17\n23 -- 13\n23 -- 22\n23 -- 37\n24 -- 3\n24 -",
-> "- 32\n25 -- 4\n25 -- 9\n26 -- 10\n26 -- 31\n27 -- 13\n27 -- 26\n27 -- 40\n28 -",
-> "- 4\n28 -- 14\n29 -- 15\n29 -- 25\n30 -- 7\n30 -- 32\n30 -- 38\n31 -- 7\n31 --",
-> " 29\n31 -- 33\n32 -- 8\n32 -- 34\n33 -- 8\n33 -- 15\n34 -- 9\n34 -- 14\n35 -- ",
-> "15\n35 -- 34\n36 -- 16\n36 -- 21\n36 -- 37\n36 -- 40\n37 -- 17\n37 -- 24\n37 -",
-> "- 41\n38 -- 25\n38 -- 28\n38 -- 34\n39 -- 29\n39 -- 35\n39 -- 38\n40 -- 30\n40",
-> " -- 31\n40 -- 39\n40 -- 41\n41 -- 32\n41 -- 33\n41 -- 35\n }");
+> "//dot\ngraph graphname {\n     node [shape=point]\n2 -- 3\n2 -- 7\n3 -- 8\n",
+> "4 -- 1\n5 -- 22\n6 -- 5\n6 -- 18\n7 -- 8\n7 -- 25\n8 -- 9\n9 -- 1\n10 -- 33\n",
+> "11 -- 5\n11 -- 23\n12 -- 5\n13 -- 10\n13 -- 41\n14 -- 1\n15 -- 9\n16 -- 2\n16",
+> " -- 17\n16 -- 31\n17 -- 3\n17 -- 33\n18 -- 16\n18 -- 22\n18 -- 26\n19 -- 6\n1",
+> "9 -- 11\n19 -- 12\n19 -- 20\n20 -- 18\n20 -- 23\n20 -- 27\n20 -- 36\n21 -- 2",
+> "\n21 -- 24\n21 -- 30\n22 -- 10\n22 -- 17\n23 -- 13\n23 -- 22\n23 -- 37\n24 --",
+> " 3\n24 -- 32\n25 -- 4\n25 -- 9\n26 -- 10\n26 -- 31\n27 -- 13\n27 -- 26\n27 --",
+> " 40\n28 -- 4\n28 -- 14\n29 -- 15\n29 -- 25\n30 -- 7\n30 -- 32\n30 -- 38\n31 -",
+> "- 7\n31 -- 29\n31 -- 33\n32 -- 8\n32 -- 34\n33 -- 8\n33 -- 15\n34 -- 9\n34 --",
+> " 14\n35 -- 15\n35 -- 34\n36 -- 16\n36 -- 21\n36 -- 37\n36 -- 40\n37 -- 17\n37",
+> " -- 24\n37 -- 41\n38 -- 25\n38 -- 28\n38 -- 34\n39 -- 29\n39 -- 35\n39 -- 38",
+> "\n40 -- 30\n40 -- 31\n40 -- 39\n40 -- 41\n41 -- 32\n41 -- 33\n41 -- 35\n }");
 true
 
 #T# Left/RightCongruences (as a list)
@@ -113,9 +113,9 @@ gap> Size(CongruencesOfSemigroup(S));
 
 #T# LatticeOfLeft/RightCongruences with restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
-gap> restriction := Subsemigroup(S, [Transformation([1,1,1]),
->                                    Transformation([2,2,2]),
->                                    Transformation([3,3,3])]);;
+gap> restriction := Subsemigroup(S, [Transformation([1, 1, 1]),
+>                                    Transformation([2, 2, 2]),
+>                                    Transformation([3, 3, 3])]);;
 gap> latt := LatticeOfLeftCongruences(S, restriction);
 [ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
 gap> restriction := [Transformation([3, 2, 3]),
@@ -141,7 +141,7 @@ gap> latt := LatticeOfCongruences(S, restriction);
 
 #T# LatticeOf(Left/Right)Congruences with invalid restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
-gap> restriction := [Transformation([1,1,1]), Transformation([2,2,2,2])];;
+gap> restriction := [Transformation([1, 1, 1]), Transformation([2, 2, 2, 2])];;
 gap> LatticeOfCongruences(S, restriction);
 Error, Semigroups: PosetOfPrincipalCongruences: usage,
 <restriction> must be a subset of <S>,
@@ -176,9 +176,9 @@ gap> Size(PrincipalCongruencesOfSemigroup(S));
 
 #T# PosetOfPrincipalLeft/RightCongruences with restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
-gap> restriction := Subsemigroup(S, [Transformation([1,1,1]),
->                                    Transformation([2,2,2]),
->                                    Transformation([3,3,3])]);;
+gap> restriction := Subsemigroup(S, [Transformation([1, 1, 1]),
+>                                    Transformation([2, 2, 2]),
+>                                    Transformation([3, 3, 3])]);;
 gap> latt := PosetOfPrincipalLeftCongruences(S, restriction);
 [ [  ], [  ], [  ] ]
 gap> restriction := [Transformation([3, 2, 3]),
@@ -201,7 +201,7 @@ gap> latt := PosetOfPrincipalCongruences(S, restriction);
 
 #T# PosetOfPrincipal(Left/Right)Congruences with invalid restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
-gap> restriction := [Transformation([1,1,1]), Transformation([2,2,2,2])];;
+gap> restriction := [Transformation([1, 1, 1]), Transformation([2, 2, 2, 2])];;
 gap> PosetOfPrincipalCongruences(S, restriction);
 Error, Semigroups: PosetOfPrincipalCongruences: usage,
 <restriction> must be a subset of <S>,
@@ -241,7 +241,7 @@ gap> PrincipalLeftCongruencesOfSemigroup(S)[2];
  with 2 generators> with 1 generating pairs>
 
 #T# MinimalCongruencesOfSemigroup
-gap> S := Semigroup([Transformation([1,3,2]), Transformation([3,1,3])]);;
+gap> S := Semigroup([Transformation([1, 3, 2]), Transformation([3, 1, 3])]);;
 gap> min := MinimalCongruencesOfSemigroup(S);
 [ <semigroup congruence over <transformation semigroup of size 13, degree 3 
      with 2 generators> with 1 generating pairs> ]
@@ -288,8 +288,8 @@ gap> MinimalCongruencesOfSemigroup(S);
 #T# JoinSemilatticeOfCongruences
 gap> S := SymmetricInverseMonoid(2);;
 gap> pair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;
-gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1,2], [1,2])];;
-gap> pair3 := [PartialPerm([1,2], [1,2]), PartialPerm([1,2], [2,1])];;
+gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;
+gap> pair3 := [PartialPerm([1, 2], [1, 2]), PartialPerm([1, 2], [2, 1])];;
 gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair2),
 >             RightSemigroupCongruence(S, pair3)];;
@@ -303,8 +303,8 @@ ments
 #T# MinimalCongruences
 gap> S := SymmetricInverseMonoid(2);;
 gap> pair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;
-gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1,2], [1,2])];;
-gap> pair3 := [PartialPerm([1,2], [1,2]), PartialPerm([1,2], [2,1])];;
+gap> pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;
+gap> pair3 := [PartialPerm([1, 2], [1, 2]), PartialPerm([1, 2], [2, 1])];;
 gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair2),
 >             RightSemigroupCongruence(S, pair3)];;

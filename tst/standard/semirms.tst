@@ -39,7 +39,13 @@ gap> BruteForceInverseCheck := function(map)
 
 #T# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ PBR([ [ -1 ], [ -5 ], [ -1 ], [ -1 ], [ -5 ], [ -5 ], [ -1 ] ], [ [ 1, 3, 4, 7 ], [ ], [ ], [ ], [ 2, 5, 6 ], [ ], [ ] ]), PBR([ [ -4 ], [ -2 ], [ -4 ], [ -4 ], [ -2 ], [ -2 ], [ -2 ] ], [ [ ], [ 2, 5, 6, 7 ], [ ], [ 1, 3, 4 ], [ ], [ ], [ ] ]), PBR([ [ -3 ], [ -6 ], [ -3 ], [ -3 ], [ -6 ], [ -6 ], [ -3 ] ], [ [ ], [ ], [ 1, 3, 4, 7 ], [ ], [ ], [ 2, 5, 6 ], [ ] ]) ] );
+gap> S := Semigroup([
+> PBR([[-1], [-5], [-1], [-1], [-5], [-5], [-1]],
+>     [[1, 3, 4, 7], [], [], [], [2, 5, 6], [], []]),
+> PBR([[-4], [-2], [-4], [-4], [-2], [-2], [-2]],
+>     [[], [2, 5, 6, 7], [], [1, 3, 4], [], [], []]),
+> PBR([[-3], [-6], [-3], [-3], [-6], [-6], [-3]],
+>     [[], [], [1, 3, 4, 7], [], [], [2, 5, 6], []])]);
 <pbr semigroup of degree 7 with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -62,7 +68,15 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpSemigroup to IsReesMatrixSemigroup
 gap> F := FreeSemigroup(3);; AssignGeneratorVariables(F);;
-gap> rels := [ [ s1^2, s1 ], [ s1*s3, s3 ], [ s2^2, s2 ], [ s3*s1, s1 ], [ s3*s2, s1*s2 ], [ s3^2, s3 ], [ s1*s2*s1, s1 ], [ s1*s2*s3, s3 ], [ s2*s1*s2, s2 ] ];;
+gap> rels := [[s1 ^ 2, s1],
+>         [s1 * s3, s3],
+>         [s2 ^ 2, s2],
+>         [s3 * s1, s1],
+>         [s3 * s2, s1 * s2],
+>         [s3 ^ 2, s3],
+>         [s1 * s2 * s1, s1],
+>         [s1 * s2 * s3, s3],
+>         [s2 * s1 * s2, s2]];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2, s3 ]>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
@@ -85,7 +99,10 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Bipartition([ [ 1, 3, 4, 7, -1 ], [ 2, 5, 6, -5 ], [ -2 ], [ -3 ], [ -4 ], [ -6 ], [ -7 ] ]), Bipartition([ [ 1, 3, 4, -4 ], [ 2, 5, 6, 7, -2 ], [ -1 ], [ -3 ], [ -5 ], [ -6 ], [ -7 ] ]), Bipartition([ [ 1, 3, 4, 7, -3 ], [ 2, 5, 6, -6 ], [ -1 ], [ -2 ], [ -4 ], [ -5 ], [ -7 ] ]) ] );
+gap> S := Semigroup([
+> Bipartition([[1, 3, 4, 7, -1], [2, 5, 6, -5], [-2], [-3], [-4], [-6], [-7]]),
+> Bipartition([[1, 3, 4, -4], [2, 5, 6, 7, -2], [-1], [-3], [-5], [-6], [-7]]),
+> Bipartition([[1, 3, 4, 7, -3], [2, 5, 6, -6], [-1], [-2], [-4], [-5], [-7]])]);
 <bipartition semigroup of degree 7 with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -107,7 +124,10 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Transformation( [ 1, 5, 1, 1, 5, 5, 1 ] ), Transformation( [ 4, 2, 4, 4, 2, 2, 2 ] ), Transformation( [ 3, 6, 3, 3, 6, 6, 3 ] ) ] );
+gap> S := Semigroup([
+> Transformation([1, 5, 1, 1, 5, 5, 1]),
+> Transformation([4, 2, 4, 4, 2, 2, 2]),
+> Transformation([3, 6, 3, 3, 6, 6, 3])]);
 <transformation semigroup of degree 7 with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -129,7 +149,31 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ true, false, false, false, false, false, false ], [ false, false, false, false, true, false, false ], [ true, false, false, false, false, false, false ], [ true, false, false, false, false, false, false ], [ false, false, false, false, true, false, false ], [ false, false, false, false, true, false, false ], [ true, false, false, false, false, false, false ] ]), Matrix(IsBooleanMat, [ [ false, false, false, true, false, false, false ], [ false, true, false, false, false, false, false ], [ false, false, false, true, false, false, false ], [ false, false, false, true, false, false, false ], [ false, true, false, false, false, false, false ], [ false, true, false, false, false, false, false ], [ false, true, false, false, false, false, false ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false, false, false, false ], [ false, false, false, false, false, true, false ], [ false, false, true, false, false, false, false ], [ false, false, true, false, false, false, false ], [ false, false, false, false, false, true, false ], [ false, false, false, false, false, true, false ], [ false, false, true, false, false, false, false ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsBooleanMat,
+>        [[true, false, false, false, false, false, false],
+>         [false, false, false, false, true, false, false],
+>         [true, false, false, false, false, false, false],
+>         [true, false, false, false, false, false, false],
+>         [false, false, false, false, true, false, false],
+>         [false, false, false, false, true, false, false],
+>         [true, false, false, false, false, false, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, false, false, true, false, false, false],
+>         [false, true, false, false, false, false, false],
+>         [false, false, false, true, false, false, false],
+>         [false, false, false, true, false, false, false],
+>         [false, true, false, false, false, false, false],
+>         [false, true, false, false, false, false, false],
+>         [false, true, false, false, false, false, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, false, true, false, false, false, false],
+>         [false, false, false, false, false, true, false],
+>         [false, false, true, false, false, false, false],
+>         [false, false, true, false, false, false, false],
+>         [false, false, false, false, false, true, false],
+>         [false, false, false, false, false, true, false],
+>         [false, false, true, false, false, false, false]])]);
 <semigroup of 7x7 boolean matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -151,7 +195,31 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity]])]);
 <semigroup of 7x7 max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -173,7 +241,31 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMinPlusMatrix,
+>        [[0, infinity, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, infinity, 0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity, infinity]])]);
 <semigroup of 7x7 min-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -195,7 +287,31 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity]])]);
 <semigroup of 7x7 projective max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -217,7 +333,31 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0, 0, 0 ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsIntegerMatrix,
+>        [[1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0],
+>         [1, 0, 0, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0],
+>         [1, 0, 0, 0, 0, 0, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 1, 0, 0, 0, 0]])]);
 <semigroup of 7x7 integer matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -239,7 +379,34 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ] ], 1), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ] ], 1), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ] ], 1) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMaxPlusMatrix,
+>      [[0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>       [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>       [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>       [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity],
+>       [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>       [-infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>       [0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity]],
+>      1),
+> Matrix(IsTropicalMaxPlusMatrix,
+>      [[-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>       [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>       [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>       [-infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>       [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>       [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>       [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity]],
+>      1),
+> Matrix(IsTropicalMaxPlusMatrix,
+>      [[-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>       [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>       [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>       [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>       [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>       [-infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>       [-infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity]],
+>      1)]);
 <semigroup of 7x7 tropical max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -261,7 +428,32 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity, infinity ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity ] ], 3) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[0, infinity, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity, infinity]], 3),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity, infinity]], 3),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, infinity, 0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity, infinity]],
+>        3)]);
 <semigroup of 7x7 tropical min-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -283,7 +475,31 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsReesMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0 ] ], 4, 1), Matrix(IsNTPMatrix, [ [ 0, 0, 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0 ] ], 4, 1), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0, 0, 0 ] ], 4, 1) ] );
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix,
+>        [[1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0],
+>         [1, 0, 0, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0],
+>         [1, 0, 0, 0, 0, 0, 0]], 4, 1),
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0, 0]], 4, 1),
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 1, 0, 0, 0, 0]], 4, 1)]);
 <semigroup of 7x7 ntp matrices with 3 generators>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 2x3 over Group(())>
@@ -305,7 +521,13 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsPBRSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ PBR([ [ -4 ], [ -5 ], [ -3 ], [ -1 ], [ -2 ], [ -1 ] ], [ [ 4, 6 ], [ 5 ], [ 3 ], [ 1 ], [ 2 ], [ ] ]), PBR([ [ -1 ], [ -2 ], [ -3 ], [ -4 ], [ -5 ], [ -2 ] ], [ [ 1 ], [ 2, 6 ], [ 3 ], [ 4 ], [ 5 ], [ ] ]), PBR([ [ -3 ], [ -3 ], [ -3 ], [ -3 ], [ -3 ], [ -3 ] ], [ [ ], [ ], [ 1, 2, 3, 4, 5, 6 ], [ ], [ ], [ ] ]) ] );
+gap> S := Semigroup([
+> PBR([[-4], [-5], [-3], [-1], [-2], [-1]],
+>     [[4, 6], [5], [3], [1], [2], []]),
+> PBR([[-1], [-2], [-3], [-4], [-5], [-2]],
+>     [[1], [2, 6], [3], [4], [5], []]),
+> PBR([[-3], [-3], [-3], [-3], [-3], [-3]],
+>     [[], [], [1, 2, 3, 4, 5, 6], [], [], []])]);
 <pbr semigroup of degree 6 with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
@@ -328,7 +550,15 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpSemigroup to IsReesZeroMatrixSemigroup
 gap> F := FreeSemigroup(3);; AssignGeneratorVariables(F);;
-gap> rels := [ [ s1*s2, s1 ], [ s1*s3, s3 ], [ s2^2, s2 ], [ s2*s3, s3 ], [ s3*s1, s3 ], [ s3*s2, s3 ], [ s3^2, s3 ], [ s1^3, s1 ], [ s2*s1^2, s2 ] ];;
+gap> rels := [[s1 * s2, s1],
+>         [s1 * s3, s3],
+>         [s2 ^ 2, s2],
+>         [s2 * s3, s3],
+> [s3 * s1, s3],
+>         [s3 * s2, s3],
+>         [s3 ^ 2, s3],
+>         [s1 ^ 3, s1],
+>         [s2 * s1 ^ 2, s2]];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1, s2, s3 ]>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
@@ -351,11 +581,14 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Bipartition([ [ 1, -4 ], [ 2, -5 ], [ 3, -3 ], [ 4, 6, -1 ], [ 5, -2 ], [ -6 ] ]), Bipartition([ [ 1, -1 ], [ 2, 6, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ -6 ] ]), Bipartition([ [ 1, 2, 3, 4, 5, 6, -3 ], [ -1 ], [ -2 ], [ -4 ], [ -5 ], [ -6 ] ]) ] );
+gap> S := Semigroup([
+> Bipartition([[1, -4], [2, -5], [3, -3], [4, 6, -1], [5, -2], [-6]]),
+> Bipartition([[1, -1], [2, 6, -2], [3, -3], [4, -4], [5, -5], [-6]]),
+> Bipartition([[1, 2, 3, 4, 5, 6, -3], [-1], [-2], [-4], [-5], [-6]])]);
 <bipartition semigroup of degree 6 with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);;
-gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group((1,4)(2,5))) 
-> or (not IsActingSemigroup(S) and  UnderlyingSemigroup(T) = Group((1,2)));
+gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group((1, 4)(2, 5)))
+> or (not IsActingSemigroup(S) and  UnderlyingSemigroup(T) = Group((1, 2)));
 true
 gap> Length(Rows(T)) = 2 and Length(Columns(T)) = 1;
 true
@@ -377,11 +610,14 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTransformationSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Transformation( [ 4, 5, 3, 1, 2, 1 ] ), Transformation( [ 1, 2, 3, 4, 5, 2 ] ), Transformation( [ 3, 3, 3, 3, 3, 3 ] ) ] );
+gap> S := Semigroup([
+> Transformation([4, 5, 3, 1, 2, 1]),
+> Transformation([1, 2, 3, 4, 5, 2]),
+> Transformation([3, 3, 3, 3, 3, 3])]);
 <transformation semigroup of degree 6 with 3 generators>
-gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);; 
-gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group((1,4)(2,5))) 
-> or (not IsActingSemigroup(S) and  UnderlyingSemigroup(T) = Group((1,2)));
+gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);;
+gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group((1, 4)(2, 5)))
+> or (not IsActingSemigroup(S) and  UnderlyingSemigroup(T) = Group((1, 2)));
 true
 gap> Length(Rows(T)) = 2 and Length(Columns(T)) = 1;
 true
@@ -403,7 +639,28 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBooleanMatSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ false, false, false, true, false, false ], [ false, false, false, false, true, false ], [ false, false, true, false, false, false ], [ true, false, false, false, false, false ], [ false, true, false, false, false, false ], [ true, false, false, false, false, false ] ]), Matrix(IsBooleanMat, [ [ true, false, false, false, false, false ], [ false, true, false, false, false, false ], [ false, false, true, false, false, false ], [ false, false, false, true, false, false ], [ false, false, false, false, true, false ], [ false, true, false, false, false, false ] ]), Matrix(IsBooleanMat, [ [ false, false, true, false, false, false ], [ false, false, true, false, false, false ], [ false, false, true, false, false, false ], [ false, false, true, false, false, false ], [ false, false, true, false, false, false ], [ false, false, true, false, false, false ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsBooleanMat,
+>        [[false, false, false, true, false, false],
+>         [false, false, false, false, true, false],
+>         [false, false, true, false, false, false],
+>         [true, false, false, false, false, false],
+>         [false, true, false, false, false, false],
+>         [true, false, false, false, false, false]]),
+> Matrix(IsBooleanMat,
+>        [[true, false, false, false, false, false],
+>         [false, true, false, false, false, false],
+>         [false, false, true, false, false, false],
+>         [false, false, false, true, false, false],
+>         [false, false, false, false, true, false],
+>         [false, true, false, false, false, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, false, true, false, false, false],
+>         [false, false, true, false, false, false],
+>         [false, false, true, false, false, false],
+>         [false, false, true, false, false, false],
+>         [false, false, true, false, false, false],
+>         [false, false, true, false, false, false]])]);
 <semigroup of 6x6 boolean matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
@@ -425,7 +682,28 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity]])]);
 <semigroup of 6x6 max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
@@ -447,7 +725,28 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity]])]);
 <semigroup of 6x6 min-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
@@ -469,7 +768,28 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity]])]);
 <semigroup of 6x6 projective max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
@@ -491,7 +811,28 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 1, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [1, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[1, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 1, 0],
+>         [0, 1, 0, 0, 0, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0]])]);
 <semigroup of 6x6 integer matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
@@ -513,7 +854,28 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ] ], 1), Matrix(IsTropicalMaxPlusMatrix, [ [ 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, 0, -infinity, -infinity, -infinity, -infinity ] ], 1), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity ] ], 1) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [0, -infinity, -infinity, -infinity, -infinity, -infinity]], 1),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[0, -infinity, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, 0, -infinity, -infinity],
+>         [-infinity, -infinity, -infinity, -infinity, 0, -infinity],
+>         [-infinity, 0, -infinity, -infinity, -infinity, -infinity]], 1),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity],
+>         [-infinity, -infinity, 0, -infinity, -infinity, -infinity]], 1)]);
 <semigroup of 6x6 tropical max-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
@@ -535,7 +897,28 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, 0, infinity, infinity, infinity, infinity ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity ] ], 3) ] );
+gap> S := Semigroup([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity],
+>         [0, infinity, infinity, infinity, infinity, infinity]], 3),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[0, infinity, infinity, infinity, infinity, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, infinity, 0, infinity, infinity],
+>         [infinity, infinity, infinity, infinity, 0, infinity],
+>         [infinity, 0, infinity, infinity, infinity, infinity]], 3),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity],
+>         [infinity, infinity, 0, infinity, infinity, infinity]], 3)]);
 <semigroup of 6x6 tropical min-plus matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
@@ -557,7 +940,28 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixSemigroup to IsReesZeroMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0 ] ], 4, 1), Matrix(IsNTPMatrix, [ [ 1, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 1, 0 ], [ 0, 1, 0, 0, 0, 0 ] ], 4, 1), Matrix(IsNTPMatrix, [ [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0 ] ], 4, 1) ] );
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 1, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [1, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0],
+>         [1, 0, 0, 0, 0, 0]], 4, 1),
+> Matrix(IsNTPMatrix,
+>        [[1, 0, 0, 0, 0, 0],
+>         [0, 1, 0, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 1, 0],
+>         [0, 1, 0, 0, 0, 0]], 4, 1),
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0]], 4, 1)]);
 <semigroup of 6x6 ntp matrices with 3 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 2x1 over Group([ (1,2) ])>
@@ -579,7 +983,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsPBRMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ PBR([ [ -3 ], [ -2 ], [ -1 ] ], [ [ 3 ], [ 2 ], [ 1 ] ]), PBR([ [ -2 ], [ -2 ], [ -2 ] ], [ [ ], [ 1, 2, 3 ], [ ] ]) ] );
+gap> S := Monoid([
+> PBR([[-3], [-2], [-1]], [[3], [2], [1]]),
+> PBR([[-2], [-2], [-2]], [[], [1, 2, 3], []])]);
 <pbr monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -602,7 +1008,10 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpMonoid to IsReesZeroMatrixSemigroup
 gap> F := FreeMonoid(2);; AssignGeneratorVariables(F);;
-gap> rels := [ [ m1^2, One(F) ], [ m1*m2, m2 ], [ m2*m1, m2 ], [ m2^2, m2 ] ];;
+gap> rels := [[m1 ^ 2, One(F)],
+>         [m1 * m2, m2],
+>         [m2 * m1, m2],
+>         [m2 ^ 2, m2]];;
 gap> S := F / rels;
 <fp monoid on the generators [ m1, m2 ]>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
@@ -625,11 +1034,13 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Bipartition([ [ 1, -3 ], [ 2, -2 ], [ 3, -1 ] ]), Bipartition([ [ 1, 2, 3, -2 ], [ -1 ], [ -3 ] ]) ] );
+gap> S := Monoid([
+> Bipartition([[1, -3], [2, -2], [3, -1]]),
+> Bipartition([[1, 2, 3, -2], [-1], [-3]])]);
 <bipartition monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);;
-gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([ (1,3) ])) 
-> or (not IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([(1,2)]));
+gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([(1, 3)]))
+> or (not IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([(1, 2)]));
 true
 gap> Length(Rows(T)) = 1 and Length(Columns(T)) = 1;
 true
@@ -651,11 +1062,12 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTransformationMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Transformation( [ 3, 2, 1 ] ), Transformation( [ 2, 2, 2 ] ) ] );
+gap> S := Monoid([
+> Transformation([3, 2, 1]), Transformation([2, 2, 2])]);
 <transformation monoid of degree 3 with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);;
-gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([ (1,3) ])) 
-> or (not IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([(1,2)]));
+gap> (IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([(1, 3)]))
+> or (not IsActingSemigroup(S) and UnderlyingSemigroup(T) = Group([(1, 2)]));
 true
 gap> Length(Rows(T)) = 1 and Length(Columns(T)) = 1;
 true
@@ -677,7 +1089,14 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBooleanMatMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, false, true ], [ false, true, false ], [ true, false, false ] ]), Matrix(IsBooleanMat, [ [ false, true, false ], [ false, true, false ], [ false, true, false ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsBooleanMat,
+>        [[false, false, true], [false, true, false],
+>         [true, false, false]]),
+> Matrix(IsBooleanMat,
+>        [[false, true, false],
+>         [false, true, false],
+>         [false, true, false]])]);
 <monoid of 3x3 boolean matrices with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -699,7 +1118,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ], [ 0, -infinity, -infinity ] ]), Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, -infinity, 0],
+>         [-infinity, 0, -infinity],
+>         [0, -infinity, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity]])]);
 <monoid of 3x3 max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -721,7 +1148,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, infinity, 0 ], [ infinity, 0, infinity ], [ 0, infinity, infinity ] ]), Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, infinity, 0],
+>         [infinity, 0, infinity],
+>         [0, infinity, infinity]]),
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, 0, infinity],
+>         [infinity, 0, infinity]])]);
 <monoid of 3x3 min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -743,7 +1178,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ], [ 0, -infinity, -infinity ] ]), Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, -infinity, 0],
+>         [-infinity, 0, -infinity],
+>         [0, -infinity, -infinity]]),
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity]])]);
 <monoid of 3x3 projective max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -765,7 +1208,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 1, 0, 0 ] ]), Matrix(IsIntegerMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsIntegerMatrix,
+>        [[0, 0, 1],
+>         [0, 1, 0],
+>         [1, 0, 0]]),
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0],
+>         [0, 1, 0],
+>         [0, 1, 0]])]);
 <monoid of 3x3 integer matrices with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -787,7 +1238,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, -infinity, 0 ], [ -infinity, 0, -infinity ], [ 0, -infinity, -infinity ] ], 1), Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ], [ -infinity, 0, -infinity ] ], 1) ] );
+gap> S := Monoid([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, -infinity, 0],
+>         [-infinity, 0, -infinity],
+>         [0, -infinity, -infinity]], 1),
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity],
+>         [-infinity, 0, -infinity]], 1)]);
 <monoid of 3x3 tropical max-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -809,7 +1268,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, infinity, 0 ], [ infinity, 0, infinity ], [ 0, infinity, infinity ] ], 3), Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity ], [ infinity, 0, infinity ], [ infinity, 0, infinity ] ], 3) ] );
+gap> S := Monoid([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, infinity, 0],
+>         [infinity, 0, infinity],
+>         [0, infinity, infinity]], 3),
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, 0, infinity],
+>         [infinity, 0, infinity],
+>         [infinity, 0, infinity]], 3)]);
 <monoid of 3x3 tropical min-plus matrices with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -831,7 +1298,15 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixMonoid to IsReesZeroMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 0, 1 ], [ 0, 1, 0 ], [ 1, 0, 0 ] ], 4, 1), Matrix(IsNTPMatrix, [ [ 0, 1, 0 ], [ 0, 1, 0 ], [ 0, 1, 0 ] ], 4, 1) ] );
+gap> S := Monoid([
+> Matrix(IsNTPMatrix,
+>        [[0, 0, 1],
+>         [0, 1, 0],
+>         [1, 0, 0]], 4, 1),
+> Matrix(IsNTPMatrix,
+>        [[0, 1, 0],
+>         [0, 1, 0],
+>         [0, 1, 0]], 4, 1)]);
 <monoid of 3x3 ntp matrices with 2 generators>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -854,7 +1329,7 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpMonoid to IsReesZeroMatrixSemigroup
 gap> F := FreeMonoid(1);; AssignGeneratorVariables(F);;
-gap> rels := [ [ m1^2, m1 ] ];;
+gap> rels := [[m1 ^ 2, m1]];;
 gap> S := F / rels;
 <fp monoid on the generators [ m1 ]>
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
@@ -877,7 +1352,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsPBRMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ PBR([ [ -2 ], [ -1 ] ], [ [ 2 ], [ 1 ] ]) ] );
+gap> S := Monoid([
+> PBR([[-2], [-1]], [[2], [1]])]);
 <commutative pbr monoid of degree 2 with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -900,7 +1376,7 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpMonoid to IsReesMatrixSemigroup
 gap> F := FreeMonoid(1);; AssignGeneratorVariables(F);;
-gap> rels := [ [ m1^2, One(F) ] ];;
+gap> rels := [[m1 ^ 2, One(F)]];;
 gap> S := F / rels;
 <fp monoid on the generators [ m1 ]>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
@@ -923,7 +1399,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionMonoid to IsReesMatrixSemigroup
-gap> S := InverseMonoid( [ Bipartition([ [ 1, -1 ], [ 2, -2 ] ]), Bipartition([ [ 1, -2 ], [ 2, -1 ] ]) ] );
+gap> S := InverseMonoid([
+> Bipartition([[1, -1], [2, -2]]),
+> Bipartition([[1, -2], [2, -1]])]);
 <block bijection group of degree 2 with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -945,7 +1423,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsReesMatrixSemigroup
-gap> S := InverseSemigroup( [ Bipartition([ [ 1, -1 ], [ 2, -2 ] ]), Bipartition([ [ 1, -2 ], [ 2, -1 ] ]) ] );
+gap> S := InverseSemigroup([
+> Bipartition([[1, -1], [2, -2]]),
+> Bipartition([[1, -2], [2, -1]])]);
 <block bijection group of degree 2 with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -967,7 +1447,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionMonoid to IsReesZeroMatrixSemigroup
-gap> S := InverseMonoid(Bipartition([[1, -1], [2, -2]]), 
+gap> S := InverseMonoid(Bipartition([[1, -1], [2, -2]]),
 > Bipartition([[1, -2], [2, -1]]),
 > Bipartition([[1, 2, -1, -2]]));
 <inverse block bijection monoid of degree 2 with 2 generators>
@@ -991,7 +1471,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBipartitionSemigroup to IsReesZeroMatrixSemigroup
-gap> S := InverseSemigroup(Bipartition([[1, -1], [2, -2]]), 
+gap> S := InverseSemigroup(Bipartition([[1, -1], [2, -2]]),
 > Bipartition([[1, -2], [2, -1]]),
 > Bipartition([[1, 2, -1, -2]]));
 <inverse block bijection monoid of degree 2 with 2 generators>
@@ -1057,7 +1537,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsPartialPermSemigroup to IsReesZeroMatrixSemigroup
-gap> S := InverseSemigroup(PartialPerm([1, 2], [2, 1]), 
+gap> S := InverseSemigroup(PartialPerm([1, 2], [2, 1]),
 >                          PartialPerm([]));;
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1079,7 +1559,7 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsPartialPermMonoid to IsReesZeroMatrixSemigroup
-gap> S := InverseMonoid(PartialPerm([1, 2], [2, 1]), 
+gap> S := InverseMonoid(PartialPerm([1, 2], [2, 1]),
 >                       PartialPerm([]));;
 gap> T := AsSemigroup(IsReesZeroMatrixSemigroup, S);
 <Rees 0-matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1101,7 +1581,8 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTransformationMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ Transformation( [ 2, 1 ] ) ] );
+gap> S := Monoid([
+> Transformation([2, 1])]);
 <commutative transformation monoid of degree 2 with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1123,7 +1604,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsBooleanMatMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsBooleanMat, [ [ false, true ], [ true, false ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsBooleanMat,
+>        [[false, true], [true, false]])]);
 <commutative monoid of 2x2 boolean matrices with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1145,7 +1628,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMaxPlusMatrixMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0 ], [ 0, -infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, 0], [0, -infinity]])]);
 <commutative monoid of 2x2 max-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1167,7 +1652,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsMinPlusMatrixMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0 ], [ 0, infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsMinPlusMatrix,
+>        [[infinity, 0], [0, infinity]])]);
 <commutative monoid of 2x2 min-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1189,7 +1676,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsProjectiveMaxPlusMatrixMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0 ], [ 0, -infinity ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsProjectiveMaxPlusMatrix,
+>        [[-infinity, 0], [0, -infinity]])]);
 <commutative monoid of 2x2 projective max-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1211,7 +1700,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsIntegerMatrixMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsIntegerMatrix, [ [ 0, 1 ], [ 1, 0 ] ]) ] );
+gap> S := Monoid([
+> Matrix(IsIntegerMatrix,
+>        [[0, 1], [1, 0]])]);
 <commutative monoid of 2x2 integer matrices with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1233,7 +1724,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMaxPlusMatrixMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0 ], [ 0, -infinity ] ], 1) ] );
+gap> S := Monoid([
+> Matrix(IsTropicalMaxPlusMatrix,
+>        [[-infinity, 0], [0, -infinity]], 1)]);
 <commutative monoid of 2x2 tropical max-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1255,7 +1748,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsTropicalMinPlusMatrixMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0 ], [ 0, infinity ] ], 3) ] );
+gap> S := Monoid([
+> Matrix(IsTropicalMinPlusMatrix,
+>        [[infinity, 0], [0, infinity]], 3)]);
 <commutative monoid of 2x2 tropical min-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1277,7 +1772,9 @@ true
 
 #T# AsSemigroup: 
 #   convert from IsNTPMatrixMonoid to IsReesMatrixSemigroup
-gap> S := Monoid( [ Matrix(IsNTPMatrix, [ [ 0, 1 ], [ 1, 0 ] ], 4, 1) ] );
+gap> S := Monoid([
+> Matrix(IsNTPMatrix,
+>        [[0, 1], [1, 0]], 4, 1)]);
 <commutative monoid of 2x2 ntp matrices with 1 generator>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
@@ -1300,7 +1797,7 @@ true
 #T# AsSemigroup: 
 #   convert from IsFpMonoid to IsReesMatrixSemigroup
 gap> F := FreeMonoid(0);; AssignGeneratorVariables(F);;
-gap> rels := [ ];;
+gap> rels := [];;
 gap> S := F / rels;
 <fp monoid on the generators [  ]>
 gap> T := AsSemigroup(IsReesMatrixSemigroup, S);
@@ -1932,13 +2429,15 @@ gap> S := SemigroupIdeal(
 gap> IsomorphismReesMatrixSemigroup(S);;
 
 #T# IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 1/2
-gap> S := Semigroup([Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
+gap> S := Semigroup([
+> Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
 >   Transformation([1, 1, 2, 1, 4, 1, 6, 1, 8, 2]),
 >   Transformation([1, 5, 1, 3, 1, 9, 1, 7, 1, 7])]);;
 gap> IsomorphismReesZeroMatrixSemigroup(S);;
 
 #T# IsomorphismReesMatrixSemigroup: for a 0-simple semigroup 2/2
-gap> S := Semigroup([Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
+gap> S := Semigroup([
+> Transformation([1, 1, 5, 1, 3, 1, 9, 1, 7, 5]),
 >   Transformation([1, 1, 2, 1, 4, 1, 6, 1, 8, 2]),
 >   Transformation([1, 5, 1, 3, 1, 9, 1, 7, 1, 7])]);;
 gap> S := Semigroup(MultiplicativeZero(S), S);;
@@ -2007,8 +2506,8 @@ gap> func(x, data);;
 #T# HashTables: Over a pc group
 gap> G := SmallGroup(32, 2);;
 gap> a := G.1;; b := G.2;; c := G.3;; d := G.4;; e := G.5;;
-gap> mat := [[a, 0, c, b, 0, a, e], 
-> [b, 0, 0, e, a, b, a], 
+gap> mat := [[a, 0, c, b, 0, a, e],
+> [b, 0, 0, e, a, b, a],
 > [0, a, b, a, b, d, d],
 > [a, b, c, d, e, 0, a],
 > [e, a, 0, b, d, e, e],
@@ -2023,7 +2522,7 @@ gap> for x in S do
 
 #T# ChooseHashFunction: Test for RZMS elements over a group we can't hash yet
 gap> F := FreeGroup("a", "b");;
-gap> G := F / [F.1^2, F.2^3, (F.1 * F.2) ^ 5 ];;
+gap> G := F / [F.1 ^ 2, F.2 ^ 3, (F.1 * F.2) ^ 5];;
 gap> a := AsList(G)[1];; b := AsList(G)[2];;
 gap> mat := [[a, 0, b], [b, 0, 0], [0, a, b]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
@@ -2068,17 +2567,20 @@ there must be at most four arguments,
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup);;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2);;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2);;
-gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2, Group(()));;
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2,
+> Group(()));;
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, "a");
 Error, Semigroups: RandomSemigroup: usage,
 the second argument (number of rows) must be a pos int,
 gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, "a");
 Error, Semigroups: RandomSemigroup: usage,
 the third argument (number of columns) must be a pos int,
-gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2, "a");
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2,
+> "a");
 Error, Semigroups: RandomSemigroup: usage,
 the fourth argument must be a perm group,
-gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2, Group(()), 1);
+gap> RandomSemigroup(IsReesZeroMatrixSemigroup and IsRegularSemigroup, 2, 2,
+> Group(()), 1);
 Error, Semigroups: RandomSemigroup: usage,
 there must be at most four arguments,
 
@@ -2089,7 +2591,7 @@ gap> R := ReesMatrixSemigroup(SymmetricGroup(4),
 >  [(3, 4), (1, 3), (1, 2, 4, 3)],
 >  [(), (2, 4, 3), (1, 2)]]);
 <Rees matrix semigroup 3x4 over Sym( [ 1 .. 4 ] )>
-gap> x := RMSElementNC(R, 1, (1,2), 1);
+gap> x := RMSElementNC(R, 1, (1, 2), 1);
 (1,(1,2),1)
 gap> x in R;
 true
@@ -2163,7 +2665,7 @@ gap> S := Semigroup(MultiplicativeZero(R));;
 gap> IsomorphismPermGroup(S);
 MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 
  with 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
-gap> S := Semigroup(RMSElementNC(R, 1, (1,2,3), 1));;
+gap> S := Semigroup(RMSElementNC(R, 1, (1, 2, 3), 1));;
 gap> map := IsomorphismPermGroup(S);
 MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 
  with 1 generator>, Group(()), function( x ) ... end, function( x ) ... end )
@@ -2171,7 +2673,7 @@ gap> BruteForceIsoCheck(map);
 true
 gap> BruteForceInverseCheck(map);
 true
-gap> S := Semigroup(RMSElementNC(R, 1, (1,3), 1));;
+gap> S := Semigroup(RMSElementNC(R, 1, (1, 3), 1));;
 gap> map := IsomorphismPermGroup(S);
 MappingByFunction( <subsemigroup of 3x4 Rees 0-matrix semigroup 
  with 1 generator>, Group([ (1,
@@ -2192,10 +2694,10 @@ fail
 gap> S := Semigroup(MultiplicativeZero(R));;
 gap> GroupOfUnits(S);
 <subsemigroup of 3x4 Rees 0-matrix semigroup with 1 generator>
-gap> S := Semigroup(RMSElementNC(R, 1, (1,3), 1));;
+gap> S := Semigroup(RMSElementNC(R, 1, (1, 3), 1));;
 gap> GroupOfUnits(S);
 <subsemigroup of 3x4 Rees 0-matrix semigroup with 2 generators>
-gap> S := Semigroup(RMSElementNC(R, 2, (1,3), 3));;
+gap> S := Semigroup(RMSElementNC(R, 2, (1, 3), 3));;
 gap> GroupOfUnits(S);
 fail
 
@@ -2224,7 +2726,7 @@ gap> I := SemigroupIdeal(R, MultiplicativeZero(R));
 gap> IsCommutative(I) and IsSimpleSemigroup(I);
 true
 gap> I;;
-gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1,3), 1));
+gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1, 3), 1));
 <regular Rees 0-matrix semigroup ideal with 1 generator>
 gap> IsCommutative(I);
 false
@@ -2243,15 +2745,15 @@ gap> IsInverseSemigroup(I);
 true
 gap> I;
 <inverse Rees 0-matrix semigroup ideal with 1 generator>
-gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1,3), 1), 
->                           RMSElementNC(R, 2, (1,3), 3));
+gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1, 3), 1),
+>                           RMSElementNC(R, 2, (1, 3), 3));
 <regular Rees 0-matrix semigroup ideal with 2 generators>
-gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1,3), 3));
+gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1, 3), 3));
 <regular Rees 0-matrix semigroup ideal with 1 generator>
 gap> R := ReesZeroMatrixSemigroup(SymmetricGroup(4),
 > [[0, 0], [0, 0]]);
 <Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 4 ] )>
-gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1,3), 2));
+gap> I := SemigroupIdeal(R, RMSElementNC(R, 2, (1, 3), 2));
 <Rees 0-matrix semigroup ideal with 1 generator>
 gap> IsRegularSemigroup(I);
 false
@@ -2319,8 +2821,8 @@ gap> R := ReesZeroMatrixSemigroup(G, [[IdentityTransformation,
   degree 4 with 2 generators>>
 gap> Idempotents(R);
 [ 0, (1,IdentityTransformation,1), (2,IdentityTransformation,1) ]
-gap> R := ReesZeroMatrixSemigroup(ZeroSemigroup(2), 
-> [[Transformation([1, 1, 2]), Transformation([1, 1, 2])]]); 
+gap> R := ReesZeroMatrixSemigroup(ZeroSemigroup(2),
+> [[Transformation([1, 1, 2]), Transformation([1, 1, 2])]]);
 <Rees 0-matrix semigroup 2x1 over <commutative non-regular transformation 
   semigroup of size 2, degree 3 with 1 generator>>
 gap> Idempotents(R);

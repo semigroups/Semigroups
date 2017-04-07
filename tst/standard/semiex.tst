@@ -17,7 +17,7 @@ gap> SEMIGROUPS.StartTest();
 gap> EndomorphismsPartition([-1]);
 Error, Semigroups: EndomorphismsPartition: usage,
 the argument <partition> must be a list of positive integers,
-gap> EndomorphismsPartition([1,1,1]);
+gap> EndomorphismsPartition([1, 1, 1]);
 <full transformation monoid of degree 3>
 gap> EndomorphismsPartition([5]);
 <full transformation monoid of degree 5>

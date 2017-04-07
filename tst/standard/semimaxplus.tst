@@ -125,7 +125,9 @@ true
 
 #T# AsSemigroup:
 #   convert from IsPBRSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ PBR([ [ -2 ], [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ], [ -8 ], [ -8 ], [ -1 ] ], [ [ 9 ], [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7, 8 ], [ ] ]) ] );
+gap> S := Semigroup([
+> PBR([[-2], [-3], [-4], [-5], [-6], [-7], [-8], [-8], [-1]],
+>      [[9], [1], [2], [3], [4], [5], [6], [7, 8], []])]);
 <commutative pbr semigroup of degree 9 with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of size 8, 9x9 max-plus matrices with 1 generator>
@@ -148,7 +150,7 @@ true
 #T# AsSemigroup:
 #   convert from IsFpSemigroup to IsMaxPlusMatrixSemigroup
 gap> F := FreeSemigroup(1);; AssignGeneratorVariables(F);;
-gap> rels := [ [ s1^9, s1^8 ] ];;
+gap> rels := [[s1 ^ 9, s1 ^ 8]];;
 gap> S := F / rels;
 <fp semigroup on the generators [ s1 ]>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
@@ -171,7 +173,9 @@ true
 
 #T# AsSemigroup:
 #   convert from IsBipartitionSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Bipartition([ [ 1, -2 ], [ 2, -3 ], [ 3, -4 ], [ 4, -5 ], [ 5, -6 ], [ 6, -7 ], [ 7, 8, -8 ], [ 9, -1 ], [ -9 ] ]) ] );
+gap> S := Semigroup([
+>  Bipartition([[1, -2], [2, -3], [3, -4], [4, -5], [5, -6], [6, -7],
+>               [7, 8, -8], [9, -1], [-9]])]);
 <commutative bipartition semigroup of degree 9 with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of 9x9 max-plus matrices with 1 generator>
@@ -193,7 +197,7 @@ true
 
 #T# AsSemigroup:
 #   convert from IsTransformationSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Transformation( [ 2, 3, 4, 5, 6, 7, 8, 8, 1 ] ) ] );
+gap> S := Semigroup([Transformation([2, 3, 4, 5, 6, 7, 8, 8, 1])]);
 <commutative transformation semigroup of degree 9 with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of 9x9 max-plus matrices with 1 generator>
@@ -215,7 +219,17 @@ true
 
 #T# AsSemigroup:
 #   convert from IsBooleanMatSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsBooleanMat, [ [ false, true, false, false, false, false, false, false, false ], [ false, false, true, false, false, false, false, false, false ], [ false, false, false, true, false, false, false, false, false ], [ false, false, false, false, true, false, false, false, false ], [ false, false, false, false, false, true, false, false, false ], [ false, false, false, false, false, false, true, false, false ], [ false, false, false, false, false, false, false, true, false ], [ false, false, false, false, false, false, false, true, false ], [ true, false, false, false, false, false, false, false, false ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsBooleanMat,
+>  [[false, true, false, false, false, false, false, false, false],
+>   [false, false, true, false, false, false, false, false, false],
+>   [false, false, false, true, false, false, false, false, false],
+>   [false, false, false, false, true, false, false, false, false],
+>   [false, false, false, false, false, true, false, false, false],
+>   [false, false, false, false, false, false, true, false, false],
+>   [false, false, false, false, false, false, false, true, false],
+>   [false, false, false, false, false, false, false, true, false],
+>   [true, false, false, false, false, false, false, false, false]])]);
 <commutative semigroup of 9x9 boolean matrices with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of 9x9 max-plus matrices with 1 generator>
@@ -237,7 +251,12 @@ true
 
 #T# AsSemigroup:
 #   convert from IsMaxPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ] ]) ] );
+gap> mat := ListWithIdenticalEntries(9, -infinity);;
+gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
+gap> for i in [1 .. 7] do mat[i][i + 1] := 0; od;
+gap> mat[8][8] := 0;;
+gap> mat[9][1] := 0;;
+gap> S := Semigroup(Matrix(IsMaxPlusMatrix, mat));
 <commutative semigroup of 9x9 max-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of 9x9 max-plus matrices with 1 generator>
@@ -259,7 +278,12 @@ true
 
 #T# AsSemigroup:
 #   convert from IsMinPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ] ]) ] );
+gap> mat := ListWithIdenticalEntries(9, infinity);;
+gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
+gap> for i in [1 .. 7] do mat[i][i + 1] := 0; od;
+gap> mat[8][8] := 0;;
+gap> mat[9][1] := 0;;
+gap> S := Semigroup(Matrix(IsMinPlusMatrix, mat));
 <commutative semigroup of 9x9 min-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of size 8, 9x9 max-plus matrices with 1 generator>
@@ -281,7 +305,12 @@ true
 
 #T# AsSemigroup:
 #   convert from IsProjectiveMaxPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsProjectiveMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ] ]) ] );
+gap> mat := ListWithIdenticalEntries(9, -infinity);;
+gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
+gap> for i in [1 .. 7] do mat[i][i + 1] := 0; od;
+gap> mat[8][8] := 0;;
+gap> mat[9][1] := 0;;
+gap> S := Semigroup(Matrix(IsProjectiveMaxPlusMatrix, mat));
 <commutative semigroup of 9x9 projective max-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of size 8, 9x9 max-plus matrices with 1 generator>
@@ -303,7 +332,17 @@ true
 
 #T# AsSemigroup:
 #   convert from IsIntegerMatrixSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsIntegerMatrix, [ [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ] ]) ] );
+gap> S := Semigroup([
+> Matrix(IsIntegerMatrix,
+>        [[0, 1, 0, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 1, 0, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 1, 0, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 1, 0, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 1, 0, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 1, 0, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1, 0],
+>         [0, 0, 0, 0, 0, 0, 0, 1, 0],
+>         [1, 0, 0, 0, 0, 0, 0, 0, 0]])]);
 <commutative semigroup of 9x9 integer matrices with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of size 8, 9x9 max-plus matrices with 1 generator>
@@ -325,7 +364,12 @@ true
 
 #T# AsSemigroup:
 #   convert from IsTropicalMaxPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMaxPlusMatrix, [ [ -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 0, -infinity ], [ 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity ] ], 2) ] );
+gap> mat := ListWithIdenticalEntries(9, -infinity);;
+gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
+gap> for i in [1 .. 7] do mat[i][i + 1] := 0; od;
+gap> mat[8][8] := 0;;
+gap> mat[9][1] := 0;;
+gap> S := Semigroup(Matrix(IsTropicalMaxPlusMatrix, mat, 2));
 <commutative semigroup of 9x9 tropical max-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of size 8, 9x9 max-plus matrices with 1 generator>
@@ -347,7 +391,12 @@ true
 
 #T# AsSemigroup:
 #   convert from IsTropicalMinPlusMatrixSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsTropicalMinPlusMatrix, [ [ infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ infinity, infinity, infinity, infinity, infinity, infinity, infinity, 0, infinity ], [ 0, infinity, infinity, infinity, infinity, infinity, infinity, infinity, infinity ] ], 4) ] );
+gap> mat := ListWithIdenticalEntries(9, infinity);;
+gap> mat := List([1 .. 9], x -> ShallowCopy(mat));;
+gap> for i in [1 .. 7] do mat[i][i + 1] := 0; od;
+gap> mat[8][8] := 0;;
+gap> mat[9][1] := 0;;
+gap> S := Semigroup(Matrix(IsTropicalMinPlusMatrix, mat, 4));
 <commutative semigroup of 9x9 tropical min-plus matrices with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of size 8, 9x9 max-plus matrices with 1 generator>
@@ -369,7 +418,17 @@ true
 
 #T# AsSemigroup:
 #   convert from IsNTPMatrixSemigroup to IsMaxPlusMatrixSemigroup
-gap> S := Semigroup( [ Matrix(IsNTPMatrix, [ [ 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0, 0 ] ], 3, 4) ] );
+gap> S := Semigroup([
+> Matrix(IsNTPMatrix,
+>   [[0, 1, 0, 0, 0, 0, 0, 0, 0],
+>    [0, 0, 1, 0, 0, 0, 0, 0, 0],
+>    [0, 0, 0, 1, 0, 0, 0, 0, 0],
+>    [0, 0, 0, 0, 1, 0, 0, 0, 0],
+>    [0, 0, 0, 0, 0, 1, 0, 0, 0],
+>    [0, 0, 0, 0, 0, 0, 1, 0, 0],
+>    [0, 0, 0, 0, 0, 0, 0, 1, 0],
+>    [0, 0, 0, 0, 0, 0, 0, 1, 0],
+>    [1, 0, 0, 0, 0, 0, 0, 0, 0]], 3, 4)]);
 <commutative semigroup of 9x9 ntp matrices with 1 generator>
 gap> T := AsSemigroup(IsMaxPlusMatrixSemigroup, S);
 <commutative semigroup of size 8, 9x9 max-plus matrices with 1 generator>
@@ -470,18 +529,23 @@ Error, Semigroups: RandomMonoid: usage,
 there must be at most five arguments,
 
 #T# IsFinite, IsTorsion, NormalizeSemigroup
-gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
+gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]])));
 true
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -infinity],
 > [-infinity, -infinity, -infinity], [-infinity, 1, -infinity]])));
 true
 gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix,
-> [[1, -infinity, 2],[-2, 4, -infinity], [1, 0, 3]])));
+> [[1, -infinity, 2], [-2, 4, -infinity], [1, 0, 3]])));
 false
-gap> IsFinite(Semigroup(Matrix(IsMaxPlusMatrix, [[0, -infinity, -1],[0, -infinity, -4],
->  [-infinity, 0, -infinity]]), Matrix(IsMaxPlusMatrix, [[-2, -2, 0],[0, -infinity, -3],
->  [-5, 0, -infinity]]), Matrix(IsMaxPlusMatrix,
-> [[-infinity, -infinity, -infinity],[0, 0, -infinity], [-5, 0, -infinity]])));
+gap> IsFinite(Semigroup([
+> Matrix(IsMaxPlusMatrix,
+>        [[0, -infinity, -1], [0, -infinity, -4], [-infinity, 0, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-2, -2, 0], [0, -infinity, -3], [-5, 0, -infinity]]),
+> Matrix(IsMaxPlusMatrix,
+>        [[-infinity, -infinity, -infinity],
+>         [0, 0, -infinity],
+>         [-5, 0, -infinity]])]));
 false
 gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix, [[infinity, 0], [5, 4]])));
 false
@@ -489,12 +553,13 @@ gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix, [[1, 0], [0, infinity]])));
 true
 gap> IsFinite(Semigroup(Matrix(IsMinPlusMatrix, [[infinity, -2], [2, 1]])));
 true
-gap> NormalizeSemigroup(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
+gap> NormalizeSemigroup(Semigroup([
+> Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]])]));
 <commutative semigroup of 2x2 max-plus matrices with 1 generator>
-gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]])));
+gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]])));
 true
 gap> IsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,
-> [[1, -infinity, 2],[-2, 4, -infinity], [1, 0, 3]])));
+> [[1, -infinity, 2], [-2, 4, -infinity], [1, 0, 3]])));
 false
 
 # AsMonoid
@@ -508,22 +573,22 @@ gap> S := AsSemigroup(IsMaxPlusMatrixSemigroup,
 <semigroup of 2x2 max-plus matrices with 2 generators>
 gap> AsMonoid(S);
 fail
-gap> S := AsSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, 
+gap> S := AsSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3,
 > Semigroup(Transformation([1, 2, 3, 3, 3])));
 <commutative semigroup of 5x5 tropical max-plus matrices with 1 generator>
 gap> AsMonoid(S);
 <trivial group of 1x1 tropical max-plus matrices with 1 generator>
-gap> S := AsSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, 
+gap> S := AsSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3,
 > Semigroup(Transformation([1, 1]), Transformation([2, 2])));
 <semigroup of 2x2 tropical max-plus matrices with 2 generators>
 gap> AsMonoid(S);
 fail
-gap> S := AsSemigroup(IsNTPMatrixSemigroup, 3, 4, 
+gap> S := AsSemigroup(IsNTPMatrixSemigroup, 3, 4,
 > Semigroup(Transformation([1, 2, 3, 3, 3])));
 <commutative semigroup of 5x5 ntp matrices with 1 generator>
 gap> AsMonoid(S);
 <trivial group of 1x1 ntp matrices with 1 generator>
-gap> S := AsSemigroup(IsNTPMatrixSemigroup, 3, 4, 
+gap> S := AsSemigroup(IsNTPMatrixSemigroup, 3, 4,
 > Semigroup(Transformation([1, 1]), Transformation([2, 2])));
 <semigroup of 2x2 ntp matrices with 2 generators>
 gap> AsMonoid(S);

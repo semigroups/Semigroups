@@ -393,7 +393,7 @@ ments
 #T# properties: IsCompletelyRegularSemigroup, 4
 gap> T := AsSemigroup(IsTransformationSemigroup, FullBooleanMatMonoid(3));
 <transformation monoid of degree 8 with 5 generators>
-gap> IsRegularSemigroup(T); 
+gap> IsRegularSemigroup(T);
 false
 gap> IsCompletelyRegularSemigroup(T);
 false
@@ -582,7 +582,7 @@ gap> IsRTrivial(S);
 false
 
 #T# properties: IsXTrivial, acting, true, 5
-gap> S :=  
+gap> S :=
 > Monoid(Transformation([1, 1, 1, 2, 1, 5, 3]),
 >  Transformation([1, 2, 1, 2]), Transformation([1, 1, 1, 3, 1, 2, 5]),
 >  Transformation([1, 1, 3, 3]), Transformation([1, 2, 3, 4, 1, 2]),
@@ -719,7 +719,7 @@ Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsIdempotentGenerated' on 1 arguments
 
 #T# properties: IsIdempotentGenerated, 5
-gap> S := AsSemigroup(IsBooleanMatSemigroup, 
+gap> S := AsSemigroup(IsBooleanMatSemigroup,
 >                     SingularTransformationMonoid(3));;
 gap> IsIdempotentGenerated(S);
 true
@@ -852,7 +852,7 @@ gap> IsLeftZeroSemigroup(I);
 true
 
 #T# properties: IsLeftZeroSemigroup, 2
-gap> S := AsSemigroup(IsTransformationSemigroup, 
+gap> S := AsSemigroup(IsTransformationSemigroup,
 > RectangularBand(IsReesMatrixSemigroup, 2, 2));
 <transformation semigroup of size 4, degree 5 with 2 generators>
 gap> IsLeftZeroSemigroup(S);
@@ -895,7 +895,8 @@ gap> IsMonogenicSemigroup(SymmetricInverseMonoid(3));
 false
 
 #T# properties: IsMonogenicSemigroup, 5
-gap> IsMonogenicSemigroup(AsSemigroup(IsBooleanMatSemigroup, Group((1, 2, 3), (2, 3))));
+gap> IsMonogenicSemigroup(AsSemigroup(IsBooleanMatSemigroup,
+> Group((1, 2, 3), (2, 3))));
 false
 
 #T# properties: IsMonogenicSemigroup, 6
@@ -940,7 +941,7 @@ gap> IsMonogenicSemigroup(S);
 true
 
 #T# properties: IsMonogenicInverseSemigroup, 1
-gap> IsMonogenicInverseSemigroup(AsSemigroup(IsBooleanMatSemigroup, 
+gap> IsMonogenicInverseSemigroup(AsSemigroup(IsBooleanMatSemigroup,
 >                                            Group((1, 2, 3), (2, 3))));
 false
 
@@ -980,7 +981,7 @@ Error, no 4th choice method found for `IsMonogenicInverseSemigroup' on 1 argum\
 ents
 
 #T# properties: IsMonogenicMonoid, 1
-gap> S := AsSemigroup(IsBooleanMatSemigroup, 
+gap> S := AsSemigroup(IsBooleanMatSemigroup,
 >                     Group((1, 2, 3), (2, 3)));;
 gap> S := Monoid(S);;
 gap> IsMonogenicMonoid(S);
@@ -1100,44 +1101,46 @@ true
 
 #T# properties: IsOrthodoxSemigroup, 2
 gap> S := Semigroup(
->   PBR(
->       [[-5, -4, -3, -2, -1, 1, 2, 4, 5], [-3, -1, 2, 6], [-6, -4, -3, -2, \
-> 2, 5], [-6, -3, -2, 1, 2, 3, 4, 6], [-5, -4, -2, 1, 2, 5], [-4, -3, -2, \
-> -1, 6]],
->         [[-6, -5, -4, -1, 1, 3, 4, 6], [-4, -2, 1, 2, 4, 6], [-5, -4, -3,
-> -2, 3, 5, 6], [-6, -5, -4, -2, 1, 2, 3, 4], [-6, -5, -4, 1, 3], [-6, -\
-> 5, -4, -2, 1, 4, 5]]),
->   PBR(
->       [[-6, -5, -3, -2, 1, 3, 4], [-6, -5, -4, -3, -2, -1, 1, 2, 3, 6], [\
-> -1, 1, 2, 3, 4, 5], [-6, -5, -3, -1, 1, 6], [-5, -4, -2, -1, 1, 4, 5, 6],
-> [-6, -4, -3, -2, -1, 1, 3]],
->         [[-4, 1, 6], [-6, -5, -4, -3, -1, 3, 5, 6], [-5, -4, -3, -2, 4, \
-> 5, 6], [-2, -1, 1, 2, 3, 4, 6], [-5, -4, -3, -1, 2, 4, 5], [-6, -5, -3, \
-> 1, 3, 4]]),
->   PBR(
->       [[-6, -5, -4, 2, 3, 5, 6], [-6, -5, -4, -3, -2, -1, 1, 2, 4], [-6, \
-> -5, -4, -3, -2, -1, 1, 3, 6], [-6, -2, -1, 2, 4], [-5, -1, 1, 2, 3], [-6,
-> -5, -3, -2, -1, 1, 2, 4, 6]],
->         [[-5, -4, -3, -2, 1, 5, 6], [-5, -3, -1, 2, 3, 5, 6], [-6, -4, -\
-> 3, -1, 1, 2, 3, 4, 5], [-5, -4, 1, 4, 5], [-5, -4, -2, 4, 6], [-5, -3, -\
-> 1, 1, 2, 3, 4, 5, 6]]),
->   PBR(
->       [[-4, -2, -1, 2, 5], [-6, -5, -2, -1, 1, 4], [-6, -3, -1, 3, 5],
-> [-6, -4, -2, -1, 3, 6], [-5, -4, -2, 2, 4, 6], [-4, -2, -1, 1, 3, 5, 6]],
->         [[-4, 1, 4, 6], [-3, -2, 1, 4, 5, 6], [-4, -2, 1, 2, 4, 5], [-6,
-> -5, -1, 1, 3, 4, 5, 6], [-6, -5, -4, -3, 1, 3, 5, 6], [-6, -5, -4, 3, 6]]),
->   PBR(
->       [[-6, -4, -3, 3, 6], [-5, -3, 2, 5, 6], [-6, -2, -1, 1, 3, 4, 5],
-> [-3, -2, -1, 1, 2, 3, 4, 5], [-6, -5, -2, 3, 5], [-5, -4, -3, 2, 3, 5]],
->         [[-3, 1, 2, 3, 6], [-5, -4, -3, -1, 1, 2, 4, 6], [-6, -4, -3, -2,
-> -1, 2], [-5, -4, 1, 3, 4, 5, 6], [-6, -5, -4, 5, 6], [-6, -4, -1, 1, 2, 3,
-> 5, 6]]),
->   PBR(
->       [[-5, -3, -1, 4, 5], [-5, -3, 2, 4, 5, 6], [-6, -5, -4, -2, -1, 1, \
-> 3, 5, 6], [-6, -5, 4, 5, 6], [-6, -1, 1, 2, 5, 6], [-3, -1, 1, 2, 4]],
->         [[-6, -4, -3, -2, -1, 1, 2, 3, 4, 6], [-6, -5, -2, 1, 2, 4], [-5,
-> -3, -1, 3, 5, 6], [-6, -5, -4, -3, -1, 3, 4, 6], [-4, -3, 1, 3, 4, 6],
-> [-6, -5, -4, -2, 1, 2, 3, 4, 6]]));
+>  PBR(
+>   [[-5, -4, -3, -2, -1, 1, 2, 4, 5], [-3, -1, 2, 6],
+>    [-6, -4, -3, -2, 2, 5], [-6, -3, -2, 1, 2, 3, 4, 6],
+>    [-5, -4, -2, 1, 2, 5], [-4, -3, -2, -1, 6]],
+>   [[-6, -5, -4, -1, 1, 3, 4, 6], [-4, -2, 1, 2, 4, 6],
+>    [-5, -4, -3, -2, 3, 5, 6], [-6, -5, -4, -2, 1, 2, 3, 4],
+>    [-6, -5, -4, 1, 3], [-6, -5, -4, -2, 1, 4, 5]]),
+>  PBR(
+>   [[-6, -5, -3, -2, 1, 3, 4], [-6, -5, -4, -3, -2, -1, 1, 2, 3, 6],
+>    [-1, 1, 2, 3, 4, 5], [-6, -5, -3, -1, 1, 6],
+>    [-5, -4, -2, -1, 1, 4, 5, 6], [-6, -4, -3, -2, -1, 1, 3]],
+>   [[-4, 1, 6], [-6, -5, -4, -3, -1, 3, 5, 6], [-5, -4, -3, -2, 4, 5, 6],
+>    [-2, -1, 1, 2, 3, 4, 6], [-5, -4, -3, -1, 2, 4, 5],
+>    [-6, -5, -3, 1, 3, 4]]),
+>  PBR(
+>   [[-6, -5, -4, 2, 3, 5, 6], [-6, -5, -4, -3, -2, -1, 1, 2, 4],
+>   [-6, -5, -4, -3, -2, -1, 1, 3, 6], [-6, -2, -1, 2, 4], [-5, -1, 1, 2, 3],
+>   [-6, -5, -3, -2, -1, 1, 2, 4, 6]],
+>   [[-5, -4, -3, -2, 1, 5, 6], [-5, -3, -1, 2, 3, 5, 6],
+>    [-6, -4, -3, -1, 1, 2, 3, 4, 5], [-5, -4, 1, 4, 5], [-5, -4, -2, 4, 6],
+>    [-5, -3, -1, 1, 2, 3, 4, 5, 6]]),
+>  PBR(
+>   [[-4, -2, -1, 2, 5], [-6, -5, -2, -1, 1, 4], [-6, -3, -1, 3, 5],
+>    [-6, -4, -2, -1, 3, 6], [-5, -4, -2, 2, 4, 6], [-4, -2, -1, 1, 3, 5, 6]],
+>   [[-4, 1, 4, 6], [-3, -2, 1, 4, 5, 6], [-4, -2, 1, 2, 4, 5],
+>    [-6, -5, -1, 1, 3, 4, 5, 6], [-6, -5, -4, -3, 1, 3, 5, 6],
+>    [-6, -5, -4, 3, 6]]),
+>  PBR(
+>   [[-6, -4, -3, 3, 6], [-5, -3, 2, 5, 6], [-6, -2, -1, 1, 3, 4, 5],
+>    [-3, -2, -1, 1, 2, 3, 4, 5], [-6, -5, -2, 3, 5], [-5, -4, -3, 2, 3, 5]],
+>   [[-3, 1, 2, 3, 6], [-5, -4, -3, -1, 1, 2, 4, 6], [-6, -4, -3, -2, -1, 2],
+>    [-5, -4, 1, 3, 4, 5, 6], [-6, -5, -4, 5, 6],
+>    [-6, -4, -1, 1, 2, 3, 5, 6]]),
+>  PBR(
+>   [[-5, -3, -1, 4, 5], [-5, -3, 2, 4, 5, 6],
+>    [-6, -5, -4, -2, -1, 1, 3, 5, 6], [-6, -5, 4, 5, 6],
+>    [-6, -1, 1, 2, 5, 6], [-3, -1, 1, 2, 4]],
+>   [[-6, -4, -3, -2, -1, 1, 2, 3, 4, 6], [-6, -5, -2, 1, 2, 4],
+>    [-5, -3, -1, 3, 5, 6], [-6, -5, -4, -3, -1, 3, 4, 6],
+>    [-4, -3, 1, 3, 4, 6], [-6, -5, -4, -2, 1, 2, 3, 4, 6]]));
 <pbr semigroup of degree 6 with 6 generators>
 gap> IsOrthodoxSemigroup(S);
 false
@@ -1254,7 +1257,7 @@ gap> S := Semigroup(Transformation([3, 1, 3, 5, 4, 5, 5, 7]),
 >                   Transformation([2, 5, 2, 1, 2, 8, 3, 6]),
 >                   Transformation([8, 6, 7, 2, 2, 4, 6, 5]),
 >                   Transformation([4, 8, 5, 2, 5, 8, 4, 2]),
->                   Transformation([4, 1, 4, 4, 2, 2, 3, 5]), 
+>                   Transformation([4, 1, 4, 4, 2, 2, 3, 5]),
 >                   rec(acting := true));;
 gap> data := SemigroupData(S);;
 gap> Enumerate(data, 500);;
@@ -1325,8 +1328,9 @@ true
 gap> S := Semigroup([Transformation([6, 9, 10, 1, 11, 3, 6, 6, 2, 10, 12, 2]),
 >  Transformation([7, 8, 8, 11, 2, 11, 10, 2, 11, 4, 4, 7])]);
 <transformation semigroup of degree 12 with 2 generators>
-gap> IsRegularSemigroupElement(AsSemigroup(IsBipartitionSemigroup, S), Bipartition([[1,
-> 2, 3, 4, 5, 7, -4, -10, -11, -12], [6, 11, -6, -7, -9],
+gap> IsRegularSemigroupElement(AsSemigroup(IsBipartitionSemigroup, S),
+> Bipartition([
+>  [1, 2, 3, 4, 5, 7, -4, -10, -11, -12], [6, 11, -6, -7, -9],
 >  [8, 9, 10, -2, -3, -5, -8], [12, -1]]));
 false
 gap> x := Bipartition([[1, 2, 6, 10, -1, -3, -4, -5, -7],
@@ -1350,11 +1354,11 @@ gap> IsRegularSemigroupElementNC(AsSemigroup(IsBipartitionSemigroup, S), x);
 false
 
 #T# properties: IsRegularElementSemigroup, 7/8
-gap> IsRegularSemigroupElement(PartitionMonoid(3), Bipartition([[1, 2, 3,
-> -1, -2], [-3]]));
+gap> IsRegularSemigroupElement(PartitionMonoid(3),
+> Bipartition([[1, 2, 3, -1, -2], [-3]]));
 true
-gap> IsRegularSemigroupElementNC(PartitionMonoid(3), Bipartition([[1, 2, 3,
-> -1, -2], [-3]]));
+gap> IsRegularSemigroupElementNC(PartitionMonoid(3),
+> Bipartition([[1, 2, 3, -1, -2], [-3]]));
 true
 
 #T# properties: IsRegularElementSemigroup, 8/8
@@ -1432,7 +1436,7 @@ gap> IsRightZeroSemigroup(I);
 true
 
 #T# properties: IsRightZeroSemigroup, 2
-gap> S := AsSemigroup(IsTransformationSemigroup, 
+gap> S := AsSemigroup(IsTransformationSemigroup,
 > RectangularBand(IsReesMatrixSemigroup, 2, 2));
 <transformation semigroup of size 4, degree 5 with 2 generators>
 gap> IsRightZeroSemigroup(S);
@@ -1621,17 +1625,17 @@ gap> IsUnitRegularMonoid(LeftZeroSemigroup(4));
 false
 gap> IsUnitRegularMonoid(LeftZeroSemigroup(1));
 true
-gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([1], [1]), 
+gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([1], [1]),
 >                                      PartialPerm([], [])));
 true
-gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([2, 1]), 
+gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([2, 1]),
 >                                      PartialPerm([], [])));
 true
-gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([1], [1]), 
+gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([1], [1]),
 >                                      PartialPerm([], []), rec(acting :=
 >                                      false)));
 true
-gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([2, 1]), 
+gap> IsUnitRegularMonoid(InverseMonoid(PartialPerm([2, 1]),
 >                                      PartialPerm([], []), rec(acting :=
 >                                      false)));
 true
@@ -1800,11 +1804,11 @@ false
 gap> S := FullTransformationMonoid(12);;
 gap> IsSemigroupWithAdjoinedZero(S);
 false
-gap> S := ReesMatrixSemigroup(SymmetricGroup(4), [[(1,3,2), (4,2)]]);
+gap> S := ReesMatrixSemigroup(SymmetricGroup(4), [[(1, 3, 2), (4, 2)]]);
 <Rees matrix semigroup 2x1 over Sym( [ 1 .. 4 ] )>
 gap> IsSemigroupWithAdjoinedZero(S);
 false
-gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(4), [[(1,3,2), (4,2)]]);
+gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(4), [[(1, 3, 2), (4, 2)]]);
 <Rees 0-matrix semigroup 2x1 over Sym( [ 1 .. 4 ] )>
 gap> IsSemigroupWithAdjoinedZero(S);
 true

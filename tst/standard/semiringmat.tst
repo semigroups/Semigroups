@@ -590,10 +590,10 @@ gap> IsBound(mat[3]);
 false
 
 # Test \<
-gap> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10) < 
+gap> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10) <
 > Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 11);
 true
-gap> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10) < 
+gap> Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10) <
 > Matrix(IsTropicalMaxPlusMatrix, [[2, 2], [0, 1]], 10);
 false
 

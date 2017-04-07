@@ -721,8 +721,10 @@ gap> foo(z, z);
 false
 
 # Test IsGreensDGreaterThanFunc for an infinite enumerable semigroup
-gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
->  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+gap> S := Semigroup([Matrix(IsMaxPlusMatrix,
+>                           [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+>                    Matrix(IsMaxPlusMatrix,
+>                           [[-infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
 gap> IsGreensDGreaterThanFunc(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `IsGreensDGreaterThanFunc' on 1 argument\
@@ -813,8 +815,8 @@ gap> S := Semigroup(Transformation([4, 5, 1, 3, 8, 5, 8, 2]),
 >                   Transformation([2, 6, 2, 8, 2, 2, 2, 8]),
 >                   Transformation([5, 4, 4, 5, 8, 8, 5, 5]),
 >                   Transformation([2, 2, 6, 8, 6, 6, 6, 8]),
->                   Transformation([2, 8, 8, 6, 8, 8, 6, 6]), 
->                   rec(acting := false));; 
+>                   Transformation([2, 8, 8, 6, 8, 8, 6, 6]),
+>                   rec(acting := false));;
 >  # acting := false is required to test a particular bit of code
 gap> MultiplicativeNeutralElement(S);
 fail
@@ -1134,13 +1136,13 @@ gap> S := Semigroup(Bipartition([[1], [2, -4], [3, -5], [4, -6], [5, -1],
 <commutative bipartition semigroup of degree 6 with 1 generator>
 gap> Size(S);
 5
-gap> S := Semigroup(Matrix(GF(2^2),
-> [[Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)],
->  [Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)],
->  [0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)],
->  [0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)],
->  [0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)],
->  [0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)]]));;
+gap> S := Semigroup(Matrix(GF(2 ^ 2),
+> [[Z(2 ^ 2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [Z(2 ^ 2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), 0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)]]));;
 gap> Size(S);
 6
 gap> S := Semigroup(PartialPerm(
@@ -1168,13 +1170,13 @@ gap> S := Monoid(Bipartition([[1], [2, -4], [3, -5], [4, -6], [5, -1],
 <commutative bipartition monoid of degree 6 with 1 generator>
 gap> Size(S);
 6
-gap> S := Monoid(Matrix(GF(2^2),
-> [[Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)],
->  [Z(2^2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)],
->  [0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)],
->  [0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2)],
->  [0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2)],
->  [0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2)]]));;
+gap> S := Monoid(Matrix(GF(2 ^ 2),
+> [[Z(2 ^ 2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [Z(2 ^ 2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), 0 * Z(2), 0 * Z(2), Z(2) ^ 0, 0 * Z(2), 0 * Z(2)],
+>  [0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2), 0 * Z(2)]]));;
 gap> Size(S);
 7
 gap> S := Monoid(PartialPerm(
@@ -1297,8 +1299,8 @@ gap> Size(Monoid(x));
 4
 
 # Test for Issue 218
-gap> S := Semigroup(PlanarPartitionMonoid(5), AsBipartition((1,2,3,4,5)), 
-> rec(acting := true));;
+gap> S := Semigroup(PlanarPartitionMonoid(5),
+> AsBipartition((1, 2, 3, 4, 5)), rec(acting := true));;
 gap> D := DClasses(S)[2];;
 gap> x := Bipartition([[1, -1], [2, -2], [3, -3], [4, -4, -5], [5]]);;
 gap> x in D;
@@ -1331,8 +1333,10 @@ gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]]),
 >  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 1, 1]])]);;
 gap> SmallestElementSemigroup(S);
 Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]])
-gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
->  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+gap> S := Semigroup([Matrix(IsMaxPlusMatrix,
+>                           [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+>                    Matrix(IsMaxPlusMatrix,
+>                           [[-infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
 gap> SmallestElementSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `SmallestElementSemigroup' on 1 argument\
@@ -1343,8 +1347,10 @@ gap> S := Semigroup([Matrix(IsBooleanMat, [[0, 0, 1], [0, 1, 1], [1, 0, 0]]),
 >  Matrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 1, 1]])]);;
 gap> LargestElementSemigroup(S);
 Matrix(IsBooleanMat, [[1, 1, 1], [1, 1, 1], [1, 1, 1]])
-gap> S := Semigroup([Matrix(IsMaxPlusMatrix, [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
->  Matrix(IsMaxPlusMatrix, [[- infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
+gap> S := Semigroup([Matrix(IsMaxPlusMatrix,
+>                           [[-2, 2, 0], [-1, 0, 0], [1, -3, 1]]),
+>                    Matrix(IsMaxPlusMatrix,
+>                           [[-infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
 gap> LargestElementSemigroup(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 3rd choice method found for `LargestElementSemigroup' on 1 arguments

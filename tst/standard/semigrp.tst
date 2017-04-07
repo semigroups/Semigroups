@@ -36,13 +36,13 @@ gap> AsMonoid(S);
 <trivial group of 1x1 max-plus matrices with 1 generator>
 gap> S := AsSemigroup(IsMinPlusMatrixSemigroup, S);
 <trivial group of 1x1 min-plus matrices with 1 generator>
-gap> S := Semigroup(Transformation([2,2,3,4]));
+gap> S := Semigroup(Transformation([2, 2, 3, 4]));
 <commutative transformation semigroup of degree 2 with 1 generator>
 gap> S := AsSemigroup(IsMinPlusMatrixSemigroup, S);
 <commutative semigroup of 2x2 min-plus matrices with 1 generator>
 gap> AsMonoid(S);
 <trivial group of 1x1 min-plus matrices with 1 generator>
-gap> S := Semigroup(Transformation([2,2,3,4]));
+gap> S := Semigroup(Transformation([2, 2, 3, 4]));
 <commutative transformation semigroup of degree 2 with 1 generator>
 gap> S := AsSemigroup(IsProjectiveMaxPlusMatrixSemigroup, S);
 <commutative semigroup of 2x2 projective max-plus matrices with 1 generator>
@@ -50,19 +50,19 @@ gap> AsMonoid(S);
 <trivial group of 1x1 projective max-plus matrices with 1 generator>
 gap> S := AsSemigroup(IsIntegerMatrixSemigroup, S);
 <trivial group of 1x1 integer matrices with 1 generator>
-gap> S := Semigroup(Transformation([2,2,3,4]));
+gap> S := Semigroup(Transformation([2, 2, 3, 4]));
 <commutative transformation semigroup of degree 2 with 1 generator>
 gap> S := AsSemigroup(IsIntegerMatrixSemigroup, S);
 <commutative semigroup of 2x2 integer matrices with 1 generator>
 gap> AsMonoid(S);
 <trivial group of 1x1 integer matrices with 1 generator>
-gap> S := Semigroup(Transformation([2,2,3,4]));
+gap> S := Semigroup(Transformation([2, 2, 3, 4]));
 <commutative transformation semigroup of degree 2 with 1 generator>
 gap> S := AsSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3, S);
 <commutative semigroup of 2x2 tropical max-plus matrices with 1 generator>
 gap> AsMonoid(S);
 <trivial group of 1x1 tropical max-plus matrices with 1 generator>
-gap> S := Semigroup(Transformation([2,2,3,4]));
+gap> S := Semigroup(Transformation([2, 2, 3, 4]));
 <commutative transformation semigroup of degree 2 with 1 generator>
 gap> S := AsSemigroup(IsTropicalMinPlusMatrixSemigroup, 3, S);
 <commutative semigroup of 2x2 tropical min-plus matrices with 1 generator>
@@ -130,14 +130,14 @@ fail
 gap> S := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
 gap> AsMonoid(S);
 fail
-gap> S := GraphInverseSemigroup(Digraph([[2],[]]));
+gap> S := GraphInverseSemigroup(Digraph([[2], []]));
 <finite graph inverse semigroup with 2 vertices, 1 edge>
 gap> AsMonoid(S);
 fail
 
 # SEMIGROUPS.ClosureSemigroupDestructive 1
-gap> gens := 
-> [ Matrix(IsBooleanMat, [[0, 0, 0, 1, 0], [0, 1, 1, 1, 1], [1, 1, 1, 1, 0],
+gap> gens :=
+> [Matrix(IsBooleanMat, [[0, 0, 0, 1, 0], [0, 1, 1, 1, 1], [1, 1, 1, 1, 0],
 >       [1, 0, 1, 1, 1], [0, 1, 0, 1, 1]]),
 >   Matrix(IsBooleanMat, [[1, 0, 1, 1, 1], [1, 1, 0, 0, 1], [0, 0, 1, 1, 1],
 >       [1, 1, 0, 0, 0], [0, 0, 1, 0, 1]]),
@@ -146,7 +146,7 @@ gap> gens :=
 >   Matrix(IsBooleanMat, [[1, 1, 1, 0, 0], [1, 0, 1, 0, 0], [0, 1, 1, 0, 1],
 >       [0, 0, 0, 1, 1], [1, 1, 1, 0, 0]]),
 >   Matrix(IsBooleanMat, [[0, 1, 0, 1, 0], [1, 0, 0, 1, 0], [1, 1, 0, 0, 0],
->       [1, 0, 1, 1, 0], [0, 0, 1, 1, 0]]) ];;
+>       [1, 0, 1, 1, 0], [0, 0, 1, 1, 0]])];;
 gap> x := Matrix(IsBooleanMat, [[1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 1, 0], 
 > [1, 0, 0, 1]]);;
 gap> S := Semigroup(gens);
@@ -570,7 +570,7 @@ gap> S.1;
 
 # Test ClosureSemigroup 1
 gap> S := Semigroup(
-> [ Matrix(IsBooleanMat, [[0, 1, 0, 0, 1, 1, 1, 1], [1, 1, 1, 1, 0, 1, 0, 1],
+> [Matrix(IsBooleanMat, [[0, 1, 0, 0, 1, 1, 1, 1], [1, 1, 1, 1, 0, 1, 0, 1],
 >       [1, 1, 0, 1, 0, 1, 1, 1], [0, 1, 1, 1, 1, 1, 0, 0],
 >       [1, 0, 0, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 1, 0, 1],
 >       [0, 0, 0, 0, 1, 1, 0, 1], [1, 1, 1, 0, 1, 0, 1, 1]]),
@@ -609,7 +609,7 @@ gap> S := Semigroup(
 >   Matrix(IsBooleanMat, [[1, 1, 0, 1, 1, 0, 1, 1], [0, 0, 0, 0, 0, 1, 1, 1],
 >       [1, 1, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 0, 1, 1, 0],
 >       [0, 1, 0, 1, 1, 0, 0, 1], [0, 1, 0, 1, 1, 1, 0, 0],
->       [1, 0, 1, 1, 1, 1, 1, 1], [0, 1, 0, 1, 1, 0, 0, 0]]) ] );
+>       [1, 0, 1, 1, 1, 1, 1, 1], [0, 1, 0, 1, 1, 0, 0, 0]])]);
 <semigroup of 8x8 boolean matrices with 10 generators>
 gap> Size(S);
 266
@@ -973,7 +973,7 @@ gap> ClosureInverseMonoid(SymmetricInverseMonoid(3), PartialPerm([4 .. 6]),
 > rec());
 <inverse partial perm monoid of rank 6 with 5 generators>
 gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
-> Bipartition( [ [ 1, 2, -2 ], [ 3, -1 ], [ -3 ] ] ));
+> Bipartition([[1, 2, -2], [3, -1], [-3]]));
 Error, Semigroups: ClosureInverseMonoid: usage,
 the second argument must satisfy `IsGeneratorsOfInverseSemigroup',
 gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
@@ -998,7 +998,8 @@ true
 gap> S := InverseMonoid(PartialPerm([1]));;
 gap> ClosureInverseSemigroupOrMonoidNC(InverseMonoid, S, [], rec()) = S;
 true
-gap> IsIdenticalObj(ClosureInverseSemigroupOrMonoidNC(InverseMonoid, S, [], rec()), S);
+gap> IsIdenticalObj(S,
+> ClosureInverseSemigroupOrMonoidNC(InverseMonoid, S, [], rec()));
 true
 
 # Test RandomSemigroup

@@ -180,7 +180,7 @@ the third argument <p> does not belong to the Schutzenberger group,
 #T# factor: test for epimorphism from free group returning a word with negative
 # powers.
 gap> S := Semigroup(FullTransformationMonoid(8), rec(acting := true));;
-gap> x := AsTransformation((1,2,3,5));
+gap> x := AsTransformation((1, 2, 3, 5));
 Transformation( [ 2, 3, 5, 4, 1 ] )
 gap> Factorization(S, x);
 [ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 3, 2, 

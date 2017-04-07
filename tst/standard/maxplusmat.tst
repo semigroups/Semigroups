@@ -129,10 +129,11 @@ Error, Semigroups: \* (for tropical min-plus matrices): usage,
 the arguments do not have the same threshold,
 
 #T# maxplusmat: test projective max-plus matrix code, 1/1
-gap> mat := Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0],
->                                       [0, -1, -infinity, -infinity],
->                                       [4, 4, 2, -1],
->                                       [1, 1, 0, 3]]);
+gap> mat := Matrix(IsProjectiveMaxPlusMatrix,
+> [[0, -infinity, -1, 0],
+>  [0, -1, -infinity, -infinity],
+>  [4, 4, 2, -1],
+>  [1, 1, 0, 3]]);
 Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
   [0, -1, -infinity, -infinity], [4, 4, 2, -1], [1, 1, 0, 3]])
 gap> mat ^ 2;
@@ -151,9 +152,12 @@ Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -infinity, -infinity],
 #true
 gap> mat = One(mat);
 false
-gap> mat2 := Matrix(IsProjectiveMaxPlusMatrix, [[-3, 0, 0, -infinity, -1], [1,
-> -1, 2, -3, -2], [-2, 2, 2, 0, 0], [-1, 0, 2, 0, 0], [3, -infinity, 4, -2,
-> 1]]);;
+gap> mat2 := Matrix(IsProjectiveMaxPlusMatrix,
+> [[-3, 0, 0, -infinity, -1],
+>  [1, -1, 2, -3, -2],
+>  [-2, 2, 2, 0, 0],
+>  [-1, 0, 2, 0, 0],
+>  [3, -infinity, 4, -2, 1]]);;
 gap> mat * mat2;
 Matrix(IsProjectiveMaxPlusMatrix, [[-7, -5, -4, -6], [-6, -6, -5, -10], 
   [-1, -2, 0, -4], [-4, -3, -1, -3]])
@@ -443,17 +447,17 @@ gap> IsTorsion(mat);
 false
 
 #T# maxplusmat: RadialEigenvector for a max-plus matrix with SpectralRadius = 0
-gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
+gap> RadialEigenvector(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));
 [ 0, -2 ]
-gap> RadialEigenvector(Matrix(IsMaxPlusMatrix,[[3,-3],[-2,-10]]));
+gap> RadialEigenvector(Matrix(IsMaxPlusMatrix, [[3, -3], [-2, -10]]));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 2nd choice method found for `RadialEigenvector' on 1 arguments
-gap> SpectralRadius(Matrix(IsMaxPlusMatrix,[[0,-3],[-2,-10]]));
+gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));
 0
 
 #T# maxplusmat: UnweightedPrecedenceDigraph for a max-plus matrix
 gap> UnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],
-> [-infinity, 10,-2], [-infinity, 2, 1]]));
+> [-infinity, 10, -2], [-infinity, 2, 1]]));
 <digraph with 3 vertices, 7 edges>
 
 #T# maxplusmat: InverseOp for a max-plus matrix
@@ -469,28 +473,19 @@ gap> mat * InverseOp(mat) = One(mat);
 true
 gap> InverseOp(mat) * mat = One(mat);
 true
-gap> mat := Matrix(IsMaxPlusMatrix,
->  [
->   [-infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity,\
->  -infinity, -infinity, -1],
->   [-infinity, -infinity, -infinity, -infinity, -infinity, -infinity, 5, -infin\
-> ity, -infinity, -infinity],
->   [-infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity\
-> , -infinity, -2, -infinity],
->   [-infinity, -infinity, -infinity, -5, -infinity, -infinity, -infinity, -infi\
-> nity, -infinity, -infinity],
->   [-infinity, -infinity, -infinity, -infinity, -infinity, -2, -infinity, -infi\
-> nity, -infinity, -infinity],
->   [-infinity, 0, -infinity, -infinity, -infinity, -infinity, -infinity, -infin\
-> ity, -infinity, -infinity],
->   [-infinity, -infinity, -infinity, -infinity, 1, -infinity, -infinity, -infin\
-> ity, -infinity, -infinity],
->   [-infinity, -infinity, -2, -infinity, -infinity, -infinity, -infinity, -infi\
-> nity, -infinity, -infinity],
->   [-1, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infi\
-> nity, -infinity, -infinity],
->   [-infinity, -infinity, -infinity, -infinity, -infinity, -infinity, -infinity\
-> , -3, -infinity, -infinity]]);
+gap> mat := ListWithIdenticalEntries(10, -infinity);;
+gap> mat := List([1 .. 10], x -> ShallowCopy(mat));;
+gap> mat[1][10] := -1;;
+gap> mat[2][7] := 5;;
+gap> mat[3][9] := -2;;
+gap> mat[4][4] := -5;;
+gap> mat[5][6] := -2;;
+gap> mat[6][2] := 0;;
+gap> mat[7][5] := 1;;
+gap> mat[8][3] := -2;;
+gap> mat[9][1] := -1;;
+gap> mat[10][8] := -3;;
+gap> mat := Matrix(IsMaxPlusMatrix, mat);
 <10x10 max-plus matrix>
 gap> InverseOp(mat) * mat = One(mat);
 true
@@ -500,8 +495,10 @@ gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -1, 3, -infinity],
 > [4, 0, -4, 1], [-2, 1, 1, 1], [0, -infinity, 5, 0]]);;
 gap> InverseOp(mat);
 fail
-gap> InverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 0],  
-> [0, -infinity, -infinity], [-infinity, 0,  -infinity]]));
+gap> InverseOp(Matrix(IsMaxPlusMatrix,
+> [[-infinity, -infinity, 0],
+>  [0, -infinity, -infinity],
+>  [-infinity, 0, -infinity]]));
 Matrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity], 
   [-infinity, -infinity, 0], [0, -infinity, -infinity]])
 gap> InverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, 2], [2, 1]]));
@@ -543,7 +540,7 @@ gap> mat := Matrix(IsMaxPlusMatrix, [[3, -1, -2, -infinity, -infinity],
 gap> SpectralRadius(mat);
 3
 gap> SpectralRadius(Matrix(IsMaxPlusMatrix,
-> [[1, -infinity, 2],[-2, 4, -infinity], [1, 0, 3]]));
+> [[1, -infinity, 2], [-2, 4, -infinity], [1, 0, 3]]));
 4
 gap> SpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -infinity],  
 > [-infinity, -infinity, -infinity], [-infinity, 1, -infinity]]));
