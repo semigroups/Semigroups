@@ -178,8 +178,7 @@ gap> S := Semigroup(
 > Bipartition([[1, -5], [2, 3, 4, 5], [-1], [-2], [-3, -4]]),
 > Bipartition([[1, -4], [2], [3, -2], [4, 5, -1], [-3, -5]]));;
 gap> IsomorphismPartialPermSemigroup(S);
-Error, IsomorphismPartialPermSemigroup: usage,
-the argument must be an inverse semigroup,
+Error, the argument must be an inverse semigroup
 gap> Range(IsomorphismTransformationSemigroup(S));
 <transformation semigroup of size 207, degree 208 with 5 generators>
 
