@@ -51,7 +51,7 @@ debug: CXXFLAGS = -g3 -O0 -std=c++11 -Wall -Wextra -Wno-unused-parameter -Wtype-
 debug: clean all
 
 gaplint: 
-	gaplint *.g gap/options.g gap/*.gi gap/*.gd gap/*/* doc/*.xml 
+	gaplint *.g gap/options.g gap/*.gi gap/*.gd gap/*/* doc/*.xml tst/*.tst tst/*/*.tst
 
 cpplint:
 	cpplint src/*.h src/*.cc
