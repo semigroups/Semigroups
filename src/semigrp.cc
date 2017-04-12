@@ -1110,7 +1110,7 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
         semi_cpp->idempotents_cbegin();
     typename std::vector<size_t>::const_iterator cend =
         semi_cpp->idempotents_cend();
-    size_t nr = semi_cpp->nr_idempotents();
+    size_t nr = semi_cpp->nridempotents();
     assert(nr != 0);
 
     gap_list_t out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, nr);
@@ -1224,7 +1224,7 @@ gap_int_t EN_SEMI_NR_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
     semi_cpp->set_report(semi_obj_get_report(so));
     semi_cpp->set_max_threads(semi_obj_get_nr_threads(so));
 
-    return INTOBJ_INT(semi_cpp->nr_idempotents());
+    return INTOBJ_INT(semi_cpp->nridempotents());
   } else {
     // This could probably be better but is also probably not worth the effort
     // of improving
