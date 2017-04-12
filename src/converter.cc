@@ -23,6 +23,9 @@
 #include "bipart.h"
 #include "pkg.h"
 
+using libsemigroups::SemiringWithThreshold;
+using libsemigroups::NaturalSemiring;
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 // Boolean matrices
@@ -127,13 +130,20 @@ Obj MatrixOverSemiringConverter::unconvert(Element const* x) const {
   size_t                    n = xx->degree();
 
   Obj plist = NEW_PLIST(T_PLIST_HOM + IMMUTABLE, n + 2);
-  if (_semiring->period() != -1) {
+
+  if (_gap_type == NTPMatrixType) {
+    NaturalSemiring* semiring = static_cast<NaturalSemiring*>(_semiring);
     SET_LEN_PLIST(plist, n + 2);
-    SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
-    SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(_semiring->period()));
-  } else if (_semiring->threshold() != -1) {
+    SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(semiring->threshold()));
+    SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(semiring->period()));
+  } else if (_gap_type == MaxPlusMatrixType || _gap_type == MinPlusMatrixType
+             || _gap_type == TropicalMaxPlusMatrixType
+             || _gap_type == TropicalMinPlusMatrixType
+             || _gap_type == ProjectiveMaxPlusMatrixType) {
+    SemiringWithThreshold* semiring =
+        static_cast<SemiringWithThreshold*>(_semiring);
     SET_LEN_PLIST(plist, n + 1);
-    SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(_semiring->threshold()));
+    SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(semiring->threshold()));
   } else {
     SET_LEN_PLIST(plist, n);
     RetypeBag(plist, T_PLIST_TAB_RECT + IMMUTABLE);
