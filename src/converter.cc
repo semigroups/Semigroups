@@ -136,10 +136,8 @@ Obj MatrixOverSemiringConverter::unconvert(Element const* x) const {
     SET_LEN_PLIST(plist, n + 2);
     SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(semiring->threshold()));
     SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(semiring->period()));
-  } else if (_gap_type == MaxPlusMatrixType || _gap_type == MinPlusMatrixType
-             || _gap_type == TropicalMaxPlusMatrixType
-             || _gap_type == TropicalMinPlusMatrixType
-             || _gap_type == ProjectiveMaxPlusMatrixType) {
+  } else if (_gap_type == TropicalMaxPlusMatrixType
+             || _gap_type == TropicalMinPlusMatrixType) {
     SemiringWithThreshold* semiring =
         static_cast<SemiringWithThreshold*>(_semiring);
     SET_LEN_PLIST(plist, n + 1);
