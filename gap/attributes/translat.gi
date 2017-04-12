@@ -63,7 +63,7 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
     fi;
   fi;
   Error("Semigroups: TranslationsSemigroupElements: \n",
-        "no method of calculating this translations semigroup is known");
+        "no method of calculating this translations semigroup is known,");
 end;
 
 # Choose how to calculate the elements of a translational hull
@@ -684,7 +684,7 @@ function(L, x)
   
   if not (IsLeftTranslationsSemigroup(L)) then
     Error("Semigroups: LeftTranslation: \n",
-          "the first argument must be a semigroup of left translations");
+          "the first argument must be a semigroup of left translations,");
     return;
   fi;
   
@@ -692,13 +692,13 @@ function(L, x)
     if not (S = Source(x) and Source(x) = Range(x)) then
       Error("Semigroups: LeftTranslation (from Mapping): \n",
             "the domain and range of the second argument must be ",
-            "the underlying semigroup of the first.");
+            "the underlying semigroup of the first,");
     fi;
     if HasGeneratorsOfSemigroup(S) then
       if ForAny(GeneratorsOfSemigroup(S), 
                 t -> ForAny(S, s -> (s^x) * t <> (s * t)^x)) then
          Error("Semigroups: LeftTranslation: \n",
-               "the mapping given must define a left translation.");
+               "the mapping given must define a left translation,");
       fi;
     else
       reps := [];
@@ -707,14 +707,14 @@ function(L, x)
       od;
       if ForAny(reps, s -> ForAny(S, t -> (s^x) * t <> (s * t)^x)) then
         Error("Semigroups: LeftTranslation: \n",
-               "the mapping given must define a left translation.");
+               "the mapping given must define a left translation,");
       fi;
     fi;
   elif IsTransformation(x) then
     if not DegreeOfTransformation(x) <= Size(S) then
       Error("Semigroups: LeftTranslation (from transformation): \n",
             "the second argument must act on the indices of the underlying ",
-            "semigroup of the first argument.");
+            "semigroup of the first argument,");
     fi;
     semiList := AsList(S);
     if HasGeneratorsOfSemigroup(S) then
@@ -723,7 +723,7 @@ function(L, x)
                             s -> semiList[Position(semiList, s)^x] * t <> 
                             semiList[Position(semiList, s * t)^x])) then
          Error("Semigroups: LeftTranslation: \n",
-               "the transformation given must define a left translation.");
+               "the transformation given must define a left translation,");
       fi;
     else
       reps := [];
@@ -735,7 +735,7 @@ function(L, x)
                             t -> semiList[Position(semiList, s)^x] * t <> 
                             semiList[Position(semiList, s * t)^x])) then
         Error("Semigroups: LeftTranslation: \n",
-               "the transformation given must define a left translation.");
+               "the transformation given must define a left translation,");
       fi;
     fi;
   else
@@ -743,7 +743,7 @@ function(L, x)
           "the first argument should be a left translations semigroup, and ",
           "the second argument should be a mapping on the underlying ",
           "semigroup of the first argument, or a transformation on the ",
-          "indices of its elements.");
+          "indices of its elements,");
   fi;
   return LeftTranslationNC(L, x);
 end);
@@ -774,7 +774,7 @@ function(R, x)
   
   if not (IsRightTranslationsSemigroup(R)) then
     Error("Semigroups: RightTranslation: \n",
-          "the first argument must be a semigroup of right translations");
+          "the first argument must be a semigroup of right translations,");
     return;
   fi;
 
@@ -782,13 +782,13 @@ function(R, x)
     if not (S = Source(x) and Source(x) = Range(x)) then
       Error("Semigroups: RightTranslation (from Mapping): \n",
             "the domain and range of the second argument must be ",
-            "the underlying semigroup of the first.");
+            "the underlying semigroup of the first,");
     fi;
     if HasGeneratorsOfSemigroup(S) then
       if ForAny(GeneratorsOfSemigroup(S), 
                 t -> ForAny(S, s -> t * (s^x) <> (t * s)^x)) then
          Error("Semigroups: RightTranslation: \n",
-               "the mapping given must define a right translation.");
+               "the mapping given must define a right translation,");
       fi;
     else
       reps := [];
@@ -797,14 +797,14 @@ function(R, x)
       od;
       if ForAny(reps, s -> ForAny(S, t -> t * (s^x) <> (t * s)^x)) then
         Error("Semigroups: RightTranslation: \n",
-               "the mapping given must define a right translation.");
+               "the mapping given must define a right translation,");
       fi;
     fi;
   elif IsTransformation(x) then
     if not DegreeOfTransformation(x) <= Size(S) then
       Error("Semigroups: RightTranslation (from transformation): \n",
             "the second argument must act on the indices of the underlying ",
-            "semigroup of the first argument.");
+            "semigroup of the first argument,");
     fi;
     semiList := AsList(S);
     if HasGeneratorsOfSemigroup(S) then
@@ -813,7 +813,7 @@ function(R, x)
                             s -> t * semiList[Position(semiList, s)^x] <> 
                             semiList[Position(semiList, t * s)^x])) then
          Error("Semigroups: RightTranslation: \n",
-               "the transformation given must define a right translation.");
+               "the transformation given must define a right translation,");
       fi;
     else
       if ForAny(reps, 
@@ -821,7 +821,7 @@ function(R, x)
                             t -> t * semiList[Position(semiList, s)^x] <> 
                             semiList[Position(semiList, t * s)^x])) then
         Error("Semigroups: RightTranslation: \n",
-               "the transformation given must define a right translation.");
+               "the transformation given must define a right translation,");
       fi;
     fi;
   else
@@ -829,7 +829,7 @@ function(R, x)
           "the first argument should be a right translations semigroup, and ",
           "the second argument should be a mapping on the underlying ",
           "semigroup of the first argument, or a transformation on the ",
-          "indices of its elements.");
+          "indices of its elements,");
   fi;
   return RightTranslationNC(R, x);
 end);
@@ -895,14 +895,14 @@ function(H, l, r)
   
   if not IsTranslationalHull(H) then 
     Error("Semigroups: TranslationalHullElement: \n",
-          "the first argument must be a translational hull.");
+          "the first argument must be a translational hull,");
   fi;
   
   if not (IsLeftTranslationsSemigroupElement(l) and 
             IsRightTranslationsSemigroupElement(r)) then
     Error("Semigroups: TranslationalHullElement: \n",
           "the second argument must be a left translation ",
-          "and the third argument must be a right translation.");
+          "and the third argument must be a right translation,");
     return;
   fi;
   
@@ -912,14 +912,14 @@ function(H, l, r)
   
   if not (UnderlyingSemigroup(L) = S and UnderlyingSemigroup(R) = S) then
       Error("Semigroups: TranslationalHullElement: \n",
-            "each argument must have the same underlying semigroup.");
+            "each argument must have the same underlying semigroup,");
   fi;
   
   if HasGeneratorsOfSemigroup(S) then
     if ForAny(GeneratorsOfSemigroup(S), 
               t -> ForAny(S, s -> s * (t^l) <> (s^r) * t)) then
        Error("Semigroups: TranslationalHullElement: \n",
-             "the translations given must form a linked pair.");
+             "the translations given must form a linked pair,");
     fi;
   else
     dclasses := DClasses(S);
@@ -950,7 +950,7 @@ function(H, l, r)
     od;
     if ForAny(reps, t -> ForAny(S, s -> s * (t^l) <> (s^r) * t)) then
       Error("Semigroups: TranslationalHullElement: \n",
-             "the translations given must form a linked pair.");
+             "the translations given must form a linked pair,");
     fi;
   fi;
   
@@ -1281,7 +1281,7 @@ function(x, t)
   fi;
   if not x in list then
     Error("Semigroups: ^ for a semigroup element and translation: \n",
-          "the first argument must be an element of the domain of the second");
+          "the first argument must be an element of the domain of the second,");
   fi;
   return list[Position(list, x)^t![1]];
 end);
