@@ -66,6 +66,8 @@ Obj SEMIGROUPS_IS_OPTIMIZED(Obj self) {
 #define SYSTEM_IS_32_BIT
 #endif
 
+Obj SEMIGROUPS;
+
 Obj TheTypeTSemiObj;
 Obj TheTypeTBlocksObj;
 
@@ -532,6 +534,8 @@ static Int InitKernel(StructInitInfo* module) {
   /* init filters and functions                                          */
   InitHdlrFiltsFromTable(GVarFilts);
   InitHdlrFuncsFromTable(GVarFuncs);
+
+  ImportGVarFromLibrary("SEMIGROUPS", &SEMIGROUPS);
 
   // T_SEMI
   T_SEMI                = RegisterPackageTNUM("TSemiObj", TSemiObjTypeFunc);

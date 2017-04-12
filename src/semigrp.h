@@ -35,7 +35,7 @@ using libsemigroups::Semigroup;
 typedef Obj en_semi_obj_t;
 
 // Enum for types of enumerable semigroups, to be stored in the en_semi_obj_t
-// associated to an enumerable semigroup
+// associated to an enumerable semigroup.
 
 enum en_semi_t {
   UNKNOWN,

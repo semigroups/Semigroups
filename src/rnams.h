@@ -26,6 +26,7 @@
 static Int RNam_batch_size        = 0;
 static Int RNam_cong              = 0;
 static Int RNam_elts              = 0;
+static Int RNam_DefaultOptionsRec = 0;
 static Int RNam_genslookup        = 0;
 static Int RNam_genpairs          = 0;
 static Int RNam_GeneratorsOfMagma = 0;
@@ -64,6 +65,7 @@ static inline void initRNams() {
     RNam_batch_size        = RNamName("batch_size");
     RNam_cong              = RNamName("cong");
     RNam_elts              = RNamName("elts");
+    RNam_DefaultOptionsRec = RNamName("DefaultOptionsRec");
     RNam_genslookup        = RNamName("genslookup");
     RNam_genpairs          = RNamName("genpairs");
     RNam_GeneratorsOfMagma = RNamName("GeneratorsOfMagma");

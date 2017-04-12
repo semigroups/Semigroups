@@ -198,6 +198,11 @@ gap_element_t semi_obj_get_rep(gap_semigroup_t so) {
   }
 }
 
+Obj get_default_value(Int rnam) {
+  gap_rec_t opts = ElmPRec(SEMIGROUPS, RNam_DefaultOptionsRec);
+  return ElmPRec(opts, rnam);
+}
+
 size_t semi_obj_get_batch_size(gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
   initRNams();
@@ -208,7 +213,7 @@ size_t semi_obj_get_batch_size(gap_semigroup_t so) {
       return INT_INTOBJ(GET_ELM_PREC(opts, i));
     }
   }
-  return 8192;
+  return INT_INTOBJ(get_default_value(RNam_batch_size));
 }
 
 bool semi_obj_get_report(gap_semigroup_t so) {
@@ -221,7 +226,7 @@ bool semi_obj_get_report(gap_semigroup_t so) {
       return (GET_ELM_PREC(opts, i) == True ? true : false);
     }
   }
-  return true;
+  return (get_default_value(RNam_report) == True ? true : false);
 }
 
 static inline size_t semi_obj_get_nr_threads(gap_semigroup_t so) {
@@ -234,7 +239,7 @@ static inline size_t semi_obj_get_nr_threads(gap_semigroup_t so) {
       return INT_INTOBJ(GET_ELM_PREC(opts, i));
     }
   }
-  return 1;
+  return INT_INTOBJ(get_default_value(RNam_nr_threads));
 }
 
 static inline size_t semi_obj_get_threshold(gap_semigroup_t so) {
