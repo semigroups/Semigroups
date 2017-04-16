@@ -481,11 +481,6 @@ function(cong)
 end);
 
 InstallMethod(EquivalenceRelationCanonicalLookup,
-"for a semigroup congruence",
-[IsSemigroupCongruence],
-_GenericCongCanonicalLookup);
-
-InstallMethod(EquivalenceRelationCanonicalLookup,
 "for a left semigroup congruence",
 [IsLeftSemigroupCongruence],
 _GenericCongCanonicalLookup);
