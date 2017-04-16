@@ -670,6 +670,18 @@ function(class1, class2)
   return [Representative(class1), Representative(class2)] in cong;
 end);
 
+InstallMethod(\<,
+"for two fp semigroup congruence classes",
+[IsFpSemigroupCongruenceClass, IsFpSemigroupCongruenceClass],
+function(class1, class2)
+  local cong;
+  cong := EquivalenceClassRelation(class1);
+  if cong <> EquivalenceClassRelation(class2) then
+    return false;
+  fi;
+  return CONG_PAIRS_LESS_THAN(cong, class1!.rep, class2!.rep);
+end);
+
 InstallMethod(AsList,
 "for a congruence class by generating pairs rep",
 [IsCongruenceClassByGeneratingPairsRep],
