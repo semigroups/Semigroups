@@ -57,6 +57,10 @@ static Int RNam_fp_semi_rels   = 0;
 static Int RNam_fp_semi_nrgens = 0;
 static Int RNam_fp_semi_cong   = 0;
 
+static Int RNam_fp_nrgens = 0;
+static Int RNam_fp_rels   = 0;
+static Int RNam_fp_extra  = 0;
+
 static Int RNam_en_semi_cpp_semi = 0;
 static Int RNam_en_semi_fropin   = 0;
 
@@ -95,6 +99,10 @@ static inline void initRNams() {
     RNam_fp_semi_rels   = RNamName("__fp_semigroup_relations");
     RNam_fp_semi_nrgens = RNamName("__fp_semigroup_nrgens");
     RNam_fp_semi_cong   = RNamName("__fp_semigroup_cong");
+
+    RNam_fp_nrgens = RNamName("fp_nrgens");
+    RNam_fp_rels   = RNamName("fp_rels");
+    RNam_fp_extra  = RNamName("fp_extra");
 
     RNam_en_semi_cpp_semi = RNamName("__en_semi_cpp_semi");
     RNam_en_semi_fropin   = RNamName("__en_semi_fropin");
