@@ -494,3 +494,13 @@ _GenericCongCanonicalLookup);
 
 MakeReadWriteGlobal("_GenericCongCanonicalLookup");
 Unbind(_GenericCongCanonicalLookup);
+
+InstallMethod(EquivalenceRelationCanonicalPartition,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+cong -> Set(EquivalenceRelationPartition(cong), Set));
+
+InstallMethod(EquivalenceRelationCanonicalPartition,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+cong -> Set(EquivalenceRelationPartition(cong), Set));

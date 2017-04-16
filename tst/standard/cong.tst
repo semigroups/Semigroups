@@ -47,9 +47,12 @@ gap> IsSimpleSemigroup(S);
 true
 gap> pairs := [
 > [Transformation([1, 1, 1, 1, 1]), Transformation([3, 3, 3, 3, 3])]];;
-gap> SemigroupCongruence(S, pairs);
+gap> cong := SemigroupCongruence(S, pairs);
 <semigroup congruence over <simple transformation semigroup of degree 5 with 
  5 generators> with linked triple (1,1,4)>
+gap> EquivalenceRelationCanonicalPartition(cong);
+[ [ Transformation( [ 1, 1, 1, 1, 1 ] ), Transformation( [ 3, 3, 3, 3, 3 ] ) 
+     ] ]
 
 #T# SemigroupCongruence: 0-simple semigroup
 gap> S := Semigroup(Transformation([1, 2]), Transformation([1, 1]));;
@@ -98,9 +101,11 @@ gap> SemigroupCongruence(S, [S.1, S.2],
 gap> S := Semigroup([Transformation([3, 3, 3]),
 >                    Transformation([3, 4, 3, 3])]);;
 gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
-gap> SemigroupCongruence(S, pairs);
+gap> cong := SemigroupCongruence(S, pairs);
 <semigroup congruence over <transformation semigroup of degree 4 with 2 
  generators> with 1 generating pairs>
+gap> EquivalenceRelationCanonicalPartition(cong);
+[ [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 3, 4, 3, 3 ] ) ] ]
 
 #T# SemigroupCongruence: Giving an RMS cong
 gap> S := Semigroup(MinimalIdeal(FullTransformationMonoid(5)));;
@@ -408,6 +413,28 @@ gap> GeneratingPairsOfSemigroupCongruence(cong1);;
 gap> GeneratingPairsOfSemigroupCongruence(cong2);;
 gap> cong1 = cong2;
 false
+
+#T# EquivalenceRelation(Canonical)Partition
+gap> S := FullTransformationMonoid(3);;
+gap> I := SemigroupIdeal(S, Transformation([1, 1, 2]));;
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
+gap> Size(EquivalenceRelationPartition(cong)[1]);
+21
+gap> EquivalenceRelationCanonicalPartition(cong);
+[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 2 ] ), 
+      Transformation( [ 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
+      Transformation( [ 1, 2, 2 ] ), Transformation( [ 1, 3, 1 ] ), 
+      Transformation( [ 1, 3, 3 ] ), Transformation( [ 2, 1, 1 ] ), 
+      Transformation( [ 2, 1, 2 ] ), Transformation( [ 2, 2, 1 ] ), 
+      Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 2 ] ), 
+      Transformation( [ 2, 3, 2 ] ), Transformation( [ 2, 3, 3 ] ), 
+      Transformation( [ 3, 1, 1 ] ), Transformation( [ 3, 1, 3 ] ), 
+      Transformation( [ 3, 2, 2 ] ), Transformation( [ 3, 2, 3 ] ), 
+      Transformation( [ 3, 3, 1 ] ), Transformation( [ 3, 3, 2 ] ), 
+      Transformation( [ 3, 3, 3 ] ) ] ]
+gap> EquivalenceRelationCanonicalPartition(cong)
+>        = Set(EquivalenceRelationPartition(cong), Set);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(F);

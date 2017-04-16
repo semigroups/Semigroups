@@ -437,6 +437,37 @@ gap> EquivalenceRelationCanonicalLookup(cong);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="EquivalenceRelationCanonicalPartition">
+  <ManSection>
+    <Attr Name = "EquivalenceRelationCanonicalPartition" Arg = "cong"/>
+    <Returns>A list of lists.</Returns>
+    <Description>
+      This attribute returns a list of lists of elements of the underlying set
+      of the semigroup congruence <A>cong</A>.  These lists are precisely the
+      nontrivial equivalence classes of <A>cong</A>.  The order in which the
+      classes appear is deterministic, and the order of the elements inside each
+      class is also deterministic.  Hence, two congruence objects have the same
+      <C>EquivalenceRelationCanonicalPartition</C> if and only if they describe
+      the same relation. <P/>
+
+      See also <Ref Attr = "EquivalenceRelationPartition" BookName = "ref"/>,
+      a similar attribute which does not have canonical ordering, but which is
+      likely to be faster. <P/>
+      <Example><![CDATA[
+gap> S := Semigroup(Transformation([1, 4, 3, 3]),
+>                   Transformation([2, 4, 3, 3]));;
+gap> cong := SemigroupCongruence(S, [Transformation([1, 4, 3, 3]),
+>                                    Transformation([1, 3, 3, 3])]);;
+gap> EquivalenceRelationCanonicalPartition(cong);
+[ [ Transformation( [ 1, 3, 3, 3 ] ), 
+      Transformation( [ 1, 4, 3, 3 ] ) ], 
+  [ Transformation( [ 3, 3, 3, 3 ] ), 
+      Transformation( [ 4, 3, 3, 3 ] ) ] ]
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="NrEquivalenceClasses">
   <ManSection>
     <Attr Name = "NrEquivalenceClasses" Arg = "eq"/>

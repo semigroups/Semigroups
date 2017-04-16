@@ -21,6 +21,10 @@
 ## Some general functions are also implemented in cong.gi
 ##
 
+# These are equivalence relations
+InstallTrueMethod(IsEquivalenceRelation, IsLeftSemigroupCongruence);
+InstallTrueMethod(IsEquivalenceRelation, IsRightSemigroupCongruence);
+
 # Flexible functions for creating congruences
 DeclareGlobalFunction("SemigroupCongruence");
 DeclareGlobalFunction("LeftSemigroupCongruence");
@@ -68,6 +72,9 @@ DeclareAttribute("NonTrivialEquivalenceClasses", IsEquivalenceRelation);
 DeclareAttribute("EquivalenceRelationLookup", IsEquivalenceRelation);
 DeclareAttribute("EquivalenceRelationCanonicalLookup", IsEquivalenceRelation);
 DeclareAttribute("NrEquivalenceClasses", IsEquivalenceRelation);
+
+DeclareAttribute("EquivalenceRelationCanonicalPartition",
+                 IsEquivalenceRelation);
 
 DeclareOperation("JoinLeftSemigroupCongruences",
                  [IsLeftSemigroupCongruence, IsLeftSemigroupCongruence]);
