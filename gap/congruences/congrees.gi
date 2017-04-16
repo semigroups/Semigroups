@@ -341,3 +341,8 @@ function(class)
   fi;
   return [Representative(class)];
 end);
+
+InstallMethod(EquivalenceRelationPartition,
+"for a Rees congruence",
+[IsReesCongruence],
+cong -> [AsList(SemigroupIdealOfReesCongruence(cong))]);
