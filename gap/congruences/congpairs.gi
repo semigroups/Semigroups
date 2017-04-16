@@ -29,29 +29,6 @@ function(cong)
   return cong!.__fin_cong_lookup;
 end);
 
-InstallMethod(EquivalenceRelationCanonicalLookup,
-"for a finite semigroup congruence by generating pairs rep",
-[IsFiniteCongruenceByGeneratingPairsRep],
-function(cong)
-  local lookup, max, dictionary, next, out, i, new_nr;
-  lookup := EquivalenceRelationLookup(cong);
-  max := NrEquivalenceClasses(cong);
-  # We assume lookup uses the numbers 1 to max, but in an unknown order
-  dictionary := ListWithIdenticalEntries(max, 0);
-  next := 1;
-  out := EmptyPlist(max);
-  for i in [1 .. Length(lookup)] do
-    new_nr := dictionary[lookup[i]];
-    if new_nr = 0 then
-      dictionary[lookup[i]] := next;
-      new_nr := next;
-      next := next + 1;
-    fi;
-    out[i] := new_nr;
-  od;
-  return out;
-end);
-
 InstallMethod(EquivalenceRelationPartition,
 "for a finite semigroup congruence by generating pairs rep",
 [IsFiniteCongruenceByGeneratingPairsRep],
