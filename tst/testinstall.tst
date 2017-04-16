@@ -1568,6 +1568,23 @@ false
 gap> Size(ec);
 5
 
+#T# Infinite congruence classes: part 2 of semicong.tst (fp semigroups)
+gap> f := FreeSemigroup(2);;
+gap> s := f / [[f.1 ^ 3, f.1], [f.1 * f.2, f.1], [f.2 * f.1, f.1]];;
+gap> gns := GeneratorsOfSemigroup(s);;
+gap> c := SemigroupCongruenceByGeneratingPairs(s, [[gns[1], gns[1] ^ 2],
+>                                                  [gns[2], gns[2] ^ 2]]);;
+gap> ec := EquivalenceClassOfElement(c, gns[2]);;
+gap> gns[2] ^ 20 in ec;
+true
+gap> gns[2] ^ 40 in ec;
+true
+gap> ##
+gap> ## We should never get a full closure
+gap> ##
+gap> HasEquivalenceRelationPartition(c);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
