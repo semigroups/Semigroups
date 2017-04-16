@@ -1,16 +1,15 @@
 ############################################################################
 ##
 #W  congruences/congpairs.gd
-#Y  Copyright (C) 2015                                   Michael C. Torpey
+#Y  Copyright (C) 2015-17                                Michael C. Torpey
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
-## This file contains functions for any finite semigroup congruence with
-## generating pairs, using a pair enumeration and union-find method.
-##
-## See the header of congpairs.gi for a full summary.
+## This file contains functions for any semigroup congruence with generating
+## pairs.  These act as a wrapper to the congpairs.cc file, which in turn uses
+## the congruence methods in libsemigroups.
 ##
 
 DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
@@ -36,16 +35,24 @@ DeclareOperation("AsSemigroupCongruenceByGeneratingPairs",
 #   report:   should be true or false, sets whether information is printed
 #             during a computation or not.
 
-DeclareCategory("IsFiniteCongruenceByGeneratingPairs",
+DeclareCategory("IsCongruenceByGeneratingPairs",
                 IsEquivalenceRelation, RankFilter(IsSemigroupCongruence));
 
-DeclareRepresentation("IsFiniteCongruenceByGeneratingPairsRep",
+DeclareRepresentation("IsCongruenceByGeneratingPairsRep",
                       IsEquivalenceRelation and IsAttributeStoringRep and
-                      IsFiniteCongruenceByGeneratingPairs,
+                      IsCongruenceByGeneratingPairs,
                       ["range", "genpairs", "type", "report"]);
 
-DeclareAttribute("FiniteCongruenceByGeneratingPairsPartition",
-                 IsFiniteCongruenceByGeneratingPairsRep);
+DeclareCategory("IsEnumerableSemigroupCongruence",
+                IsCongruenceByGeneratingPairsRep,
+                RankFilter(IsSemigroupCongruence));
+
+DeclareCategory("IsFpSemigroupCongruence",
+                IsCongruenceByGeneratingPairsRep,
+                RankFilter(IsSemigroupCongruence));
+
+DeclareAttribute("CongruenceByGeneratingPairsPartition",
+                 IsCongruenceByGeneratingPairsRep);
 
 # This is a representation for classes of a left/right/two-sided congruence of
 # a finite semigroup by generating pairs.
@@ -56,16 +63,24 @@ DeclareAttribute("FiniteCongruenceByGeneratingPairsPartition",
 #
 #   cong: the underlying congruence of the class.
 
-DeclareCategory("IsFiniteCongruenceClassByGeneratingPairs",
+DeclareCategory("IsCongruenceClassByGeneratingPairs",
                 IsEquivalenceClass, RankFilter(IsCongruenceClass));
 
-DeclareRepresentation("IsFiniteCongruenceClassByGeneratingPairsRep",
+DeclareRepresentation("IsCongruenceClassByGeneratingPairsRep",
                       IsEquivalenceClass and IsAttributeStoringRep and
-                      IsFiniteCongruenceClassByGeneratingPairs,
+                      IsCongruenceClassByGeneratingPairs,
                       ["rep", "cong"]);
 
-DeclareAttribute("FiniteCongruenceClassByGeneratingPairsCosetId",
-                 IsFiniteCongruenceClassByGeneratingPairsRep);
+DeclareCategory("IsEnumerableSemigroupCongruenceClass",
+                IsCongruenceClassByGeneratingPairsRep,
+                RankFilter(IsCongruenceClass));
 
-DeclareAttribute("FiniteCongruenceClassByGeneratingPairsType",
-                 IsFiniteCongruenceByGeneratingPairsRep);
+DeclareCategory("IsFpSemigroupCongruenceClass",
+                IsCongruenceClassByGeneratingPairsRep,
+                RankFilter(IsCongruenceClass));
+
+DeclareAttribute("CongruenceClassByGeneratingPairsCosetId",
+                 IsCongruenceClassByGeneratingPairsRep);
+
+DeclareAttribute("CongruenceClassByGeneratingPairsType",
+                 IsCongruenceByGeneratingPairsRep);
