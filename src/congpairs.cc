@@ -32,7 +32,7 @@ using libsemigroups::word_t;
 using libsemigroups::relation_t;
 using libsemigroups::RecVec;
 
-static inline word_t plist_to_word_t(Obj plist) {
+static inline word_t plist_to_word_t(gap_list_t plist) {
   word_t word;
   for (size_t i = 1; i <= (size_t) LEN_PLIST(plist); i++) {
     Obj j = ELM_PLIST(plist, i);
@@ -42,7 +42,7 @@ static inline word_t plist_to_word_t(Obj plist) {
   return word;
 }
 
-static inline bool cong_obj_has_cpp_cong(Obj cong) {
+static inline bool cong_obj_has_cpp_cong(gap_cong_t cong) {
   initRNams();
   return IsbPRec(cong, RNam_cong_pairs_congruence)
          && CLASS_OBJ<Congruence*>(ElmPRec(cong, RNam_cong_pairs_congruence))
@@ -64,7 +64,7 @@ static inline bool cong_obj_get_range_type(gap_cong_t o) {
   return semi_obj_get_type(cong_obj_get_range_obj(o));
 }
 
-static void cong_obj_init_cpp_cong(Obj o) {
+static void cong_obj_init_cpp_cong(gap_cong_t o) {
   // assert(IsSemigroupCongruenceByGeneratingPairsRep(o));
   assert(!cong_obj_has_cpp_cong(o));
 
@@ -158,7 +158,7 @@ static void cong_obj_init_cpp_cong(Obj o) {
   AssPRec(o, RNam_cong_pairs_congruence, OBJ_CLASS(cong, T_SEMI_SUBTYPE_CONG));
 }
 
-static Congruence* cong_obj_get_cpp(Obj cong) {
+static Congruence* cong_obj_get_cpp(gap_cong_t cong) {
   initRNams();
   if (!cong_obj_has_cpp_cong(cong)) {
     cong_obj_init_cpp_cong(cong);
@@ -169,7 +169,7 @@ static Congruence* cong_obj_get_cpp(Obj cong) {
   return CLASS_OBJ<Congruence*>(tsemiobj);
 }
 
-Obj CONG_PAIRS_NR_CLASSES(Obj self, Obj o) {
+Obj CONG_PAIRS_NR_CLASSES(Obj self, gap_cong_t o) {
   return INTOBJ_INT(cong_obj_get_cpp(o)->nr_classes());
 }
 
