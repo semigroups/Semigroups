@@ -31,6 +31,7 @@ using libsemigroups::Congruence;
 using libsemigroups::word_t;
 using libsemigroups::relation_t;
 using libsemigroups::RecVec;
+using libsemigroups::Partition;
 
 static inline word_t plist_to_word_t(gap_list_t plist) {
   word_t word;
@@ -380,4 +381,30 @@ Obj CONG_PAIRS_CLASS_COSET_ID(Obj self, gap_cong_class_t o) {
 
     return INTOBJ_INT(cong->word_to_class_index(plist_to_word_t(word)) + 1);
   }
+}
+
+gap_list_t CONG_PAIRS_NONTRIVIAL_CLASSES(Obj self, gap_cong_t o) {
+  initRNams();
+  Congruence* cong = cong_obj_get_cpp(o);
+
+  Partition<word_t>* nt_classes = cong->nontrivial_classes();
+
+  // Initialise gap_lists
+  gap_list_t gap_lists = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, nt_classes->size());
+  SET_LEN_PLIST(gap_lists, nt_classes->size());
+
+  // Convert the words to plists
+  for (size_t c = 0; c < nt_classes->size(); c++) {
+    gap_list_t next_class =
+        NEW_PLIST(T_PLIST_TAB + IMMUTABLE, (*nt_classes)[c]->size());
+    SET_LEN_PLIST(next_class, (*nt_classes)[c]->size());
+    for (size_t e = 0; e < (*nt_classes)[c]->size(); e++) {
+      SET_ELM_PLIST(next_class, e + 1, word_t_to_plist((*(*nt_classes)[c])[e]));
+    }
+    SET_ELM_PLIST(gap_lists, c + 1, next_class);
+  }
+
+  delete nt_classes;
+
+  return gap_lists;
 }
