@@ -21,16 +21,41 @@
 ## cong.gd contains declarations for many of these.
 ##
 
-InstallMethod(\=, "for two semigroup congruences",
-[IsSemigroupCongruence, IsSemigroupCongruence],
-function(c1, c2)
-  if not IsFinite(Range(c1)) then
-    TryNextMethod();
+BindGlobal("_GenericCongEquality",
+function(cong1, cong2)
+  local S;
+  S := Range(cong1);
+  if S <> Range(cong2) then
+    return false;
   fi;
-  return Range(c1) = Range(c2)
-         and EquivalenceRelationCanonicalLookup(c1) =
-             EquivalenceRelationCanonicalLookup(c2);
+  if HasIsFinite(S) and IsFinite(S) then
+    return EquivalenceRelationCanonicalLookup(cong1) =
+           EquivalenceRelationCanonicalLookup(cong2);
+  fi;
+  return EquivalenceRelationCanonicalPartition(cong1) =
+         EquivalenceRelationCanonicalPartition(cong2);
 end);
+
+InstallMethod(\=, "for two left semigroup congruences",
+[IsLeftSemigroupCongruence, IsLeftSemigroupCongruence],
+_GenericCongEquality);
+
+InstallMethod(\=, "for a left and a right semigroup congruence",
+[IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
+_GenericCongEquality);
+
+InstallMethod(\=, "for a right and a left semigroup congruence",
+[IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
+_GenericCongEquality);
+
+InstallMethod(\=, "for two right semigroup congruences",
+[IsRightSemigroupCongruence, IsRightSemigroupCongruence],
+_GenericCongEquality);
+
+# Since two-sided congs are both left and right, this covers all cases
+
+MakeReadWriteGlobal("_GenericCongEquality");
+Unbind(_GenericCongEquality);
 
 InstallMethod(\=, "for two semigroup congruences with generating pairs",
 [IsSemigroupCongruence and HasGeneratingPairsOfMagmaCongruence,
@@ -39,28 +64,6 @@ function(c1, c2)
   return Range(c1) = Range(c2)
          and ForAll(GeneratingPairsOfSemigroupCongruence(c1), p -> p in c2)
          and ForAll(GeneratingPairsOfSemigroupCongruence(c2), p -> p in c1);
-end);
-
-InstallMethod(\=, "for a left and a right semigroup congruence",
-[IsLeftSemigroupCongruence, IsRightSemigroupCongruence],
-function(c1, c2)
-  if not IsFinite(Range(c1)) then
-    TryNextMethod();
-  fi;
-  return Range(c1) = Range(c2)
-         and EquivalenceRelationCanonicalLookup(c1) =
-             EquivalenceRelationCanonicalLookup(c2);
-end);
-
-InstallMethod(\=, "for a right and a left semigroup congruence",
-[IsRightSemigroupCongruence, IsLeftSemigroupCongruence],
-function(c1, c2)
-  if not IsFinite(Range(c1)) then
-    TryNextMethod();
-  fi;
-  return Range(c1) = Range(c2)
-         and EquivalenceRelationCanonicalLookup(c1) =
-             EquivalenceRelationCanonicalLookup(c2);
 end);
 
 # Multiplication for congruence classes: only makes sense for 2-sided
