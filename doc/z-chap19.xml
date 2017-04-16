@@ -47,7 +47,6 @@
     <#Include Label="IsSemigroupCongruence">
     <#Include Label="IsLeftSemigroupCongruence">
     <#Include Label="IsRightSemigroupCongruence">
-    <#Include Label="IsFreeCongruence">
 
   </Section>
 
