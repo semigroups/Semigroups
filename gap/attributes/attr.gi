@@ -826,3 +826,33 @@ _MonoidSizeByIndexPeriod);
 
 MakeReadWriteGlobal("_MonoidSizeByIndexPeriod");
 Unbind(_MonoidSizeByIndexPeriod);
+
+InstallMethod(MultiplicativeZero,
+"for a semigroup with generators",
+[IsSemigroup and HasGeneratorsOfSemigroup],
+function(S)
+  local gens, z;
+  # Does a generator act as a zero on all the other generators?
+  gens := GeneratorsOfSemigroup(S);
+  for z in gens do
+    if ForAll(gens, g -> z * g = z and g * z = z) then
+      return z;
+    fi;
+  od;
+  TryNextMethod();
+end);
+
+InstallMethod(MultiplicativeZero,
+"for a monoid with generators",
+[IsMonoid and HasGeneratorsOfMonoid],
+function(S)
+  local gens, z;
+  # Does a generator act as a zero on all the other generators?
+  gens := GeneratorsOfMonoid(S);
+  for z in gens do
+    if ForAll(gens, g -> z * g = z and g * z = z) then
+      return z;
+    fi;
+  od;
+  TryNextMethod();
+end);

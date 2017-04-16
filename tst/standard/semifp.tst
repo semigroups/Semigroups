@@ -1989,6 +1989,16 @@ gap> IsomorphismFpMonoid(S);
 Error, Semigroups: IsomorphismFpMonoid: usage,
 the first argument (a semigroup) must satisfy `IsMonoidAsSemigroup`,
 
+# Test MultiplicativeZero
+gap> F := FreeSemigroup(2);;
+gap> S := F / [[F.1, F.2 * F.1], [F.1, F.1 * F.2], [F.1 ^ 2, F.1]];;
+gap> MultiplicativeZero(S) = S.1;
+true
+gap> F := FreeMonoid(2);;
+gap> S := F / [[F.1, F.2 * F.1], [F.1, F.1 * F.2], [F.1 ^ 2, F.1]];;
+gap> MultiplicativeZero(S) = S.1;
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
