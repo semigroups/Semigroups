@@ -13,13 +13,13 @@ lib_LTLIBRARIES = semigroups.la
 
 semigroups_la_SOURCES =  src/pkg.cc src/converter.cc src/bipart.cc 
 semigroups_la_SOURCES += src/uf.cc src/fropin.cc src/congpairs.cc
-semigroups_la_SOURCES += src/semifp.cc src/semigrp.cc
+semigroups_la_SOURCES += src/semigrp.cc
 semigroups_la_SOURCES += src/libsemigroups/src/blocks.cc
 semigroups_la_SOURCES += src/libsemigroups/src/cong.cc
 semigroups_la_SOURCES += src/libsemigroups/src/elements.cc
 semigroups_la_SOURCES += src/libsemigroups/src/rws.cc
 semigroups_la_SOURCES += src/libsemigroups/src/rwse.cc
-semigroups_la_SOURCES += src/libsemigroups/src/semigroups.cc 
+semigroups_la_SOURCES += src/libsemigroups/src/semigroups.cc
 semigroups_la_SOURCES += src/libsemigroups/src/uf.cc
 
 semigroups_la_CXXFLAGS = -std=c++11 -O3 -g -DNDEBUG

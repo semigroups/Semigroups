@@ -28,7 +28,6 @@
 #include <vector>
 
 #include "rnams.h"
-#include "semifp.h"
 
 #include "src/compiled.h"
 
