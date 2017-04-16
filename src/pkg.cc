@@ -464,6 +464,7 @@ static StructGVarFunc GVarFuncs[] = {
 
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_NR_CLASSES, 1, "cong"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_IN, 2, "cong, pair"),
+    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_LESS_THAN, 3, "cong, rep1, rep2"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_LOOKUP_PART, 1, "cong"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_CLASS_COSET_ID, 1, "class"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_NONTRIVIAL_CLASSES, 1, "cong"),

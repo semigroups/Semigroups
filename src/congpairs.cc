@@ -257,6 +257,42 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_list_t pair) {
   return (cong->test_equals(lhs, rhs) ? True : False);
 }
 
+// This describes a total ordering on the classes of the congruence.
+// Returns True if pair[1] is in a lower class than pair[2], False otherwise.
+Obj CONG_PAIRS_LESS_THAN(Obj        self,
+                         gap_cong_t o,
+                         gap_list_t rep1,
+                         gap_list_t rep2) {
+  initRNams();
+
+  word_t lhs, rhs;
+
+  if (cong_obj_is_fp_cong(o)) {
+    lhs = plist_to_word_t(rep1);
+    rhs = plist_to_word_t(rep2);
+  } else {
+    gap_semigroup_t S       = cong_obj_get_range_obj(o);
+    size_t          lhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, rep1));
+    size_t          rhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, rep2));
+
+    if (cong_obj_get_range_type(o) != UNKNOWN) {
+      Semigroup* range = cong_obj_get_range(o);
+
+      range->factorisation(lhs, lhs_pos - 1);
+      range->factorisation(rhs, rhs_pos - 1);
+    } else {
+      gap_rec_t  data  = fropin(S, INTOBJ_INT(-1), 0, False);
+      gap_list_t words = ElmPRec(data, RNam_words);
+
+      lhs = plist_to_word_t(ELM_PLIST(words, lhs_pos));
+      rhs = plist_to_word_t(ELM_PLIST(words, rhs_pos));
+    }
+  }
+
+  Congruence* cong = cong_obj_get_cpp(o);
+  return (cong->test_less_than(lhs, rhs) ? True : False);
+}
+
 Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   initRNams();
   // TODO(JDM) assert o is correct type of object
