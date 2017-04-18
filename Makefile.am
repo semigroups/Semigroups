@@ -20,6 +20,7 @@ semigroups_la_SOURCES += src/libsemigroups/elements.cc
 semigroups_la_SOURCES += src/libsemigroups/rws.cc
 semigroups_la_SOURCES += src/libsemigroups/rwse.cc
 semigroups_la_SOURCES += src/libsemigroups/semigroups.cc 
+semigroups_la_SOURCES += src/libsemigroups/util/uf.cc
 
 semigroups_la_CXXFLAGS = -std=c++11 -O3 -g -DNDEBUG
 
