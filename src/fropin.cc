@@ -23,7 +23,7 @@
 #include <algorithm>
 #include <iostream>
 
-#include "libsemigroups/util/report.h"
+#include "libsemigroups/src/report.h"
 #include "rnams.h"
 #include "semigrp.h"
 

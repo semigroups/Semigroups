@@ -21,7 +21,7 @@
 
 #include <assert.h>
 
-#include "libsemigroups/elements.h"
+#include "libsemigroups/src/elements.h"
 #include "pkg.h"
 #include "src/compiled.h"
 

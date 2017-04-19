@@ -28,7 +28,7 @@
 #include <utility>
 #include <vector>
 
-#include "src/libsemigroups/semigroups.h"
+#include "libsemigroups/src/semigroups.h"
 #include "src/permutat.h"
 #include "src/precord.h"
 

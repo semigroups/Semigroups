@@ -22,7 +22,7 @@
 #define SEMIGROUPS_SRC_SEMIGRP_H_
 
 #include "converter.h"
-#include "libsemigroups/semigroups.h"
+#include "libsemigroups/src/semigroups.h"
 #include "pkg.h"
 #include "rnams.h"
 #include "src/compiled.h"  // GAP headers

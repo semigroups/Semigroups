@@ -25,7 +25,7 @@
 #include "src/compiled.h"
 #include "src/pperm.h"
 
-#include "libsemigroups/elements.h"
+#include "libsemigroups/src/elements.h"
 
 using libsemigroups::Element;
 using libsemigroups::Transformation;

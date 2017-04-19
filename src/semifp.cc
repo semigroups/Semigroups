@@ -23,7 +23,7 @@
 
 #include <vector>
 
-#include "libsemigroups/cong.h"
+#include "libsemigroups/src/cong.h"
 #include "pkg.h"
 #include "rnams.h"
 #include "semigrp.h"

@@ -27,7 +27,7 @@
 #include "pkg.h"
 #include "src/compiled.h"
 
-#include "libsemigroups/util/uf.h"
+#include "libsemigroups/src/uf.h"
 
 using libsemigroups::UF;
 
