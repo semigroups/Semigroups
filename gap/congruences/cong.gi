@@ -455,9 +455,27 @@ function(cong)
   return SEMIGROUPS._GenericCongLookup(cong);
 end);
 
-# We could add an equivalent Left/RightSemigroupCongruence, but currently these
-# can only be created by generating pairs, and such a congruence has a better
-# method for EquivalenceRelationLookup
+InstallMethod(EquivalenceRelationLookup,
+"for a left semigroup congruence",
+[IsLeftSemigroupCongruence],
+function(cong)
+  if not IsFinite(Range(cong)) then
+    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
+                  "<cong> must be over a finite semigroup,");
+  fi;
+  return SEMIGROUPS._GenericCongLookup(cong);
+end);
+
+InstallMethod(EquivalenceRelationLookup,
+"for a right semigroup congruence",
+[IsRightSemigroupCongruence],
+function(cong)
+  if not IsFinite(Range(cong)) then
+    ErrorNoReturn("Semigroups: EquivalenceRelationLookup: usage,\n",
+                  "<cong> must be over a finite semigroup,");
+  fi;
+  return SEMIGROUPS._GenericCongLookup(cong);
+end);
 
 BindGlobal("_GenericCongCanonicalLookup",
 function(cong)

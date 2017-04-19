@@ -431,6 +431,14 @@ Error, Semigroups: EquivalenceRelationLookup: usage,
 gap> EquivalenceRelationCanonicalLookup(cong);
 Error, Semigroups: EquivalenceRelationLookup: usage,
 <cong> must be over a finite semigroup,
+gap> cong := LeftSemigroupCongruence(F, [F.1, F.2]);;
+gap> EquivalenceRelationLookup(cong);
+Error, Semigroups: EquivalenceRelationLookup: usage,
+<cong> must be over a finite semigroup,
+gap> cong := RightSemigroupCongruence(F, [F.1, F.2]);;
+gap> EquivalenceRelationLookup(cong);
+Error, Semigroups: EquivalenceRelationLookup: usage,
+<cong> must be over a finite semigroup,
 
 #T# Equality for congruences over different semigroups (false)
 gap> S := Semigroup([Transformation([3, 2, 3]), Transformation([3, 1, 1])]);;
@@ -490,9 +498,48 @@ gap> EquivalenceRelationCanonicalPartition(cong)
 >        = Set(EquivalenceRelationPartition(cong), Set);
 true
 
+#T# A left congruence example
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
+>              [F.2 ^ 3, F.2 ^ 2],
+>              [F.1 ^ 4, F.1],
+>              [F.2 * F.1 ^ 2 * F.2, F.2 ^ 2],
+>              [F.2 * F.1 ^ 3 * F.2, F.2],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2],
+>              [F.2 ^ 2 * F.1 ^ 3, F.2 ^ 2],
+>              [F.2 * (F.2 * F.1) ^ 2, F.2 ^ 2 * F.1 ^ 2]];;
+gap> cong1 := LeftSemigroupCongruence(M, [M.1, M.2 ^ 3]);;
+gap> cong2 := LeftSemigroupCongruence(M, [M.2 ^ 2, M.1 ^ 7]);;
+gap> lookup1 := EquivalenceRelationCanonicalLookup(cong1);;
+gap> lookup2 := EquivalenceRelationCanonicalLookup(cong2);;
+gap> Length(lookup1);
+40
+gap> lookup1 = lookup2;
+true
+
+#T# A right congruence example
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
+>              [F.2 ^ 3, F.2 ^ 2],
+>              [F.1 ^ 4, F.1],
+>              [F.2 * F.1 ^ 2 * F.2, F.2 ^ 2],
+>              [F.2 * F.1 ^ 3 * F.2, F.2],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2],
+>              [F.2 ^ 2 * F.1 ^ 3, F.2 ^ 2],
+>              [F.2 * (F.2 * F.1) ^ 2, F.2 ^ 2 * F.1 ^ 2]];;
+gap> cong1 := RightSemigroupCongruence(M, [M.1, M.2 ^ 3]);;
+gap> cong2 := RightSemigroupCongruence(M, [M.2 ^ 2, M.1 ^ 7]);;
+gap> lookup1 := EquivalenceRelationCanonicalLookup(cong1);;
+gap> lookup2 := EquivalenceRelationCanonicalLookup(cong2);;
+gap> Length(lookup1);
+40
+gap> lookup1 = lookup2;
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(I);
+gap> Unbind(M);
 gap> Unbind(R);
 gap> Unbind(S);
 gap> Unbind(T);
@@ -512,6 +559,8 @@ gap> Unbind(ideal);
 gap> Unbind(iso);
 gap> Unbind(ker);
 gap> Unbind(lcong);
+gap> Unbind(lookup1);
+gap> Unbind(lookup2);
 gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);
