@@ -381,24 +381,22 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   return True;
 }
 
-Obj CONG_PAIRS_CLASS_COSET_ID(Obj self, gap_cong_class_t o) {
+Obj CONG_PAIRS_ELM_COSET_ID(Obj self, gap_cong_t cong_obj, Obj elm) {
   initRNams();
-  // TODO(JDM) assert o is correct type of object
-
-  Obj             rep       = ElmPRec(o, RNam_rep);
-  Obj             cong_obj  = ElmPRec(o, RNam_cong);
+  // TODO(JDM) assert args are correct types
   gap_semigroup_t range_obj = cong_obj_get_range_obj(cong_obj);
   bool            report    = semi_obj_get_report(range_obj);
 
-  if (IsbPRec(o, RNam_fin_cong_lookup)) {
+  if (IsbPRec(cong_obj, RNam_fin_cong_lookup)) {
+    assert(!cong_obj_is_fp_cong(cong_obj));
     // TODO(JDM) Use FindPRec and GET_ELM_PREC
     Obj lookup = ElmPRec(cong_obj, RNam_fin_cong_lookup);
     return ELM_PLIST(lookup,
-                     INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, rep)));
+                     INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, elm)));
   } else if (cong_obj_is_fp_cong(cong_obj)) {
-    // rep should be a gap_list_t representing a word
+    // elm should be a gap_list_t representing a word
     Congruence* cong = cong_obj_get_cpp(cong_obj);
-    return INTOBJ_INT(cong->word_to_class_index(plist_to_word_t(rep)) + 1);
+    return INTOBJ_INT(cong->word_to_class_index(plist_to_word_t(elm)) + 1);
   } else if (cong_obj_get_range_type(cong_obj) != UNKNOWN) {
     Congruence* cong  = cong_obj_get_cpp(cong_obj);
     Semigroup*  range = cong_obj_get_range(cong_obj);
@@ -406,14 +404,14 @@ Obj CONG_PAIRS_CLASS_COSET_ID(Obj self, gap_cong_class_t o) {
 
     word_t word;
     range->factorisation(
-        word, INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, rep)) - 1);
+        word, INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, elm)) - 1);
     return INTOBJ_INT(cong->word_to_class_index(word) + 1);
   } else {
     gap_rec_t   data = fropin(range_obj, INTOBJ_INT(-1), 0, False);
     Congruence* cong = cong_obj_get_cpp(cong_obj);
 
     Obj word = ELM_PLIST(ElmPRec(data, RNam_words),
-                         INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, rep)));
+                         INT_INTOBJ(EN_SEMI_POSITION(self, range_obj, elm)));
 
     return INTOBJ_INT(cong->word_to_class_index(plist_to_word_t(word)) + 1);
   }

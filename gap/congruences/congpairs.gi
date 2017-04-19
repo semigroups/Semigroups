@@ -52,7 +52,7 @@ end);
 InstallMethod(CongruenceClassByGeneratingPairsCosetId,
 "for a congruence class by gen pairs rep",
 [IsCongruenceClassByGeneratingPairsRep],
-CONG_PAIRS_CLASS_COSET_ID);
+c -> CONG_PAIRS_ELM_COSET_ID(EquivalenceClassRelation(c), c!.rep));
 
 InstallMethod(CongruenceClassByGeneratingPairsType,
 "for a congruence by gen pairs rep",
