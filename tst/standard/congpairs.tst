@@ -585,6 +585,11 @@ gap> Size(class);
 2
 gap> Elements(class) = [S.1, S.1 * S.2 * S.1];
 true
+gap> classes := EquivalenceClasses(cong);;
+gap> Length(classes);
+8
+gap> ForAll(S, x -> Number(classes, c -> x in c) = 1);
+true
 
 #T# a right congruence over an fp semigroup
 gap> F := FreeSemigroup(2);;

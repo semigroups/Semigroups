@@ -42,11 +42,29 @@ function(cong)
 end);
 
 InstallMethod(CongruenceByGeneratingPairsPartition,
-"for a semigroup congruence by generating pairs rep",
-[IsCongruenceByGeneratingPairsRep],
+"for an enumerable semigroup congruence",
+[IsEnumerableSemigroupCongruence],
 function(cong)
   CONG_PAIRS_LOOKUP_PART(cong);
   return cong!.__fin_cong_partition;
+end);
+
+InstallMethod(CongruenceByGeneratingPairsPartition,
+"for an fp semigroup congruence",
+[IsFpSemigroupCongruence],
+function(cong)
+  local enum, nrclasses, part, i, word;
+  enum := Enumerator(Range(cong));
+  nrclasses := NrEquivalenceClasses(cong);
+  part := EmptyPlist(nrclasses);
+  for i in [1 .. nrclasses] do
+    part[i] := [];
+  od;
+  for i in [1 .. Size(enum)] do
+    word := SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(enum[i]));
+    Add(part[CONG_PAIRS_ELM_COSET_ID(cong, word)], i);
+  od;
+  return part;
 end);
 
 InstallMethod(CongruenceClassByGeneratingPairsCosetId,
