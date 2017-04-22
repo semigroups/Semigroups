@@ -366,17 +366,30 @@ function(S, n)
 end);
 
 # FIXME can probably do better than this
+# WW has improved this
 
 InstallMethod(Idempotents, "for a transformation semigroup and pos int",
 [IsTransformationSemigroup, IsPosInt],
 function(S, rank)
-  local deg;
+  local deg, out, d;
+
   deg := DegreeOfTransformationSemigroup(S);
   if rank > deg then
     return [];
+  elif rank = 1 then
+    if IsSynchronizingSemigroup(S) then
+      return Elements(MinimalIdeal(S));
+    fi;
+    return [];
   fi;
-  return Filtered(Idempotents(S),
-                              x -> RankOfTransformation(x, deg) = rank);
+  out := [];
+  for d in DClasses(S) do
+    if RankOfTransformation(Representative(d), deg) = rank
+        and IsRegularDClass(d) then
+      Append(out, Idempotents(d));
+    fi;
+  od;
+  return out;
 end);
 
 InstallMethod(IteratorSorted, "for an acting transformation semigroup",
