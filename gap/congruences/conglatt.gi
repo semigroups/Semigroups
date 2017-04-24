@@ -168,7 +168,7 @@ function(poset, join_func)
   length := 0;
   found := true;
   # 'ignore' is a list of congs that we don't try joining
-  ignore := BlistList(congs, []);
+  ignore := BlistList([1 .. nrcongs], []);
   while found do
     # There are new congs to try joining
     start := length + 1;     # New congs start here
