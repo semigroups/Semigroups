@@ -384,7 +384,17 @@ InstallMethod(HClassReps, "for a Green's class",
 InstallMethod(RegularDClasses, "for a semigroup",
 [IsSemigroup], S -> Filtered(GreensDClasses(S), IsRegularDClass));
 
-#TODO PartialOrderOfDClasses
+InstallMethod(PartialOrderOfDClasses, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local l, r, gr;
+
+  l  := LeftCayleyGraphSemigroup(S);
+  r  := RightCayleyGraphSemigroup(S);
+  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
+  gr := QuotientDigraph(gr, DigraphStronglyConnectedComponents(gr).comps);
+  return List(OutNeighbours(gr), Set);
+end);
 
 #############################################################################
 ## 5. Idempotents . . .

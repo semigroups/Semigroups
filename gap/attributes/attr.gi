@@ -449,7 +449,7 @@ end);
 InstallMethod(MultiplicativeZero, "for a free semigroup",
 [IsFreeSemigroup], ReturnFail);
 
-InstallMethod(LengthOfLongestDClassChain, "for a finite semigroup",
+InstallMethod(LengthOfLongestDClassChain, "for a semigroup",
 [IsSemigroup],
 function(S)
   local gr, nbs, po, minimal_dclass;
@@ -656,6 +656,17 @@ function(S)
 
   comps := GreensRRelation(S)!.data.comps;
   return EnumeratorCanonical(S)[comps[1][1]];
+end);
+
+InstallMethod(RepresentativeOfMinimalIdealNC, "for a finite semigroup",
+[IsSemigroup and IsFinite],
+function(S)
+  local gr, pos;
+  gr  := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
+  pos := DigraphSinks(gr)[1];
+
+  Assert(1, Length(DigraphSinks(gr)) = 1);
+  return Representative(DClasses(S)[pos]);
 end);
 
 InstallMethod(InversesOfSemigroupElementNC,
