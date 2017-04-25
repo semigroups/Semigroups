@@ -47,7 +47,7 @@ using libsemigroups::UF;
 
 #ifdef DEBUG
 #include "gap-debug.h"
-#include "libsemigroups/util/timer.h"
+#include "libsemigroups/src/timer.h"
 using libsemigroups::Timer;
 
 Obj SEMIGROUPS_IS_OPTIMIZED(Obj self) {
