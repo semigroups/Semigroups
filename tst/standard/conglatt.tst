@@ -123,15 +123,11 @@ gap> restriction := [Transformation([3, 2, 3]),
 >                    Transformation([2, 2, 2])];;
 gap> latt := LatticeOfRightCongruences(S, restriction);
 [ [  ], [ 1, 3, 4 ], [ 1 ], [ 1 ] ]
-gap> CongruencesOfPoset(latt);
-[ <right semigroup congruence over <transformation semigroup of size 11, 
-     degree 3 with 2 generators> with 0 generating pairs>, 
-  <right semigroup congruence over <transformation semigroup of size 11, 
-     degree 3 with 2 generators> with 1 generating pairs>, 
-  <right semigroup congruence over <transformation semigroup of size 11, 
-     degree 3 with 2 generators> with 1 generating pairs>, 
-  <right semigroup congruence over <transformation semigroup of size 11, 
-     degree 3 with 2 generators> with 1 generating pairs> ]
+gap> congs := CongruencesOfPoset(latt);;
+gap> Length(congs);
+4
+gap> IsDuplicateFreeList(congs);
+true
 gap> restriction := [Transformation([3, 1, 3]), Transformation([3, 2, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
 [ [  ], [ 1 ] ]
