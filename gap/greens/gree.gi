@@ -384,8 +384,8 @@ InstallMethod(HClassReps, "for a Green's class",
 InstallMethod(RegularDClasses, "for a semigroup",
 [IsSemigroup], S -> Filtered(GreensDClasses(S), IsRegularDClass));
 
-InstallMethod(PartialOrderOfDClasses, "for a semigroup",
-[IsSemigroup],
+InstallMethod(PartialOrderOfDClasses, "for a finite semigroup",
+[IsSemigroup and IsFinite],
 function(S)
   local l, r, gr;
 

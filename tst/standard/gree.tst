@@ -1358,6 +1358,20 @@ gap> RClassOfHClass(GreensHClassOfElementNC(S, S.1));
 gap> LClassOfHClass(GreensHClassOfElementNC(S, S.1));
 <Green's L-class: <object>>
 
+# Test PartialOrderOfDClasses for a finite non-enumerable, non-acting semigroup
+gap> S := SemigroupByMultiplicationTable([[1, 1, 1, 1, 1], 
+>                                         [1, 1, 1, 1, 1], 
+>                                         [1, 1, 1, 1, 2], 
+>                                         [1, 1, 2, 1, 1], 
+>                                         [1, 1, 1, 2, 1]]);;
+gap> IsActingSemigroup(S);
+false
+gap> IsEnumerableSemigroupRep(S);
+false
+gap> PartialOrderOfDClasses(S);
+[ [ 1 ], [ 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 2 ] ]
+false
+
 #E# 
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/gree.tst");
