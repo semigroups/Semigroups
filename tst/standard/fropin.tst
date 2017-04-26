@@ -444,7 +444,7 @@ the first argument (a semigroup) must be finite,
 gap> S := RegularBooleanMatMonoid(1);
 <commutative monoid of 1x1 boolean matrices with 1 generator>
 gap> MultiplicationTable(S);
-[ [ 1, 2 ], [ 2, 2 ] ]
+[ [ 1, 1 ], [ 1, 2 ] ]
 
 # NrIdempotents
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;

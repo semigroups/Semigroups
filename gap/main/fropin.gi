@@ -588,11 +588,16 @@ end);
 InstallMethod(MultiplicationTable, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
+  local tab;
   if not IsFinite(S) then
     ErrorNoReturn("Semigroups: MultiplicationTable: usage,\n",
                   "the first argument (a semigroup) must be finite,");
   fi;
-  return EN_SEMI_CAYLEY_TABLE(S);
+  tab := EN_SEMI_CAYLEY_TABLE(S);
+  if tab <> fail then 
+    return tab;
+  fi;
+  TryNextMethod();
 end);
 
 InstallMethod(NrIdempotents, "for an enumerable semigroup rep",

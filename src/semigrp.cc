@@ -624,16 +624,29 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
       gap_list_t next = NEW_PLIST(T_PLIST_CYC, n);
       // this is intentionally not IMMUTABLE
       SET_LEN_PLIST(next, n);
-      for (size_t j = 0; j < n; j++) {
-        SET_ELM_PLIST(
-            next, j + 1, INTOBJ_INT(semi_cpp->fast_product(i, j) + 1));
-      }
       SET_ELM_PLIST(out, i + 1, next);
+      CHANGED_BAG(out);
+    }
+
+    for (size_t i = 0; i < n; i++) {
+      gap_list_t next =
+          ELM_PLIST(out, semi_cpp->position_to_sorted_position(i) + 1);
+      for (size_t j = 0; j < n; j++) {
+        size_t jj = semi_cpp->position_to_sorted_position(j);
+        SET_ELM_PLIST(next,
+                      jj + 1,
+                      INTOBJ_INT(semi_cpp->position_to_sorted_position(
+                                     semi_cpp->fast_product(i, j))
+                                 + 1));
+        CHANGED_BAG(next);
+      }
       CHANGED_BAG(out);
     }
     return out;
   } else {
-    gap_rec_t  fp    = fropin(so, INTOBJ_INT(-1), 0, False);
+    // FIXME this is wrong, the ordering of the rows and columns should be the
+    // same as the order of the elements (i.e. in a sorted list).
+    /*gap_rec_t  fp    = fropin(so, INTOBJ_INT(-1), 0, False);
     gap_list_t words = ElmPRec(fp, RNam_words);
     size_t     n     = LEN_PLIST(words);
     assert(n != 0);
@@ -675,7 +688,8 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
       SET_ELM_PLIST(out, i, next);
       CHANGED_BAG(out);
     }
-    return out;
+    return out;*/
+    return Fail;
   }
 }
 
