@@ -1370,7 +1370,6 @@ gap> IsEnumerableSemigroupRep(S);
 false
 gap> PartialOrderOfDClasses(S);
 [ [ 1 ], [ 1 ], [ 1, 2 ], [ 1, 2 ], [ 1, 2 ] ]
-false
 
 #E# 
 gap> SEMIGROUPS.StopTest();
