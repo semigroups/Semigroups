@@ -594,7 +594,7 @@ function(S)
                   "the first argument (a semigroup) must be finite,");
   fi;
   tab := EN_SEMI_CAYLEY_TABLE(S);
-  if tab <> fail then 
+  if tab <> fail then
     return tab;
   fi;
   TryNextMethod();
