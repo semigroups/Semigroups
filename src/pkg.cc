@@ -677,9 +677,7 @@ static StructInitInfo module = {
     /* checkInit   = */ 0,
     /* preSave     = */ 0,
     /* postSave    = */ 0,
-    /* postRestore = */ 0,
-    /* filename    = */ (char*) "pkg/semigroups/src/pkg.cc",  // NOLINT()
-    /* isGapRootR  = */ true};
+    /* postRestore = */ 0};
 
 extern "C" StructInitInfo* Init__Dynamic(void) {
   return &module;
