@@ -24,10 +24,12 @@ gap> gens := [x ^ 2, x ^ 4];
 gap> cong := SemigroupCongruence(S, gens);
 <semigroup congruence over <free semigroup on the generators [ s1 ]> with 
 1 generating pairs>
-gap> NonTrivialCongruenceClasses(cong);
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `NonTrivialEquivalenceClasses' on 1 argu\
-ments
+
+# The next test is now valid (but would run forever)
+#gap> NonTrivialCongruenceClasses(cong);
+#Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+#Error, no 2nd choice method found for `NonTrivialEquivalenceClasses' on 1 argu\
+#ments
 gap> gens in cong;
 true
 gap> EquivalenceRelationLookup(cong);
@@ -559,19 +561,121 @@ gap> S := Semigroup(
 >     Matrix(IsMaxPlusMatrix, [[-infinity, 0, 0], [0, 1, 0], [1, -1, 0]])]);;
 gap> pairs := [[S.1, S.2]];;
 gap> SemigroupCongruenceByGeneratingPairs(S, pairs);
-<semigroup congruence over <infinite semigroup 3x3 max-plus matrices with 2 
+<semigroup congruence over <semigroup of 3x3 max-plus matrices with 2 
  generators> with 1 generating pairs>
 gap> LeftSemigroupCongruenceByGeneratingPairs(S, pairs);
-<left semigroup congruence over <infinite semigroup 3x3 max-plus matrices 
- with 2 generators> with 1 generating pairs>
+<left semigroup congruence over <semigroup of 3x3 max-plus matrices with 2 
+ generators> with 1 generating pairs>
 gap> RightSemigroupCongruenceByGeneratingPairs(S, pairs);
-<right semigroup congruence over <infinite semigroup 3x3 max-plus matrices 
- with 2 generators> with 1 generating pairs>
+<right semigroup congruence over <semigroup of 3x3 max-plus matrices with 2 
+ generators> with 1 generating pairs>
+
+#T# a left congruence over an fp semigroup
+gap> F := FreeSemigroup(2);;
+gap> S := F / [[F.2 ^ 2, F.2],
+>              [F.1 ^ 3, F.1 ^ 2],
+>              [F.2 * F.1 ^ 2, F.1 ^ 2],
+>              [F.1 * (F.1 * F.2) ^ 2, F.1 ^ 2 * F.2 * F.1],
+>              [(F.1 * F.2) ^ 2 * F.1, F.1],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2]];;
+gap> pair := [S.1 * S.2 * S.1, S.1];;
+gap> cong := LeftSemigroupCongruence(S, pair);;
+gap> class := LeftCongruenceClassOfElement(cong, S.1);;
+gap> Size(class);
+2
+gap> Elements(class) = [S.1, S.1 * S.2 * S.1];
+true
+gap> classes := EquivalenceClasses(cong);;
+gap> Length(classes);
+8
+gap> ForAll(S, x -> Number(classes, c -> x in c) = 1);
+true
+
+#T# a right congruence over an fp semigroup
+gap> F := FreeSemigroup(2);;
+gap> S := F / [[F.2 ^ 2, F.2],
+>              [F.1 ^ 3, F.1 ^ 2],
+>              [F.2 * F.1 ^ 2, F.1 ^ 2],
+>              [F.1 * (F.1 * F.2) ^ 2, F.1 ^ 2 * F.2 * F.1],
+>              [(F.1 * F.2) ^ 2 * F.1, F.1],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2]];;
+gap> pair := [S.1 * S.2 * S.1, S.1];;
+gap> cong := RightSemigroupCongruence(S, pair);;
+gap> class := RightCongruenceClassOfElement(cong, S.1);;
+gap> Elements(class) = [S.1, S.1 * S.2 * S.1];
+true
+gap> cong2 := RightSemigroupCongruence(S, [[S.1, S.2]]);;
+gap> class2 := EquivalenceClassOfElement(cong2, S.1);;
+gap> class < class2;
+false
+
+#T# \in: Bad input for an fp semigroup
+gap> F := FreeSemigroup(2);;
+gap> S := F / [[F.2 ^ 2, F.2],
+>              [F.1 ^ 3, F.1 ^ 2],
+>              [F.2 * F.1 ^ 2, F.1 ^ 2],
+>              [F.1 * (F.1 * F.2) ^ 2, F.1 ^ 2 * F.2 * F.1],
+>              [(F.1 * F.2) ^ 2 * F.1, F.1],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2]];;
+gap> pair := [S.1 * S.2 * S.1, S.1];;
+gap> cong := RightSemigroupCongruence(S, pair);;
+gap> [Transformation([2, 1, 1, 2, 1])] in cong;
+Error, Semigroups: \in (for a congruence): usage,
+the first arg <pair> must be a list of length 2,
+gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
+Error, Semigroups: \in (for a congruence): usage,
+elements of the first arg <pair> must be
+in the range of the second arg <cong>,
+
+#T# comparing congruence classes over fp semigroups
+gap> F := FreeSemigroup(3);;
+gap> gens := GeneratorsOfSemigroup(F);;
+gap> rels := [];;
+gap> x := 0;;
+gap> for x in [1 .. Length(gens) - 1] do
+> Append(rels, List(gens, y -> [gens[x] * y, y * gens[x]]));
+> Add(rels, [gens[x] ^ (x + 1), gens[x]]);
+> Add(rels, [gens[x] * gens[Length(gens)], gens[x]]);
+> Add(rels, [gens[Length(gens)] * gens[x], gens[x]]);
+> od;
+gap> S := F / rels;;
+gap> sgens := GeneratorsOfSemigroup(S);;
+gap> cong := SemigroupCongruenceByGeneratingPairs(S, [[sgens[1], sgens[2]]]);;
+gap> class1 := EquivalenceClassOfElement(cong, sgens[3]);;
+gap> class2 := EquivalenceClassOfElement(cong, sgens[2]);;
+gap> class1 < class2;
+false
+gap> class2 < class1;
+true
+gap> class1 > class2;
+true
+gap> class2 > class1;
+false
+gap> class1 = class2;
+false
+gap> class1 <> class2;
+true
+
+#T# creating a congruence over an fp monoid
+gap> F := FreeMonoid(2);;
+gap> S := F / [[F.2 ^ 2, F.2], [F.1 ^ 3, F.1 ^ 2]];;
+gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
+<semigroup congruence over <fp monoid on the generators [ m1, m2 ]> with 
+1 generating pairs>
+gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
+<left semigroup congruence over <fp monoid on the generators [ m1, m2 ]> with 
+1 generating pairs>
+gap> RightSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
+<right semigroup congruence over <fp monoid on the generators 
+[ m1, m2 ]> with 1 generating pairs>
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(F);
 gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(class);
+gap> Unbind(class1);
+gap> Unbind(class2);
 gap> Unbind(classes);
 gap> Unbind(cong);
 gap> Unbind(cong1);
@@ -586,6 +690,8 @@ gap> Unbind(pair2);
 gap> Unbind(pairs);
 gap> Unbind(pairs1);
 gap> Unbind(pairs2);
+gap> Unbind(rels);
+gap> Unbind(sgens);
 gap> Unbind(u);
 gap> Unbind(v);
 gap> Unbind(x);

@@ -797,6 +797,42 @@ function(S)
 end);
 
 InstallMethod(IsomorphismTransformationSemigroup,
+"for an fp monoid",
+[IsFpMonoid],
+function(S)
+  local cay, deg, gen, i, next, T, iso, inv;
+
+  if not IsFinite(S) then
+    # This is unreachable in tests, since there is not other method that
+    # terminates
+    TryNextMethod();
+  fi;
+
+  cay := RightCayleyGraphSemigroup(S);
+  deg := Size(S);
+  gen := EmptyPlist(Length(cay[1]));
+
+  for i in [1 .. Length(cay[1])] do
+    next := List([1 .. deg], j -> cay[j][i]);
+    gen[i] := Transformation(next);
+  od;
+
+  T := Semigroup(gen);
+  UseIsomorphismRelation(S, T);
+
+  iso := function(x)
+    return EvaluateWord(gen, MinimalFactorization(S, x));
+  end;
+
+  inv := function(x)
+    return EvaluateWord(GeneratorsOfSemigroup(S), Factorization(T, x));
+  end;
+
+  #TODO replace this with SemigroupIsomorphismByImagesOfGenerators
+  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
+end);
+
+InstallMethod(IsomorphismTransformationSemigroup,
 "for a boolean matrix semigroup with generators",
 [IsBooleanMatSemigroup and HasGeneratorsOfSemigroup],
 function(S)

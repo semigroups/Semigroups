@@ -2677,6 +2677,29 @@ gap> Size(T);
 gap> IsMonoid(T);
 true
 
+#T# IsomorphismTransformationSemigroup for an fp monoid
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
+>              [F.2 ^ 3, F.2 ^ 2],
+>              [F.1 ^ 4, F.1],
+>              [F.2 * F.1 ^ 2 * F.2, F.2 ^ 2],
+>              [F.2 * F.1 ^ 3 * F.2, F.2],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2],
+>              [F.2 ^ 2 * F.1 ^ 3, F.2 ^ 2],
+>              [F.2 * (F.2 * F.1) ^ 2, F.2 ^ 2 * F.1 ^ 2]];;
+gap> Size(M);
+40
+gap> iso := IsomorphismTransformationSemigroup(M);;
+gap> T := Range(iso);;
+gap> IsTransformationSemigroup(T);
+true
+gap> IsMonoid(T);
+true
+gap> Size(T);
+40
+gap> Size(M);
+40
+
 #T# semitrans: DigraphOfActionOnPairs, 1
 gap> gr := DigraphOfActionOnPairs(FullTransformationMonoid(1));
 <digraph with 0 vertices, 0 edges>
@@ -2713,13 +2736,21 @@ gap> DigraphEdgeLabels(gr);
   [ 1, 2, 3, 4 ], [ 1, 2, 4 ] ]
 
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(B);
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);
 gap> Unbind(F);
+gap> Unbind(M);
 gap> Unbind(R);
 gap> Unbind(S);
+gap> Unbind(S1);
+gap> Unbind(S2);
 gap> Unbind(T);
+gap> Unbind(coll);
 gap> Unbind(gr);
+gap> Unbind(iso);
+gap> Unbind(iter1);
+gap> Unbind(iter2);
 gap> Unbind(map);
 gap> Unbind(n);
 gap> Unbind(rels);

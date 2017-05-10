@@ -47,7 +47,6 @@
     <#Include Label="IsSemigroupCongruence">
     <#Include Label="IsLeftSemigroupCongruence">
     <#Include Label="IsRightSemigroupCongruence">
-    <#Include Label="IsFreeCongruence">
 
   </Section>
 
@@ -78,6 +77,7 @@
     <#Include Label = "NrCongruenceClasses">
     <#Include Label = "EquivalenceRelationLookup">
     <#Include Label = "EquivalenceRelationCanonicalLookup">
+    <#Include Label = "EquivalenceRelationCanonicalPartition">
     <#Include Label = "OnLeftCongruenceClasses">
     <#Include Label = "OnRightCongruenceClasses">
 

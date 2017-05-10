@@ -47,9 +47,12 @@ gap> IsSimpleSemigroup(S);
 true
 gap> pairs := [
 > [Transformation([1, 1, 1, 1, 1]), Transformation([3, 3, 3, 3, 3])]];;
-gap> SemigroupCongruence(S, pairs);
+gap> cong := SemigroupCongruence(S, pairs);
 <semigroup congruence over <simple transformation semigroup of degree 5 with 
  5 generators> with linked triple (1,1,4)>
+gap> EquivalenceRelationCanonicalPartition(cong);
+[ [ Transformation( [ 1, 1, 1, 1, 1 ] ), Transformation( [ 3, 3, 3, 3, 3 ] ) 
+     ] ]
 
 #T# SemigroupCongruence: 0-simple semigroup
 gap> S := Semigroup(Transformation([1, 2]), Transformation([1, 1]));;
@@ -98,9 +101,19 @@ gap> SemigroupCongruence(S, [S.1, S.2],
 gap> S := Semigroup([Transformation([3, 3, 3]),
 >                    Transformation([3, 4, 3, 3])]);;
 gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
-gap> SemigroupCongruence(S, pairs);
+gap> cong := SemigroupCongruence(S, pairs);
 <semigroup congruence over <transformation semigroup of degree 4 with 2 
  generators> with 1 generating pairs>
+gap> EquivalenceRelationCanonicalPartition(cong);
+[ [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 3, 4, 3, 3 ] ) ] ]
+
+#T# SemigroupCongruence: left congruence
+gap> S := Semigroup([Transformation([3, 3, 3]),
+>                    Transformation([3, 4, 3, 3])]);;
+gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
+gap> cong := LeftSemigroupCongruence(S, pairs);;
+gap> EquivalenceRelationCanonicalPartition(cong);
+[ [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 3, 4, 3, 3 ] ) ] ]
 
 #T# SemigroupCongruence: Giving an RMS cong
 gap> S := Semigroup(MinimalIdeal(FullTransformationMonoid(5)));;
@@ -356,6 +369,22 @@ gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 4, 5, 6, 4, 7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
   4, 4 ]
 
+#T# EquivalenceRelationCanonicalLookup with an fp semigroup
+gap> F := FreeSemigroup(2);;
+gap> S := F / [[F.1 ^ 2, F.1],
+>              [F.1 * F.2 * F.1, F.2 * F.1],
+>              [F.1 * F.2 ^ 2, F.2 * F.1],
+>              [F.2 * F.1 * F.2, F.1 * F.2],
+>              [F.2 ^ 2 * F.1, F.2 * F.1],
+>              [F.2 ^ 3, F.2]];;
+gap> cong1 := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(S, [S.1 * S.2]));;
+gap> cong2 := SemigroupCongruenceByGeneratingPairs(S, [[S.1 * S.2,
+>                                                       S.1 * S.2 * S.1]]);;
+gap> EquivalenceRelationCanonicalLookup(cong1);
+[ 1, 2, 3, 3, 4 ]
+gap> EquivalenceRelationCanonicalLookup(cong2);
+[ 1, 2, 3, 3, 4 ]
+
 # EquivalenceRelationCanonicalLookup with an RMS cong
 gap> S := ReesMatrixSemigroup(SymmetricGroup(3), [[(1, 2), ()], [(), (1, 3)]]);
 <Rees matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )>
@@ -371,21 +400,27 @@ gap> EquivalenceRelationCanonicalLookup(ccong);
 gap> cong = ccong;
 true
 
-# Two infinite congruences (will try next method)
-gap> F := FreeSemigroup(2);;
-gap> cong1 := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(F, [F.1]));;
-gap> cong2 := SemigroupCongruence(F, [F.1, F.1 ^ 2]);;
-gap> cong1 = cong2;
-false
-gap> F := FreeSemigroup(2);;
-gap> cong1 := LeftSemigroupCongruence(F, [F.1, F.2]);;
-gap> cong2 := RightSemigroupCongruence(F, [F.1, F.2]);;
-gap> cong1 = cong2;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `ImagesSet' on 2 arguments
-gap> cong2 = cong1;
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `ImagesSet' on 2 arguments
+# This test used to return false because it fell back on a generic \= method for
+# objects of different families (this is invalid and may give false negatives).
+# We now use a correct method, but this test would run forever if enabled.
+#gap> F := FreeSemigroup(2);;
+#gap> cong1 := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(F, [F.1]));;
+#gap> cong2 := SemigroupCongruence(F, [F.1, F.1 ^ 2]);;
+#gap> cong1 = cong2;
+#false
+
+# This test made sure that an error was thrown when we tried anything with
+# infinite semigroups.  Infinite semigroups are now supported, but this test
+# would run forever if enabled.
+#gap> F := FreeSemigroup(2);;
+#gap> cong1 := LeftSemigroupCongruence(F, [F.1, F.2]);;
+#gap> cong2 := RightSemigroupCongruence(F, [F.1, F.2]);;
+#gap> cong1 = cong2;
+#Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+#Error, no 2nd choice method found for `ImagesSet' on 2 arguments
+#gap> cong2 = cong1;
+#Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+#Error, no 2nd choice method found for `ImagesSet' on 2 arguments
 
 # EquivalenceRelationLookup with an infinite semigroup
 gap> F := FreeSemigroup(2);;
@@ -396,6 +431,38 @@ Error, Semigroups: EquivalenceRelationLookup: usage,
 gap> EquivalenceRelationCanonicalLookup(cong);
 Error, Semigroups: EquivalenceRelationLookup: usage,
 <cong> must be over a finite semigroup,
+gap> cong := LeftSemigroupCongruence(F, [F.1, F.2]);;
+gap> EquivalenceRelationLookup(cong);
+Error, Semigroups: EquivalenceRelationLookup: usage,
+<cong> must be over a finite semigroup,
+gap> cong := RightSemigroupCongruence(F, [F.1, F.2]);;
+gap> EquivalenceRelationLookup(cong);
+Error, Semigroups: EquivalenceRelationLookup: usage,
+<cong> must be over a finite semigroup,
+
+#T# Equality for congruences over different semigroups (false)
+gap> S := Semigroup([Transformation([3, 2, 3]), Transformation([3, 1, 1])]);;
+gap> congS := ReesCongruenceOfSemigroupIdeal(MinimalIdeal(S));;
+gap> T := Semigroup([PartialPerm([1, 2], [3, 2]),
+>                    PartialPerm([1, 3], [3, 1])]);;
+gap> pair := [PartialPerm([], []), PartialPerm([3], [1])];;
+gap> congT := SemigroupCongruence(T, pair);;
+gap> congS = congT;
+false
+
+#T# Equality for different types of congruences over a maybe-infinite semigroup
+gap> F := FreeSemigroup(2);;
+gap> S := F / [[F.1 ^ 2, F.1],
+>              [F.1 * F.2 * F.1, F.2 * F.1],
+>              [F.1 * F.2 ^ 2, F.2 * F.1],
+>              [F.2 * F.1 * F.2, F.1 * F.2],
+>              [F.2 ^ 2 * F.1, F.2 * F.1],
+>              [F.2 ^ 3, F.2]];;
+gap> cong1 := ReesCongruenceOfSemigroupIdeal(SemigroupIdeal(S, [S.1 * S.2]));;
+gap> cong2 := SemigroupCongruenceByGeneratingPairs(S, [[S.1 * S.2,
+>                                                       S.1 * S.2 * S.1]]);;
+gap> cong1 = cong2;
+true
 
 #T# Equality for different types of congruence, both with pairs
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
@@ -409,11 +476,73 @@ gap> GeneratingPairsOfSemigroupCongruence(cong2);;
 gap> cong1 = cong2;
 false
 
+#T# EquivalenceRelation(Canonical)Partition
+gap> S := FullTransformationMonoid(3);;
+gap> I := SemigroupIdeal(S, Transformation([1, 1, 2]));;
+gap> cong := ReesCongruenceOfSemigroupIdeal(I);;
+gap> Size(EquivalenceRelationPartition(cong)[1]);
+21
+gap> EquivalenceRelationCanonicalPartition(cong);
+[ [ Transformation( [ 1, 1, 1 ] ), Transformation( [ 1, 1, 2 ] ), 
+      Transformation( [ 1, 1 ] ), Transformation( [ 1, 2, 1 ] ), 
+      Transformation( [ 1, 2, 2 ] ), Transformation( [ 1, 3, 1 ] ), 
+      Transformation( [ 1, 3, 3 ] ), Transformation( [ 2, 1, 1 ] ), 
+      Transformation( [ 2, 1, 2 ] ), Transformation( [ 2, 2, 1 ] ), 
+      Transformation( [ 2, 2, 2 ] ), Transformation( [ 2, 2 ] ), 
+      Transformation( [ 2, 3, 2 ] ), Transformation( [ 2, 3, 3 ] ), 
+      Transformation( [ 3, 1, 1 ] ), Transformation( [ 3, 1, 3 ] ), 
+      Transformation( [ 3, 2, 2 ] ), Transformation( [ 3, 2, 3 ] ), 
+      Transformation( [ 3, 3, 1 ] ), Transformation( [ 3, 3, 2 ] ), 
+      Transformation( [ 3, 3, 3 ] ) ] ]
+gap> EquivalenceRelationCanonicalPartition(cong)
+>        = Set(EquivalenceRelationPartition(cong), Set);
+true
+
+#T# A left congruence example
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
+>              [F.2 ^ 3, F.2 ^ 2],
+>              [F.1 ^ 4, F.1],
+>              [F.2 * F.1 ^ 2 * F.2, F.2 ^ 2],
+>              [F.2 * F.1 ^ 3 * F.2, F.2],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2],
+>              [F.2 ^ 2 * F.1 ^ 3, F.2 ^ 2],
+>              [F.2 * (F.2 * F.1) ^ 2, F.2 ^ 2 * F.1 ^ 2]];;
+gap> cong1 := LeftSemigroupCongruence(M, [M.1, M.2 ^ 3]);;
+gap> cong2 := LeftSemigroupCongruence(M, [M.2 ^ 2, M.1 ^ 7]);;
+gap> lookup1 := EquivalenceRelationCanonicalLookup(cong1);;
+gap> lookup2 := EquivalenceRelationCanonicalLookup(cong2);;
+gap> Length(lookup1);
+40
+gap> lookup1 = lookup2;
+true
+
+#T# A right congruence example
+gap> F := FreeMonoid(2);;
+gap> M := F / [[F.1 * F.2 ^ 2, F.2 ^ 2],
+>              [F.2 ^ 3, F.2 ^ 2],
+>              [F.1 ^ 4, F.1],
+>              [F.2 * F.1 ^ 2 * F.2, F.2 ^ 2],
+>              [F.2 * F.1 ^ 3 * F.2, F.2],
+>              [(F.2 * F.1) ^ 2 * F.2, F.2],
+>              [F.2 ^ 2 * F.1 ^ 3, F.2 ^ 2],
+>              [F.2 * (F.2 * F.1) ^ 2, F.2 ^ 2 * F.1 ^ 2]];;
+gap> cong1 := RightSemigroupCongruence(M, [M.1, M.2 ^ 3]);;
+gap> cong2 := RightSemigroupCongruence(M, [M.2 ^ 2, M.1 ^ 7]);;
+gap> lookup1 := EquivalenceRelationCanonicalLookup(cong1);;
+gap> lookup2 := EquivalenceRelationCanonicalLookup(cong2);;
+gap> Length(lookup1);
+40
+gap> lookup1 = lookup2;
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(F);
 gap> Unbind(I);
+gap> Unbind(M);
 gap> Unbind(R);
 gap> Unbind(S);
+gap> Unbind(T);
 gap> Unbind(ccong);
 gap> Unbind(class);
 gap> Unbind(class1a);
@@ -423,11 +552,15 @@ gap> Unbind(class2);
 gap> Unbind(cong);
 gap> Unbind(cong1);
 gap> Unbind(cong2);
+gap> Unbind(congS);
+gap> Unbind(congT);
 gap> Unbind(elm);
 gap> Unbind(ideal);
 gap> Unbind(iso);
 gap> Unbind(ker);
 gap> Unbind(lcong);
+gap> Unbind(lookup1);
+gap> Unbind(lookup2);
 gap> Unbind(pair);
 gap> Unbind(pair1);
 gap> Unbind(pair2);

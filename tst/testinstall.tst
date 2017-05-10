@@ -1539,6 +1539,52 @@ gap> R := ReesZeroMatrixSemigroup(FullTransformationMonoid(3), mat);
 gap> IsIdempotentGenerated(R);
 false
 
+#T# Issue #191: part 1 of semicong.tst (congruences on fp semigroups)
+gap> n := 3;;
+gap> f := FreeSemigroup(n);;
+gap> gns := GeneratorsOfSemigroup(f);;
+gap> rel := [];;
+gap> x := 0;;
+gap> for x in [1 .. Length(gns) - 1] do
+>   Append(rel, List(gns, y -> [gns[x] * y, y * gns[x]]));
+>   Add(rel, [gns[x] ^ (x + 1), gns[x]]);
+>   Add(rel, [gns[x] * gns[Length(gns)], gns[x]]);
+>   Add(rel, [gns[Length(gns)] * gns[x], gns[x]]);
+> od;
+gap> s := f / rel;;
+gap> sgns := GeneratorsOfSemigroup(s);;
+gap> c := SemigroupCongruenceByGeneratingPairs(s, [[sgns[1], sgns[2]]]);;
+gap> EquivalenceRelationPartition(c);;
+gap> ##
+gap> ## Check to see if elements are in the partition
+gap> ##     true and false
+gap> ##
+gap> ec := EquivalenceClassOfElement(c, sgns[n]);;
+gap> Size(ec);
+1
+gap> ec := EquivalenceClassOfElement(c, sgns[n - 1]);;
+gap> sgns[n] in ec;
+false
+gap> Size(ec);
+5
+
+#T# Infinite congruence classes: part 2 of semicong.tst (fp semigroups)
+gap> f := FreeSemigroup(2);;
+gap> s := f / [[f.1 ^ 3, f.1], [f.1 * f.2, f.1], [f.2 * f.1, f.1]];;
+gap> gns := GeneratorsOfSemigroup(s);;
+gap> c := SemigroupCongruenceByGeneratingPairs(s, [[gns[1], gns[1] ^ 2],
+>                                                  [gns[2], gns[2] ^ 2]]);;
+gap> ec := EquivalenceClassOfElement(c, gns[2]);;
+gap> gns[2] ^ 20 in ec;
+true
+gap> gns[2] ^ 40 in ec;
+true
+gap> ##
+gap> ## We should never get a full closure
+gap> ##
+gap> HasEquivalenceRelationPartition(c);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
@@ -1559,10 +1605,13 @@ gap> Unbind(U);
 gap> Unbind(V);
 gap> Unbind(c);
 gap> Unbind(cong);
+gap> Unbind(contain);
+gap> Unbind(ec);
 gap> Unbind(f);
 gap> Unbind(file);
 gap> Unbind(g);
 gap> Unbind(gens);
+gap> Unbind(gns);
 gap> Unbind(hom);
 gap> Unbind(i);
 gap> Unbind(id);
@@ -1573,9 +1622,12 @@ gap> Unbind(latt);
 gap> Unbind(map);
 gap> Unbind(mat);
 gap> Unbind(max);
+gap> Unbind(n);
 gap> Unbind(o);
 gap> Unbind(pairs);
+gap> Unbind(rel);
 gap> Unbind(s);
+gap> Unbind(sgns);
 gap> Unbind(t);
 gap> Unbind(tuples);
 gap> Unbind(u);

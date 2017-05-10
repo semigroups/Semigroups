@@ -86,6 +86,8 @@ gap> IsReesCongruence(ccong);
 true
 gap> SemigroupIdealOfReesCongruence(ccong) = I;
 true
+gap> EquivalenceRelationPartition(cong) = [AsList(I)];
+true
 
 #T# ReesCongTest4
 # Test the \in function
@@ -166,6 +168,10 @@ gap> NrCongruenceClasses(ci); NrCongruenceClasses(cj); NrCongruenceClasses(cc);
 16
 17
 15
+gap> EquivalenceRelationPartition(cc) =
+>    [AsList(SemigroupIdeal(S, Transformation([1, 1, 1, 3, 1]),
+>                              Transformation([3, 3, 3, 3, 1])))];
+true
 gap> K := SemigroupIdeal(FullTransformationMonoid(5),
 >                         Transformation([3, 2, 5, 4, 2]));;
 gap> ck := ReesCongruenceOfSemigroupIdeal(K);
@@ -194,6 +200,10 @@ true
 gap> cj := ReesCongruenceOfSemigroupIdeal(J);;
 gap> ci = cj;
 false
+gap> EquivalenceRelationPartition(ci) = [AsList(I)];
+true
+gap> EquivalenceRelationPartition(cj) = [AsList(J)];
+true
 
 #T# IsReesCongruence: False
 gap> S := Semigroup([Transformation([3, 4, 3, 2]),
