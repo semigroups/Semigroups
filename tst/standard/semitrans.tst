@@ -99,6 +99,13 @@ gap> MultiplicativeZero(S);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
 gap> IsSynchronizingSemigroup(S);
 true
+gap> IsSynchronizingSemigroup(S, 9);
+true
+gap> IsSynchronizingSemigroup(S, 10);
+true
+gap> S := Semigroup(S);;
+gap> IsSynchronizingSemigroup(S, 9);
+true
 gap> S := Semigroup(Transformation([1, 2, 2, 3]));
 <commutative transformation semigroup of degree 4 with 1 generator>
 gap> MultiplicativeZero(S);
@@ -169,6 +176,10 @@ gap> DigraphOfActionOnPoints(S);
 gap> OutNeighbours(last);
 [ [ 2, 3, 4 ], [ 3, 6, 8 ], [ 1, 2, 7 ], [ 2, 4, 7 ], [ 5, 6, 7 ], [ 1, 6 ], 
   [ 1, 6, 7 ], [ 1, 5 ] ]
+gap> DigraphOfActionOnPoints(FullTransformationMonoid(1));
+<digraph with 0 vertices, 0 edges>
+gap> DigraphOfActionOnPoints(FullTransformationMonoid(2), 1);
+fail
 
 #T# SemiTransTest7
 # SEMIGROUPS.SmallestElementRClass
@@ -2734,6 +2745,13 @@ gap> DigraphVertexLabels(gr);
 gap> DigraphEdgeLabels(gr);
 [ [  ], [  ], [  ], [  ], [ 1, 2 ], [ 1, 2, 3 ], [ 1, 2, 3, 4 ], [ 1, 2, 3 ], 
   [ 1, 2, 3, 4 ], [ 1, 2, 4 ] ]
+gap> DigraphOfActionOnPairs(FullTransformationMonoid(3), 2);
+fail
+gap> S := FullTransformationMonoid(3);;
+gap> DigraphOfActionOnPairs(S);
+<digraph with 6 vertices, 9 edges>
+gap> DigraphOfActionOnPairs(S, 3);
+<digraph with 6 vertices, 9 edges>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
