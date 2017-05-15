@@ -53,10 +53,10 @@ true
 gap> [x, z] in cong;
 false
 gap> [x, y, z] in cong;
-Error, Semigroups: \in (for a congruence): usage,
+Error, Semigroups: \in (for a relation): usage,
 the first arg <pair> must be a list of length 2,
 gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
-Error, Semigroups: \in (for a congruence): usage,
+Error, Semigroups: \in (for a relation): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
 

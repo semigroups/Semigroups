@@ -36,10 +36,10 @@ Error, Semigroups: RightSemigroupCongruenceByGeneratingPairs: usage,
 <pairs> must all be lists of elements of <M>,
 gap> cong := SemigroupCongruenceByGeneratingPairs(M, [[M.1, M.2]]);;
 gap> [M.1, M.2, M.2 ^ 2] in cong;
-Error, Semigroups: \in (for a congruence): usage,
+Error, Semigroups: \in (for a relation): usage,
 the first arg <pair> must be a list of length 2,
 gap> [F.1, F.2] in cong;
-Error, Semigroups: \in (for a congruence): usage,
+Error, Semigroups: \in (for a relation): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
 gap> EquivalenceClassOfElement(cong, Transformation([1, 2, 1]));
