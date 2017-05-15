@@ -118,3 +118,8 @@ DeclareOperation("LeftCongruenceClassOfElement", [IsLeftSemigroupCongruence,
                                                   IsMultiplicativeElement]);
 DeclareOperation("RightCongruenceClassOfElement", [IsRightSemigroupCongruence,
                                                    IsMultiplicativeElement]);
+
+# No-checks version of the "\in" operation
+DeclareOperation("CongruenceTestMembershipNC", [IsEquivalenceRelation,
+                                                IsMultiplicativeElement,
+                                                IsMultiplicativeElement]);

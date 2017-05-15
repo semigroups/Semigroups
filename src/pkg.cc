@@ -463,7 +463,7 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_ENTRY("semigrp.cc", EN_SEMI_NEXT_ITERATOR_SORTED, 1, "iter"),
 
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_NR_CLASSES, 1, "cong"),
-    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_IN, 2, "cong, pair"),
+    GVAR_ENTRY("congpairs.cc", CONG_PAIRS_IN, 3, "cong, elm1, elm2"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_LESS_THAN, 3, "cong, rep1, rep2"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_LOOKUP_PART, 1, "cong"),
     GVAR_ENTRY("congpairs.cc", CONG_PAIRS_ELM_COSET_ID, 2, "cong, elm"),

@@ -95,23 +95,11 @@ function(cong1, cong2)
   return SEMIGROUPS.SimpleCongFromRMSCong(Range(cong1), cong1!.iso, meet);
 end);
 
-InstallMethod(\in,
-"for a multiplicative element collection and a (0-)simple semigroup congruence",
-[IsMultiplicativeElementCollection, IsSimpleSemigroupCongruence],
-function(pair, cong)
-  local S;
-    # Input checks
-    S := Range(cong);
-    if Size(pair) <> 2 then
-      ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                    "the first arg <pair> must be a list of length 2,");
-    fi;
-    if not (pair[1] in S and pair[2] in S) then
-      ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                    "elements of the first arg <pair> must be\n",
-                    "in the range of the second arg <cong>,");
-    fi;
-  return [pair[1] ^ cong!.iso, pair[2] ^ cong!.iso] in cong!.rmscong;
+InstallMethod(CongruenceTestMembershipNC,
+"for (0-)simple semigroup congruence and two multiplicative elements",
+[IsSimpleSemigroupCongruence, IsMultiplicativeElement, IsMultiplicativeElement],
+function(cong, elm1, elm2)
+  return [elm1 ^ cong!.iso, elm2 ^ cong!.iso] in cong!.rmscong;
 end);
 
 InstallMethod(ImagesElm,
