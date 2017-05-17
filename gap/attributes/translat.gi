@@ -992,6 +992,19 @@ function(S)
   return R;
 end);
 
+# For rectangular bands, don't calculate AsList for TranslationalHull 
+# Just get generators
+InstallMethod(TranslationalHull, "for a rectangular band",
+[IsSemigroup and IsFinite and IsRectangularBand],
+function(S)
+  local H;
+  
+  H := TranslationalHullSemigroup(S);
+  GeneratorsOfSemigroup(H);
+  
+  return H;
+end);
+
 # Every transformation on the relevant index set corresponds to a translation.
 # The R classes of an I x J rectangular band correspond to (i, J) for i in I.
 # Dually for L classes.
@@ -1070,7 +1083,7 @@ function(T)
 end);      
 
 # Generators of translational hull are the direct product of 
-# generators of left/right translations semigroup
+# generators of left/right translations semigroup for rectangular bands
 InstallMethod(GeneratorsOfSemigroup, "for the translational hull of a rectangular band", 
 [IsTranslationalHull],
 function(H)
