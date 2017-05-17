@@ -53,6 +53,10 @@ gap> H := TranslationalHull(S);
  with 3 generators>>
 gap> Size(L);
 27
+gap> Size(R);
+27
+gap> Size(H);
+729
 gap> GeneratorsOfSemigroup(L);
 [ <left translation on <simple transformation semigroup of size 9, degree 7 
      with 3 generators>>, 
@@ -284,6 +288,9 @@ gap> H = Semigroup(H);
 true
 gap> Size(H);
 13
+gap> I := InnerTranslationalHull(S);;
+gap> IsWholeFamily(I);
+false
 
 #T# OneOp for translations semigroups elements and translational hull elements
 gap> G := SmallGroup(6, 1);;
@@ -325,14 +332,101 @@ gap> for h in TranslationalHull(S) do
 > od;
 > od;
 
+#T# IsWholeFamily for translations semigroups
+gap> S := Semigroup([Transformation([1,1,2,4]), Transformation([3,1,3])]);;
+gap> L := LeftTranslations(S);;
+gap> R := RightTranslations(S);;
+gap> Ll := ShallowCopy(AsList(L));;
+gap> Rl := ShallowCopy(AsList(R));;
+gap> Sort(Ll);
+gap> Sort(Rl);
+gap> l := Ll[1];;
+gap> r := Rl[1];;
+gap> IsWholeFamily(Semigroup(l));
+false
+gap> IsWholeFamily(Semigroup(r));
+false
+
+#T# Error Testing - Left Translations
+gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);;
+gap> T := Semigroup([Transformation([5,2,3,2,1]), Transformation([2,3,1,1,2])]);;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> R := RightTranslationsSemigroup(S);;
+gap> f := MappingByFunction(S, S, x -> S.1);;
+gap> g := MappingByFunction(S, T, x -> T.1);;
+gap> LeftTranslation(L, f);
+Error, Semigroups: LeftTranslation: 
+the mapping given must define a left translation,
+gap> LeftTranslation(R, f);
+Error, Semigroups: LeftTranslation: 
+the first argument must be a semigroup of left translations,
+gap> LeftTranslation(L, (1,4)(2,3));
+Error, Semigroups: LeftTranslation: 
+the first argument should be a left translations semigroup, and the second arg\
+ument should be a mapping on the underlying semigroup of the first argument, o\
+r a transformation on the indices of its elements,
+gap> LeftTranslation(L, g);
+Error, Semigroups: LeftTranslation (from Mapping): 
+the domain and range of the second argument must be the underlying semigroup o\
+f the first,
+
+#T# Error Testing - Right Translations
+gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);;
+gap> T := Semigroup([Transformation([5,2,3,2,1]), Transformation([2,3,1,1,2])]);;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> R := RightTranslationsSemigroup(S);;
+gap> f := MappingByFunction(S, S, x -> S.1);;
+gap> g := MappingByFunction(S, T, x -> T.1);;
+gap> RightTranslation(R, f);
+Error, Semigroups: RightTranslation: 
+the mapping given must define a right translation,
+gap> RightTranslation(L, f);
+Error, Semigroups: RightTranslation: 
+the first argument must be a semigroup of right translations,
+gap> RightTranslation(R, (1,4)(2,3));
+Error, Semigroups: RightTranslation: 
+the first argument should be a right translations semigroup, and the second ar\
+gument should be a mapping on the underlying semigroup of the first argument, \
+or a transformation on the indices of its elements,
+gap> RightTranslation(R, g);
+Error, Semigroups: RightTranslation (from Mapping): 
+the domain and range of the second argument must be the underlying semigroup o\
+f the first,
+
+#T# Error Testing - Translational Hull Elements
+gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> R := RightTranslationsSemigroup(S);;
+gap> H := TranslationalHull(S);;
+gap> l := Representative(L);;
+gap> r := Representative(R);;
+gap> TranslationalHullElement(L, l, r);
+Error, Semigroups: TranslationalHullElement: 
+the first argument must be a translational hull,
+gap> TranslationalHullElement(H, r, l);
+Error, Semigroups: TranslationalHullElement: 
+the second argument must be a left translation and the third argument must be \
+a right translation,
+gap> l := LeftTranslation(L, MappingByFunction(S, S, x -> S.1 * x));;
+gap> r := RightTranslation(R, MappingByFunction(S, S, x -> x * S.2));;
+gap> TranslationalHullElement(H, l, r);
+Error, Semigroups: TranslationalHullElement: 
+the translations given must form a linked pair,
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(a);
 gap> Unbind(b);
+gap> Unbind(f);
 gap> Unbind(G);
+gap> Unbind(g);
 gap> Unbind(L);
+gap> Unbind(l);
 gap> Unbind(H);
+gap> Unbind(I);
+gap> Unbind(h);
 gap> Unbind(mat);
 gap> Unbind(R);
+gap> Unbind(r);
 gap> Unbind(S);
 gap> Unbind(SEMIGROUPS.bruteforcetranshull);
 
