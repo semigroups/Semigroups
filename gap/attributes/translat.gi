@@ -7,6 +7,7 @@
 ##
 #############################################################################
 ##
+#TODO need to fix AsList vs AsListCanonical issues
 #TODO Translations semigroups can currently forget their generators
 #############################################################################
 ## This file contains methods for dealing with left and right translation
@@ -43,10 +44,15 @@
 # 1. Internal Functions
 #############################################################################
 
+# Hash translations by their underlying transformations
+SEMIGROUPS.HashFunctionForTranslations := function(x, data)
+  return ORB_HashFunctionForTransformations(x![1], data);
+end;
+
 # Hash linked pairs as sum of underlying transformation hashes
 SEMIGROUPS.HashFunctionForTranslationalHullElements := function(x, data)
-    return (ORB_HashFunctionForTransformations(x![1]![1], data)
-      + ORB_HashFunctionForTransformations(x![2]![1], data)) mod data + 1;
+    return (SEMIGROUPS.HashFunctionForTranslations(x![1], data)
+      + SEMIGROUPS.HashFunctionForTranslations(x![2], data)) mod data + 1;
 end;
 
 # Choose how to calculate the elements of a translations semigroup
@@ -1355,6 +1361,13 @@ InstallMethod(UnderlyingSemigroup, "for a subsemigroup of the translational hull
 function(H)
     return UnderlyingSemigroup(TranslationalHullOfFamily(FamilyObj(
       Enumerator(H)[1])));
+end);
+
+InstallMethod(ChooseHashFunction, "for a left or right translation and int",
+[IsTranslationsSemigroupElement, IsInt],
+function(x, hashlen)
+  return rec(func := SEMIGROUPS.HashFunctionForTranslations,
+             data := hashlen);
 end);
 
 InstallMethod(ChooseHashFunction, "for a translational hull element and int",

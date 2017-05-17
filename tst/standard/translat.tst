@@ -369,6 +369,12 @@ gap> LeftTranslation(L, g);
 Error, Semigroups: LeftTranslation (from Mapping): 
 the domain and range of the second argument must be the underlying semigroup o\
 f the first,
+gap> x := [2..Size(S)+1];;
+gap> Add(x, 1);;
+gap> LeftTranslation(L, Transformation(x));
+Error, Semigroups: LeftTranslation (from transformation): 
+the second argument must act on the indices of the underlying semigroup of the\
+ first argument,
 
 #T# Error Testing - Right Translations
 gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);;
@@ -392,6 +398,12 @@ gap> RightTranslation(R, g);
 Error, Semigroups: RightTranslation (from Mapping): 
 the domain and range of the second argument must be the underlying semigroup o\
 f the first,
+gap> x := [2..Size(S)+1];;
+gap> Add(x, 1);;
+gap> RightTranslation(R, Transformation(x));
+Error, Semigroups: RightTranslation (from transformation): 
+the second argument must act on the indices of the underlying semigroup of the\
+ first argument,
 
 #T# Error Testing - Translational Hull Elements
 gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);;
@@ -413,6 +425,29 @@ gap> TranslationalHullElement(H, l, r);
 Error, Semigroups: TranslationalHullElement: 
 the translations given must form a linked pair,
 
+#T# Hashing translations
+gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);; 
+gap> L := LeftTranslations(S);;
+gap> R := RightTranslations(S);;
+gap> l := Representative(L);;
+gap> r := Representative(R);;
+gap> Lht := HTCreate(l);;
+gap> Rht := HTCreate(r);;
+gap> for l in L do
+> HTAdd(Lht, l, true);
+> od;
+gap> for r in R do
+> HTAdd(Rht, r, true);
+> od;
+
+#T# Hashing translational hull elements
+gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);; 
+gap> H := TranslationalHull(S);;
+gap> ht := HTCreate(Representative(H));;
+gap> for h in H do
+> HTAdd(ht, h, true);
+> od;
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(a);
 gap> Unbind(b);
@@ -429,6 +464,7 @@ gap> Unbind(R);
 gap> Unbind(r);
 gap> Unbind(S);
 gap> Unbind(SEMIGROUPS.bruteforcetranshull);
+gap> Unbind(x);
 
 #E#
 gap> STOP_TEST("Semigroups package: standard/translat.tst");
