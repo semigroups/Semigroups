@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  extreme/maximal.tst
-#Y  Copyright (C) 2013-16                                Wilfred A. Wilson
+#Y  Copyright (C) 2013-16                                   Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

@@ -2,7 +2,7 @@
 ##
 #W  standard/setup.tst
 #Y  Copyright (C) 2016-17                                James D. Mitchell
-##                                                       Wilfred A. Wilson
+##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

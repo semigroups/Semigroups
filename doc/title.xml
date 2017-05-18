@@ -16,7 +16,7 @@
   <Author>Ben Steinberg</Author>
   <Author>Jhevon Smith</Author>
   <Author>Michael Torpey</Author>
-  <Author>Wilf Wilson</Author>
+  <Author>Wilf A. Wilson</Author>
 
   <Copyright>&copyright; &COPYRIGHTYEARS; by J. D. Mitchell et al.<P/>
     &Semigroups; is free software; you can redistribute it and/or modify it
@@ -87,7 +87,7 @@
     Michael Torpey contributed the part of the package relating to congruences.
     <P/>
 
-    Wilf Wilson contributed to the part of the package relating maximal
+    Wilf A. Wilson contributed to the part of the package relating maximal
     subsemigroups and smaller degree partial permutation representations of
     inverse semigroups. We are also grateful to C. Donoven and R. Hancock for
     their contribution to the development of the algorithms for maximal

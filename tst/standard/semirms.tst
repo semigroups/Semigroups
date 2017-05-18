@@ -2,8 +2,8 @@
 ##
 #W  standard/semirms.tst
 #Y  Copyright (C) 2015-16                                James D. Mitchell
-##                                                       Wilfred A. Wilson
-##                                                       Finn Smith
+##                                                          Wilf A. Wilson
+##                                                              Finn Smith
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

@@ -20,7 +20,7 @@
     <Item><Ref Attr = "SmallerDegreePartialPermRepresentation"/></Item>
     <Item><Ref Attr = "VagnerPrestonRepresentation"/></Item>
   </List>
-  were written by Wilf Wilson and Robert Hancock. <P/>
+  were written by Wilf A. Wilson and Robert Hancock. <P/>
 
   The function <Ref Oper = "CharacterTableOfInverseSemigroup"/> was written by
   Jhevon Smith and Ben Steinberg.

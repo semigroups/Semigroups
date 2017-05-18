@@ -1,8 +1,7 @@
 #############################################################################
 ##
 #W  standard/gracreg.tst
-#Y  Copyright (C) 2015                                   Wilfred A. Wilson
-##                                                       
+#Y  Copyright (C) 2015                                      Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

@@ -2,7 +2,7 @@
 ##
 #W  maximal.gi
 #Y  Copyright (C) 2013-16                                James D. Mitchell
-##                                                       Wilfred A. Wilson
+##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##

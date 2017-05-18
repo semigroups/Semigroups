@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  extreme/attrinv.tst
-#Y  Copyright (C) 2012-15                                  Wilfred Wilson
+#Y  Copyright (C) 2012-15                                   Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 #

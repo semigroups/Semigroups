@@ -167,7 +167,7 @@ Persons := [
 
   rec(
     LastName      := "Wilson",
-    FirstNames    := "W.",
+    FirstNames    := "W. A.",
     IsAuthor      := true,
     IsMaintainer  := false,
     Email         := "waw7@st-and.ac.uk",

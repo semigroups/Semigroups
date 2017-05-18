@@ -33,10 +33,10 @@ The new features in this release are contributed by [Nick Ham](https://n-ham.git
 
 * [Issue 160](https://github.com/gap-packages/Semigroups/issues/160) `IrreundantGeneratingSubset` behaved incorrectly when given a
 semigroup whose generating set consisted of a single repeated
-element. [[Wilf Wilson](http://wilf.me)]
+element. [[Wilf A. Wilson](http://wilf.me)]
 * [Issue 164](https://github.com/gap-packages/Semigroups/issues/164) `MatrixEntries` 
 gave an error for Rees 0-matrix semigroups whose
-matrices contain `0`. [[Wilf Wilson](http://wilf.me)]
+matrices contain `0`. [[Wilf A. Wilson](http://wilf.me)]
 * Some tests failed when GAP was compiled in 32-bit mode. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
 
 ### Version 2.7.6 (released 19/04/2016)
@@ -108,11 +108,11 @@ This release includes some bugfixes, some minor new features, and one major new 
 now have an optional first argument to specify the category of the result;
 the functions `LeftZeroSemigroup` and `RightZeroSemigroup` are introduced
 in a similar sense.
-[[Wilf Wilson](http://wilf.me)]
+[[Wilf A. Wilson](http://wilf.me)]
 
 * The new property `IsSemigroupWithAdjoinedZero` and attribute
 `UnderlyingSemigroupOfSemigroupWithAdjoinedZero` are introduced.
-[[Wilf Wilson](http://wilf.me)]
+[[Wilf A. Wilson](http://wilf.me)]
 
 * The operations `MotzkinMonoid` and `PartialJonesMonoid` were introduced.
  [[James Mitchell](http://tinyurl.com/jdmitchell)]
@@ -135,12 +135,12 @@ This is a minor release including several bugfixes, lots of minor improvements i
 
 * Semigroups of partial permutations now have a polynomial time
 (quadratic in the degree) algorithm for computing the minimal ideal
-[[Wilf Wilson](http://wilf.me)]
+[[Wilf A. Wilson](http://wilf.me)]
 
 * A more efficient `IsInverseSemigroup` method for Rees 0-matrix semigroups
 is introduced, along with new methods for `Idempotents` and
 `NrIdempotents` for inverse Rees 0-matrix semigroups
-[[Wilf Wilson](http://wilf.me)]
+[[Wilf A. Wilson](http://wilf.me)]
 
 * The documentation for congruences has been improved and new tests have
 been added. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
@@ -175,18 +175,18 @@ improvements in performance, and some new features.
 Wilson](http://wilf.me)]
 
 * Transformation semigroups now have a polynomial time (cubic in the
-degree) algorithm for computing the minimal ideal [[Wilf Wilson](http://wilf.me)]
+degree) algorithm for computing the minimal ideal [[Wilf A. Wilson](http://wilf.me)]
 
 * The functions `RectangularBand`, `ZeroSemigroup`, and
-`MonogenicSemigroup` are introduced. [[Wilf Wilson](http://wilf.me)]
+`MonogenicSemigroup` are introduced. [[Wilf A. Wilson](http://wilf.me)]
 
 * A method for choosing a random element of a semigroup has been
 introduced in the case that the semigroup knows its set of
 elements. This new method choose elements at random with uniform
-probability. [[Wilf Wilson](http://wilf.me)]
+probability. [[Wilf A. Wilson](http://wilf.me)]
 
 * The documentation and tests for congruences has been improved.
-[[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/) and [Wilf Wilson](http://wilf.me)]
+[[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/) and [Wilf A. Wilson](http://wilf.me)]
 
 * The functionality for Rees congruences has been rewritten and
 improved. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
@@ -563,7 +563,7 @@ permutations are:
 for changing the representation of an inverse semigroup of partial 
 permutations. The changes in this release were the result of the 
 University of St Andrews Research for Undergraduates Summer School 
-in 2012, and were largely written by [Wilf Wilson](http://wilf.me) and Robert Hancock.
+in 2012, and were largely written by [Wilf A. Wilson](http://wilf.me) and Robert Hancock.
 
 Free inverse semigroups, and their elements, are also introduced,
 this part of the package was written by [Julius
@@ -594,7 +594,7 @@ A minor release fixing several bugs relating to inverse semigroups
 of partial permutations pointed out by partcipants at the
 University of St Andrews Research for Undergraduates Summer School
 in July 2012.  Most notably by Demi Allen, Casey Donoven, Rhiannon
-Dougall, Robert Hancock, and [Wilf Wilson](http://wilf.me). More specifically,
+Dougall, Robert Hancock, and [Wilf A. Wilson](http://wilf.me). More specifically,
 SymmetricInverseSemigroup(n) returned an incorrect answer when n=1
 or n=2, \in for the empty mapping and an inverse semigroup of
 partial perms sometimes incorrectly returned false, some harmless

@@ -2,8 +2,8 @@
 ##
 #W  extreme/ideals.tst
 #Y  Copyright (C) 2013-15                                James D. Mitchell
-##                                                       Julius Jonusas 
-##                                                       Wilfred A. Wilson
+##                                                          Julius Jonusas
+##                                                          Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
