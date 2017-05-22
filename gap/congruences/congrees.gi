@@ -122,24 +122,13 @@ function(cong1, cong2)
   return ForAll(GeneratorsOfSemigroupIdeal(i2), gen -> gen in i1);
 end);
 
-InstallMethod(\in,
-"for a multiplicative element collection and a Rees congruence",
-[IsMultiplicativeElementCollection, IsReesCongruence],
-function(pair, cong)
-  local S, I;
-  # Check for validity
-  if Size(pair) <> 2 then
-    ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "the first arg <pair> must be a list of length 2,");
-  fi;
-  S := Range(cong);
-  if not ForAll(pair, x -> x in S) then
-    ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "the elements of 1st arg <pair> ",
-                  "must be in the range of 2nd arg <cong>,");
-  fi;
+InstallMethod(CongruenceTestMembershipNC,
+"for Rees congruence and two multiplicative elements",
+[IsReesCongruence, IsMultiplicativeElement, IsMultiplicativeElement],
+function(cong, elm1, elm2)
+  local I;
   I := SemigroupIdealOfReesCongruence(cong);
-  return (pair[1] = pair[2]) or (pair[1] in I and pair[2] in I);
+  return (elm1 = elm2) or (elm1 in I and elm2 in I);
 end);
 
 InstallMethod(ImagesElm,

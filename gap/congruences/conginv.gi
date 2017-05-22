@@ -240,26 +240,16 @@ function(cong)
   return table;
 end);
 
-InstallMethod(\in,
-"for dense list and inverse semigroup congruence",
-[IsDenseList, IsInverseSemigroupCongruenceByKernelTrace],
-function(pair, cong)
-  local S;
-  if Size(pair) <> 2 then
-    ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "the first arg <pair> must be a list of length 2,");
-  fi;
-  S := Range(cong);
-  if not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "the entries of the first arg <pair> must\n",
-                  "belong to the semigroup of <cong>,");
-  fi;
+InstallMethod(CongruenceTestMembershipNC,
+"for inverse semigroup congruence and two multiplicative elements",
+[IsInverseSemigroupCongruenceByKernelTrace,
+ IsMultiplicativeElement, IsMultiplicativeElement],
+function(cong, elm1, elm2)
   # Is (a^-1 a, b^-1 b) in the trace?
-  if pair[1] ^ -1 * pair[1] in
-      First(cong!.traceBlocks, c -> pair[2] ^ -1 * pair[2] in c) then
+  if elm1 ^ -1 * elm1 in
+      First(cong!.traceBlocks, c -> elm2 ^ -1 * elm2 in c) then
     # Is ab^-1 in the kernel?
-    if pair[1] * pair[2] ^ -1 in cong!.kernel then
+    if elm1 * elm2 ^ -1 in cong!.kernel then
       return true;
     fi;
   fi;

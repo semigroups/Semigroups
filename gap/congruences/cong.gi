@@ -21,6 +21,44 @@
 ## cong.gd contains declarations for many of these.
 ##
 
+InstallMethod(\in,
+"for dense list and left semigroup congruence",
+[IsDenseList, IsLeftSemigroupCongruence],
+function(pair, cong)
+  local S;
+  S := Range(cong);
+  if Size(pair) <> 2 then
+    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
+                  "the first arg <pair> must be a list of length 2,");
+  elif not (pair[1] in S and pair[2] in S) then
+    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
+                  "elements of the first arg <pair> must be\n",
+                  "in the range of the second arg <cong>,");
+  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
+    return true;
+  fi;
+  return CongruenceTestMembershipNC(cong, pair[1], pair[2]);
+end);
+
+InstallMethod(\in,
+"for dense list and right semigroup congruence",
+[IsDenseList, IsRightSemigroupCongruence],
+function(pair, cong)
+  local S;
+  S := Range(cong);
+  if Size(pair) <> 2 then
+    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
+                  "the first arg <pair> must be a list of length 2,");
+  elif not (pair[1] in S and pair[2] in S) then
+    ErrorNoReturn("Semigroups: \\in (for a relation): usage,\n",
+                  "elements of the first arg <pair> must be\n",
+                  "in the range of the second arg <cong>,");
+  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
+    return true;
+  fi;
+  return CongruenceTestMembershipNC(cong, pair[1], pair[2]);
+end);
+
 BindGlobal("_GenericCongEquality",
 function(cong1, cong2)
   local S;

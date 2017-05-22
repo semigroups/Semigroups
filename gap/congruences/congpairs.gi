@@ -525,44 +525,22 @@ function(cong1, cong2)
   return ForAll(cong2!.genpairs, pair -> pair in cong1);
 end);
 
-InstallMethod(\in,
-"for dense list and enumerable semigroup congruence",
-[IsDenseList, IsEnumerableSemigroupCongruence],
-function(pair, cong)
-  local S;
-  S := Range(cong);
-  if Size(pair) <> 2 then
-    ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                  "the first arg <pair> must be a list of length 2,");
-  elif not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                  "elements of the first arg <pair> must be\n",
-                  "in the range of the second arg <cong>,");
-  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
-    return true;
-  fi;
-  return CONG_PAIRS_IN(cong, pair);
+InstallMethod(CongruenceTestMembershipNC,
+"for enumerable semigroup congruence and two elements",
+[IsEnumerableSemigroupCongruence,
+ IsMultiplicativeElement, IsMultiplicativeElement],
+function(cong, elm1, elm2)
+  return CONG_PAIRS_IN(cong, elm1, elm2);
 end);
 
-InstallMethod(\in,
-"for dense list and fp semigroup congruence",
-[IsDenseList, IsFpSemigroupCongruence],
-function(pair, cong)
-  local S;
-  S := Range(cong);
-  if Size(pair) <> 2 then
-    ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                  "the first arg <pair> must be a list of length 2,");
-  elif not (pair[1] in S and pair[2] in S) then
-    ErrorNoReturn("Semigroups: \\in (for a congruence): usage,\n",
-                  "elements of the first arg <pair> must be\n",
-                  "in the range of the second arg <cong>,");
-  elif CanEasilyCompareElements(pair[1]) and pair[1] = pair[2] then
-    return true;
-  fi;
-  pair := [SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(pair[1])),
-           SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(pair[2]))];
-  return CONG_PAIRS_IN(cong, pair);
+InstallMethod(CongruenceTestMembershipNC,
+"for fp semigroup congruence and two elements",
+[IsFpSemigroupCongruence, IsMultiplicativeElement, IsMultiplicativeElement],
+function(cong, elm1, elm2)
+  local word1, word2;
+  word1 := SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(elm1));
+  word2 := SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(elm2));
+  return CONG_PAIRS_IN(cong, word1, word2);
 end);
 
 InstallMethod(\=,

@@ -116,11 +116,16 @@ gap> uni := UniversalSemigroupCongruence(S);;
 gap> [Transformation([1, 4, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
 true
 gap> [Transformation([1, 3, 2, 4]), Transformation([1, 4, 4, 4])] in uni;
-false
+Error, Semigroups: \in (for a relation): usage,
+elements of the first arg <pair> must be
+in the range of the second arg <cong>,
 gap> [3, 4] in uni;
-false
+Error, Semigroups: \in (for a relation): usage,
+elements of the first arg <pair> must be
+in the range of the second arg <cong>,
 gap> [Transformation([1, 4, 2, 4])] in uni;
-false
+Error, Semigroups: \in (for a relation): usage,
+the first arg <pair> must be a list of length 2,
 
 #T# Classes
 gap> S := Semigroup([PartialPerm([1, 2], [3, 1]),

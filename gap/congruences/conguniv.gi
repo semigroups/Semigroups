@@ -113,13 +113,12 @@ function(pcong, ucong)
   return Range(ucong) = Range(pcong) and NrEquivalenceClasses(pcong) = 1;
 end);
 
-InstallMethod(\in,
-"for dense list and universal semigroup congruence",
-[IsDenseList, IsUniversalSemigroupCongruence],
-function(pair, cong)
-  return(Size(pair) = 2
-          and pair[1] in Range(cong)
-          and pair[2] in Range(cong));
+InstallMethod(CongruenceTestMembershipNC,
+"for universal semigroup congruence and two multiplicative elements",
+[IsUniversalSemigroupCongruence,
+ IsMultiplicativeElement, IsMultiplicativeElement],
+function(pair, elm1, elm2)
+  return true;
 end);
 
 InstallMethod(IsSubrelation,

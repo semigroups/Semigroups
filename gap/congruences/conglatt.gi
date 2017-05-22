@@ -59,7 +59,8 @@ end);
 
 SEMIGROUPS.PrincipalXCongruencePosetNC := function(S, restriction, cong_func)
   local report, pairs, total, congs, nrcongs, children, parents, last_collected,
-        nr, pair, badcong, newchildren, newparents, newcong, i, c, p, po, poset;
+        nr, pair, badcong, newchildren, newparents, newcong, i, pair1, c, p, po,
+        poset;
 
   # Suppress reporting
   report := SEMIGROUPS.OptionsRec(S).report;
@@ -83,15 +84,16 @@ SEMIGROUPS.PrincipalXCongruencePosetNC := function(S, restriction, cong_func)
     newparents := [];  # Parents of newcong
     newcong := cong_func(S, pair);
     for i in [1 .. Length(congs)] do
-      if CONG_PAIRS_IN(congs[i], pair) then
-        if CONG_PAIRS_IN(newcong, congs[i]!.genpairs[1]) then
+      pair1 := congs[i]!.genpairs[1];
+      if CongruenceTestMembershipNC(congs[i], pair[1], pair[2]) then
+        if CongruenceTestMembershipNC(newcong, pair1[1], pair1[2]) then
           # This is not a new cong - drop it!
           badcong := true;
           break;
         else
           Add(newparents, i);
         fi;
-      elif CONG_PAIRS_IN(newcong, congs[i]!.genpairs[1]) then
+      elif CongruenceTestMembershipNC(newcong, pair1[1], pair1[2]) then
         Add(newchildren, i);
       fi;
     od;

@@ -169,12 +169,12 @@ gap> S := InverseSemigroup([PartialPerm([1, 2, 3], [2, 5, 3]),
 gap> cong := SemigroupCongruence(S,
 >  [PartialPerm([4], [4]), PartialPerm([2], [1])]);;
 gap> [2] in cong;
-Error, Semigroups: \in: usage,
+Error, Semigroups: \in (for a relation): usage,
 the first arg <pair> must be a list of length 2,
 gap> [PartialPerm([4], [4]), 42] in cong;
-Error, Semigroups: \in: usage,
-the entries of the first arg <pair> must
-belong to the semigroup of <cong>,
+Error, Semigroups: \in (for a relation): usage,
+elements of the first arg <pair> must be
+in the range of the second arg <cong>,
 gap> EquivalenceClassOfElement(cong, (2, 5, 4));
 Error, Semigroups: EquivalenceClassOfElement: usage,
 the second arg <elm> must be in the

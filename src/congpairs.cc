@@ -216,18 +216,18 @@ Obj CONG_PAIRS_NR_CLASSES(Obj self, gap_cong_t o) {
   return INTOBJ_INT(cong_obj_get_cpp(o)->nr_classes());
 }
 
-Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, gap_list_t pair) {
+Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, Obj elm1, Obj elm2) {
   initRNams();
 
   word_t lhs, rhs;
 
   if (cong_obj_is_fp_cong(o)) {
-    lhs = plist_to_word_t(ELM_LIST(pair, 1));
-    rhs = plist_to_word_t(ELM_LIST(pair, 2));
+    lhs = plist_to_word_t(elm1);
+    rhs = plist_to_word_t(elm2);
   } else {
-    gap_semigroup_t S = cong_obj_get_range_obj(o);
-    size_t lhs_pos    = INT_INTOBJ(EN_SEMI_POSITION(0L, S, ELM_LIST(pair, 1)));
-    size_t rhs_pos    = INT_INTOBJ(EN_SEMI_POSITION(0L, S, ELM_LIST(pair, 2)));
+    gap_semigroup_t S       = cong_obj_get_range_obj(o);
+    size_t          lhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, elm1));
+    size_t          rhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, elm2));
     assert(lhs_pos != Semigroup::UNDEFINED);
     assert(rhs_pos != Semigroup::UNDEFINED);
 

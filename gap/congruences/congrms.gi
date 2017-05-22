@@ -531,31 +531,19 @@ function(cong1, cong2)
                     b2 -> ForAny(cong1!.rowBlocks, b1 -> IsSubset(b1, b2)));
 end);
 
-InstallMethod(\in,
-"for RMS element coll and a semigroup congruence by linked triple",
-[IsReesMatrixSemigroupElementCollection, IsRMSCongruenceByLinkedTriple],
-function(pair, cong)
-  local S, i, a, u, j, b, v, mat, gpElm;
-
-  # Check for validity
-  if Size(pair) <> 2 then
-    ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "the first arg <pair> must be a list of length 2,");
-  fi;
-  S := Range(cong);
-  if not ForAll(pair, x -> x in S) then
-    ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "elements of first arg <pair> ",
-                  "must be in range of second arg <cong>,");
-  fi;
-
+InstallMethod(CongruenceTestMembershipNC,
+"for RMS congruence by linked triple and two RMS elements",
+[IsRMSCongruenceByLinkedTriple,
+ IsReesMatrixSemigroupElement, IsReesMatrixSemigroupElement],
+function(cong, elm1, elm2)
+  local i, a, u, j, b, v, mat, gpElm;
   # Read the elements as (i,a,u) and (j,b,v)
-  i := pair[1][1];
-  a := pair[1][2];
-  u := pair[1][3];
-  j := pair[2][1];
-  b := pair[2][2];
-  v := pair[2][3];
+  i := elm1[1];
+  a := elm1[2];
+  u := elm1[3];
+  j := elm2[1];
+  b := elm2[2];
+  v := elm2[3];
 
   # First, the columns and rows must be related
   if not (cong!.colLookup[i] = cong!.colLookup[j] and
@@ -564,43 +552,33 @@ function(pair, cong)
   fi;
 
   # Finally, check Lemma 3.5.6(2) in Howie, with row 1 and column 1
-  mat := Matrix(S);
+  mat := Matrix(Range(cong));
   gpElm := mat[1][i] * a * mat[u][1] * Inverse(mat[1][j] * b * mat[v][1]);
   return gpElm in cong!.n;
 end);
 
-InstallMethod(\in,
-"for RZMS elements and semigroup congruence by linked triple",
-[IsReesZeroMatrixSemigroupElementCollection, IsRZMSCongruenceByLinkedTriple],
-function(pair, cong)
-  local S, mat, gpElm, row, col, rows, cols, a, i, u, j, b, v;
-
-  # Check for validity
-  if Size(pair) <> 2 then
-    ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "the first arg <pair> must be a list of length 2,");
-  fi;
+InstallMethod(CongruenceTestMembershipNC,
+"for RZMS congruence by linked triple and two RZMS elements",
+[IsRZMSCongruenceByLinkedTriple,
+ IsReesZeroMatrixSemigroupElement, IsReesZeroMatrixSemigroupElement],
+function(cong, elm1, elm2)
+  local S, i, a, u, j, b, v, mat, rows, cols, col, row, gpElm;
   S := Range(cong);
-  if not ForAll(pair, x -> x in S) then
-    ErrorNoReturn("Semigroups: \\in: usage,\n",
-                  "elements of first arg <pair> ",
-                  "must be in range of second arg <cong>,");
-  fi;
 
   # Handling the case when one or more of the pair are zero
-  if pair[1] = pair[2] then
+  if elm1 = elm2 then
     return true;
-  elif MultiplicativeZero(S) in pair then
+  elif elm1 = MultiplicativeZero(S) or elm2 = MultiplicativeZero(S) then
     return false;
   fi;
 
   # Read the elements as (i,a,u) and (j,b,v)
-  i := pair[1][1];
-  a := pair[1][2];
-  u := pair[1][3];
-  j := pair[2][1];
-  b := pair[2][2];
-  v := pair[2][3];
+  i := elm1[1];
+  a := elm1[2];
+  u := elm1[3];
+  j := elm2[1];
+  b := elm2[2];
+  v := elm2[3];
 
   # First, the columns and rows must be related
   if not (cong!.colLookup[i] = cong!.colLookup[j] and

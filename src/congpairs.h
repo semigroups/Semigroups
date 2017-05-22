@@ -24,7 +24,7 @@
 // GAP level functions
 
 Obj CONG_PAIRS_NR_CLASSES(Obj, Obj);
-Obj CONG_PAIRS_IN(Obj, Obj, Obj);
+Obj CONG_PAIRS_IN(Obj, Obj, Obj, Obj);
 Obj CONG_PAIRS_LESS_THAN(Obj, Obj, Obj, Obj);
 Obj CONG_PAIRS_LOOKUP_PART(Obj, Obj);
 Obj CONG_PAIRS_ELM_COSET_ID(Obj, Obj, Obj);

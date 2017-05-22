@@ -35,6 +35,38 @@ gap> SemigroupCongruence(S, 12, 13, 100);
 Error, Semigroups: SemigroupCongruence: usage,
 the arguments are not valid for this function,
 
+#T# \in: Bad input
+gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]),
+>                   Transformation([2, 4, 2, 3, 5]),
+>                   Transformation([3, 4, 3, 4, 3]),
+>                   Transformation([4, 3, 3, 4, 4]));;
+gap> pair1 := [Transformation([3, 4, 3, 4, 3]),
+>              Transformation([1, 2, 1, 2, 1])];;
+gap> cong := LeftSemigroupCongruence(S, pair1);;
+gap> [Transformation([2, 1, 1, 2, 1])] in cong;
+Error, Semigroups: \in (for a relation): usage,
+the first arg <pair> must be a list of length 2,
+gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
+Error, Semigroups: \in (for a relation): usage,
+elements of the first arg <pair> must be
+in the range of the second arg <cong>,
+gap> cong := RightSemigroupCongruence(S, pair1);;
+gap> [Transformation([2, 1, 1, 2, 1])] in cong;
+Error, Semigroups: \in (for a relation): usage,
+the first arg <pair> must be a list of length 2,
+gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
+Error, Semigroups: \in (for a relation): usage,
+elements of the first arg <pair> must be
+in the range of the second arg <cong>,
+gap> cong := SemigroupCongruence(S, pair1);;
+gap> [Transformation([2, 1, 1, 2, 1])] in cong;
+Error, Semigroups: \in (for a relation): usage,
+the first arg <pair> must be a list of length 2,
+gap> [Transformation([2, 1, 1, 2, 1]), Transformation([5, 2, 1, 2, 2])] in cong;
+Error, Semigroups: \in (for a relation): usage,
+elements of the first arg <pair> must be
+in the range of the second arg <cong>,
+
 #T# SemigroupCongruence: Infinite semigroup
 gap> S := FreeSemigroup(2);;
 gap> SemigroupCongruence(S, [S.1, S.2]);
@@ -110,10 +142,14 @@ gap> EquivalenceRelationCanonicalPartition(cong);
 #T# SemigroupCongruence: left congruence
 gap> S := Semigroup([Transformation([3, 3, 3]),
 >                    Transformation([3, 4, 3, 3])]);;
-gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
-gap> cong := LeftSemigroupCongruence(S, pairs);;
+gap> pair := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
+gap> cong := LeftSemigroupCongruence(S, pair);;
 gap> EquivalenceRelationCanonicalPartition(cong);
 [ [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 3, 4, 3, 3 ] ) ] ]
+gap> pair in cong;
+true
+gap> [S.1, S.1] in cong;
+true
 
 #T# SemigroupCongruence: Giving an RMS cong
 gap> S := Semigroup(MinimalIdeal(FullTransformationMonoid(5)));;
