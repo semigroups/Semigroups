@@ -434,8 +434,10 @@ gap_list_t CONG_PAIRS_NONTRIVIAL_CLASSES(Obj self, gap_cong_t o) {
     SET_LEN_PLIST(next_class, (*nt_classes)[c]->size());
     for (size_t e = 0; e < (*nt_classes)[c]->size(); e++) {
       SET_ELM_PLIST(next_class, e + 1, word_t_to_plist((*(*nt_classes)[c])[e]));
+      CHANGED_BAG(next_class);
     }
     SET_ELM_PLIST(gap_lists, c + 1, next_class);
+    CHANGED_BAG(gap_lists);
   }
 
   delete nt_classes;
