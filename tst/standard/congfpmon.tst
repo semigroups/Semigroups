@@ -74,9 +74,10 @@ gap> Length(part) = 1;
 true
 gap> Length(part[1]) = 11;
 true
-gap> EquivalenceRelationCanonicalPartition(cong);
-[ [ m2, m1^2, m2*m1, m1^2*m2, m1^2*m2*m1, m2*m1*m2, (m2*m1)^2, m1*m2, 
-      m1*m2*m1, (m1*m2)^2, (m1*m2)^2*m1 ] ]
+gap> Size(EquivalenceRelationCanonicalPartition(cong));
+1
+gap> Size(EquivalenceRelationCanonicalPartition(cong)[1]);
+11
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ]
 gap> ImagesElm(cong, M.1);
@@ -138,13 +139,11 @@ gap> Length(part) = 1;
 true
 gap> Length(part[1]) = 30;
 true
-gap> part := EquivalenceRelationCanonicalPartition(cong);
-[ [ m1, m2^2, m1^2, m1^3, m2*m1, m2*m1^2, m2*m1^3, (m2*m1)^2, m2^2*m1, 
-      m2^2*m1^2, m1*m2*m1, m1*m2*m1^2, m1*m2*m1^3, (m1*m2)^2*m1, m1^2*m2*m1, 
-      m1^2*m2*m1^2, m1^2*m2*m1^3, m1*(m1*m2)^2*m1, m1^3*m2*m1, m1^3*m2*m1^2, 
-      m1^3*m2*m1^3, m1^2*(m1*m2)^2*m1, (m2*m1)^2*m1, (m2*m1)^2*m1^2, 
-      (m1*m2)^2*m1^2, (m1*m2)^2*m1^3, m1*(m1*m2)^2*m1^2, m1*(m1*m2)^2*m1^3, 
-      m1^2*(m1*m2)^2*m1^2, m1^2*(m1*m2)^2*m1^3 ] ]
+gap> part := EquivalenceRelationCanonicalPartition(cong);;
+gap> Size(part);
+1
+gap> Size(part[1]);
+30
 gap> EquivalenceRelationCanonicalLookup(cong);
 [ 1, 2, 3, 2, 4, 2, 2, 2, 5, 2, 2, 6, 2, 7, 2, 2, 8, 2, 2, 2, 9, 2, 2, 10, 2, 
   2, 2, 2, 11, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
