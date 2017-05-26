@@ -152,8 +152,8 @@ true
 gap> ImagesElm(cong, One(M));
 [ <identity ...> ]
 gap> classes := EquivalenceClasses(cong);;
-gap> List(classes, Size);
-[ 1, 30, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+gap> SortedList(List(classes, Size));
+[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 30 ]
 gap> class1 := EquivalenceClassOfElement(cong, M.2 * M.1 ^ 2);;
 gap> class2 := EquivalenceClassOfElement(cong, M.2);;
 gap> M.1 in class1;
@@ -220,8 +220,8 @@ gap> NrEquivalenceClasses(cong);
 gap> ImagesElm(cong, One(M));
 [ <identity ...> ]
 gap> classes := EquivalenceClasses(cong);;
-gap> List(classes, Size);
-[ 1, 11, 8, 1, 8, 1, 1, 1, 1, 1, 4, 1, 1 ]
+gap> SortedList(List(classes, Size));
+[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 8, 8, 11 ]
 gap> class1 := EquivalenceClassOfElement(cong, M.1 * (M.2 * M.1) ^ 2 * M.2);;
 gap> class2 := EquivalenceClassOfElement(cong, M.2 ^ 2 * M.1);;
 gap> M.1 in class1;
