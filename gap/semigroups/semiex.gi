@@ -318,11 +318,6 @@ function(d, q)
   return S;
 end);
 
-# FIXME this method is not correct
-
-InstallMethod(IsFullMatrixMonoid, "for a semigroup",
-[IsSemigroup], ReturnFalse);
-
 InstallMethod(SpecialLinearMonoid, "for pos int and pos int",
 [IsPosInt, IsPosInt],
 function(d, q)
@@ -772,6 +767,16 @@ function(n)
     return InverseMonoid(PartialPerm([1]), PartialPerm([]));
   fi;
   return InverseMonoid(POI(n), PartialPerm(Reversed([1 .. n])));
+end);
+
+InstallMethod(PORI, "for a positive integer", [IsPosInt],
+function(n)
+  if n = 1 then
+    return InverseMonoid(PartialPerm([1]), PartialPerm([]));
+  fi;
+  return InverseMonoid(PartialPermNC(Concatenation([2 .. n], [1])),
+                       PartialPermNC(Concatenation([1 .. n - 2], [n])),
+                       PartialPerm(Reversed([1 .. n])));
 end);
 
 InstallMethod(PlanarUniformBlockBijectionMonoid, "for a positive integer",

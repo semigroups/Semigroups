@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  semiex.xml
-#Y  Copyright (C) 2011-15                                James D. Mitchell
+#Y  Copyright (C) 2011-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -39,6 +39,67 @@ gap> Size(S);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="AnnularJonesMonoid">
+   <ManSection>
+    <Oper Name = "AnnularJonesMonoid" Arg = "n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      If <A>n</A> is a non-negative integer, then <C>AnnularJonesMonoid</C>
+      returns the annular Jones monoid of degree <A>n</A>.  The <E>annular Jones
+        monoid</E> is the subsemigroup of the partition monoid consisting of all
+      annular bipartitions whose blocks have size 2 (annular bipartitions are
+      defined in Chapter <Ref Label="bipartition"/>). See <Ref
+        Oper="BrauerMonoid" />.
+
+      <Example><![CDATA[
+gap> S := AnnularJonesMonoid(4);
+<regular bipartition *-monoid of degree 4 with 2 generators>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PartialJonesMonoid">
+   <ManSection>
+    <Oper Name = "PartialJonesMonoid" Arg = "n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      If <A>n</A> is a non-negative integer, then <C>PartialJonesMonoid</C>
+      returns the partial Jones monoid of degree <A>n</A>.  The <E>partial Jones
+        monoid</E> is a subsemigroup of the partial Brauer monoid. An element of
+      the partial Brauer monoid is contained in the partial Jones monoid if the
+      partition that it defines is finer than the partition defined by some
+      element of the Jones monoid. In other words, an element of the partial
+      Jones monoid can be formed from some element <C>x</C> of the Jones monoid
+      by replacing some blocks <C>[a, b]</C> of <C>x</C> by singleton blocks
+      <C>[a], [b]</C>.  <P/>
+
+      Note that, in general, the partial Jones monoid of degree <A>n</A> is
+      strictly contained in the Motzkin monoid of the same degree. <P/>
+      
+      See <Ref Oper="PartialBrauerMonoid"/>, <Ref Oper="JonesMonoid" />, and
+      <Ref Oper="MotzkinMonoid"/>.
+
+      <Example><![CDATA[
+gap> S := PartialJonesMonoid(4);
+<regular bipartition *-monoid of degree 4 with 7 generators>
+gap> T := JonesMonoid(4);
+<regular bipartition *-monoid of degree 4 with 3 generators>
+gap> U := MotzkinMonoid(4);
+<regular bipartition *-monoid of degree 4 with 8 generators>
+gap> IsSubsemigroup(U, S);
+true
+gap> IsSubsemigroup(S, T);
+true
+gap> Size(U);
+323
+gap> Size(S);
+143
+gap> Size(T);
+14]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="JonesMonoid">
    <ManSection>
     <Oper Name = "JonesMonoid" Arg = "n"/>
@@ -46,21 +107,53 @@ gap> Size(S);
     <Oper Name = "SingularJonesMonoid" Arg = "n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
-      If <A>n</A> is a positive integer, then this operation returns the Jones
-      monoid of degree <A>n</A>. The <B>Jones monoid</B> is the subsemigroup of
-      the Brauer monoid consisting of those bipartitions with a planar diagram.
-      The Jones monoid is sometimes referred to as the <B>Temperley-Lieb
-        monoid</B>. <P/>
+      If <A>n</A> is a non-negative integer, then this operation returns the
+      Jones monoid of degree <A>n</A>. The <E>Jones monoid</E> is the
+      subsemigroup of the Brauer monoid consisting of those bipartitions that
+      are planar; see <Ref Oper="PlanarPartitionMonoid" />.  The Jones monoid is
+      sometimes referred to as the <B>Temperley-Lieb monoid</B>. <P/>
 
       <C>SingularJonesMonoid</C> returns the ideal of the Jones monoid
       consisting of the non-invertible elements (i.e. those not in the group of
-      units), when <A>n</A> is at least 2. 
+      units), when <A>n</A> is at least 2.
 
       <Example><![CDATA[
 gap> S := JonesMonoid(4);
 <regular bipartition *-monoid of degree 4 with 3 generators>
+gap> S = TemperleyLiebMonoid(4);
+true
 gap> SingularJonesMonoid(8);
 <regular bipartition *-semigroup ideal of degree 8 with 1 generator>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="MotzkinMonoid">
+   <ManSection>
+    <Oper Name = "MotzkinMonoid" Arg = "n"/>
+    <Returns>A bipartition monoid.</Returns>
+    <Description>
+      If <A>n</A> is a non-negative integer, then this operation returns the
+      Motzkin monoid of degree <A>n</A>. The <E>Motzkin monoid</E> is the
+      subsemigroup of the partial Brauer monoid consisting of those bipartitions
+      that are planar (planar bipartitions are defined in Chapter <Ref
+        Label="bipartition"/>).  <P/>
+      
+      Note that the Motzkin monoid of degree <A>n</A> contains the partial Jones
+      monoid of degree <A>n</A>, but in general, these monoids are not equal;
+      see <Ref Oper="PartialJonesMonoid"/>.
+
+      <Example><![CDATA[
+gap> S := MotzkinMonoid(4);
+<regular bipartition *-monoid of degree 4 with 8 generators>
+gap> T := PartialJonesMonoid(4);
+<regular bipartition *-monoid of degree 4 with 7 generators>
+gap> IsSubsemigroup(S, T);
+true
+gap> Size(S);
+323
+gap> Size(T);
+143]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -73,7 +166,7 @@ gap> SingularJonesMonoid(8);
     <Returns>A bipartition monoid.</Returns>
     <Description>
       If <A>n</A> is a non-negative integer, then this operation returns the
-      Brauer monoid of degree <A>n</A>. The <B>Brauer monoid</B> is the
+      Brauer monoid of degree <A>n</A>. The <E>Brauer monoid</E> is the
       submonoid of the partition monoid consisiting of those bipartitions where
       the size of every block is 2. <P/>
 
@@ -112,21 +205,22 @@ gap> Size(S);
     <Oper Name="SingularPartitionMonoid" Arg="n"/>
     <Returns>A bipartition monoid.</Returns>
     <Description>
-      If <A>n</A> is a positive integer, then this operation returns the
-      partition monoid of degree <A>n</A> which is the monoid consisting of all
-      the bipartitions of degree <A>n</A>. 
+      If <A>n</A> is a non-negative integer, then this operation returns the
+      partition monoid of degree <A>n</A>. The <E>partition monoid of degree
+        <A>n</A></E> is the monoid consisting of all the bipartitions of degree
+      <A>n</A>. 
       <P/>
 
-      <C>SingularPartitionMonoid</C> returns the ideal of the
-      partition monoid consisting of the non-invertible elements
-      (i.e. those not in the group of units).
+      <C>SingularPartitionMonoid</C> returns the ideal of the partition monoid
+      consisting of the non-invertible elements (i.e. those not in the group of
+      units), when <A>n</A> is positive.
       <P/>
  
-      <C>RookPartitionMonoid</C> returns submonoid of the partition monoid of
-      degree <C><A>n</A> + 1</C> consisting of those bipartitions with
-      <C><A>n</A> + 1</C> and <C>-<A>n</A> - 1</C> in the same block;
-      see <Cite Key="Halverson2005PartitionAlgebras"/>,
-      <Cite Key="Grood2006aa"/>, and <Cite Key="East2016aa"/>.
+      If <A>n</A> is positive, then <C>RookPartitionMonoid</C> returns submonoid
+      of the partition monoid of degree <C><A>n</A> + 1</C> consisting of those
+      bipartitions with <C><A>n</A> + 1</C> and <C>-<A>n</A> - 1</C> in the same
+      block; see <Cite Key="Halverson2005PartitionAlgebras"/>, <Cite
+        Key="Grood2006aa"/>, and <Cite Key="East2016aa"/>.
 
       <Example><![CDATA[
 gap> S := PartitionMonoid(5);
@@ -134,6 +228,10 @@ gap> S := PartitionMonoid(5);
  generators>
 gap> Size(S);
 115975
+gap> T := SingularPartitionMonoid(5);
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
+gap> Size(S) - Size(T) = Factorial(5);
+true
 gap> S := RookPartitionMonoid(5);
 <regular bipartition *-monoid of degree 6 with 5 generators>
 gap> Size(S);
@@ -159,9 +257,17 @@ gap> Size(S);
 
       <Example><![CDATA[
 gap> S := PlanarPartitionMonoid(5);
-<regular bipartition monoid of degree 5 with 9 generators>
+<regular bipartition *-monoid of degree 5 with 9 generators>
 gap> Size(S);
-16796]]></Example>
+16796
+gap> T := SingularPlanarPartitionMonoid(5);
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
+gap> Size(T);
+16795
+gap> Difference(S, T);
+[ <block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
+     [ 5, -5 ]> ]
+]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -191,7 +297,8 @@ gap> Size(S);
 
       <C>PlanarUniformBlockBijectionMonoid</C> returns the submonoid of the
       uniform block bijection monoid consisting of the planar elements
-      (i.e. those in the planar partition monoid). <P/>
+      (i.e. those in the planar partition monoid, see <Ref
+        Oper="PlanarPartitionMonoid"/>). <P/>
 
       <C>SingularPlanarUniformBlockBijectionMonoid</C> returns the ideal of the
       planar uniform block bijection monoid consisting of the non-invertible
@@ -241,10 +348,11 @@ true]]></Example>
     <Oper Name = "PartialDualSymmetricInverseMonoid" Arg = "n"/>
     <Returns>An inverse bipartition monoid.</Returns>
     <Description>
-      If <A>n</A> is a positive integer, then these operations return the dual
-      symmetric inverse monoid of degree <A>n</A>, which is the subsemigroup of
-      the partition monoid consisting of the block bijections of degree
-      <A>n</A>.<P/>
+      If <A>n</A> is a positive integer, then the operations
+      <C>DualSymmetricInverseSemigroup</C> and <C>DualSymmetricInverseMonoid</C>
+      return the dual symmetric inverse monoid of degree <A>n</A>, which is the
+      subsemigroup of the partition monoid consisting of the block bijections of
+      degree <A>n</A>.<P/>
 
       <C>SingularDualSymmetricInverseMonoid</C> returns the ideal of the
       dual symmetric inverse monoid consisting of the non-invertible elements
@@ -290,7 +398,8 @@ gap> Size(S);
 
       <C>SingularApsisMonoid</C> returns the ideal of the
       apsis monoid consisting of the non-invertible elements
-      (i.e. those not in the group of units), when <A>m &lt;= n</A>. <P/>
+      (i.e. those not in the group of units), when <A>m</A> <M>\leq</M>
+      <A>n</A>.  <P/>
 
       <C>CrossedApsisGeneratedMonoid</C> returns the semigroup generated by the
       symmetric group of degree <A>n</A> and the <A>m</A>-apsis monoid of
@@ -306,8 +415,14 @@ gap> S := ApsisMonoid(3, 7);
 <regular bipartition *-monoid of degree 7 with 5 generators>
 gap> Size(S);
 320
+gap> T := SingularApsisMonoid(3, 7);
+<regular bipartition *-semigroup ideal of degree 7 with 1 generator>
+gap> Difference(S, T) = [One(S)];
+true
 gap> Size(CrossedApsisMonoid(4, 9));
-24291981]]></Example>
+24291981
+gap> SingularCrossedApsisMonoid(4, 6);
+<regular bipartition *-semigroup ideal of degree 6 with 1 generator>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -352,7 +467,8 @@ gap> Size(last);
 
       <C>PlanarModularPartitionMonoid</C> returns the submonoid of the
       modular-<A>m</A> partition monoid consisting of the planar elements
-      (i.e. those in the planar partition monoid). <P/>
+      (i.e. those in the planar partition monoid, see <Ref
+        Oper="PlanarPartitionMonoid" />). <P/>
 
       <C>SingularPlanarModularPartitionMonoid</C> returns the ideal of the
       planar modular partition monoid consisting of the non-invertible elements
@@ -362,11 +478,22 @@ gap> Size(last);
 
       <Example><![CDATA[
 gap> S := ModularPartitionMonoid(3, 7);
-<regular bipartition monoid of degree 7 with 4 generators>
+<regular bipartition *-monoid of degree 7 with 4 generators>
 gap> Size(S);
 826897
-gap> Size(PlanarModularPartitionMonoid(4, 9));
-1795]]></Example>
+gap> S := SingularModularPartitionMonoid(1, 1);
+<commutative inverse bipartition semigroup ideal of degree 1 with
+  1 generator>
+gap> Size(SingularModularPartitionMonoid(2, 4));
+355
+gap> S := PlanarModularPartitionMonoid(4, 9);
+<regular bipartition *-monoid of degree 9 with 14 generators>
+gap> Size(S);
+1795
+gap> S := SingularPlanarModularPartitionMonoid(3, 5);
+<regular bipartition *-semigroup ideal of degree 5 with 1 generator>
+gap> Size(SingularPlanarModularPartitionMonoid(1, 2));
+13]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -376,20 +503,24 @@ gap> Size(PlanarModularPartitionMonoid(4, 9));
     <Oper Name="FullMatrixMonoid" Arg="d, q"/>
     <Oper Name="GeneralLinearMonoid" Arg="d, q"/>
     <Oper Name="GLM" Arg="d, q"/>
-    <Returns>A matrix Monoid.</Returns>
+    <Returns>A matrix monoid.</Returns>
     <Description>
-      <C>FullMatrixMonoid</C>, <C>GeneralLinearMonoid</C>, and <C>GLS</C>
-      are synonyms for each other. They all return the full matrix monoid,
-      or if you prefer the general linear monoid, of <A>d</A> by <A>d</A>
-      matrices with entries over the field with <A>q</A> elements.  This
+      These operations return the full matrix monoid of <A>d</A> by <A>d</A>
+      matrices over the field with <A>q</A> elements. The <E>full matrix
+        monoid</E>, also known as the <E>general linear monoid</E>, with these
+      parameters, is the monoid consisting of all <A>d</A> by <A>d</A> matrices
+      with entries from the field <C>GF(<A>q</A>)</C>. This
       monoid has <C><A>q</A> ^ (<A>d</A> ^ 2)</C> elements.
-      <P/>
 
       <Example><![CDATA[
 gap> S := FullMatrixMonoid(3, 4);
 <general linear monoid 3x3 over GF(2^2)>
 gap> Size(S);
-262144]]></Example>
+262144
+gap> S = GeneralLinearMonoid(3, 4);
+true
+gap> GLM(2, 2);
+<general linear monoid 2x2 over GF(2)>]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -400,20 +531,38 @@ gap> Size(S);
   <Oper Name="SLM" Arg="d, q"/>
   <Returns>A matrix monoid.</Returns>
     <Description>
-      <C>SpecialLinearMonoid</C> and <C>SLM</C> are synonymous.
-
-      The special linear monoid of <A>d</A> by <A>d</A> matrices
-      with entries over the field with <A>q</A> elements is generated
-      by a generating set for the special linear group of <A>d</A> by
-      <A>d</A> matrices over the field with <A>q</A> elements and a
-      matrix of rank <A>d-1</A>.
-      <P/><!--FIXME this is not very descriptive-->
+      These operations return the special linear monoid of <A>d</A> by <A>d</A>
+      matrices over the field with <A>q</A> elements. The <E>special linear
+        monoid</E> is the monoid consisting of all <A>d</A> by <A>d</A> matrices
+      with entries from the field <C>GF(<A>q</A>)</C> that have determinant
+      <C>0</C> or <C>1</C>. In other words, the special linear monoid is formed
+      from the general linear monoid of the same parameters by replacing its
+      group of units (the general linear group) by the special linear group.
 
       <Example><![CDATA[
-gap> S := SLM(3, 4);
-<special linear monoid 3x3 over GF(2^2)>
+gap> S := SpecialLinearMonoid(3, 4);
+<regular monoid of 3x3 matrices over GF(2^2) with 3 generators>
+gap> S = SLM(3, 4);
+true
 gap> Size(S);
 141184]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RookMonoid">
+   <ManSection>
+    <Oper Name="RookMonoid" Arg="n"/>
+    <Returns>An inverse monoid of partial permutations.</Returns>
+    <Description>
+      <C>RookMonoid</C> is a synonym for <Ref Oper="SymmetricInverseMonoid"
+        BookName="ref" />.
+
+      <Example><![CDATA[
+gap> S := RookMonoid(4);
+<symmetric inverse monoid of degree 4>
+gap> S = SymmetricInverseMonoid(4);
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -446,17 +595,17 @@ gap> NrIdempotents(S);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="OPOIPOPI">
-  <ManSection><Heading>Monoids of order preserving functions</Heading>
+<#GAPDoc Label="OrderPreserving">
+  <ManSection>
+    <Heading>Semigroups of order-preserving transformations</Heading>
     <Oper Name = "OrderEndomorphisms" Arg = "n"
       Label = "monoid of order preserving transformations"/>
-    <Oper Name = "POI" Arg = "n"
-      Label = "monoid of order preserving partial perms"/>
-    <Oper Name = "POPI" Arg = "n"
-      Label = "monoid of orientation preserving partial perms"/>
+    <Oper Name = "SingularOrderEndomorphisms" Arg = "n"/>
+    <Oper Name = "OrderAntiEndomorphisms" Arg = "n"/>
+    <Oper Name = "PartialOrderEndomorphisms" Arg = "n"/>
+    <Oper Name = "PartialOrderAntiEndomorphisms" Arg = "n"/>
     <Returns>
-      A semigroup of transformations or partial permutations related to a
-      linear order. 
+      A semigroup of transformations related to a linear order.
     </Returns>
     <Description>
       <List>
@@ -464,7 +613,7 @@ gap> NrIdempotents(S);
         <Item>
           <C>OrderEndomorphisms(<A>n</A>)</C> returns the monoid of
           transformations that preserve the usual order on <M>\{1, 2, \ldots,
-            n\}</M> where <A>n</A> is a positive integer. 
+            n\}</M>, where <A>n</A> is a positive integer. 
           <Alt Not = "Text">
             <C>OrderEndomorphisms(<A>n</A>)</C> is generated by the
             <M><A>n + 1</A></M> transformations:
@@ -482,43 +631,135 @@ gap> NrIdempotents(S);
               &amp;n\\
               \end{array}\right)
             </Display>
-            where <M>i=0,\ldots,n-1</M> and has <M>{2n-1\choose n-1}</M>
+            where <M>i=0,\ldots,n-1</M>, and has <M>{2n-1\choose n-1}</M>
             elements.
           </Alt>
       </Item>
+      <Mark><C>SingularOrderEndomorphisms(<A>n</A>)</C></Mark>
+      <Item>
+        <C>SingularOrderEndomorphisms(<A>n</A>)</C> returns the ideal of
+        <C>OrderEndomorphisms(<A>n</A>)</C> consisting of the non-invertible
+        elements, when <A>n</A> is at least <C>2</C>. The only invertible
+        element in <C>OrderEndomorphisms(<A>n</A>)</C> is the identity
+        transformation.
+        <Alt Not="Text">
+          Therefore <C>SingularOrderEndomorphisms(<A>n</A>)</C> has
+          <M>{2n-1\choose n-1} - 1</M> elements.
+        </Alt>
+      </Item>
+      <Mark><C>OrderAntiEndomorphisms(<A>n</A>)</C></Mark>
+      <Item>
+        <C>OrderAntiEndomorphisms(<A>n</A>)</C> returns the monoid of
+        transformations that preserve or reverse the usual order on <M>\{1, 2,
+          \ldots, n\}</M>, where <A>n</A> is a positive integer.
+        <C>OrderAntiEndomorphisms(<A>n</A>)</C> is generated by the generators
+        of <C>OrderEndomorphisms(<A>n</A>)</C> along with the bijective
+        transformation that reverses the order on <M>\{1, 2, \ldots, n\}</M>.
+        <Alt Not = "text">
+          The monoid <C>OrderAntiEndomorphisms(<A>n</A>)</C> has <M>{2n-1\choose
+            n-1} - n</M> elements.
+        </Alt>
+      </Item>
+      <Mark><C>PartialOrderEndomorphisms(<A>n</A>)</C></Mark>
+      <Item>
+        <C>PartialOrderEndomorphisms(<A>n</A>)</C> returns a monoid of
+        transformations on <C><A>n</A> + 1</C> points that is isomorphic to the
+        monoid consisting of all partial transformations that preserve the usual
+        order on <M>\{1, 2, \ldots, n\}</M>.
+      </Item>
+      <Mark><C>PartialOrderAntiEndomorphisms(<A>n</A>)</C></Mark>
+      <Item>
+        <C>PartialAntiOrderEndomorphisms(<A>n</A>)</C> returns a monoid of
+        transformations on <C><A>n</A> + 1</C> points that is isomorphic to the
+        monoid consisting of all partial transformations that preserve or
+        reverse the usual order on <M>\{1, 2, \ldots, n\}</M>.
+      </Item>
+      </List>
+      <Example><![CDATA[
+gap> S := OrderEndomorphisms(5);
+<regular transformation monoid of degree 5 with 5 generators>
+gap> IsIdempotentGenerated(S);
+true
+gap> Size(S) = Binomial(2 * 5 - 1, 5 - 1);
+true
+gap> Difference(S, SingularOrderEndomorphisms(5));
+[ IdentityTransformation ]
+gap> SingularOrderEndomorphisms(10);
+<regular transformation semigroup ideal of degree 10 with 1 generator>
+gap> T := OrderAntiEndomorphisms(4);
+<regular transformation monoid of degree 4 with 5 generators>
+gap> Transformation([4, 2, 2, 1]) in T;
+true
+gap> U := PartialOrderEndomorphisms(6);
+<regular transformation monoid of degree 7 with 12 generators>
+gap> V := PartialOrderAntiEndomorphisms(6);
+<regular transformation monoid of degree 7 with 13 generators>
+gap> IsSubsemigroup(V, U);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="POIPODIPOPIPORI">
+  <ManSection>
+  <Heading>Inverse monoids of order-preserving partial permutations</Heading>
+    <Oper Name = "POI" Arg = "n"
+      Label = "monoid of order preserving partial perms"/>
+    <Oper Name = "PODI" Arg = "n"
+      Label = "monoid of order preserving or reversing partial perms"/>
+    <Oper Name = "POPI" Arg = "n"
+      Label = "monoid of orientation preserving partial perms"/>
+    <Oper Name = "PORI" Arg = "n"
+      Label = "monoid of orientation preserving or reversing partial perms"/>
+    <Returns>
+      An inverse monoid of partial permutations related to a linear order.
+    </Returns>
+    <Description>
+      <List>
       <Mark><C>POI(<A>n</A>)</C></Mark>
       <Item>
       <C>POI(<A>n</A>)</C> returns the inverse
       monoid of partial permutations that preserve the usual order
-      on <M>\{1, 2, \ldots, n\}</M> where <A>n</A> is a positive integer.
+      on <M>\{1, 2, \ldots, n\}</M>, where <A>n</A> is a positive integer.
       <Alt Not="Text">
       <C>POI(<A>n</A>)</C> is generated by the <M><A>n</A></M>
       partial permutations:
       <Display>
-      \left(
-      \begin{array}{ccccc}
-      1&amp;2&amp;3&amp;\cdots&amp;n\\ 
-      -&amp;1&amp;2&amp;\cdots&amp;n-1
-      \end{array}\right), \qquad
-      \left(
-      \begin{array}{ccccccccc}
-      1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
-      &amp;n\\
-      1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;-&amp;i+2&amp;\cdots&amp;n\\
-      \end{array}\right)
-    </Display>
-    where <M>i = 1, \ldots, n - 1</M>
-    and has <M>{2n\choose n}</M> elements. </Alt>
-  </Item>
-  <Mark><C>POPI(<A>n</A>)</C></Mark>
-  <Item>
-    <C>POPI(<A>n</A>)</C> returns the inverse monoid of partial permutation
-    that preserve the orientation of <M>\{1,2,\ldots, n\}</M> where
-    <M>n</M> is a positive integer.
-    <Alt Not="Text">
+        \left(
+        \begin{array}{ccccc}
+        1&amp;2&amp;3&amp;\cdots&amp;n\\ 
+        -&amp;1&amp;2&amp;\cdots&amp;n-1
+        \end{array}\right), \qquad
+        \left(
+        \begin{array}{ccccccccc}
+        1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
+        &amp;n\\
+        1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;-&amp;i+2&amp;\cdots&amp;n\\
+        \end{array}\right)
+      </Display>
+      where <M>i = 1, \ldots, n - 1</M>,
+      and has <M>{2n\choose n}</M> elements. </Alt>
+    </Item>
+    <Mark><C>PODI(<A>n</A>)</C></Mark>
+    <Item>
+      <C>PODI(<A>n</A>)</C> returns the inverse monoid of partial permutations
+      that preserve or reverse the usual order on <M>\{1, 2, \ldots, n\}</M>,
+      where <A>n</A> is a positive integer.  <C>PODI(<A>n</A>)</C> is generated
+      by the generators of <C>POI(<A>n</A>)</C>, along with the
+      permutation that reverses the usual order on <M>\{1, 2, \ldots, n\}</M>.
+      <Alt Not="Text">
+        <C>PODI(<A>n</A>)</C> has <M>{2n\choose n} - n^{2} - 1</M> elements.
+      </Alt>
+    </Item>
+    <Mark><C>POPI(<A>n</A>)</C></Mark>
+    <Item>
+      <C>POPI(<A>n</A>)</C> returns the inverse monoid of partial permutations
+      that preserve the orientation of <M>\{1,2,\ldots, n\}</M>, where
+      <M>n</M> is a positive integer.
+      <Alt Not="Text">
 
-    <C>POPI(<A>n</A>)</C> is generated by the partial permutations:
-    <Display>
+      <C>POPI(<A>n</A>)</C> is generated by the partial permutations:
+      <Display>
       \left(
       \begin{array}{ccccc}
 1&amp;2&amp;\cdots&amp;n-1&amp;n\\
@@ -528,32 +769,41 @@ gap> NrIdempotents(S);
 \begin{array}{cccccc}
 1&amp;2&amp;\cdots&amp;n-2&amp;n-1&amp;n\\
 1&amp;2&amp;\cdots&amp;n-2&amp;n&amp;-
-\end{array}\right).
-    </Display>
-    and has <M>1+\frac{n}{2}{2n\choose n}</M> elements. 
-    </Alt>
-  </Item>
-</List>
+\end{array}\right),
+      </Display>
+      and has <M>1+\frac{n}{2}{2n\choose n}</M> elements. 
+      </Alt>
+    </Item>
+    <Mark><C>PORI(<A>n</A>)</C></Mark>
+    <Item>
+      <C>PORI(<A>n</A>)</C> returns the inverse monoid of partial permutations
+      that preserve or reverse the orientation of <M>\{1, 2, \ldots, n\}</M>,
+      where <M>n</M> is a positive integer. <C>PORI(<A>n</A>)</C> is generated
+      by the generators of <C>POPI(<A>n</A>)</C>, along with the
+      permutation that reverses the usual order on <M>\{1, 2, \ldots, n\}</M>.
+      <Alt Not="Text">
+        <C>PORI(<A>n</A>)</C> has <M>\frac{n}{2}{2n\choose n} - n(n + 1)</M>
+        elements.
+      </Alt>
+    </Item>
+  </List>
       <Example><![CDATA[
+gap> S := PORI(10);
+<inverse partial perm monoid of rank 10 with 3 generators>
 gap> S := POPI(10);
 <inverse partial perm monoid of rank 10 with 2 generators>
-gap> Size(S);
-923781
-gap> 1 + 5 * Binomial(20, 10);
-923781
+gap> Size(S) = 1 + 5 * Binomial(20, 10);
+true
+gap> S := PODI(10);
+<inverse partial perm monoid of rank 10 with 11 generators>
 gap> S := POI(10);
 <inverse partial perm monoid of rank 10 with 10 generators>
-gap> Size(S);
-184756
-gap> Binomial(20, 10);
-184756
-gap> IsSubsemigroup(POPI(10), POI(10));
+gap> Size(S) = Binomial(20, 10);
 true
-gap> S := OrderEndomorphisms(5);
-<regular transformation monoid of degree 5 with 5 generators>
-gap> IsIdempotentGenerated(S);
-true
-gap> Size(S) = Binomial(2 * 5 - 1, 5 - 1);
+gap> IsSubsemigroup(PORI(10), PODI(10))
+> and IsSubsemigroup(PORI(10), POPI(10))
+> and IsSubsemigroup(PODI(10), POI(10))
+> and IsSubsemigroup(POPI(10), POI(10));
 true]]></Example>
     </Description>
   </ManSection>
@@ -565,7 +815,7 @@ true]]></Example>
     <Returns>A transformation monoid.</Returns>
     <Description>
       If <A>n</A> is a positive integer, then this operation returns the Catalan
-      monoid of degree <A>n</A>. The <B>Catalan monoid</B> is the semigroup of
+      monoid of degree <A>n</A>. The <E>Catalan monoid</E> is the semigroup of
       the order-preserving and order-decreasing transformations of <C>[1 ..
         n]</C> with the usual ordering. <P/>
 
@@ -611,38 +861,51 @@ gap> Size(S);
     </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="RegularBinaryRelationSemigroup">
-<ManSection>
-  <Oper Name="RegularBinaryRelationSemigroup" Arg="n"/>
-  <Returns>A semigroup of binary relations.</Returns>
-  <Description>
-    <C>RegularBinaryRelationSemigroup</C> return the semigroup generated by
-    the regular binary relations on the set <M>\{1,\ldots, <A>n</A>\}</M> for a
-    positive integer <A>n</A>. 
-    <Alt Not = "Text"> <C>RegularBinaryRelationSemigroup(<A>n</A>)</C> is
-      generated by the <M>4</M> binary relations:
-      <Display>
-        \begin{array}{ll}
-        \left(\begin{array}{ccccccccc}
-        1&amp;2&amp;\cdots&amp;n-1&amp; n\\
-        2&amp;3&amp;\cdots&amp;n&amp;1
-        \end{array}\right),&amp; \quad
-        \left(\begin{array}{ccccccccc}
-        1&amp;2&amp;3&amp;\cdots&amp;n\\
-          2&amp;1&amp;3&amp;\cdots&amp;n
-        \end{array}\right),\\
-        \left(\begin{array}{ccccccccc}
-        1&amp;2&amp;\cdots&amp;n-1&amp; n\\
-        2&amp;2&amp;\cdots&amp;n-1&amp;\{1,n\}
-        \end{array}\right), &amp;\quad
-        \left(\begin{array}{ccccccccc}
-        1&amp;2&amp;\cdots&amp;n-1&amp;n\\
-        2&amp;2&amp;\cdots&amp;n-1&amp;-
-        \end{array}\right).
-        \end{array}
-      </Display>
-    </Alt>
-    This semigroup has nearly <C>2 ^ (n ^ 2)</C> elements. 
-  </Description>
-</ManSection>
+<#GAPDoc Label="FullTropicalMaxPlusMonoid">
+   <ManSection>
+    <Oper Name="FullTropicalMaxPlusMonoid" Arg="d, t"/>
+    <Returns>A monoid of tropical max plus matrices.</Returns>
+    <Description>
+      If <C><A>d</A> = 2</C> and <A>t</A> is a positive integer, then
+      <C>FullTropicalMaxPlusMonoid</C> returns the monoid consisting of all
+      <A>d</A> by <A>d</A> matrices with entries from the tropical max-plus
+      semiring with threshold <A>t</A>. A small generating set for larger values
+      of <A>d</A> is not currently known. <P/>
+
+      This monoid contains <C>(<A>t</A> + 2) ^ (<A>d</A> ^ 2)</C>
+      elements.
+
+      <Example><![CDATA[
+gap> S := FullTropicalMaxPlusMonoid(2, 5);
+<monoid of 2x2 tropical max-plus matrices with 24 generators>
+gap> Size(S);
+2401
+gap> (5 + 2) ^ (2 ^ 2);
+2401]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="FullTropicalMinPlusMonoid">
+   <ManSection>
+    <Oper Name="FullTropicalMinPlusMonoid" Arg="d, t"/>
+    <Returns>A monoid of tropical min plus matrices.</Returns>
+    <Description>
+      If <A>d</A> is equal to <C>2</C> or <C>3</C>, and <A>t</A> is a positive
+      integer, then <C>FullTropicalMinPlusMonoid</C> returns the monoid
+      consisting of all <A>d</A> by <A>d</A> matrices with entries from the
+      tropical min-plus semiring with threshold <A>t</A>.  A small generating
+      set for larger values of <A>d</A> is not currently known. <P/>
+
+      This monoid contains <C>(<A>t</A> + 2) ^ (<A>d</A> ^ 2)</C> elements.
+
+      <Example><![CDATA[
+gap> S := FullTropicalMinPlusMonoid(3, 2);
+<monoid of 3x3 tropical min-plus matrices with 21 generators>
+gap> Size(S);
+262144
+gap> (2 + 2) ^ (3 ^ 2);
+262144]]></Example>
+    </Description>
+  </ManSection>
 <#/GAPDoc>

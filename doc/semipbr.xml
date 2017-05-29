@@ -119,12 +119,14 @@ gap> AsSemigroup(IsPBRSemigroup, S);
     <Oper Name = "FullPBRMonoid" Arg = "S"/>
     <Returns>A PBR monoid.</Returns>
     <Description>
-      If <A>n</A> is a positive integer not greater than <C>2</C>, then
-      this operations returns the monoid consisting of all of the PBRs of
-      degree <A>n</A>; called the <B>full PBR monoid</B>.
-      <P/>
+      If <A>n</A> is a positive integer not greater than <C>2</C>, then this
+      operations returns the monoid consisting of all of the partitioned binary
+      relations (PBRs) of degree <A>n</A>; called the <E>full PBR monoid</E>.
+      There are <C>2 ^ (2 * n) ^ 2</C> PBRs of degree <A>n</A>.  The full PBR
+      monoid of degree <A>n</A> is currently too large to compute when <M><A>n
+          \geq 3</A></M>. <P/>
 
-      The  full PBR monoid is regular and has order <C>2 ^ (2 * n) ^ 2</C>.
+      The full PBR monoid is not regular in general.
 
       <Example><![CDATA[
 gap> S := FullPBRMonoid(1);
