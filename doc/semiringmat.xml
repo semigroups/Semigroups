@@ -274,8 +274,8 @@ gap> DimensionOfMatrixOverSemiring(x);
       <List>
         <Mark><A>filt</A></Mark>
         <Item>
-          This must be one of the filters given in Section <Ref Sect =
-            "IsXMatrix"/>.
+          This must be one of the filters given in
+          Section <Ref Sect = "IsXMatrix"/>.
         </Item>
 
         <Mark><A>mat</A></Mark>

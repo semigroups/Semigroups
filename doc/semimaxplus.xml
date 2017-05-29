@@ -9,8 +9,8 @@
 ##
 
 <#GAPDoc Label="IsXMatrixSemigroup">
-  <ManSection Label = "IsXMatrix">
-  <Heading>Matrix filters</Heading>
+  <ManSection Label = "IsXMatrixSemigroup">
+  <Heading>Matrix semigroup filters</Heading>
     <Filt Name = "IsBooleanMatSemigroup"              Arg = "obj" Type = "Category"/>
     <Filt Name = "IsMaxPlusMatrixSemigroup"           Arg = "obj" Type = "Category"/>
     <Filt Name = "IsMinPlusMatrixSemigroup"           Arg = "obj" Type = "Category"/>
