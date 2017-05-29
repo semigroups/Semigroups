@@ -48,11 +48,11 @@ For bug reports, feature requests and suggestions, please use the
 If you are using BibTeX, you can use the following BibTeX entry for the current 
 version of {{site.data.package.name}}:
 
-@manual{ Mitchell{{site.data.package.year}}aa,
+<pre style="white-space: pre-wrap;">@manual{ Mitchell{{site.data.package.year}}aa,
          Author = { Mitchell, J. D. and others },
          Month  = { {{site.data.package.month}} },
          Title  = { Semigroups - GAP package, Version {{site.data.package.version}} },
          Doi    = { 10.5281/zenodo.53112 },
          Url    = { http://dx.doi.org/10.5281/zenodo.53112 },
          Year   = { {{site.data.package.year}} }
-}
+}</pre>
