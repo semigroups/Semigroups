@@ -32,7 +32,7 @@ elif [ ! -z "$GAP_BRANCH" ]; then
   cd semigroups/src
   git clone https://github.com/james-d-mitchell/libsemigroups.git libsemigroups
   cd libsemigroups
-  LIBSEMIGROUPS_VERS=`git tag | grep "v\d\+.\d\+.\d\+" | tail -n 1`
+  LIBSEMIGROUPS_VERS=`git tag | grep "v\d\+\(.\d\+\)\+" | tail -n 1`
   echo "Checking out libsemigroups version $LIBSEMIGROUPS_VERS..."
   git checkout $LIBSEMIGROUPS_VERS
   cd ../..
@@ -50,7 +50,7 @@ elif [ ! -z "$GAP_BRANCH" ]; then
     echo -e "\nDownloading the profiling package..."
     git clone https://github.com/gap-packages/profiling.git profiling
     cd profiling
-    PROFILING_VERS=`git tag | grep "v\d\+.\d\+.\d\+" | tail -n 1`
+    PROFILING_VERS=`git tag | grep "v\d\+\(.\d\+\)\+" | tail -n 1`
     echo "Checking out profiling version $PROFILING_VERS..."
     git checkout $PROFILING_VERS
     ./autogen.sh
