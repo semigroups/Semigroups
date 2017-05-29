@@ -9,8 +9,8 @@
 ##
 
 <#GAPDoc Label="IsXMatrixSemigroup">
-  <ManSection Label = "IsXMatrix">
-  <Heading>Matrix filters</Heading>
+  <ManSection Label = "IsXMatrixSemigroup">
+  <Heading>Matrix semigroup filters</Heading>
     <Filt Name = "IsBooleanMatSemigroup"              Arg = "obj" Type = "Category"/>
     <Filt Name = "IsMaxPlusMatrixSemigroup"           Arg = "obj" Type = "Category"/>
     <Filt Name = "IsMinPlusMatrixSemigroup"           Arg = "obj" Type = "Category"/>
@@ -23,6 +23,27 @@
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       The above are the currently supported types of matrix semigroups.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsXMatrixMonoid">
+  <ManSection Label = "IsXMatrixMonoid">
+  <Heading>Matrix monoid filters</Heading>
+    <Filt Name = "IsBooleanMatMonoid"              Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMaxPlusMatrixMonoid"           Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMinPlusMatrixMonoid"           Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsTropicalMatrixMonoid"          Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsTropicalMaxPlusMatrixMonoid"   Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsTropicalMinPlusMatrixMonoid"   Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsProjectiveMaxPlusMatrixMonoid" Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsNTPMatrixMonoid"               Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsIntegerMatrixMonoid"           Arg = "obj" Type = "Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      The above are the currently supported types of matrix monoids.  They
+      correspond to the matrix semigroup types in
+      Section <Ref Sect="IsXMatrixSemigroup"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>

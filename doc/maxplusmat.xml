@@ -43,8 +43,9 @@
         Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>.
       <P/>
 
-      For matrices over finite fields <Ref Attr = "BaseDomain"/>; for Boolean
-      matrices more details can be found in
+      For matrices over finite fields
+      <Ref Attr = "BaseDomain" Label="for a matrix over finite field"/>;
+      for Boolean matrices more details can be found in
       Section <Ref Sect = "Boolean matrices"/>.
     </Description>
   </ManSection>
