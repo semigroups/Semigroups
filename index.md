@@ -27,8 +27,15 @@ The following additional GAP packages are not required, but suggested:
 
 ## Author{% if site.data.package.authors.size != 1 %}s{% endif %}
 {% for person in site.data.package.authors %}
+{% if person.url %}<a href="{{ person.url }}">{{ person.name }}</a>{% else %}{{ person.name }}{% endif %}{% if forloop.last %}.{% else %}, {% endif %}{% else %}
+{% endfor %}
+
+{% if site.data.package.contributors.size != 0 %}
+## Contributor{% if site.data.package.contributors.size != 1 %}s{% endif %}
+{% for person in site.data.package.contributors %}
 {% if person.url %}<a href="{{ person.url }}">{{ person.name }}</a>{% else %}{{ person.name }}{% endif %}{% unless forloop.last %}, {% endunless %}{% else %}
 {% endfor %}
+{% endif %}
 
 {% if site.github.issues_url %}
 ## Feedback
@@ -41,10 +48,11 @@ For bug reports, feature requests and suggestions, please use the
 If you are using BibTeX, you can use the following BibTeX entry for the current 
 version of {{site.data.package.name}}:
 
-    @manual{ Mitchell{{site.data.package.year}}aa,
-             Author = { Mitchell, J. D. and others },
-             Month = { {{site.data.package.month}} },
-             Title = { Semigroups - GAP package, Version {{site.data.package.version}} },
-             Doi = { 10.5281/zenodo.53112 },
-             Url = { http://dx.doi.org/10.5281/zenodo.53112 },
-             Year = { {{site.data.package.year}} }}
+@manual{ Mitchell{{site.data.package.year}}aa,
+         Author = { Mitchell, J. D. and others },
+         Month  = { {{site.data.package.month}} },
+         Title  = { Semigroups - GAP package, Version {{site.data.package.version}} },
+         Doi    = { 10.5281/zenodo.53112 },
+         Url    = { http://dx.doi.org/10.5281/zenodo.53112 },
+         Year   = { {{site.data.package.year}} }
+}

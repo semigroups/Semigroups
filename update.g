@@ -47,7 +47,7 @@ PrintPackageList := function(stream, pkgs)
 end;
 
 GeneratePackageYML:=function(pkg)
-  local stream, authors, maintainers, formats, str_int_to_month, attin, f;
+    local stream, authors, maintainers, formats, date, contributors, attin, f;
 
     stream := OutputTextFile("_data/package.yml", false);
     SetPrintFormattingStatus(stream, false);
@@ -109,44 +109,22 @@ GeneratePackageYML:=function(pkg)
     AppendTo(stream, "status: ", pkg.Status, "\n");
     AppendTo(stream, "doc-html: ", pkg.PackageDoc.HTMLStart, "\n");
     AppendTo(stream, "doc-pdf: ", pkg.PackageDoc.PDFFile, "\n");
+    AppendTo(stream, "\n");
 
     # TODO: use AbstractHTML?
     # TODO: use Keywords?
 
-    # Added by JDM
-    str_int_to_month := function(str)
-      local n;
-      n := Int(str);
-      if n = 1 then 
-        return "January";
-      elif n = 2 then 
-        return "February";
-      elif n = 3 then 
-        return "March";
-      elif n = 4 then 
-        return "April";
-      elif n = 5 then 
-        return "May";
-      elif n = 6 then 
-        return "June";
-      elif n = 7 then 
-        return "July";
-      elif n = 8 then 
-        return "August";
-      elif n = 9 then 
-        return "September";
-      elif n = 10 then 
-        return "October";
-      elif n = 11 then 
-        return "November";
-      elif n = 12 then 
-        return "December";
-      fi;
-    end;
+    # added by WW
+    date := SplitString(StringDate(List(SplitString(pkg.Date, "/"), Int)), "-");
+    AppendTo(stream, "month: ", date[2], "\n");
+    AppendTo(stream, "year: ", date[3], "\n");
+    AppendTo(stream, "\n");
 
-    AppendTo(stream, "year: ", SplitString(pkg.Date, "/")[3], "\n");
-    AppendTo(stream, "month: ", str_int_to_month(SplitString(pkg.Date,
-    "/")[2]), "\n");
+    contributors := Filtered(pkg.Persons, p -> not p.IsAuthor);
+    if Length(contributors) > 0 then
+        AppendTo(stream, "contributors:\n");
+        PrintPeopleList(stream, contributors);
+    fi;
 
     CloseStream(stream);
 end;
