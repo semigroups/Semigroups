@@ -893,9 +893,9 @@ gap> RZMSConnectedComponents(R);
         If the index sets <M>I</M> and <M>\Lambda</M> are partitioned into
         <M>k</M> parts according to the <Ref Attr="RZMSConnectedComponents"/> of
         <M>S</M>, giving a disjoint union <M>I=I_1\cup\ldots\cup I_k</M> and
-        <M>\Lambda=\Lambda_1\cup\ldots\cup\Lambda_k</M>, then the
-        <M>r^{\text{th}}</M> block corresponds to the sub-matrix <M>Q_{r}</M> of
-        <M>Q</M> defined by <M>I_{r}</M> and <M>\Lambda_{r}</M>.
+        <M>\Lambda=\Lambda_1\cup\ldots\cup\Lambda_k</M>, then the <M>r</M>th
+        block corresponds to the sub-matrix <M>Q_{r}</M> of <M>Q</M> defined by
+        <M>I_{r}</M> and <M>\Lambda_{r}</M>.
       </Item>
       <Item>
         The first non-zero entry in a row occurs no sooner than
