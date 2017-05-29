@@ -273,6 +273,7 @@ gap> AsSemigroup(IsPBRSemigroup, M);
      <#Include Label = "IsomorphismMonoid">
      <#Include Label = "AsSemigroup">
      <#Include Label = "AsMonoid">
+     <#Include Label = "IsomorphismPermGroup">
      <#Include Label = "RZMSNormalization">
      <#Include Label = "RMSNormalization">
   </Section>

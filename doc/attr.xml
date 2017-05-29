@@ -459,14 +459,16 @@ gap> MinimalDClass(S);
 
 <#GAPDoc Label="IsomorphismPermGroup">
 <ManSection>
-  <Oper Name="IsomorphismPermGroup" Arg="S"/>
+  <Attr Name="IsomorphismPermGroup" Arg="S"/>
   <Returns> An isomorphism. </Returns>
   <Description>
     If the semigroup <A>S</A> is mathematically a group, so that it satisfies
     <Ref Prop="IsGroupAsSemigroup"/>, then <C>IsomorphismPermGroup</C> returns
     an isomorphism to a permutation group.<P/>
 
-    If <A>S</A> is not a group then an error is given.
+    If <A>S</A> is not a group then an error is given.<P/>
+
+    See also <Ref Attr="IsomorphismPermGroup" BookName="ref"/>.
 
 <Example><![CDATA[
 gap> S := Semigroup(Transformation([2, 2, 3, 4, 6, 8, 5, 5]),
@@ -506,7 +508,7 @@ true]]></Example>
     <Description>
       <C>GroupOfUnits</C> returns the group of units of the semigroup <A>S</A>
       as a subsemigroup of <A>S</A> if it exists and returns <K>fail</K> if it
-      does not. Use <Ref Oper="IsomorphismPermGroup"/> if you require a
+      does not. Use <Ref Attr="IsomorphismPermGroup"/> if you require a
       permutation representation of the group of units.<P/>
 
       If a semigroup <A>S</A> has an identity <C>e</C>, then the <E>group of
