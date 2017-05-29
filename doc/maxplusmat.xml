@@ -17,7 +17,8 @@
     <Filt Name = "IsTropicalMatrix"          Arg = "obj" Type = "Category"/>
     <Filt Name = "IsTropicalMaxPlusMatrix"   Arg = "obj" Type = "Category"/>
     <Filt Name = "IsTropicalMinPlusMatrix"   Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsProjectiveMaxPlusMatrix" Arg = "obj" Type = "Category"/>
+    <!-- <Filt Name = "IsProjectiveMaxPlusMatrix" Arg = "obj" Type =
+         "Category"/> -->
     <Filt Name = "IsNTPMatrix"               Arg = "obj" Type = "Category"/>
     <Filt Name = "IsIntegerMatrix"           Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
@@ -27,8 +28,8 @@
       <P/>
 
       <C>IsTropicalMatrix</C> is a supercategory of
-      <C>IsTropicalMaxPlusMatrix</C>, <C>IsTropicalMinPlusMatrix</C> and
-      <C>IsProjectiveMaxPlusMatrix</C>.
+      <C>IsTropicalMaxPlusMatrix</C> and <C>IsTropicalMinPlusMatrix</C>.
+      <!-- and <C>IsProjectiveMaxPlusMatrix</C>. -->
       <P/>
 
       Basic operations for matrices over semirings include: multiplication via
@@ -76,10 +77,10 @@
       "Category"/>
     <Filt Name = "IsTropicalMinPlusMatrixCollColl"     Arg = "obj" Type =
       "Category"/>
-    <Filt Name = "IsProjectiveMaxPlusMatrixCollection" Arg = "obj" Type =
+    <!-- <Filt Name = "IsProjectiveMaxPlusMatrixCollection" Arg = "obj" Type =
       "Category"/>
     <Filt Name = "IsProjectiveMaxPlusMatrixCollColl"   Arg = "obj" Type =
-      "Category"/>
+      "Category"/> -->
     <Filt Name = "IsNTPMatrixCollection"               Arg = "obj" Type =
       "Category"/>
     <Filt Name = "IsNTPMatrixCollColl"                 Arg = "obj" Type =

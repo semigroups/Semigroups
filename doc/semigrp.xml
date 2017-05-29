@@ -301,9 +301,9 @@ gap> AsMonoid(S);
     </List>
 
     If <A>filter</A> is a filter such as <Ref
-      Filt="IsTransformationSemigroup" BookName = "ref"/>, <Ref
-      Filt="IsIntegerMatrixSemigroup"/>, or <Ref
-      Filt="IsProjectiveMaxPlusMatrix"/>,
+      Filt="IsTransformationSemigroup" BookName = "ref"/> or <Ref
+      Filt="IsIntegerMatrixSemigroup"/>, <!-- or <Ref
+      Filt="IsProjectiveMaxPlusMatrix"/>, -->
     then a further argument can be specified:
     <List>
       <Mark>degree / dimension</Mark>

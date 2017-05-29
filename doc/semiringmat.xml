@@ -37,13 +37,13 @@
           convert a tropical min-plus matrix to a (non-tropical) min-plus matrix);
         </Item>
         <Item>
-          <Ref Filt = "IsMaxPlusMatrix"/> and a tropical max-plus matrix or
-          projective max-plus matrix;
+          <Ref Filt = "IsMaxPlusMatrix"/> and a tropical max-plus matrix; <!-- or
+          projective max-plus matrix; -->
         </Item>
-        <Item>
+        <!-- <Item>
           <Ref Filt = "IsProjectiveMaxPlusMatrix"/> and a tropical max-plus
           matrix or (non-tropical) max-plus matrix;
-        </Item>
+        </Item> -->
         <Item>
           <Ref Filt = "IsIntegerMatrix"/> and an ntp matrix.
         </Item>
@@ -59,7 +59,7 @@
         </Item>
         <Item>
           <Ref Filt = "IsTropicalMaxPlusMatrix"/> and a tropical max-plus,
-          projective max-plus, or max-plus matrix, and a value for the
+          <!-- projective max-plus, --> or max-plus matrix, and a value for the
           threshold of the resulting matrix.
         </Item>
       </List>
@@ -89,17 +89,6 @@ gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
 gap> AsMatrix(IsMaxPlusMatrix, mat);
 Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], 
   [4, 1, 0]])
-gap> mat := Matrix(IsProjectiveMaxPlusMatrix, [[-1, 2, 1],
->                                              [-2, -1, 1],
->                                              [1, 1, 2]]);;
-gap> AsMatrix(IsMaxPlusMatrix, mat);
-Matrix(IsMaxPlusMatrix, [[-1, 2, 1], [-2, -1, 1], [1, 1, 2]])
-gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
->                                            [0, 1, 3],
->                                            [4, 1, 0]], 10);;
-gap> AsMatrix(IsProjectiveMaxPlusMatrix, mat);
-Matrix(IsProjectiveMaxPlusMatrix, [[-infinity, -infinity, 3], 
-  [0, 1, 3], [4, 1, 0]])
 gap> mat := Matrix(IsNTPMatrix, [[1, 2, 2],
 >                                [0, 2, 0],
 >                                [1, 3, 0]], 4, 5);;
@@ -116,13 +105,6 @@ gap> mat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],
 gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 4);
 Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], 
   [0, 1, 3], [4, 1, 0]], 4)
-gap> mat := Matrix(IsProjectiveMaxPlusMatrix,
->                  [[-infinity, -infinity, 3],
->                   [0, 1, 3],
->                   [4, 1, 0]]);;
-gap> AsMatrix(IsTropicalMaxPlusMatrix, mat, 1);
-Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 1], 
-  [0, 1, 1], [1, 1, 0]], 1)
 gap> mat := Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3],
 >                                    [0, 1, 3],
 >                                    [4, 1, 0]]);;
@@ -344,12 +326,6 @@ gap> Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1],
 >                                     [1, 1, 3]],
 >           9);
 Matrix(IsTropicalMinPlusMatrix, [[1, 1, 1], [0, 3, 0], [1, 1, 3]], 9)
-gap> Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0],
->                                       [0, -1, -infinity, -infinity],
->                                       [4, 4, 2, -1],
->                                       [1, 1, 0, 3]]);
-Matrix(IsProjectiveMaxPlusMatrix, [[0, -infinity, -1, 0], 
-  [0, -1, -infinity, -infinity], [4, 4, 2, -1], [1, 1, 0, 3]])
 gap> Matrix(IsNTPMatrix, [[0, 0, 0],
 >                         [2, 0, 1],
 >                         [2, 2, 2]],
@@ -438,9 +414,6 @@ Matrix(IsTropicalMaxPlusMatrix, [[5, 1, 4], [1, -infinity, 1], [1, 0, 2]],
 gap> RandomMatrix(IsTropicalMinPlusMatrix, 3, 2);
 Matrix(IsTropicalMinPlusMatrix, [[1, -infinity, -infinity], [1, 1, 1], 
   [2, 2, 1]], 2)
-gap> RandomMatrix(IsProjectiveMaxPlusMatrix, 4);
-Matrix(IsProjectiveMaxPlusMatrix, [[1, -1, -1, -infinity], 
-  [0, -infinity, 1, -1], [-infinity, 3, 2, 4], [3, -1, 1, -infinity]])
 gap> RandomMatrix(IsNTPMatrix, 3, 2, 5);
 Matrix(IsNTPMatrix, [[1, 1, 1], [1, 1, 0], [3, 0, 1]], 2, 5)
 gap> RandomMatrix(IsIntegerMatrix, 2);

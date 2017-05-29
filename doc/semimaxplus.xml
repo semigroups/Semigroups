@@ -17,7 +17,7 @@
     <Filt Name = "IsTropicalMatrixSemigroup"          Arg = "obj" Type = "Category"/>
     <Filt Name = "IsTropicalMaxPlusMatrixSemigroup"   Arg = "obj" Type = "Category"/>
     <Filt Name = "IsTropicalMinPlusMatrixSemigroup"   Arg = "obj" Type = "Category"/>
-    <Filt Name = "IsProjectiveMaxPlusMatrixSemigroup" Arg = "obj" Type = "Category"/>
+    <!-- <Filt Name = "IsProjectiveMaxPlusMatrixSemigroup" Arg = "obj" Type = "Category"/> -->
     <Filt Name = "IsNTPMatrixSemigroup"               Arg = "obj" Type = "Category"/>
     <Filt Name = "IsIntegerMatrixSemigroup"           Arg = "obj" Type = "Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
