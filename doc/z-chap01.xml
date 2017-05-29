@@ -19,13 +19,7 @@
     monoids, inverse semigroups and their ideals, calculating their Green's
     structure, size, elements, group of units, minimal ideal, and testing
     membership, finding the inverses of a regular element, and factorizing
-    elements over the generators, and much more; see Chapters
-    <Ref Chap = "Creating semigroups and monoids"/>, <Ref Chap = "Ideals"/>, and
-    <Ref Chap = "Green's relations"/>. There
-    are methods for testing if semigroups satisfy  particular
-    properties, such as if they are regular, simple, inverse, completely
-    regular, and a variety of further properties; see Chapter <Ref
-      Chap = "Green's relations"/>. <!--TODO update+add references -->
+    elements over the generators, and much more; see below for more details.
     <P/>
 
     There are methods for finding: congruences of semigroups, the normalizer of
@@ -50,10 +44,9 @@
 
     There are functions in &Semigroups; to define and manipulate free
     inverse semigroups and free bands; this part of the package was written
-    by Julius Jonu&#353;as; see Chapters <Ref Chap = "Free inverse semigroups"/>
-    and <Ref Chap = "Free bands"/>.
+    by Julius Jonu&#353;as; see Chapters <Ref Chap = "Free objects"/>.
     <P/>
-
+    
     There are three fundamental types of algorithms in the &Semigroups; package,
     those for semigroups of:
     <Enum>
@@ -151,12 +144,87 @@
     differently when &Semigroups; is loaded.  For more details about semigroups
     in &GAP; or Green's relations in particular, see <Ref Sect = "Semigroups"
       BookName = "ref"/> or <Ref Sect = "Green's Relations" BookName = "ref"/>.
-    <P/>
+  </Section>
 
-    If you find a bug or an issue with the package, then report this using the
-    <URL Text = "issue
-      tracker">http://bitbucket.org/james-d-mitchell/semigroups/issues</URL>.
+  If you find a bug or an issue with the package, then report this using the
+  <URL Text = "issue
+    tracker">http://bitbucket.org/james-d-mitchell/semigroups/issues</URL>.
 
+  <Section Label = "Overview">
+    <Heading>
+      Overview
+    </Heading>
+
+    This manual is organised as follows: 
+    <List>
+      <Mark>Part I: generators</Mark> 
+      <Item>
+        the different types of generators that are introduced in &Semigroups;
+        are described in Chapters <Ref Chap = "bipartition"/>, <Ref Chap =
+          "Partitioned binary relations (PBRs)"/>, and <Ref Chap = 
+          "Matrices over semirings"/>. These include <Ref Func="Bipartition"/>, 
+        <Ref Func="PBR"/>, and <Ref Func="Matrix"/>, which 
+        supplement those already defined in the &GAP; library, such as <Ref
+          Oper="Transformation" BookName="ref"/> or <Ref Oper="PartialPerm" 
+          BookName="ref"/>. 
+      </Item>
+
+      <Mark>Part II: semigroups and ideals</Mark>
+      <Item>
+        functions and operations for creating semigroups, monoids, and their
+        ideals, in general, and various options, are described
+        in Chapters <Ref Chap = "Creating semigroups and monoids"/> and 
+        <Ref Chap = "Ideals"/>.
+      </Item>
+      
+      <Mark>Part III: standard examples and constructions</Mark>
+      <Item>
+        standard examples of semigroups, such as <Ref Oper =
+          "FullBooleanMatMonoid"/> or <Ref Oper =
+          "UniformBlockBijectionMonoid"/>, are described in 
+        Chapter <Ref Chap = "Standard examples"/>, and standard constructions,
+        such as <Ref Oper = "TrivialSemigroup"/>, <Ref Oper =
+          "RightZeroSemigroup"/>, are described in Chapter 
+        <Ref Chap = "Standard constructions"/>.
+      </Item>
+      
+      <Mark>Part IV: further classes of semigroups and monoids</Mark>
+      <Item>
+        free objects in the categories of inverse semigroups, and bands, are
+        described in Chapter <Ref Chap = "Free objects"/>, and graph inverse
+        semigroups, which are a generalisation of polycyclic monoids, are
+        described in Chapter <Ref Chap = "GraphInverseSemigroups"/>.
+      </Item>
+
+      <Mark>Part V: the structure of a semigroup or monoid</Mark>
+      <Item>
+        the functionality of the &Semigroups; package for determining various
+        structural properties of a given semigroup or monoid are described in
+        Chapters <Ref Chap = "Green's relations"/>,  
+        <Ref Chap = "Attributes and operations for semigroups"/>, 
+        and 
+        <Ref Chap = "Properties of semigroups"/>.
+        Attributes and properties specific to inverse semigroups are described in
+        Chapter
+        <Ref Chap = "Properties and attributes specific to inverse semigroups"/>.
+      </Item>
+      
+      <Mark>Part VI: congruences, quotients, and homomorphisms</Mark>
+      <Item>
+        methods for creating and manipulating congruences and homomorphisms are
+        described by Chapters <Ref Chap = "Congruences"/> and <Ref Chap =
+          "Semigroup homomorphisms"/>.
+      </Item>
+      
+      <Mark>Part VII: utilities and helper functions</Mark>
+      <Item>
+        functions for reading and writing semigroups and their elements, and
+        for visualising semigroups, and some of their elements, can be found in
+        Chapters <Ref Chap = "Visualising semigroups and elements"/> and 
+        <Ref Chap = "Utilities"/>.
+      </Item>
+
+    </List>
   </Section>
 
 </Chapter>

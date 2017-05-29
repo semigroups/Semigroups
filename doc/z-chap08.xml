@@ -1,73 +1,93 @@
-<Chapter Label = "Visualising semigroups and elements">
+<Chapter Label = "Standard examples">
   <Heading>
-    Visualising semigroups and elements
+    Standard examples
   </Heading>
 
-  There are two operations <Ref Oper = "TikzString"/> and <Ref Oper =
-    "DotString"/> in &Semigroups; for creating &LaTeX; and <C>dot</C> (also
-  known as GraphViz) format pictures of the Green's class structure of a
-  semigroup and for visualising certain types of elements of a semigroup. There
-  is also a function <Ref Func = "Splash"/> for automatically processing the
-  output of <Ref Oper = "TikzString"/> and <Ref Oper = "DotString"/> and
-  opening the resulting pdf file.
+  In this Chapter we describe some standard examples of semigroups which are
+  available in the &Semigroups; package.
+  <P/>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
- 
-  <Section>
 
+  <Section Label = "Transformation semigroups">
     <Heading>
-      Automatic viewing
+      Transformation semigroups
     </Heading>
 
-    In this section we describe the function <Ref Func = "Splash"/> for
-    automatically processing and opening the strings output by <Ref Oper =
-      "TikzString"/> and <Ref Oper = "DotString"/>
+    In this section, we describe the operations in &Semigroups; that can be
+    used to create transformation semigroups belonging to several standard
+    classes of example. See <Ref Chap = "Transformations" BookName = "ref"/>
+    for more information about semigroups of transformations.
+    <#Include Label = "EndomorphismsPartition">
+    <#Include Label = "PartialTransformationMonoid">
+    <#Include Label = "MunnSemigroup">
+    <#Include Label = "OPOIPOPI">
+    <!-- split this to separate transformation and partial perm semigroups-->
+    <#Include Label = "SingularTransformationSemigroup">
+    <#Include Label = "CatalanMonoid">
+  </Section>
 
-    <#Include Label = "Splash"/>
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
+  <Section Label = "Semigroups of partial permutations">
+    <Heading>
+      Semigroups of partial permutations
+    </Heading>
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label = "Semigroups of bipartitions">
+    <Heading>
+      Semigroups of bipartitions
+    </Heading>
+
+    In this section, we describe the operations in &Semigroups; that can be
+    used to create bipartition semigroups belonging to several standard
+    classes of example. See Chapter <Ref Chap = "bipartition"/> for more
+    information about semigroups of bipartitions.
+    <#Include Label = "PartitionMonoid">
+    <#Include Label = "BrauerMonoid">
+    <#Include Label = "JonesMonoid">
+    <#Include Label = "UniformBlockBijectionMonoid">
+    <#Include Label = "ApsisMonoid">
+    <#Include Label = "DualSymmetricInverseSemigroup">
   </Section>
  
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section>
-
+  <Section Label = "Standard PBR semigroups">
     <Heading>
-      <C>dot</C> pictures
+      Standard PBR semigroups
     </Heading>
-
-    In this section, we describe the operations in &Semigroups; for creating
-    pictures in <C>dot</C> format.
-    <P/>
- 
-    The operations described in this section return strings, which
-    can be written to a file using the function <Ref Func = "FileString"
-      BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash"/>.
-
-    <#Include Label = "DotString"/>
-    <#Include Label = "DotSemilatticeOfIdempotents"/>
-
+    <#Include Label = "FullPBRMonoid">
   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
  
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
+  <Section Label = "Semigroups of boolean matrices">
     <Heading>
-      <C>tikz</C> pictures
+      Semigroups of boolean matrices
     </Heading>
+    <#Include Label = "RegularBinaryRelationSemigroup">
+ 
+  </Section>
 
-    In this section, we describe the operations in &Semigroups; for creating
-    pictures in <C>tikz</C> format.
-    <P/>
-
-    The functions described in this section return a string, which can be
-    written to a file using the function <Ref Func = "FileString"
-      BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash"/>.
-
-    <#Include Label = "TikzString">
-
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+ 
+  <Section Label = "Matrix semigroups">
+    <Heading>
+      Matrix semigroups
+    </Heading>
+    <#Include Label = "GeneralLinearMonoid">
+    <#Include Label = "IsFullMatrixMonoid">
+ 
   </Section>
 
 </Chapter>
