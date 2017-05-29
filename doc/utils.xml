@@ -40,21 +40,25 @@
 <#GAPDoc Label="SemigroupsTestStandard">
   <ManSection>
     <Func Name = "SemigroupsTestStandard" Arg = ""/>
-    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Returns>A list indicating which tests passed and failed and the time take
+      to run each file.</Returns>
     <Description>
       This function should be called with no argument to comprehensively test
       that &Semigroups; is working correctly. These tests should take no more
       than a few minutes to complete.  To quickly test that &Semigroups; is
-      installed correctly use <Ref Func = "SemigroupsTestInstall"/>.
+      installed correctly use <Ref Func = "SemigroupsTestInstall"/>.<P/>
+
+      Each test file is run twice, once when the methods for 
+      <Ref Filt="IsActingSemigroup"/> are enabled and once when they are
+      disabled. 
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-
 <#GAPDoc Label="SemigroupsTestInstall">
   <ManSection>
     <Func Name = "SemigroupsTestInstall" Arg = ""/>
-    <Returns>Nothing.</Returns>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       This function should be called with no argument to test your installation
       of &Semigroups; is working correctly. These tests should take no more
@@ -69,43 +73,13 @@
   <ManSection>
     <InfoClass Name = "InfoSemigroups"/>
     <Description>
-    <C>InfoSemigroups</C> is the info class of the &Semigroups; package.
-    The info level is initially set to 0 and no info messages are displayed.
-    We recommend that you set the level to 1 so that basic info messages
-    are displayed. To increase the amount of information displayed during a
-    computation increase the info level to 2 or 3. To stop all info messages
-    from being displayed, set the info level to 0.  See also
+    <C>InfoSemigroups</C> is the info class of the &Semigroups; package.  The
+    info level is initially set to 0 and no info messages are displayed.  To
+    increase the amount of information displayed during a computation increase
+    the info level to 2 or 3. To stop all info messages from being displayed,
+    set the info level to 0.  See also
     <Ref Subsect = "Info Functions" BookName = "ref"/> and
     <Ref Func = "SetInfoLevel" BookName = "ref"/>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="SemigroupsTestManualExamples">
-  <ManSection>
-    <Func Name = "SemigroupsTestManualExamples" Arg = ""/>
-    <Returns>Nothing.</Returns>
-    <Description>
-      This function should be called with no argument to test the examples in
-      the &Semigroups; manual. These tests should take no more than a few
-      minutes to complete.  To more comprehensively test that &Semigroups; is
-      installed correctly use <Ref Func = "SemigroupsTestStandard"/>. See also <Ref
-      Func = "SemigroupsTestInstall"/>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
-<#GAPDoc Label="SemigroupsDir">
-  <ManSection>
-    <Func Name = "SemigroupsDir" Arg = ""/>
-    <Returns>A string.</Returns>
-    <Description>
-      This function returns the absolute path to the &Semigroups; package
-      directory as a string. The same result can be obtained typing:
-
-      <Log>PackageInfo("semigroups")[1]!.InstallationPath;</Log>
-
-      at the &GAP; prompt.
     </Description>
   </ManSection>
 <#/GAPDoc>

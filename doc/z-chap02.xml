@@ -54,8 +54,7 @@
       </Item>
 
       <Item>
-        <!-- TODO put in the correct version -->
-        from Version 3.0.0, it is necessary to compile the &Semigroups; package.
+        from version 3.0.0, it is necessary to compile the &Semigroups; package.
         Inside the <F>pkg/&ARCHIVENAME;</F> directory, type
         <Listing>
 <![CDATA[./configure
@@ -73,9 +72,7 @@ make]]></Listing>
       </Item>
     </List>
 
-    <!-- TODO put in the correct version -->
-
-    <E><B>Please note that</B> from Version 3.0.0: &Semigroups; can only be
+    <E><B>Please note that</B> from version 3.0.0: &Semigroups; can only be
       loaded if it has been compiled.</E><P/>
 
     If you want to check that the package is working correctly, you
@@ -95,12 +92,16 @@ make]]></Listing>
     &Orb;, &IO;, &Digraphs; and &genss; packages. The &Orb; package is used to
     efficiently compute components of actions, which underpin many of the
     features of &Semigroups;.  The &IO; package is used to read and write
-    transformations, partial permutations, and bipartitions to a file.  The
+    elements of a semigroup to a file.  The
     &genss; package is used in a non-deterministic version of the operation <Ref
       Oper = "Normalizer" Label = "for a perm group, semigroup, record"/> and in
-    calculating the stabiliser of a Rees 0-matrix semigroup's matrix. <P/>
-    <!-- TODO add description of the use of the Digraphs package -->
-
+    calculating the stabiliser of a Rees 0-matrix semigroup's matrix. 
+    The &Digraphs; package is used for in variety of ways in the &Semigroups;
+    package, in particular, to apply standard graph theoretic algorithms to
+    certain data structures. 
+    <P/>
+    <!-- TODO Update the sentednce about Digraphs, when it is used more widely
+         in Semigroups-->
   </Section>
 
   <!--**********************************************************************-->
@@ -123,21 +124,22 @@ make]]></Listing>
 make]]></Listing>
     <P/>
 
-    If you installed the package in another 'pkg' directory than the standard 'pkg'
+    If you installed the package in another <F>pkg</F> directory other than the
+    standard <F>pkg</F>
     directory in your &GAP; installation, then you have to do two things. Firstly
-    during compilation you have to use the option '--with-gaproot=PATH' of the
-    'configure' script where 'PATH' is a path to the main GAP root directory (if
-    not given the default '../..' is assumed).<P/>
+    during compilation you have to use the option <C>--with-gaproot=PATH</C> of
+    the <C>configure</C> script where <C>PATH</C> is a path to the main &GAP;
+    root directory (if not given the default <C>../..</C> is assumed).<P/>
 
     If you installed &GAP; on several architectures, you must execute the
     configure/make step for each of the architectures. You can either do this
-    immediately after configuring and compiling GAP itself on this architecture, or
-    alternatively (when using version 4.5 of GAP or newer) set the environment
-    variable 'CONFIGNAME' to the name of the configuration you used when compiling
-    GAP before running './configure'.  Note however that your compiler choice and
-    flags (environment variables 'CC' and 'CFLAGS') need to be chosen to match the
-    setup of the original GAP compilation. For example you have to specify 32-bit
-    or 64-bit mode correctly!
+    immediately after configuring and compiling &GAP; itself on this
+    architecture, or alternatively set the environment variable
+    <C>CONFIGNAME</C> to the name of the configuration you used when compiling
+    &GAP; before running <C>./configure</C>.  Note however that your compiler
+    choice and flags (environment variables <C>CC</C> and <C>CFLAGS</C>) need
+    to be chosen to match the setup of the original &GAP; compilation. For
+    example you have to specify 32-bit or 64-bit mode correctly!
   </Section>
 
   <!--**********************************************************************-->
@@ -170,14 +172,13 @@ make]]></Listing>
 
     If something goes wrong, then please review the instructions in Section
     <Ref Sect = "For those in a hurry"/> and ensure that &Semigroups; has been
-    properly installed.  If you continue having problems, please use the <URL
-      Text = "issue
-      tracker">https://github.com/gap-packages/Semigroups/issues</URL> to
-    report the issues you are having.
+    properly installed.  If you continue having problems, please use the 
+    <URL Text = 
+      "issue tracker">https://github.com/gap-packages/Semigroups/issues</URL> 
+    to report the issues you are having.
 
     <#Include Label = "SemigroupsTestInstall">
     <#Include Label = "SemigroupsTestStandard">
-    <!--<#Include Label = "SemigroupsTestManualExamples">-->
 
   </Section>
 
