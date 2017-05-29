@@ -369,7 +369,15 @@ gap> RandomSemigroup(IsReesZeroMatrixSemigroup, 2, 2, Group((1, 2), (3, 4)));
 gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 2);
 <monoid of 3x3 matrices over GF(421^4) with 3 generators>
 gap> RandomInverseMonoid(IsMatrixOverFiniteFieldMonoid, 2, 2, GF(7));
-<monoid of 3x3 matrices over GF(7) with 2 generators>]]></Log>
+<monoid of 3x3 matrices over GF(7) with 2 generators>
+gap> RandomSemigroup(IsBipartitionSemigroup, 5, 5);
+<bipartition semigroup of degree 5 with 5 generators>
+gap> RandomMonoid(IsBipartitionMonoid, 5, 5);
+<bipartition monoid of degree 5 with 5 generators>
+gap> RandomSemigroup(IsBooleanMatSemigroup);
+<semigroup of 3x3 boolean matrices with 18 generators>
+gap> RandomMonoid(IsBooleanMatMonoid);
+<monoid of 11x11 boolean matrices with 19 generators>]]></Log> 
   </Description>
 </ManSection>
 <#/GAPDoc>
