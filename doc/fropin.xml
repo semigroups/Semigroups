@@ -1,0 +1,30 @@
+#############################################################################
+##
+#W  fropin.xml
+#Y  Copyright (C) 2017                                      Michael Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsEnumerableSemigroupRep">
+  <ManSection>
+    <Filt Name = "IsEnumerableSemigroupRep" Arg = "obj" Type="Representation"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A representation for any semigroup to which the Froidure-Pin algorithm
+      applies.
+      <!--TODO: Write more about this-->
+
+      <Example><![CDATA[
+gap> S := Semigroup([Transformation([1, 3, 2])]);;
+gap> IsEnumerableSemigroupRep(S);
+true
+gap> S := FreeSemigroup(3);;
+gap> IsEnumerableSemigroupRep(S);
+false
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

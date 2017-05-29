@@ -68,7 +68,7 @@
         extend &Semigroups; see <Ref Chap = "Extending the package"/>.-->  We
         refer to semigroups to which the algorithms in <Cite Key =
           "East2015aa"/> can be applied as <E>acting semigroups</E>.  See
-        Section <Ref Sect = "Acting semigroups"/> for further details.
+        Section <Ref Sect = "Types of semigroup"/> for further details.
       </Item>
 
       <Item>

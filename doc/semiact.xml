@@ -1,0 +1,29 @@
+#############################################################################
+##
+#W  semiact.xml
+#Y  Copyright (C) 2017                                      Michael Torpey
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="IsActingSemigroup">
+  <ManSection>
+    <Filt Name = "IsActingSemigroup" Arg = "obj" Type="Category"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A category of semigroup for which we have special methods.
+      <!--TODO: Write more about this-->
+
+      <Example><![CDATA[
+gap> S := Semigroup([Transformation([1, 3, 2])]);;
+gap> IsActingSemigroup(S);
+true
+gap> S := FreeSemigroup(3);;
+gap> IsActingSemigroup(S);
+false
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

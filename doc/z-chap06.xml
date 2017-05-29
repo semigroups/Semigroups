@@ -7,8 +7,10 @@
   be created in &Semigroups;, and the options that are available at the time of
   creation.
  
-  <Section Label = "Acting semigroups"><!--TODOFIXME: move this-->
-    <Heading>Acting semigroups</Heading>
+  <Section Label = "Types of semigroup">
+    <Heading>Types of semigroup</Heading>
+    <!--TODO: Write about acting/enumerable semigroups-->
+    <!--
     It is harder for &Semigroups; to compute Green's &L;- and &H;-classes of a
     transformation semigroup and the methods used to compute with Green's &R;-
     and &D;-classes are the most efficient in &Semigroups;.  Thus, if you are
@@ -29,6 +31,9 @@
     <Ref Func = "NrRClasses"/>.  This may be useful if you want to study a very
     large semigroup where computing all the elements of the semigroup is not
     feasible.<P/>
+    -->
+    <#Include Label = "IsActingSemigroup">
+    <#Include Label = "IsEnumerableSemigroupRep">
   </Section>
 
   <Section>
