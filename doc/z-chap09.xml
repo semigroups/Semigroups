@@ -1,93 +1,34 @@
-<Chapter Label = "Standard examples">
+<Chapter Label = "Standard constructions">
   <Heading>
-    Standard examples
+    Standard constructions
   </Heading>
 
-  In this Chapter we describe some standard examples of semigroups which are
-  available in the &Semigroups; package.
+  In this chapter we describe some standard semigroup constructions which
+  are available in the &Semigroups; package.
   <P/>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
-  <Section Label = "Transformation semigroups">
+  <Section Label = "Standard constructions section">
     <Heading>
-      Transformation semigroups
+      Standard constructions
     </Heading>
 
-    In this section, we describe the operations in &Semigroups; that can be
-    used to create transformation semigroups belonging to several standard
-    classes of example. See <Ref Chap = "Transformations" BookName = "ref"/>
-    for more information about semigroups of transformations.
-    <#Include Label = "EndomorphismsPartition">
-    <#Include Label = "PartialTransformationMonoid">
-    <#Include Label = "MunnSemigroup">
-    <#Include Label = "OPOIPOPI">
-    <!-- split this to separate transformation and partial perm semigroups-->
-    <#Include Label = "SingularTransformationSemigroup">
-    <#Include Label = "CatalanMonoid">
+    In this section, we describe the functions in &Semigroups; that can be used
+    to create standard semigroup constructions in various representations.
+    For all of the constructions, the default representation is as a semigroup
+    of transformations. In general, these functions do not return
+    a representation of minimal degree.
+
+    <#Include Label = "TrivialSemigroup">
+    <#Include Label = "MonogenicSemigroup">
+    <#Include Label = "RectangularBand">
+    <#Include Label = "ZeroSemigroup">
+    <#Include Label = "LeftZeroSemigroup">
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-
-  <Section Label = "Semigroups of partial permutations">
-    <Heading>
-      Semigroups of partial permutations
-    </Heading>
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section Label = "Semigroups of bipartitions">
-    <Heading>
-      Semigroups of bipartitions
-    </Heading>
-
-    In this section, we describe the operations in &Semigroups; that can be
-    used to create bipartition semigroups belonging to several standard
-    classes of example. See Chapter <Ref Chap = "bipartition"/> for more
-    information about semigroups of bipartitions.
-    <#Include Label = "PartitionMonoid">
-    <#Include Label = "BrauerMonoid">
-    <#Include Label = "JonesMonoid">
-    <#Include Label = "UniformBlockBijectionMonoid">
-    <#Include Label = "ApsisMonoid">
-    <#Include Label = "DualSymmetricInverseSemigroup">
-  </Section>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section Label = "Standard PBR semigroups">
-    <Heading>
-      Standard PBR semigroups
-    </Heading>
-    <#Include Label = "FullPBRMonoid">
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section Label = "Semigroups of boolean matrices">
-    <Heading>
-      Semigroups of boolean matrices
-    </Heading>
-    <#Include Label = "RegularBinaryRelationSemigroup">
- 
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section Label = "Matrix semigroups">
-    <Heading>
-      Matrix semigroups
-    </Heading>
-    <#Include Label = "GeneralLinearMonoid">
-    <#Include Label = "IsFullMatrixMonoid">
- 
-  </Section>
 
 </Chapter>
