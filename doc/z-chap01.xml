@@ -102,9 +102,9 @@
               \ldots, t, \infty\}</M> for some threshold <M>t</M> with
             operations min and plus;
           </Item>
-          <Item>
+          <!-- <Item>
             the <E>projective max-plus semiring</E> ... TODO
-          </Item>
+          </Item> -->
           <Item>
             the semiring <M>\mathbb{N}_{t, p} = \{0, 1,
               \ldots, t, t + 1, \ldots, t + p - 1\}</M> for some threshold
