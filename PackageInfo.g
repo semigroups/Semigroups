@@ -80,7 +80,7 @@ Persons := [
   rec(
     LastName     := "Delgado",
     FirstNames    := "M.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mdelgado@fc.up.pt",
     WWWHome       := "http://cmup.fc.up.pt/cmup/mdelgado/",
@@ -90,7 +90,7 @@ Persons := [
   rec(
     LastName      := "East",
     FirstNames    := "J.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "j.east@uws.edu.au",
     WWWHome       := "http://goo.gl/MuiJu5",
@@ -100,7 +100,7 @@ Persons := [
   rec(
     LastName      := "Egri-Nagy",
     FirstNames    := "A.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "attila@egri-nagy.hu",
     WWWHome       := "http://www.egri-nagy.hu",
@@ -110,7 +110,7 @@ Persons := [
   rec(
     LastName      := "Ham",
     FirstNames    := "N.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "nicholas.charles.ham@gmail.com",
     WWWHome       := "https://n-ham.github.io",
@@ -120,7 +120,7 @@ Persons := [
   rec(
     LastName      := "Jonusas",
     FirstNames    := "J.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "jj252@st-and.ac.uk",
     PostalAddress := _STANDREWS,
@@ -131,7 +131,7 @@ Persons := [
    rec(
     LastName      := "Pfeiffer",
     FirstNames    := "M.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
     WWWHome       := "http://www.morphism.de/~markusp/",
@@ -142,21 +142,21 @@ Persons := [
   rec(
     LastName      := "Steinberg",
     FirstNames    := "B.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     WWWHome       := "http://www.sci.ccny.cuny.edu/~benjamin/"),
 
   rec(
     LastName      := "Smith",
     FirstNames    := "J.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     WWWHome       := "http://math.sci.ccny.cuny.edu/people?name=Jhevon_Smith"),
 
   rec(
     LastName      := "Torpey",
     FirstNames    := "M.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
     WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~mct25/",
@@ -168,7 +168,7 @@ Persons := [
   rec(
     LastName      := "Wilson",
     FirstNames    := "W. A.",
-    IsAuthor      := true,
+    IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "waw7@st-and.ac.uk",
     WWWHome       := "http://wilf.me",
