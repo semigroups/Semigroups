@@ -329,6 +329,7 @@
     </List>
  
     <#Include Label = "IsXMatrixSemigroup">
+    <#Include Label = "IsXMatrixMonoid">
     <#Include Label = "IsFinite">
     <#Include Label = "IsTorsion">
     <#Include Label = "NormalizeSemigroup">
