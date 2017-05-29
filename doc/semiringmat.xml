@@ -238,8 +238,10 @@ gap> DimensionOfMatrixOverSemiring(x);
 
 <#GAPDoc Label="Matrix">
   <ManSection>
-    <Oper Name = "Matrix" Arg = "filt, mat[, threshold[, period]]"/>
-    <Oper Name = "Matrix" Arg = "semiring, mat"/>
+    <Oper Name = "Matrix" Arg = "filt, mat[, threshold[, period]]"
+          Label = "for a filter and a matrix"/>
+    <Oper Name = "Matrix" Arg = "semiring, mat"
+          Label = "for a semiring and a matrix"/>
     <Returns>A matrix over semiring.</Returns>
     <Description>
       This operation can be used to construct a matrix over
@@ -353,13 +355,15 @@ Matrix(GF(3), [[Z(3), Z(3)^0, Z(3)], [Z(3), Z(3)^0, Z(3)^0],
 
 <#GAPDoc Label="RandomMatrix">
   <ManSection>
-    <Func Name = "RandomMatrix" Arg = "filt, dim[, threshold[, period]]"/>
-    <Func Name = "RandomMatrix" Arg = "semiring, dim"/>
+    <Func Name = "RandomMatrix" Arg = "filt, dim[, threshold[, period]]"
+          Label = "for a filter and a matrix"/>
+    <Func Name = "RandomMatrix" Arg = "semiring, dim"
+          Label = "for a semiring and a matrix"/>
     <Returns>A matrix over semiring.</Returns>
     <Description>
       This operation can be used to construct a random matrix over a semiring
       in &Semigroups;. The usage of <C>RandomMatrix</C> is similar to that of
-        <Ref Oper = "Matrix"/>.
+        <Ref Oper = "Matrix" Label = "for a filter and a matrix"/>.
       <P/>
  
       In its first form, the first argument <A>filt</A> specifies the
