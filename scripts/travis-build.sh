@@ -32,8 +32,11 @@ elif [ ! -z "$GAP_BRANCH" ]; then
   cd semigroups/src
   git clone https://github.com/james-d-mitchell/libsemigroups.git libsemigroups
   cd libsemigroups
-  LIBSEMIGROUPS_VERS=`git tag | grep "v\d\+\(.\d\+\)\+" | tail -n 1`
-  echo "Checking out libsemigroups version $LIBSEMIGROUPS_VERS..."
+  LIBSEMIGROUPS_VERS=`git tag | grep 'v' | tail -n 1`
+  echo -e "Checking out libsemigroups version $LIBSEMIGROUPS_VERS..."
+  # FIXME temp hack until 0.3.1 is released
+  echo -e "Actually only going to use master for now (TEMP)..."
+  LIBSEMIGROUPS_VERS=master
   git checkout $LIBSEMIGROUPS_VERS
   cd ../..
 
