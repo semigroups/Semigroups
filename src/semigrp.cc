@@ -1088,7 +1088,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
 
     return ELM_PLIST(ElmPRec(fp, RNam_words), pos_c);
   } else {
-    gap_rec_t fp = fropin(so, INTOBJ_INT(pos), 0, False);
+    gap_rec_t fp = fropin(so, pos, 0, False);
     return ELM_PLIST(ElmPRec(fp, RNam_words), pos_c);
   }
 }
