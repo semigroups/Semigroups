@@ -46,9 +46,9 @@
       <Ref Func = "CompositionMapping" BookName = "ref"/>,
       <Ref Oper = "ImagesElm" Label = "for IsRMSIsoByTriple"/>,
       <Ref Oper = "ImagesRepresentative" Label = "for IsRMSIsoByTriple"/>,
-      <Ref Attr = "InverseGeneralMapping" Label = "for IsRMSIsoByTriple"/>,
+      <Ref Attr = "InverseGeneralMapping" BookName = "ref"/>,
       <Ref Oper = "PreImagesRepresentative" BookName = "ref"/>,
-      <Ref Prop = "IsOne" Label = "for IsRMSIsoByTriple"/>.
+      <Ref Prop = "IsOne" BookName = "ref"/>.
 
     </Description>
   </ManSection>

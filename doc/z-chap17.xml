@@ -30,11 +30,12 @@
     </Heading>
 
     PREAMBLE
+    <!-- TODO: Fill in this preamble, or remove it -->
 
     <!--********************************************************************-->
  
-    <Subsection Label = "Operators for isomorphisms of Rees (0-)matrix
-      semigroup by triples">
+    <Subsection Label =
+     "Operators for isomorphisms of Rees (0-)matrix semigroup by triples">
 
       <Heading>
         Operators for isomorphisms of Rees (0-)matrix semigroup by triples

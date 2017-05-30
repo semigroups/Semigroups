@@ -83,19 +83,6 @@
   <!--**********************************************************************-->
 
   <Section Label = "Matrices over arbitrary semirings">
-    <Heading>The category <C>IsMatrixOverSemiring</C></Heading>
-    In this section we describe the categories, attributes, and operations
-    for matrices in the category <Ref Filt = "IsMatrixOverSemiring"/>.
-
-    <#Include Label = "IsMatrixOverSemiring">
-    <#Include Label = "IsMatrixOverSemiringCollection">
-    <#Include Label = "DimensionOfMatrixOverSemiring">
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section Label = "Matrices over arbitrary semirings">
     <Heading>Creating matrices over semirings</Heading>
     In this section we describe the two main operations for creating matrices
     over semirings in &Semigroups;, and the categories, attributes, and
@@ -108,6 +95,9 @@
     There are also several special methods for finite fields, which can be found
     in section <Ref Sect = "Matrices over finite fields"/>.
 
+    <#Include Label = "IsMatrixOverSemiring">
+    <#Include Label = "IsMatrixOverSemiringCollection">
+    <#Include Label = "DimensionOfMatrixOverSemiring">
     <#Include Label = "Matrix">
     <#Include Label = "AsMatrix"/>
     <#Include Label = "RandomMatrix">

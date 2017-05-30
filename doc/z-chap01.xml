@@ -163,7 +163,8 @@
         are described in Chapters <Ref Chap = "bipartition"/>, <Ref Chap =
           "Partitioned binary relations (PBRs)"/>, and <Ref Chap = 
           "Matrices over semirings"/>. These include <Ref Func="Bipartition"/>, 
-        <Ref Func="PBR"/>, and <Ref Func="Matrix"/>, which 
+        <Ref Func="PBR"/>, and
+        <Ref Func="Matrix" Label="for a filter and a matrix"/>, which
         supplement those already defined in the &GAP; library, such as <Ref
           Oper="Transformation" BookName="ref"/> or <Ref Oper="PartialPerm" 
           BookName="ref"/>. 
