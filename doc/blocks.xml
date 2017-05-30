@@ -56,7 +56,7 @@ gap> RightProjection(x);
 <#GAPDoc Label="BlocksNC">
   <ManSection>
     <Func Name = "BlocksNC" Arg = "classes"/>
-    <Returns>A blocks.</Returns>
+    <Returns>An <C>IsBlocks</C> object.</Returns>
     <Description>
       This function makes it possible to create a &GAP; object corresponding
       to the left or right blocks of a bipartition without reference to any
