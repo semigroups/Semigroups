@@ -532,7 +532,7 @@ end);
 # TODO could have a method for IsomorphismSemigroup for
 # IsPartialPermBipartitions and IsBlockBijectionSemigroup too... or just for
 # general inverse semigroups, via composing IsomorphismPartialPermSemigroup and
-# the isomorphism to a block bijection semigroup. 
+# the isomorphism to a block bijection semigroup.
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection",
 [IsBipartitionCollection],
