@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  standard/semitrans.tst
-#Y  Copyright (C) 2015                                      Wilf A. Wilson
+#Y  Copyright (C) 2015-17                                   Wilf A. Wilson
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -163,17 +163,26 @@ gap> GeneratorsOfSemigroup(S ^ (1, 7, 8, 6, 10)(3, 9, 5, 4));
 
 #T# SemiTransTest6
 # DigraphOfActionOnPoints for a transformation semigroup (and a pos int)
-gap> DigraphOfActionOnPoints(FullTransformationSemigroup(4));
+gap> gr := DigraphOfActionOnPoints(FullTransformationSemigroup(4));
 <digraph with 4 vertices, 9 edges>
-gap> OutNeighbours(last);
+gap> OutNeighbours(gr);
 [ [ 1, 2 ], [ 1, 2, 3 ], [ 3, 4 ], [ 1, 4 ] ]
 gap> S := Semigroup([
 > Transformation([2, 6, 7, 2, 6, 1, 1, 5]),
->  Transformation([3, 8, 1, 4, 5, 6, 7, 1]),
->  Transformation([4, 3, 2, 7, 7, 6, 6, 5])]);;
-gap> DigraphOfActionOnPoints(S);
+>  Transformation([4, 3, 2, 7, 7, 6, 6, 5]),
+>  Transformation([3, 8, 1, 4, 5, 6, 7, 1])]);;
+gap> DigraphOfActionOnPoints(S, -1);
+Error, Semigroups: DigraphOfActionOnPoints: usage,
+the second argument <n> must be non-negative,
+gap> DigraphOfActionOnPoints(S, 5);
+fail
+gap> gr := DigraphOfActionOnPoints(S);
 <digraph with 8 vertices, 22 edges>
-gap> OutNeighbours(last);
+gap> DigraphOfActionOnPoints(S, 0) = EmptyDigraph(0);
+true
+gap> DigraphOfActionOnPoints(S, 8) = gr;
+true
+gap> OutNeighbours(gr);
 [ [ 2, 3, 4 ], [ 3, 6, 8 ], [ 1, 2, 7 ], [ 2, 4, 7 ], [ 5, 6, 7 ], [ 1, 6 ], 
   [ 1, 6, 7 ], [ 1, 5 ] ]
 gap> DigraphOfActionOnPoints(FullTransformationMonoid(1));

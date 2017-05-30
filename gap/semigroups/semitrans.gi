@@ -207,32 +207,33 @@ end);
 InstallMethod(DigraphOfActionOnPoints,
 "for a transformation semigroup with known generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
-function(S)
-  local n;
-
-  n := DegreeOfTransformationSemigroup(S);
-  if n = 0 then
-    return EmptyDigraph(0);
-  fi;
-  return DigraphOfActionOnPoints(S, n);
-end);
+S -> DigraphOfActionOnPoints(S, DegreeOfTransformationSemigroup(S)));
 
 InstallMethod(DigraphOfActionOnPoints,
-"for a transformation semigroup with known generators and pos int",
-[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsPosInt],
+"for a transformation semigroup with known generators and int",
+[IsTransformationSemigroup and HasGeneratorsOfSemigroup, IsInt],
 function(S, n)
-  local out, gens, x, k, i, j;
+  local gens, out, range, i, j;
 
-  out := List([1 .. n], x -> []);
+  if n < 0 then
+    ErrorNoReturn("Semigroups: DigraphOfActionOnPoints: usage,\n",
+                  "the second argument <n> must be non-negative,");
+  elif n = 0 then
+    return EmptyDigraph(0);
+  elif HasDigraphOfActionOnPoints(S)
+      and n = DegreeOfTransformationSemigroup(S) then
+    return DigraphOfActionOnPoints(S);
+  fi;
+
   gens := GeneratorsOfSemigroup(S);
-  for i in [1 .. Length(gens)] do
-    x := gens[i];
-    for j in [1 .. n] do
-      k := j ^ x;
-      if k > n then
+  out := List([1 .. n], x -> []);
+  for i in [1 .. n] do
+    for j in [1 .. Length(gens)] do
+      range := i ^ gens[j];
+      if range > n then
         return fail;
       fi;
-      AddSet(out[j], k);
+      AddSet(out[i], range);
     od;
   od;
   return DigraphNC(out);
@@ -296,15 +297,7 @@ end;
 InstallMethod(DigraphOfActionOnPairs,
 "for a transformation semigroup",
 [IsTransformationSemigroup],
-function(S)
-  local n;
-
-  n := DegreeOfTransformationSemigroup(S);
-  if n = 0 then
-    return EmptyDigraph(0);
-  fi;
-  return DigraphOfActionOnPairs(S, n);
-end);
+S -> DigraphOfActionOnPairs(S, DegreeOfTransformationSemigroup(S)));
 
 InstallMethod(DigraphOfActionOnPairs,
 "for a transformation semigroup and int",
@@ -324,9 +317,7 @@ function(S, n)
     return fail;
   elif n <= 1 then
     return EmptyDigraph(n);
-  fi;
-
-  if HasDigraphOfActionOnPairs(S)
+  elif HasDigraphOfActionOnPairs(S)
       and DegreeOfTransformationSemigroup(S) = n then
     return DigraphOfActionOnPairs(S);
   fi;
@@ -358,7 +349,7 @@ function(S, n)
     od;
   od;
 
-  gr := Digraph(out_nbs);
+  gr := DigraphNC(out_nbs);
   SetInNeighbours(gr, inn_nbs);
   SetDigraphEdgeLabels(gr, label);
   SetDigraphVertexLabels(gr, PairNumber);
