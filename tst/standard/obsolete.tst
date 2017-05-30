@@ -33,6 +33,16 @@ gap> RandomPartialPermMonoid(2, 2);;
 #I  `RandomPartialPermMonoid` is no longer supported
 #I  use `RandomMonoid(IsPartialPermMonoid, 2, 2)` instead!
 
+#T# RandomMatrixSemigroup
+gap> RandomMatrixSemigroup(2, 2);;
+#I  `RandomMatrixSemigroup` is no longer supported
+#I  use `RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, 2, 2)` instead!
+
+#T# RandomMatrixMonoid
+gap> RandomMatrixMonoid(2, 2);;
+#I  `RandomMatrixMonoid` is no longer supported
+#I  use `RandomMonoid(IsMatrixOverFiniteFieldMonoid, 2, 2)` instead!
+
 #T# DotDClasses 
 gap> S := RandomPartialPermMonoid(2, 2);;
 #I  `RandomPartialPermMonoid` is no longer supported
@@ -71,6 +81,11 @@ gap> AsTransformationSemigroup(DualSymmetricInverseMonoid(3));;
 #I  `AsTransformationSemigroup` is no longer supported
 #I  use `AsSemigroup(IsTransformationSemigroup, S)` instead!
 
+#T# AsMatrixSemigroup
+gap> AsMatrixSemigroup(DualSymmetricInverseMonoid(3));;
+#I  `AsMatrixSemigroup` is no longer supported
+#I  use `AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S)` instead!
+
 #T# IsomorphismBipartitionSemigroup
 gap> IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(3));;
 #I  `IsomorphismBipartitionSemigroup` is no longer supported
@@ -80,6 +95,11 @@ gap> IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(3));;
 gap> IsomorphismBlockBijectionSemigroup(SymmetricInverseMonoid(3));;
 #I  `IsomorphismBlockBijectionSemigroup` is no longer supported
 #I  use `IsomorphismSemigroup(IsBlockBijectionSemigroup, S)` instead!
+
+#T# IsomorphismMatrixSemigroup
+gap> IsomorphismMatrixSemigroup(SymmetricInverseMonoid(3));;
+#I  `IsomorphismMatrixSemigroup` is no longer supported
+#I  use `IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, S)` instead!
 
 #T# IsSynchronizingTransformationCollection
 gap> IsSynchronizingTransformationCollection([
