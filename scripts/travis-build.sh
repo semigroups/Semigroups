@@ -32,7 +32,7 @@ elif [ ! -z "$GAP_BRANCH" ]; then
   cd semigroups/src
   git clone https://github.com/james-d-mitchell/libsemigroups.git libsemigroups
   cd libsemigroups
-  LIBSEMIGROUPS_VERS=`git tag | grep 'v' | tail -n 1`
+  LIBSEMIGROUPS_VERS=`git tag | grep -E "^v[0-9]" | tail -n 1`
   echo -e "Checking out libsemigroups version $LIBSEMIGROUPS_VERS..."
   # FIXME temp hack until 0.3.1 is released
   echo -e "Actually only going to use master for now (TEMP)..."
@@ -53,7 +53,7 @@ elif [ ! -z "$GAP_BRANCH" ]; then
     echo -e "\nDownloading the profiling package..."
     git clone https://github.com/gap-packages/profiling.git profiling
     cd profiling
-    PROFILING_VERS=`git tag | grep "v\d\+\(.\d\+\)\+" | tail -n 1`
+    PROFILING_VERS=`git tag | grep -E "^v[0-9]" | tail -n 1`
     echo "Checking out profiling version $PROFILING_VERS..."
     git checkout $PROFILING_VERS
     ./autogen.sh
