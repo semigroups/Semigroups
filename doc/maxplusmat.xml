@@ -12,6 +12,7 @@
   <ManSection Label = "IsXMatrix">
   <Heading>Matrix filters</Heading>
     <Filt Name = "IsBooleanMat"              Arg = "obj" Type = "Category"/>
+    <Filt Name = "IsMatrixOverFiniteField"   Arg = "obj" Type = "Category"/>
     <Filt Name = "IsMaxPlusMatrix"           Arg = "obj" Type = "Category"/>
     <Filt Name = "IsMinPlusMatrix"           Arg = "obj" Type = "Category"/>
     <Filt Name = "IsTropicalMatrix"          Arg = "obj" Type = "Category"/>
@@ -43,10 +44,10 @@
         Attr = "ThresholdNTPMatrix"/> and <Ref Attr = "PeriodNTPMatrix"/>.
       <P/>
 
-      For matrices over finite fields
-      <Ref Attr = "BaseDomain" Label="for a matrix over finite field"/>;
-      for Boolean matrices more details can be found in
-      Section <Ref Sect = "Boolean matrices"/>.
+      For matrices over finite fields see Section 
+      <Ref Sect = "Matrices over finite fields"/>; for Boolean matrices more
+      details can be found in Section <Ref Sect = "Boolean matrices"/>.
+
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -57,6 +58,10 @@
     <Filt Name = "IsBooleanMatCollection"              Arg = "obj" Type =
       "Category"/>
     <Filt Name = "IsBooleanMatCollColl"                Arg = "obj" Type =
+      "Category"/>
+    <Filt Name = "IsMatrixOverFiniteFieldCollection"   Arg = "obj" Type =
+      "Category"/>
+    <Filt Name = "IsMatrixOverFiniteFieldCollColl"     Arg = "obj" Type =
       "Category"/>
     <Filt Name = "IsMaxPlusMatrixCollection"           Arg = "obj" Type =
       "Category"/>
