@@ -1585,6 +1585,16 @@ gap> ##
 gap> HasEquivalenceRelationPartition(c);
 false
 
+#T# Issue 286: Bug in IsSynchronizingSemigroup
+gap> S := FullTransformationMonoid(10);
+<full transformation monoid of degree 10>
+gap> IsSynchronizingSemigroup(S, 9);
+true
+gap> IsSynchronizingSemigroup(S);
+true
+gap> IsSynchronizingSemigroup(S, 9);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);

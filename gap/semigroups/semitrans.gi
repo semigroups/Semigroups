@@ -596,12 +596,13 @@ InstallMethod(IsSynchronizingSemigroup,
 "for a transformation semigroup and positive integer",
 [IsTransformationSemigroup, IsPosInt],
 function(S, n)
-  local gens, all_perms, r, gr, inn, marked, squashed, x, i, j;
+  local deg, gens, all_perms, r, gr, verts, offset, inn, marked, squashed, x, i,
+  j;
 
+  deg := DegreeOfTransformationSemigroup(S);
   if n = 1 then
     return true;
-  elif HasIsSynchronizingSemigroup(S)
-      and n <= DegreeOfTransformationSemigroup(S) then
+  elif HasIsSynchronizingSemigroup(S) and n <= deg then
     return IsSynchronizingSemigroup(S);
   fi;
 
@@ -616,7 +617,7 @@ function(S, n)
     r := RankOfTransformation(x, n);
     if r = 1 then
       return true;
-    elif r < n then
+    elif r < deg then
       all_perms := false;
     fi;
   od;
@@ -624,32 +625,44 @@ function(S, n)
     return false; # S = <gens> is a group of transformations
   fi;
 
-  if n = DegreeOfTransformationSemigroup(S) then
-    gr := DigraphOfActionOnPairs(S);
+  gr := DigraphOfActionOnPairs(S);
+  # Create <verts> = vertices corresponding to pairs in [1 .. n]
+  # These are the vertices that we still need to be collapsible in <gr>
+  if n = deg then
+    verts := BlistList(DigraphVertices(gr), [n + 1 .. DigraphNrVertices(gr)]);
   else
-    gr := DigraphOfActionOnPairs(S, n);
+    verts := BlistList(DigraphVertices(gr), []);
+    offset := 0;
+    for i in [1 .. n - 1] do
+      offset := offset + deg - i + 1;
+      for j in [1 .. n - i] do
+        verts[offset + j] := true;
+      od;
+    od;
   fi;
 
-  # Check if any pairs are isolated in gr
-  if ForAny([n + 1 .. DigraphNrVertices(gr)],
-            v -> OutDegreeOfVertex(gr, v) = 0) then
+  # Check if any pairs are isolated
+  if ForAny([deg + 1 .. DigraphNrVertices(gr)],
+            v -> verts[v] and OutNeighboursOfVertex(gr, v) = [v]) then
     return false;
   fi;
 
   inn := InNeighbours(gr);
 
   marked := BlistList(DigraphVertices(gr), []);
+  # <marked[i]> iff <i> has been visited in the search of <gr>
   squashed := [1 .. n];
   for i in squashed do
     for j in inn[i] do
       if not marked[j] then
         marked[j] := true;
+        verts[j] := false;
         Add(squashed, j);
       fi;
     od;
   od;
 
-  return Length(squashed) = DigraphNrVertices(gr);
+  return SizeBlist(verts) = 0;
 end);
 
 InstallMethod(RepresentativeOfMinimalIdealNC, "for a transformation semigroup",
