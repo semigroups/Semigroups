@@ -499,13 +499,14 @@ the argument <classes> must consist of duplicate-free homogeneous lists,
 # bipartition: Bipartition 2/3
 gap> Bipartition([[1, 2], [3, E(3)]]);
 Error, Semigroups: Bipartition: usage,
-the argument <classes> must consist of positive and/or negative integers,
-
+the argument <classes> must consist of lists of integers from [-2 .. -1, 1 .. 
+2],
 
 # bipartition: Bipartition 3/3
 gap> Bipartition([[1, 2], [3, 4]]);
 Error, Semigroups: Bipartition: usage,
-the union of the argument <classes> must be [-n..-1, 1..n],
+the argument <classes> must consist of lists of integers from [-2 .. -1, 1 .. 
+2],
 
 # bipartition: OneMutable, for a bipartition collection 1/1
 gap> OneMutable([IdentityBipartition(2)]);
@@ -519,21 +520,32 @@ the length of the argument <blocks> must be an even integer,
 # bipartition: BipartitionByIntRep 2/5
 gap> BipartitionByIntRep([1, 2, 3, "a"]);
 Error, Semigroups: BipartitionByIntRep: usage,
-the elements of the argument <blocks> must be positive integers,
+the elements of the argument <blocks> must be positive integers not exceeding 
+4,
 
 # bipartition: BipartitionByIntRep 3/5
 gap> BipartitionByIntRep([1, 2, 3, 5]);
 Error, Semigroups: BipartitionByIntRep: usage,
-expected 4 but found 5, in position 4
+the elements of the argument <blocks> must be positive integers not exceeding 
+4,
 
 # bipartition: BipartitionByIntRep 4/5
 gap> BipartitionByIntRep([1, 3, 3, 5]);
 Error, Semigroups: BipartitionByIntRep: usage,
-expected 2 but found 3, in position 2
+the elements of the argument <blocks> must be positive integers not exceeding 
+4,
 
 # bipartition: BipartitionByIntRep 5/5
 gap> BipartitionByIntRep([1, 2, 3, 1]);
 <bipartition: [ 1, -2 ], [ 2 ], [ -1 ]>
+
+# BipartitionByIntRep
+gap> BipartitionByIntRep([1, 3, 3, 4]);
+Error, Semigroups: BipartitionByIntRep: usage,
+expected 2 but found 3, in position 2,
+gap> BipartitionByIntRep([1, 2, 4, 4]);
+Error, Semigroups: BipartitionByIntRep: usage,
+expected 3 but found 4, in position 3,
 
 # bipartition: BIPART_LAMBDA_CONJ 1/2
 gap> x := Bipartition([[1, 3, -2, -3], [2, -1]]);;
@@ -759,6 +771,49 @@ gap> DomainOfBipartition(x);
 [ 1, 2, 3, 6, 4, 5 ]
 gap> CodomainOfBipartition(x);
 [ -1, -4, -2, -3, -5 ]
+
+#T# Test error messages for when creating a bipartition with degree too large.
+# We create enum, as opposed to a range [1 .. 2 ^ 33] to allow this test to
+# work in the 32-bit version.
+gap> enum := EnumeratorByFunctions(Integers, 
+>                                  rec(ElementNumber := {enum, x} -> x,
+>                                  NumberElement := {enum, x} -> x,
+>                                  Length := x -> 2 ^ 33));;
+gap> Bipartition([enum]);
+Error, Semigroups: Bipartition: usage,
+the maximum degree of a bipartition is 2 ^ 29 - 1,
+gap> BipartitionByIntRep(enum);
+Error, Semigroups: BipartitionByIntRep: usage,
+the length of the argument <blocks> must not exceed 2 ^ 30 - 1,
+gap> IdentityBipartition(2 ^ 31);
+Error, Semigroups: IdentityBipartition: usage,
+the argument <n> must not exceed 2 ^ 29 - 1,
+gap> RandomBipartition(2 ^ 31);
+Error, Semigroups: RandomBipartition: usage,
+the argument <n> must not exceed 2 ^ 29 - 1,
+gap> RandomBlockBijection(2 ^ 31);
+Error, Semigroups: RandomBlockBipartition: usage,
+the argument <n> must not exceed 2 ^ 29 - 1,
+gap> AsBipartition((), 2 ^ 31);
+Error, Semigroups: AsBipartition: usage,
+the argument <n> must not exceed 2 ^ 29 - 1,
+gap> AsBipartition(PartialPerm([]), 2 ^ 31);
+Error, Semigroups: AsBipartition: usage,
+the argument <n> must not exceed 2 ^ 29 - 1,
+gap> AsBipartition(Transformation([]), 2 ^ 31);
+Error, Semigroups: AsBipartition: usage,
+the argument <n> must not exceed 2 ^ 29 - 1,
+gap> AsBipartition(Bipartition([]), 2 ^ 31);
+Error, Semigroups: AsBipartition: usage,
+the argument <n> must not exceed 2 ^ 29 - 1,
+gap> AsBlockBijection(PartialPerm([]), 2 ^ 31);
+Error, Semigroups: AsBlockBijection: usage,
+the argument <n> must not exceed 2 ^ 29 - 1,
+
+# Bipartition
+gap> Bipartition([[1, 2], [-1, 1]]);
+Error, Semigroups: Bipartition: usage,
+the union of the argument <classes> must be [-2 .. -1, 1 .. 2],
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
