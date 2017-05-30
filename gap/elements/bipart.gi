@@ -101,22 +101,25 @@ function(classes)
                   "homogeneous lists,");
   fi;
 
-  if not ForAll(classes, x -> ForAll(x, i -> IsPosInt(i) or IsNegInt(i))) then
-    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
-                  "the argument <classes> must consist of positive and/or ",
-                  "negative integers,\n");
-  fi;
+  n := Sum(classes, Length) / 2;
 
-  copy := Union(classes);
-  if not IsEmpty(classes)
-      and (copy <> Concatenation([Minimum(copy) .. -1], [1 .. Maximum(copy)])
-           or Minimum(copy) > 0) then
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
+                  "the maximum degree of a bipartition ",
+                  "is 2 ^ 29 - 1,");
+  elif not ForAll(classes, x -> ForAll(x,
+                                       i -> (IsPosInt(i) or IsNegInt(i))
+                                            and AbsInt(i) <= n)) then
+    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
+                  "the argument <classes> must consist of lists of ",
+                  "integers from [-", n, " .. -1, 1 .. ", n, "],");
+  elif not IsEmpty(classes)
+      and Union(classes) <> Concatenation([-n .. -1], [1 .. n]) then
     ErrorNoReturn("Semigroups: Bipartition: usage,\n",
                   "the union of the argument <classes> must be ",
-                  "[-n..-1, 1..n],");
+                  "[-", n, " .. -1, 1 .. ", n, "],");
   fi;
 
-  n := Sum(List(classes, Length)) / 2;
   copy := List(classes, ShallowCopy);
   for i in [1 .. Length(copy)] do
     for j in [1 .. Length(copy[i])] do
@@ -141,7 +144,7 @@ end);
 
 InstallMethod(BipartitionByIntRep, "for a list", [IsList],
 function(blocks)
-  local n, next, seen, nrleft, out, i;
+  local n, next, seen, nrleft, i;
 
   n := Length(blocks);
 
@@ -149,15 +152,17 @@ function(blocks)
     ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
                   "the length of the argument <blocks> must be an even ",
                   "integer,");
+  elif n >= 2 ^ 30 then
+    ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
+                  "the length of the argument <blocks> must not exceed ",
+                  "2 ^ 30 - 1,");
+  elif not ForAll(blocks, i -> IsPosInt(i) and i <= n) then
+    ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
+                  "the elements of the argument <blocks> must be positive ",
+                  "integers not exceeding ", n, ",");
   fi;
 
   n := n / 2;
-  if not ForAll(blocks, IsPosInt) then
-    ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
-                  "the elements of the argument <blocks> must be positive ",
-                  "integers,");
-  fi;
-
   next := 0;
   seen := BlistList([1 .. 2 * Maximum(blocks)], []);
 
@@ -167,7 +172,7 @@ function(blocks)
       if blocks[i] <> next then
         ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
                       "expected ", next, " but found ", blocks[i],
-                      ", in position ", i);
+                      ", in position ", i, ",");
       fi;
       seen[blocks[i]] := true;
     fi;
@@ -181,14 +186,13 @@ function(blocks)
       if blocks[i] <> next then
         ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
                       "expected ", next, " but found ", blocks[i],
-                      ", in position ", i);
+                      ", in position ", i, ",");
       fi;
       seen[blocks[i]] := true;
     fi;
   od;
 
-  out := BIPART_NC(blocks);
-  return out;
+  return BIPART_NC(blocks);
 end);
 
 InstallMethod(IdentityBipartition, "for zero", [IsZeroCyc],
@@ -200,6 +204,10 @@ InstallMethod(IdentityBipartition, "for a positive integer", [IsPosInt],
 function(n)
   local blocks, i;
 
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("Semigroups: IdentityBipartition: usage,\n",
+                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+  fi;
   blocks := EmptyPlist(2 * n);
 
   for i in [1 .. n] do
@@ -215,6 +223,10 @@ InstallMethod(RandomBipartition, "for a random source and pos int",
 function(rs, n)
   local out, nrblocks, vals, j, i;
 
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("Semigroups: RandomBipartition: usage,\n",
+                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+  fi;
   out := EmptyPlist(2 * n);
   nrblocks := 0;
   vals := [1];
@@ -241,6 +253,11 @@ InstallMethod(RandomBlockBijection, "for a random source and pos int",
 function(rs, n)
   local out, nrblocks, j, free, i;
 
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("Semigroups: RandomBlockBipartition: usage,\n",
+                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+  fi;
+
   out := EmptyPlist(2 * n);
   out[1] := 1;
   nrblocks := 1;
@@ -264,8 +281,7 @@ function(rs, n)
     out[i] := Random(rs, [1 .. nrblocks]);
   od;
 
-  out := BIPART_NC(out);
-  return out;
+  return BIPART_NC(out);
 end);
 
 InstallMethod(RandomBlockBijection, "for a pos int", [IsPosInt],
@@ -677,7 +693,10 @@ end);
 InstallMethod(AsBipartition, "for a permutation and pos int",
 [IsPerm, IsPosInt],
 function(x, n)
-  if OnSets([1 .. n], x) <> [1 .. n] then
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("Semigroups: AsBipartition: usage,\n",
+                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+  elif OnSets([1 .. n], x) <> [1 .. n] then
     ErrorNoReturn("Semigroups: AsBipartition (for a permutation and pos int):",
                   "\nthe permutation <p> in the 1st argument must permute ",
                   "[1 .. ", String(n), "],");
@@ -768,6 +787,10 @@ InstallMethod(AsBipartition, "for a partial perm and pos int",
 function(x, n)
   local r, out, j, i;
 
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("Semigroups: AsBipartition: usage,\n",
+                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+  fi;
   r := n;
   out := EmptyPlist(2 * n);
 
@@ -781,8 +804,7 @@ function(x, n)
       out[n + i] := r;
     fi;
   od;
-  out := BIPART_NC(out);
-  return out;
+  return BIPART_NC(out);
 end);
 
 InstallMethod(AsBipartition, "for a transformation and a positive integer",
@@ -790,6 +812,10 @@ InstallMethod(AsBipartition, "for a transformation and a positive integer",
 function(f, n)
   local r, ker, out, g, i;
 
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("Semigroups: AsBipartition: usage,\n",
+                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+  fi;
   if n < DegreeOfTransformation(f) then
     #verify <f> is a transformation on [1..n]
     for i in [1 .. n] do
@@ -822,8 +848,7 @@ function(f, n)
       out[n + i] := r;
     fi;
   od;
-  out := BIPART_NC(out);
-  return out;
+  return BIPART_NC(out);
 end);
 
 InstallMethod(AsBipartition, "for a bipartition and pos int",
@@ -831,6 +856,10 @@ InstallMethod(AsBipartition, "for a bipartition and pos int",
 function(f, n)
   local deg, blocks, out, nrblocks, nrleft, lookup, j, i;
 
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("Semigroups: AsBipartition: usage,\n",
+                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+  fi;
   deg := DegreeOfBipartition(f);
   if n = deg then
     return f;
@@ -882,8 +911,7 @@ function(f, n)
       out[i] := nrblocks;
     od;
   fi;
-  out := BIPART_NC(out);
-  return out;
+  return BIPART_NC(out);
 end);
 
 # same as AsBipartition except that all undefined points are in a single block
@@ -893,6 +921,11 @@ InstallMethod(AsBlockBijection, "for a partial perm and pos int",
 [IsPartialPerm, IsPosInt],
 function(f, n)
   local bigblock, nr, out, i;
+
+  if n >= 2 ^ 29 then
+    ErrorNoReturn("Semigroups: AsBlockBijection: usage,\n",
+                  "the argument <n> must not exceed 2 ^ 29 - 1,");
+  fi;
 
   if n <= Maximum(DegreeOfPartialPerm(f), CodegreeOfPartialPerm(f)) then
     ErrorNoReturn("Semigroups: AsBlockBijection (for a partial perm and pos ",
@@ -928,8 +961,7 @@ function(f, n)
     fi;
   od;
 
-  out := BIPART_NC(out);
-  return out;
+  return BIPART_NC(out);
 end);
 
 InstallMethod(AsBlockBijection, "for a bipartition and pos int",
