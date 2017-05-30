@@ -31,6 +31,7 @@
      <!ENTITY setX "<Alt Not='Text'><M>X</M></Alt><Alt Only='Text'><C>X</C></Alt>">
      <!ENTITY bfn "<Alt Not='Text'><M>\mathbf{n}</M></Alt><Alt Only='Text'><E>n</E></Alt>">
      <!ENTITY n "<Alt Not='Text'><M>n</M></Alt><Alt Only='Text'><C>n</C></Alt>">
+     <!ENTITY p "<Alt Not='Text'><M>p</M></Alt><Alt Only='Text'><C>p</C></Alt>">
      <!ENTITY x "<Alt Not='Text'><M>x</M></Alt><Alt Only='Text'><C>x</C></Alt>">
      <!ENTITY y "<Alt Not='Text'><M>y</M></Alt><Alt Only='Text'><C>y</C></Alt>">
      <!ENTITY i "<Alt Not='Text'><M>i</M></Alt><Alt Only='Text'><C>i</C></Alt>">
