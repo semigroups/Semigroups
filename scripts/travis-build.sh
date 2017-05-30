@@ -34,9 +34,6 @@ elif [ ! -z "$GAP_BRANCH" ]; then
   cd libsemigroups
   LIBSEMIGROUPS_VERS=`git tag | grep -E "^v[0-9]" | tail -n 1`
   echo -e "Checking out libsemigroups version $LIBSEMIGROUPS_VERS..."
-  # FIXME temp hack until 0.3.1 is released
-  echo -e "Actually only going to use master for now (TEMP)..."
-  LIBSEMIGROUPS_VERS=master
   git checkout $LIBSEMIGROUPS_VERS
   cd ../..
 
