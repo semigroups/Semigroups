@@ -116,8 +116,9 @@ gap> G := GroupOfUnits(PartitionMonoid(3));
 gap> ForAll(G, x -> AsBipartition(AsPermutation(x), 3) = x);
 true
 
-#T# BipartitionTest22: AsBlockBijection and IsomorphismBlockBijectionSemigroup
-# for an inverse semigroup of partial perms
+#T# BipartitionTest22: AsBlockBijection and
+# IsomorphismSemigroup(IsBlockBijectionSemigroup for an inverse semigroup of
+# partial perms
 gap> S := InverseSemigroup(
 > PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]),
 > PartialPerm([1, 2, 3, 4, 6, 7, 8, 10], [3, 8, 1, 9, 4, 10, 5, 6]));;

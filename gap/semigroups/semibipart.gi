@@ -529,9 +529,10 @@ function(filter, S)
   return MagmaIsomorphismByFunctionsNC(S, S, IdFunc, IdFunc);
 end);
 
-# TODO could have a method for IsomorphismBlockBijectionSemigroup for
-# IsPartialPermBipartitions too..  or just for general inverse semigroups, via
-# composing IsomorphismPartialPermSemigroup and IsomorphismBlockBijection
+# TODO could have a method for IsomorphismSemigroup for
+# IsPartialPermBipartitions and IsBlockBijectionSemigroup too... or just for
+# general inverse semigroups, via composing IsomorphismPartialPermSemigroup and
+# the isomorphism to a block bijection semigroup. 
 
 InstallMethod(IsGeneratorsOfInverseSemigroup, "for a bipartition collection",
 [IsBipartitionCollection],
