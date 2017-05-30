@@ -105,10 +105,8 @@
     There are several special methods for boolean matrices, which can be found
     in Section <Ref Sect = "Boolean matrices"/>.
 
-    <!--
     There are also several special methods for finite fields, which can be found
     in section <Ref Sect = "Matrices over finite fields"/>.
-    -->
 
     <#Include Label = "Matrix">
     <#Include Label = "AsMatrix"/>
@@ -231,7 +229,7 @@
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-  <!--
+  
   <Section Label = "Matrices over finite fields">
     <Heading>
       Matrices over finite fields
@@ -240,11 +238,17 @@
     In this section we describe the operations, properties, and attributes in
     &Semigroups; specifically for matrices over finite fields. These are in
     addition to those given elsewhere in this chapter for arbitrary matrices
-    over semirings. These include:
-    <#Include Label = "BaseDomain">
+    over semirings.
 
+    <#Include Label="NewMatrixOverFiniteField"/>
+    <#Include Label="NewIdentityMatrixOverFiniteField"/>
+    <#Include Label="RowSpaceBasis"/>
+    <#Include Label="RowRank"/>
+    <#Include Label="RightInverse"/>
+    <#Include Label="BaseDomain"/>
+    <#Include Label="TransposedMatImmutable"/>
   </Section>
-  -->
+  
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
@@ -274,6 +278,9 @@
     <#Include Label = "IntIsTorsion">
     <#Include Label = "IntOrder">
   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
  
   <Section Label = "Max-plus and min-plus matrices">
     <Heading>
@@ -306,6 +313,9 @@
     <#Include Label = "UnweightedPrecedenceDigraph">
   </Section>
 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
   <Section Label = "Matrix semigroups">
     <Heading>
       Matrix semigroups
@@ -315,8 +325,11 @@
     &Semigroups; specifically for matrix semigroups. These are in addition to
     those given elsewhere in this chapter for arbitrary matrices over
     semirings. These include:
- 
+
     <List>
+      <Item>
+        <Ref Filt = "IsXMatrixSemigroup"/>
+      </Item>
       <Item>
         <Ref Attr = "IsFinite"/>
       </Item>
@@ -327,12 +340,55 @@
         <Ref Oper = "NormalizeSemigroup"/>
       </Item>
     </List>
- 
+
+    &GAP; provides a way to define matrices which are in the
+    filter <Ref Filt="IsMatrix" BookName="ref"/>.
+    For technical reasons, the matrix semigroup functions in &Semigroups; rely
+    on a custom wrapper for matrices <Ref Filt="IsMatrixOverSemiring"/>.<P/> 
+    We take precautions to hide this fact from the user of &Semigroups; and
+    also provide conversion functions between the two representations.
+
+    Random matrix semigroups can be created by using the functions
+    <Ref Func="RandomSemigroup"/> or <Ref Func="RandomMonoid"/>. The functions
+    <Ref Attr="IsomorphismSemigroup"/> and <Ref Oper="AsSemigroup"/>
+    can be used to create a matrix semigroup isomorphic to an already known
+    semigroup.
+
     <#Include Label = "IsXMatrixSemigroup">
     <#Include Label = "IsXMatrixMonoid">
     <#Include Label = "IsFinite">
     <#Include Label = "IsTorsion">
-    <#Include Label = "NormalizeSemigroup">
+    <#Include Label = "NormalizeSemigroup"> 
+    
+    <Subsection Label = "Semigroups matrix groups">
+      <Heading>Matrix groups</Heading>
+    
+      For interfacing the semigroups code with &GAP;s library code for
+      matrix groups, the &Semigroups; package implements matrix groups
+      that delegate to the &GAP; library. These functions include:
+
+      <List>
+        <Item>
+          <Ref Prop = "IsMatrixOverFiniteFieldGroup"/>
+        </Item>
+        <Item>
+          <Ref Oper = "\^" Label = "for a matrix over finite field group and matrix over finite field"/>
+        </Item>
+        <Item>
+          <Ref Attr = "IsomorphismMatrixGroup"/>
+        </Item>
+        <Item>
+          <Ref Attr = "AsMatrixGroup"/>
+        </Item>
+      </List>
+
+    </Subsection>
+    
+    <#Include Label="IsMatrixOverFiniteFieldGroup"/>
+    <#Include Label="MatrixGroupOperation"/>
+    <#Include Label="IsomorphismMatrixGroup"/>
+    <#Include Label="AsMatrixGroup"/>
+ 
   </Section>
  
   <!--**********************************************************************-->

@@ -49,6 +49,25 @@ function(nrgens, deg)
   return RandomMonoid(IsPartialPermMonoid, nrgens, deg);
 end);
 
+InstallMethod(RandomMatrixSemigroup, "for pos ints",
+[IsPosInt, IsPosInt],
+function(nrgens, deg)
+  SEMIGROUPS.PrintObsolete("RandomMatrixSemigroup",
+                           "RandomSemigroup(IsMatrix",
+                           "OverFiniteFieldSemigroup, ",
+                           nrgens, ", ", deg, ")");
+  return RandomSemigroup(IsMatrixOverFiniteFieldSemigroup, nrgens, deg);
+end);
+
+InstallMethod(RandomMatrixMonoid, "for pos ints",
+[IsPosInt, IsPosInt],
+function(nrgens, deg)
+  SEMIGROUPS.PrintObsolete("RandomMatrixMonoid",
+                            "RandomMonoid(IsMatrixOverFiniteFieldMonoid, ",
+                            nrgens, ", ", deg, ")");
+  return RandomMonoid(IsMatrixOverFiniteFieldMonoid, nrgens, deg);
+end);
+
 InstallMethod(DotDClasses, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -103,6 +122,14 @@ function(S)
   return AsSemigroup(IsTransformationSemigroup, S);
 end);
 
+InstallMethod(AsMatrixSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  SEMIGROUPS.PrintObsolete("AsMatrixSemigroup",
+                           "AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S)");
+  return AsSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
+end);
+
 InstallMethod(IsomorphismBipartitionSemigroup, "for a semigroup",
 [IsSemigroup],
 function(S)
@@ -118,6 +145,15 @@ function(S)
                            "IsomorphismSemigroup(",
                            "IsBlockBijectionSemigroup, S)");
   return IsomorphismSemigroup(IsBlockBijectionSemigroup, S);
+end);
+
+InstallMethod(IsomorphismMatrixSemigroup, "for a semigroup",
+[IsSemigroup],
+function(S)
+  SEMIGROUPS.PrintObsolete("IsomorphismMatrixSemigroup",
+                           "IsomorphismSemigroup(",
+                           "IsMatrixOverFiniteFieldSemigroup, S)");
+  return IsomorphismSemigroup(IsMatrixOverFiniteFieldSemigroup, S);
 end);
 
 InstallMethod(FactorisableDualSymmetricInverseSemigroup,
