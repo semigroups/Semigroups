@@ -151,9 +151,7 @@
     </Heading>
 
     In this section we describe the operations, properties, and attributes in
-    &Semigroups; specifically for Boolean matrices. These are in addition to
-    those given elsewhere in this chapter for arbitrary matrices over
-    semirings. These include:
+    &Semigroups; specifically for Boolean matrices.  These include:
 
     <List>
       <Item>
@@ -331,18 +329,16 @@
       </Item>
     </List>
 
-    &GAP; provides a way to define matrices which are in the
-    filter <Ref Filt="IsMatrix" BookName="ref"/>.
-    For technical reasons, the matrix semigroup functions in &Semigroups; rely
-    on a custom wrapper for matrices <Ref Filt="IsMatrixOverSemiring"/>.<P/> 
-    We take precautions to hide this fact from the user of &Semigroups; and
-    also provide conversion functions between the two representations.
+    Random matrix semigroups can be created by using the function
+    <Ref Func="RandomSemigroup"/>.  We can also create a matrix semigroup
+    isomorphic to a given semigroup by using <Ref Attr="IsomorphismSemigroup"/>
+    and <Ref Oper="AsSemigroup"/>.  These functions require a filter, and accept
+    any of the filters in Section <Ref Sect="IsXMatrixSemigroup"/>. <P/>
 
-    Random matrix semigroups can be created by using the functions
-    <Ref Func="RandomSemigroup"/> or <Ref Func="RandomMonoid"/>. The functions
-    <Ref Attr="IsomorphismSemigroup"/> and <Ref Oper="AsSemigroup"/>
-    can be used to create a matrix semigroup isomorphic to an already known
-    semigroup.
+    There are corresponding functions which can be used for matrix monoids:
+    <Ref Func="RandomMonoid"/>, <Ref Attr="IsomorphismMonoid"/>, and
+    <Ref Oper="AsMonoid"/>.  These can be used with the filters in
+    Section <Ref Sect="IsXMatrixMonoid"/>. <P/>
 
     <#Include Label = "IsXMatrixSemigroup">
     <#Include Label = "IsXMatrixMonoid">
@@ -353,7 +349,7 @@
     <Subsection Label = "Semigroups matrix groups">
       <Heading>Matrix groups</Heading>
     
-      For interfacing the semigroups code with &GAP;s library code for
+      For interfacing the semigroups code with &GAP;'s library code for
       matrix groups, the &Semigroups; package implements matrix groups
       that delegate to the &GAP; library. These functions include:
 
@@ -371,6 +367,9 @@
           <Ref Attr = "AsMatrixGroup"/>
         </Item>
       </List>
+
+      This type of group only applies to matrices over finite fields
+      (see <Ref Filt = "IsMatrixOverFiniteFieldSemigroup"/>).
 
     </Subsection>
     
