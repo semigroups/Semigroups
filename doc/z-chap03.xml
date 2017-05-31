@@ -138,7 +138,7 @@
   <P/>
 
   Let &x; be a bipartition of degree &n;. Then we define &x;<M>^*</M> to be the
-  bipartition obtained from &x; by replacing &i; by -&i; and -&i; by -&i; in
+  bipartition obtained from &x; by replacing &i; by -&i; and -&i; by &i; in
   every block of &x; for all &i;<M>\in</M>&bfn;.  It is routine to verify that
   if &x; and &y; are arbitrary bipartitions of equal degree, then
   <Alt Not = "Text">
