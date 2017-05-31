@@ -3,13 +3,15 @@
     Bipartitions and blocks
   </Heading>
 
-  In this chapter we describe the functions in &Semigroups; for creating
-  and manipulating bipartitions and semigroups of bipartitions. We begin by
+  In this chapter we describe the functions in &Semigroups; for creating and
+  manipulating bipartitions and semigroups of bipartitions. We begin by
   describing what these objects are.
   <P/>
 
   A <E>partition</E> of a set &setX; is a set of pairwise disjoint non-empty
-  subsets of &setX; whose union is &setX;.
+  subsets of &setX; whose union is &setX;. A partition of &setX; is the
+  collection of equivalence classes of an equivalence relation on &setX;, and
+  vice versa.
   <P/>
 
   Let <M>n\in</M>&bbN;, let &bfn;<M> = \{1, 2, \ldots, n\}</M>, and let
@@ -17,95 +19,128 @@
   <P/>
  
   The <E>partition monoid</E> of degree &n; is the set of all partitions of
-  &bfn;<M>\cup</M>-&bfn; with a multiplication we describe below. To
-  avoid conflict with other uses of the word "partition" in &GAP;, and to reflect
+  &bfn;<M>\cup</M>-&bfn; with a multiplication we describe below. To avoid
+  conflict with other uses of the word "partition" in &GAP;, and to reflect
   their definition, we have opted to refer to the elements of the partition
-  monoid as <E>bipartitions</E> of degree &n;; we will do so from this
-  point on.
+  monoid as <E>bipartitions</E> of degree &n;; we will do so from this point on.
   <P/>
  
-  Let &x; be any bipartition of degree &n;. Then &x; is a set of
-  pairwise disjoint non-empty subsets of &bfn;<M>\cup</M>-&bfn; whose
-  union is &bfn;<M>\cup</M>-&bfn;; these subsets are called the
-  <E>blocks</E> of &x;.  A block containing elements of both
-  &bfn; and -&bfn; is called a <E>transverse block</E>.
-  If &i;, &j;<M>\in</M>&bfn;<M>\cup</M>-&bfn; belong to the same block of a
-  bipartition &x;, then we write (&i;, &j;)<M>\in</M>&x;.
+  Let &x; be any bipartition of degree &n;. Then &x; is a set of pairwise
+  disjoint non-empty subsets of &bfn;<M>\cup</M>-&bfn; whose union is
+  &bfn;<M>\cup</M>-&bfn;; these subsets are called the <E>blocks</E> of &x;.  A
+  block containing elements of both &bfn; and -&bfn; is called a <E>transverse
+    block</E>.  If &i;, &j;<M>\in</M>&bfn;<M>\cup</M>-&bfn; belong to the same
+  block of a bipartition &x;, then we write (&i;, &j;)<M>\in</M>&x;.
   <P/>
 
-  Let &x; and &y; be bipartitions of equal degree.   Then &x;&y; is
-  the bipartition where &i;,&j;<M>\in</M>&bfn;<M>\cup</M>-&bfn; belong to the
-  same block of &x;&y; if there exist
-  <Alt Not = "Text"><M>k(1), k(2),\ldots, k(r)\in \mathbf{n}</M></Alt>
-  <Alt Only = "Text">
-    <C>k(1),k(2)</C>,<M>\ldots</M>,<C>k(r)</C><M>\in</M><E>n</E></Alt>;
-  and one of the following holds:
+  Let &x; and &y; be bipartitions of degree &n;.  Their product &x;&y; can be
+  described as follows. Define &bfn;'<M> = \{1', 2', \ldots, n'\}</M>. From &x;,
+  create a partition &x;' of the set &bfn;<M>\cup</M>&bfn;' by replacing each
+  negative point -&i; in a block of &x; by the point &i;', and create from &y; a
+  partition &y;' of the set &bfn;'<M>\cup</M>-&bfn; by replacing each positive
+  point &i; in a block of &y; by the point &i;'. Then define a relation on the
+  set &bfn;<M>\cup</M>&bfn;'<M>\cup</M>-&bfn;, where &i; and &j; are related if
+  they are related in either &x;' or &y;', and let &p; be the transitive closure of
+  this relation.  Finally, define &x;&y; to be the bipartition of degree &n;
+  defined by the restriction of the equivalence relation &p; to the set
+  &bfn;<M>\cup</M>-&bfn;.
+  <P/>
+  
+  Equivalently, the product &x;&y; is defined to be the bipartition where
+  &i;,&j;<M>\in</M>&bfn;<M>\cup</M>-&bfn; (we assume without loss of generality
+  that &i;<M>\geq</M>&j;) belong to the same block of &x;&y; if either:
   <List>
     <Item>
-      &r;<M>=0</M> and either <M>(</M>&i;,&j;<M>)\in</M>&x; or
-      <M>(</M>-&i;,-&j;<M>)\in</M>&y;;
+      &i;<C>=</C>&j;,
     </Item>
- 
     <Item>
-      <Alt Not="Text">
-        <M>r=2s-1</M> for some <M>s\geq 1</M> and
-        <Display>(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots,\
-          (-k(2s-2),-k(2s-1))\in x,\ (k(2s-1),-j)\in y</Display>
+      &i;, &j; <M>\in</M> &bfn; and <M>(</M>&i;,&j;<M>)</M><M>\in</M> &x;, or
+    </Item>
+    <Item>
+      &i;, &j; <M>\in</M> -&bfn; and <M>(</M>&i;,&j;<M>)</M><M>\in</M> &y;;
+    </Item>
+  </List>
+  or there exists
+  <M>r\in</M>&bbN; and
+  <Alt Not = "Text">
+    <M>k(1), k(2),\ldots, k(r)\in \mathbf{n}</M>
+  </Alt>
+  <Alt Only = "Text">
+    <C>k(1),k(2)</C>,<M>\ldots</M>,<C>k(r)</C><M>\in</M><E>n</E>
+  </Alt>,
+  and one of the following holds:
+  <List>
+    <Item> 
+      <Alt Not = "Text">
+        <M>r=2s-1</M> for some <M>s\geq 1</M>
       </Alt>
       <Alt Only = "Text">
-        <C>r=2s-1</C> for some <C>s</C><M>\geq</M><C>1</C> and<P/>
+        <C>r=2s-1</C> for some <C>s</C><M>\geq</M><C>1</C>
+      </Alt>,
+      &i;<M>\in</M>&bfn;, &j;<M>\in</M> -&bfn; and
+      <Alt Not = "Text">
+        <Display>(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots,\
+          (-k(2s-2),-k(2s-1))\in x,\ (k(2s-1),j)\in y;</Display>
+      </Alt>
+      <Alt Only = "Text">
         <C>(i,-k(1))</C><M>\in</M><C>x</C>, <C>(k(1),k(2))</C><M>\in</M><C>y</C>,
         <C>(-k(2),-k(3))</C><M>\in</M><C>x</C>, <M>\ldots</M>,
         <C>(-k(2s-2),-k(2s-1))</C><M>\in</M><C>x</C>,
-        <C>(k(2s-1),-j)</C><M>\in</M><C>y</C>
+        <C>(k(2s-1),j)</C><M>\in</M><C>y</C>;
       </Alt>
     </Item>
- 
     <Item>
       <Alt Not = "Text">
-        <M>r=2s</M> for some <M>s\geq 1</M> and either:
-        <Display>(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots,
-          (k(2s-1), k(2s))\in y,\ (-k(2s), j)\in x</Display>
-        or
-        <Display>(-i,k(1))\in y,\ (-k(1),-k(2))\in x,\ (k(2),k(3))\in y,\ \ldots,
-          (-k(2s-1), -k(2s))\in x,\ (k(2s), -j)\in y.</Display>
+        <M>r=2s</M> for some <M>s\geq 1</M>
       </Alt>
       <Alt Only = "Text">
-        <C>r=2s</C> for some <C>s</C><M>\geq</M><C>1</C> and either:
+        <C>r=2s</C> for some <C>s</C><M>\geq</M><C>1</C>
+      </Alt>,
+      and either
+      &i;,&j;<M>\in</M>&bfn;, and
+      <Alt Not = "Text">
+        <Display>(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots,
+          (k(2s-1), k(2s))\in y,\ (-k(2s), j)\in x,</Display>
+      </Alt>
+      <Alt Only = "Text">
         <P/>
         <C>(i,-k(1))</C><M>\in</M><C>x</C>,
         <C>(k(1),k(2))</C><M>\in</M><C>y</C>,
         <C>(-k(2),-k(3))</C><M>\in</M><C>x</C>,
         <M>\ldots</M>,
         <C>(k(2s-1),k(2s))</C><M>\in</M><C>x</C>,
-        <C>(-k(2s),j)</C><M>\in</M><C>y</C><P/>
-        or<P/>
-        <C>(-i,k(1))</C><M>\in</M><C>y</C>,
+        <C>(-k(2s),j)</C><M>\in</M><C>y</C>,<P/>
+      </Alt>
+      or &i;,&j;<M>\in</M>-&bfn;, and
+      <Alt Not = "Text">
+        <Display>(i,k(1))\in y,\ (-k(1),-k(2))\in x,\ (k(2),k(3))\in y,\ \ldots,
+          (-k(2s-1), -k(2s))\in x,\ (k(2s), j)\in y.</Display>
+      </Alt>
+      <Alt Only = "Text">
+        <P/>
+        <C>(i,k(1))</C><M>\in</M><C>y</C>,
         <C>(-k(1),-k(2))</C><M>\in</M><C>x</C>,
         <C>(k(2),k(3))</C><M>\in</M><C>y</C>,
         <M>\ldots</M>,
         <C>(-k(2s-1),-k(2s))</C><M>\in</M><C>y</C>,
-        <C>(k(2s),-j)</C><M>\in</M><C>x</C>.<P/>
+        <C>(k(2s),j)</C><M>\in</M><C>x</C>.<P/>
       </Alt>
     </Item>
- 
   </List>
-
-  This product can be shown to be associative, and so the collection of
-  bipartitions of any particular degree is a monoid; the identity element is the
-  partition
-  <Alt Not = "Text"><M>\left\{\{i,-i\}:i\in\mathbf{n}\right\}</M>.</Alt>
-  <Alt Only = "Text">{{<C>i</C>,-<C>i</C>}:<C>i</C><M>\in</M><E>n</E>}.</Alt>
-  A bipartition is a unit if and only if each block is of the form
-  <M>\{</M>&i;,-&j;<M>\}</M> for some &i;, &j;<M>\in</M>&bfn;.  Hence the group
-  of units is isomorphic to the symmetric group on &bfn;.
+  This multiplication can be shown to be associative, and so the collection of
+  all bipartitions of any particular degree is a monoid; the identity element of
+  the partition monoid of degree <M>n</M> is the bipartition <Alt Not =
+    "Text"><M>\left\{\{i,-i\}:i\in\mathbf{n}\right\}</M>.</Alt> <Alt Only =
+    "Text">{{<M>i</M>,-<M>i</M>}:<M>i \in</M><E>n</E>}.</Alt> A bipartition is a
+  unit if and only if each block is of the form <M>\{</M>&i;,-&j;<M>\}</M> for
+  some &i;, &j;<M>\in</M>&bfn;.  Hence the group of units is isomorphic to the
+  symmetric group on &bfn;.
   <P/>
 
-  Let &x; be a bipartition of degree &n;. Then we define &x;<M>^*</M> to
-  be the bipartition obtained from &x; by replacing &i; by -&i;
-  and -&i; by -&i; in every block of &x; for all &i;<M>\in</M>&bfn;.
-  It is routine to verify that if &x; and &y; are
-  arbitrary bipartitions of equal degree, then
+  Let &x; be a bipartition of degree &n;. Then we define &x;<M>^*</M> to be the
+  bipartition obtained from &x; by replacing &i; by -&i; and -&i; by -&i; in
+  every block of &x; for all &i;<M>\in</M>&bfn;.  It is routine to verify that
+  if &x; and &y; are arbitrary bipartitions of equal degree, then
   <Alt Not = "Text">
     <Display>
       (x^*)^*=x,\quad xx^*x=x,\quad x^*xx^*=x^*,\quad (xy)^*=y^*x^*.
@@ -119,39 +154,35 @@
  
   In this way, the partition monoid is a <E>regular *-semigroup</E>. <P/>
 
-  A bipartition &x; of degree &n; is called <E>planar</E> if there does not exist
-  distinct blocks <M>A, B \in</M> &x;, along with <M>a, a' \in A</M> and
-  <M>b, b' \in B</M> such that <M>a &lt; a'</M>, <M>b &lt; b'</M> and
-  either:
-  <List>
-    <Item>
-      <M>a &lt; b &lt; a' &lt; b'</M>; or
-    </Item>
-    <Item>
-      <M>b &lt; a &lt; b' &lt; a'</M>.
-    </Item>
-  </List>
-  Or equivalently, &x; is planar if for each distinct blocks <M>A, B \in</M> &x;,
-  and each <M>a, a' \in A</M> and <M>b, b' \in B</M> such that <M>a &lt; a'</M>
-  and <M>b &lt; b'</M>, either:
-  <List>
-    <Item>
-      <M>a &lt; a' &lt; b &lt; b'</M>;
-    </Item>
-    <Item>
-      <M>a &lt; b &lt; b' &lt; a'</M>;
-    </Item>
-    <Item>
-      <M>b &lt; a &lt; a' &lt; b'</M>; or
-    </Item>
-    <Item>
-      <M>b &lt; b' &lt; a &lt; a'</M>.
-    </Item>
-  </List>
-  From a graphical perspective, as on Page 873 in
-  <Cite Key="Halverson2005PartitionAlgebras"/>, a bipartition &x; of degree &n;
-  is planar if it can be represented as a graph without edges crossing inside of
-  the rectangle formed by its vertices &bfn;<M>\cup</M>-&bfn;.
+  A bipartition &x; of degree &n; is called <E>planar</E> if there do not exist
+  distinct blocks <M>A, U \in</M> &x;, along with <M>a, b \in A</M> and <M>u, v
+    \in U</M>, such that <M>a &lt; u &lt; b &lt; v</M>.  Define &p; to be the
+  bipartition of degree &n; with blocks
+  <Alt Not = "Text">
+    <M>\left\{\{i, -(i+1)\}:i\in\{1,\ldots,n-1\right\}\}</M> and
+    <M>\{n,-1\}</M>
+  </Alt>
+  <Alt Only = "Text">
+    {{<C>i</C>,-<C>(i+1)</C>}:<C>i</C><M>\in</M><E>n</E>,<C>i</C>&lt;<E>n</E>}
+    and {<C>n</C>,-<C>1</C>}
+  </Alt>. Note that &p; is a unit.
+  A bipartition &x; of degree &n; is called <E>annular</E> if
+  <Alt Not = "Text">
+    <M>x = p^{i} y p^{j}</M>
+  </Alt>
+  <Alt Only = "Text">
+    <C>x =(p^i)y(p^j)</C>
+  </Alt>
+  for some planar bipartition &y; of degree &n;, and some integers &i; and &j;.
+  <P/>
+
+  From a graphical perspective, as on Page 873 in <Cite
+    Key="Halverson2005PartitionAlgebras"/>, a bipartition of degree &n; is
+  planar if it can be represented as a graph without edges crossing inside of
+  the rectangle formed by its vertices &bfn;<M>\cup</M>-&bfn;.  Similarly, as
+  shown in Figure 2 in <Cite Key="auinger2012krohn"/>, a bipartition of degree
+  &n; is annular if it can be represented as a graph without edges crossing
+  inside an annulus.
 
   <Section><Heading>The family and categories of bipartitions</Heading>
     <#Include Label = "IsBipartition">
