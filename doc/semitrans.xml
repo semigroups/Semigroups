@@ -233,7 +233,7 @@ Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
       If <A>S</A> is a transformation semigroup and <A>n</A> is a non-negative
       integer such that <A>S</A> acts on the points <C>[1 .. <A>n</A>]</C>, then
       <C>DigraphOfActionOnPairs(<A>S</A>, <A>n</A>)</C> returns a digraph
-      representing the <Ref Oper="OnSets" BookName="ref"/> action of <A>S</A> on
+      representing the <Ref Func="OnSets" BookName="ref"/> action of <A>S</A> on
       the pairs of points in <C>[1 ..  <A>n</A>]</C>.
       <P/>
 
@@ -254,17 +254,16 @@ Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
 
       The edges of the digraph are defined as follows. For each pair <C>{i,
         j}</C> in <C>[1 .. <A>n</A>]</C>, and for each generator <C>f</C> in
-      <C>GeneratorsOfSemigroup(<A>S</A>)</C> (see <Ref
-        Attr="GeneratorsOfSemigroup" BookName="ref" />), there is an edge from
-      the vertex corresponding to <C>{i, j}</C> to the vertex corresponding to
-      <C>{i ^ f, j ^ f}</C>.  Since <C>f</C> is a transformation, the set <C>{i
-        ^ f, j ^ f}</C> may correspond to a pair (in the case that <C>i ^ f
-        &lt;&gt; j ^ f</C>), or to a point (in the case that <C>i ^ f = j ^
-        f</C>).  The label of an edge (<Ref Oper="DigraphEdgeLabels"
-        BookName="Digraphs" />) is the position of the first transformation
-      within <C>GeneratorsOfSemigroup(<A>S</A>)</C> that maps the pair
-      corresponding to the source vertex to the pair/point corresponding to the
-      range vertex.
+      <C>GeneratorsOfSemigroup(<A>S</A>)</C>, there is an edge from the vertex
+      corresponding to <C>{i, j}</C> to the vertex corresponding to <C>{i ^ f, j
+        ^ f}</C>.  Since <C>f</C> is a transformation, the set <C>{i ^ f, j ^
+        f}</C> may correspond to a pair (in the case that <C>i ^ f &lt;&gt; j ^
+        f</C>), or to a point (in the case that <C>i ^ f = j ^ f</C>).  The
+      label of an edge is the position of the first transformation within
+      <C>GeneratorsOfSemigroup(<A>S</A>)</C> that maps the pair corresponding to
+      the source vertex to the pair/point corresponding to the range vertex. See
+      <Ref Attr="GeneratorsOfSemigroup" BookName="ref" /> and <Ref
+        Oper="DigraphEdgeLabels" BookName="Digraphs" /> for further information.
       <P/>
 
       Note that the digraph returned by <C>DigraphOfActionOnPairs</C> has no
@@ -291,6 +290,58 @@ gap> DigraphVertexLabels(gr);
 [ 1, 2, 3, 4, [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 2, 3 ], [ 2, 4 ], 
   [ 3, 4 ] ]
 gap> DigraphOfActionOnPairs(S, 5);
+fail]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="DigraphOfActionOnPoints">
+  <ManSection>
+    <Attr Name = "DigraphOfActionOnPoints" Arg = "S"
+      Label = "for a transformation semigroup" />
+    <Oper Name = "DigraphOfActionOnPoints" Arg = "S, n"
+      Label = "for a transformation semigroup and an integer" />
+    <Returns>A digraph, or <K>fail</K>.</Returns>
+    <Description>
+      If <A>S</A> is a transformation semigroup and <A>n</A> is a non-negative
+      integer such that <A>S</A> acts on the points <C>[1 .. <A>n</A>]</C>, then
+      <C>DigraphOfActionOnPoints(<A>S</A>, <A>n</A>)</C> returns a digraph
+      representing the <Ref Func="OnPoints" BookName="ref"/> action of <A>S</A>
+      on the set <C>[1 ..  <A>n</A>]</C>.
+      <P/>
+
+      If the optional argument <A>n</A> is not specified, then by default the
+      degree of <A>S</A> will be chosen for <A>n</A>; see <Ref
+        Attr="DegreeOfTransformationSemigroup" BookName="ref" />. If the
+      semigroup <A>S</A> does not act on <C>[1 ..  <A>n</A>]</C>, then
+      <C>DigraphOfActionOnPairs(<A>S</A>, <A>n</A>)</C> returns <K>fail</K>.
+      <P/>
+
+      The digraph returned by <C>DigraphOfActionOnPairs</C> has <A>n</A>
+      vertices, where the vertex <C>i</C> corresponds to the point <C>i</C>.
+      For each point <C>i</C> in <C>[1 .. <A>n</A>]</C>, and for each generator
+      <C>f</C> in <C>GeneratorsOfSemigroup(<A>S</A>)</C>, there is an edge from
+      the vertex <C>i</C> to the vertex <C>i ^ f</C>. See <Ref
+        Attr="GeneratorsOfSemigroup" BookName="ref" /> for further information.
+      <P/>
+
+      Note that the digraph returned by <C>DigraphOfActionOnPoints</C> has no
+      multiple edges; see <Ref Prop="IsMultiDigraph" BookName="Digraphs"/>.
+
+      <Example><![CDATA[
+gap> x := Transformation([2, 4, 2, 4, 7, 1, 6]);;
+gap> y := Transformation([3, 3, 2, 3, 5, 1, 5]);;
+gap> S := Semigroup(x, y);
+<transformation semigroup of degree 7 with 2 generators>
+gap> gr := DigraphOfActionOnPoints(S);
+<digraph with 7 vertices, 12 edges>
+gap> OnPoints(2, x);
+4
+gap> gr2 := DigraphOfActionOnPoints(S, 4);
+<digraph with 4 vertices, 7 edges>
+gap> gr2 = InducedSubdigraph(gr, [1 .. 4]);
+true
+gap> DigraphOfActionOnPoints(S, 5);
 fail]]></Example>
     </Description>
   </ManSection>

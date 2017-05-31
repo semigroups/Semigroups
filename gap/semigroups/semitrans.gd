@@ -12,7 +12,7 @@ DeclareOperation("\^", [IsTransformationCollection, IsPerm]);
 DeclareAttribute("FixedPoints", IsTransformationSemigroup);
 DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
 DeclareOperation("DigraphOfActionOnPoints",
-                 [IsTransformationSemigroup, IsPosInt]);
+                 [IsTransformationSemigroup, IsInt]);
 DeclareAttribute("DigraphOfActionOnPairs", IsTransformationSemigroup);
 DeclareOperation("DigraphOfActionOnPairs",
                  [IsTransformationSemigroup, IsInt]);
