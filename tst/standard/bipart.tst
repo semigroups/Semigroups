@@ -484,8 +484,8 @@ gap> RightProjection(StarOp(x));
 
 # bipartition: Bipartition 1/3
 gap> Bipartition("test");
-Error, Semigroups: Bipartition: usage,
-the argument <classes> must consist of duplicate-free homogeneous lists,
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `Length' on 1 arguments
 gap> Bipartition(["test"]);
 Error, Semigroups: Bipartition: usage,
 the argument <classes> must consist of duplicate-free homogeneous lists,
@@ -524,12 +524,12 @@ the elements of the argument <blocks> must be positive integers,
 # bipartition: BipartitionByIntRep 3/5
 gap> BipartitionByIntRep([1, 2, 3, 5]);
 Error, Semigroups: BipartitionByIntRep: usage,
-expected 4 but found 5, in position 4
+expected 4 but found 5, in position 4,
 
 # bipartition: BipartitionByIntRep 4/5
 gap> BipartitionByIntRep([1, 3, 3, 5]);
 Error, Semigroups: BipartitionByIntRep: usage,
-expected 2 but found 3, in position 2
+expected 2 but found 3, in position 2,
 
 # bipartition: BipartitionByIntRep 5/5
 gap> BipartitionByIntRep([1, 2, 3, 1]);
@@ -759,6 +759,39 @@ gap> DomainOfBipartition(x);
 [ 1, 2, 3, 6, 4, 5 ]
 gap> CodomainOfBipartition(x);
 [ -1, -4, -2, -3, -5 ]
+
+#T# Test error messages for when creating a bipartition with degree too large.
+gap> Bipartition([[1 .. 2 ^ 32]]);
+Error, Semigroups: Bipartition: usage,
+the argument <classes> must be a list of lists whose unionhas length at most 2\
+ ^ 31 - 1,
+gap> BipartitionByIntRep([1 .. 2 ^ 32]);
+Error, Semigroups: BipartitionByIntRep: usage,
+the length of the argument <blocks> must not exceed2 ^ 32 - 1,
+gap> IdentityBipartition(2 ^ 31);
+Error, Semigroups: IdentityBipartition: usage,
+the argument <n> must not exceed 2 ^ 31 - 1,
+gap> RandomBipartition(2 ^ 31);
+Error, Semigroups: RandomBipartition: usage,
+the argument <n> must not exceed 2 ^ 31 - 1,
+gap> RandomBlockBijection(2 ^ 31);
+Error, Semigroups: RandomBlockBipartition: usage,
+the argument <n> must not exceed 2 ^ 31 - 1,
+gap> AsBipartition((), 2 ^ 31);
+Error, Semigroups: AsBipartition: usage,
+the argument <n> must not exceed 2 ^ 31 - 1,
+gap> AsBipartition(PartialPerm([]), 2 ^ 31);
+Error, Semigroups: AsBipartition: usage,
+the argument <n> must not exceed 2 ^ 31 - 1,
+gap> AsBipartition(Transformation([]), 2 ^ 31);
+Error, Semigroups: AsBipartition: usage,
+the argument <n> must not exceed 2 ^ 31 - 1,
+gap> AsBipartition(Bipartition([]), 2 ^ 31);
+Error, Semigroups: AsBipartition: usage,
+the argument <n> must not exceed 2 ^ 31 - 1,
+gap> AsBlockBijection(PartialPerm([]), 2 ^ 31);
+Error, Semigroups: AsBlockBijection: usage,
+the argument <n> must not exceed 2 ^ 31 - 1,
 
 # SEMIGROUPS_UnbindVariables
 gap> Unbind(G);

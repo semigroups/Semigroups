@@ -93,7 +93,7 @@ InstallGlobalFunction(Bipartition,
 function(classes)
   local n, copy, i, j;
 
-  n := Sum(List(classes, Length)) / 2;
+  n := Sum(classes, Length) / 2;
 
   if n >= 2 ^ 31 then
     ErrorNoReturn("Semigroups: Bipartition: usage,\n",
@@ -262,7 +262,7 @@ InstallMethod(RandomBlockBijection, "for a random source and pos int",
 function(rs, n)
   local out, nrblocks, j, free, i;
 
-  if n >= 2^31 then
+  if n >= 2 ^ 31 then
     ErrorNoReturn("Semigroups: RandomBlockBipartition: usage,\n",
                   "the argument <n> must not exceed 2 ^ 31 - 1,");
   fi;
