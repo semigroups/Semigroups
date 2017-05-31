@@ -1884,6 +1884,14 @@ gap> PODI(2);
 gap> PODI(5);
 <inverse partial perm monoid of rank 5 with 6 generators>
 
+# PORI
+gap> PORI(1);
+<inverse partial perm monoid of rank 1 with 2 generators>
+gap> PORI(2);
+<inverse partial perm monoid of rank 2 with 3 generators>
+gap> PORI(5);
+<inverse partial perm monoid of rank 5 with 3 generators>
+
 # SingularPartitionMonoid
 gap> SingularPartitionMonoid(1);;
 gap> SingularPartitionMonoid(2);

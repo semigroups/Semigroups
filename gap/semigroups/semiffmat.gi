@@ -597,3 +597,9 @@ function(coll)
   fi;
   return true;
 end);
+
+# FIXME this method is not correct (although it works as documented)
+# This should check whether <S> = GLM of the right dimensions/field
+
+InstallMethod(IsFullMatrixMonoid, "for a semigroup",
+[IsSemigroup], ReturnFalse);

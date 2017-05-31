@@ -3,7 +3,7 @@
     Standard examples
   </Heading>
 
-  In this Chapter we describe some standard examples of semigroups which are
+  In this chapter we describe some standard examples of semigroups which are
   available in the &Semigroups; package.
   <P/>
 
@@ -17,15 +17,13 @@
 
     In this section, we describe the operations in &Semigroups; that can be
     used to create transformation semigroups belonging to several standard
-    classes of example. See <Ref Chap = "Transformations" BookName = "ref"/>
-    for more information about semigroups of transformations.
+    classes of example. See <Ref Chap = "Transformations" BookName = "ref" />
+    for more information about transformations. 
+    <#Include Label = "CatalanMonoid">
     <#Include Label = "EndomorphismsPartition">
     <#Include Label = "PartialTransformationMonoid">
-    <#Include Label = "MunnSemigroup">
-    <#Include Label = "OPOIPOPI">
-    <!-- split this to separate transformation and partial perm semigroups-->
     <#Include Label = "SingularTransformationSemigroup">
-    <#Include Label = "CatalanMonoid">
+    <#Include Label = "OrderPreserving">
   </Section>
 
   <!--**********************************************************************-->
@@ -35,6 +33,14 @@
     <Heading>
       Semigroups of partial permutations
     </Heading>
+
+    In this section, we describe the operations in &Semigroups; that can be used
+    to create semigroups of partial permutations belonging to several standard
+    classes of example. See <Ref Chap = "Partial permutations" BookName = "ref"
+      /> for more information about partial permutations.
+    <#Include Label = "MunnSemigroup">
+    <#Include Label = "RookMonoid">
+    <#Include Label = "POIPODIPOPIPORI">
   </Section>
 
   <!--**********************************************************************-->
@@ -48,13 +54,18 @@
     In this section, we describe the operations in &Semigroups; that can be
     used to create bipartition semigroups belonging to several standard
     classes of example. See Chapter <Ref Chap = "bipartition"/> for more
-    information about semigroups of bipartitions.
+    information about bipartitions.
     <#Include Label = "PartitionMonoid">
     <#Include Label = "BrauerMonoid">
     <#Include Label = "JonesMonoid">
-    <#Include Label = "UniformBlockBijectionMonoid">
-    <#Include Label = "ApsisMonoid">
+    <#Include Label = "PartialJonesMonoid">
+    <#Include Label = "AnnularJonesMonoid">
+    <#Include Label = "MotzkinMonoid">
     <#Include Label = "DualSymmetricInverseSemigroup">
+    <#Include Label = "UniformBlockBijectionMonoid">
+    <#Include Label = "PlanarPartitionMonoid">
+    <#Include Label = "ModularPartitionMonoid">
+    <#Include Label = "ApsisMonoid">
   </Section>
  
   <!--**********************************************************************-->
@@ -64,7 +75,30 @@
     <Heading>
       Standard PBR semigroups
     </Heading>
+
+    In this section, we describe the operations in &Semigroups; that can be used
+    to create standard examples of semigroups of partitioned binary relations
+    (PBRs).  See Chapter <Ref Chap = "Partitioned binary relations (PBRs)"/> for
+    more information about PBRs.
     <#Include Label = "FullPBRMonoid">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+ 
+  <Section Label = "Semigroups of matrices of a finite field">
+    <Heading>
+      Semigroups of matrices over a finite field
+    </Heading>
+    In this section, we describe the operations in &Semigroups; that can be used
+    to create semigroups of matrices over a finite field that belonging to
+    several standard classes of example. See the section
+    <Ref Sect = "Matrices over finite fields" Style="Text" /> for more
+    information about matrices over a finite field.
+    <#Include Label = "GeneralLinearMonoid">
+    <#Include Label = "SpecialLinearMonoid">
+    <!-- FIXME move to a more appropriate place -->
+    <#Include Label = "IsFullMatrixMonoid">
   </Section>
 
   <!--**********************************************************************-->
@@ -74,20 +108,31 @@
     <Heading>
       Semigroups of boolean matrices
     </Heading>
-    <#Include Label = "RegularBinaryRelationSemigroup">
- 
+    In this section, we describe the operations in &Semigroups; that can be used
+    to create semigroups of boolean matrices belonging to several standard
+    classes of example. See the section <Ref Sect = "Boolean matrices"
+      Style="Text" /> for more information about boolean matrices.
+    <#Include Label = "FullBooleanMatMonoid">
+    <#Include Label = "RegularBooleanMatMonoid">
+    <#Include Label = "ReflexiveBooleanMatMonoid">
+    <#Include Label = "HallMonoid">
+    <#Include Label = "GossipMonoid">
+    <#Include Label = "TriangularBooleanMatMonoid">
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
  
-  <Section Label = "Matrix semigroups">
+  <Section Label = "Semigroups of matrices over a semiring">
     <Heading>
-      Matrix semigroups
+      Semigroups of matrices over a semiring
     </Heading>
-    <#Include Label = "GeneralLinearMonoid">
-    <#Include Label = "IsFullMatrixMonoid">
- 
+    In this section, we describe the operations in &Semigroups; that can be used
+    to create semigroups of matices over a semiring that belong to several
+    standard classes of example.  See Chapter
+    <Ref Chap = "Matrices over semirings" /> for more information about matrices
+    over a semiring.
+    <#Include Label = "FullTropicalMaxPlusMonoid"/>
+    <#Include Label = "FullTropicalMinPlusMonoid"/>
   </Section>
-
 </Chapter>
