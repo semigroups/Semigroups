@@ -715,3 +715,68 @@ SEMIGROUPS.CheckManualConsistency := function()
   SEMIGROUPS.CheckDocCoverage(doc);
   return SEMIGROUPS.CheckManSectionTypes(doc, true);
 end;
+
+SEMIGROUPS.DocumentedPackageVariables := function()
+  local doc, r, x, out, mansect, record;
+  doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
+                           "main.xml",
+                           SEMIGROUPS.DocXMLFiles,
+                           true);
+  r := ParseTreeXMLString(doc[1]);
+  CheckAndCleanGapDocTree(r);
+  x := XMLElements(r, ["ManSection"]);
+  out := [];
+  for mansect in x do
+    for record in mansect.content do
+      if IsBound(record.attributes) and IsBound(record.attributes.Name) then
+        AddSet(out, record.attributes.Name);
+      fi;
+    od;
+  od;
+  return out;
+end;
+
+# info := PackageVariablesInfo("semigroups", "3.0.0");
+# which must be run before loading Semigroups
+SEMIGROUPS.UndocumentedPackageVariables := function(info)
+  local out, suppressions, obsoletes, documented, name, part, entry;
+
+  out := [];
+  suppressions := ["*", ".", "/", "<", "=", "[]", "^", "in", "{}",
+                   "HTAdd_TreeHash_C", "HTValue_TreeHash_C"];
+
+  obsoletes := ["RandomTransformationSemigroup", "RandomTransformationMonoid",
+                "RandomPartialPermSemigroup", "RandomPartialPermMonoid",
+                "RandomMatrixSemigroup", "RandomMatrixMonoid", "DotDClasses",
+                "DotDClasses", "PartialTransformationSemigroup",
+                "AsPartialPermSemigroup", "AsTransformationSemigroup",
+                "AsBipartitionSemigroup", "AsBlockBijectionSemigroup",
+                "AsMatrixSemigroup", "IsomorphismBipartitionSemigroup",
+                "IsomorphismBlockBijectionSemigroup",
+                "IsomorphismMatrixSemigroup",
+                "FactorisableDualSymmetricInverseSemigroup",
+                "SingularFactorisableDualSymmetricInverseSemigroup",
+                "IsSynchronizingTransformationCollection"];
+  documented := SEMIGROUPS.DocumentedPackageVariables();
+
+  for part in info do
+    if (part[1]{[1 .. 3]} = "new" or part[1]{[1 .. 9]} = "other new") and not
+        part[1] = "new methods" then
+      for entry in part[2] do
+        name := entry[1][1];
+        if not name in suppressions
+            and not name in obsoletes
+            and not name in documented
+            and not ForAll(name, x -> IsUpperAlphaChar(x) or x = '_')
+            and not (Length(name) >= 3 and name{[1 .. 3]} = "Has")
+            and not (Length(name) >= 3 and name{[1 .. 3]} = "Set")
+            and not (Length(name) >= 11 and name{[1 .. 11]} = "SEMIGROUPS_")
+            and not (Length(name) >= 2
+                     and name{[Length(name) - 1, Length(name)]} = "NC") then
+          AddSet(out, [name, JoinStringsWithSeparator(entry[2], ":")]);
+        fi;
+      od;
+    fi;
+  od;
+  return out;
+end;
