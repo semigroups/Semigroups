@@ -422,8 +422,6 @@ function(m)
                   "`IsPlistMatrixOverFiniteFieldRep`,");
   fi;
 
-  Info(InfoMatrixSemigroups, 2, "ComputeRowSpaceAndTransformation called");
-
   deg := DimensionOfMatrixOverSemiring(m);
   bd := BaseDomain(m);
   if IsZero(m) then

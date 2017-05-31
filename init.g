@@ -117,5 +117,4 @@ ReadPackage("semigroups", "gap/fp/freeband.gd");
 
 ReadPackage("semigroups", "gap/obsolete.gd");
 
-DeclareInfoClass("InfoMatrixSemigroups");
 DeclareInfoClass("InfoSemigroups");
