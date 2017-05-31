@@ -13,6 +13,28 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
+# helper functions
+gap> BruteForceIsoCheck := function(iso)
+>   local x, y;
+>   if not IsInjective(iso) or not IsSurjective(iso) then
+>     return false;
+>   fi;
+>   for x in Generators(Source(iso)) do
+>     for y in Generators(Source(iso)) do
+>       if x ^ iso * y ^ iso <> (x * y) ^ iso then
+>         return false;
+>       fi;
+>     od;
+>   od;
+>   return true;
+> end;;
+gap> BruteForceInverseCheck := function(map)
+> local inv;
+>   inv := InverseGeneralMapping(map);
+>   return ForAll(Source(map), x -> x = (x ^ map) ^ inv)
+>     and ForAll(Range(map), x -> x = (x ^ inv) ^ map);
+> end;;
+
 #T#
 gap> R := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),
 > [[0, (2, 8), 0, 0, 0, (2, 8, 6)],
@@ -21,11 +43,11 @@ gap> R := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0],
 >  [0, (2, 8, 6), 0, 0, 0, (2, 8)],
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0]]);;
-gap> AutomorphismGroup(R);
+gap> A := AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 6x6 over Group([ (2,8), (2,8,
-6) ])> with 37 generators>
-gap> Size(last);
-72
+6) ])> with 24 generators>
+gap> Size(Range(IsomorphismPermGroup(A)));
+82944
 
 #T#
 gap> SetInfoLevel(InfoSemigroups, 2);
@@ -36,7 +58,7 @@ gap> R := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0],
 >  [0, (2, 8, 6), 0, 0, 0, (2, 8)],
 >  [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0]]);;
-gap> AutomorphismGroup(R);
+gap> A := AutomorphismGroup(R);
 #I  finding automorphisms of the graph . . . 2304 found
 #I  finding the stabilizer of matrix . . . 12
 #I  finding the automorphism group of the group . . . found 6
@@ -44,21 +66,18 @@ gap> AutomorphismGroup(R);
 #I  the graph has 2 connected components
 #I  backtracking in the direct product of size 2304 . . . 
 <automorphism group of <Rees 0-matrix semigroup 6x6 over Group([ (2,8), (2,8,
-6) ])> with 37 generators>
-gap> Size(last);
-72
+6) ])> with 24 generators>
+gap> Size(Range(IsomorphismPermGroup(A)));
+82944
 gap> SetInfoLevel(InfoSemigroups, 0);
 
 #T#
-gap> I := MinimalIdeal(PartitionMonoid(4));
-<simple bipartition *-semigroup ideal of degree 4 with 1 generator>
-gap> R := Range(IsomorphismReesMatrixSemigroup(I));
-<Rees matrix semigroup 15x15 over Group(())>
+gap> I := MinimalIdeal(PartitionMonoid(4));;
+gap> R := Range(IsomorphismReesMatrixSemigroup(I));;
 gap> G := AutomorphismGroup(R);
 <automorphism group of <Rees matrix semigroup 15x15 over Group(())> with 
 5 generators>
-gap> G := Range(IsomorphismPermGroup(AutomorphismGroup(R)));
-<permutation group with 5 generators>
+gap> G := Range(IsomorphismPermGroup(AutomorphismGroup(R)));;
 gap> Size(G);
 1710012252724199424000000
 
@@ -71,11 +90,13 @@ gap> I := SemigroupIdeal(
 >  [PartialPermNC([1], [1])]);;
 gap> R := Range(IsomorphismReesZeroMatrixSemigroup(I));
 <Rees 0-matrix semigroup 5x5 over Group(())>
-gap> AutomorphismGroup(R);
+gap> A := AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 5x5 over Group(())> with 
 5 generators>
-gap> Size(last);
+gap> Size(A);
 120
+gap> ForAll(A, BruteForceIsoCheck);
+true
 
 #T# RMSInducedFunction
 gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 4, 3));
@@ -91,13 +112,15 @@ gap> AutomorphismGroup(R);
 6 generators>
 gap> Size(last);
 144
+gap> ForAll(A, BruteForceIsoCheck);
+true
 
 #T# AutomorphismGroup: for a RZMS with trivial automorphism group of graph
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
 >                                 [[(1, 3), (1, 2)], [0, (2, 3)]]);;
 gap> AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,3), (1,
-2) ])> with 6 generators>
+2) ])> with 4 generators>
 gap> Size(last);
 6
 
@@ -134,25 +157,35 @@ Error, no 2nd choice method found for `AutomorphismGroup' on 1 arguments
 #T# AutomorphismGroup: 1x1 RMS
 gap> R := ReesMatrixSemigroup(Group(()), [[()]]);
 <Rees matrix semigroup 1x1 over Group(())>
-gap> AutomorphismGroup(R);
+gap> A := AutomorphismGroup(R);
 <automorphism group of <Rees matrix semigroup 1x1 over Group(())> with 
 1 generator>
+gap> ForAll(A, BruteForceIsoCheck);
+true
 
 #T# AutomorphismGroup: 1x2 and 2x1 RMS
-gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 2, 1));
+gap> A := AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 2, 1));
 <automorphism group of <Rees matrix semigroup 2x1 over Group(())> with 
 2 generators>
-gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 1, 2));
+gap> ForAll(A, BruteForceIsoCheck);
+true
+gap> A := AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 1, 2));
 <automorphism group of <Rees matrix semigroup 1x2 over Group(())> with 
 2 generators>
+gap> ForAll(A, BruteForceIsoCheck);
+true
 
 #T# AutomorphismGroup: 1x3 and 3x1 RMS
-gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 3, 1));
+gap> A := AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 3, 1));
 <automorphism group of <Rees matrix semigroup 3x1 over Group(())> with 
 3 generators>
-gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 1, 3));
+gap> ForAll(A, BruteForceIsoCheck);
+true
+gap> A := AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 1, 3));
 <automorphism group of <Rees matrix semigroup 1x3 over Group(())> with 
 3 generators>
+gap> ForAll(A, BruteForceIsoCheck);
+true
 
 #T# AutomorphismGroup: 33x33 RMS
 gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 33, 33));
@@ -162,8 +195,12 @@ gap> AutomorphismGroup(RectangularBand(IsReesMatrixSemigroup, 33, 33));
 #T# IdentityMapping: for an RMS
 gap> R := ReesMatrixSemigroup(Group([()]), [[()]]);
 <Rees matrix semigroup 1x1 over Group(())>
-gap> IdentityMapping(R);
+gap> map := IdentityMapping(R);
 ((), IdentityMapping( Group( [ () ] ) ), [ (), () ])
+gap> BruteForceIsoCheck(last);
+true
+gap> ForAll(R, x -> x = x ^ map);
+true
 
 #T# IsomorphismSemigroups: RMS fail
 gap> R := RectangularBand(IsReesMatrixSemigroup, 2, 2);
@@ -176,26 +213,48 @@ fail
 #T# IsomorphismSemigroups: from RMS to itself
 gap> R := RectangularBand(IsReesMatrixSemigroup, 2, 2);
 <Rees matrix semigroup 2x2 over Group(())>
-gap> IsomorphismSemigroups(R, R);
+gap> map := IsomorphismSemigroups(R, R);
 ((), IdentityMapping( Group( [ () ] ) ), [ (), (), (), () ])
+gap> BruteForceIsoCheck(map);
+true
+gap> ForAll(R, x -> x = x ^ map);
+true
 
 #T# IsomorphismSemigroups: from RMS to RMS
-gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[(), ()], [(), (1, 2)]]);
-<Rees matrix semigroup 2x2 over Group([ (1,2) ])>
-gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [(), ()]]);
-<Rees matrix semigroup 2x2 over Group([ (1,2) ])>
-gap> IsomorphismSemigroups(R, S);
+gap> S := ReesMatrixSemigroup(Group([(1, 2)]), [[(), ()], [(), (1, 2)]]);;
+gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[(), (1, 2)], [(), ()]]);;
+gap> map := IsomorphismSemigroups(R, S);
 ((), GroupHomomorphismByImages( Group( [ (1,2) ] ), Group( [ (1,2) ] ), 
-[ (1,2) ], [ (1,2) ] ), [ (), (), (), () ])
+[ (1,2) ], [ (1,2) ] ), [ (), (1,2), (), () ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+gap> map := InverseGeneralMapping(map);
+((), GroupHomomorphismByImages( Group( [ (1,2) ] ), Group( [ (1,2) ] ), 
+[ (1,2) ], [ (1,2) ] ), [ (), (1,2), (), () ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
 
 #T# IsomorphismSemigroups: from RZMS to RZMS
-gap> S := ReesZeroMatrixSemigroup(Group([()]), [[(), ()], [(), 0]]);
-<Rees 0-matrix semigroup 2x2 over Group(())>
-gap> R := ReesZeroMatrixSemigroup(Group([()]), [[(), 0], [(), ()]]);
-<Rees 0-matrix semigroup 2x2 over Group(())>
-gap> IsomorphismSemigroups(R, S);
+gap> S := ReesZeroMatrixSemigroup(Group([()]), [[(), ()], [(), 0]]);;
+gap> R := ReesZeroMatrixSemigroup(Group([()]), [[(), 0], [(), ()]]);;
+gap> map := IsomorphismSemigroups(R, S);
 ((3,4), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [  ], 
 [  ] ), [ (), (), (), () ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+gap> map := InverseGeneralMapping(map);
+((3,4), GroupHomomorphismByImages( Group( () ), Group( [ () ] ), [  ], 
+[  ] ), [ (), (), (), () ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
 
 #T# IsomorphismSemigroups: fail (non-regular RZMS)
 gap> R := ReesZeroMatrixSemigroup(Group([()]), [[0, 0], [(), ()]]);
@@ -214,8 +273,14 @@ fail
 
 #T# IsomorphismSemigroups: from RZMS to itself
 gap> R := ReesZeroMatrixSemigroup(Group([()]), [[(), ()]]);;
-gap> IsomorphismSemigroups(R, R);
+gap> map := IsomorphismSemigroups(R, R);
 ((), IdentityMapping( Group( [ () ] ) ), [ (), (), () ])
+gap> BruteForceIsoCheck(map);
+true
+gap> ForAll(R, x -> x = x ^ map);
+true
+gap> BruteForceInverseCheck(map);
+true
 
 #T# IsomorphismSemigroups: fail (non-isomorphic groups)
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3, 4)]), [[(), ()]]);;
@@ -240,19 +305,42 @@ fail
 #T# IsomorphismSemigroups: non-trivial isomorphism 1/2
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), 0], [0, ()]]);;
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[0, ()], [(1, 2), 0]]);;
-gap> IsomorphismSemigroups(R, S);
+gap> map := IsomorphismSemigroups(R, S);
 ((3,4), GroupHomomorphismByImages( Group( [ (1,2) ] ), Group( [ (1,2) ] ), 
 [ (1,2) ], [ (1,2) ] ), [ (), (), (1,2), () ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+gap> map := InverseGeneralMapping(map);
+((3,4), GroupHomomorphismByImages( Group( [ (1,2) ] ), Group( [ (1,2) ] ), 
+[ (1,2) ], [ (1,2) ] ), [ (), (), (), (1,2) ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
 
 #T# IsomorphismSemigroups: non-trivial isomorphism 2/2
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
 >                                 [[0, (1, 2, 3)], [(1, 3, 2), ()]]);;
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
 >                                 [[(1, 3), (1, 2)], [0, (2, 3)]]);;
-gap> IsomorphismSemigroups(R, S);
+gap> map := IsomorphismSemigroups(R, S);
 ((3,4), GroupHomomorphismByImages( Group( [ (1,2,3), (1,2) ] ), Group( 
 [ (1,2,3), (1,2) ] ), [ (1,2,3), (1,2) ], [ (1,2,3), (1,2) ] ), 
 [ (), (1,2,3), (2,3), (1,2) ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+gap> map := InverseGeneralMapping(map);
+((3,4), GroupHomomorphismByImages( Group( [ (1,2,3), (1,2) ] ), Group( 
+[ (1,2,3), (1,2) ] ), [ (1,2,3), (1,2) ], [ (1,2,3), (1,2) ] ), 
+[ (), (1,3,2), (1,2), (2,3) ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
 
 #T# SEMIGROUPS.RZMStoRZMSInducedFunction: error, 1/1
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2)]), [[(), 0], [0, ()]]);;
@@ -315,66 +403,59 @@ gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3)]),
 > [[(1, 2, 3), 0], [0, (1, 2, 3)]]);;
 gap> G := AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,
-3) ])> with 3 generators>
-gap> G.1 = G.2;
-false
+3) ])> with 5 generators>
+gap> map := RZMSIsoByTriple(R, R,
+> [(1, 2)(3, 4), IdentityMapping(Group((1, 2, 3))), [(), (), (), ()]]);
+((1,2)(3,4), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (), (), () ])
+gap> map in G;
+true
 gap> CompositionMapping2(G.1, G.2);
-((), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( [ (1,2,3) ] ), 
-[ (1,2,3) ], [ (1,3,2) ] ), [ (), (1,3,2), (1,3,2), (1,2,3) ])
+((), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (1,3,2), (), (1,3,2) ])
 gap> R.1 ^ G.1;
 (1,(),1)
 gap> G.1 ^ -1;
-((), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( [ (1,2,3) ] ), 
-[ (1,3,2) ], [ (1,2,3) ] ), [ (), (), (1,3,2), (1,3,2) ])
+((), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (), (), () ])
 gap> IsOne(G.1);
-false
+true
 gap> IsOne(One(G.1 * G.2));
 true
 gap> Print(G.1); true;
-RZMSIsoByTriple ( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), 
-[ [ (1,2,3), 0 ], [ 0, (1,2,3) ] ] ), ReesZeroMatrixSemigroup( Group( 
-[ (1,2,3) ] ), [ [ (1,2,3), 0 ], [ 0, (1,2,3) ] 
- ] ), (), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( 
-[ (1,2,3) ] ), [ (1,2,3) ], [ (1,3,2) ] ), [ (), (), (1,3,2), (1,3,2) ] )true
+IdentityMapping( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), 
+[ [ (1,2,3), 0 ], [ 0, (1,2,3) ] ] ) )true
 
 #T# \=: RZMS and RZMS elements 2/2
 gap> R := ReesZeroMatrixSemigroup(Group([(1, 2, 3)]),
 > [[(1, 2, 3), 0], [0, (1, 2, 3)]]);;
 gap> G := AutomorphismGroup(R);
 <automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,
-3) ])> with 3 generators>
+3) ])> with 5 generators>
 gap> S := ReesZeroMatrixSemigroup(Group([(1, 2, 3), (1, 2)]),
 > [[0, (1, 2, 3)], [(1, 3, 2), ()]]);;
 gap> H := AutomorphismGroup(S);
 <automorphism group of <Rees 0-matrix semigroup 2x2 over Group([ (1,2,3), (1,
-2) ])> with 6 generators>
+2) ])> with 4 generators>
 gap> G.1 = H.1;
 false
 gap> CompositionMapping2(G.1, G.2);
-((), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( [ (1,2,3) ] ), 
-[ (1,2,3) ], [ (1,3,2) ] ), [ (), (1,3,2), (1,3,2), (1,2,3) ])
+((), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (1,3,2), (), (1,3,2) ])
 gap> R.1 ^ G.1;
 (1,(),1)
 gap> G.1 ^ -1;
-((), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( [ (1,2,3) ] ), 
-[ (1,3,2) ], [ (1,2,3) ] ), [ (), (), (1,3,2), (1,3,2) ])
+((), IdentityMapping( Group( [ (1,2,3) ] ) ), [ (), (), (), () ])
 gap> IsOne(G.1);
-false
+true
 gap> IsOne(One(G.1 * G.2));
 true
 gap> Print(G.1); true;
-RZMSIsoByTriple ( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), 
-[ [ (1,2,3), 0 ], [ 0, (1,2,3) ] ] ), ReesZeroMatrixSemigroup( Group( 
-[ (1,2,3) ] ), [ [ (1,2,3), 0 ], [ 0, (1,2,3) ] 
- ] ), (), GroupHomomorphismByImages( Group( [ (1,2,3) ] ), Group( 
-[ (1,2,3) ] ), [ (1,2,3) ], [ (1,3,2) ] ), [ (), (), (1,3,2), (1,3,2) ] )true
+IdentityMapping( ReesZeroMatrixSemigroup( Group( [ (1,2,3) ] ), 
+[ [ (1,2,3), 0 ], [ 0, (1,2,3) ] ] ) )true
 gap> PreImagesRepresentative(G.2, R.1);
 (1,(),1)
 gap> ImagesElm(G.2, R.1);
 [ (1,(),1) ]
 
-# Issue #167, problem with IsomorphismSemigroups for RMS and RZMS when one of
-# the arguments was did not satisfy IsWholeFamily
+# Issue #167 (part 1), problem with IsomorphismSemigroups for RMS and RZMS when
+# one of the arguments was did not satisfy IsWholeFamily
 gap> R := ReesMatrixSemigroup(Group(()), [[(), ()], [(), ()]]);;
 gap> W := Semigroup(RMSElement(R, 2, (), 2));;
 gap> S := ReesMatrixSemigroup(Group(()), [[()]]);;
@@ -400,6 +481,90 @@ gap> IsomorphismSemigroups(S, WW);
 gap> IsomorphismSemigroups(WW, S);
 ((), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [  ], 
 [  ] ), [ (), () ])
+
+# Issue #167 (part 2)
+gap> G1 := SymmetricGroup(IsPermGroup, 2);;
+gap> R1 := ReesMatrixSemigroup(G1, [[Identity(G1)]]);;
+gap> G2 := SymmetricGroup(IsPcGroup, 2);;
+gap> R2 := ReesMatrixSemigroup(G2, [[Identity(G2)]]);;
+gap> map := IsomorphismSemigroups(R1, R2);
+((), GroupHomomorphismByImages( SymmetricGroup( [ 1 .. 2 ] ), Group( 
+[ f1 ] ), [ (1,2) ], [ f1 ] ), [ <identity> of ..., <identity> of ... ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+gap> map := InverseGeneralMapping(map);
+((), Pcgs([ f1 ]) -> [ (1,2) ], [ (), () ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+# Issue #167 (part 3)
+gap> R := ReesMatrixSemigroup(Group(()), [[()]]);
+<Rees matrix semigroup 1x1 over Group(())>
+gap> iso := IsomorphismSemigroups(R, R);
+((), IdentityMapping( Group( [ () ] ) ), [ (), () ])
+gap> inv := InverseGeneralMapping(iso);
+((), IdentityMapping( Group( [ () ] ) ), [ (), () ])
+gap> Representative(R) ^ inv;
+(1,(),1)
+
+# Issue #167 (part 4)
+gap> G1 := Group([(2, 4), (1, 2)]);;
+gap> mat1 := [[(1, 2), (2, 4)]];;
+gap> R1 := ReesMatrixSemigroup(G1, mat1);;
+gap> G2 := Group([(1, 2)(3, 6)(4, 5), (1, 3, 5)(2, 4, 6)]);;
+gap> mat2 := [[(1, 2)(3, 6)(4, 5), (1, 5, 3)(2, 6, 4)]];;
+gap> R2 := ReesMatrixSemigroup(G2, mat2);;
+gap> map := IsomorphismSemigroups(R1, R2);
+((), GroupHomomorphismByImages( Group( [ (2,4), (1,2) ] ), Group( 
+[ (1,2)(3,6)(4,5), (1,3,5)(2,4,6) ] ), [ (2,4), (1,2) ], 
+[ (1,2)(3,6)(4,5), (1,4)(2,3)(5,6) ] ), [ (), (1,4)(2,3)(5,6), (1,3,5)(2,4,6) 
+ ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+gap> map := InverseGeneralMapping(map);
+((), GroupHomomorphismByImages( Group( [ (1,2)(3,6)(4,5), (1,4)(2,3)(5,6) 
+ ] ), Group( [ (2,4), (1,2) ] ), [ (1,2)(3,6)(4,5), (1,4)(2,3)(5,6) ], 
+[ (2,4), (1,2) ] ), [ (), (1,2), (1,4,2) ])
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+# Issue #167 (part 5)
+gap> R := ReesMatrixSemigroup(Group(()), [[(), ()], [(), ()]]);;
+gap> W := Semigroup(RMSElement(R, 2, (), 2));;
+gap> S := ReesMatrixSemigroup(Group(()), [[()]]);;
+gap> norm := InverseGeneralMapping(IsomorphismReesMatrixSemigroup(W));;
+gap> iso := IsomorphismSemigroups(S, Source(norm));;
+gap> comp := CompositionMapping(norm, iso);;
+gap> inv := InverseGeneralMapping(comp);;
+gap> Representative(S) ^ comp = Representative(W);
+true
+gap> Representative(W) ^ inv;
+(1,(),1)
+
+# Check inverses work
+gap> R := ReesZeroMatrixSemigroup(Group([()]),
+> [[(), 0, (), 0], [0, (), 0, ()]]);;
+gap> A := AutomorphismGroup(R);
+<automorphism group of <Rees 0-matrix semigroup 4x2 over Group(())> with 
+3 generators>
+gap> Size(A);
+8
+gap> ForAll(A, x -> x * x ^ -1 = One(A));
+true
+gap> ForAll(A, x -> x ^ -1 * x = One(A));
+true
+gap> ForAll(A, BruteForceIsoCheck);
+true
+gap> ForAll(A, BruteForceInverseCheck);
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(G);
