@@ -79,8 +79,10 @@
       </Alt>,
       &i;<M>\in</M>&bfn;, &j;<M>\in</M> -&bfn; and
       <Alt Not = "Text">
-        <Display>(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\ \ldots,\
-          (-k(2s-2),-k(2s-1))\in x,\ (k(2s-1),j)\in y;</Display>
+        <Display>(i,-k(1))\in x,\ (k(1),k(2))\in y,\ (-k(2),-k(3))\in x,\
+          \ldots,\qquad</Display>
+        <Display>\qquad\ldots,\ (-k(2s-2),-k(2s-1))\in x,\ 
+          (k(2s-1),j)\in y;</Display>
       </Alt>
       <Alt Only = "Text">
         <C>(i,-k(1))</C><M>\in</M><C>x</C>, <C>(k(1),k(2))</C><M>\in</M><C>y</C>,
