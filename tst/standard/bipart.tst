@@ -761,11 +761,17 @@ gap> CodomainOfBipartition(x);
 [ -1, -4, -2, -3, -5 ]
 
 #T# Test error messages for when creating a bipartition with degree too large.
-gap> Bipartition([[1 .. 2 ^ 32]]);
+# We create enum, as opposed to a range [1 .. 2 ^ 33] to allow this test to
+# work in the 32-bit version.
+gap> enum := EnumeratorByFunctions(Integers, 
+>                                  rec(ElementNumber := {enum, x} -> x,
+>                                  NumberElement := {enum, x} -> x,
+>                                  Length := x -> 2 ^ 33));;
+gap> Bipartition([enum]);
 Error, Semigroups: Bipartition: usage,
 the argument <classes> must be a list of lists whose unionhas length at most 2\
  ^ 31 - 1,
-gap> BipartitionByIntRep([1 .. 2 ^ 32]);
+gap> BipartitionByIntRep(enum);
 Error, Semigroups: BipartitionByIntRep: usage,
 the length of the argument <blocks> must not exceed2 ^ 32 - 1,
 gap> IdentityBipartition(2 ^ 31);
