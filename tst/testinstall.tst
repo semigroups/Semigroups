@@ -1595,6 +1595,24 @@ true
 gap> IsSynchronizingSemigroup(S, 9);
 true
 
+#T# Free semigroup congruence test from extreme/cong.tst
+gap> F := FreeSemigroup(1);;
+gap> x := GeneratorsOfSemigroup(F)[1];;
+gap> pair := [x ^ 2, x ^ 4];;
+gap> cong := SemigroupCongruence(F, pair);
+<semigroup congruence over <free semigroup on the generators [ s1 ]> with 
+1 generating pairs>
+gap> pair in cong;
+true
+gap> EquivalenceRelationLookup(cong);
+Error, Semigroups: EquivalenceRelationLookup: usage,
+<cong> must be over a finite semigroup,
+gap> EquivalenceClasses(cong);
+[ <congruence class of s1>, <congruence class of s1^2>, 
+  <congruence class of s1^3> ]
+gap> NrCongruenceClasses(cong);
+3
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);

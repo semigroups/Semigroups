@@ -89,24 +89,6 @@ gap> c := EquivalenceClasses(cong);;
 gap> Size(c) = 85;
 true
 
-#T# Free semigroups
-gap> F := FreeSemigroup(1);;
-gap> x := GeneratorsOfSemigroup(F)[1];;
-gap> pair := [x ^ 2, x ^ 4];;
-gap> cong := SemigroupCongruence(F, pair);
-<semigroup congruence over <free semigroup on the generators [ s1 ]> with 
-1 generating pairs>
-gap> pair in cong;
-true
-gap> EquivalenceRelationLookup(cong);
-Error, Semigroups: EquivalenceRelationLookup: usage,
-<cong> must be over a finite semigroup,
-gap> EquivalenceClasses(cong);
-[ <congruence class of s1>, <congruence class of s1^2>, 
-  <congruence class of s1^3> ]
-gap> NrCongruenceClasses(cong);
-3
-
 #T# PairsCongTest3: \= for two semigroup congruences
 gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> s := Semigroup(Transformation([1]));;
