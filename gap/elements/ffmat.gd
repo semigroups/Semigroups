@@ -42,19 +42,6 @@ DeclareOperation("AsMutableList", [IsMatrix]);
 ## Declarations specifically for finite field vectors
 #############################################################################
 
-DeclareCategory("IsVectorOverFiniteField", IsAdditiveElementWithInverse);
-DeclareCategoryCollections("IsVectorOverFiniteField");
-DeclareCategoryCollections("IsVectorOverFiniteFieldCollection");
-
-DeclareConstructor("NewVectorOverFiniteField",
-                   [IsVectorOverFiniteField, IsRing, IsInt, IsList]);
-DeclareConstructor("NewVectorOverFiniteField",
-                   [IsVectorOverFiniteField, IsRing, IsInt, IsPlistVectorRep]);
-DeclareConstructor("NewZeroVectorOverFiniteField",
-                   [IsVectorOverFiniteField, IsRing, IsInt]);
-
-DeclareAttribute("BaseDomain", IsVectorOverFiniteField);
-
 DeclareCategory("IsRowBasisOverFiniteField", IsCollection);
 DeclareCategoryCollections("IsRowBasisOverFiniteField");
 DeclareConstructor("NewRowBasisOverFiniteField",
