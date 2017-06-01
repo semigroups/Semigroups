@@ -44,7 +44,6 @@
 # is false.
 
 SEMIGROUPS.InfoStatement := function(level, linebreak, arg...)
-
   if InfoLevel(InfoSemigroups) >= level then
     Apply(arg, String);
     if not linebreak then
@@ -127,26 +126,37 @@ SEMIGROUPS.RMSIsoPruner := function(U, V)
     end;
 end;
 
-SEMIGROUPS.RMSInducedFunction := function(R, l, g, x)
-  local mat, m, n, out, j, i;
+# Theorem 3.4.1 in Howie's book, Fundamentals of Semigroup Theory. This
+# function finds the values of the elements u_i and v_lambda of the underlying
+# group of R2 for the choice of l, and g, by propogating the initial value x
+# from u_1 to v_1, ..., v_n, and then from v_1 to u_2, ..., u_m.  It then
+# checks that the equation in Theorem 3.4.1 holds for the values of u and v
+# defined.
 
-  mat := Matrix(R);
-  m := Length(mat[1]);
-  n := Length(mat);
+SEMIGROUPS.RMSInducedFunction := function(R1, R2, l, g, x)
+  local mat1, mat2, m, n, out, i, j;
+
+  mat1 := Matrix(R1);
+  mat2 := Matrix(R2);
+  m := Length(mat1[1]);
+  n := Length(mat1);
   out := EmptyPlist(m + n);
   out[1] := x;
 
   for i in [m + 1 .. m + n] do
-    out[i] := mat[i ^ l - m][1 ^ l] * x * (mat[i - m][1] ^ g) ^ -1;
+    # This is the inverse of v_lambda from Howie's book
+    out[i] := mat2[i ^ l - m][1 ^ l] * x * ((mat1[i - m][1] ^ g) ^ -1);
   od;
 
   for i in [2 .. m] do
-    out[i] := mat[(m + 1) ^ l - m][i ^ l] ^ -1 * out[m + 1] * (mat[1][i] ^ g);
+    out[i] := mat2[(m + 1) ^ l - m][i ^ l] ^ -1 * out[m + 1]
+              * (mat1[1][i] ^ g);
   od;
 
   for j in [m + 2 .. n + m] do
     for i in [2 .. m] do
-      if mat[j ^ l - m][i ^ l] <> out[j] * mat[j - m][i] ^ g * out[i] ^ -1 then
+      if mat1[j - m][i] ^ g
+          <> out[j] ^ -1 * mat2[j ^ l - m][i ^ l] * out[i] then
         return fail;
       fi;
     od;
@@ -156,64 +166,48 @@ SEMIGROUPS.RMSInducedFunction := function(R, l, g, x)
 end;
 
 SEMIGROUPS.RZMSInducedFunction := function(R, l, g, x, component)
-  local mat, m, n, graph, rep, out, edges, bicomps, sub, perm, defined, orb,
-  j, Last, involved, verts, v, new, k;
+  local mat, m, n, adj, rep, out, Q, q, v;
 
-  mat := Matrix(R);
-  m := Length(mat[1]);
-  n := Length(mat);
-  graph := RZMSDigraph(R);
-  rep := Minimum(component);
-  out := EmptyPlist(m + n);
+  mat      := Matrix(R);
+  m        := Length(mat[1]);
+  n        := Length(mat);
+  adj      := OutNeighbours(RZMSDigraph(R));
+  rep      := component[1];
+  out      := EmptyPlist(m + n);
   out[rep] := x;
+  Q        := [rep];
+  q        := 1;
 
-  if Length(component) = Length(DigraphVertices(graph)) then
-    edges := DigraphEdges(graph);
-    bicomps := DigraphBicomponents(graph);
-  else
-    sub := InducedSubdigraph(graph, component);
-    perm := MappingPermListList(DigraphVertexLabels(sub), DigraphVertices(sub));
-    edges := OnTuplesTuples(DigraphEdges(sub), perm ^ -1);
-    bicomps := OnTuplesTuples(DigraphBicomponents(sub), perm ^ -1);
-  fi;
-
-  defined := [];
-  orb := [rep];
-  j := 0;
-
-  repeat
-    j := j + 1;
-    Last := orb[j];
-
-    involved := Filtered(edges, x -> x[1] = Last and not x in defined);
-
-    if not involved = [] then
-      verts := List(involved, x -> x[2]);
-      Append(orb, Filtered(verts, x -> not x in orb));
-
-      for k in [1 .. Length(verts)] do
-        v := verts[k];
-
-        if Last in bicomps[1] then
-          new := mat[v ^ l - m][Last ^ l] * out[Last]
-                * (mat[v - m][Last] ^ g) ^ -1;
-        else
-          new := (mat[Last ^ l - m][v ^ l]) ^ -1 * out[Last]
-                 * (mat[Last - m][v] ^ g);
-        fi;
-
+  while q <= Length(Q) do
+    rep := Q[q];
+    q   := q + 1;
+    if rep <= m then
+      for v in adj[rep] do
         if not IsBound(out[v]) then
-          out[v] := new;
-        elif not out[v] = new then
+          Add(Q, v);
+          out[v] := mat[v ^ l - m][rep ^ l] * out[rep] / mat[v - m][rep] ^ g;
+        elif mat[v - m][rep] ^ g
+             <> (out[v] ^ -1) * mat[v ^ l - m][rep ^ l] * out[rep] then
           return fail;
         fi;
-        defined := Union(defined, [involved[k], Reversed(involved[k])]);
+      od;
+    else
+      for v in adj[rep] do
+        if not IsBound(out[v]) then
+          Add(Q, v);
+          out[v] := mat[rep ^ l - m][v ^ l] ^ -1 * out[rep] ^ -1
+                    * (mat[rep - m][v] ^ g);
+        elif mat[rep - m][v] ^ g
+            <> out[rep] ^ -1 * mat[rep ^ l - m][v ^ l] * out[v] then
+          return fail;
+        fi;
       od;
     fi;
-  until defined = edges;
-
+  od;
   return out;
 end;
+
+#TODO the next function should be combined with the previous one.
 
 SEMIGROUPS.RZMStoRZMSInducedFunction := function(rms1, rms2, l, g, groupelts)
   local mat1, mat2, m, n, rmsgraph, components, reps, imagelist, edges,
@@ -414,7 +408,9 @@ function(R)
          Size(V), " . . . ");
     BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
                                            tester,
-                                           SEMIGROUPS.RMSIsoPruner(U, V));
+                                           ReturnTrue);
+                                           # FIXME the pruner prunes too much!
+                                           #SEMIGROUPS.RMSIsoPruner(U, V));
   else # U = V
     Perform(GeneratorsOfGroup(V), tester);
   fi;
@@ -558,7 +554,7 @@ function(R)
     y := PreImagesRepresentative(hom, x ^ Projection(V, 2));
     x := x ^ Projection(V, 1);
     for g in T do
-      map := RMSInducedFunction(R, x, y, g);
+      map := RMSInducedFunction(R, R, x, y, g);
       if map <> fail then
         AddSet(A, RMSIsoByTriple(R, R, [x, y, map]));
         return true;
@@ -574,13 +570,16 @@ function(R)
          Size(V), ". . .");
     BacktrackSearchStabilizerChainSubgroup(StabilizerChain(V),
                                            tester,
-                                           SEMIGROUPS.RMSIsoPruner(U, V));
+                                           ReturnTrue);
+                                           # FIXME the pruner prunes too much!
+                                           #SEMIGROUPS.RMSIsoPruner(U, V));
   else # U = V
     Perform(GeneratorsOfGroup(V), tester);
   fi;
 
   for g in T do
     map := RMSInducedFunction(R,
+                              R,
                               One(aut_graph),
                               One(aut_group),
                               g);
@@ -702,7 +701,7 @@ function(R1, R2)
         for l in isograph do
           for g in isogroup do
             for tup in Elements(g2) do
-              map := RMSInducedFunction(R2, l, g, tup);
+              map := RMSInducedFunction(R1, R2, l, g, tup);
               if map <> fail then
                 return RMSIsoByTriple(R1, R2, [l, g, map]);
               fi;
@@ -776,7 +775,7 @@ function(R1, R2)
   RZMStoRZMSInducedFunction := SEMIGROUPS.RZMStoRZMSInducedFunction;
   for l in graphiso do
     for g in groupiso do
-      for tup in tuples do #FIXME it should be possible to cut this down
+      for tup in tuples do #TODO it should be possible to cut this down
         map := RZMStoRZMSInducedFunction(R1, R2, l, g, tup);
         if map <> fail then
           return RZMSIsoByTriple(R1, R2, [l, g, map]);
@@ -884,28 +883,30 @@ end);
 
 InstallMethod(CompositionMapping2, "for objects in `IsRMSIsoByTriple'",
 [IsRMSIsoByTriple, IsRMSIsoByTriple],
-function(x, y)
+function(map2, map1)
   local n;
-  n := Length(Rows(Source(x))) + Length(Columns(Source(x)));
-  return RMSIsoByTriple(Source(x),
-                        Range(y),
-                        [x[1] * y[1],
-                         x[2] * y[2],
+  n := Length(Rows(Source(map2))) + Length(Columns(Source(map2)));
+  return RMSIsoByTriple(Source(map1),
+                        Range(map2),
+                        [map1[1] * map2[1],
+                         map1[2] * map2[2],
                          List([1 .. n],
-                              i -> y[3][i ^ x[1]] * x[3][i] ^ y[2])]);
+                              i -> map2[3][i ^ map1[1]] * map1[3][i] ^
+                                                          map2[2])]);
 end);
 
 InstallMethod(CompositionMapping2, "for objects in `IsRZMSIsoByTriple'",
 IsIdenticalObj, [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
-function(x, y)
+function(map2, map1)
   local n;
-  n := Length(Rows(Source(x))) + Length(Columns(Source(x)));
-  return RZMSIsoByTriple(Source(x),
-                         Range(y),
-                         [x[1] * y[1],
-                          x[2] * y[2],
+  n := Length(Rows(Source(map1))) + Length(Columns(Source(map1)));
+  return RZMSIsoByTriple(Source(map1),
+                         Range(map2),
+                         [map1[1] * map2[1],
+                          map1[2] * map2[2],
                           List([1 .. n],
-                               i -> y[3][i ^ x[1]] * x[3][i] ^ y[2])]);
+                               i -> map2[3][i ^ map1[1]] * map1[3][i] ^
+                                                           map2[2])]);
 end);
 
 InstallMethod(ImagesElm, "for an RMS element under a mapping by a triple",
@@ -923,67 +924,62 @@ end);
 InstallMethod(ImagesRepresentative,
 "for an RMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
-function(map, elt)
+function(map, x)
   local m;
   m := Length(Rows(Source(map)));
   return RMSElementNC(Range(map),
-                      elt[1] ^ map[1],
-                      map[3][elt[1]] * ImageElm(map[2], elt[2]) /
-                        map[3][elt[3]],
-                      (elt[3] + m) ^ map[1] - m);
+                      x[1] ^ map[1],
+                      map[3][x[1]] * x[2] ^ map[2] / map[3][x[3] + m],
+                      (x[3] + m) ^ map[1] - m);
 end);
 
 InstallMethod(ImagesRepresentative,
 "for an RZMS element under a mapping by a triple",
 FamSourceEqFamElm, [IsRZMSIsoByTriple, IsReesZeroMatrixSemigroupElement],
-function(map, elt)
+function(map, x)
   local m;
 
-  if elt <> MultiplicativeZero(Source(map)) and map[3][elt[1]] <> 0
-      and map[3][elt[3]] <> 0 then
-    m := Length(Rows(Source(map)));
-    return RMSElementNC(Range(map),
-                        elt[1] ^ map[1],
-                        map[3][elt[1]] * ImageElm(map[2], elt[2]) /
-                          map[3][elt[3]],
-                        (elt[3] + m) ^ map[1] - m);
+  m := Length(Rows(Source(map)));
+  if x = MultiplicativeZero(Source(map)) or map[3][x[1]] = 0
+        or map[3][x[3] + m] = 0 then
+    return MultiplicativeZero(Range(map));
   fi;
-  return elt;
+  return RMSElementNC(Range(map),
+                      x[1] ^ map[1],
+                      map[3][x[1]] * x[2] ^ map[2] / map[3][x[3] + m],
+                      (x[3] + m) ^ map[1] - m);
 end);
 
 InstallMethod(InverseGeneralMapping, "for objects in `IsRMSIsoByTriple'",
-[IsEndoGeneralMapping and IsRMSIsoByTriple],
+[IsRMSIsoByTriple],
 function(map)
-  local n;
-
+  local n, inv;
   n := Length(Rows(Source(map))) + Length(Columns(Source(map)));
-
+  inv := InverseGeneralMapping(map[2]);
   return RMSIsoByTriple(Range(map),
                         Source(map),
                         [map[1] ^ -1,
-                         map[2] ^ -1,
+                         inv,
                          List([1 .. n],
-                              i -> (map[3][i ^ map[1]] ^ (map[2] ^ -1))
-                                    ^ -1)]);
+                              i -> ((map[3][i ^ (map[1] ^ -1)] ^ inv) ^ -1))]);
+
 end);
 
 InstallMethod(InverseGeneralMapping, "for objects in `IsRMSIsoByTriple'",
-[IsEndoGeneralMapping and IsRMSIsoByTriple and IsOne], x -> x);
+[IsRMSIsoByTriple and IsOne], x -> x);
 
 InstallMethod(InverseGeneralMapping, "for objects in `IsRZMSIsoByTriple'",
 [IsRZMSIsoByTriple],
 function(map)
-  local n;
-
+  local n, inv;
   n := Length(Rows(Source(map))) + Length(Columns(Source(map)));
-
+  inv := InverseGeneralMapping(map[2]);
   return RZMSIsoByTriple(Range(map),
                          Source(map),
                          [map[1] ^ -1,
-                          map[2] ^ -1,
+                          inv,
                           List([1 .. n],
-                               i -> (map[3][i ^ map[1]] ^ (map[2] ^ -1))
-                                    ^ -1)]);
+                               i -> (map[3][i ^ (map[1] ^ -1)] ^ inv) ^ -1)]);
 end);
 
 InstallMethod(IsOne, "for objects in `IsRMSIsoByTriple'",
@@ -1000,16 +996,16 @@ end);
 
 InstallMethod(PreImagesRepresentative,
 "for an RMS element under a mapping by a triple",
-FamSourceEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
+FamRangeEqFamElm, [IsRMSIsoByTriple, IsReesMatrixSemigroupElement],
 function(map, x)
-  return ImagesRepresentative(map ^ -1, x);
+  return ImagesRepresentative(InverseGeneralMapping(map), x);
 end);
 
 InstallMethod(PreImagesRepresentative,
 "for an RZMS element under a mapping by a triple",
-FamSourceEqFamElm, [IsRZMSIsoByTriple, IsReesZeroMatrixSemigroupElement],
+FamRangeEqFamElm, [IsRZMSIsoByTriple, IsReesZeroMatrixSemigroupElement],
 function(map, x)
-  return ImagesRepresentative(map ^ -1, x);
+  return ImagesRepresentative(InverseGeneralMapping(map), x);
 end);
 
 InstallMethod(PrintObj, "for an object in `IsRMSIsoByTriple'",
