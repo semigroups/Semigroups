@@ -32,9 +32,9 @@
       <C>CanonicalTransformation</C> returns a canonical representative of
       the class <C>C(n)</C> that contains <A>trans</A>.
     <Example><![CDATA[
-gap> x := Transformation( [ 5, 1, 4, 1, 1 ] );
+gap> x := Transformation([5, 1, 4, 1, 1]);
 Transformation( [ 5, 1, 4, 1, 1 ] )
-gap> y := Transformation( [ 3, 3, 2, 3, 1 ] );
+gap> y := Transformation([3, 3, 2, 3, 1]);
 Transformation( [ 3, 3, 2, 3, 1 ] )
 gap> CanonicalTransformation(x);
 Transformation( [ 5, 5, 1, 5, 4 ] )

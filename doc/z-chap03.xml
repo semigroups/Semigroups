@@ -288,6 +288,7 @@
     <#Include Label = "IsPartialPermBipartition">
     <#Include Label = "IsBlockBijection">
     <#Include Label = "IsUniformBlockBijection">
+    <#Include Label = "CanonicalBlocks">
   </Section>
 
   <!--**********************************************************************-->
