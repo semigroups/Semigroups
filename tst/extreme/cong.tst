@@ -39,10 +39,10 @@ true
 false
 false
 gap> [x, y, z] in cong;
-Error, Semigroups: \in (for a congruence): usage,
+Error, Semigroups: \in (for a relation): usage,
 the first arg <pair> must be a list of length 2,
 gap> [x, Transformation([1])] in cong;
-Error, Semigroups: \in (for a congruence): usage,
+Error, Semigroups: \in (for a relation): usage,
 elements of the first arg <pair> must be
 in the range of the second arg <cong>,
 gap> classes := CongruenceClasses(cong);;
