@@ -150,6 +150,8 @@ x1x2x2^-1x1^-1x1x2]]></Example>
     <#Include Label = "IsFreeBand">
     <#Include Label = "IsFreeBandElement">
     <#Include Label = "IsFreeBandSubsemigroup">
+    <#Include Label = "ContentOfFreeBandElement">
+    
   </Section>
 
   <Section>

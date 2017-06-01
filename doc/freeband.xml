@@ -140,3 +140,41 @@ true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="ContentOfFreeBandElement" >
+<ManSection>
+    <Oper Name = "ContentOfFreeBandElement" Arg = "x" /> 
+    <Oper Name = "ContentOfFreeBandElementCollection" Arg = "coll" /> 
+    <Returns> A list of integers </Returns>
+    <Description>
+      The content of a free band element <A>x</A> is the set of generators
+      appearing in the word representing the element <A>x</A> of the free band.
+      <P/>
+      
+      The function <C>ContentOfFreeBandElement</C> returns the content of free
+      band element <A>x</A> represented as a list of integers, where <C>1</C>
+      represents the first generator, <C>2</C> the second generator, and so on.
+      <P/>
+
+      The function <C>ContentOfFreeBandElementCollection</C> returns the
+      the least list <C>C</C> for the collection of free band elements <A>coll</A>
+      such that the content of every element in <A>coll</A>
+      is contained in <C>C</C>.
+<Example><![CDATA[
+gap> S := FreeBand(2);
+<free band on the generators [ x1, x2 ]>
+gap> x := S.1;
+x1
+gap> y := S.2;
+x2
+gap> ContentOfFreeBandElement(x);
+[ 1 ]
+gap> ContentOfFreeBandElement(x * y);
+[ 1, 2 ]
+gap> ContentOfFreeBandElement(x * y * x);
+[ 1, 2 ]
+gap> ContentOfFreeBandElementCollection([x, y]);
+[ 1, 2 ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
