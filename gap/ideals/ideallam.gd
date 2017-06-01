@@ -14,6 +14,6 @@ DeclareGlobalFunction("UpdateIdealLambdaOrb");
 DeclareGlobalFunction("UpdateIdealRhoOrb");
 
 DeclareOperation("Enumerate", [IsIdealOrb, IsCyclotomic, IsFunction]);
-DeclareOperation("ComponentOfIndex", [IsIdealOrb, IsPosInt]);
+#DeclareOperation("ComponentOfIndex", [IsIdealOrb, IsPosInt]);
 
 DeclareGlobalFunction("SuffixOrb");
