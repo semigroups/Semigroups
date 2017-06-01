@@ -114,8 +114,6 @@ DeclareProperty("IsZero", IsMatrixOverFiniteField);
 #############################################################################
 
 #TODO make these cons/opers/attributes for MatrixOverSemiring
-DeclareAttribute("DegreeOfMatrixOverFiniteFieldCollection",
-                 IsMatrixOverFiniteFieldCollection);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
 
 #############################################################################
