@@ -320,3 +320,26 @@ cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="TexString">
+  <ManSection>
+    <Oper Name="TexString" Arg="f[, n]"/>
+    <Returns>A string.</Returns>
+    <Description>
+      This function produces a string containing LaTeX code for the
+      transformation <A>f</A>. If the optional paramater <A>n</A> is used, then
+      this is taken to be the degree of the transformation <A>f</A>, if the
+      parameter <A>n</A> is not given, then <Ref Attr="DegreeOfTransformation"
+        BookName="ref"/> is used by default. If <A>n</A> is less than the
+      degree of <A>f</A>, then an error is given. 
+      <P/>
+      <Example><![CDATA[
+gap> TexString(Transformation([6, 2, 4, 3, 6, 4]));
+"\\begin{pmatrix}\n  1 & 2 & 3 & 4 & 5 & 6 \\\\\n  6 & 2 & 4 & 3 & 6 &\
+ 4\n\\end{pmatrix}"
+gap> TexString(Transformation([1, 2, 1, 3]), 5);
+"\\begin{pmatrix}\n  1 & 2 & 3 & 4 & 5 \\\\\n  1 & 2 & 1 & 3 & 5\n\\en\
+d{pmatrix}"]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

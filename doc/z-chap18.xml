@@ -55,6 +55,20 @@
 
   <Section>
     <Heading>
+      <C>tex</C> output
+    </Heading>
+    In this section, we describe the operations in &Semigroups; for creating
+    &LaTeX; representations of &GAP; objects. For pictures of &GAP; objects
+    please see Section <Ref Sect="tikz pictures"/>. 
+
+    <#Include Label = "TexString">
+  </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section Label="tikz pictures">
+    <Heading>
       <C>tikz</C> pictures
     </Heading>
 
