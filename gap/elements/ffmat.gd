@@ -102,7 +102,6 @@ DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
 #DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
 
 DeclareAttribute("RowRank", IsMatrixOverFiniteField);
-DeclareAttribute("ColRank", IsMatrixOverFiniteField);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);
 
 # FIXME shouldn't this be IsMultiplicativeZero??
