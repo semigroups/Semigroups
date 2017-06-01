@@ -17,6 +17,13 @@ DeclareCategory("IsRZMSIsoByTriple", IsGeneralMapping and IsSPGeneralMapping
                                      IsInjective and IsSurjective and
                                      IsAttributeStoringRep);
 
+DeclareOperation("RMSIsoByTriple", [IsReesMatrixSemigroup,
+                                    IsReesMatrixSemigroup,
+                                    IsDenseList]);
+DeclareOperation("RZMSIsoByTriple", [IsReesZeroMatrixSemigroup,
+                                     IsReesZeroMatrixSemigroup,
+                                     IsDenseList]);
+
 DeclareOperation("RMSIsoByTripleNC", [IsReesMatrixSemigroup,
                                       IsReesMatrixSemigroup,
                                       IsDenseList]);
