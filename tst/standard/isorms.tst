@@ -566,17 +566,120 @@ true
 gap> ForAll(A, BruteForceInverseCheck);
 true
 
+#T# Errors in checked version of RMSIsoByTriple
+gap> g := SymmetricGroup(4);;
+gap> mat := [[(1, 3), (1, 2)(3, 4)],
+>            [(1, 4, 3, 2), ()],
+>            [(1, 3)(2, 4), (1, 3, 4, 2)]];;
+gap> R := ReesMatrixSemigroup(g, mat);;
+gap> S := ReesMatrixSemigroup(Group((1, 2)), [[()]]);;
+gap> auto := IdentityMapping(g);;
+gap> g_elms_list := [(), (1, 3), (), (), ()];;
+gap> RMSIsoByTriple(R, S, [(), auto, g_elms_list]);
+Error, Semigroups: RMSIsoByTriple:
+<R1> and <R2> are not isomorphic,
+gap> RMSIsoByTriple(R, R, [42, auto, g_elms_list]);
+Error, Semigroups: RMSIsoByTriple: usage,
+<triple>[1] should be a permutation,
+gap> RMSIsoByTriple(R, R, [(1, 7), auto, g_elms_list]);
+Error, Semigroups: RMSIsoByTriple: usage,
+<triple>[1] should be a permutation on [1 .. 5],
+gap> RMSIsoByTriple(R, R, [(1, 4), auto, g_elms_list]);
+Error, Semigroups: RMSIsoByTriple: usage,
+<triple>[1] should not map columns to rows,
+gap> RMSIsoByTriple(R, R, [(), fail, g_elms_list]);
+Error, Semigroups: RMSIsoByTriple: usage,
+<triple>[2] should be an isomorphism from
+the underlying group of <R1> to that of <R2>,
+gap> RMSIsoByTriple(R, R, [(), auto, [(), (), ()]]);
+Error, Semigroups: RMSIsoByTriple: usage,
+<triple>[3] should have length equal to
+the number of rows and columns of <R1>,
+gap> RMSIsoByTriple(R, R, [(), auto, [42, 43, 44, 45, 46]]);
+Error, Semigroups: RMSIsoByTriple: usage,
+<triple>[3] should only contain elements from the underlying group of <R2>,
+gap> RMSIsoByTriple(R, R, [(), auto, g_elms_list]);
+Error, Semigroups: RMSIsoByTriple: usage,
+<triple>[3] does not define an isomorphism,
+gap> iso := RMSIsoByTripleNC(R, R, [(), auto, g_elms_list]);;
+gap> BruteForceIsoCheck(iso);
+false
+gap> g_elms_list := [(), (), (), (), ()];;
+gap> iso := RMSIsoByTriple(R, R, [(), auto, g_elms_list]);
+((), IdentityMapping( SymmetricGroup( [ 1 .. 4 ] ) ), [ (), (), (), (), () ])
+gap> BruteForceIsoCheck(iso);
+true
+
+#T# Errors in checked version of RZMSIsoByTriple
+gap> g := SymmetricGroup(3);;
+gap> mat := [[0, 0, (1, 3)], [(1, 2, 3), (), (2, 3)], [0, 0, ()]];;
+gap> R := ReesZeroMatrixSemigroup(g, mat);;
+gap> S := ReesZeroMatrixSemigroup(Group((1, 2)), [[()]]);;
+gap> auto := IdentityMapping(g);;
+gap> g_elms_list := [(), (1, 3), (), (), (), ()];;
+gap> RZMSIsoByTriple(R, S, [(), auto, g_elms_list]);
+Error, Semigroups: RZMSIsoByTriple:
+<R1> and <R2> are not isomorphic,
+gap> RZMSIsoByTriple(R, R, [42, auto, g_elms_list]);
+Error, Semigroups: RZMSIsoByTriple: usage,
+<triple>[1] should be a permutation,
+gap> RZMSIsoByTriple(R, R, [(1, 3), auto, g_elms_list]);
+Error, Semigroups: RZMSIsoByTriple: usage,
+<triple>[1] should act as an isomorphism from
+the graph of <R1> to the graph of <R2>,
+gap> RZMSIsoByTriple(R, R, [(), fail, g_elms_list]);
+Error, Semigroups: RZMSIsoByTriple: usage,
+<triple>[2] should be an isomorphism from
+the underlying group of <R1> to that of <R2>,
+gap> RZMSIsoByTriple(R, R, [(), auto, [(), (), ()]]);
+Error, Semigroups: RZMSIsoByTriple: usage,
+<triple>[3] should have length equal to
+the number of rows and columns of <R1>,
+gap> RZMSIsoByTriple(R, R, [(), auto, [41, 42, 43, 44, 45, 46]]);
+Error, Semigroups: RZMSIsoByTriple: usage,
+<triple>[3] should only contain elements from the underlying group of <R2>,
+gap> RZMSIsoByTriple(R, R, [(), auto, g_elms_list]);
+Error, Semigroups: RZMSIsoByTriple: usage,
+<triple>[3] does not define an isomorphism,
+gap> iso := RZMSIsoByTripleNC(R, R, [(), auto, g_elms_list]);;
+gap> BruteForceIsoCheck(iso);
+false
+gap> g_elms_list := [(), (), (), (), (), ()];;
+gap> iso := RZMSIsoByTriple(R, R, [(), auto, g_elms_list]);
+((), IdentityMapping( SymmetricGroup( [ 1 .. 3 ] ) ), 
+[ (), (), (), (), (), () ])
+gap> BruteForceIsoCheck(iso);
+true
+
 #T# SEMIGROUPS_UnbindVariables
+gap> Unbind(A);
+gap> Unbind(BruteForceInverseCheck);
+gap> Unbind(BruteForceIsoCheck);
 gap> Unbind(G);
+gap> Unbind(G1);
+gap> Unbind(G2);
 gap> Unbind(H);
 gap> Unbind(I);
 gap> Unbind(R);
 gap> Unbind(R1);
 gap> Unbind(R2);
 gap> Unbind(S);
+gap> Unbind(W);
+gap> Unbind(WW);
+gap> Unbind(auto);
+gap> Unbind(comp);
 gap> Unbind(func);
+gap> Unbind(g);
+gap> Unbind(inv);
+gap> Unbind(iso);
+gap> Unbind(list);
+gap> Unbind(map);
 gap> Unbind(mat);
 gap> Unbind(mat1);
+gap> Unbind(mat2);
+gap> Unbind(norm);
+gap> Unbind(x);
+gap> Unbind(y);
 
 #E#
 gap> SEMIGROUPS.StopTest();
