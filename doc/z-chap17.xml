@@ -31,9 +31,14 @@
 
     PREAMBLE
     <!-- TODO: Fill in this preamble, or remove it -->
+ 
+    <#Include Label = "IsRMSIsoByTriple">
+    <#Include Label = "ELM_LIST">
+    <#Include Label = "CompositionMapping2">
+    <#Include Label = "ImagesElm">
 
     <!--********************************************************************-->
- 
+
     <Subsection Label =
      "Operators for isomorphisms of Rees (0-)matrix semigroup by triples">
 
@@ -98,13 +103,6 @@
       </List>
  
     </Subsection>
-
-    <#Include Label = "IsRMSIsoByTriple">
-    <#Include Label = "ELM_LIST">
-    <#Include Label = "CompositionMapping2">
-    <#Include Label = "ImagesElm">
-
-    <!--********************************************************************-->
 
   </Section>
  
