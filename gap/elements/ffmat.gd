@@ -164,19 +164,6 @@ BindGlobal("PlistMatrixOverFiniteFieldType",
                    IsMatrixOverFiniteField and
                    IsPlistMatrixOverFiniteFieldRep));
 
-# Vectors and matrices from the CVEC package
-
-DeclareRepresentation("IsCVECMatrixOverFiniteFieldRep",
-                      IsMatrixOverFiniteField and IsComponentObjectRep and
-                      IsAttributeStoringRep, []);
-BindGlobal("CVECMatrixOverFiniteFieldFamily",
-           NewFamily("CVECMatrixOverFiniteFieldFamily",
-                     IsMatrixOverFiniteField, CanEasilyCompareElements));
-BindGlobal("CVECMatrixOverFiniteFieldType",
-           NewType(CVECMatrixOverFiniteFieldFamily,
-                   IsMatrixOverFiniteField and
-                   IsCVECMatrixOverFiniteFieldRep));
-
 #############################################################################
 ## Helper functions
 #############################################################################
