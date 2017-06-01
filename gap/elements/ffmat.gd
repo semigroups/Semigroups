@@ -53,7 +53,6 @@ DeclareConstructor("NewVectorOverFiniteField",
 DeclareConstructor("NewZeroVectorOverFiniteField",
                    [IsVectorOverFiniteField, IsRing, IsInt]);
 
-DeclareAttribute("DegreeOfVectorOverFiniteField", IsVectorOverFiniteField);
 DeclareAttribute("BaseDomain", IsVectorOverFiniteField);
 
 DeclareCategory("IsRowBasisOverFiniteField", IsCollection);
