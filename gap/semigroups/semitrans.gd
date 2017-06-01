@@ -9,7 +9,8 @@
 ##
 
 DeclareOperation("\^", [IsTransformationCollection, IsPerm]);
-DeclareAttribute("FixedPoints", IsTransformationSemigroup);
+DeclareAttribute("FixedPointsOfTransformationSemigroup",
+                 IsTransformationSemigroup);
 DeclareAttribute("DigraphOfActionOnPoints", IsTransformationSemigroup);
 DeclareOperation("DigraphOfActionOnPoints",
                  [IsTransformationSemigroup, IsInt]);

@@ -114,15 +114,16 @@ gap> IsSynchronizingSemigroup(S);
 false
 
 #T# SemiTransTest3
-# FixedPoints for a transformation semigroup with generators
+# FixedPointsOfTransformationSemigroup for a transformation semigroup with
+# generators
 gap> S := FullTransformationMonoid(3);;
-gap> FixedPoints(S);
+gap> FixedPointsOfTransformationSemigroup(S);
 [  ]
 gap> S := Semigroup([
 > Transformation([1, 2, 4, 4, 5, 6]),
 > Transformation([1, 1, 3, 4, 6, 6]),
 > Transformation([1, 1, 3, 4, 5, 6])]);;
-gap> FixedPoints(S);
+gap> FixedPointsOfTransformationSemigroup(S);
 [ 1, 4, 6 ]
 
 #T# SemiTransTest4
