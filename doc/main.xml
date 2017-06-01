@@ -26,6 +26,8 @@
      Only='Text'><E>L</E></Alt><Alt Only='LaTeX'><M>\mathcal{L}</M></Alt>">
      <!ENTITY D "<Alt Only='HTML'>\(\mathscr{D}\)</Alt><Alt
      Only='Text'><E>D</E></Alt><Alt Only='LaTeX'><M>\mathcal{D}</M></Alt>">
+     <!ENTITY J "<Alt Only='HTML'>\(\mathscr{J}\)</Alt><Alt
+     Only='Text'><E>J</E></Alt><Alt Only='LaTeX'><M>\mathcal{J}</M></Alt>">
      <#Include Label="PKGVERSIONDATA">
      <!ENTITY noindent "<Alt Only='LaTeX'>\noindent</Alt>">
      <!ENTITY setX "<Alt Not='Text'><M>X</M></Alt><Alt Only='Text'><C>X</C></Alt>">
