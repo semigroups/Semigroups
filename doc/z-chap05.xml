@@ -57,7 +57,7 @@
       the semiring
       <M>\mathbb{N}_{t,p} = \{0, 1, \ldots, t, t + 1, \ldots, t + p - 1\}</M>
       for some threshold <M>t</M> and period <M>p</M> under addition and
-      mutliplication modulo the congruence <M>t = t + p</M>;
+      multiplication modulo the congruence <M>t = t + p</M>;
     </Item>
 
     <Mark>the integers</Mark>

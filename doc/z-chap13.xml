@@ -11,6 +11,29 @@
   <!--**********************************************************************-->
 
   <Section>
+    <Heading>
+       Accessing the elements of a semigroup
+     </Heading>
+     <#Include Label = "AsListCanonical">
+     <#Include Label = "PositionCanonical">
+     <#Include Label = "Enumerate">
+     <#Include Label = "IsFullyEnumerated">
+   </Section>
+   
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+   
+   <Section>
+    <Heading>
+       Cayley graphs
+     </Heading>
+     <#Include Label = "RightCayleyGraphSemigroup">
+   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+
+  <Section>
  
     <Heading>
       Random elements of a semigroup
