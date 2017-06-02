@@ -68,6 +68,26 @@ Matrix(GF(2^2), [])]]></Example>
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IdentityMatrixOverFiniteField">
+<ManSection>
+  <Oper Name="IdentityMatrixOverFiniteField" Arg="F, n"/>
+  <Oper Name="IdentityMatrixOverFiniteField" Arg="mat, n"/>
+  <Description>
+    Returns a <A>n</A>-by-<A>n</A> identity matrix with entries in the finite
+    field <A>F</A>. If the a matrix <A>mat</A> is given as an argument then
+    the a  <A>n</A>-by-<A>n</A> identity matrix is returned with entries in the
+    finite field determined by applying <Ref Oper="BaseDomain"> to <A>mat</A>.
+        <Example><![CDATA[
+gap> x := NewIdentityMatrixOverFiniteField(
+>                   IsPlistMatrixOverFiniteFieldRep, GF(4), 2);
+Matrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
+gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+>                                      GF(4), 2);
+Matrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="NewIdentityMatrixOverFiniteField">
 <ManSection>
   <Oper Name="NewIdentityMatrixOverFiniteField" Arg="filt, F, n"/>

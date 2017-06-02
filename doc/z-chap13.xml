@@ -215,6 +215,7 @@
     <#Include Label = "CyclesOfTransformationSemigroup">
     <#Include Label = "DigraphOfActionOnPairs">
     <#Include Label = "DigraphOfActionOnPoints">
+    <#Include Label = "FixedPointsOfTransformationSemigroup">
     <#Include Label = "GeneratorsSmallest">
     <#Include Label = "IsTransitive">
     <#Include Label = "SmallestElementSemigroup">
