@@ -404,22 +404,26 @@ InstallMethod(EquivalenceClasses,
 "for an fp semigroup congruence",
 [IsFpSemigroupCongruence],
 function(cong)
-  local part, enum, reps, classes, next, i;
-
-  part := CongruenceByGeneratingPairsPartition(cong);
+  local enum, nrclasses, classes, class_added, count, i, word, id;
   enum := Enumerator(Range(cong));
-  reps := List(part, x -> enum[x[1]]);
+  nrclasses := NrEquivalenceClasses(cong);
 
-  classes := EmptyPlist(Length(reps));
-  next := 1;
-
-  for i in [1 .. Length(reps)] do
-    classes[next] := EquivalenceClassOfElementNC(cong, reps[i]);
-    SetCongruenceClassByGeneratingPairsCosetId(classes[next], i);
-    SetSize(classes[next], Length(part[i]));
-
-    next := next + 1;
-  od;
+  # Add each class when we find a representative for it
+  classes := EmptyPlist(nrclasses);
+  class_added := BlistList([1 .. nrclasses], []);
+  count := 0;
+  i := 0;
+  repeat
+    i := i + 1;
+    word := SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(enum[i]));
+    id := CONG_PAIRS_ELM_COSET_ID(cong, word);
+    if not class_added[id] then
+      classes[id] := EquivalenceClassOfElementNC(cong, enum[i]);
+      SetCongruenceClassByGeneratingPairsCosetId(classes[id], id);
+      class_added[id] := true;
+      count := count + 1;
+    fi;
+  until count = nrclasses;
 
   return classes;
 end);
