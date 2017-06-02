@@ -191,8 +191,10 @@
       <Item><Ref Func = "Monoid" BookName = "ref"/>, </Item>
       <Item><Ref Meth = "SemigroupByGenerators" BookName = "ref"/>, </Item>
       <Item><Ref Meth = "MonoidByGenerators" BookName = "ref"/>, </Item>
-      <Item><Ref Oper = "ClosureInverseSemigroup"/>, </Item>
       <Item><Ref Oper = "ClosureSemigroup"/>, </Item>
+      <Item><Ref Oper = "ClosureMonoid"/>, </Item>
+      <Item><Ref Oper = "ClosureInverseSemigroup"/>, </Item>
+      <Item><Ref Oper = "ClosureInverseMonoid"/>, </Item>
       <Item><Ref Func = "SemigroupIdeal"/></Item>
     </List>
     a record can be given as an optional final argument. The components of this
@@ -326,7 +328,6 @@ true]]></Log>
   <Section>
     <Heading>New semigroups from old</Heading>
 
-    <#Include Label = "ClosureInverseSemigroup">
     <#Include Label = "ClosureSemigroup">
     <#Include Label = "SubsemigroupByProperty">
     <#Include Label = "InverseSubsemigroupByProperty">
