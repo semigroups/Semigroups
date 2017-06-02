@@ -89,7 +89,7 @@
           <A>R1</A>'s matrix, and the last <M>n</M> entries should correspond to
           the rows.  These column and row entries should correspond to the
           <M>u_i</M> and <M>v_\lambda</M> elements in Theorem 3.4.1 of
-          <Cite>Howie1995aa</Cite>.
+          <Cite Key = "Howie1995aa"/>.
         </Item>
       </List>
 
