@@ -324,17 +324,6 @@ false]]></Example>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="BipartitionFamily">
-  <ManSection>
-    <Var Name = "BipartitionFamily"/>
-    <Var Name = "BipartitionType"/>
-    <Description>
-      The family of all bipartitions is <C>BipartitionFamily</C> and the type
-      of every bipartition is <C>BipartitionType</C>.
-    </Description>
-  </ManSection>
-<#/GAPDoc>
-
 <#GAPDoc Label="IsBipartition">
   <ManSection>
     <Filt Name = "IsBipartition" Arg = "obj" Type = "Category"/>
@@ -375,7 +364,7 @@ false]]></Example>
 
 <#GAPDoc Label="AsTransformation">
   <ManSection>
-    <Oper Name = "AsTransformation" Arg = "x" Label="for a bipartition"/>
+    <Attr Name = "AsTransformation" Arg = "x" Label="for a bipartition"/>
     <Returns>A transformation.</Returns>
     <Description>
       When the argument <A>x</A> is a bipartition, that mathematically defines
@@ -384,7 +373,7 @@ false]]></Example>
       blocks are the image list of a permutation of <C>[1 .. n]</C> where
       <C>n</C> is the degree of <A>x</A>. <P/>
 
-      See <Ref Oper="IsTransBipartition"/>.
+      See <Ref Prop="IsTransBipartition"/>.
       <Example><![CDATA[
 gap> x := Bipartition([[1, -3], [2, -2], [3, 5, 10, -7],
 >                      [4, -12], [6, 7, -6], [8, -5], [9, -11],
@@ -405,7 +394,7 @@ the argument does not define a transformation,]]></Example>
 
 <#GAPDoc Label="AsPermutation">
   <ManSection>
-    <Oper Name = "AsPermutation" Arg = "x" Label="for a bipartition"/>
+    <Attr Name = "AsPermutation" Arg = "x" Label="for a bipartition"/>
     <Returns>A permutation.</Returns>
     <Description>
       When the argument <A>x</A> is a bipartition that mathematically defines a
@@ -414,7 +403,7 @@ the argument does not define a transformation,]]></Example>
       A bipartition <A>x</A> defines a permutation if and only if its numbers of
       left, right, and transverse blocks all equal its degree.<P/>
 
-      See <Ref Oper = "IsPermBipartition"/>.
+      See <Ref Prop = "IsPermBipartition"/>.
       <Example><![CDATA[
 gap> x := Bipartition([[1, -6], [2, -4], [3, -2], [4, -5],
 >                      [5, -3], [6, -1]]);;
@@ -441,7 +430,7 @@ true]]></Example>
       of left and right blocks both equal its degree.
       <P/>
 
-      See <Ref Oper = "IsPartialPermBipartition"/>.
+      See <Ref Prop = "IsPartialPermBipartition"/>.
       <Example><![CDATA[
 gap> x := Bipartition([[1, -4], [2, -2], [3, -10], [4, -5],
 >                      [5, -9], [6], [7], [8, -6], [9, -3], [10, -8],
@@ -532,7 +521,7 @@ gap> AsBlockBijection(x);
 
       If no positive integer <A>n</A> is specified, then
       the largest moved point of <A>x</A> is used as the value for <A>n</A>; see
-      <Ref Func = "LargestMovedPoint" Label="for a permutation" BookName =
+      <Ref Attr = "LargestMovedPoint" Label="for a permutation" BookName =
         "ref"/>.
     </Item>
 

@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="IsMatrixOverFiniteFieldGroup">
 <ManSection>
-  <Prop Name="IsMatrixOverFiniteFieldGroup" Arg="G"/>
+  <Filt Name="IsMatrixOverFiniteFieldGroup" Arg="G"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
     A <E>matrix group</E> is simply a group of invertible matrices over a

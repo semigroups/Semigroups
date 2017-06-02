@@ -42,7 +42,7 @@ false
   <ManSection>
     <Attr Name="AsListCanonical" Arg="S"/> 
     <Attr Name="EnumeratorCanonical" Arg="S"/>
-    <Attr Name="IteratorCanonical" Arg="S"/>
+    <Oper Name="IteratorCanonical" Arg="S"/>
     <Returns>A list, enumerator, or iterator.</Returns>
     <Description>
       When the argument <A>S</A> is a semigroup in the representation 
@@ -168,8 +168,8 @@ true]]></Example>
       equivalently the position of <A>x</A> in
       <C>EnumeratorCanonical(<A>S</A>)</C>.<P/>
 
-      See also <Ref Oper="AsListCanonical"/> and 
-      <Ref Oper="EnumeratorCanonical"/>.
+      See also <Ref Attr="AsListCanonical"/> and 
+      <Ref Attr="EnumeratorCanonical"/>.
       <Example><![CDATA[
 gap> S := FullTropicalMaxPlusMonoid(2, 3);
 <monoid of 2x2 tropical max-plus matrices with 13 generators>

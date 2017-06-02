@@ -49,14 +49,14 @@
       correspond to the matrix semigroup types in
       Section <Ref Sect = "IsXMatrixSemigroup"/>.
       For matrix semigroups over finite fields there is also 
-      <Ref Prop = "IsMatrixOverFiniteFieldGroup"/>.
+      <Ref Filt = "IsMatrixOverFiniteFieldGroup"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsFinite">
   <ManSection>
-    <Attr Name = "IsFinite" Arg = "S"/>
+    <Prop Name = "IsFinite" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>. </Returns>
     <Description>
       If <A>S</A> is a max-plus or min-plus matrix semigroup (i.e. belongs to

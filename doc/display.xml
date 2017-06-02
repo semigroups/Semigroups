@@ -25,8 +25,8 @@
 
       This function is provided to allow convenient, immediate viewing of the
       pictures produced by the functions:
-      <Ref Func="TikzString"/>, <Ref Func="TikzString"/>,
-      <Ref Func="DotSemilatticeOfIdempotents"/>, and <Ref Func="DotString"/>.<P/>
+      <Ref Oper="TikzString"/>, <Ref Oper="TikzString"/>,
+      <Ref Attr="DotSemilatticeOfIdempotents"/>, and <Ref Oper="DotString"/>.<P/>
 
       The optional second argument <A>opts</A> should be a record with
       components corresponding to various options, given below.

@@ -79,8 +79,8 @@
     inverse semigroups, and contributed to the code for ideals.
     <P/>
 
-    Yann P&#233;resse and Yanhui Wang contributed to the function <Ref
-      Oper = "MunnSemigroup"/>.<P/>
+    Yann P&#233;resse and Yanhui Wang contributed to the attribute
+    <Ref Attr = "MunnSemigroup"/>.<P/>
 
     Jhevon Smith and Ben Steinberg contributed the function
     <Ref Attr = "CharacterTableOfInverseSemigroup"/>.<P/>

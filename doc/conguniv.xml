@@ -10,10 +10,10 @@
 
 <#GAPDoc Label="IsUniversalSemigroupCongruence">
   <ManSection>
-    <Filt Name = "IsUniversalSemigroupCongruence" Arg = "obj" Type = "category"/>
+    <Prop Name = "IsUniversalSemigroupCongruence" Arg = "obj"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      This category describes a type of semigroup congruence, which must refer
+      This property describes a type of semigroup congruence, which must refer
       to the <E>universal semigroup congruence</E> <M>S \times S</M>.
       Externally, an object of this type may be used in the same way as any
       other object in the category <Ref Prop = "IsSemigroupCongruence"
@@ -41,7 +41,7 @@ true]]></Example>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       This category describes a class of the universal semigroup congruence (see
-      <Ref Filt = "IsUniversalSemigroupCongruence"/>).  A universal semigroup
+      <Ref Prop = "IsUniversalSemigroupCongruence"/>).  A universal semigroup
       congruence by definition has precisely one congruence class, which
       contains all of the elements of the semigroup in question.
 

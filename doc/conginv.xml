@@ -109,7 +109,7 @@ gap> cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);
       <P/>
 
       See <Cite Key = "Howie1995aa"/> Section 5.3 for more details.  See also
-      <Ref Attr = "InverseSemigroupCongruenceByKernelTrace"/>.
+      <Ref Func = "InverseSemigroupCongruenceByKernelTrace"/>.
  
       <Example><![CDATA[
 gap> S := InverseSemigroup([
@@ -136,7 +136,7 @@ true]]></Example>
     <Description>
       This category contains any congruence class which belongs to a congruence
       which is represented internally by its kernel and trace.  See <Ref
-      Attr = "InverseSemigroupCongruenceByKernelTrace"/>. <P/>
+      Func = "InverseSemigroupCongruenceByKernelTrace"/>. <P/>
 
       See <Cite Key = "Howie1995aa"/> Section 5.3 for more details.
 

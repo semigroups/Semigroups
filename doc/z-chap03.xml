@@ -189,7 +189,6 @@
   <Section><Heading>The family and categories of bipartitions</Heading>
     <#Include Label = "IsBipartition">
     <#Include Label = "IsBipartitionCollection">
-    <#Include Label = "BipartitionFamily">
   </Section>
 
   <!--**********************************************************************-->
@@ -220,9 +219,9 @@
   representation of another type of object to that of a bipartition.<P/>
  
   The  operations
-  <Ref Oper = "AsPermutation" Label = "for a bipartition"/>,
+  <Ref Attr = "AsPermutation" Label = "for a bipartition"/>,
   <Ref Oper = "AsPartialPerm" Label = "for a bipartition"/>,
-  <Ref Oper = "AsTransformation" Label = "for a bipartition"/> can be
+  <Ref Attr = "AsTransformation" Label = "for a bipartition"/> can be
   used  to convert bipartitions into permutations, partial permutations, or
   transformations where  appropriate.
     <#Include Label = "AsBipartition"/>

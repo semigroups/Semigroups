@@ -271,7 +271,7 @@ gap> JoinIrreducibleDClasses(D);
   <Description>
     <C>MajorantClosure</C> returns a majorantly closed subset of an inverse
     semigroup of partial permutations, block bijections or partial permutation
-    bipartitions, <A>S</A>, as a list. See <Ref Func="IsMajorantlyClosed"/>.<P/>
+    bipartitions, <A>S</A>, as a list. See <Ref Oper="IsMajorantlyClosed"/>.<P/>
     The result contains all elements of <A>S</A> which are greater than or
     equal to any element of <A>T</A> (with respect to the natural partial
     order <Ref Func = "NaturalLeqPartialPerm" BookName="ref"/>).
@@ -352,11 +352,11 @@ gap> Minorants(S, x);
     <C>RightCosetsOfInverseSemigroup</C> takes a majorantly closed inverse
     subsemigroup <A>T</A>  of an inverse semigroup of partial permutations,
     block bijections or partial permutation bipartitions <A>S</A>. See
-    <Ref Func="IsMajorantlyClosed"/>. The result is a list of the right cosets
+    <Ref Oper="IsMajorantlyClosed"/>. The result is a list of the right cosets
     of <A>T</A> in <A>S</A>.<P/>
     For <M>s \in S</M>, the right coset <M>\overline{Ts}</M> is defined if and
     only if <M>ss^{-1} \in T</M>, in which case it is defined to be the
-    majorant closure of the set <M>Ts</M>. See <Ref Func="MajorantClosure"/>.
+    majorant closure of the set <M>Ts</M>. See <Ref Oper="MajorantClosure"/>.
     Distinct cosets are disjoint but do not necessarily partition <A>S</A>.
   </Description>
 </ManSection>

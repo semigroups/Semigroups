@@ -40,7 +40,7 @@
     might be more than one word of the minimum length. For example, if <M>x</M>
     and <M>y</M> are generators of a free inverse semigroups, then <Display>xyy
       ^ {-1}xx ^ {-1}x ^ {-1} = xxx ^ {-1}yy ^ {-1}x ^ {-1}.</Display> See <Ref
-      Oper = "MinimalWord" Label = "for free inverse semigroup element"/>.
+      Attr = "MinimalWord" Label = "for free inverse semigroup element"/>.
     Therefore we provide a another method for printing elements of a free
     inverse semigroup: a unique canonical form.  Suppose an element of a free
     inverse semigroup is given as a Munn tree. Let <M>L</M> be the set of words

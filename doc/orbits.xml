@@ -69,7 +69,7 @@ gap> o;
       the word <A>w</A> in the generators <A>gens</A>. More precisely,
       <C>EvaluateWord(<A>gens</A>, <A>w</A>)</C> returns the equivalent of:
       <Log>Product(List(w, i -> gens[i]));</Log>
-      see also <Ref Meth = "Factorization"/>.<P/>
+      see also <Ref Oper = "Factorization"/>.<P/>
       <List>
         <Mark>for elements of a semigroup</Mark>
         <Item>

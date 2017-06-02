@@ -169,7 +169,7 @@ true]]></Example>
     </Returns>
     <Description>
       These functions produce essentially the same output as the &GAP; library
-      functions with the same names; see <Ref Oper = "GreensDClasses"
+      functions with the same names; see <Ref Meth = "GreensDClasses"
         BookName = "ref"/>. The main difference is that these functions can be
       applied to a wider class of objects:
       <List>
@@ -198,8 +198,8 @@ true]]></Example>
       identical output. The shorter command is provided for the sake of
       convenience.<P/>
 
-      See also <Ref Attr = "DClassReps"/>, <Ref Func = "IteratorOfDClassReps"/>,
-      <Ref Func = "IteratorOfDClasses"/>, and <Ref Func = "NrDClasses"/>.
+      See also <Ref Attr = "DClassReps"/>, <Ref Oper = "IteratorOfDClassReps"/>,
+      <Ref Oper = "IteratorOfDClasses"/>, and <Ref Attr = "NrDClasses"/>.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([3, 4, 4, 4]),
 >                   Transformation([4, 3, 1, 2]));;
@@ -267,16 +267,16 @@ gap> GreensRClasses(D);
 <#GAPDoc Label="GreensXClassOfElement">
   <ManSection><Heading>GreensXClassOfElement</Heading>
     <Oper Name = "GreensDClassOfElement" Arg = "X, f"/>
-    <Func Name = "DClass" Arg = "X, f"/>
+    <Oper Name = "DClass" Arg = "X, f"/>
     <Oper Name = "GreensHClassOfElement" Arg = "X, f"/>
     <Oper Name = "GreensHClassOfElement" Arg = "R, i, j"
       Label = "for a Rees matrix semigroup"/>
-    <Func Name = "HClass" Arg = "X, f"/>
-    <Func Name = "HClass" Arg = "R, i, j" Label = "for a Rees matrix semigroup"/>
+    <Oper Name = "HClass" Arg = "X, f"/>
+    <Oper Name = "HClass" Arg = "R, i, j" Label = "for a Rees matrix semigroup"/>
     <Oper Name = "GreensLClassOfElement" Arg = "X, f"/>
-    <Func Name = "LClass" Arg = "X, f"/>
+    <Oper Name = "LClass" Arg = "X, f"/>
     <Oper Name = "GreensRClassOfElement" Arg = "X, f"/>
-    <Func Name = "RClass" Arg = "X, f"/>
+    <Oper Name = "RClass" Arg = "X, f"/>
     <Returns>A Green's class.</Returns>
     <Description>
       These functions produce essentially the same output as the &GAP; library
@@ -321,13 +321,13 @@ gap> GreensRClasses(D);
 <#GAPDoc Label="GreensXClassOfElementNC">
   <ManSection><Heading>GreensXClassOfElementNC</Heading>
     <Oper Name = "GreensDClassOfElementNC" Arg = "X, f"/>
-    <Func Name = "DClassNC" Arg = "X, f"/>
+    <Oper Name = "DClassNC" Arg = "X, f"/>
     <Oper Name = "GreensHClassOfElementNC" Arg = "X, f"/>
-    <Func Name = "HClassNC" Arg = "X, f"/>
+    <Oper Name = "HClassNC" Arg = "X, f"/>
     <Oper Name = "GreensLClassOfElementNC" Arg = "X, f"/>
-    <Func Name = "LClassNC" Arg = "X, f"/>
+    <Oper Name = "LClassNC" Arg = "X, f"/>
     <Oper Name = "GreensRClassOfElementNC" Arg = "X, f"/>
-    <Func Name = "RClassNC" Arg = "X, f"/>
+    <Oper Name = "RClassNC" Arg = "X, f"/>
     <Returns>A Green's class.</Returns>
     <Description>
       These functions are essentially the same as <Ref
@@ -358,7 +358,7 @@ gap> GreensRClasses(D);
       can take a signficant amount of time to return a value.<P/>
 
       See also <Ref Oper="GreensRClassOfElement" BookName="ref"/> and <Ref
-      Oper="RClassOfHClass"/>.
+      Meth="RClassOfHClass"/>.
 
       <Example><![CDATA[
 gap> S := RandomSemigroup(IsTransformationSemigroup, 2, 1000);;
@@ -400,10 +400,10 @@ gap> Size(L);
       since the Green's class objects are not created.<P/>
 
       See also
-      <Ref Attr = "GreensDClasses"/>,
-      <Ref Func = "IteratorOfDClassReps"/>,
-      <Ref Func = "IteratorOfDClasses"/>,  and
-      <Ref Func = "NrDClasses"/>.
+      <Ref Meth = "GreensDClasses"/>,
+      <Ref Oper = "IteratorOfDClassReps"/>,
+      <Ref Oper = "IteratorOfDClasses"/>,  and
+      <Ref Attr = "NrDClasses"/>.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([3, 4, 4, 4]),
 >                   Transformation([4, 3, 1, 2]));;
@@ -509,7 +509,7 @@ gap> StructureDescription(GroupHClass(last));
   <P/>
 
   This functions produce essentially the same output as the &GAP; library
-  function with the same name; see <Ref Oper = "Idempotents" BookName =
+  function with the same name; see <Ref Attr = "Idempotents" BookName =
     "ref"/>.  The main difference is that this function can be applied to a
   wider class of objects as described above.<P/>
 
@@ -573,8 +573,8 @@ gap> Idempotents(S, 0);
       See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
       <Ref Prop = "IsGroupHClass" BookName = "ref"/>,
       <Ref Attr = "GroupHClassOfGreensDClass" BookName = "ref"/>,
-      <Ref Oper = "GroupHClass"/>, <Ref Oper = "NrIdempotents"/>,
-      <Ref Oper = "Idempotents"/>, and
+      <Ref Attr = "GroupHClass"/>, <Ref Attr = "NrIdempotents"/>,
+      <Ref Attr = "Idempotents"/>, and
       <Ref Oper = "IsRegularSemigroupElement" BookName = "ref"/>.
       <P/>
 
@@ -624,10 +624,10 @@ false]]></Example>
 
 <#GAPDoc Label="IteratorOfXClassReps">
   <ManSection><Heading>IteratorOfXClassReps</Heading>
-  <Func Name = "IteratorOfDClassReps" Arg = "S"/>
-  <Func Name = "IteratorOfHClassReps" Arg = "S"/>
-  <Func Name = "IteratorOfLClassReps" Arg = "S"/>
-  <Func Name = "IteratorOfRClassReps" Arg = "S"/>
+  <Oper Name = "IteratorOfDClassReps" Arg = "S"/>
+  <Oper Name = "IteratorOfHClassReps" Arg = "S"/>
+  <Oper Name = "IteratorOfLClassReps" Arg = "S"/>
+  <Oper Name = "IteratorOfRClassReps" Arg = "S"/>
   <Returns>
   An iterator.
   </Returns>
@@ -637,8 +637,8 @@ false]]></Example>
   more information on iterators.<P/>
 
 
-  See also <Ref Oper = "GreensRClasses" BookName = "ref"/>, <Ref
-  Attr = "GreensRClasses"/>, and <Ref Oper = "IteratorOfRClasses"/>.<P/>
+  See also <Ref Meth = "GreensRClasses" BookName = "ref"/>, <Ref
+  Meth = "GreensRClasses"/>, and <Ref Oper = "IteratorOfRClasses"/>.<P/>
 
   <Example><![CDATA[
 gap> S := Semigroup(Transformation([3, 2, 1, 5, 4]),
@@ -670,10 +670,10 @@ gap> NextIterator(iter);
 
 <#GAPDoc Label="IteratorOfXClasses">
   <ManSection><Heading>IteratorOfXClasses</Heading>
-  <Func Name = "IteratorOfDClasses" Arg = "S"/>
-  <Func Name = "IteratorOfHClasses" Arg = "S"/>
-  <Func Name = "IteratorOfLClasses" Arg = "S"/>
-  <Func Name = "IteratorOfRClasses" Arg = "S"/>
+  <Oper Name = "IteratorOfDClasses" Arg = "S"/>
+  <Oper Name = "IteratorOfHClasses" Arg = "S"/>
+  <Oper Name = "IteratorOfLClasses" Arg = "S"/>
+  <Oper Name = "IteratorOfRClasses" Arg = "S"/>
   <Returns>
   An iterator.
   </Returns>
@@ -687,8 +687,8 @@ gap> NextIterator(iter);
     of a semigroup with a particular property but do not necessarily want to
     compute all of the &R;-classes.<P/>
 
-    See also <Ref Attr = "GreensRClasses"/>,
-    <Ref Oper = "GreensRClasses" BookName = "ref"/>,
+    See also <Ref Meth = "GreensRClasses"/>,
+    <Ref Meth = "GreensRClasses" BookName = "ref"/>,
     <Ref Attr = "NrRClasses"/>, and
     <Ref Oper = "IteratorOfRClassReps"/>.<P/>
 
@@ -772,10 +772,10 @@ gap> Size(R);
   Green's classes themselves are not created when <C>NrXClasses</C> is called.
   <P/>
 
-  See also <Ref Attr = "GreensRClasses"/>,
-  <Ref Oper = "GreensRClasses" BookName = "ref"/>,
-  <Ref Func = "IteratorOfRClasses"/>, and
-  <Ref Func = "IteratorOfRClassReps"/>.
+  See also <Ref Meth = "GreensRClasses"/>,
+  <Ref Meth = "GreensRClasses" BookName = "ref"/>,
+  <Ref Oper = "IteratorOfRClasses"/>, and
+  <Ref Oper = "IteratorOfRClassReps"/>.
 
   <Example><![CDATA[
 gap> S := Semigroup(
@@ -904,7 +904,7 @@ gap> NrIdempotents(D);
     <C>RegularDClasses</C> returns a list of the regular &D;-classes of the
     semigroup <A>S</A>. <P/>
 
-    See also <Ref Func = "IsRegularGreensClass"/> and
+    See also <Ref Prop = "IsRegularGreensClass"/> and
     <Ref Func = "IsRegularDClass" BookName = "ref"/>.
 
     <Example><![CDATA[
@@ -938,8 +938,8 @@ gap> AsSet(RegularDClasses(S));
     The partial order on the &D;-classes is defined by <M>x\leq y</M> if and only
     if <M>S ^ 1xS ^ 1</M> is a subset of  <M>S ^ 1yS ^ 1</M>. <P/>
 
-    See also <Ref Attr = "GreensDClasses"/>,
-    <Ref Attr = "GreensDClasses" BookName = "ref"/>,
+    See also <Ref Meth = "GreensDClasses"/>,
+    <Ref Meth = "GreensDClasses" BookName = "ref"/>,
     <Ref Oper = "IsGreensLessThanOrEqual" BookName = "ref"/>,
     and <Ref Oper="\&lt;" Label="for Green's classes"/>.
   <Example><![CDATA[

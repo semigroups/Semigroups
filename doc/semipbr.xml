@@ -10,8 +10,8 @@
 
 <#GAPDoc Label="IsPBRSemigroup">
   <ManSection>
-    <Prop Name = "IsPBRSemigroup" Arg = "S"/>
-    <Prop Name = "IsPBRMonoid" Arg = "S"/>
+    <Filt Name = "IsPBRSemigroup" Arg = "S"/>
+    <Filt Name = "IsPBRMonoid" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>PBR semigroup</E> is simply a semigroup consisting of
@@ -53,7 +53,7 @@ PBR([ [ -1, 1 ], [ -2, 2 ], [ -3, 3 ], [ -4, 4, 5 ], [ -4, 4, 5 ] ],
 gap> IsPBRMonoid(S);
 false]]></Example>
       In this example <C>S</C> cannot be converted into a monoid using <Ref
-        Attr = "AsMonoid" BookName = "ref"/> since the <Ref Attr = "One"
+        Oper = "AsMonoid" BookName = "ref"/> since the <Ref Attr = "One"
         BookName = "ref"/> of any element in <C>S</C> differs from the
       multiplicative neutral element. <P/>
 

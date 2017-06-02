@@ -194,7 +194,7 @@ gap> DegreeOfPBRCollection(S);
     <Returns>A pair of lists of lists of integers.</Returns>
     <Description>
       If <C>n</C> is the degree of the PBR <A>x</A>, then <C>ExtRepOfObj</C>
-      returns the argument required by <Ref Func = "PBR"/> to create a PBR
+      returns the argument required by <Ref Oper = "PBR"/> to create a PBR
       equal to <A>x</A>, i.e. <C>PBR(ExtRepOfObj(<A>x</A>))</C>
       returns a PBR equal to <A>x</A>.
 
@@ -363,7 +363,7 @@ false]]></Example>
     <P/>
 
     With this definition, <Ref Oper = "AsPBR"/> and
-    <Ref Oper = "AsTransformation" Label = "for a PBR"/> define mutually
+    <Ref Attr = "AsTransformation" Label = "for a PBR"/> define mutually
     inverse isomorphisms from the full transformation monoid of degree <C>n</C>
     to the submonoid of the full PBR monoid of degree <C>n</C> consisting of
     all the elements satisfying <C>IsTransformationPBR</C>.
@@ -470,7 +470,7 @@ gap> Number(FullPBRMonoid(1), IsPartialPermPBR);
     <P/>
 
     With this definition, <Ref Oper = "AsPBR"/> and
-    <Ref Oper = "AsPermutation" Label = "for a PBR"/> define mutually inverse
+    <Ref Attr = "AsPermutation" Label = "for a PBR"/> define mutually inverse
     isomorphisms from the symmetric group of degree <C>n</C> to the
     subgroup of the full PBR monoid of degree <C>n</C> consisting of all the
     elements satisfying <C>IsPermPBR</C> (i.e. the <Ref Attr = "GroupOfUnits"/>
@@ -591,11 +591,11 @@ PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ], [ -5, 5 ] ],
 
 <#GAPDoc Label="AsTransformationPBR">
   <ManSection>
-    <Oper Name = "AsTransformation" Arg = "x" Label = "for a PBR"/>
+    <Attr Name = "AsTransformation" Arg = "x" Label = "for a PBR"/>
     <Returns>A transformation.</Returns>
     <Description>
       When the argument <A>x</A> is a PBR which satisfies <Ref Prop =
-        "IsTransformationPBR"/>, then this function returns that
+        "IsTransformationPBR"/>, then this attribute returns that
       transformation.
 
       <Example><![CDATA[
@@ -634,11 +634,11 @@ gap> AsPartialPerm(x);
 
 <#GAPDoc Label="AsPermutationPBR">
   <ManSection>
-    <Oper Name = "AsPermutation" Arg = "x" Label = "for a PBR"/>
+    <Attr Name = "AsPermutation" Arg = "x" Label = "for a PBR"/>
     <Returns>A permutation.</Returns>
     <Description>
       When the argument <A>x</A> is a PBR which satisfies
-      <Ref Prop = "IsPermPBR"/>, then this function returns that permutation.
+      <Ref Prop = "IsPermPBR"/>, then this attribute returns that permutation.
 
       <Example><![CDATA[
 gap> x := PBR([[-1, 1], [-4, 2], [-2, 3], [-3, 4]],

@@ -282,7 +282,7 @@ gap> NormalizedPrincipalFactor(D);
 
     <C>SmallGeneratingSet</C> returns the smallest of the returned values of
     <C>SmallXGeneratingSet</C> which is applicable to <A>coll</A>; see <Ref
-      Func="Generators"/>.<P/>
+      Attr="Generators"/>.<P/>
 
     As neither irredundancy, nor minimal length are proven, these functions
     usually return an answer much more quickly than <Ref
@@ -606,7 +606,7 @@ true]]></Example>
       See also
       <Ref Oper="GreensHClassOfElement" BookName="ref"/>,
       <Ref Prop="IsMonoidAsSemigroup"/>, and
-      <Ref Attr="MultiplicativeNeutralElement" BookName="ref"/>.
+      <Ref Meth="MultiplicativeNeutralElement" BookName="ref"/>.
 
       <Example><![CDATA[
 gap> S := Semigroup(

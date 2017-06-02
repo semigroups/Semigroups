@@ -43,7 +43,7 @@
     see <Ref Oper = "MinimalFactorization"/>.
     <P/>
 
-    See also <Ref Func = "EvaluateWord"/> and
+    See also <Ref Oper = "EvaluateWord"/> and
     <Ref Func = "GeneratorsOfSemigroup" BookName = "ref"/>.
 <Example><![CDATA[
 gap> gens := [Transformation([2, 2, 9, 7, 4, 9, 5, 5, 4, 8]),
@@ -100,7 +100,7 @@ gap> EvaluateWord(GeneratorsOfSemigroup(S), word);
 
     Unlike <Ref Oper = "Factorization"/> this operation does not distinguish
     between semigroups and inverse semigroups.  See also <Ref
-      Func = "EvaluateWord"/> and <Ref Func = "GeneratorsOfSemigroup"
+      Oper = "EvaluateWord"/> and <Ref Func = "GeneratorsOfSemigroup"
       BookName="ref"/>.
     <Example><![CDATA[
 gap> S := Semigroup(Transformation([2, 2, 9, 7, 4, 9, 5, 5, 4, 8]),

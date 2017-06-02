@@ -71,11 +71,11 @@
         are described in Chapters <Ref Chap = "Bipartitions and blocks"/>, 
         <Ref Chap = "Partitioned binary relations (PBRs)"/>, and 
         <Ref Chap = "Matrices over semirings"/>. These include 
-        <Ref Func="Bipartition"/>, <Ref Func="PBR"/>, and
-        <Ref Func="Matrix" Label="for a filter and a matrix"/>, which
-        supplement those already defined in the &GAP; library, such as <Ref
-          Oper="Transformation" BookName="ref"/> or <Ref Oper="PartialPerm" 
-          BookName="ref"/>. 
+        <Ref Func="Bipartition"/>, <Ref Oper="PBR"/>, and
+        <Ref Oper="Matrix" Label="for a filter and a matrix"/>, which
+        supplement those already defined in the &GAP; library, such as
+        <Ref Oper="Transformation" Label="for an image list" BookName="ref"/> or
+        <Ref Oper="PartialPerm" Label="for a domain and image" BookName="ref"/>.
       </Item>
 
       <Mark>Part II: semigroups and ideals</Mark>
@@ -92,7 +92,7 @@
           "FullBooleanMatMonoid"/> or <Ref Oper =
           "UniformBlockBijectionMonoid"/>, are described in 
         Chapter <Ref Chap = "Standard examples"/>, and standard constructions,
-        such as <Ref Oper = "TrivialSemigroup"/>, <Ref Oper =
+        such as <Ref Func = "TrivialSemigroup"/>, <Ref Func =
           "RightZeroSemigroup"/>, are described in Chapter 
         <Ref Chap = "Standard constructions"/>.
       </Item>
