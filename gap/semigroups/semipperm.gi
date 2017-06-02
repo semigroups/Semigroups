@@ -451,7 +451,10 @@ function(I)
   return fail;
 end);
 
-# FIXME this cannot be correct
+# FIXME this cannot be correct, the returned value is an upper bound, and
+# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) 
+# is not correct, since the generators acted on by generators of the
+# supersemigroup can have higher degree.
 
 InstallMethod(CodegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
@@ -460,7 +463,10 @@ function(I)
   return CodegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
 
-# FIXME this cannot be correct
+# FIXME this cannot be correct, the returned value is an upper bound, and
+# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) 
+# is not correct, since the generators acted on by generators of the
+# supersemigroup can have higher degree.
 
 InstallMethod(DegreeOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
@@ -469,7 +475,10 @@ function(I)
   return DegreeOfPartialPermCollection(SupersemigroupOfIdeal(I));
 end);
 
-# FIXME this cannot be correct
+# FIXME this cannot be correct, the returned value is an upper bound, and
+# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) 
+# is not correct, since the generators acted on by generators of the
+# supersemigroup can have higher degree.
 
 InstallMethod(RankOfPartialPermSemigroup,
 "for a partial perm semigroup ideal",
