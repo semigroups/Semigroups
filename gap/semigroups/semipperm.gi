@@ -452,7 +452,7 @@ function(I)
 end);
 
 # FIXME this cannot be correct, the returned value is an upper bound, and
-# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) 
+# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I))
 # is not correct, since the generators acted on by generators of the
 # supersemigroup can have higher degree.
 
@@ -464,7 +464,7 @@ function(I)
 end);
 
 # FIXME this cannot be correct, the returned value is an upper bound, and
-# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) 
+# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I))
 # is not correct, since the generators acted on by generators of the
 # supersemigroup can have higher degree.
 
@@ -476,7 +476,7 @@ function(I)
 end);
 
 # FIXME this cannot be correct, the returned value is an upper bound, and
-# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I)) 
+# returning CodegreeOfPartialPermCollection(GeneratorsOfSemigroupIdeal(I))
 # is not correct, since the generators acted on by generators of the
 # supersemigroup can have higher degree.
 
