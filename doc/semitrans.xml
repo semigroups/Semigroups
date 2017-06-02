@@ -346,3 +346,28 @@ fail]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+
+<#GAPDoc Label="IsConnectedTransformationSemigroup">
+  <ManSection>
+    <Prop Name = "IsConnectedTransformationSemigroup" Arg = "S"
+      Label = "for a transformation semigroup" />
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A transformation semigroup <A>S</A> is connected if the digraph returned
+      by the function <C>DigraphOfActionOnPoints</C> is connected. See 
+      <Ref Prop = "IsConnectedDigraph" BookName = "digraphs" /> and <Ref Attr
+        = "DigraphOfActionOnPoints" Label = "for a transformation semigroup"/>.
+      The function <C>IsConnectedTransformationSemigroup</C> returns <K>true</K>
+      if the semigroup <A>S</A> is connected and <K>false</K> otherwise.
+
+      <Example><![CDATA[
+gap> S := Semigroup([
+>  Transformation([2, 4, 3, 4]),
+>  Transformation([3, 3, 2, 3, 3])]);
+<transformation semigroup of degree 5 with 2 generators>
+gap> IsConnectedTransformationSemigroup(S);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
