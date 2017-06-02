@@ -68,6 +68,31 @@ Matrix(GF(2^2), [])]]></Example>
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="IdentityMatrixOverFiniteField">
+<ManSection>
+  <Oper Name="IdentityMatrixOverFiniteField" Arg="F, n"
+    Label = "for a finite field and a pos int" />
+  <Oper Name="IdentityMatrixOverFiniteField" Arg="mat, n"
+    Label = "for a matrix over finite field and pos int" />
+  <Description>
+    Given a finite field <A>F</A> and a positive integer <A>n</A>, this
+    operation returns an <A>n</A>-by-<A>n</A> identity matrix with entries in
+    the finite field <A>F</A>. If instead the first argument is an
+    <A>n</A>-by-<A>n</A> matrix <A>mat</A> whose <Ref Oper = "BaseDomain" Label
+      = "for a matrix over finite field" /> is a finite field <A>F</A>, then
+    <C>IdentityMatrixOverFiniteField(<A>mat</A>, <A>n</A>)</C> returns the same
+    as <C>IdentityMatrixOverFiniteField(<A>F</A>, <A>n</A>)</C>.
+        <Example><![CDATA[
+gap> x := NewIdentityMatrixOverFiniteField(
+>                   IsPlistMatrixOverFiniteFieldRep, GF(4), 2);
+Matrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])
+gap> y := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,
+>                                      GF(4), 2);
+Matrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="NewIdentityMatrixOverFiniteField">
 <ManSection>
   <Oper Name="NewIdentityMatrixOverFiniteField" Arg="filt, F, n"/>

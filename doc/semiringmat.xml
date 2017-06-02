@@ -236,6 +236,29 @@ gap> DimensionOfMatrixOverSemiring(x);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="DimensionOfMatrixOverSemiringCollection">
+  <ManSection>
+    <Attr Name = "DimensionOfMatrixOverSemiringCollection" Arg = "coll"/>
+    <Returns>A positive integer.</Returns>
+    <Description>
+      If <A>coll</A> is a collection of matrices over a semiring (i.e. belongs
+      to the category <Ref Filt = "IsMatrixOverSemiringCollection"/>), then
+      the elements of <A>coll</A> are square <C>n</C> by <C>n</C> matrices. 
+      <C>DimensionOfMatrixOverSemiringCollection</C> returns the dimension
+      <C>n</C> of these matrices.
+      <Example><![CDATA[
+gap> x := BooleanMat([[1, 0, 0, 1],
+>                     [0, 1, 1, 0],
+>                     [1, 0, 1, 1],
+>                     [0, 0, 0, 1]]);
+Matrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1], 
+  [0, 0, 0, 1]])
+gap> DimensionOfMatrixOverSemiringCollection(Semigroup(x));
+4]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="Matrix">
   <ManSection>
     <Oper Name = "Matrix" Arg = "filt, mat[, threshold[, period]]"

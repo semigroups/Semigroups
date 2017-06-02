@@ -329,3 +329,23 @@ true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="FixedPointsOfTransformationSemigroup">
+  <ManSection>
+    <Attr Name="FixedPointsOfTransformationSemigroup" Arg="S" Label="for a transformation semigroup"/>
+    <Returns>A set of positive integers.</Returns>
+    <Description>
+      If <A>S</A> is a transformation semigroup, then
+      <C>FixedPointsOfTransformationSemigroup(<A>S</A>)</C> returns the set of
+      points <C>i</C> in <C>[1 .. DegreeOfTransformationSemigroup(<A>S</A>)]</C>
+      such that <C>i ^ f = i</C> for all <C>f</C> in <A>S</A>. <P/>
+      <Example><![CDATA[
+gap> f := Transformation([1, 4, 2, 4, 3, 7, 7]);
+Transformation( [ 1, 4, 2, 4, 3, 7, 7 ] )
+gap> S := Semigroup(f);
+<commutative transformation semigroup of degree 7 with 1 generator>
+gap> FixedPointsOfTransformationSemigroup(S);
+[ 1, 4, 7 ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

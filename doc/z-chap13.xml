@@ -216,6 +216,7 @@
     <#Include Label = "CyclesOfTransformationSemigroup">
     <#Include Label = "DigraphOfActionOnPairs">
     <#Include Label = "DigraphOfActionOnPoints">
+    <#Include Label = "FixedPointsOfTransformationSemigroup">
     <#Include Label = "IsTransitive">
     <#Include Label = "SmallestElementSemigroup">
     <#Include Label = "CanonicalTransformation">
