@@ -47,6 +47,10 @@
     by Julius Jonu&#353;as; see Chapters <Ref Chap = "Free objects"/>.
     <P/>
 
+    From Version 3.0.0, &Semigroups; includes a copy of the &libsemigroups; C++
+    library which contains an implementation of the Froidure-Pin Algorithm. 
+    <P/>
+
     <B>Minor note of caution</B>: &Semigroups; contains different methods for
     some &GAP; library functions, and so you might notice that &GAP; behaves
     differently when &Semigroups; is loaded.  For more details about semigroups
