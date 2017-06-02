@@ -204,6 +204,48 @@ gap> RightSemigroupCongruence(S, pair1, pair2);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="GeneratingPairsOfSemigroupCongruence">
+  <ManSection>
+    <Attr Name = "GeneratingPairsOfSemigroupCongruence" Arg = "cong"/>
+    <Attr Name = "GeneratingPairsOfLeftSemigroupCongruence" Arg = "cong"/>
+    <Attr Name = "GeneratingPairsOfRightSemigroupCongruence" Arg = "cong"/>
+    <Returns>A list of lists.</Returns>
+    <Description>
+      If <A>cong</A> is a semigroup congruence, then
+      <C>GeneratingPairsOfSemigroupCongruence</C> returns a list of pairs of
+      elements from <C>Range(<A>cong</A>)</C> that <E>generates</E> the
+      congruence; i.e. <A>cong</A> is the least congruence on the semigroup
+      which contains all the pairs in the list. <P/>
+
+      If <A>cong</A> is a left or right semigroup congruence, then
+      <C>GeneratingPairsOfLeft/RightSemigroupCongruence</C> will instead give a
+      list of pairs which generate it as a left or right congruence.  Note that,
+      although a congruence is also a left and right congruence, its generating
+      pairs as a left or right congruence may differ from its generating pairs
+      as a two-sided congruence. <P/>
+
+      A congruence can be defined using a set of generating pairs: see
+      <Ref Func = "SemigroupCongruence"/>,
+      <Ref Func = "LeftSemigroupCongruence"/>, and
+      <Ref Func = "RightSemigroupCongruence"/>. <P/>
+
+      <Example><![CDATA[
+gap> S := Semigroup([Transformation([3, 3, 2, 3]),
+>                    Transformation([3, 4, 4, 1])]);;
+gap> pairs :=
+>     [[Transformation([1, 1, 1, 1]), Transformation([2, 2, 2, 3])], 
+>      [Transformation([2, 2, 3, 2]), Transformation([3, 3, 2, 3])]];;
+gap> cong := SemigroupCongruence(S, pairs);;
+gap> GeneratingPairsOfSemigroupCongruence(cong);
+[ [ Transformation( [ 1, 1, 1, 1 ] ), 
+      Transformation( [ 2, 2, 2, 3 ] ) ], 
+  [ Transformation( [ 2, 2, 3, 2 ] ), 
+      Transformation( [ 3, 3, 2, 3 ] ) ] ]
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="CongruencesOfSemigroup">
   <ManSection>
     <Attr Name = "CongruencesOfSemigroup" Arg = "S"
