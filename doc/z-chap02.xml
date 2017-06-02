@@ -39,7 +39,7 @@
 
       <Item>
         download the package archive <F>&ARCHIVENAME;.tar.gz</F> from
-        <URL Text = "the Semigroups package webpage" >https://gap-packages.github.io/Semigroups</URL>.
+        <URL Text = "the Semigroups package webpage">https://gap-packages.github.io/Semigroups</URL>.
       </Item>
 
       <Item>
