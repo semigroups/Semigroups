@@ -156,6 +156,14 @@ gap> CanonicalBlocks(blocks);
 [ 5, 6, 7 
  ], [ 8*, 9*, 10* ], [ 11*, 12*, 13* ], [ 14*, 15*, 16* ], [ 17*, 18* ], [ 19*\
 , 20* ]>
+gap> Print(last); "this string allows us to test the PrintObj method";
+BlocksNC([ [ -1, -2, -3, -4 ], [ -5, -6, -7 ], [ 8, 9, 10 ], [ 11, 12, 13 ], [\
+ 14, 15, 16 ], [ 17, 18 ], [ 19, 20 ] ])"this string allows us to test the Pri\
+ntObj method"
+
+# Test empty blocks
+gap> BlocksNC([]);
+<empty blocks>
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);

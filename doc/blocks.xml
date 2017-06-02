@@ -68,7 +68,10 @@ gap> RightProjection(x);
       consisting solely of positive or negative integers, where the union of the
       absolute values of the lists is <C>[1 .. n]</C> for some <C>n</C>. The
       blocks with positive entries correspond to transverse blocks and the
-      classes with negative entries correspond to non-transverse blocks. 
+      classes with negative entries correspond to non-transverse blocks. <P/>
+
+      This method function does not check that its arguments are valid, and
+      should be used with caution.
 
       <Example><![CDATA[
 gap> BlocksNC([[1], [2], [-3, -6], [-4, -5]]);
