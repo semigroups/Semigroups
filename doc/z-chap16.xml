@@ -197,6 +197,7 @@
 
     <#Include Label = "IsRZMSCongruenceByLinkedTriple">
     <#Include Label = "RZMSCongruenceByLinkedTriple">
+    <#Include Label = "IsRZMSCongruenceClassByLinkedTriple">
     <#Include Label = "RZMSCongruenceClassByLinkedTriple">
     <#Include Label = "IsLinkedTriple">
     <#Include Label = "CanonicalRepresentative">

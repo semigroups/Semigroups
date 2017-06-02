@@ -55,8 +55,8 @@ true]]></Example>
       Filt = "IsRZMSCongruenceByLinkedTriple"/> respectively. <P/>
 
       An object of one of these types may be used in the same way as any other
-      object in the category <Ref Prop = "IsCongruenceClass" BookName =
-        "ref"/>, but the class is represented internally by information related
+      object in the category <Ref Filt = "IsCongruenceClass"/>,
+      but the class is represented internally by information related
       to the congruence's <E>linked triple</E>, and certain functions may take
       advantage of this information to reduce computation times. <P/>
 
