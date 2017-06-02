@@ -300,6 +300,28 @@
         5</C>.  See Section <Ref Sect = "Congruences on inverse semigroups"/>
         for more information about the "kernel and trace" method.
     </Item>
+
+    <Mark><C>report</C></Mark>
+    <Item>this component should be either <K>true</K> or <K>false</K>. If this
+      component is set to <K>true</K>, then some additional information will be
+      provided during computations performed by the &libsemigroups; C++ library.
+    </Item>
+
+    <Mark><C>batch_size</C></Mark>
+    <Item>this component should be a positive integer. If <A>S</A> is a
+      semigroup with representation <Ref Filt="IsEnumerableSemigroupRep" />,
+      then when certain computations are performed with <A>S</A> using the
+      &libsemigroups; C++ library, then the computations will be executed in
+      batches of size at least <C>batch_size</C>.  This value of this component
+      changes the performance of the &libsemigroups; C++ library &#8212; you may
+      wish to tweak this parameter if you experience sub-optimal performance.
+    </Item>
+
+    <Mark><C>nr_threads</C></Mark>
+    <Item>this component should be a positive integer. This number sets the
+      maximum number of threads that can be used by computations in the
+      &libsemigroups; C++ library.
+    </Item>
 </List>
 
     <Example><![CDATA[
