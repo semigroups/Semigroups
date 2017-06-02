@@ -72,7 +72,7 @@
   <#Include SYSTEM "z-chap17.xml">  <!-- homomorphisms -->
   <#Include SYSTEM "z-chap18.xml">  <!-- visualising semigroups -->
   <#Include SYSTEM "z-chap19.xml">  <!-- utils -->
-  <!--<#Include SYSTEM "z-chap20.xml">  <!-- orbits -->-->
+  <!--<#Include SYSTEM "z-chap20.xml">  <!-- orbits -->
   <!-- <#Include SYSTEM "z-chap22.xml">  <!-- extending the package -->
 </Body>
 

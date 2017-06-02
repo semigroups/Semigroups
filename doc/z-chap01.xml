@@ -134,7 +134,7 @@
         functions for reading and writing semigroups and their elements, and
         for visualising semigroups, and some of their elements, can be found in
         Chapters <Ref Chap = "Visualising semigroups and elements"/> and 
-        <Ref Chap = "Utilities"/>.
+        <Ref Chap = "IO"/>.
       </Item>
 
     </List>

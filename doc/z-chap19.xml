@@ -1,6 +1,6 @@
-<Chapter Label="Utilities">
+<Chapter Label="IO">
   <Heading>
-    Utilities
+    IO
   </Heading>
 
   <Section><Heading>Reading and writing elements to a file</Heading>
