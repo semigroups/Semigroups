@@ -50,8 +50,6 @@ InstallMethod(OnRightBlocks, "for blocks and a bipartition",
 InstallMethod(OnLeftBlocks, "for blocks and a bipartition",
 [IsBlocks, IsBipartition], BLOCKS_LEFT_ACT);
 
-BindGlobal("EmptyBlocks", BLOCKS_NC([]));
-
 #############################################################################
 # GAP level - NOT directly using interface to C/C++ level
 #############################################################################
