@@ -32,7 +32,8 @@
     efficient methods for semigroups or ideals consisting of transformations,
     partial permutations, bipartitions, partitioned binary relations,
     subsemigroups of regular Rees 0-matrix semigroups, and matrices of various
-    semirings including boolean or tropical matrices.
+    semirings including boolean matrices, matrices over finite fields, and
+    certain tropical matrices.
     <P/>
 
     &Semigroups; contains efficient methods for creating semigroups, monoids,

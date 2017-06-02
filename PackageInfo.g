@@ -48,7 +48,7 @@ SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "",
 Version := "3.0.0",
-Date := "01/01/3000",
+Date := "02/06/2017",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -177,27 +177,37 @@ Persons := [
     Institution   := "University of St Andrews")],
 
 Status := "deposited",
-#FIXME update the AbstractHTML
+
 AbstractHTML :=
-"""<p>The <strong class=\"pkg\">Semigroups</strong> package is a <strong
+"""<p>
+The <strong class=\"pkg\">Semigroups</strong> package is a <strong
 class=\"pkg\">GAP</strong> package containing methods for semigroups, monoids,
-and inverse semigroups, principally of transformations, partial permutations,
-bipartitions, subsemigroups of regular Rees 0-matrix semigroups, free inverse
-semigroups, free bands, and semigroups of matrices over finite fields.</p>
-<p><strong class=\"pkg\">Semigroups</strong> contains more efficient methods
-than those available in the <strong class=\"pkg\">GAP</strong> library (and in
-many cases more efficient than any other software) for creating semigroups,
-monoids, and inverse semigroup, calculating their Green's structure, ideals,
-size, elements, group of units, small generating sets, testing membership,
-finding the inverses of a regular element, factorizing elements over the
-generators, and many more. It is also possible to test if a semigroup satisfies
-a particular property, such as if it is regular, simple, inverse, completely
-regular, and a variety of further properties.</p> <p>There are methods for
-finding congruences of certain types of semigroups, the normalizer of a
-semigroup in a permutation group, the maximal subsemigroups of a finite
-semigroup, and smaller degree partial permutation representations of inverse
-semigroups. There are functions for producing pictures of the Green's structure
-of a semigroup, and for drawing bipartitions.</p>""",
+and inverse semigroups.  There are particularly efficient methods for
+semigroups or ideals consisting of transformations, partial permutations,
+bipartitions, partitioned binary relations, subsemigroups of regular Rees
+0-matrix semigroups, and matrices of various semirings including boolean
+matrices, matrices over finite fields, and certain tropical matrices.
+</p>
+
+<p>
+<strong class=\"pkg\">Semigroups</strong> contains efficient methods for
+creating semigroups, monoids, and inverse semigroup, calculating their Green's
+structure, ideals, size, elements, group of units, small generating sets,
+testing membership, finding the inverses of a regular element, factorizing
+elements over the generators, and so on. It is possible to test if a semigroup
+satisfies a particular property, such as if it is regular, simple, inverse,
+completely regular, and a variety of further properties.
+</p>
+
+<p>
+There are methods for finding presentations for a semigroup, the
+congruences of a semigroup, the normalizer of a semigroup in a permutation
+group, the maximal subsemigroups of a finite semigroup, smaller degree
+partial permutation representations, and the character tables of inverse
+semigroups. There are functions for producing pictures of the Green's
+structure of a semigroup, and for drawing graphical representations of
+certain types of elements.
+</p>""",
 
 PackageDoc := rec(
   BookName  := "Semigroups",
