@@ -180,6 +180,11 @@
     <#Include Label = "IsEnumerableSemigroupRep">
   </Section>
 
+  <Section Label = "Semigroups represented by generators">
+    <Heading>Semigroups represented by generators</Heading>
+    <#Include Label = "InverseMonoidByGenerators">
+  </Section>
+
   <Section Label = "Options when creating semigroups">
     <Heading>Options when creating semigroups</Heading>
 
