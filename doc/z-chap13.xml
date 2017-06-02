@@ -219,6 +219,7 @@
     <#Include Label = "IsTransitive">
     <#Include Label = "SmallestElementSemigroup">
     <#Include Label = "CanonicalTransformation">
+    <#Include Label = "IsConnectedTransformationSemigroup">
  
   </Section>
  
