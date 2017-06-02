@@ -48,7 +48,7 @@ gap> Size(S);
       returns the annular Jones monoid of degree <A>n</A>.  The <E>annular Jones
         monoid</E> is the subsemigroup of the partition monoid consisting of all
       annular bipartitions whose blocks have size 2 (annular bipartitions are
-      defined in Chapter <Ref Label="bipartition"/>). See <Ref
+      defined in Chapter <Ref Chap="Bipartitions and blocks"/>). See <Ref
         Oper="BrauerMonoid" />.
 
       <Example><![CDATA[
@@ -137,7 +137,7 @@ gap> SingularJonesMonoid(8);
       Motzkin monoid of degree <A>n</A>. The <E>Motzkin monoid</E> is the
       subsemigroup of the partial Brauer monoid consisting of those bipartitions
       that are planar (planar bipartitions are defined in Chapter <Ref
-        Label="bipartition"/>).  <P/>
+        Chap="Bipartitions and blocks"/>).  <P/>
       
       Note that the Motzkin monoid of degree <A>n</A> contains the partial Jones
       monoid of degree <A>n</A>, but in general, these monoids are not equal;
@@ -249,7 +249,7 @@ gap> Size(S);
       If <A>n</A> is a positive integer, then this operation returns the planar
       partition monoid of degree <A>n</A> which is the monoid consisting of all
       the planar bipartitions of degree <A>n</A> (planar bipartitions are defined
-      in Chapter <Ref Label="bipartition"/>). <P/>
+      in Chapter <Ref Chap="Bipartitions and blocks"/>). <P/>
 
       <C>SingularPlanarPartitionMonoid</C> returns the ideal of the planar
       partition monoid consisting of the non-invertible elements

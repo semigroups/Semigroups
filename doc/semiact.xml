@@ -13,17 +13,18 @@
     <Filt Name = "IsActingSemigroup" Arg = "obj" Type="Category"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      A category of semigroup for which we have special methods.
-      <!--TODO: Write more about this-->
+      Every acting semigroup, as defined in Section 
+      <Ref Subsect="Acting semigroups"/>, belongs to this category. 
 
       <Example><![CDATA[
-gap> S := Semigroup([Transformation([1, 3, 2])]);;
+gap> S := Semigroup(Transformation([1, 3, 2]));;
 gap> IsActingSemigroup(S);
+true
+gap> IsEnumerableSemigroupRep(S);
 true
 gap> S := FreeSemigroup(3);;
 gap> IsActingSemigroup(S);
-false
-]]></Example>
+false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

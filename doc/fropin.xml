@@ -13,18 +13,197 @@
     <Filt Name = "IsEnumerableSemigroupRep" Arg = "obj" Type="Representation"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      A representation for any semigroup to which the Froidure-Pin algorithm
-      applies.
-      <!--TODO: Write more about this-->
+      Every semigroup with this representation can have the 
+      Froidure-Pin algorithm
+      applied to it; see Section <Ref Subsect="Enumerable semigroups"/> for
+      more details.<P/>
+
+      Basic operations for enumerable semigroups are 
+      <Ref Attr="AsListCanonical"/>, 
+      <Ref Attr="EnumeratorCanonical"/>, 
+      <Ref Oper="IteratorCanonical"/>,
+      <Ref Oper="PositionCanonical"/>,
+      <Ref Oper="Enumerate"/>, and
+      <Ref Oper="IsFullyEnumerated"/>.
 
       <Example><![CDATA[
-gap> S := Semigroup([Transformation([1, 3, 2])]);;
+gap> S := Semigroup(Transformation([1, 3, 2]));;
 gap> IsEnumerableSemigroupRep(S);
 true
 gap> S := FreeSemigroup(3);;
 gap> IsEnumerableSemigroupRep(S);
 false
 ]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="AsListCanonical">
+  <ManSection>
+    <Attr Name="AsListCanonical" Arg="S"/> 
+    <Attr Name="EnumeratorCanonical" Arg="S"/>
+    <Attr Name="IteratorCanonical" Arg="S"/>
+    <Returns>A list, enumerator, or iterator.</Returns>
+    <Description>
+      When the argument <A>S</A> is a semigroup in the representation 
+      <Ref Filt="IsEnumerableSemigroupRep"/>, <C>AsListCanonical</C>
+      returns a list of the elements of <A>S</A> in the order they are
+      enumerated by the Froidure-Pin Algorithm. This is the same as the order
+      used to index the elements of <A>S</A> in <Ref
+        Attr="RightCayleyGraphSemigroup"/> and <Ref
+        Attr="LeftCayleyGraphSemigroup"/>. <P/>
+
+      <C>EnumeratorCanonical</C> and <C>IteratorCanonical</C> return an
+      enumerator and an iterator where the elements are
+      ordered in the same way as <C>AsListCanonical</C>. Using
+      <C>EnumeratorCanonical</C> or <C>IteratorCanonical</C> will often use
+      less memory than <C>AsListCanonical</C>, but may have slightly worse
+      performance if the elements of the semigroup are looped over repeatedly.
+      <C>EnumeratorCanonical</C> returns the same list as
+      <C>AsListCanonical</C> if <C>AsListCanonical</C> has ever been called for
+      <A>S</A>.<P/>
+
+      If <A>S</A> is an acting semigroup, then the value returned by
+      <C>AsList</C> may not equal the value returned by <C>AsListCanonical</C>.
+      <C>AsListCanonical</C> exists so that there is a method for obtaining the
+      elements of <A>S</A> in the particular order used by 
+      <Ref Attr="RightCayleyGraphSemigroup"/> and 
+      <Ref Attr="LeftCayleyGraphSemigroup"/>.<P/>
+
+      See also <Ref Oper="PositionCanonical"/>.
+
+      <Example><![CDATA[
+gap> S := Semigroup(Transformation([1, 3, 2]));;
+gap> AsListCanonical(S);
+[ Transformation( [ 1, 3, 2 ] ), IdentityTransformation ]
+gap> IteratorCanonical(S);
+<iterator>
+gap> EnumeratorCanonical(S);
+[ Transformation( [ 1, 3, 2 ] ), IdentityTransformation ]
+gap> S := Monoid([Matrix(IsBooleanMat, [[1, 0, 0],
+>                                       [0, 1, 0],
+>                                       [0, 1, 0]])]);
+<commutative monoid of 3x3 boolean matrices with 1 generator>
+gap> it := IteratorCanonical(S);
+<iterator>
+gap> NextIterator(it);
+Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+gap> en := EnumeratorCanonical(S);
+<enumerator of <commutative monoid of 3x3 boolean matrices with 1 
+ generator>>
+gap> en[1];
+Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+gap> Position(en, en[1]);
+1
+gap> Length(en);
+2]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="Enumerate">
+  <ManSection>
+    <Oper Name="Enumerate" Arg="S[, limit]"/> 
+    <Returns>A semigroup (the argument).</Returns>
+    <Description>
+      If <A>S</A> is a semigroup with representation 
+      <Ref Filt="IsEnumerableSemigroupRep"/> and <A>limit</A> is a positive
+      integer, then this operation can be used to enumerate at least
+      <A>limit</A> elements of <A>S</A>, or <C>Size(<A>S</A>)</C> elements if
+      this is less than <A>limit</A>, using the Froidure-Pin Algorithm. <P/>
+
+      If the optional second argument <A>limit</A> is not given, then the
+      semigroup is enumerated until all of its elements have been found. <P/>
+
+      For reasons of performance, <A>S</A> is enumerated in batches according
+      to the option <C>batch_size</C>, which can be specified when <A>S</A> is
+      created; see Section <Ref Sect="Options when creating semigroups"/>.
+
+      <Log><![CDATA[
+gap> S := FullTransformationMonoid(7);
+<full transformation monoid of degree 7>
+gap> Enumerate(S, 1000);
+<full transformation monoid of degree 7>
+gap> Display(S);
+<partially enumerated semigroup with 8197 elements, 
+224 rules, max word length 11>]]></Log>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsFullyEnumerated">
+  <ManSection>
+    <Oper Name="IsFullyEnumerated" Arg="S"/> 
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      If <A>S</A> is a semigroup with representation 
+      <Ref Filt="IsEnumerableSemigroupRep"/>, then this operation returns
+      <K>true</K> if the Froidure-Pin Algorithm has been run to completion
+      (i.e. all of the elements of <A>S</A> have been found) and <K>false</K>
+      if <A>S</A> has not been fully enumerated.
+      <Example><![CDATA[
+gap> S := FullBooleanMatMonoid(4);
+<monoid of 4x4 boolean matrices with 7 generators>
+gap> Enumerate(S, 1000);
+<monoid of 4x4 boolean matrices with 7 generators>
+gap> IsFullyEnumerated(S);
+false
+gap> Size(S);
+65536
+gap> IsFullyEnumerated(S);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="PositionCanonical">
+  <ManSection>
+    <Oper Name="PositionCanonical" Arg="S, x"/> 
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      When the argument <A>S</A> is a semigroup in the representation 
+      <Ref Filt="IsEnumerableSemigroupRep"/> and <A>x</A> is an element of
+      <A>S</A>, <C>PositionCanonical</C>
+      returns the position of <A>x</A> in <C>AsListCanonical(<A>S</A>)</C> or 
+      equivalently the position of <A>x</A> in
+      <C>EnumeratorCanonical(<A>S</A>)</C>.<P/>
+
+      See also <Ref Oper="AsListCanonical"/> and 
+      <Ref Oper="EnumeratorCanonical"/>.
+      <Example><![CDATA[
+gap> S := FullTropicalMaxPlusMonoid(2, 3);
+<monoid of 2x2 tropical max-plus matrices with 13 generators>
+gap> x := Matrix(IsTropicalMaxPlusMatrix, [[1, 3], [2, 1]], 3);
+Matrix(IsTropicalMaxPlusMatrix, [[1, 3], [2, 1]], 3)
+gap> PositionCanonical(S, x);
+234
+gap> EnumeratorCanonical(S)[234] = x;
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="RightCayleyGraphSemigroup">
+  <ManSection>
+    <Attr Name="RightCayleyGraphSemigroup" Arg="S"/> 
+    <Attr Name="LeftCayleyGraphSemigroup" Arg="S"/> 
+    <Returns>A list of lists of positive integers.</Returns>
+    <Description>
+      When the argument <A>S</A> is a semigroup in the representation 
+      <Ref Filt="IsEnumerableSemigroupRep"/>, 
+      <C>RightCayleyGraphSemigroup</C> returns the right
+      Cayley graphs of <A>S</A>, as a list <C>graph</C> where 
+      <C>graph[i][j]</C> is equal to 
+      <C>PositionCanonical(<A>S</A>, AsListCanonical(<A>S</A>)[i] *
+        GeneratorsOfSemigroup(<A>S</A>)[j])</C>.
+      The list returned by <C>LeftCayleyGraphSemigroup</C> is defined analogously.
+      <Example><![CDATA[
+gap> S := FullTransformationMonoid(2);
+<full transformation monoid of degree 2>
+gap> RightCayleyGraphSemigroup(S);
+[ [ 1, 2, 3 ], [ 2, 1, 3 ], [ 3, 4, 3 ], [ 4, 3, 3 ] ]
+gap> LeftCayleyGraphSemigroup(S);
+[ [ 1, 2, 3 ], [ 2, 1, 4 ], [ 3, 3, 3 ], [ 4, 4, 4 ] ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

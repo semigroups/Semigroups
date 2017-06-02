@@ -124,8 +124,8 @@
           <A>f</A> will be colored using the standard <C>tikz</C> colors. Due
           to the limited number of colors available in <C>tikz</C> this option
           only works when the degree of <A>obj</A> is less than 20.
-          See Chapter <Ref Chap = "bipartition"/> for more details about
-          bipartitions.
+          See Chapter <Ref Chap = "Bipartitions and blocks"/> for more details
+          about bipartitions.
         </Item>
         <Mark>pbrs</Mark>
         <Item>

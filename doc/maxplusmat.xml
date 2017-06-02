@@ -151,7 +151,7 @@ gap> ThresholdTropicalMatrix(mat);
       An <B>ntp matrix</B> is a matrix with entries in
       a semiring <M>\mathbb{N}_{t,p} = \{0, 1,
         \ldots, t, t + 1, \ldots, t + p - 1\}</M> for some threshold <M>t</M>
-      and period <M>p</M> under addition and mutliplication modulo the congruence
+      and period <M>p</M> under addition and multiplication modulo the congruence
       <M>t = t + p</M>.
       <P/>
 
