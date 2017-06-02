@@ -93,20 +93,19 @@ InstallGlobalFunction(Bipartition,
 function(classes)
   local n, copy, i, j;
 
-  n := Sum(classes, Length) / 2;
-
-  if n >= 2 ^ 31 then
-    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
-                  "the argument <classes> must be a list of lists whose union",
-                  "has length at most 2 ^ 31 - 1,");
-  fi;
-
   if not IsList(classes)
       or ForAny(classes, x -> not IsHomogeneousList(x)
                               or not IsDuplicateFree(x)) then
     ErrorNoReturn("Semigroups: Bipartition: usage,\n",
                   "the argument <classes> must consist of duplicate-free ",
                   "homogeneous lists,");
+  fi;
+
+  n := Sum(classes, Length) / 2;
+  if n >= 2 ^ 31 then
+    ErrorNoReturn("Semigroups: Bipartition: usage,\n",
+                  "the maximum degree which is allowed for a bipartition ",
+                  "is 2 ^ 31 - 1,");
   fi;
 
   if not ForAll(classes, x -> ForAll(x, i -> IsPosInt(i) or IsNegInt(i))) then
@@ -160,7 +159,7 @@ function(blocks)
 
   if n >= 2 ^ 32 then
     ErrorNoReturn("Semigroups: BipartitionByIntRep: usage,\n",
-                  "the length of the argument <blocks> must not exceed",
+                  "the length of the argument <blocks> must not exceed ",
                   "2 ^ 32 - 1,");
   fi;
 

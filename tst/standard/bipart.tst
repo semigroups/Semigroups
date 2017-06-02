@@ -484,8 +484,8 @@ gap> RightProjection(StarOp(x));
 
 # bipartition: Bipartition 1/3
 gap> Bipartition("test");
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `Length' on 1 arguments
+Error, Semigroups: Bipartition: usage,
+the argument <classes> must consist of duplicate-free homogeneous lists,
 gap> Bipartition(["test"]);
 Error, Semigroups: Bipartition: usage,
 the argument <classes> must consist of duplicate-free homogeneous lists,
@@ -769,11 +769,10 @@ gap> enum := EnumeratorByFunctions(Integers,
 >                                  Length := x -> 2 ^ 33));;
 gap> Bipartition([enum]);
 Error, Semigroups: Bipartition: usage,
-the argument <classes> must be a list of lists whose unionhas length at most 2\
- ^ 31 - 1,
+the maximum degree which is allowed for a bipartition is 2 ^ 31 - 1,
 gap> BipartitionByIntRep(enum);
 Error, Semigroups: BipartitionByIntRep: usage,
-the length of the argument <blocks> must not exceed2 ^ 32 - 1,
+the length of the argument <blocks> must not exceed 2 ^ 32 - 1,
 gap> IdentityBipartition(2 ^ 31);
 Error, Semigroups: IdentityBipartition: usage,
 the argument <n> must not exceed 2 ^ 31 - 1,
