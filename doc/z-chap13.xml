@@ -184,7 +184,7 @@
   <Section>
 
     <Heading>
-      Attributes of transformation semigroups
+      Attributes of transformations and transformation semigroups
     </Heading>
 
     <#Include Label = "ComponentRepsOfTransformationSemigroup">
@@ -195,6 +195,7 @@
     <#Include Label = "GeneratorsSmallest">
     <#Include Label = "IsTransitive">
     <#Include Label = "SmallestElementSemigroup">
+    <#Include Label = "CanonicalTransformation">
  
   </Section>
  

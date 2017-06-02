@@ -80,14 +80,13 @@ end);
 
 InstallMethod(CanonicalBlocks, "for blocks", [IsBlocks],
 function(blocks)
-  local gr, canon, scc, id, rep, i;
+  local gr, canon, scc, rep, i;
 
   gr := AsDigraph(blocks);
   gr := OnDigraphs(gr, DigraphCanonicalLabelling(gr));
   canon := [];
 
   scc := DigraphStronglyConnectedComponents(gr).comps;
-  id  := DigraphStronglyConnectedComponents(gr).id;
   canon := ShallowCopy(scc);
 
   for i in [1 .. Length(scc)] do

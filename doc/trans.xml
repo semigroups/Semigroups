@@ -1,0 +1,45 @@
+#############################################################################
+##
+#W  trans.xml
+#Y  Copyright (C) 2017                                   James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="CanonicalTransformation">
+  <ManSection>
+    <Func Name = "CanonicalTransformation" Arg = "trans [,n]"/>
+    <Returns>
+      A transformation.
+    </Returns>
+    <Description>
+      If <A>trans</A> is a transformation, and <A>n</A> is a non-negative
+      integer such that the restriction of <A>trans</A> to <K>[1 .. n]</K>
+      defines a transformation of <C>[1 .. n]</C>, then
+      <C>CanonicalTransformation</C> returns a canonical representative of the
+      transformation <A>trans</A> restricted to <C>[1 .. n]</C>. 
+      <P/>
+
+      More specifically, let <C>C(n)</C> be a class of transformations of degree
+      <A>n</A> such that <C>AsDigraph</C> returns isomorphic digraphs for every
+      pair of element elements in <C>C(n)</C>. Recall that for a transformation
+      <A>trans</A> and integer <A>n</A> the function <C>AsDigraph</C> returns a
+      digraph with <A>n</A> vertices and an edge with source <C>x</C> and range
+      <C>x^trans</C> for every <C>x</C> in <C>[1 .. n]</C>. See <Ref
+      Oper="AsDigraph" BookName="Digraphs"/>. Then
+      <C>CanonicalTransformation</C> returns a canonical representative of
+      the class <C>C(n)</C> that contains <A>trans</A>.
+    <Example><![CDATA[
+gap> x := Transformation([5, 1, 4, 1, 1]);
+Transformation( [ 5, 1, 4, 1, 1 ] )
+gap> y := Transformation([3, 3, 2, 3, 1]);
+Transformation( [ 3, 3, 2, 3, 1 ] )
+gap> CanonicalTransformation(x);
+Transformation( [ 5, 5, 1, 5, 4 ] )
+gap> CanonicalTransformation(y);
+Transformation( [ 5, 5, 1, 5, 4 ] )]]></Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
