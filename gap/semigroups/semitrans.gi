@@ -161,7 +161,8 @@ function(S)
   return IsConnectedDigraph(DigraphOfActionOnPoints(S));
 end);
 
-InstallMethod(FixedPoints, "for a transformation semigroup with generators",
+InstallMethod(FixedPointsOfTransformationSemigroup,
+"for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
   local n, gens, out, fixed, i, x;
@@ -189,7 +190,8 @@ end);
 InstallMethod(MovedPoints, "for a transformation semigroup with generators",
 [IsTransformationSemigroup and HasGeneratorsOfSemigroup],
 function(S)
-  return Difference([1 .. DegreeOfTransformationSemigroup(S)], FixedPoints(S));
+  return Difference([1 .. DegreeOfTransformationSemigroup(S)],
+                    FixedPointsOfTransformationSemigroup(S));
 end);
 
 InstallMethod(\^, "for a transformation semigroup with generators and perm",

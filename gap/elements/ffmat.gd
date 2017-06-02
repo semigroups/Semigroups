@@ -42,20 +42,6 @@ DeclareOperation("AsMutableList", [IsMatrix]);
 ## Declarations specifically for finite field vectors
 #############################################################################
 
-DeclareCategory("IsVectorOverFiniteField", IsAdditiveElementWithInverse);
-DeclareCategoryCollections("IsVectorOverFiniteField");
-DeclareCategoryCollections("IsVectorOverFiniteFieldCollection");
-
-DeclareConstructor("NewVectorOverFiniteField",
-                   [IsVectorOverFiniteField, IsRing, IsInt, IsList]);
-DeclareConstructor("NewVectorOverFiniteField",
-                   [IsVectorOverFiniteField, IsRing, IsInt, IsPlistVectorRep]);
-DeclareConstructor("NewZeroVectorOverFiniteField",
-                   [IsVectorOverFiniteField, IsRing, IsInt]);
-
-DeclareAttribute("DegreeOfVectorOverFiniteField", IsVectorOverFiniteField);
-DeclareAttribute("BaseDomain", IsVectorOverFiniteField);
-
 DeclareCategory("IsRowBasisOverFiniteField", IsCollection);
 DeclareCategoryCollections("IsRowBasisOverFiniteField");
 DeclareConstructor("NewRowBasisOverFiniteField",
@@ -103,7 +89,6 @@ DeclareAttribute("LeftInverse", IsMatrixOverFiniteField);
 #DeclareAttribute("SemigroupInverse", IsMatrixOverFiniteField);
 
 DeclareAttribute("RowRank", IsMatrixOverFiniteField);
-DeclareAttribute("ColRank", IsMatrixOverFiniteField);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteField);
 
 # FIXME shouldn't this be IsMultiplicativeZero??
@@ -114,8 +99,6 @@ DeclareProperty("IsZero", IsMatrixOverFiniteField);
 #############################################################################
 
 #TODO make these cons/opers/attributes for MatrixOverSemiring
-DeclareAttribute("DegreeOfMatrixOverFiniteFieldCollection",
-                 IsMatrixOverFiniteFieldCollection);
 DeclareAttribute("BaseDomain", IsMatrixOverFiniteFieldCollection);
 
 #############################################################################
@@ -163,19 +146,6 @@ BindGlobal("PlistMatrixOverFiniteFieldType",
            NewType(PlistMatrixOverFiniteFieldFamily,
                    IsMatrixOverFiniteField and
                    IsPlistMatrixOverFiniteFieldRep));
-
-# Vectors and matrices from the CVEC package
-
-DeclareRepresentation("IsCVECMatrixOverFiniteFieldRep",
-                      IsMatrixOverFiniteField and IsComponentObjectRep and
-                      IsAttributeStoringRep, []);
-BindGlobal("CVECMatrixOverFiniteFieldFamily",
-           NewFamily("CVECMatrixOverFiniteFieldFamily",
-                     IsMatrixOverFiniteField, CanEasilyCompareElements));
-BindGlobal("CVECMatrixOverFiniteFieldType",
-           NewType(CVECMatrixOverFiniteFieldFamily,
-                   IsMatrixOverFiniteField and
-                   IsCVECMatrixOverFiniteFieldRep));
 
 #############################################################################
 ## Helper functions

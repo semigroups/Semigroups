@@ -23,19 +23,8 @@ InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
 "for IsPlistMatrixOverFiniteFieldRep",
 [IsPlistMatrixOverFiniteFieldRep], x -> PlistMatrixOverFiniteFieldType);
 
-# TODO it is not currently possible to create any type of matrix except
+# It is not currently possible to create any type of matrix except
 # IsPlistMatrixOverFiniteFieldRep
-
-# The next two methods are commented out because they cannot be used at
-# present.
-
-#InstallMethod(SEMIGROUPS_FilterOfMatrixOverSemiring,
-#"for a cvec matrix over a finite field",
-#[IsCVECMatrixOverFiniteFieldRep], x -> IsCVECMatrixOverFiniteFieldRep);
-
-#InstallMethod(SEMIGROUPS_TypeOfMatrixOverSemiringCons,
-#"for IsCVECMatrixOverFiniteFieldRep",
-#[IsCVECMatrixOverFiniteFieldRep], x -> CVECMatrixOverFiniteFieldType);
 
 InstallMethod(ELM_LIST, "for a plist matrix over finite field and pos int",
 [IsPlistMatrixOverFiniteFieldRep, IsPosInt],

@@ -82,25 +82,25 @@ end);
 
 # returns the index of the component containing <o[i]>
 
-InstallMethod(ComponentOfIndex, "for an ideal orb and positive integer",
-[IsIdealOrb, IsPosInt],
-function(o, i)
-  local nr;
+#InstallMethod(ComponentOfIndex, "for an ideal orb and positive integer",
+#[IsIdealOrb, IsPosInt],
+#function(o, i)
+#  local nr;
+#
+#  nr := 1;
+#  while i > Length(o!.orbits[nr]) do
+#    i := i - Length(o!.orbits[nr]);
+#    nr := nr + 1;
+#  od;
+#  return nr;
+#end);
 
-  nr := 1;
-  while i > Length(o!.orbits[nr]) do
-    i := i - Length(o!.orbits[nr]);
-    nr := nr + 1;
-  od;
-  return nr;
-end);
-
-InstallMethod(ComponentOfIndex,
-"for an inverse ideal orb and positive integer",
-[IsIdealOrb and IsInverseOrb, IsPosInt],
-function(o, i)
-  return 1;
-end);
+#InstallMethod(ComponentOfIndex,
+#"for an inverse ideal orb and positive integer",
+#[IsIdealOrb and IsInverseOrb, IsPosInt],
+#function(o, i)
+#  return 1;
+#end);
 
 InstallMethod(ELM_LIST, "for an ideal orb and positive integer",
 [IsIdealOrb, IsPosInt],

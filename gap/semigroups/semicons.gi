@@ -90,7 +90,7 @@ end);
 
 # Trivial semigroup: other constructors
 
-for IsXSemigroup in ["IsFpSemigroup",
+for _IsXSemigroup in ["IsFpSemigroup",
                      "IsFpMonoid",
                      "IsNTPMatrixSemigroup",
                      "IsMaxPlusMatrixSemigroup",
@@ -102,8 +102,8 @@ for IsXSemigroup in ["IsFpSemigroup",
                      "IsReesMatrixSemigroup",
                      "IsReesZeroMatrixSemigroup"] do
   InstallMethod(TrivialSemigroupCons,
-  Concatenation("for ", IsXSemigroup, " and an integer"),
-  [EvalString(IsXSemigroup), IsInt],
+  Concatenation("for ", _IsXSemigroup, " and an integer"),
+  [EvalString(_IsXSemigroup), IsInt],
   function(filter, deg)
     local n;
     n := Maximum(deg, 1);
@@ -111,6 +111,8 @@ for IsXSemigroup in ["IsFpSemigroup",
                        TrivialSemigroupCons(IsTransformationSemigroup, deg));
   end);
 od;
+
+Unbind(_IsXSemigroup);
 
 # Monogenic semigroup: main method
 
