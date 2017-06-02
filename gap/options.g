@@ -13,7 +13,7 @@ SEMIGROUPS.DefaultOptionsRec :=
       hashlen    := rec(S := 251, M := 6257, L := 25013),
       regular    := false,
       acting     := true,
-      report     := true,
+      report     := false,
       batch_size := 8192,
       nr_threads := 4,
       cong_by_ker_trace_threshold := 10 ^ 5);
