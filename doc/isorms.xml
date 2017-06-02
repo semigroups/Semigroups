@@ -54,6 +54,70 @@
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="RMSIsoByTriple">
+  <ManSection>
+    <Oper Name = "RMSIsoByTriple" Arg = "R1, R2, triple"/>
+    <Oper Name = "RZMSIsoByTriple" Arg = "R1, R2, triple"/>
+    <Returns>An isomorphism.</Returns>
+    <Description>
+      If <A>R1</A> and <A>R2</A> are isomorphic regular Rees 0-matrix semigroups
+      whose underlying semigroups are groups then <C>RZMSIsoByTriple</C> returns
+      the isomorphism between <A>R1</A> and <A>R2</A> defined by <A>triple</A>,
+      which should be a list consisting of the following:
+
+      <List>
+        <Item>
+          <C><A>triple</A>[1]</C> should be a permutation describing an
+          isomorphism from the graph of <A>R1</A> to the graph of <A>R2</A>,
+          i.e. it should satisfy
+          <C>OnDigraphs(RZMSDigraph(<A>R1</A>), <A>triple</A>[1])
+             = RZMSDigraph(<A>R2</A>)</C>.
+        </Item>
+        <Item>
+          <C><A>triple</A>[2]</C> should be an isomorphism from the underlying
+          group of <A>R1</A> to the underlying group of <A>R2</A> (see
+          <Ref Attr="UnderlyingSemigroup"
+               Label="for a Rees 0-matrix semigroup"
+               BookName="ref"/>).
+        </Item>
+        <Item>
+          <C><A>triple</A>[3]</C> should be a list of elements from the
+          underlying group of <A>R2</A>.  If the
+          <Ref Attr="Matrix" BookName="ref"/> of <A>R1</A> has <M>m</M> columns
+          and <M>n</M> rows, then the list should have length <M>m + n</M>,
+          where the first <M>m</M> entries should correspond to the columns of
+          <A>R1</A>'s matrix, and the last <M>n</M> entries should correspond to
+          the rows.  These column and row entries should correspond to the
+          <M>u_i</M> and <M>v_\lambda</M> elements in Theorem 3.4.1 of
+          <Cite>Howie1995aa</Cite>.
+        </Item>
+      </List>
+
+      If <A>triple</A> describes a valid isomorphism from <A>R1</A> to <A>R2</A>
+      then this will return an object in the category
+      <Ref Filt="IsRZMSIsoByTriple"/>; otherwise an error will be returned. <P/>
+
+      If <A>R1</A> and <A>R2</A> are instead Rees matrix semigroups (without
+      zero) then <C>RMSIsoByTriple</C> should be used instead.  This operation
+      is used in the same way, but it should be noted that since an RMS's graph
+      is a complete bipartite graph, <C><A>triple</A>[1]</C> can be any
+      permutation on <C>[1 .. m + n]</C>, so long as no point in <C>[1 .. m]</C>
+      is mapped to a point in <C>[m + 1 .. m + n]</C>. <P/>
+
+      <Example><![CDATA[
+gap> g := SymmetricGroup(3);;
+gap> mat := [[0, 0, (1, 3)], [(1, 2, 3), (), (2, 3)], [0, 0, ()]];;
+gap> R := ReesZeroMatrixSemigroup(g, mat);;
+gap> id := IdentityMapping(g);;
+gap> g_elms_list := [(), (), (), (), (), ()];;
+gap> RZMSIsoByTriple(R, R, [(), id, g_elms_list]);
+((), IdentityMapping( SymmetricGroup( [ 1 .. 3 ] ) ), 
+[ (), (), (), (), (), () ])
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="ELM_LIST">
   <ManSection>
     <Oper Name = "ELM_LIST" Label = "for IsRMSIsoByTriple"

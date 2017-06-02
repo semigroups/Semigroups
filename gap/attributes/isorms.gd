@@ -17,8 +17,19 @@ DeclareCategory("IsRZMSIsoByTriple", IsGeneralMapping and IsSPGeneralMapping
                                      IsInjective and IsSurjective and
                                      IsAttributeStoringRep);
 
-DeclareGlobalFunction("RMSIsoByTriple");
-DeclareGlobalFunction("RZMSIsoByTriple");
+DeclareOperation("RMSIsoByTriple", [IsReesMatrixSemigroup,
+                                    IsReesMatrixSemigroup,
+                                    IsDenseList]);
+DeclareOperation("RZMSIsoByTriple", [IsReesZeroMatrixSemigroup,
+                                     IsReesZeroMatrixSemigroup,
+                                     IsDenseList]);
+
+DeclareOperation("RMSIsoByTripleNC", [IsReesMatrixSemigroup,
+                                      IsReesMatrixSemigroup,
+                                      IsDenseList]);
+DeclareOperation("RZMSIsoByTripleNC", [IsReesZeroMatrixSemigroup,
+                                       IsReesZeroMatrixSemigroup,
+                                       IsDenseList]);
 
 DeclareOperation("ELM_LIST", [IsRMSIsoByTriple, IsPosInt]);
 DeclareOperation("ELM_LIST", [IsRZMSIsoByTriple, IsPosInt]);

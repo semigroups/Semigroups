@@ -396,7 +396,7 @@ function(R)
     od;
 
     if found then
-      AddSet(A, RZMSIsoByTriple(R, R, [x, y, tmp]));
+      AddSet(A, RZMSIsoByTripleNC(R, R, [x, y, tmp]));
     fi;
     return found;
   end;
@@ -443,7 +443,7 @@ function(R)
 
   # put B together
   for map in EnumeratorOfCartesianProduct(cart) do
-    x := RZMSIsoByTriple(R, R, [One(aut_graph), One(aut_group), Sum(map)]);
+    x := RZMSIsoByTripleNC(R, R, [One(aut_graph), One(aut_group), Sum(map)]);
     AddSet(A, x);
   od;
 
@@ -481,8 +481,8 @@ function(R)
     if IsEmpty(gens) then
       gens := [IdentityMapping(G)];
     fi;
-    A := Group(List(gens, x -> RMSIsoByTriple(R, R,
-                                              [(), x, [One(G), One(G)]])));
+    A := Group(List(gens, x -> RMSIsoByTripleNC(R, R,
+                                                [(), x, [One(G), One(G)]])));
     SetIsAutomorphismGroupOfRMSOrRZMS(A, true);
     SetIsFinite(A, true);
     return A;
@@ -556,7 +556,7 @@ function(R)
     for g in T do
       map := RMSInducedFunction(R, R, x, y, g);
       if map <> fail then
-        AddSet(A, RMSIsoByTriple(R, R, [x, y, map]));
+        AddSet(A, RMSIsoByTripleNC(R, R, [x, y, map]));
         return true;
       fi;
     od;
@@ -584,7 +584,7 @@ function(R)
                               One(aut_group),
                               g);
     if map <> fail then
-      AddSet(A, RMSIsoByTriple(R, R, [One(aut_graph), One(aut_group), map]));
+      AddSet(A, RMSIsoByTripleNC(R, R, [One(aut_graph), One(aut_group), map]));
     fi;
   od;
 
@@ -645,11 +645,11 @@ InstallMethod(IdentityMapping, "for a Rees matrix semigroup",
 function(R)
   local G;
   G := UnderlyingSemigroup(R);
-  return RMSIsoByTriple(R, R,
-                        [(),
-                         IdentityMapping(G),
-                         List([1 .. Length(Columns(R)) + Length(Rows(R))],
-                              x -> One(G))]);
+  return RMSIsoByTripleNC(R, R,
+                          [(),
+                           IdentityMapping(G),
+                           List([1 .. Length(Columns(R)) + Length(Rows(R))],
+                                x -> One(G))]);
 end);
 
 InstallMethod(IdentityMapping, "for a Rees 0-matrix semigroup",
@@ -658,7 +658,7 @@ function(R)
   local G, tup;
   G := UnderlyingSemigroup(R);
   tup := List([1 .. Length(Columns(R)) + Length(Rows(R))], x -> One(G));
-  return RZMSIsoByTriple(R, R, [(), IdentityMapping(G), tup]);
+  return RZMSIsoByTripleNC(R, R, [(), IdentityMapping(G), tup]);
 end);
 
 #############################################################################
@@ -680,9 +680,9 @@ function(R1, R2)
 
     if R1 = R2 then
       g := UnderlyingSemigroup(R1);
-      return RMSIsoByTriple(R1, R2, [(),
-                                     IdentityMapping(g),
-                                     List([1 .. m + n], x -> One(g))]);
+      return RMSIsoByTripleNC(R1, R2, [(),
+                                       IdentityMapping(g),
+                                       List([1 .. m + n], x -> One(g))]);
     else
       g1 := UnderlyingSemigroup(R1);
       g2 := UnderlyingSemigroup(R2);
@@ -703,7 +703,7 @@ function(R1, R2)
             for tup in Elements(g2) do
               map := RMSInducedFunction(R1, R2, l, g, tup);
               if map <> fail then
-                return RMSIsoByTriple(R1, R2, [l, g, map]);
+                return RMSIsoByTripleNC(R1, R2, [l, g, map]);
               fi;
             od;
           od;
@@ -741,9 +741,9 @@ function(R1, R2)
   n := Length(mat);
 
   if R1 = R2 then
-    return RZMSIsoByTriple(R1, R2, [(),
-                                    IdentityMapping(G1),
-                                    List([1 .. m + n], x -> One(G2))]);
+    return RZMSIsoByTripleNC(R1, R2, [(),
+                                      IdentityMapping(G1),
+                                      List([1 .. m + n], x -> One(G2))]);
   fi;
 
   # every isomorphism of the groups
@@ -778,7 +778,7 @@ function(R1, R2)
       for tup in tuples do #TODO it should be possible to cut this down
         map := RZMStoRZMSInducedFunction(R1, R2, l, g, tup);
         if map <> fail then
-          return RZMSIsoByTriple(R1, R2, [l, g, map]);
+          return RZMSIsoByTripleNC(R1, R2, [l, g, map]);
         fi;
       od;
     od;
@@ -790,23 +790,151 @@ end);
 # 5. RMS/RZMSIsoByTriple
 #############################################################################
 
-InstallGlobalFunction(RMSIsoByTriple,
+InstallMethod(RMSIsoByTriple,
+"for two Rees matrix semigroups and a dense list",
+[IsReesMatrixSemigroup, IsReesMatrixSemigroup, IsDenseList],
+function(R1, R2, triple)
+  local graph_iso, group_iso, g2_elms_list, nrrows, nrcols, G1, G2;
+  graph_iso := triple[1];
+  group_iso := triple[2];
+  g2_elms_list := triple[3];
+
+  # Check number of rows and cols
+  nrcols := Length(Rows(R1));  # rows of R1 are cols of the matrix
+  nrrows := Length(Columns(R1));
+  if nrcols <> Length(Rows(R2)) or nrrows <> Length(Columns(R2)) then
+    ErrorNoReturn("Semigroups: RMSIsoByTriple:\n",
+                  "<R1> and <R2> are not isomorphic,");
+  fi;
+
+  # Check graph isomorphism
+  if not IsPerm(graph_iso) then
+    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
+                  "<triple>[1] should be a permutation,");
+  elif LargestMovedPoint(graph_iso) > nrrows + nrcols then
+    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
+                  "<triple>[1] should be a permutation on [1 .. ",
+                  nrrows + nrcols, "],");
+  elif ForAny([1 .. nrcols], x -> x ^ graph_iso > nrcols) then
+    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
+                  "<triple>[1] should not map columns to rows,");
+  fi;
+
+  # Check group isomorphism
+  G1 := UnderlyingSemigroup(R1);
+  G2 := UnderlyingSemigroup(R2);
+  if not (IsGroupHomomorphism(group_iso) and
+          IsBijective(group_iso) and
+          Source(group_iso) = G1 and
+          Range(group_iso) = G2) then
+    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
+                  "<triple>[2] should be an isomorphism from\n",
+                  "the underlying group of <R1> to that of <R2>,");
+  fi;
+
+  # Check map from rows and cols to H
+  if Length(g2_elms_list) <> nrrows + nrcols then
+    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
+                  "<triple>[3] should have length equal to\n",
+                  "the number of rows and columns of <R1>,");
+  elif not ForAll(g2_elms_list, x -> x in G2) then
+    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
+                  "<triple>[3] should only contain elements from ",
+                  "the underlying group of <R2>,");
+  fi;
+  if SEMIGROUPS.RMSInducedFunction(R1, R2, graph_iso, group_iso,
+                                   g2_elms_list[1]) <> g2_elms_list then
+    ErrorNoReturn("Semigroups: RMSIsoByTriple: usage,\n",
+                  "<triple>[3] does not define an isomorphism,");
+  fi;
+
+  return RMSIsoByTripleNC(R1, R2, triple);
+end);
+
+InstallMethod(RZMSIsoByTriple,
+"for two Rees 0-matrix semigroups and a dense list",
+[IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup, IsDenseList],
+function(R1, R2, triple)
+  local graph_iso, group_iso, g2_elms_list, nrrows, nrcols, graph1, graph2, G1,
+        G2, reps, map, rep;
+  graph_iso := triple[1];
+  group_iso := triple[2];
+  g2_elms_list := triple[3];
+
+  # Check number of rows and cols
+  nrrows := Length(Rows(R1));
+  nrcols := Length(Columns(R1));
+  if nrrows <> Length(Rows(R2)) or nrcols <> Length(Columns(R2)) then
+    ErrorNoReturn("Semigroups: RZMSIsoByTriple:\n",
+                  "<R1> and <R2> are not isomorphic,");
+  fi;
+
+  # Check graph isomorphism
+  graph1 := RZMSDigraph(R1);
+  graph2 := RZMSDigraph(R2);
+  if not IsPerm(graph_iso) then
+    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
+                  "<triple>[1] should be a permutation,");
+  elif not OnDigraphs(graph1, graph_iso) = graph2 then
+    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
+                  "<triple>[1] should act as an isomorphism from\n",
+                  "the graph of <R1> to the graph of <R2>,");
+  fi;
+
+  # Check group isomorphism
+  G1 := UnderlyingSemigroup(R1);
+  G2 := UnderlyingSemigroup(R2);
+  if not (IsGroupHomomorphism(group_iso) and
+          IsBijective(group_iso) and
+          Source(group_iso) = G1 and
+          Range(group_iso) = G2) then
+    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
+                  "<triple>[2] should be an isomorphism from\n",
+                  "the underlying group of <R1> to that of <R2>,");
+  fi;
+
+  # Check map from rows and cols to H
+  if Length(g2_elms_list) <> nrrows + nrcols then
+    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
+                  "<triple>[3] should have length equal to\n",
+                  "the number of rows and columns of <R1>,");
+  elif not ForAll(g2_elms_list, x -> x in G2) then
+    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
+                  "<triple>[3] should only contain elements from ",
+                  "the underlying group of <R2>,");
+  fi;
+  reps := List(DigraphConnectedComponents(graph1).comps, Representative);
+  map := EmptyPlist(Length(reps));
+  for rep in reps do
+    map[rep] := g2_elms_list[rep];
+  od;
+  if SEMIGROUPS.RZMStoRZMSInducedFunction(R1, R2, graph_iso, group_iso, map)
+      <> g2_elms_list then
+    ErrorNoReturn("Semigroups: RZMSIsoByTriple: usage,\n",
+                  "<triple>[3] does not define an isomorphism,");
+  fi;
+
+  return RZMSIsoByTripleNC(R1, R2, triple);
+end);
+
+InstallMethod(RMSIsoByTripleNC,
+"for two Rees matrix semigroups and a dense list",
+[IsReesMatrixSemigroup, IsReesMatrixSemigroup, IsDenseList],
 function(R1, R2, triple)
   local fam, out;
-
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(R1)),
                                ElementsFamily(FamilyObj(R2)));
   out := Objectify(NewType(fam, IsRMSIsoByTriple), rec(triple := triple));
   SetSource(out, R1);
   SetRange(out, R2);
-
   return out;
 end);
 
-InstallGlobalFunction(RZMSIsoByTriple,
+InstallMethod(RZMSIsoByTripleNC,
+"for two Rees 0-matrix semigroups and a dense list",
+[IsReesZeroMatrixSemigroup, IsReesZeroMatrixSemigroup, IsDenseList],
 function(R1, R2, triple)
   local fam, out;
-
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(R1)),
                                ElementsFamily(FamilyObj(R2)));
   out := Objectify(NewType(fam, IsRZMSIsoByTriple), rec(triple := triple));
@@ -886,13 +1014,13 @@ InstallMethod(CompositionMapping2, "for objects in `IsRMSIsoByTriple'",
 function(map2, map1)
   local n;
   n := Length(Rows(Source(map2))) + Length(Columns(Source(map2)));
-  return RMSIsoByTriple(Source(map1),
-                        Range(map2),
-                        [map1[1] * map2[1],
-                         map1[2] * map2[2],
-                         List([1 .. n],
-                              i -> map2[3][i ^ map1[1]] * map1[3][i] ^
-                                                          map2[2])]);
+  return RMSIsoByTripleNC(Source(map1),
+                          Range(map2),
+                          [map1[1] * map2[1],
+                           map1[2] * map2[2],
+                           List([1 .. n],
+                                i -> map2[3][i ^ map1[1]] * map1[3][i] ^
+                                                            map2[2])]);
 end);
 
 InstallMethod(CompositionMapping2, "for objects in `IsRZMSIsoByTriple'",
@@ -900,13 +1028,13 @@ IsIdenticalObj, [IsRZMSIsoByTriple, IsRZMSIsoByTriple],
 function(map2, map1)
   local n;
   n := Length(Rows(Source(map1))) + Length(Columns(Source(map1)));
-  return RZMSIsoByTriple(Source(map1),
-                         Range(map2),
-                         [map1[1] * map2[1],
-                          map1[2] * map2[2],
-                          List([1 .. n],
-                               i -> map2[3][i ^ map1[1]] * map1[3][i] ^
-                                                           map2[2])]);
+  return RZMSIsoByTripleNC(Source(map1),
+                           Range(map2),
+                           [map1[1] * map2[1],
+                            map1[2] * map2[2],
+                            List([1 .. n],
+                                 i -> map2[3][i ^ map1[1]] * map1[3][i] ^
+                                                             map2[2])]);
 end);
 
 InstallMethod(ImagesElm, "for an RMS element under a mapping by a triple",
@@ -956,13 +1084,13 @@ function(map)
   local n, inv;
   n := Length(Rows(Source(map))) + Length(Columns(Source(map)));
   inv := InverseGeneralMapping(map[2]);
-  return RMSIsoByTriple(Range(map),
-                        Source(map),
-                        [map[1] ^ -1,
-                         inv,
-                         List([1 .. n],
-                              i -> ((map[3][i ^ (map[1] ^ -1)] ^ inv) ^ -1))]);
-
+  return RMSIsoByTripleNC(Range(map),
+                          Source(map),
+                          [map[1] ^ -1,
+                           inv,
+                           List([1 .. n],
+                                i -> ((map[3][i ^ (map[1] ^ -1)] ^ inv)
+                                      ^ -1))]);
 end);
 
 InstallMethod(InverseGeneralMapping, "for objects in `IsRMSIsoByTriple'",
@@ -974,12 +1102,12 @@ function(map)
   local n, inv;
   n := Length(Rows(Source(map))) + Length(Columns(Source(map)));
   inv := InverseGeneralMapping(map[2]);
-  return RZMSIsoByTriple(Range(map),
-                         Source(map),
-                         [map[1] ^ -1,
-                          inv,
-                          List([1 .. n],
-                               i -> (map[3][i ^ (map[1] ^ -1)] ^ inv) ^ -1)]);
+  return RZMSIsoByTripleNC(Range(map),
+                           Source(map),
+                           [map[1] ^ -1,
+                            inv,
+                            List([1 .. n],
+                                 i -> (map[3][i ^ (map[1] ^ -1)] ^ inv) ^ -1)]);
 end);
 
 InstallMethod(IsOne, "for objects in `IsRMSIsoByTriple'",
