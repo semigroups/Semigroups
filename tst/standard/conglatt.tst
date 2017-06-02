@@ -338,6 +338,13 @@ gap> JoinSemilatticeOfCongruences(poset, JoinSemigroupCongruences);
 gap> MinimalCongruences(poset);
 [  ]
 
+# Test Issue 309
+gap> S := Semigroup(Transformation([2, 1, 4, 3, 5, 2]),
+>                   Transformation([3, 4, 1, 2, 5, 3]),
+>                   Transformation([5, 5, 5, 5, 5, 5]));;
+gap> LatticeOfCongruences(S);
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4 ] ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(coll);

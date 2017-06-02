@@ -57,7 +57,11 @@ function(poset, x)
   return x >= 1 and x <= Length(poset);
 end);
 
-SEMIGROUPS.PrincipalXCongruencePosetNC := function(S, restriction, cong_func)
+SEMIGROUPS.PrincipalXCongruencePosetNC :=
+  function(S,
+           restriction,
+           SemigroupXCongruence,
+           GeneratingPairsOfXSemigroupCongruence)
   local report, pairs, total, congs, nrcongs, children, parents, last_collected,
         nr, pair, badcong, newchildren, newparents, newcong, i, pair1, c, p, po,
         poset;
@@ -82,9 +86,9 @@ SEMIGROUPS.PrincipalXCongruencePosetNC := function(S, restriction, cong_func)
     badcong := false;
     newchildren := []; # Children of newcong
     newparents := [];  # Parents of newcong
-    newcong := cong_func(S, pair);
+    newcong := SemigroupXCongruence(S, pair);
     for i in [1 .. Length(congs)] do
-      pair1 := congs[i]!.genpairs[1];
+      pair1 := GeneratingPairsOfXSemigroupCongruence(congs[i])[1];
       if CongruenceTestMembershipNC(congs[i], pair[1], pair[2]) then
         if CongruenceTestMembershipNC(newcong, pair1[1], pair1[2]) then
           # This is not a new cong - drop it!
@@ -375,6 +379,7 @@ InstallMethod(PosetOfPrincipalLeftCongruences,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
+  local genpairs;
   if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
     ErrorNoReturn("Semigroups: PosetOfPrincipalLeftCongruences: usage,\n",
                   "first argument <S> must be an enumerable finite semigroup,");
@@ -382,14 +387,18 @@ function(S, restriction)
     ErrorNoReturn("Semigroups: PosetOfPrincipalLeftCongruences: usage,\n",
                   "<restriction> must be a subset of <S>,");
   fi;
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S, restriction,
-                                                LeftSemigroupCongruence);
+  genpairs := GeneratingPairsOfLeftSemigroupCongruence;
+  return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
+                                                restriction,
+                                                LeftSemigroupCongruence,
+                                                genpairs);
 end);
 
 InstallMethod(PosetOfPrincipalRightCongruences,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
+  local genpairs;
   if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
     ErrorNoReturn("Semigroups: PosetOfPrincipalRightCongruences: usage,\n",
                   "first argument <S> must be an enumerable finite semigroup,");
@@ -397,14 +406,18 @@ function(S, restriction)
     ErrorNoReturn("Semigroups: PosetOfPrincipalRightCongruences: usage,\n",
                   "<restriction> must be a subset of <S>,");
   fi;
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S, restriction,
-                                                RightSemigroupCongruence);
+  genpairs := GeneratingPairsOfRightSemigroupCongruence;
+  return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
+                                                restriction,
+                                                RightSemigroupCongruence,
+                                                genpairs);
 end);
 
 InstallMethod(PosetOfPrincipalCongruences,
 "for a semigroup and a multiplicative element collection",
 [IsSemigroup, IsMultiplicativeElementCollection],
 function(S, restriction)
+  local genpairs;
   if not (IsFinite(S) and IsEnumerableSemigroupRep(S)) then
     ErrorNoReturn("Semigroups: PosetOfPrincipalCongruences: usage,\n",
                   "first argument <S> must be an enumerable finite semigroup,");
@@ -412,8 +425,11 @@ function(S, restriction)
     ErrorNoReturn("Semigroups: PosetOfPrincipalCongruences: usage,\n",
                   "<restriction> must be a subset of <S>,");
   fi;
-  return SEMIGROUPS.PrincipalXCongruencePosetNC(S, restriction,
-                                                SemigroupCongruence);
+  genpairs := GeneratingPairsOfSemigroupCongruence;
+  return SEMIGROUPS.PrincipalXCongruencePosetNC(S,
+                                                restriction,
+                                                SemigroupCongruence,
+                                                genpairs);
 end);
 
 InstallMethod(MinimalLeftCongruencesOfSemigroup,
