@@ -272,12 +272,10 @@ function(partition)
     x := [];
     if partition[unique[1]] <> 1 then
       if IsOddInt(partition[unique[1]]) then
-        # gaplint: ignore 3 FIXME
         Append(x, Permuted(blocks[unique[1]],
                            PermList(Concatenation([2 ..
                            Length(blocks[unique[1]])], [1]))));
       else
-        # gaplint: ignore 3 FIXME
         Append(x, Permuted(blocks[unique[1]],
                            PermList(Concatenation([1],
                            [3 .. Length(blocks[unique[1]])], [2]))));
@@ -1069,8 +1067,6 @@ function(n)
   S := FullTransformationSemigroup(n);
   return SemigroupIdeal(S, x);
 end);
-
-# TODO document this
 
 InstallMethod(SingularOrderEndomorphisms, "for a positive integer",
 [IsPosInt],

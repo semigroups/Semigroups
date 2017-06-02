@@ -103,7 +103,7 @@ function(x, S)
   # look for lambda!
   lambda := LambdaFunc(S)(x);
   lambdao := LambdaOrb(S);
-  # FIXME!! lookahead here too
+  # TODO(later) lookahead here too
   if not IsClosed(lambdao) then
     Enumerate(lambdao, infinity);
   fi;

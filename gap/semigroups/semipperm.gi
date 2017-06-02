@@ -342,8 +342,6 @@ function(S)
   T := Semigroup(List(GeneratorsOfSemigroup(S), AsPartialPerm));
   UseIsomorphismRelation(S, T);
   n := DegreeOfBipartitionSemigroup(S);
-
-  # gaplint: ignore 2
   return MagmaIsomorphismByFunctionsNC(S,
                                        T,
                                        AsPartialPerm,

@@ -1641,13 +1641,11 @@ function(H)
   if IsMatrixOverFiniteFieldSemigroup(Parent(H)) then
     iso := IsomorphismPermGroup(SchutzenbergerGroup(H));
     inv := InverseGeneralMapping(iso);
-    # gaplint: ignore 3
     return MappingByFunction(H, Range(iso),
      x -> LambdaPerm(Parent(H))(Representative(H), x) ^ iso,
      x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H),
                                       x ^ inv));
   else
-    # gaplint: ignore 3
     return MappingByFunction(H, SchutzenbergerGroup(H),
      x -> LambdaPerm(Parent(H))(Representative(H), x),
      x -> StabilizerAction(Parent(H))(MultiplicativeNeutralElement(H), x));
@@ -2034,7 +2032,6 @@ end);
 InstallMethod(EnumeratorOfRClasses, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  # gaplint: ignore 15
   return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)),
   rec(ElementNumber := function(enum, pos)
         return GreensRClasses(S)[pos];
@@ -2098,7 +2095,6 @@ function(S)
     iter := IteratorList(GreensDClasses(S));
     return iter;
   fi;
-  # gaplint: ignore 20
   return IteratorByIterator(
     IteratorOfRClassData(S), # baseiter
     function(iter, x)        # convert

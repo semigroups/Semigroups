@@ -78,7 +78,7 @@
         </Item>
       </List>
 
-      <Log><![CDATA[FIXME
+      <Log><![CDATA[
 gap> S := BrauerMonoid(8);
 <regular bipartition *-monoid of degree 8 with 3 generators>
 gap> StructureDescription(Normalizer(S));

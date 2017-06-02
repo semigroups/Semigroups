@@ -334,7 +334,6 @@ function(R)
   stab_aut_group := SEMIGROUPS.StabOfRMSEntries(aut_group, R);
 
   # homomorphism from Aut(G) to a perm rep of Aut(G) / Inn(G)
-  # gaplint: ignore 2
   hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
            InnerAutomorphismsAutomorphismGroup(aut_group));
   hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
@@ -520,7 +519,6 @@ function(R)
   stab_aut_group := SEMIGROUPS.StabOfRMSEntries(aut_group, R);
 
   # homomorphism from Aut(G) to a perm rep of Aut(G) / Inn(G)
-  # gaplint: ignore 2
   hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
            InnerAutomorphismsAutomorphismGroup(aut_group));
   hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
@@ -767,7 +765,6 @@ function(R1, R2)
   graphiso := List(AutomorphismGroup(graph1, [[1 .. m], [m + 1 .. n + m]]),
                    x -> x * g);
 
-  # gaplint: ignore 2
   tuples := EnumeratorOfCartesianProduct(
               List([1 .. Length(DigraphConnectedComponents(graph1).comps)],
                    x -> G2));

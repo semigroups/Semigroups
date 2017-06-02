@@ -439,7 +439,6 @@ function(d)
     return iter;
   fi;
 
-  # gaplint: ignore 3
   baseiter := IteratorOfCartesianProduct(OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)],
                 SchutzenbergerGroup(d),
                 OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)]);
@@ -575,7 +574,6 @@ function(r)
     iter := IteratorList(AsSSortedList(r));
     return iter;
   fi;
-  # gaplint: ignore 2
   baseiter := IteratorOfCartesianProduct(Enumerator(SchutzenbergerGroup(r)),
                 OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)]);
 
@@ -665,7 +663,6 @@ InstallMethod(Iterator, "for a full transformation semigroup",
 7, #to beat the method for acting semigroups TODO check this is necessary!!
 function(S)
   local iter;
-  # gaplint: ignore 15
   iter := IteratorByFunctions(rec(
     tups := IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(S)],
                              DegreeOfTransformationSemigroup(S)),

@@ -620,7 +620,6 @@ InstallMethod(EnumeratorOfRClasses,
 function(S)
 
   Enumerate(LambdaOrb(S));
-  # gaplint: ignore 36
   return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)), rec(
 
     parent := S,

@@ -673,7 +673,7 @@ function(coll, x)
     return Bipartition(out);
 
   elif IsBipartition(x) and IsPartialPermBipartition(x) then
-    #FIXME shouldn't there be a check here like above?
+    #TODO(later) shouldn't there be a check here like above?
     return AsBipartition(SupremumIdempotentsNC(
                          List(coll, AsPartialPerm), PartialPerm([])),
                          DegreeOfBipartition(x));

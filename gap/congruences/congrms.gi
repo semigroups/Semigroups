@@ -185,8 +185,6 @@ function(cong)
         Size(cong!.rowBlocks), ")>");
 end);
 
-#FIXME this should use find minimal congruences and then use JoinOfCongruences
-
 InstallMethod(CongruencesOfSemigroup,
 "for finite simple Rees matrix semigroup",
 [IsReesMatrixSemigroup and IsSimpleSemigroup and IsFinite],

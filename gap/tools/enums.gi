@@ -336,7 +336,6 @@ function(d)
   rho_scc := OrbSCC(RhoOrb(d))[RhoOrbSCCIndex(d)];
   lambda_scc := OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)];
 
-  # gaplint: ignore 5
   return EnumeratorByEnumerator(d,
            EnumeratorOfCartesianProduct(rho_scc,
                                         SchutzenbergerGroup(d),
@@ -398,7 +397,6 @@ function(d)
   end;
   #
   lambda_scc := OrbSCC(LambdaOrb(d))[LambdaOrbSCCIndex(d)];
-  # gaplint: ignore 5
   return EnumeratorByEnumerator(d,
      EnumeratorOfCartesianProduct(lambda_scc,
                                   SchutzenbergerGroup(d),
@@ -415,7 +413,6 @@ function(h)
   if HasAsSSortedList(h) then
     return AsSSortedList(h);
   fi;
-  # gaplint: ignore 2
   return EnumeratorByFunctions(h,
     rec(schutz := Enumerator(SchutzenbergerGroup(h)),
 
@@ -505,7 +502,6 @@ function(l)
   end;
   #
   scc := OrbSCC(RhoOrb(l))[RhoOrbSCCIndex(l)];
-  # gaplint: ignore 4
   return EnumeratorByEnumerator(l,
     EnumeratorOfCartesianProduct(scc,
                                  SchutzenbergerGroup(l)),
@@ -565,7 +561,6 @@ function(l)
   end;
   #
   scc := OrbSCC(LambdaOrb(l))[LambdaOrbSCCIndex(l)];
-  # gaplint: ignore 4
   return EnumeratorByEnumerator(l,
            EnumeratorOfCartesianProduct(scc,
                                         SchutzenbergerGroup(l)),
@@ -624,7 +619,6 @@ function(r)
   end;
   #
   scc := OrbSCC(LambdaOrb(r))[LambdaOrbSCCIndex(r)];
-  # gaplint: ignore 4
   return EnumeratorByEnumerator(r,
            EnumeratorOfCartesianProduct(SchutzenbergerGroup(r),
                                         scc),

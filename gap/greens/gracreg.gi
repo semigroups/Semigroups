@@ -474,7 +474,6 @@ end);
 InstallMethod(EnumeratorOfRClasses, "for a regular acting semigroup",
 [IsActingSemigroup and IsRegularSemigroup],
 function(S)
-  # gaplint: ignore 35
   return EnumeratorByFunctions(CollectionsFamily(FamilyObj(S)), rec(
 
     parent := S,

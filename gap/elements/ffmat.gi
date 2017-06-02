@@ -274,14 +274,13 @@ function(filter, basedomain, deg)
   m := NewMatrixOverFiniteField(filter,
                                 basedomain,
                                 IdentityMat(deg, basedomain));
-  # gaplint: ignore 2
   SetRowSpaceBasis(m, NewRowBasisOverFiniteField(
     IsPlistRowBasisOverFiniteFieldRep, basedomain, []));
   SetRowRank(m, 0);
   SetRowSpaceTransformation(m, m);
   SetRowSpaceTransformationInv(m, m);
-  # FIXME:
-  #  SetSemigroupInverse(m, m);
+  # TODO(later) uncomment the next line
+  # SetSemigroupInverse(m, m);
   return m;
 end);
 
@@ -478,8 +477,8 @@ function(m)
   SetRowRank(m, Rank(bas));
   SetRowSpaceTransformation(m, tr);
   SetRowSpaceTransformationInv(m, tri);
-  # FIXME
-  #  SetSemigroupInverse(m, sinv);
+  # TODO(later) uncomment the next line
+  # SetSemigroupInverse(m, sinv);
   SetInverse(m, inv);
 end);
 
@@ -589,8 +588,8 @@ function(x, y)
     return x;
   fi;
 
-  # FIXME the first arg of the following should be
-  # IsPlistMatrixOverFiniteFieldRep
+  # TODO(later) the first arg of the following should be
+  # IsPlistMatrixOverFiniteFieldRep, but that does not currently work
   return AsMatrix(IsMatrixOverFiniteField, x, x!.mat * y!.mat);
 end);
 

@@ -26,11 +26,9 @@ function(S, pairs)
 
   # If s is a RMS/RZMS, then just create the linked triple congruence
   if IsReesMatrixSemigroup(S) then
-    # gaplint: ignore 2
     cong := AsRMSCongruenceByLinkedTriple(
             SemigroupCongruenceByGeneratingPairs(S, pairs));
   elif IsReesZeroMatrixSemigroup(S) then
-    # gaplint: ignore 2
     cong := AsRZMSCongruenceByLinkedTriple(
             SemigroupCongruenceByGeneratingPairs(S, pairs));
   else
