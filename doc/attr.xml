@@ -8,6 +8,57 @@
 #############################################################################
 ##
 
+<#GAPDoc Label="EndomorphismMonoid">
+<ManSection>
+  <Attr Name="EndomorphismMonoid" Arg="digraph" Label="for a digraph"/>
+  <Oper Name="EndomorphismMonoid" Arg="digraph, colors" 
+    Label="for a digraph and vertex coloring"/>
+  <Returns> A monoid.</Returns>
+  <Description>
+    An endomorphism of <A>digraph</A> is a homomorphism
+    <Ref Oper="DigraphHomomorphism" BookName="digraphs"/> from <A>digraph</A>
+    back to itself.<P/>
+
+    <C>EndomorphismMonoid</C>, called with a single argument,
+    returns the monoid of all endomorphisms of <A>digraph</A>. <P/>
+
+    If the <A>colors</A> argument is specified, then it will return 
+    the monoid of endomorphisms which respect the given colouring.
+    The colouring <A>colors</A> can be in one of two forms: <P/>
+
+    <List>
+      <Item>
+        A list of positive integers of size the number of vertices of
+        <A>digraph</A>, where <A>colors</A><C>[i]</C> is the colour of vertex
+        <C>i</C>.
+      </Item>
+      <Item>
+        A list of lists, such that <A>colors</A><C>[i]</C> is a list of all
+        vertices with colour <C>i</C>.
+      </Item>
+    </List>
+
+    See also <Ref Func="GeneratorsOfEndomorphismMonoid" BookName="digraphs"/>.
+    Note that the performance of <C>EndomorphismMonoid</C> may differ from that
+    of <Ref Func="GeneratorsOfEndomorphismMonoid" BookName="digraphs"/> since
+    the former incrementally adds newly discovered endomorphisms to the monoid
+    using <Ref Oper="ClosureMonoid"/>.
+
+    <Example><![CDATA[
+gap> gr := Digraph(List([1 .. 3], x -> [1 .. 3]));;
+gap> EndomorphismMonoid(gr);
+<transformation monoid of degree 3 with 3 generators>
+gap> gr := CompleteDigraph(3);;
+gap> EndomorphismMonoid(gr);
+<transformation group of size 6, degree 3 with 2 generators>
+gap> EndomorphismMonoid(gr, [1, 2, 2]);
+<transformation group of degree 3 with 1 generator>
+gap> EndomorphismMonoid(gr, [[1], [2, 3]]);
+<transformation group of degree 3 with 1 generator>]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="StructureDescription">
   <ManSection>
     <Attr Name="StructureDescription" Arg="class" Label="for an H-class"/>

@@ -426,5 +426,17 @@ gap> AsSemigroup(IsPBRSemigroup, M);
 
     <#Include Label = "RandomSemigroup">
   </Section>
+  
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+ 
+  <Section Label = "Endomorphism monoid of a digraph">
+
+    <Heading>
+      Endomorphism monoid of a digraph
+    </Heading>
+  
+    <#Include Label = "EndomorphismMonoid">
+  </Section>
  
 </Chapter>
