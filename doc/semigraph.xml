@@ -184,3 +184,42 @@ gap> GraphOfGraphInverseSemigroup(S);
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="IsGraphInverseSemigroupElementCollection">
+  <ManSection>
+    <Filt Name="IsGraphInverseSemigroupElementCollection"  Type="Category"/>
+    <Description>
+      Every collection of elements of a graph inverse semigroup belongs to the
+      category <C>IsGraphInverseSemigroupElementCollection</C>. For example,
+      every graph inverse semigroup belongs to 
+      <C>IsGraphInverseSemigroupElementCollection</C>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsGraphInverseSubsemigroup">
+<ManSection>
+    <Filt Name = "IsGraphInverseSubsemigroup"/>
+    <Description>
+      <C>IsGraphInverseSubsemigroup</C> is a synonym for
+      <C>IsSemigroup</C> and <C>IsInverseSemigroup</C> and
+      <C>IsGraphInverseSemigroupElementCollection</C>. <P/>
+
+      See <Ref Filt = "IsGraphInverseSemigroupElementCollection"/> and
+      <Ref Prop = "IsInverseSemigroup" BookName = "ref"/>.
+
+<Example><![CDATA[
+gap> gr := Digraph([[], [1], [2]]);
+<digraph with 3 vertices, 2 edges>
+gap> S := GraphInverseSemigroup(gr);
+<finite graph inverse semigroup with 3 vertices, 2 edges>
+gap> Elements(S);
+[ e_2^-1, e_1^-1, e_1^-1e_2^-1, 0, e_1, e_1e_1^-1, e_1e_1^-1e_2^-1, 
+  e_2, e_2e_2^-1, e_2e_1, e_2e_1e_1^-1, e_2e_1e_1^-1e_2^-1, v_1, v_2, 
+  v_3 ]
+gap> T := InverseSemigroup(Elements(S){[3, 5]});;
+gap> IsGraphInverseSubsemigroup(T);
+true]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

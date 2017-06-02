@@ -16,5 +16,7 @@
     <#Include Label = "IsVertex">
     <#Include Label = "IsGraphInverseSemigroup">
     <#Include Label = "GraphOfGraphInverseSemigroup">
+    <#Include Label = "IsGraphInverseSemigroupElementCollection">
+    <#Include Label = "IsGraphInverseSubsemigroup">
   </Section>
 </Chapter>

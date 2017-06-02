@@ -26,6 +26,9 @@ DeclareAttribute("Source", IsGraphInverseSemigroupElement);
 
 DeclareOperation("IsVertex", [IsGraphInverseSemigroupElement]);
 
+InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
+                  IsGraphInverseSemigroupElementCollection);
+
 # JDM: why are these required?
 DeclareAttribute("MultiplicativeZero", IsGraphInverseSemigroup);
 DeclareOperation("ZeroOp", [IsGraphInverseSemigroupElement]);
