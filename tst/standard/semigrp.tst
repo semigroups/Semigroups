@@ -899,6 +899,25 @@ gap> Length(GeneratorsOfSemigroup(U)) <= 20;
 true
 gap> T;
 <trivial transformation group of degree 0 with 1 generator>
+gap> gens :=
+> [Matrix(GF(5 ^ 2), [[Z(5 ^ 2), Z(5 ^ 2) ^ 13],
+>                     [0 * Z(5), Z(5 ^ 2) ^ 14]]),
+>  Matrix(GF(5 ^ 2), [[Z(5 ^ 2) ^ 21, Z(5) ^ 0],
+>                     [Z(5) ^ 0, 0 * Z(5)]]),
+>  Matrix(GF(5 ^ 2), [[Z(5 ^ 2) ^ 23, Z(5 ^ 2) ^ 5],
+>                     [Z(5 ^ 2) ^ 20, Z(5 ^ 2) ^ 20]])];;
+gap> S := Semigroup(gens[1]);
+<commutative semigroup of 2x2 matrices over GF(5^2) with 1 generator>
+gap> Size(S);
+24
+gap> S := ClosureSemigroup(S, gens[2]);
+<semigroup of 2x2 matrices over GF(5^2) with 2 generators>
+gap> Size(S);
+124800
+gap> S := ClosureSemigroup(S, gens[3]);
+<semigroup of 2x2 matrices over GF(5^2) with 3 generators>
+gap> Size(S);
+374400
 
 # Test IsGeneratorsOfInverseSemigroup
 gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;

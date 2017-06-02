@@ -269,8 +269,7 @@ gap> NormalizedPrincipalFactor(D);
     be a semigroup. The returned value of <C>SmallXGeneratingSet</C>, where
     applicable, has the property that
     <Log>
-      X(SmallXGeneratingSet(coll))=X(coll);
-    </Log>
+      X(SmallXGeneratingSet(coll)) = X(coll);</Log>
     where <C>X</C> is any of
     <Ref Func="Semigroup" BookName="ref"/>,
     <Ref Func="Monoid" BookName="ref"/>,
@@ -346,7 +345,7 @@ gap> Length(SmallGeneratingSet(S));
     <C>MinimalXGeneratingSet</C>, where applicable, is a minimal-length list
     of elements of <A>S</A> with the property that
     <Log>
-      X(MinimalXGeneratingSet(S))=S;
+      X(MinimalXGeneratingSet(S)) = S;
     </Log>
     where <C>X</C> is any of
     <Ref Func="Semigroup" BookName="ref"/>,
