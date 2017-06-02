@@ -539,9 +539,9 @@ gap> NrEquivalenceClasses(cong);
       case that the argument <A>cong</A> is a congruence, left congruence, or
       right congruence (respectively) of a semigroup.<P/>
 
-      See <Ref Filt="IsLeftSemigroupCongruence"/>,
-      <Ref Filt="IsRightSemigroupCongruence"/>, and
-      <Ref Filt="IsSemigroupCongruence"/>.<P/>
+      See <Ref Prop="IsLeftSemigroupCongruence"/>,
+      <Ref Prop="IsRightSemigroupCongruence"/>, and
+      <Ref Prop="IsSemigroupCongruence"/>.<P/>
 
       <Example><![CDATA[
 gap> S := Monoid([
@@ -614,9 +614,9 @@ gap> Set(classes);
       in the case that the argument <A>cong</A> is a congruence, left
       congruence, or right congruence (respectively) of a semigroup.<P/>
 
-      See <Ref Filt="IsLeftSemigroupCongruence"/>,
-      <Ref Filt="IsRightSemigroupCongruence"/>, and
-      <Ref Filt="IsSemigroupCongruence"/>.<P/>
+      See <Ref Prop="IsLeftSemigroupCongruence"/>,
+      <Ref Prop="IsRightSemigroupCongruence"/>, and
+      <Ref Prop="IsSemigroupCongruence"/>.<P/>
 
       <Example><![CDATA[
 gap> S := Monoid([
@@ -637,7 +637,7 @@ gap> Set(classes);
     <Filt Name="IsCongruenceClass" Arg="obj" Type="category"/>
     <Description>
       This category contains any object which is an equivalence class of a
-      semigroup congruence (see <Ref Filt="IsSemigroupCongruence"/>).  An
+      semigroup congruence (see <Ref Prop="IsSemigroupCongruence"/>).  An
       object will only be in this category if the relation is known to be a
       semigroup congruence when the congruence class is created.
 
@@ -660,7 +660,7 @@ true]]></Example>
     <Filt Name="IsLeftCongruenceClass" Arg="obj" Type="category"/>
     <Description>
       This category contains any object which is an equivalence class of a
-      left semigroup congruence (see <Ref Filt="IsLeftSemigroupCongruence"/>).
+      left semigroup congruence (see <Ref Prop="IsLeftSemigroupCongruence"/>).
       An object will only be in this category if the relation is known to be a
       left semigroup congruence when the class is created.
 
@@ -684,7 +684,7 @@ true]]></Example>
     <Filt Name="IsRightCongruenceClass" Arg="obj" Type="category"/>
     <Description>
       This category contains any object which is an equivalence class of a
-      right semigroup congruence (see <Ref Filt="IsRightSemigroupCongruence"/>).
+      right semigroup congruence (see <Ref Prop="IsRightSemigroupCongruence"/>).
       An object will only be in this category if the relation is known to be a
       right semigroup congruence when the class is created.
 
@@ -714,9 +714,9 @@ true]]></Example>
       the case that the argument <A>cong</A> is a congruence, left congruence,
       or right congruence (respectively) of a semigroup.<P/>
 
-      See <Ref Filt="IsLeftSemigroupCongruence"/>,
-      <Ref Filt="IsRightSemigroupCongruence"/>, and
-      <Ref Filt="IsSemigroupCongruence"/>.<P/>
+      See <Ref Prop="IsLeftSemigroupCongruence"/>,
+      <Ref Prop="IsRightSemigroupCongruence"/>, and
+      <Ref Prop="IsSemigroupCongruence"/>.<P/>
 
     <Example><![CDATA[
 gap> S := ReesZeroMatrixSemigroup(SymmetricGroup(3),
@@ -741,9 +741,9 @@ gap> CongruenceClassOfElement(cong, elm);
       case that the argument <A>cong</A> is a congruence, left congruence, or
       right congruence (respectively) of a semigroup.<P/>
 
-      See <Ref Filt="IsLeftSemigroupCongruence"/>,
-      <Ref Filt="IsRightSemigroupCongruence"/>, and
-      <Ref Filt="IsSemigroupCongruence"/>.<P/>
+      See <Ref Prop="IsLeftSemigroupCongruence"/>,
+      <Ref Prop="IsRightSemigroupCongruence"/>, and
+      <Ref Prop="IsSemigroupCongruence"/>.<P/>
 
       <Example><![CDATA[
 gap> S := Monoid([
@@ -861,7 +861,7 @@ gap> JoinSemigroupCongruences(congs[2], congs[3]);
     of <A>class</A>.  The result is well-defined by the definition of a left
     congruence. <P/>
 
-    See <Ref Filt="IsLeftSemigroupCongruence"/> and
+    See <Ref Prop="IsLeftSemigroupCongruence"/> and
     <Ref Filt="IsLeftCongruenceClass"/>. <P/>
 
     <Example><![CDATA[
@@ -900,7 +900,7 @@ gap> OnLeftCongruenceClasses(class, elm);
     of <A>class</A>.  The result is well-defined by the definition of a right
     congruence. <P/>
 
-    See <Ref Filt="IsRightSemigroupCongruence"/> and
+    See <Ref Prop="IsRightSemigroupCongruence"/> and
     <Ref Filt="IsRightCongruenceClass"/>. <P/>
 
     <Example><![CDATA[

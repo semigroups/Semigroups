@@ -49,7 +49,7 @@
       correspond to the matrix semigroup types in
       Section <Ref Sect = "IsXMatrixSemigroup"/>.
       For matrix semigroups over finite fields there is also 
-      <Ref Prop = "IsMatrixOverFiniteFieldGroup"/>.
+      <Ref Filt = "IsMatrixOverFiniteFieldGroup"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>

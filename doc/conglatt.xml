@@ -227,7 +227,7 @@ true
       However, see
       <Ref Oper = "JoinSemilatticeOfCongruences"
            Label = "for a list or collection and a function"/>.
-      See also <Ref Attr = "IsCongruencePoset"/>
+      See also <Ref Filt = "IsCongruencePoset"/>
       and <Ref Attr = "LatticeOfCongruences" Label = "for a semigroup"/>. <P/>
 
       <Example><![CDATA[
@@ -255,7 +255,7 @@ gap> PosetOfCongruences(coll);
       If <A>coll</A> is a list or collection of semigroup congruences (which may
       be left, right, or two-sided) and <A>join_func</A> is a function for
       taking the join of two of the congruences (such as
-      <Ref Attr = "JoinSemigroupCongruences"/>) then this operation returns the
+      <Ref Oper = "JoinSemigroupCongruences"/>) then this operation returns the
       congruence poset formed by these congruences partially ordered by
       containment, along with all their joins. <P/>
 
@@ -264,8 +264,8 @@ gap> PosetOfCongruences(coll);
       <A>coll</A>, and information already known about their containments will
       be used. <P/>
 
-      See also <Ref Attr = "IsCongruencePoset"/>
-      and <Ref Attr = "PosetOfCongruences"/>. <P/>
+      See also <Ref Filt = "IsCongruencePoset"/>
+      and <Ref Oper = "PosetOfCongruences"/>. <P/>
 
       <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(2);;
@@ -303,8 +303,8 @@ gap> JoinSemilatticeOfCongruences(coll, JoinRightSemigroupCongruences);
 
       This function should not be confused with
       <Ref Attr = "MinimalCongruencesOfSemigroup" Label = "for a semigroup"/>.
-      See also <Ref Attr = "IsCongruencePoset"/>
-      and <Ref Attr = "PosetOfCongruences"/>. <P/>
+      See also <Ref Filt = "IsCongruencePoset"/>
+      and <Ref Oper = "PosetOfCongruences"/>. <P/>
 
       <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(2);;

@@ -41,7 +41,7 @@ true]]></Example>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       This category describes a class of the universal semigroup congruence (see
-      <Ref Filt = "IsUniversalSemigroupCongruence"/>).  A universal semigroup
+      <Ref Prop = "IsUniversalSemigroupCongruence"/>).  A universal semigroup
       congruence by definition has precisely one congruence class, which
       contains all of the elements of the semigroup in question.
 

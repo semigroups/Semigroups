@@ -57,9 +57,9 @@
     <P/>
 
     The  operations
-    <Ref Oper = "AsPermutation" Label = "for a PBR"/>,
+    <Ref Attr = "AsPermutation" Label = "for a PBR"/>,
     <Ref Oper = "AsPartialPerm" Label = "for a PBR"/>,
-    <Ref Oper = "AsTransformation" Label = "for a PBR"/>,
+    <Ref Attr = "AsTransformation" Label = "for a PBR"/>,
     <Ref Oper = "AsBipartition"/>,
     <Ref Oper = "AsBooleanMat"/>
     can be used  to convert PBRs into permutations, partial permutations,

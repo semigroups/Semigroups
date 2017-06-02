@@ -225,7 +225,7 @@ false]]></Example>
        If <A>S</A> is a partial permutation monoid, then this function
        returns an isomorphism from <A>S</A> to a monoid of partial permutations
        on <C>[1 .. LargestMovedPoint(<A>S</A>) + 1]</C> obtained using
-       <Ref Oper="AsTransformation" BookName="ref"/>. The inverse of this
+       <Ref Attr="AsTransformation" BookName="ref"/>. The inverse of this
        isomorphism is obtained using
        <Ref Func="AsPartialPerm" BookName="ref"/>; see
      <Ref Attr="LargestMovedPoint" Label="for a partial perm" BookName="ref"/>,
@@ -238,7 +238,7 @@ false]]></Example>
       If <A>S</A> is a permutation group, then this function returns an
       isomorphism from <A>S</A> to a transformation monoid acting on the set
       <C>[1 .. NrMovedPoints(<A>S</A>)]</C> obtained using
-      <Ref Oper="AsTransformation" BookName="ref"/>; see
+      <Ref Attr="AsTransformation" BookName="ref"/>; see
       <Ref Attr="NrMovedPoints" BookName="ref"/>.
     </Item>
 

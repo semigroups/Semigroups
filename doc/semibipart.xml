@@ -53,7 +53,7 @@ gap> MultiplicativeNeutralElement(S);
 gap> IsMonoid(S);
 false]]></Example>
       In this example <C>S</C> cannot be converted into a monoid using <Ref
-        Attr = "AsMonoid" BookName = "ref"/> since the <Ref Attr = "One"
+        Oper = "AsMonoid" BookName = "ref"/> since the <Ref Attr = "One"
         BookName = "ref"/> of any element in <C>S</C> differs from the
       multiplicative neutral element. <P/>
 
@@ -89,9 +89,9 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
  
       An object in &GAP; is a block bijection monoid if it satisfies
       <Ref Prop = "IsMonoid" BookName = "ref"/> and <Ref
-        Filt = "IsBlockBijectionSemigroup"/>.<P/>
+        Prop = "IsBlockBijectionSemigroup"/>.<P/>
  
-      See <Ref Filt = "IsBlockBijection"/>.
+      See <Ref Prop = "IsBlockBijection"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -108,9 +108,9 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
  
       An object in &GAP; is a partial perm bipartition monoid
       if it satisfies <Ref Prop = "IsMonoid" BookName = "ref"/> and
-      <Ref Filt = "IsPartialPermBipartitionSemigroup"/>.<P/>
+      <Ref Prop = "IsPartialPermBipartitionSemigroup"/>.<P/>
  
-      See <Ref Filt = "IsPartialPermBipartition"/>.
+      See <Ref Prop = "IsPartialPermBipartition"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -123,7 +123,7 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
       A <E>perm bipartition group</E> is simply a semigroup consisting of perm
       bipartitions.<P/>
 
-      See <Ref Filt = "IsPermBipartition"/>.<P/>
+      See <Ref Prop = "IsPermBipartition"/>.<P/>
     </Description>
   </ManSection>
 <#/GAPDoc>

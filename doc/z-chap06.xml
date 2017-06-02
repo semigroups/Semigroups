@@ -66,9 +66,9 @@
       semigroup; see <Ref Oper = "GreensRClassOfElementNC"/>.  It is also
       possible to compute the &R;-classes, the number of elements and test
       membership in a semigroup without computing all the elements; see, for
-      example, <Ref Oper = "GreensRClasses"/>, <Ref Attr = "RClassReps"/>, <Ref
-        Func = "IteratorOfRClassReps"/>, <Ref Func = "IteratorOfRClasses"/>, or
-      <Ref Func = "NrRClasses"/>.  This may be useful if you want to study a very
+      example, <Ref Meth = "GreensRClasses"/>, <Ref Attr = "RClassReps"/>, <Ref
+        Oper = "IteratorOfRClassReps"/>, <Ref Oper = "IteratorOfRClasses"/>, or
+      <Ref Attr = "NrRClasses"/>.  This may be useful if you want to study a very
       large semigroup where computing all the elements of the semigroup is not
       feasible.<P/>
       <!--For details of how to
@@ -222,7 +222,7 @@
           "Introduction"/>.
         In order for a semigroup to use the latter methods in
         <!-- the reference to IsActingSemigroup does not work -->
-        &Semigroups; it must satisfy <Ref Prop="IsActingSemigroup"/>.  By
+        &Semigroups; it must satisfy <Ref Filt="IsActingSemigroup"/>.  By
         default any semigroup or monoid of transformations, partial
         permutations, Rees 0-matrix elements, or bipartitions satisfies
         <C>IsActingSemigroup</C>.<P/>
@@ -357,7 +357,7 @@ true]]></Log>
      methods for the &GAP; library operations:
      <List>
        <Item>
-         <Ref Oper = "IsomorphismReesMatrixSemigroup" BookName = "ref"/>,
+         <Ref Attr = "IsomorphismReesMatrixSemigroup" BookName = "ref"/>,
        </Item>
        <Item>
          <Ref Oper = "AntiIsomorphismTransformationSemigroup" BookName = "ref"/>,

@@ -161,10 +161,10 @@
         <Ref Attr = "Successors"/>
       </Item>
       <Item>
-        <Ref Oper = "IsRowTrimBooleanMat"/>,
-        <Ref Oper = "IsColTrimBooleanMat"/>,
+        <Ref Prop = "IsRowTrimBooleanMat"/>,
+        <Ref Prop = "IsColTrimBooleanMat"/>,
         and
-        <Ref Oper = "IsTrimBooleanMat"/>,
+        <Ref Prop = "IsTrimBooleanMat"/>,
       </Item>
       <Item>
         <Ref Oper = "CanonicalBooleanMat"/>
@@ -257,7 +257,7 @@
         <Ref Attr = "IsTorsion" Label = "for an integer matrix"/>
       </Item>
       <Item>
-        <Ref Oper = "Order"/>
+        <Ref Attr = "Order"/>
       </Item>
     </List>
  
@@ -319,7 +319,7 @@
         <Ref Filt = "IsXMatrixSemigroup"/>
       </Item>
       <Item>
-        <Ref Attr = "IsFinite"/>
+        <Ref Prop = "IsFinite"/>
       </Item>
       <Item>
         <Ref Attr = "IsTorsion"/>
@@ -331,12 +331,12 @@
 
     Random matrix semigroups can be created by using the function
     <Ref Func="RandomSemigroup"/>.  We can also create a matrix semigroup
-    isomorphic to a given semigroup by using <Ref Attr="IsomorphismSemigroup"/>
+    isomorphic to a given semigroup by using <Ref Oper="IsomorphismSemigroup"/>
     and <Ref Oper="AsSemigroup"/>.  These functions require a filter, and accept
     any of the filters in Section <Ref Sect="IsXMatrixSemigroup"/>. <P/>
 
     There are corresponding functions which can be used for matrix monoids:
-    <Ref Func="RandomMonoid"/>, <Ref Attr="IsomorphismMonoid"/>, and
+    <Ref Func="RandomMonoid"/>, <Ref Oper="IsomorphismMonoid"/>, and
     <Ref Oper="AsMonoid"/>.  These can be used with the filters in
     Section <Ref Sect="IsXMatrixMonoid"/>. <P/>
 
@@ -355,7 +355,7 @@
 
       <List>
         <Item>
-          <Ref Prop = "IsMatrixOverFiniteFieldGroup"/>
+          <Ref Filt = "IsMatrixOverFiniteFieldGroup"/>
         </Item>
         <Item>
           <Ref Oper = "\^" Label = "for a matrix over finite field group and matrix over finite field"/>

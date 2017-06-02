@@ -339,7 +339,7 @@ false]]></Example>
     </Alt><P/>
 
     This condition is equivalent to <A>E</A> being majorantly closed in
-    <A>S</A>.  See <Ref Oper = "IdempotentGeneratedSubsemigroup"/> and <Ref
+    <A>S</A>.  See <Ref Attr = "IdempotentGeneratedSubsemigroup"/> and <Ref
       Oper = "IsMajorantlyClosed"/>.
     Hence an inverse semigroup of partial permutations, block bijections or
     partial permutation bipartitions is <E>E-unitary</E> if and only if the
@@ -691,13 +691,13 @@ false]]></Example>
     <Description>
       <C>IsMonoidAsSemigroup</C> returns <K>true</K> if and only if the
       semigroup <A>S</A> is mathematically a monoid, i.e. if and only if it
-      contains a <Ref Attr = "MultiplicativeNeutralElement" BookName = "ref"/>.
+      contains a <Ref Meth = "MultiplicativeNeutralElement" BookName = "ref"/>.
       <P/>
 
       It is possible that a semigroup which satisfies
       <C>IsMonoidAsSemigroup</C> is not in the &GAP; category <Ref
         Prop = "IsMonoid" BookName = "ref"/>. This is possible if the <Ref
-        Attr = "MultiplicativeNeutralElement" BookName = "ref"/> of <A>S</A> is not
+        Meth = "MultiplicativeNeutralElement" BookName = "ref"/> of <A>S</A> is not
       equal to the <Ref Attr = "One" BookName = "ref"/> of any element in <A>S</A>.
       Therefore a semigroup satisfying <C>IsMonoidAsSemigroup</C> may not
       possess the attributes of a monoid (such as, <Ref
@@ -809,7 +809,7 @@ true]]></Example>
       regular if and only if it is an inverse semigroup.<P/>
 
       See also <Ref Prop = "IsRegularDClass" BookName = "ref"/>,
-      <Ref Func = "IsRegularGreensClass"/>,
+      <Ref Prop = "IsRegularGreensClass"/>,
       and <Ref Func = "IsRegularSemigroupElement" BookName = "ref"/>.
 
       <Example><![CDATA[
