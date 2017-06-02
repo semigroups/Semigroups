@@ -1,0 +1,1232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (semigroups) - Chapter 12: 
+    Green's relations
+  </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap12"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap11_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap13_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap12.html">[MathJax off]</a></p>
+<p><a id="X80C6C718801855E9" name="X80C6C718801855E9"></a></p>
+<div class="ChapSects"><a href="chap12_mj.html#X80C6C718801855E9">12 <span class="Heading">
+    Green's relations
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X788D6753849BAD7C">12.1 <span class="Heading">
+      Creating Green's classes and representatives
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X87558FEF805D24E1">12.1-1 <span class="Heading">XClassOfYClass</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X81B7AD4C7C552867">12.1-2 <span class="Heading">GreensXClassOfElement</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7B44317786571F8B">12.1-3 <span class="Heading">GreensXClassOfElementNC</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7D51218A80234DE5">12.1-4 <span class="Heading">GreensXClasses</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X865387A87FAAC395">12.1-5 <span class="Heading">XClassReps</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X81E5A04F7DA3A1E1">12.1-6 MinimalDClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X81F030B27ACB141D">12.1-7 MaximalDClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7AA3F0A77D0043FB">12.1-8 NrRegularDClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7E45FD9F7BADDFBD">12.1-9 <span class="Heading">NrXClasses</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X83F1C306846DF26B">12.1-10 PartialOrderOfDClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X83B0EDA57F1D2F97">12.1-11 LengthOfLongestDClassChain</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7E872C5381D0DD8A">12.1-12 IsGreensDGreaterThanFunc</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X819CCBD67FD27115">12.2 <span class="Heading">
+      Iterators and enumerators of classes and representatives
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X8566F84A7F6D4193">12.2-1 <span class="Heading">IteratorOfXClassReps</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X867D7B8982915960">12.2-2 <span class="Heading">IteratorOfXClasses</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X820EF2BA7D5D53B4">12.3 <span class="Heading">
+      Properties of Green's classes
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X85F30ACF86C3A733">12.3-1 <span class="Heading">Less than for Green's classes</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X859DD1C079C80DCC">12.3-2 IsRegularGreensClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7E9BD34B8021045A">12.3-3 IsGreensClassNC</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap12_mj.html#X855723B17D4AAF8F">12.4 <span class="Heading">
+      Attributes of Green's classes
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X8723756387DD4C0F">12.4-1 GroupHClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X84F1321E8217D2A8">12.4-2 SchutzenbergerGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X81202126806443F9">12.4-3 StructureDescriptionSchutzenbergerGroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X838F43FE79A8C678">12.4-4 StructureDescriptionMaximalSubgroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X8459E4067C5773AD">12.4-5 MultiplicativeNeutralElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X85B34FFB82C83127">12.4-6 StructureDescription</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7EBB4F1981CC2AE9">12.4-7 InjectionPrincipalFactor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X86C6D777847AAEC7">12.4-8 PrincipalFactor</a></span>
+</div></div>
+</div>
+
+<h3>12 <span class="Heading">
+    Green's relations
+  </span></h3>
+
+<p>In this chapter we describe the functions in <strong class="pkg">Semigroups</strong> for computing Green's classes and related properties of semigroups.</p>
+
+<p><a id="X788D6753849BAD7C" name="X788D6753849BAD7C"></a></p>
+
+<h4>12.1 <span class="Heading">
+      Creating Green's classes and representatives
+    </span></h4>
+
+<p>In this section, we describe the methods in the <strong class="pkg">Semigroups</strong> package for creating Green's classes.</p>
+
+<p><a id="X87558FEF805D24E1" name="X87558FEF805D24E1"></a></p>
+
+<h5>12.1-1 <span class="Heading">XClassOfYClass</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DClassOfHClass</code>( <var class="Arg">class</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DClassOfLClass</code>( <var class="Arg">class</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DClassOfRClass</code>( <var class="Arg">class</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LClassOfHClass</code>( <var class="Arg">class</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RClassOfHClass</code>( <var class="Arg">class</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<p>Returns: A Green's class.</p>
+
+<p><code class="code">XClassOfYClass</code> returns the <code class="code">X</code>-class containing the <code class="code">Y</code>-class <var class="Arg">class</var> where <code class="code">X</code> and <code class="code">Y</code> should be replaced by an appropriate choice of <code class="code">D, H, L,</code> and <code class="code">R</code>.</p>
+
+<p>Note that if it is not known to <strong class="pkg">GAP</strong> whether or not the representative of <var class="Arg">class</var> is an element of the semigroup containing <var class="Arg">class</var>, then no attempt is made to check this.</p>
+
+<p>The same result can be produced using:</p>
+
+
+<div class="example"><pre>First(GreensXClasses(S), x -&gt; Representative(x) in class);</pre></div>
+
+<p>but this might be substantially slower. Note that <code class="code">XClassOfYClass</code> is also likely to be faster than</p>
+
+
+<div class="example"><pre>GreensXClassOfElement(S, Representative(class));</pre></div>
+
+<p><code class="code">DClass</code> can also be used as a synonym for <code class="code">DClassOfHClass</code>, <code class="code">DClassOfLClass</code>, and <code class="code">DClassOfRClass</code>; <code class="code">LClass</code> as a synonym for <code class="code">LClassOfHClass</code>; and <code class="code">RClass</code> as a synonym for <code class="code">RClassOfHClass</code>. See also <code class="func">GreensDClassOfElement</code> (<a href="../../../doc/ref/chap51_mj.html#X87C75A9D86122D93"><span class="RefLink">Reference: GreensDClassOfElement</span></a>) and <code class="func">GreensDClassOfElementNC</code> (<a href="chap12_mj.html#X7B44317786571F8B"><span class="RefLink">12.1-3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 1, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([1, 3, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := GreensRClassOfElement(S, Transformation([3, 2, 1]));</span>
+&lt;Green's R-class: Transformation( [ 3, 2, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DClassOfRClass(R);</span>
+&lt;Green's D-class: Transformation( [ 3, 2, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensDClass(DClassOfRClass(R));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([2, 6, 7, 0, 0, 9, 0, 1, 0, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([3, 8, 1, 9, 0, 4, 10, 5, 0, 6]));</span>
+&lt;inverse partial perm semigroup of rank 10 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1;</span>
+[3,7][8,1,2,6,9][10,5]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := HClass(S, x);</span>
+&lt;Green's H-class: [3,7][8,1,2,6,9][10,5]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RClassOfHClass(H);</span>
+&lt;Green's R-class: [3,7][8,1,2,6,9][10,5]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LClass(H);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L = LClass(S, PartialPerm([1, 2, 0, 0, 5, 6, 7, 0, 9]));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DClass(R) = DClass(L);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DClass(H) = DClass(L);</span>
+true</pre></div>
+
+<p><a id="X81B7AD4C7C552867" name="X81B7AD4C7C552867"></a></p>
+
+<h5>12.1-2 <span class="Heading">GreensXClassOfElement</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensDClassOfElement</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DClass</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensHClassOfElement</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensHClassOfElement</code>( <var class="Arg">R</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HClass</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HClass</code>( <var class="Arg">R</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensLClassOfElement</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LClass</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensRClassOfElement</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RClass</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A Green's class.</p>
+
+<p>These functions produce essentially the same output as the <strong class="pkg">GAP</strong> library functions with the same names; see <code class="func">GreensDClassOfElement</code> (<a href="../../../doc/ref/chap51_mj.html#X87C75A9D86122D93"><span class="RefLink">Reference: GreensDClassOfElement</span></a>). The main difference is that these functions can be applied to a wider class of objects:</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">GreensDClassOfElement</code> and <code class="code">DClass</code></strong></dt>
+<dd><p><var class="Arg">X</var> must be a semigroup.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">GreensHClassOfElement</code> and <code class="code">HClass</code></strong></dt>
+<dd><p><var class="Arg">X</var> can be a semigroup, \(\mathscr{R}\)-class, \(\mathscr{L}\)-class, or \(\mathscr{D}\)-class.</p>
+
+</dd>
+<dd><p>If <var class="Arg">R</var> is a <var class="Arg">IxJ</var> Rees matrix semigroup or a Rees 0-matrix semigroup, and <var class="Arg">i</var> and <var class="Arg">j</var> are integers of the corresponding index sets, then <code class="code">GreensHClassOfElement</code> returns the \(\mathscr{H}\)-class in row <var class="Arg">i</var> and column <var class="Arg">j</var>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">GreensLClassOfElement</code> and <code class="code">LClass</code></strong></dt>
+<dd><p><var class="Arg">X</var> can be a semigroup or \(\mathscr{D}\)-class.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">GreensRClassOfElement</code> and <code class="code">RClass</code></strong></dt>
+<dd><p><var class="Arg">X</var> can be a semigroup or \(\mathscr{D}\)-class.</p>
+
+</dd>
+</dl>
+<p>Note that <code class="code">GreensXClassOfElement</code> and <code class="code">XClass</code> are synonyms and have identical output. The shorter command is provided for the sake of convenience.</p>
+
+<p><a id="X7B44317786571F8B" name="X7B44317786571F8B"></a></p>
+
+<h5>12.1-3 <span class="Heading">GreensXClassOfElementNC</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensDClassOfElementNC</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DClassNC</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensHClassOfElementNC</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HClassNC</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensLClassOfElementNC</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LClassNC</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensRClassOfElementNC</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RClassNC</code>( <var class="Arg">X</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A Green's class.</p>
+
+<p>These functions are essentially the same as <code class="func">GreensDClassOfElement</code> (<a href="chap12_mj.html#X81B7AD4C7C552867"><span class="RefLink">12.1-2</span></a>) except that no effort is made to verify if <var class="Arg">f</var> is an element of <var class="Arg">X</var>. More precisely, <code class="code">GreensXClassOfElementNC</code> and <code class="code">XClassNC</code> first check if <var class="Arg">f</var> has already been shown to be an element of <var class="Arg">X</var>. If it is not known to <strong class="pkg">GAP</strong> if <var class="Arg">f</var> is an element of <var class="Arg">X</var>, then no further attempt to verify this is made.</p>
+
+<p>Note that <code class="code">GreensXClassOfElementNC</code> and <code class="code">XClassNC</code> are synonyms and have identical output. The shorter command is provided for the sake of convenience.</p>
+
+<p>It can be quicker to compute the class of an element using <code class="code">GreensRClassOfElementNC</code>, say, than using <code class="code">GreensRClassOfElement</code> if it is known <em>a priori</em> that <var class="Arg">f</var> is an element of <var class="Arg">X</var>. On the other hand, if <var class="Arg">f</var> is not an element of <var class="Arg">X</var>, then the results of this computation are unpredictable.</p>
+
+<p>For example, if</p>
+
+
+<div class="example"><pre>x := Transformation([15, 18, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]);</pre></div>
+
+<p>in the semigroup <var class="Arg">X</var> of order-preserving mappings on 20 points, then</p>
+
+
+<div class="example"><pre>GreensRClassOfElementNC(X, x);</pre></div>
+
+<p>returns an answer relatively quickly, whereas</p>
+
+
+<div class="example"><pre>GreensRClassOfElement(X, x)</pre></div>
+
+<p>can take a signficant amount of time to return a value.</p>
+
+<p>See also <code class="func">GreensRClassOfElement</code> (<a href="../../../doc/ref/chap51_mj.html#X87C75A9D86122D93"><span class="RefLink">Reference: GreensRClassOfElement</span></a>) and <code class="func">RClassOfHClass</code> (<a href="chap12_mj.html#X87558FEF805D24E1"><span class="RefLink">12.1-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RandomSemigroup(IsTransformationSemigroup, 2, 1000);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := [1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 1];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := EvaluateWord(Generators(S), x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := GreensRClassOfElementNC(S, x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(R);</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := GreensLClassOfElementNC(S, x);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(L);</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([2, 3, 4, 5, 0, 0, 6, 8, 10, 11]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LClass(POI(13), x);</span>
+&lt;Green's L-class: [1,2,3,4,5,6,8][7,10,11]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(L);</span>
+1287</pre></div>
+
+<p><a id="X7D51218A80234DE5" name="X7D51218A80234DE5"></a></p>
+
+<h5>12.1-4 <span class="Heading">GreensXClasses</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensDClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensHClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensJClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensLClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensRClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<p>Returns: A list of Green's classes.</p>
+
+<p>These functions produce essentially the same output as the <strong class="pkg">GAP</strong> library functions with the same names; see <code class="func">GreensDClasses</code> (<a href="../../../doc/ref/chap51_mj.html#X844D20467A644811"><span class="RefLink">Reference: GreensDClasses</span></a>). The main difference is that these functions can be applied to a wider class of objects:</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">GreensDClasses</code> and <code class="code">DClasses</code></strong></dt>
+<dd><p><var class="Arg">X</var> should be a semigroup.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">GreensHClasses</code> and <code class="code">HClasses</code></strong></dt>
+<dd><p><var class="Arg">X</var> can be a semigroup, \(\mathscr{R}\)-class, \(\mathscr{L}\)-class, or \(\mathscr{D}\)-class.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">GreensLClasses</code> and <code class="code">LClasses</code></strong></dt>
+<dd><p><var class="Arg">X</var> can be a semigroup or \(\mathscr{D}\)-class.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">GreensRClasses</code> and <code class="code">RClasses</code></strong></dt>
+<dd><p><var class="Arg">X</var> can be a semigroup or \(\mathscr{D}\)-class.</p>
+
+</dd>
+</dl>
+<p>Note that <code class="code">GreensXClasses</code> and <code class="code">XClasses</code> are synonyms and have identical output. The shorter command is provided for the sake of convenience.</p>
+
+<p>See also <code class="func">DClassReps</code> (<a href="chap12_mj.html#X865387A87FAAC395"><span class="RefLink">12.1-5</span></a>), <code class="func">IteratorOfDClassReps</code> (<a href="chap12_mj.html#X8566F84A7F6D4193"><span class="RefLink">12.2-1</span></a>), <code class="func">IteratorOfDClasses</code> (<a href="chap12_mj.html#X867D7B8982915960"><span class="RefLink">12.2-2</span></a>), and <code class="func">NrDClasses</code> (<a href="chap12_mj.html#X7E45FD9F7BADDFBD"><span class="RefLink">12.1-9</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([3, 4, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([4, 3, 1, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensDClasses(S);</span>
+[ &lt;Green's D-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
+  &lt;Green's D-class: Transformation( [ 4, 3, 1, 2 ] )&gt;, 
+  &lt;Green's D-class: Transformation( [ 4, 4, 4, 4 ] )&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensRClasses(S);</span>
+[ &lt;Green's R-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
+  &lt;Green's R-class: Transformation( [ 4, 3, 1, 2 ] )&gt;, 
+  &lt;Green's R-class: Transformation( [ 4, 4, 4, 4 ] )&gt;, 
+  &lt;Green's R-class: Transformation( [ 4, 4, 3, 4 ] )&gt;, 
+  &lt;Green's R-class: Transformation( [ 4, 3, 4, 4 ] )&gt;, 
+  &lt;Green's R-class: Transformation( [ 4, 4, 4, 3 ] )&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClasses(S)[1];</span>
+&lt;Green's D-class: Transformation( [ 3, 4, 4, 4 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensLClasses(D);</span>
+[ &lt;Green's L-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
+  &lt;Green's L-class: Transformation( [ 1, 2, 2, 2 ] )&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensRClasses(D);</span>
+[ &lt;Green's R-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
+  &lt;Green's R-class: Transformation( [ 4, 4, 3, 4 ] )&gt;, 
+  &lt;Green's R-class: Transformation( [ 4, 3, 4, 4 ] )&gt;, 
+  &lt;Green's R-class: Transformation( [ 4, 4, 4, 3 ] )&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := GreensRClasses(D)[1];</span>
+&lt;Green's R-class: Transformation( [ 3, 4, 4, 4 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensHClasses(R);</span>
+[ &lt;Green's H-class: Transformation( [ 3, 4, 4, 4 ] )&gt;, 
+  &lt;Green's H-class: Transformation( [ 1, 2, 2, 2 ] )&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([2, 4, 1]), PartialPerm([3, 0, 4, 1])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensDClasses(S);</span>
+[ &lt;Green's D-class: &lt;identity partial perm on [ 1, 2, 4 ]&gt;&gt;, 
+  &lt;Green's D-class: &lt;identity partial perm on [ 1, 3, 4 ]&gt;&gt;, 
+  &lt;Green's D-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;, 
+  &lt;Green's D-class: &lt;identity partial perm on [ 4 ]&gt;&gt;, 
+  &lt;Green's D-class: &lt;empty partial perm&gt;&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensLClasses(S);</span>
+[ &lt;Green's L-class: &lt;identity partial perm on [ 1, 2, 4 ]&gt;&gt;, 
+  &lt;Green's L-class: [4,2,1,3]&gt;, 
+  &lt;Green's L-class: &lt;identity partial perm on [ 1, 3, 4 ]&gt;&gt;, 
+  &lt;Green's L-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;, 
+  &lt;Green's L-class: [3,1,2]&gt;, &lt;Green's L-class: [1,4][3,2]&gt;, 
+  &lt;Green's L-class: [1,3,4]&gt;, &lt;Green's L-class: [3,1,4]&gt;, 
+  &lt;Green's L-class: [1,2](3)&gt;, 
+  &lt;Green's L-class: &lt;identity partial perm on [ 4 ]&gt;&gt;, 
+  &lt;Green's L-class: [4,1]&gt;, &lt;Green's L-class: [4,3]&gt;, 
+  &lt;Green's L-class: [4,2]&gt;, &lt;Green's L-class: &lt;empty partial perm&gt;&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClasses(S)[3];</span>
+&lt;Green's D-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensLClasses(D);</span>
+[ &lt;Green's L-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;, 
+  &lt;Green's L-class: [3,1,2]&gt;, &lt;Green's L-class: [1,4][3,2]&gt;, 
+  &lt;Green's L-class: [1,3,4]&gt;, &lt;Green's L-class: [3,1,4]&gt;, 
+  &lt;Green's L-class: [1,2](3)&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GreensRClasses(D);</span>
+[ &lt;Green's R-class: &lt;identity partial perm on [ 1, 3 ]&gt;&gt;, 
+  &lt;Green's R-class: [2,1,3]&gt;, &lt;Green's R-class: [2,3][4,1]&gt;, 
+  &lt;Green's R-class: [4,3,1]&gt;, &lt;Green's R-class: [4,1,3]&gt;, 
+  &lt;Green's R-class: [2,1](3)&gt; ]</pre></div>
+
+<p><a id="X865387A87FAAC395" name="X865387A87FAAC395"></a></p>
+
+<h5>12.1-5 <span class="Heading">XClassReps</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DClassReps</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HClassReps</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LClassReps</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RClassReps</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list of representatives.</p>
+
+<p><code class="code">XClassReps</code> returns a list of the representatives of the Green's classes of <var class="Arg">obj</var>, which can be a semigroup, \(\mathscr{D}\)-, \(\mathscr{L}\)-, or \(\mathscr{R}\)-class where appropriate.</p>
+
+<p>The same output can be obtained by calling, for example:</p>
+
+
+<div class="example"><pre>List(GreensXClasses(obj), Representative);</pre></div>
+
+<p>Note that if the Green's classes themselves are not required, then <code class="code">XClassReps</code> will return an answer more quickly than the above, since the Green's class objects are not created.</p>
+
+<p>See also <code class="func">GreensDClasses</code> (<a href="chap12_mj.html#X7D51218A80234DE5"><span class="RefLink">12.1-4</span></a>), <code class="func">IteratorOfDClassReps</code> (<a href="chap12_mj.html#X8566F84A7F6D4193"><span class="RefLink">12.2-1</span></a>), <code class="func">IteratorOfDClasses</code> (<a href="chap12_mj.html#X867D7B8982915960"><span class="RefLink">12.2-2</span></a>), and <code class="func">NrDClasses</code> (<a href="chap12_mj.html#X7E45FD9F7BADDFBD"><span class="RefLink">12.1-9</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([3, 4, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([4, 3, 1, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DClassReps(S);</span>
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
+  Transformation( [ 4, 4, 4, 4 ] ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LClassReps(S);</span>
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ), 
+  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), 
+  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), 
+  Transformation( [ 1, 1, 1, 1 ] ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClasses(S)[1];</span>
+&lt;Green's D-class: Transformation( [ 3, 4, 4, 4 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LClassReps(D);</span>
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RClassReps(D);</span>
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), 
+  Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := GreensRClasses(D)[1];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HClassReps(R);</span>
+[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e := InverseSemigroup(Idempotents(S));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := MunnSemigroup(e);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LClassNC(M, PartialPerm([51, 63], [51, 47]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HClassReps(L);</span>
+[ &lt;identity partial perm on [ 47, 51 ]&gt;, [27,47](51), [50,47](51), 
+  [64,47](51), [63,47](51), [59,47](51) ]</pre></div>
+
+<p><a id="X81E5A04F7DA3A1E1" name="X81E5A04F7DA3A1E1"></a></p>
+
+<h5>12.1-6 MinimalDClass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalDClass</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The minimal \(\mathscr{D}\)-class of a semigroup.</p>
+
+<p>The minimal ideal of a semigroup is the least ideal with respect to containment. <code class="code">MinimalDClass</code> returns the \(\mathscr{D}\)-class corresponding to the minimal ideal of the semigroup <var class="Arg">S</var>. Equivalently, <code class="code">MinimalDClass</code> returns the minimal \(\mathscr{D}\)-class with respect to the partial order of \(\mathscr{D}\)-classes.</p>
+
+<p>It is significantly easier to find the minimal \(\mathscr{D}\)-class of a semigroup, than to find its \(\mathscr{D}\)-classes.</p>
+
+<p>See also <code class="func">PartialOrderOfDClasses</code> (<a href="chap12_mj.html#X83F1C306846DF26B"><span class="RefLink">12.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="../../../doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), <code class="func">MinimalIdeal</code> (<a href="chap13_mj.html#X7BC68589879C3BE9"><span class="RefLink">13.7-1</span></a>) and <code class="func">RepresentativeOfMinimalIdeal</code> (<a href="chap13_mj.html#X7CA6744182D07C5B"><span class="RefLink">13.7-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := MinimalDClass(JonesMonoid(8));</span>
+&lt;Green's D-class: &lt;bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], 
+  [ 7, 8 ], [ -1, -2 ], [ -3, -4 ], [ -5, -6 ], [ -7, -8 ]&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 5, 7, 8, 9], [2, 6, 9, 1, 5, 3, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 3, 4, 5, 7, 8, 9], [9, 4, 10, 5, 6, 7, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalDClass(S);</span>
+&lt;Green's D-class: &lt;empty partial perm&gt;&gt;</pre></div>
+
+<p><a id="X81F030B27ACB141D" name="X81F030B27ACB141D"></a></p>
+
+<h5>12.1-7 MaximalDClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The maximal \(\mathscr{D}\)-classes of a semigroup.</p>
+
+<p><code class="code">MaximalDClasses</code> returns the maximal \(\mathscr{D}\)-classes with respect to the partial order of \(\mathscr{D}\)-classes.</p>
+
+<p>See also <code class="func">PartialOrderOfDClasses</code> (<a href="chap12_mj.html#X83F1C306846DF26B"><span class="RefLink">12.1-10</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="../../../doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), and <code class="func">MinimalDClass</code> (<a href="chap12_mj.html#X81E5A04F7DA3A1E1"><span class="RefLink">12.1-6</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalDClasses(BrauerMonoid(8));</span>
+[ &lt;Green's D-class: &lt;block bijection: [ 1, -1 ], [ 2, -2 ], 
+      [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], 
+      [ 8, -8 ]&gt;&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalDClasses(FullTransformationMonoid(5));</span>
+[ &lt;Green's D-class: IdentityTransformation&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4, 5, 6, 7], [3, 8, 1, 4, 5, 6, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 6, 8], [2, 6, 7, 1, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4, 6, 8], [4, 3, 2, 7, 6, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 4, 5, 6, 7, 8], [7, 1, 4, 2, 5, 6, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MaximalDClasses(S);</span>
+[ &lt;Green's D-class: [2,8](1,3)(4)(5)(6)(7)&gt;, 
+  &lt;Green's D-class: [8,3](1,7,6,5,2)(4)&gt; ]</pre></div>
+
+<p><a id="X7AA3F0A77D0043FB" name="X7AA3F0A77D0043FB"></a></p>
+
+<h5>12.1-8 NrRegularDClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrRegularDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A positive integer, or a list.</p>
+
+<p><code class="code">NrRegularDClasses</code> returns the number of regular \(\mathscr{D}\)-classes of the semigroup <var class="Arg">S</var>.</p>
+
+<p><code class="code">RegularDClasses</code> returns a list of the regular \(\mathscr{D}\)-classes of the semigroup <var class="Arg">S</var>.</p>
+
+<p>See also <code class="func">IsRegularGreensClass</code> (<a href="chap12_mj.html#X859DD1C079C80DCC"><span class="RefLink">12.3-2</span></a>) and <code class="func">IsRegularDClass</code> (<a href="../../../doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 4, 1, 3, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 1, 6, 1, 6, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRegularDClasses(S);</span>
+3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrDClasses(S);</span>
+7
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSet(RegularDClasses(S));</span>
+[ &lt;Green's D-class: Transformation( [ 1, 3, 4, 1, 3, 3 ] )&gt;, 
+  &lt;Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )&gt;, 
+  &lt;Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )&gt; ]</pre></div>
+
+<p><a id="X7E45FD9F7BADDFBD" name="X7E45FD9F7BADDFBD"></a></p>
+
+<h5>12.1-9 <span class="Heading">NrXClasses</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrDClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrHClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrLClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrRClasses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A positive integer.</p>
+
+<p><code class="code">NrXClasses</code> returns the number of Green's classes in <var class="Arg">obj</var> where <var class="Arg">obj</var> can be a semigroup, \(\mathscr{D}\)-, \(\mathscr{L}\)-, or \(\mathscr{R}\)-class where appropriate. If the actual Green's classes are not required, then it is more efficient to use</p>
+
+
+<div class="example"><pre>NrHClasses(obj)</pre></div>
+
+<p>than</p>
+
+
+<div class="example"><pre>Length(HClasses(obj))</pre></div>
+
+<p>since the Green's classes themselves are not created when <code class="code">NrXClasses</code> is called.</p>
+
+<p>See also <code class="func">GreensRClasses</code> (<a href="chap12_mj.html#X7D51218A80234DE5"><span class="RefLink">12.1-4</span></a>), <code class="func">GreensRClasses</code> (<a href="../../../doc/ref/chap51_mj.html#X844D20467A644811"><span class="RefLink">Reference: GreensRClasses</span></a>), <code class="func">IteratorOfRClasses</code> (<a href="chap12_mj.html#X867D7B8982915960"><span class="RefLink">12.2-2</span></a>), and <code class="func">IteratorOfRClassReps</code> (<a href="chap12_mj.html#X8566F84A7F6D4193"><span class="RefLink">12.2-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 5, 4, 3, 8, 7, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 6, 3, 4, 7, 2, 5, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([2, 1, 6, 7, 8, 3, 4, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([3, 2, 3, 6, 1, 6, 1, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([5, 2, 3, 6, 3, 4, 7, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([2, 5, 4, 7, 4, 3, 6, 3]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RClass(S, x);</span>
+&lt;Green's R-class: Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrHClasses(R);</span>
+12
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(R);</span>
+&lt;Green's D-class: Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrHClasses(D);</span>
+72
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LClass(S, x);</span>
+&lt;Green's L-class: Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrHClasses(L);</span>
+6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrHClasses(S);</span>
+1555
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([4, 6, 5, 2, 1, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([6, 3, 2, 5, 4, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([1, 2, 4, 3, 5, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 5, 6, 1, 2, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 3, 6, 6, 6, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 3, 2, 6, 4, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 1, 2, 2, 2, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([4, 4, 1, 2, 1, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRClasses(S);</span>
+150
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+6342
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([1, 3, 3, 1, 3, 5]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(S, x);</span>
+&lt;Green's D-class: Transformation( [ 2, 4, 2, 2, 2, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRClasses(D);</span>
+87
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrDClasses(S); NrRClasses(S); NrHClasses(S); NrLClasses(S);</span>
+11
+1024
+184756
+1024
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := POPI(10);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrDClasses(S);</span>
+11
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRClasses(S);</span>
+1024</pre></div>
+
+<p><a id="X83F1C306846DF26B" name="X83F1C306846DF26B"></a></p>
+
+<h5>12.1-10 PartialOrderOfDClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderOfDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The partial order of the \(\mathscr{D}\)-classes of <var class="Arg">S</var>.</p>
+
+<p>Returns a list <code class="code">list</code> where <code class="code">list[i]</code> contains every <code class="code">j</code> such that <code class="code">GreensDClasses(S)[j]</code> is immediately less than <code class="code">GreensDClasses(S)[i]</code> in the partial order of \(\mathscr{D}\)- classes of <var class="Arg">S</var>. There might be other indices in <code class="code">list</code>, and it may or may not include <code class="code">i</code>. The reflexive transitive closure of the relation defined by <code class="code">list</code> is the partial order of \(\mathscr{D}\)-classes of <var class="Arg">S</var>.</p>
+
+<p>The partial order on the \(\mathscr{D}\)-classes is defined by <span class="SimpleMath">\(x\leq y\)</span> if and only if <span class="SimpleMath">\(S ^ 1xS ^ 1\)</span> is a subset of <span class="SimpleMath">\(S ^ 1yS ^ 1\)</span>.</p>
+
+<p>See also <code class="func">GreensDClasses</code> (<a href="chap12_mj.html#X7D51218A80234DE5"><span class="RefLink">12.1-4</span></a>), <code class="func">GreensDClasses</code> (<a href="../../../doc/ref/chap51_mj.html#X844D20467A644811"><span class="RefLink">Reference: GreensDClasses</span></a>), <code class="func">IsGreensLessThanOrEqual</code> (<a href="../../../doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>), and <code class="func">\&lt;</code> (<a href="chap12_mj.html#X85F30ACF86C3A733"><span class="RefLink">12.3-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 4, 1, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 3, 4, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PartialOrderOfDClasses(S);</span>
+[ [ 3 ], [ 2, 3 ], [ 3, 4 ], [ 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(GreensDClasses(S)[1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           GreensDClasses(S)[2]);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(GreensDClasses(S)[2],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           GreensDClasses(S)[1]);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(GreensDClasses(S)[3],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           GreensDClasses(S)[1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3], [1, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 3, 5], [5, 1, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+58
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PartialOrderOfDClasses(S);</span>
+[ [ 1, 3 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ], [ 5 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(GreensDClasses(S)[1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           GreensDClasses(S)[2]);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(GreensDClasses(S)[5],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           GreensDClasses(S)[2]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(GreensDClasses(S)[3],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           GreensDClasses(S)[4]);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(GreensDClasses(S)[4],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           GreensDClasses(S)[3]);</span>
+true</pre></div>
+
+<p><a id="X83B0EDA57F1D2F97" name="X83B0EDA57F1D2F97"></a></p>
+
+<h5>12.1-11 LengthOfLongestDClassChain</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LengthOfLongestDClassChain</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A non-negative integer.</p>
+
+<p>If <var class="Arg">S</var> is a semigroup, then <code class="code">LengthOfLongestDClassChain</code> returns the length of the longest chain in the partial order defined by <code class="code">PartialOrderOfDClasses(<var class="Arg">S</var>)</code>. See <code class="func">PartialOrderOfDClasses</code> (<a href="chap12_mj.html#X83F1C306846DF26B"><span class="RefLink">12.1-10</span></a>).</p>
+
+<p>The partial order on the \(\mathscr{D}\)-classes is defined by <span class="SimpleMath">\(x\leq y\)</span> if and only if <span class="SimpleMath">\(S ^ 1xS ^ 1\)</span> is a subset of <span class="SimpleMath">\(S ^ 1yS ^ 1\)</span>. A <em>chain</em> of \(\mathscr{D}\)-classes is a collection of <code class="code">n</code> \(\mathscr{D}\)-classes <span class="SimpleMath">\(D_{1}, D_{2}, \ldots D_{n}\)</span> such that <span class="SimpleMath">\(D_{1} &lt; D_{2} &lt; \cdots &lt; D_{n}\)</span>. The <em>length</em> of such a chain is <code class="code">n - 1</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := TrivialSemigroup();;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LengthOfLongestDClassChain(S);</span>
+0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := ZeroSemigroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LengthOfLongestDClassChain(T);</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := MonogenicSemigroup(14, 7);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LengthOfLongestDClassChain(U);</span>
+13
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V := FullTransformationMonoid(6);</span>
+&lt;full transformation monoid of degree 6&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LengthOfLongestDClassChain(V);</span>
+5</pre></div>
+
+<p><a id="X7E872C5381D0DD8A" name="X7E872C5381D0DD8A"></a></p>
+
+<h5>12.1-12 IsGreensDGreaterThanFunc</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensDGreaterThanFunc</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A function.</p>
+
+<p><code class="code">IsGreensDGreaterThanFunc(<var class="Arg">S</var>)</code> returns a function <code class="code">func</code> such that for any two elements <code class="code">x</code> and <code class="code">y</code> of <var class="Arg">S</var>, <code class="code">func(x, y)</code> return <code class="keyw">true</code> if the \(\mathscr{D}\)-class of <code class="code">x</code> in <var class="Arg">S</var> is greater than or equal to the \(\mathscr{D}\)-class of <code class="code">y</code> in <var class="Arg">S</var> under the usual ordering of Green's \(\mathscr{D}\)-classes of a semigroup.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 4, 1, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 4, 1, 5, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 5, 3, 5, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 5, 1, 1, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">reps := ShallowCopy(AsSet(DClassReps(S)));</span>
+[ Transformation( [ 1, 1, 1, 1, 1 ] ), 
+  Transformation( [ 1, 3, 1, 3, 3 ] ), 
+  Transformation( [ 1, 3, 4, 1, 3 ] ), 
+  Transformation( [ 2, 4, 1, 5, 5 ] ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sort(reps, IsGreensDGreaterThanFunc(S));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">reps;</span>
+[ Transformation( [ 2, 4, 1, 5, 5 ] ), 
+  Transformation( [ 1, 3, 4, 1, 3 ] ), 
+  Transformation( [ 1, 3, 1, 3, 3 ] ), 
+  Transformation( [ 1, 1, 1, 1, 1 ] ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(DClass(S, reps[2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           DClass(S, reps[1]));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensDGreaterThanFunc(S)(S.1, S.3);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensDGreaterThanFunc(S)(S.3, S.1);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(DClass(S, S.3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           DClass(S, S.1));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(DClass(S, S.1),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                           DClass(S, S.3));</span>
+false</pre></div>
+
+<p><a id="X819CCBD67FD27115" name="X819CCBD67FD27115"></a></p>
+
+<h4>12.2 <span class="Heading">
+      Iterators and enumerators of classes and representatives
+    </span></h4>
+
+<p>In this section, we describe the methods in the <strong class="pkg">Semigroups</strong> package for incrementally determining Green's classes or their representatives.</p>
+
+<p><a id="X8566F84A7F6D4193" name="X8566F84A7F6D4193"></a></p>
+
+<h5>12.2-1 <span class="Heading">IteratorOfXClassReps</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfDClassReps</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfHClassReps</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfLClassReps</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfRClassReps</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: An iterator.</p>
+
+<p>Returns an iterator of the representatives of the Green's classes contained in the semigroup <var class="Arg">S</var>. See <a href="../../../doc/ref/chap30_mj.html#X85A3F00985453F95"><span class="RefLink">Reference: Iterators</span></a> for more information on iterators.</p>
+
+<p>See also <code class="func">GreensRClasses</code> (<a href="../../../doc/ref/chap51_mj.html#X844D20467A644811"><span class="RefLink">Reference: GreensRClasses</span></a>), <code class="func">GreensRClasses</code> (<a href="chap12_mj.html#X7D51218A80234DE5"><span class="RefLink">12.1-4</span></a>), and <code class="func">IteratorOfRClasses</code> (<a href="chap12_mj.html#X867D7B8982915960"><span class="RefLink">12.2-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([3, 2, 1, 5, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 4, 3, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 4, 3, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 5, 4, 5, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([4, 5, 4, 3, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iter := IteratorOfRClassReps(S);</span>
+&lt;iterator of R-class reps&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextIterator(iter);</span>
+Transformation( [ 3, 2, 1, 5, 4 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextIterator(iter);</span>
+Transformation( [ 5, 5, 4, 5, 1 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iter;</span>
+&lt;iterator of R-class reps&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file := PackageInfo("semigroups")[1]!.InstallationPath;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file := Concatenation(file, "/data/doc/greens.pickle");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(ReadGenerators(file, 1));</span>
+&lt;inverse partial perm semigroup of rank 983 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrMovedPoints(S);</span>
+983
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iter := IteratorOfLClassReps(S);</span>
+&lt;iterator of L-class reps&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NextIterator(iter);</span>
+&lt;partial perm on 634 pts with degree 1000, codegree 1000&gt;</pre></div>
+
+<p><a id="X867D7B8982915960" name="X867D7B8982915960"></a></p>
+
+<h5>12.2-2 <span class="Heading">IteratorOfXClasses</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfDClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfHClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfLClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfRClasses</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: An iterator.</p>
+
+<p>Returns an iterator of the Green's classes in the semigroup <var class="Arg">S</var>. See <a href="../../../doc/ref/chap30_mj.html#X85A3F00985453F95"><span class="RefLink">Reference: Iterators</span></a> for more information on iterators.</p>
+
+<p>This function is useful if you are, for example, looking for an \(\mathscr{R}\)-class of a semigroup with a particular property but do not necessarily want to compute all of the \(\mathscr{R}\)-classes.</p>
+
+<p>See also <code class="func">GreensRClasses</code> (<a href="chap12_mj.html#X7D51218A80234DE5"><span class="RefLink">12.1-4</span></a>), <code class="func">GreensRClasses</code> (<a href="../../../doc/ref/chap51_mj.html#X844D20467A644811"><span class="RefLink">Reference: GreensRClasses</span></a>), <code class="func">NrRClasses</code> (<a href="chap12_mj.html#X7E45FD9F7BADDFBD"><span class="RefLink">12.1-9</span></a>), and <code class="func">IteratorOfRClassReps</code> (<a href="chap12_mj.html#X8566F84A7F6D4193"><span class="RefLink">12.2-1</span></a>).</p>
+
+<p>The transformation semigroup in the example below has 25147892 elements but it only takes a fraction of a second to find a non-trivial \(\mathscr{R}\)-class. The inverse semigroup of partial permutations in the example below has size 158122047816 but it only takes a fraction of a second to find an \(\mathscr{R}\)-class with more than 1000 elements.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := [Transformation([2, 4, 1, 5, 4, 4, 7, 3, 8, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([3, 2, 8, 8, 4, 4, 8, 6, 5, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([4, 10, 6, 6, 1, 2, 4, 10, 9, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([6, 2, 2, 4, 9, 9, 5, 10, 1, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([6, 4, 1, 6, 6, 8, 9, 6, 2, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([6, 8, 1, 10, 6, 4, 9, 1, 9, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([8, 6, 2, 3, 3, 4, 8, 6, 2, 9]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([9, 1, 2, 8, 1, 5, 9, 9, 9, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([9, 3, 1, 5, 10, 3, 4, 6, 10, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            Transformation([10, 7, 3, 7, 1, 9, 8, 8, 4, 10])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(gens);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iter := IteratorOfRClasses(S);</span>
+&lt;iterator of R-classes&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for R in iter do</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  if Size(R) &gt; 1 then</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    break;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R;</span>
+&lt;Green's R-class: Transformation( [ 6, 4, 1, 6, 6, 8, 9, 6, 2, 2 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(R);</span>
+21600
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 5, 6, 7, 10, 11, 19, 20],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [19, 4, 11, 15, 3, 20, 1, 14, 8, 13, 17]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 6, 7, 8, 14, 15, 16, 17],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [15, 14, 20, 19, 4, 5, 1, 13, 11, 10, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 4, 6, 7, 8, 9, 10, 14, 15, 18],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [7, 2, 17, 10, 1, 19, 9, 3, 11, 16, 18]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 5, 7, 8, 9, 11, 12, 13, 16],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [8, 3, 18, 1, 4, 13, 12, 7, 19, 20, 2, 11]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 5, 6, 7, 9, 11, 15, 16, 17, 20],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [7, 17, 13, 4, 6, 9, 18, 10, 11, 19, 5, 2, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 18],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [10, 20, 11, 7, 13, 8, 4, 9, 2, 18, 17, 6, 15]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 17, 18],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [10, 20, 18, 1, 14, 16, 9, 5, 15, 4, 8, 12, 19, 11]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 15, 16, 19, 20],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [13, 6, 1, 2, 11, 7, 16, 18, 9, 10, 4, 14, 15, 5, 17]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 20],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [5, 3, 12, 9, 20, 15, 8, 16, 13, 1, 17, 11, 14, 10, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 17, 18, 19, 20],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [8, 3, 9, 20, 2, 12, 14, 15, 4, 18, 13, 1, 17, 19, 5]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iter := IteratorOfRClasses(S);</span>
+&lt;iterator of R-classes&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">repeat</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  R := NextIterator(iter);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">until Size(R) &gt; 1000;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R;</span>
+&lt;Green's R-class: [8,3][11,5][13,1][15,2][17,6][19,7]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(R);</span>
+10020240</pre></div>
+
+<p><a id="X820EF2BA7D5D53B4" name="X820EF2BA7D5D53B4"></a></p>
+
+<h4>12.3 <span class="Heading">
+      Properties of Green's classes
+    </span></h4>
+
+<p>In this section, we describe the properties and operators of Green's classes that are available in the <strong class="pkg">Semigroups</strong> package</p>
+
+<p><a id="X85F30ACF86C3A733" name="X85F30ACF86C3A733"></a></p>
+
+<h5>12.3-1 <span class="Heading">Less than for Green's classes</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">left-expr</var>, <var class="Arg">right-expr</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>The Green's class <var class="Arg">left-expr</var> is less than or equal to <var class="Arg">right-expr</var> if they belong to the same semigroup and the representative of <var class="Arg">left-expr</var> is less than the representative of <var class="Arg">right-expr</var> under <code class="code">&lt;</code>; see also <code class="func">Representative</code> (<a href="../../../doc/ref/chap30_mj.html#X865507568182424E"><span class="RefLink">Reference: Representative</span></a>).</p>
+
+<p>Please note that this is not the usual order on the Green's classes of a semigroup as defined in <a href="../../../doc/ref/chap51_mj.html#X80C6C718801855E9"><span class="RefLink">Reference: Green's Relations</span></a>. See also <code class="func">IsGreensLessThanOrEqual</code> (<a href="../../../doc/ref/chap51_mj.html#X7AA204C8850F9070"><span class="RefLink">Reference: IsGreensLessThanOrEqual</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationSemigroup(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := GreensRClassOfElement(S, Transformation([2, 1, 3, 1]));</span>
+&lt;Green's R-class: Transformation( [ 2, 1, 3, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := GreensRClassOfElement(S, Transformation([1, 2, 3, 4]));</span>
+&lt;Green's R-class: IdentityTransformation&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A &lt; B;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B &lt; A;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(A, B);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(B, A);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := GreensJClassOfElement(S, PartialPerm([1, 3, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := GreensJClassOfElement(S, PartialPerm([3, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A &lt; B;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B &lt; A;</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(A, B);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensLessThanOrEqual(B, A);</span>
+true</pre></div>
+
+<p><a id="X859DD1C079C80DCC" name="X859DD1C079C80DCC"></a></p>
+
+<h5>12.3-2 IsRegularGreensClass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegularGreensClass</code>( <var class="Arg">class</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This function returns <code class="keyw">true</code> if <var class="Arg">class</var> is a regular Green's class and <code class="keyw">false</code> if it is not. See also <code class="func">IsRegularDClass</code> (<a href="../../../doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>), <code class="func">IsGroupHClass</code> (<a href="../../../doc/ref/chap51_mj.html#X79D740EF7F0E53BD"><span class="RefLink">Reference: IsGroupHClass</span></a>), <code class="func">GroupHClassOfGreensDClass</code> (<a href="../../../doc/ref/chap51_mj.html#X7CB4A18685B850E2"><span class="RefLink">Reference: GroupHClassOfGreensDClass</span></a>), <code class="func">GroupHClass</code> (<a href="chap12_mj.html#X8723756387DD4C0F"><span class="RefLink">12.4-1</span></a>), <code class="func">NrIdempotents</code> (<a href="chap13_mj.html#X7CFC4DB387452320"><span class="RefLink">13.9-2</span></a>), <code class="func">Idempotents</code> (<a href="chap13_mj.html#X7C651C9C78398FFF"><span class="RefLink">13.9-1</span></a>), and <code class="func">IsRegularSemigroupElement</code> (<a href="../../../doc/ref/chap51_mj.html#X87532A76854347E0"><span class="RefLink">Reference: IsRegularSemigroupElement</span></a>).</p>
+
+<p>The function <code class="code">IsRegularDClass</code> produces the same output as the <strong class="pkg">GAP</strong> library functions with the same name; see <code class="func">IsRegularDClass</code> (<a href="../../../doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid(Transformation([10, 8, 7, 4, 1, 4, 10, 10, 7, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">               Transformation([5, 2, 5, 5, 9, 10, 8, 3, 8, 10]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation([1, 1, 10, 8, 8, 8, 1, 1, 10, 8]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RClass(S, f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularGreensClass(R);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid(Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">               Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RClass(S, f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularGreensClass(R);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrIdempotents(R);</span>
+0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 1, 3, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([4, 2, 3, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation([4, 2, 3, 3]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := GreensLClassOfElement(S, f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularGreensClass(L);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := GreensRClassOfElement(S, f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularGreensClass(R);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := Transformation([4, 4, 4, 4]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularSemigroupElement(S, g);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularGreensClass(LClass(S, g));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularGreensClass(RClass(S, g));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularDClass(DClass(S, g));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DClass(S, g) = RClass(S, g);</span>
+false</pre></div>
+
+<p><a id="X7E9BD34B8021045A" name="X7E9BD34B8021045A"></a></p>
+
+<h5>12.3-3 IsGreensClassNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensClassNC</code>( <var class="Arg">class</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>A Green's class <var class="Arg">class</var> of a semigroup <code class="code">S</code> satisfies <code class="code">IsGreensClassNC</code> if it was not known to <strong class="pkg">GAP</strong> that the representative of <var class="Arg">class</var> was an element of <code class="code">S</code> at the point that <var class="Arg">class</var> was created.</p>
+
+<p><a id="X855723B17D4AAF8F" name="X855723B17D4AAF8F"></a></p>
+
+<h4>12.4 <span class="Heading">
+      Attributes of Green's classes
+    </span></h4>
+
+<p>In this section, we describe the attributes of Green's classes that are available in the <strong class="pkg">Semigroups</strong> package</p>
+
+<p><a id="X8723756387DD4C0F" name="X8723756387DD4C0F"></a></p>
+
+<h5>12.4-1 GroupHClass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupHClass</code>( <var class="Arg">class</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A group \(\mathscr{H}\)-class of the \(\mathscr{D}\)-class <var class="Arg">class</var> if it is regular and <code class="keyw">fail</code> if it is not.</p>
+
+<p><code class="code">GroupHClass</code> is a synonym for <code class="func">GroupHClassOfGreensDClass</code> (<a href="../../../doc/ref/chap51_mj.html#X7CB4A18685B850E2"><span class="RefLink">Reference: GroupHClassOfGreensDClass</span></a>).</p>
+
+<p>See also <code class="func">IsGroupHClass</code> (<a href="../../../doc/ref/chap51_mj.html#X79D740EF7F0E53BD"><span class="RefLink">Reference: IsGroupHClass</span></a>), <code class="func">IsRegularDClass</code> (<a href="../../../doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>), <code class="func">IsRegularGreensClass</code> (<a href="chap12_mj.html#X859DD1C079C80DCC"><span class="RefLink">12.3-2</span></a>), and <code class="func">IsRegularSemigroup</code> (<a href="chap14_mj.html#X7C4663827C5ACEF1"><span class="RefLink">14.1-16</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 6, 7, 2, 6, 1, 1, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 8, 1, 4, 5, 6, 7, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iter := IteratorOfDClasses(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">repeat D := NextIterator(iter); until IsRegularDClass(D);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D;</span>
+&lt;Green's D-class: Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrIdempotents(D);</span>
+12
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRClasses(D);</span>
+8
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrLClasses(D);</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHClass(D);</span>
+&lt;Green's H-class: Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHClassOfGreensDClass(D);</span>
+&lt;Green's H-class: Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(GroupHClass(D));</span>
+"S3"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">repeat D := NextIterator(iter); until not IsRegularDClass(D);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D;</span>
+&lt;Green's D-class: Transformation( [ 7, 5, 2, 2, 6, 1, 1, 2 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularDClass(D);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GroupHClass(D);</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([2, 1, 6, 0, 3]), PartialPerm([3, 5, 2, 0, 0, 6]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([1 .. 3], [6, 3, 1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">First(DClasses(S), x -&gt; not IsTrivial(GroupHClass(x)));</span>
+&lt;Green's D-class: &lt;identity partial perm on [ 1, 2 ]&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(GroupHClass(last));</span>
+"C2"</pre></div>
+
+<p><a id="X84F1321E8217D2A8" name="X84F1321E8217D2A8"></a></p>
+
+<h5>12.4-2 SchutzenbergerGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SchutzenbergerGroup</code>( <var class="Arg">class</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A group.</p>
+
+<p><code class="code">SchutzenbergerGroup</code> returns the generalized Schutzenberger group (defined below) of the \(\mathscr{R}\)-, \(\mathscr{D}\)-, \(\mathscr{L}\)-, or \(\mathscr{H}\)-class <var class="Arg">class</var>.</p>
+
+<p>If <code class="code">f</code> is an element of a semigroup of transformations or partial permutations and <code class="code">im(f)</code> denotes the image of <code class="code">f</code>, then the <em>generalized Schutzenberger group</em> of <code class="code">im(f)</code> is the permutation group</p>
+
+<p class="center">\[
+    \{\:g|_{\textrm{im}(f)}\::\:\textrm{im}(f*g)=\textrm{im}(f)\:\}.
+  \]</p>
+
+<p>The generalized Schutzenberger group of the kernel <code class="code">ker(f)</code> of a transformation <code class="code">f</code> or the domain <code class="code">dom(f)</code> of a partial permutation <code class="code">f</code> is defined analogously.</p>
+
+<p>The generalized Schutzenberger group of a Green's class is then defined as follows.</p>
+
+
+<dl>
+<dt><strong class="Mark">\(\mathscr{R}\)-class</strong></dt>
+<dd><p>The generalized Schutzenberger group of the image or range of the representative of the \(\mathscr{R}\)-class.</p>
+
+</dd>
+<dt><strong class="Mark">\(\mathscr{L}\)-class</strong></dt>
+<dd><p>The generalized Schutzenberger group of the kernel or domain of the representative of the \(\mathscr{L}\)-class.</p>
+
+</dd>
+<dt><strong class="Mark">\(\mathscr{H}\)-class</strong></dt>
+<dd><p>The intersection of the generalized Schutzenberger groups of the \(\mathscr{R}\)- and \(\mathscr{L}\)-class containing the \(\mathscr{H}\)-class.</p>
+
+</dd>
+<dt><strong class="Mark">\(\mathscr{D}\)-class</strong></dt>
+<dd><p>The intersection of the generalized Schutzenberger groups of the \(\mathscr{R}\)- and \(\mathscr{L}\)-class containing the representative of the \(\mathscr{D}\)-class.</p>
+
+</dd>
+</dl>
+<p>The output of this attribute is difficult to describe for other types of semigroup. However, a general description is given in <a href="chapBib_mj.html#biBEast2015aa">[EEMP15]</a>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([4, 4, 3, 5, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 1, 1, 4, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 5, 4, 4, 5]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation([5, 5, 4, 4, 5]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchutzenbergerGroup(RClass(S, f));</span>
+Group([ (4,5) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 7],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [9, 2, 4, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 6, 7, 8, 9, 10],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [6, 8, 4, 5, 9, 1, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 5, 6, 7, 8, 9],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [7, 4, 1, 6, 9, 5, 2, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(DClasses(S), SchutzenbergerGroup);</span>
+[ Group(()), Group(()), Group(()), Group(()), Group([ (4,9) ]), 
+  Group(()), Group(()), Group([ (5,8,6), (5,8) ]), Group(()), 
+  Group(()), Group(()), Group(()), Group(()), Group(()), 
+  Group([ (1,7,5,6,9,3) ]), Group([ (1,6)(3,5) ]), Group(()), 
+  Group(()), Group(()), Group(()), Group(()), Group(()), Group(()) ]</pre></div>
+
+<p><a id="X81202126806443F9" name="X81202126806443F9"></a></p>
+
+<h5>12.4-3 StructureDescriptionSchutzenbergerGroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StructureDescriptionSchutzenbergerGroups</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: Distinct structure descriptions of the Schutzenberger groups of a semigroup.</p>
+
+<p><code class="code">StructureDescriptionSchutzenbergerGroups</code> returns the distinct values of <code class="func">StructureDescription</code> (<a href="../../../doc/ref/chap39_mj.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>) when it is applied to the Schutzenberger groups of the \(\mathscr{R}\)-classes of the semigroup <var class="Arg">S</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3], [2, 5, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3], [4, 1, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3], [5, 2, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 4, 5], [2, 1, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 5], [2, 3, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 5], [2, 3, 5, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 5], [4, 2, 5, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 5], [5, 2, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 5], [5, 4, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescriptionSchutzenbergerGroups(S);</span>
+[ "1", "C2", "S3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 5, -1, -2], [3, 4, -3, -5], [-4]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, -2], [3, -1], [4], [5], [-3, -4], [-5]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1], [2, 3, -5], [4, -3], [5, -2], [-1, -4]]));</span>
+&lt;bipartition monoid of degree 5 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescriptionSchutzenbergerGroups(S);</span>
+[ "1", "C2" ]</pre></div>
+
+<p><a id="X838F43FE79A8C678" name="X838F43FE79A8C678"></a></p>
+
+<h5>12.4-4 StructureDescriptionMaximalSubgroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StructureDescriptionMaximalSubgroups</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: Distinct structure descriptions of the maximal subgroups of a semigroup.</p>
+
+<p><code class="code">StructureDescriptionMaximalSubgroups</code> returns the distinct values of <code class="func">StructureDescription</code> (<a href="../../../doc/ref/chap39_mj.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>) when it is applied to the maximal subgroups of the semigroup <var class="Arg">S</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseSemigroup(6);</span>
+&lt;inverse block bijection monoid of degree 6 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescriptionMaximalSubgroups(S);</span>
+[ "1", "C2", "S3", "S4", "S5", "S6" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 3, 4, 5, 8],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [8, 3, 9, 4, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 8],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [10, 4, 1, 9, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 5, 6, 7, 10],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [4, 1, 6, 7, 5, 3, 2, 10]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 6, 8, 10],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [4, 9, 10, 3, 1, 5, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescriptionMaximalSubgroups(S);</span>
+[ "1", "C2", "C3", "C4" ]</pre></div>
+
+<p><a id="X8459E4067C5773AD" name="X8459E4067C5773AD"></a></p>
+
+<h5>12.4-5 MultiplicativeNeutralElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplicativeNeutralElement</code>( <var class="Arg">H</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<p>Returns: A semigroup element or <code class="keyw">fail</code>.</p>
+
+<p>If the \(\mathscr{H}\)-class <var class="Arg">H</var> of a semigroup <code class="code">S</code> is a subgroup of <code class="code">S</code>, then <code class="code">MultiplicativeNeutralElement</code> returns the identity of <var class="Arg">H</var>. If <var class="Arg">H</var> is not a subgroup of <code class="code">S</code>, then <code class="keyw">fail</code> is returned.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([PartialPerm([1, 5, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([2, 0, 4]), PartialPerm([4, 1, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 0, 3, 0, 4]), PartialPerm([1, 2, 0, 3, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 3, 2, 0, 5]), PartialPerm([5, 0, 0, 4, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := HClass(S, PartialPerm([1, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeNeutralElement(H);</span>
+&lt;identity partial perm on [ 1, 2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := HClass(S, PartialPerm([1, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeNeutralElement(H);</span>
+fail</pre></div>
+
+<p><a id="X85B34FFB82C83127" name="X85B34FFB82C83127"></a></p>
+
+<h5>12.4-6 StructureDescription</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StructureDescription</code>( <var class="Arg">class</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A string or <code class="keyw">fail</code>.</p>
+
+<p><code class="code">StructureDescription</code> returns the value of <code class="func">StructureDescription</code> (<a href="../../../doc/ref/chap39_mj.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>) when it is applied to a group isomorphic to the group \(\mathscr{H}\)-class <var class="Arg">class</var>. If <var class="Arg">class</var> is not a group \(\mathscr{H}\)-class, then <code class="keyw">fail</code> is returned.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4, 6, 7, 8, 9],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [1, 9, 4, 3, 5, 2, 10, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 4, 7, 8, 9],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [6, 2, 4, 9, 1, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := HClass(S, PartialPerm([1, 2, 3, 4, 7, 9],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                              [1, 7, 3, 4, 9, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(H);</span>
+"C6"</pre></div>
+
+<p><a id="X7EBB4F1981CC2AE9" name="X7EBB4F1981CC2AE9"></a></p>
+
+<h5>12.4-7 InjectionPrincipalFactor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InjectionPrincipalFactor</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InjectionNormalizedPrincipalFactor</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroup</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A injective mapping.</p>
+
+<p>If the \(\mathscr{D}\)-class <var class="Arg">D</var> is a subsemigroup of a semigroup <code class="code">S</code>, then the <em>principal factor</em> of <var class="Arg">D</var> is just <var class="Arg">D</var> itself. If <var class="Arg">D</var> is not a subsemigroup of <code class="code">S</code>, then the principal factor of <var class="Arg">D</var> is the semigroup with elements <var class="Arg">D</var> and a new element <code class="code">0</code> with multiplication of <span class="SimpleMath">\(x,y\in D\)</span> defined by:</p>
+
+<p class="center">\[
+        xy=\left\{\begin{array}{ll}
+        x*y\ (\textrm{in }S)&amp;\textrm{if }x*y\in D\\
+        0&amp;\textrm{if }xy\not\in D.
+        \end{array}\right.
+      \]</p>
+
+<p><code class="code">InjectionPrincipalFactor</code> returns an injective function from the \(\mathscr{D}\)-class <var class="Arg">D</var> to a Rees (0-)matrix semigroup, which contains the principal factor of <var class="Arg">D</var> as a subsemigroup.</p>
+
+<p>If <var class="Arg">D</var> is a subsemigroup of its parent semigroup, then the function returned by <code class="code">InjectionPrincipalFactor</code> or <code class="code">IsomorphismReesMatrixSemigroup</code> is an isomorphism from <var class="Arg">D</var> to a Rees matrix semigroup; see <code class="func">ReesMatrixSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X8526AA557CDF6C49"><span class="RefLink">Reference: ReesMatrixSemigroup</span></a>).</p>
+
+<p>If <var class="Arg">D</var> is not a semigroup, then the function returned by <code class="code">InjectionPrincipalFactor</code> is an injective function from <var class="Arg">D</var> to a Rees 0-matrix semigroup isomorphic to the principal factor of <var class="Arg">D</var>; see <code class="func">ReesZeroMatrixSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X8526AA557CDF6C49"><span class="RefLink">Reference: ReesZeroMatrixSemigroup</span></a>). In this case, <code class="code">IsomorphismReesMatrixSemigroup</code> and <code class="code">IsomorphismReesZeroMatrixSemigroup</code> returns an error.</p>
+
+<p><code class="code">InjectionNormalizedPrincipalFactor</code> returns the composition of <code class="code">InjectionPrincipalFactor</code> with <code class="func">RZMSNormalization</code> (<a href="chap6_mj.html#X870210EA7912B52A"><span class="RefLink">6.5-6</span></a>) or <code class="func">RMSNormalization</code> (<a href="chap6_mj.html#X80DE617E841E5BA0"><span class="RefLink">6.5-7</span></a>) as appropriate.</p>
+
+<p>See also <code class="func">PrincipalFactor</code> (<a href="chap12_mj.html#X86C6D777847AAEC7"><span class="RefLink">12.4-8</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 6, 8, 10],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [2, 6, 7, 9, 1, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4, 6, 7, 8, 10],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [3, 8, 1, 9, 4, 10, 5, 6]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([1, 2, 5, 6, 7, 9],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                    [1, 2, 5, 6, 7, 9]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClassOfElement(S, x);</span>
+&lt;Green's D-class: &lt;identity partial perm on [ 1, 2, 5, 6, 7, 9 ]&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Range(InjectionPrincipalFactor(D));</span>
+&lt;Rees 0-matrix semigroup 3x3 over Group(())&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MatrixOfReesZeroMatrixSemigroup(R);</span>
+[ [ (), 0, 0 ], [ 0, (), 0 ], [ 0, 0, () ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(R);</span>
+10
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(D);</span>
+9
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, -3, -5], [4], [5, -2], [-1, -4]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 3, 5], [2, 4, -3], [-1, -2, -4, -5]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 5, -2, -4], [2, 3, 4, -1, -5], [-3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 5, -1, -2, -3], [2, 4, -4], [3, -5]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClassOfElement(S,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 5, -2, -4], [2, 3, 4, -1, -5], [-3]]));</span>
+&lt;Green's D-class: &lt;bipartition: [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ]
+   , [ -3 ]&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InjectionNormalizedPrincipalFactor(D);</span>
+MappingByFunction( &lt;Green's D-class: &lt;bipartition: [ 1, 5, -2, -4 ], 
+  [ 2, 3, 4, -1, -5 ], [ -3 ]&gt;&gt;, &lt;Rees matrix semigroup 1x1 over 
+  Group([ (1,2) ])&gt;, function( x ) ... end, function( x ) ... end )</pre></div>
+
+<p><a id="X86C6D777847AAEC7" name="X86C6D777847AAEC7"></a></p>
+
+<h5>12.4-8 PrincipalFactor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrincipalFactor</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalizedPrincipalFactor</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A Rees (0-)matrix semigroup.</p>
+
+<p>If <var class="Arg">D</var> is a \(\mathscr{D}\)-class of semigroup, then <code class="code">PrincipalFactor(<var class="Arg">D</var>)</code> is just shorthand for <code class="code">Range(InjectionPrincipalFactor(<var class="Arg">D</var>))</code>, and <code class="code">NormalizedPrincipalFactor(<var class="Arg">D</var>)</code> is shorthand for <code class="code">Range(InjectionNormalizedPrincipalFactor(<var class="Arg">D</var>))</code>.</p>
+
+<p>See <code class="func">InjectionPrincipalFactor</code> (<a href="chap12_mj.html#X7EBB4F1981CC2AE9"><span class="RefLink">12.4-7</span></a>) and <code class="func">InjectionNormalizedPrincipalFactor</code> (<a href="chap12_mj.html#X7EBB4F1981CC2AE9"><span class="RefLink">12.4-7</span></a>) for more details.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([PartialPerm([1, 2, 3], [1, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3], [2, 5, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 3, 5], [5, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrincipalFactor(MinimalDClass(S));</span>
+&lt;Rees matrix semigroup 1x1 over Group(())&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZero(S);</span>
+&lt;empty partial perm&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, 4, 5, -1, -3], [-2, -5], [-4]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -5], [2, 3, 4, 5, -1, -3], [-2, -4]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 5, -4], [2, 4, -1, -5], [3, -2, -3]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := MinimalDClass(S);</span>
+&lt;Green's D-class: &lt;bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], 
+  [ -2, -5 ], [ -4 ]&gt;&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalizedPrincipalFactor(D);</span>
+&lt;Rees matrix semigroup 1x5 over Group(())&gt;</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap11_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap13_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

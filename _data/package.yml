@@ -1,6 +1,6 @@
 name: Semigroups
-version: 2.8.0
-date: 26/05/2016
+version: 3.0.0
+date: 02/06/2017
 description: 
 
 authors:
@@ -11,26 +11,26 @@ maintainers:
     - name: J. D. Mitchell
       url: http://www-groups.mcs.st-andrews.ac.uk/~jamesm/
 
-GAP: ">=4.8.3"
+GAP: ">=4.9.0"
 
 needed-pkgs:
     - name: "orb"
-      version: ">=4.7.3"
+      version: ">=4.7.5"
       url: "https://gap-packages.github.io/orb"
     - name: "io"
       version: ">=4.4.4"
-      url: "https://gap-packages.github.io/io"
+      url: "http://gap-system.github.io/io/"
+    - name: "digraphs"
+      version: ">=0.7.1"
+      url: "https://gap-packages.github.io/Digraphs"
+    - name: "genss"
+      version: ">=1.5"
+      url: "http://gap-system.github.io/genss/"
 
 suggested-pkgs:
     - name: "gapdoc"
       version: ">=1.5.1"
       url: "http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
-    - name: "grape"
-      version: ">=4.5"
-      url: "http://www.maths.qmul.ac.uk/~leonard/grape/"
-    - name: "genss"
-      version: ">=1.5"
-      url: "https://gap-packages.github.io/genss"
 
 www: https://gap-packages.github.io/Semigroups
 readme: https://gap-packages.github.io/Semigroups/README.md
@@ -38,16 +38,44 @@ packageinfo: https://gap-packages.github.io/Semigroups/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/Semigroups/releases/download/v2.8.0/semigroups-2.8.0.tar.gz
+      url: https://github.com/gap-packages/Semigroups/releases/download/v3.0.0/semigroups-3.0.0.tar.gz
 
-abstract: <p>The <strong class="pkg">Semigroups</strong> package is a <strong class="pkg">GAP</strong> package containing methods for semigroups, monoids, and inverse semigroups, principally of transformations, partial permutations, bipartitions, subsemigroups of regular Rees 0-matrix semigroups, free inverse semigroups, free bands, and semigroups of matrices over finite fields.</p> <p><strong class="pkg">Semigroups</strong> contains more efficient methods than those available in the <strong class="pkg">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups, monoids, and inverse semigroup, calculating their Green's structure, ideals, size, elements, group of units, small generating sets, testing membership, finding the inverses of a regular element, factorizing elements over the generators, and many more. It is also possible to test if a semigroup satisfies a particular property, such as if it is regular, simple, inverse, completely regular, and a variety of further properties.</p> <p>There are methods for finding congruences of certain types of semigroups, the normalizer of a semigroup in a permutation group, the maximal subsemigroups of a finite semigroup, and smaller degree partial permutation representations of inverse semigroups. There are functions for producing pictures of the Green's structure of a semigroup, and for drawing bipartitions.</p>
+abstract: <p>
+The <strong class=\"pkg\">Semigroups</strong> package is a <strong
+class=\"pkg\">GAP</strong> package containing methods for semigroups, monoids,
+and inverse semigroups.  There are particularly efficient methods for
+semigroups or ideals consisting of transformations, partial permutations,
+bipartitions, partitioned binary relations, subsemigroups of regular Rees
+0-matrix semigroups, and matrices of various semirings including boolean
+matrices, matrices over finite fields, and certain tropical matrices.
+</p>
+
+<p>
+<strong class=\"pkg\">Semigroups</strong> contains efficient methods for
+creating semigroups, monoids, and inverse semigroup, calculating their Green's
+structure, ideals, size, elements, group of units, small generating sets,
+testing membership, finding the inverses of a regular element, factorizing
+elements over the generators, and so on. It is possible to test if a semigroup
+satisfies a particular property, such as if it is regular, simple, inverse,
+completely regular, and a variety of further properties.
+</p>
+
+<p>
+There are methods for finding presentations for a semigroup, the
+congruences of a semigroup, the normalizer of a semigroup in a permutation
+group, the maximal subsemigroups of a finite semigroup, smaller degree
+partial permutation representations, and the character tables of inverse
+semigroups. There are functions for producing pictures of the Green's
+structure of a semigroup, and for drawing graphical representations of
+certain types of elements.
+</p>
 
 status: deposited
 doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 
-month: May
-year: 2016
+month: Jun
+year: 2017
 
 contributors:
     - name: M. Delgado
@@ -68,6 +96,6 @@ contributors:
       url: http://math.sci.ccny.cuny.edu/people?name=Jhevon_Smith
     - name: M. Torpey
       url: http://www-circa.mcs.st-and.ac.uk/~mct25/
-    - name: W. Wilson
+    - name: W. A. Wilson
       url: http://wilf.me
 

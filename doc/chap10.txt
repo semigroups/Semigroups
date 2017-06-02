@@ -1,283 +1,398 @@
   
-  [1X10 [33X[0;0YOrbits[133X[101X
+  [1X10 [33X[0;0YFree objects[133X[101X
+  
+  [33X[0;0YThis  chapter  describes  the  functions in [5XSemigroups[105X for dealing with free
+  inverse semigroups and free bands. This part of the manual and the functions
+  described herein were written by Julius Jonušas.[133X
   
   
-  [1X10.1 [33X[0;0YLooking for something in an orbit[133X[101X
+  [1X10.1 [33X[0;0YFree inverse semigroups[133X[101X
   
-  [33X[0;0YThe  functions  described  in  this  section  supplement  the [5XOrb[105X package by
-  providing methods for finding something in an orbit, with the possibility of
-  continuing the orbit enumeration at some later point.[133X
+  [33X[0;0YAn inverse semigroup [22XF[122X is said to be [13Xfree[113X on a non-empty set [22XX[122X if there is a
+  map [22Xf[122X from [22XF[122X to [22XX[122X such that for every inverse semigroup [22XS[122X and a map [22Xg[122X from [22XX[122X
+  to  [22XS[122X  there  exists a unique homomorphism [22Xg'[122X from [22XF[122X to [22XS[122X such that [22Xfg' = g[122X.
+  Moreover,  by  this  universal  property,  every  inverse  semigroup  can be
+  expressed as a quotient of a free inverse semigroup.[133X
   
-  [1X10.1-1 EnumeratePosition[101X
+  [33X[0;0YThe internal representation of an element of a free inverse semigroup uses a
+  Munn  tree.  A  [13XMunn  tree[113X  is  a directed tree with distinguished start and
+  terminal  vertices and where the edges are labeled by generators so that two
+  edges  labeled by the same generator are only incident to the same vertex if
+  one  of the edges is coming in and the other is leaving the vertex. For more
+  information  regarding  free inverse semigroups and the Munn representations
+  see Section 5.10 of [How95].[133X
   
-  [29X[2XEnumeratePosition[102X( [3Xo[103X, [3Xval[103X[, [3Xonlynew[103X] ) [32X function
-  [6XReturns:[106X  [33X[0;10YA positive integer or [9Xfail[109X.[133X
+  [33X[0;0YSee  also  [14X'Reference:  Inverse semigroups and monoids'[114X, [14X'Reference: Partial
+  permutations'[114X and [14X'Reference: Free Groups, Monoids and Semigroups'[114X.[133X
   
-  [33X[0;0YThis  function returns the position of the value [3Xval[103X in the orbit [3Xo[103X. If [3Xo[103X is
-  closed,  then this is equivalent to doing [10XPosition([3Xo[103X[10X, [3Xval[103X[10X)[110X. However, if [3Xo[103X is
-  open,  then  the  orbit  is enumerated until [3Xval[103X is found, in which case the
-  position  of [3Xval[103X is returned, or the enumeration ends, in which case [9Xfail[109X is
-  returned.[133X
+  [33X[0;0YAn  element  of  a  free  inverse  semigroup  in [5XSemigroups[105X is displayed, by
+  default,  as  a  shortest  word corresponding to the element. However, there
+  might  be  more than one word of the minimum length. For example, if [22Xx[122X and [22Xy[122X
+  are generators of a free inverse semigroups, then[133X
   
-  [33X[0;0YIf  the optional argument [3Xonlynew[103X is present, it should be [9Xtrue[109X or [9Xfalse[109X. If
-  [3Xonlynew[103X  is  [9Xtrue[109X,  then  [3Xval[103X  will only be checked against new points in [3Xo[103X.
-  Otherwise, every point in the [3Xo[103X, not only the new ones, is considered.[133X
   
-  [1X10.1-2 LookForInOrb[101X
+        [33X[1;6Y[24X[33X[0;0Yxyy ^ {-1}xx ^ {-1}x ^ {-1} = xxx ^ {-1}yy ^ {-1}x ^ {-1}.[133X [124X[133X
   
-  [29X[2XLookForInOrb[102X( [3Xo[103X, [3Xfunc[103X, [3Xstart[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10Y[9Xfalse[109X or a positive integer.[133X
   
-  [33X[0;0YThe  arguments  of this function should be an orbit [3Xo[103X, a function [3Xfunc[103X which
-  gets  the orbit object and a point in the orbit as arguments, and a positive
-  integer  [3Xstart[103X.  The  function  [3Xfunc[103X  will  be  called  for every point in [3Xo[103X
-  starting  from [3Xstart[103X (inclusive) and the orbit will be enumerated until [3Xfunc[103X
-  returns  [9Xtrue[109X  or  the enumeration ends. In the former case, the position of
-  the  first  point  in  [3Xo[103X for which [3Xfunc[103X returns [9Xtrue[109X is returned, and in the
-  latter [9Xfalse[109X is returned.[133X
+  [33X[0;0YSee [2XMinimalWord[102X ([14X10.3-2[114X). Therefore we provide a another method for printing
+  elements  of  a  free inverse semigroup: a unique canonical form. Suppose an
+  element  of  a  free inverse semigroup is given as a Munn tree. Let [22XL[122X be the
+  set  of  words  corresponding to the shortest paths from the start vertex to
+  the  leaves  of the tree. Also let [22Xw[122X be a word corresponding to the shortest
+  path  from start to terminal vertices. The word [22Xvv ^ -1[122X is an idempotent for
+  every  [22Xv[122X in [22XL[122X. The canonical form is given by multiplying these idempotents,
+  in  shortlex order, and then postmultiplying by [22Xw[122X. For example, consider the
+  word  [22Xxyy  ^  -1xx ^ -1x ^ -1[122X again. The words corresponding to the paths to
+  the  leaves  are  in this case [22Xxx[122X and [22Xxy[122X. And [22Xw[122X is an empty word since start
+  and terminal vertices are the same. Therefore, the canonical form is[133X
+  
+  
+        [33X[1;6Y[24X[33X[0;0Yxxx ^ {-1}x ^ {-1}xyy ^ {-1}x ^ {-1}.[133X [124X[133X
+  
+  
+  [33X[0;0YSee [2XCanonicalForm[102X ([14X10.3-1[114X).[133X
+  
+  [1X10.1-1 FreeInverseSemigroup[101X
+  
+  [29X[2XFreeInverseSemigroup[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function
+  [29X[2XFreeInverseSemigroup[102X( [3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function
+  [29X[2XFreeInverseSemigroup[102X( [3Xnames[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA free inverse semigroup.[133X
+  
+  [33X[0;0YReturns  a  free  inverse  semigroup  on  [3Xrank[103X  generators,  where [3Xrank[103X is a
+  positive  integer. If [3Xrank[103X is not specified, the number of [3Xnames[103X is used. If
+  [10XS[110X  is  a free inverse semigroup, then the generators can be accessed by [10XS.1[110X,
+  [10XS.2[110X and so on.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xo:=Orb(SymmetricGroup(100), 1, OnPoints);[127X[104X
-    [4X[28X<open Int-orbit, 1 points>[128X[104X
-    [4X[25Xgap>[125X [27Xfunc:=function(o, x) return x=42; end;[127X[104X
-    [4X[28Xfunction( o, x ) ... end[128X[104X
-    [4X[25Xgap>[125X [27XLookForInOrb(o, func, 1);[127X[104X
-    [4X[28X42[128X[104X
-    [4X[25Xgap>[125X [27Xo;[127X[104X
-    [4X[28X<open Int-orbit, 42 points>[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(7);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [128X[104X
+    [4X[28X[ x1, x2, x3, x4, x5, x6, x7 ]>[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(7, "s");[127X[104X
+    [4X[28X<free inverse semigroup on the generators [128X[104X
+    [4X[28X[ s1, s2, s3, s4, s5, s6, s7 ]>[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup("a", "b", "c");[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(["a", "b", "c"]);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XS.1;[127X[104X
+    [4X[28Xa[128X[104X
+    [4X[25Xgap>[125X [27XS.2;[127X[104X
+    [4X[28Xb[128X[104X
+  [4X[32X[104X
+  
+  [1X10.1-2 IsFreeInverseSemigroupCategory[101X
+  
+  [29X[2XIsFreeInverseSemigroupCategory[102X( [3Xobj[103X ) [32X Category
+  
+  [33X[0;0YEvery free inverse semigroup in [5XGAP[105X created by [2XFreeInverseSemigroup[102X ([14X10.1-1[114X)
+  belongs  to the category [10XIsFreeInverseSemigroup[110X. Basic operations for a free
+  inverse     semigroup    are:    [2XGeneratorsOfInverseSemigroup[102X    ([14XReference:
+  GeneratorsOfInverseSemigroup[114X)    and    [2XGeneratorsOfSemigroup[102X    ([14XReference:
+  GeneratorsOfSemigroup[114X).  Elements  of a free inverse semigroup belong to the
+  category [2XIsFreeInverseSemigroupElement[102X ([14X10.1-4[114X).[133X
+  
+  [1X10.1-3 IsFreeInverseSemigroup[101X
+  
+  [29X[2XIsFreeInverseSemigroup[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YAttempts  to  determine  whether  the  given  semigroup  [3XS[103X is a free inverse
+  semigroup.[133X
+  
+  [1X10.1-4 IsFreeInverseSemigroupElement[101X
+  
+  [29X[2XIsFreeInverseSemigroupElement[102X[32X Category
+  
+  [33X[0;0YEvery   element  of  a  free  inverse  semigroup  belongs  to  the  category
+  [10XIsFreeInverseSemigroupElement[110X.[133X
+  
+  [1X10.1-5 IsFreeInverseSemigroupElementCollection[101X
+  
+  [29X[2XIsFreeInverseSemigroupElementCollection[102X[32X Category
+  
+  [33X[0;0YEvery  collection  of  elements  of  a free inverse semigroup belongs to the
+  category  [10XIsFreeInverseSemigroupElementCollection[110X.  For  example, every free
+  inverse semigroup belongs to [10XIsFreeInverseSemigroupElementCollection[110X.[133X
+  
+  
+  [1X10.2 [33X[0;0YDisplaying free inverse semigroup elements[133X[101X
+  
+  [33X[0;0YThere  is  a  way to change how [5XGAP[105X displays free inverse semigroup elements
+  using    the   user   preference   [10XFreeInverseSemigroupElementDisplay[110X.   See
+  [2XUserPreference[102X  ([14XReference:  UserPreference[114X) for more information about user
+  preferences.[133X
+  
+  [33X[0;0YThere are two possible values for [10XFreeInverseSemigroupElementDisplay[110X:[133X
+  
+  [8Xminimal [108X
+        [33X[0;6YWith   this   option  selected,  [5XGAP[105X  will  display  a  shortest  word
+        corresponding  to  the  free  inverse semigroup element. However, this
+        shortest word is not unique. This is a default setting.[133X
+  
+  [8Xcanonical[108X
+        [33X[0;6YWith  this  option selected, [5XGAP[105X will display a free inverse semigroup
+        element in the canonical form.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSetUserPreference("semigroups",[127X[104X
+    [4X[25X>[125X [27X                     "FreeInverseSemigroupElementDisplay",[127X[104X
+    [4X[25X>[125X [27X                     "minimal");[127X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(2);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ x1, x2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XS.1 * S.2;[127X[104X
+    [4X[28Xx1*x2[128X[104X
+    [4X[25Xgap>[125X [27XSetUserPreference("semigroups",[127X[104X
+    [4X[25X>[125X [27X                     "FreeInverseSemigroupElementDisplay",[127X[104X
+    [4X[25X>[125X [27X                     "canonical");[127X[104X
+    [4X[25Xgap>[125X [27XS.1 * S.2;[127X[104X
+    [4X[28Xx1x2x2^-1x1^-1x1x2[128X[104X
   [4X[32X[104X
   
   
-  [1X10.2 [33X[0;0YStrongly connected components of orbits[133X[101X
+  [1X10.3 [33X[0;0YOperators and operations for free inverse semigroup elements[133X[101X
   
-  [33X[0;0YThe  functions  described  in  this  section  supplement  the [5XOrb[105X package by
-  providing methods for operations related to strongly connected components of
-  orbits.[133X
+  [8X[10X[3Xw[103X[10X ^ -1[110X[108X
+        [33X[0;6Yreturns the semigroup inverse of the free inverse semigroup element [3Xw[103X.[133X
   
-  [33X[0;0YIf  any  of  the  functions  is  applied to an open orbit, then the orbit is
-  completely enumerated before any further calculation is performed. It is not
-  possible  to  calculate  the  strongly connected components of an orbit of a
-  semigroup acting on a set until the entire orbit has been found.[133X
+  [8X[10X[3Xu[103X[10X * [3Xv[103X[10X[110X[108X
+        [33X[0;6Yreturns the product of two free inverse semigroup elements [3Xu[103X and [3Xv[103X.[133X
   
-  [1X10.2-1 OrbSCC[101X
+  [8X[10X[3Xu[103X[10X = [3Xv[103X[10X [110X[108X
+        [33X[0;6Ychecks  if two free inverse semigroup elements are equal, by comparing
+        their canonical forms.[133X
   
-  [29X[2XOrbSCC[102X( [3Xo[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YThe strongly connected components of an orbit.[133X
+  [1X10.3-1 CanonicalForm[101X
   
-  [33X[0;0YIf [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X,
-  then  [10XOrbSCC[110X  returns  a  set of sets of positions in [3Xo[103X corresponding to its
-  strongly connected components.[133X
+  [29X[2XCanonicalForm[102X( [3Xw[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA string.[133X
   
-  [33X[0;0YSee also [2XOrbSCCLookup[102X ([14X10.2-2[114X) and [2XOrbSCCTruthTable[102X ([14X10.2-3[114X).[133X
+  [33X[0;0YEvery  element of a free inverse semigroup has a unique canonical form. If [3Xw[103X
+  is  such an element, then [10XCanonicalForm[110X returns the canonical form of [3Xw[103X as a
+  string.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=FullTransformationSemigroup(4);;[127X[104X
-    [4X[25Xgap>[125X [27Xo:=LambdaOrb(S);[127X[104X
-    [4X[28X<open orbit, 1 points with Schreier tree with log>[128X[104X
-    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
-    [4X[28X[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], [128X[104X
-    [4X[28X  [ 13, 14, 15, 16 ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(3);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ x1, x2, x3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := S.1; y := S.2;[127X[104X
+    [4X[28Xx1[128X[104X
+    [4X[28Xx2[128X[104X
+    [4X[25Xgap>[125X [27XCanonicalForm(x ^ 3 * y ^ 3);[127X[104X
+    [4X[28X"x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"[128X[104X
   [4X[32X[104X
   
-  [1X10.2-2 OrbSCCLookup[101X
+  [1X10.3-2 MinimalWord[101X
   
-  [29X[2XOrbSCCLookup[102X( [3Xo[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YA lookup table for the strongly connected components of an orbit.[133X
+  [29X[2XMinimalWord[102X( [3Xw[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA string.[133X
   
-  [33X[0;0YIf [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X,
-  then  [10XOrbSCCLookup[110X  returns  a  lookup  table  for  its  strongly  connected
-  components.  More  precisely,  [10XOrbSCCLookup(o)[i][110X  equals  the  index of the
-  strongly connected component containing [10Xo[i][110X.[133X
+  [33X[0;0YFor  an  element [3Xw[103X of a free inverse semigroup [10XS[110X, [10XMinimalWord[110X returns a word
+  of minimal length equal to [3Xw[103X in [10XS[110X as a string.[133X
   
-  [33X[0;0YSee also [2XOrbSCC[102X ([14X10.2-1[114X) and [2XOrbSCCTruthTable[102X ([14X10.2-3[114X).[133X
+  [33X[0;0YNote that there maybe more than one word of minimal length which is equal to
+  [3Xw[103X in [10XS[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=FullTransformationSemigroup(4);;[127X[104X
-    [4X[25Xgap>[125X [27Xo:=LambdaOrb(S);;[127X[104X
-    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
-    [4X[28X[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], [128X[104X
-    [4X[28X  [ 13, 14, 15, 16 ] ][128X[104X
-    [4X[25Xgap>[125X [27XOrbSCCLookup(o);[127X[104X
-    [4X[28X[ 1, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5 ][128X[104X
-    [4X[25Xgap>[125X [27XOrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; [127X[104X
-    [4X[28X1[128X[104X
-    [4X[28X3[128X[104X
-    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeInverseSemigroup(3);[127X[104X
+    [4X[28X<free inverse semigroup on the generators [ x1, x2, x3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := S.1;[127X[104X
+    [4X[28Xx1[128X[104X
+    [4X[25Xgap>[125X [27Xy := S.2;[127X[104X
+    [4X[28Xx2[128X[104X
+    [4X[25Xgap>[125X [27XMinimalWord(x ^ 3 * y ^ 3);[127X[104X
+    [4X[28X"x1*x1*x1*x2*x2*x2"[128X[104X
   [4X[32X[104X
   
-  [1X10.2-3 OrbSCCTruthTable[101X
   
-  [29X[2XOrbSCCTruthTable[102X( [3Xo[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YTruth tables for strongly connected components of an orbit.[133X
+  [1X10.4 [33X[0;0YFree bands[133X[101X
   
-  [33X[0;0YIf [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X,
-  then   [10XOrbSCCTruthTable[110X   returns   a   list  of  boolean  lists  such  that
-  [10XOrbSCCTruthTable(o)[i][j][110X is [9Xtrue[109X if [10Xj[110X belongs to [10XOrbSCC(o)[i][110X.[133X
+  [33X[0;0YA  semigroup [22XB[122X is a [13Xfree band[113X on a non-empty set [22XX[122X if [22XB[122X is a band with a map
+  [22Xf[122X  from  [22XB[122X to [22XX[122X such that for every band [22XS[122X and every map [22Xg[122X from [22XX[122X to [22XB[122X there
+  exists a unique homomorphism [22Xg'[122X from [22XB[122X to [22XS[122X such that [22Xfg' = g[122X. The free band
+  on a set [22XX[122X is unique up to isomorphism. Moreover, by the universal property,
+  every band can be expressed as a quotient of a free band.[133X
   
-  [33X[0;0YSee also [2XOrbSCC[102X ([14X10.2-1[114X) and [2XOrbSCCLookup[102X ([14X10.2-2[114X).[133X
+  [33X[0;0YFor an alternative description of a free band. Suppose that [22XX[122X is a non-empty
+  set  and  [22XX  ^  +[122X a free semigroup on [22XX[122X. Also suppose that [22Xb[122X is the smallest
+  congurance on [22XX ^ +[122X containing the set[133X
+  
+  
+        [33X[1;6Y[24X[33X[0;0Y\{(w ^ 2, w) : w \in X ^ + \}.[133X [124X[133X
+  
+  
+  [33X[0;0YThen  the  free  band  on [22XX[122X is isomorphic to the quotient of [22XX ^ +[122X by [22Xb[122X. See
+  Section 4.5 of [How95] for more information on free bands.[133X
+  
+  [1X10.4-1 FreeBand[101X
+  
+  [29X[2XFreeBand[102X( [3Xrank[103X[, [3Xname[103X] ) [32X function
+  [29X[2XFreeBand[102X( [3Xname1[103X, [3Xname2[103X, [3X..[103X, [3X.[103X ) [32X function
+  [29X[2XFreeBand[102X( [3Xnames[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA free band.[133X
+  
+  [33X[0;0YReturns a free band on [3Xrank[103X generators, for a positive integer [3Xrank[103X. If [3Xrank[103X
+  is  not  specified,  the number of [3Xnames[103X is used. The resulting semigroup is
+  always finite.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=FullTransformationSemigroup(4);;[127X[104X
-    [4X[25Xgap>[125X [27Xo:=LambdaOrb(S);;[127X[104X
-    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
-    [4X[28X[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], [128X[104X
-    [4X[28X  [ 13, 14, 15, 16 ] ][128X[104X
-    [4X[25Xgap>[125X [27XOrbSCCTruthTable(o);[127X[104X
-    [4X[28X[ [ true, false, false, false, false, false, false, false, false, [128X[104X
-    [4X[28X      false, false, false, false, false, false, false ], [128X[104X
-    [4X[28X  [ false, true, false, false, false, false, false, false, false, [128X[104X
-    [4X[28X      false, false, false, false, false, false, false ], [128X[104X
-    [4X[28X  [ false, false, true, true, true, true, false, false, false, false, [128X[104X
-    [4X[28X      false, false, false, false, false, false ], [128X[104X
-    [4X[28X  [ false, false, false, false, false, false, true, true, true, true, [128X[104X
-    [4X[28X      true, true, false, false, false, false ], [128X[104X
-    [4X[28X  [ false, false, false, false, false, false, false, false, false, [128X[104X
-    [4X[28X      false, false, false, true, true, true, true ] ][128X[104X
+    [4X[25Xgap>[125X [27XFreeBand(6);[127X[104X
+    [4X[28X<free band on the generators [ x1, x2, x3, x4, x5, x6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeBand(6, "b");[127X[104X
+    [4X[28X<free band on the generators [ b1, b2, b3, b4, b5, b6 ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeBand("a", "b", "c");[127X[104X
+    [4X[28X<free band on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XFreeBand("a", "b", "c");[127X[104X
+    [4X[28X<free band on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeBand(["a", "b", "c"]);[127X[104X
+    [4X[28X<free band on the generators [ a, b, c ]>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X159[128X[104X
+    [4X[25Xgap>[125X [27Xgens := Generators(S);[127X[104X
+    [4X[28X[ a, b, c ][128X[104X
+    [4X[25Xgap>[125X [27XS.1 * S.2;[127X[104X
+    [4X[28Xab[128X[104X
   [4X[32X[104X
   
-  [1X10.2-4 ReverseSchreierTreeOfSCC[101X
+  [1X10.4-2 IsFreeBandCategory[101X
   
-  [29X[2XReverseSchreierTreeOfSCC[102X( [3Xo[103X, [3Xi[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YThe  reverse  Schreier  tree  corresponding  to  the  [3Xi[103Xth strongly
-            connected component of an orbit.[133X
+  [29X[2XIsFreeBandCategory[102X[32X Category
   
-  [33X[0;0YIf  [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X
-  and    action    [10Xact[110X,    and    [3Xi[103X    is    a    positive    integer,    then
-  [10XReverseSchreierTreeOfSCC([3Xo[103X[10X,  [3Xi[103X[10X)[110X  returns  a  pair [10X[ gen, pos ][110X of lists with
-  [10XLength(o)[110X entries such that[133X
+  [33X[0;0Y[10XIsFreeBandCategory[110X  is  the  category  of  semigroups created using [2XFreeBand[102X
+  ([14X10.4-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28Xact(o[j], o!.gens[gen[j]])=o[pos[j]].[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandCategory(FreeBand(3));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(SymmetricGroup(6));[127X[104X
+    [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  pair [10X[ gen, pos ][110X corresponds to a tree with root [10XOrbSCC(o)[i][1][110X and a
-  path from every element of [10XOrbSCC(o)[i][110X to the root.[133X
+  [1X10.4-3 IsFreeBand[101X
   
-  [33X[0;0YSee    also    [2XOrbSCC[102X    ([14X10.2-1[114X),    [2XTraceSchreierTreeOfSCCBack[102X   ([14X10.2-6[114X),
-  [2XSchreierTreeOfSCC[102X ([14X10.2-5[114X), and [2XTraceSchreierTreeOfSCCForward[102X ([14X10.2-7[114X).[133X
+  [29X[2XIsFreeBand[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsFreeBand[110X returns [9Xtrue[109X if the given semigroup [3XS[103X is a free band.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), [127X[104X
-    [4X[25X>[125X [27XTransformation( [ 3, 3, 3, 4, 5 ] ),[127X[104X
-    [4X[25X>[125X [27XTransformation( [ 5, 1, 4, 5, 5 ] ) );;[127X[104X
-    [4X[25Xgap>[125X [27Xo:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;[127X[104X
-    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
-    [4X[28X[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ][128X[104X
-    [4X[25Xgap>[125X [27XReverseSchreierTreeOfSCC(o, 3);[127X[104X
-    [4X[28X[ [ ,, fail,, 2, 1, 2,,,, 1 ], [ ,, fail,, 3, 5, 3,,,, 7 ] ][128X[104X
-    [4X[25Xgap>[125X [27XReverseSchreierTreeOfSCC(o, 7);[127X[104X
-    [4X[28X[ [ ,,,,,,,,, fail,, 3 ], [ ,,,,,,,,, fail,, 10 ] ][128X[104X
-    [4X[25Xgap>[125X [27XOnSets(o[11], Generators(S)[1]);[127X[104X
-    [4X[28X[ 1, 4 ][128X[104X
-    [4X[25Xgap>[125X [27XPosition(o, last);[127X[104X
-    [4X[28X7[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(FreeBand(3));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(SymmetricGroup(6));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(FullTransformationMonoid(7));[127X[104X
+    [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X10.2-5 SchreierTreeOfSCC[101X
+  [1X10.4-4 IsFreeBandElement[101X
   
-  [29X[2XSchreierTreeOfSCC[102X( [3Xo[103X, [3Xi[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YThe  Schreier  tree  corresponding  to  the [3Xi[103Xth strongly connected
-            component of an orbit.[133X
+  [29X[2XIsFreeBandElement[102X[32X Category
   
-  [33X[0;0YIf  [3Xo[103X is an orbit created by the [5XOrb[105X package with the option [10Xorbitgraph=true[110X
-  and  action  [10Xact[110X,  and [3Xi[103X is a positive integer, then [10XSchreierTreeOfSCC([3Xo[103X[10X, [3Xi[103X[10X)[110X
-  returns a pair [10X[ gen, pos ][110X of lists with [10XLength(o)[110X entries such that[133X
+  [33X[0;0Y[10XIsFreeBandElement[110X is a [10XCategory[110X containing the elements of a free band.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28Xact(o[pos[j]], o!.gens[gen[j]])=o[j].[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandElement(Generators(FreeBand(4))[1]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandElement(Transformation([1, 3, 4, 1]));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandElement((1, 2, 3, 4));[127X[104X
+    [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  pair [10X[ gen, pos ][110X corresponds to a tree with root [10XOrbSCC(o)[i][1][110X and a
-  path from the root to every element of [10XOrbSCC(o)[i][110X.[133X
+  [1X10.4-5 IsFreeBandElementCollection[101X
   
-  [33X[0;0YSee    also    [2XOrbSCC[102X    ([14X10.2-1[114X),    [2XTraceSchreierTreeOfSCCBack[102X   ([14X10.2-6[114X),
-  [2XReverseSchreierTreeOfSCC[102X    ([14X10.2-4[114X),    and   [2XTraceSchreierTreeOfSCCForward[102X
-  ([14X10.2-7[114X).[133X
+  [29X[2XIsFreeBandElementCollection[102X[32X Category
+  
+  [33X[0;0YEvery  collection  of  elements  of  a  free  band  belongs  to the category
+  [10XIsFreeBandElementCollection[110X.   For  example,  every  free  band  belongs  to
+  [10XIsFreeBandElementCollection[110X.[133X
+  
+  [1X10.4-6 IsFreeBandSubsemigroup[101X
+  
+  [29X[2XIsFreeBandSubsemigroup[102X[32X filter
+  
+  [33X[0;0Y[10XIsFreeBandSubsemigroup[110X     is     a     synonym    for    [10XIsSemigroup[110X    and
+  [10XIsFreeBandElementCollection[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), [127X[104X
-    [4X[25X>[125X [27XTransformation( [ 3, 3, 3, 4, 5 ] ),[127X[104X
-    [4X[25X>[125X [27XTransformation( [ 5, 1, 4, 5, 5 ] ) );;[127X[104X
-    [4X[25Xgap>[125X [27Xo:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;[127X[104X
-    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
-    [4X[28X[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ][128X[104X
-    [4X[25Xgap>[125X [27XSchreierTreeOfSCC(o, 3);[127X[104X
-    [4X[28X[ [ ,, fail,, 1, 3, 1,,,, 2 ], [ ,, fail,, 7, 5, 3,,,, 6 ] ][128X[104X
-    [4X[25Xgap>[125X [27XSchreierTreeOfSCC(o, 7);[127X[104X
-    [4X[28X[ [ ,,,,,,,,, fail,, 1 ], [ ,,,,,,,,, fail,, 10 ] ][128X[104X
-    [4X[25Xgap>[125X [27XOnSets(o[6], Generators(S)[2]);[127X[104X
-    [4X[28X[ 3, 5 ][128X[104X
-    [4X[25Xgap>[125X [27XPosition(o, last);[127X[104X
-    [4X[28X11[128X[104X
+    [4X[25Xgap>[125X [27XS := FreeBand(2);[127X[104X
+    [4X[28X<free band on the generators [ x1, x2 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := S.1;[127X[104X
+    [4X[28Xx1[128X[104X
+    [4X[25Xgap>[125X [27Xy := S.2;[127X[104X
+    [4X[28Xx2[128X[104X
+    [4X[25Xgap>[125X [27Xnew := Semigroup([x * y, x]);[127X[104X
+    [4X[28X<semigroup with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBand(new);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFreeBandSubsemigroup(new);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X10.2-6 TraceSchreierTreeOfSCCBack[101X
+  [1X10.4-7 ContentOfFreeBandElement[101X
   
-  [29X[2XTraceSchreierTreeOfSCCBack[102X( [3Xorb[103X, [3Xm[103X, [3Xnr[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA word in the generators.[133X
+  [29X[2XContentOfFreeBandElement[102X( [3Xx[103X ) [32X attribute
+  [29X[2XContentOfFreeBandElementCollection[102X( [3Xcoll[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA list of integers[133X
   
-  [33X[0;0Y[3Xorb[103X  must  be an orbit object with a Schreier tree and orbit graph, that is,
-  the  options  [10Xschreier[110X  and [10Xorbitgraph[110X must have been set to [9Xtrue[109X during the
-  creation  of  the  orbit,  [3Xm[103X  must  be  the  number  of a strongly connected
-  component  of  [3Xorb[103X, and [10Xnr[110X must be the number of a point in the [3Xm[103Xth strongly
-  connect component of [3Xorb[103X.[133X
+  [33X[0;0YThe  content  of a free band element [3Xx[103X is the set of generators appearing in
+  the word representing the element [3Xx[103X of the free band.[133X
   
-  [33X[0;0YThis  operation  traces  the result of [2XReverseSchreierTreeOfSCC[102X ([14X10.2-4[114X) and
-  with  arguments [3Xorb[103X and [3Xm[103X and returns a word in the generators that maps the
-  point  with  number  [3Xnr[103X  to  the  first  point in the [3Xm[103Xth strongly connected
-  component  of  [3Xorb[103X.  Here,  a  word  is  a  list of integers, where positive
-  integers   are   numbers   of   generators.   See   also   [2XOrbSCC[102X  ([14X10.2-1[114X),
-  [2XReverseSchreierTreeOfSCC[102X    ([14X10.2-4[114X),    [2XSchreierTreeOfSCC[102X   ([14X10.2-5[114X),   and
-  [2XTraceSchreierTreeOfSCCForward[102X ([14X10.2-7[114X).[133X
+  [33X[0;0YThe  function  [10XContentOfFreeBandElement[110X  returns  the  content  of free band
+  element  [3Xx[103X  represented  as a list of integers, where [10X1[110X represents the first
+  generator, [10X2[110X the second generator, and so on.[133X
+  
+  [33X[0;0YThe function [10XContentOfFreeBandElementCollection[110X returns the the least list [10XC[110X
+  for the collection of free band elements [3Xcoll[103X such that the content of every
+  element in [3Xcoll[103X is contained in [10XC[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), [127X[104X
-    [4X[25X>[125X [27XTransformation( [ 2, 4, 1, 2 ] ),[127X[104X
-    [4X[25X>[125X [27XTransformation( [ 3, 1, 1, 3 ] ), [127X[104X
-    [4X[25X>[125X [27XTransformation( [ 3, 3, 4, 1 ] ) );;[127X[104X
-    [4X[25Xgap>[125X [27Xo:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;[127X[104X
-    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
-    [4X[28X[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ][128X[104X
-    [4X[25Xgap>[125X [27XReverseSchreierTreeOfSCC(o, 4);               [127X[104X
-    [4X[28X[ [ ,,, fail, 4, 1, 1, 3 ], [ ,,, fail, 4, 4, 4, 4 ] ][128X[104X
-    [4X[25Xgap>[125X [27XTraceSchreierTreeOfSCCBack(o, 4, 7);[127X[104X
+    [4X[25Xgap>[125X [27XS := FreeBand(2);[127X[104X
+    [4X[28X<free band on the generators [ x1, x2 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := S.1;[127X[104X
+    [4X[28Xx1[128X[104X
+    [4X[25Xgap>[125X [27Xy := S.2;[127X[104X
+    [4X[28Xx2[128X[104X
+    [4X[25Xgap>[125X [27XContentOfFreeBandElement(x);[127X[104X
     [4X[28X[ 1 ][128X[104X
-    [4X[25Xgap>[125X [27XTraceSchreierTreeOfSCCBack(o, 4, 8);[127X[104X
-    [4X[28X[ 3 ][128X[104X
+    [4X[25Xgap>[125X [27XContentOfFreeBandElement(x * y);[127X[104X
+    [4X[28X[ 1, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XContentOfFreeBandElement(x * y * x);[127X[104X
+    [4X[28X[ 1, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XContentOfFreeBandElementCollection([x, y]);[127X[104X
+    [4X[28X[ 1, 2 ][128X[104X
   [4X[32X[104X
   
-  [1X10.2-7 TraceSchreierTreeOfSCCForward[101X
   
-  [29X[2XTraceSchreierTreeOfSCCForward[102X( [3Xorb[103X, [3Xm[103X, [3Xnr[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA word in the generators.[133X
+  [1X10.5 [33X[0;0YOperators and operations for free band elements[133X[101X
   
-  [33X[0;0Y[3Xorb[103X  must  be an orbit object with a Schreier tree and orbit graph, that is,
-  the  options  [10Xschreier[110X  and [10Xorbitgraph[110X must have been set to [9Xtrue[109X during the
-  creation  of  the  orbit,  [3Xm[103X  must  be  the  number  of a strongly connected
-  component  of  [3Xorb[103X, and [10Xnr[110X must be the number of a point in the [3Xm[103Xth strongly
-  connect component of [3Xorb[103X.[133X
+  [8X[10X[3Xu[103X[10X * [3Xv[103X[10X[110X[108X
+        [33X[0;6Yreturns the product of two free band elements [3Xu[103X and [3Xv[103X.[133X
   
-  [33X[0;0YThis  operation  traces  the  result  of [2XSchreierTreeOfSCC[102X ([14X10.2-5[114X) and with
-  arguments [3Xorb[103X and [3Xm[103X and returns a word in the generators that maps the first
-  point  in  the  [3Xm[103Xth  strongly  connected  component of [3Xorb[103X to the point with
-  number  [3Xnr[103X.  Here, a word is a list of integers, where positive integers are
-  numbers  of  generators.  See also [2XOrbSCC[102X ([14X10.2-1[114X), [2XReverseSchreierTreeOfSCC[102X
-  ([14X10.2-4[114X),   [2XSchreierTreeOfSCC[102X   ([14X10.2-5[114X),   and   [2XTraceSchreierTreeOfSCCBack[102X
-  ([14X10.2-6[114X).[133X
+  [8X[10X[3Xu[103X[10X = [3Xv[103X[10X [110X[108X
+        [33X[0;6Ychecks if two free band elements are equal.[133X
+  
+  [8X[10X[3Xu[103X[10X < [3Xv[103X[10X [110X[108X
+        [33X[0;6Ycompares  the  sizes  of the internal representations of two free band
+        elements.[133X
+  
+  [1X10.5-1 GreensDClassOfElement[101X
+  
+  [29X[2XGreensDClassOfElement[102X( [3XS[103X, [3Xx[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA Green's [13XD[113X-class[133X
+  
+  [33X[0;0YLet  [3XS[103X be a free band. Two elements of [3X S [103X are [13XD[113X-related if and only if they
+  have  the  same  content  i.e.  the  set  of  generators  appearing  in  any
+  factorization  of the elements. Therefore, a [13XD[113X-class of a free band element [3X
+  x [103X is the set of elements of [3X S [103X which have the same content as [3X x [103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), [127X[104X
-    [4X[25X>[125X [27XTransformation( [ 2, 4, 1, 2 ] ),[127X[104X
-    [4X[25X>[125X [27XTransformation( [ 3, 1, 1, 3 ] ), [127X[104X
-    [4X[25X>[125X [27XTransformation( [ 3, 3, 4, 1 ] ) );;[127X[104X
-    [4X[25Xgap>[125X [27Xo:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;[127X[104X
-    [4X[25Xgap>[125X [27XOrbSCC(o);[127X[104X
-    [4X[28X[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ][128X[104X
-    [4X[25Xgap>[125X [27XSchreierTreeOfSCC(o, 4);[127X[104X
-    [4X[28X[ [ ,,, fail, 1, 2, 2, 4 ], [ ,,, fail, 4, 4, 6, 4 ] ][128X[104X
-    [4X[25Xgap>[125X [27XTraceSchreierTreeOfSCCForward(o, 4, 8);[127X[104X
-    [4X[28X[ 4 ][128X[104X
-    [4X[25Xgap>[125X [27XTraceSchreierTreeOfSCCForward(o, 4, 7);[127X[104X
-    [4X[28X[ 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XS := FreeBand(3, "b");[127X[104X
+    [4X[28X<free band on the generators [ b1, b2, b3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := S.1 * S.2;[127X[104X
+    [4X[28Xb1b2[128X[104X
+    [4X[25Xgap>[125X [27XD := GreensDClassOfElement(S, x);[127X[104X
+    [4X[28X<Green's D-class: b1b2>[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensDClass(D);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   

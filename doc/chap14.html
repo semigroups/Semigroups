@@ -1,0 +1,862 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (semigroups) - Chapter 14: 
+    Properties of semigroups 
+  </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap14"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap14_mj.html">[MathJax on]</a></p>
+<p><a id="X78274024827F306D" name="X78274024827F306D"></a></p>
+<div class="ChapSects"><a href="chap14.html#X78274024827F306D">14 <span class="Heading">
+    Properties of semigroups 
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X78274024827F306D">14.1 <span class="Heading">
+      Properties of semigroups
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7C8DB14587D1B55A">14.1-1 IsBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X79659C467C8A7EBD">14.1-2 IsBlockGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X843EFDA4807FDC31">14.1-3 IsCommutativeSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7AFA23AF819FBF3D">14.1-4 IsCompletelyRegularSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X855088F378D8F5E1">14.1-5 IsCongruenceFreeSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X852F29E8795FA489">14.1-6 IsGroupAsSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X835484C481CF3DDD">14.1-7 <span class="Heading">IsIdempotentGenerated</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8206D2B0809952EF">14.1-8 IsLeftSimple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7E9261367C8C52C0">14.1-9 IsLeftZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X79D46BAB7E327AD1">14.1-10 IsMonogenicSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X790DC9F4798DBB09">14.1-11 IsMonogenicMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7E4DEECD7CD9886D">14.1-12 IsMonoidAsSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7935C476808C8773">14.1-13 IsOrthodoxSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7E9B674D781B072C">14.1-14 IsRectangularBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X80E682BB78547F41">14.1-15 IsRectangularGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7C4663827C5ACEF1">14.1-16 IsRegularSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7CB099958658F979">14.1-17 IsRightZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8752642C7F7E512B">14.1-18 <span class="Heading">IsXTrivial</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7826DDF8808EC4D9">14.1-19 IsSemigroupWithAdjoinedZero</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X833D24AE7C900B85">14.1-20 IsSemilattice</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X836F4692839F4874">14.1-21 <span class="Heading">IsSimpleSemigroup</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7EEC85187D315398">14.1-22 IsSynchronizingSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X80F9A4B87997839F">14.1-23 IsUnitRegularMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X85F7E5CD86F0643B">14.1-24 IsZeroGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7C6787D07B95B450">14.1-25 IsZeroRectangularBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X81A1882181B75CC9">14.1-26 IsZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8193A60F839C064E">14.1-27 IsZeroSimpleSemigroup</a></span>
+</div></div>
+</div>
+
+<h3>14 <span class="Heading">
+    Properties of semigroups 
+  </span></h3>
+
+<p>In this chapter we decribe the methods that are available in <strong class="pkg">Semigroups</strong> for determining various properties of a semigroup.</p>
+
+<p><a id="X78274024827F306D" name="X78274024827F306D"></a></p>
+
+<h4>14.1 <span class="Heading">
+      Properties of semigroups
+    </span></h4>
+
+<p>In this section we describe the properties of a semigroup that can be determined using the <strong class="pkg">Semigroups</strong> package.</p>
+
+<p><a id="X7C8DB14587D1B55A" name="X7C8DB14587D1B55A"></a></p>
+
+<h5>14.1-1 IsBand</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBand</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsBand</code> returns <code class="keyw">true</code> if every element of the semigroup <var class="Arg">S</var> is an idempotent and <code class="keyw">false</code> if it is not. An inverse semigroup is band if and only if it is a semilattice; see <code class="func">IsSemilattice</code> (<a href="chap14.html#X833D24AE7C900B85"><span class="RefLink">14.1-20</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([2, 2, 2, 5, 5, 5, 8, 8, 8, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 3, 3, 6, 6, 6, 9, 9, 9, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 7]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBand(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4, 8, 9], [5, 8, 7, 6, 9, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 3, 4, 7, 8, 9, 10], [2, 3, 8, 7, 10, 6, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBand(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBand(IdempotentGeneratedSubsemigroup(S));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(4);</span>
+&lt;regular bipartition *-monoid of size 4140, degree 4 with 4 
+ generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := MinimalIdeal(S);</span>
+&lt;simple bipartition *-semigroup ideal of degree 4 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBand(M);</span>
+true</pre></div>
+
+<p><a id="X79659C467C8A7EBD" name="X79659C467C8A7EBD"></a></p>
+
+<h5>14.1-2 IsBlockGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBlockGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsBlockGroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a block group and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup <var class="Arg">S</var> is a <em>block group</em> if every \(\mathscr{L}\)-class and every \(\mathscr{R}\)-class of <var class="Arg">S</var> contains at most one idempotent. Every semigroup of partial permutations is a block group.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([5, 6, 7, 3, 1, 4, 2, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 6, 8, 5, 7, 4, 2, 8]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBlockGroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([2, 1, 10, 4, 5, 9, 7, 4, 8, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([10, 7, 5, 6, 1, 3, 9, 7, 10, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBlockGroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([1, 2], [5, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  PartialPerm([1, 2, 3], [1, 2, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  PartialPerm([1, 2, 3], [2, 1, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  PartialPerm([1, 3, 4], [3, 1, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  PartialPerm([1, 3, 4, 5], [5, 4, 3, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := AsSemigroup(IsBlockBijectionSemigroup, S);</span>
+&lt;block bijection semigroup of degree 6 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBlockGroup(T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBlockGroup(AsSemigroup(IsBipartitionSemigroup, S));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -2], [2, -3], [3, -4], [4, -1]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -2], [2, -1], [3, -3], [4, -4]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, -3], [3, -1, -2], [4, -4]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -1], [2, -2], [3, -3], [4, -4]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBlockGroup(S);</span>
+true</pre></div>
+
+<p><a id="X843EFDA4807FDC31" name="X843EFDA4807FDC31"></a></p>
+
+<h5>14.1-3 IsCommutativeSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCommutativeSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsCommutativeSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is commutative and <code class="keyw">false</code> if it is not. The function <code class="func">IsCommutative</code> (<a href="../../../doc/ref/chap35_mj.html#X830A4A4C795FBC2D"><span class="RefLink">Reference: IsCommutative</span></a>) can also be used to test if a semigroup is commutative.</p>
+
+<p>A semigroup <var class="Arg">S</var> is <em>commutative</em> if <code class="code">x * y = y * x</code> for all <code class="code">x, y</code> in <var class="Arg">S</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 5, 6, 7, 8, 1, 9, 2, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCommutativeSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCommutative(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 5, 6], [2, 5, 1, 3, 9, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([1, 2, 3, 4, 6, 8], [8, 5, 7, 6, 2, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCommutativeSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, 6, 7, -1, -4, -6],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [4, 5, 8, -2, -3, -5, -7, -8]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([[1, 2, -3, -4], [3, -5], [4, -6], [5, -7],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [6, -8], [7, -1], [8, -2]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCommutativeSemigroup(S);</span>
+true</pre></div>
+
+<p><a id="X7AFA23AF819FBF3D" name="X7AFA23AF819FBF3D"></a></p>
+
+<h5>14.1-4 IsCompletelyRegularSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCompletelyRegularSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsCompletelyRegularSemigroup</code> returns <code class="keyw">true</code> if every element of the semigroup <var class="Arg">S</var> is contained in a subgroup of <var class="Arg">S</var>.</p>
+
+<p>An inverse semigroup is completely regular if and only if it is a Clifford semigroup; see <code class="func">IsCliffordSemigroup</code> (<a href="chap15.html#X81DE11987BB81017"><span class="RefLink">15.2-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 2, 4, 3, 6, 5, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([1, 2, 5, 6, 3, 4, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 1, 2, 2, 2, 2, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCompletelyRegularSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Range(IsomorphismPartialPermSemigroup(S));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCompletelyRegularSemigroup(T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCliffordSemigroup(T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 3, -4], [2, 4, -1, -2], [-3]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, -1], [2, 3, 4, -3], [-2, -4]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCompletelyRegularSemigroup(S);</span>
+false</pre></div>
+
+<p><a id="X855088F378D8F5E1" name="X855088F378D8F5E1"></a></p>
+
+<h5>14.1-5 IsCongruenceFreeSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCongruenceFreeSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsCongruenceFreeSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a congruence-free semigroup and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup <var class="Arg">S</var> is <em>congruence-free</em> if it has no non-trivial proper congruences.</p>
+
+<p>A semigroup with zero is congruence-free if and only if it is isomorphic to a regular Rees 0-matrix semigroup <code class="code">R</code> whose underlying semigroup is the trivial group, no two rows of the matrix of <code class="code">R</code> are identical, and no two columns are identical; see Theorem 3.7.1 in <a href="chapBib.html#biBHowie1995aa">[How95]</a>.</p>
+
+<p>A semigroup without zero is congruence-free if and only if it is a simple group or has order 2; see Theorem 3.7.2 in <a href="chapBib.html#biBHowie1995aa">[How95]</a>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([4, 2, 3, 3, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruenceFreeSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 2, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 3, 4, 4, 6, 6]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruenceFreeSemigroup(S);</span>
+false</pre></div>
+
+<p><a id="X852F29E8795FA489" name="X852F29E8795FA489"></a></p>
+
+<h5>14.1-6 IsGroupAsSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupAsSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsGroupAsSemigroup</code> returns <code class="keyw">true</code> if and only if the semigroup <var class="Arg">S</var> is mathematically a group.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 4, 5, 3, 7, 8, 6, 9, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 5, 6, 7, 8, 1, 9, 2, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(G);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := AsSemigroup(IsPartialPermSemigroup, G);</span>
+&lt;partial perm group of size 120, rank 5 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SymmetricGroup([1, 2, 10]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := AsSemigroup(IsBlockBijectionSemigroup, G);</span>
+&lt;inverse block bijection semigroup of size 6, degree 11 with 2 
+ generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(T);</span>
+true</pre></div>
+
+<p><a id="X835484C481CF3DDD" name="X835484C481CF3DDD"></a></p>
+
+<h5>14.1-7 <span class="Heading">IsIdempotentGenerated</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIdempotentGenerated</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemiband</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsIdempotentGenerated</code> and <code class="code">IsSemiband</code> return <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is generated by its idempotents and <code class="keyw">false</code> if it is not. See also <code class="func">Idempotents</code> (<a href="chap13.html#X7C651C9C78398FFF"><span class="RefLink">13.9-1</span></a>) and <code class="func">IdempotentGeneratedSubsemigroup</code> (<a href="chap13.html#X83970D028143B79B"><span class="RefLink">13.9-3</span></a>).</p>
+
+<p>An inverse semigroup is idempotent-generated if and only if it is a semilattice; see <code class="func">IsSemilattice</code> (<a href="chap14.html#X833D24AE7C900B85"><span class="RefLink">14.1-20</span></a>).</p>
+
+<p>The terms semiband and idempotent-generated are synonymous in this context.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularTransformationSemigroup(4);</span>
+&lt;regular transformation semigroup ideal of degree 4 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdempotentGenerated(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularBrauerMonoid(5);</span>
+&lt;regular bipartition *-semigroup ideal of degree 5 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdempotentGenerated(S);</span>
+true</pre></div>
+
+<p><a id="X8206D2B0809952EF" name="X8206D2B0809952EF"></a></p>
+
+<h5>14.1-8 IsLeftSimple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftSimple</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightSimple</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsLeftSimple</code> and <code class="code">IsRightSimple</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> has only one \(\mathscr{L}\)-class or one \(\mathscr{R}\)-class, respectively, and returns <code class="keyw">false</code> if it has more than one.</p>
+
+<p>An inverse semigroup is left simple if and only if it is right simple if and only if it is a group; see <code class="func">IsGroupAsSemigroup</code> (<a href="chap14.html#X852F29E8795FA489"><span class="RefLink">14.1-6</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([6, 7, 9, 6, 8, 9, 8, 7, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([6, 8, 9, 6, 8, 8, 7, 9, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([6, 8, 9, 7, 8, 8, 7, 9, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([6, 9, 8, 6, 7, 9, 7, 8, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([6, 9, 9, 6, 8, 8, 7, 9, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([6, 9, 9, 7, 8, 8, 6, 9, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([7, 8, 8, 7, 9, 9, 7, 8, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([7, 9, 9, 7, 6, 9, 6, 8, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([8, 7, 6, 9, 8, 6, 8, 7, 9]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([9, 6, 6, 7, 8, 8, 7, 6, 9]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([9, 6, 6, 7, 9, 6, 9, 8, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([9, 6, 7, 9, 6, 6, 9, 7, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([9, 6, 8, 7, 9, 6, 9, 8, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([9, 7, 6, 8, 7, 7, 9, 6, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([9, 7, 7, 8, 9, 6, 9, 7, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([9, 8, 8, 9, 6, 7, 6, 8, 9]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightSimple(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftSimple(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRClasses(S);</span>
+16
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := BrauerMonoid(6);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(RClass(S, Random(MinimalDClass(S))));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftSimple(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightSimple(S);</span>
+true</pre></div>
+
+<p><a id="X7E9261367C8C52C0" name="X7E9261367C8C52C0"></a></p>
+
+<h5>14.1-9 IsLeftZeroSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftZeroSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsLeftZeroSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a left zero semigroup and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup is a <em>left zero semigroup</em> if <code class="code">x*y=x</code> for all <code class="code">x,y</code>. An inverse semigroup is a left zero semigroup if and only if it is trivial.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 1, 4, 3, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 2, 3, 1, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightZeroSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 2, 3, 3, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([1, 2, 3, 3, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftZeroSemigroup(S);</span>
+true</pre></div>
+
+<p><a id="X79D46BAB7E327AD1" name="X79D46BAB7E327AD1"></a></p>
+
+<h5>14.1-10 IsMonogenicSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonogenicSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsMonogenicSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is monogenic and it returns <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup is <em>monogenic</em> if it is generated by a single element. See also <code class="func">IsMonogenicMonoid</code> (<a href="chap14.html#X790DC9F4798DBB09"><span class="RefLink">14.1-11</span></a>), <code class="func">IsMonogenicInverseSemigroup</code> (<a href="chap15.html#X7D2641AD830DEC1C"><span class="RefLink">15.2-7</span></a>), and <code class="func">IsMonogenicInverseMonoid</code> (<a href="chap15.html#X7EDFA6CA86645DBE"><span class="RefLink">15.2-8</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [2, 2, 2, 11, 10, 8, 10, 11, 2, 11, 10, 2, 11, 11, 10]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [2, 2, 2, 8, 11, 15, 11, 10, 2, 10, 11, 2, 10, 4, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [2, 2, 2, 11, 10, 8, 10, 11, 2, 11, 10, 2, 11, 11, 10]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [2, 2, 12, 7, 8, 14, 8, 11, 2, 11, 10, 2, 11, 15, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -2, -5, -7, -9],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [-1, -10], [-3, -4, -6, -8]]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Bipartition([[1, 4, 7, 8, -2], [2, 3, 5, 10, -5],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              [6, 9, -7, -9], [-1, -10], [-3, -4, -6, -8]]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationSemigroup(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicSemigroup(S);</span>
+false</pre></div>
+
+<p><a id="X790DC9F4798DBB09" name="X790DC9F4798DBB09"></a></p>
+
+<h5>14.1-11 IsMonogenicMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonogenicMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsMonogenicMonoid</code> returns <code class="keyw">true</code> if the monoid <var class="Arg">S</var> is a monogenic monoid and it returns <code class="keyw">false</code> if it is not.</p>
+
+<p>A monoid is <em>monogenic</em> if it is generated as a monoid by a single element. See also <code class="func">IsMonogenicSemigroup</code> (<a href="chap14.html#X79D46BAB7E327AD1"><span class="RefLink">14.1-10</span></a>) and <code class="func">IsMonogenicInverseMonoid</code> (<a href="chap15.html#X7EDFA6CA86645DBE"><span class="RefLink">15.2-8</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid(x, x ^ 2, x ^ 3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicMonoid(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationMonoid(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicMonoid(S);</span>
+false</pre></div>
+
+<p><a id="X7E4DEECD7CD9886D" name="X7E4DEECD7CD9886D"></a></p>
+
+<h5>14.1-12 IsMonoidAsSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonoidAsSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsMonoidAsSemigroup</code> returns <code class="keyw">true</code> if and only if the semigroup <var class="Arg">S</var> is mathematically a monoid, i.e. if and only if it contains a <code class="func">MultiplicativeNeutralElement</code> (<a href="../../../doc/ref/chap35_mj.html#X7EE2EA5F7EB7FEC2"><span class="RefLink">Reference: MultiplicativeNeutralElement</span></a>).</p>
+
+<p>It is possible that a semigroup which satisfies <code class="code">IsMonoidAsSemigroup</code> is not in the <strong class="pkg">GAP</strong> category <code class="func">IsMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X861C523483C6248C"><span class="RefLink">Reference: IsMonoid</span></a>). This is possible if the <code class="func">MultiplicativeNeutralElement</code> (<a href="../../../doc/ref/chap35_mj.html#X7EE2EA5F7EB7FEC2"><span class="RefLink">Reference: MultiplicativeNeutralElement</span></a>) of <var class="Arg">S</var> is not equal to the <code class="func">One</code> (<a href="../../../doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>) of any element in <var class="Arg">S</var>. Therefore a semigroup satisfying <code class="code">IsMonoidAsSemigroup</code> may not possess the attributes of a monoid (such as, <code class="func">GeneratorsOfMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X83CA2E7279C44718"><span class="RefLink">Reference: GeneratorsOfMonoid</span></a>)).</p>
+
+<p>See also <code class="func">One</code> (<a href="../../../doc/ref/chap31_mj.html#X8046262384895B2A"><span class="RefLink">Reference: One</span></a>), <code class="func">IsInverseMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X83F1529479D56665"><span class="RefLink">Reference: IsInverseMonoid</span></a>) and <code class="func">IsomorphismTransformationMonoid</code> (<a href="../../../doc/ref/chap53_mj.html#X78F29C817CF6827F"><span class="RefLink">Reference: IsomorphismTransformationMonoid</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 4, 6, 2, 5, 3, 7, 8, 9, 9]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([6, 3, 2, 7, 5, 1, 8, 8, 9, 9]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoidAsSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoid(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeNeutralElement(S);</span>
+Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 9 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := AsSemigroup(IsBipartitionSemigroup, S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoidAsSemigroup(T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoid(T);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One(T);</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid(Transformation([8, 2, 8, 9, 10, 6, 2, 8, 7, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">               Transformation([9, 2, 6, 3, 6, 4, 5, 5, 3, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoidAsSemigroup(S);</span>
+true</pre></div>
+
+<p><a id="X7935C476808C8773" name="X7935C476808C8773"></a></p>
+
+<h5>14.1-13 IsOrthodoxSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOrthodoxSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsOrthodoxSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is orthodox and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup is <em>orthodox</em> if it is regular and its idempotent elements form a subsemigroup. Every inverse semigroup is also an orthodox semigroup.</p>
+
+<p>See also <code class="func">IsRegularSemigroup</code> (<a href="chap14.html#X7C4663827C5ACEF1"><span class="RefLink">14.1-16</span></a>) and <code class="func">IsRegularSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7C4663827C5ACEF1"><span class="RefLink">Reference: IsRegularSemigroup</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 1, 1, 4, 5, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([1, 2, 3, 1, 1, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([1, 2, 3, 1, 1, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([5, 5, 5, 5, 5, 5]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsOrthodoxSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(GeneratorsOfSemigroup(S));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsOrthodoxSemigroup(S);</span>
+true</pre></div>
+
+<p><a id="X7E9B674D781B072C" name="X7E9B674D781B072C"></a></p>
+
+<h5>14.1-14 IsRectangularBand</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRectangularBand</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsRectangularBand</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a rectangular band and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup <var class="Arg">S</var> is a <em>rectangular band</em> if for all <span class="SimpleMath">x, y, z</span> in <var class="Arg">S</var> we have that <span class="SimpleMath">x ^ 2 = x</span> and <span class="SimpleMath">xyz = xz</span>.</p>
+
+<p>Equivalently, <var class="Arg">S</var> is a <em>rectangular band</em> if <var class="Arg">S</var> is isomorphic to a semigroup of the form <span class="SimpleMath">I × Λ</span> with multiplication <span class="SimpleMath">(i, λ)(j, μ) = (i, μ)</span>. In this case, <var class="Arg">S</var> is called an <span class="SimpleMath">|I| × |Λ|</span> <em>rectangular band</em>.</p>
+
+<p>An inverse semigroup is a rectangular band if and only if it is a group.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([2, 2, 2, 5, 5, 5, 8, 8, 8, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 3, 3, 6, 6, 6, 9, 9, 9, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 1, 1, 4, 4, 4, 7, 7, 7, 7]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularBand(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularBand(MinimalIdeal(PartitionMonoid(4)));</span>
+true</pre></div>
+
+<p><a id="X80E682BB78547F41" name="X80E682BB78547F41"></a></p>
+
+<h5>14.1-15 IsRectangularGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRectangularGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>A semigroup is <em>rectangular group</em> if it is the direct product of a group and a rectangular band. Or equivalently, if it is orthodox and simple.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := AsSemigroup(IsTransformationSemigroup, MathieuGroup(11));</span>
+&lt;transformation group of size 7920, degree 11 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := RectangularBand(3, 2);</span>
+&lt;regular transformation semigroup of size 6, degree 6 with 3 
+ generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DirectProduct(G, R);</span>
+&lt;transformation semigroup of size 47520, degree 17 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularGroup(R);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularGroup(G);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularGroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularGroup(JonesMonoid(3));</span>
+false</pre></div>
+
+<p><a id="X7C4663827C5ACEF1" name="X7C4663827C5ACEF1"></a></p>
+
+<h5>14.1-16 IsRegularSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegularSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsRegularSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is regular and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup <code class="code">S</code> is <em>regular</em> if for all <code class="code">x</code> in <code class="code">S</code> there exists <code class="code">y</code> in <code class="code">S</code> such that <code class="code">x * y * x = x</code>. Every inverse semigroup is regular, and a semigroup of partial permutations is regular if and only if it is an inverse semigroup.</p>
+
+<p>See also <code class="func">IsRegularDClass</code> (<a href="../../../doc/ref/chap51_mj.html#X7F5860927CAD920F"><span class="RefLink">Reference: IsRegularDClass</span></a>), <code class="func">IsRegularGreensClass</code> (<a href="chap12.html#X859DD1C079C80DCC"><span class="RefLink">12.3-2</span></a>), and <code class="func">IsRegularSemigroupElement</code> (<a href="../../../doc/ref/chap51_mj.html#X87532A76854347E0"><span class="RefLink">Reference: IsRegularSemigroupElement</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularSemigroup(FullTransformationSemigroup(5));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularSemigroup(JonesMonoid(5));</span>
+true</pre></div>
+
+<p><a id="X7CB099958658F979" name="X7CB099958658F979"></a></p>
+
+<h5>14.1-17 IsRightZeroSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightZeroSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsRightZeroSemigroup</code> returns <code class="keyw">true</code> if the <var class="Arg">S</var> is a right zero semigroup and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup <code class="code">S</code> is a <em>right zero semigroup</em> if <code class="code">x * y = y</code> for all <code class="code">x, y</code> in <code class="code">S</code>. An inverse semigroup is a right zero semigroup if and only if it is trivial.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 1, 4, 3, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 2, 3, 1, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightZeroSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 2, 3, 3, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([1, 2, 4, 4, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightZeroSemigroup(S);</span>
+true</pre></div>
+
+<p><a id="X8752642C7F7E512B" name="X8752642C7F7E512B"></a></p>
+
+<h5>14.1-18 <span class="Heading">IsXTrivial</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRTrivial</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLTrivial</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHTrivial</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDTrivial</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAperiodicSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCombinatorialSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsXTrivial</code> returns <code class="keyw">true</code> if Green's \(\mathscr{R}\)-relation, \(\mathscr{L}\)-relation, \(\mathscr{H}\)-relation, \(\mathscr{D}\)-relation, respectively, on the semigroup <var class="Arg">S</var> is trivial and <code class="keyw">false</code> if it is not. These properties can also be applied to a Green's class instead of a semigroup where applicable.</p>
+
+<p>For inverse semigroups, the properties of being \(\mathscr{R}\)-trivial, \(\mathscr{L}\)-trivial, \(\mathscr{D}\)-trivial, and a semilattice are equivalent; see <code class="func">IsSemilattice</code> (<a href="chap14.html#X833D24AE7C900B85"><span class="RefLink">14.1-20</span></a>).</p>
+
+<p>A semigroup is <em>aperiodic</em> if its contains no non-trivial subgroups (equivalently, all of its group \(\mathscr{H}\)-classes are trivial). A finite semigroup is aperiodic if and only if it is \(\mathscr{H}\)-trivial.</p>
+
+<p><em>Combinatorial</em> is a synonym for aperiodic in this context.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 5, 1, 3, 7, 10, 6, 2, 7, 10]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([4, 4, 5, 6, 7, 7, 7, 4, 3, 10]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsHTrivial(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+108
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRTrivial(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLTrivial(S);</span>
+false</pre></div>
+
+<p><a id="X7826DDF8808EC4D9" name="X7826DDF8808EC4D9"></a></p>
+
+<h5>14.1-19 IsSemigroupWithAdjoinedZero</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupWithAdjoinedZero</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsSemigroupWithAdjoinedZero</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> can be expressed as the disjoint union of subsemigroups <span class="SimpleMath"><var class="Arg">S</var> ∖ { 0 }</span> and <span class="SimpleMath">{ 0 }</span> (where <span class="SimpleMath">0</span> is the <code class="func">MultiplicativeZero</code> (<a href="chap13.html#X7B39F93C8136D642"><span class="RefLink">13.7-3</span></a>) of <var class="Arg">S</var>).</p>
+
+<p>If this is not the case, then either <var class="Arg">S</var> lacks a multiplicative zero, or the set <span class="SimpleMath"><var class="Arg">S</var> ∖ { 0 }</span> is not a subsemigroup of <var class="Arg">S</var>, and so <code class="code">IsSemigroupWithAdjoinedZero</code> returns <code class="keyw">false</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 3, 4, 5, 1, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 1, 3, 4, 5, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([6, 6, 6, 6, 6, 6]));</span>
+&lt;transformation semigroup of degree 6 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroGroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemigroupWithAdjoinedZero(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationMonoid(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemigroupWithAdjoinedZero(S);</span>
+false</pre></div>
+
+<p><a id="X833D24AE7C900B85" name="X833D24AE7C900B85"></a></p>
+
+<h5>14.1-20 IsSemilattice</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemilattice</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsSemilattice</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a semilattice and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup is a <em>semilattice</em> if it is commutative and every element is an idempotent. The idempotents of an inverse semigroup form a semilattice.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 5, 1, 7, 3, 7, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 6, 5, 7, 2, 1, 7]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+631
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := Semigroup(Idempotents(S));</span>
+&lt;transformation semigroup of degree 7 with 32 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemilattice(A);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FactorisableDualSymmetricInverseMonoid(5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := IdempotentGeneratedSubsemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemilattice(S);</span>
+true</pre></div>
+
+<p><a id="X836F4692839F4874" name="X836F4692839F4874"></a></p>
+
+<h5>14.1-21 <span class="Heading">IsSimpleSemigroup</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSimpleSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCompletelySimpleSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsSimpleSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is simple and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup is <em>simple</em> if it has no proper 2-sided ideals. A semigroup is <em>completely simple</em> if it is simple and possesses minimal left and right ideals. A finite semigroup is simple if and only if it is completely simple. An inverse semigroup is simple if and only if it is a group.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([2, 2, 4, 4, 6, 6, 8, 8, 10, 10, 12, 12, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 7, 3, 9, 5, 11, 7, 1, 9, 3, 11, 5, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([7, 7, 9, 9, 11, 11, 1, 1, 3, 3, 5, 5, 7]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimpleSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCompletelySimpleSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimpleSemigroup(MinimalIdeal(BrauerMonoid(6)));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Range(IsomorphismReesMatrixSemigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">MinimalIdeal(BrauerMonoid(6))));</span>
+&lt;Rees matrix semigroup 15x15 over Group(())&gt;</pre></div>
+
+<p><a id="X7EEC85187D315398" name="X7EEC85187D315398"></a></p>
+
+<h5>14.1-22 IsSynchronizingSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSynchronizingSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSynchronizingSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">n</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>For a positive integer <var class="Arg">n</var>, <code class="code">IsSynchronizingSemigroup</code> returns <code class="keyw">true</code> if the semigroup of transformations <var class="Arg">S</var> contains a transformation with constant value on <code class="code">[1 .. <var class="Arg">n</var>]</code>. Note that this function will return true whenever <code class="code"><var class="Arg">n</var> = 1</code>. See also <code class="func">ConstantTransformation</code> (<a href="../../../doc/ref/chap53_mj.html#X7F1E4B5184210D2B"><span class="RefLink">Reference: ConstantTransformation</span></a>).</p>
+
+<p>If the optional second argument is not specified, then <var class="Arg">n</var> will be taken to be the value of <code class="func">DegreeOfTransformationSemigroup</code> (<a href="../../../doc/ref/chap53_mj.html#X7EA699C687952544"><span class="RefLink">Reference: DegreeOfTransformationSemigroup</span></a>) for <var class="Arg">S</var>.</p>
+
+<p>Note that the semigroup consisting of the identity transformation is the unique transformation semigroup with degree <code class="code">0</code>. In this special case, the function <code class="code">IsSynchronizingSemigroup</code> will return <code class="keyw">false</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 1, 8, 7, 6, 6, 4, 1, 8, 9]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([5, 8, 7, 6, 10, 8, 7, 6, 9, 7]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSynchronizingSemigroup(S, 10);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 8, 1, 1, 9, 9, 8, 7, 9, 6]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([7, 6, 8, 7, 5, 6, 8, 7, 8, 9]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSynchronizingSemigroup(S, 10);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Representative(MinimalIdeal(S));</span>
+Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )</pre></div>
+
+<p><a id="X80F9A4B87997839F" name="X80F9A4B87997839F"></a></p>
+
+<h5>14.1-23 IsUnitRegularMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUnitRegularMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is unit regular and <code class="keyw">false</code> if it is not.</p>
+
+<p>A monoid is <em>unit regular</em> if and only if for every <code class="code">&gt;x</code> in <var class="Arg">S</var> there exists an element <code class="code">y</code> in the group of units of <var class="Arg">S</var> such that <code class="code">x*y*x=x</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsUnitRegularMonoid(FullTransformationMonoid(3));</span>
+true</pre></div>
+
+<p><a id="X85F7E5CD86F0643B" name="X85F7E5CD86F0643B"></a></p>
+
+<h5>14.1-24 IsZeroGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsZeroGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsZeroGroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a zero group and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup <code class="code">S</code> is a <em>zero group</em> if there exists an element <code class="code">z</code> in <code class="code">S</code> such that <code class="code">S</code> without <code class="code">z</code> is a group and <code class="code">x*z=z*x=z</code> for all <code class="code">x</code> in <code class="code">S</code>. Every zero group is an inverse semigroup.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 2, 3, 4, 6, 8, 5, 5, 9]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 3, 8, 2, 5, 6, 4, 4, 9]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  ConstantTransformation(9, 9));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroGroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Range(IsomorphismPartialPermSemigroup(S));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroGroup(T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroGroup(JonesMonoid(2));</span>
+true</pre></div>
+
+<p><a id="X7C6787D07B95B450" name="X7C6787D07B95B450"></a></p>
+
+<h5>14.1-25 IsZeroRectangularBand</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsZeroRectangularBand</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsZeroRectangularBand</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a zero rectangular band and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup is a <em>0-rectangular band</em> if it is 0-simple and \(\mathscr{H}\)-trivial; see also <code class="func">IsZeroSimpleSemigroup</code> (<a href="chap14.html#X8193A60F839C064E"><span class="RefLink">14.1-27</span></a>) and <code class="func">IsHTrivial</code> (<a href="chap14.html#X8752642C7F7E512B"><span class="RefLink">14.1-18</span></a>). An inverse semigroup is a 0-rectangular band if and only if it is a 0-group; see <code class="func">IsZeroGroup</code> (<a href="chap14.html#X85F7E5CD86F0643B"><span class="RefLink">14.1-24</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 3, 7, 9, 1, 12, 13, 1, 15, 9, 1, 18, 1, 1, 13,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 1, 1, 21, 1, 1, 1, 1, 1, 25, 26, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 5, 1, 5, 11, 1, 1, 14, 1, 16, 17, 1, 1, 19, 1,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                11, 1, 1, 1, 23, 1, 16, 19, 1, 1, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 4, 8, 1, 10, 1, 8, 1, 1, 1, 10, 1, 8, 10, 1, 1,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                20, 1, 22, 1, 8, 1, 1, 1, 1, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 6, 6, 1, 1, 1, 6, 1, 1, 1, 1, 1, 6, 1, 6, 1, 1,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                6, 1, 1, 24, 1, 1, 1, 1, 6]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(S,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([1, 8, 1, 1, 8, 1, 1, 1, 1, 1, 8, 1, 1, 8, 1, 1, 1,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                1, 1, 1, 1, 1, 1, 1, 1, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroRectangularBand(Semigroup(D));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroRectangularBand(Semigroup(GreensDClasses(S)[1]));</span>
+false</pre></div>
+
+<p><a id="X81A1882181B75CC9" name="X81A1882181B75CC9"></a></p>
+
+<h5>14.1-26 IsZeroSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsZeroSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsZeroSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a zero semigroup and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup <code class="code">S</code> is a <em>zero semigroup</em> if there exists an element <code class="code">z</code> in <code class="code">S</code> such that <code class="code">x*y=z</code> for all <code class="code">x,y</code> in <code class="code">S</code>. An inverse semigroup is a zero semigroup if and only if it is trivial.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([4, 7, 6, 3, 1, 5, 3, 6, 5, 9]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([5, 3, 5, 1, 9, 3, 8, 7, 4, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSemigroup(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([7, 8, 8, 8, 5, 8, 8, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([8, 8, 8, 8, 5, 7, 8, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([8, 7, 8, 8, 5, 8, 8, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([8, 8, 8, 7, 5, 8, 8, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([8, 8, 7, 8, 5, 8, 8, 8]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZero(S);</span>
+Transformation( [ 8, 8, 8, 8, 5, 8, 8, 8 ] )</pre></div>
+
+<p><a id="X8193A60F839C064E" name="X8193A60F839C064E"></a></p>
+
+<h5>14.1-27 IsZeroSimpleSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsZeroSimpleSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsZeroSimpleSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is 0-simple and <code class="keyw">false</code> if it is not.</p>
+
+<p>A semigroup is a <em>0-simple</em> if it has no two-sided ideals other than itself and the set containing the zero element; see also <code class="func">MultiplicativeZero</code> (<a href="chap13.html#X7B39F93C8136D642"><span class="RefLink">13.7-3</span></a>). An inverse semigroup is 0-simple if and only if it is a Brandt semigroup; see <code class="func">IsBrandtSemigroup</code> (<a href="chap15.html#X7EFDBA687DCDA6FA"><span class="RefLink">15.2-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 5, 17,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 17, 17, 17, 17, 17]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 17, 17, 17, 11, 17, 17, 17, 17, 17, 17, 17,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 17, 17, 17, 17, 17]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 17, 17, 17, 17, 17, 17, 17, 17, 17, 4, 17,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 17, 17, 17, 17, 17]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 17, 17, 5, 17, 17, 17, 17, 17, 17, 17, 17,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 17, 17, 17, 17, 17]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSimpleSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([2, 3, 4, 5, 6, 8, 7, 1, 2, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSimpleSemigroup(S);</span>
+false</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap15.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

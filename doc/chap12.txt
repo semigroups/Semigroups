@@ -1,0 +1,1191 @@
+  
+  [1X12 [33X[0;0YGreen's relations[133X[101X
+  
+  [33X[0;0YIn  this  chapter  we  describe  the  functions  in [5XSemigroups[105X for computing
+  Green's classes and related properties of semigroups.[133X
+  
+  
+  [1X12.1 [33X[0;0YCreating Green's classes and representatives[133X[101X
+  
+  [33X[0;0YIn  this  section,  we  describe  the  methods in the [5XSemigroups[105X package for
+  creating Green's classes.[133X
+  
+  
+  [1X12.1-1 [33X[0;0YXClassOfYClass[133X[101X
+  
+  [29X[2XDClassOfHClass[102X( [3Xclass[103X ) [32X method
+  [29X[2XDClassOfLClass[102X( [3Xclass[103X ) [32X method
+  [29X[2XDClassOfRClass[102X( [3Xclass[103X ) [32X method
+  [29X[2XLClassOfHClass[102X( [3Xclass[103X ) [32X method
+  [29X[2XRClassOfHClass[102X( [3Xclass[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10YA Green's class.[133X
+  
+  [33X[0;0Y[10XXClassOfYClass[110X  returns the [10XX[110X-class containing the [10XY[110X-class [3Xclass[103X where [10XX[110X and
+  [10XY[110X should be replaced by an appropriate choice of [10XD, H, L,[110X and [10XR[110X.[133X
+  
+  [33X[0;0YNote  that  if  it  is not known to [5XGAP[105X whether or not the representative of
+  [3Xclass[103X  is  an  element of the semigroup containing [3Xclass[103X, then no attempt is
+  made to check this.[133X
+  
+  [33X[0;0YThe same result can be produced using:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XFirst(GreensXClasses(S), x -> Representative(x) in class);[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Ybut  this  might  be  substantially slower. Note that [10XXClassOfYClass[110X is also
+  likely to be faster than[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XGreensXClassOfElement(S, Representative(class));[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[10XDClass[110X can also be used as a synonym for [10XDClassOfHClass[110X, [10XDClassOfLClass[110X, and
+  [10XDClassOfRClass[110X;  [10XLClass[110X  as  a  synonym  for [10XLClassOfHClass[110X; and [10XRClass[110X as a
+  synonym  for  [10XRClassOfHClass[110X.  See  also  [2XGreensDClassOfElement[102X  ([14XReference:
+  GreensDClassOfElement[114X) and [2XGreensDClassOfElementNC[102X ([14X12.1-3[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 2]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([2, 1, 3]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 2, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 3, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XR := GreensRClassOfElement(S, Transformation([3, 2, 1]));[127X[104X
+    [4X[28X<Green's R-class: Transformation( [ 3, 2, 1 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XDClassOfRClass(R);[127X[104X
+    [4X[28X<Green's D-class: Transformation( [ 3, 2, 1 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensDClass(DClassOfRClass(R));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([2, 6, 7, 0, 0, 9, 0, 1, 0, 5]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([3, 8, 1, 9, 0, 4, 10, 5, 0, 6]));[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 10 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xx := S.1;[127X[104X
+    [4X[28X[3,7][8,1,2,6,9][10,5][128X[104X
+    [4X[25Xgap>[125X [27XH := HClass(S, x);[127X[104X
+    [4X[28X<Green's H-class: [3,7][8,1,2,6,9][10,5]>[128X[104X
+    [4X[25Xgap>[125X [27XR := RClassOfHClass(H);[127X[104X
+    [4X[28X<Green's R-class: [3,7][8,1,2,6,9][10,5]>[128X[104X
+    [4X[25Xgap>[125X [27XL := LClass(H);;[127X[104X
+    [4X[25Xgap>[125X [27XL = LClass(S, PartialPerm([1, 2, 0, 0, 5, 6, 7, 0, 9]));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDClass(R) = DClass(L);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDClass(H) = DClass(L);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.1-2 [33X[0;0YGreensXClassOfElement[133X[101X
+  
+  [29X[2XGreensDClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XDClass[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XGreensHClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XGreensHClassOfElement[102X( [3XR[103X, [3Xi[103X, [3Xj[103X ) [32X operation
+  [29X[2XHClass[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XHClass[102X( [3XR[103X, [3Xi[103X, [3Xj[103X ) [32X operation
+  [29X[2XGreensLClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XLClass[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XGreensRClassOfElement[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XRClass[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA Green's class.[133X
+  
+  [33X[0;0YThese  functions  produce  essentially  the  same  output as the [5XGAP[105X library
+  functions   with  the  same  names;  see  [2XGreensDClassOfElement[102X  ([14XReference:
+  GreensDClassOfElement[114X).  The  main difference is that these functions can be
+  applied to a wider class of objects:[133X
+  
+  [8X[10XGreensDClassOfElement[110X and [10XDClass[110X[108X
+        [33X[0;6Y[3XX[103X must be a semigroup.[133X
+  
+  [8X[10XGreensHClassOfElement[110X and [10XHClass[110X[108X
+        [33X[0;6Y[3XX[103X can be a semigroup, [13XR[113X-class, [13XL[113X-class, or [13XD[113X-class.[133X
+  
+        [33X[0;6YIf  [3XR[103X is a [3XIxJ[103X Rees matrix semigroup or a Rees 0-matrix semigroup, and
+        [3Xi[103X   and   [3Xj[103X  are  integers  of  the  corresponding  index  sets,  then
+        [10XGreensHClassOfElement[110X returns the [13XH[113X-class in row [3Xi[103X and column [3Xj[103X.[133X
+  
+  [8X[10XGreensLClassOfElement[110X and [10XLClass[110X[108X
+        [33X[0;6Y[3XX[103X can be a semigroup or [13XD[113X-class.[133X
+  
+  [8X[10XGreensRClassOfElement[110X and [10XRClass[110X[108X
+        [33X[0;6Y[3XX[103X can be a semigroup or [13XD[113X-class.[133X
+  
+  [33X[0;0YNote  that  [10XGreensXClassOfElement[110X and [10XXClass[110X are synonyms and have identical
+  output. The shorter command is provided for the sake of convenience.[133X
+  
+  
+  [1X12.1-3 [33X[0;0YGreensXClassOfElementNC[133X[101X
+  
+  [29X[2XGreensDClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XDClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XGreensHClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XHClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XGreensLClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XLClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XGreensRClassOfElementNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [29X[2XRClassNC[102X( [3XX[103X, [3Xf[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA Green's class.[133X
+  
+  [33X[0;0YThese  functions  are essentially the same as [2XGreensDClassOfElement[102X ([14X12.1-2[114X)
+  except  that  no  effort  is  made  to  verify if [3Xf[103X is an element of [3XX[103X. More
+  precisely, [10XGreensXClassOfElementNC[110X and [10XXClassNC[110X first check if [3Xf[103X has already
+  been  shown  to  be  an  element  of [3XX[103X. If it is not known to [5XGAP[105X if [3Xf[103X is an
+  element of [3XX[103X, then no further attempt to verify this is made.[133X
+  
+  [33X[0;0YNote  that  [10XGreensXClassOfElementNC[110X  and  [10XXClassNC[110X  are  synonyms  and  have
+  identical   output.  The  shorter  command  is  provided  for  the  sake  of
+  convenience.[133X
+  
+  [33X[0;0YIt   can   be   quicker   to   compute   the   class  of  an  element  using
+  [10XGreensRClassOfElementNC[110X,  say,  than  using  [10XGreensRClassOfElement[110X  if it is
+  known  [13Xa priori[113X that [3Xf[103X is an element of [3XX[103X. On the other hand, if [3Xf[103X is not an
+  element of [3XX[103X, then the results of this computation are unpredictable.[133X
+  
+  [33X[0;0YFor example, if[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28Xx := Transformation([15, 18, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]);[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Yin the semigroup [3XX[103X of order-preserving mappings on 20 points, then[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XGreensRClassOfElementNC(X, x);[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Yreturns an answer relatively quickly, whereas[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XGreensRClassOfElement(X, x)[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Ycan take a signficant amount of time to return a value.[133X
+  
+  [33X[0;0YSee   also   [2XGreensRClassOfElement[102X  ([14XReference:  GreensRClassOfElement[114X)  and
+  [2XRClassOfHClass[102X ([14X12.1-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := RandomSemigroup(IsTransformationSemigroup, 2, 1000);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := [1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 1];;[127X[104X
+    [4X[25Xgap>[125X [27Xx := EvaluateWord(Generators(S), x);;[127X[104X
+    [4X[25Xgap>[125X [27XR := GreensRClassOfElementNC(S, x);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(R);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XL := GreensLClassOfElementNC(S, x);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(L);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([2, 3, 4, 5, 0, 0, 6, 8, 10, 11]);;[127X[104X
+    [4X[25Xgap>[125X [27XL := LClass(POI(13), x);[127X[104X
+    [4X[28X<Green's L-class: [1,2,3,4,5,6,8][7,10,11]>[128X[104X
+    [4X[25Xgap>[125X [27XSize(L);[127X[104X
+    [4X[28X1287[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.1-4 [33X[0;0YGreensXClasses[133X[101X
+  
+  [29X[2XGreensDClasses[102X( [3Xobj[103X ) [32X method
+  [29X[2XDClasses[102X( [3Xobj[103X ) [32X method
+  [29X[2XGreensHClasses[102X( [3Xobj[103X ) [32X method
+  [29X[2XHClasses[102X( [3Xobj[103X ) [32X method
+  [29X[2XGreensJClasses[102X( [3Xobj[103X ) [32X method
+  [29X[2XJClasses[102X( [3Xobj[103X ) [32X method
+  [29X[2XGreensLClasses[102X( [3Xobj[103X ) [32X method
+  [29X[2XLClasses[102X( [3Xobj[103X ) [32X method
+  [29X[2XGreensRClasses[102X( [3Xobj[103X ) [32X method
+  [29X[2XRClasses[102X( [3Xobj[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10YA list of Green's classes.[133X
+  
+  [33X[0;0YThese  functions  produce  essentially  the  same  output as the [5XGAP[105X library
+  functions    with   the   same   names;   see   [2XGreensDClasses[102X   ([14XReference:
+  GreensDClasses[114X).  The main difference is that these functions can be applied
+  to a wider class of objects:[133X
+  
+  [8X[10XGreensDClasses[110X and [10XDClasses[110X[108X
+        [33X[0;6Y[3XX[103X should be a semigroup.[133X
+  
+  [8X[10XGreensHClasses[110X and [10XHClasses[110X[108X
+        [33X[0;6Y[3XX[103X can be a semigroup, [13XR[113X-class, [13XL[113X-class, or [13XD[113X-class.[133X
+  
+  [8X[10XGreensLClasses[110X and [10XLClasses[110X[108X
+        [33X[0;6Y[3XX[103X can be a semigroup or [13XD[113X-class.[133X
+  
+  [8X[10XGreensRClasses[110X and [10XRClasses[110X[108X
+        [33X[0;6Y[3XX[103X can be a semigroup or [13XD[113X-class.[133X
+  
+  [33X[0;0YNote  that  [10XGreensXClasses[110X  and  [10XXClasses[110X  are  synonyms  and have identical
+  output. The shorter command is provided for the sake of convenience.[133X
+  
+  [33X[0;0YSee     also    [2XDClassReps[102X    ([14X12.1-5[114X),    [2XIteratorOfDClassReps[102X    ([14X12.2-1[114X),
+  [2XIteratorOfDClasses[102X ([14X12.2-2[114X), and [2XNrDClasses[102X ([14X12.1-9[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([3, 4, 4, 4]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([4, 3, 1, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XGreensDClasses(S);[127X[104X
+    [4X[28X[ <Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
+    [4X[28X  <Green's D-class: Transformation( [ 4, 3, 1, 2 ] )>, [128X[104X
+    [4X[28X  <Green's D-class: Transformation( [ 4, 4, 4, 4 ] )> ][128X[104X
+    [4X[25Xgap>[125X [27XGreensRClasses(S);[127X[104X
+    [4X[28X[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 3, 1, 2 ] )>, [128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 4, 4 ] )>, [128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>, [128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>, [128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 4, 3 ] )> ][128X[104X
+    [4X[25Xgap>[125X [27XD := GreensDClasses(S)[1];[127X[104X
+    [4X[28X<Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XGreensLClasses(D);[127X[104X
+    [4X[28X[ <Green's L-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
+    [4X[28X  <Green's L-class: Transformation( [ 1, 2, 2, 2 ] )> ][128X[104X
+    [4X[25Xgap>[125X [27XGreensRClasses(D);[127X[104X
+    [4X[28X[ <Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 3, 4 ] )>, [128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 3, 4, 4 ] )>, [128X[104X
+    [4X[28X  <Green's R-class: Transformation( [ 4, 4, 4, 3 ] )> ][128X[104X
+    [4X[25Xgap>[125X [27XR := GreensRClasses(D)[1];[127X[104X
+    [4X[28X<Green's R-class: Transformation( [ 3, 4, 4, 4 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XGreensHClasses(R);[127X[104X
+    [4X[28X[ <Green's H-class: Transformation( [ 3, 4, 4, 4 ] )>, [128X[104X
+    [4X[28X  <Green's H-class: Transformation( [ 1, 2, 2, 2 ] )> ][128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27XPartialPerm([2, 4, 1]), PartialPerm([3, 0, 4, 1])]);;[127X[104X
+    [4X[25Xgap>[125X [27XGreensDClasses(S);[127X[104X
+    [4X[28X[ <Green's D-class: <identity partial perm on [ 1, 2, 4 ]>>, [128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 1, 3, 4 ]>>, [128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 1, 3 ]>>, [128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 4 ]>>, [128X[104X
+    [4X[28X  <Green's D-class: <empty partial perm>> ][128X[104X
+    [4X[25Xgap>[125X [27XGreensLClasses(S);[127X[104X
+    [4X[28X[ <Green's L-class: <identity partial perm on [ 1, 2, 4 ]>>, [128X[104X
+    [4X[28X  <Green's L-class: [4,2,1,3]>, [128X[104X
+    [4X[28X  <Green's L-class: <identity partial perm on [ 1, 3, 4 ]>>, [128X[104X
+    [4X[28X  <Green's L-class: <identity partial perm on [ 1, 3 ]>>, [128X[104X
+    [4X[28X  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>, [128X[104X
+    [4X[28X  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>, [128X[104X
+    [4X[28X  <Green's L-class: [1,2](3)>, [128X[104X
+    [4X[28X  <Green's L-class: <identity partial perm on [ 4 ]>>, [128X[104X
+    [4X[28X  <Green's L-class: [4,1]>, <Green's L-class: [4,3]>, [128X[104X
+    [4X[28X  <Green's L-class: [4,2]>, <Green's L-class: <empty partial perm>> ][128X[104X
+    [4X[25Xgap>[125X [27XD := GreensDClasses(S)[3];[127X[104X
+    [4X[28X<Green's D-class: <identity partial perm on [ 1, 3 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XGreensLClasses(D);[127X[104X
+    [4X[28X[ <Green's L-class: <identity partial perm on [ 1, 3 ]>>, [128X[104X
+    [4X[28X  <Green's L-class: [3,1,2]>, <Green's L-class: [1,4][3,2]>, [128X[104X
+    [4X[28X  <Green's L-class: [1,3,4]>, <Green's L-class: [3,1,4]>, [128X[104X
+    [4X[28X  <Green's L-class: [1,2](3)> ][128X[104X
+    [4X[25Xgap>[125X [27XGreensRClasses(D);[127X[104X
+    [4X[28X[ <Green's R-class: <identity partial perm on [ 1, 3 ]>>, [128X[104X
+    [4X[28X  <Green's R-class: [2,1,3]>, <Green's R-class: [2,3][4,1]>, [128X[104X
+    [4X[28X  <Green's R-class: [4,3,1]>, <Green's R-class: [4,1,3]>, [128X[104X
+    [4X[28X  <Green's R-class: [2,1](3)> ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.1-5 [33X[0;0YXClassReps[133X[101X
+  
+  [29X[2XDClassReps[102X( [3Xobj[103X ) [32X attribute
+  [29X[2XHClassReps[102X( [3Xobj[103X ) [32X attribute
+  [29X[2XLClassReps[102X( [3Xobj[103X ) [32X attribute
+  [29X[2XRClassReps[102X( [3Xobj[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA list of representatives.[133X
+  
+  [33X[0;0Y[10XXClassReps[110X  returns  a list of the representatives of the Green's classes of
+  [3Xobj[103X, which can be a semigroup, [13XD[113X-, [13XL[113X-, or [13XR[113X-class where appropriate.[133X
+  
+  [33X[0;0YThe same output can be obtained by calling, for example:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XList(GreensXClasses(obj), Representative);[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that  if  the  Green's  classes  themselves  are  not  required,  then
+  [10XXClassReps[110X  will  return  an  answer  more quickly than the above, since the
+  Green's class objects are not created.[133X
+  
+  [33X[0;0YSee    also    [2XGreensDClasses[102X   ([14X12.1-4[114X),   [2XIteratorOfDClassReps[102X   ([14X12.2-1[114X),
+  [2XIteratorOfDClasses[102X ([14X12.2-2[114X), and [2XNrDClasses[102X ([14X12.1-9[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([3, 4, 4, 4]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([4, 3, 1, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XDClassReps(S);[127X[104X
+    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 3, 1, 2 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 4, 4, 4 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XLClassReps(S);[127X[104X
+    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 3, 1, 2 ] ), Transformation( [ 4, 4, 4, 4 ] ), [128X[104X
+    [4X[28X  Transformation( [ 2, 2, 2, 2 ] ), Transformation( [ 3, 3, 3, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 1, 1, 1 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XD := GreensDClasses(S)[1];[127X[104X
+    [4X[28X<Green's D-class: Transformation( [ 3, 4, 4, 4 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XLClassReps(D);[127X[104X
+    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XRClassReps(D);[127X[104X
+    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 4, 4, 3, 4 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 3, 4, 4 ] ), Transformation( [ 4, 4, 4, 3 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XR := GreensRClasses(D)[1];;[127X[104X
+    [4X[25Xgap>[125X [27XHClassReps(R);[127X[104X
+    [4X[28X[ Transformation( [ 3, 4, 4, 4 ] ), Transformation( [ 1, 2, 2, 2 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(6);;[127X[104X
+    [4X[25Xgap>[125X [27Xe := InverseSemigroup(Idempotents(S));;[127X[104X
+    [4X[25Xgap>[125X [27XM := MunnSemigroup(e);;[127X[104X
+    [4X[25Xgap>[125X [27XL := LClassNC(M, PartialPerm([51, 63], [51, 47]));;[127X[104X
+    [4X[25Xgap>[125X [27XHClassReps(L);[127X[104X
+    [4X[28X[ <identity partial perm on [ 47, 51 ]>, [27,47](51), [50,47](51), [128X[104X
+    [4X[28X  [64,47](51), [63,47](51), [59,47](51) ][128X[104X
+  [4X[32X[104X
+  
+  [1X12.1-6 MinimalDClass[101X
+  
+  [29X[2XMinimalDClass[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe minimal [13XD[113X-class of a semigroup.[133X
+  
+  [33X[0;0YThe  minimal  ideal  of  a  semigroup  is  the  least  ideal with respect to
+  containment.  [10XMinimalDClass[110X returns the [13XD[113X-class corresponding to the minimal
+  ideal  of  the  semigroup [3XS[103X. Equivalently, [10XMinimalDClass[110X returns the minimal
+  [13XD[113X-class with respect to the partial order of [13XD[113X-classes.[133X
+  
+  [33X[0;0YIt  is significantly easier to find the minimal [13XD[113X-class of a semigroup, than
+  to find its [13XD[113X-classes.[133X
+  
+  [33X[0;0YSee    also    [2XPartialOrderOfDClasses[102X   ([14X12.1-10[114X),   [2XIsGreensLessThanOrEqual[102X
+  ([14XReference:     IsGreensLessThanOrEqual[114X),    [2XMinimalIdeal[102X    ([14X13.7-1[114X)    and
+  [2XRepresentativeOfMinimalIdeal[102X ([14X13.7-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XD := MinimalDClass(JonesMonoid(8));[127X[104X
+    [4X[28X<Green's D-class: <bipartition: [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [128X[104X
+    [4X[28X  [ 7, 8 ], [ -1, -2 ], [ -3, -4 ], [ -5, -6 ], [ -7, -8 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5, 7, 8, 9], [2, 6, 9, 1, 5, 3, 8]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 3, 4, 5, 7, 8, 9], [9, 4, 10, 5, 6, 7, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XMinimalDClass(S);[127X[104X
+    [4X[28X<Green's D-class: <empty partial perm>>[128X[104X
+  [4X[32X[104X
+  
+  [1X12.1-7 MaximalDClasses[101X
+  
+  [29X[2XMaximalDClasses[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe maximal [13XD[113X-classes of a semigroup.[133X
+  
+  [33X[0;0Y[10XMaximalDClasses[110X  returns  the  maximal [13XD[113X-classes with respect to the partial
+  order of [13XD[113X-classes.[133X
+  
+  [33X[0;0YSee    also    [2XPartialOrderOfDClasses[102X   ([14X12.1-10[114X),   [2XIsGreensLessThanOrEqual[102X
+  ([14XReference: IsGreensLessThanOrEqual[114X), and [2XMinimalDClass[102X ([14X12.1-6[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMaximalDClasses(BrauerMonoid(8));[127X[104X
+    [4X[28X[ <Green's D-class: <block bijection: [ 1, -1 ], [ 2, -2 ], [128X[104X
+    [4X[28X      [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [128X[104X
+    [4X[28X      [ 8, -8 ]>> ][128X[104X
+    [4X[25Xgap>[125X [27XMaximalDClasses(FullTransformationMonoid(5));[127X[104X
+    [4X[28X[ <Green's D-class: IdentityTransformation> ][128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 5, 6, 7], [3, 8, 1, 4, 5, 6, 7]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 6, 8], [2, 6, 7, 1, 5]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 6, 8], [4, 3, 2, 7, 6, 5]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 4, 5, 6, 7, 8], [7, 1, 4, 2, 5, 6, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27XMaximalDClasses(S);[127X[104X
+    [4X[28X[ <Green's D-class: [2,8](1,3)(4)(5)(6)(7)>, [128X[104X
+    [4X[28X  <Green's D-class: [8,3](1,7,6,5,2)(4)> ][128X[104X
+  [4X[32X[104X
+  
+  [1X12.1-8 NrRegularDClasses[101X
+  
+  [29X[2XNrRegularDClasses[102X( [3XS[103X ) [32X attribute
+  [29X[2XRegularDClasses[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA positive integer, or a list.[133X
+  
+  [33X[0;0Y[10XNrRegularDClasses[110X  returns  the number of regular [13XD[113X-classes of the semigroup
+  [3XS[103X.[133X
+  
+  [33X[0;0Y[10XRegularDClasses[110X returns a list of the regular [13XD[113X-classes of the semigroup [3XS[103X.[133X
+  
+  [33X[0;0YSee  also  [2XIsRegularGreensClass[102X  ([14X12.3-2[114X)  and  [2XIsRegularDClass[102X  ([14XReference:
+  IsRegularDClass[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 4, 1, 3, 5]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 1, 6, 1, 6, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27XNrRegularDClasses(S);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XNrDClasses(S);[127X[104X
+    [4X[28X7[128X[104X
+    [4X[25Xgap>[125X [27XAsSet(RegularDClasses(S));[127X[104X
+    [4X[28X[ <Green's D-class: Transformation( [ 1, 3, 4, 1, 3, 3 ] )>, [128X[104X
+    [4X[28X  <Green's D-class: Transformation( [ 1, 1, 1, 1, 1 ] )>, [128X[104X
+    [4X[28X  <Green's D-class: Transformation( [ 1, 1, 1, 1, 1, 1 ] )> ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.1-9 [33X[0;0YNrXClasses[133X[101X
+  
+  [29X[2XNrDClasses[102X( [3Xobj[103X ) [32X attribute
+  [29X[2XNrHClasses[102X( [3Xobj[103X ) [32X attribute
+  [29X[2XNrLClasses[102X( [3Xobj[103X ) [32X attribute
+  [29X[2XNrRClasses[102X( [3Xobj[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
+  
+  [33X[0;0Y[10XNrXClasses[110X  returns  the number of Green's classes in [3Xobj[103X where [3Xobj[103X can be a
+  semigroup,  [13XD[113X-,  [13XL[113X-,  or  [13XR[113X-class  where  appropriate. If the actual Green's
+  classes are not required, then it is more efficient to use[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XNrHClasses(obj)[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Ythan[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XLength(HClasses(obj))[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Ysince  the  Green's  classes  themselves  are not created when [10XNrXClasses[110X is
+  called.[133X
+  
+  [33X[0;0YSee     also    [2XGreensRClasses[102X    ([14X12.1-4[114X),    [2XGreensRClasses[102X    ([14XReference:
+  GreensRClasses[114X),   [2XIteratorOfRClasses[102X   ([14X12.2-2[114X),  and  [2XIteratorOfRClassReps[102X
+  ([14X12.2-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27X Transformation([1, 2, 5, 4, 3, 8, 7, 6]),[127X[104X
+    [4X[25X>[125X [27X Transformation([1, 6, 3, 4, 7, 2, 5, 8]),[127X[104X
+    [4X[25X>[125X [27X Transformation([2, 1, 6, 7, 8, 3, 4, 5]),[127X[104X
+    [4X[25X>[125X [27X Transformation([3, 2, 3, 6, 1, 6, 1, 2]),[127X[104X
+    [4X[25X>[125X [27X Transformation([5, 2, 3, 6, 3, 4, 7, 4]));;[127X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([2, 5, 4, 7, 4, 3, 6, 3]);;[127X[104X
+    [4X[25Xgap>[125X [27XR := RClass(S, x);[127X[104X
+    [4X[28X<Green's R-class: Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XNrHClasses(R);[127X[104X
+    [4X[28X12[128X[104X
+    [4X[25Xgap>[125X [27XD := DClass(R);[127X[104X
+    [4X[28X<Green's D-class: Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XNrHClasses(D);[127X[104X
+    [4X[28X72[128X[104X
+    [4X[25Xgap>[125X [27XL := LClass(S, x);[127X[104X
+    [4X[28X<Green's L-class: Transformation( [ 2, 5, 4, 7, 4, 3, 6, 3 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XNrHClasses(L);[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27XNrHClasses(S);[127X[104X
+    [4X[28X1555[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([4, 6, 5, 2, 1, 3]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([6, 3, 2, 5, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 4, 3, 5, 6]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 5, 6, 1, 2, 3]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 3, 6, 6, 6, 2]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([2, 3, 2, 6, 4, 6]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([2, 1, 2, 2, 2, 4]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([4, 4, 1, 2, 1, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XNrRClasses(S);[127X[104X
+    [4X[28X150[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X6342[128X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([1, 3, 3, 1, 3, 5]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DClass(S, x);[127X[104X
+    [4X[28X<Green's D-class: Transformation( [ 2, 4, 2, 2, 2, 1 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XNrRClasses(D);[127X[104X
+    [4X[28X87[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(10);;[127X[104X
+    [4X[25Xgap>[125X [27XNrDClasses(S); NrRClasses(S); NrHClasses(S); NrLClasses(S);[127X[104X
+    [4X[28X11[128X[104X
+    [4X[28X1024[128X[104X
+    [4X[28X184756[128X[104X
+    [4X[28X1024[128X[104X
+    [4X[25Xgap>[125X [27XS := POPI(10);;[127X[104X
+    [4X[25Xgap>[125X [27XNrDClasses(S);[127X[104X
+    [4X[28X11[128X[104X
+    [4X[25Xgap>[125X [27XNrRClasses(S);[127X[104X
+    [4X[28X1024[128X[104X
+  [4X[32X[104X
+  
+  [1X12.1-10 PartialOrderOfDClasses[101X
+  
+  [29X[2XPartialOrderOfDClasses[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe partial order of the [13XD[113X-classes of [3XS[103X.[133X
+  
+  [33X[0;0YReturns   a   list   [10Xlist[110X   where   [10Xlist[i][110X   contains  every  [10Xj[110X  such  that
+  [10XGreensDClasses(S)[j][110X  is  immediately  less than [10XGreensDClasses(S)[i][110X in the
+  partial  order of [13XD[113X- classes of [3XS[103X. There might be other indices in [10Xlist[110X, and
+  it  may  or  may  not  include  [10Xi[110X.  The  reflexive transitive closure of the
+  relation defined by [10Xlist[110X is the partial order of [13XD[113X-classes of [3XS[103X.[133X
+  
+  [33X[0;0YThe partial order on the [13XD[113X-classes is defined by [22Xx≤ y[122X if and only if [22XS ^ 1xS
+  ^ 1[122X is a subset of [22XS ^ 1yS ^ 1[122X.[133X
+  
+  [33X[0;0YSee     also    [2XGreensDClasses[102X    ([14X12.1-4[114X),    [2XGreensDClasses[102X    ([14XReference:
+  GreensDClasses[114X),             [2XIsGreensLessThanOrEqual[102X             ([14XReference:
+  IsGreensLessThanOrEqual[114X), and [2X\<[102X ([14X12.3-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 4, 1, 2]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 3, 4, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XPartialOrderOfDClasses(S);[127X[104X
+    [4X[28X[ [ 3 ], [ 2, 3 ], [ 3, 4 ], [ 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(GreensDClasses(S)[1],[127X[104X
+    [4X[25X>[125X [27X                           GreensDClasses(S)[2]);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(GreensDClasses(S)[2],[127X[104X
+    [4X[25X>[125X [27X                           GreensDClasses(S)[1]);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(GreensDClasses(S)[3],[127X[104X
+    [4X[25X>[125X [27X                           GreensDClasses(S)[1]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3], [1, 3, 4]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 3, 5], [5, 1, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X58[128X[104X
+    [4X[25Xgap>[125X [27XPartialOrderOfDClasses(S);[127X[104X
+    [4X[28X[ [ 1, 3 ], [ 2, 3 ], [ 3, 4 ], [ 4, 5 ], [ 5 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(GreensDClasses(S)[1],[127X[104X
+    [4X[25X>[125X [27X                           GreensDClasses(S)[2]);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(GreensDClasses(S)[5],[127X[104X
+    [4X[25X>[125X [27X                           GreensDClasses(S)[2]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(GreensDClasses(S)[3],[127X[104X
+    [4X[25X>[125X [27X                           GreensDClasses(S)[4]);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(GreensDClasses(S)[4],[127X[104X
+    [4X[25X>[125X [27X                           GreensDClasses(S)[3]);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X12.1-11 LengthOfLongestDClassChain[101X
+  
+  [29X[2XLengthOfLongestDClassChain[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
+  
+  [33X[0;0YIf  [3XS[103X  is a semigroup, then [10XLengthOfLongestDClassChain[110X returns the length of
+  the longest chain in the partial order defined by [10XPartialOrderOfDClasses([3XS[103X[10X)[110X.
+  See [2XPartialOrderOfDClasses[102X ([14X12.1-10[114X).[133X
+  
+  [33X[0;0YThe partial order on the [13XD[113X-classes is defined by [22Xx≤ y[122X if and only if [22XS ^ 1xS
+  ^  1[122X  is  a subset of [22XS ^ 1yS ^ 1[122X. A [13Xchain[113X of [13XD[113X-classes is a collection of [10Xn[110X
+  [13XD[113X-classes  [22XD_1,  D_2,  ...  D_n[122X such that [22XD_1 < D_2 < ⋯ < D_n[122X. The [13Xlength[113X of
+  such a chain is [10Xn - 1[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := TrivialSemigroup();;[127X[104X
+    [4X[25Xgap>[125X [27XLengthOfLongestDClassChain(S);[127X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27XT := ZeroSemigroup(5);;[127X[104X
+    [4X[25Xgap>[125X [27XLengthOfLongestDClassChain(T);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XU := MonogenicSemigroup(14, 7);;[127X[104X
+    [4X[25Xgap>[125X [27XLengthOfLongestDClassChain(U);[127X[104X
+    [4X[28X13[128X[104X
+    [4X[25Xgap>[125X [27XV := FullTransformationMonoid(6);[127X[104X
+    [4X[28X<full transformation monoid of degree 6>[128X[104X
+    [4X[25Xgap>[125X [27XLengthOfLongestDClassChain(V);[127X[104X
+    [4X[28X5[128X[104X
+  [4X[32X[104X
+  
+  [1X12.1-12 IsGreensDGreaterThanFunc[101X
+  
+  [29X[2XIsGreensDGreaterThanFunc[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA function.[133X
+  
+  [33X[0;0Y[10XIsGreensDGreaterThanFunc([3XS[103X[10X)[110X  returns  a  function [10Xfunc[110X such that for any two
+  elements  [10Xx[110X  and  [10Xy[110X of [3XS[103X, [10Xfunc(x, y)[110X return [9Xtrue[109X if the [13XD[113X-class of [10Xx[110X in [3XS[103X is
+  greater  than  or equal to the [13XD[113X-class of [10Xy[110X in [3XS[103X under the usual ordering of
+  Green's [13XD[113X-classes of a semigroup.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 3, 4, 1, 3]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([2, 4, 1, 5, 5]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([2, 5, 3, 5, 3]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 5, 1, 1, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27Xreps := ShallowCopy(AsSet(DClassReps(S)));[127X[104X
+    [4X[28X[ Transformation( [ 1, 1, 1, 1, 1 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 3, 1, 3, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 3, 4, 1, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 2, 4, 1, 5, 5 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XSort(reps, IsGreensDGreaterThanFunc(S));[127X[104X
+    [4X[25Xgap>[125X [27Xreps;[127X[104X
+    [4X[28X[ Transformation( [ 2, 4, 1, 5, 5 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 3, 4, 1, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 3, 1, 3, 3 ] ), [128X[104X
+    [4X[28X  Transformation( [ 1, 1, 1, 1, 1 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(DClass(S, reps[2]),[127X[104X
+    [4X[25X>[125X [27X                           DClass(S, reps[1]));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(4);;[127X[104X
+    [4X[25Xgap>[125X [27XIsGreensDGreaterThanFunc(S)(S.1, S.3);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensDGreaterThanFunc(S)(S.3, S.1);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(DClass(S, S.3),[127X[104X
+    [4X[25X>[125X [27X                           DClass(S, S.1));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(DClass(S, S.1),[127X[104X
+    [4X[25X>[125X [27X                           DClass(S, S.3));[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.2 [33X[0;0YIterators and enumerators of classes and representatives[133X[101X
+  
+  [33X[0;0YIn  this  section,  we  describe  the  methods in the [5XSemigroups[105X package for
+  incrementally determining Green's classes or their representatives.[133X
+  
+  
+  [1X12.2-1 [33X[0;0YIteratorOfXClassReps[133X[101X
+  
+  [29X[2XIteratorOfDClassReps[102X( [3XS[103X ) [32X operation
+  [29X[2XIteratorOfHClassReps[102X( [3XS[103X ) [32X operation
+  [29X[2XIteratorOfLClassReps[102X( [3XS[103X ) [32X operation
+  [29X[2XIteratorOfRClassReps[102X( [3XS[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn iterator.[133X
+  
+  [33X[0;0YReturns  an iterator of the representatives of the Green's classes contained
+  in  the  semigroup  [3XS[103X.  See  [14X'Reference:  Iterators'[114X for more information on
+  iterators.[133X
+  
+  [33X[0;0YSee   also   [2XGreensRClasses[102X   ([14XReference:   GreensRClasses[114X),  [2XGreensRClasses[102X
+  ([14X12.1-4[114X), and [2XIteratorOfRClasses[102X ([14X12.2-2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([3, 2, 1, 5, 4]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 4, 3, 2, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 4, 3, 2, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 5, 4, 5, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([4, 5, 4, 3, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27Xiter := IteratorOfRClassReps(S);[127X[104X
+    [4X[28X<iterator of R-class reps>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28XTransformation( [ 3, 2, 1, 5, 4 ] )[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28XTransformation( [ 5, 5, 4, 5, 1 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xiter;[127X[104X
+    [4X[28X<iterator of R-class reps>[128X[104X
+    [4X[25Xgap>[125X [27Xfile := PackageInfo("semigroups")[1]!.InstallationPath;;[127X[104X
+    [4X[25Xgap>[125X [27Xfile := Concatenation(file, "/data/doc/greens.pickle");;[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(ReadGenerators(file, 1));[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 983 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XNrMovedPoints(S);[127X[104X
+    [4X[28X983[128X[104X
+    [4X[25Xgap>[125X [27Xiter := IteratorOfLClassReps(S);[127X[104X
+    [4X[28X<iterator of L-class reps>[128X[104X
+    [4X[25Xgap>[125X [27XNextIterator(iter);[127X[104X
+    [4X[28X<partial perm on 634 pts with degree 1000, codegree 1000>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.2-2 [33X[0;0YIteratorOfXClasses[133X[101X
+  
+  [29X[2XIteratorOfDClasses[102X( [3XS[103X ) [32X operation
+  [29X[2XIteratorOfHClasses[102X( [3XS[103X ) [32X operation
+  [29X[2XIteratorOfLClasses[102X( [3XS[103X ) [32X operation
+  [29X[2XIteratorOfRClasses[102X( [3XS[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn iterator.[133X
+  
+  [33X[0;0YReturns  an  iterator  of  the  Green's  classes  in  the  semigroup  [3XS[103X. See
+  [14X'Reference: Iterators'[114X for more information on iterators.[133X
+  
+  [33X[0;0YThis function is useful if you are, for example, looking for an [13XR[113X-class of a
+  semigroup  with a particular property but do not necessarily want to compute
+  all of the [13XR[113X-classes.[133X
+  
+  [33X[0;0YSee     also    [2XGreensRClasses[102X    ([14X12.1-4[114X),    [2XGreensRClasses[102X    ([14XReference:
+  GreensRClasses[114X), [2XNrRClasses[102X ([14X12.1-9[114X), and [2XIteratorOfRClassReps[102X ([14X12.2-1[114X).[133X
+  
+  [33X[0;0YThe  transformation semigroup in the example below has 25147892 elements but
+  it  only  takes  a  fraction  of a second to find a non-trivial [13XR[113X-class. The
+  inverse  semigroup  of  partial  permutations  in the example below has size
+  158122047816  but  it  only  takes a fraction of a second to find an [13XR[113X-class
+  with more than 1000 elements.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgens := [Transformation([2, 4, 1, 5, 4, 4, 7, 3, 8, 1]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([3, 2, 8, 8, 4, 4, 8, 6, 5, 7]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([4, 10, 6, 6, 1, 2, 4, 10, 9, 7]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([6, 2, 2, 4, 9, 9, 5, 10, 1, 8]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([6, 4, 1, 6, 6, 8, 9, 6, 2, 2]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([6, 8, 1, 10, 6, 4, 9, 1, 9, 4]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([8, 6, 2, 3, 3, 4, 8, 6, 2, 9]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([9, 1, 2, 8, 1, 5, 9, 9, 9, 5]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([9, 3, 1, 5, 10, 3, 4, 6, 10, 2]),[127X[104X
+    [4X[25X>[125X [27X            Transformation([10, 7, 3, 7, 1, 9, 8, 8, 4, 10])];;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(gens);;[127X[104X
+    [4X[25Xgap>[125X [27Xiter := IteratorOfRClasses(S);[127X[104X
+    [4X[28X<iterator of R-classes>[128X[104X
+    [4X[25Xgap>[125X [27Xfor R in iter do[127X[104X
+    [4X[25X>[125X [27X  if Size(R) > 1 then[127X[104X
+    [4X[25X>[125X [27X    break;[127X[104X
+    [4X[25X>[125X [27X  fi;[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[25Xgap>[125X [27XR;[127X[104X
+    [4X[28X<Green's R-class: Transformation( [ 6, 4, 1, 6, 6, 8, 9, 6, 2, 2 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XSize(R);[127X[104X
+    [4X[28X21600[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5, 6, 7, 10, 11, 19, 20],[127X[104X
+    [4X[25X>[125X [27X             [19, 4, 11, 15, 3, 20, 1, 14, 8, 13, 17]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 6, 7, 8, 14, 15, 16, 17],[127X[104X
+    [4X[25X>[125X [27X             [15, 14, 20, 19, 4, 5, 1, 13, 11, 10, 3]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 4, 6, 7, 8, 9, 10, 14, 15, 18],[127X[104X
+    [4X[25X>[125X [27X             [7, 2, 17, 10, 1, 19, 9, 3, 11, 16, 18]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5, 7, 8, 9, 11, 12, 13, 16],[127X[104X
+    [4X[25X>[125X [27X             [8, 3, 18, 1, 4, 13, 12, 7, 19, 20, 2, 11]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5, 6, 7, 9, 11, 15, 16, 17, 20],[127X[104X
+    [4X[25X>[125X [27X             [7, 17, 13, 4, 6, 9, 18, 10, 11, 19, 5, 2, 8]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 18],[127X[104X
+    [4X[25X>[125X [27X             [10, 20, 11, 7, 13, 8, 4, 9, 2, 18, 17, 6, 15]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 17, 18],[127X[104X
+    [4X[25X>[125X [27X             [10, 20, 18, 1, 14, 16, 9, 5, 15, 4, 8, 12, 19, 11]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 15, 16, 19, 20],[127X[104X
+    [4X[25X>[125X [27X             [13, 6, 1, 2, 11, 7, 16, 18, 9, 10, 4, 14, 15, 5, 17]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 20],[127X[104X
+    [4X[25X>[125X [27X             [5, 3, 12, 9, 20, 15, 8, 16, 13, 1, 17, 11, 14, 10, 2]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 13, 17, 18, 19, 20],[127X[104X
+    [4X[25X>[125X [27X             [8, 3, 9, 20, 2, 12, 14, 15, 4, 18, 13, 1, 17, 19, 5]));;[127X[104X
+    [4X[25Xgap>[125X [27Xiter := IteratorOfRClasses(S);[127X[104X
+    [4X[28X<iterator of R-classes>[128X[104X
+    [4X[25Xgap>[125X [27Xrepeat[127X[104X
+    [4X[25X>[125X [27X  R := NextIterator(iter);[127X[104X
+    [4X[25X>[125X [27Xuntil Size(R) > 1000;[127X[104X
+    [4X[25Xgap>[125X [27XR;[127X[104X
+    [4X[28X<Green's R-class: [8,3][11,5][13,1][15,2][17,6][19,7]>[128X[104X
+    [4X[25Xgap>[125X [27XSize(R);[127X[104X
+    [4X[28X10020240[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X12.3 [33X[0;0YProperties of Green's classes[133X[101X
+  
+  [33X[0;0YIn this section, we describe the properties and operators of Green's classes
+  that are available in the [5XSemigroups[105X package[133X
+  
+  
+  [1X12.3-1 [33X[0;0YLess than for Green's classes[133X[101X
+  
+  [29X[2X\<[102X( [3Xleft-expr[103X, [3Xright-expr[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThe  Green's  class  [3Xleft-expr[103X  is  less than or equal to [3Xright-expr[103X if they
+  belong  to  the  same  semigroup and the representative of [3Xleft-expr[103X is less
+  than  the  representative  of  [3Xright-expr[103X  under  [10X<[110X; see also [2XRepresentative[102X
+  ([14XReference: Representative[114X).[133X
+  
+  [33X[0;0YPlease  note  that  this  is not the usual order on the Green's classes of a
+  semigroup   as   defined   in   [14X'Reference:  Green's  Relations'[114X.  See  also
+  [2XIsGreensLessThanOrEqual[102X ([14XReference: IsGreensLessThanOrEqual[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationSemigroup(4);;[127X[104X
+    [4X[25Xgap>[125X [27XA := GreensRClassOfElement(S, Transformation([2, 1, 3, 1]));[127X[104X
+    [4X[28X<Green's R-class: Transformation( [ 2, 1, 3, 1 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XB := GreensRClassOfElement(S, Transformation([1, 2, 3, 4]));[127X[104X
+    [4X[28X<Green's R-class: IdentityTransformation>[128X[104X
+    [4X[25Xgap>[125X [27XA < B;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XB < A;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(A, B);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(B, A);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(4);;[127X[104X
+    [4X[25Xgap>[125X [27XA := GreensJClassOfElement(S, PartialPerm([1, 3, 4]));;[127X[104X
+    [4X[25Xgap>[125X [27XB := GreensJClassOfElement(S, PartialPerm([3, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XA < B;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XB < A;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(A, B);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsGreensLessThanOrEqual(B, A);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X12.3-2 IsRegularGreensClass[101X
+  
+  [29X[2XIsRegularGreensClass[102X( [3Xclass[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThis  function returns [9Xtrue[109X if [3Xclass[103X is a regular Green's class and [9Xfalse[109X if
+  it   is   not.   See   also  [2XIsRegularDClass[102X  ([14XReference:  IsRegularDClass[114X),
+  [2XIsGroupHClass[102X    ([14XReference:    IsGroupHClass[114X),    [2XGroupHClassOfGreensDClass[102X
+  ([14XReference:  GroupHClassOfGreensDClass[114X), [2XGroupHClass[102X ([14X12.4-1[114X), [2XNrIdempotents[102X
+  ([14X13.9-2[114X),  [2XIdempotents[102X  ([14X13.9-1[114X),  and [2XIsRegularSemigroupElement[102X ([14XReference:
+  IsRegularSemigroupElement[114X).[133X
+  
+  [33X[0;0YThe  function  [10XIsRegularDClass[110X  produces  the same output as the [5XGAP[105X library
+  functions    with   the   same   name;   see   [2XIsRegularDClass[102X   ([14XReference:
+  IsRegularDClass[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Monoid(Transformation([10, 8, 7, 4, 1, 4, 10, 10, 7, 2]),[127X[104X
+    [4X[25X>[125X [27X               Transformation([5, 2, 5, 5, 9, 10, 8, 3, 8, 10]));;[127X[104X
+    [4X[25Xgap>[125X [27Xf := Transformation([1, 1, 10, 8, 8, 8, 1, 1, 10, 8]);;[127X[104X
+    [4X[25Xgap>[125X [27XR := RClass(S, f);;[127X[104X
+    [4X[25Xgap>[125X [27XIsRegularGreensClass(R);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := Monoid(Transformation([2, 3, 4, 5, 1, 8, 7, 6, 2, 7]),[127X[104X
+    [4X[25X>[125X [27X               Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27Xf := Transformation([3, 8, 7, 4, 1, 4, 3, 3, 7, 2]);;[127X[104X
+    [4X[25Xgap>[125X [27XR := RClass(S, f);;[127X[104X
+    [4X[25Xgap>[125X [27XIsRegularGreensClass(R);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(R);[127X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 1, 3, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 1, 2, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([4, 2, 3, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27Xf := Transformation([4, 2, 3, 3]);;[127X[104X
+    [4X[25Xgap>[125X [27XL := GreensLClassOfElement(S, f);;[127X[104X
+    [4X[25Xgap>[125X [27XIsRegularGreensClass(L);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XR := GreensRClassOfElement(S, f);;[127X[104X
+    [4X[25Xgap>[125X [27XIsRegularGreensClass(R);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xg := Transformation([4, 4, 4, 4]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsRegularSemigroupElement(S, g);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsRegularGreensClass(LClass(S, g));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsRegularGreensClass(RClass(S, g));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsRegularDClass(DClass(S, g));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDClass(S, g) = RClass(S, g);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X12.3-3 IsGreensClassNC[101X
+  
+  [29X[2XIsGreensClassNC[102X( [3Xclass[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  Green's  class [3Xclass[103X of a semigroup [10XS[110X satisfies [10XIsGreensClassNC[110X if it was
+  not known to [5XGAP[105X that the representative of [3Xclass[103X was an element of [10XS[110X at the
+  point that [3Xclass[103X was created.[133X
+  
+  
+  [1X12.4 [33X[0;0YAttributes of Green's classes[133X[101X
+  
+  [33X[0;0YIn  this  section,  we  describe  the attributes of Green's classes that are
+  available in the [5XSemigroups[105X package[133X
+  
+  [1X12.4-1 GroupHClass[101X
+  
+  [29X[2XGroupHClass[102X( [3Xclass[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA  group [13XH[113X-class of the [13XD[113X-class [3Xclass[103X if it is regular and [9Xfail[109X if
+            it is not.[133X
+  
+  [33X[0;0Y[10XGroupHClass[110X   is   a   synonym   for  [2XGroupHClassOfGreensDClass[102X  ([14XReference:
+  GroupHClassOfGreensDClass[114X).[133X
+  
+  [33X[0;0YSee   also   [2XIsGroupHClass[102X   ([14XReference:   IsGroupHClass[114X),   [2XIsRegularDClass[102X
+  ([14XReference:    IsRegularDClass[114X),    [2XIsRegularGreensClass[102X    ([14X12.3-2[114X),    and
+  [2XIsRegularSemigroup[102X ([14X14.1-16[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 6, 7, 2, 6, 1, 1, 5]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 8, 1, 4, 5, 6, 7, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XIsRegularSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xiter := IteratorOfDClasses(S);;[127X[104X
+    [4X[25Xgap>[125X [27Xrepeat D := NextIterator(iter); until IsRegularDClass(D);[127X[104X
+    [4X[25Xgap>[125X [27XD;[127X[104X
+    [4X[28X<Green's D-class: Transformation( [ 6, 1, 1, 6, 1, 2, 2, 6 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XNrIdempotents(D);[127X[104X
+    [4X[28X12[128X[104X
+    [4X[25Xgap>[125X [27XNrRClasses(D);[127X[104X
+    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27XNrLClasses(D);[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XGroupHClass(D);[127X[104X
+    [4X[28X<Green's H-class: Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XGroupHClassOfGreensDClass(D);[127X[104X
+    [4X[28X<Green's H-class: Transformation( [ 1, 2, 2, 1, 2, 6, 6, 1 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(GroupHClass(D));[127X[104X
+    [4X[28X"S3"[128X[104X
+    [4X[25Xgap>[125X [27Xrepeat D := NextIterator(iter); until not IsRegularDClass(D);[127X[104X
+    [4X[25Xgap>[125X [27XD;[127X[104X
+    [4X[28X<Green's D-class: Transformation( [ 7, 5, 2, 2, 6, 1, 1, 2 ] )>[128X[104X
+    [4X[25Xgap>[125X [27XIsRegularDClass(D);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XGroupHClass(D);[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([2, 1, 6, 0, 3]), PartialPerm([3, 5, 2, 0, 0, 6]));;[127X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1 .. 3], [6, 3, 1]);;[127X[104X
+    [4X[25Xgap>[125X [27XFirst(DClasses(S), x -> not IsTrivial(GroupHClass(x)));[127X[104X
+    [4X[28X<Green's D-class: <identity partial perm on [ 1, 2 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(GroupHClass(last));[127X[104X
+    [4X[28X"C2"[128X[104X
+  [4X[32X[104X
+  
+  [1X12.4-2 SchutzenbergerGroup[101X
+  
+  [29X[2XSchutzenbergerGroup[102X( [3Xclass[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA group.[133X
+  
+  [33X[0;0Y[10XSchutzenbergerGroup[110X  returns  the  generalized Schutzenberger group (defined
+  below) of the [13XR[113X-, [13XD[113X-, [13XL[113X-, or [13XH[113X-class [3Xclass[103X.[133X
+  
+  [33X[0;0YIf [10Xf[110X is an element of a semigroup of transformations or partial permutations
+  and  [10Xim(f)[110X denotes the image of [10Xf[110X, then the [13Xgeneralized Schutzenberger group[113X
+  of [10Xim(f)[110X is the permutation group[133X
+  
+  [33X[0;0Y{ g|_im(f) : im(f*g)=im(f) }.[133X
+  
+  [33X[0;0YThe   generalized   Schutzenberger   group   of   the  kernel  [10Xker(f)[110X  of  a
+  transformation  [10Xf[110X or the domain [10Xdom(f)[110X of a partial permutation [10Xf[110X is defined
+  analogously.[133X
+  
+  [33X[0;0YThe  generalized  Schutzenberger group of a Green's class is then defined as
+  follows.[133X
+  
+  [8X[13XR[113X-class[108X
+        [33X[0;6YThe  generalized  Schutzenberger  group  of  the image or range of the
+        representative of the [13XR[113X-class.[133X
+  
+  [8X[13XL[113X-class[108X
+        [33X[0;6YThe  generalized  Schutzenberger  group of the kernel or domain of the
+        representative of the [13XL[113X-class.[133X
+  
+  [8X[13XH[113X-class[108X
+        [33X[0;6YThe  intersection  of  the generalized Schutzenberger groups of the [13XR[113X-
+        and [13XL[113X-class containing the [13XH[113X-class.[133X
+  
+  [8X[13XD[113X-class[108X
+        [33X[0;6YThe  intersection  of  the generalized Schutzenberger groups of the [13XR[113X-
+        and [13XL[113X-class containing the representative of the [13XD[113X-class.[133X
+  
+  [33X[0;0YThe  output  of  this  attribute is difficult to describe for other types of
+  semigroup. However, a general description is given in [EEMP15].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([4, 4, 3, 5, 3]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 1, 1, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([5, 5, 4, 4, 5]));;[127X[104X
+    [4X[25Xgap>[125X [27Xf := Transformation([5, 5, 4, 4, 5]);;[127X[104X
+    [4X[25Xgap>[125X [27XSchutzenbergerGroup(RClass(S, f));[127X[104X
+    [4X[28XGroup([ (4,5) ])[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 7],[127X[104X
+    [4X[25X>[125X [27X            [9, 2, 4, 8]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 6, 7, 8, 9, 10],[127X[104X
+    [4X[25X>[125X [27X            [6, 8, 4, 5, 9, 1, 3]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5, 6, 7, 8, 9],[127X[104X
+    [4X[25X>[125X [27X            [7, 4, 1, 6, 9, 5, 2, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27XList(DClasses(S), SchutzenbergerGroup);[127X[104X
+    [4X[28X[ Group(()), Group(()), Group(()), Group(()), Group([ (4,9) ]), [128X[104X
+    [4X[28X  Group(()), Group(()), Group([ (5,8,6), (5,8) ]), Group(()), [128X[104X
+    [4X[28X  Group(()), Group(()), Group(()), Group(()), Group(()), [128X[104X
+    [4X[28X  Group([ (1,7,5,6,9,3) ]), Group([ (1,6)(3,5) ]), Group(()), [128X[104X
+    [4X[28X  Group(()), Group(()), Group(()), Group(()), Group(()), Group(()) ][128X[104X
+  [4X[32X[104X
+  
+  [1X12.4-3 StructureDescriptionSchutzenbergerGroups[101X
+  
+  [29X[2XStructureDescriptionSchutzenbergerGroups[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YDistinct  structure descriptions of the Schutzenberger groups of a
+            semigroup.[133X
+  
+  [33X[0;0Y[10XStructureDescriptionSchutzenbergerGroups[110X  returns  the  distinct  values  of
+  [2XStructureDescription[102X ([14XReference: StructureDescription[114X) when it is applied to
+  the Schutzenberger groups of the [13XR[113X-classes of the semigroup [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3], [2, 5, 4]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3], [4, 1, 2]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3], [5, 2, 3]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 4, 5], [2, 1, 4, 3]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 5], [2, 3, 5]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 5], [2, 3, 5, 4]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 5], [4, 2, 5, 1]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 5], [5, 2, 4, 3]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 5], [5, 4, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescriptionSchutzenbergerGroups(S);[127X[104X
+    [4X[28X[ "1", "C2", "S3" ][128X[104X
+    [4X[25Xgap>[125X [27XS := Monoid([127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 5, -1, -2], [3, 4, -3, -5], [-4]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, -2], [3, -1], [4], [5], [-3, -4], [-5]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1], [2, 3, -5], [4, -3], [5, -2], [-1, -4]]));[127X[104X
+    [4X[28X<bipartition monoid of degree 5 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescriptionSchutzenbergerGroups(S);[127X[104X
+    [4X[28X[ "1", "C2" ][128X[104X
+  [4X[32X[104X
+  
+  [1X12.4-4 StructureDescriptionMaximalSubgroups[101X
+  
+  [29X[2XStructureDescriptionMaximalSubgroups[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YDistinct  structure  descriptions  of  the  maximal subgroups of a
+            semigroup.[133X
+  
+  [33X[0;0Y[10XStructureDescriptionMaximalSubgroups[110X   returns   the   distinct   values  of
+  [2XStructureDescription[102X ([14XReference: StructureDescription[114X) when it is applied to
+  the maximal subgroups of the semigroup [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseSemigroup(6);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 6 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescriptionMaximalSubgroups(S);[127X[104X
+    [4X[28X[ "1", "C2", "S3", "S4", "S5", "S6" ][128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 3, 4, 5, 8],[127X[104X
+    [4X[25X>[125X [27X             [8, 3, 9, 4, 5]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 8],[127X[104X
+    [4X[25X>[125X [27X             [10, 4, 1, 9, 6]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5, 6, 7, 10],[127X[104X
+    [4X[25X>[125X [27X             [4, 1, 6, 7, 5, 3, 2, 10]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 6, 8, 10],[127X[104X
+    [4X[25X>[125X [27X             [4, 9, 10, 3, 1, 5, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescriptionMaximalSubgroups(S);[127X[104X
+    [4X[28X[ "1", "C2", "C3", "C4" ][128X[104X
+  [4X[32X[104X
+  
+  [1X12.4-5 MultiplicativeNeutralElement[101X
+  
+  [29X[2XMultiplicativeNeutralElement[102X( [3XH[103X ) [32X method
+  [6XReturns:[106X  [33X[0;10YA semigroup element or [9Xfail[109X.[133X
+  
+  [33X[0;0YIf   the   [13XH[113X-class   [3XH[103X   of   a  semigroup  [10XS[110X  is  a  subgroup  of  [10XS[110X,  then
+  [10XMultiplicativeNeutralElement[110X  returns  the  identity  of  [3XH[103X.  If  [3XH[103X is not a
+  subgroup of [10XS[110X, then [9Xfail[109X is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([PartialPerm([1, 5, 2]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([2, 0, 4]), PartialPerm([4, 1, 5]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 0, 3, 0, 4]), PartialPerm([1, 2, 0, 3, 5]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 3, 2, 0, 5]), PartialPerm([5, 0, 0, 4, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XH := HClass(S, PartialPerm([1, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeNeutralElement(H);[127X[104X
+    [4X[28X<identity partial perm on [ 1, 2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XH := HClass(S, PartialPerm([1, 4]));;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeNeutralElement(H);[127X[104X
+    [4X[28Xfail[128X[104X
+  [4X[32X[104X
+  
+  [1X12.4-6 StructureDescription[101X
+  
+  [29X[2XStructureDescription[102X( [3Xclass[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA string or [9Xfail[109X.[133X
+  
+  [33X[0;0Y[10XStructureDescription[110X  returns  the value of [2XStructureDescription[102X ([14XReference:
+  StructureDescription[114X)  when it is applied to a group isomorphic to the group
+  [13XH[113X-class [3Xclass[103X. If [3Xclass[103X is not a group [13XH[113X-class, then [9Xfail[109X is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 6, 7, 8, 9],[127X[104X
+    [4X[25X>[125X [27X            [1, 9, 4, 3, 5, 2, 10, 7]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 4, 7, 8, 9],[127X[104X
+    [4X[25X>[125X [27X            [6, 2, 4, 9, 1, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27XH := HClass(S, PartialPerm([1, 2, 3, 4, 7, 9],[127X[104X
+    [4X[25X>[125X [27X                              [1, 7, 3, 4, 9, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(H);[127X[104X
+    [4X[28X"C6"[128X[104X
+  [4X[32X[104X
+  
+  [1X12.4-7 InjectionPrincipalFactor[101X
+  
+  [29X[2XInjectionPrincipalFactor[102X( [3XD[103X ) [32X attribute
+  [29X[2XInjectionNormalizedPrincipalFactor[102X( [3XD[103X ) [32X attribute
+  [29X[2XIsomorphismReesMatrixSemigroup[102X( [3XD[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA injective mapping.[133X
+  
+  [33X[0;0YIf  the  [13XD[113X-class  [3XD[103X  is  a subsemigroup of a semigroup [10XS[110X, then the [13Xprincipal
+  factor[113X  of  [3XD[103X  is  just  [3XD[103X itself. If [3XD[103X is not a subsemigroup of [10XS[110X, then the
+  principal  factor  of [3XD[103X is the semigroup with elements [3XD[103X and a new element [10X0[110X
+  with multiplication of [22Xx,y∈ D[122X defined by:[133X
+  
+  [33X[0;0Y[10Xxy[110X equals the product of [10Xx[110X and [10Xy[110X if it belongs to [3XD[103X and [10X0[110X if it does not.[133X
+  
+  [33X[0;0Y[10XInjectionPrincipalFactor[110X returns an injective function from the [13XD[113X-class [3XD[103X to
+  a  Rees  (0-)matrix semigroup, which contains the principal factor of [3XD[103X as a
+  subsemigroup.[133X
+  
+  [33X[0;0YIf  [3XD[103X  is a subsemigroup of its parent semigroup, then the function returned
+  by   [10XInjectionPrincipalFactor[110X   or   [10XIsomorphismReesMatrixSemigroup[110X   is  an
+  isomorphism  from  [3XD[103X  to  a  Rees  matrix semigroup; see [2XReesMatrixSemigroup[102X
+  ([14XReference: ReesMatrixSemigroup[114X).[133X
+  
+  [33X[0;0YIf    [3XD[103X    is   not   a   semigroup,   then   the   function   returned   by
+  [10XInjectionPrincipalFactor[110X  is an injective function from [3XD[103X to a Rees 0-matrix
+  semigroup    isomorphic    to    the    principal    factor    of   [3XD[103X;   see
+  [2XReesZeroMatrixSemigroup[102X  ([14XReference: ReesZeroMatrixSemigroup[114X). In this case,
+  [10XIsomorphismReesMatrixSemigroup[110X     and    [10XIsomorphismReesZeroMatrixSemigroup[110X
+  returns an error.[133X
+  
+  [33X[0;0Y[10XInjectionNormalizedPrincipalFactor[110X     returns     the     composition    of
+  [10XInjectionPrincipalFactor[110X  with [2XRZMSNormalization[102X ([14X6.5-6[114X) or [2XRMSNormalization[102X
+  ([14X6.5-7[114X) as appropriate.[133X
+  
+  [33X[0;0YSee also [2XPrincipalFactor[102X ([14X12.4-8[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 6, 8, 10],[127X[104X
+    [4X[25X>[125X [27X            [2, 6, 7, 9, 1, 5]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4, 6, 7, 8, 10],[127X[104X
+    [4X[25X>[125X [27X            [3, 8, 1, 9, 4, 10, 5, 6]));;[127X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 5, 6, 7, 9],[127X[104X
+    [4X[25X>[125X [27X                    [1, 2, 5, 6, 7, 9]);;[127X[104X
+    [4X[25Xgap>[125X [27XD := GreensDClassOfElement(S, x);[127X[104X
+    [4X[28X<Green's D-class: <identity partial perm on [ 1, 2, 5, 6, 7, 9 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XR := Range(InjectionPrincipalFactor(D));[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 3x3 over Group(())>[128X[104X
+    [4X[25Xgap>[125X [27XMatrixOfReesZeroMatrixSemigroup(R);[127X[104X
+    [4X[28X[ [ (), 0, 0 ], [ 0, (), 0 ], [ 0, 0, () ] ][128X[104X
+    [4X[25Xgap>[125X [27XSize(R);[127X[104X
+    [4X[28X10[128X[104X
+    [4X[25Xgap>[125X [27XSize(D);[127X[104X
+    [4X[28X9[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3, -3, -5], [4], [5, -2], [-1, -4]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 3, 5], [2, 4, -3], [-1, -2, -4, -5]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 5, -2, -4], [2, 3, 4, -1, -5], [-3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 5, -1, -2, -3], [2, 4, -4], [3, -5]]));;[127X[104X
+    [4X[25Xgap>[125X [27XD := GreensDClassOfElement(S,[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 5, -2, -4], [2, 3, 4, -1, -5], [-3]]));[127X[104X
+    [4X[28X<Green's D-class: <bipartition: [ 1, 5, -2, -4 ], [ 2, 3, 4, -1, -5 ][128X[104X
+    [4X[28X   , [ -3 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XInjectionNormalizedPrincipalFactor(D);[127X[104X
+    [4X[28XMappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ], [128X[104X
+    [4X[28X  [ 2, 3, 4, -1, -5 ], [ -3 ]>>, <Rees matrix semigroup 1x1 over [128X[104X
+    [4X[28X  Group([ (1,2) ])>, function( x ) ... end, function( x ) ... end )[128X[104X
+  [4X[32X[104X
+  
+  [1X12.4-8 PrincipalFactor[101X
+  
+  [29X[2XPrincipalFactor[102X( [3XD[103X ) [32X attribute
+  [29X[2XNormalizedPrincipalFactor[102X( [3XD[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA Rees (0-)matrix semigroup.[133X
+  
+  [33X[0;0YIf  [3XD[103X  is  a [13XD[113X-class of semigroup, then [10XPrincipalFactor([3XD[103X[10X)[110X is just shorthand
+  for  [10XRange(InjectionPrincipalFactor([3XD[103X[10X))[110X, and [10XNormalizedPrincipalFactor([3XD[103X[10X)[110X is
+  shorthand for [10XRange(InjectionNormalizedPrincipalFactor([3XD[103X[10X))[110X.[133X
+  
+  [33X[0;0YSee [2XInjectionPrincipalFactor[102X ([14X12.4-7[114X) and [2XInjectionNormalizedPrincipalFactor[102X
+  ([14X12.4-7[114X) for more details.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([PartialPerm([1, 2, 3], [1, 3, 4]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3], [2, 5, 3]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 3, 5], [5, 1, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XPrincipalFactor(MinimalDClass(S));[127X[104X
+    [4X[28X<Rees matrix semigroup 1x1 over Group(())>[128X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28X<empty partial perm>[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3, 4, 5, -1, -3], [-2, -5], [-4]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -5], [2, 3, 4, 5, -1, -3], [-2, -4]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 5, -4], [2, 4, -1, -5], [3, -2, -3]]));;[127X[104X
+    [4X[25Xgap>[125X [27XD := MinimalDClass(S);[127X[104X
+    [4X[28X<Green's D-class: <bipartition: [ 1, 2, 3, 4, 5, -1, -3 ], [128X[104X
+    [4X[28X  [ -2, -5 ], [ -4 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XNormalizedPrincipalFactor(D);[127X[104X
+    [4X[28X<Rees matrix semigroup 1x5 over Group(())>[128X[104X
+  [4X[32X[104X
+  

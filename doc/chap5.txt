@@ -1,1321 +1,1715 @@
   
-  [1X5 [33X[0;0YBipartitions and blocks[133X[101X
+  [1X5 [33X[0;0YMatrices over semirings[133X[101X
   
-  [33X[0;0YIn  this  chapter  we  describe the functions in [5XSemigroups[105X for creating and
-  manipulating  bipartitions  and  semigroups  of  bipartitions.  We  begin by
-  describing what these objects are.[133X
+  [33X[0;0YIn  this  chapter  we  describe the functionality in [5XSemigroups[105X for creating
+  matrices  over  semirings.  [12XOnly square matrices are currently supported.[112X We
+  use the term [12Xmatrix[112X to mean [12Xsquare matrix[112X everywhere in this manual.[133X
   
-  [33X[0;0YA  [13Xpartition[113X of a set [10XX[110X is a set of pairwise disjoint non-empty subsets of [10XX[110X
-  whose union is [10XX[110X.[133X
+  [33X[0;0YFor   reference,   matrices  over  the  following  semirings  are  currently
+  supported:[133X
   
-  [33X[0;0YLet [22Xn∈[122X[13XN[113X, let [13Xn[113X[22X={1,2,...,n}[122X, and let [22X-[122X[13Xn[113X[22X={-1,-2,...,-n}[122X.[133X
+  [8Xthe Boolean semiring[108X
+        [33X[0;6Ythe  set [22X{0, 1}[122X where [22X0 + 0 = 0[122X, [22X0 + 1 = 1 + 1 = 1 + 0 = 1[122X, [22X1⋅ 0 = 0 ⋅
+        0 = 0 ⋅ 1 = 0[122X, and [22X1⋅ 1 = 1[122X.[133X
   
-  [33X[0;0YThe [13Xpartition monoid[113X of degree [10Xn[110X is the set of all partitions of [13Xn[113X[22X∪[122X-[13Xn[113X with a
-  multiplication  we  describe below. To avoid conflict with other uses of the
-  word  "partition"  in [5XGAP[105X, and to reflect their definition, we have opted to
-  refer  to  the elements of the partition monoid as [13Xbipartitions[113X of degree [10Xn[110X;
-  we will do so from this point on.[133X
+  [8Xthe max-plus semiring[108X
+        [33X[0;6Ythe  set of integers and negative infinity [22XZ∪ {-∞}[122X with operations max
+        and plus.[133X
   
-  [33X[0;0YLet  [10Xx[110X  be any bipartition of degree [10Xn[110X. Then [10Xx[110X is a set of pairwise disjoint
-  non-empty  subsets of [13Xn[113X[22X∪[122X-[13Xn[113X whose union is [13Xn[113X[22X∪[122X-[13Xn[113X; these subsets are called the
-  [13Xblocks[113X  of  [10Xx[110X.  A  block  containing  elements  of both [13Xn[113X and -[13Xn[113X is called a
-  [13Xtransverse  block[113X.  If [10Xi[110X,[10Xj[110X[22X∈[122X[13Xn[113X[22X∪[122X-[13Xn[113X belong to the same block of a bipartition [10Xx[110X,
-  then we write ([10Xi[110X,[10Xj[110X)[22X∈[122X[10Xx[110X.[133X
+  [8Xthe min-plus semiring[108X
+        [33X[0;6Ythe set of integers and infinity [22XZ∪ {∞}[122X with operations min and plus;[133X
   
-  [33X[0;0YLet  [10Xx[110X  and  [10Xy[110X  be  bipartitions of equal degree. Then [10Xx[110X[10Xy[110X is the bipartition
-  where   [10Xi[110X,[10Xj[110X[22X∈[122X[13Xn[113X[22X∪[122X-[13Xn[113X   belong   to   the   same  block  of  [10Xx[110X[10Xy[110X  if  there  exist
-  [10Xk(1),k(2)[110X,[22X...[122X,[10Xk(r)[110X[22X∈[122X[13Xn[113X; and one of the following holds:[133X
+  [8Xtropical max-plus semirings[108X
+        [33X[0;6Ythe  set  [22X{-∞,  0, 1, ..., t}[122X for some threshold [22Xt[122X with operations max
+        and plus;[133X
   
-  [30X    [33X[0;6Y[10Xr[110X[22X=0[122X and either [22X([122X[10Xi[110X,[10Xj[110X[22X)∈[122X[10Xx[110X or [22X([122X-[10Xi[110X,-[10Xj[110X[22X)∈[122X[10Xy[110X;[133X
+  [8Xtropical min-plus semirings[108X
+        [33X[0;6Ythe set [22X{0, 1, ..., t, ∞}[122X for some threshold [22Xt[122X with operations min and
+        plus;[133X
   
-  [30X    [33X[0;6Y[10Xr=2s-1[110X for some [10Xs[110X[22X≥[122X[10X1[110X and[133X
+  [8Xthe semiring [22XN_t,p[122X[108X
+        [33X[0;6Ythe  semiring  [22XN_t,p  = {0, 1, ..., t, t + 1, ..., t + p - 1}[122X for some
+        threshold  [22Xt[122X and period [22Xp[122X under addition and multiplication modulo the
+        congruence [22Xt = t + p[122X;[133X
   
-        [33X[0;6Y[10X(i,-k(1))[110X[22X∈[122X[10Xx[110X,        [10X(k(1),k(2))[110X[22X∈[122X[10Xy[110X,        [10X(-k(2),-k(3))[110X[22X∈[122X[10Xx[110X,        [22X...[122X,
-        [10X(-k(2s-2),-k(2s-1))[110X[22X∈[122X[10Xx[110X, [10X(k(2s-1),-j)[110X[22X∈[122X[10Xy[110X[133X
+  [8Xthe integers[108X
+        [33X[0;6Ythe usual ring of integers;[133X
   
-  [30X    [33X[0;6Y[10Xr=2s[110X for some [10Xs[110X[22X≥[122X[10X1[110X and either:[133X
+  [8Xfinite fields[108X
+        [33X[0;6Ythe finite fields [10XGF(q^d)[110X for prime [10Xq[110X and some positive integer [10Xd[110X.[133X
   
-        [33X[0;6Y[10X(i,-k(1))[110X[22X∈[122X[10Xx[110X,  [10X(k(1),k(2))[110X[22X∈[122X[10Xy[110X,  [10X(-k(2),-k(3))[110X[22X∈[122X[10Xx[110X, [22X...[122X, [10X(k(2s-1),k(2s))[110X[22X∈[122X[10Xx[110X,
-        [10X(-k(2s),j)[110X[22X∈[122X[10Xy[110X[133X
-  
-        [33X[0;6Yor[133X
-  
-        [33X[0;6Y[10X(-i,k(1))[110X[22X∈[122X[10Xy[110X, [10X(-k(1),-k(2))[110X[22X∈[122X[10Xx[110X, [10X(k(2),k(3))[110X[22X∈[122X[10Xy[110X, [22X...[122X, [10X(-k(2s-1),-k(2s))[110X[22X∈[122X[10Xy[110X,
-        [10X(k(2s),-j)[110X[22X∈[122X[10Xx[110X.[133X
-  
-  [33X[0;0YThis  product  can  be  shown  to  be  associative, and so the collection of
-  bipartitions  of  any particular degree is a monoid; the identity element is
-  the  partition  {{[10Xi[110X,-[10Xi[110X}:[10Xi[110X[22X∈[122X[13Xn[113X}.  A  bipartition  is a unit if and only if each
-  block  is  of  the  form [22X{[122X[10Xi[110X,-[10Xj[110X[22X}[122X for some [10Xi[110X, [10Xj[110X[22X∈[122X[13Xn[113X. Hence the group of units is
-  isomorphic to the symmetric group on [13Xn[113X.[133X
-  
-  [33X[0;0YLet [10Xx[110X be a bipartition of degree [10Xn[110X. Then we define [10Xx[110X[22X^*[122X to be the bipartition
-  obtained  from  [10Xx[110X  by replacing [10Xi[110X by -[10Xi[110X and -[10Xi[110X by -[10Xi[110X in every block of [10Xx[110X for
-  all  [10Xi[110X[22X∈[122X[13Xn[113X. It is routine to verify that if [10Xx[110X and [10Xy[110X are arbitrary bipartitions
-  of equal degree, then[133X
-  
-  [33X[0;0Y[10X(x^*)^*=x, xx^*x=x, x^*xx^*=x^*, (xy)^*=y^*x^*.[110X[133X
-  
-  [33X[0;0YIn this way, the partition monoid is a [13Xregular *-semigroup[113X.[133X
-  
-  [33X[0;0YA  bipartition  [10Xx[110X  of  degree  [10Xn[110X  is  called  [13Xplanar[113X if there does not exist
-  distinct  blocks  [22XA, B ∈[122X [10Xx[110X, along with [22Xa, a' ∈ A[122X and [22Xb, b' ∈ B[122X such that [22Xa <
-  a'[122X, [22Xb < b'[122X and either:[133X
-  
-  [30X    [33X[0;6Y[22Xa < b < a' < b'[122X; or[133X
-  
-  [30X    [33X[0;6Y[22Xb < a < b' < a'[122X.[133X
-  
-  [33X[0;0YOr  equivalently, [10Xx[110X is planar if for each distinct blocks [22XA, B ∈[122X [10Xx[110X, and each
-  [22Xa, a' ∈ A[122X and [22Xb, b' ∈ B[122X such that [22Xa < a'[122X and [22Xb < b'[122X, either:[133X
-  
-  [30X    [33X[0;6Y[22Xa < a' < b < b'[122X;[133X
-  
-  [30X    [33X[0;6Y[22Xa < b < b' < a'[122X;[133X
-  
-  [30X    [33X[0;6Y[22Xb < a < a' < b'[122X; or[133X
-  
-  [30X    [33X[0;6Y[22Xb < b' < a < a'[122X.[133X
-  
-  [33X[0;0YFrom  a  graphical perspective, as on Page 873 in [HR05], a bipartition [10Xx[110X of
-  degree  [10Xn[110X  is  planar  if  it  can  be  represented as a graph without edges
-  crossing inside of the rectangle formed by its vertices [13Xn[113X[22X∪[122X-[13Xn[113X.[133X
+  [33X[0;0YWith  the  exception of matrices of finite fields, semigroups of matrices in
+  [5XSemigroups[105X  are of the second type described in Section [14X1.1[114X. In other words,
+  a version of the Froidure-Pin Algorithm [FP97] is used to compute semigroups
+  of  these  types,  i.e  it  is  possible  that all of the elements of such a
+  semigroup are enumerated and stored in the memory of your computer.[133X
   
   
-  [1X5.1 [33X[0;0YThe family and categories of bipartitions[133X[101X
+  [1X5.1 [33X[0;0YCreating matrices over semirings[133X[101X
   
-  [1X5.1-1 IsBipartition[101X
+  [33X[0;0YIn  this  section  we describe the two main operations for creating matrices
+  over semirings in [5XSemigroups[105X, and the categories, attributes, and operations
+  which  apply to every matrix over one of the semirings given at the start of
+  this chapter.[133X
   
-  [29X[2XIsBipartition[102X( [3Xobj[103X ) [32X Category
+  [33X[0;0YThere  are  several special methods for boolean matrices, which can be found
+  in  Section  [14X5.3[114X.  There are also several special methods for finite fields,
+  which can be found in section [14X5.4[114X.[133X
+  
+  [1X5.1-1 IsMatrixOverSemiring[101X
+  
+  [29X[2XIsMatrixOverSemiring[102X( [3Xobj[103X ) [32X Category
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YEvery  bipartition  in  [5XGAP[105X  belongs  to  the  category [10XIsBipartition[110X. Basic
-  operations  for  bipartitions  are  [2XRightBlocks[102X ([14X5.5-4[114X), [2XLeftBlocks[102X ([14X5.5-5[114X),
-  [2XExtRepOfBipartition[102X   ([14X5.5-3[114X),   [2XLeftProjection[102X   ([14X5.2-4[114X),   [2XRightProjection[102X
-  ([14X5.2-5[114X),  [2XStarOp[102X  ([14X5.2-6[114X),  [2XDegreeOfBipartition[102X  ([14X5.5-1[114X),  [2XRankOfBipartition[102X
-  ([14X5.5-2[114X), multiplication of two bipartitions of equal degree is via [9X*[109X.[133X
+  [33X[0;0YEvery  matrix  over  a  semiring  in  [5XSemigroups[105X is a member of the category
+  [10XIsMatrixOverSemiring[110X,       which       is       a       subcategory      of
+  [2XIsMultiplicativeElementWithOne[102X  ([14XReference: IsMultiplicativeElementWithOne[114X),
+  [2XIsAssociativeElement[102X       ([14XReference:       IsAssociativeElement[114X),      and
+  [10XIsPositionalObjectRep[110X; see [14X'Reference: Representation'[114X.[133X
   
-  [1X5.1-2 IsBipartitionCollection[101X
+  [33X[0;0YEvery matrix over a semiring in [5XSemigroups[105X is a square matrix.[133X
   
-  [29X[2XIsBipartitionCollection[102X( [3Xobj[103X ) [32X Category
+  [33X[0;0YBasic      operations      for      matrices     over     semirings     are:
+  [2XDimensionOfMatrixOverSemiring[102X     ([14X5.1-3[114X),     [2XTransposedMat[102X     ([14XReference:
+  TransposedMat[114X), and [2XOne[102X ([14XReference: One[114X).[133X
+  
+  [1X5.1-2 IsMatrixOverSemiringCollection[101X
+  
+  [29X[2XIsMatrixOverSemiringCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMatrixOverSemiringCollColl[102X( [3Xobj[103X ) [32X Category
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YEvery    collection    of    bipartitions    belongs    to    the   category
-  [10XIsBipartitionCollection[110X.  For  example,  bipartition  semigroups  belong  to
-  [10XIsBipartitionCollection[110X.[133X
+  [33X[0;0YEvery  collection of matrices over the same semiring belongs to the category
+  [10XIsMatrixOverSemiringCollection[110X.  For  example, semigroups of matrices over a
+  semiring belong to [10XIsMatrixOverSemiringCollection[110X.[133X
   
-  [1X5.1-3 BipartitionFamily[101X
+  [33X[0;0YEvery  collection  of collections of matrices over the same semiring belongs
+  to  the  category  [10XIsMatrixOverSemiringCollColl[110X.  For  example,  a  list  of
+  semigroups      of      matrices      over      semirings     belongs     to
+  [10XIsMatrixOverSemiringCollColl[110X.[133X
   
-  [29X[2XBipartitionFamily[102X[32X family
+  [1X5.1-3 DimensionOfMatrixOverSemiring[101X
   
-  [33X[0;0YThe family of all bipartitions is [10XBipartitionFamily[110X.[133X
+  [29X[2XDimensionOfMatrixOverSemiring[102X( [3Xmat[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
-  
-  [1X5.2 [33X[0;0YCreating bipartitions[133X[101X
-  
-  [33X[0;0YThere  are several ways of creating bipartitions in [5XGAP[105X, which are described
-  in this section.[133X
-  
-  [1X5.2-1 Bipartition[101X
-  
-  [29X[2XBipartition[102X( [3Xblocks[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
-  
-  [33X[0;0Y[10XBipartition[110X returns the bipartition [10Xf[110X with equivalence classes [3Xblocks[103X, which
-  should  be  a  list  of  duplicate-free  lists whose union is [10X[-n..-1][110X union
-  [10X[1..n][110X for some positive integer [10Xn[110X.[133X
-  
-  [33X[0;0Y[10XBipartition[110X returns an error if the argument does not define a bipartition.[133X
+  [33X[0;0YIf  [3Xmat[103X  is  a  matrix  over  a  semiring  (i.e.  belongs  to  the  category
+  [2XIsMatrixOverSemiring[102X  ([14X5.1-1[114X)),  then  [3Xmat[103X  is  a  square  [10Xn[110X  by  [10Xn[110X  matrix.
+  [10XDimensionOfMatrixOverSemiring[110X returns the dimension [10Xn[110X of [3Xmat[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -1 ],[ 2, 3, -3 ], [ -2 ] ] );[127X[104X
-    [4X[28X<bipartition: [ 1, -1 ], [ 2, 3, -3 ], [ -2 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[1, 0, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                    [0, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                    [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                    [0, 0, 0, 1]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1], [128X[104X
+    [4X[28X  [0, 0, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XDimensionOfMatrixOverSemiring(x);[127X[104X
+    [4X[28X4[128X[104X
   [4X[32X[104X
   
-  [1X5.2-2 BipartitionByIntRep[101X
+  [1X5.1-4 DimensionOfMatrixOverSemiringCollection[101X
   
-  [29X[2XBipartitionByIntRep[102X( [3Xlist[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  [29X[2XDimensionOfMatrixOverSemiringCollection[102X( [3Xcoll[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
-  [33X[0;0YIt  is  possible  to create a bipartition using its internal representation.
-  The argument [3Xlist[103X must be a list of positive integers not greater than [10Xn[110X, of
-  length  [10X2*n[110X,  and  where [10Xi[110X appears in the list only if [10Xi-1[110X occurs earlier in
-  the list.[133X
-  
-  [33X[0;0YFor example, the internal representation of the bipartition with blocks[133X
+  [33X[0;0YIf  [3Xcoll[103X  is  a  collection of matrices over a semiring (i.e. belongs to the
+  category  [2XIsMatrixOverSemiringCollection[102X ([14X5.1-2[114X)), then the elements of [3Xcoll[103X
+  are  square [10Xn[110X by [10Xn[110X matrices. [10XDimensionOfMatrixOverSemiringCollection[110X returns
+  the dimension [10Xn[110X of these matrices.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X[ 1, -1 ], [ 2, 3, -2 ], [ -3 ][128X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[1, 0, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                    [0, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                    [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                    [0, 0, 0, 1]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 1, 1], [128X[104X
+    [4X[28X  [0, 0, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XDimensionOfMatrixOverSemiringCollection(Semigroup(x));[127X[104X
+    [4X[28X4[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Yhas internal representation[133X
+  [1X5.1-5 Matrix[101X
+  
+  [29X[2XMatrix[102X( [3Xfilt[103X, [3Xmat[103X[, [3Xthreshold[103X[, [3Xperiod[103X]] ) [32X operation
+  [29X[2XMatrix[102X( [3Xsemiring[103X, [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA matrix over semiring.[133X
+  
+  [33X[0;0YThis  operation  can  be  used  to  construct  a  matrix  over a semiring in
+  [5XSemigroups[105X.[133X
+  
+  [33X[0;0YIn  its  first form, the first argument [3Xfilt[103X specifies the filter to be used
+  to  create  the matrix, the second argument [3Xmat[103X is a [5XGAP[105X matrix (i.e. a list
+  of lists) compatible with [3Xfilt[103X, the third and fourth arguments [3Xthreshold[103X and
+  [3Xperiod[103X (if required) must be positive integers.[133X
+  
+  [8X[3Xfilt[103X[108X
+        [33X[0;6YThis must be one of the filters given in Section [14X5.1-8[114X.[133X
+  
+  [8X[3Xmat[103X[108X
+        [33X[0;6YThis  must  be  a  list  of  [10Xn[110X  lists  each of length [10Xn[110X (i.e. a square
+        matrix),  consisting  of elements belonging to the underlying semiring
+        described  by  [3Xfilt[103X,  and [3Xthreshold[103X and [3Xperiod[103X if present. An error is
+        given if [3Xmat[103X is not compatible with the other arguments.[133X
+  
+        [33X[0;6YFor  example, if [3Xfilt[103X is [10XIsMaxPlusMatrix[110X, then the entries of [3Xmat[103X must
+        belong to the max-plus semiring, i.e. they must be integers or -[22X∞[122X.[133X
+  
+        [33X[0;6YThe  supported  semirings  are  fully  described  at the start of this
+        chapter.[133X
+  
+  [8X[3Xthreshold[103X[108X
+        [33X[0;6YIf     [3Xfilt[103X     is    any    of    [2XIsTropicalMaxPlusMatrix[102X    ([14X5.1-8[114X),
+        [2XIsTropicalMinPlusMatrix[102X  ([14X5.1-8[114X),  or  [2XIsNTPMatrix[102X  ([14X5.1-8[114X), then this
+        argument  specifies  the  threshold  of the underlying semiring of the
+        matrix being created.[133X
+  
+  [8X[3Xperiod[103X[108X
+        [33X[0;6YIf  [3Xfilt[103X  is  [2XIsNTPMatrix[102X  ([14X5.1-8[114X),  then  this argument specifies the
+        period of the underlying semiring of the matrix being created.[133X
+  
+  [33X[0;0YIn  its  second form, the arguments should be a semiring [3Xsemiring[103X and matrix
+  [3Xmat[103X  with  entries  in [3Xsemiring[103X. Currently, the only supported semirings are
+  finite  fields  of  prime  order,  and  the  integers  [2XIntegers[102X  ([14XReference:
+  Integers[114X).[133X
+  
+  [33X[0;0YThe  function  [2XBooleanMat[102X  ([14X5.3-1[114X)  is  provided  for  specifically creating
+  boolean matrices.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[28X[ 1, 2, 2, 1, 2, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XMatrix(IsBooleanMat, [[1, 0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                         [0, 0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                         [1, 1, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                         [1, 0, 1, 1]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [128X[104X
+    [4X[28X  [1, 0, 1, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(IsMaxPlusMatrix, [[4, 0, -2],[127X[104X
+    [4X[25X>[125X [27X                            [1, -3, 0],[127X[104X
+    [4X[25X>[125X [27X                            [5, -1, -4]]);[127X[104X
+    [4X[28XMatrix(IsMaxPlusMatrix, [[4, 0, -2], [1, -3, 0], [5, -1, -4]])[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(IsMinPlusMatrix, [[-1, infinity],[127X[104X
+    [4X[25X>[125X [27X                            [1, -1]]);[127X[104X
+    [4X[28XMatrix(IsMinPlusMatrix, [[-1, infinity], [1, -1]])[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(IsTropicalMaxPlusMatrix, [[3, 2, 4],[127X[104X
+    [4X[25X>[125X [27X                                    [3, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                                    [-infinity, 1, 1]],[127X[104X
+    [4X[25X>[125X [27X          9);[127X[104X
+    [4X[28XMatrix(IsTropicalMaxPlusMatrix, [[3, 2, 4], [3, 1, 1], [128X[104X
+    [4X[28X  [-infinity, 1, 1]], 9)[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(IsTropicalMinPlusMatrix, [[1, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                                    [0, 3, 0],[127X[104X
+    [4X[25X>[125X [27X                                    [1, 1, 3]],[127X[104X
+    [4X[25X>[125X [27X          9);[127X[104X
+    [4X[28XMatrix(IsTropicalMinPlusMatrix, [[1, 1, 1], [0, 3, 0], [1, 1, 3]], 9)[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(IsNTPMatrix, [[0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                        [2, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                        [2, 2, 2]],[127X[104X
+    [4X[25X>[125X [27X          2, 1);[127X[104X
+    [4X[28XMatrix(IsNTPMatrix, [[0, 0, 0], [2, 0, 1], [2, 2, 2]], 2, 1)[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(IsIntegerMatrix, [[-1, -2, 0],[127X[104X
+    [4X[25X>[125X [27X                            [0, 3, -1],[127X[104X
+    [4X[25X>[125X [27X                            [1, 0, -3]]);[127X[104X
+    [4X[28XMatrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])[128X[104X
+    [4X[25Xgap>[125X [27XMatrix(Integers, [[-1, -2, 0],[127X[104X
+    [4X[25X>[125X [27X                     [0, 3, -1],[127X[104X
+    [4X[25X>[125X [27X                     [1, 0, -3]]);[127X[104X
+    [4X[28XMatrix(IsIntegerMatrix, [[-1, -2, 0], [0, 3, -1], [1, 0, -3]])[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  internal  representation indicates that the number [10X1[110X is in class [10X1[110X, the
-  number  [10X2[110X  is  in  class  [10X2[110X, the number [10X3[110X is in class [10X2[110X, the number [10X-1[110X is in
-  class  [10X1[110X,  the  number  [10X-2[110X  is  in class [10X2[110X, and [10X-3[110X is in class [10X3[110X. As another
-  example,  [10X[  1,  3,  2,  1  ][110X  is  not  the  internal  representation of any
-  bipartition since there is no [10X2[110X before the [10X3[110X in the second position.[133X
+  [1X5.1-6 AsMatrix[101X
   
-  [33X[0;0YIn its first form [10XBipartitionByIntRep[110X verifies that the argument [3Xlist[103X is the
-  internal representation of a bipartition.[133X
+  [29X[2XAsMatrix[102X( [3Xfilt[103X, [3Xmat[103X ) [32X operation
+  [29X[2XAsMatrix[102X( [3Xfilt[103X, [3Xmat[103X, [3Xthreshold[103X ) [32X operation
+  [29X[2XAsMatrix[102X( [3Xfilt[103X, [3Xmat[103X, [3Xthreshold[103X, [3Xperiod[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA matrix.[133X
+  
+  [33X[0;0YThis  operation can be used to change the representation of certain matrices
+  over  semirings.  If  [3Xmat[103X  is  a  matrix  over  a  semiring (in the category
+  [2XIsMatrixOverSemiring[102X   ([14X5.1-1[114X)),   then   [10XAsMatrix[110X   returns  a  new  matrix
+  corresponding  to  [3Xmat[103X  of  the  type  specified  by the filter [3Xfilt[103X, and if
+  applicable  the  arguments [3Xthreshold[103X and [3Xperiod[103X. The dimension of the matrix
+  [3Xmat[103X is not changed by this operation.[133X
+  
+  [33X[0;0YThe version of the operation with arguments [3Xfilt[103X and [3Xmat[103X can be applied to:[133X
+  
+  [30X    [33X[0;6Y[2XIsMinPlusMatrix[102X ([14X5.1-8[114X) and a tropical min-plus matrix (i.e. convert a
+        tropical min-plus matrix to a (non-tropical) min-plus matrix);[133X
+  
+  [30X    [33X[0;6Y[2XIsMaxPlusMatrix[102X ([14X5.1-8[114X) and a tropical max-plus matrix;[133X
+  
+  [30X    [33X[0;6Y[2XIsIntegerMatrix[102X ([14X5.1-8[114X) and an ntp matrix.[133X
+  
+  [33X[0;0YThe  version of the operation with arguments [3Xfilt[103X, [3Xmat[103X, and [3Xthreshold[103X can be
+  applied to:[133X
+  
+  [30X    [33X[0;6Y[2XIsTropicalMinPlusMatrix[102X  ([14X5.1-8[114X),  a  tropical  min-plus  or  min-plus
+        matrix, and a value for the threshold of the resulting matrix.[133X
+  
+  [30X    [33X[0;6Y[2XIsTropicalMaxPlusMatrix[102X  ([14X5.1-8[114X)  and a tropical max-plus, or max-plus
+        matrix, and a value for the threshold of the resulting matrix.[133X
+  
+  [33X[0;0YThe version of the operation with arguments [3Xfilt[103X, [3Xmat[103X, [3Xthreshold[103X, and [3Xperiod[103X
+  can be applied to [2XIsNTPMatrix[102X ([14X5.1-8[114X) and an ntp matrix, or integer matrix.[133X
+  
+  [33X[0;0YWhen converting matrices with negative entries to an ntp, tropical max-plus,
+  or tropical min-plus matrix, the entry is replaced with its absolute value.[133X
+  
+  [33X[0;0YWhen  converting  non-tropical  matrices to tropical matrices entries higher
+  than the specified threshold are reduced to the threshold.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XBipartitionByIntRep([ 1, 2, 2, 1, 3, 4 ]);                         [127X[104X
-    [4X[28X<bipartition: [ 1, -1 ], [ 2, 3 ], [ -2 ], [ -3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsTropicalMinPlusMatrix, [[0, 1, 3],[127X[104X
+    [4X[25X>[125X [27X                                           [1, 1, 6],[127X[104X
+    [4X[25X>[125X [27X                                           [0, 4, 2]], 10);;[127X[104X
+    [4X[25Xgap>[125X [27XAsMatrix(IsMinPlusMatrix, mat);[127X[104X
+    [4X[28XMatrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]])[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],[127X[104X
+    [4X[25X>[125X [27X                                           [0, 1, 3],[127X[104X
+    [4X[25X>[125X [27X                                           [4, 1, 0]], 10);;[127X[104X
+    [4X[25Xgap>[125X [27XAsMatrix(IsMaxPlusMatrix, mat);[127X[104X
+    [4X[28XMatrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3], [0, 1, 3], [128X[104X
+    [4X[28X  [4, 1, 0]])[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsNTPMatrix, [[1, 2, 2],[127X[104X
+    [4X[25X>[125X [27X                               [0, 2, 0],[127X[104X
+    [4X[25X>[125X [27X                               [1, 3, 0]], 4, 5);;[127X[104X
+    [4X[25Xgap>[125X [27XAsMatrix(IsIntegerMatrix, mat);[127X[104X
+    [4X[28XMatrix(IsIntegerMatrix, [[1, 2, 2], [0, 2, 0], [1, 3, 0]])[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsMinPlusMatrix, [[0, 1, 3], [1, 1, 6], [0, 4, 2]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := AsMatrix(IsTropicalMinPlusMatrix, mat, 2);[127X[104X
+    [4X[28XMatrix(IsTropicalMinPlusMatrix, [[0, 1, 2], [1, 1, 2], [0, 2, 2]], 2)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := AsMatrix(IsTropicalMinPlusMatrix, mat, 1);[127X[104X
+    [4X[28XMatrix(IsTropicalMinPlusMatrix, [[0, 1, 1], [1, 1, 1], [0, 1, 1]], 1)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3],[127X[104X
+    [4X[25X>[125X [27X                                           [0, 1, 3],[127X[104X
+    [4X[25X>[125X [27X                                           [4, 1, 0]], 10);;[127X[104X
+    [4X[25Xgap>[125X [27XAsMatrix(IsTropicalMaxPlusMatrix, mat, 4);[127X[104X
+    [4X[28XMatrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], [128X[104X
+    [4X[28X  [0, 1, 3], [4, 1, 0]], 4)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 3],[127X[104X
+    [4X[25X>[125X [27X                                   [0, 1, 3],[127X[104X
+    [4X[25X>[125X [27X                                   [4, 1, 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27XAsMatrix(IsTropicalMaxPlusMatrix, mat, 10);[127X[104X
+    [4X[28XMatrix(IsTropicalMaxPlusMatrix, [[-infinity, -infinity, 3], [128X[104X
+    [4X[28X  [0, 1, 3], [4, 1, 0]], 10)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsNTPMatrix, [[0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                               [1, 3, 1],[127X[104X
+    [4X[25X>[125X [27X                               [1, 0, 1]], 10, 10);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := AsMatrix(IsNTPMatrix, mat, 5, 6);[127X[104X
+    [4X[28XMatrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 5, 6)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := AsMatrix(IsNTPMatrix, mat, 2, 6);[127X[104X
+    [4X[28XMatrix(IsNTPMatrix, [[0, 1, 0], [1, 3, 1], [1, 0, 1]], 2, 6)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := AsMatrix(IsNTPMatrix, mat, 2, 1);[127X[104X
+    [4X[28XMatrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 2, 1)[128X[104X
+    [4X[25Xgap>[125X [27Xmat := AsMatrix(IsIntegerMatrix, mat);[127X[104X
+    [4X[28XMatrix(IsIntegerMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XAsMatrix(IsNTPMatrix, mat, 1, 2);[127X[104X
+    [4X[28XMatrix(IsNTPMatrix, [[0, 1, 0], [1, 2, 1], [1, 0, 1]], 1, 2)[128X[104X
   [4X[32X[104X
   
-  [1X5.2-3 IdentityBipartition[101X
+  [1X5.1-7 RandomMatrix[101X
   
-  [29X[2XIdentityBipartition[102X( [3Xn[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YThe identity bipartition.[133X
+  [29X[2XRandomMatrix[102X( [3Xfilt[103X, [3Xdim[103X[, [3Xthreshold[103X[, [3Xperiod[103X]] ) [32X function
+  [29X[2XRandomMatrix[102X( [3Xsemiring[103X, [3Xdim[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA matrix over semiring.[133X
   
-  [33X[0;0YReturns the identity bipartition with degree [3Xn[103X.[133X
+  [33X[0;0YThis  operation  can be used to construct a random matrix over a semiring in
+  [5XSemigroups[105X. The usage of [10XRandomMatrix[110X is similar to that of [2XMatrix[102X ([14X5.1-5[114X).[133X
+  
+  [33X[0;0YIn  its  first form, the first argument [3Xfilt[103X specifies the filter to be used
+  to  create  the  matrix, the second argument [3Xdim[103X is dimension of the matrix,
+  the  third  and  fourth arguments [3Xthreshold[103X and [3Xperiod[103X (if required) must be
+  positive integers.[133X
+  
+  [8X[3Xfilt[103X[108X
+        [33X[0;6YThis must be one of the filters given in Section [14X5.1-8[114X.[133X
+  
+  [8X[3Xdim[103X[108X
+        [33X[0;6YThis must be a positive integer.[133X
+  
+  [8X[3Xthreshold[103X[108X
+        [33X[0;6YIf     [3Xfilt[103X     is    any    of    [2XIsTropicalMaxPlusMatrix[102X    ([14X5.1-8[114X),
+        [2XIsTropicalMinPlusMatrix[102X  ([14X5.1-8[114X),  or  [2XIsNTPMatrix[102X  ([14X5.1-8[114X), then this
+        argument  specifies  the  threshold  of the underlying semiring of the
+        matrix being created.[133X
+  
+  [8X[3Xperiod[103X[108X
+        [33X[0;6YIf  [3Xfilt[103X  is  [2XIsNTPMatrix[102X  ([14X5.1-8[114X),  then  this argument specifies the
+        period of the underlying semiring of the matrix being created.[133X
+  
+  [33X[0;0YIn  its  second  form,  the  arguments  should  be  a  semiring [3Xsemiring[103X and
+  dimension  [3Xdim[103X. Currently, the only supported semirings are finite fields of
+  prime order and the integers [2XIntegers[102X ([14XReference: Integers[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XIdentityBipartition(10);[127X[104X
-    [4X[28X<block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [128X[104X
-    [4X[28X [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(IsBooleanMat, 3);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0], [1, 0, 1], [1, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(IsMaxPlusMatrix, 2);[127X[104X
+    [4X[28XMatrix(IsMaxPlusMatrix, [[1, -infinity], [1, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(IsMinPlusMatrix, 3);[127X[104X
+    [4X[28XMatrix(IsMinPlusMatrix, [[infinity, 2, infinity], [4, 0, -2], [1, -3, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(IsTropicalMaxPlusMatrix, 3, 5);[127X[104X
+    [4X[28XMatrix(IsTropicalMaxPlusMatrix, [[5, 1, 4], [1, -infinity, 1], [1, 0, 2]], [128X[104X
+    [4X[28X  5)[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(IsTropicalMinPlusMatrix, 3, 2);[127X[104X
+    [4X[28XMatrix(IsTropicalMinPlusMatrix, [[1, -infinity, -infinity], [1, 1, 1], [128X[104X
+    [4X[28X  [2, 2, 1]], 2)[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(IsNTPMatrix, 3, 2, 5);[127X[104X
+    [4X[28XMatrix(IsNTPMatrix, [[1, 1, 1], [1, 1, 0], [3, 0, 1]], 2, 5)[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(IsIntegerMatrix, 2);[127X[104X
+    [4X[28XMatrix(IsIntegerMatrix, [[1, 3], [0, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(Integers, 2);[127X[104X
+    [4X[28XMatrix(IsIntegerMatrix, [[-1, 0], [0, -1]])[128X[104X
+    [4X[25Xgap>[125X [27XRandomMatrix(GF(5), 1);[127X[104X
+    [4X[28XMatrix(GF(5), [[Z(5)^0]])[128X[104X
   [4X[32X[104X
   
-  [1X5.2-4 LeftOne[101X
   
-  [29X[2XLeftOne[102X( [3Xf[103X ) [32X attribute
-  [29X[2XLeftProjection[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  [1X5.1-8 [33X[0;0YMatrix filters[133X[101X
   
-  [33X[0;0YThe  [10XLeftProjection[110X  of  a bipartition [3Xf[103X is the bipartition [10X[3Xf[103X[10X*Star([3Xf[103X[10X)[110X. It is
-  so-named,  since  the left and right blocks of the left projection equal the
-  left blocks of [3Xf[103X.[133X
+  [29X[2XIsBooleanMat[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMatrixOverFiniteField[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMaxPlusMatrix[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMinPlusMatrix[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMatrix[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMaxPlusMatrix[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMinPlusMatrix[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsNTPMatrix[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsIntegerMatrix[102X( [3Xobj[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YThe  left  projection  [10Xe[110X  of  [3Xf[103X is also a bipartition with the property that
-  [10Xe*[3Xf[103X[10X=[3Xf[103X[10X[110X. [10XLeftOne[110X and [10XLeftProjection[110X are synonymous.[133X
+  [33X[0;0YEvery  matrix  over  a  semiring  in  [5XSemigroups[105X is a member of one of these
+  categories, which are subcategory of [2XIsMatrixOverSemiring[102X ([14X5.1-1[114X).[133X
+  
+  [33X[0;0Y[10XIsTropicalMatrix[110X   is   a   supercategory   of  [10XIsTropicalMaxPlusMatrix[110X  and
+  [10XIsTropicalMinPlusMatrix[110X.[133X
+  
+  [33X[0;0YBasic operations for matrices over semirings include: multiplication via \*,
+  [2XDimensionOfMatrixOverSemiring[102X  ([14X5.1-3[114X), [2XOne[102X ([14XReference: One[114X), the underlying
+  list  of  lists  used  to  create  the  matrix  can be accessed using [2XAsList[102X
+  ([14X5.1-10[114X),  the rows of [10Xmat[110X can be accessed using [10Xmat[i][110X where [10Xi[110X is between [10X1[110X
+  and the dimension of the matrix, it also possible to loop over the rows of a
+  matrix;  for  tropical  matrices  [2XThresholdTropicalMatrix[102X  ([14X5.1-11[114X); for ntp
+  matrices [2XThresholdNTPMatrix[102X ([14X5.1-12[114X) and [2XPeriodNTPMatrix[102X ([14X5.1-12[114X).[133X
+  
+  [33X[0;0YFor  matrices  over finite fields see Section [14X5.4[114X; for Boolean matrices more
+  details can be found in Section [14X5.3[114X.[133X
+  
+  
+  [1X5.1-9 [33X[0;0YMatrix collection filters[133X[101X
+  
+  [29X[2XIsBooleanMatCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsBooleanMatCollColl[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMatrixOverFiniteFieldCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMatrixOverFiniteFieldCollColl[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMaxPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMaxPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMinPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMinPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMatrixCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMaxPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMaxPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMinPlusMatrixCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMinPlusMatrixCollColl[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsNTPMatrixCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsNTPMatrixCollColl[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsIntegerMatrixCollection[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsIntegerMatrixCollColl[102X( [3Xobj[103X ) [32X Category
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YEvery collection of matrices over the same semiring in [5XSemigroups[105X belongs to
+  one  of  the  categories  above. For example, semigroups of boolean matrices
+  belong to [10XIsBooleanMatCollection[110X.[133X
+  
+  [33X[0;0YSimilarly,  every  collection  of  collections  of  matrices  over  the same
+  semiring in [5XSemigroups[105X belongs to one of the categories above.[133X
+  
+  [1X5.1-10 AsList[101X
+  
+  [29X[2XAsList[102X( [3Xmat[103X ) [32X attribute
+  [29X[2XAsMutableList[102X( [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA list of lists.[133X
+  
+  [33X[0;0YIf  [3Xmat[103X  is  a  matrix over a semiring (in the category [2XIsMatrixOverSemiring[102X
+  ([14X5.1-1[114X)),  then  [10XAsList[110X  returns  the  underlying  list of lists of semiring
+  elements  corresponding  to  [3Xmat[103X. In this case, the returned list and all of
+  its entries are immutable.[133X
+  
+  [33X[0;0YThe operation [10XAsMutableList[110X returns a mutable copy of the underlying list of
+  lists of the matrix over semiring [3Xmat[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -1, -2, -6 ], [ 2, 3, 5, -4 ], [127X[104X
-    [4X[25X>[125X [27X[ 6, -3 ], [ -5 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XLeftOne(f);[127X[104X
-    [4X[28X<block bijection: [ 1, 4, -1, -4 ], [ 2, 3, 5, -2, -3, -5 ], [128X[104X
-    [4X[28X [ 6, -6 ]>[128X[104X
-    [4X[25Xgap>[125X [27XLeftBlocks(f);[127X[104X
-    [4X[28X<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
-    [4X[25Xgap>[125X [27XRightBlocks(LeftOne(f));[127X[104X
-    [4X[28X<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
-    [4X[25Xgap>[125X [27XLeftBlocks(LeftOne(f)); [127X[104X
-    [4X[28X<blocks: [ 1, 4 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
-    [4X[25Xgap>[125X [27XLeftOne(f)*f=f;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 2],[127X[104X
+    [4X[25X>[125X [27X                                   [3, 5]]);[127X[104X
+    [4X[28XMatrix(IsIntegerMatrix, [[0, 2], [3, 5]])[128X[104X
+    [4X[25Xgap>[125X [27XAsList(mat);[127X[104X
+    [4X[28X[ [ 0, 2 ], [ 3, 5 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(GF(7), [[Z(7) ^ 3, Z(7) ^ 2],[127X[104X
+    [4X[25X>[125X [27X                         [Z(7) ^ 4, Z(7)]]);[127X[104X
+    [4X[28XMatrix(GF(7), [[Z(7)^3, Z(7)^2], [Z(7)^4, Z(7)]])[128X[104X
+    [4X[25Xgap>[125X [27Xlist := AsList(mat);[127X[104X
+    [4X[28X[ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsMutable(list);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsMutable(list[1]);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xlist := AsMutableList(mat);[127X[104X
+    [4X[28X[ [ Z(7)^3, Z(7)^2 ], [ Z(7)^4, Z(7) ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsMutable(list);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsMutable(list[1]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xmat = Matrix(BaseDomain(mat), AsList(mat));[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X5.2-5 RightOne[101X
+  [1X5.1-11 ThresholdTropicalMatrix[101X
   
-  [29X[2XRightOne[102X( [3Xf[103X ) [32X attribute
-  [29X[2XRightProjection[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  [29X[2XThresholdTropicalMatrix[102X( [3Xmat[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
-  [33X[0;0YThe  [10XRightProjection[110X  of a bipartition [3Xf[103X is the bipartition [10XStar([3Xf[103X[10X)*[3Xf[103X[10X[110X. It is
-  so-named,  since the left and right blocks of the right projection equal the
-  right blocks of [3Xf[103X.[133X
-  
-  [33X[0;0YThe  right  projection  [10Xe[110X  of [3Xf[103X is also a bipartition with the property that
-  [10X[3Xf[103X[10X*e=[3Xf[103X[10X[110X. [10XRightOne[110X and [10XRightProjection[110X are synonymous.[133X
+  [33X[0;0YIf  [3Xmat[103X  is a tropical matrix (i.e. belongs to the category [2XIsTropicalMatrix[102X
+  ([14X5.1-8[114X)),  then  [10XThresholdTropicalMatrix[110X  returns  the  threshold  (i.e. the
+  largest integer) of the underlying semiring.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -1, -4 ], [ 2, -2, -3 ], [ 3, 4 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -5 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XRightOne(f);[127X[104X
-    [4X[28X<block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ], [ 5, -5 ]>[128X[104X
-    [4X[25Xgap>[125X [27XRightBlocks(RightOne(f));[127X[104X
-    [4X[28X<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>[128X[104X
-    [4X[25Xgap>[125X [27XLeftBlocks(RightOne(f));        [127X[104X
-    [4X[28X<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>[128X[104X
-    [4X[25Xgap>[125X [27XRightBlocks(f);[127X[104X
-    [4X[28X<blocks: [ 1, 4 ], [ 2, 3 ], [ 5 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xf*RightOne(f)=f;[127X[104X
-    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsTropicalMaxPlusMatrix,[127X[104X
+    [4X[25X>[125X [27X[[0, 3, 0, 2],[127X[104X
+    [4X[25X>[125X [27X [1, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X [-infinity, 1, -infinity, 1],[127X[104X
+    [4X[25X>[125X [27X [0, -infinity, 2, -infinity]], 10);[127X[104X
+    [4X[28XMatrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], [128X[104X
+    [4X[28X  [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 10)[128X[104X
+    [4X[25Xgap>[125X [27XThresholdTropicalMatrix(mat);[127X[104X
+    [4X[28X10[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsTropicalMaxPlusMatrix,[127X[104X
+    [4X[25X>[125X [27X[[0, 3, 0, 2],[127X[104X
+    [4X[25X>[125X [27X [1, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X [-infinity, 1, -infinity, 1],[127X[104X
+    [4X[25X>[125X [27X [0, -infinity, 2, -infinity]], 3);[127X[104X
+    [4X[28XMatrix(IsTropicalMaxPlusMatrix, [[0, 3, 0, 2], [1, 1, 1, 0], [128X[104X
+    [4X[28X  [-infinity, 1, -infinity, 1], [0, -infinity, 2, -infinity]], 3)[128X[104X
+    [4X[25Xgap>[125X [27XThresholdTropicalMatrix(mat);[127X[104X
+    [4X[28X3[128X[104X
   [4X[32X[104X
   
-  [1X5.2-6 StarOp[101X
+  [1X5.1-12 ThresholdNTPMatrix[101X
   
-  [29X[2XStarOp[102X( [3Xf[103X ) [32X operation
-  [29X[2XStar[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
+  [29X[2XThresholdNTPMatrix[102X( [3Xmat[103X ) [32X attribute
+  [29X[2XPeriodNTPMatrix[102X( [3Xmat[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
-  [33X[0;0Y[10XStarOp[110X  returns  the  unique  bipartition [10Xg[110X with the property that: [10X[3Xf[103X[10X*g*[3Xf[103X[10X=[3Xf[103X[10X[110X,
-  [10XRightBlocks([3Xf[103X[10X)=LeftBlocks(g)[110X,  and  [10XLeftBlocks([3Xf[103X[10X)=RightBlocks(g)[110X. The star [10Xg[110X
-  can be obtained from [3Xf[103X by changing the sign of every integer in the external
-  representation of [3Xf[103X.[133X
+  [33X[0;0YAn  [12Xntp matrix[112X is a matrix with entries in a semiring [22XN_t,p = {0, 1, ..., t,
+  t  + 1, ..., t + p - 1}[122X for some threshold [22Xt[122X and period [22Xp[122X under addition and
+  multiplication modulo the congruence [22Xt = t + p[122X.[133X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [127X[104X
-    [4X[25X>[125X [27X[ -2, -3 ], [ -5 ] ] );[127X[104X
-    [4X[28X<bipartition: [ 1, -4 ], [ 2, 3, 4 ], [ 5 ], [ -1 ], [ -2, -3 ], [128X[104X
-    [4X[28X [ -5 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xg:=Star(f);[127X[104X
-    [4X[28X<bipartition: [ 1 ], [ 2, 3 ], [ 4, -1 ], [ 5 ], [ -2, -3, -4 ], [128X[104X
-    [4X[28X [ -5 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xf*g*f=f;[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XLeftBlocks(f)=RightBlocks(g);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XRightBlocks(f)=LeftBlocks(g); [127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X5.2-7 RandomBipartition[101X
-  
-  [29X[2XRandomBipartition[102X( [3Xn[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
-  
-  [33X[0;0YIf  [3Xn[103X  is  a  positive  integer,  then  [10XRandomBipartition[110X  returns  a random
-  bipartition of degree [3Xn[103X.[133X
+  [33X[0;0YIf  [3Xmat[103X  is a ntp matrix (i.e. belongs to the category [2XIsNTPMatrix[102X ([14X5.1-8[114X)),
+  then  [10XThresholdNTPMatrix[110X and [10XPeriodNTPMatrix[110X return the threshold and period
+  of the underlying semiring, respectively.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=RandomBipartition(6); [127X[104X
-    [4X[28X<bipartition: [ 1, 2, 3, 4 ], [ 5 ], [ 6, -2, -3, -4 ], [ -1, -5 ], [ -6 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsNTPMatrix, [[1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                               [2, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                               [0, 1, 1]],[127X[104X
+    [4X[25X>[125X [27X                 1, 2);[127X[104X
+    [4X[28XMatrix(IsNTPMatrix, [[1, 1, 0], [2, 1, 0], [0, 1, 1]], 1, 2)[128X[104X
+    [4X[25Xgap>[125X [27XThresholdNTPMatrix(mat);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XPeriodNTPMatrix(mat);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsNTPMatrix, [[2, 1, 3],[127X[104X
+    [4X[25X>[125X [27X                               [0, 5, 1],[127X[104X
+    [4X[25X>[125X [27X                               [4, 1, 0]],[127X[104X
+    [4X[25X>[125X [27X                 3, 4);[127X[104X
+    [4X[28XMatrix(IsNTPMatrix, [[2, 1, 3], [0, 5, 1], [4, 1, 0]], 3, 4)[128X[104X
+    [4X[25Xgap>[125X [27XThresholdNTPMatrix(mat);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XPeriodNTPMatrix(mat);[127X[104X
+    [4X[28X4[128X[104X
   [4X[32X[104X
   
   
-  [1X5.3 [33X[0;0YChanging the representation of a bipartition[133X[101X
+  [1X5.2 [33X[0;0YOperators for matrices over semirings[133X[101X
   
-  [33X[0;0YIt  is  possible  that  a  bipartition can be represented as another type of
-  object,  or  that  another  type  of  [5XGAP[105X  object  can  be  represented as a
-  bipartition.  In  this  section, we describe the functions in the [5XSemigroups[105X
-  package  for changing the representation of bipartition, or for changing the
-  representation of another type of object to that of a bipartition.[133X
+  [8X[10X[3Xmat1[103X[10X * [3Xmat2[103X[10X[110X[108X
+        [33X[0;6Yreturns  the  product of the matrices [3Xmat1[103X and [3Xmat2[103X of equal dimension
+        over  the same semiring using the usual matrix multiplication with the
+        operations [10X+[110X and [10X*[110X from the underlying semiring.[133X
   
-  [33X[0;0YThe     operations    [2XAsPermutation[102X    ([14X5.3-5[114X),    [2XAsPartialPerm[102X    ([14X5.3-4[114X),
-  [2XAsTransformation[102X   ([14X5.3-3[114X)   can   be  used  to  convert  bipartitions  into
-  permutations, partial permutations, or transformations where appropriate.[133X
+  [8X[10X[3Xmat1[103X[10X < [3Xmat2[103X[10X[110X[108X
+        [33X[0;6Yreturns  [9Xtrue[109X if when considered as a list of rows, the matrix [3Xmat1[103X is
+        short-lex  less  than  the  matrix  [3Xmat2[103X, and [9Xfalse[109X if this is not the
+        case.  This  means  that  a  matrix  of lower dimension is less than a
+        matrix of higher dimension.[133X
   
-  [1X5.3-1 AsBipartition[101X
+  [8X[10X[3Xmat1[103X[10X = [3Xmat2[103X[10X[110X[108X
+        [33X[0;6Yreturns  [9Xtrue[109X  if  the  matrix  [3Xmat1[103X  equals the matrix [3Xmat2[103X (i.e. the
+        entries  are equal and the underlying semirings are equal) and returns
+        [9Xfalse[109X if it does not.[133X
   
-  [29X[2XAsBipartition[102X( [3Xf[103X[, [3Xn[103X] ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
   
-  [33X[0;0Y[10XAsBipartition[110X  returns  the  bipartition,  permutation,  transformation,  or
-  partial  permutation  [3Xf[103X,  as  a  bipartition  of degree [3Xn[103X. There are several
-  possible arguments for [10XAsBipartition[110X:[133X
+  [1X5.3 [33X[0;0YBoolean matrices[133X[101X
+  
+  [33X[0;0YIn  this  section  we describe the operations, properties, and attributes in
+  [5XSemigroups[105X specifically for Boolean matrices. These include:[133X
+  
+  [30X    [33X[0;6Y[2XNumberBooleanMat[102X ([14X5.3-6[114X)[133X
+  
+  [30X    [33X[0;6Y[2XSuccessors[102X ([14X5.3-5[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsRowTrimBooleanMat[102X    ([14X5.3-9[114X),   [2XIsColTrimBooleanMat[102X   ([14X5.3-9[114X),   and
+        [2XIsTrimBooleanMat[102X ([14X5.3-9[114X),[133X
+  
+  [30X    [33X[0;6Y[2XCanonicalBooleanMat[102X ([14X5.3-8[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsSymmetricBooleanMat[102X ([14X5.3-10[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsAntiSymmetricBooleanMat[102X ([14X5.3-13[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsTransitiveBooleanMat[102X ([14X5.3-12[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsReflexiveBooleanMat[102X ([14X5.3-11[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsTotalBooleanMat[102X ([14X5.3-14[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsOntoBooleanMat[102X ([14X5.3-14[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsPartialOrderBooleanMat[102X ([14X5.3-15[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEquivalenceBooleanMat[102X ([14X5.3-16[114X)[133X
+  
+  [1X5.3-1 BooleanMat[101X
+  
+  [29X[2XBooleanMat[102X( [3Xarg[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA boolean matrix.[133X
+  
+  [33X[0;0Y[10XBooleanMat[110X  returns  the  boolean  matrix  [10Xmat[110X  defined by its argument. The
+  argument can be any of the following:[133X
+  
+  [8Xa matrix with entries [10X0[110X and/or [10X1[110X[108X
+        [33X[0;6Ythe  argument  [3Xarg[103X  is  list  of [10Xn[110X lists of length [10Xn[110X consisting of the
+        values [10X0[110X and [10X1[110X;[133X
+  
+  [8Xa matrix with entries [9Xtrue[109X and/or [9Xfalse[109X[108X
+        [33X[0;6Ythe  argument  [3Xarg[103X  is  list  of [10Xn[110X lists of length [10Xn[110X consisting of the
+        values [9Xtrue[109X and [9Xfalse[109X;[133X
+  
+  [8Xsuccessors[108X
+        [33X[0;6Ythe  argument  [3Xarg[103X  is  list  of  [10Xn[110X sublists of consisting of positive
+        integers  not greater than [10Xn[110X. In this case, the entry [10Xj[110X in the sublist
+        in  position  [10Xi[110X  of [3Xarg[103X indicates that the entry in position [10X(i, j)[110X of
+        the created boolean matrix is [9Xtrue[109X.[133X
+  
+  [33X[0;0Y[10XBooleanMat[110X returns an error if the argument is not one of the above types.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[true, false], [true, true]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0], [1, 1]])[128X[104X
+    [4X[25Xgap>[125X [27Xy := BooleanMat([[1, 0], [1, 1]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0], [1, 1]])[128X[104X
+    [4X[25Xgap>[125X [27Xz := BooleanMat([[1], [1, 2]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0], [1, 1]])[128X[104X
+    [4X[25Xgap>[125X [27Xx = y;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xy = z;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(x);[127X[104X
+    [4X[28X1 0[128X[104X
+    [4X[28X1 1[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-2 AsBooleanMat[101X
+  
+  [29X[2XAsBooleanMat[102X( [3Xx[103X[, [3Xn[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA boolean matrix.[133X
+  
+  [33X[0;0Y[10XAsBooleanMat[110X  returns  the pbr, bipartition, permutation, transformation, or
+  partial permutation [3Xx[103X, as a boolean matrix of dimension [3Xn[103X.[133X
+  
+  [33X[0;0YThere are several possible arguments for [10XAsBooleanMat[110X:[133X
   
   [8Xpermutations[108X
-        [33X[0;6YIf   [3Xf[103X   is   a   permutation  and  [3Xn[103X  is  a  positive  integer,  then
-        [10XAsBipartition([3Xf[103X[10X, [3Xn[103X[10X)[110X returns the bipartition on [10X[1..[3Xn[103X[10X][110X with classes [10X[i,
-        i^[3Xf[103X[10X][110X for all [10Xi=1..n[110X.[133X
+        [33X[0;6YIf   [3Xx[103X   is   a   permutation  and  [3Xn[103X  is  a  positive  integer,  then
+        [10XAsBooleanMat([3Xx[103X[10X,  [3Xn[103X[10X)[110X returns the boolean matrix [10Xmat[110X of dimension [3Xn[103X such
+        that [10Xmat[i][j] = true[110X if and only if [10Xj = i ^ x[110X.[133X
   
         [33X[0;6YIf no positive integer [3Xn[103X is specified, then the largest moved point of
-        [3Xf[103X  is  used  as  the  value  for  [3Xn[103X; see [2XLargestMovedPoint[102X ([14XReference:
+        [3Xx[103X  is  used  as  the  value  for  [3Xn[103X; see [2XLargestMovedPoint[102X ([14XReference:
         LargestMovedPoint (for a permutation)[114X).[133X
   
   [8Xtransformations[108X
-        [33X[0;6YIf  [3Xf[103X is a transformation and [3Xn[103X is a positive integer such that [3Xf[103X is a
-        transformation   of   [10X[1..[3Xn[103X[10X][110X,   then   [10XAsTransformation[110X   returns  the
-        bipartition with classes [22X(i)f^-1∪ {i}[122X for all [10Xi[110X in the image of [3Xf[103X.[133X
+        [33X[0;6YIf  [3Xx[103X is a transformation and [3Xn[103X is a positive integer such that [3Xx[103X is a
+        transformation  of [10X[1 .. [3Xn[103X[10X][110X, then [10XAsTransformation[110X returns the boolean
+        matrix  [10Xmat[110X of dimension [3Xn[103X such that [10Xmat[i][j] = true[110X if and only if [10Xj
+        = i ^ x[110X.[133X
   
-        [33X[0;6YIf  the  positive integer [3Xn[103X is not specified, then the internal degree
-        of [3Xf[103X is used as the value for [3Xn[103X.[133X
+        [33X[0;6YIf  the  positive  integer [3Xn[103X is not specified, then the degree of [3Xf[103X is
+        used as the value for [3Xn[103X.[133X
   
   [8Xpartial permutations[108X
-        [33X[0;6YIf  [3Xf[103X  is  a  partial  permutation [3Xf[103X and [3Xn[103X is a positive integer, then
-        [10XAsBipartition[110X  returns  the bipartition with classes [10X[i, i^[3Xf[103X[10X][110X for [10Xi[110X in
-        [10X[1..[3Xn[103X[10X][110X.  Thus the degree of the returned bipartition is the maximum of
-        [3Xn[103X and the values [10Xi^[3Xf[103X[10X[110X where [10Xi[110X in [10X[1..[3Xn[103X[10X][110X.[133X
+        [33X[0;6YIf  [3Xx[103X is a partial permutation and [3Xn[103X is a positive integer such that [10Xi
+        ^  [3Xx[103X[10X <= n[110X for all [10Xi[110X in [10X[1 .. [3Xn[103X[10X][110X, then [10XAsBooleanMat[110X returns the boolean
+        matrix  [10Xmat[110X of dimension [3Xn[103X such that [10Xmat[i][j] = true[110X if and only if [10Xj
+        = i ^ x[110X.[133X
   
         [33X[0;6YIf  the  optional argument [3Xn[103X is not present, then the default value of
-        the  maximum  of  the  largest  moved point and the largest image of a
-        moved point of [3Xf[103X plus [10X1[110X is used.[133X
+        the maximum of degree and the codegree of [3Xx[103X is used.[133X
   
   [8Xbipartitions[108X
-        [33X[0;6YIf  [3Xf[103X  is  a  bipartition  and  [3Xn[103X  is  a  non-negative  integer,  then
-        [10XAsBipartition[110X returns a bipartition corresponding to [3Xf[103X with degree [3Xn[103X.[133X
+        [33X[0;6YIf  [3Xx[103X  is  a  bipartition  and  [3Xn[103X  is  any  non-negative integer, then
+        [10XAsBooleanMat[110X  returns  the boolean matrix [10Xmat[110X of dimension [3Xn[103X such that
+        [10Xmat[i][j] = true[110X if and only if [10Xi[110X and [10Xj[110X belong to the same block of [3Xx[103X.[133X
   
-        [33X[0;6YIf [3Xn[103X equals the degree of [3Xf[103X, then [3Xf[103X is returned. If [3Xn[103X is less than the
-        degree  of [3Xf[103X, then this function returns the bipartition obtained from
-        [3Xf[103X  by  removing the values exceeding [3Xn[103X or less than [3X-n[103X from the blocks
-        of [3Xf[103X. If [3Xn[103X is greater than the degree of [3Xf[103X, then this function returns
-        the  bipartition  with the same blocks as [3Xf[103X and the singleton blocks [10Xi[110X
-        and [10X-i[110X for all [10Xi[110X greater than the degree of [3Xf[103X[133X
+        [33X[0;6YIf  the optional argument [3Xn[103X is not present, then twice the degree of [3Xx[103X
+        is used by default.[133X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Transformation( [ 3, 5, 3, 4, 1, 2 ] );;[127X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(f, 5);[127X[104X
-    [4X[28X<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [ -2 ]>[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(f);  [127X[104X
-    [4X[28X<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [128X[104X
-    [4X[28X [ 6, -2 ], [ -6 ]>[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(f, 10);[127X[104X
-    [4X[28X<bipartition: [ 1, 3, -3 ], [ 2, -5 ], [ 4, -4 ], [ 5, -1 ], [128X[104X
-    [4X[28X [ 6, -2 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ], [ -6 ]>[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition((1, 3)(2, 4));[127X[104X
-    [4X[28X<block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ]>[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition((1, 3)(2, 4), 10);[127X[104X
-    [4X[28X<block bijection: [ 1, -3 ], [ 2, -4 ], [ 3, -1 ], [ 4, -2 ], [128X[104X
-    [4X[28X [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xf:=PartialPerm( [ 1, 2, 3, 4, 5, 6 ], [ 6, 7, 1, 4, 3, 2 ] );;[127X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(f, 11);            [127X[104X
-    [4X[28X<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], [128X[104X
-    [4X[28X [ 6, -2 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], [ 11 ], [ -5 ], [ -8 ], [128X[104X
-    [4X[28X [ -9 ], [ -10 ], [ -11 ]>[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(f);[127X[104X
-    [4X[28X<bipartition: [ 1, -6 ], [ 2, -7 ], [ 3, -1 ], [ 4, -4 ], [ 5, -3 ], [128X[104X
-    [4X[28X [ 6, -2 ], [ 7 ], [ -5 ]>[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(Transformation( [ 1, 1, 2 ] ), 1);[127X[104X
-    [4X[28X<block bijection: [ 1, -1 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [127X[104X
-    [4X[25X>[125X [27X[ -3, -4, -5, -6 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(f, 0);[127X[104X
-    [4X[28X<empty bipartition>[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(f, 2);[127X[104X
-    [4X[28X<bipartition: [ 1, 2, -2 ], [ -1 ]>[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(f, 8);[127X[104X
-    [4X[28X<bipartition: [ 1, 2, -2 ], [ 3 ], [ 4, 5, 6, -1 ], [ 7 ], [ 8 ], [128X[104X
-    [4X[28X [ -3, -4, -5, -6 ], [ -7 ], [ -8 ]>[128X[104X
-  [4X[32X[104X
+  [8Xpbrs[108X
+        [33X[0;6YIf  [3Xx[103X  is  a  pbr and [3Xn[103X is any non-negative integer, then [10XAsBooleanMat[110X
+        returns  the  boolean  matrix [10Xmat[110X of dimension [3Xn[103X such that [10Xmat[i][j] =
+        true[110X if and only if [10Xi[110X and [10Xj[110X are related in [3Xx[103X.[133X
   
-  [1X5.3-2 AsBlockBijection[101X
-  
-  [29X[2XAsBlockBijection[102X( [3Xf[103X[, [3Xn[103X] ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA block bijection or [9Xfail[109X.[133X
-  
-  [33X[0;0YWhen  the  argument [3Xf[103X is a partial perm and [3Xn[103X is a positive integer which is
-  greater  than  the  maximum  of  the degree and codegree of [3Xf[103X, this function
-  returns  a  block bijection corresponding to [3Xf[103X. This block bijection has the
-  same  non-singleton  classes  as  [10Xg:=AsBipartition([3Xf[103X[10X,  [3Xn[103X[10X)[110X and one additional
-  class which is the union the singleton classes of [10Xg[110X.[133X
-  
-  [33X[0;0YIf  the  optional  second argument [3Xn[103X is not present, then the maximum of the
-  degree and codegree of [3Xf[103X plus 1 is used by default. If the second argument [3Xn[103X
-  is not greater than this maximum, then [9Xfail[109X is returned.[133X
-  
-  [33X[0;0YThis is the value at [3Xf[103X of the embedding of the symmetric inverse monoid into
-  the  dual  symmetric  inverse  monoid  given in the FitzGerald-Leech Theorem
-  [FL98].[133X
+        [33X[0;6YIf  the optional argument [3Xn[103X is not present, then twice the degree of [3Xx[103X
+        is used by default.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=PartialPerm( [ 1, 2, 3, 6, 7, 10 ], [ 9, 5, 6, 1, 7, 8 ] ) ;  [127X[104X
-    [4X[28X[2,5][3,6,1,9][10,8](7)[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(f, 11);[127X[104X
-    [4X[28X<bipartition: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [ 4 ], [ 5 ], [128X[104X
-    [4X[28X [ 6, -1 ], [ 7, -7 ], [ 8 ], [ 9 ], [ 10, -8 ], [ 11 ], [ -2 ], [128X[104X
-    [4X[28X [ -3 ], [ -4 ], [ -10 ], [ -11 ]>[128X[104X
-    [4X[25Xgap>[125X [27XAsBlockBijection(f, 10);[127X[104X
-    [4X[28Xfail[128X[104X
-    [4X[25Xgap>[125X [27XAsBlockBijection(f, 11);[127X[104X
-    [4X[28X<block bijection: [ 1, -9 ], [ 2, -5 ], [ 3, -6 ], [128X[104X
-    [4X[28X [ 4, 5, 8, 9, 11, -2, -3, -4, -10, -11 ], [ 6, -1 ], [ 7, -7 ], [128X[104X
-    [4X[28X [ 10, -8 ]>[128X[104X
-  [4X[32X[104X
-  
-  [1X5.3-3 AsTransformation[101X
-  
-  [29X[2XAsTransformation[102X( [3Xf[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA transformation or [9Xfail[109X.[133X
-  
-  [33X[0;0YWhen  the  argument  [3Xf[103X  is  a  bipartition,  that  mathematically  defines a
-  transformation,  this  function returns that transformation. A bipartition [3Xf[103X
-  defines  a transformation if and only if its right blocks are the image list
-  of a permutation of [10X[1..n][110X where [10Xn[110X is the degree of [3Xf[103X.[133X
-  
-  [33X[0;0YSee [2XIsTransBipartition[102X ([14X5.5-9[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition([[ 1, -3 ], [ 2, -2 ], [ 3, 5, 10, -7 ], [ 4, -12 ], [127X[104X
-    [4X[25X>[125X [27X[ 6, 7, -6 ], [ 8, -5 ], [ 9, -11 ], [ 11, 12, -10 ], [ -1 ], [ -4 ], [127X[104X
-    [4X[25X>[125X [27X[ -8 ], [ -9 ]]);;[127X[104X
-    [4X[25Xgap>[125X [27XAsTransformation(f);[127X[104X
-    [4X[28XTransformation( [ 3, 2, 7, 12, 7, 6, 6, 5, 11, 7, 10, 10 ] )[128X[104X
-    [4X[25Xgap>[125X [27XIsTransBipartition(f);[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat((1, 2), 5));[127X[104X
+    [4X[28X0 1 0 0 0[128X[104X
+    [4X[28X1 0 0 0 0[128X[104X
+    [4X[28X0 0 1 0 0[128X[104X
+    [4X[28X0 0 0 1 0[128X[104X
+    [4X[28X0 0 0 0 1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat((1, 2)));[127X[104X
+    [4X[28X0 1[128X[104X
+    [4X[28X1 0[128X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([1, 3, 4, 1, 3]);;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat(x));[127X[104X
+    [4X[28X1 0 0 0 0[128X[104X
+    [4X[28X0 0 1 0 0[128X[104X
+    [4X[28X0 0 0 1 0[128X[104X
+    [4X[28X1 0 0 0 0[128X[104X
+    [4X[28X0 0 1 0 0[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat(x, 4));[127X[104X
+    [4X[28X1 0 0 0[128X[104X
+    [4X[28X0 0 1 0[128X[104X
+    [4X[28X0 0 0 1[128X[104X
+    [4X[28X1 0 0 0[128X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 3, 6, 8, 10],[127X[104X
+    [4X[25X>[125X [27X                    [2, 6, 7, 9, 1, 5]);[127X[104X
+    [4X[28X[3,7][8,1,2,6,9][10,5][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat(x));[127X[104X
+    [4X[28X0 1 0 0 0 0 0 0 0 0[128X[104X
+    [4X[28X0 0 0 0 0 1 0 0 0 0[128X[104X
+    [4X[28X0 0 0 0 0 0 1 0 0 0[128X[104X
+    [4X[28X0 0 0 0 0 0 0 0 0 0[128X[104X
+    [4X[28X0 0 0 0 0 0 0 0 0 0[128X[104X
+    [4X[28X0 0 0 0 0 0 0 0 1 0[128X[104X
+    [4X[28X0 0 0 0 0 0 0 0 0 0[128X[104X
+    [4X[28X1 0 0 0 0 0 0 0 0 0[128X[104X
+    [4X[28X0 0 0 0 0 0 0 0 0 0[128X[104X
+    [4X[28X0 0 0 0 1 0 0 0 0 0[128X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]);[127X[104X
+    [4X[28X<bipartition: [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xy := AsBooleanMat(x);[127X[104X
+    [4X[28X<10x10 boolean matrix>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(y);[127X[104X
+    [4X[28X1 0 0 1 0 0 1 1 0 0[128X[104X
+    [4X[28X0 1 1 0 1 0 0 0 0 1[128X[104X
+    [4X[28X0 1 1 0 1 0 0 0 0 1[128X[104X
+    [4X[28X1 0 0 1 0 0 1 1 0 0[128X[104X
+    [4X[28X0 1 1 0 1 0 0 0 0 1[128X[104X
+    [4X[28X0 0 0 0 0 1 0 0 1 0[128X[104X
+    [4X[28X1 0 0 1 0 0 1 1 0 0[128X[104X
+    [4X[28X1 0 0 1 0 0 1 1 0 0[128X[104X
+    [4X[28X0 0 0 0 0 1 0 0 1 0[128X[104X
+    [4X[28X0 1 1 0 1 0 0 0 0 1[128X[104X
+    [4X[25Xgap>[125X [27XIsEquivalenceBooleanMat(y);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition([[ 1, 5 ], [ 2, 4, 8, 10 ], [ 3, 6, 7, -1, -2 ], [127X[104X
-    [4X[25X>[125X [27X[ 9, -4, -6, -9 ], [ -3, -5 ], [ -7, -8 ], [ -10 ]]);;[127X[104X
-    [4X[25Xgap>[125X [27XAsTransformation(f);[127X[104X
-    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XAsBooleanMat(x, 1);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1]])[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat(x, 1));[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat(x, 2));[127X[104X
+    [4X[28X1 0[128X[104X
+    [4X[28X0 1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat(x, 3));[127X[104X
+    [4X[28X1 0 0[128X[104X
+    [4X[28X0 1 1[128X[104X
+    [4X[28X0 1 1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat(x, 11));[127X[104X
+    [4X[28X1 0 0 1 0 0 1 1 0 0 0[128X[104X
+    [4X[28X0 1 1 0 1 0 0 0 0 1 0[128X[104X
+    [4X[28X0 1 1 0 1 0 0 0 0 1 0[128X[104X
+    [4X[28X1 0 0 1 0 0 1 1 0 0 0[128X[104X
+    [4X[28X0 1 1 0 1 0 0 0 0 1 0[128X[104X
+    [4X[28X0 0 0 0 0 1 0 0 1 0 0[128X[104X
+    [4X[28X1 0 0 1 0 0 1 1 0 0 0[128X[104X
+    [4X[28X1 0 0 1 0 0 1 1 0 0 0[128X[104X
+    [4X[28X0 0 0 0 0 1 0 0 1 0 0[128X[104X
+    [4X[28X0 1 1 0 1 0 0 0 0 1 0[128X[104X
+    [4X[28X0 0 0 0 0 0 0 0 0 0 0[128X[104X
+    [4X[25Xgap>[125X [27Xx := PBR([127X[104X
+    [4X[25X>[125X [27X[[-1, 1], [2, 3], [-3, 2, 3]],[127X[104X
+    [4X[25X>[125X [27X[[-1, 1, 2], [-3, -1, 1, 3], [-3, -1, 1, 2, 3]]);;[127X[104X
+    [4X[25Xgap>[125X [27XAsBooleanMat(x);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0], [128X[104X
+    [4X[28X  [0, 1, 1, 0, 0, 1], [1, 1, 0, 1, 0, 0], [1, 0, 1, 1, 0, 1], [128X[104X
+    [4X[28X  [1, 1, 1, 1, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(AsBooleanMat(x));[127X[104X
+    [4X[28X1 0 0 1 0 0[128X[104X
+    [4X[28X0 1 1 0 0 0[128X[104X
+    [4X[28X0 1 1 0 0 1[128X[104X
+    [4X[28X1 1 0 1 0 0[128X[104X
+    [4X[28X1 0 1 1 0 1[128X[104X
+    [4X[28X1 1 1 1 0 1[128X[104X
   [4X[32X[104X
   
-  [1X5.3-4 AsPartialPerm[101X
+  [1X5.3-3 \in[101X
   
-  [29X[2XAsPartialPerm[102X( [3Xf[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA partial perm or [9Xfail[109X.[133X
-  
-  [33X[0;0YWhen  the  argument [3Xf[103X is a bipartition that mathematically defines a partial
-  perm, this function returns that partial perm.[133X
-  
-  [33X[0;0YA  bipartition  [3Xf[103X  defines a partial perm if and only if its numbers of left
-  and right blocks both equal its degree.[133X
-  
-  [33X[0;0YSee [2XIsPartialPermBipartition[102X ([14X5.5-12[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -4 ], [ 2, -2 ], [ 3, -10 ], [ 4, -5 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -9 ], [ 6 ], [ 7 ], [ 8, -6 ], [ 9, -3 ], [ 10, -8 ], [127X[104X
-    [4X[25X>[125X [27X[ -1 ], [ -7 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsPartialPermBipartition(f);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XAsPartialPerm(f);[127X[104X
-    [4X[28X[1,4,5,9,3,10,8,6](2)[128X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition([[ 1, -2, -4 ], [ 2, 3, 4, -3 ], [ -1 ]]);;[127X[104X
-    [4X[25Xgap>[125X [27XIsPartialPermBipartition(f);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XAsPartialPerm(f);[127X[104X
-    [4X[28Xfail[128X[104X
-  [4X[32X[104X
-  
-  [1X5.3-5 AsPermutation[101X
-  
-  [29X[2XAsPermutation[102X( [3Xf[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA permutation or [9Xfail[109X.[133X
-  
-  [33X[0;0YWhen  the  argument  [3Xf[103X  is  a  bipartition  that  mathematically  defines  a
-  permutation, this function returns that permutation.[133X
-  
-  [33X[0;0YA  bipartition  [3Xf[103X  defines a permutation if and only if its numbers of left,
-  right, and transverse blocks all equal its degree.[133X
-  
-  [33X[0;0YSee [2XIsPermBipartition[102X ([14X5.5-11[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -6 ], [ 2, -4 ], [ 3, -2 ], [ 4, -5 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -3 ], [ 6, -1 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsPermBipartition(f);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XAsPermutation(f);[127X[104X
-    [4X[28X(1,6)(2,4,5,3)[128X[104X
-    [4X[25Xgap>[125X [27XAsBipartition(last)=f;[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X5.4 [33X[0;0YOperators for bipartitions[133X[101X
-  
-  [8X[10X[3Xf[103X[10X * [3Xg[103X[10X[110X[108X
-        [33X[0;6Yreturns the composition of [3Xf[103X and [3Xg[103X when [3Xf[103X and [3Xg[103X are bipartitions.[133X
-  
-  [8X[10X[3Xf[103X[10X < [3Xg[103X[10X[110X[108X
-        [33X[0;6Yreturns  [9Xtrue[109X if the internal representation of [3Xf[103X is lexicographically
-        less than the internal representation of [3Xg[103X and [9Xfalse[109X if it is not.[133X
-  
-  [8X[10X[3Xf[103X[10X = [3Xg[103X[10X[110X[108X
-        [33X[0;6Yreturns [9Xtrue[109X if the bipartition [3Xf[103X equals the bipartition [3Xg[103X and returns
-        [9Xfalse[109X if it does not.[133X
-  
-  [1X5.4-1 PartialPermLeqBipartition[101X
-  
-  [29X[2XPartialPermLeqBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [29X[2X\in[102X( [3Xmat1[103X, [3Xmat2[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YIf   [3Xx[103X   and   [3Xy[103X   are   partial   perm   bipartitions,  i.e.  they  satisfy
-  [2XIsPartialPermBipartition[102X    ([14X5.5-12[114X),    then    this    function    returns
-  [10XAsPartialPerm([3Xx[103X[10X)<AsPartialPerm([3Xy[103X[10X)[110X.[133X
+  [33X[0;0YIf [3Xmat1[103X and [3Xmat2[103X are boolean matrices, then [10X[3Xmat1[103X[10X in [3Xmat2[103X[10X[110X returns [9Xtrue[109X if the
+  binary relation defined by [3Xmat1[103X is a subset of that defined by [3Xmat2[103X.[133X
   
-  [1X5.4-2 NaturalLeqPartialPermBipartition[101X
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[1, 0, 0, 1], [0, 0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                    [1, 0, 1, 1], [0, 1, 1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xy := BooleanMat([[1, 0, 1, 0], [1, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                    [0, 1, 1, 0], [1, 1, 1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xx in y;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xy in y;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
   
-  [29X[2XNaturalLeqPartialPermBipartition[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [1X5.3-4 OnBlist[101X
+  
+  [29X[2XOnBlist[102X( [3Xblist[103X, [3Xmat[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA boolean list.[133X
+  
+  [33X[0;0YIf  [3Xblist[103X  is  a  boolean  list  of  length [10Xn[110X and [3Xmat[103X is boolean matrices of
+  dimension  [10Xn[110X, then [10XOnBlist[110X returns the product of [3Xblist[103X (thought of as a row
+  vector over the boolean semiring) and [3Xmat[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[1, 0, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                      [0, 0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                      [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                      [0, 1, 1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xblist := BlistList([1 .. 4], [1, 2]);[127X[104X
+    [4X[28X[ true, true, false, false ][128X[104X
+    [4X[25Xgap>[125X [27XOnBlist(blist, mat);[127X[104X
+    [4X[28X[ true, false, false, true ][128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-5 Successors[101X
+  
+  [29X[2XSuccessors[102X( [3Xmat[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA list of lists of positive integers.[133X
+  
+  [33X[0;0YA  row  of  a  boolean  matrix  of  dimension  [10Xn[110X can be thought of of as the
+  characteristic  function  of a subset [10XS[110X of [10X[1 .. n][110X, i.e. [10Xi in S[110X if and only
+  if  the  [10Xi[110Xth  component of the row equals [22X1[122X. We refer to the subset [10XS[110X as the
+  [12Xsuccessors[112X of the row.[133X
+  
+  [33X[0;0YIf  [3Xmat[103X  is a boolean matrix, then [10XSuccessors[110X returns the list of successors
+  of the rows of [3Xmat[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                      [1, 0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                      [0, 0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                      [1, 1, 0, 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27XSuccessors(mat);[127X[104X
+    [4X[28X[ [ 1, 3, 4 ], [ 1 ], [ 3 ], [ 1, 2 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-6 BooleanMatNumber[101X
+  
+  [29X[2XBooleanMatNumber[102X( [3Xm[103X, [3Xn[103X ) [32X operation
+  [29X[2XNumberBooleanMat[102X( [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA boolean matrix, or a positive integer.[133X
+  
+  [33X[0;0YThese  functions  implement a bijection from the set of all boolean matrices
+  of dimension [3Xn[103X and the numbers [10X[1 .. 2 ^ ([3Xn[103X[10X ^ 2)][110X.[133X
+  
+  [33X[0;0YMore  precisely, if [3Xm[103X and [3Xn[103X are positive integers such that [3Xm[103X is at most [10X2 ^
+  ([3Xn[103X[10X ^ 2)[110X, then [10XBooleanMatNumber[110X returns the [3Xm[103Xth [3Xn[103X by [3Xn[103X boolean matrix.[133X
+  
+  [33X[0;0YIf [3Xmat[103X is an [3Xn[103X by [3Xn[103X boolean matrix, then [10XNumberBooleanMat[110X returns the number
+  in [10X[1 .. 2 ^ ([3Xn[103X[10X ^ 2)][110X that corresponds to [3Xmat[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[0, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                      [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                      [1, 1, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                      [0, 1, 0, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27XNumberBooleanMat(mat);[127X[104X
+    [4X[28X27606[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(BooleanMatNumber(27606, 4));[127X[104X
+    [4X[28X0 1 1 0[128X[104X
+    [4X[28X1 0 1 1[128X[104X
+    [4X[28X1 1 0 1[128X[104X
+    [4X[28X0 1 0 1[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-7 BlistNumber[101X
+  
+  [29X[2XBlistNumber[102X( [3Xm[103X, [3Xn[103X ) [32X function
+  [29X[2XNumberBlist[102X( [3Xblist[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA boolean list, or a positive integer.[133X
+  
+  [33X[0;0YThese  functions  implement a bijection from the set of all boolean lists of
+  length [3Xn[103X and the numbers [10X[1 .. 2 ^ [3Xn[103X[10X][110X.[133X
+  
+  [33X[0;0YMore  precisely, if [3Xm[103X and [3Xn[103X are positive integers such that [3Xm[103X is at most [10X2 ^
+  [3Xn[103X[10X[110X, then [10XBlistNumber[110X returns the [3Xm[103Xth boolean list of length [3Xn[103X.[133X
+  
+  [33X[0;0YIf  [3Xblist[103X is a boolean list of length [3Xn[103X, then [10XNumberBlist[110X returns the number
+  in [10X[1 .. 2 ^ [3Xn[103X[10X][110X that corresponds to [3Xblist[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xblist := BlistList([1 .. 10], []);[127X[104X
+    [4X[28X[ false, false, false, false, false, false, false, false, false, [128X[104X
+    [4X[28X  false ][128X[104X
+    [4X[25Xgap>[125X [27XNumberBlist(blist);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xblist := BlistList([1 .. 10], [10]);[127X[104X
+    [4X[28X[ false, false, false, false, false, false, false, false, false, true [128X[104X
+    [4X[28X ][128X[104X
+    [4X[25Xgap>[125X [27XNumberBlist(blist);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XBlistNumber(1, 10);[127X[104X
+    [4X[28X[ false, false, false, false, false, false, false, false, false, [128X[104X
+    [4X[28X  false ][128X[104X
+    [4X[25Xgap>[125X [27XBlistNumber(2, 10);[127X[104X
+    [4X[28X[ false, false, false, false, false, false, false, false, false, true [128X[104X
+    [4X[28X ][128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-8 CanonicalBooleanMat[101X
+  
+  [29X[2XCanonicalBooleanMat[102X( [3XG[103X, [3XH[103X, [3Xmat[103X ) [32X operation
+  [29X[2XCanonicalBooleanMat[102X( [3XG[103X, [3Xmat[103X ) [32X operation
+  [29X[2XCanonicalBooleanMat[102X( [3Xmat[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA boolean matrix.[133X
+  
+  [33X[0;0YThis  operation  returns  a fixed representative of the orbit of the boolean
+  matrix  [3Xmat[103X  under the action of the permutation group [3XG[103X on its rows and the
+  permutation group [3XH[103X on its columns.[133X
+  
+  [33X[0;0YIn  its  second form, when only a single permutation group [3XG[103X is specified, [3XG[103X
+  acts on the rows and columns of [3Xmat[103X independently.[133X
+  
+  [33X[0;0YIn   its   third   form,   when   only   a   boolean  matrix  is  specified,
+  [10XCanonicalBooleanMat[110X returns a fixed representative of the orbit of [3Xmat[103X under
+  the  action  of  the symmetric group on its rows, and, independently, on its
+  columns.  In  other  words,  [10XCanonicalBooleanMat[110X returns a canonical boolean
+  matrix equivalent to [3Xmat[103X up to rearranging rows and columns. This version of
+  [10XCanonicalBooleanMat[110X  uses  [5XDigraphs[105X and its interface with the [5Xbliss[105X library
+  for computing automorphism groups and canonical forms of graphs [JK07]. As a
+  consequence,  [10XCanonicalBooleanMat[110X  with  a  single argument is significantly
+  faster than the versions with 2 or 3 arguments.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[1, 1, 1, 0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                      [0, 0, 0, 1, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                      [1, 0, 0, 1, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                      [0, 0, 0, 0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                      [0, 1, 1, 1, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                      [0, 1, 1, 0, 1, 0]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 1], [128X[104X
+    [4X[28X  [1, 0, 0, 1, 0, 1], [0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 1, 1], [128X[104X
+    [4X[28X  [0, 1, 1, 0, 1, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XCanonicalBooleanMat(mat);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[0, 0, 1, 1, 1, 0], [1, 1, 0, 0, 1, 0], [128X[104X
+    [4X[28X  [0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 0, 0], [1, 1, 0, 0, 0, 1], [128X[104X
+    [4X[28X  [1, 1, 1, 1, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(CanonicalBooleanMat(mat));[127X[104X
+    [4X[28X0 0 1 1 1 0[128X[104X
+    [4X[28X1 1 0 0 1 0[128X[104X
+    [4X[28X0 0 0 0 0 0[128X[104X
+    [4X[28X0 0 1 1 0 0[128X[104X
+    [4X[28X1 1 0 0 0 1[128X[104X
+    [4X[28X1 1 1 1 0 1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(CanonicalBooleanMat(Group((1, 3)), mat));[127X[104X
+    [4X[28X0 1 1 0 0 1[128X[104X
+    [4X[28X0 0 1 0 0 1[128X[104X
+    [4X[28X1 1 0 1 0 0[128X[104X
+    [4X[28X0 0 0 0 0 0[128X[104X
+    [4X[28X1 0 1 1 1 1[128X[104X
+    [4X[28X1 0 0 1 1 0[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(CanonicalBooleanMat(Group((1, 3)), Group(()), mat));[127X[104X
+    [4X[28X1 1 1 0 0 0[128X[104X
+    [4X[28X0 0 0 1 0 1[128X[104X
+    [4X[28X0 1 0 1 0 1[128X[104X
+    [4X[28X0 0 0 0 0 0[128X[104X
+    [4X[28X1 0 1 1 1 1[128X[104X
+    [4X[28X1 0 1 0 1 0[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-9 IsRowTrimBooleanMat[101X
+  
+  [29X[2XIsRowTrimBooleanMat[102X( [3Xmat[103X ) [32X property
+  [29X[2XIsColTrimBooleanMat[102X( [3Xmat[103X ) [32X property
+  [29X[2XIsTrimBooleanMat[102X( [3Xmat[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YThe  [13Xnatural  partial order[113X [22X≤[122X on an inverse semigroup [10XS[110X is defined by [10Xs[110X[22X≤[122X[10Xt[110X if
-  there  exists  an  idempotent  [10Xe[110X  in  [10XS[110X such that [10Xs=et[110X. Hence if [3Xx[103X and [3Xy[103X are
-  partial  perm  bipartitions,  then  [3Xx[103X[22X≤[122X[3Xy[103X if and only if [10XAsPartialPerm([3Xx[103X[10X)[110X is a
-  restriction of [10XAsPartialPerm([3Xy[103X[10X)[110X.[133X
+  [33X[0;0YA  row  or column of a boolean matrix of dimension [10Xn[110X can be thought of of as
+  the  characteristic  function  of a subset [10XS[110X of [10X[1 .. n][110X, i.e. [10Xi in S[110X if and
+  only if the [10Xi[110Xth component of the row or column equals [10X1[110X.[133X
   
-  [33X[0;0Y[10XNaturalLeqPartialPermBipartition[110X  returns  [9Xtrue[109X  if  [10XAsPartialPerm([3Xx[103X[10X)[110X  is  a
-  restriction of [10XAsPartialPerm([3Xy[103X[10X)[110X and [9Xfalse[109X if it is not. Note that since this
-  is  a  partial  order and not a total order, it is possible that [3Xx[103X and [3Xy[103X are
-  incomparable with respect to the natural partial order.[133X
+  [33X[0;0YA  boolean  matrix  is  [12Xrow  trim[112X  if  no  subset induced by a row of [3Xmat[103X is
+  contained  in  the  subset  induced  by any other row of [3Xmat[103X. [12XColumn trim[112X is
+  defined  analogously.  A boolean matrix is [12Xtrim[112X if it is both row and column
+  trim.[133X
   
-  [1X5.4-3 NaturalLeqBlockBijection[101X
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[0, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                      [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                      [1, 1, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                      [0, 1, 1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsTrimBooleanMat(mat);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[0, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                      [0, 0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                      [1, 0, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                      [1, 0, 1, 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsRowTrimBooleanMat(mat);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsColTrimBooleanMat(mat);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
   
-  [29X[2XNaturalLeqBlockBijection[102X( [3Xx[103X, [3Xy[103X ) [32X operation
+  [1X5.3-10 IsSymmetricBooleanMat[101X
+  
+  [29X[2XIsSymmetricBooleanMat[102X( [3Xmat[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YThe  [13Xnatural  partial order[113X [22X≤[122X on an inverse semigroup [10XS[110X is defined by [10Xs[110X[22X≤[122X[10Xt[110X if
-  there exists an idempotent [10Xe[110X in [10XS[110X such that [10Xs=et[110X. Hence if [3Xx[103X and [3Xy[103X are block
-  bijections, then [3Xx[103X[22X≤[122X[3Xy[103X if and only if [3Xx[103X contains [3Xy[103X.[133X
-  
-  [33X[0;0Y[10XNaturalLeqBlockBijection[110X returns [9Xtrue[109X if [3Xx[103X is contained in [3Xy[103X and [9Xfalse[109X if it
-  is not. Note that since this is a partial order and not a total order, it is
-  possible  that  [3Xx[103X and [3Xy[103X are incomparable with respect to the natural partial
-  order.[133X
+  [33X[0;0YA  boolean  matrix  is [12Xsymmetric[112X if it is symmetric about the main diagonal,
+  i.e. [10X[3Xmat[103X[10X[i][j] = [3Xmat[103X[10X[j][i][110X for all [10Xi, j[110X in the range [10X[1 .. n][110X where [10Xn[110X is the
+  dimension of [3Xmat[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [127X[104X
-    [4X[25X>[125X [27X[ 10, -10 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27Xy:=Bipartition( [ [ 1, -2 ], [ 2, -1 ], [ 3, -3 ], [ 4, -4 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, -9 ], [ 10, -10 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27Xz:=Bipartition([Union([1..10],[-10..-1])]);;[127X[104X
-    [4X[25Xgap>[125X [27XNaturalLeqBlockBijection(x, y);[127X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[0, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                      [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                      [1, 1, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                      [0, 1, 0, 1]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1], [128X[104X
+    [4X[28X  [0, 1, 0, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XIsSymmetricBooleanMat(mat);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XNaturalLeqBlockBijection(y, x);[127X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[0, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                      [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                      [1, 1, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                      [0, 1, 1, 1]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[0, 1, 1, 0], [1, 0, 1, 1], [1, 1, 0, 1], [128X[104X
+    [4X[28X  [0, 1, 1, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XIsSymmetricBooleanMat(mat);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-11 IsReflexiveBooleanMat[101X
+  
+  [29X[2XIsReflexiveBooleanMat[102X( [3Xmat[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  boolean  matrix is [12Xreflexive[112X if every entry in the main diagonal is [9Xtrue[109X,
+  i.e.  [10X[3Xmat[103X[10X[i][i]  =  true[110X  for  all  [10Xi[110X  in  the range [10X[1 .. n][110X where [10Xn[110X is the
+  dimension of [3Xmat[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[1, 0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                      [1, 1, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                      [0, 1, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                      [1, 1, 1, 1]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 0], [1, 1, 0, 0], [0, 1, 0, 1], [128X[104X
+    [4X[28X  [1, 1, 1, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XIsReflexiveBooleanMat(mat);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XNaturalLeqBlockBijection(z, x);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XNaturalLeqBlockBijection(z, y);[127X[104X
+    [4X[25Xgap>[125X [27Xmat := BooleanMat([[1, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                      [1, 1, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                      [1, 1, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                      [0, 1, 1, 1]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 1, 1, 0], [1, 1, 1, 1], [1, 1, 1, 1], [128X[104X
+    [4X[28X  [0, 1, 1, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XIsReflexiveBooleanMat(mat);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X5.4-4 PermLeftQuoBipartition[101X
+  [1X5.3-12 IsTransitiveBooleanMat[101X
   
-  [29X[2XPermLeftQuoBipartition[102X( [3Xf[103X, [3Xg[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA permutation.[133X
+  [29X[2XIsTransitiveBooleanMat[102X( [3Xmat[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YIf  [3Xf[103X  and  [3Xg[103X  are  bipartitions  with  equal  left  and  right blocks, then
-  [10XPermLeftQuoBipartition[110X  returns  the permutation of the indices of the right
-  blocks of [3Xf[103X (and [3Xg[103X) induced by [10XStar([3Xf[103X[10X)*[3Xg[103X[10X[110X.[133X
-  
-  [33X[0;0Y[10XPermLeftQuoBipartition[110X  verifies  that  [3Xf[103X  and  [3Xg[103X  have equal left and right
-  blocks,  and  returns  an  error  if  they  do  not.  The  value returned by
-  [10XPermLeftQuoBipartition([3Xf[103X[10X,[3Xg[103X[10X)[110X    is    the    same   as   that   returned   by
-  [10XPermRightBlocks(RightBlocks([3Xf[103X[10X), Star([3Xf[103X[10X)*[3Xg[103X[10X)[110X. See also [2XPermRightBlocks[102X ([14X5.7-3[114X)
-  and [2XOnRightBlocksBipartitionByPerm[102X ([14X5.4-5[114X).[133X
+  [33X[0;0YA  boolean matrix is [12Xtransitive[112X if whenever [10X[3Xmat[103X[10X[i][j] = true[110X and [10X[3Xmat[103X[10X[j][k] =
+  true[110X then [10X[3Xmat[103X[10X[i][k] = true[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -1, -2, -8 ], [127X[104X
-    [4X[25X>[125X [27X[ 3, -3, -6, -7, -9 ], [ 9, -4, -5 ], [ -10 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27Xg:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], [127X[104X
-    [4X[25X>[125X [27X[ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XPermLeftQuoBipartition(f, g);[127X[104X
-    [4X[28X(1,2,3)[128X[104X
-    [4X[25Xgap>[125X [27XStar(f)*g;[127X[104X
-    [4X[28X<bipartition: [ 1, 2, 8, -3, -6, -7, -9 ], [ 3, 6, 7, 9, -4, -5 ], [128X[104X
-    [4X[28X [ 4, 5, -1, -2, -8 ], [ 10 ], [ -10 ]>[128X[104X
-    [4X[25Xgap>[125X [27XPermRightBlocks(RightBlocks(f), last);[127X[104X
-    [4X[28X(1,2,3)[128X[104X
-  [4X[32X[104X
-  
-  [1X5.4-5 OnRightBlocksBipartitionByPerm[101X
-  
-  [29X[2XOnRightBlocksBipartitionByPerm[102X( [3Xf[103X, [3Xp[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
-  
-  [33X[0;0YIf  [3Xf[103X  is  a  bipartition and [3Xp[103X is a permutation of the indices of the right
-  blocks  of  [3Xf[103X,  then  [10XOnRightBlocksBipartitionByPerm[110X returns the bipartition
-  obtained from [3Xf[103X by rearranging the right blocks of [3Xf[103X according to [3Xp[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -1, -2, -8 ],[127X[104X
-    [4X[25X>[125X [27X[ 3, -3, -6, -7, -9 ], [ 9, -4, -5 ], [ -10 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XOnRightBlocksBipartitionByPerm(f, (1,2,3));[127X[104X
-    [4X[28X<bipartition: [ 1, 4, 6, 7, 8, 10 ], [ 2, 5, -3, -6, -7, -9 ], [128X[104X
-    [4X[28X [ 3, -4, -5 ], [ 9, -1, -2, -8 ], [ -10 ]>[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X5.5 [33X[0;0YAttributes for bipartitons[133X[101X
-  
-  [33X[0;0YIn  this  section  we  describe  various  attributes  that a bipartition can
-  possess.[133X
-  
-  [1X5.5-1 DegreeOfBipartition[101X
-  
-  [29X[2XDegreeOfBipartition[102X( [3Xf[103X ) [32X attribute
-  [29X[2XDegreeOfBipartitionCollection[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
-  
-  [33X[0;0YThe degree of a bipartition is, roughly speaking, the number of points where
-  it  is defined. More precisely, if [3Xf[103X is a bipartition defined on [10X2*n[110X points,
-  then the degree of [3Xf[103X is [10Xn[110X.[133X
-  
-  [33X[0;0YThe  degree of a collection [3Xcoll[103X of bipartitions of equal degree is just the
-  degree  of  any (and every) bipartition in [3Xcoll[103X. The degree of collection of
-  bipartitions of unequal degrees is not defined.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 7, -3, -8 ], [ 2, 6 ], [ 3 ], [ 4, -7, -9 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, 9, -2 ], [ 8, -1, -4, -6 ], [ -5 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XDegreeOfBipartition(f);[127X[104X
-    [4X[28X9[128X[104X
-    [4X[25Xgap>[125X [27Xs:=BrauerMonoid(5);[127X[104X
-    [4X[28X<regular bipartition monoid of degree 5 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XIsBipartitionCollection(s);[127X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[1, 0, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                    [0, 1, 1, 0]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0], [128X[104X
+    [4X[28X  [0, 1, 1, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XIsTransitiveBooleanMat(x);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[1, 1, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 1, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 1, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 1, 1, 1]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [128X[104X
+    [4X[28X  [1, 1, 1, 1]])[128X[104X
+    [4X[25Xgap>[125X [27XIsTransitiveBooleanMat(x);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XDegreeOfBipartitionCollection(s);[127X[104X
+  [4X[32X[104X
+  
+  [1X5.3-13 IsAntiSymmetricBooleanMat[101X
+  
+  [29X[2XIsAntiSymmetricBooleanMat[102X( [3Xmat[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  boolean  matrix  is  [12Xanti-symmetric[112X  if  whenever  [10X[3Xmat[103X[10X[i][j]  =  true[110X and
+  [10X[3Xmat[103X[10X[j][i] = true[110X then [10Xi = j[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[1, 0, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                    [0, 1, 1, 0]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0], [128X[104X
+    [4X[28X  [0, 1, 1, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XIsAntiSymmetricBooleanMat(x);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[1, 0, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                    [1, 0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                    [0, 1, 1, 0]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 0], [1, 0, 1, 0], [128X[104X
+    [4X[28X  [0, 1, 1, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XIsAntiSymmetricBooleanMat(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-14 IsTotalBooleanMat[101X
+  
+  [29X[2XIsTotalBooleanMat[102X( [3Xmat[103X ) [32X property
+  [29X[2XIsOntoBooleanMat[102X( [3Xmat[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  boolean  matrix  is  [12Xtotal[112X if there is at least one entry in every row is
+  [9Xtrue[109X.  Similarly,  a  boolean  matrix is [12Xonto[112X if at least one entry in every
+  column is [9Xtrue[109X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[1, 0, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 0, 1, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 1, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                    [0, 1, 1, 0]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 1], [1, 1, 1, 0], [128X[104X
+    [4X[28X  [0, 1, 1, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XIsTotalBooleanMat(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsOntoBooleanMat(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx := BooleanMat([[1, 0, 0, 1],[127X[104X
+    [4X[25X>[125X [27X                    [1, 0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                    [0, 0, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                    [0, 1, 1, 0]]);[127X[104X
+    [4X[28XMatrix(IsBooleanMat, [[1, 0, 0, 1], [1, 0, 1, 0], [0, 0, 0, 0], [128X[104X
+    [4X[28X  [0, 1, 1, 0]])[128X[104X
+    [4X[25Xgap>[125X [27XIsTotalBooleanMat(x);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsOntoBooleanMat(x);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-15 IsPartialOrderBooleanMat[101X
+  
+  [29X[2XIsPartialOrderBooleanMat[102X( [3Xmat[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  boolean  matrix  is  a  [12Xpartial order[112X if it is reflexive, transitive, and
+  anti-symmetric.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XNumber(FullBooleanMatMonoid(3), IsPartialOrderBooleanMat);[127X[104X
+    [4X[28X19[128X[104X
+  [4X[32X[104X
+  
+  [1X5.3-16 IsEquivalenceBooleanMat[101X
+  
+  [29X[2XIsEquivalenceBooleanMat[102X( [3Xmat[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA  boolean  matrix  is  an  [12Xequivalence[112X  if it is reflexive, transitive, and
+  symmetric.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XNumber(FullBooleanMatMonoid(3), IsEquivalenceBooleanMat);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27XBell(3);[127X[104X
     [4X[28X5[128X[104X
   [4X[32X[104X
   
-  [1X5.5-2 RankOfBipartition[101X
   
-  [29X[2XRankOfBipartition[102X( [3Xf[103X ) [32X attribute
-  [29X[2XNrTransverseBlocks[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YThe rank of a bipartition.[133X
+  [1X5.4 [33X[0;0YMatrices over finite fields[133X[101X
   
-  [33X[0;0YWhen  the  argument is a bipartition [3Xf[103X, [10XRankOfBipartition[110X returns the number
-  of  blocks  of  [3Xf[103X  containing  both  positive and negative entries, i.e. the
-  number of transverse blocks of [3Xf[103X.[133X
+  [33X[0;0YIn  this  section  we describe the operations, properties, and attributes in
+  [5XSemigroups[105X  specifically  for  matrices  over  finite  fields.  These are in
+  addition  to  those  given  elsewhere in this chapter for arbitrary matrices
+  over semirings.[133X
   
-  [33X[0;0Y[10XNrTransverseBlocks[110X is just a synonym for [10XRankOfBipartition[110X.[133X
+  [1X5.4-1 NewMatrixOverFiniteField[101X
+  
+  [29X[2XNewMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xrows[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Ya new matrix object.[133X
+  
+  [33X[0;0YCreates a new [3Xn[103X-by-[3Xn[103X matrix over the finite field [3XF[103X with constructing filter
+  [3Xfilt[103X.  The matrix itself is given by a list [3Xrows[103X of rows. Currently the only
+  possible value for [3Xfilt[103X is [10XIsPlistMatrixOverFiniteFieldRep[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], [127X[104X
-    [4X[25X>[125X [27X[ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ] ] );[127X[104X
-    [4X[28X<bipartition: [ 1, 2, 6, 7, -4, -5, -7 ], [ 3, 4, 5, -1, -3 ], [128X[104X
-    [4X[28X [ 8, -9 ], [ 9, -2 ], [ -6 ], [ -8 ]>[128X[104X
-    [4X[25Xgap>[125X [27XRankOfBipartition(f);[127X[104X
-    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xx := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
+    [4X[25X>[125X [27X                                 GF(4),[127X[104X
+    [4X[25X>[125X [27X                                 Z(4) * [[1, 0], [0, 1]]);[127X[104X
+    [4X[28XMatrix(GF(2^2), [[Z(2^2), 0*Z(2)], [0*Z(2), Z(2^2)]])[128X[104X
+    [4X[25Xgap>[125X [27Xy := NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
+    [4X[25X>[125X [27X                                 GF(4),[127X[104X
+    [4X[25X>[125X [27X                                 []);[127X[104X
+    [4X[28XMatrix(GF(2^2), [])[128X[104X
   [4X[32X[104X
   
-  [1X5.5-3 ExtRepOfBipartition[101X
+  [1X5.4-2 IdentityMatrixOverFiniteField[101X
   
-  [29X[2XExtRepOfBipartition[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA partition of [10X[1..2*n][110X.[133X
+  [29X[2XIdentityMatrixOverFiniteField[102X( [3XF[103X, [3Xn[103X ) [32X operation
+  [29X[2XIdentityMatrixOverFiniteField[102X( [3Xmat[103X, [3Xn[103X ) [32X operation
   
-  [33X[0;0YIf  [10Xn[110X  is  the degree of the bipartition [3Xf[103X, then [10XExtRepOfBipartition[110X returns
-  the  partition  of [10X[-n..-1][110X union [10X[1..n][110X corresponding to [3Xf[103X as a sorted list
-  of duplicate-free lists.[133X
+  [33X[0;0YGiven  a  finite field [3XF[103X and a positive integer [3Xn[103X, this operation returns an
+  [3Xn[103X-by-[3Xn[103X  identity  matrix  with entries in the finite field [3XF[103X. If instead the
+  first  argument is an [3Xn[103X-by-[3Xn[103X matrix [3Xmat[103X whose [2XBaseDomain[102X ([14X5.4-7[114X) is a finite
+  field  [3XF[103X,  then  [10XIdentityMatrixOverFiniteField([3Xmat[103X[10X,  [3Xn[103X[10X)[110X  returns the same as
+  [10XIdentityMatrixOverFiniteField([3XF[103X[10X, [3Xn[103X[10X)[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ] ] );[127X[104X
-    [4X[28X<block bijection: [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ]>[128X[104X
-    [4X[25Xgap>[125X [27XExtRepOfBipartition(f);[127X[104X
-    [4X[28X[ [ 1, 5, -3 ], [ 2, 4, -2, -4 ], [ 3, -1, -5 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xx := NewIdentityMatrixOverFiniteField([127X[104X
+    [4X[25X>[125X [27X                  IsPlistMatrixOverFiniteFieldRep, GF(4), 2);[127X[104X
+    [4X[28XMatrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])[128X[104X
+    [4X[25Xgap>[125X [27Xy := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
+    [4X[25X>[125X [27X                                     GF(4), 2);[127X[104X
+    [4X[28XMatrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])[128X[104X
   [4X[32X[104X
   
-  [1X5.5-4 RightBlocks[101X
+  [1X5.4-3 NewIdentityMatrixOverFiniteField[101X
   
-  [29X[2XRightBlocks[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YThe right blocks of a bipartition.[133X
+  [29X[2XNewIdentityMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation
+  [29X[2XNewZeroMatrixOverFiniteField[102X( [3Xfilt[103X, [3XF[103X, [3Xn[103X ) [32X operation
   
-  [33X[0;0Y[10XRightBlocks[110X returns the right blocks of the bipartition [3Xf[103X.[133X
-  
-  [33X[0;0YThe [13Xright blocks[113X of a bipartition [3Xf[103X are just the intersections of the blocks
-  of  [3Xf[103X  with  [10X[-n..-1][110X  where  [10Xn[110X is the degree of [3Xf[103X, the values in transverse
-  blocks are positive, and the values in non-transverse blocks are negative.[133X
-  
-  [33X[0;0YThe  right blocks of bipartition are [5XGAP[105X objects in their own right, and are
-  not simply a list of blocks of [3Xf[103X; see [14X5.6[114X for more information.[133X
-  
-  [33X[0;0YThe  significance  of this notion lies in the fact that bipartitions [10Xx[110X and [10Xy[110X
-  are  [13XL[113X-related  in the partition monoid if and only if they have equal right
-  blocks.[133X
+  [33X[0;0YCreates  a  new  [3Xn[103X-by-[3Xn[103X  zero  or identity matrix with entries in the finite
+  field [3XF[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], [127X[104X
-    [4X[25X>[125X [27X[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XRightBlocks(f);[127X[104X
-    [4X[28X<blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]>[128X[104X
-    [4X[25Xgap>[125X [27XLeftBlocks(f);[127X[104X
-    [4X[28X<blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := NewIdentityMatrixOverFiniteField([127X[104X
+    [4X[25X>[125X [27X                  IsPlistMatrixOverFiniteFieldRep, GF(4), 2);[127X[104X
+    [4X[28XMatrix(GF(2^2), [[Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0]])[128X[104X
+    [4X[25Xgap>[125X [27Xy := NewZeroMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,[127X[104X
+    [4X[25X>[125X [27X                                     GF(4), 2);[127X[104X
+    [4X[28XMatrix(GF(2^2), [[0*Z(2), 0*Z(2)], [0*Z(2), 0*Z(2)]])[128X[104X
   [4X[32X[104X
   
-  [1X5.5-5 LeftBlocks[101X
+  [1X5.4-4 RowSpaceBasis[101X
   
-  [29X[2XLeftBlocks[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YThe left blocks of a bipartition.[133X
+  [29X[2XRowSpaceBasis[102X( [3Xm[103X ) [32X attribute
+  [29X[2XRowSpaceTransformation[102X( [3Xm[103X ) [32X attribute
+  [29X[2XRowSpaceTransformationInv[102X( [3Xm[103X ) [32X attribute
   
-  [33X[0;0Y[10XLeftBlocks[110X returns the left blocks of the bipartition [3Xf[103X.[133X
-  
-  [33X[0;0YThe  [13Xleft blocks[113X of a bipartition [3Xf[103X are just the intersections of the blocks
-  of [3Xf[103X with [10X[1..n][110X where [10Xn[110X is the degree of [3Xf[103X, the values in transverse blocks
-  are positive, and the values in non-transverse blocks are negative.[133X
-  
-  [33X[0;0YThe  left  blocks of bipartition are [5XGAP[105X objects in their own right, and are
-  not simply a list of blocks of [3Xf[103X; see [14X5.6[114X for more information.[133X
-  
-  [33X[0;0YThe  significance  of this notion lies in the fact that bipartitions [10Xx[110X and [10Xy[110X
-  are  [13XR[113X-related  in  the partition monoid if and only if they have equal left
-  blocks.[133X
+  [33X[0;0YTo  compute  the value of any of the above attributes, a canonical basis for
+  the   row   space   of  [3Xm[103X  is  computed  along  with  an  invertible  matrix
+  [10XRowSpaceTransformation[110X   such   that   [10Xm   *   RowSpaceTransformation(m)   =
+  RowSpaceBasis(m)[110X.    [10XRowSpaceTransformationInv(m)[110X    is   the   inverse   of
+  [10XRowSpaceTransformation(m)[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], [127X[104X
-    [4X[25X>[125X [27X[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XRightBlocks(f);[127X[104X
-    [4X[28X<blocks: [ 1 ], [ 2, 7 ], [ -3 ], [ 4 ], [ -5, -6, -8 ]>[128X[104X
-    [4X[25Xgap>[125X [27XLeftBlocks(f);[127X[104X
-    [4X[28X<blocks: [ 1, 4, 7, 8 ], [ 2, 3, 5 ], [ 6 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 1], [1, 1, 1]]);[127X[104X
+    [4X[28XMatrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), Z(2)^0, Z(2)^0], [128X[104X
+    [4X[28X  [Z(2)^0, Z(2)^0, Z(2)^0]])[128X[104X
+    [4X[25Xgap>[125X [27XRowSpaceBasis(x);[127X[104X
+    [4X[28X<rowbasis of rank 3 over GF(2^2)>[128X[104X
+    [4X[25Xgap>[125X [27XRowSpaceTransformation(x);[127X[104X
+    [4X[28X[ [ 0*Z(2), Z(2)^0, Z(2)^0 ], [ Z(2)^0, Z(2)^0, Z(2)^0 ], [128X[104X
+    [4X[28X  [ Z(2)^0, 0*Z(2), Z(2)^0 ] ][128X[104X
   [4X[32X[104X
   
-  [1X5.5-6 NrLeftBlocks[101X
+  [1X5.4-5 RowRank[101X
   
-  [29X[2XNrLeftBlocks[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
-  
-  [33X[0;0YWhen  the  argument  is  a bipartition [3Xf[103X, [10XNrLeftBlocks[110X returns the number of
-  left  blocks  of  [3Xf[103X,  i.e.  the  number  of  blocks of [3Xf[103X intersecting [10X[1..n][110X
-  non-trivially.[133X
+  [29X[2XRowRank[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YLength of a basis of the row space of [3Xm[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, 3, 4, 5, 6, 8 ], [ 7, -2, -3 ], [127X[104X
-    [4X[25X>[125X [27X[ -1, -4, -7, -8 ], [ -5, -6 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XNrLeftBlocks(f);[127X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);[127X[104X
+    [4X[28XMatrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], [128X[104X
+    [4X[28X  [Z(5)^0, Z(5)^0, Z(5)^0]])[128X[104X
+    [4X[25Xgap>[125X [27XRowRank(x);[127X[104X
     [4X[28X2[128X[104X
-    [4X[25Xgap>[125X [27XLeftBlocks(f);[127X[104X
-    [4X[28X<blocks: [ -1, -2, -3, -4, -5, -6, -8 ], [ 7 ]>[128X[104X
   [4X[32X[104X
   
-  [1X5.5-7 NrRightBlocks[101X
+  [1X5.4-6 RightInverse[101X
   
-  [29X[2XNrRightBlocks[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
+  [29X[2XRightInverse[102X( [3Xm[103X ) [32X attribute
+  [29X[2XLeftInverse[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA matrix over a finite field.[133X
   
-  [33X[0;0YWhen  the  argument  is a bipartition [3Xf[103X, [10XNrRightBlocks[110X returns the number of
-  right  blocks  of  [3Xf[103X,  i.e.  the number of blocks of [3Xf[103X intersecting [10X[-n..-1][110X
-  non-trivially.[133X
+  [33X[0;0YThese   attributes   contain  a  semigroup  left-inverse,  and  a  semigroup
+  right-inverse of the matrix [3Xm[103X respectively.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, 3, 4, 6, -2, -7 ], [ 5, -1, -3, -8 ], [127X[104X
-    [4X[25X>[125X [27X[ 7, -4, -6 ], [ 8 ], [ -5 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XRightBlocks(f);[127X[104X
-    [4X[28X<blocks: [ 1, 3, 8 ], [ 2, 7 ], [ 4, 6 ], [ -5 ]>[128X[104X
-    [4X[25Xgap>[125X [27XNrRightBlocks(f);[127X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);[127X[104X
+    [4X[28XMatrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2), 0*Z(2)], [128X[104X
+    [4X[28X  [Z(2)^0, Z(2)^0, Z(2)^0]])[128X[104X
+    [4X[25Xgap>[125X [27XLeftInverse(x);[127X[104X
+    [4X[28XMatrix(GF(2^2), [[Z(2)^0, Z(2)^0, 0*Z(2)], [0*Z(2), 0*Z(2), 0*Z(2)], [128X[104X
+    [4X[28X  [Z(2)^0, 0*Z(2), Z(2)^0]])[128X[104X
+    [4X[25Xgap>[125X [27XDisplay(LeftInverse(x) * x);[127X[104X
+    [4X[28XZ(2)^0 Z(2)^0 0*Z(2)[128X[104X
+    [4X[28X0*Z(2) 0*Z(2) 0*Z(2)[128X[104X
+    [4X[28X0*Z(2) 0*Z(2) Z(2)^0[128X[104X
+  [4X[32X[104X
+  
+  [1X5.4-7 BaseDomain[101X
+  
+  [29X[2XBaseDomain[102X( [3Xmat[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YIf  [3Xmat[103X  is  a  matrix  over  a  finite  field  (in  the  category
+            [2XIsMatrixOverSemiring[102X  ([14X5.1-1[114X)), then [10XBaseDomain[110X returns the finite
+            field  specified at the point that [3Xmat[103X was created. Every entry in
+            the matrix [3Xmat[103X belongs to [10XBaseDomain([3Xmat[103X[10X)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);[127X[104X
+    [4X[28XMatrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], [128X[104X
+    [4X[28X  [Z(5)^0, Z(5)^0, Z(5)^0]])[128X[104X
+    [4X[25Xgap>[125X [27XBaseDomain(x);[127X[104X
+    [4X[28XGF(5)[128X[104X
+  [4X[32X[104X
+  
+  [1X5.4-8 TransposedMatImmutable[101X
+  
+  [29X[2XTransposedMatImmutable[102X( [3Xm[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn immutable matrix.[133X
+  
+  [33X[0;0YThis  attribute  contains  an  immutable  copy  of [3Xm[103X. Note that matrices are
+  immutable by default.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(GF(5), Z(5) ^ 0 * [[1, 1, 0], [0, 0, 0], [1, 1, 1]]);[127X[104X
+    [4X[28XMatrix(GF(5), [[Z(5)^0, Z(5)^0, 0*Z(5)], [0*Z(5), 0*Z(5), 0*Z(5)], [128X[104X
+    [4X[28X  [Z(5)^0, Z(5)^0, Z(5)^0]])[128X[104X
+    [4X[25Xgap>[125X [27XTransposedMatImmutable(x);[127X[104X
+    [4X[28XMatrix(GF(5), [[Z(5)^0, 0*Z(5), Z(5)^0], [Z(5)^0, 0*Z(5), Z(5)^0], [128X[104X
+    [4X[28X  [0*Z(5), 0*Z(5), Z(5)^0]])[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.5 [33X[0;0YInteger Matrices[133X[101X
+  
+  [33X[0;0YIn  this  section  we  describe  operations  in  [5XSemigroups[105X specifically for
+  integer  matrices.  These  are  in addition to those given elsewhere in this
+  chapter for arbitrary matrices over semirings. These include:[133X
+  
+  [30X    [33X[0;6Y[2XInverseOp[102X ([14X5.5-1[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsTorsion[102X ([14X5.5-2[114X)[133X
+  
+  [30X    [33X[0;6Y[2XOrder[102X ([14X5.5-3[114X)[133X
+  
+  [1X5.5-1 InverseOp[101X
+  
+  [29X[2XInverseOp[102X( [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn integer matrix.[133X
+  
+  [33X[0;0YIf  [3Xmat[103X  is  an integer matrix (i.e. belongs to the category [2XIsIntegerMatrix[102X
+  ([14X5.1-8[114X))  whose  inverse  (if  it  exists)  is  also an integer matrix, then
+  [10XInverseOp[110X returns the inverse of [3Xmat[103X.[133X
+  
+  [33X[0;0YAn  integer  matrix  has  an  integer  matrix  inverse if and only if it has
+  determinant one.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1],[127X[104X
+    [4X[25X>[125X [27X                                   [0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                                   [1, 0, 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27XInverseOp(mat);[127X[104X
+    [4X[28XMatrix(IsIntegerMatrix, [[0, 0, 1], [0, 1, 0], [-1, 0, 0]])[128X[104X
+    [4X[25Xgap>[125X [27Xmat * InverseOp(mat) = One(mat);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-2 IsTorsion[101X
+  
+  [29X[2XIsTorsion[102X( [3Xmat[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YIf  [3Xmat[103X  is  an integer matrix (i.e. belongs to the category [2XIsIntegerMatrix[102X
+  ([14X5.1-8[114X)), then [10XIsTorsion[110X returns [9Xtrue[109X if [3Xmat[103X is torsion and [9Xfalse[109X otherwise.[133X
+  
+  [33X[0;0YAn  integer  matrix  [3Xmat[103X is torsion if and only if there exists an integer [10Xn[110X
+  such that [3Xmat[103X to the power of [10Xn[110X is equal to the identity matrix.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1],[127X[104X
+    [4X[25X>[125X [27X                                   [0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                                   [1, 0, 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsTorsion(mat);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],[127X[104X
+    [4X[25X>[125X [27X                                   [0, -1, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                                   [4, 4, 2, -1],[127X[104X
+    [4X[25X>[125X [27X                                   [1, 1, 0, 3]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsTorsion(mat);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X5.5-3 Order[101X
+  
+  [29X[2XOrder[102X( [3Xmat[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn integer or [10Xinfinity[110X.[133X
+  
+  [33X[0;0YIf  [3Xmat[103X  is  an integer matrix (i.e. belongs to the category [2XIsIntegerMatrix[102X
+  ([14X5.1-8[114X)),  then  [10XInverseOp[110X returns the order of [3Xmat[103X. The order of [3Xmat[103X is the
+  smallest  integer  power  of  [3Xmat[103X  equal to the identity. If no such integer
+  exists, the order is equal to [10Xinfinity[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1, 0],[127X[104X
+    [4X[25X>[125X [27X                                   [0, -1, 0, 0],[127X[104X
+    [4X[25X>[125X [27X                                   [4, 4, 2, -1],[127X[104X
+    [4X[25X>[125X [27X                                   [1, 1, 0, 3]]);;[127X[104X
+    [4X[25Xgap>[125X [27XOrder(mat);[127X[104X
+    [4X[28Xinfinity[128X[104X
+    [4X[25Xgap>[125X [27Xmat := Matrix(IsIntegerMatrix, [[0, 0, -1],[127X[104X
+    [4X[25X>[125X [27X                                   [0, 1, 0],[127X[104X
+    [4X[25X>[125X [27X                                   [1, 0, 0]]);;[127X[104X
+    [4X[25Xgap>[125X [27XOrder(mat);[127X[104X
     [4X[28X4[128X[104X
   [4X[32X[104X
   
-  [1X5.5-8 NrBlocks[101X
   
-  [29X[2XNrBlocks[102X( [3Xblocks[103X ) [32X attribute
-  [29X[2XNrBlocks[102X( [3Xf[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA positive integer.[133X
+  [1X5.6 [33X[0;0YMax-plus and min-plus matrices[133X[101X
   
-  [33X[0;0YIf  [3Xblocks[103X  is  some blocks or [3Xf[103X is a bipartition, then [10XNrBlocks[110X returns the
-  number of blocks in [3Xblocks[103X or [3Xf[103X, respectively.[133X
+  [33X[0;0YIn  this  section  we  describe  operations  in  [5XSemigroups[105X specifically for
+  max-plus  and  min-plus  matrices.  These  are  in  addition  to those given
+  elsewhere  in  this  chapter  for  arbitrary  matrices over semirings. These
+  include:[133X
+  
+  [30X    [33X[0;6Y[2XInverseOp[102X ([14X5.6-1[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRadialEigenvector[102X ([14X5.6-2[114X)[133X
+  
+  [30X    [33X[0;6Y[2XSpectralRadius[102X ([14X5.6-3[114X)[133X
+  
+  [30X    [33X[0;6Y[2XUnweightedPrecedenceDigraph[102X ([14X5.6-4[114X)[133X
+  
+  [1X5.6-1 InverseOp[101X
+  
+  [29X[2XInverseOp[102X( [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA max-plus matrix.[133X
+  
+  [33X[0;0YIf  [3Xmat[103X  is  an  invertible  max-plus  matrix  (i.e. belongs to the category
+  [2XIsMaxPlusMatrix[102X  ([14X5.1-8[114X)  and is a row permutation applied to the identity),
+  then  [10XInverseOp[110X  returns  the  inverse  of  [3Xmat[103X. This method is described in
+  [Far09].[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ -1, -2, -3, -4 ], [ -5 ], [ 6 ]]);[127X[104X
-    [4X[28X<blocks: [ -1, -2, -3, -4 ], [ -5 ], [ 6 ]>[128X[104X
-    [4X[25Xgap>[125X [27XNrBlocks(blocks);[127X[104X
-    [4X[28X3[128X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], [127X[104X
-    [4X[25X>[125X [27X[ -3 ] ] );[127X[104X
-    [4X[28X<bipartition: [ 1, 5 ], [ 2, 4, -2, -4 ], [ 3, 6, -1, -5, -6 ], [128X[104X
-    [4X[28X [ -3 ]>[128X[104X
-    [4X[25Xgap>[125X [27XNrBlocks(f);[127X[104X
-    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XInverseOp(Matrix(IsMaxPlusMatrix, [[-infinity, -infinity, 0],[127X[104X
+    [4X[25X>[125X [27X                                      [0, -infinity, -infinity],[127X[104X
+    [4X[25X>[125X [27X                                      [-infinity, 0, -infinity]]));[127X[104X
+    [4X[28XMatrix(IsMaxPlusMatrix, [[-infinity, 0, -infinity], [128X[104X
+    [4X[28X  [-infinity, -infinity, 0], [0, -infinity, -infinity]])[128X[104X
   [4X[32X[104X
   
-  [1X5.5-9 IsTransBipartition[101X
+  [1X5.6-2 RadialEigenvector[101X
   
-  [29X[2XIsTransBipartition[102X( [3Xf[103X ) [32X property
+  [29X[2XRadialEigenvector[102X( [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA vector.[133X
+  
+  [33X[0;0YIf  [3Xmat[103X  is  a  [10Xn[110X  by  [10Xn[110X  max-plus  matrix  (i.e.  belongs  to  the category
+  [2XIsMaxPlusMatrix[102X  ([14X5.1-8[114X)),  then  [10XRadialEigenvector[110X  returns  an eigenvector
+  corresponding  to  the  eigenvalue equal to the spectral radius of [3Xmat[103X. This
+  method is described in [Far09].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XRadialEigenvector(Matrix(IsMaxPlusMatrix, [[0, -3], [-2, -10]]));[127X[104X
+    [4X[28X[ 0, -2 ][128X[104X
+  [4X[32X[104X
+  
+  [1X5.6-3 SpectralRadius[101X
+  
+  [29X[2XSpectralRadius[102X( [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA rational number.[133X
+  
+  [33X[0;0YIf  [3Xmat[103X  is  a max-plus matrix (i.e. belongs to the category [2XIsMaxPlusMatrix[102X
+  ([14X5.1-8[114X)), then [10XSpectralRadius[110X returns the supremum of the set of eigenvalues
+  of [3Xmat[103X. This method is described in [BFCGOGJ92].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSpectralRadius(Matrix(IsMaxPlusMatrix, [[-infinity, 1, -4],[127X[104X
+    [4X[25X>[125X [27X                                           [2, -infinity, 0],[127X[104X
+    [4X[25X>[125X [27X                                           [0, 1, 1]]));[127X[104X
+    [4X[28X3/2[128X[104X
+  [4X[32X[104X
+  
+  [1X5.6-4 UnweightedPrecedenceDigraph[101X
+  
+  [29X[2XUnweightedPrecedenceDigraph[102X( [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA digraph.[133X
+  
+  [33X[0;0YIf  [3Xmat[103X  is  a max-plus matrix (i.e. belongs to the category [2XIsMaxPlusMatrix[102X
+  ([14X5.1-8[114X)), then [10XUnweightedPrecedenceDigraph[110X returns the unweighted precedence
+  digraph corresponding to [3Xmat[103X.[133X
+  
+  [33X[0;0YFor  an  [10Xn[110X  by [10Xn[110X matrix [3Xmat[103X, the unweighted precedence digraph is defined as
+  the  digraph  with  [10Xn[110X vertices where vertex [10Xi[110X is adjacent to vertex [10Xj[110X if and
+  only if [3Xmat[103X[10X[i][j][110X is not equal to [9X-infinity[109X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XUnweightedPrecedenceDigraph(Matrix(IsMaxPlusMatrix, [[2, -2, 0],[127X[104X
+    [4X[25X>[125X [27X[-infinity, 10, -2], [-infinity, 2, 1]]));[127X[104X
+    [4X[28X<digraph with 3 vertices, 7 edges>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.7 [33X[0;0YMatrix semigroups[133X[101X
+  
+  [33X[0;0YIn  this  section  we  describe  operations  and  attributes  in  [5XSemigroups[105X
+  specifically  for  matrix  semigroups.  These are in addition to those given
+  elsewhere  in  this  chapter  for  arbitrary  matrices over semirings. These
+  include:[133X
+  
+  [30X    [33X[0;6Y[2XIsXMatrixSemigroup[102X ([14X5.7-1[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsFinite[102X ([14X5.7-3[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsTorsion[102X ([14X5.7-4[114X)[133X
+  
+  [30X    [33X[0;6Y[2XNormalizeSemigroup[102X ([14X5.7-5[114X)[133X
+  
+  [33X[0;0YRandom   matrix   semigroups   can   be   created   by  using  the  function
+  [2XRandomSemigroup[102X ([14X6.6-1[114X). We can also create a matrix semigroup isomorphic to
+  a  given  semigroup  by  using  [2XIsomorphismSemigroup[102X ([14X6.5-1[114X) and [2XAsSemigroup[102X
+  ([14X6.5-3[114X).  These functions require a filter, and accept any of the filters in
+  Section [14X5.7-1[114X.[133X
+  
+  [33X[0;0YThere  are  corresponding  functions  which  can be used for matrix monoids:
+  [2XRandomMonoid[102X ([14X6.6-1[114X), [2XIsomorphismMonoid[102X ([14X6.5-2[114X), and [2XAsMonoid[102X ([14X6.5-4[114X). These
+  can be used with the filters in Section [14X5.7-2[114X.[133X
+  
+  
+  [1X5.7-1 [33X[0;0YMatrix semigroup filters[133X[101X
+  
+  [29X[2XIsMatrixOverSemiringSemigroup[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsBooleanMatSemigroup[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMatrixOverFiniteFieldSemigroup[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMaxPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMinPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMaxPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMinPlusMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsNTPMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsIntegerMatrixSemigroup[102X( [3Xobj[103X ) [32X Category
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YIf  the  bipartition  [3Xf[103X  defines  a  transformation, then [10XIsTransBipartition[110X
-  returns [9Xtrue[109X, and if not, then [9Xfalse[109X is returned.[133X
+  [33X[0;0YThe  above  are  the  currently  supported  types  of matrix semigroups. For
+  monoids see Section [14X5.7-2[114X.[133X
   
-  [33X[0;0YA  bipartition  [3Xf[103X defines a transformation if and only if the number of left
-  blocks equals the number of transverse blocks and the number of right blocks
-  equals the degree.[133X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], [ 6, 7, -9 ], [127X[104X
-    [4X[25X>[125X [27X[ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], [ -8 ], [ -10 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsTransBipartition(f);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], [127X[104X
-    [4X[25X>[125X [27X[ -2 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsTransBipartition(f);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XNumber(PartitionMonoid(3), IsTransBipartition);[127X[104X
-    [4X[28X27[128X[104X
-  [4X[32X[104X
+  [1X5.7-2 [33X[0;0YMatrix monoid filters[133X[101X
   
-  [1X5.5-10 IsDualTransBipartition[101X
-  
-  [29X[2XIsDualTransBipartition[102X( [3Xf[103X ) [32X property
+  [29X[2XIsMatrixOverSemiringMonoid[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsBooleanMatMonoid[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMatrixOverFiniteFieldMonoid[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMaxPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsMinPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMatrixMonoid[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMaxPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsTropicalMinPlusMatrixMonoid[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsNTPMatrixMonoid[102X( [3Xobj[103X ) [32X Category
+  [29X[2XIsIntegerMatrixMonoid[102X( [3Xobj[103X ) [32X Category
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YIf   the   star   of  the  bipartition  [3Xf[103X  defines  a  transformation,  then
-  [10XIsDualTransBipartition[110X returns [9Xtrue[109X, and if not, then [9Xfalse[109X is returned.[133X
+  [33X[0;0YThe  above  are  the  currently  supported  types  of  matrix  monoids. They
+  correspond  to  the  matrix  semigroup  types  in  Section [14X5.7-1[114X. For matrix
+  semigroups  over  finite  fields  there is also [2XIsMatrixOverFiniteFieldGroup[102X
+  ([14X5.7-7[114X).[133X
   
-  [33X[0;0YA  bipartition  is the dual of a transformation if and only if its number of
-  right  blocks  equals its number of transverse blocks and its number of left
-  blocks equals its degree.[133X
+  [1X5.7-3 IsFinite[101X
   
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -8, -9 ], [ 2, -1, -4 ], [ 3 ], [ 4 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -10 ], [ 6, -2, -5 ], [ 7, -3 ], [ 8 ], [ 9, -6, -7 ], [ 10 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsDualTransBipartition(f);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -3, -6 ], [ 2, 5, -4, -5 ], [ 3, 6, -1 ], [127X[104X
-    [4X[25X>[125X [27X[ -2 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsTransBipartition(f);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XNumber(PartitionMonoid(3), IsDualTransBipartition);[127X[104X
-    [4X[28X27[128X[104X
-  [4X[32X[104X
-  
-  [1X5.5-11 IsPermBipartition[101X
-  
-  [29X[2XIsPermBipartition[102X( [3Xf[103X ) [32X property
+  [29X[2XIsFinite[102X( [3XS[103X ) [32X property
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YIf  the  bipartition [3Xf[103X defines a permutation, then [10XIsPermBipartition[110X returns
-  [9Xtrue[109X, and if not, then [9Xfalse[109X is returned.[133X
-  
-  [33X[0;0YA bipartition is a permutation if its numbers of left, right, and transverse
-  blocks all equal its degree.[133X
+  [33X[0;0YIf  [3XS[103X  is  a  max-plus  or  min-plus  matrix  semigroup (i.e. belongs to the
+  category  [2XIsMaxPlusMatrixSemigroup[102X ([14X5.7-1[114X)), then [10XIsFinite[110X returns [9Xtrue[109X if [3XS[103X
+  is  finite  and  [9Xfalse[109X otherwise. This method is based on [Gau96] (max-plus)
+  and  [Sim78] (min-plus). For min-plus matrix semigroups, this method is only
+  valid  if  each  min-plus matrix in the semigroup contains only non-negative
+  integers.  Note, this method is terminating and does not involve enumerating
+  semigroups.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -2, -4, -6 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsPermBipartition(f);[127X[104X
+    [4X[25Xgap>[125X [27XIsFinite(Semigroup(Matrix(IsMaxPlusMatrix,[127X[104X
+    [4X[25X>[125X [27X                             [[0, -3],[127X[104X
+    [4X[25X>[125X [27X                              [-2, -10]])));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFinite(Semigroup(Matrix(IsMaxPlusMatrix,[127X[104X
+    [4X[25X>[125X [27X                             [[1, -infinity, 2],[127X[104X
+    [4X[25X>[125X [27X                              [-2, 4, -infinity],[127X[104X
+    [4X[25X>[125X [27X                              [1, 0, 3]])));[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -3 ], [ 2, -4 ], [ 3, -6 ], [127X[104X
-    [4X[25X>[125X [27X[ 4, -1 ], [ 5, -5 ], [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsPermBipartition(f);[127X[104X
+    [4X[25Xgap>[125X [27XIsFinite(Semigroup(Matrix(IsMinPlusMatrix,[127X[104X
+    [4X[25X>[125X [27X                             [[infinity, 0],[127X[104X
+    [4X[25X>[125X [27X                              [5, 4]])));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFinite(Semigroup(Matrix(IsMinPlusMatrix,[127X[104X
+    [4X[25X>[125X [27X                             [[1, 0],[127X[104X
+    [4X[25X>[125X [27X                              [0, infinity]])));[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X5.5-12 IsPartialPermBipartition[101X
+  [1X5.7-4 IsTorsion[101X
   
-  [29X[2XIsPartialPermBipartition[102X( [3Xf[103X ) [32X property
+  [29X[2XIsTorsion[102X( [3XS[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YIf    the    bipartition    [3Xf[103X    defines   a   partial   permutation,   then
-  [10XIsPartialPermBipartition[110X returns [9Xtrue[109X, and if not, then [9Xfalse[109X is returned.[133X
-  
-  [33X[0;0YA  bipartition [3Xf[103X defines a partial permutation if and only if the numbers of
-  left and right blocks of [3Xf[103X equal the degree of [3Xf[103X.[133X
+  [33X[0;0YIf  [3XS[103X  is  a  max-plus  matrix  semigroup  (i.e.  belongs  to  the  category
+  [2XIsMaxPlusMatrixSemigroup[102X  ([14X5.7-1[114X)),  then  [10XIsTorsion[110X  returns  [9Xtrue[109X  if [3XS[103X is
+  torsion  and  [9Xfalse[109X  otherwise. This method is based on [Gau96] and draws on
+  [Bur16], [BFCGOGJ92] and [Far09].[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -1 ], [ 2, -3 ], [ 3, 6, -5 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -2, -4, -6 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsPartialPermBipartition(f);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, -3 ], [ 2 ], [ -4 ], [ 3, -6 ], [ 4, -1 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -5 ], [ 6, -2 ], [ 7, -8 ], [ 8, -7 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsPermBipartition(f);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XIsPartialPermBipartition(f); [127X[104X
+    [4X[25Xgap>[125X [27XIsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,[127X[104X
+    [4X[25X>[125X [27X                             [[0, -3],[127X[104X
+    [4X[25X>[125X [27X                              [-2, -10]])));[127X[104X
     [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X5.5-13 IsBlockBijection[101X
-  
-  [29X[2XIsBlockBijection[102X( [3Xf[103X ) [32X property
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YIf  the bipartition [3Xf[103X induces a bijection from the quotient of [10X[1..n][110X by the
-  blocks  of  [3Xf[103X  to  the  quotient  of  [10X[-n..-1][110X  by  the  blocks  of  [3Xf[103X, then
-  [10XIsBlockBijection[110X return [9Xtrue[109X, and if not, then it returns [9Xfalse[109X.[133X
-  
-  [33X[0;0YA bipartition is a block bijection if and only if its number of blocks, left
-  blocks and right blocks are equal.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 5, -2 ], [ 2, 3, -1 ], [127X[104X
-    [4X[25X>[125X [27X[ 6, -5, -6 ], [ -3, -4 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsBlockBijection(f);[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -5 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsBlockBijection(f);[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  [1X5.5-14 IsUniformBlockBijection[101X
-  
-  [29X[2XIsUniformBlockBijection[102X( [3Xx[103X ) [32X property
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YIf  the  bipartition  [3Xx[103X  is  a block bijection where every block contains an
-  equal  number of positive and negative entries, then [10XIsUniformBlockBijection[110X
-  returns [9Xtrue[109X, and otherwise it returns [9Xfalse[109X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xx:=Bipartition( [ [ 1, 2, -3, -4 ], [ 3, -5 ], [ 4, -6 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -7 ], [ 6, -8 ], [ 7, -9 ], [ 8, -1 ], [ 9, -2 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsBlockBijection(x); [127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xx:=Bipartition( [ [ 1, 2, -3 ], [ 3, -1, -2 ], [ 4, -4 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -5 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XIsUniformBlockBijection(x);[127X[104X
-    [4X[28Xfalse[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X5.6 [33X[0;0YCreating blocks and their attributes[133X[101X
-  
-  [33X[0;0YAs  described  above the left and right blocks of a bipartition characterise
-  Green's  [13XR[113X-  and  [13XL[113X-relation on the partition monoid; see [2XLeftBlocks[102X ([14X5.5-5[114X)
-  and  [2XRightBlocks[102X  ([14X5.5-4[114X). The left or right blocks of a bipartition are [5XGAP[105X
-  objects in their own right.[133X
-  
-  [33X[0;0YIn  this  section,  we  describe the functions in the [5XSemigroups[105X package for
-  creating and manipulating the left or right blocks of a bipartition.[133X
-  
-  [1X5.6-1 BlocksNC[101X
-  
-  [29X[2XBlocksNC[102X( [3Xclasses[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YA blocks.[133X
-  
-  [33X[0;0YThis  function makes it possible to create a [5XGAP[105X object corresponding to the
-  left or right blocks of a bipartition without reference to any bipartitions.[133X
-  
-  [33X[0;0Y[10XBlocksNC[110X  returns  the blocks with equivalence classes [3Xclasses[103X, which should
-  be  a list of duplicate-free lists consisting solely of positive or negative
-  integers,  where the union of the absolute values of the lists is [10X[1..n][110X for
-  some [10Xn[110X. The blocks with positive entries correspond to transverse blocks and
-  the classes with negative entries correspond to non-transverse blocks.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XBlocksNC([[ 1 ], [ 2 ], [ -3, -6 ], [ -4, -5 ]]);[127X[104X
-    [4X[28X<blocks: [ 1 ], [ 2 ], [ -3, -6 ], [ -4, -5 ]>[128X[104X
-  [4X[32X[104X
-  
-  [1X5.6-2 ExtRepOfBlocks[101X
-  
-  [29X[2XExtRepOfBlocks[102X( [3Xblocks[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA list of integers.[133X
-  
-  [33X[0;0YIf  [10Xn[110X  is the degree of a bipartition with left or right blocks [3Xblocks[103X, then
-  [10XExtRepOfBlocks[110X  returns  the  partition  corresponding to [3Xblocks[103X as a sorted
-  list of duplicate-free lists.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ]);;[127X[104X
-    [4X[25Xgap>[125X [27XExtRepOfBlocks(blocks);[127X[104X
-    [4X[28X[ [ 1, 6 ], [ 2, 3, 7 ], [ 4, 5 ], [ -8 ] ][128X[104X
-  [4X[32X[104X
-  
-  [1X5.6-3 RankOfBlocks[101X
-  
-  [29X[2XRankOfBlocks[102X( [3Xblocks[103X ) [32X attribute
-  [29X[2XNrTransverseBlocks[102X( [3Xblocks[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
-  
-  [33X[0;0YWhen  the  argument  [3Xblocks[103X  is  the  left or right blocks of a bipartition,
-  [10XRankOfBlocks[110X returns the number of blocks of [3Xblocks[103X containing only positive
-  entries, i.e. the number of transverse blocks in [3Xblocks[103X.[133X
-  
-  [33X[0;0Y[10XNrTransverseBlocks[110X is a synonym of [10XRankOfBlocks[110X in this context.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([ [ -1, -2, -4, -6 ], [ 3, 10, 12 ], [ 5, 7 ], [127X[104X
-    [4X[25X>[125X [27X[ 8 ], [ 9 ], [ -11 ] ]);;[127X[104X
-    [4X[25Xgap>[125X [27XRankOfBlocks(blocks);[127X[104X
-    [4X[28X4[128X[104X
-  [4X[32X[104X
-  
-  [1X5.6-4 DegreeOfBlocks[101X
-  
-  [29X[2XDegreeOfBlocks[102X( [3Xblocks[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
-  
-  [33X[0;0YThe degree of [3Xblocks[103X is the number of points [10Xn[110X where it is defined, i.e. the
-  union of the blocks in [3Xblocks[103X will be [10X[1..n][110X after taking the absolute value
-  of every element.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([ [ -1, -11 ], [ 2 ], [ 3, 5, 6, 7 ], [ 4, 8 ], [127X[104X
-    [4X[25X>[125X [27X[ 9, 10 ], [ 12 ] ]);;[127X[104X
-    [4X[25Xgap>[125X [27XDegreeOfBlocks(blocks);[127X[104X
-    [4X[28X12[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X5.7 [33X[0;0YActions on blocks[133X[101X
-  
-  [33X[0;0YBipartitions  act  on  left  and  right  blocks  in  several ways, which are
-  described in this section.[133X
-  
-  [1X5.7-1 OnRightBlocks[101X
-  
-  [29X[2XOnRightBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YThe blocks of a bipartition.[133X
-  
-  [33X[0;0Y[10XOnRightBlocks[110X  returns  the  right  blocks of the product [10Xg*[3Xf[103X[10X[110X where [10Xg[110X is any
-  bipartition whose right blocks are equal to [3Xblocks[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 5, 8 ], [ 2, 3, 7 ], [ 6, -3, -4, -5 ], [127X[104X
-    [4X[25X>[125X [27X [ -1, -2, -6 ], [ -7, -8 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27Xg:=Bipartition( [ [ 1, 5 ], [ 2, 4, 8, -2 ], [ 3, 6, 7, -3, -4 ], [127X[104X
-    [4X[25X>[125X [27X [ -1, -6, -8 ], [ -5, -7 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XRightBlocks(g*f);[127X[104X
-    [4X[28X<blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>[128X[104X
-    [4X[25Xgap>[125X [27XOnRightBlocks(RightBlocks(g), f); [127X[104X
-    [4X[28X<blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>[128X[104X
-  [4X[32X[104X
-  
-  [1X5.7-2 OnLeftBlocks[101X
-  
-  [29X[2XOnLeftBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YThe blocks of a bipartition.[133X
-  
-  [33X[0;0Y[10XOnLeftBlocks[110X  returns  the  left  blocks  of  the product [10X[3Xf[103X[10X*g[110X where [10Xg[110X is any
-  bipartition whose left blocks are equal to [3Xblocks[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 5, 7, -1, -3, -4, -6 ], [ 2, 3, 6, 8 ], [127X[104X
-    [4X[25X>[125X [27X[ 4, -2, -5, -8 ], [ -7 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27Xg:=Bipartition( [ [ 1, 3, -4, -5 ], [ 2, 4, 5, 8 ], [ 6, -1, -3 ], [127X[104X
-    [4X[25X>[125X [27X[ 7, -2, -6, -7, -8 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XLeftBlocks(f*g);[127X[104X
-    [4X[28X<blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]>[128X[104X
-    [4X[25Xgap>[125X [27XOnLeftBlocks(LeftBlocks(g), f);[127X[104X
-    [4X[28X<blocks: [ 1, 4, 5, 7 ], [ -2, -3, -6, -8 ]>[128X[104X
-  [4X[32X[104X
-  
-  [1X5.7-3 PermRightBlocks[101X
-  
-  [29X[2XPermRightBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X operation
-  [29X[2XPermLeftBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YA permutation.[133X
-  
-  [33X[0;0YIf  [3Xf[103X  is  a  bipartition that stabilises [3Xblocks[103X, i.e. [10XOnRightBlocks([3Xblocks[103X[10X,
-  [3Xf[103X[10X)=[3Xblocks[103X[10X[110X,  then  [10XPermRightBlocks[110X  returns the permutation of the indices of
-  the transverse blocks of [3Xblocks[103X under the action of [3Xf[103X.[133X
-  
-  [33X[0;0Y[10XPermLeftBlocks[110X   is   the   analogue  of  [10XPermRightBlocks[110X  with  respect  to
-  [2XOnLeftBlocks[102X ([14X5.7-2[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 10 ], [ 2, -7, -9 ], [ 3, 4, 6, 8 ], [ 5, -5 ], [127X[104X
-    [4X[25X>[125X [27X[ 7, 9, -2 ], [ -1, -10 ], [ -3, -4, -6, -8 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ -1, -10 ], [ 2 ], [ -3, -4, -6, -8 ], [ 5 ], [127X[104X
-    [4X[25X>[125X [27X[ 7, 9 ]]);;[127X[104X
-    [4X[25Xgap>[125X [27XOnRightBlocks(blocks, f)=blocks;[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XPermRightBlocks(blocks, f);[127X[104X
-    [4X[28X(2,5)[128X[104X
-  [4X[32X[104X
-  
-  [1X5.7-4 InverseRightBlocks[101X
-  
-  [29X[2XInverseRightBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
-  
-  [33X[0;0YIf  [10XOnRightBlocks([3Xblocks[103X[10X,  [3Xf[103X[10X)[110X  has  rank  equal  to the rank of [3Xblocks[103X, then
-  [10XInverseRightBlocks[110X  returns  a bipartition [10Xg[110X such that [10XOnRightBlocks([3Xblocks[103X[10X,
-  [3Xf[103X[10X*g)=[3Xblocks[103X[10X[110X   and   where   [10XPermRightBlocks([3Xblocks[103X[10X,  [3Xf[103X[10X*g)[110X  is  the  identity
-  permutation.[133X
-  
-  [33X[0;0YSee [2XPermRightBlocks[102X ([14X5.7-3[114X) and [2XOnRightBlocks[102X ([14X5.7-1[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], [127X[104X
-    [4X[25X>[125X [27X[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]]);;[127X[104X
-    [4X[25Xgap>[125X [27XRankOfBlocks(blocks);[127X[104X
-    [4X[28X1[128X[104X
-    [4X[25Xgap>[125X [27XRankOfBlocks(OnRightBlocks(blocks, f));[127X[104X
-    [4X[28X1[128X[104X
-    [4X[25Xgap>[125X [27Xg:=InverseRightBlocks(blocks, f);[127X[104X
-    [4X[28X<bipartition: [ 1, -6 ], [ 2, 3, 4, 5, 6, 7, 8 ], [ -1, -4, -5, -8 ], [128X[104X
-    [4X[28X [ -2, -3, -7 ]>[128X[104X
-    [4X[25Xgap>[125X [27Xblocks;[127X[104X
-    [4X[28X<blocks: [ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]>[128X[104X
-    [4X[25Xgap>[125X [27XOnRightBlocks(blocks, f*g);[127X[104X
-    [4X[28X<blocks: [ -1, -4, -5, -8 ], [ -2, -3, -7 ], [ 6 ]>[128X[104X
-    [4X[25Xgap>[125X [27XPermRightBlocks(blocks, f*g);[127X[104X
-    [4X[28X()[128X[104X
-  [4X[32X[104X
-  
-  [1X5.7-5 InverseLeftBlocks[101X
-  
-  [29X[2XInverseLeftBlocks[102X( [3Xblocks[103X, [3Xf[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YA bipartition.[133X
-  
-  [33X[0;0YIf  [10XOnLeftBlocks([3Xblocks[103X[10X,  [3Xf[103X[10X)[110X  has  rank  equal  to  the rank of [3Xblocks[103X, then
-  [10XInverseLeftBlocks[110X  returns  a  bipartition  [10Xg[110X such that [10XOnLeftBlocks([3Xblocks[103X[10X,
-  g*[3Xf[103X[10X)=[3Xblocks[103X[10X[110X   and   where   [10XPermLeftBlocks([3Xblocks[103X[10X,   g*[3Xf[103X[10X)[110X  is  the  identity
-  permutation.[133X
-  
-  [33X[0;0YSee [2XPermLeftBlocks[102X ([14X5.7-3[114X) and [2XOnLeftBlocks[102X ([14X5.7-2[114X).[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, 7, 8, -4 ], [ 2, 3, 5, -2, -7 ], [127X[104X
-    [4X[25X>[125X [27X[ 6, -1 ], [ -3 ], [ -5, -6, -8 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27Xblocks:=BlocksNC([[ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]]);;[127X[104X
-    [4X[25Xgap>[125X [27XRankOfBlocks(OnLeftBlocks(blocks, f));[127X[104X
-    [4X[28X1[128X[104X
-    [4X[25Xgap>[125X [27Xg:=InverseLeftBlocks(blocks, f);[127X[104X
-    [4X[28X<bipartition: [ 1, 2, 6 ], [ 3, 4, 5, -1, -2, -3, -4, -5, -6, -7, -8 ][128X[104X
-    [4X[28X  , [ 7, 8 ]>[128X[104X
-    [4X[25Xgap>[125X [27XOnLeftBlocks(blocks, g*f);[127X[104X
-    [4X[28X<blocks: [ -1, -2, -6 ], [ 3, 4, 5 ], [ -7, -8 ]>[128X[104X
-    [4X[25Xgap>[125X [27XPermLeftBlocks(blocks, g*f);          [127X[104X
-    [4X[28X()[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X5.8 [33X[0;0YVisualising blocks and bipartitions[133X[101X
-  
-  [33X[0;0YThere  are  some  functions  in  [5XSemigroups[105X  for  creating LaTeX pictures of
-  bipartitions  and blocks. Descriptions of these methods can be found in this
-  section.[133X
-  
-  [33X[0;0YThe  functions  described  in  this  section  return  a string, which can be
-  written  to  a  file  using  the function [2XFileString[102X ([14XGAPDoc: FileString[114X) or
-  viewed using [2XSplash[102X ([14X4.8-1[114X).[133X
-  
-  [1X5.8-1 TikzBipartition[101X
-  
-  [29X[2XTikzBipartition[102X( [3Xf[103X[, [3Xopts[103X] ) [32X function
-  [6XReturns:[106X  [33X[0;10YA string.[133X
-  
-  [33X[0;0YThis function produces a graphical representation of the bipartition [3Xf[103X using
-  the  [10Xtikz[110X  package for LaTeX. More precisely, this function outputs a string
-  containing  a  minimal  LaTeX  document which can be compiled using LaTeX to
-  produce a picture of [3Xf[103X.[133X
-  
-  [33X[0;0YIf  the  optional second argument [3Xopts[103X is a record with the component [10Xcolors[110X
-  set  to  [9Xtrue[109X,  then the blocks of [3Xf[103X will be colored using the standard [10Xtikz[110X
-  colors.  Due  to  the limited number of colors available in [10Xtikz[110X this option
-  only works when the degree of [3Xf[103X is less than 20.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 5 ], [ 2, 4, -3, -5 ], [ 3, -1, -2 ], [127X[104X
-    [4X[25X>[125X [27X[ -4 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XTikzBipartition(f);[127X[104X
-    [4X[28X"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\[128X[104X
-    [4X[28Xt}\n\\begin{tikzpicture}\n\n  %block #1\n  %vertices and labels\n  \\\[128X[104X
-    [4X[28Xfill(1,2)circle(.125);\n  \\draw(0.95, 2.2) node [above] {{ $1$}};\n \[128X[104X
-    [4X[28X \\fill(5,2)circle(.125);\n  \\draw(4.95, 2.2) node [above] {{ $5$}};\[128X[104X
-    [4X[28X\n\n  %lines\n  \\draw(1,1.875) .. controls (1,1.1) and (5,1.1) .. (5\[128X[104X
-    [4X[28X,1.875);\n\n  %block #2\n  %vertices and labels\n  \\fill(2,2)circle(\[128X[104X
-    [4X[28X.125);\n  \\draw(1.95, 2.2) node [above] {{ $2$}};\n  \\fill(4,2)circ\[128X[104X
-    [4X[28Xle(.125);\n  \\draw(3.95, 2.2) node [above] {{ $4$}};\n  \\fill(3,0)c\[128X[104X
-    [4X[28Xircle(.125);\n  \\draw(3, -0.2) node [below] {{ $-3$}};\n  \\fill(5,0\[128X[104X
-    [4X[28X)circle(.125);\n  \\draw(5, -0.2) node [below] {{ $-5$}};\n\n  %lines\[128X[104X
-    [4X[28X\n  \\draw(2,1.875) .. controls (2,1.3) and (4,1.3) .. (4,1.875);\n  \[128X[104X
-    [4X[28X\\draw(3,0.125) .. controls (3,0.7) and (5,0.7) .. (5,0.125);\n  \\dr\[128X[104X
-    [4X[28Xaw(2,2)--(3,0);\n\n  %block #3\n  %vertices and labels\n  \\fill(3,2)\[128X[104X
-    [4X[28Xcircle(.125);\n  \\draw(2.95, 2.2) node [above] {{ $3$}};\n  \\fill(1\[128X[104X
-    [4X[28X,0)circle(.125);\n  \\draw(1, -0.2) node [below] {{ $-1$}};\n  \\fill\[128X[104X
-    [4X[28X(2,0)circle(.125);\n  \\draw(2, -0.2) node [below] {{ $-2$}};\n\n  %l\[128X[104X
-    [4X[28Xines\n  \\draw(1,0.125) .. controls (1,0.6) and (2,0.6) .. (2,0.125);\[128X[104X
-    [4X[28X\n  \\draw(3,2)--(2,0);\n\n  %block #4\n  %vertices and labels\n  \\f\[128X[104X
-    [4X[28Xill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \[128X[104X
-    [4X[28X %lines\n\\end{tikzpicture}\n\n\\end{document}"[128X[104X
-  [4X[32X[104X
-  
-  [1X5.8-2 TikzBlocks[101X
-  
-  [29X[2XTikzBlocks[102X( [3Xblocks[103X ) [32X function
-  [6XReturns:[106X  [33X[0;10YA string.[133X
-  
-  [33X[0;0YThis  function produces a graphical representation of the blocks [3Xblocks[103X of a
-  bipartition  using the [10Xtikz[110X package for LaTeX. More precisely, this function
-  outputs  a  string containing a minimal LaTeX document which can be compiled
-  using LaTeX to produce a picture of [3Xblocks[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -2, -3 ], [ 2, 3, 5, -5 ], [ -1, -4 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XTikzBlocks(RightBlocks(f));[127X[104X
-    [4X[28X"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\[128X[104X
-    [4X[28Xt}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \[128X[104X
-    [4X[28X\\draw(1.8,5) node [top] {{$1$}};\n  \\fill(4,2)circle(.125);\n  \\dr\[128X[104X
-    [4X[28Xaw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\[128X[104X
-    [4X[28X.8,3) node [top] {{$3$}};\n  \\draw[ultra thick](2,2)circle(.115);\n \[128X[104X
-    [4X[28X \\draw(1.8,2) node [top] {{$4$}};\n  \\fill(1,2)circle(.125);\n  \\d\[128X[104X
-    [4X[28Xraw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\[128X[104X
-    [4X[28X.8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\[128X[104X
-    [4X[28X and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X5.9 [33X[0;0YSemigroups of bipartitions[133X[101X
-  
-  [33X[0;0YSemigroups  and  monoids  of bipartitions can be created in the usual way in
-  [5XGAP[105X   using  the  functions  [2XSemigroup[102X  ([14XReference:  Semigroup[114X)  and  [2XMonoid[102X
-  ([14XReference: Monoid[114X).[133X
-  
-  [33X[0;0YIt  is  possible  to  create  inverse semigroups and monoids of bipartitions
-  using   [2XInverseSemigroup[102X  ([14XReference:  InverseSemigroup[114X)  and  [2XInverseMonoid[102X
-  ([14XReference:  InverseMonoid[114X)  when  the  argument  is  a  collection of block
-  bijections  or  partial  perm  bipartions; see [2XIsBlockBijection[102X ([14X5.5-13[114X) and
-  [2XIsPartialPermBipartition[102X ([14X5.5-12[114X).[133X
-  
-  [1X5.9-1 IsBipartitionSemigroup[101X
-  
-  [29X[2XIsBipartitionSemigroup[102X( [3XS[103X ) [32X property
-  [29X[2XIsBipartitionMonoid[102X( [3XS[103X ) [32X property
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YA [13Xbipartition semigroup[113X is simply a semigroup consisting of bipartitions. An
-  object  [3Xobj[103X  is  a  bipartition semigroup in [5XGAP[105X if it satisfies [2XIsSemigroup[102X
-  ([14XReference: IsSemigroup[114X) and [2XIsBipartitionCollection[102X ([14X5.1-2[114X).[133X
-  
-  [33X[0;0YA  [13Xbipartition  monoid[113X is a monoid consisting of bipartitions. An object [3Xobj[103X
-  is  a  bipartition  monoid  in  [5XGAP[105X  if  it  satisfies  [2XIsMonoid[102X ([14XReference:
-  IsMonoid[114X) and [2XIsBipartitionCollection[102X ([14X5.1-2[114X).[133X
-  
-  [33X[0;0YNote   that   it   is  possible  for  a  bipartition  semigroup  to  have  a
-  multiplicative neutral element (i.e. an identity element) but not to satisfy
-  [10XIsBipartitionMonoid[110X. For example,[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Bipartition( [ [ 1, 4, -2 ], [ 2, 5, -6 ], [ 3, -7 ], [127X[104X
-    [4X[25X>[125X [27X[ 6, 7, -9 ], [ 8, 9, -1 ], [ 10, -5 ], [ -3 ], [ -4 ], [127X[104X
-    [4X[25X>[125X [27X[ -8 ], [ -10 ] ] );;[127X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup(f, One(f));[127X[104X
-    [4X[28X<commutative bipartition monoid of degree 10 with 1 generator>[128X[104X
-    [4X[25Xgap>[125X [27XIsMonoid(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsBipartitionMonoid(S);[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup( Bipartition( [ [ 1, -3 ], [ 2, -8 ], [ 3, 8, -1 ], [127X[104X
-    [4X[25X>[125X [27X[ 4, -4 ], [ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 9, 10, -10 ], [127X[104X
-    [4X[25X>[125X [27X[ -2 ], [ -9 ] ] ), [127X[104X
-    [4X[25X>[125X [27XBipartition( [ [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [127X[104X
-    [4X[25X>[125X [27X[ 5, -5 ], [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [127X[104X
-    [4X[25X>[125X [27X[ -9 ] ] ) );;[127X[104X
-    [4X[25Xgap>[125X [27XOne(S);[127X[104X
-    [4X[28Xfail[128X[104X
-    [4X[25Xgap>[125X [27XMultiplicativeNeutralElement(S);[127X[104X
-    [4X[28X<bipartition: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], [ 5, -5 ], [128X[104X
-    [4X[28X [ 6, -6 ], [ 7, -7 ], [ 8, -8 ], [ 9, 10, -10 ], [ -9 ]>[128X[104X
-    [4X[25Xgap>[125X [27XIsMonoid(S);[127X[104X
+    [4X[25Xgap>[125X [27XIsTorsion(Semigroup(Matrix(IsMaxPlusMatrix,[127X[104X
+    [4X[25X>[125X [27X                              [[1, -infinity, 2],[127X[104X
+    [4X[25X>[125X [27X                               [-2, 4, -infinity],[127X[104X
+    [4X[25X>[125X [27X                               [1, 0, 3]])));[127X[104X
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YIn  this  example  [10XS[110X  cannot  be  converted  into  a  monoid  using [2XAsMonoid[102X
-  ([14XReference:  AsMonoid[114X)  since  the  [2XOne[102X ([14XReference: One[114X) of any element in [10XS[110X
-  differs from the multiplicative neutral element.[133X
+  [1X5.7-5 NormalizeSemigroup[101X
   
-  [33X[0;0YFor more details see [2XIsMagmaWithOne[102X ([14XReference: IsMagmaWithOne[114X).[133X
+  [29X[2XNormalizeSemigroup[102X( [3XS[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA semigroup.[133X
   
-  [1X5.9-2 IsBlockBijectionSemigroup[101X
-  
-  [29X[2XIsBlockBijectionSemigroup[102X( [3XS[103X ) [32X property
-  [29X[2XIsBlockBijectionMonoid[102X( [3XS[103X ) [32X property
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YA  [13Xblock  bijection  semigroup[113X  is  simply  a  semigroup consisting of block
-  bijections.  A  [13Xblock  bijection  monoid[113X  is  a  monoid  consisting of block
-  bijections.[133X
-  
-  [33X[0;0YAn  object  in  [5XGAP[105X  is  a  block  bijection monoid if it satisfies [2XIsMonoid[102X
-  ([14XReference: IsMonoid[114X) and [2XIsBlockBijectionSemigroup[102X.[133X
-  
-  [33X[0;0YSee [2XIsBlockBijection[102X ([14X5.5-13[114X).[133X
-  
-  [1X5.9-3 IsPartialPermBipartitionSemigroup[101X
-  
-  [29X[2XIsPartialPermBipartitionSemigroup[102X( [3XS[103X ) [32X property
-  [29X[2XIsPartialPermBipartitionMonoid[102X( [3XS[103X ) [32X property
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YA  [13Xpartial  perm  bipartition  semigroup[113X is simply a semigroup consisting of
-  partial  perm  bipartitions.  A  [13Xpartial perm bipartition monoid[113X is a monoid
-  consisting of partial perm bipartitions.[133X
-  
-  [33X[0;0YAn  object  in  [5XGAP[105X  is  a  partial  perm bipartition monoid if it satisfies
-  [2XIsMonoid[102X ([14XReference: IsMonoid[114X) and [2XIsPartialPermBipartitionSemigroup[102X.[133X
-  
-  [33X[0;0YSee [2XIsPartialPermBipartition[102X ([14X5.5-12[114X).[133X
-  
-  [1X5.9-4 IsPermBipartitionGroup[101X
-  
-  [29X[2XIsPermBipartitionGroup[102X( [3XS[103X ) [32X property
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
-  
-  [33X[0;0YA   [13Xperm  bipartition  group[113X  is  simply  a  semigroup  consisting  of  perm
-  bipartitions.[133X
-  
-  [33X[0;0YSee [2XIsPermBipartition[102X ([14X5.5-11[114X).[133X
-  
-  [1X5.9-5 DegreeOfBipartitionSemigroup[101X
-  
-  [29X[2XDegreeOfBipartitionSemigroup[102X( [3XS[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
-  
-  [33X[0;0YThe  [13Xdegree[113X  of  a  bipartition  semigroup  [3XS[103X is just the degree of any (and
-  every) element of [3XS[103X.[133X
+  [33X[0;0YThis  method  applies to max-plus matrix semigroups (i.e. those belonging to
+  the  category [2XIsMaxPlusMatrixSemigroup[102X ([14X5.7-1[114X)) that are finitely generated,
+  such  that  the  spectral  radius  of  the  matrix  equal  to the sum of the
+  generators    (with   respect   to   the   max-plus   semiring)   is   zero.
+  [10XNormalizeSemigroup[110X  returns  a  semigroup  of  matrices  all  with  strictly
+  non-positive  entries.  Note  that  the  output  is isomorphic to a min-plus
+  matrix semigroup. This method is based on [Gau96] and [Bur16].[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XDegreeOfBipartitionSemigroup(JonesMonoid(8));[127X[104X
-    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27XNormalizeSemigroup(Semigroup(Matrix(IsMaxPlusMatrix,[127X[104X
+    [4X[25X>[125X [27X                                       [[0, -3],[127X[104X
+    [4X[25X>[125X [27X                                        [-2, -10]])));[127X[104X
+    [4X[28X<commutative semigroup of 2x2 max-plus matrices with 1 generator>[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.7-6 [33X[0;0YMatrix groups[133X[101X
+  
+  [33X[0;0YFor  interfacing  the  semigroups  code  with  [5XGAP[105X's library code for matrix
+  groups, the [5XSemigroups[105X package implements matrix groups that delegate to the
+  [5XGAP[105X library. These functions include:[133X
+  
+  [30X    [33X[0;6Y[2XIsMatrixOverFiniteFieldGroup[102X ([14X5.7-7[114X)[133X
+  
+  [30X    [33X[0;6Y[2X\^[102X ([14X5.7-8[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsomorphismMatrixGroup[102X ([14X5.7-9[114X)[133X
+  
+  [30X    [33X[0;6Y[2XAsMatrixGroup[102X ([14X5.7-10[114X)[133X
+  
+  [33X[0;0YThis  type  of  group  only  applies  to  matrices  over  finite fields (see
+  [2XIsMatrixOverFiniteFieldSemigroup[102X ([14X5.7-1[114X)).[133X
+  
+  [1X5.7-7 IsMatrixOverFiniteFieldGroup[101X
+  
+  [29X[2XIsMatrixOverFiniteFieldGroup[102X( [3XG[103X ) [32X filter
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YA [13Xmatrix group[113X is simply a group of invertible matrices over a finite field.
+  An  object  in  [5XSemigroups[105X  is  a  matrix  group  if  it  satisfies  [2XIsGroup[102X
+  ([14XReference: IsGroup[114X) and [2XIsMatrixOverFiniteFieldCollection[102X ([14X5.1-9[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27XG := Group(x);[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XIsMatrixOverFiniteFieldGroup(G);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XG := Group(Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);[127X[104X
+    [4X[28XGroup([ <an immutable 3x3 matrix over GF2> ])[128X[104X
+    [4X[25Xgap>[125X [27XIsGroup(G);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsMatrixOverFiniteFieldGroup(G);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X5.7-8 \^[101X
+  
+  [29X[2X\^[102X( [3XG[103X, [3Xmat[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA matrix group over a finite field.[133X
+  
+  [33X[0;0YThe   arguments   of   this   operation,  [3XG[103X  and  [3Xmat[103X,  must  be  categories
+  [2XIsMatrixOverFiniteFieldGroup[102X ([14X5.7-7[114X) and [2XIsMatrixOverFiniteField[102X ([14X5.1-8[114X). If
+  [3XG[103X  consists  of  [10Xd[110X  by [10Xd[110X matrices over [10XGF(q)[110X and [3Xmat[103X is a [10Xd[110X by [10Xd[110X matrix over
+  [10XGF(q)[110X, then [10X[3XG[103X[10X ^ [3Xmat[103X[10X[110X returns the conjugate of [3XG[103X by [3Xmat[103X inside [10XGL(d, q)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xy := Matrix(GF(4), Z(4) ^ 0 * [[1, 0, 0], [1, 0, 1], [1, 1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27XG := Group(x);[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XG ^ y;[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+  [4X[32X[104X
+  
+  [1X5.7-9 IsomorphismMatrixGroup[101X
+  
+  [29X[2XIsomorphismMatrixGroup[102X( [3XG[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
+  
+  [33X[0;0YIf  [3XG[103X  belongs  to  the  category [2XIsMatrixOverFiniteFieldGroup[102X ([14X5.7-7[114X), then
+  [10XIsomorphismMatrixGroup[110X returns an isomorphism from [3XG[103X into a group consisting
+  of [5XGAP[105X library matrices.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27XG := Group(x);;[127X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismMatrixGroup(G);;[127X[104X
+    [4X[25Xgap>[125X [27XSource(iso); Range(iso);[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+    [4X[28XGroup([128X[104X
+    [4X[28X[ [128X[104X
+    [4X[28X  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])[128X[104X
+  [4X[32X[104X
+  
+  [1X5.7-10 AsMatrixGroup[101X
+  
+  [29X[2XAsMatrixGroup[102X( [3XG[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA group of [5XGAP[105X library matrices over a finite field.[133X
+  
+  [33X[0;0YReturns the image of the isomorphism returned by [14X5.7-9[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Matrix(GF(4), Z(4) ^ 0 * [[1, 1, 0], [0, 1, 0], [1, 1, 1]]);;[127X[104X
+    [4X[25Xgap>[125X [27XG := Group(x);[127X[104X
+    [4X[28X<group of 3x3 matrices over GF(2^2) with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XAsMatrixGroup(G);[127X[104X
+    [4X[28XGroup([128X[104X
+    [4X[28X[ [128X[104X
+    [4X[28X  [ [ Z(2)^0, Z(2)^0, 0*Z(2) ], [ 0*Z(2), Z(2)^0, 0*Z(2) ], [128X[104X
+    [4X[28X      [ Z(2)^0, Z(2)^0, Z(2)^0 ] ] ])[128X[104X
   [4X[32X[104X
   

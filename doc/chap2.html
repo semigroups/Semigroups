@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (semigroups) - Chapter 2: Creating semigroups and monoids</title>
+<title>GAP (semigroups) - Chapter 2: Installing Semigroups</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,1239 +15,179 @@
 <body class="chap2"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
-<p><a id="X79A4C070831D989D" name="X79A4C070831D989D"></a></p>
-<div class="ChapSects"><a href="chap2.html#X79A4C070831D989D">2 <span class="Heading">Creating semigroups and monoids</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7C3F130B8362D55A">2.1 <span class="Heading">Random semigroups</span></a>
+<p><a id="X7F0AC0CD7BC0C807" name="X7F0AC0CD7BC0C807"></a></p>
+<div class="ChapSects"><a href="chap2.html#X7F0AC0CD7BC0C807">2 <span class="Heading">Installing <strong class="pkg">Semigroups</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7DA3059C79842BF3">2.1 <span class="Heading">For those in a hurry</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7F6ED36E84AF7F82">2.2 <span class="Heading">Package dependencies</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X849F6196875A6DF5">2.3 <span class="Heading">Compiling the kernel module</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X857CBE5484CF703A">2.4 <span class="Heading">Rebuilding the documentation</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B341D6C7CECFB55">2.1-1 RandomInverseMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79834BC080B011B4">2.1-2 RandomTransformationMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X843D7E2B7D951523">2.1-3 RandomPartialPermMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84882D0F7F6C12D3">2.1-4 RandomBinaryRelationMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7ED057FE7D9B7C5B">2.1-5 RandomBipartitionSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X857EBB697BE08DB4">2.1-6 RandomMatrixSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X838F4B0D780C2A3F">2.4-1 SemigroupsMakeDoc</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7A5CFD4F8607CBF7">2.2 <span class="Heading">New semigroups from old</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7862D3F37C5BBDEF">2.5 <span class="Heading">Testing your installation</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78A488637BBEF7AD">2.2-1 ClosureInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7BE36790862AE26F">2.2-2 ClosureSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E5B4C5A82F9E0E0">2.2-3 SubsemigroupByProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X832AEDCC7BA9E5F5">2.2-4 InverseSubsemigroupByProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80F85B577A3DFCF9">2.5-1 SemigroupsTestInstall</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C2D57708006AB63">2.5-2 SemigroupsTestStandard</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X799EBA2F819D8867">2.3 <span class="Heading">Options when creating semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X798CBC46800AB80F">2.6 <span class="Heading">More information during a computation</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7969E83287A8FD5D">2.3-1 SemigroupsOptionsRec</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X82CCC1A781650878">2.4 <span class="Heading">Changing the representation of a semigroup</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C6F3A667F09BAEC">2.4-1 AsTransformationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80B7B1C783AA1567">2.4-2 IsomorphismPermGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83FC67AE7ECDD526">2.4-3 IsomorphismBipartitionSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X869E6EF87DE8529D">2.4-4 IsomorphismBlockBijectionSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80B6A19E835618BD">2.4-5 IsomorphismMatrixSemigroup</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7C76D1DC7DAF03D3">2.5 <span class="Heading">Standard examples</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85C1D4307D0F5FF7">2.5-1 EndomorphismsPartition</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E4B61FF7CCFD74A">2.5-2 PartitionMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8444092A7967A029">2.5-3 PlanarPartitionMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79D33B2E7BA3073A">2.5-4 BrauerMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8378FC8B840B9706">2.5-5 JonesMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E1A7FF08064440C">2.5-6 PartialTransformationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83C7587C81B985BA">2.5-7 DualSymmetricInverseSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8301C61384168D6F">2.5-8 UniformBlockBijectionMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C82B25F8441928E">2.5-9 ApsisMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7F208DC584C0B9D1">2.5-10 ModularPartitionMonoid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78F9812D79A457EF">2.5-11 FullMatrixSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B64C74987009BA9">2.5-12 SpecialLinearSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78FBE6DD7BCA30C1">2.5-13 MunnSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87B855227B9870BD">2.5-14 <span class="Heading">Monoids of order preserving functions</span></a>
-</span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7894EE357D103806">2.5-15 SingularTransformationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X831612CD78F55B3C">2.5-16 RegularBinaryRelationSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8411EBD97A220921">2.5-17 MonogenicSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E4DFDE27BF8B8F7">2.5-18 RectangularBand</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X801FC1D97D832A6F">2.5-19 ZeroSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8672CFA47CA620B2">2.5-20 LeftZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85CD4E6C82BECAF3">2.6-1 InfoSemigroups</a></span>
 </div></div>
 </div>
 
-<h3>2 <span class="Heading">Creating semigroups and monoids</span></h3>
+<h3>2 <span class="Heading">Installing <strong class="pkg">Semigroups</strong></span></h3>
 
-<p>In this chapter we describe the various ways that semigroups and monoids can be created in <strong class="pkg">Semigroups</strong>, the options that are available at the time of creation, and describe some standard examples available in <strong class="pkg">Semigroups</strong>.</p>
+<p><a id="X7DA3059C79842BF3" name="X7DA3059C79842BF3"></a></p>
 
-<p>Any semigroup created before <strong class="pkg">Semigroups</strong> has been loaded must be recreated after <strong class="pkg">Semigroups</strong> is loaded so that the options record (described in Section <a href="chap2.html#X799EBA2F819D8867"><span class="RefLink">2.3</span></a>) is defined. Almost all of the functions and methods provided by <strong class="pkg">Semigroups</strong>, including those methods for existing <strong class="pkg">GAP</strong> library functions, will return an error when applied to a semigroup created before <strong class="pkg">Semigroups</strong> is loaded.</p>
+<h4>2.1 <span class="Heading">For those in a hurry</span></h4>
 
-<p><a id="X7C3F130B8362D55A" name="X7C3F130B8362D55A"></a></p>
+<p>In this section we give a brief description of how to start using <strong class="pkg">Semigroups</strong>.</p>
 
-<h4>2.1 <span class="Heading">Random semigroups</span></h4>
+<p>It is assumed that you have a working copy of <strong class="pkg">GAP</strong> with version number 4.9.0 or higher. The most up-to-date version of <strong class="pkg">GAP</strong> and instructions on how to install it can be obtained from the main <strong class="pkg">GAP</strong> webpage <span class="URL"><a href="http://www.gap-system.org">http://www.gap-system.org</a></span>.</p>
 
-<p><a id="X7B341D6C7CECFB55" name="X7B341D6C7CECFB55"></a></p>
-
-<h5>2.1-1 RandomInverseMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomInverseMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomInverseSemigroup</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: An inverse monoid or semigroup.</p>
-
-<p>Returns a random inverse monoid or semigroup of partial permutations with degree at most <var class="Arg">n</var> with <var class="Arg">m</var> generators.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RandomInverseSemigroup(10, 10);                                </span>
-&lt;inverse partial perm semigroup of rank 10 with 10 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RandomInverseMonoid(10, 10);   </span>
-&lt;inverse partial perm monoid of rank 10 with 10 generators&gt;
-</pre></div>
-
-<p><a id="X79834BC080B011B4" name="X79834BC080B011B4"></a></p>
-
-<h5>2.1-2 RandomTransformationMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomTransformationMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomTransformationSemigroup</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A transformation semigroup or monoid.</p>
-
-<p>Returns a random transformation monoid or semigroup of at most degree <var class="Arg">n</var> with <var class="Arg">m</var> generators.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RandomTransformationMonoid(5, 5);</span>
-&lt;transformation monoid of degree 5 with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RandomTransformationSemigroup(5, 5);</span>
-&lt;transformation semigroup of degree 5 with 5 generators&gt;</pre></div>
-
-<p><a id="X843D7E2B7D951523" name="X843D7E2B7D951523"></a></p>
-
-<h5>2.1-3 RandomPartialPermMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPartialPermMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPartialPermSemigroup</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A partial perm semigroup or monoid.</p>
-
-<p>Returns a random partial perm monoid or semigroup of degree at most <var class="Arg">n</var> with <var class="Arg">m</var> generators.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RandomPartialPermSemigroup(5, 5);</span>
-&lt;partial perm semigroup of rank 4 with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=RandomPartialPermMonoid(5, 5);</span>
-&lt;partial perm monoid of degree 5 with 5 generators&gt;</pre></div>
-
-<p><a id="X84882D0F7F6C12D3" name="X84882D0F7F6C12D3"></a></p>
-
-<h5>2.1-4 RandomBinaryRelationMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomBinaryRelationMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomBinaryRelationSemigroup</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A semigroup or monoid of binary relations.</p>
-
-<p>Returns a random monoid or semigroup of binary relations on <var class="Arg">n</var> points with <var class="Arg">m</var> generators.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomBinaryRelationSemigroup(5,5);</span>
-&lt;semigroup with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomBinaryRelationMonoid(5,5);   </span>
-&lt;monoid with 5 generators&gt;</pre></div>
-
-<p><a id="X7ED057FE7D9B7C5B" name="X7ED057FE7D9B7C5B"></a></p>
-
-<h5>2.1-5 RandomBipartitionSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomBipartitionSemigroup</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomBipartitionMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A bipartition semigroup or monoid.</p>
-
-<p>Returns a random monoid or semigroup of bipartition on <var class="Arg">n</var> points with <var class="Arg">m</var> generators.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomBipartitionMonoid(5, 5);</span>
-&lt;bipartition monoid of degree 5 with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomBipartitionSemigroup(5, 5);</span>
-&lt;bipartition semigroup of degree 5 with 5 generators&gt;</pre></div>
-
-<p><a id="X857EBB697BE08DB4" name="X857EBB697BE08DB4"></a></p>
-
-<h5>2.1-6 RandomMatrixSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMatrixSemigroup</code>( <var class="Arg">R</var>, <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">ranks</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMatrixMonoid</code>( <var class="Arg">R</var>, <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">ranks</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A matrix semigroup or monoid.</p>
-
-<p>Returns a random semigroup or monoid of <var class="Arg">n</var>-by-<var class="Arg">n</var> matrices over the ring <var class="Arg">R</var> with <var class="Arg">m</var> generators.</p>
-
-<p>The optional fourth argument <var class="Arg">ranks</var> is expected to be a list of permissible ranks for the generators. For any generator the rank is chosen uniformly randomly from the list of permissible ranks. This allows for creating more interesting random matrix semigroups and monoids. Without the <var class="Arg">ranks</var> argument there is a very high probability that the semigroups returned by this function are full matrix monoids over the base ring.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrixSemigroup(GF(25),5,5);</span>
-&lt;semigroup of 5x5 matrices over GF(5^2) with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RandomMatrixSemigroup(GF(4),2,5,[1,2]);</span>
-&lt;semigroup of 5x5 matrices over GF(2^2) with 2 generators&gt;
-</pre></div>
-
-<p><a id="X7A5CFD4F8607CBF7" name="X7A5CFD4F8607CBF7"></a></p>
-
-<h4>2.2 <span class="Heading">New semigroups from old</span></h4>
-
-<p><a id="X78A488637BBEF7AD" name="X78A488637BBEF7AD"></a></p>
-
-<h5>2.2-1 ClosureInverseSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClosureInverseSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">coll</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: An inverse semigroup or monoid.</p>
-
-<p>This function returns the inverse semigroup or monoid generated by the inverse semigroup <var class="Arg">S</var> and the collection of elements <var class="Arg">coll</var> after first removing duplicates and elements in <var class="Arg">coll</var> that are already in <var class="Arg">S</var>. In most cases, the new semigroup knows at least as much information about its structure as was already known about that of <var class="Arg">S</var>.</p>
-
-<p>If present, the optional third argument <var class="Arg">opts</var> should be a record containing the values of the options for the inverse semigroup being created; these options are described in Section <a href="chap2.html#X799EBA2F819D8867"><span class="RefLink">2.3</span></a>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseMonoid(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 3, 5, 6, 7, 8 ], [ 5, 9, 10, 6, 3, 8, 4 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 4, 7, 8, 9 ], [ 10, 7, 8, 5, 9, 1 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 18, 19, 20 ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 5, 1, 7, 3, 10, 2, 12, 14, 11, 16, 6, 9, 15 ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ClosureInverseSemigroup(S, f);</span>
-&lt;inverse partial perm semigroup of rank 19 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-9744
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=Idempotents(SymmetricInverseSemigroup(10));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ClosureInverseSemigroup(S, T);</span>
-&lt;inverse partial perm semigroup of rank 19 with 854 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup(SmallGeneratingSet(S));</span>
-&lt;inverse partial perm semigroup of rank 19 with 14 generators&gt;</pre></div>
-
-<p><a id="X7BE36790862AE26F" name="X7BE36790862AE26F"></a></p>
-
-<h5>2.2-2 ClosureSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClosureSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">coll</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A semigroup or monoid.</p>
-
-<p>This function returns the semigroup or monoid generated by the semigroup <var class="Arg">S</var> and the collection of elements <var class="Arg">coll</var> after removing duplicates and elements from <var class="Arg">coll</var> that are already in <var class="Arg">S</var>. In most cases, the new semigroup knows at least as much information about its structure as was already known about that of <var class="Arg">S</var>.</p>
-
-<p>If present, the optional third argument <var class="Arg">opts</var> should be a record containing the values of the options for the semigroup being created as described in Section <a href="chap2.html#X799EBA2F819D8867"><span class="RefLink">2.3</span></a>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:=[ Transformation( [ 2, 6, 7, 2, 6, 1, 1, 5 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation( [ 4, 3, 2, 7, 7, 6, 6, 5 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation( [ 7, 1, 7, 4, 2, 5, 6, 3 ] ) ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Monoid(gens[1]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [2..4] do S:=ClosureSemigroup(S, gens[i]); od;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S;</span>
-&lt;transformation monoid of degree 8 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-233606
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:=</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(25),2,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   [ [ Z(5^2), Z(5^2)^13 ], [ 0*Z(5), Z(5^2)^14 ] ]), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(25),2,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   [ [ Z(5^2)^21, Z(5)^0 ], [ Z(5)^0, 0*Z(5) ] ]), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> NewMatrixOverFiniteField(IsPlistMatrixOverFiniteFieldRep,GF(25),2,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   [ [ Z(5^2)^23, Z(5^2)^5 ], [ Z(5^2)^20, Z(5^2)^20 ] ]) ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(gens[1]);</span>
-&lt;semigroup of 2x2 matrices over GF(5^2) with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-24
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ClosureSemigroup(S, gens[2]);</span>
-&lt;semigroup of 2x2 matrices over GF(5^2) with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-124800
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ClosureSemigroup(S, gens[3]);</span>
-&lt;semigroup of 2x2 matrices over GF(5^2) with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-374400</pre></div>
-
-<p><a id="X7E5B4C5A82F9E0E0" name="X7E5B4C5A82F9E0E0"></a></p>
-
-<h5>2.2-3 SubsemigroupByProperty</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubsemigroupByProperty</code>( <var class="Arg">S</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubsemigroupByProperty</code>( <var class="Arg">S</var>, <var class="Arg">func</var>, <var class="Arg">limit</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A semigroup.</p>
-
-<p><code class="code">SubsemigroupByProperty</code> returns the subsemigroup of the semigroup <var class="Arg">S</var> generated by those elements of <var class="Arg">S</var> fulfilling <var class="Arg">func</var> (which should be a function returning <code class="keyw">true</code> or <code class="keyw">false</code>).</p>
-
-<p>If no elements of <var class="Arg">S</var> fulfil <var class="Arg">func</var>, then <code class="keyw">fail</code> is returned.</p>
-
-<p>If the optional third argument <var class="Arg">limit</var> is present and a positive integer, then once the subsemigroup has at least <var class="Arg">limit</var> elements the computation stops.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">func := function(f) return 1 ^ f &lt;&gt; 1 and</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">ForAll([1..DegreeOfTransformation(f)], y-&gt; y = 1 or y ^ f = y); end;</span>
-function( f ) ... end
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SubsemigroupByProperty(FullTransformationSemigroup(3), func);</span>
-&lt;transformation semigroup of size 2, degree 3 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SubsemigroupByProperty(FullTransformationSemigroup(4), func);</span>
-&lt;transformation semigroup of size 3, degree 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SubsemigroupByProperty(FullTransformationSemigroup(5), func);</span>
-&lt;transformation semigroup of size 4, degree 5 with 4 generators&gt;</pre></div>
-
-<p><a id="X832AEDCC7BA9E5F5" name="X832AEDCC7BA9E5F5"></a></p>
-
-<h5>2.2-4 InverseSubsemigroupByProperty</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseSubsemigroupByProperty</code>( <var class="Arg">S</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: An inverse semigroup.</p>
-
-<p><code class="code">InverseSubsemigroupByProperty</code> returns the inverse subsemigroup of the inverse semigroup <var class="Arg">S</var> generated by those elements of <var class="Arg">S</var> fulfilling <var class="Arg">func</var> (which should be a function returning <code class="keyw">true</code> or <code class="keyw">false</code>).</p>
-
-<p>If no elements of <var class="Arg">S</var> fulfil <var class="Arg">func</var>, then <code class="keyw">fail</code> is returned.</p>
-
-<p>If the optional third argument <var class="Arg">limit</var> is present and a positive integer, then once the subsemigroup has at least <var class="Arg">limit</var> elements the computation stops.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsometry:=function(f)</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">local n, i, j, k, l;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> n:=RankOfPartialPerm(f);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> for i in [1..n-1] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   k:=DomainOfPartialPerm(f)[i];</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   for j in [i+1..n] do</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">     l:=DomainOfPartialPerm(f)[j];</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">     if not AbsInt(k^f-l^f)=AbsInt(k-l) then</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">       return false;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">     fi;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   od;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> od;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> return true;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSubsemigroupByProperty(SymmetricInverseSemigroup(5),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">IsIsometry);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-142</pre></div>
-
-<p><a id="X799EBA2F819D8867" name="X799EBA2F819D8867"></a></p>
-
-<h4>2.3 <span class="Heading">Options when creating semigroups</span></h4>
-
-<p>When using any of the functions:</p>
+<p>The following is a summary of the steps that should lead to a successful installation of <strong class="pkg">Semigroups</strong>:</p>
 
 
 <ul>
-<li><p><code class="func">InverseSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X78B13FED7AFB4326"><span class="RefLink">Reference: InverseSemigroup</span></a>),</p>
+<li><p>ensure that the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html ">IO</a></span> package version 4.4.4 or higher is available. <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html ">IO</a></span> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
 
 </li>
-<li><p><code class="func">InverseMonoid</code> (<a href="../../../doc/ref/chap51_mj.html#X80D9B9A98736051B"><span class="RefLink">Reference: InverseMonoid</span></a>),</p>
+<li><p>ensure that the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> package version 4.7.5 or higher is available. <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> and <strong class="pkg">Semigroups</strong> both perform better if <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> is compiled.</p>
 
 </li>
-<li><p><code class="func">Semigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7F55D28F819B2817"><span class="RefLink">Reference: Semigroup</span></a>),</p>
+<li><p>ensure that the <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> package version 0.7.1 or higher is available. <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> must be compiled before <strong class="pkg">Semigroups</strong> can be loaded.</p>
 
 </li>
-<li><p><code class="func">Monoid</code> (<a href="../../../doc/ref/chap51_mj.html#X7F95328B7C7E49EA"><span class="RefLink">Reference: Monoid</span></a>),</p>
+<li><p>ensure that the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> package version 1.5 or higher is available.</p>
 
 </li>
-<li><p><code class="func">SemigroupByGenerators</code> (<a href="../../../doc/ref/chap51_mj.html#X79FBBEC9841544F3"><span class="RefLink">Reference: SemigroupByGenerators</span></a>),</p>
+<li><p>download the package archive <code class="file">semigroups-3.0.0.tar.gz</code> from <span class="URL"><a href="https://gap-packages.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
 
 </li>
-<li><p><code class="func">MonoidByGenerators</code> (<a href="../../../doc/ref/chap51_mj.html#X85129EE387CC4D28"><span class="RefLink">Reference: MonoidByGenerators</span></a>),</p>
+<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-3.0.0</code>.</p>
 
 </li>
-<li><p><code class="func">ClosureInverseSemigroup</code> (<a href="chap2.html#X78A488637BBEF7AD"><span class="RefLink">2.2-1</span></a>),</p>
+<li><p>locate the <code class="file">pkg</code> directory of your <strong class="pkg">GAP</strong> directory, which contains the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-3.0.0</code> into the <code class="file">pkg</code> directory.</p>
 
 </li>
-<li><p><code class="func">ClosureSemigroup</code> (<a href="chap2.html#X7BE36790862AE26F"><span class="RefLink">2.2-2</span></a>),</p>
+<li><p>from version 3.0.0, it is necessary to compile the <strong class="pkg">Semigroups</strong> package. Inside the <code class="file">pkg/semigroups-3.0.0</code> directory, type</p>
+
+
+<div class="example"><pre>
+./configure
+make</pre></div>
+
+<p>Further information about this step can be found in Section <a href="chap2.html#X849F6196875A6DF5"><span class="RefLink">2.3</span></a>.</p>
 
 </li>
-<li><p><code class="func">SemigroupIdeal</code> (<a href="chap3.html#X78E15B0184A1DC14"><span class="RefLink">3.1-1</span></a>)</p>
+<li><p>start <strong class="pkg">GAP</strong> in the usual way (i.e. type <code class="code">gap</code> at the command line).</p>
+
+</li>
+<li><p>type <code class="code">LoadPackage("semigroups");</code></p>
 
 </li>
 </ul>
-<p>a record can be given as an optional final argument. The components of this record specify the values of certain options for the semigroup being created. A list of these options and their default values is given below.</p>
+<p><em><strong class="button">Please note that</strong> from version 3.0.0: <strong class="pkg">Semigroups</strong> can only be loaded if it has been compiled.</em></p>
 
-<p>Assume that <var class="Arg">S</var> is the semigroup created by one of the functions given above and that either: <var class="Arg">S</var> is generated by a collection <var class="Arg">gens</var> of transformations, partial permutations, Rees 0-matrix semigroup elements, or bipartitions; or <var class="Arg">S</var> is an ideal of such a semigroup.</p>
+<p>If you want to check that the package is working correctly, you should run some of the tests described in Section <a href="chap2.html#X7862D3F37C5BBDEF"><span class="RefLink">2.5</span></a>.</p>
 
+<p><a id="X7F6ED36E84AF7F82" name="X7F6ED36E84AF7F82"></a></p>
 
-<dl>
-<dt><strong class="Mark"><code class="code">acting</code></strong></dt>
-<dd><p>this component should be <code class="keyw">true</code> or <code class="keyw">false</code>. In order for a semigroup to use the methods in <strong class="pkg">Semigroups</strong> it must satisfy <code class="code">IsActingSemigroup</code>. By default any semigroup or monoid of transformations, partial permutations, Rees 0-matrix elements, or bipartitions satisfies <code class="code">IsActingSemigroup</code>. From time to time, it might be preferable to use the exhaustive algorithm in the <strong class="pkg">GAP</strong> library to compute with a semigroup. If this is the case, then the value of this component can be set <code class="keyw">false</code> when the semigroup is created. Following this none of the methods in the <strong class="pkg">Semigroups</strong> package will be used to compute anything about the semigroup.</p>
+<h4>2.2 <span class="Heading">Package dependencies</span></h4>
 
-</dd>
-<dt><strong class="Mark"><code class="code">regular</code></strong></dt>
-<dd><p>this component should be <code class="keyw">true</code> or <code class="keyw">false</code>. If it is known <em>a priori</em> that the semigroup <code class="code">S</code> being created is a regular semigroup, then this component can be set to <code class="keyw">true</code>. In this case, <code class="code">S</code> knows it is a regular semigroup and can take advantage of the methods for regular semigroups in <strong class="pkg">Semigroups</strong>. It is usually much more efficient to compute with a regular semigroup that to compute with a non-regular semigroup.</p>
+<p>The <strong class="pkg">Semigroups</strong> package is written in <strong class="pkg">GAP</strong> and C++ code and requires the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span>, <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html ">IO</a></span>, <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> and <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> packages. The <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> package is used to efficiently compute components of actions, which underpin many of the features of <strong class="pkg">Semigroups</strong>. The <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/io.html ">IO</a></span> package is used to read and write elements of a semigroup to a file. The <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> package is used in a non-deterministic version of the operation <code class="func">Normalizer</code> (<a href="chap13.html#X87C024AE814BC9D8"><span class="RefLink">13.11-1</span></a>) and in calculating the stabiliser of a Rees 0-matrix semigroup's matrix. The <span class="URL"><a href="https://gap-packages.github.io/Digraphs">Digraphs</a></span> package is used for in variety of ways in the <strong class="pkg">Semigroups</strong> package, in particular, to apply standard graph theoretic algorithms to certain data structures.</p>
 
-<p>If this option is set to <code class="keyw">true</code> when the semigroup being defined is <strong class="button">not</strong> regular, then the results might be unpredictable.</p>
+<p><a id="X849F6196875A6DF5" name="X849F6196875A6DF5"></a></p>
 
-<p>The default value for this option is <code class="keyw">false</code>.</p>
+<h4>2.3 <span class="Heading">Compiling the kernel module</span></h4>
 
-</dd>
-<dt><strong class="Mark"><code class="code">hashlen</code></strong></dt>
-<dd><p>this component should be a positive integer, which roughly specifies the lengths of the hash tables used internally by <strong class="pkg">Semigroups</strong>. <strong class="pkg">Semigroups</strong> uses hash tables in several fundamental methods. The lengths of these tables are a compromise between performance and memory usage; larger tables provide better performance for large computations but use more memory. Note that it is unlikely that you will need to specify this option unless you find that <strong class="pkg">GAP</strong> runs out of memory unexpectedly or that the performance of <strong class="pkg">Semigroups</strong> is poorer than expected. If you find that <strong class="pkg">GAP</strong> runs out of memory unexpectedly, or you plan to do a large number of computations with relatively small semigroups (say with tens of thousands of elements), then you might consider setting <code class="code">hashlen</code> to be less than the default value of <code class="code">25013</code> for each of these semigroups. If you find that the performance of <strong class="pkg">Semigroups</strong> is unexpectedly poor, or you plan to do a computation with a very large semigroup (say, more than 10 million elements), then you might consider setting <code class="code">hashlen</code> to be greater than the default value of <code class="code">25013</code>.</p>
+<p>As of version 3.0.0, the <strong class="pkg">Semigroups</strong> package has a <strong class="pkg">GAP</strong> kernel component in C/C++ which must be compiled. This component contains low-level functions relating to the enumeration of certain types of semigroups, and it is not possible to use the <strong class="pkg">Semigroups</strong> package without compiling it.</p>
 
-<p>You might find it useful to set the info level of the info class <code class="code">InfoOrb</code> to 2 or higher since this will indicate when hash tables used by <strong class="pkg">Semigroups</strong> are being grown; see <code class="func">SetInfoLevel</code> (<a href="../../../doc/ref/chap7_mj.html#X7A43B9E68765EE9E"><span class="RefLink">Reference: SetInfoLevel</span></a>).</p>
-
-</dd>
-<dt><strong class="Mark"><code class="code">small</code></strong></dt>
-<dd><p>if this component is set to <code class="keyw">true</code>, then <strong class="pkg">Semigroups</strong> will compute a small subset of <var class="Arg">gens</var> that generates <var class="Arg">S</var> at the time that <var class="Arg">S</var> is created. This will increase the amount of time required to create <var class="Arg">S</var> substantially, but may decrease the amount of time required for subsequent calculations with <var class="Arg">S</var>. If this component is set to <code class="keyw">false</code>, then <strong class="pkg">Semigroups</strong> will return the semigroup generated by <var class="Arg">gens</var> without modifying <var class="Arg">gens</var>. The default value for this component is <code class="keyw">false</code>.</p>
-
-<p>This option is ignored when passed to <code class="func">ClosureSemigroup</code> (<a href="chap2.html#X7BE36790862AE26F"><span class="RefLink">2.2-2</span></a>) or <code class="func">ClosureInverseSemigroup</code> (<a href="chap2.html#X78A488637BBEF7AD"><span class="RefLink">2.2-1</span></a>).</p>
-
-</dd>
-</dl>
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation( [ 1, 2, 3, 3 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">rec(hashlen:=100003, small:=false));</span>
-&lt;commutative transformation semigroup of degree 4 with 1 generator&gt;</pre></div>
-
-<p>The default values of the options described above are stored in a global variable named <code class="func">SemigroupsOptionsRec</code> (<a href="chap2.html#X7969E83287A8FD5D"><span class="RefLink">2.3-1</span></a>). If you want to change the default values of these options for a single <strong class="pkg">GAP</strong> session, then you can simply redefine the value in <strong class="pkg">GAP</strong>. For example, to change the option <code class="code">small</code> from the default value of <var class="Arg">false</var> use:</p>
-
-
-<div class="example"><pre><span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupsOptionsRec.small:=true;</span>
-true</pre></div>
-
-<p>If you want to change the default values of the options stored in <code class="func">SemigroupsOptionsRec</code> (<a href="chap2.html#X7969E83287A8FD5D"><span class="RefLink">2.3-1</span></a>) for all <strong class="pkg">GAP</strong> sessions, then you can edit these values in the file <code class="code">semigroups/gap/options.g</code>.</p>
-
-<p><a id="X7969E83287A8FD5D" name="X7969E83287A8FD5D"></a></p>
-
-<h5>2.3-1 SemigroupsOptionsRec</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupsOptionsRec</code></td><td class="tdright">( global variable )</td></tr></table></div>
-<p>This global variable is a record whose components contain the default values of certain options for transformation semigroups created after <strong class="pkg">Semigroups</strong> has been loaded. A description of these options is given above in Section <a href="chap2.html#X799EBA2F819D8867"><span class="RefLink">2.3</span></a>.</p>
-
-<p>The value of <code class="code">SemigroupsOptionsRec</code> is defined in the file <code class="code">semigroups/gap/options.g</code> as:</p>
-
-
-<div class="example"><pre>rec( acting := true, hashlen := rec( L := 25013, M := 6257, S :=
-         251 ), regular := false, small := false )</pre></div>
-
-<p><a id="X82CCC1A781650878" name="X82CCC1A781650878"></a></p>
-
-<h4>2.4 <span class="Heading">Changing the representation of a semigroup</span></h4>
-
-<p>In addition, to the library functions</p>
-
-
-<ul>
-<li><p><code class="func">IsomorphismReesMatrixSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7964B5C97FB9C07D"><span class="RefLink">Reference: IsomorphismReesMatrixSemigroup</span></a>),</p>
-
-</li>
-<li><p><code class="func">AntiIsomorphismTransformationSemigroup</code> (<a href="../../../doc/ref/chap53_mj.html#X820ECE00846E480F"><span class="RefLink">Reference: AntiIsomorphismTransformationSemigroup</span></a>),</p>
-
-</li>
-<li><p><code class="func">IsomorphismTransformationSemigroup</code> (<a href="../../../doc/ref/chap53_mj.html#X78F29C817CF6827F"><span class="RefLink">Reference: IsomorphismTransformationSemigroup</span></a>),</p>
-
-</li>
-<li><p><code class="func">IsomorphismPartialPermSemigroup</code> (<a href="../../../doc/ref/chap54_mj.html#X857F68DF7EDA3BE4"><span class="RefLink">Reference: IsomorphismPartialPermSemigroup</span></a>),</p>
-
-</li>
-</ul>
-<p>there are several methods for changing the representation of a semigroup in <strong class="pkg">Semigroups</strong>. There are also methods for the operations given above for the types of semigroups defined in <strong class="pkg">Semigroups</strong> which are not mentioned in the reference manual.</p>
-
-<p><a id="X7C6F3A667F09BAEC" name="X7C6F3A667F09BAEC"></a></p>
-
-<h5>2.4-1 AsTransformationSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPermSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBipartitionSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBlockBijectionSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMatrixSemigroup</code>( <var class="Arg">S</var>[, <var class="Arg">F</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A semigroup.</p>
-
-<p><code class="code">AsTransformationSemigroup(<var class="Arg">S</var>)</code> is just shorthand for <code class="code">Range(IsomorphismTransformationSemigroup(<var class="Arg">S</var>))</code>, when <var class="Arg">S</var> is a semigroup; see <code class="func">IsomorphismTransformationSemigroup</code> (<a href="../../../doc/ref/chap53_mj.html#X78F29C817CF6827F"><span class="RefLink">Reference: IsomorphismTransformationSemigroup</span></a>) for more details.</p>
-
-<p>The operations:</p>
-
-
-<ul>
-<li><p><code class="code">AsPartialPermSemigroup</code>;</p>
-
-</li>
-<li><p><code class="code">AsBipartitionSemigroup</code>;</p>
-
-</li>
-<li><p><code class="code">AsBlockBijectionSemigroup</code>;</p>
-
-</li>
-</ul>
-<p>are analogous to <code class="code">AsTransformationSemigroup</code>.</p>
-
-<p><code class="code">AsMatrixSemigroup</code> returns the range of an isomorphism from <var class="Arg">S</var> to a semigroup of matrices over <code class="code">GF(2)</code>. If the optional argument <var class="Arg">F</var> is present, then <code class="code">AsMatrixSemigroup</code> returns an isomorphic semigroup over the finite field <var class="Arg">F</var>.</p>
+<p>To compile the kernel component inside the <code class="file">pkg/semigroups-3.0.0</code> directory, type</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup( [ Bipartition( [ [ 1, 2 ], [ 3, 6, -2 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 4, 5, -3, -4 ], [ -1, -6 ], [ -5 ] ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, -4 ], [ 2, 3, 4, 5 ], [ 6 ], [ -1, -6 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ -2, -3 ], [ -5 ] ] ) ] );</span>
-&lt;bipartition semigroup of degree 6 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsTransformationSemigroup(S);</span>
-&lt;transformation semigroup of degree 12 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsMatrixSemigroup(S);</span>
-&lt;semigroup of 12x12 matrices over GF(2) with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Semigroup(Transformation([2, 2, 3]), Transformation([3, 1, 3]));</span>
-&lt;transformation semigroup of degree 3 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := AsMatrixSemigroup(T, GF(5));</span>
-&lt;semigroup of 3x3 matrices over GF(5) with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-5</pre></div>
 
-<p><a id="X80B7B1C783AA1567" name="X80B7B1C783AA1567"></a></p>
+./configure
+make</pre></div>
 
-<h5>2.4-2 IsomorphismPermGroup</h5>
+<p>If you installed the package in another <code class="file">pkg</code> directory other than the standard <code class="file">pkg</code> directory in your <strong class="pkg">GAP</strong> installation, then you have to do two things. Firstly during compilation you have to use the option <code class="code">--with-gaproot=PATH</code> of the <code class="code">configure</code> script where <code class="code">PATH</code> is a path to the main <strong class="pkg">GAP</strong> root directory (if not given the default <code class="code">../..</code> is assumed).</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: An isomorphism.</p>
+<p>If you installed <strong class="pkg">GAP</strong> on several architectures, you must execute the configure/make step for each of the architectures. You can either do this immediately after configuring and compiling <strong class="pkg">GAP</strong> itself on this architecture, or alternatively set the environment variable <code class="code">CONFIGNAME</code> to the name of the configuration you used when compiling <strong class="pkg">GAP</strong> before running <code class="code">./configure</code>. Note however that your compiler choice and flags (environment variables <code class="code">CC</code> and <code class="code">CFLAGS</code>) need to be chosen to match the setup of the original <strong class="pkg">GAP</strong> compilation. For example you have to specify 32-bit or 64-bit mode correctly!</p>
 
-<p>If the semigroup <var class="Arg">S</var> is mathematically a group, so that it satisfies <code class="func">IsGroupAsSemigroup</code> (<a href="chap4.html#X852F29E8795FA489"><span class="RefLink">4.6-6</span></a>), then <code class="code">IsomorphismPermGroup</code> returns an isomorphism to a permutation group.</p>
+<p><a id="X857CBE5484CF703A" name="X857CBE5484CF703A"></a></p>
 
-<p>If <var class="Arg">S</var> is not a group then an error is given.</p>
+<h4>2.4 <span class="Heading">Rebuilding the documentation</span></h4>
 
+<p>The <strong class="pkg">Semigroups</strong> package comes complete with pdf, html, and text versions of the documentation. However, you might find it necessary, at some point, to rebuild the documentation. To rebuild the documentation use the <code class="func">SemigroupsMakeDoc</code> (<a href="chap2.html#X838F4B0D780C2A3F"><span class="RefLink">2.4-1</span></a>).</p>
 
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 2, 3, 4, 6, 8, 5, 5]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 3, 8, 2, 5, 6, 4, 4]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Range(IsomorphismPermGroup(S)); </span>
-Group([ (5,6,8), (2,3,8,4) ])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(Range(IsomorphismPermGroup(S)));</span>
-"S6"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));</span>
-&lt;inverse partial perm semigroup of rank 4 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismPermGroup(S);</span>
-MappingByFunction( &lt;partial perm group of rank 4 with 2 generators&gt;
-, Group([ (1,2,3,4), (1,
-2) ]), &lt;Attribute "AsPermutation"&gt;, function( x ) ... end )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := GroupOfUnits(PartitionMonoid(4));</span>
-&lt;bipartition group of degree 4 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(G);</span>
-"S4"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismPermGroup(G);  </span>
-MappingByFunction( &lt;bipartition group of degree 4 with 2 generators&gt;
-, S4, &lt;Attribute "AsPermutation"&gt;, function( x ) ... end )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RespectsMultiplication(iso);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv := InverseGeneralMapping(iso);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(G, x-&gt; (x^iso)^inv=x);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(G, x-&gt; ForAll(G, y-&gt; (x*y)^iso=x^iso*y^iso));</span>
-true</pre></div>
+<p><a id="X838F4B0D780C2A3F" name="X838F4B0D780C2A3F"></a></p>
 
-<p><a id="X83FC67AE7ECDD526" name="X83FC67AE7ECDD526"></a></p>
+<h5>2.4-1 SemigroupsMakeDoc</h5>
 
-<h5>2.4-3 IsomorphismBipartitionSemigroup</h5>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupsMakeDoc</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: Nothing.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismBipartitionSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismBipartitionMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: An isomorphism.</p>
+<p>This function should be called with no argument to compile the <strong class="pkg">Semigroups</strong> documentation.</p>
 
-<p>If <var class="Arg">S</var> is a semigroup, then <code class="code">IsomorphismBipartitionSemigroup</code> returns an isomorphism from <var class="Arg">S</var> to a bipartition semigroup. When <var class="Arg">S</var> is a transformation semigroup, partial permutation semigroup, or a permutation group, on <code class="code">n</code> points, <code class="code">IsomorphismBipartitionSemigroup</code> returns the natural embedding of <var class="Arg">S</var> into the partition monoid on <code class="code">n</code> points. When <var class="Arg">S</var> is a generic semigroup, this funciton returns the right regular representation of <var class="Arg">S</var> acting on <var class="Arg">S</var> with an identity adjoined.</p>
+<p><a id="X7862D3F37C5BBDEF" name="X7862D3F37C5BBDEF"></a></p>
 
-<p>See <code class="func">AsBipartition</code> (<a href="chap5.html#X855126D98583C181"><span class="RefLink">5.3-1</span></a>).</p>
+<h4>2.5 <span class="Heading">Testing your installation</span></h4>
 
+<p>In this section we describe how to test that <strong class="pkg">Semigroups</strong> is working as intended. To test that <strong class="pkg">Semigroups</strong> is installed correctly use <code class="func">SemigroupsTestInstall</code> (<a href="chap2.html#X80F85B577A3DFCF9"><span class="RefLink">2.5-1</span></a>) or for more extensive tests use <code class="func">SemigroupsTestStandard</code> (<a href="chap2.html#X7C2D57708006AB63"><span class="RefLink">2.5-2</span></a>). Please note that it will take a few seconds for <code class="func">SemigroupsTestInstall</code> (<a href="chap2.html#X80F85B577A3DFCF9"><span class="RefLink">2.5-1</span></a>) to finish and it may take several minutes for <code class="func">SemigroupsTestStandard</code> (<a href="chap2.html#X7C2D57708006AB63"><span class="RefLink">2.5-2</span></a>) to finish.</p>
 
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 3, 6, 8, 10 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [ 2, 6, 7, 9, 1, 5 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 3, 4, 6, 7, 8, 10 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [ 3, 8, 1, 9, 4, 10, 5, 6 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismBipartitionSemigroup(S);</span>
-MappingByFunction( &lt;inverse partial perm semigroup of rank 10 with 2 
- generators&gt;, &lt;inverse bipartition semigroup of degree 10 with 2 
- generators&gt;, function( x ) ... end, &lt;Operation "AsPartialPerm"&gt; )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(Generators(Range(last)), IsPartialPermBipartition);</span>
-true</pre></div>
+<p>If something goes wrong, then please review the instructions in Section <a href="chap2.html#X7DA3059C79842BF3"><span class="RefLink">2.1</span></a> and ensure that <strong class="pkg">Semigroups</strong> has been properly installed. If you continue having problems, please use the <span class="URL"><a href="https://github.com/gap-packages/Semigroups/issues">issue tracker</a></span> to report the issues you are having.</p>
 
-<p><a id="X869E6EF87DE8529D" name="X869E6EF87DE8529D"></a></p>
+<p><a id="X80F85B577A3DFCF9" name="X80F85B577A3DFCF9"></a></p>
 
-<h5>2.4-4 IsomorphismBlockBijectionSemigroup</h5>
+<h5>2.5-1 SemigroupsTestInstall</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismBlockBijectionSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismBlockBijectionMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: An isomorphism.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupsTestInstall</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>If <var class="Arg">S</var> is a partial perm semigroup on <code class="code">n</code> points, then this function returns the embedding of <var class="Arg">S</var> into a subsemigroup of the dual symmetric inverse monoid on <code class="code">n+1</code> points given by the FitzGerald-Leech Theorem <a href="chapBib.html#biBFitzgerald1998aa">[FL98]</a>.</p>
+<p>This function should be called with no argument to test your installation of <strong class="pkg">Semigroups</strong> is working correctly. These tests should take no more than a few seconds to complete. To more comprehensively test that <strong class="pkg">Semigroups</strong> is installed correctly use <code class="func">SemigroupsTestStandard</code> (<a href="chap2.html#X7C2D57708006AB63"><span class="RefLink">2.5-2</span></a>).</p>
 
-<p>See <code class="func">AsBlockBijection</code> (<a href="chap5.html#X85A5AD2B7F3B776F"><span class="RefLink">5.3-2</span></a>) for more details.</p>
+<p><a id="X7C2D57708006AB63" name="X7C2D57708006AB63"></a></p>
 
+<h5>2.5-2 SemigroupsTestStandard</h5>
 
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(4);                                    </span>
-&lt;symmetric inverse monoid of degree 4&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismBlockBijectionSemigroup(S);</span>
-MappingByFunction( &lt;symmetric inverse monoid of degree 4&gt;, 
-&lt;inverse bipartition monoid of degree 5 with 3 generators&gt;
- , function( x ) ... end, function( x ) ... end )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Range(last));</span>
-209
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup( PartialPerm( [ 1, 2 ], [ 3, 1 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 3 ], [ 1, 3, 4 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismBlockBijectionSemigroup(S);</span>
-MappingByFunction( &lt;partial perm semigroup of rank 3 with 2 
- generators&gt;, &lt;bipartition semigroup of degree 5 with 2 generators&gt;
- , function( x ) ... end, function( x ) ... end )</pre></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupsTestStandard</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A list indicating which tests passed and failed and the time take to run each file.</p>
 
-<p><a id="X80B6A19E835618BD" name="X80B6A19E835618BD"></a></p>
+<p>This function should be called with no argument to comprehensively test that <strong class="pkg">Semigroups</strong> is working correctly. These tests should take no more than a few minutes to complete. To quickly test that <strong class="pkg">Semigroups</strong> is installed correctly use <code class="func">SemigroupsTestInstall</code> (<a href="chap2.html#X80F85B577A3DFCF9"><span class="RefLink">2.5-1</span></a>).</p>
 
-<h5>2.4-5 IsomorphismMatrixSemigroup</h5>
+<p>Each test file is run twice, once when the methods for <code class="func">IsActingSemigroup</code> (<a href="chap6.html#X7F69D8FC7D578A0C"><span class="RefLink">6.1-3</span></a>) are enabled and once when they are disabled.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismMatrixSemigroup</code>( <var class="Arg">S</var>[, <var class="Arg">F</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: An isomorphism to a matrix semigroup.</p>
+<p><a id="X798CBC46800AB80F" name="X798CBC46800AB80F"></a></p>
 
-<p>This attribute contains an isomorphism from the semigroup <var class="Arg">S</var> to a matrix semigroup. Currently this is done by taking a standard basis of a vector space suitable dimension and acting on this basis over the field <var class="Arg">F</var> if <var class="Arg">F</var> is given, and over <code class="code">GF(2)</code> if <var class="Arg">F</var> is not given. This will not give an optimal matrix semigroup representation of <var class="Arg">S</var>.</p>
+<h4>2.6 <span class="Heading">More information during a computation</span></h4>
 
+<p><a id="X85CD4E6C82BECAF3" name="X85CD4E6C82BECAF3"></a></p>
 
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Semigroup(Transformation([2, 2, 3]), Transformation([3, 1, 3]));</span>
-&lt;transformation semigroup of degree 3 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismMatrixSemigroup(T);</span>
-MappingByFunction( &lt;transformation semigroup of degree 3 with 2 
- generators&gt;, &lt;semigroup of 3x3 matrices over GF(2)
- with 2 generators&gt;, function( x ) ... end, function( x ) ... end )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Range(iso));</span>
-5</pre></div>
+<h5>2.6-1 InfoSemigroups</h5>
 
-<p><a id="X7C76D1DC7DAF03D3" name="X7C76D1DC7DAF03D3"></a></p>
-
-<h4>2.5 <span class="Heading">Standard examples</span></h4>
-
-<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> that can be used to creating semigroups belonging to several standard classes of example. See Chapter <a href="chap5.html#X7C18DB427C9C0917"><span class="RefLink">5</span></a> for more information about semigroups of bipartitions.</p>
-
-<p><a id="X85C1D4307D0F5FF7" name="X85C1D4307D0F5FF7"></a></p>
-
-<h5>2.5-1 EndomorphismsPartition</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EndomorphismsPartition</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A transformation monoid.</p>
-
-<p>If <var class="Arg">list</var> is a list of positive integers, then <code class="code">EndomorphismsPartition</code> returns a monoid of endomorphisms preserving a partition of <code class="code">[1..Sum(<var class="Arg">list</var>)]</code> with a part of length <code class="code"><var class="Arg">list</var>[i]</code> for every <code class="code">i</code>. For example, if <code class="code"><var class="Arg">list</var>=[1,2,3]</code>, then <code class="code">EndomorphismsPartition</code> returns the monoid of endomorphisms of the partition <code class="code">[[1],[2,3],[4,5,6]]</code>.</p>
-
-<p>If <code class="code">f</code> is a transformation of <code class="code">[1..n]</code>, then it is an <strong class="button">endomorphism</strong> of a partition <code class="code">P</code> on <code class="code">[1..n]</code> if <code class="code">(i,j)</code> in <code class="code">P</code> implies that <code class="code">(i^f, j^f)</code> is in <code class="code">P</code>.</p>
-
-<p><code class="code">EndomorphismsPartition</code> returns a monoid with a minimal size generating set, as described in <a href="chapBib.html#biBAraujo2014aa">[ABMS14]</a>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=EndomorphismsPartition([3,3,3]);</span>
-&lt;transformation semigroup of degree 9 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-531441
-</pre></div>
-
-<p><a id="X7E4B61FF7CCFD74A" name="X7E4B61FF7CCFD74A"></a></p>
-
-<h5>2.5-2 PartitionMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartitionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularPartitionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A bipartition monoid.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then this operation returns the partition monoid of degree <var class="Arg">n</var> which is the monoid consisting of all the bipartitions of degree <var class="Arg">n</var>.</p>
-
-<p><code class="code">SingularPartitionMonoid</code> returns the ideal of the partition monoid consisting of the non-invertible elements (i.e. those not in the group of units).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=PartitionMonoid(5);</span>
-&lt;regular bipartition monoid of degree 5 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-115975
-</pre></div>
-
-<p><a id="X8444092A7967A029" name="X8444092A7967A029"></a></p>
-
-<h5>2.5-3 PlanarPartitionMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PlanarPartitionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularPlanarPartitionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A bipartition monoid.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then this operation returns the planar partition monoid of degree <var class="Arg">n</var> which is the monoid consisting of all the planar bipartitions of degree <var class="Arg">n</var> (planar bipartitions are defined in Chapter <a href="chap5.html#X7C18DB427C9C0917"><span class="RefLink">5</span></a>).</p>
-
-<p><code class="code">SingularPlanarPartitionMonoid</code> returns the ideal of the planar partition monoid consisting of the non-invertible elements (i.e. those not in the group of units).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PlanarPartitionMonoid(5);</span>
-&lt;regular bipartition monoid of degree 5 with 9 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-16796
-</pre></div>
-
-<p><a id="X79D33B2E7BA3073A" name="X79D33B2E7BA3073A"></a></p>
-
-<h5>2.5-4 BrauerMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrauerMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularBrauerMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A bipartition monoid.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then this operation returns the Brauer monoid of degree <var class="Arg">n</var>. The <strong class="button">Brauer monoid</strong> is the subsemigroup of the partition monoid consisiting of those bipartitions where the size of every block is 2.</p>
-
-<p><code class="code">SingularBrauerMonoid</code> returns the ideal of the Brauer monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=BrauerMonoid(4);</span>
-&lt;regular bipartition monoid of degree 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(S, JonesMonoid(4));</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-105
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SingularBrauerMonoid(8);</span>
-&lt;regular bipartition semigroup ideal of degree 8 with 1 generator&gt;</pre></div>
-
-<p><a id="X8378FC8B840B9706" name="X8378FC8B840B9706"></a></p>
-
-<h5>2.5-5 JonesMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JonesMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TemperleyLiebMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularJonesMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A bipartition monoid.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then this operation returns the Jones monoid of degree <var class="Arg">n</var>. The <strong class="button">Jones monoid</strong> is the subsemigroup of the Brauer monoid consisting of those bipartitions with a planar diagram. The Jones monoid is sometimes referred to as the <strong class="button">Temperley-Lieb monoid</strong>.</p>
-
-<p><code class="code">SingularJonesMonoid</code> returns the ideal of the Jones monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=JonesMonoid(4);</span>
-&lt;regular bipartition monoid of degree 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SingularJonesMonoid(8);</span>
-&lt;regular bipartition semigroup ideal of degree 8 with 1 generator&gt;</pre></div>
-
-<p><a id="X7E1A7FF08064440C" name="X7E1A7FF08064440C"></a></p>
-
-<h5>2.5-6 PartialTransformationSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialTransformationSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A transformation monoid.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then this function returns a semigroup of transformations on <code class="code"><var class="Arg">n</var>+1</code> points which is isomorphic to the semigroup consisting of all partial transformation on <var class="Arg">n</var> points. This monoid has <code class="code">(<var class="Arg">n</var>+1)^<var class="Arg">n</var></code> elements.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PartialTransformationSemigroup(8); </span>
-&lt;regular transformation monoid of degree 9 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(last);</span>
-43046721</pre></div>
-
-<p><a id="X83C7587C81B985BA" name="X83C7587C81B985BA"></a></p>
-
-<h5>2.5-7 DualSymmetricInverseSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DualSymmetricInverseSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DualSymmetricInverseMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularDualSymmetricInverseSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: An inverse bipartition monoid.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then these operations return the dual symmetric inverse monoid of degree <var class="Arg">n</var>, which is the subsemigroup of the partition monoid consisting of the block bijections of degree <var class="Arg">n</var>.</p>
-
-<p><code class="code">SingularDualSymmetricInverseSemigroup</code> returns the ideal of the dual symmetric inverse monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
-
-<p>See <code class="func">IsBlockBijection</code> (<a href="chap5.html#X829494DF7FD6CFEC"><span class="RefLink">5.5-13</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Number(PartitionMonoid(3), IsBlockBijection);</span>
-25
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseSemigroup(3);</span>
-&lt;inverse bipartition monoid of degree 3 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-25
-</pre></div>
-
-<p><a id="X8301C61384168D6F" name="X8301C61384168D6F"></a></p>
-
-<h5>2.5-8 UniformBlockBijectionMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniformBlockBijectionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorisableDualSymmetricInverseSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularUniformBlockBijectionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularFactorisableDualSymmetricInverseSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PlanarUniformBlockBijectionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularPlanarUniformBlockBijectionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: An inverse bipartition monoid.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then this operation returns the uniform block bijection monoid of degree <var class="Arg">n</var>. The <em>uniform block bijection monoid</em> is the submonoid of the partition monoid consisting of the block bijections of degree <span class="SimpleMath">n</span> where the number of positive integers in a block equals the number of negative integers in that block. The uniform block bijection monoid is also referred to as the <em>factorisable dual symmetric inverse semigroup</em>.</p>
-
-<p><code class="code">SingularUniformBlockBijectionMonoid</code> returns the ideal of the uniform block bijection monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
-
-<p><code class="code">PlanarUniformBlockBijectionMonoid</code> returns the submonoid of the uniform block bijection monoid consisting of the planar elements (i.e. those in the planar partition monoid).</p>
-
-<p><code class="code">SingularPlanarUniformBlockBijectionMonoid</code> returns the ideal of the planar uniform block bijection monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
-
-<p>See <code class="func">IsUniformBlockBijection</code> (<a href="chap5.html#X79D54AD8833B9551"><span class="RefLink">5.5-14</span></a>).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := UniformBlockBijectionMonoid(4);</span>
-&lt;inverse bipartition monoid of degree 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(PlanarUniformBlockBijectionMonoid(8));</span>
-128
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=DualSymmetricInverseMonoid(4);</span>
-&lt;inverse bipartition monoid of degree 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableSemigroup(S);</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FactorisableDualSymmetricInverseSemigroup(4);</span>
-&lt;inverse bipartition monoid of degree 4 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Range(IsomorphismBipartitionSemigroup(SymmetricInverseMonoid(5)));</span>
-&lt;inverse bipartition monoid of degree 5 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableSemigroup(S);</span>
-true</pre></div>
-
-<p><a id="X7C82B25F8441928E" name="X7C82B25F8441928E"></a></p>
-
-<h5>2.5-9 ApsisMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApsisMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularApsisMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CrossedApsisMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularCrossedApsisMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A bipartition monoid.</p>
-
-<p>If <var class="Arg">m</var> and <var class="Arg">n</var> are positive integers, then this operation returns the <var class="Arg">m</var>-apsis monoid of degree <var class="Arg">n</var>. The <var class="Arg">m</var><em>-apsis monoid</em> is the monoid of bipartitions generated when the diapses in generators of the Jones monoid are replaced with <var class="Arg">m</var>-apses. Note that an <var class="Arg">m</var><em>-apsis</em> is a block that contains precisely <var class="Arg">m</var> consecutive integers.</p>
-
-<p><code class="code">SingularApsisMonoid</code> returns the ideal of the apsis monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">m &lt;= n</var>.</p>
-
-<p><code class="code">CrossedApsisGeneratedMonoid</code> returns the semigroup generated by the symmetric group of degree <var class="Arg">n</var> and the <var class="Arg">m</var>-apsis monoid of degree <var class="Arg">n</var>.</p>
-
-<p><code class="code">SingularCrossedApsisMonoid</code> returns the ideal of the crossed apsis monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">m &lt;= n</var>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ApsisMonoid(3, 7);</span>
-&lt;regular bipartition monoid of degree 7 with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-320
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(CrossedApsisMonoid(4, 9));</span>
-24291981</pre></div>
-
-<p><a id="X7F208DC584C0B9D1" name="X7F208DC584C0B9D1"></a></p>
-
-<h5>2.5-10 ModularPartitionMonoid</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ModularPartitionMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularModularPartitionMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PlanarModularPartitionMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularPlanarModularPartitionMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A bipartition monoid.</p>
-
-<p>If <var class="Arg">m</var> and <var class="Arg">n</var> are positive integers, then this operation returns the modular-<var class="Arg">m</var> partition monoid of degree <var class="Arg">n</var>. The <em>modular-</em><var class="Arg">m</var> <em>partition monoid</em> is the submonoid of the partition monoid such that the numbers of positive and negative integers contained in each block are congruent mod <var class="Arg">m</var>.</p>
-
-<p><code class="code">SingularModularPartitionMonoid</code> returns the ideal of the modular partition monoid consisting of the non-invertible elements (i.e. those not in the group of units), when either <var class="Arg">m = n = 1</var> or <var class="Arg">m, n &gt; 1</var>.</p>
-
-<p><code class="code">PlanarModularPartitionMonoid</code> returns the submonoid of the modular-<var class="Arg">m</var> partition monoid consisting of the planar elements (i.e. those in the planar partition monoid).</p>
-
-<p><code class="code">SingularPlanarModularPartitionMonoid</code> returns the ideal of the planar modular partition monoid consisting of the non-invertible elements (i.e. those not in the group of units), when either <var class="Arg">m = n = 1</var> or <var class="Arg">m, n &gt; 1</var>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ModularPartitionMonoid(3, 7);</span>
-&lt;regular bipartition monoid of degree 7 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-826897
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(PlanarModularPartitionMonoid(4, 9));</span>
-1795</pre></div>
-
-<p><a id="X78F9812D79A457EF" name="X78F9812D79A457EF"></a></p>
-
-<h5>2.5-11 FullMatrixSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullMatrixSemigroup</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralLinearSemigroup</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GLS</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A matrix semigroup.</p>
-
-<p><code class="code">FullMatrixSemigroup</code>, <code class="code">GeneralLinearSemigroup</code>, and <code class="code">GLS</code> are synonyms for each other. They both return the full matrix semigroup, or if you prefer the general linear semigroup, of <var class="Arg">d</var> by <var class="Arg">d</var> matrices with entries over the field with <var class="Arg">q</var> elements. This semigroup has <code class="code"><var class="Arg">q</var> ^ (<var class="Arg">d</var> ^ 2)</code> elements.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullMatrixSemigroup(3, 4);</span>
-&lt;general linear monoid 3x3 over GF(2^2)&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-262144</pre></div>
-
-<p><a id="X7B64C74987009BA9" name="X7B64C74987009BA9"></a></p>
-
-<h5>2.5-12 SpecialLinearSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialLinearSemigroup</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SLS</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A matrix semigroup.</p>
-
-<p><code class="code">SpecialLinearSemigroup</code> and <code class="code">SLS</code> are synonymous. The special linear semigroup of <var class="Arg">d</var> by <var class="Arg">d</var> matrices with entries over the field with <var class="Arg">q</var> elements is generated by a generating set for the special linear group of <var class="Arg">d</var> by <var class="Arg">d</var> matrices over the field with <var class="Arg">q</var> elements and a matrix of rank <var class="Arg">d-1</var>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SLS(3,4);</span>
-&lt;special linear monoid 3x3 over GF(2^2)&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-141184</pre></div>
-
-<p><a id="X78FBE6DD7BCA30C1" name="X78FBE6DD7BCA30C1"></a></p>
-
-<h5>2.5-13 MunnSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MunnSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: The Munn semigroup of a semilattice.</p>
-
-<p>If <var class="Arg">S</var> is a semilattice, then <code class="code">MunnSemigroup</code> returns the inverse semigroup of partial permutations of isomorphisms of principal ideals of <var class="Arg">S</var>; called the <em>Munn semigroup</em> of <var class="Arg">S</var>.</p>
-
-<p>This function was written jointly by J. D. Mitchell, Yann Peresse (St Andrews), Yanhui Wang (York).</p>
-
-<p><strong class="button">Please note:</strong> the <span class="URL"><a href="http://www.maths.qmul.ac.uk/~leonard/grape/">Grape</a></span> package version 4.5 or higher must be available and compiled for this function to work.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 3, 4, 5, 6, 7, 10 ], [ 4, 6, 7, 3, 8, 2, 9, 5 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 7, 9 ], [ 5, 6, 4, 3 ] ) );</span>
-&lt;inverse partial perm semigroup of rank 10 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := InverseSemigroup(Idempotents(S), rec(small := true));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := MunnSemigroup(T);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrIdempotents(M);</span>
-60
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrIdempotents(S);</span>
-60</pre></div>
-
-<p><a id="X87B855227B9870BD" name="X87B855227B9870BD"></a></p>
-
-<h5>2.5-14 <span class="Heading">Monoids of order preserving functions</span></h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderEndomorphisms</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; POI</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; POPI</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A semigroup of transformations or partial permutations related to a linear order.</p>
-
-
-<dl>
-<dt><strong class="Mark"><code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code></strong></dt>
-<dd><p><code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code> returns the monoid of transformations that preserve the usual order on <span class="SimpleMath">{1,2,..., n}</span> where <var class="Arg">n</var> is a positive integer. <code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code> is generated by the <span class="SimpleMath"><var class="Arg">n+1</var></span> transformations:</p>
-
-<p class="pcenter">
-              \left(
-              \begin{array}{ccccccccc}
-              1&amp;2&amp;3&amp;\cdots&amp;n-1&amp; n\\
-              1&amp;1&amp;2&amp;\cdots&amp;n-2&amp;n-1
-              \end{array}\right), \qquad
-              \left(
-              \begin{array}{ccccccccc}
-              1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
-              &amp;n\\
-              1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;i+1&amp;i+2&amp;\cdots
-              &amp;n\\
-              \end{array}\right)
-            </p>
-
-<p>where <span class="SimpleMath">i=0,...,n-1</span> and has <span class="SimpleMath">2n-1choose n-1</span> elements.</p>
-
-</dd>
-<dt><strong class="Mark"><code class="code">POI(<var class="Arg">n</var>)</code></strong></dt>
-<dd><p><code class="code">POI(<var class="Arg">n</var>)</code> returns the inverse monoid of partial permutations that preserve the usual order on <span class="SimpleMath">{1,2,..., n}</span> where <var class="Arg">n</var> is a positive integer. <code class="code">POI(<var class="Arg">n</var>)</code> is generated by the <span class="SimpleMath"><var class="Arg">n</var></span> partial permutations:</p>
-
-<p class="pcenter">
-      \left(
-      \begin{array}{ccccc}
-      1&amp;2&amp;3&amp;\cdots&amp;n\\          
-      -&amp;1&amp;2&amp;\cdots&amp;n-1
-      \end{array}\right), \qquad
-      \left(
-      \begin{array}{ccccccccc}
-      1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
-      &amp;n\\
-      1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;-&amp;i+2&amp;\cdots&amp;n\\
-      \end{array}\right)
-    </p>
-
-<p>where <span class="SimpleMath">i=1, ..., n-1</span> and has <span class="SimpleMath">2nchoose n</span> elements.</p>
-
-</dd>
-<dt><strong class="Mark"><code class="code">POPI(<var class="Arg">n</var>)</code></strong></dt>
-<dd><p><code class="code">POPI(<var class="Arg">n</var>)</code> returns the inverse monoid of partial permutation that preserve the orientation of <span class="SimpleMath">{1,2,..., n}</span> where <span class="SimpleMath">n</span> is a positive integer. <code class="code">POPI(<var class="Arg">n</var>)</code> is generated by the partial permutations:</p>
-
-<p class="pcenter">
-      \left(
-      \begin{array}{ccccc}
-1&amp;2&amp;\cdots&amp;n-1&amp;n\\
-2&amp;3&amp;\cdots&amp;n&amp;1
-\end{array}\right),\qquad
-\left(
-\begin{array}{cccccc}
-1&amp;2&amp;\cdots&amp;n-2&amp;n-1&amp;n\\
-1&amp;2&amp;\cdots&amp;n-2&amp;n&amp;-
-\end{array}\right).
-    </p>
-
-<p>and has <span class="SimpleMath">1+fracn22nchoose n</span> elements.</p>
-
-</dd>
-</dl>
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=POPI(10);                                            </span>
-&lt;inverse partial perm monoid of rank 10 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-923781
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1+5*Binomial(20, 10);</span>
-923781
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=POI(10);</span>
-&lt;inverse partial perm monoid of rank 10 with 10 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-184756
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Binomial(20,10);</span>
-184756
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(POPI(10), POI(10));</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=OrderEndomorphisms(5);</span>
-&lt;regular transformation monoid of degree 5 with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdempotentGenerated(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S)=Binomial(2*5-1, 5-1);</span>
-true</pre></div>
-
-<p><a id="X7894EE357D103806" name="X7894EE357D103806"></a></p>
-
-<h5>2.5-15 SingularTransformationSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularTransformationSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularTransformationMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: The semigroup of non-invertible transformations.</p>
-
-<p>If <var class="Arg">n</var> is a integer greater than 1, then this function returns the semigroup of non-invertible transformations, which is generated by the <code class="code"><var class="Arg">n</var>(<var class="Arg">n</var>-1)</code> idempotents of degree <var class="Arg">n</var> and rank <code class="code"><var class="Arg">n</var>-1</code> and has <span class="SimpleMath">n^n-n!</span> elements.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SingularTransformationSemigroup(5);</span>
-&lt;regular transformation semigroup ideal of degree 5 with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-3005</pre></div>
-
-<p><a id="X831612CD78F55B3C" name="X831612CD78F55B3C"></a></p>
-
-<h5>2.5-16 RegularBinaryRelationSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularBinaryRelationSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A semigroup of binary relations.</p>
-
-<p><code class="code">RegularBinaryRelationSemigroup</code> return the semigroup generated by the regular binary relations on the set <span class="SimpleMath">{1,..., <var class="Arg">n</var>}</span> for a positive integer <var class="Arg">n</var>. <code class="code">RegularBinaryRelationSemigroup(<var class="Arg">n</var>)</code> is generated by the <span class="SimpleMath">4</span> binary relations:</p>
-
-<p class="pcenter">
-        \begin{array}{ll} 
-        \left(\begin{array}{ccccccccc}
-        1&amp;2&amp;\cdots&amp;n-1&amp; n\\
-        2&amp;3&amp;\cdots&amp;n&amp;1
-        \end{array}\right),&amp; \quad
-        \left(\begin{array}{ccccccccc}
-        1&amp;2&amp;3&amp;\cdots&amp;n\\
-          2&amp;1&amp;3&amp;\cdots&amp;n
-        \end{array}\right),\\
-        \left(\begin{array}{ccccccccc}
-        1&amp;2&amp;\cdots&amp;n-1&amp; n\\
-        2&amp;2&amp;\cdots&amp;n-1&amp;\{1,n\}
-        \end{array}\right), &amp;\quad
-        \left(\begin{array}{ccccccccc}
-        1&amp;2&amp;\cdots&amp;n-1&amp;n\\
-        2&amp;2&amp;\cdots&amp;n-1&amp;-
-        \end{array}\right).
-        \end{array}
-      </p>
-
-<p>This semigroup has nearly <span class="SimpleMath">2^(n^2)</span> elements.</p>
-
-<p><a id="X8411EBD97A220921" name="X8411EBD97A220921"></a></p>
-
-<h5>2.5-17 MonogenicSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonogenicSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">m</var>, <var class="Arg">r</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: A monogenic semigroup with index <var class="Arg">m</var> and period <var class="Arg">r</var>.</p>
-
-<p>If <var class="Arg">m</var> and <var class="Arg">r</var> are positive integers, then this function returns a monogenic semigroup <code class="code">S</code> with index <var class="Arg">m</var> and period <var class="Arg">r</var> in the category given by the filter <var class="Arg">filt</var>.</p>
-
-<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
-
-
-<ul>
-<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
-
-</li>
-<li><p><code class="code">IsPartialPermSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBlockBijectionSemigroup</code>.</p>
-
-</li>
-</ul>
-<p>The semigroup <code class="code">S</code> is generated by a single element, <span class="SimpleMath">f</span>. <code class="code">S</code> consists of the elements <span class="SimpleMath">f, f ^ 2, ..., f ^ m, ..., f ^ m + r - 1</span>. The minimal ideal of <code class="code">S</code> consists of the elements <span class="SimpleMath">f ^ m, ..., f ^ m + r - 1</span> and is isomorphic to the cyclic group of order <span class="SimpleMath">r</span>.</p>
-
-<p>See <code class="func">IsMonogenicSemigroup</code> (<a href="chap4.html#X79D46BAB7E327AD1"><span class="RefLink">4.6-10</span></a>) for more information about monogenic semigroups.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MonogenicSemigroup(5, 3);</span>
-&lt;commutative non-regular transformation semigroup of size 7, degree 8 
- with 1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := MinimalIdeal(S);</span>
-&lt;commutative simple transformation semigroup ideal of degree 8 with
-  1 generator&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(I);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(I);</span>
-"C3"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);</span>
-&lt;commutative non-regular bipartition semigroup of size 9, degree 10 
- with 1 generator&gt;</pre></div>
-
-<p><a id="X7E4DFDE27BF8B8F7" name="X7E4DFDE27BF8B8F7"></a></p>
-
-<h5>2.5-18 RectangularBand</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RectangularBand</code>( [<var class="Arg">filt</var>, ]<var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: An <var class="Arg">m</var> by <var class="Arg">n</var> rectangular band.</p>
-
-<p>If <var class="Arg">m</var> and <var class="Arg">n</var> are positive integers, then this function returns a semigroup isomorphic to an <var class="Arg">m</var> by <var class="Arg">n</var> rectangular band, which is in the category given by the filter <var class="Arg">filt</var>.</p>
-
-<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
-
-
-<ul>
-<li><p><code class="code">IsTransformationSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsReesMatrixSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified).</p>
-
-</li>
-</ul>
-<p>See <code class="func">IsRectangularBand</code> (<a href="chap4.html#X7E9B674D781B072C"><span class="RefLink">4.6-13</span></a>) for more information about rectangular bands.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(4, 8);</span>
-&lt;Rees matrix semigroup 4x8 over Group(())&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularBand(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCompletelySimpleSemigroup(S) and IsHTrivial(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := RectangularBand(IsTransformationSemigroup, 5, 6);</span>
-&lt;transformation semigroup of size 30, degree 31 with 6 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularBand(T);</span>
-true</pre></div>
-
-<p><a id="X801FC1D97D832A6F" name="X801FC1D97D832A6F"></a></p>
-
-<h5>2.5-19 ZeroSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: A zero semigroup of order <var class="Arg">n</var>.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then this function returns a zero semigroup of order <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>.</p>
-
-<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
-
-
-<ul>
-<li><p><code class="code">IsTransformationSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsPartialPermSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
-
-</li>
-<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsBlockBijectionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsReesZeroMatrixSemigroup</code> (provided that <span class="SimpleMath"><var class="Arg">n</var> &gt; 1</span>).</p>
-
-</li>
-</ul>
-<p>See <code class="func">IsZeroSemigroup</code> (<a href="chap4.html#X81A1882181B75CC9"><span class="RefLink">4.6-23</span></a>) for more information about zero semigroups.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ZeroSemigroup(15);</span>
-&lt;non-regular partial perm semigroup of size 15, rank 14 with 14 
- generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-15
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z := MultiplicativeZero(S);</span>
-&lt;empty partial perm&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(S, x -&gt; ForAll(S, y -&gt; x * y = z));</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ZeroSemigroup(IsReesZeroMatrixSemigroup, 5);</span>
-&lt;Rees 0-matrix semigroup 4x1 over Group(())&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(S);</span>
-[ [ 0, 0, 0, 0 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSemigroup(S);</span>
-true</pre></div>
-
-<p><a id="X8672CFA47CA620B2" name="X8672CFA47CA620B2"></a></p>
-
-<h5>2.5-20 LeftZeroSemigroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: A left zero (or right zero) semigroup of order <var class="Arg">n</var>.</p>
-
-<p>If <var class="Arg">n</var> is a positive integer, then this function returns a left zero (or right zero, as appropriate) semigroup of order <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>.</p>
-
-<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
-
-
-<ul>
-<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
-
-</li>
-<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
-
-</li>
-<li><p><code class="code">IsReesMatrixSemigroup</code>.</p>
-
-</li>
-</ul>
-<p>See <code class="func">IsLeftZeroSemigroup</code> (<a href="chap4.html#X7E9261367C8C52C0"><span class="RefLink">4.6-9</span></a>) and <code class="func">IsRightZeroSemigroup</code> (<a href="chap4.html#X7CB099958658F979"><span class="RefLink">4.6-15</span></a>) for more information about left and right zero semigroups.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := LeftZeroSemigroup(20);</span>
-&lt;transformation semigroup of size 20, degree 21 with 20 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftZeroSemigroup(S);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(Tuples(S, 2), p -&gt; p[1] * p[2] = p[1]);</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RightZeroSemigroup(IsBipartitionSemigroup, 5);</span>
-&lt;bipartition semigroup of size 5, degree 3 with 5 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightZeroSemigroup(S);</span>
-true</pre></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoSemigroups</code></td><td class="tdright">( info class )</td></tr></table></div>
+<p><code class="code">InfoSemigroups</code> is the info class of the <strong class="pkg">Semigroups</strong> package. The info level is initially set to 0 and no info messages are displayed. To increase the amount of information displayed during a computation increase the info level to 2 or 3. To stop all info messages from being displayed, set the info level to 0. See also <a href="../../../doc/ref/chap7_mj.html#X7A9C902479CB6F7C"><span class="RefLink">Reference: Info Functions</span></a> and <code class="func">SetInfoLevel</code> (<a href="../../../doc/ref/chap7_mj.html#X7B2ADC37783104B9"><span class="RefLink">Reference: InfoLevel</span></a>).</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

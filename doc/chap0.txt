@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 2.8.0
+                                 Version 3.0.0
   
   
                                  J. D. Mitchell
@@ -26,7 +26,7 @@
   
                                  Michael Torpey
   
-                                  Wilf Wilson
+                                 Wilf A. Wilson
   
   
   
@@ -37,32 +37,33 @@
   -------------------------------------------------------
   [1XAbstract[101X
   [33X[0;0YThe  [5XSemigroups[105X  package is a [5XGAP[105X package containing methods for semigroups,
-  monoids,  and  inverse  semigroups,  principally of transformations, partial
-  permutations,   bipartitions,   subsemigroups   of   regular  Rees  0-matrix
-  semigroups,  free inverse semigroups, free bands, and semigroups of matrices
-  over finite fields.[133X
+  monoids,  and  inverse  semigroups. There are particularly efficient methods
+  for   semigroups   or   ideals   consisting   of   transformations,  partial
+  permutations,  bipartitions,  partitioned binary relations, subsemigroups of
+  regular   Rees  0-matrix  semigroups,  and  matrices  of  various  semirings
+  including  boolean  matrices,  matrices  over  finite  fields,  and  certain
+  tropical matrices.[133X
   
-  [33X[0;0Y[5XSemigroups[105X  contains  more efficient methods than those available in the [5XGAP[105X
-  library  (and  in  many  cases  more  efficient than any other software) for
-  creating  semigroups,  monoids,  and  inverse  semigroup,  calculating their
-  Green's  structure, ideals, size, elements, group of units, small generating
-  sets,  testing  membership,  finding  the  inverses  of  a  regular element,
-  factorizing elements over the generators, and many more. It is also possible
-  to  test  if  a  semigroup satisfies a particular property, such as if it is
-  regular,  simple,  inverse,  completely  regular,  and  a variety of further
-  properties.[133X
+  [33X[0;0Y[5XSemigroups[105X  contains efficient methods for creating semigroups, monoids, and
+  inverse  semigroup,  calculating  their  Green's  structure,  ideals,  size,
+  elements, group of units, small generating sets, testing membership, finding
+  the inverses of a regular element, factorizing elements over the generators,
+  and  so  on.  It  is  possible to test if a semigroup satisfies a particular
+  property, such as if it is regular, simple, inverse, completely regular, and
+  a variety of further properties.[133X
   
-  [33X[0;0YThere  are  methods  for finding congruences of certain types of semigroups,
-  the   normalizer  of  a  semigroup  in  a  permutation  group,  the  maximal
-  subsemigroups  of a finite semigroup, and smaller degree partial permutation
-  representations  and  the  character tables of inverse semigroups. There are
-  functions  for  producing  pictures of the Green's structure of a semigroup,
-  and for drawing bipartitions.[133X
+  [33X[0;0YThere are methods for finding presentations for a semigroup, the congruences
+  of  a  semigroup,  the normalizer of a semigroup in a permutation group, the
+  maximal   subsemigroups  of  a  finite  semigroup,  smaller  degree  partial
+  permutation representations, and the character tables of inverse semigroups.
+  There  are  functions  for  producing pictures of the Green's structure of a
+  semigroup,  and  for  drawing  graphical representations of certain types of
+  elements.[133X
   
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2011-16 by J. D. Mitchell et al.[133X
+  [33X[0;0Y© 2011-17 by J. D. Mitchell et al.[133X
   
   [33X[0;0Y[5XSemigroups[105X  is free software; you can redistribute it and/or modify it under
   the      terms      of      the      GNU      General     Public     License
@@ -80,7 +81,7 @@
   the package.[133X
   
   [33X[0;0YManuel  Delgado  and  Attila  Egri-Nagy  contributed to the functions [2XSplash[102X
-  ([14X4.8-1[114X) and [2XDotDClasses[102X ([14X4.8-2[114X).[133X
+  ([14X18.1-1[114X) and [2XDotString[102X ([14X18.2-1[114X).[133X
   
   [33X[0;0YJames East, Attila Egri-Nagy, and Markus Pfeiffer contributed to the part of
   the  package  relating to bipartitions. I would like to thank the University
@@ -93,16 +94,15 @@
   [33X[0;0YJulius  Jonušas contributed the part of the package relating to free inverse
   semigroups, and contributed to the code for ideals.[133X
   
-  [33X[0;0YYann  Peresse  and  Yanhui  Wang  contributed  to the function [2XMunnSemigroup[102X
-  ([14X2.5-13[114X).[133X
+  [33X[0;0YYann  Péresse  and  Yanhui  Wang  contributed to the attribute [2XMunnSemigroup[102X
+  ([14X8.2-1[114X).[133X
   
   [33X[0;0YJhevon    Smith    and    Ben    Steinberg    contributed    the    function
-  [2XCharacterTableOfInverseSemigroup[102X ([14X4.7-16[114X).[133X
+  [2XCharacterTableOfInverseSemigroup[102X ([14X15.1-10[114X).[133X
   
-  [33X[0;0YMichael  Torpey  contributed the part of the package relating to congruences
-  of Rees (0-)matrix semigroups.[133X
+  [33X[0;0YMichael Torpey contributed the part of the package relating to congruences.[133X
   
-  [33X[0;0YWilf  Wilson  contributed  to  the  part  of  the  package  relating maximal
+  [33X[0;0YWilf  A.  Wilson  contributed  to  the  part of the package relating maximal
   subsemigroups  and  smaller  degree  partial  permutation representations of
   inverse  semigroups.  We  are also grateful to C. Donoven and R. Hancock for
   their  contribution  to  the  development  of  the  algorithms  for  maximal
@@ -111,8 +111,12 @@
   [33X[0;0YMarkus  Pfeiffer contributed the majority of the code relating to semigroups
   of matrices over finite fields.[133X
   
-  [33X[0;0YWe  would  also  like to acknowledge the support of the Centre of Algebra at
-  the University of Lisbon, and of EPSRC grant number GR/S/56085/01.[133X
+  [33X[0;0YWe  would  also  like  to  acknowledge  the  support  of: EPSRC grant number
+  GR/S/56085/01;  the  Carnegie  Trust  for  the  Universities of Scotland for
+  funding the PhD scholarships of J. Jonušas and W. Wilson when they worked on
+  this project; the Engineering and Physical Sciences Research Council (EPSRC)
+  for  funding the PhD scholarship of M. Torpey when he worked on this project
+  (EP/M506631/1).[133X
   
   
   -------------------------------------------------------
@@ -122,316 +126,510 @@
   
   1 [33X[0;0YThe [5XSemigroups[105X package[133X
     1.1 [33X[0;0YIntroduction[133X
-    1.2 [33X[0;0YInstalling the [5XSemigroups[105X package[133X
-    1.3 [33X[0;0YCompiling the documentation[133X
-      1.3-1 SemigroupsMakeDoc
-    1.4 [33X[0;0YTesting the installation[133X
-      1.4-1 SemigroupsTestInstall
-      1.4-2 SemigroupsTestManualExamples
-      1.4-3 SemigroupsTestAll
-    1.5 [33X[0;0YMore information during a computation[133X
-      1.5-1 InfoSemigroups
-    1.6 [33X[0;0YReading and writing elements to a file[133X
-      1.6-1 SemigroupsDir
-      1.6-2 ReadGenerators
-      1.6-3 WriteGenerators
-      1.6-4 IteratorFromGeneratorsFile
-  2 [33X[0;0YCreating semigroups and monoids[133X
-    2.1 [33X[0;0YRandom semigroups[133X
-      2.1-1 RandomInverseMonoid
-      2.1-2 RandomTransformationMonoid
-      2.1-3 RandomPartialPermMonoid
-      2.1-4 RandomBinaryRelationMonoid
-      2.1-5 RandomBipartitionSemigroup
-      2.1-6 RandomMatrixSemigroup
-    2.2 [33X[0;0YNew semigroups from old[133X
-      2.2-1 ClosureInverseSemigroup
-      2.2-2 ClosureSemigroup
-      2.2-3 SubsemigroupByProperty
-      2.2-4 InverseSubsemigroupByProperty
-    2.3 [33X[0;0YOptions when creating semigroups[133X
-      2.3-1 SemigroupsOptionsRec
-    2.4 [33X[0;0YChanging the representation of a semigroup[133X
-      2.4-1 AsTransformationSemigroup
-      2.4-2 IsomorphismPermGroup
-      2.4-3 IsomorphismBipartitionSemigroup
-      2.4-4 IsomorphismBlockBijectionSemigroup
-      2.4-5 IsomorphismMatrixSemigroup
-    2.5 [33X[0;0YStandard examples[133X
-      2.5-1 EndomorphismsPartition
-      2.5-2 PartitionMonoid
-      2.5-3 PlanarPartitionMonoid
-      2.5-4 BrauerMonoid
-      2.5-5 JonesMonoid
-      2.5-6 PartialTransformationSemigroup
-      2.5-7 DualSymmetricInverseSemigroup
-      2.5-8 UniformBlockBijectionMonoid
-      2.5-9 ApsisMonoid
-      2.5-10 ModularPartitionMonoid
-      2.5-11 FullMatrixSemigroup
-      2.5-12 SpecialLinearSemigroup
-      2.5-13 MunnSemigroup
-      2.5-14 [33X[0;0YMonoids of order preserving functions[133X
-      2.5-15 SingularTransformationSemigroup
-      2.5-16 RegularBinaryRelationSemigroup
-      2.5-17 MonogenicSemigroup
-      2.5-18 RectangularBand
-      2.5-19 ZeroSemigroup
-      2.5-20 LeftZeroSemigroup
-  3 [33X[0;0YIdeals[133X
-    3.1 [33X[0;0YCreating ideals[133X
-      3.1-1 SemigroupIdeal
-    3.2 [33X[0;0YAttributes of ideals[133X
-      3.2-1 GeneratorsOfSemigroupIdeal
-      3.2-2 MinimalIdealGeneratingSet
-      3.2-3 SupersemigroupOfIdeal
-  4 [33X[0;0YDetermining the structure of a semigroup[133X
-    4.1 [33X[0;0YExpressing semigroup elements as words in generators[133X
-      4.1-1 EvaluateWord
-      4.1-2 Factorization
-    4.2 [33X[0;0YCreating Green's classes[133X
-      4.2-1 [33X[0;0YXClassOfYClass[133X
-      4.2-2 [33X[0;0YGreensXClassOfElement[133X
-      4.2-3 [33X[0;0YGreensXClassOfElementNC[133X
-      4.2-4 GroupHClass
-    4.3 [33X[0;0YIterators and enumerators of classes and representatives[133X
-      4.3-1 [33X[0;0YGreensXClasses[133X
-      4.3-2 [33X[0;0YIteratorOfXClassReps[133X
-      4.3-3 [33X[0;0YIteratorOfXClasses[133X
-      4.3-4 [33X[0;0YXClassReps[133X
-    4.4 [33X[0;0YAttributes and properties directly related to Green's classes[133X
-      4.4-1 [33X[0;0YLess than for Green's classes[133X
-      4.4-2 InjectionPrincipalFactor
-      4.4-3 PrincipalFactor
-      4.4-4 IsRegularClass
-      4.4-5 NrRegularDClasses
-      4.4-6 [33X[0;0YNrXClasses[133X
-      4.4-7 PartialOrderOfDClasses
-      4.4-8 SchutzenbergerGroup
-      4.4-9 MinimalDClass
-      4.4-10 MaximalDClasses
-      4.4-11 StructureDescriptionSchutzenbergerGroups
-      4.4-12 StructureDescriptionMaximalSubgroups
-      4.4-13 MultiplicativeNeutralElement
-      4.4-14 IsGreensClassNC
-      4.4-15 IsTransformationSemigroupGreensClass
-      4.4-16 IsBipartitionSemigroupGreensClass
-      4.4-17 IsPartialPermSemigroupGreensClass
-      4.4-18 IsMatrixSemigroupGreensClass
-      4.4-19 StructureDescription
-      4.4-20 IsGreensDLeq
-    4.5 [33X[0;0YFurther attributes of semigroups[133X
-      4.5-1 Generators
-      4.5-2 GroupOfUnits
-      4.5-3 Idempotents
-      4.5-4 NrIdempotents
-      4.5-5 IdempotentGeneratedSubsemigroup
-      4.5-6 IrredundantGeneratingSubset
-      4.5-7 MaximalSubsemigroups
-      4.5-8 MaximalSubsemigroups
-      4.5-9 IsMaximalSubsemigroup
-      4.5-10 MinimalIdeal
-      4.5-11 RepresentativeOfMinimalIdeal
-      4.5-12 MultiplicativeZero
-      4.5-13 Random
-      4.5-14 SmallGeneratingSet
-      4.5-15 ComponentRepsOfTransformationSemigroup
-      4.5-16 ComponentsOfTransformationSemigroup
-      4.5-17 CyclesOfTransformationSemigroup
-      4.5-18 IsTransitive
-      4.5-19 ComponentRepsOfPartialPermSemigroup
-      4.5-20 ComponentsOfPartialPermSemigroup
-      4.5-21 CyclesOfPartialPerm
-      4.5-22 CyclesOfPartialPermSemigroup
-      4.5-23 Normalizer
-      4.5-24 SmallestElementSemigroup
-      4.5-25 GeneratorsSmallest
-      4.5-26 UnderlyingSemigroupOfSemigroupWithAdjoinedZero
-    4.6 [33X[0;0YFurther properties of semigroups[133X
-      4.6-1 IsBand
-      4.6-2 IsBlockGroup
-      4.6-3 IsCommutativeSemigroup
-      4.6-4 IsCompletelyRegularSemigroup
-      4.6-5 IsCongruenceFreeSemigroup
-      4.6-6 IsGroupAsSemigroup
-      4.6-7 [33X[0;0YIsIdempotentGenerated[133X
-      4.6-8 IsLeftSimple
-      4.6-9 IsLeftZeroSemigroup
-      4.6-10 IsMonogenicSemigroup
-      4.6-11 IsMonoidAsSemigroup
-      4.6-12 IsOrthodoxSemigroup
-      4.6-13 IsRectangularBand
-      4.6-14 IsRegularSemigroup
-      4.6-15 IsRightZeroSemigroup
-      4.6-16 [33X[0;0YIsXTrivial[133X
-      4.6-17 IsSemigroupWithAdjoinedZero
-      4.6-18 IsSemilattice
-      4.6-19 [33X[0;0YIsSimpleSemigroup[133X
-      4.6-20 IsSynchronizingSemigroup
-      4.6-21 IsZeroGroup
-      4.6-22 IsZeroRectangularBand
-      4.6-23 IsZeroSemigroup
-      4.6-24 IsZeroSimpleSemigroup
-    4.7 [33X[0;0YProperties and attributes of inverse semigroups[133X
-      4.7-1 IsCliffordSemigroup
-      4.7-2 IsBrandtSemigroup
-      4.7-3 IsEUnitaryInverseSemigroup
-      4.7-4 IsFactorisableSemigroup
-      4.7-5 IsJoinIrreducible
-      4.7-6 IsMajorantlyClosed
-      4.7-7 IsMonogenicInverseSemigroup
-      4.7-8 JoinIrreducibleDClasses
-      4.7-9 MajorantClosure
-      4.7-10 Minorants
-      4.7-11 PrimitiveIdempotents
-      4.7-12 RightCosetsOfInverseSemigroup
-      4.7-13 SameMinorantsSubgroup
-      4.7-14 SmallerDegreePartialPermRepresentation
-      4.7-15 VagnerPrestonRepresentation
-      4.7-16 CharacterTableOfInverseSemigroup
-    4.8 [33X[0;0YVisualising the structure of a semigroup[133X
-      4.8-1 Splash
-      4.8-2 DotDClasses
-      4.8-3 DotSemilatticeOfIdempotents
-  5 [33X[0;0YBipartitions and blocks[133X
-    5.1 [33X[0;0YThe family and categories of bipartitions[133X
-      5.1-1 IsBipartition
-      5.1-2 IsBipartitionCollection
-      5.1-3 BipartitionFamily
-    5.2 [33X[0;0YCreating bipartitions[133X
-      5.2-1 Bipartition
-      5.2-2 BipartitionByIntRep
-      5.2-3 IdentityBipartition
-      5.2-4 LeftOne
-      5.2-5 RightOne
-      5.2-6 StarOp
-      5.2-7 RandomBipartition
-    5.3 [33X[0;0YChanging the representation of a bipartition[133X
-      5.3-1 AsBipartition
-      5.3-2 AsBlockBijection
-      5.3-3 AsTransformation
-      5.3-4 AsPartialPerm
-      5.3-5 AsPermutation
-    5.4 [33X[0;0YOperators for bipartitions[133X
-      5.4-1 PartialPermLeqBipartition
-      5.4-2 NaturalLeqPartialPermBipartition
-      5.4-3 NaturalLeqBlockBijection
-      5.4-4 PermLeftQuoBipartition
-      5.4-5 OnRightBlocksBipartitionByPerm
-    5.5 [33X[0;0YAttributes for bipartitons[133X
-      5.5-1 DegreeOfBipartition
-      5.5-2 RankOfBipartition
-      5.5-3 ExtRepOfBipartition
-      5.5-4 RightBlocks
-      5.5-5 LeftBlocks
-      5.5-6 NrLeftBlocks
-      5.5-7 NrRightBlocks
-      5.5-8 NrBlocks
-      5.5-9 IsTransBipartition
-      5.5-10 IsDualTransBipartition
-      5.5-11 IsPermBipartition
-      5.5-12 IsPartialPermBipartition
-      5.5-13 IsBlockBijection
-      5.5-14 IsUniformBlockBijection
-    5.6 [33X[0;0YCreating blocks and their attributes[133X
-      5.6-1 BlocksNC
-      5.6-2 ExtRepOfBlocks
-      5.6-3 RankOfBlocks
-      5.6-4 DegreeOfBlocks
-    5.7 [33X[0;0YActions on blocks[133X
-      5.7-1 OnRightBlocks
-      5.7-2 OnLeftBlocks
-      5.7-3 PermRightBlocks
-      5.7-4 InverseRightBlocks
-      5.7-5 InverseLeftBlocks
-    5.8 [33X[0;0YVisualising blocks and bipartitions[133X
-      5.8-1 TikzBipartition
-      5.8-2 TikzBlocks
-    5.9 [33X[0;0YSemigroups of bipartitions[133X
-      5.9-1 IsBipartitionSemigroup
-      5.9-2 IsBlockBijectionSemigroup
-      5.9-3 IsPartialPermBipartitionSemigroup
-      5.9-4 IsPermBipartitionGroup
-      5.9-5 DegreeOfBipartitionSemigroup
-  6 [33X[0;0YFree inverse semigroups and free bands[133X
-    6.1 [33X[0;0YFree inverse semigroups[133X
-      6.1-1 FreeInverseSemigroup
-      6.1-2 IsFreeInverseSemigroupCategory
-      6.1-3 IsFreeInverseSemigroup
-      6.1-4 IsFreeInverseSemigroupElement
-    6.2 [33X[0;0YDisplaying free inverse semigroup elements[133X
-    6.3 [33X[0;0YOperators and operations for free inverse semigroup elements[133X
-      6.3-1 CanonicalForm
-      6.3-2 MinimalWord
-    6.4 [33X[0;0YFree bands[133X
-      6.4-1 FreeBand
-      6.4-2 IsFreeBandCategory
-      6.4-3 IsFreeBand
-      6.4-4 IsFreeBandElement
-      6.4-5 IsFreeBandSubsemigroup
-    6.5 [33X[0;0YOperators and operations for free band elements[133X
-      6.5-1 GreensDClassOfElement
-  7 [33X[0;0YMatrix semigroups[133X
-    7.1 [33X[0;0YCreating matrix semigroups[133X
-      7.1-1 IsMatrixSemigroup
-      7.1-2 MatrixSemigroup
-    7.2 [33X[0;0YMatrices in the [5XSemigroups[105X package[133X
-      7.2-1 IsMatrixOverFiniteField
-      7.2-2 IsMatrixOverFiniteFieldCollection
-      7.2-3 NewMatrixOverFiniteField
-      7.2-4 NewIdentityMatrixOverFiniteField
-      7.2-5 RowSpaceBasis
-      7.2-6 RowRank
-      7.2-7 RightInverse
-      7.2-8 DegreeOfMatrixOverFiniteField
-      7.2-9 BaseDomain
-      7.2-10 TransposedMatImmutable
-      7.2-11 AsMatrix
-      7.2-12 ConstructingFilter
-    7.3 [33X[0;0YMatrix groups in the [5XSemigroups[105X package[133X
-      7.3-1 IsMatrixOverFiniteFieldGroup
-      7.3-2 \^
-      7.3-3 IsomorphismMatrixGroup
-      7.3-4 AsMatrixGroup
-  8 [33X[0;0YCongruences[133X
-    8.1 [33X[0;0YCreating congruences[133X
-      8.1-1 SemigroupCongruence
-    8.2 [33X[0;0YCongruence classes[133X
-      8.2-1 CongruenceClassOfElement
-      8.2-2 CongruenceClasses
-      8.2-3 NrCongruenceClasses
-      8.2-4 CongruencesOfSemigroup
-      8.2-5 AsLookupTable
-    8.3 [33X[0;0YCongruences on Rees matrix semigroups[133X
-      8.3-1 IsRMSCongruenceByLinkedTriple
-      8.3-2 RMSCongruenceByLinkedTriple
-      8.3-3 RMSCongruenceClassByLinkedTriple
-      8.3-4 IsLinkedTriple
-      8.3-5 CanonicalRepresentative
-      8.3-6 AsSemigroupCongruenceByGeneratingPairs
-      8.3-7 AsRMSCongruenceByLinkedTriple
-      8.3-8 MeetSemigroupCongruences
-      8.3-9 JoinSemigroupCongruences
-    8.4 [33X[0;0YUniversal congruences[133X
-      8.4-1 IsUniversalSemigroupCongruence
-      8.4-2 UniversalSemigroupCongruence
-  9 [33X[0;0YHomomorphisms[133X
-    9.1 [33X[0;0YIsomorphisms[133X
-      9.1-1 IsIsomorphicSemigroup
-      9.1-2 SmallestMultiplicationTable
-      9.1-3 IsomorphismSemigroups
-  10 [33X[0;0YOrbits[133X
-    10.1 [33X[0;0YLooking for something in an orbit[133X
-      10.1-1 EnumeratePosition
-      10.1-2 LookForInOrb
-    10.2 [33X[0;0YStrongly connected components of orbits[133X
-      10.2-1 OrbSCC
-      10.2-2 OrbSCCLookup
-      10.2-3 OrbSCCTruthTable
-      10.2-4 ReverseSchreierTreeOfSCC
-      10.2-5 SchreierTreeOfSCC
-      10.2-6 TraceSchreierTreeOfSCCBack
-      10.2-7 TraceSchreierTreeOfSCCForward
+    1.2 [33X[0;0YOverview[133X
+  2 [33X[0;0YInstalling [5XSemigroups[105X[133X
+    2.1 [33X[0;0YFor those in a hurry[133X
+    2.2 [33X[0;0YPackage dependencies[133X
+    2.3 [33X[0;0YCompiling the kernel module[133X
+    2.4 [33X[0;0YRebuilding the documentation[133X
+      2.4-1 SemigroupsMakeDoc
+    2.5 [33X[0;0YTesting your installation[133X
+      2.5-1 SemigroupsTestInstall
+      2.5-2 SemigroupsTestStandard
+    2.6 [33X[0;0YMore information during a computation[133X
+      2.6-1 InfoSemigroups
+  3 [33X[0;0YBipartitions and blocks[133X
+    3.1 [33X[0;0YThe family and categories of bipartitions[133X
+      3.1-1 IsBipartition
+      3.1-2 IsBipartitionCollection
+    3.2 [33X[0;0YCreating bipartitions[133X
+      3.2-1 Bipartition
+      3.2-2 BipartitionByIntRep
+      3.2-3 IdentityBipartition
+      3.2-4 LeftOne
+      3.2-5 RightOne
+      3.2-6 StarOp
+      3.2-7 RandomBipartition
+    3.3 [33X[0;0YChanging the representation of a bipartition[133X
+      3.3-1 AsBipartition
+      3.3-2 AsBlockBijection
+      3.3-3 AsTransformation
+      3.3-4 AsPartialPerm
+      3.3-5 AsPermutation
+    3.4 [33X[0;0YOperators for bipartitions[133X
+      3.4-1 PartialPermLeqBipartition
+      3.4-2 NaturalLeqPartialPermBipartition
+      3.4-3 NaturalLeqBlockBijection
+      3.4-4 PermLeftQuoBipartition
+    3.5 [33X[0;0YAttributes for bipartitons[133X
+      3.5-1 DegreeOfBipartition
+      3.5-2 RankOfBipartition
+      3.5-3 ExtRepOfObj
+      3.5-4 RightBlocks
+      3.5-5 LeftBlocks
+      3.5-6 NrLeftBlocks
+      3.5-7 NrRightBlocks
+      3.5-8 NrBlocks
+      3.5-9 DomainOfBipartition
+      3.5-10 CodomainOfBipartition
+      3.5-11 IsTransBipartition
+      3.5-12 IsDualTransBipartition
+      3.5-13 IsPermBipartition
+      3.5-14 IsPartialPermBipartition
+      3.5-15 IsBlockBijection
+      3.5-16 IsUniformBlockBijection
+      3.5-17 CanonicalBlocks
+    3.6 [33X[0;0YCreating blocks and their attributes[133X
+      3.6-1 IsBlocks
+      3.6-2 BlocksNC
+      3.6-3 ExtRepOfObj
+      3.6-4 RankOfBlocks
+      3.6-5 DegreeOfBlocks
+      3.6-6 ProjectionFromBlocks
+    3.7 [33X[0;0YActions on blocks[133X
+      3.7-1 OnRightBlocks
+      3.7-2 OnLeftBlocks
+    3.8 [33X[0;0YSemigroups of bipartitions[133X
+      3.8-1 IsBipartitionSemigroup
+      3.8-2 IsBlockBijectionSemigroup
+      3.8-3 IsPartialPermBipartitionSemigroup
+      3.8-4 IsPermBipartitionGroup
+      3.8-5 DegreeOfBipartitionSemigroup
+  4 [33X[0;0YPartitioned binary relations (PBRs)[133X
+    4.1 [33X[0;0YThe family and categories of PBRs[133X
+      4.1-1 IsPBR
+      4.1-2 IsPBRCollection
+    4.2 [33X[0;0YCreating PBRs[133X
+      4.2-1 PBR
+      4.2-2 RandomPBR
+      4.2-3 EmptyPBR
+      4.2-4 IdentityPBR
+      4.2-5 UniversalPBR
+    4.3 [33X[0;0YChanging the representation of a PBR[133X
+      4.3-1 AsPBR
+      4.3-2 AsTransformation
+      4.3-3 AsPartialPerm
+      4.3-4 AsPermutation
+    4.4 [33X[0;0YOperators for PBRs[133X
+    4.5 [33X[0;0YAttributes for PBRs[133X
+      4.5-1 StarOp
+      4.5-2 DegreeOfPBR
+      4.5-3 ExtRepOfObj
+      4.5-4 PBRNumber
+      4.5-5 IsEmptyPBR
+      4.5-6 IsIdentityPBR
+      4.5-7 IsUniversalPBR
+      4.5-8 IsBipartitionPBR
+      4.5-9 IsTransformationPBR
+      4.5-10 IsDualTransformationPBR
+      4.5-11 IsPartialPermPBR
+      4.5-12 IsPermPBR
+    4.6 [33X[0;0YSemigroups of PBRs[133X
+      4.6-1 IsPBRSemigroup
+      4.6-2 DegreeOfPBRSemigroup
+  5 [33X[0;0YMatrices over semirings[133X
+    5.1 [33X[0;0YCreating matrices over semirings[133X
+      5.1-1 IsMatrixOverSemiring
+      5.1-2 IsMatrixOverSemiringCollection
+      5.1-3 DimensionOfMatrixOverSemiring
+      5.1-4 DimensionOfMatrixOverSemiringCollection
+      5.1-5 Matrix
+      5.1-6 AsMatrix
+      5.1-7 RandomMatrix
+      5.1-8 [33X[0;0YMatrix filters[133X
+      5.1-9 [33X[0;0YMatrix collection filters[133X
+      5.1-10 AsList
+      5.1-11 ThresholdTropicalMatrix
+      5.1-12 ThresholdNTPMatrix
+    5.2 [33X[0;0YOperators for matrices over semirings[133X
+    5.3 [33X[0;0YBoolean matrices[133X
+      5.3-1 BooleanMat
+      5.3-2 AsBooleanMat
+      5.3-3 \in
+      5.3-4 OnBlist
+      5.3-5 Successors
+      5.3-6 BooleanMatNumber
+      5.3-7 BlistNumber
+      5.3-8 CanonicalBooleanMat
+      5.3-9 IsRowTrimBooleanMat
+      5.3-10 IsSymmetricBooleanMat
+      5.3-11 IsReflexiveBooleanMat
+      5.3-12 IsTransitiveBooleanMat
+      5.3-13 IsAntiSymmetricBooleanMat
+      5.3-14 IsTotalBooleanMat
+      5.3-15 IsPartialOrderBooleanMat
+      5.3-16 IsEquivalenceBooleanMat
+    5.4 [33X[0;0YMatrices over finite fields[133X
+      5.4-1 NewMatrixOverFiniteField
+      5.4-2 IdentityMatrixOverFiniteField
+      5.4-3 NewIdentityMatrixOverFiniteField
+      5.4-4 RowSpaceBasis
+      5.4-5 RowRank
+      5.4-6 RightInverse
+      5.4-7 BaseDomain
+      5.4-8 TransposedMatImmutable
+    5.5 [33X[0;0YInteger Matrices[133X
+      5.5-1 InverseOp
+      5.5-2 IsTorsion
+      5.5-3 Order
+    5.6 [33X[0;0YMax-plus and min-plus matrices[133X
+      5.6-1 InverseOp
+      5.6-2 RadialEigenvector
+      5.6-3 SpectralRadius
+      5.6-4 UnweightedPrecedenceDigraph
+    5.7 [33X[0;0YMatrix semigroups[133X
+      5.7-1 [33X[0;0YMatrix semigroup filters[133X
+      5.7-2 [33X[0;0YMatrix monoid filters[133X
+      5.7-3 IsFinite
+      5.7-4 IsTorsion
+      5.7-5 NormalizeSemigroup
+      5.7-6 [33X[0;0YMatrix groups[133X
+      5.7-7 IsMatrixOverFiniteFieldGroup
+      5.7-8 \^
+      5.7-9 IsomorphismMatrixGroup
+      5.7-10 AsMatrixGroup
+  6 [33X[0;0YCreating semigroups and monoids[133X
+    6.1 [33X[0;0YUnderlying algorithms and related representations[133X
+      6.1-1 [33X[0;0YActing semigroups[133X
+      6.1-2 [33X[0;0YEnumerable semigroups[133X
+      6.1-3 IsActingSemigroup
+      6.1-4 IsEnumerableSemigroupRep
+    6.2 [33X[0;0YSemigroups represented by generators[133X
+      6.2-1 InverseMonoidByGenerators
+    6.3 [33X[0;0YOptions when creating semigroups[133X
+      6.3-1 SEMIGROUPS.DefaultOptionsRec
+    6.4 [33X[0;0YNew semigroups from old[133X
+      6.4-1 ClosureSemigroup
+      6.4-2 SubsemigroupByProperty
+      6.4-3 InverseSubsemigroupByProperty
+    6.5 [33X[0;0YChanging the representation of a semigroup[133X
+      6.5-1 IsomorphismSemigroup
+      6.5-2 IsomorphismMonoid
+      6.5-3 AsSemigroup
+      6.5-4 AsMonoid
+      6.5-5 IsomorphismPermGroup
+      6.5-6 RZMSNormalization
+      6.5-7 RMSNormalization
+    6.6 [33X[0;0YRandom semigroups[133X
+      6.6-1 RandomSemigroup
+    6.7 [33X[0;0YEndomorphism monoid of a digraph[133X
+      6.7-1 EndomorphismMonoid
+  7 [33X[0;0YIdeals[133X
+    7.1 [33X[0;0YCreating ideals[133X
+      7.1-1 SemigroupIdeal
+    7.2 [33X[0;0YAttributes of ideals[133X
+      7.2-1 GeneratorsOfSemigroupIdeal
+      7.2-2 MinimalIdealGeneratingSet
+      7.2-3 SupersemigroupOfIdeal
+  8 [33X[0;0YStandard examples[133X
+    8.1 [33X[0;0YTransformation semigroups[133X
+      8.1-1 CatalanMonoid
+      8.1-2 EndomorphismsPartition
+      8.1-3 PartialTransformationMonoid
+      8.1-4 SingularTransformationSemigroup
+      8.1-5 [33X[0;0YSemigroups of order-preserving transformations[133X
+    8.2 [33X[0;0YSemigroups of partial permutations[133X
+      8.2-1 MunnSemigroup
+      8.2-2 RookMonoid
+      8.2-3 [33X[0;0YInverse monoids of order-preserving partial permutations[133X
+    8.3 [33X[0;0YSemigroups of bipartitions[133X
+      8.3-1 PartitionMonoid
+      8.3-2 BrauerMonoid
+      8.3-3 JonesMonoid
+      8.3-4 PartialJonesMonoid
+      8.3-5 AnnularJonesMonoid
+      8.3-6 MotzkinMonoid
+      8.3-7 DualSymmetricInverseSemigroup
+      8.3-8 UniformBlockBijectionMonoid
+      8.3-9 PlanarPartitionMonoid
+      8.3-10 ModularPartitionMonoid
+      8.3-11 ApsisMonoid
+    8.4 [33X[0;0YStandard PBR semigroups[133X
+      8.4-1 FullPBRMonoid
+    8.5 [33X[0;0YSemigroups of matrices over a finite field[133X
+      8.5-1 FullMatrixMonoid
+      8.5-2 SpecialLinearMonoid
+      8.5-3 IsFullMatrixMonoid
+    8.6 [33X[0;0YSemigroups of boolean matrices[133X
+      8.6-1 FullBooleanMatMonoid
+      8.6-2 RegularBooleanMatMonoid
+      8.6-3 ReflexiveBooleanMatMonoid
+      8.6-4 HallMonoid
+      8.6-5 GossipMonoid
+      8.6-6 TriangularBooleanMatMonoid
+    8.7 [33X[0;0YSemigroups of matrices over a semiring[133X
+      8.7-1 FullTropicalMaxPlusMonoid
+      8.7-2 FullTropicalMinPlusMonoid
+  9 [33X[0;0YStandard constructions[133X
+    9.1 [33X[0;0YStandard constructions[133X
+      9.1-1 TrivialSemigroup
+      9.1-2 MonogenicSemigroup
+      9.1-3 RectangularBand
+      9.1-4 ZeroSemigroup
+      9.1-5 LeftZeroSemigroup
+  10 [33X[0;0YFree objects[133X
+    10.1 [33X[0;0YFree inverse semigroups[133X
+      10.1-1 FreeInverseSemigroup
+      10.1-2 IsFreeInverseSemigroupCategory
+      10.1-3 IsFreeInverseSemigroup
+      10.1-4 IsFreeInverseSemigroupElement
+      10.1-5 IsFreeInverseSemigroupElementCollection
+    10.2 [33X[0;0YDisplaying free inverse semigroup elements[133X
+    10.3 [33X[0;0YOperators and operations for free inverse semigroup elements[133X
+      10.3-1 CanonicalForm
+      10.3-2 MinimalWord
+    10.4 [33X[0;0YFree bands[133X
+      10.4-1 FreeBand
+      10.4-2 IsFreeBandCategory
+      10.4-3 IsFreeBand
+      10.4-4 IsFreeBandElement
+      10.4-5 IsFreeBandElementCollection
+      10.4-6 IsFreeBandSubsemigroup
+      10.4-7 ContentOfFreeBandElement
+    10.5 [33X[0;0YOperators and operations for free band elements[133X
+      10.5-1 GreensDClassOfElement
+  11 [33X[0;0YGraph inverse semigroups[133X
+    11.1 [33X[0;0YCreating graph inverse semigroups[133X
+      11.1-1 GraphInverseSemigroup
+      11.1-2 Range
+      11.1-3 IsVertex
+      11.1-4 IsGraphInverseSemigroup
+      11.1-5 GraphOfGraphInverseSemigroup
+      11.1-6 IsGraphInverseSemigroupElementCollection
+      11.1-7 IsGraphInverseSubsemigroup
+  12 [33X[0;0YGreen's relations[133X
+    12.1 [33X[0;0YCreating Green's classes and representatives[133X
+      12.1-1 [33X[0;0YXClassOfYClass[133X
+      12.1-2 [33X[0;0YGreensXClassOfElement[133X
+      12.1-3 [33X[0;0YGreensXClassOfElementNC[133X
+      12.1-4 [33X[0;0YGreensXClasses[133X
+      12.1-5 [33X[0;0YXClassReps[133X
+      12.1-6 MinimalDClass
+      12.1-7 MaximalDClasses
+      12.1-8 NrRegularDClasses
+      12.1-9 [33X[0;0YNrXClasses[133X
+      12.1-10 PartialOrderOfDClasses
+      12.1-11 LengthOfLongestDClassChain
+      12.1-12 IsGreensDGreaterThanFunc
+    12.2 [33X[0;0YIterators and enumerators of classes and representatives[133X
+      12.2-1 [33X[0;0YIteratorOfXClassReps[133X
+      12.2-2 [33X[0;0YIteratorOfXClasses[133X
+    12.3 [33X[0;0YProperties of Green's classes[133X
+      12.3-1 [33X[0;0YLess than for Green's classes[133X
+      12.3-2 IsRegularGreensClass
+      12.3-3 IsGreensClassNC
+    12.4 [33X[0;0YAttributes of Green's classes[133X
+      12.4-1 GroupHClass
+      12.4-2 SchutzenbergerGroup
+      12.4-3 StructureDescriptionSchutzenbergerGroups
+      12.4-4 StructureDescriptionMaximalSubgroups
+      12.4-5 MultiplicativeNeutralElement
+      12.4-6 StructureDescription
+      12.4-7 InjectionPrincipalFactor
+      12.4-8 PrincipalFactor
+  13 [33X[0;0YAttributes and operations for semigroups[133X
+    13.1 [33X[0;0YAccessing the elements of a semigroup[133X
+      13.1-1 AsListCanonical
+      13.1-2 PositionCanonical
+      13.1-3 Enumerate
+      13.1-4 IsFullyEnumerated
+    13.2 [33X[0;0YCayley graphs[133X
+      13.2-1 RightCayleyGraphSemigroup
+    13.3 [33X[0;0YRandom elements of a semigroup[133X
+      13.3-1 Random
+    13.4 [33X[0;0YProperties of elements in a semigroup[133X
+      13.4-1 IndexPeriodOfSemigroupElement
+      13.4-2 SmallestIdempotentPower
+    13.5 [33X[0;0YExpressing semigroup elements as words in generators[133X
+      13.5-1 EvaluateWord
+      13.5-2 Factorization
+      13.5-3 MinimalFactorization
+    13.6 [33X[0;0YGenerating sets[133X
+      13.6-1 Generators
+      13.6-2 SmallGeneratingSet
+      13.6-3 IrredundantGeneratingSubset
+      13.6-4 MinimalSemigroupGeneratingSet
+      13.6-5 GeneratorsSmallest
+    13.7 [33X[0;0YMinimal ideals and multiplicative zeros[133X
+      13.7-1 MinimalIdeal
+      13.7-2 RepresentativeOfMinimalIdeal
+      13.7-3 MultiplicativeZero
+      13.7-4 UnderlyingSemigroupOfSemigroupWithAdjoinedZero
+    13.8 [33X[0;0YGroup of units and identity elements[133X
+      13.8-1 GroupOfUnits
+    13.9 [33X[0;0YIdempotents[133X
+      13.9-1 Idempotents
+      13.9-2 NrIdempotents
+      13.9-3 IdempotentGeneratedSubsemigroup
+    13.10 [33X[0;0YMaximal subsemigroups[133X
+      13.10-1 MaximalSubsemigroups
+      13.10-2 NrMaximalSubsemigroups
+      13.10-3 IsMaximalSubsemigroup
+    13.11 [33X[0;0YThe normalizer of a semigroup[133X
+      13.11-1 Normalizer
+    13.12 [33X[0;0YAttributes of transformations and transformation semigroups[133X
+      13.12-1 ComponentRepsOfTransformationSemigroup
+      13.12-2 ComponentsOfTransformationSemigroup
+      13.12-3 CyclesOfTransformationSemigroup
+      13.12-4 DigraphOfActionOnPairs
+      13.12-5 DigraphOfActionOnPoints
+      13.12-6 FixedPointsOfTransformationSemigroup
+      13.12-7 IsTransitive
+      13.12-8 SmallestElementSemigroup
+      13.12-9 CanonicalTransformation
+      13.12-10 IsConnectedTransformationSemigroup
+    13.13 [33X[0;0YAttributes of partial perm semigroups[133X
+      13.13-1 ComponentRepsOfPartialPermSemigroup
+      13.13-2 ComponentsOfPartialPermSemigroup
+      13.13-3 CyclesOfPartialPerm
+      13.13-4 CyclesOfPartialPermSemigroup
+    13.14 [33X[0;0YAttributes of Rees (0-)matrix semigroups[133X
+      13.14-1 RZMSDigraph
+      13.14-2 RZMSConnectedComponents
+  14 [33X[0;0YProperties of semigroups[133X
+    14.1 [33X[0;0YProperties of semigroups[133X
+      14.1-1 IsBand
+      14.1-2 IsBlockGroup
+      14.1-3 IsCommutativeSemigroup
+      14.1-4 IsCompletelyRegularSemigroup
+      14.1-5 IsCongruenceFreeSemigroup
+      14.1-6 IsGroupAsSemigroup
+      14.1-7 [33X[0;0YIsIdempotentGenerated[133X
+      14.1-8 IsLeftSimple
+      14.1-9 IsLeftZeroSemigroup
+      14.1-10 IsMonogenicSemigroup
+      14.1-11 IsMonogenicMonoid
+      14.1-12 IsMonoidAsSemigroup
+      14.1-13 IsOrthodoxSemigroup
+      14.1-14 IsRectangularBand
+      14.1-15 IsRectangularGroup
+      14.1-16 IsRegularSemigroup
+      14.1-17 IsRightZeroSemigroup
+      14.1-18 [33X[0;0YIsXTrivial[133X
+      14.1-19 IsSemigroupWithAdjoinedZero
+      14.1-20 IsSemilattice
+      14.1-21 [33X[0;0YIsSimpleSemigroup[133X
+      14.1-22 IsSynchronizingSemigroup
+      14.1-23 IsUnitRegularMonoid
+      14.1-24 IsZeroGroup
+      14.1-25 IsZeroRectangularBand
+      14.1-26 IsZeroSemigroup
+      14.1-27 IsZeroSimpleSemigroup
+  15 [33X[0;0YProperties and attributes specific to inverse semigroups[133X
+    15.1 [33X[0;0YAttributes specific to inverse semigroups[133X
+      15.1-1 NaturalLeqInverseSemigroup
+      15.1-2 JoinIrreducibleDClasses
+      15.1-3 MajorantClosure
+      15.1-4 Minorants
+      15.1-5 PrimitiveIdempotents
+      15.1-6 RightCosetsOfInverseSemigroup
+      15.1-7 SameMinorantsSubgroup
+      15.1-8 SmallerDegreePartialPermRepresentation
+      15.1-9 VagnerPrestonRepresentation
+      15.1-10 CharacterTableOfInverseSemigroup
+    15.2 [33X[0;0YProperties of inverse semigroups[133X
+      15.2-1 IsCliffordSemigroup
+      15.2-2 IsBrandtSemigroup
+      15.2-3 IsEUnitaryInverseSemigroup
+      15.2-4 IsFactorisableInverseMonoid
+      15.2-5 IsJoinIrreducible
+      15.2-6 IsMajorantlyClosed
+      15.2-7 IsMonogenicInverseSemigroup
+      15.2-8 IsMonogenicInverseMonoid
+  16 [33X[0;0YCongruences[133X
+    16.1 [33X[0;0YSemigroup congruence objects[133X
+      16.1-1 IsSemigroupCongruence
+      16.1-2 IsLeftSemigroupCongruence
+      16.1-3 IsRightSemigroupCongruence
+    16.2 [33X[0;0YCreating congruences[133X
+      16.2-1 SemigroupCongruence
+      16.2-2 LeftSemigroupCongruence
+      16.2-3 RightSemigroupCongruence
+      16.2-4 GeneratingPairsOfSemigroupCongruence
+    16.3 [33X[0;0YCongruence classes[133X
+      16.3-1 IsCongruenceClass
+      16.3-2 IsLeftCongruenceClass
+      16.3-3 IsRightCongruenceClass
+      16.3-4 CongruenceClassOfElement
+      16.3-5 CongruenceClasses
+      16.3-6 NonTrivialEquivalenceClasses
+      16.3-7 NonTrivialCongruenceClasses
+      16.3-8 NrEquivalenceClasses
+      16.3-9 NrCongruenceClasses
+      16.3-10 EquivalenceRelationLookup
+      16.3-11 EquivalenceRelationCanonicalLookup
+      16.3-12 EquivalenceRelationCanonicalPartition
+      16.3-13 OnLeftCongruenceClasses
+      16.3-14 OnRightCongruenceClasses
+    16.4 [33X[0;0YFinding the congruences of a semigroup[133X
+      16.4-1 CongruencesOfSemigroup
+      16.4-2 MinimalCongruencesOfSemigroup
+      16.4-3 PrincipalCongruencesOfSemigroup
+      16.4-4 IsCongruencePoset
+      16.4-5 LatticeOfCongruences
+      16.4-6 PosetOfPrincipalCongruences
+      16.4-7 CongruencesOfPoset
+      16.4-8 UnderlyingSemigroupOfCongruencePoset
+      16.4-9 PosetOfCongruences
+      16.4-10 JoinSemilatticeOfCongruences
+      16.4-11 MinimalCongruences
+    16.5 [33X[0;0YComparing congruences[133X
+      16.5-1 IsSubrelation
+      16.5-2 IsSuperrelation
+      16.5-3 MeetSemigroupCongruences
+      16.5-4 JoinSemigroupCongruences
+    16.6 [33X[0;0YCongruences on Rees matrix semigroups[133X
+      16.6-1 IsRMSCongruenceByLinkedTriple
+      16.6-2 RMSCongruenceByLinkedTriple
+      16.6-3 IsRMSCongruenceClassByLinkedTriple
+      16.6-4 RMSCongruenceClassByLinkedTriple
+      16.6-5 IsLinkedTriple
+      16.6-6 CanonicalRepresentative
+      16.6-7 AsSemigroupCongruenceByGeneratingPairs
+      16.6-8 AsRMSCongruenceByLinkedTriple
+    16.7 [33X[0;0YCongruences on inverse semigroups[133X
+      16.7-1 IsInverseSemigroupCongruenceByKernelTrace
+      16.7-2 InverseSemigroupCongruenceByKernelTrace
+      16.7-3 AsInverseSemigroupCongruenceByKernelTrace
+      16.7-4 KernelOfSemigroupCongruence
+      16.7-5 TraceOfSemigroupCongruence
+      16.7-6 IsInverseSemigroupCongruenceClassByKernelTrace
+      16.7-7 MinimumGroupCongruence
+    16.8 [33X[0;0YRees congruences[133X
+      16.8-1 SemigroupIdealOfReesCongruence
+      16.8-2 IsReesCongruenceClass
+    16.9 [33X[0;0YUniversal congruences[133X
+      16.9-1 IsUniversalSemigroupCongruence
+      16.9-2 IsUniversalSemigroupCongruenceClass
+      16.9-3 UniversalSemigroupCongruence
+  17 [33X[0;0YSemigroup homomorphisms[133X
+    17.1 [33X[0;0YIsomorphisms of arbitrary semigroups[133X
+      17.1-1 IsIsomorphicSemigroup
+      17.1-2 SmallestMultiplicationTable
+      17.1-3 IsomorphismSemigroups
+    17.2 [33X[0;0YIsomorphisms of Rees (0-)matrix semigroups[133X
+      17.2-1 IsRMSIsoByTriple
+      17.2-2 RMSIsoByTriple
+      17.2-3 ELM_LIST
+      17.2-4 CompositionMapping2
+      17.2-5 ImagesElm
+      17.2-6 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroup by
+      triples[133X
+  18 [33X[0;0YVisualising semigroups and elements[133X
+    18.1 [33X[0;0YAutomatic viewing[133X
+      18.1-1 Splash
+    18.2 [33X[0;0Y[10Xdot[110X pictures[133X
+      18.2-1 DotString
+      18.2-2 DotSemilatticeOfIdempotents
+    18.3 [33X[0;0Y[10Xtex[110X output[133X
+      18.3-1 TexString
+    18.4 [33X[0;0Y[10Xtikz[110X pictures[133X
+      18.4-1 TikzString
+  19 [33X[0;0YIO[133X
+    19.1 [33X[0;0YReading and writing elements to a file[133X
+      19.1-1 ReadGenerators
+      19.1-2 WriteGenerators
+      19.1-3 IteratorFromPickledFile
   
   
   [32X

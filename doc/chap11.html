@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (semigroups) - Chapter 11: 
+    Graph inverse semigroups
+  </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap11"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap11_mj.html">[MathJax on]</a></p>
+<p><a id="X850B10D783053100" name="X850B10D783053100"></a></p>
+<div class="ChapSects"><a href="chap11.html#X850B10D783053100">11 <span class="Heading">
+    Graph inverse semigroups
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X7FCCC69385B19F92">11.1 <span class="Heading">
+      Creating graph inverse semigroups
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7A9EEFD386D6F630">11.1-1 GraphInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X8187F0FF784A82CD">11.1-2 Range</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7DEE927C83D4DFDD">11.1-3 IsVertex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7BFDF88B799B05A0">11.1-4 IsGraphInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7BE287A385A058BC">11.1-5 GraphOfGraphInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X870128E4845D6ABD">11.1-6 IsGraphInverseSemigroupElementCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7BC6D5107ED09DBA">11.1-7 IsGraphInverseSubsemigroup</a></span>
+</div></div>
+</div>
+
+<h3>11 <span class="Heading">
+    Graph inverse semigroups
+  </span></h3>
+
+<p>In this chapter we describe a class of semigroups arising from directed graphs.</p>
+
+<p><a id="X7FCCC69385B19F92" name="X7FCCC69385B19F92"></a></p>
+
+<h4>11.1 <span class="Heading">
+      Creating graph inverse semigroups
+    </span></h4>
+
+<p><a id="X7A9EEFD386D6F630" name="X7A9EEFD386D6F630"></a></p>
+
+<h5>11.1-1 GraphInverseSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphInverseSemigroup</code>( <var class="Arg">E</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A graph inverse semigroup.</p>
+
+<p>If <var class="Arg">E</var> is a digraph (i.e. it satisfies <code class="func">IsDigraph</code> (<a href="../../../pkg/digraphs/doc/chap3_mj.html#X7877ADC77F85E630"><span class="RefLink">Digraphs: IsDigraph</span></a>)), then <code class="code">GraphInverseSemigroup</code> returns the graph inverse semigroup <span class="SimpleMath">G(<var class="Arg">E</var>)</span> where, roughly speaking, elements correspond to paths in the graph <var class="Arg">E</var>.</p>
+
+<p>Let us describe <var class="Arg">E</var> as a digraph <span class="SimpleMath"><var class="Arg">E</var> = (E ^ 0, E ^ 1, r, s)</span>, where <span class="SimpleMath">E^0</span> is the set of vertices, <span class="SimpleMath">E^1</span> is the set of edges, and <span class="SimpleMath">r</span> and <span class="SimpleMath">s</span> are functions <span class="SimpleMath">E^1 -&gt; E^0</span> giving the <em>range</em> and <em>source</em> of an edge, respectively. The <em>graph inverse semigroup <span class="SimpleMath">G(<var class="Arg">E</var>)</span> of <span class="SimpleMath">E</span></em> is the semigroup-with-zero generated by the sets <span class="SimpleMath"><var class="Arg">E</var> ^ 0</span> and <span class="SimpleMath"><var class="Arg">E</var> ^ 1</span>, together with a set of variables <span class="SimpleMath">{e ^ -1 ∣ e ∈ <var class="Arg">E</var> ^ 1}</span>, satisfying the following relations for all <span class="SimpleMath">v, w ∈ <var class="Arg">E</var> ^ 0</span> and <span class="SimpleMath">e, f ∈ <var class="Arg">E</var> ^ 1</span>:</p>
+
+
+<dl>
+<dt><strong class="Mark">(V)</strong></dt>
+<dd><p><span class="SimpleMath">vw = δ_v,w ⋅ v</span>,</p>
+
+</dd>
+<dt><strong class="Mark">(E1)</strong></dt>
+<dd><p><span class="SimpleMath">s(e) ⋅ e=e ⋅ r(e)=e</span>,</p>
+
+</dd>
+<dt><strong class="Mark">(E2)</strong></dt>
+<dd><p><span class="SimpleMath">r(e) ⋅ e^-1 = e^-1 ⋅ s(e) =e^-1</span>,</p>
+
+</dd>
+<dt><strong class="Mark">(CK1)</strong></dt>
+<dd><p><span class="SimpleMath">e^-1 ⋅ f = δ_e,f ⋅ r(e)</span>.</p>
+
+</dd>
+</dl>
+<p>(Here <span class="SimpleMath">δ</span> is the Kronecker delta.) We define <span class="SimpleMath">v^-1=v</span> for each <span class="SimpleMath">v ∈ E^0</span>, and for any path <span class="SimpleMath">y=e_1dots e_n</span> (<span class="SimpleMath">e_1dots e_n ∈ E^1</span>) we let <span class="SimpleMath">y^-1 = e_n^-1 dots e_1^-1</span>. With this notation, every nonzero element of <span class="SimpleMath">G(E)</span> can be written uniquely as <span class="SimpleMath">xy^-1</span> for some paths <span class="SimpleMath">x, y</span> in <span class="SimpleMath">E</span>, by the CK1 relation.</p>
+
+<p>For a more complete description, see <a href="chapBib.html#biBMesyan2016">[MM16]</a>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gr := Digraph([[2, 5, 8, 10], [2, 3, 4, 5, 6, 8, 9, 10], [1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  [3, 5, 7, 8, 10], [2, 5, 7], [3, 6, 7, 9, 10],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  [1, 4], [1, 5, 9], [1, 2, 7, 8], [3, 5]]);</span>
+&lt;digraph with 10 vertices, 37 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GraphInverseSemigroup(gr);</span>
+&lt;infinite graph inverse semigroup with 10 vertices, 37 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfInverseSemigroup(S);</span>
+[ e_1, e_2, e_3, e_4, e_5, e_6, e_7, e_8, e_9, e_10, e_11, e_12, 
+  e_13, e_14, e_15, e_16, e_17, e_18, e_19, e_20, e_21, e_22, e_23, 
+  e_24, e_25, e_26, e_27, e_28, e_29, e_30, e_31, e_32, e_33, e_34, 
+  e_35, e_36, e_37, v_1, v_2, v_3, v_4, v_5, v_6, v_7, v_8, v_9, v_10 
+ ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignGeneratorVariables(S);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e_1 * e_1 ^ -1;</span>
+e_1e_1^-1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e_1 ^ -1 * e_1 ^ -1;</span>
+0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e_1 ^ -1 * e_1;</span>
+v_2</pre></div>
+
+<p><a id="X8187F0FF784A82CD" name="X8187F0FF784A82CD"></a></p>
+
+<h5>11.1-2 Range</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Range</code>( <var class="Arg">x</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Source</code>( <var class="Arg">x</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A graph inverse semigroup element.</p>
+
+<p>If <var class="Arg">x</var> is an element of a graph inverse semigroup (i.e. it satisfies <code class="func">IsGraphInverseSemigroupElement</code> (<a href="chap11.html#X7BFDF88B799B05A0"><span class="RefLink">11.1-4</span></a>)), then <code class="code">Range</code> and <code class="code">Source</code> give, respectively, the start and end vertices of <var class="Arg">x</var> when viewed as a path in the digraph over which the semigroup is defined.</p>
+
+<p>For a fuller description, see <code class="func">GraphInverseSemigroup</code> (<a href="chap11.html#X7A9EEFD386D6F630"><span class="RefLink">11.1-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gr := Digraph([[], [1], [3]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GraphInverseSemigroup(gr);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e := S.1;</span>
+e_1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Source(e);</span>
+v_2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Range(e);</span>
+v_1
+</pre></div>
+
+<p><a id="X7DEE927C83D4DFDD" name="X7DEE927C83D4DFDD"></a></p>
+
+<h5>11.1-3 IsVertex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsVertex</code>( <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>If <var class="Arg">x</var> is an element of a graph inverse semigroup (i.e. it satisfies <code class="func">IsGraphInverseSemigroupElement</code> (<a href="chap11.html#X7BFDF88B799B05A0"><span class="RefLink">11.1-4</span></a>)), then this attribute returns <code class="keyw">true</code> if <var class="Arg">x</var> corresponds to a vertex in the digraph over which the semigroup is defined, and <code class="keyw">false</code> otherwise.</p>
+
+<p>For a fuller description, see <code class="func">GraphInverseSemigroup</code> (<a href="chap11.html#X7A9EEFD386D6F630"><span class="RefLink">11.1-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gr := Digraph([[], [1], [3]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GraphInverseSemigroup(gr);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e := S.1;</span>
+e_1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsVertex(e);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">v := S.3;</span>
+v_1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsVertex(v);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z := v * e;</span>
+0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsVertex(z);</span>
+false
+</pre></div>
+
+<p><a id="X7BFDF88B799B05A0" name="X7BFDF88B799B05A0"></a></p>
+
+<h5>11.1-4 IsGraphInverseSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSemigroup</code>( <var class="Arg">x</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSemigroupElement</code>( <var class="Arg">x</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>The category <code class="code">IsGraphInverseSemigroup</code> contains any semigroup defined over a digraph using the <code class="func">GraphInverseSemigroup</code> (<a href="chap11.html#X7A9EEFD386D6F630"><span class="RefLink">11.1-1</span></a>) operation. The category <code class="code">IsGraphInverseSemigroupElement</code> contains any element contained in such a semigroup.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gr := Digraph([[], [1], [3]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GraphInverseSemigroup(gr);</span>
+&lt;infinite graph inverse semigroup with 3 vertices, 2 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGraphInverseSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := GeneratorsOfSemigroup(S)[1];</span>
+e_1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGraphInverseSemigroupElement(x);</span>
+true
+</pre></div>
+
+<p><a id="X7BE287A385A058BC" name="X7BE287A385A058BC"></a></p>
+
+<h5>11.1-5 GraphOfGraphInverseSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GraphOfGraphInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A digraph.</p>
+
+<p>If <var class="Arg">S</var> is a graph inverse semigroup (i.e. it satisfies <code class="func">IsGraphInverseSemigroup</code> (<a href="chap11.html#X7BFDF88B799B05A0"><span class="RefLink">11.1-4</span></a>)), then this attribute returns the original digraph over which <var class="Arg">S</var> was defined (most likely the argument given to <code class="func">GraphInverseSemigroup</code> (<a href="chap11.html#X7A9EEFD386D6F630"><span class="RefLink">11.1-1</span></a>) to create <var class="Arg">S</var>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gr := Digraph([[], [1], [3]]);</span>
+&lt;digraph with 3 vertices, 2 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GraphInverseSemigroup(gr);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GraphOfGraphInverseSemigroup(S);</span>
+&lt;digraph with 3 vertices, 2 edges&gt;
+</pre></div>
+
+<p><a id="X870128E4845D6ABD" name="X870128E4845D6ABD"></a></p>
+
+<h5>11.1-6 IsGraphInverseSemigroupElementCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSemigroupElementCollection</code></td><td class="tdright">( category )</td></tr></table></div>
+<p>Every collection of elements of a graph inverse semigroup belongs to the category <code class="code">IsGraphInverseSemigroupElementCollection</code>. For example, every graph inverse semigroup belongs to <code class="code">IsGraphInverseSemigroupElementCollection</code>.</p>
+
+<p><a id="X7BC6D5107ED09DBA" name="X7BC6D5107ED09DBA"></a></p>
+
+<h5>11.1-7 IsGraphInverseSubsemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGraphInverseSubsemigroup</code></td><td class="tdright">( filter )</td></tr></table></div>
+<p><code class="code">IsGraphInverseSubsemigroup</code> is a synonym for <code class="code">IsSemigroup</code> and <code class="code">IsInverseSemigroup</code> and <code class="code">IsGraphInverseSemigroupElementCollection</code>.</p>
+
+<p>See <code class="func">IsGraphInverseSemigroupElementCollection</code> (<a href="chap11.html#X870128E4845D6ABD"><span class="RefLink">11.1-6</span></a>) and <code class="func">IsInverseSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X83F1529479D56665"><span class="RefLink">Reference: IsInverseSemigroup</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gr := Digraph([[], [1], [2]]);</span>
+&lt;digraph with 3 vertices, 2 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GraphInverseSemigroup(gr);</span>
+&lt;finite graph inverse semigroup with 3 vertices, 2 edges&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(S);</span>
+[ e_2^-1, e_1^-1, e_1^-1e_2^-1, 0, e_1, e_1e_1^-1, e_1e_1^-1e_2^-1, 
+  e_2, e_2e_2^-1, e_2e_1, e_2e_1e_1^-1, e_2e_1e_1^-1e_2^-1, v_1, v_2, 
+  v_3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := InverseSemigroup(Elements(S){[3, 5]});;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGraphInverseSubsemigroup(T);</span>
+true</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

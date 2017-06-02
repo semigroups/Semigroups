@@ -10,11 +10,50 @@
   rank of the semigroup of transformations stabilising a partition of a finite
   set[117X (2014), ((in preparation)).
   
+  [[20XAui12[120X]  [16XAuinger,  K.[116X,  [17XKrohn--Rhodes  complexity of Brauer type semigroups[117X,
+  [18XPortugaliae Mathematica[118X, [19X69[119X, 4 (2012), 341--360.
+  
+  [[20XBFCGOGJ92[120X] [16XBaccelli F. Cohen G. Olsder G. J., Q. J. P.[116X, [17XSynchronisation and
+  Linearity: An Algebra for Discrete Event Systems[117X, Wiley (1992).
+  
+  [[20XBDF15[120X]  [16XBrouwer,  A.  E.,  Draisma,  J.  and Frenk, B. J.[116X, [17XLossy Gossip and
+  Composition  of Metrics[117X, [18XDiscrete {\&} Computational Geometry[118X, [19X53[119X, 4 (2015),
+  890--913.
+  
+  [[20XBur16[120X]  [16XBurrell,  S.  A.[116X, [17XThe Order Problem for Natural and Tropical Matrix
+  Semigroups[117X,  Master's  thesis,  University  of  St  Andrews,  United Kingdom
+  (2016).
+  
+  [[20XDMW16[120X]  [16XDonoven,  C.,  Mitchell,  J.  D.  and Wilson, W.[116X, [17XComputing maximal
+  subsemigroups of a finite semigroup[117X, [18Xsubmitted[118X (2016).
+  
+  [[20XEas16[120X]  [16XEast, J.[116X, [17XPresentations for rook partition monoids and algebras and
+  their singular ideals[117X, [18XarXiv:1606.00563[118X (2016).
+  
+  [[20XEEMP15[120X]  [16XEast,  J.,  Egri-Nagy,  A.,  Mitchell,  J. D. and P{\'e}resse, Y.[116X,
+  [17XComputing finite semigroups[117X, [18XJ. Symbolic Comput. (to appear)[118X (2015).
+  
+  [[20XFar09[120X]   [16XFarlow,   K.  G.[116X,  [17XMax-Plus  Algebra[117X,  Master's  thesis,  Virginia
+  {P}olytechnic {I}nstitute and {S}tate {U}niversity, United States (2009).
+  
   [[20XFL98[120X]  [16XFitzgerald,  D. G. and Leech, J.[116X, [17XDual symmetric inverse monoids and
   representation theory[117X, [18XJ. Austral. Math. Soc. A[118X, [19X64[119X (1998), 345-67.
   
+  [[20XFP97[120X]  [16XFroidure,  V.  and  Pin,  J.-E.[116X,  [17XAlgorithms  for  computing  finite
+  semigroups[117X,  in  Foundations  of  computational mathematics (Rio de Janeiro,
+  1997), Springer, Berlin (1997), 112--126.
+  
+  [[20XGau96[120X] [16XGaubert, S.[116X, [17XOn the Burnside problem for Semigroups of Matrices over
+  the (max, +) Algebra[117X, [18XSemigroup Forum[118X, [19X5[119X (1996), 271-292.
+  
+  [[20XGra68[120X]  [16XGraham,  R.[116X,  [17XOn  finite  0-simple  semigroups  and  graph  theory[117X,
+  [18XMathematical systems theory[118X, [19X2[119X, 4 (1968), 325--339.
+  
   [[20XGGR68[120X]  [16XGraham,  N.,  Graham,  R.  and Rhodes, J.[116X, [17XMaximal subsemigroups of
   finite semigroups[117X, [18XJ. Combinatorial Theory[118X, [19X4[119X (1968), 203--209.
+  
+  [[20XGro06[120X]  [16XGrood,  C.[116X,  [17XThe  rook partition algebra[117X, [18XJ. Combin. Theory Ser. A[118X,
+  [19X113[119X, 2 (2006), 325--351.
   
   [[20XHR05[120X]  [16XHalverson,  T.  and Ram, A.[116X, [17XPartition algebras[117X, [18XEuropean Journal of
   Combinatorics[118X, Elsevier, [19X26[119X, 6 (2005), 869--921.
@@ -23,8 +62,31 @@
   Oxford University Press, London Mathematical Society Monographs. New Series,
   [19X12[119X, New York (1995), x+351 pages, ((Oxford Science Publications)).
   
+  [[20XJK07[120X] [16XJunttila, T. and Kaski, P.[116X ([1m[31mApplegate, D., Brodal, G. S., Panario, D.
+  and  Sedgewick,  R.[15X, Eds.), [17XEngineering an efficient canonical labeling tool
+  for  large  and  sparse  graphs[117X,  in  Proceedings  of  the Ninth Workshop on
+  Algorithm  Engineering  and  Experiments and the Fourth Workshop on Analytic
+  Algorithms and Combinatorics, SIAM (2007), 135--149.
+  
+  [[20XKM11[120X]  [16XKudryavtseva,  G.  and  Maltcev,  V.[116X,  [17XTwo  generalisations  of  the
+  symmetric inverse semigroups[117X, [18XPubl. Math. Debrecen[118X, [19X78[119X, 2 (2011), 253--282.
+  
+  [[20XKMU15[120X]  [16XKudryavtseva,  G.,  Maltcev,  V. and Umar, A.[116X, [17XPresentation for the
+  partial  dual  symmetric  inverse  monoid[117X,  [18XComm.  Algebra[118X,  [19X43[119X,  4  (2015),
+  1621--1639.
+  
+  [[20XMM11[120X]   [16XMartin,   P.  and  Mazorchuk,  V.[116X,  [17XPartitioned  binary  relations[117X,
+  [18XarXiv:1102.0862[118X (2011).
+  
+  [[20XMM16[120X]  [16XMesyan,  Z.  and  Mitchell,  J. D.[116X, [17XThe structure of a graph inverse
+  semigroup[117X, [18XSemigroup Forum[118X, Springer Nature, [19X93[119X, 1 (2016), 111--130.
+  
   [[20XSch92[120X]  [16XSchein,  B.  M.[116X,  [17XThe minimal degree of a finite inverse semigroup[117X,
   [18XTrans. Amer. Math. Soc.[118X, [19X333[119X, 2 (1992), 877--888.
+  
+  [[20XSim78[120X]  [16XSimon,  I.[116X, [17XLimited Subsets of a Free Monoid[117X, in Proceedings of the
+  19th  Annual  Symposium  on  Foundations  of Computer Science, IEEE Computer
+  Society, SFCS '78, Washington, DC, USA (1978), 143--150.
   
   
   

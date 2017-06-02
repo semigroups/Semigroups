@@ -5,7 +5,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (semigroups) - Chapter 8: Congruences</title>
+<title>GAP (semigroups) - Chapter 8: 
+    Standard examples
+  </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,513 +17,1012 @@
 <body class="chap8"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap8_mj.html">[MathJax on]</a></p>
-<p><a id="X82BD951079E3C349" name="X82BD951079E3C349"></a></p>
-<div class="ChapSects"><a href="chap8.html#X82BD951079E3C349">8 <span class="Heading">Congruences</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7D49787B7B2589B2">8.1 <span class="Heading">Creating congruences</span></a>
+<p><a id="X7C76D1DC7DAF03D3" name="X7C76D1DC7DAF03D3"></a></p>
+<div class="ChapSects"><a href="chap8.html#X7C76D1DC7DAF03D3">8 <span class="Heading">
+    Standard examples
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7E42E8337A78B076">8.1 <span class="Heading">
+      Transformation semigroups
+    </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85CE56AC84FA5D33">8.1-1 SemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X84C4C81380B0239D">8.1-1 CatalanMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85C1D4307D0F5FF7">8.1-2 EndomorphismsPartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X808A27F87E5AC598">8.1-3 PartialTransformationMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7894EE357D103806">8.1-4 SingularTransformationSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X80E80A0A83B57483">8.1-5 <span class="Heading">Semigroups of order-preserving transformations</span></a>
+</span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7D65BB067A762CD6">8.2 <span class="Heading">Congruence classes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X862BA1C67AA1C77C">8.2 <span class="Heading">
+      Semigroups of partial permutations
+    </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7CB27F237B59C8C9">8.2-1 CongruenceClassOfElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7E36A01C85E2DCF0">8.2-2 CongruenceClasses</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7C80CD547A5C3E76">8.2-3 NrCongruenceClasses</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7AB683CB7CD1B18D">8.2-4 CongruencesOfSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F9E84A185A717C1">8.2-5 AsLookupTable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X78FBE6DD7BCA30C1">8.2-1 MunnSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X82D9619B7845CAEB">8.2-2 RookMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85D841AE83DF101C">8.2-3 <span class="Heading">Inverse monoids of order-preserving partial permutations</span></a>
+</span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7A6478D1831DD787">8.3 <span class="Heading">Congruences on Rees matrix semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X876C963F830719E2">8.3 <span class="Heading">
+      Semigroups of bipartitions
+    </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F4AFD7F7E163022">8.3-1 IsRMSCongruenceByLinkedTriple</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X87A475E4847D3C96">8.3-2 RMSCongruenceByLinkedTriple</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7E9AB940868FCC9D">8.3-3 RMSCongruenceClassByLinkedTriple</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B19CACF7A37ADBC">8.3-4 IsLinkedTriple</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X79027F0580F9D081">8.3-5 CanonicalRepresentative</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7DB7E32E865AD95D">8.3-6 AsSemigroupCongruenceByGeneratingPairs</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85A731257EFB88A1">8.3-7 AsRMSCongruenceByLinkedTriple</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7952A5A5789C6F60">8.3-8 MeetSemigroupCongruences</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8262D5207DBF3C5B">8.3-9 JoinSemigroupCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7E4B61FF7CCFD74A">8.3-1 PartitionMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X79D33B2E7BA3073A">8.3-2 BrauerMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8378FC8B840B9706">8.3-3 JonesMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8458B0F7874484CE">8.3-4 PartialJonesMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7DB8CB067CBE1254">8.3-5 AnnularJonesMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8375152F7AB52B7B">8.3-6 MotzkinMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X83C7587C81B985BA">8.3-7 DualSymmetricInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8301C61384168D6F">8.3-8 UniformBlockBijectionMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8444092A7967A029">8.3-9 PlanarPartitionMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F208DC584C0B9D1">8.3-10 ModularPartitionMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7C82B25F8441928E">8.3-11 ApsisMonoid</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X789450398397141D">8.4 <span class="Heading">Universal congruences</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X874C945E7C61A969">8.4 <span class="Heading">
+      Standard PBR semigroups
+    </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X8751EF557A81A2B1">8.4-1 IsUniversalSemigroupCongruence</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B99C6A47F3D375F">8.4-2 UniversalSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7DBB30AA83663CE8">8.4-1 FullPBRMonoid</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X857DBF537A9A9976">8.5 <span class="Heading">
+      Semigroups of matrices over a finite field
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7D4B473A7D7735E3">8.5-1 FullMatrixMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X785924807B60F187">8.5-2 SpecialLinearMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X860B2A4382CA8F87">8.5-3 IsFullMatrixMonoid</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X85BACB7F81660ECC">8.6 <span class="Heading">
+      Semigroups of boolean matrices
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7B20103D84E010EF">8.6-1 FullBooleanMatMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7A43263981F2F2AF">8.6-2 RegularBooleanMatMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X78DF50747A28098C">8.6-3 ReflexiveBooleanMatMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X79EF0EA68782CFCA">8.6-4 HallMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F083600787C78FF">8.6-5 GossipMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X81BBCF2E84239521">8.6-6 TriangularBooleanMatMonoid</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7F3D0AEE79AA8C98">8.7 <span class="Heading">
+      Semigroups of matrices over a semiring
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X81E937B6852A9C69">8.7-1 FullTropicalMaxPlusMonoid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X85EDC03180768931">8.7-2 FullTropicalMinPlusMonoid</a></span>
 </div></div>
 </div>
 
-<h3>8 <span class="Heading">Congruences</span></h3>
+<h3>8 <span class="Heading">
+    Standard examples
+  </span></h3>
 
-<p>Congruences in <strong class="pkg">Semigroups</strong> can be described in several different ways:</p>
+<p>In this chapter we describe some standard examples of semigroups which are available in the <strong class="pkg">Semigroups</strong> package.</p>
+
+<p><a id="X7E42E8337A78B076" name="X7E42E8337A78B076"></a></p>
+
+<h4>8.1 <span class="Heading">
+      Transformation semigroups
+    </span></h4>
+
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> that can be used to create transformation semigroups belonging to several standard classes of example. See <a href="../../../doc/ref/chap53_mj.html#X860026B880BCB2A5"><span class="RefLink">Reference: Transformations</span></a> for more information about transformations.</p>
+
+<p><a id="X84C4C81380B0239D" name="X84C4C81380B0239D"></a></p>
+
+<h5>8.1-1 CatalanMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CatalanMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A transformation monoid.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer, then this operation returns the Catalan monoid of degree <var class="Arg">n</var>. The <em>Catalan monoid</em> is the semigroup of the order-preserving and order-decreasing transformations of <code class="code">[1 .. n]</code> with the usual ordering.</p>
+
+<p>The Catalan monoid is generated by the <span class="SimpleMath"><var class="Arg">n - 1</var></span> transformations <span class="SimpleMath">f_i</span>:</p>
+
+<p class="pcenter">
+          \left(
+          \begin{array}{cccccccccc}
+          1&amp;2&amp;3&amp;\cdots&amp; i &amp;i + 1&amp; i + 2 &amp; \cdots &amp; n\\
+          1&amp;2&amp;3&amp;\cdots&amp; i &amp;i    &amp; i + 2 &amp; \cdots &amp; n
+          \end{array}\right), \qquad
+        </p>
+
+<p>where <span class="SimpleMath">i = 1, ..., n - 1</span> and has size equal to the <span class="SimpleMath">n</span>th Catalan number.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := CatalanMonoid(9);</span>
+&lt;transformation monoid of degree 9 with 8 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+4862</pre></div>
+
+<p><a id="X85C1D4307D0F5FF7" name="X85C1D4307D0F5FF7"></a></p>
+
+<h5>8.1-2 EndomorphismsPartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EndomorphismsPartition</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A transformation monoid.</p>
+
+<p>If <var class="Arg">list</var> is a list of positive integers, then <code class="code">EndomorphismsPartition</code> returns a monoid of endomorphisms preserving a partition of <code class="code">[1 .. Sum(<var class="Arg">list</var>)]</code> with a part of length <code class="code"><var class="Arg">list</var>[i]</code> for every <code class="code">i</code>. For example, if <code class="code"><var class="Arg">list</var> = [1, 2, 3]</code>, then <code class="code">EndomorphismsPartition</code> returns the monoid of endomorphisms of the partition <code class="code">[[1], [2, 3], [4, 5, 6]]</code>.</p>
+
+<p>If <code class="code">f</code> is a transformation of <code class="code">[1 .. n]</code>, then it is an <strong class="button">endomorphism</strong> of a partition <code class="code">P</code> on <code class="code">[1 .. n]</code> if <code class="code">(i, j)</code> in <code class="code">P</code> implies that <code class="code">(i ^ f, j ^ f)</code> is in <code class="code">P</code>.</p>
+
+<p><code class="code">EndomorphismsPartition</code> returns a monoid with a minimal size generating set, as described in <a href="chapBib.html#biBAraujo2014aa">[ABMS14]</a>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := EndomorphismsPartition([3, 3, 3]);</span>
+&lt;transformation semigroup of degree 9 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+531441</pre></div>
+
+<p><a id="X808A27F87E5AC598" name="X808A27F87E5AC598"></a></p>
+
+<h5>8.1-3 PartialTransformationMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialTransformationMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A transformation monoid.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer, then this function returns a semigroup of transformations on <code class="code"><var class="Arg">n</var> + 1</code> points which is isomorphic to the semigroup consisting of all partial transformation on <var class="Arg">n</var> points. This monoid has <code class="code">(<var class="Arg">n</var> + 1) ^ <var class="Arg">n</var></code> elements.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PartialTransformationMonoid(8);</span>
+&lt;regular transformation monoid of degree 9 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(last);</span>
+43046721</pre></div>
+
+<p><a id="X7894EE357D103806" name="X7894EE357D103806"></a></p>
+
+<h5>8.1-4 SingularTransformationSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularTransformationSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularTransformationMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: The semigroup of non-invertible transformations.</p>
+
+<p>If <var class="Arg">n</var> is a integer greater than 1, then this function returns the semigroup of non-invertible transformations, which is generated by the <code class="code"><var class="Arg">n</var>(<var class="Arg">n</var> - 1)</code> idempotents of degree <var class="Arg">n</var> and rank <code class="code"><var class="Arg">n</var> - 1</code> and has <span class="SimpleMath">n ^ n - n!</span> elements.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularTransformationSemigroup(5);</span>
+&lt;regular transformation semigroup ideal of degree 5 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+3005</pre></div>
+
+<p><a id="X80E80A0A83B57483" name="X80E80A0A83B57483"></a></p>
+
+<h5>8.1-5 <span class="Heading">Semigroups of order-preserving transformations</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderEndomorphisms</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularOrderEndomorphisms</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderAntiEndomorphisms</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderEndomorphisms</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderAntiEndomorphisms</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A semigroup of transformations related to a linear order.</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code> returns the monoid of transformations that preserve the usual order on <span class="SimpleMath">{1, 2, ..., n}</span>, where <var class="Arg">n</var> is a positive integer. <code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code> is generated by the <span class="SimpleMath"><var class="Arg">n + 1</var></span> transformations:</p>
+
+<p class="pcenter">
+              \left(
+              \begin{array}{ccccccccc}
+              1&amp;2&amp;3&amp;\cdots&amp;n-1&amp; n\\
+              1&amp;1&amp;2&amp;\cdots&amp;n-2&amp;n-1
+              \end{array}\right), \qquad
+              \left(
+              \begin{array}{ccccccccc}
+              1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
+              &amp;n\\
+              1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;i+1&amp;i+2&amp;\cdots
+              &amp;n\\
+              \end{array}\right)
+            </p>
+
+<p>where <span class="SimpleMath">i=0,...,n-1</span>, and has <span class="SimpleMath">2n-1choose n-1</span> elements.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">SingularOrderEndomorphisms(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">SingularOrderEndomorphisms(<var class="Arg">n</var>)</code> returns the ideal of <code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code> consisting of the non-invertible elements, when <var class="Arg">n</var> is at least <code class="code">2</code>. The only invertible element in <code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code> is the identity transformation. Therefore <code class="code">SingularOrderEndomorphisms(<var class="Arg">n</var>)</code> has <span class="SimpleMath">2n-1choose n-1 - 1</span> elements.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">OrderAntiEndomorphisms(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">OrderAntiEndomorphisms(<var class="Arg">n</var>)</code> returns the monoid of transformations that preserve or reverse the usual order on <span class="SimpleMath">{1, 2, ..., n}</span>, where <var class="Arg">n</var> is a positive integer. <code class="code">OrderAntiEndomorphisms(<var class="Arg">n</var>)</code> is generated by the generators of <code class="code">OrderEndomorphisms(<var class="Arg">n</var>)</code> along with the bijective transformation that reverses the order on <span class="SimpleMath">{1, 2, ..., n}</span>. The monoid <code class="code">OrderAntiEndomorphisms(<var class="Arg">n</var>)</code> has <span class="SimpleMath">2n-1choose n-1 - n</span> elements.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">PartialOrderEndomorphisms(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">PartialOrderEndomorphisms(<var class="Arg">n</var>)</code> returns a monoid of transformations on <code class="code"><var class="Arg">n</var> + 1</code> points that is isomorphic to the monoid consisting of all partial transformations that preserve the usual order on <span class="SimpleMath">{1, 2, ..., n}</span>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">PartialOrderAntiEndomorphisms(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">PartialAntiOrderEndomorphisms(<var class="Arg">n</var>)</code> returns a monoid of transformations on <code class="code"><var class="Arg">n</var> + 1</code> points that is isomorphic to the monoid consisting of all partial transformations that preserve or reverse the usual order on <span class="SimpleMath">{1, 2, ..., n}</span>.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := OrderEndomorphisms(5);</span>
+&lt;regular transformation monoid of degree 5 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdempotentGenerated(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S) = Binomial(2 * 5 - 1, 5 - 1);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Difference(S, SingularOrderEndomorphisms(5));</span>
+[ IdentityTransformation ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SingularOrderEndomorphisms(10);</span>
+&lt;regular transformation semigroup ideal of degree 10 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := OrderAntiEndomorphisms(4);</span>
+&lt;regular transformation monoid of degree 4 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Transformation([4, 2, 2, 1]) in T;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := PartialOrderEndomorphisms(6);</span>
+&lt;regular transformation monoid of degree 7 with 12 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V := PartialOrderAntiEndomorphisms(6);</span>
+&lt;regular transformation monoid of degree 7 with 13 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(V, U);</span>
+true</pre></div>
+
+<p><a id="X862BA1C67AA1C77C" name="X862BA1C67AA1C77C"></a></p>
+
+<h4>8.2 <span class="Heading">
+      Semigroups of partial permutations
+    </span></h4>
+
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> that can be used to create semigroups of partial permutations belonging to several standard classes of example. See <a href="../../../doc/ref/chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">Reference: Partial permutations</span></a> for more information about partial permutations.</p>
+
+<p><a id="X78FBE6DD7BCA30C1" name="X78FBE6DD7BCA30C1"></a></p>
+
+<h5>8.2-1 MunnSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MunnSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: The Munn semigroup of a semilattice.</p>
+
+<p>If <var class="Arg">S</var> is a semilattice, then <code class="code">MunnSemigroup</code> returns the inverse semigroup of partial permutations of isomorphisms of principal ideals of <var class="Arg">S</var>; called the <em>Munn semigroup</em> of <var class="Arg">S</var>.</p>
+
+<p>This function was written jointly by J. D. Mitchell, Yann Péresse (St Andrews), Yanhui Wang (York).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 3, 4, 5, 6, 7, 10], [4, 6, 7, 3, 8, 2, 9, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm([1, 2, 7, 9], [5, 6, 4, 3])]);</span>
+&lt;inverse partial perm semigroup of rank 10 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := IdempotentGeneratedSubsemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := MunnSemigroup(T);</span>
+&lt;inverse partial perm semigroup of rank 60 with 7 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrIdempotents(M);</span>
+60
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrIdempotents(S);</span>
+60</pre></div>
+
+<p><a id="X82D9619B7845CAEB" name="X82D9619B7845CAEB"></a></p>
+
+<h5>8.2-2 RookMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RookMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: An inverse monoid of partial permutations.</p>
+
+<p><code class="code">RookMonoid</code> is a synonym for <code class="func">SymmetricInverseMonoid</code> (<a href="../../../doc/ref/chap54_mj.html#X81D271B380995F8A"><span class="RefLink">Reference: SymmetricInverseMonoid</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RookMonoid(4);</span>
+&lt;symmetric inverse monoid of degree 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = SymmetricInverseMonoid(4);</span>
+true</pre></div>
+
+<p><a id="X85D841AE83DF101C" name="X85D841AE83DF101C"></a></p>
+
+<h5>8.2-3 <span class="Heading">Inverse monoids of order-preserving partial permutations</span></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; POI</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PODI</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; POPI</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PORI</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: An inverse monoid of partial permutations related to a linear order.</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">POI(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">POI(<var class="Arg">n</var>)</code> returns the inverse monoid of partial permutations that preserve the usual order on <span class="SimpleMath">{1, 2, ..., n}</span>, where <var class="Arg">n</var> is a positive integer. <code class="code">POI(<var class="Arg">n</var>)</code> is generated by the <span class="SimpleMath"><var class="Arg">n</var></span> partial permutations:</p>
+
+<p class="pcenter">
+        \left(
+        \begin{array}{ccccc}
+        1&amp;2&amp;3&amp;\cdots&amp;n\\ 
+        -&amp;1&amp;2&amp;\cdots&amp;n-1
+        \end{array}\right), \qquad
+        \left(
+        \begin{array}{ccccccccc}
+        1&amp;2&amp;\cdots&amp;i-1&amp; i&amp; i+1&amp;i+2&amp;\cdots
+        &amp;n\\
+        1&amp;2&amp;\cdots&amp;i-1&amp; i+1&amp;-&amp;i+2&amp;\cdots&amp;n\\
+        \end{array}\right)
+      </p>
+
+<p>where <span class="SimpleMath">i = 1, ..., n - 1</span>, and has <span class="SimpleMath">2nchoose n</span> elements.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">PODI(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">PODI(<var class="Arg">n</var>)</code> returns the inverse monoid of partial permutations that preserve or reverse the usual order on <span class="SimpleMath">{1, 2, ..., n}</span>, where <var class="Arg">n</var> is a positive integer. <code class="code">PODI(<var class="Arg">n</var>)</code> is generated by the generators of <code class="code">POI(<var class="Arg">n</var>)</code>, along with the permutation that reverses the usual order on <span class="SimpleMath">{1, 2, ..., n}</span>. <code class="code">PODI(<var class="Arg">n</var>)</code> has <span class="SimpleMath">2nchoose n - n^2 - 1</span> elements.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">POPI(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">POPI(<var class="Arg">n</var>)</code> returns the inverse monoid of partial permutations that preserve the orientation of <span class="SimpleMath">{1,2,..., n}</span>, where <span class="SimpleMath">n</span> is a positive integer. <code class="code">POPI(<var class="Arg">n</var>)</code> is generated by the partial permutations:</p>
+
+<p class="pcenter">
+      \left(
+      \begin{array}{ccccc}
+1&amp;2&amp;\cdots&amp;n-1&amp;n\\
+2&amp;3&amp;\cdots&amp;n&amp;1
+\end{array}\right),\qquad
+\left(
+\begin{array}{cccccc}
+1&amp;2&amp;\cdots&amp;n-2&amp;n-1&amp;n\\
+1&amp;2&amp;\cdots&amp;n-2&amp;n&amp;-
+\end{array}\right),
+      </p>
+
+<p>and has <span class="SimpleMath">1+fracn22nchoose n</span> elements.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">PORI(<var class="Arg">n</var>)</code></strong></dt>
+<dd><p><code class="code">PORI(<var class="Arg">n</var>)</code> returns the inverse monoid of partial permutations that preserve or reverse the orientation of <span class="SimpleMath">{1, 2, ..., n}</span>, where <span class="SimpleMath">n</span> is a positive integer. <code class="code">PORI(<var class="Arg">n</var>)</code> is generated by the generators of <code class="code">POPI(<var class="Arg">n</var>)</code>, along with the permutation that reverses the usual order on <span class="SimpleMath">{1, 2, ..., n}</span>. <code class="code">PORI(<var class="Arg">n</var>)</code> has <span class="SimpleMath">fracn22nchoose n - n(n + 1)</span> elements.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PORI(10);</span>
+&lt;inverse partial perm monoid of rank 10 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := POPI(10);</span>
+&lt;inverse partial perm monoid of rank 10 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S) = 1 + 5 * Binomial(20, 10);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PODI(10);</span>
+&lt;inverse partial perm monoid of rank 10 with 11 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := POI(10);</span>
+&lt;inverse partial perm monoid of rank 10 with 10 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S) = Binomial(20, 10);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(PORI(10), PODI(10))</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">and IsSubsemigroup(PORI(10), POPI(10))</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">and IsSubsemigroup(PODI(10), POI(10))</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">and IsSubsemigroup(POPI(10), POI(10));</span>
+true</pre></div>
+
+<p><a id="X876C963F830719E2" name="X876C963F830719E2"></a></p>
+
+<h4>8.3 <span class="Heading">
+      Semigroups of bipartitions
+    </span></h4>
+
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> that can be used to create bipartition semigroups belonging to several standard classes of example. See Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a> for more information about bipartitions.</p>
+
+<p><a id="X7E4B61FF7CCFD74A" name="X7E4B61FF7CCFD74A"></a></p>
+
+<h5>8.3-1 PartitionMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartitionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RookPartitionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularPartitionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition monoid.</p>
+
+<p>If <var class="Arg">n</var> is a non-negative integer, then this operation returns the partition monoid of degree <var class="Arg">n</var>. The <em>partition monoid of degree <var class="Arg">n</var></em> is the monoid consisting of all the bipartitions of degree <var class="Arg">n</var>.</p>
+
+<p><code class="code">SingularPartitionMonoid</code> returns the ideal of the partition monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is positive.</p>
+
+<p>If <var class="Arg">n</var> is positive, then <code class="code">RookPartitionMonoid</code> returns submonoid of the partition monoid of degree <code class="code"><var class="Arg">n</var> + 1</code> consisting of those bipartitions with <code class="code"><var class="Arg">n</var> + 1</code> and <code class="code">-<var class="Arg">n</var> - 1</code> in the same block; see <a href="chapBib.html#biBHalverson2005PartitionAlgebras">[HR05]</a>, <a href="chapBib.html#biBGrood2006aa">[Gro06]</a>, and <a href="chapBib.html#biBEast2016aa">[Eas16]</a>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartitionMonoid(5);</span>
+&lt;regular bipartition *-monoid of size 115975, degree 5 with 4 
+ generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+115975
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SingularPartitionMonoid(5);</span>
+&lt;regular bipartition *-semigroup ideal of degree 5 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S) - Size(T) = Factorial(5);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RookPartitionMonoid(5);</span>
+&lt;regular bipartition *-monoid of degree 6 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+678570</pre></div>
+
+<p><a id="X79D33B2E7BA3073A" name="X79D33B2E7BA3073A"></a></p>
+
+<h5>8.3-2 BrauerMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrauerMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialBrauerMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularBrauerMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition monoid.</p>
+
+<p>If <var class="Arg">n</var> is a non-negative integer, then this operation returns the Brauer monoid of degree <var class="Arg">n</var>. The <em>Brauer monoid</em> is the submonoid of the partition monoid consisiting of those bipartitions where the size of every block is 2.</p>
+
+<p><code class="code">PartialBrauerMonoid</code> returns the partial Brauer monoid, which is the submonoid of the partition monoid consisting of those bipartitions where the size of every block is <em>at most</em> 2. The partial Brauer monoid contains the Brauer monoid as a submonoid.</p>
+
+<p><code class="code">SingularBrauerMonoid</code> returns the ideal of the Brauer monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := BrauerMonoid(4);</span>
+&lt;regular bipartition *-monoid of degree 4 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(S, JonesMonoid(4));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+105
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SingularBrauerMonoid(8);</span>
+&lt;regular bipartition *-semigroup ideal of degree 8 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartialBrauerMonoid(3);</span>
+&lt;regular bipartition *-monoid of degree 3 with 8 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(S, BrauerMonoid(3));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+76</pre></div>
+
+<p><a id="X8378FC8B840B9706" name="X8378FC8B840B9706"></a></p>
+
+<h5>8.3-3 JonesMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JonesMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TemperleyLiebMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularJonesMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition monoid.</p>
+
+<p>If <var class="Arg">n</var> is a non-negative integer, then this operation returns the Jones monoid of degree <var class="Arg">n</var>. The <em>Jones monoid</em> is the subsemigroup of the Brauer monoid consisting of those bipartitions that are planar; see <code class="func">PlanarPartitionMonoid</code> (<a href="chap8.html#X8444092A7967A029"><span class="RefLink">8.3-9</span></a>). The Jones monoid is sometimes referred to as the <strong class="button">Temperley-Lieb monoid</strong>.</p>
+
+<p><code class="code">SingularJonesMonoid</code> returns the ideal of the Jones monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := JonesMonoid(4);</span>
+&lt;regular bipartition *-monoid of degree 4 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = TemperleyLiebMonoid(4);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SingularJonesMonoid(8);</span>
+&lt;regular bipartition *-semigroup ideal of degree 8 with 1 generator&gt;</pre></div>
+
+<p><a id="X8458B0F7874484CE" name="X8458B0F7874484CE"></a></p>
+
+<h5>8.3-4 PartialJonesMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialJonesMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition monoid.</p>
+
+<p>If <var class="Arg">n</var> is a non-negative integer, then <code class="code">PartialJonesMonoid</code> returns the partial Jones monoid of degree <var class="Arg">n</var>. The <em>partial Jones monoid</em> is a subsemigroup of the partial Brauer monoid. An element of the partial Brauer monoid is contained in the partial Jones monoid if the partition that it defines is finer than the partition defined by some element of the Jones monoid. In other words, an element of the partial Jones monoid can be formed from some element <code class="code">x</code> of the Jones monoid by replacing some blocks <code class="code">[a, b]</code> of <code class="code">x</code> by singleton blocks <code class="code">[a], [b]</code>.</p>
+
+<p>Note that, in general, the partial Jones monoid of degree <var class="Arg">n</var> is strictly contained in the Motzkin monoid of the same degree.</p>
+
+<p>See <code class="func">PartialBrauerMonoid</code> (<a href="chap8.html#X79D33B2E7BA3073A"><span class="RefLink">8.3-2</span></a>), <code class="func">JonesMonoid</code> (<a href="chap8.html#X8378FC8B840B9706"><span class="RefLink">8.3-3</span></a>), and <code class="func">MotzkinMonoid</code> (<a href="chap8.html#X8375152F7AB52B7B"><span class="RefLink">8.3-6</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartialJonesMonoid(4);</span>
+&lt;regular bipartition *-monoid of degree 4 with 7 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := JonesMonoid(4);</span>
+&lt;regular bipartition *-monoid of degree 4 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := MotzkinMonoid(4);</span>
+&lt;regular bipartition *-monoid of degree 4 with 8 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(U, S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(S, T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(U);</span>
+323
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+143
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(T);</span>
+14</pre></div>
+
+<p><a id="X7DB8CB067CBE1254" name="X7DB8CB067CBE1254"></a></p>
+
+<h5>8.3-5 AnnularJonesMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AnnularJonesMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition monoid.</p>
+
+<p>If <var class="Arg">n</var> is a non-negative integer, then <code class="code">AnnularJonesMonoid</code> returns the annular Jones monoid of degree <var class="Arg">n</var>. The <em>annular Jones monoid</em> is the subsemigroup of the partition monoid consisting of all annular bipartitions whose blocks have size 2 (annular bipartitions are defined in Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>). See <code class="func">BrauerMonoid</code> (<a href="chap8.html#X79D33B2E7BA3073A"><span class="RefLink">8.3-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := AnnularJonesMonoid(4);</span>
+&lt;regular bipartition *-monoid of degree 4 with 2 generators&gt;</pre></div>
+
+<p><a id="X8375152F7AB52B7B" name="X8375152F7AB52B7B"></a></p>
+
+<h5>8.3-6 MotzkinMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MotzkinMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition monoid.</p>
+
+<p>If <var class="Arg">n</var> is a non-negative integer, then this operation returns the Motzkin monoid of degree <var class="Arg">n</var>. The <em>Motzkin monoid</em> is the subsemigroup of the partial Brauer monoid consisting of those bipartitions that are planar (planar bipartitions are defined in Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>).</p>
+
+<p>Note that the Motzkin monoid of degree <var class="Arg">n</var> contains the partial Jones monoid of degree <var class="Arg">n</var>, but in general, these monoids are not equal; see <code class="func">PartialJonesMonoid</code> (<a href="chap8.html#X8458B0F7874484CE"><span class="RefLink">8.3-4</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MotzkinMonoid(4);</span>
+&lt;regular bipartition *-monoid of degree 4 with 8 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := PartialJonesMonoid(4);</span>
+&lt;regular bipartition *-monoid of degree 4 with 7 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(S, T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+323
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(T);</span>
+143</pre></div>
+
+<p><a id="X83C7587C81B985BA" name="X83C7587C81B985BA"></a></p>
+
+<h5>8.3-7 DualSymmetricInverseSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DualSymmetricInverseSemigroup</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DualSymmetricInverseMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularDualSymmetricInverseMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialDualSymmetricInverseMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: An inverse bipartition monoid.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer, then the operations <code class="code">DualSymmetricInverseSemigroup</code> and <code class="code">DualSymmetricInverseMonoid</code> return the dual symmetric inverse monoid of degree <var class="Arg">n</var>, which is the subsemigroup of the partition monoid consisting of the block bijections of degree <var class="Arg">n</var>.</p>
+
+<p><code class="code">SingularDualSymmetricInverseMonoid</code> returns the ideal of the dual symmetric inverse monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
+
+<p><code class="code">PartialDualSymmetricInverseMonoid</code> returns the submonoid of the dual symmetric inverse monoid of degree <code class="code"><var class="Arg">n</var> + 1</code> consisting of those block bijections with <code class="code"><var class="Arg">n</var> + 1</code> and <code class="code">-<var class="Arg">n</var> - 1</code> in the same block; see <a href="chapBib.html#biBKudryavtseva2011aa">[KM11]</a> and <a href="chapBib.html#biBKudryavtseva2015aa">[KMU15]</a>.</p>
+
+<p>See <code class="func">IsBlockBijection</code> (<a href="chap3.html#X829494DF7FD6CFEC"><span class="RefLink">3.5-15</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Number(PartitionMonoid(3), IsBlockBijection);</span>
+25
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseSemigroup(3);</span>
+&lt;inverse block bijection monoid of degree 3 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+25
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartialDualSymmetricInverseMonoid(5);</span>
+&lt;inverse block bijection monoid of degree 6 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+29072</pre></div>
+
+<p><a id="X8301C61384168D6F" name="X8301C61384168D6F"></a></p>
+
+<h5>8.3-8 UniformBlockBijectionMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniformBlockBijectionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorisableDualSymmetricInverseMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularUniformBlockBijectionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialUniformBlockBijectionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularFactorisableDualSymmetricInverseMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PlanarUniformBlockBijectionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularPlanarUniformBlockBijectionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: An inverse bipartition monoid.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer, then this operation returns the uniform block bijection monoid of degree <var class="Arg">n</var>. The <em>uniform block bijection monoid</em> is the submonoid of the partition monoid consisting of the block bijections of degree <span class="SimpleMath">n</span> where the number of positive integers in a block equals the number of negative integers in that block. The uniform block bijection monoid is also referred to as the <em>factorisable dual symmetric inverse monoid</em>.</p>
+
+<p><code class="code">SingularUniformBlockBijectionMonoid</code> returns the ideal of the uniform block bijection monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
+
+<p><code class="code">PlanarUniformBlockBijectionMonoid</code> returns the submonoid of the uniform block bijection monoid consisting of the planar elements (i.e. those in the planar partition monoid, see <code class="func">PlanarPartitionMonoid</code> (<a href="chap8.html#X8444092A7967A029"><span class="RefLink">8.3-9</span></a>)).</p>
+
+<p><code class="code">SingularPlanarUniformBlockBijectionMonoid</code> returns the ideal of the planar uniform block bijection monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">n</var> is at least 2.</p>
+
+<p><code class="code">PartialUniformBlockBijectionMonoid</code> returns the submonoid of the uniform block bijection monoid of degree <code class="code"><var class="Arg">n</var> + 1</code> consisting of those uniform block bijection with <code class="code"><var class="Arg">n</var> + 1</code> and <code class="code">-<var class="Arg">n</var> - 1</code> in the same block.</p>
+
+<p>See <code class="func">IsUniformBlockBijection</code> (<a href="chap3.html#X79D54AD8833B9551"><span class="RefLink">3.5-16</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := UniformBlockBijectionMonoid(4);</span>
+&lt;inverse block bijection monoid of degree 4 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(PlanarUniformBlockBijectionMonoid(8));</span>
+128
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(4);</span>
+&lt;inverse block bijection monoid of degree 4 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableInverseMonoid(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := UniformBlockBijectionMonoid(4);</span>
+&lt;inverse block bijection monoid of degree 4 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableInverseMonoid(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := AsSemigroup(IsBipartitionSemigroup,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                    SymmetricInverseMonoid(5));</span>
+&lt;inverse bipartition monoid of degree 5 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableInverseMonoid(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PartialUniformBlockBijectionMonoid(5);</span>
+&lt;inverse block bijection monoid of degree 6 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrIdempotents(S);</span>
+203
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFactorisableInverseMonoid(S);</span>
+true</pre></div>
+
+<p><a id="X8444092A7967A029" name="X8444092A7967A029"></a></p>
+
+<h5>8.3-9 PlanarPartitionMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PlanarPartitionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularPlanarPartitionMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition monoid.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer, then this operation returns the planar partition monoid of degree <var class="Arg">n</var> which is the monoid consisting of all the planar bipartitions of degree <var class="Arg">n</var> (planar bipartitions are defined in Chapter <a href="chap3.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a>).</p>
+
+<p><code class="code">SingularPlanarPartitionMonoid</code> returns the ideal of the planar partition monoid consisting of the non-invertible elements (i.e. those not in the group of units).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PlanarPartitionMonoid(5);</span>
+&lt;regular bipartition *-monoid of degree 5 with 9 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+16796
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SingularPlanarPartitionMonoid(5);</span>
+&lt;regular bipartition *-semigroup ideal of degree 5 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(T);</span>
+16795
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Difference(S, T);</span>
+[ &lt;block bijection: [ 1, -1 ], [ 2, -2 ], [ 3, -3 ], [ 4, -4 ], 
+     [ 5, -5 ]&gt; ]
+</pre></div>
+
+<p><a id="X7F208DC584C0B9D1" name="X7F208DC584C0B9D1"></a></p>
+
+<h5>8.3-10 ModularPartitionMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ModularPartitionMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularModularPartitionMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PlanarModularPartitionMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularPlanarModularPartitionMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition monoid.</p>
+
+<p>If <var class="Arg">m</var> and <var class="Arg">n</var> are positive integers, then this operation returns the modular-<var class="Arg">m</var> partition monoid of degree <var class="Arg">n</var>. The <em>modular-</em><var class="Arg">m</var> <em>partition monoid</em> is the submonoid of the partition monoid such that the numbers of positive and negative integers contained in each block are congruent mod <var class="Arg">m</var>.</p>
+
+<p><code class="code">SingularModularPartitionMonoid</code> returns the ideal of the modular partition monoid consisting of the non-invertible elements (i.e. those not in the group of units), when either <var class="Arg">m = n = 1</var> or <var class="Arg">m, n &gt; 1</var>.</p>
+
+<p><code class="code">PlanarModularPartitionMonoid</code> returns the submonoid of the modular-<var class="Arg">m</var> partition monoid consisting of the planar elements (i.e. those in the planar partition monoid, see <code class="func">PlanarPartitionMonoid</code> (<a href="chap8.html#X8444092A7967A029"><span class="RefLink">8.3-9</span></a>)).</p>
+
+<p><code class="code">SingularPlanarModularPartitionMonoid</code> returns the ideal of the planar modular partition monoid consisting of the non-invertible elements (i.e. those not in the group of units), when either <var class="Arg">m = n = 1</var> or <var class="Arg">m, n &gt; 1</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ModularPartitionMonoid(3, 7);</span>
+&lt;regular bipartition *-monoid of degree 7 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+826897
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularModularPartitionMonoid(1, 1);</span>
+&lt;commutative inverse bipartition semigroup ideal of degree 1 with
+  1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(SingularModularPartitionMonoid(2, 4));</span>
+355
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PlanarModularPartitionMonoid(4, 9);</span>
+&lt;regular bipartition *-monoid of degree 9 with 14 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+1795
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SingularPlanarModularPartitionMonoid(3, 5);</span>
+&lt;regular bipartition *-semigroup ideal of degree 5 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(SingularPlanarModularPartitionMonoid(1, 2));</span>
+13</pre></div>
+
+<p><a id="X7C82B25F8441928E" name="X7C82B25F8441928E"></a></p>
+
+<h5>8.3-11 ApsisMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApsisMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularApsisMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CrossedApsisMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingularCrossedApsisMonoid</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A bipartition monoid.</p>
+
+<p>If <var class="Arg">m</var> and <var class="Arg">n</var> are positive integers, then this operation returns the <var class="Arg">m</var>-apsis monoid of degree <var class="Arg">n</var>. The <var class="Arg">m</var><em>-apsis monoid</em> is the monoid of bipartitions generated when the diapses in generators of the Jones monoid are replaced with <var class="Arg">m</var>-apses. Note that an <var class="Arg">m</var><em>-apsis</em> is a block that contains precisely <var class="Arg">m</var> consecutive integers.</p>
+
+<p><code class="code">SingularApsisMonoid</code> returns the ideal of the apsis monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">m</var> <span class="SimpleMath">≤</span> <var class="Arg">n</var>.</p>
+
+<p><code class="code">CrossedApsisGeneratedMonoid</code> returns the semigroup generated by the symmetric group of degree <var class="Arg">n</var> and the <var class="Arg">m</var>-apsis monoid of degree <var class="Arg">n</var>.</p>
+
+<p><code class="code">SingularCrossedApsisMonoid</code> returns the ideal of the crossed apsis monoid consisting of the non-invertible elements (i.e. those not in the group of units), when <var class="Arg">m &lt;= n</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ApsisMonoid(3, 7);</span>
+&lt;regular bipartition *-monoid of degree 7 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+320
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SingularApsisMonoid(3, 7);</span>
+&lt;regular bipartition *-semigroup ideal of degree 7 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Difference(S, T) = [One(S)];</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(CrossedApsisMonoid(4, 9));</span>
+24291981
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SingularCrossedApsisMonoid(4, 6);</span>
+&lt;regular bipartition *-semigroup ideal of degree 6 with 1 generator&gt;</pre></div>
+
+<p><a id="X874C945E7C61A969" name="X874C945E7C61A969"></a></p>
+
+<h4>8.4 <span class="Heading">
+      Standard PBR semigroups
+    </span></h4>
+
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> that can be used to create standard examples of semigroups of partitioned binary relations (PBRs). See Chapter <a href="chap4.html#X85A717D1790B7BB5"><span class="RefLink">4</span></a> for more information about PBRs.</p>
+
+<p><a id="X7DBB30AA83663CE8" name="X7DBB30AA83663CE8"></a></p>
+
+<h5>8.4-1 FullPBRMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullPBRMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A PBR monoid.</p>
+
+<p>If <var class="Arg">n</var> is a positive integer not greater than <code class="code">2</code>, then this operation returns the monoid consisting of all of the partitioned binary relations (PBRs) of degree <var class="Arg">n</var>; called the <em>full PBR monoid</em>. There are <code class="code">2 ^ (2 * n) ^ 2</code> PBRs of degree <var class="Arg">n</var>. The full PBR monoid of degree <var class="Arg">n</var> is currently too large to compute when <span class="SimpleMath"><var class="Arg">n</var> ≥ 3</span>.</p>
+
+<p>The full PBR monoid is not regular in general.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullPBRMonoid(1);</span>
+&lt;pbr monoid of degree 1 with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullPBRMonoid(2);</span>
+&lt;pbr monoid of degree 2 with 10 generators&gt;</pre></div>
+
+<p><a id="X857DBF537A9A9976" name="X857DBF537A9A9976"></a></p>
+
+<h4>8.5 <span class="Heading">
+      Semigroups of matrices over a finite field
+    </span></h4>
+
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> that can be used to create semigroups of matrices over a finite field that belonging to several standard classes of example. See the section <a href="chap5.html#X873822B6830CE367"><span class="RefLink"><span class="Heading"> Matrices over finite fields </span></span></a> for more information about matrices over a finite field.</p>
+
+<p><a id="X7D4B473A7D7735E3" name="X7D4B473A7D7735E3"></a></p>
+
+<h5>8.5-1 FullMatrixMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullMatrixMonoid</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralLinearMonoid</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GLM</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A matrix monoid.</p>
+
+<p>These operations return the full matrix monoid of <var class="Arg">d</var> by <var class="Arg">d</var> matrices over the field with <var class="Arg">q</var> elements. The <em>full matrix monoid</em>, also known as the <em>general linear monoid</em>, with these parameters, is the monoid consisting of all <var class="Arg">d</var> by <var class="Arg">d</var> matrices with entries from the field <code class="code">GF(<var class="Arg">q</var>)</code>. This monoid has <code class="code"><var class="Arg">q</var> ^ (<var class="Arg">d</var> ^ 2)</code> elements.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullMatrixMonoid(3, 4);</span>
+&lt;general linear monoid 3x3 over GF(2^2)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+262144
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = GeneralLinearMonoid(3, 4);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GLM(2, 2);</span>
+&lt;general linear monoid 2x2 over GF(2)&gt;</pre></div>
+
+<p><a id="X785924807B60F187" name="X785924807B60F187"></a></p>
+
+<h5>8.5-2 SpecialLinearMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialLinearMonoid</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SLM</code>( <var class="Arg">d</var>, <var class="Arg">q</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A matrix monoid.</p>
+
+<p>These operations return the special linear monoid of <var class="Arg">d</var> by <var class="Arg">d</var> matrices over the field with <var class="Arg">q</var> elements. The <em>special linear monoid</em> is the monoid consisting of all <var class="Arg">d</var> by <var class="Arg">d</var> matrices with entries from the field <code class="code">GF(<var class="Arg">q</var>)</code> that have determinant <code class="code">0</code> or <code class="code">1</code>. In other words, the special linear monoid is formed from the general linear monoid of the same parameters by replacing its group of units (the general linear group) by the special linear group.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SpecialLinearMonoid(3, 4);</span>
+&lt;regular monoid of 3x3 matrices over GF(2^2) with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S = SLM(3, 4);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+141184</pre></div>
+
+<p><a id="X860B2A4382CA8F87" name="X860B2A4382CA8F87"></a></p>
+
+<h5>8.5-3 IsFullMatrixMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFullMatrixMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeneralLinearMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p><code class="code">IsFullMatrixMonoid</code> and <code class="code">IsGeneralLinearMonoid</code> return <code class="keyw">true</code> if the semigroup <code class="code">S</code> was created using either of the commands <code class="func">FullMatrixMonoid</code> (<a href="chap8.html#X7D4B473A7D7735E3"><span class="RefLink">8.5-1</span></a>) or <code class="func">GeneralLinearMonoid</code> (<a href="chap8.html#X7D4B473A7D7735E3"><span class="RefLink">8.5-1</span></a>) and <code class="keyw">false</code> otherwise.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RandomSemigroup(IsTransformationSemigroup, 4, 4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFullMatrixMonoid(S);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GeneralLinearMonoid(3, 3);</span>
+&lt;general linear monoid 3x3 over GF(3)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFullMatrixMonoid(S);</span>
+true</pre></div>
+
+<p><a id="X85BACB7F81660ECC" name="X85BACB7F81660ECC"></a></p>
+
+<h4>8.6 <span class="Heading">
+      Semigroups of boolean matrices
+    </span></h4>
+
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> that can be used to create semigroups of boolean matrices belonging to several standard classes of example. See the section <a href="chap5.html#X844A32A184E5EB75"><span class="RefLink"><span class="Heading"> Boolean matrices </span></span></a> for more information about boolean matrices.</p>
+
+<p><a id="X7B20103D84E010EF" name="X7B20103D84E010EF"></a></p>
+
+<h5>8.6-1 FullBooleanMatMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullBooleanMatMonoid</code>( <var class="Arg">d</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: The monoid of all boolean matrices of dimension <var class="Arg">d</var>.</p>
+
+<p>If <var class="Arg">d</var> is a positive integer less than or equal to <code class="code">5</code>, then this operation returns the full boolean matrix monoid of dimension <var class="Arg">d</var>. The <em>full boolean matrix monoid of dimension <var class="Arg">d</var></em> is the monoid consisting of all <var class="Arg">d</var> by <var class="Arg">d</var> boolean matrices, and has <code class="code">2 ^ (<var class="Arg">n</var> ^ 2)</code> matrices.</p>
+
+<p><code class="code">FullBooleanMatMonoid</code> returns a monoid with a generating set that is minimal in size. These generating sets are pre-computed.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullBooleanMatMonoid(3);</span>
+&lt;monoid of 3x3 boolean matrices with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+512</pre></div>
+
+<p><a id="X7A43263981F2F2AF" name="X7A43263981F2F2AF"></a></p>
+
+<h5>8.6-2 RegularBooleanMatMonoid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularBooleanMatMonoid</code>( <var class="Arg">d</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A monoid of boolean matrices.</p>
+
+<p>If <var class="Arg">d</var> is a positive integer, then <code class="code">RegularBooleanMatMonoid</code> returns the monoid generated by the regular <var class="Arg">d</var> by <var class="Arg">d</var> boolean matrices. Note that this monoid is <em>not</em> regular in general. <code class="code">RegularBooleanMatMonoid(<var class="Arg">d</var>)</code> is generated by the four boolean matrices <code class="code">A, B, C, D</code>, whose <code class="keyw">true</code> entries are:</p>
 
 
 <ul>
-<li><p>Generating pairs -- the minimal congruence which contains these pairs</p>
+<li><p><code class="code">A[i][i + 1]</code> and <code class="code">A[n][1]</code>, for <span class="SimpleMath">i ∈ {1, ..., n - 1}</span>;</p>
 
 </li>
-<li><p>Rees congruences -- the congruence specified by a given ideal</p>
+<li><p><code class="code">B[1][2]</code>, <code class="code">B[2][1]</code>, and <code class="code">B[i][i]</code> for <span class="SimpleMath">i ∈ {3, ..., n}</span>;</p>
 
 </li>
-<li><p>Universal congruences -- the unique congruence with only one class</p>
+<li><p><code class="code">C[1][2]</code> and <code class="code">C[i][i]</code>, for <span class="SimpleMath">i ∈ {2, ..., n - 1}</span>; and</p>
 
 </li>
-<li><p>Linked triples -- only for simple or 0-simple semigroups (see below)</p>
-
-</li>
-<li><p>Kernel and trace -- only for inverse semigroups</p>
+<li><p><code class="code">D[1][2]</code>, <code class="code">D[i][i]</code>, for <span class="SimpleMath">i ∈ {2, ..., n}</span>, and <code class="code">D[n][1]</code>.</p>
 
 </li>
 </ul>
-<p>The operation <code class="func">SemigroupCongruence</code> (<a href="chap8.html#X85CE56AC84FA5D33"><span class="RefLink">8.1-1</span></a>) can be used to create any of these, interpreting the arguments in a smart way. The usual way of specifying a congruence will be by giving a set of generating pairs, but a user with an ideal could instead create a Rees congruence or universal congruence.</p>
+<p>This monoid has nearly <code class="code">2 ^ (n ^ 2)</code> elements.</p>
 
-<p>If a congruence is specified by generating pairs on a simple, 0-simple, or inverse semigroup, then the congruence will be converted automatically to one of the last two items in the above list, to reduce the complexity of any calculations to be performed. The user need not manually specify, or even be aware of, the congruence's linked triple or kernel and trace.</p>
+<p><a id="X78DF50747A28098C" name="X78DF50747A28098C"></a></p>
 
-<p><a id="X7D49787B7B2589B2" name="X7D49787B7B2589B2"></a></p>
+<h5>8.6-3 ReflexiveBooleanMatMonoid</h5>
 
-<h4>8.1 <span class="Heading">Creating congruences</span></h4>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReflexiveBooleanMatMonoid</code>( <var class="Arg">d</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A monoid of boolean matrices.</p>
 
-<p><a id="X85CE56AC84FA5D33" name="X85CE56AC84FA5D33"></a></p>
+<p>If <var class="Arg">d</var> is a positive integer less than or equal to <code class="code">5</code>, then this operation returns the monoid consisting of all reflexive <var class="Arg">d</var> by <var class="Arg">d</var> boolean matrices. A boolean matrix <code class="code">mat</code> is <em>reflexive</em> if each entry of its leading diagonal is <code class="keyw">true</code>, i.e. if <code class="code">mat[i][i]</code> is <code class="keyw">true</code> for all <span class="SimpleMath">i ∈ {1, ..., d}</span>.</p>
 
-<h5>8.1-1 SemigroupCongruence</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupCongruence</code>( <var class="Arg">S</var>, <var class="Arg">pairs</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: A semigroup congruence.</p>
-
-<p>This function returns a semigroup congruence over the semigroup <var class="Arg">S</var>.</p>
-
-<p>If <var class="Arg">pairs</var> is a list of lists of size 2 with elements from <var class="Arg">S</var>, then this function will return the semigroup congruence defined by these generating pairs. The individual pairs may instead be given as separate arguments.</p>
+<p>The generating sets for the monoids returned by <code class="code">ReflexiveBooleanMatMonoid</code> are pre-computed, and read from a file. Small generating sets are not known for <span class="SimpleMath"><var class="Arg">d</var> ≥ 6</span>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                Transformation( [ 3, 4, 3, 4, 4 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                Transformation( [ 3, 4, 3, 4, 3 ] ),  </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                Transformation( [ 4, 3, 3, 4, 4 ] ));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [ Transformation( [ 3, 4, 3, 4, 3 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">              Transformation( [ 1, 2, 1, 2, 1 ] ) ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [ Transformation( [ 4, 3, 4, 3, 4 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">              Transformation( [ 3, 4, 3, 4, 3 ] ) ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupCongruence(S, [pair1, pair2]);</span>
-&lt;semigroup congruence over &lt;simple transformation semigroup of 
- degree 5 with 4 generators&gt; with linked triple (2,4,1)&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupCongruence(S, pair1, pair2);</span>
-&lt;semigroup congruence over &lt;simple transformation semigroup of 
- degree 5 with 4 generators&gt; with linked triple (2,4,1)&gt;</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReflexiveBooleanMatMonoid(4);</span>
+&lt;monoid of 4x4 boolean matrices with 38 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+4096</pre></div>
 
-<p><a id="X7D65BB067A762CD6" name="X7D65BB067A762CD6"></a></p>
+<p><a id="X79EF0EA68782CFCA" name="X79EF0EA68782CFCA"></a></p>
 
-<h4>8.2 <span class="Heading">Congruence classes</span></h4>
+<h5>8.6-4 HallMonoid</h5>
 
-<p><a id="X7CB27F237B59C8C9" name="X7CB27F237B59C8C9"></a></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HallMonoid</code>( <var class="Arg">d</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A monoid of boolean matrices.</p>
 
-<h5>8.2-1 CongruenceClassOfElement</h5>
+<p>If <var class="Arg">d</var> is a positive integer less than or equal to <code class="code">5</code>, then this operation returns the monoid consisting Hall matrices of degree <var class="Arg">d</var>. A <em>Hall matrix</em> is a boolean matrix in which every column and every row contains at least one <code class="keyw">true</code> entry. Equivalently, a Hall matrix is a boolean matrix than contains a permutation.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruenceClassOfElement</code>( <var class="Arg">cong</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A congruence class.</p>
+<p>A Hall matrix of dimension <var class="Arg">d</var> corresponds to a solution to Hall's Marriage Problem, when there are two collection of <var class="Arg">d</var> people. Thus the number of solutions to Hall's Marriage Problem in this instance is the number of elements of <code class="code">HallMonoid(<var class="Arg">d</var>)</code>.</p>
 
-<p>This operation is a synonym of <code class="code">EquivalenceClassOfElement</code> in the case that the argument <var class="Arg">cong</var> is a congruence of a semigroup.</p>
+<p>The operation <code class="code">HallMonoid</code> returns a monoid with a generating set that is minimal in size. These generating sets are pre-computed, and a minimal generating set is not known for larger dimensions.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">elm := ReesZeroMatrixSemigroupElement(S, 1, (1,3,2), 1);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruenceClassOfElement(cong, elm);</span>
-{(1,(1,3,2),1)}</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := HallMonoid(3);</span>
+&lt;monoid of 3x3 boolean matrices with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+247</pre></div>
 
-<p><a id="X7E36A01C85E2DCF0" name="X7E36A01C85E2DCF0"></a></p>
+<p><a id="X7F083600787C78FF" name="X7F083600787C78FF"></a></p>
 
-<h5>8.2-2 CongruenceClasses</h5>
+<h5>8.6-5 GossipMonoid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: The classes of congruence.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GossipMonoid</code>( <var class="Arg">d</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A monoid of boolean matrices.</p>
 
-<p>When <var class="Arg">cong</var> is a congruence of semigroup, this attribute is synonymous with <code class="code">EquivalenceClasses</code>.</p>
+<p>If <var class="Arg">d</var> is a positive integer, then this operation returns the <var class="Arg">d</var> by <var class="Arg">d</var> gossip monoid. The <em>gossip monoid</em> is defined to be the monoid generated by the collection of all <var class="Arg">d</var> by <var class="Arg">d</var> boolean matrices that define an equivalence relation; see <code class="func">IsEquivalenceBooleanMat</code> (<a href="chap5.html#X82EA957982B79827"><span class="RefLink">5.3-16</span></a>).</p>
 
-<p>The return value is a list containing all the equivalence classes of the semigroup congruence <var class="Arg">cong</var>.</p>
+<p>For <span class="SimpleMath"><var class="Arg">d</var> ≥ 2</span>, <code class="code">GossipMonoid(<var class="Arg">d</var>)</code> returns a monoid with <span class="SimpleMath">d choose 2</span> generators. The generating set is the collection of boolean matrices that define an equivalence relation that has one equivalence class of size <code class="code">2</code>, and no other non-trivial equivalence classes. Note that this generating set is strictly contained within the collection of all equivalence relation boolean matrices.</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := CongruenceClasses(cong);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(classes);</span>
-9</pre></div>
-
-<p><a id="X7C80CD547A5C3E76" name="X7C80CD547A5C3E76"></a></p>
-
-<h5>8.2-3 NrCongruenceClasses</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: A positive integer.</p>
-
-<p>This attribute describes the number of congruence classes in the semigroup congruence <var class="Arg">cong</var>.</p>
+<p>The number of elements of <code class="code">GossipMonoid(<var class="Arg">d</var>)</code> is known for some small values of <var class="Arg">d</var> — see <a href="chapBib.html#biBBrouwer2015aa">[BDF15]</a> for more information about the gossip monoid, and its size for <span class="SimpleMath"><var class="Arg">d</var> ≤ 9</span>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrCongruenceClasses(cong);</span>
-9</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := GossipMonoid(3);</span>
+&lt;monoid of 3x3 boolean matrices with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+11</pre></div>
 
-<p><a id="X7AB683CB7CD1B18D" name="X7AB683CB7CD1B18D"></a></p>
+<p><a id="X81BBCF2E84239521" name="X81BBCF2E84239521"></a></p>
 
-<h5>8.2-4 CongruencesOfSemigroup</h5>
+<h5>8.6-6 TriangularBooleanMatMonoid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: The congruences of a semigroup.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangularBooleanMatMonoid</code>( <var class="Arg">d</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnitriangularBooleanMatMonoid</code>( <var class="Arg">d</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A monoid of boolean matrices.</p>
 
-<p>This attribute gives a list of the congruences of the semigroup <var class="Arg">S</var>.</p>
+<p>If <var class="Arg">d</var> is a positive integer, then <code class="code">TriangularBooleanMatMonoid</code> returns the monoid consisting of the upper-triangular <var class="Arg">d</var> by <var class="Arg">d</var> boolean matrices. A boolean matrix is <em>upper-triangular</em> if the entry in row <code class="code">i</code>, column <code class="code">j</code> is <code class="keyw">false</code> whenever <code class="code">i &gt; j</code>.</p>
 
-<p>At present this only works for simple and 0-simple semigroups.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(s);</span>
-[ &lt;universal semigroup congruence over 
-    &lt;Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )&gt;&gt;, 
-  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-      Sym( [ 1 .. 3 ] )&gt; with linked triple (1,2,2)&gt;, 
-  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-      Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;, 
-  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-      Sym( [ 1 .. 3 ] )&gt; with linked triple (S3,2,2)&gt; ]</pre></div>
-
-<p><a id="X7F9E84A185A717C1" name="X7F9E84A185A717C1"></a></p>
-
-<h5>8.2-5 AsLookupTable</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsLookupTable</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: A list.</p>
-
-<p>This attribute describes the semigroup congruence <var class="Arg">cong</var> as a list of positive integers with length the size of the semigroup over which <var class="Arg">cong</var> is defined.</p>
-
-<p>Each position in the list corresponds to an element of the semigroup (in the order defined by <code class="code">SSortedList</code>) and the integer at that position is a unique identifier for that element's congruence class under <var class="Arg">cong</var>. Hence, two elements are congruent if and only if they have the same number at their two positions in the list.</p>
+<p><code class="code">UnitriangularBooleanMatMonoid</code> returns the subsemigroup of the <code class="code">TriangularBooleanMatMonoid</code> that consists of reflexive upper-triangular boolean matrices; see <code class="func">ReflexiveBooleanMatMonoid</code> (<a href="chap8.html#X78DF50747A28098C"><span class="RefLink">8.6-3</span></a>).</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := Monoid( [ Transformation( [ 1, 2, 2 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation( [ 3, 1, 3 ] ) ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence( s,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">      [Transformation([1,2,1]),Transformation([2,1,2])] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsLookupTable(cong);</span>
-[ 1, 2, 3, 4, 5, 6, 3, 2, 1, 6, 5, 1 ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := TriangularBooleanMatMonoid(3);</span>
+&lt;monoid of 3x3 boolean matrices with 6 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+64
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := UnitriangularBooleanMatMonoid(4);</span>
+&lt;monoid of 4x4 boolean matrices with 6 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(T);</span>
+64</pre></div>
 
-<p><a id="X7A6478D1831DD787" name="X7A6478D1831DD787"></a></p>
+<p><a id="X7F3D0AEE79AA8C98" name="X7F3D0AEE79AA8C98"></a></p>
 
-<h4>8.3 <span class="Heading">Congruences on Rees matrix semigroups</span></h4>
+<h4>8.7 <span class="Heading">
+      Semigroups of matrices over a semiring
+    </span></h4>
 
-<p>This section describes the implementation of congruences of simple and 0-simple semigroups in the <strong class="pkg">Semigroups</strong> package, and the functions associated with them. This code and this part of the manual were written by Michael Torpey. Most of the theorems used in this chapter are from Section 3.5 of <a href="chapBib.html#biBhowie">[How95]</a>.</p>
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> that can be used to create semigroups of matices over a semiring that belong to several standard classes of example. See Chapter <a href="chap5.html#X82D6B7FE7CAC0AFA"><span class="RefLink">5</span></a> for more information about matrices over a semiring.</p>
 
-<p>By the Rees Theorem, any 0-simple semigroup <span class="SimpleMath">S</span> is isomorphic to a <em>Rees 0-matrix semigroup</em> (see <a href="../../../doc/ref/chap51_mj.html#X8225A9EC87A255E6"><span class="RefLink">Reference: Rees Matrix Semigroups</span></a>) over a group, with a regular sandwich matrix. That is,</p>
+<p><a id="X81E937B6852A9C69" name="X81E937B6852A9C69"></a></p>
 
-<p class="pcenter">S \cong \mathcal{M}^0[G; I,\Lambda; P], </p>
+<h5>8.7-1 FullTropicalMaxPlusMonoid</h5>
 
-<p>where <span class="SimpleMath">G</span> is a group, <span class="SimpleMath">Λ</span> and <span class="SimpleMath">I</span> are non-empty sets, and <span class="SimpleMath">P</span> is regular in the sense that it has no rows or columns consisting soley of zeroes.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullTropicalMaxPlusMonoid</code>( <var class="Arg">d</var>, <var class="Arg">t</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A monoid of tropical max plus matrices.</p>
 
-<p>The congruences of a Rees 0-matrix semigroup are in 1-1 correspondence with the <em>linked triple</em>, which is a triple of the form <code class="code">[N,S,T]</code> where:</p>
+<p>If <code class="code"><var class="Arg">d</var> = 2</code> and <var class="Arg">t</var> is a positive integer, then <code class="code">FullTropicalMaxPlusMonoid</code> returns the monoid consisting of all <var class="Arg">d</var> by <var class="Arg">d</var> matrices with entries from the tropical max-plus semiring with threshold <var class="Arg">t</var>. A small generating set for larger values of <var class="Arg">d</var> is not currently known.</p>
 
-
-<ul>
-<li><p><code class="code">N</code> is a normal subgroup of the underlying group <code class="code">G</code>,</p>
-
-</li>
-<li><p><code class="code">S</code> is an equivalence relation on the columns of <code class="code">P</code>,</p>
-
-</li>
-<li><p><code class="code">T</code> is an equivalence relation on the rows of <code class="code">P</code>,</p>
-
-</li>
-</ul>
-<p>satisfying the following conditions:</p>
-
-
-<ul>
-<li><p>a pair of <code class="code">S</code>-related columns must contain zeroes in precisely the same rows,</p>
-
-</li>
-<li><p>a pair of <code class="code">T</code>-related rows must contain zeroes in precisely the same columns,</p>
-
-</li>
-<li><p>if <code class="code">i</code> and <code class="code">j</code> are <code class="code">S</code>-related, <code class="code">k</code> and <code class="code">l</code> are <code class="code">T</code>-related and the matrix entries <span class="SimpleMath">p_k, i, p_k, j, p_l, i, p_l, j ≠ 0</span>, then <span class="SimpleMath">q_k, l, i, j ∈ N</span>, where</p>
-
-<p class="pcenter">q_{k, l, i, j} = p_{k, i}
-        p_{l, i}^{-1} p_{l, j} p_{k, j}^{-1}.</p>
-
-</li>
-</ul>
-<p>By Theorem 3.5.9 in <a href="chapBib.html#biBhowie">[How95]</a>, for any finite 0-simple Rees 0-matrix semigroup, there is a bijection between its non-universal congruences and its linked triples. In this way, we can internally represent any congruence of such a semigroup by storing its associated linked triple instead of a set of generating pairs, and thus perform many calculations on it more efficiently.</p>
-
-<p>If a congruence is defined by a linked triple <code class="code">(N,S,T)</code>, then a single class of that congruence can be defined by a triple <code class="code">(Nx,i/S,k/S)</code>, where <code class="code">Nx</code> is a right coset of <code class="code">N</code>, <code class="code">i/S</code> is the equivalence class of <code class="code">i</code> in <code class="code">S</code>, and <code class="code">k/S</code> is the equivalence class of <code class="code">k</code> in <code class="code">T</code>. Thus we can internally represent any class of such a congruence as a triple simply consisting of a right coset and two positive integers.</p>
-
-<p>An analogous condition exists for finite simple Rees matrix semigroups without zero.</p>
-
-<p><a id="X7F4AFD7F7E163022" name="X7F4AFD7F7E163022"></a></p>
-
-<h5>8.3-1 IsRMSCongruenceByLinkedTriple</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRMSCongruenceByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRZMSCongruenceByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p>These categories describe a type of semigroup congruence over a Rees matrix or 0-matrix semigroup. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>) but it is represented internally by its <em>linked triple</em>, and certain functions may take advantage of this information to reduce computation times.</p>
-
-<p>An object of this type may be constructed with <code class="code">RMSCongruenceByLinkedTriple</code> or <code class="code">RZMSCongruenceByLinkedTriple</code>, or this representation may be selected automatically by <code class="func">SemigroupCongruence</code> (<a href="chap8.html#X85CE56AC84FA5D33"><span class="RefLink">8.1-1</span></a>).</p>
+<p>This monoid contains <code class="code">(<var class="Arg">t</var> + 2) ^ (<var class="Arg">d</var> ^ 2)</code> elements.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group( [ (1,4,5), (1,5,3,4) ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [  0, (),       0,     0, (3,5),         0 ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ (),  0,       0, (3,5),     0,         0 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([ (1,4)(3,5), (1,5)(3,4) ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRZMSCongruenceByLinkedTriple(cong);</span>
-true</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTropicalMaxPlusMonoid(2, 5);</span>
+&lt;monoid of 2x2 tropical max-plus matrices with 24 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+2401
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">(5 + 2) ^ (2 ^ 2);</span>
+2401</pre></div>
 
-<p><a id="X87A475E4847D3C96" name="X87A475E4847D3C96"></a></p>
+<p><a id="X85EDC03180768931" name="X85EDC03180768931"></a></p>
 
-<h5>8.3-2 RMSCongruenceByLinkedTriple</h5>
+<h5>8.7-2 FullTropicalMinPlusMonoid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSCongruenceByLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSCongruenceByLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: A Rees matrix or 0-matrix semigroup congruence by linked triple.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullTropicalMinPlusMonoid</code>( <var class="Arg">d</var>, <var class="Arg">t</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A monoid of tropical min plus matrices.</p>
 
-<p>This function returns a semigroup congruence over the Rees matrix or 0-matrix semigroup <var class="Arg">S</var> corresponding to the linked triple (<var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var>). The argument <var class="Arg">N</var> should be a normal subgroup of the underlying semigroup of <var class="Arg">S</var>; <var class="Arg">colBlocks</var> should be a partition of the columns of the matrix of <var class="Arg">S</var>; and <var class="Arg">rowBlocks</var> should be a partition of the rows of the matrix of <var class="Arg">S</var>. For example, if the matrix has 5 rows, then a possibility for <var class="Arg">rowBlocks</var> might be <code class="code">[ [1,3], [2,5], [4] ]</code>.</p>
+<p>If <var class="Arg">d</var> is equal to <code class="code">2</code> or <code class="code">3</code>, and <var class="Arg">t</var> is a positive integer, then <code class="code">FullTropicalMinPlusMonoid</code> returns the monoid consisting of all <var class="Arg">d</var> by <var class="Arg">d</var> matrices with entries from the tropical min-plus semiring with threshold <var class="Arg">t</var>. A small generating set for larger values of <var class="Arg">d</var> is not currently known.</p>
 
-<p>If the arguments describe a valid linked triple on <var class="Arg">S</var>, then an object in the category <code class="code">IsRZMSCongruenceByLinkedTriple</code> is returned. This object can be used like any other semigroup congruence in <strong class="pkg">GAP</strong>.</p>
-
-<p>If the arguments describe a triple which is not <em>linked</em> in the sense described above, then this function returns an error.</p>
+<p>This monoid contains <code class="code">(<var class="Arg">t</var> + 2) ^ (<var class="Arg">d</var> ^ 2)</code> elements.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group( [ (1,4,5), (1,5,3,4) ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [  0, (),       0,     0, (3,5),         0 ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ (),  0,       0, (3,5),     0,         0 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([ (1,4)(3,5), (1,5)(3,4) ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);</span>
-&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 6x3 over 
-  Group([ (1,4,5), (1,5,3,4) ])&gt; with linked triple (2^2,4,3)&gt;</pre></div>
-
-<p><a id="X7E9AB940868FCC9D" name="X7E9AB940868FCC9D"></a></p>
-
-<h5>8.3-3 RMSCongruenceClassByLinkedTriple</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSCongruenceClassByLinkedTriple</code>( <var class="Arg">cong</var>, <var class="Arg">nCoset</var>, <var class="Arg">colClass</var>, <var class="Arg">rowClass</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSCongruenceClassByLinkedTriple</code>( <var class="Arg">cong</var>, <var class="Arg">nCoset</var>, <var class="Arg">colClass</var>, <var class="Arg">rowClass</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A Rees matrix or 0-matrix semigroup congruence class by linked triple.</p>
-
-<p>This operation returns one congruence class of the congruence <var class="Arg">cong</var>, as defined by the other three parameters.</p>
-
-<p>The argument <var class="Arg">cong</var> must be a Rees matrix or 0-matrix semigroup congruence by linked triple. If the linked triple consists of the three parameters <code class="code">N</code>, <code class="code">colBlocks</code> and <code class="code">rowBlocks</code>, then <var class="Arg">nCoset</var> must be a right coset of <code class="code">N</code>, <var class="Arg">colClass</var> must be a positive integer corresponding to a position in the list <code class="code">colBlocks</code>, and <var class="Arg">rowClass</var> must be a positive integer corresponding to a position in the list <code class="code">rowBlocks</code>.</p>
-
-<p>If the arguments are valid, an <code class="code">IsRMSCongruenceClassByLinkedTriple</code> or <code class="code">IsRZMSCongruenceClassByLinkedTriple</code> object is returned, which can be used like any other equivalence class in <strong class="pkg">GAP</strong>. Otherwise, an error is returned.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := Group( [ (1,4,5), (1,5,3,4) ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [  0, (),       0,     0, (3,5),         0 ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ (),  0,       0, (3,5),     0,         0 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := ReesZeroMatrixSemigroup(g, mat);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := Group([ (1,4)(3,5), (1,5)(3,4) ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(s, n, colBlocks, rowBlocks);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := RZMSCongruenceClassByLinkedTriple(cong, </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">RightCoset(n,(1,5)),2,3);</span>
-{(2,(3,4),3)}</pre></div>
-
-<p><a id="X7B19CACF7A37ADBC" name="X7B19CACF7A37ADBC"></a></p>
-
-<h5>8.3-4 IsLinkedTriple</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p>This operation returns true if and only if the arguments (<var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var>) describe a linked triple of the Rees matrix or 0-matrix semigroup <var class="Arg">S</var>, as described above.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group( [ (1,4,5), (1,5,3,4) ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [ [  0,  0, (1,4,5),     0,     0, (1,4,3,5) ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [  0, (),       0,     0, (3,5),         0 ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ (),  0,       0, (3,5),     0,         0 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([ (1,4)(3,5), (1,5)(3,4) ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [ [ 1 ], [ 2, 5 ], [ 3, 6 ], [ 4 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [ [ 1 ], [ 2 ], [ 3 ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLinkedTriple(S, N, colBlocks, rowBlocks);</span>
-true</pre></div>
-
-<p><a id="X79027F0580F9D081" name="X79027F0580F9D081"></a></p>
-
-<h5>8.3-5 CanonicalRepresentative</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalRepresentative</code>( <var class="Arg">class</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: A congruence class.</p>
-
-<p>This attribute gives a canonical representative for the semigroup congruence class <var class="Arg">class</var>. This representative can be used to identify a class uniquely.</p>
-
-<p>At present this only works for simple and 0-simple semigroups.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := CongruenceClasses(cong)[3];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalRepresentative(class);</span>
-(1,(1,2,3),2)</pre></div>
-
-<p><a id="X7DB7E32E865AD95D" name="X7DB7E32E865AD95D"></a></p>
-
-<h5>8.3-6 AsSemigroupCongruenceByGeneratingPairs</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSemigroupCongruenceByGeneratingPairs</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A semigroup congruence.</p>
-
-<p>This operation takes <var class="Arg">cong</var>, a semigroup congruence, and returns the same congruence relation, but described by <strong class="pkg">GAP</strong>'s default method of defining semigroup congruences: a set of generating pairs for the congruence.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSemigroupCongruenceByGeneratingPairs(cong);</span>
-&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-  Sym( [ 1 .. 3 ] )&gt; with 3 generating pairs&gt;</pre></div>
-
-<p><a id="X85A731257EFB88A1" name="X85A731257EFB88A1"></a></p>
-
-<h5>8.3-7 AsRMSCongruenceByLinkedTriple</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsRMSCongruenceByLinkedTriple</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsRZMSCongruenceByLinkedTriple</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A Rees matrix or 0-matrix semigroup congruence by linked triple.</p>
-
-<p>This operation takes a semigroup congruence <var class="Arg">cong</var> over a finite simple or 0-simple Rees 0-matrix semigroup, and returns that congruence relation in a new form: as either a congruence by linked triple, or a universal congruence.</p>
-
-<p>If the congruence is not defined over an appropriate type of semigroup, then this function returns an error.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := ReesZeroMatrixSemigroupElement(S, 1, (1,3,2), 1);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := ReesZeroMatrixSemigroupElement(S, 1, (), 1);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruenceByGeneratingPairs(S, [ [x,y] ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsRZMSCongruenceByLinkedTriple(cong);</span>
-&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-  Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;</pre></div>
-
-<p><a id="X7952A5A5789C6F60" name="X7952A5A5789C6F60"></a></p>
-
-<h5>8.3-8 MeetSemigroupCongruences</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MeetSemigroupCongruences</code>( <var class="Arg">c1</var>, <var class="Arg">c2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A semigroup congruence.</p>
-
-<p>This operation returns the <em>meet</em> of the two semigroup congruences <var class="Arg">c1</var> and <var class="Arg">c2</var> -- that is, the largest semigroup congruence contained in both <var class="Arg">c1</var> and <var class="Arg">c2</var>.</p>
-
-<p>At present this only works for simple and 0-simple semigroups.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MeetSemigroupCongruences(congs[2], congs[3]);</span>
-&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-  Sym( [ 1 .. 3 ] )&gt; with linked triple (1,2,2)&gt;</pre></div>
-
-<p><a id="X8262D5207DBF3C5B" name="X8262D5207DBF3C5B"></a></p>
-
-<h5>8.3-9 JoinSemigroupCongruences</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinSemigroupCongruences</code>( <var class="Arg">c1</var>, <var class="Arg">c2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A semigroup congruence.</p>
-
-<p>This operation returns the <em>join</em> of the two semigroup congruences <var class="Arg">c1</var> and <var class="Arg">c2</var> -- that is, the smallest semigroup congruence containing all the relations in both <var class="Arg">c1</var> and <var class="Arg">c2</var>.</p>
-
-<p>At present this only works for simple and 0-simple semigroups.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinSemigroupCongruences(congs[2], congs[3]);</span>
-&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-  Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;</pre></div>
-
-<p><a id="X789450398397141D" name="X789450398397141D"></a></p>
-
-<h4>8.4 <span class="Heading">Universal congruences</span></h4>
-
-<p>The linked triples of a completely 0-simple Rees 0-matrix semigroup describe only its non-universal congruences. In any one of these, the zero element of the semigroup is related only to itself. However, for any semigroup <span class="SimpleMath">S</span> the universal relation <span class="SimpleMath">S × S</span> is a congruence; called the <em>universal congruence</em>. The universal congruence on a semigroup has its own unique representation.</p>
-
-<p>Since many things we want to calculate about congruences are trivial in the case of the universal congruence, this package contains a category specifically designed for it, <code class="code">IsUniversalSemigroupCongruence</code>. We also define <code class="code">IsUniversalSemigroupCongruenceClass</code>, which represents the single congruence class of the universal congruence.</p>
-
-<p><a id="X8751EF557A81A2B1" name="X8751EF557A81A2B1"></a></p>
-
-<h5>8.4-1 IsUniversalSemigroupCongruence</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUniversalSemigroupCongruence</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
-
-<p>This category describes a type of semigroup congruence, which must refer to the <em>universal semigroup congruence</em> <span class="SimpleMath">S × S</span>. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>).</p>
-
-<p>An object of this type may be constructed with <code class="code">UniversalSemigroupCongruence</code> or this representation may be selected automatically as an alternative to an <code class="code">IsRZMSCongruenceByLinkedTriple</code> object (since the universal congruence cannot be represented by a linked triple).</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([ Transformation([ 3, 2, 3 ]) ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := UniversalSemigroupCongruence(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsUniversalSemigroupCongruence(U);</span>
-true</pre></div>
-
-<p><a id="X7B99C6A47F3D375F" name="X7B99C6A47F3D375F"></a></p>
-
-<h5>8.4-2 UniversalSemigroupCongruence</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniversalSemigroupCongruence</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A universal semigroup congruence.</p>
-
-<p>This operation returns the universal semigroup congruence for the semigroup <var class="Arg">S</var>. It can be used in the same way as any other semigroup congruence object.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(),(1,3,2)],[(1,2),0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UniversalSemigroupCongruence(S);</span>
-&lt;universal semigroup congruence over 
-&lt;Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )&gt;&gt;</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTropicalMinPlusMonoid(3, 2);</span>
+&lt;monoid of 3x3 tropical min-plus matrices with 21 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+262144
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">(2 + 2) ^ (3 ^ 2);</span>
+262144</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

@@ -1,95 +1,218 @@
   
-  [1X9 [33X[0;0YHomomorphisms[133X[101X
+  [1X9 [33X[0;0YStandard constructions[133X[101X
   
-  [33X[0;0YIn this chapter we describe the various ways to define a homomorphism from a
-  semigroup to another semigroup.[133X
-  
-  [33X[0;0YSupport  for  homomorphisms  in  [5XSemigroups[105X  is currently rather limited but
-  there are plans to improve this in the future.[133X
+  [33X[0;0YIn  this chapter we describe some standard semigroup constructions which are
+  available in the [5XSemigroups[105X package.[133X
   
   
-  [1X9.1 [33X[0;0YIsomorphisms[133X[101X
+  [1X9.1 [33X[0;0YStandard constructions[133X[101X
   
-  [1X9.1-1 IsIsomorphicSemigroup[101X
+  [33X[0;0YIn this section, we describe the functions in [5XSemigroups[105X that can be used to
+  create  standard semigroup constructions in various representations. For all
+  of  the  constructions,  the  default  representation  is  as a semigroup of
+  transformations.  In general, these functions do not return a representation
+  of minimal degree.[133X
   
-  [29X[2XIsIsomorphicSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  [1X9.1-1 TrivialSemigroup[101X
   
-  [33X[0;0YThis  operation  attempts  to  determine  if  the  semigroups  [3XS[103X  and  [3XT[103X are
-  isomorphic, it returns [9Xtrue[109X if they are and [9Xfalse[109X if they are not.[133X
+  [29X[2XTrivialSemigroup[102X( [[3Xfilt[103X, ][[3Xdeg[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10YA trivial semigroup.[133X
   
-  [33X[0;0YAt  present  this only works for rather small semigroups, with approximately
-  50 elements or less.[133X
+  [33X[0;0YA [12Xtrivial[112X semigroup is a semigroup with precisely one element. This function
+  returns  a  trivial  semigroup  in  the  representation  given by the filter
+  [3Xfilter[103X, and (if possible) with the degree of the representation given by the
+  non-negative integer [3Xdeg[103X.[133X
   
-  [33X[0;0Y[12XPlease  note:[112X  the [5XGrape[105X package version 4.5 or higher must be available and
-  compiled installed for this function to work.[133X
+  [33X[0;0YThe optional argument [3Xfilt[103X may be one of the following:[133X
+  
+  [30X    [33X[0;6Y[10XIsTransformationSemigroup[110X (the default, if [3Xfilt[103X is not specified),[133X
+  
+  [30X    [33X[0;6Y[10XIsPartialPermSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBipartitionSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBlockBijectionSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsPBRSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBooleanMatSemigroup[110X.[133X
+  
+  [33X[0;0YIf  the  optional  argument [3Xdeg[103X is not specified, then the smallest possible
+  degree will be used.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup( [ PartialPerm( [ 1, 2, 4 ], [ 3, 5, 1 ] ), [127X[104X
-    [4X[25X>[125X [27XPartialPerm( [ 1, 3, 5 ], [ 4, 3, 2 ] ) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XS := TrivialSemigroup();[127X[104X
+    [4X[28X<trivial transformation group of degree 0 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X11[128X[104X
-    [4X[25Xgap>[125X [27XT:=SemigroupByMultiplicationTable(SmallestMultiplicationTable(S));;[127X[104X
-    [4X[25Xgap>[125X [27XIsIsomorphicSemigroup(S, T);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XS := TrivialSemigroup(3);[127X[104X
+    [4X[28X<trivial transformation group of degree 3 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XS := TrivialSemigroup(IsBipartitionSemigroup, 2);[127X[104X
+    [4X[28X<trivial block bijection group of degree 2 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XElements(S);[127X[104X
+    [4X[28X[ <block bijection: [ 1, 2, -1, -2 ]> ][128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-2 MonogenicSemigroup[101X
+  
+  [29X[2XMonogenicSemigroup[102X( [[3Xfilt[103X, ][3Xm[103X, [3Xr[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA monogenic semigroup with index [3Xm[103X and period [3Xr[103X.[133X
+  
+  [33X[0;0YIf  [3Xm[103X  and  [3Xr[103X  are positive integers, then this function returns a monogenic
+  semigroup  [10XS[110X  with  index  [3Xm[103X and period [3Xr[103X in the representation given by the
+  filter [3Xfilt[103X.[133X
+  
+  [33X[0;0YThe optional argument [3Xfilt[103X may be one of the following:[133X
+  
+  [30X    [33X[0;6Y[10XIsTransformationSemigroup[110X (the default, if [3Xfilt[103X is not specified),[133X
+  
+  [30X    [33X[0;6Y[10XIsPartialPermSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBipartitionSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBlockBijectionSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsPBRSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBooleanMatSemigroup[110X.[133X
+  
+  [33X[0;0YThe  semigroup  [10XS[110X  is  generated  by  a single element, [22Xf[122X. [10XS[110X consists of the
+  elements  [22Xf,  f  ^ 2, ..., f ^ m, ..., f ^ m + r - 1[122X. The minimal ideal of [10XS[110X
+  consists  of the elements [22Xf ^ m, ..., f ^ m + r - 1[122X and is isomorphic to the
+  cyclic group of order [22Xr[122X.[133X
+  
+  [33X[0;0YSee  [2XIsMonogenicSemigroup[102X  ([14X14.1-10[114X)  for  more  information about monogenic
+  semigroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := MonogenicSemigroup(5, 3);[127X[104X
+    [4X[28X<commutative non-regular transformation semigroup of size 7, degree 8 [128X[104X
+    [4X[28X with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XI := MinimalIdeal(S);;[127X[104X
+    [4X[25Xgap>[125X [27XIsGroupAsSemigroup(I);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(I);[127X[104X
+    [4X[28X"C3"[128X[104X
+    [4X[25Xgap>[125X [27XS := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);[127X[104X
+    [4X[28X<commutative non-regular block bijection semigroup of size 9, [128X[104X
+    [4X[28X degree 10 with 1 generator>[128X[104X
+  [4X[32X[104X
+  
+  [1X9.1-3 RectangularBand[101X
+  
+  [29X[2XRectangularBand[102X( [[3Xfilt[103X, ][3Xm[103X, [3Xn[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YAn [3Xm[103X by [3Xn[103X rectangular band.[133X
+  
+  [33X[0;0YIf  [3Xm[103X  and  [3Xn[103X  are positive integers, then this function returns a semigroup
+  isomorphic to an [3Xm[103X by [3Xn[103X rectangular band, in the representation given by the
+  filter [3Xfilt[103X.[133X
+  
+  [33X[0;0YThe optional argument [3Xfilt[103X may be one of the following:[133X
+  
+  [30X    [33X[0;6Y[10XIsTransformationSemigroup[110X (the default, if [3Xfilt[103X is not specified),[133X
+  
+  [30X    [33X[0;6Y[10XIsBipartitionSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsPBRSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBooleanMatSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsReesMatrixSemigroup[110X.[133X
+  
+  [33X[0;0YSee  [2XIsRectangularBand[102X  ([14X14.1-14[114X)  for  more  information  about rectangular
+  bands.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XT := RectangularBand(5, 6);[127X[104X
+    [4X[28X<regular transformation semigroup of size 30, degree 10 with 6 [128X[104X
+    [4X[28X generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsRectangularBand(T);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := RectangularBand(IsReesMatrixSemigroup, 4, 8);[127X[104X
+    [4X[28X<Rees matrix semigroup 4x8 over Group(())>[128X[104X
+    [4X[25Xgap>[125X [27XIsRectangularBand(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsCompletelySimpleSemigroup(S) and IsHTrivial(S);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X9.1-2 SmallestMultiplicationTable[101X
+  [1X9.1-4 ZeroSemigroup[101X
   
-  [29X[2XSmallestMultiplicationTable[102X( [3XS[103X ) [32X attribute
-  [6XReturns:[106X  [33X[0;10YThe lex-least multiplication table of a semigroup.[133X
+  [29X[2XZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA zero semigroup of order [3Xn[103X.[133X
   
-  [33X[0;0YThis  function  returns  the  lex-least  multiplication table of a semigroup
-  isomorphic to the semigroup [3XS[103X. [10XSmallestMultiplicationTable[110X is an isomorphism
-  invariant of semigroups, and so it can, for example, be used to check if two
-  semigroups are isomorphic.[133X
+  [33X[0;0YIf  [3Xn[103X  is a positive integer, then this function returns a zero semigroup of
+  order [3Xn[103X in the representation given by the filter [3Xfilt[103X.[133X
   
-  [33X[0;0YDue to the high complexity of computing the smallest multiplication table of
-  a  semigroup,  this  function only performs well for semigroups with at most
-  approximately 50 elements.[133X
+  [33X[0;0YThe optional argument [3Xfilt[103X may be one of the following:[133X
   
-  [33X[0;0Y[10XSmallestMultiplicationTable[110X   is  based  on  the  function  [2XIdSmallSemigroup[102X
-  ([14XSmallsemi: IdSmallSemigroup[114X) by Andreas Distler.[133X
+  [30X    [33X[0;6Y[10XIsTransformationSemigroup[110X (the default, if [3Xfilt[103X is not specified),[133X
   
-  [33X[0;0Y[12XPlease note:[112X the [5XGrape[105X package version 4.5 or higher must be loaded for this
-  function to work.[133X
+  [30X    [33X[0;6Y[10XIsPartialPermSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBipartitionSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBlockBijectionSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsPBRSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsBooleanMatSemigroup[110X,[133X
+  
+  [30X    [33X[0;6Y[10XIsReesZeroMatrixSemigroup[110X (provided that [10X[3Xn[103X[10X > 1[110X).[133X
+  
+  [33X[0;0YSee [2XIsZeroSemigroup[102X ([14X14.1-26[114X) for more information about zero semigroups.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup([127X[104X
-    [4X[25X>[125X [27XBipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), [127X[104X
-    [4X[25X>[125X [27XBipartition( [ [ 1, 2, 3, -1 ], [ -2 ], [ -3 ] ] ), [127X[104X
-    [4X[25X>[125X [27XBipartition( [ [ 1, 2, 3 ], [ -1 ], [ -2, -3 ] ] ), [127X[104X
-    [4X[25X>[125X [27XBipartition( [ [ 1, 2, -1 ], [ 3, -2 ], [ -3 ] ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27XS := ZeroSemigroup(5);[127X[104X
+    [4X[28X<commutative non-regular transformation semigroup of size 5, degree 5 [128X[104X
+    [4X[28X with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsZeroSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := ZeroSemigroup(IsPartialPermSemigroup, 15);[127X[104X
+    [4X[28X<commutative non-regular partial perm semigroup of size 15, rank 14 [128X[104X
+    [4X[28X with 14 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X8[128X[104X
-    [4X[25Xgap>[125X [27XSmallestMultiplicationTable(S);[127X[104X
-    [4X[28X[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ], [128X[104X
-    [4X[28X  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ], [128X[104X
-    [4X[28X  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], [128X[104X
-    [4X[28X  [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ][128X[104X
+    [4X[28X15[128X[104X
+    [4X[25Xgap>[125X [27Xz := MultiplicativeZero(S);[127X[104X
+    [4X[28X<empty partial perm>[128X[104X
+    [4X[25Xgap>[125X [27XIsZeroSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XForAll(S, x -> ForAll(S, y -> x * y = z));[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X9.1-3 IsomorphismSemigroups[101X
+  [1X9.1-5 LeftZeroSemigroup[101X
   
-  [29X[2XIsomorphismSemigroups[102X( [3XS[103X, [3XT[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YAn isomorphism or [9Xfail[109X.[133X
+  [29X[2XLeftZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
+  [29X[2XRightZeroSemigroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YA left zero (or right zero) semigroup of order [3Xn[103X.[133X
   
-  [33X[0;0YThis  operation  returns  an  isomorphism  from  the  semigroup [3XS[103X and to the
-  semigroup [3XT[103X if it exists, and it returns [9Xfail[109X if it does not.[133X
+  [33X[0;0YIf [3Xn[103X is a positive integer, then this function returns a left zero (or right
+  zero,  as  appropriate)  semigroup of order [3Xn[103X in the representation given by
+  the filter [3Xfilt[103X. If [3Xfilt[103X is not specified then the default representation is
+  [10XIsTransformationSemigroup[110X.[133X
   
-  [33X[0;0YAt  present  this  only  works  for Rees matrix semigroups and Rees 0-matrix
-  semigroups.[133X
+  [33X[0;0YThe      function      [10XLeftZeroSemigroup([[3Xfilt[103X[10X,]     [3Xn[103X[10X)[110X     simply     calls
+  [10XRectangularBand([[3Xfilt[103X[10X,] [3Xn[103X[10X, 1)[110X and the function [10XRightZeroSemigroup([[3Xfilt[103X[10X,] [3Xn[103X[10X)[110X
+  simply calls [10XRectangularBand([[3Xfilt[103X[10X,] 1, [3Xn[103X[10X)[110X.[133X
   
-  [33X[0;0Y[12XPlease  note:[112X  the [5XGrape[105X package version 4.5 or higher must be available and
-  compiled  for  this function to work, when the argument [3XR[103X is a Rees 0-matrix
-  semigroup.[133X
+  [33X[0;0YFor  more  information about [10XRectangularBand[110X, including its permitted values
+  of  [3Xfilt[103X,  see [2XRectangularBand[102X ([14X9.1-3[114X). See [2XIsLeftZeroSemigroup[102X ([14X14.1-9[114X) and
+  [2XIsRightZeroSemigroup[102X  ([14X14.1-17[114X)  for  more  information  about left zero and
+  right zero semigroups.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);[127X[104X
-    [4X[28X<Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])>[128X[104X
-    [4X[25Xgap>[125X [27XT:=PrincipalFactor(DClasses(PartitionMonoid(5))[2]);[127X[104X
-    [4X[28X<Rees 0-matrix semigroup 15x15 over Group([ (2,3,4,5), (4,5) ])>[128X[104X
-    [4X[25Xgap>[125X [27XIsomorphismSemigroups(S, T);[127X[104X
-    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XS := LeftZeroSemigroup(20);[127X[104X
+    [4X[28X<transformation semigroup of degree 6 with 20 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsLeftZeroSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XForAll(Tuples(S, 2), p -> p[1] * p[2] = p[1]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := RightZeroSemigroup(IsBipartitionSemigroup, 5);[127X[104X
+    [4X[28X<regular bipartition semigroup of size 5, degree 3 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsRightZeroSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   

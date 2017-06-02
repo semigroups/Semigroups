@@ -1,0 +1,687 @@
+  
+  [1X15 [33X[0;0YProperties and attributes specific to inverse semigroups[133X[101X
+  
+  [33X[0;0YIn  this  chapter  we  describe the attributes which are specific to inverse
+  semigroups that can be determined using [5XSemigroups[105X.[133X
+  
+  [33X[0;0YThe functions[133X
+  
+  [30X    [33X[0;6Y[2XIsJoinIrreducible[102X ([14X15.2-5[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsMajorantlyClosed[102X ([14X15.2-6[114X)[133X
+  
+  [30X    [33X[0;6Y[2XJoinIrreducibleDClasses[102X ([14X15.1-2[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMajorantClosure[102X ([14X15.1-3[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMinorants[102X ([14X15.1-4[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRightCosetsOfInverseSemigroup[102X ([14X15.1-6[114X)[133X
+  
+  [30X    [33X[0;6Y[2XSmallerDegreePartialPermRepresentation[102X ([14X15.1-8[114X)[133X
+  
+  [30X    [33X[0;6Y[2XVagnerPrestonRepresentation[102X ([14X15.1-9[114X)[133X
+  
+  [33X[0;0Ywere written by Wilf A. Wilson and Robert Hancock.[133X
+  
+  [33X[0;0YThe  function  [2XCharacterTableOfInverseSemigroup[102X  ([14X15.1-10[114X)  was  written  by
+  Jhevon Smith and Ben Steinberg.[133X
+  
+  
+  [1X15.1 [33X[0;0YAttributes specific to inverse semigroups[133X[101X
+  
+  [1X15.1-1 NaturalLeqInverseSemigroup[101X
+  
+  [29X[2XNaturalLeqInverseSemigroup[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn function.[133X
+  
+  [33X[0;0Y[10XNaturalLeqInverseSemigroup[110X  returns a function that, when given two elements
+  [10Xx,  y[110X of the inverse semigroup [3XS[103X, returns [9Xtrue[109X if [10Xx[110X is less than or equal to
+  [10Xy[110X in the natural partial order on [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Monoid(Transformation([1, 3, 4, 4]),[127X[104X
+    [4X[25X>[125X [27X               Transformation([1, 4, 2, 4]));[127X[104X
+    [4X[28X<transformation monoid of degree 4 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsInverseSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27XNaturalPartialOrder(S);[127X[104X
+    [4X[28X[ [ 2, 5, 6 ], [ 6 ], [ 6 ], [ 6 ], [ 6 ], [  ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X15.1-2 JoinIrreducibleDClasses[101X
+  
+  [29X[2XJoinIrreducibleDClasses[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA list of [13XD[113X-classes.[133X
+  
+  [33X[0;0Y[10XJoinIrreducibleDClasses[110X  returns a list of the join irreducible [13XD[113X-classes of
+  the  inverse  semigroup of partial permutations, block bijections or partial
+  permutation bipartitions [3XS[103X.[133X
+  
+  [33X[0;0YA  [13Xjoin  irreducible  [13XD[113X-class[113X  is a [13XD[113X-class containing only join irreducible
+  elements.  See  [2XIsJoinIrreducible[102X  ([14X15.2-5[114X).  If a [13XD[113X-class contains one join
+  irreducible  element,  then  all  of  the  elements  in the [13XD[113X-class are join
+  irreducible.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XJoinIrreducibleDClasses(S);[127X[104X
+    [4X[28X[ <Green's D-class: <identity partial perm on [ 2 ]>> ][128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X  PartialPerm([1, 2, 4, 3]),[127X[104X
+    [4X[25X>[125X [27X  PartialPerm([1]),[127X[104X
+    [4X[25X>[125X [27X  PartialPerm([0, 2])]);[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XJoinIrreducibleDClasses(T);[127X[104X
+    [4X[28X[ <Green's D-class: <identity partial perm on [ 1, 2, 3, 4 ]>>, [128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 1 ]>>, [128X[104X
+    [4X[28X  <Green's D-class: <identity partial perm on [ 2 ]>> ][128X[104X
+    [4X[25Xgap>[125X [27XD := DualSymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 3 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XJoinIrreducibleDClasses(D);[127X[104X
+    [4X[28X[ <Green's D-class: <block bijection: [ 1, 2, -1, -2 ], [ 3, -3 ]>> ][128X[104X
+  [4X[32X[104X
+  
+  [1X15.1-3 MajorantClosure[101X
+  
+  [29X[2XMajorantClosure[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA majorantly closed list of elements.[133X
+  
+  [33X[0;0Y[10XMajorantClosure[110X  returns  a majorantly closed subset of an inverse semigroup
+  of   partial   permutations,   block   bijections   or  partial  permutation
+  bipartitions, [3XS[103X, as a list. See [2XIsMajorantlyClosed[102X ([14X15.2-6[114X).[133X
+  
+  [33X[0;0YThe result contains all elements of [3XS[103X which are greater than or equal to any
+  element    of    [3XT[103X    (with   respect   to   the   natural   partial   order
+  [2XNaturalLeqPartialPerm[102X  ([14XReference:  NaturalLeqPartialPerm[114X)).  In particular,
+  the result is a superset of [3XT[103X.[133X
+  
+  [33X[0;0YNote that [3XT[103X can be a subset of [3XS[103X or a subsemigroup of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(4);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 4>[128X[104X
+    [4X[25Xgap>[125X [27XT := [PartialPerm([1, 0, 3, 0])];[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 3 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XU := MajorantClosure(S, T);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 3 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 1, 2, 3 ]>, [2,4](1)(3), [4,2](1)(3), [128X[104X
+    [4X[28X  <identity partial perm on [ 1, 3, 4 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2,4)(3) ][128X[104X
+    [4X[25Xgap>[125X [27XB := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X Bipartition([[1, -2], [2, -1], [3, -3], [4, 5, -4, -5]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[1, -3], [2, -4], [3, -2], [4, -1], [5, -5]])]);;[127X[104X
+    [4X[25Xgap>[125X [27XT := [Bipartition([[1, -2], [2, 3, 5, -1, -3, -5], [4, -4]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[1, -4], [2, 3, 5, -1, -3, -5], [4, -2]])];;[127X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(B, T);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XMajorantClosure(B, T);[127X[104X
+    [4X[28X[ <block bijection: [ 1, -2 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, -4 ], [ 2, 3, 5, -1, -3, -5 ], [ 4, -2 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, -2 ], [ 2, 5, -1, -5 ], [ 3, -3 ], [ 4, -4 ]>[128X[104X
+    [4X[28X    , <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, 5, -3, -5 ], [128X[104X
+    [4X[28X     [ 4, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, -4 ], [ 2, 5, -3, -5 ], [ 3, -1 ], [ 4, -2 ]>[128X[104X
+    [4X[28X    , <block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, 5, -1, -5 ], [128X[104X
+    [4X[28X     [ 4, -2 ]>, <block bijection: [ 1, -4 ], [ 2, -3 ], [ 3, -1 ], [128X[104X
+    [4X[28X     [ 4, -2 ], [ 5, -5 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(B, last);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X15.1-4 Minorants[101X
+  
+  [29X[2XMinorants[102X( [3XS[103X, [3Xf[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA list of elements.[133X
+  
+  [33X[0;0Y[10XMinorants[110X   takes  an  element  [3Xf[103X  from  an  inverse  semigroup  of  partial
+  permutations,  block  bijections  or partial permutation bipartitions [3XS[103X, and
+  returns a list of the minorants of [3Xf[103X in [3XS[103X.[133X
+  
+  [33X[0;0YA  [13Xminorant[113X  of  [3Xf[103X  is  an element of [3XS[103X which is strictly less than [3Xf[103X in the
+  natural   partial   order   of   [3XS[103X.  See  [2XNaturalLeqPartialPerm[102X  ([14XReference:
+  NaturalLeqPartialPerm[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Elements(S)[13];[127X[104X
+    [4X[28X[1,3](2)[128X[104X
+    [4X[25Xgap>[125X [27XMinorants(S, x);[127X[104X
+    [4X[28X[ <empty partial perm>, [1,3], <identity partial perm on [ 2 ]> ][128X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([3, 2, 4, 0]);[127X[104X
+    [4X[28X[1,3,4](2)[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(x);[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 4 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XMinorants(S, x);[127X[104X
+    [4X[28X[ <identity partial perm on [ 2 ]>, [1,3](2), [3,4](2) ][128X[104X
+  [4X[32X[104X
+  
+  [1X15.1-5 PrimitiveIdempotents[101X
+  
+  [29X[2XPrimitiveIdempotents[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA list of elements.[133X
+  
+  [33X[0;0YAn  idempotent  in an inverse semigroup [3XS[103X is [13Xprimitive[113X if it is non-zero and
+  minimal    with    respect    to    the    [2XNaturalPartialOrder[102X   ([14XReference:
+  NaturalPartialOrder[114X)   on   [3XS[103X.  [10XPrimitiveIdempotents[110X  returns  the  list  of
+  primitive idempotents in the inverse semigroup [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1], [4]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3], [2, 1, 3]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3], [3, 1, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
+    [4X[28X<empty partial perm>[128X[104X
+    [4X[25Xgap>[125X [27XSet(PrimitiveIdempotents(S));[127X[104X
+    [4X[28X[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 2 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 3 ]>, <identity partial perm on [ 4 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(4);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSet(PrimitiveIdempotents(S));[127X[104X
+    [4X[28X[ <block bijection: [ 1, 2, 3, -1, -2, -3 ], [ 4, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 2, 4, -1, -2, -4 ], [ 3, -3 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 2, -1, -2 ], [ 3, 4, -3, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 3, 4, -1, -3, -4 ], [ 2, -2 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 3, -1, -3 ], [ 2, 4, -2, -4 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, 4, -1, -4 ], [ 2, 3, -2, -3 ]>, [128X[104X
+    [4X[28X  <block bijection: [ 1, -1 ], [ 2, 3, 4, -2, -3, -4 ]> ][128X[104X
+  [4X[32X[104X
+  
+  [1X15.1-6 RightCosetsOfInverseSemigroup[101X
+  
+  [29X[2XRightCosetsOfInverseSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA list of lists of elements.[133X
+  
+  [33X[0;0Y[10XRightCosetsOfInverseSemigroup[110X takes a majorantly closed inverse subsemigroup
+  [3XT[103X  of  an  inverse  semigroup  of  partial permutations, block bijections or
+  partial  permutation  bipartitions  [3XS[103X.  See [2XIsMajorantlyClosed[102X ([14X15.2-6[114X). The
+  result is a list of the right cosets of [3XT[103X in [3XS[103X.[133X
+  
+  [33X[0;0YFor  [22Xs  ∈ S[122X, the right coset [22XoverlineTs[122X is defined if and only if [22Xss^-1 ∈ T[122X,
+  in  which  case  it is defined to be the majorant closure of the set [22XTs[122X. See
+  [2XMajorantClosure[102X   ([14X15.1-3[114X).   Distinct   cosets  are  disjoint  but  do  not
+  necessarily partition [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup(MajorantClosure(S, [PartialPerm([1])]));[127X[104X
+    [4X[28X<inverse partial perm monoid of rank 3 with 6 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(S, T);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XRC := RightCosetsOfInverseSemigroup(S, T);[127X[104X
+    [4X[28X[ [ <identity partial perm on [ 1 ]>, [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 2 ]>, [2,3](1), [3,2](1), [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 3 ]>, [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3) ], [128X[104X
+    [4X[28X  [ [1,3], [2,1,3], [1,3](2), (1,3), [1,3,2], (1,3,2), (1,3)(2) ], [128X[104X
+    [4X[28X  [ [1,2], (1,2), [1,2,3], [3,1,2], [1,2](3), (1,2)(3), (1,2,3) ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X15.1-7 SameMinorantsSubgroup[101X
+  
+  [29X[2XSameMinorantsSubgroup[102X( [3XH[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA list of elements of the group [13XH[113X-class [3XH[103X.[133X
+  
+  [33X[0;0YGiven  a  group  [13XH[113X-class  [3XH[103X in an inverse semigroup of partial permutations,
+  block     bijections     or     partial    permutation    bipartitions    [10XS[110X,
+  [10XSameMinorantsSubgroup[110X  returns  a  list  of the elements of [3XH[103X which have the
+  same  strict  minorants as the identity element of [3XH[103X. A [13Xstrict minorant[113X of [10Xx[110X
+  in  [3XH[103X  is  an element of [10XS[110X which is less than [10Xx[110X (with respect to the natural
+  partial order), but is not equal to [10Xx[110X.[133X
+  
+  [33X[0;0YThe returned list of elements of [3XH[103X describe a subgroup of [3XH[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XH := GroupHClass(DClass(S, PartialPerm([1, 2, 3])));[127X[104X
+    [4X[28X<Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XElements(H);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2)(3), [128X[104X
+    [4X[28X  (1,2,3), (1,3,2), (1,3)(2) ][128X[104X
+    [4X[25Xgap>[125X [27XSameMinorantsSubgroup(H);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 4], [1, 2, 4, 3]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1], [1]), PartialPerm([2], [2]));[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XElements(T);[127X[104X
+    [4X[28X[ <empty partial perm>, <identity partial perm on [ 1 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 2 ]>, [128X[104X
+    [4X[28X  <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ][128X[104X
+    [4X[25Xgap>[125X [27Xx := GroupHClass(DClass(T, PartialPerm([1, 2, 3, 4])));[127X[104X
+    [4X[28X<Green's H-class: <identity partial perm on [ 1, 2, 3, 4 ]>>[128X[104X
+    [4X[25Xgap>[125X [27XElements(x);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ][128X[104X
+    [4X[25Xgap>[125X [27XAsSet(SameMinorantsSubgroup(x));[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4) ][128X[104X
+  [4X[32X[104X
+  
+  [1X15.1-8 SmallerDegreePartialPermRepresentation[101X
+  
+  [29X[2XSmallerDegreePartialPermRepresentation[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
+  
+  [33X[0;0Y[10XSmallerDegreePartialPermRepresentation[110X  attempts to find an isomorphism from
+  the inverse semigroup [3XS[103X to an inverse semigroup of partial permutations with
+  small  degree.  If  [3XS[103X  is  already  a partial permutation semigroup, and the
+  function cannot reduce the degree, the identity mapping is returned.[133X
+  
+  [33X[0;0YThere  is  no  guarantee that the smallest possible degree representation is
+  returned. For more information see [Sch92].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(PartialPerm([2, 1, 4, 3, 6, 5, 8, 7]));[127X[104X
+    [4X[28X<commutative inverse partial perm semigroup of rank 8 with 1 [128X[104X
+    [4X[28X generator>[128X[104X
+    [4X[25Xgap>[125X [27XElements(S);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, [128X[104X
+    [4X[28X  (1,2)(3,4)(5,6)(7,8) ][128X[104X
+    [4X[25Xgap>[125X [27XT := SmallerDegreePartialPermRepresentation(S);[127X[104X
+    [4X[28XMappingByFunction( <partial perm group of size 2, rank 8 with[128X[104X
+    [4X[28X  1 generator>, <commutative inverse partial perm semigroup of rank 2 [128X[104X
+    [4X[28Xwith 1 generator>, function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XR := Range(T);[127X[104X
+    [4X[28X<commutative inverse partial perm semigroup of rank 2 with 1 [128X[104X
+    [4X[28X generator>[128X[104X
+    [4X[25Xgap>[125X [27XElements(R);[127X[104X
+    [4X[28X[ <identity partial perm on [ 1, 2 ]>, (1,2) ][128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(5);;[127X[104X
+    [4X[25Xgap>[125X [27XT := Range(IsomorphismPartialPermSemigroup(S));[127X[104X
+    [4X[28X<inverse partial perm monoid of size 6721, rank 6721 with 3 [128X[104X
+    [4X[28X generators>[128X[104X
+    [4X[25Xgap>[125X [27XSmallerDegreePartialPermRepresentation(T);[127X[104X
+    [4X[28XMappingByFunction( <inverse partial perm monoid of size 6721, [128X[104X
+    [4X[28X rank 6721 with 3 generators>, <inverse partial perm semigroup of [128X[104X
+    [4X[28X rank 30 with 3 generators>[128X[104X
+    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+  [4X[32X[104X
+  
+  [1X15.1-9 VagnerPrestonRepresentation[101X
+  
+  [29X[2XVagnerPrestonRepresentation[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn isomorphism to an inverse semigroup of partial permutations.[133X
+  
+  [33X[0;0Y[10XVagnerPrestonRepresentation[110X returns an isomorphism from an inverse semigroup
+  [3XS[103X  where  the  elements  of [3XS[103X have a unique semigroup inverse accessible via
+  [2XInverse[102X   ([14XReference:   Inverse[114X),   to  the  inverse  semigroup  of  partial
+  permutations [3XT[103X of degree equal to the size of [3XS[103X, which is obtained using the
+  Vagner-Preston Representation Theorem.[133X
+  
+  [33X[0;0YMore    precisely,   if   [22Xf:S->   T[122X   is   the   isomorphism   returned   by
+  [10XVagnerPrestonRepresentation([3XS[103X[10X)[110X  and  [22Xx[122X  is  in  [3XS[103X,  then [22Xf(x)[122X is the partial
+  permutation  with  domain  [22XSx^-1[122X  and  range  [22XSx^-1x[122X defined by [22Xf(x): sx^-1↦
+  sx^-1x[122X.[133X
+  
+  [33X[0;0YIn  many  cases, it is possible to find a smaller degree representation than
+  that        provided        by       [10XVagnerPrestonRepresentation[110X       using
+  [2XIsomorphismPartialPermSemigroup[102X ([14XReference: IsomorphismPartialPermSemigroup[114X)
+  or [2XSmallerDegreePartialPermRepresentation[102X ([14X15.1-8[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(2);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 2>[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X7[128X[104X
+    [4X[25Xgap>[125X [27Xiso := VagnerPrestonRepresentation(S);[127X[104X
+    [4X[28XMappingByFunction( <symmetric inverse monoid of degree 2>, [128X[104X
+    [4X[28X<inverse partial perm monoid of rank 7 with 2 generators>[128X[104X
+    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XRespectsMultiplication(iso);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xinv := InverseGeneralMapping(iso);;[127X[104X
+    [4X[25Xgap>[125X [27XForAll(S, x -> (x ^ iso) ^ inv = x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XV := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -4], [2, -1], [3, -5], [4], [5], [-2], [-3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -5], [2, -1], [3, -3], [4], [5], [-2], [-4]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, -2], [2, -4], [3, -5], [4, -1], [5, -3]]));[127X[104X
+    [4X[28X<inverse bipartition semigroup of degree 5 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsInverseSemigroup(V);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XVagnerPrestonRepresentation(V);[127X[104X
+    [4X[28XMappingByFunction( <inverse bipartition semigroup of size 394, [128X[104X
+    [4X[28X degree 5 with 3 generators>, <inverse partial perm semigroup of [128X[104X
+    [4X[28X rank 394 with 5 generators>[128X[104X
+    [4X[28X , function( x ) ... end, function( x ) ... end )[128X[104X
+  [4X[32X[104X
+  
+  [1X15.1-10 CharacterTableOfInverseSemigroup[101X
+  
+  [29X[2XCharacterTableOfInverseSemigroup[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe  character  table  of  the  inverse  semigroup [3XS[103X and a list of
+            conjugacy class representatives of [3XS[103X.[133X
+  
+  [33X[0;0YReturns  a  list with two entries: the first entry being the character table
+  of  the inverse semigroup [3XS[103X as a matrix, while the second entry is a list of
+  conjugacy class representatives of [3XS[103X.[133X
+  
+  [33X[0;0YThe  order of the columns in the character table matrix follows the order of
+  the  conjugacy class representatives list. The conjugacy representatives are
+  grouped by [13XD[113X-class and then sorted by rank. Also, as is typical of character
+  tables,  the rows of the matrix correspond to the irreducible characters and
+  the columns correspond to the conjugacy classes.[133X
+  
+  [33X[0;0YThis function was contributed by Jhevon Smith and Ben Steinberg.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid([[127X[104X
+    [4X[25X>[125X [27X  PartialPerm([1, 2], [3, 1]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3], [1, 3, 4]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3], [2, 4, 1]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 3, 4], [3, 4, 1])]);;[127X[104X
+    [4X[25Xgap>[125X [27XCharacterTableOfInverseSemigroup(S);[127X[104X
+    [4X[28X[ [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 3, 1, 1, 1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 3, 1, E(3), E(3)^2, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 3, 1, E(3)^2, E(3), 0, 0, 0, 0 ], [ 6, 3, 0, 0, 1, -1, 0, 0 ],[128X[104X
+    [4X[28X      [ 6, 3, 0, 0, 1, 1, 0, 0 ], [ 4, 3, 0, 0, 2, 0, 1, 0 ], [128X[104X
+    [4X[28X      [ 1, 1, 1, 1, 1, 1, 1, 1 ] ], [128X[104X
+    [4X[28X  [ <identity partial perm on [ 1, 2, 3, 4 ]>, [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 3, 4 ]>, (1,3,4), (1,4,3), [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 3 ]>, (1,3), [128X[104X
+    [4X[28X      <identity partial perm on [ 3 ]>, <empty partial perm> ] ][128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(4);;[127X[104X
+    [4X[25Xgap>[125X [27XCharacterTableOfInverseSemigroup(S);[127X[104X
+    [4X[28X[ [ [ 1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 3, -1, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 2, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 3, 1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 4, -2, 1, 0, 0, 1, -1, 1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 8, 0, -1, 0, 0, 2, 0, -1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 4, 2, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X      [ 6, 0, 0, -2, 0, 3, -1, 0, 1, -1, 0, 0 ], [128X[104X
+    [4X[28X      [ 6, 2, 0, 2, 0, 3, 1, 0, 1, 1, 0, 0 ], [128X[104X
+    [4X[28X      [ 4, 2, 1, 0, 0, 3, 1, 0, 2, 0, 1, 0 ], [128X[104X
+    [4X[28X      [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] ], [128X[104X
+    [4X[28X  [ <identity partial perm on [ 1, 2, 3, 4 ]>, (1)(2)(3,4), [128X[104X
+    [4X[28X      (1)(2,3,4), (1,2)(3,4), (1,2,3,4), [128X[104X
+    [4X[28X      <identity partial perm on [ 1, 2, 3 ]>, (1)(2,3), (1,2,3), [128X[104X
+    [4X[28X      <identity partial perm on [ 2, 3 ]>, (2,3), [128X[104X
+    [4X[28X      <identity partial perm on [ 1 ]>, <empty partial perm> ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X15.2 [33X[0;0YProperties of inverse semigroups[133X[101X
+  
+  [1X15.2-1 IsCliffordSemigroup[101X
+  
+  [29X[2XIsCliffordSemigroup[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsCliffordSemigroup[110X  returns  [9Xtrue[109X  if  the  semigroup  [3XS[103X is regular and its
+  idempotents are central, and [9Xfalse[109X if it is not.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([1, 2, 4, 5, 6, 3, 7, 8]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 3, 4, 5, 6, 2, 7, 8]),[127X[104X
+    [4X[25X>[125X [27X                  Transformation([1, 2, 5, 3, 6, 8, 4, 4]));;[127X[104X
+    [4X[25Xgap>[125X [27XIsCliffordSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT := Range(IsomorphismPartialPermSemigroup(S));;[127X[104X
+    [4X[25Xgap>[125X [27XIsCliffordSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(5);;[127X[104X
+    [4X[25Xgap>[125X [27XT := IdempotentGeneratedSubsemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27XIsCliffordSemigroup(T);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X15.2-2 IsBrandtSemigroup[101X
+  
+  [29X[2XIsBrandtSemigroup[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsBrandtSemigroup[110X  return  [9Xtrue[109X  if  the  semigroup  [3XS[103X  is a finite 0-simple
+  inverse  semigroup,  and  [9Xfalse[109X if it is not. See also [2XIsZeroSimpleSemigroup[102X
+  ([14X14.1-27[114X) and [2XIsInverseSemigroup[102X ([14XReference: IsInverseSemigroup[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XTransformation([2, 8, 8, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([5, 8, 8, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 3, 8, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 6, 8, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 1, 8, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 8, 1, 8, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 8, 8, 4, 8, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 8, 8, 8, 7, 8, 8]),[127X[104X
+    [4X[25X>[125X [27XTransformation([8, 8, 8, 8, 8, 8, 2, 8]));;[127X[104X
+    [4X[25Xgap>[125X [27XIsBrandtSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT := Range(IsomorphismPartialPermSemigroup(S));;[127X[104X
+    [4X[25Xgap>[125X [27XIsBrandtSemigroup(T);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(4);;[127X[104X
+    [4X[25Xgap>[125X [27XD := DClass(S,[127X[104X
+    [4X[25X>[125X [27X               Bipartition([[1, 2, 3, -1, -2, -3], [4, -4]]));;[127X[104X
+    [4X[25Xgap>[125X [27XR := InjectionPrincipalFactor(D);;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(PreImages(R, GeneratorsOfSemigroup(Range(R))));;[127X[104X
+    [4X[25Xgap>[125X [27XIsBrandtSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X15.2-3 IsEUnitaryInverseSemigroup[101X
+  
+  [29X[2XIsEUnitaryInverseSemigroup[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YAs  described  in  Section  5.9  of  [How95],  an  inverse  semigroup [3XS[103X with
+  semilattice of idempotents [3XE[103X is [13XE-unitary[113X if for[133X
+  
+  [33X[0;0Yfor s in S and e in E, es in E implies s in E.[133X
+  
+  [33X[0;0YEquivalently,  [3XS[103X  is  [13XE-unitary[113X  if [3XE[103X is closed in the natural partial order
+  (see Proposition 5.9.1 in [How95]):[133X
+  
+  [33X[0;0Yfor s in S and e in E, e less than s implies s in E.[133X
+  
+  [33X[0;0YThis  condition  is  equivalent  to  [3XE[103X  being  majorantly  closed  in [3XS[103X. See
+  [2XIdempotentGeneratedSubsemigroup[102X  ([14X13.9-3[114X)  and  [2XIsMajorantlyClosed[102X ([14X15.2-6[114X).
+  Hence  an  inverse  semigroup  of  partial permutations, block bijections or
+  partial  permutation bipartitions is [13XE-unitary[113X if and only if the idempotent
+  semilattice is majorantly closed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4], [2, 3, 1, 6]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 5], [3, 2, 1, 6]));;[127X[104X
+    [4X[25Xgap>[125X [27XIsEUnitaryInverseSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xe := IdempotentGeneratedSubsemigroup(S);;[127X[104X
+    [4X[25Xgap>[125X [27XForAll(Difference(S, e), x -> not ForAny(e, y -> y * x in e));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 3, 4, 6, 8], [2, 5, 10, 7, 9]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 5, 6, 7, 8], [5, 8, 9, 2, 10, 1, 3]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 5, 6, 7, 9], [9, 8, 4, 1, 6, 7, 2])]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsEUnitaryInverseSemigroup(T);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XU := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5], [2, 3, 4, 5, 1]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 3, 4, 5], [2, 1, 3, 4, 5])]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsEUnitaryInverseSemigroup(U);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsGroupAsSemigroup(U);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(U);[127X[104X
+    [4X[28X"S5"[128X[104X
+  [4X[32X[104X
+  
+  [1X15.2-4 IsFactorisableInverseMonoid[101X
+  
+  [29X[2XIsFactorisableInverseMonoid[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YAn  inverse  monoid  is  [13Xfactorisable[113X  if every element is the product of an
+  element  of  the  group  of  units  and an idempotent; see also [2XGroupOfUnits[102X
+  ([14X13.8-1[114X)  and  [2XIdempotents[102X  ([14X13.9-1[114X).  Hence an inverse semigroup of partial
+  permutations  is  factorisable  if and only if each of its generators is the
+  restriction of some element in the group of units.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 4], [3, 1, 4]),[127X[104X
+    [4X[25X>[125X [27XPartialPerm([1, 2, 3, 5], [4, 1, 5, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(SymmetricInverseSemigroup(5));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(DualSymmetricInverseMonoid(5));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XS := FactorisableDualSymmetricInverseMonoid(5);;[127X[104X
+    [4X[25Xgap>[125X [27XIsFactorisableInverseMonoid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X15.2-5 IsJoinIrreducible[101X
+  
+  [29X[2XIsJoinIrreducible[102X( [3XS[103X, [3Xx[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsJoinIrreducible[110X  determines whether an element [3Xx[103X of an inverse semigroup [3XS[103X
+  of   partial   permutations,   block   bijections   or  partial  permutation
+  bipartitions is join irreducible.[133X
+  
+  [33X[0;0YAn  element [3Xx[103X is [13Xjoin irreducible[113X when it is not the least upper bound (with
+  respect  to  the  natural  partial  order  [2XNaturalLeqPartialPerm[102X ([14XReference:
+  NaturalLeqPartialPerm[114X)) of any subset of [3XS[103X not containing [3Xx[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 3]);[127X[104X
+    [4X[28X<identity partial perm on [ 1, 2, 3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsJoinIrreducible(S, x);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XT := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1, 2, 4, 3]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([1]),[127X[104X
+    [4X[25X>[125X [27X PartialPerm([0, 2])]);[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xy := PartialPerm([1, 2, 3, 4]);[127X[104X
+    [4X[28X<identity partial perm on [ 1, 2, 3, 4 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsJoinIrreducible(T, y);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XB := InverseSemigroup([[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, -5], [2, -2], [3, 5, 6, 7, -1, -4, -6, -7], [4, -3]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, -1], [2, -3], [3, -4], [4, 5, 7, -2, -6, -7], [6, -5]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, -2], [2, -4], [3, -6], [4, -1], [5, 7, -3, -7], [6, -5]]),[127X[104X
+    [4X[25X>[125X [27X Bipartition([[127X[104X
+    [4X[25X>[125X [27X   [1, -5], [2, -1], [3, -6], [4, 5, 7, -2, -4, -7], [6, -3]])]);[127X[104X
+    [4X[28X<inverse block bijection semigroup of degree 7 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[127X[104X
+    [4X[25X>[125X [27X  [1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7], [4, -1]]);[127X[104X
+    [4X[28X<block bijection: [ 1, 2, 3, 5, 6, 7, -2, -3, -4, -5, -6, -7 ], [128X[104X
+    [4X[28X [ 4, -1 ]>[128X[104X
+    [4X[25Xgap>[125X [27XIsJoinIrreducible(B, x);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsJoinIrreducible(B, B.1);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X15.2-6 IsMajorantlyClosed[101X
+  
+  [29X[2XIsMajorantlyClosed[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsMajorantlyClosed[110X  determines whether the subset [3XT[103X of the inverse semigroup
+  of   partial   permutations,   block   bijections   or  partial  permutation
+  bipartitions [3XS[103X is majorantly closed in [3XS[103X. See also [2XMajorantClosure[102X ([14X15.1-3[114X).[133X
+  
+  [33X[0;0YWe  say  that  [3XT[103X  is [13Xmajorantly closed[113X in [3XS[103X if it contains all elements of [3XS[103X
+  which  are  greater  than  or equal to any element of [3XT[103X, with respect to the
+  natural     partial    order.    See    [2XNaturalLeqPartialPerm[102X    ([14XReference:
+  NaturalLeqPartialPerm[114X).[133X
+  
+  [33X[0;0YNote that [3XT[103X can be a subset of [3XS[103X or a subsemigroup of [3XS[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(2);[127X[104X
+    [4X[28X<symmetric inverse monoid of degree 2>[128X[104X
+    [4X[25Xgap>[125X [27XT := [Elements(S)[2]];[127X[104X
+    [4X[28X[ <identity partial perm on [ 1 ]> ][128X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(S, T);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XU := [Elements(S)[2], Elements(S)[6]];[127X[104X
+    [4X[28X[ <identity partial perm on [ 1 ]>, <identity partial perm on [ 1, 2 ][128X[104X
+    [4X[28X    > ][128X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(S, U);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XD := DualSymmetricInverseSemigroup(3);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 3 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[1, -2], [2, -3], [3, -1]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(D, [x]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xy := Bipartition([[1, 2, -1, -2], [3, -3]]);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMajorantlyClosed(D, [x, y]);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X15.2-7 IsMonogenicInverseSemigroup[101X
+  
+  [29X[2XIsMonogenicInverseSemigroup[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsMonogenicInverseSemigroup[110X  returns  [9Xtrue[109X if the semigroup [3XS[103X is a monogenic
+  inverse semigroup and it returns [9Xfalse[109X if it is not.[133X
+  
+  [33X[0;0YA  inverse semigroup is [13Xmonogenic[113X if it is generated as an inverse semigroup
+  by   a   single   element.   See  also  [2XIsMonogenicSemigroup[102X  ([14X14.1-10[114X)  and
+  [2XIsMonogenicInverseMonoid[102X ([14X15.2-8[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);;[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(x, x ^ 2, x ^ 3);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx := RandomBlockBijection(100);;[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(x, x ^ 2, x ^ 20);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseSemigroup(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(5);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X15.2-8 IsMonogenicInverseMonoid[101X
+  
+  [29X[2XIsMonogenicInverseMonoid[102X( [3XS[103X ) [32X property
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0Y[10XIsMonogenicInverseMonoid[110X returns [9Xtrue[109X if the monoid [3XS[103X is a monogenic inverse
+  monoid and it returns [9Xfalse[109X if it is not.[133X
+  
+  [33X[0;0YA  inverse  monoid is [13Xmonogenic[113X if it is generated as an inverse monoid by a
+  single   element.   See   also   [2XIsMonogenicInverseSemigroup[102X   ([14X15.2-7[114X)  and
+  [2XIsMonogenicMonoid[102X ([14X14.1-11[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := PartialPerm([1, 2, 3, 6, 8, 10], [2, 6, 7, 9, 1, 5]);;[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid(x, x ^ 2, x ^ 3);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicMonoid(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseSemigroup(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseMonoid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xx := RandomBlockBijection(100);;[127X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid(x, x ^ 2, x ^ 20);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseMonoid(S);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XS := SymmetricInverseMonoid(5);;[127X[104X
+    [4X[25Xgap>[125X [27XIsMonogenicInverseMonoid(S);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  

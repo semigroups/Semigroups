@@ -1,0 +1,316 @@
+  
+  [1X18 [33X[0;0YVisualising semigroups and elements[133X[101X
+  
+  [33X[0;0YThere  are  two  operations  [2XTikzString[102X  ([14X18.4-1[114X)  and [2XDotString[102X ([14X18.2-1[114X) in
+  [5XSemigroups[105X  for  creating  LaTeX  and  [10Xdot[110X  (also  known as GraphViz) format
+  pictures  of  the Green's class structure of a semigroup and for visualising
+  certain  types  of  elements of a semigroup. There is also a function [2XSplash[102X
+  ([14X18.1-1[114X)  for automatically processing the output of [2XTikzString[102X ([14X18.4-1[114X) and
+  [2XDotString[102X ([14X18.2-1[114X) and opening the resulting pdf file.[133X
+  
+  
+  [1X18.1 [33X[0;0YAutomatic viewing[133X[101X
+  
+  [33X[0;0YIn  this  section we describe the function [2XSplash[102X ([14X18.1-1[114X) for automatically
+  processing  and  opening  the  strings  output  by  [2XTikzString[102X  ([14X18.4-1[114X) and
+  [2XDotString[102X ([14X18.2-1[114X)[133X
+  
+  [1X18.1-1 Splash[101X
+  
+  [29X[2XSplash[102X( [3Xstr[103X[, [3Xopts[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10YNothing.[133X
+  
+  [33X[0;0YThis  function  attempts  to  convert the string [3Xstr[103X into a pdf document and
+  open this document, i.e. to splash it all over your monitor.[133X
+  
+  [33X[0;0YThe  string  [3Xstr[103X  must  correspond to a valid [10Xdot[110X or [10XLaTeX[110X text file and you
+  must have have [10XGraphViz[110X and [10Xpdflatex[110X installed on your computer. For details
+  about    these    file   formats,   see   [7Xhttp://www.latex-project.org[107X   and
+  [7Xhttp://www.graphviz.org[107X.[133X
+  
+  [33X[0;0YThis  function  is  provided  to  allow convenient, immediate viewing of the
+  pictures   produced   by  the  functions:  [2XTikzString[102X  ([14X18.4-1[114X),  [2XTikzString[102X
+  ([14X18.4-1[114X), [2XDotSemilatticeOfIdempotents[102X ([14X18.2-2[114X), and [2XDotString[102X ([14X18.2-1[114X).[133X
+  
+  [33X[0;0YThe  optional  second  argument  [3Xopts[103X  should  be  a  record with components
+  corresponding to various options, given below.[133X
+  
+  [8Xpath[108X
+        [33X[0;6Ythis  should  be a string representing the path to the directory where
+        you  want  [10XSplash[110X  to do its work. The default value of this option is
+        [10X"~/"[110X.[133X
+  
+  [8Xdirectory[108X
+        [33X[0;6Ythis should be a string representing the name of the directory in [10Xpath[110X
+        where  you  want [10XSplash[110X to do its work. This function will create this
+        directory if does not already exist.[133X
+  
+        [33X[0;6YThe  default  value  of this option is [10X"tmp.viz"[110X if the option [10Xpath[110X is
+        present,    and   the   result   of   [2XDirectoryTemporary[102X   ([14XReference:
+        DirectoryTemporary[114X) is used otherwise.[133X
+  
+  [8Xfilename[108X
+        [33X[0;6Ythis  should  be  a string representing the name of the file where [3Xstr[103X
+        will be written. The default value of this option is [10X"vizpicture"[110X.[133X
+  
+  [8Xviewer[108X
+        [33X[0;6Ythis  should  be  a  string representing the name of the program which
+        should open the files produced by [10XGraphViz[110X or [10Xpdflatex[110X.[133X
+  
+  [8Xtype[108X
+        [33X[0;6Ythis  option  can  be  used  to specify that the string [3Xstr[103X contains a
+        LaTeX  or [10Xdot[110X document. You can specify this option in [3Xstr[103X directly by
+        making  the  first line [10X"%latex"[110X or [10X"//dot"[110X. There is no default value
+        for this option, this option must be specified in [3Xstr[103X or in [3Xopt.type[103X.[133X
+  
+  [8Xfiletype[108X
+        [33X[0;6Ythis  should  be  a  string representing the type of file which [10XSplash[110X
+        should  produce.  For  LaTeX  files,  this  option  is ignored and the
+        default value [10X"pdf"[110X is used.[133X
+  
+  [33X[0;0YThis  function  was written by Attila Egri-Nagy and Manuel Delgado with some
+  minor changes by J. D. Mitchell.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X        gap> Splash(DotString(FullTransformationMonoid(4)));[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X18.2 [33X[0;0Y[10Xdot[110X[101X[1X pictures[133X[101X
+  
+  [33X[0;0YIn  this  section,  we  describe  the  operations in [5XSemigroups[105X for creating
+  pictures in [10Xdot[110X format.[133X
+  
+  [33X[0;0YThe  operations  described  in  this  section  return  strings, which can be
+  written  to  a  file  using  the function [2XFileString[102X ([14XGAPDoc: FileString[114X) or
+  viewed using [2XSplash[102X ([14X18.1-1[114X).[133X
+  
+  [1X18.2-1 DotString[101X
+  
+  [29X[2XDotString[102X( [3XS[103X[, [3Xoptions[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA string.[133X
+  
+  [33X[0;0YIf  the  argument [3XS[103X is a semigroup, and the optional second argument [3Xoptions[103X
+  is  a record, then this operation produces a graphical representation of the
+  partial  order  of the [13XD[113X-classes of the semigroup [3XS[103X together with the eggbox
+  diagram  of  each  [13XD[113X-class.  The  output  is  in  [10Xdot[110X  format (also known as
+  [10XGraphViz[110X)  format. For details about this file format, and information about
+  how to display or edit this format see [7Xhttp://www.graphviz.org[107X.[133X
+  
+  [33X[0;0YThe  string returned by [10XDotString[110X can be written to a file using the command
+  [2XFileString[102X ([14XGAPDoc: FileString[114X).[133X
+  
+  [33X[0;0YThe  [13XD[113X-classes  are  shown  as  eggbox  diagrams  with [13XL[113X-classes as rows and
+  [13XR[113X-classes  as  columns;  group  [13XH[113X-classes  are  shaded  gray  and contain an
+  asterisk.  The  [13XL[113X-classes  and  [13XR[113X-classes  within  a [13XD[113X-class are arranged to
+  correspond   to   the   normalization  of  the  principal  factor  given  by
+  [2XNormalizedPrincipalFactor[102X  ([14X12.4-8[114X). The [13XD[113X-classes are numbered according to
+  their  index  in  [10XGreensDClasses([3XS[103X[10X)[110X, so that an [10Xi[110X appears next to the eggbox
+  diagram  of  [10XGreensDClasses([3XS[103X[10X)[i][110X.  A  line  from  one  [13XD[113X-class  to  another
+  indicates  that  the  higher  [13XD[113X-class  is  greater than the lower one in the
+  [13XD[113X-order on [3XS[103X.[133X
+  
+  [33X[0;0YIf  the  optional  second  argument  [3Xoptions[103X  is  present, it can be used to
+  specify some options for output.[133X
+  
+  [8Xnumber[108X
+        [33X[0;6Yif  [10X[3Xoptions[103X[10X.number[110X is [9Xfalse[109X, then the [13XD[113X-classes in the diagram are not
+        numbered  according  to their index in the list of [13XD[113X-classes of [3XS[103X. The
+        default value for this option is [9Xtrue[109X.[133X
+  
+  [8Xmaximal[108X
+        [33X[0;6Yif  [10X[3Xoptions[103X[10X.maximal[110X  is  [9Xtrue[109X,  then  the structure description of the
+        group  [13XH[113X-classes  is  displayed;  see [2XStructureDescription[102X ([14XReference:
+        StructureDescription[114X).  Setting  this  attribute to [9Xtrue[109X can adversely
+        affect the performance of [10XDotString[110X. The default value for this option
+        is [9Xfalse[109X.[133X
+  
+  [8Xnormal[108X
+        [33X[0;6Yif  [10X[3Xoptions[103X[10X.normal[110X  is  [9Xfalse[109X,  then  the [13XL[113X- and [13XR[113X-classes within each
+        [13XD[113X-class   arranged  to  correspond  to  [2XPrincipalFactor[102X  ([14X12.4-8[114X).  If
+        [10X[3Xoptions[103X[10X.normal[110X  is  [9Xtrue[109X,  they  are instead arranged to correspond to
+        [2XNormalizedPrincipalFactor[102X  ([14X12.4-8[114X).  Setting  this attribute to [9Xfalse[109X
+        may  improve the performance of [10XDotString[110X as it avoids the computation
+        of  [2XInjectionNormalizedPrincipalFactor[102X ([14X12.4-7[114X). The default value for
+        this option is [9Xtrue[109X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := FullTransformationMonoid(3);[127X[104X
+    [4X[28X<full transformation monoid of degree 3>[128X[104X
+    [4X[25Xgap>[125X [27XDotString(S);[127X[104X
+    [4X[28X"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=blac\[128X[104X
+    [4X[28Xk,arrowhead=none]\n1 [shape=box style=invisible label=<\n<TABLE BORDE\[128X[104X
+    [4X[28XR=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"\[128X[104X
+    [4X[28X1\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BORDER = \"0\" > 1</TD></TR>\[128X[104X
+    [4X[28X<TR><TD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n2 [shape=box style\[128X[104X
+    [4X[28X=invisible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\[128X[104X
+    [4X[28X\"10\" CELLSPACING=\"0\" PORT=\"2\">\n<TR BORDER=\"0\"><TD COLSPAN=\"\[128X[104X
+    [4X[28X3\" BORDER = \"0\" > 2</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD><TD BG\[128X[104X
+    [4X[28XCOLOR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD></TR>\n<TR><TD BGCOLO\[128X[104X
+    [4X[28XR=\"gray\">*</TD><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</T\[128X[104X
+    [4X[28XD></TR>\n<TR><TD BGCOLOR=\"white\"></TD><TD BGCOLOR=\"gray\">*</TD><T\[128X[104X
+    [4X[28XD BGCOLOR=\"gray\">*</TD></TR>\n</TABLE>>];\n3 [shape=box style=invis\[128X[104X
+    [4X[28Xible label=<\n<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\"\[128X[104X
+    [4X[28X CELLSPACING=\"0\" PORT=\"3\">\n<TR BORDER=\"0\"><TD COLSPAN=\"1\" BO\[128X[104X
+    [4X[28XRDER = \"0\" > 3</TD></TR><TR><TD BGCOLOR=\"gray\">*</TD></TR>\n<TR><\[128X[104X
+    [4X[28XTD BGCOLOR=\"gray\">*</TD></TR>\n<TR><TD BGCOLOR=\"gray\">*</TD></TR>\[128X[104X
+    [4X[28X\n</TABLE>>];\n1 -> 2\n2 -> 3\n }"[128X[104X
+    [4X[25Xgap>[125X [27XFileString("t3.dot", DotString(S));[127X[104X
+    [4X[28X1040[128X[104X
+  [4X[32X[104X
+  
+  [1X18.2-2 DotSemilatticeOfIdempotents[101X
+  
+  [29X[2XDotSemilatticeOfIdempotents[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YA string.[133X
+  
+  [33X[0;0YThis  function produces a graphical representation of the semilattice of the
+  idempotents  of an inverse semigroup [3XS[103X where the elements of [3XS[103X have a unique
+  semigroup   inverse   accessible   via  [2XInverse[102X  ([14XReference:  Inverse[114X).  The
+  idempotents are grouped by the [13XD[113X-class they belong to.[133X
+  
+  [33X[0;0YThe  output  is  in  [10Xdot[110X format (also known as [10XGraphViz[110X) format. For details
+  about  this  file  format, and information about how to display or edit this
+  format see [7Xhttp://www.graphviz.org[107X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(4);[127X[104X
+    [4X[28X<inverse block bijection monoid of degree 4 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XDotSemilatticeOfIdempotents(S);[127X[104X
+    [4X[28X"//dot\ngraph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph \[128X[104X
+    [4X[28Xcluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\[128X[104X
+    [4X[28X cluster_3{\n2 10 6 3 4 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3\[128X[104X
+    [4X[28X -- 1\n4 -- 1\n5 -- 2\n5 -- 3\n5 -- 4\n6 -- 1\n7 -- 1\n8 -- 2\n8 -- 6\[128X[104X
+    [4X[28X\n8 -- 7\n9 -- 1\n10 -- 1\n11 -- 2\n11 -- 9\n11 -- 10\n12 -- 3\n12 -- \[128X[104X
+    [4X[28X6\n12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15\[128X[104X
+    [4X[28X -- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X18.3 [33X[0;0Y[10Xtex[110X[101X[1X output[133X[101X
+  
+  [33X[0;0YIn this section, we describe the operations in [5XSemigroups[105X for creating LaTeX
+  representations  of  [5XGAP[105X  objects.  For  pictures  of [5XGAP[105X objects please see
+  Section [14X18.4[114X.[133X
+  
+  [1X18.3-1 TexString[101X
+  
+  [29X[2XTexString[102X( [3Xf[103X[, [3Xn[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA string.[133X
+  
+  [33X[0;0YThis function produces a string containing LaTeX code for the transformation
+  [3Xf[103X.  If the optional paramater [3Xn[103X is used, then this is taken to be the degree
+  of   the   transformation   [3Xf[103X,  if  the  parameter  [3Xn[103X  is  not  given,  then
+  [2XDegreeOfTransformation[102X   ([14XReference:   DegreeOfTransformation[114X)  is  used  by
+  default. If [3Xn[103X is less than the degree of [3Xf[103X, then an error is given.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XTexString(Transformation([6, 2, 4, 3, 6, 4]));[127X[104X
+    [4X[28X"\\begin{pmatrix}\n  1 & 2 & 3 & 4 & 5 & 6 \\\\\n  6 & 2 & 4 & 3 & 6 &\[128X[104X
+    [4X[28X 4\n\\end{pmatrix}"[128X[104X
+    [4X[25Xgap>[125X [27XTexString(Transformation([1, 2, 1, 3]), 5);[127X[104X
+    [4X[28X"\\begin{pmatrix}\n  1 & 2 & 3 & 4 & 5 \\\\\n  1 & 2 & 1 & 3 & 5\n\\en\[128X[104X
+    [4X[28Xd{pmatrix}"[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X18.4 [33X[0;0Y[10Xtikz[110X[101X[1X pictures[133X[101X
+  
+  [33X[0;0YIn  this  section,  we  describe  the  operations in [5XSemigroups[105X for creating
+  pictures in [10Xtikz[110X format.[133X
+  
+  [33X[0;0YThe  functions  described  in  this  section  return  a string, which can be
+  written  to  a  file  using  the function [2XFileString[102X ([14XGAPDoc: FileString[114X) or
+  viewed using [2XSplash[102X ([14X18.1-1[114X).[133X
+  
+  [1X18.4-1 TikzString[101X
+  
+  [29X[2XTikzString[102X( [3Xobj[103X[, [3Xoptions[103X] ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA string.[133X
+  
+  [33X[0;0YThis  function  produces  a graphical representation of the object [3Xobj[103X using
+  the  [10Xtikz[110X package for LaTeX. More precisely, this operation outputs a string
+  containing  a  minimal  LaTeX  document which can be compiled using LaTeX to
+  produce a picture of [3Xobj[103X.[133X
+  
+  [33X[0;0YCurrently the following types of objects are supported:[133X
+  
+  [8Xblocks[108X
+        [33X[0;6YIf  [3Xobj[103X  is the left or right blocks of a bipartition, then [10XTikzString[110X
+        returns a graphical representation of these blocks; see Section [14X3.6[114X.[133X
+  
+  [8Xbipartitions[108X
+        [33X[0;6YIf   [3Xobj[103X  is  a  bipartition,  then  [10XTikzString[110X  returns  a  graphical
+        representation of [3Xobj[103X.[133X
+  
+        [33X[0;6YIf the optional second argument [3Xoptions[103X is a record with the component
+        [10Xcolors[110X  set  to  [9Xtrue[109X,  then the blocks of [3Xf[103X will be colored using the
+        standard [10Xtikz[110X colors. Due to the limited number of colors available in
+        [10Xtikz[110X  this  option  only works when the degree of [3Xobj[103X is less than 20.
+        See Chapter [14X3[114X for more details about bipartitions.[133X
+  
+  [8Xpbrs[108X
+        [33X[0;6YIf  [3Xobj[103X  is  a PBR, then [10XTikzString[110X returns a graphical representation
+        [3Xobj[103X; see Section [14X3.6[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]);;[127X[104X
+    [4X[25Xgap>[125X [27XTikzString(RightBlocks(x));[127X[104X
+    [4X[28X"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\[128X[104X
+    [4X[28Xt}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \[128X[104X
+    [4X[28X\\draw(1.8,5) node [top] {{$1$}};\n  \\fill(4,2)circle(.125);\n  \\dr\[128X[104X
+    [4X[28Xaw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\[128X[104X
+    [4X[28X.8,3) node [top] {{$3$}};\n  \\draw[ultra thick](2,2)circle(.115);\n \[128X[104X
+    [4X[28X \\draw(1.8,2) node [top] {{$4$}};\n  \\fill(1,2)circle(.125);\n  \\d\[128X[104X
+    [4X[28Xraw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\[128X[104X
+    [4X[28X.8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\[128X[104X
+    [4X[28X and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"[128X[104X
+    [4X[25Xgap>[125X [27Xx := Bipartition([[1, 5], [2, 4, -3, -5], [3, -1, -2], [-4]]);;[127X[104X
+    [4X[25Xgap>[125X [27XTikzString(x);[127X[104X
+    [4X[28X"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\[128X[104X
+    [4X[28Xt}\n\\begin{tikzpicture}\n\n  %block #1\n  %vertices and labels\n  \\\[128X[104X
+    [4X[28Xfill(1,2)circle(.125);\n  \\draw(0.95, 2.2) node [above] {{ $1$}};\n \[128X[104X
+    [4X[28X \\fill(5,2)circle(.125);\n  \\draw(4.95, 2.2) node [above] {{ $5$}};\[128X[104X
+    [4X[28X\n\n  %lines\n  \\draw(1,1.875) .. controls (1,1.1) and (5,1.1) .. (5\[128X[104X
+    [4X[28X,1.875);\n\n  %block #2\n  %vertices and labels\n  \\fill(2,2)circle(\[128X[104X
+    [4X[28X.125);\n  \\draw(1.95, 2.2) node [above] {{ $2$}};\n  \\fill(4,2)circ\[128X[104X
+    [4X[28Xle(.125);\n  \\draw(3.95, 2.2) node [above] {{ $4$}};\n  \\fill(3,0)c\[128X[104X
+    [4X[28Xircle(.125);\n  \\draw(3, -0.2) node [below] {{ $-3$}};\n  \\fill(5,0\[128X[104X
+    [4X[28X)circle(.125);\n  \\draw(5, -0.2) node [below] {{ $-5$}};\n\n  %lines\[128X[104X
+    [4X[28X\n  \\draw(2,1.875) .. controls (2,1.3) and (4,1.3) .. (4,1.875);\n  \[128X[104X
+    [4X[28X\\draw(3,0.125) .. controls (3,0.7) and (5,0.7) .. (5,0.125);\n  \\dr\[128X[104X
+    [4X[28Xaw(2,2)--(3,0);\n\n  %block #3\n  %vertices and labels\n  \\fill(3,2)\[128X[104X
+    [4X[28Xcircle(.125);\n  \\draw(2.95, 2.2) node [above] {{ $3$}};\n  \\fill(1\[128X[104X
+    [4X[28X,0)circle(.125);\n  \\draw(1, -0.2) node [below] {{ $-1$}};\n  \\fill\[128X[104X
+    [4X[28X(2,0)circle(.125);\n  \\draw(2, -0.2) node [below] {{ $-2$}};\n\n  %l\[128X[104X
+    [4X[28Xines\n  \\draw(1,0.125) .. controls (1,0.6) and (2,0.6) .. (2,0.125);\[128X[104X
+    [4X[28X\n  \\draw(3,2)--(2,0);\n\n  %block #4\n  %vertices and labels\n  \\f\[128X[104X
+    [4X[28Xill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \[128X[104X
+    [4X[28X%lines\n\\end{tikzpicture}\n\n\\end{document}"[128X[104X
+    [4X[25Xgap>[125X [27XTikzString(UniversalPBR(2));[127X[104X
+    [4X[28X"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{docume\[128X[104X
+    [4X[28Xnt}\n\\usetikzlibrary{arrows}\n\\usetikzlibrary{arrows.meta}\n\\newco\[128X[104X
+    [4X[28Xmmand{\\arc}{\\draw[semithick, -{>[width = 1.5mm, length = 2.5mm]}]}\[128X[104X
+    [4X[28X\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, i\[128X[104X
+    [4X[28Xnner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = \[128X[104X
+    [4X[28X0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110}\[128X[104X
+    [4X[28X,\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % \[128X[104X
+    [4X[28Xvertices and labels\n  \\foreach \\i in {1,...,2} {\n    \\node [vert\[128X[104X
+    [4X[28Xex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\[128X[104X
+    [4X[28X\n  }\n\n  \\foreach \\i in {1,...,2} {\n    \\node [vertex] at (\\i/\[128X[104X
+    [4X[28X1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  \[128X[104X
+    [4X[28X% arcs from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) to (-1);\n  \[128X[104X
+    [4X[28X\\arc (1) edge [toploop] (1);\n  \\arc (1) .. controls (1.06666666666\[128X[104X
+    [4X[28X66667, 2.125) and (0.93333333333333324, 2.125) .. (2);\n\n  % arcs fr\[128X[104X
+    [4X[28Xom vertex -1\n  \\arc (-1) .. controls (1.0666666666666667, 0.875) an\[128X[104X
+    [4X[28Xd (0.93333333333333324, 0.875) .. (-2);\n  \\arc (-1) edge [botloop] \[128X[104X
+    [4X[28X(-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n\n  % arcs from ve\[128X[104X
+    [4X[28Xrtex 2\n  \\arc (2) to (-2);\n  \\arc (2) to (-1);\n  \\arc (2) .. co\[128X[104X
+    [4X[28Xntrols (0.93333333333333324, 2.125) and (1.0666666666666667, 2.125) .\[128X[104X
+    [4X[28X. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs from vertex -2\n \[128X[104X
+    [4X[28X \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.9333333\[128X[104X
+    [4X[28X3333333324, 0.875) and (1.0666666666666667, 0.875) .. (-1);\n  \\arc \[128X[104X
+    [4X[28X(-2) to (1);\n  \\arc (-2) to (2);\n\n\\end{tikzpicture}\n\\end{docum\[128X[104X
+    [4X[28Xent}"[128X[104X
+  [4X[32X[104X
+  

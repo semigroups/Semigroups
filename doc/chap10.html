@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <title>GAP (semigroups) - Chapter 10: 
-    Orbits
+    Free objects
   </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
@@ -17,283 +17,438 @@
 <body class="chap10"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap10_mj.html">[MathJax on]</a></p>
-<p><a id="X81E0FF0587C54543" name="X81E0FF0587C54543"></a></p>
-<div class="ChapSects"><a href="chap10.html#X81E0FF0587C54543">10 <span class="Heading">
-    Orbits
+<p><a id="X7C778F007FE3503E" name="X7C778F007FE3503E"></a></p>
+<div class="ChapSects"><a href="chap10.html#X7C778F007FE3503E">10 <span class="Heading">
+    Free objects
   </span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7B4CFC5380ACB95F">10.1 <span class="Heading">Looking for something in an orbit</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7E51292C8755DCF2">10.1 <span class="Heading">
+      Free inverse semigroups
+    </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7C8B0A2A82C9E4D8">10.1-1 EnumeratePosition</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7DEB890C7D547574">10.1-2 LookForInOrb</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7F3F9DED8003CBD0">10.1-1 FreeInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7CE4CFD886220179">10.1-2 IsFreeInverseSemigroupCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7B91643B827DA6DB">10.1-3 IsFreeInverseSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7999FE0286283CC2">10.1-4 IsFreeInverseSemigroupElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X813A291779726739">10.1-5 IsFreeInverseSemigroupElementCollection</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X80B19F9E8631D88B">10.2 <span class="Heading">Strongly connected components of orbits</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X8073A2387A42B52D">10.2 <span class="Heading"> Displaying free inverse semigroup elements </span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7E93822179CD7602">10.3 <span class="Heading">Operators and operations for free inverse semigroup elements
+      </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8178A420792E6AAC">10.2-1 OrbSCC</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X814337A47B773F50">10.2-2 OrbSCCLookup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X78AFD003840823BD">10.2-3 OrbSCCTruthTable</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D9A29B47D743213">10.2-4 ReverseSchreierTreeOfSCC</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8071C7148255D0DB">10.2-5 SchreierTreeOfSCC</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7853DC817C3102A4">10.2-6 TraceSchreierTreeOfSCCBack</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D2E200A7B2D5946">10.2-7 TraceSchreierTreeOfSCCForward</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7DB7DCEC7E0FE9A3">10.3-1 CanonicalForm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X87BB5D047EB7C2BF">10.3-2 MinimalWord</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7BB29A6779E8066A">10.4 <span class="Heading">
+      Free bands
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7B2A65F382DB36EC">10.4-1 FreeBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7F5658DC7E56C4A6">10.4-2 IsFreeBandCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7B1CD5FC7E034B88">10.4-3 IsFreeBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7DECF69087BB3B16">10.4-4 IsFreeBandElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X842839C87DAAA43C">10.4-5 IsFreeBandElementCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7AEF4CD1857E7DCC">10.4-6 IsFreeBandSubsemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X808CAEC17BF271D1">10.4-7 ContentOfFreeBandElement</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X86221BAE7CD5CF4D">10.5 <span class="Heading">Operators and operations for free band elements
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X85DC5D50875E55D6">10.5-1 GreensDClassOfElement</a></span>
 </div></div>
 </div>
 
 <h3>10 <span class="Heading">
-    Orbits
+    Free objects
   </span></h3>
 
-<p><a id="X7B4CFC5380ACB95F" name="X7B4CFC5380ACB95F"></a></p>
+<p>This chapter describes the functions in <strong class="pkg">Semigroups</strong> for dealing with free inverse semigroups and free bands. This part of the manual and the functions described herein were written by Julius Jonušas.</p>
 
-<h4>10.1 <span class="Heading">Looking for something in an orbit</span></h4>
+<p><a id="X7E51292C8755DCF2" name="X7E51292C8755DCF2"></a></p>
 
-<p>The functions described in this section supplement the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> package by providing methods for finding something in an orbit, with the possibility of continuing the orbit enumeration at some later point.</p>
+<h4>10.1 <span class="Heading">
+      Free inverse semigroups
+    </span></h4>
 
-<p><a id="X7C8B0A2A82C9E4D8" name="X7C8B0A2A82C9E4D8"></a></p>
+<p>An inverse semigroup <span class="SimpleMath">F</span> is said to be <em>free</em> on a non-empty set <span class="SimpleMath">X</span> if there is a map <span class="SimpleMath">f</span> from <span class="SimpleMath">F</span> to <span class="SimpleMath">X</span> such that for every inverse semigroup <span class="SimpleMath">S</span> and a map <span class="SimpleMath">g</span> from <span class="SimpleMath">X</span> to <span class="SimpleMath">S</span> there exists a unique homomorphism <span class="SimpleMath">g'</span> from <span class="SimpleMath">F</span> to <span class="SimpleMath">S</span> such that <span class="SimpleMath">fg' = g</span>. Moreover, by this universal property, every inverse semigroup can be expressed as a quotient of a free inverse semigroup.</p>
 
-<h5>10.1-1 EnumeratePosition</h5>
+<p>The internal representation of an element of a free inverse semigroup uses a Munn tree. A <em>Munn tree</em> is a directed tree with distinguished start and terminal vertices and where the edges are labeled by generators so that two edges labeled by the same generator are only incident to the same vertex if one of the edges is coming in and the other is leaving the vertex. For more information regarding free inverse semigroups and the Munn representations see Section 5.10 of <a href="chapBib.html#biBHowie1995aa">[How95]</a>.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratePosition</code>( <var class="Arg">o</var>, <var class="Arg">val</var>[, <var class="Arg">onlynew</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: A positive integer or <code class="keyw">fail</code>.</p>
+<p>See also <a href="../../../doc/ref/chap51_mj.html#X840847B6810BD0E1"><span class="RefLink">Reference: Inverse semigroups and monoids</span></a>, <a href="../../../doc/ref/chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">Reference: Partial permutations</span></a> and <a href="../../../doc/ref/chap37_mj.html#X82E7EA7F7FD31EC3"><span class="RefLink">Reference: Free Groups, Monoids and Semigroups</span></a>.</p>
 
-<p>This function returns the position of the value <var class="Arg">val</var> in the orbit <var class="Arg">o</var>. If <var class="Arg">o</var> is closed, then this is equivalent to doing <code class="code">Position(<var class="Arg">o</var>, <var class="Arg">val</var>)</code>. However, if <var class="Arg">o</var> is open, then the orbit is enumerated until <var class="Arg">val</var> is found, in which case the position of <var class="Arg">val</var> is returned, or the enumeration ends, in which case <code class="keyw">fail</code> is returned.</p>
+<p>An element of a free inverse semigroup in <strong class="pkg">Semigroups</strong> is displayed, by default, as a shortest word corresponding to the element. However, there might be more than one word of the minimum length. For example, if <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> are generators of a free inverse semigroups, then</p>
 
-<p>If the optional argument <var class="Arg">onlynew</var> is present, it should be <code class="keyw">true</code> or <code class="keyw">false</code>. If <var class="Arg">onlynew</var> is <code class="keyw">true</code>, then <var class="Arg">val</var> will only be checked against new points in <var class="Arg">o</var>. Otherwise, every point in the <var class="Arg">o</var>, not only the new ones, is considered.</p>
+<p class="pcenter">xyy
+      ^ {-1}xx ^ {-1}x ^ {-1} = xxx ^ {-1}yy ^ {-1}x ^ {-1}.</p>
 
-<p><a id="X7DEB890C7D547574" name="X7DEB890C7D547574"></a></p>
+<p>See <code class="func">MinimalWord</code> (<a href="chap10.html#X87BB5D047EB7C2BF"><span class="RefLink">10.3-2</span></a>). Therefore we provide a another method for printing elements of a free inverse semigroup: a unique canonical form. Suppose an element of a free inverse semigroup is given as a Munn tree. Let <span class="SimpleMath">L</span> be the set of words corresponding to the shortest paths from the start vertex to the leaves of the tree. Also let <span class="SimpleMath">w</span> be a word corresponding to the shortest path from start to terminal vertices. The word <span class="SimpleMath">vv ^ -1</span> is an idempotent for every <span class="SimpleMath">v</span> in <span class="SimpleMath">L</span>. The canonical form is given by multiplying these idempotents, in shortlex order, and then postmultiplying by <span class="SimpleMath">w</span>. For example, consider the word <span class="SimpleMath">xyy ^ -1xx ^ -1x ^ -1</span> again. The words corresponding to the paths to the leaves are in this case <span class="SimpleMath">xx</span> and <span class="SimpleMath">xy</span>. And <span class="SimpleMath">w</span> is an empty word since start and terminal vertices are the same. Therefore, the canonical form is</p>
 
-<h5>10.1-2 LookForInOrb</h5>
+<p class="pcenter">xxx ^ {-1}x ^ {-1}xyy ^ {-1}x ^ {-1}.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LookForInOrb</code>( <var class="Arg">o</var>, <var class="Arg">func</var>, <var class="Arg">start</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: <code class="keyw">false</code> or a positive integer.</p>
+<p>See <code class="func">CanonicalForm</code> (<a href="chap10.html#X7DB7DCEC7E0FE9A3"><span class="RefLink">10.3-1</span></a>).</p>
 
-<p>The arguments of this function should be an orbit <var class="Arg">o</var>, a function <var class="Arg">func</var> which gets the orbit object and a point in the orbit as arguments, and a positive integer <var class="Arg">start</var>. The function <var class="Arg">func</var> will be called for every point in <var class="Arg">o</var> starting from <var class="Arg">start</var> (inclusive) and the orbit will be enumerated until <var class="Arg">func</var> returns <code class="keyw">true</code> or the enumeration ends. In the former case, the position of the first point in <var class="Arg">o</var> for which <var class="Arg">func</var> returns <code class="keyw">true</code> is returned, and in the latter <code class="keyw">false</code> is returned.</p>
+<p><a id="X7F3F9DED8003CBD0" name="X7F3F9DED8003CBD0"></a></p>
 
+<h5>10.1-1 FreeInverseSemigroup</h5>
 
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(SymmetricGroup(100), 1, OnPoints);</span>
-&lt;open Int-orbit, 1 points&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">func:=function(o, x) return x=42; end;</span>
-function( o, x ) ... end
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LookForInOrb(o, func, 1);</span>
-42
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o;</span>
-&lt;open Int-orbit, 42 points&gt;</pre></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeInverseSemigroup</code>( <var class="Arg">names</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A free inverse semigroup.</p>
 
-<p><a id="X80B19F9E8631D88B" name="X80B19F9E8631D88B"></a></p>
-
-<h4>10.2 <span class="Heading">Strongly connected components of orbits</span></h4>
-
-<p>The functions described in this section supplement the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/orb.html ">Orb</a></span> package by providing methods for operations related to strongly connected components of orbits.</p>
-
-<p>If any of the functions is applied to an open orbit, then the orbit is completely enumerated before any further calculation is performed. It is not possible to calculate the strongly connected components of an orbit of a semigroup acting on a set until the entire orbit has been found.</p>
-
-<p><a id="X8178A420792E6AAC" name="X8178A420792E6AAC"></a></p>
-
-<h5>10.2-1 OrbSCC</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbSCC</code>( <var class="Arg">o</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: The strongly connected components of an orbit.</p>
-
-<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code>, then <code class="code">OrbSCC</code> returns a set of sets of positions in <var class="Arg">o</var> corresponding to its strongly connected components.</p>
-
-<p>See also <code class="func">OrbSCCLookup</code> (<a href="chap10.html#X814337A47B773F50"><span class="RefLink">10.2-2</span></a>) and <code class="func">OrbSCCTruthTable</code> (<a href="chap10.html#X78AFD003840823BD"><span class="RefLink">10.2-3</span></a>).</p>
+<p>Returns a free inverse semigroup on <var class="Arg">rank</var> generators, where <var class="Arg">rank</var> is a positive integer. If <var class="Arg">rank</var> is not specified, the number of <var class="Arg">names</var> is used. If <code class="code">S</code> is a free inverse semigroup, then the generators can be accessed by <code class="code">S.1</code>, <code class="code">S.2</code> and so on.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(4);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=LambdaOrb(S);</span>
-&lt;open orbit, 1 points with Schreier tree with log&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
-[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
-  [ 13, 14, 15, 16 ] ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(7);</span>
+&lt;free inverse semigroup on the generators 
+[ x1, x2, x3, x4, x5, x6, x7 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(7, "s");</span>
+&lt;free inverse semigroup on the generators 
+[ s1, s2, s3, s4, s5, s6, s7 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup("a", "b", "c");</span>
+&lt;free inverse semigroup on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(["a", "b", "c"]);</span>
+&lt;free inverse semigroup on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.1;</span>
+a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.2;</span>
+b</pre></div>
 
-<p><a id="X814337A47B773F50" name="X814337A47B773F50"></a></p>
+<p><a id="X7CE4CFD886220179" name="X7CE4CFD886220179"></a></p>
 
-<h5>10.2-2 OrbSCCLookup</h5>
+<h5>10.1-2 IsFreeInverseSemigroupCategory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbSCCLookup</code>( <var class="Arg">o</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: A lookup table for the strongly connected components of an orbit.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupCategory</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Every free inverse semigroup in <strong class="pkg">GAP</strong> created by <code class="func">FreeInverseSemigroup</code> (<a href="chap10.html#X7F3F9DED8003CBD0"><span class="RefLink">10.1-1</span></a>) belongs to the category <code class="code">IsFreeInverseSemigroup</code>. Basic operations for a free inverse semigroup are: <code class="func">GeneratorsOfInverseSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X87C373597F787250"><span class="RefLink">Reference: GeneratorsOfInverseSemigroup</span></a>) and <code class="func">GeneratorsOfSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X78147A247963F23B"><span class="RefLink">Reference: GeneratorsOfSemigroup</span></a>). Elements of a free inverse semigroup belong to the category <code class="func">IsFreeInverseSemigroupElement</code> (<a href="chap10.html#X7999FE0286283CC2"><span class="RefLink">10.1-4</span></a>).</p>
 
-<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code>, then <code class="code">OrbSCCLookup</code> returns a lookup table for its strongly connected components. More precisely, <code class="code">OrbSCCLookup(o)[i]</code> equals the index of the strongly connected component containing <code class="code">o[i]</code>.</p>
+<p><a id="X7B91643B827DA6DB" name="X7B91643B827DA6DB"></a></p>
 
-<p>See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>) and <code class="func">OrbSCCTruthTable</code> (<a href="chap10.html#X78AFD003840823BD"><span class="RefLink">10.2-3</span></a>).</p>
+<h5>10.1-3 IsFreeInverseSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>Attempts to determine whether the given semigroup <var class="Arg">S</var> is a free inverse semigroup.</p>
+
+<p><a id="X7999FE0286283CC2" name="X7999FE0286283CC2"></a></p>
+
+<h5>10.1-4 IsFreeInverseSemigroupElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupElement</code></td><td class="tdright">( category )</td></tr></table></div>
+<p>Every element of a free inverse semigroup belongs to the category <code class="code">IsFreeInverseSemigroupElement</code>.</p>
+
+<p><a id="X813A291779726739" name="X813A291779726739"></a></p>
+
+<h5>10.1-5 IsFreeInverseSemigroupElementCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeInverseSemigroupElementCollection</code></td><td class="tdright">( category )</td></tr></table></div>
+<p>Every collection of elements of a free inverse semigroup belongs to the category <code class="code">IsFreeInverseSemigroupElementCollection</code>. For example, every free inverse semigroup belongs to <code class="code">IsFreeInverseSemigroupElementCollection</code>.</p>
+
+<p><a id="X8073A2387A42B52D" name="X8073A2387A42B52D"></a></p>
+
+<h4>10.2 <span class="Heading"> Displaying free inverse semigroup elements </span></h4>
+
+<p>There is a way to change how <strong class="pkg">GAP</strong> displays free inverse semigroup elements using the user preference <code class="code">FreeInverseSemigroupElementDisplay</code>. See <code class="func">UserPreference</code> (<a href="../../../doc/ref/chap3_mj.html#X7B0AD104839B6C3C"><span class="RefLink">Reference: UserPreference</span></a>) for more information about user preferences.</p>
+
+<p>There are two possible values for <code class="code">FreeInverseSemigroupElementDisplay</code>:</p>
+
+
+<dl>
+<dt><strong class="Mark">minimal </strong></dt>
+<dd><p>With this option selected, <strong class="pkg">GAP</strong> will display a shortest word corresponding to the free inverse semigroup element. However, this shortest word is not unique. This is a default setting.</p>
+
+</dd>
+<dt><strong class="Mark">canonical</strong></dt>
+<dd><p>With this option selected, <strong class="pkg">GAP</strong> will display a free inverse semigroup element in the canonical form.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetUserPreference("semigroups",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                     "FreeInverseSemigroupElementDisplay",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                     "minimal");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(2);</span>
+&lt;free inverse semigroup on the generators [ x1, x2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.1 * S.2;</span>
+x1*x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetUserPreference("semigroups",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                     "FreeInverseSemigroupElementDisplay",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                     "canonical");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.1 * S.2;</span>
+x1x2x2^-1x1^-1x1x2</pre></div>
+
+<p><a id="X7E93822179CD7602" name="X7E93822179CD7602"></a></p>
+
+<h4>10.3 <span class="Heading">Operators and operations for free inverse semigroup elements
+      </span></h4>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code"><var class="Arg">w</var> ^ -1</code></strong></dt>
+<dd><p>returns the semigroup inverse of the free inverse semigroup element <var class="Arg">w</var>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> * <var class="Arg">v</var></code></strong></dt>
+<dd><p>returns the product of two free inverse semigroup elements <var class="Arg">u</var> and <var class="Arg">v</var>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> = <var class="Arg">v</var> </code></strong></dt>
+<dd><p>checks if two free inverse semigroup elements are equal, by comparing their canonical forms.</p>
+
+</dd>
+</dl>
+<p><a id="X7DB7DCEC7E0FE9A3" name="X7DB7DCEC7E0FE9A3"></a></p>
+
+<h5>10.3-1 CanonicalForm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalForm</code>( <var class="Arg">w</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>Every element of a free inverse semigroup has a unique canonical form. If <var class="Arg">w</var> is such an element, then <code class="code">CanonicalForm</code> returns the canonical form of <var class="Arg">w</var> as a string.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(4);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=LambdaOrb(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
-[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
-  [ 13, 14, 15, 16 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCCLookup(o);</span>
-[ 1, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCCLookup(o)[1]; OrbSCCLookup(o)[4]; OrbSCCLookup(o)[7]; </span>
-1
-3
-4</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(3);</span>
+&lt;free inverse semigroup on the generators [ x1, x2, x3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1; y := S.2;</span>
+x1
+x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalForm(x ^ 3 * y ^ 3);</span>
+"x1x1x1x2x2x2x2^-1x2^-1x2^-1x1^-1x1^-1x1^-1x1x1x1x2x2x2"</pre></div>
 
-<p><a id="X78AFD003840823BD" name="X78AFD003840823BD"></a></p>
+<p><a id="X87BB5D047EB7C2BF" name="X87BB5D047EB7C2BF"></a></p>
 
-<h5>10.2-3 OrbSCCTruthTable</h5>
+<h5>10.3-2 MinimalWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbSCCTruthTable</code>( <var class="Arg">o</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: Truth tables for strongly connected components of an orbit.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalWord</code>( <var class="Arg">w</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A string.</p>
 
-<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code>, then <code class="code">OrbSCCTruthTable</code> returns a list of boolean lists such that <code class="code">OrbSCCTruthTable(o)[i][j]</code> is <code class="keyw">true</code> if <code class="code">j</code> belongs to <code class="code">OrbSCC(o)[i]</code>.</p>
+<p>For an element <var class="Arg">w</var> of a free inverse semigroup <code class="code">S</code>, <code class="code">MinimalWord</code> returns a word of minimal length equal to <var class="Arg">w</var> in <code class="code">S</code> as a string.</p>
 
-<p>See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>) and <code class="func">OrbSCCLookup</code> (<a href="chap10.html#X814337A47B773F50"><span class="RefLink">10.2-2</span></a>).</p>
+<p>Note that there maybe more than one word of minimal length which is equal to <var class="Arg">w</var> in <code class="code">S</code>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(4);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=LambdaOrb(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
-[ [ 1 ], [ 2 ], [ 3, 4, 5, 6 ], [ 7, 8, 9, 10, 11, 12 ], 
-  [ 13, 14, 15, 16 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCCTruthTable(o);</span>
-[ [ true, false, false, false, false, false, false, false, false, 
-      false, false, false, false, false, false, false ], 
-  [ false, true, false, false, false, false, false, false, false, 
-      false, false, false, false, false, false, false ], 
-  [ false, false, true, true, true, true, false, false, false, false, 
-      false, false, false, false, false, false ], 
-  [ false, false, false, false, false, false, true, true, true, true, 
-      true, true, false, false, false, false ], 
-  [ false, false, false, false, false, false, false, false, false, 
-      false, false, false, true, true, true, true ] ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeInverseSemigroup(3);</span>
+&lt;free inverse semigroup on the generators [ x1, x2, x3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1;</span>
+x1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := S.2;</span>
+x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalWord(x ^ 3 * y ^ 3);</span>
+"x1*x1*x1*x2*x2*x2"</pre></div>
 
-<p><a id="X7D9A29B47D743213" name="X7D9A29B47D743213"></a></p>
+<p><a id="X7BB29A6779E8066A" name="X7BB29A6779E8066A"></a></p>
 
-<h5>10.2-4 ReverseSchreierTreeOfSCC</h5>
+<h4>10.4 <span class="Heading">
+      Free bands
+    </span></h4>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReverseSchreierTreeOfSCC</code>( <var class="Arg">o</var>, <var class="Arg">i</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: The reverse Schreier tree corresponding to the <var class="Arg">i</var>th strongly connected component of an orbit.</p>
+<p>A semigroup <span class="SimpleMath">B</span> is a <em>free band</em> on a non-empty set <span class="SimpleMath">X</span> if <span class="SimpleMath">B</span> is a band with a map <span class="SimpleMath">f</span> from <span class="SimpleMath">B</span> to <span class="SimpleMath">X</span> such that for every band <span class="SimpleMath">S</span> and every map <span class="SimpleMath">g</span> from <span class="SimpleMath">X</span> to <span class="SimpleMath">B</span> there exists a unique homomorphism <span class="SimpleMath">g'</span> from <span class="SimpleMath">B</span> to <span class="SimpleMath">S</span> such that <span class="SimpleMath">fg' = g</span>. The free band on a set <span class="SimpleMath">X</span> is unique up to isomorphism. Moreover, by the universal property, every band can be expressed as a quotient of a free band.</p>
 
-<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code> and action <code class="code">act</code>, and <var class="Arg">i</var> is a positive integer, then <code class="code">ReverseSchreierTreeOfSCC(<var class="Arg">o</var>, <var class="Arg">i</var>)</code> returns a pair <code class="code">[ gen, pos ]</code> of lists with <code class="code">Length(o)</code> entries such that</p>
+<p>For an alternative description of a free band. Suppose that <span class="SimpleMath">X</span> is a non-empty set and <span class="SimpleMath">X ^ +</span> a free semigroup on <span class="SimpleMath">X</span>. Also suppose that <span class="SimpleMath">b</span> is the smallest congurance on <span class="SimpleMath">X ^ +</span> containing the set</p>
 
+<p class="pcenter"> \{(w ^ 2, w) : w \in X ^ + \}. </p>
 
-<div class="example"><pre>act(o[j], o!.gens[gen[j]])=o[pos[j]].</pre></div>
+<p>Then the free band on <span class="SimpleMath">X</span> is isomorphic to the quotient of <span class="SimpleMath">X ^ +</span> by <span class="SimpleMath">b</span>. See Section 4.5 of <a href="chapBib.html#biBHowie1995aa">[How95]</a> for more information on free bands.</p>
 
-<p>The pair <code class="code">[ gen, pos ]</code> corresponds to a tree with root <code class="code">OrbSCC(o)[i][1]</code> and a path from every element of <code class="code">OrbSCC(o)[i]</code> to the root.</p>
+<p><a id="X7B2A65F382DB36EC" name="X7B2A65F382DB36EC"></a></p>
 
-<p>See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>), <code class="func">TraceSchreierTreeOfSCCBack</code> (<a href="chap10.html#X7853DC817C3102A4"><span class="RefLink">10.2-6</span></a>), <code class="func">SchreierTreeOfSCC</code> (<a href="chap10.html#X8071C7148255D0DB"><span class="RefLink">10.2-5</span></a>), and <code class="func">TraceSchreierTreeOfSCCForward</code> (<a href="chap10.html#X7D2E200A7B2D5946"><span class="RefLink">10.2-7</span></a>).</p>
+<h5>10.4-1 FreeBand</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">..</var>, <var class="Arg">.</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeBand</code>( <var class="Arg">names</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A free band.</p>
 
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 3, 4, 5 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 5, 1, 4, 5, 5 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
-[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReverseSchreierTreeOfSCC(o, 3);</span>
-[ [ ,, fail,, 2, 1, 2,,,, 1 ], [ ,, fail,, 3, 5, 3,,,, 7 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReverseSchreierTreeOfSCC(o, 7);</span>
-[ [ ,,,,,,,,, fail,, 3 ], [ ,,,,,,,,, fail,, 10 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSets(o[11], Generators(S)[1]);</span>
-[ 1, 4 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Position(o, last);</span>
-7</pre></div>
-
-<p><a id="X8071C7148255D0DB" name="X8071C7148255D0DB"></a></p>
-
-<h5>10.2-5 SchreierTreeOfSCC</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SchreierTreeOfSCC</code>( <var class="Arg">o</var>, <var class="Arg">i</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: The Schreier tree corresponding to the <var class="Arg">i</var>th strongly connected component of an orbit.</p>
-
-<p>If <var class="Arg">o</var> is an orbit created by the <strong class="pkg">Orb</strong> package with the option <code class="code">orbitgraph=true</code> and action <code class="code">act</code>, and <var class="Arg">i</var> is a positive integer, then <code class="code">SchreierTreeOfSCC(<var class="Arg">o</var>, <var class="Arg">i</var>)</code> returns a pair <code class="code">[ gen, pos ]</code> of lists with <code class="code">Length(o)</code> entries such that</p>
-
-
-<div class="example"><pre>act(o[pos[j]], o!.gens[gen[j]])=o[j].</pre></div>
-
-<p>The pair <code class="code">[ gen, pos ]</code> corresponds to a tree with root <code class="code">OrbSCC(o)[i][1]</code> and a path from the root to every element of <code class="code">OrbSCC(o)[i]</code>.</p>
-
-<p>See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>), <code class="func">TraceSchreierTreeOfSCCBack</code> (<a href="chap10.html#X7853DC817C3102A4"><span class="RefLink">10.2-6</span></a>), <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap10.html#X7D9A29B47D743213"><span class="RefLink">10.2-4</span></a>), and <code class="func">TraceSchreierTreeOfSCCForward</code> (<a href="chap10.html#X7D2E200A7B2D5946"><span class="RefLink">10.2-7</span></a>).</p>
+<p>Returns a free band on <var class="Arg">rank</var> generators, for a positive integer <var class="Arg">rank</var>. If <var class="Arg">rank</var> is not specified, the number of <var class="Arg">names</var> is used. The resulting semigroup is always finite.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 2, 1, 4, 4 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 3, 4, 5 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 5, 1, 4, 5, 5 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
-[ [ 1 ], [ 2 ], [ 3, 5, 6, 7, 11 ], [ 4 ], [ 8 ], [ 9 ], [ 10, 12 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchreierTreeOfSCC(o, 3);</span>
-[ [ ,, fail,, 1, 3, 1,,,, 2 ], [ ,, fail,, 7, 5, 3,,,, 6 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchreierTreeOfSCC(o, 7);</span>
-[ [ ,,,,,,,,, fail,, 1 ], [ ,,,,,,,,, fail,, 10 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnSets(o[6], Generators(S)[2]);</span>
-[ 3, 5 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Position(o, last);</span>
-11</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeBand(6);</span>
+&lt;free band on the generators [ x1, x2, x3, x4, x5, x6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeBand(6, "b");</span>
+&lt;free band on the generators [ b1, b2, b3, b4, b5, b6 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeBand("a", "b", "c");</span>
+&lt;free band on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FreeBand("a", "b", "c");</span>
+&lt;free band on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeBand(["a", "b", "c"]);</span>
+&lt;free band on the generators [ a, b, c ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
+159
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := Generators(S);</span>
+[ a, b, c ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S.1 * S.2;</span>
+ab</pre></div>
 
-<p><a id="X7853DC817C3102A4" name="X7853DC817C3102A4"></a></p>
+<p><a id="X7F5658DC7E56C4A6" name="X7F5658DC7E56C4A6"></a></p>
 
-<h5>10.2-6 TraceSchreierTreeOfSCCBack</h5>
+<h5>10.4-2 IsFreeBandCategory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceSchreierTreeOfSCCBack</code>( <var class="Arg">orb</var>, <var class="Arg">m</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A word in the generators.</p>
-
-<p><var class="Arg">orb</var> must be an orbit object with a Schreier tree and orbit graph, that is, the options <code class="code">schreier</code> and <code class="code">orbitgraph</code> must have been set to <code class="keyw">true</code> during the creation of the orbit, <var class="Arg">m</var> must be the number of a strongly connected component of <var class="Arg">orb</var>, and <code class="code">nr</code> must be the number of a point in the <var class="Arg">m</var>th strongly connect component of <var class="Arg">orb</var>.</p>
-
-<p>This operation traces the result of <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap10.html#X7D9A29B47D743213"><span class="RefLink">10.2-4</span></a>) and with arguments <var class="Arg">orb</var> and <var class="Arg">m</var> and returns a word in the generators that maps the point with number <var class="Arg">nr</var> to the first point in the <var class="Arg">m</var>th strongly connected component of <var class="Arg">orb</var>. Here, a word is a list of integers, where positive integers are numbers of generators. See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>), <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap10.html#X7D9A29B47D743213"><span class="RefLink">10.2-4</span></a>), <code class="func">SchreierTreeOfSCC</code> (<a href="chap10.html#X8071C7148255D0DB"><span class="RefLink">10.2-5</span></a>), and <code class="func">TraceSchreierTreeOfSCCForward</code> (<a href="chap10.html#X7D2E200A7B2D5946"><span class="RefLink">10.2-7</span></a>).</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandCategory</code></td><td class="tdright">( category )</td></tr></table></div>
+<p><code class="code">IsFreeBandCategory</code> is the category of semigroups created using <code class="func">FreeBand</code> (<a href="chap10.html#X7B2A65F382DB36EC"><span class="RefLink">10.4-1</span></a>).</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 2, 4, 1, 2 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 1, 1, 3 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 4, 1 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
-[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReverseSchreierTreeOfSCC(o, 4);               </span>
-[ [ ,,, fail, 4, 1, 1, 3 ], [ ,,, fail, 4, 4, 4, 4 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCBack(o, 4, 7);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandCategory(FreeBand(3));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(SymmetricGroup(6));</span>
+false</pre></div>
+
+<p><a id="X7B1CD5FC7E034B88" name="X7B1CD5FC7E034B88"></a></p>
+
+<h5>10.4-3 IsFreeBand</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBand</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p><code class="code">IsFreeBand</code> returns <code class="keyw">true</code> if the given semigroup <var class="Arg">S</var> is a free band.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(FreeBand(3));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(SymmetricGroup(6));</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(FullTransformationMonoid(7));</span>
+false
+</pre></div>
+
+<p><a id="X7DECF69087BB3B16" name="X7DECF69087BB3B16"></a></p>
+
+<h5>10.4-4 IsFreeBandElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandElement</code></td><td class="tdright">( category )</td></tr></table></div>
+<p><code class="code">IsFreeBandElement</code> is a <code class="code">Category</code> containing the elements of a free band.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandElement(Generators(FreeBand(4))[1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandElement(Transformation([1, 3, 4, 1]));</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandElement((1, 2, 3, 4));</span>
+false
+</pre></div>
+
+<p><a id="X842839C87DAAA43C" name="X842839C87DAAA43C"></a></p>
+
+<h5>10.4-5 IsFreeBandElementCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandElementCollection</code></td><td class="tdright">( category )</td></tr></table></div>
+<p>Every collection of elements of a free band belongs to the category <code class="code">IsFreeBandElementCollection</code>. For example, every free band belongs to <code class="code">IsFreeBandElementCollection</code>.</p>
+
+<p><a id="X7AEF4CD1857E7DCC" name="X7AEF4CD1857E7DCC"></a></p>
+
+<h5>10.4-6 IsFreeBandSubsemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeBandSubsemigroup</code></td><td class="tdright">( filter )</td></tr></table></div>
+<p><code class="code">IsFreeBandSubsemigroup</code> is a synonym for <code class="code">IsSemigroup</code> and <code class="code">IsFreeBandElementCollection</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeBand(2);</span>
+&lt;free band on the generators [ x1, x2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1;</span>
+x1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := S.2;</span>
+x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">new := Semigroup([x * y, x]);</span>
+&lt;semigroup with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBand(new);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFreeBandSubsemigroup(new);</span>
+true</pre></div>
+
+<p><a id="X808CAEC17BF271D1" name="X808CAEC17BF271D1"></a></p>
+
+<h5>10.4-7 ContentOfFreeBandElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContentOfFreeBandElement</code>( <var class="Arg">x</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContentOfFreeBandElementCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list of integers</p>
+
+<p>The content of a free band element <var class="Arg">x</var> is the set of generators appearing in the word representing the element <var class="Arg">x</var> of the free band.</p>
+
+<p>The function <code class="code">ContentOfFreeBandElement</code> returns the content of free band element <var class="Arg">x</var> represented as a list of integers, where <code class="code">1</code> represents the first generator, <code class="code">2</code> the second generator, and so on.</p>
+
+<p>The function <code class="code">ContentOfFreeBandElementCollection</code> returns the the least list <code class="code">C</code> for the collection of free band elements <var class="Arg">coll</var> such that the content of every element in <var class="Arg">coll</var> is contained in <code class="code">C</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeBand(2);</span>
+&lt;free band on the generators [ x1, x2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1;</span>
+x1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := S.2;</span>
+x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ContentOfFreeBandElement(x);</span>
 [ 1 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCBack(o, 4, 8);</span>
-[ 3 ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ContentOfFreeBandElement(x * y);</span>
+[ 1, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ContentOfFreeBandElement(x * y * x);</span>
+[ 1, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ContentOfFreeBandElementCollection([x, y]);</span>
+[ 1, 2 ]</pre></div>
 
-<p><a id="X7D2E200A7B2D5946" name="X7D2E200A7B2D5946"></a></p>
+<p><a id="X86221BAE7CD5CF4D" name="X86221BAE7CD5CF4D"></a></p>
 
-<h5>10.2-7 TraceSchreierTreeOfSCCForward</h5>
+<h4>10.5 <span class="Heading">Operators and operations for free band elements
+    </span></h4>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceSchreierTreeOfSCCForward</code>( <var class="Arg">orb</var>, <var class="Arg">m</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: A word in the generators.</p>
 
-<p><var class="Arg">orb</var> must be an orbit object with a Schreier tree and orbit graph, that is, the options <code class="code">schreier</code> and <code class="code">orbitgraph</code> must have been set to <code class="keyw">true</code> during the creation of the orbit, <var class="Arg">m</var> must be the number of a strongly connected component of <var class="Arg">orb</var>, and <code class="code">nr</code> must be the number of a point in the <var class="Arg">m</var>th strongly connect component of <var class="Arg">orb</var>.</p>
+<dl>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> * <var class="Arg">v</var></code></strong></dt>
+<dd><p>returns the product of two free band elements <var class="Arg">u</var> and <var class="Arg">v</var>.</p>
 
-<p>This operation traces the result of <code class="func">SchreierTreeOfSCC</code> (<a href="chap10.html#X8071C7148255D0DB"><span class="RefLink">10.2-5</span></a>) and with arguments <var class="Arg">orb</var> and <var class="Arg">m</var> and returns a word in the generators that maps the first point in the <var class="Arg">m</var>th strongly connected component of <var class="Arg">orb</var> to the point with number <var class="Arg">nr</var>. Here, a word is a list of integers, where positive integers are numbers of generators. See also <code class="func">OrbSCC</code> (<a href="chap10.html#X8178A420792E6AAC"><span class="RefLink">10.2-1</span></a>), <code class="func">ReverseSchreierTreeOfSCC</code> (<a href="chap10.html#X7D9A29B47D743213"><span class="RefLink">10.2-4</span></a>), <code class="func">SchreierTreeOfSCC</code> (<a href="chap10.html#X8071C7148255D0DB"><span class="RefLink">10.2-5</span></a>), and <code class="func">TraceSchreierTreeOfSCCBack</code> (<a href="chap10.html#X7853DC817C3102A4"><span class="RefLink">10.2-6</span></a>).</p>
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> = <var class="Arg">v</var> </code></strong></dt>
+<dd><p>checks if two free band elements are equal.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">u</var> &lt; <var class="Arg">v</var> </code></strong></dt>
+<dd><p>compares the sizes of the internal representations of two free band elements.</p>
+
+</dd>
+</dl>
+<p><a id="X85DC5D50875E55D6" name="X85DC5D50875E55D6"></a></p>
+
+<h5>10.5-1 GreensDClassOfElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GreensDClassOfElement</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A Green's \(\mathscr{D}\)-class</p>
+
+<p>Let <var class="Arg">S</var> be a free band. Two elements of <var class="Arg"> S </var> are \(\mathscr{D}\)-related if and only if they have the same content i.e. the set of generators appearing in any factorization of the elements. Therefore, a \(\mathscr{D}\)-class of a free band element <var class="Arg"> x </var> is the set of elements of <var class="Arg"> S </var> which have the same content as <var class="Arg"> x </var>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 3, 4, 1 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 2, 4, 1, 2 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 1, 1, 3 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 4, 1 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">o:=Orb(S, [1..4], OnSets, rec(orbitgraph:=true, schreier:=true));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OrbSCC(o);</span>
-[ [ 1 ], [ 2 ], [ 3 ], [ 4, 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SchreierTreeOfSCC(o, 4);</span>
-[ [ ,,, fail, 1, 2, 2, 4 ], [ ,,, fail, 4, 4, 6, 4 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCForward(o, 4, 8);</span>
-[ 4 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceSchreierTreeOfSCCForward(o, 4, 7);</span>
-[ 2, 2 ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FreeBand(3, "b");</span>
+&lt;free band on the generators [ b1, b2, b3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := S.1 * S.2;</span>
+b1b2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := GreensDClassOfElement(S, x);</span>
+&lt;Green's D-class: b1b2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGreensDClass(D);</span>
+true</pre></div>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

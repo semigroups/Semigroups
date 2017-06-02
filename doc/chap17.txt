@@ -1,0 +1,315 @@
+  
+  [1X17 [33X[0;0YSemigroup homomorphisms[133X[101X
+  
+  [33X[0;0YIn this chapter we describe the various ways to define a homomorphism from a
+  semigroup to another semigroup.[133X
+  
+  
+  [1X17.1 [33X[0;0YIsomorphisms of arbitrary semigroups[133X[101X
+  
+  [1X17.1-1 IsIsomorphicSemigroup[101X
+  
+  [29X[2XIsIsomorphicSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThis  operation  attempts  to  determine  if  the  semigroups  [3XS[103X  and  [3XT[103X are
+  isomorphic, it returns [9Xtrue[109X if they are and [9Xfalse[109X if they are not.[133X
+  
+  [33X[0;0YAt  present  this only works for rather small semigroups, with approximately
+  50 elements or less.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1, 2, 4], [3, 5, 1]),[127X[104X
+    [4X[25X>[125X [27X                  PartialPerm([1, 3, 5], [4, 3, 2]));;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X11[128X[104X
+    [4X[25Xgap>[125X [27XT := SemigroupByMultiplicationTable([127X[104X
+    [4X[25X>[125X [27XSmallestMultiplicationTable(S));;[127X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicSemigroup(S, T);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X17.1-2 SmallestMultiplicationTable[101X
+  
+  [29X[2XSmallestMultiplicationTable[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YThe lex-least multiplication table of a semigroup.[133X
+  
+  [33X[0;0YThis  function  returns  the  lex-least  multiplication table of a semigroup
+  isomorphic to the semigroup [3XS[103X. [10XSmallestMultiplicationTable[110X is an isomorphism
+  invariant of semigroups, and so it can, for example, be used to check if two
+  semigroups are isomorphic.[133X
+  
+  [33X[0;0YDue to the high complexity of computing the smallest multiplication table of
+  a  semigroup,  this  function only performs well for semigroups with at most
+  approximately 50 elements.[133X
+  
+  [33X[0;0Y[10XSmallestMultiplicationTable[110X   is  based  on  the  function  [2XIdSmallSemigroup[102X
+  ([14XSmallsemi: IdSmallSemigroup[114X) by Andreas Distler.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3, -1, -3], [-2]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3, -1], [-2], [-3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, 3], [-1], [-2, -3]]),[127X[104X
+    [4X[25X>[125X [27XBipartition([[1, 2, -1], [3, -2], [-3]]));;[127X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X8[128X[104X
+    [4X[25Xgap>[125X [27XSmallestMultiplicationTable(S);[127X[104X
+    [4X[28X[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], [128X[104X
+    [4X[28X  [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X17.1-3 IsomorphismSemigroups[101X
+  
+  [29X[2XIsomorphismSemigroups[102X( [3XS[103X, [3XT[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn isomorphism or [9Xfail[109X.[133X
+  
+  [33X[0;0YThis  operation  returns  an  isomorphism  from  the  semigroup [3XS[103X and to the
+  semigroup [3XT[103X if it exists, and it returns [9Xfail[109X if it does not.[133X
+  
+  [33X[0;0YAt  present  this  only  works  for Rees matrix semigroups and Rees 0-matrix
+  semigroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XD := DClass(FullTransformationMonoid(5),[127X[104X
+    [4X[25X>[125X [27X               Transformation([1, 2, 3, 4, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XS := PrincipalFactor(D);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(UnderlyingSemigroup(S));[127X[104X
+    [4X[28X"S4"[128X[104X
+    [4X[25Xgap>[125X [27XS;[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 10x5 over S4>[128X[104X
+    [4X[25Xgap>[125X [27XD := DClass(PartitionMonoid(5),[127X[104X
+    [4X[25X>[125X [27X               Bipartition([[1], [2, -2], [3, -3],[127X[104X
+    [4X[25X>[125X [27X                            [4, -4], [5, -5], [-1]]));;[127X[104X
+    [4X[25Xgap>[125X [27XT := PrincipalFactor(D);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(UnderlyingSemigroup(T));[127X[104X
+    [4X[28X"S4"[128X[104X
+    [4X[25Xgap>[125X [27XT;[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 15x15 over S4>[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismSemigroups(S, T);[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XI := SemigroupIdeal(FullTransformationMonoid(5),[127X[104X
+    [4X[25X>[125X [27X                       Transformation([1, 1, 2, 3, 4]));;[127X[104X
+    [4X[25Xgap>[125X [27XT := PrincipalFactor(DClass(I, I.1));;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(UnderlyingSemigroup(T));[127X[104X
+    [4X[28X"S4"[128X[104X
+    [4X[25Xgap>[125X [27XT;[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 10x5 over S4>[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismSemigroups(S, T) <> fail;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X17.2 [33X[0;0YIsomorphisms of Rees (0-)matrix semigroups[133X[101X
+  
+  [33X[0;0YAn  isomorphism  between two regular finite Rees (0-)matrix semigroups whose
+  underlying  semigroups  are  groups  can be described by a triple defined in
+  terms  of  the  matrices and underlying groups of the semigroups. For a full
+  description of the theory involved, see Section 3.4 of [How95].[133X
+  
+  [33X[0;0YAn isomorphism described in this way can be constructed using [2XRMSIsoByTriple[102X
+  ([14X17.2-2[114X)   or   [2XRZMSIsoByTriple[102X   ([14X17.2-2[114X),  and  will  satisfy  the  filter
+  [2XIsRMSIsoByTriple[102X ([14X17.2-1[114X) or [2XIsRZMSIsoByTriple[102X ([14X17.2-1[114X).[133X
+  
+  [1X17.2-1 IsRMSIsoByTriple[101X
+  
+  [29X[2XIsRMSIsoByTriple[102X[32X Category
+  [29X[2XIsRZMSIsoByTriple[102X[32X Category
+  
+  [33X[0;0YThe  isomorphisms  between finite Rees matrix or 0-matrix semigroups [10XS[110X and [10XT[110X
+  over groups [10XG[110X and [10XH[110X, respectively, specified by a triple consisting of:[133X
+  
+  [31X1[131X   [33X[0;6Yan isomorphism of the underlying graph of [10XS[110X to the underlying graph of
+        of [10XT[110X[133X
+  
+  [31X2[131X   [33X[0;6Yan isomorphism from [10XG[110X to [10XH[110X[133X
+  
+  [31X3[131X   [33X[0;6Ya function from [10XRows(S)[110X union [10XColumns(S)[110X to [10XH[110X[133X
+  
+  [33X[0;0Ybelong  to  the  categories  [10XIsRMSIsoByTriple[110X  and  [10XIsRZMSIsoByTriple[110X. Basic
+  operators  for  such  isomorphism  are given in [14X17.2-6[114X, and basic operations
+  are:   [2XRange[102X   ([14XReference:  range[114X),  [2XSource[102X  ([14XReference:  Source[114X),  [2XELM_LIST[102X
+  ([14X17.2-3[114X),   [2XCompositionMapping[102X  ([14XReference:  CompositionMapping[114X),  [2XImagesElm[102X
+  ([14X17.2-5[114X),  [2XImagesRepresentative[102X  ([14X17.2-5[114X), [2XInverseGeneralMapping[102X ([14XReference:
+  InverseGeneralMapping[114X),          [2XPreImagesRepresentative[102X         ([14XReference:
+  PreImagesRepresentative[114X), [2XIsOne[102X ([14XReference: IsOne[114X).[133X
+  
+  [1X17.2-2 RMSIsoByTriple[101X
+  
+  [29X[2XRMSIsoByTriple[102X( [3XR1[103X, [3XR2[103X, [3Xtriple[103X ) [32X operation
+  [29X[2XRZMSIsoByTriple[102X( [3XR1[103X, [3XR2[103X, [3Xtriple[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
+  
+  [33X[0;0YIf  [3XR1[103X  and  [3XR2[103X  are  isomorphic  regular  Rees  0-matrix  semigroups  whose
+  underlying   semigroups   are   groups   then  [10XRZMSIsoByTriple[110X  returns  the
+  isomorphism  between  [3XR1[103X  and  [3XR2[103X  defined by [3Xtriple[103X, which should be a list
+  consisting of the following:[133X
+  
+  [30X    [33X[0;6Y[10X[3Xtriple[103X[10X[1][110X  should  be a permutation describing an isomorphism from the
+        graph   of   [3XR1[103X   to   the   graph  of  [3XR2[103X,  i.e.  it  should  satisfy
+        [10XOnDigraphs(RZMSDigraph([3XR1[103X[10X), [3Xtriple[103X[10X[1]) = RZMSDigraph([3XR2[103X[10X)[110X.[133X
+  
+  [30X    [33X[0;6Y[10X[3Xtriple[103X[10X[2][110X  should be an isomorphism from the underlying group of [3XR1[103X to
+        the  underlying  group  of  [3XR2[103X  (see  [2XUnderlyingSemigroup[102X  ([14XReference:
+        UnderlyingSemigroup (for a Rees 0-matrix semigroup)[114X)).[133X
+  
+  [30X    [33X[0;6Y[10X[3Xtriple[103X[10X[3][110X  should  be  a list of elements from the underlying group of
+        [3XR2[103X.  If the [2XMatrix[102X ([14XReference: Matrix[114X) of [3XR1[103X has [22Xm[122X columns and [22Xn[122X rows,
+        then  the  list  should  have  length [22Xm + n[122X, where the first [22Xm[122X entries
+        should  correspond  to  the  columns  of  [3XR1[103X's  matrix, and the last [22Xn[122X
+        entries  should  correspond  to the rows. These column and row entries
+        should  correspond  to  the  [22Xu_i[122X  and [22Xv_λ[122X elements in Theorem 3.4.1 of
+        [How95].[133X
+  
+  [33X[0;0YIf  [3Xtriple[103X describes a valid isomorphism from [3XR1[103X to [3XR2[103X then this will return
+  an  object  in  the  category [2XIsRZMSIsoByTriple[102X ([14X17.2-1[114X); otherwise an error
+  will be returned.[133X
+  
+  [33X[0;0YIf  [3XR1[103X  and  [3XR2[103X  are  instead  Rees  matrix  semigroups  (without zero) then
+  [10XRMSIsoByTriple[110X  should  be  used instead. This operation is used in the same
+  way,  but  it  should  be  noted  that  since  an  RMS's graph is a complete
+  bipartite  graph,  [10X[3Xtriple[103X[10X[1][110X can be any permutation on [10X[1 .. m + n][110X, so long
+  as no point in [10X[1 .. m][110X is mapped to a point in [10X[m + 1 .. m + n][110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg := SymmetricGroup(3);;[127X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0, 0, (1, 3)], [(1, 2, 3), (), (2, 3)], [0, 0, ()]];;[127X[104X
+    [4X[25Xgap>[125X [27XR := ReesZeroMatrixSemigroup(g, mat);;[127X[104X
+    [4X[25Xgap>[125X [27Xid := IdentityMapping(g);;[127X[104X
+    [4X[25Xgap>[125X [27Xg_elms_list := [(), (), (), (), (), ()];;[127X[104X
+    [4X[25Xgap>[125X [27XRZMSIsoByTriple(R, R, [(), id, g_elms_list]);[127X[104X
+    [4X[28X((), IdentityMapping( SymmetricGroup( [ 1 .. 3 ] ) ), [128X[104X
+    [4X[28X[ (), (), (), (), (), () ])[128X[104X
+  [4X[32X[104X
+  
+  [1X17.2-3 ELM_LIST[101X
+  
+  [29X[2XELM_LIST[102X( [3Xmap[103X, [3Xpos[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA  component  of  an  isomorphism of Rees (0-)matrix semigroups by
+            triple.[133X
+  
+  [33X[0;0Y[10XELM_LIST([3Xmap[103X[10X,  [3Xi[103X[10X)[110X returns the [10Xi[110Xth component of the Rees (0-)matrix semigroup
+  isomorphism by triple [3Xmap[103X when [10Xi = 1, 2, 3[110X.[133X
+  
+  [33X[0;0YThe  components  of  an  isomorphism of Rees (0-)matrix semigroups by triple
+  are:[133X
+  
+  [31X1[131X   [33X[0;6YAn  isomorphism  of  the  underlying graphs of the source and range of
+        [3Xmap[103X, respectively.[133X
+  
+  [31X2[131X   [33X[0;6YAn  isomorphism  of  the  underlying groups of the source and range of
+        [3Xmap[103X, respectively.[133X
+  
+  [31X3[131X   [33X[0;6YAn  function  from  the union of the rows and columns of the source of
+        [3Xmap[103X to the underlying group of the range of [3Xmap[103X.[133X
+  
+  [1X17.2-4 CompositionMapping2[101X
+  
+  [29X[2XCompositionMapping2[102X( [3Xmap1[103X, [3Xmap2[103X ) [32X operation
+  [29X[2XCompositionMapping2[102X( [3Xmap1[103X, [3Xmap2[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA Rees (0-)matrix semigroup by triple.[133X
+  
+  [33X[0;0YIf  [3Xmap1[103X  and  [3Xmap2[103X  are  isomorphisms of Rees matrix or 0-matrix semigroups
+  specified  by  triples  and  the range of [3Xmap2[103X is contained in the source of
+  [3Xmap1[103X,  then  [10XCompositionMapping2([3Xmap1[103X[10X,  [3Xmap2[103X[10X)[110X  returns  the isomorphism from
+  [10XSource([3Xmap2[103X[10X)[110X to [10XRange([3Xmap1[103X[10X)[110X specified by the triple with components:[133X
+  
+  [31X1[131X   [33X[0;6Y[10X[3Xmap1[103X[10X[1] * [3Xmap2[103X[10X[1][110X[133X
+  
+  [31X2[131X   [33X[0;6Y[10X[3Xmap1[103X[10X[2] * [3Xmap2[103X[10X[2][110X[133X
+  
+  [31X3[131X   [33X[0;6Ythe componentwise product of [10X[3Xmap1[103X[10X[1] * [3Xmap2[103X[10X[3][110X and [10X[3Xmap1[103X[10X[3] * [3Xmap2[103X[10X[2][110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR := ReesZeroMatrixSemigroup(Group([(1, 2, 3, 4)]),[127X[104X
+    [4X[25X>[125X [27X[[(1, 3)(2, 4), (1, 4, 3, 2), (), (1, 2, 3, 4), (1, 3)(2, 4), 0],[127X[104X
+    [4X[25X>[125X [27X [(1, 4, 3, 2), 0, (), (1, 4, 3, 2), (1, 2, 3, 4), (1, 2, 3, 4)],[127X[104X
+    [4X[25X>[125X [27X [(), (), (1, 4, 3, 2), (1, 2, 3, 4), 0, (1, 2, 3, 4)],[127X[104X
+    [4X[25X>[125X [27X [(1, 2, 3, 4), (1, 4, 3, 2), (1, 2, 3, 4), 0, (), (1, 2, 3, 4)],[127X[104X
+    [4X[25X>[125X [27X [(1, 3)(2, 4), (1, 2, 3, 4), 0, (), (1, 4, 3, 2), (1, 2, 3, 4)],[127X[104X
+    [4X[25X>[125X [27X [0, (1, 2, 3, 4), (1, 2, 3, 4), (1, 2, 3, 4), (1, 2, 3, 4), ()]]);[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 6x6 over Group([ (1,2,3,4) ])>[128X[104X
+    [4X[25Xgap>[125X [27XG := AutomorphismGroup(R);[127X[104X
+    [4X[28X<automorphism group of <Rees 0-matrix semigroup 6x6 over Group([ (1,2,[128X[104X
+    [4X[28X3,4) ])> with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XG.2;[127X[104X
+    [4X[28X((), IdentityMapping( Group( [ (1,2,3,4) ] ) ), [128X[104X
+    [4X[28X[ (), (), (), (), (), (), (), (), (), (), (), () ])[128X[104X
+    [4X[25Xgap>[125X [27XG.3;[127X[104X
+    [4X[28X(( 2, 4, 6, 3)( 7,11, 8,10), GroupHomomorphismByImages( Group( [128X[104X
+    [4X[28X[ (1,2,3,4) ] ), Group( [ (1,2,3,4) ] ), [ (1,2,3,4) ], [128X[104X
+    [4X[28X[ (1,2,3,4) ] ), [ (), (1,4,3,2), (1,4,3,2), (), (1,4,3,2), [128X[104X
+    [4X[28X  (1,3)(2,4), (), (1,3)(2,4), (), (1,2,3,4), (1,2,3,4), (1,4,3,2) ])[128X[104X
+    [4X[25Xgap>[125X [27XCompositionMapping2(G.2, G.3);[127X[104X
+    [4X[28X(( 2, 4, 6, 3)( 7,11, 8,10), GroupHomomorphismByImages( Group( [128X[104X
+    [4X[28X[ (1,2,3,4) ] ), Group( [ (1,2,3,4) ] ), [ (1,2,3,4) ], [128X[104X
+    [4X[28X[ (1,2,3,4) ] ), [ (), (1,4,3,2), (1,4,3,2), (), (1,4,3,2), [128X[104X
+    [4X[28X  (1,3)(2,4), (), (1,3)(2,4), (), (1,2,3,4), (1,2,3,4), (1,4,3,2) ])[128X[104X
+  [4X[32X[104X
+  
+  [1X17.2-5 ImagesElm[101X
+  
+  [29X[2XImagesElm[102X( [3Xmap[103X, [3Xpt[103X ) [32X operation
+  [29X[2XImagesRepresentative[102X( [3Xmap[103X, [3Xpt[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YAn  element  of  a  Rees (0-)matrix semigroup or a list containing
+            such an element.[133X
+  
+  [33X[0;0YIf  [3Xmap[103X is an isomorphism of Rees matrix or 0-matrix semigroups specified by
+  a   triple   and   [3Xpt[103X   is   an   element   of   the  source  of  [3Xmap[103X,  then
+  [10XImagesRepresentative([3Xmap[103X[10X, [3Xpt[103X[10X) = [3Xpt[103X[10X ^ [3Xmap[103X[10X[110X returns the image of [3Xpt[103X under [3Xmap[103X.[133X
+  
+  [33X[0;0YThe image of [3Xpt[103X under [3Xmap[103X of [10XRange([3Xmap[103X[10X)[110X is the element with components:[133X
+  
+  [31X1[131X   [33X[0;6Y[10X[3Xpt[103X[10X[1] ^ [3Xmap[103X[10X[1][110X[133X
+  
+  [31X2[131X   [33X[0;6Y[10X([3Xpt[103X[10X[1] ^ [3Xmap[103X[10X[3]) * ([3Xpt[103X[10X[2] ^ [3Xmap[103X[10X[2]) * ([3Xpt[103X[10X[3] ^ [3Xmap[103X[10X[3]) ^ -1[110X[133X
+  
+  [31X3[131X   [33X[0;6Y[10X[3Xpt[103X[10X[3] ^ [3Xmap[103X[10X[1][110X.[133X
+  
+  [33X[0;0Y[10XImagesElm([3Xmap[103X[10X, [3Xpt[103X[10X)[110X simply returns [10X[ImagesRepresentative([3Xmap[103X[10X, [3Xpt[103X[10X)][110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR := ReesZeroMatrixSemigroup(Group([(2, 8), (2, 8, 6)]),[127X[104X
+    [4X[25X>[125X [27X[[0, (2, 8), 0, 0, 0, (2, 8, 6)],[127X[104X
+    [4X[25X>[125X [27X [(), 0, (2, 8, 6), (2, 6), (2, 6, 8), 0],[127X[104X
+    [4X[25X>[125X [27X [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0],[127X[104X
+    [4X[25X>[125X [27X [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0],[127X[104X
+    [4X[25X>[125X [27X [0, (2, 8, 6), 0, 0, 0, (2, 8)],[127X[104X
+    [4X[25X>[125X [27X [(2, 8, 6), 0, (2, 6, 8), (2, 8), (), 0]]);[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 6x6 over Group([ (2,8), (2,8,6) ])>[128X[104X
+    [4X[25Xgap>[125X [27Xmap := RZMSIsoByTriple(R, R,[127X[104X
+    [4X[25X>[125X [27X[(), IdentityMapping(Group([(2, 8), (2, 8, 6)])),[127X[104X
+    [4X[25X>[125X [27X[(), (2, 6, 8), (), (), (), (2, 8, 6),[127X[104X
+    [4X[25X>[125X [27X (2, 8, 6), (), (), (), (2, 6, 8), ()]]);;[127X[104X
+    [4X[25Xgap>[125X [27XImagesElm(map, RMSElement(R, 1, (2, 8), 2));[127X[104X
+    [4X[28X[ (1,(2,8),2) ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X17.2-6 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroup by triples[133X[101X
+  
+  [8X[10X[3Xmap[103X[10X[[3Xi[103X[10X][110X[108X
+        [33X[0;6Y[10X[3Xmap[103X[10X[i][110X  returns  the  [3Xi[103Xth  component  of the Rees (0-)matrix semigroup
+        isomorphism by triple [3Xmap[103X when [10X[3Xi[103X[10X = 1, 2, 3[110X; see [2XELM_LIST[102X ([14X17.2-3[114X).[133X
+  
+  [8X[10X[3Xmap1[103X[10X * [3Xmap2[103X[10X[110X[108X
+        [33X[0;6Yreturns  the  composition  of  [3Xmap2[103X  and [3Xmap1[103X; see [2XCompositionMapping2[102X
+        ([14X17.2-4[114X).[133X
+  
+  [8X[10X[3Xmap1[103X[10X < [3Xmap2[103X[10X[110X[108X
+        [33X[0;6Yreturns [9Xtrue[109X if [3Xmap1[103X is lexicographically less than [3Xmap2[103X.[133X
+  
+  [8X[10X[3Xmap1[103X[10X = [3Xmap2[103X[10X[110X[108X
+        [33X[0;6Yreturns  [9Xtrue[109X  if the Rees (0-)matrix semigroup isomorphisms by triple
+        [3Xmap1[103X and [3Xmap2[103X have equal source and range, and are equal as functions,
+        and [9Xfalse[109X otherwise.[133X
+  
+        [33X[0;6YIt  is  possible  for  [3Xmap1[103X  and [3Xmap2[103X to be equal but to have distinct
+        components.[133X
+  
+  [8X[10X[3Xpt[103X[10X ^ [3Xmap[103X[10X[110X[108X
+        [33X[0;6Yreturns  the  image  of  the element [3Xpt[103X of the source of [3Xmap[103X under the
+        isomorphism [3Xmap[103X; see [2XImagesElm[102X ([14X17.2-5[114X).[133X
+  

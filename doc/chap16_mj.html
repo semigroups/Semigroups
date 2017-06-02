@@ -1,0 +1,1723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (semigroups) - Chapter 16: Congruences</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap16"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap15_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap16.html">[MathJax off]</a></p>
+<p><a id="X82BD951079E3C349" name="X82BD951079E3C349"></a></p>
+<div class="ChapSects"><a href="chap16_mj.html#X82BD951079E3C349">16 <span class="Heading">Congruences</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X784770137D98FEB9">16.1 <span class="Heading">Semigroup congruence objects</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X78E34B737F0E009F">16.1-1 IsSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7E909A78830D42A6">16.1-2 IsLeftSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X839EEA797B1CCB67">16.1-3 IsRightSemigroupCongruence</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X7D49787B7B2589B2">16.2 <span class="Heading">
+      Creating congruences
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X85CE56AC84FA5D33">16.2-1 SemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X8757DB087BE7E55A">16.2-2 LeftSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7D01176B788FEE60">16.2-3 RightSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X870EE0BF868D1892">16.2-4 GeneratingPairsOfSemigroupCongruence</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X7D65BB067A762CD6">16.3 <span class="Heading">
+      Congruence classes
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7B1F67A97E23E6A4">16.3-1 IsCongruenceClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7C803E8C84E81A0B">16.3-2 IsLeftCongruenceClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7D2F11C28470BC5A">16.3-3 IsRightCongruenceClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7CB27F237B59C8C9">16.3-4 CongruenceClassOfElement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7E36A01C85E2DCF0">16.3-5 CongruenceClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X86C05F31797C1D6D">16.3-6 NonTrivialEquivalenceClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X8309AAE581B686AB">16.3-7 NonTrivialCongruenceClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X8012081880FDBD66">16.3-8 NrEquivalenceClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7C80CD547A5C3E76">16.3-9 NrCongruenceClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X867772F37B2A5EB2">16.3-10 EquivalenceRelationLookup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X846AAC317D39C72A">16.3-11 EquivalenceRelationCanonicalLookup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X842D567F79648FEB">16.3-12 EquivalenceRelationCanonicalPartition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X85400841879E41A5">16.3-13 OnLeftCongruenceClasses</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7D66F8607B4F0D8F">16.3-14 OnRightCongruenceClasses</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X806DEBC07E6D8FCA">16.4 <span class="Heading">
+      Finding the congruences of a semigroup
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7E8D5BA27CB5A4DA">16.4-1 CongruencesOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7838738987B2DB41">16.4-2 MinimalCongruencesOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7986F3597F9DF7AF">16.4-3 PrincipalCongruencesOfSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X8195D6F47EE52806">16.4-4 IsCongruencePoset</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X86C9C5BA7FE93F4C">16.4-5 LatticeOfCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X83ACF2C0789F621B">16.4-6 PosetOfPrincipalCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7B2E2CEE8626FBC3">16.4-7 CongruencesOfPoset</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X830F42B582A2FAA0">16.4-8 UnderlyingSemigroupOfCongruencePoset</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X78A91138818A4FAE">16.4-9 PosetOfCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7C5BAC8D82ABEBBE">16.4-10 JoinSemilatticeOfCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X780E2B3F8509CE32">16.4-11 MinimalCongruences</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X857D750579B87DBF">16.5 <span class="Heading">
+      Comparing congruences
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X85075F1D878512F5">16.5-1 IsSubrelation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X83878AED7A8E75BE">16.5-2 IsSuperrelation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7952A5A5789C6F60">16.5-3 MeetSemigroupCongruences</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X8262D5207DBF3C5B">16.5-4 JoinSemigroupCongruences</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X7A6478D1831DD787">16.6 <span class="Heading">Congruences on Rees matrix semigroups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7F4AFD7F7E163022">16.6-1 IsRMSCongruenceByLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X87A475E4847D3C96">16.6-2 RMSCongruenceByLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X79E4CF7B79B25AE3">16.6-3 IsRMSCongruenceClassByLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7E9AB940868FCC9D">16.6-4 RMSCongruenceClassByLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7B19CACF7A37ADBC">16.6-5 IsLinkedTriple</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X79027F0580F9D081">16.6-6 CanonicalRepresentative</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7DB7E32E865AD95D">16.6-7 AsSemigroupCongruenceByGeneratingPairs</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X85A731257EFB88A1">16.6-8 AsRMSCongruenceByLinkedTriple</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X7BFDC38178940AE6">16.7 <span class="Heading">
+      Congruences on inverse semigroups
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X8546E48E85A2A7E8">16.7-1 IsInverseSemigroupCongruenceByKernelTrace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7A588B737CEEB104">16.7-2 InverseSemigroupCongruenceByKernelTrace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X87916D4E854F1F6B">16.7-3 AsInverseSemigroupCongruenceByKernelTrace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7D521AFF7876CBC7">16.7-4 KernelOfSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X80972A5B82D88F89">16.7-5 TraceOfSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X8049A0E780A7A8D9">16.7-6 IsInverseSemigroupCongruenceClassByKernelTrace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X857495647F9A9579">16.7-7 MinimumGroupCongruence</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X7CE483078769A4D6">16.8 <span class="Heading">Rees congruences</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7BC02E08840E0AF4">16.8-1 SemigroupIdealOfReesCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7E15F66A8029C64A">16.8-2 IsReesCongruenceClass</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap16_mj.html#X789450398397141D">16.9 <span class="Heading">Universal congruences</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X8751EF557A81A2B1">16.9-1 IsUniversalSemigroupCongruence</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X8646253C86AFFA29">16.9-2 IsUniversalSemigroupCongruenceClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap16_mj.html#X7B99C6A47F3D375F">16.9-3 UniversalSemigroupCongruence</a></span>
+</div></div>
+</div>
+
+<h3>16 <span class="Heading">Congruences</span></h3>
+
+<p>Congruences in <strong class="pkg">Semigroups</strong> can be described in several different ways:</p>
+
+
+<ul>
+<li><p>Generating pairs -- the minimal congruence which contains these pairs</p>
+
+</li>
+<li><p>Rees congruences -- the congruence specified by a given ideal</p>
+
+</li>
+<li><p>Universal congruences -- the unique congruence with only one class</p>
+
+</li>
+<li><p>Linked triples -- only for simple or 0-simple semigroups (see below)</p>
+
+</li>
+<li><p>Kernel and trace -- only for inverse semigroups</p>
+
+</li>
+</ul>
+<p>The operation <code class="func">SemigroupCongruence</code> (<a href="chap16_mj.html#X85CE56AC84FA5D33"><span class="RefLink">16.2-1</span></a>) can be used to create any of these, interpreting the arguments in a smart way. The usual way of specifying a congruence will be by giving a set of generating pairs, but a user with an ideal could instead create a Rees congruence or universal congruence.</p>
+
+<p>If a congruence is specified by generating pairs on a simple, 0-simple, or inverse semigroup, then the congruence may be converted automatically to one of the last two items in the above list, to reduce the complexity of any calculations to be performed. The user need not manually specify, or even be aware of, the congruence's linked triple or kernel and trace.</p>
+
+<p>We can also create left congruences and right congruences, using the <code class="func">LeftSemigroupCongruence</code> (<a href="chap16_mj.html#X8757DB087BE7E55A"><span class="RefLink">16.2-2</span></a>) and <code class="func">RightSemigroupCongruence</code> (<a href="chap16_mj.html#X7D01176B788FEE60"><span class="RefLink">16.2-3</span></a>) functions.</p>
+
+<p>Please note that congruence objects made in <strong class="pkg">GAP</strong> before loading the <strong class="pkg">Semigroups</strong> package may not behave correctly after <strong class="pkg">Semigroups</strong> is loaded. If <strong class="pkg">Semigroups</strong> is loaded at the beginning of the session, or before any congruence work is done, then the objects should behave correctly.</p>
+
+<p><a id="X784770137D98FEB9" name="X784770137D98FEB9"></a></p>
+
+<h4>16.1 <span class="Heading">Semigroup congruence objects</span></h4>
+
+<p><a id="X78E34B737F0E009F" name="X78E34B737F0E009F"></a></p>
+
+<h5>16.1-1 IsSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroupCongruence</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>A semigroup congruence <code class="code">cong</code> is an equivalence relation on a semigroup <code class="code">S</code> which respects left and right multiplication.</p>
+
+<p>That is, if <span class="SimpleMath">\((a,b)\)</span> is a pair in <code class="code">cong</code>, and <span class="SimpleMath">\(x\)</span> is an element of <code class="code">S</code>, then <span class="SimpleMath">\((ax,bx)\)</span> and <span class="SimpleMath">\((xa,xb)\)</span> are both in <code class="code">cong</code>.</p>
+
+<p>The simplest way of creating a congruence in <strong class="pkg">Semigroups</strong> is by a set of <em>generating pairs</em>. See <code class="func">SemigroupCongruence</code> (<a href="chap16_mj.html#X85CE56AC84FA5D33"><span class="RefLink">16.2-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([2, 1, 1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([4, 3, 3, 4, 4])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([1, 2, 1, 2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [Transformation([4, 3, 4, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([3, 4, 3, 4, 3])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, [pair1, pair2]);</span>
+&lt;semigroup congruence over &lt;simple transformation semigroup of 
+ degree 5 with 4 generators&gt; with linked triple (2,4,1)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSemigroupCongruence(cong);</span>
+true</pre></div>
+
+<p><a id="X7E909A78830D42A6" name="X7E909A78830D42A6"></a></p>
+
+<h5>16.1-2 IsLeftSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftSemigroupCongruence</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>A left semigroup congruence <code class="code">cong</code> is an equivalence relation on a semigroup <code class="code">S</code> which respects left multiplication.</p>
+
+<p>That is, if <span class="SimpleMath">\((a,b)\)</span> is a pair in <code class="code">cong</code>, and <span class="SimpleMath">\(x\)</span> is an element of <code class="code">S</code>, then <span class="SimpleMath">\((xa,xb)\)</span> is also in <code class="code">cong</code>.</p>
+
+<p>The simplest way of creating a left congruence in <strong class="pkg">Semigroups</strong> is by a set of <em>generating pairs</em>. See <code class="func">LeftSemigroupCongruence</code> (<a href="chap16_mj.html#X8757DB087BE7E55A"><span class="RefLink">16.2-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([2, 1, 1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([4, 3, 3, 4, 4])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([1, 2, 1, 2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [Transformation([4, 3, 4, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([3, 4, 3, 4, 3])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := LeftSemigroupCongruence(S, [pair1, pair2]);</span>
+&lt;left semigroup congruence over &lt;transformation semigroup of degree 5 
+ with 4 generators&gt; with 2 generating pairs&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftSemigroupCongruence(cong);</span>
+true</pre></div>
+
+<p><a id="X839EEA797B1CCB67" name="X839EEA797B1CCB67"></a></p>
+
+<h5>16.1-3 IsRightSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightSemigroupCongruence</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>A right semigroup congruence <code class="code">cong</code> is an equivalence relation on a semigroup <code class="code">S</code> which respects right multiplication.</p>
+
+<p>That is, if <span class="SimpleMath">\((a,b)\)</span> is a pair in <code class="code">cong</code>, and <span class="SimpleMath">\(x\)</span> is an element of <code class="code">S</code>, then <span class="SimpleMath">\((ax,bx)\)</span> is also in <code class="code">cong</code>.</p>
+
+<p>The simplest way of creating a right congruence in <strong class="pkg">Semigroups</strong> is by a set of <em>generating pairs</em>. See <code class="func">RightSemigroupCongruence</code> (<a href="chap16_mj.html#X7D01176B788FEE60"><span class="RefLink">16.2-3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([2, 1, 1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([4, 3, 3, 4, 4])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([1, 2, 1, 2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [Transformation([4, 3, 4, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([3, 4, 3, 4, 3])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightSemigroupCongruence(S, [pair1, pair2]);</span>
+&lt;right semigroup congruence over &lt;transformation semigroup of 
+ degree 5 with 4 generators&gt; with 2 generating pairs&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightSemigroupCongruence(cong);</span>
+true</pre></div>
+
+<p><a id="X7D49787B7B2589B2" name="X7D49787B7B2589B2"></a></p>
+
+<h4>16.2 <span class="Heading">
+      Creating congruences
+    </span></h4>
+
+<p><a id="X85CE56AC84FA5D33" name="X85CE56AC84FA5D33"></a></p>
+
+<h5>16.2-1 SemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupCongruence</code>( <var class="Arg">S</var>, <var class="Arg">pairs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A semigroup congruence.</p>
+
+<p>This function returns a semigroup congruence over the semigroup <var class="Arg">S</var>.</p>
+
+<p>If <var class="Arg">pairs</var> is a list of lists of size 2 with elements from <var class="Arg">S</var>, then this function will return the semigroup congruence defined by these generating pairs. The individual pairs may instead be given as separate arguments.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([2, 1, 1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([4, 3, 3, 4, 4])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([1, 2, 1, 2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [Transformation([4, 3, 4, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([3, 4, 3, 4, 3])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupCongruence(S, [pair1, pair2]);</span>
+&lt;semigroup congruence over &lt;simple transformation semigroup of 
+ degree 5 with 4 generators&gt; with linked triple (2,4,1)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupCongruence(S, pair1, pair2);</span>
+&lt;semigroup congruence over &lt;simple transformation semigroup of 
+ degree 5 with 4 generators&gt; with linked triple (2,4,1)&gt;</pre></div>
+
+<p><a id="X8757DB087BE7E55A" name="X8757DB087BE7E55A"></a></p>
+
+<h5>16.2-2 LeftSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftSemigroupCongruence</code>( <var class="Arg">S</var>, <var class="Arg">pairs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A left semigroup congruence.</p>
+
+<p>This function returns a left semigroup congruence over the semigroup <var class="Arg">S</var>.</p>
+
+<p>If <var class="Arg">pairs</var> is a list of lists of size 2 with elements from <var class="Arg">S</var>, then this function will return the least left semigroup congruence on <var class="Arg">S</var> which contains these generating pairs. The individual pairs may instead be given as separate arguments.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([2, 1, 1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([4, 3, 3, 4, 4])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([1, 2, 1, 2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [Transformation([4, 3, 4, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([3, 4, 3, 4, 3])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftSemigroupCongruence(S, [pair1, pair2]);</span>
+&lt;left semigroup congruence over &lt;transformation semigroup of degree 5 
+ with 4 generators&gt; with 2 generating pairs&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LeftSemigroupCongruence(S, pair1, pair2);</span>
+&lt;left semigroup congruence over &lt;transformation semigroup of degree 5 
+ with 4 generators&gt; with 2 generating pairs&gt;</pre></div>
+
+<p><a id="X7D01176B788FEE60" name="X7D01176B788FEE60"></a></p>
+
+<h5>16.2-3 RightSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightSemigroupCongruence</code>( <var class="Arg">S</var>, <var class="Arg">pairs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A right semigroup congruence.</p>
+
+<p>This function returns a right semigroup congruence over the semigroup <var class="Arg">S</var>.</p>
+
+<p>If <var class="Arg">pairs</var> is a list of lists of size 2 with elements from <var class="Arg">S</var>, then this function will return the least right semigroup congruence on <var class="Arg">S</var> which contains these generating pairs. The individual pairs may instead be given as separate arguments.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([2, 1, 1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([4, 3, 3, 4, 4])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([1, 2, 1, 2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [Transformation([4, 3, 4, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([3, 4, 3, 4, 3])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightSemigroupCongruence(S, [pair1, pair2]);</span>
+&lt;right semigroup congruence over &lt;transformation semigroup of 
+ degree 5 with 4 generators&gt; with 2 generating pairs&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RightSemigroupCongruence(S, pair1, pair2);</span>
+&lt;right semigroup congruence over &lt;transformation semigroup of 
+ degree 5 with 4 generators&gt; with 2 generating pairs&gt;</pre></div>
+
+<p><a id="X870EE0BF868D1892" name="X870EE0BF868D1892"></a></p>
+
+<h5>16.2-4 GeneratingPairsOfSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratingPairsOfSemigroupCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratingPairsOfLeftSemigroupCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratingPairsOfRightSemigroupCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list of lists.</p>
+
+<p>If <var class="Arg">cong</var> is a semigroup congruence, then <code class="code">GeneratingPairsOfSemigroupCongruence</code> returns a list of pairs of elements from <code class="code">Range(<var class="Arg">cong</var>)</code> that <em>generates</em> the congruence; i.e. <var class="Arg">cong</var> is the least congruence on the semigroup which contains all the pairs in the list.</p>
+
+<p>If <var class="Arg">cong</var> is a left or right semigroup congruence, then <code class="code">GeneratingPairsOfLeft/RightSemigroupCongruence</code> will instead give a list of pairs which generate it as a left or right congruence. Note that, although a congruence is also a left and right congruence, its generating pairs as a left or right congruence may differ from its generating pairs as a two-sided congruence.</p>
+
+<p>A congruence can be defined using a set of generating pairs: see <code class="func">SemigroupCongruence</code> (<a href="chap16_mj.html#X85CE56AC84FA5D33"><span class="RefLink">16.2-1</span></a>), <code class="func">LeftSemigroupCongruence</code> (<a href="chap16_mj.html#X8757DB087BE7E55A"><span class="RefLink">16.2-2</span></a>), and <code class="func">RightSemigroupCongruence</code> (<a href="chap16_mj.html#X7D01176B788FEE60"><span class="RefLink">16.2-3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([3, 3, 2, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([3, 4, 4, 1])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pairs :=</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    [[Transformation([1, 1, 1, 1]), Transformation([2, 2, 2, 3])], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">     [Transformation([2, 2, 3, 2]), Transformation([3, 3, 2, 3])]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, pairs);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratingPairsOfSemigroupCongruence(cong);</span>
+[ [ Transformation( [ 1, 1, 1, 1 ] ), 
+      Transformation( [ 2, 2, 2, 3 ] ) ], 
+  [ Transformation( [ 2, 2, 3, 2 ] ), 
+      Transformation( [ 3, 3, 2, 3 ] ) ] ]
+</pre></div>
+
+<p><a id="X7D65BB067A762CD6" name="X7D65BB067A762CD6"></a></p>
+
+<h4>16.3 <span class="Heading">
+      Congruence classes
+    </span></h4>
+
+<p><a id="X7B1F67A97E23E6A4" name="X7B1F67A97E23E6A4"></a></p>
+
+<h5>16.3-1 IsCongruenceClass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCongruenceClass</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>This category contains any object which is an equivalence class of a semigroup congruence (see <code class="func">IsSemigroupCongruence</code> (<a href="chap16_mj.html#X78E34B737F0E009F"><span class="RefLink">16.1-1</span></a>)). An object will only be in this category if the relation is known to be a semigroup congruence when the congruence class is created.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, [Transformation([1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   Transformation([2, 1, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := EquivalenceClassOfElement(cong,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                      Transformation([3, 1, 1]));</span>
+&lt;congruence class of Transformation( [ 3, 1, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruenceClass(class);</span>
+true</pre></div>
+
+<p><a id="X7C803E8C84E81A0B" name="X7C803E8C84E81A0B"></a></p>
+
+<h5>16.3-2 IsLeftCongruenceClass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftCongruenceClass</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>This category contains any object which is an equivalence class of a left semigroup congruence (see <code class="func">IsLeftSemigroupCongruence</code> (<a href="chap16_mj.html#X7E909A78830D42A6"><span class="RefLink">16.1-2</span></a>)). An object will only be in this category if the relation is known to be a left semigroup congruence when the class is created.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pairs := [Transformation([1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([2, 1, 2])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := LeftSemigroupCongruence(S, pairs);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := EquivalenceClassOfElement(cong,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                      Transformation([3, 1, 1]));</span>
+&lt;left congruence class of Transformation( [ 3, 1, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftCongruenceClass(class);</span>
+true</pre></div>
+
+<p><a id="X7D2F11C28470BC5A" name="X7D2F11C28470BC5A"></a></p>
+
+<h5>16.3-3 IsRightCongruenceClass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightCongruenceClass</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>This category contains any object which is an equivalence class of a right semigroup congruence (see <code class="func">IsRightSemigroupCongruence</code> (<a href="chap16_mj.html#X839EEA797B1CCB67"><span class="RefLink">16.1-3</span></a>)). An object will only be in this category if the relation is known to be a right semigroup congruence when the class is created.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pairs := [Transformation([1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([2, 1, 2])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RightSemigroupCongruence(S, pairs);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := EquivalenceClassOfElement(cong,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                      Transformation([3, 1, 1]));</span>
+&lt;right congruence class of Transformation( [ 3, 1, 1 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightCongruenceClass(class);</span>
+true</pre></div>
+
+<p><a id="X7CB27F237B59C8C9" name="X7CB27F237B59C8C9"></a></p>
+
+<h5>16.3-4 CongruenceClassOfElement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruenceClassOfElement</code>( <var class="Arg">cong</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCongruenceClassOfElement</code>( <var class="Arg">cong</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCongruenceClassOfElement</code>( <var class="Arg">cong</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: An equivalence class.</p>
+
+<p>These operations act as a synonym of <code class="code">EquivalenceClassOfElement</code> in the case that the argument <var class="Arg">cong</var> is a congruence, left congruence, or right congruence (respectively) of a semigroup.</p>
+
+<p>See <code class="func">IsLeftSemigroupCongruence</code> (<a href="chap16_mj.html#X7E909A78830D42A6"><span class="RefLink">16.1-2</span></a>), <code class="func">IsRightSemigroupCongruence</code> (<a href="chap16_mj.html#X839EEA797B1CCB67"><span class="RefLink">16.1-3</span></a>), and <code class="func">IsSemigroupCongruence</code> (<a href="chap16_mj.html#X78E34B737F0E009F"><span class="RefLink">16.1-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">elm := ReesZeroMatrixSemigroupElement(S, 1, (1, 3, 2), 1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruenceClassOfElement(cong, elm);</span>
+&lt;congruence class of (1,(1,3,2),1)&gt;
+</pre></div>
+
+<p><a id="X7E36A01C85E2DCF0" name="X7E36A01C85E2DCF0"></a></p>
+
+<h5>16.3-5 CongruenceClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A list of equivalence classes.</p>
+
+<p>These operations act as a synonym of <code class="code">EquivalenceClasses</code> in the case that the argument <var class="Arg">cong</var> is a congruence, left congruence, or right congruence (respectively) of a semigroup.</p>
+
+<p>See <code class="func">IsLeftSemigroupCongruence</code> (<a href="chap16_mj.html#X7E909A78830D42A6"><span class="RefLink">16.1-2</span></a>), <code class="func">IsRightSemigroupCongruence</code> (<a href="chap16_mj.html#X839EEA797B1CCB67"><span class="RefLink">16.1-3</span></a>), and <code class="func">IsSemigroupCongruence</code> (<a href="chap16_mj.html#X78E34B737F0E009F"><span class="RefLink">16.1-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair := [Transformation([1, 2, 1]), Transformation([2, 1, 2])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, pair);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := CongruenceClasses(cong);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(classes);</span>
+[ &lt;congruence class of Transformation( [ 3, 3, 3 ] )&gt;, 
+  &lt;congruence class of Transformation( [ 2, 1, 2 ] )&gt;, 
+  &lt;congruence class of Transformation( [ 1, 2, 2 ] )&gt;, 
+  &lt;congruence class of IdentityTransformation&gt;, 
+  &lt;congruence class of Transformation( [ 3, 1, 3 ] )&gt;, 
+  &lt;congruence class of Transformation( [ 3, 1, 1 ] )&gt; ]
+</pre></div>
+
+<p><a id="X86C05F31797C1D6D" name="X86C05F31797C1D6D"></a></p>
+
+<h5>16.3-6 NonTrivialEquivalenceClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonTrivialEquivalenceClasses</code>( <var class="Arg">eq</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list of equivalence classes.</p>
+
+<p>If <var class="Arg">eq</var> is an equivalence relation, then this attribute returns a list of all equivalence classes of <var class="Arg">eq</var> which contain more than one element.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([Transformation([1, 2, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                Transformation([3, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, [Transformation([1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   Transformation([2, 1, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := NonTrivialEquivalenceClasses(cong);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(classes);</span>
+[ &lt;congruence class of Transformation( [ 3, 3, 3 ] )&gt;, 
+  &lt;congruence class of Transformation( [ 2, 1, 2 ] )&gt;, 
+  &lt;congruence class of Transformation( [ 1, 2, 2 ] )&gt;, 
+  &lt;congruence class of Transformation( [ 3, 1, 3 ] )&gt;, 
+  &lt;congruence class of Transformation( [ 3, 1, 1 ] )&gt; ]</pre></div>
+
+<p><a id="X8309AAE581B686AB" name="X8309AAE581B686AB"></a></p>
+
+<h5>16.3-7 NonTrivialCongruenceClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonTrivialCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonTrivialLeftCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonTrivialRightCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A list of equivalence classes.</p>
+
+<p>These operations act as a synonym of <code class="code">NonTrivialEquivalenceClasses</code> in the case that the argument <var class="Arg">cong</var> is a congruence, left congruence, or right congruence (respectively) of a semigroup.</p>
+
+<p>See <code class="func">IsLeftSemigroupCongruence</code> (<a href="chap16_mj.html#X7E909A78830D42A6"><span class="RefLink">16.1-2</span></a>), <code class="func">IsRightSemigroupCongruence</code> (<a href="chap16_mj.html#X839EEA797B1CCB67"><span class="RefLink">16.1-3</span></a>), and <code class="func">IsSemigroupCongruence</code> (<a href="chap16_mj.html#X78E34B737F0E009F"><span class="RefLink">16.1-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RightSemigroupCongruence(S, [Transformation([1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                        Transformation([2, 1, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := NonTrivialRightCongruenceClasses(cong);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(classes);</span>
+[ &lt;right congruence class of Transformation( [ 2, 1, 2 ] )&gt;, 
+  &lt;right congruence class of Transformation( [ 3, 1, 3 ] )&gt; ]
+</pre></div>
+
+<p><a id="X8012081880FDBD66" name="X8012081880FDBD66"></a></p>
+
+<h5>16.3-8 NrEquivalenceClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrEquivalenceClasses</code>( <var class="Arg">eq</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A positive integer.</p>
+
+<p>If <var class="Arg">eq</var> is an equivalence relation, then this attribute describes the number of equivalence classes it has.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                [[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrEquivalenceClasses(cong);</span>
+9</pre></div>
+
+<p><a id="X7C80CD547A5C3E76" name="X7C80CD547A5C3E76"></a></p>
+
+<h5>16.3-9 NrCongruenceClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrLeftCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrRightCongruenceClasses</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A list of equivalence classes.</p>
+
+<p>These operations act as a synonym of <code class="code">NrEquivalenceClasses</code> in the case that the argument <var class="Arg">cong</var> is a congruence, left congruence, or right congruence (respectively) of a semigroup.</p>
+
+<p>See <code class="func">IsLeftSemigroupCongruence</code> (<a href="chap16_mj.html#X7E909A78830D42A6"><span class="RefLink">16.1-2</span></a>), <code class="func">IsRightSemigroupCongruence</code> (<a href="chap16_mj.html#X839EEA797B1CCB67"><span class="RefLink">16.1-3</span></a>), and <code class="func">IsSemigroupCongruence</code> (<a href="chap16_mj.html#X78E34B737F0E009F"><span class="RefLink">16.1-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair := [Transformation([1, 2, 1]), Transformation([2, 1, 2])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, pair);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrCongruenceClasses(cong);</span>
+6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RightSemigroupCongruence(S, pair);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrRightCongruenceClasses(cong);</span>
+10
+</pre></div>
+
+<p><a id="X867772F37B2A5EB2" name="X867772F37B2A5EB2"></a></p>
+
+<h5>16.3-10 EquivalenceRelationLookup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationLookup</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list.</p>
+
+<p>This attribute describes the (left, right or two-sided) semigroup congruence <var class="Arg">cong</var> as a list of positive integers with length the size of the finite semigroup over which <var class="Arg">cong</var> is defined.</p>
+
+<p>Each position in the list corresponds to an element of the semigroup (in a consistent canonical order) and the integer at that position is a unique identifier for that element's congruence class under <var class="Arg">cong</var>. Two elements of the semigroup on which the congruence is defined are related in the congruence if and only if they have the same number at their respective positions in the lookup.</p>
+
+<p>Note that the order in which numbers appear in the list is non-deterministic, and two congruence objects which describe the same equivalence relation might therefore have different lookups. Note also that the maximum value of the list may not be the number of classes of <var class="Arg">cong</var>, and that any integer might not be included. However, see <code class="func">EquivalenceRelationCanonicalLookup</code> (<a href="chap16_mj.html#X846AAC317D39C72A"><span class="RefLink">16.3-11</span></a>).</p>
+
+<p>See also <code class="func">EquivalenceRelationPartition</code> (<a href="../../../doc/ref/chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[Transformation([1, 2, 1]), Transformation([2, 1, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lookup := EquivalenceRelationLookup(cong);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lookup[3] = lookup[8];</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lookup[2] = lookup[9];</span>
+false</pre></div>
+
+<p><a id="X846AAC317D39C72A" name="X846AAC317D39C72A"></a></p>
+
+<h5>16.3-11 EquivalenceRelationCanonicalLookup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationCanonicalLookup</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list.</p>
+
+<p>This attribute describes the semigroup congruence <var class="Arg">cong</var> as a list of positive integers with length the size of the finite semigroup over which <var class="Arg">cong</var> is defined.</p>
+
+<p>Each position in the list corresponds to an element of the semigroup (in a consistent canonical order) and the integer at that position is a unique identifier for that element's congruence class under <var class="Arg">cong</var>. The value of <code class="code">EquivalenceRelationCanonicalLookup</code> has the property that the first appearance of the value <code class="code">i</code> is strictly later than the first appearance of <code class="code">i-1</code>, and that all entries in the list will be from the range <code class="code">[1 .. NrEquivalenceClasses(<var class="Arg">cong</var>)]</code>. As such, two congruences on a given semigroup are equal if and only if their canonical lookups are equal.</p>
+
+<p>Two elements of the semigroup on which the congruence is defined are related in the congruence if and only if they have the same number at their respective positions in the lookup.</p>
+
+<p>See also <code class="func">EquivalenceRelationLookup</code> (<a href="chap16_mj.html#X867772F37B2A5EB2"><span class="RefLink">16.3-10</span></a>) and <code class="func">EquivalenceRelationPartition</code> (<a href="../../../doc/ref/chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Monoid([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 2]), Transformation([3, 1, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[Transformation([1, 2, 1]), Transformation([2, 1, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EquivalenceRelationCanonicalLookup(cong);</span>
+[ 1, 2, 3, 4, 5, 6, 2, 3, 6, 4, 5, 6 ]</pre></div>
+
+<p><a id="X842D567F79648FEB" name="X842D567F79648FEB"></a></p>
+
+<h5>16.3-12 EquivalenceRelationCanonicalPartition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationCanonicalPartition</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list of lists.</p>
+
+<p>This attribute returns a list of lists of elements of the underlying set of the semigroup congruence <var class="Arg">cong</var>. These lists are precisely the nontrivial equivalence classes of <var class="Arg">cong</var>. The order in which the classes appear is deterministic, and the order of the elements inside each class is also deterministic. Hence, two congruence objects have the same <code class="code">EquivalenceRelationCanonicalPartition</code> if and only if they describe the same relation.</p>
+
+<p>See also <code class="func">EquivalenceRelationPartition</code> (<a href="../../../doc/ref/chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">Reference: EquivalenceRelationPartition</span></a>), a similar attribute which does not have canonical ordering, but which is likely to be faster.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 4, 3, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([2, 4, 3, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, [Transformation([1, 4, 3, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                   Transformation([1, 3, 3, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EquivalenceRelationCanonicalPartition(cong);</span>
+[ [ Transformation( [ 1, 3, 3, 3 ] ), 
+      Transformation( [ 1, 4, 3, 3 ] ) ], 
+  [ Transformation( [ 3, 3, 3, 3 ] ), 
+      Transformation( [ 4, 3, 3, 3 ] ) ] ]
+</pre></div>
+
+<p><a id="X85400841879E41A5" name="X85400841879E41A5"></a></p>
+
+<h5>16.3-13 OnLeftCongruenceClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnLeftCongruenceClasses</code>( <var class="Arg">class</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A left congruence class.</p>
+
+<p>If <var class="Arg">class</var> is an equivalence class of the left semigroup congruence <code class="code">cong</code> on the semigroup <code class="code">S</code>, and <var class="Arg">elm</var> is an element of <code class="code">S</code>, then this operation returns the equivalence class of <code class="code">cong</code> containing the element <code class="code"><var class="Arg">elm</var> * x</code>, where <code class="code">x</code> is any element of <var class="Arg">class</var>. The result is well-defined by the definition of a left congruence.</p>
+
+<p>See <code class="func">IsLeftSemigroupCongruence</code> (<a href="chap16_mj.html#X7E909A78830D42A6"><span class="RefLink">16.1-2</span></a>) and <code class="func">IsLeftCongruenceClass</code> (<a href="chap16_mj.html#X7C803E8C84E81A0B"><span class="RefLink">16.3-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([2, 1, 1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([4, 3, 3, 4, 4])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([1, 2, 1, 2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [Transformation([4, 3, 4, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([3, 4, 3, 4, 3])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := LeftSemigroupCongruence(S, [pair1, pair2]);</span>
+&lt;left semigroup congruence over &lt;transformation semigroup of degree 5 
+ with 4 generators&gt; with 2 generating pairs&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([3, 4, 3, 4, 3]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := LeftCongruenceClassOfElement(cong, x);</span>
+&lt;left congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">elm := Transformation([1, 2, 2, 1, 2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnLeftCongruenceClasses(class, elm);</span>
+&lt;left congruence class of Transformation( [ 3, 4, 4, 3, 4 ] )&gt;
+</pre></div>
+
+<p><a id="X7D66F8607B4F0D8F" name="X7D66F8607B4F0D8F"></a></p>
+
+<h5>16.3-14 OnRightCongruenceClasses</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnRightCongruenceClasses</code>( <var class="Arg">class</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A right congruence class.</p>
+
+<p>If <var class="Arg">class</var> is an equivalence class of the right semigroup congruence <code class="code">cong</code> on the semigroup <code class="code">S</code>, and <var class="Arg">elm</var> is an element of <code class="code">S</code>, then this operation returns the equivalence class of <code class="code">cong</code> containing the element <code class="code">x * <var class="Arg">elm</var></code>, where <code class="code">x</code> is any element of <var class="Arg">class</var>. The result is well-defined by the definition of a right congruence.</p>
+
+<p>See <code class="func">IsRightSemigroupCongruence</code> (<a href="chap16_mj.html#X839EEA797B1CCB67"><span class="RefLink">16.1-3</span></a>) and <code class="func">IsRightCongruenceClass</code> (<a href="chap16_mj.html#X7D2F11C28470BC5A"><span class="RefLink">16.3-3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([2, 1, 1, 2, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  Transformation([4, 3, 3, 4, 4])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [Transformation([3, 4, 3, 4, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([1, 2, 1, 2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [Transformation([4, 3, 4, 3, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             Transformation([3, 4, 3, 4, 3])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RightSemigroupCongruence(S, [pair1, pair2]);</span>
+&lt;right semigroup congruence over &lt;transformation semigroup of 
+ degree 5 with 4 generators&gt; with 2 generating pairs&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([3, 4, 3, 4, 3]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := RightCongruenceClassOfElement(cong, x);</span>
+&lt;right congruence class of Transformation( [ 3, 4, 3, 4, 3 ] )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">elm := Transformation([1, 2, 2, 1, 2]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">OnRightCongruenceClasses(class, elm);</span>
+&lt;right congruence class of Transformation( [ 2, 1, 2, 1, 2 ] )&gt;
+</pre></div>
+
+<p><a id="X806DEBC07E6D8FCA" name="X806DEBC07E6D8FCA"></a></p>
+
+<h4>16.4 <span class="Heading">
+      Finding the congruences of a semigroup
+    </span></h4>
+
+<p><a id="X7E8D5BA27CB5A4DA" name="X7E8D5BA27CB5A4DA"></a></p>
+
+<h5>16.4-1 CongruencesOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruencesOfSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftCongruencesOfSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightCongruencesOfSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: The congruences of a semigroup.</p>
+
+<p>This attribute gives a list of the left, right, or 2-sided congruences of the semigroup <var class="Arg">S</var>.</p>
+
+<p>If <var class="Arg">restriction</var> is specified and is a collection of elements from <var class="Arg">S</var>, then the result will only include congruences generated by pairs of elements from <var class="Arg">restriction</var>. Otherwise, all congruences will be calculated.</p>
+
+<p>See also <code class="func">LatticeOfCongruences</code> (<a href="chap16_mj.html#X86C9C5BA7FE93F4C"><span class="RefLink">16.4-5</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                [[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);</span>
+[ &lt;universal semigroup congruence over 
+    &lt;Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )&gt;&gt;, 
+  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+      Sym( [ 1 .. 3 ] )&gt; with linked triple (1,2,2)&gt;, 
+  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+      Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;, 
+  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+      Sym( [ 1 .. 3 ] )&gt; with linked triple (S3,2,2)&gt; ]</pre></div>
+
+<p><a id="X7838738987B2DB41" name="X7838738987B2DB41"></a></p>
+
+<h5>16.4-2 MinimalCongruencesOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalCongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalLeftCongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalRightCongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalCongruencesOfSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalLeftCongruencesOfSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalRightCongruencesOfSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: The congruences of a semigroup.</p>
+
+<p>If <var class="Arg">S</var> is a semigroup, then the attribute <code class="code">MinimalCongruencesOfSemigroup</code> gives a list of all the congruences on <var class="Arg">S</var> which are <em>minimal</em>. A congruence is minimal iff it is non-trivial and contains no other congruences as subrelations (apart from the trivial congruence).</p>
+
+<p><code class="code">MinimalLeftCongruencesOfSemigroup</code> and <code class="code">MinimalRightCongruencesOfSemigroup</code> do the same thing, but for left congruences and right congruences respectively. Note that any congruence is also a left congruence, but that a minimal congruence may not be a minimal left congruence.</p>
+
+<p>If <var class="Arg">restriction</var> is specified and is a collection of elements from <var class="Arg">S</var>, then the result will only include congruences generated by pairs of elements from <var class="Arg">restriction</var>. Otherwise, all congruences will be calculated.</p>
+
+<p>See also <code class="func">CongruencesOfSemigroup</code> (<a href="chap16_mj.html#X7E8D5BA27CB5A4DA"><span class="RefLink">16.4-1</span></a>) and <code class="func">PrincipalCongruencesOfSemigroup</code> (<a href="chap16_mj.html#X7986F3597F9DF7AF"><span class="RefLink">16.4-3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 1, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">min := MinimalCongruencesOfSemigroup(S);</span>
+[ &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+     degree 3 with 2 generators&gt; with 1 generating pairs&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">minl := MinimalLeftCongruencesOfSemigroup(S);</span>
+[ &lt;left semigroup congruence over &lt;transformation semigroup 
+     of size 13, degree 3 with 2 generators&gt; with 1 generating pairs&gt;,
+  &lt;left semigroup congruence over &lt;transformation semigroup 
+     of size 13, degree 3 with 2 generators&gt; with 1 generating pairs&gt;,
+  &lt;left semigroup congruence over &lt;transformation semigroup 
+     of size 13, degree 3 with 2 generators&gt; with 1 generating pairs&gt; 
+ ]
+</pre></div>
+
+<p><a id="X7986F3597F9DF7AF" name="X7986F3597F9DF7AF"></a></p>
+
+<h5>16.4-3 PrincipalCongruencesOfSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrincipalCongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrincipalLeftCongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrincipalRightCongruencesOfSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrincipalCongruencesOfSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrincipalLeftCongruencesOfSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrincipalRightCongruencesOfSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A list.</p>
+
+<p>If <var class="Arg">S</var> is a semigroup, then the attribute <code class="code">PrincipalCongruencesOfSemigroup</code> gives a list of all the congruences on <var class="Arg">S</var> which are <em>principal</em>. A congruence is principal if and only if it is non-trivial and can be defined by a single generating pair.</p>
+
+<p><code class="code">PrincipalLeftCongruencesOfSemigroup</code> and <code class="code">PrincipalRightCongruencesOfSemigroup</code> do the same thing, but for left congruences and right congruences respectively. Note that any congruence is a left congruence and a right congruence, but that a principal congruence may not be a principal left congruence or a principal right congruence.</p>
+
+<p>If <var class="Arg">restriction</var> is specified and is a collection of elements from <var class="Arg">S</var>, then the result will only include congruences generated by pairs of elements from <var class="Arg">restriction</var>. Otherwise, all congruences will be calculated.</p>
+
+<p>See also <code class="func">CongruencesOfSemigroup</code> (<a href="chap16_mj.html#X7E8D5BA27CB5A4DA"><span class="RefLink">16.4-1</span></a>) and <code class="func">MinimalCongruencesOfSemigroup</code> (<a href="chap16_mj.html#X7838738987B2DB41"><span class="RefLink">16.4-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([1, 3, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 1, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := PrincipalCongruencesOfSemigroup(S);</span>
+[ &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+     degree 3 with 2 generators&gt; with 1 generating pairs&gt;, 
+  &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+     degree 3 with 2 generators&gt; with 1 generating pairs&gt;, 
+  &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+     degree 3 with 2 generators&gt; with 1 generating pairs&gt;, 
+  &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+     degree 3 with 2 generators&gt; with 1 generating pairs&gt;, 
+  &lt;semigroup congruence over &lt;transformation semigroup of size 13, 
+     degree 3 with 2 generators&gt; with 1 generating pairs&gt; ]
+</pre></div>
+
+<p><a id="X8195D6F47EE52806" name="X8195D6F47EE52806"></a></p>
+
+<h5>16.4-4 IsCongruencePoset</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCongruencePoset</code>( <var class="Arg">poset</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This category contains all congruence posets. A <em>congruence poset</em> is a partially ordered set of congruences over a specific semigroup, where the ordering is defined by containment according to <code class="func">IsSubrelation</code> (<a href="chap16_mj.html#X85075F1D878512F5"><span class="RefLink">16.5-1</span></a>): given two congruences <code class="code">cong1</code> and <code class="code">cong2</code>, we say that <code class="code">cong1</code> &lt; <code class="code">cong2</code> if and only if <code class="code">cong1</code> is a subrelation (a refinement) of <code class="code">cong2</code>. The congruences in a congruence poset can be left, right, or two-sided.</p>
+
+<p>A congruence poset is displayed as a list of lists, which describes the partial order of its congruences: the integer <code class="code">j</code> appears in list <code class="code">i</code> if and only if the congruence numbered <code class="code">j</code> is a subrelation of the congruence numbered <code class="code">i</code>. The list of congruences can be obtained using <code class="func">CongruencesOfPoset</code> (<a href="chap16_mj.html#X7B2E2CEE8626FBC3"><span class="RefLink">16.4-7</span></a>). Congruence posets can be created using <code class="func">PosetOfCongruences</code> (<a href="chap16_mj.html#X78A91138818A4FAE"><span class="RefLink">16.4-9</span></a>), <code class="func">JoinSemilatticeOfCongruences</code> (<a href="chap16_mj.html#X7C5BAC8D82ABEBBE"><span class="RefLink">16.4-10</span></a>), and <code class="func">LatticeOfCongruences</code> (<a href="chap16_mj.html#X86C9C5BA7FE93F4C"><span class="RefLink">16.4-5</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := LatticeOfCongruences(S);</span>
+[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruencePoset(poset);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset[3];</span>
+[ 1, 2, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := FullTransformationMonoid(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := PrincipalCongruencesOfSemigroup(T);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := JoinSemilatticeOfCongruences(congs,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                         JoinSemigroupCongruences);</span>
+[ [ 4, 6 ], [ 1, 3, 4, 5, 6 ], [ 1, 4, 5, 6 ], [ 6 ], [ 1, 4, 6 ], 
+  [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruencePoset(poset);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(poset);</span>
+6
+</pre></div>
+
+<p><a id="X86C9C5BA7FE93F4C" name="X86C9C5BA7FE93F4C"></a></p>
+
+<h5>16.4-5 LatticeOfCongruences</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeOfCongruences</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeOfLeftCongruences</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeOfRightCongruences</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeOfCongruences</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeOfLeftCongruences</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeOfRightCongruences</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A list of lists.</p>
+
+<p>If <var class="Arg">S</var> is a semigroup, then <code class="code">LatticeOfCongruences</code> gives a list of lists showing how the congruences of <var class="Arg">S</var> are contained in each other. The congruence numbered <span class="SimpleMath">\(i\)</span> is a subcongruence of the congruence numbered <span class="SimpleMath">\(j\)</span> if and only if <span class="SimpleMath">\(i\)</span> is in the <span class="SimpleMath">\(j\)</span>th list. The numbering is according to the order in <code class="func">CongruencesOfPoset</code> (<a href="chap16_mj.html#X7B2E2CEE8626FBC3"><span class="RefLink">16.4-7</span></a>).</p>
+
+<p><code class="code">LatticeOfLeftCongruences</code> and <code class="code">LatticeOfRightCongruences</code> do the same thing for left and right congruences respectively.</p>
+
+<p>If <var class="Arg">restriction</var> is specified and is a collection of elements from <var class="Arg">S</var>, then the result will only include congruences generated by pairs of elements from <var class="Arg">restriction</var>. Otherwise, all congruences will be calculated.</p>
+
+<p>See <code class="func">CongruencesOfSemigroup</code> (<a href="chap16_mj.html#X7E8D5BA27CB5A4DA"><span class="RefLink">16.4-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := OrderEndomorphisms(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LatticeOfCongruences(S);</span>
+[ [  ], [ 1, 3 ], [ 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LatticeOfLeftCongruences(S);</span>
+[ [  ], [ 1, 3 ], [ 1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LatticeOfRightCongruences(S);</span>
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationMonoid(4);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">restriction := [Transformation([1, 1, 1, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([1, 1, 1, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([1, 1, 1, 3])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">latt := LatticeOfCongruences(S, restriction);</span>
+[ [  ], [ 1 ] ]
+</pre></div>
+
+<p><a id="X83ACF2C0789F621B" name="X83ACF2C0789F621B"></a></p>
+
+<h5>16.4-6 PosetOfPrincipalCongruences</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PosetOfPrincipalCongruences</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PosetOfPrincipalLeftCongruences</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PosetOfPrincipalRightCongruences</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PosetOfPrincipalCongruences</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PosetOfPrincipalLeftCongruences</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PosetOfPrincipalRightCongruences</code>( <var class="Arg">S</var>, <var class="Arg">restriction</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A congruence poset.</p>
+
+<p>If <var class="Arg">S</var> is a semigroup, then <code class="code">PosetOfPrincipalCongruences</code> returns a congruence poset object which contains all the principal congruences of <var class="Arg">S</var>, ordered by containment according to <code class="func">IsSubrelation</code> (<a href="chap16_mj.html#X85075F1D878512F5"><span class="RefLink">16.5-1</span></a>). A congruence is <em>principal</em> if it can be defined by a single generating pair. <code class="code">PosetOfPrincipalLeftCongruences</code> and <code class="code">PosetOfPrincipalRightCongruences</code> do the same thing for left and right congruences respectively.</p>
+
+<p>If <var class="Arg">restriction</var> is specified and is a collection of elements from <var class="Arg">S</var>, then the result will only include principal congruences generated by pairs of elements from <var class="Arg">restriction</var>. Otherwise, all principal congruences will be calculated.</p>
+
+<p>See also <code class="func">LatticeOfCongruences</code> (<a href="chap16_mj.html#X86C9C5BA7FE93F4C"><span class="RefLink">16.4-5</span></a>) and <code class="func">PrincipalCongruencesOfSemigroup</code> (<a href="chap16_mj.html#X7986F3597F9DF7AF"><span class="RefLink">16.4-3</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([1, 3, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([2, 3, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PosetOfPrincipalLeftCongruences(S);</span>
+[ [ 8, 11 ], [  ], [ 1, 2, 8, 11, 12 ], [ 2, 7, 10, 11, 12 ], [ 2 ], 
+  [ 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12 ], [ 10, 12 ], [ 11 ], 
+  [ 2, 11, 12 ], [ 12 ], [  ], [  ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PosetOfPrincipalCongruences(S);</span>
+[ [ 2, 3 ], [  ], [ 2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">restriction := [Transformation([3, 2, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([3, 1, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                   Transformation([2, 2, 2])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := PosetOfPrincipalRightCongruences(S, restriction);</span>
+[ [ 2, 3 ], [  ], [  ] ]
+</pre></div>
+
+<p><a id="X7B2E2CEE8626FBC3" name="X7B2E2CEE8626FBC3"></a></p>
+
+<h5>16.4-7 CongruencesOfPoset</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruencesOfPoset</code>( <var class="Arg">poset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list.</p>
+
+<p>If <var class="Arg">poset</var> is a congruence poset object, then this attribute returns a list of all the congruence objects in the poset (these may be left, right, or two-sided). The order of this list corresponds to the order of the entries in the poset.</p>
+
+<p>See also <code class="func">LatticeOfCongruences</code> (<a href="chap16_mj.html#X86C9C5BA7FE93F4C"><span class="RefLink">16.4-5</span></a>) and <code class="func">CongruencesOfSemigroup</code> (<a href="chap16_mj.html#X7E8D5BA27CB5A4DA"><span class="RefLink">16.4-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := OrderEndomorphisms(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">latt := LatticeOfRightCongruences(S);</span>
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruencesOfPoset(latt);</span>
+[ &lt;right semigroup congruence over &lt;regular transformation monoid 
+     of size 3, degree 2 with 2 generators&gt; with 0 generating pairs&gt;, 
+  &lt;right semigroup congruence over &lt;regular transformation monoid 
+     of size 3, degree 2 with 2 generators&gt; with 1 generating pairs&gt;, 
+  &lt;right semigroup congruence over &lt;regular transformation monoid 
+     of size 3, degree 2 with 2 generators&gt; with 1 generating pairs&gt;, 
+  &lt;right semigroup congruence over &lt;regular transformation monoid 
+     of size 3, degree 2 with 2 generators&gt; with 1 generating pairs&gt;, 
+  &lt;right semigroup congruence over &lt;regular transformation monoid 
+     of size 3, degree 2 with 2 generators&gt; with 2 generating pairs&gt; ]
+</pre></div>
+
+<p><a id="X830F42B582A2FAA0" name="X830F42B582A2FAA0"></a></p>
+
+<h5>16.4-8 UnderlyingSemigroupOfCongruencePoset</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingSemigroupOfCongruencePoset</code>( <var class="Arg">poset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A semigroup.</p>
+
+<p>If <var class="Arg">poset</var> is a congruence poset object, then this attribute returns the semigroup on which all its congruences are defined.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := OrderEndomorphisms(2);</span>
+&lt;regular transformation monoid of degree 2 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">latt := LatticeOfRightCongruences(S);</span>
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSemigroupOfCongruencePoset(latt) = S;</span>
+true
+</pre></div>
+
+<p><a id="X78A91138818A4FAE" name="X78A91138818A4FAE"></a></p>
+
+<h5>16.4-9 PosetOfCongruences</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PosetOfCongruences</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A congruence poset.</p>
+
+<p>If <var class="Arg">coll</var> is a list or collection of semigroup congruences (which may be left, right, or two-sided) then this operation returns the congruence poset formed by these congruences partially ordered by containment.</p>
+
+<p>This operation does not create any new congruences or take any joins. However, see <code class="func">JoinSemilatticeOfCongruences</code> (<a href="chap16_mj.html#X7C5BAC8D82ABEBBE"><span class="RefLink">16.4-10</span></a>). See also <code class="func">IsCongruencePoset</code> (<a href="chap16_mj.html#X8195D6F47EE52806"><span class="RefLink">16.4-4</span></a>) and <code class="func">LatticeOfCongruences</code> (<a href="chap16_mj.html#X86C9C5BA7FE93F4C"><span class="RefLink">16.4-5</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := OrderEndomorphisms(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [Transformation([1, 1]), IdentityTransformation];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [IdentityTransformation, Transformation([2, 2])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coll := [RightSemigroupCongruence(S, pair1),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair2),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, [])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PosetOfCongruences(coll);</span>
+[ [ 3 ], [ 3 ], [  ] ]
+</pre></div>
+
+<p><a id="X7C5BAC8D82ABEBBE" name="X7C5BAC8D82ABEBBE"></a></p>
+
+<h5>16.4-10 JoinSemilatticeOfCongruences</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinSemilatticeOfCongruences</code>( <var class="Arg">coll</var>, <var class="Arg">join_func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinSemilatticeOfCongruences</code>( <var class="Arg">poset</var>, <var class="Arg">join_func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A congruence poset.</p>
+
+<p>If <var class="Arg">coll</var> is a list or collection of semigroup congruences (which may be left, right, or two-sided) and <var class="Arg">join_func</var> is a function for taking the join of two of the congruences (such as <code class="func">JoinSemigroupCongruences</code> (<a href="chap16_mj.html#X8262D5207DBF3C5B"><span class="RefLink">16.5-4</span></a>)) then this operation returns the congruence poset formed by these congruences partially ordered by containment, along with all their joins.</p>
+
+<p>Alternatively, a congruence poset <var class="Arg">poset</var> can be specified; in this case, the congruences contained in <var class="Arg">poset</var> will be used in place of <var class="Arg">coll</var>, and information already known about their containments will be used.</p>
+
+<p>See also <code class="func">IsCongruencePoset</code> (<a href="chap16_mj.html#X8195D6F47EE52806"><span class="RefLink">16.4-4</span></a>) and <code class="func">PosetOfCongruences</code> (<a href="chap16_mj.html#X78A91138818A4FAE"><span class="RefLink">16.4-9</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair3 := [PartialPerm([1, 2], [1, 2]), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             PartialPerm([1, 2], [2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coll := [RightSemigroupCongruence(S, pair1),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair2),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair3)];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinSemilatticeOfCongruences(coll, JoinRightSemigroupCongruences);</span>
+[ [  ], [  ], [ 1 ], [ 1, 2, 3 ] ]
+</pre></div>
+
+<p><a id="X780E2B3F8509CE32" name="X780E2B3F8509CE32"></a></p>
+
+<h5>16.4-11 MinimalCongruences</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalCongruences</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalCongruences</code>( <var class="Arg">poset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list.</p>
+
+<p>If <var class="Arg">coll</var> is a list or collection of semigroup congruences (which may be left, right, or two-sided) then this attribute returns a list of all the congruences from <var class="Arg">coll</var> which do not contain any of the others as subrelations.</p>
+
+<p>Alternatively, a congruence poset <var class="Arg">poset</var> can be specified; in this case, the congruences contained in <var class="Arg">poset</var> will be used in place of <var class="Arg">coll</var>, and information already known about their containments will be used.</p>
+
+<p>This function should not be confused with <code class="func">MinimalCongruencesOfSemigroup</code> (<a href="chap16_mj.html#X7838738987B2DB41"><span class="RefLink">16.4-2</span></a>). See also <code class="func">IsCongruencePoset</code> (<a href="chap16_mj.html#X8195D6F47EE52806"><span class="RefLink">16.4-4</span></a>) and <code class="func">PosetOfCongruences</code> (<a href="chap16_mj.html#X78A91138818A4FAE"><span class="RefLink">16.4-9</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseMonoid(2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair1 := [PartialPerm([1], [1]), PartialPerm([2], [1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair2 := [PartialPerm([1], [1]), PartialPerm([1, 2], [1, 2])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pair3 := [PartialPerm([1, 2], [1, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             PartialPerm([1, 2], [2, 1])];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">coll := [RightSemigroupCongruence(S, pair1),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair2),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            RightSemigroupCongruence(S, pair3)];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalCongruences(coll);</span>
+[ &lt;right semigroup congruence over &lt;symmetric inverse monoid of degree\
+ 2&gt; with 1 generating pairs&gt;, 
+  &lt;right semigroup congruence over &lt;symmetric inverse monoid of degree\
+ 2&gt; with 1 generating pairs&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">poset := LatticeOfCongruences(S);</span>
+[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MinimalCongruences(poset);</span>
+[ &lt;semigroup congruence over &lt;symmetric inverse monoid of degree 2&gt; wi\
+th 0 generating pairs&gt; ]
+</pre></div>
+
+<p><a id="X857D750579B87DBF" name="X857D750579B87DBF"></a></p>
+
+<h4>16.5 <span class="Heading">
+      Comparing congruences
+    </span></h4>
+
+<p><a id="X85075F1D878512F5" name="X85075F1D878512F5"></a></p>
+
+<h5>16.5-1 IsSubrelation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubrelation</code>( <var class="Arg">cong1</var>, <var class="Arg">cong2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: True or false.</p>
+
+<p>If <var class="Arg">cong1</var> and <var class="Arg">cong2</var> are congruences over the same semigroup, then this operation returns whether <var class="Arg">cong2</var> is a refinement of <var class="Arg">cong1</var>, i.e. whether every pair in <var class="Arg">cong2</var> is contained in <var class="Arg">cong1</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong1 := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := CongruencesOfSemigroup(S)[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubrelation(cong1, cong2);</span>
+true</pre></div>
+
+<p><a id="X83878AED7A8E75BE" name="X83878AED7A8E75BE"></a></p>
+
+<h5>16.5-2 IsSuperrelation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSuperrelation</code>( <var class="Arg">cong1</var>, <var class="Arg">cong2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: True or false.</p>
+
+<p>If <var class="Arg">cong1</var> and <var class="Arg">cong2</var> are congruences over the same semigroup, then this operation returns whether <var class="Arg">cong1</var> is a refinement of <var class="Arg">cong2</var>, i.e. whether every pair in <var class="Arg">cong1</var> is contained in <var class="Arg">cong2</var>.</p>
+
+<p>See <code class="func">IsSubrelation</code> (<a href="chap16_mj.html#X85075F1D878512F5"><span class="RefLink">16.5-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong1 := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := CongruencesOfSemigroup(S)[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSuperrelation(cong1, cong2);</span>
+false</pre></div>
+
+<p><a id="X7952A5A5789C6F60" name="X7952A5A5789C6F60"></a></p>
+
+<h5>16.5-3 MeetSemigroupCongruences</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MeetSemigroupCongruences</code>( <var class="Arg">c1</var>, <var class="Arg">c2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A semigroup congruence.</p>
+
+<p>This operation returns the <em>meet</em> of the two semigroup congruences <var class="Arg">c1</var> and <var class="Arg">c2</var> -- that is, the largest semigroup congruence contained in both <var class="Arg">c1</var> and <var class="Arg">c2</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MeetSemigroupCongruences(congs[2], congs[3]);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )&gt; with linked triple (1,2,2)&gt;</pre></div>
+
+<p><a id="X8262D5207DBF3C5B" name="X8262D5207DBF3C5B"></a></p>
+
+<h5>16.5-4 JoinSemigroupCongruences</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinSemigroupCongruences</code>( <var class="Arg">c1</var>, <var class="Arg">c2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinLeftSemigroupCongruences</code>( <var class="Arg">c1</var>, <var class="Arg">c2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinRightSemigroupCongruences</code>( <var class="Arg">c1</var>, <var class="Arg">c2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A semigroup congruence.</p>
+
+<p>This operation returns the <em>join</em> of the two semigroup congruences <var class="Arg">c1</var> and <var class="Arg">c2</var> -- that is, the smallest semigroup congruence containing all the relations in both <var class="Arg">c1</var> and <var class="Arg">c2</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinSemigroupCongruences(congs[2], congs[3]);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;</pre></div>
+
+<p><a id="X7A6478D1831DD787" name="X7A6478D1831DD787"></a></p>
+
+<h4>16.6 <span class="Heading">Congruences on Rees matrix semigroups</span></h4>
+
+<p>This section describes the implementation of congruences of simple and 0-simple semigroups in the <strong class="pkg">Semigroups</strong> package, and the functions associated with them. This code and this part of the manual were written by Michael Torpey. Most of the theorems used in this chapter are from Section 3.5 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>
+
+<p>By the Rees Theorem, any 0-simple semigroup <span class="SimpleMath">\(S\)</span> is isomorphic to a <em>Rees 0-matrix semigroup</em> (see <a href="../../../doc/ref/chap51_mj.html#X8225A9EC87A255E6"><span class="RefLink">Reference: Rees Matrix Semigroups</span></a>) over a group, with a regular sandwich matrix. That is,</p>
+
+<p class="center">\[S \cong \mathcal{M} ^ 0[G; I, \Lambda; P], \]</p>
+
+<p>where <span class="SimpleMath">\(G\)</span> is a group, <span class="SimpleMath">\(\Lambda\)</span> and <span class="SimpleMath">\(I\)</span> are non-empty sets, and <span class="SimpleMath">\(P\)</span> is regular in the sense that it has no rows or columns consisting solely of zeroes.</p>
+
+<p>The congruences of a Rees 0-matrix semigroup are in 1-1 correspondence with the <em>linked triple</em>, which is a triple of the form <code class="code">[N, S, T]</code> where:</p>
+
+
+<ul>
+<li><p><code class="code">N</code> is a normal subgroup of the underlying group <code class="code">G</code>,</p>
+
+</li>
+<li><p><code class="code">S</code> is an equivalence relation on the columns of <code class="code">P</code>,</p>
+
+</li>
+<li><p><code class="code">T</code> is an equivalence relation on the rows of <code class="code">P</code>,</p>
+
+</li>
+</ul>
+<p>satisfying the following conditions:</p>
+
+
+<ul>
+<li><p>a pair of <code class="code">S</code>-related columns must contain zeroes in precisely the same rows,</p>
+
+</li>
+<li><p>a pair of <code class="code">T</code>-related rows must contain zeroes in precisely the same columns,</p>
+
+</li>
+<li><p>if <code class="code">i</code> and <code class="code">j</code> are <code class="code">S</code>-related, <code class="code">k</code> and <code class="code">l</code> are <code class="code">T</code>-related and the matrix entries <span class="SimpleMath">\(p_{k, i}, p_{k, j}, p_{l, i}, p_{l, j} \neq 0\)</span>, then <span class="SimpleMath">\(q_{k, l, i, j} \in N\)</span>, where</p>
+
+<p class="center">\[q_{k, l, i, j} = p_{k, i}
+        p_{l, i} ^ {-1} p_{l, j} p_{k, j} ^ {-1}.\]</p>
+
+</li>
+</ul>
+<p>By Theorem 3.5.9 in <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>, for any finite 0-simple Rees 0-matrix semigroup, there is a bijection between its non-universal congruences and its linked triples. In this way, we can internally represent any congruence of such a semigroup by storing its associated linked triple instead of a set of generating pairs, and thus perform many calculations on it more efficiently.</p>
+
+<p>If a congruence is defined by a linked triple <code class="code">(N, S, T)</code>, then a single class of that congruence can be defined by a triple <code class="code">(Nx, i / S, k / S)</code>, where <code class="code">Nx</code> is a right coset of <code class="code">N</code>, <code class="code">i / S</code> is the equivalence class of <code class="code">i</code> in <code class="code">S</code>, and <code class="code">k / S</code> is the equivalence class of <code class="code">k</code> in <code class="code">T</code>. Thus we can internally represent any class of such a congruence as a triple simply consisting of a right coset and two positive integers.</p>
+
+<p>An analogous condition exists for finite simple Rees matrix semigroups without zero.</p>
+
+<p><a id="X7F4AFD7F7E163022" name="X7F4AFD7F7E163022"></a></p>
+
+<h5>16.6-1 IsRMSCongruenceByLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRMSCongruenceByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRZMSCongruenceByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>These categories describe a type of semigroup congruence over a Rees matrix or 0-matrix semigroup. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>) but it is represented internally by its <em>linked triple</em>, and certain functions may take advantage of this information to reduce computation times.</p>
+
+<p>An object of this type may be constructed with <code class="code">RMSCongruenceByLinkedTriple</code> or <code class="code">RZMSCongruenceByLinkedTriple</code>, or this representation may be selected automatically by <code class="func">SemigroupCongruence</code> (<a href="chap16_mj.html#X85CE56AC84FA5D33"><span class="RefLink">16.2-1</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group([(1, 4, 5), (1, 5, 3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [0, (), 0, 0, (3, 5), 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [(), 0, 0, (3, 5), 0, 0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [[1], [2, 5], [3, 6], [4]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [[1], [2], [3]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRZMSCongruenceByLinkedTriple(cong);</span>
+true</pre></div>
+
+<p><a id="X87A475E4847D3C96" name="X87A475E4847D3C96"></a></p>
+
+<h5>16.6-2 RMSCongruenceByLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSCongruenceByLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSCongruenceByLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A Rees matrix or 0-matrix semigroup congruence by linked triple.</p>
+
+<p>This function returns a semigroup congruence over the Rees matrix or 0-matrix semigroup <var class="Arg">S</var> corresponding to the linked triple (<var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var>). The argument <var class="Arg">N</var> should be a normal subgroup of the underlying semigroup of <var class="Arg">S</var>; <var class="Arg">colBlocks</var> should be a partition of the columns of the matrix of <var class="Arg">S</var>; and <var class="Arg">rowBlocks</var> should be a partition of the rows of the matrix of <var class="Arg">S</var>. For example, if the matrix has 5 rows, then a possibility for <var class="Arg">rowBlocks</var> might be <code class="code">[[1, 3], [2, 5], [4]]</code>.</p>
+
+<p>If the arguments describe a valid linked triple on <var class="Arg">S</var>, then an object in the category <code class="code">IsRZMSCongruenceByLinkedTriple</code> is returned. This object can be used like any other semigroup congruence in <strong class="pkg">GAP</strong>.</p>
+
+<p>If the arguments describe a triple which is not <em>linked</em> in the sense described above, then this function returns an error.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group([(1, 4, 5), (1, 5, 3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [0, (), 0, 0, (3, 5), 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [(), 0, 0, (3, 5), 0, 0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [[1], [2, 5], [3, 6], [4]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [[1], [2], [3]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 6x3 over 
+  Group([ (1,4,5), (1,5,3,4) ])&gt; with linked triple (2^2,4,3)&gt;</pre></div>
+
+<p><a id="X79E4CF7B79B25AE3" name="X79E4CF7B79B25AE3"></a></p>
+
+<h5>16.6-3 IsRMSCongruenceClassByLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRMSCongruenceClassByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRZMSCongruenceClassByLinkedTriple</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>These categories contain the congruence classes of a semigroup congruence of the categories <code class="func">IsRMSCongruenceByLinkedTriple</code> (<a href="chap16_mj.html#X7F4AFD7F7E163022"><span class="RefLink">16.6-1</span></a>) and <code class="func">IsRZMSCongruenceByLinkedTriple</code> (<a href="chap16_mj.html#X7F4AFD7F7E163022"><span class="RefLink">16.6-1</span></a>) respectively.</p>
+
+<p>An object of one of these types may be used in the same way as any other object in the category <code class="func">IsCongruenceClass</code> (<a href="chap16_mj.html#X7B1F67A97E23E6A4"><span class="RefLink">16.3-1</span></a>), but the class is represented internally by information related to the congruence's <em>linked triple</em>, and certain functions may take advantage of this information to reduce computation times.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group([(1, 4, 5), (1, 5, 3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [0, (), 0, 0, (3, 5), 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [(), 0, 0, (3, 5), 0, 0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [[1], [2, 5], [3, 6], [4]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [[1], [2], [3]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := CongruenceClasses(cong);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRZMSCongruenceClassByLinkedTriple(classes[1]);</span>
+true</pre></div>
+
+<p><a id="X7E9AB940868FCC9D" name="X7E9AB940868FCC9D"></a></p>
+
+<h5>16.6-4 RMSCongruenceClassByLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RMSCongruenceClassByLinkedTriple</code>( <var class="Arg">cong</var>, <var class="Arg">nCoset</var>, <var class="Arg">colClass</var>, <var class="Arg">rowClass</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RZMSCongruenceClassByLinkedTriple</code>( <var class="Arg">cong</var>, <var class="Arg">nCoset</var>, <var class="Arg">colClass</var>, <var class="Arg">rowClass</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A Rees matrix or 0-matrix semigroup congruence class by linked triple.</p>
+
+<p>This operation returns one congruence class of the congruence <var class="Arg">cong</var>, as defined by the other three parameters.</p>
+
+<p>The argument <var class="Arg">cong</var> must be a Rees matrix or 0-matrix semigroup congruence by linked triple. If the linked triple consists of the three parameters <code class="code">N</code>, <code class="code">colBlocks</code> and <code class="code">rowBlocks</code>, then <var class="Arg">nCoset</var> must be a right coset of <code class="code">N</code>, <var class="Arg">colClass</var> must be a positive integer corresponding to a position in the list <code class="code">colBlocks</code>, and <var class="Arg">rowClass</var> must be a positive integer corresponding to a position in the list <code class="code">rowBlocks</code>.</p>
+
+<p>If the arguments are valid, an <code class="code">IsRMSCongruenceClassByLinkedTriple</code> or <code class="code">IsRZMSCongruenceClassByLinkedTriple</code> object is returned, which can be used like any other equivalence class in <strong class="pkg">GAP</strong>. Otherwise, an error is returned.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group([(1, 4, 5), (1, 5, 3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [0, (), 0, 0, (3, 5), 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [(), 0, 0, (3, 5), 0, 0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [[1], [2, 5], [3, 6], [4]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [[1], [2], [3]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := RZMSCongruenceByLinkedTriple(S, N, colBlocks, rowBlocks);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := RZMSCongruenceClassByLinkedTriple(cong,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">RightCoset(N, (1, 5)), 2, 3);</span>
+&lt;congruence class of (2,(3,4),3)&gt;</pre></div>
+
+<p><a id="X7B19CACF7A37ADBC" name="X7B19CACF7A37ADBC"></a></p>
+
+<h5>16.6-5 IsLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLinkedTriple</code>( <var class="Arg">S</var>, <var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This operation returns true if and only if the arguments (<var class="Arg">N</var>, <var class="Arg">colBlocks</var>, <var class="Arg">rowBlocks</var>) describe a linked triple of the Rees matrix or 0-matrix semigroup <var class="Arg">S</var>, as described above.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group([(1, 4, 5), (1, 5, 3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[0, 0, (1, 4, 5), 0, 0, (1, 4, 3, 5)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [0, (), 0, 0, (3, 5), 0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [(), 0, 0, (3, 5), 0, 0]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(G, mat);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := Group([(1, 4)(3, 5), (1, 5)(3, 4)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">colBlocks := [[1], [2, 5], [3, 6], [4]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rowBlocks := [[1], [2], [3]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLinkedTriple(S, N, colBlocks, rowBlocks);</span>
+true</pre></div>
+
+<p><a id="X79027F0580F9D081" name="X79027F0580F9D081"></a></p>
+
+<h5>16.6-6 CanonicalRepresentative</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalRepresentative</code>( <var class="Arg">class</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A congruence class.</p>
+
+<p>This attribute gives a canonical representative for the semigroup congruence class <var class="Arg">class</var>. This representative can be used to identify a class uniquely.</p>
+
+<p>At present this only works for simple and 0-simple semigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := CongruenceClasses(cong)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CanonicalRepresentative(class);</span>
+(1,(1,2,3),2)</pre></div>
+
+<p><a id="X7DB7E32E865AD95D" name="X7DB7E32E865AD95D"></a></p>
+
+<h5>16.6-7 AsSemigroupCongruenceByGeneratingPairs</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSemigroupCongruenceByGeneratingPairs</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A semigroup congruence.</p>
+
+<p>This operation takes <var class="Arg">cong</var>, a semigroup congruence, and returns the same congruence relation, but described by <strong class="pkg">GAP</strong>'s default method of defining semigroup congruences: a set of generating pairs for the congruence.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                [[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := CongruencesOfSemigroup(S)[3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsSemigroupCongruenceByGeneratingPairs(cong);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )&gt; with 3 generating pairs&gt;</pre></div>
+
+<p><a id="X85A731257EFB88A1" name="X85A731257EFB88A1"></a></p>
+
+<h5>16.6-8 AsRMSCongruenceByLinkedTriple</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsRMSCongruenceByLinkedTriple</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsRZMSCongruenceByLinkedTriple</code>( <var class="Arg">cong</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A Rees matrix or 0-matrix semigroup congruence by linked triple.</p>
+
+<p>This operation takes a semigroup congruence <var class="Arg">cong</var> over a finite simple or 0-simple Rees 0-matrix semigroup, and returns that congruence relation in a new form: as either a congruence by linked triple, or a universal congruence.</p>
+
+<p>If the congruence is not defined over an appropriate type of semigroup, then this function returns an error.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := ReesZeroMatrixSemigroupElement(S, 1, (1, 3, 2), 1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := ReesZeroMatrixSemigroupElement(S, 1, (), 1);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruenceByGeneratingPairs(S, [[x, y]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsRZMSCongruenceByLinkedTriple(cong);</span>
+&lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
+  Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;</pre></div>
+
+<p><a id="X7BFDC38178940AE6" name="X7BFDC38178940AE6"></a></p>
+
+<h4>16.7 <span class="Heading">
+      Congruences on inverse semigroups
+    </span></h4>
+
+<p>This section describes the implementation of congruences of inverse semigroups in the <strong class="pkg">Semigroups</strong> package, and the functions associated with them. This code and this part of the manual were written by Michael Torpey. Most of the theorems used in this chapter are from Section 5.3 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>
+
+<p>The congruences of an inverse semigroup are in 1-1 correspondence with its <em>congruence pairs</em>. A congruence pair is a pair <code class="code">(N, t)</code> such that:</p>
+
+
+<ul>
+<li><p><code class="code">N</code> is a normal subsemigroup of <code class="code">S</code> -- that is, a self-conjugate subsemigroup which contains all the idempotents of <code class="code">S</code>,</p>
+
+</li>
+<li><p><code class="code">t</code> is a normal congruence on <code class="code">E</code>, the subsemigroup of all idempotents in <code class="code">S</code> -- that is, a congruence on <code class="code">E</code> such that if <span class="SimpleMath">\((e, f)\)</span> is a pair in <code class="code">t</code>, then the pair <span class="SimpleMath">\((a ^ {-1} e a, a ^ {-1} f a)\)</span> is also in <code class="code">t</code>,</p>
+
+</li>
+</ul>
+<p>satisfying the following conditions:</p>
+
+
+<ul>
+<li><p>If <span class="SimpleMath">\(ae \in N\)</span> and <span class="SimpleMath">\((e, a ^ {-1} a) \in t\)</span>, then <span class="SimpleMath">\(a \in N\)</span>,</p>
+
+</li>
+<li><p>If <span class="SimpleMath">\(a \in N\)</span>, then <span class="SimpleMath">\((aa ^ {-1} , a ^ {-1} a) \in t\)</span>.</p>
+
+</li>
+</ul>
+<p>By Theorem 5.3.3 in <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>, for any inverse semigroup, there is a bijection between its congruences and its congruence pairs. In this way, we can internally represent any congruence of such a semigroup by storing its associated congruence pair instead of a set of generating pairs, and thus perform many calculations on it more efficiently.</p>
+
+<p>If we have a congruence <code class="code">C</code> with congruence pair <code class="code">(N, t)</code>, it turns out that <code class="code">N</code> is its <em>kernel</em> (that is, the set of all elements congruent to an idempotent) and that <code class="code">t</code> is its <em>trace</em> (that is, the restriction of <code class="code">C</code> to the idempotents). Hence, we refer to a congruence stored in this format as a "congruence by kernel and trace".</p>
+
+<p>See <code class="code">cong_by_ker_trace_threshold</code> in Section <a href="chap6_mj.html#X799EBA2F819D8867"><span class="RefLink">6.3</span></a> for details on when this method is used.</p>
+
+<p><a id="X8546E48E85A2A7E8" name="X8546E48E85A2A7E8"></a></p>
+
+<h5>16.7-1 IsInverseSemigroupCongruenceByKernelTrace</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInverseSemigroupCongruenceByKernelTrace</code>( <var class="Arg">cong</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This category contains any inverse semigroup congruence <var class="Arg">cong</var> which is represented internally by its kernel and trace. The <code class="func">SemigroupCongruence</code> (<a href="chap16_mj.html#X85CE56AC84FA5D33"><span class="RefLink">16.2-1</span></a>) function may create an object of this category if its first argument <var class="Arg">S</var> is an inverse semigroup and has sufficiently large size. It can be treated like any other semigroup congruence object.</p>
+
+<p>See <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a> Section 5.3 for more details. See also <code class="func">InverseSemigroupCongruenceByKernelTrace</code> (<a href="chap16_mj.html#X7A588B737CEEB104"><span class="RefLink">16.7-2</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([3, 6, 7, 8, 0, 1, 2, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([5, 6, 7, 0, 9, 4, 0, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([5, 1, 8, 6, 9, 4, 0, 7])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(S, []);</span>
+&lt;semigroup congruence over &lt;inverse partial perm semigroup 
+ of size 117859, rank 9 with 3 generators&gt; with congruence pair (228,
+228)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroupCongruenceByKernelTrace(cong);</span>
+true</pre></div>
+
+<p><a id="X7A588B737CEEB104" name="X7A588B737CEEB104"></a></p>
+
+<h5>16.7-2 InverseSemigroupCongruenceByKernelTrace</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseSemigroupCongruenceByKernelTrace</code>( <var class="Arg">S</var>, <var class="Arg">kernel</var>, <var class="Arg">traceBlocks</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: An inverse semigroup congruence by kernel and trace.</p>
+
+<p>If <var class="Arg">S</var> is an inverse semigroup, <var class="Arg">kernel</var> is a subsemigroup of <var class="Arg">S</var>, <var class="Arg">traceBlocks</var> is a list of lists describing a congruence on the idempotents of <var class="Arg">S</var>, and <span class="SimpleMath">\((\textit{kernel}, \textit{trace})\)</span> describes a valid congruence pair for <var class="Arg">S</var> (see <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a> Section 5.3) then this function returns the semigroup congruence defined by that congruence pair.</p>
+
+<p>See also <code class="func">KernelOfSemigroupCongruence</code> (<a href="chap16_mj.html#X7D521AFF7876CBC7"><span class="RefLink">16.7-4</span></a>) and <code class="func">TraceOfSemigroupCongruence</code> (<a href="chap16_mj.html#X80972A5B82D88F89"><span class="RefLink">16.7-5</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">kernel := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([1, 0, 3]), PartialPerm([0, 2, 3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([1, 2]), PartialPerm([3]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">trace := [</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([0, 2, 3])],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([1, 2])],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([1, 0, 3])],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([0, 0, 3]), PartialPerm([0, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([1]), PartialPerm([], [])]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := InverseSemigroupCongruenceByKernelTrace(S, kernel, trace);</span>
+&lt;semigroup congruence over &lt;inverse partial perm semigroup of rank 3 
+ with 2 generators&gt; with congruence pair (13,4)&gt;</pre></div>
+
+<p><a id="X87916D4E854F1F6B" name="X87916D4E854F1F6B"></a></p>
+
+<h5>16.7-3 AsInverseSemigroupCongruenceByKernelTrace</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsInverseSemigroupCongruenceByKernelTrace</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: An inverse semigroup congruence by kernel and trace.</p>
+
+<p>If <var class="Arg">cong</var> is a semigroup congruence over an inverse semigroup, then this attribute returns an object which describes the same congruence, but with an internal representation defined by that congruence's kernel and trace.</p>
+
+<p>See <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a> section 5.3 for more details.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruenceByGeneratingPairs(I,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([]), PartialPerm([1, 2])]]);</span>
+&lt;semigroup congruence over &lt;inverse partial perm semigroup of rank 3 
+ with 2 generators&gt; with 2 generating pairs&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := AsInverseSemigroupCongruenceByKernelTrace(cong);</span>
+&lt;semigroup congruence over &lt;inverse partial perm semigroup of rank 3 
+ with 2 generators&gt; with congruence pair (19,1)&gt;</pre></div>
+
+<p><a id="X7D521AFF7876CBC7" name="X7D521AFF7876CBC7"></a></p>
+
+<h5>16.7-4 KernelOfSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfSemigroupCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: An inverse semigroup.</p>
+
+<p>If <var class="Arg">cong</var> is a congruence over a semigroup with inverse op, then this attribute returns the <em>kernel</em> of that congruence; that is, the inverse subsemigroup consisting of all elements which are related to an idempotent by <var class="Arg">cong</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(I,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([]), PartialPerm([1, 2])]]);</span>
+&lt;semigroup congruence over &lt;inverse partial perm semigroup 
+ of size 19, rank 3 with 2 generators&gt; with 2 generating pairs&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KernelOfSemigroupCongruence(cong);</span>
+&lt;inverse partial perm semigroup of rank 3 with 5 generators&gt;
+</pre></div>
+
+<p><a id="X80972A5B82D88F89" name="X80972A5B82D88F89"></a></p>
+
+<h5>16.7-5 TraceOfSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceOfSemigroupCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A list of lists.</p>
+
+<p>If <var class="Arg">cong</var> is an inverse semigroup congruence by kernel and trace, then this attribute returns the restriction of <var class="Arg">cong</var> to the idempotents of the semigroup. This is in block form: each idempotent will appear in precisely one list, and two idempotents will be in the same list if and only if they are related by <var class="Arg">cong</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([2, 3]), PartialPerm([2, 0, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(I,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([]), PartialPerm([1, 2])]]);</span>
+&lt;semigroup congruence over &lt;inverse partial perm semigroup 
+ of size 19, rank 3 with 2 generators&gt; with 2 generating pairs&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceOfSemigroupCongruence(cong);</span>
+[ [ &lt;empty partial perm&gt;, &lt;identity partial perm on [ 1 ]&gt;, 
+      &lt;identity partial perm on [ 2 ]&gt;, 
+      &lt;identity partial perm on [ 1, 2 ]&gt;, 
+      &lt;identity partial perm on [ 3 ]&gt;, 
+      &lt;identity partial perm on [ 2, 3 ]&gt;, 
+      &lt;identity partial perm on [ 1, 3 ]&gt; ] ]</pre></div>
+
+<p><a id="X8049A0E780A7A8D9" name="X8049A0E780A7A8D9"></a></p>
+
+<h5>16.7-6 IsInverseSemigroupCongruenceClassByKernelTrace</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInverseSemigroupCongruenceClassByKernelTrace</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This category contains any congruence class which belongs to a congruence which is represented internally by its kernel and trace. See <code class="func">InverseSemigroupCongruenceByKernelTrace</code> (<a href="chap16_mj.html#X7A588B737CEEB104"><span class="RefLink">16.7-2</span></a>).</p>
+
+<p>See <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a> Section 5.3 for more details.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> PartialPerm([2, 3]), PartialPerm([2, 0, 3])],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">rec(cong_by_ker_trace_threshold := 0));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := SemigroupCongruence(I,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[PartialPerm([0, 1, 3]), PartialPerm([0, 1])],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [PartialPerm([]), PartialPerm([1, 2])]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class := CongruenceClassOfElement(cong,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                     PartialPerm([1, 2], [2, 3]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroupCongruenceClassByKernelTrace(class);</span>
+true</pre></div>
+
+<p><a id="X857495647F9A9579" name="X857495647F9A9579"></a></p>
+
+<h5>16.7-7 MinimumGroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimumGroupCongruence</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: An inverse semigroup congruence by kernel and trace.</p>
+
+<p>If <var class="Arg">S</var> is an inverse semigroup, then this function returns the least congruence on <var class="Arg">S</var> whose quotient is a group.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([5, 2, 0, 0, 1, 4]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  PartialPerm([1, 4, 6, 3, 5, 0, 2])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := MinimumGroupCongruence(S);</span>
+&lt;semigroup congruence over &lt;inverse partial perm semigroup of rank 7 
+ with 2 generators&gt; with congruence pair (59,1)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(S / cong);</span>
+true</pre></div>
+
+<p><a id="X7CE483078769A4D6" name="X7CE483078769A4D6"></a></p>
+
+<h4>16.8 <span class="Heading">Rees congruences</span></h4>
+
+<p>A Rees congruence is defined by a semigroup ideal. It is a congruence on a semigroup <code class="code">S</code> which has one congruence class equal to a semigroup ideal <code class="code">I</code> of <code class="code">S</code>, and every other congruence class being a singleton.</p>
+
+<p><a id="X7BC02E08840E0AF4" name="X7BC02E08840E0AF4"></a></p>
+
+<h5>16.8-1 SemigroupIdealOfReesCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupIdealOfReesCongruence</code>( <var class="Arg">cong</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A semigroup ideal.</p>
+
+<p>If <var class="Arg">cong</var> is a rees congruence (see <code class="func">IsReesCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)) then this attribute returns the two-sided ideal that was used to define it, i.e.~the ideal of elements in the only non-trivial congruence class of <var class="Arg">cong</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([2, 3, 4, 3, 1, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([6, 4, 4, 4, 6, 1])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := SemigroupIdeal(S,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([4, 4, 4, 4, 4, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 3, 3, 3, 3, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := ReesCongruenceOfSemigroupIdeal(I);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupIdealOfReesCongruence(cong);</span>
+&lt;non-regular transformation semigroup ideal of degree 6 with
+  2 generators&gt;</pre></div>
+
+<p><a id="X7E15F66A8029C64A" name="X7E15F66A8029C64A"></a></p>
+
+<h5>16.8-2 IsReesCongruenceClass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReesCongruenceClass</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This category describes a congruence class of a Rees congruence. A congruence class of a Rees congruence either contains all the elements of an ideal, or is a singleton (see <code class="func">IsReesCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X822DB78579BCB7B5"><span class="RefLink">Reference: IsReesCongruence</span></a>)).</p>
+
+<p>An object of this type may be used in the same way as any other congruence class object.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([2, 3, 4, 3, 1, 1]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([6, 4, 4, 4, 6, 1]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := SemigroupIdeal(S,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([4, 4, 4, 4, 4, 2]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation([3, 3, 3, 3, 3, 2]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong := ReesCongruenceOfSemigroupIdeal(I);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := CongruenceClasses(cong);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsReesCongruenceClass(classes[1]);</span>
+true</pre></div>
+
+<p><a id="X789450398397141D" name="X789450398397141D"></a></p>
+
+<h4>16.9 <span class="Heading">Universal congruences</span></h4>
+
+<p>The linked triples of a completely 0-simple Rees 0-matrix semigroup describe only its non-universal congruences. In any one of these, the zero element of the semigroup is related only to itself. However, for any semigroup <span class="SimpleMath">\(S\)</span> the universal relation <span class="SimpleMath">\(S \times S\)</span> is a congruence; called the <em>universal congruence</em>. The universal congruence on a semigroup has its own unique representation.</p>
+
+<p>Since many things we want to calculate about congruences are trivial in the case of the universal congruence, this package contains a category specifically designed for it, <code class="code">IsUniversalSemigroupCongruence</code>. We also define <code class="code">IsUniversalSemigroupCongruenceClass</code>, which represents the single congruence class of the universal congruence.</p>
+
+<p><a id="X8751EF557A81A2B1" name="X8751EF557A81A2B1"></a></p>
+
+<h5>16.9-1 IsUniversalSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUniversalSemigroupCongruence</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This property describes a type of semigroup congruence, which must refer to the <em>universal semigroup congruence</em> <span class="SimpleMath">\(S \times S\)</span>. Externally, an object of this type may be used in the same way as any other object in the category <code class="func">IsSemigroupCongruence</code> (<a href="../../../doc/ref/chap51_mj.html#X78E34B737F0E009F"><span class="RefLink">Reference: IsSemigroupCongruence</span></a>).</p>
+
+<p>An object of this type may be constructed with <code class="code">UniversalSemigroupCongruence</code> or this representation may be selected automatically as an alternative to an <code class="code">IsRZMSCongruenceByLinkedTriple</code> object (since the universal congruence cannot be represented by a linked triple).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([3, 2, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := UniversalSemigroupCongruence(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsUniversalSemigroupCongruence(U);</span>
+true</pre></div>
+
+<p><a id="X8646253C86AFFA29" name="X8646253C86AFFA29"></a></p>
+
+<h5>16.9-2 IsUniversalSemigroupCongruenceClass</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUniversalSemigroupCongruenceClass</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+
+<p>This category describes a class of the universal semigroup congruence (see <code class="func">IsUniversalSemigroupCongruence</code> (<a href="chap16_mj.html#X8751EF557A81A2B1"><span class="RefLink">16.9-1</span></a>)). A universal semigroup congruence by definition has precisely one congruence class, which contains all of the elements of the semigroup in question.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([Transformation([3, 2, 3])]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := UniversalSemigroupCongruence(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := CongruenceClasses(U);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsUniversalSemigroupCongruenceClass(classes[1]);</span>
+true</pre></div>
+
+<p><a id="X7B99C6A47F3D375F" name="X7B99C6A47F3D375F"></a></p>
+
+<h5>16.9-3 UniversalSemigroupCongruence</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniversalSemigroupCongruence</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A universal semigroup congruence.</p>
+
+<p>This operation returns the universal semigroup congruence for the semigroup <var class="Arg">S</var>. It can be used in the same way as any other semigroup congruence object.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UniversalSemigroupCongruence(S);</span>
+&lt;universal semigroup congruence over 
+&lt;Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )&gt;&gt;</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap15_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

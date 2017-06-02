@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (semigroups) - Chapter 18: 
+    Visualising semigroups and elements
+  </title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap18"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap19_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap18.html">[MathJax off]</a></p>
+<p><a id="X80E82C6785300A86" name="X80E82C6785300A86"></a></p>
+<div class="ChapSects"><a href="chap18_mj.html#X80E82C6785300A86">18 <span class="Heading">
+    Visualising semigroups and elements
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X7B210B8179EFBC5A">18.1 <span class="Heading">
+      Automatic viewing
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X83B3318784E78415">18.1-1 Splash</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X82042B9A8095AEBB">18.2 <span class="Heading">
+      <code class="code">dot</code> pictures
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7F51F3CD7E13D199">18.2-1 DotString</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7C22E8D17D6C23EA">18.2-2 DotSemilatticeOfIdempotents</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X7BE4C766836B06AF">18.3 <span class="Heading">
+      <code class="code">tex</code> output
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X80FBF08180F7F181">18.3-1 TexString</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X7920398C7C0A375D">18.4 <span class="Heading">
+      <code class="code">tikz</code> pictures
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7F0971F678B4FC66">18.4-1 TikzString</a></span>
+</div></div>
+</div>
+
+<h3>18 <span class="Heading">
+    Visualising semigroups and elements
+  </span></h3>
+
+<p>There are two operations <code class="func">TikzString</code> (<a href="chap18_mj.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>) and <code class="func">DotString</code> (<a href="chap18_mj.html#X7F51F3CD7E13D199"><span class="RefLink">18.2-1</span></a>) in <strong class="pkg">Semigroups</strong> for creating LaTeX and <code class="code">dot</code> (also known as GraphViz) format pictures of the Green's class structure of a semigroup and for visualising certain types of elements of a semigroup. There is also a function <code class="func">Splash</code> (<a href="chap18_mj.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>) for automatically processing the output of <code class="func">TikzString</code> (<a href="chap18_mj.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>) and <code class="func">DotString</code> (<a href="chap18_mj.html#X7F51F3CD7E13D199"><span class="RefLink">18.2-1</span></a>) and opening the resulting pdf file.</p>
+
+<p><a id="X7B210B8179EFBC5A" name="X7B210B8179EFBC5A"></a></p>
+
+<h4>18.1 <span class="Heading">
+      Automatic viewing
+    </span></h4>
+
+<p>In this section we describe the function <code class="func">Splash</code> (<a href="chap18_mj.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>) for automatically processing and opening the strings output by <code class="func">TikzString</code> (<a href="chap18_mj.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>) and <code class="func">DotString</code> (<a href="chap18_mj.html#X7F51F3CD7E13D199"><span class="RefLink">18.2-1</span></a>)</p>
+
+<p><a id="X83B3318784E78415" name="X83B3318784E78415"></a></p>
+
+<h5>18.1-1 Splash</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Splash</code>( <var class="Arg">str</var>[, <var class="Arg">opts</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: Nothing.</p>
+
+<p>This function attempts to convert the string <var class="Arg">str</var> into a pdf document and open this document, i.e. to splash it all over your monitor.</p>
+
+<p>The string <var class="Arg">str</var> must correspond to a valid <code class="code">dot</code> or <code class="code">LaTeX</code> text file and you must have have <code class="code">GraphViz</code> and <code class="code">pdflatex</code> installed on your computer. For details about these file formats, see <span class="URL"><a href="http://www.latex-project.org">http://www.latex-project.org</a></span> and <span class="URL"><a href="http://www.graphviz.org">http://www.graphviz.org</a></span>.</p>
+
+<p>This function is provided to allow convenient, immediate viewing of the pictures produced by the functions: <code class="func">TikzString</code> (<a href="chap18_mj.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>), <code class="func">TikzString</code> (<a href="chap18_mj.html#X7F0971F678B4FC66"><span class="RefLink">18.4-1</span></a>), <code class="func">DotSemilatticeOfIdempotents</code> (<a href="chap18_mj.html#X7C22E8D17D6C23EA"><span class="RefLink">18.2-2</span></a>), and <code class="func">DotString</code> (<a href="chap18_mj.html#X7F51F3CD7E13D199"><span class="RefLink">18.2-1</span></a>).</p>
+
+<p>The optional second argument <var class="Arg">opts</var> should be a record with components corresponding to various options, given below.</p>
+
+
+<dl>
+<dt><strong class="Mark">path</strong></dt>
+<dd><p>this should be a string representing the path to the directory where you want <code class="code">Splash</code> to do its work. The default value of this option is <code class="code">"~/"</code>.</p>
+
+</dd>
+<dt><strong class="Mark">directory</strong></dt>
+<dd><p>this should be a string representing the name of the directory in <code class="code">path</code> where you want <code class="code">Splash</code> to do its work. This function will create this directory if does not already exist.</p>
+
+<p>The default value of this option is <code class="code">"tmp.viz"</code> if the option <code class="code">path</code> is present, and the result of <code class="func">DirectoryTemporary</code> (<a href="../../../doc/ref/chap9_mj.html#X8222B1A886E6195E"><span class="RefLink">Reference: DirectoryTemporary</span></a>) is used otherwise.</p>
+
+</dd>
+<dt><strong class="Mark">filename</strong></dt>
+<dd><p>this should be a string representing the name of the file where <var class="Arg">str</var> will be written. The default value of this option is <code class="code">"vizpicture"</code>.</p>
+
+</dd>
+<dt><strong class="Mark">viewer</strong></dt>
+<dd><p>this should be a string representing the name of the program which should open the files produced by <code class="code">GraphViz</code> or <code class="code">pdflatex</code>.</p>
+
+</dd>
+<dt><strong class="Mark">type</strong></dt>
+<dd><p>this option can be used to specify that the string <var class="Arg">str</var> contains a LaTeX or <code class="code">dot</code> document. You can specify this option in <var class="Arg">str</var> directly by making the first line <code class="code">"%latex"</code> or <code class="code">"//dot"</code>. There is no default value for this option, this option must be specified in <var class="Arg">str</var> or in <var class="Arg">opt.type</var>.</p>
+
+</dd>
+<dt><strong class="Mark">filetype</strong></dt>
+<dd><p>this should be a string representing the type of file which <code class="code">Splash</code> should produce. For LaTeX files, this option is ignored and the default value <code class="code">"pdf"</code> is used.</p>
+
+</dd>
+</dl>
+<p>This function was written by Attila Egri-Nagy and Manuel Delgado with some minor changes by J. D. Mitchell.</p>
+
+
+<div class="example"><pre>
+        gap&gt; Splash(DotString(FullTransformationMonoid(4)));</pre></div>
+
+<p><a id="X82042B9A8095AEBB" name="X82042B9A8095AEBB"></a></p>
+
+<h4>18.2 <span class="Heading">
+      <code class="code">dot</code> pictures
+    </span></h4>
+
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">dot</code> format.</p>
+
+<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18_mj.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
+
+<p><a id="X7F51F3CD7E13D199" name="X7F51F3CD7E13D199"></a></p>
+
+<h5>18.2-1 DotString</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotString</code>( <var class="Arg">S</var>[, <var class="Arg">options</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>If the argument <var class="Arg">S</var> is a semigroup, and the optional second argument <var class="Arg">options</var> is a record, then this operation produces a graphical representation of the partial order of the \(\mathscr{D}\)-classes of the semigroup <var class="Arg">S</var> together with the eggbox diagram of each \(\mathscr{D}\)-class. The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="http://www.graphviz.org">http://www.graphviz.org</a></span>.</p>
+
+<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
+
+<p>The \(\mathscr{D}\)-classes are shown as eggbox diagrams with \(\mathscr{L}\)-classes as rows and \(\mathscr{R}\)-classes as columns; group \(\mathscr{H}\)-classes are shaded gray and contain an asterisk. The \(\mathscr{L}\)-classes and \(\mathscr{R}\)-classes within a \(\mathscr{D}\)-class are arranged to correspond to the normalization of the principal factor given by <code class="func">NormalizedPrincipalFactor</code> (<a href="chap12_mj.html#X86C6D777847AAEC7"><span class="RefLink">12.4-8</span></a>). The \(\mathscr{D}\)-classes are numbered according to their index in <code class="code">GreensDClasses(<var class="Arg">S</var>)</code>, so that an <code class="code">i</code> appears next to the eggbox diagram of <code class="code">GreensDClasses(<var class="Arg">S</var>)[i]</code>. A line from one \(\mathscr{D}\)-class to another indicates that the higher \(\mathscr{D}\)-class is greater than the lower one in the \(\mathscr{D}\)-order on <var class="Arg">S</var>.</p>
+
+<p>If the optional second argument <var class="Arg">options</var> is present, it can be used to specify some options for output.</p>
+
+
+<dl>
+<dt><strong class="Mark">number</strong></dt>
+<dd><p>if <code class="code"><var class="Arg">options</var>.number</code> is <code class="keyw">false</code>, then the \(\mathscr{D}\)-classes in the diagram are not numbered according to their index in the list of \(\mathscr{D}\)-classes of <var class="Arg">S</var>. The default value for this option is <code class="keyw">true</code>.</p>
+
+</dd>
+<dt><strong class="Mark">maximal</strong></dt>
+<dd><p>if <code class="code"><var class="Arg">options</var>.maximal</code> is <code class="keyw">true</code>, then the structure description of the group \(\mathscr{H}\)-classes is displayed; see <code class="func">StructureDescription</code> (<a href="../../../doc/ref/chap39_mj.html#X8199B74B84446971"><span class="RefLink">Reference: StructureDescription</span></a>). Setting this attribute to <code class="keyw">true</code> can adversely affect the performance of <code class="code">DotString</code>. The default value for this option is <code class="keyw">false</code>.</p>
+
+</dd>
+<dt><strong class="Mark">normal</strong></dt>
+<dd><p>if <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">false</code>, then the \(\mathscr{L}\)- and \(\mathscr{R}\)-classes within each \(\mathscr{D}\)-class arranged to correspond to <code class="func">PrincipalFactor</code> (<a href="chap12_mj.html#X86C6D777847AAEC7"><span class="RefLink">12.4-8</span></a>). If <code class="code"><var class="Arg">options</var>.normal</code> is <code class="keyw">true</code>, they are instead arranged to correspond to <code class="func">NormalizedPrincipalFactor</code> (<a href="chap12_mj.html#X86C6D777847AAEC7"><span class="RefLink">12.4-8</span></a>). Setting this attribute to <code class="keyw">false</code> may improve the performance of <code class="code">DotString</code> as it avoids the computation of <code class="func">InjectionNormalizedPrincipalFactor</code> (<a href="chap12_mj.html#X7EBB4F1981CC2AE9"><span class="RefLink">12.4-7</span></a>). The default value for this option is <code class="keyw">true</code>.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationMonoid(3);</span>
+&lt;full transformation monoid of degree 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DotString(S);</span>
+"//dot\ndigraph  DClasses {\nnode [shape=plaintext]\nedge [color=blac\
+k,arrowhead=none]\n1 [shape=box style=invisible label=&lt;\n&lt;TABLE BORDE\
+R=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\"\
+1\"&gt;\n&lt;TR BORDER=\"0\"&gt;&lt;TD COLSPAN=\"1\" BORDER = \"0\" &gt; 1&lt;/TD&gt;&lt;/TR&gt;\
+&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;/TABLE&gt;&gt;];\n2 [shape=box style\
+=invisible label=&lt;\n&lt;TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\
+\"10\" CELLSPACING=\"0\" PORT=\"2\"&gt;\n&lt;TR BORDER=\"0\"&gt;&lt;TD COLSPAN=\"\
+3\" BORDER = \"0\" &gt; 2&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;TD BG\
+COLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;TD BGCOLOR=\"white\"&gt;&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLO\
+R=\"gray\"&gt;*&lt;/TD&gt;&lt;TD BGCOLOR=\"white\"&gt;&lt;/TD&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/T\
+D&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"white\"&gt;&lt;/TD&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;T\
+D BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;/TABLE&gt;&gt;];\n3 [shape=box style=invis\
+ible label=&lt;\n&lt;TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\"\
+ CELLSPACING=\"0\" PORT=\"3\"&gt;\n&lt;TR BORDER=\"0\"&gt;&lt;TD COLSPAN=\"1\" BO\
+RDER = \"0\" &gt; 3&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;\
+TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\n&lt;TR&gt;&lt;TD BGCOLOR=\"gray\"&gt;*&lt;/TD&gt;&lt;/TR&gt;\
+\n&lt;/TABLE&gt;&gt;];\n1 -&gt; 2\n2 -&gt; 3\n }"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FileString("t3.dot", DotString(S));</span>
+1040</pre></div>
+
+<p><a id="X7C22E8D17D6C23EA" name="X7C22E8D17D6C23EA"></a></p>
+
+<h5>18.2-2 DotSemilatticeOfIdempotents</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DotSemilatticeOfIdempotents</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>This function produces a graphical representation of the semilattice of the idempotents of an inverse semigroup <var class="Arg">S</var> where the elements of <var class="Arg">S</var> have a unique semigroup inverse accessible via <code class="func">Inverse</code> (<a href="../../../doc/ref/chap31_mj.html#X78EE524E83624057"><span class="RefLink">Reference: Inverse</span></a>). The idempotents are grouped by the \(\mathscr{D}\)-class they belong to.</p>
+
+<p>The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="http://www.graphviz.org">http://www.graphviz.org</a></span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := DualSymmetricInverseMonoid(4);</span>
+&lt;inverse block bijection monoid of degree 4 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DotSemilatticeOfIdempotents(S);</span>
+"//dot\ngraph graphname {\n  node [shape=point]\nranksep=2;\nsubgraph \
+cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
+ cluster_3{\n2 10 6 3 4 9 7 \n}\nsubgraph cluster_4{\n1 \n}\n2 -- 1\n3\
+ -- 1\n4 -- 1\n5 -- 2\n5 -- 3\n5 -- 4\n6 -- 1\n7 -- 1\n8 -- 2\n8 -- 6\
+\n8 -- 7\n9 -- 1\n10 -- 1\n11 -- 2\n11 -- 9\n11 -- 10\n12 -- 3\n12 -- \
+6\n12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15\
+ -- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"</pre></div>
+
+<p><a id="X7BE4C766836B06AF" name="X7BE4C766836B06AF"></a></p>
+
+<h4>18.3 <span class="Heading">
+      <code class="code">tex</code> output
+    </span></h4>
+
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating LaTeX representations of <strong class="pkg">GAP</strong> objects. For pictures of <strong class="pkg">GAP</strong> objects please see Section <a href="chap18_mj.html#X7920398C7C0A375D"><span class="RefLink">18.4</span></a>.</p>
+
+<p><a id="X80FBF08180F7F181" name="X80FBF08180F7F181"></a></p>
+
+<h5>18.3-1 TexString</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TexString</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>This function produces a string containing LaTeX code for the transformation <var class="Arg">f</var>. If the optional paramater <var class="Arg">n</var> is used, then this is taken to be the degree of the transformation <var class="Arg">f</var>, if the parameter <var class="Arg">n</var> is not given, then <code class="func">DegreeOfTransformation</code> (<a href="../../../doc/ref/chap53_mj.html#X78A209C87CF0E32B"><span class="RefLink">Reference: DegreeOfTransformation</span></a>) is used by default. If <var class="Arg">n</var> is less than the degree of <var class="Arg">f</var>, then an error is given.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TexString(Transformation([6, 2, 4, 3, 6, 4]));</span>
+"\\begin{pmatrix}\n  1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 \\\\\n  6 &amp; 2 &amp; 4 &amp; 3 &amp; 6 &amp;\
+ 4\n\\end{pmatrix}"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TexString(Transformation([1, 2, 1, 3]), 5);</span>
+"\\begin{pmatrix}\n  1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 \\\\\n  1 &amp; 2 &amp; 1 &amp; 3 &amp; 5\n\\en\
+d{pmatrix}"</pre></div>
+
+<p><a id="X7920398C7C0A375D" name="X7920398C7C0A375D"></a></p>
+
+<h4>18.4 <span class="Heading">
+      <code class="code">tikz</code> pictures
+    </span></h4>
+
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">tikz</code> format.</p>
+
+<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18_mj.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
+
+<p><a id="X7F0971F678B4FC66" name="X7F0971F678B4FC66"></a></p>
+
+<h5>18.4-1 TikzString</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TikzString</code>( <var class="Arg">obj</var>[, <var class="Arg">options</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>Returns: A string.</p>
+
+<p>This function produces a graphical representation of the object <var class="Arg">obj</var> using the <code class="code">tikz</code> package for LaTeX. More precisely, this operation outputs a string containing a minimal LaTeX document which can be compiled using LaTeX to produce a picture of <var class="Arg">obj</var>.</p>
+
+<p>Currently the following types of objects are supported:</p>
+
+
+<dl>
+<dt><strong class="Mark">blocks</strong></dt>
+<dd><p>If <var class="Arg">obj</var> is the left or right blocks of a bipartition, then <code class="code">TikzString</code> returns a graphical representation of these blocks; see Section <a href="chap3_mj.html#X87684C148592F831"><span class="RefLink">3.6</span></a>.</p>
+
+</dd>
+<dt><strong class="Mark">bipartitions</strong></dt>
+<dd><p>If <var class="Arg">obj</var> is a bipartition, then <code class="code">TikzString</code> returns a graphical representation of <var class="Arg">obj</var>.</p>
+
+<p>If the optional second argument <var class="Arg">options</var> is a record with the component <code class="code">colors</code> set to <code class="keyw">true</code>, then the blocks of <var class="Arg">f</var> will be colored using the standard <code class="code">tikz</code> colors. Due to the limited number of colors available in <code class="code">tikz</code> this option only works when the degree of <var class="Arg">obj</var> is less than 20. See Chapter <a href="chap3_mj.html#X7C18DB427C9C0917"><span class="RefLink">3</span></a> for more details about bipartitions.</p>
+
+</dd>
+<dt><strong class="Mark">pbrs</strong></dt>
+<dd><p>If <var class="Arg">obj</var> is a PBR, then <code class="code">TikzString</code> returns a graphical representation <var class="Arg">obj</var>; see Section <a href="chap3_mj.html#X87684C148592F831"><span class="RefLink">3.6</span></a>.</p>
+
+</dd>
+</dl>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 4, -2, -3], [2, 3, 5, -5], [-1, -4]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzString(RightBlocks(x));</span>
+"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
+t}\n\\begin{tikzpicture}\n  \\draw[ultra thick](5,2)circle(.115);\n  \
+\\draw(1.8,5) node [top] {{$1$}};\n  \\fill(4,2)circle(.125);\n  \\dr\
+aw(1.8,4) node [top] {{$2$}};\n  \\fill(3,2)circle(.125);\n  \\draw(1\
+.8,3) node [top] {{$3$}};\n  \\draw[ultra thick](2,2)circle(.115);\n \
+ \\draw(1.8,2) node [top] {{$4$}};\n  \\fill(1,2)circle(.125);\n  \\d\
+raw(1.8,1) node [top] {{$5$}};\n\n  \\draw (5,2.125) .. controls (5,2\
+.8) and (2,2.8) .. (2,2.125);\n  \\draw (4,2.125) .. controls (4,2.6)\
+ and (3,2.6) .. (3,2.125);\n\\end{tikzpicture}\n\n\\end{document}"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Bipartition([[1, 5], [2, 4, -3, -5], [3, -1, -2], [-4]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzString(x);</span>
+"%tikz\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{documen\
+t}\n\\begin{tikzpicture}\n\n  %block #1\n  %vertices and labels\n  \\\
+fill(1,2)circle(.125);\n  \\draw(0.95, 2.2) node [above] {{ $1$}};\n \
+ \\fill(5,2)circle(.125);\n  \\draw(4.95, 2.2) node [above] {{ $5$}};\
+\n\n  %lines\n  \\draw(1,1.875) .. controls (1,1.1) and (5,1.1) .. (5\
+,1.875);\n\n  %block #2\n  %vertices and labels\n  \\fill(2,2)circle(\
+.125);\n  \\draw(1.95, 2.2) node [above] {{ $2$}};\n  \\fill(4,2)circ\
+le(.125);\n  \\draw(3.95, 2.2) node [above] {{ $4$}};\n  \\fill(3,0)c\
+ircle(.125);\n  \\draw(3, -0.2) node [below] {{ $-3$}};\n  \\fill(5,0\
+)circle(.125);\n  \\draw(5, -0.2) node [below] {{ $-5$}};\n\n  %lines\
+\n  \\draw(2,1.875) .. controls (2,1.3) and (4,1.3) .. (4,1.875);\n  \
+\\draw(3,0.125) .. controls (3,0.7) and (5,0.7) .. (5,0.125);\n  \\dr\
+aw(2,2)--(3,0);\n\n  %block #3\n  %vertices and labels\n  \\fill(3,2)\
+circle(.125);\n  \\draw(2.95, 2.2) node [above] {{ $3$}};\n  \\fill(1\
+,0)circle(.125);\n  \\draw(1, -0.2) node [below] {{ $-1$}};\n  \\fill\
+(2,0)circle(.125);\n  \\draw(2, -0.2) node [below] {{ $-2$}};\n\n  %l\
+ines\n  \\draw(1,0.125) .. controls (1,0.6) and (2,0.6) .. (2,0.125);\
+\n  \\draw(3,2)--(2,0);\n\n  %block #4\n  %vertices and labels\n  \\f\
+ill(4,0)circle(.125);\n  \\draw(4, -0.2) node [below] {{ $-4$}};\n\n \
+%lines\n\\end{tikzpicture}\n\n\\end{document}"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TikzString(UniversalPBR(2));</span>
+"%latex\n\\documentclass{minimal}\n\\usepackage{tikz}\n\\begin{docume\
+nt}\n\\usetikzlibrary{arrows}\n\\usetikzlibrary{arrows.meta}\n\\newco\
+mmand{\\arc}{\\draw[semithick, -{&gt;[width = 1.5mm, length = 2.5mm]}]}\
+\n\\begin{tikzpicture}[\n  vertex/.style={circle, draw, fill=black, i\
+nner sep =0.04cm},\n  ghost/.style={circle, draw = none, inner sep = \
+0.14cm},\n  botloop/.style={min distance = 8mm, out = -70, in = -110}\
+,\n  toploop/.style={min distance = 8mm, out = 70, in = 110}]\n\n  % \
+vertices and labels\n  \\foreach \\i in {1,...,2} {\n    \\node [vert\
+ex] at (\\i/1.5, 3) {};\n    \\node [ghost] (\\i) at (\\i/1.5, 3) {};\
+\n  }\n\n  \\foreach \\i in {1,...,2} {\n    \\node [vertex] at (\\i/\
+1.5, 0) {};\n    \\node [ghost] (-\\i) at (\\i/1.5, 0) {};\n  }\n\n  \
+% arcs from vertex 1\n  \\arc (1) to (-2);\n  \\arc (1) to (-1);\n  \
+\\arc (1) edge [toploop] (1);\n  \\arc (1) .. controls (1.06666666666\
+66667, 2.125) and (0.93333333333333324, 2.125) .. (2);\n\n  % arcs fr\
+om vertex -1\n  \\arc (-1) .. controls (1.0666666666666667, 0.875) an\
+d (0.93333333333333324, 0.875) .. (-2);\n  \\arc (-1) edge [botloop] \
+(-1);\n  \\arc (-1) to (1);\n  \\arc (-1) to (2);\n\n  % arcs from ve\
+rtex 2\n  \\arc (2) to (-2);\n  \\arc (2) to (-1);\n  \\arc (2) .. co\
+ntrols (0.93333333333333324, 2.125) and (1.0666666666666667, 2.125) .\
+. (1);\n  \\arc (2) edge [toploop] (2);\n\n  % arcs from vertex -2\n \
+ \\arc (-2) edge [botloop] (-2);\n  \\arc (-2) .. controls (0.9333333\
+3333333324, 0.875) and (1.0666666666666667, 0.875) .. (-1);\n  \\arc \
+(-2) to (1);\n  \\arc (-2) to (2);\n\n\\end{tikzpicture}\n\\end{docum\
+ent}"</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap17_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap19_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chap15_mj.html">15</a>  <a href="chap16_mj.html">16</a>  <a href="chap17_mj.html">17</a>  <a href="chap18_mj.html">18</a>  <a href="chap19_mj.html">19</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

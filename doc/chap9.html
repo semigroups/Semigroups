@@ -5,7 +5,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (semigroups) - Chapter 9: Homomorphisms</title>
+<title>GAP (semigroups) - Chapter 9: 
+    Standard constructions
+  </title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,112 +17,274 @@
 <body class="chap9"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap8.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap10.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap9_mj.html">[MathJax on]</a></p>
-<p><a id="X84975388859F203D" name="X84975388859F203D"></a></p>
-<div class="ChapSects"><a href="chap9.html#X84975388859F203D">9 <span class="Heading">Homomorphisms</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X7D702EA087C1C5EF">9.1 <span class="Heading">Isomorphisms</span></a>
+<p><a id="X86EE8DC987BA646E" name="X86EE8DC987BA646E"></a></p>
+<div class="ChapSects"><a href="chap9.html#X86EE8DC987BA646E">9 <span class="Heading">
+    Standard constructions
+  </span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9.html#X86EE8DC987BA646E">9.1 <span class="Heading">
+      Standard constructions
+    </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7A6D59247F15935E">9.1-1 IsIsomorphicSemigroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7DE212DF7DF0A4E9">9.1-2 SmallestMultiplicationTable</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8248C522825E2684">9.1-3 IsomorphismSemigroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X82B07E907B3A55F0">9.1-1 TrivialSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8411EBD97A220921">9.1-2 MonogenicSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X7E4DFDE27BF8B8F7">9.1-3 RectangularBand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X801FC1D97D832A6F">9.1-4 ZeroSemigroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9.html#X8672CFA47CA620B2">9.1-5 LeftZeroSemigroup</a></span>
 </div></div>
 </div>
 
-<h3>9 <span class="Heading">Homomorphisms</span></h3>
+<h3>9 <span class="Heading">
+    Standard constructions
+  </span></h3>
 
-<p>In this chapter we describe the various ways to define a homomorphism from a semigroup to another semigroup.</p>
+<p>In this chapter we describe some standard semigroup constructions which are available in the <strong class="pkg">Semigroups</strong> package.</p>
 
-<p>Support for homomorphisms in <strong class="pkg">Semigroups</strong> is currently rather limited but there are plans to improve this in the future.</p>
+<p><a id="X86EE8DC987BA646E" name="X86EE8DC987BA646E"></a></p>
 
-<p><a id="X7D702EA087C1C5EF" name="X7D702EA087C1C5EF"></a></p>
+<h4>9.1 <span class="Heading">
+      Standard constructions
+    </span></h4>
 
-<h4>9.1 <span class="Heading">Isomorphisms</span></h4>
+<p>In this section, we describe the functions in <strong class="pkg">Semigroups</strong> that can be used to create standard semigroup constructions in various representations. For all of the constructions, the default representation is as a semigroup of transformations. In general, these functions do not return a representation of minimal degree.</p>
 
-<p><a id="X7A6D59247F15935E" name="X7A6D59247F15935E"></a></p>
+<p><a id="X82B07E907B3A55F0" name="X82B07E907B3A55F0"></a></p>
 
-<h5>9.1-1 IsIsomorphicSemigroup</h5>
+<h5>9.1-1 TrivialSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsomorphicSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrivialSemigroup</code>( [<var class="Arg">filt</var>, ][<var class="Arg">deg</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A trivial semigroup.</p>
 
-<p>This operation attempts to determine if the semigroups <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic, it returns <code class="keyw">true</code> if they are and <code class="keyw">false</code> if they are not.</p>
+<p>A <strong class="button">trivial</strong> semigroup is a semigroup with precisely one element. This function returns a trivial semigroup in the representation given by the filter <var class="Arg">filter</var>, and (if possible) with the degree of the representation given by the non-negative integer <var class="Arg">deg</var>.</p>
 
-<p>At present this only works for rather small semigroups, with approximately 50 elements or less.</p>
+<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
 
-<p><strong class="button">Please note:</strong> the <span class="URL"><a href="http://www.maths.qmul.ac.uk/~leonard/grape/">Grape</a></span> package version 4.5 or higher must be available and compiled installed for this function to work.</p>
+
+<ul>
+<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
+
+</li>
+<li><p><code class="code">IsPartialPermSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBlockBijectionSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsPBRSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBooleanMatSemigroup</code>.</p>
+
+</li>
+</ul>
+<p>If the optional argument <var class="Arg">deg</var> is not specified, then the smallest possible degree will be used.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup( [ PartialPerm( [ 1, 2, 4 ], [ 3, 5, 1 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 3, 5 ], [ 4, 3, 2 ] ) ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := TrivialSemigroup();</span>
+&lt;trivial transformation group of degree 0 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-11
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=SemigroupByMultiplicationTable(SmallestMultiplicationTable(S));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphicSemigroup(S, T);</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := TrivialSemigroup(3);</span>
+&lt;trivial transformation group of degree 3 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := TrivialSemigroup(IsBipartitionSemigroup, 2);</span>
+&lt;trivial block bijection group of degree 2 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Elements(S);</span>
+[ &lt;block bijection: [ 1, 2, -1, -2 ]&gt; ]</pre></div>
+
+<p><a id="X8411EBD97A220921" name="X8411EBD97A220921"></a></p>
+
+<h5>9.1-2 MonogenicSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonogenicSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">m</var>, <var class="Arg">r</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A monogenic semigroup with index <var class="Arg">m</var> and period <var class="Arg">r</var>.</p>
+
+<p>If <var class="Arg">m</var> and <var class="Arg">r</var> are positive integers, then this function returns a monogenic semigroup <code class="code">S</code> with index <var class="Arg">m</var> and period <var class="Arg">r</var> in the representation given by the filter <var class="Arg">filt</var>.</p>
+
+<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
+
+
+<ul>
+<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
+
+</li>
+<li><p><code class="code">IsPartialPermSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBlockBijectionSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsPBRSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBooleanMatSemigroup</code>.</p>
+
+</li>
+</ul>
+<p>The semigroup <code class="code">S</code> is generated by a single element, <span class="SimpleMath">f</span>. <code class="code">S</code> consists of the elements <span class="SimpleMath">f, f ^ 2, ..., f ^ m, ..., f ^ m + r - 1</span>. The minimal ideal of <code class="code">S</code> consists of the elements <span class="SimpleMath">f ^ m, ..., f ^ m + r - 1</span> and is isomorphic to the cyclic group of order <span class="SimpleMath">r</span>.</p>
+
+<p>See <code class="func">IsMonogenicSemigroup</code> (<a href="chap14.html#X79D46BAB7E327AD1"><span class="RefLink">14.1-10</span></a>) for more information about monogenic semigroups.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MonogenicSemigroup(5, 3);</span>
+&lt;commutative non-regular transformation semigroup of size 7, degree 8 
+ with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonogenicSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := MinimalIdeal(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupAsSemigroup(I);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(I);</span>
+"C3"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := MonogenicSemigroup(IsBlockBijectionSemigroup, 9, 1);</span>
+&lt;commutative non-regular block bijection semigroup of size 9, 
+ degree 10 with 1 generator&gt;</pre></div>
+
+<p><a id="X7E4DFDE27BF8B8F7" name="X7E4DFDE27BF8B8F7"></a></p>
+
+<h5>9.1-3 RectangularBand</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RectangularBand</code>( [<var class="Arg">filt</var>, ]<var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: An <var class="Arg">m</var> by <var class="Arg">n</var> rectangular band.</p>
+
+<p>If <var class="Arg">m</var> and <var class="Arg">n</var> are positive integers, then this function returns a semigroup isomorphic to an <var class="Arg">m</var> by <var class="Arg">n</var> rectangular band, in the representation given by the filter <var class="Arg">filt</var>.</p>
+
+<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
+
+
+<ul>
+<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
+
+</li>
+<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsPBRSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBooleanMatSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsReesMatrixSemigroup</code>.</p>
+
+</li>
+</ul>
+<p>See <code class="func">IsRectangularBand</code> (<a href="chap14.html#X7E9B674D781B072C"><span class="RefLink">14.1-14</span></a>) for more information about rectangular bands.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := RectangularBand(5, 6);</span>
+&lt;regular transformation semigroup of size 30, degree 10 with 6 
+ generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularBand(T);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(IsReesMatrixSemigroup, 4, 8);</span>
+&lt;Rees matrix semigroup 4x8 over Group(())&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularBand(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCompletelySimpleSemigroup(S) and IsHTrivial(S);</span>
 true</pre></div>
 
-<p><a id="X7DE212DF7DF0A4E9" name="X7DE212DF7DF0A4E9"></a></p>
+<p><a id="X801FC1D97D832A6F" name="X801FC1D97D832A6F"></a></p>
 
-<h5>9.1-2 SmallestMultiplicationTable</h5>
+<h5>9.1-4 ZeroSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMultiplicationTable</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>Returns: The lex-least multiplication table of a semigroup.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A zero semigroup of order <var class="Arg">n</var>.</p>
 
-<p>This function returns the lex-least multiplication table of a semigroup isomorphic to the semigroup <var class="Arg">S</var>. <code class="code">SmallestMultiplicationTable</code> is an isomorphism invariant of semigroups, and so it can, for example, be used to check if two semigroups are isomorphic.</p>
+<p>If <var class="Arg">n</var> is a positive integer, then this function returns a zero semigroup of order <var class="Arg">n</var> in the representation given by the filter <var class="Arg">filt</var>.</p>
 
-<p>Due to the high complexity of computing the smallest multiplication table of a semigroup, this function only performs well for semigroups with at most approximately 50 elements.</p>
+<p>The optional argument <var class="Arg">filt</var> may be one of the following:</p>
 
-<p><code class="code">SmallestMultiplicationTable</code> is based on the function <code class="func">IdSmallSemigroup</code> (<a href="../../../pkg/smallsemi/doc/chap4.html#X788211A07D67C282"><span class="RefLink">Smallsemi: IdSmallSemigroup</span></a>) by Andreas Distler.</p>
 
-<p><strong class="button">Please note:</strong> the <span class="URL"><a href="http://www.maths.qmul.ac.uk/~leonard/grape/">Grape</a></span> package version 4.5 or higher must be loaded for this function to work.</p>
+<ul>
+<li><p><code class="code">IsTransformationSemigroup</code> (the default, if <var class="Arg">filt</var> is not specified),</p>
+
+</li>
+<li><p><code class="code">IsPartialPermSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBipartitionSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBlockBijectionSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsPBRSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsBooleanMatSemigroup</code>,</p>
+
+</li>
+<li><p><code class="code">IsReesZeroMatrixSemigroup</code> (provided that <code class="code"><var class="Arg">n</var> &gt; 1</code>).</p>
+
+</li>
+</ul>
+<p>See <code class="func">IsZeroSemigroup</code> (<a href="chap14.html#X81A1882181B75CC9"><span class="RefLink">14.1-26</span></a>) for more information about zero semigroups.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, 2, 3, -1, -3 ], [ -2 ] ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, 2, 3, -1 ], [ -2 ], [ -3 ] ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, 2, 3 ], [ -1 ], [ -2, -3 ] ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition( [ [ 1, 2, -1 ], [ 3, -2 ], [ -3 ] ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ZeroSemigroup(5);</span>
+&lt;commutative non-regular transformation semigroup of size 5, degree 5 
+ with 4 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ZeroSemigroup(IsPartialPermSemigroup, 15);</span>
+&lt;commutative non-regular partial perm semigroup of size 15, rank 14 
+ with 14 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-8
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMultiplicationTable(S);</span>
-[ [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 1, 3, 4, 5, 6, 7, 8 ], 
-  [ 1, 1, 3, 4, 5, 6, 7, 8 ], [ 1, 3, 3, 4, 5, 6, 7, 8 ], 
-  [ 5, 5, 6, 7, 5, 6, 7, 8 ], [ 5, 5, 6, 7, 5, 6, 7, 8 ], 
-  [ 5, 6, 6, 7, 5, 6, 7, 8 ], [ 5, 6, 6, 7, 5, 6, 7, 8 ] ]</pre></div>
+15
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">z := MultiplicativeZero(S);</span>
+&lt;empty partial perm&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(S, x -&gt; ForAll(S, y -&gt; x * y = z));</span>
+true</pre></div>
 
-<p><a id="X8248C522825E2684" name="X8248C522825E2684"></a></p>
+<p><a id="X8672CFA47CA620B2" name="X8672CFA47CA620B2"></a></p>
 
-<h5>9.1-3 IsomorphismSemigroups</h5>
+<h5>9.1-5 LeftZeroSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSemigroups</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: An isomorphism or <code class="keyw">fail</code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightZeroSemigroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A left zero (or right zero) semigroup of order <var class="Arg">n</var>.</p>
 
-<p>This operation returns an isomorphism from the semigroup <var class="Arg">S</var> and to the semigroup <var class="Arg">T</var> if it exists, and it returns <code class="keyw">fail</code> if it does not.</p>
+<p>If <var class="Arg">n</var> is a positive integer, then this function returns a left zero (or right zero, as appropriate) semigroup of order <var class="Arg">n</var> in the representation given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not specified then the default representation is <code class="code">IsTransformationSemigroup</code>.</p>
 
-<p>At present this only works for Rees matrix semigroups and Rees 0-matrix semigroups.</p>
+<p>The function <code class="code">LeftZeroSemigroup([<var class="Arg">filt</var>,] <var class="Arg">n</var>)</code> simply calls <code class="code">RectangularBand([<var class="Arg">filt</var>,] <var class="Arg">n</var>, 1)</code> and the function <code class="code">RightZeroSemigroup([<var class="Arg">filt</var>,] <var class="Arg">n</var>)</code> simply calls <code class="code">RectangularBand([<var class="Arg">filt</var>,] 1, <var class="Arg">n</var>)</code>.</p>
 
-<p><strong class="button">Please note:</strong> the <span class="URL"><a href="http://www.maths.qmul.ac.uk/~leonard/grape/">Grape</a></span> package version 4.5 or higher must be available and compiled for this function to work, when the argument <var class="Arg">R</var> is a Rees 0-matrix semigroup.</p>
+<p>For more information about <code class="code">RectangularBand</code>, including its permitted values of <var class="Arg">filt</var>, see <code class="func">RectangularBand</code> (<a href="chap9.html#X7E4DFDE27BF8B8F7"><span class="RefLink">9.1-3</span></a>). See <code class="func">IsLeftZeroSemigroup</code> (<a href="chap14.html#X7E9261367C8C52C0"><span class="RefLink">14.1-9</span></a>) and <code class="func">IsRightZeroSemigroup</code> (<a href="chap14.html#X7CB099958658F979"><span class="RefLink">14.1-17</span></a>) for more information about left zero and right zero semigroups.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=PrincipalFactor(DClasses(FullTransformationMonoid(5))[2]);</span>
-&lt;Rees 0-matrix semigroup 10x5 over Group([ (1,2,3,4), (1,2) ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=PrincipalFactor(DClasses(PartitionMonoid(5))[2]);</span>
-&lt;Rees 0-matrix semigroup 15x15 over Group([ (2,3,4,5), (4,5) ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroups(S, T);</span>
-fail</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := LeftZeroSemigroup(20);</span>
+&lt;transformation semigroup of degree 6 with 20 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLeftZeroSemigroup(S);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll(Tuples(S, 2), p -&gt; p[1] * p[2] = p[1]);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RightZeroSemigroup(IsBipartitionSemigroup, 5);</span>
+&lt;regular bipartition semigroup of size 5, degree 3 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRightZeroSemigroup(S);</span>
+true</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap8.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap10.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chap16.html">16</a>  <a href="chap17.html">17</a>  <a href="chap18.html">18</a>  <a href="chap19.html">19</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
