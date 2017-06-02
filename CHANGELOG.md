@@ -2,6 +2,14 @@
 
 #### Copyright (C) 2011-16 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.0 (released 02/06/2017)
+This is a major release that dramatically expands the scope of the package.  The
+package now features a compiled C/C++ module which interfaces with
+the [libsemigroups](https://github.com/james-d-mitchell/libsemigroups) C++
+library to allow high-speed computations for congruences and certain categories
+of semigroup.  There are also several new types of semigroup and a variety of
+new methods which can be used with them.
+
 ### Version 2.8.1 (released 22/06/2016)
 This is a minor release to update the output in some test file and manual
 examples due to some changes in the GAP library code for semigroup
