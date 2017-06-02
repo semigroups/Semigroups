@@ -45,13 +45,12 @@ loaded.
 
 * locate the `pkg` directory of your GAP directory, which contains the directories `lib`, `doc` and so on. Move the directory `semigroups-x.x.x` into the `pkg` directory.
     
-* from Version 3.0.0, it is necessary to compile the [Semigroups](https://gap-packages.github.io/Semigroups) package.
-
-* inside the `pkg/semigroups-x.x.x` directory, type
+* from version 3.0.0, it is necessary to compile the [Semigroups](https://gap-packages.github.io/Semigroups) package. To do this,
+ inside the `pkg/semigroups-x.x.x` directory, type
     * `./configure`
     * `make`
 
-Further information about this step can be found in manual section entitled "Compiling the kernel module"
+    Further information about this step can be found in manual section entitled "Compiling the kernel module"
 
 * start GAP in the usual way.
 
