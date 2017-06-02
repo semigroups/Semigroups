@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  attr.xml
-#Y  Copyright (C) 2011-16                                James D. Mitchell
+#Y  Copyright (C) 2011-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -458,6 +458,43 @@ gap> MinimalIdeal(POI(10));
 <partial perm group of rank 10>
 gap> MinimalIdeal(BrauerMonoid(6));
 <simple bipartition *-semigroup ideal of degree 6 with 1 generator>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="LengthOfLongestDClassChain">
+  <ManSection>
+    <Attr Name="LengthOfLongestDClassChain" Arg="S"/>
+    <Returns>
+    A non-negative integer.
+    </Returns>
+    <Description>
+      If <A>S</A> is a semigroup, then <C>LengthOfLongestDClassChain</C> returns
+      the length of the longest chain in the partial order defined by
+      <C>PartialOrderOfDClasses(<A>S</A>)</C>.  See <Ref Attr =
+        "PartialOrderOfDClasses" />. <P/>
+
+      The partial order on the &D;-classes is defined by <M>x\leq y</M> if and
+      only if <M>S ^ 1xS ^ 1</M> is a subset of  <M>S ^ 1yS ^ 1</M>. A
+      <E>chain</E> of &D;-classes is a collection of <C>n</C> &D;-classes
+      <M>D_{1}, D_{2}, \ldots D_{n}</M> such that <M>D_{1} &lt; D_{2} &lt;
+        \cdots &lt; D_{n}</M>.  The <E>length</E> of such a chain is <C>n -
+        1</C>.
+
+      <Example><![CDATA[
+gap> S := TrivialSemigroup();;
+gap> LengthOfLongestDClassChain(S);
+0
+gap> T := ZeroSemigroup(5);;
+gap> LengthOfLongestDClassChain(T);
+1
+gap> U := MonogenicSemigroup(14, 7);;
+gap> LengthOfLongestDClassChain(U);
+13
+gap> V := FullTransformationMonoid(6);
+<full transformation monoid of degree 6>
+gap> LengthOfLongestDClassChain(V);
+5]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

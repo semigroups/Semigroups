@@ -29,6 +29,7 @@
     <#Include Label = "NrRegularDClasses">
     <#Include Label = "NrXClasses">
     <#Include Label = "PartialOrderOfDClasses">
+    <#Include Label = "LengthOfLongestDClassChain">
     <#Include Label = "IsGreensDGreaterThanFunc">
 
   </Section>
