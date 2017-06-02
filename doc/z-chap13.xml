@@ -64,6 +64,7 @@
     <#Include Label = "SmallGeneratingSet">
     <#Include Label = "IrredundantGeneratingSubset">
     <#Include Label = "MinimalGeneratingSet">
+    <#Include Label = "GeneratorsSmallest">
  
   </Section>
 
@@ -192,7 +193,6 @@
     <#Include Label = "CyclesOfTransformationSemigroup">
     <#Include Label = "DigraphOfActionOnPairs">
     <#Include Label = "DigraphOfActionOnPoints">
-    <#Include Label = "GeneratorsSmallest">
     <#Include Label = "IsTransitive">
     <#Include Label = "SmallestElementSemigroup">
  
