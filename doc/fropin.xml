@@ -42,7 +42,7 @@ false
   <ManSection>
     <Attr Name="AsListCanonical" Arg="S"/> 
     <Attr Name="EnumeratorCanonical" Arg="S"/>
-    <Attr Name="IteratorCanonical" Arg="S"/>
+    <Oper Name="IteratorCanonical" Arg="S"/>
     <Returns>A list, enumerator, or iterator.</Returns>
     <Description>
       When the argument <A>S</A> is a semigroup in the representation 

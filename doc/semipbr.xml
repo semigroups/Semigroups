@@ -10,8 +10,8 @@
 
 <#GAPDoc Label="IsPBRSemigroup">
   <ManSection>
-    <Prop Name = "IsPBRSemigroup" Arg = "S"/>
-    <Prop Name = "IsPBRMonoid" Arg = "S"/>
+    <Filt Name = "IsPBRSemigroup" Arg = "S"/>
+    <Filt Name = "IsPBRMonoid" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>PBR semigroup</E> is simply a semigroup consisting of

@@ -198,8 +198,8 @@ true]]></Example>
       identical output. The shorter command is provided for the sake of
       convenience.<P/>
 
-      See also <Ref Attr = "DClassReps"/>, <Ref Func = "IteratorOfDClassReps"/>,
-      <Ref Func = "IteratorOfDClasses"/>, and <Ref Func = "NrDClasses"/>.
+      See also <Ref Attr = "DClassReps"/>, <Ref Oper = "IteratorOfDClassReps"/>,
+      <Ref Oper = "IteratorOfDClasses"/>, and <Ref Func = "NrDClasses"/>.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([3, 4, 4, 4]),
 >                   Transformation([4, 3, 1, 2]));;
@@ -267,16 +267,16 @@ gap> GreensRClasses(D);
 <#GAPDoc Label="GreensXClassOfElement">
   <ManSection><Heading>GreensXClassOfElement</Heading>
     <Oper Name = "GreensDClassOfElement" Arg = "X, f"/>
-    <Func Name = "DClass" Arg = "X, f"/>
+    <Oper Name = "DClass" Arg = "X, f"/>
     <Oper Name = "GreensHClassOfElement" Arg = "X, f"/>
     <Oper Name = "GreensHClassOfElement" Arg = "R, i, j"
       Label = "for a Rees matrix semigroup"/>
-    <Func Name = "HClass" Arg = "X, f"/>
-    <Func Name = "HClass" Arg = "R, i, j" Label = "for a Rees matrix semigroup"/>
+    <Oper Name = "HClass" Arg = "X, f"/>
+    <Oper Name = "HClass" Arg = "R, i, j" Label = "for a Rees matrix semigroup"/>
     <Oper Name = "GreensLClassOfElement" Arg = "X, f"/>
-    <Func Name = "LClass" Arg = "X, f"/>
+    <Oper Name = "LClass" Arg = "X, f"/>
     <Oper Name = "GreensRClassOfElement" Arg = "X, f"/>
-    <Func Name = "RClass" Arg = "X, f"/>
+    <Oper Name = "RClass" Arg = "X, f"/>
     <Returns>A Green's class.</Returns>
     <Description>
       These functions produce essentially the same output as the &GAP; library
@@ -321,13 +321,13 @@ gap> GreensRClasses(D);
 <#GAPDoc Label="GreensXClassOfElementNC">
   <ManSection><Heading>GreensXClassOfElementNC</Heading>
     <Oper Name = "GreensDClassOfElementNC" Arg = "X, f"/>
-    <Func Name = "DClassNC" Arg = "X, f"/>
+    <Oper Name = "DClassNC" Arg = "X, f"/>
     <Oper Name = "GreensHClassOfElementNC" Arg = "X, f"/>
-    <Func Name = "HClassNC" Arg = "X, f"/>
+    <Oper Name = "HClassNC" Arg = "X, f"/>
     <Oper Name = "GreensLClassOfElementNC" Arg = "X, f"/>
-    <Func Name = "LClassNC" Arg = "X, f"/>
+    <Oper Name = "LClassNC" Arg = "X, f"/>
     <Oper Name = "GreensRClassOfElementNC" Arg = "X, f"/>
-    <Func Name = "RClassNC" Arg = "X, f"/>
+    <Oper Name = "RClassNC" Arg = "X, f"/>
     <Returns>A Green's class.</Returns>
     <Description>
       These functions are essentially the same as <Ref
@@ -401,8 +401,8 @@ gap> Size(L);
 
       See also
       <Ref Attr = "GreensDClasses"/>,
-      <Ref Func = "IteratorOfDClassReps"/>,
-      <Ref Func = "IteratorOfDClasses"/>,  and
+      <Ref Oper = "IteratorOfDClassReps"/>,
+      <Ref Oper = "IteratorOfDClasses"/>,  and
       <Ref Func = "NrDClasses"/>.
       <Example><![CDATA[
 gap> S := Semigroup(Transformation([3, 4, 4, 4]),
@@ -624,10 +624,10 @@ false]]></Example>
 
 <#GAPDoc Label="IteratorOfXClassReps">
   <ManSection><Heading>IteratorOfXClassReps</Heading>
-  <Func Name = "IteratorOfDClassReps" Arg = "S"/>
-  <Func Name = "IteratorOfHClassReps" Arg = "S"/>
-  <Func Name = "IteratorOfLClassReps" Arg = "S"/>
-  <Func Name = "IteratorOfRClassReps" Arg = "S"/>
+  <Oper Name = "IteratorOfDClassReps" Arg = "S"/>
+  <Oper Name = "IteratorOfHClassReps" Arg = "S"/>
+  <Oper Name = "IteratorOfLClassReps" Arg = "S"/>
+  <Oper Name = "IteratorOfRClassReps" Arg = "S"/>
   <Returns>
   An iterator.
   </Returns>
@@ -670,10 +670,10 @@ gap> NextIterator(iter);
 
 <#GAPDoc Label="IteratorOfXClasses">
   <ManSection><Heading>IteratorOfXClasses</Heading>
-  <Func Name = "IteratorOfDClasses" Arg = "S"/>
-  <Func Name = "IteratorOfHClasses" Arg = "S"/>
-  <Func Name = "IteratorOfLClasses" Arg = "S"/>
-  <Func Name = "IteratorOfRClasses" Arg = "S"/>
+  <Oper Name = "IteratorOfDClasses" Arg = "S"/>
+  <Oper Name = "IteratorOfHClasses" Arg = "S"/>
+  <Oper Name = "IteratorOfLClasses" Arg = "S"/>
+  <Oper Name = "IteratorOfRClasses" Arg = "S"/>
   <Returns>
   An iterator.
   </Returns>
@@ -774,8 +774,8 @@ gap> Size(R);
 
   See also <Ref Attr = "GreensRClasses"/>,
   <Ref Oper = "GreensRClasses" BookName = "ref"/>,
-  <Ref Func = "IteratorOfRClasses"/>, and
-  <Ref Func = "IteratorOfRClassReps"/>.
+  <Ref Oper = "IteratorOfRClasses"/>, and
+  <Ref Oper = "IteratorOfRClassReps"/>.
 
   <Example><![CDATA[
 gap> S := Semigroup(

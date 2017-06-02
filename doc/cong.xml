@@ -810,8 +810,6 @@ false]]></Example>
 <#GAPDoc Label="MeetSemigroupCongruences">
 <ManSection>
   <Oper Name = "MeetSemigroupCongruences" Arg = "c1, c2"/>
-  <Oper Name = "MeetLeftSemigroupCongruences" Arg = "c1, c2"/>
-  <Oper Name = "MeetRightSemigroupCongruences" Arg = "c1, c2"/>
   <Returns>A semigroup congruence.</Returns>
   <Description>
     This operation returns the <E>meet</E> of the two semigroup congruences

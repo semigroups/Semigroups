@@ -591,11 +591,11 @@ PBR([ [ -3, 1 ], [ -4, 2 ], [ -1, 3 ], [ -2, 4 ], [ -5, 5 ] ],
 
 <#GAPDoc Label="AsTransformationPBR">
   <ManSection>
-    <Oper Name = "AsTransformation" Arg = "x" Label = "for a PBR"/>
+    <Attr Name = "AsTransformation" Arg = "x" Label = "for a PBR"/>
     <Returns>A transformation.</Returns>
     <Description>
       When the argument <A>x</A> is a PBR which satisfies <Ref Prop =
-        "IsTransformationPBR"/>, then this function returns that
+        "IsTransformationPBR"/>, then this attribute returns that
       transformation.
 
       <Example><![CDATA[
@@ -634,11 +634,11 @@ gap> AsPartialPerm(x);
 
 <#GAPDoc Label="AsPermutationPBR">
   <ManSection>
-    <Oper Name = "AsPermutation" Arg = "x" Label = "for a PBR"/>
+    <Attr Name = "AsPermutation" Arg = "x" Label = "for a PBR"/>
     <Returns>A permutation.</Returns>
     <Description>
       When the argument <A>x</A> is a PBR which satisfies
-      <Ref Prop = "IsPermPBR"/>, then this function returns that permutation.
+      <Ref Prop = "IsPermPBR"/>, then this attribute returns that permutation.
 
       <Example><![CDATA[
 gap> x := PBR([[-1, 1], [-4, 2], [-2, 3], [-3, 4]],

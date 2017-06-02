@@ -364,7 +364,7 @@ false]]></Example>
 
 <#GAPDoc Label="AsTransformation">
   <ManSection>
-    <Oper Name = "AsTransformation" Arg = "x" Label="for a bipartition"/>
+    <Attr Name = "AsTransformation" Arg = "x" Label="for a bipartition"/>
     <Returns>A transformation.</Returns>
     <Description>
       When the argument <A>x</A> is a bipartition, that mathematically defines
@@ -394,7 +394,7 @@ the argument does not define a transformation,]]></Example>
 
 <#GAPDoc Label="AsPermutation">
   <ManSection>
-    <Oper Name = "AsPermutation" Arg = "x" Label="for a bipartition"/>
+    <Attr Name = "AsPermutation" Arg = "x" Label="for a bipartition"/>
     <Returns>A permutation.</Returns>
     <Description>
       When the argument <A>x</A> is a bipartition that mathematically defines a

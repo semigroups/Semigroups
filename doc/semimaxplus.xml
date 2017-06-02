@@ -56,7 +56,7 @@
 
 <#GAPDoc Label="IsFinite">
   <ManSection>
-    <Attr Name = "IsFinite" Arg = "S"/>
+    <Prop Name = "IsFinite" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>. </Returns>
     <Description>
       If <A>S</A> is a max-plus or min-plus matrix semigroup (i.e. belongs to

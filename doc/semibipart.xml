@@ -10,8 +10,8 @@
 
 <#GAPDoc Label="IsBipartitionSemigroup">
   <ManSection>
-    <Prop Name = "IsBipartitionSemigroup" Arg = "S"/>
-    <Prop Name = "IsBipartitionMonoid" Arg = "S"/>
+    <Filt Name = "IsBipartitionSemigroup" Arg = "S"/>
+    <Filt Name = "IsBipartitionMonoid" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>bipartition semigroup</E> is simply a semigroup consisting of
@@ -80,7 +80,7 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
 <#GAPDoc Label="IsBlockBijectionSemigroup">
   <ManSection>
     <Prop Name = "IsBlockBijectionSemigroup" Arg = "S"/>
-    <Prop Name = "IsBlockBijectionMonoid" Arg = "S"/>
+    <Filt Name = "IsBlockBijectionMonoid" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>block bijection semigroup</E> is simply a semigroup consisting of
@@ -99,7 +99,7 @@ gap> DegreeOfBipartitionSemigroup(JonesMonoid(8));
 <#GAPDoc Label="IsPartialPermBipartitionSemigroup">
   <ManSection>
     <Prop Name = "IsPartialPermBipartitionSemigroup" Arg = "S"/>
-    <Prop Name = "IsPartialPermBipartitionMonoid" Arg = "S"/>
+    <Filt Name = "IsPartialPermBipartitionMonoid" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
       A <E>partial perm bipartition semigroup</E> is simply a semigroup

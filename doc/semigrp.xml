@@ -265,10 +265,10 @@ gap> AsMonoid(S);
 
 <#GAPDoc Label="RandomSemigroup">
 <ManSection>
-  <Oper Name = "RandomSemigroup" Arg = "arg..."/>
-  <Oper Name = "RandomMonoid" Arg = "arg..."/>
-  <Oper Name = "RandomInverseSemigroup" Arg = "arg..."/>
-  <Oper Name = "RandomInverseMonoid" Arg = "arg..."/>
+  <Func Name = "RandomSemigroup" Arg = "arg..."/>
+  <Func Name = "RandomMonoid" Arg = "arg..."/>
+  <Func Name = "RandomInverseSemigroup" Arg = "arg..."/>
+  <Func Name = "RandomInverseMonoid" Arg = "arg..."/>
   <Returns>A semigroup.</Returns>
   <Description>
     The operations described in this section can be used to generate

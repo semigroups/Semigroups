@@ -73,8 +73,6 @@
       "Category"/>
     <Filt Name = "IsTropicalMatrixCollection"          Arg = "obj" Type =
       "Category"/>
-    <Filt Name = "IsTropicalMatrixCollColl"            Arg = "obj" Type =
-      "Category"/>
     <Filt Name = "IsTropicalMaxPlusMatrixCollection"   Arg = "obj" Type =
       "Category"/>
     <Filt Name = "IsTropicalMaxPlusMatrixCollColl"     Arg = "obj" Type =
@@ -239,7 +237,7 @@ false
 
 <#GAPDoc Label="IntOrder">
   <ManSection>
-    <Oper Name = "Order" Arg = "mat"/>
+    <Attr Name = "Order" Arg = "mat"/>
     <Returns>An integer or <C>infinity</C>.</Returns>
     <Description>
       If <A>mat</A> is an integer matrix (i.e. belongs to the

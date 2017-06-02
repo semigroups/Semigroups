@@ -81,9 +81,9 @@ Transformation( [ 11, 11, 10, 10, 7, 6, 5, 6, 2, 2, 4 ] )]]></Example>
 
 <#GAPDoc Label="IsTransitive">
 <ManSection>
-  <Oper Name = "IsTransitive" Arg = "S[, X]" Label = "for a transformation
+  <Prop Name = "IsTransitive" Arg = "S[, X]" Label = "for a transformation
     semigroup and a set"/>
-  <Oper Name = "IsTransitive" Arg = "S[, n]" Label = "for a transformation
+  <Prop Name = "IsTransitive" Arg = "S[, n]" Label = "for a transformation
     semigroup and a pos int"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
@@ -182,7 +182,7 @@ gap> CyclesOfTransformationSemigroup(S);
   <ManSection>
     <Prop Name = "IsSynchronizingSemigroup" Arg = "S"
       Label = "for a transformation semigroup" />
-    <Oper Name = "IsSynchronizingSemigroup" Arg = "S, n"
+    <Prop Name = "IsSynchronizingSemigroup" Arg = "S, n"
       Label = "for a transformation semigroup and a positive integer" />
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
@@ -226,7 +226,7 @@ Transformation( [ 7, 8, 8, 7, 8, 8, 8, 7, 8, 8 ] )]]></Example>
   <ManSection>
     <Attr Name = "DigraphOfActionOnPairs" Arg = "S"
       Label = "for a transformation semigroup" />
-    <Oper Name = "DigraphOfActionOnPairs" Arg = "S, n"
+    <Attr Name = "DigraphOfActionOnPairs" Arg = "S, n"
       Label = "for a transformation semigroup and an integer" />
     <Returns>A digraph, or <K>fail</K>.</Returns>
     <Description>
@@ -299,7 +299,7 @@ fail]]></Example>
   <ManSection>
     <Attr Name = "DigraphOfActionOnPoints" Arg = "S"
       Label = "for a transformation semigroup" />
-    <Oper Name = "DigraphOfActionOnPoints" Arg = "S, n"
+    <Attr Name = "DigraphOfActionOnPoints" Arg = "S, n"
       Label = "for a transformation semigroup and an integer" />
     <Returns>A digraph, or <K>fail</K>.</Returns>
     <Description>

@@ -10,7 +10,7 @@
 
 <#GAPDoc Label="ProjectionFromBlocks">
   <ManSection>
-    <Oper Name = "ProjectionFromBlocks" Arg = "blocks"/>
+    <Attr Name = "ProjectionFromBlocks" Arg = "blocks"/>
     <Returns>A bipartition.</Returns>
     <Description>
       When the argument <A>blocks</A> is the left or right blocks of a
@@ -82,7 +82,7 @@ gap> BlocksNC([[1], [2], [-3, -6], [-4, -5]]);
 
 <#GAPDoc Label="OnRightBlocks">
   <ManSection>
-    <Func Name = "OnRightBlocks" Arg = "blocks, x"/>
+    <Oper Name = "OnRightBlocks" Arg = "blocks, x"/>
     <Returns>The blocks of a bipartition.</Returns>
     <Description>
       <C>OnRightBlocks</C> returns the right blocks of the product
@@ -103,7 +103,7 @@ gap> OnRightBlocks(RightBlocks(y), x);
 
 <#GAPDoc Label="OnLeftBlocks">
   <ManSection>
-    <Func Name = "OnLeftBlocks" Arg = "blocks, x"/>
+    <Oper Name = "OnLeftBlocks" Arg = "blocks, x"/>
     <Returns>The blocks of a bipartition.</Returns>
     <Description>
       <C>OnLeftBlocks</C> returns the left blocks of the product <C><A>x</A> *

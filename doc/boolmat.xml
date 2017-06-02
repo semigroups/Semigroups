@@ -420,7 +420,7 @@ gap> Display(AsBooleanMat(x));
       Label = "for a perm group, perm group and boolean matrix"/>
     <Oper Name = "CanonicalBooleanMat" Arg = "G, mat"
       Label = "for a perm group and boolean matrix"/>
-    <Oper Name = "CanonicalBooleanMat" Arg = "mat"/>
+    <Attr Name = "CanonicalBooleanMat" Arg = "mat"/>
     <Returns>A boolean matrix.</Returns>
     <Description>
       This operation returns a fixed representative of the orbit of the boolean

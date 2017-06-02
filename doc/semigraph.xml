@@ -107,7 +107,7 @@ v_1
 
 <#GAPDoc Label="IsVertex">
 <ManSection>
-  <Attr Name="IsVertex" Arg="x" Label="for a graph inverse semigroup element"/>
+  <Oper Name="IsVertex" Arg="x" Label="for a graph inverse semigroup element"/>
   <Returns><K>true</K> or <K>false</K>.</Returns>
   <Description>
     If <A>x</A> is an element of a graph inverse semigroup (i.e. it satisfies

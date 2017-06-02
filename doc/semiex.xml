@@ -569,7 +569,7 @@ true]]></Example>
 
 <#GAPDoc Label="MunnSemigroup">
     <ManSection>
-      <Oper Name = "MunnSemigroup" Arg = "S"/>
+      <Attr Name = "MunnSemigroup" Arg = "S"/>
       <Returns>The Munn semigroup of a semilattice.</Returns>
       <Description>
         If <A>S</A> is a semilattice, then <C>MunnSemigroup</C> returns the
