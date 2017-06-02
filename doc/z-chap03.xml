@@ -189,7 +189,6 @@
   <Section><Heading>The family and categories of bipartitions</Heading>
     <#Include Label = "IsBipartition">
     <#Include Label = "IsBipartitionCollection">
-    <#Include Label = "BipartitionFamily">
   </Section>
 
   <!--**********************************************************************-->
