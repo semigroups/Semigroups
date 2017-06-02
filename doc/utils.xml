@@ -79,7 +79,7 @@
     the info level to 2 or 3. To stop all info messages from being displayed,
     set the info level to 0.  See also
     <Ref Subsect = "Info Functions" BookName = "ref"/> and
-    <Ref Func = "SetInfoLevel" BookName = "ref"/>.
+    <Ref Oper = "SetInfoLevel" BookName = "ref"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
