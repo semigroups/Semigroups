@@ -28,10 +28,6 @@ gap> Size(Monoid([Bipartition([[1, 2, -1], [-2]]),
 >  Bipartition([[1], [2, -1, -2]])]));
 8
 
-# blocks: EmptyBlocks 1/1
-gap> EmptyBlocks;
-<empty blocks>
-
 # blocks: \< 1/1
 gap> a := BlocksNC([[1, 2], [3, 5], [4]]);;
 gap> b := BlocksNC([[1], [2, 3], [4], [-5]]);;
@@ -79,10 +75,6 @@ gap> NrLClasses(S);
 # blocks: BLOCKS_LEFT_ACT 2/3
 gap> NrLClasses(PartitionMonoid(2));
 6
-
-# blocks: BLOCKS_LEFT_ACT 3/3
-gap> BLOCKS_LEFT_ACT(EmptyBlocks, IdentityBipartition(2));
-<blocks: [ 1* ], [ 2* ]>
 
 # blocks: BLOCKS_E_TESTER 1/3
 gap> NrIdempotents(PartitionMonoid(3));
