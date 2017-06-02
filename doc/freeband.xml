@@ -178,3 +178,15 @@ gap> ContentOfFreeBandElementCollection([x, y]);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="IsFreeBandElementCollection">
+  <ManSection>
+    <Filt Name="IsFreeBandElementCollection"  Type='Category'/>
+    <Description>
+      Every collection of elements of a free band belongs to the
+      category <C>IsFreeBandElementCollection</C>. For example,
+      every free band belongs to
+      <C>IsFreeBandElementCollection</C>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
