@@ -29,20 +29,19 @@
       Isomorphisms of Rees (0-)matrix semigroups
     </Heading>
 
-    An isomorphism between two finite Rees matrix semigroups or two finite Rees
-    0-matrix semigroups can be associated to a triple which uniquely describes
-    the isomorphism in terms of the structure of the semigroups' matrices and
-    underlying groups.  An isomorphism described in this way can be constructed
+    An isomorphism between two regular finite Rees (0-)matrix semigroups whose
+    underlying semigroups are groups can be described by a triple defined in
+    terms of the matrices and underlying groups of the semigroups.  For a full
+    description of the theory involved, see Section 3.4 of
+    <Cite Key = "Howie1995aa"/>. <P/>
+
+    An isomorphism described in this way can be constructed
     using <Ref Oper="RMSIsoByTriple"/> or <Ref Oper="RZMSIsoByTriple"/>, and
     will satisfy the filter <Ref Filt="IsRMSIsoByTriple"/> or
-    <Ref Filt="IsRZMSIsoByTriple"/>.  On the whole, these isomorphisms can be
-    treated like any other isomorphism. <P/>
-
-    For more information on the structure of such an isomorphism, see
-    <Ref Filt="IsRMSIsoByTriple"/>.  For a full description of the theory
-    involved, see Section 3.4 of <Cite Key = "Howie1995aa"/>. <P/>
+    <Ref Filt="IsRZMSIsoByTriple"/>. <P/>
 
     <#Include Label = "IsRMSIsoByTriple">
+    <#Include Label = "RMSIsoByTriple">
     <#Include Label = "ELM_LIST">
     <#Include Label = "CompositionMapping2">
     <#Include Label = "ImagesElm">
