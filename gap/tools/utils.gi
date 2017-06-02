@@ -274,7 +274,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
         test := Test(s, rec(ignoreComments := false,
                             width := 72,
                             EQ := EQ,
-                            reportDiff := Ignore, 
+                            reportDiff := Ignore,
                             showProgress := false));
         end_time := IO_gettimeofday();
         CloseStream(s);
