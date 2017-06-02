@@ -155,7 +155,7 @@ function(list, S)
 end);
 
 InstallMethod(IsConnectedTransformationSemigroup,
-"for a transformation semigroup with generators",
+"for a transformation semigroup",
 [IsTransformationSemigroup],
 function(S)
   return IsConnectedDigraph(DigraphOfActionOnPoints(S));
