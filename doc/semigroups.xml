@@ -122,13 +122,12 @@ gap> GeneratorsOfSemigroup(S);
       <A>coll</A> contains a duplicates or elements already known to belong to
       <A>S</A>.<P/>
       
-      For example,    the argument <A>S</A> of <C>ClosureInverseSemigroup</C>
-      must be an inverse semigroup in the category <Ref
-        Filt="IsInverseSemigroup" BookName="ref"/> and an inverse semigroup is
-      returned. 
-      <C>ClosureInverseSemigroup(<A>S</A>, <A>coll</A>)</C> returns an
-      inverse semigroup which is equal to <C>InverseSemigroup(<A>S</A>,
-        <A>coll</A>)</C>.<P/>
+      For example, the argument <A>S</A> of <C>ClosureInverseSemigroup</C> must
+      be an inverse semigroup in the category <Ref Filt="IsInverseSemigroup"
+        BookName="ref"/>.  <C>ClosureInverseSemigroup(<A>S</A>,
+        <A>coll</A>)</C> returns an inverse semigroup which is equal to
+      <C>InverseSemigroup(<A>S</A>, <A>coll</A>)</C>.
+      <P/>
 
       If present, the optional third argument <A>opts</A> should be a record
       containing the values of the options for the semigroup being created as
