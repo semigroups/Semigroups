@@ -580,8 +580,6 @@ true
 gap> IsGroup(T);
 false
 gap> mat := [[t2, t1], [t1, t2]];;
-
-#TODO this takes 3 seconds, ugh! No good method for Generators 
 gap> R := ReesZeroMatrixSemigroup(T, mat);;
 gap> (CompareVersionNumbers(GAPInfo.Version, "4.7.7")
 > and IsRegularSemigroup(R))

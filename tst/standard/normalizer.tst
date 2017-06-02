@@ -7,7 +7,9 @@
 ##
 #############################################################################
 ##
-## TODO: remove acting := true from all of these!
+## TODO: remove acting := true from all of these, when there are methods
+## available for Normalizer for non-acting semigroups.
+
 gap> START_TEST("Semigroups package: standard/normalizer.tst");
 gap> LoadPackage("semigroups", false);;
 

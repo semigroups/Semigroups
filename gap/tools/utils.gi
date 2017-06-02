@@ -314,14 +314,7 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
 end;
 
 SEMIGROUPS.TestManualExamples := function(arg)
-  local exclude, ex, omit, width, acting, passed, str;
-
-  # TODO add extreme/standard tests for those examples below where it makes
-  # sense.
-  exclude := [48, 58, 61, 66, 87, 88, 89, 91, 93, 94, 96, 97, 100, 101, 102,
-              103, 108, 109, 110, 113, 114, 115, 119, 126, 127, 133, 137, 139,
-              141, 194, 195, 196];
-  # 103 takes ages, 114 should be in an extreme test
+  local ex, omit, width, acting, passed, str;
 
   ex := SEMIGROUPS.ManualExamples();
   if Length(arg) = 1 then

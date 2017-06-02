@@ -546,7 +546,6 @@ end);
 #T this idempotent exists (without constructing it)?
 #T the method below is already pretty efficient
 
-# TODO: remove redundant S as an argument here.
 InstallGlobalFunction(MatrixOverFiniteFieldIdempotentTester,
 function(S, x, y)
     return MatrixOverFiniteFieldIdempotentCreator(S, x, y) <> fail;
