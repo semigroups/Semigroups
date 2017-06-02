@@ -178,8 +178,6 @@
 
     <#Include Label = "IsActingSemigroup">
     <#Include Label = "IsEnumerableSemigroupRep">
-    <#Include Label = "Enumerate">
-    <#Include Label = "IsFullyEnumerated">
   </Section>
 
   <Section Label = "Options when creating semigroups">
