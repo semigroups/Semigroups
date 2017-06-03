@@ -1,6 +1,10 @@
 ### CHANGELOG - [Semigroups](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/semigroups.php) package for [GAP](http://www.gap-system.org)
 
-#### Copyright (C) 2011-16 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
+#### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
+
+### Version 3.0.1 (released 03/06/2017)
+This is an extremely minor release fixing some minor issues in the last
+release. 
 
 ### Version 3.0.0 (released 02/06/2017)
 This is a major release that dramatically expands the scope of the package.  The
