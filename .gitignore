@@ -76,3 +76,4 @@ tst/workspaces/test-output.w
 ltmain.sh
 wiki/
 VERSION
+tmp
