@@ -192,7 +192,7 @@ AbstractHTML := Concatenation(
   "membership, finding the inverses of a regular element, factorizing ",
   "elements over the generators, and so on. It is possible to test if a ",
   "semigroup satisfies a particular property, such as if it is regular, ",
-  "simple, inverse, completely regular, and a variety of further ", 
+  "simple, inverse, completely regular, and a variety of further ",
   "properties.</p><p>",
   "There are methods for finding presentations for a semigroup, the ",
   "congruences of a semigroup, the normalizer of a semigroup in a permutation ",
