@@ -200,7 +200,7 @@ AbstractHTML := Concatenation(
   "partial permutation representations, and the character tables of inverse ",
   "semigroups. There are functions for producing pictures of the Green's ",
   "structure of a semigroup, and for drawing graphical representations of ",
-  "certain types of elements.</p>",),
+  "certain types of elements.</p>"),
 
 PackageDoc := rec(
   BookName  := "Semigroups",
