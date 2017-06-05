@@ -1866,6 +1866,23 @@ gap> IdempotentGeneratedSubsemigroup(S);;
 gap> IsSemigroupWithCommutingIdempotents(S);
 true
 
+#T# properties: true methods for IsMonogenicSemigroup and IsRegularSemigroup
+gap> S := Semigroup(Matrix(IsIntegerMatrix,
+>                   [[1, 0, 0], [0, 1, 0], [0, 0, 0]]));
+<commutative semigroup of 3x3 integer matrices with 1 generator>
+gap> IsMonogenicSemigroup(S);
+true
+gap> HasIsFinite(S) or HasIsGroupAsSemigroup(S);
+false
+gap> IsRegularSemigroup(S);
+true
+gap> HasIsFinite(S);
+true
+gap> HasIsGroupAsSemigroup(S);
+true
+gap> IsFinite(S) and IsGroupAsSemigroup(S);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(I);
