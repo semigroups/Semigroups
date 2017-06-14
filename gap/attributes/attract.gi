@@ -127,24 +127,24 @@ end);
 InstallMethod(InversesOfSemigroupElementNC,
 "for an acting semigroup and multiplicative element",
 [IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
-function(s, f)
-  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts, grades,
-   rho_f, lambdarank, creator, inv, out, k, g, i, name, rho;
+function(S, x)
+  local regular, lambda, rank, rhorank, tester, j, o, rhos, opts,
+    grades, rho_x, lambdarank, creator, inv, out, k, y, i, name, rho;
 
-  regular := IsRegularSemigroup(s);
-  if not (regular or IsRegularSemigroupElementNC(s, f)) then
+  regular := IsRegularSemigroup(S);
+  if not (regular or IsRegularSemigroupElementNC(S, x)) then
     return [];
   fi;
 
-  lambda := LambdaFunc(s)(f);
-  rank := LambdaRank(s)(LambdaFunc(s)(f));
-  rhorank := RhoRank(s);
-  tester := IdempotentTester(s);
+  lambda := LambdaFunc(S)(x);
+  rank := LambdaRank(S)(LambdaFunc(S)(x));
+  rhorank := RhoRank(S);
+  tester := IdempotentTester(S);
   j := 0;
 
   # can't use GradedRhoOrb here since there may be inverses not D-related to f
-  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
-    o := RhoOrb(s);
+  if HasRhoOrb(S) and IsClosed(RhoOrb(S)) then
+    o := RhoOrb(S);
     rhos := EmptyPlist(Length(o));
     for i in [2 .. Length(o)] do
       if rhorank(o[i]) = rank and tester(lambda, o[i]) then
@@ -153,17 +153,16 @@ function(s, f)
       fi;
     od;
   else
-
-    opts := rec(treehashsize := SEMIGROUPS.OptionsRec(s).hashlen.M,
+    opts := rec(treehashsize := SEMIGROUPS.OptionsRec(S).hashlen.M,
                 gradingfunc := function(o, x) return rhorank(x); end,
                 onlygrades := function(x, y) return x >= rank; end,
                 onlygradesdata := fail);
 
-    for name in RecNames(LambdaOrbOpts(s)) do
-      opts.(name) := LambdaOrbOpts(s).(name);
+    for name in RecNames(LambdaOrbOpts(S)) do
+      opts.(name) := LambdaOrbOpts(S).(name);
     od;
 
-    o := Orb(s, RhoOrbSeed(s), RhoAct(s), opts);
+    o := Orb(S, RhoOrbSeed(S), RhoAct(S), opts);
     Enumerate(o, infinity);
 
     grades := Grades(o);
@@ -177,25 +176,25 @@ function(s, f)
   fi;
   ShrinkAllocationPlist(rhos);
 
-  rho_f := RhoFunc(s)(f);
-  lambdarank := LambdaRank(s);
-  creator := IdempotentCreator(s);
-  inv := LambdaInverse(s);
+  rho_x := RhoFunc(S)(x);
+  lambdarank := LambdaRank(S);
+  creator := IdempotentCreator(S);
+  inv := LambdaInverse(S);
 
   out := [];
   k := 0;
 
-  #if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then
+  #if HasLambdaOrb(S) and IsClosed(LambdaOrb(S)) then
   # Notes: it seems that LambdaOrb(S) is always closed at this point
-  o := LambdaOrb(s);
+  o := LambdaOrb(S);
   Enumerate(o); # just in case
   for i in [2 .. Length(o)] do
-    if lambdarank(o[i]) = rank and tester(o[i], rho_f) then
+    if lambdarank(o[i]) = rank and tester(o[i], rho_x) then
       for rho in rhos do
-        g := creator(lambda, rho) * inv(o[i], f);
-        if regular or g in s then
+        y := creator(lambda, rho) * inv(o[i], x);
+        if regular or y in S then
           k := k + 1;
-          out[k] := g;
+          out[k] := y;
         fi;
       od;
     fi;
@@ -215,7 +214,7 @@ function(s, f)
   #  grades := Grades(o);
 
   #  for i in [2 .. Length(o)] do
-  #    if grades[i] = rank and tester(o[i], rho_f) then
+  #    if grades[i] = rank and tester(o[i], rho_x) then
   #      for rho in rhos do
   #        g := creator(lambda, rho) * inv(o[i], f);
   #        if regular or g in s then
