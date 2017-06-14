@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  isorms.gi
-#Y  Copyright (C) 2014-15                                James D. Mitchell
+#Y  Copyright (C) 2014-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -663,119 +663,133 @@ end);
 # 4. Isomorphisms
 #############################################################################
 
-InstallMethod(IsomorphismSemigroups, "for Rees matrix semigroups",
-[IsReesMatrixSemigroup and IsWholeFamily,
- IsReesMatrixSemigroup and IsWholeFamily],
-function(R1, R2)
-  local mat, m, n, g, g1, g2, iso, isograph, isogroup, map, l, tup,
-  RMSInducedFunction;
+InstallMethod(IsomorphismSemigroups,
+"for finite whole family Rees matrix semigroups",
+[IsReesMatrixSemigroup and IsWholeFamily and IsFinite,
+ IsReesMatrixSemigroup and IsWholeFamily and IsFinite],
+(RankFilter(IsSimpleSemigroup and IsFinite) - RankFilter(IsReesMatrixSemigroup
+and IsWholeFamily and IsFinite)) + 10, # to beat IsSimpleSemigroup and IsFinite
+function(S, T)
+  local G, H, isoG, invG, s, first, isoH, invH, t, second, iso, mat, m, n, f,
+  isograph, isogroup, RMSInducedFunction, map, l, g, tup;
 
-  if Size(R1) = Size(R2) and Columns(R1) = Columns(R2)
-      and Rows(R1) = Rows(R2) then
-    mat := Matrix(R1);
-    m := Length(mat[1]);
-    n := Length(mat);
+  G := UnderlyingSemigroup(S);
+  H := UnderlyingSemigroup(T);
 
-    if R1 = R2 then
-      g := UnderlyingSemigroup(R1);
-      return RMSIsoByTripleNC(R1, R2, [(),
-                                       IdentityMapping(g),
-                                       List([1 .. m + n], x -> One(g))]);
-    else
-      g1 := UnderlyingSemigroup(R1);
-      g2 := UnderlyingSemigroup(R2);
-      iso := IsomorphismGroups(g1, g2);
-
-      # for RMS without 0 the graphs are always isomorphic,
-      # being complete bipartite.
-
-      if not iso = fail then
-        isograph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
-        #all isomorphisms from g1 to g2
-        isogroup := List(Elements(AutomorphismGroup(g1)), x -> x * iso);
-
-        #find an induced function, if there is one
-        RMSInducedFunction := SEMIGROUPS.RMSInducedFunction;
-        for l in isograph do
-          for g in isogroup do
-            for tup in Elements(g2) do
-              map := RMSInducedFunction(R1, R2, l, g, tup);
-              if map <> fail then
-                return RMSIsoByTripleNC(R1, R2, [l, g, map]);
-              fi;
-            od;
-          od;
-        od;
-      fi;
-    fi;
-  fi;
-  return fail;
-end);
-
-InstallMethod(IsomorphismSemigroups, "for Rees 0-matrix semigroups",
-[IsReesZeroMatrixSemigroup and IsWholeFamily,
- IsReesZeroMatrixSemigroup and IsWholeFamily],
-function(R1, R2)
-  local G1, G2, mat, m, n, f, groupiso, graph1, graph2, g, graphiso, tuples,
-        map, l, tup, RZMStoRZMSInducedFunction;
-
-  G1 := UnderlyingSemigroup(R1);
-  G2 := UnderlyingSemigroup(R2);
-
-  if not (IsRegularSemigroup(R1) and IsGroup(G1) and IsRegularSemigroup(R2)
-          and IsGroup(G2)) then
-    ErrorNoReturn("Semigroups: IsomorphismSemigroups: usage,\n",
-                  "the arguments must be regular Rees 0-matrix semigroups ",
-                  "over groups,");
-  fi;
-
-  if not (Size(R1) = Size(R2) and Columns(R1) = Columns(R2)
-          and Rows(R1) = Rows(R2)) then
+  if not (IsGroupAsSemigroup(G) and IsGroupAsSemigroup(H)) then
+    TryNextMethod();
+  elif Size(S) <> Size(T)
+      or Length(Columns(S)) <> Length(Columns(T))
+      or Length(Rows(T)) <> Length(Rows(T)) then
     return fail;
   fi;
 
-  mat := Matrix(R1);
+  if not (IsPermGroup(G) and IsPermGroup(H)) then
+    TryNextMethod();
+  fi;
+
+  mat := Matrix(S);
   m := Length(mat[1]);
   n := Length(mat);
 
-  if R1 = R2 then
-    return RZMSIsoByTripleNC(R1, R2, [(),
-                                      IdentityMapping(G1),
-                                      List([1 .. m + n], x -> One(G2))]);
+  if S = T then
+    return RMSIsoByTriple(S, T, [(),
+                                 IdentityMapping(G),
+                                 ListWithIdenticalEntries(m + n, ())]);
   fi;
 
-  # every isomorphism of the groups
-  f := IsomorphismGroups(G1, G2);
+  f := IsomorphismGroups(G, H);
   if f = fail then
     return fail;
   fi;
-  groupiso := List(AutomorphismGroup(G1), x -> x * f);
+
+  # for RMS without 0 the graphs are always isomorphic,
+  # being complete bipartite.
+
+  isograph := DirectProduct(SymmetricGroup(m), SymmetricGroup(n));
+  #all isomorphisms from g1 to g2
+  isogroup := List(Elements(AutomorphismGroup(G)), x -> x * f);
+
+  #find an induced function, if there is one
+  RMSInducedFunction := SEMIGROUPS.RMSInducedFunction;
+  for l in isograph do
+    for g in isogroup do
+      for tup in Elements(H) do
+        map := RMSInducedFunction(S, T, l, g, tup);
+        if map <> fail then
+          return RMSIsoByTriple(S, T, [l, g, map]);
+        fi;
+      od;
+    od;
+  od;
+  return fail;
+end);
+
+InstallMethod(IsomorphismSemigroups,
+"for finite whole family Rees 0-matrix semigroups",
+[IsReesZeroMatrixSemigroup and IsWholeFamily and IsFinite,
+ IsReesZeroMatrixSemigroup and IsWholeFamily and IsFinite],
+function(S, T)
+  local G, H, func, isoG, invG, s, first, isoH, invH, t, second, iso, mat, m, n,
+  f, groupiso, grS, grT, g, graphiso, tuples, RZMStoRZMSInducedFunction, map, l,
+  tup;
+
+  G := UnderlyingSemigroup(S);
+  H := UnderlyingSemigroup(T);
+
+  if not (IsRegularSemigroup(S) and IsGroupAsSemigroup(G) and
+          IsRegularSemigroup(T) and IsGroupAsSemigroup(H)) then
+    TryNextMethod();
+  elif Size(S) <> Size(T)
+      or Length(Columns(S)) <> Length(Columns(T))
+      or Length(Rows(S)) <> Length(Rows(T)) then
+    return fail;
+  elif not (IsPermGroup(G) and IsPermGroup(H)) then
+    TryNextMethod();
+  fi;
+
+  mat := Matrix(S);
+  m := Length(mat[1]);
+  n := Length(mat);
+
+  if S = T then
+    return RZMSIsoByTripleNC(S, T, [(),
+                                  IdentityMapping(G),
+                                  ListWithIdenticalEntries(m + n, ())]);
+  fi;
+
+  # every isomorphism of the groups
+  f := IsomorphismGroups(G, H);
+  if f = fail then
+    return fail;
+  fi;
+  groupiso := List(AutomorphismGroup(G), x -> x * f);
 
   # every isomorphism of the graphs
-  graph1 := RZMSDigraph(R1);
-  graph2 := RZMSDigraph(R2);
-  if graph1 <> graph2 then
-    g := IsomorphismDigraphs(graph1, graph2);
+  grS := RZMSDigraph(S);
+  grT := RZMSDigraph(T);
+  if grS <> grT then
+    g := IsomorphismDigraphs(grS, grT);
     if g = fail then
       return fail;
     fi;
   else
     g := ();
   fi;
-  graphiso := List(AutomorphismGroup(graph1, [[1 .. m], [m + 1 .. n + m]]),
+  graphiso := List(AutomorphismGroup(grS, [[1 .. m], [m + 1 .. n + m]]),
                    x -> x * g);
 
   tuples := EnumeratorOfCartesianProduct(
-              List([1 .. Length(DigraphConnectedComponents(graph1).comps)],
-                   x -> G2));
+              List([1 .. Length(DigraphConnectedComponents(grS).comps)],
+                   x -> H));
   #find an induced function, if there is one
   RZMStoRZMSInducedFunction := SEMIGROUPS.RZMStoRZMSInducedFunction;
   for l in graphiso do
     for g in groupiso do
       for tup in tuples do #TODO it should be possible to cut this down
-        map := RZMStoRZMSInducedFunction(R1, R2, l, g, tup);
+        map := RZMStoRZMSInducedFunction(S, T, l, g, tup);
         if map <> fail then
-          return RZMSIsoByTripleNC(R1, R2, [l, g, map]);
+          return RZMSIsoByTripleNC(S, T, [l, g, map]);
         fi;
       od;
     od;

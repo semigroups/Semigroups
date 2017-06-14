@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  isomorph.gi
-#Y  Copyright (C) 2014-15                                James D. Mitchell
+#Y  Copyright (C) 2014-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -88,36 +88,133 @@ function(S)
   return lits_to_tbl(SmallestImageSet(stabS, tbllitsS), n);
 end);
 
-InstallMethod(IsIsomorphicSemigroup, "for semigroups with generators",
-[IsSemigroup and HasGeneratorsOfSemigroup, IsSemigroup and
- HasGeneratorsOfSemigroup],
+InstallMethod(IsIsomorphicSemigroup, "for semigroups",
+[IsSemigroup, IsSemigroup],
 function(S, T)
-  local pS, pT, iso;
+  return IsomorphismSemigroups(S, T) <> fail;
+end);
+
+InstallMethod(IsomorphismSemigroups, "for finite simple semigroups",
+[IsSimpleSemigroup and IsFinite, IsSimpleSemigroup and IsFinite],
+function(S, T)
+  local isoS, rmsS, invT, rmsT, iso;
+
+  # Take an isomorphism of S to an RMS if appropriate
+  if not (IsReesMatrixSemigroup(S) and IsWholeFamily(S)
+      and IsPermGroup(UnderlyingSemigroup(S))) then
+    isoS := IsomorphismReesMatrixSemigroupOverPermGroup(S);
+    rmsS := Range(isoS);
+  else
+    rmsS := S;
+  fi;
+  # Take an isomorphism of T to an RMS if appropriate
+  if not (IsReesMatrixSemigroup(T) and IsWholeFamily(T)
+      and IsPermGroup(UnderlyingSemigroup(T))) then
+    invT := IsomorphismReesMatrixSemigroupOverPermGroup(T);
+    invT := InverseGeneralMapping(invT);
+    rmsT := Source(invT);
+  else
+    rmsT := T;
+  fi;
+
+  # Uses more specific method to find isomorphism between RMS/RZMS
+  iso := IsomorphismSemigroups(rmsS, rmsT);
+  if iso = fail then
+    return fail;
+  elif IsBound(isoS) and IsBound(invT) then
+    return CompositionMapping(invT, iso, isoS);
+  elif IsBound(isoS) then
+    return CompositionMapping(iso, isoS);
+  elif IsBound(invT) then
+    return CompositionMapping(invT, iso);
+  fi;
+  # If this method was selected, at least one of isoS and invT is bound
+end);
+
+InstallMethod(IsomorphismSemigroups, "for finite 0-simple semigroups",
+[IsZeroSimpleSemigroup and IsFinite, IsZeroSimpleSemigroup and IsFinite],
+function(S, T)
+  local isoS, rmsS, invT, rmsT, iso;
+
+  # Take an isomorphism of S to an RZMS if appropriate
+  if not (IsReesZeroMatrixSemigroup(S) and IsWholeFamily(S)
+      and IsPermGroup(UnderlyingSemigroup(S))) then
+    isoS := IsomorphismReesZeroMatrixSemigroupOverPermGroup(S);
+    rmsS := Range(isoS);
+  else
+    rmsS := S;
+  fi;
+  # Take an isomorphism of T to an RZMS if appropriate
+  if not (IsReesZeroMatrixSemigroup(T) and IsWholeFamily(T)
+      and IsPermGroup(UnderlyingSemigroup(T))) then
+    invT := IsomorphismReesZeroMatrixSemigroupOverPermGroup(T);
+    invT := InverseGeneralMapping(invT);
+    rmsT := Source(invT);
+  else
+    rmsT := T;
+  fi;
+
+  # Uses more specific method to find isomorphism between RMS/RZMS
+  iso := IsomorphismSemigroups(rmsS, rmsT);
+  if iso = fail then
+    return fail;
+  elif IsBound(isoS) and IsBound(invT) then
+    return CompositionMapping(invT, iso, isoS);
+  elif IsBound(isoS) then
+    return CompositionMapping(iso, isoS);
+  elif IsBound(invT) then
+    return CompositionMapping(invT, iso);
+  fi;
+  # If this method was selected, at least one of isoS and invT is bound
+end);
+
+InstallMethod(IsomorphismSemigroups, "for finite monogenic semigroups",
+[IsMonogenicSemigroup and IsFinite, IsMonogenicSemigroup and IsFinite],
+function(S, T)
+  local genS, genT, SS, TT;
+
+  # Monogenic semigroups are of the same size, are not groups, and have the
+  # same number of D-classes by this point, and so they are isomorphism
+  genS := Representative(MaximalDClasses(S)[1]);
+  genT := Representative(MaximalDClasses(T)[1]);
+  SS := Semigroup(genS);
+  TT := Semigroup(genT);
+  return MagmaIsomorphismByFunctionsNC(S, T,
+           x -> genT ^ Length(Factorization(SS, x)),
+           x -> genS ^ Length(Factorization(TT, x)));
+end);
+
+InstallMethod(IsomorphismSemigroups, "for semigroups",
+[IsSemigroup, IsSemigroup],
+function(S, T)
+  local pS, pT;
 
   if S = T then
-    return true;
-  elif Size(S) <> Size(T) or NrRClasses(S) <> NrRClasses(T) or
+    return MagmaIsomorphismByFunctionsNC(S, T, IdFunc, IdFunc);
+  elif IsFinite(S) <> IsFinite(T) then
+    return fail;
+  elif not IsFinite(S) then
+    TryNextMethod();
+  elif IsSimpleSemigroup(S) <> IsSimpleSemigroup(T) or
+      IsZeroSimpleSemigroup(S) <> IsZeroSimpleSemigroup(T) or
+      Size(S) <> Size(T) or NrRClasses(S) <> NrRClasses(T) or
       NrDClasses(S) <> NrDClasses(T) or NrLClasses(S) <> NrLClasses(T) or
       NrHClasses(S) <> NrHClasses(T) or NrIdempotents(S) <> NrIdempotents(T)
       then
-    return false;
-  elif Size(S) = 1 then
-    return true;
-  elif Size(S) < 32 or (HasSmallestMultiplicationTable(S)
-                        and HasSmallestMultiplicationTable(T)) then
-    return SmallestMultiplicationTable(S) = SmallestMultiplicationTable(T);
+    return fail;
   fi;
 
-  # compare the partial orders of the D-classes
+  if IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S)
+      or (IsMonogenicSemigroup(S) and IsMonogenicSemigroup(T)) then
+    return IsomorphismSemigroups(S, T);
+  fi;
+
+  # Compare the partial orders of the D-classes
   pS := DigraphReflexiveTransitiveClosure(Digraph(PartialOrderOfDClasses(S)));
   pT := DigraphReflexiveTransitiveClosure(Digraph(PartialOrderOfDClasses(T)));
-  iso := IsomorphismDigraphs(pS, pT);
-
-  if iso = fail then
-    return false;
+  if not IsIsomorphicDigraph(pS, pT) then
+    return fail;
   fi;
 
-  ErrorNoReturn("Semigroups: IsIsomorphicSemigroup:\n",
-                "not yet implemented,");
-
+  TryNextMethod();
 end);
