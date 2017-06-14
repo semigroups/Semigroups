@@ -2,6 +2,34 @@
 
 #### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.2 (released 16/06/2017)
+This is an minor release fixing some minor issues in the last
+release. 
+
+The following issues were resolved:
+
+* [Issue 330](https://github.com/gap-packages/Semigroups/issues/330)
+`InversesOfSemigroupElement` some times returned an incorrect 
+value, specifically when applied to the identity of a transformation monoid. 
+[[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+* [Issue 328](https://github.com/gap-packages/Semigroups/issues/328)
+when using Linux the package compiled but failed to link pthreads and so the
+kernel module failed to load in GAP. 
+[[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+There are improvements to the following:
+
+* some missing documentation was added. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+
+* the subsemigroup returned by `IdempotentGeneratedSubsemigroup` for Rees
+  (0-)matrix semigroup over a group has a smaller generating set than
+  previously, and can be found more quickly. [[Wilf A. Wilson](http://wilf.me)]
+
+* `IsomorphismSemigroups` is extended so that it can be applied to arbitrary
+  simple, 0-simple, or monogenic semigroups. [[Wilf A. Wilson](http://wilf.me)]
+
+
 ### Version 3.0.1 (released 03/06/2017)
 This is an extremely minor release fixing some minor issues in the last
 release. 
