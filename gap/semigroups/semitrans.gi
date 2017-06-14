@@ -800,7 +800,8 @@ InstallMethod(WreathProduct,
 "for a transformation semigroup and a permutation group",
 [IsPermGroup, IsTransformationSemigroup],
 function(G, S)
-  local maps, newmap, gensG, gensS, next, reps, orbs, gen1, n, i, s, x, m;
+  local maps, newmap, gensG, gensS, next, reps, orbs, gen1, n, i, s, x, m, y,
+        rimage;
   if not IsMonoidAsSemigroup(S) then
     ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
                     "the first argument <S> should be a monoid,");
@@ -812,9 +813,15 @@ function(G, S)
   gensG := List(gensG, x -> OnTuples([1 .. m], x));
   gensS := GeneratorsOfSemigroup(S);
 
-  orbs := ComponentRepsOfTransformationSemigroup(S);
-
+  orbs := List(ComponentsOfTransformationSemigroup(S), x -> Minimum(x));
   n := DegreeOfTransformationCollection(S);
+  rimage := [1 .. n];
+
+  for x in orbs do
+    for y in gensS do
+      RemoveSet(rimage, x ^ y);
+    od;
+  od;
 
   maps := []; # final generating set for the wreath product
 
@@ -835,6 +842,15 @@ function(G, S)
       Add(maps, Transformation(newmap));
     od;
   od;
+
+  for i in rimage do
+    newmap := OnTuples([1 .. m * n], maps[1]);
+    for x in gensG do
+      newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
+      Add(maps, Transformation(newmap));
+    od;
+  od;
+
   return Semigroup(maps);
 end);
 
