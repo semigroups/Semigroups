@@ -1662,8 +1662,7 @@ true
 gap> R := ReesMatrixSemigroup(Group([(1, 2)]), [[()]]);
 <Rees matrix semigroup 1x1 over Group([ (1,2) ])>
 gap> T := AsSemigroup(IsPartialPermSemigroup, R);
-<commutative inverse partial perm semigroup of size 2, rank 2 with 1 
- generator>
+<partial perm group of size 2, rank 2 with 1 generator>
 gap> Size(R) = Size(T);
 true
 gap> NrDClasses(R) = NrDClasses(T);
