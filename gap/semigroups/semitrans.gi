@@ -796,6 +796,48 @@ function(S, G)
   return Semigroup(maps);
 end);
 
+InstallMethod(WreathProduct,
+"for a transformation semigroup and a permutation group",
+[IsPermGroup, IsTransformationSemigroup],
+function(G, S)
+  local maps, newmap, gensG, gensS, next, reps, orbs, gen1, n, i, s, x, m;
+  if not IsMonoidAsSemigroup(S) then
+    ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
+                    "the first argument <S> should be a monoid,");
+  fi;
+
+  m := LargestMovedPoint(G);
+
+  gensG := ShallowCopy(GeneratorsOfGroup(G));
+  gensG := List(gensG, x -> OnTuples([1 .. m], x));
+  gensS := GeneratorsOfSemigroup(S);
+
+  orbs := ComponentRepsOfTransformationSemigroup(S);
+
+  n := DegreeOfTransformationCollection(S);
+
+  maps := []; # final generating set for the wreath product
+
+  # move copies of S as by the action induced by S
+  next := [1 .. m * n];
+  for s in gensS do
+    for i in [1 .. n] do
+      next{[1 .. m] + (i - 1) * m} := [1 .. m] + (i ^ s - 1) * m;
+    od;
+    Add(maps, Transformation(next));
+  od;
+
+  gen1 := gensS[1];
+  for i in orbs do
+    newmap := OnTuples([1 .. m * n], maps[1]);
+    for x in gensG do
+      newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
+      Add(maps, Transformation(newmap));
+    od;
+  od;
+  return Semigroup(maps);
+end);
+
 #############################################################################
 # ?. Isomorphisms
 #############################################################################
