@@ -555,6 +555,79 @@ function(S)
   return out;
 end);
 
+InstallMethod(IdempotentGeneratedSubsemigroup,
+"for a Rees matrix subsemigroup",
+[IsReesMatrixSubsemigroup],
+function(R)
+  local mat, I, J, nrrows, nrcols, min, max, gens, out, i;
+
+  if not IsFinite(R) or not IsReesMatrixSemigroup(R)
+      or not IsGroup(UnderlyingSemigroup(R)) then
+    TryNextMethod();
+  fi;
+
+  mat := Matrix(R);
+  I := Rows(R);
+  J := Columns(R);
+  nrrows := Length(I);
+  nrcols := Length(J);
+
+  min := Minimum(nrrows, nrcols);
+  max := Maximum(nrrows, nrcols);
+  gens := EmptyPlist(max);
+  for i in [1 .. min] do
+    Add(gens, RMSElement(R, I[i], mat[J[i]][I[i]] ^ -1, J[i]));
+  od;
+  for i in [min + 1 .. nrrows] do
+    Add(gens, RMSElement(R, I[i], mat[J[1]][I[i]] ^ -1, J[1]));
+  od;
+  for i in [min + 1 .. nrcols] do
+    Add(gens, RMSElement(R, I[1], mat[J[i]][I[1]] ^ -1, J[i]));
+  od;
+  out := Semigroup(gens);
+  SetIsRegularSemigroup(out, true);
+  SetIsIdempotentGenerated(out, true);
+  SetIsSimpleSemigroup(out, true);
+  return out;
+end);
+
+InstallMethod(IdempotentGeneratedSubsemigroup,
+"for a Rees 0-matrix subsemigroup",
+[IsReesZeroMatrixSubsemigroup],
+function(R)
+  local mat, gr, gens, I, J, nrrows, k, out, i, j;
+
+  if not IsFinite(R) or not IsReesZeroMatrixSemigroup(R)
+      or not IsGroup(UnderlyingSemigroup(R)) then
+    TryNextMethod();
+  fi;
+
+  mat := Matrix(R);
+  gr := RZMSDigraph(R);
+  gens := [];
+
+  if IsCompleteBipartiteDigraph(ReducedDigraph(gr)) or IsEmptyDigraph(gr) then
+    Add(gens, MultiplicativeZero(R));
+  fi;
+
+  gr := OutNeighbours(UndirectedSpanningForest(gr));
+  I := Rows(R);
+  J := Columns(R);
+  nrrows := Length(I);
+
+  for i in [1 .. nrrows] do
+    for j in gr[i] do
+      k := J[j - nrrows];
+      Add(gens, RMSElement(R, I[i], mat[k][I[i]] ^ -1, k));
+    od;
+  od;
+
+  out := Semigroup(gens);
+  SetIsRegularSemigroup(out, true);
+  SetIsIdempotentGenerated(out, true);
+  return out;
+end);
+
 InstallMethod(InjectionPrincipalFactor, "for a Green's D-class (Semigroups)",
 [IsGreensDClass],
 function(D)

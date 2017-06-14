@@ -281,7 +281,7 @@ gap> max := MaximalSubsemigroups(R1);
   <subsemigroup of 5x5 Rees 0-matrix semigroup with 10 generators>, 
   <subsemigroup of 5x5 Rees 0-matrix semigroup with 10 generators>, 
   <subsemigroup of 5x5 Rees 0-matrix semigroup with 10 generators>, 
-  <subsemigroup of 5x5 Rees 0-matrix semigroup with 11 generators> ]
+  <subsemigroup of 5x5 Rees 0-matrix semigroup with 10 generators> ]
 gap> NrMaximalSubsemigroups(R1);
 26
 
