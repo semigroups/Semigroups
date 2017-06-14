@@ -162,7 +162,7 @@ function(S, x)
       opts.(name) := LambdaOrbOpts(S).(name);
     od;
 
-    o := Orb(S, RhoOrbSeed(S), RhoAct(S), opts);
+    o := Orb(GeneratorsOfSemigroup(S), RhoOrbSeed(S), RhoAct(S), opts);
     Enumerate(o, infinity);
 
     grades := Grades(o);

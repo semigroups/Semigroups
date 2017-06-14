@@ -1613,6 +1613,13 @@ gap> EquivalenceClasses(cong);
 gap> NrCongruenceClasses(cong);
 3
 
+# Issue 300: problem with InverseOfSemigroupElement for an acting monoid
+gap> S := Monoid(Transformation([1, 2, 4, 4]), 
+>                Transformation([4, 2, 3, 4]),
+>                Transformation([1, 4, 3, 4]));;
+gap> IsEUnitaryInverseSemigroup(S);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
