@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/isorms.tst
-#Y  Copyright (C) 2015                                   James D. Mitchell
+#Y  Copyright (C) 2015-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -651,6 +651,80 @@ gap> iso := RZMSIsoByTriple(R, R, [(), auto, g_elms_list]);
 gap> BruteForceIsoCheck(iso);
 true
 
+#T# IsomorphismRees(Zero)MatrixSemigroupOverPermGroup
+gap> S := FullTransformationMonoid(3);;
+gap> IsomorphismReesMatrixSemigroupOverPermGroup(S);
+Error, Semigroups: IsomorphismReesMatrixSemigroupOverPermGroup: usage,
+the argument must be a finite simple semigroup,
+gap> IsomorphismReesZeroMatrixSemigroupOverPermGroup(S);
+Error, Semigroups: IsomorphismReesZeroMatrixSemigroupOverPermGroup: usage,
+the argument must be a finite 0-simple semigroup,
+gap> G := SymmetricGroup(2);;
+gap> R := ReesMatrixSemigroup(G, [[G.1, G.1]]);
+<Rees matrix semigroup 2x1 over Sym( [ 1 .. 2 ] )>
+gap> iso := IsomorphismReesMatrixSemigroupOverPermGroup(R);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> S := Semigroup(Representative(R));;
+gap> iso := IsomorphismReesMatrixSemigroupOverPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> G := AllSmallGroups(8)[3];;
+gap> R := ReesMatrixSemigroup(G, [[G.1, G.1]]);
+<Rees matrix semigroup 2x1 over <pc group of size 8 with 3 generators>>
+gap> iso := IsomorphismReesMatrixSemigroupOverPermGroup(R);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> S := Semigroup(Representative(R));;
+gap> iso := IsomorphismReesMatrixSemigroupOverPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> G := SymmetricGroup(2);;
+gap> R := ReesZeroMatrixSemigroup(G, [[(), 0, 0], [0, (), 0], [0, 0, ()]]);
+<Rees 0-matrix semigroup 3x3 over Sym( [ 1 .. 2 ] )>
+gap> iso := IsomorphismReesZeroMatrixSemigroupOverPermGroup(R);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> S := Semigroup(RMSElement(R, 2, (), 1), RMSElement(R, 1, (), 2));;
+gap> iso := IsomorphismReesZeroMatrixSemigroupOverPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> G := AllSmallGroups(8)[3];;
+gap> x := One(G);;
+gap> R := ReesZeroMatrixSemigroup(G, [[x, 0, 0], [0, x, 0], [0, 0, x]]);
+<Rees 0-matrix semigroup 3x3 over <pc group of size 8 with 3 generators>>
+gap> iso := IsomorphismReesZeroMatrixSemigroupOverPermGroup(R);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> S := Semigroup(RMSElement(R, 1, x, 2), RMSElement(R, 2, x, 1));;
+gap> iso := IsomorphismReesZeroMatrixSemigroupOverPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+gap> R := ReesZeroMatrixSemigroup(G, [[G.1, 0, 0], [0, G.1, 0], [0, 0, G.1]]);
+<Rees 0-matrix semigroup 3x3 over <pc group of size 8 with 3 generators>>
+gap> S := Semigroup(RMSElement(R, 1, x, 2), RMSElement(R, 2, x, 1));;
+gap> iso := IsomorphismReesZeroMatrixSemigroupOverPermGroup(S);;
+gap> BruteForceIsoCheck(iso);
+true
+gap> BruteForceInverseCheck(iso);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(A);
 gap> Unbind(BruteForceInverseCheck);
@@ -680,6 +754,8 @@ gap> Unbind(mat2);
 gap> Unbind(norm);
 gap> Unbind(x);
 gap> Unbind(y);
+gap> Unbind(BruteForceInverseCheck);
+gap> Unbind(BruteForceIsoCheck);
 
 #E#
 gap> SEMIGROUPS.StopTest();

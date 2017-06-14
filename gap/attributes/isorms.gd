@@ -35,3 +35,7 @@ DeclareOperation("ELM_LIST", [IsRMSIsoByTriple, IsPosInt]);
 DeclareOperation("ELM_LIST", [IsRZMSIsoByTriple, IsPosInt]);
 
 DeclareProperty("IsAutomorphismGroupOfRMSOrRZMS", IsGroup and IsFinite);
+
+DeclareAttribute("IsomorphismReesMatrixSemigroupOverPermGroup", IsSemigroup);
+DeclareAttribute("IsomorphismReesZeroMatrixSemigroupOverPermGroup",
+                 IsSemigroup);

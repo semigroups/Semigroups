@@ -1160,3 +1160,86 @@ InstallMethod(ViewObj, "for object in `IsRZMSIsoByTriple'",
 function(map)
   Print("(", map[1], ", ", map[2], ", ", map[3], ")");
 end);
+
+InstallMethod(IsomorphismReesMatrixSemigroupOverPermGroup,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  local iso, T, G, isoG, invG, s;
+
+  if not IsFinite(S) or not IsSimpleSemigroup(S) then
+    ErrorNoReturn("Semigroups: IsomorphismReesMatrixSemigroupOverPermGroup: ",
+                  "usage,\n",
+                  "the argument must be a finite simple semigroup,");
+  elif not IsReesMatrixSemigroup(S) then
+    return IsomorphismReesMatrixSemigroup(S);
+  elif not IsWholeFamily(S) then
+    iso := IsomorphismReesMatrixSemigroup(S);
+    T := Range(iso);
+    if IsPermGroup(UnderlyingSemigroup(T)) then
+      return iso;
+    fi;
+    return CompositionMapping(IsomorphismReesMatrixSemigroupOverPermGroup(T),
+                              iso);
+  fi;
+
+  G := UnderlyingSemigroup(S);
+  isoG := IsomorphismPermGroup(G);
+  invG := InverseGeneralMapping(isoG);
+  s := ReesMatrixSemigroup(Range(isoG),
+                          List(Matrix(S), x -> OnTuples(x, isoG)));
+  return MagmaIsomorphismByFunctionsNC(S, s,
+           x -> RMSElement(s, x![1], x![2] ^ isoG, x![3]),
+           x -> RMSElement(S, x![1], x![2] ^ invG, x![3]));
+end);
+
+InstallMethod(IsomorphismReesZeroMatrixSemigroupOverPermGroup,
+"for a semigroup",
+[IsSemigroup],
+function(S)
+  local iso, T, G, isoG, invG, s, func;
+
+  if not IsFinite(S) or not IsZeroSimpleSemigroup(S) then
+    ErrorNoReturn("Semigroups: IsomorphismReesZeroMatrixSemigroupOverPermGro",
+                  "up: usage,\n",
+                  "the argument must be a finite 0-simple semigroup,");
+  elif not IsReesZeroMatrixSemigroup(S) then
+    return IsomorphismReesZeroMatrixSemigroup(S);
+  elif not IsWholeFamily(S) then
+    iso := IsomorphismReesZeroMatrixSemigroup(S);
+    T := Range(iso);
+    if IsPermGroup(UnderlyingSemigroup(T)) then
+      return iso;
+    fi;
+    return CompositionMapping(
+             IsomorphismReesZeroMatrixSemigroupOverPermGroup(T), iso);
+  fi;
+
+  func := function(x, map)
+    if x = 0 then
+      return 0;
+    fi;
+    return x ^ map;
+  end;
+
+  G := UnderlyingSemigroup(S);
+  isoG := IsomorphismPermGroup(G);
+  invG := InverseGeneralMapping(isoG);
+  s := ReesZeroMatrixSemigroup(Range(isoG),
+                               List(Matrix(S),
+                                    x -> List(x, y -> func(y, isoG))));
+
+  return MagmaIsomorphismByFunctionsNC(S, s,
+           function(x)
+             if x![1] = 0 then
+               return MultiplicativeZero(s);
+             fi;
+             return RMSElement(s, x![1], func(x![2], isoG), x![3]);
+           end,
+           function(x)
+             if x![1] = 0 then
+               return MultiplicativeZero(S);
+             fi;
+             return RMSElement(S, x![1], func(x![2], invG), x![3]);
+           end);
+end);
