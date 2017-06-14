@@ -42,7 +42,7 @@ using libsemigroups::UF;
 
 // Prevent compilation if the DEBUG and NDEBUG flags are both set
 #if defined(DEBUG) && defined(NDEBUG)
-#error When compiling with -DDEBUG you must also use -UNDEBUG
+#error When compiling with -DDEBUG you must also use -UNDEBUG and vice versa
 #endif
 
 #ifdef DEBUG

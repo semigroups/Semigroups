@@ -22,15 +22,15 @@ semigroups_la_SOURCES += src/libsemigroups/src/rwse.cc
 semigroups_la_SOURCES += src/libsemigroups/src/semigroups.cc
 semigroups_la_SOURCES += src/libsemigroups/src/uf.cc
 
-semigroups_la_CXXFLAGS = -std=c++11 -O3 -g -DNDEBUG
+semigroups_la_CXXFLAGS = -std=c++11 -O3 -g 
 
-semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
+semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DNDEBUG -DCONFIG_H
 # Note that the latter is only for GAP 4.4.12
 semigroups_la_LDFLAGS = -module -avoid-version
+
 if SYS_IS_CYGWIN
 semigroups_la_LDFLAGS += -no-undefined -version-info 0:0:0 -Wl,$(GAPROOT)/bin/$(GAPARCH)/gap.dll
 endif
-
 all-local: semigroups.la
 	$(mkdir_p) $(top_srcdir)/$(BINARCHDIR)
 if SYS_IS_CYGWIN

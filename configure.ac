@@ -50,6 +50,12 @@ dnl ##
 AC_CHECK_SIZEOF([void **])
 
 dnl ##
+dnl ## Check for pthread, this seems to be required to compile with GCC
+dnl ##
+AX_PTHREAD(,[AC_MSG_ERROR([pthread is required])])
+AC_CHECK_LIB([pthread], [pthread_create])
+
+dnl ##
 dnl ## Detect Windows resp. Cygwin
 dnl ##
 case $host_os in
