@@ -71,6 +71,26 @@
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="SemigroupsTestExtreme">
+  <ManSection>
+    <Func Name = "SemigroupsTestExtreme" Arg = ""/>
+    <Returns>A list indicating which tests passed and failed and the time take
+      to run each file.</Returns>
+    <Description>
+      This function should be called with no argument to run some long-running
+      tests, which could be used to benchmark &Semigroups; or test your
+      hardware. These tests should take no more than around half an hour to
+      complete.  To quickly test that &Semigroups; is installed correctly use
+      <Ref Func = "SemigroupsTestInstall"/>, or to test all aspects of the
+      package use <Ref Func = "SemigroupsTestStandard"/>.<P/>
+
+      Each test file is run twice, once when the methods for semigroups
+      satisfying <Ref Filt="IsActingSemigroup"/> are enabled and once when they
+      are disabled.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="InfoSemigroups">
   <ManSection>
     <InfoClass Name = "InfoSemigroups"/>
