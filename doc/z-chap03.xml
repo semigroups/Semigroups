@@ -274,6 +274,7 @@
     <#Include Label = "DegreeOfBipartition">
     <#Include Label = "RankOfBipartition">
     <#Include Label = "ExtRepOfObjBipart">
+    <#Include Label = "IntRepOfBipartition">
     <#Include Label = "RightBlocks">
     <#Include Label = "LeftBlocks">
     <#Include Label = "NrLeftBlocks">
