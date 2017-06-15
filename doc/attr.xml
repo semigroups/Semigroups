@@ -783,13 +783,21 @@ MappingByFunction( <Green's D-class: <bipartition: [ 1, 5, -2, -4 ],
 <ManSection>
   <Attr Name="IsomorphismReesMatrixSemigroup" Arg="S" Label="for a semigroup"/>
   <Attr Name="IsomorphismReesZeroMatrixSemigroup" Arg="S"/>
+  <Attr Name="IsomorphismReesMatrixSemigroupOverPermGroup" Arg="S"/>
+  <Attr Name="IsomorphismReesZeroMatrixSemigroupOverPermGroup" Arg="S"/>
   <Returns>An isomorphism.</Returns>
   <Description>
     If the semigroup <A>S</A> is finite and simple, then
     <C>IsomorphismReesMatrixSemigroup</C> returns an isomorphism to a Rees
-    matrix semigroup.  If <A>S</A> is finite and 0-simple, then
+    matrix semigroup over some group (usually a permutation group), and
+    <C>IsomorphismReesMatrixSemigroupOverPermGroup</C> returns an isomorphism to
+    a Rees matrix semigroup over a permutation group.  <P/>
+    
+    If <A>S</A> is finite and 0-simple, then
     <C>IsomorphismReesZeroMatrixSemigroup</C> returns an isomorphism to a Rees
-    0-matrix semigroup.<P/>
+    0-matrix semigroup over some group (usually a permutation group), and
+    <C>IsomorphismReesZeroMatrixSemigroupOverPermGroup</C> returns an
+    isomorphism to a Rees 0-matrix semigroup over a permutation group. <P/>
 
     See also <Ref Attr="InjectionPrincipalFactor"/>.
 

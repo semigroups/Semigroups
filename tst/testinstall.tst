@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  testinstall.tst
-#Y  Copyright (C) 2011-15                               James D. Mitchell
+#Y  Copyright (C) 2011-17                               James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -731,6 +731,9 @@ gap> T := Semigroup(Transformation([1, 2, 3, 1]),
 >                   Transformation([2, 3, 3, 3]),
 >                   Transformation([3, 2, 3, 3]));;
 gap> IsIsomorphicSemigroup(S, T);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `IsomorphismSemigroups' on 2 arguments
+gap> SmallestMultiplicationTable(S) = SmallestMultiplicationTable(T);
 true
 
 #T# TestInstall45: Issue 97
@@ -1619,6 +1622,33 @@ gap> S := Monoid(Transformation([1, 2, 4, 4]),
 >                Transformation([1, 4, 3, 4]));;
 gap> IsEUnitaryInverseSemigroup(S);
 true
+
+#T# Issue 167: IsomorphismSemigroups, for an RMS where an arg is not WholeFamily
+gap> R := ReesMatrixSemigroup(Group(()), [[(), ()], [(), ()]]);;
+gap> W := Semigroup(RMSElement(R, 2, (), 2));;
+gap> S := ReesMatrixSemigroup(Group(()), [[()]]);;
+gap> IsReesMatrixSemigroup(W);
+true
+gap> IsomorphismSemigroups(S, S);
+((), IdentityMapping( Group( [ () ] ) ), [ (), () ])
+gap> IsomorphismSemigroups(W, W);
+CompositionMapping( MappingByFunction( <Rees matrix semigroup 1x1 over 
+  Group(())>, <Rees matrix semigroup 1x1 over Group(())>
+ , function( v ) ... end, function( u ) ... end ), CompositionMapping( 
+((), IdentityMapping( Group( [ () ] ) ), [ (), () ]), MappingByFunction( 
+<Rees matrix semigroup 1x1 over Group(())>, <Rees matrix semigroup 1x1 over 
+  Group(())>, function( u ) ... end, function( v ) ... end ) ) )
+gap> IsomorphismSemigroups(S, W);
+CompositionMapping( MappingByFunction( <Rees matrix semigroup 1x1 over 
+  Group(())>, <Rees matrix semigroup 1x1 over Group(())>
+ , function( v ) ... end, function( u ) ... end ),
+ ((), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [  ], 
+[  ] ), [ (), () ]) )
+gap> IsomorphismSemigroups(W, S);
+CompositionMapping( ((), GroupHomomorphismByImages( Group( [ () ] ), Group( 
+[ () ] ), [  ], [  ] ), [ (), () ]), MappingByFunction( 
+<Rees matrix semigroup 1x1 over Group(())>, <Rees matrix semigroup 1x1 over 
+  Group(())>, function( u ) ... end, function( v ) ... end ) )
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
