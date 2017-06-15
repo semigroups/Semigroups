@@ -40,5 +40,6 @@ DeclareOperation("EndomorphismMonoid", [IsDigraph, IsHomogeneousList]);
 
 DeclareOperation("DirectProductOp", [IsList, IsSemigroup]);
 
-DeclareOperation("WreathProduct", 
-                 [IsMultiplicativeElementCollection, IsMultiplicativeElementCollection]);
+DeclareOperation("WreathProduct",
+                 [IsMultiplicativeElementCollection,
+                  IsMultiplicativeElementCollection]);
