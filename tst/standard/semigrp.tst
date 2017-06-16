@@ -906,7 +906,7 @@ gap> gens :=
 >                     [Z(5) ^ 0, 0 * Z(5)]]),
 >  Matrix(GF(5 ^ 2), [[Z(5 ^ 2) ^ 23, Z(5 ^ 2) ^ 5],
 >                     [Z(5 ^ 2) ^ 20, Z(5 ^ 2) ^ 20]])];;
-gap> S := Semigroup(gens[1]);
+gap> S := Semigroup(gens[1], rec(acting := true));
 <commutative semigroup of 2x2 matrices over GF(5^2) with 1 generator>
 gap> Size(S);
 24
