@@ -1,8 +1,7 @@
 ### README - Semigroups package for GAP
 
 #### Copyright (C) 2011-17 James D. Mitchell et al. <br/>Licensing information is available in the LICENSE file.
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.53112.svg)](http://dx.doi.org/10.5281/zenodo.53112)
-  
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.592893.svg)](https://doi.org/10.5281/zenodo.592893)[![Build Status](https://travis-ci.org/gap-packages/Semigroups.svg?branch=stable-3.0)](https://travis-ci.org/gap-packages/Semigroups)
 
 ## Getting Semigroups
 
