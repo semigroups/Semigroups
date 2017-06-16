@@ -124,7 +124,7 @@ Persons := [
     IsMaintainer  := false,
     Email         := "jj252@st-and.ac.uk",
     PostalAddress := _STANDREWS,
-    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~julius/",
+    WWWHome       := "https://www-circa.mcs.st-and.ac.uk/~julius/",
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
@@ -159,11 +159,10 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
-    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~mct25/",
+    WWWHome       := "https://www-circa.mcs.st-and.ac.uk/~mct25/",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
-    Institution   := "University of St Andrews",
-    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~mct25/"),
+    Institution   := "University of St Andrews"),
 
   rec(
     LastName      := "Wilson",
