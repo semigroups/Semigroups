@@ -2827,7 +2827,7 @@ true
 #T# Tests wreath product of a monoid not satisfying IsTransformationMonoid
 gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]));;
 gap> C := Group((1, 2));;
-gap> W := WreathProduct(S,C);;
+gap> W := WreathProduct(S, C);;
 gap> Size(W) = 2;
 true
 
