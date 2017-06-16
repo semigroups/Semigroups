@@ -52,7 +52,7 @@ version of {{site.data.package.name}}:
          Author = { Mitchell, J. D. and others },
          Month  = { {{site.data.package.month}} },
          Title  = { Semigroups - GAP package, Version {{site.data.package.version}} },
-         Doi    = { 10.5281/zenodo.53112 },
-         Url    = { http://dx.doi.org/10.5281/zenodo.53112 },
+         Doi    = { 10.5281/zenodo.592893 },
+         Url    = { http://dx.doi.org/10.5281/zenodo.592893 },
          Year   = { {{site.data.package.year}} }
 }</pre>
