@@ -44,7 +44,7 @@ InstallMethod(IsGeneratorsOfActingSemigroup,
 function(coll)
   local R;
   R := ReesMatrixSemigroupOfFamily(FamilyObj(Representative(coll)));
-  return IsGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
+  return IsPermGroup(UnderlyingSemigroup(R)) and IsRegularSemigroup(R);
 end);
 
 # FIXME with the below uncommented many tests fail
