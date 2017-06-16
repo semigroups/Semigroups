@@ -12,21 +12,31 @@
   [29X[2XIsIsomorphicSemigroup[102X( [3XS[103X, [3XT[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YThis  operation  attempts  to  determine  if  the  semigroups  [3XS[103X  and  [3XT[103X are
-  isomorphic, it returns [9Xtrue[109X if they are and [9Xfalse[109X if they are not.[133X
+  [33X[0;0YIf [3XS[103X and [3XT[103X are semigroups, then this operation attempts to determine whether
+  [3XS[103X    and    [3XT[103X   are   isomorphic   semigroups   by   using   the   operation
+  [2XIsomorphismSemigroups[102X  ([14X17.1-3[114X).  If  [10XIsomorphismSemigroups([3XS[103X[10X, [3XT[103X[10X)[110X returns an
+  isomorphism,   then  [10XIsIsomorphicSemigroup([3XS[103X[10X,  [3XT[103X[10X)[110X  returns  [9Xtrue[109X,  while  if
+  [10XIsomorphismSemigroups([3XS[103X[10X,  [3XT[103X[10X)[110X  returns [9Xfail[109X, then [10XIsIsomorphicSemigroup([3XS[103X[10X, [3XT[103X[10X)[110X
+  returns  [9Xfalse[109X.  Note that in some cases, at present, there is no method for
+  determining  whether [3XS[103X is isomorphic to [3XT[103X, even if it is obvious to the user
+  whether  or  not  [3XS[103X and [3XT[103X are isomorphic. There are plans to improve this in
+  the future.[133X
   
-  [33X[0;0YAt  present  this only works for rather small semigroups, with approximately
-  50 elements or less.[133X
+  [33X[0;0YIf  the  size  of  [3XS[103X  and [3XT[103X is rather small — with approximately 50 or fewer
+  elements  —  then it is possible to calculate whether [3XS[103X and [3XT[103X are isomorphic
+  by  using  [2XSmallestMultiplicationTable[102X  ([14X17.1-2[114X),  but this is not currently
+  done  by [10XIsIsomorphicSemigroup[110X. In particular, [3XS[103X and [3XT[103X are isomorphic if and
+  only if [10XSmallestMultiplicationTable([3XS[103X[10X) = SmallestMultiplicationTable([3XT[103X[10X)[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1, 2, 4], [3, 5, 1]),[127X[104X
-    [4X[25X>[125X [27X                  PartialPerm([1, 3, 5], [4, 3, 2]));;[127X[104X
-    [4X[25Xgap>[125X [27XSize(S);[127X[104X
-    [4X[28X11[128X[104X
-    [4X[25Xgap>[125X [27XT := SemigroupByMultiplicationTable([127X[104X
-    [4X[25X>[125X [27XSmallestMultiplicationTable(S));;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1, 2, 4], [1, 3, 5]),[127X[104X
+    [4X[25X>[125X [27X                  PartialPerm([1, 3, 5], [1, 2, 4]));;[127X[104X
+    [4X[25Xgap>[125X [27XT := AsSemigroup(IsTransformationSemigroup, S);;[127X[104X
     [4X[25Xgap>[125X [27XIsIsomorphicSemigroup(S, T);[127X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicSemigroup(FullTransformationMonoid(4),[127X[104X
+    [4X[25X>[125X [27XPartitionMonoid(4));[127X[104X
+    [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
   [1X17.1-2 SmallestMultiplicationTable[101X
@@ -64,15 +74,33 @@
   [1X17.1-3 IsomorphismSemigroups[101X
   
   [29X[2XIsomorphismSemigroups[102X( [3XS[103X, [3XT[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10YAn isomorphism or [9Xfail[109X.[133X
+  [6XReturns:[106X  [33X[0;10YAn isomorphism, or [9Xfail[109X.[133X
   
-  [33X[0;0YThis  operation  returns  an  isomorphism  from  the  semigroup [3XS[103X and to the
-  semigroup [3XT[103X if it exists, and it returns [9Xfail[109X if it does not.[133X
+  [33X[0;0YThis  operation  attempts to find an isomorphism from the semigroup [3XS[103X to the
+  semigroup  [3XT[103X. If it finds one, then it is returned, and if not, then [9Xfail[109X is
+  returned.[133X
   
-  [33X[0;0YAt  present  this  only  works  for Rees matrix semigroups and Rees 0-matrix
+  [33X[0;0YFor  many types of semigroup, [10XIsomorphismSemigroups[110X is not able to determine
+  whether  or  not [3XS[103X and [3XT[103X are isomorphic, and so this operation may result in
+  an "Error, no method found". [10XIsomorphismSemigroups[110X may be able deduce that [3XS[103X
+  and  [3XT[103X  are not isomorphic by finding that some of their semigroup-theoretic
+  properties  differ;  however  it  is  harder to construct an isomorphism for
+  semigroups that are isomorphic.[133X
+  
+  [33X[0;0YAt present, [10XIsomorphismSemigroups[110X is only able to return an isomorphism when
+  [3XS[103X and [3XT[103X are finite simple, 0-simple, or monogenic semigroups, or when [10X[3XS[103X[10X = [3XT[103X[10X[110X.
+  See   [2XIsSimpleSemigroup[102X   ([14X14.1-21[114X),  [2XIsZeroSimpleSemigroup[102X  ([14X14.1-27[114X),  and
+  [2XIsMonogenicSemigroup[102X  ([14X14.1-10[114X)  for  more  information about these types of
   semigroups.[133X
   
   [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := RectangularBand(IsTransformationSemigroup, 4, 5);[127X[104X
+    [4X[28X<regular transformation semigroup of size 20, degree 9 with 5 [128X[104X
+    [4X[28X generators>[128X[104X
+    [4X[25Xgap>[125X [27XT := RectangularBand(IsBipartitionSemigroup, 4, 5);[127X[104X
+    [4X[28X<regular bipartition semigroup of size 20, degree 3 with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismSemigroups(S, T) <> fail;[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XD := DClass(FullTransformationMonoid(5),[127X[104X
     [4X[25X>[125X [27X               Transformation([1, 2, 3, 4, 1]));;[127X[104X
     [4X[25Xgap>[125X [27XS := PrincipalFactor(D);;[127X[104X
@@ -81,8 +109,7 @@
     [4X[25Xgap>[125X [27XS;[127X[104X
     [4X[28X<Rees 0-matrix semigroup 10x5 over S4>[128X[104X
     [4X[25Xgap>[125X [27XD := DClass(PartitionMonoid(5),[127X[104X
-    [4X[25X>[125X [27X               Bipartition([[1], [2, -2], [3, -3],[127X[104X
-    [4X[25X>[125X [27X                            [4, -4], [5, -5], [-1]]));;[127X[104X
+    [4X[25X>[125X [27XBipartition([[1], [2, -2], [3, -3], [4, -4], [5, -5], [-1]]));;[127X[104X
     [4X[25Xgap>[125X [27XT := PrincipalFactor(D);;[127X[104X
     [4X[25Xgap>[125X [27XStructureDescription(UnderlyingSemigroup(T));[127X[104X
     [4X[28X"S4"[128X[104X

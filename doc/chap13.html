@@ -154,6 +154,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7EA1B28785B9D38C">13.14-1 RZMSDigraph</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X79B062917AB34542">13.14-2 RZMSConnectedComponents</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap13.html#X82CCC1A781650878">13.15 <span class="Heading">
+      Changing the representation of a semigroup
+    </span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7E2ECC577A1CF7CA">13.15-1 IsomorphismReesMatrixSemigroup</a></span>
+</div></div>
 </div>
 
 <h3>13 <span class="Heading">
@@ -1795,6 +1802,41 @@ true</pre></div>
 &lt;Rees 0-matrix semigroup 5x4 over Sym( [ 1 .. 5 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RZMSConnectedComponents(R);</span>
 [ [ [ 1, 3, 4 ], [ 1, 3 ] ], [ [ 2, 5 ], [ 2, 4 ] ] ]</pre></div>
+
+<p><a id="X82CCC1A781650878" name="X82CCC1A781650878"></a></p>
+
+<h4>13.15 <span class="Heading">
+      Changing the representation of a semigroup
+    </span></h4>
+
+<p><a id="X7E2ECC577A1CF7CA" name="X7E2ECC577A1CF7CA"></a></p>
+
+<h5>13.15-1 IsomorphismReesMatrixSemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesZeroMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroupOverPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesZeroMatrixSemigroupOverPermGroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: An isomorphism.</p>
+
+<p>If the semigroup <var class="Arg">S</var> is finite and simple, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an isomorphism to a Rees matrix semigroup over some group (usually a permutation group), and <code class="code">IsomorphismReesMatrixSemigroupOverPermGroup</code> returns an isomorphism to a Rees matrix semigroup over a permutation group.</p>
+
+<p>If <var class="Arg">S</var> is finite and 0-simple, then <code class="code">IsomorphismReesZeroMatrixSemigroup</code> returns an isomorphism to a Rees 0-matrix semigroup over some group (usually a permutation group), and <code class="code">IsomorphismReesZeroMatrixSemigroupOverPermGroup</code> returns an isomorphism to a Rees 0-matrix semigroup over a permutation group.</p>
+
+<p>See also <code class="func">InjectionPrincipalFactor</code> (<a href="chap12.html#X7EBB4F1981CC2AE9"><span class="RefLink">12.4-7</span></a>).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([1]));</span>
+&lt;trivial partial perm group of rank 1 with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismReesMatrixSemigroup(S);</span>
+MappingByFunction( &lt;trivial partial perm group of rank 1 with
+  1 generator&gt;, &lt;Rees matrix semigroup 1x1 over Group(())&gt;
+, function( x ) ... end, function( x ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([1]), PartialPerm([]));</span>
+&lt;partial perm monoid of rank 1 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Range(IsomorphismReesZeroMatrixSemigroup(S));</span>
+&lt;Rees 0-matrix semigroup 1x1 over Group(())&gt;</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap12.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap14.html">[Next Chapter]</a>&nbsp;  </div>

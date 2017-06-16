@@ -1781,3 +1781,40 @@
     [4X[28X[ [ [ 1, 3, 4 ], [ 1, 3 ] ], [ [ 2, 5 ], [ 2, 4 ] ] ][128X[104X
   [4X[32X[104X
   
+  
+  [1X13.15 [33X[0;0YChanging the representation of a semigroup[133X[101X
+  
+  [1X13.15-1 IsomorphismReesMatrixSemigroup[101X
+  
+  [29X[2XIsomorphismReesMatrixSemigroup[102X( [3XS[103X ) [32X attribute
+  [29X[2XIsomorphismReesZeroMatrixSemigroup[102X( [3XS[103X ) [32X attribute
+  [29X[2XIsomorphismReesMatrixSemigroupOverPermGroup[102X( [3XS[103X ) [32X attribute
+  [29X[2XIsomorphismReesZeroMatrixSemigroupOverPermGroup[102X( [3XS[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
+  
+  [33X[0;0YIf the semigroup [3XS[103X is finite and simple, then [10XIsomorphismReesMatrixSemigroup[110X
+  returns an isomorphism to a Rees matrix semigroup over some group (usually a
+  permutation  group), and [10XIsomorphismReesMatrixSemigroupOverPermGroup[110X returns
+  an isomorphism to a Rees matrix semigroup over a permutation group.[133X
+  
+  [33X[0;0YIf [3XS[103X is finite and 0-simple, then [10XIsomorphismReesZeroMatrixSemigroup[110X returns
+  an  isomorphism  to  a  Rees  0-matrix  semigroup over some group (usually a
+  permutation   group),   and  [10XIsomorphismReesZeroMatrixSemigroupOverPermGroup[110X
+  returns  an  isomorphism  to  a  Rees  0-matrix semigroup over a permutation
+  group.[133X
+  
+  [33X[0;0YSee also [2XInjectionPrincipalFactor[102X ([14X12.4-7[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1]));[127X[104X
+    [4X[28X<trivial partial perm group of rank 1 with 1 generator>[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismReesMatrixSemigroup(S);[127X[104X
+    [4X[28XMappingByFunction( <trivial partial perm group of rank 1 with[128X[104X
+    [4X[28X  1 generator>, <Rees matrix semigroup 1x1 over Group(())>[128X[104X
+    [4X[28X, function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(PartialPerm([1]), PartialPerm([]));[127X[104X
+    [4X[28X<partial perm monoid of rank 1 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XRange(IsomorphismReesZeroMatrixSemigroup(S));[127X[104X
+    [4X[28X<Rees 0-matrix semigroup 1x1 over Group(())>[128X[104X
+  [4X[32X[104X
+  

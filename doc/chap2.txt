@@ -26,19 +26,19 @@
   
   [30X    [33X[0;6Yensure that the [5Xgenss[105X package version 1.5 or higher is available.[133X
   
-  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-3.0.1.tar.gz[111X  from  the
+  [30X    [33X[0;6Ydownload   the   package   archive  [11Xsemigroups-3.0.2.tar.gz[111X  from  the
         Semigroups                       package                       webpage
         ([7Xhttps://gap-packages.github.io/Semigroups[107X).[133X
   
   [30X    [33X[0;6Yunzip  and  untar  the  file,  this  should  create a directory called
-        [11Xsemigroups-3.0.1[111X.[133X
+        [11Xsemigroups-3.0.2[111X.[133X
   
   [30X    [33X[0;6Ylocate  the  [11Xpkg[111X  directory  of your [5XGAP[105X directory, which contains the
-        directories  [11Xlib[111X,  [11Xdoc[111X  and so on. Move the directory [11Xsemigroups-3.0.1[111X
+        directories  [11Xlib[111X,  [11Xdoc[111X  and so on. Move the directory [11Xsemigroups-3.0.2[111X
         into the [11Xpkg[111X directory.[133X
   
   [30X    [33X[0;6Yfrom version 3.0.0, it is necessary to compile the [5XSemigroups[105X package.
-        Inside the [11Xpkg/semigroups-3.0.1[111X directory, type[133X
+        Inside the [11Xpkg/semigroups-3.0.2[111X directory, type[133X
   
   [4X      [32X[104X
           [4X./configure[104X
@@ -78,7 +78,7 @@
   relating  to  the  enumeration of certain types of semigroups, and it is not
   possible to use the [5XSemigroups[105X package without compiling it.[133X
   
-  [33X[0;0YTo  compile  the kernel component inside the [11Xpkg/semigroups-3.0.1[111X directory,
+  [33X[0;0YTo  compile  the kernel component inside the [11Xpkg/semigroups-3.0.2[111X directory,
   type[133X
   
   [4X[32X[104X
@@ -123,11 +123,11 @@
   [1X2.5 [33X[0;0YTesting your installation[133X[101X
   
   [33X[0;0YIn  this  section  we  describe  how  to  test that [5XSemigroups[105X is working as
-  intended.   To   test   that   [5XSemigroups[105X   is   installed   correctly   use
-  [2XSemigroupsTestInstall[102X    ([14X2.5-1[114X)   or   for   more   extensive   tests   use
-  [2XSemigroupsTestStandard[102X  ([14X2.5-2[114X). Please note that it will take a few seconds
-  for  [2XSemigroupsTestInstall[102X ([14X2.5-1[114X) to finish and it may take several minutes
-  for [2XSemigroupsTestStandard[102X ([14X2.5-2[114X) to finish.[133X
+  intended.  To  quickly  test  that  [5XSemigroups[105X  is  installed  correctly use
+  [2XSemigroupsTestInstall[102X  ([14X2.5-1[114X)  -  this  will  take  a few seconds. For more
+  extensive  tests  use [2XSemigroupsTestStandard[102X ([14X2.5-2[114X) - this may take several
+  minutes.  Finally,  for lengthy benchmarking tests use [2XSemigroupsTestExtreme[102X
+  ([14X2.5-3[114X) - this may take more than half an hour.[133X
   
   [33X[0;0YIf  something goes wrong, then please review the instructions in Section [14X2.1[114X
   and  ensure  that  [5XSemigroups[105X  has  been properly installed. If you continue
@@ -158,6 +158,22 @@
   
   [33X[0;0YEach  test  file  is  run twice, once when the methods for [2XIsActingSemigroup[102X
   ([14X6.1-3[114X) are enabled and once when they are disabled.[133X
+  
+  [1X2.5-3 SemigroupsTestExtreme[101X
+  
+  [29X[2XSemigroupsTestExtreme[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10YA  list indicating which tests passed and failed and the time take
+            to run each file.[133X
+  
+  [33X[0;0YThis  function  should  be  called with no argument to run some long-running
+  tests,  which  could  be used to benchmark [5XSemigroups[105X or test your hardware.
+  These  tests  should  take  no more than around half an hour to complete. To
+  quickly    test    that    [5XSemigroups[105X    is    installed    correctly    use
+  [2XSemigroupsTestInstall[102X  ([14X2.5-1[114X),  or  to  test all aspects of the package use
+  [2XSemigroupsTestStandard[102X ([14X2.5-2[114X).[133X
+  
+  [33X[0;0YEach test file is run twice, once when the methods for semigroups satisfying
+  [2XIsActingSemigroup[102X ([14X6.1-3[114X) are enabled and once when they are disabled.[133X
   
   
   [1X2.6 [33X[0;0YMore information during a computation[133X[101X

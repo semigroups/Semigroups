@@ -568,7 +568,7 @@ false</pre></div>
 
 <p>If the PBR <var class="Arg">x</var> defines a transformation, then <code class="code">IsTransformationPBR</code> returns <code class="keyw">true</code>, and if not, then <code class="keyw">false</code> is returned.</p>
 
-<p>A PBR <var class="Arg">x</var> defines a transformation if and only if it satisfies <code class="func">IsBipartitionPBR</code> (<a href="chap4.html#X81EC86397E098BC8"><span class="RefLink">4.5-8</span></a>) and when it is considered as a bipartition it satisfies <code class="func">IsTransBipartition</code> (<a href="chap3.html#X79C556827A578509"><span class="RefLink">3.5-11</span></a>).</p>
+<p>A PBR <var class="Arg">x</var> defines a transformation if and only if it satisfies <code class="func">IsBipartitionPBR</code> (<a href="chap4.html#X81EC86397E098BC8"><span class="RefLink">4.5-8</span></a>) and when it is considered as a bipartition it satisfies <code class="func">IsTransBipartition</code> (<a href="chap3.html#X79C556827A578509"><span class="RefLink">3.5-12</span></a>).</p>
 
 <p>With this definition, <code class="func">AsPBR</code> (<a href="chap4.html#X81CBBE6080439596"><span class="RefLink">4.3-1</span></a>) and <code class="func">AsTransformation</code> (<a href="chap4.html#X8407F516825A514A"><span class="RefLink">4.3-2</span></a>) define mutually inverse isomorphisms from the full transformation monoid of degree <code class="code">n</code> to the submonoid of the full PBR monoid of degree <code class="code">n</code> consisting of all the elements satisfying <code class="code">IsTransformationPBR</code>.</p>
 
@@ -622,7 +622,7 @@ true
 
 <p>If the PBR <var class="Arg">x</var> defines a partial permutation, then <code class="code">IsPartialPermPBR</code> returns <code class="keyw">true</code>, and if not, then <code class="keyw">false</code> is returned.</p>
 
-<p>A PBR <var class="Arg">x</var> defines a partial perm if and only if it satisfies <code class="func">IsBipartitionPBR</code> (<a href="chap4.html#X81EC86397E098BC8"><span class="RefLink">4.5-8</span></a>) and and when it is considered as a bipartition it satisfies <code class="func">IsPartialPermBipartition</code> (<a href="chap3.html#X87C771D37B1FE95C"><span class="RefLink">3.5-14</span></a>).</p>
+<p>A PBR <var class="Arg">x</var> defines a partial perm if and only if it satisfies <code class="func">IsBipartitionPBR</code> (<a href="chap4.html#X81EC86397E098BC8"><span class="RefLink">4.5-8</span></a>) and and when it is considered as a bipartition it satisfies <code class="func">IsPartialPermBipartition</code> (<a href="chap3.html#X87C771D37B1FE95C"><span class="RefLink">3.5-15</span></a>).</p>
 
 <p>With this definition, <code class="func">AsPBR</code> (<a href="chap4.html#X81CBBE6080439596"><span class="RefLink">4.3-1</span></a>) and <code class="func">AsPartialPerm</code> (<a href="chap4.html#X795B1C16819905E8"><span class="RefLink">4.3-3</span></a>) define mutually inverse isomorphisms from the symmetric inverse monoid of degree <code class="code">n</code> to the submonoid of the full PBR monoid of degree <code class="code">n</code> consisting of all the elements satisfying <code class="code">IsPartialPermPBR</code>.</p>
 
@@ -648,7 +648,7 @@ true
 
 <p>If the PBR <var class="Arg">x</var> defines a permutation, then <code class="code">IsPermPBR</code> returns <code class="keyw">true</code>, and if not, then <code class="keyw">false</code> is returned.</p>
 
-<p>A PBR <var class="Arg">x</var> defines a permutation if and only if it satisfies <code class="func">IsBipartitionPBR</code> (<a href="chap4.html#X81EC86397E098BC8"><span class="RefLink">4.5-8</span></a>) and and when it is considered as a bipartition it satisfies <code class="func">IsPermBipartition</code> (<a href="chap3.html#X8031B53E7D0ECCFA"><span class="RefLink">3.5-13</span></a>).</p>
+<p>A PBR <var class="Arg">x</var> defines a permutation if and only if it satisfies <code class="func">IsBipartitionPBR</code> (<a href="chap4.html#X81EC86397E098BC8"><span class="RefLink">4.5-8</span></a>) and and when it is considered as a bipartition it satisfies <code class="func">IsPermBipartition</code> (<a href="chap3.html#X8031B53E7D0ECCFA"><span class="RefLink">3.5-14</span></a>).</p>
 
 <p>With this definition, <code class="func">AsPBR</code> (<a href="chap4.html#X81CBBE6080439596"><span class="RefLink">4.3-1</span></a>) and <code class="func">AsPermutation</code> (<a href="chap4.html#X86786B297FBCD064"><span class="RefLink">4.3-4</span></a>) define mutually inverse isomorphisms from the symmetric group of degree <code class="code">n</code> to the subgroup of the full PBR monoid of degree <code class="code">n</code> consisting of all the elements satisfying <code class="code">IsPermPBR</code> (i.e. the <code class="func">GroupOfUnits</code> (<a href="chap13.html#X811AEDD88280C277"><span class="RefLink">13.8-1</span></a>) of the full PBR monoid of degree <code class="code">n</code>).</p>
 

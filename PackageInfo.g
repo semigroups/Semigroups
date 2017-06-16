@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.0.1">
+##  <!ENTITY VERSION "3.0.2">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.7.1">
 ##  <!ENTITY ORBVERS "4.7.5">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.0.1">
+##  <!ENTITY ARCHIVENAME "semigroups-3.0.2">
 ##  <!ENTITY COPYRIGHTYEARS "2011-17">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "",
-Version := "3.0.1",
-Date := "03/06/2017",
+Version := "3.0.2",
+Date := "16/06/2017",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -134,7 +134,7 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
-    WWWHome       := "http://www.morphism.de/~markusp/",
+    WWWHome       := "https://www.morphism.de/~markusp/",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
@@ -178,33 +178,29 @@ Persons := [
 
 Status := "deposited",
 
-AbstractHTML := Concatenation("The ",
-  "Semigroups package is a GAP package containing ",
+AbstractHTML := Concatenation(
+  "<p>The Semigroups package is a GAP package containing ",
   "methods for semigroups, monoids, and inverse semigroups.  There are ",
   "particularly efficient methods for semigroups or ideals consisting of ",
   "transformations, partial permutations, bipartitions, partitioned binary ",
   "relations, subsemigroups of regular Rees 0-matrix semigroups, and matrices ",
   "of various semirings including boolean matrices, matrices over finite ",
-  "fields, and certain tropical matrices.",
-  "</p>",
-  "<p>",
+  "fields, and certain tropical matrices.</p><p>",
   "Semigroups contains efficient methods for creating semigroups, ",
   "monoids, and inverse semigroup, calculating their Green's structure, ",
   "ideals, size, elements, group of units, small generating sets, testing ",
   "membership, finding the inverses of a regular element, factorizing ",
   "elements over the generators, and so on. It is possible to test if a ",
   "semigroup satisfies a particular property, such as if it is regular, ",
-  "simple, inverse, completely regular, and a variety of further properties.",
-  "</p>",
-  "<p>",
+  "simple, inverse, completely regular, and a variety of further ",
+  "properties.</p><p>",
   "There are methods for finding presentations for a semigroup, the ",
   "congruences of a semigroup, the normalizer of a semigroup in a permutation ",
   "group, the maximal subsemigroups of a finite semigroup, smaller degree ",
   "partial permutation representations, and the character tables of inverse ",
   "semigroups. There are functions for producing pictures of the Green's ",
   "structure of a semigroup, and for drawing graphical representations of ",
-  "certain types of elements.",
-  "</p>"),
+  "certain types of elements.</p>"),
 
 PackageDoc := rec(
   BookName  := "Semigroups",

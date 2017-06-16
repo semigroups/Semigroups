@@ -460,7 +460,7 @@
   symmetric  inverse  monoid  of  degree  [10X[3Xn[103X[10X  +  1[110X  consisting  of  those block
   bijections with [10X[3Xn[103X[10X + 1[110X and [10X-[3Xn[103X[10X - 1[110X in the same block; see [KM11] and [KMU15].[133X
   
-  [33X[0;0YSee [2XIsBlockBijection[102X ([14X3.5-15[114X).[133X
+  [33X[0;0YSee [2XIsBlockBijection[102X ([14X3.5-16[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XNumber(PartitionMonoid(3), IsBlockBijection);[127X[104X
@@ -509,7 +509,7 @@
   block  bijection  monoid  of  degree [10X[3Xn[103X[10X + 1[110X consisting of those uniform block
   bijection with [10X[3Xn[103X[10X + 1[110X and [10X-[3Xn[103X[10X - 1[110X in the same block.[133X
   
-  [33X[0;0YSee [2XIsUniformBlockBijection[102X ([14X3.5-16[114X).[133X
+  [33X[0;0YSee [2XIsUniformBlockBijection[102X ([14X3.5-17[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := UniformBlockBijectionMonoid(4);[127X[104X

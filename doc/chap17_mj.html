@@ -74,20 +74,20 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIsomorphicSemigroup</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>This operation attempts to determine if the semigroups <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic, it returns <code class="keyw">true</code> if they are and <code class="keyw">false</code> if they are not.</p>
+<p>If <var class="Arg">S</var> and <var class="Arg">T</var> are semigroups, then this operation attempts to determine whether <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic semigroups by using the operation <code class="func">IsomorphismSemigroups</code> (<a href="chap17_mj.html#X8248C522825E2684"><span class="RefLink">17.1-3</span></a>). If <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns an isomorphism, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">true</code>, while if <code class="code">IsomorphismSemigroups(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">fail</code>, then <code class="code">IsIsomorphicSemigroup(<var class="Arg">S</var>, <var class="Arg">T</var>)</code> returns <code class="keyw">false</code>. Note that in some cases, at present, there is no method for determining whether <var class="Arg">S</var> is isomorphic to <var class="Arg">T</var>, even if it is obvious to the user whether or not <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic. There are plans to improve this in the future.</p>
 
-<p>At present this only works for rather small semigroups, with approximately 50 elements or less.</p>
+<p>If the size of <var class="Arg">S</var> and <var class="Arg">T</var> is rather small — with approximately 50 or fewer elements — then it is possible to calculate whether <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic by using <code class="func">SmallestMultiplicationTable</code> (<a href="chap17_mj.html#X7DE212DF7DF0A4E9"><span class="RefLink">17.1-2</span></a>), but this is not currently done by <code class="code">IsIsomorphicSemigroup</code>. In particular, <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic if and only if <code class="code">SmallestMultiplicationTable(<var class="Arg">S</var>) = SmallestMultiplicationTable(<var class="Arg">T</var>)</code>.</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([1, 2, 4], [3, 5, 1]),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  PartialPerm([1, 3, 5], [4, 3, 2]));;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-11
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := SemigroupByMultiplicationTable(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">SmallestMultiplicationTable(S));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([1, 2, 4], [1, 3, 5]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  PartialPerm([1, 3, 5], [1, 2, 4]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := AsSemigroup(IsTransformationSemigroup, S);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphicSemigroup(S, T);</span>
-true</pre></div>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphicSemigroup(FullTransformationMonoid(4),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">PartitionMonoid(4));</span>
+false</pre></div>
 
 <p><a id="X7DE212DF7DF0A4E9" name="X7DE212DF7DF0A4E9"></a></p>
 
@@ -122,14 +122,23 @@ true</pre></div>
 <h5>17.1-3 IsomorphismSemigroups</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSemigroups</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Returns: An isomorphism or <code class="keyw">fail</code>.</p>
+<p>Returns: An isomorphism, or <code class="keyw">fail</code>.</p>
 
-<p>This operation returns an isomorphism from the semigroup <var class="Arg">S</var> and to the semigroup <var class="Arg">T</var> if it exists, and it returns <code class="keyw">fail</code> if it does not.</p>
+<p>This operation attempts to find an isomorphism from the semigroup <var class="Arg">S</var> to the semigroup <var class="Arg">T</var>. If it finds one, then it is returned, and if not, then <code class="keyw">fail</code> is returned.</p>
 
-<p>At present this only works for Rees matrix semigroups and Rees 0-matrix semigroups.</p>
+<p>For many types of semigroup, <code class="code">IsomorphismSemigroups</code> is not able to determine whether or not <var class="Arg">S</var> and <var class="Arg">T</var> are isomorphic, and so this operation may result in an "Error, no method found". <code class="code">IsomorphismSemigroups</code> may be able deduce that <var class="Arg">S</var> and <var class="Arg">T</var> are not isomorphic by finding that some of their semigroup-theoretic properties differ; however it is harder to construct an isomorphism for semigroups that are isomorphic.</p>
+
+<p>At present, <code class="code">IsomorphismSemigroups</code> is only able to return an isomorphism when <var class="Arg">S</var> and <var class="Arg">T</var> are finite simple, 0-simple, or monogenic semigroups, or when <code class="code"><var class="Arg">S</var> = <var class="Arg">T</var></code>. See <code class="func">IsSimpleSemigroup</code> (<a href="chap14_mj.html#X836F4692839F4874"><span class="RefLink">14.1-21</span></a>), <code class="func">IsZeroSimpleSemigroup</code> (<a href="chap14_mj.html#X8193A60F839C064E"><span class="RefLink">14.1-27</span></a>), and <code class="func">IsMonogenicSemigroup</code> (<a href="chap14_mj.html#X79D46BAB7E327AD1"><span class="RefLink">14.1-10</span></a>) for more information about these types of semigroups.</p>
 
 
 <div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := RectangularBand(IsTransformationSemigroup, 4, 5);</span>
+&lt;regular transformation semigroup of size 20, degree 9 with 5 
+ generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := RectangularBand(IsBipartitionSemigroup, 4, 5);</span>
+&lt;regular bipartition semigroup of size 20, degree 3 with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismSemigroups(S, T) &lt;&gt; fail;</span>
+true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(FullTransformationMonoid(5),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">               Transformation([1, 2, 3, 4, 1]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := PrincipalFactor(D);;</span>
@@ -138,8 +147,7 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S;</span>
 &lt;Rees 0-matrix semigroup 10x5 over S4&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DClass(PartitionMonoid(5),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">               Bipartition([[1], [2, -2], [3, -3],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">                            [4, -4], [5, -5], [-1]]));;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Bipartition([[1], [2, -2], [3, -3], [4, -4], [5, -5], [-1]]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := PrincipalFactor(D);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(UnderlyingSemigroup(T));</span>
 "S4"

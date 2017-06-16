@@ -41,6 +41,7 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80F85B577A3DFCF9">2.5-1 SemigroupsTestInstall</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C2D57708006AB63">2.5-2 SemigroupsTestStandard</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7ED2F9C784B554D8">2.5-3 SemigroupsTestExtreme</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X798CBC46800AB80F">2.6 <span class="Heading">More information during a computation</span></a>
 </span>
@@ -75,16 +76,16 @@
 <li><p>ensure that the <span class="URL"><a href=" http://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/genss.html ">genss</a></span> package version 1.5 or higher is available.</p>
 
 </li>
-<li><p>download the package archive <code class="file">semigroups-3.0.1.tar.gz</code> from <span class="URL"><a href="https://gap-packages.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
+<li><p>download the package archive <code class="file">semigroups-3.0.2.tar.gz</code> from <span class="URL"><a href="https://gap-packages.github.io/Semigroups">the Semigroups package webpage</a></span>.</p>
 
 </li>
-<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-3.0.1</code>.</p>
+<li><p>unzip and untar the file, this should create a directory called <code class="file">semigroups-3.0.2</code>.</p>
 
 </li>
-<li><p>locate the <code class="file">pkg</code> directory of your <strong class="pkg">GAP</strong> directory, which contains the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-3.0.1</code> into the <code class="file">pkg</code> directory.</p>
+<li><p>locate the <code class="file">pkg</code> directory of your <strong class="pkg">GAP</strong> directory, which contains the directories <code class="file">lib</code>, <code class="file">doc</code> and so on. Move the directory <code class="file">semigroups-3.0.2</code> into the <code class="file">pkg</code> directory.</p>
 
 </li>
-<li><p>from version 3.0.0, it is necessary to compile the <strong class="pkg">Semigroups</strong> package. Inside the <code class="file">pkg/semigroups-3.0.1</code> directory, type</p>
+<li><p>from version 3.0.0, it is necessary to compile the <strong class="pkg">Semigroups</strong> package. Inside the <code class="file">pkg/semigroups-3.0.2</code> directory, type</p>
 
 
 <div class="example"><pre>
@@ -117,7 +118,7 @@ make</pre></div>
 
 <p>As of version 3.0.0, the <strong class="pkg">Semigroups</strong> package has a <strong class="pkg">GAP</strong> kernel component in C/C++ which must be compiled. This component contains low-level functions relating to the enumeration of certain types of semigroups, and it is not possible to use the <strong class="pkg">Semigroups</strong> package without compiling it.</p>
 
-<p>To compile the kernel component inside the <code class="file">pkg/semigroups-3.0.1</code> directory, type</p>
+<p>To compile the kernel component inside the <code class="file">pkg/semigroups-3.0.2</code> directory, type</p>
 
 
 <div class="example"><pre>
@@ -148,7 +149,7 @@ make</pre></div>
 
 <h4>2.5 <span class="Heading">Testing your installation</span></h4>
 
-<p>In this section we describe how to test that <strong class="pkg">Semigroups</strong> is working as intended. To test that <strong class="pkg">Semigroups</strong> is installed correctly use <code class="func">SemigroupsTestInstall</code> (<a href="chap2.html#X80F85B577A3DFCF9"><span class="RefLink">2.5-1</span></a>) or for more extensive tests use <code class="func">SemigroupsTestStandard</code> (<a href="chap2.html#X7C2D57708006AB63"><span class="RefLink">2.5-2</span></a>). Please note that it will take a few seconds for <code class="func">SemigroupsTestInstall</code> (<a href="chap2.html#X80F85B577A3DFCF9"><span class="RefLink">2.5-1</span></a>) to finish and it may take several minutes for <code class="func">SemigroupsTestStandard</code> (<a href="chap2.html#X7C2D57708006AB63"><span class="RefLink">2.5-2</span></a>) to finish.</p>
+<p>In this section we describe how to test that <strong class="pkg">Semigroups</strong> is working as intended. To quickly test that <strong class="pkg">Semigroups</strong> is installed correctly use <code class="func">SemigroupsTestInstall</code> (<a href="chap2.html#X80F85B577A3DFCF9"><span class="RefLink">2.5-1</span></a>) - this will take a few seconds. For more extensive tests use <code class="func">SemigroupsTestStandard</code> (<a href="chap2.html#X7C2D57708006AB63"><span class="RefLink">2.5-2</span></a>) - this may take several minutes. Finally, for lengthy benchmarking tests use <code class="func">SemigroupsTestExtreme</code> (<a href="chap2.html#X7ED2F9C784B554D8"><span class="RefLink">2.5-3</span></a>) - this may take more than half an hour.</p>
 
 <p>If something goes wrong, then please review the instructions in Section <a href="chap2.html#X7DA3059C79842BF3"><span class="RefLink">2.1</span></a> and ensure that <strong class="pkg">Semigroups</strong> has been properly installed. If you continue having problems, please use the <span class="URL"><a href="https://github.com/gap-packages/Semigroups/issues">issue tracker</a></span> to report the issues you are having.</p>
 
@@ -171,6 +172,17 @@ make</pre></div>
 <p>This function should be called with no argument to comprehensively test that <strong class="pkg">Semigroups</strong> is working correctly. These tests should take no more than a few minutes to complete. To quickly test that <strong class="pkg">Semigroups</strong> is installed correctly use <code class="func">SemigroupsTestInstall</code> (<a href="chap2.html#X80F85B577A3DFCF9"><span class="RefLink">2.5-1</span></a>).</p>
 
 <p>Each test file is run twice, once when the methods for <code class="func">IsActingSemigroup</code> (<a href="chap6.html#X7F69D8FC7D578A0C"><span class="RefLink">6.1-3</span></a>) are enabled and once when they are disabled.</p>
+
+<p><a id="X7ED2F9C784B554D8" name="X7ED2F9C784B554D8"></a></p>
+
+<h5>2.5-3 SemigroupsTestExtreme</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemigroupsTestExtreme</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<p>Returns: A list indicating which tests passed and failed and the time take to run each file.</p>
+
+<p>This function should be called with no argument to run some long-running tests, which could be used to benchmark <strong class="pkg">Semigroups</strong> or test your hardware. These tests should take no more than around half an hour to complete. To quickly test that <strong class="pkg">Semigroups</strong> is installed correctly use <code class="func">SemigroupsTestInstall</code> (<a href="chap2.html#X80F85B577A3DFCF9"><span class="RefLink">2.5-1</span></a>), or to test all aspects of the package use <code class="func">SemigroupsTestStandard</code> (<a href="chap2.html#X7C2D57708006AB63"><span class="RefLink">2.5-2</span></a>).</p>
+
+<p>Each test file is run twice, once when the methods for semigroups satisfying <code class="func">IsActingSemigroup</code> (<a href="chap6.html#X7F69D8FC7D578A0C"><span class="RefLink">6.1-3</span></a>) are enabled and once when they are disabled.</p>
 
 <p><a id="X798CBC46800AB80F" name="X798CBC46800AB80F"></a></p>
 

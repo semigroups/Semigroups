@@ -499,7 +499,7 @@
   
   [33X[0;0YA   PBR   [3Xx[103X   defines   a   transformation  if  and  only  if  it  satisfies
   [2XIsBipartitionPBR[102X  ([14X4.5-8[114X)  and  when  it  is  considered as a bipartition it
-  satisfies [2XIsTransBipartition[102X ([14X3.5-11[114X).[133X
+  satisfies [2XIsTransBipartition[102X ([14X3.5-12[114X).[133X
   
   [33X[0;0YWith  this  definition,  [2XAsPBR[102X  ([14X4.3-1[114X)  and [2XAsTransformation[102X ([14X4.3-2[114X) define
   mutually  inverse isomorphisms from the full transformation monoid of degree
@@ -557,7 +557,7 @@
   
   [33X[0;0YA  PBR [3Xx[103X defines a partial perm if and only if it satisfies [2XIsBipartitionPBR[102X
   ([14X4.5-8[114X)  and  and  when  it  is  considered  as  a  bipartition it satisfies
-  [2XIsPartialPermBipartition[102X ([14X3.5-14[114X).[133X
+  [2XIsPartialPermBipartition[102X ([14X3.5-15[114X).[133X
   
   [33X[0;0YWith  this  definition,  [2XAsPBR[102X  ([14X4.3-1[114X)  and  [2XAsPartialPerm[102X  ([14X4.3-3[114X)  define
   mutually  inverse isomorphisms from the symmetric inverse monoid of degree [10Xn[110X
@@ -587,7 +587,7 @@
   
   [33X[0;0YA  PBR  [3Xx[103X defines a permutation if and only if it satisfies [2XIsBipartitionPBR[102X
   ([14X4.5-8[114X)  and  and  when  it  is  considered  as  a  bipartition it satisfies
-  [2XIsPermBipartition[102X ([14X3.5-13[114X).[133X
+  [2XIsPermBipartition[102X ([14X3.5-14[114X).[133X
   
   [33X[0;0YWith  this  definition,  [2XAsPBR[102X  ([14X4.3-1[114X)  and  [2XAsPermutation[102X  ([14X4.3-4[114X)  define
   mutually  inverse  isomorphisms  from the symmetric group of degree [10Xn[110X to the

@@ -278,18 +278,16 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup(PartialPerm([2, 1, 4, 3, 6, 5, 8, 7]));[127X[104X
-    [4X[28X<commutative inverse partial perm semigroup of rank 8 with 1 [128X[104X
-    [4X[28X generator>[128X[104X
+    [4X[28X<partial perm group of rank 8 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XElements(S);[127X[104X
     [4X[28X[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8 ]>, [128X[104X
     [4X[28X  (1,2)(3,4)(5,6)(7,8) ][128X[104X
     [4X[25Xgap>[125X [27XT := SmallerDegreePartialPermRepresentation(S);[127X[104X
     [4X[28XMappingByFunction( <partial perm group of size 2, rank 8 with[128X[104X
-    [4X[28X  1 generator>, <commutative inverse partial perm semigroup of rank 2 [128X[104X
-    [4X[28Xwith 1 generator>, function( x ) ... end, function( x ) ... end )[128X[104X
+    [4X[28X  1 generator>, <partial perm group of rank 2 with 1 generator>[128X[104X
+    [4X[28X, function( x ) ... end, function( x ) ... end )[128X[104X
     [4X[25Xgap>[125X [27XR := Range(T);[127X[104X
-    [4X[28X<commutative inverse partial perm semigroup of rank 2 with 1 [128X[104X
-    [4X[28X generator>[128X[104X
+    [4X[28X<partial perm group of rank 2 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XElements(R);[127X[104X
     [4X[28X[ <identity partial perm on [ 1, 2 ]>, (1,2) ][128X[104X
     [4X[25Xgap>[125X [27XS := DualSymmetricInverseMonoid(5);;[127X[104X
