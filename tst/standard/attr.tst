@@ -1662,6 +1662,25 @@ true
 gap> I = Semigroup(Idempotents(S));
 true
 
+#T# IdempotentGeneratedSubsemigroup, for R(Z)MS where new method is much better
+
+# RZMS: 2241 generators -> 384 generators
+gap> R := PrincipalFactor(
+>  DClass(FullTransformationMonoid(7),
+>  Transformation([1, 1, 3, 4, 5, 4, 1])));;
+gap> Length(Rows(R));
+350
+gap> Length(Columns(R));
+35
+gap> IdempotentGeneratedSubsemigroup(R);
+<subsemigroup of 350x35 Rees 0-matrix semigroup with 384 generators>
+
+# RMS: 7200 generators -> 90 generators
+gap> R := RectangularBand(IsReesMatrixSemigroup, 80, 90);
+<Rees matrix semigroup 80x90 over Group(())>
+gap> IdempotentGeneratedSubsemigroup(R);
+<subsemigroup of 80x90 Rees matrix semigroup with 90 generators>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);
