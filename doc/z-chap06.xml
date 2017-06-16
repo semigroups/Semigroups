@@ -34,7 +34,7 @@
       partial permutations 
       (see <Ref Chap="Partial permutations" BookName="ref"/>),
       bipartitions (see Chapter <Ref Chap="Bipartitions and blocks"/>), 
-      subsemigroups of regular Rees 0-matrix semigroups over groups 
+      subsemigroups of regular Rees 0-matrix semigroups over permutation groups 
       (see Chapter <Ref Chap="Rees matrix semigroups" BookName="ref"/>), 
       and matrices over a finite field 
       (see Section <Ref Sect="Matrices over finite fields"/>).
