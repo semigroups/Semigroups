@@ -78,6 +78,17 @@ Persons := [
     Institution   := "University of St Andrews"),
 
   rec(
+    LastName     := "Burrell",
+    FirstNames    := "S.",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "sb235@st-andrews.ac.uk ",
+    WWWHome       := "http://sburrell.nfshost.com",
+    PostalAddress := _STANDREWS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
     LastName     := "Delgado",
     FirstNames    := "M.",
     IsAuthor      := false,

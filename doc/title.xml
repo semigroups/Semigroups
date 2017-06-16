@@ -62,6 +62,9 @@
     efficiency of the package.
     <P/>
 
+    Stuart Burrell contributed methods for checking finiteness of semigroups of
+    matrices of the max-plus and min-plus semirings.<P/>
+
     Manuel Delgado and Attila Egri-Nagy contributed to the functions
     <Ref Func = "Splash"/> and <Ref Oper = "DotString"/>.<P/>
 
@@ -79,6 +82,10 @@
     inverse semigroups, and contributed to the code for ideals.
     <P/>
 
+    Markus Pfeiffer contributed the majority of the code relating to
+    semigroups of matrices over finite fields.
+    <P/>
+
     Yann P&#233;resse and Yanhui Wang contributed to the attribute
     <Ref Attr = "MunnSemigroup"/>.<P/>
 
@@ -93,10 +100,6 @@
     inverse semigroups. We are also grateful to C. Donoven and R. Hancock for
     their contribution to the development of the algorithms for maximal
     subsemigroups and smaller degree partial permutation representations.
-    <P/>
-
-    Markus Pfeiffer contributed the majority of the code relating to
-    semigroups of matrices over finite fields.
     <P/>
 
     We would also like to acknowledge the support of: EPSRC grant number
