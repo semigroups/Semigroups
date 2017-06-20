@@ -35,7 +35,7 @@ DeclareProperty("IsSemigroupWithCommutingIdempotents", IsSemigroup);
 DeclareProperty("IsUnitRegularMonoid", IsSemigroup);
 DeclareProperty("IsZeroRectangularBand", IsSemigroup);
 DeclareProperty("IsCongruenceFreeSemigroup", IsSemigroup);
-DeclareProperty("IsEUnitaryInverseSemigroup", IsInverseSemigroup);
+DeclareProperty("IsEUnitaryInverseSemigroup", IsSemigroup);
 DeclareProperty("IsSemigroupWithAdjoinedZero", IsSemigroup);
 
 DeclareSynonymAttr("IsRectangularGroup",

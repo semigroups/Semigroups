@@ -334,11 +334,13 @@ function(S)
   return IsMajorantlyClosed(S, IdempotentGeneratedSubsemigroup(S));
 end);
 
-InstallMethod(IsEUnitaryInverseSemigroup, "for an inverse semigroup",
-[IsInverseSemigroup],
+InstallMethod(IsEUnitaryInverseSemigroup, "for a semigroup",
+[IsSemigroup],
 function(S)
   if not IsFinite(S) then
     TryNextMethod();
+  elif not IsInverseSemigroup(S) then
+    return false;
   fi;
   return IsEUnitaryInverseSemigroup(AsSemigroup(IsPartialPermSemigroup, S));
 end);
