@@ -75,6 +75,7 @@ ReadPackage("semigroups", "gap/semigroups/semicons.gd");
 ReadPackage("semigroups", "gap/semigroups/semigraph.gd");
 ReadPackage("semigroups", "gap/semigroups/semifp.gd");
 ReadPackage("semigroups", "gap/semigroups/semiquo.gd");
+ReadPackage("semigroups", "gap/semigroups/semieunit.gd");
 
 ReadPackage("semigroups", "gap/hash.gd");
 
