@@ -52,10 +52,10 @@ gap> ReadGenerators(name, 2);
 [ <identity partial perm on [ 1, 3, 4 ]>, [1,2](3)(4) ]
 gap> ReadGenerators(name, 2, 3);
 Error, Semigroups: ReadGenerators: usage,
-there should be at most 2 arguments,
+there should be 1 or 2 arguments,
 gap> ReadGenerators("non-existant-file");
 Error, Semigroups: ReadGenerators:
-could not open the file fail,
+could not open the file non-existant-file,
 gap> file := IO_CompressedFile(name, "r");;
 gap> ReadGenerators(file, 2);
 [ <identity partial perm on [ 1, 3, 4 ]>, [1,2](3)(4) ]
@@ -110,10 +110,10 @@ gap> ReadOldGenerators(name, 4);
 [ IdentityTransformation ]
 gap> ReadOldGenerators(name, 2, 3);
 Error, Semigroups: ReadOldGenerators: usage,
-there should be at most 2 arguments,
+there should be 1 or 2 arguments,
 gap> ReadOldGenerators("non-existant-file");
 Error, Semigroups: ReadOldGenerators:
-could not open the file fail,
+could not open the file non-existant-file,
 gap> file := IO_CompressedFile(name, "r");;
 gap> ReadOldGenerators(file, 2);
 [ Transformation( [ 1, 1, 2 ] ) ]

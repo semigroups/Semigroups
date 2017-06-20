@@ -63,7 +63,7 @@ function(arg)
     line_nr := arg[2];
   else
     ErrorNoReturn("Semigroups: ReadGenerators: usage,\n",
-                  "there should be at most 2 arguments,");
+                  "there should be 1 or 2 arguments,");
   fi;
 
   if IsString(name) then
@@ -71,7 +71,7 @@ function(arg)
     file := IO_CompressedFile(name, "r");
     if file = fail then
       ErrorNoReturn("Semigroups: ReadGenerators:\n",
-                    "could not open the file ", file, ",");
+                    "could not open the file ", name, ",");
     fi;
   elif IsFile(name) then
     file := name;
@@ -219,7 +219,7 @@ function(arg)
     line_nr := arg[2];
   else
     ErrorNoReturn("Semigroups: ReadOldGenerators: usage,\n",
-                  "there should be at most 2 arguments,");
+                  "there should be 1 or 2 arguments,");
   fi;
 
   if IsString(name) then
@@ -227,7 +227,7 @@ function(arg)
     file := IO_CompressedFile(name, "r");
     if file = fail then
       ErrorNoReturn("Semigroups: ReadOldGenerators:\n",
-                    "could not open the file ", file, ",");
+                    "could not open the file ", name, ",");
     fi;
   elif IsFile(name) then
     file := name;
