@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  PackageInfo.g
-#Y  Copyright (C) 2011-16                                James D. Mitchell
+#Y  Copyright (C) 2011-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.0.2">
+##  <!ENTITY VERSION "3.0.3">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.7.1">
 ##  <!ENTITY ORBVERS "4.7.5">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.0.2">
+##  <!ENTITY ARCHIVENAME "semigroups-3.0.3">
 ##  <!ENTITY COPYRIGHTYEARS "2011-17">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "",
-Version := "3.0.2",
-Date := "16/06/2017",
+Version := "3.0.3",
+Date := "21/06/2017",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -73,6 +73,17 @@ Persons := [
     IsMaintainer  := true,
     Email         := "jdm3@st-and.ac.uk",
     WWWHome       := "http://www-groups.mcs.st-andrews.ac.uk/~jamesm/",
+    PostalAddress := _STANDREWS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
+    LastName     := "Burrell",
+    FirstNames    := "S.",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "sb235@st-andrews.ac.uk ",
+    WWWHome       := "http://sburrell.nfshost.com",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
@@ -124,7 +135,7 @@ Persons := [
     IsMaintainer  := false,
     Email         := "jj252@st-and.ac.uk",
     PostalAddress := _STANDREWS,
-    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~julius/",
+    WWWHome       := "http://www-groups.mcs.st-andrews.ac.uk/~julius/",
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
 
@@ -135,6 +146,16 @@ Persons := [
     IsMaintainer  := false,
     Email         := "markus.pfeiffer@morphism.de",
     WWWHome       := "https://www.morphism.de/~markusp/",
+    PostalAddress := _STANDREWS,
+    Place         := "St Andrews",
+    Institution   := "University of St Andrews"),
+
+  rec(
+    LastName     := "Russell",
+    FirstNames    := "C.",
+    IsAuthor      := false,
+    IsMaintainer  := false,
+    Email         := "cr66@st-andrews.ac.uk",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
     Institution   := "University of St Andrews"),
@@ -159,11 +180,10 @@ Persons := [
     IsAuthor      := false,
     IsMaintainer  := false,
     Email         := "mct25@st-and.ac.uk",
-    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~mct25/",
+    WWWHome       := "http://www-groups.mcs.st-and.ac.uk/~mct25/",
     PostalAddress := _STANDREWS,
     Place         := "St Andrews",
-    Institution   := "University of St Andrews",
-    WWWHome       := "http://www-circa.mcs.st-and.ac.uk/~mct25/"),
+    Institution   := "University of St Andrews"),
 
   rec(
     LastName      := "Wilson",

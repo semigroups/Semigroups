@@ -29,8 +29,8 @@
   implemented    for   semigroups   of:   transformations   (see   [14X'Reference:
   Transformations'[114X),    partial    permutations   (see   [14X'Reference:   Partial
   permutations'[114X),  bipartitions (see Chapter [14X3[114X), subsemigroups of regular Rees
-  0-matrix  semigroups  over  groups  (see  Chapter  [14X'Reference:  Rees  Matrix
-  Semigroups'[114X), and matrices over a finite field (see Section [14X5.4[114X).[133X
+  0-matrix  semigroups  over  permutation groups (see Chapter [14X'Reference: Rees
+  Matrix Semigroups'[114X), and matrices over a finite field (see Section [14X5.4[114X).[133X
   
   [33X[0;0YWe refer to semigroups to which the algorithms in [EEMP15] can be applied as
   [13Xacting   semigroups[113X,   and   such   semigroups   belong   to   the  category

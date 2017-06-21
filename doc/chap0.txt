@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.0.2
+                                 Version 3.0.3
   
   
                                  J. D. Mitchell
@@ -80,6 +80,9 @@
   and to M. Neunhoeffer for his invaluable help in improving the efficiency of
   the package.[133X
   
+  [33X[0;0YStuart  Burrell contributed methods for checking finiteness of semigroups of
+  matrices of the max-plus and min-plus semirings.[133X
+  
   [33X[0;0YManuel  Delgado  and  Attila  Egri-Nagy  contributed to the functions [2XSplash[102X
   ([14X18.1-1[114X) and [2XDotString[102X ([14X18.2-1[114X).[133X
   
@@ -94,6 +97,9 @@
   [33X[0;0YJulius  Jonušas contributed the part of the package relating to free inverse
   semigroups, and contributed to the code for ideals.[133X
   
+  [33X[0;0YMarkus  Pfeiffer contributed the majority of the code relating to semigroups
+  of matrices over finite fields.[133X
+  
   [33X[0;0YYann  Péresse  and  Yanhui  Wang  contributed to the attribute [2XMunnSemigroup[102X
   ([14X8.2-1[114X).[133X
   
@@ -107,9 +113,6 @@
   inverse  semigroups.  We  are also grateful to C. Donoven and R. Hancock for
   their  contribution  to  the  development  of  the  algorithms  for  maximal
   subsemigroups and smaller degree partial permutation representations.[133X
-  
-  [33X[0;0YMarkus  Pfeiffer contributed the majority of the code relating to semigroups
-  of matrices over finite fields.[133X
   
   [33X[0;0YWe  would  also  like  to  acknowledge  the  support  of: EPSRC grant number
   GR/S/56085/01;  the  Carnegie  Trust  for  the  Universities of Scotland for
