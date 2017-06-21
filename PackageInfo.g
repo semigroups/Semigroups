@@ -1,7 +1,7 @@
 ############################################################################
 ##
 #W  PackageInfo.g
-#Y  Copyright (C) 2011-16                                James D. Mitchell
+#Y  Copyright (C) 2011-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -9,13 +9,13 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "3.0.2">
+##  <!ENTITY VERSION "3.0.3">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.7.1">
 ##  <!ENTITY ORBVERS "4.7.5">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-3.0.2">
+##  <!ENTITY ARCHIVENAME "semigroups-3.0.3">
 ##  <!ENTITY COPYRIGHTYEARS "2011-17">
 ##  <#/GAPDoc>
 
@@ -47,8 +47,8 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 SetPackageInfo(rec(
 PackageName := "Semigroups",
 Subtitle := "",
-Version := "3.0.2",
-Date := "16/06/2017",
+Version := "3.0.3",
+Date := "21/06/2017",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(

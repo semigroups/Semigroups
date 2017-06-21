@@ -2,7 +2,22 @@
 
 #### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.3 (released 21/06/2017)
+
+Some minor issues are fixed in this release:
+
+* [Issue 336](https://github.com/gap-packages/Semigroups/issues/336)
+Rees (0-)matrix semigroups over non-permutation groups sometimes resulted in an
+error. 
+[[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+* A method was added for `IsEUnitaryInverseSemigroup` for non-inverse
+  semigroups, which previously resulted in no method found. [Chris Russell]
+
+* Some error messages were improved in `ReadGenerators` and `WriteGenerators`.
+
 ### Version 3.0.2 (released 16/06/2017)
+
 This is an minor release fixing some minor issues in the last
 release. 
 
