@@ -2813,7 +2813,7 @@ gap> Unbind(rels);
 gap> Unbind(x);
 gap> Unbind(y);
 
-#T# Tests wreath product method
+#T# Tests wreath product of transf. semgp. and perm. group
 gap> T := FullTransformationMonoid(3);;
 gap> C := Group((1, 3));;
 gap> TC := WreathProduct(T, C);;
@@ -2824,12 +2824,20 @@ gap> TC := WreathProduct(T, C);;
 gap> Size(TC) = 1458;                 
 true
 
+#T# Test wreath product of perm. group and transf. semgp.
+gap> W := WreathProduct(Group((1, 2)), FullTransformationMonoid(3));;
+gap> Size(W);
+216
+
 #T# Tests wreath product of a monoid not satisfying IsTransformationMonoid
 gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]));;
 gap> C := Group((1, 2));;
 gap> W := WreathProduct(S, C);;
 gap> Size(W) = 2;
 true
+gap> WW := WreathProduct(C, S);;
+gap> Size(WW);
+32
 
 #E#
 gap> SEMIGROUPS.StopTest();
