@@ -804,7 +804,7 @@ function(G, S)
         rimage;
   if not IsMonoidAsSemigroup(S) then
     ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
-                    "the first argument <S> should be a monoid,");
+                    "the second argument <S> should be a monoid,");
   fi;
 
   m := LargestMovedPoint(G);
