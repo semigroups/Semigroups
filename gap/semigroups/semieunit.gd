@@ -49,6 +49,8 @@ DeclareAttribute("McAlisterTripleSemigroupSemilattice",
                  IsMcAlisterTripleSemigroup and IsWholeFamily);
 DeclareAttribute("McAlisterTripleSemigroupElmList",
                  IsMcAlisterTripleSemigroup and IsWholeFamily);
+DeclareAttribute("OneImmutable",
+                 IsMcAlisterTripleSemigroup and IsWholeFamily and IsMonoid);
 
 # Operations for McAlister triple semigroups
 DeclareOperation("IsomorphismMcAlisterTripleSemigroup", [IsSemigroup]);

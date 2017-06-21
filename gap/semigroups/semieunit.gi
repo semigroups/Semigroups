@@ -17,7 +17,7 @@ InstallMethod(McAlisterTripleSemigroup,
 "for a perm group, action, digraph, and digraph",
 [IsGroup, IsFunction, IsDigraph, IsDigraph],
 function(G, act, X, Y)
-  local anti_act, hom, y_edges, out_nbrs, orbs, min, fam, M, x, y;
+  local anti_act, hom, y_edges, out_nbrs, orbs, min, fam, filt, M, x, y;
 
   if not IsFinite(G) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
@@ -99,9 +99,14 @@ function(G, act, X, Y)
   fam := NewFamily("McAlisterTripleSemigroupFamily",
                    IsMcAlisterTripleSemigroupElement);
 
+  # Check if this McAlister triple semigroup is a monoid
+  if IsMeetSemilatticeDigraph(Y) then
+    filt := IsMcAlisterTripleSemigroup and IsMonoid;
+  else
+    filt := IsMcAlisterTripleSemigroup;
+  fi;
   # Create the semigroup itself
-  M := Objectify(NewType(CollectionsFamily(fam),
-                         IsMcAlisterTripleSemigroup and IsAttributeStoringRep
+  M := Objectify(NewType(CollectionsFamily(fam), filt and IsAttributeStoringRep
                          and IsEUnitaryInverseSemigroup and IsWholeFamily),
                  rec());
 
@@ -139,7 +144,7 @@ function(G, X, sub_ver)
 end);
 
 #############################################################################
-# Operations for McAlister triple semigroups
+# Methods for McAlister triple semigroups
 #############################################################################
 InstallMethod(\=, "for two McAlister triple semigroups",
 [IsMcAlisterTripleSemigroup, IsMcAlisterTripleSemigroup],
@@ -158,6 +163,14 @@ function(x, y)
     fi;
   fi;
   return false;
+end);
+
+InstallMethod(OneImmutable, "for a McAlister triple semigroup",
+[IsMcAlisterTripleSemigroup],
+function(S)
+  local Y;
+  Y := McAlisterTripleSemigroupSemilattice(S);
+  return MTE(S, DigraphSources(DigraphRemoveLoops(Y))[1], ());
 end);
 
 # (A, g) in S if and only if Ag^-1 is a vertex of the semilattice of S
@@ -243,7 +256,7 @@ function(S, T)
 end);
 
 #############################################################################
-# Operations for McAlister triple elements
+# Methods for McAlister triple elements
 #############################################################################
 InstallMethod(McAlisterTripleSemigroupElement,
 "for a McAlister triple semigroup, pos int, and perm",
