@@ -14,7 +14,7 @@ error.
 * A method was added for `IsEUnitaryInverseSemigroup` for non-inverse
   semigroups, which previously resulted in no method found. [Chris Russell]
 
-* Some error messages were improved in `ReadGenerators` and `WriteGenerators`.
+* Some error messages were improved in `ReadGenerators` and `WriteGenerators`. [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
 
 ### Version 3.0.2 (released 16/06/2017)
 
