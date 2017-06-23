@@ -758,7 +758,7 @@ InstallMethod(WreathProduct,
 [IsTransformationMonoid, IsPermGroup],
 function(M, G)
   local S;
-  S := AsSemigroup(IsTransformationSemigroup, G);
+  S := AsMonoid(IsTransformationMonoid, G);
   return WreathProduct(M, S);
 end);
 
@@ -767,13 +767,13 @@ InstallMethod(WreathProduct,
 [IsPermGroup, IsTransformationSemigroup],
 function(G, S)
   local M;
-  M := AsSemigroup(IsTransformationSemigroup, G);
+  M := AsMonoid(IsTransformationMonoid, G);
   return WreathProduct(M, S);
 end);
 
 InstallMethod(WreathProduct,
 "for two transformation semigroups",
-[IsTransformationSemigroup, IsTransformationSemigroup],
+[IsTransformationMonoid, IsTransformationSemigroup],
 function(M, S)
   local maps, newmap, gensM, gensS, next, reps, orbs, gen1, n, i, s, x, m, y,
         rimage;
