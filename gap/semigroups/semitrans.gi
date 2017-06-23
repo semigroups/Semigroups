@@ -772,7 +772,7 @@ function(G, S)
 end);
 
 InstallMethod(WreathProduct,
-"for two transformation semigroups",
+"for a transformation monoid and a transformation semigroup",
 [IsTransformationMonoid, IsTransformationSemigroup],
 function(M, S)
   local maps, newmap, gensM, gensS, next, reps, orbs, gen1, n, i, s, x, m, y,
