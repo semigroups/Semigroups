@@ -387,17 +387,14 @@ gap> FixedPointsOfTransformationSemigroup(S);
 
 <#GAPDoc Label="WreathProduct">
   <ManSection>
-    <Oper Name = "WreathProduct" Arg = "S, G"
-          Label = "for a transformation semigroup and a permutation group"/>
-    <Oper Name = "WreathProduct" Arg = "G, S"
-          Label = "for a permutation group and a transformation semigroup"/>
+    <Oper Name = "WreathProduct" Arg = "M, S"/>
     <Returns>A transformation semigroup.</Returns>
     <Description>
-      For a transformation semigroup <A>S</A> and a permutation group <A>G</A>,
-      the functions <C>WreathProduct(<A>S</A>, <A>G</A>)</C>, and
-      <C>WreathProduct(<A>G</A>, <A>S</A>)</C> output the wreath product of
-      <A>S</A> and <A>G</A>, and the wreath product of <A>G</A> and <A>S</A>,
-      respectively, in terms of its embedding in the full transformation monoid.
+      If <A>M</A> is a transformation monoid or a permutation group, and
+      <A>S</A> is a transformation semigroup or a permutation group, the
+      function <C>WreathProduct(<A>M</A>, <A>S</A>)</C> outputs the wreath
+      product of <A>M</A> and <A>S</A>, in terms of its embedding in the full
+      transformation monoid.
 
       <Example><![CDATA[
 gap> T := FullTransformationMonoid(3);;
@@ -405,7 +402,7 @@ gap> C := Group((1, 3));;
 gap> W := WreathProduct(T, C);;
 gap> Size(W);
 39366
-gap> WW := WreathProduct(T, C);;
+gap> WW := WreathProduct(C, T);;
 gap> Size(WW);
 216
 ]]></Example>
