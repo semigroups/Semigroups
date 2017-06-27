@@ -519,11 +519,10 @@ SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
         x[2][i] := invlist[x[2][isolist[i]]];
       od;
     od;
-  else
-    Apply(linkedpairs, x -> TranslationalHullElementNC(H, 
-                              LeftTranslationNC(L, Transformation(x[1])),
-                              RightTranslationNC(R, Transformation(x[2]))));
   fi;
+  Apply(linkedpairs, x -> TranslationalHullElementNC(H, 
+                            LeftTranslationNC(L, Transformation(x[1])),
+                            RightTranslationNC(R, Transformation(x[2]))));
   
   return linkedpairs;
 end;
@@ -722,7 +721,7 @@ function(L, x)
             "the second argument must act on the indices of the underlying ",
             "semigroup of the first argument,");
     fi;
-    semiList := AsList(S);
+    semiList := AsListCanonical(S);
     if HasGeneratorsOfSemigroup(S) then
       if ForAny(GeneratorsOfSemigroup(S), 
                 t -> ForAny(S, 
@@ -761,7 +760,7 @@ function(L, x)
     return Objectify(TypeLeftTranslationsSemigroupElements(L), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList := AsList(UnderlyingSemigroup(L));
+  semiList := AsListCanonical(UnderlyingSemigroup(L));
   mapAsTransList := [];
   for i in [1..Length(semiList)] do
     mapAsTransList[i] := Position(semiList, semiList[i]^x);
@@ -812,7 +811,7 @@ function(R, x)
             "the second argument must act on the indices of the underlying ",
             "semigroup of the first argument,");
     fi;
-    semiList := AsList(S);
+    semiList := AsListCanonical(S);
     if HasGeneratorsOfSemigroup(S) then
       if ForAny(GeneratorsOfSemigroup(S), 
                 t -> ForAny(S, 
@@ -847,7 +846,7 @@ function(R, x)
     return Objectify(TypeRightTranslationsSemigroupElements(R), [x]);
   fi;
   # x is a mapping on UnderlyingSemigroup(S)
-  semiList := AsList(UnderlyingSemigroup(R));
+  semiList := AsListCanonical(UnderlyingSemigroup(R));
   mapAsTransList := [];
   for i in [1..Length(semiList)] do
     mapAsTransList[i] := Position(semiList, semiList[i]^x);
