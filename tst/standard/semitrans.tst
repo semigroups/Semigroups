@@ -2819,9 +2819,17 @@ gap> C := Group((1, 3));;
 gap> TC := WreathProduct(T, C);;
 gap> Size(TC) = 39366;
 true
+gap> CC := AsMonoid(IsTransformationMonoid, C);;
+gap> DP := DirectProduct(T, CC);;
+gap> IsSubsemigroup(TC, DP);
+true
 gap> C := Group((1, 2));;
 gap> TC := WreathProduct(T, C);;
 gap> Size(TC) = 1458;                 
+true
+gap> CC := AsMonoid(IsTransformationMonoid, C);;
+gap> DP := DirectProduct(T, CC);;
+gap> IsSubsemigroup(TC, DP);
 true
 
 #T# Test wreath product of perm. group and transf. semgp.

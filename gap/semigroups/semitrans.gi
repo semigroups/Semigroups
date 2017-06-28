@@ -757,18 +757,14 @@ InstallMethod(WreathProduct,
 "for a transformation monoid and a permutation group",
 [IsTransformationMonoid, IsPermGroup],
 function(M, G)
-  local S;
-  S := AsMonoid(IsTransformationMonoid, G);
-  return WreathProduct(M, S);
+  return WreathProduct(M, AsMonoid(IsTransformationMonoid, G));
 end);
 
 InstallMethod(WreathProduct,
 "for a permutation group and a transformation semigroup",
 [IsPermGroup, IsTransformationSemigroup],
 function(G, S)
-  local M;
-  M := AsMonoid(IsTransformationMonoid, G);
-  return WreathProduct(M, S);
+  return WreathProduct(AsMonoid(IsTransformationMonoid, G), S);
 end);
 
 InstallMethod(WreathProduct,
@@ -779,12 +775,13 @@ function(M, S)
         rimage;
   if not IsMonoidAsSemigroup(S) then
     ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
-                    "the second argument <S> should be a monoid,");
+                    "the second argument <S> should be a monoid (as ",
+                    "semigroup),");
   fi;
 
   m := DegreeOfTransformationCollection(M);
 
-  gensM := ShallowCopy(GeneratorsOfSemigroup(M));
+  gensM := ShallowCopy(GeneratorsOfMonoid(M));
   gensM := List(gensM, x -> OnTuples([1 .. m], x));
   gensS := GeneratorsOfSemigroup(S);
 
