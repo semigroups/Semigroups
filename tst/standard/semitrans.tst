@@ -2497,6 +2497,34 @@ gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]),
 > Transformation([1, 1, 3, 3, 3]));;
 gap> S := DirectProduct(S, S);
 <transformation semigroup of degree 10 with 4 generators>
+gap> S := DirectProduct(Semigroup(Transformation([1, 2, 3, 3, 3])),
+>                       Semigroup(Transformation([2, 1])));;
+gap> Elements(S);
+[ Transformation( [ 1, 2, 3, 3, 3 ] ), 
+  Transformation( [ 1, 2, 3, 3, 3, 7, 6 ] ) ]
+gap> Size(S);
+2
+gap> S := DirectProduct(Semigroup(Transformation([2, 1])),
+>                       Semigroup(Transformation([1, 2, 3, 3, 3])));;
+gap> Elements(S);
+[ Transformation( [ 1, 2, 3, 4, 5, 5, 5 ] ), 
+  Transformation( [ 2, 1, 3, 4, 5, 5, 5 ] ) ]
+gap> Size(S);
+2
+gap> S := DirectProduct(Semigroup(Transformation([1, 2, 3, 3, 3])),
+>                       Semigroup(Transformation([2, 1])), 
+>                       Semigroup(Transformation([1, 1, 2, 3, 4])));;
+gap> Size(S);
+8
+gap> Elements(S);
+[ Transformation( [ 1, 2, 3, 3, 3, 6, 7, 8, 8, 8, 8, 8 ] ), 
+  Transformation( [ 1, 2, 3, 3, 3, 6, 7, 8, 8, 8, 8, 9 ] ), 
+  Transformation( [ 1, 2, 3, 3, 3, 6, 7, 8, 8, 8, 9, 10 ] ), 
+  Transformation( [ 1, 2, 3, 3, 3, 6, 7, 8, 8, 9, 10, 11 ] ), 
+  Transformation( [ 1, 2, 3, 3, 3, 7, 6, 8, 8, 8, 8, 8 ] ), 
+  Transformation( [ 1, 2, 3, 3, 3, 7, 6, 8, 8, 8, 8, 9 ] ), 
+  Transformation( [ 1, 2, 3, 3, 3, 7, 6, 8, 8, 8, 9, 10 ] ), 
+  Transformation( [ 1, 2, 3, 3, 3, 7, 6, 8, 8, 9, 10, 11 ] ) ]
 
 # Test RandomSemigroup
 gap> RandomSemigroup(IsTransformationSemigroup);;

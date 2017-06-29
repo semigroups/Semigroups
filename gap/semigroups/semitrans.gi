@@ -84,24 +84,36 @@ InstallMethod(DirectProductOp,
 "for a list and a transformation monoid as semigroup",
 [IsList, IsTransformationSemigroup], 1, # to beat the next method
 function(list, S)
-  local gens, deg, m, i, x;
+  local gens, deg, one, m, next, i, x;
 
   # Check the arguments.
   if IsEmpty(list) then
     ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
                   "the first argument must be a non-empty list,");
   elif not ForAll(list, T -> IsTransformationSemigroup(T)
-                  and IsMonoidAsSemigroup(T)) then
+                             and IsMonoidAsSemigroup(T)) then
     TryNextMethod();
   fi;
 
-  gens := ShallowCopy(GeneratorsOfSemigroup(list[1]));
+  # Make the identity element from the identity elements of the factors
   deg  := DegreeOfTransformationSemigroup(list[1]);
-
+  one  := MultiplicativeNeutralElement(list[1]);
+  one  := ShallowCopy(ImageListOfTransformation(one, deg));
   for i in [2 .. Length(list)] do
+    m    := DegreeOfTransformationSemigroup(list[i]);
+    next := MultiplicativeNeutralElement(list[i]);
+    Append(one, ImageListOfTransformation(next, m) + deg);
+    deg := deg + m;
+  od;
+
+  gens := [];
+  deg  := 0;
+  for i in [1 .. Length(list)] do
     m := DegreeOfTransformationSemigroup(list[i]);
     for x in GeneratorsOfSemigroup(list[i]) do
-      Add(gens, Transformation([1 .. m] + deg, i -> (i - deg) ^ x + deg));
+      next := ShallowCopy(one);
+      next{[1 .. m] + deg} := List([1 .. m], i -> i ^ x + deg);
+      Add(gens, TransformationNC(next));
     od;
     deg := deg + m;
   od;
