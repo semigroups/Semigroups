@@ -352,9 +352,9 @@ InstallMethod(TraceOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  local invcong;
-  if not IsInverseSemigroup(Range(cong))
-      and IsGeneratorsOfInverseSemigroup(Range(cong)) then
+  local S, invcong;
+  S := Range(cong);
+  if not (IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S)) then
     ErrorNoReturn("Semigroups: TraceOfSemigroupCongruence: usage,\n",
                   "<cong> must be over an inverse semigroup with inverse op,");
   fi;
@@ -366,9 +366,9 @@ InstallMethod(KernelOfSemigroupCongruence,
 "for semigroup congruence",
 [IsSemigroupCongruence],
 function(cong)
-  local invcong;
-  if not IsInverseSemigroup(Range(cong))
-      and IsGeneratorsOfInverseSemigroup(Range(cong)) then
+  local S, invcong;
+  S := Range(cong);
+  if not (IsInverseSemigroup(S) and IsGeneratorsOfInverseSemigroup(S)) then
     ErrorNoReturn("Semigroups: KernelOfSemigroupCongruence: usage,\n",
                   "<cong> must be over an inverse semigroup with inverse op,");
   fi;

@@ -19,6 +19,12 @@ gap> S := FreeSemigroup(2);;
 gap> congs := CongruencesOfSemigroup(S);
 Error, Semigroups: PosetOfPrincipalCongruences: usage,
 first argument <S> must be an enumerable finite semigroup,
+gap> poset := PosetOfPrincipalLeftCongruences(S);
+Error, Semigroups: PosetOfPrincipalLeftCongruences: usage,
+first argument <S> must be an enumerable finite semigroup,
+gap> poset := PosetOfPrincipalRightCongruences(S);
+Error, Semigroups: PosetOfPrincipalRightCongruences: usage,
+first argument <S> must be an enumerable finite semigroup,
 
 #T# LatticeOfCongruences
 gap> S := PartitionMonoid(2);;

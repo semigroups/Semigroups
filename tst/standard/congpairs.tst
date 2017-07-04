@@ -590,6 +590,11 @@ gap> Length(classes);
 8
 gap> ForAll(S, x -> Number(classes, c -> x in c) = 1);
 true
+gap> part := CongruenceByGeneratingPairsPartition(cong);;
+gap> SortedList(List(part, Size)) = [1, 1, 1, 1, 1, 2, 2, 2];
+true
+gap> Set(Flat(part)) = [1 .. Size(S)];
+true
 
 #T# a right congruence over an fp semigroup
 gap> F := FreeSemigroup(2);;
@@ -662,6 +667,12 @@ gap> S := F / [[F.2 ^ 2, F.2], [F.1 ^ 3, F.1 ^ 2]];;
 gap> SemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
 <semigroup congruence over <fp monoid on the generators [ m1, m2 ]> with 
 1 generating pairs>
+gap> LeftSemigroupCongruenceByGeneratingPairs(F, [[F.1, F.2]]);
+<left semigroup congruence over <free monoid on the generators 
+[ m1, m2 ]> with 1 generating pairs>
+gap> RightSemigroupCongruenceByGeneratingPairs(F, [[F.1, F.2]]);
+<right semigroup congruence over <free monoid on the generators 
+[ m1, m2 ]> with 1 generating pairs>
 gap> LeftSemigroupCongruenceByGeneratingPairs(S, [[S.1, S.2]]);
 <left semigroup congruence over <fp monoid on the generators [ m1, m2 ]> with 
 1 generating pairs>

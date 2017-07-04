@@ -177,6 +177,14 @@ gap> JoinSemigroupCongruences(cong1, cong2);
 Error, Semigroups: JoinSemigroupCongruences: usage,
 <cong1> and <cong2> must be over the same semigroup,
 
+#T# not simple or 0-simple: try next method
+gap> S := OrderEndomorphisms(2);;
+gap> IsSimpleSemigroup(S) or IsZeroSimpleSemigroup(S);
+false
+gap> congs := CongruencesOfSemigroup(S);;
+gap> Size(congs);
+3
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 gap> Unbind(T);
