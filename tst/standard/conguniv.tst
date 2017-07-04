@@ -23,6 +23,11 @@ gap> pairs := GeneratingPairsOfSemigroupCongruence(uni);;
 gap> cong := SemigroupCongruence(S, pairs);;
 gap> NrCongruenceClasses(cong);
 1
+gap> part := EquivalenceRelationPartition(uni);;
+gap> Size(part);
+1
+gap> Set(part[1]) = Elements(S);
+true
 
 #T# CongUnivTest2: Has zero, not 0-simple
 gap> S := Semigroup([Transformation([2, 4, 3, 5, 5, 7, 1]),

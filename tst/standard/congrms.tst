@@ -162,6 +162,8 @@ gap> Size(classes[24]);
 4
 gap> Size(classes[1]);
 8
+gap> Enumerator(classes[24]);
+[ (2,(2,4),3), (2,(1,2,3,4),3), (2,(1,3),3), (2,(1,4,3,2),3) ]
 
 #T# RMSCongruenceClassByLinkedTriple: bad input
 gap> badCoset := RightCoset(SymmetricGroup(6), (1, 5, 4));;
@@ -217,6 +219,10 @@ gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[2]);;
 gap> ccong := AsRMSCongruenceByLinkedTriple(cong);;
 gap> congs[2] = ccong;
 true
+gap> AsRZMSCongruenceByLinkedTriple(cong);
+Error, Semigroups: AsRZMSCongruenceByLinkedTriple: usage,
+the argument must be a congruence over a Rees 0-matrix
+semigroup,
 
 #T# ReesMatCongTest9: Universal semigroup congruences
 gap> uni := UniversalSemigroupCongruence(S);
@@ -428,6 +434,8 @@ gap> MultiplicativeZero(S) in class0;
 true
 gap> x in class0;
 false
+gap> Enumerator(classes[13]);
+[ (1,(),3), (1,(1,4)(3,5),3), (1,(1,5)(3,4),3), (1,(1,3)(4,5),3) ]
 
 #T# RZMSCongruenceClassByLinkedTriple: bad input
 gap> badCoset := RightCoset(SymmetricGroup(6), (1, 5, 4));;

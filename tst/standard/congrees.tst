@@ -68,6 +68,13 @@ gap> cc[2] * cc[5];
 <congruence class of Transformation( [ 2, 4, 1, 3, 1 ] )>
 gap> cc[9] * cc[7] = cc[11];
 true
+gap> Print(cong, "\n");
+ReesCongruenceOfSemigroupIdeal( SemigroupIdeal( Semigroup(
+    [ Transformation( [ 2, 4, 3, 5, 5 ] ), Transformation( [ 3, 1, 1, 4, 4 ] )\
+, Transformation( [ 3, 1, 4, 2, 4 ] ), Transformation( [ 3, 4, 2, 3, 4 ] ), Tr\
+ansformation( [ 4, 1, 5, 1, 2 ] ) ] ), 
+ [ Transformation( [ 3, 1, 1, 4, 4 ] ), Transformation( [ 1, 4, 1, 4, 1 ] ) ]
+   ) )
 
 #T# ReesCongTest3
 # Convert a congruence to generating pairs
