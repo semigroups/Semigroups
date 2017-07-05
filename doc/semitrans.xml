@@ -390,11 +390,12 @@ gap> FixedPointsOfTransformationSemigroup(S);
     <Oper Name = "WreathProduct" Arg = "M, S"/>
     <Returns>A transformation semigroup.</Returns>
     <Description>
-      If <A>M</A> is a transformation monoid or a permutation group, and
-      <A>S</A> is a transformation semigroup or a permutation group, the
-      operation <C>WreathProduct(<A>M</A>, <A>S</A>)</C> returns the wreath
+      If <A>M</A> is a transformation monoid (or a permutation group) of degree
+      (largest moved point) m, and <A>S</A> is a transformation semigroup (or a
+      permutation group) of degree (largest moved point) s, the  operation
+      <C>WreathProduct(<A>M</A>, <A>S</A>)</C> returns the wreath
       product of <A>M</A> and <A>S</A>, in terms of its embedding in the full
-      transformation monoid.
+      transformation monoid of degree <C>m * s</C>.
 
       <Example><![CDATA[
 gap> T := FullTransformationMonoid(3);;

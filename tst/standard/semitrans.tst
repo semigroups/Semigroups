@@ -2836,6 +2836,10 @@ true
 gap> W := WreathProduct(Group((1, 2)), FullTransformationMonoid(3));;
 gap> Size(W);
 216
+gap> Transformation([5, 6, 1, 2, 3, 4]) in W;
+true
+gap> Transformation([5, 5, 1, 2, 3, 4]) in W;
+false
 
 #T# Tests wreath product of a monoid not satisfying IsTransformationMonoid
 gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]));;
@@ -2843,6 +2847,10 @@ gap> C := Group((1, 2));;
 gap> WW := WreathProduct(C, S);;
 gap> Size(WW);
 32
+gap> Transformation([2, 1, 4, 3, 6, 5, 6, 5, 6, 5]) in WW;
+true
+gap> Transformation([2, 1, 4, 3, 6, 5, 6, 5, 7, 8]) in WW;
+false
 
 #E#
 gap> SEMIGROUPS.StopTest();
