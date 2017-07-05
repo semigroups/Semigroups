@@ -14,3 +14,7 @@ DeclareGlobalFunction("IteratorFromPickledFile");
 
 DeclareGlobalFunction("ReadOldGenerators");
 DeclareGlobalFunction("IteratorFromOldGeneratorsFile");
+
+DeclareGlobalFunction("ReadMultiplicationTable");
+DeclareGlobalFunction("WriteMultiplicationTable");
+DeclareGlobalFunction("IteratorFromMultiplicationTableFile");

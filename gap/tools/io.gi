@@ -313,3 +313,203 @@ function(str)
 
   return IteratorByFunctions(record);
 end);
+
+InstallGlobalFunction(ReadMultiplicationTable,
+function(arg)
+  local name, line_nr, file, ReadMultiplicationTableLine, i, line, lines;
+  if Length(arg) = 1 then
+    name    := arg[1];
+    line_nr := 0;
+  elif Length(arg) = 2 then
+    name    := arg[1];
+    line_nr := arg[2];
+  else
+    ErrorNoReturn("Semigroups: ReadMultiplicationTable: usage,\n",
+                  "there should be 1 or 2 arguments,");
+  fi;
+  if IsString(name) then
+    name := UserHomeExpand(name);
+    file := IO_CompressedFile(name, "r");
+    if file = fail then
+      ErrorNoReturn("Semigroups: ReadMultiplicationTable:\n",
+                    "could not open the file \"", name, "\",");
+    fi;
+  elif IsFile(name) then
+    file := name;
+  else
+    ErrorNoReturn("Semigroups: ReadMultiplicationTable: usage,\n",
+                  "the first argument must be a string or a file,");
+  fi;
+  if not (IsInt(line_nr) and line_nr >= 0) then
+    ErrorNoReturn("Semigroups: ReadMultiplicationTable: usage,\n",
+                  "the second argument must be a positive integer,");
+  fi;
+  ReadMultiplicationTableLine := SEMIGROUPS.ReadMultiplicationTableLine;
+
+  if line_nr <> 0 then
+    i := 0;
+    repeat
+      i    := i + 1;
+      line := IO_ReadLine(file);
+    until i = line_nr or line = "";
+    if IsString(arg[1]) then
+      IO_Close(file);
+    elif line = "" then
+      ErrorNoReturn("Semigroups: ReadMultiplicationTable:\n",
+                    "the file only has ", i - 1, " lines,");
+    fi;
+    return ReadMultiplicationTableLine(Chomp(line), RootInt(Length(line)));
+  else
+    lines := IO_ReadLines(file);
+    if IsString(arg[1]) then
+      IO_Close(file);
+    fi;
+    Apply(lines, line -> ReadMultiplicationTableLine(Chomp(line),
+                                                   RootInt(Length(line))));
+    return lines;
+  fi;
+end);
+
+SEMIGROUPS.ReadMultiplicationTableLine := function(line, n)
+  local table, vals, row, entry, i, j;
+  table := EmptyPlist(n);
+  vals := [0 .. n - 1];
+  for i in vals do
+    row := EmptyPlist(n);
+    for j in vals do
+      entry := IntChar(line[i * n + j + 1]);
+      if entry = 0 then
+        row[j + 1] := 10;
+      else
+        row[j + 1] := entry;
+      fi;
+    od;
+    table[i + 1] := row;
+  od;
+  return table;
+end;
+
+InstallGlobalFunction(WriteMultiplicationTable,
+function(arg)
+  local name, coll, mode, file, str, i, j, k, n;
+
+  if Length(arg) = 2 then
+    name := arg[1];
+    coll := arg[2];
+    mode := "w";
+  elif Length(arg) = 3 then
+    name := arg[1];
+    coll := arg[2];
+    mode := arg[3];
+  else
+    ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
+                  "there should be 2 or 3 arguments,");
+  fi;
+
+  if not (mode = "a" or mode = "w") then
+    ErrorNoReturn("Semigroups: WriteMultiplcationTable: usage,\n",
+                  "the third argument must be \"a\" or \"w\",");
+  fi;
+
+  if IsString(name) then
+    name := UserHomeExpand(name);
+    file := IO_CompressedFile(name, mode);
+    if file = fail then
+      # Cannot test this
+      ErrorNoReturn("Semigroups: WriteMultiplcationTable:\n",
+                    "couldn't open the file ", name, ",");
+    fi;
+  elif IsFile(name) then
+    file := name;
+  else
+    ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
+                  "the first argument must be a string or a file,");
+  fi;
+
+  for i in [1 .. Length(coll)] do
+    n := Size(coll[i]); # Don't assume all multiplcation tables are same size.
+    if not (IsRectangularTable(coll[i]) and IsInt(coll[i][1][1])) then
+      ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
+                    "the second argument must be a collection of rectangular ",
+                    "tables containing only integers,");
+    elif not n < 256 then
+      ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
+                    "the second argument must be a collection of rectangular ",
+                    "tables with at most 255 rows,");
+    fi;
+
+    str := EmptyString(n ^ 2 + 1); # + 1 for newline character
+    for j in [1 .. n] do
+      for k in [1 .. n] do
+        if not (0 < coll[i][j][k] and coll[i][j][k] <= n) then
+          ErrorNoReturn("Semigroups: WriteMultiplicationTable: usage,\n",
+                        "the second argument must be a collection of ",
+                        "rectangular tables with integer entries from [1, 2, ",
+                        "..., n] (where n equals the number of rows of the ",
+                        "table),");
+        elif coll[i][j][k] = 10 then
+          Add(str, '\000'); # We use CharInt(0) since CharInt(10) is newline.
+        else
+          Add(str, CharInt(coll[i][j][k]));
+        fi;
+      od;
+    od;
+    Add(str, '\n');
+
+    if IO_Write(file, str) = fail then
+      return IO_Error;
+    fi;
+  od;
+
+  if IsString(arg[1]) then
+    IO_Close(file);
+  fi;
+  return IO_OK;
+end);
+
+InstallGlobalFunction(IteratorFromMultiplicationTableFile,
+function(str)
+  local file, line, record, n;
+
+  file := IO_CompressedFile(UserHomeExpand(str), "r");
+
+  if file = fail then
+    return fail;
+  fi;
+
+  line := IO_ReadLine(file);
+  n := RootInt(Length(line));
+  line := SEMIGROUPS.ReadMultiplicationTableLine(Chomp(line), n);
+  record := rec(file := file, current := line);
+
+  record.NextIterator := function(iter)
+    local next;
+    next := iter!.current;
+    iter!.current := IO_ReadLine(iter!.file);
+    if iter!.current <> "" then
+      iter!.current
+        := SEMIGROUPS.ReadMultiplicationTableLine(Chomp(iter!.current), n);
+    fi;
+    return next;
+  end;
+
+  record.IsDoneIterator := function(iter)
+    if iter!.current = "" then
+      if not iter!.file!.closed then
+        IO_Close(iter!.file);
+      fi;
+      return true;
+    else
+      return false;
+    fi;
+  end;
+
+  record.ShallowCopy := function(iter)
+    local file, line;
+    file := IO_CompressedFile(UserHomeExpand(str), "r");
+    line := SEMIGROUPS.ReadMultiplicationTableLine(Chomp(IO_ReadLine(file)), n);
+    return rec(file := file, current := line);
+  end;
+
+  return IteratorByFunctions(record);
+end);

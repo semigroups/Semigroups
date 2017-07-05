@@ -14,11 +14,11 @@
     <Func Name = "IteratorFromOldGeneratorsFile" Arg = "filename"/>
     <Returns>An iterator.</Returns>
     <Description>
-      If <A>filename</A> is a string containing the name of a file created using
-      <Ref Func = "WriteGenerators"/>, then <C>IteratorFromPickledFile</C>
-      returns an iterator <C>iter</C> such that <C>NextIterator(iter)</C>
-      returns the next collection of generators stored in the file <A>filename</A>.
-      <P/>
+      If <A>filename</A> is a file or a string containing the name of a file
+      created using <Ref Func = "WriteGenerators"/>, then
+      <C>IteratorFromPickledFile</C> returns an iterator <C>iter</C> such that
+      <C>NextIterator(iter)</C> returns the next collection of generators stored
+      in the file <A>filename</A>. <P/>
 
       This function is a convenient way of, for example, looping over a
       collection of generators in a file without loading every object in the
@@ -44,17 +44,17 @@
       The argument <A>list</A> should be a list of elements, a semigroup, or a
       list of lists of elements, or semigroups. <P/>
 
-      The argument <A>filename</A> should be a string containing the name of a
-      file where the entries in <A>list</A> will be written or an
+      The argument <A>filename</A> should be a file or a string containing the
+      name of a file where the entries in <A>list</A> will be written or an
       <Package>IO</Package> package file object; see <Ref Func="IO_File"
         BookName="io"/> and <Ref Func="IO_CompressedFile" BookName="io"/>.<P/>
 
-      If  the  optional  third argument <A>append</A> is given and equals
-      <C>"w"</C>,  then the previous content of the file is deleted and
-      overwritten.  If the optional third argument is <C>"a"</C> or is not
-      present, then <C>list</C> is appended to the file.  This function returns
-      <Ref Var="IO_OK" BookName="io"/> if everything went well or <Ref
-        Var="IO_ERROR" BookName="io"/> if something went wrong.<P/>
+      If the optional third argument <A>append</A> is not present or is given
+      and equals <C>"w"</C>, then the previous content of the file is deleted
+      and overwritten.  If the third argument is <C>"a"</C>, then <C>list</C>
+      is appended to the file.  This function returns
+      <Ref Var="IO_OK" BookName="io"/> if everything went well or
+      <Ref Var="IO_ERROR" BookName="io"/> if something went wrong.<P/>
 
       <C>WriteGenerators</C> appends a line to the file <A>filename</A>
       for every entry in <A>list</A>. If any element of <A>list</A> is a
@@ -85,7 +85,7 @@
     <Func Name = "ReadOldGenerators" Arg = "filename[, nr]"/>
     <Returns>A list of lists of semigroup elements.</Returns>
     <Description>
-      If <A>filename</A> is the name of a file created using
+      If <A>filename</A> is a file or is the name of a file created using
       <Ref Func = "WriteGenerators"/>, then <C>ReadGenerators</C> returns the
       contents of this file as a list of lists of elements of a semigroup. <P/>
 
@@ -105,3 +105,83 @@ gap> ReadGenerators(file, 13);
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="IteratorFromMultiplicationTableFile">
+  <ManSection>
+    <Func Name = "IteratorFromMultiplicationTableFile" Arg = "filename"/>
+    <Returns>An iterator.</Returns>
+    <Description>
+      If <A>filename</A> is a file or a string containing the name of a file
+      created using <Ref Func = "WriteMultiplicationTable"/>, then 
+      <C>IteratorFromMultiplicationTableFile</C> returns an iterator <C>iter</C>
+      such that <C>NextIterator(iter)</C> returns the next multiplication table
+      stored in the file <A>filename</A>.<P/>
+
+      This function is a convenient way of, for example, looping over a
+      collection of multiplication tables in a file without loading every
+      object in the file into memory. This might be useful if the file
+      contains more information than there is available memory.<P/>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="WriteMultiplicationTable">
+  <ManSection>
+    <Func Name = "WriteMultiplicationTable" Arg = "filename, list[, append]"/>
+    <Returns><C>IO_OK</C> or <C>IO_ERROR</C>.</Returns>
+    <Description>
+      This function provides a method for writing collections of multiplication
+      tables to a file.  The resulting file can be further compressed using
+      <C>gzip</C> or <C>xz</C>. This function applies to square arrays with a
+      maximum of 255 rows where the entries are integers from
+      <C>[1, 2, .., n]</C> (where <C>n</C> is the number of rows in the
+      array.<P/>
+
+      The argument <A>list</A> should be a list of multiplication tables.<P/>
+
+      The argument <A>filename</A> should be a file or a string containing the
+      name of a file where the entries in <A>list</A> will be written or an
+      <Package>IO</Package> package file object; see <Ref Func="IO_File"
+        BookName="io"/> and <Ref Func="IO_CompressedFile" BookName="io"/>.<P/>
+
+      If  the  optional third argument <A>append</A> is not present or is
+      given and equals <C>"w"</C>, then the previous content of the file
+      is deleted and overwritten. If the third argument is given and equals
+      <C>"a"</C> then <C>list</C> is appended to the file. This function
+      returns <Ref Var="IO_OK" BookName="io"/> if everything went well or
+      <Ref Var="IO_ERROR" BookName="io"/> if something went wrong.<P/>
+      
+      The multiplication tables saved in <A>filename</A> can be recovered from
+      the file using <Ref Func = "ReadMultiplicationTable"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="ReadMultiplicationTable">
+  <ManSection>
+    <Func Name = "ReadMultiplicationTable" Arg = "filename[, nr]"/>
+    <Returns>A list of multiplication tables.</Returns>
+    <Description>
+      If <A>filename</A> is a file or is the name of a file created using
+      <Ref Func = "WriteMultiplicationTable"/>, then
+      <C>ReadMultiplicationTable</C> returns the contents of this file as a
+      list of multiplication tables.<P/>
+
+      If the optional second argument <A>nr</A> is present, then
+      <C>ReadMultiplicationTable</C> returns the mutiplication table stored in
+      the <A>nr</A>th line of <A>filename</A>.
+
+      <Example><![CDATA[
+gap> file := Concatenation(SEMIGROUPS.PackageDir,
+> "/data/tst/tables.gz");;
+gap> tab := ReadMultiplicationTable(file, 12);
+[ [ 1, 1, 3, 4, 5, 6, 7, 8, 9, 6 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+  [ 3, 3, 1, 5, 4, 7, 6, 9, 8, 7 ], [ 4, 4, 9, 6, 3, 8, 5, 1, 7, 8 ], 
+  [ 5, 5, 8, 7, 1, 9, 4, 3, 6, 9 ], [ 6, 6, 7, 8, 9, 1, 3, 4, 5, 1 ], 
+  [ 7, 7, 6, 9, 8, 3, 1, 5, 4, 3 ], [ 8, 8, 5, 1, 7, 4, 9, 6, 3, 4 ], 
+  [ 9, 9, 4, 3, 6, 5, 8, 7, 1, 5 ], [ 6, 10, 7, 8, 9, 1, 3, 4, 5, 2 ] 
+ ]]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
