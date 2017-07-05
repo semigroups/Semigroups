@@ -391,9 +391,9 @@ gap> FixedPointsOfTransformationSemigroup(S);
     <Returns>A transformation semigroup.</Returns>
     <Description>
       If <A>M</A> is a transformation monoid (or a permutation group) of degree
-      (largest moved point) m, and <A>S</A> is a transformation semigroup (or a
-      permutation group) of degree (largest moved point) s, the  operation
-      <C>WreathProduct(<A>M</A>, <A>S</A>)</C> returns the wreath
+      (largest moved point) <C>m</C>, and <A>S</A> is a transformation semigroup
+      (or a permutation group) of degree (largest moved point) <C>s</C>, the
+      operation <C>WreathProduct(<A>M</A>, <A>S</A>)</C> returns the wreath
       product of <A>M</A> and <A>S</A>, in terms of its embedding in the full
       transformation monoid of degree <C>m * s</C>.
 
