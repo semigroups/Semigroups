@@ -358,6 +358,7 @@ true]]></Log>
     <#Include Label = "ClosureSemigroup">
     <#Include Label = "SubsemigroupByProperty">
     <#Include Label = "InverseSubsemigroupByProperty">
+    <#Include Label = "DirectProduct">
   </Section>
  
    <Section Label = "Changing the representation of a semigroup">
