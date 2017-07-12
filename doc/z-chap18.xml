@@ -46,7 +46,9 @@
       BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash"/>.
 
     <#Include Label = "DotString"/>
+    <#Include Label = "DotStringDigraph"/>
     <#Include Label = "DotSemilatticeOfIdempotents"/>
+    <#Include Label = "DotLeftCayleyDigraph">
 
   </Section>
  
@@ -81,6 +83,7 @@
       BookName = "GAPDoc"/> or viewed using <Ref Func = "Splash"/>.
 
     <#Include Label = "TikzString">
+    <#Include Label = "TikzLeftCayleyDigraph">
 
   </Section>
 

@@ -735,3 +735,101 @@ function(coll)
   deg := DegreeOfTransformationCollection(coll);
   return JoinStringsWithSeparator(List(coll, x -> TexString(x, deg)), "\n");
 end);
+
+InstallMethod(TikzLeftCayleyDigraph, "for a semigroup", [IsSemigroup],
+function(S)
+  return TikzString(LeftCayleyDigraph(S));
+end);
+
+InstallMethod(TikzRightCayleyDigraph, "for a semigroup", [IsSemigroup],
+function(S)
+  return TikzString(RightCayleyDigraph(S));
+end);
+
+InstallMethod(TikzString, "for a Cayley digraph", [IsCayleyDigraph],
+function(digraph)
+  local S, vertex, edge, str, nbs, x, from, gen;
+
+  S := SemigroupOfCayleyDigraph(digraph);
+  if not IsEnumerableSemigroupRep(S) or Size(S) > 26 then
+    TryNextMethod();
+  fi;
+
+  vertex := function(x)
+    local word, name, label;
+    word  := MinimalFactorization(S, x);
+    name  := SEMIGROUPS.WordToString(word);
+    label := SEMIGROUPS.ExtRepObjToString(SEMIGROUPS.WordToExtRepObj(word));
+    return Concatenation("  \\node [vertex] (", name, ") at (0, 0) {};\n",
+                         "  \\node at (0, 0) {$", label, "$};\n\n");
+  end;
+
+  edge := function(from, to, gen)
+    local word;
+    word := MinimalFactorization(S, AsListCanonical(S)[from]);
+    from := SEMIGROUPS.WordToString(word);
+    word := MinimalFactorization(S, AsListCanonical(S)[to]);
+    to   := SEMIGROUPS.WordToString(word);
+    gen  := SEMIGROUPS.WordToString([gen]);
+    if from <> to then
+      return Concatenation("  \\path[->] (", from,
+                           ") edge [edge] node {$", gen, "$} (",
+                           to, ");\n");
+    else
+      return Concatenation("  \\path[->] (", from,
+                           ") edge [loop]\n",
+                           "           node {$", gen, "$} (", to, ");\n");
+    fi;
+  end;
+
+  str := "";
+
+  Append(str, "\\begin{tikzpicture}[scale=1, auto, \n");
+  Append(str, "  vertex/.style={circle, draw, thick, fill=white, minimum");
+  Append(str, " size=0.65cm},\n");
+  Append(str, "  edge/.style={arrows={-angle 90}, thick},\n");
+  Append(str, "  loop/.style={min distance=5mm,looseness=5,");
+  Append(str, "arrows={-angle 90},thick}]\n\n");
+
+  Append(str, "  % Vertices . . .\n");
+  for x in AsListCanonical(S) do
+    Append(str, vertex(x));
+  od;
+
+  Append(str, "  % Edges . . .\n");
+  nbs := OutNeighbours(digraph);
+  for from in [1 .. Size(S)] do
+    for gen in [1 .. Size(nbs[from])] do
+      Append(str, edge(from, nbs[from][gen], gen));
+    od;
+  od;
+
+  Append(str, "\\end{tikzpicture}");
+  return str;
+end);
+
+InstallMethod(DotString, "for a Cayley digraph", [IsCayleyDigraph],
+function(digraph)
+  local S, li, label, i;
+  S  := SemigroupOfCayleyDigraph(digraph);
+  if not IsEnumerableSemigroupRep(S) or Size(S) > 26 then
+    TryNextMethod();
+  fi;
+  li := AsListCanonical(S);
+  for i in [1 .. Size(S)] do
+    label := SEMIGROUPS.WordToExtRepObj(MinimalFactorization(S, li[i]));
+    label := SEMIGROUPS.ExtRepObjToString(label);
+    SetDigraphVertexLabel(digraph, i, label);
+  od;
+  return DotVertexLabelledDigraph(digraph);
+end);
+
+InstallMethod(DotLeftCayleyDigraph, "for a semigroup", [IsSemigroup],
+function(S)
+  return DotString(LeftCayleyDigraph(S));
+end);
+
+InstallMethod(DotRightCayleyDigraph, "for a semigroup", [IsSemigroup],
+function(S)
+  return DotString(RightCayleyDigraph(S));
+end);
