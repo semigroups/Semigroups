@@ -565,11 +565,23 @@ end);
 InstallMethod(RightCayleyGraphSemigroup, "for an enumerable semigroup rep",
 [IsEnumerableSemigroupRep], 3,
 function(S)
+  return OutNeighbours(RightCayleyDigraph(S));
+end);
+
+InstallMethod(RightCayleyDigraph,
+"for an enumerable semigroup rep",
+[IsEnumerableSemigroupRep],
+function(S)
+  local digraph;
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: RightCayleyGraphSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: RightCayleyDigraph: usage,\n",
                   "the first argument (a semigroup) must be finite,");
   fi;
-  return EN_SEMI_RIGHT_CAYLEY_GRAPH(S);
+  digraph := Digraph(EN_SEMI_RIGHT_CAYLEY_GRAPH(S));
+  SetFilterObj(digraph, IsCayleyDigraph);
+  SetSemigroupOfCayleyDigraph(digraph, S);
+  SetGeneratorsOfCayleyDigraph(digraph, GeneratorsOfSemigroup(S));
+  return digraph;
 end);
 
 # same method for ideals
@@ -578,11 +590,23 @@ InstallMethod(LeftCayleyGraphSemigroup,
 "for an enumerable semigroup rep",
 [IsEnumerableSemigroupRep], 3,
 function(S)
+  return OutNeighbours(LeftCayleyDigraph(S));
+end);
+
+InstallMethod(LeftCayleyDigraph,
+"for an enumerable semigroup rep",
+[IsEnumerableSemigroupRep],
+function(S)
+  local digraph;
   if not IsFinite(S) then
-    ErrorNoReturn("Semigroups: LeftCayleyGraphSemigroup: usage,\n",
+    ErrorNoReturn("Semigroups: LeftCayleyDigraph: usage,\n",
                   "the first argument (a semigroup) must be finite,");
   fi;
-  return EN_SEMI_LEFT_CAYLEY_GRAPH(S);
+  digraph := Digraph(EN_SEMI_LEFT_CAYLEY_GRAPH(S));
+  SetFilterObj(digraph, IsCayleyDigraph);
+  SetSemigroupOfCayleyDigraph(digraph, S);
+  SetGeneratorsOfCayleyDigraph(digraph, GeneratorsOfSemigroup(S));
+  return digraph;
 end);
 
 InstallMethod(MultiplicationTable, "for an enumerable semigroup",

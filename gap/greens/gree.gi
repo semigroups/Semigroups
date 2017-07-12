@@ -391,8 +391,6 @@ function(S)
 
   l  := LeftCayleyGraphSemigroup(S);
   r  := RightCayleyGraphSemigroup(S);
-  # WW: in the future, when l and r are digraphs, gr can be created
-  #     by using DigraphEdgeUnion(l, r)
   gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
   gr := QuotientDigraph(gr, DigraphStronglyConnectedComponents(gr).comps);
   return List(OutNeighbours(gr), Set);

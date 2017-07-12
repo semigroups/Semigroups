@@ -48,3 +48,6 @@ DeclareOperation("Enumerate", [IsEnumerableSemigroupRep]);
 DeclareOperation("IsFullyEnumerated", [IsEnumerableSemigroupRep]);
 
 DeclareProperty("IsSemigroupEnumerator", IsEnumeratorByFunctions);
+
+DeclareAttribute("LeftCayleyDigraph", IsEnumerableSemigroupRep);
+DeclareAttribute("RightCayleyDigraph", IsEnumerableSemigroupRep);

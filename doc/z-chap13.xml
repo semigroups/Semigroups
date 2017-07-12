@@ -27,7 +27,7 @@
     <Heading>
        Cayley graphs
      </Heading>
-     <#Include Label = "RightCayleyGraphSemigroup">
+     <#Include Label = "RightCayleyDigraph">
    </Section>
 
   <!--**********************************************************************-->

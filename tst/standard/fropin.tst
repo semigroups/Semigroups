@@ -416,14 +416,35 @@ gap> PositionSorted(S, S.1);
 Error, Semigroups: PositionSortedOp: usage,
 the first argument (a semigroup) must be finite,
 
-# Left/RightCayleyGraphSemigroup, for an infinite enumerable semigroup
+# Left/RightCayleyDigraph, for an infinite enumerable semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;
-gap> RightCayleyGraphSemigroup(S);
-Error, Semigroups: RightCayleyGraphSemigroup: usage,
+gap> RightCayleyDigraph(S);
+Error, Semigroups: RightCayleyDigraph: usage,
 the first argument (a semigroup) must be finite,
+gap> LeftCayleyDigraph(S);
+Error, Semigroups: LeftCayleyDigraph: usage,
+the first argument (a semigroup) must be finite,
+
+# Left/RightCayleyGraphSemigroup
+gap> S := Semigroup(FullTransformationMonoid(3));;
 gap> LeftCayleyGraphSemigroup(S);
-Error, Semigroups: LeftCayleyGraphSemigroup: usage,
-the first argument (a semigroup) must be finite,
+[ [ 1, 2, 3, 4 ], [ 2, 5, 8, 9 ], [ 3, 6, 1, 10 ], [ 4, 7, 7, 4 ], 
+  [ 5, 1, 6, 14 ], [ 6, 8, 5, 15 ], [ 7, 11, 4, 10 ], [ 8, 3, 2, 16 ], 
+  [ 9, 12, 12, 9 ], [ 10, 13, 13, 10 ], [ 11, 4, 11, 22 ], [ 12, 17, 9, 16 ], 
+  [ 13, 18, 10, 4 ], [ 14, 19, 19, 14 ], [ 15, 20, 20, 15 ], 
+  [ 16, 21, 21, 16 ], [ 17, 9, 17, 26 ], [ 18, 10, 18, 26 ], 
+  [ 19, 23, 14, 15 ], [ 20, 24, 15, 14 ], [ 21, 25, 16, 9 ], 
+  [ 22, 22, 22, 22 ], [ 23, 14, 23, 27 ], [ 24, 15, 24, 22 ], 
+  [ 25, 16, 25, 27 ], [ 26, 26, 26, 26 ], [ 27, 27, 27, 27 ] ]
+gap> RightCayleyGraphSemigroup(S);
+[ [ 1, 2, 3, 4 ], [ 2, 5, 6, 7 ], [ 3, 8, 1, 7 ], [ 4, 9, 10, 4 ], 
+  [ 5, 1, 8, 11 ], [ 6, 3, 2, 11 ], [ 7, 12, 13, 7 ], [ 8, 6, 5, 4 ], 
+  [ 9, 14, 15, 10 ], [ 10, 16, 4, 10 ], [ 11, 17, 18, 11 ], 
+  [ 12, 19, 20, 13 ], [ 13, 21, 7, 13 ], [ 14, 4, 16, 22 ], [ 15, 10, 9, 22 ],
+  [ 16, 15, 14, 4 ], [ 17, 23, 24, 18 ], [ 18, 25, 11, 18 ], 
+  [ 19, 7, 21, 22 ], [ 20, 13, 12, 22 ], [ 21, 20, 19, 7 ], 
+  [ 22, 26, 26, 22 ], [ 23, 11, 25, 22 ], [ 24, 18, 17, 22 ], 
+  [ 25, 24, 23, 11 ], [ 26, 27, 22, 26 ], [ 27, 22, 27, 22 ] ]
 
 # AsSet, for an infinite enumerable semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[-2, 2], [0, -1]]));;

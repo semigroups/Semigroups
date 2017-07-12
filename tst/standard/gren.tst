@@ -1670,16 +1670,16 @@ gap> GreensLClasses(D);
 # Test GreensXClasses for an infinite enumerable semigroup
 gap> S := Semigroup(Matrix(IsMaxPlusMatrix, [[0, 2], [-1, 0]]));;
 gap> GreensLClasses(S);
-Error, Semigroups: LeftCayleyGraphSemigroup: usage,
+Error, Semigroups: LeftCayleyDigraph: usage,
 the first argument (a semigroup) must be finite,
 gap> GreensRClasses(S);
-Error, Semigroups: RightCayleyGraphSemigroup: usage,
+Error, Semigroups: RightCayleyDigraph: usage,
 the first argument (a semigroup) must be finite,
 gap> GreensHClasses(S);
-Error, Semigroups: LeftCayleyGraphSemigroup: usage,
+Error, Semigroups: LeftCayleyDigraph: usage,
 the first argument (a semigroup) must be finite,
 gap> GreensDClasses(S);
-Error, Semigroups: LeftCayleyGraphSemigroup: usage,
+Error, Semigroups: LeftCayleyDigraph: usage,
 the first argument (a semigroup) must be finite,
 gap> GreensJClasses(S);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound

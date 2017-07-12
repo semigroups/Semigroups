@@ -225,19 +225,19 @@ end);
 InstallMethod(GreensRRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
-  local fam, rel;
+  local fam, data, rel;
   if IsActingSemigroup(S) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-
+  data := DigraphStronglyConnectedComponents(RightCayleyDigraph(S));
   rel := Objectify(NewType(fam,
                            IsEquivalenceRelation
                              and IsEquivalenceRelationDefaultRep
                              and IsGreensRRelation
                              and IsEnumerableSemigroupGreensRelationRep),
-                   rec(data := GABOW_SCC(RightCayleyGraphSemigroup(S))));
+                   rec(data := data));
   SetSource(rel, S);
   SetRange(rel, S);
   SetIsLeftSemigroupCongruence(rel, true);
@@ -250,19 +250,19 @@ end);
 InstallMethod(GreensLRelation, "for an enumerable semigroup",
 [IsEnumerableSemigroupRep],
 function(S)
-  local fam, rel;
+  local fam, data, rel;
   if IsActingSemigroup(S) then
     TryNextMethod();
   fi;
   fam := GeneralMappingsFamily(ElementsFamily(FamilyObj(S)),
                                ElementsFamily(FamilyObj(S)));
-
+  data := DigraphStronglyConnectedComponents(LeftCayleyDigraph(S));
   rel := Objectify(NewType(fam,
                            IsEquivalenceRelation
                              and IsEquivalenceRelationDefaultRep
                              and IsGreensLRelation
                              and IsEnumerableSemigroupGreensRelationRep),
-                   rec(data := GABOW_SCC(LeftCayleyGraphSemigroup(S))));
+                   rec(data := data));
   SetSource(rel, S);
   SetRange(rel, S);
   SetIsRightSemigroupCongruence(rel, true);
@@ -514,19 +514,20 @@ InstallMethod(HClassReps, "for a Green's class of an enumerable semigroup",
 [IsGreensClass and IsEnumerableSemigroupGreensClassRep],
 C -> SEMIGROUPS.XClassRepsOfClass(C, GreensHRelation));
 
-## Partial order of D-classes
-# There is duplicate code in here and in maximal D-classes
+# There is duplicate code in here and in maximal D-classes.
+#
+# This cannot be replaced with the method for IsSemigroup and IsFinite since
+# the value of GreensDRelation(S)!.data.comps is not the same as the output of
+# DigraphStronglyConnectedComponents.
 
 InstallMethod(PartialOrderOfDClasses, "for a finite enumerable semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local l, r, gr;
-
-  l  := LeftCayleyGraphSemigroup(S);
-  r  := RightCayleyGraphSemigroup(S);
-  gr := Digraph(List([1 .. Length(l)], i -> Concatenation(l[i], r[i])));
+  l  := LeftCayleyDigraph(S);
+  r  := RightCayleyDigraph(S);
+  gr := DigraphEdgeUnion(l, r);
   gr := QuotientDigraph(gr, GreensDRelation(S)!.data.comps);
-
   return List(OutNeighbours(gr), Set);
 end);
 
