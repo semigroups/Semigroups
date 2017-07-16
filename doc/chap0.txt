@@ -3,7 +3,7 @@
                                    [1X[5XSemigroups[105X[101X
   
   
-                                 Version 3.0.3
+                                 Version 3.0.4
   
   
                                  J. D. Mitchell
@@ -307,6 +307,7 @@
       6.4-1 ClosureSemigroup
       6.4-2 SubsemigroupByProperty
       6.4-3 InverseSubsemigroupByProperty
+      6.4-4 DirectProduct
     6.5 [33X[0;0YChanging the representation of a semigroup[133X
       6.5-1 IsomorphismSemigroup
       6.5-2 IsomorphismMonoid

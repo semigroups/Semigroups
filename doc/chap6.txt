@@ -518,6 +518,37 @@
     [4X[28X142[128X[104X
   [4X[32X[104X
   
+  [1X6.4-4 DirectProduct[101X
+  
+  [29X[2XDirectProduct[102X( [3XS[103X[, [3XT[103X, [3X...[103X] ) [32X function
+  [29X[2XDirectProductOp[102X( [3Xlist[103X, [3XS[103X ) [32X operation
+  [6XReturns:[106X  [33X[0;10YA transformation semigroup.[133X
+  
+  [33X[0;0YThe   function   [10XDirectProduct[110X   takes   an  arbitrary  positive  number  of
+  transformation  semigroups  and  returns  another  transformation  semigroup
+  isomorphic  to  their  direct  product.  The  operation  [10XDirectProductOp[110X  is
+  included   for   consistency  with  the  [5XGAP[105X  library  (see  [2XDirectProductOp[102X
+  ([14XReference:  DirectProductOp[114X)).  It  takes  exactly  two arguments, namely a
+  non-empty   list   [10Xlist[110X  of  transformation  semigroups  and  one  of  these
+  semigroups, [10XS[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 1]));;[127X[104X
+    [4X[25Xgap>[125X [27XT := Semigroup(Transformation([1, 2, 3, 3, 3]));;[127X[104X
+    [4X[25Xgap>[125X [27XDP := DirectProduct(S, T);[127X[104X
+    [4X[28X<commutative transformation semigroup of degree 7 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XElements(DP);[127X[104X
+    [4X[28X[ Transformation( [ 1, 2, 3, 4, 5, 5, 5 ] ), [128X[104X
+    [4X[28X  Transformation( [ 2, 1, 3, 4, 5, 5, 5 ] ) ][128X[104X
+    [4X[25Xgap>[125X [27XS := Monoid([Transformation([2, 4, 3, 4]),[127X[104X
+    [4X[25X>[125X [27X                Transformation([3, 3, 2, 3, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XT := Semigroup([Transformation([3, 5, 4, 2, 6, 3])]);;[127X[104X
+    [4X[25Xgap>[125X [27XDP := DirectProduct(S, T);[127X[104X
+    [4X[28X<transformation semigroup of degree 11 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSize(DP);[127X[104X
+    [4X[28X35[128X[104X
+  [4X[32X[104X
+  
   
   [1X6.5 [33X[0;0YChanging the representation of a semigroup[133X[101X
   

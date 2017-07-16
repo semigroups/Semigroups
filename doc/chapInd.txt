@@ -102,6 +102,8 @@
   [2XDigraphOfActionOnPoints[102X (for a transformation semigroup)  13.12-5
   [2XDimensionOfMatrixOverSemiring[102X  5.1-3
   [2XDimensionOfMatrixOverSemiringCollection[102X  5.1-4
+  [2XDirectProduct[102X  6.4-4
+  [2XDirectProductOp[102X  6.4-4
   [2XDomainOfBipartition[102X  3.5-10
   [2XDotSemilatticeOfIdempotents[102X  18.2-2
   [2XDotString[102X  18.2-1
