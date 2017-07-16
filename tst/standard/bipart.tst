@@ -667,6 +667,8 @@ gap> filename := Concatenation(SEMIGROUPS.PackageDir,
 > "/tst/standard/bipart.tst");;
 gap> f := IO_File(filename, "r");;
 gap> IO_Unpicklers.BIPA(f);
+No unpickler for magic value "####"
+Maybe you have to load a package for this to work?
 IO_Error
 gap> IO_Pickle(f, x);
 IO_Error
