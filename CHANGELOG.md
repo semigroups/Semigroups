@@ -2,6 +2,17 @@
 
 #### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.4 (released 16/07/2017)
+
+Some minor issues are fixed in this release:
+
+* [Issue 342](https://github.com/gap-packages/Semigroups/issues/342)
+`DirectProduct` for transformation semigroups returned the wrong answer when
+applied to semigroups satisfying `IsMonoidAsSemigroup`. 
+[[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+Some documentation and tests were added. [[Michael Torpey](http://www-circa.mcs.st-and.ac.uk/mct25/)]
+
 ### Version 3.0.3 (released 21/06/2017)
 
 Some minor issues are fixed in this release:
