@@ -775,8 +775,7 @@ function(M, S)
         rimage;
   if not IsMonoidAsSemigroup(S) then
     ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
-                   "the second argument <S> should be a monoid (as ",
-                   "semigroup),");
+                  "the second argument <S> should be a monoid (as semigroup),");
   fi;
 
   m := DegreeOfTransformationCollection(M);
