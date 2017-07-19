@@ -753,6 +753,77 @@ function(S)
   return t;
 end);
 
+InstallMethod(WreathProduct,
+"for a transformation monoid and a permutation group",
+[IsTransformationMonoid, IsPermGroup],
+function(M, G)
+  return WreathProduct(M, AsMonoid(IsTransformationMonoid, G));
+end);
+
+InstallMethod(WreathProduct,
+"for a permutation group and a transformation semigroup",
+[IsPermGroup, IsTransformationSemigroup],
+function(G, S)
+  return WreathProduct(AsMonoid(IsTransformationMonoid, G), S);
+end);
+
+InstallMethod(WreathProduct,
+"for a transformation monoid and a transformation semigroup",
+[IsTransformationMonoid, IsTransformationSemigroup],
+function(M, S)
+  local maps, newmap, gensM, gensS, next, reps, orbs, gen1, n, i, s, x, m, y,
+        rimage;
+  if not IsMonoidAsSemigroup(S) then
+    ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
+                  "the second argument <S> should be a monoid (as semigroup),");
+  fi;
+
+  m := DegreeOfTransformationCollection(M);
+
+  gensM := List(GeneratorsOfMonoid(M), x -> ImageListOfTransformation(x, m));
+  gensS := GeneratorsOfSemigroup(S);
+
+  orbs := List(ComponentsOfTransformationSemigroup(S), Minimum);
+  n := DegreeOfTransformationCollection(S);
+  rimage := [1 .. n];
+
+  for x in orbs do
+    for y in gensS do
+      RemoveSet(rimage, x ^ y);
+    od;
+  od;
+
+  maps := []; # final generating set for the wreath product
+
+  # move copies of M as by the action induced by S
+  next := [1 .. m * n];
+  for s in gensS do
+    for i in [1 .. n] do
+      next{[1 .. m] + (i - 1) * m} := [1 .. m] + (i ^ s - 1) * m;
+    od;
+    Add(maps, Transformation(next));
+  od;
+
+  gen1 := gensS[1];
+  for i in orbs do
+    newmap := ShallowCopy(ImageListOfTransformation(maps[1], m * n));
+    for x in gensM do
+      newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
+      Add(maps, Transformation(newmap));
+    od;
+  od;
+
+  for i in rimage do
+    newmap := OnTuples([1 .. m * n], maps[1]);
+    for x in gensM do
+      newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
+      Add(maps, Transformation(newmap));
+    od;
+  od;
+
+  return Semigroup(maps);
+end);
+
 #############################################################################
 # ?. Isomorphisms
 #############################################################################

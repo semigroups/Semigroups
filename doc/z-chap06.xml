@@ -359,6 +359,7 @@ true]]></Log>
     <#Include Label = "SubsemigroupByProperty">
     <#Include Label = "InverseSubsemigroupByProperty">
     <#Include Label = "DirectProduct">
+    <#Include Label = "WreathProduct">
   </Section>
  
    <Section Label = "Changing the representation of a semigroup">

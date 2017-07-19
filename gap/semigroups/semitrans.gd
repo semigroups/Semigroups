@@ -39,3 +39,7 @@ DeclareAttribute("EndomorphismMonoid", IsDigraph);
 DeclareOperation("EndomorphismMonoid", [IsDigraph, IsHomogeneousList]);
 
 DeclareOperation("DirectProductOp", [IsList, IsSemigroup]);
+
+DeclareOperation("WreathProduct",
+                 [IsMultiplicativeElementCollection,
+                  IsMultiplicativeElementCollection]);
