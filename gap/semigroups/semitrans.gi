@@ -806,7 +806,7 @@ function(M, S)
 
   gen1 := gensS[1];
   for i in orbs do
-    newmap := ImageListOfTransformation(maps[1], m * n);
+    newmap := ShallowCopy(ImageListOfTransformation(maps[1], m * n));
     for x in gensM do
       newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
       Add(maps, Transformation(newmap));
