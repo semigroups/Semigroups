@@ -775,17 +775,16 @@ function(M, S)
         rimage;
   if not IsMonoidAsSemigroup(S) then
     ErrorNoReturn("Semigroups: WreathProduct: usage,\n",
-                    "the second argument <S> should be a monoid (as ",
-                    "semigroup),");
+                   "the second argument <S> should be a monoid (as ",
+                   "semigroup),");
   fi;
 
   m := DegreeOfTransformationCollection(M);
 
-  gensM := ShallowCopy(GeneratorsOfMonoid(M));
-  gensM := List(gensM, x -> OnTuples([1 .. m], x));
+  gensM := List(GeneratorsOfMonoid(M), x -> ImageListOfTransformation(x, m));
   gensS := GeneratorsOfSemigroup(S);
 
-  orbs := List(ComponentsOfTransformationSemigroup(S), x -> Minimum(x));
+  orbs := List(ComponentsOfTransformationSemigroup(S), Minimum);
   n := DegreeOfTransformationCollection(S);
   rimage := [1 .. n];
 
@@ -808,7 +807,7 @@ function(M, S)
 
   gen1 := gensS[1];
   for i in orbs do
-    newmap := OnTuples([1 .. m * n], maps[1]);
+    newmap := ImageListOfTransformation(maps[1], m * n);
     for x in gensM do
       newmap{[1 .. m] + (i - 1) * m} := x + (i ^ gen1 - 1) * m;
       Add(maps, Transformation(newmap));
