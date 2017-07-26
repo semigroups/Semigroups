@@ -1293,9 +1293,9 @@ InstallMethod(\^, "for a semigroup element and a translation",
 function(x, t)
   local list;
   if IsLeftTranslationsSemigroupElement(t) then
-    list := AsList(UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t))));
+    list := AsListCanonical(UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t))));
   else
-    list := AsList(UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t))));
+    list := AsListCanonical(UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t))));
   fi;
   if not x in list then
     Error("Semigroups: ^ for a semigroup element and translation: \n",
