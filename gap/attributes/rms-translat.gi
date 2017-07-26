@@ -114,7 +114,7 @@ function(T)
         return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
             fa(x[1])*x[2], x[3]);
       end;
-      Add(gens, LeftTranslation(T, CompositionMapping(
+      Add(gens, LeftTranslationNC(T, CompositionMapping(
         inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
     else
       f := function(x)
@@ -124,7 +124,7 @@ function(T)
         return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
           x[2]*fa(x[3]), x[3]); 
       end;
-      Add(gens, RightTranslation(T, CompositionMapping(
+      Add(gens, RightTranslationNC(T, CompositionMapping(
         inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
     fi;
   od;
@@ -534,13 +534,13 @@ SEMIGROUPS.TranslationalHullElementsOfZeroSimple := function(H)
       fi;
     end;
     
-    l := LeftTranslation(L, CompositionMapping(inv, MappingByFunction(
+    l := LeftTranslationNC(L, CompositionMapping(inv, MappingByFunction(
       reesmatsemi, reesmatsemi, fl), iso));
     
-    r := RightTranslation(R, CompositionMapping(inv, MappingByFunction(
+    r := RightTranslationNC(R, CompositionMapping(inv, MappingByFunction(
       reesmatsemi, reesmatsemi, fr), iso));
     
-    return TranslationalHullElement(H, l, r);
+    return TranslationalHullElementNC(H, l, r);
   end;
   
   
