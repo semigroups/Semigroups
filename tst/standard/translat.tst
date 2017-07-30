@@ -39,7 +39,16 @@ gap> TranslationalHullSemigroup(S);
 <translational hull over <regular transformation semigroup ideal of 
  degree 10 with 1 generator>>
 
-#T# with calculation - rectangular bands
+#T# Creation of translations without having generators of the semigroup
+gap> S := SymmetricGroup(4);;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> l := LeftTranslation(L, IdentityTransformation);
+<left translation on Sym( [ 1 .. 4 ] )>
+gap> R := RightTranslationsSemigroup(S);;
+gap> r := RightTranslation(R, IdentityTransformation);
+<right translation on Sym( [ 1 .. 4 ] )>
+
+#T# With calculation - rectangular bands
 gap> S := RectangularBand(3,3);
 <regular transformation semigroup of size 9, degree 7 with 3 generators>
 gap> L := LeftTranslations(S);
@@ -86,6 +95,22 @@ gap> GeneratorsOfSemigroup(H);
     <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
   <linked pair of translations on <simple transformation semigroup of size 9, 
      degree 7 with 3 generators>> ]
+gap> SEMIGROUPS.TranslationalHullElements(H);
+Semigroup( 
+[ <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>>, <linked pair of translations on 
+    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
+  <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>>, <linked pair of translations on 
+    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
+  <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>>, <linked pair of translations on 
+    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
+  <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>>, <linked pair of translations on 
+    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
+  <linked pair of translations on <simple transformation semigroup of size 9, 
+     degree 7 with 3 generators>> ] )
 
 #T# small RZMS
 gap> G := SmallGroup(4,2);;
@@ -158,33 +183,32 @@ gap> Size(R);
 gap> S := BrauerMonoid(5);;
 gap> L := LeftTranslations(S);
 Monoid( 
-[ <left translation on <regular bipartition *-monoid of size 945, degree 5 
-     with 3 generators>>, <left translation on <regular bipartition *-monoid 
-     of size 945, degree 5 with 3 generators>>, 
-  <left translation on <regular bipartition *-monoid of size 945, degree 5 
-     with 3 generators>>, <left translation on <regular bipartition *-monoid 
-     of size 945, degree 5 with 3 generators>> ] )
+[ <left translation on <regular bipartition *-monoid of degree 5 with 3 
+     generators>>, <left translation on <regular bipartition *-monoid of 
+     degree 5 with 3 generators>>, 
+  <left translation on <regular bipartition *-monoid of degree 5 with 3 
+     generators>>, <left translation on <regular bipartition *-monoid of 
+     degree 5 with 3 generators>> ] )
 gap> Size(L);
 945
 gap> R := RightTranslations(S);
 Monoid( 
-[ <right translation on <regular bipartition *-monoid of size 945, degree 5 
-     with 3 generators>>, <right translation on <regular bipartition *-monoid 
-     of size 945, degree 5 with 3 generators>>, 
-  <right translation on <regular bipartition *-monoid of size 945, degree 5 
-     with 3 generators>>, <right translation on <regular bipartition *-monoid 
-     of size 945, degree 5 with 3 generators>> ] )
+[ <right translation on <regular bipartition *-monoid of degree 5 with 3 
+     generators>>, <right translation on <regular bipartition *-monoid of 
+     degree 5 with 3 generators>>, 
+  <right translation on <regular bipartition *-monoid of degree 5 with 3 
+     generators>>, <right translation on <regular bipartition *-monoid of 
+     degree 5 with 3 generators>> ] )
 gap> Size(R);
 945
 gap> H := TranslationalHull(S);
 Monoid( 
-[ <linked pair of translations on <regular bipartition *-monoid of size 945, 
-     degree 5 with 3 generators>>, <linked pair of translations on 
-    <regular bipartition *-monoid of size 945, degree 5 with 3 generators>>, 
-  <linked pair of translations on <regular bipartition *-monoid of size 945, 
-     degree 5 with 3 generators>>, <linked pair of translations on 
-    <regular bipartition *-monoid of size 945, degree 5 with 3 generators>> 
- ] )
+[ <linked pair of translations on <regular bipartition *-monoid of degree 5 
+     with 3 generators>>, <linked pair of translations on 
+    <regular bipartition *-monoid of degree 5 with 3 generators>>, 
+  <linked pair of translations on <regular bipartition *-monoid of degree 5 
+     with 3 generators>>, <linked pair of translations on 
+    <regular bipartition *-monoid of degree 5 with 3 generators>> ] )
 gap> Size(H);
 945
 gap> S := FullTransformationMonoid(5);;
@@ -375,6 +399,11 @@ gap> LeftTranslation(L, Transformation(x));
 Error, Semigroups: LeftTranslation (from transformation): 
 the second argument must act on the indices of the underlying semigroup of the\
  first argument,
+gap> S := RectangularBand(2,3);;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> l := LeftTranslation(L, Transformation([1,1,1,1,1,1]));
+Error, Semigroups: LeftTranslation: 
+the transformation given must define a left translation,
 
 #T# Error Testing - Right Translations
 gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);;
@@ -404,11 +433,32 @@ gap> RightTranslation(R, Transformation(x));
 Error, Semigroups: RightTranslation (from transformation): 
 the second argument must act on the indices of the underlying semigroup of the\
  first argument,
+gap> S := RectangularBand(2,3);;
+gap> R := RightTranslationsSemigroup(S);;
+gap> r := RightTranslation(R, Transformation([1,1,1,1,1,1]));
+Error, Semigroups: RightTranslation: 
+the transformation given must define a right translation,
+
+#T# Error Testing - Left Translations Without Generators
+gap> S := SymmetricGroup(4);;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> LeftTranslation(L, Transformation([1,1,1,1,1,1]));
+Error, Semigroups: LeftTranslation: 
+the transformation given must define a left translation,
+
+#T# Error Testing - Right Translations Without Generators
+gap> S := SymmetricGroup(4);;
+gap> R := RightTranslationsSemigroup(S);;
+gap> RightTranslation(R, Transformation([1,1,1,1,1,1]));
+Error, Semigroups: RightTranslation: 
+the transformation given must define a right translation,
 
 #T# Error Testing - Translational Hull Elements
 gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);;
+gap> T := RectangularBand(3,4);;
 gap> L := LeftTranslationsSemigroup(S);;
 gap> R := RightTranslationsSemigroup(S);;
+gap> RT := RightTranslationsSemigroup(T);;
 gap> H := TranslationalHull(S);;
 gap> l := Representative(L);;
 gap> r := Representative(R);;
@@ -421,6 +471,21 @@ the second argument must be a left translation and the third argument must be \
 a right translation,
 gap> l := LeftTranslation(L, MappingByFunction(S, S, x -> S.1 * x));;
 gap> r := RightTranslation(R, MappingByFunction(S, S, x -> x * S.2));;
+gap> TranslationalHullElement(H, l, r);
+Error, Semigroups: TranslationalHullElement: 
+the translations given must form a linked pair,
+gap> r := Representative(RT);;
+gap> TranslationalHullElement(H, l, r);
+Error, Semigroups: TranslationalHullElement: 
+each argument must have the same underlying semigroup,
+
+#T# Error Testing - Translational Hull Elements Without Generators
+gap> S := SymmetricGroup(3);;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> R := RightTranslationsSemigroup(S);;
+gap> H := TranslationalHullSemigroup(S);;
+gap> l := LeftTranslationNC(L, IdentityTransformation);;
+gap> r := RightTranslationNC(R, Transformation([2,1,4,3,6,5]));;
 gap> TranslationalHullElement(H, l, r);
 Error, Semigroups: TranslationalHullElement: 
 the translations given must form a linked pair,
@@ -463,6 +528,7 @@ gap> Unbind(mat);
 gap> Unbind(R);
 gap> Unbind(r);
 gap> Unbind(S);
+gap> Unbind(T);
 gap> Unbind(SEMIGROUPS.bruteforcetranshull);
 gap> Unbind(x);
 
