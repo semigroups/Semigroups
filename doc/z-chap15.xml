@@ -86,97 +86,86 @@
     <C>S</C> we have that:
 
       <List>
-        <Mark>(i)</Mark> 
         <Item>
           <C>es</C> <M>\in</M> <C>E</C> implies <C>s</C> <M>\in</M> <C>E</C>,
         </Item>
-        <Mark>(ii)</Mark> 
         <Item>
           <C>se</C> <M>\in</M> <C>E</C> implies <C>s</C> <M>\in</M> <C>E</C>.
         </Item>
       </List>
 
     For inverse semigroups these two conditions are equivalent. We are only
-    interested in <E>E-unitary inverse semigroups</E>. A 
-    <E>McAlister triple semigroup</E> is, briefly, an E-unitary inverse
-    semigroup defined by a partial order <C>X</C>, a join semilattice <C>Y</C>
-    which is a suborder of <C>X</C> and a group which acts on <C>X</C>, on the
-    right, as an order automorphism. Such a McAlister triple is denoted by
-    <C>M(G,X,Y)</C> and it is the set of pairs <C>[A,g]</C> in
-    <C>Y x G</C> such that <C>A</C> acted on by <C>g</C> inverse is in
-    <A>Y</A> together with multiplication defined as
-    <C>[A,g]*[B,h]=[Join(A,Bg^-1),hg]</C> where <C>Meet</C> is the natural join 
-    operation of the semilattice and <C>Bg^-1</C> is <C>B</C> acted on by 
-    <C>g</C> inverse. With this operation, a McAlister triple is a semigroup. In fact
-    every McAlister triple is an E-unitary inverse semigroup and every E-unitary
-    inverse semigroup is isomorphic to some McAlister triple semigroup. The
-    triple <C>[G,X,Y]</C> must also satisfy the following conditions to be a
-    McAlister triple:
-    
-      <List>
-        <Mark> M1 </Mark> 
-        <Item>
-          <C>Y</C> is a semilattice which is a subdigraph of <C>X</C>.
-        </Item>
-        <Mark> M2 </Mark> 
-        <Item>
-          For all <C>A</C> <M>\in</M> <C>X</C> and <C>B</C> <M>\in</M> <C>Y</C>: 
-          if <C>A</C> <M>\leq</M>  <C>B</C> then <C>A</C> <M>\in</M> <C>Y</C>.
-        </Item>
-        <Mark> M3 </Mark> 
-        <Item>
-          For every <C>A</C> <M>\in</M> <C>X</C> there exists some <C>B</C> <M>\in</M> 
-          <C>Y</C> and <C>g</C> <M>\in</M> <C>G</C> such that
-          <C>A</C>=<C>Bg</C>.
-        </Item>
-        <Mark> M4 </Mark> 
-        <Item>
-          For all <C>g</C> <M>\in</M> <C>G</C> we have that the set <C>{yg : y 
-          </C><M>\in</M><C> Y}</C> <M>\cap</M> <C>Y</C> is non-empty.
-        </Item>
-      </List>
+    interested in <E>E-unitary inverse semigroups</E>. 
+    Before defining McAlister triple semigroups we define a McAlister triple.
+    A <E>McAlister triple</E> is a triple <C>(G,X,Y)</C> which consisting of:
+
+    <List>
+      <Item>
+        a partial order <C>X</C>,
+      </Item>
+      <Item>
+        a join semilattice <C>Y</C> which is a suborder of <C>X</C>,
+      </Item>
+      <Item>
+        a group <C>G</C> which acts on <C>X</C>, on the right, by order automorphisms.
+      </Item>
+    </List>
+
+    Furthermore, <C>(G,X,Y)</C> must satisfy the following four properties to
+    be a McAlister triple:
+
+    <List>
+      <Mark> M1 </Mark> 
+      <Item>
+        <C>Y</C> is a semilattice that is a subdigraph of <C>X</C>.
+      </Item>
+      <Mark> M2 </Mark> 
+      <Item>
+        For all <C>A</C> <M>\in</M> <C>X</C> and for all <C>B</C> <M>\in</M>
+        <C>Y</C>: if <C>A</C> <M>\leq</M> <C>B</C>, then <C>A</C> <M>\in</M>
+        <C>Y</C>.
+      </Item>
+      <Mark> M3 </Mark> 
+      <Item>
+        For every <C>A</C> <M>\in</M> <C>X</C>, there exists some <C>B</C> <M>\in</M> 
+        <C>Y</C> and there exists <C>g</C> <M>\in</M> <C>G</C> such that
+        <C>A</C> = <C>Bg</C>.
+      </Item>
+      <Mark> M4 </Mark> 
+      <Item>
+        For all <C>g</C> <M>\in</M> <C>G</C>, the intersection <C>{yg : y 
+        </C><M>\in</M><C> Y}</C> <M>\cap</M> <C>Y</C> is non-empty.
+      </Item>
+    </List>
+
+    We may define an E-unitary inverse semigroup using a McAlister triple. Given 
+    <C>(G,X,Y)</C> let <C>M(G,X,Y)</C> be the set of all pairs <C>(A,g)</C> in
+    <C>Y x G</C> such that <C>A</C> acted on by the inverse of <C>g</C> is in
+    <C>Y</C> together with multiplication defined by <P/>
+
+    <C>(A,g)*(B,h) = (Join(A,Bg^-1),hg)</C> <P/>
+
+    where <C>Join</C> is the natural join operation of the semilattice and
+    <C>Bg^-1</C> is <C>B</C> acted on by the inverse of <C>g</C>. With this
+    operation, <C>M(G,X,Y)</C> is semigroup which we call a <E>McAlister triple
+    semigroup</E> over <C>(G,X,Y)</C>. In fact every McAlister triple semigroup
+    is an E-unitary inverse semigroup and every E-unitary inverse semigroup is
+    isomorphic to some McAlister triple semigroup. Note that there is not a
+    unqiue McAlister triple semigroups defined by McAlister triple because
+    there may be multiple different actions of the group on the partial order.
 
     A rigorous treatment of McAlister triples may be found in Chapter 5 of
-    <Cite Key = "Howie1995aa"/>. The reader should be aware that this GAP 
-    implementation differs from the treatment in Howie in that it uses right 
-    actions. This changes some definitions and the specifics of the GAP 
-    implmentation are detailed in what follows. 
-
-    In this GAP implementation, a McAlister triple semigroup is defined by a
-    quadruple <A>(G, act, X, Y)</A> where:
-
-      <List> 
-        <Item>
-          <A>G</A> is a finite group.
-        </Item>
-        <Item>
-          <A>X</A> is a digraph, with integer vertex labels, which returns true when
-          input to IsPartialOrderDigraph
-        </Item>
-        <Item>
-          <A>Y</A> is a digraph which returns true when input to
-          IsSemilatticeDigraph. It is also is a subdigraph of <A>X</A>
-          (possibly with a different labeling).
-        </Item>
-        <Item>
-          <A>act</A> is a function which is a right action of <A>G</A> on the
-          vertices of <A>X</A>. That is to say, it is a function which takes as
-          its first input a vertex of the digraph <A>X</A>, as its second input
-          an element of <A>G</A> and returns a vertex of <A>X</A>. Being a
-          right action means that <C>act(x,gh)=act(act(x,g),h)</C> holds for
-          all <A>x</A> in <A>X</A> and <A>g,h</A> <M>\in</M> <A>G</A>.
-          Furthermore this action must satisfy 
-          <C>IsSubgroup(AutomorphismGroup(</C><A>X</A><C>), 
-            Image(ActionHomomorphism(</C><A>G</A><C>,
-              DigraphVertices(</C><A>X</A><C>), </C><A>act</A><C>))</C>
-        </Item>
-      </List>
-
-      In addition, <A>(G, act, X, Y)</A> satisfy M1-M4 where the action of
-      <A>G</A> on (the vertices of) <A>X, Y</A> is <A>act</A>.
+    <Cite Key = "Howie1995aa"/>. This GAP implementation differs from the
+    treatment in Howie in that it uses right actions. This changes some
+    definitions and the specifics of the GAP implmentation are detailed in
+    the section <Ref Oper="McAlisterTripleSemigroup"/>.
 
     <#Include Label = "IsMcAlisterTripleSemigroup">
     <#Include Label = "McAlisterTripleSemigroup">
+    <#Include Label = "McAlisterTripleSemigroupGroup" Arg = "S"/>
+    <#Include Label = "McAlisterTripleSemigroupPartialOrder" Arg = "S"/>
+    <#Include Label = "McAlisterTripleSemigroupSemilattice" Arg = "S"/>
+    <#Include Label = "McAlisterTripleSemigroupAction" Arg = "S"/>
     <#Include Label = "IsMcAlisterTripleSemigroupElement">
     <#Include Label = "McAlisterTripleSemigroupElement">
 

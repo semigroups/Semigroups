@@ -16,6 +16,7 @@ DeclareRepresentation("IsMcAlisterTripleSemigroupElementRep",
                       and IsPositionalObjectRep, 2);
 
 DeclareCategoryCollections("IsMcAlisterTripleSemigroupElement");
+DeclareSynonym("IsMTSE", IsMcAlisterTripleSemigroupElement);
 DeclareSynonymAttr("IsMcAlisterTripleSemigroup",
                    IsInverseSemigroup and IsGeneratorsOfInverseSemigroup
                    and IsMcAlisterTripleSemigroupElementCollection
@@ -30,9 +31,9 @@ InstallTrueMethod(IsGeneratorsOfInverseSemigroup,
 
 # Operations for creating McAlister triple semigroups
 DeclareOperation("McAlisterTripleSemigroup",
-                 [IsGroup, IsFunction, IsDigraph, IsDigraph]);
+                 [IsGroup, IsDigraph, IsDigraph, IsFunction]);
 DeclareOperation("McAlisterTripleSemigroup",
-                 [IsGroup, IsFunction, IsDigraph, IsHomogeneousList]);
+                 [IsGroup, IsDigraph, IsHomogeneousList, IsFunction]);
 DeclareOperation("McAlisterTripleSemigroup",
                  [IsPermGroup, IsDigraph, IsDigraph]);
 DeclareOperation("McAlisterTripleSemigroup",
@@ -61,14 +62,12 @@ DeclareOperation("EUnitaryInverseCover", [IsSemigroup]);
 DeclareOperation("McAlisterTripleSemigroupElement",
                  [IsMcAlisterTripleSemigroup,
                  IsPosInt, IsMultiplicativeElementWithInverse]);
-DeclareOperation("MTE", [IsMcAlisterTripleSemigroup, IsPosInt,
-                         IsMultiplicativeElementWithInverse]);
+DeclareSynonym("MTSE", McAlisterTripleSemigroupElement);
 
 # Operations for McAlister triple semigroup elements
 DeclareOperation("McAlisterTripleSemigroupElementParent",
                  [IsMcAlisterTripleSemigroupElementRep]);
-DeclareOperation("MTEParent",
-                 [IsMcAlisterTripleSemigroupElementRep]);
+DeclareSynonym("MTSEParent", McAlisterTripleSemigroupElementParent);
 DeclareOperation("ELM_LIST", [IsMcAlisterTripleSemigroupElementRep, IsPosInt]);
 
 # F-inverse semigroup property

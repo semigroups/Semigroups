@@ -10,48 +10,80 @@
 
 <#GAPDoc Label="IsMcAlisterTripleSemigroup">
   <ManSection>
-    <Prop Name = "IsMcAlisterTripleSemigroup" Arg = "S"/>
+    <Filt Name = "IsMcAlisterTripleSemigroup" Arg = "S"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      A <E>McAlister triple semigroup</E> is an E-unitary inverse semigroup
-      <Ref Oper= "IsEUnitaryInverseSemigroup" BookName= "Semigroups" />
-      defined by a partial order, a semilattice and a group which acts by
-      order automorphisms on the partial order. All E-unitary inverse
-      semigroups can be represented as a McAlister triple semigroup and all
-      McAlister triple semigroups define E-unitary inverse semigroups. <P/>
+      This function returns true if <A>S</A> is a McAlister triple semigroup.
+      A <E>McAlister triple semigroup</E> is a special representation of an
+      E-unitary inverse semigroup <Ref Oper="IsEUnitaryInverseSemigroup"/>
+      created by <Ref Oper="McAlisterTripleSemigroup"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
-      We use two <Ref Oper= "Digraph" BookName= "Digraphs" /> objects to
-      represent the partial order and the semilattice of a McAlister triple.
-      These will satisfy <Ref Oper= "IsPartialOrderDigraph" 
-      BookName= "Digraphs" /> and <Ref Oper= "IsJoinSemilatticeDigraph"
-      BookName= "Digraphs" />, respecitvely. <P/>
+<#GAPDoc Label="McAlisterTripleSemigroup">
+  <ManSection>
+    <Oper Name = "McAlisterTripleSemigroup" Arg = "G, X, Y, act"
+    Label = "for a group, partial order digraph, semilattice digraph, and action"/>
+    <Oper Name = "McAlisterTripleSemigroup" Arg = "G, X, Y"
+    Label = "for a group, partial order digraph, and semilattice digraph"/>
+    <Oper Name = "McAlisterTripleSemigroup" Arg = "G, X, sub_ver, act"
+    Label = "for a group, partial order digraph, homogeneous list, and action"/>
+    <Oper Name = "McAlisterTripleSemigroup" Arg = "G, X, sub_ver"
+    Label = "for a group, partial order digraph, and homogeneous list"/>
+    <Returns>A McAlister triple semigroup.</Returns>
+    <Description>
 
-      A rigorous treatment of McAlister triples may be found in Chapter 5
-      of <Cite Key = "Howie1995aa"/>. The precise conditions
-      for a triple in &GAP; are as follows:
+    The following will cover the technical information needed to create
+    McAlister triple semigroups in GAP, the underlying theorey can be read in
+    the introduction of the section <Ref Sect = "McAlister triple semigroups"/>.
 
-      <List>
-        <Mark> M1 </Mark>
-        <Item>
-          <C>Y</C> is a semilattice which is a subdigraph of <C>X</C>.
-        </Item>
-        <Mark> M2 </Mark> 
-        <Item>
-          For all <C>A</C> in <C>X</C> and for all <C>B</C> in <C>Y</C>:
-          if <C>A</C> <M>\leq</M> <C>B</C> then <C>A</C> in <C>Y</C>.
-        </Item>
-        <Mark> M3 </Mark> 
-        <Item>
-          For every <C>A</C> in <C>X</C> there exists some <C>B</C> in
-          <C>Y</C> and <C>g</C> in <C>G</C> such that <C>A</C> is equal to
-          <C>B</C> acted on by <C>g</C>.
-        </Item>
-        <Mark> M4 </Mark> 
-        <Item>
-          For all <C>g</C> in <C>G</C> we have that the intersection of <C>Y</C>
-          acted on by <C>g</C> with <C>Y</C> is non-empty.
-        </Item>
-      </List>
+    A McAlister triple semigroup is created from a quadruple
+    <A>(G, act, X, Y)</A> where:
+
+    <List> 
+      <Item>
+        <A>G</A> is a finite group.
+      </Item>
+      <Item>
+        <A>X</A> is a <Ref Oper="Digraph" BookName="Digraphs"/>,
+        with integer vertex labels, which is a partial order digraph.
+        That latter means that <A>X</A> returns true when input to 
+        <Ref Prop= "IsPartialOrderDigraph" BookName="Digraphs"/>.
+      </Item>
+      <Item>
+        <A>Y</A> is a subdigraph of <A>X</A>, possibly with different vertex
+        labels, which is a join-semilattice. The latter means that <A>Y</A>
+        returns true when input to
+        <Ref Prop="IsJoinSemilatticeDigraph" BookName="Digraphs"/>.  
+      </Item>
+      <Item>
+        <A>act</A> is a function which is a right action of <A>G</A> on the
+        vertices of <A>X</A>. That is to say, it is a function which takes as
+        its first input a vertex of the digraph <A>X</A>, as its second input
+        an element of <A>G</A> and returns a vertex of <A>X</A>. Being a
+        right action means that <C>act(x,gh)=act(act(x,g),h)</C> holds for
+        all <A>x</A> in <A>X</A> and <A>g,h</A> <M>\in</M> <A>G</A>.
+        Furthermore the permutation represenation of this action must be a
+        subgroup of the automorphism group of <A>X</A>. That means we require
+        the following to return true: <P/>
+        <C>IsSubgroup(AutomorphismGroup(</C><A>X</A><C>),
+          Image(ActionHomomorphism(</C><A>G</A><C>,
+            DigraphVertices(</C><A>X</A><C>), </C><A>act</A><C>))</C>.
+      </Item>
+    </List>
+
+    In addition, <A>(G,X,Y)</A> must be a McAlister triple as described in
+    <Ref Sect = "McAlister triple semigroups"/>, where the action of <A>G</A>
+    on the vertices of <A>X,Y</A> being <A>act</A>.
+
+    For user convienience, there are multiple versions of
+    <C>McAlisterTripleSemigroup</C>. When the argument <A>act</A> is ommitted
+    it is assumed to be <Ref Func= "OnPoints" BookName= "ref"/>. Additionally,
+    the semilattice argument <A>Y</A> may be replaced by a homogeneous list
+    <A>sub_ver</A> of vertices of <A>X</A>. When <A>sub_ver</A> is provided,
+    <C>McAlisterTripleSemigroup</C> is called with <A>Y</A> equalling
+    <C>InducedSubdigraph(<A>X</A>, <A>sub_ver</A>)</C>.
 
      <Example><![CDATA[
 gap> x := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);
@@ -70,55 +102,65 @@ gap> GeneratorsOfSemigroup(T);
 [ (1, ()), (2, ()), (3, ()), (1, (2,4)(3,5)) ]
 gap> AsSemigroup(IsPartialPermSemigroup, T);
 <inverse partial perm monoid of size 4, rank 4 with 4 generators>]]></Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="McAlisterTripleSemigroupGroup">
+  <ManSection>
+    <Attr Name = "McAlisterTripleSemigroupGroup" Arg = "S"/>
+    <Returns>A group.</Returns>
+    <Description>
+      Returns the group used to create the McAlister triple semigroup <A>S</A>
+      via <Ref Oper="McAlisterTripleSemigroup"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="McAlisterTripleSemigroup">
+<#GAPDoc Label="McAlisterTripleSemigroupPartialOrder">
   <ManSection>
-    <Oper Name = "McAlisterTripleSemigroup" Arg = "G, act, X, Y"
-    Label = "for a group, action, partial order digraph, and semilattice digraph"/>
-    <Oper Name = "McAlisterTripleSemigroup" Arg = "G, X, Y"
-    Label = "for a group, partial order digraph, and semilattice digraph"/>
-    <Oper Name = "McAlisterTripleSemigroup" Arg = "G, act, X, sub_ver"
-    Label = "for a group, action, partial order digraph, and homogeneous list"/>
-    <Oper Name = "McAlisterTripleSemigroup" Arg = "G, X, sub_ver"
-    Label = "for a group, partial order digraph, and homogeneous list"/>
-    <Returns>A McAlister triple semigroup.</Returns>
+    <Attr Name = "McAlisterTripleSemigroupPartialOrder" Arg = "S"/>
+    <Returns>A partial order digraph.</Returns>
     <Description>
-      <C>McAlisterTripleSemigroup</C> requires a digraph <A>X</A> satisfying
-      <Ref Oper= "IsPartialOrderDigraph" BookName= "Digraphs" />, a 
-      <Ref Oper= "Digraph" BookName= "Digraphs" /> <A>Y</A> satisfying
-      <Ref Oper= "IsJoinSemilatticeDigraph" BookName= "Digraphs" />, a group
-      <A>G</A>, and a function <A>act</A> defining an action of <A>G</A> on
-      <A>X</A>. <C>McAlisterTripleSemigroup</C> also has a three argument
-      version which assumes that  <A>act</A> is <Ref Func= "OnPoints"
-      BookName= "GAPDoc"/>. Furthermore there are three and four argument
-      versions where the homogeneous list <A>sub_ver</A> of vertices of
-      <A>X</A> replaces <A>Y</A> as an argument. When <A>sub_ver</A> is
-      provided, a McAlister triple semigroup is created with semilattice
-      <C>InducedSubdigraph(<A>X</A>, <A>sub_ver</A>)</C>. <P/>
+      Returns the partial order digraph used to create the McAlister triple
+      semigroup <A>S</A> via <Ref Oper="McAlisterTripleSemigroup"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 
-      Finally, the user may use <C>McAlsiterTriple</C> with a single argument,
-      <A>S</A>, which is an E-unitary inverse semigroup and it will return a
-      McAlister triple semigroup that is isomorphic to <A>S</A>.
-  </Description>
+<#GAPDoc Label="McAlisterTripleSemigroupSemilattice">
+  <ManSection>
+    <Attr Name = "McAlisterTripleSemigroupSemilattice" Arg = "S"/>
+   <Returns>A join semilattice digraph.</Returns>
+    <Description>
+      Returns the join semilattice digraph used to create the McAlister triple
+      semigroup <A>S</A> via <Ref Oper="McAlisterTripleSemigroup"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="McAlisterTripleSemigroupAction">
+  <ManSection>
+    <Attr Name = "McAlisterTripleSemigroupAction" Arg = "S"/>
+    <Returns>A group.</Returns>
+    <Description>
+      Returns the action used to create the McAlister triple semigroup
+      <A>S</A> via <Ref Oper="McAlisterTripleSemigroup"/>.
+    </Description>
   </ManSection>
 <#/GAPDoc>
 
 <#GAPDoc Label="IsMcAlisterTripleSemigroupElement">
   <ManSection>
     <Prop Name = "IsMcAlisterTripleSemigroupElement" Arg = "x"/>
-    <Prop Name = "IsMTE" Arg = "x"/>
+    <Prop Name = "IsMTSE" Arg = "x"/>
     <Returns><K>true</K> or <K>false</K>.</Returns>
     <Description>
-      A <E>McAlister triple semigroup element</E> of the McAlister triple
-      semigroup <C>M:=McAlisterTripleSemigroup=(G,act,X,Y)</C> is a pair
-      consisting of a vertex <A>A</A> of the semilattice <C>Y</C> and an
-      element <A>g</A> of the group <C>G</C> such that 
-      <C>OnPoints(<A>A</A>,<A>g</A>^-1)</C> is in <C>Y</C>. The functions
-      <Ref Prop= "IsMTE"/> and <Ref Prop= "IsMcAlisterTripleSemigroupElement"/>
-      are identicial.
+      Returns true if <A>x</A> has been created by 
+      <Ref Oper="McAlisterTripleSemigroupElement"/>. The functions <C>IsMTSE</C>
+      and <C>IsMcAlisterTripleSemigroupElement</C> are synonyms. The
+      mathematical description of the objects read can be found in the
+      introduction to <Ref Sect = "McAlister triple semigroups"/>.
 
 <Example><![CDATA[
 gap> x := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);
@@ -129,11 +171,7 @@ gap> A := AutomorphismGroup(x);
 Group([ (2,4)(3,5) ])
 gap> S := McAlisterTripleSemigroup(A, OnPoints, x, y);
 <McAlister triple semigroup over Group([ (2,4)(3,5) ])>
-gap> T := McAlisterTripleSemigroup(A, x, y);
-<McAlister triple semigroup over Group([ (2,4)(3,5) ])>
-gap> T = S;
-true
-gap> a := MTE(S, 1, (2, 4)(3, 5));
+gap> a := MTSE(S, 1, (2, 4)(3, 5));
 (1, (2,4)(3,5))
 gap> a * a;
 (1, ())
@@ -141,12 +179,12 @@ gap> gens := GeneratorsOfSemigroup(S);
 [ (1, ()), (2, ()), (3, ()), (1, (2,4)(3,5)) ]
 gap> P := AsSemigroup(IsPartialPermSemigroup, S);
 <inverse partial perm monoid of size 4, rank 4 with 4 generators>
-gap> IsomorphismMcAlisterTripleSemigroup(P);
+gap> iso := IsomorphismMcAlisterTripleSemigroup(P);
 MappingByFunction( <inverse partial perm monoid of size 4, rank 4 
  with 4 generators>, <McAlister triple semigroup over Group([ (), (),
  (1,2) ])>, function( s ) ... end )
-]]></Example>
-
+gap> IsIsomorphicSemigroup(Image(iso), S);
+true]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -154,15 +192,21 @@ MappingByFunction( <inverse partial perm monoid of size 4, rank 4
 <#GAPDoc Label="McAlisterTripleSemigroupElement">
   <ManSection>
     <Oper Name = "McAlisterTripleSemigroupElement" Arg = "S, A, g"/>
-    <Oper Name = "MTE" Arg = "S, A, g"/>
+    <Oper Name = "MTSE" Arg = "S, A, g"/>
     <Returns>A McAlister triple semigroup element.</Returns>
     <Description>
-      Returns the <E>McAlister triple semigroup</E> element of the McAlister
+      Returns the <E>McAlister triple semigroup element</E> of the McAlister
       triple semigroup <A>S</A> which corresponds to the semilattice vertex
       <A>A</A> and group element <A>g</A>, if this specifices an element of
-      <A>S</A>. The functions <Ref Prop= "MTE"/> and <Ref Prop= 
-        "McAlisterTripleSemigroupElement"/> are identicial.
+      <A>S</A>. For this to specify an element the pair <A>(A,g)</A> must
+      satisfy the following:
+      
+      <A>A</A> acted on by the inverse of <A>g</A> is a vertex of the
+      semilattice of the McAlister triple <A>S</A>. <P/> 
+      <!--TODO: Ref McAlisterTripleSemilattice -->
 
+      The functions <C>MTSE</C> and <C>McAlisterTripleSemigroupElement</C>
+      are synonyms.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -172,7 +216,7 @@ MappingByFunction( <inverse partial perm monoid of size 4, rank 4
     <Oper Name = "AsMcAlisterTripleSemigroup" Arg = "S"/>
     <Returns>A McAlister triple semigroup.</Returns>
     <Description>
-      This function can be used to find a McAlister triple semigroup which is
+      This function tries to find a McAlister triple semigroup which is
       isomorphic to a given semigroup.
     </Description>
   </ManSection>
@@ -199,7 +243,7 @@ gap> T := McAlisterTripleSemigroup(A, x, y);
 <McAlister triple semigroup over Group([ (2,4)(3,5) ])>
 gap> T = S;
 true
-gap> a := MTE(S, 1, (2, 4)(3, 5));
+gap> a := MTSE(S, 1, (2, 4)(3, 5));
 (1, (2,4)(3,5))
 gap> a * a;
 (1, ())
@@ -272,7 +316,7 @@ gap> T := McAlisterTripleSemigroup(A, x, y);
 <McAlister triple semigroup over Group([ (2,4)(3,5) ])>
 gap> T = S;
 true
-gap> a := MTE(S, 1, (2, 4)(3, 5));
+gap> a := MTSE(S, 1, (2, 4)(3, 5));
 (1, (2,4)(3,5))
 gap> a * a;
 (1, ())

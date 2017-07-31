@@ -14,9 +14,9 @@
 # Methods for creating McAlister triple semigroups
 #############################################################################
 InstallMethod(McAlisterTripleSemigroup,
-"for a perm group, action, digraph, and digraph",
-[IsGroup, IsFunction, IsDigraph, IsDigraph],
-function(G, act, X, Y)
+"for a perm group, digraph, digraph, and action",
+[IsGroup, IsDigraph, IsDigraph, IsFunction],
+function(G, X, Y, act)
   local anti_act, hom, y_edges, out_nbrs, orbs, min, fam, filt, M, x, y;
 
   if not IsFinite(G) then
@@ -33,11 +33,11 @@ function(G, act, X, Y)
   if not IsSubgroup(AutomorphismGroup(X), Image(hom)) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
                   "the first argument (a group) must act by order ",
-                  "automorphisms on the third argument (a partial order ",
+                  "automorphisms on the second argument (a partial order ",
                   "digraph),");
   elif not IsPartialOrderDigraph(X) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                  "the third argument must be a partial order digraph,");
+                  "the second argument must be a partial order digraph,");
   fi;
 
   # To check if the edges of y are a subset of the edges of x we need to apply
@@ -48,11 +48,11 @@ function(G, act, X, Y)
   if not (IsSubset(DigraphVertexLabels(X), DigraphVertexLabels(Y)) and
           IsSubset(DigraphEdges(X), y_edges)) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                  "the fourth argument must be a subdigraph of the third ",
+                  "the third argument must be a subdigraph of the third ",
                   "argument,");
   elif not IsJoinSemilatticeDigraph(Y) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
-                  "the fourth argument must be a join semilattice digraph,");
+                  "the third argument must be a join semilattice digraph,");
   fi;
 
   # Check condition M2 (check that Y is an order ideal of X.)
@@ -125,22 +125,22 @@ InstallMethod(McAlisterTripleSemigroup,
 "for a perm group, digraph, and digraph",
 [IsPermGroup, IsDigraph, IsDigraph],
 function(G, X, Y)
-  return McAlisterTripleSemigroup(G, OnPoints, X, Y);
+  return McAlisterTripleSemigroup(G, X, Y, OnPoints);
 end);
 
 InstallMethod(McAlisterTripleSemigroup,
-"for a perm group, action, digraph, and a homogeneous list",
-[IsGroup, IsFunction, IsDigraph, IsHomogeneousList],
-function(G, act, X, sub_ver)
-  return McAlisterTripleSemigroup(G, act, X, InducedSubdigraph(X, sub_ver));
+"for a perm group, digraph, homogeneous list, and action",
+[IsGroup, IsDigraph, IsHomogeneousList, IsFunction],
+function(G, X, sub_ver, act)
+  return McAlisterTripleSemigroup(G, X, InducedSubdigraph(X, sub_ver), act);
 end);
 
 InstallMethod(McAlisterTripleSemigroup,
-"for a perm group, digraph, and a homogeneous list",
+"for a perm group, digraph, and homogeneous list",
 [IsPermGroup, IsDigraph, IsHomogeneousList],
 function(G, X, sub_ver)
-  return McAlisterTripleSemigroup(G, OnPoints, X,
-                                  InducedSubdigraph(X, sub_ver));
+  return McAlisterTripleSemigroup(G, X, InducedSubdigraph(X, sub_ver),
+                                  OnPoints);
 end);
 
 #############################################################################
@@ -170,7 +170,7 @@ InstallMethod(OneImmutable, "for a McAlister triple semigroup",
 function(S)
   local Y;
   Y := McAlisterTripleSemigroupSemilattice(S);
-  return MTE(S, DigraphSources(DigraphRemoveLoops(Y))[1], ());
+  return MTSE(S, DigraphSources(DigraphRemoveLoops(Y))[1], ());
 end);
 
 # (A, g) in S if and only if Ag^-1 is a vertex of the semilattice of S
@@ -183,7 +183,7 @@ function(S)
     for g in McAlisterTripleSemigroupGroup(S) do
       for A in V do
         if (McAlisterTripleSemigroupAction(S)(A, Inverse(g)) in V) then
-          Add(out, MTE(S, A, g));
+          Add(out, MTSE(S, A, g));
         fi;
       od;
     od;
@@ -239,7 +239,7 @@ function(S, T)
          g -> ForAll(DigraphVertices(McAlisterTripleSemigroupPartialOrder(S)),
          x -> (McAlisterTripleSemigroupAction(S)(x, g)) ^ iso_x
          = McAlisterTripleSemigroupAction(T)((x ^ iso_x), (g ^ iso_g)))) then
-    return MappingByFunction(S, T, s -> MTE(T, s[1] ^ iso_x, s[2] ^ iso_g));
+    return MappingByFunction(S, T, s -> MTSE(T, s[1] ^ iso_x, s[2] ^ iso_g));
   fi;
 
   return fail;
@@ -279,13 +279,6 @@ function(S, A, g)
   return Objectify(S!.elementType, [A, g, S]);
 end);
 
-InstallMethod(MTE,
-"for a McAlister triple semigroup, pos int, and perm",
-[IsMcAlisterTripleSemigroup, IsPosInt, IsMultiplicativeElementWithInverse],
-function(S, A, g)
-  return McAlisterTripleSemigroupElement(S, A, g);
-end);
-
 InstallMethod(ELM_LIST,
 "for a McAlister triple semigroup element rep and a pos int",
 [IsMcAlisterTripleSemigroupElementRep, IsPosInt],
@@ -297,7 +290,7 @@ function(x, i)
                 ": usage,\n", "the index must be at most 2,");
 end);
 
-InstallMethod(MTEParent,
+InstallMethod(MTSEParent,
 "for a McAlister triple semigroup element rep",
 [IsMcAlisterTripleSemigroupElementRep],
 function(x)
@@ -314,7 +307,7 @@ end);
 InstallMethod(String, "for a McAlister triple semigroup element rep",
 [IsMcAlisterTripleSemigroupElementRep],
 function(x)
-  return Concatenation("MTE(", String(x![3]), ", ",
+  return Concatenation("MTSE(", String(x![3]), ", ",
     String(DigraphVertexLabels(
            McAlisterTripleSemigroupSemilattice(x![3]))[x[1]]),
     ", ", String(x[2]), ")");
@@ -348,7 +341,7 @@ function(x, y)
                   "triple semigroup,");
   fi;
   labels := DigraphVertexLabels(McAlisterTripleSemigroupSemilattice(S));
-  return MTE(S, DigraphVertexLabel(McAlisterTripleSemigroupPartialOrder(S),
+  return MTSE(S, DigraphVertexLabel(McAlisterTripleSemigroupPartialOrder(S),
                PartialOrderDigraphJoinOfVertices(
                  McAlisterTripleSemigroupPartialOrder(S), x[1],
                  McAlisterTripleSemigroupAction(S)(y[1], x[2]))),
@@ -364,7 +357,7 @@ end);
 InstallMethod(InverseOp, "for a McAlister triple semigroup element rep",
 [IsMcAlisterTripleSemigroupElementRep],
 function(x)
-  return MTE(x![3], McAlisterTripleSemigroupAction(x![3])(x[1], Inverse(x[2])),
+  return MTSE(x![3], McAlisterTripleSemigroupAction(x![3])(x[1], Inverse(x[2])),
             Inverse(x[2]));
 end);
 
@@ -504,11 +497,11 @@ function(S)
     return(anti_act(pt, g ^ -1));
   end;
 
-  M := McAlisterTripleSemigroup(Image(map_g), act, x, y);
+  M := McAlisterTripleSemigroup(Image(map_g), x, y, act);
   iso := function(s)
     local t;
     t := s;
-    return MTE(M, (t ^ map_yy) ^ map_y,
+    return MTSE(M, (t ^ map_yy) ^ map_y,
                CongruenceClassOfElement(cong, s) ^ map_g);
   end;
   return MappingByFunction(S, M, iso);
@@ -711,5 +704,5 @@ end;
 # 4) Improve GeneratorsOfSemigroup method.
 # 5) Replace SEMIGROUPS.DirectProductForCover with a proper implementation
 #    of direct products for partial perm semigroups.
-# 6) Line break hints for printing MTEs and McAlisterTripleSemigroups.
+# 6) Line break hints for printing MTSEs and McAlisterTripleSemigroups.
 ###############################################################################
