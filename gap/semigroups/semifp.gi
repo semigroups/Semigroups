@@ -92,7 +92,7 @@ function(x1, x2)
   return x1 ^ map < x2 ^ map;
 end);
 
-#TODO AsSSortedList, RightCayleyGraph, any more?
+#TODO AsSSortedList, RightCayleyDigraph, any more?
 
 InstallMethod(ViewString, "for an f.p. semigroup element",
 [IsElementOfFpSemigroup], String);

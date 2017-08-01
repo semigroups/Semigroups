@@ -27,7 +27,7 @@ The  following  is  a  summary of the steps that should lead to a successful ins
 * get the [Orb](http://gap-system.github.io/orb/) package version 4.7.5 or higher. 
   Both [Orb](http://gap-system.github.io/orb/) and [Semigroups](https://gap-packages.github.io/Semigroups) perform better if [Orb](http://gap-system.github.io/orb/) is compiled, so compile [Orb](http://gap-system.github.io/orb/)!
 
-* ensure that the [Digraphs](http://gap-system.github.io/digraphs/) package version 0.7.1 or higher is available.  [Digraphs](http://gap-system.github.io/digraphs/) must be compiled before [Semigroups](https://gap-packages.github.io/Semigroups) can be
+* ensure that the [Digraphs](http://gap-system.github.io/digraphs/) package version 0.10.0 or higher is available.  [Digraphs](http://gap-system.github.io/digraphs/) must be compiled before [Semigroups](https://gap-packages.github.io/Semigroups) can be
 loaded.
 
 * get the [genss](http://gap-system.github.io/genss/) package version 1.5 or higher 

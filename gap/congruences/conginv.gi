@@ -507,7 +507,7 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
   hashlen := SEMIGROUPS.OptionsRec(S).hashlen.L;
   ht := HTCreate([1, 1], rec(forflatplainlists := true,
                              treehashsize := hashlen));
-  right := RightCayleyGraphSemigroup(idsmgp);
+  right := OutNeighbours(RightCayleyDigraph(idsmgp));
   genstoapply := [1 .. Length(right[1])];
 
   #

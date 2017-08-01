@@ -853,12 +853,12 @@ function(S)
   local cay, deg, gen, next, T, iso, inv, i;
 
   if not IsFinite(S) then
-    # This is unreachable in tests, since there is not other method that
+    # This is unreachable in tests, since there is no other method that
     # terminates
     TryNextMethod();
   fi;
 
-  cay := RightCayleyGraphSemigroup(S);
+  cay := OutNeighbours(RightCayleyDigraph(S));
   deg := Size(S);
   gen := [];
 
@@ -897,7 +897,7 @@ function(S)
     TryNextMethod();
   fi;
 
-  cay := RightCayleyGraphSemigroup(S);
+  cay := OutNeighbours(RightCayleyDigraph(S));
   deg := Size(S);
   gen := EmptyPlist(Length(cay[1]));
 

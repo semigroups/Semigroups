@@ -15,4 +15,10 @@ DeclareOperation("DotString", [IsObject, IsRecord]);
 DeclareOperation("TexString", [IsObject]);
 DeclareOperation("TexString", [IsObject, IsObject]);
 
+DeclareOperation("TikzLeftCayleyDigraph", [IsSemigroup]);
+DeclareOperation("TikzRightCayleyDigraph", [IsSemigroup]);
+
+DeclareOperation("DotLeftCayleyDigraph", [IsSemigroup]);
+DeclareOperation("DotRightCayleyDigraph", [IsSemigroup]);
+
 DeclareAttribute("DotSemilatticeOfIdempotents", IsInverseSemigroup);

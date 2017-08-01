@@ -338,9 +338,9 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   return data;
 }
 
-// Using the output of GABOW_SCC on the right and left Cayley graphs of a
-// semigroup, the following function calculates the strongly connected
-// components of the union of these two graphs.
+// Using the output of DigraphStronglyConnectedComponents on the right and left
+// Cayley graphs of a semigroup, the following function calculates the strongly
+// connected components of the union of these two graphs.
 
 Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
   UInt* ptr;
@@ -416,9 +416,9 @@ Obj SCC_UNION_LEFT_RIGHT_CAYLEY_GRAPHS(Obj self, Obj scc1, Obj scc2) {
 }
 
 // <right> and <left> should be scc data structures for the right and left
-// Cayley graphs of a semigroup, as produced by GABOW_SCC. This function find
-// the H-classes of the semigroup from <right> and <left>. The method used is
-// that described in:
+// Cayley graphs of a semigroup, as produced by
+// DigraphStronglyConnectedComponents. This function find the H-classes of the
+// semigroup from <right> and <left>. The method used is that described in:
 // http://www.liafa.jussieu.fr/~jep/PDF/Exposes/StAndrews.pdf
 
 Obj FIND_HCLASSES(Obj self, Obj right, Obj left) {

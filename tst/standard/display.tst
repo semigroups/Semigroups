@@ -724,6 +724,62 @@ Error, Semigroups: TexString: usage,
 the second argument (the degree) should be at least the degree of the first ar\
 gument (a transformation),
 
+# Tikz/DotLeft/RightCayleyDigraph
+gap> TikzLeftCayleyDigraph(FullTransformationMonoid(2));
+"\\begin{tikzpicture}[scale=1, auto, \n  vertex/.style={circle, draw, thick, f\
+ill=white, minimum size=0.65cm},\n  edge/.style={arrows={-angle 90}, thick},\n\
+  loop/.style={min distance=5mm,looseness=5,arrows={-angle 90},thick}]\n\n  % \
+Vertices . . .\n  \\node [vertex] (a) at (0, 0) {};\n  \\node at (0, 0) {$a$};\
+\n\n  \\node [vertex] (b) at (0, 0) {};\n  \\node at (0, 0) {$b$};\n\n  \\node\
+ [vertex] (c) at (0, 0) {};\n  \\node at (0, 0) {$c$};\n\n  \\node [vertex] (c\
+b) at (0, 0) {};\n  \\node at (0, 0) {$cb$};\n\n  % Edges . . .\n  \\path[->] \
+(a) edge [loop]\n           node {$a$} (a);\n  \\path[->] (a) edge [edge] node\
+ {$b$} (b);\n  \\path[->] (a) edge [edge] node {$c$} (c);\n  \\path[->] (b) ed\
+ge [loop]\n           node {$a$} (b);\n  \\path[->] (b) edge [edge] node {$b$}\
+ (a);\n  \\path[->] (b) edge [edge] node {$c$} (cb);\n  \\path[->] (c) edge [l\
+oop]\n           node {$a$} (c);\n  \\path[->] (c) edge [loop]\n           nod\
+e {$b$} (c);\n  \\path[->] (c) edge [loop]\n           node {$c$} (c);\n  \\pa\
+th[->] (cb) edge [loop]\n           node {$a$} (cb);\n  \\path[->] (cb) edge [\
+loop]\n           node {$b$} (cb);\n  \\path[->] (cb) edge [loop]\n           \
+node {$c$} (cb);\n\\end{tikzpicture}"
+gap> TikzRightCayleyDigraph(FullTransformationMonoid(2));
+"\\begin{tikzpicture}[scale=1, auto, \n  vertex/.style={circle, draw, thick, f\
+ill=white, minimum size=0.65cm},\n  edge/.style={arrows={-angle 90}, thick},\n\
+  loop/.style={min distance=5mm,looseness=5,arrows={-angle 90},thick}]\n\n  % \
+Vertices . . .\n  \\node [vertex] (a) at (0, 0) {};\n  \\node at (0, 0) {$a$};\
+\n\n  \\node [vertex] (b) at (0, 0) {};\n  \\node at (0, 0) {$b$};\n\n  \\node\
+ [vertex] (c) at (0, 0) {};\n  \\node at (0, 0) {$c$};\n\n  \\node [vertex] (c\
+b) at (0, 0) {};\n  \\node at (0, 0) {$cb$};\n\n  % Edges . . .\n  \\path[->] \
+(a) edge [loop]\n           node {$a$} (a);\n  \\path[->] (a) edge [edge] node\
+ {$b$} (b);\n  \\path[->] (a) edge [edge] node {$c$} (c);\n  \\path[->] (b) ed\
+ge [loop]\n           node {$a$} (b);\n  \\path[->] (b) edge [edge] node {$b$}\
+ (a);\n  \\path[->] (b) edge [edge] node {$c$} (c);\n  \\path[->] (c) edge [lo\
+op]\n           node {$a$} (c);\n  \\path[->] (c) edge [edge] node {$b$} (cb);\
+\n  \\path[->] (c) edge [loop]\n           node {$c$} (c);\n  \\path[->] (cb) \
+edge [loop]\n           node {$a$} (cb);\n  \\path[->] (cb) edge [edge] node {\
+$b$} (c);\n  \\path[->] (cb) edge [edge] node {$c$} (c);\n\\end{tikzpicture}"
+gap> DotRightCayleyDigraph(FullTransformationMonoid(2));
+"//dot\ndigraph hgn{\nnode [shape=circle]\n1 [label=\"a\"]\n2 [label=\"b\"]\n3\
+ [label=\"c\"]\n4 [label=\"cb\"]\n1 -> 1\n1 -> 2\n1 -> 3\n2 -> 2\n2 -> 1\n2 ->\
+ 3\n3 -> 3\n3 -> 4\n3 -> 3\n4 -> 4\n4 -> 3\n4 -> 3\n}\n"
+gap> DotLeftCayleyDigraph(FullTransformationMonoid(2));
+"//dot\ndigraph hgn{\nnode [shape=circle]\n1 [label=\"a\"]\n2 [label=\"b\"]\n3\
+ [label=\"c\"]\n4 [label=\"cb\"]\n1 -> 1\n1 -> 2\n1 -> 3\n2 -> 2\n2 -> 1\n2 ->\
+ 4\n3 -> 3\n3 -> 3\n3 -> 3\n4 -> 4\n4 -> 4\n4 -> 4\n}\n"
+gap> S := LeftZeroSemigroup(27);;
+gap> DotLeftCayleyDigraph(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `DotString' on 1 arguments
+gap> TikzLeftCayleyDigraph(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `TikzString' on 1 arguments
+gap> DotRightCayleyDigraph(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `DotString' on 1 arguments
+gap> TikzRightCayleyDigraph(S);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 2nd choice method found for `TikzString' on 1 arguments
+
 #
 gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/display.tst");

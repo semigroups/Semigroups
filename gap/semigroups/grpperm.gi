@@ -156,7 +156,7 @@ function(S)
                   "IsGroupAsSemigroup,");
   fi;
 
-  cay := RightCayleyGraphSemigroup(S);
+  cay := OutNeighbours(RightCayleyDigraph(S));
   deg := Size(S);
   gen := [];
 

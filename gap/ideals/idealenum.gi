@@ -53,8 +53,8 @@ SEMIGROUPS.EnumerateIdeal := function(enum, limit, lookfunc)
   indices := enum!.indices;
 
   S := SupersemigroupOfIdeal(UnderlyingCollection(enum));
-  left := LeftCayleyGraphSemigroup(S);
-  right := RightCayleyGraphSemigroup(S);
+  left := OutNeighbours(LeftCayleyDigraph(S));
+  right := OutNeighbours(RightCayleyDigraph(S));
   # FIXME Once the left and right Cayley graphs have been calculated, the
   # entire data structure of S is known and from this it is relatively easy to
   # find the entire data structure for I, so there is no point to what follows,

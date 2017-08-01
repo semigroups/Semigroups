@@ -342,22 +342,23 @@ gap> Size(MinimalDClass(s));
 gap> MultiplicativeZero(s);
 Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 ] )
 
-#T# attr: RightCayleyGraphSemigroup
+#T# attr: RightCayleyDigraph
 gap> S := Semigroup(PartialPerm([1, 2, 3], [1, 3, 4]),
 >                   PartialPerm([1, 2, 3], [2, 5, 3]),
 >                   PartialPerm([1, 2, 3], [4, 1, 2]),
 >                   PartialPerm([1, 2, 3, 4], [2, 4, 1, 5]),
 >                   PartialPerm([1, 3, 5], [5, 1, 3]));;
-gap> RightCayleyGraphSemigroup(S);;
-gap> Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(last)) = NrRClasses(S);
+gap> digraph := RightCayleyDigraph(S);;
+gap> Length(DigraphStronglyConnectedComponents(digraph).comps) 
+> = NrRClasses(S);
 true
 
-#T# attr: RightCayleyGraphSemigroup, infinite
-gap> RightCayleyGraphSemigroup(FreeSemigroup(2));
+#T# attr: RightCayleyDigraph, infinite
+gap> RightCayleyDigraph(FreeSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `CayleyGraphSemigroup' on 1 arguments
+Error, no 1st choice method found for `RightCayleyDigraph' on 1 arguments
 
-#T# attr: LeftCayleyGraphSemigroup
+#T# attr: LeftCayleyDigraph
 gap> S := Monoid(BooleanMat([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
 >                              [1, 1, 0, 1, 0], [1, 1, 1, 1, 1],
 >                              [1, 1, 0, 0, 0]]),
@@ -373,15 +374,15 @@ gap> S := Monoid(BooleanMat([[1, 1, 1, 1, 1], [1, 0, 1, 0, 0],
 >                BooleanMat([[1, 0, 0, 0, 1], [1, 0, 0, 0, 1],
 >                              [0, 0, 0, 0, 1], [0, 1, 1, 0, 1],
 >                              [1, 1, 1, 0, 1]]));;
-gap> LeftCayleyGraphSemigroup(S);;
-gap> Length(STRONGLY_CONNECTED_COMPONENTS_DIGRAPH(last)) = NrLClasses(S);
+gap> digraph := LeftCayleyDigraph(S);;
+gap> Length(DigraphStronglyConnectedComponents(digraph).comps) 
+> = NrLClasses(S);
 true
 
-#T# attr: RightCayleyGraphSemigroup, infinite
-gap> LeftCayleyGraphSemigroup(FreeInverseSemigroup(2));
+#T# attr: RightCayleyDigraph, infinite
+gap> LeftCayleyDigraph(FreeInverseSemigroup(2));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 2nd choice method found for `CayleyGraphDualSemigroup' on 1 argument\
-s
+Error, no 1st choice method found for `LeftCayleyDigraph' on 1 arguments
 
 #T# attr: IsomorphismReesMatrixSemigroup
 gap> D := GreensDClassOfElement(Semigroup(
