@@ -22,7 +22,7 @@ gap> inv_semigroups := AllSmallSemigroups([2 .. 7], IsInverseSemigroup, true);;
 gap> e_unitary_semigroups := Filtered(inv_semigroups, IsEUnitaryInverseSemigroup);;
 gap> triples := ShallowCopy(e_unitary_semigroups);;
 gap> Apply(triples, a -> AsSemigroup(IsPartialPermSemigroup, a));;
-gap> Apply(triples, a -> IsomorphismMcAlisterTriple(a));;
+gap> Apply(triples, a -> IsomorphismSemigroup(IsMcAlisterTripleSemigroup, a));;
 gap> BruteForceIsoCheck := function(iso)
 >   local x, y;
 >   if not IsInjective(iso) or not IsSurjective(iso) then

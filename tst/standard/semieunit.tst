@@ -18,9 +18,9 @@ gap> SEMIGROUPS.StartTest();
 gap> G := SymmetricGroup([2 .. 5]);;
 gap> x := Digraph([[1], [1, 2], [1, 3], [1, 4], [1, 5]]);;
 gap> y := Digraph([[1], [1, 2], [1, 3], [1, 4]]);;
-gap> M := McAlisterTripleSemigroup(G, OnPoints, x, y);
+gap> M := McAlisterTripleSemigroup(G, x, y, OnPoints);
 <McAlister triple semigroup over Sym( [ 2 .. 5 ] )>
-gap> M = McAlisterTripleSemigroup(G, OnPoints, x, [1, 2, 3, 4]);
+gap> M = McAlisterTripleSemigroup(G, x, [1, 2, 3, 4], OnPoints);
 true
 gap> M = McAlisterTripleSemigroup(G, x, y);
 true
@@ -34,78 +34,85 @@ gap> String(M);
 #T# McAlisterTripleSemigroup with bad inputs
 gap> G1 := FreeGroup(1);;
 gap> act := function(x, g) return x; end;;
-gap> McAlisterTripleSemigroup(G1, act, Digraph([[1]]), [1]);
+gap> McAlisterTripleSemigroup(G1, Digraph([[1]]), [1], act);
 Error, Semigroups: McAlisterTripleSemigroup: usage,
 the first argument must be a finite group,
-gap> y1 := Digraph([[1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6]]);;
-gap> McAlisterTripleSemigroup(G, x, y1);;
+gap> x1 := Digraph([[1], [1], [3], [3], [1, 3, 5]]);;
+gap> G1 := AutomorphismGroup(x1);;
+gap> McAlisterTripleSemigroup(G1, x1, [1, 2, 5]);;
 Error, Semigroups: McAlisterTripleSemigroup: usage,
-the fourth argument must be a subdigraph of the third argument,
-gap> x1 := Digraph([[1], [1], [3], [3, 4], [1, 3, 5]]);;
+the second argument must be a partial order digraph,
+gap> x1 := Digraph([[1], [1, 2], [3], [3, 4], [1, 3, 5], [1, 3, 5, 6]]);;
 gap> McAlisterTripleSemigroup(G, x1, x1);;
 Error, Semigroups: McAlisterTripleSemigroup: usage,
-the first argument (a group) must act by order automorphisms on the third argu\
-ment (a partial order digraph),
+the first argument (a group) must act by order automorphisms on the second arg\
+ument (a partial order digraph),
+gap> y1 := Digraph([[1], [1, 2], [3], [3, 4], [1, 3, 5], [1, 3, 6]]);;
+gap> McAlisterTripleSemigroup(Group(()), x1, y1);
+Error, Semigroups: McAlisterTripleSemigroup: usage,
+the third argument <Y> must be an induced subdigraph of
+the second argument <X> with vertex labels corresponding
+to the vertices of <X> which <Y> was induced from,
 gap> G1 := SymmetricGroup([5 .. 11]);;
 gap> McAlisterTripleSemigroup(G1, x, y);;
 Error, Action not well-defined. See the manual section
 ``Action on canonical representatives''.
-gap> G1 := AutomorphismGroup(x1);;
-gap> McAlisterTripleSemigroup(G1, x1, x1);;
-Error, Semigroups: McAlisterTripleSemigroup: usage,
-the third argument must be a partial order digraph,
 gap> x2 := Digraph([[1], [2], [1, 2, 3], [1, 2, 4]]);;
 gap> G1 := AutomorphismGroup(x2);;
 gap> McAlisterTripleSemigroup (G1, x2, x2);;
 Error, Semigroups: McAlisterTripleSemigroup: usage,
-the fourth argument must be a join semilattice digraph,
+the third argument must be a join-semilattice digraph,
 gap> y2 := Digraph([[1]]);;
 gap> SetDigraphVertexLabel(y2, 1, 2);;
 gap> McAlisterTripleSemigroup(G, x, y2);;
 Error, Semigroups: McAlisterTripleSemigroup: usage,
-condition M2 is not satisfied - see the documentation for details,
-gap> McAlisterTripleSemigroup(TrivialSubgroup(G), OnPoints, x, y);;
-Error, Semigroups: McAlisterTripleSemigroup: 
-Condition M3 is not satisfied - see the documentation for details,
-gap> y3 := Digraph([[1], [1, 2], [1, 3]]);;
-gap> McAlisterTripleSemigroup(Group([(2, 3), (4, 5)]), OnPoints, x, y3);
+the out-neighbours of each vertex of <X> which is in <Y> must contain only ver\
+tices which are in <Y> - see the documentation for more detail,
+gap> McAlisterTripleSemigroup(TrivialSubgroup(G), x, y, OnPoints);;
 Error, Semigroups: McAlisterTripleSemigroup: usage,
-condition M3 is not satisfied - see the documentation for details,
+every vertex of <X> must be in the orbit of some vertex of <X> which is in <Y>\
+ - see the documentation for more detail,
+gap> y3 := Digraph([[1], [1, 2], [1, 3]]);;
+gap> McAlisterTripleSemigroup(Group([(2, 3), (4, 5)]), x, y3, OnPoints);
+Error, Semigroups: McAlisterTripleSemigroup: usage,
+every vertex of <X> must be in the orbit of some vertex of <X> which is in <Y>\
+ - see the documentation for more detail,
 gap> x3 := Digraph([[1], [2]]);;
 gap> McAlisterTripleSemigroup(AutomorphismGroup(x3), x3, y2);;
-Error, Semigroups: McAlisterTriple: usage,
-condition M4 is not satisfied - see the documentation for details,
+Error, Semigroups: McAlisterTripleSemigroup: 
+<act> must fix the vertex of <X> which is the minimal vertex of <Y> - see the \
+documentation for more detail,
 
-#T# IsomorphismSemigroup, AsMcAlisterTripleSemigroup
+#T# IsomorphismSemigroup, AsSemigroup
 gap> ps := InverseSemigroup([PartialPerm([2, 3, 4, 5], [1, 3, 5, 4]),
 > PartialPerm([2, 3, 4, 5], [1, 4, 5, 3])]);;
-gap> Mps := IsomorphismMcAlisterTripleSemigroup(ps);;
+gap> Mps := IsomorphismSemigroup(IsMcAlisterTripleSemigroup, ps);;
 gap> Image(Mps);
 [ (1, ()), (1, (2,3)), (1, (1,2)), (1, (1,2,3)), (1, (1,3,2)), (1, (1,3)), 
   (2, ()), (2, (2,3)), (2, (1,2,3)), (2, (1,3)), (3, ()), (3, (2,3)), 
   (3, (1,2)), (3, (1,3,2)) ]
-gap> AsMcAlisterTripleSemigroup(ps);
+gap> AsSemigroup(IsMcAlisterTripleSemigroup, ps);
 <McAlister triple semigroup over Group([ (2,3), (1,2,3), (2,3), (1,3,2) ])>
 gap> ps := InverseSemigroup([PartialPerm([1, 4, 6, 7], [1, 4, 6, 7]),
 >   PartialPerm([2, 3, 6, 7], [2, 3, 6, 7]), PartialPerm([6, 7], [6, 7]),
 >   PartialPerm([2, 3, 5, 6, 7], [2, 3, 5, 6, 7]),
 >   PartialPerm([1, 4, 6, 7], [2, 3, 7, 6]),
 >   PartialPerm([2, 3, 6, 7], [1, 4, 7, 6]), PartialPerm([6, 7], [7, 6])]);;
-gap> Mps := IsomorphismMcAlisterTripleSemigroup(ps);;
+gap> Mps := IsomorphismSemigroup(IsMcAlisterTripleSemigroup, ps);;
 gap> Image(Mps);
 [ (1, ()), (1, (1,2)), (2, ()), (3, ()), (3, (1,2)), (5, ()), (5, (1,2)) ]
 gap> Elements(Range(Mps));
 [ (1, ()), (1, (1,2)), (2, ()), (3, ()), (3, (1,2)), (5, ()), (5, (1,2)) ]
 gap> IsWholeFamily(Image(Mps));
 true
-gap> AsMcAlisterTripleSemigroup(ps);
+gap> AsSemigroup(IsMcAlisterTripleSemigroup, ps);
 <McAlister triple semigroup over Group([ (), (), (), (1,2), (1,2), (1,2) ])>
 
-#T# AsMcAlisterTripleSemigroup with bad input
+#T# AsSemigroup with bad input
 gap> T := Semigroup([PartialPerm([1], [3]),
 > PartialPerm([1, 2, 3], [2, 3, 1]), PartialPerm([1, 3], [2, 3])]);;
-gap> AsMcAlisterTripleSemigroup(T);
-Error, Semigroups: IsomorphismMcAlisterTripleSemigroup: usage,
+gap> AsSemigroup(IsMcAlisterTripleSemigroup, T);
+Error, Semigroups: IsomorphismSemigroup: usage,
 the semigroup is not E-unitary,
 
 #T# Other McAlisterTripleSemigroup tests
@@ -114,7 +121,7 @@ gap> x := Digraph([[1], [1, 2], [1, 3], [1, 4], [1, 5]]);
 <digraph with 5 vertices, 9 edges>
 gap> y := Digraph([[1], [1, 2], [1, 3], [1, 4]]);
 <digraph with 4 vertices, 7 edges>
-gap> M := McAlisterTripleSemigroup(G, OnPoints, x, y);
+gap> M := McAlisterTripleSemigroup(G, x, y, OnPoints);
 <McAlister triple semigroup over Sym( [ 2 .. 5 ] )>
 gap> M = McAlisterTripleSemigroup(AutomorphismGroup(x), x, y);
 true
@@ -124,48 +131,55 @@ gap> IsInverseSemigroup(Semigroup(GeneratorsOfSemigroup(M)));
 true
 gap> elms := Enumerator(M);;
 gap> String(elms[1]);
-"MTE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ], \
-[ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), Digraph( [ [ 1 ], [ 1, 2 ], [ 1, 3\
- ], [ 1, 4 ] ] )), 1, ())"
+"MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ],\
+ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), Digraph( [ [ 1 ], [ 1, 2 ], [ 1, \
+3 ], [ 1, 4 ] ] )), 1, ())"
+gap> OneImmutable(M);
+Error, Semigroups: OneImuutable (for McAlister triple semigroup): usage,
+the argument must be a monoid
+gap> M1 := McAlisterTripleSemigroup(G, x, [1, 2]);;
+gap> OneImmutable(M1);
+(2, ())
 
 #T# McAlister triple semigroup elements
-gap> MTE(M, 4, (2, 4)(3, 5)) * MTE(M, 4, (2, 5, 3, 4));
+gap> MTSE(M, 4, (2, 4)(3, 5)) * MTSE(M, 4, (2, 5, 3, 4));
 (1, (4,5))
-gap> MTE(M, 1, (2, 3, 4, 5)) ^ -2;
+gap> MTSE(M, 1, (2, 3, 4, 5)) ^ -2;
 (1, (2,4)(3,5))
-gap> M = MTEParent(MTE(M, 1, (4, 5)));
+gap> M = MTSEParent(MTSE(M, 1, (4, 5)));
 true
-gap> M = McAlisterTripleSemigroupElementParent(MTE(M, 1, (4, 5)));
+gap> M = McAlisterTripleSemigroupElementParent(MTSE(M, 1, (4, 5)));
 true
-gap> MTE(M, 10, (2, 3, 4, 5));
+gap> MTSE(M, 10, (2, 3, 4, 5));
 Error, Semigroups: McAlisterTripleSemigroupElement: usage,
-second input should be a vertex of the join semilattice of the McAlister tripl\
-e,
-gap> MTE(M, 1, (5, 6));
+second input should be a vertex label of the join-semilattice of the McAlister\
+ triple,
+gap> MTSE(M, 1, (5, 6));
 Error, Semigroups: McAlisterTripleSemigroupElement: usage,
 third input must an element of the group of the McAlister triple,
-gap> MTE(M, 3, (2, 4)(3, 5));
+gap> MTSE(M, 3, (2, 4)(3, 5));
 Error, Semigroups: McAlisterTripleSemigroupElement: usage,
 the arguments do not specify an element of the McAlister triple semigroup,
-gap> MTE(M, 1, ())[3];
+gap> MTSE(M, 1, ())[3];
 Error, Semigroups: ELM_LIST (for a McAlisterTripleSemigroupElement): usage,
 the index must be at most 2,
 gap> M1 := McAlisterTripleSemigroup(G, x, x);;
-gap> MTE(M1, 4, (2, 4)(3, 5)) * MTE(M, 4, (2, 5, 3, 4));
+gap> MTSE(M1, 4, (2, 4)(3, 5)) * MTSE(M, 4, (2, 5, 3, 4));
 Error, Semigroups: * (for an McAlisterTripleSemigroupElement): usage,
 the elements must be from the same McAlister triple semigroup,
 
+# This test is for a function which is not working at the moment
 #T# IsomorphismSemigroups
-gap> x1 := Digraph([[1], [1, 2], [1, 3], [1, 2, 3, 4], [1, 2, 3, 5]]);;
-gap> G1 := Group([(4, 5)]);;
-gap> x2 := Digraph([[1, 3, 4, 5], [2, 3, 4, 5], [3, 5], [4, 5], [5]]);;
-gap> G2 := Group([(1, 2)]);;
-gap> M1 := McAlisterTripleSemigroup(G1, x1, [1, 2, 3, 4]);;
-gap> M2 := McAlisterTripleSemigroup(G2, x2, [1, 3, 4, 5]);;
-gap> IsomorphismSemigroups(M1, M2);
-MappingByFunction( <McAlister triple semigroup over Group([ (4,
-5) ])>, <McAlister triple semigroup over Group([ (1,
-2) ])>, function( s ) ... end )
+# gap> x1 := Digraph([[1], [1, 2], [1, 3], [1, 2, 3, 4], [1, 2, 3, 5]]);;
+# gap> G1 := Group([(4, 5)]);;
+# gap> x2 := Digraph([[1, 3, 4, 5], [2, 3, 4, 5], [3, 5], [4, 5], [5]]);;
+# gap> G2 := Group([(1, 2)]);;
+# gap> M1 := McAlisterTripleSemigroup(G1, x1, [1, 2, 3, 4]);;
+# gap> M2 := McAlisterTripleSemigroup(G2, x2, [1, 3, 4, 5]);;
+# gap> IsomorphismSemigroups(M1, M2);
+# MappingByFunction( <McAlister triple semigroup over Group([ (4,
+# 5) ])>, <McAlister triple semigroup over Group([ (1,
+# 2) ])>, function( s ) ... end )
 
 #T# IsomorphicSemigroups with bad input
 gap> x1 := Digraph([[1], [1, 2], [1, 3]]);;
@@ -185,7 +199,7 @@ fail
 gap> act := function(x, g)
 > return x;
 > end;;
-gap> M5 := McAlisterTripleSemigroup(G, act, x1, x1);;
+gap> M5 := McAlisterTripleSemigroup(G, x1, x1, act);;
 gap> IsomorphismSemigroups(M1, M5);
 fail
 

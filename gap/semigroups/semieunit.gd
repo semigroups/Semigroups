@@ -53,10 +53,9 @@ DeclareAttribute("McAlisterTripleSemigroupElmList",
 DeclareAttribute("OneImmutable",
                  IsMcAlisterTripleSemigroup and IsWholeFamily and IsMonoid);
 
-# Operations for McAlister triple semigroups
-DeclareOperation("IsomorphismMcAlisterTripleSemigroup", [IsSemigroup]);
-DeclareOperation("AsMcAlisterTripleSemigroup", [IsSemigroup]);
-DeclareOperation("EUnitaryInverseCover", [IsSemigroup]);
+# Operations for relating to McAlister triple semigroups
+DeclareAttribute("IsomorphismMcAlisterTripleSemigroup",
+                IsSemigroup);
 
 # Operations for creating McAlister triple semigroup elements
 DeclareOperation("McAlisterTripleSemigroupElement",
@@ -65,11 +64,12 @@ DeclareOperation("McAlisterTripleSemigroupElement",
 DeclareSynonym("MTSE", McAlisterTripleSemigroupElement);
 
 # Operations for McAlister triple semigroup elements
-DeclareOperation("McAlisterTripleSemigroupElementParent",
-                 [IsMcAlisterTripleSemigroupElementRep]);
+DeclareAttribute("McAlisterTripleSemigroupElementParent",
+                 IsMcAlisterTripleSemigroupElementRep);
 DeclareSynonym("MTSEParent", McAlisterTripleSemigroupElementParent);
 DeclareOperation("ELM_LIST", [IsMcAlisterTripleSemigroupElementRep, IsPosInt]);
 
-# F-inverse semigroup property
-DeclareOperation("IsFInverseSemigroup", [IsSemigroup]);
-DeclareOperation("IsFInverseMonoid", [IsSemigroup]);
+# Inverse semigroup methods
+DeclareAttribute("EUnitaryInverseCover", IsSemigroup);
+DeclareProperty("IsFInverseSemigroup", IsSemigroup);
+DeclareProperty("IsFInverseMonoid", IsSemigroup);
