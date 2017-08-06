@@ -69,6 +69,14 @@ else
   AC_DEFINE(SYS_IS_CYGWIN32, 0, are we on CYGWIN?)
 fi
 
+dnl ## Check for libsemigroups
+AC_CHECK_FILE(
+   [src/libsemigroups/src/semigroups.h],
+   [AC_MSG_NOTICE([found libsemigroups])],
+   [AC_MSG_ERROR([libsemigroups is required, clone or download the repo from
+    https://github.com/james-d-mitchell/libsemigroups into the src directory])]
+   )
+
 dnl ##
 dnl ## Output everything
 dnl ##
