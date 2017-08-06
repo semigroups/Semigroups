@@ -37,7 +37,7 @@ static inline word_t plist_to_word_t(gap_list_t plist) {
   word_t word;
   for (size_t i = 1; i <= (size_t) LEN_PLIST(plist); i++) {
     Obj j = ELM_PLIST(plist, i);
-    assert(IS_INTOBJ(j));
+    SEMIGROUPS_ASSERT(IS_INTOBJ(j));
     word.push_back(INT_INTOBJ(j) - 1);
   }
   return word;
@@ -70,7 +70,7 @@ static inline Semigroup* cong_obj_get_range(gap_cong_t o) {
 
 static inline bool cong_obj_get_range_type(gap_cong_t o) {
   initRNams();
-  // assert(IsSemigroupCongruenceByGeneratingPairsRep(o));
+  // SEMIGROUPS_ASSERT(IsSemigroupCongruenceByGeneratingPairsRep(o));
   return semi_obj_get_type(cong_obj_get_range_obj(o));
 }
 
@@ -80,8 +80,8 @@ static inline bool cong_obj_is_fp_cong(gap_cong_t cong) {
 }
 
 static void cong_obj_init_cpp_cong(gap_cong_t o) {
-  // assert(IsSemigroupCongruenceByGeneratingPairsRep(o));
-  assert(!cong_obj_has_cpp_cong(o));
+  // SEMIGROUPS_ASSERT(IsSemigroupCongruenceByGeneratingPairsRep(o));
+  SEMIGROUPS_ASSERT(!cong_obj_has_cpp_cong(o));
 
   initRNams();
 
@@ -176,7 +176,7 @@ static void cong_obj_init_cpp_cong(gap_cong_t o) {
       // the left Cayley graph
       graph = ElmPRec(data, RNam_left);
     } else {
-      assert(type == "right" || type == "twosided");
+      SEMIGROUPS_ASSERT(type == "right" || type == "twosided");
       // the right Cayley graph
       graph = ElmPRec(data, RNam_right);
     }
@@ -207,8 +207,8 @@ static Congruence* cong_obj_get_cpp(gap_cong_t cong) {
     cong_obj_init_cpp_cong(cong);
   }
   Obj tsemiobj = ElmPRec(cong, RNam_cong_pairs_congruence);
-  assert(TNUM_OBJ(tsemiobj) == T_SEMI
-         && SUBTYPE_OF_T_SEMI(tsemiobj) == T_SEMI_SUBTYPE_CONG);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(tsemiobj) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(tsemiobj) == T_SEMI_SUBTYPE_CONG);
   return CLASS_OBJ<Congruence*>(tsemiobj);
 }
 
@@ -228,8 +228,8 @@ Obj CONG_PAIRS_IN(Obj self, gap_cong_t o, Obj elm1, Obj elm2) {
     gap_semigroup_t S       = cong_obj_get_range_obj(o);
     size_t          lhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, elm1));
     size_t          rhs_pos = INT_INTOBJ(EN_SEMI_POSITION(0L, S, elm2));
-    assert(lhs_pos != Semigroup::UNDEFINED);
-    assert(rhs_pos != Semigroup::UNDEFINED);
+    SEMIGROUPS_ASSERT(lhs_pos != Semigroup::UNDEFINED);
+    SEMIGROUPS_ASSERT(rhs_pos != Semigroup::UNDEFINED);
 
     if (IsbPRec(o, RNam_fin_cong_lookup)) {
       // TODO(JDM) use FindPRec and GET_ELM_PREC
@@ -297,7 +297,7 @@ Obj CONG_PAIRS_LOOKUP_PART(Obj self, gap_cong_t o) {
   initRNams();
   // TODO(JDM) assert o is correct type of object
   if (IsbPRec(o, RNam_fin_cong_lookup)) {
-    assert(IsbPRec(o, RNam_fin_cong_partition));
+    SEMIGROUPS_ASSERT(IsbPRec(o, RNam_fin_cong_partition));
     return True;
   }
 
@@ -388,7 +388,7 @@ Obj CONG_PAIRS_ELM_COSET_ID(Obj self, gap_cong_t cong_obj, Obj elm) {
   bool            report    = semi_obj_get_report(range_obj);
 
   if (IsbPRec(cong_obj, RNam_fin_cong_lookup)) {
-    assert(!cong_obj_is_fp_cong(cong_obj));
+    SEMIGROUPS_ASSERT(!cong_obj_is_fp_cong(cong_obj));
     // TODO(JDM) Use FindPRec and GET_ELM_PREC
     Obj lookup = ElmPRec(cong_obj, RNam_fin_cong_lookup);
     return ELM_PLIST(lookup,

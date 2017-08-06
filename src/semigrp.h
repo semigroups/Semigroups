@@ -65,22 +65,22 @@ en_semi_t semi_obj_get_type(gap_semigroup_t so);
 Semigroup* semi_obj_get_semi_cpp(gap_semigroup_t so);
 
 static inline en_semi_t en_semi_get_type(en_semi_obj_t es) {
-  assert(TNUM_OBJ(es) == T_SEMI
-         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(es) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
   return static_cast<en_semi_t>(reinterpret_cast<UInt>(ADDR_OBJ(es)[1]));
 }
 
 static inline gap_semigroup_t en_semi_get_semi_obj(en_semi_obj_t es) {
-  assert(TNUM_OBJ(es) == T_SEMI
-         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
-  assert(en_semi_get_type(es) != UNKNOWN);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(es) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  SEMIGROUPS_ASSERT(en_semi_get_type(es) != UNKNOWN);
   return ADDR_OBJ(es)[2];
 }
 
 static inline size_t en_semi_get_degree(en_semi_obj_t es) {
-  assert(TNUM_OBJ(es) == T_SEMI
-         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
-  assert(en_semi_get_type(es) != UNKNOWN);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(es) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  SEMIGROUPS_ASSERT(en_semi_get_type(es) != UNKNOWN);
   return CLASS_OBJ<size_t>(es, 3);
 }
 

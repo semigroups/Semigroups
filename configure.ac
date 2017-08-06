@@ -11,7 +11,7 @@ dnl ##
 AC_PREREQ([2.68])
 AC_INIT([semigroups], m4_esyscmd([tr -d '\n' < VERSION]))
 AC_CONFIG_SRCDIR([src/pkg.cc])
-AC_CONFIG_HEADER([src/pkgconfig.h:cnf/pkgconfig.h.in])
+AC_CONFIG_HEADER([src/_pkgconfig.h:cnf/pkgconfig.h.in])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([cnf])
 
@@ -26,6 +26,8 @@ dnl ##
 AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects])
 AM_SILENT_RULES([yes])
 AM_PROG_AR
+
+AX_PREFIX_CONFIG_H([src/semigroups-config.h],[],[src/_pkgconfig.h])
 
 dnl ##
 dnl ## Set the language
@@ -76,6 +78,23 @@ AC_CHECK_FILE(
    [AC_MSG_ERROR([libsemigroups is required, clone or download the repo from
     https://github.com/james-d-mitchell/libsemigroups into the src directory])]
    )
+
+dnl ## User setting: Debug mode (off by default)
+AC_ARG_ENABLE([debug],
+    [AS_HELP_STRING([--enable-debug], [enable debug mode])],
+    [AC_DEFINE([KERNEL_DEBUG], [1], [define if building in debug mode])],
+    [enable_debug=no]
+    )
+AC_MSG_CHECKING([whether to enable debug mode])
+AC_MSG_RESULT([$enable_debug])
+
+AS_IF([test "x$enable_debug" = xyes],
+    [AC_SUBST(CXXFLAGS, '-g3 -O0 -Wall -Wextra -Wno-unused-parameter -Wtype-limits -Wformat-security -Wpointer-arith -Wno-div-by-zero -Wreturn-type -Wswitch -Wsizeof-array-argument -Wunused-label -fno-omit-frame-pointer -Wno-c++11-extensions -Wshadow')])
+
+AS_IF([test "x$enable_debug" = xyes],
+    [AC_SUBST(CFLAGS, '-g3 -O0 -Wall -Wextra -Wno-unused-parameter -Wtype-limits -Wformat-security -Wpointer-arith -Wno-div-by-zero -Wreturn-type -Wswitch -Wsizeof-array-argument -Wunused-label -fno-omit-frame-pointer -Wshadow')])
+
+AM_CONDITIONAL([KERNEL_DEBUG], [test "x$enable_debug" = xyes])
 
 dnl ##
 dnl ## Output everything

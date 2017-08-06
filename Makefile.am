@@ -24,7 +24,7 @@ semigroups_la_SOURCES += src/libsemigroups/src/uf.cc
 
 semigroups_la_CXXFLAGS = -std=c++11 -O3 -g 
 
-semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DNDEBUG -DCONFIG_H -DDO_NOT_INCLUDE_CONFIG_H
+semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DCONFIG_H
 # Note that the latter is only for GAP 4.4.12
 semigroups_la_LDFLAGS = -module -avoid-version
 
@@ -38,7 +38,11 @@ if SYS_IS_CYGWIN
 else
 	cp .libs/semigroups.so $(GAPINSTALLLIB)
 endif
+if KERNEL_DEBUG
+	@echo "SUCCESS (debug mode enabled)!"
+else
 	@echo "SUCCESS!"
+endif
 
 distclean-local:
 	rm -rf bin/*
@@ -47,9 +51,6 @@ doc: doc/manual.six
 
 doc/manual.six: doc/*.xml PackageInfo.g
 	($(GAPROOT)/bin/gap.sh -A makedoc.g)
-
-debug: CXXFLAGS = -g3 -O0 -std=c++11 -Wall -Wextra -Wno-unused-parameter -Wtype-limits -Wformat-security -Wpointer-arith -Wno-div-by-zero -Wreturn-type -Wswitch -Wsizeof-array-argument -Wunused-label -fno-omit-frame-pointer -fno-omit-frame-pointer -Wno-c++11-extensions -UNDEBUG -DDEBUG
-debug: clean all
 
 gaplint: 
 	gaplint *.g gap/options.g gap/*.gi gap/*.gd gap/*/* doc/*.xml tst/*.tst tst/*/*.tst
@@ -62,4 +63,6 @@ lint: gaplint cpplint
 format: 
 	clang-format -i src/*.h src/*.cc
 
-.PHONY: debug
+superclean: distclean
+	git clean -xdf --exclude *.swp --exclude *.swo
+.PHONY: superclean

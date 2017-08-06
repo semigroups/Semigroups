@@ -97,7 +97,7 @@ inline Obj blocks_new_obj(Blocks* x) {
 // is valid.
 
 Obj BIPART_NC(Obj self, Obj gap_blocks) {
-  assert(IS_LIST(gap_blocks));
+  SEMIGROUPS_ASSERT(IS_LIST(gap_blocks));
   std::vector<u_int32_t>* blocks = new std::vector<u_int32_t>();
 
   size_t degree         = 0;
@@ -108,7 +108,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
     if (IS_LIST(ELM_LIST(gap_blocks, 1))) {  // gap_blocks is a list of lists
       nr_blocks = LEN_LIST(gap_blocks);
       for (size_t i = 1; i <= nr_blocks; i++) {
-        assert(IS_LIST(ELM_LIST(gap_blocks, i)));
+        SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(gap_blocks, i)));
         degree += LEN_LIST(ELM_LIST(gap_blocks, i));
       }
       blocks->resize(degree);
@@ -118,7 +118,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
       for (size_t i = 1; i <= nr_blocks; i++) {
         Obj block = ELM_LIST(gap_blocks, i);
         for (size_t j = 1; j <= (size_t) LEN_LIST(block); j++) {
-          assert(IS_INTOBJ(ELM_LIST(block, j)));
+          SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(block, j)));
           int jj = INT_INTOBJ(ELM_LIST(block, j));
           if (jj < 0) {
             (*blocks)[-jj + degree - 1] = i - 1;
@@ -131,8 +131,8 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
     } else {  // gap_blocks is the internal rep of a bipartition
       blocks->reserve(LEN_LIST(gap_blocks));
       for (size_t i = 1; i <= (size_t) LEN_LIST(gap_blocks) / 2; i++) {
-        assert(IS_INTOBJ(ELM_LIST(gap_blocks, i))
-               && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
+        SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(gap_blocks, i))
+                          && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
         u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
         blocks->push_back(index);
         nr_blocks = (index > nr_blocks ? index : nr_blocks);
@@ -141,8 +141,8 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
       for (size_t i = ((size_t) LEN_LIST(gap_blocks) / 2) + 1;
            i <= (size_t) LEN_LIST(gap_blocks);
            i++) {
-        assert(IS_INTOBJ(ELM_LIST(gap_blocks, i))
-               && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
+        SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(gap_blocks, i))
+                          && INT_INTOBJ(ELM_LIST(gap_blocks, i)) > 0);
         u_int32_t index = INT_INTOBJ(ELM_LIST(gap_blocks, i)) - 1;
         blocks->push_back(index);
         nr_blocks = (index > nr_blocks ? index : nr_blocks);
@@ -165,7 +165,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
 // BIPART_NC for more details.
 
 Obj BIPART_EXT_REP(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);
   size_t       n  = xx->degree();
@@ -194,7 +194,7 @@ Obj BIPART_EXT_REP(Obj self, Obj x) {
 // BIPART_NC for more details.
 
 Obj BIPART_INT_REP(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);  // get C++ bipartition pointer
   size_t       n  = xx->degree();
@@ -212,8 +212,8 @@ Obj BIPART_INT_REP(Obj self, Obj x) {
 // Returns the hash value for a GAP bipartition from the C++ object.
 
 Obj BIPART_HASH(Obj self, Obj x, Obj data) {
-  assert(TNUM_OBJ(x) == T_BIPART);
-  assert(IS_INTOBJ(data));
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(IS_INTOBJ(data));
 
   return INTOBJ_INT((bipart_get_cpp(x)->hash_value() % INT_INTOBJ(data)) + 1);
 }
@@ -222,7 +222,7 @@ Obj BIPART_HASH(Obj self, Obj x, Obj data) {
 // is of degree n if it is defined on [-n .. -1] union [1 .. n].
 
 Obj BIPART_DEGREE(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   return INTOBJ_INT(bipart_get_cpp(x)->degree());
 }
@@ -230,7 +230,7 @@ Obj BIPART_DEGREE(Obj self, Obj x) {
 // Returns the number of blocks in the bipartition from the C++ object.
 
 Obj BIPART_NR_BLOCKS(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   return INTOBJ_INT(bipart_get_cpp(x)->nr_blocks());
 }
@@ -239,7 +239,7 @@ Obj BIPART_NR_BLOCKS(Obj self, Obj x) {
 // bipartition from the C++ object.
 
 Obj BIPART_NR_LEFT_BLOCKS(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   return INTOBJ_INT(bipart_get_cpp(x)->nr_left_blocks());
 }
@@ -248,7 +248,7 @@ Obj BIPART_NR_LEFT_BLOCKS(Obj self, Obj x) {
 // bipartition from the C++ object.
 
 Obj BIPART_RANK(Obj self, Obj x, Obj dummy) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   return INTOBJ_INT(bipart_get_cpp(x)->rank());
 }
@@ -257,8 +257,8 @@ Obj BIPART_RANK(Obj self, Obj x, Obj dummy) {
 // bipartition.
 
 Obj BIPART_PROD(Obj x, Obj y) {
-  assert(TNUM_OBJ(x) == T_BIPART);
-  assert(TNUM_OBJ(y) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(y) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
@@ -286,22 +286,22 @@ Int BIPART_LT(Obj x, Obj y) {
 // equal.
 
 Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
-  assert(TNUM_OBJ(x) == T_BIPART);
-  assert(TNUM_OBJ(y) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(y) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
 
 // The following is done to avoid leaking memory
-#ifdef DEBUG
+#ifdef SEMIGROUPS_KERNEL_DEBUG
   Blocks* xb = xx->left_blocks();
   Blocks* yb = yy->left_blocks();
-  assert(*xb == *yb);
+  SEMIGROUPS_ASSERT(*xb == *yb);
   delete xb;
   delete yb;
   xb = xx->right_blocks();
   yb = yy->right_blocks();
-  assert(*xb == *yb);
+  SEMIGROUPS_ASSERT(*xb == *yb);
   delete xb;
   delete yb;
 #endif
@@ -334,7 +334,7 @@ Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
 // Returns the GAP bipartition xx ^ *.
 
 Obj BIPART_LEFT_PROJ(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);
 
@@ -370,7 +370,7 @@ Obj BIPART_LEFT_PROJ(Obj self, Obj x) {
 // Returns the GAP bipartition x ^ *x.
 
 Obj BIPART_RIGHT_PROJ(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);
 
@@ -407,7 +407,7 @@ Obj BIPART_RIGHT_PROJ(Obj self, Obj x) {
 // Returns the GAP bipartition x ^ *.
 
 Obj BIPART_STAR(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   Bipartition* xx  = bipart_get_cpp(x);
   size_t       deg = xx->degree();
@@ -456,16 +456,16 @@ Obj BIPART_STAR(Obj self, Obj x) {
 // left blocks.
 
 Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
-  assert(TNUM_OBJ(x) == T_BIPART);
-  assert(TNUM_OBJ(y) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(y) == T_BIPART);
 
   Bipartition* xx = bipart_get_cpp(x);
   Bipartition* yy = bipart_get_cpp(y);
 
-#ifdef DEBUG
+#ifdef SEMIGROUPS_KERNEL_DEBUG
   Blocks* xb = xx->left_blocks();
   Blocks* yb = yy->left_blocks();
-  assert(*xb == *yb);
+  SEMIGROUPS_ASSERT(*xb == *yb);
   delete xb;
   delete yb;
 #endif
@@ -530,7 +530,7 @@ Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
 // blocks of x permuted by p.
 
 Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
 
   // find the largest moved point of the permutation p
   size_t pdeg;
@@ -614,12 +614,12 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
 // simply the subpartition of [1 .. n] induced by x.
 
 Obj BIPART_LEFT_BLOCKS(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
   if (ADDR_OBJ(x)[1] == NULL) {
     ADDR_OBJ(x)[1] = blocks_new_obj(bipart_get_cpp(x)->left_blocks());
     CHANGED_BAG(x);
   }
-  assert(TNUM_OBJ(ADDR_OBJ(x)[1]) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(x)[1]) == T_BLOCKS);
   return ADDR_OBJ(x)[1];
 }
 
@@ -627,12 +627,12 @@ Obj BIPART_LEFT_BLOCKS(Obj self, Obj x) {
 // simply the subpartition of [-n .. -1] induced by x.
 
 Obj BIPART_RIGHT_BLOCKS(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
   if (ADDR_OBJ(x)[2] == NULL) {
     ADDR_OBJ(x)[2] = blocks_new_obj(bipart_get_cpp(x)->right_blocks());
     CHANGED_BAG(x);
   }
-  assert(TNUM_OBJ(ADDR_OBJ(x)[2]) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(x)[2]) == T_BLOCKS);
   return ADDR_OBJ(x)[2];
 }
 
@@ -667,19 +667,19 @@ static void fuse(u_int32_t,
 // is valid.
 
 Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
-  assert(IS_LIST(gap_blocks));
+  SEMIGROUPS_ASSERT(IS_LIST(gap_blocks));
 
   if (LEN_LIST(gap_blocks) == 0) {
     return blocks_new_obj(new Blocks());
   }
 
-  assert(IS_LIST(ELM_LIST(gap_blocks, 1)));
+  SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(gap_blocks, 1)));
 
   size_t degree    = 0;
   size_t nr_blocks = LEN_LIST(gap_blocks);
 
   for (size_t i = 1; i <= nr_blocks; i++) {
-    assert(IS_LIST(ELM_LIST(gap_blocks, i)));
+    SEMIGROUPS_ASSERT(IS_LIST(ELM_LIST(gap_blocks, i)));
     degree += LEN_LIST(ELM_LIST(gap_blocks, i));
   }
 
@@ -692,7 +692,7 @@ Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
   for (size_t i = 1; i <= nr_blocks; i++) {
     Obj block = ELM_LIST(gap_blocks, i);
     for (size_t j = 1; j <= (size_t) LEN_LIST(block); j++) {
-      assert(IS_INTOBJ(ELM_LIST(block, j)));
+      SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_LIST(block, j)));
       int jj = INT_INTOBJ(ELM_LIST(block, j));
       if (jj < 0) {
         (*blocks)[-jj - 1] = i - 1;
@@ -710,7 +710,7 @@ Obj BLOCKS_NC(Obj self, Obj gap_blocks) {
 // before BLOCKS_NC for more details.
 
 Obj BLOCKS_EXT_REP(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
 
   initRNams();
 
@@ -742,7 +742,7 @@ Obj BLOCKS_EXT_REP(Obj self, Obj x) {
 // Returns the hash value for a GAP bipartition from the C++ object.
 
 Obj BLOCKS_HASH(Obj self, Obj x, Obj data) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
 
   return INTOBJ_INT((blocks_get_cpp(x)->hash_value() % INT_INTOBJ(data)) + 1);
 }
@@ -752,7 +752,7 @@ Obj BLOCKS_HASH(Obj self, Obj x, Obj data) {
 // [1 .. n].
 
 Obj BLOCKS_DEGREE(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
 
   return INTOBJ_INT(blocks_get_cpp(x)->degree());
 }
@@ -762,7 +762,7 @@ Obj BLOCKS_DEGREE(Obj self, Obj x) {
 // consisting of positive integers).
 
 Obj BLOCKS_RANK(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
 
   return INTOBJ_INT(blocks_get_cpp(x)->rank());
 }
@@ -771,7 +771,7 @@ Obj BLOCKS_RANK(Obj self, Obj x) {
 // object.
 
 Obj BLOCKS_NR_BLOCKS(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
 
   return INTOBJ_INT(blocks_get_cpp(x)->nr_blocks());
 }
@@ -780,7 +780,7 @@ Obj BLOCKS_NR_BLOCKS(Obj self, Obj x) {
 // GAP blocks object x.
 
 Obj BLOCKS_PROJ(Obj self, Obj x) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
 
   Blocks* blocks = blocks_get_cpp(x);
 
@@ -810,8 +810,8 @@ Obj BLOCKS_PROJ(Obj self, Obj x) {
 // Check if two GAP blocks objects are equal.
 
 Int BLOCKS_EQ(Obj x, Obj y) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
-  assert(TNUM_OBJ(y) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(y) == T_BLOCKS);
 
   return (*blocks_get_cpp(x) == *blocks_get_cpp(y) ? 1L : 0L);
 }
@@ -819,8 +819,8 @@ Int BLOCKS_EQ(Obj x, Obj y) {
 // Check if x < y, when x and y are GAP blocks objects.
 
 Int BLOCKS_LT(Obj x, Obj y) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
-  assert(TNUM_OBJ(y) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(y) == T_BLOCKS);
 
   return (*blocks_get_cpp(x) < *blocks_get_cpp(y) ? 1L : 0L);
 }
@@ -829,8 +829,8 @@ Int BLOCKS_LT(Obj x, Obj y) {
 // left_gap and right blocks equal to right_gap.
 
 Obj BLOCKS_E_TESTER(Obj self, Obj left_gap, Obj right_gap) {
-  assert(TNUM_OBJ(left_gap) == T_BLOCKS);
-  assert(TNUM_OBJ(right_gap) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(left_gap) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(right_gap) == T_BLOCKS);
 
   Blocks* left  = blocks_get_cpp(left_gap);
   Blocks* right = blocks_get_cpp(right_gap);
@@ -883,9 +883,9 @@ Obj BLOCKS_E_TESTER(Obj self, Obj left_gap, Obj right_gap) {
 // left_gap and right blocks equal to right_gap, assuming that this exists.
 
 Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
-  assert(TNUM_OBJ(left_gap) == T_BLOCKS);
-  assert(TNUM_OBJ(right_gap) == T_BLOCKS);
-  assert(BLOCKS_E_TESTER(self, left_gap, right_gap) == True);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(left_gap) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(right_gap) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(BLOCKS_E_TESTER(self, left_gap, right_gap) == True);
 
   Blocks* left  = blocks_get_cpp(left_gap);
   Blocks* right = blocks_get_cpp(right_gap);
@@ -944,8 +944,8 @@ Obj BLOCKS_E_CREATOR(Obj self, Obj left_gap, Obj right_gap) {
 // is a GAP bipartition.
 
 Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
-  assert(TNUM_OBJ(x_gap) == T_BIPART);
-  assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x_gap) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(blocks_gap) == T_BLOCKS);
 
   Bipartition* x      = bipart_get_cpp(x_gap);
   Blocks*      blocks = blocks_get_cpp(blocks_gap);
@@ -998,8 +998,8 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
 // is a GAP bipartition.
 
 Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
-  assert(TNUM_OBJ(x_gap) == T_BIPART);
-  assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x_gap) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(blocks_gap) == T_BLOCKS);
 
   Bipartition* x      = bipart_get_cpp(x_gap);
   Blocks*      blocks = blocks_get_cpp(blocks_gap);
@@ -1052,8 +1052,8 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
 // of x_gap on Y.
 
 Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
-  assert(TNUM_OBJ(blocks_gap) == T_BLOCKS);
-  assert(TNUM_OBJ(x_gap) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(blocks_gap) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x_gap) == T_BIPART);
 
   Blocks*      blocks = blocks_get_cpp(blocks_gap);
   Bipartition* x      = bipart_get_cpp(x_gap);

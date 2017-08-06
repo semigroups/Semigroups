@@ -33,8 +33,8 @@ using libsemigroups::NaturalSemiring;
 ////////////////////////////////////////////////////////////////////////////////
 
 BooleanMat* BoolMatConverter::convert(Obj o, size_t n) const {
-  assert(CALL_1ARGS(IsBooleanMat, o));
-  assert(IS_BLIST_REP(ELM_PLIST(o, 1)));
+  SEMIGROUPS_ASSERT(CALL_1ARGS(IsBooleanMat, o));
+  SEMIGROUPS_ASSERT(IS_BLIST_REP(ELM_PLIST(o, 1)));
 
   size_t             m = LEN_BLIST(ELM_PLIST(o, 1));
   std::vector<bool>* x(new std::vector<bool>());
@@ -42,7 +42,7 @@ BooleanMat* BoolMatConverter::convert(Obj o, size_t n) const {
 
   for (size_t i = 0; i < m; i++) {
     Obj row = ELM_PLIST(o, i + 1);
-    assert(IS_BLIST_REP(row));
+    SEMIGROUPS_ASSERT(IS_BLIST_REP(row));
     for (size_t j = 0; j < m; j++) {
       if (ELM_BLIST(row, j + 1) == True) {
         x->at(i * m + j) = true;
@@ -86,7 +86,7 @@ Obj BoolMatConverter::unconvert(Element const* x) const {
 ////////////////////////////////////////////////////////////////////////////////
 
 Bipartition* BipartConverter::convert(Obj o, size_t n) const {
-  assert(TNUM_OBJ(o) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_BIPART);
   return static_cast<Bipartition*>(
       static_cast<Element*>(bipart_get_cpp(o))->really_copy());
 }
@@ -112,7 +112,7 @@ Obj PBRConverter::get_gap_type(size_t deg) const {
 // TODO(JDM) add some more asserts here
 
 PBR* PBRConverter::convert(Obj o, size_t n) const {
-  assert(CALL_1ARGS(IsPBR, o));
+  SEMIGROUPS_ASSERT(CALL_1ARGS(IsPBR, o));
   size_t                               m = INT_INTOBJ(ELM_PLIST(o, 1));
   std::vector<std::vector<u_int32_t>>* pbr(
       new std::vector<std::vector<u_int32_t>>());

@@ -18,11 +18,10 @@
 
 #include <fropin.h>
 
-#include <assert.h>
-
 #include <algorithm>
 #include <iostream>
 
+#include "semigroups-debug.h"
 #include "libsemigroups/src/report.h"
 #include "rnams.h"
 #include "semigrp.h"
@@ -90,12 +89,12 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
     data       = semi_obj_get_fropin(obj);
   } else {
     parent = ElmPRec(obj, RNamName("parent"));
-    assert(CALL_1ARGS(IsSemigroup, parent) == True);
+    SEMIGROUPS_ASSERT(CALL_1ARGS(IsSemigroup, parent) == True);
     data       = obj;
     report     = semi_obj_get_report(parent);
     batch_size = semi_obj_get_batch_size(parent);
   }
-  assert(semi_obj_get_type(parent) == UNKNOWN);
+  SEMIGROUPS_ASSERT(semi_obj_get_type(parent) == UNKNOWN);
 
   // TODO(JDM) if looking check that something in elts doesn't already satisfy
   // the lookfunc

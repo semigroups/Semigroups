@@ -22,13 +22,12 @@
 
 #include "pkg.h"
 
-#include <assert.h>
-
 #include <iostream>
 
 #include "bipart.h"
 #include "congpairs.h"
 #include "converter.h"
+#include "semigroups-debug.h"
 #include "fropin.h"
 #include "semigrp.h"
 #include "uf.h"
@@ -39,26 +38,6 @@
 
 using libsemigroups::Congruence;
 using libsemigroups::UF;
-
-// Prevent compilation if the DEBUG and NDEBUG flags are both set
-#if defined(DEBUG) && defined(NDEBUG)
-#error When compiling with -DDEBUG you must also use -UNDEBUG and vice versa
-#endif
-
-#ifdef DEBUG
-#include "gap-debug.h"
-#include "libsemigroups/src/timer.h"
-using libsemigroups::Timer;
-
-Obj SEMIGROUPS_IS_OPTIMIZED(Obj self) {
-  Timer t;
-  t.start();
-  for (UInt i = 0; i < 10000000; i++) {
-  }
-  t.stop();
-  return (t.elapsed() > 2000 ? False : True);
-}
-#endif
 
 #if !defined(SIZEOF_VOID_P)
 #error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
@@ -111,7 +90,7 @@ void TSemiObjPrintFunc(Obj o) {
       Pr("<wrapper for C++ semigroup objects>", 0L, 0L);
       break;
     }
-    default: { assert(false); }
+    default: { SEMIGROUPS_ASSERT(false); }
   }
 }
 
@@ -144,7 +123,7 @@ Int TBlocksObjIsMutableObjFuncs(Obj o) {
 // Function to free a T_SEMI Obj during garbage collection.
 
 void TSemiObjFreeFunc(Obj o) {
-  assert(TNUM_OBJ(o) == T_SEMI);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
   switch (SUBTYPE_OF_T_SEMI(o)) {
     case T_SEMI_SUBTYPE_UF: {
       delete CLASS_OBJ<UF*>(o);
@@ -163,18 +142,18 @@ void TSemiObjFreeFunc(Obj o) {
       }
       break;
     }
-    default: { assert(false); }
+    default: { SEMIGROUPS_ASSERT(false); }
   }
 }
 
 void TBipartObjFreeFunc(Obj o) {
-  assert(TNUM_OBJ(o) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_BIPART);
   bipart_get_cpp(o)->really_delete();
   delete bipart_get_cpp(o);
 }
 
 void TBlocksObjFreeFunc(Obj o) {
-  assert(TNUM_OBJ(o) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_BLOCKS);
   delete blocks_get_cpp(o);
 }
 
@@ -195,7 +174,7 @@ Obj TBlocksObjTypeFunc(Obj o) {
 // Functions to save/load T_SEMI, T_BIPART, T_BLOCKS
 
 void TSemiObjSaveFunc(Obj o) {
-  assert(TNUM_OBJ(o) == T_SEMI);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
 
   SaveUInt4(SUBTYPE_OF_T_SEMI(o));
 
@@ -227,7 +206,7 @@ void TSemiObjSaveFunc(Obj o) {
 }
 
 void TSemiObjLoadFunc(Obj o) {
-  assert(TNUM_OBJ(o) == T_SEMI);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
 
   t_semi_subtype_t type = static_cast<t_semi_subtype_t>(LoadUInt4());
   ADDR_OBJ(o)[0]        = reinterpret_cast<Obj>(type);
@@ -251,7 +230,7 @@ void TSemiObjLoadFunc(Obj o) {
       en_semi_t s_type = static_cast<en_semi_t>(LoadUInt4());
       ADDR_OBJ(o)[1]   = reinterpret_cast<Obj>(s_type);
       if (s_type != UNKNOWN) {
-        assert(SIZE_OBJ(o) == 6 * SIZEOF_VOID_P);
+        SEMIGROUPS_ASSERT(SIZE_OBJ(o) == 6 * SIZEOF_VOID_P);
         ADDR_OBJ(o)[2] = LoadSubObj();                        // semigroup Obj
         ADDR_OBJ(o)[3] = reinterpret_cast<Obj>(LoadUInt4());  // degree
         ADDR_OBJ(o)[4] = static_cast<Obj>(nullptr);           // Converter*
@@ -260,7 +239,7 @@ void TSemiObjLoadFunc(Obj o) {
       }
       break;
     }
-    default: { assert(false); }
+    default: { SEMIGROUPS_ASSERT(false); }
   }
 }
 
@@ -281,7 +260,7 @@ void TBipartObjLoadFunc(Obj o) {
     blocks->push_back(LoadUInt4());
   }
   ADDR_OBJ(o)[0] = reinterpret_cast<Obj>(new Bipartition(blocks));
-  assert(ADDR_OBJ(o)[1] == NULL && ADDR_OBJ(o)[2] == NULL);
+  SEMIGROUPS_ASSERT(ADDR_OBJ(o)[1] == NULL && ADDR_OBJ(o)[2] == NULL);
 }
 
 void TBlocksObjSaveFunc(Obj o) {
@@ -325,11 +304,11 @@ void TBlocksObjLoadFunc(Obj o) {
 
 void TBipartObjMarkSubBags(Obj o) {
   if (ADDR_OBJ(o)[1] != NULL) {
-    // assert(TNUM_OBJ(ADDR_OBJ(o)[1]) == T_BLOCKS);
+    // SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(o)[1]) == T_BLOCKS);
     MARK_BAG(ADDR_OBJ(o)[1]);
   }
   if (ADDR_OBJ(o)[2] != NULL) {
-    // assert(TNUM_OBJ(ADDR_OBJ(o)[2]) == T_BLOCKS);
+    // SEMIGROUPS_ASSERT(TNUM_OBJ(ADDR_OBJ(o)[2]) == T_BLOCKS);
     MARK_BAG(ADDR_OBJ(o)[2]);
   }
 }
@@ -428,10 +407,6 @@ typedef Obj (*GVarFunc)(/*arguments*/);
 // Table of functions to export
 
 static StructGVarFunc GVarFuncs[] = {
-#ifdef DEBUG
-    GVAR_ENTRY("pkg.cc", SEMIGROUPS_IS_OPTIMIZED, 0, ""),
-#endif
-
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_LIST, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_AS_SET, 1, "S"),
     GVAR_ENTRY("semigrp.cc", EN_SEMI_CAYLEY_TABLE, 1, "S"),

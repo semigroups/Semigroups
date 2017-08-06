@@ -40,7 +40,7 @@ using libsemigroups::Integers;
 using libsemigroups::really_delete_cont;
 using libsemigroups::MatrixOverSemiring;
 
-#ifdef DEBUG
+#ifdef SEMIGROUPS_KERNEL_DEBUG
 #define ERROR(obj, message)                               \
   char buf[128];                                          \
   strncpy(buf, __func__, sizeof(buf));                    \
@@ -80,7 +80,7 @@ using libsemigroups::MatrixOverSemiring;
 
 std::vector<Element const*>*
 plist_to_vec(Converter* converter, gap_list_t elements, size_t degree) {
-  assert(IS_PLIST(elements));
+  SEMIGROUPS_ASSERT(IS_PLIST(elements));
 
   auto out = new std::vector<Element const*>();
 
@@ -105,7 +105,7 @@ iterator_to_plist(Converter* converter, T first, T last) {
 }
 
 gap_list_t word_t_to_plist(word_t const& word) {
-  assert(!word.empty());
+  SEMIGROUPS_ASSERT(!word.empty());
   gap_list_t out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, word.size());
   // IMMUTABLE since it should not be altered on the GAP level
   SET_LEN_PLIST(out, word.size());
@@ -129,7 +129,7 @@ gap_list_t semi_obj_get_gens(gap_semigroup_t so) {
     CHANGED_BAG(gens);
     return gens;
   } else {
-#ifdef DEBUG
+#ifdef SEMIGROUPS_KERNEL_DEBUG
     // This is included since the methods for finding generating sets for
     // acting semigroup ideals may use the output of the F-P algorithm (Green's
     // relations etc), and so if we are here we are about to call
@@ -219,11 +219,12 @@ static inline size_t semi_obj_get_threshold(gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
   initRNams();
   gap_element_t x = semi_obj_get_rep(so);
-  assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(CALL_1ARGS(IsTropicalMatrix, x) || CALL_1ARGS(IsNTPMatrix, x));
-  assert(ELM_PLIST(x, 1) != 0);
-  assert(IS_PLIST(ELM_PLIST(x, 1)));
-  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_POSOBJ);
+  SEMIGROUPS_ASSERT(CALL_1ARGS(IsTropicalMatrix, x)
+                    || CALL_1ARGS(IsNTPMatrix, x));
+  SEMIGROUPS_ASSERT(ELM_PLIST(x, 1) != 0);
+  SEMIGROUPS_ASSERT(IS_PLIST(ELM_PLIST(x, 1)));
+  SEMIGROUPS_ASSERT(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1) != 0);
 
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 1));
 }
@@ -232,11 +233,11 @@ static inline size_t semi_obj_get_period(gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
   initRNams();
   gap_element_t x = semi_obj_get_rep(so);
-  assert(TNUM_OBJ(x) == T_POSOBJ);
-  assert(CALL_1ARGS(IsNTPMatrix, x));
-  assert(ELM_PLIST(x, 1) != 0);
-  assert(IS_PLIST(ELM_PLIST(x, 1)));
-  assert(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2) != 0);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_POSOBJ);
+  SEMIGROUPS_ASSERT(CALL_1ARGS(IsNTPMatrix, x));
+  SEMIGROUPS_ASSERT(ELM_PLIST(x, 1) != 0);
+  SEMIGROUPS_ASSERT(IS_PLIST(ELM_PLIST(x, 1)));
+  SEMIGROUPS_ASSERT(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2) != 0);
 
   return INT_INTOBJ(ELM_PLIST(x, LEN_PLIST(ELM_PLIST(x, 1)) + 2));
 }
@@ -263,8 +264,8 @@ static inline size_t semi_obj_get_period(gap_semigroup_t so) {
 //  its en_semi_t is UNKNOWN.
 
 Converter* en_semi_init_converter(en_semi_obj_t es) {
-  assert(en_semi_get_type(es) != UNKNOWN);
-  assert(CLASS_OBJ<Converter*>(es, 4) == nullptr);
+  SEMIGROUPS_ASSERT(en_semi_get_type(es) != UNKNOWN);
+  SEMIGROUPS_ASSERT(CLASS_OBJ<Converter*>(es, 4) == nullptr);
 
   Converter* converter = nullptr;
   // semigroup Obj is required to get the threshold etc for matrices over a
@@ -341,7 +342,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
       converter = new PBRConverter();
       break;
     }
-    default: { assert(false); }
+    default: { SEMIGROUPS_ASSERT(false); }
   }
   ADDR_OBJ(es)[4] = reinterpret_cast<Obj>(converter);
   CHANGED_BAG(es);
@@ -349,8 +350,8 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
 }
 
 Semigroup* en_semi_init_semigroup(en_semi_obj_t es) {
-  assert(en_semi_get_type(es) != UNKNOWN);
-  assert(CLASS_OBJ<Semigroup*>(es, 5) == nullptr);
+  SEMIGROUPS_ASSERT(en_semi_get_type(es) != UNKNOWN);
+  SEMIGROUPS_ASSERT(CLASS_OBJ<Semigroup*>(es, 5) == nullptr);
   initRNams();
 
   if (en_semi_get_converter(es) == nullptr) {
@@ -460,17 +461,17 @@ en_semi_obj_t semi_obj_init_en_semi(gap_semigroup_t so) {
 }
 
 Converter* en_semi_get_converter(en_semi_obj_t es) {
-  assert(TNUM_OBJ(es) == T_SEMI
-         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
-  assert(en_semi_get_type(es) != UNKNOWN);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(es) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  SEMIGROUPS_ASSERT(en_semi_get_type(es) != UNKNOWN);
   Converter* converter = CLASS_OBJ<Converter*>(es, 4);
   return (converter != nullptr ? converter : en_semi_init_converter(es));
 }
 
 Semigroup* en_semi_get_semi_cpp(en_semi_obj_t es) {
-  assert(TNUM_OBJ(es) == T_SEMI
-         && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
-  assert(en_semi_get_type(es) != UNKNOWN);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(es) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(es) == T_SEMI_SUBTYPE_ENSEMI);
+  SEMIGROUPS_ASSERT(en_semi_get_type(es) != UNKNOWN);
   Semigroup* semi_cpp = CLASS_OBJ<Semigroup*>(es, 5);
   return (semi_cpp != nullptr ? semi_cpp : en_semi_init_semigroup(es));
 }
@@ -583,7 +584,7 @@ gap_list_t EN_SEMI_CAYLEY_TABLE(Obj self, gap_semigroup_t so) {
     semi_cpp->set_report(semi_obj_get_report(so));
 
     size_t n = semi_cpp->size();
-    assert(n != 0);
+    SEMIGROUPS_ASSERT(n != 0);
     gap_list_t out = NEW_PLIST(T_PLIST_TAB_RECT, n);
     // this is intentionally not IMMUTABLE
 
@@ -657,7 +658,7 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
 // function if coll contains some elements not in old_semi_cpp. We check in
 // the GAP to avoid creating new_so at all, and also to avoid sorting etc a
 // collection of elements that belong to the semigroup.
-#ifdef DEBUG
+#ifdef SEMIGROUPS_KERNEL_DEBUG
   bool valid = false;
   for (auto const& x : *coll) {
     if (!old_semi_cpp->test_membership(x)) {
@@ -665,7 +666,7 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
       break;
     }
   }
-  assert(valid);
+  SEMIGROUPS_ASSERT(valid);
 #endif
   old_semi_cpp->set_report(semi_obj_get_report(new_so));
   Semigroup* new_semi_cpp = old_semi_cpp->copy_closure(coll);
@@ -708,8 +709,8 @@ EN_SEMI_CLOSURE_DEST(Obj self, gap_semigroup_t so, gap_list_t plist) {
     return Fail;
   }
 
-  assert(IS_PLIST(plist));
-  assert(LEN_PLIST(plist) > 0);
+  SEMIGROUPS_ASSERT(IS_PLIST(plist));
+  SEMIGROUPS_ASSERT(LEN_PLIST(plist) > 0);
 
   Semigroup*   semi_cpp  = en_semi_get_semi_cpp(es);
   size_t const deg       = semi_cpp->degree();
@@ -1006,9 +1007,9 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
       }
     }
     CHANGED_BAG(so);
-    assert(IsbPRec(fp, RNam_words));
-    assert(IS_PLIST(ElmPRec(fp, RNam_words)));
-    assert(pos_c <= (size_t) LEN_PLIST(ElmPRec(fp, RNam_words)));
+    SEMIGROUPS_ASSERT(IsbPRec(fp, RNam_words));
+    SEMIGROUPS_ASSERT(IS_PLIST(ElmPRec(fp, RNam_words)));
+    SEMIGROUPS_ASSERT(pos_c <= (size_t) LEN_PLIST(ElmPRec(fp, RNam_words)));
 
     return ELM_PLIST(ElmPRec(fp, RNam_words), pos_c);
   } else {
@@ -1065,7 +1066,6 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
 
     semi_cpp->set_report(semi_obj_get_report(so));
     semi_cpp->set_max_threads(semi_obj_get_nr_threads(so));
-
     return iterator_to_plist(converter,
                              semi_cpp->cbegin_idempotents(),
                              semi_cpp->cend_idempotents());
@@ -1092,7 +1092,7 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
         AssPlist(out, ++nr, ELM_PLIST(elts, pos));
       }
     }
-    assert(nr != 0);
+    SEMIGROUPS_ASSERT(nr != 0);
     return out;
   }
 }
@@ -1141,7 +1141,7 @@ gap_int_t EN_SEMI_IDEMS_SUBSET(Obj self, gap_semigroup_t so, gap_list_t list) {
       }
     }
   }
-  assert(len == (size_t) LEN_PLIST(out));
+  SEMIGROUPS_ASSERT(len == (size_t) LEN_PLIST(out));
   if (len == 0) {
     RetypeBag(out, T_PLIST_EMPTY + IMMUTABLE);
   }
