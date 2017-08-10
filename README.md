@@ -22,15 +22,15 @@ It is assumed that you have a working copy of GAP with version number 4.9.0 or h
 
 The  following  is  a  summary of the steps that should lead to a successful installation of [Semigroups](https://gap-packages.github.io/Semigroups):
 
-* get the [IO](http://gap-system.github.io/io/) package version 4.4.4 or higher
+* get the [IO](http://gap-packages.github.io/io/) package version 4.4.4 or higher
 
-* get the [Orb](http://gap-system.github.io/orb/) package version 4.7.5 or higher. 
-  Both [Orb](http://gap-system.github.io/orb/) and [Semigroups](https://gap-packages.github.io/Semigroups) perform better if [Orb](http://gap-system.github.io/orb/) is compiled, so compile [Orb](http://gap-system.github.io/orb/)!
+* get the [Orb](http://gap-packages.github.io/orb/) package version 4.7.5 or higher. 
+  Both [Orb](http://gap-packages.github.io/orb/) and [Semigroups](https://gap-packages.github.io/Semigroups) perform better if [Orb](http://gap-packages.github.io/orb/) is compiled, so compile [Orb](http://gap-packages.github.io/orb/)!
 
-* ensure that the [Digraphs](http://gap-system.github.io/digraphs/) package version 0.10.0 or higher is available.  [Digraphs](http://gap-system.github.io/digraphs/) must be compiled before [Semigroups](https://gap-packages.github.io/Semigroups) can be
+* ensure that the [Digraphs](http://gap-packages.github.io/Digraphs/) package version 0.10.0 or higher is available.  [Digraphs](http://gap-packages.github.io/Digraphs/) must be compiled before [Semigroups](https://gap-packages.github.io/Semigroups) can be
 loaded.
 
-* get the [genss](http://gap-system.github.io/genss/) package version 1.5 or higher 
+* get the [genss](http://gap-packages.github.io/genss/) package version 1.5 or higher 
 
 * download the package archive `semigroups-x.x.x.tar.gz` from the [Semigroups](https://gap-packages.github.io/Semigroups) webpage.
 
