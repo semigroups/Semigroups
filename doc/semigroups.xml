@@ -257,6 +257,35 @@ gap> T := SubsemigroupByProperty(FullTransformationSemigroup(5), func);
 </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="StabilizerInverseSemigroup">
+<ManSection>
+  <Oper Name="StabilizerInverseSemigroup" Arg="S, pnt"/>
+  <Returns>An inverse semigroup.</Returns>
+  <Description>
+  <C>StabilizerInverseSemigroup</C> computes the stabilizer in the inverse
+  semigroup <A>S</A> of the point <A>pnt</A>, that is the inverse subsemigroup
+  of those elements <A>p</A> of <A>S</A> for which <C>pnt^p</C> is defined and
+  equal to <A>pnt</A>.
+  <P/>
+  Note: Currently, a method is only installed for <A>S</A> an inverse semigroup of
+  partial permutations.
+  <Example><![CDATA[
+gap> S := InverseSemigroup(
+> PartialPerm([1, 2, 3], [2, 3, 1]),
+> PartialPerm([1, 2, 3], [1, 3, 2]),
+> PartialPerm([1, 2, 3], [4, 5, 6]),
+> PartialPerm([1, 2, 3], [5, 6, 7])
+> );;
+gap> GeneratorsOfInverseSemigroup(S);
+[ (1,2,3), (1)(2,3), [1,4][2,5][3,6], [1,5][2,6][3,7] ]
+gap> StabilizerInverseSemigroup(S, 5);
+<inverse partial perm semigroup of rank 4 with 3 generators>
+gap> GeneratorsOfInverseSemigroup(last);
+[ (4,6)(5), (5)(6,7), [7,4](5)(6) ]]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="Random">
   <ManSection>
     <Meth Name = "Random" Arg = "S" Label = "for a semigroup"/>

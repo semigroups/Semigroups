@@ -734,6 +734,30 @@ gap> func := function(x)
 gap> T := InverseSubsemigroupByProperty(SymmetricInverseMonoid(3), func);
 fail
 
+# Test StabilizerInverseSemigroup 1
+gap> BruteForceStabilizerInverseSemigroup := function(S, pnt)
+>     return SortedList(Filtered(AsList(S), x -> pnt ^ x = pnt));
+> end;;
+gap> S := InverseSemigroup(
+>     PartialPermNC([1, 2, 3, 4], [1, 8, 3, 6]),
+>     PartialPermNC([1, 2, 3, 4, 5], [6, 7, 2, 8, 5]),
+>     PartialPermNC([1, 2, 3, 4, 5, 6], [4, 6, 8, 5, 1, 3]),
+>     PartialPermNC([1, 2, 4, 5, 6, 8], [3, 5, 6, 1, 7, 4]),
+>     rec(acting := true)
+> );;
+gap> Size(S);
+16448
+gap> stab := StabilizerInverseSemigroup(S, 3);;
+gap> Size(stab);
+724
+gap> bf := BruteForceStabilizerInverseSemigroup(S, 3);;
+gap> AsSortedList(stab) = bf;
+true
+
+# Test StabilizerInverseSemigroup 2
+gap> StabilizerInverseSemigroup(S, 9);
+Error, S must be defined on pnt!
+
 # Test Random (for a semigroup with AsList)
 gap> S := FullTransformationMonoid(4);;
 gap> AsList(S);;

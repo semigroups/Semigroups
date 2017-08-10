@@ -944,6 +944,93 @@ function(S, func)
   return InverseSubsemigroupByProperty(S, func, Size(S));
 end);
 
+InstallMethod(StabilizerInverseSemigroup,
+"for a partial perm inverse semigroup and a positive integer",
+[IsActingSemigroup and IsInverseSemigroup and IsPartialPermSemigroup,
+ IsPosInt],
+function(S, pnt)
+  local orb, scclookup, setswithpoint, tmp, sccreps, fromsccrep, tosccrep,
+  stabgens, to, schutz, stab, newstabgens, dom, from, a, b, pi,
+  pointstabilizer, modulus, i, j;
+  if ForAll(GeneratorsOfInverseSemigroup(S),
+            x -> pnt ^ x = 0 and pnt ^ (x ^ -1) = 0) then
+    ErrorNoReturn("S must be defined on pnt!");
+  fi;
+  orb := LambdaOrb(S);
+  scclookup := OrbSCCLookup(orb);
+  setswithpoint := Filtered([1 .. Size(orb)], i -> pnt in orb[i]);
+  scclookup := scclookup{setswithpoint};
+  tmp := List([1 .. Size(setswithpoint)],
+              i -> LambdaOrbMult(orb, scclookup[i], setswithpoint[i]));
+  sccreps := List(scclookup, i -> orb[OrbSCC(orb)[i][1]]);
+  fromsccrep := List(tmp, x -> x[1]);
+  tosccrep := List(tmp, x -> x[2]);
+  stabgens := [];
+  # Let x be a set containing pnt. We compute generators of the stabiliser
+  # of pnt in the Schutzenberger group of x. To this end, we use the set
+  # representing the SCC of x.
+  for i in [1 .. Length(setswithpoint)] do
+    to := tosccrep[i];
+    schutz := LambdaOrbSchutzGp(orb, scclookup[i]);
+    stab := Stabilizer(schutz, pnt ^ to);
+    # Convert the permutations in stab to PartialPerms
+    newstabgens := GeneratorsOfGroup(stab);
+    dom := sccreps[i];
+    newstabgens := List(newstabgens, x -> AsPartialPerm(x, dom));
+    # If stab is trivial newstabgens will be empty. Add the identity pperm
+    if IsEmpty(newstabgens) then
+      newstabgens := [AsPartialPerm((), dom)];
+    fi;
+    # Conjugate them back into the Schutzenberger group of x
+    newstabgens := List(newstabgens, x -> x ^ (to ^ -1));
+    Add(stabgens, newstabgens);
+  od;
+  stabgens := Concatenation(stabgens);
+  # For two different sets in the same SCC take semigroup elements
+  # mapping one to the other via the SCC's representative.
+  # Then check whether pnt^to and PreImage(from, pnt) can be
+  # mapped to each other in the representatives Schutzenberger
+  # group.
+  for i in [1 .. Length(setswithpoint)] do
+    for j in [1 .. Length(setswithpoint)] do
+      if not i = j and scclookup[i] = scclookup[j] then
+        to := tosccrep[i];
+        from := fromsccrep[j];
+        a := pnt ^ to;
+        b := PreImagePartialPerm(from, pnt);
+        schutz := LambdaOrbSchutzGp(orb, scclookup[i]);
+        if a = b then
+          pi := ();
+        else
+          pi := RepresentativeAction(schutz, a, b);
+          if pi = fail then
+            continue;
+          fi;
+        fi;
+        # Make pi a partial perm
+        dom := sccreps[i];
+        pi := AsPartialPerm(pi, dom);
+        Add(stabgens, to * pi * from);
+      fi;
+    od;
+  od;
+  # Try to keep the generating set small by using ClosureInverseSemigroup
+  pointstabilizer := InverseSemigroup(stabgens[1]);
+  for i in [1 .. QuoInt(Length(stabgens), 3)] do
+    pointstabilizer := ClosureInverseSemigroup(
+                         pointstabilizer,
+                         stabgens{[3 * i - 2 .. 3 * i]});
+  od;
+  modulus := Length(stabgens) mod 3;
+  if not modulus = 0 then
+    pointstabilizer := ClosureInverseSemigroup(
+                         pointstabilizer,
+                         stabgens{[Length(stabgens) - modulus + 1,
+                                   Length(stabgens)]});
+  fi;
+  return pointstabilizer;
+end);
+
 #############################################################################
 ## 8. Random semigroups and elements
 #############################################################################

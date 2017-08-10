@@ -151,5 +151,10 @@ DeclareOperation("InverseSubsemigroupByProperty",
                   IsFunction,
                   IsPosInt]);
 
+DeclareOperation("StabilizerInverseSemigroup",
+                 [IsActingSemigroup and IsInverseSemigroup
+                 and IsPartialPermSemigroup,
+                 IsPosInt]);
+
 # undocumented
 DeclareGlobalFunction("RegularSemigroup");

@@ -358,6 +358,7 @@ true]]></Log>
     <#Include Label = "ClosureSemigroup">
     <#Include Label = "SubsemigroupByProperty">
     <#Include Label = "InverseSubsemigroupByProperty">
+    <#Include Label = "StabilizerInverseSemigroup">
     <#Include Label = "DirectProduct">
     <#Include Label = "WreathProduct">
   </Section>
