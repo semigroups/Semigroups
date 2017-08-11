@@ -23,7 +23,6 @@
 #include <vector>
 
 #include "src/compiled.h"
-#include "src/pperm.h"
 
 #include "libsemigroups/src/elements.h"
 
@@ -155,33 +154,21 @@ template <typename T> class PPermConverter : public Converter {
       deg--;
     }
 
-    Obj o     = NEW_PPERM(deg);
-    T*  pto   = reinterpret_cast<T*>(static_cast<Obj*>(ADDR_OBJ(o)) + 2) + 1;
-    T   codeg = 0;
+    Obj o   = NEW_PPERM(deg);
+    T*  pto = reinterpret_cast<T*>(static_cast<Obj*>(ADDR_OBJ(o)) + 2) + 1;
 
     for (T i = 0; i < deg; i++) {
       if ((*xx)[i] == UNDEFINED) {
         pto[i] = 0;
       } else {
         pto[i] = (*xx)[i] + 1;
-        if (pto[i] > codeg) {
-          codeg = pto[i];
-        }
       }
     }
-    set_codeg(o, deg, codeg);
     return o;
   }
 
  private:
-  void set_codeg(Obj o, T deg, T codeg) const {
-    if (deg < 65536) {
-      CODEG_PPERM2(o) = codeg;
-    } else {
-      CODEG_PPERM4(o) = codeg;
-    }
-  }
-
+  // FIXME this isn't right it depends on the codegree only and not the degree
   inline Obj NEW_PPERM(size_t deg) const {
     if (deg < 65536) {
       return NEW_PPERM2(deg);
