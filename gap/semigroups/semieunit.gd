@@ -11,6 +11,18 @@
 DeclareCategory("IsMcAlisterTripleSemigroupElement",
                 IsAssociativeElement and IsMultiplicativeElementWithInverse);
 
+# This is a representation for McAlister triple semigroup elements, which are
+# created via the function McAlisterTripleSemigroupElement.
+#
+# The components are:
+#
+#   Parent:   A McAlister triple semigroup of which this is an element
+#
+#   Vertex:   A vertex of the McAlisterTripleSemigroupSemilattice of the Parent
+#
+#   Group element:  An element of the McAlisterTripleSemigroupGroup of the
+#                   Parent
+
 DeclareRepresentation("IsMcAlisterTripleSemigroupElementRep",
                       IsMcAlisterTripleSemigroupElement
                       and IsPositionalObjectRep, 2);
@@ -21,7 +33,20 @@ DeclareSynonymAttr("IsMcAlisterTripleSemigroup",
                    IsInverseSemigroup and IsGeneratorsOfInverseSemigroup
                    and IsMcAlisterTripleSemigroupElementCollection
                    and IsWholeFamily and IsEnumerableSemigroupRep);
-# TODO: Add description. See congpairs.gd
+
+# This is a representation for McAlister triple semigroup, which are
+# created via the function McAlisterTripleSemigroup.
+#
+# The attributes stored upon creation are:
+#
+#   McAlisterTripleSemigroupGroup
+#   McAlisterTripleSemigroupPartialOrder
+#   McAlisterTripleSemigroupSemilattice
+#   McAlisterTripleSemigroupAction
+#
+# their purpose is described in the section of the user manual on McAlister
+# triple semigroups.
+
 DeclareRepresentation("IsMcAlisterTripleSemigroupDefaultRep",
                       IsMcAlisterTripleSemigroup and IsAttributeStoringRep,
                       []);

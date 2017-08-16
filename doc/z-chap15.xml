@@ -1,183 +1,55 @@
-<Chapter Label = "Properties and attributes specific to inverse semigroups">
+<Chapter Label = "Properties of semigroups">
   <Heading>
-    Properties and attributes specific to inverse semigroups
+    Properties of semigroups 
   </Heading>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
 
-  In this chapter we describe the attributes which are specific
-  to inverse semigroups that can be determined using &Semigroups;.<P/>
-
-  The functions
-  <List>
-    <Item><Ref Oper = "IsJoinIrreducible"/></Item>
-    <Item><Ref Oper = "IsMajorantlyClosed"/></Item>
-    <Item><Ref Attr = "JoinIrreducibleDClasses"/></Item>
-    <Item><Ref Oper = "MajorantClosure"/></Item>
-    <Item><Ref Oper = "Minorants"/></Item>
-    <Item><Ref Oper = "RightCosetsOfInverseSemigroup"/></Item>
-    <Item><Ref Attr = "SmallerDegreePartialPermRepresentation"/></Item>
-    <Item><Ref Attr = "VagnerPrestonRepresentation"/></Item>
-  </List>
-  were written by Wilf A. Wilson and Robert Hancock. <P/>
-
-  The function <Ref Attr = "CharacterTableOfInverseSemigroup"/> was written by
-  Jhevon Smith and Ben Steinberg.
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
- 
-    <Heading>
-      Attributes specific to inverse semigroups
-    </Heading>
- 
-    <#Include Label = "NaturalLeqInverseSemigroup">
-    <#Include Label = "JoinIrreducibleDClasses">
-    <#Include Label = "MajorantClosure">
-    <#Include Label = "Minorants">
-    <#Include Label = "PrimitiveIdempotents">
-    <#Include Label = "RightCosetsOfInverseSemigroup">
-    <#Include Label = "SameMinorantsSubgroup">
-    <#Include Label = "SmallerDegreePartialPermRepresentation">
-    <#Include Label = "VagnerPrestonRepresentation">
-    <#Include Label = "CharacterTableOfInverseSemigroup">
-    <#Include Label = "EUnitaryInverseCover">
-
-  </Section>
+  In this chapter we decribe the methods that are available in &Semigroups; for
+  determining various properties of a semigroup.
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
     <Heading>
-      Properties of inverse semigroups
+      Properties of semigroups
     </Heading>
+
+    In this section we describe the properties of a semigroup that can be
+    determined using the &Semigroups; package.
+    <P/>
  
-    <#Include Label = "IsCliffordSemigroup">
-    <#Include Label = "IsBrandtSemigroup">
-    <#Include Label = "IsEUnitaryInverseSemigroup">
-    <#Include Label = "IsFInverseSemigroup">
-    <#Include Label = "IsFInverseMonoid">        
-    <#Include Label = "IsFactorisableInverseMonoid">
-    <#Include Label = "IsJoinIrreducible">
-    <#Include Label = "IsMajorantlyClosed">
-    <#Include Label = "IsMonogenicInverseSemigroup">
-    <#Include Label = "IsMonogenicInverseMonoid">
-
+    <#Include Label = "IsBand">
+    <#Include Label = "IsBlockGroup">
+    <#Include Label = "IsCommutativeSemigroup">
+    <#Include Label = "IsCompletelyRegularSemigroup">
+    <#Include Label = "IsCongruenceFreeSemigroup">
+    <#Include Label = "IsGroupAsSemigroup">
+    <#Include Label = "IsIdempotentGenerated">
+    <#Include Label = "IsLeftSimple">
+    <#Include Label = "IsLeftZeroSemigroup">
+    <#Include Label = "IsMonogenicSemigroup">
+    <#Include Label = "IsMonogenicMonoid">
+    <#Include Label = "IsMonoidAsSemigroup">
+    <#Include Label = "IsOrthodoxSemigroup">
+    <#Include Label = "IsRectangularBand">
+    <#Include Label = "IsRectangularGroup">
+    <#Include Label = "IsRegularSemigroup">
+    <#Include Label = "IsRightZeroSemigroup">
+    <#Include Label = "IsRTrivial">
+    <#Include Label = "IsSemigroupWithAdjoinedZero">
+    <#Include Label = "IsSemilattice">
+    <#Include Label = "IsSimpleSemigroup">
+    <#Include Label = "IsSynchronizingSemigroup">
+    <#Include Label = "IsUnitRegularMonoid">
+    <#Include Label = "IsZeroGroup">
+    <#Include Label = "IsZeroRectangularBand">
+    <#Include Label = "IsZeroSemigroup">
+    <#Include Label = "IsZeroSimpleSemigroup">
+ 
   </Section>
 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
-
-  <Section Label = "McAlister triple semigroups">
-    
-    <Heading>
-      McAlister triple semigroups and E-unitary inverse semigroups     
-    </Heading>
-    In this section, we describe the functions in &GAP; for creating and
-    computing with McAlister triple semigroups and their subsemigroups.
-    This implementation is based on the section in Chapter 5 of
-    <Cite Key = "Howie1995aa"/> but differs from the treatment in Howie
-    by using right actions instead of left. Some definitions found in
-    the documentation are changed for this reason. <P/>
-
-    The importance of the McAlister triple semigroups lies in the fact that
-    they are exactly the E-unitary inverse semigroups, which are an important
-    class in the study of inverse semigroups. <P/>
-
-    First we define E-unitary inverse semigroups. It is standard to
-    denote the subsemigroup of a semigroup consisting of its idempotents by
-    <C>E</C>. A semigroup <C>S</C> is said to be <E>E-unitary</E> if for all
-    <C>e</C> in <C>E</C> and for all <C>s</C> in <C>S</C>:
-
-      <List>
-        <Item>
-          <C>es</C> <M>\in</M> <C>E</C> implies <C>s</C> <M>\in</M> <C>E</C>,
-        </Item>
-        <Item>
-          <C>se</C> <M>\in</M> <C>E</C> implies <C>s</C> <M>\in</M> <C>E</C>.
-        </Item>
-      </List>
-
-    For inverse semigroups these two conditions are equivalent. We are only
-    interested in <E>E-unitary inverse semigroups</E>. 
-    Before defining McAlister triple semigroups we define a McAlister triple.
-    A <E>McAlister triple</E> is a triple <C>(G,X,Y)</C> which consisting of:
-
-    <List>
-      <Item>
-        a partial order <C>X</C>,
-      </Item>
-      <Item>
-        a subset <C>Y</C> of <C>X</C>,
-      </Item>
-      <Item>
-        a group <C>G</C> which acts on <C>X</C>, on the right, by order
-        automorphisms. That means for all <C>A,B</C> <M>\in</M> <C>X</C> and
-        for all <C>g</C> <M>\in</M> <C>G</C>: <C>A</C> <M>\leq</M> <C>B</C> if
-        and only if <C>Ag</C> <M>\leq</M> <C>Bg</C>.
-      </Item>
-    </List>
-
-    Furthermore, <C>(G,X,Y)</C> must satisfy the following four properties to
-    be a McAlister triple:
-
-    <List>
-      <Mark> M1 </Mark> 
-      <Item>
-        <C>Y</C> is a subset of <C>X</C> which is a join-semilattice together
-        with the restriction of the order relation of <C>X</C> to <C>Y</C>.
-      </Item>
-      <Mark> M2 </Mark> 
-      <Item>
-        <C>Y</C> is an order ideal of <C>X</C>. That is to say, for all <C>A</C>
-        <M>\in</M> <C>X</C> and for all <C>B</C> <M>\in</M>
-        <C>Y</C>: if <C>A</C> <M>\leq</M> <C>B</C>, then <C>A</C> <M>\in</M>
-        <C>Y</C>.
-      </Item>
-      <Mark> M3 </Mark> 
-      <Item>
-        Every element of <C>X</C> is the image of some element in <C>Y</C> moved
-        by an element of <C>G</C>. That is to say, for every <C>A</C> <M>\in</M>
-        <C>X</C>, there exists some <C>B</C> <M>\in</M> <C>Y</C> and there exists
-        <C>g</C> <M>\in</M> <C>G</C> such that <C>A</C> = <C>Bg</C>.
-      </Item>
-      <Mark> M4 </Mark> 
-      <Item>
-        Finally, for all <C>g</C> <M>\in</M> <C>G</C>, the intersection
-        <C>{yg : y </C><M>\in</M><C> Y}</C> <M>\cap</M> <C>Y</C> is non-empty.
-      </Item>
-    </List>
-
-    We may define an E-unitary inverse semigroup using a McAlister triple. Given 
-    <C>(G,X,Y)</C> let <C>M(G,X,Y)</C> be the set of all pairs <C>(A,g)</C> in
-    <C>Y x G</C> such that <C>A</C> acted on by the inverse of <C>g</C> is in
-    <C>Y</C> together with multiplication defined by <P/>
-
-    <C>(A,g)*(B,h) = (Join(A,Bg^-1),hg)</C> <P/>
-
-    where <C>Join</C> is the natural join operation of the semilattice and
-    <C>Bg^-1</C> is <C>B</C> acted on by the inverse of <C>g</C>. With this
-    operation, <C>M(G,X,Y)</C> is semigroup which we call a <E>McAlister triple
-    semigroup</E> over <C>(G,X,Y)</C>. In fact every McAlister triple semigroup
-    is an E-unitary inverse semigroup and every E-unitary inverse semigroup is
-    isomorphic to some McAlister triple semigroup. Note that there need not be
-    a unqiue McAlister triple semigroup for a particular McAlister triple
-    because in general there is more than one way for a group to act on a
-    partial order.
-
-    <#Include Label = "IsMcAlisterTripleSemigroup">
-    <#Include Label = "McAlisterTripleSemigroup">
-    <#Include Label = "McAlisterTripleSemigroupGroup">
-    <#Include Label = "McAlisterTripleSemigroupPartialOrder">
-    <#Include Label = "McAlisterTripleSemigroupSemilattice">
-    <#Include Label = "McAlisterTripleSemigroupAction">
-    <#Include Label = "IsMcAlisterTripleSemigroupElement">
-    <#Include Label = "McAlisterTripleSemigroupElement">
-
-  </Section>
 
 </Chapter>
+

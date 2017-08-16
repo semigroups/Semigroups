@@ -1,307 +1,75 @@
-<Chapter Label = "Congruences">
-  <Heading>Congruences</Heading>
+<Chapter Label = "Properties and attributes specific to inverse semigroups">
+  <Heading>
+    Properties and attributes specific to inverse semigroups
+  </Heading>
+ 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
-  Congruences in &Semigroups; can be described in several different ways:<P/>
+  In this chapter we describe the attributes which are specific
+  to inverse semigroups that can be determined using &Semigroups;.<P/>
 
+  The functions
   <List>
-    <Item>
-      Generating pairs -- the minimal congruence which contains these pairs
-    </Item>
-    <Item>
-      Rees congruences -- the congruence specified by a given ideal
-    </Item>
-    <Item>
-      Universal congruences -- the unique congruence with only one class
-    </Item>
-    <Item>
-      Linked triples -- only for simple or 0-simple semigroups (see below)
-    </Item>
-    <Item>
-      Kernel and trace -- only for inverse semigroups
-    </Item>
+    <Item><Ref Oper = "IsJoinIrreducible"/></Item>
+    <Item><Ref Oper = "IsMajorantlyClosed"/></Item>
+    <Item><Ref Attr = "JoinIrreducibleDClasses"/></Item>
+    <Item><Ref Oper = "MajorantClosure"/></Item>
+    <Item><Ref Oper = "Minorants"/></Item>
+    <Item><Ref Oper = "RightCosetsOfInverseSemigroup"/></Item>
+    <Item><Ref Attr = "SmallerDegreePartialPermRepresentation"/></Item>
+    <Item><Ref Attr = "VagnerPrestonRepresentation"/></Item>
   </List>
+  were written by Wilf A. Wilson and Robert Hancock. <P/>
 
-  The operation <Ref Func = "SemigroupCongruence"/> can be used to create any
-  of these, interpreting the arguments in a smart way.  The usual way of
-  specifying a congruence will be by giving a set of generating pairs, but a
-  user with an ideal could instead create a Rees congruence or universal
-  congruence.<P/>
+  The function <Ref Attr = "CharacterTableOfInverseSemigroup"/> was written by
+  Jhevon Smith and Ben Steinberg.
 
-  If a congruence is specified by generating pairs on a simple, 0-simple, or
-  inverse semigroup, then the congruence may be converted automatically to one
-  of the last two items in the above list, to reduce the complexity of any
-  calculations to be performed.  The user need not manually specify, or even be
-  aware of, the congruence's linked triple or kernel and trace.<P/>
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
-  We can also create left congruences and right congruences, using the <Ref
-  Func="LeftSemigroupCongruence"/> and <Ref Func="RightSemigroupCongruence"/>
-  functions.<P/>
-
-  Please note that congruence objects made in &GAP; before loading the
-  &Semigroups; package may not behave correctly after &Semigroups; is loaded.
-  If &Semigroups; is loaded at the beginning of the session, or before any
-  congruence work is done, then the objects should behave correctly.<P/>
-
-  <Section><Heading>Semigroup congruence objects</Heading>
-
-    <#Include Label="IsSemigroupCongruence">
-    <#Include Label="IsLeftSemigroupCongruence">
-    <#Include Label="IsRightSemigroupCongruence">
+  <Section>
+ 
+    <Heading>
+      Attributes specific to inverse semigroups
+    </Heading>
+ 
+    <#Include Label = "NaturalLeqInverseSemigroup">
+    <#Include Label = "JoinIrreducibleDClasses">
+    <#Include Label = "MajorantClosure">
+    <#Include Label = "Minorants">
+    <#Include Label = "PrimitiveIdempotents">
+    <#Include Label = "RightCosetsOfInverseSemigroup">
+    <#Include Label = "SameMinorantsSubgroup">
+    <#Include Label = "SmallerDegreePartialPermRepresentation">
+    <#Include Label = "VagnerPrestonRepresentation">
+    <#Include Label = "CharacterTableOfInverseSemigroup">
+    <#Include Label = "EUnitaryInverseCover">
 
   </Section>
+
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
   <Section>
     <Heading>
-      Creating congruences
+      Properties of inverse semigroups
     </Heading>
-
-    <#Include Label = "SemigroupCongruence">
-    <#Include Label = "LeftSemigroupCongruence">
-    <#Include Label = "RightSemigroupCongruence">
-    <#Include Label = "GeneratingPairsOfSemigroupCongruence">
-
-  </Section>
-
-  <Section>
-    <Heading>
-      Congruence classes
-    </Heading>
-
-    <#Include Label = "IsCongruenceClass">
-    <#Include Label = "IsLeftCongruenceClass">
-    <#Include Label = "IsRightCongruenceClass">
-    <#Include Label = "CongruenceClassOfElement">
-    <#Include Label = "CongruenceClasses">
-    <#Include Label = "NonTrivialEquivalenceClasses">
-    <#Include Label = "NonTrivialCongruenceClasses">
-    <#Include Label = "NrEquivalenceClasses">
-    <#Include Label = "NrCongruenceClasses">
-    <#Include Label = "EquivalenceRelationLookup">
-    <#Include Label = "EquivalenceRelationCanonicalLookup">
-    <#Include Label = "EquivalenceRelationCanonicalPartition">
-    <#Include Label = "OnLeftCongruenceClasses">
-    <#Include Label = "OnRightCongruenceClasses">
+ 
+    <#Include Label = "IsCliffordSemigroup">
+    <#Include Label = "IsBrandtSemigroup">
+    <#Include Label = "IsEUnitaryInverseSemigroup">
+    <#Include Label = "IsFInverseSemigroup">
+    <#Include Label = "IsFInverseMonoid">        
+    <#Include Label = "IsFactorisableInverseMonoid">
+    <#Include Label = "IsJoinIrreducible">
+    <#Include Label = "IsMajorantlyClosed">
+    <#Include Label = "IsMonogenicInverseSemigroup">
+    <#Include Label = "IsMonogenicInverseMonoid">
 
   </Section>
 
-  <Section>
-    <Heading>
-      Finding the congruences of a semigroup
-    </Heading>
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
 
-    <#Include Label = "CongruencesOfSemigroup">
-    <#Include Label = "MinimalCongruencesOfSemigroup">
-    <#Include Label = "PrincipalCongruencesOfSemigroup">
-    <#Include Label = "IsCongruencePoset">
-    <#Include Label = "LatticeOfCongruences">
-    <#Include Label = "PosetOfPrincipalCongruences">
-    <#Include Label = "CongruencesOfPoset">
-    <#Include Label = "UnderlyingSemigroupOfCongruencePoset">
-    <#Include Label = "PosetOfCongruences">
-    <#Include Label = "JoinSemilatticeOfCongruences">
-    <#Include Label = "MinimalCongruences">
-
-  </Section>
-
-<Section>
-    <Heading>
-      Comparing congruences
-    </Heading>
-
-    <#Include Label = "IsSubrelation">
-    <#Include Label = "IsSuperrelation">
-    <#Include Label = "MeetSemigroupCongruences">
-    <#Include Label = "JoinSemigroupCongruences">
-
-  </Section>
-
-
-  <Section>
-    <Heading>Congruences on Rees matrix semigroups</Heading>
-
-    This section describes the implementation of congruences of simple and 0-simple
-    semigroups in the &Semigroups; package, and the functions associated with
-    them.  This code and this part of the manual were written by Michael Torpey.
-    Most of the theorems used in this chapter are from Section 3.5 of
-    <Cite Key = "Howie1995aa"/>.<P/>
-
-    By the Rees Theorem, any 0-simple semigroup <M>S</M> is isomorphic to a
-    <E>Rees 0-matrix semigroup</E> (see <Ref Chap = "Rees Matrix Semigroups"
-    BookName = "ref" />) over a group, with a regular sandwich matrix.
-    <Alt Not = "Text">
-      That is, <Display>S \cong \mathcal{M} ^ 0[G; I, \Lambda; P], </Display>
-      where <M>G</M> is a group, <M>\Lambda</M> and <M>I</M> are non-empty
-      sets, and <M>P</M> is regular in the sense that it has no rows or columns
-      consisting solely of zeroes.
-    </Alt>
-    <Alt Only = "Text">
-      That is, <C>S</C> is isomorphic to <C>M ^ 0[G; I, L; P]</C> where <C>G</C>
-      is a group, <C>L</C> and <C>I</C> are non-empty sets and the matrix
-      <C>P</C> is regular in the sense that it has no rows or columns
-      consisting solely of zeroes.
-    </Alt><P/>
-
-    The congruences of a Rees 0-matrix semigroup are in 1-1 correspondence with
-    the <E>linked triple</E>, which is a triple of the form <C>[N, S, T]</C> where:
-
-    <List>
-      <Item>
-	<C>N</C> is a normal subgroup of the underlying group <C>G</C>,
-      </Item>
-      <Item>
-        <C>S</C> is an equivalence relation on the columns of <C>P</C>,
-      </Item>
-      <Item>
-        <C>T</C> is an equivalence relation on the rows of <C>P</C>,
-      </Item>
-    </List>
-
-    satisfying the following conditions:
-
-    <List>
-      <Item>
-        a pair of <C>S</C>-related columns must contain zeroes in
-	precisely the same rows,
-      </Item>
-      <Item>
-	a pair of <C>T</C>-related rows must contain zeroes in precisely
-	the same columns,
-      </Item>
-      <Item>
-        if <C>i</C> and <C>j</C> are <C>S</C>-related, <C>k</C> and
-        <C>l</C> are <C>T</C>-related and the matrix entries
-        <M>p_{k, i}, p_{k, j}, p_{l, i}, p_{l, j} \neq 0</M>, then
-        <M>q_{k, l, i, j} \in N</M>, where
-        <Display>q_{k, l, i, j} = p_{k, i}
-        p_{l, i} ^ {-1} p_{l, j} p_{k, j} ^ {-1}.</Display>
-      </Item>
-    </List>
-
-    By Theorem 3.5.9 in <Cite Key = "Howie1995aa"/>, for any finite 0-simple
-    Rees 0-matrix semigroup, there is a bijection between its non-universal
-    congruences and its linked triples.  In this way, we can internally
-    represent any congruence of such a semigroup by storing its associated
-    linked triple instead of a set of generating pairs, and thus perform many
-    calculations on it more efficiently.<P/>
-
-    If a congruence is defined by a linked triple <C>(N, S, T)</C>, then a
-    single class of that congruence can be defined by a triple <C>(Nx, i / S, k
-      / S)</C>, where <C>Nx</C> is a right coset of <C>N</C>, <C>i / S</C> is
-    the equivalence class of <C>i</C> in <C>S</C>, and <C>k / S</C> is the
-    equivalence class of <C>k</C> in <C>T</C>.  Thus we can internally
-    represent any class of such a congruence as a triple simply consisting of a
-    right coset and two positive integers.<P/>
-
-    An analogous condition exists for finite simple Rees matrix semigroups
-    without zero.<P/>
-
-    <#Include Label = "IsRZMSCongruenceByLinkedTriple">
-    <#Include Label = "RZMSCongruenceByLinkedTriple">
-    <#Include Label = "IsRZMSCongruenceClassByLinkedTriple">
-    <#Include Label = "RZMSCongruenceClassByLinkedTriple">
-    <#Include Label = "IsLinkedTriple">
-    <#Include Label = "CanonicalRepresentative">
-    <#Include Label = "AsSemigroupCongruenceByGeneratingPairs">
-    <#Include Label = "AsRZMSCongruenceByLinkedTriple">
-  </Section>
-
-  <Section Label="Congruences on inverse semigroups">
-    <Heading>
-      Congruences on inverse semigroups
-    </Heading>
-
-    This section describes the implementation of congruences of inverse
-    semigroups in the &Semigroups; package, and the functions associated with
-    them.  This code and this part of the manual were written by Michael
-    Torpey.  Most of the theorems used in this chapter are from Section 5.3 of
-    <Cite Key = "Howie1995aa"/>.<P/>
-
-    The congruences of an inverse semigroup are in 1-1 correspondence with its
-    <E>congruence pairs</E>.  A congruence pair is a pair <C>(N, t)</C> such
-    that:
-
-    <List>
-      <Item>
-	<C>N</C> is a normal subsemigroup of <C>S</C> -- that is, a
-	self-conjugate subsemigroup which contains all the idempotents of
-	<C>S</C>,
-      </Item>
-      <Item>
-        <C>t</C> is a normal congruence on <C>E</C>, the subsemigroup of all
-        idempotents in <C>S</C> -- that is, a congruence on <C>E</C> such that
-        if <M>(e, f)</M> is a pair in <C>t</C>, then the pair
-        <M>(a ^ {-1} e a, a ^ {-1} f a)</M> is also in <C>t</C>,
-      </Item>
-    </List>
-
-    satisfying the following conditions:
-
-    <List>
-      <Item>
-        If <M>ae \in N</M> and <M>(e, a ^ {-1} a) \in t</M>, then <M>a \in N</M>,
-      </Item>
-      <Item>
-        If <M>a \in N</M>, then <M>(aa ^ {-1} , a ^ {-1} a) \in t</M>.
-      </Item>
-    </List>
-
-    By Theorem 5.3.3 in <Cite Key = "Howie1995aa"/>, for any inverse semigroup,
-    there is a bijection between its congruences and its congruence pairs.  In
-    this way, we can internally represent any congruence of such a semigroup by
-    storing its associated congruence pair instead of a set of generating
-    pairs, and thus perform many calculations on it more efficiently.<P/>
-
-    If we have a congruence <C>C</C> with congruence pair <C>(N, t)</C>, it
-    turns out that <C>N</C> is its <E>kernel</E> (that is, the set of all
-    elements congruent to an idempotent) and that <C>t</C> is its <E>trace</E>
-    (that is, the restriction of <C>C</C> to the idempotents).  Hence, we refer
-    to a congruence stored in this format as a "congruence by kernel and
-    trace".<P/>
-
-    See <C>cong_by_ker_trace_threshold</C> in Section
-    <Ref Sect = "Options when creating semigroups"/>
-    for details on when this method is used. <P/>
-
-    <#Include Label = "IsInverseSemigroupCongruenceByKernelTrace">
-    <#Include Label = "InverseSemigroupCongruenceByKernelTrace">
-    <#Include Label = "AsInverseSemigroupCongruenceByKernelTrace">
-    <#Include Label = "KernelOfSemigroupCongruence">
-    <#Include Label = "TraceOfSemigroupCongruence">
-    <#Include Label = "IsInverseSemigroupCongruenceClassByKernelTrace">
-    <#Include Label = "MinimumGroupCongruence">
-  </Section>
-
-  <Section>
-    <Heading>Rees congruences</Heading>
-
-    A Rees congruence is defined by a semigroup ideal.  It is a congruence on a
-    semigroup <C>S</C> which has one congruence class equal to a semigroup
-    ideal <C>I</C> of <C>S</C>, and every other congruence class being a
-    singleton. <P/>
-
-    <#Include Label = "SemigroupIdealOfReesCongruence">
-    <#Include Label = "IsReesCongruenceClass">
-  </Section>
-
-  <Section>
-    <Heading>Universal congruences</Heading>
-
-    The linked triples of a completely 0-simple Rees 0-matrix semigroup describe
-    only its non-universal congruences.  In any one of these, the zero element
-    of the semigroup is related only to itself.  However, for any semigroup
-    <M>S</M> the universal relation <M>S<Alt Not = "Text"> \times </Alt>
-      <Alt Only = "Text">x</Alt>S</M> is a congruence; called the <E>universal
-    congruence</E>. The universal congruence on a semigroup has its own unique
-    representation.<P/>
-
-    Since many things we want to calculate about congruences are trivial in the
-    case of the universal congruence, this package contains a category
-    specifically designed for it, <C>IsUniversalSemigroupCongruence</C>. We also
-    define <C>IsUniversalSemigroupCongruenceClass</C>, which represents the single
-    congruence class of the universal congruence.<P/>
-
-    <#Include Label = "IsUniversalSemigroupCongruence">
-    <#Include Label = "IsUniversalSemigroupCongruenceClass">
-    <#Include Label = "UniversalSemigroupCongruence">
-  </Section>
 </Chapter>

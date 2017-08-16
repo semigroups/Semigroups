@@ -1,115 +1,10 @@
-<Chapter Label = "Attributes and operations for semigroups">
+<Chapter Label = "Green's relations">
   <Heading>
-    Attributes and operations for semigroups
+    Green's relations
   </Heading>
 
-  In this chapter we decribe the methods that are available in &Semigroups; for
-  determining the attributes of a semigroup, and the operations which can be
-  applied to a semigroup.
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-    <Heading>
-       Accessing the elements of a semigroup
-     </Heading>
-     <#Include Label = "AsListCanonical">
-     <#Include Label = "PositionCanonical">
-     <#Include Label = "Enumerate">
-     <#Include Label = "IsFullyEnumerated">
-   </Section>
-   
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-   
-   <Section>
-    <Heading>
-       Cayley graphs
-     </Heading>
-     <#Include Label = "RightCayleyDigraph">
-   </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
- 
-    <Heading>
-      Random elements of a semigroup
-    </Heading>
- 
-    <#Include Label = "Random">
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
- 
-    <Heading>
-       Properties of elements in a semigroup
-    </Heading>
- 
-    <#Include Label = "IndexPeriodOfSemigroupElement">
-    <#Include Label = "SmallestIdempotentPower">
-  </Section>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
- 
-    <Heading>
-      Expressing semigroup elements as words in generators
-    </Heading>
-
-    It is possible to express an element of a semigroup as a word in the
-    generators of that semigroup. This section describes how to accomplish this
-    in &Semigroups;.<P/>
- 
-    <#Include Label = "EvaluateWord">
-    <#Include Label = "Factorization">
-    <#Include Label = "MinimalFactorization">
-
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-
-    <Heading>
-      Generating sets
-    </Heading>
- 
-    <#Include Label = "Generators">
-    <#Include Label = "SmallGeneratingSet">
-    <#Include Label = "IrredundantGeneratingSubset">
-    <#Include Label = "MinimalGeneratingSet">
-    <#Include Label = "GeneratorsSmallest">
- 
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
-
-    <Heading>
-      Minimal ideals and multiplicative zeros
-    </Heading>
-
-    In this section we describe the attributes of a semigroup that can be found
-    using the &Semigroups; package.
-    <P/>
- 
-    <#Include Label = "MinimalIdeal">
-    <#Include Label = "RepresentativeOfMinimalIdeal">
-    <#Include Label = "MultiplicativeZero">
-    <#Include Label = "UnderlyingSemigroupOfSemigroupWithAdjoinedZero">
-
-  </Section>
+  In this chapter we describe the functions in &Semigroups; for
+  computing Green's classes and related properties of semigroups.
  
   <!--**********************************************************************-->
   <!--**********************************************************************-->
@@ -117,161 +12,89 @@
   <Section>
 
     <Heading>
-      Group of units and identity elements
+      Creating Green's classes and representatives
     </Heading>
  
-    <#Include Label = "GroupOfUnits">
-    <!--TODO add man entry for MultiplicativeNeutralElement-->
-
-  </Section>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section>
-
-    <Heading>
-      Idempotents
-    </Heading>
-
-    <#Include Label = "Idempotents">
-    <#Include Label = "NrIdempotents">
-    <#Include Label = "IdempotentGeneratedSubsemigroup">
-
-  </Section>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section Label = "Computing maximal subsemigroups">
-
-    <Heading>
-      Maximal subsemigroups
-    </Heading>
-
-    The &Semigroups; package provides methods to calculate the maximal
-    subsemigroups of a finite semigroup, subject to various conditions.  A
-    <E>maximal subsemigroup</E> of a semigroup is a proper subsemigroup
-    that is contained in no other proper subsemigroup of the semigroup.
-
+    In this section, we describe the methods in the &Semigroups; package for
+    creating Green's classes.
     <P/>
 
-    When computing the maximal subsemigroups of a regular Rees (0-)matrix
-    semigroup over a group, additional functionality is available. As described
-    in <Cite Key="Graham1968aa"/>, a maximal subsemigroup of a finite regular
-    Rees (0-)matrix semigroup over a group is one of 6 possible types. Using the
-    &Semigroups; package, it is possible to search for only those maximal
-    subsemigroups of certain types.
+    <#Include Label = "XClassOfYClass">
+    <#Include Label = "GreensXClassOfElement">
+    <#Include Label = "GreensXClassOfElementNC">
+    <#Include Label = "GreensXClasses">
+    <#Include Label = "XClassReps">
+    <#Include Label = "MinimalDClass">
+    <#Include Label = "MaximalDClasses">
+    <#Include Label = "NrRegularDClasses">
+    <#Include Label = "NrXClasses">
+    <#Include Label = "PartialOrderOfDClasses">
+    <#Include Label = "LengthOfLongestDClassChain">
+    <#Include Label = "IsGreensDGreaterThanFunc">
 
+  </Section>
+ 
+  <!--**********************************************************************-->
+  <!--**********************************************************************-->
+ 
+  <Section>
+
+    <Heading>
+      Iterators and enumerators of classes and representatives
+    </Heading>
+ 
+    In this section, we describe the methods in the &Semigroups; package for
+    incrementally determining Green's classes or their representatives.
     <P/>
 
-    A maximal subsemigroup of such a Rees (0-)matrix semigroup <C>R</C> over a
-    group <C>G</C> is either:
-
-    <Enum>
-      <Item><C>{0};</C></Item>
-      <Item>formed by removing <C>0</C>;</Item>
-      <Item>formed by removing a column (a non-zero &L;-class);</Item>
-      <Item>formed by removing a row (a non-zero &R;-class);</Item>
-      <Item>formed by removing a set of both rows and columns;</Item>
-      <Item>isomorphic to a Rees (0-)matrix semigroup of the same dimensions over
-        a maximal subgroup of <C>G</C> (in particular, the maximal subsemigroup
-        intersects every &H;-class of <C>R</C>).</Item>
-    </Enum>
-
-    Note that if <C>R</C> is a Rees matrix semigroup then it has no
-    maximal subsemigroups of types 1, 2, or 5. Only types 3, 4, and 6
-    are relevant to a Rees matrix semigroup.
-
-    <#Include Label = "MaximalSubsemigroups">
-    <#Include Label = "NrMaximalSubsemigroups">
-    <#Include Label = "IsMaximalSubsemigroup">
+    <#Include Label = "IteratorOfXClassReps">
+    <#Include Label = "IteratorOfXClasses">
 
   </Section>
-
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 
   <Section>
-
+ 
     <Heading>
-      The normalizer of a semigroup
+      Properties of Green's classes
     </Heading>
-
-    <#Include Label = "Normalizer">
  
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
+    In this section, we describe the properties and operators of Green's
+    classes that are available in the &Semigroups; package
+    <P/>
  
-  <Section>
+    <#Include Label = "\&lt;">
+    <#Include Label = "IsRegularGreensClass">
+    <#Include Label = "IsGreensClassNC">
 
-    <Heading>
-      Attributes of transformations and transformation semigroups
-    </Heading>
-
-    <#Include Label = "ComponentRepsOfTransformationSemigroup">
-    <#Include Label = "ComponentsOfTransformationSemigroup">
-    <#Include Label = "CyclesOfTransformationSemigroup">
-    <#Include Label = "DigraphOfActionOnPairs">
-    <#Include Label = "DigraphOfActionOnPoints">
-    <#Include Label = "FixedPointsOfTransformationSemigroup">
-    <#Include Label = "IsTransitive">
-    <#Include Label = "SmallestElementSemigroup">
-    <#Include Label = "CanonicalTransformation">
-    <#Include Label = "IsConnectedTransformationSemigroup">
- 
   </Section>
  
   <!--**********************************************************************-->
   <!--**********************************************************************-->
  
   <Section>
-
-    <Heading>
-      Attributes of partial perm semigroups
-    </Heading>
-
-    <#Include Label = "ComponentRepsOfPartialPermSemigroup">
-    <#Include Label = "ComponentsOfPartialPermSemigroup">
-    <#Include Label = "CyclesOfPartialPerm">
-    <#Include Label = "CyclesOfPartialPermSemigroup">
-
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  The content in this chapter is based partly on work by
-  <URL Text = "Zachary Mesyan">https://academics.uccs.edu/zmesyan</URL>.
-  A full description of the objects described can be found in
-  <Cite Key = "Mesyan2016"/>.
-
-  <Section>
-
-    <Heading>
-      Attributes of Rees (0-)matrix semigroups
-    </Heading>
-
-    <#Include Label = "RZMSDigraph">
-    <#Include Label = "RZMSConnectedComponents">
-
-  </Section>
-
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
  
-  <Section>
-
     <Heading>
-      Changing the representation of a semigroup
+      Attributes of Green's classes
     </Heading>
 
-    <#Include Label = "IsomorphismReesZeroMatrixSemigroup">
+    In this section, we describe the attributes of Green's classes that are
+    available in the &Semigroups; package
+    <P/>
 
+    <#Include Label = "GroupHClass">
+    <#Include Label = "SchutzenbergerGroup">
+    <#Include Label = "StructureDescriptionSchutzenbergerGroups">
+    <#Include Label = "StructureDescriptionMaximalSubgroups">
+    <#Include Label = "MultiplicativeNeutralElement">
+    <#Include Label = "StructureDescription">
+    <#Include Label = "InjectionPrincipalFactor">
+    <#Include Label = "PrincipalFactor">
+ 
   </Section>
-
+ 
   <!--**********************************************************************-->
   <!--**********************************************************************-->
 

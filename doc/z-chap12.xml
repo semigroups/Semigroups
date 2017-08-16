@@ -1,101 +1,112 @@
-<Chapter Label = "Green's relations">
+<Chapter Label = "McAlister triple semigroups">
   <Heading>
-    Green's relations
-  </Heading>
+    McAlister triple semigroups and E-unitary inverse semigroups     
+  </Heading>  
+    In this section, we describe the functions in &GAP; for creating and
+    computing with McAlister triple semigroups and their subsemigroups.
+    This implementation is based on the section in Chapter 5 of
+    <Cite Key = "Howie1995aa"/> but differs from the treatment in Howie
+    by using right actions instead of left. Some definitions found in
+    the documentation are changed for this reason. <P/>
 
-  In this chapter we describe the functions in &Semigroups; for
-  computing Green's classes and related properties of semigroups.
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
+    The importance of the McAlister triple semigroups lies in the fact that
+    they are exactly the E-unitary inverse semigroups, which are an important
+    class in the study of inverse semigroups. <P/>
+
+    First we define E-unitary inverse semigroups. It is standard to
+    denote the subsemigroup of a semigroup consisting of its idempotents by
+    <C>E</C>. A semigroup <C>S</C> is said to be <E>E-unitary</E> if for all
+    <C>e</C> in <C>E</C> and for all <C>s</C> in <C>S</C>:
+
+      <List>
+        <Item>
+          <C>es</C> <M>\in</M> <C>E</C> implies <C>s</C> <M>\in</M> <C>E</C>,
+        </Item>
+        <Item>
+          <C>se</C> <M>\in</M> <C>E</C> implies <C>s</C> <M>\in</M> <C>E</C>.
+        </Item>
+      </List>
+
+    For inverse semigroups these two conditions are equivalent. We are only
+    interested in <E>E-unitary inverse semigroups</E>. 
+    Before defining McAlister triple semigroups we define a McAlister triple.
+    A <E>McAlister triple</E> is a triple <C>(G,X,Y)</C> which consist of:
+
+    <List>
+      <Item>
+        a partial order <C>X</C>,
+      </Item>
+      <Item>
+        a subset <C>Y</C> of <C>X</C>,
+      </Item>
+      <Item>
+        a group <C>G</C> which acts on <C>X</C>, on the right, by order
+        automorphisms. That means for all <C>A,B</C> <M>\in</M> <C>X</C> and
+        for all <C>g</C> <M>\in</M> <C>G</C>: <C>A</C> <M>\leq</M> <C>B</C> if
+        and only if <C>Ag</C> <M>\leq</M> <C>Bg</C>.
+      </Item>
+    </List>
+
+    Furthermore, <C>(G,X,Y)</C> must satisfy the following four properties to
+    be a McAlister triple:
+
+    <List>
+      <Mark> M1 </Mark> 
+      <Item>
+        <C>Y</C> is a subset of <C>X</C> which is a join-semilattice together
+        with the restriction of the order relation of <C>X</C> to <C>Y</C>.
+      </Item>
+      <Mark> M2 </Mark> 
+      <Item>
+        <C>Y</C> is an order ideal of <C>X</C>. That is to say, for all <C>A</C>
+        <M>\in</M> <C>X</C> and for all <C>B</C> <M>\in</M>
+        <C>Y</C>: if <C>A</C> <M>\leq</M> <C>B</C>, then <C>A</C> <M>\in</M>
+        <C>Y</C>.
+      </Item>
+      <Mark> M3 </Mark> 
+      <Item>
+        Every element of <C>X</C> is the image of some element in <C>Y</C> moved
+        by an element of <C>G</C>. That is to say, for every <C>A</C> <M>\in</M>
+        <C>X</C>, there exists some <C>B</C> <M>\in</M> <C>Y</C> and there exists
+        <C>g</C> <M>\in</M> <C>G</C> such that <C>A</C> = <C>Bg</C>.
+      </Item>
+      <Mark> M4 </Mark> 
+      <Item>
+        Finally, for all <C>g</C> <M>\in</M> <C>G</C>, the intersection
+        <C>{yg : y </C><M>\in</M><C> Y}</C> <M>\cap</M> <C>Y</C> is non-empty.
+      </Item>
+    </List>
+
+    We may define an E-unitary inverse semigroup using a McAlister triple. Given 
+    <C>(G,X,Y)</C> let <C>M(G,X,Y)</C> be the set of all pairs <C>(A,g)</C> in
+    <C>Y x G</C> such that <C>A</C> acted on by the inverse of <C>g</C> is in
+    <C>Y</C> together with multiplication defined by <P/>
+
+    <C>(A,g)*(B,h) = (Join(A,Bg^-1),hg)</C> <P/>
+
+    where <C>Join</C> is the natural join operation of the semilattice and
+    <C>Bg^-1</C> is <C>B</C> acted on by the inverse of <C>g</C>. With this
+    operation, <C>M(G,X,Y)</C> is a semigroup which we call a <E>McAlister
+    triple semigroup</E> over <C>(G,X,Y)</C>. In fact every McAlister triple
+    semigroup is an E-unitary inverse semigroup and every E-unitary inverse
+    semigroup is isomorphic to some McAlister triple semigroup. Note that there
+    need not be a unqiue McAlister triple semigroup for a particular McAlister
+    triple because in general there is more than one way for a group to act on
+    a partial order.
 
   <Section>
-
     <Heading>
-      Creating Green's classes and representatives
-    </Heading>
- 
-    In this section, we describe the methods in the &Semigroups; package for
-    creating Green's classes.
-    <P/>
-
-    <#Include Label = "XClassOfYClass">
-    <#Include Label = "GreensXClassOfElement">
-    <#Include Label = "GreensXClassOfElementNC">
-    <#Include Label = "GreensXClasses">
-    <#Include Label = "XClassReps">
-    <#Include Label = "MinimalDClass">
-    <#Include Label = "MaximalDClasses">
-    <#Include Label = "NrRegularDClasses">
-    <#Include Label = "NrXClasses">
-    <#Include Label = "PartialOrderOfDClasses">
-    <#Include Label = "LengthOfLongestDClassChain">
-    <#Include Label = "IsGreensDGreaterThanFunc">
-
-  </Section>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section>
-
-    <Heading>
-      Iterators and enumerators of classes and representatives
-    </Heading>
- 
-    In this section, we describe the methods in the &Semigroups; package for
-    incrementally determining Green's classes or their representatives.
-    <P/>
-
-    <#Include Label = "IteratorOfXClassReps">
-    <#Include Label = "IteratorOfXClasses">
-
-  </Section>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
-
-  <Section>
- 
-    <Heading>
-      Properties of Green's classes
-    </Heading>
- 
-    In this section, we describe the properties and operators of Green's
-    classes that are available in the &Semigroups; package
-    <P/>
- 
-    <#Include Label = "\&lt;">
-    <#Include Label = "IsRegularGreensClass">
-    <#Include Label = "IsGreensClassNC">
-
-  </Section>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
- 
-  <Section>
- 
-    <Heading>
-      Attributes of Green's classes
+      Creating McAlister triple semigroups    
     </Heading>
 
-    In this section, we describe the attributes of Green's classes that are
-    available in the &Semigroups; package
-    <P/>
-
-    <#Include Label = "GroupHClass">
-    <#Include Label = "SchutzenbergerGroup">
-    <#Include Label = "StructureDescriptionSchutzenbergerGroups">
-    <#Include Label = "StructureDescriptionMaximalSubgroups">
-    <#Include Label = "MultiplicativeNeutralElement">
-    <#Include Label = "StructureDescription">
-    <#Include Label = "InjectionPrincipalFactor">
-    <#Include Label = "PrincipalFactor">
- 
+    <#Include Label = "IsMcAlisterTripleSemigroup">
+    <#Include Label = "McAlisterTripleSemigroup">
+    <#Include Label = "McAlisterTripleSemigroupGroup">
+    <#Include Label = "McAlisterTripleSemigroupPartialOrder">
+    <#Include Label = "McAlisterTripleSemigroupSemilattice">
+    <#Include Label = "McAlisterTripleSemigroupAction">
+    <#Include Label = "IsMcAlisterTripleSemigroupElement">
+    <#Include Label = "McAlisterTripleSemigroupElement">
   </Section>
- 
-  <!--**********************************************************************-->
-  <!--**********************************************************************-->
 
 </Chapter>

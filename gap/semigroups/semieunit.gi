@@ -43,7 +43,7 @@ function(G, X, Y, act)
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
                   "the third argument <Y> must be an induced subdigraph of\n",
                   "the second argument <X> with vertex labels corresponding\n",
-                  "to the vertices of <X> which <Y> was induced from,");
+                  "to the vertices of <X> on which <Y> was induced,");
   elif not IsJoinSemilatticeDigraph(Y) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroup: usage,\n",
                   "the third argument must be a join-semilattice digraph,");
@@ -143,32 +143,31 @@ end);
 #############################################################################
 # Methods for McAlister triple semigroups
 #############################################################################
-InstallMethod(\=, "for two McAlister triple semigroups",
-[IsMcAlisterTripleSemigroup, IsMcAlisterTripleSemigroup],
-function(x, y)
-  local A, G, X, Y, g;
-  G := McAlisterTripleSemigroupGroup(x);
-  X := McAlisterTripleSemigroupPartialOrder(x);
-  Y := McAlisterTripleSemigroupSemilattice(x);
-  if G = McAlisterTripleSemigroupGroup(y)
-      and X = McAlisterTripleSemigroupPartialOrder(y)
-      and Y = McAlisterTripleSemigroupSemilattice(y) then
-    if ForAll(G, g -> ForAll(DigraphVertices(X),
-         A -> McAlisterTripleSemigroupAction(x)(A, g) =
-              McAlisterTripleSemigroupAction(y)(A, g))) then
-      return true;
-    fi;
-  fi;
-  return false;
-end);
+# InstallMethod(\=, "for two McAlister triple semigroups",
+# IsIdenticalObj,
+# [IsMcAlisterTripleSemigroup, IsMcAlisterTripleSemigroup],
+# function(x, y)
+#   local G, X, Y;
+#   G := McAlisterTripleSemigroupGroup(x);
+#   X := McAlisterTripleSemigroupPartialOrder(x);
+#   Y := McAlisterTripleSemigroupSemilattice(x);
+#   if G = McAlisterTripleSemigroupGroup(y)
+#       and X = McAlisterTripleSemigroupPartialOrder(y)
+#       and Y = McAlisterTripleSemigroupSemilattice(y) then
+#     if IsIsomorphicSemigroup(x, y) then
+#       return true;
+#     fi;
+#   fi;
+#   return false;
+# end);
 
 InstallMethod(OneImmutable, "for a McAlister triple semigroup",
 [IsMcAlisterTripleSemigroup],
 function(S)
   local Y;
   if not IsMonoid(S) then
-    ErrorNoReturn("Semigroups: OneImuutable (for McAlister triple semigroup):",
-                  " usage,\n", "the argument must be a monoid");
+    ErrorNoReturn("Semigroups: OneImutable (for McAlister triple semigroup):",
+                  " usage,\n", "the argument must be a monoid,");
   fi;
   Y := McAlisterTripleSemigroupSemilattice(S);
   return MTSE(S, DigraphSources(DigraphRemoveLoops(Y))[1], ());
@@ -213,49 +212,55 @@ function(S)
   return Concatenation("<McAlister triple semigroup over ", ViewString(G), ">");
 end);
 
-# Currently this does not work. iso_x restricted to the semilattice is not
-# necesarilly an insomorphism of the two semilattices. If we have an isomorphism
-# of the semilattices then not sure how to extend to the full isomorphism.
-
-# InstallMethod(IsomorphismSemigroups, "for two McAlister triple semigroups",
-# [IsMcAlisterTripleSemigroup, IsMcAlisterTripleSemigroup],
-# function(S, T)
-#   local iso_g, iso_x;
-#
-#   if not IsIsomorphicDigraph(McAlisterTripleSemigroupSemilattice(S),
-#                              McAlisterTripleSemigroupSemilattice(T)) then
-#     return fail;
-#   fi;
-#
-#   iso_x := IsomorphismDigraphs(McAlisterTripleSemigroupPartialOrder(S),
-#                                McAlisterTripleSemigroupPartialOrder(T));
-#
-#   if iso_x = fail then
-#     return fail;
-#   fi;
-#
-#   iso_g := IsomorphismGroups(McAlisterTripleSemigroupGroup(S),
-#                              McAlisterTripleSemigroupGroup(T));
-#
-#   if iso_g = fail then
-#     return fail;
-#   fi;
-#
-#   if ForAll(McAlisterTripleSemigroupGroup(S),
-#          g -> ForAll(DigraphVertices(McAlisterTripleSemigroupPartialOrder(S)),
-#          x -> (McAlisterTripleSemigroupAction(S)(x, g)) ^ iso_x
-#          = McAlisterTripleSemigroupAction(T)((x ^ iso_x), (g ^ iso_g)))) then
-#     return MappingByFunction(S, T, s -> MTSE(T, s[1] ^ iso_x, s[2] ^ iso_g));
-#   fi;
-#
-#   return fail;
-# end);
-
-InstallMethod(IsIsomorphicSemigroup, "for two McAlister triple semigroups",
-[IsMcAlisterTripleSemigroup and HasGeneratorsOfSemigroup,
-IsMcAlisterTripleSemigroup and HasGeneratorsOfSemigroup],
+InstallMethod(IsomorphismSemigroups, "for two McAlister triple semigroups",
+[IsMcAlisterTripleSemigroup, IsMcAlisterTripleSemigroup],
 function(S, T)
-  return IsomorphismSemigroups(S, T) <> fail;
+  local YS, YT, XT, iso_g, iso_x, im_YS, rep, A;
+
+  iso_g := IsomorphismGroups(McAlisterTripleSemigroupGroup(S),
+                             McAlisterTripleSemigroupGroup(T));
+
+  if iso_g = fail then
+    return fail;
+  fi;
+
+  YS := McAlisterTripleSemigroupSemilattice(S);
+  YT := McAlisterTripleSemigroupSemilattice(T);
+  XT := McAlisterTripleSemigroupPartialOrder(T);
+
+  if not IsIsomorphicDigraph(YS, YT) then
+    return fail;
+  fi;
+
+  iso_x := IsomorphismDigraphs(McAlisterTripleSemigroupPartialOrder(S), XT);
+
+  if iso_x = fail then
+    return fail;
+  fi;
+
+  im_YS := List(DigraphVertexLabels(YS), a -> a ^ iso_x);
+  # if the restriction of iso_x to DigraphVertexLabels(YS) is not
+  # DigraphVertexLabels(YT) then we need to compose iso_x with an
+  # automorphism of McAlisterTripleSemilattice(T). Composing this with
+  # iso_x will restrict to an isomorphism from (the labels of) YS to YT.
+  if not im_YS = DigraphVertexLabels(YT) then
+    A := AutomorphismGroup(XT);
+    rep := RepresentativeAction(A, im_YS, DigraphVertexLabels(YT), OnSets);
+    if rep = fail then
+      return fail;
+    fi;
+  else
+    rep := ();
+  fi;
+
+  if ForAll(McAlisterTripleSemigroupGroup(S),
+      g -> ForAll(DigraphVertices(McAlisterTripleSemigroupPartialOrder(S)),
+      x -> (McAlisterTripleSemigroupAction(S)(x, g)) ^ (rep * iso_x) =
+      McAlisterTripleSemigroupAction(T)((x ^ iso_x), (g ^ iso_g)) ^ rep)) then
+    return MappingByFunction(S, T, s -> MTSE(T, s[1] ^ iso_x, s[2] ^ iso_g));
+  fi;
+
+  return fail;
 end);
 
 #############################################################################
@@ -267,12 +272,12 @@ InstallMethod(McAlisterTripleSemigroupElement,
 function(S, A, g)
   if not A in DigraphVertexLabels(McAlisterTripleSemigroupSemilattice(S)) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroupElement: usage,\n",
-                  "second input should be a vertex label of the ",
+                  "second argument should be a vertex label of the ",
                   "join-semilattice of the McAlister triple,");
   elif not g in McAlisterTripleSemigroupGroup(S) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroupElement: usage,\n",
-                  "third input must an element of the group of the McAlister ",
-                  "triple,");
+                  "third argument must an element of the group of the ",
+                  "McAlister triple,");
   elif not (McAlisterTripleSemigroupAction(S)(A, g ^ -1) in
       DigraphVertexLabels(McAlisterTripleSemigroupSemilattice(S))) then
     ErrorNoReturn("Semigroups: McAlisterTripleSemigroupElement: usage,\n",
@@ -318,6 +323,7 @@ function(x)
 end);
 
 InstallMethod(\=, "for two McAlister triple semigroup element reps",
+IsIdenticalObj,
 [IsMcAlisterTripleSemigroupElementRep, IsMcAlisterTripleSemigroupElementRep],
 function(x, y)
   if x![1] = y![1] and x![2] = y![2] and x![3] = y![3] then
@@ -494,7 +500,7 @@ function(S)
     return(anti_act(pt, g ^ -1));
   end;
 
-  M := McAlisterTripleSemigroup(Image(map_g), x, y, act);
+  M := McAlisterTripleSemigroup(Range(map_g), x, y, act);
   iso := function(s)
     local t;
     t := s;
@@ -514,7 +520,7 @@ end);
 InstallMethod(IsWholeFamily, "for a McAlister triple semigroup",
 [IsMcAlisterTripleSemigroupElementCollection],
 function(C)
-  return Size(C[1]![3]) = Size(C);
+  return Size(Elements(C)[1]![3]) = Size(C);
 end);
 
 InstallMethod(ChooseHashFunction, "for McAlister triple semigroup elements",
@@ -692,6 +698,7 @@ SEMIGROUPS.DirectProductForCover := function(S, T)
      * PartialPerm(Concatenation([1 .. m], m + DomainOfPartialPerm(x[2])),
                    Concatenation([1 .. m], m + ImageListOfPartialPerm(x[2]))));
 end;
+
 ###############################################################################
 # TODO:
 # 1) Write hash function that works when group is not a perm group.
