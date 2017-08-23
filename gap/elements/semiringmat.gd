@@ -74,7 +74,15 @@ DeclareConstructor("AsMatrix", [IsMatrixOverSemiring,
 
 DeclareAttribute("AsTransformation", IsMatrixOverSemiring);
 
-DeclareGlobalFunction("RandomMatrix");
+DeclareOperation("RandomMatrix", [IsOperation and IsFunction, IsPosInt]);
+DeclareOperation("RandomMatrix",
+                 [IsOperation and IsFunction, IsPosInt, IsInt]);
+DeclareOperation("RandomMatrix",
+                 [IsOperation and IsFunction, IsPosInt, IsInt, IsInt]);
+DeclareOperation("RandomMatrix", [IsSemiring, IsInt]);
+DeclareOperation("RandomMatrix", [IsSemiring, IsInt, IsPosInt]);
+DeclareOperation("RandomMatrix", [IsSemiring, IsInt, IsList]);
+
 DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
                                         IsPosInt]);
 DeclareConstructor("RandomMatrixCons", [IsMatrixOverSemiring,
@@ -98,7 +106,7 @@ DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
 DeclareAttribute("DimensionOfMatrixOverSemiringCollection",
                  IsMatrixOverSemiringCollection);
 DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
-DeclareAttribute("IsTorsion", IsMatrixOverSemiring);
+DeclareProperty("IsTorsion", IsMatrixOverSemiring);
 
 # Cannot use TypeObj since it can contain information about
 # properties satisfied (or not) by the object.
