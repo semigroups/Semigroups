@@ -7,8 +7,7 @@
 ##
 #############################################################################
 ##
-#TODO need to fix AsList vs AsListCanonical issues
-#TODO Translations semigroups can currently forget their generators
+#TODO Translations semigroups can currently forget their generators - maybe??
 #############################################################################
 ## This file contains methods for dealing with left and right translation
 ## semigroups, as well as translational hulls. 
@@ -18,8 +17,8 @@
 ## XTranslationsSemigroup or TranslationalHullSemigroup
 ##
 ## Left/Right translations are stored internally as transformations on the 
-## incides of the underlying semigroup (determined by AsList). Hence, only 
-## finite semigroups are supported.
+## indices of the underlying semigroup (determined by AsListCanonical). Hence, 
+## only finite semigroups are supported.
 ##
 ## Much of the implementation in this file was based on the implementation of
 ## RMS in reesmatsemi.gi in the GAP library - in particular, the creation of
@@ -148,7 +147,7 @@ end;
 # non-empty or a_i S intersect a_k S is non-empty.
 SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
   local X, iso, inv, S, reps, repspos, dclasses, lclasses, rclasses,
-        I, d, e, f, g, i, j, k, m, n, p, r, s, x, y, slist, fposrepk, gposrepk,
+        I, d, e, f, g, i, j, k, m, n, p, q, r, s, x, y, slist, fposrepk, gposrepk,
         possiblefrepvals, possiblegrepvals, whenboundfvals, whenboundgvals, pos,
         multtablepositionsets, transposepositionsets, posrepsks, posfrepsks,
         possrepsk, possgrepsk, undosortinglist, sortinglist, p1, p2, L, R,
@@ -207,7 +206,6 @@ SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
 
   I := Idempotents(S);
   q := Size(I);
-  #only rely on the values in these lists that correspond to idempotents
   possibleidempotentfvals := [1 .. q];
   possibleidempotentgvals := [1 .. q];
   for e in I do
@@ -682,7 +680,7 @@ end);
 
 # Create a left translation as an element of a left translations semigroup.
 # Second argument should be a mapping on the underlying semigroup or
-# a transformation of its indices (as defined by AsList)
+# a transformation of its indices (as defined by AsListCanonical)
 InstallGlobalFunction(LeftTranslation,
 function(L, x)
   local S, semiList, i, reps, R;
@@ -1028,12 +1026,10 @@ function(T)
     TryNextMethod();
   fi;
 
-  semiList := AsList(S);
   iso := IsomorphismReesMatrixSemigroup(S);
   inv := InverseGeneralMapping(iso);
   reesMatSemi := Range(iso);
-  L := IsLeftTranslationsSemigroup(T);
-  if L then
+  if IsLeftTranslationsSemigroup(T) then
     n := Length(Rows(reesMatSemi));
   else
     n := Length(Columns(reesMatSemi));
@@ -1041,7 +1037,7 @@ function(T)
   
   gens := [];
   for t in GeneratorsOfMonoid(FullTransformationMonoid(n)) do
-    if L then
+    if IsLeftTranslationsSemigroup(T) then
       f := function(x)
         return ReesMatrixSemigroupElement(reesMatSemi, x[1]^t, 
           (), x[3]);
@@ -1062,6 +1058,7 @@ end);
 
 # Generators of translational hull are the direct product of 
 # generators of left/right translations semigroup for rectangular bands
+# since they are monoids
 InstallMethod(GeneratorsOfSemigroup, "for the translational hull of a rectangular band", 
 [IsTranslationalHull],
 function(H)
