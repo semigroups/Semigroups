@@ -328,32 +328,76 @@ function(R, mat)
   return Matrix(R, AsList(mat));
 end);
 
-InstallGlobalFunction(RandomMatrix,
-function(arg)
-  if Length(arg) >= 2 and IsOperation(arg[1]) and IsFunction(arg[1])
-      and IsPosInt(arg[2]) then
-    if Length(arg) = 2 then
-      return RandomMatrixCons(arg[1], arg[2]);
-    elif Length(arg) >= 3 and IsInt(arg[3]) then
-      if Length(arg) = 3 then
-        return RandomMatrixCons(arg[1], arg[2], arg[3]);
-      elif Length(arg) = 4 and IsInt(arg[4]) then
-        return RandomMatrixCons(arg[1], arg[2], arg[3], arg[4]);
-      fi;
-    fi;
-  elif Length(arg) = 2 and IsSemiring(arg[1])
-      and (IsInt(arg[2]) and arg[2] >= 0) then
-    return RandomMatrixOp(arg[1], arg[2]);
-  elif Length(arg) = 3 and IsSemiring(arg[1])
-      and (IsInt(arg[2]) and arg[2] >= 0)
-      and (IsList(arg[3]) or IsPosInt(arg[3])) then
-    return RandomMatrixOp(arg[1], arg[2], arg[3]);
-  fi;
-
-  ErrorNoReturn("Semigroups: RandomMatrix: usage,\n",
-                "the arguments must be: filter, pos int[, pos int[,",
-                " pos int]],");
+InstallMethod(RandomMatrix, "for an operation and pos int",
+[IsOperation and IsFunction, IsPosInt],
+function(op, dim)
+  return RandomMatrixCons(op, dim);
 end);
+
+InstallMethod(RandomMatrix, "for an operation, pos int, and int",
+[IsOperation and IsFunction, IsPosInt, IsInt],
+function(op, dim, threshold)
+  return RandomMatrixCons(op, dim, threshold);
+end);
+
+InstallMethod(RandomMatrix, "for an operation, pos int, int, and int",
+[IsOperation and IsFunction, IsPosInt, IsInt, IsInt],
+function(op, dim, threshold, period)
+  return RandomMatrixCons(op, dim, threshold, period);
+end);
+
+InstallMethod(RandomMatrix, "for a semiring and non-negative int",
+[IsSemiring, IsInt],
+function(semiring, dim)
+  if dim < 0 then
+    TryNextMethod();
+  fi;
+  return RandomMatrixOp(semiring, dim);
+end);
+
+InstallMethod(RandomMatrix, "for a semiring, non-negative int, and pos int",
+[IsSemiring, IsInt, IsPosInt],
+function(semiring, dim, rank)
+  if dim < 0 then
+    TryNextMethod();
+  fi;
+  return RandomMatrixOp(semiring, dim, rank);
+end);
+
+InstallMethod(RandomMatrix, "for a semiring, non-negative int, and list",
+[IsSemiring, IsInt, IsList],
+function(semiring, dim, ranks)
+  if dim < 0 then
+    TryNextMethod();
+  fi;
+  return RandomMatrixOp(semiring, dim, ranks);
+end);
+
+#InstallGlobalFunction(RandomMatrix,
+#function(arg)
+#  if Length(arg) >= 2 and IsOperation(arg[1]) and IsFunction(arg[1])
+#      and IsPosInt(arg[2]) then
+#    if Length(arg) = 2 then
+#    elif Length(arg) >= 3 and IsInt(arg[3]) then
+#      if Length(arg) = 3 then
+#        return RandomMatrixCons(arg[1], arg[2], arg[3]);
+#      elif Length(arg) = 4 and IsInt(arg[4]) then
+#        return RandomMatrixCons(arg[1], arg[2], arg[3], arg[4]);
+#      fi;
+#    fi;
+#  elif Length(arg) = 2 and IsSemiring(arg[1])
+#      and (IsInt(arg[2]) and arg[2] >= 0) then
+#    return RandomMatrixOp(arg[1], arg[2]);
+#  elif Length(arg) = 3 and IsSemiring(arg[1])
+#      and (IsInt(arg[2]) and arg[2] >= 0)
+#      and (IsList(arg[3]) or IsPosInt(arg[3])) then
+#    return RandomMatrixOp(arg[1], arg[2], arg[3]);
+#  fi;
+#
+#  ErrorNoReturn("Semigroups: RandomMatrix: usage,\n",
+#                "the arguments must be: filter, pos int[, pos int[,",
+#                " pos int]],");
+#end);
 
 InstallMethod(AsTransformation, "for a matrix over semiring",
 [IsMatrixOverSemiring],
