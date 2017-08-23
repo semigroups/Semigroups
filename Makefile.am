@@ -24,7 +24,7 @@ semigroups_la_SOURCES += src/libsemigroups/src/uf.cc
 
 semigroups_la_CXXFLAGS = -std=c++11 -O3 -g 
 
-semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DNDEBUG -DCONFIG_H
+semigroups_la_CPPFLAGS = $(GAP_CPPFLAGS) -DNDEBUG -DCONFIG_H -DDO_NOT_INCLUDE_CONFIG_H
 # Note that the latter is only for GAP 4.4.12
 semigroups_la_LDFLAGS = -module -avoid-version
 
