@@ -2,6 +2,15 @@
 
 #### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.5 (released 23/08/2017)
+
+This version contains some minor tweaks and the following issue is resolved:
+
+
+* [Issue 352](https://github.com/gap-packages/Semigroups/issues/352)
+There was a name clash with some other GAP packages using `RandomMatrix` and `IsTorsion`. 
+[[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
 ### Version 3.0.4 (released 16/07/2017)
 
 Some minor issues are fixed in this release:
