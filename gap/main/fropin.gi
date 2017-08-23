@@ -577,7 +577,7 @@ function(S)
     ErrorNoReturn("Semigroups: RightCayleyDigraph: usage,\n",
                   "the first argument (a semigroup) must be finite,");
   fi;
-  digraph := Digraph(EN_SEMI_RIGHT_CAYLEY_GRAPH(S));
+  digraph := DigraphNC(MakeImmutable(EN_SEMI_RIGHT_CAYLEY_GRAPH(S)));
   SetFilterObj(digraph, IsCayleyDigraph);
   SetSemigroupOfCayleyDigraph(digraph, S);
   SetGeneratorsOfCayleyDigraph(digraph, GeneratorsOfSemigroup(S));
@@ -602,7 +602,7 @@ function(S)
     ErrorNoReturn("Semigroups: LeftCayleyDigraph: usage,\n",
                   "the first argument (a semigroup) must be finite,");
   fi;
-  digraph := Digraph(EN_SEMI_LEFT_CAYLEY_GRAPH(S));
+  digraph := DigraphNC(MakeImmutable(EN_SEMI_LEFT_CAYLEY_GRAPH(S)));
   SetFilterObj(digraph, IsCayleyDigraph);
   SetSemigroupOfCayleyDigraph(digraph, S);
   SetGeneratorsOfCayleyDigraph(digraph, GeneratorsOfSemigroup(S));
