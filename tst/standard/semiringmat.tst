@@ -183,8 +183,8 @@ gap> RandomMatrix(IsNTPMatrix, 2, 2, 2);;
 
 #T# semiringmat: RandomMatrix, 6
 gap> RandomMatrix(7, 2, 3);
-Error, Semigroups: RandomMatrix: usage,
-the arguments must be: filter, pos int[, pos int[, pos int]],
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `RandomMatrix' on 3 arguments
 
 #T# semiringmat: RandomMatrix, for a semiring, 7
 gap> RandomMatrix(Integers, 20);;

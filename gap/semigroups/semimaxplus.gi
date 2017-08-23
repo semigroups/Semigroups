@@ -744,7 +744,7 @@ function(S)
 end);
 
 InstallMethod(IsTorsion,
-"for max-plus matrix semigroups",
+"for a max-plus matrix semigroup",
 [IsMaxPlusMatrixSemigroup],
 function(S)
   local gens, dim, func, m, rad, T;
