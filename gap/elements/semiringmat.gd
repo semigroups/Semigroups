@@ -106,7 +106,7 @@ DeclareAttribute("DimensionOfMatrixOverSemiring", IsMatrixOverSemiring);
 DeclareAttribute("DimensionOfMatrixOverSemiringCollection",
                  IsMatrixOverSemiringCollection);
 DeclareAttribute("TransposedMat", IsMatrixOverSemiring);
-DeclareAttribute("IsTorsion", IsMatrixOverSemiring);
+DeclareProperty("IsTorsion", IsMatrixOverSemiring);
 
 # Cannot use TypeObj since it can contain information about
 # properties satisfied (or not) by the object.
