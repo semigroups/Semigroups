@@ -582,7 +582,7 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
 
-    std::vector<std::pair<Element*, size_t>>* pairs =
+    std::vector<std::pair<Element*, Semigroup::element_index_t>>* pairs =
         semi_cpp->sorted_elements();
     Converter* converter = en_semi_get_converter(es);
     // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
@@ -1077,11 +1077,9 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
     semi_cpp->set_max_threads(semi_obj_get_nr_threads(so));
-    typename std::vector<size_t>::const_iterator cbegin =
-        semi_cpp->idempotents_cbegin();
-    typename std::vector<size_t>::const_iterator cend =
-        semi_cpp->idempotents_cend();
-    size_t nr = semi_cpp->nridempotents();
+    auto   cbegin = semi_cpp->idempotents_cbegin();
+    auto   cend   = semi_cpp->idempotents_cend();
+    size_t nr     = semi_cpp->nridempotents();
     assert(nr != 0);
 
     gap_list_t out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, nr);
