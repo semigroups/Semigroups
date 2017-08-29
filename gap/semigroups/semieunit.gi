@@ -199,7 +199,14 @@ function(S)
   X := McAlisterTripleSemigroupPartialOrder(S);
   Y := McAlisterTripleSemigroupSemilattice(S);
   return Concatenation("McAlisterTripleSemigroup(", String(G), ", ",
-                       String(X), ", ", String(Y), ")");
+                       String(X), ", ", String(DigraphVertexLabels(Y)), ")");
+end);
+
+InstallMethod(PrintObj, "for a McAlister triple semigroup",
+[IsMcAlisterTripleSemigroup],
+function(S)
+  Print(String(S));
+  return;
 end);
 
 #TODO Linebreak hints
@@ -308,10 +315,8 @@ end);
 InstallMethod(String, "for a McAlister triple semigroup element rep",
 [IsMcAlisterTripleSemigroupElementRep],
 function(x)
-  return Concatenation("MTSE(", String(x![3]), ", ",
-    String(DigraphVertexLabels(
-           McAlisterTripleSemigroupSemilattice(x![3]))[x[1]]),
-    ", ", String(x[2]), ")");
+  return Concatenation("MTSE(", String(x![3]), ", ", String(x![1]), ", ",
+                       String(x![2]), ")");
 end);
 
 #TODO Linebreak hints

@@ -41,8 +41,10 @@ gap> M = M1;
 true
 gap> String(M);
 "McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ], [ 1,\
- 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), Digraph( [ [ 1 ], [ 1, 2 ], [ 1, 3 ], \
-[ 1, 4 ] ] ))"
+ 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ])"
+gap> Print(M, "\n");
+McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ], [ 1, \
+2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ])
 
 #T# McAlisterTripleSemigroup with bad inputs
 gap> G1 := FreeGroup(1);;
@@ -143,8 +145,7 @@ true
 gap> elms := Enumerator(M);;
 gap> String(elms[1]);
 "MTSE(McAlisterTripleSemigroup(SymmetricGroup( [ 2 .. 5 ] ), Digraph( [ [ 1 ],\
- [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), Digraph( [ [ 1 ], [ 1, 2 ], [ 1, \
-3 ], [ 1, 4 ] ] )), 1, ())"
+ [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 5 ] ] ), [ 1 .. 4 ]), 1, ())"
 gap> OneImmutable(M);
 Error, Semigroups: OneImutable (for McAlister triple semigroup): usage,
 the argument must be a monoid,
@@ -236,6 +237,18 @@ gap> M5 := McAlisterTripleSemigroup(G, x1, x1, act);;
 gap> IsomorphismSemigroups(M1, M5);
 fail
 
+#T# IsomorphismSemigroups, where RepresentativeAction fails
+gap> gr := DigraphFromDigraph6String("+H_A?GC_Q@G~wA?G");
+<digraph with 9 vertices, 20 edges>
+gap> G := Group((1, 2, 3)(4, 5, 6), (8, 9));
+Group([ (1,2,3)(4,5,6), (8,9) ])
+gap> S1 := McAlisterTripleSemigroup(G, gr, [1, 4, 5, 7, 8]);
+<McAlister triple semigroup over Group([ (1,2,3)(4,5,6), (8,9) ])>
+gap> S2 := McAlisterTripleSemigroup(G, gr, [3, 6, 7, 8, 9]);
+<McAlister triple semigroup over Group([ (1,2,3)(4,5,6), (8,9) ])>
+gap> IsomorphismSemigroups(S1, S2);
+fail
+
 #T# IsIsomorphicSemigroup
 gap> IsIsomorphicSemigroup(M1, M1);
 true
@@ -271,6 +284,11 @@ gap> IsFInverseMonoid(M);
 true
 gap> IsFInverseSemigroup(M);
 true
+gap> S := McAlisterTripleSemigroup(Group((4, 5)),
+> Digraph([[1], [1, 2], [1, 3], [1, 2, 3, 4], [1, 2, 3, 5]]), [1 .. 4]);
+<McAlister triple semigroup over Group([ (4,5) ])>
+gap> IsFInverseSemigroup(S);
+false
 
 #T# EUnitaryInverseCover
 gap> S := InverseMonoid([PartialPermNC([1, 3], [1, 3]),
