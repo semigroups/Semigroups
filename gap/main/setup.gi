@@ -727,7 +727,7 @@ InstallMethod(LambdaPerm, "for a transformation semigroup",
 InstallMethod(LambdaPerm, "for a partial perm semigroup",
 [IsPartialPermSemigroup], S -> PERM_LEFT_QUO_PPERM_NC);
 
-InstallMethod(LambdaPerm, "for a partial perm semigroup",
+InstallMethod(LambdaPerm, "for a bipartition semigroup",
 [IsBipartitionSemigroup], S -> BIPART_PERM_LEFT_QUO);
 
 InstallMethod(LambdaPerm, "for a Rees 0-matrix subsemigroup",
