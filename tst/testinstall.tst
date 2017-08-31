@@ -1650,6 +1650,12 @@ CompositionMapping( ((), GroupHomomorphismByImages( Group( [ () ] ), Group(
 <Rees matrix semigroup 1x1 over Group(())>, <Rees matrix semigroup 1x1 over 
   Group(())>, function( u ) ... end, function( v ) ... end ) )
 
+#T# Issue 363: MultiplicativeNeutralElement, for an ideal
+gap> S := SingularFactorisableDualSymmetricInverseMonoid(3);
+<inverse bipartition semigroup ideal of degree 3 with 1 generator>
+gap> IsMonoidAsSemigroup(S);
+false
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);

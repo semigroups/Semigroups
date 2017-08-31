@@ -256,8 +256,9 @@ function(S)
 
   r := GreensRClassOfElementNC(S, rep);
 
-  if not NrIdempotents(r) = 1 then
-    Info(InfoSemigroups, 2, "the number of idempotents in the R-class of the",
+  if NrIdempotents(r) <> 1
+      or NrIdempotents(GreensDClassOfElementNC(S, rep)) <> 1 then
+    Info(InfoSemigroups, 2, "the number of idempotents in the D-class of the",
          " first maximum rank");
     Info(InfoSemigroups, 2, " generator is not 1");
     return fail;
@@ -265,11 +266,11 @@ function(S)
 
   e := Idempotents(r)[1];
 
-  if ForAll(gens, x -> x * e = x and e * x = x) then
+  if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then
     return e;
   fi;
 
-  Info(InfoSemigroups, 2, "the unique idempotent in the R-class of the first",
+  Info(InfoSemigroups, 2, "the unique idempotent in the D-class of the first",
                           " maximum rank");
   Info(InfoSemigroups, 2, " generator is not the identity");
   return fail;

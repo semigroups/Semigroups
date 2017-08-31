@@ -240,6 +240,23 @@ gap> S := Semigroup(Transformation([1, 1, 3]), Transformation([2, 2, 3]));
 gap> MultiplicativeNeutralElement(S);
 fail
 
+#T# attract: MultiplicativeNeutralElement, 5
+gap> S := SingularFactorisableDualSymmetricInverseMonoid(3);
+<inverse bipartition semigroup ideal of degree 3 with 1 generator>
+gap> IsMonoidAsSemigroup(S);
+false
+
+#T# attract: MultiplicativeNeutralElement, 5
+gap> S := Semigroup([Transformation([3, 2, 3]),
+>                    Transformation([3, 4, 2, 5, 5])]);
+<transformation semigroup of degree 5 with 2 generators>
+gap> MultiplicativeNeutralElement(S);
+fail
+gap> S := SemigroupIdeal(S, S.1);
+<non-regular transformation semigroup ideal of degree 5 with 1 generator>
+gap> MultiplicativeNeutralElement(S);
+fail
+
 #T# attract: RepresentativeOfMinimalIdeal, 1/3
 gap> S := Semigroup(Transformation([1, 2, 1]), Transformation([2, 2, 3]));;
 gap> RepresentativeOfMinimalIdeal(S);
