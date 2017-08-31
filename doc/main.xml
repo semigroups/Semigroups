@@ -64,15 +64,16 @@
   <#Include SYSTEM "z-chap09.xml">  <!-- standard constructions-->
   <#Include SYSTEM "z-chap10.xml">  <!-- free objects -->
   <#Include SYSTEM "z-chap11.xml">  <!-- graph inverse semigroups -->
-  <#Include SYSTEM "z-chap12.xml">  <!-- Green's relations -->
-  <#Include SYSTEM "z-chap13.xml">  <!-- attributes of semigroups -->
-  <#Include SYSTEM "z-chap14.xml">  <!-- properties of semigroups -->
-  <#Include SYSTEM "z-chap15.xml">  <!-- properties and attributes of inverse semigroups -->
-  <#Include SYSTEM "z-chap16.xml">  <!-- congruences -->
-  <#Include SYSTEM "z-chap17.xml">  <!-- homomorphisms -->
-  <#Include SYSTEM "z-chap18.xml">  <!-- visualising semigroups -->
-  <#Include SYSTEM "z-chap19.xml">  <!-- utils -->
-  <!--<#Include SYSTEM "z-chap20.xml">  <!-- orbits -->
+  <#Include SYSTEM "z-chap12.xml">  <!-- McAlister triple semigroups -->
+  <#Include SYSTEM "z-chap13.xml">  <!-- Green's relations -->
+  <#Include SYSTEM "z-chap14.xml">  <!-- attributes of semigroups -->
+  <#Include SYSTEM "z-chap15.xml">  <!-- properties of semigroups -->
+  <#Include SYSTEM "z-chap16.xml">  <!-- properties and attributes of inverse semigroups -->
+  <#Include SYSTEM "z-chap17.xml">  <!-- congruences -->
+  <#Include SYSTEM "z-chap18.xml">  <!-- homomorphisms -->
+  <#Include SYSTEM "z-chap19.xml">  <!-- visualising semigroups -->
+  <#Include SYSTEM "z-chap20.xml">  <!-- utils -->
+  <!--<#Include SYSTEM "z-chap21.xml">  <!-- orbits -->
   <!-- <#Include SYSTEM "z-chap22.xml">  <!-- extending the package -->
 </Body>
 
