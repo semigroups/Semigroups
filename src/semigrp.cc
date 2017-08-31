@@ -125,9 +125,9 @@ gap_list_t cayley_graph_t_to_plist(cayley_graph_t* graph) {
     // this is intentionally not IMMUTABLE
     SET_LEN_PLIST(next, graph->nr_cols());
     assert(graph->nr_cols() != 0);
-    typename std::vector<size_t>::const_iterator end = graph->row_cend(i);
-    size_t                                       j   = 1;
-    for (auto it = graph->row_cbegin(i); it != end; ++it) {
+    auto   end = graph->cend_row(i);
+    size_t j   = 1;
+    for (auto it = graph->cbegin_row(i); it != end; ++it) {
       SET_ELM_PLIST(next, j++, INTOBJ_INT(*it + 1));
     }
     SET_ELM_PLIST(out, i + 1, next);
