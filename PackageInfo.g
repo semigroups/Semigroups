@@ -46,7 +46,7 @@ _STANDREWS := Concatenation(["Mathematical Institute, ",
 
 SetPackageInfo(rec(
 PackageName := "Semigroups",
-Subtitle := "",
+Subtitle := "A package for semigroups and monoids",
 Version := "3.0.5",
 Date := "23/08/2017",
 ArchiveFormats := ".tar.gz",
