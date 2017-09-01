@@ -14,18 +14,18 @@ DeclareCategory("IsMcAlisterTripleSemigroupElement",
 # This is a representation for McAlister triple semigroup elements, which are
 # created via the function McAlisterTripleSemigroupElement.
 #
-# The components are:
+# If x belongs to the representation IsMcAlisterTripleElementRep, then the
+# components are:
 #
-#   Parent:   A McAlister triple semigroup of which this is an element
+#   x![1]:   The McAlister triple semigroup which this element belongs to
 #
-#   Vertex:   A vertex of the McAlisterTripleSemigroupSemilattice of the Parent
+#   x![2]:   A vertex of the McAlisterTripleSemigroupSemilattice of x![1]
 #
-#   Group element:  An element of the McAlisterTripleSemigroupGroup of the
-#                   Parent
+#   x![3]:   An element of the McAlisterTripleSemigroupGroup of x![1]
 
 DeclareRepresentation("IsMcAlisterTripleSemigroupElementRep",
                       IsMcAlisterTripleSemigroupElement
-                      and IsPositionalObjectRep, 2);
+                      and IsPositionalObjectRep, 3);
 
 DeclareCategoryCollections("IsMcAlisterTripleSemigroupElement");
 DeclareSynonym("IsMTSE", IsMcAlisterTripleSemigroupElement);

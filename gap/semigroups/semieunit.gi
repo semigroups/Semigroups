@@ -143,23 +143,6 @@ end);
 #############################################################################
 # Methods for McAlister triple semigroups
 #############################################################################
-# InstallMethod(\=, "for two McAlister triple semigroups",
-# IsIdenticalObj,
-# [IsMcAlisterTripleSemigroup, IsMcAlisterTripleSemigroup],
-# function(x, y)
-#   local G, X, Y;
-#   G := McAlisterTripleSemigroupGroup(x);
-#   X := McAlisterTripleSemigroupPartialOrder(x);
-#   Y := McAlisterTripleSemigroupSemilattice(x);
-#   if G = McAlisterTripleSemigroupGroup(y)
-#       and X = McAlisterTripleSemigroupPartialOrder(y)
-#       and Y = McAlisterTripleSemigroupSemilattice(y) then
-#     if IsIsomorphicSemigroup(x, y) then
-#       return true;
-#     fi;
-#   fi;
-#   return false;
-# end);
 
 InstallMethod(OneImmutable, "for a McAlister triple semigroup",
 [IsMcAlisterTripleSemigroup],
