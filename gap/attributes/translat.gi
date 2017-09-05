@@ -146,7 +146,7 @@ end;
 # as well as restriction by the translation condition if Sa_i intersect Sa_k is
 # non-empty or a_i S intersect a_k S is non-empty.
 SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
-  local X, iso, inv, S, reps, repspos, dclasses, lclasses, rclasses,
+  local S, reps, repspos, dclasses, lclasses, rclasses,
         I, d, e, f, g, i, j, k, m, n, p, q, r, s, x, y, slist, fposrepk, gposrepk,
         possiblefrepvals, possiblegrepvals, whenboundfvals, whenboundgvals, pos,
         multtablepositionsets, transposepositionsets, posrepsks, posfrepsks,
@@ -159,28 +159,11 @@ SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
         possiblefrepvalsfromidempotent, possiblegrepvalsfromidempotent,
         multtable, xlist, isolist, invlist;
   
-  X := UnderlyingSemigroup(H);
-  n := Size(X);
-  
-  if not IsEnumerableSemigroupRep(X) then
-    iso := IsomorphismSemigroup(IsTransformationSemigroup, X);
-    inv := InverseGeneralMapping(iso);
-    S := Range(iso);
-    xlist := AsList(X);
-    slist := AsListCanonical(S);
-    isolist := [1 .. n];
-    invlist := [1 .. n];
-    for i in [1 .. n] do
-      isolist[i] := Position(slist, xlist[i]^iso);
-      invlist[i] := Position(xlist, slist[i]^inv);
-    od;
-  else
-    S := X;
-    slist := AsListCanonical(S);
-  fi;
-  
-  L := LeftTranslationsSemigroup(X);
-  R := RightTranslationsSemigroup(X);
+  S := UnderlyingSemigroup(H);
+  n := Size(S);
+  slist := AsListCanonical(S);
+  L := LeftTranslationsSemigroup(S);
+  R := RightTranslationsSemigroup(S);
   multtable := MultiplicationTable(S);
   
   reps := GeneratorsOfSemigroup(S);
@@ -512,14 +495,6 @@ SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
     k := bt(reject(k - 1));
   od;
   
-  if not IsEnumerableSemigroupRep(S) then
-    for x in linkedpairs do
-      for i in [1 .. n] do
-        x[1][i] := invlist[x[1][isolist[i]]];
-        x[2][i] := invlist[x[2][isolist[i]]];
-      od;
-    od;
-  fi;
   Apply(linkedpairs, x -> TranslationalHullElementNC(H, 
                             LeftTranslationNC(L, Transformation(x[1])),
                             RightTranslationNC(R, Transformation(x[2]))));
@@ -614,7 +589,7 @@ end);
 
 # Create and calculate the semigroup of left translations
 InstallMethod(LeftTranslations, "for a semigroup", 
-[IsSemigroup and IsFinite], 
+[IsEnumerableSemigroupRep and IsFinite], 
 function(S) 
   local L;
   
@@ -626,7 +601,7 @@ end);
 
 # Create and calculate the semigroup of inner left translations
 InstallMethod(InnerLeftTranslations, "for a semigroup",
-[IsSemigroup and IsFinite],
+[IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local A, I, L, l, s;
   
@@ -647,7 +622,7 @@ end);
 
 # Create and calculate the semigroup of right translations
 InstallMethod(RightTranslations, "for a semigroup", 
-[IsSemigroup and IsFinite],
+[IsEnumerableSemigroupRep and IsFinite],
 function(S) 
   local R;
   
@@ -659,7 +634,7 @@ end);
 
 # Create and calculate the semigroup of inner right translations
 InstallMethod(InnerRightTranslations, "for a semigroup",
-[IsSemigroup and IsFinite],
+[IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local A, I, R, r, s;
   
@@ -828,7 +803,7 @@ end);
 
 # Creates and calculates the elements of the translational hull.
 InstallMethod(TranslationalHull, "for a semigroup",
-[IsSemigroup and IsFinite],
+[IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local H;
   
@@ -841,7 +816,7 @@ end);
 # Creates the ideal of the translational hull consisting of 
 # all inner bitranslations
 InstallMethod(InnerTranslationalHull, "for a semigroup",
-[IsSemigroup and IsFinite],
+[IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local A, I, H, L, R, l, r, s;
   
@@ -885,17 +860,8 @@ function(H, l, r)
   L := LeftTranslationsSemigroupOfFamily(FamilyObj(l));
   R := RightTranslationsSemigroupOfFamily(FamilyObj(r));
   
-  if not (UnderlyingSemigroup(L) = S and UnderlyingSemigroup(R) = S) then
-      Error("Semigroups: TranslationalHullElement: \n",
-            "each argument must have the same underlying semigroup,");
-  fi;
-  
   if HasGeneratorsOfSemigroup(S) then
-    if ForAny(GeneratorsOfSemigroup(S), 
-              t -> ForAny(S, s -> s * (t^l) <> (s^r) * t)) then
-       Error("Semigroups: TranslationalHullElement: \n",
-             "the translations given must form a linked pair,");
-    fi;
+    reps := GeneratorsOfSemigroup(S);
   else
     dclasses := DClasses(S);
     reps := [];
@@ -924,10 +890,16 @@ function(H, l, r)
         od;
       fi;
     od;
-    if ForAny(reps, t -> ForAny(S, s -> s * (t^l) <> (s^r) * t)) then
+  fi;
+  
+  if not (UnderlyingSemigroup(L) = S and UnderlyingSemigroup(R) = S) then
       Error("Semigroups: TranslationalHullElement: \n",
-             "the translations given must form a linked pair,");
-    fi;
+            "each argument must have the same underlying semigroup,");
+  fi;
+  
+  if ForAny(reps, t -> ForAny(reps, s -> s * (t^l) <> (s^r) * t)) then
+     Error("Semigroups: TranslationalHullElement: \n",
+           "the translations given must form a linked pair,");
   fi;
   
   return TranslationalHullElementNC(H, l, r);
@@ -945,7 +917,7 @@ end);
 # For rectangular bands, don't calculate AsList for LeftTranslations 
 # Just get generators
 InstallMethod(LeftTranslations, "for a rectangular band",
-[IsSemigroup and IsFinite and IsRectangularBand],
+[IsEnumerableSemigroupRep and IsFinite and IsRectangularBand],
 function(S) 
   local L;
   
@@ -958,7 +930,7 @@ end);
 # For rectangular bands, don't calculate AsList for RightTranslations 
 # Just get generators
 InstallMethod(RightTranslations, "for a rectangular band",
-[IsSemigroup and IsFinite and IsRectangularBand],
+[IsEnumerableSemigroupRep and IsFinite and IsRectangularBand],
 function(S) 
   local R;
   
@@ -971,7 +943,7 @@ end);
 # For rectangular bands, don't calculate AsList for TranslationalHull 
 # Just get generators
 InstallMethod(TranslationalHull, "for a rectangular band",
-[IsSemigroup and IsFinite and IsRectangularBand],
+[IsEnumerableSemigroupRep and IsFinite and IsRectangularBand],
 function(S)
   local H;
   
@@ -1088,20 +1060,20 @@ end);
 
 # Translations of a monoid are all inner translations
 InstallMethod(LeftTranslations, "for a monoid",
-[IsMonoid and IsFinite],
+[IsEnumerableSemigroupRep and IsMonoid and IsFinite],
 function(S)
   return InnerLeftTranslations(S);
 end);
 
 InstallMethod(RightTranslations, "for a monoid",
-[IsMonoid and IsFinite],
+[IsEnumerableSemigroupRep and IsMonoid and IsFinite],
 function(S)
   return InnerRightTranslations(S);
 end);
 
 # Translational hull of a monoid is inner translational hull
 InstallMethod(TranslationalHull, "for a monoid",
-[IsMonoid and IsFinite],
+[IsEnumerableSemigroupRep and IsMonoid and IsFinite],
 function(S)
   return InnerTranslationalHull(S);
 end);
@@ -1328,8 +1300,8 @@ end);
 InstallMethod(UnderlyingSemigroup, "for a subsemigroup of the translational hull",
 [IsTranslationalHull],
 function(H)
-    return UnderlyingSemigroup(TranslationalHullOfFamily(FamilyObj(
-      Enumerator(H)[1])));
+    return UnderlyingSemigroup(TranslationalHullOfFamily(ElementsFamily(
+                                                        FamilyObj(H))));
 end);
 
 InstallMethod(ChooseHashFunction, "for a left or right translation and int",

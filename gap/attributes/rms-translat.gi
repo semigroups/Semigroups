@@ -7,7 +7,6 @@
 ##
 #############################################################################
 ##
-
 #############################################################################
 ## This file contains special methods for translations semigroups and 
 ## translational hulls of completely 0-simple seimgroups.
@@ -23,7 +22,7 @@
 # For RZMS, don't calculate AsList when LeftTranslations is called
 # Just get generators
 InstallMethod(LeftTranslations, "for a RZMS semigroup",
-[IsSemigroup and IsFinite and IsZeroSimpleSemigroup],
+[IsEnumerableSemigroupRep and IsFinite and IsZeroSimpleSemigroup],
 function(S) 
   local L;
   
@@ -36,7 +35,7 @@ end);
 # For RZMS, don't calculate AsList when RightTranslations is called
 # Just get generators
 InstallMethod(RightTranslations, "for a RZMS semigroup",
-[IsSemigroup and IsFinite and IsZeroSimpleSemigroup],
+[IsEnumerableSemigroupRep and IsFinite and IsZeroSimpleSemigroup],
 function(S) 
   local R;
   

@@ -56,11 +56,11 @@ DeclareAttribute("TypeTranslationalHullElements",
                  IsTranslationalHull);
 
 
-DeclareAttribute("LeftTranslations", IsSemigroup and IsFinite);
-DeclareAttribute("InnerLeftTranslations", IsSemigroup and IsFinite);
-DeclareAttribute("RightTranslations", IsSemigroup and IsFinite);
-DeclareAttribute("InnerRightTranslations", IsSemigroup and IsFinite);
-DeclareAttribute("TranslationalHull", IsSemigroup and IsFinite);
-DeclareAttribute("InnerTranslationalHull", IsSemigroup and IsFinite);
+DeclareAttribute("LeftTranslations", IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("InnerLeftTranslations", IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("RightTranslations", IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("InnerRightTranslations", IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("TranslationalHull", IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("InnerTranslationalHull", IsEnumerableSemigroupRep and IsFinite);
 DeclareAttribute("TranslationalElements", IsTranslationsSemigroup and IsWholeFamily);
 DeclareAttribute("TranslationalElements", IsTranslationalHull and IsWholeFamily);

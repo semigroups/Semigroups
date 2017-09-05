@@ -338,12 +338,15 @@ true
 gap> Semigroup(SEMIGROUPS.TranslationalHullElementsByGenerators(H)) = H;
 true
 
-#T# TranslationalHull for semigroups which are not IsEnumerable
+#T# TranslationalHull for semigroups which are not IsEnumerableSemigroupRep
 gap> S := Semigroup([Transformation([1,4,3,3]), Transformation([3,4,1,1])]);;
 gap> S := AsSemigroup(IsFpSemigroup, S);;
 gap> IsEnumerableSemigroupRep(S);
 false
 gap> H := TranslationalHull(S);;
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `TranslationalHull' on 1 arguments
+gap> AsList(S);;
 gap> for h in TranslationalHull(S) do
 > l := h![1];
 > r := h![2];
