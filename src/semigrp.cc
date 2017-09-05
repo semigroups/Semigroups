@@ -37,6 +37,7 @@ using libsemigroups::TropicalMaxPlusSemiring;
 using libsemigroups::TropicalMinPlusSemiring;
 using libsemigroups::NaturalSemiring;
 using libsemigroups::Integers;
+using libsemigroups::really_delete_cont;
 
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
@@ -76,11 +77,11 @@ using libsemigroups::Integers;
 #define CHECK_POS_INTOBJ(obj)
 #endif
 
-std::vector<Element*>*
+std::vector<Element const*>*
 plist_to_vec(Converter* converter, gap_list_t elements, size_t degree) {
   assert(IS_PLIST(elements));
 
-  auto out = new std::vector<Element*>();
+  auto out = new std::vector<Element const*>();
 
   for (size_t i = 0; i < (size_t) LEN_PLIST(elements); i++) {
     out->push_back(converter->convert(ELM_LIST(elements, i + 1), degree));
@@ -134,14 +135,6 @@ gap_list_t cayley_graph_t_to_plist(cayley_graph_t* graph) {
     CHANGED_BAG(out);
   }
   return out;
-}
-
-template <typename T> static inline void really_delete_cont(T* cont) {
-  for (Element* x : *cont) {
-    x->really_delete();
-    delete x;
-  }
-  delete cont;
 }
 
 // Semigroups
@@ -384,12 +377,12 @@ Semigroup* en_semi_init_semigroup(en_semi_obj_t es) {
     en_semi_init_converter(es);
   }
 
-  gap_semigroup_t        so        = en_semi_get_semi_obj(es);
-  Converter*             converter = en_semi_get_converter(es);
-  size_t                 deg       = en_semi_get_degree(es);
-  gap_list_t             plist     = semi_obj_get_gens(so);
-  std::vector<Element*>* gens      = plist_to_vec(converter, plist, deg);
-  Semigroup*             semi_cpp  = new Semigroup(gens);
+  gap_semigroup_t so        = en_semi_get_semi_obj(es);
+  Converter*      converter = en_semi_get_converter(es);
+  size_t          deg       = en_semi_get_degree(es);
+  gap_list_t      plist     = semi_obj_get_gens(so);
+  auto            gens      = plist_to_vec(converter, plist, deg);
+  Semigroup*      semi_cpp  = new Semigroup(gens);
   semi_cpp->set_batch_size(semi_obj_get_batch_size(so));
   really_delete_cont(gens);
   ADDR_OBJ(es)[5] = reinterpret_cast<Obj>(semi_cpp);
@@ -566,9 +559,7 @@ gap_list_t EN_SEMI_AS_LIST(Obj self, gap_semigroup_t so) {
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
-    std::vector<Element*>* elements  = semi_cpp->elements();
-    Converter*             converter = en_semi_get_converter(es);
-    return vec_to_plist(converter, elements);
+    return vec_to_plist(en_semi_get_converter(es), semi_cpp);
   } else {
     return ElmPRec(fropin(so, INTOBJ_INT(-1), 0, False), RNam_elts);
   }
@@ -581,9 +572,8 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
-
-    std::vector<std::pair<Element*, Semigroup::element_index_t>>* pairs =
-        semi_cpp->sorted_elements();
+    // FIXME
+    auto       pairs     = semi_cpp->sorted_elements();
     Converter* converter = en_semi_get_converter(es);
     // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
     gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, pairs->size());
@@ -674,9 +664,9 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
   // this to work.
   es = semi_obj_init_en_semi(new_so);
 
-  size_t                 deg       = en_semi_get_degree(es);
-  Converter*             converter = en_semi_get_converter(es);
-  std::vector<Element*>* coll      = plist_to_vec(converter, plist, deg);
+  size_t     deg       = en_semi_get_degree(es);
+  Converter* converter = en_semi_get_converter(es);
+  auto       coll      = plist_to_vec(converter, plist, deg);
 
   Semigroup* old_semi_cpp = semi_obj_get_semi_cpp(old_so);
 
@@ -743,7 +733,7 @@ EN_SEMI_CLOSURE_DEST(Obj self, gap_semigroup_t so, gap_list_t plist) {
   size_t const deg       = semi_cpp->degree();
   Converter*   converter = en_semi_get_converter(es);
 
-  std::vector<Element*>* coll = plist_to_vec(converter, plist, deg);
+  auto coll = plist_to_vec(converter, plist, deg);
   semi_cpp->set_report(semi_obj_get_report(so));
   semi_cpp->closure(coll);
   really_delete_cont(coll);
@@ -832,7 +822,7 @@ EN_SEMI_ELEMENT_NUMBER(Obj self, gap_semigroup_t so, gap_int_t pos) {
     nr--;
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
-    Element* x = semi_cpp->at(nr);
+    Element const* x = semi_cpp->at(nr);
     return (x == nullptr ? Fail : en_semi_get_converter(es)->unconvert(x));
   } else {
     gap_rec_t fp = semi_obj_get_fropin(so);
@@ -864,7 +854,7 @@ EN_SEMI_ELEMENT_NUMBER_SORTED(Obj self, gap_semigroup_t so, gap_int_t pos) {
     size_t     nr       = INT_INTOBJ(pos) - 1;
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
-    Element* x = semi_cpp->sorted_at(nr);
+    Element const* x = semi_cpp->sorted_at(nr);
 
     return (x == nullptr ? Fail : en_semi_get_converter(es)->unconvert(x));
   } else {
@@ -896,7 +886,7 @@ gap_list_t EN_SEMI_ELMS_LIST(Obj self, gap_semigroup_t so, gap_list_t poslist) {
                   0L);
       }
       semi_cpp->set_report(semi_obj_get_report(so));
-      Element* x = semi_cpp->at(INT_INTOBJ(pos) - 1);
+      Element const* x = semi_cpp->at(INT_INTOBJ(pos) - 1);
       if (x == nullptr) {
         ErrorQuit("Semigroups: ELMS_LIST: List Elements, <list>[%d] "
                   "must be at most %d,",
