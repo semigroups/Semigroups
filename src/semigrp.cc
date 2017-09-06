@@ -572,15 +572,15 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
-    // FIXME
-    auto       pairs     = semi_cpp->sorted_elements();
     Converter* converter = en_semi_get_converter(es);
     // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
-    gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, pairs->size());
-    SET_LEN_PLIST(out, pairs->size());
+    gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, semi_cpp->size());
+    SET_LEN_PLIST(out, semi_cpp->size());
     size_t i = 1;
-    for (auto const& x : *pairs) {
-      SET_ELM_PLIST(out, i++, converter->unconvert(x.first));
+    auto it = semi_cpp->cbegin_sorted();
+    for (auto it = semi_cpp->cbegin_sorted(); it < semi_cpp->cend_sorted();
+         ++it) {
+      SET_ELM_PLIST(out, i++, converter->unconvert(*it));
       CHANGED_BAG(out);
     }
     return out;
