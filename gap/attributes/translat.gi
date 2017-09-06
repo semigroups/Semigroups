@@ -164,7 +164,14 @@ SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
   slist := AsListCanonical(S);
   L := LeftTranslationsSemigroup(S);
   R := RightTranslationsSemigroup(S);
-  multtable := MultiplicationTable(S);
+
+  #easiest to just recalculate multiplication table with canonical list
+  multtable := List([1..n], i -> [1..n]);
+  for i in [1..n] do
+    for j in [1..n] do
+      multtable[i][j] := Position(slist, slist[i] * slist[j]);
+    od;
+  od;
   
   reps := GeneratorsOfSemigroup(S);
   repspos := [];
