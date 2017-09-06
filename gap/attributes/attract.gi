@@ -234,7 +234,7 @@ end);
 InstallMethod(MultiplicativeNeutralElement, "for an acting semigroup",
 [IsActingSemigroup],
 function(S)
-  local gens, rank, lambda, max, rep, r, e;
+  local gens, rank, lambda, max, rep, r, e, lo, ro, lact, ract;
 
   gens := Generators(S);
   rank := LambdaRank(S);
@@ -256,23 +256,33 @@ function(S)
 
   r := GreensRClassOfElementNC(S, rep);
 
-  if NrIdempotents(r) <> 1
-      or NrIdempotents(GreensDClassOfElementNC(S, rep)) <> 1 then
-    Info(InfoSemigroups, 2, "the number of idempotents in the D-class of the",
-         " first maximum rank");
-    Info(InfoSemigroups, 2, " generator is not 1");
+  if NrIdempotents(r) <> 1 or NrHClasses(r) <> 1 or
+      NrHClasses(GreensLClassOfElementNC(S, rep)) <> 1 then
+    Info(InfoSemigroups, 2, "the D-class of the first maximum rank generator ",
+                            "is not a group");
     return fail;
   fi;
 
   e := Idempotents(r)[1];
 
-  if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then
-    return e;
+  if HasGeneratorsOfSemigroup(S) then
+    if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then
+      return e;
+    fi;
+    return fail;
   fi;
 
-  Info(InfoSemigroups, 2, "the unique idempotent in the D-class of the first",
-                          " maximum rank");
-  Info(InfoSemigroups, 2, " generator is not the identity");
+  lo := LambdaOrb(S);
+  ro := RhoOrb(S);
+  lact := LambdaAct(S);
+  ract := RhoAct(S);
+
+  # S is an ideal without GeneratorsOfSemigroup
+  if ForAll(gens, x -> x * e = x and e * x = x)
+      and ForAll([2 .. Length(Enumerate(lo))], i -> lact(lo[i], e) = lo[i])
+      and ForAll([2 .. Length(Enumerate(ro))], i -> ract(ro[i], e) = ro[i]) then
+    return e;
+  fi;
   return fail;
 end);
 
