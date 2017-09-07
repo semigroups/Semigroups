@@ -90,15 +90,15 @@ plist_to_vec(Converter* converter, gap_list_t elements, size_t degree) {
 }
 
 template <typename T>
-static inline gap_list_t vec_to_plist(Converter* converter, T* cont) {
-  gap_list_t out = NEW_PLIST((cont->size() == 0 ? T_PLIST_EMPTY : T_PLIST_HOM),
-                             cont->size());
-  SET_LEN_PLIST(out, cont->size());
+static inline gap_list_t iterator_to_plist(Converter* converter, T first, T last) {
+  gap_list_t out =
+      NEW_PLIST((first == last ? T_PLIST_EMPTY : T_PLIST_HOM), last - first);
+  SET_LEN_PLIST(out, last - first);
   size_t i = 1;
-  for (auto const& x : *cont) {
-    SET_ELM_PLIST(out, i++, converter->unconvert(x));
-    CHANGED_BAG(out);
+  for (auto it = first; it < last; ++it) {
+    SET_ELM_PLIST(out, i++, converter->unconvert(*it));
   }
+  CHANGED_BAG(out);
   return out;
 }
 
@@ -559,7 +559,9 @@ gap_list_t EN_SEMI_AS_LIST(Obj self, gap_semigroup_t so) {
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
     semi_cpp->set_report(semi_obj_get_report(so));
-    return vec_to_plist(en_semi_get_converter(es), semi_cpp);
+    semi_cpp->enumerate();
+    return iterator_to_plist(
+        en_semi_get_converter(es), semi_cpp->cbegin(), semi_cpp->cend());
   } else {
     return ElmPRec(fropin(so, INTOBJ_INT(-1), 0, False), RNam_elts);
   }
@@ -1065,27 +1067,20 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
     Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
+    Converter* converter = en_semi_get_converter(es);
+
     semi_cpp->set_report(semi_obj_get_report(so));
     semi_cpp->set_max_threads(semi_obj_get_nr_threads(so));
-    auto   cbegin = semi_cpp->idempotents_cbegin();
-    auto   cend   = semi_cpp->idempotents_cend();
-    size_t nr     = semi_cpp->nridempotents();
-    assert(nr != 0);
 
-    gap_list_t out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, nr);
-    // IMMUTABLE since it should not be altered on the GAP level
-    SET_LEN_PLIST(out, nr);
-
-    for (auto it = cend - 1; it >= cbegin; it--) {
-      SET_ELM_PLIST(out, nr--, INTOBJ_INT(*it + 1));
-    }
-    CHANGED_BAG(out);
-    return out;
+    return iterator_to_plist(
+        converter, semi_cpp->cbegin_idempotents(), semi_cpp->cend_idempotents());
   } else {
     gap_rec_t  fp     = fropin(so, INTOBJ_INT(-1), 0, False);
     gap_list_t left   = ElmPRec(fp, RNamName("left"));
     gap_list_t last   = ElmPRec(fp, RNamName("final"));
     gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
+    gap_list_t elts   = ElmPRec(fp, RNamName("elts"));
+
     size_t     size   = LEN_PLIST(left);
     size_t     nr     = 0;
     gap_list_t out    = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
@@ -1099,7 +1094,7 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
         i = INT_INTOBJ(ELM_PLIST(prefix, i));
       }
       if (j == pos) {
-        AssPlist(out, ++nr, INTOBJ_INT(pos));
+        AssPlist(out, ++nr, ELM_PLIST(elts, pos));
       }
     }
     assert(nr != 0);
