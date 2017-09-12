@@ -173,7 +173,7 @@ SEMIGROUPS.StopTest := function()
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoSemigroups);
   SetInfoLevel(InfoOrb, record.InfoLevelInfoOrb);
-  SetInfoLevel(InfoOrb, record.InfoLevelInfoGenSS);
+  SetInfoLevel(InfoGenSS, record.InfoLevelInfoGenSS);
   SetInfoLevel(InfoSemigroups, record.InfoLevelInfoPackageLoading);
 
   # restore user preferences
