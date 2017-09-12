@@ -11,7 +11,8 @@
       <C>RightTranslations(<A>S</A>)</C>. For finite 0-simple semigroups and 
       rectangular bands <A>S</A> generating sets and sizes of the translations
       semigroups are known.
-      It is not currently possible to calculate this for arbitrary semigroups.
+      A method for semigroups with known generators is also included; this only
+      works for small semigroups. 
       <C>LeftTranslationsSemigroup</C> and <C>RightTranslationsSemigroup</C> do
       the same thing except that they do not attempt to calculate the elements
       of the translations semigroup.
@@ -42,8 +43,9 @@ gap> GeneratorsOfSemigroup(L);
     <Returns>A left or right translation.</Returns>
     <Description>
       For the semigroup of left of right translations and a Mapping on the 
-      underlying semigroup, LeftTranslation and RightTranslation return 
-      the corresponding translations. 
+      underlying semigroup, or a transformation acting on the indices of the
+      sorted list of elements of the underlying semigroup,
+      LeftTranslation and RightTranslation return the corresponding translations. 
       <Example><![CDATA[
 gap> S := RectangularBand(3,4);;
 gap> L := LeftTranslationsSemigroup(S);;
