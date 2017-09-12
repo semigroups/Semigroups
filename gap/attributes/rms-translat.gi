@@ -9,7 +9,7 @@
 ##
 #############################################################################
 ## This file contains special methods for translations semigroups and 
-## translational hulls of completely 0-simple seimgroups.
+## translational hulls of completely simple and 0-simple semigroups.
 ## 
 ## These methods are based on the constructions given in 
 ## Petrich, M. (1968) 
@@ -130,6 +130,79 @@ function(T)
   return gens;
 end);
 
+
+# The generators are generators of a full transformation monoid to act on the
+# index sets, together with functions to the generators of the group.
+InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left/right translations of a finite 0-simple semigroup",
+[IsTranslationsSemigroup and IsWholeFamily],
+function(T)
+  local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f, groupGens,
+        e, a, fa, G;
+        
+  S := UnderlyingSemigroup(T);
+  if not (IsSimpleSemigroup(S) and IsFinite(S)) then
+    TryNextMethod();
+  fi;
+  
+  semiList := AsList(S);
+  iso := IsomorphismReesMatrixSemigroup(S);
+  inv := InverseGeneralMapping(iso);
+  reesMatSemi := Range(iso);
+  L := IsLeftTranslationsSemigroup(T);
+  if L then
+    n := Length(Rows(reesMatSemi));
+  else
+    n := Length(Columns(reesMatSemi));
+  fi;
+  
+  gens := [];
+  G := UnderlyingSemigroup(reesMatSemi);
+  groupGens := GeneratorsOfGroup(G);
+  
+  for t in GeneratorsOfMonoid(FullTransformationMonoid(n)) do
+    if L then
+      f := function(x)
+        return ReesMatrixSemigroupElement(reesMatSemi, x[1]^t, 
+            x[2], x[3]);
+      end;
+      Add(gens, LeftTranslation(T, CompositionMapping(
+        inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+    else
+      f := function(x)
+        return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
+          x[2], x[3]^t); 
+      end;
+      Add(gens, RightTranslation(T, CompositionMapping(
+        inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+    fi;
+  od;
+  
+  for a in groupGens do
+    fa := function(x)
+      if x = 1 then
+        return a;
+      fi; 
+      return MultiplicativeNeutralElement(G);
+    end;
+    if L then
+      f := function(x)
+        return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
+            fa(x[1])*x[2], x[3]);
+      end;
+      Add(gens, LeftTranslationNC(T, CompositionMapping(
+        inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+    else
+      f := function(x)
+        return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
+          x[2]*fa(x[3]), x[3]); 
+      end;
+      Add(gens, RightTranslationNC(T, CompositionMapping(
+        inv, MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
+    fi;
+  od;
+  return gens;
+end);
+
 InstallMethod(Size, "for the semigroup of left or right translations of a completely 0-simple semigroup",
 [IsTranslationsSemigroup and IsWholeFamily], 1,
 function(T)
@@ -146,6 +219,24 @@ function(T)
     n := Length(Columns(reesMatSemi));
   fi;
   return (n * Size(G) + 1)^n;
+end);
+
+InstallMethod(Size, "for the semigroup of left or right translations of a completely 0-simple semigroup",
+[IsTranslationsSemigroup and IsWholeFamily], 1,
+function(T)
+  local S, G, reesMatSemi, n;
+  S := UnderlyingSemigroup(T);
+  if not (IsSimpleSemigroup(S) and IsFinite(S)) then
+    TryNextMethod();
+  fi;
+  reesMatSemi := Range(IsomorphismReesMatrixSemigroup(S));
+  G := UnderlyingSemigroup(reesMatSemi);
+  if IsLeftTranslationsSemigroup(T) then
+    n := Length(Rows(reesMatSemi));
+  else
+    n := Length(Columns(reesMatSemi));
+  fi;
+  return n^n * Size(G)^n;
 end);
 
 # Finds the transformations on the indices of a finite 0-simple semigroup
@@ -583,4 +674,207 @@ SEMIGROUPS.TranslationalHullElementsOfZeroSimple := function(H)
   od;
   
   return Set(linkedpairs);
+end;
+
+# Finds the bitranslations of a RMS over a group
+# Uses the characterisation of Theorem 1 in
+# Clifford and Petrich, 'Some Classes of Completely Regular Semigroups'
+# Journal of Algebra 46, 1977
+SEMIGROUPS.RMSBitranslations := function(H)
+  local a, f, g, G, i, j, k, L, m, n, P, r, R, s, S, x,
+        inv, iso, normalrms, triples,
+        lefttrans, righttrans, tripletobitranslation,
+        extendf, extendg, nextf, nextg,
+        partialcheckrow, partialcheckcol,
+        reject, bt;  
+  
+  S := UnderlyingSemigroup(H);
+  iso := RMSNormalization(S);
+  inv := InverseGeneralMapping(iso);
+  normalrms := Range(iso);
+  L := LeftTranslationsSemigroup(S);
+  R := RightTranslationsSemigroup(S);
+  P := Matrix(normalrms);
+  m := Size(P);
+  n := Size(P[1]);
+  G := UnderlyingSemigroup(normalrms);
+  triples := [];
+
+  tripletobitranslation := function(x)
+    
+    lefttrans := function(r)
+      return RMSElementNC(normalrms, x[3][r[1]], x[1] * P[x[2][1]][r[1]] * r[2], r[3]);
+    end;
+
+    righttrans := function(r)
+      return RMSElementNC(normalrms, r[1], r[2] * P[r[3]][x[3][1]] * x[1], x[2][r[3]]);
+    end;
+
+    return TranslationalHullElementNC(H,
+                        LeftTranslationNC(L, CompositionMapping(inv, 
+                                                    MappingByFunction(normalrms, normalrms, lefttrans), iso)),
+                        RightTranslationNC(R, CompositionMapping(inv,
+                                                    MappingByFunction(normalrms, normalrms, righttrans), iso)));
+  end;
+
+  extendf := function(k)
+    f[k] := 1;
+  end;
+
+  extendg := function(k)
+    g[k] := 1;
+  end;
+
+  nextf := function(k)
+    if f[k] = m then
+      return fail;
+    fi;
+    f[k] := f[k] + 1;
+    return k;
+  end;
+  
+  nextg := function(k)
+    if g[k] = n then 
+      return fail;
+    fi;
+    g[k] := g[k] + 1;
+    return k;
+  end;
+
+  partialcheckrow := function(k)
+    for j in [1 .. Minimum(k-1, n)] do
+      if not P[k][g[j]] * a * P[f[1]][j] = P[k][g[1]] * a * P[f[k]][j] then
+        return false;
+      fi;
+    od;
+    return true;
+  end;
+
+  partialcheckcol := function(k)
+    for i in [1 .. Minimum(k, m)] do
+      if not P[i][g[k]] * a * P[f[1]][k] = P[i][g[1]] * a * P[f[i]][k] then
+        return false;
+      fi;
+    od;
+    return true;
+  end;
+
+  reject := function(k)
+    while k > n do
+      if nextf(k) = fail then
+        Unbind(f[k]);
+        k := k - 1;
+      else
+        return k;
+      fi;
+    od;
+
+    while k > m do
+      if nextg(k) = fail then
+        Unbind(g[k]);
+        k := k - 1;
+      else
+        return k;
+      fi;
+    od;
+
+    if not IsBound(g[k]) then 
+      if nextf(k) = fail then
+        Unbind(f[k]);
+        k := k - 1;
+      else
+        return k;
+      fi;
+    fi;
+
+    while k > 0 and nextg(k) = fail do
+      Unbind(g[k]);
+      if nextf(k) = fail then
+        Unbind(f[k]);
+        k := k - 1;
+      else
+        return k;
+      fi;
+    od;
+    return k;
+  end;
+
+  #TODO: add flag to not partial check row/col as appropriate
+  bt := function(k)
+    if k = 0 then
+      return 0;
+    fi;  
+   
+    if k > m then
+      if partialcheckcol(k) then
+        if k = n then
+          Add(triples, [a, ShallowCopy(f), ShallowCopy(g)]);
+          k := reject(k);
+          return bt(k);
+        fi;
+        k := k + 1;
+        extendg(k);
+        return bt(k);
+      fi;
+      k := reject(k);
+      return bt(k);
+    fi;
+
+    if k > n then
+      if partialcheckrow(k) then
+        if k = m then
+          Add(triples, [a, ShallowCopy(f), ShallowCopy(g)]);
+          k := reject(k);
+          return bt(k);
+        fi;
+        k := k + 1;
+        extendf(k);
+        return bt(k);
+      fi;
+      k := reject(k);
+      return bt(k);
+    fi;
+    
+    if partialcheckrow(k) then
+      
+      if not IsBound(g[k]) then
+        extendg(k);
+        return bt(k);
+      fi;
+     
+      if partialcheckcol(k) then
+        if k = m and k = n then
+          Add(triples, [a, ShallowCopy(f), ShallowCopy(g)]);
+          k := reject(k);
+          return bt(k);
+        fi;
+
+        if k = m then 
+          k := k + 1;
+          extendg(k);
+          return bt(k);
+        fi;
+
+        k := k + 1;
+        extendf(k);
+        return bt(k);
+      fi;
+      
+      k := reject(k);
+      return bt(k);
+    fi;
+    
+    k := reject(k);
+    return bt(k);
+  end;
+
+  for a in G do
+    k := 1;
+    f := [1];
+    g := [];
+    bt(k);
+  od;
+  
+ Apply(triples, x -> tripletobitranslation(x));
+  return triples;
 end;

@@ -79,6 +79,8 @@ SEMIGROUPS.TranslationalHullElements := function(H)
     return Semigroup(GeneratorsOfSemigroup(H));
   elif IsZeroSimpleSemigroup(S) then
     return SEMIGROUPS.TranslationalHullElementsOfZeroSimple(H);
+  elif IsSimpleSemigroup(S) then
+    return SEMIGROUPS.RMSBitranslations(H);
   else
     return SEMIGROUPS.TranslationalHullElementsByGenerators(H);
   fi;
@@ -997,6 +999,7 @@ end);
 # band correspond to the generators of the full transformation monoid on I or J. 
 InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left or right translations of a rectangular band",
 [IsTranslationsSemigroup and IsWholeFamily],
+2,
 function(T)
   local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f;
   S := UnderlyingSemigroup(T);
@@ -1039,6 +1042,7 @@ end);
 # since they are monoids
 InstallMethod(GeneratorsOfSemigroup, "for the translational hull of a rectangular band", 
 [IsTranslationalHull],
+2,
 function(H)
   local S, leftGens, rightGens, l, r, gens;
   
