@@ -401,9 +401,21 @@ gap> schutz := lambda_schutz;
 Group(())
 gap> lambda_stab = true;
 false
-gap> p := LambdaConjugator(Parent(d))(RhoOrbRep(o, m),
->    Representative(d));
-(1,12,6,5,4,3,2)
+gap> Parent(d) = s;
+true
+gap> PartialPerm([1, 9], [6, 12]) in d;
+true
+gap> RhoOrbRep(o, m);
+[2,12][7,1]
+gap> Representative(d);
+[2,6][7,12]
+gap> p := LambdaConjugator(Parent(d))(RhoOrbRep(o, m), Representative(d));;
+gap> LambdaFunc(s)(RhoOrbRep(o, m));
+[ 1, 12 ]
+gap> OnSets(last, p);
+[ 6, 12 ]
+gap> LambdaFunc(s)(Representative(d));
+[ 6, 12 ]
 gap> rho_schutz := rho_schutz ^ p;
 Group([ (6,12) ])
 gap> f := PartialPermNC([6, 9], [12, 6]);
