@@ -646,6 +646,7 @@ InstallMethod(IsIdempotentGenerated, "for an inverse semigroup",
 
 InstallMethod(IsInverseSemigroup, "for a semigroup",
 [IsSemigroup],
+1, # to beat sgpviz
 function(S)
   local lambda, rho, iter, x;
 
