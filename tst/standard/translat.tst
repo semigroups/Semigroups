@@ -305,9 +305,7 @@ gap> S := ZeroSemigroup(4);;
 gap> Size(TranslationalHull(S));
 4096
 gap> S := Semigroup([Transformation([1,1,2]), Transformation([3,1,3])]);;
-gap> H := TranslationalHull(S);
-<translational hull over <regular transformation semigroup of size 11, 
- degree 3 with 2 generators>>
+gap> H := TranslationalHull(S);;
 gap> H = Semigroup(H);
 true
 gap> Size(H);
