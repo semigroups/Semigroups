@@ -383,6 +383,10 @@ gap> GeneratorsOfSemigroup(R);
   <right translation on <simple semigroup of size 72, with 5 generators>>, 
   <right translation on <simple semigroup of size 72, with 5 generators>>, 
   <right translation on <simple semigroup of size 72, with 5 generators>> ]
+gap> mat := TransposedMat([[G.1, G.2], [G.1, G.1], [G.2, G.3]]);;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> Size(TranslationalHull(S));
+76
 
 #T# IsWholeFamily for translations semigroups
 gap> S := Semigroup([Transformation([1,1,2,4]), Transformation([3,1,3])]);;
