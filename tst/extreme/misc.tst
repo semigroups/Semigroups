@@ -224,7 +224,8 @@ gap> Length(last);
 72
 
 #T# MiscTest3
-gap> gens := [PartialPermNC([1, 2, 3, 5, 7, 10], [12, 3, 1, 11, 9, 5]),
+gap> gens := [
+>  PartialPermNC([1, 2, 3, 5, 7, 10], [12, 3, 1, 11, 9, 5]),
 >  PartialPermNC([1, 2, 3, 4, 5, 7, 8], [4, 3, 11, 12, 6, 2, 1]),
 >  PartialPermNC([1, 2, 3, 4, 5, 9, 11], [11, 6, 9, 2, 4, 8, 12]),
 >  PartialPermNC([1, 2, 3, 4, 7, 9, 12], [7, 1, 12, 2, 9, 4, 5]),
@@ -317,9 +318,11 @@ gap> ElementsFamily(FamilyObj(s)) <> FamilyObj(f)
 false
 gap> g := f;
 [9,6,12]
-gap>   m := LambdaOrbSCCIndex(d); o := LambdaOrb(d); scc := OrbSCC(o);
+gap> m := LambdaOrbSCCIndex(d);
 54
+gap> o := LambdaOrb(d);
 <closed orbit, 184 points with Schreier tree with log>
+gap> scc := OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ], [ 10 ], 
   [ 11 ], [ 12 ], [ 14 ], [ 15 ], [ 16 ], [ 17 ], [ 18 ], [ 19 ], [ 21 ], 
   [ 22 ], [ 23 ], [ 24 ], [ 25 ], [ 26 ], [ 27 ], [ 28 ], [ 29 ], [ 30 ], 
@@ -342,13 +345,15 @@ gap>   m := LambdaOrbSCCIndex(d); o := LambdaOrb(d); scc := OrbSCC(o);
   [ 181 ], [ 182 ], [ 183 ], [ 184 ] ]
 gap> l := Position(o, LambdaFunc(s)(g));
 65
-gap>  l = fail or OrbSCCLookup(o)[l] <> m ;
+gap> l = fail or OrbSCCLookup(o)[l] <> m ;
 false
-gap>  l <> scc[m][1];
+gap> l <> scc[m][1];
 false
-gap>   m := RhoOrbSCCIndex(d); o := RhoOrb(d); scc := OrbSCC(o);
+gap> m := RhoOrbSCCIndex(d);
 38
+gap> o := RhoOrb(d);
 <closed orbit, 147 points with Schreier tree with log>
+gap> scc := OrbSCC(o);
 [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ], 
   [ 10, 42, 45, 50, 48, 52, 53, 51, 115, 134, 144 ], [ 11 ], [ 14 ], [ 15 ], 
   [ 16 ], [ 17 ], [ 18 ], [ 19 ], [ 20 ], [ 21 ], [ 22 ], [ 23 ], [ 24 ], 
@@ -369,7 +374,7 @@ gap> l := Position(o, RhoFunc(s)(g));
 gap> l = fail or OrbSCCLookup(o)[l] <> m;
 false
 gap> g := RhoOrbMult(o, m, l)[2] * g;;
-gap>  schutz := RhoOrbStabChain(d);
+gap> schutz := RhoOrbStabChain(d);
 <stabilizer chain record, Base [ 12 ], Orbit length 2, Size: 2>
 gap> l <> scc[m][1];
 true
@@ -381,29 +386,43 @@ gap> g := LambdaPerm(s)(rep, g);
 ()
 gap> schutz <> false;
 true
-gap> o := LambdaOrb(d); m := LambdaOrbSCCIndex(d);
+gap> o := LambdaOrb(d);
 <closed orbit, 184 points with Schreier tree with log>
+gap> m := LambdaOrbSCCIndex(d);
 54
 gap> lambda_schutz := LambdaOrbSchutzGp(o, m);
 Group(())
-gap>   lambda_stab := LambdaOrbStabChain(o, m);
+gap> lambda_stab := LambdaOrbStabChain(o, m);
 false
-gap>  o := RhoOrb(d); m := RhoOrbSCCIndex(d);
+gap> o := RhoOrb(d);
 <closed orbit, 147 points with Schreier tree with log>
+gap> m := RhoOrbSCCIndex(d);
 38
-gap>   rho_schutz := RhoOrbSchutzGp(o, m);
+gap> rho_schutz := RhoOrbSchutzGp(o, m);
 Group([ (1,12) ])
-gap>   rho_stab := RhoOrbStabChain(o, m);
+gap> rho_stab := RhoOrbStabChain(o, m);
 true
-gap> rho_stab = true ;
+gap> rho_stab = true;
 true
 gap> schutz := lambda_schutz;
 Group(())
 gap> lambda_stab = true;
 false
-gap> p := LambdaConjugator(Parent(d))(RhoOrbRep(o, m),
->    Representative(d));
-(1,12,6,5,4,3,2)
+gap> Parent(d) = s;
+true
+gap> PartialPerm([1, 9], [6, 12]) in d;
+true
+gap> RhoOrbRep(o, m);
+[2,12][7,1]
+gap> Representative(d);
+[2,6][7,12]
+gap> p := LambdaConjugator(Parent(d))(RhoOrbRep(o, m), Representative(d));;
+gap> LambdaFunc(s)(RhoOrbRep(o, m));
+[ 1, 12 ]
+gap> OnSets(last, p);
+[ 6, 12 ]
+gap> LambdaFunc(s)(Representative(d));
+[ 6, 12 ]
 gap> rho_schutz := rho_schutz ^ p;
 Group([ (6,12) ])
 gap> f := PartialPermNC([6, 9], [12, 6]);
@@ -910,10 +929,10 @@ gap> enum[3];
 gap> enum[4];
 [2,7][6,4](8)
 gap> for d in DClasses(s) do
-> enum := Enumerator(d);
-> if not ForAll(enum, x -> enum[Position(enum, x)] = x) then
-> Print("problem with enumerator of a D-class 1\n");
-> fi;
+>   enum := Enumerator(d);
+>   if not ForAll(enum, x -> enum[Position(enum, x)] = x) then
+>     Print("problem with enumerator of a D-class 1\n");
+>   fi;
 > od;
 gap> Size(s);
 72713
@@ -1998,7 +2017,7 @@ gap> o := LambdaOrb(s);
 <closed orbit, 15 points with Schreier tree with log>
 gap> HasRhoOrb(s) and IsClosed(RhoOrb(s));
 true
-gap>    o := RhoOrb(s);
+gap> o := RhoOrb(s);
 <closed orbit, 12 points with Schreier tree with log>
 gap> List(reps, x -> DClass(s, x));
 [ <Green's D-class: IdentityTransformation>, 
@@ -3490,7 +3509,8 @@ gap> h := GroupHClass(DClass(h));
 <Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )>
 gap> IsGroupHClass(h);
 true
-gap> iso := IsomorphismPermGroup(h);; inv := InverseGeneralMapping(iso);;
+gap> iso := IsomorphismPermGroup(h);;
+gap> inv := InverseGeneralMapping(iso);;
 gap> ForAll(h, x -> (x ^ iso) ^ inv = x);
 true
 gap> First(h, x -> (x ^ iso) ^ inv <> x);
@@ -3508,9 +3528,10 @@ gap> h := GroupHClass(DClass(h));
 <Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )>
 gap> IsGroupHClass(h);
 true
-gap> iso := IsomorphismPermGroup(h); inv := InverseGeneralMapping(iso);
+gap> iso := IsomorphismPermGroup(h);
 MappingByFunction( <Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )
   >, Group([ (3,6)(4,5) ]), function( x ) ... end, function( x ) ... end )
+gap> inv := InverseGeneralMapping(iso);
 MappingByFunction( Group([ (3,6)
 (4,5) ]), <Green's H-class: Transformation( [ 4, 3, 3, 4, 5, 6, 5 ] )>
  , function( x ) ... end, function( x ) ... end )
@@ -3551,9 +3572,10 @@ gap> IsGroupHClass(h);
 true
 gap> h := GroupHClass(DClass(h));
 <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
-gap> iso := IsomorphismPermGroup(h); inv := InverseGeneralMapping(iso);
+gap> iso := IsomorphismPermGroup(h);
 MappingByFunction( <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
  , Group([ (1,2), (2,3) ]), function( x ) ... end, function( x ) ... end )
+gap> inv := InverseGeneralMapping(iso);
 MappingByFunction( Group([ (1,2), (2,
 3) ]), <Green's H-class: <identity partial perm on [ 1, 2, 3 ]>>
  , function( x ) ... end, function( x ) ... end )
@@ -3648,7 +3670,8 @@ gap> KnownAttributesOfObject(h);
   "RhoOrbSCCIndex" ]
 gap> ForAll(h, x -> One(h) * x = x and x * One(h) = x);
 true
-gap> iso := IsomorphismPermGroup(h);; inv := InverseGeneralMapping(iso);;
+gap> iso := IsomorphismPermGroup(h);;
+gap> inv := InverseGeneralMapping(iso);;
 gap> ForAll(h, x -> (x ^ iso) ^ inv = x);
 true
 gap> ForAll(Image(iso), x -> (x ^ inv) ^ iso = x);

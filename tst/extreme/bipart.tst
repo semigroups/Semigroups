@@ -2893,4 +2893,5 @@ gap> Unbind(triples);
 gap> Unbind(x);
 
 #E# 
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/bipart.tst");

@@ -743,4 +743,5 @@ gap> Unbind(z);
 gap> Unbind(zz);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: extreme/attrinv.tst");
