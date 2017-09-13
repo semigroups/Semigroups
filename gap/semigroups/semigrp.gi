@@ -277,7 +277,7 @@ function(gens, opts)
 
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
 
-  if CanEasilyCompareElements(gens) and not One(gens) in gens then
+  if not CanEasilyCompareElements(gens) or not One(gens) in gens then
     SetGeneratorsOfMagma(S, Concatenation([One(gens)], gens));
   else
     SetGeneratorsOfMagma(S, AsList(gens));

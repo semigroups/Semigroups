@@ -1673,6 +1673,17 @@ gap> S := Semigroup([
 gap> IsInverseSemigroup(S);
 false
 
+#T# Issue 371: GeneratorsOfSemigroup for a monoid
+gap> R := ReesMatrixSemigroup(Group(()), [[()]]);;
+gap> S := MonoidByAdjoiningIdentity(R);
+<commutative monoid with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ ONE, (1,(),1) ]
+gap> Size(S);
+2
+gap> Elements(S);
+[ ONE, (1,(),1) ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
