@@ -689,7 +689,8 @@ function(S)
     return true;
   fi;
 
-  return NrLClasses(S) = NrRClasses(S) and NrIdempotents(S) = NrRClasses(S);
+  return NrLClasses(S) = NrRClasses(S) and IsRegularSemigroup(S)
+    and NrIdempotents(S) = NrRClasses(S);
 end);
 
 # same method for ideals
