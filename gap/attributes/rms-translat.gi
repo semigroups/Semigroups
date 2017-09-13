@@ -17,6 +17,10 @@
 ## Glasgow Mathematical Journal, 9(01), p. 1. 
 ## doi: 10.1017/s0017089500000239
 ##
+## A.H Clifford, Mario Petrich, (1977) 
+## Some classes of completely regular semigroups, 
+## Journal of Algebra, Volume 46, Issue 2, 1977, Pages 462-480, 
+## http://dx.doi.org/10.1016/0021-8693(77)90383-0.
 #############################################################################
 
 # For RZMS, don't calculate AsList when LeftTranslations is called
@@ -680,6 +684,7 @@ end;
 # Uses the characterisation of Theorem 1 in
 # Clifford and Petrich, 'Some Classes of Completely Regular Semigroups'
 # Journal of Algebra 46, 1977
+# TODO: improve isomorphism application to triples (currently slow)
 SEMIGROUPS.RMSBitranslations := function(H)
   local a, f, g, G, i, j, k, L, m, n, P, r, R, s, S, x,
         inv, iso, normalrms, triples,
@@ -711,10 +716,10 @@ SEMIGROUPS.RMSBitranslations := function(H)
     end;
 
     return TranslationalHullElementNC(H,
-                        LeftTranslationNC(L, CompositionMapping(inv, 
-                                                    MappingByFunction(normalrms, normalrms, lefttrans), iso)),
-                        RightTranslationNC(R, CompositionMapping(inv,
-                                                    MappingByFunction(normalrms, normalrms, righttrans), iso)));
+              LeftTranslationNC(L, CompositionMapping(inv, 
+                                      MappingByFunction(normalrms, normalrms, lefttrans), iso)),
+              RightTranslationNC(R, CompositionMapping(inv,
+                                      MappingByFunction(normalrms, normalrms, righttrans), iso)));
   end;
 
   extendf := function(k)
@@ -875,6 +880,6 @@ SEMIGROUPS.RMSBitranslations := function(H)
     bt(k);
   od;
   
- Apply(triples, x -> tripletobitranslation(x));
+  Apply(triples, x -> tripletobitranslation(x));
   return triples;
 end;

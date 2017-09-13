@@ -965,7 +965,7 @@ end);
 # The R classes of an I x J rectangular band correspond to (i, J) for i in I.
 # Dually for L classes.
 InstallMethod(Size, "for the semigroup of left or right translations of a rectangular band", 
-[IsTranslationsSemigroup and IsWholeFamily], 1, 
+[IsTranslationsSemigroup and IsWholeFamily], 2, 
 function(T)
   local S, n;
   S := UnderlyingSemigroup(T);
