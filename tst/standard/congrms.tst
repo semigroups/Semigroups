@@ -14,6 +14,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 # All ReesMatrixSemigroup functions tested with a small example
+
 #T# ReesMatCongTest1: Create a Rees matrix semigroup
 gap> g := SymmetricGroup(4);;
 gap> StructureDescription(g);
@@ -35,9 +36,21 @@ gap> rowBlocks := [[1, 2], [3]];;
 gap> cong := RMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (2^2,2,2)>
-gap> cong = congs[12];
+gap> congs12 := SemigroupCongruence(S, [[RMSElement(S, 1, (1, 2, 3, 4), 2),
+>                                        RMSElement(S, 2, (), 2)],
+>                                       [RMSElement(S, 1, (1, 3), 1),
+>                                        RMSElement(S, 1, (1, 2, 3, 4), 2)],
+>                                       [RMSElement(S, 1, (1, 3), 1),
+>                                        RMSElement(S, 1, (1, 3)(2, 4), 3)]]);
+<semigroup congruence over <Rees matrix semigroup 2x3 over S4>
+  with linked triple (A4,1,1)>
+gap> cong = congs12;
 false
-gap> cong = congs[3];
+gap> congs3 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 3), 1),
+>                                      RMSElement(S, 1, (1, 2, 3, 4), 2)]);
+<semigroup congruence over <Rees matrix semigroup 2x3 over S4>
+  with linked triple (2^2,2,2)>
+gap> cong = congs3;
 true
 
 #T# IsSubrelation: RMS case
@@ -128,7 +141,15 @@ gap> class3 := EquivalenceClassOfElement(cong, z);
 gap> EquivalenceClassOfElement(cong, t);
 Error, Semigroups: EquivalenceClassOfElement: usage,
 the second arg <elm> must be in the semigroup of first arg <cong>,
-gap> classother := EquivalenceClassOfElement(congs[12], x);;
+gap> congs12 := SemigroupCongruence(S, [[RMSElement(S, 1, (1, 2, 3, 4), 2),
+>                                        RMSElement(S, 2, (), 2)],
+>                                       [RMSElement(S, 1, (1, 3), 1),
+>                                        RMSElement(S, 1, (1, 2, 3, 4), 2)],
+>                                       [RMSElement(S, 1, (1, 3), 1),
+>                                        RMSElement(S, 1, (1, 3)(2, 4), 3)]]);
+<semigroup congruence over <Rees matrix semigroup 2x3 over S4>
+  with linked triple (A4,1,1)>
+gap> classother := EquivalenceClassOfElement(congs12, x);;
 gap> class1 = class2;
 true
 gap> class1 = class3;
@@ -139,8 +160,12 @@ gap> x in class3;
 false
 gap> class1 = classes[3];
 true
-gap> nCoset := RightCoset(congs[3]!.n, (1, 3));;
-gap> class := RMSCongruenceClassByLinkedTriple(congs[3], nCoset, 1, 2);;
+gap> congs3 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 3), 1),
+>                                      RMSElement(S, 1, (1, 2, 3, 4), 2)]);
+<semigroup congruence over <Rees matrix semigroup 2x3 over S4>
+  with linked triple (2^2,2,2)>
+gap> nCoset := RightCoset(congs3!.n, (1, 3));;
+gap> class := RMSCongruenceClassByLinkedTriple(congs3, nCoset, 1, 2);;
 gap> class = classes[7];
 true
 gap> classes[11] * classes[19] = classes[12];
@@ -166,59 +191,74 @@ gap> Enumerator(classes[24]);
 [ (2,(2,4),3), (2,(1,2,3,4),3), (2,(1,3),3), (2,(1,4,3,2),3) ]
 
 #T# RMSCongruenceClassByLinkedTriple: bad input
+gap> congs3 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 3), 1),
+>                                      RMSElement(S, 1, (1, 2, 3, 4), 2)]);
+<semigroup congruence over <Rees matrix semigroup 2x3 over S4>
+  with linked triple (2^2,2,2)>
 gap> badCoset := RightCoset(SymmetricGroup(6), (1, 5, 4));;
-gap> class := RMSCongruenceClassByLinkedTriple(congs[3], badCoset, 1, 2);;
+gap> class := RMSCongruenceClassByLinkedTriple(congs3, badCoset, 1, 2);;
 Error, Semigroups: RMSCongruenceClassByLinkedTriple: usage,
 the second arg <nCoset> must be a right coset of <cong>'s
 normal subgroup <n> inside the semigroup's underlying group <g>,
-gap> class := RMSCongruenceClassByLinkedTriple(congs[3], nCoset, 7, 2);;
+gap> class := RMSCongruenceClassByLinkedTriple(congs3, nCoset, 7, 2);;
 Error, Semigroups: RMSCongruenceClassByLinkedTriple: usage,
 the third arg <colClass> is out of range,
-gap> class := RMSCongruenceClassByLinkedTriple(congs[3], nCoset, 1, 42);;
+gap> class := RMSCongruenceClassByLinkedTriple(congs3, nCoset, 1, 42);;
 Error, Semigroups: RMSCongruenceClassByLinkedTriple: usage,
 the fourth arg <rowClass> is out of range,
 
 #T# ReesMatCongTest6: Join and meet congruences
-gap> congs[3];
+gap> congs3 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 3), 1),
+>                                      RMSElement(S, 1, (1, 2, 3, 4), 2)]);
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (2^2,2,2)>
-gap> MeetSemigroupCongruences(congs[3], congs[3]) = congs[3];
+gap> congs3;
+<semigroup congruence over <Rees matrix semigroup 2x3 over S4>
+  with linked triple (2^2,2,2)>
+gap> MeetSemigroupCongruences(congs3, congs3) = congs3;
 true
-gap> congs[9];
+gap> congs9 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 2, 3, 4), 2),
+>                                      RMSElement(S, 2, (), 2)]);
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (A4,1,3)>
-gap> cong1 := JoinSemigroupCongruences(congs[3], congs[9]);
+gap> cong1 := JoinSemigroupCongruences(congs3, congs9);
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (A4,1,2)>
-gap> JoinSemigroupCongruences(congs[9], congs[3]) = cong1;
+gap> JoinSemigroupCongruences(congs9, congs3) = cong1;
 true
-gap> MeetSemigroupCongruences(cong1, congs[9]);
+gap> MeetSemigroupCongruences(cong1, congs9);
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (A4,1,3)>
-gap> cong1 := MeetSemigroupCongruences(congs[3], congs[9]);
+gap> cong1 := MeetSemigroupCongruences(congs3, congs9);
 <semigroup congruence over <Rees matrix semigroup 2x3 over S4>
   with linked triple (2^2,2,3)>
-gap> MeetSemigroupCongruences(congs[9], congs[3]) = cong1;
+gap> MeetSemigroupCongruences(congs9, congs3) = cong1;
 true
 gap> cong1 := SemigroupCongruence(T, []);;
-gap> MeetSemigroupCongruences(congs[3], cong1);
+gap> MeetSemigroupCongruences(congs3, cong1);
 Error, Semigroups: MeetSemigroupCongruences: usage,
 congruences must be defined over the same semigroup,
-gap> JoinSemigroupCongruences(congs[3], cong1);
+gap> JoinSemigroupCongruences(congs3, cong1);
 Error, Semigroups: JoinSemigroupCongruences: usage,
 congruences must be defined over the same semigroup,
 
 #T# ReesMatCongTest7: Quotients
-gap> q := S / congs[13];;
+gap> congs13 := SemigroupCongruence(S, [[RMSElement(S, 1, (1, 2, 3, 4), 2),
+>                                        RMSElement(S, 2, (), 2)],
+>                                       [RMSElement(S, 1, (1, 3), 1),
+>                                        RMSElement(S, 1, (1, 3)(2, 4), 3)]]);
+<semigroup congruence over <Rees matrix semigroup 2x3 over S4>
+  with linked triple (A4,1,2)>
+gap> q := S / congs13;;
 gap> Size(q);
 4
 
 #T# ReesMatCongTest8
 # Convert to and from semigroup congruence by generating pairs
-gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[2]);;
-gap> ccong := AsRMSCongruenceByLinkedTriple(cong);;
-gap> congs[2] = ccong;
+gap> ForAll(congs, x -> x = AsRMSCongruenceByLinkedTriple(
+>  AsSemigroupCongruenceByGeneratingPairs(x)));
 true
+gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[2]);;
 gap> AsRZMSCongruenceByLinkedTriple(cong);
 Error, Semigroups: AsRZMSCongruenceByLinkedTriple: usage,
 the argument must be a congruence over a Rees 0-matrix
@@ -298,21 +338,52 @@ false
 gap> cong := RZMSCongruenceByLinkedTriple(S, n, colBlocks, rowBlocks);
 <semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
  (1,5,3,4) ])> with linked triple (2^2,4,3)>
-gap> cong = congs[12];
+gap> congs12 := SemigroupCongruence(S, [[RMSElement(S, 2, (), 2),
+>                                        RMSElement(S, 5, (3, 5), 2)],
+>                                       [RMSElement(S, 3, (1, 3)(4, 5), 1),
+>                                        RMSElement(S, 3, (), 1)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,5,3)>
+gap> cong = congs12;
 false
-gap> cong = congs[13];
+gap> congs13 := SemigroupCongruence(S, [[RMSElement(S, 2, (), 2),
+>                                        RMSElement(S, 5, (3, 5), 2)],
+>                                       [RMSElement(S, 3, (1, 3)(4, 5), 1),
+>                                        RMSElement(S, 3, (), 1)],
+>                                       [RMSElement(S, 3, (1, 5, 4), 1),
+>                                        RMSElement(S, 6, (1, 5, 3, 4), 1)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,4,3)>
+gap> cong = congs13;
 true
 
 #T# IsSubrelation: with zero
-gap> IsSubrelation(congs[26], congs[2]);
+gap> trivialcong := SemigroupCongruence(S, []);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (1,6,3)>
+gap> ForAll(congs, x -> IsSubrelation(x, trivialcong));
 true
-gap> IsSubrelation(congs[33], congs[33]);
+gap> ForAll(congs, x -> IsSubrelation(x, x));
 true
-gap> IsSubrelation(congs[19], congs[24]);
-false
-gap> IsSubrelation(UniversalSemigroupCongruence(S), congs[11]);
-true
-gap> IsSubrelation(congs[8], UniversalSemigroupCongruence(S));
+gap> Number(congs, x -> IsSubrelation(UniversalSemigroupCongruence(S), x));
+33
+gap> Number(congs, x -> IsSubrelation(x, UniversalSemigroupCongruence(S)));
+1
+gap> congs19 := SemigroupCongruence(S, [[RMSElement(S, 3, (3, 4, 5), 1),
+>                                        RMSElement(S, 3, (), 1)],
+>                                       [RMSElement(S, 3, (1, 5, 4), 1),
+>                                        RMSElement(S, 6, (1, 5, 3, 4), 1)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (A4,5,3)>
+gap> congs24 := SemigroupCongruence(S, [[RMSElement(S, 1, (), 3),
+>                                        RMSElement(S, 4, (3, 5), 3)],
+>                                       [RMSElement(S, 2, (), 2),
+>                                        RMSElement(S, 5, (3, 5), 2)],
+>                                       [RMSElement(S, 3, (3, 4, 5), 1),
+>                                        RMSElement(S, 3, (), 1)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (A4,4,3)>
+gap> IsSubrelation(congs19, congs24);
 false
 
 #T# RZMSCongruenceByLinkedTriple: Bad input
@@ -396,7 +467,13 @@ gap> class3 := EquivalenceClassOfElement(cong, z);
 gap> EquivalenceClassOfElement(cong, t);
 Error, Semigroups: EquivalenceClassOfElement: usage,
 the second arg <elm> must be in the semigroup of first arg <cong>,
-gap> classother := EquivalenceClassOfElement(congs[12], x);;
+gap> congs12 := SemigroupCongruence(S, [[RMSElement(S, 2, (), 2),
+>                                        RMSElement(S, 5, (3, 5), 2)],
+>                                       [RMSElement(S, 3, (1, 3)(4, 5), 1),
+>                                        RMSElement(S, 3, (), 1)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,5,3)>
+gap> classother := EquivalenceClassOfElement(congs12, x);;
 gap> class1 = class2;
 true
 gap> class1 = class3;
@@ -407,8 +484,16 @@ gap> x in class3;
 false
 gap> class1 = classes[38];
 true
-gap> nCoset := RightCoset(congs[13]!.n, (1, 5));;
-gap> class := RZMSCongruenceClassByLinkedTriple(congs[13], nCoset, 3, 2);;
+gap> congs13 := SemigroupCongruence(S, [[RMSElement(S, 2, (), 2),
+>                                        RMSElement(S, 5, (3, 5), 2)],
+>                                       [RMSElement(S, 3, (1, 3)(4, 5), 1),
+>                                        RMSElement(S, 3, (), 1)],
+>                                       [RMSElement(S, 3, (1, 5, 4), 1),
+>                                        RMSElement(S, 6, (1, 5, 3, 4), 1)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,4,3)>
+gap> nCoset := RightCoset(congs13!.n, (1, 5));;
+gap> class := RZMSCongruenceClassByLinkedTriple(congs13, nCoset, 3, 2);;
 gap> class = classes[44];
 true
 gap> classes[45] * classes[4] = classes[73]; # 0 class
@@ -439,27 +524,39 @@ gap> Enumerator(classes[13]);
 
 #T# RZMSCongruenceClassByLinkedTriple: bad input
 gap> badCoset := RightCoset(SymmetricGroup(6), (1, 5, 4));;
-gap> class := RZMSCongruenceClassByLinkedTriple(congs[13], badCoset, 3, 2);;
+gap> class := RZMSCongruenceClassByLinkedTriple(congs13, badCoset, 3, 2);;
 Error, Semigroups: RZMSCongruenceClassByLinkedTriple: usage,
 the second arg <nCoset> must be a right coset of <cong>'s
 normal subgroup <n> inside the semigroup's underlying group <g>,
-gap> class := RZMSCongruenceClassByLinkedTriple(congs[13], nCoset, 7, 2);;
+gap> class := RZMSCongruenceClassByLinkedTriple(congs13, nCoset, 7, 2);;
 Error, Semigroups: RZMSCongruenceClassByLinkedTriple: usage,
 the third arg <colClass> is out of range,
-gap> class := RZMSCongruenceClassByLinkedTriple(congs[13], nCoset, 3, 42);;
+gap> class := RZMSCongruenceClassByLinkedTriple(congs13, nCoset, 3, 42);;
 Error, Semigroups: RZMSCongruenceClassByLinkedTriple: usage,
 the fourth arg <rowClass> is out of range,
 
 #T# ReesZeroMatCongTest6: Join and meet congruences
-gap> cong1 := JoinSemigroupCongruences(congs[12], congs[31]);
+gap> congs12 := SemigroupCongruence(S, [[RMSElement(S, 2, (), 2),
+>                                        RMSElement(S, 5, (3, 5), 2)],
+>                                       [RMSElement(S, 3, (1, 3)(4, 5), 1),
+>                                        RMSElement(S, 3, (), 1)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,5,3)>
+gap> congs31 := SemigroupCongruence(S,
+> [[RMSElement(S, 1, (), 3), RMSElement(S, 4, (3, 5), 3)],
+>  [RMSElement(S, 3, (4, 5), 1), RMSElement(S, 3, (), 1)],
+>  [RMSElement(S, 3, (1, 5, 4), 1), RMSElement(S, 6, (1, 5, 3, 4), 1)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (S4,4,3)>
+gap> cong1 := JoinSemigroupCongruences(congs12, congs31);
 <semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
  (1,5,3,4) ])> with linked triple (S4,3,3)>
-gap> cong1 = JoinSemigroupCongruences(congs[31], congs[12]);
+gap> cong1 = JoinSemigroupCongruences(congs31, congs12);
 true
-gap> cong1 := MeetSemigroupCongruences(congs[12], congs[31]);
+gap> cong1 := MeetSemigroupCongruences(congs12, congs31);
 <semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
  (1,5,3,4) ])> with linked triple (2^2,6,3)>
-gap> cong1 = MeetSemigroupCongruences(congs[31], congs[12]);
+gap> cong1 = MeetSemigroupCongruences(congs31, congs12);
 true
 gap> JoinSemigroupCongruences(congs[3], congs1[2]);
 Error, Semigroups: JoinSemigroupCongruences: usage,
@@ -469,15 +566,20 @@ Error, Semigroups: MeetSemigroupCongruences: usage,
 congruences must be defined over the same semigroup,
 
 #T# ReesZeroMatCongTest7: Quotients
-gap> q := S / congs[13];;
+gap> congs13 := SemigroupCongruence(S,
+> [[RMSElement(S, 2, (), 2), RMSElement(S, 5, (3, 5), 2)],
+>  [RMSElement(S, 3, (1, 3)(4, 5), 1), RMSElement(S, 3, (), 1)],
+>  [RMSElement(S, 3, (1, 5, 4), 1), RMSElement(S, 6, (1, 5, 3, 4), 1)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 6x3 over Group([ (1,4,5),
+ (1,5,3,4) ])> with linked triple (2^2,4,3)>
+gap> q := S / congs13;;
 gap> Size(q);
 73
 
 #T# ReesZeroMatCongTest8
 # Convert to and from semigroup congruence by generating pairs
-gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[2]);;
-gap> ccong := AsRZMSCongruenceByLinkedTriple(cong);;
-gap> congs[2] = ccong;
+gap> ForAll(congs, x -> x = AsRZMSCongruenceByLinkedTriple(
+>  AsSemigroupCongruenceByGeneratingPairs(x)));
 true
 
 #T# IsSubrelation: bad input (with zero)
@@ -529,23 +631,44 @@ gap> S := ReesZeroMatrixSemigroup(g, mat);;
 gap> congs := CongruencesOfSemigroup(S);;
 gap> Size(congs);
 29
-gap> cong1 := JoinSemigroupCongruences(congs[7], congs[25]);
+gap> congs7 := SemigroupCongruence(S,
+> [RMSElement(S, 2, (4, 5), 1), RMSElement(S, 2, (1, 3, 4), 4)]);
+<semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
+  with linked triple (A4,5,3)>
+gap> congs25 := SemigroupCongruence(S,
+> [[RMSElement(S, 1, (), 3), RMSElement(S, 5, (1, 3, 4), 3)],
+>  [RMSElement(S, 3, (), 4), RMSElement(S, 4, (4, 5), 4)]]);
+<semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
+  with linked triple (S4,3,4)>
+gap> cong1 := JoinSemigroupCongruences(congs7, congs25);
 <semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
   with linked triple (S4,3,3)>
-gap> cong1 = JoinSemigroupCongruences(congs[25], congs[7]);
+gap> cong1 = JoinSemigroupCongruences(congs25, congs7);
 true
-gap> cong1 := MeetSemigroupCongruences(congs[7], congs[25]);
+gap> cong1 := MeetSemigroupCongruences(congs7, congs25);
 <semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
   with linked triple (A4,5,4)>
-gap> cong1 = MeetSemigroupCongruences(congs[25], congs[7]);
+gap> cong1 = MeetSemigroupCongruences(congs25, congs7);
 true
-gap> MeetSemigroupCongruences(congs[9], congs[28]);
+gap> congs9 := SemigroupCongruence(S,
+> [[RMSElement(S, 1, (), 3), RMSElement(S, 5, (1, 3, 4), 3)],
+>  [RMSElement(S, 2, (4, 5), 1), RMSElement(S, 2, (1, 3, 4), 4)]]);
 <semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
   with linked triple (A4,4,3)>
-gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs[9]);;
-gap> AsRZMSCongruenceByLinkedTriple(cong) = congs[9];
+gap> congs28 := RZMSCongruenceByLinkedTriple(S, g, [[1, 5], [2], [3, 4]],
+> [[1, 2, 4], [3]]);
+<semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
+  with linked triple (S4,3,2)>
+gap> congs28 = SemigroupCongruence(S,
+> GeneratingPairsOfMagmaCongruence(congs28));
 true
-gap> cong = congs[9];
+gap> MeetSemigroupCongruences(congs9, congs28);
+<semigroup congruence over <Rees 0-matrix semigroup 5x4 over S4>
+  with linked triple (A4,4,3)>
+gap> cong := AsSemigroupCongruenceByGeneratingPairs(congs9);;
+gap> AsRZMSCongruenceByLinkedTriple(cong) = congs9;
+true
+gap> cong = congs9;
 true
 
 #T# AsRZMSCongruenceByLinkedTriple
