@@ -709,8 +709,8 @@ gap> T := Semigroup(x);;
 gap> IsInverseSemigroup(T);
 false
 gap> R := ReesZeroMatrixSemigroup(T, [[0, x], [0, x ^ 2]]);
-<Rees 0-matrix semigroup 2x2 over <commutative transformation semigroup of 
-  degree 3 with 1 generator>>
+<Rees 0-matrix semigroup 2x2 over <commutative non-regular transformation 
+  semigroup of degree 3 with 1 generator>>
 gap> IsInverseSemigroup(R);
 false
 gap> IsInverseSemigroup(AsSemigroup(IsTransformationSemigroup, R));
