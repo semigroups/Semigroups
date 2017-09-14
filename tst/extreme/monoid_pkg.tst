@@ -1247,7 +1247,7 @@ gap> s := Semigroup(AsList(g));;
 gap> IsGroupAsSemigroup(s);
 true
 gap> IsGroupAsSemigroup(Range(IsomorphismTransformationSemigroup(
-> PrimitiveGroup(5, 2))));
+>  Group([(2, 4)(3, 5), (1, 2, 3, 5, 4)]))));
 true
 gap> IsGroupAsSemigroup(m14);
 false

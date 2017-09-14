@@ -57,8 +57,8 @@ gap> u := UniversalSemigroupCongruence(S);
 <universal semigroup congruence over <trivial transformation group of 
  degree 0 with 1 generator>>
 gap> v := SemigroupCongruence(T, [gens[1], gens[1]]);
-<semigroup congruence over <commutative transformation monoid of degree 10 
- with 1 generator> with 0 generating pairs>
+<semigroup congruence over <commutative non-regular transformation monoid of 
+ degree 10 with 1 generator> with 0 generating pairs>
 gap> NrCongruenceClasses(v);
 6
 gap> Size(T);
@@ -66,14 +66,14 @@ gap> Size(T);
 gap> u = v;
 false
 gap> u := UniversalSemigroupCongruence(T);
-<universal semigroup congruence over <commutative transformation monoid 
- of size 6, degree 10 with 1 generator>>
+<universal semigroup congruence over <commutative non-regular transformation 
+ monoid of size 6, degree 10 with 1 generator>>
 gap> u = v;
 false
 gap> gens := List(T, x -> [gens[1], x]);;
 gap> v := SemigroupCongruence(T, gens);
-<semigroup congruence over <commutative transformation monoid of size 6, 
- degree 10 with 1 generator> with 5 generating pairs>
+<semigroup congruence over <commutative non-regular transformation monoid 
+ of size 6, degree 10 with 1 generator> with 5 generating pairs>
 gap> u = v;
 true
 gap> NrCongruenceClasses(u);
@@ -84,13 +84,13 @@ gap> gens := [Transformation([2, 6, 7, 2, 6, 9, 9, 1, 1, 5])];;
 gap> S := Semigroup(gens);;
 gap> gens := List(S, x -> [gens[1], x]);;
 gap> u := SemigroupCongruence(S, gens); # universal congruence
-<semigroup congruence over <commutative transformation semigroup of degree 10 
- with 1 generator> with 4 generating pairs>
+<semigroup congruence over <commutative non-regular transformation semigroup 
+ of degree 10 with 1 generator> with 4 generating pairs>
 gap> u = UniversalSemigroupCongruence(S);
 true
 gap> v := SemigroupCongruence(S, [gens[1], gens[1]]); # trivial congruence
-<semigroup congruence over <commutative transformation semigroup of degree 10 
- with 1 generator> with 0 generating pairs>
+<semigroup congruence over <commutative non-regular transformation semigroup 
+ of degree 10 with 1 generator> with 0 generating pairs>
 gap> classes := Set(CongruenceClasses(v));
 [ <congruence class of Transformation( [ 1, 2, 2, 1, 2, 6, 6, 9, 9, 1 ] )>, 
   <congruence class of Transformation( [ 2, 6, 6, 2, 6, 9, 9, 1, 1, 2 ] )>, 

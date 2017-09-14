@@ -133,9 +133,7 @@ gap> SemigroupCongruence(S, [S.1, S.2],
 gap> S := Semigroup([Transformation([3, 3, 3]),
 >                    Transformation([3, 4, 3, 3])]);;
 gap> pairs := [Transformation([3, 4, 3, 3]), Transformation([3, 3, 3, 3])];;
-gap> cong := SemigroupCongruence(S, pairs);
-<semigroup congruence over <transformation semigroup of degree 4 with 2 
- generators> with 1 generating pairs>
+gap> cong := SemigroupCongruence(S, pairs);;
 gap> EquivalenceRelationCanonicalPartition(cong);
 [ [ Transformation( [ 3, 3, 3, 3 ] ), Transformation( [ 3, 4, 3, 3 ] ) ] ]
 

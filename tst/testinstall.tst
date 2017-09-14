@@ -1656,6 +1656,34 @@ gap> S := SingularFactorisableDualSymmetricInverseMonoid(3);
 gap> IsMonoidAsSemigroup(S);
 false
 
+#T# Issue 377: IsInverseSemigroup
+gap> S := Semigroup([
+>   Transformation([1, 1, 1, 2, 1, 5, 3]),
+>   Transformation([1, 4, 4, 4, 6, 6, 6])],
+> rec(acting := false));;
+gap> IsInverseSemigroup(S);
+false
+gap> S := Semigroup([
+>  PBR([[-1], [-1], [-3], [-1], [-3], [-3], [-2]],
+>      [[1, 2, 4], [7], [3, 5, 6], [], [], [], []]),
+>  PBR([[-1], [-2], [-3], [-4], [-5], [-5], [-4]],
+>      [[1], [2], [3], [4, 7], [5, 6], [], []]),
+>  PBR([[-1], [-2], [-3], [-6], [-6], [-6], [-6]],
+>      [[1], [2], [3], [], [], [4, 5, 6, 7], []])]);;
+gap> IsInverseSemigroup(S);
+false
+
+#T# Issue 371: GeneratorsOfSemigroup for a monoid
+gap> R := ReesMatrixSemigroup(Group(()), [[()]]);;
+gap> S := MonoidByAdjoiningIdentity(R);
+<commutative monoid with 1 generator>
+gap> GeneratorsOfSemigroup(S);
+[ ONE, (1,(),1) ]
+gap> Size(S);
+2
+gap> Elements(S);
+[ ONE, (1,(),1) ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
