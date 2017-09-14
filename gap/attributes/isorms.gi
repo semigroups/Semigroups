@@ -333,10 +333,19 @@ function(R)
   # automorphism group of the group
   stab_aut_group := SEMIGROUPS.StabOfRMSEntries(aut_group, R);
 
+  # The following mathematically unnecessary separation of cases is needed to
+  # support the AutPGrp package, whose method for `AutomorphismGroup` for the
+  # trivial group does not set `InnerAutomorphismsAutomorphismGroup` at
+  # creation, and no method is installed to calculate it.
+
   # homomorphism from Aut(G) to a perm rep of Aut(G) / Inn(G)
-  hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
-           InnerAutomorphismsAutomorphismGroup(aut_group));
-  hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
+  if IsTrivial(G) then
+    hom := IsomorphismPermGroup(aut_group);
+  else
+    hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
+             InnerAutomorphismsAutomorphismGroup(aut_group));
+    hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
+  fi;
 
   # V is isomorphic to Aut(Gamma) x (Aut(G) / Inn(G))
   # U is a subgroup of V contained in the subgroup we are looking for.
@@ -518,10 +527,19 @@ function(R)
   # automorphism group of the group
   stab_aut_group := SEMIGROUPS.StabOfRMSEntries(aut_group, R);
 
+  # The following mathematically unnecessary separation of cases is needed to
+  # support the AutPGrp package, whose method for `AutomorphismGroup` for the
+  # trivial group does not set `InnerAutomorphismsAutomorphismGroup` at
+  # creation, and no method is installed to calculate it.
+
   # homomorphism from Aut(G) to a perm rep of Aut(G) / Inn(G)
-  hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
-           InnerAutomorphismsAutomorphismGroup(aut_group));
-  hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
+  if IsTrivial(G) then
+    hom := IsomorphismPermGroup(aut_group);
+  else
+    hom := NaturalHomomorphismByNormalSubgroupNC(aut_group,
+             InnerAutomorphismsAutomorphismGroup(aut_group));
+    hom := CompositionMapping(IsomorphismPermGroup(ImagesSource(hom)), hom);
+  fi;
 
   # V is isomorphic to Aut(Gamma) x (Aut(G) / Inn(G))
   # U is a subgroup of V contained in the subgroup we are looking for.
