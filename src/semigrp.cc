@@ -90,7 +90,8 @@ plist_to_vec(Converter* converter, gap_list_t elements, size_t degree) {
 }
 
 template <typename T>
-static inline gap_list_t iterator_to_plist(Converter* converter, T first, T last) {
+static inline gap_list_t
+iterator_to_plist(Converter* converter, T first, T last) {
   gap_list_t out =
       NEW_PLIST((first == last ? T_PLIST_EMPTY : T_PLIST_HOM), last - first);
   SET_LEN_PLIST(out, last - first);
@@ -556,8 +557,8 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
     gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, semi_cpp->size());
     SET_LEN_PLIST(out, semi_cpp->size());
-    size_t i = 1;
-    auto it = semi_cpp->cbegin_sorted();
+    size_t i  = 1;
+    auto   it = semi_cpp->cbegin_sorted();
     for (auto it = semi_cpp->cbegin_sorted(); it < semi_cpp->cend_sorted();
          ++it) {
       SET_ELM_PLIST(out, i++, converter->unconvert(*it));
@@ -677,7 +678,7 @@ gap_semigroup_t EN_SEMI_CLOSURE(Obj             self,
   gap_list_t gens = NEW_PLIST(T_PLIST_HOM, new_semi_cpp->nrgens());
 
   for (size_t i = 0; i < new_semi_cpp->nrgens(); i++) {
-    AssPlist(gens, i + 1, converter->unconvert((*new_semi_cpp->gens())[i]));
+    AssPlist(gens, i + 1, converter->unconvert(new_semi_cpp->gens(i)));
   }
   AssPRec(new_so, RNam_GeneratorsOfMagma, gens);
   CHANGED_BAG(new_so);
@@ -721,7 +722,7 @@ EN_SEMI_CLOSURE_DEST(Obj self, gap_semigroup_t so, gap_list_t plist) {
   gap_list_t gens = ElmPRec(so, RNam_GeneratorsOfMagma);
 
   for (size_t i = 0; i < semi_cpp->nrgens(); i++) {
-    AssPlist(gens, i + 1, converter->unconvert((*semi_cpp->gens())[i]));
+    AssPlist(gens, i + 1, converter->unconvert(semi_cpp->gens(i)));
   }
   CHANGED_BAG(so);
 
@@ -1058,14 +1059,15 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
   CHECK_SEMI_OBJ(so);
   en_semi_obj_t es = semi_obj_get_en_semi(so);
   if (en_semi_get_type(es) != UNKNOWN) {
-    Semigroup* semi_cpp = en_semi_get_semi_cpp(es);
+    Semigroup* semi_cpp  = en_semi_get_semi_cpp(es);
     Converter* converter = en_semi_get_converter(es);
 
     semi_cpp->set_report(semi_obj_get_report(so));
     semi_cpp->set_max_threads(semi_obj_get_nr_threads(so));
 
-    return iterator_to_plist(
-        converter, semi_cpp->cbegin_idempotents(), semi_cpp->cend_idempotents());
+    return iterator_to_plist(converter,
+                             semi_cpp->cbegin_idempotents(),
+                             semi_cpp->cend_idempotents());
   } else {
     gap_rec_t  fp     = fropin(so, INTOBJ_INT(-1), 0, False);
     gap_list_t left   = ElmPRec(fp, RNamName("left"));
@@ -1073,9 +1075,9 @@ gap_list_t EN_SEMI_IDEMPOTENTS(Obj self, gap_semigroup_t so) {
     gap_list_t prefix = ElmPRec(fp, RNamName("prefix"));
     gap_list_t elts   = ElmPRec(fp, RNamName("elts"));
 
-    size_t     size   = LEN_PLIST(left);
-    size_t     nr     = 0;
-    gap_list_t out    = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
+    size_t     size = LEN_PLIST(left);
+    size_t     nr   = 0;
+    gap_list_t out  = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, 0);
     // IMMUTABLE since it should not be altered on the GAP level
     SET_LEN_PLIST(out, 0);
     for (size_t pos = 1; pos <= size; pos++) {
