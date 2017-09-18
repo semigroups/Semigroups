@@ -176,14 +176,14 @@ Obj BIPART_EXT_REP(Obj self, Obj x) {
 
   for (size_t i = 0; i < 2 * n; i++) {
     Obj entry = INTOBJ_INT((i < n ? i + 1 : -(i - n) - 1));
-    if (ELM_PLIST(ext_rep, xx->block(i) + 1) == 0) {
+    if (ELM_PLIST(ext_rep, xx->at(i) + 1) == 0) {
       Obj block = NEW_PLIST(T_PLIST_CYC, 1);
       SET_LEN_PLIST(block, 1);
       SET_ELM_PLIST(block, 1, entry);
-      SET_ELM_PLIST(ext_rep, xx->block(i) + 1, block);
+      SET_ELM_PLIST(ext_rep, xx->at(i) + 1, block);
       CHANGED_BAG(ext_rep);
     } else {
-      Obj block = ELM_PLIST(ext_rep, xx->block(i) + 1);
+      Obj block = ELM_PLIST(ext_rep, xx->at(i) + 1);
       AssPlist(block, LEN_PLIST(block) + 1, entry);
     }
   }
@@ -204,7 +204,7 @@ Obj BIPART_INT_REP(Obj self, Obj x) {
   SET_LEN_PLIST(int_rep, (Int) 2 * n);
 
   for (size_t i = 0; i < 2 * n; i++) {
-    SET_ELM_PLIST(int_rep, i + 1, INTOBJ_INT(xx->block(i) + 1));
+    SET_ELM_PLIST(int_rep, i + 1, INTOBJ_INT(xx->at(i) + 1));
   }
   return int_rep;
 }
@@ -316,16 +316,16 @@ Obj BIPART_PERM_LEFT_QUO(Obj self, Obj x, Obj y) {
   _BUFFER_size_t.resize(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (_BUFFER_size_t[xx->block(i)] == (size_t) -1) {
-      _BUFFER_size_t[xx->block(i)] = index;
+    if (_BUFFER_size_t[xx->at(i)] == (size_t) -1) {
+      _BUFFER_size_t[xx->at(i)] = index;
       index++;
     }
     ptrp[i - deg] = i - deg;
   }
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (yy->block(i) < xx->nr_left_blocks()) {
-      ptrp[_BUFFER_size_t[yy->block(i)]] = _BUFFER_size_t[xx->block(i)];
+    if (yy->at(i) < xx->nr_left_blocks()) {
+      ptrp[_BUFFER_size_t[yy->at(i)]] = _BUFFER_size_t[xx->at(i)];
     }
   }
   return p;
@@ -350,13 +350,13 @@ Obj BIPART_LEFT_PROJ(Obj self, Obj x) {
   blocks->resize(2 * deg, -1);
 
   for (size_t i = 0; i < deg; i++) {
-    (*blocks)[i] = xx->block(i);
-    if (xx->is_transverse_block(xx->block(i))) {
-      (*blocks)[i + deg] = xx->block(i);
-    } else if (_BUFFER_size_t[xx->block(i)] != (size_t) -1) {
-      (*blocks)[i + deg] = _BUFFER_size_t[xx->block(i)];
+    (*blocks)[i] = xx->at(i);
+    if (xx->is_transverse_block(xx->at(i))) {
+      (*blocks)[i + deg] = xx->at(i);
+    } else if (_BUFFER_size_t[xx->at(i)] != (size_t) -1) {
+      (*blocks)[i + deg] = _BUFFER_size_t[xx->at(i)];
     } else {
-      _BUFFER_size_t[xx->block(i)] = next;
+      _BUFFER_size_t[xx->at(i)] = next;
       (*blocks)[i + deg]           = next;
       next++;
     }
@@ -387,16 +387,16 @@ Obj BIPART_RIGHT_PROJ(Obj self, Obj x) {
   blocks->resize(2 * deg, -1);
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (buf2[xx->block(i)] == (size_t) -1) {
-      if (xx->is_transverse_block(xx->block(i))) {
-        buf2[xx->block(i)] = buf1[xx->block(i)] = l_block++;
+    if (buf2[xx->at(i)] == (size_t) -1) {
+      if (xx->is_transverse_block(xx->at(i))) {
+        buf2[xx->at(i)] = buf1[xx->at(i)] = l_block++;
       } else {
-        buf2[xx->block(i)] = r_block++;
-        buf1[xx->block(i)] = l_block++;
+        buf2[xx->at(i)] = r_block++;
+        buf1[xx->at(i)] = l_block++;
       }
     }
-    (*blocks)[i - deg] = buf1[xx->block(i)];
-    (*blocks)[i]       = buf2[xx->block(i)];
+    (*blocks)[i - deg] = buf1[xx->at(i)];
+    (*blocks)[i]       = buf2[xx->at(i)];
   }
 
   Bipartition* out = new Bipartition(blocks);
@@ -423,10 +423,10 @@ Obj BIPART_STAR(Obj self, Obj x) {
   size_t next = 0;
 
   for (size_t i = 0; i < deg; i++) {
-    if (_BUFFER_size_t[xx->block(i + deg)] != (size_t) -1) {
-      (*blocks)[i] = _BUFFER_size_t[xx->block(i + deg)];
+    if (_BUFFER_size_t[xx->at(i + deg)] != (size_t) -1) {
+      (*blocks)[i] = _BUFFER_size_t[xx->at(i + deg)];
     } else {
-      _BUFFER_size_t[xx->block(i + deg)] = next;
+      _BUFFER_size_t[xx->at(i + deg)] = next;
       (*blocks)[i]                       = next;
       next++;
     }
@@ -435,10 +435,10 @@ Obj BIPART_STAR(Obj self, Obj x) {
   size_t nr_left = next;
 
   for (size_t i = 0; i < deg; i++) {
-    if (_BUFFER_size_t[xx->block(i)] != (size_t) -1) {
-      (*blocks)[i + deg] = _BUFFER_size_t[xx->block(i)];
+    if (_BUFFER_size_t[xx->at(i)] != (size_t) -1) {
+      (*blocks)[i + deg] = _BUFFER_size_t[xx->at(i)];
     } else {
-      _BUFFER_size_t[xx->block(i)] = next;
+      _BUFFER_size_t[xx->at(i)] = next;
       (*blocks)[i + deg]           = next;
       next++;
     }
@@ -486,10 +486,10 @@ Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
   size_t next   = 0;
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (!seen[yy->block(i)]) {
-      seen[yy->block(i)] = true;
-      if (yy->block(i) < nr_left_blocks) {  // connected block
-        lookup[yy->block(i)] = next;
+    if (!seen[yy->at(i)]) {
+      seen[yy->at(i)] = true;
+      if (yy->at(i) < nr_left_blocks) {  // connected block
+        lookup[yy->at(i)] = next;
       }
       next++;
     }
@@ -502,12 +502,12 @@ Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
   next        = 0;
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (!seen[xx->block(i)]) {
-      seen[xx->block(i)] = true;
-      if (xx->block(i) < nr_left_blocks) {  // connected block
-        ptrp[next]                = lookup[xx->block(i)];
+    if (!seen[xx->at(i)]) {
+      seen[xx->at(i)] = true;
+      if (xx->at(i) < nr_left_blocks) {  // connected block
+        ptrp[next]                = lookup[xx->at(i)];
         src[next]                 = true;
-        dst[lookup[xx->block(i)]] = true;
+        dst[lookup[xx->at(i)]] = true;
       }
       next++;
     }
@@ -595,16 +595,16 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
   size_t next = 0;
 
   for (size_t i = deg; i < 2 * deg; i++) {
-    if (tab1[xx->block(i)] == (size_t) -1) {
-      tab1[xx->block(i)] = q[next];
-      tab2[next]         = xx->block(i);
+    if (tab1[xx->at(i)] == (size_t) -1) {
+      tab1[xx->at(i)] = q[next];
+      tab2[next]         = xx->at(i);
       next++;
     }
   }
 
   for (size_t i = 0; i < deg; i++) {
-    (*blocks)[i]       = xx->block(i);
-    (*blocks)[i + deg] = tab2[tab1[xx->block(i + deg)]];
+    (*blocks)[i]       = xx->at(i);
+    (*blocks)[i + deg] = tab2[tab1[xx->at(i + deg)]];
   }
 
   return bipart_new_obj(new Bipartition(blocks));
@@ -982,7 +982,7 @@ Obj BLOCKS_LEFT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
   u_int32_t next = 0;
 
   for (u_int32_t i = 0; i < x->degree(); i++) {
-    u_int32_t j = fuse_it(x->block(i));
+    u_int32_t j = fuse_it(x->at(i));
     if (tab[j] == (size_t) -1) {
       tab[j] = next;
       next++;
@@ -1035,7 +1035,7 @@ Obj BLOCKS_RIGHT_ACT(Obj self, Obj blocks_gap, Obj x_gap) {
   u_int32_t next = 0;
 
   for (u_int32_t i = x->degree(); i < 2 * x->degree(); i++) {
-    u_int32_t j = fuse_it(x->block(i) + blocks->nr_blocks());
+    u_int32_t j = fuse_it(x->at(i) + blocks->nr_blocks());
     if (tab[j] == (size_t) -1) {
       tab[j] = next;
       next++;
@@ -1080,7 +1080,7 @@ Obj BLOCKS_INV_LEFT(Obj self, Obj blocks_gap, Obj x_gap) {
   // find the left blocks of the output
   for (u_int32_t i = 0; i < blocks->degree(); i++) {
     (*out_blocks)[i] = blocks->block(i);
-    u_int32_t j      = fuse_it(x->block(i) + blocks->nr_blocks());
+    u_int32_t j      = fuse_it(x->at(i) + blocks->nr_blocks());
     if (j > blocks->nr_blocks() || tab[j] == (size_t) -1) {
       (*out_blocks)[i + x->degree()] = blocks->nr_blocks();  // junk
     } else {
@@ -1168,8 +1168,8 @@ Obj BLOCKS_INV_RIGHT(Obj self, Obj blocks_gap, Obj x_gap) {
 
   // find the left blocks of the output
   for (u_int32_t i = 0; i < blocks->degree(); i++) {
-    if (x->block(i + x->degree()) < x->nr_left_blocks()) {
-      u_int32_t j = fuse_it(x->block(i + x->degree()) + blocks->nr_blocks());
+    if (x->at(i + x->degree()) < x->nr_left_blocks()) {
+      u_int32_t j = fuse_it(x->at(i + x->degree()) + blocks->nr_blocks());
       if (_BUFFER_bool[j]) {
         if (tab1[j] == (size_t) -1) {
           tab1[j] = next;

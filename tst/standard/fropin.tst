@@ -21,11 +21,11 @@ gap> S := FullTransformationSemigroup(6);
 gap> T := Semigroup(S.1, rec(acting := false));
 <commutative transformation semigroup of degree 6 with 1 generator>
 gap> EN_SEMI_IDEMPOTENTS(T);
-[ 6 ]
+[ IdentityTransformation ]
 gap> T := SEMIGROUPS.ClosureSemigroupDestructive(T, [S.2], T!.opts);
 <transformation semigroup of degree 6 with 2 generators>
 gap> EN_SEMI_IDEMPOTENTS(T);
-[ 6 ]
+[ IdentityTransformation ]
 gap> T := SEMIGROUPS.ClosureSemigroupDestructive(T, [S.3], T!.opts);
 <transformation semigroup of degree 6 with 3 generators>
 gap> EN_SEMI_IDEMPOTENTS(T);;
