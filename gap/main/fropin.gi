@@ -459,7 +459,7 @@ function(S)
   if not IsFinite(S) then
     TryNextMethod();
   fi;
-  return EnumeratorCanonical(S){EN_SEMI_IDEMPOTENTS(S)};
+  return EN_SEMI_IDEMPOTENTS(S);
 end);
 
 InstallMethod(PositionCanonical,
