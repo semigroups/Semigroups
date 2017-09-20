@@ -361,13 +361,17 @@ gap> for h in TranslationalHull(S) do
 gap> G := SmallGroup(12,1);;
 gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
-gap> L := LeftTranslationsSemigroup(S);;
-gap> R := RightTranslationsSemigroup(S);;
-gap> H := TranslationalHullSemigroup(S);;
-gap> Size(L);
-576
-gap> Size(R);
-46656
+gap> T := Range(RMSNormalization(S));;
+gap> LS := LeftTranslationsSemigroup(S);;
+gap> RS := RightTranslationsSemigroup(S);;
+gap> HS := TranslationalHullSemigroup(S);;
+gap> L := LeftTranslationsSemigroup(T);;
+gap> R := RightTranslationsSemigroup(T);;
+gap> H := TranslationalHullSemigroup(T);;
+gap> Size(LS) = Size(L);
+true
+gap> Size(RS) = Size(R);
+true
 gap> Size(H);
 76
 gap> GeneratorsOfSemigroup(L);
@@ -383,10 +387,9 @@ gap> GeneratorsOfSemigroup(R);
   <right translation on <simple semigroup of size 72, with 5 generators>>, 
   <right translation on <simple semigroup of size 72, with 5 generators>>, 
   <right translation on <simple semigroup of size 72, with 5 generators>> ]
-gap> mat := TransposedMat([[G.1, G.2], [G.1, G.1], [G.2, G.3]]);;
-gap> S := ReesMatrixSemigroup(G, mat);;
-gap> Size(TranslationalHull(S));
-76
+gap> Representative(H);
+<linked pair of translations on <simple semigroup of size 72, with 5 
+ generators>>
 
 #T# IsWholeFamily for translations semigroups
 gap> S := Semigroup([Transformation([1,1,2,4]), Transformation([3,1,3])]);;

@@ -22,6 +22,8 @@
 ## Journal of Algebra, Volume 46, Issue 2, 1977, Pages 462-480, 
 ## http://dx.doi.org/10.1016/0021-8693(77)90383-0.
 #############################################################################
+# TODO: make sure you can't mix translations of different types in one semigroup
+# TODO: decide whether to use Rows(S)/Columns(S) or Matrix(S) - confusing
 
 # For RZMS, don't calculate AsList when LeftTranslations is called
 # Just get generators
@@ -680,11 +682,12 @@ SEMIGROUPS.TranslationalHullElementsOfZeroSimple := function(H)
   return Set(linkedpairs);
 end;
 
-# Finds the bitranslations of a RMS over a group
+# Finds the bitranslations of a normalised RMS over a group
 # Uses the characterisation of Theorem 1 in
 # Clifford and Petrich, 'Some Classes of Completely Regular Semigroups'
 # Journal of Algebra 46, 1977
 # TODO: improve isomorphism application to triples (currently slow)
+# TODO: swap f and g; currently opposite to names in functions below
 SEMIGROUPS.RMSBitranslations := function(H)
   local a, f, g, G, i, j, k, L, m, n, P, r, R, s, S, x,
         inv, iso, normalrms, triples,
@@ -694,33 +697,13 @@ SEMIGROUPS.RMSBitranslations := function(H)
         reject, bt;  
   
   S := UnderlyingSemigroup(H);
-  iso := RMSNormalization(S);
-  inv := InverseGeneralMapping(iso);
-  normalrms := Range(iso);
   L := LeftTranslationsSemigroup(S);
   R := RightTranslationsSemigroup(S);
-  P := Matrix(normalrms);
+  P := Matrix(S);
   m := Size(P);
   n := Size(P[1]);
-  G := UnderlyingSemigroup(normalrms);
+  G := UnderlyingSemigroup(S);
   triples := [];
-
-  tripletobitranslation := function(x)
-    
-    lefttrans := function(r)
-      return RMSElementNC(normalrms, x[3][r[1]], x[1] * P[x[2][1]][r[1]] * r[2], r[3]);
-    end;
-
-    righttrans := function(r)
-      return RMSElementNC(normalrms, r[1], r[2] * P[r[3]][x[3][1]] * x[1], x[2][r[3]]);
-    end;
-
-    return TranslationalHullElementNC(H,
-              LeftTranslationNC(L, CompositionMapping(inv, 
-                                      MappingByFunction(normalrms, normalrms, lefttrans), iso)),
-              RightTranslationNC(R, CompositionMapping(inv,
-                                      MappingByFunction(normalrms, normalrms, righttrans), iso)));
-  end;
 
   extendf := function(k)
     f[k] := 1;
@@ -880,6 +863,390 @@ SEMIGROUPS.RMSBitranslations := function(H)
     bt(k);
   od;
   
-  Apply(triples, x -> tripletobitranslation(x));
+  # careful with the order!
+  Apply(triples, x -> BitranslationRMSByTripleNC(H,
+                                                 x![1],
+                                                 Transformation(x![3]),
+                                                 Transformation(x![2])));
   return triples;
 end;
+
+#This should go somewhere else
+SEMIGROUPS.IsNormalRMSOverGroup := function(S)
+  local mat, T, one;
+
+  if not IsReesMatrixSemigroup(S) then
+    return false;
+  fi;
+
+  T := UnderlyingSemigroup(S);
+
+  if not IsGroupAsSemigroup(T) then
+    return false;
+  fi;
+
+  mat := Matrix(S);
+  one := MultiplicativeNeutralElement(T);
+  return ForAll(mat[1], x -> x = one) and
+          ForAll(mat, x -> x[1] = one);
+end;
+
+SEMIGROUPS.FamOfRMSLeftTranslationsByTriple := function()
+  local fam, type;
+  
+  fam := NewFamily("LeftTranslationsSemigroupElementsFamily",
+                    IsLeftTranslationRMSTriple);
+
+  type := NewType(fam, IsLeftTranslationRMSTriple);
+  fam!.type := type;
+  return fam;
+end;
+
+SEMIGROUPS.FamOfRMSRightTranslationsByTriple := function()
+  local fam, type;
+  
+  fam := NewFamily("RightTranslationsSemigroupElementsFamily",
+                    IsRightTranslationRMSTriple);
+
+  type := NewType(fam, IsRightTranslationRMSTriple);
+  fam!.type := type;
+  return fam;
+end;
+
+SEMIGROUPS.FamOfRMSBitranslationsByTriple := function()
+  local fam, type;
+  
+  fam := NewFamily("BitranslationsSemigroupElementsFamily",
+                    IsBitranslationRMSTriple);
+
+  type := NewType(fam, IsBitranslationRMSTriple);
+  fam!.type := type;
+  return fam;
+end;
+
+
+# Create a left translation of an IxJ normalised RMS over a group G.
+# L should be a left translations semigroup
+# gpfunc should be a function (represented as a list) from I to G
+# t should be a transformation of I
+InstallGlobalFunction(LeftTranslationRMSByTriple,
+function(L, gpfunc, t)
+  local G, S;
+
+  if not (IsLeftTranslationRMSTripleSemigroup(L)) then
+    ErrorNoReturn("Semigroups: LeftTranslationRMSByTriple: \n",
+                  "the first argument must be a semigroup ",
+                  "of left translations,");
+  fi;
+  S := UnderlyingSemigroup(L);
+
+  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    ErrorNoReturn("Semigroups: LeftTranslationRMSByTriple: \n",
+                  "the underlying semigroup of the first argument ",
+                  "must be a normalised RMS ",
+                  "semigroup over a group,");
+  fi;
+  
+  G := UnderlyingSemigroup(S);
+
+  if not (IsList(gpfunc) and 
+          ForAll(gpfunc, x -> x in G) and 
+          Size(gpfunc) = Size(Matrix(S)[1])) then
+    ErrorNoReturn("Semigroups: LeftTranslationRMSByTriple: \n",
+                  "the second argument must be a list of group elements ",
+                  "of length equal to the number of columns of the ",
+                  "sandwich matrix of the underlying semigroup ",
+                  "of the first argument,");
+  fi;
+
+  if not (IsTransformation(t) and 
+          DegreeOfTransformation(t) <= Size(Matrix(S)[1])) then
+    ErrorNoReturn("Semigroups: LeftTranslationRMSByTriple: \n",
+                  "the third argument must be a transformation on ",
+                  "the column index of the sandwich matrix of the ",
+                  "underlying semigroup of the first argument,");
+  fi;
+  
+  return LeftTranslationRMSByTripleNC(L, gpfunc, t);
+end);
+
+InstallGlobalFunction(LeftTranslationRMSByTripleNC,
+function(L, gpfunc, t)
+  return Objectify(TypeLeftTranslationsSemigroupElements(L), [gpfunc, t]);
+end);
+
+
+# Create a right translation of an IxJ normalised RMS over a group G.
+# R should be a right translations semigroup
+# gpfunc should be a function (represented as a list) from J to G
+# t should be a transformation of J
+InstallGlobalFunction(RightTranslationRMSByTriple,
+function(R, gpfunc, t)
+  local G, S;
+
+  if not (IsRightTranslationRMSTripleSemigroup(R)) then
+    ErrorNoReturn("Semigroups: RightTranslationRMSByTriple: \n",
+                  "the first argument must be a semigroup ",
+                  "of right translations,");
+  fi;
+  S := UnderlyingSemigroup(R);
+
+  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    ErrorNoReturn("Semigroups: RightTranslationRMSByTriple: \n",
+                  "the underlying semigroup of the first argument ",
+                  "must be a normalised RMS ",
+                  "semigroup over a group,");
+  fi;
+  
+  G := UnderlyingSemigroup(S);
+
+  if not (IsList(gpfunc) and 
+          ForAll(gpfunc, x -> x in G) and 
+          Size(gpfunc) = Size(Matrix(S))) then
+    ErrorNoReturn("Semigroups: RightTranslationRMSByTriple: \n",
+                  "the second argument must be a list of group elements ",
+                  "of length equal to the number of rows of the ",
+                  "sandwich matrix of the underlying semigroup ",
+                  "of the first argument,");
+  fi;
+
+  if not (IsTransformation(t) and 
+          DegreeOfTransformation(t) <= Size(Matrix(S))) then
+    ErrorNoReturn("Semigroups: RightTranslationRMSByTriple: \n",
+                  "the third argument must be a transformation on ",
+                  "the row index of the sandwich matrix of the ",
+                  "underlying semigroup of the first argument,");
+  fi;
+  
+  return RightTranslationRMSByTripleNC(R, gpfunc, t);
+end);
+
+InstallGlobalFunction(RightTranslationRMSByTripleNC,
+function(R, gpfunc, t)
+  return Objectify(TypeRightTranslationsSemigroupElements(R), [gpfunc, t]);
+end);
+
+InstallGlobalFunction(BitranslationRMSByTriple,
+function(H, a, transI, transJ)
+  local G, i, I, j, J, P, S;
+
+  if not IsBitranslationRMSTripleSemigroup(H) then
+    ErrorNoReturn("Semigroups: BitranslationRMSByTriple: \n",
+                  "the first argument must be a semigroup ",
+                  "of bitranslations,");
+  fi;
+
+  S := UnderlyingSemigroup(H);
+
+  if not SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    ErrorNoReturn("Semigroups: BitranslationRMSByTriple: \n",
+                  "the underlying semigroup of the first argument ",
+                  "must be a normalised RMS ",
+                  "semigroup over a group,");
+  fi;
+
+  G := UnderlyingSemigroup(S);
+
+  if not a in G then 
+    ErrorNoReturn("Semigroups: BitranslationRMSByTriple: \n",
+                  "the second argument must be an element of the ",
+                  "underlying group of the RMS underlying the ",
+                  "first argument,");
+  fi;
+
+  if not (IsTransformation(transI) and 
+          DegreeOfTransformation(transI) <= Size(Matrix(S)[1])) then
+    ErrorNoReturn("Semigroups: BitranslationRMSByTriple: \n",
+                  "the third argument must be a transformation on ",
+                  "the column index of the sandwich matrix of the ",
+                  "underlying semigroup of the first argument,");
+  fi;
+  
+  if not (IsTransformation(transJ) and 
+          DegreeOfTransformation(transJ) <= Size(Matrix(S))) then
+    ErrorNoReturn("Semigroups: BitranslationRMSByTriple: \n",
+                  "the fourth argument must be a transformation on ",
+                  "the row index of the sandwich matrix of the ",
+                  "underlying semigroup of the first argument,");
+  fi;
+  
+  P := Matrix(S);
+  I := Size(P[1]);
+  J := Size(P);
+
+  for i in [1 .. I] do
+    for j in [1 .. J] do
+      if not P[j][i^transI] * a * P[1^transJ][i] 
+              = P[j][1^transI] * a * P[j^transJ][i] then
+        ErrorNoReturn("Semigroups: BitranslationRMSByTriple: \n",
+                      "the triple given must represent ",
+                      "a bitranslation of the underlying semigroup ",
+                      "of the first argument,");
+      fi;
+    od;
+  od;
+  
+  return BitranslationRMSByTripleNC(H, a, transI, transJ);
+end);
+
+InstallGlobalFunction(BitranslationRMSByTripleNC,
+function(H, a, transI, transJ)
+  local G, I, J, l, leftgpfunc, L, P, r, rightgpfunc, R, S;
+ 
+  S := UnderlyingSemigroup(H);
+  G := UnderlyingSemigroup(S);
+  L := LeftTranslationsSemigroup(S);
+  R := RightTranslationsSemigroup(S);
+  P := Matrix(S);
+  I := Size(P[1]);
+  J := Size(P);
+
+  leftgpfunc := List([1 .. I], i -> a * P[1^transJ][i]);
+  rightgpfunc := List([1 .. J], j -> P[j][1^transI] * a);
+  
+  l := LeftTranslationRMSByTripleNC(L, leftgpfunc, transI);
+  r := RightTranslationRMSByTripleNC(R, rightgpfunc, transJ);
+
+  return BitranslationRMSByPairNC(H, l, r);
+end);
+
+InstallGlobalFunction(BitranslationRMSByPair,
+function(H, l, r)
+  local i, I, j, J, lf, lt, P, rf, rt, S;
+  
+  if not IsBitranslationRMSTripleSemigroup(H) then
+      ErrorNoReturn("Semigroups: BitranslationRMSByPair: \n",
+                    "the first argument must be a semigroup of ",
+                    "bitranslations over a normalised RMS,");
+  fi;
+
+  S := UnderlyingSemigroup(H);
+  P := Matrix(S);
+  I := Size(P[1]);
+  J := Size(P);
+
+  lf := l![1];
+  lt := l![2];
+  rf := r![1];
+  rt := r![2];
+
+  for i in [1 .. I] do
+    for j in [1 .. J] do
+      if not P[j][i^lt] * lf[i] = rf[j] * P[j^rt][i] then
+        ErrorNoReturn("Semigroups: BitranslationRMSByPair: \n",
+                      "the second and third arguments must be a ",
+                      "linked left and right translation, respectively,");
+      fi;
+    od;
+  od;
+  
+  return BitranslationRMSByPairNC(H, l, r);
+end);
+
+InstallGlobalFunction(BitranslationRMSByPairNC,
+function(H, l, r)
+  return Objectify(TypeTranslationalHullElements(H), [l, r]);
+end);
+
+############################################################################
+#Technical Methods
+############################################################################
+
+InstallMethod(Representative, "for a semigroup of left or right translations over a normalised RMS",
+[IsTranslationRMSTripleSemigroup and IsWholeFamily],
+function(T)
+  local e, G, S;
+  
+  S := UnderlyingSemigroup(T);
+  G := UnderlyingSemigroup(S);
+  e := MultiplicativeNeutralElement(G);
+  
+  if IsLeftTranslationRMSTripleSemigroup(T) then
+    return LeftTranslationRMSByTriple(T, 
+                                      List(Rows(S), x -> e),
+                                      IdentityTransformation);
+  else
+    return RightTranslationRMSByTriple(T,
+                                       List(Columns(S), x -> e),
+                                       IdentityTransformation);
+  fi;
+end);
+
+InstallMethod(Representative, "for a translational hull over a normalised RMS",
+[IsBitranslationRMSTripleSemigroup and IsWholeFamily],
+function(H)
+  local L, R, S;
+
+  S := UnderlyingSemigroup(H);
+  L := LeftTranslationsSemigroup(S);
+  R := RightTranslationsSemigroup(S);
+
+  return BitranslationRMSByPair(H, Representative(L), Representative(R));
+end);
+
+InstallMethod(\*, "for left translations of a normalised RMS",
+IsIdenticalObj,
+[IsLeftTranslationRMSTriple, IsLeftTranslationRMSTriple],
+function(x, y)
+  return Objectify(FamilyObj(x)!.type, 
+                   [List([1 .. Size(x![1])], i -> x![1][i^y![2]] * y![1][i]),
+                    y![2] * x![2]]);
+end);
+
+InstallMethod(\=, "for left translations of a normalised RMS",
+IsIdenticalObj,
+[IsLeftTranslationRMSTriple, IsLeftTranslationRMSTriple],
+function(x, y)
+  return x![1] = y![1] and x![2] = y![2];
+end);
+
+InstallMethod(\<, "for left translations of a normalised RMS",
+IsIdenticalObj,
+[IsLeftTranslationRMSTriple, IsLeftTranslationRMSTriple],
+function(x, y)
+  return x![2] < y![2] or (x![2] = y![2] and x![1] < y![1]);
+end);
+
+InstallMethod(\*, "for right translations of a normalised RMS",
+IsIdenticalObj,
+[IsRightTranslationRMSTriple, IsRightTranslationRMSTriple],
+function(x, y)
+  return Objectify(FamilyObj(x)!.type, 
+                   [List([1 .. Size(x![1])], j -> x![1][j] * y![1][j^x![2]]),
+                    x![2] * y![2]]);
+end);
+
+InstallMethod(\=, "for right translations of a normalised RMS",
+IsIdenticalObj,
+[IsRightTranslationRMSTriple, IsRightTranslationRMSTriple],
+function(x, y)
+  return x![1] = y![1] and x![2] = y![2];
+end);
+
+InstallMethod(\<, "for right translations of a normalised RMS",
+IsIdenticalObj,
+[IsRightTranslationRMSTriple, IsRightTranslationRMSTriple],
+function(x, y)
+  return x![2] < y![2] or (x![2] = y![2] and x![1] < y![1]);
+end);
+
+InstallMethod(\*, "for bitranslations of a normalised RMS",
+IsIdenticalObj,
+[IsBitranslationRMSTriple, IsBitranslationRMSTriple],
+function(x, y)
+    return Objectify(FamilyObj(x)!.type, [x![1] * y![1], x![2] * y![2]]);
+end);
+
+InstallMethod(\=, "for bitranslations of a normalised RMS",
+IsIdenticalObj,
+[IsBitranslationRMSTriple, IsBitranslationRMSTriple],
+function(x, y)
+  return x![1] = y![1] and x![2] = y![2];
+end);
+
+InstallMethod(\<, "for bitranslations of a normalised RMS",
+IsIdenticalObj,
+[IsBitranslationRMSTriple, IsBitranslationRMSTriple],
+function(x, y)
+  return x![1] < y![1] or (x![1] = y![1] and x![2] < y![2]);
+end);

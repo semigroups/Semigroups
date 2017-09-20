@@ -79,7 +79,7 @@ SEMIGROUPS.TranslationalHullElements := function(H)
     return Semigroup(GeneratorsOfSemigroup(H));
   elif IsZeroSimpleSemigroup(S) then
     return SEMIGROUPS.TranslationalHullElementsOfZeroSimple(H);
-  elif IsSimpleSemigroup(S) then
+  elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
     return SEMIGROUPS.RMSBitranslations(H);
   else
     return SEMIGROUPS.TranslationalHullElementsByGenerators(H);
@@ -518,24 +518,30 @@ end;
 # Create the left translations semigroup without calculating the elements
 InstallGlobalFunction(LeftTranslationsSemigroup,
 function(S)
-  local fam, type, L;
+  local fam, L, type;
   
+
   if HasLeftTranslations(S) then
     return LeftTranslations(S);
   fi;
-  fam := NewFamily("LeftTranslationsSemigroupElementsFamily",
-                    IsLeftTranslationsSemigroupElement);
   
+  if SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    fam := SEMIGROUPS.FamOfRMSLeftTranslationsByTriple();
+    type := fam!.type;
+  else
+    fam := NewFamily("LeftTranslationsSemigroupElementsFamily",
+                      IsLeftTranslationsSemigroupElement);
+    type := NewType(fam, IsLeftTranslationsSemigroupElement);
+    fam!.type := type;
+  fi;
+
   #create the semigroup of left translations
   L := Objectify(NewType(CollectionsFamily(fam), IsLeftTranslationsSemigroup
                          and IsWholeFamily and IsAttributeStoringRep), rec());
   
   #store the type of the elements in the semigroup
-  type := NewType(fam, IsLeftTranslationsSemigroupElement);
-  fam!.type := type;
   SetTypeLeftTranslationsSemigroupElements(L, type);
   SetLeftTranslationsSemigroupOfFamily(fam, L); 
-  
   SetUnderlyingSemigroup(L, S);
   SetLeftTranslations(S, L);
   
@@ -550,19 +556,24 @@ function(S)
   if HasRightTranslations(S) then
     return RightTranslations(S);
   fi;
-  fam := NewFamily( "RightTranslationsSemigroupElementsFamily",
-          IsRightTranslationsSemigroupElement);
+
+  if SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    fam := SEMIGROUPS.FamOfRMSRightTranslationsByTriple();
+    type := fam!.type;
+  else
+    fam := NewFamily("RightTranslationsSemigroupElementsFamily",
+                      IsRightTranslationsSemigroupElement);
+    type := NewType(fam, IsRightTranslationsSemigroupElement);
+    fam!.type := type;
+  fi;
   
   # create the semigroup of right translations
   R := Objectify(NewType(CollectionsFamily(fam), IsRightTranslationsSemigroup 
     and IsWholeFamily and IsAttributeStoringRep), rec());
   
   # store the type of the elements in the semigroup
-  type := NewType(fam, IsRightTranslationsSemigroupElement);
-  fam!.type := type;
   SetTypeRightTranslationsSemigroupElements(R, type);
   SetRightTranslationsSemigroupOfFamily(fam, R);
-   
   SetUnderlyingSemigroup(R, S);
   SetRightTranslations(S, R);
   
@@ -577,18 +588,23 @@ function(S)
   if HasTranslationalHull(S) then
     return TranslationalHull(S);
   fi;
-  fam := NewFamily( "TranslationalHullElementsFamily", 
-          IsTranslationalHullElement);
+  
+  if SEMIGROUPS.IsNormalRMSOverGroup(S) then
+    fam := SEMIGROUPS.FamOfRMSBitranslationsByTriple();
+    type := fam!.type;
+  else
+    fam := NewFamily("TranslationalHullElementsFamily",
+                      IsTranslationalHullElement);
+    type := NewType(fam, IsTranslationalHullElement);
+    fam!.type := type;
+  fi;
   
   # create the translational hull
   H := Objectify(NewType(CollectionsFamily(fam), IsTranslationalHull and
     IsWholeFamily and IsAttributeStoringRep), rec());
   
   # store the type of the elements in the semigroup
-  type := NewType(fam, IsTranslationalHullElement);
-  fam!.type := type;
   SetTypeTranslationalHullElements(H, type);
-  
   SetTranslationalHullOfFamily(fam, H);
   SetUnderlyingSemigroup(H, S);
   SetTranslationalHull(S, H);
@@ -1107,7 +1123,7 @@ end);
 InstallMethod(Representative, "for a semigroup of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
-  local S, l, r;
+  local S;
   S := UnderlyingSemigroup(T);
   if IsLeftTranslationsSemigroup(T) then
     return LeftTranslation(T, MappingByFunction(S, S, x -> x));
@@ -1119,13 +1135,11 @@ end);
 InstallMethod(Representative, "for a translational hull",
 [IsTranslationalHull and IsWholeFamily],
 function(H)
-  local L, R, S, l, r;
+  local L, R, S;
   S := UnderlyingSemigroup(H);
   L := LeftTranslationsSemigroup(S);
   R := RightTranslationsSemigroup(S);
-  l := LeftTranslation(L, MappingByFunction(S, S, x -> x));
-  r := RightTranslation(R, MappingByFunction(S, S, x -> x));
-  return TranslationalHullElement(H, l, r);
+  return TranslationalHullElement(H, Representative(L), Representative(R));
 end);
 
 InstallMethod(ViewObj, "for a semigroup of left or right translations",
