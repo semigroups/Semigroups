@@ -16,7 +16,7 @@
 ## this file.
 ##
 
-DeclareCategory("IsCongruencePoset", IsList and IsAttributeStoringRep);
+DeclareCategory("IsCongruencePoset", IsDigraph);
 
 DeclareAttribute("CongruencesOfPoset", IsCongruencePoset);
 DeclareAttribute("UnderlyingSemigroupOfCongruencePoset", IsCongruencePoset);
@@ -45,5 +45,10 @@ DeclareOperation("PosetOfCongruences", [IsListOrCollection]);
 
 DeclareOperation("JoinSemilatticeOfCongruences",
                  [IsListOrCollection, IsFunction]);
+DeclareOperation("JoinSemilatticeOfCongruences",
+                 [IsCongruencePoset, IsFunction]);
 
 DeclareAttribute("MinimalCongruences", IsListOrCollection);
+DeclareAttribute("MinimalCongruences", IsCongruencePoset);
+
+DeclareAttribute("Size", IsCongruencePoset);
