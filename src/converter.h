@@ -24,6 +24,8 @@
 
 #include "src/compiled.h"
 
+#include "pkg.h"
+
 #include "libsemigroups/src/elements.h"
 
 using libsemigroups::Element;
@@ -31,10 +33,12 @@ using libsemigroups::Transformation;
 using libsemigroups::PartialPerm;
 using libsemigroups::BooleanMat;
 using libsemigroups::Semiring;
-using libsemigroups::MatrixOverSemiring;
+using libsemigroups::MatrixOverSemiringBase;
 using libsemigroups::ProjectiveMaxPlusMatrix;
 using libsemigroups::PBR;
 using libsemigroups::Bipartition;
+using libsemigroups::SemiringWithThreshold;
+using libsemigroups::NaturalSemiring;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Abstract base class
@@ -185,16 +189,6 @@ template <typename T> class PPermConverter : public Converter {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// Boolean matrices
-////////////////////////////////////////////////////////////////////////////////
-
-class BoolMatConverter : public Converter {
- public:
-  BooleanMat* convert(Obj o, size_t n) const override;
-  Obj unconvert(Element const* x) const override;
-};
-
-////////////////////////////////////////////////////////////////////////////////
 // Bipartitions
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -208,43 +202,98 @@ class BipartConverter : public Converter {
 // Matrices over semirings
 ////////////////////////////////////////////////////////////////////////////////
 
+template <class TSubclass>
 class MatrixOverSemiringConverter : public Converter {
  public:
   ~MatrixOverSemiringConverter() {
     delete _semiring;
   }
 
-  MatrixOverSemiringConverter(Semiring* semiring, Obj gap_zero, Obj gap_type)
+  MatrixOverSemiringConverter(Semiring<int64_t>* semiring,
+                              Obj                gap_zero,
+                              Obj                gap_type)
       : _semiring(semiring), _gap_zero(gap_zero), _gap_type(gap_type) {}
 
-  MatrixOverSemiring* convert(Obj o, size_t n) const override;
-  Obj unconvert(Element const* x) const override;
+  MatrixOverSemiringBase<int64_t, TSubclass>* convert(Obj o,
+                                                      size_t n) const override {
+    assert(CALL_1ARGS(IsMatrixOverSemiring, o) == True);
+    assert(IS_PLIST(ELM_PLIST(o, 1)));
 
- protected:
-  Semiring* _semiring;
-  Obj       _gap_zero;
-  Obj       _gap_type;
-};
+    size_t m = LEN_PLIST(ELM_PLIST(o, 1));
 
-////////////////////////////////////////////////////////////////////////////////
-// Projective max-plus matrices
-////////////////////////////////////////////////////////////////////////////////
+    std::vector<int64_t>* matrix(new std::vector<int64_t>());
+    matrix->reserve(m);
 
-class ProjectiveMaxPlusMatrixConverter : public MatrixOverSemiringConverter {
- public:
-  ProjectiveMaxPlusMatrixConverter(Semiring* semiring,
-                                   Obj       gap_zero,
-                                   Obj       gap_type)
-      : MatrixOverSemiringConverter(semiring, gap_zero, gap_type) {}
-
-  ProjectiveMaxPlusMatrix* convert(Obj o, size_t n) const override {
-    return static_cast<ProjectiveMaxPlusMatrix*>(
-        MatrixOverSemiringConverter::convert(o, n));
+    for (size_t i = 0; i < m; i++) {
+      Obj row = ELM_PLIST(o, i + 1);
+      for (size_t j = 0; j < m; j++) {
+        Obj entry = ELM_PLIST(row, j + 1);
+        if (EQ(_gap_zero, entry)) {
+          matrix->push_back(_semiring->zero());
+        } else {
+          matrix->push_back(INT_INTOBJ(entry));
+        }
+      }
+    }
+    return new TSubclass(matrix, _semiring);
   }
 
   Obj unconvert(Element const* x) const override {
-    return MatrixOverSemiringConverter::unconvert(x);
+    TSubclass const* xx(static_cast<TSubclass const*>(x));
+    size_t           n = xx->degree();
+
+    Obj plist = NEW_PLIST(T_PLIST_HOM + IMMUTABLE, n + 2);
+
+    if (_gap_type == NTPMatrixType) {
+      NaturalSemiring* semiring = static_cast<NaturalSemiring*>(_semiring);
+      SET_LEN_PLIST(plist, n + 2);
+      SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(semiring->threshold()));
+      SET_ELM_PLIST(plist, n + 2, INTOBJ_INT(semiring->period()));
+    } else if (_gap_type == TropicalMaxPlusMatrixType
+               || _gap_type == TropicalMinPlusMatrixType) {
+      SemiringWithThreshold* semiring =
+          static_cast<SemiringWithThreshold*>(_semiring);
+      SET_LEN_PLIST(plist, n + 1);
+      SET_ELM_PLIST(plist, n + 1, INTOBJ_INT(semiring->threshold()));
+    } else {
+      SET_LEN_PLIST(plist, n);
+      RetypeBag(plist, T_PLIST_TAB_RECT + IMMUTABLE);
+    }
+
+    for (size_t i = 0; i < n; i++) {
+      Obj row = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, n);
+      SET_LEN_PLIST(row, n);
+      for (size_t j = 0; j < n; j++) {
+        int64_t entry = xx->at(i * n + j);
+        if (entry == _semiring->zero()) {
+          SET_ELM_PLIST(row, j + 1, _gap_zero);
+        } else {
+          SET_ELM_PLIST(row, j + 1, INTOBJ_INT(entry));
+        }
+      }
+      SET_ELM_PLIST(plist, i + 1, row);
+      CHANGED_BAG(plist);
+    }
+    TYPE_POSOBJ(plist) = _gap_type;
+    RetypeBag(plist, T_POSOBJ);
+    CHANGED_BAG(plist);
+    return plist;
   }
+
+ protected:
+  Semiring<int64_t>* _semiring;
+  Obj                _gap_zero;
+  Obj                _gap_type;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// Boolean matrices
+////////////////////////////////////////////////////////////////////////////////
+
+class BoolMatConverter : public Converter {
+ public:
+  BooleanMat* convert(Obj o, size_t n) const override;
+  Obj unconvert(Element const* x) const override;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
