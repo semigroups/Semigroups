@@ -96,21 +96,8 @@ gap> GeneratorsOfSemigroup(H);
   <linked pair of translations on <simple transformation semigroup of size 9, 
      degree 7 with 3 generators>> ]
 gap> SEMIGROUPS.TranslationalHullElements(H);
-Semigroup( 
-[ <linked pair of translations on <simple transformation semigroup of size 9, 
-     degree 7 with 3 generators>>, <linked pair of translations on 
-    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
-  <linked pair of translations on <simple transformation semigroup of size 9, 
-     degree 7 with 3 generators>>, <linked pair of translations on 
-    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
-  <linked pair of translations on <simple transformation semigroup of size 9, 
-     degree 7 with 3 generators>>, <linked pair of translations on 
-    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
-  <linked pair of translations on <simple transformation semigroup of size 9, 
-     degree 7 with 3 generators>>, <linked pair of translations on 
-    <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
-  <linked pair of translations on <simple transformation semigroup of size 9, 
-     degree 7 with 3 generators>> ] )
+<semigroups of translational hull elements over <simple transformation 
+ semigroup of size 9, degree 7 with 3 generators>>
 
 #T# small RZMS
 gap> G := SmallGroup(4,2);;
@@ -157,13 +144,13 @@ gap> S := ZeroSemigroup(4);;
 gap> L := SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators(
 > LeftTranslations(S));
 <semigroup of left translations of <commutative non-regular transformation 
- semigroup of size 4, degree 4 with 3 generators> with 17 generatorss>
+ semigroup of size 4, degree 4 with 3 generators> with 17 generators>
 gap> Size(L);
 64
 gap> R := SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators(
 > RightTranslations(S));
 <semigroup of right translations of <commutative non-regular transformation 
- semigroup of size 4, degree 4 with 3 generators> with 17 generatorss>
+ semigroup of size 4, degree 4 with 3 generators> with 17 generators>
 
 #T# Further test translations generation by digraph endomorphisms
 gap> S := Semigroup([Transformation([2,4,4,1]), Transformation([2,3,2,1]), 
@@ -182,57 +169,33 @@ gap> Size(R);
 #T# Translations and translational hulls of monoids that couldn't be calculated
 gap> S := BrauerMonoid(5);;
 gap> L := LeftTranslations(S);
-Monoid( 
-[ <left translation on <regular bipartition *-monoid of degree 5 with 3 
-     generators>>, <left translation on <regular bipartition *-monoid of 
-     degree 5 with 3 generators>>, 
-  <left translation on <regular bipartition *-monoid of degree 5 with 3 
-     generators>>, <left translation on <regular bipartition *-monoid of 
-     degree 5 with 3 generators>> ] )
+<the semigroup of left translations of <regular bipartition *-monoid of 
+ degree 5 with 3 generators>>
 gap> Size(L);
 945
 gap> R := RightTranslations(S);
-Monoid( 
-[ <right translation on <regular bipartition *-monoid of degree 5 with 3 
-     generators>>, <right translation on <regular bipartition *-monoid of 
-     degree 5 with 3 generators>>, 
-  <right translation on <regular bipartition *-monoid of degree 5 with 3 
-     generators>>, <right translation on <regular bipartition *-monoid of 
-     degree 5 with 3 generators>> ] )
+<the semigroup of right translations of <regular bipartition *-monoid of 
+ degree 5 with 3 generators>>
 gap> Size(R);
 945
 gap> H := TranslationalHull(S);
-Monoid( 
-[ <linked pair of translations on <regular bipartition *-monoid of degree 5 
-     with 3 generators>>, <linked pair of translations on 
-    <regular bipartition *-monoid of degree 5 with 3 generators>>, 
-  <linked pair of translations on <regular bipartition *-monoid of degree 5 
-     with 3 generators>>, <linked pair of translations on 
-    <regular bipartition *-monoid of degree 5 with 3 generators>> ] )
+<translational hull over <regular bipartition *-monoid of degree 5 with 3 
+ generators>>
 gap> Size(H);
 945
 gap> S := FullTransformationMonoid(5);;
 gap> L := LeftTranslations(S);
-Monoid( [ <left translation on <full transformation monoid of degree 5>>, 
-  <left translation on <full transformation monoid of degree 5>>, 
-  <left translation on <full transformation monoid of degree 5>>, 
-  <left translation on <full transformation monoid of degree 5>> ] )
+<the semigroup of left translations of <full transformation monoid of degree 5\
+>>
 gap> Size(L);
 3125
 gap> R := RightTranslations(S);
-Monoid( [ <right translation on <full transformation monoid of degree 5>>, 
-  <right translation on <full transformation monoid of degree 5>>, 
-  <right translation on <full transformation monoid of degree 5>>, 
-  <right translation on <full transformation monoid of degree 5>> ] )
+<the semigroup of right translations of <full transformation monoid of degree \
+5>>
 gap> Size(R);
 3125
 gap> H := TranslationalHull(S);
-Monoid( 
-[ <linked pair of translations on <full transformation monoid of degree 5>>, 
-  <linked pair of translations on <full transformation monoid of degree 5>>, 
-  <linked pair of translations on <full transformation monoid of degree 5>>, 
-  <linked pair of translations on <full transformation monoid of degree 5>> 
- ] )
+<translational hull over <full transformation monoid of degree 5>>
 gap> Size(H);
 3125
 
@@ -314,6 +277,19 @@ gap> I := InnerTranslationalHull(S);;
 gap> IsWholeFamily(I);
 false
 
+#T# Test inner translations
+gap> G := SmallGroup(6, 1);;
+gap> a := G.1;; b := G.2;;
+gap> mat := [[a, 0],
+> [b, a]];;
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> Size(InnerLeftTranslations(S)) = Size(S);
+true
+gap> Size(InnerRightTranslations(S)) = Size(S);
+true
+gap> Size(InnerTranslationalHull(S)) = Size(S);
+true
+
 #T# OneOp for translations semigroups elements and translational hull elements
 gap> G := SmallGroup(6, 1);;
 gap> a := G.1;; b := G.2;;
@@ -390,6 +366,10 @@ gap> GeneratorsOfSemigroup(R);
 gap> Representative(H);
 <linked pair of translations on <simple semigroup of size 72, with 5 
  generators>>
+gap> mat := TransposedMat([[G.1, G.2], [G.1, G.1], [G.2, G.3]]);;
+gap> R := Range(RMSNormalization(ReesMatrixSemigroup(G, mat)));;
+gap> Size(TranslationalHull(R));
+76
 
 #T# IsWholeFamily for translations semigroups
 gap> S := Semigroup([Transformation([1,1,2,4]), Transformation([3,1,3])]);;
@@ -555,12 +535,14 @@ gap> Unbind(f);
 gap> Unbind(G);
 gap> Unbind(g);
 gap> Unbind(L);
+gap> Unbind(LS);
 gap> Unbind(l);
 gap> Unbind(H);
 gap> Unbind(I);
 gap> Unbind(h);
 gap> Unbind(mat);
 gap> Unbind(R);
+gap> Unbind(RS);
 gap> Unbind(r);
 gap> Unbind(S);
 gap> Unbind(T);

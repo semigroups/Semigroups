@@ -17,7 +17,7 @@
       the same thing except that they do not attempt to calculate the elements
       of the translations semigroup.
       <Example><![CDATA[
-gap> S := RectangularBand(3,4);;
+gap> S := RectangularBand(3, 4);;
 gap> L := LeftTranslationsSemigroup(S);
 <the semigroup of left translations of <regular transformation 
  semigroup of size 12, degree 8 with 4 generators>>
@@ -44,7 +44,7 @@ gap> GeneratorsOfSemigroup(L);
     <Description>
       For the semigroup of left of right translations and a Mapping on the 
       underlying semigroup, or a transformation acting on the indices of the
-      sorted list of elements of the underlying semigroup,
+      canonical list of elements of the underlying semigroup,
       LeftTranslation and RightTranslation return the corresponding translations. 
       <Example><![CDATA[
 gap> S := RectangularBand(3,4);;
@@ -84,8 +84,10 @@ gap> mat := [[a, 0, b],
 > [0, a, b]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> H := TranslationalHull(S);
-<translational hull over <0-simple regular semigroup of size 55, with 
- 6 generators>>
+<translational hull over <0-simple regular semigroup with 6 
+ generators>>
+gap> Size(H);
+67
 ]]></Example>
     </Description>
   </ManSection>
@@ -112,8 +114,8 @@ gap> l := LeftTranslation(L, MappingByFunction(S, S, s -> S.1 * s));;
 gap> r := RightTranslation(R, MappingByFunction(S, S, s -> s * S.1));;
 gap> H := TranslationalHull(S);;
 gap> x := TranslationalHullElement(H, l, r);
-<linked pair of translations on <0-simple regular semigroup 
- of size 17, with 4 generators>>
+<linked pair of translations on <0-simple regular semigroup with 4 
+ generators>>
 ]]></Example>
     </Description>
   </ManSection>
@@ -207,9 +209,12 @@ false
       <Example><![CDATA[
 gap> S := RectangularBand(3,3);;
 gap> H := TranslationalHull(S);;
+gap> L := LeftTranslationsSemigroup(S);;
 gap> IsTranslationalHull(H);
 true
 gap> IsTranslationalHull(S);
+false
+gap> IsTranslationalHull(L);
 false
 ]]></Example>
     </Description>
@@ -290,17 +295,11 @@ true
 gap> S := Semigroup([Transformation([2,2,3,1]), 
 > Transformation([1,4,3,3])]);;
 gap> L := InnerLeftTranslations(S);
-Monoid( 
-[ <left translation on <transformation semigroup of size 24, degree 4 
-     with 2 generators>>, 
-  <left translation on <transformation semigroup of size 24, degree 4 
-     with 2 generators>> ] )
+<semigroup of left translations of <transformation semigroup of 
+ degree 4 with 2 generators> with 2 generators>
 gap> R := InnerRightTranslations(S);
-Monoid( 
-[ <right translation on <transformation semigroup of size 24, 
-     degree 4 with 2 generators>>, 
-  <right translation on <transformation semigroup of size 24, 
-     degree 4 with 2 generators>> ] )
+<semigroup of right translations of <transformation semigroup of 
+ degree 4 with 2 generators> with 2 generators>
 gap> Size(L) = Size(S);
 true
 gap> Size(L) = Size(R);
@@ -324,14 +323,11 @@ true
 gap> S := Semigroup([Transformation([2,2,3,1]), 
 > Transformation([1,4,3,3])]);;
 gap> InnerTranslationalHull(S);
-Monoid( 
-[ <linked pair of translations on <transformation semigroup 
-     of size 24, degree 4 with 2 generators>>, 
-  <linked pair of translations on <transformation semigroup 
-     of size 24, degree 4 with 2 generators>> ] )
+<semigroups of translational hull elements over <transformation 
+ semigroup of degree 4 with 2 generators>>
 ]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
-    
+
 #EOF

@@ -642,7 +642,7 @@ function(S)
     l := LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
     Add(I, l);
   od;
-  return Monoid(I);
+  return Semigroup(I);
 end);
 
 # Create and calculate the semigroup of right translations
@@ -675,7 +675,7 @@ function(S)
     r := RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
     Add(I, r);
   od;
-  return Monoid(I);
+  return Semigroup(I);
 end);
 
 # Create a left translation as an element of a left translations semigroup.
@@ -858,7 +858,7 @@ function(S)
     r := RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
     Add(I, TranslationalHullElementNC(H, l, r));
   od;
-  return Monoid(I);
+  return Semigroup(I);
 end);
 
 # Creates a linked pair (l, r) from a left translation l and a right
@@ -1088,20 +1088,35 @@ end);
 InstallMethod(LeftTranslations, "for a monoid",
 [IsEnumerableSemigroupRep and IsMonoid and IsFinite],
 function(S)
-  return InnerLeftTranslations(S);
+  local L;
+  L := LeftTranslationsSemigroup(S);
+  if not HasGeneratorsOfSemigroup(L) then
+    SetGeneratorsOfSemigroup(L, GeneratorsOfSemigroup(InnerLeftTranslations(S)));
+  fi;
+  return L;
 end);
 
 InstallMethod(RightTranslations, "for a monoid",
 [IsEnumerableSemigroupRep and IsMonoid and IsFinite],
 function(S)
-  return InnerRightTranslations(S);
+  local R;
+  R := RightTranslationsSemigroup(S);
+  if not HasGeneratorsOfSemigroup(R) then
+    SetGeneratorsOfSemigroup(R, GeneratorsOfSemigroup(InnerRightTranslations(S)));
+  fi;
+  return R;
 end);
 
 # Translational hull of a monoid is inner translational hull
 InstallMethod(TranslationalHull, "for a monoid",
 [IsEnumerableSemigroupRep and IsMonoid and IsFinite],
 function(S)
-  return InnerTranslationalHull(S);
+  local H;
+  H := TranslationalHullSemigroup(S);
+  if not HasGeneratorsOfSemigroup(H) then
+    SetGeneratorsOfSemigroup(H, GeneratorsOfSemigroup(InnerTranslationalHull(S)));
+  fi;
+  return H;
 end);
 
 #############################################################################
@@ -1163,7 +1178,7 @@ function(T)
   fi;
   Print("translations of ", ViewString(UnderlyingSemigroup(T)), " with ",
     Length(GeneratorsOfSemigroup(T)),
-    " generators");
+    " generator");
   if Length(GeneratorsOfSemigroup(T)) > 1 then
     Print("s");
   fi;
@@ -1197,6 +1212,12 @@ InstallMethod(PrintObj, "for a translational hull",
 [IsTranslationalHull and IsWholeFamily],
 function(H)
   Print("<translational hull over ", ViewString(UnderlyingSemigroup(H)), ">");
+end);
+
+InstallMethod(PrintObj, "for a subsemigroup of a translational hull",
+[IsTranslationalHull],
+function(H)
+  Print("<semigroups of translational hull elements over ", ViewString(UnderlyingSemigroup(H)), ">");
 end);
 
 InstallMethod(ViewObj, "for a translational hull element", 
@@ -1368,4 +1389,16 @@ function(t)
     S := UnderlyingSemigroup(T);
     return RightTranslation(T, MappingByFunction(S, S, x -> x));
   fi;
+end);
+
+InstallMethod(LeftPartOfBitranslation, "for a bitranslation",
+[IsBitranslation],
+function(h)
+  return h![1];
+end);
+
+InstallMethod(RightPartOfBitranslation, "for a bitranslation",
+[IsBitranslation],
+function(h)
+  return h![2];
 end);
