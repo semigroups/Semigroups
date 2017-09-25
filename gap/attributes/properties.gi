@@ -792,7 +792,7 @@ function(S)
   local gens;
 
   gens := GeneratorsOfMonoid(S);
-  if CanEasilyCompareElements(S) then
+  if CanEasilyCompareElements(gens) then
     gens := DuplicateFreeList(gens);
   fi;
   if Length(gens) = 1 then
