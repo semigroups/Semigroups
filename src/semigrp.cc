@@ -38,6 +38,7 @@ using libsemigroups::TropicalMinPlusSemiring;
 using libsemigroups::NaturalSemiring;
 using libsemigroups::Integers;
 using libsemigroups::really_delete_cont;
+using libsemigroups::MatrixOverSemiring;
 
 #ifdef DEBUG
 #define ERROR(obj, message)                               \
@@ -295,36 +296,36 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
       break;
     }
     case MAX_PLUS_MAT: {
-      converter = new MatrixOverSemiringConverter(
+      converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
           new MaxPlusSemiring(), Ninfinity, MaxPlusMatrixType);
       break;
     }
     case MIN_PLUS_MAT: {
-      converter = new MatrixOverSemiringConverter(
+      converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
           new MinPlusSemiring(), infinity, MinPlusMatrixType);
       break;
     }
     case TROP_MAX_PLUS_MAT: {
-      converter = new MatrixOverSemiringConverter(
+      converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
           new TropicalMaxPlusSemiring(semi_obj_get_threshold(so)),
           Ninfinity,
           TropicalMaxPlusMatrixType);
       break;
     }
     case TROP_MIN_PLUS_MAT: {
-      converter = new MatrixOverSemiringConverter(
+      converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
           new TropicalMinPlusSemiring(semi_obj_get_threshold(so)),
           infinity,
           TropicalMinPlusMatrixType);
       break;
     }
     case PROJ_MAX_PLUS_MAT: {
-      converter = new ProjectiveMaxPlusMatrixConverter(
+      converter = new MatrixOverSemiringConverter<ProjectiveMaxPlusMatrix>(
           new MaxPlusSemiring(), Ninfinity, ProjectiveMaxPlusMatrixType);
       break;
     }
     case NTP_MAT: {
-      converter = new MatrixOverSemiringConverter(
+      converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
           new NaturalSemiring(semi_obj_get_threshold(so),
                               semi_obj_get_period(so)),
           INTOBJ_INT(0),
@@ -332,7 +333,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
       break;
     }
     case INT_MAT: {
-      converter = new MatrixOverSemiringConverter(
+      converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
           new Integers(), INTOBJ_INT(0), IntegerMatrixType);
       break;
     }
