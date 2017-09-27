@@ -22,40 +22,30 @@
 ## user as the list of out-neighbours of that digraph.
 ##
 
-InstallMethod(\[\],
-"for a congruence poset and a positive integer",
-[IsCongruencePoset, IsPosInt],
-function(poset, x)
-  return OutNeighboursOfVertex(poset!.po, x);
-end);
-
 InstallMethod(ViewObj,
 "for a congruence poset",
 [IsCongruencePoset],
 function(poset)
-  ViewObj(OutNeighbours(poset!.po));
+  if DigraphNrVertices(poset) = 0 then
+    Print("<empty congruence poset>");
+  else
+    Print("<poset of ", DigraphNrVertices(poset), " congruences over ");
+    ViewObj(UnderlyingSemigroupOfCongruencePoset(poset));
+    Print(">");
+  fi;
 end);
 
 InstallMethod(PrintObj,
 "for a congruence poset",
 [IsCongruencePoset],
 function(poset)
-  PrintObj(OutNeighbours(poset!.po));
+  Print("PosetOfCongruences( ", CongruencesOfPoset(poset), " )");
 end);
 
-InstallMethod(Length,
+InstallMethod(Size,
 "for a congruence poset",
 [IsCongruencePoset],
-function(poset)
-  return DigraphNrVertices(poset!.po);
-end);
-
-InstallMethod(IsBound\[\],
-"for a congruence poset and a positive integer",
-[IsCongruencePoset, IsPosInt],
-function(poset, x)
-  return x >= 1 and x <= Length(poset);
-end);
+DigraphNrVertices);
 
 SEMIGROUPS.PrincipalXCongruencePosetNC :=
   function(S,
@@ -63,7 +53,7 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
            SemigroupXCongruence,
            GeneratingPairsOfXSemigroupCongruence)
   local report, pairs, total, congs, nrcongs, children, parents, last_collected,
-        nr, pair, badcong, newchildren, newparents, newcong, i, pair1, c, p, po,
+        nr, pair, badcong, newchildren, newparents, newcong, i, pair1, c, p,
         poset;
 
   # Suppress reporting
@@ -125,19 +115,19 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
   SEMIGROUPS.OptionsRec(S).report := report;
 
   # We are done: make the object and return
-  po := Digraph(children);
-  SetInNeighbours(po, parents);
-  poset := Objectify(NewType(FamilyObj(children), IsCongruencePoset),
-                     rec(po := po));
+  poset := Digraph(children);
+  SetInNeighbours(poset, parents);
   SetCongruencesOfPoset(poset, congs);
+  SetDigraphVertexLabels(poset, congs);
   SetUnderlyingSemigroupOfCongruencePoset(poset, S);
+  SetFilterObj(poset, IsCongruencePoset);
   return poset;
 end;
 
 InstallMethod(MinimalCongruences,
 "for a congruence poset",
 [IsCongruencePoset],
-poset -> CongruencesOfPoset(poset){DigraphSinks(poset!.po)});
+poset -> CongruencesOfPoset(poset){DigraphSinks(poset)});
 
 InstallMethod(MinimalCongruences,
 "for a list or collection",
@@ -150,7 +140,7 @@ InstallMethod(JoinSemilatticeOfCongruences,
 function(poset, join_func)
   local children, parents, congs, princ_congs, nrcongs, S, report, length,
         found, ignore, start, i, j, newcong, badcong, newchildren, newparents,
-        k, c, p, po;
+        k, c, p;
 
   # Trivial case
   if Size(poset) = 0 then
@@ -158,8 +148,8 @@ function(poset, join_func)
   fi;
 
   # Extract the info
-  children := OutNeighboursMutableCopy(poset!.po);
-  parents := InNeighboursMutableCopy(poset!.po);
+  children := OutNeighboursMutableCopy(poset);
+  parents := InNeighboursMutableCopy(poset);
   congs := ShallowCopy(CongruencesOfPoset(poset));
   princ_congs := ShallowCopy(congs);
   nrcongs := Length(congs);
@@ -220,12 +210,12 @@ function(poset, join_func)
   SEMIGROUPS.OptionsRec(S).report := report;
 
   # We are done: make the object and return
-  po := Digraph(children);
-  SetInNeighbours(po, parents);
-  poset := Objectify(NewType(FamilyObj(children), IsCongruencePoset),
-                     rec(po := po));
+  poset := Digraph(children);
+  SetInNeighbours(poset, parents);
   SetCongruencesOfPoset(poset, congs);
+  SetDigraphVertexLabels(poset, congs);
   SetUnderlyingSemigroupOfCongruencePoset(poset, S);
+  SetFilterObj(poset, IsCongruencePoset);
   return poset;
 end);
 
@@ -239,11 +229,11 @@ function(coll, join_func)
 end);
 
 SEMIGROUPS.AddTrivialCongruence := function(poset, cong_func)
-  local S, children, parents, congs, nrcongs, i, po;
+  local S, children, parents, congs, nrcongs, i;
   # Extract the info
   S := UnderlyingSemigroupOfCongruencePoset(poset);
-  children := OutNeighboursMutableCopy(poset!.po);
-  parents := InNeighboursMutableCopy(poset!.po);
+  children := OutNeighboursMutableCopy(poset);
+  parents := InNeighboursMutableCopy(poset);
   congs := ShallowCopy(CongruencesOfPoset(poset));
 
   # Add the trivial congruence
@@ -256,12 +246,12 @@ SEMIGROUPS.AddTrivialCongruence := function(poset, cong_func)
   od;
 
   # Make the object and return
-  po := Digraph(children);
-  SetInNeighbours(po, parents);
-  poset := Objectify(NewType(FamilyObj(children), IsCongruencePoset),
-                     rec(po := po));
+  poset := Digraph(children);
+  SetInNeighbours(poset, parents);
   SetCongruencesOfPoset(poset, congs);
+  SetDigraphVertexLabels(poset, congs);
   SetUnderlyingSemigroupOfCongruencePoset(poset, S);
+  SetFilterObj(poset, IsCongruencePoset);
   return poset;
 end;
 
@@ -269,7 +259,7 @@ InstallMethod(PosetOfCongruences,
 "for a list or collection",
 [IsListOrCollection],
 function(coll)
-  local congs, nrcongs, children, parents, i, ignore, j, po, poset;
+  local congs, nrcongs, children, parents, i, ignore, j, poset;
   congs := AsList(coll);
   nrcongs := Length(congs);
 
@@ -295,14 +285,14 @@ function(coll)
   od;
 
   # We are done: make the object and return
-  po := Digraph(children);
-  SetInNeighbours(po, parents);
-  poset := Objectify(NewType(FamilyObj(children), IsCongruencePoset),
-                     rec(po := po));
+  poset := Digraph(children);
+  SetInNeighbours(poset, parents);
   SetCongruencesOfPoset(poset, congs);
+  SetDigraphVertexLabels(poset, congs);
   if nrcongs > 0 then
     SetUnderlyingSemigroupOfCongruencePoset(poset, Range(congs[1]));
   fi;
+  SetFilterObj(poset, IsCongruencePoset);
   return poset;
 end);
 
@@ -510,14 +500,15 @@ InstallMethod(DotString,
 "for a congruence poset and a record",
 [IsCongruencePoset, IsRecord],
 function(poset, opts)
-  local congs, S, symbols, i, nr, rel, str, j, k;
+  local out_nbs, congs, S, symbols, i, nr, rel, str, j, k;
+  out_nbs := OutNeighbours(poset);
   # If the user wants info, then change the node labels
   if opts.info = true then
     # The congruences are stored inside the poset object
     congs := CongruencesOfPoset(poset);
     S := Range(congs[1]);
-    symbols := EmptyPlist(Length(poset));
-    for i in [1 .. Length(poset)] do
+    symbols := EmptyPlist(Length(out_nbs));
+    for i in [1 .. Length(out_nbs)] do
       nr := NrEquivalenceClasses(congs[i]);
       if nr = 1 then
         symbols[i] := "U";
@@ -530,10 +521,10 @@ function(poset, opts)
       fi;
     od;
   else
-    symbols := List([1 .. Length(poset)], String);
+    symbols := List([1 .. Length(out_nbs)], String);
   fi;
 
-  rel := List([1 .. Length(poset)], x -> Filtered(poset[x], y -> x <> y));
+  rel := List([1 .. Length(out_nbs)], x -> Filtered(out_nbs[x], y -> x <> y));
   str := "";
 
   if Length(rel) < 40 then
