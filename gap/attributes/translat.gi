@@ -49,7 +49,7 @@ SEMIGROUPS.HashFunctionForTranslations := function(x, data)
 end;
 
 # Hash linked pairs as sum of underlying transformation hashes
-SEMIGROUPS.HashFunctionForTranslationalHullElements := function(x, data)
+SEMIGROUPS.HashFunctionForBitranslations := function(x, data)
     return (SEMIGROUPS.HashFunctionForTranslations(x![1], data)
       + SEMIGROUPS.HashFunctionForTranslations(x![2], data)) mod data + 1;
 end;
@@ -58,7 +58,9 @@ end;
 SEMIGROUPS.TranslationsSemigroupElements := function(T)
   local S;
   S := UnderlyingSemigroup(T);
-  if IsZeroSimpleSemigroup(S) or IsRectangularBand(S) then
+  if IsZeroSimpleSemigroup(S) or 
+      IsRectangularBand(S) or
+      SEMIGROUPS.IsNormalRMSOverGroup(S) then
     return Semigroup(GeneratorsOfSemigroup(T));
   elif HasGeneratorsOfSemigroup(S) then
     if IsLeftTranslationsSemigroup(T) then
@@ -72,17 +74,17 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
 end;
 
 # Choose how to calculate the elements of a translational hull
-SEMIGROUPS.TranslationalHullElements := function(H)
+SEMIGROUPS.Bitranslations := function(H)
   local S;
   S := UnderlyingSemigroup(H);
   if IsRectangularBand(S) then
     return Semigroup(GeneratorsOfSemigroup(H));
   elif IsZeroSimpleSemigroup(S) then
-    return SEMIGROUPS.TranslationalHullElementsOfZeroSimple(H);
+    return SEMIGROUPS.BitranslationsOfZeroSimple(H);
   elif SEMIGROUPS.IsNormalRMSOverGroup(S) then
     return SEMIGROUPS.RMSBitranslations(H);
   else
-    return SEMIGROUPS.TranslationalHullElementsByGenerators(H);
+    return SEMIGROUPS.BitranslationsByGenerators(H);
   fi;
 end;
 
@@ -147,7 +149,7 @@ end;
 # s*a_i f(a_k) = (s*a_i)g a_k and a_k f(a_i * s) = (a_k)g a_i * s,
 # as well as restriction by the translation condition if Sa_i intersect Sa_k is
 # non-empty or a_i S intersect a_k S is non-empty.
-SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
+SEMIGROUPS.BitranslationsByGenerators := function(H)
   local d, e, f, g, i, I, j, k, L, m, n, p, q, r, R, s, S, x, y,
         flinkedrestrictionatstage, fposrepk, ftransrestrictionatstage, fvalsi, 
         glinkedrestrictionatstage, gposrepk, gtransrestrictionatstage, gvalsi, 
@@ -504,7 +506,7 @@ SEMIGROUPS.TranslationalHullElementsByGenerators := function(H)
     k := bt(reject(k - 1));
   od;
   
-  Apply(linkedpairs, x -> TranslationalHullElementNC(H, 
+  Apply(linkedpairs, x -> BitranslationNC(H, 
                             LeftTranslationNC(L, Transformation(x[1])),
                             RightTranslationNC(R, Transformation(x[2]))));
   
@@ -593,9 +595,9 @@ function(S)
     fam := SEMIGROUPS.FamOfRMSBitranslationsByTriple();
     type := fam!.type;
   else
-    fam := NewFamily("TranslationalHullElementsFamily",
-                      IsTranslationalHullElement);
-    type := NewType(fam, IsTranslationalHullElement);
+    fam := NewFamily("BitranslationsFamily",
+                      IsBitranslation);
+    type := NewType(fam, IsBitranslation);
     fam!.type := type;
   fi;
   
@@ -604,7 +606,7 @@ function(S)
     IsWholeFamily and IsAttributeStoringRep), rec());
   
   # store the type of the elements in the semigroup
-  SetTypeTranslationalHullElements(H, type);
+  SetTypeBitranslations(H, type);
   SetTranslationalHullOfFamily(fam, H);
   SetUnderlyingSemigroup(H, S);
   SetTranslationalHull(S, H);
@@ -856,25 +858,25 @@ function(S)
   for s in A do
     l := LeftTranslationNC(L, MappingByFunction(S, S, x -> s * x));
     r := RightTranslationNC(R, MappingByFunction(S, S, x -> x * s));
-    Add(I, TranslationalHullElementNC(H, l, r));
+    Add(I, BitranslationNC(H, l, r));
   od;
   return Semigroup(I);
 end);
 
 # Creates a linked pair (l, r) from a left translation l and a right
 # translation r, as an element of a translational hull H.
-InstallGlobalFunction(TranslationalHullElement, 
+InstallGlobalFunction(Bitranslation, 
 function(H, l, r) 
   local S, L, R, dclasses, lclasses, rclasses, reps, d, i, j, z;
   
   if not IsTranslationalHull(H) then 
-    ErrorNoReturn("Semigroups: TranslationalHullElement: \n",
+    ErrorNoReturn("Semigroups: Bitranslation: \n",
           "the first argument must be a translational hull,");
   fi;
   
   if not (IsLeftTranslationsSemigroupElement(l) and 
             IsRightTranslationsSemigroupElement(r)) then
-    ErrorNoReturn("Semigroups: TranslationalHullElement: \n",
+    ErrorNoReturn("Semigroups: Bitranslation: \n",
           "the second argument must be a left translation ",
           "and the third argument must be a right translation,");
     return;
@@ -917,21 +919,21 @@ function(H, l, r)
   fi;
   
   if not (UnderlyingSemigroup(L) = S and UnderlyingSemigroup(R) = S) then
-      ErrorNoReturn("Semigroups: TranslationalHullElement: \n",
+      ErrorNoReturn("Semigroups: Bitranslation: \n",
             "each argument must have the same underlying semigroup,");
   fi;
   
   if ForAny(reps, t -> ForAny(reps, s -> s * (t^l) <> (s^r) * t)) then
-     ErrorNoReturn("Semigroups: TranslationalHullElement: \n",
+     ErrorNoReturn("Semigroups: Bitranslation: \n",
            "the translations given must form a linked pair,");
   fi;
   
-  return TranslationalHullElementNC(H, l, r);
+  return BitranslationNC(H, l, r);
 end);
 
-InstallGlobalFunction(TranslationalHullElementNC,
+InstallGlobalFunction(BitranslationNC,
 function(H, l, r)
-  return Objectify(TypeTranslationalHullElements(H), [l, r]);
+  return Objectify(TypeBitranslations(H), [l, r]);
 end);
 
 #############################################################################
@@ -1073,7 +1075,7 @@ function(H)
   
   for l in leftGens do
     for r in rightGens do
-      Add(gens, TranslationalHullElementNC(H, l, r));
+      Add(gens, BitranslationNC(H, l, r));
     od;
   od;
   
@@ -1132,7 +1134,7 @@ end);
 InstallMethod(AsList, "for a translational hull",
 [IsTranslationalHull and IsWholeFamily],
 function(H)
-  return Immutable(AsList(SEMIGROUPS.TranslationalHullElements(H)));
+  return Immutable(AsList(SEMIGROUPS.Bitranslations(H)));
 end);
 
 InstallMethod(Representative, "for a semigroup of left or right translations",
@@ -1154,7 +1156,7 @@ function(H)
   S := UnderlyingSemigroup(H);
   L := LeftTranslationsSemigroup(S);
   R := RightTranslationsSemigroup(S);
-  return TranslationalHullElement(H, Representative(L), Representative(R));
+  return Bitranslation(H, Representative(L), Representative(R));
 end);
 
 InstallMethod(ViewObj, "for a semigroup of left or right translations",
@@ -1221,10 +1223,10 @@ function(H)
 end);
 
 InstallMethod(ViewObj, "for a translational hull element", 
-[IsTranslationalHullElement], PrintObj);
+[IsBitranslation], PrintObj);
 
 InstallMethod(PrintObj, "for a translational hull element",
-[IsTranslationalHullElement],
+[IsBitranslation],
 function(t)
   local H;
   H := TranslationalHullOfFamily(FamilyObj(t));
@@ -1293,21 +1295,21 @@ end);
 
 InstallMethod(\*, "for translation hull elements (linked pairs)",
 IsIdenticalObj,
-[IsTranslationalHullElement, IsTranslationalHullElement],
+[IsBitranslation, IsBitranslation],
 function(x, y)
   return Objectify(FamilyObj(x)!.type, [x![1]*y![1], x![2]*y![2]]);
 end);
 
 InstallMethod(\=, "for translational hull elements (linked pairs)",
 IsIdenticalObj,
-[IsTranslationalHullElement, IsTranslationalHullElement],
+[IsBitranslation, IsBitranslation],
 function(x, y)
   return x![1] = y![1] and x![2] = y![2];
 end);
 
 InstallMethod(\<, "for translational hull elements (linked pairs)",
 IsIdenticalObj,
-[IsTranslationalHullElement, IsTranslationalHullElement],
+[IsBitranslation, IsBitranslation],
 function(x, y)
   return x![1] < y![1] or (x![1] = y![1] and x![2] < y![2]);
 end);
@@ -1357,14 +1359,14 @@ function(x, hashlen)
 end);
 
 InstallMethod(ChooseHashFunction, "for a translational hull element and int",
-[IsTranslationalHullElement, IsInt],
+[IsBitranslation, IsInt],
 function(x, hashlen)
-  return rec(func := SEMIGROUPS.HashFunctionForTranslationalHullElements,
+  return rec(func := SEMIGROUPS.HashFunctionForBitranslations,
              data := hashlen);
 end);
 
 InstallMethod(OneOp, "for a translational hull",
-[IsTranslationalHullElement],
+[IsBitranslation],
 function(h)
   local H, L, R, S, l, r;
   H := TranslationalHullOfFamily(FamilyObj(h));
@@ -1373,7 +1375,7 @@ function(h)
   R := RightTranslationsSemigroup(S);
   l := LeftTranslation(L, MappingByFunction(S, S, x -> x));
   r := RightTranslation(R, MappingByFunction(S, S, x -> x));
-  return TranslationalHullElement(H, l, r);
+  return Bitranslation(H, l, r);
 end);
 
 InstallMethod(OneOp, "for a semigroup of translations",
@@ -1391,14 +1393,12 @@ function(t)
   fi;
 end);
 
-InstallMethod(LeftPartOfBitranslation, "for a bitranslation",
-[IsBitranslation],
+InstallGlobalFunction(LeftPartOfBitranslation, "for a bitranslation",
 function(h)
   return h![1];
 end);
 
-InstallMethod(RightPartOfBitranslation, "for a bitranslation",
-[IsBitranslation],
+InstallGlobalFunction(RightPartOfBitranslation, "for a bitranslation",
 function(h)
   return h![2];
 end);

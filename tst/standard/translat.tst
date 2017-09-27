@@ -95,7 +95,7 @@ gap> GeneratorsOfSemigroup(H);
     <simple transformation semigroup of size 9, degree 7 with 3 generators>>, 
   <linked pair of translations on <simple transformation semigroup of size 9, 
      degree 7 with 3 generators>> ]
-gap> SEMIGROUPS.TranslationalHullElements(H);
+gap> SEMIGROUPS.Bitranslations(H);
 <semigroups of translational hull elements over <simple transformation 
  semigroup of size 9, degree 7 with 3 generators>>
 
@@ -246,7 +246,7 @@ gap> SEMIGROUPS.bruteforcetranshull := function(S)
 >           fi;
 >         od;
 >       if flag then 
->         Add(linkedpairs, TranslationalHullElement(H, l, r));
+>         Add(linkedpairs, Bitranslation(H, l, r));
 >       fi;
 >     od;
 >   od;
@@ -304,12 +304,12 @@ gap> OneOp(L.1) = LeftTranslation(L, MappingByFunction(S, S, x -> x));
 true
 gap> OneOp(R.1) = RightTranslation(R, MappingByFunction(S, S, x -> x));
 true
-gap> OneOp(Representative(H)) = TranslationalHullElement(
+gap> OneOp(Representative(H)) = Bitranslation(
 > H, OneOp(L.1), OneOp(R.1));
 true
 
 #T# Make sure the generic method and special methods agree for hulls
-gap> Semigroup(SEMIGROUPS.TranslationalHullElementsByGenerators(H)) = H;
+gap> Semigroup(SEMIGROUPS.BitranslationsByGenerators(H)) = H;
 true
 
 #T# TranslationalHull for semigroups which are not IsEnumerableSemigroupRep
@@ -370,6 +370,31 @@ gap> mat := TransposedMat([[G.1, G.2], [G.1, G.1], [G.2, G.3]]);;
 gap> R := Range(RMSNormalization(ReesMatrixSemigroup(G, mat)));;
 gap> Size(TranslationalHull(R));
 76
+
+#T# Some error testing for RMS
+gap> G := SmallGroup(12, 1);;
+gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> R := Range(RMSNormalization(S));;
+gap> G := UnderlyingSemigroup(R);
+<pc group of size 12 with 3 generators>
+gap> L := LeftTranslations(R);;
+gap> RT := RightTranslations(R);;
+gap> H := TranslationalHull(R);;
+gap> lgpfunc := [G.1*G.3*G.3, G.2];;
+gap> rgpfunc := [G.1*G.3*G.3, G.3*G.3, G.2];;
+gap> lt := Transformation([2,2]);;
+gap> rt := Transformation([3,3,3]);;
+gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, lt);;
+gap> r := RightTranslationOfNormalRMS(RT, rgpfunc, rt);;
+gap> h := BitranslationOfNormalRMS(H, l, r);
+<linked pair of translations on <simple semigroup of size 72, with 5 
+ generators>>
+gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, IdentityTransformation);;
+gap> h := BitranslationOfNormalRMS(H, l, r);
+Error, Semigroups: BitranslationOfNormalRMS: 
+the second and third arguments must be a linked left and right translation, re\
+spectively,
 
 #T# IsWholeFamily for translations semigroups
 gap> S := Semigroup([Transformation([1,1,2,4]), Transformation([3,1,3])]);;
@@ -477,21 +502,21 @@ gap> RT := RightTranslationsSemigroup(T);;
 gap> H := TranslationalHull(S);;
 gap> l := Representative(L);;
 gap> r := Representative(R);;
-gap> TranslationalHullElement(L, l, r);
-Error, Semigroups: TranslationalHullElement: 
+gap> Bitranslation(L, l, r);
+Error, Semigroups: Bitranslation: 
 the first argument must be a translational hull,
-gap> TranslationalHullElement(H, r, l);
-Error, Semigroups: TranslationalHullElement: 
+gap> Bitranslation(H, r, l);
+Error, Semigroups: Bitranslation: 
 the second argument must be a left translation and the third argument must be \
 a right translation,
 gap> l := LeftTranslation(L, MappingByFunction(S, S, x -> S.1 * x));;
 gap> r := RightTranslation(R, MappingByFunction(S, S, x -> x * S.2));;
-gap> TranslationalHullElement(H, l, r);
-Error, Semigroups: TranslationalHullElement: 
+gap> Bitranslation(H, l, r);
+Error, Semigroups: Bitranslation: 
 the translations given must form a linked pair,
 gap> r := Representative(RT);;
-gap> TranslationalHullElement(H, l, r);
-Error, Semigroups: TranslationalHullElement: 
+gap> Bitranslation(H, l, r);
+Error, Semigroups: Bitranslation: 
 each argument must have the same underlying semigroup,
 
 #T# Error Testing - Translational Hull Elements Without Generators
@@ -501,8 +526,8 @@ gap> R := RightTranslationsSemigroup(S);;
 gap> H := TranslationalHullSemigroup(S);;
 gap> l := LeftTranslationNC(L, IdentityTransformation);;
 gap> r := RightTranslationNC(R, Transformation([2,1,4,3,6,5]));;
-gap> TranslationalHullElement(H, l, r);
-Error, Semigroups: TranslationalHullElement: 
+gap> Bitranslation(H, l, r);
+Error, Semigroups: Bitranslation: 
 the translations given must form a linked pair,
 
 #T# Hashing translations
@@ -536,14 +561,22 @@ gap> Unbind(G);
 gap> Unbind(g);
 gap> Unbind(L);
 gap> Unbind(LS);
+gap> Unbind(Ll);
 gap> Unbind(l);
+gap> Unbind(lgpfunc);
+gap> Unbind(lt);
 gap> Unbind(H);
+gap> Unbind(HS);
 gap> Unbind(I);
 gap> Unbind(h);
 gap> Unbind(mat);
 gap> Unbind(R);
 gap> Unbind(RS);
+gap> Unbind(RT);
+gap> Unbind(Rl);
 gap> Unbind(r);
+gap> Unbind(rgpfunc);
+gap> Unbind(rt);
 gap> Unbind(S);
 gap> Unbind(T);
 gap> Unbind(SEMIGROUPS.bruteforcetranshull);

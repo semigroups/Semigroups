@@ -1,9 +1,9 @@
 <#GAPDoc Label="XTranslations">
   <ManSection>
-    <Func Name="LeftTranslations" Arg="sgrp"/>
-    <Func Name="RightTranslations" Arg="sgrp"/>
-    <Func Name="LeftTranslationsSemigroup" Arg="sgrp"/>
-    <Func Name="RightTranslationsSemigroup" Arg="sgrp"/>
+    <Func Name="LeftTranslations" Arg="S"/>
+    <Func Name="RightTranslations" Arg="S"/>
+    <Func Name="LeftTranslationsSemigroup" Arg="S"/>
+    <Func Name="RightTranslationsSemigroup" Arg="S"/>
     <Returns>The semigroup of left or right translations of the given semigroup</Returns>
     <Description>
       <C>LeftTranslations(<A>S</A>)</C> returns the semigroup of left 
@@ -66,8 +66,8 @@ Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
 
 <#GAPDoc Label="TranslationalHull">
   <ManSection>
-    <Attr Name="TranslationalHull" Arg="sgrp"/>    
-    <Func Name="TranslationalHullSemigroup" Arg="sgrp"/>
+    <Attr Name="TranslationalHull" Arg="S"/>    
+    <Func Name="TranslationalHullSemigroup" Arg="S"/>
     <Returns>The translational hull of the given semigroup</Returns>
     <Description>
       <C>TranslationalHull</C>(<A>S</A>)returns the translational hull of 
@@ -93,13 +93,13 @@ gap> Size(H);
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="TranslationalHullElement">
+<#GAPDoc Label="Bitranslation">
   <ManSection>
-    <Attr Name="TranslationalHullElement" Arg="H, l, r"/>
+    <Attr Name="Bitranslation" Arg="H, l, r"/>
     <Returns>The element of the translational hull corresponding to the given 
               left and right translations</Returns>
     <Description>
-      <C>TranslationalHullElement</C>(<A>H, l, r</A>) returns the linked pair 
+      <C>Bitranslation</C>(<A>H, l, r</A>) returns the linked pair 
       (<A>l, r</A>) of translations, belonging to the translational hull 
       <A>H</A>.
       <Example> <![CDATA[
@@ -113,7 +113,7 @@ gap> R := RightTranslationsSemigroup(S);;
 gap> l := LeftTranslation(L, MappingByFunction(S, S, s -> S.1 * s));;
 gap> r := RightTranslation(R, MappingByFunction(S, S, s -> s * S.1));;
 gap> H := TranslationalHull(S);;
-gap> x := TranslationalHullElement(H, l, r);
+gap> x := Bitranslation(H, l, r);
 <linked pair of translations on <0-simple regular semigroup with 4 
  generators>>
 ]]></Example>
@@ -148,12 +148,12 @@ false
   </ManSection>
 <#/GAPDoc>
 
-<#GAPDoc Label="IsTranslationalHullElement">
+<#GAPDoc Label="IsBitranslation">
   <ManSection>
-    <Filt Name="IsTranslationalHullElement" Type="Category"/>
+    <Filt Name="IsBitranslation" Type="Category"/>
     <Description>
-      All, and only, translational hull elements belong to 
-      <C>IsTranslationalHullElement</C>. This is a subcategory of 
+      All, and only, bitranslations
+      belong to <C>IsBitranslation</C>. This is a subcategory of 
       <Ref Filt="IsAssociativeElement" BookName="ref"/>.
       <Example> <![CDATA[
 gap> G := SmallGroup(4,2);;
@@ -166,8 +166,8 @@ gap> R := RightTranslations(S);;
 gap> l := OneOp(Representative(L));;
 gap> r := OneOp(Representative(R));;
 gap> H := TranslationalHull(S);;
-gap> x := TranslationalHullElement(H, l, r);;
-gap> IsTranslationalHullElement(x);
+gap> x := Bitranslation(H, l, r);;
+gap> IsBitranslation(x);
 true
 gap> IsTranslationsSemigroupElement(x);
 false
@@ -182,7 +182,7 @@ false
     <Filt Name="IsLeftTranslationsSemigroup" Type="Synonym"/>
     <Filt Name="IsRightTranslationsSemigroup" Type="Synonym"/>
     <Description>
-      <C>IsXTranslationsSemigroup(</C> is a synonym for 
+      <C>IsXTranslationsSemigroup</C> is a synonym for 
       <C>IsXTranslationsSemigroupElementCollection</C> and
       <C>IsSemigroup</C>.
       <Example><![CDATA[
@@ -205,7 +205,7 @@ false
     <Filt Name="IsTranslationalHull" Type="synonym"/>
     <Description>
       <C>IsTranslationalHull</C> is a synonym for <C>IsSemigroup</C> and
-      <Ref Filt="IsTranslationalHullElementCollection"/>
+      <Ref Filt="IsBitranslationCollection"/>
       <Example><![CDATA[
 gap> S := RectangularBand(3,3);;
 gap> H := TranslationalHull(S);;
@@ -229,6 +229,7 @@ false
       right translations or a translational hull, returns the semigroup which 
       elements of <A>S</A> act on.
       <Example><![CDATA[
+gap> S := RectangularBand(4, 5);;        
 gap> H := TranslationalHull(S);;
 gap> UnderlyingSemigroup(H) = S;
 true
@@ -280,15 +281,15 @@ true
 
 <#GAPDoc Label="InnerXTranslations">
   <ManSection>
-    <Attr Name="InnerLeftTranslations" Arg="sgrp"/>
-    <Attr Name="InnerRightTranslations" Arg="sgrp"/>
+    <Attr Name="InnerLeftTranslations" Arg="S"/>
+    <Attr Name="InnerRightTranslations" Arg="S"/>
     <Returns>The monoid of inner left or right translations of a semigroup.
     </Returns>
     <Description>
-      For a finite semigroup <A>S</A>, <C>InnerLeftTranslations</C><A>S</A> 
+      For a finite semigroup <A>S</A>, <C>InnerLeftTranslations</C>(<A>S</A>) 
       returns the inner left translations of S. These are the translations 
       defined by left multiplication by a fixed element of <A>S</A>.
-      <C>InnerRightTranslations</C><A>S</A> returns the inner right translations
+      <C>InnerRightTranslations</C>(<A>S</A>) returns the inner right translations
       of <A>S</A>. These are the translations defined by right multiplication by
       a fixed element of <A>S</A>.
       <Example><![CDATA[
@@ -311,11 +312,11 @@ true
 
 <#GAPDoc Label="InnerTranslationalHull">
   <ManSection>
-    <Attr Name="InnerTranslationalHull" Arg="sgrp"/>
+    <Attr Name="InnerTranslationalHull" Arg="S"/>
     <Returns>The monoid of linked inner left/right translations of a semigroup
     </Returns>
     <Description>
-      For a finite semigroup <A>S</A>, <C>InnerTranslationalHull</C><A>S</A> 
+      For a finite semigroup <A>S</A>, <C>InnerTranslationalHull</C>(<A>S</A>) 
       returns the inner bitranslations of S. These are the pairs of left and  
       right translations defined respectively by left multiplication 
       and right multiplication by the same fixed element of <A>S</A>.
@@ -330,4 +331,125 @@ gap> InnerTranslationalHull(S);
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="XPartOfBitranslation">
+  <ManSection>
+    <Attr Name="LeftPartOfBitranslation" Arg="x"/>
+    <Attr Name="RightPartOfBitranslation" Arg="x"/>
+    <Returns> The left or right translation component of <A>x</A>.
+    </Returns>
+    <Description>
+      For a bitranslation <A>b</A> consisting of a linked pair <A>(l, r)</A>,i
+      <C>LeftPartOfBitranslation</C><A>b</A> returns the left translation
+      <A>l</A>, and <C>RightPartOfBitranslation</C><A>b</A> returns the
+      right translation <A>r</A>.
+      <Example><![CDATA[
+gap> S := Semigroup([Transformation([4,2,3,3]),
+> Transformation([2,2,3,1])]);
+<transformation semigroup of degree 4 with 2 generators>
+gap> H := TranslationalHull(S);;
+gap> h := AsList(H)[2];;
+gap> l := LeftPartOfBitranslation(h);
+<left translation on <regular transformation semigroup of size 7, 
+ degree 4 with 2 generators>>
+gap> r := RightPartOfBitranslation(h);
+<right translation on <regular transformation semigroup of size 7, 
+ degree 4 with 2 generators>>
+gap> h = Bitranslation(H, l, r);
+true
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="IsXTranslationOfNormalRMS">
+  <ManSection>
+    <Filt Name="IsTranslationOfNormalRMS" Type="Category"/>
+    <Filt Name="IsLeftTranslationOfNormalRMS" Type="Category"/>
+    <Filt Name="IsRightTranslationOfNormalRMS" Type="Category"/>
+    <Filt Name="IsBitranslationOfNormalRMS" Type="Category"/>
+    <Description>
+        All and only those translations [bitranslations] of a normalised RMS 
+        created through their tuple [triple] representation lie in these 
+        categories.
+        <C>IsLeftTranslationOfNormalRMS</C> and
+        <C>IsRightTranslationOfNormalRMS</C> are subcategories 
+        of <C>IsTranslationOfNormalRMS</C>, which is a subcategory of 
+        <C>IsTranslationsSemigroupElement</C>.
+        <C>IsBitranslationOfNormalRMS</C> is a subcategory of 
+        <C>IsBitranslation</C>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="XTranslationOfNormalRMS">
+  <ManSection>
+    <Func Name="LeftTranslationOfNormalRMS" Arg="L, gpfunc, t"/>
+    <Func Name="RightTranslationOfNormalRMS" Arg="R, gpfunc, t"/>
+    <Returns>A left or right translation.</Returns>
+    <Description>
+      For a function from the rows [columns] of the underlying semigroup
+      (a normalised Rees matrix semigroup) of L [R] to the underlying group of
+      that semigroup, and a transformation on the rows [columns] of the 
+      semigroup, <C>LeftTranslationOfNormalRMS</C>(<A>L, gpfunc, t</A>) 
+      [<C>RightTranslationOfNormalRMS</C>(<A>R, gpfunc, t</A>) returns
+      the corresponding translation as defined in <Cite Key="Clifford1977a"/>. 
+      <Example><![CDATA[
+gap> G := SmallGroup(12, 1);;
+gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> R := Range(RMSNormalization(S));;
+gap> L := LeftTranslations(R);;
+gap> RT := RightTranslations(R);;
+gap> gpfunc := [G.1, G.2*G.1];
+[ f1, f1*f2 ]
+gap> t := IdentityTransformation;;
+gap> l := LeftTranslationOfNormalRMS(L, gpfunc, t);
+<left translation on <simple semigroup of size 72, with 5 generators>>
+gap> r := RightTranslationOfNormalRMS(RT, gpfunc, t);
+Error, Semigroups: RightTranslationOfNormalRMS: 
+the second argument must be a list of group elements of length equal t\
+o the number of columns of the underlying semigroup of the first argum\
+ent,
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="BitranslationOfNormalRMS">
+  <ManSection>
+    <Func Name="BitranslationOfNormalRMS" Arg="H, l, r"/>
+    <Returns>A bitranslation.</Returns>
+    <Description>
+      <C>BitranslationOfNormalRMS</C>(<A>H, l, r</A>) functions the same as
+      <C>Bitranslation</C> but employs a more efficient method for determining
+      whether the two translations are linked, special to a normalised RMS.
+      <Example><![CDATA[
+gap> G := SmallGroup(12, 1);;
+gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> R := Range(RMSNormalization(S));;
+gap> G := UnderlyingSemigroup(R);
+<pc group of size 12 with 3 generators>
+gap> L := LeftTranslations(R);;
+gap> RT := RightTranslations(R);;
+gap> H := TranslationalHull(R);;
+gap> lgpfunc := [G.1*G.3*G.3, G.2];;
+gap> rgpfunc := [G.1*G.3*G.3, G.3*G.3, G.2];;
+gap> lt := Transformation([2,2]);;
+gap> rt := Transformation([3,3,3]);;
+gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, lt);;
+gap> r := RightTranslationOfNormalRMS(RT, rgpfunc, rt);;
+gap> h := BitranslationOfNormalRMS(H, l, r);
+<linked pair of translations on <simple semigroup of size 72, with 5 
+ generators>>
+gap> l := LeftTranslationOfNormalRMS(L, 
+> lgpfunc, IdentityTransformation);;
+gap> h := BitranslationOfNormalRMS(H, l, r);
+Error, Semigroups: BitranslationOfNormalRMS: 
+the second and third arguments must be a linked left and right transla\
+tion, respectively,
+]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
 #EOF

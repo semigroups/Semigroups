@@ -51,6 +51,32 @@ function(S)
   return R;
 end);
 
+# For RMS, don't calculate AsList when LeftTranslations is called
+# Just get generators
+InstallMethod(LeftTranslations, "for a RMS semigroup",
+[IsEnumerableSemigroupRep and IsFinite and IsSimpleSemigroup],
+function(S) 
+  local L;
+  
+  L := LeftTranslationsSemigroup(S);
+  GeneratorsOfSemigroup(L);
+  
+  return L;
+end);
+
+# For RMS, don't calculate AsList when RightTranslations is called
+# Just get generators
+InstallMethod(RightTranslations, "for a RMS semigroup",
+[IsEnumerableSemigroupRep and IsFinite and IsSimpleSemigroup],
+function(S) 
+  local R;
+  
+  R := RightTranslationsSemigroup(S);
+  GeneratorsOfSemigroup(R);
+  
+  return R;
+end);
+
 # The generators are generators of partial transformation monoid to act on the
 # index sets, together with functions to the generators of the group.
 InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left/right translations of a finite 0-simple semigroup",
@@ -79,7 +105,13 @@ function(T)
   gens := [];
   G := UnderlyingSemigroup(reesMatSemi);
   groupGens := GeneratorsOfGroup(G);
-  
+ 
+  #It would be safer (and more correct) to use GeneratorsOfSemigroup here
+  #but the semigroup generated is the same in either case,
+  #from fewer generators is this case.
+  #If the generators of the partial transformation monoid are changed
+  #in the future, this could fail but would be an easy fix
+  #(Monoid -> Semigroup)
   for t in GeneratorsOfMonoid(PartialTransformationMonoid(n)) do
     if L then
       f := function(x)
@@ -165,6 +197,12 @@ function(T)
   G := UnderlyingSemigroup(reesMatSemi);
   groupGens := GeneratorsOfGroup(G);
   
+  #It would be safer (and more correct) to use GeneratorsOfSemigroup here
+  #but the semigroup generated is the same in either case,
+  #from fewer generators is this case.
+  #If the generators of the full transformation monoid are changed
+  #in the future, this could fail but would be an easy fix
+  #(Monoid -> Semigroup)
   for t in GeneratorsOfMonoid(FullTransformationMonoid(n)) do
     if L then
       f := function(x)
@@ -584,7 +622,7 @@ end;
 
 # Combine the previous methods to form the translational hull
 # Performance suffers greatly as the size of the group increases.
-SEMIGROUPS.TranslationalHullElementsOfZeroSimple := function(H)
+SEMIGROUPS.BitranslationsOfZeroSimple := function(H)
   local S, tt, failedcomponents, iterator, transfuncs, unboundpositions, gplist,
         L, R, linkedpairs, i, j, c, linkedpairfromfuncs, iso, inv, nrrows,
         nrcols, reesmatsemi, zero, fl, fr, l, r, t1, t2, funcs, fx, fy,
@@ -636,7 +674,7 @@ SEMIGROUPS.TranslationalHullElementsOfZeroSimple := function(H)
     r := RightTranslationNC(R, CompositionMapping(inv, MappingByFunction(
       reesmatsemi, reesmatsemi, fr), iso));
     
-    return TranslationalHullElementNC(H, l, r);
+    return BitranslationNC(H, l, r);
   end;
   
   
@@ -954,16 +992,15 @@ function(L, gpfunc, t)
           Size(gpfunc) = Size(Matrix(S)[1])) then
     ErrorNoReturn("Semigroups: LeftTranslationOfNormalRMS: \n",
                   "the second argument must be a list of group elements ",
-                  "of length equal to the number of columns of the ",
-                  "sandwich matrix of the underlying semigroup ",
-                  "of the first argument,");
+                  "of length equal to the number of rows of the ",
+                  "underlying semigroup of the first argument,");
   fi;
 
   if not (IsTransformation(t) and 
           DegreeOfTransformation(t) <= Size(Matrix(S)[1])) then
     ErrorNoReturn("Semigroups: LeftTranslationOfNormalRMS: \n",
                   "the third argument must be a transformation on ",
-                  "the column index of the sandwich matrix of the ",
+                  "the number of rows of the ",
                   "underlying semigroup of the first argument,");
   fi;
   
@@ -1005,16 +1042,15 @@ function(R, gpfunc, t)
           Size(gpfunc) = Size(Matrix(S))) then
     ErrorNoReturn("Semigroups: RightTranslationOfNormalRMS: \n",
                   "the second argument must be a list of group elements ",
-                  "of length equal to the number of rows of the ",
-                  "sandwich matrix of the underlying semigroup ",
-                  "of the first argument,");
+                  "of length equal to the number of columns of the ",
+                  "underlying semigroup of the first argument,");
   fi;
 
   if not (IsTransformation(t) and 
           DegreeOfTransformation(t) <= Size(Matrix(S))) then
     ErrorNoReturn("Semigroups: RightTranslationOfNormalRMS: \n",
                   "the third argument must be a transformation on ",
-                  "the row index of the sandwich matrix of the ",
+                  "the number of columns of the ",
                   "underlying semigroup of the first argument,");
   fi;
   
@@ -1041,10 +1077,10 @@ SEMIGROUPS.BitranslationOfNormalRMSByTripleNC := function(H, a, transI, transJ)
   leftgpfunc := List([1 .. I], i -> a * P[1^transJ][i]);
   rightgpfunc := List([1 .. J], j -> P[j][1^transI] * a);
   
-  l := LeftTranslationOfNormalRMSNC(L, leftgpfunc, transI);
-  r := RightTranslationOfNormalRMSNC(R, rightgpfunc, transJ);
+  l := LeftTranslationOfNormalRMS(L, leftgpfunc, transI);
+  r := RightTranslationOfNormalRMS(R, rightgpfunc, transJ);
 
-  return BitranslationOfNormalRMSNC(H, l, r);
+  return BitranslationOfNormalRMS(H, l, r);
 end;
 
 InstallGlobalFunction(BitranslationOfNormalRMS,
@@ -1082,7 +1118,7 @@ end);
 
 InstallGlobalFunction(BitranslationOfNormalRMSNC,
 function(H, l, r)
-  return Objectify(TypeTranslationalHullElements(H), [l, r]);
+  return Objectify(TypeBitranslations(H), [l, r]);
 end);
 
 ############################################################################
@@ -1186,4 +1222,20 @@ IsIdenticalObj,
 [IsBitranslationOfNormalRMS, IsBitranslationOfNormalRMS],
 function(x, y)
   return x![1] < y![1] or (x![1] = y![1] and x![2] < y![2]);
+end);
+
+InstallMethod(\^, "for a semigroup element and a translation",
+[IsReesMatrixSemigroupElement, IsTranslationOfNormalRMS],
+function(x, t)
+  if IsLeftTranslationOfNormalRMS(t) then
+    return RMSElementNC(ReesMatrixSemigroupOfFamily(FamilyObj(x)),
+                        x![1]^t![2],
+                        t![1][x![1]] * x![2],
+                        x![3]);
+  else
+    return RMSElementNC(ReesMatrixSemigroupOfFamily(FamilyObj(x)),
+                        x![1],
+                        x![2] * t![1][x![3]],
+                        x![3]^t![2]);
+  fi;
 end);

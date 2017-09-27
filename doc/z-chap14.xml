@@ -295,21 +295,70 @@
     <Heading>
       Translations and translational hulls
     </Heading>
-    All methods in this section are only applicable to finite semigroups.
+    In this section we describe the functionality in Semigroups for working with
+    translations of semigroups. The notation used (as well as a number of results)
+    is based on <Cite Key="Petrich1970a"/>. Translations are of interest mainly 
+    due to their role in ideal extensions. A description of this role can also 
+    be found in <Cite Key="Petrich1970a"/>.  
+    The implementation of translations in this package is only applicable
+    to finite semigroups.
+    
+    For a semigroup <C>S</C>, a transformation <M>\lambda</M> of <C>S</C> 
+    (written on the left) is a left translation if for all <C>s, t</C> in <C>S</C>
+    <M>\lambda (s)t = \lambda (st) </M>.<P/>
+
+    A right translation <M>\rho</M> (written on the right) is defined analogously.<P/>
+
+    The set <C>L</C> of left translations of <C>S</C> is a semigroup under 
+    composition of functions, as is the set <C>R</C> of right translations.<P/>
+
+    The associativity of <C>S</C> guarantees that left [right] multiplication 
+    by any element <C>s</C> of <C>S</C> represents a left [right] translation; this is the
+    <E>inner</E> left [right] translation <M>\lambda_s</M> [<M>\rho_s</M>]. 
+    The inner left [right] translations form an ideal in <C>L</C> [<C>R</C>].<P/>
+
+    A left translation <M>\lambda</M> and right translation <M>\rho</M> are <E>linked</E>
+    if for all <C>s, t</C> in <C>S</C>,
+
+    <M>s\lambda(t) = (s)\rho t</M>.<P/>
+
+    A pair of linked translations is called a <E>bitranslation</E>. The set of all 
+    bitranslations forms a semigroup <C>H</C> called the <E>translational hull</E> 
+    of <C>S</C> where the operation is componentwise. If the components are inner
+    translations corresponding to multiplication by the same element, then the
+    bitranslation is <E>inner</E>. The inner bitranslations form an ideal of
+    the translational hull.
+
     <#Include Label = "XTranslations">
     <#Include Label = "XTranslation">
     <#Include Label = "InnerXTranslations">
     <#Include Label = "TranslationalHull">
-    <#Include Label = "TranslationalHullElement">
+    <#Include Label = "Bitranslation">
+    <#Include Label = "XPartOfBitranslation">
     <#Include Label = "InnerTranslationalHull">
     <#Include Label = "IsXTranslationsSemigroupElement">
-    <#Include Label = "IsTranslationalHullElement">
+    <#Include Label = "IsBitranslation">
     <#Include Label = "IsXTranslationsSemigroup">
     <#Include Label = "IsTranslationalHull">
     <#Include Label = "UnderlyingSemigroup">
     <#Include Label = "XTranslationsSemigroupOfFamily">
     <#Include Label = "TranslationalHullOfFamily">
-    
+
+    <Heading>
+        Translations of normalised Rees matrix semigroups
+    </Heading>
+    Translations [bitranslations] of a normalized Rees matrix semigroup
+    <C>T</C> (see <Ref Attr = "RMSNormalization"/>) over a group <C>G</C> 
+    can be represented through special tuples [triples], which can be generated 
+    very quickly compared to arbitrary translations [bitranslations]. 
+    For left [right] translations these tuples consist of a 
+    function from the row [column] indices of <C>T</C> to G and a transformation
+    on the row [column] indices of <C>T</C>. Details of how these tuples act
+    on <C>T</C> may be found in <Cite Key="Clifford1977a"/>. 
+
+    <#Include Label = "XTranslationOfNormalRMS">
+    <#Include Label = "BitranslationOfNormalRMS">
+    <#Include Label = "IsXTranslationOfNormalRMS">
   </Section>
 
   <!--**********************************************************************-->

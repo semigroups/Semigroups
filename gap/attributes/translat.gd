@@ -14,20 +14,20 @@ DeclareCategory("IsLeftTranslationsSemigroupElement",
                 IsTranslationsSemigroupElement);
 DeclareCategory("IsRightTranslationsSemigroupElement",
                 IsTranslationsSemigroupElement);
-DeclareCategory("IsTranslationalHullElement", IsAssociativeElement and
+DeclareCategory("IsBitranslation", IsAssociativeElement and
                   IsMultiplicativeElementWithOne);
 
 DeclareCategoryCollections("IsTranslationsSemigroupElement");
 DeclareCategoryCollections("IsLeftTranslationsSemigroupElement");
 DeclareCategoryCollections("IsRightTranslationsSemigroupElement");
-DeclareCategoryCollections("IsTranslationalHullElement" );
+DeclareCategoryCollections("IsBitranslation");
 
 DeclareGlobalFunction("LeftTranslation");
 DeclareGlobalFunction("LeftTranslationNC");
 DeclareGlobalFunction("RightTranslation");
 DeclareGlobalFunction("RightTranslationNC");
-DeclareGlobalFunction("TranslationalHullElement");
-DeclareGlobalFunction("TranslationalHullElementNC");
+DeclareGlobalFunction("Bitranslation");
+DeclareGlobalFunction("BitranslationNC");
 DeclareGlobalFunction("LeftTranslationsSemigroup");
 DeclareGlobalFunction("RightTranslationsSemigroup");
 DeclareGlobalFunction("TranslationalHullSemigroup");
@@ -41,7 +41,7 @@ DeclareSynonym("IsRightTranslationsSemigroup", IsSemigroup and
 DeclareSynonym("IsTranslationsSemigroup", IsSemigroup and
                   IsTranslationsSemigroupElementCollection);
 DeclareSynonym("IsTranslationalHull", IsSemigroup and 
-                  IsTranslationalHullElementCollection);
+                  IsBitranslationCollection);
 
 DeclareAttribute("UnderlyingSemigroup", IsTranslationsSemigroup);
 DeclareAttribute("UnderlyingSemigroup", IsTranslationalHull);
@@ -54,9 +54,7 @@ DeclareAttribute("TypeLeftTranslationsSemigroupElements",
                  IsLeftTranslationsSemigroup);
 DeclareAttribute("TypeRightTranslationsSemigroupElements", 
                  IsRightTranslationsSemigroup);
-DeclareAttribute("TypeTranslationalHullElements",
-                 IsTranslationalHull);
-
+DeclareAttribute("TypeBitranslations", IsTranslationalHull);
 
 DeclareAttribute("LeftTranslations", IsEnumerableSemigroupRep and IsFinite);
 DeclareAttribute("InnerLeftTranslations", IsEnumerableSemigroupRep and IsFinite);
