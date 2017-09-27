@@ -21,11 +21,12 @@
       <C>cong1</C> is a subrelation (a refinement) of <C>cong2</C>. The
       congruences in a congruence poset can be left, right, or two-sided. <P/>
 
-      A congruence poset is displayed as a list of lists, which describes the
-      partial order of its congruences: the integer <C>j</C> appears in list
-      <C>i</C> if and only if the congruence numbered <C>j</C> is a subrelation
-      of the congruence numbered <C>i</C>.  The list of congruences can be
-      obtained using <Ref Attr = "CongruencesOfPoset"/>.
+      A congruence poset is a digraph
+      (see <Ref Filt = "IsDigraph" BookName = "Digraphs"/>) with a vertex for
+      each congruence, and an edge from vertex <C>i</C> to vertex <C>j</C> if
+      and only if the congruence numbered <C>j</C> is a subrelation of the
+      congruence numbered <C>i</C>.  The list of congruences can be obtained
+      using <Ref Attr = "CongruencesOfPoset"/>. <P/>
 
       Congruence posets can be created using <Ref Oper = "PosetOfCongruences"/>,
       <Ref Oper = "JoinSemilatticeOfCongruences"
@@ -72,12 +73,10 @@ gap> Size(poset);
           Label = "for a semigroup and a multiplicative element collection"/>
     <Returns>A list of lists.</Returns>
     <Description>
-      If <A>S</A> is a semigroup, then <C>LatticeOfCongruences</C> gives a list
-      of lists showing how the congruences of <A>S</A> are contained in each
-      other.  The congruence numbered <M>i</M> is a subcongruence of the
-      congruence numbered <M>j</M> if and only if <M>i</M> is in the <M>j</M>th
-      list.  The numbering is according to the order in
-      <Ref Attr = "CongruencesOfPoset"/>. <P/>
+      If <A>S</A> is a semigroup, then <C>LatticeOfCongruences</C> gives a
+      congruence poset object containing all the congruences of <A>S</A> and
+      information about how they are contained in each other.
+      See <Ref Filt = "IsCongruencePoset"/> for more details. <P/>
 
       <C>LatticeOfLeftCongruences</C> and <C>LatticeOfRightCongruences</C> do
       the same thing for left and right congruences respectively. <P/>
