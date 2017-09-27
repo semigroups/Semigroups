@@ -747,15 +747,15 @@ false</pre></div>
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                [[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);</span>
-[ &lt;universal semigroup congruence over 
-    &lt;Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )&gt;&gt;, 
-  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-      Sym( [ 1 .. 3 ] )&gt; with linked triple (1,2,2)&gt;, 
-  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-      Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;, 
-  &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
-      Sym( [ 1 .. 3 ] )&gt; with linked triple (S3,2,2)&gt; ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(congs);</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(congs, NrCongruenceClasses);</span>
+[ 1, 5, 9, 25 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pos := Position(congs, UniversalSemigroupCongruence(S));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs[pos];</span>
+&lt;universal semigroup congruence over 
+&lt;Rees 0-matrix semigroup 2x2 over Sym( [ 1 .. 3 ] )&gt;&gt;</pre></div>
 
 <p><a id="X7838738987B2DB41" name="X7838738987B2DB41"></a></p>
 
@@ -1089,10 +1089,13 @@ th 0 generating pairs&gt; ]
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong1 := CongruencesOfSemigroup(S)[3];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := CongruencesOfSemigroup(S)[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong1 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 2, 3), 1),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                    RMSElement(S, 1, (), 1)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := SemigroupCongruence(S, []);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubrelation(cong1, cong2);</span>
-true</pre></div>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubrelation(cong2, cong1);</span>
+false</pre></div>
 
 <p><a id="X83878AED7A8E75BE" name="X83878AED7A8E75BE"></a></p>
 
@@ -1109,10 +1112,13 @@ true</pre></div>
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong1 := CongruencesOfSemigroup(S)[3];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := CongruencesOfSemigroup(S)[2];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong1 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 2, 3), 1),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                    RMSElement(S, 1, (), 1)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := SemigroupCongruence(S, []);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSuperrelation(cong1, cong2);</span>
-false</pre></div>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSuperrelation(cong2, cong1);</span>
+true</pre></div>
 
 <p><a id="X7952A5A5789C6F60" name="X7952A5A5789C6F60"></a></p>
 
@@ -1127,8 +1133,10 @@ false</pre></div>
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MeetSemigroupCongruences(congs[2], congs[3]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong1 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 2, 3), 1),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                    RMSElement(S, 1, (), 1)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := SemigroupCongruence(S, []);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MeetSemigroupCongruences(cong1, cong2);</span>
 &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
   Sym( [ 1 .. 3 ] )&gt; with linked triple (1,2,2)&gt;</pre></div>
 
@@ -1147,8 +1155,10 @@ false</pre></div>
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(SymmetricGroup(3),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[[(), (1, 3, 2)], [(1, 2), 0]]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congs := CongruencesOfSemigroup(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinSemigroupCongruences(congs[2], congs[3]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong1 := SemigroupCongruence(S, [RMSElement(S, 1, (1, 2, 3), 1),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                                    RMSElement(S, 1, (), 1)]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cong2 := SemigroupCongruence(S, []);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JoinSemigroupCongruences(cong1, cong2);</span>
 &lt;semigroup congruence over &lt;Rees 0-matrix semigroup 2x2 over 
   Sym( [ 1 .. 3 ] )&gt; with linked triple (3,2,2)&gt;</pre></div>
 
