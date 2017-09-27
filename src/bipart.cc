@@ -357,7 +357,7 @@ Obj BIPART_LEFT_PROJ(Obj self, Obj x) {
       (*blocks)[i + deg] = _BUFFER_size_t[xx->at(i)];
     } else {
       _BUFFER_size_t[xx->at(i)] = next;
-      (*blocks)[i + deg]           = next;
+      (*blocks)[i + deg]        = next;
       next++;
     }
   }
@@ -427,7 +427,7 @@ Obj BIPART_STAR(Obj self, Obj x) {
       (*blocks)[i] = _BUFFER_size_t[xx->at(i + deg)];
     } else {
       _BUFFER_size_t[xx->at(i + deg)] = next;
-      (*blocks)[i]                       = next;
+      (*blocks)[i]                    = next;
       next++;
     }
   }
@@ -439,7 +439,7 @@ Obj BIPART_STAR(Obj self, Obj x) {
       (*blocks)[i + deg] = _BUFFER_size_t[xx->at(i)];
     } else {
       _BUFFER_size_t[xx->at(i)] = next;
-      (*blocks)[i + deg]           = next;
+      (*blocks)[i + deg]        = next;
       next++;
     }
   }
@@ -505,8 +505,8 @@ Obj BIPART_LAMBDA_CONJ(Obj self, Obj x, Obj y) {
     if (!seen[xx->at(i)]) {
       seen[xx->at(i)] = true;
       if (xx->at(i) < nr_left_blocks) {  // connected block
-        ptrp[next]                = lookup[xx->at(i)];
-        src[next]                 = true;
+        ptrp[next]             = lookup[xx->at(i)];
+        src[next]              = true;
         dst[lookup[xx->at(i)]] = true;
       }
       next++;
@@ -597,7 +597,7 @@ Obj BIPART_STAB_ACTION(Obj self, Obj x, Obj p) {
   for (size_t i = deg; i < 2 * deg; i++) {
     if (tab1[xx->at(i)] == (size_t) -1) {
       tab1[xx->at(i)] = q[next];
-      tab2[next]         = xx->at(i);
+      tab2[next]      = xx->at(i);
       next++;
     }
   }
