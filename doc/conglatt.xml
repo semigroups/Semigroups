@@ -35,20 +35,21 @@
       <Example><![CDATA[
 gap> S := SymmetricInverseMonoid(2);;
 gap> poset := LatticeOfCongruences(S);
-[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ]
+<poset of 4 congruences over <symmetric inverse monoid of degree 2>>
 gap> IsCongruencePoset(poset);
 true
-gap> poset[3];
-[ 1, 2, 4 ]
+gap> IsDigraph(poset);
+true
+gap> OutNeighbours(poset);
+[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ]
 gap> T := FullTransformationMonoid(3);;
 gap> congs := PrincipalCongruencesOfSemigroup(T);;
 gap> poset := JoinSemilatticeOfCongruences(congs,
 >                                          JoinSemigroupCongruences);
-[ [ 4, 6 ], [ 1, 3, 4, 5, 6 ], [ 1, 4, 5, 6 ], [ 6 ], [ 1, 4, 6 ], 
-  [  ] ]
+<poset of 6 congruences over <full transformation monoid of degree 3>>
 gap> IsCongruencePoset(poset);
 true
-gap> Length(poset);
+gap> Size(poset);
 6
 ]]></Example>
     </Description>
@@ -91,17 +92,22 @@ gap> Length(poset);
       <Example><![CDATA[
 gap> S := OrderEndomorphisms(2);;
 gap> LatticeOfCongruences(S);
-[ [  ], [ 1, 3 ], [ 1 ] ]
+<poset of 3 congruences over <regular transformation monoid 
+ of size 3, degree 2 with 2 generators>>
 gap> LatticeOfLeftCongruences(S);
-[ [  ], [ 1, 3 ], [ 1 ] ]
+<poset of 3 congruences over <regular transformation monoid 
+ of size 3, degree 2 with 2 generators>>
 gap> LatticeOfRightCongruences(S);
+<poset of 5 congruences over <regular transformation monoid 
+ of size 3, degree 2 with 2 generators>>
+gap> OutNeighbours(LatticeOfRightCongruences(S));
 [ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
 gap> S := FullTransformationMonoid(4);;
 gap> restriction := [Transformation([1, 1, 1, 1]),
 >                    Transformation([1, 1, 1, 2]),
 >                    Transformation([1, 1, 1, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
-[ [  ], [ 1 ] ]
+<poset of 2 congruences over <full transformation monoid of degree 4>>
 ]]></Example>
     </Description>
   </ManSection>
@@ -146,16 +152,17 @@ gap> latt := LatticeOfCongruences(S, restriction);
 gap> S := Semigroup([Transformation([1, 3, 1]),
 >                    Transformation([2, 3, 3])]);;
 gap> PosetOfPrincipalLeftCongruences(S);
-[ [ 8, 11 ], [  ], [ 1, 2, 8, 11, 12 ], [ 2, 7, 10, 11, 12 ], [ 2 ], 
-  [ 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12 ], [ 10, 12 ], [ 11 ], 
-  [ 2, 11, 12 ], [ 12 ], [  ], [  ] ]
+<poset of 12 congruences over <transformation semigroup of size 11, 
+ degree 3 with 2 generators>>
 gap> PosetOfPrincipalCongruences(S);
-[ [ 2, 3 ], [  ], [ 2 ] ]
+<poset of 3 congruences over <transformation semigroup of size 11, 
+ degree 3 with 2 generators>>
 gap> restriction := [Transformation([3, 2, 3]),
 >                    Transformation([3, 1, 3]),
 >                    Transformation([2, 2, 2])];;
 gap> poset := PosetOfPrincipalRightCongruences(S, restriction);
-[ [ 2, 3 ], [  ], [  ] ]
+<poset of 3 congruences over <transformation semigroup of size 11, 
+ degree 3 with 2 generators>>
 ]]></Example>
     </Description>
   </ManSection>
@@ -177,7 +184,8 @@ gap> poset := PosetOfPrincipalRightCongruences(S, restriction);
       <Example><![CDATA[
 gap> S := OrderEndomorphisms(2);;
 gap> latt := LatticeOfRightCongruences(S);
-[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+<poset of 5 congruences over <regular transformation monoid 
+ of size 3, degree 2 with 2 generators>>
 gap> CongruencesOfPoset(latt);
 [ <right semigroup congruence over <regular transformation monoid 
      of size 3, degree 2 with 2 generators> with 0 generating pairs>, 
@@ -206,7 +214,8 @@ gap> CongruencesOfPoset(latt);
 gap> S := OrderEndomorphisms(2);
 <regular transformation monoid of degree 2 with 2 generators>
 gap> latt := LatticeOfRightCongruences(S);
-[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+<poset of 5 congruences over <regular transformation monoid 
+ of size 3, degree 2 with 2 generators>>
 gap> UnderlyingSemigroupOfCongruencePoset(latt) = S;
 true
 ]]></Example>
@@ -237,7 +246,10 @@ gap> pair2 := [IdentityTransformation, Transformation([2, 2])];;
 gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair2),
 >             RightSemigroupCongruence(S, [])];;
-gap> PosetOfCongruences(coll);
+gap> poset := PosetOfCongruences(coll);
+<poset of 3 congruences over <regular transformation monoid of 
+ degree 2 with 2 generators>>
+gap> OutNeighbours(poset);
 [ [ 3 ], [ 3 ], [  ] ]
 ]]></Example>
     </Description>
@@ -277,7 +289,7 @@ gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair2),
 >             RightSemigroupCongruence(S, pair3)];;
 gap> JoinSemilatticeOfCongruences(coll, JoinRightSemigroupCongruences);
-[ [  ], [  ], [ 1 ], [ 1, 2, 3 ] ]
+<poset of 4 congruences over <symmetric inverse monoid of degree 2>>
 ]]></Example>
     </Description>
   </ManSection>
@@ -321,7 +333,7 @@ gap> MinimalCongruences(coll);
   <right semigroup congruence over <symmetric inverse monoid of degree\
  2> with 1 generating pairs> ]
 gap> poset := LatticeOfCongruences(S);
-[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ]
+<poset of 4 congruences over <symmetric inverse monoid of degree 2>>
 gap> MinimalCongruences(poset);
 [ <semigroup congruence over <symmetric inverse monoid of degree 2> wi\
 th 0 generating pairs> ]
