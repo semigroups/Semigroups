@@ -11,45 +11,6 @@
 # This file contains methods for every operation/attribute/property that is
 # specific to semigroups of partial perms.
 
-InstallMethod(DirectProductOp, "for a list and a partial perm inverse monoid",
-[IsList, IsPartialPermMonoid and IsInverseMonoid],
-function(list, S)
-  local gens, deg, n, m, func, i, x;
-
-  # Check the arguments.
-  if IsEmpty(list) then
-    ErrorNoReturn("Semigroups: DirectProductOp: usage,\n",
-                  "the first argument must be a non-empty list,");
-  elif ForAny(list,
-              T -> not (IsPartialPermMonoid(T) and IsInverseMonoid(T))) then
-    TryNextMethod();
-  fi;
-
-  gens := [];
-  deg  := Sum(List(list, DegreeOfPartialPermSemigroup));
-  n := 0;
-
-  for i in [1 .. Length(list)] do
-    m := DegreeOfPartialPermSemigroup(list[i]);
-    for x in GeneratorsOfInverseMonoid(list[i]) do
-      func := function(i)
-        local j;
-        if i <= n or i > n + m then
-          return i;
-        fi;
-        j := (i - n) ^ x;
-        if j = 0 then
-          return 0;
-        fi;
-        return j + n;
-      end;
-      Add(gens, PartialPerm(List([1 .. deg], func)));
-    od;
-    n := n + m;
-  od;
-  return InverseMonoid(gens);
-end);
-
 #############################################################################
 ## Random
 #############################################################################

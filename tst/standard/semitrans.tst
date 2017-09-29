@@ -2465,67 +2465,6 @@ gap> S := Semigroup([
 gap> RepresentativeOfMinimalIdeal(S);
 Transformation( [ 2, 3, 4, 5, 1 ] )
 
-#T# Test DirectProduct for non-monoids
-gap> S := ZeroSemigroup(3);
-<commutative non-regular transformation semigroup of size 3, degree 4 with 2 
- generators>
-gap> T := DirectProduct(S, S);
-<commutative transformation semigroup of size 9, degree 8 with 8 generators>
-gap> T := Semigroup(T);
-<transformation semigroup of degree 8 with 8 generators>
-gap> Size(T);
-9
-gap> DirectProductOp([], Monoid(Transformation([1, 1])));
-Error, Semigroups: DirectProductOp: usage,
-the first argument must be a non-empty list,
-gap> DirectProductOp([], Semigroup(Transformation([1, 1])));
-Error, Semigroups: DirectProductOp: usage,
-the first argument must be a non-empty list,
-gap> DirectProductOp([Semigroup(PartialPerm([1 .. 3]))],
-> Semigroup(Transformation([1, 1])));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 3rd choice method found for `DirectProductOp' on 2 arguments
-gap> DirectProductOp([Semigroup(PartialPerm([1 .. 3]))],
-> Monoid(Transformation([1, 1])));
-Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 4th choice method found for `DirectProductOp' on 2 arguments
-gap> S := DirectProduct(FullTransformationMonoid(3), FullTransformationMonoid(3));
-<transformation monoid of size 729, degree 6 with 6 generators>
-gap> Size(S) = 27 ^ 2;
-true
-gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]),
-> Transformation([1, 1, 3, 3, 3]));;
-gap> S := DirectProduct(S, S);
-<transformation semigroup of degree 10 with 4 generators>
-gap> S := DirectProduct(Semigroup(Transformation([1, 2, 3, 3, 3])),
->                       Semigroup(Transformation([2, 1])));;
-gap> Elements(S);
-[ Transformation( [ 1, 2, 3, 3, 3 ] ), 
-  Transformation( [ 1, 2, 3, 3, 3, 7, 6 ] ) ]
-gap> Size(S);
-2
-gap> S := DirectProduct(Semigroup(Transformation([2, 1])),
->                       Semigroup(Transformation([1, 2, 3, 3, 3])));;
-gap> Elements(S);
-[ Transformation( [ 1, 2, 3, 4, 5, 5, 5 ] ), 
-  Transformation( [ 2, 1, 3, 4, 5, 5, 5 ] ) ]
-gap> Size(S);
-2
-gap> S := DirectProduct(Semigroup(Transformation([1, 2, 3, 3, 3])),
->                       Semigroup(Transformation([2, 1])), 
->                       Semigroup(Transformation([1, 1, 2, 3, 4])));;
-gap> Size(S);
-8
-gap> Elements(S);
-[ Transformation( [ 1, 2, 3, 3, 3, 6, 7, 8, 8, 8, 8, 8 ] ), 
-  Transformation( [ 1, 2, 3, 3, 3, 6, 7, 8, 8, 8, 8, 9 ] ), 
-  Transformation( [ 1, 2, 3, 3, 3, 6, 7, 8, 8, 8, 9, 10 ] ), 
-  Transformation( [ 1, 2, 3, 3, 3, 6, 7, 8, 8, 9, 10, 11 ] ), 
-  Transformation( [ 1, 2, 3, 3, 3, 7, 6, 8, 8, 8, 8, 8 ] ), 
-  Transformation( [ 1, 2, 3, 3, 3, 7, 6, 8, 8, 8, 8, 9 ] ), 
-  Transformation( [ 1, 2, 3, 3, 3, 7, 6, 8, 8, 8, 9, 10 ] ), 
-  Transformation( [ 1, 2, 3, 3, 3, 7, 6, 8, 8, 9, 10, 11 ] ) ]
-
 # Test RandomSemigroup
 gap> RandomSemigroup(IsTransformationSemigroup);;
 gap> RandomSemigroup(IsTransformationSemigroup, 2);;

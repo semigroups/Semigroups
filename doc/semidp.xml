@@ -1,0 +1,58 @@
+#############################################################################
+##
+#W  semidp.xml
+#Y  Copyright (C) 2017                                     Wilf A. Wilson
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="DirectProduct">
+<ManSection>
+  <Func Name = "DirectProduct" Arg = "S[, T, ...]"/>
+  <Oper Name = "DirectProductOp" Arg = "list, S"/>
+  <Returns>A transformation semigroup.</Returns>
+  <Description>
+    The function <C>DirectProduct</C> takes an arbitrary positive number of
+    finite semigroups, and returns a semigroup that is isomorphic to their
+    direct product. <P/>
+
+    If these finite semigroups are either all partial perm semigroups, or all
+    bipartition semigroups, or all PBR semigroups, then <C>DirectProduct</C>
+    returns a semigroup of the same type. Otherwise, <C>DirectProduct</C>
+    returns a transformation semigroup. <P/>
+
+    The operation <C>DirectProductOp</C> is included for consistency with the
+    &GAP; library (see <Ref Oper="DirectProductOp" BookName="ref"/>).  It takes
+    exactly two arguments, namely a non-empty list <A>list</A> of semigroups and
+    one of these semigroups, <A>S</A>, and returns the same result as
+    <C>CallFuncList(DirectProduct, <A>list</A>)</C>. <P/>
+
+    If <C>D</C> is the direct product of a collection of semigroups, then an
+    embedding of the <C>i</C>th factor into <C>D</C> can be accessed with
+    the command <C>Embedding(D, i)</C>, and a projection of <C>D</C> onto its
+    <C>i</C>th factor can be accessed with the command <C>Projection(D, i)</C>;
+    see <Ref Oper = "Embedding" BookName = "ref" /> and
+    <Ref Oper = "Projection" BookName = "ref" /> for more information.
+
+    <Example><![CDATA[
+gap> S := InverseMonoid([PartialPerm([2, 1])]);;
+gap> T := InverseMonoid([PartialPerm([1, 2, 3])]);;
+gap> D := DirectProduct(S, T);
+<commutative inverse partial perm monoid of rank 5 with 1 generator>
+gap> Elements(D);
+[ <identity partial perm on [ 1, 2, 3, 4, 5 ]>, (1,2)(3)(4)(5) ]
+gap> S := PartitionMonoid(3);;
+gap> D := DirectProduct(S, S, S);
+<bipartition monoid of size 8365427, degree 9 with 12 generators>
+gap> S := Semigroup([PartialPerm([2, 5, 0, 1, 3]),
+>                    PartialPerm([5, 2, 4, 3])]);;
+gap> T := Semigroup([Bipartition([[1, -2], [2], [3, -1, -3]])]);;
+gap> D := DirectProduct(S, T);
+<transformation semigroup of size 122, degree 9 with 63 generators>
+gap> Size(D) = Size(S) * Size(T);
+true]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>
