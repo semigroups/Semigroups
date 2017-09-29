@@ -156,9 +156,7 @@ Obj BIPART_NC(Obj self, Obj gap_blocks) {
   x->set_nr_left_blocks(nr_left_blocks);
   x->set_nr_blocks(nr_blocks);
 
-  Obj out = bipart_new_obj(x);
-
-  return out;
+  return bipart_new_obj(x);
 }
 
 // Returns the external rep of a GAP bipartition, see description before
@@ -1450,38 +1448,38 @@ class IdempotentCounter {
     _fuse_tab[thread_id].clear();
     _fuse_tab[thread_id].reserve(left->nr_blocks() + right->nr_blocks());
 
-    for (size_t i = 0; i < left->nr_blocks() + right->nr_blocks(); i++) {
-      _fuse_tab[thread_id].push_back(i);
+    for (size_t k = 0; k < left->nr_blocks() + right->nr_blocks(); k++) {
+      _fuse_tab[thread_id].push_back(k);
     }
 
     for (auto left_it = left->cbegin(), right_it = right->cbegin();
          left_it < left->cbegin() + left->degree();
          left_it++, right_it++) {
-      size_t j = fuse_it(thread_id, *left_it);
-      size_t k = fuse_it(thread_id, *right_it + left->nr_blocks());
+      size_t k = fuse_it(thread_id, *left_it);
+      size_t l = fuse_it(thread_id, *right_it + left->nr_blocks());
 
-      if (j != k) {
-        if (j < k) {
-          _fuse_tab[thread_id][k] = j;
-          if (_lookup[thread_id][k]) {
-            _lookup[thread_id][j] = true;
+      if (k != l) {
+        if (k < l) {
+          _fuse_tab[thread_id][l] = k;
+          if (_lookup[thread_id][l]) {
+            _lookup[thread_id][k] = true;
           }
         } else {
-          _fuse_tab[thread_id][j] = k;
-          if (_lookup[thread_id][j]) {
-            _lookup[thread_id][k] = true;
+          _fuse_tab[thread_id][k] = l;
+          if (_lookup[thread_id][k]) {
+            _lookup[thread_id][l] = true;
           }
         }
       }
     }
 
-    for (u_int32_t i = 0; i < left->nr_blocks(); i++) {
-      if (left->is_transverse_block(i)) {
-        size_t j = fuse_it(thread_id, i);
-        if (!_lookup[thread_id][j] || _seen[thread_id][j]) {
+    for (u_int32_t k = 0; k < left->nr_blocks(); k++) {
+      if (left->is_transverse_block(k)) {
+        size_t l = fuse_it(thread_id, k);
+        if (!_lookup[thread_id][l] || _seen[thread_id][l]) {
           return false;
         }
-        _seen[thread_id][j] = true;
+        _seen[thread_id][l] = true;
       }
     }
     return true;
