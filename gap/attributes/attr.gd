@@ -62,3 +62,5 @@ DeclareAttribute("UnderlyingSemigroupOfSemigroupWithAdjoinedZero",
 
 DeclareOperation("InversesOfSemigroupElementNC",
                  [IsSemigroup, IsMultiplicativeElement]);
+
+DeclareAttribute("IndecomposableElements", IsSemigroup);

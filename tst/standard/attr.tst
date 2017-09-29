@@ -1693,6 +1693,27 @@ gap> R := RectangularBand(IsReesMatrixSemigroup, 80, 90);
 gap> IdempotentGeneratedSubsemigroup(R);
 <subsemigroup of 80x90 Rees matrix semigroup with 90 generators>
 
+#T# IndecomposableElements
+gap> S := FullTransformationMonoid(3);
+<full transformation monoid of degree 3>
+gap> S := Semigroup(GeneratorsOfMonoid(S));
+<transformation semigroup of degree 3 with 3 generators>
+gap> HasIsDecomposableSemigroup(S);
+false
+gap> IndecomposableElements(S);
+[  ]
+gap> S := Semigroup(S);
+<transformation semigroup of degree 3 with 3 generators>
+gap> IsMonoidAsSemigroup(S);
+true
+gap> HasIsDecomposableSemigroup(S) and IsDecomposableSemigroup(S);
+true
+gap> IndecomposableElements(S);
+[  ]
+gap> S := MonogenicSemigroup(3, 2);;
+gap> IndecomposableElements(S) = [S.1];
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);

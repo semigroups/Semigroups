@@ -70,6 +70,7 @@ ReadPackage("semigroups", "gap/tools/iterators.gi");
 
 ReadPackage("semigroups", "gap/attributes/attr.gi");
 ReadPackage("semigroups", "gap/attributes/attract.gi");
+ReadPackage("semigroups", "gap/attributes/attrfp.gi");
 ReadPackage("semigroups", "gap/attributes/attrinv.gi");
 ReadPackage("semigroups", "gap/attributes/factor.gi");
 ReadPackage("semigroups", "gap/attributes/isomorph.gi");

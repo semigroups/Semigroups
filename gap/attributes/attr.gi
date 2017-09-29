@@ -933,3 +933,17 @@ function(S)
   od;
   TryNextMethod();
 end);
+
+InstallMethod(IndecomposableElements, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local out, D;
+
+  out := [];
+  for D in MaximalDClasses(S) do
+    if not IsRegularDClass(D) then
+      AddSet(out, Representative(D));
+    fi;
+  od;
+  return out;
+end);
