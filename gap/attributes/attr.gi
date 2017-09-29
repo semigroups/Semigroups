@@ -521,8 +521,12 @@ function(S)
   fi;
 
   gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
-  return List(DigraphSources(gr), x -> DClasses(S)[x]);
+  return DClasses(S){DigraphSources(gr)};
 end);
+
+InstallMethod(MaximalDClasses, "for a finite monoid as semigroup",
+[IsFinite and IsMonoidAsSemigroup],
+S -> [DClass(S, MultiplicativeNeutralElement(S))]);
 
 # same method for ideals
 

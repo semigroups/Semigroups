@@ -742,6 +742,17 @@ gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
 gap> MaximalDClasses(S);
 [ <Green's D-class: Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])> ]
+gap> S := SingularTransformationMonoid(4);
+<regular transformation semigroup ideal of degree 4 with 1 generator>
+gap> x := MaximalDClasses(S);;
+gap> Length(x) = 1 and x[1] = DClass(S, Transformation([1, 2, 3, 3]));
+true
+gap> S := ReesMatrixSemigroup(Group(()), [[()]]);;
+gap> MaximalDClasses(S);
+[ <Green's D-class: (1,(),1)> ]
+gap> S := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
+gap> MaximalDClasses(S);
+[ <Green's D-class: (1,(),1)> ]
 
 #T# attr: StructureDescriptionMaximalSubgroups
 gap> S := RegularBooleanMatMonoid(3);;
