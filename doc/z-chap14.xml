@@ -71,6 +71,7 @@
     <#Include Label = "EvaluateWord">
     <#Include Label = "Factorization">
     <#Include Label = "MinimalFactorization">
+    <#Include Label = "NonTrivialFactorization">
 
   </Section>
 

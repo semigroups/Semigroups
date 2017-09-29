@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  factor.gi
-#Y  Copyright (C) 2013-15                                James D. Mitchell
+#Y  Copyright (C) 2013-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -21,6 +21,136 @@ InstallMethod(Factorization,
 [IsEnumerableSemigroupRep, IsMultiplicativeElement],
 function(S, x)
   return MinimalFactorization(S, x);
+end);
+
+InstallMethod(NonTrivialFactorization,
+"for an enumerable semigroup and multiplicative element",
+[IsEnumerableSemigroupRep, IsMultiplicativeElement],
+function(S, x)
+  local gens, pos, gr, verts, i, j;
+
+  if not x in S then
+    ErrorNoReturn("Semigroups: NonTrivialFactorization: usage,\n",
+                  "the element <x> must belong to the semigroup <S>,");
+  elif HasIndecomposableElements(S)
+      and x in IndecomposableElements(S) then
+    return fail;
+  fi;
+
+  # if <x> is not a generator of <S>, then any factorization is non-trivial
+  gens := GeneratorsOfSemigroup(S);
+  pos := Position(gens, x);
+  if pos = fail then
+    return Factorization(S, x);
+  elif IsIdempotent(x) then
+    return [pos, pos];
+  fi;
+
+  pos := PositionCanonical(S, x);
+  gr  := RightCayleyDigraph(S);
+  verts := InNeighboursOfVertex(gr, pos);
+  if IsEmpty(verts) then
+    return fail;
+  fi;
+  i := verts[1];
+  j := Position(OutNeighboursOfVertex(gr, i), pos);
+  return Concatenation(EN_SEMI_FACTORIZATION(S, i), [j]);
+end);
+
+InstallMethod(NonTrivialFactorization,
+"for an acting semigroup with generators and multiplicative element",
+[IsActingSemigroup and HasGeneratorsOfSemigroup, IsMultiplicativeElement],
+function(S, x)
+  local factorization, gens, nrgens, o, l, m, id, scc, word, tree, k, p, data,
+  pos, graph, j, i;
+
+  if not x in S then
+    ErrorNoReturn("Semigroups: NonTrivialFactorization: usage,\n",
+                  "the element <x> must belong to the semigroup <S>,");
+  elif HasIndecomposableElements(S)
+      and x in IndecomposableElements(S) then
+    return fail;
+  fi;
+
+  factorization := Factorization(S, x);
+  if not IsTrivial(factorization) then
+    return factorization;
+  fi;
+  gens   := GeneratorsOfSemigroup(S);
+  nrgens := Length(gens);
+
+  # Attempt to use LambdaOrb to find a right identity for <x>.
+  o := LambdaOrb(S);
+  l := Position(o, LambdaFunc(S)(x));
+  m := OrbSCCLookup(o)[l];
+  # Note that <x> is its R-class rep, and LambdaFunc(S)(x) is first in its SCC.
+  id := Factorization(o, m, LambdaIdentity(S)(true));
+  if id <> fail then
+    return Concatenation(factorization, id);
+  fi;
+
+  # {x} is a non-reg trivial R-class.
+  Assert(1, IsTrivial(RClass(S, x)) and not IsRegularGreensClass(RClass(S, x)));
+
+  # Attempt to use RhoOrb to obtain a decomposition of <x>.
+  o := RhoOrb(S);
+  l := Position(o, RhoFunc(S)(x));
+  m := OrbSCCLookup(o)[l];
+  scc := OrbSCC(o)[m];
+  if scc[1] <> l then
+    word := Reversed(TraceSchreierTreeOfSCCForward(o, m, l));
+    return Concatenation(word, Factorization(S, RhoOrbMult(o, m, l)[2] * x));
+  fi;
+  # Attempt to find a left identity for <x>. RhoFunc(S)(x) is first in <scc>.
+  tree := ReverseSchreierTreeOfSCC(o, m);
+  k := First(scc, k -> tree[2][k] = l);
+  if k <> fail then
+    word := [tree[1][k]];
+    Append(word, Reversed(TraceSchreierTreeOfSCCForward(o, m, k)));
+    p := SmallestIdempotentPower(EvaluateWord(gens, word));
+    # x = (word ^ p) * x.
+    word := Concatenation(ListWithIdenticalEntries(p, word));
+    return Concatenation(word, factorization);
+  fi;
+
+  # {x} is a non-reg trivial D-class. Either {x} is maximal or <x> is redundant.
+  Assert(1, IsTrivial(DClass(S, x)) and not IsRegularDClass(DClass(S, x)));
+
+  # If <x> is redundant, we can decompose <x> as a left multiple of some other
+  # R-class rep of the semigroup
+  data := SemigroupData(S);
+  Enumerate(data);
+  pos := Position(data, x);
+  graph := OrbitGraph(data);
+  for j in [2 .. Length(data)] do
+    for i in [1 .. Length(gens)] do
+      if graph[j][i] = pos then
+        # x = gens[i] * RClassReps(S)[j - 1].
+        return Concatenation([i], Factorization(S, data[j][4]));
+      fi;
+    od;
+  od;
+
+  # {x} is a maximal D-class and is therefore an indecomposable element.
+  return fail;
+end);
+
+InstallMethod(NonTrivialFactorization,
+"for an acting inverse semigroup rep with generators and element",
+[IsInverseActingSemigroupRep and HasGeneratorsOfSemigroup,
+ IsMultiplicativeElement],
+function(S, x)
+  local pos;
+
+  if not x in S then
+    ErrorNoReturn("Semigroups: NonTrivialFactorization: usage,\n",
+                  "the element <x> must belong to the semigroup <S>,");
+  fi;
+  pos := Position(GeneratorsOfSemigroup(S), x);
+  if pos = fail then
+    return Factorization(S, x);
+  fi;
+  return [pos, -pos, pos];
 end);
 
 # factorisation of Schutzenberger group element, the same method works for
