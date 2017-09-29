@@ -177,6 +177,25 @@ gap> Factorization(o, 2, (1, 2));
 Error, Semigroups: Factorization: usage,
 the third argument <p> does not belong to the Schutzenberger group,
 
+#T# factor: Factorization, () in SchutzenbergerGroup, fail, 1
+gap> S := Semigroup(Transformation([1, 1, 2, 3]), rec(acting := true));;
+gap> o := LambdaOrb(S);;
+gap> Factorization(o, 2, ());
+fail
+
+#T# factor: Factorization, () in SchutzenbergerGroup, 1
+gap> S := InverseSemigroup(PartialPerm([1]), rec(acting := true));;
+gap> o := LambdaOrb(S);;
+gap> Factorization(o, 2, ());
+[ 1, -1 ]
+
+#T# factor: Factorization, () in SchutzenbergerGroup, 2
+gap> S := InverseSemigroup(PartialPerm([2, 3, 1]), PartialPerm([2, 1, 3]),
+>                          rec(acting := true));;
+gap> o := LambdaOrb(S);;
+gap> Factorization(o, 2, ());
+[ 2, -2 ]
+
 #T# factor: test for epimorphism from free group returning a word with negative
 # powers.
 gap> S := Semigroup(FullTransformationMonoid(8), rec(acting := true));;

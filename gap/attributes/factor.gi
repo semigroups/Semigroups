@@ -62,7 +62,7 @@ function(o, m, p)
           vword := TraceSchreierTreeOfSCCBack(o, m, adj[l]);
           v     := EvaluateWord(o, vword);
           x     := lambdaperm(rep, rep * u * gens[l] * v);
-          if not x in G then
+          if bound = 1 or not x in G then
             G := ClosureGroup(G, x);
             nr := nr + 1;
             factors[nr] := Concatenation(uword, [l], vword);
@@ -88,6 +88,11 @@ function(o, m, p)
     ErrorNoReturn("Semigroups: Factorization: usage,\n",
                   "the third argument <p> does not belong to the ",
                   "Schutzenberger group,");
+  elif IsEmpty(factors) then
+    # No elt of the semigroup stabilizes the relevant lambda value.  Therefore
+    # the Schutzenberger group is trivial, and corresponds to the action of an
+    # adjoined identity. No element of the semigroup acts like <p> = ().
+    return fail;
   fi;
 
   # express <elt> as a word in the generators of the Schutzenberger group
@@ -99,8 +104,23 @@ function(o, m, p)
     # generators and we do not have a good way, in general, of finding words in
     # the original generators of the semigroup that equal the inverse of a
     # generator of the Schutzenberger group.
-    epi := EpimorphismFromFreeGroup(G);
-    word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
+    if p = () then
+      # When p = (), LetterRepAssocWord gives the empty word. The case p = () is
+      # only used by NonTrivialFactorization, which requires a non-empty word.
+      # Return [k, -k] (i.e. kk^-1), where k is gen with smallest order in G.
+      v := infinity;
+      for i in [1 .. Length(GeneratorsOfGroup(G))] do
+        x := Order(G.(i));
+        if x < v then
+          k := i;
+          v := x;
+        fi;
+      od;
+      word := [k, -k];
+    else
+      epi := EpimorphismFromFreeGroup(G);
+      word := LetterRepAssocWord(PreImagesRepresentative(epi, p));
+    fi;
   fi;
 
   # convert group generators to semigroup generators
