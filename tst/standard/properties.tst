@@ -1883,6 +1883,39 @@ true
 gap> IsFinite(S) and IsGroupAsSemigroup(S);
 true
 
+#T# properties: IsDecomposableSemigroup, for an fp semigroup, 1
+gap> F := FreeSemigroup(1);
+<free semigroup on the generators [ s1 ]>
+gap> S := F / [];;
+gap> IsDecomposableSemigroup(S);
+false
+gap> S := F / [[F.1, F.1]];
+<fp semigroup on the generators [ s1 ]>
+gap> IsDecomposableSemigroup(S);
+false
+gap> S := F / [[F.1 ^ 3, F.1]];
+<fp semigroup on the generators [ s1 ]>
+gap> IsDecomposableSemigroup(S);
+true
+gap> S := F / [[F.1 ^ 3, F.1 ^ 2]];
+<fp semigroup on the generators [ s1 ]>
+gap> IsDecomposableSemigroup(S);
+false
+gap> F := FreeSemigroup(3);
+<free semigroup on the generators [ s1, s2, s3 ]>
+gap> S := F / [[F.2, F.1], [F.2 ^ 3, F.2], [F.2, F.3]];
+<fp semigroup on the generators [ s1, s2, s3 ]>
+gap> IsDecomposableSemigroup(S);
+true
+
+#T# properties: IsDecomposableSemigroup, for a transformation semigroup, 1
+gap> S := MonogenicSemigroup(6, 2);;
+gap> IsDecomposableSemigroup(S);
+false
+gap> S := FullTransformationMonoid(3);;
+gap> IsDecomposableSemigroup(S);
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(I);

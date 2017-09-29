@@ -934,6 +934,10 @@ function(S)
   TryNextMethod();
 end);
 
+InstallImmediateMethod(IndecomposableElements,
+IsDecomposableSemigroup, 0,
+S -> []);
+
 InstallMethod(IndecomposableElements, "for a semigroup",
 [IsSemigroup],
 function(S)

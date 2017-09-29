@@ -1133,3 +1133,40 @@ false]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="IsDecomposableSemigroup">
+  <ManSection>
+    <Prop Name="IsDecomposableSemigroup" Arg="S"/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      A semigroup is decomposable if each of its elements can be written as a
+      product of two elements in the semigroup.
+      <C>IsDecomposableSemigroup(<A>S</A>)</C> returns <K>true</K> if the
+      semigroup <A>S</A> is decomposable, and <K>false</K> if it is not. <P/>
+
+      See also <Ref Attr="IndecomposableElements" />. <P/>
+
+      Note that every monoid, and every regular semigroup, is decomposable.
+
+      <Example><![CDATA[
+gap> S := FullTransformationMonoid(100);
+<full transformation monoid of degree 100>
+gap> IsDecomposableSemigroup(S);
+true
+gap> F := FreeSemigroup(3);;
+gap> P := F / [[F.1, F.2 * F.1], [F.3 ^ 3, F.3]];
+<fp semigroup on the generators [ s1, s2, s3 ]>
+gap> IsDecomposableSemigroup(P);
+false
+gap> I := SingularTransformationMonoid(5);
+<regular transformation semigroup ideal of degree 5 with 1 generator>
+gap> IsDecomposableSemigroup(I);
+true
+gap> M := MonogenicSemigroup(IsBipartitionSemigroup, 3, 2);
+<commutative non-regular block bijection semigroup of size 4, 
+ degree 6 with 1 generator>
+gap> IsDecomposableSemigroup(M);
+false]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>

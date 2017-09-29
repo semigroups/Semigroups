@@ -92,3 +92,8 @@ InstallTrueMethod(IsSemigroupWithAdjoinedZero, IsSemigroup and IsZeroGroup);
 InstallTrueMethod(IsFinite, IsMonogenicSemigroup and IsRegularSemigroup);
 InstallTrueMethod(IsGroupAsSemigroup,
                   IsMonogenicSemigroup and IsRegularSemigroup);
+
+DeclareProperty("IsDecomposableSemigroup", IsSemigroup);
+InstallTrueMethod(IsDecomposableSemigroup, IsRegularSemigroup);
+InstallTrueMethod(IsDecomposableSemigroup, IsMonoidAsSemigroup);
+InstallTrueMethod(IsDecomposableSemigroup, IsIdempotentGenerated);

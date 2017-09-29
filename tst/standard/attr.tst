@@ -1708,6 +1708,8 @@ gap> IsMonoidAsSemigroup(S);
 true
 gap> HasIsDecomposableSemigroup(S) and IsDecomposableSemigroup(S);
 true
+gap> HasIndecomposableElements(S);
+true
 gap> IndecomposableElements(S);
 [  ]
 gap> S := MonogenicSemigroup(3, 2);;
