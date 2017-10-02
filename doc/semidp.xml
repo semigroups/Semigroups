@@ -18,7 +18,7 @@
     finite semigroups, and returns a semigroup that is isomorphic to their
     direct product. <P/>
 
-    If these finite semigroups are either all partial perm semigroups, or all
+    If these finite semigroups are all partial perm semigroups, all
     bipartition semigroups, or all PBR semigroups, then <C>DirectProduct</C>
     returns a semigroup of the same type. Otherwise, <C>DirectProduct</C>
     returns a transformation semigroup. <P/>
