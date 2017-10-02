@@ -79,6 +79,22 @@ AC_CHECK_FILE(
     https://github.com/james-d-mitchell/libsemigroups into the src directory])]
    )
 
+dnl ## Check for libsemigroups-config.h
+AC_CHECK_FILE(
+   [src/libsemigroups/src/libsemigroups-config.h],
+   [AC_MSG_NOTICE([found libsemigroups-config.h])],
+   [AC_MSG_ERROR([libsemigroups-config.h is required, either download the
+latest release version from
+
+    https://github.com/james-d-mitchell/libsemigroups 
+
+or do 
+
+    ./autogen.sh ; ./configure 
+    
+in the src/libsemigroups directory])]
+   )
+
 dnl ## User setting: Debug mode (off by default)
 AC_ARG_ENABLE([debug],
     [AS_HELP_STRING([--enable-debug], [enable debug mode])],
@@ -88,6 +104,7 @@ AC_ARG_ENABLE([debug],
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_MSG_RESULT([$enable_debug])
 
+## TODO check that the compiler supports these flags
 AS_IF([test "x$enable_debug" = xyes],
     [AC_SUBST(CXXFLAGS, '-g3 -O0 -Wall -Wextra -Wno-unused-parameter -Wtype-limits -Wformat-security -Wpointer-arith -Wno-div-by-zero -Wreturn-type -Wswitch -Wsizeof-array-argument -Wunused-label -fno-omit-frame-pointer -Wno-c++11-extensions -Wshadow')])
 
