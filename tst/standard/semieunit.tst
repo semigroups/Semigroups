@@ -9,7 +9,6 @@
 ##
 gap> START_TEST("Semigroups package: standard/semieunit.tst");
 gap> LoadPackage("semigroups", false);;
-gap> LoadPackage("Digraphs", false);;
 
 # Set info levels and user preferences
 gap> SEMIGROUPS.StartTest();
@@ -333,4 +332,5 @@ gap> Unbind(y2);
 gap> Unbind(y3);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/eunittest.tst");
+gap> SEMIGROUPS.StopTest();
+gap> STOP_TEST("Semigroups package: standard/semieunit.tst");
