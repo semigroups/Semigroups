@@ -13,11 +13,11 @@ gap> LoadPackage("semigroups", false);;
 #
 gap> SEMIGROUPS.StartTest();
 
-# Test IteratorFromPickledFile
-gap> it := IteratorFromPickledFile(Concatenation(SEMIGROUPS.PackageDir,
+# Test IteratorFromGeneratorsFile
+gap> it := IteratorFromGeneratorsFile(Concatenation(SEMIGROUPS.PackageDir,
 > "/non-existant-file.gz"));
 fail
-gap> it := IteratorFromPickledFile(Concatenation(SEMIGROUPS.PackageDir,
+gap> it := IteratorFromGeneratorsFile(Concatenation(SEMIGROUPS.PackageDir,
 > "/data/tst/testdata"));
 <iterator>
 gap> NextIterator(it);
@@ -80,7 +80,7 @@ gap> WriteGenerators(name, gens, "w");
 IO_OK
 gap> WriteGenerators(name, gens, "w", 2);
 Error, Semigroups: WriteGenerators: usage,
-there should be 2 or 3 arguments,
+the third or fourth argument must be a function,
 gap> WriteGenerators(name, gens, "x");
 Error, Semigroups: WriteGenerators: usage,
 the third argument must be "a" or "w",
@@ -98,38 +98,47 @@ IO_OK
 gap> Length(ReadGenerators(name)[1]);
 4
 gap> Exec("rm ", name);
+gap> WriteGenerators(name, gens, 1);
+Error, Semigroups: WriteGenerators: usage,
+the third argument must be a string or a function,
+gap> WriteGenerators(1, 2, 3, 4, 5);
+Error, Semigroups: WriteGenerators: usage,
+there should be 2, 3, or 4 arguments,
+gap> WriteGenerators(name, [], "w");
+Error, Semigroups: WriteGenerators: usage,
+the second argument must be a non-empty list,
 
-# Test ReadOldGenerators
+# Test ReadGenerators
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/trans3");;
-gap> ReadOldGenerators(name);
+gap> ReadGenerators(name);
 [ [ Transformation( [ 1, 1, 1 ] ) ], [ Transformation( [ 1, 1, 2 ] ) ], 
   [ Transformation( [ 1, 1 ] ) ], [ IdentityTransformation ], 
   [ Transformation( [ 1, 3, 2 ] ) ], [ Transformation( [ 2, 1, 1 ] ) ], 
   [ Transformation( [ 2, 3, 1 ] ) ] ]
-gap> ReadOldGenerators(name, 4);
+gap> ReadGenerators(name, 4);
 [ IdentityTransformation ]
-gap> ReadOldGenerators(name, 2, 3);
-Error, Semigroups: ReadOldGenerators: usage,
+gap> ReadGenerators(name, 2, 3);
+Error, Semigroups: ReadGenerators: usage,
 there should be 1 or 2 arguments,
-gap> ReadOldGenerators("non-existant-file");
-Error, Semigroups: ReadOldGenerators:
+gap> ReadGenerators("non-existant-file");
+Error, Semigroups: ReadGenerators:
 could not open the file non-existant-file,
 gap> file := IO_CompressedFile(name, "r");;
-gap> ReadOldGenerators(file, 2);
+gap> ReadGenerators(file, 2);
 [ Transformation( [ 1, 1, 2 ] ) ]
-gap> ReadOldGenerators(file, -1);
-Error, Semigroups: ReadOldGenerators: usage,
+gap> ReadGenerators(file, -1);
+Error, Semigroups: ReadGenerators: usage,
 the second argument must be a positive integer,
-gap> ReadOldGenerators(file, 2000);
-Error, Semigroups: ReadOldGenerators:
-the file only has 5 lines,
+gap> ReadGenerators(file, 2000);
+Error, Semigroups: ReadGenerators:
+the file only has 5 further entries,
 gap> IO_Close(file);
 true
-gap> ReadOldGenerators(3);
-Error, Semigroups: ReadOldGenerators: usage,
+gap> ReadGenerators(3);
+Error, Semigroups: ReadGenerators: usage,
 the first argument must be a string or a file,
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/bipart4");;
-gap> ReadOldGenerators(name);
+gap> ReadGenerators(name);
 [ [ <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
       <bipartition: [ 1, 2, 3, 4, -1, -2, -3 ], [ -4 ]> ], 
   [ <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
@@ -151,14 +160,14 @@ gap> ReadOldGenerators(name);
   [ <block bijection: [ 1, 2, 3, 4, -1, -2, -3, -4 ]>, 
       <bipartition: [ 1, 2, 3, 4 ], [ -1, -2 ], [ -3 ], [ -4 ]> ] ]
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/pperm10");;
-gap> ReadOldGenerators(name);
+gap> ReadGenerators(name);
 [ [ [3,7][8,1,2,6,9][10,5] ] ]
 
-# Test IteratorFromOldGeneratorsFile
-gap> it := IteratorFromOldGeneratorsFile("non-existant-file.gz");
+# Test IteratorFromGeneratorsFile
+gap> it := IteratorFromGeneratorsFile("non-existant-file.gz");
 fail
 gap> name := Concatenation(SEMIGROUPS.PackageDir, "/data/tst/trans3");;
-gap> it := IteratorFromOldGeneratorsFile(name);
+gap> it := IteratorFromGeneratorsFile(name);
 <iterator>
 gap> NextIterator(it);
 [ Transformation( [ 1, 1, 1 ] ) ]
@@ -325,6 +334,51 @@ false
 gap> for x in it do od;
 gap> IsDoneIterator(it);
 true
+
+# Test read from an old format file
+gap> ReadGenerators(Filename(DirectoriesPackageLibrary("semigroups",
+>                                                      "data/tst/")[1], 
+>                            "trans3-old"));
+[ [ Transformation( [ 1, 1, 1 ] ) ], [ Transformation( [ 1, 1, 2 ] ) ], 
+  [ Transformation( [ 1, 1 ] ) ], [ IdentityTransformation ], 
+  [ Transformation( [ 1, 3, 2 ] ) ], [ Transformation( [ 2, 1, 1 ] ) ], 
+  [ Transformation( [ 2, 3, 1 ] ) ] ]
+
+# Test write using old format
+gap> fname := Filename(DirectoriesPackageLibrary("semigroups",
+>                                                "data/tst/")[1], 
+>                      "tmpfile");;
+gap> WriteGenerators(fname,
+>                    [FullTransformationMonoid(3)],
+>                    SEMIGROUPS.WriteGeneratorsLine);
+IO_OK
+gap> FullTransformationMonoid(3) = Semigroup(ReadGenerators(fname)[1]);
+true
+gap> WriteGenerators(fname,
+>                    [[Bipartition([[1, 3, -3, -5, -6], [2, 4, 7], [5, 6, 8, 9, -8, -9],
+>                                   [10, -1, -4], [-2, -7], [-10]])]],
+>                    SEMIGROUPS.WriteGeneratorsLine);
+IO_OK
+gap> ReadGenerators(fname);
+[ [ <bipartition: [ 1, 3, -3, -5, -6 ], [ 2, 4, 7 ], [ 5, 6, 8, 9, -8, -9 ], 
+         [ 10, -1, -4 ], [ -2, -7 ], [ -10 ]> ] ]
+gap> WriteGenerators(fname,
+>                    [[PartialPerm([1, 2, 4, 5, 6, 7, 11, 12], 
+>                                  [3, 5, 8, 12, 4, 1, 9, 7])]], 
+>                    "a",
+>                    SEMIGROUPS.WriteGeneratorsLine);
+IO_OK
+gap> ReadGenerators(fname);
+[ [ <bipartition: [ 1, 3, -3, -5, -6 ], [ 2, 4, 7 ], [ 5, 6, 8, 9, -8, -9 ], 
+         [ 10, -1, -4 ], [ -2, -7 ], [ -10 ]> ], 
+  [ [2,5,12,7,1,3][6,4,8][11,9] ] ]
+gap> WriteGenerators(fname, 
+>                    [[Matrix(IsIntegerMatrix, [[0]])]], 
+>                    "w",
+>                    SEMIGROUPS.WriteGeneratorsLine);
+Error, Semigroups: WriteGenerators: usage,
+the second argument is incompatible with the file format,
+gap> Exec("rm ", fname);
 
 #
 gap> SEMIGROUPS.StopTest();

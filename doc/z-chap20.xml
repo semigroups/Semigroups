@@ -10,7 +10,7 @@
 
     <#Include Label = "ReadGenerators">
     <#Include Label = "WriteGenerators">
-    <#Include Label = "IteratorFromPickledFile">
+    <#Include Label = "IteratorFromGeneratorsFile">
   </Section>
 
   <Section>
