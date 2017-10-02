@@ -50,6 +50,7 @@ ReadPackage("semigroups", "gap/semigroups/semiffmat.gi");
 ReadPackage("semigroups", "gap/semigroups/grpffmat.gi");
 ReadPackage("semigroups", "gap/semigroups/semiquo.gi");
 ReadPackage("semigroups", "gap/semigroups/semieunit.gi");
+ReadPackage("semigroups", "gap/semigroups/semidp.gi");
 
 ReadPackage("semigroups", "gap/ideals/ideals.gi");
 ReadPackage("semigroups", "gap/ideals/idealact.gi");
@@ -70,6 +71,7 @@ ReadPackage("semigroups", "gap/tools/iterators.gi");
 
 ReadPackage("semigroups", "gap/attributes/attr.gi");
 ReadPackage("semigroups", "gap/attributes/attract.gi");
+ReadPackage("semigroups", "gap/attributes/attrfp.gi");
 ReadPackage("semigroups", "gap/attributes/attrinv.gi");
 ReadPackage("semigroups", "gap/attributes/factor.gi");
 ReadPackage("semigroups", "gap/attributes/isomorph.gi");

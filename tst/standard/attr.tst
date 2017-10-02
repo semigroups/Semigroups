@@ -742,6 +742,17 @@ gap> S := RegularBooleanMatMonoid(3);
 <monoid of 3x3 boolean matrices with 4 generators>
 gap> MaximalDClasses(S);
 [ <Green's D-class: Matrix(IsBooleanMat, [[1, 0, 0], [0, 1, 0], [0, 0, 1]])> ]
+gap> S := SingularTransformationMonoid(4);
+<regular transformation semigroup ideal of degree 4 with 1 generator>
+gap> x := MaximalDClasses(S);;
+gap> Length(x) = 1 and x[1] = DClass(S, Transformation([1, 2, 3, 3]));
+true
+gap> S := ReesMatrixSemigroup(Group(()), [[()]]);;
+gap> MaximalDClasses(S);
+[ <Green's D-class: (1,(),1)> ]
+gap> S := ReesZeroMatrixSemigroup(Group(()), [[()]]);;
+gap> MaximalDClasses(S);
+[ <Green's D-class: (1,(),1)> ]
 
 #T# attr: StructureDescriptionMaximalSubgroups
 gap> S := RegularBooleanMatMonoid(3);;
@@ -1681,6 +1692,29 @@ gap> R := RectangularBand(IsReesMatrixSemigroup, 80, 90);
 <Rees matrix semigroup 80x90 over Group(())>
 gap> IdempotentGeneratedSubsemigroup(R);
 <subsemigroup of 80x90 Rees matrix semigroup with 90 generators>
+
+#T# IndecomposableElements
+gap> S := FullTransformationMonoid(3);
+<full transformation monoid of degree 3>
+gap> S := Semigroup(GeneratorsOfMonoid(S));
+<transformation semigroup of degree 3 with 3 generators>
+gap> HasIsDecomposableSemigroup(S);
+false
+gap> IndecomposableElements(S);
+[  ]
+gap> S := Semigroup(S);
+<transformation semigroup of degree 3 with 3 generators>
+gap> IsMonoidAsSemigroup(S);
+true
+gap> HasIsDecomposableSemigroup(S) and IsDecomposableSemigroup(S);
+true
+gap> HasIndecomposableElements(S);
+true
+gap> IndecomposableElements(S);
+[  ]
+gap> S := MonogenicSemigroup(3, 2);;
+gap> IndecomposableElements(S) = [S.1];
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);

@@ -115,3 +115,50 @@ gap> MinimalFactorization(S, x);
     </Description>
   </ManSection>
   <#/GAPDoc>
+
+<#GAPDoc Label="NonTrivialFactorization">
+<ManSection>
+  <Oper Name = "NonTrivialFactorization" Arg = "S, x"/>
+  <Returns>A non-trivial word in the generators, or <K>fail</K>.</Returns>
+  <Description>
+    When <A>S</A> is a semigroup and <A>x</A> belongs to <A>S</A>, this
+    operation returns a non-trivial word in the generators of the semigroup
+    <A>S</A> that equals <A>x</A>, if one exists. The definition of
+    a word in the generators is the same as given in <Ref Oper="Factorization"
+      /> for semigroups and inverse semigroups. A word is non-trivial if it has
+    non-trivial length. <P/>
+
+    If no non-trivial word for <A>x</A> exists, then <A>x</A> is an
+    indecomposable element of <A>S</A> and this operation returns <K>fail</K>;
+    see <Ref Attr="IndecomposableElements" />. <P/>
+
+    When <A>x</A> does not belong to <C>GeneratorsOfSemigroup(<A>S</A>)</C>,
+    any factorization of <A>x</A> is non-trivial. In this case,
+    <C>NonTrivialFactorization</C> returns the same word as <Ref
+      Oper="Factorization" />.  <P/>
+
+    See also <Ref Func = "EvaluateWord"/> and <Ref Func =
+      "GeneratorsOfSemigroup" BookName="ref"/>.
+    <Example><![CDATA[
+gap> x := Transformation([5, 4, 2, 1, 3]);;
+gap> y := Transformation([4, 4, 2, 4, 1]);;
+gap> S := Semigroup([x, y]);
+<transformation semigroup of degree 5 with 2 generators>
+gap> NonTrivialFactorization(S, x * y);
+[ 1, 2 ]
+gap> Factorization(S, x);
+[ 1 ]
+gap> NonTrivialFactorization(S, x);
+[ 1, 1, 1, 1, 1, 1 ]
+gap> Factorization(S, y);
+[ 2 ]
+gap> NonTrivialFactorization(S, y);
+[ 2, 1, 1, 2, 1, 1, 2, 1, 1, 2 ]
+gap> z := PartialPerm([2]);;
+gap> S := Semigroup(z);
+<commutative partial perm semigroup of rank 1 with 1 generator>
+gap> NonTrivialFactorization(S, z);
+fail]]></Example>
+  </Description>
+  </ManSection>
+<#/GAPDoc>

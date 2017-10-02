@@ -71,6 +71,7 @@
     <#Include Label = "EvaluateWord">
     <#Include Label = "Factorization">
     <#Include Label = "MinimalFactorization">
+    <#Include Label = "NonTrivialFactorization">
 
   </Section>
 
@@ -88,6 +89,7 @@
     <#Include Label = "IrredundantGeneratingSubset">
     <#Include Label = "MinimalGeneratingSet">
     <#Include Label = "GeneratorsSmallest">
+    <#Include Label = "IndecomposableElements">
  
   </Section>
 

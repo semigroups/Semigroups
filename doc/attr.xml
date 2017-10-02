@@ -1202,3 +1202,43 @@ gap> GeneratorsSmallest(T);
   </Description>
 </ManSection>
 <#/GAPDoc>
+
+<#GAPDoc Label="IndecomposableElements">
+<ManSection>
+  <Attr Name="IndecomposableElements" Arg="S"/>
+  <Returns>A list of elements.</Returns>
+  <Description>
+    If <A>S</A> is a semigroup, then this attribute returns the set of elements
+    of <A>S</A> that are not decomposable. A element of <A>S</A> is
+    <E>decomposable</E> if it can be written as the product of two elements in
+    <A>S</A>. An element of <A>S</A> is <E>indecomposable</E> if it is not
+    decomposable. <P/>
+    
+    See also <Ref Prop="IsDecomposableSemigroup" />. <P/>
+
+    Note that any generating set for <A>S</A> contains each indecomposable
+    element of <A>S</A>. Thus <C>IndecomposableElements(<A>S</A>)</C> is a
+    subset of <C>GeneratorsOfSemigroup(<A>S</A>)</C>. <P/>
+
+<Example><![CDATA[
+gap> S := Semigroup([
+> Transformation([1, 1, 2, 3]),
+> Transformation([1, 1, 1, 2])]);
+<transformation semigroup of degree 4 with 2 generators>
+gap> x := IndecomposableElements(S);
+[ Transformation( [ 1, 1, 2, 3 ] ) ]
+gap> IsSubset(GeneratorsOfSemigroup(S), x);
+true
+gap> T := FullTransformationMonoid(10);
+<full transformation monoid of degree 10>
+gap> IndecomposableElements(T);
+[  ]
+gap> B := ZeroSemigroup(IsBipartitionSemigroup, 3);
+<commutative non-regular bipartition semigroup of size 3, degree 4 
+ with 2 generators>
+gap> IndecomposableElements(B);
+[ <bipartition: [ 1, 2, 3, -1 ], [ 4, -2 ], [ -3 ], [ -4 ]>, 
+  <bipartition: [ 1, 2, 4, -1 ], [ 3, -2 ], [ -3 ], [ -4 ]> ]]]></Example>
+  </Description>
+</ManSection>
+<#/GAPDoc>

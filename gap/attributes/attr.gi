@@ -521,8 +521,12 @@ function(S)
   fi;
 
   gr := DigraphRemoveLoops(Digraph(PartialOrderOfDClasses(S)));
-  return List(DigraphSources(gr), x -> DClasses(S)[x]);
+  return DClasses(S){DigraphSources(gr)};
 end);
+
+InstallMethod(MaximalDClasses, "for a finite monoid as semigroup",
+[IsFinite and IsMonoidAsSemigroup],
+S -> [DClass(S, MultiplicativeNeutralElement(S))]);
 
 # same method for ideals
 
@@ -928,4 +932,22 @@ function(S)
     fi;
   od;
   TryNextMethod();
+end);
+
+InstallImmediateMethod(IndecomposableElements,
+IsDecomposableSemigroup, 0,
+S -> []);
+
+InstallMethod(IndecomposableElements, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local out, D;
+
+  out := [];
+  for D in MaximalDClasses(S) do
+    if not IsRegularDClass(D) then
+      AddSet(out, Representative(D));
+    fi;
+  od;
+  return out;
 end);
