@@ -613,9 +613,9 @@ gap> GeneratorsOfInverseMonoid(T) =
 >   PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3])];
 true
 gap> GeneratorsOfInverseSemigroup(T) =
-> [PartialPerm([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6]),
->  PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]),
->  PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3])];
+> [PartialPerm([1, 2, 4, 5, 6], [1, 2, 4, 5, 6]),
+>  PartialPerm([1, 2, 3, 4, 6], [2, 5, 4, 1, 3]),
+>  PartialPerm([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6])];
 true
 gap> One(S) in T;
 true

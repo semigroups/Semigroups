@@ -394,13 +394,12 @@ function(gens, opts)
   S := Objectify(NewType(FamilyObj(gens), filts), rec(opts := opts));
   SetOne(S, One(gens));
 
-  if CanEasilyCompareElements(gens) and not One(gens) in gens then
-    SetGeneratorsOfInverseSemigroup(S, Concatenation([One(gens)], gens));
+  SetGeneratorsOfInverseMonoid(S, AsList(gens));
+  if not CanEasilyCompareElements(gens) or not One(gens) in gens then
+    SetGeneratorsOfInverseSemigroup(S, Concatenation(gens, [One(gens)]));
   else
     SetGeneratorsOfInverseSemigroup(S, AsList(gens));
   fi;
-  SetGeneratorsOfInverseMonoid(S, AsList(gens));
-
   return S;
 end);
 
