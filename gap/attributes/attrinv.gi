@@ -36,25 +36,29 @@ function(S)
   if not IsFinite(S) then
     ErrorNoReturn("Semigroups: NaturalPartialOrder: usage,\n",
                   "the argument is not a finite semigroup,");
-  fi;
-
-  if not IsInverseSemigroup(S) then
+  elif not IsInverseSemigroup(S) then
     ErrorNoReturn("Semigroups: NaturalPartialOrder: usage,\n",
                   "the argument is not an inverse semigroup,");
+  elif IsPartialPermSemigroup(S) then
+    # Use the library method for partial perm inverse semigroups.
+    return NaturalPartialOrder(S);
   fi;
 
   Info(InfoWarning, 2, "NaturalPartialOrder: this method ",
                        "fully enumerates its argument!");
 
   elts := ShallowCopy(Elements(S));
-  p    := Sortex(elts, IsGreensDGreaterThanFunc(S)) ^ -1;
+  p    := Sortex(elts, {x, y} -> IsGreensDGreaterThanFunc(S)(y, x)) ^ -1;
   func := NaturalLeqInverseSemigroup(S);
   out  := List([1 .. Size(S)], x -> []);
 
+  # <elts> is sorted so that D_elts[i] < D_elts[j] => i < j.
+  # Thus NaturalLeqInverseSemigroup(S)(i, j) => i <= j.
+
   for i in [1 .. Size(S)] do
     for j in [i + 1 .. Size(S)] do
-      if func(elts[j], elts[i]) then
-        AddSet(out[i ^ p], j ^ p);
+      if func(elts[i], elts[j]) then
+        AddSet(out[j ^ p], i ^ p);
       fi;
     od;
   od;

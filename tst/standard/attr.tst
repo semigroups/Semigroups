@@ -759,13 +759,34 @@ gap> S := RegularBooleanMatMonoid(3);;
 gap> StructureDescriptionMaximalSubgroups(S);
 [ "1", "C2", "S3" ]
 
-#T# attr: IdempotentGeneratedSubsemigroup
+#T# attr: IdempotentGeneratedSubsemigroup, 1
 gap> S := RegularBooleanMatMonoid(3);;
 gap> T := IdempotentGeneratedSubsemigroup(S);;
 gap> HasIsIdempotentGenerated(T) and IsIdempotentGenerated(T);
 true
 gap> Size(T);
 381
+
+#T# attr: IdempotentGeneratedSubsemigroup, 2
+gap> S := SymmetricInverseMonoid(3);;
+gap> T := IdempotentGeneratedSubsemigroup(S);;
+gap> HasIsSemilattice(T) and IsSemilattice(T);
+true
+gap> S := AsSemigroup(IsTransformationSemigroup, S);;
+gap> IsInverseSemigroup(S);
+true
+gap> T := IdempotentGeneratedSubsemigroup(S);;
+gap> HasIsSemilattice(T) and IsSemilattice(T);
+true
+gap> S := Semigroup([
+>  PartialPerm([1, 3], [5, 4]),
+>  PartialPerm([1, 2, 5], [1, 4, 5]),
+>  PartialPerm([1, 3, 4], [3, 4, 5])]);;
+gap> T := IdempotentGeneratedSubsemigroup(S);;
+gap> IsInverseSemigroup(S);
+false
+gap> HasIsSemilattice(T) and IsSemilattice(T);
+true
 
 #T# attr: InjectionPrincipalFactor
 gap> S := Monoid([BooleanMat([[1, 0, 1], [0, 1, 0], [0, 0, 1]]),

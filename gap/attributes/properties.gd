@@ -74,6 +74,8 @@ InstallTrueMethod(IsRightSimple, IsInverseSemigroup and IsGroupAsSemigroup);
 InstallTrueMethod(IsRTrivial, IsInverseSemigroup and IsLTrivial);
 InstallTrueMethod(IsRTrivial, IsDTrivial);
 InstallTrueMethod(IsSemilattice, IsDTrivial and IsInverseSemigroup);
+InstallTrueMethod(IsSemilattice, IsIdempotentGenerated and
+                                 IsSemigroupWithCommutingIdempotents);
 InstallTrueMethod(IsMonogenicInverseSemigroup,
                   IsInverseSemigroup and IsMonogenicSemigroup);
 InstallTrueMethod(IsZeroRectangularBand, IsZeroGroup);

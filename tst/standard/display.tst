@@ -693,7 +693,7 @@ TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLPADDING=\"10\" CELLSPACING=\"0\" PORT=\
  BGCOLOR=\"gray\" PORT=\"e1\">*</TD></TR>\n</TABLE>>];\n1 -> 2\n2 -> 3\n3 -> 4\
 \nedge [color=blue,arrowhead=none,style=dashed]\n3:e2 -> 4:e1\n3:e3 -> 4:e1\n2\
 :e4 -> 3:e2\n2:e4 -> 3:e3\n3:e5 -> 4:e1\n2:e6 -> 3:e3\n2:e6 -> 3:e5\n2:e7 -> 3\
-:e5\n1:e8 -> 2:e4\n1:e8 -> 2:e6\n1:e8 -> 2:e7\n }"
+:e2\n2:e7 -> 3:e5\n1:e8 -> 2:e4\n1:e8 -> 2:e6\n1:e8 -> 2:e7\n }"
 
 # DotSemilatticeOfIdempotents
 gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;

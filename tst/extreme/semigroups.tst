@@ -166,8 +166,8 @@ gap> s := InverseMonoid(PartialPermNC([1, 2, 3, 5], [5, 6, 8, 2]),
 gap> Generators(s);
 [ [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9) ]
 gap> GeneratorsOfInverseSemigroup(s);
-[ <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]>, 
-  [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9) ]
+[ [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9), 
+  <identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]> ]
 gap> GeneratorsOfInverseMonoid(s);
 [ [1,5,2,6][3,8], [3,1,7][10,4](2)(5)(9) ]
 gap> GeneratorsOfSemigroup(s);
