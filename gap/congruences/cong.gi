@@ -21,6 +21,14 @@
 ## cong.gd contains declarations for many of these.
 ##
 
+# Fallback method
+
+InstallMethod(NrEquivalenceClasses, "for a semigroup congruence",
+[IsSemigroupCongruence],
+function(cong)
+  return Length(EquivalenceClasses(cong));
+end);
+
 InstallMethod(\in,
 "for dense list and left semigroup congruence",
 [IsDenseList, IsLeftSemigroupCongruence],
