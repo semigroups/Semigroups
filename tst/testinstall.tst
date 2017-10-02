@@ -1692,6 +1692,17 @@ gap> G := F / [s * r * s ^ (- 1) * r ^ (- 1)];;
 gap> StructureDescription(G);
 "C0 x C0"
 
+#T# Issue 389: NaturalPartialOrder
+gap> S := Semigroup(SymmetricInverseMonoid(3), rec(acting := true));;
+gap> es := IdempotentGeneratedSubsemigroup(S);; 
+gap> NaturalPartialOrder(es);
+[ [  ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1 ], [ 1, 3, 5 ], [ 1, 2, 5 ], 
+  [ 1, 2, 3, 4, 5, 6, 7 ] ]
+gap> es := AsSemigroup(IsBlockBijectionSemigroup, es);;
+gap> NaturalPartialOrder(es);
+[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1, 2, 4 ], [ 1, 3, 4 ], 
+  [ 1, 2, 3, 4, 5, 6, 7 ] ]
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
