@@ -68,7 +68,8 @@ pkgconfig.h.in~
 src/.deps
 src/.dirstamp
 src/.libs
-src/pkgconfig.h
+src/_pkgconfig.h
+src/semigroups-config.h
 src/libsemigroups
 src/stamp-h1
 tags

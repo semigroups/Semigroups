@@ -23,10 +23,10 @@
 #ifndef SEMIGROUPS_SRC_PKG_H_
 #define SEMIGROUPS_SRC_PKG_H_
 
-#include <assert.h>
 #include <iostream>
 #include <vector>
 
+#include "semigroups-debug.h"
 #include "rnams.h"
 
 #include "src/compiled.h"
@@ -84,7 +84,7 @@ template <typename Class> inline Class CLASS_OBJ(Obj o, size_t pos = 1) {
 // Get the t_semi_subtype_t out of the T_SEMI Obj
 
 inline t_semi_subtype_t SUBTYPE_OF_T_SEMI(Obj o) {
-  assert(TNUM_OBJ(o) == T_SEMI);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(o) == T_SEMI);
   return static_cast<t_semi_subtype_t>(reinterpret_cast<UInt>(ADDR_OBJ(o)[0]));
 }
 

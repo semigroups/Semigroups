@@ -22,8 +22,7 @@
 
 #include "uf.h"
 
-#include <assert.h>
-
+#include "semigroups-debug.h"
 #include "pkg.h"
 #include "src/compiled.h"
 
@@ -34,7 +33,7 @@ using libsemigroups::UF;
 // GAP level functions
 
 Obj UF_NEW(Obj self, Obj size) {
-  assert(IS_INTOBJ(size) && INT_INTOBJ(size) > 0);
+  SEMIGROUPS_ASSERT(IS_INTOBJ(size) && INT_INTOBJ(size) > 0);
   return OBJ_CLASS(new UF(INT_INTOBJ(size)), T_SEMI_SUBTYPE_UF);
 }
 
@@ -47,14 +46,16 @@ Obj UF_SIZE(Obj self, Obj uf) {
 }
 
 Obj UF_FIND(Obj self, Obj uf, Obj i) {
-  assert(IS_INTOBJ(i) && INT_INTOBJ(i) > 0);
+  SEMIGROUPS_ASSERT(IS_INTOBJ(i) && INT_INTOBJ(i) > 0);
   return INTOBJ_INT(CLASS_OBJ<UF*>(uf)->find(INT_INTOBJ(i) - 1) + 1);
 }
 
 Obj UF_UNION(Obj self, Obj uf, Obj pair) {
-  assert(IS_PLIST(pair) && LEN_PLIST(pair) == 2);
-  assert(IS_INTOBJ(ELM_PLIST(pair, 1)) && INT_INTOBJ(ELM_PLIST(pair, 1)) > 0);
-  assert(IS_INTOBJ(ELM_PLIST(pair, 2)) && INT_INTOBJ(ELM_PLIST(pair, 2)) > 0);
+  SEMIGROUPS_ASSERT(IS_PLIST(pair) && LEN_PLIST(pair) == 2);
+  SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_PLIST(pair, 1))
+                    && INT_INTOBJ(ELM_PLIST(pair, 1)) > 0);
+  SEMIGROUPS_ASSERT(IS_INTOBJ(ELM_PLIST(pair, 2))
+                    && INT_INTOBJ(ELM_PLIST(pair, 2)) > 0);
   CLASS_OBJ<UF*>(uf)->unite(INT_INTOBJ(ELM_PLIST(pair, 1)) - 1,
                             INT_INTOBJ(ELM_PLIST(pair, 2)) - 1);
   return 0L;
@@ -102,12 +103,14 @@ Obj UF_BLOCKS(Obj self, Obj uf) {
 }
 
 gap_int_t UF_NR_BLOCKS(Obj self, Obj uf) {
-  assert(TNUM_OBJ(uf) == T_SEMI && SUBTYPE_OF_T_SEMI(uf) == T_SEMI_SUBTYPE_UF);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(uf) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(uf) == T_SEMI_SUBTYPE_UF);
   return INTOBJ_INT(CLASS_OBJ<UF*>(uf)->nr_blocks());
 }
 
 gap_list_t UF_BLOCK_REPS(Obj self, Obj uf) {
-  assert(TNUM_OBJ(uf) == T_SEMI && SUBTYPE_OF_T_SEMI(uf) == T_SEMI_SUBTYPE_UF);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(uf) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(uf) == T_SEMI_SUBTYPE_UF);
   UF* uf_cpp = CLASS_OBJ<UF*>(uf);
   uf_cpp->reset_next_rep();
   size_t next_rep = uf_cpp->next_rep();
@@ -124,11 +127,12 @@ gap_list_t UF_BLOCK_REPS(Obj self, Obj uf) {
 }
 
 Obj UF_JOIN(Obj self, Obj uf1, Obj uf2) {
-  assert(TNUM_OBJ(uf1) == T_SEMI
-         && SUBTYPE_OF_T_SEMI(uf1) == T_SEMI_SUBTYPE_UF);
-  assert(TNUM_OBJ(uf2) == T_SEMI
-         && SUBTYPE_OF_T_SEMI(uf2) == T_SEMI_SUBTYPE_UF);
-  assert(CLASS_OBJ<UF*>(uf1)->get_size() == CLASS_OBJ<UF*>(uf2)->get_size());
+  SEMIGROUPS_ASSERT(TNUM_OBJ(uf1) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(uf1) == T_SEMI_SUBTYPE_UF);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(uf2) == T_SEMI
+                    && SUBTYPE_OF_T_SEMI(uf2) == T_SEMI_SUBTYPE_UF);
+  SEMIGROUPS_ASSERT(CLASS_OBJ<UF*>(uf1)->get_size()
+                    == CLASS_OBJ<UF*>(uf2)->get_size());
   Obj uf_join = UF_COPY(self, uf1);
   CLASS_OBJ<UF*>(uf_join)->join(CLASS_OBJ<UF*>(uf2));
   return uf_join;
