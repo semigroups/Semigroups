@@ -19,8 +19,7 @@
 #ifndef SEMIGROUPS_SRC_BIPART_H_
 #define SEMIGROUPS_SRC_BIPART_H_
 
-#include <assert.h>
-
+#include "semigroups-debug.h"
 #include "libsemigroups/src/elements.h"
 #include "pkg.h"
 #include "src/compiled.h"
@@ -31,12 +30,12 @@ using libsemigroups::Blocks;
 // C functions
 
 inline Bipartition* bipart_get_cpp(Obj x) {
-  assert(TNUM_OBJ(x) == T_BIPART);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BIPART);
   return reinterpret_cast<Bipartition*>(ADDR_OBJ(x)[0]);
 }
 
 inline Blocks* blocks_get_cpp(Obj x) {
-  assert(TNUM_OBJ(x) == T_BLOCKS);
+  SEMIGROUPS_ASSERT(TNUM_OBJ(x) == T_BLOCKS);
   return reinterpret_cast<Blocks*>(ADDR_OBJ(x)[0]);
 }
 

@@ -26,6 +26,8 @@
 
 #include "pkg.h"
 
+#include "semigroups-debug.h"
+
 #include "libsemigroups/src/elements.h"
 
 using libsemigroups::Element;
@@ -58,7 +60,7 @@ class Converter {
 template <typename T> class TransConverter : public Converter {
  public:
   Transformation<T>* convert(Obj o, size_t n) const override {
-    assert(IS_TRANS(o));
+    SEMIGROUPS_ASSERT(IS_TRANS(o));
 
     auto x = new std::vector<T>();
     x->reserve(n);
@@ -76,7 +78,7 @@ template <typename T> class TransConverter : public Converter {
       }
     } else {
       // in case of future changes to transformations in GAP
-      assert(false);
+      SEMIGROUPS_ASSERT(false);
     }
 
     for (; i < n; i++) {
@@ -113,7 +115,7 @@ template <typename T> class TransConverter : public Converter {
 template <typename T> class PPermConverter : public Converter {
  public:
   PartialPerm<T>* convert(Obj o, size_t n) const override {
-    assert(IS_PPERM(o));
+    SEMIGROUPS_ASSERT(IS_PPERM(o));
 
     auto x = new std::vector<T>();
     x->reserve(n);
@@ -139,7 +141,7 @@ template <typename T> class PPermConverter : public Converter {
       }
     } else {
       // in case of future changes to partial perms in GAP
-      assert(false);
+      SEMIGROUPS_ASSERT(false);
     }
 
     for (; i < n; i++) {
