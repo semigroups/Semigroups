@@ -2,6 +2,22 @@
 
 #### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.7 (released 02/10/2017)
+
+This version contains some minor bugfixes, fixes some issues where some tests
+in the main GAP repo returned different output when Semigroups was loaded than
+when it was not, and updates the kernel module for version 0.5.2 of
+[libsemigroups](https://james-d-mitchell.github.io/libsemigroups/). The
+configuratoin option `--enable-debug` was added.  
+
+The following issues are resolved:
+
+* [Issue 389](https://github.com/gap-packages/Semigroups/issues/389): the most general method for `NaturalPartialOrder` sometimes returned incorrect results.  [[Wilf A. Wilson](http://wilf.me)]
+
+* [Issue 393](https://github.com/gap-packages/Semigroups/issues/393): `StructureDescription` for finitely presented groups failed with an error when Semigroups was loaded.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+* [Issue 395](https://github.com/gap-packages/Semigroups/issues/395): GAP's test `tst/testinstall/semigrp.tst` failed because of a missing method for `NrEquivalenceClasses` for a generic semigroup congruence.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)] and [[Wilf A. Wilson](http://wilf.me)]
+
 ### Version 3.0.6 (released 27/09/2017)
 
 This version contains some minor bugfixes, improves the compatibility of
@@ -94,11 +110,6 @@ the [libsemigroups](https://github.com/james-d-mitchell/libsemigroups) C++
 library to allow high-speed computations for congruences and certain categories
 of semigroup.  There are also several new types of semigroup and a variety of
 new methods which can be used with them.
-
-### Version 2.8.1 (released 22/06/2016)
-This is a minor release to update the output in some test file and manual
-examples due to some changes in the GAP library code for semigroup
-isomorphisms.
 
 ### Version 2.8.0 (released 26/05/2016)
 In this release there are some new features and some bug fixes. In this

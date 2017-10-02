@@ -44,8 +44,7 @@ loaded.
 
 * locate the `pkg` directory of your GAP directory, which contains the directories `lib`, `doc` and so on. Move the directory `semigroups-x.x.x` into the `pkg` directory.
     
-* from version 3.0.0, it is necessary to compile the [Semigroups](https://gap-packages.github.io/Semigroups) package. To do this,
- inside the `pkg/semigroups-x.x.x` directory, type
+* from version 3.0.0, it is necessary to compile the [Semigroups](https://gap-packages.github.io/Semigroups) package. [Semigroups](https://gap-packages.github.io/Semigroups) uses the [libsemigroups](https://james-d-mitchell.github.io/libsemigroups/) C++ library, which requires a compiler implementing the C++11 standard. To compile, inside the `pkg/semigroups-x.x.x` directory, type
     * `./configure`
     * `make`
 
