@@ -557,6 +557,10 @@ function(S)
   fi;
   out := Semigroup(Idempotents(S), rec(small := true));
   SetIsIdempotentGenerated(out, true);
+  if HasIsSemigroupWithCommutingIdempotents(S)
+      and IsSemigroupWithCommutingIdempotents(S) then
+    SetIsSemigroupWithCommutingIdempotents(out, true);
+  fi;
   return out;
 end);
 
