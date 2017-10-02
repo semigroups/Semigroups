@@ -205,10 +205,15 @@ gap> Factorization(S, x);
 #T# factor: test for use of minimal factorization it is known, regular.
 gap> S := SymmetricInverseMonoid(6);;
 gap> x := PartialPerm([1, 2, 5], [6, 2, 4]);;
+gap> GeneratorsOfSemigroup(S);
+[ <identity partial perm on [ 1, 2, 3, 4, 5, 6 ]>, (1,2,3,4,5,6), 
+  (1,2)(3)(4)(5)(6), [6,5,4,3,2,1], [1,2,3,4,5,6] ]
 gap> MinimalFactorization(S, x);
 [ 5, 2, 5, 5, 2, 3 ]
 gap> Factorization(S, x);
 [ 5, 2, 5, 5, 2, 3 ]
+gap> EvaluateWord(GeneratorsOfSemigroup(S), last) = x;
+true
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
