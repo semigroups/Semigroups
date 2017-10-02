@@ -1,22 +1,21 @@
 #############################################################################
 ##
 #W  io.xml
-#Y  Copyright (C) 2016                                  James D. Mitchell
+#Y  Copyright (C) 2017                                  James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
 #############################################################################
 ##
 
-<#GAPDoc Label="IteratorFromPickledFile">
+<#GAPDoc Label="IteratorFromGeneratorsFile">
   <ManSection>
-    <Func Name = "IteratorFromPickledFile" Arg = "filename"/>
-    <Func Name = "IteratorFromOldGeneratorsFile" Arg = "filename"/>
+    <Func Name = "IteratorFromGeneratorsFile" Arg = "filename"/>
     <Returns>An iterator.</Returns>
     <Description>
       If <A>filename</A> is a file or a string containing the name of a file
       created using <Ref Func = "WriteGenerators"/>, then
-      <C>IteratorFromPickledFile</C> returns an iterator <C>iter</C> such that
+      <C>IteratorFromGeneratorsFile</C> returns an iterator <C>iter</C> such that
       <C>NextIterator(iter)</C> returns the next collection of generators stored
       in the file <A>filename</A>. <P/>
 
@@ -34,36 +33,38 @@
 
 <#GAPDoc Label="WriteGenerators">
   <ManSection>
-    <Func Name = "WriteGenerators" Arg = "filename, list[, append]"/>
+    <Func Name = "WriteGenerators" Arg = "filename, list[, append][, function]"/>
     <Returns><C>IO_OK</C> or <C>IO_ERROR</C>.</Returns>
     <Description>
       This function provides a method for writing collections of elements of a
       semigroup to a file.  The resulting file can be further compressed using
       <C>gzip</C> or <C>xz</C>.<P/>
 
-      The argument <A>list</A> should be a list of elements, a semigroup, or a
-      list of lists of elements, or semigroups. <P/>
+      The argument <A>list</A> should be a list of lists of elements, or
+      semigroups. <P/>
 
-      The argument <A>filename</A> should be a file or a string containing the
-      name of a file where the entries in <A>list</A> will be written or an
-      <Package>IO</Package> package file object; see <Ref Func="IO_File"
+      The argument <A>filename</A> should be a string containing the name of a
+      file  or an <Package>IO</Package> package file object where the entries
+      in <A>list</A> will be written; see <Ref Func="IO_File"
         BookName="io"/> and <Ref Func="IO_CompressedFile" BookName="io"/>.<P/>
 
       If the optional third argument <A>append</A> is not present or is given
       and equals <C>"w"</C>, then the previous content of the file is deleted
       and overwritten.  If the third argument is <C>"a"</C>, then <C>list</C>
-      is appended to the file.  This function returns
-      <Ref Var="IO_OK" BookName="io"/> if everything went well or
-      <Ref Var="IO_ERROR" BookName="io"/> if something went wrong.<P/>
-
-      <C>WriteGenerators</C> appends a line to the file <A>filename</A>
-      for every entry in <A>list</A>. If any element of <A>list</A> is a
-      semigroup, then the generators of that semigroup are written to
-      <A>filename</A>. More specifically, the list returned by <Ref
-        Attr="GeneratorsOfSemigroup" BookName="ref"/> is written to the file.
+      is appended to the file.  <P/>
+      
+      If any element of <A>list</A> is a semigroup, then the generators of that
+      semigroup are written to <A>filename</A>. More specifically, the list
+      returned by <Ref Attr="GeneratorsOfSemigroup" BookName="ref"/> is written
+      to the file.
       <P/>
       
-      The file <A>filename</A> can be read using <Ref Func = "ReadGenerators"/>.
+      This function returns
+      <Ref Var="IO_OK" BookName="io"/> if everything went well or
+      <Ref Var="IO_ERROR" BookName="io"/> if something went wrong.<P/>
+      
+      The file produced by <C>WriteGenerators</C> can be read using <Ref Func =
+        "ReadGenerators"/>.
       <P/>
 
       From Version 3.0.0 onwards the &Semigroups; package used the &IO; package
@@ -72,9 +73,6 @@
       more general and more robust than the methods used by earlier versions of
       &Semigroups;, although the performance is somewhat worse, and the
       resulting files are somewhat larger. <P/>
-
-      A file written in the old format can be read using <Ref Func
-        ="ReadOldGenerators"/>.
     </Description>
   </ManSection>
 <#/GAPDoc>
@@ -82,20 +80,17 @@
 <#GAPDoc Label="ReadGenerators">
   <ManSection>
     <Func Name = "ReadGenerators" Arg = "filename[, nr]"/>
-    <Func Name = "ReadOldGenerators" Arg = "filename[, nr]"/>
     <Returns>A list of lists of semigroup elements.</Returns>
     <Description>
-      If <A>filename</A> is a file or is the name of a file created using
+      If <A>filename</A> is an  <Package>IO</Package> package file object or is
+      the name of a file created using
       <Ref Func = "WriteGenerators"/>, then <C>ReadGenerators</C> returns the
       contents of this file as a list of lists of elements of a semigroup. <P/>
 
       If the optional second argument <A>nr</A> is present, then
       <C>ReadGenerators</C> returns the elements stored in the <A>nr</A>th line
-      of <A>filename</A>.<P/>
+      of <A>filename</A>.
 
-      If you want to read generators from a file written using
-      <C>WriteGenerators</C> from a version of &Semigroups; before version
-      3.0.0, then you can use <C>ReadOldGenerators</C>.
       <Example><![CDATA[
 gap> file := Concatenation(SEMIGROUPS.PackageDir,
 > "/data/tst/testdata");;
