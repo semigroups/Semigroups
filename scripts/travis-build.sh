@@ -32,7 +32,6 @@ elif [ ! -z "$GAP_BRANCH" ]; then
   cd semigroups/src
   git clone https://github.com/james-d-mitchell/libsemigroups.git libsemigroups
   cd libsemigroups
-  LIBSEMIGROUPS_VERS=`git tag | grep -E "^v[0-9]" | tail -n 1`
   echo -e "Checking out libsemigroups version $LIBSEMIGROUPS_VERS..."
   git checkout $LIBSEMIGROUPS_VERS
   # The next line produces the libsemigroups-config.h file which is required

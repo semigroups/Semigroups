@@ -1684,6 +1684,14 @@ gap> Size(S);
 gap> Elements(S);
 [ ONE, (1,(),1) ]
 
+# Issue 393: StructureDescription method in Semigroups inappropriately selected
+gap> F := FreeGroup("r", "s");;
+gap> r := F.1;;
+gap> s := F.2;;
+gap> G := F / [s * r * s ^ (- 1) * r ^ (- 1)];;
+gap> StructureDescription(G);
+"C0 x C0"
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);

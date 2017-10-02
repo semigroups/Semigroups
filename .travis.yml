@@ -5,6 +5,7 @@ compiler:
 env:
   global:
     - GAPDOC=GAPDoc-1.6
+    - LIBSEMIGROUPS_VERS=v0.5.1
   matrix:
     # Run only `make lint'
     - LINT=1
