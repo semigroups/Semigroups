@@ -2,6 +2,22 @@
 
 #### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.7 (released 02/10/2017)
+
+This version contains some minor bugfixes, fixes some issues where some tests
+in the main GAP repo returned different output when Semigroups was loaded than
+when it was not, and updates the kernel module for version 0.5.2 of
+[libsemigroups](https://james-d-mitchell.github.io/libsemigroups/). The
+configuratoin option `--enable-debug` was added.  
+
+The following issues are resolved:
+
+* [Issue 389](https://github.com/gap-packages/Semigroups/issues/389): the most general method for `NaturalPartialOrder` sometimes returned incorrect results.  [[Wilf A. Wilson](http://wilf.me)]
+
+* [Issue 393](https://github.com/gap-packages/Semigroups/issues/393): `StructureDescription` for finitely presented groups failed with an error when Semigroups was loaded.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)]
+
+* [Issue 395](https://github.com/gap-packages/Semigroups/issues/395): GAP's test `tst/testinstall/semigrp.tst` failed because of a missing method for `NrEquivalenceClasses` for a generic semigroup congruence.  [[J. D. Mitchell](http://www-groups.mcs.st-andrews.ac.uk/~jamesm/)] and [[Wilf A. Wilson](http://wilf.me)]
+
 ### Version 3.0.6 (released 27/09/2017)
 
 This version contains some minor bugfixes, improves the compatibility of
