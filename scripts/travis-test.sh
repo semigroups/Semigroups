@@ -61,9 +61,9 @@ elif [ ! -z "$GAP_BRANCH" ]; then
       cd ../..
       # Run all tests and manual examples
       echo -e "\nRunning tests and manual examples..."
-      echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples(); quit; quit; quit;" | $GAP_DIR/bin/gap.sh -A -r -m 1g -T 2>&1 | tee $TESTLOG
+      echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples(); Read(\"$GAP_DIR/tst/testinstall.g\");" | $GAP_DIR/bin/gap.sh -A -r -m 1g -T 2>&1 | tee $TESTLOG
     fi
   done
 fi
 
-( ! grep -E "Diff|brk>|#E|Error|error|# WARNING|fail|Syntax warning|Couldn't open saved workspace|insufficient|WARNING in|FAILED|Total errors found:" $TESTLOG )
+( ! grep -E "Diff|brk>|#E|Error|Errors detected|# WARNING|fail|Syntax warning|Couldn't open saved workspace|insufficient|WARNING in|FAILED|Total errors found:" $TESTLOG )
