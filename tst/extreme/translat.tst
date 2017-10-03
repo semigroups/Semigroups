@@ -12,7 +12,7 @@ gap> LoadPackage("semigroups", false);;
 gap> SEMIGROUPS.StartTest();
 
 #T# RZMS Translational Hull
-gap> G := SmallGroup(12,1);;
+gap> G := SmallGroup(12, 1);;
 gap> mat := [[0, G.2], [G.1, G.1], [G.2, 0]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> Size(TranslationalHull(S));
@@ -22,7 +22,7 @@ gap> for h in TranslationalHull(S) do
 > r := h![2];
 > for s in S do
 > for t in S do
-> if not s * (t^l) = (s ^ r) * t then
+> if not s * (t ^ l) = (s ^ r) * t then
 > Print(s, t, h);
 > fi;
 > od;
@@ -31,7 +31,8 @@ gap> for h in TranslationalHull(S) do
 
 #T# RMS Translational Hull
 gap> G := SmallGroup(12, 1);;
-gap> mat := TransposedMat([[G.1, G.2, G.3*G.2, G.1*G.3], [G.2*G.2, G.3, G.1, G.3*G.3]]);;
+gap> mat := TransposedMat([[G.1, G.2, G.3 * G.2, G.1 * G.3],
+> [G.2 * G.2, G.3, G.1, G.3 * G.3]]);;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> Size(TranslationalHull(S));
 444

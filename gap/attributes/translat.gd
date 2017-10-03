@@ -40,7 +40,7 @@ DeclareSynonym("IsRightTranslationsSemigroup", IsSemigroup and
                   IsRightTranslationsSemigroupElementCollection);
 DeclareSynonym("IsTranslationsSemigroup", IsSemigroup and
                   IsTranslationsSemigroupElementCollection);
-DeclareSynonym("IsTranslationalHull", IsSemigroup and 
+DeclareSynonym("IsTranslationalHull", IsSemigroup and
                   IsBitranslationCollection);
 
 DeclareAttribute("UnderlyingSemigroup", IsTranslationsSemigroup);
@@ -52,15 +52,23 @@ DeclareAttribute("TranslationalHullOfFamily", IsFamily);
 
 DeclareAttribute("TypeLeftTranslationsSemigroupElements",
                  IsLeftTranslationsSemigroup);
-DeclareAttribute("TypeRightTranslationsSemigroupElements", 
+DeclareAttribute("TypeRightTranslationsSemigroupElements",
                  IsRightTranslationsSemigroup);
 DeclareAttribute("TypeBitranslations", IsTranslationalHull);
 
-DeclareAttribute("LeftTranslations", IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("InnerLeftTranslations", IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("RightTranslations", IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("InnerRightTranslations", IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("TranslationalHull", IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("InnerTranslationalHull", IsEnumerableSemigroupRep and IsFinite);
-DeclareAttribute("TranslationalElements", IsTranslationsSemigroup and IsWholeFamily);
-DeclareAttribute("TranslationalElements", IsTranslationalHull and IsWholeFamily);
+DeclareAttribute("LeftTranslations",
+                  IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("InnerLeftTranslations",
+                  IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("RightTranslations",
+                  IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("InnerRightTranslations",
+                  IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("TranslationalHull",
+                  IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("InnerTranslationalHull",
+                  IsEnumerableSemigroupRep and IsFinite);
+DeclareAttribute("TranslationalElements",
+                  IsTranslationsSemigroup and IsWholeFamily);
+DeclareAttribute("TranslationalElements",
+                  IsTranslationalHull and IsWholeFamily);

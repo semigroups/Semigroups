@@ -10,22 +10,22 @@
 #TODO Translations semigroups can currently forget their generators - maybe??
 #############################################################################
 ## This file contains methods for dealing with left and right translation
-## semigroups, as well as translational hulls. 
+## semigroups, as well as translational hulls.
 ## When one of these semigroups is created, the attribute AsList
 ## is calculated.
 ## To avoid this calculation at the time of creation, you can call
 ## XTranslationsSemigroup or TranslationalHullSemigroup
 ##
-## Left/Right translations are stored internally as transformations on the 
-## indices of the underlying semigroup (determined by AsListCanonical). Hence, 
+## Left/Right translations are stored internally as transformations on the
+## indices of the underlying semigroup (determined by AsListCanonical). Hence,
 ## only finite semigroups are supported.
 ##
 ## Much of the implementation in this file was based on the implementation of
 ## RMS in reesmatsemi.gi in the GAP library - in particular, the creation of
 ## the semigroups and their relation to their elements.
-##  
-## The code specific to rectangular bands is based on 
-## Howie, J.M. (1995) 'Fundamentals of Semigroup theory'. 
+##
+## The code specific to rectangular bands is based on
+## Howie, J.M. (1995) 'Fundamentals of Semigroup theory'.
 ## United Kingdom: Oxford University Press. (p. 116)
 ##
 ## This file is organised as follows:
@@ -37,7 +37,6 @@
 ##    5. Technical methods, eg. PrintObj, *, =, etc.
 ##
 #############################################################################
-
 
 #############################################################################
 # 1. Internal Functions
@@ -58,15 +57,15 @@ end;
 SEMIGROUPS.TranslationsSemigroupElements := function(T)
   local S;
   S := UnderlyingSemigroup(T);
-  if IsZeroSimpleSemigroup(S) or 
+  if IsZeroSimpleSemigroup(S) or
       IsRectangularBand(S) or
       SEMIGROUPS.IsNormalRMSOverGroup(S) then
     return Semigroup(GeneratorsOfSemigroup(T));
   elif HasGeneratorsOfSemigroup(S) then
     if IsLeftTranslationsSemigroup(T) then
       return SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators(T);
-    else 
-      return SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators(T); 
+    else
+      return SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators(T);
     fi;
   fi;
   Error("Semigroups: TranslationsSemigroupElements: \n",
@@ -92,9 +91,9 @@ end;
 # right cayley graph
 SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators := function(L)
   local S, digraph, n, nrgens, out, colors, gens, i, j;
-  
+
   S := UnderlyingSemigroup(L);
-  
+
   digraph := RightCayleyGraphSemigroup(S);
   n       := Length(digraph);
   nrgens  := Length(digraph[1]);
@@ -120,7 +119,7 @@ SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators := function(R)
   local S, digraph, n, nrgens, out, colors, gens, i, j;
 
   S := UnderlyingSemigroup(R);
-  
+
   digraph := LeftCayleyGraphSemigroup(S);
   n       := Length(digraph);
   nrgens  := Length(digraph[1]);
@@ -137,7 +136,7 @@ SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators := function(R)
     od;
   od;
   gens := GeneratorsOfEndomorphismMonoid(Digraph(out), colors);
-  Apply(gens, x -> RightTranslation(R,RestrictedTransformation(x, [1 .. n])));
+  Apply(gens, x -> RightTranslation(R, RestrictedTransformation(x, [1 .. n])));
   return Semigroup(gens, rec(small := true));
 end;
 
@@ -146,23 +145,23 @@ end;
 # Given a set A which hits every L class and R class, a linked pair (f, g) of
 # translations is completely determined by the values on A. Having fixed a_i,
 # we can restrict the values on a_k, k > i, by the linked pair conditions
-# s*a_i f(a_k) = (s*a_i)g a_k and a_k f(a_i * s) = (a_k)g a_i * s,
+# s * a_i f(a_k) = (s * a_i)g a_k and a_k f(a_i * s) = (a_k)g a_i * s,
 # as well as restriction by the translation condition if Sa_i intersect Sa_k is
 # non-empty or a_i S intersect a_k S is non-empty.
 SEMIGROUPS.BitranslationsByGenerators := function(H)
   local d, e, f, g, i, I, j, k, L, m, n, p, q, r, R, s, S, x, y,
-        flinkedrestrictionatstage, fposrepk, ftransrestrictionatstage, fvalsi, 
-        glinkedrestrictionatstage, gposrepk, gtransrestrictionatstage, gvalsi, 
-        linkedpairs, multtable, multtablepositionsets,
+        flinkedrestrictionatstage, fposrepk, ftransrestrictionatstage, fvalsi,
+        glinkedrestrictionatstage, gposrepk, gtransrestrictionatstage, gvalsi,
+        ipos, linkedpairs, multtable, multtablepossets,
         pos, posrepsks, posfrepsks, possrepsk, possgrepsk,
         possibleidempotentfvals, possibleidempotentgvals,
         possiblefrepvals, possiblegrepvals,
         possiblefrepvalsfromidempotent, possiblegrepvalsfromidempotent,
-        reps, repspos, slist, transposepositionsets, whenboundfvals, 
+        reps, repspos, slist, transposepossets, whenboundfvals,
         whenboundgvals,
-        bt, extendf, propagatef, propagateg, reject, restrictfromf, 
+        bt, extendf, propagatef, propagateg, reject, restrictfromf,
         restrictfromg, unrestrict;
-  
+
   S := UnderlyingSemigroup(H);
   n := Size(S);
   slist := AsListCanonical(S);
@@ -170,13 +169,13 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
   R := RightTranslationsSemigroup(S);
 
   #easiest to just recalculate multiplication table with canonical list
-  multtable := List([1..n], i -> [1..n]);
-  for i in [1..n] do
-    for j in [1..n] do
+  multtable := List([1 .. n], i -> [1 .. n]);
+  for i in [1 .. n] do
+    for j in [1 .. n] do
       multtable[i][j] := Position(slist, slist[i] * slist[j]);
     od;
   od;
-  
+
   reps := GeneratorsOfSemigroup(S);
   repspos := [];
   m := Size(reps);
@@ -186,15 +185,15 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
 
   #store which elements of the semigroups multiply each given element to form
   #another given element
-  #eg., if a * b = a * c = d, with (a,b,c,d) having indices (i,j,k,l) 
-  #in the multiplication table, then we store [j,k] in the cell [i][l] 
-  multtablepositionsets := List([1 .. n], x -> List([1 .. n], y -> []));
-  transposepositionsets := List([1 .. n], x -> List([1 .. n], y -> []));
+  #eg., if a * b = a * c = d, with (a,b,c,d) having indices (i,j,k,l)
+  #in the multiplication table, then we store [j,k] in the cell [i][l]
+  multtablepossets := List([1 .. n], x -> List([1 .. n], y -> []));
+  transposepossets := List([1 .. n], x -> List([1 .. n], y -> []));
   for i in [1 .. n] do
     for j in [1 .. n] do
       pos := multtable[i][j];
-      Add(multtablepositionsets[i][pos], j);
-      Add(transposepositionsets[j][pos], i);
+      Add(multtablepossets[i][pos], j);
+      Add(transposepossets[j][pos], i);
     od;
   od;
 
@@ -208,13 +207,13 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
     possibleidempotentgvals[Position(I, e)] := PositionsProperty(slist,
                                                    x -> e * x = x);
   od;
-  
+
   possiblefrepvals := List([1 .. m], x -> [1 .. n]);
   possiblegrepvals := List([1 .. m], x -> [1 .. n]);
-  
+
   #restrict values for f, g based on idemopotents
   #if e is an idempotent with r_i * s = e
-  #then f(r_i)*s = f(r_i)*s*r_i * s
+  #then f(r_i)*s = f(r_i)*s * r_i * s
   #and f(r_i) satisfies f(r_i) * s = x for some value x such that x * e = e
   for i in [1 .. m] do
     for s in S do
@@ -225,12 +224,12 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
         possiblefrepvalsfromidempotent := [];
         for y in possibleidempotentfvals[Position(I, reps[i] * s)] do
           UniteSet(possiblefrepvalsfromidempotent,
-                    transposepositionsets[Position(slist, s)][y]);
+                    transposepossets[Position(slist, s)][y]);
         od;
         possiblefrepvals[i] := Intersection(possiblefrepvals[i],
                                               possiblefrepvalsfromidempotent);
       fi;
-      
+
       if IsIdempotent(s * reps[i]) then
         possiblegrepvals[i] := Intersection(possiblegrepvals[i],
                                             PositionsProperty(slist,
@@ -238,19 +237,19 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
         possiblegrepvalsfromidempotent := [];
         for y in possibleidempotentgvals[Position(I, s * reps[i])] do
           UniteSet(possiblegrepvalsfromidempotent,
-                    multtablepositionsets[Position(slist, s)][y]);
+                    multtablepossets[Position(slist, s)][y]);
         od;
         possiblegrepvals[i] := Intersection(possiblegrepvals[i],
                                               possiblegrepvalsfromidempotent);
       fi;
     od;
   od;
-  
+
   extendf := function(k)
     f[repspos[k + 1]] := possiblefrepvals[k + 1][1];
     return k + 1;
   end;
-  
+
   propagatef := function(k)
     for i in [1 .. n] do
       pos := multtable[repspos[k]][i];
@@ -267,7 +266,7 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
     od;
     return k;
   end;
-  
+
   propagateg := function(k)
     for i in [1 .. n] do
       pos := multtable[i][repspos[k]];
@@ -282,15 +281,16 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
     od;
     return k;
   end;
-  
+
   restrictfromf := function(k)
     for i in [k + 1 .. m] do
+      ipos := repspos[i];
       for j in [1 .. n] do
         posrepsks := multtable[repspos[k]][j];
         posfrepsks := multtable[f[repspos[k]]][j];
         #restrict by the translation condition
-        for p in multtablepositionsets[repspos[i]][posrepsks] do
-          fvalsi := transposepositionsets[p][posfrepsks];
+        for p in multtablepossets[ipos][posrepsks] do
+          fvalsi := transposepossets[p][posfrepsks];
           UniteSet(ftransrestrictionatstage[i][k],
                     Difference(possiblefrepvals[i], fvalsi));
           possiblefrepvals[i] := Intersection(possiblefrepvals[i], fvalsi);
@@ -300,7 +300,7 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
         od;
 
         #deal with the cases reps[i] = reps[k] * slist[j]
-        if repspos[i] = multtable[k][j] then 
+        if ipos = multtable[k][j] then
           fvalsi := [posfrepsks];
           UniteSet(ftransrestrictionatstage[i][k],
                     Difference(possiblefrepvals[i], fvalsi));
@@ -311,9 +311,9 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
         fi;
       od;
       #deal with the cases reps[i] * slist[j] = reps[k]
-      for p in multtablepositionsets[repspos[i]][repspos[k]] do
-        fvalsi := transposepositionsets[p][f[repspos[k]]];  
-        UniteSet(ftransrestrictionatstage[i][k], 
+      for p in multtablepossets[ipos][repspos[k]] do
+        fvalsi := transposepossets[p][f[repspos[k]]];
+        UniteSet(ftransrestrictionatstage[i][k],
                   Difference(possiblefrepvals[i], fvalsi));
         possiblefrepvals[i] := Intersection(possiblefrepvals[i], fvalsi);
         if Size(possiblefrepvals[i]) = 0 then
@@ -322,55 +322,57 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
       od;
     od;
     for i in [k .. m] do
+      ipos := repspos[i];
       for j in [1 .. n] do
         #restrict by the linked pair condition
         posrepsks := multtable[repspos[k]][j];
-        gvalsi := transposepositionsets[posrepsks][multtable[repspos[i]][f[posrepsks]]];
-        UniteSet(glinkedrestrictionatstage[i][k], 
+        gvalsi := transposepossets[posrepsks][multtable[ipos][f[posrepsks]]];
+        UniteSet(glinkedrestrictionatstage[i][k],
                   Difference(possiblegrepvals[i], gvalsi));
         possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
       od;
       #deal with linked condition on reps[k]
-      gvalsi := transposepositionsets[repspos[k]][multtable[repspos[i]][f[repspos[k]]]];
+      gvalsi := transposepossets[repspos[k]][multtable[ipos][f[repspos[k]]]];
       UniteSet(glinkedrestrictionatstage[i][k],
                 Difference(possiblegrepvals[i], gvalsi));
       possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
       if Size(possiblegrepvals[i]) = 0 then
         return fail;
-      fi; 
+      fi;
     od;
     return k;
   end;
-  
+
   restrictfromg := function(k)
     for i in [k + 1 .. m] do
+      ipos := repspos[i];
       for j in [1 .. n] do
-        possrepsk := multtable[j][repspos[k]]; 
+        possrepsk := multtable[j][repspos[k]];
         possgrepsk := multtable[j][g[repspos[k]]];
-        for p in transposepositionsets[repspos[i]][possrepsk] do
-          gvalsi := multtablepositionsets[p][possgrepsk];
+        for p in transposepossets[ipos][possrepsk] do
+          gvalsi := multtablepossets[p][possgrepsk];
           UniteSet(gtransrestrictionatstage[i][k],
                     Difference(possiblegrepvals[i], gvalsi));
           possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
         od;
-        
+
         #deal with the cases reps[i] = s * reps[k] and s * reps[i] = reps[k]
-        if repspos[i] = multtable[j][repspos[k]] then 
+        if ipos = multtable[j][repspos[k]] then
           gvalsi := [possgrepsk];
           UniteSet(gtransrestrictionatstage[i][k],
                     Difference(possiblegrepvals[i], gvalsi));
           possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
         fi;
-        
-        for p in transposepositionsets[repspos[i]][repspos[k]] do
-          gvalsi := multtablepositionsets[p][g[repspos[k]]];  
+
+        for p in transposepossets[ipos][repspos[k]] do
+          gvalsi := multtablepossets[p][g[repspos[k]]];
           UniteSet(gtransrestrictionatstage[i][k],
                     Difference(possiblegrepvals[i], gvalsi));
           possiblegrepvals[i] := Intersection(possiblegrepvals[i], gvalsi);
         od;
-        
-        fvalsi := multtablepositionsets[possrepsk][multtable[g[possrepsk]][repspos[i]]];
-        UniteSet(flinkedrestrictionatstage[i][k], 
+
+        fvalsi := multtablepossets[possrepsk][multtable[g[possrepsk]][ipos]];
+        UniteSet(flinkedrestrictionatstage[i][k],
                   Difference(possiblefrepvals[i], fvalsi));
         possiblefrepvals[i] := Intersection(possiblefrepvals[i], fvalsi);
       od;
@@ -380,7 +382,7 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
     od;
     return k;
   end;
-  
+
   unrestrict := function(k, unrestrictf)
     for i in [1 .. n] do
       if whenboundgvals[i] = k then
@@ -393,8 +395,8 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
       UniteSet(possiblefrepvals[i], flinkedrestrictionatstage[i][k]);
       gtransrestrictionatstage[i][k] := [];
       flinkedrestrictionatstage[i][k] := [];
-    od; 
-  
+    od;
+
     if unrestrictf then
       for i in [1 .. n] do
         if whenboundfvals[i] = k then
@@ -410,9 +412,9 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
       od;
     fi;
   end;
-  
+
   reject := function(k)
-    if k = 0 then 
+    if k = 0 then
       return 0;
     fi;
     fposrepk := Position(possiblefrepvals[k], f[repspos[k]]);
@@ -421,7 +423,7 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
     else
       gposrepk := 0;
     fi;
-    
+
     if gposrepk = 0 then
       if fposrepk < Size(possiblefrepvals[k]) then
         f[repspos[k]] := possiblefrepvals[k][fposrepk + 1];
@@ -486,30 +488,30 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
       return bt(reject(k));
     fi;
   end;
-  
+
   #The actual search
-  ftransrestrictionatstage := List([1..m], x -> List([1..m], y -> []));  
-  flinkedrestrictionatstage := List([1..m], x -> List([1..m], y -> []));
-  gtransrestrictionatstage := List([1..m], x -> List([1..m], y -> []));
-  glinkedrestrictionatstage := List([1..m], x -> List([1..m], y -> []));
+  ftransrestrictionatstage := List([1 .. m], x -> List([1 .. m], y -> []));
+  flinkedrestrictionatstage := List([1 .. m], x -> List([1 .. m], y -> []));
+  gtransrestrictionatstage := List([1 .. m], x -> List([1 .. m], y -> []));
+  glinkedrestrictionatstage := List([1 .. m], x -> List([1 .. m], y -> []));
   whenboundfvals := List([1 .. n], x -> 0);
   whenboundgvals := ShallowCopy(whenboundfvals);
   linkedpairs := [];
-  
+
   f := [];
   g := [];
-  
+
   k := extendf(0);
   k := bt(k);
   while k = m + 1 do
     Add(linkedpairs, [ShallowCopy(f), ShallowCopy(g)]);
     k := bt(reject(k - 1));
   od;
-  
-  Apply(linkedpairs, x -> BitranslationNC(H, 
+
+  Apply(linkedpairs, x -> BitranslationNC(H,
                             LeftTranslationNC(L, Transformation(x[1])),
                             RightTranslationNC(R, Transformation(x[2]))));
-  
+
   return linkedpairs;
 end;
 
@@ -521,12 +523,11 @@ end;
 InstallGlobalFunction(LeftTranslationsSemigroup,
 function(S)
   local fam, L, type;
-  
 
   if HasLeftTranslations(S) then
     return LeftTranslations(S);
   fi;
-  
+
   if SEMIGROUPS.IsNormalRMSOverGroup(S) then
     fam := SEMIGROUPS.FamOfRMSLeftTranslationsByTriple();
     type := fam!.type;
@@ -540,13 +541,13 @@ function(S)
   #create the semigroup of left translations
   L := Objectify(NewType(CollectionsFamily(fam), IsLeftTranslationsSemigroup
                          and IsWholeFamily and IsAttributeStoringRep), rec());
-  
+
   #store the type of the elements in the semigroup
   SetTypeLeftTranslationsSemigroupElements(L, type);
-  SetLeftTranslationsSemigroupOfFamily(fam, L); 
+  SetLeftTranslationsSemigroupOfFamily(fam, L);
   SetUnderlyingSemigroup(L, S);
   SetLeftTranslations(S, L);
-  
+
   return L;
 end);
 
@@ -554,7 +555,7 @@ end);
 InstallGlobalFunction(RightTranslationsSemigroup,
 function(S)
   local fam, type, R;
-  
+
   if HasRightTranslations(S) then
     return RightTranslations(S);
   fi;
@@ -568,17 +569,17 @@ function(S)
     type := NewType(fam, IsRightTranslationsSemigroupElement);
     fam!.type := type;
   fi;
-  
+
   # create the semigroup of right translations
-  R := Objectify(NewType(CollectionsFamily(fam), IsRightTranslationsSemigroup 
+  R := Objectify(NewType(CollectionsFamily(fam), IsRightTranslationsSemigroup
     and IsWholeFamily and IsAttributeStoringRep), rec());
-  
+
   # store the type of the elements in the semigroup
   SetTypeRightTranslationsSemigroupElements(R, type);
   SetRightTranslationsSemigroupOfFamily(fam, R);
   SetUnderlyingSemigroup(R, S);
   SetRightTranslations(S, R);
-  
+
   return R;
 end);
 
@@ -586,11 +587,11 @@ end);
 InstallGlobalFunction(TranslationalHullSemigroup,
 function(S)
   local fam, type, H;
-  
+
   if HasTranslationalHull(S) then
     return TranslationalHull(S);
   fi;
-  
+
   if SEMIGROUPS.IsNormalRMSOverGroup(S) then
     fam := SEMIGROUPS.FamOfRMSBitranslationsByTriple();
     type := fam!.type;
@@ -600,29 +601,29 @@ function(S)
     type := NewType(fam, IsBitranslation);
     fam!.type := type;
   fi;
-  
+
   # create the translational hull
   H := Objectify(NewType(CollectionsFamily(fam), IsTranslationalHull and
     IsWholeFamily and IsAttributeStoringRep), rec());
-  
+
   # store the type of the elements in the semigroup
   SetTypeBitranslations(H, type);
   SetTranslationalHullOfFamily(fam, H);
   SetUnderlyingSemigroup(H, S);
   SetTranslationalHull(S, H);
-  
+
   return H;
 end);
 
 # Create and calculate the semigroup of left translations
-InstallMethod(LeftTranslations, "for a semigroup", 
-[IsEnumerableSemigroupRep and IsFinite], 
-function(S) 
+InstallMethod(LeftTranslations, "for a semigroup",
+[IsEnumerableSemigroupRep and IsFinite],
+function(S)
   local L;
-  
+
   L := LeftTranslationsSemigroup(S);
   AsList(L);
-  
+
   return L;
 end);
 
@@ -631,10 +632,10 @@ InstallMethod(InnerLeftTranslations, "for a semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local A, I, L, l, s;
-  
+
   I := [];
   L := LeftTranslationsSemigroup(S);
-  
+
   if HasGeneratorsOfSemigroup(S) then
     A := GeneratorsOfSemigroup(S);
   else
@@ -648,14 +649,14 @@ function(S)
 end);
 
 # Create and calculate the semigroup of right translations
-InstallMethod(RightTranslations, "for a semigroup", 
+InstallMethod(RightTranslations, "for a semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
-function(S) 
+function(S)
   local R;
-  
+
   R := RightTranslationsSemigroup(S);
   AsList(R);
-  
+
   return R;
 end);
 
@@ -664,10 +665,10 @@ InstallMethod(InnerRightTranslations, "for a semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local A, I, R, r, s;
-  
+
   I := [];
   R := RightTranslationsSemigroup(S);
-  
+
   if HasGeneratorsOfSemigroup(S) then
     A := GeneratorsOfSemigroup(S);
   else
@@ -685,16 +686,15 @@ end);
 # a transformation of its indices (as defined by AsListCanonical)
 InstallGlobalFunction(LeftTranslation,
 function(L, x)
-  local S, semiList, i, reps, R;
-  
+  local R, S, reps, semiList;
   S := UnderlyingSemigroup(L);
   reps := [];
-  
+
   if not (IsLeftTranslationsSemigroup(L)) then
     ErrorNoReturn("Semigroups: LeftTranslation: \n",
           "the first argument must be a semigroup of left translations,");
   fi;
-  
+
   if HasGeneratorsOfSemigroup(S) then
     reps := GeneratorsOfSemigroup(S);
   else
@@ -702,14 +702,14 @@ function(L, x)
       Add(reps, Representative(R));
     od;
   fi;
-  
+
   if IsGeneralMapping(x) then
     if not (S = Source(x) and Source(x) = Range(x)) then
       ErrorNoReturn("Semigroups: LeftTranslation (from Mapping): \n",
             "the domain and range of the second argument must be ",
             "the underlying semigroup of the first,");
     fi;
-    if ForAny(reps, s -> ForAny(S, t -> (s^x) * t <> (s * t)^x)) then
+    if ForAny(reps, s -> ForAny(S, t -> (s ^ x) * t <> (s * t) ^ x)) then
       ErrorNoReturn("Semigroups: LeftTranslation: \n",
              "the mapping given must define a left translation,");
     fi;
@@ -720,10 +720,10 @@ function(L, x)
             "semigroup of the first argument,");
     fi;
     semiList := AsListCanonical(S);
-    if ForAny(reps, 
-              s -> ForAny(S, 
-                          t -> semiList[Position(semiList, s)^x] * t <> 
-                          semiList[Position(semiList, s * t)^x])) then
+    if ForAny(reps,
+              s -> ForAny(S,
+                          t -> semiList[Position(semiList, s) ^ x] * t <>
+                          semiList[Position(semiList, s * t) ^ x])) then
       ErrorNoReturn("Semigroups: LeftTranslation: \n",
             "the transformation given must define a left translation,");
     fi;
@@ -746,10 +746,10 @@ function(L, x)
   # x is a mapping on UnderlyingSemigroup(S)
   semiList := AsListCanonical(UnderlyingSemigroup(L));
   mapAsTransList := [];
-  for i in [1..Length(semiList)] do
-    mapAsTransList[i] := Position(semiList, semiList[i]^x);
+  for i in [1 .. Length(semiList)] do
+    mapAsTransList[i] := Position(semiList, semiList[i] ^ x);
   od;
-  
+
   return Objectify(TypeLeftTranslationsSemigroupElements(L),
                    [Transformation(mapAsTransList)]);
 end);
@@ -757,11 +757,11 @@ end);
 # Same for right translations.
 InstallGlobalFunction(RightTranslation,
 function(R, x)
-  local S, semiList, i, reps, L;
-  
+  local S, semiList, reps, L;
+
   S := UnderlyingSemigroup(R);
   reps := [];
-  
+
   if not (IsRightTranslationsSemigroup(R)) then
     ErrorNoReturn("Semigroups: RightTranslation: \n",
           "the first argument must be a semigroup of right translations,");
@@ -775,14 +775,14 @@ function(R, x)
       Add(reps, Representative(L));
     od;
   fi;
-  
+
   if IsGeneralMapping(x) then
     if not (S = Source(x) and Source(x) = Range(x)) then
       ErrorNoReturn("Semigroups: RightTranslation (from Mapping): \n",
             "the domain and range of the second argument must be ",
             "the underlying semigroup of the first,");
     fi;
-    if ForAny(reps, s -> ForAny(S, t -> t * (s^x) <> (t * s)^x)) then
+    if ForAny(reps, s -> ForAny(S, t -> t * (s ^ x) <> (t * s) ^ x)) then
       ErrorNoReturn("Semigroups: RightTranslation: \n",
              "the mapping given must define a right translation,");
     fi;
@@ -793,10 +793,10 @@ function(R, x)
             "semigroup of the first argument,");
     fi;
     semiList := AsListCanonical(S);
-    if ForAny(reps, 
-              s -> ForAny(S, 
-                          t -> t * semiList[Position(semiList, s)^x] <> 
-                          semiList[Position(semiList, t * s)^x])) then
+    if ForAny(reps,
+              s -> ForAny(S, t ->
+                            t * semiList[Position(semiList, s) ^ x]
+                              <> semiList[Position(semiList, t * s) ^ x])) then
       ErrorNoReturn("Semigroups: RightTranslation: \n",
             "the transformation given must define a right translation,");
     fi;
@@ -819,10 +819,10 @@ function(R, x)
   # x is a mapping on UnderlyingSemigroup(S)
   semiList := AsListCanonical(UnderlyingSemigroup(R));
   mapAsTransList := [];
-  for i in [1..Length(semiList)] do
-    mapAsTransList[i] := Position(semiList, semiList[i]^x);
+  for i in [1 .. Length(semiList)] do
+    mapAsTransList[i] := Position(semiList, semiList[i] ^ x);
   od;
-  
+
   return Objectify(TypeRightTranslationsSemigroupElements(R),
                    [Transformation(mapAsTransList)]);
 end);
@@ -832,20 +832,20 @@ InstallMethod(TranslationalHull, "for a semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local H;
-  
+
   H := TranslationalHullSemigroup(S);
   AsList(H);
-  
+
   return H;
 end);
 
-# Creates the ideal of the translational hull consisting of 
+# Creates the ideal of the translational hull consisting of
 # all inner bitranslations
 InstallMethod(InnerTranslationalHull, "for a semigroup",
 [IsEnumerableSemigroupRep and IsFinite],
 function(S)
   local A, I, H, L, R, l, r, s;
-  
+
   I := [];
   H := TranslationalHullSemigroup(S);
   L := LeftTranslationsSemigroup(S);
@@ -865,27 +865,27 @@ end);
 
 # Creates a linked pair (l, r) from a left translation l and a right
 # translation r, as an element of a translational hull H.
-InstallGlobalFunction(Bitranslation, 
-function(H, l, r) 
+InstallGlobalFunction(Bitranslation,
+function(H, l, r)
   local S, L, R, dclasses, lclasses, rclasses, reps, d, i, j, z;
-  
-  if not IsTranslationalHull(H) then 
+
+  if not IsTranslationalHull(H) then
     ErrorNoReturn("Semigroups: Bitranslation: \n",
           "the first argument must be a translational hull,");
   fi;
-  
-  if not (IsLeftTranslationsSemigroupElement(l) and 
+
+  if not (IsLeftTranslationsSemigroupElement(l) and
             IsRightTranslationsSemigroupElement(r)) then
     ErrorNoReturn("Semigroups: Bitranslation: \n",
           "the second argument must be a left translation ",
           "and the third argument must be a right translation,");
     return;
   fi;
-  
+
   S := UnderlyingSemigroup(H);
   L := LeftTranslationsSemigroupOfFamily(FamilyObj(l));
   R := RightTranslationsSemigroupOfFamily(FamilyObj(r));
-  
+
   if HasGeneratorsOfSemigroup(S) then
     reps := GeneratorsOfSemigroup(S);
   else
@@ -917,17 +917,17 @@ function(H, l, r)
       fi;
     od;
   fi;
-  
+
   if not (UnderlyingSemigroup(L) = S and UnderlyingSemigroup(R) = S) then
       ErrorNoReturn("Semigroups: Bitranslation: \n",
             "each argument must have the same underlying semigroup,");
   fi;
-  
-  if ForAny(reps, t -> ForAny(reps, s -> s * (t^l) <> (s^r) * t)) then
+
+  if ForAny(reps, t -> ForAny(reps, s -> s * (t ^ l) <> (s ^ r) * t)) then
      ErrorNoReturn("Semigroups: Bitranslation: \n",
            "the translations given must form a linked pair,");
   fi;
-  
+
   return BitranslationNC(H, l, r);
 end);
 
@@ -937,53 +937,54 @@ function(H, l, r)
 end);
 
 #############################################################################
-# 3. Methods for rectangular bands 
+# 3. Methods for rectangular bands
 #############################################################################
 
-# For rectangular bands, don't calculate AsList for LeftTranslations 
+# For rectangular bands, don't calculate AsList for LeftTranslations
 # Just get generators
 InstallMethod(LeftTranslations, "for a rectangular band",
 [IsEnumerableSemigroupRep and IsFinite and IsRectangularBand],
-function(S) 
+function(S)
   local L;
-  
+
   L := LeftTranslationsSemigroup(S);
   GeneratorsOfSemigroup(L);
-  
+
   return L;
 end);
 
-# For rectangular bands, don't calculate AsList for RightTranslations 
+# For rectangular bands, don't calculate AsList for RightTranslations
 # Just get generators
 InstallMethod(RightTranslations, "for a rectangular band",
 [IsEnumerableSemigroupRep and IsFinite and IsRectangularBand],
-function(S) 
+function(S)
   local R;
-  
+
   R := RightTranslationsSemigroup(S);
   GeneratorsOfSemigroup(R);
-  
+
   return R;
 end);
 
-# For rectangular bands, don't calculate AsList for TranslationalHull 
+# For rectangular bands, don't calculate AsList for TranslationalHull
 # Just get generators
 InstallMethod(TranslationalHull, "for a rectangular band",
 [IsEnumerableSemigroupRep and IsFinite and IsRectangularBand],
 function(S)
   local H;
-  
+
   H := TranslationalHullSemigroup(S);
   GeneratorsOfSemigroup(H);
-  
+
   return H;
 end);
 
 # Every transformation on the relevant index set corresponds to a translation.
 # The R classes of an I x J rectangular band correspond to (i, J) for i in I.
 # Dually for L classes.
-InstallMethod(Size, "for the semigroup of left or right translations of a rectangular band", 
-[IsTranslationsSemigroup and IsWholeFamily], 2, 
+InstallMethod(Size,
+"for the semigroup of left or right translations of a rectangular band",
+[IsTranslationsSemigroup and IsWholeFamily], 2,
 function(T)
   local S, n;
   S := UnderlyingSemigroup(T);
@@ -994,8 +995,8 @@ function(T)
     n := NrRClasses(S);
   else n := NrLClasses(S);
   fi;
-  
-  return n^n;
+
+  return n ^ n;
 end);
 
 # The translational hull of a rectangular band is the direct product of the
@@ -1013,13 +1014,14 @@ function(H)
   return Size(L) * Size(R);
 end);
 
-# Generators of the left/right translations semigroup on the I x J rectangular 
-# band correspond to the generators of the full transformation monoid on I or J. 
-InstallMethod(GeneratorsOfSemigroup, "for the semigroup of left or right translations of a rectangular band",
+# Generators of the left/right translations semigroup on the I x J rectangular
+# band correspond to the generators of the full transformation monoid on I or J.
+InstallMethod(GeneratorsOfSemigroup,
+"for the semigroup of left or right translations of a rectangular band",
 [IsTranslationsSemigroup and IsWholeFamily],
 2,
 function(T)
-  local S, L, n, iso, inv, reesMatSemi, semiList, gens, t, f;
+  local S, n, iso, inv, reesMatSemi, gens, t, f;
   S := UnderlyingSemigroup(T);
   if not IsRectangularBand(S) then
     TryNextMethod();
@@ -1033,37 +1035,38 @@ function(T)
   else
     n := Length(Columns(reesMatSemi));
   fi;
-  
+
   gens := [];
   for t in GeneratorsOfMonoid(FullTransformationMonoid(n)) do
     if IsLeftTranslationsSemigroup(T) then
       f := function(x)
-        return ReesMatrixSemigroupElement(reesMatSemi, x[1]^t, 
+        return ReesMatrixSemigroupElement(reesMatSemi, x[1] ^ t,
           (), x[3]);
       end;
-      Add(gens, LeftTranslationNC(T, CompositionMapping(inv, 
+      Add(gens, LeftTranslationNC(T, CompositionMapping(inv,
       MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
-    else 
+    else
       f := function(x)
-        return ReesMatrixSemigroupElement(reesMatSemi, x[1], 
-          (), x[3]^t);
+        return ReesMatrixSemigroupElement(reesMatSemi, x[1],
+          (), x[3] ^ t);
       end;
-      Add(gens, RightTranslationNC(T, CompositionMapping(inv, 
+      Add(gens, RightTranslationNC(T, CompositionMapping(inv,
         MappingByFunction(reesMatSemi, reesMatSemi, f), iso)));
     fi;
   od;
   return gens;
-end);      
+end);
 
-# Generators of translational hull are the direct product of 
+# Generators of translational hull are the direct product of
 # generators of left/right translations semigroup for rectangular bands
 # since they are monoids
-InstallMethod(GeneratorsOfSemigroup, "for the translational hull of a rectangular band", 
+InstallMethod(GeneratorsOfSemigroup,
+"for the translational hull of a rectangular band",
 [IsTranslationalHull],
 2,
 function(H)
   local S, leftGens, rightGens, l, r, gens;
-  
+
   S := UnderlyingSemigroup(H);
   if not IsRectangularBand(S) then
     TryNextMethod();
@@ -1072,18 +1075,18 @@ function(H)
   leftGens := GeneratorsOfSemigroup(LeftTranslationsSemigroup(S));
   rightGens := GeneratorsOfSemigroup(RightTranslationsSemigroup(S));
   gens := [];
-  
+
   for l in leftGens do
     for r in rightGens do
       Add(gens, BitranslationNC(H, l, r));
     od;
   od;
-  
+
   return gens;
 end);
 
 #############################################################################
-# 4. Methods for monoids 
+# 4. Methods for monoids
 #############################################################################
 
 # Translations of a monoid are all inner translations
@@ -1093,7 +1096,8 @@ function(S)
   local L;
   L := LeftTranslationsSemigroup(S);
   if not HasGeneratorsOfSemigroup(L) then
-    SetGeneratorsOfSemigroup(L, GeneratorsOfSemigroup(InnerLeftTranslations(S)));
+    SetGeneratorsOfSemigroup(L,
+                            GeneratorsOfSemigroup(InnerLeftTranslations(S)));
   fi;
   return L;
 end);
@@ -1104,7 +1108,8 @@ function(S)
   local R;
   R := RightTranslationsSemigroup(S);
   if not HasGeneratorsOfSemigroup(R) then
-    SetGeneratorsOfSemigroup(R, GeneratorsOfSemigroup(InnerRightTranslations(S)));
+    SetGeneratorsOfSemigroup(R,
+                            GeneratorsOfSemigroup(InnerRightTranslations(S)));
   fi;
   return R;
 end);
@@ -1116,7 +1121,8 @@ function(S)
   local H;
   H := TranslationalHullSemigroup(S);
   if not HasGeneratorsOfSemigroup(H) then
-    SetGeneratorsOfSemigroup(H, GeneratorsOfSemigroup(InnerTranslationalHull(S)));
+    SetGeneratorsOfSemigroup(H,
+                            GeneratorsOfSemigroup(InnerTranslationalHull(S)));
   fi;
   return H;
 end);
@@ -1164,11 +1170,12 @@ InstallMethod(ViewObj, "for a semigroup of left or right translations",
 function(T)
   Print("<the semigroup of");
   if IsLeftTranslationsSemigroup(T) then Print(" left");
-  else Print(" right"); fi;
+    else Print(" right");
+  fi;
   Print(" translations of ", ViewString(UnderlyingSemigroup(T)), ">");
 end);
-  
-InstallMethod(ViewObj, "for a semigroup of translations", 
+
+InstallMethod(ViewObj, "for a semigroup of translations",
 [IsTranslationsSemigroup], PrintObj);
 
 InstallMethod(PrintObj, "for a semigroup of translations",
@@ -1188,26 +1195,26 @@ function(T)
   return;
 end);
 
-InstallMethod(ViewObj, "for a translation", 
+InstallMethod(ViewObj, "for a translation",
 [IsTranslationsSemigroupElement], PrintObj);
 
 InstallMethod(PrintObj, "for a translation",
 [IsTranslationsSemigroupElement],
 function(t)
   local L, S;
-  L := IsLeftTranslationsSemigroupElement(t); 
-  if L then 
+  L := IsLeftTranslationsSemigroupElement(t);
+  if L then
     S := UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t)));
     Print("<left ");
-  else 
+  else
     S := UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t)));
     Print("<right ");
   fi;
-  
+
   Print("translation on ", ViewString(S), ">");
 end);
 
-InstallMethod(ViewObj, "for a translational hull", 
+InstallMethod(ViewObj, "for a translational hull",
 [IsTranslationalHull], PrintObj);
 
 InstallMethod(PrintObj, "for a translational hull",
@@ -1219,10 +1226,11 @@ end);
 InstallMethod(PrintObj, "for a subsemigroup of a translational hull",
 [IsTranslationalHull],
 function(H)
-  Print("<semigroups of translational hull elements over ", ViewString(UnderlyingSemigroup(H)), ">");
+  Print("<semigroups of translational hull elements over ",
+        ViewString(UnderlyingSemigroup(H)), ">");
 end);
 
-InstallMethod(ViewObj, "for a translational hull element", 
+InstallMethod(ViewObj, "for a translational hull element",
 [IsBitranslation], PrintObj);
 
 InstallMethod(PrintObj, "for a translational hull element",
@@ -1230,7 +1238,8 @@ InstallMethod(PrintObj, "for a translational hull element",
 function(t)
   local H;
   H := TranslationalHullOfFamily(FamilyObj(t));
-  Print("<linked pair of translations on ", ViewString(UnderlyingSemigroup(H)), ">");
+  Print("<linked pair of translations on ",
+        ViewString(UnderlyingSemigroup(H)), ">");
 end);
 
 # Note the order of multiplication
@@ -1238,20 +1247,20 @@ InstallMethod(\*, "for left translations of a semigroup",
 IsIdenticalObj,
 [IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
 function(x, y)
-  return Objectify(FamilyObj(x)!.type, [y![1]*x![1]]);
+  return Objectify(FamilyObj(x)!.type, [y![1] * x![1]]);
 end);
 
 InstallMethod(\=, "for left translations of a semigroup",
 IsIdenticalObj,
 [IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
-function(x, y) 
+function(x, y)
   return x![1] = y![1];
 end);
 
 InstallMethod(\<, "for left translations of a semigroup",
 IsIdenticalObj,
 [IsLeftTranslationsSemigroupElement, IsLeftTranslationsSemigroupElement],
-function(x, y) 
+function(x, y)
   return x![1] < y![1];
 end);
 
@@ -1260,20 +1269,20 @@ InstallMethod(\*, "for right translations of a semigroup",
 IsIdenticalObj,
 [IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
 function(x, y)
-  return Objectify(FamilyObj(x)!.type, [x![1]*y![1]]);
+  return Objectify(FamilyObj(x)!.type, [x![1] * y![1]]);
 end);
 
 InstallMethod(\=, "for right translations of a semigroup",
 IsIdenticalObj,
 [IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
-function(x, y) 
+function(x, y)
   return x![1] = y![1];
 end);
 
 InstallMethod(\<, "for right translations of a semigroup",
 IsIdenticalObj,
 [IsRightTranslationsSemigroupElement, IsRightTranslationsSemigroupElement],
-function(x, y) 
+function(x, y)
   return x![1] < y![1];
 end);
 
@@ -1282,22 +1291,26 @@ InstallMethod(\^, "for a semigroup element and a translation",
 function(x, t)
   local list;
   if IsLeftTranslationsSemigroupElement(t) then
-    list := AsListCanonical(UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(FamilyObj(t))));
+    list := AsListCanonical(UnderlyingSemigroup(
+                              LeftTranslationsSemigroupOfFamily(
+                                FamilyObj(t))));
   else
-    list := AsListCanonical(UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(FamilyObj(t))));
+    list := AsListCanonical(UnderlyingSemigroup(
+                              RightTranslationsSemigroupOfFamily(
+                                FamilyObj(t))));
   fi;
   if not x in list then
     ErrorNoReturn("Semigroups: ^ for a semigroup element and translation: \n",
           "the first argument must be an element of the domain of the second,");
   fi;
-  return list[Position(list, x)^t![1]];
+  return list[Position(list, x) ^ t![1]];
 end);
 
 InstallMethod(\*, "for translation hull elements (linked pairs)",
 IsIdenticalObj,
 [IsBitranslation, IsBitranslation],
 function(x, y)
-  return Objectify(FamilyObj(x)!.type, [x![1]*y![1], x![2]*y![2]]);
+  return Objectify(FamilyObj(x)!.type, [x![1] * y![1], x![2] * y![2]]);
 end);
 
 InstallMethod(\=, "for translational hull elements (linked pairs)",
@@ -1314,37 +1327,23 @@ function(x, y)
   return x![1] < y![1] or (x![1] = y![1] and x![2] < y![2]);
 end);
 
-InstallMethod(IsWholeFamily, "for a semigroup of translations of a rectangular band",
-[IsTranslationsSemigroup],
-function(T)
-  if IsLeftTranslationsSemigroup(T) then  
-    return Size(T) = Size(LeftTranslationsSemigroupOfFamily(ElementsFamily(
-                                                                FamilyObj(T))));
-  else 
-    return Size(T) = Size(RightTranslationsSemigroupOfFamily(ElementsFamily(
-                                                                FamilyObj(T)))); 
-  fi;
-end);
-
-InstallMethod(IsWholeFamily, "for a subsemigroup of the translational hull of a rectangular band",
-[IsTranslationalHull],
-function(H) 
-  return Size(H) = Size(TranslationalHullOfFamily(ElementsFamily(FamilyObj(H))));
-end);
-
-InstallMethod(UnderlyingSemigroup, "for a semigroup of left or right translations",
+InstallMethod(UnderlyingSemigroup,
+"for a semigroup of left or right translations",
 [IsTranslationsSemigroup],
 function(T)
   if IsLeftTranslationsSemigroup(T) then
-    return UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(ElementsFamily(
+    return UnderlyingSemigroup(LeftTranslationsSemigroupOfFamily(
+                                                                ElementsFamily(
                                                                 FamilyObj(T))));
-  else 
-    return UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(ElementsFamily(
+  else
+    return UnderlyingSemigroup(RightTranslationsSemigroupOfFamily(
+                                                                ElementsFamily(
                                                                 FamilyObj(T))));
   fi;
 end);
 
-InstallMethod(UnderlyingSemigroup, "for a subsemigroup of the translational hull",
+InstallMethod(UnderlyingSemigroup,
+"for a subsemigroup of the translational hull",
 [IsTranslationalHull],
 function(H)
     return UnderlyingSemigroup(TranslationalHullOfFamily(ElementsFamily(
@@ -1381,7 +1380,7 @@ end);
 InstallMethod(OneOp, "for a semigroup of translations",
 [IsTranslationsSemigroupElement],
 function(t)
-  local T, S, l, r;
+  local S, T;
   if IsLeftTranslationsSemigroupElement(t) then
     T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
     S := UnderlyingSemigroup(T);
@@ -1401,4 +1400,48 @@ end);
 InstallGlobalFunction(RightPartOfBitranslation, "for a bitranslation",
 function(h)
   return h![2];
+end);
+
+InstallMethod(IsWholeFamily, "for a collection of translations",
+[IsTranslationsSemigroupElementCollection],
+function(C)
+  local L, S, T, t;
+
+  t := Representative(C);
+  L := IsLeftTranslationsSemigroupElement(t);
+
+  if L then
+    T := LeftTranslationsSemigroupOfFamily(FamilyObj(t));
+  else
+    T := RightTranslationsSemigroupOfFamily(FamilyObj(t));
+  fi;
+
+  S := UnderlyingSemigroup(T);
+
+  if not HasSize(T) or
+          IsRectangularBand(S) or
+          IsSimpleSemigroup(S) or
+          IsZeroSimpleSemigroup(S) or
+          IsMonoidAsSemigroup(S) then
+    TryNextMethod();
+  fi;
+
+  return Size(T) = Size(C);
+end);
+
+InstallMethod(IsWholeFamily, "for a collection of bitranslations",
+[IsBitranslationCollection],
+function(C)
+  local b, H, S;
+  b := Representative(C);
+  H := TranslationalHullOfFamily(FamilyObj(b));
+  S := UnderlyingSemigroup(H);
+
+  if not HasSize(H) or
+          IsRectangularBand(S) or
+          IsMonoidAsSemigroup(S) then
+    TryNextMethod();
+  fi;
+
+  return Size(H) = Size(C);
 end);

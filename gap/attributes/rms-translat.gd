@@ -11,10 +11,10 @@
 DeclareCategory("IsTranslationOfNormalRMS",
                 IsTranslationsSemigroupElement);
 DeclareCategory("IsLeftTranslationOfNormalRMS",
-                IsTranslationOfNormalRMS and 
+                IsTranslationOfNormalRMS and
                 IsLeftTranslationsSemigroupElement);
 DeclareCategory("IsRightTranslationOfNormalRMS",
-                IsTranslationOfNormalRMS and 
+                IsTranslationOfNormalRMS and
                 IsRightTranslationsSemigroupElement);
 DeclareCategory("IsBitranslationOfNormalRMS", IsBitranslation);
 

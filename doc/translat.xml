@@ -47,7 +47,7 @@ gap> GeneratorsOfSemigroup(L);
       canonical list of elements of the underlying semigroup,
       LeftTranslation and RightTranslation return the corresponding translations. 
       <Example><![CDATA[
-gap> S := RectangularBand(3,4);;
+gap> S := RectangularBand(3, 4);;
 gap> L := LeftTranslationsSemigroup(S);;
 gap> s := AsList(S)[1];;
 gap> f := function(x)
@@ -57,7 +57,7 @@ gap> map := MappingByFunction(S, S, f);;
 gap> l := LeftTranslation(L, map);
 <left translation on <regular transformation semigroup of size 12, 
  degree 8 with 4 generators>>
-gap> s^l;
+gap> s ^ l;
 Transformation( [ 1, 2, 1, 1, 5, 5, 5, 5 ] )
 ]]></Example>
     </Description>
@@ -103,10 +103,10 @@ gap> Size(H);
       (<A>l, r</A>) of translations, belonging to the translational hull 
       <A>H</A>.
       <Example> <![CDATA[
-gap> G := SmallGroup(4,2);;
+gap> G := SmallGroup(4, 2);;
 gap> A := AsList(G);;
-gap> mat := [ [A[1], 0],
-> [A[2], A[2]] ];;
+gap> mat := [[A[1], 0],
+> [A[2], A[2]]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> L := LeftTranslationsSemigroup(S);;
 gap> R := RightTranslationsSemigroup(S);;
@@ -133,7 +133,7 @@ gap> x := Bitranslation(H, l, r);
       of <C>IsTranslationsSemigroupElement</C>,
       which itself is a subcategory of <C>IsAssociativeElement</C>.
       <Example> <![CDATA[
-gap> S := RectangularBand(3,4);;
+gap> S := RectangularBand(3, 4);;
 gap> l := Representative(LeftTranslations(S));
 <left translation on <simple transformation semigroup of size 12, 
  degree 8 with 4 generators>>
@@ -156,9 +156,9 @@ false
       belong to <C>IsBitranslation</C>. This is a subcategory of 
       <Ref Filt="IsAssociativeElement" BookName="ref"/>.
       <Example> <![CDATA[
-gap> G := SmallGroup(4,2);;
+gap> G := SmallGroup(4, 2);;
 gap> A := AsList(G);;
-gap> mat := [ [A[1], 0, A[1]],
+gap> mat := [[A[1], 0, A[1]],
 > [A[2], A[2], A[4]]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> L := LeftTranslations(S);;
@@ -186,7 +186,7 @@ false
       <C>IsXTranslationsSemigroupElementCollection</C> and
       <C>IsSemigroup</C>.
       <Example><![CDATA[
-gap> S := RectangularBand(3,4);;
+gap> S := RectangularBand(3, 4);;
 gap> L := LeftTranslations(S);;
 gap> R := RightTranslations(S);;
 gap> IsLeftTranslationsSemigroup(L);
@@ -207,7 +207,7 @@ false
       <C>IsTranslationalHull</C> is a synonym for <C>IsSemigroup</C> and
       <Ref Filt="IsBitranslationCollection"/>
       <Example><![CDATA[
-gap> S := RectangularBand(3,3);;
+gap> S := RectangularBand(3, 3);;
 gap> H := TranslationalHull(S);;
 gap> L := LeftTranslationsSemigroup(S);;
 gap> IsTranslationalHull(H);
@@ -249,7 +249,7 @@ true
       <C>XTranslationsSemigroupOfFamily</C>(<A>fam</A>) returns the left or right
       translations semigroup which contains the objects of family <A>fam</A>
       <Example><![CDATA[
-gap> S := RectangularBand(3,3);;
+gap> S := RectangularBand(3, 3);;
 gap> L := LeftTranslations(S);;
 gap> l := Representative(L);;
 gap> LeftTranslationsSemigroupOfFamily(FamilyObj(l)) = L;
@@ -269,7 +269,7 @@ true
       <C>TranslationalHullOfFamily</C>(<A>fam</A>) returns the translational hull
       which contains the objects of family <A>fam</A>
       <Example><![CDATA[
-gap> S := RectangularBand(3,3);;
+gap> S := RectangularBand(3, 3);;
 gap> H := TranslationalHull(S);;
 gap> h := Representative(H);;
 gap> TranslationalHullOfFamily(FamilyObj(h)) = H;
@@ -293,8 +293,8 @@ true
       of <A>S</A>. These are the translations defined by right multiplication by
       a fixed element of <A>S</A>.
       <Example><![CDATA[
-gap> S := Semigroup([Transformation([2,2,3,1]), 
-> Transformation([1,4,3,3])]);;
+gap> S := Semigroup([Transformation([2, 2, 3, 1]), 
+> Transformation([1, 4, 3, 3])]);;
 gap> L := InnerLeftTranslations(S);
 <semigroup of left translations of <transformation semigroup of 
  degree 4 with 2 generators> with 2 generators>
@@ -321,8 +321,8 @@ true
       right translations defined respectively by left multiplication 
       and right multiplication by the same fixed element of <A>S</A>.
       <Example><![CDATA[
-gap> S := Semigroup([Transformation([2,2,3,1]), 
-> Transformation([1,4,3,3])]);;
+gap> S := Semigroup([Transformation([2, 2, 3, 1]), 
+> Transformation([1, 4, 3, 3])]);;
 gap> InnerTranslationalHull(S);
 <semigroups of translational hull elements over <transformation 
  semigroup of degree 4 with 2 generators>>
@@ -338,13 +338,13 @@ gap> InnerTranslationalHull(S);
     <Returns> The left or right translation component of <A>x</A>.
     </Returns>
     <Description>
-      For a bitranslation <A>b</A> consisting of a linked pair <A>(l, r)</A>,i
+      For a bitranslation <A>b</A> consisting of a linked pair <A>(l, r)</A>,
       <C>LeftPartOfBitranslation</C><A>b</A> returns the left translation
       <A>l</A>, and <C>RightPartOfBitranslation</C><A>b</A> returns the
       right translation <A>r</A>.
       <Example><![CDATA[
-gap> S := Semigroup([Transformation([4,2,3,3]),
-> Transformation([2,2,3,1])]);
+gap> S := Semigroup([Transformation([4, 2, 3, 3]),
+> Transformation([2, 2, 3, 1])]);
 <transformation semigroup of degree 4 with 2 generators>
 gap> H := TranslationalHull(S);;
 gap> h := AsList(H)[2];;
@@ -400,7 +400,7 @@ gap> S := ReesMatrixSemigroup(G, mat);;
 gap> R := Range(RMSNormalization(S));;
 gap> L := LeftTranslations(R);;
 gap> RT := RightTranslations(R);;
-gap> gpfunc := [G.1, G.2*G.1];
+gap> gpfunc := [G.1, G.2 * G.1];
 [ f1, f1*f2 ]
 gap> t := IdentityTransformation;;
 gap> l := LeftTranslationOfNormalRMS(L, gpfunc, t);
@@ -433,10 +433,10 @@ gap> G := UnderlyingSemigroup(R);
 gap> L := LeftTranslations(R);;
 gap> RT := RightTranslations(R);;
 gap> H := TranslationalHull(R);;
-gap> lgpfunc := [G.1*G.3*G.3, G.2];;
-gap> rgpfunc := [G.1*G.3*G.3, G.3*G.3, G.2];;
-gap> lt := Transformation([2,2]);;
-gap> rt := Transformation([3,3,3]);;
+gap> lgpfunc := [G.1 * G.3 * G.3, G.2];;
+gap> rgpfunc := [G.1 * G.3 * G.3, G.3 * G.3, G.2];;
+gap> lt := Transformation([2, 2]);;
+gap> rt := Transformation([3, 3, 3]);;
 gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, lt);;
 gap> r := RightTranslationOfNormalRMS(RT, rgpfunc, rt);;
 gap> h := BitranslationOfNormalRMS(H, l, r);
