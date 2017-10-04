@@ -1366,7 +1366,7 @@ gap> AsList(JonesMonoid(1));
 #T# Kernel-trace methods should only be selected for semigroups with inverse op
 gap> S := HallMonoid(2);;
 gap> latt := LatticeOfCongruences(S);;
-gap> OutNeighbours(latt);
+gap> InNeighbours(latt);
 [ [  ], [ 1, 3, 4 ], [ 1, 4 ], [ 1 ] ]
 
 # Test bug in \in for high degree transformation semigroup
