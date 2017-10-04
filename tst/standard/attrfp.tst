@@ -43,4 +43,5 @@ gap> Unbind(F);
 gap> Unbind(S);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/attrfp.tst");
