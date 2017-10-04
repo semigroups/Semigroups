@@ -31,7 +31,7 @@ gap> S := PartitionMonoid(2);;
 gap> l := LatticeOfCongruences(S);
 <poset of 13 congruences over <regular bipartition *-monoid of size 15, 
  degree 2 with 3 generators>>
-gap> OutNeighbours(l);
+gap> InNeighbours(l);
 [ [  ], [ 1, 3, 4 ], [ 1 ], [ 1 ], [ 1, 3, 9 ], [ 1, 2, 3, 4, 5, 9, 10 ], 
   [ 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13 ], [ 1, 3 ], [ 1 ], [ 1, 4, 9 ], 
   [ 1, 2, 3, 4, 8 ], [ 1, 3, 5, 8, 9 ], 
@@ -47,7 +47,7 @@ gap> CongruencesOfSemigroup(S);
 gap> l := LatticeOfCongruences(S);
 <poset of 3 congruences over <regular transformation monoid of size 3, 
  degree 2 with 2 generators>>
-gap> OutNeighbours(l);
+gap> InNeighbours(l);
 [ [  ], [ 1, 3 ], [ 1 ] ]
 gap> Print(l, "\n");
 PosetOfCongruences( 
@@ -69,7 +69,7 @@ gap> S := Semigroup([Transformation([1, 4, 3, 1, 4, 2]),
 gap> l := LatticeOfCongruences(S);
 <poset of 5 congruences over <transformation semigroup of size 48, degree 6 
  with 2 generators>>
-gap> OutNeighbours(l);
+gap> InNeighbours(l);
 [ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ], [ 1, 2, 3, 4 ] ]
 gap> DotString(l, rec(info := true)) = Concatenation("//dot\ngraph graphname",
 > " {\n     node [shape=circle]\nR2 -- T\nR3 -- 4\n4 -- R2\nU -- R3\n }");
@@ -104,7 +104,7 @@ gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> l := LatticeOfLeftCongruences(S);
 <poset of 21 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
-gap> OutNeighbours(l) =
+gap> InNeighbours(l) =
 > [[], [1, 9, 12], [1], [1, 2, 3, 9, 12, 13, 15, 17],
 >   [1, 3, 8, 11, 12, 13, 16, 17], [1, 3],
 >   [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
@@ -118,7 +118,7 @@ true
 gap> l := LatticeOfRightCongruences(S);
 <poset of 31 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
-gap> OutNeighbours(l) =
+gap> InNeighbours(l) =
 > [[], [1], [1], [1], [1], [1, 2, 5, 8, 14, 24],
 >   [1, 3, 5, 10, 12, 23], [1], [1, 4, 8, 10], [1], [1], [1],
 >   [1, 3, 8, 11], [1], [1, 2, 10, 11], [1, 2, 3, 4],
@@ -131,7 +131,7 @@ gap> OutNeighbours(l) =
 >   [1, 4, 5, 11, 12, 14, 20, 21, 22, 23, 24, 29, 31],
 >   [1, 5, 12, 14, 23, 24, 29]];
 true
-gap> OutNeighbours(LatticeOfCongruences(S));
+gap> InNeighbours(LatticeOfCongruences(S));
 [ [  ], [ 1, 3, 4 ], [ 1 ], [ 1, 3 ] ]
 gap> Size(CongruencesOfSemigroup(S));
 4
@@ -144,7 +144,7 @@ gap> restriction := Subsemigroup(S, [Transformation([1, 1, 1]),
 gap> latt := LatticeOfLeftCongruences(S, restriction);
 <poset of 5 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
-gap> OutNeighbours(latt);
+gap> InNeighbours(latt);
 [ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
 gap> restriction := [Transformation([3, 2, 3]),
 >                    Transformation([3, 1, 3]),
@@ -152,7 +152,7 @@ gap> restriction := [Transformation([3, 2, 3]),
 gap> latt := LatticeOfRightCongruences(S, restriction);
 <poset of 4 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
-gap> OutNeighbours(latt);
+gap> InNeighbours(latt);
 [ [  ], [ 1, 3, 4 ], [ 1 ], [ 1 ] ]
 gap> congs := CongruencesOfPoset(latt);;
 gap> Length(congs);
@@ -163,13 +163,13 @@ gap> restriction := [Transformation([3, 1, 3]), Transformation([3, 2, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
 <poset of 2 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
-gap> OutNeighbours(latt);
+gap> InNeighbours(latt);
 [ [  ], [ 1 ] ]
 gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
 <poset of 1 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
-gap> OutNeighbours(latt);
+gap> InNeighbours(latt);
 [ [  ] ]
 
 #T# LatticeOf(Left/Right)Congruences with invalid restriction
@@ -197,7 +197,7 @@ gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
 gap> poset := PosetOfPrincipalLeftCongruences(S);
 <poset of 12 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
-gap> OutNeighbours(poset) =
+gap> InNeighbours(poset) =
 > [[8, 11], [], [1, 2, 8, 11, 12], [2, 7, 10, 11, 12], [2],
 >   [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12], [10, 12], [11], [2, 11, 12],
 >   [12], [], []];
@@ -205,7 +205,7 @@ true
 gap> poset := PosetOfPrincipalRightCongruences(S);
 <poset of 15 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
-gap> OutNeighbours(poset) =
+gap> InNeighbours(poset) =
 > [[], [], [], [], [1, 4, 7, 13], [2, 4, 9, 11], [],
 >   [3, 7, 9], [], [], [], [2, 7, 10], [], [1, 9, 10],
 >   [1, 2, 3]];
@@ -213,7 +213,7 @@ true
 gap> poset := PosetOfPrincipalCongruences(S);
 <poset of 3 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
-gap> OutNeighbours(poset);
+gap> InNeighbours(poset);
 [ [ 2, 3 ], [  ], [ 2 ] ]
 gap> Print(poset, "\n");
 PosetOfCongruences( 
@@ -237,7 +237,7 @@ gap> restriction := Subsemigroup(S, [Transformation([1, 1, 1]),
 gap> latt := PosetOfPrincipalLeftCongruences(S, restriction);
 <poset of 3 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
-gap> OutNeighbours(latt);
+gap> InNeighbours(latt);
 [ [  ], [  ], [  ] ]
 gap> restriction := [Transformation([3, 2, 3]),
 >                    Transformation([3, 1, 3]),
@@ -245,7 +245,7 @@ gap> restriction := [Transformation([3, 2, 3]),
 gap> latt := PosetOfPrincipalRightCongruences(S, restriction);
 <poset of 3 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
-gap> OutNeighbours(latt);
+gap> InNeighbours(latt);
 [ [ 2, 3 ], [  ], [  ] ]
 gap> CongruencesOfPoset(latt);
 [ <right semigroup congruence over <transformation semigroup of degree 3 with 
@@ -257,12 +257,12 @@ gap> restriction := [Transformation([3, 1, 3]), Transformation([3, 2, 3])];;
 gap> latt := PosetOfPrincipalCongruences(S, restriction);
 <poset of 1 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
-gap> OutNeighbours(latt);
+gap> InNeighbours(latt);
 [ [  ] ]
 gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := PosetOfPrincipalCongruences(S, restriction);
 <empty congruence poset>
-gap> OutNeighbours(latt);
+gap> InNeighbours(latt);
 [  ]
 
 #T# PosetOfPrincipal(Left/Right)Congruences with invalid restriction
@@ -327,7 +327,7 @@ gap> congs := CongruencesOfSemigroup(S);
 gap> l := LatticeOfCongruences(S);
 <poset of 6 congruences over <transformation semigroup of size 13, degree 3 
  with 2 generators>>
-gap> OutNeighbours(l);
+gap> InNeighbours(l);
 [ [  ], [ 1, 5, 6 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 5, 6 ], [ 1, 6 ], [ 1 ] ]
 gap> minl := MinimalLeftCongruencesOfSemigroup(S);;
 gap> Size(minl);
@@ -362,7 +362,7 @@ gap> coll := [RightSemigroupCongruence(S, pair1),
 >             RightSemigroupCongruence(S, pair3)];;
 gap> l := JoinSemilatticeOfCongruences(coll, JoinRightSemigroupCongruences);
 <poset of 4 congruences over <symmetric inverse monoid of degree 2>>
-gap> OutNeighbours(l);
+gap> InNeighbours(l);
 [ [  ], [  ], [ 1 ], [ 1, 2, 3 ] ]
 gap> JoinSemilatticeOfCongruences(coll, JoinLeftSemigroupCongruences);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -383,7 +383,7 @@ gap> MinimalCongruences(PosetOfCongruences(coll)) = coll{[1, 2]};
 true
 gap> poset := LatticeOfCongruences(S);
 <poset of 4 congruences over <symmetric inverse monoid of degree 2>>
-gap> OutNeighbours(poset);
+gap> InNeighbours(poset);
 [ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ]
 gap> Print(l, "\n");
 PosetOfCongruences( 
@@ -417,7 +417,7 @@ gap> coll := [RightSemigroupCongruence(S, pair1),
 gap> poset := PosetOfCongruences(coll);
 <poset of 3 congruences over <regular transformation monoid of degree 2 with 
  2 generators>>
-gap> OutNeighbours(poset);
+gap> InNeighbours(poset);
 [ [ 3 ], [ 3 ], [  ] ]
 
 #T# Trivial poset
@@ -437,7 +437,7 @@ gap> S := Semigroup(Transformation([2, 1, 4, 3, 5, 2]),
 >                   Transformation([3, 4, 1, 2, 5, 3]),
 >                   Transformation([5, 5, 5, 5, 5, 5]));;
 gap> l := LatticeOfCongruences(S);;
-gap> OutNeighbours(l);
+gap> InNeighbours(l);
 [ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4 ] ]
 
 #T# SEMIGROUPS_UnbindVariables

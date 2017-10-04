@@ -24,8 +24,8 @@
       A congruence poset is a digraph
       (see <Ref Filt = "IsDigraph" BookName = "Digraphs"/>) with a vertex for
       each congruence, and an edge from vertex <C>i</C> to vertex <C>j</C> if
-      and only if the congruence numbered <C>j</C> is a subrelation of the
-      congruence numbered <C>i</C>.  The list of congruences can be obtained
+      and only if the congruence numbered <C>i</C> is a subrelation of the
+      congruence numbered <C>j</C>.  The list of congruences can be obtained
       using <Ref Attr = "CongruencesOfPoset"/>. <P/>
 
       Congruence posets can be created using <Ref Oper = "PosetOfCongruences"/>,
@@ -42,7 +42,7 @@ true
 gap> IsDigraph(poset);
 true
 gap> OutNeighbours(poset);
-[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ]
+[ [ 2 .. 4 ], [ 3, 4 ], [  ], [ 3 ] ]
 gap> T := FullTransformationMonoid(3);;
 gap> congs := PrincipalCongruencesOfSemigroup(T);;
 gap> poset := JoinSemilatticeOfCongruences(congs,
@@ -100,7 +100,7 @@ gap> LatticeOfRightCongruences(S);
 <poset of 5 congruences over <regular transformation monoid 
  of size 3, degree 2 with 2 generators>>
 gap> OutNeighbours(LatticeOfRightCongruences(S));
-[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+[ [ 2 .. 5 ], [ 5 ], [ 5 ], [ 5 ], [  ] ]
 gap> S := FullTransformationMonoid(4);;
 gap> restriction := [Transformation([1, 1, 1, 1]),
 >                    Transformation([1, 1, 1, 2]),
@@ -249,7 +249,7 @@ gap> poset := PosetOfCongruences(coll);
 <poset of 3 congruences over <regular transformation monoid of 
  degree 2 with 2 generators>>
 gap> OutNeighbours(poset);
-[ [ 3 ], [ 3 ], [  ] ]
+[ [  ], [  ], [ 1, 2 ] ]
 ]]></Example>
     </Description>
   </ManSection>

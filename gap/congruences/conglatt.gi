@@ -17,8 +17,8 @@
 ##
 ## The list of congruences in the poset is stored as an attribute
 ## CongruencesOfPoset.  The partial order of the poset is stored as a digraph,
-## where an edge (i,j) is present if and only if congruence j is a subrelation
-## of congruence i.  When a congruence poset is displayed, it appears to the
+## where an edge (i,j) is present if and only if congruence i is a subrelation
+## of congruence j.  When a congruence poset is displayed, it appears to the
 ## user as the list of out-neighbours of that digraph.
 ##
 
@@ -115,8 +115,8 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
   SEMIGROUPS.OptionsRec(S).report := report;
 
   # We are done: make the object and return
-  poset := Digraph(children);
-  SetInNeighbours(poset, parents);
+  poset := Digraph(parents);
+  SetInNeighbours(poset, children);
   SetCongruencesOfPoset(poset, congs);
   SetDigraphVertexLabels(poset, congs);
   SetUnderlyingSemigroupOfCongruencePoset(poset, S);
@@ -127,7 +127,7 @@ end;
 InstallMethod(MinimalCongruences,
 "for a congruence poset",
 [IsCongruencePoset],
-poset -> CongruencesOfPoset(poset){DigraphSinks(poset)});
+poset -> CongruencesOfPoset(poset){Positions(InDegrees(poset), 0)});
 
 InstallMethod(MinimalCongruences,
 "for a list or collection",
@@ -148,8 +148,8 @@ function(poset, join_func)
   fi;
 
   # Extract the info
-  children := OutNeighboursMutableCopy(poset);
-  parents := InNeighboursMutableCopy(poset);
+  children := InNeighboursMutableCopy(poset);
+  parents := OutNeighboursMutableCopy(poset);
   congs := ShallowCopy(CongruencesOfPoset(poset));
   princ_congs := ShallowCopy(congs);
   nrcongs := Length(congs);
@@ -210,8 +210,8 @@ function(poset, join_func)
   SEMIGROUPS.OptionsRec(S).report := report;
 
   # We are done: make the object and return
-  poset := Digraph(children);
-  SetInNeighbours(poset, parents);
+  poset := Digraph(parents);
+  SetInNeighbours(poset, children);
   SetCongruencesOfPoset(poset, congs);
   SetDigraphVertexLabels(poset, congs);
   SetUnderlyingSemigroupOfCongruencePoset(poset, S);
@@ -232,8 +232,8 @@ SEMIGROUPS.AddTrivialCongruence := function(poset, cong_func)
   local S, children, parents, congs, nrcongs, i;
   # Extract the info
   S := UnderlyingSemigroupOfCongruencePoset(poset);
-  children := OutNeighboursMutableCopy(poset);
-  parents := InNeighboursMutableCopy(poset);
+  children := InNeighboursMutableCopy(poset);
+  parents := OutNeighboursMutableCopy(poset);
   congs := ShallowCopy(CongruencesOfPoset(poset));
 
   # Add the trivial congruence
@@ -246,8 +246,8 @@ SEMIGROUPS.AddTrivialCongruence := function(poset, cong_func)
   od;
 
   # Make the object and return
-  poset := Digraph(children);
-  SetInNeighbours(poset, parents);
+  poset := Digraph(parents);
+  SetInNeighbours(poset, children);
   SetCongruencesOfPoset(poset, congs);
   SetDigraphVertexLabels(poset, congs);
   SetUnderlyingSemigroupOfCongruencePoset(poset, S);
@@ -285,8 +285,8 @@ function(coll)
   od;
 
   # We are done: make the object and return
-  poset := Digraph(children);
-  SetInNeighbours(poset, parents);
+  poset := Digraph(parents);
+  SetInNeighbours(poset, children);
   SetCongruencesOfPoset(poset, congs);
   SetDigraphVertexLabels(poset, congs);
   if nrcongs > 0 then
@@ -500,15 +500,15 @@ InstallMethod(DotString,
 "for a congruence poset and a record",
 [IsCongruencePoset, IsRecord],
 function(poset, opts)
-  local out_nbs, congs, S, symbols, i, nr, rel, str, j, k;
-  out_nbs := OutNeighbours(poset);
+  local nrcongs, congs, S, symbols, i, nr, in_nbs, rel, str, j, k;
+  nrcongs := Size(poset);
   # If the user wants info, then change the node labels
   if opts.info = true then
     # The congruences are stored inside the poset object
     congs := CongruencesOfPoset(poset);
     S := Range(congs[1]);
-    symbols := EmptyPlist(Length(out_nbs));
-    for i in [1 .. Length(out_nbs)] do
+    symbols := EmptyPlist(nrcongs);
+    for i in [1 .. nrcongs] do
       nr := NrEquivalenceClasses(congs[i]);
       if nr = 1 then
         symbols[i] := "U";
@@ -521,13 +521,14 @@ function(poset, opts)
       fi;
     od;
   else
-    symbols := List([1 .. Length(out_nbs)], String);
+    symbols := List([1 .. nrcongs], String);
   fi;
 
-  rel := List([1 .. Length(out_nbs)], x -> Filtered(out_nbs[x], y -> x <> y));
+  in_nbs := InNeighbours(poset);
+  rel := List([1 .. nrcongs], x -> Filtered(in_nbs[x], y -> x <> y));
   str := "";
 
-  if Length(rel) < 40 then
+  if nrcongs < 40 then
     Append(str, "//dot\ngraph graphname {\n     node [shape=circle]\n");
   else
     Append(str, "//dot\ngraph graphname {\n     node [shape=point]\n");
