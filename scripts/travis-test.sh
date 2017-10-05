@@ -7,34 +7,21 @@ cd ../..
 touch testlog.txt
 TESTLOG="`pwd`/testlog.txt"
 
-if [ ! -z "$LINT" ]; then
+if [ "$SUITE" == "lint" ]; then
 
-  cd ../gaplint
-  export PATH=$PATH:`pwd`
-  cd ../gap/pkg/semigroups
-  # Can't use make lint since it requires compilation
-  `grep "^\s\+gaplint" Makefile.am`
-  `grep "^\s\+cpplint" Makefile.am`
+  cd ../lint/gaplint
+  GAPLINT="`pwd`/gaplint.py"
+  cd ../cpplint
+  CPPLINT="`pwd`/cpplint.py"
 
-elif [ ! -z "$GAP_BRANCH" ]; then
+  cd ../../gap/pkg/semigroups
+
+  $GAPLINT `grep "^\s\+gaplint" Makefile.am | cut -d " " -f2-`
+  $CPPLINT --extensions=c,cc,h `grep "^\s\+cpplint" Makefile.am | cut -d " " -f2-`
+
+elif [ ! -z "$GAP" ]; then
 
   GAP_DIR=`pwd`
-
-  # Work out the Digraphs versions/branches in which to run the tests
-  if [ ! -z "$DIGRAPHS_BR" ]; then
-    DIGRAPHS_BRANCH=$DIGRAPHS_BR
-  else
-    cd $GAP_DIR/pkg/semigroups
-    DIGRAPHS_BRANCH=v`grep "\"digraphs\"" PackageInfo.g| awk -F'"' '{print $4}' | cut -c3-`
-  fi
-
-  echo -e "\nRunning tests with Digraphs package in $DIGRAPHS_BRANCH..."
-  cd $GAP_DIR/pkg/digraphs
-  git checkout $DIGRAPHS_BRANCH
-  echo "Compiling Digraphs..."
-  ./autogen.sh
-  ./configure $PKG_FLAGS
-  make
   cd $GAP_DIR/pkg/semigroups
 
   if [ ! -z "$COVERAGE" ]; then
@@ -43,7 +30,7 @@ elif [ ! -z "$GAP_BRANCH" ]; then
     for TESTFILE in tst/standard/*.tst; do
       FILENAME=${TESTFILE##*/}
       if [ ! `grep -E "$FILENAME" .covignore` ]; then
-        ../digraphs/scripts/travis-coverage.py $TESTFILE $THRESHOLD | tee -a $TESTLOG
+        $GAP_DIR/pkg/semigroups/scripts/travis-coverage.py $TESTFILE $THRESHOLD | tee -a $TESTLOG
       else
         echo -e "\033[35mignoring $FILENAME, since it is listed in .covignore\033[0m"
       fi
@@ -59,7 +46,10 @@ elif [ ! -z "$GAP_BRANCH" ]; then
     cd ../..
     # Run all tests and manual examples
     echo -e "\nRunning tests and manual examples..."
-    echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples(); Read(\"$GAP_DIR/tst/testinstall.g\");" | $GAP_DIR/bin/gap.sh -A -r -m 1g -T 2>&1 | tee $TESTLOG
+    echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples();" | $GAP_DIR/bin/gap.sh -A -r -m 1g -T 2>&1 | tee $TESTLOG
+    if [ ! "$ABI" == "32" ]; then
+      echo "LoadPackage(\"semigroups\"); Read(\"$GAP_DIR/tst/testinstall.g\");" | $GAP_DIR/bin/gap.sh -A -x 80 -r -m 100m -o 1g -K 2g -T 2>&1 | tee $TESTLOG
+    fi
   fi
 fi
 
