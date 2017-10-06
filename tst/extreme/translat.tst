@@ -9,6 +9,8 @@
 ##
 gap> START_TEST("Semigroups package: extreme/translat.tst");
 gap> LoadPackage("semigroups", false);;
+
+#
 gap> SEMIGROUPS.StartTest();
 
 #T# RZMS Translational Hull
@@ -46,4 +48,5 @@ gap> Unbind(S);
 gap> Unbind(t);
 
 #E#
-gap> STOP_TEST("Semigroups package: standard/translat.tst");
+gap> SEMIGROUPS.StopTest();
+gap> STOP_TEST("Semigroups package: extreme/translat.tst");

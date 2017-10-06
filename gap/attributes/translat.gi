@@ -1134,6 +1134,9 @@ end);
 InstallMethod(AsList, "for a semigroup of left or right translations",
 [IsTranslationsSemigroup and IsWholeFamily],
 function(T)
+  if HasGeneratorsOfSemigroup(T) then
+    return Immutable(AsList(Semigroup(GeneratorsOfSemigroup(T))));
+  fi;
   return Immutable(AsList(SEMIGROUPS.TranslationsSemigroupElements(T)));
 end);
 

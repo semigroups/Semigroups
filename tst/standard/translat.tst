@@ -105,6 +105,16 @@ gap> H := AsList(G);;
 gap> mat := [[H[1], 0],
 > [H[2], H[2]]];;
 gap> S := ReesZeroMatrixSemigroup(G, mat);;
+gap> L := LeftTranslationsSemigroup(S);
+<the semigroup of left translations of <regular semigroup with 4 generators>>
+gap> Size(L);
+81
+gap> R := RightTranslationsSemigroup(S);
+<the semigroup of right translations of <0-simple regular semigroup with 4 
+ generators>>
+gap> Size(R);
+81
+gap> S := ReesZeroMatrixSemigroup(G, mat);;
 gap> L := LeftTranslations(S);
 <the semigroup of left translations of <0-simple regular semigroup 
  of size 17, with 4 generators>>
@@ -333,68 +343,67 @@ gap> for h in TranslationalHull(S) do
 > od;
 > od;
 
-#T# Special methods for RMS 
+#T# Methods for non-normalised RMS
+gap> G := SmallGroup(8, 2);;
+gap> mat := [[G.1, G.2], [G.2, G.2 * G.2]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> L := LeftTranslationsSemigroup(S);;
+gap> R := RightTranslationsSemigroup(S);;
+gap> Size(L) = Size(Semigroup(GeneratorsOfSemigroup(L)));
+true
+gap> Size(R) = Size(Semigroup(GeneratorsOfSemigroup(R)));
+true
+
+#T# Special methods for normalised RMS 
 gap> G := SmallGroup(12, 1);;
-gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
+gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3], [G.1 * G.2, G.1 * G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
 gap> T := Range(RMSNormalization(S));;
 gap> LS := LeftTranslationsSemigroup(S);;
 gap> RS := RightTranslationsSemigroup(S);;
 gap> HS := TranslationalHullSemigroup(S);;
-gap> L := LeftTranslationsSemigroup(T);;
-gap> R := RightTranslationsSemigroup(T);;
-gap> H := TranslationalHullSemigroup(T);;
+gap> L := LeftTranslations(T);;
+gap> R := RightTranslations(T);;
+gap> H := TranslationalHull(T);;
 gap> Size(LS) = Size(L);
 true
 gap> Size(RS) = Size(R);
 true
 gap> Size(H);
-76
+444
 gap> GeneratorsOfSemigroup(L);
-[ <left translation on <simple semigroup of size 72, with 5 generators>>, 
-  <left translation on <simple semigroup of size 72, with 5 generators>>, 
-  <left translation on <simple semigroup of size 72, with 5 generators>>, 
-  <left translation on <simple semigroup of size 72, with 5 generators>>, 
-  <left translation on <simple semigroup of size 72, with 5 generators>> ]
+[ <left translation on <simple semigroup of size 96, with 6 generators>>, 
+  <left translation on <simple semigroup of size 96, with 6 generators>>, 
+  <left translation on <simple semigroup of size 96, with 6 generators>>, 
+  <left translation on <simple semigroup of size 96, with 6 generators>>, 
+  <left translation on <simple semigroup of size 96, with 6 generators>> ]
 gap> GeneratorsOfSemigroup(R);
-[ <right translation on <simple semigroup of size 72, with 5 generators>>, 
-  <right translation on <simple semigroup of size 72, with 5 generators>>, 
-  <right translation on <simple semigroup of size 72, with 5 generators>>, 
-  <right translation on <simple semigroup of size 72, with 5 generators>>, 
-  <right translation on <simple semigroup of size 72, with 5 generators>>, 
-  <right translation on <simple semigroup of size 72, with 5 generators>> ]
+[ <right translation on <simple semigroup of size 96, with 6 generators>>, 
+  <right translation on <simple semigroup of size 96, with 6 generators>>, 
+  <right translation on <simple semigroup of size 96, with 6 generators>>, 
+  <right translation on <simple semigroup of size 96, with 6 generators>>, 
+  <right translation on <simple semigroup of size 96, with 6 generators>>, 
+  <right translation on <simple semigroup of size 96, with 6 generators>> ]
+gap> Size(L) = Size(Semigroup(GeneratorsOfSemigroup(L)));
+true
 gap> Representative(H);
-<linked pair of translations on <simple semigroup of size 72, with 5 
+<linked pair of translations on <simple semigroup of size 96, with 6 
  generators>>
-gap> mat := TransposedMat([[G.1, G.2], [G.1, G.1], [G.2, G.3]]);;
-gap> R := Range(RMSNormalization(ReesMatrixSemigroup(G, mat)));;
-gap> Size(TranslationalHull(R));
-76
-
-#T# Some error testing for RMS
-gap> G := SmallGroup(12, 1);;
-gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
+gap> mat := TransposedMat([[G.1, G.2], [G.1, G.1], [G.2, G.3],
+> [G.1 * G.2, G.1 * G.3]]);;
+gap> T := Range(RMSNormalization(ReesMatrixSemigroup(G, mat)));;
+gap> R := RightTranslations(T);;
+gap> Size(R) = Size(Semigroup(GeneratorsOfSemigroup(R)));
+true
+gap> Size(TranslationalHull(T));
+100
+gap> G := SmallGroup(16, 2);;
+gap> mat := [[G.1, G.2, G.2 * G.1], [G.2 * G.2, G.2, G.2 * G.2],
+> [G.2 * G.1 * G.2, G.3, G.1 * G.3]];;
 gap> S := ReesMatrixSemigroup(G, mat);;
-gap> R := Range(RMSNormalization(S));;
-gap> G := UnderlyingSemigroup(R);
-<pc group of size 12 with 3 generators>
-gap> L := LeftTranslations(R);;
-gap> RT := RightTranslations(R);;
-gap> H := TranslationalHull(R);;
-gap> lgpfunc := [G.1 * G.3 * G.3, G.2];;
-gap> rgpfunc := [G.1 * G.3 * G.3, G.3 * G.3, G.2];;
-gap> lt := Transformation([2, 2]);;
-gap> rt := Transformation([3, 3, 3]);;
-gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, lt);;
-gap> r := RightTranslationOfNormalRMS(RT, rgpfunc, rt);;
-gap> h := BitranslationOfNormalRMS(H, l, r);
-<linked pair of translations on <simple semigroup of size 72, with 5 
- generators>>
-gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, IdentityTransformation);;
-gap> h := BitranslationOfNormalRMS(H, l, r);
-Error, Semigroups: BitranslationOfNormalRMS: 
-the second and third arguments must be a linked left and right translation, re\
-spectively,
+gap> T := Range(RMSNormalization(S));;
+gap> Size(TranslationalHull(T));
+160
 
 #T# IsWholeFamily for translations semigroups
 gap> S := Semigroup([Transformation([1, 1, 2, 4]), Transformation([3, 1, 3])]);;
@@ -534,6 +543,78 @@ gap> Bitranslation(H, l, r);
 Error, Semigroups: Bitranslation: 
 the translations given must form a linked pair,
 
+#T# Error Testing - left translations over normalised RMS
+gap> G := SmallGroup(12, 1);;
+gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3], [G.1 * G.2, G.1 * G.3]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> T := Range(RMSNormalization(S));;
+gap> L := LeftTranslationsSemigroup(T);;
+gap> LS := LeftTranslationsSemigroup(S);;
+gap> lgpfunc := [G.1 * G.3 * G.3, G.2];;
+gap> LeftTranslationOfNormalRMS(LS, lgpfunc, IdentityTransformation);
+Error, Semigroups: LeftTranslationOfNormalRMS: 
+the first argument must be a semigroup of left translations over a normalised \
+Rees matrix semigroup over a group,
+gap> LeftTranslationOfNormalRMS(L, [G.1, G.1, G.2], IdentityTransformation);
+Error, Semigroups: LeftTranslationOfNormalRMS: 
+the second argument must be a list of group elements of length equal to the nu\
+mber of rows of the underlying semigroup of the first argument,
+gap> LeftTranslationOfNormalRMS(L, lgpfunc, Transformation([1, 3, 2]));
+Error, Semigroups: LeftTranslationOfNormalRMS: 
+the third argument must be a transformation on the number of rows of the under\
+lying semigroup of the first argument,
+
+#T# Error Testing - right translations over normalised RMS
+gap> G := SmallGroup(12, 1);;
+gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3], [G.1 * G.2, G.1 * G.3]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> T := Range(RMSNormalization(S));;
+gap> R := RightTranslationsSemigroup(T);;
+gap> RS := RightTranslationsSemigroup(S);;
+gap> rgpfunc := [G.1 * G.3 * G.3, G.3 * G.3, G.2, G.1];;
+gap> RightTranslationOfNormalRMS(RS, rgpfunc, IdentityTransformation);
+Error, Semigroups: RightTranslationOfNormalRMS: 
+the first argument must be a semigroup of right translations of a normalised R\
+ees matrix semigroup over a group,
+gap> RightTranslationOfNormalRMS(R, [G.1, G.2], IdentityTransformation);
+Error, Semigroups: RightTranslationOfNormalRMS: 
+the second argument must be a list of group elements of length equal to the nu\
+mber of columns of the underlying semigroup of the first argument,
+gap> RightTranslationOfNormalRMS(R, rgpfunc, Transformation([1, 3, 2, 5, 4]));
+Error, Semigroups: RightTranslationOfNormalRMS: 
+the third argument must be a transformation on the number of columns of the un\
+derlying semigroup of the first argument,
+
+#T# Error testing - bitranslations over normalised RMS
+gap> G := SmallGroup(12, 1);;
+gap> mat := [[G.1, G.2], [G.1, G.1], [G.2, G.3]];;
+gap> S := ReesMatrixSemigroup(G, mat);;
+gap> T := Range(RMSNormalization(S));;
+gap> G := UnderlyingSemigroup(T);
+<pc group of size 12 with 3 generators>
+gap> L := LeftTranslations(T);;
+gap> R := RightTranslations(T);;
+gap> H := TranslationalHull(T);;
+gap> HS := TranslationalHullSemigroup(S);;
+gap> lgpfunc := [G.1 * G.3 * G.3, G.2];;
+gap> rgpfunc := [G.1 * G.3 * G.3, G.3 * G.3, G.2];;
+gap> lt := Transformation([2, 2]);;
+gap> rt := Transformation([3, 3, 3]);;
+gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, lt);;
+gap> r := RightTranslationOfNormalRMS(R, rgpfunc, rt);;
+gap> h := BitranslationOfNormalRMS(H, l, r);
+<linked pair of translations on <simple semigroup of size 72, with 5 
+ generators>>
+gap> h := BitranslationOfNormalRMS(HS, l, r);
+Error, Semigroups: BitranslationOfNormalRMS: 
+the first argument must be a semigroup of bitranslations over a normalised RMS\
+,
+gap> l := LeftTranslationOfNormalRMS(L, lgpfunc, IdentityTransformation);;
+gap> h := BitranslationOfNormalRMS(H, l, r);
+Error, Semigroups: BitranslationOfNormalRMS: 
+the second and third arguments must be a linked left and right translation, re\
+spectively,
+
 #T# Hashing translations
 gap> S := Semigroup([Transformation([1, 4, 3, 3]), Transformation([3, 4, 1, 1])]);; 
 gap> L := LeftTranslations(S);;
@@ -587,4 +668,5 @@ gap> Unbind(SEMIGROUPS.bruteforcetranshull);
 gap> Unbind(x);
 
 #E#
+gap> SEMIGROUPS.StopTest();
 gap> STOP_TEST("Semigroups package: standard/translat.tst");
