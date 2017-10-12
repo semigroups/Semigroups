@@ -663,6 +663,12 @@ InstallMethod(Iterator, "for a full transformation semigroup",
 7, #to beat the method for acting semigroups TODO check this is necessary!!
 function(S)
   local iter;
+
+  if HasAsSSortedList(S) or HasAsListCanonical(S) then
+    # This is much faster
+    TryNextMethod();
+  fi;
+
   iter := IteratorByFunctions(rec(
     tups := IteratorOfTuples([1 .. DegreeOfTransformationSemigroup(S)],
                              DegreeOfTransformationSemigroup(S)),
@@ -690,6 +696,11 @@ InstallMethod(Iterator, "for a symmetric inverse semigroup",
  and HasGeneratorsOfSemigroup],
 function(s)
   local deg, record, iter;
+
+  if HasAsSSortedList(s) or HasAsListCanonical(s) then
+    # This is much faster
+    TryNextMethod();
+  fi;
 
   deg := DegreeOfPartialPermSemigroup(s);
 
