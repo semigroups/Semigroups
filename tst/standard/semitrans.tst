@@ -2730,6 +2730,16 @@ gap> DigraphOfActionOnPairs(S);
 gap> DigraphOfActionOnPairs(S, 3);
 <digraph with 6 vertices, 9 edges>
 
+#T# Iterator, for a full transformation monoid
+gap> S := FullTransformationMonoid(4);;
+gap> y := Iterator(S);
+<iterator of semigroup>
+gap> for x in y do od;
+gap> S := FullTransformationMonoid(4);; Elements(S);;
+gap> y := Iterator(S);
+<iterator>
+gap> for x in y do od;
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(BruteForceInverseCheck);
