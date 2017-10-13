@@ -101,14 +101,16 @@ SEMIGROUPS.PrincipalXCongruencePosetNC :=
     if not badcong then
       nrcongs := nrcongs + 1;
       congs[nrcongs] := newcong;
-      children[nrcongs] := newchildren;
-      parents[nrcongs] := newparents;
       for c in newchildren do
         Add(parents[c], nrcongs);
       od;
       for p in newparents do
         Add(children[p], nrcongs);
       od;
+      Add(newchildren, nrcongs);  # Include loops (reflexive)
+      Add(newparents, nrcongs);
+      children[nrcongs] := newchildren;
+      parents[nrcongs] := newparents;
     fi;
   od;
 
@@ -127,7 +129,7 @@ end;
 InstallMethod(MinimalCongruences,
 "for a congruence poset",
 [IsCongruencePoset],
-poset -> CongruencesOfPoset(poset){Positions(InDegrees(poset), 0)});
+poset -> CongruencesOfPoset(poset){Positions(InDegrees(poset), 1)});
 
 InstallMethod(MinimalCongruences,
 "for a list or collection",
@@ -192,15 +194,17 @@ function(poset, join_func)
         if not badcong then
           nrcongs := nrcongs + 1;
           congs[nrcongs] := newcong;
-          children[nrcongs] := newchildren;
-          parents[nrcongs] := newparents;
-          ignore[nrcongs] := false;
           for c in newchildren do
             Add(parents[c], nrcongs);
           od;
           for p in newparents do
             Add(children[p], nrcongs);
           od;
+          Add(newchildren, nrcongs);  # Include loops (reflexive)
+          Add(newparents, nrcongs);
+          children[nrcongs] := newchildren;
+          parents[nrcongs] := newparents;
+          ignore[nrcongs] := false;
           found := true;
         fi;
       od;
@@ -240,8 +244,8 @@ SEMIGROUPS.AddTrivialCongruence := function(poset, cong_func)
   nrcongs := Length(congs) + 1;
   Add(congs, cong_func(S, []), 1);
   children := Concatenation([[]], children + 1);
-  parents := Concatenation([[2 .. nrcongs]], parents + 1);
-  for i in [2 .. nrcongs] do
+  parents := Concatenation([[1 .. nrcongs]], parents + 1);
+  for i in [1 .. nrcongs] do
     Add(children[i], 1, 1);
   od;
 
@@ -267,15 +271,14 @@ function(coll)
   children := [];
   parents := [];
   for i in [1 .. nrcongs] do
-    children[i] := Set([]);
-    parents[i] := Set([]);
+    children[i] := Set([i]);
+    parents[i] := Set([i]);
   od;
 
   # Find children of each cong in turn
   for i in [1 .. nrcongs] do
-    # Ignore self and known parents
+    # Ignore known parents
     ignore := BlistList([1 .. nrcongs], [parents[i]]);
-    ignore[i] := true;
     for j in [1 .. nrcongs] do
       if not ignore[j] and IsSubrelation(congs[i], congs[j]) then
         AddSet(children[i], j);

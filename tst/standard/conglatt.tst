@@ -32,10 +32,10 @@ gap> l := LatticeOfCongruences(S);
 <poset of 13 congruences over <regular bipartition *-monoid of size 15, 
  degree 2 with 3 generators>>
 gap> InNeighbours(l);
-[ [  ], [ 1, 3, 4 ], [ 1 ], [ 1 ], [ 1, 3, 9 ], [ 1, 2, 3, 4, 5, 9, 10 ], 
-  [ 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13 ], [ 1, 3 ], [ 1 ], [ 1, 4, 9 ], 
-  [ 1, 2, 3, 4, 8 ], [ 1, 3, 5, 8, 9 ], 
-  [ 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12 ] ]
+[ [ 1 ], [ 1, 2, 3, 4 ], [ 1, 3 ], [ 1, 4 ], [ 1, 3, 5, 9 ], 
+  [ 1, 2, 3, 4, 5, 6, 9, 10 ], [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ], 
+  [ 1, 3, 8 ], [ 1, 9 ], [ 1, 4, 9, 10 ], [ 1, 2, 3, 4, 8, 11 ], 
+  [ 1, 3, 5, 8, 9, 12 ], [ 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13 ] ]
 gap> S := OrderEndomorphisms(2);;
 gap> CongruencesOfSemigroup(S);
 [ <semigroup congruence over <regular transformation monoid of size 3, 
@@ -48,7 +48,9 @@ gap> l := LatticeOfCongruences(S);
 <poset of 3 congruences over <regular transformation monoid of size 3, 
  degree 2 with 2 generators>>
 gap> InNeighbours(l);
-[ [  ], [ 1, 3 ], [ 1 ] ]
+[ [ 1 ], [ 1, 2, 3 ], [ 1, 3 ] ]
+gap> OutNeighbours(l);
+[ [ 1 .. 3 ], [ 2 ], [ 2, 3 ] ]
 gap> Print(l, "\n");
 PosetOfCongruences( 
 [ 
@@ -70,7 +72,9 @@ gap> l := LatticeOfCongruences(S);
 <poset of 5 congruences over <transformation semigroup of size 48, degree 6 
  with 2 generators>>
 gap> InNeighbours(l);
-[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ], [ 1, 2, 3, 4 ] ]
+[ [ 1 ], [ 1, 2 ], [ 1, 2, 3, 4 ], [ 1, 2, 4 ], [ 1, 2, 3, 4, 5 ] ]
+gap> OutNeighbours(l);
+[ [ 1 .. 5 ], [ 2, 3, 4, 5 ], [ 3, 5 ], [ 3, 4, 5 ], [ 5 ] ]
 gap> DotString(l, rec(info := true)) = Concatenation("//dot\ngraph graphname",
 > " {\n     node [shape=circle]\nR2 -- T\nR3 -- 4\n4 -- R2\nU -- R3\n }");
 true
@@ -91,6 +95,12 @@ gap> DotString(l) = Concatenation(
 > " -- 24\n37 -- 41\n38 -- 25\n38 -- 28\n38 -- 34\n39 -- 29\n39 -- 35\n39 -- 38",
 > "\n40 -- 30\n40 -- 31\n40 -- 39\n40 -- 41\n41 -- 32\n41 -- 33\n41 -- 35\n }");
 true
+gap> IsCongruencePoset(l);
+true
+gap> IsDigraph(l);
+true
+gap> IsPartialOrderDigraph(l);
+true
 
 #T# Left/RightCongruences (as a list)
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
@@ -105,36 +115,38 @@ gap> l := LatticeOfLeftCongruences(S);
 <poset of 21 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
 gap> InNeighbours(l) =
-> [[], [1, 9, 12], [1], [1, 2, 3, 9, 12, 13, 15, 17],
->   [1, 3, 8, 11, 12, 13, 16, 17], [1, 3],
->   [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
->   [1, 11, 13], [1, 12], [1, 3, 12, 13, 17], [1, 13], [1], [1],
->   [1, 2, 3, 4, 9, 11, 12, 13, 15, 16, 17, 21], [1, 3, 9, 12, 13, 17],
->   [1, 3, 11, 12, 13, 17], [1, 3, 12, 13],
->   [1, 3, 5, 8, 9, 11, 12, 13, 15, 16, 17, 21],
->   [1, 3, 6, 9, 10, 11, 12, 13, 15, 16, 17, 20, 21], [1, 3, 6, 12, 13, 17],
->   [1, 3, 9, 11, 12, 13, 15, 16, 17]];
+> [[1], [1, 2, 9, 12], [1, 3], [1, 2, 3, 4, 9, 12, 13, 15, 17],
+>   [1, 3, 5, 8, 11, 12, 13, 16, 17], [1, 3, 6], [1 .. 21],
+>   [1, 8, 11, 13], [1, 9, 12], [1, 3, 10, 12, 13, 17],
+>   [1, 11, 13], [1, 12], [1, 13],
+>   [1, 2, 3, 4, 9, 11, 12, 13, 14, 15, 16, 17, 21], [1, 3, 9, 12, 13, 15, 17],
+>   [1, 3, 11, 12, 13, 16, 17], [1, 3, 12, 13, 17],
+>   [1, 3, 5, 8, 9, 11, 12, 13, 15, 16, 17, 18, 21],
+>   [1, 3, 6, 9, 10, 11, 12, 13, 15, 16, 17, 19, 20, 21],
+>   [1, 3, 6, 12, 13, 17, 20],
+>   [1, 3, 9, 11, 12, 13, 15, 16, 17, 21]];
 true
 gap> l := LatticeOfRightCongruences(S);
 <poset of 31 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
 gap> InNeighbours(l) =
-> [[], [1], [1], [1], [1], [1, 2, 5, 8, 14, 24],
->   [1, 3, 5, 10, 12, 23], [1], [1, 4, 8, 10], [1], [1], [1],
->   [1, 3, 8, 11], [1], [1, 2, 10, 11], [1, 2, 3, 4],
->   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21,
->       22, 23, 24, 25, 26, 27, 28, 29, 30, 31], [1, 2, 12], [1, 3, 14],
->   [1, 4, 5], [1, 4, 11, 12, 14, 29], [1, 5, 11], [1, 5, 12],
->   [1, 5, 14], [1, 2, 5, 6, 8, 12, 14, 18, 23, 24, 27, 29, 31],
->   [1, 3, 5, 7, 10, 12, 14, 19, 23, 24, 28, 29, 31], [1, 8, 12],
->   [1, 10, 14], [1, 12, 14],
->   [1, 4, 5, 11, 12, 14, 20, 21, 22, 23, 24, 29, 31],
->   [1, 5, 12, 14, 23, 24, 29]];
+> [[1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 2, 5, 6, 8, 14, 24],
+>   [1, 3, 5, 7, 10, 12, 23], [1, 8], [1, 4, 8, 9, 10], [1, 10], [1, 11],
+>   [1, 12], [1, 3, 8, 11, 13], [1, 14], [1, 2, 10, 11, 15], [1, 2, 3, 4, 16],
+>   [1 .. 31], [1, 2, 12, 18], [1, 3, 14, 19],
+>   [1, 4, 5, 20], [1, 4, 11, 12, 14, 21, 29], [1, 5, 11, 22], [1, 5, 12, 23],
+>   [1, 5, 14, 24], [1, 2, 5, 6, 8, 12, 14, 18, 23, 24, 25, 27, 29, 31],
+>   [1, 3, 5, 7, 10, 12, 14, 19, 23, 24, 26, 28, 29, 31], [1, 8, 12, 27],
+>   [1, 10, 14, 28], [1, 12, 14, 29],
+>   [1, 4, 5, 11, 12, 14, 20, 21, 22, 23, 24, 29, 30, 31],
+>   [1, 5, 12, 14, 23, 24, 29, 31]];
 true
 gap> InNeighbours(LatticeOfCongruences(S));
-[ [  ], [ 1, 3, 4 ], [ 1 ], [ 1, 3 ] ]
+[ [ 1 ], [ 1, 2, 3, 4 ], [ 1, 3 ], [ 1, 3, 4 ] ]
 gap> Size(CongruencesOfSemigroup(S));
 4
+gap> IsPartialOrderDigraph(l);
+true
 
 #T# LatticeOfLeft/RightCongruences with restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
@@ -145,7 +157,9 @@ gap> latt := LatticeOfLeftCongruences(S, restriction);
 <poset of 5 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
 gap> InNeighbours(latt);
-[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4 ] ]
+[ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 2, 3, 4, 5 ] ]
+gap> OutNeighbours(latt);
+[ [ 1 .. 5 ], [ 2, 5 ], [ 3, 5 ], [ 4, 5 ], [ 5 ] ]
 gap> restriction := [Transformation([3, 2, 3]),
 >                    Transformation([3, 1, 3]),
 >                    Transformation([2, 2, 2])];;
@@ -153,7 +167,7 @@ gap> latt := LatticeOfRightCongruences(S, restriction);
 <poset of 4 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
 gap> InNeighbours(latt);
-[ [  ], [ 1, 3, 4 ], [ 1 ], [ 1 ] ]
+[ [ 1 ], [ 1, 2, 3, 4 ], [ 1, 3 ], [ 1, 4 ] ]
 gap> congs := CongruencesOfPoset(latt);;
 gap> Length(congs);
 4
@@ -164,13 +178,13 @@ gap> latt := LatticeOfCongruences(S, restriction);
 <poset of 2 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
 gap> InNeighbours(latt);
-[ [  ], [ 1 ] ]
+[ [ 1 ], [ 1, 2 ] ]
 gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := LatticeOfCongruences(S, restriction);
 <poset of 1 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
 gap> InNeighbours(latt);
-[ [  ] ]
+[ [ 1 ] ]
 
 #T# LatticeOf(Left/Right)Congruences with invalid restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
@@ -198,23 +212,23 @@ gap> poset := PosetOfPrincipalLeftCongruences(S);
 <poset of 12 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
 gap> InNeighbours(poset) =
-> [[8, 11], [], [1, 2, 8, 11, 12], [2, 7, 10, 11, 12], [2],
->   [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12], [10, 12], [11], [2, 11, 12],
->   [12], [], []];
+> [[1, 8, 11], [2], [1, 2, 3, 8, 11, 12], [2, 4, 7, 10, 11, 12], [2, 5],
+>   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [7, 10, 12], [8, 11],
+>   [2, 9, 11, 12], [10, 12], [11], [12]];
 true
 gap> poset := PosetOfPrincipalRightCongruences(S);
 <poset of 15 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
 gap> InNeighbours(poset) =
-> [[], [], [], [], [1, 4, 7, 13], [2, 4, 9, 11], [],
->   [3, 7, 9], [], [], [], [2, 7, 10], [], [1, 9, 10],
->   [1, 2, 3]];
+> [[1], [2], [3], [4], [1, 4, 5, 7, 13], [2, 4, 6, 9, 11], [7],
+>   [3, 7, 8, 9], [9], [10], [11], [2, 7, 10, 12], [13], [1, 9, 10, 14],
+>   [1, 2, 3, 15]];
 true
 gap> poset := PosetOfPrincipalCongruences(S);
 <poset of 3 congruences over <transformation semigroup of size 11, degree 3 
  with 2 generators>>
 gap> InNeighbours(poset);
-[ [ 2, 3 ], [  ], [ 2 ] ]
+[ [ 1, 2, 3 ], [ 2 ], [ 2, 3 ] ]
 gap> Print(poset, "\n");
 PosetOfCongruences( 
 [ SemigroupCongruence( Semigroup( [ Transformation( [ 1, 3, 1 ] ), 
@@ -238,7 +252,7 @@ gap> latt := PosetOfPrincipalLeftCongruences(S, restriction);
 <poset of 3 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
 gap> InNeighbours(latt);
-[ [  ], [  ], [  ] ]
+[ [ 1 ], [ 2 ], [ 3 ] ]
 gap> restriction := [Transformation([3, 2, 3]),
 >                    Transformation([3, 1, 3]),
 >                    Transformation([2, 2, 2])];;
@@ -246,7 +260,7 @@ gap> latt := PosetOfPrincipalRightCongruences(S, restriction);
 <poset of 3 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
 gap> InNeighbours(latt);
-[ [ 2, 3 ], [  ], [  ] ]
+[ [ 1, 2, 3 ], [ 2 ], [ 3 ] ]
 gap> CongruencesOfPoset(latt);
 [ <right semigroup congruence over <transformation semigroup of degree 3 with 
      2 generators> with 1 generating pairs>, <right semigroup congruence over 
@@ -258,12 +272,14 @@ gap> latt := PosetOfPrincipalCongruences(S, restriction);
 <poset of 1 congruences over <transformation semigroup of degree 3 with 2 
  generators>>
 gap> InNeighbours(latt);
-[ [  ] ]
+[ [ 1 ] ]
 gap> restriction := [Transformation([3, 3, 3])];;
 gap> latt := PosetOfPrincipalCongruences(S, restriction);
 <empty congruence poset>
 gap> InNeighbours(latt);
 [  ]
+gap> IsPartialOrderDigraph(latt);
+true
 
 #T# PosetOfPrincipal(Left/Right)Congruences with invalid restriction
 gap> S := Semigroup([Transformation([1, 3, 1]), Transformation([2, 3, 3])]);;
@@ -328,7 +344,8 @@ gap> l := LatticeOfCongruences(S);
 <poset of 6 congruences over <transformation semigroup of size 13, degree 3 
  with 2 generators>>
 gap> InNeighbours(l);
-[ [  ], [ 1, 5, 6 ], [ 1, 2, 4, 5, 6 ], [ 1, 2, 5, 6 ], [ 1, 6 ], [ 1 ] ]
+[ [ 1 ], [ 1, 2, 5, 6 ], [ 1, 2, 3, 4, 5, 6 ], [ 1, 2, 4, 5, 6 ], 
+  [ 1, 5, 6 ], [ 1, 6 ] ]
 gap> minl := MinimalLeftCongruencesOfSemigroup(S);;
 gap> Size(minl);
 3
@@ -363,7 +380,7 @@ gap> coll := [RightSemigroupCongruence(S, pair1),
 gap> l := JoinSemilatticeOfCongruences(coll, JoinRightSemigroupCongruences);
 <poset of 4 congruences over <symmetric inverse monoid of degree 2>>
 gap> InNeighbours(l);
-[ [  ], [  ], [ 1 ], [ 1, 2, 3 ] ]
+[ [ 1 ], [ 2 ], [ 1, 3 ], [ 1, 2, 3, 4 ] ]
 gap> JoinSemilatticeOfCongruences(coll, JoinLeftSemigroupCongruences);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 1st choice method found for `JoinLeftSemigroupCongruences' on 2 argu\
@@ -384,7 +401,7 @@ true
 gap> poset := LatticeOfCongruences(S);
 <poset of 4 congruences over <symmetric inverse monoid of degree 2>>
 gap> InNeighbours(poset);
-[ [  ], [ 1 ], [ 1, 2, 4 ], [ 1, 2 ] ]
+[ [ 1 ], [ 1, 2 ], [ 1, 2, 3, 4 ], [ 1, 2, 4 ] ]
 gap> Print(l, "\n");
 PosetOfCongruences( 
 [ RightSemigroupCongruence( InverseMonoid( 
@@ -418,7 +435,7 @@ gap> poset := PosetOfCongruences(coll);
 <poset of 3 congruences over <regular transformation monoid of degree 2 with 
  2 generators>>
 gap> InNeighbours(poset);
-[ [ 3 ], [ 3 ], [  ] ]
+[ [ 1, 3 ], [ 2, 3 ], [ 3 ] ]
 
 #T# Trivial poset
 gap> poset := PosetOfCongruences([]);
@@ -438,7 +455,8 @@ gap> S := Semigroup(Transformation([2, 1, 4, 3, 5, 2]),
 >                   Transformation([5, 5, 5, 5, 5, 5]));;
 gap> l := LatticeOfCongruences(S);;
 gap> InNeighbours(l);
-[ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3, 4, 6 ], [ 1, 2, 3, 4 ] ]
+[ [ 1 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ], [ 1, 2, 3, 4, 5, 6 ], 
+  [ 1, 2, 3, 4, 6 ] ]
 
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
