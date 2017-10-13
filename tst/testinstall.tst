@@ -1367,7 +1367,9 @@ gap> AsList(JonesMonoid(1));
 gap> S := HallMonoid(2);;
 gap> latt := LatticeOfCongruences(S);;
 gap> InNeighbours(latt);
-[ [  ], [ 1, 3, 4 ], [ 1, 4 ], [ 1 ] ]
+[ [ 1 ], [ 1, 2, 3, 4 ], [ 1, 3, 4 ], [ 1, 4 ] ]
+gap> IsPartialOrderDigraph(latt);
+true
 
 # Test bug in \in for high degree transformation semigroup
 gap> S := Semigroup(Transformation([4, 3, 2, 1]),

@@ -42,7 +42,7 @@ true
 gap> IsDigraph(poset);
 true
 gap> OutNeighbours(poset);
-[ [ 2 .. 4 ], [ 3, 4 ], [  ], [ 3 ] ]
+[ [ 1 .. 4 ], [ 2, 3, 4 ], [ 3 ], [ 3, 4 ] ]
 gap> T := FullTransformationMonoid(3);;
 gap> congs := PrincipalCongruencesOfSemigroup(T);;
 gap> poset := JoinSemilatticeOfCongruences(congs,
@@ -100,7 +100,7 @@ gap> LatticeOfRightCongruences(S);
 <poset of 5 congruences over <regular transformation monoid 
  of size 3, degree 2 with 2 generators>>
 gap> OutNeighbours(LatticeOfRightCongruences(S));
-[ [ 2 .. 5 ], [ 5 ], [ 5 ], [ 5 ], [  ] ]
+[ [ 1 .. 5 ], [ 2, 5 ], [ 3, 5 ], [ 4, 5 ], [ 5 ] ]
 gap> S := FullTransformationMonoid(4);;
 gap> restriction := [Transformation([1, 1, 1, 1]),
 >                    Transformation([1, 1, 1, 2]),
@@ -249,7 +249,7 @@ gap> poset := PosetOfCongruences(coll);
 <poset of 3 congruences over <regular transformation monoid of 
  degree 2 with 2 generators>>
 gap> OutNeighbours(poset);
-[ [  ], [  ], [ 1, 2 ] ]
+[ [ 1 ], [ 2 ], [ 1, 2, 3 ] ]
 ]]></Example>
     </Description>
   </ManSection>
