@@ -753,6 +753,27 @@ gap> S := Semigroup([
 gap> NrMaximalSubsemigroups(S);
 3
 
+#T# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 3
+gap> S := Semigroup([
+>  Transformation([1, 2, 1, 2, 6, 6]),
+>  Transformation([1, 3, 1, 3]),
+>  Transformation([2, 1]),
+>  Transformation([3, 4, 1, 2])]);
+<transformation semigroup of degree 6 with 4 generators>
+gap> NrMaximalSubsemigroups(S);
+5
+
+#T# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 4
+gap> S := Semigroup([
+>  Transformation([2, 1, 5, 2, 4]),
+>  Transformation([2, 3, 4, 3, 1]),
+>  Transformation([3, 4, 1, 4, 3]),
+>  Transformation([3, 4, 2, 2, 2]),
+>  Transformation([5, 1, 1, 2, 3])]);
+<transformation semigroup of degree 5 with 5 generators>
+gap> NrMaximalSubsemigroups(S);
+8
+
 #T# maximal: NrMaximalSubsemigroups, for a transformation monoid, 1
 gap> S := Monoid([
 > Transformation([1, 1, 2, 1, 4, 4]),
