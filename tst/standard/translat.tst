@@ -184,13 +184,13 @@ gap> L := LeftTranslations(S);
 gap> Size(L);
 945
 gap> R := RightTranslations(S);
-<the semigroup of right translations of <regular bipartition *-monoid of 
- degree 5 with 3 generators>>
+<the semigroup of right translations of <regular bipartition *-monoid 
+ of size 945, degree 5 with 3 generators>>
 gap> Size(R);
 945
 gap> H := TranslationalHull(S);
-<translational hull over <regular bipartition *-monoid of degree 5 with 3 
- generators>>
+<translational hull over <regular bipartition *-monoid of size 945, degree 5 
+ with 3 generators>>
 gap> Size(H);
 945
 gap> S := FullTransformationMonoid(5);;

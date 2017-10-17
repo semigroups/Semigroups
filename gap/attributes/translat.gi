@@ -140,42 +140,40 @@ SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators := function(R)
   return Semigroup(gens, rec(small := true));
 end;
 
-# Translational hull elements of an arbitrary (finite) semigroup
+# Calculates bitranslations of an arbitrary (finite)
+# semigroup with known generators.
 # This is a backtrack search on functions from the semigroup to itself.
-# Given a set A which hits every L class and R class, a linked pair (f, g) of
-# translations is completely determined by the values on A. Having fixed a_i,
-# we can restrict the values on a_k, k > i, by the linked pair conditions
-# s * a_i f(a_k) = (s * a_i)g a_k and a_k f(a_i * s) = (a_k)g a_i * s,
-# as well as restriction by the translation condition if Sa_i intersect Sa_k is
-# non-empty or a_i S intersect a_k S is non-empty.
+# Given a set X of generators, a linked pair (f, g) of
+# translations is completely determined by the values on X. Having fixed x_i,
+# we can restrict the values on x_k, k > i, by the linked pair conditions
+# s * x_i f(x_k) = (s * x_i)g x_k and x_k f(x_i * s) = (x_k)g x_i * s,
+# as well as restriction by the translation condition if Sx_i intersect Sx_k is
+# non-empty or x_i S intersect x_k S is non-empty.
 SEMIGROUPS.BitranslationsByGenerators := function(H)
-  local d, e, f, g, i, I, j, k, L, m, n, p, q, r, R, s, S, x, y,
-        flinkedrestrictionatstage, fposrepk, ftransrestrictionatstage, fvalsi,
-        glinkedrestrictionatstage, gposrepk, gtransrestrictionatstage, gvalsi,
-        ipos, linkedpairs, multtable, multtablepossets,
-        pos, posrepsks, posfrepsks, possrepsk, possgrepsk,
-        possibleidempotentfvals, possibleidempotentgvals,
-        possiblefrepvals, possiblegrepvals,
-        possiblefrepvalsfromidempotent, possiblegrepvalsfromidempotent,
-        reps, repspos, slist, transposepossets, whenboundfvals,
-        whenboundgvals,
-        bt, extendf, propagatef, propagateg, reject, restrictfromf,
-        restrictfromg, unrestrict;
+  local I, L, M, R, S, bt, d, e, extendf, f, flinkedrestrictionatstage,
+  fposrepk, ftransrestrictionatstage, fvalsi, g, glinkedrestrictionatstage,
+  gposrepk, gtransrestrictionatstage, gvalsi, i, ipos, isweaklyreductive, j, k,
+  linkedpairs, m, multtable, multtablepossets, n, p, pos, posfrepsks, posrepsks,
+  possgrepsk, possiblefrepvals, possiblefrepvalsfromidempotent,
+  possiblegrepvals, possiblegrepvalsfromidempotent, possibleidempotentfvals,
+  possibleidempotentgvals, possrepsk, propagatef, propagateg, q, r, reject,
+  reps, repspos, restrictbyweakreductivity, restrictfromf, restrictfromg,
+  restrictionbyweakreductivity, s, slist, t, tinv, transposepossets, unrestrict,
+  whenboundfvals, whenboundgvals, x, y;
 
   S := UnderlyingSemigroup(H);
   n := Size(S);
+  isweaklyreductive := Size(InnerTranslationalHull(S)) = n;
   slist := AsListCanonical(S);
   L := LeftTranslationsSemigroup(S);
   R := RightTranslationsSemigroup(S);
 
-  #easiest to just recalculate multiplication table with canonical list
-  multtable := List([1 .. n], i -> [1 .. n]);
-  for i in [1 .. n] do
-    for j in [1 .. n] do
-      multtable[i][j] := Position(slist, slist[i] * slist[j]);
-    od;
-  od;
+  t := Transformation(List([1 .. n], i -> Position(slist, AsSortedList(S)[i])));
+  tinv := InverseOfTransformation(t);
+  M := MultiplicationTable(S);
 
+  multtable := List([1 .. n], i -> List([1 .. n],
+                                        j -> M[i ^ tinv][j ^ tinv] ^ t));
   reps := GeneratorsOfSemigroup(S);
   repspos := [];
   m := Size(reps);
@@ -244,6 +242,39 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
       fi;
     od;
   od;
+
+  #if S is weakly reductive then every pair of bitranslations permute
+  #i.e. for (f, g) and (f', g') bitranslations, for all s in S,
+  #f(sg') = (fs)g'
+  #so if fs is a generator x_i, then (x_i)g lies in the range of f
+  restrictbyweakreductivity := function(f, g)
+    for i in [1 .. m] do
+      if repspos[i] in f then
+        # add the restriction...
+        possiblegrepvals[i] := Intersection(possiblegrepvals[i], f);
+        # stop the backtracking from undoing the restriction
+        # by only letting it restore those things in the range of f
+        for j in [1 .. m] do
+          gtransrestrictionatstage[i][j]
+            := Intersection(gtransrestrictionatstage[i][j], f);
+          glinkedrestrictionatstage[i][j]
+            := Intersection(glinkedrestrictionatstage[i][j], f);
+        od;
+      fi;
+      if repspos[i] in g then
+        # add the restriction...
+        possiblefrepvals[i] := Intersection(possiblefrepvals[i], g);
+        # stop the backtracking from undoing the restriction
+        # by only letting it restore those things in the range of g
+        for j in [1 .. m] do
+          ftransrestrictionatstage[i][j]
+            := Intersection(ftransrestrictionatstage[i][j], g);
+          flinkedrestrictionatstage[i][j]
+            := Intersection(flinkedrestrictionatstage[i][j], g);
+        od;
+      fi;
+    od;
+  end;
 
   extendf := function(k)
     f[repspos[k + 1]] := possiblefrepvals[k + 1][1];
@@ -504,6 +535,9 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
   k := extendf(0);
   k := bt(k);
   while k = m + 1 do
+    if isweaklyreductive then
+      restrictbyweakreductivity(f, g);
+    fi;
     Add(linkedpairs, [ShallowCopy(f), ShallowCopy(g)]);
     k := bt(reject(k - 1));
   od;
@@ -1003,6 +1037,7 @@ end);
 # left translations and right translations
 InstallMethod(Size, "for the translational hull of a rectangular band",
 [IsTranslationalHull and IsWholeFamily],
+1,
 function(H)
   local S, L, R;
   S := UnderlyingSemigroup(H);
@@ -1127,6 +1162,26 @@ function(S)
   return H;
 end);
 
+InstallMethod(Size, "for a semigroup of left/right translations of a monoid",
+[IsTranslationsSemigroup and IsWholeFamily],
+1,
+function(T)
+  if not IsMonoid(UnderlyingSemigroup(T)) then
+    TryNextMethod();
+  fi;
+  return Size(UnderlyingSemigroup(T));
+end);
+
+InstallMethod(Size, "for a translational hull of a monoid",
+[IsTranslationalHull and IsWholeFamily],
+1,
+function(H)
+  if not IsMonoid(UnderlyingSemigroup(H)) then
+    TryNextMethod();
+  fi;
+  return Size(UnderlyingSemigroup(H));
+end);
+
 #############################################################################
 # 5. Technical methods
 #############################################################################
@@ -1144,6 +1199,18 @@ InstallMethod(AsList, "for a translational hull",
 [IsTranslationalHull and IsWholeFamily],
 function(H)
   return Immutable(AsList(SEMIGROUPS.Bitranslations(H)));
+end);
+
+InstallMethod(Size, "for a semigroups of left or right translations",
+[IsTranslationsSemigroup and IsWholeFamily],
+function(T)
+  return Size(AsList(T));
+end);
+
+InstallMethod(Size, "for a translational hull",
+[IsTranslationalHull and IsWholeFamily],
+function(H)
+  return Size(AsList(H));
 end);
 
 InstallMethod(Representative, "for a semigroup of left or right translations",

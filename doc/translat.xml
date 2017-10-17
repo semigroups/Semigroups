@@ -349,11 +349,11 @@ gap> S := Semigroup([Transformation([4, 2, 3, 3]),
 gap> H := TranslationalHull(S);;
 gap> h := AsList(H)[2];;
 gap> l := LeftPartOfBitranslation(h);
-<left translation on <regular transformation semigroup of size 7, 
- degree 4 with 2 generators>>
+<left translation on <transformation semigroup of size 7, degree 4 
+ with 2 generators>>
 gap> r := RightPartOfBitranslation(h);
-<right translation on <regular transformation semigroup of size 7, 
- degree 4 with 2 generators>>
+<right translation on <transformation semigroup of size 7, degree 4 
+ with 2 generators>>
 gap> h = Bitranslation(H, l, r);
 true
 ]]></Example>
