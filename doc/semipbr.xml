@@ -122,7 +122,7 @@ gap> AsSemigroup(IsPBRSemigroup, S);
       If <A>n</A> is a positive integer not greater than <C>2</C>, then this
       operation returns the monoid consisting of all of the partitioned binary
       relations (PBRs) of degree <A>n</A>; called the <E>full PBR monoid</E>.
-      There are <C>2 ^ (2 * n) ^ 2</C> PBRs of degree <A>n</A>.  The full PBR
+      There are <C>2 ^ ((2 * n) ^ 2)</C> PBRs of degree <A>n</A>.  The full PBR
       monoid of degree <A>n</A> is currently too large to compute when
       <M><A>n</A> \geq 3</M>. <P/>
 
