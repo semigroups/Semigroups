@@ -46,7 +46,7 @@ elif [ ! -z "$GAP" ]; then
     cd ../..
     # Run all tests and manual examples
     echo -e "\nRunning tests and manual examples..."
-    echo "LoadPackage(\"semigroups\"); SemigroupsTestStandard(); SEMIGROUPS.TestManualExamples();" | $GAP_DIR/bin/gap.sh -A -r -m 1g -T 2>&1 | tee $TESTLOG
+    echo "LoadPackage(\"semigroups\"); SemigroupsTestAll();" | $GAP_DIR/bin/gap.sh -A -r -m 1g -T 2>&1 | tee $TESTLOG
     if [ ! "$ABI" == "32" ]; then
       echo "LoadPackage(\"semigroups\"); Read(\"$GAP_DIR/tst/testinstall.g\");" | $GAP_DIR/bin/gap.sh -A -x 80 -r -m 100m -o 1g -K 2g -T 2>&1 | tee $TESTLOG
     fi
