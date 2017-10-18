@@ -185,6 +185,7 @@ make]]></Listing>
     <#Include Label = "SemigroupsTestInstall">
     <#Include Label = "SemigroupsTestStandard">
     <#Include Label = "SemigroupsTestExtreme">
+    <#Include Label = "SemigroupsTestAll">
 
   </Section>
 
