@@ -208,6 +208,8 @@ function(poset, join_func)
           found := true;
         fi;
       od;
+      Info(InfoSemigroups, 2, "Processed cong ", i, " of ", Length(congs),
+           " (", Length(congs) - i, " remaining)");
     od;
   od;
 
