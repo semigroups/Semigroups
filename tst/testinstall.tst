@@ -1703,6 +1703,21 @@ gap> NaturalPartialOrder(es);
 [ [  ], [ 1 ], [ 1 ], [ 1 ], [ 1, 2, 3 ], [ 1, 2, 4 ], [ 1, 3, 4 ], 
   [ 1, 2, 3, 4, 5, 6, 7 ] ]
 
+#T# Issue 251
+gap> S := Monoid([
+> Transformation([2, 1]),
+> Transformation([3, 1, 2]),
+> Transformation([4, 2, 3, 4]),
+> Transformation([2, 2])]);;
+gap> slist := ShallowCopy(AsList(S));;
+gap> Sort(slist);
+gap> r := MultiplicativeNeutralElement(S);;
+gap> for s in S do
+> if not r * s in slist then
+> Print(s);
+> fi;
+> od;
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
