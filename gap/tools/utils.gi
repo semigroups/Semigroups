@@ -463,6 +463,16 @@ function()
                                   "testinstall.tst"));
 end);
 
+InstallGlobalFunction(SemigroupsTestAll,
+function()
+  local success;
+  SemigroupsMakeDoc();
+  # Return true if both test suites succeed, but run both anyway
+  success := IsEmpty(SemigroupsTestStandard()[1]);
+  success := SEMIGROUPS.TestManualExamples() and success;
+  return success;
+end);
+
 # The following is based on doc/ref/testconsistency.g
 
 # Detect which ManSection should be used to document obj. Returns one of
