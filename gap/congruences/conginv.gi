@@ -635,9 +635,9 @@ SEMIGROUPS.KernelTraceClosure := function(S, kernel, traceBlocks, pairstoapply)
     enumerate_trace();
     trace_unchanged := (oldLookup = UF_TABLE(traceUF));
     kernel_unchanged := (oldKernel = kernel);
-    Info(InfoSemigroups, 2, "lookup: ", trace_unchanged);
-    Info(InfoSemigroups, 2, "kernel: ", kernel_unchanged);
-    Info(InfoSemigroups, 2, "nrk = 0: ", nrk = 0);
+    Info(InfoSemigroups, 3, "lookup: ", trace_unchanged);
+    Info(InfoSemigroups, 3, "kernel: ", kernel_unchanged);
+    Info(InfoSemigroups, 3, "nrk = 0: ", nrk = 0);
   until trace_unchanged and kernel_unchanged and (nrk = 0);
 
   # Convert traceLookup to traceBlocks
