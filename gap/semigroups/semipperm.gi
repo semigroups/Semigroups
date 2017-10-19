@@ -345,6 +345,80 @@ function(I)
   return MagmaIsomorphismByFunctionsNC(I, J, x -> x ^ iso, x -> x ^ inv);
 end);
 
+InstallMethod(IsomorphismPartialPermSemigroup, "for a group as semigroup",
+[IsGroupAsSemigroup],
+function(G)
+  local perm_iso, perm_inv, perm_grp, pperm_iso, pperm_inv;
+
+  if IsPartialPermSemigroup(G) then
+    return MagmaIsomorphismByFunctionsNC(G, G, IdFunc, IdFunc);
+  fi;
+
+  perm_iso := IsomorphismPermGroup(G);
+  perm_inv := InverseGeneralMapping(perm_iso);
+  perm_grp := Range(perm_iso);
+  GeneratorsOfGroup(perm_grp); # to make sure that the following line calls the
+                               # library method for IsPermGroup and HasGensOfGp
+  pperm_iso := IsomorphismPartialPermSemigroup(perm_grp);
+  pperm_inv := InverseGeneralMapping(pperm_iso);
+  return MagmaIsomorphismByFunctionsNC(G, Range(pperm_iso),
+                                       x -> (x ^ perm_iso) ^ pperm_iso,
+                                       x -> (x ^ pperm_inv) ^ perm_inv);
+end);
+
+InstallMethod(IsomorphismPartialPermSemigroup,
+"for a group with adjoined zero",
+[IsMagmaWithZeroAdjoined and IsZeroGroup],
+function(S)
+  local zero, inj_zm, inv_zm, grp, one, iso, inv, T, iso_pp, inv_pp;
+
+  zero := MultiplicativeZero(S);
+  inj_zm := UnderlyingInjectionZeroMagma(S);
+  inv_zm := InverseGeneralMapping(inj_zm);
+  grp := Source(inj_zm);
+
+  if IsTrivial(grp) then
+    # Special case: if <grp> is trivial, then `IsomorphismPartialPermSemigroup`
+    # will map to <{EmptyPartialPerm}>, to which we can't easily adjoin a zero.
+    one := MultiplicativeNeutralElement(S); # S = {zero, one}
+    iso := function(x)
+      if x = zero then
+        return EmptyPartialPerm();
+      fi;
+      return PartialPerm([1]);
+    end;
+    inv := function(x)
+      if DegreeOfPartialPerm(x) = 0 then
+        return zero;
+      fi;
+      return one;
+    end;
+    T := SymmetricInverseSemigroup(1);
+    return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
+  fi;
+
+  iso_pp := IsomorphismPartialPermSemigroup(grp);
+  inv_pp := InverseGeneralMapping(iso_pp);
+  T := InverseMonoid(GeneratorsOfInverseSemigroup(Range(iso_pp)),
+                     EmptyPartialPerm());
+
+  iso := function(x)
+    if x = zero then
+      return EmptyPartialPerm();
+    fi;
+    return (x ^ inv_zm) ^ iso_pp;
+  end;
+
+  inv := function(x)
+    if DegreeOfPartialPerm(x) = 0 then
+      return zero;
+    fi;
+    return (x ^ inv_pp) ^ inj_zm;
+  end;
+
+  return MagmaIsomorphismByFunctionsNC(S, T, iso, inv);
+end);
+
 # it just so happens that the MultiplicativeNeutralElement of a semigroup of
 # partial permutations has to coincide with the One. This is not the case for
 # transformation semigroups
