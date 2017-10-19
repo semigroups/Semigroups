@@ -12,5 +12,6 @@ DeclareGlobalFunction("SemigroupsMakeDoc");
 DeclareGlobalFunction("SemigroupsTestInstall");
 DeclareGlobalFunction("SemigroupsTestStandard");
 DeclareGlobalFunction("SemigroupsTestExtreme");
+DeclareGlobalFunction("SemigroupsTestAll");
 
 SEMIGROUPS.OmitFromTests := [];

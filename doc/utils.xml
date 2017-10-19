@@ -91,6 +91,24 @@
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="SemigroupsTestAll">
+  <ManSection>
+    <Func Name = "SemigroupsTestAll" Arg = ""/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      This function should be called with no argument to compile the
+      &Semigroups; package's documentation, run the standard suite of tests, and
+      run all the examples from the documentation to ensure that their output is
+      correct.  The value returned is <K>true</K> if all the tests succeed, and
+      <K>false</K> otherwise.  The whole process should take no more than a few
+      minutes. <P/>
+
+      See <Ref Func = "SemigroupsMakeDoc"/>
+      and <Ref Func = "SemigroupsTestStandard"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="InfoSemigroups">
   <ManSection>
     <InfoClass Name = "InfoSemigroups"/>
