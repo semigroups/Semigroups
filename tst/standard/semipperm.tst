@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  standard/semipperm.tst
-#Y  Copyright (C) 2011-15                                James D. Mitchell
+#Y  Copyright (C) 2011-17                                James D. Mitchell
 ##
 ##  Licensing information can be found in the README file of this package.
 ##
@@ -1817,7 +1817,7 @@ true
 gap> S := DihedralGroup(6);
 <pc group of size 6 with 2 generators>
 gap> T := AsSemigroup(IsPartialPermSemigroup, S);
-<inverse partial perm monoid of size 6, rank 6 with 5 generators>
+<partial perm group of size 6, rank 6 with 2 generators>
 gap> Size(S) = Size(T);
 true
 gap> NrDClasses(S) = NrDClasses(T);
@@ -1989,6 +1989,77 @@ MappingByFunction( <bipartition semigroup of degree 3 with 3 generators>,
  , <Operation "AsPartialPerm">, function( x ) ... end )
 gap> I := SemigroupIdeal(T, T.1 * T.2 * T.3);;
 gap> IsomorphismPartialPermSemigroup(I);;
+
+#T# semipperm: IsomorphismPartialPermSemigroup, for a group as semigroup, 1
+gap> S := DihedralGroup(8);
+<pc group of size 8 with 3 generators>
+gap> IsGroupAsSemigroup(S);
+true
+gap> map := IsomorphismPartialPermSemigroup(S);
+MappingByFunction( <pc group of size 8 with 3 generators>, 
+<partial perm group of size 8, rank 8 with 3 generators>
+, function( x ) ... end, function( x ) ... end )
+gap> Range(map);
+<partial perm group of size 8, rank 8 with 3 generators>
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# semipperm: IsomorphismPartialPermSemigroup, for a group as semigroup, 2
+gap> S := Semigroup([
+>  PartialPerm([1, 2, 3, 4, 5], [2, 3, 4, 5, 1]),
+>  PartialPerm([1, 2, 3, 4, 5], [2, 1, 3, 4, 5])]);;
+gap> IsGroupAsSemigroup(S);
+true
+gap> map := IsomorphismPartialPermSemigroup(S);
+MappingByFunction( <partial perm group of rank 5 with 2 generators>, 
+<partial perm group of rank 5 with 2 generators>
+, function( object ) ... end, function( object ) ... end )
+gap> Range(map);
+<partial perm group of rank 5 with 2 generators>
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# semipperm: IsomorphismPartialPermSemigroup, for a zero group, 1
+gap> S := Range(InjectionZeroMagma(SymmetricGroup(5)));
+<Sym( [ 1 .. 5 ] ) with 0 adjoined>
+gap> map := IsomorphismPartialPermSemigroup(S);
+MappingByFunction( <Sym( [ 1 .. 5 ] ) with 0 adjoined>, <inverse partial perm 
+ monoid of rank 5 with 3 generators>
+ , function( x ) ... end, function( x ) ... end )
+gap> Range(map);
+<inverse partial perm monoid of rank 5 with 3 generators>
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# semipperm: IsomorphismPartialPermSemigroup, for a zero group, 2
+gap> S := Range(InjectionZeroMagma(TrivialGroup(IsPcGroup)));
+<<pc group of size 1 with 0 generators> with 0 adjoined>
+gap> map := IsomorphismPartialPermSemigroup(S);;
+gap> Range(map);
+<symmetric inverse monoid of degree 1>
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
+
+#T# semipperm: IsomorphismPartialPermSemigroup, for a zero group, 3
+gap> S := Range(InjectionZeroMagma(SL(2, 2)));
+<SL(2,2) with 0 adjoined>
+gap> map := IsomorphismPartialPermSemigroup(S);
+MappingByFunction( <SL(2,2) with 0 adjoined>, <inverse partial perm monoid of 
+ rank 3 with 3 generators>, function( x ) ... end, function( x ) ... end )
+gap> Range(map);
+<inverse partial perm monoid of rank 3 with 3 generators>
+gap> BruteForceIsoCheck(map);
+true
+gap> BruteForceInverseCheck(map);
+true
 
 # Test GroupOfUnits
 gap> S := SymmetricInverseMonoid(4);;
