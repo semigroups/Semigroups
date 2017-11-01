@@ -73,7 +73,7 @@ Obj BoolMatConverter::unconvert(Element const* x) const {
     CHANGED_BAG(o);
   }
 
-  TYPE_POSOBJ(o) = BooleanMatType;
+  SET_TYPE_POSOBJ(o, BooleanMatType);
   RetypeBag(o, T_POSOBJ);
   CHANGED_BAG(o);
   return o;
@@ -152,7 +152,7 @@ Obj PBRConverter::unconvert(Element const* xx) const {
     SET_ELM_PLIST(plist, i + 2, adj);
     CHANGED_BAG(plist);
   }
-  TYPE_POSOBJ(plist) = get_gap_type(x->degree());
+  SET_TYPE_POSOBJ(plist, get_gap_type(x->degree()));
   RetypeBag(plist, T_POSOBJ);
   CHANGED_BAG(plist);
   return plist;
