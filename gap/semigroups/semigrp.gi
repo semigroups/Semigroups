@@ -196,7 +196,7 @@ InstallMethod(SemigroupByGenerators,
 function(gens, opts)
   local filts, S;
 
-  opts := SEMIGROUPS.ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
 
   if CanEasilyCompareElements(gens) then
     # Check if the One of the generators is a generator
@@ -243,7 +243,7 @@ InstallMethod(MonoidByGenerators,
 function(gens, opts)
   local mgens, pos, filts, S;
 
-  opts := SEMIGROUPS.ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
   mgens := ShallowCopy(gens);
 
   if CanEasilyCompareElements(gens) then
@@ -306,7 +306,7 @@ function(gens, opts)
                   "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
-  opts := SEMIGROUPS.ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
 
   if CanEasilyCompareElements(gens) then
     # Check if the One of the generators is a generator
@@ -358,7 +358,7 @@ function(gens, opts)
                   "`IsGeneratorsOfInverseSemigroup',");
   fi;
 
-  opts := SEMIGROUPS.ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
 
   if CanEasilyCompareElements(gens) then
     if (not IsPartialPermCollection(gens) or not opts.small)
@@ -495,7 +495,8 @@ function(S, coll, opts)
   opts         := ShallowCopy(opts);
   opts.small   := false;
   opts.regular := false;
-  opts         := SEMIGROUPS.ProcessOptionsRec(opts);
+  opts         := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec,
+                                               opts);
 
   return ClosureSemigroupOrMonoidNC(Semigroup, S, coll, opts);
 end);
@@ -533,7 +534,8 @@ function(S, coll, opts)
   opts         := ShallowCopy(opts);
   opts.small   := false;
   opts.regular := false;
-  opts         := SEMIGROUPS.ProcessOptionsRec(opts);
+  opts         := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec,
+                                               opts);
 
   return ClosureSemigroupOrMonoidNC(Monoid, S, coll, opts);
 end);
@@ -703,7 +705,8 @@ function(S, coll, opts)
 
   opts         := ShallowCopy(opts);
   opts.small   := false;
-  opts         := SEMIGROUPS.ProcessOptionsRec(opts);
+  opts         := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec,
+                                               opts);
 
   return ClosureInverseSemigroupOrMonoidNC(InverseSemigroup, S, coll, opts);
 end);
@@ -747,7 +750,8 @@ function(S, coll, opts)
 
   opts         := ShallowCopy(opts);
   opts.small   := false;
-  opts         := SEMIGROUPS.ProcessOptionsRec(opts);
+  opts         := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec,
+                                               opts);
 
   return ClosureInverseSemigroupOrMonoidNC(InverseMonoid, S, coll, opts);
 end);

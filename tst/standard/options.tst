@@ -15,9 +15,9 @@ gap> SEMIGROUPS.StartTest();
 gap> SEMIGROUPS.DefaultOptionsRec.acting := true;;
 
 # SEMIGROUPS.ProcessOptionsRec
-gap> SEMIGROUPS.ProcessOptionsRec(rec(hashlen := 103));
+gap> SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, rec(hashlen := 103));
 rec( acting := true, batch_size := 8192, cong_by_ker_trace_threshold := 100000
-    , hashlen := rec( L := 107, M := 29, S := 2 ), nr_threads := 4, 
+    , hashlen := rec( L := 25013, M := 6257, S := 251 ), nr_threads := 4, 
   regular := false, report := false, small := false )
 
 # SEMIGROUPS.OptionsRec
@@ -34,10 +34,10 @@ rec( acting := true, batch_size := 8192, cong_by_ker_trace_threshold := 100000
 gap> SEMIGROUPS.DefaultOptionsRec.acting := false;;
 
 # SEMIGROUPS.ProcessOptionsRec
-gap> SEMIGROUPS.ProcessOptionsRec(rec(hashlen := 103));
+gap> SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, rec(hashlen := 103));
 rec( acting := false, batch_size := 8192, 
   cong_by_ker_trace_threshold := 100000, 
-  hashlen := rec( L := 107, M := 29, S := 2 ), nr_threads := 4, 
+  hashlen := rec( L := 25013, M := 6257, S := 251 ), nr_threads := 4, 
   regular := false, report := false, small := false )
 
 # SEMIGROUPS.OptionsRec
