@@ -266,12 +266,12 @@
         &GAP; runs out of memory unexpectedly, or you plan to do a large number
         of computations with relatively small semigroups (say with tens of
         thousands of elements), then you might consider setting <C>hashlen</C> to
-        be less than the default value of <C>25013</C> for each of these
+        be less than the default value of <C>12517</C> for each of these
         semigroups.  If you find that the performance of &Semigroups; is
         unexpectedly poor, or you plan to do a computation with a very large
         semigroup (say, more than 10 million elements), then you might consider
         setting <C>hashlen</C> to be greater than the default value of
-        <C>25013</C>. <P/>
+        <C>12517</C>. <P/>
 
         You might find it useful to set the info level of the info class
         <C>InfoOrb</C> to 2 or higher since this will indicate when hash tables
