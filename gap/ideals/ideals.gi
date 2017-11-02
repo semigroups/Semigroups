@@ -278,7 +278,7 @@ InstallMethod(SemigroupIdealByGeneratorsNC,
 [IsSemigroup, IsMultiplicativeElementCollection, IsRecord],
 function(S, gens, opts)
   local filts, I;
-  opts := SEMIGROUPS.ProcessOptionsRec(opts);
+  opts := SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.DefaultOptionsRec, opts);
   gens := AsList(gens);
 
   filts := IsMagmaIdeal and IsAttributeStoringRep;

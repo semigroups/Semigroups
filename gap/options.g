@@ -18,22 +18,23 @@ SEMIGROUPS.DefaultOptionsRec :=
       nr_threads := 4,
       cong_by_ker_trace_threshold := 10 ^ 5);
 
-SEMIGROUPS.ProcessOptionsRec := function(opts)
-  local n, x;
-
-  for x in RecNames(SEMIGROUPS.DefaultOptionsRec) do
-    if not IsBound(opts.(x)) then
-      opts.(x) := SEMIGROUPS.DefaultOptionsRec.(x);
+SEMIGROUPS.ProcessOptionsRec := function(defaults, opts)
+  local name;
+  for name in RecNames(defaults) do
+    if not IsBound(opts.(name)) then
+      opts.(name) := defaults.(name);
+    elif TNUM_OBJ(opts.(name))[1] <> TNUM_OBJ(defaults.(name))[1] then
+      Info(InfoWarning, 1, "Expected a ", TNUM_OBJ(defaults.(name))[2],
+           " for option \"", name, "\", but got a ", TNUM_OBJ(opts.(name))[2]);
+      Info(InfoWarning, 1, "Ignoring the value of option \"", name, "\"");
+      opts.(name) := defaults.(name);
     fi;
   od;
-
-  if IsBound(opts.hashlen) and IsPosInt(opts.hashlen) then
-    n := opts.hashlen;
-    opts.hashlen := rec(S := NextPrimeInt(Int(n / 100)),
-                        M := NextPrimeInt(Int(n / 4)),
-                        L := NextPrimeInt(n));
-  fi;
-
+  for name in RecNames(opts) do
+    if not IsBound(defaults.(name)) then
+      Info(InfoWarning, 1, "Ignoring unknown option \"", name, "\"");
+    fi;
+  od;
   return opts;
 end;
 
