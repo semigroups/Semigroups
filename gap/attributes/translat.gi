@@ -59,17 +59,163 @@ SEMIGROUPS.TranslationsSemigroupElements := function(T)
   S := UnderlyingSemigroup(T);
   if IsZeroSimpleSemigroup(S) or
       IsRectangularBand(S) or
+      IsSimpleSemigroup(S) or
       SEMIGROUPS.IsNormalRMSOverGroup(S) then
     return Semigroup(GeneratorsOfSemigroup(T));
   elif HasGeneratorsOfSemigroup(S) then
     if IsLeftTranslationsSemigroup(T) then
-      return SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators(T);
+      return SEMIGROUPS.LeftTranslationsBacktrack(T);
     else
       return SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators(T);
     fi;
   fi;
   Error("Semigroups: TranslationsSemigroupElements: \n",
         "no method of calculating this translations semigroup is known,");
+end;
+
+
+SEMIGROUPS.LeftTranslationsBacktrack := function(L)
+  local n, slist, gens, m, possiblefgenvals, genspos, I, q,
+  possibleidempotentfvals, gen, idempos, extend, next, propagate, reject, bt,
+  whenbound, translist, e, i, s, x, f, k, multtable, t, tinv, M, pos,
+  posinfgenvals, genpos, restrictionatstage, S;
+  
+  S := UnderlyingSemigroup(L);
+  n := Size(S);
+  slist := AsListCanonical(S);
+  gens := GeneratorsOfSemigroup(S);
+  m := Size(gens);
+
+  t := Transformation(List([1 .. n], i -> Position(slist, AsSortedList(S)[i])));
+  tinv := InverseOfTransformation(t);
+  M := MultiplicationTable(S);
+
+  multtable := List([1 .. n], i -> List([1 .. n],
+                                        j -> M[i ^ tinv][j ^ tinv] ^ t));
+
+
+  possiblefgenvals := List([1 .. m], i -> [1 .. n]);
+
+  genspos := List(gens, g -> Position(slist, g));
+
+  I := Idempotents(S);
+  q := Size(I);
+  possibleidempotentfvals := [1 .. q];
+  for e in I do
+    possibleidempotentfvals[Position(I, e)] := PositionsProperty(slist,
+                                                   x -> x * e = x);
+  od;
+  for i in [1 .. m] do
+    gen := gens[i];
+    for s in S do
+      if gen * s in Idempotents(S) then
+        idempos := Position(I, gen * s);
+        possiblefgenvals[i] := Intersection(possiblefgenvals[i],
+                                            PositionsProperty(slist, 
+                                              x -> Position(slist, x * s) in
+                                              possibleidempotentfvals[idempos]));
+        possiblefgenvals[i] := Intersection(possiblefgenvals[i],
+                                            PositionsProperty(slist,
+                                              x -> x * s = x * s * gen * s));
+      fi;
+    od;
+  od;
+
+  extend := function(k)
+    f[k + 1] := possiblefgenvals[k + 1][1];
+    posinfgenvals[k + 1] := 1;
+    return k + 1;
+  end;
+
+  next := function(k)
+    for i in [1 .. n] do
+      if whenbound[i] = k then
+        whenbound[i] := 0;
+        Unbind(f[i]);
+      fi;
+    od;
+    for i in [1 .. m] do
+      UniteSet(possiblefgenvals[i], restrictionatstage[k][i]);
+      restrictionatstage[k][i] := [];
+    od;
+    if posinfgenvals[k] = Size(possiblefgenvals[k]) then
+      return fail;
+    fi;
+    #whenbound[genspos[k]] := k;
+    posinfgenvals[k] := posinfgenvals[k] + 1;
+    f[genspos[k]] := possiblefgenvals[k][posinfgenvals[k]];
+    return k;
+  end;
+
+  propagate := function(k)
+    x := genspos[k];
+    for i in [1 .. n] do
+      pos := multtable[x][i];
+      if slist[pos] in gens then
+        # we don't want to restrict f[gens[k]] based on the value of f[gens[k]]
+        # and there's no point restricting f[gens[i]] for i < k
+        genpos := Position(gens, slist[pos]);
+        if genpos > k and multtable[f[x]][i] in possiblefgenvals[genpos] then
+          restrictionatstage[k][genpos] := Difference(possiblefgenvals[genpos],
+                                                      [multtable[f[x]][i]]);
+          possiblefgenvals[genpos] := Intersection(possiblefgenvals[genpos],
+                                                   [multtable[f[x]][i]]);
+        fi;
+      fi;
+      if IsBound(f[pos]) then 
+        if not f[pos] = multtable[f[x]][i] then
+          return fail;
+        fi;
+        continue;
+      fi;
+      f[pos] := multtable[f[genspos[k]]][i];
+      whenbound[pos] := k;
+    od;
+    return k;
+  end;
+
+  reject := function(k)
+    if k = m + 1 then
+      k := m;
+    fi;
+    while k > 0 and next(k) = fail do
+      Unbind(f[genspos[k]]);
+      posinfgenvals[k] := 0;
+      for i in [k .. m] do
+        UniteSet(possiblefgenvals[i], restrictionatstage[k][i]);
+        restrictionatstage[k][i] := [];
+      od;
+      k := k - 1;
+    od;
+    return k;
+  end;
+
+  bt := function(k)
+    if k = 0 or k = m + 1 then
+      return k;
+    fi;
+    if propagate(k) = fail then
+      return bt(reject(k));
+    fi;
+    if k = m then 
+      return m + 1;
+    fi;
+    return bt(extend(k));
+  end;
+
+  whenbound := List([1 .. n], i -> 0);
+  translist := [];
+  restrictionatstage := List([1 .. m], i -> List([1 .. m], j -> []));
+  f := [];
+  posinfgenvals := List([1 .. m], i -> 0);
+
+  extend(0);
+  k := bt(1);
+  while k = m + 1 do
+    Add(translist, LeftTranslationNC(L, Transformation(ShallowCopy(f))));
+    k := bt(reject(k));
+  od;
+  return translist;
 end;
 
 # Choose how to calculate the elements of a translational hull
@@ -110,7 +256,7 @@ SEMIGROUPS.LeftTranslationsSemigroupElementsByGenerators := function(L)
     od;
   od;
   gens := GeneratorsOfEndomorphismMonoid(Digraph(out), colors);
-  Apply(gens, x -> LeftTranslation(L, RestrictedTransformation(x, [1 .. n])));
+  Apply(gens, x -> LeftTranslationNC(L, RestrictedTransformation(x, [1 .. n])));
   return Semigroup(gens, rec(small := true));
 end;
 
@@ -136,7 +282,7 @@ SEMIGROUPS.RightTranslationsSemigroupElementsByGenerators := function(R)
     od;
   od;
   gens := GeneratorsOfEndomorphismMonoid(Digraph(out), colors);
-  Apply(gens, x -> RightTranslation(R, RestrictedTransformation(x, [1 .. n])));
+  Apply(gens, x -> RightTranslationNC(R, RestrictedTransformation(x, [1 .. n])));
   return Semigroup(gens, rec(small := true));
 end;
 
@@ -492,9 +638,7 @@ SEMIGROUPS.BitranslationsByGenerators := function(H)
   end;
 
   bt := function(k)
-    if k = 0 then
-      return 0;
-    elif k = m + 1 then
+    if k = 0 or k = m + 1 then
       return k;
     elif k = m then
       if not (propagatef(k) = fail or restrictfromf(k) = fail) then
