@@ -30,11 +30,7 @@
        <P/>
 
        The value of <C>SEMIGROUPS.DefaultOptionsRec</C> is defined in the file
-       <C>semigroups/gap/options.g</C> as:
-       <Log>rec(acting := true, regular := false, small := false,
-    hashlen := rec(L := 25013, M := 6257, S := 251),
-    report := false, batch_size := 8192, nr_threads := 4,
-    cong_by_ker_trace_threshold := 10 ^ 5)</Log>
+       <C>semigroups/gap/options.g</C>.
      </Description>
    </ManSection>
 <#/GAPDoc>

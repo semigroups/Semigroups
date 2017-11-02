@@ -30,7 +30,7 @@ function(S)
               genstoapply := [1 .. Length(gens)],
               graph := [EmptyPlist(Length(gens))],
               ht := HTCreate(gens[1], rec(treehashsize :=
-                                          SEMIGROUPS.OptionsRec(S).hashlen.L)),
+                                          SEMIGROUPS.OptionsRec(S).hashlen)),
               init := false,
               lambdarhoht := [],
               lenreps := [0],
