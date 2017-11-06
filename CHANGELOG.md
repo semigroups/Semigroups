@@ -8,7 +8,7 @@ This version contains some minor bugfixes, fixes some issues where some tests
 in the main GAP repo returned different output when Semigroups was loaded than
 when it was not, and updates the kernel module for version 0.5.2 of
 [libsemigroups](https://james-d-mitchell.github.io/libsemigroups/). The
-configuratoin option `--enable-debug` was added.  
+configuration option `--enable-debug` was added.  
 
 The following issues are resolved:
 
