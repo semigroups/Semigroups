@@ -78,7 +78,8 @@ PKGS=( "digraphs" "genss" "io" "orb" "profiling" )
 for PKG in "${PKGS[@]}"; do
   cd $GAPROOT/pkg
   # TODO remove the condition about IO when IO 4.4.7 or newer is released
-  if [ "$PACKAGES" == "master" ] && [ ! "$PKG" == "io" ]; then
+  # TODO remove the condition about Orb when Orb 4.7.7 or newer is released
+  if ([ "$PACKAGES" == "master" ] && [ ! "$PKG" == "io" ]) || [ "$PKG" == "orb" ]; then
     echo -e "\nGetting master branch of $PKG repository..."
     git clone -b master --depth=1 https://github.com/gap-packages/$PKG.git $PKG
     PKGDIR=$PKG
