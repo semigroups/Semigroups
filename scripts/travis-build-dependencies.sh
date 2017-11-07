@@ -77,19 +77,28 @@ cd libsemigroups
 PKGS=( "digraphs" "genss" "io" "orb" "profiling" )
 for PKG in "${PKGS[@]}"; do
   cd $GAPROOT/pkg
-  if [ "$PACKAGES" == "newest" ] || [ "$PKG" == "profiling" ]; then
-    echo -e "\nGetting latest release of $PKG..."
-    VERSION=`curl -s -L https://github.com/gap-packages/$PKG/releases/latest | grep \<title\> | awk -F' ' '{print $2}'`
+  if [ "$PACKAGES" == "master" ]; then
+    echo -e "\nGetting master branch of $PKG repository..."
+    git clone -b master --depth=1 https://github.com/gap-packages/$PKG.git $PKG
+    PKGDIR=$PKG
   else
-    echo -e "\nGetting required release of $PKG..."
-    VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
+    if [ "$PACKAGES" == "newest" ] || [ "$PKG" == "profiling" ]; then
+      echo -e "\nGetting latest release of $PKG..."
+      VERSION=`curl -s -L https://github.com/gap-packages/$PKG/releases/latest | grep \<title\> | awk -F' ' '{print $2}'`
+    else
+      echo -e "\nGetting required release of $PKG..."
+      VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
+    fi
+    echo -e "Downloading $PKG-$VERSION..."
+    curl -L -O https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz
+    tar xf $PKG-$VERSION.tar.gz
+    PKGDIR=`tar -tf $PKG-$VERSION.tar.gz | head -1`
+    rm $PKG-$VERSION.tar.gz
   fi
-  echo -e "Downloading $PKG-$VERSION..."
-  curl -L -O https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz
-  tar xf $PKG-$VERSION.tar.gz
-  PKGDIR=`tar -tf $PKG-$VERSION.tar.gz | head -1`
-  rm $PKG-$VERSION.tar.gz
   cd $PKGDIR
+  if [ -f autogen.sh ]; then
+    ./autogen.sh
+  fi
   if [ -f configure ]; then
     ./configure $PKG_FLAGS
     make
