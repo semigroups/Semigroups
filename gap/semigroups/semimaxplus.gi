@@ -282,6 +282,13 @@ for _IsXMatrix in ["IsTropicalMaxPlusMatrix",
   end);
 
   InstallMethod(IsomorphismSemigroup,
+  Concatenation("for ", _IsXSemigroup, ", and a semigroup"),
+  [EvalString(_IsXSemigroup), IsSemigroup],
+  function(filter, S)
+    return IsomorphismSemigroup(filter, 1, S);
+  end);
+
+  InstallMethod(IsomorphismSemigroup,
   Concatenation("for ", _IsXSemigroup, " and a ", _IsXSemigroup),
   [EvalString(_IsXSemigroup), IsPosInt, EvalString(_IsXSemigroup)],
   function(filter, threshold, S)
@@ -312,6 +319,13 @@ function(filter, threshold, period, S)
                                        Range(iso2),
                                        x -> (x ^ iso1) ^ iso2,
                                        x -> (x ^ inv2) ^ inv1);
+end);
+
+InstallMethod(IsomorphismSemigroup,
+"for IsNTPMatrixSemigroup and a semigroup",
+[IsNTPMatrixSemigroup, IsSemigroup],
+function(filter, S)
+  return IsomorphismSemigroup(IsNTPMatrixSemigroup, 1, 1, S);
 end);
 
 InstallMethod(IsomorphismSemigroup,
@@ -444,6 +458,13 @@ _InstallIsomorphism1 := function(filter)
   end);
 
   InstallMethod(IsomorphismMonoid,
+  Concatenation("for ", IsXMonoid, " and a semigroup"),
+  [EvalString(IsXMonoid), IsSemigroup],
+  function(filter, S)
+    return IsomorphismMonoid(filter, 1, S);
+  end);
+
+  InstallMethod(IsomorphismMonoid,
   Concatenation("for ", IsXMonoid, ", pos int, and a monoid"),
   [EvalString(IsXMonoid), IsPosInt, IsMonoid],
   function(filter, threshold, S)
@@ -467,6 +488,15 @@ _InstallIsomorphism1 := function(filter)
                                          T,
                                          map,
                                          AsTransformation);
+  end);
+
+  InstallMethod(IsomorphismSemigroup,
+  Concatenation("for ", IsXSemigroup,
+                " and a transformation semigroup with generators"),
+  [EvalString(IsXSemigroup),
+   IsTransformationSemigroup and HasGeneratorsOfSemigroup],
+  function(filt, S)
+    return IsomorphismSemigroup(filt, 1, S);
   end);
 end;
 
@@ -517,6 +547,13 @@ function(filter, threshold, period, S)
                                        Range(iso2),
                                        x -> (x ^ iso1) ^ iso2,
                                        x -> (x ^ inv2) ^ inv1);
+end);
+
+InstallMethod(IsomorphismMonoid,
+"for IsNTPMatrixMonoid and a semigroup",
+[IsNTPMatrixMonoid, IsSemigroup],
+function(filter, S)
+  return IsomorphismMonoid(filter, 1, 1, S);
 end);
 
 InstallMethod(IsomorphismMonoid,
