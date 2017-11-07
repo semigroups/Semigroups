@@ -24,7 +24,7 @@ elif [ ! -z "$GAP" ]; then
   GAP_DIR=`pwd`
   cd $GAP_DIR/pkg/semigroups
 
-  if [ ! -z "$COVERAGE" ]; then
+  if [ "$SUITE" == "coverage" ]; then
 
     echo -e "\nPerforming code coverage tests..."
     for TESTFILE in tst/standard/*.tst; do
