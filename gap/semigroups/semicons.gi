@@ -236,7 +236,7 @@ end);
 
 # Monogenic semigroup: other constructors
 
-for IsXSemigroup in ["IsPBRSemigroup",
+for _IsXSemigroup in ["IsPBRSemigroup",
                      "IsBooleanMatSemigroup",
                      "IsNTPMatrixSemigroup",
                      "IsMaxPlusMatrixSemigroup",
@@ -248,13 +248,14 @@ for IsXSemigroup in ["IsPBRSemigroup",
                      "IsReesMatrixSemigroup",
                      "IsReesZeroMatrixSemigroup"] do
   InstallMethod(MonogenicSemigroupCons,
-  Concatenation("for ", IsXSemigroup, " and two positive integers"),
-  [EvalString(IsXSemigroup), IsPosInt, IsPosInt],
+  Concatenation("for ", _IsXSemigroup, " and two positive integers"),
+  [EvalString(_IsXSemigroup), IsPosInt, IsPosInt],
   function(filter, m, r)
     return AsSemigroup(filter,
                        MonogenicSemigroupCons(IsTransformationSemigroup, m, r));
   end);
 od;
+Unbind(_IsXSemigroup);
 
 # Rectangular band: main method
 
@@ -399,7 +400,7 @@ end);
 
 # Rectangular band: other constructors
 
-for IsXSemigroup in ["IsBooleanMatSemigroup",
+for _IsXSemigroup in ["IsBooleanMatSemigroup",
                      "IsNTPMatrixSemigroup",
                      "IsMaxPlusMatrixSemigroup",
                      "IsMinPlusMatrixSemigroup",
@@ -408,13 +409,14 @@ for IsXSemigroup in ["IsBooleanMatSemigroup",
                      "IsProjectiveMaxPlusMatrixSemigroup",
                      "IsIntegerMatrixSemigroup"] do
   InstallMethod(RectangularBandCons,
-  Concatenation("for ", IsXSemigroup, ", pos int, and pos int"),
-  [EvalString(IsXSemigroup), IsPosInt, IsPosInt],
+  Concatenation("for ", _IsXSemigroup, ", pos int, and pos int"),
+  [EvalString(_IsXSemigroup), IsPosInt, IsPosInt],
   function(filter, m, n)
     return AsSemigroup(filter,
                        RectangularBandCons(IsTransformationSemigroup, m, n));
   end);
 od;
+Unbind(_IsXSemigroup);
 
 # Zero semigroup: main method
 
@@ -703,3 +705,97 @@ function(arg)
   od;
   return Semigroup(gens, rec(acting := false));
 end);
+
+InstallGlobalFunction(BrandtSemigroup,
+function(arg)
+  local S;
+
+  if Length(arg) = 1 and IsPosInt(arg[1]) then
+    S := BrandtSemigroupCons(IsPartialPermSemigroup, Group(()), arg[1]);
+  elif Length(arg) = 2 and IsOperation(arg[1]) and IsPosInt(arg[2]) then
+    S := BrandtSemigroupCons(arg[1], Group(()), arg[2]);
+  elif Length(arg) = 2 and IsGroup(arg[1]) and IsPosInt(arg[2]) then
+    S := BrandtSemigroupCons(IsPartialPermSemigroup, arg[1], arg[2]);
+  elif Length(arg) = 3 and IsOperation(arg[1]) and IsGroup(arg[2])
+      and IsPosInt(arg[3]) then
+    S := BrandtSemigroupCons(arg[1], arg[2], arg[3]);
+  else
+    ErrorNoReturn("Semigroups: BrandtSemigroup: usage,\n",
+                   "the arguments must be a positive integer or a filter and",
+                   " a positive integer, or\n a perm group and positive ",
+                   "integer, or a filter, perm group, and positive\n ",
+                   "integer,");
+  fi;
+  SetIsZeroSimpleSemigroup(S, true);
+  SetIsBrandtSemigroup(S, true);
+  return S;
+end);
+
+InstallMethod(BrandtSemigroupCons,
+"for IsPartialPermSemigroup, a perm group, and a positive integer",
+[IsPartialPermSemigroup, IsPermGroup, IsPosInt],
+function(filter, G, n)
+  local gens, one, m, i, x;
+
+  gens := [];
+
+  if IsTrivial(G) then
+    if n = 1 then
+      Add(gens, PartialPerm([1], [1]));
+      Add(gens, EmptyPartialPerm());
+    else
+      for i in [2 .. n] do
+        Add(gens, PartialPerm([1], [i]));
+      od;
+    fi;
+  else
+    one := PartialPerm(MovedPoints(G), MovedPoints(G));
+    for x in GeneratorsOfGroup(G) do
+      Add(gens, one * x);
+    od;
+    m := LargestMovedPoint(G) - SmallestMovedPoint(G) + 1;
+    for i in [1 .. n - 1] do
+      Add(gens, PartialPerm(MovedPoints(G), MovedPoints(G) + m * i));
+    od;
+    if n = 1 then
+      Add(gens, EmptyPartialPerm());
+    fi;
+  fi;
+
+  return InverseSemigroup(gens);
+end);
+
+InstallMethod(BrandtSemigroupCons,
+"for IsReesZeroMatrixSemigroup, a finite group, and a positive integer",
+[IsReesZeroMatrixSemigroup, IsGroup and IsFinite, IsPosInt],
+function(filter, G, n)
+  local mat, i;
+  mat := [];
+  for i in [1 .. n] do
+    Add(mat, ListWithIdenticalEntries(n, 0));
+    mat[i][i] := One(G);
+  od;
+
+  return ReesZeroMatrixSemigroup(G, mat);
+end);
+
+for _IsXSemigroup in ["IsTransformationSemigroup",
+                      "IsBipartitionSemigroup",
+                      "IsPBRSemigroup",
+                      "IsBooleanMatSemigroup",
+                      "IsNTPMatrixSemigroup",
+                      "IsMaxPlusMatrixSemigroup",
+                      "IsMinPlusMatrixSemigroup",
+                      "IsTropicalMaxPlusMatrixSemigroup",
+                      "IsTropicalMinPlusMatrixSemigroup",
+                      "IsProjectiveMaxPlusMatrixSemigroup",
+                      "IsIntegerMatrixSemigroup"] do
+  InstallMethod(BrandtSemigroupCons,
+  Concatenation("for ", _IsXSemigroup, " and a positive integer"),
+  [EvalString(_IsXSemigroup), IsPermGroup, IsPosInt],
+  function(filter, G, n)
+    return AsSemigroup(filter,
+                       BrandtSemigroupCons(IsPartialPermSemigroup, G, n));
+  end);
+od;
+Unbind(_IsXSemigroup);

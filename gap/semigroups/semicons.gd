@@ -18,3 +18,5 @@ DeclareGlobalFunction("ZeroSemigroup");
 DeclareConstructor("ZeroSemigroupCons", [IsSemigroup, IsPosInt]);
 DeclareGlobalFunction("LeftZeroSemigroup");
 DeclareGlobalFunction("RightZeroSemigroup");
+DeclareConstructor("BrandtSemigroupCons", [IsSemigroup, IsGroup, IsPosInt]);
+DeclareGlobalFunction("BrandtSemigroup");
