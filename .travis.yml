@@ -9,7 +9,6 @@ compiler:
 
 env:
   global:
-    - GAPDOC=GAPDoc-1.6
     - COVDIR=coverage
     - LIBSEMI=v0.5.2
     - g++=g++-5

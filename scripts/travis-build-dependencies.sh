@@ -97,18 +97,8 @@ for PKG in "${PKGS[@]}"; do
 done
 
 ################################################################################
-# Install GAPDoc
-PKGS=( $GAPDOC )
-for PKG in "${PKGS[@]}"; do
-  echo -e "\nDownloading $PKG..."
-  cd $GAPROOT/pkg
-  curl -O https://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$PKG.tar.gz
-  PKG_DIR=`tar -tf $PKG.tar.gz | head -1 | cut -f1 -d"/"`
-  tar xf $PKG.tar.gz
-  rm $PKG.tar.gz
-  cd $PKG_DIR
-  if [ -f configure ]; then
-    ./configure $PKG_FLAGS
-    make
-  fi
-done
+# Install required GAP packages
+cd $GAPROOT/pkg
+curl -L -O http://www.gap-system.org/pub/gap/gap4pkgs/packages-required-master.tar.gz
+tar xf packages-required-master.tar.gz
+rm packages-required-master.tar.gz
