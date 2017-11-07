@@ -77,7 +77,8 @@ cd libsemigroups
 PKGS=( "digraphs" "genss" "io" "orb" "profiling" )
 for PKG in "${PKGS[@]}"; do
   cd $GAPROOT/pkg
-  if [ "$PACKAGES" == "master" ]; then
+  # TODO remove the condition about IO when IO 4.4.7 or newer is released
+  if [ "$PACKAGES" == "master" ] && [ ! "$PKG" == "io" ]; then
     echo -e "\nGetting master branch of $PKG repository..."
     git clone -b master --depth=1 https://github.com/gap-packages/$PKG.git $PKG
     PKGDIR=$PKG
