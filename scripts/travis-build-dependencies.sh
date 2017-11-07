@@ -77,19 +77,30 @@ cd libsemigroups
 PKGS=( "digraphs" "genss" "io" "orb" "profiling" )
 for PKG in "${PKGS[@]}"; do
   cd $GAPROOT/pkg
-  if [ "$PACKAGES" == "newest" ] || [ "$PKG" == "profiling" ]; then
-    echo -e "\nGetting latest release of $PKG..."
-    VERSION=`curl -s -L https://github.com/gap-packages/$PKG/releases/latest | grep \<title\> | awk -F' ' '{print $2}'`
+  # TODO remove the condition about IO when IO 4.4.7 or newer is released
+  # TODO remove the condition about Orb when Orb 4.7.7 or newer is released
+  if ([ "$PACKAGES" == "master" ] && [ ! "$PKG" == "io" ]) || [ "$PKG" == "orb" ]; then
+    echo -e "\nGetting master branch of $PKG repository..."
+    git clone -b master --depth=1 https://github.com/gap-packages/$PKG.git $PKG
+    PKGDIR=$PKG
   else
-    echo -e "\nGetting required release of $PKG..."
-    VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
+    if [ "$PACKAGES" == "newest" ] || [ "$PKG" == "profiling" ]; then
+      echo -e "\nGetting latest release of $PKG..."
+      VERSION=`curl -s -L https://github.com/gap-packages/$PKG/releases/latest | grep \<title\> | awk -F' ' '{print $2}'`
+    else
+      echo -e "\nGetting required release of $PKG..."
+      VERSION=`grep "\"$PKG\"" $GAPROOT/pkg/semigroups/PackageInfo.g | awk -F'"' '{print $4}' | cut -c3-`
+    fi
+    echo -e "Downloading $PKG-$VERSION..."
+    curl -L -O https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz
+    tar xf $PKG-$VERSION.tar.gz
+    PKGDIR=`tar -tf $PKG-$VERSION.tar.gz | head -1`
+    rm $PKG-$VERSION.tar.gz
   fi
-  echo -e "Downloading $PKG-$VERSION..."
-  curl -L -O https://github.com/gap-packages/$PKG/releases/download/v$VERSION/$PKG-$VERSION.tar.gz
-  tar xf $PKG-$VERSION.tar.gz
-  PKGDIR=`tar -tf $PKG-$VERSION.tar.gz | head -1`
-  rm $PKG-$VERSION.tar.gz
   cd $PKGDIR
+  if [ -f autogen.sh ]; then
+    ./autogen.sh
+  fi
   if [ -f configure ]; then
     ./configure $PKG_FLAGS
     make
@@ -97,18 +108,8 @@ for PKG in "${PKGS[@]}"; do
 done
 
 ################################################################################
-# Install GAPDoc
-PKGS=( $GAPDOC )
-for PKG in "${PKGS[@]}"; do
-  echo -e "\nDownloading $PKG..."
-  cd $GAPROOT/pkg
-  curl -O https://www.gap-system.org/pub/gap/gap4/tar.gz/packages/$PKG.tar.gz
-  PKG_DIR=`tar -tf $PKG.tar.gz | head -1 | cut -f1 -d"/"`
-  tar xf $PKG.tar.gz
-  rm $PKG.tar.gz
-  cd $PKG_DIR
-  if [ -f configure ]; then
-    ./configure $PKG_FLAGS
-    make
-  fi
-done
+# Install required GAP packages
+cd $GAPROOT/pkg
+curl -L -O http://www.gap-system.org/pub/gap/gap4pkgs/packages-required-master.tar.gz
+tar xf packages-required-master.tar.gz
+rm packages-required-master.tar.gz

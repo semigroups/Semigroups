@@ -9,7 +9,6 @@ compiler:
 
 env:
   global:
-    - GAPDOC=GAPDoc-1.6
     - COVDIR=coverage
     - LIBSEMI=v0.5.2
     - g++=g++-5
@@ -25,7 +24,8 @@ addons:
 # Matrix
 #                    | GAP: master  | GAP: stable-4.9 | GAP: required |
 #--------------------+--------------+-----------------+---------------+
-# packages:   newest | 64- & 32-bit |               - |             - |
+# packages:   master | 64- & 32-bit |               - |             - |
+# packages:   newest |       64-bit |               - |             - |
 # packages: required |   (coverage) |               - |             - |
 
 # Plus: linting, and code coverage
@@ -41,33 +41,33 @@ matrix:
 
     - env:
       - SUITE=test
-      - ABI=64
       - GAP=master
-      - PACKAGES=newest
-      sudo:
-        required
-
-    - env:
-      - SUITE=test
+      - PACKAGES=master
       - ABI=64
-      - GAP=master # change to required once 4.9 is released
-      - PACKAGES=required
       sudo:
         required
 
     - env:
       - SUITE=test
+      - GAP=master
+      - PACKAGES=master
       - ABI=32
+      sudo:
+        required
+
+    - env:
+      - SUITE=test
       - GAP=master
       - PACKAGES=newest
+      - ABI=64
       sudo:
         required
 
     - env:
       - SUITE=coverage
-      - ABI=64
       - GAP=master
       - PACKAGES=required
+      - ABI=64
       - THRESHOLD=95
       sudo:
         required

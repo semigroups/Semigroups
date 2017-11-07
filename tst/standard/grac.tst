@@ -221,12 +221,14 @@ gap> x := Bipartition([[1, 4, -1, -2, -6], [2, 3, 5, -4],
 > [6, -3], [-5]]);;
 gap> LClassNC(D, x);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-The 2nd argument is 'fail' which might point to an earlier problem
 Error, no 1st choice method found for `IsBound[]' on 2 arguments
+The 2nd argument is 'fail' which might point to an earlier problem
+
 gap> RClassNC(D, x);
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-The 2nd argument is 'fail' which might point to an earlier problem
 Error, no 1st choice method found for `IsBound[]' on 2 arguments
+The 2nd argument is 'fail' which might point to an earlier problem
+
 
 # grac: GreensClassOfElementNC(D-class, x) inverse-op, 1/1
 gap> S := InverseSemigroup([
