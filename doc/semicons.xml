@@ -196,6 +196,69 @@ true]]></Example>
   </ManSection>
 <#/GAPDoc>
 
+<#GAPDoc Label="BrandtSemigroup">
+  <ManSection>
+    <Func Name="BrandtSemigroup" Arg="[[filt, ]G, ]n"/>
+    <Returns>
+      An <A>n</A> by <A>n</A> Brandt semigroup over the group <A>G</A>.
+    </Returns>
+      <Description>
+        If <A>n</A> is a positive integer, then this function returns an
+        <A>n</A> by <A>n</A> Brandt semigroup over the group <A>G</A>
+        in the representation given by the filter <A>filt</A>. <P/>
+
+        The optional argument <A>filt</A> can be any of the following:
+        <List>
+          <Item><C>IsPartialPermSemigroup</C>
+            (the default, if <A>filt</A> is not specified),</Item>
+          <Item><C>IsReesZeroMatrixSemigroup</C>,</Item>
+          <Item><C>IsTransformationSemigroup</C>,</Item>
+          <Item><C>IsBipartitionSemigroup</C>,</Item>
+          <Item><C>IsPBRSemigroup</C>,</Item>
+          <Item><C>IsBooleanMatSemigroup</C>,</Item>
+          <Item><C>IsNTPMatrixSemigroup</C>,</Item>
+          <Item><C>IsMaxPlusMatrixSemigroup</C>,</Item>
+          <Item><C>IsMinPlusMatrixSemigroup</C>,</Item>
+          <Item><C>IsTropicalMaxPlusMatrixSemigroup</C>,</Item>
+          <Item><C>IsTropicalMinPlusMatrixSemigroup</C>,</Item>
+          <Item><C>IsProjectiveMaxPlusMatrixSemigroup</C>,</Item>
+          <Item><C>IsIntegerMatrixSemigroup.</C></Item>
+        </List>
+        
+        The optional argument <A>G</A> defaults to a trivial permutation group.
+        If present <A>G</A> must be a permutation group, unless <A>filt</A> is
+        <C>IsReesZeroMatrixSemigroup</C> when <A>G</A> may be any type of
+        finite group. 
+        <P/>
+        
+        See <Ref Prop="IsBrandtSemigroup"/> for more information about Brandt
+        semigroups.
+
+        <Example><![CDATA[
+gap> S := BrandtSemigroup(5);
+<0-simple inverse partial perm semigroup of rank 5 with 4 generators>
+gap> IsBrandtSemigroup(S);
+true
+gap> S := BrandtSemigroup(IsTransformationSemigroup, 15);
+<0-simple transformation semigroup of degree 16 with 28 generators>
+gap> Size(S);
+226
+gap> MultiplicativeZero(S);
+Transformation( [ 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+  16, 16, 16 ] )
+gap> S := BrandtSemigroup(Group((1, 2)), 3);
+<0-simple inverse partial perm semigroup of rank 6 with 3 generators>
+gap> S := BrandtSemigroup(IsTransformationSemigroup, Group((1, 2)), 3);
+<0-simple transformation semigroup of degree 7 with 5 generators>
+gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup, 
+>                         DihedralGroup(4), 
+>                         2);
+<Rees 0-matrix semigroup 2x2 over <pc group of size 4 with 
+ 2 generators>>]]></Example>
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
 <#GAPDoc Label="LeftZeroSemigroup">
   <ManSection>
     <Func Name="LeftZeroSemigroup" Arg="[filt, ]n"/>

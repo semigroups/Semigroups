@@ -26,6 +26,7 @@
     <#Include Label = "RectangularBand">
     <#Include Label = "ZeroSemigroup">
     <#Include Label = "LeftZeroSemigroup">
+    <#Include Label = "BrandtSemigroup">
   </Section>
 
   <!--**********************************************************************-->

@@ -822,6 +822,133 @@ gap> Size(S);
 gap> S := RightZeroSemigroup(9);
 <transformation semigroup of degree 6 with 9 generators>
 
+#T# constructions: Brandt semigroups, partial perm semigroups, default
+gap> S := BrandtSemigroup(Group((1, 2)), 1);
+<0-simple inverse partial perm semigroup of rank 2 with 2 generators>
+gap> MultiplicativeZero(S);
+<empty partial perm>
+gap> Size(S);
+3
+gap> IsBrandtSemigroup(S);
+true
+gap> S := BrandtSemigroup(Group((1, 2)), 2);
+<0-simple inverse partial perm semigroup of rank 4 with 2 generators>
+gap> MultiplicativeZero(S);
+<empty partial perm>
+gap> Size(S);
+9
+gap> IsBrandtSemigroup(S);
+true
+gap> S := BrandtSemigroup(IsPartialPermSemigroup, Group((1, 2)), 5);
+<0-simple inverse partial perm semigroup of rank 10 with 5 generators>
+gap> Size(S);
+51
+gap> S := BrandtSemigroup(10);
+<0-simple inverse partial perm semigroup of rank 10 with 9 generators>
+gap> Size(S);
+101
+gap> S := BrandtSemigroup(1);
+<0-simple inverse partial perm monoid of rank 1 with 2 generators>
+gap> Size(S);
+2
+gap> S := BrandtSemigroup(TrivialGroup(IsPermGroup), 1);
+<0-simple inverse partial perm monoid of rank 1 with 2 generators>
+gap> Size(S);
+2
+
+#T# constructions: Brandt semigroups, Rees 0-matrix semigroup
+gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup, 4);
+<Rees 0-matrix semigroup 4x4 over Group(())>
+gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup, DihedralGroup(4), 4);
+<Rees 0-matrix semigroup 4x4 over <pc group of size 4 with 2 generators>>
+gap> IsInverseSemigroup(last);
+true
+gap> S := BrandtSemigroup(IsReesZeroMatrixSemigroup, DihedralGroup(4));
+Error, Semigroups: BrandtSemigroup: usage,
+the arguments must be a positive integer or a filter and a positive integer, o\
+r
+ a perm group and positive integer, or a filter, perm group, and positive
+ integer,
+
+#T# constructions: Brandt semigroups, other semigroups
+gap> S := BrandtSemigroup(IsTransformationSemigroup, 3);
+<0-simple transformation semigroup of degree 4 with 4 generators>
+gap> S := BrandtSemigroup(IsTransformationSemigroup, Group((1, 2)), 3);
+<0-simple transformation semigroup of degree 7 with 5 generators>
+gap> S := BrandtSemigroup(IsTransformationSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsBipartitionSemigroup, 3);
+<0-simple inverse bipartition semigroup of degree 3 with 2 generators>
+gap> S := BrandtSemigroup(IsBipartitionSemigroup, Group((1, 2)), 3);
+<0-simple inverse bipartition semigroup of degree 6 with 3 generators>
+gap> S := BrandtSemigroup(IsBipartitionSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsPBRSemigroup, 3);
+<0-simple pbr semigroup of degree 4 with 4 generators>
+gap> S := BrandtSemigroup(IsPBRSemigroup, Group((1, 2)), 3);
+<0-simple pbr semigroup of degree 7 with 5 generators>
+gap> S := BrandtSemigroup(IsPBRSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsBooleanMatSemigroup, 3);
+<0-simple semigroup of 4x4 boolean matrices with 4 generators>
+gap> S := BrandtSemigroup(IsBooleanMatSemigroup, Group((1, 2)), 3);
+<0-simple semigroup of 7x7 boolean matrices with 5 generators>
+gap> S := BrandtSemigroup(IsBooleanMatSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsNTPMatrixSemigroup, 3);
+<0-simple semigroup of 4x4 ntp matrices with 4 generators>
+gap> S := BrandtSemigroup(IsNTPMatrixSemigroup, Group((1, 2)), 3);
+<0-simple semigroup of 7x7 ntp matrices with 5 generators>
+gap> S := BrandtSemigroup(IsNTPMatrixSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsMaxPlusMatrixSemigroup, 3);
+<0-simple semigroup of 4x4 max-plus matrices with 4 generators>
+gap> S := BrandtSemigroup(IsMaxPlusMatrixSemigroup, Group((1, 2)), 3);
+<0-simple semigroup of 7x7 max-plus matrices with 5 generators>
+gap> S := BrandtSemigroup(IsMaxPlusMatrixSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsMinPlusMatrixSemigroup, 3);
+<0-simple semigroup of 4x4 min-plus matrices with 4 generators>
+gap> S := BrandtSemigroup(IsMinPlusMatrixSemigroup, Group((1, 2)), 3);
+<0-simple semigroup of 7x7 min-plus matrices with 5 generators>
+gap> S := BrandtSemigroup(IsMinPlusMatrixSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsTropicalMaxPlusMatrixSemigroup, 3);
+<0-simple semigroup of 4x4 tropical max-plus matrices with 4 generators>
+gap> S := BrandtSemigroup(IsTropicalMaxPlusMatrixSemigroup, Group((1, 2)), 3);
+<0-simple semigroup of 7x7 tropical max-plus matrices with 5 generators>
+gap> S := BrandtSemigroup(IsTropicalMaxPlusMatrixSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsTropicalMinPlusMatrixSemigroup, 3);
+<0-simple semigroup of 4x4 tropical min-plus matrices with 4 generators>
+gap> S := BrandtSemigroup(IsTropicalMinPlusMatrixSemigroup, Group((1, 2)), 3);
+<0-simple semigroup of 7x7 tropical min-plus matrices with 5 generators>
+gap> S := BrandtSemigroup(IsTropicalMinPlusMatrixSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsProjectiveMaxPlusMatrixSemigroup, 3);
+<0-simple semigroup of 4x4 projective max-plus matrices with 4 generators>
+gap> S := BrandtSemigroup(IsProjectiveMaxPlusMatrixSemigroup, Group((1, 2)), 3);
+<0-simple semigroup of 7x7 projective max-plus matrices with 5 generators>
+gap> S := BrandtSemigroup(IsProjectiveMaxPlusMatrixSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+gap> S := BrandtSemigroup(IsIntegerMatrixSemigroup, 3);
+<0-simple semigroup of 4x4 integer matrices with 4 generators>
+gap> S := BrandtSemigroup(IsIntegerMatrixSemigroup, Group((1, 2)), 3);
+<0-simple semigroup of 7x7 integer matrices with 5 generators>
+gap> S := BrandtSemigroup(IsIntegerMatrixSemigroup, DihedralGroup(4), 3);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `BrandtSemigroupCons' on 3 arguments
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(S);
 
