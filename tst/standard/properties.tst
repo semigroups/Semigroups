@@ -939,6 +939,10 @@ gap> HasIsMonogenicSemigroup(S);
 true
 gap> IsMonogenicSemigroup(S);
 true
+gap> x := MinimalSemigroupGeneratingSet(S)[1];;
+gap> S := Semigroup(x, x, x);;
+gap> HasIsMonogenicSemigroup(S) and IsMonogenicSemigroup(S);
+true
 
 #T# properties: IsMonogenicInverseSemigroup, 1
 gap> IsMonogenicInverseSemigroup(AsSemigroup(IsBooleanMatSemigroup,
@@ -1032,6 +1036,12 @@ gap> S := MonogenicSemigroup(IsTransformationSemigroup, 3, 2);;
 gap> S := Monoid(S.1, S.1 ^ 2);;
 gap> GreensDClasses(S);;
 gap> IsMonogenicMonoid(S);
+true
+
+#T# properties: IsMonogenicMonoid, 9
+gap> S := Monoid(Transformation([2, 1, 2, 3, 4]),
+>                Transformation([2, 1, 2, 3, 4]));;
+gap> HasIsMonogenicMonoid(S) and IsMonogenicMonoid(S);
 true
 
 #T# properties: IsMonogenicInverseMonoid, 1

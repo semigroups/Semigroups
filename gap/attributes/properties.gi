@@ -775,11 +775,12 @@ function(S)
   local gens;
 
   gens := GeneratorsOfSemigroup(S);
-  if CanEasilyCompareElements(gens) then
-    gens := DuplicateFreeList(gens);
-  fi;
-  if Length(gens) = 1 then
+  if Length(gens) <= 1 then
     SetMinimalSemigroupGeneratingSet(S, gens);
+    return true;
+  elif CanEasilyCompareElements(gens)
+      and ForAll([2 .. Length(gens)], i -> gens[1] = gens[i]) then
+    SetMinimalSemigroupGeneratingSet(S, [gens[1]]);
     return true;
   fi;
   TryNextMethod();
@@ -792,11 +793,12 @@ function(S)
   local gens;
 
   gens := GeneratorsOfMonoid(S);
-  if CanEasilyCompareElements(gens) then
-    gens := DuplicateFreeList(gens);
-  fi;
-  if Length(gens) = 1 then
+  if Length(gens) <= 1 then
     SetMinimalMonoidGeneratingSet(S, gens);
+    return true;
+  elif CanEasilyCompareElements(gens)
+      and ForAll([2 .. Length(gens)], i -> gens[1] = gens[i]) then
+    SetMinimalMonoidGeneratingSet(S, [gens[1]]);
     return true;
   fi;
   TryNextMethod();
