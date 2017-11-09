@@ -276,7 +276,7 @@ class MatrixOverSemiringConverter : public Converter {
       SET_ELM_PLIST(plist, i + 1, row);
       CHANGED_BAG(plist);
     }
-    TYPE_POSOBJ(plist) = _gap_type;
+    SET_TYPE_POSOBJ(plist, _gap_type);
     RetypeBag(plist, T_POSOBJ);
     CHANGED_BAG(plist);
     return plist;
