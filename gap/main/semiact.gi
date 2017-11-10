@@ -169,7 +169,7 @@ function(Constructor, S, coll, opts)
   rho_o!.parent := t;
   rho_o!.scc_reps := [FakeOne(GeneratorsOfSemigroup(t))];
   Append(rho_o!.gens, coll);
-  ResetFilterObj(rho_o, IsClosed);
+  ResetFilterObj(rho_o, IsClosedOrbit);
   SetRhoOrb(t, rho_o);
 
   # get new and old R-rep orbit data
@@ -515,7 +515,7 @@ InstallMethod(Random, "for a regular acting semigroup rep",
 function(S)
   local gens, i, w, x, o, m;
 
-  if not IsClosed(LambdaOrb(S)) or not IsClosed(RhoOrb(S)) then
+  if not IsClosedOrbit(LambdaOrb(S)) or not IsClosedOrbit(RhoOrb(S)) then
     if HasGeneratorsOfSemigroup(S) then
       gens := GeneratorsOfSemigroup(S);
       i := Random([1 .. 2 * Int(Length(gens))]);
@@ -557,7 +557,7 @@ InstallMethod(Random,
 function(S)
   local gens, i, w, x, o, m;
 
-  if not IsClosed(LambdaOrb(S)) then
+  if not IsClosedOrbit(LambdaOrb(S)) then
     if HasGeneratorsOfSemigroup(S) then
       gens := GeneratorsOfSemigroup(S);
       i := Random([1 .. 2 * Int(Length(gens))]);

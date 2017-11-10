@@ -152,7 +152,7 @@ function(o, limit)
   o!.pos := i;
   o!.depth := depth;
   if i > nr then
-    SetFilterObj(o, IsClosed);
+    SetFilterObj(o, IsClosedOrbit);
     o!.orbind := [1 .. nr];
   fi;
   return o;
@@ -216,12 +216,12 @@ function(arg)
 
   if not onlynew then
     pos := Position(o, val);
-    if pos <> fail or IsClosed(o) then
+    if pos <> fail or IsClosedOrbit(o) then
       return pos;
     fi;
   fi;
 
-  if IsClosed(o) then
+  if IsClosedOrbit(o) then
     return fail;
   fi;
   o!.looking := true;
@@ -260,7 +260,7 @@ function(o, func, start)
     od;
   fi;
 
-  if IsClosed(o) then
+  if IsClosedOrbit(o) then
     return false;
   fi;
 
@@ -284,7 +284,7 @@ function(o)
     return o!.scc;
   fi;
 
-  if not IsClosed(o) or not IsClosedData(o) then
+  if not IsClosedOrbit(o) or not IsClosedData(o) then
     Enumerate(o, infinity);
   fi;
 

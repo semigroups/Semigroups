@@ -143,7 +143,7 @@ function(S, x)
   j := 0;
 
   # can't use GradedRhoOrb here since there may be inverses not D-related to f
-  if HasRhoOrb(S) and IsClosed(RhoOrb(S)) then
+  if HasRhoOrb(S) and IsClosedOrbit(RhoOrb(S)) then
     o := RhoOrb(S);
     rhos := EmptyPlist(Length(o));
     for i in [2 .. Length(o)] do
@@ -184,7 +184,7 @@ function(S, x)
   out := [];
   k := 0;
 
-  #if HasLambdaOrb(S) and IsClosed(LambdaOrb(S)) then
+  #if HasLambdaOrb(S) and IsClosedOrbit(LambdaOrb(S)) then
   # Notes: it seems that LambdaOrb(S) is always closed at this point
   o := LambdaOrb(S);
   Enumerate(o); # just in case
