@@ -104,7 +104,7 @@ function(x, S)
   lambda := LambdaFunc(S)(x);
   lambdao := LambdaOrb(S);
   # TODO(later) lookahead here too
-  if not IsClosed(lambdao) then
+  if not IsClosedOrbit(lambdao) then
     Enumerate(lambdao, infinity);
   fi;
 
@@ -166,7 +166,7 @@ function(x, S)
 
   if l = fail then
     # rho is not already known, so we look for it
-    if IsClosed(rhoo) or not LookAhead() then
+    if IsClosedOrbit(rhoo) or not LookAhead() then
       return false;
     fi;
 
@@ -675,7 +675,7 @@ function(data, limit, lookfunc)
   fi;
   if nr = i then
     SetFilterObj(data, IsClosedData);
-    SetFilterObj(rho_o, IsClosed);
+    SetFilterObj(rho_o, IsClosedOrbit);
     rho_o!.orbind := [1 .. rho_nr];
   fi;
 
