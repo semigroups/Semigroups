@@ -1146,9 +1146,9 @@
         [22Xp_k, i, p_k, j, p_l, i, p_l, j ≠ 0[122X, then [22Xq_k, l, i, j ∈ N[122X, where[133X
   
   
-              [33X[1;12Y[24X [33X[0;6Yq_{k, l, i, j} = p_{k, i} p_{l, i} ^ {-1} p_{l, j} p_{k, j} ^
-              {-1}.[133X [124X[133X
+  [24X      [33X[0;6Yq_{k, l, i, j} = p_{k, i} p_{l, i} ^ {-1} p_{l, j} p_{k, j} ^ {-1}.[133X
   
+  [124X
   
   [33X[0;0YBy  Theorem  3.5.9  in  [How95],  for  any  finite  0-simple  Rees  0-matrix
   semigroup,  there  is  a bijection between its non-universal congruences and

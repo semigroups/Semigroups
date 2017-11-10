@@ -143,10 +143,10 @@
   of lists) compatible with [3Xfilt[103X, the third and fourth arguments [3Xthreshold[103X and
   [3Xperiod[103X (if required) must be positive integers.[133X
   
-  [8X[3Xfilt[103X[108X
+  [8X[3Xfilt[103X[8X[108X
         [33X[0;6YThis must be one of the filters given in Section [14X5.1-8[114X.[133X
   
-  [8X[3Xmat[103X[108X
+  [8X[3Xmat[103X[8X[108X
         [33X[0;6YThis  must  be  a  list  of  [10Xn[110X  lists  each of length [10Xn[110X (i.e. a square
         matrix),  consisting  of elements belonging to the underlying semiring
         described  by  [3Xfilt[103X,  and [3Xthreshold[103X and [3Xperiod[103X if present. An error is
@@ -158,13 +158,13 @@
         [33X[0;6YThe  supported  semirings  are  fully  described  at the start of this
         chapter.[133X
   
-  [8X[3Xthreshold[103X[108X
+  [8X[3Xthreshold[103X[8X[108X
         [33X[0;6YIf     [3Xfilt[103X     is    any    of    [2XIsTropicalMaxPlusMatrix[102X    ([14X5.1-8[114X),
         [2XIsTropicalMinPlusMatrix[102X  ([14X5.1-8[114X),  or  [2XIsNTPMatrix[102X  ([14X5.1-8[114X), then this
         argument  specifies  the  threshold  of the underlying semiring of the
         matrix being created.[133X
   
-  [8X[3Xperiod[103X[108X
+  [8X[3Xperiod[103X[8X[108X
         [33X[0;6YIf  [3Xfilt[103X  is  [2XIsNTPMatrix[102X  ([14X5.1-8[114X),  then  this argument specifies the
         period of the underlying semiring of the matrix being created.[133X
   
@@ -320,19 +320,19 @@
   the  third  and  fourth arguments [3Xthreshold[103X and [3Xperiod[103X (if required) must be
   positive integers.[133X
   
-  [8X[3Xfilt[103X[108X
+  [8X[3Xfilt[103X[8X[108X
         [33X[0;6YThis must be one of the filters given in Section [14X5.1-8[114X.[133X
   
-  [8X[3Xdim[103X[108X
+  [8X[3Xdim[103X[8X[108X
         [33X[0;6YThis must be a positive integer.[133X
   
-  [8X[3Xthreshold[103X[108X
+  [8X[3Xthreshold[103X[8X[108X
         [33X[0;6YIf     [3Xfilt[103X     is    any    of    [2XIsTropicalMaxPlusMatrix[102X    ([14X5.1-8[114X),
         [2XIsTropicalMinPlusMatrix[102X  ([14X5.1-8[114X),  or  [2XIsNTPMatrix[102X  ([14X5.1-8[114X), then this
         argument  specifies  the  threshold  of the underlying semiring of the
         matrix being created.[133X
   
-  [8X[3Xperiod[103X[108X
+  [8X[3Xperiod[103X[8X[108X
         [33X[0;6YIf  [3Xfilt[103X  is  [2XIsNTPMatrix[102X  ([14X5.1-8[114X),  then  this argument specifies the
         period of the underlying semiring of the matrix being created.[133X
   
@@ -530,18 +530,18 @@
   
   [1X5.2 [33X[0;0YOperators for matrices over semirings[133X[101X
   
-  [8X[10X[3Xmat1[103X[10X * [3Xmat2[103X[10X[110X[108X
+  [8X[10X[3Xmat1[103X[8X[10X * [3Xmat2[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  the  product of the matrices [3Xmat1[103X and [3Xmat2[103X of equal dimension
         over  the same semiring using the usual matrix multiplication with the
         operations [10X+[110X and [10X*[110X from the underlying semiring.[133X
   
-  [8X[10X[3Xmat1[103X[10X < [3Xmat2[103X[10X[110X[108X
+  [8X[10X[3Xmat1[103X[8X[10X < [3Xmat2[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [9Xtrue[109X if when considered as a list of rows, the matrix [3Xmat1[103X is
         short-lex  less  than  the  matrix  [3Xmat2[103X, and [9Xfalse[109X if this is not the
         case.  This  means  that  a  matrix  of lower dimension is less than a
         matrix of higher dimension.[133X
   
-  [8X[10X[3Xmat1[103X[10X = [3Xmat2[103X[10X[110X[108X
+  [8X[10X[3Xmat1[103X[8X[10X = [3Xmat2[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [9Xtrue[109X  if  the  matrix  [3Xmat1[103X  equals the matrix [3Xmat2[103X (i.e. the
         entries  are equal and the underlying semirings are equal) and returns
         [9Xfalse[109X if it does not.[133X
@@ -585,7 +585,7 @@
   [33X[0;0Y[10XBooleanMat[110X  returns  the  boolean  matrix  [10Xmat[110X  defined by its argument. The
   argument can be any of the following:[133X
   
-  [8Xa matrix with entries [10X0[110X and/or [10X1[110X[108X
+  [8Xa matrix with entries [10X0[110X[8X and/or [10X1[110X[8X[108X
         [33X[0;6Ythe  argument  [3Xarg[103X  is  list  of [10Xn[110X lists of length [10Xn[110X consisting of the
         values [10X0[110X and [10X1[110X;[133X
   
@@ -634,7 +634,7 @@
   
         [33X[0;6YIf no positive integer [3Xn[103X is specified, then the largest moved point of
         [3Xx[103X  is  used  as  the  value  for  [3Xn[103X; see [2XLargestMovedPoint[102X ([14XReference:
-        LargestMovedPoint (for a permutation)[114X).[133X
+        LargestMovedPoint for a permutation[114X).[133X
   
   [8Xtransformations[108X
         [33X[0;6YIf  [3Xx[103X is a transformation and [3Xn[103X is a positive integer such that [3Xx[103X is a

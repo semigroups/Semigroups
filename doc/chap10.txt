@@ -31,8 +31,9 @@
   are generators of a free inverse semigroups, then[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yxyy ^ {-1}xx ^ {-1}x ^ {-1} = xxx ^ {-1}yy ^ {-1}x ^ {-1}.[133X [124X[133X
+  [24X[33X[0;6Yxyy ^ {-1}xx ^ {-1}x ^ {-1} = xxx ^ {-1}yy ^ {-1}x ^ {-1}.[133X
   
+  [124X
   
   [33X[0;0YSee [2XMinimalWord[102X ([14X10.3-2[114X). Therefore we provide a another method for printing
   elements  of  a  free inverse semigroup: a unique canonical form. Suppose an
@@ -47,8 +48,9 @@
   and terminal vertices are the same. Therefore, the canonical form is[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yxxx ^ {-1}x ^ {-1}xyy ^ {-1}x ^ {-1}.[133X [124X[133X
+  [24X[33X[0;6Yxxx ^ {-1}x ^ {-1}xyy ^ {-1}x ^ {-1}.[133X
   
+  [124X
   
   [33X[0;0YSee [2XCanonicalForm[102X ([14X10.3-1[114X).[133X
   
@@ -152,13 +154,13 @@
   
   [1X10.3 [33X[0;0YOperators and operations for free inverse semigroup elements[133X[101X
   
-  [8X[10X[3Xw[103X[10X ^ -1[110X[108X
+  [8X[10X[3Xw[103X[8X[10X ^ -1[110X[8X[108X
         [33X[0;6Yreturns the semigroup inverse of the free inverse semigroup element [3Xw[103X.[133X
   
-  [8X[10X[3Xu[103X[10X * [3Xv[103X[10X[110X[108X
+  [8X[10X[3Xu[103X[8X[10X * [3Xv[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns the product of two free inverse semigroup elements [3Xu[103X and [3Xv[103X.[133X
   
-  [8X[10X[3Xu[103X[10X = [3Xv[103X[10X [110X[108X
+  [8X[10X[3Xu[103X[8X[10X = [3Xv[103X[8X[10X [110X[8X[108X
         [33X[0;6Ychecks  if two free inverse semigroup elements are equal, by comparing
         their canonical forms.[133X
   
@@ -217,8 +219,9 @@
   congurance on [22XX ^ +[122X containing the set[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y\{(w ^ 2, w) : w \in X ^ + \}.[133X [124X[133X
+  [24X[33X[0;6Y\{(w ^ 2, w) : w \in X ^ + \}.[133X
   
+  [124X
   
   [33X[0;0YThen  the  free  band  on [22XX[122X is isomorphic to the quotient of [22XX ^ +[122X by [22Xb[122X. See
   Section 4.5 of [How95] for more information on free bands.[133X
@@ -365,13 +368,13 @@
   
   [1X10.5 [33X[0;0YOperators and operations for free band elements[133X[101X
   
-  [8X[10X[3Xu[103X[10X * [3Xv[103X[10X[110X[108X
+  [8X[10X[3Xu[103X[8X[10X * [3Xv[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns the product of two free band elements [3Xu[103X and [3Xv[103X.[133X
   
-  [8X[10X[3Xu[103X[10X = [3Xv[103X[10X [110X[108X
+  [8X[10X[3Xu[103X[8X[10X = [3Xv[103X[8X[10X [110X[8X[108X
         [33X[0;6Ychecks if two free band elements are equal.[133X
   
-  [8X[10X[3Xu[103X[10X < [3Xv[103X[10X [110X[108X
+  [8X[10X[3Xu[103X[8X[10X < [3Xv[103X[8X[10X [110X[8X[108X
         [33X[0;6Ycompares  the  sizes  of the internal representations of two free band
         elements.[133X
   

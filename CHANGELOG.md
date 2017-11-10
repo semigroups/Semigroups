@@ -2,6 +2,11 @@
 
 #### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.8 (released 10/11/2017)
+
+This version contains some minor bugfixes, and updates for compatibility GAP
+4.9 and Orb 4.8.0. 
+
 ### Version 3.0.7 (released 02/10/2017)
 
 This version contains some minor bugfixes, fixes some issues where some tests

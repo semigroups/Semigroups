@@ -13,12 +13,12 @@
   [[20XAui12[120X]  [16XAuinger,  K.[116X,  [17XKrohn--Rhodes  complexity of Brauer type semigroups[117X,
   [18XPortugaliae Mathematica[118X, [19X69[119X, 4 (2012), 341--360.
   
-  [[20XBFCGOGJ92[120X] [16XBaccelli F. Cohen G. Olsder G. J., Q. J. P.[116X, [17XSynchronisation and
-  Linearity: An Algebra for Discrete Event Systems[117X, Wiley (1992).
-  
   [[20XBDF15[120X]  [16XBrouwer,  A.  E.,  Draisma,  J.  and Frenk, B. J.[116X, [17XLossy Gossip and
   Composition  of Metrics[117X, [18XDiscrete {\&} Computational Geometry[118X, [19X53[119X, 4 (2015),
   890--913.
+  
+  [[20XBFCGOGJ92[120X] [16XBaccelli F. Cohen G. Olsder G. J., Q. J. P.[116X, [17XSynchronisation and
+  Linearity: An Algebra for Discrete Event Systems[117X, Wiley (1992).
   
   [[20XBur16[120X]  [16XBurrell,  S.  A.[116X, [17XThe Order Problem for Natural and Tropical Matrix
   Semigroups[117X,  Master's  thesis,  University  of  St  Andrews,  United Kingdom
@@ -30,7 +30,7 @@
   [[20XEas16[120X]  [16XEast, J.[116X, [17XPresentations for rook partition monoids and algebras and
   their singular ideals[117X, [18XarXiv:1606.00563[118X (2016).
   
-  [[20XEEMP15[120X]  [16XEast,  J.,  Egri-Nagy,  A.,  Mitchell,  J. D. and P{\'e}resse, Y.[116X,
+  [[20XEENMP15[120X]  [16XEast,  J.,  Egri-Nagy,  A.,  Mitchell, J. D. and P{\'e}resse, Y.[116X,
   [17XComputing finite semigroups[117X, [18XJ. Symbolic Comput. (to appear)[118X (2015).
   
   [[20XFar09[120X]   [16XFarlow,   K.  G.[116X,  [17XMax-Plus  Algebra[117X,  Master's  thesis,  Virginia
@@ -46,21 +46,21 @@
   [[20XGau96[120X] [16XGaubert, S.[116X, [17XOn the Burnside problem for Semigroups of Matrices over
   the (max, +) Algebra[117X, [18XSemigroup Forum[118X, [19X5[119X (1996), 271-292.
   
-  [[20XGra68[120X]  [16XGraham,  R.[116X,  [17XOn  finite  0-simple  semigroups  and  graph  theory[117X,
-  [18XMathematical systems theory[118X, [19X2[119X, 4 (1968), 325--339.
-  
   [[20XGGR68[120X]  [16XGraham,  N.,  Graham,  R.  and Rhodes, J.[116X, [17XMaximal subsemigroups of
   finite semigroups[117X, [18XJ. Combinatorial Theory[118X, [19X4[119X (1968), 203--209.
+  
+  [[20XGra68[120X]  [16XGraham,  R.[116X,  [17XOn  finite  0-simple  semigroups  and  graph  theory[117X,
+  [18XMathematical systems theory[118X, [19X2[119X, 4 (1968), 325--339.
   
   [[20XGro06[120X]  [16XGrood,  C.[116X,  [17XThe  rook partition algebra[117X, [18XJ. Combin. Theory Ser. A[118X,
   [19X113[119X, 2 (2006), 325--351.
   
-  [[20XHR05[120X]  [16XHalverson,  T.  and Ram, A.[116X, [17XPartition algebras[117X, [18XEuropean Journal of
-  Combinatorics[118X, Elsevier, [19X26[119X, 6 (2005), 869--921.
-  
   [[20XHow95[120X]  [16XHowie, J. M.[116X, [17XFundamentals of semigroup theory[117X, The Clarendon Press
   Oxford University Press, London Mathematical Society Monographs. New Series,
   [19X12[119X, New York (1995), x+351 pages, ((Oxford Science Publications)).
+  
+  [[20XHR05[120X]  [16XHalverson,  T.  and Ram, A.[116X, [17XPartition algebras[117X, [18XEuropean Journal of
+  Combinatorics[118X, Elsevier, [19X26[119X, 6 (2005), 869--921.
   
   [[20XJK07[120X] [16XJunttila, T. and Kaski, P.[116X ([1m[31mApplegate, D., Brodal, G. S., Panario, D.
   and  Sedgewick,  R.[15X, Eds.), [17XEngineering an efficient canonical labeling tool

@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (semigroups) - Chapter 8: 
     Standard examples
@@ -762,7 +762,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullPBRMonoid</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: A PBR monoid.</p>
 
-<p>If <var class="Arg">n</var> is a positive integer not greater than <code class="code">2</code>, then this operation returns the monoid consisting of all of the partitioned binary relations (PBRs) of degree <var class="Arg">n</var>; called the <em>full PBR monoid</em>. There are <code class="code">2 ^ (2 * n) ^ 2</code> PBRs of degree <var class="Arg">n</var>. The full PBR monoid of degree <var class="Arg">n</var> is currently too large to compute when <span class="SimpleMath">\(\textit{n} \geq 3\)</span>.</p>
+<p>If <var class="Arg">n</var> is a positive integer not greater than <code class="code">2</code>, then this operation returns the monoid consisting of all of the partitioned binary relations (PBRs) of degree <var class="Arg">n</var>; called the <em>full PBR monoid</em>. There are <code class="code">2 ^ ((2 * n) ^ 2)</code> PBRs of degree <var class="Arg">n</var>. The full PBR monoid of degree <var class="Arg">n</var> is currently too large to compute when <span class="SimpleMath">\(\textit{n} \geq 3\)</span>.</p>
 
 <p>The full PBR monoid is not regular in general.</p>
 

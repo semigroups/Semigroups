@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (semigroups) - Chapter 17: 
     Semigroup homomorphisms
@@ -211,7 +211,7 @@ true</pre></div>
 <li><p><code class="code"><var class="Arg">triple</var>[1]</code> should be a permutation describing an isomorphism from the graph of <var class="Arg">R1</var> to the graph of <var class="Arg">R2</var>, i.e. it should satisfy <code class="code">OnDigraphs(RZMSDigraph(<var class="Arg">R1</var>), <var class="Arg">triple</var>[1]) = RZMSDigraph(<var class="Arg">R2</var>)</code>.</p>
 
 </li>
-<li><p><code class="code"><var class="Arg">triple</var>[2]</code> should be an isomorphism from the underlying group of <var class="Arg">R1</var> to the underlying group of <var class="Arg">R2</var> (see <code class="func">UnderlyingSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7D9719F887AFCF8F"><span class="RefLink">Reference: UnderlyingSemigroup (for a Rees 0-matrix semigroup)</span></a>)).</p>
+<li><p><code class="code"><var class="Arg">triple</var>[2]</code> should be an isomorphism from the underlying group of <var class="Arg">R1</var> to the underlying group of <var class="Arg">R2</var> (see <code class="func">UnderlyingSemigroup</code> (<a href="../../../doc/ref/chap51_mj.html#X7D9719F887AFCF8F"><span class="RefLink">Reference: UnderlyingSemigroup for a rees 0-matrix semigroup</span></a>)).</p>
 
 </li>
 <li><p><code class="code"><var class="Arg">triple</var>[3]</code> should be a list of elements from the underlying group of <var class="Arg">R2</var>. If the <code class="func">Matrix</code> (<a href="../../../doc/ref/chap51_mj.html#X879384D479EB1D82"><span class="RefLink">Reference: Matrix</span></a>) of <var class="Arg">R1</var> has <span class="SimpleMath">\(m\)</span> columns and <span class="SimpleMath">\(n\)</span> rows, then the list should have length <span class="SimpleMath">\(m + n\)</span>, where the first <span class="SimpleMath">\(m\)</span> entries should correspond to the columns of <var class="Arg">R1</var>'s matrix, and the last <span class="SimpleMath">\(n\)</span> entries should correspond to the rows. These column and row entries should correspond to the <span class="SimpleMath">\(u_i\)</span> and <span class="SimpleMath">\(v_\lambda\)</span> elements in Theorem 3.4.1 of <a href="chapBib_mj.html#biBHowie1995aa">[How95]</a>.</p>

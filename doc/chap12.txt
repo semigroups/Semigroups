@@ -95,20 +95,20 @@
   GreensDClassOfElement[114X).  The  main difference is that these functions can be
   applied to a wider class of objects:[133X
   
-  [8X[10XGreensDClassOfElement[110X and [10XDClass[110X[108X
+  [8X[10XGreensDClassOfElement[110X[8X and [10XDClass[110X[8X[108X
         [33X[0;6Y[3XX[103X must be a semigroup.[133X
   
-  [8X[10XGreensHClassOfElement[110X and [10XHClass[110X[108X
+  [8X[10XGreensHClassOfElement[110X[8X and [10XHClass[110X[8X[108X
         [33X[0;6Y[3XX[103X can be a semigroup, [13XR[113X-class, [13XL[113X-class, or [13XD[113X-class.[133X
   
         [33X[0;6YIf  [3XR[103X is a [3XIxJ[103X Rees matrix semigroup or a Rees 0-matrix semigroup, and
         [3Xi[103X   and   [3Xj[103X  are  integers  of  the  corresponding  index  sets,  then
         [10XGreensHClassOfElement[110X returns the [13XH[113X-class in row [3Xi[103X and column [3Xj[103X.[133X
   
-  [8X[10XGreensLClassOfElement[110X and [10XLClass[110X[108X
+  [8X[10XGreensLClassOfElement[110X[8X and [10XLClass[110X[8X[108X
         [33X[0;6Y[3XX[103X can be a semigroup or [13XD[113X-class.[133X
   
-  [8X[10XGreensRClassOfElement[110X and [10XRClass[110X[108X
+  [8X[10XGreensRClassOfElement[110X[8X and [10XRClass[110X[8X[108X
         [33X[0;6Y[3XX[103X can be a semigroup or [13XD[113X-class.[133X
   
   [33X[0;0YNote  that  [10XGreensXClassOfElement[110X and [10XXClass[110X are synonyms and have identical
@@ -202,16 +202,16 @@
   GreensDClasses[114X).  The main difference is that these functions can be applied
   to a wider class of objects:[133X
   
-  [8X[10XGreensDClasses[110X and [10XDClasses[110X[108X
+  [8X[10XGreensDClasses[110X[8X and [10XDClasses[110X[8X[108X
         [33X[0;6Y[3XX[103X should be a semigroup.[133X
   
-  [8X[10XGreensHClasses[110X and [10XHClasses[110X[108X
+  [8X[10XGreensHClasses[110X[8X and [10XHClasses[110X[8X[108X
         [33X[0;6Y[3XX[103X can be a semigroup, [13XR[113X-class, [13XL[113X-class, or [13XD[113X-class.[133X
   
-  [8X[10XGreensLClasses[110X and [10XLClasses[110X[108X
+  [8X[10XGreensLClasses[110X[8X and [10XLClasses[110X[8X[108X
         [33X[0;6Y[3XX[103X can be a semigroup or [13XD[113X-class.[133X
   
-  [8X[10XGreensRClasses[110X and [10XRClasses[110X[108X
+  [8X[10XGreensRClasses[110X[8X and [10XRClasses[110X[8X[108X
         [33X[0;6Y[3XX[103X can be a semigroup or [13XD[113X-class.[133X
   
   [33X[0;0YNote  that  [10XGreensXClasses[110X  and  [10XXClasses[110X  are  synonyms  and have identical
@@ -960,7 +960,7 @@
         and [13XL[113X-class containing the representative of the [13XD[113X-class.[133X
   
   [33X[0;0YThe  output  of  this  attribute is difficult to describe for other types of
-  semigroup. However, a general description is given in [EEMP15].[133X
+  semigroup. However, a general description is given in [EENMP15].[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation([4, 4, 3, 5, 3]),[127X[104X

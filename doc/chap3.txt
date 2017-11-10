@@ -326,7 +326,7 @@
   
         [33X[0;6YIf no positive integer [3Xn[103X is specified, then the largest moved point of
         [3Xx[103X  is  used  as  the  value  for  [3Xn[103X; see [2XLargestMovedPoint[102X ([14XReference:
-        LargestMovedPoint (for a permutation)[114X).[133X
+        LargestMovedPoint for a permutation[114X).[133X
   
   [8Xtransformations[108X
         [33X[0;6YIf  [3Xx[103X is a transformation and [3Xn[103X is a positive integer such that [3Xx[103X is a
@@ -542,14 +542,14 @@
   
   [1X3.4 [33X[0;0YOperators for bipartitions[133X[101X
   
-  [8X[10X[3Xf[103X[10X * [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X * [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns the composition of [3Xf[103X and [3Xg[103X when [3Xf[103X and [3Xg[103X are bipartitions.[133X
   
-  [8X[10X[3Xf[103X[10X < [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X < [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [9Xtrue[109X if the internal representation of [3Xf[103X is lexicographically
         less than the internal representation of [3Xg[103X and [9Xfalse[109X if it is not.[133X
   
-  [8X[10X[3Xf[103X[10X = [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X = [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns [9Xtrue[109X if the bipartition [3Xf[103X equals the bipartition [3Xg[103X and returns
         [9Xfalse[109X if it does not.[133X
   

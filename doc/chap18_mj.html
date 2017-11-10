@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (semigroups) - Chapter 18: 
     Visualising semigroups and elements
@@ -36,7 +36,7 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X83B3318784E78415">18.1-1 Splash</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X82042B9A8095AEBB">18.2 <span class="Heading">
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X82E16CAB874A1D84">18.2 <span class="Heading">
       <code class="code">dot</code> pictures
     </span></a>
 </span>
@@ -44,14 +44,14 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7F51F3CD7E13D199">18.2-1 DotString</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X7C22E8D17D6C23EA">18.2-2 DotSemilatticeOfIdempotents</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X7BE4C766836B06AF">18.3 <span class="Heading">
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X83152CA78114E2BD">18.3 <span class="Heading">
       <code class="code">tex</code> output
     </span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap18_mj.html#X80FBF08180F7F181">18.3-1 TexString</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X7920398C7C0A375D">18.4 <span class="Heading">
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap18_mj.html#X7BDDE0FE80D09887">18.4 <span class="Heading">
       <code class="code">tikz</code> pictures
     </span></a>
 </span>
@@ -124,7 +124,7 @@
 <div class="example"><pre>
         gap&gt; Splash(DotString(FullTransformationMonoid(4)));</pre></div>
 
-<p><a id="X82042B9A8095AEBB" name="X82042B9A8095AEBB"></a></p>
+<p><a id="X82E16CAB874A1D84" name="X82E16CAB874A1D84"></a></p>
 
 <h4>18.2 <span class="Heading">
       <code class="code">dot</code> pictures
@@ -132,7 +132,7 @@
 
 <p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">dot</code> format.</p>
 
-<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18_mj.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
+<p>The operations described in this section return strings, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18_mj.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
 
 <p><a id="X7F51F3CD7E13D199" name="X7F51F3CD7E13D199"></a></p>
 
@@ -143,7 +143,7 @@
 
 <p>If the argument <var class="Arg">S</var> is a semigroup, and the optional second argument <var class="Arg">options</var> is a record, then this operation produces a graphical representation of the partial order of the \(\mathscr{D}\)-classes of the semigroup <var class="Arg">S</var> together with the eggbox diagram of each \(\mathscr{D}\)-class. The output is in <code class="code">dot</code> format (also known as <code class="code">GraphViz</code>) format. For details about this file format, and information about how to display or edit this format see <span class="URL"><a href="http://www.graphviz.org">http://www.graphviz.org</a></span>.</p>
 
-<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
+<p>The string returned by <code class="code">DotString</code> can be written to a file using the command <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>).</p>
 
 <p>The \(\mathscr{D}\)-classes are shown as eggbox diagrams with \(\mathscr{L}\)-classes as rows and \(\mathscr{R}\)-classes as columns; group \(\mathscr{H}\)-classes are shaded gray and contain an asterisk. The \(\mathscr{L}\)-classes and \(\mathscr{R}\)-classes within a \(\mathscr{D}\)-class are arranged to correspond to the normalization of the principal factor given by <code class="func">NormalizedPrincipalFactor</code> (<a href="chap12_mj.html#X86C6D777847AAEC7"><span class="RefLink">12.4-8</span></a>). The \(\mathscr{D}\)-classes are numbered according to their index in <code class="code">GreensDClasses(<var class="Arg">S</var>)</code>, so that an <code class="code">i</code> appears next to the eggbox diagram of <code class="code">GreensDClasses(<var class="Arg">S</var>)[i]</code>. A line from one \(\mathscr{D}\)-class to another indicates that the higher \(\mathscr{D}\)-class is greater than the lower one in the \(\mathscr{D}\)-order on <var class="Arg">S</var>.</p>
 
@@ -213,13 +213,13 @@ cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
 6\n12 -- 9\n13 -- 3\n13 -- 7\n13 -- 10\n14 -- 4\n14 -- 6\n14 -- 10\n15\
  -- 5\n15 -- 8\n15 -- 11\n15 -- 12\n15 -- 13\n15 -- 14\n }"</pre></div>
 
-<p><a id="X7BE4C766836B06AF" name="X7BE4C766836B06AF"></a></p>
+<p><a id="X83152CA78114E2BD" name="X83152CA78114E2BD"></a></p>
 
 <h4>18.3 <span class="Heading">
       <code class="code">tex</code> output
     </span></h4>
 
-<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating LaTeX representations of <strong class="pkg">GAP</strong> objects. For pictures of <strong class="pkg">GAP</strong> objects please see Section <a href="chap18_mj.html#X7920398C7C0A375D"><span class="RefLink">18.4</span></a>.</p>
+<p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating LaTeX representations of <strong class="pkg">GAP</strong> objects. For pictures of <strong class="pkg">GAP</strong> objects please see Section <a href="chap18_mj.html#X7BDDE0FE80D09887"><span class="RefLink">18.4</span></a>.</p>
 
 <p><a id="X80FBF08180F7F181" name="X80FBF08180F7F181"></a></p>
 
@@ -239,7 +239,7 @@ cluster_1{\n15 \n}\nsubgraph cluster_2{\n5 11 14 12 13 8 \n}\nsubgraph\
 "\\begin{pmatrix}\n  1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 \\\\\n  1 &amp; 2 &amp; 1 &amp; 3 &amp; 5\n\\en\
 d{pmatrix}"</pre></div>
 
-<p><a id="X7920398C7C0A375D" name="X7920398C7C0A375D"></a></p>
+<p><a id="X7BDDE0FE80D09887" name="X7BDDE0FE80D09887"></a></p>
 
 <h4>18.4 <span class="Heading">
       <code class="code">tikz</code> pictures
@@ -247,7 +247,7 @@ d{pmatrix}"</pre></div>
 
 <p>In this section, we describe the operations in <strong class="pkg">Semigroups</strong> for creating pictures in <code class="code">tikz</code> format.</p>
 
-<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18_mj.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
+<p>The functions described in this section return a string, which can be written to a file using the function <code class="func">FileString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) or viewed using <code class="func">Splash</code> (<a href="chap18_mj.html#X83B3318784E78415"><span class="RefLink">18.1-1</span></a>).</p>
 
 <p><a id="X7F0971F678B4FC66" name="X7F0971F678B4FC66"></a></p>
 

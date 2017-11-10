@@ -180,7 +180,7 @@
   
   [30X    [33X[0;6Y[10X[3Xtriple[103X[10X[2][110X  should be an isomorphism from the underlying group of [3XR1[103X to
         the  underlying  group  of  [3XR2[103X  (see  [2XUnderlyingSemigroup[102X  ([14XReference:
-        UnderlyingSemigroup (for a Rees 0-matrix semigroup)[114X)).[133X
+        UnderlyingSemigroup for a rees 0-matrix semigroup[114X)).[133X
   
   [30X    [33X[0;6Y[10X[3Xtriple[103X[10X[3][110X  should  be  a list of elements from the underlying group of
         [3XR2[103X.  If the [2XMatrix[102X ([14XReference: Matrix[114X) of [3XR1[103X has [22Xm[122X columns and [22Xn[122X rows,
@@ -317,18 +317,18 @@
   
   [1X17.2-6 [33X[0;0YOperators for isomorphisms of Rees (0-)matrix semigroup by triples[133X[101X
   
-  [8X[10X[3Xmap[103X[10X[[3Xi[103X[10X][110X[108X
+  [8X[10X[3Xmap[103X[8X[10X[[3Xi[103X[8X[10X][110X[8X[108X
         [33X[0;6Y[10X[3Xmap[103X[10X[i][110X  returns  the  [3Xi[103Xth  component  of the Rees (0-)matrix semigroup
         isomorphism by triple [3Xmap[103X when [10X[3Xi[103X[10X = 1, 2, 3[110X; see [2XELM_LIST[102X ([14X17.2-3[114X).[133X
   
-  [8X[10X[3Xmap1[103X[10X * [3Xmap2[103X[10X[110X[108X
+  [8X[10X[3Xmap1[103X[8X[10X * [3Xmap2[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  the  composition  of  [3Xmap2[103X  and [3Xmap1[103X; see [2XCompositionMapping2[102X
         ([14X17.2-4[114X).[133X
   
-  [8X[10X[3Xmap1[103X[10X < [3Xmap2[103X[10X[110X[108X
+  [8X[10X[3Xmap1[103X[8X[10X < [3Xmap2[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns [9Xtrue[109X if [3Xmap1[103X is lexicographically less than [3Xmap2[103X.[133X
   
-  [8X[10X[3Xmap1[103X[10X = [3Xmap2[103X[10X[110X[108X
+  [8X[10X[3Xmap1[103X[8X[10X = [3Xmap2[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [9Xtrue[109X  if the Rees (0-)matrix semigroup isomorphisms by triple
         [3Xmap1[103X and [3Xmap2[103X have equal source and range, and are equal as functions,
         and [9Xfalse[109X otherwise.[133X
@@ -336,7 +336,7 @@
         [33X[0;6YIt  is  possible  for  [3Xmap1[103X  and [3Xmap2[103X to be equal but to have distinct
         components.[133X
   
-  [8X[10X[3Xpt[103X[10X ^ [3Xmap[103X[10X[110X[108X
+  [8X[10X[3Xpt[103X[8X[10X ^ [3Xmap[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  the  image  of  the element [3Xpt[103X of the source of [3Xmap[103X under the
         isomorphism [3Xmap[103X; see [2XImagesElm[102X ([14X17.2-5[114X).[133X
   
