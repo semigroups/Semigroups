@@ -18,7 +18,7 @@ InstallMethod(GradedLambdaHT, "for an acting semigroup",
 function(S)
   local record;
   record := ShallowCopy(LambdaOrbOpts(S));
-  record.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen.S;
+  record.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
   return HTCreate(LambdaFunc(S)(Representative(S)), record);
 end);
 
@@ -27,7 +27,7 @@ InstallMethod(GradedRhoHT, "for an acting semigroup",
 function(S)
   local record;
   record := ShallowCopy(RhoOrbOpts(S));
-  record.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen.S;
+  record.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
   return HTCreate(RhoFunc(S)(Representative(S)), record);
 end);
 
@@ -124,7 +124,7 @@ function(arg)
   orb := ShallowCopy(LambdaOrbOpts(S));
   # TODO include as much of the following as appropriate in LambdaOrbOpts
   orb.parent := S;
-  orb.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen.M;
+  orb.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
   orb.schreier := true;
   orb.orbitgraph := true;
   orb.storenumbers := true;
@@ -228,7 +228,7 @@ function(arg)
 
   orb := ShallowCopy(RhoOrbOpts(S));
   orb.parent := S;
-  orb.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen.M;
+  orb.treehashsize := SEMIGROUPS.OptionsRec(S).hashlen;
   orb.schreier := true;
   orb.orbitgraph := true;
   orb.storenumbers := true;

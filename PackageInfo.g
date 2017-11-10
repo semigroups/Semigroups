@@ -12,7 +12,7 @@
 ##  <!ENTITY VERSION "3.0.7">
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.10.0">
-##  <!ENTITY ORBVERS "4.7.5">
+##  <!ENTITY ORBVERS "4.8.0">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY ARCHIVENAME "semigroups-3.0.7">
@@ -234,7 +234,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.9.0",
-  NeededOtherPackages := [["orb", ">=4.7.5"],
+  NeededOtherPackages := [["orb", ">=4.8.0"],
                           ["io", ">=4.4.4"],
                           ["digraphs", ">=0.10.0"],
                           ["genss", ">=1.5"]],

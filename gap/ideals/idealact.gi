@@ -334,7 +334,7 @@ function(I)
   data.log := [1];
   data.genspos := 0;
   data.ht := HTCreate(gens[1], rec(treehashsize :=
-                                   SEMIGROUPS.OptionsRec(I).hashlen.L));
+                                   SEMIGROUPS.OptionsRec(I).hashlen));
   data.pos := 0;
   data.init := false;
   data.reps := [];
@@ -727,8 +727,8 @@ function(data, limit, record)
   data!.pos := i;
 
   if nr_d = i then
-    SetFilterObj(lambdao, IsClosed);
-    SetFilterObj(rhoo, IsClosed);
+    SetFilterObj(lambdao, IsClosedOrbit);
+    SetFilterObj(rhoo, IsClosedOrbit);
     SetFilterObj(data, IsClosedData);
     if not HasIsRegularSemigroup(I) then
       SetIsRegularSemigroup(I, ForAll(regular, x -> x));
@@ -783,7 +783,7 @@ function(x, I)
   l := Position(o, xx);
 
   if l = fail then
-    if IsClosed(o) then
+    if IsClosedOrbit(o) then
       return false;
     fi;
 
@@ -828,7 +828,7 @@ function(x, I)
   l := Position(o, RhoFunc(I)(x));
 
   if l = fail then
-    Assert(1, IsClosed(o));
+    Assert(1, IsClosedOrbit(o));
     # Because I is regular once we have found the lambda-val we have found the
     # (unique) D-class of I containing something with the same lambda-val. If x
     # in I, then the D-class we've found must contain x and so we already know
@@ -1187,8 +1187,8 @@ function(data, limit, record)
   data!.pos := i;
 
   if nr_d = i then
-    SetFilterObj(lambdao, IsClosed);
-    SetFilterObj(rhoo, IsClosed);
+    SetFilterObj(lambdao, IsClosedOrbit);
+    SetFilterObj(rhoo, IsClosedOrbit);
     SetFilterObj(data, IsClosedData);
   fi;
 

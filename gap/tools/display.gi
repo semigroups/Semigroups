@@ -29,7 +29,8 @@ SEMIGROUPS.TikzArcPBR := Concatenation("\\newcommand{\\arc}{\\draw[semithick, ",
 SEMIGROUPS.TikzPBROpts         := rec(labels := false);
 SEMIGROUPS.TikzBipartitionOpts := rec(colors        := false,
                                       beginDocument := true,
-                                      endDocument   := true);
+                                      endDocument   := true,
+                                      labels        := true);
 SEMIGROUPS.TikzBlocksOpts      := rec(labels := "above",
                                       edges  := "below",
                                       colors := false);
@@ -333,8 +334,11 @@ InstallMethod(TikzString, "for a bipartition and record",
 [IsBipartition, IsRecord],
 function(x, opts)
   local fill, draw, labels, ext, n, str, block, up, down, min, j, i, k;
-  # TODO process options
-  if IsBound(opts.colors) and opts.colors = true and NrBlocks(x) < 20 then
+
+  # Process the options
+  SEMIGROUPS.ProcessOptionsRec(SEMIGROUPS.TikzBipartitionOpts, opts);
+
+  if opts.colors and NrBlocks(x) < 20 then
     fill := i -> Concatenation("  \\fill[", SEMIGROUPS.TikzColors[i], "](");
     draw := i -> Concatenation("  \\draw[", SEMIGROUPS.TikzColors[i], "](");
   else
@@ -342,11 +346,7 @@ function(x, opts)
     draw := i -> "  \\draw(";
   fi;
 
-  if IsBound(opts.labels) then
-    labels := opts.labels;
-  else
-    labels := true;
-  fi;
+  labels := opts.labels;
 
   ext := ExtRepOfObj(x);
   n   := DegreeOfBipartition(x);

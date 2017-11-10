@@ -143,7 +143,7 @@ function(S, x)
   j := 0;
 
   # can't use GradedRhoOrb here since there may be inverses not D-related to f
-  if HasRhoOrb(S) and IsClosed(RhoOrb(S)) then
+  if HasRhoOrb(S) and IsClosedOrbit(RhoOrb(S)) then
     o := RhoOrb(S);
     rhos := EmptyPlist(Length(o));
     for i in [2 .. Length(o)] do
@@ -153,7 +153,7 @@ function(S, x)
       fi;
     od;
   else
-    opts := rec(treehashsize := SEMIGROUPS.OptionsRec(S).hashlen.M,
+    opts := rec(treehashsize := SEMIGROUPS.OptionsRec(S).hashlen,
                 gradingfunc := function(o, x) return rhorank(x); end,
                 onlygrades := function(x, y) return x >= rank; end,
                 onlygradesdata := fail);
@@ -184,7 +184,7 @@ function(S, x)
   out := [];
   k := 0;
 
-  #if HasLambdaOrb(S) and IsClosed(LambdaOrb(S)) then
+  #if HasLambdaOrb(S) and IsClosedOrbit(LambdaOrb(S)) then
   # Notes: it seems that LambdaOrb(S) is always closed at this point
   o := LambdaOrb(S);
   Enumerate(o); # just in case
@@ -200,7 +200,7 @@ function(S, x)
     fi;
   od;
   #else
-  #   opts := rec(treehashsize := s!.opts.hashlen.M,
+  #   opts := rec(treehashsize := s!.opts.hashlen,
   #               gradingfunc := function(o, x) return lambdarank(x); end,
   #               onlygrades := function(x, y) return x >= rank; end,
   #               onlygradesdata := fail);

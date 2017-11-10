@@ -531,7 +531,7 @@ function(S, n)
 
   o := LambdaOrb(S);
 
-  if not IsClosed(o) then
+  if not IsClosedOrbit(o) then
     Enumerate(o, infinity);
   fi;
 
