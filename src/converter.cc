@@ -64,9 +64,11 @@ Obj BoolMatConverter::unconvert(Element const* x) const {
     SET_LEN_BLIST(blist, n);
     for (size_t j = 0; j < n; j++) {
       if ((*xx)[i * n + j]) {
-        SET_ELM_BLIST(blist, j + 1, True);
-      } else {
-        SET_ELM_BLIST(blist, j + 1, False);
+#ifdef SET_ELM_BLIST
+        SET_ELM_BLIST(blist, j + 1, True);  // for GAP < 4.9
+#else
+        SET_BIT_BLIST(blist, j + 1);    // for GAP >= 4.9
+#endif
       }
     }
     SET_ELM_PLIST(o, i + 1, blist);
