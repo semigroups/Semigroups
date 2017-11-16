@@ -2469,8 +2469,12 @@ Transformation( [ 2, 3, 4, 5, 1 ] )
 gap> S := ZeroSemigroup(3);
 <commutative non-regular transformation semigroup of size 3, degree 4 with 2 
  generators>
-gap> T := DirectProduct(S, S);
-<commutative transformation semigroup of size 9, degree 8 with 8 generators>
+gap> T := DirectProduct(S, S);;
+gap> IsRegularSemigroup(T);
+false
+gap> T;
+<commutative non-regular transformation semigroup of size 9, degree 8 with 8 
+ generators>
 gap> T := Semigroup(T);
 <transformation semigroup of degree 8 with 8 generators>
 gap> Size(T);
@@ -2489,8 +2493,12 @@ gap> DirectProductOp([Semigroup(PartialPerm([1 .. 3]))],
 > Monoid(Transformation([1, 1])));
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
 Error, no 4th choice method found for `DirectProductOp' on 2 arguments
-gap> S := DirectProduct(FullTransformationMonoid(3), FullTransformationMonoid(3));
-<transformation monoid of size 729, degree 6 with 6 generators>
+gap> S := DirectProduct(FullTransformationMonoid(3),
+>                       FullTransformationMonoid(3));;
+gap> IsRegularSemigroup(S);
+true
+gap> S;
+<regular transformation monoid of size 729, degree 6 with 6 generators>
 gap> Size(S) = 27 ^ 2;
 true
 gap> S := Semigroup(Transformation([1, 2, 3, 3, 3]),
