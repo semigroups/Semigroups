@@ -332,33 +332,21 @@ gap> Length(SmallGeneratingSet(S));
 <ManSection>
   <Attr Name="MinimalSemigroupGeneratingSet" Arg="S"/>
   <Attr Name="MinimalMonoidGeneratingSet" Arg="S"/>
-  <Attr Name="MinimalInverseSemigroupGeneratingSet" Arg="S"/>
-  <Attr Name="MinimalInverseMonoidGeneratingSet" Arg="S"/>
   <Returns>A minimal generating set for a semigroup.</Returns>
   <Description>
-
-    <B>Warning:</B> currently, no methods are installed to compute these
-    attributes.<P/>
-
-    The attributes <C>MinimalXGeneratingSet</C> return a minimal generating set
+    The attribute <C>MinimalXGeneratingSet</C> returns a minimal generating set
     for the semigroup <A>S</A>, with respect to length. The returned value of
     <C>MinimalXGeneratingSet</C>, where applicable, is a minimal-length list
     of elements of <A>S</A> with the property that
     <Log>
       X(MinimalXGeneratingSet(S)) = S;
     </Log>
-    where <C>X</C> is any of
-    <Ref Func="Semigroup" BookName="ref"/>,
-    <Ref Func="Monoid" BookName="ref"/>,
-    <Ref Func="InverseSemigroup" BookName="ref"/>, or
-    <Ref Func="InverseMonoid" BookName="ref"/>.<P/>
+    where <C>X</C> is either
+    <Ref Func="Semigroup" BookName="ref"/>, or
+    <Ref Func="Monoid" BookName="ref"/>.<P/>
 
-    For certain types of semigroup, for example monogenic semigroups, a
-    <C>MinimalXGeneratingSet</C> may be known a priori, or may be deduced as a
-    by-product of other functions. However, since there are no methods installed
-    to compute these attributes directly, for most semigroups it is not
-    currently possible to find a <C>MinimalXGeneratingSet</C> with the
-    &Semigroups; package. <P/>
+    For many types of semigroup, it is not currently possible to find a
+    <C>MinimalXGeneratingSet</C> with the &Semigroups; package. <P/>
 
     See also <Ref Attr="SmallGeneratingSet"/> and <Ref
       Oper="IrredundantGeneratingSubset"/>.
@@ -367,15 +355,18 @@ gap> Length(SmallGeneratingSet(S));
 gap> S := MonogenicSemigroup(3, 6);;
 gap> MinimalSemigroupGeneratingSet(S);
 [ Transformation( [ 2, 3, 4, 5, 6, 1, 6, 7, 8 ] ) ]
-gap> S := Semigroup([
->  PartialPerm([1, 2, 3, 4, 5], [1, 2, 3, 4, 5]),
->  PartialPerm([1, 2, 3, 4], [5, 2, 4, 1]),
->  PartialPerm([1, 2, 4, 5], [4, 2, 3, 1])]);
-<partial perm monoid of rank 5 with 2 generators>
-gap> IsMonogenicInverseMonoid(S);
+gap> S := FullTransformationMonoid(4);;
+gap> MinimalSemigroupGeneratingSet(S);
+[ Transformation( [ 1, 4, 2, 3 ] ), Transformation( [ 4, 3, 1, 2 ] ), 
+  Transformation( [ 1, 2, 3, 1 ] ) ]
+gap> S := Monoid([
+>  PartialPerm([2, 3, 4, 5, 1, 0, 6, 7]),
+>  PartialPerm([3, 4, 5, 1, 2, 0, 0, 6])]);
+<partial perm monoid of rank 8 with 2 generators>
+gap> IsMonogenicMonoid(S);
 true
-gap> MinimalInverseMonoidGeneratingSet(S);
-[ [3,4,1,5](2) ]]]></Example>
+gap> MinimalMonoidGeneratingSet(S);
+[ [8,7,6](1,2,3,4,5) ]]]></Example>
     </Description>
   </ManSection>
 <#/GAPDoc>

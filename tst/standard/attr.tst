@@ -1737,6 +1737,173 @@ gap> S := MonogenicSemigroup(3, 2);;
 gap> IndecomposableElements(S) = [S.1];
 true
 
+#T# MinimalSemigroupGeneratingSet: for a monogenic semigroup, 1
+gap> S := MonogenicSemigroup(IsTransformationSemigroup, 4, 5);
+<commutative non-regular transformation semigroup of size 8, degree 9 with 1 
+ generator>
+gap> MinimalSemigroupGeneratingSet(S);
+[ Transformation( [ 2, 3, 4, 5, 1, 5, 6, 7, 8 ] ) ]
+gap> x := MinimalSemigroupGeneratingSet(S)[1];
+Transformation( [ 2, 3, 4, 5, 1, 5, 6, 7, 8 ] )
+gap> S := Semigroup(x, x ^ 2);
+<transformation semigroup of degree 9 with 2 generators>
+gap> x := MinimalSemigroupGeneratingSet(S);
+[ Transformation( [ 2, 3, 4, 5, 1, 5, 6, 7, 8 ] ) ]
+gap> Length(x);
+1
+gap> S = Semigroup(x);
+true
+
+#T# MinimalSemigroupGeneratingSet: for a 2-generated semigroup, 1
+gap> S := SymmetricInverseMonoid(1);
+<symmetric inverse monoid of degree 1>
+gap> x := MinimalSemigroupGeneratingSet(S);
+[ <empty partial perm>, <identity partial perm on [ 1 ]> ]
+gap> Length(x);
+2
+gap> S = Semigroup(x);
+true
+
+#T# MinimalSemigroupGeneratingSet: for a semigroup with identity adjoined, 1
+gap> S := Monoid(RectangularBand(IsBipartitionSemigroup, 2, 2));
+<bipartition monoid of degree 2 with 2 generators>
+gap> x := MinimalSemigroupGeneratingSet(S);;
+gap> Length(x);
+3
+gap> S = Semigroup(x);
+true
+
+#T# MinimalSemigroupGeneratingSet: for a semigroup with zero adjoined, 1
+gap> S := ReesZeroMatrixSemigroup(Group(()), [[(), ()]]);
+<Rees 0-matrix semigroup 2x1 over Group(())>
+gap> x := MinimalSemigroupGeneratingSet(S);
+[ 0, (1,(),1), (2,(),1) ]
+gap> Length(x);
+3
+gap> S = Semigroup(x);
+true
+
+#T# MinimalSemigroupGeneratingSet: decomposable elements, 1
+gap> S := Semigroup(ZeroSemigroup(IsPartialPermSemigroup, 4));
+<partial perm semigroup of rank 3 with 3 generators>
+gap> x := MinimalSemigroupGeneratingSet(S);
+[ [1,2], [3,4], [5,6] ]
+gap> Length(x);
+3
+gap> S = Semigroup(x);
+true
+gap> S := Semigroup(Elements(S));
+<partial perm semigroup of rank 3 with 4 generators>
+gap> x := MinimalSemigroupGeneratingSet(S);
+[ [1,2], [3,4], [5,6] ]
+gap> Length(x);
+3
+
+#T# MinimalSemigroupGeneratingSet: decomposable elements, 2
+gap> S := Monoid([
+>  Transformation([1, 1, 1, 2]),
+>  Transformation([1, 1, 2, 1]),
+>  Transformation([1, 1, 2, 2]),
+>  Transformation([1, 1, 1, 1, 6, 5])]);
+<transformation monoid of degree 6 with 4 generators>
+gap> x := MinimalSemigroupGeneratingSet(S);
+[ IdentityTransformation, Transformation( [ 1, 1, 1, 1, 6, 5 ] ), 
+  Transformation( [ 1, 1, 1, 2 ] ), Transformation( [ 1, 1, 2, 1 ] ), 
+  Transformation( [ 1, 1, 2, 2 ] ) ]
+gap> Length(x);
+5
+gap> S = Semigroup(x);
+true
+
+#T# MinimalSemigroupGeneratingSet: for a group as semigroup, 1
+gap> S = Semigroup(x);
+true
+gap> S := Semigroup([
+>  Transformation([1, 3, 2, 1]),
+>  Transformation([2, 1, 3, 2]),
+>  Transformation([3, 1, 2, 3])]);
+<transformation semigroup of degree 4 with 3 generators>
+gap> x := MinimalSemigroupGeneratingSet(S);;
+gap> Length(x);
+2
+gap> S = Semigroup(x);
+true
+
+#T# MinimalSemigroupGeneratingSet: for a monoid, 1
+gap> S := FullTransformationMonoid(4);
+<full transformation monoid of degree 4>
+gap> x := MinimalSemigroupGeneratingSet(S);;
+gap> Length(x);
+3
+gap> S = Semigroup(x);
+true
+
+#T# MinimalSemigroupGeneratingSet: for a trivial semigroup, 1
+gap> S := FreeSemigroup(1);;
+gap> S := S / [[S.1 ^ 2, S.1]];
+<fp semigroup on the generators [ s1 ]>
+gap> MinimalSemigroupGeneratingSet(S);
+[ s1 ]
+
+#T# MinimalSemigroupGeneratingSet: for a D-trivial semigroup, 1
+gap> n := 3;;
+gap> S := UnitriangularBooleanMatMonoid(n);
+<monoid of 3x3 boolean matrices with 3 generators>
+gap> x := MinimalSemigroupGeneratingSet(S);;
+gap> Length(x);
+4
+gap> S = Semigroup(x);
+true
+
+#T# MinimalSemigroupGeneratingSet: not yet implemented, 1
+gap> S := PartitionMonoid(4);
+<regular bipartition *-monoid of size 4140, degree 4 with 4 generators>
+gap> x := MinimalSemigroupGeneratingSet(S);
+Error, Semigroups: MinimalSemigroupGeneratingSet: error,
+no further methods for computing minimal generating sets are implemented,
+
+#T# MinimalMonoidGeneratingSet: for a trivial monoid, 1
+gap> S := FreeMonoid(1);;
+gap> S := S / [[S.1, S.1 ^ 0]];
+<fp monoid on the generators [ m1 ]>
+gap> MinimalMonoidGeneratingSet(S);
+[ <identity ...> ]
+
+#T# MinimalMonoidGeneratingSet: for a monoid, 1
+gap> S := FullTransformationMonoid(3);;
+gap> x := MinimalMonoidGeneratingSet(S);;
+gap> Length(x);
+3
+gap> Monoid(x) = S;
+true
+
+#T# MinimalMonoidGeneratingSet: for a monoid, 2
+gap> S := SymmetricInverseMonoid(2);
+<symmetric inverse monoid of degree 2>
+gap> MinimalMonoidGeneratingSet(S);
+[ <identity partial perm on [ 1 ]>, (1,2) ]
+gap> S := AsSemigroup(IsBlockBijectionSemigroup, S);
+<inverse block bijection monoid of degree 3 with 2 generators>
+gap> MinimalMonoidGeneratingSet(S);
+[ <block bijection: [ 1, -1 ], [ 2, 3, -2, -3 ]>, 
+  <block bijection: [ 1, -2 ], [ 2, -1 ], [ 3, -3 ]> ]
+
+#T# MinimalMonoidGeneratingSet: for a monoid, 2
+gap> S := SymmetricInverseMonoid(1);
+<symmetric inverse monoid of degree 1>
+gap> MinimalMonoidGeneratingSet(S);
+[ <empty partial perm>, <identity partial perm on [ 1 ]> ]
+gap> S := AsSemigroup(IsBlockBijectionSemigroup, S);;
+gap> MinimalMonoidGeneratingSet(S);
+[ <block bijection: [ 1, 2, -1, -2 ]> ]
+
+#T# MinimalMonoidGeneratingSet: for a monoid, 3
+gap> x := Bipartition([[1, 3, -1, -2], [2, -3]]);;
+gap> S := Monoid(x, x ^ 2);
+<block bijection monoid of degree 3 with 2 generators>
+gap> MinimalMonoidGeneratingSet(S) = [x];
+true
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(D);
 gap> Unbind(G);

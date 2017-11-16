@@ -960,3 +960,123 @@ function(S)
   od;
   return out;
 end);
+
+InstallMethod(MinimalSemigroupGeneratingSet, "for a free semigroup",
+[IsFreeSemigroup],
+GeneratorsOfSemigroup);
+
+InstallMethod(MinimalSemigroupGeneratingSet, "for a semigroup",
+[IsSemigroup],
+function(S)
+  local gens, indecomp, id, T, zero, iso, inv, G, x, D, non_unit_gens, classes,
+  po, nbs;
+
+  if IsTrivial(S) then
+    return [Representative(S)];
+  elif IsGroupAsSemigroup(S) then
+    iso := IsomorphismPermGroup(S);
+    inv := InverseGeneralMapping(iso);
+    G := Range(iso);
+    return Images(inv, MinimalGeneratingSet(G));
+  elif IsMonogenicSemigroup(S) then
+    return [Representative(MaximalDClasses(S)[1])];
+  fi;
+
+  gens := IrredundantGeneratingSubset(S);
+
+  # A semigroup that has a 2-generating set but is not monogenic has rank 2.
+  if Length(gens) = 2 then
+    return gens;
+  fi;
+
+  # A generating set for a semigroup that has either a one/zero adjoined is
+  # minimal if and only if it contains that one/zero, and is minimal for the
+  # semigroup without the one/zero.
+  if IsMonoidAsSemigroup(S) and IsTrivial(GroupOfUnits(S)) then
+    id := MultiplicativeNeutralElement(S);
+    T := Semigroup(Filtered(gens, x -> x <> id));
+    return Concatenation([id], MinimalSemigroupGeneratingSet(T));
+  elif IsSemigroupWithAdjoinedZero(S) then
+    zero := MultiplicativeZero(S);
+    T := Semigroup(Filtered(gens, x -> x <> zero));
+    return Concatenation([zero], MinimalSemigroupGeneratingSet(T));
+  fi;
+
+  # The indecomposable elements are contains in any generating set. If the
+  # indecomposable elements (or if not, the indecomposable elements plus a
+  # single element) generate the semigroup, then you have a minimal generating
+  # set.
+  indecomp := IndecomposableElements(S);
+  if Length(gens) = Length(indecomp) then
+    return indecomp;
+  elif not IsEmpty(indecomp) then
+    x := Difference(gens, Semigroup(indecomp));
+    if Length(x) = 1 then
+      return Concatenation(x, indecomp);
+    fi;
+  fi;
+
+  # A generating set for a monoid that consists of a minimal generating set for
+  # the group of units and exactly one generator in each D-class immediately
+  # below the group of units is minimal.
+  if IsMonoidAsSemigroup(S) then
+    D := DClass(S, MultiplicativeNeutralElement(S));
+    non_unit_gens := Filtered(gens, x -> not x in D);
+    classes := List(non_unit_gens, x -> Position(DClasses(S), DClass(S, x)));
+    if IsDuplicateFreeList(classes) then
+      po := Digraph(PartialOrderOfDClasses(S));
+      po := DigraphReflexiveTransitiveReduction(po);
+      nbs := OutNeighboursOfVertex(po, Position(DClasses(S), D));
+      if ForAll(classes, x -> x in nbs) then
+        iso := IsomorphismPermGroup(GroupOfUnits(S));
+        inv := InverseGeneralMapping(iso);
+        G := Range(iso);
+        return Concatenation(Images(inv, MinimalGeneratingSet(G)),
+                             non_unit_gens);
+      fi;
+    fi;
+  fi;
+
+  # An irredundant generating set of a finite semigroup that contains at most
+  # one generator per D-class is minimal.
+  if IsFinite(S) and (IsDTrivial(S) or
+      Length(Set(gens, x -> DClass(S, x))) = Length(gens)) then
+    return gens;
+  fi;
+
+  ErrorNoReturn("Semigroups: MinimalSemigroupGeneratingSet: error,\n",
+                "no further methods for computing minimal generating sets ",
+                "are implemented,");
+end);
+
+InstallMethod(MinimalMonoidGeneratingSet, "for a free monoid",
+[IsFreeMonoid],
+GeneratorsOfMonoid);
+
+InstallMethod(MinimalMonoidGeneratingSet, "for a monoid",
+[IsMonoid],
+function(S)
+  local one, gens, new;
+
+  one := One(S);
+  if IsTrivial(S) then
+    return [one];
+  fi;
+
+  gens := MinimalSemigroupGeneratingSet(S);
+  if not IsTrivial(GroupOfUnits(S)) then
+    return gens;
+  fi;
+  new := Difference(gens, [one]);
+  if One(new) = one then
+    # The One of the non-identity generators is the One, so One is not needed.
+    return new;
+  fi;
+
+  # This currently applies to only partial perm monoids: sometimes, the One
+  # of the non-One generators is not the One of the monoid. Therefore the One
+  # has to be included in the GeneratorsOfMonoid. WARNING: therefore
+  # MinimalMonoidGeneratingSet may include the One even though, mathematically,
+  # it shouldn't be needed. For example, see symmetric inverse monoid on 1 pt.
+  return gens;
+end);
