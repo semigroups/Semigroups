@@ -52,7 +52,7 @@ SEMIGROUPS.DirectProductOp := function(S, degree, convert, combine, restrict)
   fi;
 
   n := Length(S);
-  gens_old := List(S, i -> Unique(f(i)));
+  gens_old := List(S, i -> f(i));
   gens_new := List([1 .. n], i -> []);
   indecomp := List([1 .. n], i -> []);
   pre_mult := List([1 .. n], i -> []);
@@ -99,11 +99,11 @@ SEMIGROUPS.DirectProductOp := function(S, degree, convert, combine, restrict)
       # For a monoid, every generator is decomposable. Simply convert each gen,
       # and use the identity as the pre_mult and pos_mult of each gen.
       for x in gens_old[i] do
-        Add(gens_new[i], convert(x, degrees[i], offsets[i]));
+        AddSet(gens_new[i], convert(x, degrees[i], offsets[i]));
       od;
       # Remember that idems[i] = MultiplicativeNeutralElement(S[i]).
-      Add(pre_mult[i], idems[i]);
-      Add(pos_mult[i], idems[i]);
+      AddSet(pre_mult[i], idems[i]);
+      AddSet(pos_mult[i], idems[i]);
     else
       for x in gens_old[i] do
         # Attempt to find a non-trivial factorization of <x>.
@@ -111,10 +111,10 @@ SEMIGROUPS.DirectProductOp := function(S, degree, convert, combine, restrict)
         y := convert(x, degrees[i], offsets[i]);
         if factorization = fail then
           # <x> is indecomposable; record it as such.
-          Add(indecomp[i], y);
+          AddSet(indecomp[i], y);
         else
           # We can decompose <x>, so we can find a <pre_mult> and <pos_mult>.
-          Add(gens_new[i], y);
+          AddSet(gens_new[i], y);
           len := Length(factorization);
           if i > 1 then
             # <pos_mult>s are not needed for the first factor

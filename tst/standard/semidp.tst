@@ -704,6 +704,20 @@ gap> S := Monoid([Transformation([2, 1]), Transformation([1, 1])]);;
 gap> IsCommutativeSemigroup(DirectProduct(S));
 false
 
+#T# semidp: DirectProduct, for a semigroup with repeated generators
+gap> S := Semigroup([
+>  PBR([[-2, 1, 2], [-2, -1, 2]], [[-2, -1, 1, 2], [-2, -1, 1, 2]]),
+>  PBR([[-2, -1, 1, 2], [-2, -1, 1, 2]], [[-2, -1, 1, 2], [-2, -1, 1, 2]]),
+>  PBR([[-2, -1, 1, 2], [-2, -1, 1, 2]], [[-2, -1, 1, 2], [-2, -1, 1, 2]]),
+>  PBR([[-2, -1, 1, 2], [-1]], [[-2, 1], [-2, -1, 1, 2]]),
+>  PBR([[-2, 1], [-2, 2]], [[-2, -1], [-2, -1, 2]]),
+>  PBR([[-2, -1, 1, 2], [-2, -1, 2]], [[-2, -1, 1, 2], [-2, -1, 1, 2]]),
+>  PBR([[-1], [-2]], [[-2, 1], [2]])]);;
+gap> Size(S);
+15
+gap> Size(Semigroup(DirectProduct(S, S)));
+225
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(list);
 gap> Unbind(S);
