@@ -81,7 +81,7 @@ function(blocks)
   local gr, canon, scc, rep, i;
 
   gr := AsDigraph(blocks);
-  gr := OnDigraphs(gr, DigraphCanonicalLabelling(gr));
+  gr := OnDigraphs(gr, BlissCanonicalLabelling(gr));
   canon := [];
 
   scc := DigraphStronglyConnectedComponents(gr).comps;

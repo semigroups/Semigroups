@@ -25,7 +25,7 @@ function(f, n)
 
   digraph := AsDigraph(f, n);
   return AsTransformation(OnDigraphs(digraph,
-                                     DigraphCanonicalLabelling(digraph)));
+                                     BlissCanonicalLabelling(digraph)));
 end);
 
 InstallMethod(TransformationByImageAndKernel, "for an image and partition",
