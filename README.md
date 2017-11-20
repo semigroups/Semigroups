@@ -22,7 +22,7 @@ It is assumed that you have a working copy of GAP with version number 4.9.0 or h
 
 The  following  is  a  summary of the steps that should lead to a successful installation of [Semigroups](https://gap-packages.github.io/Semigroups):
 
-* get the [IO](http://gap-packages.github.io/io/) package version 4.4.6 or higher
+* get the [IO](http://gap-packages.github.io/io/) package version 4.5.0 or higher
 
 * get the [Orb](http://gap-packages.github.io/orb/) package version 4.8.0 or higher. 
   Both [Orb](http://gap-packages.github.io/orb/) and [Semigroups](https://gap-packages.github.io/Semigroups) perform better if [Orb](http://gap-packages.github.io/orb/) is compiled, so compile [Orb](http://gap-packages.github.io/orb/)!

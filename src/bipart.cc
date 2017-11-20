@@ -29,8 +29,7 @@
 #include <vector>
 
 #include "libsemigroups/src/semigroups.h"
-#include "src/permutat.h"
-#include "src/precord.h"
+#include "src/compiled.h"
 
 using libsemigroups::Timer;
 using libsemigroups::glob_reporter;

@@ -22,8 +22,7 @@ gap> G := AsSemigroup(IsTransformationSemigroup, MathieuGroup(11));
 gap> R := RectangularBand(3, 2);
 <regular transformation semigroup of size 6, degree 6 with 3 
  generators>
-gap> S := DirectProduct(G, R);
-<transformation semigroup of size 47520, degree 17 with 9 generators>
+gap> S := DirectProduct(G, R);;
 gap> IsRectangularGroup(R);
 true
 gap> IsRectangularGroup(G);

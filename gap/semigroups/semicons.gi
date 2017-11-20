@@ -596,7 +596,7 @@ Unbind(_IsXSemigroup);
 
 InstallGlobalFunction(LeftZeroSemigroup,
 function(arg)
-  local filt, n, max, deg, N, R, gens, im, iter, r, i;
+  local filt, n, S, max, deg, N, R, gens, im, iter, r, i;
 
   if Length(arg) = 1 then
     filt := IsTransformationSemigroup;
@@ -613,7 +613,9 @@ function(arg)
   elif n = 1 then
     return TrivialSemigroup(filt);
   elif filt <> IsTransformationSemigroup then
-    return RectangularBand(filt, n, 1);
+    S := RectangularBand(filt, n, 1);
+    SetIsLeftZeroSemigroup(S, true);
+    return S;
   fi;
 
   # calculate the minimal possible degree
@@ -638,14 +640,16 @@ function(arg)
     Add(gens, Transformation(Concatenation(im, NextIterator(iter))));
   od;
 
-  return Semigroup(gens, rec(acting := false));
+  S := Semigroup(gens, rec(acting := false));
+  SetIsLeftZeroSemigroup(S, true);
+  return S;
 end);
 
 # Right zero semigroup: main method
 
 InstallGlobalFunction(RightZeroSemigroup,
 function(arg)
-  local filt, n, max, deg, ker, add, iter, gens, i;
+  local filt, n, S, max, deg, ker, add, iter, gens, i;
 
   if Length(arg) = 1 then
     filt := IsTransformationSemigroup;
@@ -662,7 +666,9 @@ function(arg)
   elif n = 1 then
     return TrivialSemigroup(filt);
   elif filt <> IsTransformationSemigroup then
-    return RectangularBand(filt, 1, n);
+    S := RectangularBand(filt, 1, n);
+    SetIsRightZeroSemigroup(S, true);
+    return S;
   fi;
 
   # calculate the minimal possible degree
@@ -703,7 +709,10 @@ function(arg)
   for i in [1 .. n] do
     Add(gens, TransformationByImageAndKernel(NextIterator(iter), ker));
   od;
-  return Semigroup(gens, rec(acting := false));
+
+  S := Semigroup(gens, rec(acting := false));
+  SetIsRightZeroSemigroup(S, true);
+  return S;
 end);
 
 InstallGlobalFunction(BrandtSemigroup,
