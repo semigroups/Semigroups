@@ -592,7 +592,7 @@ function(mat)
   colors := Concatenation([1 .. Length(mat![1])] * 0 + 1,
                           [1 .. Length(mat![1])] * 0 + 2);
 
-  p  := DigraphCanonicalLabelling(gr, colors);
+  p  := BlissCanonicalLabelling(gr, colors);
   return _AsBooleanMat(OnDigraphs(gr, p));
 end);
 
