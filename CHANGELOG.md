@@ -2,6 +2,11 @@
 
 #### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.9 (released 24/11/2017)
+
+This version contains some minor bugfixes, and updates for compatibility GAP
+4.9, IO 4.5.0, and Digraphs 0.11.0. 
+
 ### Version 3.0.8 (released 10/11/2017)
 
 This version contains some minor bugfixes, and updates for compatibility GAP
