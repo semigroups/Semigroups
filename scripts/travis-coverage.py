@@ -43,7 +43,8 @@ except (subprocess.CalledProcessError, IOError, OSError):
 
 filename = _DIR + '/index.html'
 if not (exists(filename) and isfile(filename)):
-    sys.exit('\n' + _ERR_PREFIX + 'Failed to find file://' + filename + '\033[0m')
+    print _WARN_PREFIX + 'Could not find file://' + filename + '\033[0m'
+    sys.exit(0)
 
 gi_file = ntpath.basename(f).split('.')[0] + '.gi'
 for line in open(filename):
