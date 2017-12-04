@@ -23,9 +23,9 @@ SEMIGROUPS.ProcessOptionsRec := function(defaults, opts)
   for name in RecNames(defaults) do
     if not IsBound(opts.(name)) then
       opts.(name) := defaults.(name);
-    elif TNUM_OBJ(opts.(name))[1] <> TNUM_OBJ(defaults.(name))[1] then
-      Info(InfoWarning, 1, "Expected a ", TNUM_OBJ(defaults.(name))[2],
-           " for option \"", name, "\", but got a ", TNUM_OBJ(opts.(name))[2]);
+    elif TNUM_OBJ(opts.(name)) <> TNUM_OBJ(defaults.(name)) then
+      Info(InfoWarning, 1, "Expected a ", TNAM_OBJ(defaults.(name)),
+           " for option \"", name, "\", but got a ", TNAM_OBJ(opts.(name)));
       Info(InfoWarning, 1, "Ignoring the value of option \"", name, "\"");
       opts.(name) := defaults.(name);
     fi;
@@ -33,6 +33,7 @@ SEMIGROUPS.ProcessOptionsRec := function(defaults, opts)
   for name in RecNames(opts) do
     if not IsBound(defaults.(name)) then
       Info(InfoWarning, 1, "Ignoring unknown option \"", name, "\"");
+      Unbind(opts.(name));
     fi;
   od;
   return opts;
