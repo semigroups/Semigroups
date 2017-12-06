@@ -20,6 +20,7 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-5-multilib
+      - libtool
 
 # Matrix
 #                    | GAP: master  | GAP: stable-4.9 | GAP: required |
@@ -74,16 +75,23 @@ matrix:
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
-  - if [ "$ABI" == "32" ]; then export GAP_FLAGS="ABI=32 --host=i686-linux-gnu"; fi
-  - if [ "$ABI" == "32" ]; then export PKG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 LOPTS=-m32 --host=i686-linux-gnu"; fi
+  - if [ "$ABI" == "32" ]; then
+      export GAP_FLAGS="ABI=32 --host=i686-linux-gnu";
+      export PKG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 LOPTS=-m32 --host=i686-linux-gnu";
+    fi;
 
 before_script:
   - export GAPROOT="$HOME/gap"
-  - if [ ! "$SUITE" == "lint" ]; then echo "deb http://us.archive.ubuntu.com/ubuntu/ vivid main" | sudo tee -a /etc/apt/sources.list; fi;
-  - if [ ! "$SUITE" == "lint" ]; then sudo apt-get update -qq; fi;
-  - if [ ! "$SUITE" == "lint" ]; then sudo apt-get install libgmp-dev; fi;
-  - if [ ! "$SUITE" == "lint" ]; then sudo apt-get install libgmp-dev:i386; fi;
-  - if [ ! "$SUITE" == "lint" ]; then sudo apt-get install --only-upgrade autoconf; fi;
+  - if [ "$SUITE" != "lint" ]; then
+      echo "deb http://www.mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ zesty main" | sudo tee -a /etc/apt/sources.list;
+      sudo apt-get update -qq;
+      sudo apt-get install --only-upgrade autoconf;
+    fi;
+  - if [ "$ABI" == "64" ]; then sudo apt-get install libgmp-dev; fi;
+  - if [ "$ABI" == "32" ]; then
+      sudo apt-get install libgmp-dev:i386;
+      sudo ln -s /usr/include/asm-generic /usr/include/asm;
+    fi;
   - scripts/travis-build-dependencies.sh
 
 script:
