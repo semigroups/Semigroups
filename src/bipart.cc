@@ -1376,7 +1376,6 @@ class IdempotentCounter {
                     << std::thread::hardware_concurrency()
                     << " threads");
     Timer timer;
-    timer.start();
 
     for (size_t i = 0; i < _nr_threads; i++) {
       _threads.push_back(
@@ -1387,7 +1386,7 @@ class IdempotentCounter {
       _threads[i].join();
     }
 
-    REPORT(timer.string("elapsed time = "));
+    REPORT(timer);
 
     size_t              max = *max_element(_ranks.begin(), _ranks.end()) + 1;
     std::vector<size_t> out = std::vector<size_t>(max, 0);
@@ -1410,7 +1409,6 @@ class IdempotentCounter {
  private:
   void thread_counter(size_t thread_id) {
     Timer timer;
-    timer.start();
 
     for (unpr_t index : _unprocessed[thread_id]) {
       if (tester(thread_id, index.first, index.first)) {
