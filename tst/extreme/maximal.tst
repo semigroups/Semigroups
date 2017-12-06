@@ -819,6 +819,37 @@ gap> S := Semigroup(S);;
 gap> NrMaximalSubsemigroups(S);
 9
 
+#T# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 1
+gap> S := Semigroup([Transformation([1, 4, 2, 5, 8, 6, 2, 7]),
+>  Transformation([2, 6, 6, 4, 2, 2, 1, 2]),
+>  Transformation([3, 6, 6, 7, 8, 2, 1, 5]),
+>  Transformation([3, 7, 4, 5, 4, 6, 6, 2]),
+>  Transformation([5, 7, 5, 2, 8, 1, 2, 4])]);;
+gap> NrMaximalSubsemigroups(S);
+5
+
+#T# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 2
+gap> S := Semigroup([Transformation([8, 4, 6, 4, 5, 3, 8, 8]),
+>  Transformation([1, 3, 5, 5, 8, 4, 1, 8]),
+>  Transformation([1, 7, 5, 3, 3, 7, 7, 5]),
+>  Transformation([4, 7, 4, 5, 1, 7, 1]),
+>  Transformation([5, 5, 8, 1, 4, 1, 4, 5]),
+>  Transformation([2, 8, 8, 6, 5, 8, 1, 3]),
+>  Transformation([6, 6, 2, 8, 5, 4, 4, 5])]);;
+gap> NrMaximalSubsemigroups(S);
+39
+
+#T# maximal: NrMaximalSubsemigroups, for a transformation semigroup, 3
+gap> S := Semigroup([Transformation([6, 3, 2, 5, 2, 8, 4, 2]),
+>  Transformation([1, 6, 6, 3, 3, 5, 4, 5]),
+>  Transformation([4, 2, 7, 3, 8, 5, 3, 3]),
+>  Transformation([2, 8, 1, 8, 3, 7, 4, 4]),
+>  Transformation([4, 6, 6, 8, 8, 1, 7, 8]),
+>  Transformation([6, 1, 3, 6, 7, 5, 7, 6]),
+>  Transformation([2, 7, 7, 4, 1, 5, 8, 2])]);;
+gap> NrMaximalSubsemigroups(S);
+18
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(C);
