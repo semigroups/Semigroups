@@ -21,9 +21,9 @@
 #include <algorithm>
 #include <iostream>
 
-#include "semigroups-debug.h"
 #include "libsemigroups/src/report.h"
 #include "rnams.h"
+#include "semigroups-debug.h"
 #include "semigrp.h"
 
 using libsemigroups::Timer;
@@ -117,7 +117,6 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
   REPORT_FROM_FUNC("limit = " << int_limit);
 
   Timer timer;
-  timer.start();
 
   // get everything out of <data>
 
@@ -321,7 +320,7 @@ Obj fropin(Obj obj, Obj limit, Obj lookfunc, Obj looking) {
                                 << " rules, max word length "
                                 << len + 1
                                 << ", finished!");
-      REPORT_FROM_FUNC(timer.string("elapsed time = "));  // NOLINT()
+      REPORT_FROM_FUNC("elapsed time = " << timer);  // NOLINT()
     }
   }
 
