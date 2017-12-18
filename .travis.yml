@@ -10,7 +10,6 @@ compiler:
 env:
   global:
     - COVDIR=coverage
-    - LIBSEMI=v0.6.0
     - g++=g++-5
     - gcc=gcc-5
 
