@@ -249,7 +249,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 gap> map := InverseGeneralMapping(map);
-((3,4), GroupHomomorphismByImages( Group( () ), Group( [ () ] ), [  ], 
+((3,4), GroupHomomorphismByImages( Group( [ () ] ), Group( [ () ] ), [  ], 
 [  ] ), [ (), (), (), () ])
 gap> BruteForceIsoCheck(map);
 true
@@ -687,7 +687,7 @@ true
 gap> BruteForceInverseCheck(map);
 true
 gap> map := InverseGeneralMapping(map);
-((), GroupHomomorphismByImages( Group( [ (1,2)(3,6)(4,5), (1,4)(2,3)(5,6) 
+((), GroupHomomorphismByImages( Group( [ (1,2)(3,6)(4,5), (1,3,5)(2,4,6) 
  ] ), Group( [ (2,4), (1,2) ] ), [ (1,2)(3,6)(4,5), (1,4)(2,3)(5,6) ], 
 [ (2,4), (1,2) ] ), [ (), (1,2), (1,4,2) ])
 gap> BruteForceIsoCheck(map);
