@@ -19,7 +19,7 @@ if [ "$SUITE" == "lint" ]; then
   $GAPLINT `grep "^\s\+gaplint" Makefile.am | cut -d " " -f2-`
   $CPPLINT --extensions=c,cc,h `grep "^\s\+cpplint" Makefile.am | cut -d " " -f2-`
 
-elif [ ! -z "$GAP" ]; then
+else
 
   GAP_DIR=`pwd`
   cd $GAP_DIR/pkg/semigroups
