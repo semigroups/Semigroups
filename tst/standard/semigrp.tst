@@ -471,8 +471,14 @@ true
 gap> IsIdenticalObj(S, T);
 true
 gap> T := ClosureInverseSemigroup(S, 
-> [Bipartition([[1, 2, 3, -1, -2, -4], [4, -3]])]);
-<inverse block bijection semigroup of degree 4 with 5 generators>
+> [Bipartition([[1, 2, 3, -1, -2, -4], [4, -3]])]);;
+gap> T =
+> InverseSemigroup(Bipartition([[1, -4], [2, 3, -1], [4, -2, -3]]),
+>                  Bipartition([[1, -2, -4], [2, -3], [3, 4, -1]]),
+>                  Bipartition([[1, 2, 3, 4, -1, -2, -3, -4]]),
+>                  Bipartition([[1, 2, -4], [3, -3], [4, -1, -2]]),
+>                  Bipartition([[1, 2, 3, -1, -2, -4], [4, -3]]));
+true
 gap> Size(T);
 108
 gap> S = T;
@@ -483,12 +489,24 @@ gap> S := SymmetricInverseMonoid(5);
 <symmetric inverse monoid of degree 5>
 gap> Size(S);
 1546
-gap> T := ClosureInverseSemigroup(S, PartialPerm([6]));
-<inverse partial perm semigroup of rank 6 with 5 generators>
+gap> T := ClosureInverseSemigroup(S, PartialPerm([6]));;
+gap> T =
+> InverseSemigroup(PartialPerm([1, 2, 3, 4, 5], [2, 3, 4, 5, 1]),
+>                  PartialPerm([1, 2, 3, 4, 5], [2, 1, 3, 4, 5]),
+>                  PartialPerm([2, 3, 4, 5], [1, 2, 3, 4]),
+>                  PartialPerm([1, 2, 3, 4, 5], [1, 2, 3, 4, 5]),
+>                  PartialPerm([1], [6]));
+true
 gap> Size(T);
 1557
-gap> T := ClosureInverseSemigroup(S, PartialPerm([6]), rec());
-<inverse partial perm semigroup of rank 6 with 5 generators>
+gap> T := ClosureInverseSemigroup(S, PartialPerm([6]), rec());;
+gap> T =
+> InverseSemigroup(PartialPerm([1, 2, 3, 4, 5], [2, 3, 4, 5, 1]),
+>                  PartialPerm([1, 2, 3, 4, 5], [2, 1, 3, 4, 5]),
+>                  PartialPerm([2, 3, 4, 5], [1, 2, 3, 4]),
+>                  PartialPerm([1, 2, 3, 4, 5], [1, 2, 3, 4, 5]),
+>                  PartialPerm([1], [6]));
+true
 gap> Size(T);
 1557
 
@@ -986,11 +1004,21 @@ gap> IsIdenticalObj(ClosureSemigroupOrMonoidNC(Semigroup, S, [], rec()), S);
 true
 
 # Test ClosureInverseMonoid
-gap> ClosureInverseMonoid(SymmetricInverseMonoid(3), PartialPerm([4 .. 6]));
-<inverse partial perm monoid of rank 6 with 5 generators>
+gap> ClosureInverseMonoid(SymmetricInverseMonoid(3), PartialPerm([4 .. 6])) 
+> = InverseMonoid(PartialPerm([1, 2, 3], [2, 3, 1]),
+>                 PartialPerm([1, 2, 3], [2, 1, 3]), 
+>                 PartialPerm([2, 3], [1, 2]),
+>                 PartialPerm([1, 2, 3], [1, 2, 3]),
+>                 PartialPerm([1, 2, 3], [4, 5, 6]));
+true
 gap> ClosureInverseMonoid(SymmetricInverseMonoid(3), PartialPerm([4 .. 6]),
-> rec());
-<inverse partial perm monoid of rank 6 with 5 generators>
+> rec())
+> = InverseMonoid(PartialPerm([1, 2, 3], [2, 3, 1]),
+>                 PartialPerm([1, 2, 3], [2, 1, 3]), 
+>                 PartialPerm([2, 3], [1, 2]),
+>                 PartialPerm([1, 2, 3], [1, 2, 3]),
+>                 PartialPerm([1, 2, 3], [4, 5, 6]));
+true
 gap> ClosureInverseMonoid(DualSymmetricInverseMonoid(3),
 > Bipartition([[1, 2, -2], [3, -1], [-3]]));
 Error, Semigroups: ClosureInverseMonoid: usage,
