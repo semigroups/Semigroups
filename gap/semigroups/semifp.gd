@@ -8,3 +8,5 @@
 #############################################################################
 ##
 
+DeclareAttribute("FreeSemigroupCongruence", IsFpSemigroup);
+DeclareAttribute("FreeSemigroupCongruence", IsFpMonoid);

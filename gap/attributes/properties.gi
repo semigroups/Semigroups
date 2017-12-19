@@ -1753,19 +1753,6 @@ function(S)
   return NrIdempotents(S) = 1;
 end);
 
-# WW the following lets us get higher code coverage
-
-InstallMethod(IsFinite, "for a finitely presented semigroup",
-[IsFpSemigroup],
-function(S)
-  if IsEmpty(RelationsOfFpSemigroup(S)) or
-      ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2])) then
-    #TODO add nr gens is higher than nr relations
-    return false;
-  fi;
-  TryNextMethod();
-end);
-
 InstallMethod(IsSemigroupWithAdjoinedZero,
 "for a semigroup",
 [IsSemigroup],

@@ -8,28 +8,87 @@
 #############################################################################
 ##
 
-SEMIGROUPS.InitFpSemigroup := function(S)
-  local semi, rels, F;
-
-  Assert(1, IsFpSemigroup(S) or IsFpMonoid(S));
-
-  if IsBound(S!.cong) then
-    return;
-  fi;
-
-  if IsFpMonoid(S) then
-    S!.iso := IsomorphismSemigroup(IsFpSemigroup, S);
-    semi := Range(S!.iso);
-    rels := RelationsOfFpSemigroup(semi);
-    F := FreeSemigroupOfFpSemigroup(semi);
-  else
-    rels := RelationsOfFpSemigroup(S);
-    F := FreeSemigroupOfFpSemigroup(S);
-  fi;
-
-  S!.cong := SemigroupCongruenceByGeneratingPairs(F, rels);
-  S!.report := SEMIGROUPS.DefaultOptionsRec.report;
+SEMIGROUPS.ExtRepObjToWord := function(ext_rep_obj)
+  local n, word, val, pow, i;
+  n    := Length(ext_rep_obj);
+  word := [];
+  for i in [1, 3 .. n - 1] do
+    val := ext_rep_obj[i];
+    pow := ext_rep_obj[i + 1];
+    while pow > 0 do
+      Add(word, val);
+      pow := pow - 1;
+    od;
+  od;
+  return word;
 end;
+
+SEMIGROUPS.WordToExtRepObj := function(word)
+  local n, ext_rep_obj, i, j;
+  n           := Length(word);
+  ext_rep_obj := [];
+  i           := 1;
+  j           := 1;
+
+  while i <= Length(word) do
+    Add(ext_rep_obj, word[i]);
+    Add(ext_rep_obj, 1);
+    i := i + 1;
+    while i <= Length(word) and word[i] = ext_rep_obj[j] do
+      ext_rep_obj[j + 1] := ext_rep_obj[j + 1] + 1;
+      i := i + 1;
+    od;
+    j := j + 2;
+  od;
+  return ext_rep_obj;
+end;
+
+SEMIGROUPS.ExtRepObjToString := function(ext_rep_obj)
+  local alphabet, out, i;
+  alphabet := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  out := "";
+  for i in [1, 3 .. Length(ext_rep_obj) - 1] do
+    if ext_rep_obj[i] > Length(alphabet) then
+      ErrorNoReturn("SEMIGROUPS.ExtRepObjToString: the maximum value in an ",
+                    "odd position of the argument must be at most ",
+                    Length(alphabet), ",");
+    fi;
+    Add(out, alphabet[ext_rep_obj[i]]);
+    if ext_rep_obj[i + 1] > 1 then
+      Append(out, " ^ ");
+      Append(out, String(ext_rep_obj[i + 1]));
+    fi;
+  od;
+  return out;
+end;
+
+SEMIGROUPS.WordToString := function(word)
+  local alphabet, out, letter;
+  alphabet := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  out := "";
+  for letter in word do
+    if letter > Length(alphabet) then
+      ErrorNoReturn("SEMIGROUPS.WordToString: the maximum value in the",
+                    " argument be at most ", Length(alphabet), ",");
+    fi;
+    Add(out, alphabet[letter]);
+  od;
+  return out;
+end;
+
+InstallMethod(FreeSemigroupCongruence, "for an fp semigroup", [IsFpSemigroup], 
+function(S)
+  return SemigroupCongruenceByGeneratingPairs(FreeSemigroupOfFpSemigroup(S),
+                                              RelationsOfFpSemigroup(S));
+end);
+
+InstallMethod(FreeSemigroupCongruence, "for an fp monoid", [IsFpMonoid], 
+function(S)
+  local T;
+  T    := AsSemigroup(IsFpSemigroup, S);
+  return SemigroupCongruenceByGeneratingPairs(FreeSemigroupOfFpSemigroup(T),
+                                              RelationsOfFpSemigroup(T));
+end);
 
 InstallMethod(ExtRepOfObj, "for an element of an fp semigroup",
 [IsElementOfFpSemigroup],
@@ -45,14 +104,12 @@ end);
 
 InstallMethod(Size, "for an fp semigroup", [IsFpSemigroup],
 function(S)
-  SEMIGROUPS.InitFpSemigroup(S);
-  return NrEquivalenceClasses(S!.cong);
+  return NrEquivalenceClasses(FreeSemigroupCongruence(S));
 end);
 
 InstallMethod(Size, "for an fp monoid", [IsFpMonoid],
 function(S)
-  SEMIGROUPS.InitFpSemigroup(S);
-  return NrEquivalenceClasses(S!.cong);
+  return NrEquivalenceClasses(FreeSemigroupCongruence(S));
 end);
 
 InstallMethod(\=, "for two elements of an f.p. semigroup",
@@ -60,8 +117,8 @@ IsIdenticalObj, [IsElementOfFpSemigroup, IsElementOfFpSemigroup],
 function(x1, x2)
   local S;
   S := FpSemigroupOfElementOfFpSemigroup(x1);
-  SEMIGROUPS.InitFpSemigroup(S);
-  return [UnderlyingElement(x1), UnderlyingElement(x2)] in S!.cong;
+  return [UnderlyingElement(x1), UnderlyingElement(x2)] 
+         in FreeSemigroupCongruence(S);
 end);
 
 InstallMethod(\=, "for two elements of an f.p. monoid",
@@ -69,8 +126,7 @@ IsIdenticalObj, [IsElementOfFpMonoid, IsElementOfFpMonoid],
 function(x1, x2)
   local M;
   M := FpMonoidOfElementOfFpMonoid(x1);
-  SEMIGROUPS.InitFpSemigroup(M);
-  return x1 ^ M!.iso = x2 ^ M!.iso;
+  return x1 ^ IsomorphismFpSemigroup(M) = x2 ^ IsomorphismFpSemigroup(M);
 end);
 
 InstallMethod(\<, "for two elements of a f.p. semigroup",
@@ -78,9 +134,10 @@ IsIdenticalObj, [IsElementOfFpSemigroup, IsElementOfFpSemigroup],
 function(x1, x2)
   local S, class1, class2;
   S := FpSemigroupOfElementOfFpSemigroup(x1);
-  SEMIGROUPS.InitFpSemigroup(S);
-  class1 := EquivalenceClassOfElement(S!.cong, UnderlyingElement(x1));
-  class2 := EquivalenceClassOfElement(S!.cong, UnderlyingElement(x2));
+  class1 := EquivalenceClassOfElement(FreeSemigroupCongruence(S),
+                                      UnderlyingElement(x1));
+  class2 := EquivalenceClassOfElement(FreeSemigroupCongruence(S),
+                                      UnderlyingElement(x2));
   return class1 < class2;
 end);
 
@@ -265,8 +322,14 @@ function(S)
 
   map := x -> EvaluateWord(B, Factorization(S, x));
   inv := x -> MappedWord(UnderlyingElement(x), A, GeneratorsOfSemigroup(S));
+  map := MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
 
-  return MagmaIsomorphismByFunctionsNC(S, Q, map, inv);
+  if IsTransformationSemigroup(S) then
+    SetIsomorphismTransformationSemigroup(Q, InverseGeneralMapping(map));
+  elif IsPartialPermSemigroup(S) then
+    SetIsomorphismPartialPermSemigroup(Q, InverseGeneralMapping(map));
+  fi;
+  return map;
 end);
 
 # same method for ideals
@@ -449,95 +512,32 @@ function(G)
                                        x -> (x ^ inv2) ^ inv1);
 end);
 
-SEMIGROUPS.ExtRepObjToWord := function(ext_rep_obj)
-  local n, word, val, pow, i;
-  n    := Length(ext_rep_obj);
-  word := [];
-  for i in [1, 3 .. n - 1] do
-    val := ext_rep_obj[i];
-    pow := ext_rep_obj[i + 1];
-    while pow > 0 do
-      Add(word, val);
-      pow := pow - 1;
-    od;
-  od;
-  return word;
-end;
-
-SEMIGROUPS.WordToExtRepObj := function(word)
-  local n, ext_rep_obj, i, j;
-  n           := Length(word);
-  ext_rep_obj := [];
-  i           := 1;
-  j           := 1;
-
-  while i <= Length(word) do
-    Add(ext_rep_obj, word[i]);
-    Add(ext_rep_obj, 1);
-    i := i + 1;
-    while i <= Length(word) and word[i] = ext_rep_obj[j] do
-      ext_rep_obj[j + 1] := ext_rep_obj[j + 1] + 1;
-      i := i + 1;
-    od;
-    j := j + 2;
-  od;
-  return ext_rep_obj;
-end;
-
-SEMIGROUPS.ExtRepObjToString := function(ext_rep_obj)
-  local alphabet, out, i;
-  alphabet := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  out := "";
-  for i in [1, 3 .. Length(ext_rep_obj) - 1] do
-    if ext_rep_obj[i] > Length(alphabet) then
-      ErrorNoReturn("SEMIGROUPS.ExtRepObjToString: the maximum value in an ",
-                    "odd position of the argument must be at most ",
-                    Length(alphabet), ",");
-    fi;
-    Add(out, alphabet[ext_rep_obj[i]]);
-    if ext_rep_obj[i + 1] > 1 then
-      Append(out, " ^ ");
-      Append(out, String(ext_rep_obj[i + 1]));
-    fi;
-  od;
-  return out;
-end;
-
-SEMIGROUPS.WordToString := function(word)
-  local alphabet, out, letter;
-  alphabet := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  out := "";
-  for letter in word do
-    if letter > Length(alphabet) then
-      ErrorNoReturn("SEMIGROUPS.WordToString: the maximum value in the",
-                    " argument be at most ", Length(alphabet), ",");
-    fi;
-    Add(out, alphabet[letter]);
-  od;
-  return out;
-end;
-
-## The following method could disappear if there are methods for Green's
-## relations etc so that the other method in attr.gi can be used.
-#
-#InstallMethod(MultiplicativeNeutralElement, "for an fp semigroup",
-#[IsFpSemigroup],
-#function(S)
-#  local e;
-#
-#  if not IsFinite(S) then
-#    TryNextMethod();
-#  fi;
-#  for e in Idempotents(S) do
-#    if ForAll(GeneratorsOfSemigroup(S), x -> x * e = x and e * x = x) then
-#      return e;
-#    fi;
-#  od;
-#  return fail;
-#end);
-
 InstallMethod(Factorization, "for an fp semigroup and element",
 IsCollsElms, [IsFpSemigroup, IsElementOfFpSemigroup],
 function(S, x)
   return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x));
+end);
+
+InstallMethod(IsFinite, "for a finitely presented semigroup",
+[IsFpSemigroup],
+function(S)
+  if IsEmpty(RelationsOfFpSemigroup(S))
+      or ForAll(RelationsOfFpSemigroup(S), x -> IsIdenticalObj(x[1], x[2]))
+      or Length(GeneratorsOfSemigroup(S)) >
+         Length(RelationsOfFpSemigroup(S)) then
+    return false;
+  fi;
+  TryNextMethod();
+end);
+
+InstallMethod(IsFinite, "for a finitely presented monoid",
+[IsFpMonoid],
+function(S)
+  if IsEmpty(RelationsOfFpMonoid(S))
+      or ForAll(RelationsOfFpMonoid(S), x -> IsIdenticalObj(x[1], x[2]))
+      or Length(GeneratorsOfMonoid(S)) >
+         Length(RelationsOfFpMonoid(S)) then
+    return false;
+  fi;
+  TryNextMethod();
 end);
