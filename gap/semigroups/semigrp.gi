@@ -786,6 +786,10 @@ function(Constructor, S, coll, opts)
     fi;
   od;
 
+  if Constructor = InverseMonoid and not One(coll) in coll then
+    AddSet(coll, One(coll));
+  fi;
+
   # Shuffle and sort by rank or the D-order
   coll := Shuffle(coll);
   if IsGeneratorsOfActingSemigroup(coll) then
