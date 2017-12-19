@@ -947,7 +947,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
       word_t w;  // changed in place by the next line
       semi_cpp->set_report(semi_obj_get_report(so));
       semi_cpp->factorisation(w, pos_c - 1);
-      words = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, pos_c);
+      words = NEW_PLIST(T_PLIST + IMMUTABLE, pos_c);
       // IMMUTABLE since it should not be altered on the GAP level
       SET_LEN_PLIST(words, pos_c);
       SET_ELM_PLIST(words, pos_c, word_t_to_plist(w));
