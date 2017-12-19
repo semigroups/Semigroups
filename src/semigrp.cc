@@ -560,7 +560,6 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, semi_cpp->size());
     SET_LEN_PLIST(out, semi_cpp->size());
     size_t i  = 1;
-    auto   it = semi_cpp->cbegin_sorted();
     for (auto it = semi_cpp->cbegin_sorted(); it < semi_cpp->cend_sorted();
          ++it) {
       SET_ELM_PLIST(out, i++, converter->unconvert(*it));
