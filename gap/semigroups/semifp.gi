@@ -541,3 +541,100 @@ IsCollsElms, [IsFpSemigroup, IsElementOfFpSemigroup],
 function(S, x)
   return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x));
 end);
+
+InstallMethod(IsomorphismFpSemigroup,
+"for an inverse partial perm semigroup",
+[IsPartialPermSemigroup and IsInverseActingSemigroupRep],
+function(M)
+  local add_to_odd_positions, S, SS, G, GG, s, g, F, rels, fam, alpha,
+  beta, lhs, rhs, map, H, o, comp, U, rhs_list, conj, MF, T, inv, rel, x, y, m,
+  i;
+
+  if not IsFactorisableInverseMonoid(M) then
+    TryNextMethod();
+  fi;
+
+  add_to_odd_positions := function(list, s)
+    local i;
+    for i in [1, 3 .. Length(list) - 1] do
+      list[i] := list[i] + s;
+    od;
+    return list;
+  end;
+
+  # FIXME: this shouldn't be necessary but for an error with
+  # MinimalFactorization
+  S := Semigroup(IdempotentGeneratedSubsemigroup(M), rec(acting := false));
+  SS := GeneratorsOfSemigroup(S);
+  G := GroupOfUnits(M);
+  GG := GeneratorsOfSemigroup(G);
+  s := Length(GeneratorsOfSemigroup(S));
+  g := Length(GeneratorsOfSemigroup(G));
+
+  F := FreeSemigroup(s + g);
+  rels := [];
+  fam := ElementsFamily(FamilyObj(F));
+
+  # R_S - semigroup relations for the idempotent generated subsemigroup
+  alpha := IsomorphismFpSemigroup(S);
+  for rel in RelationsOfFpSemigroup(Image(alpha)) do
+    Add(rels, [ObjByExtRep(fam, ExtRepOfObj(rel[1])),
+               ObjByExtRep(fam, ExtRepOfObj(rel[2]))]);
+  od;
+
+  # R_G - semigroup relations for the group of units
+  beta  := IsomorphismFpSemigroup(G);
+  for rel in RelationsOfFpSemigroup(Image(beta)) do
+    lhs := add_to_odd_positions(ShallowCopy(ExtRepOfObj(rel[1])), s);
+    rhs := add_to_odd_positions(ShallowCopy(ExtRepOfObj(rel[2])), s);
+    Add(rels, [ObjByExtRep(fam, lhs), ObjByExtRep(fam, rhs)]);
+  od;
+
+  # R_product
+  for x in [1 .. s] do
+    for y in [1 .. g] do
+      rhs := Factorization(S, SS[x] ^ (GG[y] ^ -1));
+      Add(rels, [F.(s + y) * F.(x),
+                 EvaluateWord(GeneratorsOfSemigroup(F), rhs) * F.(s + y)]);
+    od;
+  od;
+
+  map := InverseGeneralMapping(IsomorphismPermGroup(G));
+  H   := Source(map);
+  o   := Enumerate(LambdaOrb(M));
+  #R_tilde
+  for m in [2 .. Length(OrbSCC(o))] do
+    comp := OrbSCC(o)[m];
+    U := SmallGeneratingSet(Stabilizer(H,
+                                       PartialPerm(o[comp[1]], o[comp[1]]),
+                                       OnRight));
+
+    for i in comp do
+      rhs_list := Factorization(S, PartialPerm(o[i], o[i]));
+      rhs := EvaluateWord(GeneratorsOfSemigroup(F), rhs_list);
+      conj := MappingPermListList(o[comp[1]], o[i]);
+      for x in List(U, x -> x ^ conj) do
+        lhs := ShallowCopy(rhs_list);
+        Append(lhs, Factorization(G, x ^ map) + s);
+        Add(rels, [EvaluateWord(GeneratorsOfSemigroup(F), lhs), rhs]);
+      od;
+    od;
+  od;
+
+  # Relation to indentify One(G) and One(S)
+  Add(rels, [EvaluateWord(GeneratorsOfSemigroup(F),
+                          Factorization(G, One(G)) + s),
+             EvaluateWord(GeneratorsOfSemigroup(F),
+                          Factorization(S, One(S)))]);
+
+  MF := F / rels; # FpSemigroup which is isomorphic to M, with different gens.
+  fam := ElementsFamily(FamilyObj(MF));
+  T := Semigroup(Concatenation(SS, GG)); # M with isomorphic generators to MF
+
+  map := x -> ElementOfFpSemigroup(fam, EvaluateWord(GeneratorsOfSemigroup(F),
+                                                     Factorization(T, x)));
+  inv := x -> EvaluateWord(GeneratorsOfSemigroup(T),
+         SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)));
+
+  return MagmaIsomorphismByFunctionsNC(M, MF, map, inv);
+end);
