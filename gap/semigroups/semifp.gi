@@ -298,7 +298,7 @@ function(S)
     spos := Position(sgens, sgens[i]);
     mpos := Position(mgens, sgens[i], start[spos]);
     lookup[i] := mpos;
-    if spos <> fail then
+    if mpos <> fail then
       start[spos] := mpos;
     fi;
   od;
@@ -542,6 +542,10 @@ function(S, x)
   return SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x));
 end);
 
+# This method is based on the following paper
+# Presentations of Factorizable Inverse Monoids
+# David Easdown, James East, and D. G. FitzGerald
+# July 19, 2004
 InstallMethod(IsomorphismFpSemigroup,
 "for an inverse partial perm semigroup",
 [IsPartialPermSemigroup and IsInverseActingSemigroupRep],
@@ -555,16 +559,11 @@ function(M)
   fi;
 
   add_to_odd_positions := function(list, s)
-    local i;
-    for i in [1, 3 .. Length(list) - 1] do
-      list[i] := list[i] + s;
-    od;
+    list{[1, 3 .. Length(list) - 1]} := list{[1, 3 .. Length(list) - 1]} + s;
     return list;
   end;
 
-  # FIXME: this shouldn't be necessary but for an error with
-  # MinimalFactorization
-  S := Semigroup(IdempotentGeneratedSubsemigroup(M), rec(acting := false));
+  S := Semigroup(IdempotentGeneratedSubsemigroup(M));
   SS := GeneratorsOfSemigroup(S);
   G := GroupOfUnits(M);
   GG := GeneratorsOfSemigroup(G);
@@ -590,7 +589,7 @@ function(M)
     Add(rels, [ObjByExtRep(fam, lhs), ObjByExtRep(fam, rhs)]);
   od;
 
-  # R_product
+  # R_product - see page 4 of the paper
   for x in [1 .. s] do
     for y in [1 .. g] do
       rhs := Factorization(S, SS[x] ^ (GG[y] ^ -1));
@@ -602,7 +601,7 @@ function(M)
   map := InverseGeneralMapping(IsomorphismPermGroup(G));
   H   := Source(map);
   o   := Enumerate(LambdaOrb(M));
-  #R_tilde
+  #R_tilde - see page 4 of the paper
   for m in [2 .. Length(OrbSCC(o))] do
     comp := OrbSCC(o)[m];
     U := SmallGeneratingSet(Stabilizer(H,
@@ -634,7 +633,7 @@ function(M)
   map := x -> ElementOfFpSemigroup(fam, EvaluateWord(GeneratorsOfSemigroup(F),
                                                      Factorization(T, x)));
   inv := x -> EvaluateWord(GeneratorsOfSemigroup(T),
-         SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)));
+                           SEMIGROUPS.ExtRepObjToWord(ExtRepOfObj(x)));
 
   return MagmaIsomorphismByFunctionsNC(M, MF, map, inv);
 end);
