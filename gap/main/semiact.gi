@@ -444,6 +444,10 @@ function(Constructor, S, coll, opts)
     Add(coll, coll[1] ^ -1);
   fi;
 
+  if Constructor = InverseMonoid and One(T) <> One(S) then
+    Add(coll, One(T));
+  fi;
+
   o := StructuralCopy(LambdaOrb(S));
   AddGeneratorsToOrbit(o, coll);
 

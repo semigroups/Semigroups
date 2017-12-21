@@ -1372,22 +1372,6 @@ function(S, opts)
     # Regular and non-trivial non-maximal D-class
     Info(InfoSemigroups, 1, "...D[", i, "] is regular and non-trivial...");
 
-    # Find those elements of <D[i]> which are produced by the generators above
-    Info(InfoSemigroups, 1, "...computing which elements of D[", i, "] are ",
-                            "products of the generators above...");
-
-    to_test := ShallowCopy(Elements(D[i]));
-    while not IsEmpty(to_test) do
-      x := Remove(to_test);
-      if x in above_semigroup then
-        x := Elements(DClass(above_semigroup, x));
-        to_test := Difference(to_test, x);
-        for y in x do
-          AddSet(contain, y);
-        od;
-      fi;
-    od;
-
     if Length(contain) = Size(D[i]) then
       Info(InfoSemigroups, 1, "found no maximal subsemigroups.");
       continue;
@@ -1442,25 +1426,9 @@ function(S, opts)
     m := DigraphNrVertices(gamma_L);
     n := DigraphNrVertices(gamma_R);
 
+    gamma := DigraphDisjointUnion(gamma_L, gamma_R);
     red_L := BlistList(DigraphVertices(gamma_L), []);
     red_R := BlistList(DigraphVertices(gamma_R), []);
-
-    # Record which s.c.c.'s of L/R-classes contain forbidden elements
-    k := 0;
-    while k < Length(contain) and SizeBlist(red_L) < m do
-      k := k + 1;
-      x := First([1 .. Length(L)], z -> contain[k] in LL[z]);
-      red_L[comp_L.id[x]] := true;
-    od;
-    k := 0;
-    while k < Length(contain) and SizeBlist(red_R) < m do
-      k := k + 1;
-      x := First([1 .. Length(R)], z -> contain[k] in RR[z]);
-      red_R[comp_R.id[x]] := true;
-    od;
-
-    gamma := DigraphDisjointUnion(gamma_L, gamma_R);
-    red := Concatenation(red_L, red_R);
     comp := rec(id := Concatenation(comp_L.id, comp_R.id + m),
                 comps := Concatenation(comp_L.comps, comp_R.comps + m));
 
@@ -1495,20 +1463,45 @@ function(S, opts)
     while nredges < m * n and k < Length(contain) do
       k := k + 1;
       # work out the vertices of gamma which contain <contain[k]>
-      # TODO calculate the Blists red_L and red_R here to avoid work duplication
       l := comp_L.id[First([1 .. Length(L)], y -> contain[k] in LL[y])];
       r := comp_R.id[First([1 .. Length(R)], y -> contain[k] in RR[y])] + m;
       if not delta_prime[l][r] then
         nredges := nredges + 1;
         delta_prime[l][r] := true;
         delta_prime[r][l] := true;
+        red_L[l] := true;
+        red_R[r] := true;
       fi;
     od;
+
+    # Find those elements of <D[i]> which are produced by the generators above
+    # In fact, can I do better than this by only considering source comps?
+    Info(InfoSemigroups, 1, "...computing which elements of D[", i, "] are ",
+                            "products of the generators above...");
+    for l in [1 .. Length(comp_L.comps)] do
+      for r in [1 .. Length(comp_R.comps)] do
+        k := comp_L.comps[l][1];
+        j := comp_R.comps[r][1];
+        if not delta_prime[l][r + m] then
+          if ForAny(HClass(S, R[j] * L[k]), h -> h in above_semigroup) then
+            nredges := nredges + 1;
+            delta_prime[l][r + m] := true;
+            delta_prime[r + m][l] := true;
+            red_L[l] := true;
+            red_R[r] := true;
+          fi;
+        fi;
+      od;
+    od;
+
     delta_prime := DigraphByAdjacencyMatrixNC(delta_prime);
     SetIsBipartiteDigraph(delta_prime, true);
     SetIsSymmetricDigraph(delta_prime, true);
     SetDigraphNrEdges(delta_prime, nredges * 2);
     SetDigraphBicomponents(delta_prime, [[1 .. m], [m + 1 .. m + n]]);
+
+    # Colour the vertices of gamma_L and gamma_R
+    red := Concatenation(red_L, red_R);
 
     ############################################################################
     # Find maximal subsemigroups from maximal rectangles
@@ -1874,7 +1867,7 @@ function(S, opts)
     # that means there ARE maximal subsemigroups arising from D[i]
     # but none of the types so far have been found. Therefore S\D[i]
     # is a maximal subsemigroup of S
-    if tot = num_start then
+    if tot = num_start and IsEmptyDigraph(delta_prime) then
       Info(InfoSemigroups, 1, "* found a maximal subsemigroup by removing ",
                               "D[", i, "].");
       tot := tot + 1;

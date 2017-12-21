@@ -786,6 +786,10 @@ function(Constructor, S, coll, opts)
     fi;
   od;
 
+  if Constructor = InverseMonoid and not One(coll) in coll then
+    AddSet(coll, One(coll));
+  fi;
+
   # Shuffle and sort by rank or the D-order
   coll := Shuffle(coll);
   if IsGeneratorsOfActingSemigroup(coll) then
@@ -814,13 +818,11 @@ function(Constructor, S, coll, opts)
     # no longer valid after the call to EN_SEMI_CLOSURE, such as Size etc. In
     # other words, T may no longer be valid after calling this function if any
     # new generators are added.
-    coll := [];
-    for x in GeneratorsOfMagma(T) do
-      if not x in coll and not x ^ -1 in coll then
-        AddSet(coll, x);
-      fi;
-    od;
-    U := Constructor(coll, opts);
+
+    # We cannot remove inverse from the generators here because this breaks the
+    # correspondence between the generators of <U> and the C++ semigroup in #
+    # libsemigroups.
+    U := Constructor(GeneratorsOfMagma(T), opts);
     U!.__en_semi_cpp_semi := T!.__en_semi_cpp_semi;
     U!.__en_semi_fropin   := T!.__en_semi_fropin;
     return U;

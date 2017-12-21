@@ -50,7 +50,7 @@ SEMIGROUPS.DefaultRandomInverseSemigroup);
 InstallMethod(RandomInverseMonoidCons,
 "for IsBooleanMatMonoid and list",
 [IsBooleanMatMonoid, IsList],
-SEMIGROUPS.DefaultRandomInverseSemigroup);
+SEMIGROUPS.DefaultRandomInverseMonoid);
 
 #############################################################################
 ## 1. Isomorphisms

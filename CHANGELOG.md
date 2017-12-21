@@ -2,6 +2,12 @@
 
 #### Copyright (C) 2011-17 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 3.0.11 (released 18/12/2017)
+
+This version contains some minor updates for compatibility GAP 4.9, 
+the build system has been modified slightly, the kernel module has been 
+updated for libsemigroups version 0.6.1.
+
 ### Version 3.0.10 (released 04/12/2017)
 
 This version contains some minor updates for compatibility GAP 4.9. 

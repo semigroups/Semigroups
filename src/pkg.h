@@ -93,7 +93,7 @@ inline t_semi_subtype_t SUBTYPE_OF_T_SEMI(Obj o) {
 extern Obj SEMIGROUPS;
 extern Obj HTValue;
 extern Obj HTAdd;
-extern Obj infinity;
+extern Obj Pinfinity;
 extern Obj Ninfinity;
 extern Obj IsBooleanMat;
 extern Obj BooleanMatType;

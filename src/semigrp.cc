@@ -303,7 +303,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
     }
     case MIN_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
-          new MinPlusSemiring(), infinity, MinPlusMatrixType);
+          new MinPlusSemiring(), Pinfinity, MinPlusMatrixType);
       break;
     }
     case TROP_MAX_PLUS_MAT: {
@@ -316,7 +316,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
     case TROP_MIN_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
           new TropicalMinPlusSemiring(semi_obj_get_threshold(so)),
-          infinity,
+          Pinfinity,
           TropicalMinPlusMatrixType);
       break;
     }
@@ -559,8 +559,7 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
     gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, semi_cpp->size());
     SET_LEN_PLIST(out, semi_cpp->size());
-    size_t i  = 1;
-    auto   it = semi_cpp->cbegin_sorted();
+    size_t i = 1;
     for (auto it = semi_cpp->cbegin_sorted(); it < semi_cpp->cend_sorted();
          ++it) {
       SET_ELM_PLIST(out, i++, converter->unconvert(*it));
@@ -947,7 +946,7 @@ gap_list_t EN_SEMI_FACTORIZATION(Obj self, gap_semigroup_t so, gap_int_t pos) {
       word_t w;  // changed in place by the next line
       semi_cpp->set_report(semi_obj_get_report(so));
       semi_cpp->factorisation(w, pos_c - 1);
-      words = NEW_PLIST(T_PLIST_TAB + IMMUTABLE, pos_c);
+      words = NEW_PLIST(T_PLIST + IMMUTABLE, pos_c);
       // IMMUTABLE since it should not be altered on the GAP level
       SET_LEN_PLIST(words, pos_c);
       SET_ELM_PLIST(words, pos_c, word_t_to_plist(w));

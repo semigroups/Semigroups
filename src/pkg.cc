@@ -343,7 +343,7 @@ Obj IsBlocksHandler(Obj self, Obj val) {
 
 Obj HTValue;
 Obj HTAdd;
-Obj infinity;
+Obj Pinfinity;
 Obj Ninfinity;
 Obj DimensionOfMatrixOverSemiring;
 Obj IsBooleanMat;
@@ -568,7 +568,7 @@ static Int InitKernel(StructInitInfo* module) {
   ImportGVarFromLibrary("HTValue", &HTValue);
   ImportGVarFromLibrary("HTAdd", &HTAdd);
 
-  ImportGVarFromLibrary("infinity", &infinity);
+  ImportGVarFromLibrary("infinity", &Pinfinity);
   ImportGVarFromLibrary("Ninfinity", &Ninfinity);
 
   ImportGVarFromLibrary("TYPES_PBR", &TYPES_PBR);
