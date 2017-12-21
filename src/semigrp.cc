@@ -303,7 +303,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
     }
     case MIN_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
-          new MinPlusSemiring(), infinity, MinPlusMatrixType);
+          new MinPlusSemiring(), Pinfinity, MinPlusMatrixType);
       break;
     }
     case TROP_MAX_PLUS_MAT: {
@@ -316,7 +316,7 @@ Converter* en_semi_init_converter(en_semi_obj_t es) {
     case TROP_MIN_PLUS_MAT: {
       converter = new MatrixOverSemiringConverter<MatrixOverSemiring<int64_t>>(
           new TropicalMinPlusSemiring(semi_obj_get_threshold(so)),
-          infinity,
+          Pinfinity,
           TropicalMinPlusMatrixType);
       break;
     }
@@ -559,7 +559,7 @@ gap_list_t EN_SEMI_AS_SET(Obj self, gap_semigroup_t so) {
     // The T_PLIST_HOM_SSORTED makes a huge difference to performance!!
     gap_list_t out = NEW_PLIST(T_PLIST_HOM_SSORT + IMMUTABLE, semi_cpp->size());
     SET_LEN_PLIST(out, semi_cpp->size());
-    size_t i  = 1;
+    size_t i = 1;
     for (auto it = semi_cpp->cbegin_sorted(); it < semi_cpp->cend_sorted();
          ++it) {
       SET_ELM_PLIST(out, i++, converter->unconvert(*it));
