@@ -2023,7 +2023,7 @@ gap> f:=Transformation( [ 1, 2, 4, 4 ] );
 Transformation( [ 1, 2, 4, 4 ] )
 gap> o:=LambdaOrb(s);
 <closed orbit, 15 points with Schreier tree with log>
-gap> HasRhoOrb(s) and IsClosed(RhoOrb(s));
+gap> HasRhoOrb(s) and IsClosedOrbit(RhoOrb(s));
 true
 gap>    o:=RhoOrb(s);
 <closed orbit, 12 points with Schreier tree with log>
@@ -3656,12 +3656,6 @@ gap> h:=GroupHClass(DClass(h));
 gap> One(h);
 IdentityTransformation
 gap> IsGroupHClass(h);
-true
-gap> KnownPropertiesOfObject(h) =
-> [ "IsFinite", "IsDuplicateFree", "IsGroupHClass", "IsGreensClassNC" ] or
-> KnownPropertiesOfObject(h) =
-> [ "IsFinite", "IsDuplicateFree", "IsGeneratorsOfSemigroup", "IsGroupHClass", 
->   "IsGreensClassNC" ];
 true
 gap> KnownAttributesOfObject(h);
 [ "Representative", "OneImmutable", "ParentAttr", "EquivalenceClassRelation", 

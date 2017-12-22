@@ -879,7 +879,7 @@ function(s, coll, opts)
   rho_o!.parent := t;
   rho_o!.scc_reps := [FakeOne(GeneratorsOfSemigroup(t))];
   Append(rho_o!.gens, coll);
-  ResetFilterObj(rho_o, IsClosed);
+  ResetFilterObj(rho_o, IsClosedOrbit);
   SetRhoOrb(t, rho_o);
 
   # get new and old R-rep orbit data

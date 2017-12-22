@@ -544,7 +544,7 @@ function(s, f)
 
   # can't use GradedRhoOrb here since there may be inverses not D-related to f
   # JDM is this really true?
-  if HasRhoOrb(s) and IsClosed(RhoOrb(s)) then
+  if HasRhoOrb(s) and IsClosedOrbit(RhoOrb(s)) then
     o := RhoOrb(s);
     rhos := EmptyPlist(Length(o));
     for i in [2 .. Length(o)] do
@@ -586,7 +586,7 @@ function(s, f)
   out := [];
   k := 0;
 
-  if HasLambdaOrb(s) and IsClosed(LambdaOrb(s)) then
+  if HasLambdaOrb(s) and IsClosedOrbit(LambdaOrb(s)) then
     o := LambdaOrb(s);
     for i in [2 .. Length(o)] do
       if lambdarank(o[i]) = rank and tester(o[i], rho_f) then

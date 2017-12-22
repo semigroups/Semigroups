@@ -59,7 +59,7 @@ function(C)
 
   o := LambdaOrb(C);
 
-  if not IsClosed(o) then
+  if not IsClosedOrbit(o) then
     Enumerate(o, infinity);
   fi;
 
@@ -507,7 +507,7 @@ function(s)
   local o, creator, r, out, i;
 
   o := LambdaOrb(s);
-  if not IsClosed(o) then
+  if not IsClosedOrbit(o) then
     Enumerate(o, infinity);
   fi;
 
@@ -541,7 +541,7 @@ function(S, n)
 
   o := LambdaOrb(S);
 
-  if not IsClosed(o) then
+  if not IsClosedOrbit(o) then
     Enumerate(o, infinity);
   fi;
 

@@ -156,7 +156,7 @@ function(C)
   local S, o;
 
   S := Parent(C);
-  if HasLambdaOrb(S) and IsClosed(LambdaOrb(S)) and not IsGreensClassNC(C) then
+  if HasLambdaOrb(S) and IsClosedOrbit(LambdaOrb(S)) and not IsGreensClassNC(C) then
     SetLambdaOrb(C, LambdaOrb(S));
     SetLambdaOrbSCCIndex(C, OrbSCCIndex(LambdaOrb(S), LambdaFunc(S)(C!.rep)));
   else
@@ -171,7 +171,7 @@ function(C)
   local S, o;
 
   S := Parent(C);
-  if HasRhoOrb(S) and IsClosed(RhoOrb(S)) and not IsGreensClassNC(C) then
+  if HasRhoOrb(S) and IsClosedOrbit(RhoOrb(S)) and not IsGreensClassNC(C) then
     SetRhoOrb(C, RhoOrb(S));
     SetRhoOrbSCCIndex(C, OrbSCCIndex(RhoOrb(S), RhoFunc(S)(C!.rep)));
   else
@@ -201,7 +201,7 @@ function(C)
 
   o := LambdaOrb(C);
 
-  if not (IsClosed(o) or IsIdealOrb(o)) then
+  if not (IsClosedOrbit(o) or IsIdealOrb(o)) then
     Enumerate(o, infinity);
   fi;
 
@@ -234,7 +234,7 @@ function(C)
 
   o := RhoOrb(C);
 
-  if not (IsClosed(o) or IsIdealOrb(o)) then
+  if not (IsClosedOrbit(o) or IsIdealOrb(o)) then
     Enumerate(o, infinity);
   fi;
 

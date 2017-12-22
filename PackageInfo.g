@@ -40,7 +40,7 @@ SetPackageInfo( rec(
 PackageName := "Semigroups",
 Subtitle := "",
 Version := "2.8.1",
-Date := "22/06/2016",
+Date := "22/12/2017",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(

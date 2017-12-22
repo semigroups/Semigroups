@@ -141,7 +141,7 @@ function(o, func, start)
 
     pos := iter!.pos;
 
-    if IsClosed(o) and pos >= Length(o) then
+    if IsClosedOrbit(o) and pos >= Length(o) then
       return fail;
     fi;
 
@@ -768,7 +768,7 @@ InstallMethod(IteratorOfDClassData, "for regular acting semigroup",
 function(s)
   local record, o, scc, func;
 
-  if not IsClosed(LambdaOrb(s)) then
+  if not IsClosedOrbit(LambdaOrb(s)) then
     record := rec(m := fail, graded := IteratorOfGradedLambdaOrbs(s));
     record.NextIterator := function(iter)
       local l, rep, m;
@@ -838,7 +838,7 @@ function(s)
     return [s, 1, GradedRhoOrb(s, rep, false)[1], rep, true];
   end;
 
-  if not IsClosed(o) then
+  if not IsClosedOrbit(o) then
     iter := IteratorByOrbFunc(o, func, 2);
   else
     return IteratorByIterator(IteratorList([2 .. Length(o)]), func);
@@ -870,7 +870,7 @@ function(s)
     return [s, 1, GradedLambdaOrb(s, rep, false), rep, true];
   end;
 
-  if not IsClosed(o) then
+  if not IsClosedOrbit(o) then
     # JDM should we use IteratorOfGradedRhoOrbs here instead??
     iter := IteratorByOrbFunc(o, func, 2);
   else
@@ -911,7 +911,7 @@ InstallMethod(IteratorOfDClassData, "for inverse acting semigroup",
 function(s)
   local graded, record, o, scc, func;
 
-  if not IsClosed(LambdaOrb(s)) then
+  if not IsClosedOrbit(LambdaOrb(s)) then
     graded := IteratorOfGradedLambdaOrbs(s);
     record := rec(m := 0, graded := graded, o := NextIterator(graded));
     record.NextIterator := function(iter)
@@ -968,7 +968,7 @@ function(s)
   local o, func, iter, lookup;
 
   o := LambdaOrb(s);
-  if not IsClosed(o) then
+  if not IsClosedOrbit(o) then
     func := function(iter, i)
       local rep;
       rep := Inverse(EvaluateWord(o, TraceSchreierTreeForward(o, i)));

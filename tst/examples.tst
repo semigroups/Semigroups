@@ -3020,23 +3020,23 @@ true
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<trivial transformation group of degree 2 with 1 generator>
+<commutative transformation semigroup of degree 2 with 1 generator>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
 false
 gap> HasIsZeroSemigroup(s);
-true
+false
 gap> HasSize(s);
-true
+false
 gap> HasIsTrivial(s);
-true
+false
 gap> HasIsZeroSemigroup(s);
-true
+false
 gap> HasIsLeftZeroSemigroup(s);
-true
+false
 gap> HasIsRightZeroSemigroup(s);
-true
+false
 gap> IsRectangularBand(s);
 true
 gap> IsBand(s);
@@ -3092,7 +3092,7 @@ false
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<transformation semigroup of size 10, degree 11 with 10 generators>
+<transformation semigroup of degree 11 with 10 generators>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3100,9 +3100,9 @@ false
 gap> HasIsZeroSemigroup(s);
 false
 gap> HasSize(s);
-true
+false
 gap> HasIsTrivial(s);
-true
+false
 gap> HasIsZeroSemigroup(s);
 false
 gap> HasIsLeftZeroSemigroup(s);
@@ -3164,7 +3164,7 @@ true
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<transformation semigroup of size 8, degree 9 with 8 generators>
+<transformation semigroup of degree 9 with 8 generators>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3172,9 +3172,9 @@ false
 gap> HasIsZeroSemigroup(s);
 false
 gap> HasSize(s);
-true
+false
 gap> HasIsTrivial(s);
-true
+false
 gap> HasIsZeroSemigroup(s);
 false
 gap> HasIsLeftZeroSemigroup(s);
@@ -3236,7 +3236,7 @@ false
 
 # Not created by RectangularBand
 gap> s := AsTransformationSemigroup(s);
-<transformation semigroup of size 84, degree 85 with 84 generators>
+<transformation semigroup of degree 85 with 84 generators>
 gap> HasIsRectangularBand(s);
 false
 gap> HasIsBand(s);
@@ -3244,9 +3244,9 @@ false
 gap> HasIsZeroSemigroup(s);
 false
 gap> HasSize(s);
-true
+false
 gap> HasIsTrivial(s);
-true
+false
 gap> HasIsZeroSemigroup(s);
 false
 gap> HasIsLeftZeroSemigroup(s);

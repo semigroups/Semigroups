@@ -654,8 +654,8 @@ function(data, limit, record)
   data!.pos := i;
 
   if nr_d = i then
-    SetFilterObj(lambdao, IsClosed);
-    SetFilterObj(rhoo, IsClosed);
+    SetFilterObj(lambdao, IsClosedOrbit);
+    SetFilterObj(rhoo, IsClosedOrbit);
     SetFilterObj(data, IsClosedData);
     if not HasIsRegularSemigroup(I) then
       SetIsRegularSemigroup(I, ForAll(regular, x -> x = true));
@@ -711,7 +711,7 @@ function(x, I)
   l := Position(o, xx);
 
   if l = fail then
-    if IsClosed(o) then
+    if IsClosedOrbit(o) then
       return fail;
     fi;
 
@@ -752,7 +752,7 @@ function(x, I)
   l := Position(o, xxx);
 
   if l = fail then
-    if IsClosed(o) then
+    if IsClosedOrbit(o) then
       return fail;
     fi;
 
@@ -1189,8 +1189,8 @@ function(data, limit, record)
   data!.pos := i;
 
   if nr_d = i then
-    SetFilterObj(lambdao, IsClosed);
-    SetFilterObj(rhoo, IsClosed);
+    SetFilterObj(lambdao, IsClosedOrbit);
+    SetFilterObj(rhoo, IsClosedOrbit);
     SetFilterObj(data, IsClosedData);
   fi;
 

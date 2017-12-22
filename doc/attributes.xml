@@ -442,10 +442,10 @@ Group([ (5,6,8), (2,3,8,4) ])
 gap> StructureDescription(Range(IsomorphismPermGroup(S)));
 "S6"
 gap> S := Range(IsomorphismPartialPermSemigroup(SymmetricGroup(4)));
-<partial perm group of size 24, rank 4 with 2 generators>
+<inverse partial perm semigroup of rank 4 with 2 generators>
 gap> IsomorphismPermGroup(S);
-MappingByFunction( <partial perm group of size 24, rank 4 with
-  2 generators>, Group([ (1,2,3,4), (1,
+MappingByFunction( <partial perm group of rank 4 with 2 generators>
+, Group([ (1,2,3,4), (1,
 2) ]), <Attribute "AsPermutation">, function( x ) ... end )
 gap> G := GroupOfUnits(PartitionMonoid(4));
 <bipartition group of degree 4 with 2 generators>

@@ -20,12 +20,12 @@ InstallMethod(Enumerate, "for an ideal orb, and a number",
 function(o, limit)
   local newlookfunc;
 
-  if IsClosed(o) then
+  if IsClosedOrbit(o) then
     return o;
   fi;
 
   newlookfunc := function(data, x)
-    return IsClosed(o) or Length(o) >= limit;
+    return IsClosedOrbit(o) or Length(o) >= limit;
   end;
   Enumerate(SemigroupData(o!.parent), infinity, newlookfunc);
 
@@ -40,7 +40,7 @@ function(o, limit, lookfunc)
   local newlookfunc;
 
   newlookfunc := function(data, x)
-    return IsClosed(o) or Length(o) >= limit;
+    return IsClosedOrbit(o) or Length(o) >= limit;
   end;
   if IsLambdaOrb(o) then
     Enumerate(SemigroupData(o!.parent), infinity,
@@ -169,7 +169,7 @@ InstallMethod(ViewObj, "for a ideal orb",
 [IsIdealOrb],
 function(o)
   Print("<");
-  if IsClosed(o) then
+  if IsClosedOrbit(o) then
     Print("closed ");
   else
     Print("open ");

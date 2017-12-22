@@ -57,7 +57,7 @@ InstallMethod(Random, "for a regular acting semigroup",
 function(S)
   local gens, i, w, x, o, m;
 
-  if not IsClosed(LambdaOrb(S)) or not IsClosed(RhoOrb(S)) then
+  if not IsClosedOrbit(LambdaOrb(S)) or not IsClosedOrbit(RhoOrb(S)) then
     if HasGeneratorsOfSemigroup(S) then
       gens := GeneratorsOfSemigroup(S);
       i := Random([1 .. 2 * Int(Length(gens))]);
@@ -98,7 +98,7 @@ InstallMethod(Random, "for an acting semigroup with inverse op and generators",
 function(S)
   local gens, i, w, x, o, m;
 
-  if not IsClosed(LambdaOrb(S)) then
+  if not IsClosedOrbit(LambdaOrb(S)) then
     if HasGeneratorsOfSemigroup(S) then
       gens := GeneratorsOfSemigroup(S);
       i := Random([1 .. 2 * Int(Length(gens))]);

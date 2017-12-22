@@ -19,23 +19,23 @@ gap> S:=DualSymmetricInverseMonoid(4);
 <inverse bipartition monoid of degree 4 with 3 generators>
 gap> IsomorphismTransformationMonoid(S);
 MappingByFunction( <inverse bipartition monoid of size 339, degree 4 with 3 
- generators>, <transformation monoid of size 339, degree 339 with 3 
- generators>, function( x ) ... end, function( x ) ... end )
+ generators>, <transformation monoid of degree 339 with 3 generators>
+ , function( x ) ... end, function( x ) ... end )
 gap> S:=Semigroup( Bipartition( [ [ 1, 2, 3, 4, -2, -3 ], [ -1 ], [ -4 ] ] ), 
 >  Bipartition( [ [ 1, 2, -1, -3 ], [ 3, 4, -2, -4 ] ] ), 
 >  Bipartition( [ [ 1, 3, -1 ], [ 2, 4, -2, -3 ], [ -4 ] ] ), 
 >  Bipartition( [ [ 1, -4 ], [ 2 ], [ 3, -2 ], [ 4, -1 ], [ -3 ] ] ) );;
 gap> IsomorphismTransformationSemigroup(S);
 MappingByFunction( <bipartition semigroup of size 284, degree 4 with 4 
- generators>, <transformation semigroup of size 284, degree 285 with 4 
- generators>, function( x ) ... end, function( x ) ... end )
+ generators>, <transformation semigroup of degree 285 with 4 generators>
+ , function( x ) ... end, function( x ) ... end )
 gap> S:=Monoid(Bipartition( [ [ 1, 2, -2 ], [ 3 ], [ 4, -3, -4 ], [ -1 ] ] ), 
 >  Bipartition( [ [ 1, 3, -3, -4 ], [ 2, 4, -1, -2 ] ] ), 
 >  Bipartition( [ [ 1, -1, -2 ], [ 2, 3, -3, -4 ], [ 4 ] ] ), 
 >  Bipartition( [ [ 1, 4, -4 ], [ 2, -1 ], [ 3, -2, -3 ] ] ) );;
 gap> IsomorphismTransformationMonoid(S);
 MappingByFunction( <bipartition monoid of size 41, degree 4 with 4 generators>
- , <transformation monoid of size 41, degree 41 with 4 generators>
+ , <transformation monoid of degree 41 with 4 generators>
  , function( x ) ... end, function( x ) ... end )
 
 # the number of iterations, change here to get faster test
@@ -274,10 +274,9 @@ gap> S:=Semigroup(
 > Bipartition( [ [ 1, -5 ], [ 2, 3, 4, 5 ], [ -1 ], [ -2 ], [ -3, -4 ] ] ), 
 > Bipartition( [ [ 1, -4 ], [ 2 ], [ 3, -2 ], [ 4, 5, -1 ], [ -3, -5 ] ] ) );;
 gap> IsomorphismPartialPermSemigroup(S);
-Error, IsomorphismPartialPermSemigroup: usage,
-the argument must be an inverse semigroup,
+fail
 gap> Range(IsomorphismTransformationSemigroup(S));
-<transformation semigroup of size 207, degree 208 with 5 generators>
+<transformation semigroup of degree 208 with 5 generators>
 
 #T# BipartitionTest19: IsomorphismBipartitionSemigroup for a perm group
 gap> G:=DihedralGroup(IsPermGroup, 10);;

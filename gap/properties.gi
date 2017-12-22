@@ -472,7 +472,7 @@ function(S)
     return true;
   fi;
 
-  if IsClosedData(SemigroupData(S)) and IsClosed(RhoOrb(S)) then
+  if IsClosedData(SemigroupData(S)) and IsClosedOrbit(RhoOrb(S)) then
     for x in GreensDClasses(S) do
       if (not IsTrivial(SchutzenbergerGroup(x)))
           or Length(LambdaOrbSCC(x)) > 1 then
@@ -614,7 +614,7 @@ function(S)
   Enumerate(rho, Length(lambda));
   # TODO shouldn't the below be Length(rho) = Length(lambda)?
   # and we should check that rho is closed.
-  if not (IsClosed(rho) and Length(rho) >= Length(lambda)) then
+  if not (IsClosedOrbit(rho) and Length(rho) >= Length(lambda)) then
     Info(InfoSemigroups, 2,
          "the numbers of lambda and rho values are not equal");
     return false;
@@ -1020,7 +1020,7 @@ function(S, f)
     return true;
   fi;
 
-  if IsClosed(LambdaOrb(S)) then
+  if IsClosedOrbit(LambdaOrb(S)) then
     o := LambdaOrb(S);
   else
     o := GradedLambdaOrb(S, f, true);
@@ -1054,7 +1054,7 @@ function(S, x)
     return true;
   fi;
 
-  if IsClosed(LambdaOrb(S)) then
+  if IsClosedOrbit(LambdaOrb(S)) then
     o := LambdaOrb(S);
   else
     o := GradedLambdaOrb(S, x, true);
@@ -1074,7 +1074,7 @@ InstallMethod(IsRegularSemigroupElementNC,
 function(S, x)
   local o, l, scc, rho, tester, i;
 
-   if IsClosed(LambdaOrb(S)) then
+   if IsClosedOrbit(LambdaOrb(S)) then
     o := LambdaOrb(S);
     l := Position(o, LambdaFunc(S)(x));
     if l = fail then
@@ -1104,7 +1104,7 @@ InstallMethod(IsRegularSemigroupElementNC,
 function(S, x)
   local o, k, l;
 
-   if IsClosed(LambdaOrb(S)) then
+   if IsClosedOrbit(LambdaOrb(S)) then
     o := LambdaOrb(S);
     k := Position(o, LambdaFunc(S)(x));
     if k = fail then
