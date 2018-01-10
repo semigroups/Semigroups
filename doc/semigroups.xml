@@ -267,6 +267,8 @@ gap> T := SubsemigroupByProperty(FullTransformationSemigroup(5), func);
   of those elements <A>p</A> of <A>S</A> for which <C>pnt^p</C> is defined and
   equal to <A>pnt</A>.
   <P/>
+  If the action of <A>S</A> is not defined on <A>pnt</A>, an error is raised.
+  <P/>
   Note: Currently, a method is only installed for <A>S</A> an inverse semigroup of
   partial permutations.
   <Example><![CDATA[

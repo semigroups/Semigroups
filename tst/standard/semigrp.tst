@@ -756,7 +756,8 @@ true
 
 # Test StabilizerInverseSemigroup 2
 gap> StabilizerInverseSemigroup(S, 9);
-Error, S must be defined on pnt!
+Error, Semigroups: StabilizerInverseSemigroup: usage,
+<S> is not defined on <pnt>,
 
 # Test Random (for a semigroup with AsList)
 gap> S := FullTransformationMonoid(4);;
