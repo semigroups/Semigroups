@@ -9,14 +9,14 @@
 ##
 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.8.1">
-##  <!ENTITY GAPVERS "4.9.0">
+##  <!ENTITY VERSION "2.8.2">
+##  <!ENTITY GAPVERS "4.8.9">
 ##  <!ENTITY ORBVERS "4.7.3">
 ##  <!ENTITY IOVERS "4.4.4">
 ##  <!ENTITY GRAPEVERS "4.5">
 ##  <!ENTITY GENSSVERS "1.5">
-##  <!ENTITY ARCHIVENAME "semigroups-2.8.1">
-##  <!ENTITY COPYRIGHTYEARS "2011-16">
+##  <!ENTITY ARCHIVENAME "semigroups-2.8.2">
+##  <!ENTITY COPYRIGHTYEARS "2011-18">
 ##  <#/GAPDoc>
 
 RecogsFunnyNameFormatterFunction := function(st)
@@ -39,8 +39,8 @@ SetPackageInfo( rec(
 
 PackageName := "Semigroups",
 Subtitle := "",
-Version := "2.8.1",
-Date := "22/12/2017",
+Version := "2.8.2",
+Date := "15/01/2018",
 ArchiveFormats := ".tar.gz",
 
 SourceRepository := rec(
@@ -202,7 +202,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.9.0",
+  GAP := ">=4.8.9",
   NeededOtherPackages := [["orb", ">=4.7.3"], ["io", ">=4.4.4"]],
 
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"], ["grape", ">=4.5"],

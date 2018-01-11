@@ -2,6 +2,10 @@
 
 #### Copyright (C) 2011-16 James D. Mitchell et al.<br/>Licensing information can be found in the LICENSE file.
 
+### Version 2.8.2 (released 15/01/2018)
+This is a minor release to correct the required version of GAP in
+PackageInfo.g (from GAP 4.9.0 to GAP 4.8.9). 
+
 ### Version 2.8.1 (released 22/12/2017)
 This is a minor release to update the output in some test file and manual
 examples due to some changes in the GAP library code.
