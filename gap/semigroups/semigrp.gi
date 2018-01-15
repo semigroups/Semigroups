@@ -763,8 +763,7 @@ InstallMethod(ClosureInverseSemigroupOrMonoidNC,
  IsMultiplicativeElementCollection and IsFinite and IsList,
  IsRecord],
 function(Constructor, S, coll, opts)
-  local n, x, T, U, i;
-
+  local n, x, one, T, U, i;
   # EN_SEMI_CLOSURE copies the C++ semigroup if any whenever it is called, so
   # it is essential to filter coll to remove any elements that are already in S
   # here.
@@ -786,8 +785,15 @@ function(Constructor, S, coll, opts)
     fi;
   od;
 
-  if Constructor = InverseMonoid and not One(coll) in coll then
-    AddSet(coll, One(coll));
+  if Constructor = InverseMonoid then
+    if One(coll) <> One(GeneratorsOfSemigroup(S)) then
+      one := One(Concatenation(coll, GeneratorsOfSemigroup(S)));
+    else
+      one := One(coll);
+    fi;
+    if not one in coll and not one in S then
+      AddSet(coll, one);
+    fi;
   fi;
 
   # Shuffle and sort by rank or the D-order
