@@ -315,15 +315,32 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
 end;
 
 SEMIGROUPS.TestManualExamples := function(arg)
-  local ex, omit, width, acting, passed, str;
-
+  local ex, doc, tree, tester, omit, width, acting, passed, str;
   ex := SEMIGROUPS.ManualExamples();
   if Length(arg) = 1 then
     if IsPosInt(arg[1]) and arg[1] <= Length(ex) then
       ex := [ex[arg[1]]];
     elif IsHomogeneousList(arg[1])
         and ForAll(arg[1], x -> IsPosInt(x) and x <= Length(ex)) then
-      ex := ex{arg};
+      ex := SEMIGROUPS.ManualExamples(){arg};
+    elif IsString(arg[1]) then
+      doc := ComposedXMLString(Concatenation(SEMIGROUPS.PackageDir, "/doc"),
+                               "main.xml",
+                               SEMIGROUPS.DocXMLFiles,
+                               true);
+      tree := ParseTreeXMLString(doc[1]);
+      CheckAndCleanGapDocTree(tree);
+      ex := XMLElements(tree, "ManSection");
+      tester := function(record)
+        return IsBound(record.content[1].attributes.Name)
+            and record.content[1].attributes.Name = arg[1];
+      end;
+      ex := First(ex, tester);
+      if ex = fail then
+        ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
+                      "did not find a man section named ", arg[1]);
+      fi;
+      ex := ExtractExamplesXMLTree(ex, "Single");
     else
       ErrorNoReturn("Semigroups: SEMIGROUPS.TestManualExamples: usage,\n",
                     "the argument must be a pos int or list of pos ints,");
@@ -731,7 +748,7 @@ SEMIGROUPS.DocumentedPackageVariables := function()
   return out;
 end;
 
-# info := PackageVariablesInfo("semigroups", "3.0.0");
+# info := PackageVariablesInfo("semigroups", "3.0.0");;
 # which must be run before loading Semigroups
 SEMIGROUPS.UndocumentedPackageVariables := function(info)
   local out, suppressions, obsoletes, documented, name, part, entry;
