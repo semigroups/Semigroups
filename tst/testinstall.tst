@@ -1721,6 +1721,23 @@ gap> for s in S do
 > fi;
 > od;
 
+# Issue 435 (inappropriate elements added during ClosureMonoid)
+gap> S := InverseMonoid(PartialPerm([1, 4], [1, 4]),
+>                       PartialPerm([1, 3, 4, 5], [1, 6, 4, 2]),
+>                       PartialPerm([1, 2, 4, 6], [1, 5, 4, 3]),
+>                       PartialPerm([1, 4], [4, 1]),
+>                       PartialPerm([1, 3, 4, 5], [1, 3, 4, 5]),
+>                       PartialPerm([1, 2, 4, 6], [1, 2, 4, 6]),
+>                       PartialPerm([1, 2, 3, 4, 5, 6, 7],
+>                                   [1, 2, 3, 4, 5, 6, 7]));
+<inverse partial perm monoid of rank 7 with 7 generators>
+gap> I := IdempotentGeneratedSubsemigroup(S);
+<inverse partial perm monoid of rank 7 with 3 generators>
+gap> I = Semigroup(Idempotents(S));
+true
+gap> Size(I);
+4
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(B);
 gap> Unbind(D);
