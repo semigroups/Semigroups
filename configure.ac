@@ -94,17 +94,15 @@ AC_CHECK_FILE(
    [AC_MSG_ERROR([libsemigroups version 0.6.1 or higher is required])]
    )
 
-AC_MSG_CHECKING([available libsemigroups version])
-AC_MSG_RESULT(m4_esyscmd([tr -d '\n' < src/libsemigroups/VERSION]))
-
-AC_MSG_CHECKING([required libsemigroups version])
-AC_MSG_RESULT(m4_esyscmd([tr -d '\n' < .LIBSEMIGROUPS_VERSION]))
-
-AX_COMPARE_VERSION(m4_esyscmd([tr -d '\n' < src/libsemigroups/VERSION]), 
+AC_MSG_CHECKING([libsemigroups version])
+REQUI_LIBSEMIGROUPS_VERSION="$(cat .LIBSEMIGROUPS_VERSION)"
+FOUND_LIBSEMIGROUPS_VERSION="$(cat src/libsemigroups/VERSION)"
+AC_MSG_RESULT([$FOUND_LIBSEMIGROUPS_VERSION])
+AX_COMPARE_VERSION($FOUND_LIBSEMIGROUPS_VERSION, 
                    [ge], 
-                   m4_esyscmd([tr -d '\n' < .LIBSEMIGROUPS_VERSION]),
-                   [AC_MSG_NOTICE([libsemigroups version is ok])], 
-                   [AC_MSG_ERROR([libsemigroups version is too old])]
+                   $REQUI_LIBSEMIGROUPS_VERSION,
+                   [], 
+                   [AC_MSG_ERROR([libsemigroups version $REQUI_LIBSEMIGROUPS_VERSION or higher is required])]
                   )
 
 dnl ## User setting: Debug mode (off by default)
