@@ -7,100 +7,23 @@
 ##
 #############################################################################
 ##
-## this file contains utilies for use with the Semigroups package.
+## This file contains utilies for use with the Semigroups package.
 
 # No attempt has been made to get good test coverage for this file, since it
 # will hopefully be binned in the near future.
 
+# The file is organised as follows:
+#
+# 1. Tests - functions relating to testing Semigroups
+#
+# 2. Documentation - functions relating to compiling and verifying the
+#    documentation.
+
 #############################################################################
-# 1. Put things in the record SEMIGROUPS.
+# 1. Tests - internal stuff . . .
 #############################################################################
 
-SEMIGROUPS.ColorizeString := function(arg)
-  local string, color, i;
-
-  string := "";
-  for i in [1 .. Length(arg) - 1] do
-    if not IsString(arg[i]) then
-      Append(string, PrintString(arg[i]));
-    else
-      Append(string, arg[i]);
-    fi;
-  od;
-
-  if not IsString(arg[Length(arg)]) then
-    return string;
-  fi;
-
-  color := arg[Length(arg)];
-
-  if color = "green" then
-    return Concatenation("\033[32m", string, "\033[0m");
-  elif color = "red" then
-    return Concatenation("\033[31m", string, "\033[0m");
-  elif color = "lightblue" then
-    return Concatenation("\033[94m", string, "\033[0m");
-  elif color = "magenta" then
-    return Concatenation("\033[35m", string, "\033[0m");
-  elif color = "back_blue" then
-    return Concatenation("\033[44m", string, "\033[0m");
-  elif color = "back_gray" then
-    return Concatenation("\033[100m", string, "\033[0m");
-  fi;
-  return string;
-end;
-
-SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
-                           "attr.xml",
-                           "attract.xml",
-                           "attrinv.xml",
-                           "bipart.xml",
-                           "blocks.xml",
-                           "boolmat.xml",
-                           "cong.xml",
-                           "conginv.xml",
-                           "conglatt.xml",
-                           "congpairs.xml",
-                           "congrees.xml",
-                           "congrms.xml",
-                           "conguniv.xml",
-                           "display.xml",
-                           "elements.xml",
-                           "factor.xml",
-                           "ffmat.xml",
-                           "freeband.xml",
-                           "freeinverse.xml",
-                           "fropin.xml",
-                           "gree.xml",
-                           "grpffmat.xml",
-                           "ideals.xml",
-                           "io.xml",
-                           "isomorph.xml",
-                           "isorms.xml",
-                           "maximal.xml",
-                           "maxplusmat.xml",
-                           "normalizer.xml",
-                           "orbits.xml",
-                           "pbr.xml",
-                           "properties.xml",
-                           "semiact.xml",
-                           "semibipart.xml",
-                           "semiboolmat.xml",
-                           "semicons.xml",
-                           "semiex.xml",
-                           "semiffmat.xml",
-                           "semigraph.xml",
-                           "semigroups.xml",
-                           "semigrp.xml",
-                           "semimaxplus.xml",
-                           "semipbr.xml",
-                           "semipperm.xml",
-                           "semiringmat.xml",
-                           "semitrans.xml",
-                           "trans.xml",
-                           "utils.xml"];
-
-SEMIGROUPS.TestRec := rec(elapsed_last_test := 0);
+SEMIGROUPS.TestRec := rec();
 
 SEMIGROUPS.TestRec.reportDiff := function(inp, expout, found, fnam, line, time)
   Print("\033[31m######## > Diff in:\n");
@@ -166,8 +89,6 @@ SEMIGROUPS.StopTest := function()
   local record;
 
   record := SEMIGROUPS.TestRec;
-  record.elapsed_last2_test := record.elapsed_last_test;
-  record.elapsed_last_test := Runtime() - GAPInfo.TestData.START_TIME;
 
   # restore info levels
   SetInfoLevel(InfoWarning, record.InfoLevelInfoWarning);
@@ -193,52 +114,157 @@ SEMIGROUPS.StopTest := function()
   return;
 end;
 
-SEMIGROUPS.Test := function(arg)
-  local file, acting, split, pos, range, print_file, string_file, enabled,
-  disabled;
-
-  if Length(arg) = 1 then
-    file := arg[1];
-  else
-    ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
-                  "there must be only 1 argument,");
+SEMIGROUPS.RunTest := function(func)
+  local acting, passed;
+  if not (IsFunction(func) and NumberArgumentsFunction(func) = 0) then
+    ErrorNoReturn("the argument must be a 0-parameter function,");
   fi;
 
-  if not IsString(file) then
-    ErrorNoReturn("Semigroups: SEMIGROUPS.Test: usage,\n",
-                  "the first arg must be a string,");
-  fi;
-
+  # Store global option
   acting := SEMIGROUPS.DefaultOptionsRec.acting;
 
-  split  := SplitString(file, "/");
-  pos    := Position(split, "tst");
-  if pos <> fail then
-    range := [pos .. Length(split)];
-  else
-    range := [Length(split) - 2 .. Length(split)];
-  fi;
-  print_file  := JoinStringsWithSeparator(split{range}, "/");
-  string_file := StringFile(file);
-
-  if IsEmpty(string_file) then
-    Print("File: ", print_file, " is empty!\n");
-    return fail;
-  elif Length(string_file) < 600 then
-    Print("File: ", print_file, " probably contains no tests!\n");
-  fi;
-
-  Print("Testing file: ", print_file, " (acting := true)\n");
+  # Run tests with acting := true
+  Print("\033[40;38;5;82m");
+  Info(InfoWarning, 1, "Running tests with acting methods enabled . . .");
+  Print("\033[0m");
   SEMIGROUPS.DefaultOptionsRec.acting := true;
-  enabled := Test(file, SEMIGROUPS.TestRec);
+  passed := func();
 
-  Print("Testing file: ", print_file, " (acting := false)\n");
+  if not (IsBool(passed) and passed in [true, false]) then
+    ErrorNoReturn("the argument must be a function returning 'true'",
+                  " or 'false',");
+  elif not passed then
+    SEMIGROUPS.DefaultOptionsRec.acting := acting;
+    return;
+  fi;
+
+  # Run tests with acting := false
+  Print("\033[40;38;5;82m");
+  Info(InfoWarning, 1, "Running tests with acting methods disabled . . .");
+  Print("\033[0m");
   SEMIGROUPS.DefaultOptionsRec.acting := false;
-  disabled := Test(file, SEMIGROUPS.TestRec);
+  passed := func();
 
+  # Reset global options
   SEMIGROUPS.DefaultOptionsRec.acting := acting;
-  return enabled and disabled;
+  return passed;
 end;
+
+SEMIGROUPS.TestDir := function(dir, arg)
+  local opts, name;
+  opts := rec(earlyStop   := true,
+              testOptions := ShallowCopy(SEMIGROUPS.TestRec));
+  opts.testOptions.showProgress := false;
+  if Length(arg) = 1 and IsRecord(arg[1]) then
+    # Override default options with input ones.
+    for name in RecNames(arg[1]) do
+      opts.testOptions.(name) := arg[1].(name);
+    od;
+  elif Length(arg) <> 0 then
+    ErrorNoReturn("there must be no arguments, or the argument ",
+                  "must be a opts");
+  fi;
+  return SEMIGROUPS.RunTest(function()
+                              return TestDirectory(dir, opts);
+                            end);
+end;
+
+#############################################################################
+# 1. Tests - user/global functions
+#############################################################################
+
+InstallGlobalFunction(SemigroupsTestInstall,
+function(arg)
+  local opts, name;
+  opts := ShallowCopy(SEMIGROUPS.TestRec);
+  if Length(arg) = 1 and IsRecord(arg[1]) then
+    # Override default options with input ones.
+    for name in RecNames(arg[1]) do
+      opts.(name) := arg[1].(name);
+    od;
+  elif Length(arg) <> 0 then
+    ErrorNoReturn("there must be no arguments, or the argument ",
+                  "must be a opts");
+  fi;
+  return SEMIGROUPS.RunTest(function()
+      return Test(Filename(DirectoriesPackageLibrary("semigroups",
+                                                     "tst"),
+                           "testinstall.tst"), opts);
+    end);
+end);
+
+InstallGlobalFunction(SemigroupsTestStandard,
+function(arg)
+  return SEMIGROUPS.TestDir(DirectoriesPackageLibrary("semigroups",
+                                                      "tst/standard/"),
+                            arg);
+end);
+
+InstallGlobalFunction(SemigroupsTestExtreme,
+function(arg)
+  if Length(arg) = 0 then
+    arg := [rec(showProgress := "some")];
+  elif IsRecord(arg[1].showProgress) and not IsBound(arg[1].showProgress) then
+    arg[1].showProgress := "some";
+  fi;
+  return SEMIGROUPS.TestDir(DirectoriesPackageLibrary("semigroups",
+                                                      "tst/extreme/"),
+                            arg);
+end);
+
+################################################################################
+# 2. Documentation - internal stuff
+################################################################################
+
+SEMIGROUPS.DocXMLFiles := ["../PackageInfo.g",
+                           "attr.xml",
+                           "attract.xml",
+                           "attrinv.xml",
+                           "bipart.xml",
+                           "blocks.xml",
+                           "boolmat.xml",
+                           "cong.xml",
+                           "conginv.xml",
+                           "conglatt.xml",
+                           "congpairs.xml",
+                           "congrees.xml",
+                           "congrms.xml",
+                           "conguniv.xml",
+                           "display.xml",
+                           "elements.xml",
+                           "factor.xml",
+                           "ffmat.xml",
+                           "freeband.xml",
+                           "freeinverse.xml",
+                           "fropin.xml",
+                           "gree.xml",
+                           "grpffmat.xml",
+                           "ideals.xml",
+                           "io.xml",
+                           "isomorph.xml",
+                           "isorms.xml",
+                           "maximal.xml",
+                           "maxplusmat.xml",
+                           "normalizer.xml",
+                           "orbits.xml",
+                           "pbr.xml",
+                           "properties.xml",
+                           "semiact.xml",
+                           "semibipart.xml",
+                           "semiboolmat.xml",
+                           "semicons.xml",
+                           "semiex.xml",
+                           "semiffmat.xml",
+                           "semigraph.xml",
+                           "semigroups.xml",
+                           "semigrp.xml",
+                           "semimaxplus.xml",
+                           "semipbr.xml",
+                           "semipperm.xml",
+                           "semiringmat.xml",
+                           "semitrans.xml",
+                           "trans.xml",
+                           "utils.xml"];
 
 SEMIGROUPS.ManualExamples := function()
   return ExtractExamples(DirectoriesPackageLibrary("semigroups", "doc"),
@@ -246,7 +272,7 @@ SEMIGROUPS.ManualExamples := function()
 end;
 
 SEMIGROUPS.RunExamples := function(exlists, excluded)
-  local oldscr, passed, pad, l, sp, bad, s, start_time, test, end_time,
+  local oldscr, passed, pad, total, l, sp, bad, s, start_time, test, end_time,
   elapsed, pex, j, ex, i;
 
   oldscr := SizeScreen();
@@ -256,11 +282,13 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
     nr := Length(String(Length(exlists))) - Length(String(nr)) + 1;
     return List([1 .. nr], x -> ' ');
   end;
-
+  total := 0;
   for j in [1 .. Length(exlists)] do
     if j in excluded then
-      Print(SEMIGROUPS.ColorizeString("# Skipping example ", j, pad(j),
-                                      " . . .\n", "back_blue"));
+      Print("\033[44m# Skipping example ",
+            j,
+            pad(j),
+            " . . .\033[0m\n");
     else
       l := exlists[j];
       Print("# Running example ", j, pad(j), " . . .");
@@ -280,14 +308,17 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
         CloseStream(s);
         elapsed := (end_time.tv_sec - start_time.tv_sec) * 1000
                    + Int((end_time.tv_usec - start_time.tv_usec) / 1000);
+        total := total + elapsed;
         pex := TEST.lastTestData;
 
         Print(" msecs: ", elapsed, "\n");
 
         if Length(bad) > 0 then
-          Print(SEMIGROUPS.ColorizeString("# WARNING: Overlong lines ", bad,
-                                         " in ", ex[2]{[1 .. 3]}, "red"));
-          Print("\n");
+          Print("\033[31m# WARNING: Overlong lines ",
+                bad,
+                " in ",
+                ex[2]{[1 .. 3]},
+                "\033[0m\n");
           passed := false;
         fi;
 
@@ -311,6 +342,9 @@ SEMIGROUPS.RunExamples := function(exlists, excluded)
     fi;
   od;
   SizeScreen(oldscr);
+  if Length(exlists) > 1 then
+    Print("Total: ", total, " msecs\n");
+  fi;
   return passed;
 end;
 
@@ -371,112 +405,6 @@ SEMIGROUPS.TestManualExamples := function(arg)
   SEMIGROUPS.DefaultOptionsRec.acting := acting;
   return passed;
 end;
-
-#############################################################################
-# 2. User/global functions
-#############################################################################
-
-InstallGlobalFunction(SemigroupsMakeDoc,
-function()
-  MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-                              "/doc"),
-                "main.xml", SEMIGROUPS.DocXMLFiles, "semigroups", "MathJax",
-                "../../..");
-  return;
-end);
-
-InstallGlobalFunction(SemigroupsTestStandard,
-function()
-  local dir;
-  dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-                                    "/tst/standard");
-  return SEMIGROUPS.RunTestsDir(dir);
-end);
-
-InstallGlobalFunction(SemigroupsTestExtreme,
-function()
-  local dir;
-  dir  := Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
-                                    "/tst/extreme");
-  return SEMIGROUPS.RunTestsDir(dir);
-end);
-
-SEMIGROUPS.RunTestsDir := function(dir)
-  local file_ext, is_testable, contents, failed, passed, elapsed, pass,
-  elapsed_this_test, str, filename;
-
-  file_ext := function(str)
-    local split;
-    split := SplitString(str, ".");
-    if Length(split) > 1 then
-      return split[Length(split)];
-    else
-      return "";
-    fi;
-  end;
-
-  is_testable := function(dir, file)
-    local stringfile, str;
-    file := Concatenation(dir, "/", file);
-    stringfile := StringFile(file);
-    for str in SEMIGROUPS.OmitFromTests do
-      if PositionSublist(stringfile, str) <> fail then
-        Print("not testing ", file, ", it contains a test involving ",
-              str, ", which will not work . . .\n\n");
-        return false;
-      fi;
-    od;
-    return true;
-  end;
-
-  if Length(SEMIGROUPS.OmitFromTests) > 0 then
-    Print("not testing files containing the strings");
-    for str in SEMIGROUPS.OmitFromTests do
-      PRINT_STRINGIFY(", \"", str, "\"");
-    od;
-    PRINT_STRINGIFY(" . . .\n\n");
-  fi;
-
-  contents := ["../testinstall.tst"];
-  Append(contents, DirectoryContents(dir));
-
-  failed  := [];
-  passed  := [];
-  elapsed := 0;
-
-  for filename in contents do
-    if file_ext(filename) = "tst" and is_testable(dir, filename) then
-      pass := SEMIGROUPS.Test(Filename(Directory(dir), filename));
-      elapsed_this_test := SEMIGROUPS.TestRec.elapsed_last_test
-                           + SEMIGROUPS.TestRec.elapsed_last2_test;
-      elapsed := elapsed + elapsed_this_test;
-      if pass <> fail then # No test was carried out
-        if not pass then
-          Add(failed, [filename,
-                       "FAILED",
-                       Concatenation("msecs: ", String(elapsed_this_test))]);
-        else
-          Add(passed, [filename,
-                       "PASSED",
-                       Concatenation("msecs: ", String(elapsed_this_test))]);
-        fi;
-      fi;
-    fi;
-  od;
-
-  Print("Total msecs: ", String(elapsed), "\n");
-  GASMAN("collect");
-
-  return [failed, passed];
-end;
-
-InstallGlobalFunction(SemigroupsTestInstall,
-function()
-  GASMAN("collect");
-  return SEMIGROUPS.Test(Filename(DirectoriesPackageLibrary("semigroups",
-                                                            "tst"),
-                                  "testinstall.tst"));
-end);
 
 # The following is based on doc/ref/testconsistency.g
 
@@ -792,3 +720,16 @@ SEMIGROUPS.UndocumentedPackageVariables := function(info)
   od;
   return out;
 end;
+
+################################################################################
+# 2. Documentation - user/global functions
+################################################################################
+
+InstallGlobalFunction(SemigroupsMakeDoc,
+function()
+  MakeGAPDocDoc(Concatenation(PackageInfo("semigroups")[1]!.InstallationPath,
+                              "/doc"),
+                "main.xml", SEMIGROUPS.DocXMLFiles, "semigroups", "MathJax",
+                "../../..");
+  return;
+end);
