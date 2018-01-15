@@ -1862,7 +1862,7 @@ gap> MotzkinMonoid(5);
 
 # POI
 gap> POI(1);
-<inverse partial perm monoid of rank 1 with 2 generators>
+<symmetric inverse monoid of degree 1>
 gap> POI(2);
 <inverse partial perm monoid of rank 2 with 2 generators>
 gap> POI(5);
@@ -1870,25 +1870,25 @@ gap> POI(5);
 
 # POPI
 gap> POPI(1);
-<inverse partial perm monoid of rank 1 with 2 generators>
+<symmetric inverse monoid of degree 1>
 gap> POPI(2);
-<inverse partial perm monoid of rank 2 with 2 generators>
+<symmetric inverse monoid of degree 2>
 gap> POPI(5);
 <inverse partial perm monoid of rank 5 with 2 generators>
 
 # PODI
 gap> PODI(1);
-<inverse partial perm monoid of rank 1 with 2 generators>
+<symmetric inverse monoid of degree 1>
 gap> PODI(2);
-<inverse partial perm monoid of rank 2 with 3 generators>
+<symmetric inverse monoid of degree 2>
 gap> PODI(5);
 <inverse partial perm monoid of rank 5 with 6 generators>
 
 # PORI
 gap> PORI(1);
-<inverse partial perm monoid of rank 1 with 2 generators>
+<symmetric inverse monoid of degree 1>
 gap> PORI(2);
-<inverse partial perm monoid of rank 2 with 3 generators>
+<symmetric inverse monoid of degree 2>
 gap> PORI(5);
 <inverse partial perm monoid of rank 5 with 3 generators>
 

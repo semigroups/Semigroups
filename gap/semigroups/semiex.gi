@@ -736,6 +736,10 @@ InstallMethod(POI, "for a positive integer", [IsPosInt],
 function(n)
   local out, i;
 
+  if n = 1 then
+    return SymmetricInverseMonoid(n);
+  fi;
+
   out := EmptyPlist(n);
   out[1] := PartialPermNC([0 .. n - 1]);
   if n = 1 then
@@ -752,8 +756,8 @@ end);
 
 InstallMethod(POPI, "for a positive integer", [IsPosInt],
 function(n)
-  if n = 1 then
-    return InverseMonoid(PartialPerm([1]), PartialPerm([]));
+  if n <= 2 then
+    return SymmetricInverseMonoid(n);
   fi;
   return InverseMonoid(PartialPermNC(Concatenation([2 .. n], [1])),
                        PartialPermNC(Concatenation([1 .. n - 2], [n])));
@@ -761,16 +765,16 @@ end);
 
 InstallMethod(PODI, "for a positive integer", [IsPosInt],
 function(n)
-  if n = 1 then
-    return InverseMonoid(PartialPerm([1]), PartialPerm([]));
+  if n <= 2 then
+    return SymmetricInverseMonoid(n);
   fi;
   return InverseMonoid(POI(n), PartialPerm(Reversed([1 .. n])));
 end);
 
 InstallMethod(PORI, "for a positive integer", [IsPosInt],
 function(n)
-  if n = 1 then
-    return InverseMonoid(PartialPerm([1]), PartialPerm([]));
+  if n <= 3 then
+    return SymmetricInverseMonoid(n);
   fi;
   return InverseMonoid(PartialPermNC(Concatenation([2 .. n], [1])),
                        PartialPermNC(Concatenation([1 .. n - 2], [n])),
