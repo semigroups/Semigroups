@@ -158,8 +158,9 @@ function(o, limit)
   return o;
 end);
 
-InstallMethod(EvaluateWord, "for bipartition coll and list of integers",
-[IsBipartitionCollection, IsList],
+InstallMethod(EvaluateWord,
+"for multiplicative element with one coll and list of integers",
+[IsMultiplicativeElementWithOneCollection, IsList],
 function(gens, w)
     local i, res;
     if Length(w) = 0  then
@@ -167,36 +168,59 @@ function(gens, w)
     fi;
     res := gens[AbsInt(w[1])] ^ SignInt(w[1]);
     for i in [2 .. Length(w)]  do
-      res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
-    od;
-    return res;
-end);
-
-InstallMethod(EvaluateWord, "for partial perm coll and list of integers",
-[IsPartialPermCollection, IsList],
-function(gens, w)
-    local i, res;
-    if Length(w) = 0  then
-      return One(gens);
-    fi;
-    res := gens[AbsInt(w[1])] ^ SignInt(w[1]);
-    for i  in [2 .. Length(w)]  do
       res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
     od;
     return res;
 end);
 
 InstallMethod(EvaluateWord,
-"for Rees 0-matrix semigroup element collection and a list of positive ints",
-[IsReesZeroMatrixSemigroupElementCollection, IsList],
+"for multiplicative element coll and list of integers",
+[IsMultiplicativeElementCollection, IsList],
 function(gens, w)
     local i, res;
     if Length(w) = 0  then
       return SEMIGROUPS.UniversalFakeOne;
     fi;
-    res := gens[w[1]];
+    res := gens[AbsInt(w[1])] ^ SignInt(w[1]);
     for i in [2 .. Length(w)]  do
-      res := res * gens[w[i]];
+      res := res * gens[AbsInt(w[i])] ^ SignInt(w[i]);
+    od;
+    return res;
+end);
+
+InstallMethod(EvaluateExtRepObjWord,
+"for a multiplicative element coll and list of integers",
+[IsMultiplicativeElementCollection, IsList],
+function(gens, w)
+  local res, i;
+    if Length(w) = 0 then
+      ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
+                    "must be a non-empty list");
+    elif Length(w) mod 2 = 1 then
+      ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
+                    "must be a list of even length");
+    fi;
+    res := gens[AbsInt(w[1])] ^ w[2];
+    for i in [3, 5 .. Length(w) - 1] do
+      res := res * gens[AbsInt(w[i])] ^ w[i + 1];
+    od;
+    return res;
+end);
+
+InstallMethod(EvaluateExtRepObjWord,
+"for a multiplicative element with one coll and list of integers",
+[IsMultiplicativeElementWithOneCollection, IsList],
+function(gens, w)
+  local res, i;
+    if Length(w) = 0 then
+      return One(gens);
+    elif Length(w) mod 2 = 1 then
+      ErrorNoReturn("Semigroups: EvaluateExtRepObjWord, the second argument ",
+                    "must be a list of even length");
+    fi;
+    res := gens[AbsInt(w[1])] ^ w[2];
+    for i in [3, 5 .. Length(w) - 1] do
+      res := res * gens[AbsInt(w[i])] ^ w[i + 1];
     od;
     return res;
 end);
