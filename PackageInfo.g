@@ -13,7 +13,7 @@
 ##  <!ENTITY GAPVERS "4.9.0">
 ##  <!ENTITY DIGRAPHSVERS "0.11.0">
 ##  <!ENTITY ORBVERS "4.8.0">
-##  <!ENTITY IOVERS "4.5.0">
+##  <!ENTITY IOVERS "4.5.1">
 ##  <!ENTITY GENSSVERS "1.5">
 ##  <!ENTITY ARCHIVENAME "semigroups-3.0.11">
 ##  <!ENTITY COPYRIGHTYEARS "2011-17">
@@ -235,7 +235,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.9.0",
   NeededOtherPackages := [["orb", ">=4.8.0"],
-                          ["io", ">=4.5.0"],
+                          ["io", ">=4.5.1"],
                           ["digraphs", ">=0.11.0"],
                           ["genss", ">=1.5"]],
   SuggestedOtherPackages := [["gapdoc", ">=1.5.1"]],
