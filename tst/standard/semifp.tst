@@ -2121,6 +2121,23 @@ true
 gap> ForAll(tst{[1 .. 10]}, S -> BruteForceInverseCheck(IsomorphismFpSemigroup(S)));
 true
 
+# Test EvaluateExtRepObjWord
+gap> F := FreeSemigroup(4);;
+gap> x := EvaluateExtRepObjWord(Generators(F), [1, 4, 2, 5, 3, 1, 2, 1]);
+s1^4*s2^5*s3*s2
+gap> ExtRepOfObj(x) = [1, 4, 2, 5, 3, 1, 2, 1];
+true
+gap> EvaluateExtRepObjWord(Generators(F), []);
+Error, Semigroups: EvaluateExtRepObjWord, the second argument must be a non-em\
+pty list
+gap> F := FreeMonoid(4);;
+gap> x := EvaluateExtRepObjWord(Generators(F), [1, 4, 2, 5, 3, 1, 2, 1]);
+m1^4*m2^5*m3*m2
+gap> ExtRepOfObj(x) = [1, 4, 2, 5, 3, 1, 2, 1];
+true
+gap> EvaluateExtRepObjWord(Generators(F), []);
+<identity ...>
+
 #T# SEMIGROUPS_UnbindVariables
 gap> Unbind(BruteForceInverseCheck);
 gap> Unbind(BruteForceIsoCheck);

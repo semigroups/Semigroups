@@ -8,10 +8,9 @@
 #############################################################################
 ##
 
-DeclareOperation("EvaluateWord", [IsBipartitionCollection, IsList]);
-DeclareOperation("EvaluateWord", [IsPartialPermCollection, IsList]);
-DeclareOperation("EvaluateWord",
-                 [IsReesZeroMatrixSemigroupElementCollection, IsList]);
+DeclareOperation("EvaluateWord", [IsMultiplicativeElementCollection, IsList]);
+DeclareOperation("EvaluateExtRepObjWord",
+                 [IsMultiplicativeElementCollection, IsList]);
 DeclareOperation("TraceSchreierTreeOfSCCForward",
                  [IsOrbit, IsPosInt, IsPosInt]);
 DeclareOperation("TraceSchreierTreeOfSCCBack",
